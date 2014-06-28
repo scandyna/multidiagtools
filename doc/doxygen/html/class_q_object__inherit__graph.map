@@ -12,8 +12,8 @@
 <area shape="rect" id="node59" href="$classmdt_sql_data_validator.html" title="Helper class for data validation. " alt="" coords="152,699,293,728"/>
 <area shape="rect" id="node63" href="$classmdt_sql_relation.html" title="Handle parent/child relations between 2 QSqlTableModels. " alt="" coords="168,752,277,781"/>
 <area shape="rect" id="node65" href="$classmdt_sql_table_widget_key_event_filter.html" title="mdtSqlTableWidgetKeyEvent\lFilter" alt="" coords="127,805,319,851"/>
-<area shape="rect" id="node67" href="$classmdt_tt_base.html" title="Base class for helper class. " alt="" coords="180,875,265,904"/>
-<area shape="rect" id="node83" href="$class_qt_local_peer.html" title="QtLocalPeer" alt="" coords="176,928,269,957"/>
+<area shape="rect" id="node67" href="$classmdt_tt_base.html" title="Base class for helper class. " alt="" coords="180,965,265,995"/>
+<area shape="rect" id="node91" href="$class_qt_local_peer.html" title="QtLocalPeer" alt="" coords="176,1019,269,1048"/>
 <area shape="rect" id="node5" href="$classmdt_analog_io.html" title="Representation of a analog I/O. " alt="" coords="428,5,521,35"/>
 <area shape="rect" id="node7" href="$classmdt_digital_io.html" title="Representation of a digital I/O. " alt="" coords="429,59,520,88"/>
 <area shape="rect" id="node11" href="$classmdt_abstract_serial_port.html" title="NOTE: " alt="" coords="400,112,549,141"/>
@@ -34,10 +34,14 @@
 <area shape="rect" id="node55" href="$classmdt_port_thread_helper_socket.html" title="Help the usage of QTcpSocket&#39;s asynchrone API. " alt="" coords="381,645,568,675"/>
 <area shape="rect" id="node61" href="$classmdt_sql_form_widget_data_validator.html" title="mdtSqlFormWidgetDataValidator" alt="" coords="368,699,581,728"/>
 <area shape="rect" id="node69" href="$classmdt_cl_article.html" title="Helper class for Article and related tables edition. " alt="" coords="428,752,521,781"/>
-<area shape="rect" id="node71" href="$classmdt_cl_link.html" title="Helper class for link management. " alt="" coords="435,805,515,835"/>
-<area shape="rect" id="node73" href="$classmdt_cl_unit.html" title="Helper class to manage unit and related data. " alt="" coords="435,859,515,888"/>
-<area shape="rect" id="node75" href="$classmdt_cl_unit_vehicle_type.html" title="Helper class for Unit &lt;&#45;&gt; VehicleType assignments. " alt="" coords="399,912,551,941"/>
-<area shape="rect" id="node77" href="$classmdt_tt_test_connection_cable.html" title="Helper class for test connection cable edition. " alt="" coords="384,965,565,995"/>
-<area shape="rect" id="node79" href="$classmdt_tt_test_node.html" title="Helper class for test node edition. " alt="" coords="419,1019,531,1048"/>
-<area shape="rect" id="node81" href="$classmdt_tt_test_node_unit.html" title="Helper class for test node unit data manipulation. " alt="" coords="407,1072,543,1101"/>
+<area shape="rect" id="node71" href="$classmdt_cl_direct_link.html" title="Create a temporary table with direct links informations. " alt="" coords="417,805,532,835"/>
+<area shape="rect" id="node73" href="$classmdt_cl_link.html" title="Helper class for link management. " alt="" coords="435,859,515,888"/>
+<area shape="rect" id="node75" href="$classmdt_cl_link_beam.html" title="Helper class for link beam edition. " alt="" coords="417,912,532,941"/>
+<area shape="rect" id="node77" href="$classmdt_cl_unit.html" title="Helper class to manage unit and related data. " alt="" coords="435,965,515,995"/>
+<area shape="rect" id="node79" href="$classmdt_cl_unit_vehicle_type.html" title="Helper class for Unit &lt;&#45;&gt; VehicleType assignments. " alt="" coords="399,1019,551,1048"/>
+<area shape="rect" id="node81" href="$classmdt_tt_test_connection_cable.html" title="Helper class for test connection cable edition. " alt="" coords="384,1072,565,1101"/>
+<area shape="rect" id="node83" href="$classmdt_tt_test_model.html" title="Helper class for test edition. " alt="" coords="416,1125,533,1155"/>
+<area shape="rect" id="node85" href="$classmdt_tt_test_model_item.html" title="Helper class for test item edition. " alt="" coords="404,1179,545,1208"/>
+<area shape="rect" id="node87" href="$classmdt_tt_test_node.html" title="Helper class for test node edition. " alt="" coords="419,1232,531,1261"/>
+<area shape="rect" id="node89" href="$classmdt_tt_test_node_unit.html" title="Helper class for test node unit data manipulation. " alt="" coords="407,1285,543,1315"/>
 </map>

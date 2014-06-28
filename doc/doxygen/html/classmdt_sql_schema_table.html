@@ -130,15 +130,21 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a24def48594abf674f96852a4c0d5e9c1"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_schema_table.html#a24def48594abf674f96852a4c0d5e9c1">tableName</a> () const </td></tr>
 <tr class="memdesc:a24def48594abf674f96852a4c0d5e9c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get table name.  <a href="#a24def48594abf674f96852a4c0d5e9c1">More...</a><br/></td></tr>
 <tr class="separator:a24def48594abf674f96852a4c0d5e9c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6f32155aaaaa60c83f452f60268ee54"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_schema_table.html#af6f32155aaaaa60c83f452f60268ee54">setTableTemporary</a> (bool temporary)</td></tr>
+<tr class="memdesc:af6f32155aaaaa60c83f452f60268ee54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set/unset temporary flag.  <a href="#af6f32155aaaaa60c83f452f60268ee54">More...</a><br/></td></tr>
+<tr class="separator:af6f32155aaaaa60c83f452f60268ee54"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a175f4d150a816bd46bd1a8b3fccbe059"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_schema_table.html#a175f4d150a816bd46bd1a8b3fccbe059">setStorageEngineName</a> (const QString &amp;name)</td></tr>
 <tr class="memdesc:a175f4d150a816bd46bd1a8b3fccbe059"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Maria DB/MySQL storage engine (XtraDB, Inno DB, ...)  <a href="#a175f4d150a816bd46bd1a8b3fccbe059">More...</a><br/></td></tr>
 <tr class="separator:a175f4d150a816bd46bd1a8b3fccbe059"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a199589fde3f06590ba9cd38b1885fa38"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_schema_table.html#a199589fde3f06590ba9cd38b1885fa38">addField</a> (const QSqlField &amp;field, bool isPartOfPrimaryKey)</td></tr>
+<tr class="memitem:a199589fde3f06590ba9cd38b1885fa38"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_schema_table.html#a199589fde3f06590ba9cd38b1885fa38">addField</a> (const QSqlField &amp;<a class="el" href="classmdt_sql_schema_table.html#a06de6124f02171e7bf3ffa207cb8a878">field</a>, bool isPartOfPrimaryKey)</td></tr>
 <tr class="memdesc:a199589fde3f06590ba9cd38b1885fa38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a field.  <a href="#a199589fde3f06590ba9cd38b1885fa38">More...</a><br/></td></tr>
 <tr class="separator:a199589fde3f06590ba9cd38b1885fa38"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a24a9e8f260bc96f96219711981124d87"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_schema_table.html#a24a9e8f260bc96f96219711981124d87">fieldCount</a> () const </td></tr>
 <tr class="memdesc:a24a9e8f260bc96f96219711981124d87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of fields.  <a href="#a24a9e8f260bc96f96219711981124d87">More...</a><br/></td></tr>
 <tr class="separator:a24a9e8f260bc96f96219711981124d87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06de6124f02171e7bf3ffa207cb8a878"><td class="memItemLeft" align="right" valign="top">QSqlField&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_schema_table.html#a06de6124f02171e7bf3ffa207cb8a878">field</a> (const QString &amp;fieldName) const </td></tr>
+<tr class="memdesc:a06de6124f02171e7bf3ffa207cb8a878"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get field for given field name.  <a href="#a06de6124f02171e7bf3ffa207cb8a878">More...</a><br/></td></tr>
+<tr class="separator:a06de6124f02171e7bf3ffa207cb8a878"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a55c4ff0c8d01bf794e84cf4828d2cb56"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_schema_table.html#a55c4ff0c8d01bf794e84cf4828d2cb56">addIndex</a> (const QString &amp;name, bool unique)</td></tr>
 <tr class="memdesc:a55c4ff0c8d01bf794e84cf4828d2cb56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a index.  <a href="#a55c4ff0c8d01bf794e84cf4828d2cb56">More...</a><br/></td></tr>
 <tr class="separator:a55c4ff0c8d01bf794e84cf4828d2cb56"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -151,9 +157,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0909cc0e3ad602312ddf44de397d9fe4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_schema_table.html#a0909cc0e3ad602312ddf44de397d9fe4">addFieldToForeignKey</a> (const QString &amp;foreignKeyName, const QString &amp;fieldName, const QString &amp;referingFieldName)</td></tr>
 <tr class="memdesc:a0909cc0e3ad602312ddf44de397d9fe4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a field to a foreign key.  <a href="#a0909cc0e3ad602312ddf44de397d9fe4">More...</a><br/></td></tr>
 <tr class="separator:a0909cc0e3ad602312ddf44de397d9fe4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a072145d85a6a2c183e01aaa6d91a5d"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_schema_table.html#a8a072145d85a6a2c183e01aaa6d91a5d">sqlForCreateTable</a> () const </td></tr>
-<tr class="memdesc:a8a072145d85a6a2c183e01aaa6d91a5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get SQL statement for table creation.  <a href="#a8a072145d85a6a2c183e01aaa6d91a5d">More...</a><br/></td></tr>
-<tr class="separator:a8a072145d85a6a2c183e01aaa6d91a5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a652c5afd4af2965e8d5ead724dda3230"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_schema_table.html#a652c5afd4af2965e8d5ead724dda3230">updateForeignKeyReferingTable</a> (const QString &amp;name, const QString &amp;referingTableName)</td></tr>
+<tr class="memdesc:a652c5afd4af2965e8d5ead724dda3230"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update a foreign key refering table name.  <a href="#a652c5afd4af2965e8d5ead724dda3230">More...</a><br/></td></tr>
+<tr class="separator:a652c5afd4af2965e8d5ead724dda3230"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cea444ccb26b0802fb230db5460e167"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_schema_table.html#a2cea444ccb26b0802fb230db5460e167">setupFromTable</a> (const QString &amp;name, QSqlDatabase db)</td></tr>
+<tr class="memdesc:a2cea444ccb26b0802fb230db5460e167"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup structure from a existing table.  <a href="#a2cea444ccb26b0802fb230db5460e167">More...</a><br/></td></tr>
+<tr class="separator:a2cea444ccb26b0802fb230db5460e167"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6c605b7e7860ced2512792efda76357"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_schema_table.html#af6c605b7e7860ced2512792efda76357">sqlForCreateTable</a> ()</td></tr>
+<tr class="memdesc:af6c605b7e7860ced2512792efda76357"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get SQL statement for table creation.  <a href="#af6c605b7e7860ced2512792efda76357">More...</a><br/></td></tr>
+<tr class="separator:af6c605b7e7860ced2512792efda76357"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a35fd4ed657f48013747973fef78be345"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_schema_table.html#a35fd4ed657f48013747973fef78be345">sqlForDropTable</a> () const </td></tr>
 <tr class="memdesc:a35fd4ed657f48013747973fef78be345"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get SQL statement for table deleteion.  <a href="#a35fd4ed657f48013747973fef78be345">More...</a><br/></td></tr>
 <tr class="separator:a35fd4ed657f48013747973fef78be345"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -164,7 +176,7 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Helper class that generate SQL table creation string. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_schema_table_8h_source.html#l00046">46</a> of file <a class="el" href="mdt_sql_schema_table_8h_source.html">mdtSqlSchemaTable.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_schema_table_8h_source.html#l00047">47</a> of file <a class="el" href="mdt_sql_schema_table_8h_source.html">mdtSqlSchemaTable.h</a>.</p>
 </div><h2 class="groupheader">Member Enumeration Documentation</h2>
 <a class="anchor" id="a1738e443f03dc69b914edb967cb911be"></a>
 <div class="memitem">
@@ -192,7 +204,7 @@ Public Member Functions</h2></td></tr>
 </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="mdt_sql_schema_table_8h_source.html#l00052">52</a> of file <a class="el" href="mdt_sql_schema_table_8h_source.html">mdtSqlSchemaTable.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_schema_table_8h_source.html#l00053">53</a> of file <a class="el" href="mdt_sql_schema_table_8h_source.html">mdtSqlSchemaTable.h</a>.</p>
 
 </div>
 </div>
@@ -212,7 +224,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Constructor. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00025">25</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00028">28</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
 
 </div>
 </div>
@@ -231,7 +243,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00029">29</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00032">32</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
 
 </div>
 </div>
@@ -262,7 +274,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Add a field. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00075">75</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00088">88</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_data_table_manager_8cpp_source.html#l00373">mdtDataTableManager::copyTable()</a>, and <a class="el" href="mdt_data_table_manager_8cpp_source.html#l00189">mdtDataTableManager::importFromCsvFile()</a>.</p>
 
@@ -301,9 +313,9 @@ Public Member Functions</h2></td></tr>
 <p>Add a field to a foreign key. </p>
 <p>Field must allready be created with <a class="el" href="classmdt_sql_schema_table.html#a199589fde3f06590ba9cd38b1885fa38" title="Add a field. ">addField()</a> and foreign key also with <a class="el" href="classmdt_sql_schema_table.html#a48ab41fda7864ec8cd59468de2475ff2" title="Add a foreign key contraint. ">addForeignKey()</a> . If foreign key with name foreignKeyName does not exists, or field with fieldName not exists, this method returns false. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00140">140</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00166">166</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00101">field()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>.</p>
 
 </div>
 </div>
@@ -334,9 +346,9 @@ Public Member Functions</h2></td></tr>
 <p>Add a field to a index. </p>
 <p>Field must allready be created with <a class="el" href="classmdt_sql_schema_table.html#a199589fde3f06590ba9cd38b1885fa38" title="Add a field. ">addField()</a> and index also with <a class="el" href="classmdt_sql_schema_table.html#a55c4ff0c8d01bf794e84cf4828d2cb56" title="Add a index. ">addIndex()</a> . If index with name indexName does not exists, or field with fieldName not exists, this method returns false. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00097">97</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00123">123</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00101">field()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>.</p>
 
 </div>
 </div>
@@ -378,9 +390,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Add a foreign key contraint. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00127">127</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00153">153</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_sql_schema_table_8h_source.html#l00040">mdtSqlSchemaTableForeignKeyInfo::actionOnDelete</a>, <a class="el" href="mdt_sql_schema_table_8h_source.html#l00041">mdtSqlSchemaTableForeignKeyInfo::actionOnUpdate</a>, and <a class="el" href="mdt_sql_schema_table_8h_source.html#l00037">mdtSqlSchemaTableForeignKeyInfo::referingTableName</a>.</p>
+<p>References <a class="el" href="mdt_sql_schema_table_8h_source.html#l00041">mdtSqlSchemaTableForeignKeyInfo::actionOnDelete</a>, <a class="el" href="mdt_sql_schema_table_8h_source.html#l00042">mdtSqlSchemaTableForeignKeyInfo::actionOnUpdate</a>, and <a class="el" href="mdt_sql_schema_table_8h_source.html#l00038">mdtSqlSchemaTableForeignKeyInfo::referingTableName</a>.</p>
 
 </div>
 </div>
@@ -411,7 +423,7 @@ Public Member Functions</h2></td></tr>
 <p>Add a index. </p>
 <p>If name allready exists, it will not be appended </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00088">88</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00114">114</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
 
 </div>
 </div>
@@ -430,7 +442,31 @@ Public Member Functions</h2></td></tr>
 
 <p>Clear. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00033">33</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00036">36</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00211">setupFromTable()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a06de6124f02171e7bf3ffa207cb8a878"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QSqlField mdtSqlSchemaTable::field </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>fieldName</em>)</td><td></td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get field for given field name. </p>
+
+<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00101">101</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00166">addFieldToForeignKey()</a>, and <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00123">addFieldToIndex()</a>.</p>
 
 </div>
 </div>
@@ -449,7 +485,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Get number of fields. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00083">83</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00096">96</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_data_table_manager_8cpp_source.html#l00189">mdtDataTableManager::importFromCsvFile()</a>.</p>
 
@@ -470,7 +506,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Get last error. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00219">219</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00296">296</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
 
 </div>
 </div>
@@ -490,7 +526,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Set database name. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00053">53</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00057">57</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
 
 </div>
 </div>
@@ -511,7 +547,7 @@ Public Member Functions</h2></td></tr>
 <p>Set the driver name. </p>
 <p>Driver name must be given in format returned by QSqlDatabase::driverName() . </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00048">48</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00052">52</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_sql_database_manager_8cpp_source.html#l00391">mdtSqlDatabaseManager::createTable()</a>.</p>
 
@@ -533,7 +569,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Set the Maria DB/MySQL storage engine (XtraDB, Inno DB, ...) </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00070">70</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00083">83</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
 
 </div>
 </div>
@@ -569,13 +605,69 @@ Public Member Functions</h2></td></tr>
 
 <p>Set table name. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00058">58</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00062">62</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_data_table_manager_8cpp_source.html#l00373">mdtDataTableManager::copyTable()</a>, and <a class="el" href="mdt_data_table_manager_8cpp_source.html#l00125">mdtDataTableManager::createDataSet()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a8a072145d85a6a2c183e01aaa6d91a5d"></a>
+<a class="anchor" id="af6f32155aaaaa60c83f452f60268ee54"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtSqlSchemaTable::setTableTemporary </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>temporary</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set/unset temporary flag. </p>
+<p>If temporary is true, the table will be created as temporary table (CREATE TEMPORARY TABLE ... in Sqlite and MySql). </p>
+
+<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00074">74</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2cea444ccb26b0802fb230db5460e167"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtSqlSchemaTable::setupFromTable </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QSqlDatabase&#160;</td>
+          <td class="paramname"><em>db</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Setup structure from a existing table. </p>
+<p>Can be used to create a table that has same structure than a existing one. (Could also be used for reverse engeneering in future..)</p>
+<dl class="section pre"><dt>Precondition</dt><dd>db must be open </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd>Add indexes + foreign keys support </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00211">211</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
+
+<p>References <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00036">clear()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af6c605b7e7860ced2512792efda76357"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -583,16 +675,16 @@ Public Member Functions</h2></td></tr>
           <td class="memname">QString mdtSqlSchemaTable::sqlForCreateTable </td>
           <td>(</td>
           <td class="paramname">)</td><td></td>
-          <td> const</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Get SQL statement for table creation. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00171">171</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00248">248</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00049">MDT_DATABASE_ERROR</a>, and <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_sql_database_manager_8cpp_source.html#l00391">mdtSqlDatabaseManager::createTable()</a>.</p>
 
@@ -613,7 +705,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Get SQL statement for table deleteion. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00197">197</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00274">274</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_sql_database_manager_8cpp_source.html#l00391">mdtSqlDatabaseManager::createTable()</a>.</p>
 
@@ -634,20 +726,52 @@ Public Member Functions</h2></td></tr>
 
 <p>Get table name. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00065">65</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00069">69</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_sql_database_manager_8cpp_source.html#l00391">mdtSqlDatabaseManager::createTable()</a>.</p>
 
 </div>
 </div>
+<a class="anchor" id="a652c5afd4af2965e8d5ead724dda3230"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtSqlSchemaTable::updateForeignKeyReferingTable </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>referingTableName</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Update a foreign key refering table name. </p>
+
+<p>Definition at line <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00197">197</a> of file <a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a>.</p>
+
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>src/mdtutilsgui/<a class="el" href="mdt_sql_schema_table_8h_source.html">mdtSqlSchemaTable.h</a></li>
-<li>src/mdtutilsgui/<a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a></li>
+<li>src/mdtdatabase/<a class="el" href="mdt_sql_schema_table_8h_source.html">mdtSqlSchemaTable.h</a></li>
+<li>src/mdtdatabase/<a class="el" href="mdt_sql_schema_table_8cpp_source.html">mdtSqlSchemaTable.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 6 2014 09:34:22 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jun 28 2014 13:24:48 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

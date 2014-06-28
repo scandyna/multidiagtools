@@ -270,7 +270,7 @@ Child model must be set with <a class="el" href="classmdt_sql_relation.html#ad74
 
 <p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00049">MDT_DATABASE_ERROR</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_sql_relation_item_8cpp_source.html#l00062">mdtSqlRelationItem::setChildField()</a>, <a class="el" href="mdt_sql_relation_item_8cpp_source.html#l00067">mdtSqlRelationItem::setChildFieldIndex()</a>, <a class="el" href="mdt_sql_relation_item_8cpp_source.html#l00112">mdtSqlRelationItem::setCopyParentToChildOnInsertion()</a>, <a class="el" href="mdt_sql_relation_item_8cpp_source.html#l00036">mdtSqlRelationItem::setParentField()</a>, <a class="el" href="mdt_sql_relation_item_8cpp_source.html#l00057">mdtSqlRelationItem::setParentFieldIndex()</a>, and <a class="el" href="mdt_sql_relation_item_8cpp_source.html#l00122">mdtSqlRelationItem::setRelationOperatorWithPreviousItem()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_form_8cpp_source.html#l00157">mdtSqlForm::addRelation()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_form_8cpp_source.html#l00177">mdtSqlForm::addRelation()</a>.</p>
 
 </div>
 </div>
@@ -298,8 +298,6 @@ Child model must be set with <a class="el" href="classmdt_sql_relation.html#ad74
 <p>This signal is emitted once setFilter() was called on child model. </p>
 <p>This can be usefull when update must be done after child model was updated. For example, when using a <a class="el" href="class_q_data_widget_mapper.html">QDataWidgetMapper</a>, connect this signal to <a class="el" href="class_q_data_widget_mapper.html">QDataWidgetMapper</a>'s toFirst() slot. </p>
 
-<p>Definition at line <a class="el" href="moc__mdt_sql_relation_8cxx_source.html#l00113">113</a> of file <a class="el" href="moc__mdt_sql_relation_8cxx_source.html">moc_mdtSqlRelation.cxx</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="ae30eb691c46263cb4021f55b03d0d111"></a>
@@ -325,8 +323,6 @@ Child model must be set with <a class="el" href="classmdt_sql_relation.html#ad74
 
 <p>This signal is emitted after <a class="el" href="classmdt_sql_relation.html#a86656619d8156638ebfbde2b334d40e2" title="This signal is emitted once setFilter() was called on child model. ">childModelFilterApplied()</a> if child model becomes empty. </p>
 <p>Connect this signal to <a class="el" href="class_q_data_widget_mapper.html">QDataWidgetMapper</a>'s revert() slot. <a class="el" href="class_q_data_widget_mapper.html">QDataWidgetMapper</a> will not clear widgets if model becomes empty, so using this signal is a workaround.. </p>
-
-<p>Definition at line <a class="el" href="moc__mdt_sql_relation_8cxx_source.html#l00119">119</a> of file <a class="el" href="moc__mdt_sql_relation_8cxx_source.html">moc_mdtSqlRelation.cxx</a>.</p>
 
 </div>
 </div>
@@ -372,7 +368,7 @@ Child model must be set with <a class="el" href="classmdt_sql_relation.html#ad74
 
 <p>Definition at line <a class="el" href="mdt_sql_relation_8cpp_source.html#l00048">48</a> of file <a class="el" href="mdt_sql_relation_8cpp_source.html">mdtSqlRelation.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_form_8cpp_source.html#l00097">mdtSqlForm::addChildTable()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_form_8cpp_source.html#l00107">mdtSqlForm::addChildTable()</a>.</p>
 
 </div>
 </div>
@@ -405,7 +401,7 @@ Child model must be set with <a class="el" href="classmdt_sql_relation.html#ad74
 
 <p>Definition at line <a class="el" href="mdt_sql_relation_8cpp_source.html#l00108">108</a> of file <a class="el" href="mdt_sql_relation_8cpp_source.html">mdtSqlRelation.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00102">mdtAbstractSqlWidget::addChildWidget()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00157">mdtSqlForm::addRelation()</a>, and <a class="el" href="mdt_sql_relation_8cpp_source.html#l00122">setParentCurrentIndex()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00107">mdtAbstractSqlWidget::addChildWidget()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00177">mdtSqlForm::addRelation()</a>, and <a class="el" href="mdt_sql_relation_8cpp_source.html#l00122">setParentCurrentIndex()</a>.</p>
 
 </div>
 </div>
@@ -505,19 +501,18 @@ Child model must be set with <a class="el" href="classmdt_sql_relation.html#ad74
 
 <p>Definition at line <a class="el" href="mdt_sql_relation_8cpp_source.html#l00041">41</a> of file <a class="el" href="mdt_sql_relation_8cpp_source.html">mdtSqlRelation.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_form_8cpp_source.html#l00097">mdtSqlForm::addChildTable()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_form_8cpp_source.html#l00107">mdtSqlForm::addChildTable()</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtutilsgui/<a class="el" href="mdt_sql_relation_8h_source.html">mdtSqlRelation.h</a></li>
 <li>src/mdtutilsgui/<a class="el" href="mdt_sql_relation_8cpp_source.html">mdtSqlRelation.cpp</a></li>
-<li>src/mdtutilsgui/<a class="el" href="moc__mdt_sql_relation_8cxx_source.html">moc_mdtSqlRelation.cxx</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 6 2014 09:34:22 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jun 28 2014 13:24:48 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

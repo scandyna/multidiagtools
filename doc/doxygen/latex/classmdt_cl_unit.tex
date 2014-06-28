@@ -51,6 +51,10 @@ Q\-String \hyperlink{classmdt_cl_unit_a35befd3bf556fc29f0d3d1e1aa9a69cf}{sql\-Fo
 \begin{DoxyCompactList}\small\item\em Get unit connection data for given unit connection I\-D. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_cl_unit_connector_data}{mdt\-Cl\-Unit\-Connector\-Data} \hyperlink{classmdt_cl_unit_ae0992fd5a8807953ee882487c3aaa4b0}{get\-Connector\-Data} (const Q\-Variant \&unit\-Connector\-Id, bool $\ast$ok, bool include\-Connection\-Data, bool include\-Article\-Connector\-Data, bool include\-Base\-Connector\-Data)
 \begin{DoxyCompactList}\small\item\em Get unit connector data. \end{DoxyCompactList}\item 
+Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_cl_unit_acaefd010c898e3091784434a7f731aaa}{get\-Connection\-Id\-List\-Part\-Of\-Connector\-Id} (const Q\-Variant \&unit\-Connector\-Id, bool $\ast$ok)
+\begin{DoxyCompactList}\small\item\em Get a list of unit connection I\-D that are part of given unit connector I\-D. \end{DoxyCompactList}\item 
+Q\-Variant \hyperlink{classmdt_cl_unit_ab7aca8211857c7842102593aaf07eaa1}{get\-Connector\-Id\-Of\-Connection\-Id} (const Q\-Variant \&unit\-Connection\-Id, bool $\ast$ok)
+\begin{DoxyCompactList}\small\item\em Get unit connector I\-D of given unit connection I\-D. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_cl_unit_ac05aad687744aaedeef602075e28fdf7}{add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List} (\hyperlink{classmdt_cl_unit_connector_data}{mdt\-Cl\-Unit\-Connector\-Data} \&data, const Q\-List$<$ Q\-Variant $>$ \&connector\-Contact\-Id\-List)
 \begin{DoxyCompactList}\small\item\em Add unit connections into unit connector data based on a list of given connector contact I\-D list. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_cl_unit_ad9b29bd9b0ad70047d439e04f109a1cd}{add\-Article\-Connector\-Data} (\hyperlink{classmdt_cl_unit_connector_data}{mdt\-Cl\-Unit\-Connector\-Data} \&data, const Q\-Variant \&article\-Connector\-Id, bool copy\-Connector\-Name)
@@ -172,7 +176,7 @@ Will update some value in data (Unit\-Connector\-\_\-tbl)\-:
 \end{DoxyParams}
 Note\-: will only update given data, nothing is written to database. 
 
-Definition at line 191 of file mdt\-Cl\-Unit.\-cpp.
+Definition at line 232 of file mdt\-Cl\-Unit.\-cpp.
 
 
 
@@ -195,7 +199,7 @@ True on success, false else. To get reason of failure, use \hyperlink{classmdt_t
 \end{DoxyReturn}
 
 
-Definition at line 360 of file mdt\-Cl\-Unit.\-cpp.
+Definition at line 401 of file mdt\-Cl\-Unit.\-cpp.
 
 
 
@@ -215,7 +219,7 @@ Add unit connection.
 
 
 
-Definition at line 548 of file mdt\-Cl\-Unit.\-cpp.
+Definition at line 589 of file mdt\-Cl\-Unit.\-cpp.
 
 
 
@@ -239,7 +243,7 @@ Referenced by add\-Connections(), and add\-Connector().
 Add unit connections into unit connector data based on given article connection I\-D list. 
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000050}{Todo}]What is better ? 2 methods ?? Should coherence between article connection and article connector be done ? Or let \hyperlink{classmdt_cl_unit_acafdba8ebc2f5044b096282ecc41da41}{add\-Connector()} do it ?\end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000051}{Todo}]What is better ? 2 methods ?? Should coherence between article connection and article connector be done ? Or let \hyperlink{classmdt_cl_unit_acafdba8ebc2f5044b096282ecc41da41}{add\-Connector()} do it ?\end{DoxyRefDesc}
 
 
 Will also set some values to newly created unit connections (Unit\-Connection\-\_\-tbl)\-:
@@ -261,7 +265,7 @@ Will also set some values to newly created unit connections (Unit\-Connection\-\
 \end{DoxyParams}
 
 
-Definition at line 343 of file mdt\-Cl\-Unit.\-cpp.
+Definition at line 384 of file mdt\-Cl\-Unit.\-cpp.
 
 
 
@@ -287,7 +291,7 @@ Will also get some values from data (Unit\-Connector\-\_\-tbl) and set it to cre
 
 Note\-: will only update given data, nothing is written to database. 
 
-Definition at line 161 of file mdt\-Cl\-Unit.\-cpp.
+Definition at line 202 of file mdt\-Cl\-Unit.\-cpp.
 
 
 
@@ -307,7 +311,7 @@ Add unit connections.
 
 
 
-Definition at line 584 of file mdt\-Cl\-Unit.\-cpp.
+Definition at line 625 of file mdt\-Cl\-Unit.\-cpp.
 
 
 
@@ -328,7 +332,7 @@ If data contains connections, they will be added.
 
 Note\-: in connection data (contained in data), Unit\-\_\-\-Id\-\_\-\-F\-K and Unit\-Connector\-\_\-\-Id\-\_\-\-F\-K are not relevant, because they are token from data directly. 
 
-Definition at line 679 of file mdt\-Cl\-Unit.\-cpp.
+Definition at line 720 of file mdt\-Cl\-Unit.\-cpp.
 
 
 
@@ -344,7 +348,7 @@ References add\-Connection(), mdt\-Tt\-Base\-::add\-Record(), mdt\-Tt\-Base\-::b
 )}}\label{classmdt_cl_unit_a35a35f22daf4a408f5400031c12ce3cf}
 
 
-Definition at line 796 of file mdt\-Cl\-Unit.\-cpp.
+Definition at line 837 of file mdt\-Cl\-Unit.\-cpp.
 
 \hypertarget{classmdt_cl_unit_aac3afb2a4895a16f637b765b44cbca9e}{\index{mdt\-Cl\-Unit@{mdt\-Cl\-Unit}!edit\-Connection@{edit\-Connection}}
 \index{edit\-Connection@{edit\-Connection}!mdtClUnit@{mdt\-Cl\-Unit}}
@@ -363,7 +367,7 @@ True on success, false else. To get reason of failure, use \hyperlink{classmdt_t
 \end{DoxyReturn}
 
 
-Definition at line 608 of file mdt\-Cl\-Unit.\-cpp.
+Definition at line 649 of file mdt\-Cl\-Unit.\-cpp.
 
 
 
@@ -383,7 +387,7 @@ Edit connector name.
 
 
 
-Definition at line 732 of file mdt\-Cl\-Unit.\-cpp.
+Definition at line 773 of file mdt\-Cl\-Unit.\-cpp.
 
 
 
@@ -412,7 +416,31 @@ References mdt\-Error\-::commit(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-
 
 
 
-Referenced by mdt\-Tt\-Test\-Node\-Unit\-::get\-Data(), and remove\-Connection().
+Referenced by remove\-Connection().
+
+\hypertarget{classmdt_cl_unit_acaefd010c898e3091784434a7f731aaa}{\index{mdt\-Cl\-Unit@{mdt\-Cl\-Unit}!get\-Connection\-Id\-List\-Part\-Of\-Connector\-Id@{get\-Connection\-Id\-List\-Part\-Of\-Connector\-Id}}
+\index{get\-Connection\-Id\-List\-Part\-Of\-Connector\-Id@{get\-Connection\-Id\-List\-Part\-Of\-Connector\-Id}!mdtClUnit@{mdt\-Cl\-Unit}}
+\subsubsection[{get\-Connection\-Id\-List\-Part\-Of\-Connector\-Id}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ Q\-Variant $>$ mdt\-Cl\-Unit\-::get\-Connection\-Id\-List\-Part\-Of\-Connector\-Id (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{unit\-Connector\-Id, }
+\item[{bool $\ast$}]{ok}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_unit_acaefd010c898e3091784434a7f731aaa}
+
+
+Get a list of unit connection I\-D that are part of given unit connector I\-D. 
+
+
+
+Definition at line 161 of file mdt\-Cl\-Unit.\-cpp.
+
+
+
+References mdt\-Tt\-Base\-::get\-Data().
+
+
+
+Referenced by mdt\-Cl\-Direct\-Link\-::add\-Links\-By\-Unit\-Connector(), and mdt\-Cl\-Path\-Graph\-::get\-Linked\-Connector\-Id\-List().
 
 \hypertarget{classmdt_cl_unit_ae0992fd5a8807953ee882487c3aaa4b0}{\index{mdt\-Cl\-Unit@{mdt\-Cl\-Unit}!get\-Connector\-Data@{get\-Connector\-Data}}
 \index{get\-Connector\-Data@{get\-Connector\-Data}!mdtClUnit@{mdt\-Cl\-Unit}}
@@ -459,6 +487,30 @@ References mdt\-Error\-::commit(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-
 
 Referenced by mdt\-Cl\-Link\-::can\-Connect\-Connectors(), mdt\-Cl\-Link\-::connect\-By\-Contact\-Name(), and edit\-Connector\-Name().
 
+\hypertarget{classmdt_cl_unit_ab7aca8211857c7842102593aaf07eaa1}{\index{mdt\-Cl\-Unit@{mdt\-Cl\-Unit}!get\-Connector\-Id\-Of\-Connection\-Id@{get\-Connector\-Id\-Of\-Connection\-Id}}
+\index{get\-Connector\-Id\-Of\-Connection\-Id@{get\-Connector\-Id\-Of\-Connection\-Id}!mdtClUnit@{mdt\-Cl\-Unit}}
+\subsubsection[{get\-Connector\-Id\-Of\-Connection\-Id}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant mdt\-Cl\-Unit\-::get\-Connector\-Id\-Of\-Connection\-Id (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{unit\-Connection\-Id, }
+\item[{bool $\ast$}]{ok}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_unit_ab7aca8211857c7842102593aaf07eaa1}
+
+
+Get unit connector I\-D of given unit connection I\-D. 
+
+
+
+Definition at line 182 of file mdt\-Cl\-Unit.\-cpp.
+
+
+
+References mdt\-Tt\-Base\-::get\-Data().
+
+
+
+Referenced by mdt\-Cl\-Direct\-Link\-::add\-Links\-By\-Unit\-Connector(), and mdt\-Cl\-Path\-Graph\-::get\-Linked\-Connector\-Id\-List().
+
 \hypertarget{classmdt_cl_unit_a93002a29107f78901fe3aa87a83005db}{\index{mdt\-Cl\-Unit@{mdt\-Cl\-Unit}!get\-Unit\-Connection\-Data\-List\-From\-Article\-Connection\-Id\-List@{get\-Unit\-Connection\-Data\-List\-From\-Article\-Connection\-Id\-List}}
 \index{get\-Unit\-Connection\-Data\-List\-From\-Article\-Connection\-Id\-List@{get\-Unit\-Connection\-Data\-List\-From\-Article\-Connection\-Id\-List}!mdtClUnit@{mdt\-Cl\-Unit}}
 \subsubsection[{get\-Unit\-Connection\-Data\-List\-From\-Article\-Connection\-Id\-List}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ {\bf mdt\-Cl\-Unit\-Connection\-Data} $>$ mdt\-Cl\-Unit\-::get\-Unit\-Connection\-Data\-List\-From\-Article\-Connection\-Id\-List (
@@ -481,7 +533,7 @@ Will also set some values to newly created unit connections (Unit\-Connection\-\
 \item Unit\-Contact\-Name \-: if copy\-Contact\-Name is true, it will be copied from article connection data 
 \end{DoxyItemize}
 
-Definition at line 258 of file mdt\-Cl\-Unit.\-cpp.
+Definition at line 299 of file mdt\-Cl\-Unit.\-cpp.
 
 
 
@@ -514,7 +566,7 @@ Will also set some values to newly created unit connections (Unit\-Connection\-\
 \item Unit\-Contact\-Name \-: if copy\-Contact\-Name is true, it will be copied from article connection data 
 \end{DoxyItemize}
 
-Definition at line 303 of file mdt\-Cl\-Unit.\-cpp.
+Definition at line 344 of file mdt\-Cl\-Unit.\-cpp.
 
 
 
@@ -535,7 +587,7 @@ Get unit connector I\-D witch is based on given article connector I\-D and that 
 
 If given article connector is not used in given unit, a Null will be returned. If given article connector is used more than once, this method fails (returns Null and ok will be false). 
 
-Definition at line 212 of file mdt\-Cl\-Unit.\-cpp.
+Definition at line 253 of file mdt\-Cl\-Unit.\-cpp.
 
 
 
@@ -558,7 +610,7 @@ Remove a single component.
 
 
 
-Definition at line 392 of file mdt\-Cl\-Unit.\-cpp.
+Definition at line 433 of file mdt\-Cl\-Unit.\-cpp.
 
 
 
@@ -577,7 +629,7 @@ Remove a list of components.
 
 
 
-Definition at line 401 of file mdt\-Cl\-Unit.\-cpp.
+Definition at line 442 of file mdt\-Cl\-Unit.\-cpp.
 
 
 
@@ -605,7 +657,7 @@ True on success, false else. To get reason of failure, use \hyperlink{classmdt_t
 \end{DoxyReturn}
 
 
-Definition at line 435 of file mdt\-Cl\-Unit.\-cpp.
+Definition at line 476 of file mdt\-Cl\-Unit.\-cpp.
 
 
 
@@ -625,7 +677,7 @@ Remove a single unit connection.
 
 
 
-Definition at line 615 of file mdt\-Cl\-Unit.\-cpp.
+Definition at line 656 of file mdt\-Cl\-Unit.\-cpp.
 
 
 
@@ -653,7 +705,7 @@ True on success, false else. To get reason of failure, use \hyperlink{classmdt_t
 \end{DoxyReturn}
 
 
-Definition at line 657 of file mdt\-Cl\-Unit.\-cpp.
+Definition at line 698 of file mdt\-Cl\-Unit.\-cpp.
 
 
 
@@ -672,7 +724,7 @@ Remove a unit connector and its contacts.
 
 
 
-Definition at line 746 of file mdt\-Cl\-Unit.\-cpp.
+Definition at line 787 of file mdt\-Cl\-Unit.\-cpp.
 
 
 
@@ -700,7 +752,7 @@ True on success, false else. To get reason of failure, use \hyperlink{classmdt_t
 \end{DoxyReturn}
 
 
-Definition at line 782 of file mdt\-Cl\-Unit.\-cpp.
+Definition at line 823 of file mdt\-Cl\-Unit.\-cpp.
 
 
 
@@ -816,7 +868,7 @@ A number $>$= 0 on success, a value $<$ 0 on error. On error, use \hyperlink{cla
 \end{DoxyReturn}
 
 
-Definition at line 447 of file mdt\-Cl\-Unit.\-cpp.
+Definition at line 488 of file mdt\-Cl\-Unit.\-cpp.
 
 
 
@@ -837,7 +889,7 @@ Get a list of links that are related to given unit I\-D.
 
 This is a helper method to display a message to the user in a simple way. Do not use the result for technical processing. 
 
-Definition at line 476 of file mdt\-Cl\-Unit.\-cpp.
+Definition at line 517 of file mdt\-Cl\-Unit.\-cpp.
 
 
 
@@ -862,7 +914,7 @@ Get a list of links that are related to given unit I\-D.
 
 This is a helper method to display a message to the user in a simple way. Do not use the result for technical processing. 
 
-Definition at line 529 of file mdt\-Cl\-Unit.\-cpp.
+Definition at line 570 of file mdt\-Cl\-Unit.\-cpp.
 
 
 

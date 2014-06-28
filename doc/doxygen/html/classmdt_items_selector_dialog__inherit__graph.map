@@ -1,7 +1,5 @@
 <map id="mdtItemsSelectorDialog" name="mdtItemsSelectorDialog">
-<area shape="rect" id="node9" href="$classmdt_mv_column_selection_dialog.html" title="Let the user manage fields to display in table view. " alt="" coords="5,237,203,267"/>
-<area shape="rect" id="node11" href="$classmdt_mv_sorting_setup_dialog.html" title="Let the user manage columns sorting. " alt="" coords="227,237,400,267"/>
-<area shape="rect" id="node2" href="$class_q_dialog.html" title="QDialog" alt="" coords="99,83,168,112"/>
-<area shape="rect" id="node4" href="$class_ui_1_1mdt_items_selector_dialog.html" title="Ui::mdtItemsSelectorDialog" alt="" coords="192,83,373,112"/>
-<area shape="rect" id="node6" href="$class_ui__mdt_items_selector_dialog.html" title="Ui_mdtItemsSelectorDialog" alt="" coords="192,5,373,35"/>
+<area shape="rect" id="node7" href="$classmdt_mv_column_selection_dialog.html" title="Let the user manage fields to display in table view. " alt="" coords="5,160,203,189"/>
+<area shape="rect" id="node9" href="$classmdt_mv_sorting_setup_dialog.html" title="Let the user manage columns sorting. " alt="" coords="227,160,400,189"/>
+<area shape="rect" id="node2" href="$class_q_dialog.html" title="QDialog" alt="" coords="99,5,168,35"/>
 </map>

@@ -186,6 +186,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae301ec4f49781e9b649a1e49368838a5 inherit pub_methods_classmdt_tt_base"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_base.html#ae301ec4f49781e9b649a1e49368838a5">removeData</a> (const QString &amp;tableName, const QString &amp;fieldName1, const QVariant &amp;matchData1, const QString &amp;fieldName2, const QVariant &amp;matchData2)</td></tr>
 <tr class="memdesc:ae301ec4f49781e9b649a1e49368838a5 inherit pub_methods_classmdt_tt_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove data from given table.  <a href="#ae301ec4f49781e9b649a1e49368838a5">More...</a><br/></td></tr>
 <tr class="separator:ae301ec4f49781e9b649a1e49368838a5 inherit pub_methods_classmdt_tt_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a372e33909ae2912e3b69c67d05940910 inherit pub_methods_classmdt_tt_base"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_base.html#a372e33909ae2912e3b69c67d05940910">removeData</a> (const QString &amp;tableName, const <a class="el" href="classmdt_sql_table_selection.html">mdtSqlTableSelection</a> &amp;s, bool handleTransaction)</td></tr>
+<tr class="memdesc:a372e33909ae2912e3b69c67d05940910 inherit pub_methods_classmdt_tt_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove data in given selection from given table.  <a href="#a372e33909ae2912e3b69c67d05940910">More...</a><br/></td></tr>
+<tr class="separator:a372e33909ae2912e3b69c67d05940910 inherit pub_methods_classmdt_tt_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -321,7 +324,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_cl_unit_vehicle_type_8cpp_source.html#l00063">63</a> of file <a class="el" href="mdt_cl_unit_vehicle_type_8cpp_source.html">mdtClUnitVehicleType.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00188">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00213">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_cl_unit_vehicle_type_8cpp_source.html#l00054">addUnitVehicleTypeAssignment()</a>, and <a class="el" href="mdt_cl_unit_vehicle_type_8cpp_source.html#l00099">addUnitVehicleTypeAssignments()</a>.</p>
 
@@ -421,7 +424,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_cl_unit_vehicle_type_8cpp_source.html#l00122">122</a> of file <a class="el" href="mdt_cl_unit_vehicle_type_8cpp_source.html">mdtClUnitVehicleType.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00345">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00371">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00188">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_cl_link_8cpp_source.html#l00310">mdtClLink::removeVehicleTypeLinkByUnitId()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00358">mdtTtBase::rollbackTransaction()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>.</p>
+<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00434">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00460">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00213">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_cl_link_8cpp_source.html#l00314">mdtClLink::removeVehicleTypeLinkByUnitId()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00447">mdtTtBase::rollbackTransaction()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_cl_unit_vehicle_type_8cpp_source.html#l00113">removeUnitVehicleAssignment()</a>, and <a class="el" href="mdt_cl_unit_vehicle_type_8cpp_source.html#l00169">removeUnitVehicleAssignments()</a>.</p>
 
@@ -487,7 +490,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 6 2014 09:34:21 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jun 28 2014 13:24:46 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

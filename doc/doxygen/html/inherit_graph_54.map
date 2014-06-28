@@ -1,4 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$class_ui__mdt_cl_connector_editor.html" title="Ui_mdtClConnectorEditor" alt="" coords="5,5,176,35"/>
-<area shape="rect" id="node3" href="$class_ui_1_1mdt_cl_connector_editor.html" title="Ui::mdtClConnectorEditor" alt="" coords="225,5,396,35"/>
+<area shape="rect" id="node1" href="$class_q_validator.html" title="QValidator" alt="" coords="5,5,88,35"/>
+<area shape="rect" id="node3" href="$classmdt_uic_number_validator.html" title="Validator for UIC Number. " alt="" coords="137,5,297,35"/>
 </map>

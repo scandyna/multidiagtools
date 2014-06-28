@@ -92,11 +92,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="textblock"><code>#include &quot;<a class="el" href="mdt_cl_linked_unit_connector_info_dialog_8h_source.html">mdtClLinkedUnitConnectorInfoDialog.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="mdt_sql_table_widget_8h_source.html">mdtSqlTableWidget.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="mdt_sql_relation_8h_source.html">mdtSqlRelation.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="mdt_cl_path_graph_8h_source.html">mdtClPathGraph.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="mdt_cl_direct_link_8h_source.html">mdtClDirectLink.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="mdt_cl_unit_8h_source.html">mdtClUnit.h</a>&quot;</code><br/>
 <code>#include &lt;QSqlTableModel&gt;</code><br/>
+<code>#include &lt;QSqlRecord&gt;</code><br/>
 <code>#include &lt;QVBoxLayout&gt;</code><br/>
 <code>#include &lt;QSqlError&gt;</code><br/>
 <code>#include &lt;QMessageBox&gt;</code><br/>
 <code>#include &lt;QTableView&gt;</code><br/>
+<code>#include &lt;QString&gt;</code><br/>
+<code>#include &lt;QDebug&gt;</code><br/>
 </div><div class="textblock"><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Include dependency graph for mdtClLinkedUnitConnectorInfoDialog.cpp:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -104,14 +110,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="mdt_cl_linked_unit_connector_info_dialog_8cpp__incl.png" border="0" usemap="#src_2mdttools_2mdttesttool_2mdtcablelist_2mdt_cl_linked_unit_connector_info_dialog_8cpp" alt=""/></div>
 <map name="src_2mdttools_2mdttesttool_2mdtcablelist_2mdt_cl_linked_unit_connector_info_dialog_8cpp" id="src_2mdttools_2mdttesttool_2mdtcablelist_2mdt_cl_linked_unit_connector_info_dialog_8cpp">
-<area shape="rect" id="node3" href="mdt_cl_linked_unit_connector_info_dialog_8h.html" title="mdtClLinkedUnitConnector\lInfoDialog.h" alt="" coords="1836,273,2015,319"/><area shape="rect" id="node49" href="mdt_sql_table_widget_8h.html" title="mdtSqlTableWidget.h" alt="" coords="2596,117,2743,147"/><area shape="rect" id="node86" href="mdt_sql_relation_8h.html" title="mdtSqlRelation.h" alt="" coords="3172,281,3295,311"/><area shape="rect" id="node5" href="ui__mdt_cl_linked_unit_connector_info_dialog_8h.html" title="ui_mdtClLinkedUnitConnector\lInfoDialog.h" alt="" coords="1139,369,1333,415"/><area shape="rect" id="node33" href="mdt_error_8h.html" title="mdtError.h" alt="" coords="1932,377,2015,407"/><area shape="rect" id="node51" href="mdt_abstract_sql_widget_8h.html" title="mdtAbstractSqlWidget.h" alt="" coords="2324,281,2487,311"/><area shape="rect" id="node66" href="mdt_sql_table_selection_8h.html" title="mdtSqlTableSelection.h" alt="" coords="2589,195,2749,224"/><area shape="rect" id="node68" href="mdt_sql_table_selection_row_8h.html" title="mdtSqlTableSelectionRow.h" alt="" coords="2625,281,2812,311"/><area shape="rect" id="node70" href="mdt_sql_table_selection_item_8h.html" title="mdtSqlTableSelectionItem.h" alt="" coords="2740,377,2927,407"/></map>
+<area shape="rect" id="node3" href="mdt_cl_linked_unit_connector_info_dialog_8h.html" title="mdtClLinkedUnitConnector\lInfoDialog.h" alt="" coords="1861,427,2040,474"/><area shape="rect" id="node23" href="mdt_sql_table_widget_8h.html" title="mdtSqlTableWidget.h" alt="" coords="2109,272,2256,301"/><area shape="rect" id="node61" href="mdt_sql_relation_8h.html" title="mdtSqlRelation.h" alt="" coords="4813,436,4936,465"/><area shape="rect" id="node71" href="mdt_cl_path_graph_8h.html" title="mdtClPathGraph.h" alt="" coords="989,436,1120,465"/><area shape="rect" id="node99" href="mdt_cl_direct_link_8h.html" title="mdtClDirectLink.h" alt="" coords="3680,195,3805,224"/><area shape="rect" id="node132" href="mdt_cl_unit_8h.html" title="mdtClUnit.h" alt="" coords="3207,117,3297,147"/><area shape="rect" id="node7" href="mdt_error_8h.html" title="mdtError.h" alt="" coords="1545,532,1628,561"/><area shape="rect" id="node25" href="mdt_abstract_sql_widget_8h.html" title="mdtAbstractSqlWidget.h" alt="" coords="1675,436,1837,465"/><area shape="rect" id="node40" href="mdt_sql_table_selection_8h.html" title="mdtSqlTableSelection.h" alt="" coords="3984,349,4144,379"/><area shape="rect" id="node42" href="mdt_sql_table_selection_row_8h.html" title="mdtSqlTableSelectionRow.h" alt="" coords="3893,436,4080,465"/><area shape="rect" id="node44" href="mdt_sql_table_selection_item_8h.html" title="mdtSqlTableSelectionItem.h" alt="" coords="3893,532,4080,561"/><area shape="rect" id="node101" href="mdt_tt_base_8h.html" title="mdtTtBase.h" alt="" coords="3868,272,3964,301"/><area shape="rect" id="node104" href="mdt_sql_record_8h.html" title="mdtSqlRecord.h" alt="" coords="3400,436,3515,465"/><area shape="rect" id="node134" href="mdt_cl_unit_connection_data_8h.html" title="mdtClUnitConnectionData.h" alt="" coords="2720,272,2907,301"/><area shape="rect" id="node147" href="mdt_cl_unit_connector_data_8h.html" title="mdtClUnitConnectorData.h" alt="" coords="3004,195,3183,224"/><area shape="rect" id="node169" href="mdt_cl_link_data_8h.html" title="mdtClLinkData.h" alt="" coords="2563,195,2683,224"/><area shape="rect" id="node137" href="mdt_cl_article_connection_data_8h.html" title="mdtClArticleConnectionData.h" alt="" coords="2773,349,2971,379"/><area shape="rect" id="node151" href="mdt_cl_connector_data_8h.html" title="mdtClConnectorData.h" alt="" coords="3197,349,3352,379"/><area shape="rect" id="node158" href="mdt_cl_article_connector_data_8h.html" title="mdtClArticleConnectorData.h" alt="" coords="2931,272,3123,301"/><area shape="rect" id="node173" href="mdt_cl_vehicle_type_link_data_8h.html" title="mdtClVehicleTypeLinkData.h" alt="" coords="1843,272,2035,301"/></map>
 </div>
 </div>
 <p><a href="mdt_cl_linked_unit_connector_info_dialog_8cpp_source.html">Go to the source code of this file.</a></p>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 6 2014 09:34:19 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jun 28 2014 13:24:44 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

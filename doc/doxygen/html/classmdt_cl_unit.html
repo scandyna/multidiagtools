@@ -146,6 +146,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae0992fd5a8807953ee882487c3aaa4b0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_cl_unit_connector_data.html">mdtClUnitConnectorData</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_cl_unit.html#ae0992fd5a8807953ee882487c3aaa4b0">getConnectorData</a> (const QVariant &amp;unitConnectorId, bool *ok, bool includeConnectionData, bool includeArticleConnectorData, bool includeBaseConnectorData)</td></tr>
 <tr class="memdesc:ae0992fd5a8807953ee882487c3aaa4b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get unit connector data.  <a href="#ae0992fd5a8807953ee882487c3aaa4b0">More...</a><br/></td></tr>
 <tr class="separator:ae0992fd5a8807953ee882487c3aaa4b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acaefd010c898e3091784434a7f731aaa"><td class="memItemLeft" align="right" valign="top">QList&lt; QVariant &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_cl_unit.html#acaefd010c898e3091784434a7f731aaa">getConnectionIdListPartOfConnectorId</a> (const QVariant &amp;unitConnectorId, bool *ok)</td></tr>
+<tr class="memdesc:acaefd010c898e3091784434a7f731aaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a list of unit connection ID that are part of given unit connector ID.  <a href="#acaefd010c898e3091784434a7f731aaa">More...</a><br/></td></tr>
+<tr class="separator:acaefd010c898e3091784434a7f731aaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7aca8211857c7842102593aaf07eaa1"><td class="memItemLeft" align="right" valign="top">QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_cl_unit.html#ab7aca8211857c7842102593aaf07eaa1">getConnectorIdOfConnectionId</a> (const QVariant &amp;unitConnectionId, bool *ok)</td></tr>
+<tr class="memdesc:ab7aca8211857c7842102593aaf07eaa1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get unit connector ID of given unit connection ID.  <a href="#ab7aca8211857c7842102593aaf07eaa1">More...</a><br/></td></tr>
+<tr class="separator:ab7aca8211857c7842102593aaf07eaa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac05aad687744aaedeef602075e28fdf7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_cl_unit.html#ac05aad687744aaedeef602075e28fdf7">addConnectionDataListFromConnectorContactIdList</a> (<a class="el" href="classmdt_cl_unit_connector_data.html">mdtClUnitConnectorData</a> &amp;data, const QList&lt; QVariant &gt; &amp;connectorContactIdList)</td></tr>
 <tr class="memdesc:ac05aad687744aaedeef602075e28fdf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add unit connections into unit connector data based on a list of given connector contact ID list.  <a href="#ac05aad687744aaedeef602075e28fdf7">More...</a><br/></td></tr>
 <tr class="separator:ac05aad687744aaedeef602075e28fdf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -257,6 +263,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae301ec4f49781e9b649a1e49368838a5 inherit pub_methods_classmdt_tt_base"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_base.html#ae301ec4f49781e9b649a1e49368838a5">removeData</a> (const QString &amp;tableName, const QString &amp;fieldName1, const QVariant &amp;matchData1, const QString &amp;fieldName2, const QVariant &amp;matchData2)</td></tr>
 <tr class="memdesc:ae301ec4f49781e9b649a1e49368838a5 inherit pub_methods_classmdt_tt_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove data from given table.  <a href="#ae301ec4f49781e9b649a1e49368838a5">More...</a><br/></td></tr>
 <tr class="separator:ae301ec4f49781e9b649a1e49368838a5 inherit pub_methods_classmdt_tt_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a372e33909ae2912e3b69c67d05940910 inherit pub_methods_classmdt_tt_base"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_base.html#a372e33909ae2912e3b69c67d05940910">removeData</a> (const QString &amp;tableName, const <a class="el" href="classmdt_sql_table_selection.html">mdtSqlTableSelection</a> &amp;s, bool handleTransaction)</td></tr>
+<tr class="memdesc:a372e33909ae2912e3b69c67d05940910 inherit pub_methods_classmdt_tt_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove data in given selection from given table.  <a href="#a372e33909ae2912e3b69c67d05940910">More...</a><br/></td></tr>
+<tr class="separator:a372e33909ae2912e3b69c67d05940910 inherit pub_methods_classmdt_tt_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -378,9 +387,9 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <p>Note: will only update given data, nothing is written to database. </p>
 
-<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00191">191</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00232">232</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_cl_article_8cpp_source.html#l00259">mdtClArticle::getConnectorData()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00045">mdtTtBase::lastError()</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00188">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_cl_unit_connector_data_8cpp_source.html#l00155">mdtClUnitConnectorData::setArticleConnectorData()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00123">mdtSqlRecord::setValue()</a>, and <a class="el" href="mdt_sql_record_8h_source.html#l00158">mdtSqlRecord::value()</a>.</p>
+<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_cl_article_8cpp_source.html#l00259">mdtClArticle::getConnectorData()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00045">mdtTtBase::lastError()</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00213">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_cl_unit_connector_data_8cpp_source.html#l00155">mdtClUnitConnectorData::setArticleConnectorData()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00123">mdtSqlRecord::setValue()</a>, and <a class="el" href="mdt_sql_record_8h_source.html#l00158">mdtSqlRecord::value()</a>.</p>
 
 </div>
 </div>
@@ -411,9 +420,9 @@ Additional Inherited Members</h2></td></tr>
 <p>Add a unit as component. </p>
 <dl class="section return"><dt>Returns</dt><dd>True on success, false else. To get reason of failure, use <a class="el" href="classmdt_tt_base.html#a92adaae105cef63b18ace2e320776ca9" title="Get last error. ">lastError()</a> . </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00360">360</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00401">401</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00188">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00213">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>.</p>
 
 </div>
 </div>
@@ -443,11 +452,11 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Add unit connection. </p>
 
-<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00548">548</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00589">589</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00050">mdtTtBase::addRecord()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00345">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00371">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00358">mdtTtBase::rollbackTransaction()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00123">mdtSqlRecord::setValue()</a>, and <a class="el" href="mdt_sql_record_8h_source.html#l00158">mdtSqlRecord::value()</a>.</p>
+<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00050">mdtTtBase::addRecord()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00434">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00460">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00447">mdtTtBase::rollbackTransaction()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00123">mdtSqlRecord::setValue()</a>, and <a class="el" href="mdt_sql_record_8h_source.html#l00158">mdtSqlRecord::value()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_cl_unit_8cpp_source.html#l00584">addConnections()</a>, and <a class="el" href="mdt_cl_unit_8cpp_source.html#l00679">addConnector()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_cl_unit_8cpp_source.html#l00625">addConnections()</a>, and <a class="el" href="mdt_cl_unit_8cpp_source.html#l00720">addConnector()</a>.</p>
 
 </div>
 </div>
@@ -482,7 +491,7 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Add unit connections into unit connector data based on given article connection ID list. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000050">Todo:</a></b></dt><dd>What is better ? 2 methods ?? Should coherence between article connection and article connector be done ? Or let <a class="el" href="classmdt_cl_unit.html#acafdba8ebc2f5044b096282ecc41da41" title="Add a unit connector. ">addConnector()</a> do it ?</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000051">Todo:</a></b></dt><dd>What is better ? 2 methods ?? Should coherence between article connection and article connector be done ? Or let <a class="el" href="classmdt_cl_unit.html#acafdba8ebc2f5044b096282ecc41da41" title="Add a unit connector. ">addConnector()</a> do it ?</dd></dl>
 <p>Will also set some values to newly created unit connections (UnitConnection_tbl):</p>
 <ul>
 <li>Unit_Id_FK : will be copied from unit connector data</li>
@@ -499,9 +508,9 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00343">343</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00384">384</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_cl_unit_connector_data_8cpp_source.html#l00087">mdtClUnitConnectorData::addConnectionData()</a>, <a class="el" href="mdt_cl_unit_8cpp_source.html#l00258">getUnitConnectionDataListFromArticleConnectionIdList()</a>, and <a class="el" href="mdt_sql_record_8h_source.html#l00158">mdtSqlRecord::value()</a>.</p>
+<p>References <a class="el" href="mdt_cl_unit_connector_data_8cpp_source.html#l00087">mdtClUnitConnectorData::addConnectionData()</a>, <a class="el" href="mdt_cl_unit_8cpp_source.html#l00299">getUnitConnectionDataListFromArticleConnectionIdList()</a>, and <a class="el" href="mdt_sql_record_8h_source.html#l00158">mdtSqlRecord::value()</a>.</p>
 
 </div>
 </div>
@@ -537,9 +546,9 @@ Additional Inherited Members</h2></td></tr>
 </ul>
 <p>Note: will only update given data, nothing is written to database. </p>
 
-<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00161">161</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00202">202</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_cl_unit_connector_data_8cpp_source.html#l00087">mdtClUnitConnectorData::addConnectionData()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00140">mdtSqlRecord::clearValues()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_cl_article_8cpp_source.html#l00176">mdtClArticle::getConnectorContactDataList()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00150">mdtSqlRecord::lastError()</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00188">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_cl_unit_connection_data_8cpp_source.html#l00048">mdtClUnitConnectionData::setup()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00123">mdtSqlRecord::setValue()</a>, and <a class="el" href="mdt_sql_record_8h_source.html#l00158">mdtSqlRecord::value()</a>.</p>
+<p>References <a class="el" href="mdt_cl_unit_connector_data_8cpp_source.html#l00087">mdtClUnitConnectorData::addConnectionData()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00140">mdtSqlRecord::clearValues()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_cl_article_8cpp_source.html#l00176">mdtClArticle::getConnectorContactDataList()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00150">mdtSqlRecord::lastError()</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00213">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_cl_unit_connection_data_8cpp_source.html#l00048">mdtClUnitConnectionData::setup()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00123">mdtSqlRecord::setValue()</a>, and <a class="el" href="mdt_sql_record_8h_source.html#l00158">mdtSqlRecord::value()</a>.</p>
 
 </div>
 </div>
@@ -569,9 +578,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Add unit connections. </p>
 
-<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00584">584</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00625">625</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_cl_unit_8cpp_source.html#l00548">addConnection()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00345">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00371">mdtTtBase::commitTransaction()</a>, and <a class="el" href="mdt_tt_base_8cpp_source.html#l00358">mdtTtBase::rollbackTransaction()</a>.</p>
+<p>References <a class="el" href="mdt_cl_unit_8cpp_source.html#l00589">addConnection()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00434">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00460">mdtTtBase::commitTransaction()</a>, and <a class="el" href="mdt_tt_base_8cpp_source.html#l00447">mdtTtBase::rollbackTransaction()</a>.</p>
 
 </div>
 </div>
@@ -593,9 +602,9 @@ Additional Inherited Members</h2></td></tr>
 <p>If data contains connections, they will be added.</p>
 <p>Note: in connection data (contained in data), Unit_Id_FK and UnitConnector_Id_FK are not relevant, because they are token from data directly. </p>
 
-<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00679">679</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00720">720</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_cl_unit_8cpp_source.html#l00548">addConnection()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00050">mdtTtBase::addRecord()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00345">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00371">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_cl_unit_connector_data_8cpp_source.html#l00077">mdtClUnitConnectorData::connectionDataList()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00188">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00358">mdtTtBase::rollbackTransaction()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00123">mdtSqlRecord::setValue()</a>, and <a class="el" href="mdt_sql_record_8h_source.html#l00158">mdtSqlRecord::value()</a>.</p>
+<p>References <a class="el" href="mdt_cl_unit_8cpp_source.html#l00589">addConnection()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00050">mdtTtBase::addRecord()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00434">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00460">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_cl_unit_connector_data_8cpp_source.html#l00077">mdtClUnitConnectorData::connectionDataList()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00213">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00447">mdtTtBase::rollbackTransaction()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00123">mdtSqlRecord::setValue()</a>, and <a class="el" href="mdt_sql_record_8h_source.html#l00158">mdtSqlRecord::value()</a>.</p>
 
 </div>
 </div>
@@ -623,7 +632,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00796">796</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00837">837</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
 
 </div>
 </div>
@@ -654,7 +663,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Edit a unit connection. </p>
 <dl class="section return"><dt>Returns</dt><dd>True on success, false else. To get reason of failure, use <a class="el" href="classmdt_tt_base.html#a92adaae105cef63b18ace2e320776ca9" title="Get last error. ">lastError()</a>. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00608">608</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00649">649</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00181">mdtTtBase::updateRecord()</a>, and <a class="el" href="mdt_sql_record_8h_source.html#l00158">mdtSqlRecord::value()</a>.</p>
 
@@ -686,7 +695,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Edit connector name. </p>
 
-<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00732">732</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00773">773</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_cl_unit_8cpp_source.html#l00143">getConnectorData()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00123">mdtSqlRecord::setValue()</a>, and <a class="el" href="mdt_tt_base_8cpp_source.html#l00181">mdtTtBase::updateRecord()</a>.</p>
 
@@ -727,9 +736,43 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00125">125</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00188">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_error_8h_source.html#l00093">mdtError::Warning</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00213">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_error_8h_source.html#l00093">mdtError::Warning</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00129">mdtTtTestNodeUnit::getData()</a>, and <a class="el" href="mdt_cl_unit_8cpp_source.html#l00615">removeConnection()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_cl_unit_8cpp_source.html#l00656">removeConnection()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="acaefd010c898e3091784434a7f731aaa"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QList&lt; QVariant &gt; mdtClUnit::getConnectionIdListPartOfConnectorId </td>
+          <td>(</td>
+          <td class="paramtype">const QVariant &amp;&#160;</td>
+          <td class="paramname"><em>unitConnectorId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool *&#160;</td>
+          <td class="paramname"><em>ok</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get a list of unit connection ID that are part of given unit connector ID. </p>
+
+<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00161">161</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
+
+<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00127">mdtTtBase::getData()</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_cl_direct_link_8cpp_source.html#l00160">mdtClDirectLink::addLinksByUnitConnector()</a>, and <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00210">mdtClPathGraph::getLinkedConnectorIdList()</a>.</p>
 
 </div>
 </div>
@@ -792,9 +835,43 @@ ok must be valid </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00143">143</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00188">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_error_8h_source.html#l00093">mdtError::Warning</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00213">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_error_8h_source.html#l00093">mdtError::Warning</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_cl_link_8cpp_source.html#l00434">mdtClLink::canConnectConnectors()</a>, <a class="el" href="mdt_cl_link_8cpp_source.html#l00549">mdtClLink::connectByContactName()</a>, and <a class="el" href="mdt_cl_unit_8cpp_source.html#l00732">editConnectorName()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_cl_link_8cpp_source.html#l00438">mdtClLink::canConnectConnectors()</a>, <a class="el" href="mdt_cl_link_8cpp_source.html#l00553">mdtClLink::connectByContactName()</a>, and <a class="el" href="mdt_cl_unit_8cpp_source.html#l00773">editConnectorName()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab7aca8211857c7842102593aaf07eaa1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QVariant mdtClUnit::getConnectorIdOfConnectionId </td>
+          <td>(</td>
+          <td class="paramtype">const QVariant &amp;&#160;</td>
+          <td class="paramname"><em>unitConnectionId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool *&#160;</td>
+          <td class="paramname"><em>ok</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get unit connector ID of given unit connection ID. </p>
+
+<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00182">182</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
+
+<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00127">mdtTtBase::getData()</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_cl_direct_link_8cpp_source.html#l00160">mdtClDirectLink::addLinksByUnitConnector()</a>, and <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00210">mdtClPathGraph::getLinkedConnectorIdList()</a>.</p>
 
 </div>
 </div>
@@ -843,11 +920,11 @@ ok must be valid </dd></dl>
 <li>UnitContactName : if copyContactName is true, it will be copied from article connection data </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00258">258</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00299">299</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_sql_record_8cpp_source.html#l00140">mdtSqlRecord::clearValues()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_cl_article_8cpp_source.html#l00219">mdtClArticle::getConnectionDataListFromConnectionIdList()</a>, <a class="el" href="mdt_cl_unit_8cpp_source.html#l00212">getUnitConnectorIdBasedOnArticleConnectorId()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00045">mdtTtBase::lastError()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00150">mdtSqlRecord::lastError()</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00188">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_cl_unit_connection_data_8cpp_source.html#l00069">mdtClUnitConnectionData::setArticleConnectionData()</a>, <a class="el" href="mdt_cl_unit_connection_data_8cpp_source.html#l00048">mdtClUnitConnectionData::setup()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00123">mdtSqlRecord::setValue()</a>, and <a class="el" href="mdt_sql_record_8h_source.html#l00158">mdtSqlRecord::value()</a>.</p>
+<p>References <a class="el" href="mdt_sql_record_8cpp_source.html#l00140">mdtSqlRecord::clearValues()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_cl_article_8cpp_source.html#l00219">mdtClArticle::getConnectionDataListFromConnectionIdList()</a>, <a class="el" href="mdt_cl_unit_8cpp_source.html#l00253">getUnitConnectorIdBasedOnArticleConnectorId()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00045">mdtTtBase::lastError()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00150">mdtSqlRecord::lastError()</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00213">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_cl_unit_connection_data_8cpp_source.html#l00069">mdtClUnitConnectionData::setArticleConnectionData()</a>, <a class="el" href="mdt_cl_unit_connection_data_8cpp_source.html#l00048">mdtClUnitConnectionData::setup()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00123">mdtSqlRecord::setValue()</a>, and <a class="el" href="mdt_sql_record_8h_source.html#l00158">mdtSqlRecord::value()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_cl_unit_8cpp_source.html#l00343">addConnectionDataListFromArticleConnectionIdList()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_cl_unit_8cpp_source.html#l00384">addConnectionDataListFromArticleConnectionIdList()</a>.</p>
 
 </div>
 </div>
@@ -902,9 +979,9 @@ ok must be valid </dd></dl>
 <li>UnitContactName : if copyContactName is true, it will be copied from article connection data </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00303">303</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00344">344</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_sql_record_8cpp_source.html#l00140">mdtSqlRecord::clearValues()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_cl_article_8cpp_source.html#l00219">mdtClArticle::getConnectionDataListFromConnectionIdList()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00045">mdtTtBase::lastError()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00150">mdtSqlRecord::lastError()</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00188">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_cl_unit_connection_data_8cpp_source.html#l00069">mdtClUnitConnectionData::setArticleConnectionData()</a>, <a class="el" href="mdt_cl_unit_connection_data_8cpp_source.html#l00048">mdtClUnitConnectionData::setup()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00123">mdtSqlRecord::setValue()</a>, and <a class="el" href="mdt_sql_record_8h_source.html#l00158">mdtSqlRecord::value()</a>.</p>
+<p>References <a class="el" href="mdt_sql_record_8cpp_source.html#l00140">mdtSqlRecord::clearValues()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_cl_article_8cpp_source.html#l00219">mdtClArticle::getConnectionDataListFromConnectionIdList()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00045">mdtTtBase::lastError()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00150">mdtSqlRecord::lastError()</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00213">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_cl_unit_connection_data_8cpp_source.html#l00069">mdtClUnitConnectionData::setArticleConnectionData()</a>, <a class="el" href="mdt_cl_unit_connection_data_8cpp_source.html#l00048">mdtClUnitConnectionData::setup()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00123">mdtSqlRecord::setValue()</a>, and <a class="el" href="mdt_sql_record_8h_source.html#l00158">mdtSqlRecord::value()</a>.</p>
 
 </div>
 </div>
@@ -941,11 +1018,11 @@ ok must be valid </dd></dl>
 <p>Get unit connector ID witch is based on given article connector ID and that is used in given unit ID. </p>
 <p>If given article connector is not used in given unit, a Null will be returned. If given article connector is used more than once, this method fails (returns Null and ok will be false). </p>
 
-<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00212">212</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00253">253</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00127">mdtTtBase::getData()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00188">mdtTtBase::pvLastError</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00127">mdtTtBase::getData()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00213">mdtTtBase::pvLastError</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_cl_unit_8cpp_source.html#l00258">getUnitConnectionDataListFromArticleConnectionIdList()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_cl_unit_8cpp_source.html#l00299">getUnitConnectionDataListFromArticleConnectionIdList()</a>.</p>
 
 </div>
 </div>
@@ -965,9 +1042,9 @@ ok must be valid </dd></dl>
 
 <p>Remove a single component. </p>
 
-<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00392">392</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00433">433</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_cl_unit_8cpp_source.html#l00401">removeComponents()</a>.</p>
+<p>References <a class="el" href="mdt_cl_unit_8cpp_source.html#l00442">removeComponents()</a>.</p>
 
 </div>
 </div>
@@ -987,11 +1064,11 @@ ok must be valid </dd></dl>
 
 <p>Remove a list of components. </p>
 
-<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00401">401</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00442">442</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00188">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00213">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_cl_unit_8cpp_source.html#l00392">removeComponent()</a>, and <a class="el" href="mdt_cl_unit_8cpp_source.html#l00435">removeComponents()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_cl_unit_8cpp_source.html#l00433">removeComponent()</a>, and <a class="el" href="mdt_cl_unit_8cpp_source.html#l00476">removeComponents()</a>.</p>
 
 </div>
 </div>
@@ -1013,9 +1090,9 @@ ok must be valid </dd></dl>
 <p>This is usefull used together with <a class="el" href="classmdt_sql_table_widget.html" title="Table view based SQL widget. ">mdtSqlTableWidget</a> .</p>
 <dl class="section return"><dt>Returns</dt><dd>True on success, false else. To get reason of failure, use <a class="el" href="classmdt_tt_base.html#a92adaae105cef63b18ace2e320776ca9" title="Get last error. ">lastError()</a> . </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00435">435</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00476">476</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_cl_unit_8cpp_source.html#l00401">removeComponents()</a>.</p>
+<p>References <a class="el" href="mdt_cl_unit_8cpp_source.html#l00442">removeComponents()</a>.</p>
 
 </div>
 </div>
@@ -1045,11 +1122,11 @@ ok must be valid </dd></dl>
 
 <p>Remove a single unit connection. </p>
 
-<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00615">615</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00656">656</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00345">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00371">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_cl_unit_8cpp_source.html#l00125">getConnectionData()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00228">mdtTtBase::removeData()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00358">mdtTtBase::rollbackTransaction()</a>, and <a class="el" href="mdt_sql_record_8h_source.html#l00158">mdtSqlRecord::value()</a>.</p>
+<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00434">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00460">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_cl_unit_8cpp_source.html#l00125">getConnectionData()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00228">mdtTtBase::removeData()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00447">mdtTtBase::rollbackTransaction()</a>, and <a class="el" href="mdt_sql_record_8h_source.html#l00158">mdtSqlRecord::value()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_cl_unit_8cpp_source.html#l00657">removeConnections()</a>, and <a class="el" href="mdt_cl_unit_8cpp_source.html#l00746">removeConnector()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_cl_unit_8cpp_source.html#l00698">removeConnections()</a>, and <a class="el" href="mdt_cl_unit_8cpp_source.html#l00787">removeConnector()</a>.</p>
 
 </div>
 </div>
@@ -1071,9 +1148,9 @@ ok must be valid </dd></dl>
 <p>This is usefull used together with <a class="el" href="classmdt_sql_table_widget.html" title="Table view based SQL widget. ">mdtSqlTableWidget</a> .</p>
 <dl class="section return"><dt>Returns</dt><dd>True on success, false else. To get reason of failure, use <a class="el" href="classmdt_tt_base.html#a92adaae105cef63b18ace2e320776ca9" title="Get last error. ">lastError()</a> . </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00657">657</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00698">698</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00345">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00371">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_sql_table_selection_8cpp_source.html#l00082">mdtSqlTableSelection::dataList()</a>, <a class="el" href="mdt_cl_unit_8cpp_source.html#l00615">removeConnection()</a>, and <a class="el" href="mdt_tt_base_8cpp_source.html#l00358">mdtTtBase::rollbackTransaction()</a>.</p>
+<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00434">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00460">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_sql_table_selection_8cpp_source.html#l00090">mdtSqlTableSelection::dataList()</a>, <a class="el" href="mdt_cl_unit_8cpp_source.html#l00656">removeConnection()</a>, and <a class="el" href="mdt_tt_base_8cpp_source.html#l00447">mdtTtBase::rollbackTransaction()</a>.</p>
 
 </div>
 </div>
@@ -1093,11 +1170,11 @@ ok must be valid </dd></dl>
 
 <p>Remove a unit connector and its contacts. </p>
 
-<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00746">746</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00787">787</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00345">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00371">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00127">mdtTtBase::getData()</a>, <a class="el" href="mdt_cl_unit_8cpp_source.html#l00615">removeConnection()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00228">mdtTtBase::removeData()</a>, and <a class="el" href="mdt_tt_base_8cpp_source.html#l00358">mdtTtBase::rollbackTransaction()</a>.</p>
+<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00434">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00460">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00127">mdtTtBase::getData()</a>, <a class="el" href="mdt_cl_unit_8cpp_source.html#l00656">removeConnection()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00228">mdtTtBase::removeData()</a>, and <a class="el" href="mdt_tt_base_8cpp_source.html#l00447">mdtTtBase::rollbackTransaction()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_cl_unit_8cpp_source.html#l00782">removeConnectors()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_cl_unit_8cpp_source.html#l00823">removeConnectors()</a>.</p>
 
 </div>
 </div>
@@ -1119,9 +1196,9 @@ ok must be valid </dd></dl>
 <p>This is usefull used together with <a class="el" href="classmdt_sql_table_widget.html" title="Table view based SQL widget. ">mdtSqlTableWidget</a> .</p>
 <dl class="section return"><dt>Returns</dt><dd>True on success, false else. To get reason of failure, use <a class="el" href="classmdt_tt_base.html#a92adaae105cef63b18ace2e320776ca9" title="Get last error. ">lastError()</a> . </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00782">782</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00823">823</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_cl_unit_8cpp_source.html#l00746">removeConnector()</a>.</p>
+<p>References <a class="el" href="mdt_cl_unit_8cpp_source.html#l00787">removeConnector()</a>.</p>
 
 </div>
 </div>
@@ -1308,9 +1385,9 @@ ok must be valid </dd></dl>
 <p>Return the number unit connections that are related to article connections. </p>
 <dl class="section return"><dt>Returns</dt><dd>A number &gt;= 0 on success, a value &lt; 0 on error. On error, use <a class="el" href="classmdt_tt_base.html#a92adaae105cef63b18ace2e320776ca9" title="Get last error. ">lastError()</a> to check what goes wrong. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00447">447</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00488">488</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00188">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00213">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>.</p>
 
 </div>
 </div>
@@ -1347,11 +1424,11 @@ ok must be valid </dd></dl>
 <p>Get a list of links that are related to given unit ID. </p>
 <p>This is a helper method to display a message to the user in a simple way. Do not use the result for technical processing. </p>
 
-<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00476">476</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00517">517</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00127">mdtTtBase::getData()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_cl_unit_8cpp_source.html#l00529">toUnitRelatedLinksListStr()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_cl_unit_8cpp_source.html#l00570">toUnitRelatedLinksListStr()</a>.</p>
 
 </div>
 </div>
@@ -1388,9 +1465,9 @@ ok must be valid </dd></dl>
 <p>Get a list of links that are related to given unit ID. </p>
 <p>This is a helper method to display a message to the user in a simple way. Do not use the result for technical processing. </p>
 
-<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00529">529</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_unit_8cpp_source.html#l00570">570</a> of file <a class="el" href="mdt_cl_unit_8cpp_source.html">mdtClUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_cl_unit_8cpp_source.html#l00476">toUnitRelatedLinksList()</a>.</p>
+<p>References <a class="el" href="mdt_cl_unit_8cpp_source.html#l00517">toUnitRelatedLinksList()</a>.</p>
 
 </div>
 </div>
@@ -1401,7 +1478,7 @@ ok must be valid </dd></dl>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 6 2014 09:34:21 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jun 28 2014 13:24:46 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

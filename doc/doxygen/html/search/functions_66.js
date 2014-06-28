@@ -1,13 +1,13 @@
 var searchData=
 [
   ['fetchattributes',['fetchAttributes',['../classmdt_usb_config_descriptor.html#acece47193e1ab7184894082a40233f45',1,'mdtUsbConfigDescriptor::fetchAttributes()'],['../classmdt_usb_device_descriptor.html#a6239e5e56e2e25a686cac98b18158500',1,'mdtUsbDeviceDescriptor::fetchAttributes()'],['../classmdt_usb_endpoint_descriptor.html#af001cef68ba1e177a63b1f9ba02ddc6c',1,'mdtUsbEndpointDescriptor::fetchAttributes()'],['../classmdt_usb_interface_descriptor.html#a1050edfdbea744abe0bb4948b16f03fb',1,'mdtUsbInterfaceDescriptor::fetchAttributes()']]],
-  ['field',['field',['../classmdt_sql_record.html#a11c45029e57b56f441ed2ce270212b89',1,'mdtSqlRecord::field(int index) const '],['../classmdt_sql_record.html#a6f7071c2a052cbb45e004a706fa8407f',1,'mdtSqlRecord::field(const QString &amp;name) const ']]],
+  ['field',['field',['../classmdt_sql_record.html#a11c45029e57b56f441ed2ce270212b89',1,'mdtSqlRecord::field(int index) const '],['../classmdt_sql_record.html#a6f7071c2a052cbb45e004a706fa8407f',1,'mdtSqlRecord::field(const QString &amp;name) const '],['../classmdt_sql_schema_table.html#a06de6124f02171e7bf3ffa207cb8a878',1,'mdtSqlSchemaTable::field()']]],
   ['fieldcount',['fieldCount',['../classmdt_sql_schema_table.html#a24a9e8f260bc96f96219711981124d87',1,'mdtSqlSchemaTable']]],
   ['fieldindexeswithvalue',['fieldIndexesWithValue',['../classmdt_sql_record.html#a7be0d16ddc4651194ab12090065b2c1e',1,'mdtSqlRecord']]],
   ['fieldmap',['fieldMap',['../classmdt_field_map_dialog.html#ac1348e93dc0c7f2f0fb27a8c5724376c',1,'mdtFieldMapDialog']]],
   ['fieldname',['fieldName',['../classmdt_sql_table_selection_item.html#a7b986c5dbbaf34cffc1a0b0a94aaac0b',1,'mdtSqlTableSelectionItem']]],
   ['fieldnames',['fieldNames',['../classmdt_sql_record.html#af6754c9909ef1304ab382303809a7a0a',1,'mdtSqlRecord']]],
-  ['fields',['fields',['../classmdt_field_list_edition_dialog.html#a10de0f00e5639bd3f2442f25423557ec',1,'mdtFieldListEditionDialog']]],
+  ['fields',['fields',['../classmdt_sql_table_selection.html#a5885e6bb6fadabb425c4ec170c5bdfc7',1,'mdtSqlTableSelection::fields()'],['../classmdt_sql_table_selection_row.html#ac175bf0b9cde925103d6a6d782c77da8',1,'mdtSqlTableSelectionRow::fields()'],['../classmdt_field_list_edition_dialog.html#a10de0f00e5639bd3f2442f25423557ec',1,'mdtFieldListEditionDialog::fields()']]],
   ['fileline',['fileLine',['../classmdt_error.html#a7f5a9ac5e896ba24009bcadddcfe79cb',1,'mdtError']]],
   ['filename',['fileName',['../classmdt_error.html#af7c2c371678ebd45698a990502addbd8',1,'mdtError']]],
   ['filesize',['fileSize',['../classmdt_file_copier_item.html#af0bb0ba7fd66473472f55695414519b7',1,'mdtFileCopierItem']]],
@@ -43,5 +43,9 @@ var searchData=
   ['fromthreadnewframereaden',['fromThreadNewFrameReaden',['../classmdt_modbus_tcp_port_manager.html#ad941ea607f00db54aa6deb2866a539e9',1,'mdtModbusTcpPortManager::fromThreadNewFrameReaden()'],['../classmdt_port_manager.html#a4fcc8f0699b655156e661bb3de6056cc',1,'mdtPortManager::fromThreadNewFrameReaden()'],['../classmdt_usbtmc_port_manager.html#aca42b343ae1f6a324e6e45968f03bbea',1,'mdtUsbtmcPortManager::fromThreadNewFrameReaden()']]],
   ['fromthreadreaduntilshortpacketreceivedfinished',['fromThreadReadUntilShortPacketReceivedFinished',['../classmdt_usb_port_manager.html#a8f53dc5445b7f8f4a077f3cc25880b5d',1,'mdtUsbPortManager']]],
   ['full',['full',['../classmdt_buffer.html#a63e2b6b5e7656a5285d0ea1d152ea499',1,'mdtBuffer']]],
-  ['functionname',['functionName',['../classmdt_error.html#abff9bc71ff554f6f6189be88b0afa731',1,'mdtError']]]
+  ['functionname',['functionName',['../classmdt_error.html#abff9bc71ff554f6f6189be88b0afa731',1,'mdtError']]],
+  ['functionstringde',['functionStringDE',['../classmdt_cl_linked_unit_connection_info_dialog.html#ab2685a6494d758d7ea4c12e0d53281d6',1,'mdtClLinkedUnitConnectionInfoDialog']]],
+  ['functionstringen',['functionStringEN',['../classmdt_cl_linked_unit_connection_info_dialog.html#a2b7b389c4f91ee1f07a1b8befcfd5acb',1,'mdtClLinkedUnitConnectionInfoDialog']]],
+  ['functionstringfr',['functionStringFR',['../classmdt_cl_linked_unit_connection_info_dialog.html#aa2a76f39337cef29b506d6bb588b6496',1,'mdtClLinkedUnitConnectionInfoDialog']]],
+  ['functionstringit',['functionStringIT',['../classmdt_cl_linked_unit_connection_info_dialog.html#a322cc8a65ce3de322066fd6e636b7466',1,'mdtClLinkedUnitConnectionInfoDialog']]]
 ];

@@ -120,15 +120,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00029"></a><span class="lineno"><a class="code" href="classmdt_abstract_port_setup_dialog.html#a3f62d7eb0c8bdc3bbc7874b975ee7fd2">   29</a></span>&#160;<a class="code" href="classmdt_abstract_port_setup_dialog.html#a3f62d7eb0c8bdc3bbc7874b975ee7fd2" title="Constructor. ">mdtAbstractPortSetupDialog::mdtAbstractPortSetupDialog</a>(<a class="code" href="class_q_widget.html">QWidget</a> *parent)</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; : <a class="code" href="class_q_dialog.html">QDialog</a>(parent)</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;{</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <a class="code" href="class_ui__mdt_abstract_port_setup_dialog.html#a5b5b735fa4c40a033a360f4311e193e5">setupUi</a>(<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  setupUi(<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  pvPortManager = 0;</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  wHeader = 0;</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <span class="comment">// Setup status widget</span></div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  pvStatusWidget = <span class="keyword">new</span> <a class="code" href="classmdt_port_status_widget.html" title="Helper class to display port/device state and messages. ">mdtPortStatusWidget</a>;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <a class="code" href="class_ui__mdt_abstract_port_setup_dialog.html#a28b9abfda3eb1703b3bcb8f4c5dcaae9">bottomLayout</a>-&gt;insertWidget(0, pvStatusWidget);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  bottomLayout-&gt;insertWidget(0, pvStatusWidget);</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="comment">// Remove options tabs</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="keywordflow">while</span>(<a class="code" href="class_ui__mdt_abstract_port_setup_dialog.html#a8899515ed81958f46dc447309a430f6d">twOptions</a>-&gt;count() &gt; 0){</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <a class="code" href="class_ui__mdt_abstract_port_setup_dialog.html#a8899515ed81958f46dc447309a430f6d">twOptions</a>-&gt;removeTab(0);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="keywordflow">while</span>(twOptions-&gt;count() &gt; 0){</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    twOptions-&gt;removeTab(0);</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  }</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;}</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
@@ -175,12 +175,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
 <div class="line"><a name="l00085"></a><span class="lineno"><a class="code" href="classmdt_abstract_port_setup_dialog.html#ad21fb0a1f6f2c175d12fa066c4f3f5a9">   85</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port_setup_dialog.html#ad21fb0a1f6f2c175d12fa066c4f3f5a9" title="Add a widget to the options tab. ">mdtAbstractPortSetupDialog::addOptionsTabWidget</a>(<a class="code" href="class_q_widget.html">QWidget</a> *w, <span class="keyword">const</span> QString &amp;label)</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;{</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  <a class="code" href="class_ui__mdt_abstract_port_setup_dialog.html#a8899515ed81958f46dc447309a430f6d">twOptions</a>-&gt;addTab(w, label);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  twOptions-&gt;addTab(w, label);</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;}</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
 <div class="line"><a name="l00090"></a><span class="lineno"><a class="code" href="classmdt_abstract_port_setup_dialog.html#a19f18be7722d2437dbab87b7a568b216">   90</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port_setup_dialog.html#a19f18be7722d2437dbab87b7a568b216" title="Enable/disable Ok button. ">mdtAbstractPortSetupDialog::setOkButtonEnabled</a>(<span class="keywordtype">bool</span> enabled)</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;{</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  QPushButton *button = <a class="code" href="class_ui__mdt_abstract_port_setup_dialog.html#a2bea54262494fb607a2593ce826df146">buttonBox</a>-&gt;button(QDialogButtonBox::Ok);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  QPushButton *button = buttonBox-&gt;button(QDialogButtonBox::Ok);</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  <span class="keywordflow">if</span>(button == 0){</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured ">mdtError</a> e(<a class="code" href="mdt_error_8h.html#a0f1a2f7579a33e6de2fe8a1cbb5bbbb5a19bf56f8bbd1afe273b97a8e6c32efa9">MDT_GUI_ERROR</a>, <span class="stringliteral">&quot;Ok button not found in buttonBox&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce" title="Add source information to error. ">MDT_ERROR_SET_SRC</a>(e, <span class="stringliteral">&quot;mdtAbstractPortSetupDialog&quot;</span>);</div>
@@ -192,7 +192,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
 <div class="line"><a name="l00102"></a><span class="lineno"><a class="code" href="classmdt_abstract_port_setup_dialog.html#a4fa65cf9827a81bf501008ced33b69ab">  102</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port_setup_dialog.html#a4fa65cf9827a81bf501008ced33b69ab" title="Enable/disable Apply button. ">mdtAbstractPortSetupDialog::setApplyButtonEnabled</a>(<span class="keywordtype">bool</span> enabled)</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;{</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  QPushButton *button = <a class="code" href="class_ui__mdt_abstract_port_setup_dialog.html#a2bea54262494fb607a2593ce826df146">buttonBox</a>-&gt;button(QDialogButtonBox::Apply);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  QPushButton *button = buttonBox-&gt;button(QDialogButtonBox::Apply);</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  <span class="keywordflow">if</span>(button == 0){</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured ">mdtError</a> e(<a class="code" href="mdt_error_8h.html#a0f1a2f7579a33e6de2fe8a1cbb5bbbb5a19bf56f8bbd1afe273b97a8e6c32efa9">MDT_GUI_ERROR</a>, <span class="stringliteral">&quot;Apply button not found in buttonBox&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce" title="Add source information to error. ">MDT_ERROR_SET_SRC</a>(e, <span class="stringliteral">&quot;mdtAbstractPortSetupDialog&quot;</span>);</div>
@@ -204,7 +204,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
 <div class="line"><a name="l00114"></a><span class="lineno"><a class="code" href="classmdt_abstract_port_setup_dialog.html#a7a63a08869469615f5be2c10fd490641">  114</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port_setup_dialog.html#a7a63a08869469615f5be2c10fd490641" title="Enable/disable Cancel button. ">mdtAbstractPortSetupDialog::setCancelButtonEnabled</a>(<span class="keywordtype">bool</span> enabled)</div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;{</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  QPushButton *button = <a class="code" href="class_ui__mdt_abstract_port_setup_dialog.html#a2bea54262494fb607a2593ce826df146">buttonBox</a>-&gt;button(QDialogButtonBox::Cancel);</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  QPushButton *button = buttonBox-&gt;button(QDialogButtonBox::Cancel);</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  <span class="keywordflow">if</span>(button == 0){</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured ">mdtError</a> e(<a class="code" href="mdt_error_8h.html#a0f1a2f7579a33e6de2fe8a1cbb5bbbb5a19bf56f8bbd1afe273b97a8e6c32efa9">MDT_GUI_ERROR</a>, <span class="stringliteral">&quot;Cancel button not found in buttonBox&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce" title="Add source information to error. ">MDT_ERROR_SET_SRC</a>(e, <span class="stringliteral">&quot;mdtAbstractPortSetupDialog&quot;</span>);</div>
@@ -264,7 +264,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;</div>
 <div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;  QDialogButtonBox::StandardButton type;</div>
 <div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;  type = <a class="code" href="class_ui__mdt_abstract_port_setup_dialog.html#a2bea54262494fb607a2593ce826df146">buttonBox</a>-&gt;standardButton(button);</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;  type = buttonBox-&gt;standardButton(button);</div>
 <div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;  <span class="keywordflow">switch</span>(type){</div>
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    <span class="keywordflow">case</span> QDialogButtonBox::Ok:</div>
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;      <span class="comment">// If port manager is ready, setup was allready applied, or nothing was changed</span></div>
@@ -292,7 +292,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 6 2014 09:34:16 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jun 28 2014 13:24:40 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

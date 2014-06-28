@@ -299,7 +299,7 @@ Protected Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base class for port I/O. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000019">Todo:</a></b></dt><dd>WaitingCanceled, WriteCanceled, ReadCanceled are not clean defined. The only object that knows when it must stop is the thread itself ! To be a little more clean, thread should check it's running flag each time a function returns a error, and stop if requierd ! </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000020">Todo:</a></b></dt><dd>WaitingCanceled, WriteCanceled, ReadCanceled are not clean defined. The only object that knows when it must stop is the thread itself ! To be a little more clean, thread should check it's running flag each time a function returns a error, and stop if requierd ! </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_abstract_port_8h_source.html#l00042">42</a> of file <a class="el" href="mdt_abstract_port_8h_source.html">mdtAbstractPort.h</a>.</p>
 </div><h2 class="groupheader">Member Enumeration Documentation</h2>
@@ -637,7 +637,7 @@ Protected Attributes</h2></td></tr>
 <p>This method is used by thread, and should not be used directly. If a request is pending, thread will put his current read frame back to pool.</p>
 <p>A call of this method will clear the internall flag. (a second call will then return false).</p>
 <p>Mutex is not handled by this method.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000020">Todo:</a></b></dt><dd>Thread are to adapt. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000021">Todo:</a></b></dt><dd>Thread are to adapt. </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00172">172</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
@@ -687,7 +687,7 @@ Protected Attributes</h2></td></tr>
 <p>This method is used by thread, and should not be used directly. If a request is pending, thread will put his current write frame back to pool.</p>
 <p>A call of this method will clear the internall flag. (a second call will then return false).</p>
 <p>Mutex is not handled by this method.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000021">Todo:</a></b></dt><dd>Thread are to adapt. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000022">Todo:</a></b></dt><dd>Thread are to adapt. </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00192">192</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
@@ -1824,7 +1824,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 6 2014 09:34:20 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jun 28 2014 13:24:46 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

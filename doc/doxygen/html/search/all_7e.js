@@ -17,6 +17,7 @@ var searchData=
   ['_7emdtclarticleeditor',['~mdtClArticleEditor',['../classmdt_cl_article_editor.html#aaa9680ea0c9f0853992c2325cfbd0581',1,'mdtClArticleEditor']]],
   ['_7emdtclarticlelinkdialog',['~mdtClArticleLinkDialog',['../classmdt_cl_article_link_dialog.html#ab245318cbe47717ac42a57becfcf1688',1,'mdtClArticleLinkDialog']]],
   ['_7emdtclconnectoreditor',['~mdtClConnectorEditor',['../classmdt_cl_connector_editor.html#a5b6495a4ff8f57bd46feb1dcdce4860a',1,'mdtClConnectorEditor']]],
+  ['_7emdtcldirectlink',['~mdtClDirectLink',['../classmdt_cl_direct_link.html#a4b6d24e71f1e9e4f5917176f6101c4a8',1,'mdtClDirectLink']]],
   ['_7emdtcllink',['~mdtClLink',['../classmdt_cl_link.html#a1fa6ad3a2ecc7c5f2851c95152a7ed94',1,'mdtClLink']]],
   ['_7emdtclpathgraph',['~mdtClPathGraph',['../classmdt_cl_path_graph.html#aa72798f4edc19fc69d32cd5d7d643bb8',1,'mdtClPathGraph']]],
   ['_7emdtclpathgraphdialog',['~mdtClPathGraphDialog',['../classmdt_cl_path_graph_dialog.html#a2bce7d330797ffa3d2deaa3725a72d5a',1,'mdtClPathGraphDialog']]],

@@ -10,8 +10,8 @@
 <area shape="rect" id="node33" href="$classmdt_serial_port_ctl_widget.html" title="mdtSerialPortCtlWidget" alt="" coords="140,592,297,621"/>
 <area shape="rect" id="node35" href="$classmdt_sql_field_handler.html" title="Handle events between a SQL field and a edition widget. " alt="" coords="151,645,287,675"/>
 <area shape="rect" id="node37" href="$classmdt_sql_form.html" title="Base class for high level SQL widgets API. " alt="" coords="172,699,265,728"/>
-<area shape="rect" id="node51" href="$classmdt_sql_query_widget.html" title="Widget for data queriyng. " alt="" coords="149,752,288,781"/>
-<area shape="rect" id="node53" href="$classmdt_uic_number_widget.html" title="UIC Number Widget. " alt="" coords="144,805,293,835"/>
+<area shape="rect" id="node57" href="$classmdt_sql_query_widget.html" title="Widget for data queriyng. " alt="" coords="149,752,288,781"/>
+<area shape="rect" id="node59" href="$classmdt_uic_number_widget.html" title="UIC Number Widget. " alt="" coords="144,805,293,835"/>
 <area shape="rect" id="node5" href="$classmdt_analog_in_widget.html" title="Representation of a analog input. " alt="" coords="381,5,517,35"/>
 <area shape="rect" id="node7" href="$classmdt_analog_out_widget.html" title="Representation of a analog output. " alt="" coords="376,59,523,88"/>
 <area shape="rect" id="node9" href="$classmdt_digital_in_widget.html" title="Representation of a digital input. " alt="" coords="383,112,516,141"/>
@@ -19,10 +19,13 @@
 <area shape="rect" id="node15" href="$classmdt_sql_form_widget.html" title="Widget that accept a user designed form and helps dealing with table model. " alt="" coords="383,219,516,248"/>
 <area shape="rect" id="node17" href="$classmdt_sql_table_widget.html" title="Table view based SQL widget. " alt="" coords="381,272,517,301"/>
 <area shape="rect" id="node25" href="$classmdt_blink_led.html" title="Blinking LED. " alt="" coords="403,379,496,408"/>
-<area shape="rect" id="node39" href="$classmdt_cl_article_editor.html" title="Cable list&#39;s article editor. " alt="" coords="385,565,513,595"/>
-<area shape="rect" id="node41" href="$classmdt_cl_connector_editor.html" title="Class for connector edition. " alt="" coords="375,619,524,648"/>
-<area shape="rect" id="node43" href="$classmdt_cl_unit_editor.html" title="Cable list&#39;s device editor. " alt="" coords="392,672,507,701"/>
-<area shape="rect" id="node45" href="$classmdt_cl_vehicle_type_editor.html" title="Vehicle type editor. " alt="" coords="368,725,531,755"/>
-<area shape="rect" id="node47" href="$classmdt_tt_test_connection_cable_editor.html" title="Class for test connection cable edition. " alt="" coords="359,778,540,825"/>
-<area shape="rect" id="node49" href="$classmdt_tt_test_node_editor.html" title="This class provides a test node editor. " alt="" coords="376,848,523,877"/>
+<area shape="rect" id="node39" href="$classmdt_cl_article_editor.html" title="Cable list&#39;s article editor. " alt="" coords="385,485,513,515"/>
+<area shape="rect" id="node41" href="$classmdt_cl_connector_editor.html" title="Class for connector edition. " alt="" coords="375,539,524,568"/>
+<area shape="rect" id="node43" href="$classmdt_cl_link_beam_editor.html" title="Provides link beam edition to the user. " alt="" coords="375,592,524,621"/>
+<area shape="rect" id="node45" href="$classmdt_cl_unit_editor.html" title="Cable list&#39;s device editor. " alt="" coords="392,645,507,675"/>
+<area shape="rect" id="node47" href="$classmdt_cl_vehicle_type_editor.html" title="Vehicle type editor. " alt="" coords="368,699,531,728"/>
+<area shape="rect" id="node49" href="$classmdt_tt_test_connection_cable_editor.html" title="Class for test connection cable edition. " alt="" coords="359,751,540,798"/>
+<area shape="rect" id="node51" href="$classmdt_tt_test_model_editor.html" title="#include &quot;mdtClEditor.h&quot; " alt="" coords="375,821,524,851"/>
+<area shape="rect" id="node53" href="$classmdt_tt_test_model_item_editor.html" title="Test item editor. " alt="" coords="361,875,537,904"/>
+<area shape="rect" id="node55" href="$classmdt_tt_test_node_editor.html" title="This class provides a test node editor. " alt="" coords="376,928,523,957"/>
 </map>

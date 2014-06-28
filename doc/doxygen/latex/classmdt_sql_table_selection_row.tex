@@ -24,7 +24,9 @@ void \hyperlink{classmdt_sql_table_selection_row_a6efff251e9434e726243aa5b493c1b
 Q\-Model\-Index \hyperlink{classmdt_sql_table_selection_row_a2531414ca23913415c9dc4889627c6d8}{index} (int internal\-Column\-Index) const 
 \begin{DoxyCompactList}\small\item\em Get model index for given selection column. \end{DoxyCompactList}\item 
 Q\-Model\-Index \hyperlink{classmdt_sql_table_selection_row_aae6f64cb81d6a91714023c191405b856}{index} (const Q\-String \&field\-Name) const 
-\begin{DoxyCompactList}\small\item\em Get model index for given field name. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Get model index for given field name. \end{DoxyCompactList}\item 
+Q\-String\-List \hyperlink{classmdt_sql_table_selection_row_ac175bf0b9cde925103d6a6d782c77da8}{fields} () const 
+\begin{DoxyCompactList}\small\item\em Get a list of feilds that are contained in row. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -32,7 +34,7 @@ S\-Q\-L table selection row container.
 
 Each column of the selection is represented by a \hyperlink{classmdt_sql_table_selection_item}{mdt\-Sql\-Table\-Selection\-Item}. 
 
-Definition at line 32 of file mdt\-Sql\-Table\-Selection\-Row.\-h.
+Definition at line 33 of file mdt\-Sql\-Table\-Selection\-Row.\-h.
 
 
 
@@ -107,7 +109,22 @@ Get selection column count.
 
 
 
-Definition at line 46 of file mdt\-Sql\-Table\-Selection\-Row.\-h.
+Definition at line 47 of file mdt\-Sql\-Table\-Selection\-Row.\-h.
+
+\hypertarget{classmdt_sql_table_selection_row_ac175bf0b9cde925103d6a6d782c77da8}{\index{mdt\-Sql\-Table\-Selection\-Row@{mdt\-Sql\-Table\-Selection\-Row}!fields@{fields}}
+\index{fields@{fields}!mdtSqlTableSelectionRow@{mdt\-Sql\-Table\-Selection\-Row}}
+\subsubsection[{fields}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String\-List mdt\-Sql\-Table\-Selection\-Row\-::fields (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_sql_table_selection_row_ac175bf0b9cde925103d6a6d782c77da8}
+
+
+Get a list of feilds that are contained in row. 
+
+
+
+Definition at line 59 of file mdt\-Sql\-Table\-Selection\-Row.\-cpp.
 
 \hypertarget{classmdt_sql_table_selection_row_a2531414ca23913415c9dc4889627c6d8}{\index{mdt\-Sql\-Table\-Selection\-Row@{mdt\-Sql\-Table\-Selection\-Row}!index@{index}}
 \index{index@{index}!mdtSqlTableSelectionRow@{mdt\-Sql\-Table\-Selection\-Row}}

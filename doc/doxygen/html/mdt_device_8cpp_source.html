@@ -1266,275 +1266,276 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l01179"></a><span class="lineno"> 1179</span>&#160;  <span class="keywordflow">if</span>(<a class="code" href="classmdt_device.html#a76ddf08ac78502b835b192a8f38f963f" title="Get device state. ">currentState</a>() != <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daaf2ba40e19587c3a98235ee96a4acf20e">mdtPortManager::Ready</a>){</div>
 <div class="line"><a name="l01180"></a><span class="lineno"> 1180</span>&#160;    <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l01181"></a><span class="lineno"> 1181</span>&#160;  }</div>
-<div class="line"><a name="l01182"></a><span class="lineno"> 1182</span>&#160;</div>
-<div class="line"><a name="l01183"></a><span class="lineno"> 1183</span>&#160;  <a class="code" href="classmdt_device.html#acba50968d201ad95c4eaa2ab2ed48b4f" title="Sequence of queries to send periodically. ">queriesSequence</a>();</div>
-<div class="line"><a name="l01184"></a><span class="lineno"> 1184</span>&#160;}</div>
-<div class="line"><a name="l01185"></a><span class="lineno"> 1185</span>&#160;</div>
-<div class="line"><a name="l01186"></a><span class="lineno"><a class="code" href="classmdt_device.html#acba50968d201ad95c4eaa2ab2ed48b4f"> 1186</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_device.html#acba50968d201ad95c4eaa2ab2ed48b4f" title="Sequence of queries to send periodically. ">mdtDevice::queriesSequence</a>()</div>
-<div class="line"><a name="l01187"></a><span class="lineno"> 1187</span>&#160;{</div>
-<div class="line"><a name="l01188"></a><span class="lineno"> 1188</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l01189"></a><span class="lineno"> 1189</span>&#160;}</div>
-<div class="line"><a name="l01190"></a><span class="lineno"> 1190</span>&#160;</div>
-<div class="line"><a name="l01191"></a><span class="lineno"><a class="code" href="classmdt_device.html#ad211ba3be781c3db0397d5bf91f796d1"> 1191</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#ad211ba3be781c3db0397d5bf91f796d1" title="Decode incoming frames. ">mdtDevice::decodeReadenFrame</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data. ">mdtPortTransaction</a> *transaction)</div>
-<div class="line"><a name="l01192"></a><span class="lineno"> 1192</span>&#160;{</div>
-<div class="line"><a name="l01193"></a><span class="lineno"> 1193</span>&#160;}</div>
-<div class="line"><a name="l01194"></a><span class="lineno"> 1194</span>&#160;</div>
-<div class="line"><a name="l01195"></a><span class="lineno"><a class="code" href="classmdt_device.html#a6e7133e8665d9113d9423f4db44b1000"> 1195</a></span>&#160;<a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured ">mdtError</a> &amp; <a class="code" href="classmdt_device.html#a6e7133e8665d9113d9423f4db44b1000" title="Get last error for write access. ">mdtDevice::lastErrorW</a>()</div>
-<div class="line"><a name="l01196"></a><span class="lineno"> 1196</span>&#160;{</div>
-<div class="line"><a name="l01197"></a><span class="lineno"> 1197</span>&#160;  <span class="keywordflow">return</span> pvLastError;</div>
-<div class="line"><a name="l01198"></a><span class="lineno"> 1198</span>&#160;}</div>
-<div class="line"><a name="l01199"></a><span class="lineno"> 1199</span>&#160;</div>
-<div class="line"><a name="l01200"></a><span class="lineno"><a class="code" href="classmdt_device.html#acecf7934ce29b3a957accb0f4c98c746"> 1200</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#acecf7934ce29b3a957accb0f4c98c746" title="Read one analog input on physical device. ">mdtDevice::readAnalogInput</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data. ">mdtPortTransaction</a> *transaction)</div>
-<div class="line"><a name="l01201"></a><span class="lineno"> 1201</span>&#160;{</div>
-<div class="line"><a name="l01202"></a><span class="lineno"> 1202</span>&#160;  <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l01203"></a><span class="lineno"> 1203</span>&#160;}</div>
-<div class="line"><a name="l01204"></a><span class="lineno"> 1204</span>&#160;</div>
-<div class="line"><a name="l01205"></a><span class="lineno"><a class="code" href="classmdt_device.html#a40674e7bf0c367bb3edb407d73a5bd8e"> 1205</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a40674e7bf0c367bb3edb407d73a5bd8e" title="Read all analog inputs on physical device. ">mdtDevice::readAnalogInputs</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data. ">mdtPortTransaction</a> *transaction)</div>
-<div class="line"><a name="l01206"></a><span class="lineno"> 1206</span>&#160;{</div>
-<div class="line"><a name="l01207"></a><span class="lineno"> 1207</span>&#160;  <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l01208"></a><span class="lineno"> 1208</span>&#160;}</div>
-<div class="line"><a name="l01209"></a><span class="lineno"> 1209</span>&#160;</div>
-<div class="line"><a name="l01210"></a><span class="lineno"><a class="code" href="classmdt_device.html#a7934063c3f41a742515f1232c9598c2a"> 1210</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a7934063c3f41a742515f1232c9598c2a" title="Read one analog output on physical device. ">mdtDevice::readAnalogOutput</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data. ">mdtPortTransaction</a> *transaction)</div>
-<div class="line"><a name="l01211"></a><span class="lineno"> 1211</span>&#160;{</div>
-<div class="line"><a name="l01212"></a><span class="lineno"> 1212</span>&#160;  <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l01213"></a><span class="lineno"> 1213</span>&#160;}</div>
-<div class="line"><a name="l01214"></a><span class="lineno"> 1214</span>&#160;</div>
-<div class="line"><a name="l01215"></a><span class="lineno"><a class="code" href="classmdt_device.html#ab0232ac83c38bc93d3bc2aa91d94c291"> 1215</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#ab0232ac83c38bc93d3bc2aa91d94c291" title="Read all analog outputs on physical device. ">mdtDevice::readAnalogOutputs</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data. ">mdtPortTransaction</a> *transaction)</div>
-<div class="line"><a name="l01216"></a><span class="lineno"> 1216</span>&#160;{</div>
-<div class="line"><a name="l01217"></a><span class="lineno"> 1217</span>&#160;  <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l01218"></a><span class="lineno"> 1218</span>&#160;}</div>
-<div class="line"><a name="l01219"></a><span class="lineno"> 1219</span>&#160;</div>
-<div class="line"><a name="l01220"></a><span class="lineno"><a class="code" href="classmdt_device.html#ae764634bba2b321ac2b4731c0353e45f"> 1220</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#ae764634bba2b321ac2b4731c0353e45f" title="Write value on a analog output to physical device. ">mdtDevice::writeAnalogOutput</a>(<span class="keywordtype">int</span> value, <a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data. ">mdtPortTransaction</a> *transaction)</div>
-<div class="line"><a name="l01221"></a><span class="lineno"> 1221</span>&#160;{</div>
-<div class="line"><a name="l01222"></a><span class="lineno"> 1222</span>&#160;  <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l01223"></a><span class="lineno"> 1223</span>&#160;}</div>
-<div class="line"><a name="l01224"></a><span class="lineno"> 1224</span>&#160;</div>
-<div class="line"><a name="l01225"></a><span class="lineno"><a class="code" href="classmdt_device.html#a2d82cb0920e4e0628186e59f9b4de7d4"> 1225</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a2d82cb0920e4e0628186e59f9b4de7d4" title="Write all analog outputs to physical device. ">mdtDevice::writeAnalogOutputs</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data. ">mdtPortTransaction</a> *transaction, <a class="code" href="classmdt_device_ios_segment.html" title="Store a segment of device I/O list. ">mdtDeviceIosSegment</a> *segment)</div>
-<div class="line"><a name="l01226"></a><span class="lineno"> 1226</span>&#160;{</div>
-<div class="line"><a name="l01227"></a><span class="lineno"> 1227</span>&#160;  <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l01228"></a><span class="lineno"> 1228</span>&#160;}</div>
-<div class="line"><a name="l01229"></a><span class="lineno"> 1229</span>&#160;</div>
-<div class="line"><a name="l01230"></a><span class="lineno"><a class="code" href="classmdt_device.html#af128b606050035abaf8d049bb2227015"> 1230</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#af128b606050035abaf8d049bb2227015" title="Read one digital input on physical device. ">mdtDevice::readDigitalInput</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data. ">mdtPortTransaction</a> *transaction)</div>
-<div class="line"><a name="l01231"></a><span class="lineno"> 1231</span>&#160;{</div>
-<div class="line"><a name="l01232"></a><span class="lineno"> 1232</span>&#160;  <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l01233"></a><span class="lineno"> 1233</span>&#160;}</div>
-<div class="line"><a name="l01234"></a><span class="lineno"> 1234</span>&#160;</div>
-<div class="line"><a name="l01235"></a><span class="lineno"><a class="code" href="classmdt_device.html#a150e3abae6db5bf1ad11017bf2b76c14"> 1235</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a150e3abae6db5bf1ad11017bf2b76c14" title="Read all digital inputs on physical device. ">mdtDevice::readDigitalInputs</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data. ">mdtPortTransaction</a> *transaction)</div>
-<div class="line"><a name="l01236"></a><span class="lineno"> 1236</span>&#160;{</div>
-<div class="line"><a name="l01237"></a><span class="lineno"> 1237</span>&#160;  <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l01238"></a><span class="lineno"> 1238</span>&#160;}</div>
-<div class="line"><a name="l01239"></a><span class="lineno"> 1239</span>&#160;</div>
-<div class="line"><a name="l01240"></a><span class="lineno"><a class="code" href="classmdt_device.html#a1faee6ab31b094731211ea0943544501"> 1240</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a1faee6ab31b094731211ea0943544501" title="Read one digital output on physical device. ">mdtDevice::readDigitalOutput</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data. ">mdtPortTransaction</a> *transaction)</div>
-<div class="line"><a name="l01241"></a><span class="lineno"> 1241</span>&#160;{</div>
-<div class="line"><a name="l01242"></a><span class="lineno"> 1242</span>&#160;  <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l01243"></a><span class="lineno"> 1243</span>&#160;}</div>
-<div class="line"><a name="l01244"></a><span class="lineno"> 1244</span>&#160;</div>
-<div class="line"><a name="l01245"></a><span class="lineno"><a class="code" href="classmdt_device.html#aac038c24c3b91757584bdf0d09fb8b02"> 1245</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#aac038c24c3b91757584bdf0d09fb8b02" title="Read all digital outputs on physical device. ">mdtDevice::readDigitalOutputs</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data. ">mdtPortTransaction</a> *transaction)</div>
-<div class="line"><a name="l01246"></a><span class="lineno"> 1246</span>&#160;{</div>
-<div class="line"><a name="l01247"></a><span class="lineno"> 1247</span>&#160;  <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l01248"></a><span class="lineno"> 1248</span>&#160;}</div>
-<div class="line"><a name="l01249"></a><span class="lineno"> 1249</span>&#160;</div>
-<div class="line"><a name="l01250"></a><span class="lineno"><a class="code" href="classmdt_device.html#a0fbe57503d86554829e708b2b83d73f1"> 1250</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a0fbe57503d86554829e708b2b83d73f1" title="Write state on a digital output to physical device. ">mdtDevice::writeDigitalOutput</a>(<span class="keywordtype">bool</span> state, <a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data. ">mdtPortTransaction</a> *transaction)</div>
-<div class="line"><a name="l01251"></a><span class="lineno"> 1251</span>&#160;{</div>
-<div class="line"><a name="l01252"></a><span class="lineno"> 1252</span>&#160;  <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l01253"></a><span class="lineno"> 1253</span>&#160;}</div>
-<div class="line"><a name="l01254"></a><span class="lineno"> 1254</span>&#160;</div>
-<div class="line"><a name="l01255"></a><span class="lineno"><a class="code" href="classmdt_device.html#ae644ab1ef0ebb57d6d9d502829907ec1"> 1255</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#ae644ab1ef0ebb57d6d9d502829907ec1" title="Write all digital outputs to physical device. ">mdtDevice::writeDigitalOutputs</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data. ">mdtPortTransaction</a> *transaction, <a class="code" href="classmdt_device_ios_segment.html" title="Store a segment of device I/O list. ">mdtDeviceIosSegment</a> *segment)</div>
-<div class="line"><a name="l01256"></a><span class="lineno"> 1256</span>&#160;{</div>
-<div class="line"><a name="l01257"></a><span class="lineno"> 1257</span>&#160;  <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l01258"></a><span class="lineno"> 1258</span>&#160;}</div>
+<div class="line"><a name="l01182"></a><span class="lineno"> 1182</span>&#160;  <a class="code" href="classmdt_device.html#acba50968d201ad95c4eaa2ab2ed48b4f" title="Sequence of queries to send periodically. ">queriesSequence</a>();</div>
+<div class="line"><a name="l01183"></a><span class="lineno"> 1183</span>&#160;}</div>
+<div class="line"><a name="l01184"></a><span class="lineno"> 1184</span>&#160;</div>
+<div class="line"><a name="l01185"></a><span class="lineno"><a class="code" href="classmdt_device.html#acba50968d201ad95c4eaa2ab2ed48b4f"> 1185</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_device.html#acba50968d201ad95c4eaa2ab2ed48b4f" title="Sequence of queries to send periodically. ">mdtDevice::queriesSequence</a>()</div>
+<div class="line"><a name="l01186"></a><span class="lineno"> 1186</span>&#160;{</div>
+<div class="line"><a name="l01187"></a><span class="lineno"> 1187</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l01188"></a><span class="lineno"> 1188</span>&#160;}</div>
+<div class="line"><a name="l01189"></a><span class="lineno"> 1189</span>&#160;</div>
+<div class="line"><a name="l01190"></a><span class="lineno"><a class="code" href="classmdt_device.html#ad211ba3be781c3db0397d5bf91f796d1"> 1190</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#ad211ba3be781c3db0397d5bf91f796d1" title="Decode incoming frames. ">mdtDevice::decodeReadenFrame</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data. ">mdtPortTransaction</a> *transaction)</div>
+<div class="line"><a name="l01191"></a><span class="lineno"> 1191</span>&#160;{</div>
+<div class="line"><a name="l01192"></a><span class="lineno"> 1192</span>&#160;}</div>
+<div class="line"><a name="l01193"></a><span class="lineno"> 1193</span>&#160;</div>
+<div class="line"><a name="l01194"></a><span class="lineno"><a class="code" href="classmdt_device.html#a6e7133e8665d9113d9423f4db44b1000"> 1194</a></span>&#160;<a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured ">mdtError</a> &amp; <a class="code" href="classmdt_device.html#a6e7133e8665d9113d9423f4db44b1000" title="Get last error for write access. ">mdtDevice::lastErrorW</a>()</div>
+<div class="line"><a name="l01195"></a><span class="lineno"> 1195</span>&#160;{</div>
+<div class="line"><a name="l01196"></a><span class="lineno"> 1196</span>&#160;  <span class="keywordflow">return</span> pvLastError;</div>
+<div class="line"><a name="l01197"></a><span class="lineno"> 1197</span>&#160;}</div>
+<div class="line"><a name="l01198"></a><span class="lineno"> 1198</span>&#160;</div>
+<div class="line"><a name="l01199"></a><span class="lineno"><a class="code" href="classmdt_device.html#acecf7934ce29b3a957accb0f4c98c746"> 1199</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#acecf7934ce29b3a957accb0f4c98c746" title="Read one analog input on physical device. ">mdtDevice::readAnalogInput</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data. ">mdtPortTransaction</a> *transaction)</div>
+<div class="line"><a name="l01200"></a><span class="lineno"> 1200</span>&#160;{</div>
+<div class="line"><a name="l01201"></a><span class="lineno"> 1201</span>&#160;  <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l01202"></a><span class="lineno"> 1202</span>&#160;}</div>
+<div class="line"><a name="l01203"></a><span class="lineno"> 1203</span>&#160;</div>
+<div class="line"><a name="l01204"></a><span class="lineno"><a class="code" href="classmdt_device.html#a40674e7bf0c367bb3edb407d73a5bd8e"> 1204</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a40674e7bf0c367bb3edb407d73a5bd8e" title="Read all analog inputs on physical device. ">mdtDevice::readAnalogInputs</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data. ">mdtPortTransaction</a> *transaction)</div>
+<div class="line"><a name="l01205"></a><span class="lineno"> 1205</span>&#160;{</div>
+<div class="line"><a name="l01206"></a><span class="lineno"> 1206</span>&#160;  <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l01207"></a><span class="lineno"> 1207</span>&#160;}</div>
+<div class="line"><a name="l01208"></a><span class="lineno"> 1208</span>&#160;</div>
+<div class="line"><a name="l01209"></a><span class="lineno"><a class="code" href="classmdt_device.html#a7934063c3f41a742515f1232c9598c2a"> 1209</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a7934063c3f41a742515f1232c9598c2a" title="Read one analog output on physical device. ">mdtDevice::readAnalogOutput</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data. ">mdtPortTransaction</a> *transaction)</div>
+<div class="line"><a name="l01210"></a><span class="lineno"> 1210</span>&#160;{</div>
+<div class="line"><a name="l01211"></a><span class="lineno"> 1211</span>&#160;  <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l01212"></a><span class="lineno"> 1212</span>&#160;}</div>
+<div class="line"><a name="l01213"></a><span class="lineno"> 1213</span>&#160;</div>
+<div class="line"><a name="l01214"></a><span class="lineno"><a class="code" href="classmdt_device.html#ab0232ac83c38bc93d3bc2aa91d94c291"> 1214</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#ab0232ac83c38bc93d3bc2aa91d94c291" title="Read all analog outputs on physical device. ">mdtDevice::readAnalogOutputs</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data. ">mdtPortTransaction</a> *transaction)</div>
+<div class="line"><a name="l01215"></a><span class="lineno"> 1215</span>&#160;{</div>
+<div class="line"><a name="l01216"></a><span class="lineno"> 1216</span>&#160;  <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l01217"></a><span class="lineno"> 1217</span>&#160;}</div>
+<div class="line"><a name="l01218"></a><span class="lineno"> 1218</span>&#160;</div>
+<div class="line"><a name="l01219"></a><span class="lineno"><a class="code" href="classmdt_device.html#ae764634bba2b321ac2b4731c0353e45f"> 1219</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#ae764634bba2b321ac2b4731c0353e45f" title="Write value on a analog output to physical device. ">mdtDevice::writeAnalogOutput</a>(<span class="keywordtype">int</span> value, <a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data. ">mdtPortTransaction</a> *transaction)</div>
+<div class="line"><a name="l01220"></a><span class="lineno"> 1220</span>&#160;{</div>
+<div class="line"><a name="l01221"></a><span class="lineno"> 1221</span>&#160;  <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l01222"></a><span class="lineno"> 1222</span>&#160;}</div>
+<div class="line"><a name="l01223"></a><span class="lineno"> 1223</span>&#160;</div>
+<div class="line"><a name="l01224"></a><span class="lineno"><a class="code" href="classmdt_device.html#a2d82cb0920e4e0628186e59f9b4de7d4"> 1224</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a2d82cb0920e4e0628186e59f9b4de7d4" title="Write all analog outputs to physical device. ">mdtDevice::writeAnalogOutputs</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data. ">mdtPortTransaction</a> *transaction, <a class="code" href="classmdt_device_ios_segment.html" title="Store a segment of device I/O list. ">mdtDeviceIosSegment</a> *segment)</div>
+<div class="line"><a name="l01225"></a><span class="lineno"> 1225</span>&#160;{</div>
+<div class="line"><a name="l01226"></a><span class="lineno"> 1226</span>&#160;  <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l01227"></a><span class="lineno"> 1227</span>&#160;}</div>
+<div class="line"><a name="l01228"></a><span class="lineno"> 1228</span>&#160;</div>
+<div class="line"><a name="l01229"></a><span class="lineno"><a class="code" href="classmdt_device.html#af128b606050035abaf8d049bb2227015"> 1229</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#af128b606050035abaf8d049bb2227015" title="Read one digital input on physical device. ">mdtDevice::readDigitalInput</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data. ">mdtPortTransaction</a> *transaction)</div>
+<div class="line"><a name="l01230"></a><span class="lineno"> 1230</span>&#160;{</div>
+<div class="line"><a name="l01231"></a><span class="lineno"> 1231</span>&#160;  <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l01232"></a><span class="lineno"> 1232</span>&#160;}</div>
+<div class="line"><a name="l01233"></a><span class="lineno"> 1233</span>&#160;</div>
+<div class="line"><a name="l01234"></a><span class="lineno"><a class="code" href="classmdt_device.html#a150e3abae6db5bf1ad11017bf2b76c14"> 1234</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a150e3abae6db5bf1ad11017bf2b76c14" title="Read all digital inputs on physical device. ">mdtDevice::readDigitalInputs</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data. ">mdtPortTransaction</a> *transaction)</div>
+<div class="line"><a name="l01235"></a><span class="lineno"> 1235</span>&#160;{</div>
+<div class="line"><a name="l01236"></a><span class="lineno"> 1236</span>&#160;  <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l01237"></a><span class="lineno"> 1237</span>&#160;}</div>
+<div class="line"><a name="l01238"></a><span class="lineno"> 1238</span>&#160;</div>
+<div class="line"><a name="l01239"></a><span class="lineno"><a class="code" href="classmdt_device.html#a1faee6ab31b094731211ea0943544501"> 1239</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a1faee6ab31b094731211ea0943544501" title="Read one digital output on physical device. ">mdtDevice::readDigitalOutput</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data. ">mdtPortTransaction</a> *transaction)</div>
+<div class="line"><a name="l01240"></a><span class="lineno"> 1240</span>&#160;{</div>
+<div class="line"><a name="l01241"></a><span class="lineno"> 1241</span>&#160;  <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l01242"></a><span class="lineno"> 1242</span>&#160;}</div>
+<div class="line"><a name="l01243"></a><span class="lineno"> 1243</span>&#160;</div>
+<div class="line"><a name="l01244"></a><span class="lineno"><a class="code" href="classmdt_device.html#aac038c24c3b91757584bdf0d09fb8b02"> 1244</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#aac038c24c3b91757584bdf0d09fb8b02" title="Read all digital outputs on physical device. ">mdtDevice::readDigitalOutputs</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data. ">mdtPortTransaction</a> *transaction)</div>
+<div class="line"><a name="l01245"></a><span class="lineno"> 1245</span>&#160;{</div>
+<div class="line"><a name="l01246"></a><span class="lineno"> 1246</span>&#160;  <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l01247"></a><span class="lineno"> 1247</span>&#160;}</div>
+<div class="line"><a name="l01248"></a><span class="lineno"> 1248</span>&#160;</div>
+<div class="line"><a name="l01249"></a><span class="lineno"><a class="code" href="classmdt_device.html#a0fbe57503d86554829e708b2b83d73f1"> 1249</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a0fbe57503d86554829e708b2b83d73f1" title="Write state on a digital output to physical device. ">mdtDevice::writeDigitalOutput</a>(<span class="keywordtype">bool</span> state, <a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data. ">mdtPortTransaction</a> *transaction)</div>
+<div class="line"><a name="l01250"></a><span class="lineno"> 1250</span>&#160;{</div>
+<div class="line"><a name="l01251"></a><span class="lineno"> 1251</span>&#160;  <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l01252"></a><span class="lineno"> 1252</span>&#160;}</div>
+<div class="line"><a name="l01253"></a><span class="lineno"> 1253</span>&#160;</div>
+<div class="line"><a name="l01254"></a><span class="lineno"><a class="code" href="classmdt_device.html#ae644ab1ef0ebb57d6d9d502829907ec1"> 1254</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#ae644ab1ef0ebb57d6d9d502829907ec1" title="Write all digital outputs to physical device. ">mdtDevice::writeDigitalOutputs</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data. ">mdtPortTransaction</a> *transaction, <a class="code" href="classmdt_device_ios_segment.html" title="Store a segment of device I/O list. ">mdtDeviceIosSegment</a> *segment)</div>
+<div class="line"><a name="l01255"></a><span class="lineno"> 1255</span>&#160;{</div>
+<div class="line"><a name="l01256"></a><span class="lineno"> 1256</span>&#160;  <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l01257"></a><span class="lineno"> 1257</span>&#160;}</div>
+<div class="line"><a name="l01258"></a><span class="lineno"> 1258</span>&#160;</div>
 <div class="line"><a name="l01259"></a><span class="lineno"> 1259</span>&#160;</div>
-<div class="line"><a name="l01260"></a><span class="lineno"> 1260</span>&#160;</div>
-<div class="line"><a name="l01261"></a><span class="lineno"><a class="code" href="classmdt_device.html#a0e57cc8b749581cff447d514b9a1ff8e"> 1261</a></span>&#160;<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data. ">mdtPortTransaction</a> *<a class="code" href="classmdt_device.html#a0e57cc8b749581cff447d514b9a1ff8e" title="Get a new transaction. ">mdtDevice::getNewTransaction</a>()</div>
-<div class="line"><a name="l01262"></a><span class="lineno"> 1262</span>&#160;{</div>
-<div class="line"><a name="l01263"></a><span class="lineno"> 1263</span>&#160;  Q_ASSERT(<a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance. ">portManager</a>() != 0);</div>
-<div class="line"><a name="l01264"></a><span class="lineno"> 1264</span>&#160;</div>
-<div class="line"><a name="l01265"></a><span class="lineno"> 1265</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance. ">portManager</a>()-&gt;<a class="code" href="classmdt_port_manager.html#a75ebd3d1859e3ed38b9558981e53aac4" title="Get a new transaction. ">getNewTransaction</a>();</div>
-<div class="line"><a name="l01266"></a><span class="lineno"> 1266</span>&#160;}</div>
-<div class="line"><a name="l01267"></a><span class="lineno"> 1267</span>&#160;</div>
-<div class="line"><a name="l01268"></a><span class="lineno"><a class="code" href="classmdt_device.html#a4619d8be240cafe48865a89f7424de92"> 1268</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a4619d8be240cafe48865a89f7424de92" title="Restore a transaction into pool. ">mdtDevice::restoreTransaction</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data. ">mdtPortTransaction</a> *transaction)</div>
-<div class="line"><a name="l01269"></a><span class="lineno"> 1269</span>&#160;{</div>
-<div class="line"><a name="l01270"></a><span class="lineno"> 1270</span>&#160;  Q_ASSERT(<a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance. ">portManager</a>() != 0);</div>
-<div class="line"><a name="l01271"></a><span class="lineno"> 1271</span>&#160;  Q_ASSERT(transaction != 0);</div>
-<div class="line"><a name="l01272"></a><span class="lineno"> 1272</span>&#160;</div>
-<div class="line"><a name="l01273"></a><span class="lineno"> 1273</span>&#160;  <a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance. ">portManager</a>()-&gt;<a class="code" href="classmdt_port_manager.html#a5fea4a9b8e94d38e8ec699dba05c7ca8" title="Restore a transaction into pool. ">restoreTransaction</a>(transaction);</div>
-<div class="line"><a name="l01274"></a><span class="lineno"> 1274</span>&#160;}</div>
-<div class="line"><a name="l01275"></a><span class="lineno"> 1275</span>&#160;</div>
-<div class="line"><a name="l01276"></a><span class="lineno"><a class="code" href="classmdt_device.html#ab937015c1a319b7234442a4cc29a02a8"> 1276</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_device.html#ab937015c1a319b7234442a4cc29a02a8" title="Wait until a transaction is done without break the GUI&#39;s event loop. ">mdtDevice::waitTransactionDone</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>)</div>
-<div class="line"><a name="l01277"></a><span class="lineno"> 1277</span>&#160;{</div>
-<div class="line"><a name="l01278"></a><span class="lineno"> 1278</span>&#160;  Q_ASSERT(<a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance. ">portManager</a>() != 0);</div>
-<div class="line"><a name="l01279"></a><span class="lineno"> 1279</span>&#160;</div>
-<div class="line"><a name="l01280"></a><span class="lineno"> 1280</span>&#160;  <span class="keywordtype">bool</span> ok;</div>
-<div class="line"><a name="l01281"></a><span class="lineno"> 1281</span>&#160;</div>
-<div class="line"><a name="l01282"></a><span class="lineno"> 1282</span>&#160;  ok = <a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance. ">portManager</a>()-&gt;<a class="code" href="classmdt_port_manager.html#a5551802de2c08632078f2cc0e2607913" title="Wait until a transaction is done. ">waitTransactionDone</a>(<span class="keywordtype">id</span>);</div>
-<div class="line"><a name="l01283"></a><span class="lineno"> 1283</span>&#160;  <span class="comment">/*</span></div>
-<div class="line"><a name="l01284"></a><span class="lineno"> 1284</span>&#160;<span class="comment">   * Request was send, response arrived,</span></div>
-<div class="line"><a name="l01285"></a><span class="lineno"> 1285</span>&#160;<span class="comment">   * subclass has decoded response and updated I/O.</span></div>
-<div class="line"><a name="l01286"></a><span class="lineno"> 1286</span>&#160;<span class="comment">   * So, we have to remove transaction from done queue and restore it to pool</span></div>
-<div class="line"><a name="l01287"></a><span class="lineno"> 1287</span>&#160;<span class="comment">   * In mdtPortManager it was choosen to not let access</span></div>
-<div class="line"><a name="l01288"></a><span class="lineno"> 1288</span>&#160;<span class="comment">   * to transaction queues management, so we call readenFrame()</span></div>
-<div class="line"><a name="l01289"></a><span class="lineno"> 1289</span>&#160;<span class="comment">   * witch does all the needed job.</span></div>
-<div class="line"><a name="l01290"></a><span class="lineno"> 1290</span>&#160;<span class="comment">   */</span></div>
-<div class="line"><a name="l01291"></a><span class="lineno"> 1291</span>&#160;  <a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance. ">portManager</a>()-&gt;<a class="code" href="classmdt_port_manager.html#a830ae182d06dd6a52c43a7f45b9240ac" title="Get data by frame ID. ">readenFrame</a>(<span class="keywordtype">id</span>);</div>
-<div class="line"><a name="l01292"></a><span class="lineno"> 1292</span>&#160;</div>
-<div class="line"><a name="l01293"></a><span class="lineno"> 1293</span>&#160;  <span class="keywordflow">return</span> ok;</div>
-<div class="line"><a name="l01294"></a><span class="lineno"> 1294</span>&#160;}</div>
-<div class="line"><a name="l01295"></a><span class="lineno"> 1295</span>&#160;</div>
-<div class="line"><a name="l01296"></a><span class="lineno"> 1296</span>&#160;<span class="keywordtype">void</span> mdtDevice::setStateFromPortManager(<span class="keywordtype">int</span> portManagerState)</div>
-<div class="line"><a name="l01297"></a><span class="lineno"> 1297</span>&#160;{</div>
-<div class="line"><a name="l01298"></a><span class="lineno"> 1298</span>&#160;  <span class="keywordflow">switch</span>((<a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382da" title="State of device. ">mdtPortManager::state_t</a>)portManagerState){</div>
-<div class="line"><a name="l01299"></a><span class="lineno"> 1299</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daabac9679c411402c9db01399ecb72b84d">mdtPortManager::PortClosed</a>:</div>
-<div class="line"><a name="l01300"></a><span class="lineno"> 1300</span>&#160;      setStatePortClosed();</div>
-<div class="line"><a name="l01301"></a><span class="lineno"> 1301</span>&#160;      <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l01302"></a><span class="lineno"> 1302</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa4004253e25d51b1e628bb5006dbbd153">mdtPortManager::Disconnected</a>:</div>
-<div class="line"><a name="l01303"></a><span class="lineno"> 1303</span>&#160;      setStateDisconnected();</div>
-<div class="line"><a name="l01304"></a><span class="lineno"> 1304</span>&#160;      <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l01305"></a><span class="lineno"> 1305</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa89e805c9c75c39ecc8371d5f38131227">mdtPortManager::Connecting</a>:</div>
-<div class="line"><a name="l01306"></a><span class="lineno"> 1306</span>&#160;      setStateConnecting();</div>
-<div class="line"><a name="l01307"></a><span class="lineno"> 1307</span>&#160;      <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l01308"></a><span class="lineno"> 1308</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daaf2ba40e19587c3a98235ee96a4acf20e">mdtPortManager::Ready</a>:</div>
-<div class="line"><a name="l01309"></a><span class="lineno"> 1309</span>&#160;      setStateReady();</div>
-<div class="line"><a name="l01310"></a><span class="lineno"> 1310</span>&#160;      <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l01311"></a><span class="lineno"> 1311</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa5da3fa5dd98a264ecb4a37a1983ea0ff">mdtPortManager::Busy</a>:</div>
-<div class="line"><a name="l01312"></a><span class="lineno"> 1312</span>&#160;      setStateBusy();</div>
-<div class="line"><a name="l01313"></a><span class="lineno"> 1313</span>&#160;      <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l01314"></a><span class="lineno"> 1314</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa2440f5bfc7ae5c78db1598ef6d3d394c">mdtPortManager::PortError</a>:</div>
-<div class="line"><a name="l01315"></a><span class="lineno"> 1315</span>&#160;      setStateError();</div>
-<div class="line"><a name="l01316"></a><span class="lineno"> 1316</span>&#160;      <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l01317"></a><span class="lineno"> 1317</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daadbd7b0395c62e9ae38525c5dc5ba44a6">mdtPortManager::Stopped</a>:</div>
-<div class="line"><a name="l01318"></a><span class="lineno"> 1318</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daaca288962f5cb3d352f44f4e4c15f14d2">mdtPortManager::Starting</a>:</div>
-<div class="line"><a name="l01319"></a><span class="lineno"> 1319</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa1c68525fc2c4d94e39a73d1a4bea0476">mdtPortManager::Stopping</a>:</div>
-<div class="line"><a name="l01320"></a><span class="lineno"> 1320</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daaa7af1c561e17e65982c027de942d4a75">mdtPortManager::Running</a>:</div>
-<div class="line"><a name="l01321"></a><span class="lineno"> 1321</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa3a3b42b9d783381f3c7447086503fde6">mdtPortManager::PortReady</a>:</div>
-<div class="line"><a name="l01322"></a><span class="lineno"> 1322</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa3c3620c8eb4ddb126568053e3d49195f">mdtPortManager::Connected</a>:</div>
-<div class="line"><a name="l01323"></a><span class="lineno"> 1323</span>&#160;      emit <a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="mdtDeviceIos *pvIos; // I/O&#39;s container ">stateChanged</a>(portManagerState);</div>
-<div class="line"><a name="l01324"></a><span class="lineno"> 1324</span>&#160;      <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l01325"></a><span class="lineno"> 1325</span>&#160;  }</div>
-<div class="line"><a name="l01326"></a><span class="lineno"> 1326</span>&#160;}</div>
-<div class="line"><a name="l01327"></a><span class="lineno"> 1327</span>&#160;</div>
-<div class="line"><a name="l01328"></a><span class="lineno"> 1328</span>&#160;<span class="keywordtype">void</span> mdtDevice::setStatePortClosed()</div>
-<div class="line"><a name="l01329"></a><span class="lineno"> 1329</span>&#160;{</div>
-<div class="line"><a name="l01330"></a><span class="lineno"> 1330</span>&#160;  <span class="comment">// Stop auto queries if running</span></div>
-<div class="line"><a name="l01331"></a><span class="lineno"> 1331</span>&#160;  <span class="keywordflow">if</span>(pvAutoQueryEnabled){</div>
-<div class="line"><a name="l01332"></a><span class="lineno"> 1332</span>&#160;    pvQueryTimer-&gt;stop();</div>
-<div class="line"><a name="l01333"></a><span class="lineno"> 1333</span>&#160;  }</div>
-<div class="line"><a name="l01334"></a><span class="lineno"> 1334</span>&#160;  <span class="comment">// Update I/Os</span></div>
-<div class="line"><a name="l01335"></a><span class="lineno"> 1335</span>&#160;  <span class="keywordflow">if</span>(pvIos != 0){</div>
-<div class="line"><a name="l01336"></a><span class="lineno"> 1336</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#aeaa1a401ec975a67f87c62d4abae65ee" title="Set a value and validity for all analog inputs. ">setAnalogInputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
-<div class="line"><a name="l01337"></a><span class="lineno"> 1337</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a5d3edb5c95163dbe88ab5f17b6175f2b" title="Set a value and validity for all analog outputs. ">setAnalogOutputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
-<div class="line"><a name="l01338"></a><span class="lineno"> 1338</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#ae266924a427fbc896e5f9774890ec91f" title="Enable/disable (G)UI&#39;s analog outputs. ">setAnalogOutputsEnabled</a>(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l01339"></a><span class="lineno"> 1339</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a136d4a817fbd14c375ff068c436f3eeb" title="Set a value and validity for all digital inputs. ">setDigitalInputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
-<div class="line"><a name="l01340"></a><span class="lineno"> 1340</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a5685ba4a6cee6fad1555dc9b51d1d932" title="Set a value and validity for all digital outputs. ">setDigitalOutputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
-<div class="line"><a name="l01341"></a><span class="lineno"> 1341</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#ab1d98b31f7845c0015ac16728038d2db" title="Enable/disable (G)UI&#39;s digital outputs. ">setDigitalOutputsEnabled</a>(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l01342"></a><span class="lineno"> 1342</span>&#160;  }</div>
-<div class="line"><a name="l01343"></a><span class="lineno"> 1343</span>&#160;  emit(<a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="mdtDeviceIos *pvIos; // I/O&#39;s container ">stateChanged</a>(<a class="code" href="classmdt_device.html#a76ddf08ac78502b835b192a8f38f963f" title="Get device state. ">currentState</a>()));</div>
-<div class="line"><a name="l01344"></a><span class="lineno"> 1344</span>&#160;}</div>
-<div class="line"><a name="l01345"></a><span class="lineno"> 1345</span>&#160;</div>
-<div class="line"><a name="l01346"></a><span class="lineno"> 1346</span>&#160;<span class="keywordtype">void</span> mdtDevice::setStateDisconnected()</div>
-<div class="line"><a name="l01347"></a><span class="lineno"> 1347</span>&#160;{</div>
-<div class="line"><a name="l01348"></a><span class="lineno"> 1348</span>&#160;  <span class="comment">// Stop auto queries if running</span></div>
-<div class="line"><a name="l01349"></a><span class="lineno"> 1349</span>&#160;  <span class="keywordflow">if</span>(pvAutoQueryEnabled){</div>
-<div class="line"><a name="l01350"></a><span class="lineno"> 1350</span>&#160;    pvQueryTimer-&gt;stop();</div>
-<div class="line"><a name="l01351"></a><span class="lineno"> 1351</span>&#160;  }</div>
-<div class="line"><a name="l01352"></a><span class="lineno"> 1352</span>&#160;  <span class="comment">// Update I/Os</span></div>
-<div class="line"><a name="l01353"></a><span class="lineno"> 1353</span>&#160;  <span class="keywordflow">if</span>(pvIos != 0){</div>
-<div class="line"><a name="l01354"></a><span class="lineno"> 1354</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#aeaa1a401ec975a67f87c62d4abae65ee" title="Set a value and validity for all analog inputs. ">setAnalogInputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
-<div class="line"><a name="l01355"></a><span class="lineno"> 1355</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a5d3edb5c95163dbe88ab5f17b6175f2b" title="Set a value and validity for all analog outputs. ">setAnalogOutputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
-<div class="line"><a name="l01356"></a><span class="lineno"> 1356</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#ae266924a427fbc896e5f9774890ec91f" title="Enable/disable (G)UI&#39;s analog outputs. ">setAnalogOutputsEnabled</a>(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l01357"></a><span class="lineno"> 1357</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a136d4a817fbd14c375ff068c436f3eeb" title="Set a value and validity for all digital inputs. ">setDigitalInputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
-<div class="line"><a name="l01358"></a><span class="lineno"> 1358</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a5685ba4a6cee6fad1555dc9b51d1d932" title="Set a value and validity for all digital outputs. ">setDigitalOutputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
-<div class="line"><a name="l01359"></a><span class="lineno"> 1359</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#ab1d98b31f7845c0015ac16728038d2db" title="Enable/disable (G)UI&#39;s digital outputs. ">setDigitalOutputsEnabled</a>(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l01360"></a><span class="lineno"> 1360</span>&#160;  }</div>
-<div class="line"><a name="l01361"></a><span class="lineno"> 1361</span>&#160;  qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtDevice: new state is Disconnected&quot;</span>;</div>
-<div class="line"><a name="l01362"></a><span class="lineno"> 1362</span>&#160;  emit(<a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="mdtDeviceIos *pvIos; // I/O&#39;s container ">stateChanged</a>(<a class="code" href="classmdt_device.html#a76ddf08ac78502b835b192a8f38f963f" title="Get device state. ">currentState</a>()));</div>
-<div class="line"><a name="l01363"></a><span class="lineno"> 1363</span>&#160;}</div>
-<div class="line"><a name="l01364"></a><span class="lineno"> 1364</span>&#160;</div>
-<div class="line"><a name="l01365"></a><span class="lineno"> 1365</span>&#160;<span class="keywordtype">void</span> mdtDevice::setStateConnecting(<span class="comment">/*const QString &amp;message*/</span>)</div>
-<div class="line"><a name="l01366"></a><span class="lineno"> 1366</span>&#160;{</div>
-<div class="line"><a name="l01367"></a><span class="lineno"> 1367</span>&#160;  <span class="comment">// Stop auto queries if running</span></div>
-<div class="line"><a name="l01368"></a><span class="lineno"> 1368</span>&#160;  <span class="keywordflow">if</span>(pvAutoQueryEnabled){</div>
-<div class="line"><a name="l01369"></a><span class="lineno"> 1369</span>&#160;    pvQueryTimer-&gt;stop();</div>
-<div class="line"><a name="l01370"></a><span class="lineno"> 1370</span>&#160;  }</div>
-<div class="line"><a name="l01371"></a><span class="lineno"> 1371</span>&#160;  <span class="comment">// Update I/Os</span></div>
-<div class="line"><a name="l01372"></a><span class="lineno"> 1372</span>&#160;  <span class="keywordflow">if</span>(pvIos != 0){</div>
-<div class="line"><a name="l01373"></a><span class="lineno"> 1373</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#aeaa1a401ec975a67f87c62d4abae65ee" title="Set a value and validity for all analog inputs. ">setAnalogInputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
-<div class="line"><a name="l01374"></a><span class="lineno"> 1374</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a5d3edb5c95163dbe88ab5f17b6175f2b" title="Set a value and validity for all analog outputs. ">setAnalogOutputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
-<div class="line"><a name="l01375"></a><span class="lineno"> 1375</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#ae266924a427fbc896e5f9774890ec91f" title="Enable/disable (G)UI&#39;s analog outputs. ">setAnalogOutputsEnabled</a>(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l01376"></a><span class="lineno"> 1376</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a136d4a817fbd14c375ff068c436f3eeb" title="Set a value and validity for all digital inputs. ">setDigitalInputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
-<div class="line"><a name="l01377"></a><span class="lineno"> 1377</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a5685ba4a6cee6fad1555dc9b51d1d932" title="Set a value and validity for all digital outputs. ">setDigitalOutputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
-<div class="line"><a name="l01378"></a><span class="lineno"> 1378</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#ab1d98b31f7845c0015ac16728038d2db" title="Enable/disable (G)UI&#39;s digital outputs. ">setDigitalOutputsEnabled</a>(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l01379"></a><span class="lineno"> 1379</span>&#160;  }</div>
-<div class="line"><a name="l01380"></a><span class="lineno"> 1380</span>&#160;  <span class="comment">// Thread will notify the ready (or disconnected) state, cancel retry timer</span></div>
-<div class="line"><a name="l01381"></a><span class="lineno"> 1381</span>&#160;  pvBackToReadyStateTimer-&gt;stop();</div>
-<div class="line"><a name="l01382"></a><span class="lineno"> 1382</span>&#160;  qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtDevice: new state is Connecting&quot;</span>;</div>
-<div class="line"><a name="l01383"></a><span class="lineno"> 1383</span>&#160;  emit(<a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="mdtDeviceIos *pvIos; // I/O&#39;s container ">stateChanged</a>(<a class="code" href="classmdt_device.html#a76ddf08ac78502b835b192a8f38f963f" title="Get device state. ">currentState</a>()));</div>
-<div class="line"><a name="l01384"></a><span class="lineno"> 1384</span>&#160;}</div>
-<div class="line"><a name="l01385"></a><span class="lineno"> 1385</span>&#160;</div>
-<div class="line"><a name="l01386"></a><span class="lineno"> 1386</span>&#160;<span class="keywordtype">void</span> mdtDevice::setStateReady()</div>
-<div class="line"><a name="l01387"></a><span class="lineno"> 1387</span>&#160;{</div>
+<div class="line"><a name="l01260"></a><span class="lineno"><a class="code" href="classmdt_device.html#a0e57cc8b749581cff447d514b9a1ff8e"> 1260</a></span>&#160;<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data. ">mdtPortTransaction</a> *<a class="code" href="classmdt_device.html#a0e57cc8b749581cff447d514b9a1ff8e" title="Get a new transaction. ">mdtDevice::getNewTransaction</a>()</div>
+<div class="line"><a name="l01261"></a><span class="lineno"> 1261</span>&#160;{</div>
+<div class="line"><a name="l01262"></a><span class="lineno"> 1262</span>&#160;  Q_ASSERT(<a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance. ">portManager</a>() != 0);</div>
+<div class="line"><a name="l01263"></a><span class="lineno"> 1263</span>&#160;</div>
+<div class="line"><a name="l01264"></a><span class="lineno"> 1264</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance. ">portManager</a>()-&gt;<a class="code" href="classmdt_port_manager.html#a75ebd3d1859e3ed38b9558981e53aac4" title="Get a new transaction. ">getNewTransaction</a>();</div>
+<div class="line"><a name="l01265"></a><span class="lineno"> 1265</span>&#160;}</div>
+<div class="line"><a name="l01266"></a><span class="lineno"> 1266</span>&#160;</div>
+<div class="line"><a name="l01267"></a><span class="lineno"><a class="code" href="classmdt_device.html#a4619d8be240cafe48865a89f7424de92"> 1267</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a4619d8be240cafe48865a89f7424de92" title="Restore a transaction into pool. ">mdtDevice::restoreTransaction</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data. ">mdtPortTransaction</a> *transaction)</div>
+<div class="line"><a name="l01268"></a><span class="lineno"> 1268</span>&#160;{</div>
+<div class="line"><a name="l01269"></a><span class="lineno"> 1269</span>&#160;  Q_ASSERT(<a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance. ">portManager</a>() != 0);</div>
+<div class="line"><a name="l01270"></a><span class="lineno"> 1270</span>&#160;  Q_ASSERT(transaction != 0);</div>
+<div class="line"><a name="l01271"></a><span class="lineno"> 1271</span>&#160;</div>
+<div class="line"><a name="l01272"></a><span class="lineno"> 1272</span>&#160;  <a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance. ">portManager</a>()-&gt;<a class="code" href="classmdt_port_manager.html#a5fea4a9b8e94d38e8ec699dba05c7ca8" title="Restore a transaction into pool. ">restoreTransaction</a>(transaction);</div>
+<div class="line"><a name="l01273"></a><span class="lineno"> 1273</span>&#160;}</div>
+<div class="line"><a name="l01274"></a><span class="lineno"> 1274</span>&#160;</div>
+<div class="line"><a name="l01275"></a><span class="lineno"><a class="code" href="classmdt_device.html#ab937015c1a319b7234442a4cc29a02a8"> 1275</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_device.html#ab937015c1a319b7234442a4cc29a02a8" title="Wait until a transaction is done without break the GUI&#39;s event loop. ">mdtDevice::waitTransactionDone</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>)</div>
+<div class="line"><a name="l01276"></a><span class="lineno"> 1276</span>&#160;{</div>
+<div class="line"><a name="l01277"></a><span class="lineno"> 1277</span>&#160;  Q_ASSERT(<a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance. ">portManager</a>() != 0);</div>
+<div class="line"><a name="l01278"></a><span class="lineno"> 1278</span>&#160;</div>
+<div class="line"><a name="l01279"></a><span class="lineno"> 1279</span>&#160;  <span class="keywordtype">bool</span> ok;</div>
+<div class="line"><a name="l01280"></a><span class="lineno"> 1280</span>&#160;</div>
+<div class="line"><a name="l01281"></a><span class="lineno"> 1281</span>&#160;  ok = <a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance. ">portManager</a>()-&gt;<a class="code" href="classmdt_port_manager.html#a5551802de2c08632078f2cc0e2607913" title="Wait until a transaction is done. ">waitTransactionDone</a>(<span class="keywordtype">id</span>);</div>
+<div class="line"><a name="l01282"></a><span class="lineno"> 1282</span>&#160;  <span class="comment">/*</span></div>
+<div class="line"><a name="l01283"></a><span class="lineno"> 1283</span>&#160;<span class="comment">   * Request was send, response arrived,</span></div>
+<div class="line"><a name="l01284"></a><span class="lineno"> 1284</span>&#160;<span class="comment">   * subclass has decoded response and updated I/O.</span></div>
+<div class="line"><a name="l01285"></a><span class="lineno"> 1285</span>&#160;<span class="comment">   * So, we have to remove transaction from done queue and restore it to pool</span></div>
+<div class="line"><a name="l01286"></a><span class="lineno"> 1286</span>&#160;<span class="comment">   * In mdtPortManager it was choosen to not let access</span></div>
+<div class="line"><a name="l01287"></a><span class="lineno"> 1287</span>&#160;<span class="comment">   * to transaction queues management, so we call readenFrame()</span></div>
+<div class="line"><a name="l01288"></a><span class="lineno"> 1288</span>&#160;<span class="comment">   * witch does all the needed job.</span></div>
+<div class="line"><a name="l01289"></a><span class="lineno"> 1289</span>&#160;<span class="comment">   */</span></div>
+<div class="line"><a name="l01290"></a><span class="lineno"> 1290</span>&#160;  <a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance. ">portManager</a>()-&gt;<a class="code" href="classmdt_port_manager.html#a830ae182d06dd6a52c43a7f45b9240ac" title="Get data by frame ID. ">readenFrame</a>(<span class="keywordtype">id</span>);</div>
+<div class="line"><a name="l01291"></a><span class="lineno"> 1291</span>&#160;</div>
+<div class="line"><a name="l01292"></a><span class="lineno"> 1292</span>&#160;  <span class="keywordflow">return</span> ok;</div>
+<div class="line"><a name="l01293"></a><span class="lineno"> 1293</span>&#160;}</div>
+<div class="line"><a name="l01294"></a><span class="lineno"> 1294</span>&#160;</div>
+<div class="line"><a name="l01295"></a><span class="lineno"> 1295</span>&#160;<span class="keywordtype">void</span> mdtDevice::setStateFromPortManager(<span class="keywordtype">int</span> portManagerState)</div>
+<div class="line"><a name="l01296"></a><span class="lineno"> 1296</span>&#160;{</div>
+<div class="line"><a name="l01297"></a><span class="lineno"> 1297</span>&#160;  <span class="keywordflow">switch</span>((<a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382da" title="State of device. ">mdtPortManager::state_t</a>)portManagerState){</div>
+<div class="line"><a name="l01298"></a><span class="lineno"> 1298</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daabac9679c411402c9db01399ecb72b84d">mdtPortManager::PortClosed</a>:</div>
+<div class="line"><a name="l01299"></a><span class="lineno"> 1299</span>&#160;      setStatePortClosed();</div>
+<div class="line"><a name="l01300"></a><span class="lineno"> 1300</span>&#160;      <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l01301"></a><span class="lineno"> 1301</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa4004253e25d51b1e628bb5006dbbd153">mdtPortManager::Disconnected</a>:</div>
+<div class="line"><a name="l01302"></a><span class="lineno"> 1302</span>&#160;      setStateDisconnected();</div>
+<div class="line"><a name="l01303"></a><span class="lineno"> 1303</span>&#160;      <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l01304"></a><span class="lineno"> 1304</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa89e805c9c75c39ecc8371d5f38131227">mdtPortManager::Connecting</a>:</div>
+<div class="line"><a name="l01305"></a><span class="lineno"> 1305</span>&#160;      setStateConnecting();</div>
+<div class="line"><a name="l01306"></a><span class="lineno"> 1306</span>&#160;      <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l01307"></a><span class="lineno"> 1307</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daaf2ba40e19587c3a98235ee96a4acf20e">mdtPortManager::Ready</a>:</div>
+<div class="line"><a name="l01308"></a><span class="lineno"> 1308</span>&#160;      setStateReady();</div>
+<div class="line"><a name="l01309"></a><span class="lineno"> 1309</span>&#160;      <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l01310"></a><span class="lineno"> 1310</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa5da3fa5dd98a264ecb4a37a1983ea0ff">mdtPortManager::Busy</a>:</div>
+<div class="line"><a name="l01311"></a><span class="lineno"> 1311</span>&#160;      setStateBusy();</div>
+<div class="line"><a name="l01312"></a><span class="lineno"> 1312</span>&#160;      <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l01313"></a><span class="lineno"> 1313</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa2440f5bfc7ae5c78db1598ef6d3d394c">mdtPortManager::PortError</a>:</div>
+<div class="line"><a name="l01314"></a><span class="lineno"> 1314</span>&#160;      setStateError();</div>
+<div class="line"><a name="l01315"></a><span class="lineno"> 1315</span>&#160;      <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l01316"></a><span class="lineno"> 1316</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daadbd7b0395c62e9ae38525c5dc5ba44a6">mdtPortManager::Stopped</a>:</div>
+<div class="line"><a name="l01317"></a><span class="lineno"> 1317</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daaca288962f5cb3d352f44f4e4c15f14d2">mdtPortManager::Starting</a>:</div>
+<div class="line"><a name="l01318"></a><span class="lineno"> 1318</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa1c68525fc2c4d94e39a73d1a4bea0476">mdtPortManager::Stopping</a>:</div>
+<div class="line"><a name="l01319"></a><span class="lineno"> 1319</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daaa7af1c561e17e65982c027de942d4a75">mdtPortManager::Running</a>:</div>
+<div class="line"><a name="l01320"></a><span class="lineno"> 1320</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa3a3b42b9d783381f3c7447086503fde6">mdtPortManager::PortReady</a>:</div>
+<div class="line"><a name="l01321"></a><span class="lineno"> 1321</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa3c3620c8eb4ddb126568053e3d49195f">mdtPortManager::Connected</a>:</div>
+<div class="line"><a name="l01322"></a><span class="lineno"> 1322</span>&#160;      emit <a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="mdtDeviceIos *pvIos; // I/O&#39;s container ">stateChanged</a>(portManagerState);</div>
+<div class="line"><a name="l01323"></a><span class="lineno"> 1323</span>&#160;      <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l01324"></a><span class="lineno"> 1324</span>&#160;  }</div>
+<div class="line"><a name="l01325"></a><span class="lineno"> 1325</span>&#160;}</div>
+<div class="line"><a name="l01326"></a><span class="lineno"> 1326</span>&#160;</div>
+<div class="line"><a name="l01327"></a><span class="lineno"> 1327</span>&#160;<span class="keywordtype">void</span> mdtDevice::setStatePortClosed()</div>
+<div class="line"><a name="l01328"></a><span class="lineno"> 1328</span>&#160;{</div>
+<div class="line"><a name="l01329"></a><span class="lineno"> 1329</span>&#160;  <span class="comment">// Stop auto queries if running</span></div>
+<div class="line"><a name="l01330"></a><span class="lineno"> 1330</span>&#160;  <span class="keywordflow">if</span>(pvAutoQueryEnabled){</div>
+<div class="line"><a name="l01331"></a><span class="lineno"> 1331</span>&#160;    pvQueryTimer-&gt;stop();</div>
+<div class="line"><a name="l01332"></a><span class="lineno"> 1332</span>&#160;  }</div>
+<div class="line"><a name="l01333"></a><span class="lineno"> 1333</span>&#160;  <span class="comment">// Update I/Os</span></div>
+<div class="line"><a name="l01334"></a><span class="lineno"> 1334</span>&#160;  <span class="keywordflow">if</span>(pvIos != 0){</div>
+<div class="line"><a name="l01335"></a><span class="lineno"> 1335</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#aeaa1a401ec975a67f87c62d4abae65ee" title="Set a value and validity for all analog inputs. ">setAnalogInputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
+<div class="line"><a name="l01336"></a><span class="lineno"> 1336</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a5d3edb5c95163dbe88ab5f17b6175f2b" title="Set a value and validity for all analog outputs. ">setAnalogOutputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
+<div class="line"><a name="l01337"></a><span class="lineno"> 1337</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#ae266924a427fbc896e5f9774890ec91f" title="Enable/disable (G)UI&#39;s analog outputs. ">setAnalogOutputsEnabled</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l01338"></a><span class="lineno"> 1338</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a136d4a817fbd14c375ff068c436f3eeb" title="Set a value and validity for all digital inputs. ">setDigitalInputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
+<div class="line"><a name="l01339"></a><span class="lineno"> 1339</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a5685ba4a6cee6fad1555dc9b51d1d932" title="Set a value and validity for all digital outputs. ">setDigitalOutputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
+<div class="line"><a name="l01340"></a><span class="lineno"> 1340</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#ab1d98b31f7845c0015ac16728038d2db" title="Enable/disable (G)UI&#39;s digital outputs. ">setDigitalOutputsEnabled</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l01341"></a><span class="lineno"> 1341</span>&#160;  }</div>
+<div class="line"><a name="l01342"></a><span class="lineno"> 1342</span>&#160;  emit(<a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="mdtDeviceIos *pvIos; // I/O&#39;s container ">stateChanged</a>(<a class="code" href="classmdt_device.html#a76ddf08ac78502b835b192a8f38f963f" title="Get device state. ">currentState</a>()));</div>
+<div class="line"><a name="l01343"></a><span class="lineno"> 1343</span>&#160;}</div>
+<div class="line"><a name="l01344"></a><span class="lineno"> 1344</span>&#160;</div>
+<div class="line"><a name="l01345"></a><span class="lineno"> 1345</span>&#160;<span class="keywordtype">void</span> mdtDevice::setStateDisconnected()</div>
+<div class="line"><a name="l01346"></a><span class="lineno"> 1346</span>&#160;{</div>
+<div class="line"><a name="l01347"></a><span class="lineno"> 1347</span>&#160;  <span class="comment">// Stop auto queries if running</span></div>
+<div class="line"><a name="l01348"></a><span class="lineno"> 1348</span>&#160;  <span class="keywordflow">if</span>(pvAutoQueryEnabled){</div>
+<div class="line"><a name="l01349"></a><span class="lineno"> 1349</span>&#160;    pvQueryTimer-&gt;stop();</div>
+<div class="line"><a name="l01350"></a><span class="lineno"> 1350</span>&#160;  }</div>
+<div class="line"><a name="l01351"></a><span class="lineno"> 1351</span>&#160;  <span class="comment">// Update I/Os</span></div>
+<div class="line"><a name="l01352"></a><span class="lineno"> 1352</span>&#160;  <span class="keywordflow">if</span>(pvIos != 0){</div>
+<div class="line"><a name="l01353"></a><span class="lineno"> 1353</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#aeaa1a401ec975a67f87c62d4abae65ee" title="Set a value and validity for all analog inputs. ">setAnalogInputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
+<div class="line"><a name="l01354"></a><span class="lineno"> 1354</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a5d3edb5c95163dbe88ab5f17b6175f2b" title="Set a value and validity for all analog outputs. ">setAnalogOutputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
+<div class="line"><a name="l01355"></a><span class="lineno"> 1355</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#ae266924a427fbc896e5f9774890ec91f" title="Enable/disable (G)UI&#39;s analog outputs. ">setAnalogOutputsEnabled</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l01356"></a><span class="lineno"> 1356</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a136d4a817fbd14c375ff068c436f3eeb" title="Set a value and validity for all digital inputs. ">setDigitalInputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
+<div class="line"><a name="l01357"></a><span class="lineno"> 1357</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a5685ba4a6cee6fad1555dc9b51d1d932" title="Set a value and validity for all digital outputs. ">setDigitalOutputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
+<div class="line"><a name="l01358"></a><span class="lineno"> 1358</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#ab1d98b31f7845c0015ac16728038d2db" title="Enable/disable (G)UI&#39;s digital outputs. ">setDigitalOutputsEnabled</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l01359"></a><span class="lineno"> 1359</span>&#160;  }</div>
+<div class="line"><a name="l01360"></a><span class="lineno"> 1360</span>&#160;  qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtDevice: new state is Disconnected&quot;</span>;</div>
+<div class="line"><a name="l01361"></a><span class="lineno"> 1361</span>&#160;  emit(<a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="mdtDeviceIos *pvIos; // I/O&#39;s container ">stateChanged</a>(<a class="code" href="classmdt_device.html#a76ddf08ac78502b835b192a8f38f963f" title="Get device state. ">currentState</a>()));</div>
+<div class="line"><a name="l01362"></a><span class="lineno"> 1362</span>&#160;}</div>
+<div class="line"><a name="l01363"></a><span class="lineno"> 1363</span>&#160;</div>
+<div class="line"><a name="l01364"></a><span class="lineno"> 1364</span>&#160;<span class="keywordtype">void</span> mdtDevice::setStateConnecting(<span class="comment">/*const QString &amp;message*/</span>)</div>
+<div class="line"><a name="l01365"></a><span class="lineno"> 1365</span>&#160;{</div>
+<div class="line"><a name="l01366"></a><span class="lineno"> 1366</span>&#160;  <span class="comment">// Stop auto queries if running</span></div>
+<div class="line"><a name="l01367"></a><span class="lineno"> 1367</span>&#160;  <span class="keywordflow">if</span>(pvAutoQueryEnabled){</div>
+<div class="line"><a name="l01368"></a><span class="lineno"> 1368</span>&#160;    pvQueryTimer-&gt;stop();</div>
+<div class="line"><a name="l01369"></a><span class="lineno"> 1369</span>&#160;  }</div>
+<div class="line"><a name="l01370"></a><span class="lineno"> 1370</span>&#160;  <span class="comment">// Update I/Os</span></div>
+<div class="line"><a name="l01371"></a><span class="lineno"> 1371</span>&#160;  <span class="keywordflow">if</span>(pvIos != 0){</div>
+<div class="line"><a name="l01372"></a><span class="lineno"> 1372</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#aeaa1a401ec975a67f87c62d4abae65ee" title="Set a value and validity for all analog inputs. ">setAnalogInputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
+<div class="line"><a name="l01373"></a><span class="lineno"> 1373</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a5d3edb5c95163dbe88ab5f17b6175f2b" title="Set a value and validity for all analog outputs. ">setAnalogOutputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
+<div class="line"><a name="l01374"></a><span class="lineno"> 1374</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#ae266924a427fbc896e5f9774890ec91f" title="Enable/disable (G)UI&#39;s analog outputs. ">setAnalogOutputsEnabled</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l01375"></a><span class="lineno"> 1375</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a136d4a817fbd14c375ff068c436f3eeb" title="Set a value and validity for all digital inputs. ">setDigitalInputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
+<div class="line"><a name="l01376"></a><span class="lineno"> 1376</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a5685ba4a6cee6fad1555dc9b51d1d932" title="Set a value and validity for all digital outputs. ">setDigitalOutputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
+<div class="line"><a name="l01377"></a><span class="lineno"> 1377</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#ab1d98b31f7845c0015ac16728038d2db" title="Enable/disable (G)UI&#39;s digital outputs. ">setDigitalOutputsEnabled</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l01378"></a><span class="lineno"> 1378</span>&#160;  }</div>
+<div class="line"><a name="l01379"></a><span class="lineno"> 1379</span>&#160;  <span class="comment">// Thread will notify the ready (or disconnected) state, cancel retry timer</span></div>
+<div class="line"><a name="l01380"></a><span class="lineno"> 1380</span>&#160;  pvBackToReadyStateTimer-&gt;stop();</div>
+<div class="line"><a name="l01381"></a><span class="lineno"> 1381</span>&#160;  qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtDevice: new state is Connecting&quot;</span>;</div>
+<div class="line"><a name="l01382"></a><span class="lineno"> 1382</span>&#160;  emit(<a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="mdtDeviceIos *pvIos; // I/O&#39;s container ">stateChanged</a>(<a class="code" href="classmdt_device.html#a76ddf08ac78502b835b192a8f38f963f" title="Get device state. ">currentState</a>()));</div>
+<div class="line"><a name="l01383"></a><span class="lineno"> 1383</span>&#160;}</div>
+<div class="line"><a name="l01384"></a><span class="lineno"> 1384</span>&#160;</div>
+<div class="line"><a name="l01385"></a><span class="lineno"> 1385</span>&#160;<span class="keywordtype">void</span> mdtDevice::setStateReady()</div>
+<div class="line"><a name="l01386"></a><span class="lineno"> 1386</span>&#160;{</div>
+<div class="line"><a name="l01387"></a><span class="lineno"> 1387</span>&#160;  qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtDevice: new state is Ready&quot;</span>;</div>
 <div class="line"><a name="l01388"></a><span class="lineno"> 1388</span>&#160;  <span class="comment">// Check if we have to restart query timer</span></div>
 <div class="line"><a name="l01389"></a><span class="lineno"> 1389</span>&#160;  <span class="keywordflow">if</span>((pvAutoQueryEnabled)&amp;&amp;(<a class="code" href="classmdt_device.html#a8887a1142d3d3be673c18cf3376e7af4" title="Check if device is ready. ">isReady</a>())){</div>
-<div class="line"><a name="l01390"></a><span class="lineno"> 1390</span>&#160;    pvQueryTimer-&gt;start();</div>
-<div class="line"><a name="l01391"></a><span class="lineno"> 1391</span>&#160;  }</div>
-<div class="line"><a name="l01392"></a><span class="lineno"> 1392</span>&#160;  <span class="comment">// Update I/Os</span></div>
-<div class="line"><a name="l01393"></a><span class="lineno"> 1393</span>&#160;  <span class="keywordflow">if</span>(pvIos != 0){</div>
-<div class="line"><a name="l01394"></a><span class="lineno"> 1394</span>&#160;    <a class="code" href="classmdt_device.html#a98cba3132db15317daf54eb701388e91" title="Read all analog inputs on physical device and update (G)UI representation. ">getAnalogInputs</a>(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l01395"></a><span class="lineno"> 1395</span>&#160;    <a class="code" href="classmdt_device.html#a78a8968cf61c1cac518b0a8af471110c" title="Read all analog outputs on physical device and update (G)UI representation. ">getAnalogOutputs</a>(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l01396"></a><span class="lineno"> 1396</span>&#160;    <a class="code" href="classmdt_device.html#a6e338b959c86591b6b3401f925c49050" title="Read all digital inputs on physical device and update (G)UI representation. ">getDigitalInputs</a>(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l01397"></a><span class="lineno"> 1397</span>&#160;    <a class="code" href="classmdt_device.html#ab35b81b8eb68e161ac06ae882be39a25" title="Read all digital outputs on physical device and update (G)UI representation. ">getDigitalOutputs</a>(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l01398"></a><span class="lineno"> 1398</span>&#160;  }</div>
-<div class="line"><a name="l01399"></a><span class="lineno"> 1399</span>&#160;  emit(<a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="mdtDeviceIos *pvIos; // I/O&#39;s container ">stateChanged</a>(<a class="code" href="classmdt_device.html#a76ddf08ac78502b835b192a8f38f963f" title="Get device state. ">currentState</a>()));</div>
-<div class="line"><a name="l01400"></a><span class="lineno"> 1400</span>&#160;}</div>
-<div class="line"><a name="l01401"></a><span class="lineno"> 1401</span>&#160;</div>
-<div class="line"><a name="l01402"></a><span class="lineno"> 1402</span>&#160;<span class="keywordtype">void</span> mdtDevice::setStateBusy()</div>
-<div class="line"><a name="l01403"></a><span class="lineno"> 1403</span>&#160;{</div>
-<div class="line"><a name="l01404"></a><span class="lineno"> 1404</span>&#160;  <span class="comment">// Stop auto queries if running</span></div>
-<div class="line"><a name="l01405"></a><span class="lineno"> 1405</span>&#160;  <span class="keywordflow">if</span>(pvAutoQueryEnabled){</div>
-<div class="line"><a name="l01406"></a><span class="lineno"> 1406</span>&#160;    pvQueryTimer-&gt;stop();</div>
-<div class="line"><a name="l01407"></a><span class="lineno"> 1407</span>&#160;  }</div>
-<div class="line"><a name="l01408"></a><span class="lineno"> 1408</span>&#160;  <span class="comment">// Update I/Os</span></div>
-<div class="line"><a name="l01409"></a><span class="lineno"> 1409</span>&#160;  <span class="keywordflow">if</span>(pvIos != 0){</div>
-<div class="line"><a name="l01410"></a><span class="lineno"> 1410</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#aeaa1a401ec975a67f87c62d4abae65ee" title="Set a value and validity for all analog inputs. ">setAnalogInputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
-<div class="line"><a name="l01411"></a><span class="lineno"> 1411</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a5d3edb5c95163dbe88ab5f17b6175f2b" title="Set a value and validity for all analog outputs. ">setAnalogOutputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
-<div class="line"><a name="l01412"></a><span class="lineno"> 1412</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#ae266924a427fbc896e5f9774890ec91f" title="Enable/disable (G)UI&#39;s analog outputs. ">setAnalogOutputsEnabled</a>(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l01413"></a><span class="lineno"> 1413</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a136d4a817fbd14c375ff068c436f3eeb" title="Set a value and validity for all digital inputs. ">setDigitalInputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
-<div class="line"><a name="l01414"></a><span class="lineno"> 1414</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a5685ba4a6cee6fad1555dc9b51d1d932" title="Set a value and validity for all digital outputs. ">setDigitalOutputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
-<div class="line"><a name="l01415"></a><span class="lineno"> 1415</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#ab1d98b31f7845c0015ac16728038d2db" title="Enable/disable (G)UI&#39;s digital outputs. ">setDigitalOutputsEnabled</a>(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l01416"></a><span class="lineno"> 1416</span>&#160;  }</div>
-<div class="line"><a name="l01417"></a><span class="lineno"> 1417</span>&#160;  qDebug() &lt;&lt; <span class="stringliteral">&quot;**** mdtDevice: new state is Busy&quot;</span>;</div>
-<div class="line"><a name="l01418"></a><span class="lineno"> 1418</span>&#160;  emit(<a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="mdtDeviceIos *pvIos; // I/O&#39;s container ">stateChanged</a>(<a class="code" href="classmdt_device.html#a76ddf08ac78502b835b192a8f38f963f" title="Get device state. ">currentState</a>()));</div>
-<div class="line"><a name="l01419"></a><span class="lineno"> 1419</span>&#160;  <span class="comment">// Set state ready if requested</span></div>
-<div class="line"><a name="l01420"></a><span class="lineno"> 1420</span>&#160;  <span class="keywordflow">if</span>(pvBackToReadyStateTimeout &gt;= 0){</div>
-<div class="line"><a name="l01421"></a><span class="lineno"> 1421</span>&#160;    pvBackToReadyStateTimer-&gt;start(pvBackToReadyStateTimeout);</div>
-<div class="line"><a name="l01423"></a><span class="lineno"> 1423</span>&#160;  }</div>
-<div class="line"><a name="l01424"></a><span class="lineno"> 1424</span>&#160;}</div>
-<div class="line"><a name="l01425"></a><span class="lineno"> 1425</span>&#160;</div>
-<div class="line"><a name="l01426"></a><span class="lineno"> 1426</span>&#160;<span class="keywordtype">void</span> mdtDevice::setStateError()</div>
-<div class="line"><a name="l01427"></a><span class="lineno"> 1427</span>&#160;{</div>
-<div class="line"><a name="l01428"></a><span class="lineno"> 1428</span>&#160;  <span class="comment">// Stop auto queries if running</span></div>
-<div class="line"><a name="l01429"></a><span class="lineno"> 1429</span>&#160;  <span class="keywordflow">if</span>(pvAutoQueryEnabled){</div>
-<div class="line"><a name="l01430"></a><span class="lineno"> 1430</span>&#160;    pvQueryTimer-&gt;stop();</div>
-<div class="line"><a name="l01431"></a><span class="lineno"> 1431</span>&#160;  }</div>
-<div class="line"><a name="l01432"></a><span class="lineno"> 1432</span>&#160;  <span class="comment">// Update I/Os</span></div>
-<div class="line"><a name="l01433"></a><span class="lineno"> 1433</span>&#160;  <span class="keywordflow">if</span>(pvIos != 0){</div>
-<div class="line"><a name="l01434"></a><span class="lineno"> 1434</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#aeaa1a401ec975a67f87c62d4abae65ee" title="Set a value and validity for all analog inputs. ">setAnalogInputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
-<div class="line"><a name="l01435"></a><span class="lineno"> 1435</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a5d3edb5c95163dbe88ab5f17b6175f2b" title="Set a value and validity for all analog outputs. ">setAnalogOutputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
-<div class="line"><a name="l01436"></a><span class="lineno"> 1436</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#ae266924a427fbc896e5f9774890ec91f" title="Enable/disable (G)UI&#39;s analog outputs. ">setAnalogOutputsEnabled</a>(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l01437"></a><span class="lineno"> 1437</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a136d4a817fbd14c375ff068c436f3eeb" title="Set a value and validity for all digital inputs. ">setDigitalInputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
-<div class="line"><a name="l01438"></a><span class="lineno"> 1438</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a5685ba4a6cee6fad1555dc9b51d1d932" title="Set a value and validity for all digital outputs. ">setDigitalOutputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
-<div class="line"><a name="l01439"></a><span class="lineno"> 1439</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#ab1d98b31f7845c0015ac16728038d2db" title="Enable/disable (G)UI&#39;s digital outputs. ">setDigitalOutputsEnabled</a>(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l01440"></a><span class="lineno"> 1440</span>&#160;  }</div>
-<div class="line"><a name="l01441"></a><span class="lineno"> 1441</span>&#160;  <span class="comment">// Add a error</span></div>
-<div class="line"><a name="l01442"></a><span class="lineno"> 1442</span>&#160;  <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured ">mdtError</a> e(<a class="code" href="mdt_error_8h.html#a0f1a2f7579a33e6de2fe8a1cbb5bbbb5aba6f11283d5d318eae7ac9979f7f3c8d">MDT_DEVICE_ERROR</a>, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name. ">name</a>() + <span class="stringliteral">&quot; goes to error state&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);</div>
-<div class="line"><a name="l01443"></a><span class="lineno"> 1443</span>&#160;  <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce" title="Add source information to error. ">MDT_ERROR_SET_SRC</a>(e, <span class="stringliteral">&quot;mdtDevice&quot;</span>);</div>
-<div class="line"><a name="l01444"></a><span class="lineno"> 1444</span>&#160;  e.commit();</div>
-<div class="line"><a name="l01445"></a><span class="lineno"> 1445</span>&#160;  qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtDevice: new state is Error&quot;</span>;</div>
-<div class="line"><a name="l01446"></a><span class="lineno"> 1446</span>&#160;  emit(<a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="mdtDeviceIos *pvIos; // I/O&#39;s container ">stateChanged</a>(<a class="code" href="classmdt_device.html#a76ddf08ac78502b835b192a8f38f963f" title="Get device state. ">currentState</a>()));</div>
-<div class="line"><a name="l01447"></a><span class="lineno"> 1447</span>&#160;}</div>
+<div class="line"><a name="l01390"></a><span class="lineno"> 1390</span>&#160;    qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtDevice: starting query timer ...&quot;</span>;</div>
+<div class="line"><a name="l01391"></a><span class="lineno"> 1391</span>&#160;    pvQueryTimer-&gt;start();</div>
+<div class="line"><a name="l01392"></a><span class="lineno"> 1392</span>&#160;  }</div>
+<div class="line"><a name="l01393"></a><span class="lineno"> 1393</span>&#160;  <span class="comment">// Update I/Os</span></div>
+<div class="line"><a name="l01394"></a><span class="lineno"> 1394</span>&#160;  <span class="keywordflow">if</span>(pvIos != 0){</div>
+<div class="line"><a name="l01395"></a><span class="lineno"> 1395</span>&#160;    <a class="code" href="classmdt_device.html#a98cba3132db15317daf54eb701388e91" title="Read all analog inputs on physical device and update (G)UI representation. ">getAnalogInputs</a>(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l01396"></a><span class="lineno"> 1396</span>&#160;    <a class="code" href="classmdt_device.html#a78a8968cf61c1cac518b0a8af471110c" title="Read all analog outputs on physical device and update (G)UI representation. ">getAnalogOutputs</a>(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l01397"></a><span class="lineno"> 1397</span>&#160;    <a class="code" href="classmdt_device.html#a6e338b959c86591b6b3401f925c49050" title="Read all digital inputs on physical device and update (G)UI representation. ">getDigitalInputs</a>(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l01398"></a><span class="lineno"> 1398</span>&#160;    <a class="code" href="classmdt_device.html#ab35b81b8eb68e161ac06ae882be39a25" title="Read all digital outputs on physical device and update (G)UI representation. ">getDigitalOutputs</a>(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l01399"></a><span class="lineno"> 1399</span>&#160;  }</div>
+<div class="line"><a name="l01400"></a><span class="lineno"> 1400</span>&#160;  emit(<a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="mdtDeviceIos *pvIos; // I/O&#39;s container ">stateChanged</a>(<a class="code" href="classmdt_device.html#a76ddf08ac78502b835b192a8f38f963f" title="Get device state. ">currentState</a>()));</div>
+<div class="line"><a name="l01401"></a><span class="lineno"> 1401</span>&#160;}</div>
+<div class="line"><a name="l01402"></a><span class="lineno"> 1402</span>&#160;</div>
+<div class="line"><a name="l01403"></a><span class="lineno"> 1403</span>&#160;<span class="keywordtype">void</span> mdtDevice::setStateBusy()</div>
+<div class="line"><a name="l01404"></a><span class="lineno"> 1404</span>&#160;{</div>
+<div class="line"><a name="l01405"></a><span class="lineno"> 1405</span>&#160;  <span class="comment">// Stop auto queries if running</span></div>
+<div class="line"><a name="l01406"></a><span class="lineno"> 1406</span>&#160;  <span class="keywordflow">if</span>(pvAutoQueryEnabled){</div>
+<div class="line"><a name="l01407"></a><span class="lineno"> 1407</span>&#160;    pvQueryTimer-&gt;stop();</div>
+<div class="line"><a name="l01408"></a><span class="lineno"> 1408</span>&#160;  }</div>
+<div class="line"><a name="l01409"></a><span class="lineno"> 1409</span>&#160;  <span class="comment">// Update I/Os</span></div>
+<div class="line"><a name="l01410"></a><span class="lineno"> 1410</span>&#160;  <span class="keywordflow">if</span>(pvIos != 0){</div>
+<div class="line"><a name="l01411"></a><span class="lineno"> 1411</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#aeaa1a401ec975a67f87c62d4abae65ee" title="Set a value and validity for all analog inputs. ">setAnalogInputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
+<div class="line"><a name="l01412"></a><span class="lineno"> 1412</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a5d3edb5c95163dbe88ab5f17b6175f2b" title="Set a value and validity for all analog outputs. ">setAnalogOutputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
+<div class="line"><a name="l01413"></a><span class="lineno"> 1413</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#ae266924a427fbc896e5f9774890ec91f" title="Enable/disable (G)UI&#39;s analog outputs. ">setAnalogOutputsEnabled</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l01414"></a><span class="lineno"> 1414</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a136d4a817fbd14c375ff068c436f3eeb" title="Set a value and validity for all digital inputs. ">setDigitalInputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
+<div class="line"><a name="l01415"></a><span class="lineno"> 1415</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a5685ba4a6cee6fad1555dc9b51d1d932" title="Set a value and validity for all digital outputs. ">setDigitalOutputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
+<div class="line"><a name="l01416"></a><span class="lineno"> 1416</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#ab1d98b31f7845c0015ac16728038d2db" title="Enable/disable (G)UI&#39;s digital outputs. ">setDigitalOutputsEnabled</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l01417"></a><span class="lineno"> 1417</span>&#160;  }</div>
+<div class="line"><a name="l01418"></a><span class="lineno"> 1418</span>&#160;  qDebug() &lt;&lt; <span class="stringliteral">&quot;**** mdtDevice: new state is Busy&quot;</span>;</div>
+<div class="line"><a name="l01419"></a><span class="lineno"> 1419</span>&#160;  emit(<a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="mdtDeviceIos *pvIos; // I/O&#39;s container ">stateChanged</a>(<a class="code" href="classmdt_device.html#a76ddf08ac78502b835b192a8f38f963f" title="Get device state. ">currentState</a>()));</div>
+<div class="line"><a name="l01420"></a><span class="lineno"> 1420</span>&#160;  <span class="comment">// Set state ready if requested</span></div>
+<div class="line"><a name="l01421"></a><span class="lineno"> 1421</span>&#160;  <span class="keywordflow">if</span>(pvBackToReadyStateTimeout &gt;= 0){</div>
+<div class="line"><a name="l01422"></a><span class="lineno"> 1422</span>&#160;    pvBackToReadyStateTimer-&gt;start(pvBackToReadyStateTimeout);</div>
+<div class="line"><a name="l01424"></a><span class="lineno"> 1424</span>&#160;  }</div>
+<div class="line"><a name="l01425"></a><span class="lineno"> 1425</span>&#160;}</div>
+<div class="line"><a name="l01426"></a><span class="lineno"> 1426</span>&#160;</div>
+<div class="line"><a name="l01427"></a><span class="lineno"> 1427</span>&#160;<span class="keywordtype">void</span> mdtDevice::setStateError()</div>
+<div class="line"><a name="l01428"></a><span class="lineno"> 1428</span>&#160;{</div>
+<div class="line"><a name="l01429"></a><span class="lineno"> 1429</span>&#160;  <span class="comment">// Stop auto queries if running</span></div>
+<div class="line"><a name="l01430"></a><span class="lineno"> 1430</span>&#160;  <span class="keywordflow">if</span>(pvAutoQueryEnabled){</div>
+<div class="line"><a name="l01431"></a><span class="lineno"> 1431</span>&#160;    pvQueryTimer-&gt;stop();</div>
+<div class="line"><a name="l01432"></a><span class="lineno"> 1432</span>&#160;  }</div>
+<div class="line"><a name="l01433"></a><span class="lineno"> 1433</span>&#160;  <span class="comment">// Update I/Os</span></div>
+<div class="line"><a name="l01434"></a><span class="lineno"> 1434</span>&#160;  <span class="keywordflow">if</span>(pvIos != 0){</div>
+<div class="line"><a name="l01435"></a><span class="lineno"> 1435</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#aeaa1a401ec975a67f87c62d4abae65ee" title="Set a value and validity for all analog inputs. ">setAnalogInputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
+<div class="line"><a name="l01436"></a><span class="lineno"> 1436</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a5d3edb5c95163dbe88ab5f17b6175f2b" title="Set a value and validity for all analog outputs. ">setAnalogOutputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
+<div class="line"><a name="l01437"></a><span class="lineno"> 1437</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#ae266924a427fbc896e5f9774890ec91f" title="Enable/disable (G)UI&#39;s analog outputs. ">setAnalogOutputsEnabled</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l01438"></a><span class="lineno"> 1438</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a136d4a817fbd14c375ff068c436f3eeb" title="Set a value and validity for all digital inputs. ">setDigitalInputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
+<div class="line"><a name="l01439"></a><span class="lineno"> 1439</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a5685ba4a6cee6fad1555dc9b51d1d932" title="Set a value and validity for all digital outputs. ">setDigitalOutputsValue</a>(<a class="code" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>());</div>
+<div class="line"><a name="l01440"></a><span class="lineno"> 1440</span>&#160;    pvIos-&gt;<a class="code" href="classmdt_device_ios.html#ab1d98b31f7845c0015ac16728038d2db" title="Enable/disable (G)UI&#39;s digital outputs. ">setDigitalOutputsEnabled</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l01441"></a><span class="lineno"> 1441</span>&#160;  }</div>
+<div class="line"><a name="l01442"></a><span class="lineno"> 1442</span>&#160;  <span class="comment">// Add a error</span></div>
+<div class="line"><a name="l01443"></a><span class="lineno"> 1443</span>&#160;  <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured ">mdtError</a> e(<a class="code" href="mdt_error_8h.html#a0f1a2f7579a33e6de2fe8a1cbb5bbbb5aba6f11283d5d318eae7ac9979f7f3c8d">MDT_DEVICE_ERROR</a>, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name. ">name</a>() + <span class="stringliteral">&quot; goes to error state&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);</div>
+<div class="line"><a name="l01444"></a><span class="lineno"> 1444</span>&#160;  <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce" title="Add source information to error. ">MDT_ERROR_SET_SRC</a>(e, <span class="stringliteral">&quot;mdtDevice&quot;</span>);</div>
+<div class="line"><a name="l01445"></a><span class="lineno"> 1445</span>&#160;  e.commit();</div>
+<div class="line"><a name="l01446"></a><span class="lineno"> 1446</span>&#160;  qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtDevice: new state is Error&quot;</span>;</div>
+<div class="line"><a name="l01447"></a><span class="lineno"> 1447</span>&#160;  emit(<a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="mdtDeviceIos *pvIos; // I/O&#39;s container ">stateChanged</a>(<a class="code" href="classmdt_device.html#a76ddf08ac78502b835b192a8f38f963f" title="Get device state. ">currentState</a>()));</div>
+<div class="line"><a name="l01448"></a><span class="lineno"> 1448</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 6 2014 09:34:16 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jun 28 2014 13:24:40 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

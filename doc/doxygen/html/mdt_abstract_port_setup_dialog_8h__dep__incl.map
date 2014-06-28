@@ -1,18 +1,13 @@
 <map id="src/mdtport/mdtAbstractPortSetupDialog.h" name="src/mdtport/mdtAbstractPortSetupDialog.h">
-<area shape="rect" id="node3" href="$mdt_abstract_port_setup_dialog_8cpp.html" title="src/mdtport/mdtAbstractPort\lSetupDialog.cpp" alt="" coords="211,102,397,149"/>
-<area shape="rect" id="node5" href="$mdt_modbus_tcp_port_setup_dialog_8h.html" title="src/mdtport/mdtModbusTcp\lPortSetupDialog.h" alt="" coords="421,102,603,149"/>
-<area shape="rect" id="node13" href="$mdt_usbtmc_port_setup_dialog_8h.html" title="src/mdtport/mdtUsbtmcPort\lSetupDialog.h" alt="" coords="697,102,881,149"/>
-<area shape="rect" id="node21" href="$moc__mdt_abstract_port_setup_dialog_8cxx.html" title="src/mdtport/moc_mdtAbstract\lPortSetupDialog.cxx" alt="" coords="905,102,1100,149"/>
-<area shape="rect" id="node23" href="$mdt_serial_port_setup_dialog_8h.html" title="src/mdtserialport/mdtSerial\lPortSetupDialog.h" alt="" coords="1331,102,1509,149"/>
-<area shape="rect" id="node7" href="$mdt_modbus_tcp_port_setup_dialog_8cpp.html" title="src/mdtport/mdtModbusTcp\lPortSetupDialog.cpp" alt="" coords="421,198,603,245"/>
-<area shape="rect" id="node9" href="$moc__mdt_modbus_tcp_port_setup_dialog_8cxx.html" title="src/mdtport/moc_mdtModbus\lTcpPortSetupDialog.cxx" alt="" coords="5,198,197,245"/>
-<area shape="rect" id="node11" href="$mdt_modbus_io_tool_8cpp.html" title="src/mdttools/mdtModbusIo\lTool.cpp" alt="" coords="221,198,397,245"/>
-<area shape="rect" id="node15" href="$mdt_usbtmc_port_setup_dialog_8cpp.html" title="src/mdtport/mdtUsbtmcPort\lSetupDialog.cpp" alt="" coords="893,198,1077,245"/>
-<area shape="rect" id="node17" href="$moc__mdt_usbtmc_port_setup_dialog_8cxx.html" title="src/mdtport/moc_mdtUsbtmc\lPortSetupDialog.cxx" alt="" coords="627,198,819,245"/>
-<area shape="rect" id="node19" href="$mdt_port_term_8cpp.html" title="src/mdttools/mdtPortTerm.cpp" alt="" coords="919,303,1116,332"/>
-<area shape="rect" id="node25" href="$main_8cpp.html" title="src/main.cpp" alt="" coords="1501,303,1597,332"/>
-<area shape="rect" id="node27" href="$mdt_serial_port_setup_dialog_8cpp.html" title="src/mdtserialport/mdtSerial\lPortSetupDialog.cpp" alt="" coords="1587,198,1765,245"/>
-<area shape="rect" id="node29" href="$moc__mdt_serial_port_setup_dialog_8cxx.html" title="src/mdtserialport/moc\l_mdtSerialPortSetupDialog.cxx" alt="" coords="1101,198,1304,245"/>
-<area shape="rect" id="node31" href="$mdt_port_term_8h.html" title="src/mdttools/mdtPortTerm.h" alt="" coords="1328,207,1512,236"/>
-<area shape="rect" id="node35" href="$moc__mdt_port_term_8cxx.html" title="src/mdttools/moc_mdtPort\lTerm.cxx" alt="" coords="1301,294,1477,341"/>
+<area shape="rect" id="node3" href="$mdt_abstract_port_setup_dialog_8cpp.html" title="src/mdtport/mdtAbstractPort\lSetupDialog.cpp" alt="" coords="5,102,192,149"/>
+<area shape="rect" id="node5" href="$mdt_modbus_tcp_port_setup_dialog_8h.html" title="src/mdtport/mdtModbusTcp\lPortSetupDialog.h" alt="" coords="216,102,397,149"/>
+<area shape="rect" id="node11" href="$mdt_usbtmc_port_setup_dialog_8h.html" title="src/mdtport/mdtUsbtmcPort\lSetupDialog.h" alt="" coords="421,102,605,149"/>
+<area shape="rect" id="node17" href="$mdt_serial_port_setup_dialog_8h.html" title="src/mdtserialport/mdtSerial\lPortSetupDialog.h" alt="" coords="783,102,961,149"/>
+<area shape="rect" id="node7" href="$mdt_modbus_tcp_port_setup_dialog_8cpp.html" title="src/mdtport/mdtModbusTcp\lPortSetupDialog.cpp" alt="" coords="216,198,397,245"/>
+<area shape="rect" id="node9" href="$mdt_modbus_io_tool_8cpp.html" title="src/mdttools/mdtModbusIo\lTool.cpp" alt="" coords="16,198,192,245"/>
+<area shape="rect" id="node13" href="$mdt_usbtmc_port_setup_dialog_8cpp.html" title="src/mdtport/mdtUsbtmcPort\lSetupDialog.cpp" alt="" coords="472,198,656,245"/>
+<area shape="rect" id="node15" href="$mdt_port_term_8cpp.html" title="src/mdttools/mdtPortTerm.cpp" alt="" coords="585,293,783,323"/>
+<area shape="rect" id="node19" href="$main_8cpp.html" title="src/main.cpp" alt="" coords="991,293,1087,323"/>
+<area shape="rect" id="node21" href="$mdt_serial_port_setup_dialog_8cpp.html" title="src/mdtserialport/mdtSerial\lPortSetupDialog.cpp" alt="" coords="680,198,859,245"/>
+<area shape="rect" id="node23" href="$mdt_port_term_8h.html" title="src/mdttools/mdtPortTerm.h" alt="" coords="883,207,1067,236"/>
 </map>

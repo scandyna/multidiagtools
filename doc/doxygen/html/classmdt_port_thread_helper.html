@@ -329,7 +329,7 @@ Protected Attributes</h2></td></tr>
 <p>Get a new frame for reading data from port. </p>
 <p>This is a helper method to get a new frame in port's read frames pool.</p>
 <p>It can hapen that the read frames pool is empty. In this case, a error will be generated in the <a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured ">mdtError</a> log system, and notified with ReadPoolEmpty error. This method will also block ( sleep ) until a frame is available in read pool.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000031">Todo:</a></b></dt><dd>Currently implemented in polling, should be done with a wait condition.</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000032">Todo:</a></b></dt><dd>Currently implemented in polling, should be done with a wait condition.</dd></dl>
 <p>Note about port mutex handling:<br/>
  The port mutext must be locked before calling this method. Internally, it will be unlocked during wait, and will be locked again. So, the port mutex is allways locked when this method returns.</p>
 <p>Note: internally, currentReadFrame is updated.</p>
@@ -508,8 +508,6 @@ Thread must be set with <a class="el" href="classmdt_port_thread_helper.html#af6
 <p>Emited when a new frame is available. </p>
 <p>This signal is connected to mdtPortThread::void <a class="el" href="classmdt_port_thread_helper.html#a751006665ed9f110ade8ced5264a5f50" title="Emited when a new frame is available. ">newFrameReaden()</a> in <a class="el" href="classmdt_port_thread_helper.html#af6c9d2cb2e9e922942236068bf634b0b" title="Set the thread instance. ">setThread()</a>. </p>
 
-<p>Definition at line <a class="el" href="moc__mdt_port_thread_helper_8cxx_source.html#l00118">118</a> of file <a class="el" href="moc__mdt_port_thread_helper_8cxx_source.html">moc_mdtPortThreadHelper.cxx</a>.</p>
-
 <p>Referenced by <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00060">setThread()</a>, and <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00215">submitCurrentReadFrame()</a>.</p>
 
 </div>
@@ -580,8 +578,6 @@ Thread must be set with <a class="el" href="classmdt_port_thread_helper.html#af6
 
 <p>Emitted when a read process begins. </p>
 <p>This signal is connected to mdtPortThread::void <a class="el" href="classmdt_port_thread_helper.html#a78007ee41a04ffde474087a80858c0ce" title="Emitted when a read process begins. ">readProcessBegin()</a> in <a class="el" href="classmdt_port_thread_helper.html#af6c9d2cb2e9e922942236068bf634b0b" title="Set the thread instance. ">setThread()</a>. </p>
-
-<p>Definition at line <a class="el" href="moc__mdt_port_thread_helper_8cxx_source.html#l00106">106</a> of file <a class="el" href="moc__mdt_port_thread_helper_8cxx_source.html">moc_mdtPortThreadHelper.cxx</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00060">setThread()</a>, and <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00244">submitReadenData()</a>.</p>
 
@@ -791,7 +787,7 @@ Port's writeFramesPool queue must not allready contain currentWriteFrame. </dd><
 
 <p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00060">60</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
 
-<p>References <a class="el" href="moc__mdt_port_thread_helper_8cxx_source.html#l00118">newFrameReaden()</a>, <a class="el" href="mdt_port_thread_helper_8h_source.html#l00311">pvThread</a>, <a class="el" href="moc__mdt_port_thread_helper_8cxx_source.html#l00106">readProcessBegin()</a>, and <a class="el" href="moc__mdt_port_thread_helper_8cxx_source.html#l00112">writeProcessBegin()</a>.</p>
+<p>References <a class="el" href="classmdt_port_thread_helper.html#a751006665ed9f110ade8ced5264a5f50">newFrameReaden()</a>, <a class="el" href="mdt_port_thread_helper_8h_source.html#l00311">pvThread</a>, <a class="el" href="classmdt_port_thread_helper.html#a78007ee41a04ffde474087a80858c0ce">readProcessBegin()</a>, and <a class="el" href="classmdt_port_thread_helper.html#a80df5929776f6c617b96f2184e2bc96d">writeProcessBegin()</a>.</p>
 
 </div>
 </div>
@@ -827,7 +823,7 @@ Port's readenFrames queue must not allready contain currentReadFrame. </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00215">215</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
 
-<p>References <a class="el" href="moc__mdt_port_thread_helper_8cxx_source.html#l00118">newFrameReaden()</a>, <a class="el" href="mdt_port_thread_helper_8h_source.html#l00310">pvPort</a>, <a class="el" href="mdt_port_thread_helper_8h_source.html#l00311">pvThread</a>, and <a class="el" href="mdt_abstract_port_8cpp_source.html#l00288">mdtAbstractPort::readenFrames()</a>.</p>
+<p>References <a class="el" href="classmdt_port_thread_helper.html#a751006665ed9f110ade8ced5264a5f50">newFrameReaden()</a>, <a class="el" href="mdt_port_thread_helper_8h_source.html#l00310">pvPort</a>, <a class="el" href="mdt_port_thread_helper_8h_source.html#l00311">pvThread</a>, and <a class="el" href="mdt_abstract_port_8cpp_source.html#l00288">mdtAbstractPort::readenFrames()</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00244">submitReadenData()</a>.</p>
 
@@ -884,7 +880,7 @@ data must be valid. </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00244">244</a> of file <a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_frame_8cpp_source.html#l00156">mdtFrame::bytesToStore()</a>, <a class="el" href="mdt_frame_8cpp_source.html#l00209">mdtFrame::eofSeqLen()</a>, <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00180">getNewFrameRead()</a>, <a class="el" href="mdt_frame_8cpp_source.html#l00192">mdtFrame::putData()</a>, <a class="el" href="mdt_port_thread_helper_8h_source.html#l00310">pvPort</a>, <a class="el" href="mdt_port_thread_helper_8h_source.html#l00311">pvThread</a>, <a class="el" href="moc__mdt_port_thread_helper_8cxx_source.html#l00106">readProcessBegin()</a>, <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00215">submitCurrentReadFrame()</a>, and <a class="el" href="mdt_abstract_port_8h_source.html#l00084">mdtAbstractPort::UnhandledError</a>.</p>
+<p>References <a class="el" href="mdt_frame_8cpp_source.html#l00156">mdtFrame::bytesToStore()</a>, <a class="el" href="mdt_frame_8cpp_source.html#l00209">mdtFrame::eofSeqLen()</a>, <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00180">getNewFrameRead()</a>, <a class="el" href="mdt_frame_8cpp_source.html#l00192">mdtFrame::putData()</a>, <a class="el" href="mdt_port_thread_helper_8h_source.html#l00310">pvPort</a>, <a class="el" href="mdt_port_thread_helper_8h_source.html#l00311">pvThread</a>, <a class="el" href="classmdt_port_thread_helper.html#a78007ee41a04ffde474087a80858c0ce">readProcessBegin()</a>, <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00215">submitCurrentReadFrame()</a>, and <a class="el" href="mdt_abstract_port_8h_source.html#l00084">mdtAbstractPort::UnhandledError</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_port_thread_helper_port_8cpp_source.html#l00060">mdtPortThreadHelperPort::readFromPort()</a>.</p>
 
@@ -913,8 +909,6 @@ data must be valid. </dd></dl>
 
 <p>Emitted when a write process begins. </p>
 <p>This signal is connected to mdtPortThread::void <a class="el" href="classmdt_port_thread_helper.html#a80df5929776f6c617b96f2184e2bc96d" title="Emitted when a write process begins. ">writeProcessBegin()</a> in <a class="el" href="classmdt_port_thread_helper.html#af6c9d2cb2e9e922942236068bf634b0b" title="Set the thread instance. ">setThread()</a>. </p>
-
-<p>Definition at line <a class="el" href="moc__mdt_port_thread_helper_8cxx_source.html#l00112">112</a> of file <a class="el" href="moc__mdt_port_thread_helper_8cxx_source.html">moc_mdtPortThreadHelper.cxx</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00060">setThread()</a>, and <a class="el" href="mdt_port_thread_helper_port_8cpp_source.html#l00095">mdtPortThreadHelperPort::writeDataToPort()</a>.</p>
 
@@ -972,12 +966,11 @@ data must be valid. </dd></dl>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtport/<a class="el" href="mdt_port_thread_helper_8h_source.html">mdtPortThreadHelper.h</a></li>
 <li>src/mdtport/<a class="el" href="mdt_port_thread_helper_8cpp_source.html">mdtPortThreadHelper.cpp</a></li>
-<li>src/mdtport/<a class="el" href="moc__mdt_port_thread_helper_8cxx_source.html">moc_mdtPortThreadHelper.cxx</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 6 2014 09:34:22 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jun 28 2014 13:24:48 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

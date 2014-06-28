@@ -2342,7 +2342,7 @@ Protected Member Functions</h2></td></tr>
 <p>Will read status (Sx) and data (Dx) bytes from physical module and update internally cached values.</p>
 <p>Note: this method will not send a specific query. For this, control byte must be setup regarding specific module and sent to device with <a class="el" href="classmdt_device_modbus_wago_module.html#a92cf3b411849e57c1d392ffa1b2e2ce6" title="Write control byte for given range of channels. ">writeControlBytes()</a> first.</p>
 <dl class="section pre"><dt>Precondition</dt><dd>firstChannel and lastChannel must be in a valid range</dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000010">Todo:</a></b></dt><dd>Implement needDeviceSetupState </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000011">Todo:</a></b></dt><dd>Implement needDeviceSetupState </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html#l00433">433</a> of file <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html">mdtDeviceModbusWagoModule.cpp</a>.</p>
 
@@ -2392,7 +2392,7 @@ Protected Member Functions</h2></td></tr>
 <p>Will read status byte (Sx) from physical module and update internally cached value.</p>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="classmdt_device_modbus_wago_module.html#abe92a4c761a0ccf4d31312eda0521b11" title="Get the status byte for given channel. ">statusByte()</a> </dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd>firstChannel and lastChannel must be in a valid range</dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000012">Todo:</a></b></dt><dd>Implement needDeviceSetupState </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000013">Todo:</a></b></dt><dd>Implement needDeviceSetupState </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html#l00533">533</a> of file <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html">mdtDeviceModbusWagoModule.cpp</a>.</p>
 
@@ -2644,7 +2644,7 @@ Protected Member Functions</h2></td></tr>
 <p>This method will use this word do create internally I/O's based on <a class="el" href="classmdt_abstract_io.html" title="Base class for I/O handling on (G)UI. ">mdtAbstractIo</a> and setup them on the base of known parameters (range, type, etc...).</p>
 <p>Note that no absolute addressing is done at this step. Call <a class="el" href="classmdt_device_modbus_wago_module.html#ac7d9da94e7d4c06e288a346ac123c711" title="Update addresses of the module. ">updateAddresses()</a> for this.</p>
 <p>Some special modules need to communicate with fieldbus coupler to access register service. To get setup during I/O detection, use getSpecialModuleSetup() instead of this method.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000014">Todo:</a></b></dt><dd>Adapt</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000015">Todo:</a></b></dt><dd>Adapt</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">word</td><td>Word that contains I/O informations. </td></tr>
@@ -2866,7 +2866,7 @@ Protected Member Functions</h2></td></tr>
 <p>Will write cached control byte (Cx) to physical module.</p>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="classmdt_device_modbus_wago_module.html#aba44d9749bb81fe2659699ae3c50842c" title="Set the control byte for given channel. ">setControlByte()</a> </dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd>firstChannel and lastChannel must be in a valid range</dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000013">Todo:</a></b></dt><dd>Implement needDeviceSetupState </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000014">Todo:</a></b></dt><dd>Implement needDeviceSetupState </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html#l00577">577</a> of file <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html">mdtDeviceModbusWagoModule.cpp</a>.</p>
 
@@ -2915,7 +2915,7 @@ Protected Member Functions</h2></td></tr>
 <p>Write register bytes for given range of channels. </p>
 <p>Will write cached control (Cx) and data (Dx) bytes to physical module.</p>
 <dl class="section pre"><dt>Precondition</dt><dd>firstChannel and lastChannel must be in a valid range</dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000011">Todo:</a></b></dt><dd>Implement needDeviceSetupState </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000012">Todo:</a></b></dt><dd>Implement needDeviceSetupState </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html#l00493">493</a> of file <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html">mdtDeviceModbusWagoModule.cpp</a>.</p>
 
@@ -2930,7 +2930,7 @@ Protected Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 6 2014 09:34:21 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jun 28 2014 13:24:47 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

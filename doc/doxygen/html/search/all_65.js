@@ -1,13 +1,14 @@
 var searchData=
 [
   ['edge_5ft',['edge_t',['../namespacemdt_cl_path_graph_private.html#a96eb891b98d89bbea2f573cd8f3accd2',1,'mdtClPathGraphPrivate']]],
-  ['edit',['Edit',['../classmdt_cl_unit_connection_dialog.html#a754889f1591eddb79b69de4c51532f43a855eaf8093ea6043e46688cc5115643f',1,'mdtClUnitConnectionDialog::Edit()'],['../classmdt_tt_test_node_unit.html#a816cfe9014765ff66f040a11e057e285',1,'mdtTtTestNodeUnit::edit()']]],
+  ['edit',['Edit',['../classmdt_cl_unit_connection_dialog.html#a754889f1591eddb79b69de4c51532f43a855eaf8093ea6043e46688cc5115643f',1,'mdtClUnitConnectionDialog::Edit()'],['../classmdt_tt_test_node_unit_dialog.html#a27aec8b26b20230fcf0054e2f2f5c18ea24f18a30dc0ef344be1955ba4438d525',1,'mdtTtTestNodeUnitDialog::Edit()']]],
   ['editcomponent',['editComponent',['../classmdt_cl_article.html#a065c948e09af084586a4c1b110afefbb',1,'mdtClArticle']]],
   ['editconnection',['editConnection',['../classmdt_cl_article.html#add1dafdef4f6195860eed12c8722ff66',1,'mdtClArticle::editConnection()'],['../classmdt_cl_unit.html#aac3afb2a4895a16f637b765b44cbca9e',1,'mdtClUnit::editConnection()']]],
   ['editconnectorname',['editConnectorName',['../classmdt_cl_article.html#aed8a2fc638636a618409694a655e9819',1,'mdtClArticle::editConnectorName()'],['../classmdt_cl_unit.html#a7bb1ff9cc5469f45dbf244fd26d60329',1,'mdtClUnit::editConnectorName()']]],
   ['editing',['Editing',['../classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072a20fe5aac135b77990ad4a01a54ded05d',1,'mdtAbstractSqlWidget']]],
   ['editingnewrow',['EditingNewRow',['../classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072ad9d8094cd8165836394cac84adab6e65',1,'mdtAbstractSqlWidget']]],
   ['editlink',['editLink',['../classmdt_cl_article.html#a3c627720a87e6003bb78c0727ec2ba64',1,'mdtClArticle::editLink()'],['../classmdt_cl_link.html#a20d0c8888a1674a6977940fcde654f60',1,'mdtClLink::editLink()'],['../classmdt_tt_test_connection_cable.html#a7d2c08b218bd95e50a20f42bce242d83',1,'mdtTtTestConnectionCable::editLink()']]],
+  ['editnodeunit',['editNodeUnit',['../classmdt_tt_test_node_unit.html#ab7b6cbf0c8d4fb6d9495216e946571d3',1,'mdtTtTestNodeUnit']]],
   ['elapsed',['elapsed',['../classmdt_time.html#abbd22fa3b8a33b8c82e0544c20c41af1',1,'mdtTime']]],
   ['elapsedsec',['elapsedSec',['../classmdt_time.html#aabd78c0447eea8a95a9fd88adc4cb6a0',1,'mdtTime']]],
   ['enabledstatechangedforui',['enabledStateChangedForUi',['../classmdt_abstract_io.html#a4406bc16e8decdb506b34d9ca679203e',1,'mdtAbstractIo']]],

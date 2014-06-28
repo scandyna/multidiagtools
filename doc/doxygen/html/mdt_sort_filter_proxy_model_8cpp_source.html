@@ -116,7 +116,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &lt;QSqlQueryModel&gt;</span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;QSqlRecord&gt;</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">//#include &lt;QDebug&gt;</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;QDebug&gt;</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
 <div class="line"><a name="l00030"></a><span class="lineno"><a class="code" href="classmdt_sort_filter_proxy_model.html#a83bcd157f655c4d675e5a30d97fa16ba">   30</a></span>&#160;<a class="code" href="classmdt_sort_filter_proxy_model.html#a83bcd157f655c4d675e5a30d97fa16ba" title="Constructor. ">mdtSortFilterProxyModel::mdtSortFilterProxyModel</a>(<a class="code" href="class_q_object.html">QObject</a> *parent)</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; : <a class="code" href="class_q_sort_filter_proxy_model.html">QSortFilterProxyModel</a>(parent)</div>
@@ -207,19 +207,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  <span class="keywordtype">int</span> i;</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  QPair&lt;int, Qt::SortOrder&gt; p;</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  <span class="keywordflow">if</span>(pvColumnsSortOrder.isEmpty()){</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    QSortFilterProxyModel::sort(column, order);</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;  }<span class="keywordflow">else</span>{</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    <span class="keywordflow">for</span>(i = 0; i &lt; pvColumnsSortOrder.size(); ++i){</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;      p = pvColumnsSortOrder.at(i);</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;      QSortFilterProxyModel::sort(p.first, p.second);</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    }</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  }</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;}</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtSortFilterProxyModel::sort() - columns: &quot;</span> &lt;&lt; pvColumnsSortOrder;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  </div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;  <span class="keywordflow">if</span>(pvColumnsSortOrder.isEmpty()){</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    QSortFilterProxyModel::sort(column, order);</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;  }<span class="keywordflow">else</span>{</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    <span class="keywordflow">for</span>(i = 0; i &lt; pvColumnsSortOrder.size(); ++i){</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;      p = pvColumnsSortOrder.at(i);</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;      QSortFilterProxyModel::sort(p.first, p.second);</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    }</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;  }</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 6 2014 09:34:17 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jun 28 2014 13:24:41 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

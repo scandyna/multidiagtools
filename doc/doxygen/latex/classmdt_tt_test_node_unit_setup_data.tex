@@ -1,0 +1,117 @@
+\hypertarget{classmdt_tt_test_node_unit_setup_data}{\section{mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data Class Reference}
+\label{classmdt_tt_test_node_unit_setup_data}\index{mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data@{mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data}}
+}
+
+
+Storage class for test node unit.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=228pt]{classmdt_tt_test_node_unit_setup_data__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=228pt]{classmdt_tt_test_node_unit_setup_data__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_tt_test_node_unit_setup_data_a0d9372606909ab76e423f8aa180a9c38}{mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data} ()
+\begin{DoxyCompactList}\small\item\em Construct a empty test node data container. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_tt_test_node_unit_setup_data_aee5b9ec83805c0ef6fecae14adcee518}{mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data} (const Q\-Sql\-Record \&record)
+\begin{DoxyCompactList}\small\item\em Construct a test node unit setup data based on a Q\-Sql\-Record. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_test_node_unit_setup_data_a2a2bb93f0ceb79adec8b4692cf1afb39}{setup} (const Q\-Sql\-Database \&db)
+\begin{DoxyCompactList}\small\item\em Setup fields from Test\-Node\-Unit\-Setup\-\_\-tbl. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Storage class for test node unit. 
+
+Definition at line 29 of file mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_tt_test_node_unit_setup_data_a0d9372606909ab76e423f8aa180a9c38}{\index{mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data@{mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data}!mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data@{mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data}}
+\index{mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data@{mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data}!mdtTtTestNodeUnitSetupData@{mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data}}
+\subsubsection[{mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data\-::mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_node_unit_setup_data_a0d9372606909ab76e423f8aa180a9c38}
+
+
+Construct a empty test node data container. 
+
+
+
+Definition at line 24 of file mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data.\-cpp.
+
+\hypertarget{classmdt_tt_test_node_unit_setup_data_aee5b9ec83805c0ef6fecae14adcee518}{\index{mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data@{mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data}!mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data@{mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data}}
+\index{mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data@{mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data}!mdtTtTestNodeUnitSetupData@{mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data}}
+\subsubsection[{mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data\-::mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data (
+\begin{DoxyParamCaption}
+\item[{const Q\-Sql\-Record \&}]{record}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_node_unit_setup_data_aee5b9ec83805c0ef6fecae14adcee518}
+
+
+Construct a test node unit setup data based on a Q\-Sql\-Record. 
+
+\begin{DoxyPrecond}{Precondition}
+record must contain all fields from Test\-Node\-Unit\-Setup\-\_\-tbl 
+\end{DoxyPrecond}
+
+
+Definition at line 28 of file mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data.\-cpp.
+
+
+
+References mdt\-Sql\-Record\-::contains().
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_tt_test_node_unit_setup_data_a2a2bb93f0ceb79adec8b4692cf1afb39}{\index{mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data@{mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data}!setup@{setup}}
+\index{setup@{setup}!mdtTtTestNodeUnitSetupData@{mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data}}
+\subsubsection[{setup}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data\-::setup (
+\begin{DoxyParamCaption}
+\item[{const Q\-Sql\-Database \&}]{db}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_node_unit_setup_data_a2a2bb93f0ceb79adec8b4692cf1afb39}
+
+
+Setup fields from Test\-Node\-Unit\-Setup\-\_\-tbl. 
+
+
+
+Definition at line 37 of file mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data.\-cpp.
+
+
+
+References mdt\-Sql\-Record\-::add\-All\-Fields().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdttools/mdttesttool/\hyperlink{mdt_tt_test_node_unit_setup_data_8h}{mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data.\-h}\item 
+src/mdttools/mdttesttool/\hyperlink{mdt_tt_test_node_unit_setup_data_8cpp}{mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data.\-cpp}\end{DoxyCompactItemize}

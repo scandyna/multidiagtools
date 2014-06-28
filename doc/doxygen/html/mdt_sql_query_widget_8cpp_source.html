@@ -126,17 +126,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00035"></a><span class="lineno"><a class="code" href="classmdt_sql_query_widget.html#a164c6ea31fd4499109c6422f7a8f2bdf">   35</a></span>&#160;<a class="code" href="classmdt_sql_query_widget.html#a164c6ea31fd4499109c6422f7a8f2bdf" title="Constructor. ">mdtSqlQueryWidget::mdtSqlQueryWidget</a>(<a class="code" href="class_q_widget.html">QWidget</a> *parent)</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; : <a class="code" href="class_q_widget.html">QWidget</a>(parent)</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;{</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <a class="code" href="class_ui__mdt_sql_query_widget.html#a9ae4657102919bba47ca1bab699a4ee3">setupUi</a>(<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  setupUi(<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="comment">// Setup data part</span></div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  pvModel = <span class="keyword">new</span> QSqlQueryModel(<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  pvProxyModel = <span class="keyword">new</span> <a class="code" href="classmdt_sort_filter_proxy_model.html" title="Provide natural sort for Qt model/view. ">mdtSortFilterProxyModel</a>(<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  pvProxyModel-&gt;setSourceModel(pvModel);</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <a class="code" href="class_ui__mdt_sql_query_widget.html#adfcef96e9d51747e123ae65ffa30e2b7">twData</a>-&gt;setModel(pvProxyModel);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  twData-&gt;setModel(pvProxyModel);</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  connect(<a class="code" href="class_ui__mdt_sql_query_widget.html#a117cc61c4f8ab6342e54479353cf333b">pbRefresh</a>, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(select()));</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  connect(<a class="code" href="class_ui__mdt_sql_query_widget.html#a6a5136ed52cadc20027117ee6cba892e">pbTables</a>, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(chooseTables()));</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  connect(<a class="code" href="class_ui__mdt_sql_query_widget.html#a218433a4d53dc34a34462c16b435cab4">pbFields</a>, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(chooseFields()));</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  connect(<a class="code" href="class_ui__mdt_sql_query_widget.html#aae8e5865d63a67f4377058ba0af523e9">pbSort</a>, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(chooseFieldsSort()));</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  connect(pbRefresh, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(select()));</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  connect(pbTables, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(chooseTables()));</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  connect(pbFields, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(chooseFields()));</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  connect(pbSort, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(chooseFieldsSort()));</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;}</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
 <div class="line"><a name="l00051"></a><span class="lineno"><a class="code" href="classmdt_sql_query_widget.html#a03a4c8f444655f35d91b1a1b58a13b85">   51</a></span>&#160;<a class="code" href="classmdt_sql_query_widget.html#a03a4c8f444655f35d91b1a1b58a13b85" title="Destructor. ">mdtSqlQueryWidget::~mdtSqlQueryWidget</a>()</div>
@@ -176,7 +176,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  }</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  pvModel-&gt;setQuery(query);</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  updateHeaderTexts();</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  <a class="code" href="class_ui__mdt_sql_query_widget.html#adfcef96e9d51747e123ae65ffa30e2b7">twData</a>-&gt;resizeColumnsToContents();</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  twData-&gt;resizeColumnsToContents();</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;}</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="keywordtype">void</span> mdtSqlQueryWidget::chooseTables()</div>
@@ -215,7 +215,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;</div>
 <div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;<span class="keywordtype">void</span> mdtSqlQueryWidget::chooseFields()</div>
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;{</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;  <a class="code" href="classmdt_mv_column_selection_dialog.html" title="Let the user manage fields to display in table view. ">mdtMvColumnSelectionDialog</a> dialog(<span class="keyword">this</span>, pvModel, <a class="code" href="class_ui__mdt_sql_query_widget.html#adfcef96e9d51747e123ae65ffa30e2b7">twData</a>);</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;  <a class="code" href="classmdt_mv_column_selection_dialog.html" title="Let the user manage fields to display in table view. ">mdtMvColumnSelectionDialog</a> dialog(<span class="keyword">this</span>, pvModel, twData);</div>
 <div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;  dialog.exec();</div>
 <div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;}</div>
 <div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;</div>
@@ -235,7 +235,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;  <span class="keywordflow">while</span>(pvModel-&gt;canFetchMore()){</div>
 <div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;    pvModel-&gt;fetchMore();</div>
 <div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;  }</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;  <a class="code" href="class_ui__mdt_sql_query_widget.html#adfcef96e9d51747e123ae65ffa30e2b7">twData</a>-&gt;sortByColumn(0);</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;  twData-&gt;sortByColumn(0);</div>
 <div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;}</div>
 <div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;</div>
 <div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;</div>
@@ -279,7 +279,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 6 2014 09:34:17 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jun 28 2014 13:24:41 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

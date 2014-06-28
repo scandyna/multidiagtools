@@ -1,6 +1,5 @@
 <map id="src/mdttools/mdttesttool/mdtcablelist/mdtClArticleConnectionDialog.h" name="src/mdttools/mdttesttool/mdtcablelist/mdtClArticleConnectionDialog.h">
-<area shape="rect" id="node3" href="$ui__mdt_cl_article_connection_dialog_8h.html" title="ui_mdtClArticleConnection\lDialog.h" alt="" coords="944,118,1120,165"/>
-<area shape="rect" id="node31" href="$mdt_cl_article_connection_data_8h.html" title="mdtClArticleConnectionData.h" alt="" coords="2243,127,2440,156"/>
-<area shape="rect" id="node33" href="$mdt_sql_record_8h.html" title="mdtSqlRecord.h" alt="" coords="2053,213,2168,243"/>
-<area shape="rect" id="node35" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="1780,291,1863,320"/>
+<area shape="rect" id="node5" href="$mdt_cl_article_connection_data_8h.html" title="mdtClArticleConnectionData.h" alt="" coords="553,127,751,156"/>
+<area shape="rect" id="node7" href="$mdt_sql_record_8h.html" title="mdtSqlRecord.h" alt="" coords="364,213,479,243"/>
+<area shape="rect" id="node9" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="173,291,256,320"/>
 </map>

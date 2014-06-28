@@ -36,12 +36,16 @@ void \hyperlink{classmdt_sql_schema_table_a36b5b28c64ad9cfa69a65e775fc33cbd}{set
 \begin{DoxyCompactList}\small\item\em Set table name. \end{DoxyCompactList}\item 
 Q\-String \hyperlink{classmdt_sql_schema_table_a24def48594abf674f96852a4c0d5e9c1}{table\-Name} () const 
 \begin{DoxyCompactList}\small\item\em Get table name. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_schema_table_af6f32155aaaaa60c83f452f60268ee54}{set\-Table\-Temporary} (bool temporary)
+\begin{DoxyCompactList}\small\item\em Set/unset temporary flag. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_sql_schema_table_a175f4d150a816bd46bd1a8b3fccbe059}{set\-Storage\-Engine\-Name} (const Q\-String \&name)
 \begin{DoxyCompactList}\small\item\em Set the Maria D\-B/\-My\-S\-Q\-L storage engine (Xtra\-D\-B, Inno D\-B, ...) \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_sql_schema_table_a199589fde3f06590ba9cd38b1885fa38}{add\-Field} (const Q\-Sql\-Field \&field, bool is\-Part\-Of\-Primary\-Key)
+void \hyperlink{classmdt_sql_schema_table_a199589fde3f06590ba9cd38b1885fa38}{add\-Field} (const Q\-Sql\-Field \&\hyperlink{classmdt_sql_schema_table_a06de6124f02171e7bf3ffa207cb8a878}{field}, bool is\-Part\-Of\-Primary\-Key)
 \begin{DoxyCompactList}\small\item\em Add a field. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_sql_schema_table_a24a9e8f260bc96f96219711981124d87}{field\-Count} () const 
 \begin{DoxyCompactList}\small\item\em Get number of fields. \end{DoxyCompactList}\item 
+Q\-Sql\-Field \hyperlink{classmdt_sql_schema_table_a06de6124f02171e7bf3ffa207cb8a878}{field} (const Q\-String \&field\-Name) const 
+\begin{DoxyCompactList}\small\item\em Get field for given field name. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_sql_schema_table_a55c4ff0c8d01bf794e84cf4828d2cb56}{add\-Index} (const Q\-String \&name, bool unique)
 \begin{DoxyCompactList}\small\item\em Add a index. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_sql_schema_table_a3deb6f2b10178c252afbaabefb687722}{add\-Field\-To\-Index} (const Q\-String \&index\-Name, const Q\-String \&field\-Name)
@@ -50,7 +54,11 @@ void \hyperlink{classmdt_sql_schema_table_a48ab41fda7864ec8cd59468de2475ff2}{add
 \begin{DoxyCompactList}\small\item\em Add a foreign key contraint. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_sql_schema_table_a0909cc0e3ad602312ddf44de397d9fe4}{add\-Field\-To\-Foreign\-Key} (const Q\-String \&foreign\-Key\-Name, const Q\-String \&field\-Name, const Q\-String \&refering\-Field\-Name)
 \begin{DoxyCompactList}\small\item\em Add a field to a foreign key. \end{DoxyCompactList}\item 
-Q\-String \hyperlink{classmdt_sql_schema_table_a8a072145d85a6a2c183e01aaa6d91a5d}{sql\-For\-Create\-Table} () const 
+bool \hyperlink{classmdt_sql_schema_table_a652c5afd4af2965e8d5ead724dda3230}{update\-Foreign\-Key\-Refering\-Table} (const Q\-String \&name, const Q\-String \&refering\-Table\-Name)
+\begin{DoxyCompactList}\small\item\em Update a foreign key refering table name. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_sql_schema_table_a2cea444ccb26b0802fb230db5460e167}{setup\-From\-Table} (const Q\-String \&name, Q\-Sql\-Database db)
+\begin{DoxyCompactList}\small\item\em Setup structure from a existing table. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{classmdt_sql_schema_table_af6c605b7e7860ced2512792efda76357}{sql\-For\-Create\-Table} ()
 \begin{DoxyCompactList}\small\item\em Get S\-Q\-L statement for table creation. \end{DoxyCompactList}\item 
 Q\-String \hyperlink{classmdt_sql_schema_table_a35fd4ed657f48013747973fef78be345}{sql\-For\-Drop\-Table} () const 
 \begin{DoxyCompactList}\small\item\em Get S\-Q\-L statement for table deleteion. \end{DoxyCompactList}\item 
@@ -61,7 +69,7 @@ Q\-String \hyperlink{classmdt_sql_schema_table_a35fd4ed657f48013747973fef78be345
 \subsection{Detailed Description}
 Helper class that generate S\-Q\-L table creation string. 
 
-Definition at line 46 of file mdt\-Sql\-Schema\-Table.\-h.
+Definition at line 47 of file mdt\-Sql\-Schema\-Table.\-h.
 
 
 
@@ -88,7 +96,7 @@ Action on update or on delete.
 \end{Desc}
 
 
-Definition at line 52 of file mdt\-Sql\-Schema\-Table.\-h.
+Definition at line 53 of file mdt\-Sql\-Schema\-Table.\-h.
 
 
 
@@ -106,7 +114,7 @@ Constructor.
 
 
 
-Definition at line 25 of file mdt\-Sql\-Schema\-Table.\-cpp.
+Definition at line 28 of file mdt\-Sql\-Schema\-Table.\-cpp.
 
 \hypertarget{classmdt_sql_schema_table_a39be8d436117529ecdb881e0855e1403}{\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!$\sim$mdt\-Sql\-Schema\-Table@{$\sim$mdt\-Sql\-Schema\-Table}}
 \index{$\sim$mdt\-Sql\-Schema\-Table@{$\sim$mdt\-Sql\-Schema\-Table}!mdtSqlSchemaTable@{mdt\-Sql\-Schema\-Table}}
@@ -121,7 +129,7 @@ Destructor.
 
 
 
-Definition at line 29 of file mdt\-Sql\-Schema\-Table.\-cpp.
+Definition at line 32 of file mdt\-Sql\-Schema\-Table.\-cpp.
 
 
 
@@ -140,7 +148,7 @@ Add a field.
 
 
 
-Definition at line 75 of file mdt\-Sql\-Schema\-Table.\-cpp.
+Definition at line 88 of file mdt\-Sql\-Schema\-Table.\-cpp.
 
 
 
@@ -161,11 +169,11 @@ Add a field to a foreign key.
 
 Field must allready be created with \hyperlink{classmdt_sql_schema_table_a199589fde3f06590ba9cd38b1885fa38}{add\-Field()} and foreign key also with \hyperlink{classmdt_sql_schema_table_a48ab41fda7864ec8cd59468de2475ff2}{add\-Foreign\-Key()} . If foreign key with name foreign\-Key\-Name does not exists, or field with field\-Name not exists, this method returns false. 
 
-Definition at line 140 of file mdt\-Sql\-Schema\-Table.\-cpp.
+Definition at line 166 of file mdt\-Sql\-Schema\-Table.\-cpp.
 
 
 
-References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, and mdt\-Error\-::set\-Error().
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, field(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, and mdt\-Error\-::set\-Error().
 
 \hypertarget{classmdt_sql_schema_table_a3deb6f2b10178c252afbaabefb687722}{\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!add\-Field\-To\-Index@{add\-Field\-To\-Index}}
 \index{add\-Field\-To\-Index@{add\-Field\-To\-Index}!mdtSqlSchemaTable@{mdt\-Sql\-Schema\-Table}}
@@ -181,11 +189,11 @@ Add a field to a index.
 
 Field must allready be created with \hyperlink{classmdt_sql_schema_table_a199589fde3f06590ba9cd38b1885fa38}{add\-Field()} and index also with \hyperlink{classmdt_sql_schema_table_a55c4ff0c8d01bf794e84cf4828d2cb56}{add\-Index()} . If index with name index\-Name does not exists, or field with field\-Name not exists, this method returns false. 
 
-Definition at line 97 of file mdt\-Sql\-Schema\-Table.\-cpp.
+Definition at line 123 of file mdt\-Sql\-Schema\-Table.\-cpp.
 
 
 
-References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, and mdt\-Error\-::set\-Error().
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, field(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, and mdt\-Error\-::set\-Error().
 
 \hypertarget{classmdt_sql_schema_table_a48ab41fda7864ec8cd59468de2475ff2}{\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!add\-Foreign\-Key@{add\-Foreign\-Key}}
 \index{add\-Foreign\-Key@{add\-Foreign\-Key}!mdtSqlSchemaTable@{mdt\-Sql\-Schema\-Table}}
@@ -203,7 +211,7 @@ Add a foreign key contraint.
 
 
 
-Definition at line 127 of file mdt\-Sql\-Schema\-Table.\-cpp.
+Definition at line 153 of file mdt\-Sql\-Schema\-Table.\-cpp.
 
 
 
@@ -223,7 +231,7 @@ Add a index.
 
 If name allready exists, it will not be appended 
 
-Definition at line 88 of file mdt\-Sql\-Schema\-Table.\-cpp.
+Definition at line 114 of file mdt\-Sql\-Schema\-Table.\-cpp.
 
 \hypertarget{classmdt_sql_schema_table_a3ee39e0981fc152c6f811114b78068aa}{\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!clear@{clear}}
 \index{clear@{clear}!mdtSqlSchemaTable@{mdt\-Sql\-Schema\-Table}}
@@ -238,7 +246,30 @@ Clear.
 
 
 
-Definition at line 33 of file mdt\-Sql\-Schema\-Table.\-cpp.
+Definition at line 36 of file mdt\-Sql\-Schema\-Table.\-cpp.
+
+
+
+Referenced by setup\-From\-Table().
+
+\hypertarget{classmdt_sql_schema_table_a06de6124f02171e7bf3ffa207cb8a878}{\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!field@{field}}
+\index{field@{field}!mdtSqlSchemaTable@{mdt\-Sql\-Schema\-Table}}
+\subsubsection[{field}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Sql\-Field mdt\-Sql\-Schema\-Table\-::field (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{field\-Name}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_sql_schema_table_a06de6124f02171e7bf3ffa207cb8a878}
+
+
+Get field for given field name. 
+
+
+
+Definition at line 101 of file mdt\-Sql\-Schema\-Table.\-cpp.
+
+
+
+Referenced by add\-Field\-To\-Foreign\-Key(), and add\-Field\-To\-Index().
 
 \hypertarget{classmdt_sql_schema_table_a24a9e8f260bc96f96219711981124d87}{\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!field\-Count@{field\-Count}}
 \index{field\-Count@{field\-Count}!mdtSqlSchemaTable@{mdt\-Sql\-Schema\-Table}}
@@ -253,7 +284,7 @@ Get number of fields.
 
 
 
-Definition at line 83 of file mdt\-Sql\-Schema\-Table.\-cpp.
+Definition at line 96 of file mdt\-Sql\-Schema\-Table.\-cpp.
 
 
 
@@ -272,7 +303,7 @@ Get last error.
 
 
 
-Definition at line 219 of file mdt\-Sql\-Schema\-Table.\-cpp.
+Definition at line 296 of file mdt\-Sql\-Schema\-Table.\-cpp.
 
 \hypertarget{classmdt_sql_schema_table_aa9a99e27383cd6ba34231d5b2eb60dd8}{\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!set\-Database\-Name@{set\-Database\-Name}}
 \index{set\-Database\-Name@{set\-Database\-Name}!mdtSqlSchemaTable@{mdt\-Sql\-Schema\-Table}}
@@ -287,7 +318,7 @@ Set database name.
 
 
 
-Definition at line 53 of file mdt\-Sql\-Schema\-Table.\-cpp.
+Definition at line 57 of file mdt\-Sql\-Schema\-Table.\-cpp.
 
 \hypertarget{classmdt_sql_schema_table_a3518d03c95486589222610b69abe6ee8}{\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!set\-Driver\-Name@{set\-Driver\-Name}}
 \index{set\-Driver\-Name@{set\-Driver\-Name}!mdtSqlSchemaTable@{mdt\-Sql\-Schema\-Table}}
@@ -302,7 +333,7 @@ Set the driver name.
 
 Driver name must be given in format returned by Q\-Sql\-Database\-::driver\-Name() . 
 
-Definition at line 48 of file mdt\-Sql\-Schema\-Table.\-cpp.
+Definition at line 52 of file mdt\-Sql\-Schema\-Table.\-cpp.
 
 
 
@@ -321,7 +352,7 @@ Set the Maria D\-B/\-My\-S\-Q\-L storage engine (Xtra\-D\-B, Inno D\-B, ...)
 
 
 
-Definition at line 70 of file mdt\-Sql\-Schema\-Table.\-cpp.
+Definition at line 83 of file mdt\-Sql\-Schema\-Table.\-cpp.
 
 \hypertarget{classmdt_sql_schema_table_a36b5b28c64ad9cfa69a65e775fc33cbd}{\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!set\-Table\-Name@{set\-Table\-Name}}
 \index{set\-Table\-Name@{set\-Table\-Name}!mdtSqlSchemaTable@{mdt\-Sql\-Schema\-Table}}
@@ -338,30 +369,72 @@ Set table name.
 
 
 
-Definition at line 58 of file mdt\-Sql\-Schema\-Table.\-cpp.
+Definition at line 62 of file mdt\-Sql\-Schema\-Table.\-cpp.
 
 
 
 Referenced by mdt\-Data\-Table\-Manager\-::copy\-Table(), and mdt\-Data\-Table\-Manager\-::create\-Data\-Set().
 
-\hypertarget{classmdt_sql_schema_table_a8a072145d85a6a2c183e01aaa6d91a5d}{\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!sql\-For\-Create\-Table@{sql\-For\-Create\-Table}}
+\hypertarget{classmdt_sql_schema_table_af6f32155aaaaa60c83f452f60268ee54}{\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!set\-Table\-Temporary@{set\-Table\-Temporary}}
+\index{set\-Table\-Temporary@{set\-Table\-Temporary}!mdtSqlSchemaTable@{mdt\-Sql\-Schema\-Table}}
+\subsubsection[{set\-Table\-Temporary}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Schema\-Table\-::set\-Table\-Temporary (
+\begin{DoxyParamCaption}
+\item[{bool}]{temporary}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_schema_table_af6f32155aaaaa60c83f452f60268ee54}
+
+
+Set/unset temporary flag. 
+
+If temporary is true, the table will be created as temporary table (C\-R\-E\-A\-T\-E T\-E\-M\-P\-O\-R\-A\-R\-Y T\-A\-B\-L\-E ... in Sqlite and My\-Sql). 
+
+Definition at line 74 of file mdt\-Sql\-Schema\-Table.\-cpp.
+
+\hypertarget{classmdt_sql_schema_table_a2cea444ccb26b0802fb230db5460e167}{\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!setup\-From\-Table@{setup\-From\-Table}}
+\index{setup\-From\-Table@{setup\-From\-Table}!mdtSqlSchemaTable@{mdt\-Sql\-Schema\-Table}}
+\subsubsection[{setup\-From\-Table}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Schema\-Table\-::setup\-From\-Table (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{name, }
+\item[{Q\-Sql\-Database}]{db}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_schema_table_a2cea444ccb26b0802fb230db5460e167}
+
+
+Setup structure from a existing table. 
+
+Can be used to create a table that has same structure than a existing one. (Could also be used for reverse engeneering in future..)
+
+\begin{DoxyPrecond}{Precondition}
+db must be open 
+\end{DoxyPrecond}
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000004}{Todo}]Add indexes + foreign keys support \end{DoxyRefDesc}
+
+
+Definition at line 211 of file mdt\-Sql\-Schema\-Table.\-cpp.
+
+
+
+References clear(), mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, and mdt\-Error\-::set\-Error().
+
+\hypertarget{classmdt_sql_schema_table_af6c605b7e7860ced2512792efda76357}{\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!sql\-For\-Create\-Table@{sql\-For\-Create\-Table}}
 \index{sql\-For\-Create\-Table@{sql\-For\-Create\-Table}!mdtSqlSchemaTable@{mdt\-Sql\-Schema\-Table}}
 \subsubsection[{sql\-For\-Create\-Table}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Sql\-Schema\-Table\-::sql\-For\-Create\-Table (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}\label{classmdt_sql_schema_table_a8a072145d85a6a2c183e01aaa6d91a5d}
+)}}\label{classmdt_sql_schema_table_af6c605b7e7860ced2512792efda76357}
 
 
 Get S\-Q\-L statement for table creation. 
 
 
 
-Definition at line 171 of file mdt\-Sql\-Schema\-Table.\-cpp.
+Definition at line 248 of file mdt\-Sql\-Schema\-Table.\-cpp.
 
 
 
-References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-D\-A\-T\-A\-B\-A\-S\-E\-\_\-\-E\-R\-R\-O\-R, and M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C.
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, and mdt\-Error\-::set\-Error().
 
 
 
@@ -380,7 +453,7 @@ Get S\-Q\-L statement for table deleteion.
 
 
 
-Definition at line 197 of file mdt\-Sql\-Schema\-Table.\-cpp.
+Definition at line 274 of file mdt\-Sql\-Schema\-Table.\-cpp.
 
 
 
@@ -399,15 +472,35 @@ Get table name.
 
 
 
-Definition at line 65 of file mdt\-Sql\-Schema\-Table.\-cpp.
+Definition at line 69 of file mdt\-Sql\-Schema\-Table.\-cpp.
 
 
 
 Referenced by mdt\-Sql\-Database\-Manager\-::create\-Table().
 
+\hypertarget{classmdt_sql_schema_table_a652c5afd4af2965e8d5ead724dda3230}{\index{mdt\-Sql\-Schema\-Table@{mdt\-Sql\-Schema\-Table}!update\-Foreign\-Key\-Refering\-Table@{update\-Foreign\-Key\-Refering\-Table}}
+\index{update\-Foreign\-Key\-Refering\-Table@{update\-Foreign\-Key\-Refering\-Table}!mdtSqlSchemaTable@{mdt\-Sql\-Schema\-Table}}
+\subsubsection[{update\-Foreign\-Key\-Refering\-Table}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Schema\-Table\-::update\-Foreign\-Key\-Refering\-Table (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{name, }
+\item[{const Q\-String \&}]{refering\-Table\-Name}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_schema_table_a652c5afd4af2965e8d5ead724dda3230}
+
+
+Update a foreign key refering table name. 
+
+
+
+Definition at line 197 of file mdt\-Sql\-Schema\-Table.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, and mdt\-Error\-::set\-Error().
+
 
 
 The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-src/mdtutilsgui/\hyperlink{mdt_sql_schema_table_8h}{mdt\-Sql\-Schema\-Table.\-h}\item 
-src/mdtutilsgui/\hyperlink{mdt_sql_schema_table_8cpp}{mdt\-Sql\-Schema\-Table.\-cpp}\end{DoxyCompactItemize}
+src/mdtdatabase/\hyperlink{mdt_sql_schema_table_8h}{mdt\-Sql\-Schema\-Table.\-h}\item 
+src/mdtdatabase/\hyperlink{mdt_sql_schema_table_8cpp}{mdt\-Sql\-Schema\-Table.\-cpp}\end{DoxyCompactItemize}

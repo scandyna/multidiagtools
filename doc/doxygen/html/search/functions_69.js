@@ -41,7 +41,7 @@ var searchData=
   ['isdataendpoint',['isDataEndpoint',['../classmdt_usb_endpoint_descriptor.html#af7f74090d6964f908fb556a04853c873',1,'mdtUsbEndpointDescriptor']]],
   ['isdirectionin',['isDirectionIN',['../classmdt_usb_endpoint_descriptor.html#a8f6bc6b31b436f21c3ad34f909f35ccf',1,'mdtUsbEndpointDescriptor']]],
   ['isdirectionout',['isDirectionOUT',['../classmdt_usb_endpoint_descriptor.html#ae45b2407d6f973c25ff0058eb941857a',1,'mdtUsbEndpointDescriptor']]],
-  ['isempty',['isEmpty',['../classmdt_sql_record.html#a2d4e5e0834b9f1c884a117d89a5df31a',1,'mdtSqlRecord']]],
+  ['isempty',['isEmpty',['../classmdt_sql_record.html#a2d4e5e0834b9f1c884a117d89a5df31a',1,'mdtSqlRecord::isEmpty()'],['../classmdt_sql_table_selection.html#a739d9d474c3df10c01ea4094a3f8c201',1,'mdtSqlTableSelection::isEmpty()']]],
   ['iseom',['isEOM',['../classmdt_frame_usb_tmc.html#a82e93db0fc709b951c0c1f7b70692b5c',1,'mdtFrameUsbTmc']]],
   ['isfeedbackendpoint',['isFeedbackEndpoint',['../classmdt_usb_endpoint_descriptor.html#a4a0da79423ca913e32016b89e5b48e5c',1,'mdtUsbEndpointDescriptor']]],
   ['isfinished',['isFinished',['../classmdt_port_thread.html#a55d7ef615447823bf9878492a2c88fd4',1,'mdtPortThread']]],

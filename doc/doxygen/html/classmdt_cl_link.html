@@ -143,9 +143,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a865c0cee1fab1c9209d139dcd70f9fbd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_cl_link.html#a865c0cee1fab1c9209d139dcd70f9fbd">removeLink</a> (const QVariant &amp;unitConnectionStartId, const QVariant &amp;unitConnectionEndId, bool handleTransaction=true)</td></tr>
 <tr class="memdesc:a865c0cee1fab1c9209d139dcd70f9fbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a unit link.  <a href="#a865c0cee1fab1c9209d139dcd70f9fbd">More...</a><br/></td></tr>
 <tr class="separator:a865c0cee1fab1c9209d139dcd70f9fbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad89403d68ce0b31f0c8c21ad278e0f83"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_cl_link.html#ad89403d68ce0b31f0c8c21ad278e0f83">removeLinks</a> (const QList&lt; QModelIndexList &gt; &amp;indexListOfSelectedRowsByRows)</td></tr>
-<tr class="memdesc:ad89403d68ce0b31f0c8c21ad278e0f83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove each unit link that is contained in selection.  <a href="#ad89403d68ce0b31f0c8c21ad278e0f83">More...</a><br/></td></tr>
-<tr class="separator:ad89403d68ce0b31f0c8c21ad278e0f83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91b55ddf0dd2129b4b0bf499b2916102"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_cl_link.html#a91b55ddf0dd2129b4b0bf499b2916102">removeLinks</a> (const <a class="el" href="classmdt_sql_table_selection.html">mdtSqlTableSelection</a> &amp;s)</td></tr>
+<tr class="memdesc:a91b55ddf0dd2129b4b0bf499b2916102"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove each unit link that is contained in selection.  <a href="#a91b55ddf0dd2129b4b0bf499b2916102">More...</a><br/></td></tr>
+<tr class="separator:a91b55ddf0dd2129b4b0bf499b2916102"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad7c30c7cfae5f38fc38133f550e2dd01"><td class="memItemLeft" align="right" valign="top">QList&lt; <a class="el" href="classmdt_cl_vehicle_type_link_data.html">mdtClVehicleTypeLinkData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_cl_link.html#ad7c30c7cfae5f38fc38133f550e2dd01">getVehicleTypeLinkDataByUnitId</a> (const QVariant &amp;unitId, bool *ok)</td></tr>
 <tr class="memdesc:ad7c30c7cfae5f38fc38133f550e2dd01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get vehicle type link data for given unit ID.  <a href="#ad7c30c7cfae5f38fc38133f550e2dd01">More...</a><br/></td></tr>
 <tr class="separator:ad7c30c7cfae5f38fc38133f550e2dd01"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -219,6 +219,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae301ec4f49781e9b649a1e49368838a5 inherit pub_methods_classmdt_tt_base"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_base.html#ae301ec4f49781e9b649a1e49368838a5">removeData</a> (const QString &amp;tableName, const QString &amp;fieldName1, const QVariant &amp;matchData1, const QString &amp;fieldName2, const QVariant &amp;matchData2)</td></tr>
 <tr class="memdesc:ae301ec4f49781e9b649a1e49368838a5 inherit pub_methods_classmdt_tt_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove data from given table.  <a href="#ae301ec4f49781e9b649a1e49368838a5">More...</a><br/></td></tr>
 <tr class="separator:ae301ec4f49781e9b649a1e49368838a5 inherit pub_methods_classmdt_tt_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a372e33909ae2912e3b69c67d05940910 inherit pub_methods_classmdt_tt_base"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_base.html#a372e33909ae2912e3b69c67d05940910">removeData</a> (const QString &amp;tableName, const <a class="el" href="classmdt_sql_table_selection.html">mdtSqlTableSelection</a> &amp;s, bool handleTransaction)</td></tr>
+<tr class="memdesc:a372e33909ae2912e3b69c67d05940910 inherit pub_methods_classmdt_tt_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove data in given selection from given table.  <a href="#a372e33909ae2912e3b69c67d05940910">More...</a><br/></td></tr>
+<tr class="separator:a372e33909ae2912e3b69c67d05940910 inherit pub_methods_classmdt_tt_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -242,7 +245,7 @@ Additional Inherited Members</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Helper class for link management. </p>
 
-<p>Definition at line <a class="el" href="mdt_cl_link_8h_source.html#l00036">36</a> of file <a class="el" href="mdt_cl_link_8h_source.html">mdtClLink.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_link_8h_source.html#l00037">37</a> of file <a class="el" href="mdt_cl_link_8h_source.html">mdtClLink.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a5cef1766f2f03106227227582eed0245"></a>
 <div class="memitem">
@@ -323,7 +326,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_cl_link_8cpp_source.html#l00084">84</a> of file <a class="el" href="mdt_cl_link_8cpp_source.html">mdtClLink.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00050">mdtTtBase::addRecord()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00345">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00371">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00358">mdtTtBase::rollbackTransaction()</a>, and <a class="el" href="mdt_cl_link_data_8h_source.html#l00114">mdtClLinkData::vehicleTypeLinkDataList()</a>.</p>
+<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00050">mdtTtBase::addRecord()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00434">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00460">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00447">mdtTtBase::rollbackTransaction()</a>, and <a class="el" href="mdt_cl_link_data_8h_source.html#l00114">mdtClLinkData::vehicleTypeLinkDataList()</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_cl_link_8cpp_source.html#l00115">addLinks()</a>, and <a class="el" href="mdt_cl_link_8cpp_source.html#l00204">editLink()</a>.</p>
 
@@ -358,9 +361,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_cl_link_8cpp_source.html#l00115">115</a> of file <a class="el" href="mdt_cl_link_8cpp_source.html">mdtClLink.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_cl_link_8cpp_source.html#l00084">addLink()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00345">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00371">mdtTtBase::commitTransaction()</a>, and <a class="el" href="mdt_tt_base_8cpp_source.html#l00358">mdtTtBase::rollbackTransaction()</a>.</p>
+<p>References <a class="el" href="mdt_cl_link_8cpp_source.html#l00084">addLink()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00434">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00460">mdtTtBase::commitTransaction()</a>, and <a class="el" href="mdt_tt_base_8cpp_source.html#l00447">mdtTtBase::rollbackTransaction()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_cl_link_8cpp_source.html#l00518">connectByContactName()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_cl_link_8cpp_source.html#l00522">connectByContactName()</a>.</p>
 
 </div>
 </div>
@@ -404,9 +407,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_cl_link_8cpp_source.html#l00041">41</a> of file <a class="el" href="mdt_cl_link_8cpp_source.html">mdtClLink.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_cl_link_data_8cpp_source.html#l00098">mdtClLinkData::addVehicleTypeLinkData()</a>, <a class="el" href="mdt_cl_link_data_8cpp_source.html#l00107">mdtClLinkData::clearVehicleTypeLinkDataList()</a>, <a class="el" href="mdt_cl_vehicle_type_link_data_8cpp_source.html#l00028">mdtClVehicleTypeLinkData::setVehicleTypeEndId()</a>, and <a class="el" href="mdt_cl_vehicle_type_link_data_8cpp_source.html#l00023">mdtClVehicleTypeLinkData::setVehicleTypeStartId()</a>.</p>
+<p>References <a class="el" href="mdt_cl_link_data_8cpp_source.html#l00104">mdtClLinkData::addVehicleTypeLinkData()</a>, <a class="el" href="mdt_cl_link_data_8cpp_source.html#l00113">mdtClLinkData::clearVehicleTypeLinkDataList()</a>, <a class="el" href="mdt_cl_vehicle_type_link_data_8cpp_source.html#l00028">mdtClVehicleTypeLinkData::setVehicleTypeEndId()</a>, and <a class="el" href="mdt_cl_vehicle_type_link_data_8cpp_source.html#l00023">mdtClVehicleTypeLinkData::setVehicleTypeStartId()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_cl_link_8cpp_source.html#l00518">connectByContactName()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_cl_link_8cpp_source.html#l00522">connectByContactName()</a>.</p>
 
 </div>
 </div>
@@ -437,11 +440,11 @@ Additional Inherited Members</h2></td></tr>
 <p>Check if unit connector S can be connected with unit connector E. </p>
 <p>Currently, this method will only check if at least S and E have a socket/pin (or pin/socket) that have the same contact name. </p>
 
-<p>Definition at line <a class="el" href="mdt_cl_link_8cpp_source.html#l00429">429</a> of file <a class="el" href="mdt_cl_link_8cpp_source.html">mdtClLink.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_link_8cpp_source.html#l00433">433</a> of file <a class="el" href="mdt_cl_link_8cpp_source.html">mdtClLink.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_cl_unit_connector_data_8cpp_source.html#l00077">mdtClUnitConnectorData::connectionDataList()</a>, and <a class="el" href="mdt_cl_link_8cpp_source.html#l00374">getConnectionLinkListByName()</a>.</p>
+<p>References <a class="el" href="mdt_cl_unit_connector_data_8cpp_source.html#l00077">mdtClUnitConnectorData::connectionDataList()</a>, and <a class="el" href="mdt_cl_link_8cpp_source.html#l00378">getConnectionLinkListByName()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_cl_link_8cpp_source.html#l00434">canConnectConnectors()</a>, and <a class="el" href="mdt_cl_link_8cpp_source.html#l00457">sqlForConnectableUnitConnectorsSelection()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_cl_link_8cpp_source.html#l00438">canConnectConnectors()</a>, and <a class="el" href="mdt_cl_link_8cpp_source.html#l00461">sqlForConnectableUnitConnectorsSelection()</a>.</p>
 
 </div>
 </div>
@@ -478,9 +481,9 @@ Additional Inherited Members</h2></td></tr>
 <p>Check if unit connector start can be connected with unit connector end. </p>
 <p>Currently, this method will only check if at least S and E have a socket/pin (or pin/socket) that have the same contact name. </p>
 
-<p>Definition at line <a class="el" href="mdt_cl_link_8cpp_source.html#l00434">434</a> of file <a class="el" href="mdt_cl_link_8cpp_source.html">mdtClLink.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_link_8cpp_source.html#l00438">438</a> of file <a class="el" href="mdt_cl_link_8cpp_source.html">mdtClLink.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_cl_link_8cpp_source.html#l00429">canConnectConnectors()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_cl_unit_8cpp_source.html#l00143">mdtClUnit::getConnectorData()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00045">mdtTtBase::lastError()</a>, and <a class="el" href="mdt_tt_base_8h_source.html#l00188">mdtTtBase::pvLastError</a>.</p>
+<p>References <a class="el" href="mdt_cl_link_8cpp_source.html#l00433">canConnectConnectors()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_cl_unit_8cpp_source.html#l00143">mdtClUnit::getConnectorData()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00045">mdtTtBase::lastError()</a>, and <a class="el" href="mdt_tt_base_8h_source.html#l00213">mdtTtBase::pvLastError</a>.</p>
 
 </div>
 </div>
@@ -523,11 +526,11 @@ Additional Inherited Members</h2></td></tr>
 <p>Connect start and end connector by contact name. </p>
 <p>Will create a link of type CONNECTION for each connection from start connector to a connection of end connector that can be connected. See <a class="el" href="classmdt_cl_link.html#a13c49a669e9e5a7d228aeb6a238c8633" title="Get a list of connection links between A and B connections, by name. ">getConnectionLinkListByName()</a> for details. </p>
 
-<p>Definition at line <a class="el" href="mdt_cl_link_8cpp_source.html#l00518">518</a> of file <a class="el" href="mdt_cl_link_8cpp_source.html">mdtClLink.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_link_8cpp_source.html#l00522">522</a> of file <a class="el" href="mdt_cl_link_8cpp_source.html">mdtClLink.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_cl_link_8cpp_source.html#l00115">addLinks()</a>, <a class="el" href="mdt_cl_link_8cpp_source.html#l00041">buildVehicleTypeLinkDataList()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_cl_unit_connector_data_8cpp_source.html#l00077">mdtClUnitConnectorData::connectionDataList()</a>, <a class="el" href="mdt_cl_link_8cpp_source.html#l00374">getConnectionLinkListByName()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00188">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, <a class="el" href="mdt_sql_record_8h_source.html#l00158">mdtSqlRecord::value()</a>, and <a class="el" href="mdt_error_8h_source.html#l00093">mdtError::Warning</a>.</p>
+<p>References <a class="el" href="mdt_cl_link_8cpp_source.html#l00115">addLinks()</a>, <a class="el" href="mdt_cl_link_8cpp_source.html#l00041">buildVehicleTypeLinkDataList()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_cl_unit_connector_data_8cpp_source.html#l00077">mdtClUnitConnectorData::connectionDataList()</a>, <a class="el" href="mdt_cl_link_8cpp_source.html#l00378">getConnectionLinkListByName()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00213">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, <a class="el" href="mdt_sql_record_8h_source.html#l00158">mdtSqlRecord::value()</a>, and <a class="el" href="mdt_error_8h_source.html#l00093">mdtError::Warning</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_cl_link_8cpp_source.html#l00549">connectByContactName()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_cl_link_8cpp_source.html#l00553">connectByContactName()</a>.</p>
 
 </div>
 </div>
@@ -570,9 +573,9 @@ Additional Inherited Members</h2></td></tr>
 <p>Connect start and end connector by contact name. </p>
 <p>Will create a link of type CONNECTION for each connection from start connector to a connection of end connector that can be connected. See <a class="el" href="classmdt_cl_link.html#a13c49a669e9e5a7d228aeb6a238c8633" title="Get a list of connection links between A and B connections, by name. ">getConnectionLinkListByName()</a> for details. </p>
 
-<p>Definition at line <a class="el" href="mdt_cl_link_8cpp_source.html#l00549">549</a> of file <a class="el" href="mdt_cl_link_8cpp_source.html">mdtClLink.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_link_8cpp_source.html#l00553">553</a> of file <a class="el" href="mdt_cl_link_8cpp_source.html">mdtClLink.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_cl_link_8cpp_source.html#l00518">connectByContactName()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_cl_unit_8cpp_source.html#l00143">mdtClUnit::getConnectorData()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00045">mdtTtBase::lastError()</a>, and <a class="el" href="mdt_tt_base_8h_source.html#l00188">mdtTtBase::pvLastError</a>.</p>
+<p>References <a class="el" href="mdt_cl_link_8cpp_source.html#l00522">connectByContactName()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_cl_unit_8cpp_source.html#l00143">mdtClUnit::getConnectorData()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00045">mdtTtBase::lastError()</a>, and <a class="el" href="mdt_tt_base_8h_source.html#l00213">mdtTtBase::pvLastError</a>.</p>
 
 </div>
 </div>
@@ -613,16 +616,11 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Disconnect connector S from E. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000047">Todo:</a></b></dt><dd>In current version, vehicle type list are not token in acount. This will be the case once <a class="el" href="classmdt_cl_link.html#a865c0cee1fab1c9209d139dcd70f9fbd" title="Remove a unit link. ">removeLink()</a> is fixed. </dd></dl>
-<p>bool disconnectConnectors(const mdtClUnitConnectorData &amp; S, const mdtClUnitConnectorData &amp; E, const QList&lt;QVariant&gt; &amp; startVehicleTypeIdList, const QList&lt;QVariant&gt; &amp; endVehicleTypeIdList);</p>
-<p>Disconnect connector S from E</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000048">Todo:</a></b></dt><dd>In current version, vehicle type list are not token in acount. This will be the case once <a class="el" href="classmdt_cl_link.html#a865c0cee1fab1c9209d139dcd70f9fbd" title="Remove a unit link. ">removeLink()</a> is fixed. </dd></dl>
-<p>bool mdtClLink::disconnectConnectors(const mdtClUnitConnectorData &amp; S, const mdtClUnitConnectorData &amp; E, const QList&lt;QVariant&gt; &amp; startVehicleTypeIdList, const QList&lt;QVariant&gt; &amp; endVehicleTypeIdList) { QList&lt;mdtClLinkData&gt; linkDataList; int i;</p>
-<p>} </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000049">Todo:</a></b></dt><dd>In current version, vehicle type list are not token in acount. This will be the case once <a class="el" href="classmdt_cl_link.html#a865c0cee1fab1c9209d139dcd70f9fbd" title="Remove a unit link. ">removeLink()</a> is fixed. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_cl_link_8cpp_source.html#l00579">579</a> of file <a class="el" href="mdt_cl_link_8cpp_source.html">mdtClLink.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_link_8cpp_source.html#l00574">574</a> of file <a class="el" href="mdt_cl_link_8cpp_source.html">mdtClLink.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00345">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00371">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00127">mdtTtBase::getData()</a>, <a class="el" href="mdt_cl_link_8cpp_source.html#l00229">removeLink()</a>, and <a class="el" href="mdt_tt_base_8cpp_source.html#l00358">mdtTtBase::rollbackTransaction()</a>.</p>
+<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00434">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00460">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00127">mdtTtBase::getData()</a>, <a class="el" href="mdt_cl_link_8cpp_source.html#l00229">removeLink()</a>, and <a class="el" href="mdt_tt_base_8cpp_source.html#l00447">mdtTtBase::rollbackTransaction()</a>.</p>
 
 </div>
 </div>
@@ -660,7 +658,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_cl_link_8cpp_source.html#l00204">204</a> of file <a class="el" href="mdt_cl_link_8cpp_source.html">mdtClLink.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_cl_link_8cpp_source.html#l00084">addLink()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00345">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00371">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_cl_link_8cpp_source.html#l00229">removeLink()</a>, and <a class="el" href="mdt_tt_base_8cpp_source.html#l00358">mdtTtBase::rollbackTransaction()</a>.</p>
+<p>References <a class="el" href="mdt_cl_link_8cpp_source.html#l00084">addLink()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00434">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00460">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_cl_link_8cpp_source.html#l00229">removeLink()</a>, and <a class="el" href="mdt_tt_base_8cpp_source.html#l00447">mdtTtBase::rollbackTransaction()</a>.</p>
 
 </div>
 </div>
@@ -699,11 +697,11 @@ Additional Inherited Members</h2></td></tr>
 <li>LinkDirection_Code_FK : BID </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_cl_link_8cpp_source.html#l00374">374</a> of file <a class="el" href="mdt_cl_link_8cpp_source.html">mdtClLink.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_link_8cpp_source.html#l00378">378</a> of file <a class="el" href="mdt_cl_link_8cpp_source.html">mdtClLink.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_cl_link_data_8cpp_source.html#l00060">mdtClLinkData::clearValues()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_cl_link_data_8cpp_source.html#l00080">mdtClLinkData::setEndConnectionData()</a>, <a class="el" href="mdt_cl_link_data_8cpp_source.html#l00068">mdtClLinkData::setStartConnectionData()</a>, <a class="el" href="mdt_cl_link_data_8cpp_source.html#l00043">mdtClLinkData::setup()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00123">mdtSqlRecord::setValue()</a>, and <a class="el" href="mdt_sql_record_8h_source.html#l00158">mdtSqlRecord::value()</a>.</p>
+<p>References <a class="el" href="mdt_cl_link_data_8cpp_source.html#l00066">mdtClLinkData::clearValues()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_cl_link_data_8cpp_source.html#l00086">mdtClLinkData::setEndConnectionData()</a>, <a class="el" href="mdt_cl_link_data_8cpp_source.html#l00074">mdtClLinkData::setStartConnectionData()</a>, <a class="el" href="mdt_cl_link_data_8cpp_source.html#l00049">mdtClLinkData::setup()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00123">mdtSqlRecord::setValue()</a>, and <a class="el" href="mdt_sql_record_8h_source.html#l00158">mdtSqlRecord::value()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_cl_link_8cpp_source.html#l00429">canConnectConnectors()</a>, and <a class="el" href="mdt_cl_link_8cpp_source.html#l00518">connectByContactName()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_cl_link_8cpp_source.html#l00433">canConnectConnectors()</a>, and <a class="el" href="mdt_cl_link_8cpp_source.html#l00522">connectByContactName()</a>.</p>
 
 </div>
 </div>
@@ -753,7 +751,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_cl_link_8cpp_source.html#l00156">156</a> of file <a class="el" href="mdt_cl_link_8cpp_source.html">mdtClLink.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00127">mdtTtBase::getData()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00188">mdtTtBase::pvLastError</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00127">mdtTtBase::getData()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00213">mdtTtBase::pvLastError</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>.</p>
 
 </div>
 </div>
@@ -783,11 +781,11 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Get vehicle type link data for given unit ID. </p>
 
-<p>Definition at line <a class="el" href="mdt_cl_link_8cpp_source.html#l00276">276</a> of file <a class="el" href="mdt_cl_link_8cpp_source.html">mdtClLink.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_link_8cpp_source.html#l00280">280</a> of file <a class="el" href="mdt_cl_link_8cpp_source.html">mdtClLink.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00127">mdtTtBase::getData()</a>, <a class="el" href="mdt_cl_vehicle_type_link_data_8cpp_source.html#l00038">mdtClVehicleTypeLinkData::setUnitConnectionEndId()</a>, <a class="el" href="mdt_cl_vehicle_type_link_data_8cpp_source.html#l00033">mdtClVehicleTypeLinkData::setUnitConnectionStartId()</a>, <a class="el" href="mdt_cl_vehicle_type_link_data_8cpp_source.html#l00028">mdtClVehicleTypeLinkData::setVehicleTypeEndId()</a>, and <a class="el" href="mdt_cl_vehicle_type_link_data_8cpp_source.html#l00023">mdtClVehicleTypeLinkData::setVehicleTypeStartId()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_cl_link_8cpp_source.html#l00310">removeVehicleTypeLinkByUnitId()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_cl_link_8cpp_source.html#l00314">removeVehicleTypeLinkByUnitId()</a>.</p>
 
 </div>
 </div>
@@ -861,25 +859,25 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Remove a unit link. </p>
 <p>Will also remove all vehicle type related links</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000046">Todo:</a></b></dt><dd>Wrong way for delete: will delete links for all vehicle type assoc. Check about a overloaded method that limits vehicle type assoc. , that only remove the link in Link_tbl when no entry exists in VehicleType_Link_tbl </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000048">Todo:</a></b></dt><dd>Wrong way for delete: will delete links for all vehicle type assoc. Check about a overloaded method that limits vehicle type assoc. , that only remove the link in Link_tbl when no entry exists in VehicleType_Link_tbl </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_cl_link_8cpp_source.html#l00229">229</a> of file <a class="el" href="mdt_cl_link_8cpp_source.html">mdtClLink.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00345">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00371">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00228">mdtTtBase::removeData()</a>, and <a class="el" href="mdt_tt_base_8cpp_source.html#l00358">mdtTtBase::rollbackTransaction()</a>.</p>
+<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00434">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00460">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00228">mdtTtBase::removeData()</a>, and <a class="el" href="mdt_tt_base_8cpp_source.html#l00447">mdtTtBase::rollbackTransaction()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_cl_link_8cpp_source.html#l00579">disconnectConnectors()</a>, <a class="el" href="mdt_cl_link_8cpp_source.html#l00204">editLink()</a>, and <a class="el" href="mdt_cl_link_8cpp_source.html#l00260">removeLinks()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_cl_link_8cpp_source.html#l00574">disconnectConnectors()</a>, <a class="el" href="mdt_cl_link_8cpp_source.html#l00204">editLink()</a>, and <a class="el" href="mdt_cl_link_8cpp_source.html#l00260">removeLinks()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ad89403d68ce0b31f0c8c21ad278e0f83"></a>
+<a class="anchor" id="a91b55ddf0dd2129b4b0bf499b2916102"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">bool mdtClLink::removeLinks </td>
           <td>(</td>
-          <td class="paramtype">const QList&lt; QModelIndexList &gt; &amp;&#160;</td>
-          <td class="paramname"><em>indexListOfSelectedRowsByRows</em>)</td><td></td>
+          <td class="paramtype">const <a class="el" href="classmdt_sql_table_selection.html">mdtSqlTableSelection</a> &amp;&#160;</td>
+          <td class="paramname"><em>s</em>)</td><td></td>
           <td></td>
         </tr>
       </table>
@@ -889,7 +887,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_cl_link_8cpp_source.html#l00260">260</a> of file <a class="el" href="mdt_cl_link_8cpp_source.html">mdtClLink.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_cl_link_8cpp_source.html#l00229">removeLink()</a>.</p>
+<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00434">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00460">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_sql_table_selection_8cpp_source.html#l00070">mdtSqlTableSelection::data()</a>, <a class="el" href="mdt_cl_link_8cpp_source.html#l00229">removeLink()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00447">mdtTtBase::rollbackTransaction()</a>, and <a class="el" href="mdt_sql_table_selection_8h_source.html#l00084">mdtSqlTableSelection::rowCount()</a>.</p>
 
 </div>
 </div>
@@ -919,9 +917,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Remove vehicle type links for given unit ID. </p>
 
-<p>Definition at line <a class="el" href="mdt_cl_link_8cpp_source.html#l00310">310</a> of file <a class="el" href="mdt_cl_link_8cpp_source.html">mdtClLink.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_link_8cpp_source.html#l00314">314</a> of file <a class="el" href="mdt_cl_link_8cpp_source.html">mdtClLink.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_cl_link_8cpp_source.html#l00276">getVehicleTypeLinkDataByUnitId()</a>, and <a class="el" href="mdt_cl_link_8cpp_source.html#l00323">removeVehicleTypeLinks()</a>.</p>
+<p>References <a class="el" href="mdt_cl_link_8cpp_source.html#l00280">getVehicleTypeLinkDataByUnitId()</a>, and <a class="el" href="mdt_cl_link_8cpp_source.html#l00327">removeVehicleTypeLinks()</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_cl_unit_vehicle_type_8cpp_source.html#l00122">mdtClUnitVehicleType::removeUnitVehicleAssignments()</a>.</p>
 
@@ -953,11 +951,11 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Remove vehicle type links. </p>
 
-<p>Definition at line <a class="el" href="mdt_cl_link_8cpp_source.html#l00323">323</a> of file <a class="el" href="mdt_cl_link_8cpp_source.html">mdtClLink.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_link_8cpp_source.html#l00327">327</a> of file <a class="el" href="mdt_cl_link_8cpp_source.html">mdtClLink.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00345">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00371">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00188">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00358">mdtTtBase::rollbackTransaction()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>, <a class="el" href="mdt_cl_vehicle_type_link_data_8h_source.html#l00087">mdtClVehicleTypeLinkData::unitConnectionEndId()</a>, <a class="el" href="mdt_cl_vehicle_type_link_data_8h_source.html#l00082">mdtClVehicleTypeLinkData::unitConnectionStartId()</a>, <a class="el" href="mdt_cl_vehicle_type_link_data_8h_source.html#l00077">mdtClVehicleTypeLinkData::vehicleTypeEndId()</a>, and <a class="el" href="mdt_cl_vehicle_type_link_data_8h_source.html#l00072">mdtClVehicleTypeLinkData::vehicleTypeStartId()</a>.</p>
+<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00434">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00460">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00213">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00447">mdtTtBase::rollbackTransaction()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>, <a class="el" href="mdt_cl_vehicle_type_link_data_8h_source.html#l00087">mdtClVehicleTypeLinkData::unitConnectionEndId()</a>, <a class="el" href="mdt_cl_vehicle_type_link_data_8h_source.html#l00082">mdtClVehicleTypeLinkData::unitConnectionStartId()</a>, <a class="el" href="mdt_cl_vehicle_type_link_data_8h_source.html#l00077">mdtClVehicleTypeLinkData::vehicleTypeEndId()</a>, and <a class="el" href="mdt_cl_vehicle_type_link_data_8h_source.html#l00072">mdtClVehicleTypeLinkData::vehicleTypeStartId()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_cl_link_8cpp_source.html#l00310">removeVehicleTypeLinkByUnitId()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_cl_link_8cpp_source.html#l00314">removeVehicleTypeLinkByUnitId()</a>.</p>
 
 </div>
 </div>
@@ -995,9 +993,9 @@ Additional Inherited Members</h2></td></tr>
 <p>SQL statement will select unit connectors that can be connected to given start unit connector ID. If given unit ID is not null, only connectors related to this unit will be included.</p>
 <dl class="section return"><dt>Returns</dt><dd>SQL statement, or empty string on error. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_cl_link_8cpp_source.html#l00457">457</a> of file <a class="el" href="mdt_cl_link_8cpp_source.html">mdtClLink.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_link_8cpp_source.html#l00461">461</a> of file <a class="el" href="mdt_cl_link_8cpp_source.html">mdtClLink.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_cl_link_8cpp_source.html#l00429">canConnectConnectors()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00127">mdtTtBase::getData()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00188">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_error_8h_source.html#l00093">mdtError::Warning</a>.</p>
+<p>References <a class="el" href="mdt_cl_link_8cpp_source.html#l00433">canConnectConnectors()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00127">mdtTtBase::getData()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00213">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_error_8h_source.html#l00093">mdtError::Warning</a>.</p>
 
 </div>
 </div>
@@ -1008,7 +1006,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 6 2014 09:34:21 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jun 28 2014 13:24:46 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

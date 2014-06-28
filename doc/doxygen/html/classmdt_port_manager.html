@@ -397,7 +397,7 @@ Protected Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Port manager base class. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000025">Todo:</a></b></dt><dd>Port manager has no raison to inherit <a class="el" href="class_q_thread.html">QThread</a> -&gt; make it inherit <a class="el" href="class_q_object.html">QObject</a> </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000026">Todo:</a></b></dt><dd>Port manager has no raison to inherit <a class="el" href="class_q_thread.html">QThread</a> -&gt; make it inherit <a class="el" href="class_q_object.html">QObject</a> </dd></dl>
 <p>Manages a port based on <a class="el" href="classmdt_abstract_port.html" title="Base class for port I/O. ">mdtAbstractPort</a> an several threads based on <a class="el" href="classmdt_port_thread.html">mdtPortThread</a>. The goal is to hide the complexity of the port API.</p>
 <p>Example: </p>
 <div class="fragment"><div class="line"><a class="code" href="classmdt_port_manager.html" title="Port manager base class. ">mdtPortManager</a> m;</div>
@@ -458,7 +458,7 @@ Protected Attributes</h2></td></tr>
 <p>Depending on application, it's possible to use a event approach, or also a blocking approach with wait methods.</p>
 <p>Some protocols support frame identifier (like MODBUS/TCP, USBTMC, or others), and other don't (for example raw bytes transfert on a serial port). For this reason, the concept of transactions is aodpted here. A transaction is based on <a class="el" href="classmdt_port_transaction.html" title="Store port transaction identifications data. ">mdtPortTransaction</a> class. It was introduced for protocols that support identification, and can store some other meta data, usefull to decode a reply.</p>
 <p>This base class can be used directly for ports that supports raw transfers. For specific protocol, it can be subclassed.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000026">Todo:</a></b></dt><dd>Document init, open, close, ...</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000027">Todo:</a></b></dt><dd>Document init, open, close, ...</dd></dl>
 <p>Now, we can see the data transfer workflow:</p>
 <ul>
 <li>1) Wait until it's possible to send some data with waitOnWriteReady()</li>
@@ -586,7 +586,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00032">32</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_port_manager_state_machine_8cpp_source.html#l00050">mdtPortManagerStateMachine::buildMainStateMachine()</a>, <a class="el" href="moc__mdt_port_manager_8cxx_source.html#l00267">pmTransactionTimeoutEvent()</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00912">pvPort</a>, and <a class="el" href="mdt_port_manager_8cpp_source.html#l00278">setKeepTransactionsDone()</a>.</p>
+<p>References <a class="el" href="mdt_port_manager_state_machine_8cpp_source.html#l00050">mdtPortManagerStateMachine::buildMainStateMachine()</a>, <a class="el" href="classmdt_port_manager.html#a0be3429f901fc9bf4adee196035d2cee">pmTransactionTimeoutEvent()</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00912">pvPort</a>, and <a class="el" href="mdt_port_manager_8cpp_source.html#l00278">setKeepTransactionsDone()</a>.</p>
 
 </div>
 </div>
@@ -677,7 +677,7 @@ Port manager must be closed (see <a class="el" href="classmdt_port_manager.html#
 
 <p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00122">122</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_port_manager_8cpp_source.html#l00816">fromThreadNewFrameReaden()</a>, <a class="el" href="mdt_port_thread_8cpp_source.html#l00211">mdtPortThread::handlesTimeout()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00591">isClosed()</a>, <a class="el" href="mdt_port_thread_8cpp_source.html#l00201">mdtPortThread::isReader()</a>, <a class="el" href="mdt_port_thread_8cpp_source.html#l00206">mdtPortThread::isWriter()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00861">onThreadsErrorOccured()</a>, <a class="el" href="moc__mdt_port_manager_8cxx_source.html#l00237">pmConnectedEvent()</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00912">pvPort</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00913">pvThreads</a>, and <a class="el" href="mdt_port_thread_8cpp_source.html#l00057">mdtPortThread::setPort()</a>.</p>
+<p>References <a class="el" href="mdt_port_manager_8cpp_source.html#l00816">fromThreadNewFrameReaden()</a>, <a class="el" href="mdt_port_thread_8cpp_source.html#l00211">mdtPortThread::handlesTimeout()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00591">isClosed()</a>, <a class="el" href="mdt_port_thread_8cpp_source.html#l00201">mdtPortThread::isReader()</a>, <a class="el" href="mdt_port_thread_8cpp_source.html#l00206">mdtPortThread::isWriter()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00861">onThreadsErrorOccured()</a>, <a class="el" href="classmdt_port_manager.html#a871ec7f9676a12c84196404285cf2161">pmConnectedEvent()</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00912">pvPort</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00913">pvThreads</a>, and <a class="el" href="mdt_port_thread_8cpp_source.html#l00057">mdtPortThread::setPort()</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00041">mdtModbusTcpPortManager::mdtModbusTcpPortManager()</a>, <a class="el" href="mdt_serial_port_manager_8cpp_source.html#l00032">mdtSerialPortManager::mdtSerialPortManager()</a>, <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00037">mdtUsbtmcPortManager::mdtUsbtmcPortManager()</a>, and <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00181">mdtUsbPortManager::start()</a>.</p>
 
@@ -746,7 +746,7 @@ transaction ID must not allready exist in queue. </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00675">675</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00051">mdtPortTransaction::id()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_error_8h_source.html#l00040">MDT_PORT_IO_ERROR</a>, and <a class="el" href="moc__mdt_port_manager_8cxx_source.html#l00225">pmUnhandledErrorEvent()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00051">mdtPortTransaction::id()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_error_8h_source.html#l00040">MDT_PORT_IO_ERROR</a>, and <a class="el" href="classmdt_port_manager.html#a94d3fa4a26f8686449313a54003f0b4d">pmUnhandledErrorEvent()</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00517">mdtModbusTcpPortManager::sendData()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00319">sendData()</a>, and <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00204">mdtUsbtmcPortManager::sendReadRequest()</a>.</p>
 
@@ -811,7 +811,7 @@ transaction ID must not allready exist in queue. </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00791">791</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_port_transaction_8cpp_source.html#l00126">mdtPortTransaction::isQueryReplyMode()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00283">keepTransactionsDone()</a>, <a class="el" href="moc__mdt_port_manager_8cxx_source.html#l00167">newTransactionDone()</a>, and <a class="el" href="mdt_port_manager_8cpp_source.html#l00310">restoreTransaction()</a>.</p>
+<p>References <a class="el" href="mdt_port_transaction_8cpp_source.html#l00126">mdtPortTransaction::isQueryReplyMode()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00283">keepTransactionsDone()</a>, <a class="el" href="classmdt_port_manager.html#a416a24db1048e9f66aef27ea810954d2">newTransactionDone()</a>, and <a class="el" href="mdt_port_manager_8cpp_source.html#l00310">restoreTransaction()</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00297">mdtUsbtmcPortManager::fromThreadNewFrameReaden()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00593">mdtModbusTcpPortManager::fromThreadNewFrameReaden()</a>, and <a class="el" href="mdt_port_manager_8cpp_source.html#l00816">fromThreadNewFrameReaden()</a>.</p>
 
@@ -1262,7 +1262,7 @@ transaction ID must not allready exist in queue. </dd></dl>
 <p>This variant will add data to transactions done queue. If pending transactions queue contains <a class="el" href="classmdt_port_manager.html#a19abf29c8948cde0337d67c9722c25aa" title="Get the current transaction ID. ">currentTransactionId()</a>, it will be removed.</p>
 <p>For subclass that handle frames with IDs, this method must be reimplemented. The normal way is to get the frame in pending queue with <a class="el" href="classmdt_port_manager.html#a18478707a9be7638b06cde48ced48297" title="Take pending transaction matching id. ">transactionPending()</a>. For frames with ID that not exists in pending queue, it must be choosen to discard them, or adopt another behaviour.</p>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000024">Todo:</a></b></dt><dd>A méditer:<ul>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000025">Todo:</a></b></dt><dd>A méditer:<ul>
 <li>Lock le mutex</li>
 <li>Prendre les frames disponibles (-&gt; sdans une liste ...)</li>
 <li>Libéréer le mutex</li>
@@ -1303,7 +1303,7 @@ transaction ID must not allready exist in queue. </dd></dl>
 
 <p>References <a class="el" href="mdt_port_transaction_8cpp_source.html#l00032">mdtPortTransaction::clear()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_error_8h_source.html#l00040">MDT_PORT_IO_ERROR</a>, and <a class="el" href="mdt_error_8h_source.html#l00093">mdtError::Warning</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_port_manager_8cpp_source.html#l00816">fromThreadNewFrameReaden()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00369">mdtModbusTcpPortManager::getHardwareNodeAddress()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01261">mdtDevice::getNewTransaction()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00421">mdtModbusTcpPortManager::getRegisterValues()</a>, <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00190">mdtUsbtmcPortManager::sendData()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00569">mdtModbusTcpPortManager::sendData()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00365">sendData()</a>, <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00111">mdtUsbtmcPortManager::sendQuery()</a>, <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00257">mdtUsbtmcPortManager::sendReadRequest()</a>, and <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00478">mdtModbusTcpPortManager::setRegisterValues()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_port_manager_8cpp_source.html#l00816">fromThreadNewFrameReaden()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00369">mdtModbusTcpPortManager::getHardwareNodeAddress()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01260">mdtDevice::getNewTransaction()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00421">mdtModbusTcpPortManager::getRegisterValues()</a>, <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00190">mdtUsbtmcPortManager::sendData()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00569">mdtModbusTcpPortManager::sendData()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00365">sendData()</a>, <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00111">mdtUsbtmcPortManager::sendQuery()</a>, <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00257">mdtUsbtmcPortManager::sendReadRequest()</a>, and <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00478">mdtModbusTcpPortManager::setRegisterValues()</a>.</p>
 
 </div>
 </div>
@@ -1478,8 +1478,6 @@ transaction ID must not allready exist in queue. </dd></dl>
 <p>Note: the transaction pointer is only valid for one call, do not store it for later usage. Connect this signal to a slot that runs in GUI thread only.</p>
 <p>This signal is emited by <a class="el" href="classmdt_port_manager.html#a84d37b380080eb26e56c68424dedd958" title="Emit signals for each done transactions. ">commitFrames()</a>. </p>
 
-<p>Definition at line <a class="el" href="moc__mdt_port_manager_8cxx_source.html#l00167">167</a> of file <a class="el" href="moc__mdt_port_manager_8cxx_source.html">moc_mdtPortManager.cxx</a>.</p>
-
 <p>Referenced by <a class="el" href="mdt_port_manager_8cpp_source.html#l00791">commitFrames()</a>.</p>
 
 </div>
@@ -1550,7 +1548,7 @@ transaction ID must not allready exist in queue. </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00861">861</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_port_8h_source.html#l00082">mdtAbstractPort::Connecting</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00083">mdtAbstractPort::ConnectionFailed</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00568">currentState()</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00079">mdtAbstractPort::Disconnected</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00759">flushTransactionsDone()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00706">flushTransactionsPending()</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00061">mdtAbstractPort::NoError</a>, <a class="el" href="moc__mdt_port_manager_8cxx_source.html#l00255">pmBusyEvent()</a>, <a class="el" href="moc__mdt_port_manager_8cxx_source.html#l00231">pmConnectingEvent()</a>, <a class="el" href="moc__mdt_port_manager_8cxx_source.html#l00249">pmConnectionFailedEvent()</a>, <a class="el" href="moc__mdt_port_manager_8cxx_source.html#l00243">pmDisconnectedEvent()</a>, <a class="el" href="moc__mdt_port_manager_8cxx_source.html#l00261">pmReadyEvent()</a>, <a class="el" href="moc__mdt_port_manager_8cxx_source.html#l00267">pmTransactionTimeoutEvent()</a>, <a class="el" href="moc__mdt_port_manager_8cxx_source.html#l00225">pmUnhandledErrorEvent()</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00068">mdtAbstractPort::ReadCanceled</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00087">mdtAbstractPort::ReadPoolEmpty</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00072">mdtAbstractPort::ReadTimeout</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00091">mdtAbstractPort::ReadWriteBusy</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00066">mdtAbstractPort::WriteCanceled</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00088">mdtAbstractPort::WritePoolEmpty</a>, and <a class="el" href="mdt_abstract_port_8h_source.html#l00074">mdtAbstractPort::WriteTimeout</a>.</p>
+<p>References <a class="el" href="mdt_abstract_port_8h_source.html#l00082">mdtAbstractPort::Connecting</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00083">mdtAbstractPort::ConnectionFailed</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00568">currentState()</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00079">mdtAbstractPort::Disconnected</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00759">flushTransactionsDone()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00706">flushTransactionsPending()</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00061">mdtAbstractPort::NoError</a>, <a class="el" href="classmdt_port_manager.html#a5959d4025f4903eef0ea65c350f6f9b3">pmBusyEvent()</a>, <a class="el" href="classmdt_port_manager.html#a04fb1d09af226677cacd6f0e485d9810">pmConnectingEvent()</a>, <a class="el" href="classmdt_port_manager.html#a57fc083d7db52279ec6b990b75705552">pmConnectionFailedEvent()</a>, <a class="el" href="classmdt_port_manager.html#ab4667ac04a31166eeb7b5f92893b16db">pmDisconnectedEvent()</a>, <a class="el" href="classmdt_port_manager.html#aa23c17048773e345778e7d6393f630db">pmReadyEvent()</a>, <a class="el" href="classmdt_port_manager.html#a0be3429f901fc9bf4adee196035d2cee">pmTransactionTimeoutEvent()</a>, <a class="el" href="classmdt_port_manager.html#a94d3fa4a26f8686449313a54003f0b4d">pmUnhandledErrorEvent()</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00068">mdtAbstractPort::ReadCanceled</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00087">mdtAbstractPort::ReadPoolEmpty</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00072">mdtAbstractPort::ReadTimeout</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00091">mdtAbstractPort::ReadWriteBusy</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00066">mdtAbstractPort::WriteCanceled</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00088">mdtAbstractPort::WritePoolEmpty</a>, and <a class="el" href="mdt_abstract_port_8h_source.html#l00074">mdtAbstractPort::WriteTimeout</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_port_manager_8cpp_source.html#l00122">addThread()</a>, <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00405">mdtUsbPortManager::onThreadsErrorOccured()</a>, and <a class="el" href="mdt_port_manager_8cpp_source.html#l00156">removeThreads()</a>.</p>
 
@@ -1581,7 +1579,7 @@ transaction ID must not allready exist in queue. </dd></dl>
 <p>Will try to open port defined with <a class="el" href="classmdt_port_manager.html#a2b2ed690cbba9f544c6ac1b46684e59a" title="Set port name. ">setPortName()</a> or <a class="el" href="classmdt_port_manager.html#a7e2ef93ec2731e66aa2b2d5f7ce9bc1c" title="Set port info. ">setPortInfo()</a></p>
 <dl class="section return"><dt>Returns</dt><dd>True on success, false else. </dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object. ">setPort()</a> before use of this method. </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000027">Todo:</a></b></dt><dd>Should return <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error. ">mdtAbstractPort::error_t</a> </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000028">Todo:</a></b></dt><dd>Should return <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error. ">mdtAbstractPort::error_t</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00603">603</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
@@ -1615,8 +1613,6 @@ transaction ID must not allready exist in queue. </dd></dl>
 <p>Sent when all threads are ready. </p>
 <p>Used by state machine </p>
 
-<p>Definition at line <a class="el" href="moc__mdt_port_manager_8cxx_source.html#l00213">213</a> of file <a class="el" href="moc__mdt_port_manager_8cxx_source.html">moc_mdtPortManager.cxx</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="a1bfd4d20867ecae2cad1b95b52860b12"></a>
@@ -1643,8 +1639,6 @@ transaction ID must not allready exist in queue. </dd></dl>
 <p>Sent when all threads are stopped. </p>
 <p>Used by state machine </p>
 
-<p>Definition at line <a class="el" href="moc__mdt_port_manager_8cxx_source.html#l00219">219</a> of file <a class="el" href="moc__mdt_port_manager_8cxx_source.html">moc_mdtPortManager.cxx</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="a5959d4025f4903eef0ea65c350f6f9b3"></a>
@@ -1670,8 +1664,6 @@ transaction ID must not allready exist in queue. </dd></dl>
 
 <p>Sent when device is busy (or other slow down reason..) </p>
 <p>Used by state machine </p>
-
-<p>Definition at line <a class="el" href="moc__mdt_port_manager_8cxx_source.html#l00255">255</a> of file <a class="el" href="moc__mdt_port_manager_8cxx_source.html">moc_mdtPortManager.cxx</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_port_manager_8cpp_source.html#l00861">onThreadsErrorOccured()</a>.</p>
 
@@ -1701,8 +1693,6 @@ transaction ID must not allready exist in queue. </dd></dl>
 <p>Sent when connection with device is established. </p>
 <p>Used by state machine </p>
 
-<p>Definition at line <a class="el" href="moc__mdt_port_manager_8cxx_source.html#l00237">237</a> of file <a class="el" href="moc__mdt_port_manager_8cxx_source.html">moc_mdtPortManager.cxx</a>.</p>
-
 <p>Referenced by <a class="el" href="mdt_port_manager_8cpp_source.html#l00122">addThread()</a>, and <a class="el" href="mdt_port_manager_8cpp_source.html#l00156">removeThreads()</a>.</p>
 
 </div>
@@ -1730,8 +1720,6 @@ transaction ID must not allready exist in queue. </dd></dl>
 
 <p>Sent when connection with device beginns. </p>
 <p>Used by state machine </p>
-
-<p>Definition at line <a class="el" href="moc__mdt_port_manager_8cxx_source.html#l00231">231</a> of file <a class="el" href="moc__mdt_port_manager_8cxx_source.html">moc_mdtPortManager.cxx</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_port_manager_8cpp_source.html#l00861">onThreadsErrorOccured()</a>.</p>
 
@@ -1761,8 +1749,6 @@ transaction ID must not allready exist in queue. </dd></dl>
 <p>Sent when connection failed on startup or after max try. </p>
 <p>Used by state machine </p>
 
-<p>Definition at line <a class="el" href="moc__mdt_port_manager_8cxx_source.html#l00249">249</a> of file <a class="el" href="moc__mdt_port_manager_8cxx_source.html">moc_mdtPortManager.cxx</a>.</p>
-
 <p>Referenced by <a class="el" href="mdt_port_manager_8cpp_source.html#l00861">onThreadsErrorOccured()</a>.</p>
 
 </div>
@@ -1790,8 +1776,6 @@ transaction ID must not allready exist in queue. </dd></dl>
 
 <p>Sent when connection with device was lost/closed. </p>
 <p>Used by state machine </p>
-
-<p>Definition at line <a class="el" href="moc__mdt_port_manager_8cxx_source.html#l00243">243</a> of file <a class="el" href="moc__mdt_port_manager_8cxx_source.html">moc_mdtPortManager.cxx</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_port_manager_8cpp_source.html#l00861">onThreadsErrorOccured()</a>.</p>
 
@@ -1821,8 +1805,6 @@ transaction ID must not allready exist in queue. </dd></dl>
 <p>Sent when port was closed. </p>
 <p>Used by state machine </p>
 
-<p>Definition at line <a class="el" href="moc__mdt_port_manager_8cxx_source.html#l00195">195</a> of file <a class="el" href="moc__mdt_port_manager_8cxx_source.html">moc_mdtPortManager.cxx</a>.</p>
-
 <p>Referenced by <a class="el" href="mdt_port_manager_8cpp_source.html#l00213">stop()</a>.</p>
 
 </div>
@@ -1850,8 +1832,6 @@ transaction ID must not allready exist in queue. </dd></dl>
 
 <p>Sent when device and communication becomes ready again. </p>
 <p>Used by state machine </p>
-
-<p>Definition at line <a class="el" href="moc__mdt_port_manager_8cxx_source.html#l00261">261</a> of file <a class="el" href="moc__mdt_port_manager_8cxx_source.html">moc_mdtPortManager.cxx</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_port_manager_8cpp_source.html#l00861">onThreadsErrorOccured()</a>.</p>
 
@@ -1881,8 +1861,6 @@ transaction ID must not allready exist in queue. </dd></dl>
 <p>Sent when threads must be started. </p>
 <p>Used by state machine </p>
 
-<p>Definition at line <a class="el" href="moc__mdt_port_manager_8cxx_source.html#l00201">201</a> of file <a class="el" href="moc__mdt_port_manager_8cxx_source.html">moc_mdtPortManager.cxx</a>.</p>
-
 <p>Referenced by <a class="el" href="mdt_port_manager_8cpp_source.html#l00182">start()</a>.</p>
 
 </div>
@@ -1910,8 +1888,6 @@ transaction ID must not allready exist in queue. </dd></dl>
 
 <p>Sent when threads must be stopped. </p>
 <p>Used by state machine </p>
-
-<p>Definition at line <a class="el" href="moc__mdt_port_manager_8cxx_source.html#l00207">207</a> of file <a class="el" href="moc__mdt_port_manager_8cxx_source.html">moc_mdtPortManager.cxx</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_port_manager_8cpp_source.html#l00213">stop()</a>.</p>
 
@@ -1948,8 +1924,6 @@ onTransactionTimeoutOccured() </dd>
 <dd>
 <a class="el" href="classmdt_port_manager.html#a1467c0bd28612ae3116f5daba08c0b84" title="Stop transaction timer. ">stopTransactionTimer()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="moc__mdt_port_manager_8cxx_source.html#l00267">267</a> of file <a class="el" href="moc__mdt_port_manager_8cxx_source.html">moc_mdtPortManager.cxx</a>.</p>
-
 <p>Referenced by <a class="el" href="mdt_port_manager_8cpp_source.html#l00032">mdtPortManager()</a>, and <a class="el" href="mdt_port_manager_8cpp_source.html#l00861">onThreadsErrorOccured()</a>.</p>
 
 </div>
@@ -1977,8 +1951,6 @@ onTransactionTimeoutOccured() </dd>
 
 <p>Sent when a unhandled error occured. </p>
 <p>Used by state machine </p>
-
-<p>Definition at line <a class="el" href="moc__mdt_port_manager_8cxx_source.html#l00225">225</a> of file <a class="el" href="moc__mdt_port_manager_8cxx_source.html">moc_mdtPortManager.cxx</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_port_manager_8cpp_source.html#l00675">addTransactionPending()</a>, <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00405">mdtUsbPortManager::onThreadsErrorOccured()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00861">onThreadsErrorOccured()</a>, and <a class="el" href="mdt_port_manager_8cpp_source.html#l00381">waitTransactionDone()</a>.</p>
 
@@ -2051,7 +2023,7 @@ onTransactionTimeoutOccured() </dd>
 
 <p>References <a class="el" href="mdt_port_transaction_8cpp_source.html#l00116">mdtPortTransaction::data()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00310">restoreTransaction()</a>, and <a class="el" href="mdt_port_manager_8cpp_source.html#l00742">transactionDone()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00369">mdtModbusTcpPortManager::getHardwareNodeAddress()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00421">mdtModbusTcpPortManager::getRegisterValues()</a>, <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00111">mdtUsbtmcPortManager::sendQuery()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00478">mdtModbusTcpPortManager::setRegisterValues()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01276">mdtDevice::waitTransactionDone()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00369">mdtModbusTcpPortManager::getHardwareNodeAddress()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00421">mdtModbusTcpPortManager::getRegisterValues()</a>, <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00111">mdtUsbtmcPortManager::sendQuery()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00478">mdtModbusTcpPortManager::setRegisterValues()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01275">mdtDevice::waitTransactionDone()</a>.</p>
 
 </div>
 </div>
@@ -2122,7 +2094,7 @@ onTransactionTimeoutOccured() </dd>
 
 <p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00156">156</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_port_manager_8cpp_source.html#l00816">fromThreadNewFrameReaden()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00591">isClosed()</a>, <a class="el" href="mdt_port_thread_8cpp_source.html#l00201">mdtPortThread::isReader()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00861">onThreadsErrorOccured()</a>, <a class="el" href="moc__mdt_port_manager_8cxx_source.html#l00237">pmConnectedEvent()</a>, and <a class="el" href="mdt_port_manager_8h_source.html#l00913">pvThreads</a>.</p>
+<p>References <a class="el" href="mdt_port_manager_8cpp_source.html#l00816">fromThreadNewFrameReaden()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00591">isClosed()</a>, <a class="el" href="mdt_port_thread_8cpp_source.html#l00201">mdtPortThread::isReader()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00861">onThreadsErrorOccured()</a>, <a class="el" href="classmdt_port_manager.html#a871ec7f9676a12c84196404285cf2161">pmConnectedEvent()</a>, and <a class="el" href="mdt_port_manager_8h_source.html#l00913">pvThreads</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_port_manager_8cpp_source.html#l00102">detachPort()</a>.</p>
 
@@ -2149,7 +2121,7 @@ One transaction must be commited once (avoid corrupted double free) </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00310">310</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_port_manager_8cpp_source.html#l00791">commitFrames()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00759">flushTransactionsDone()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00706">flushTransactionsPending()</a>, <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00297">mdtUsbtmcPortManager::fromThreadNewFrameReaden()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00488">readenFrame()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00501">readenFrames()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01268">mdtDevice::restoreTransaction()</a>, <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00138">mdtUsbtmcPortManager::sendData()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00517">mdtModbusTcpPortManager::sendData()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00319">sendData()</a>, and <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00204">mdtUsbtmcPortManager::sendReadRequest()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_port_manager_8cpp_source.html#l00791">commitFrames()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00759">flushTransactionsDone()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00706">flushTransactionsPending()</a>, <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00297">mdtUsbtmcPortManager::fromThreadNewFrameReaden()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00488">readenFrame()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00501">readenFrames()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01267">mdtDevice::restoreTransaction()</a>, <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00138">mdtUsbtmcPortManager::sendData()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00517">mdtModbusTcpPortManager::sendData()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00319">sendData()</a>, and <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00204">mdtUsbtmcPortManager::sendReadRequest()</a>.</p>
 
 </div>
 </div>
@@ -2465,7 +2437,7 @@ Port manager must be closed (see <a class="el" href="classmdt_port_manager.html#
 
 <p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00182">182</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_port_manager_8cpp_source.html#l00568">currentState()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00591">isClosed()</a>, <a class="el" href="mdt_abstract_port_8cpp_source.html#l00048">mdtAbstractPort::isOpen()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00582">isReady()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00603">openPort()</a>, <a class="el" href="moc__mdt_port_manager_8cxx_source.html#l00201">pmStartThreadsEvent()</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00213">PortError</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00912">pvPort</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00213">stop()</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00209">Stopped</a>, and <a class="el" href="mdt_port_manager_8h_source.html#l00211">Stopping</a>.</p>
+<p>References <a class="el" href="mdt_port_manager_8cpp_source.html#l00568">currentState()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00591">isClosed()</a>, <a class="el" href="mdt_abstract_port_8cpp_source.html#l00048">mdtAbstractPort::isOpen()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00582">isReady()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00603">openPort()</a>, <a class="el" href="classmdt_port_manager.html#aa12ccb053b3ce050a2482a957b28222e">pmStartThreadsEvent()</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00213">PortError</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00912">pvPort</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00213">stop()</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00209">Stopped</a>, and <a class="el" href="mdt_port_manager_8h_source.html#l00211">Stopping</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00049">mdtDeviceModbusWago::connectToDevice()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00092">mdtDeviceModbus::connectToDevice()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00074">mdtModbusTcpPortManager::scan()</a>, and <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00181">mdtUsbPortManager::start()</a>.</p>
 
@@ -2538,8 +2510,6 @@ onTransactionTimeoutOccured() </dd>
 
 <p>Emitted each time the state changed. </p>
 
-<p>Definition at line <a class="el" href="moc__mdt_port_manager_8cxx_source.html#l00181">181</a> of file <a class="el" href="moc__mdt_port_manager_8cxx_source.html">moc_mdtPortManager.cxx</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="ae00d513ed335fbd203852dcb7180005c"></a>
@@ -2589,8 +2559,6 @@ onTransactionTimeoutOccured() </dd>
 <p>Emitted only if a state that must be notified is entered. </p>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="classmdt_state_machine.html" title="Extend Qt&#39;s QStateMachine. ">mdtStateMachine</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="moc__mdt_port_manager_8cxx_source.html#l00188">188</a> of file <a class="el" href="moc__mdt_port_manager_8cxx_source.html">moc_mdtPortManager.cxx</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="a6f6c6f8a8430d8631a08c765565db9ab"></a>
@@ -2634,8 +2602,6 @@ onTransactionTimeoutOccured() </dd>
 <p>Emitted when a new status message is to display. </p>
 <p>Typically used with mdtDeviceStatusWidget. </p>
 
-<p>Definition at line <a class="el" href="moc__mdt_port_manager_8cxx_source.html#l00174">174</a> of file <a class="el" href="moc__mdt_port_manager_8cxx_source.html">moc_mdtPortManager.cxx</a>.</p>
-
 <p>Referenced by <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00272">mdtModbusTcpPortManager::tryToConnect()</a>.</p>
 
 </div>
@@ -2659,7 +2625,7 @@ onTransactionTimeoutOccured() </dd>
 
 <p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00213">213</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_port_manager_8cpp_source.html#l00618">closePort()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00591">isClosed()</a>, <a class="el" href="mdt_abstract_port_8cpp_source.html#l00048">mdtAbstractPort::isOpen()</a>, <a class="el" href="moc__mdt_port_manager_8cxx_source.html#l00195">pmPortClosedEvent()</a>, <a class="el" href="moc__mdt_port_manager_8cxx_source.html#l00207">pmStopThreadsEvent()</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00208">PortClosed</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00912">pvPort</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00209">Stopped</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00778">stopTransactionTimer()</a>, and <a class="el" href="mdt_state_machine_8cpp_source.html#l00049">mdtStateMachine::waitOnState()</a>.</p>
+<p>References <a class="el" href="mdt_port_manager_8cpp_source.html#l00618">closePort()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00591">isClosed()</a>, <a class="el" href="mdt_abstract_port_8cpp_source.html#l00048">mdtAbstractPort::isOpen()</a>, <a class="el" href="classmdt_port_manager.html#ae77c1b24291797704488beda0009c57a">pmPortClosedEvent()</a>, <a class="el" href="classmdt_port_manager.html#a7b81ee6491167fa17574d840720d9b33">pmStopThreadsEvent()</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00208">PortClosed</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00912">pvPort</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00209">Stopped</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00778">stopTransactionTimer()</a>, and <a class="el" href="mdt_state_machine_8cpp_source.html#l00049">mdtStateMachine::waitOnState()</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00049">mdtDeviceModbusWago::connectToDevice()</a>, <a class="el" href="mdt_device_scpi_8cpp_source.html#l00068">mdtDeviceScpi::connectToDevice()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00092">mdtDeviceModbus::connectToDevice()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00102">detachPort()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00070">mdtDevice::disconnectFromDevice()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00074">mdtModbusTcpPortManager::scan()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00182">start()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00054">mdtDeviceModbus::~mdtDeviceModbus()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00059">~mdtPortManager()</a>, and <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00047">mdtUsbPortManager::~mdtUsbPortManager()</a>.</p>
 
@@ -2934,9 +2900,9 @@ onTransactionTimeoutOccured() </dd>
 
 <p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00381">381</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_port_manager_8h_source.html#l00220">Busy</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00264">config()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00568">currentState()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00582">isReady()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_error_8h_source.html#l00040">MDT_PORT_IO_ERROR</a>, <a class="el" href="moc__mdt_port_manager_8cxx_source.html#l00225">pmUnhandledErrorEvent()</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00912">pvPort</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00770">startTransactionTimer()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00778">stopTransactionTimer()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00728">transactionsDoneContains()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00786">transactionTimeoutOccured()</a>, and <a class="el" href="mdt_error_8h_source.html#l00093">mdtError::Warning</a>.</p>
+<p>References <a class="el" href="mdt_port_manager_8h_source.html#l00220">Busy</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00264">config()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00568">currentState()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00582">isReady()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_error_8h_source.html#l00040">MDT_PORT_IO_ERROR</a>, <a class="el" href="classmdt_port_manager.html#a94d3fa4a26f8686449313a54003f0b4d">pmUnhandledErrorEvent()</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00912">pvPort</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00770">startTransactionTimer()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00778">stopTransactionTimer()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00728">transactionsDoneContains()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00786">transactionTimeoutOccured()</a>, and <a class="el" href="mdt_error_8h_source.html#l00093">mdtError::Warning</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00369">mdtModbusTcpPortManager::getHardwareNodeAddress()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00421">mdtModbusTcpPortManager::getRegisterValues()</a>, <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00111">mdtUsbtmcPortManager::sendQuery()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00478">mdtModbusTcpPortManager::setRegisterValues()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01276">mdtDevice::waitTransactionDone()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00369">mdtModbusTcpPortManager::getHardwareNodeAddress()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00421">mdtModbusTcpPortManager::getRegisterValues()</a>, <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00111">mdtUsbtmcPortManager::sendQuery()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00478">mdtModbusTcpPortManager::setRegisterValues()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01275">mdtDevice::waitTransactionDone()</a>.</p>
 
 </div>
 </div>
@@ -3044,12 +3010,11 @@ onTransactionTimeoutOccured() </dd>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtport/<a class="el" href="mdt_port_manager_8h_source.html">mdtPortManager.h</a></li>
 <li>src/mdtport/<a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a></li>
-<li>src/mdtport/<a class="el" href="moc__mdt_port_manager_8cxx_source.html">moc_mdtPortManager.cxx</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 6 2014 09:34:22 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jun 28 2014 13:24:48 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

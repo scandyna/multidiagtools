@@ -527,7 +527,7 @@ Subclass notes\-:
 \item Once decoding was done, the concerned I/\-O(s) sould be updated with new value, or set to invalid value on error (see \hyperlink{classmdt_value}{mdt\-Value} class). Doing so will keep (G)U\-I consistency. 
 \end{DoxyItemize}
 
-Definition at line 1191 of file mdt\-Device.\-cpp.
+Definition at line 1190 of file mdt\-Device.\-cpp.
 
 \hypertarget{classmdt_device_a61032f15e601eb1bd74da80014bae593}{\index{mdt\-Device@{mdt\-Device}!delete\-Ios@{delete\-Ios}}
 \index{delete\-Ios@{delete\-Ios}!mdtDevice@{mdt\-Device}}
@@ -1232,7 +1232,7 @@ port\-Manager must be set before calling this method
 \end{DoxyPrecond}
 
 
-Definition at line 1261 of file mdt\-Device.\-cpp.
+Definition at line 1260 of file mdt\-Device.\-cpp.
 
 
 
@@ -1303,7 +1303,7 @@ Referenced by start(), and mdt\-Device\-Scpi\-::wait\-Operation\-Complete().
 Get last error. 
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000006}{Todo}]Not completly used currently, must be implemented in this class + subclasses . \end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000007}{Todo}]Not completly used currently, must be implemented in this class + subclasses . \end{DoxyRefDesc}
 
 
 Definition at line 222 of file mdt\-Device.\-cpp.
@@ -1321,7 +1321,7 @@ Get last error for write access.
 
 
 
-Definition at line 1195 of file mdt\-Device.\-cpp.
+Definition at line 1194 of file mdt\-Device.\-cpp.
 
 
 
@@ -1396,7 +1396,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a3b83b926ed1f9c3bdf7024de2745
 
 
 
-Definition at line 1186 of file mdt\-Device.\-cpp.
+Definition at line 1185 of file mdt\-Device.\-cpp.
 
 
 
@@ -1436,7 +1436,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_aa2a024793ae2a5e81c7e92260a70
 
 
 
-Definition at line 1200 of file mdt\-Device.\-cpp.
+Definition at line 1199 of file mdt\-Device.\-cpp.
 
 
 
@@ -1481,7 +1481,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a846af6dbf80bbf747f3f966420ef
 
 
 
-Definition at line 1205 of file mdt\-Device.\-cpp.
+Definition at line 1204 of file mdt\-Device.\-cpp.
 
 
 
@@ -1521,7 +1521,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a30c815cbe5e603e8114dcbc09849
 
 
 
-Definition at line 1210 of file mdt\-Device.\-cpp.
+Definition at line 1209 of file mdt\-Device.\-cpp.
 
 
 
@@ -1566,7 +1566,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_ae02dd44f1d873fcc15ff75d781b6
 
 
 
-Definition at line 1215 of file mdt\-Device.\-cpp.
+Definition at line 1214 of file mdt\-Device.\-cpp.
 
 
 
@@ -1611,7 +1611,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a9dd05e51223ee5bb79970fbe84c5
 
 
 
-Definition at line 1230 of file mdt\-Device.\-cpp.
+Definition at line 1229 of file mdt\-Device.\-cpp.
 
 
 
@@ -1656,7 +1656,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a3fba9e113092f9da187cf684fb62
 
 
 
-Definition at line 1235 of file mdt\-Device.\-cpp.
+Definition at line 1234 of file mdt\-Device.\-cpp.
 
 
 
@@ -1696,7 +1696,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a13a334ac86135751893f37064d8f
 
 
 
-Definition at line 1240 of file mdt\-Device.\-cpp.
+Definition at line 1239 of file mdt\-Device.\-cpp.
 
 
 
@@ -1741,7 +1741,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a8915a036472bff0f356756992c1e
 
 
 
-Definition at line 1245 of file mdt\-Device.\-cpp.
+Definition at line 1244 of file mdt\-Device.\-cpp.
 
 
 
@@ -1766,7 +1766,7 @@ port\-Manager must be set before calling this method
 \end{DoxyPrecond}
 
 
-Definition at line 1268 of file mdt\-Device.\-cpp.
+Definition at line 1267 of file mdt\-Device.\-cpp.
 
 
 
@@ -2280,10 +2280,6 @@ This signal should be used by application developpers, and not directly \hyperli
 
 But, to display current state in a easier way (f.\-ex. using \hyperlink{classmdt_port_status_widget}{mdt\-Port\-Status\-Widget}), \hyperlink{classmdt_port_manager_ae00d513ed335fbd203852dcb7180005c}{mdt\-Port\-Manager\-::state\-Changed\-For\-Ui()} can be used. 
 
-Definition at line 131 of file moc\-\_\-mdt\-Device.\-cxx.
-
-
-
 Referenced by mdt\-Device\-D\-S\-O1000\-A\-::mdt\-Device\-D\-S\-O1000\-A(), mdt\-Device\-Modbus\-::mdt\-Device\-Modbus(), and mdt\-Device\-Scpi\-::mdt\-Device\-Scpi().
 
 \hypertarget{classmdt_device_a3fbc6e71241e2e9daa2d8557f870c03c}{\index{mdt\-Device@{mdt\-Device}!status\-Message\-Changed@{status\-Message\-Changed}}
@@ -2300,10 +2296,6 @@ Referenced by mdt\-Device\-D\-S\-O1000\-A\-::mdt\-Device\-D\-S\-O1000\-A(), mdt\
 Emitted when a new status message is to display. 
 
 Typically used with \hyperlink{classmdt_port_status_widget}{mdt\-Port\-Status\-Widget} 
-
-Definition at line 138 of file moc\-\_\-mdt\-Device.\-cxx.
-
-
 
 Referenced by mdt\-Device\-Modbus\-::mdt\-Device\-Modbus().
 
@@ -2367,7 +2359,7 @@ Referenced by mdt\-Device\-Modbus\-Wago\-Module\-::wait().
 Wait until a transaction is done without break the G\-U\-I's event loop. 
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000007}{Todo}]Adapt, comment\end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000008}{Todo}]Adapt, comment\end{DoxyRefDesc}
 
 
 This is a helper method that provide a blocking wait. Internally, a couple of sleep and event processing is done, avoiding freezing the G\-U\-I.
@@ -2387,7 +2379,7 @@ granularity must be $>$ 0.
 \end{DoxyPrecond}
 
 
-Definition at line 1276 of file mdt\-Device.\-cpp.
+Definition at line 1275 of file mdt\-Device.\-cpp.
 
 
 
@@ -2434,7 +2426,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_ac63297a31205759622f341525c34
 
 
 
-Definition at line 1220 of file mdt\-Device.\-cpp.
+Definition at line 1219 of file mdt\-Device.\-cpp.
 
 
 
@@ -2482,7 +2474,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_aa09d1682bef4bbc08b59b20110e6
 
 
 
-Definition at line 1225 of file mdt\-Device.\-cpp.
+Definition at line 1224 of file mdt\-Device.\-cpp.
 
 
 
@@ -2525,7 +2517,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a6950c10fc521b193fb3c75422387
 
 
 
-Definition at line 1250 of file mdt\-Device.\-cpp.
+Definition at line 1249 of file mdt\-Device.\-cpp.
 
 
 
@@ -2573,7 +2565,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a6713edaee0bfba48791008124299
 
 
 
-Definition at line 1255 of file mdt\-Device.\-cpp.
+Definition at line 1254 of file mdt\-Device.\-cpp.
 
 
 
@@ -2584,5 +2576,4 @@ Referenced by set\-Digital\-Outputs().
 The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
 src/mdtdevice/\hyperlink{mdt_device_8h}{mdt\-Device.\-h}\item 
-src/mdtdevice/\hyperlink{mdt_device_8cpp}{mdt\-Device.\-cpp}\item 
-src/mdtdevice/\hyperlink{moc__mdt_device_8cxx}{moc\-\_\-mdt\-Device.\-cxx}\end{DoxyCompactItemize}
+src/mdtdevice/\hyperlink{mdt_device_8cpp}{mdt\-Device.\-cpp}\end{DoxyCompactItemize}

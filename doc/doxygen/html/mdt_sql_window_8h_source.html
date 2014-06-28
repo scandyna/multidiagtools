@@ -114,13 +114,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &lt;QWidget&gt;</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &lt;QMainWindow&gt;</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdtdatabase_2ui__mdt_sql_window_8h.html">ui_mdtSqlWindow.h</a>&quot;</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &quot;ui_mdtSqlWindow.h&quot;</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">class </span>QAction;</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">class </span>QCloseEvent;</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">class </span><a class="code" href="classmdt_sql_form.html" title="Base class for high level SQL widgets API. ">mdtSqlForm</a>;</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno"><a class="code" href="classmdt_sql_window.html">   39</a></span>&#160;<span class="keyword">class </span><a class="code" href="classmdt_sql_window.html" title="Main window for a database table view/editor. ">mdtSqlWindow</a> : <span class="keyword">public</span> <a class="code" href="class_q_main_window.html">QMainWindow</a>, <span class="keyword">public</span> <a class="code" href="class_ui_1_1mdt_sql_window.html">Ui::mdtSqlWindow</a></div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="code" href="classmdt_sql_window.html">   39</a></span>&#160;<span class="keyword">class </span><a class="code" href="classmdt_sql_window.html" title="Main window for a database table view/editor. ">mdtSqlWindow</a> : <span class="keyword">public</span> <a class="code" href="class_q_main_window.html">QMainWindow</a>, <span class="keyword">public</span> Ui::mdtSqlWindow</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;{</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; Q_OBJECT</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
@@ -132,36 +132,38 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_window.html#ad9a237b7bea72d92a4743f09c28e38ae" title="Set the SQL form. ">setSqlForm</a>(<a class="code" href="classmdt_sql_form.html" title="Base class for high level SQL widgets API. ">mdtSqlForm</a> *form);</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_window.html#a6d4d853c8c64a99ff2e396b99ea63a87" title="Enable navigation. ">enableNavigation</a>();</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_window.html#a961d587d63b0997a10db6728773a108f" title="Disable navigation. ">disableNavigation</a>();</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_window.html#a42d1283a05eddd2a48af74cf764ef240" title="Enable edition. ">enableEdition</a>();</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_window.html#a629fa57fcdde0e4db0fc93efd84c9123" title="Disable edition. ">disableEdition</a>();</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <span class="keywordtype">void</span> closeEvent(QCloseEvent *event);</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  QAction *actSubmit;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  QAction *actRevert;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  QAction *actInsert;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  QAction *actRemove;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  QAction *actNavToFirst;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  QAction *actNavToLast;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  QAction *actNavToPrevious;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  QAction *actNavToNext;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  <a class="code" href="classmdt_sql_form.html" title="Base class for high level SQL widgets API. ">mdtSqlForm</a> *pvForm;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  Q_DISABLE_COPY(<a class="code" href="classmdt_sql_window.html" title="Main window for a database table view/editor. ">mdtSqlWindow</a>);</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;};</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="preprocessor">#endif  // #ifndef MDT_SQL_WINDOW_H</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno"><a class="code" href="classmdt_sql_window.html#acf5dc11eb376693ba8114230ff75cfe7">   69</a></span>&#160;  <a class="code" href="classmdt_sql_form.html" title="Base class for high level SQL widgets API. ">mdtSqlForm</a> *<a class="code" href="classmdt_sql_window.html#acf5dc11eb376693ba8114230ff75cfe7" title="Get SQL for. ">sqlForm</a>() { <span class="keywordflow">return</span> pvForm; }</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_window.html#a6d4d853c8c64a99ff2e396b99ea63a87" title="Enable navigation. ">enableNavigation</a>();</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_window.html#a961d587d63b0997a10db6728773a108f" title="Disable navigation. ">disableNavigation</a>();</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_window.html#a42d1283a05eddd2a48af74cf764ef240" title="Enable edition. ">enableEdition</a>();</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_window.html#a629fa57fcdde0e4db0fc93efd84c9123" title="Disable edition. ">disableEdition</a>();</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  <span class="keywordtype">void</span> closeEvent(QCloseEvent *event);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  QAction *actSubmit;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  QAction *actRevert;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  QAction *actInsert;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  QAction *actRemove;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  QAction *actNavToFirst;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  QAction *actNavToLast;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  QAction *actNavToPrevious;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  QAction *actNavToNext;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  <a class="code" href="classmdt_sql_form.html" title="Base class for high level SQL widgets API. ">mdtSqlForm</a> *pvForm;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  Q_DISABLE_COPY(<a class="code" href="classmdt_sql_window.html" title="Main window for a database table view/editor. ">mdtSqlWindow</a>);</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;};</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="preprocessor">#endif  // #ifndef MDT_SQL_WINDOW_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 6 2014 09:34:16 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jun 28 2014 13:24:40 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

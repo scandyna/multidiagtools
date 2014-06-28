@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.4"/>
-<title>Multi diag tools: src/mdtutilsgui/mdtSqlDatabaseManager.cpp Source File</title>
+<title>Multi diag tools: src/mdtdatabase/mdtSqlDatabaseManager.cpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -81,7 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_6853ee7b343a1b65ec0b24bd11272af0.html">mdtutilsgui</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_7a9c9aa4b97bb4a5b319edee0793544f.html">mdtdatabase</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -512,7 +512,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;    }</div>
 <div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;  }</div>
 <div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;  <span class="comment">// Create table</span></div>
-<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;  sql = table.<a class="code" href="classmdt_sql_schema_table.html#a8a072145d85a6a2c183e01aaa6d91a5d" title="Get SQL statement for table creation. ">sqlForCreateTable</a>();</div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;  sql = table.<a class="code" href="classmdt_sql_schema_table.html#af6c605b7e7860ced2512792efda76357" title="Get SQL statement for table creation. ">sqlForCreateTable</a>();</div>
 <div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;  <span class="keywordflow">if</span>(!query.exec(sql)){</div>
 <div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;    sqlError = query.lastError();</div>
 <div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error. ">setError</a>(tr(<span class="stringliteral">&quot;Cannot create table &#39;&quot;</span>) + table.<a class="code" href="classmdt_sql_schema_table.html#a24def48594abf674f96852a4c0d5e9c1" title="Get table name. ">tableName</a>() + tr(<span class="stringliteral">&quot;&#39;&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);</div>
@@ -601,7 +601,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 6 2014 09:34:17 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jun 28 2014 13:24:40 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

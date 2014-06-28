@@ -21,6 +21,8 @@ bool \hyperlink{classmdt_cl_path_graph_a40e80f68b2600ad69a1fe74aa40393f8}{load\-
 \begin{DoxyCompactList}\small\item\em Load the link list. \end{DoxyCompactList}\item 
 Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_cl_path_graph_a09b3b342fe09d1afdbc88c8c683ab016}{get\-Linked\-Connection\-Id\-List} (const Q\-Variant \&from\-Connection\-Id)
 \begin{DoxyCompactList}\small\item\em Get a list of unit connections I\-Ds that are linked to a given connection. \end{DoxyCompactList}\item 
+Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_cl_path_graph_af5484b6efa4b9d9162de3dd1834fcb41}{get\-Linked\-Connector\-Id\-List} (const Q\-Variant \&from\-Connector\-Id, bool $\ast$ok, const Q\-List$<$ Q\-Variant $>$ \&connection\-Id\-List\-To\-Ignore=Q\-List$<$ Q\-Variant $>$())
+\begin{DoxyCompactList}\small\item\em Get a list of unit connector I\-D that are linked to given one. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_cl_path_graph_ae779d0527cc984122dbf063238b59749}{draw\-Path} (const Q\-Variant \&from\-Connection\-Id)
 \begin{DoxyCompactList}\small\item\em Draw the graphic representation starting from a connection. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_cl_path_graph_a6c239942dd7f31fc2197af4febec489c}{attach\-View} (Q\-Graphics\-View $\ast$view)
@@ -34,7 +36,7 @@ Q\-String\-List \hyperlink{classmdt_cl_path_graph_a63ddfb9e8d64041ad17c992eac172
 \subsection{Detailed Description}
 Represents the link list in a graph. 
 
-Definition at line 108 of file mdt\-Cl\-Path\-Graph.\-h.
+Definition at line 98 of file mdt\-Cl\-Path\-Graph.\-h.
 
 
 
@@ -52,7 +54,7 @@ Constructor.
 
 
 
-Definition at line 69 of file mdt\-Cl\-Path\-Graph.\-cpp.
+Definition at line 68 of file mdt\-Cl\-Path\-Graph.\-cpp.
 
 \hypertarget{classmdt_cl_path_graph_aa72798f4edc19fc69d32cd5d7d643bb8}{\index{mdt\-Cl\-Path\-Graph@{mdt\-Cl\-Path\-Graph}!$\sim$mdt\-Cl\-Path\-Graph@{$\sim$mdt\-Cl\-Path\-Graph}}
 \index{$\sim$mdt\-Cl\-Path\-Graph@{$\sim$mdt\-Cl\-Path\-Graph}!mdtClPathGraph@{mdt\-Cl\-Path\-Graph}}
@@ -67,7 +69,7 @@ Destructor.
 
 
 
-Definition at line 76 of file mdt\-Cl\-Path\-Graph.\-cpp.
+Definition at line 75 of file mdt\-Cl\-Path\-Graph.\-cpp.
 
 
 
@@ -85,7 +87,7 @@ Attach a view to the scene of the path graph.
 
 
 
-Definition at line 272 of file mdt\-Cl\-Path\-Graph.\-cpp.
+Definition at line 316 of file mdt\-Cl\-Path\-Graph.\-cpp.
 
 
 
@@ -104,7 +106,7 @@ Draw the graphic representation starting from a connection.
 
 
 
-Definition at line 211 of file mdt\-Cl\-Path\-Graph.\-cpp.
+Definition at line 255 of file mdt\-Cl\-Path\-Graph.\-cpp.
 
 
 
@@ -125,9 +127,9 @@ Referenced by mdt\-Cl\-Path\-Graph\-Dialog\-::draw\-Path().
 
 Get a list of unit connections I\-Ds that are linked to a given connection. 
 
+Note\-: from\-Connection\-Id is not included in result. 
 
-
-Definition at line 172 of file mdt\-Cl\-Path\-Graph.\-cpp.
+Definition at line 171 of file mdt\-Cl\-Path\-Graph.\-cpp.
 
 
 
@@ -135,7 +137,35 @@ References mdt\-Cl\-Path\-Graph\-Private\-::mdt\-Cl\-Path\-Graph\-Edge\-Data\-::
 
 
 
-Referenced by mdt\-Tt\-Test\-Node\-Unit\-::get\-Connection\-Id\-List\-Linked\-To\-Connection\-Id\-List(), mdt\-Tt\-Test\-Connection\-Cable\-::get\-To\-Unit\-Connection\-Id\-Linked\-Unit\-Connection\-Id\-List\-Part\-Of\-Unit\-Connector(), and mdt\-Tt\-Test\-Connection\-Cable\-::get\-To\-Unit\-Connection\-Linked\-Unit\-Connector\-Id\-List().
+Referenced by mdt\-Cl\-Direct\-Link\-::add\-Links\-By\-Unit\-Connector(), mdt\-Tt\-Test\-Node\-Unit\-::get\-Connection\-Id\-List\-Linked\-To\-Connection\-Id\-List(), mdt\-Tt\-Test\-Connection\-Cable\-::get\-To\-Unit\-Connection\-Id\-Linked\-Unit\-Connection\-Id\-List\-Part\-Of\-Unit\-Connector(), and mdt\-Tt\-Test\-Connection\-Cable\-::get\-To\-Unit\-Connection\-Linked\-Unit\-Connector\-Id\-List().
+
+\hypertarget{classmdt_cl_path_graph_af5484b6efa4b9d9162de3dd1834fcb41}{\index{mdt\-Cl\-Path\-Graph@{mdt\-Cl\-Path\-Graph}!get\-Linked\-Connector\-Id\-List@{get\-Linked\-Connector\-Id\-List}}
+\index{get\-Linked\-Connector\-Id\-List@{get\-Linked\-Connector\-Id\-List}!mdtClPathGraph@{mdt\-Cl\-Path\-Graph}}
+\subsubsection[{get\-Linked\-Connector\-Id\-List}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ Q\-Variant $>$ mdt\-Cl\-Path\-Graph\-::get\-Linked\-Connector\-Id\-List (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{from\-Connector\-Id, }
+\item[{bool $\ast$}]{ok, }
+\item[{const Q\-List$<$ Q\-Variant $>$ \&}]{connection\-Id\-List\-To\-Ignore = {\ttfamily QList$<$QVariant$>$()}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_path_graph_af5484b6efa4b9d9162de3dd1834fcb41}
+
+
+Get a list of unit connector I\-D that are linked to given one. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em from\-Connector\-Id} & Connector from witch linked ones will be searched \\
+\hline
+{\em connection\-Id\-List\-To\-Ignore} & For example, if each connector has a G\-N\-D, probably are they all connected together. In such case, this method has no sense. If given from\-Connector\-Id contains such special connections, give their I\-Ds here.\\
+\hline
+\end{DoxyParams}
+Note\-: from\-Connector\-Id is not included in result. 
+
+Definition at line 210 of file mdt\-Cl\-Path\-Graph.\-cpp.
+
+
+
+References mdt\-Cl\-Unit\-::get\-Connection\-Id\-List\-Part\-Of\-Connector\-Id(), mdt\-Cl\-Unit\-::get\-Connector\-Id\-Of\-Connection\-Id(), and mdt\-Tt\-Base\-::last\-Error().
 
 \hypertarget{classmdt_cl_path_graph_ada63b3baac0bca23e5bd7f9c798a29b2}{\index{mdt\-Cl\-Path\-Graph@{mdt\-Cl\-Path\-Graph}!last\-Error@{last\-Error}}
 \index{last\-Error@{last\-Error}!mdtClPathGraph@{mdt\-Cl\-Path\-Graph}}
@@ -150,7 +180,7 @@ Get last error.
 
 
 
-Definition at line 288 of file mdt\-Cl\-Path\-Graph.\-cpp.
+Definition at line 332 of file mdt\-Cl\-Path\-Graph.\-cpp.
 
 
 
@@ -173,10 +203,10 @@ The returned list is ready to be used with a Q\-Message\-Box . The first string 
 Returned list has allways a size of 3 (detailed\-Text can simply contain a empty string)
 \end{DoxyPostcond}
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000049}{Todo}]Should become Obselete . \end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000050}{Todo}]Should become Obselete . \end{DoxyRefDesc}
 
 
-Definition at line 279 of file mdt\-Cl\-Path\-Graph.\-cpp.
+Definition at line 323 of file mdt\-Cl\-Path\-Graph.\-cpp.
 
 
 
@@ -195,7 +225,7 @@ Load the link list.
 
 
 
-Definition at line 82 of file mdt\-Cl\-Path\-Graph.\-cpp.
+Definition at line 81 of file mdt\-Cl\-Path\-Graph.\-cpp.
 
 
 

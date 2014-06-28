@@ -35,6 +35,18 @@ Collaboration diagram for mdt\-Tt\-Test\-Connection\-Cable\-:\nopagebreak
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_tt_test_connection_cable_acca8a9ed0ac97e056d4917c7fa077609}{$\sim$mdt\-Tt\-Test\-Connection\-Cable} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{classmdt_tt_test_connection_cable_a24a9da7f6b48097d5f1dee660d175cfd}{sql\-For\-Test\-Node\-Unit\-Selection} (const Q\-Variant \&test\-Cable\-Id)
+\begin{DoxyCompactList}\small\item\em Get S\-Q\-L statement for test node unit selection. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{classmdt_tt_test_connection_cable_af3bc25739b94c05bb845a2f10775f19d}{sql\-For\-Dut\-Unit\-Selection} (const Q\-Variant \&test\-Cable\-Id)
+\begin{DoxyCompactList}\small\item\em Get S\-Q\-L statement for D\-U\-T unit selection. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_test_connection_cable_a39fed62a746a20313b121caf9141b503}{add\-Test\-Node\-Unit} (const Q\-Variant \&test\-Node\-Unit\-Id, const Q\-Variant \&test\-Cable\-Id)
+\begin{DoxyCompactList}\small\item\em Add a test node unit. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_test_connection_cable_a98885f0ce4d43bdc3866b13c53744913}{remove\-Test\-Node\-Units} (const \hyperlink{classmdt_sql_table_selection}{mdt\-Sql\-Table\-Selection} \&s)
+\begin{DoxyCompactList}\small\item\em Remove test node units. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_test_connection_cable_af024a5c28e223181ff318978abcbe1f1}{add\-Dut\-Unit} (const Q\-Variant \&unit\-Id, const Q\-Variant \&test\-Cable\-Id)
+\begin{DoxyCompactList}\small\item\em Add a D\-U\-T unit. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_test_connection_cable_a268dafea5cc285e4992c38ea86ea98a9}{remove\-Dut\-Units} (const \hyperlink{classmdt_sql_table_selection}{mdt\-Sql\-Table\-Selection} \&s)
+\begin{DoxyCompactList}\small\item\em Remove D\-U\-T units. \end{DoxyCompactList}\item 
 Q\-String \hyperlink{classmdt_tt_test_connection_cable_a03785cef753bae2d7d2dfd0fe1c9a6cf}{sql\-For\-Test\-Node\-Selection} () const 
 \begin{DoxyCompactList}\small\item\em Get S\-Q\-L statement for test node selection. \end{DoxyCompactList}\item 
 Q\-String \hyperlink{classmdt_tt_test_connection_cable_a5d5769169257b44e9087bca43ea709d1}{sql\-For\-Start\-Connector\-Selection} (const Q\-Variant \&dut\-Unit\-Id) const 
@@ -100,7 +112,7 @@ Constructor.
 
 
 
-Definition at line 30 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
+Definition at line 31 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
 
 \hypertarget{classmdt_tt_test_connection_cable_acca8a9ed0ac97e056d4917c7fa077609}{\index{mdt\-Tt\-Test\-Connection\-Cable@{mdt\-Tt\-Test\-Connection\-Cable}!$\sim$mdt\-Tt\-Test\-Connection\-Cable@{$\sim$mdt\-Tt\-Test\-Connection\-Cable}}
 \index{$\sim$mdt\-Tt\-Test\-Connection\-Cable@{$\sim$mdt\-Tt\-Test\-Connection\-Cable}!mdtTtTestConnectionCable@{mdt\-Tt\-Test\-Connection\-Cable}}
@@ -115,7 +127,7 @@ Destructor.
 
 
 
-Definition at line 36 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
+Definition at line 37 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
 
 
 
@@ -133,7 +145,7 @@ Add a cable into test cable table.
 
 
 
-Definition at line 406 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
+Definition at line 491 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
 
 
 
@@ -142,6 +154,26 @@ References mdt\-Error\-::commit(), mdt\-Tt\-Base\-::database(), mdt\-Error\-::\-
 
 
 Referenced by create\-Test\-Cable().
+
+\hypertarget{classmdt_tt_test_connection_cable_af024a5c28e223181ff318978abcbe1f1}{\index{mdt\-Tt\-Test\-Connection\-Cable@{mdt\-Tt\-Test\-Connection\-Cable}!add\-Dut\-Unit@{add\-Dut\-Unit}}
+\index{add\-Dut\-Unit@{add\-Dut\-Unit}!mdtTtTestConnectionCable@{mdt\-Tt\-Test\-Connection\-Cable}}
+\subsubsection[{add\-Dut\-Unit}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-Connection\-Cable\-::add\-Dut\-Unit (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{unit\-Id, }
+\item[{const Q\-Variant \&}]{test\-Cable\-Id}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_connection_cable_af024a5c28e223181ff318978abcbe1f1}
+
+
+Add a D\-U\-T unit. 
+
+
+
+Definition at line 105 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
+
+
+
+References mdt\-Sql\-Record\-::add\-All\-Fields(), mdt\-Tt\-Base\-::add\-Record(), mdt\-Tt\-Base\-::database(), mdt\-Sql\-Record\-::last\-Error(), mdt\-Tt\-Base\-::pv\-Last\-Error, and mdt\-Sql\-Record\-::set\-Value().
 
 \hypertarget{classmdt_tt_test_connection_cable_a6c047f97e4c822f8c3eac7fc3e2ae020}{\index{mdt\-Tt\-Test\-Connection\-Cable@{mdt\-Tt\-Test\-Connection\-Cable}!add\-Link@{add\-Link}}
 \index{add\-Link@{add\-Link}!mdtTtTestConnectionCable@{mdt\-Tt\-Test\-Connection\-Cable}}
@@ -156,7 +188,7 @@ Add a link into test link table.
 
 
 
-Definition at line 357 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
+Definition at line 442 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
 
 
 
@@ -182,10 +214,10 @@ Referenced by add\-Links(), and edit\-Link().
 Add a link into test link table. 
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000076}{Todo}]Obselete this version \end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000069}{Todo}]Obselete this version \end{DoxyRefDesc}
 
 
-Definition at line 437 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
+Definition at line 522 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
 
 
 
@@ -210,7 +242,7 @@ dut\-Connection\-Id\-List size must be $<$= test\-Connection\-Id\-List
 \end{DoxyPrecond}
 
 
-Definition at line 362 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
+Definition at line 447 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
 
 
 
@@ -219,6 +251,26 @@ References add\-Link().
 
 
 Referenced by create\-Test\-Cable().
+
+\hypertarget{classmdt_tt_test_connection_cable_a39fed62a746a20313b121caf9141b503}{\index{mdt\-Tt\-Test\-Connection\-Cable@{mdt\-Tt\-Test\-Connection\-Cable}!add\-Test\-Node\-Unit@{add\-Test\-Node\-Unit}}
+\index{add\-Test\-Node\-Unit@{add\-Test\-Node\-Unit}!mdtTtTestConnectionCable@{mdt\-Tt\-Test\-Connection\-Cable}}
+\subsubsection[{add\-Test\-Node\-Unit}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-Connection\-Cable\-::add\-Test\-Node\-Unit (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{test\-Node\-Unit\-Id, }
+\item[{const Q\-Variant \&}]{test\-Cable\-Id}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_connection_cable_a39fed62a746a20313b121caf9141b503}
+
+
+Add a test node unit. 
+
+
+
+Definition at line 86 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
+
+
+
+References mdt\-Sql\-Record\-::add\-All\-Fields(), mdt\-Tt\-Base\-::add\-Record(), mdt\-Tt\-Base\-::database(), mdt\-Sql\-Record\-::last\-Error(), mdt\-Tt\-Base\-::pv\-Last\-Error, and mdt\-Sql\-Record\-::set\-Value().
 
 \hypertarget{classmdt_tt_test_connection_cable_ad16ab8a1aa03c5d30caa3629fae1d6d6}{\index{mdt\-Tt\-Test\-Connection\-Cable@{mdt\-Tt\-Test\-Connection\-Cable}!connect\-Test\-Cable@{connect\-Test\-Cable}}
 \index{connect\-Test\-Cable@{connect\-Test\-Cable}!mdtTtTestConnectionCable@{mdt\-Tt\-Test\-Connection\-Cable}}
@@ -249,7 +301,7 @@ Setup and run query to get data in test link table sql = \char`\"{}\-S\-E\-L\-E\
 
 return data\-List; \} 
 
-Definition at line 579 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
+Definition at line 664 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
 
 \hypertarget{classmdt_tt_test_connection_cable_a119babb20dbb2a8f1c19f4865ef9239b}{\index{mdt\-Tt\-Test\-Connection\-Cable@{mdt\-Tt\-Test\-Connection\-Cable}!create\-Test\-Cable@{create\-Test\-Cable}}
 \index{create\-Test\-Cable@{create\-Test\-Cable}!mdtTtTestConnectionCable@{mdt\-Tt\-Test\-Connection\-Cable}}
@@ -268,7 +320,7 @@ Create a test cable.
 
 
 
-Definition at line 269 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
+Definition at line 354 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
 
 
 
@@ -291,7 +343,7 @@ Get test link data for given test cable I\-D\-Q\-List$<$mdt\-Cl\-Link\-Data$>$ g
 
 Disconnect a test cable 
 
-Definition at line 615 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
+Definition at line 700 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
 
 \hypertarget{classmdt_tt_test_connection_cable_a7d2c08b218bd95e50a20f42bce242d83}{\index{mdt\-Tt\-Test\-Connection\-Cable@{mdt\-Tt\-Test\-Connection\-Cable}!edit\-Link@{edit\-Link}}
 \index{edit\-Link@{edit\-Link}!mdtTtTestConnectionCable@{mdt\-Tt\-Test\-Connection\-Cable}}
@@ -308,7 +360,7 @@ Edit a test link.
 
 
 
-Definition at line 381 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
+Definition at line 466 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
 
 
 
@@ -329,7 +381,7 @@ Get test link data.
 
 
 
-Definition at line 323 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
+Definition at line 408 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
 
 
 
@@ -351,7 +403,7 @@ Will get unit connections that are linked to given from\-Unit\-Connection\-Id , 
 
 Note\-: link list must be loaded with \hyperlink{classmdt_tt_test_connection_cable_a6dc8270c14d7eb75297c814577b71bdd}{load\-Link\-List()} , else this method will fail. 
 
-Definition at line 177 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
+Definition at line 262 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
 
 
 
@@ -378,7 +430,7 @@ get\-To\-Unit\-Connection\-Linked\-Unit\-Connection\-Id\-List\-Part\-Of\-Unit\-C
 \end{DoxySeeAlso}
 
 
-Definition at line 220 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
+Definition at line 305 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
 
 
 
@@ -405,7 +457,7 @@ get\-To\-Unit\-Connection\-Linked\-Unit\-Connection\-Id\-List\-Part\-Of\-Unit\-C
 \end{DoxySeeAlso}
 Note\-: will alter the given from\-Unit\-Connection\-Id\-List 
 
-Definition at line 242 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
+Definition at line 327 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
 
 
 
@@ -434,7 +486,7 @@ all\-Connection\-Id\-List = get\-To\-Unit\-Connector\-Related\-Unit\-Connection\
 
 return connection\-Id\-List; \} 
 
-Definition at line 138 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
+Definition at line 223 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
 
 
 
@@ -453,7 +505,7 @@ Get a list of unit connections I\-Ds related to given unit connector I\-D.
 
 
 
-Definition at line 97 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
+Definition at line 182 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
 
 
 
@@ -472,11 +524,30 @@ Load link list.
 
 Will load link list into internal graph. Some methods will use this graph to find a path starting at a unit connection, connections that are part of a given path, ... 
 
-Definition at line 88 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
+Definition at line 173 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
 
 
 
 References mdt\-Cl\-Path\-Graph\-::last\-Error(), mdt\-Cl\-Path\-Graph\-::load\-Link\-List(), and mdt\-Tt\-Base\-::pv\-Last\-Error.
+
+\hypertarget{classmdt_tt_test_connection_cable_a268dafea5cc285e4992c38ea86ea98a9}{\index{mdt\-Tt\-Test\-Connection\-Cable@{mdt\-Tt\-Test\-Connection\-Cable}!remove\-Dut\-Units@{remove\-Dut\-Units}}
+\index{remove\-Dut\-Units@{remove\-Dut\-Units}!mdtTtTestConnectionCable@{mdt\-Tt\-Test\-Connection\-Cable}}
+\subsubsection[{remove\-Dut\-Units}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-Connection\-Cable\-::remove\-Dut\-Units (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Sql\-Table\-Selection} \&}]{s}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_connection_cable_a268dafea5cc285e4992c38ea86ea98a9}
+
+
+Remove D\-U\-T units. 
+
+
+
+Definition at line 119 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
+
+
+
+References mdt\-Tt\-Base\-::remove\-Data().
 
 \hypertarget{classmdt_tt_test_connection_cable_a4c42bb5c2f850a53737f9e2c5f710b9f}{\index{mdt\-Tt\-Test\-Connection\-Cable@{mdt\-Tt\-Test\-Connection\-Cable}!remove\-Link@{remove\-Link}}
 \index{remove\-Link@{remove\-Link}!mdtTtTestConnectionCable@{mdt\-Tt\-Test\-Connection\-Cable}}
@@ -492,7 +563,7 @@ Remove a test link.
 
 
 
-Definition at line 401 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
+Definition at line 486 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
 
 
 
@@ -501,6 +572,40 @@ References mdt\-Tt\-Base\-::remove\-Data().
 
 
 Referenced by edit\-Link().
+
+\hypertarget{classmdt_tt_test_connection_cable_a98885f0ce4d43bdc3866b13c53744913}{\index{mdt\-Tt\-Test\-Connection\-Cable@{mdt\-Tt\-Test\-Connection\-Cable}!remove\-Test\-Node\-Units@{remove\-Test\-Node\-Units}}
+\index{remove\-Test\-Node\-Units@{remove\-Test\-Node\-Units}!mdtTtTestConnectionCable@{mdt\-Tt\-Test\-Connection\-Cable}}
+\subsubsection[{remove\-Test\-Node\-Units}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-Connection\-Cable\-::remove\-Test\-Node\-Units (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Sql\-Table\-Selection} \&}]{s}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_connection_cable_a98885f0ce4d43bdc3866b13c53744913}
+
+
+Remove test node units. 
+
+
+
+Definition at line 100 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
+
+
+
+References mdt\-Tt\-Base\-::remove\-Data().
+
+\hypertarget{classmdt_tt_test_connection_cable_af3bc25739b94c05bb845a2f10775f19d}{\index{mdt\-Tt\-Test\-Connection\-Cable@{mdt\-Tt\-Test\-Connection\-Cable}!sql\-For\-Dut\-Unit\-Selection@{sql\-For\-Dut\-Unit\-Selection}}
+\index{sql\-For\-Dut\-Unit\-Selection@{sql\-For\-Dut\-Unit\-Selection}!mdtTtTestConnectionCable@{mdt\-Tt\-Test\-Connection\-Cable}}
+\subsubsection[{sql\-For\-Dut\-Unit\-Selection}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Tt\-Test\-Connection\-Cable\-::sql\-For\-Dut\-Unit\-Selection (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{test\-Cable\-Id}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_connection_cable_af3bc25739b94c05bb845a2f10775f19d}
+
+
+Get S\-Q\-L statement for D\-U\-T unit selection. 
+
+List all D\-U\-T units that are not currently affected to given test cable. 
+
+Definition at line 74 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
 
 \hypertarget{classmdt_tt_test_connection_cable_a5d5769169257b44e9087bca43ea709d1}{\index{mdt\-Tt\-Test\-Connection\-Cable@{mdt\-Tt\-Test\-Connection\-Cable}!sql\-For\-Start\-Connector\-Selection@{sql\-For\-Start\-Connector\-Selection}}
 \index{sql\-For\-Start\-Connector\-Selection@{sql\-For\-Start\-Connector\-Selection}!mdtTtTestConnectionCable@{mdt\-Tt\-Test\-Connection\-Cable}}
@@ -520,7 +625,7 @@ Get S\-Q\-L statement for start unit connector selection.
 \end{DoxyParams}
 
 
-Definition at line 53 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
+Definition at line 138 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
 
 \hypertarget{classmdt_tt_test_connection_cable_a983a8880bb1dcefd55101e26020f4c54}{\index{mdt\-Tt\-Test\-Connection\-Cable@{mdt\-Tt\-Test\-Connection\-Cable}!sql\-For\-Test\-Cable\-Selection@{sql\-For\-Test\-Cable\-Selection}}
 \index{sql\-For\-Test\-Cable\-Selection@{sql\-For\-Test\-Cable\-Selection}!mdtTtTestConnectionCable@{mdt\-Tt\-Test\-Connection\-Cable}}
@@ -535,7 +640,7 @@ Get S\-Q\-L statement for test cable selection.
 
 
 
-Definition at line 79 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
+Definition at line 164 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
 
 \hypertarget{classmdt_tt_test_connection_cable_a03785cef753bae2d7d2dfd0fe1c9a6cf}{\index{mdt\-Tt\-Test\-Connection\-Cable@{mdt\-Tt\-Test\-Connection\-Cable}!sql\-For\-Test\-Node\-Selection@{sql\-For\-Test\-Node\-Selection}}
 \index{sql\-For\-Test\-Node\-Selection@{sql\-For\-Test\-Node\-Selection}!mdtTtTestConnectionCable@{mdt\-Tt\-Test\-Connection\-Cable}}
@@ -550,7 +655,22 @@ Get S\-Q\-L statement for test node selection.
 
 
 
-Definition at line 41 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
+Definition at line 126 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
+
+\hypertarget{classmdt_tt_test_connection_cable_a24a9da7f6b48097d5f1dee660d175cfd}{\index{mdt\-Tt\-Test\-Connection\-Cable@{mdt\-Tt\-Test\-Connection\-Cable}!sql\-For\-Test\-Node\-Unit\-Selection@{sql\-For\-Test\-Node\-Unit\-Selection}}
+\index{sql\-For\-Test\-Node\-Unit\-Selection@{sql\-For\-Test\-Node\-Unit\-Selection}!mdtTtTestConnectionCable@{mdt\-Tt\-Test\-Connection\-Cable}}
+\subsubsection[{sql\-For\-Test\-Node\-Unit\-Selection}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Tt\-Test\-Connection\-Cable\-::sql\-For\-Test\-Node\-Unit\-Selection (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{test\-Cable\-Id}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_connection_cable_a24a9da7f6b48097d5f1dee660d175cfd}
+
+
+Get S\-Q\-L statement for test node unit selection. 
+
+List all test node units that are not currently affected to given test cable. 
+
+Definition at line 42 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
 
 \hypertarget{classmdt_tt_test_connection_cable_a611358757b43de273a64cfa69c9ef46e}{\index{mdt\-Tt\-Test\-Connection\-Cable@{mdt\-Tt\-Test\-Connection\-Cable}!sql\-For\-Unit\-Connector\-Selection\-From\-Unit\-Connector\-Id\-List@{sql\-For\-Unit\-Connector\-Selection\-From\-Unit\-Connector\-Id\-List}}
 \index{sql\-For\-Unit\-Connector\-Selection\-From\-Unit\-Connector\-Id\-List@{sql\-For\-Unit\-Connector\-Selection\-From\-Unit\-Connector\-Id\-List}!mdtTtTestConnectionCable@{mdt\-Tt\-Test\-Connection\-Cable}}
@@ -565,7 +685,7 @@ Get S\-Q\-L statement for unit connector selection for given unit connector I\-D
 
 
 
-Definition at line 63 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
+Definition at line 148 of file mdt\-Tt\-Test\-Connection\-Cable.\-cpp.
 
 
 

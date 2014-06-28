@@ -113,14 +113,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define MDT_TT_TEST_LINK_DIALOG_H</span></div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_tt_test_link_data_8h.html">mdtTtTestLinkData.h</a>&quot;</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ui__mdt_tt_test_link_dialog_8h.html">ui_mdtTtTestLinkDialog.h</a>&quot;</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &quot;ui_mdtTtTestLinkDialog.h&quot;</span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;QSqlDatabase&gt;</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;QDialog&gt;</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;QVariant&gt;</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">class </span><a class="code" href="class_q_widget.html">QWidget</a>;</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno"><a class="code" href="classmdt_tt_test_link_dialog.html">   34</a></span>&#160;<span class="keyword">class </span><a class="code" href="classmdt_tt_test_link_dialog.html" title="Dialog that provide test link edition. ">mdtTtTestLinkDialog</a> : <span class="keyword">public</span> <a class="code" href="class_q_dialog.html">QDialog</a>, <span class="keyword">public</span> <a class="code" href="class_ui_1_1mdt_tt_test_link_dialog.html">Ui::mdtTtTestLinkDialog</a></div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="code" href="classmdt_tt_test_link_dialog.html">   34</a></span>&#160;<span class="keyword">class </span><a class="code" href="classmdt_tt_test_link_dialog.html" title="Dialog that provide test link edition. ">mdtTtTestLinkDialog</a> : <span class="keyword">public</span> <a class="code" href="class_q_dialog.html">QDialog</a>, <span class="keyword">public</span> Ui::mdtTtTestLinkDialog</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;{</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; Q_OBJECT</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
@@ -130,57 +130,63 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <a class="code" href="classmdt_tt_test_link_dialog.html#a5732e2c5680256dd468540ae47172fbe">~mdtTtTestLinkDialog</a>();</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_tt_test_link_dialog.html#a82c51c0f0fc03eaa731297cf3bdf4f10" title="Set test node. ">setTestNode</a>(<span class="keyword">const</span> QVariant &amp; nodeId);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_tt_test_link_dialog.html#a0a67dbfcdac8800ef091fc040539b148" title="Set DUT unit. ">setDutUnit</a>(<span class="keyword">const</span> QVariant &amp; unitId);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_tt_test_link_dialog.html#a0466396e733c0e20f5c8fe1cc11fb8ec" title="Set test connection. ">setTestConnection</a>(<span class="keyword">const</span> QVariant &amp; unitConnectionId);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_tt_test_link_dialog.html#a3fc219ea7c9e271848f181ed00ca7156" title="Set DUT connection. ">setDutConnection</a>(<span class="keyword">const</span> QVariant &amp; unitConnectionId);</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_tt_test_link_dialog.html#ad5ba0637cab1c517a541742abc1dfbb4" title="Set link data. ">setLinkData</a>(<span class="keyword">const</span> <a class="code" href="classmdt_tt_test_link_data.html" title="Data container for test link. ">mdtTtTestLinkData</a> &amp; data);</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno"><a class="code" href="classmdt_tt_test_link_dialog.html#a0af064a9831a15e5b0478e9346d802c6">   72</a></span>&#160;  <span class="keyword">inline</span> <a class="code" href="classmdt_tt_test_link_data.html" title="Data container for test link. ">mdtTtTestLinkData</a> <a class="code" href="classmdt_tt_test_link_dialog.html#a0af064a9831a15e5b0478e9346d802c6" title="Get link data. ">linkData</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> pvLinkData; };</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; <span class="keyword">private</span> slots:</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_tt_test_link_dialog.html#a0816b61e02e5b82699bdbc2fdedb098f" title="Set test node unit. ">setTestNodeUnit</a>(<span class="keyword">const</span> QVariant &amp; nodeUnitId);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_tt_test_link_dialog.html#a05d0bcebecccd2bcc59aa1d8e1d04e05" title="Limit test node unit selection to given list. ">setTestNodeUnitSelectionList</a>(<span class="keyword">const</span> QList&lt;QVariant&gt; &amp; idList);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_tt_test_link_dialog.html#a0a67dbfcdac8800ef091fc040539b148" title="Set DUT unit. ">setDutUnit</a>(<span class="keyword">const</span> QVariant &amp; unitId);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_tt_test_link_dialog.html#a02daf0a705e224f518a6ba67ffbe1df4" title="Limit DUT unit selection to given list. ">setDutUnitSelectionList</a>(<span class="keyword">const</span> QList&lt;QVariant&gt; &amp; idList);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_tt_test_link_dialog.html#a0466396e733c0e20f5c8fe1cc11fb8ec" title="Set test connection. ">setTestConnection</a>(<span class="keyword">const</span> QVariant &amp; unitConnectionId);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_tt_test_link_dialog.html#a3fc219ea7c9e271848f181ed00ca7156" title="Set DUT connection. ">setDutConnection</a>(<span class="keyword">const</span> QVariant &amp; unitConnectionId);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_tt_test_link_dialog.html#ad5ba0637cab1c517a541742abc1dfbb4" title="Set link data. ">setLinkData</a>(<span class="keyword">const</span> <a class="code" href="classmdt_tt_test_link_data.html" title="Data container for test link. ">mdtTtTestLinkData</a> &amp; data);</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <span class="keywordtype">void</span> selectTestNode();</div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="code" href="classmdt_tt_test_link_dialog.html#a0af064a9831a15e5b0478e9346d802c6">   78</a></span>&#160;  <span class="keyword">inline</span> <a class="code" href="classmdt_tt_test_link_data.html" title="Data container for test link. ">mdtTtTestLinkData</a> <a class="code" href="classmdt_tt_test_link_dialog.html#a0af064a9831a15e5b0478e9346d802c6" title="Get link data. ">linkData</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> pvLinkData; };</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  <span class="keywordtype">void</span> selectDutUnit();</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  <span class="keywordtype">void</span> selectTestConnection();</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  <span class="keywordtype">void</span> selectDutConnection();</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  <span class="keywordtype">void</span> viewDutLinkedConnections();</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  <span class="keywordtype">void</span> accept();</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  <span class="keywordtype">void</span> reject();</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; <span class="keyword">private</span> slots:</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <span class="keywordtype">void</span> selectTestNodeUnit();</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  <span class="keywordtype">void</span> selectDutUnit();</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  <span class="keywordtype">void</span> selectTestConnection();</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  <span class="keywordtype">void</span> selectDutConnection();</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  <span class="keywordtype">void</span> viewDutLinkedConnections();</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  <span class="keywordtype">void</span> accept();</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  <span class="keywordtype">void</span> displayTestNode();</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  <span class="keywordtype">void</span> reject();</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  <span class="keywordtype">void</span> displayDutUnit();</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  <span class="keywordtype">void</span> displayTestConnection();</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  <span class="keywordtype">void</span> displayDutConnection();</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  Q_DISABLE_COPY(<a class="code" href="classmdt_tt_test_link_dialog.html" title="Dialog that provide test link edition. ">mdtTtTestLinkDialog</a>);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  <span class="keywordtype">void</span> displayTestNodeUnit();</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  <span class="keywordtype">void</span> displayDutUnit();</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  <span class="keywordtype">void</span> displayTestConnection();</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;  QSqlDatabase pvDatabase;</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;  <a class="code" href="classmdt_tt_test_link_data.html" title="Data container for test link. ">mdtTtTestLinkData</a> pvLinkData;</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  QVariant pvTestNodeId;</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;  QVariant pvDutUnitId;</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;};</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  <span class="keywordtype">void</span> displayDutConnection();</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;  Q_DISABLE_COPY(<a class="code" href="classmdt_tt_test_link_dialog.html" title="Dialog that provide test link edition. ">mdtTtTestLinkDialog</a>);</div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="preprocessor">#endif // #ifndef MDT_TT_TEST_LINK_DIALOG_H</span></div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;  QSqlDatabase pvDatabase;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;  <a class="code" href="classmdt_tt_test_link_data.html" title="Data container for test link. ">mdtTtTestLinkData</a> pvLinkData;</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;  QVariant pvTestNodeUnitId;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;  QList&lt;QVariant&gt; pvTestNodeUnitSelectionIdList;</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;  QVariant pvDutUnitId;</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;  QList&lt;QVariant&gt; pvDutUnitSelectionIdList;</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;};</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="preprocessor">#endif // #ifndef MDT_TT_TEST_LINK_DIALOG_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 6 2014 09:34:16 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jun 28 2014 13:24:41 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

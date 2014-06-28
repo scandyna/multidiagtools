@@ -139,26 +139,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  QList&lt;QVariant&gt; <a class="code" href="classmdt_tt_test_node.html#a07b8cd098d61c3f14d3ba226c1d1f1cb" title="Get a list of channel test connections for given bus name and node ID. ">getChannelTestConnectionIdList</a>(<span class="keyword">const</span> QVariant &amp; testNodeId, <span class="keyword">const</span> QVariant &amp; busName);</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_test_node.html#a9885f086f4496b49d2bc4ac299c55e89" title="Add a test node unit. ">addTestNodeUnit</a>(<span class="keyword">const</span> <a class="code" href="classmdt_tt_test_node_unit_data.html" title="Storage class for test node unit. ">mdtTtTestNodeUnitData</a> &amp; data);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_test_node.html#ac323fd694967fb49145eb9238622c866" title="Add a list of test node units. ">addTestNodeUnits</a>(<span class="keyword">const</span> QList&lt;mdtTtTestNodeUnitData&gt; &amp; dataList);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_test_node.html#a65478d5d026969e8b17464707fc3551d" title="Update node unit connections of given test node. ">addMissingConnections</a>(<span class="keyword">const</span> QVariant &amp; testNodeId);</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_test_node.html#a9885f086f4496b49d2bc4ac299c55e89" title="Add a test node unit. ">addTestNodeUnit</a>(<span class="keyword">const</span> QVariant &amp; UnitId, <span class="keyword">const</span> QVariant &amp; TestNodeId , <span class="keyword">const</span> QVariant &amp; typeCode, <span class="keyword">const</span> QVariant &amp; busName);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_test_node.html#ac323fd694967fb49145eb9238622c866" title="Add a list of test node units. ">addTestNodeUnits</a>(<span class="keyword">const</span> QList&lt;QVariant&gt; &amp; unitIdList, <span class="keyword">const</span> QVariant &amp; testNodeId , <span class="keyword">const</span> QVariant &amp; typeCode, <span class="keyword">const</span> QVariant &amp; busName);</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_test_node.html#a961a9fedcce41ac28fc0eb616a8968cf" title="Remove test node units. ">removeTestNodeUnits</a>(<span class="keyword">const</span> QList&lt;QVariant&gt; &amp; TestNodeIdList);</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_test_node.html#a961a9fedcce41ac28fc0eb616a8968cf" title="Remove test node units. ">removeTestNodeUnits</a>(<span class="keyword">const</span> QModelIndexList &amp; indexListOfSelectedRows);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_test_node.html#a63a7f4a4509de45526303f92c4bdbf83" title="Set test connection to given test node unit. ">setTestConnection</a>(<span class="keyword">const</span> QVariant &amp; testNodeUnitId, <span class="keyword">const</span> QVariant &amp; testConnectionId);</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;};</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="preprocessor">#endif // #ifndef MDT_TT_TEST_NODE_H</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  Q_DISABLE_COPY(<a class="code" href="classmdt_tt_test_node.html" title="Helper class for test node edition. ">mdtTtTestNode</a>);</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;};</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="preprocessor">#endif // #ifndef MDT_TT_TEST_NODE_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 6 2014 09:34:16 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jun 28 2014 13:24:41 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

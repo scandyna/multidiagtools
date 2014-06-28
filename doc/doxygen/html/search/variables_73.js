@@ -1,24 +1,12 @@
 var searchData=
 [
-  ['saios',['saIos',['../class_ui__mdt_device_window.html#a20450234862772ffcf7d6ca5ba903aa1',1,'Ui_mdtDeviceWindow::saIos()'],['../class_ui__mdt_modbus_io_tool.html#a0193061f662939b755bc31832269dd02',1,'Ui_mdtModbusIoTool::saIos()']]],
-  ['sbhwnodeid',['sbHwNodeId',['../class_ui__mdt_modbus_io_tool.html#ac67713d504ef59d0fefa6da5ca05452c',1,'Ui_mdtModbusIoTool']]],
-  ['sbioposition',['sbIoPosition',['../class_ui__mdt_tt_test_node_unit_dialog.html#ac9c8fc92eea1cbd5053a6327af4cf36c',1,'Ui_mdtTtTestNodeUnitDialog']]],
-  ['sbqty',['sbQty',['../class_ui__mdt_cl_article_component_dialog.html#a94d59140974b961351cb510dcef99581',1,'Ui_mdtClArticleComponentDialog']]],
-  ['sbreadframesize',['sbReadFrameSize',['../class_ui__mdt_port_config_widget.html#a4488f322a2a11187cee4f229dbb78aac',1,'Ui_mdtPortConfigWidget']]],
-  ['sbreadqueuesize',['sbReadQueueSize',['../class_ui__mdt_port_config_widget.html#ae685d5d2ed082b55c0dab1be72a5cf7c',1,'Ui_mdtPortConfigWidget']]],
-  ['sbreadtimeout',['sbReadTimeout',['../class_ui__mdt_port_config_widget.html#a108c450db9637fec5627512417954f67',1,'Ui_mdtPortConfigWidget']]],
-  ['sbsourcesize',['sbSourceSize',['../class_ui__mdt_field_map_item_dialog.html#a26f031167698cd4079a7862b6b6a9cb1',1,'Ui_mdtFieldMapItemDialog']]],
-  ['sbsourcestartoffset',['sbSourceStartOffset',['../class_ui__mdt_field_map_item_dialog.html#a9c8f4b9659e57c4af734d2c4b4750cbf',1,'Ui_mdtFieldMapItemDialog']]],
-  ['sbswaddress',['sbSwAddress',['../class_ui__mdt_cl_unit_connection_dialog.html#a33b682b708350ffd121c3fd8f3b00cc4',1,'Ui_mdtClUnitConnectionDialog']]],
-  ['sbvalue',['sbValue',['../class_ui__mdt_cl_article_link_dialog.html#a00018187b69f670a46eee24b810eb27c',1,'Ui_mdtClArticleLinkDialog::sbValue()'],['../class_ui__mdt_cl_unit_link_dialog.html#ac580c8a87b8a782c115e955752038e6a',1,'Ui_mdtClUnitLinkDialog::sbValue()'],['../class_ui__mdt_tt_test_link_dialog.html#a24249660bb0d0a11397d5e47e9a34833',1,'Ui_mdtTtTestLinkDialog::sbValue()']]],
-  ['sbwriteframesize',['sbWriteFrameSize',['../class_ui__mdt_port_config_widget.html#a52ec537c07730bc8bb402789ccb51774',1,'Ui_mdtPortConfigWidget']]],
-  ['sbwriteinterbytewaittime',['sbWriteInterbyteWaitTime',['../class_ui__mdt_port_config_widget.html#af238980e5cedecd8f8c80f75a99f8aab',1,'Ui_mdtPortConfigWidget']]],
-  ['sbwriteinterframetime',['sbWriteInterframeTime',['../class_ui__mdt_port_config_widget.html#afe980ec9ae205856bc2bb476feb91d32',1,'Ui_mdtPortConfigWidget']]],
-  ['sbwritequeuesize',['sbWriteQueueSize',['../class_ui__mdt_port_config_widget.html#ab5ded09564d59f57338a99642c8ad739',1,'Ui_mdtPortConfigWidget']]],
-  ['sbwritetimeout',['sbWriteTimeout',['../class_ui__mdt_port_config_widget.html#a146b41c99efbf3042b3eda59b18d3fe8',1,'Ui_mdtPortConfigWidget']]],
-  ['scrollareawidgetcontents',['scrollAreaWidgetContents',['../class_ui__mdt_device_window.html#a3389de056f2567855e29bc37becf052e',1,'Ui_mdtDeviceWindow::scrollAreaWidgetContents()'],['../class_ui__mdt_modbus_io_tool.html#a624d93d5697ab5ba75269494cc888207',1,'Ui_mdtModbusIoTool::scrollAreaWidgetContents()']]],
+  ['sbexpectedvalue',['sbExpectedValue',['../class_ui__mdt_tt_test_model_item_dialog.html#a1f36ff5ef9cdce71515249b61db66c4a',1,'Ui_mdtTtTestModelItemDialog']]],
+  ['sbfailvaluemax',['sbFailValueMax',['../class_ui__mdt_tt_test_model_item_dialog.html#a285957e452d01cd6a0a81f5d4a0c58e7',1,'Ui_mdtTtTestModelItemDialog']]],
+  ['sbfailvaluemin',['sbFailValueMin',['../class_ui__mdt_tt_test_model_item_dialog.html#af71bdb2d62648cd941f931fa061fe70f',1,'Ui_mdtTtTestModelItemDialog']]],
+  ['sblimitvaluemax',['sbLimitValueMax',['../class_ui__mdt_tt_test_model_item_dialog.html#aab2598753cacf2f117051018aadd9af3',1,'Ui_mdtTtTestModelItemDialog']]],
+  ['sblimitvaluemin',['sbLimitValueMin',['../class_ui__mdt_tt_test_model_item_dialog.html#a13be08211a42b3849150f2628c47d82e',1,'Ui_mdtTtTestModelItemDialog']]],
+  ['sbsequencenumber',['sbSequenceNumber',['../class_ui__mdt_tt_test_model_item_dialog.html#a66803ed86dfd373dac31f077c44bcf41',1,'Ui_mdtTtTestModelItemDialog']]],
   ['server',['server',['../class_qt_local_peer.html#af400ab8eb001ef4790541069a5d0e292',1,'QtLocalPeer']]],
   ['socketname',['socketName',['../class_qt_local_peer.html#a2c86a18c237bdfe4bd0565d3cc413cd8',1,'QtLocalPeer']]],
-  ['startconnectionid',['startConnectionId',['../structmdt_cl_path_graph_private_1_1mdt_cl_path_graph_edge_data.html#a4d17d73e0bbc09b541b91a9ca1cad8da',1,'mdtClPathGraphPrivate::mdtClPathGraphEdgeData']]],
-  ['statusbar',['statusbar',['../class_ui__mdt_sql_window.html#a48ad415bc7aa41b4d9a7386b6318ac7d',1,'Ui_mdtSqlWindow::statusbar()'],['../class_ui__mdt_device_window.html#a7a212839bf52a75a6a0213fa2fb9a307',1,'Ui_mdtDeviceWindow::statusbar()'],['../class_ui__mdt_modbus_io_tool.html#a067095b9a1197506ba66e11e40f195fb',1,'Ui_mdtModbusIoTool::statusbar()'],['../class_ui__mdt_port_term.html#ae922f4e6f3b8aa1db954038b8e335254',1,'Ui_mdtPortTerm::statusbar()']]]
+  ['startconnectionid',['startConnectionId',['../structmdt_cl_path_graph_private_1_1mdt_cl_path_graph_edge_data.html#a4d17d73e0bbc09b541b91a9ca1cad8da',1,'mdtClPathGraphPrivate::mdtClPathGraphEdgeData']]]
 ];

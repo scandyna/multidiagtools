@@ -1,7 +1,8 @@
 <map id="src/mdttools/mdttesttool/mdtcablelist/mdtClLink.h" name="src/mdttools/mdttesttool/mdtcablelist/mdtClLink.h">
 <area shape="rect" id="node3" href="$mdt_cl_link_8cpp.html" title="src/mdttools/mdttesttool\l/mdtcablelist/mdtClLink.cpp" alt="" coords="5,110,189,157"/>
-<area shape="rect" id="node5" href="$mdt_cl_unit_8cpp.html" title="src/mdttools/mdttesttool\l/mdtcablelist/mdtClUnit.cpp" alt="" coords="213,110,397,157"/>
-<area shape="rect" id="node7" href="$mdt_cl_unit_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtcablelist/mdtClUnitEditor.cpp" alt="" coords="421,110,640,157"/>
-<area shape="rect" id="node9" href="$mdt_cl_unit_link_dialog_8cpp.html" title="src/mdttools/mdttesttool\l/mdtcablelist/mdtClUnitLinkDialog.cpp" alt="" coords="664,110,909,157"/>
-<area shape="rect" id="node11" href="$mdt_cl_unit_vehicle_type_8cpp.html" title="src/mdttools/mdttesttool\l/mdtcablelist/mdtClUnitVehicle\lType.cpp" alt="" coords="933,101,1136,165"/>
+<area shape="rect" id="node5" href="$mdt_cl_link_beam_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtcablelist/mdtClLinkBeamEditor.cpp" alt="" coords="213,110,464,157"/>
+<area shape="rect" id="node7" href="$mdt_cl_unit_8cpp.html" title="src/mdttools/mdttesttool\l/mdtcablelist/mdtClUnit.cpp" alt="" coords="488,110,672,157"/>
+<area shape="rect" id="node9" href="$mdt_cl_unit_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtcablelist/mdtClUnitEditor.cpp" alt="" coords="696,110,915,157"/>
+<area shape="rect" id="node11" href="$mdt_cl_unit_link_dialog_8cpp.html" title="src/mdttools/mdttesttool\l/mdtcablelist/mdtClUnitLinkDialog.cpp" alt="" coords="939,110,1184,157"/>
+<area shape="rect" id="node13" href="$mdt_cl_unit_vehicle_type_8cpp.html" title="src/mdttools/mdttesttool\l/mdtcablelist/mdtClUnitVehicle\lType.cpp" alt="" coords="1208,101,1411,165"/>
 </map>

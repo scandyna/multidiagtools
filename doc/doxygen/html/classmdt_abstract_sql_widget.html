@@ -169,6 +169,9 @@ Public Slots</h2></td></tr>
 <tr class="memitem:a49624704409e34459084201ccb8e9399"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_widget.html#a49624704409e34459084201ccb8e9399">setCurrentRecord</a> (const QString &amp;fieldName, const QVariant &amp;value)</td></tr>
 <tr class="memdesc:a49624704409e34459084201ccb8e9399"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the first record that matches given criteria as current record (index).  <a href="#a49624704409e34459084201ccb8e9399">More...</a><br/></td></tr>
 <tr class="separator:a49624704409e34459084201ccb8e9399"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a434da68da8e11b0f25a4e3d2346c0373"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_widget.html#a434da68da8e11b0f25a4e3d2346c0373">reEnterVisualizingState</a> ()</td></tr>
+<tr class="memdesc:a434da68da8e11b0f25a4e3d2346c0373"><td class="mdescLeft">&#160;</td><td class="mdescRight">Re-enter in visualizing state.  <a href="#a434da68da8e11b0f25a4e3d2346c0373">More...</a><br/></td></tr>
+<tr class="separator:a434da68da8e11b0f25a4e3d2346c0373"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="signals"></a>
 Signals</h2></td></tr>
@@ -354,7 +357,7 @@ Protected Member Functions</h2></td></tr>
 <div class="textblock"><p>Base class to create database table GUI. </p>
 <p>Main goal is to provide a standard way to use GUI object for database table. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8h_source.html#l00047">47</a> of file <a class="el" href="mdt_abstract_sql_widget_8h_source.html">mdtAbstractSqlWidget.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8h_source.html#l00054">54</a> of file <a class="el" href="mdt_abstract_sql_widget_8h_source.html">mdtAbstractSqlWidget.h</a>.</p>
 </div><h2 class="groupheader">Member Enumeration Documentation</h2>
 <a class="anchor" id="a54e6a7f2b41fb3edfa1e4ed62abf4072"></a>
 <div class="memitem">
@@ -398,7 +401,7 @@ Protected Member Functions</h2></td></tr>
 </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8h_source.html#l00057">57</a> of file <a class="el" href="mdt_abstract_sql_widget_8h_source.html">mdtAbstractSqlWidget.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8h_source.html#l00064">64</a> of file <a class="el" href="mdt_abstract_sql_widget_8h_source.html">mdtAbstractSqlWidget.h</a>.</p>
 
 </div>
 </div>
@@ -420,7 +423,7 @@ Protected Member Functions</h2></td></tr>
 <p>Constructor. </p>
 <p>Will initialize internal state machine. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00036">36</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00040">40</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -447,7 +450,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00044">44</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00048">48</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -484,11 +487,11 @@ widget must be a valid pointer </dd>
 <dd>
 relation must be a valid pointer. Note: relation will be reparented, so it will be deleted automatically by Qt. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00102">102</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00107">107</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="classmdt_abstract_sql_widget.html#ab48f6375f55f1eaba309fb17aaaf5770">currentRow()</a>, <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html#l00339">currentRowChanged()</a>, and <a class="el" href="mdt_sql_relation_8cpp_source.html#l00108">mdtSqlRelation::setParentCurrentIndex()</a>.</p>
+<p>References <a class="el" href="classmdt_abstract_sql_widget.html#ab48f6375f55f1eaba309fb17aaaf5770">currentRow()</a>, <a class="el" href="classmdt_abstract_sql_widget.html#a182972cd54cf7e00322c0b6973ecbde2">currentRowChanged()</a>, and <a class="el" href="mdt_sql_relation_8cpp_source.html#l00108">mdtSqlRelation::setParentCurrentIndex()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_form_8cpp_source.html#l00097">mdtSqlForm::addChildTable()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_form_8cpp_source.html#l00107">mdtSqlForm::addChildTable()</a>.</p>
 
 </div>
 </div>
@@ -530,7 +533,7 @@ relation must be a valid pointer. Note: relation will be reparented, so it will 
 <p>Note: to apply sorting, call <a class="el" href="classmdt_abstract_sql_widget.html#a2c83a26fe75b708948c80a51887075e9" title="Sort data. ">sort()</a></p>
 <dl class="section pre"><dt>Precondition</dt><dd>Model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a8971862741e1ef79c79e11b37e955476" title="Set the table model. ">setModel()</a> before using this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00250">250</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00259">259</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html#l00044">mdtSortFilterProxyModel::addColumnToSortOrder()</a>.</p>
 
@@ -573,7 +576,7 @@ relation must be a valid pointer. Note: relation will be reparented, so it will 
 <dd>
 validator must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00072">72</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00077">77</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00052">mdtSqlFormWidget::mapFormWidgets()</a>.</p>
 
@@ -597,11 +600,11 @@ validator must be a valid pointer. </dd></dl>
 <p>This is used by <a class="el" href="classmdt_sql_window.html" title="Main window for a database table view/editor. ">mdtSqlWindow</a> and <a class="el" href="classmdt_sql_dialog.html" title="Dialog for a database table view/editor. ">mdtSqlDialog</a> to check if it can close the window.</p>
 <dl class="section return"><dt>Returns</dt><dd>true if all data are saved, false if a SQL widget has pending data. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00227">227</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00236">236</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00387">childWidgetsAreInVisaluzingState()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00214">currentState()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00090">userFriendlyTableName()</a>, and <a class="el" href="mdt_abstract_sql_widget_8h_source.html#l00058">Visualizing</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00406">childWidgetsAreInVisaluzingState()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00219">currentState()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00095">userFriendlyTableName()</a>, and <a class="el" href="mdt_abstract_sql_widget_8h_source.html#l00065">Visualizing</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_dialog_8cpp_source.html#l00099">mdtSqlDialog::accept()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00387">childWidgetsAreInVisaluzingState()</a>, and <a class="el" href="mdt_sql_dialog_8cpp_source.html#l00107">mdtSqlDialog::reject()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_dialog_8cpp_source.html#l00102">mdtSqlDialog::accept()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00494">mdtSqlForm::allDataAreSaved()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00406">childWidgetsAreInVisaluzingState()</a>, and <a class="el" href="mdt_sql_dialog_8cpp_source.html#l00110">mdtSqlDialog::reject()</a>.</p>
 
 </div>
 </div>
@@ -628,11 +631,11 @@ validator must be a valid pointer. </dd></dl>
 
 <p>Check that child widgtes have no pending data. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00387">387</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00406">406</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00227">allDataAreSaved()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00236">allDataAreSaved()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00227">allDataAreSaved()</a>, <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00199">mdtSqlFormWidget::setCurrentIndex()</a>, <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00151">mdtSqlFormWidget::toFirst()</a>, <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00163">mdtSqlFormWidget::toLast()</a>, <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00187">mdtSqlFormWidget::toNext()</a>, and <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00175">mdtSqlFormWidget::toPrevious()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00236">allDataAreSaved()</a>, <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00199">mdtSqlFormWidget::setCurrentIndex()</a>, <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00151">mdtSqlFormWidget::toFirst()</a>, <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00163">mdtSqlFormWidget::toLast()</a>, <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00187">mdtSqlFormWidget::toNext()</a>, and <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00175">mdtSqlFormWidget::toPrevious()</a>.</p>
 
 </div>
 </div>
@@ -652,7 +655,7 @@ validator must be a valid pointer. </dd></dl>
 <p>Clear columns sort order. </p>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="classmdt_abstract_sql_widget.html#a3c03a6c43f4488b377aa72879c10e066" title="Add a column to columns sort order. ">addColumnToSortOrder()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00243">243</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00252">252</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html#l00039">mdtSortFilterProxyModel::clearColumnsSortOrder()</a>.</p>
 
@@ -675,11 +678,11 @@ validator must be a valid pointer. </dd></dl>
 <p>Get current data for given field name. </p>
 <dl class="section pre"><dt>Precondition</dt><dd>(Parent) model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a8971862741e1ef79c79e11b37e955476" title="Set the table model. ">setModel()</a> before using this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00171">171</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00176">176</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="classmdt_abstract_sql_widget.html#ab48f6375f55f1eaba309fb17aaaf5770">currentRow()</a>, and <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00178">data()</a>.</p>
+<p>References <a class="el" href="classmdt_abstract_sql_widget.html#ab48f6375f55f1eaba309fb17aaaf5770">currentRow()</a>, and <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00183">data()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_form_8cpp_source.html#l00399">mdtSqlForm::currentData()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_form_8cpp_source.html#l00450">mdtSqlForm::currentData()</a>.</p>
 
 </div>
 </div>
@@ -710,7 +713,7 @@ validator must be a valid pointer. </dd></dl>
 
 <p>Implemented in <a class="el" href="classmdt_sql_form_widget.html#a9588fdc58b30440077b8dcfa3a2fb3c0">mdtSqlFormWidget</a>, and <a class="el" href="classmdt_sql_table_widget.html#a7612cf9cb10c69365b7ed820d71e6cb2">mdtSqlTableWidget</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00102">addChildWidget()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00171">currentData()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00367">mdtSqlForm::currentRow()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00420">restorePrimaryKeyDataToModel()</a>, and <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00133">setCurrentData()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00107">addChildWidget()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00176">currentData()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00407">mdtSqlForm::currentRow()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00439">restorePrimaryKeyDataToModel()</a>, and <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00138">setCurrentData()</a>.</p>
 
 </div>
 </div>
@@ -740,9 +743,7 @@ validator must be a valid pointer. </dd></dl>
 <p>This is usefull, for example, in master/detail forms, to update child models filter.</p>
 <p>Subclass must emit this signal each time the user selects a new row. </p>
 
-<p>Definition at line <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html#l00339">339</a> of file <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html">moc_mdtAbstractSqlWidget.cxx</a>.</p>
-
-<p>Referenced by <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00102">addChildWidget()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00107">addChildWidget()</a>.</p>
 
 </div>
 </div>
@@ -761,9 +762,11 @@ validator must be a valid pointer. </dd></dl>
 
 <p>Get current state. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00214">214</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00219">219</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00227">allDataAreSaved()</a>, <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00199">mdtSqlFormWidget::setCurrentIndex()</a>, <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00151">mdtSqlFormWidget::toFirst()</a>, <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00163">mdtSqlFormWidget::toLast()</a>, <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00187">mdtSqlFormWidget::toNext()</a>, and <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00175">mdtSqlFormWidget::toPrevious()</a>.</p>
+<p>References <a class="el" href="mdt_state_machine_8cpp_source.html#l00041">mdtStateMachine::currentState()</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00236">allDataAreSaved()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00320">reEnterVisualizingState()</a>, <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00199">mdtSqlFormWidget::setCurrentIndex()</a>, <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00151">mdtSqlFormWidget::toFirst()</a>, <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00163">mdtSqlFormWidget::toLast()</a>, <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00187">mdtSqlFormWidget::toNext()</a>, and <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00175">mdtSqlFormWidget::toPrevious()</a>.</p>
 
 </div>
 </div>
@@ -794,11 +797,11 @@ validator must be a valid pointer. </dd></dl>
 <p>Get data for given row and field name. </p>
 <dl class="section pre"><dt>Precondition</dt><dd>(Parent) model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a8971862741e1ef79c79e11b37e955476" title="Set the table model. ">setModel()</a> before using this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00178">178</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00183">183</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00049">MDT_DATABASE_ERROR</a>, and <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00171">currentData()</a>, and <a class="el" href="mdt_sql_form_8cpp_source.html#l00415">mdtSqlForm::data()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00176">currentData()</a>, and <a class="el" href="mdt_sql_form_8cpp_source.html#l00466">mdtSqlForm::data()</a>.</p>
 
 </div>
 </div>
@@ -825,9 +828,7 @@ validator must be a valid pointer. </dd></dl>
 
 <p>Emitted when data was edited. </p>
 
-<p>Definition at line <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html#l00309">309</a> of file <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html">moc_mdtAbstractSqlWidget.cxx</a>.</p>
-
-<p>Referenced by <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00052">mdtSqlFormWidget::mapFormWidgets()</a>, and <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00133">setCurrentData()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00052">mdtSqlFormWidget::mapFormWidgets()</a>, and <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00138">setCurrentData()</a>.</p>
 
 </div>
 </div>
@@ -857,11 +858,11 @@ validator must be a valid pointer. </dd></dl>
 <p>Internally, error will be logged with <a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured ">mdtError</a> system.</p>
 <dl class="section pre"><dt>Precondition</dt><dd>Model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a8971862741e1ef79c79e11b37e955476" title="Set the table model. ">setModel()</a> before using this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00311">311</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00330">330</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00375">getUserReadableTextFromMysqlError()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00350">getUserReadableTextFromSqliteError()</a>, <a class="el" href="mdt_error_8h_source.html#l00049">MDT_DATABASE_ERROR</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>, and <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00090">userFriendlyTableName()</a>.</p>
+<p>References <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00394">getUserReadableTextFromMysqlError()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00369">getUserReadableTextFromSqliteError()</a>, <a class="el" href="mdt_error_8h_source.html#l00049">MDT_DATABASE_ERROR</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>, and <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00095">userFriendlyTableName()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00133">setCurrentData()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00138">setCurrentData()</a>.</p>
 
 </div>
 </div>
@@ -996,7 +997,7 @@ validator must be a valid pointer. </dd></dl>
 <p>Subclass must implement this method.</p>
 <dl class="section pre"><dt>Precondition</dt><dd>model must be a valid pointer </dd></dl>
 
-<p>Referenced by <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00048">setModel()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00052">setModel()</a>.</p>
 
 </div>
 </div>
@@ -1081,7 +1082,7 @@ validator must be a valid pointer. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_sql_table_widget.html#a39422fb9522ee73513f13d8bcb91a143">mdtSqlTableWidget</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00223">223</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00232">232</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -1111,7 +1112,7 @@ validator must be a valid pointer. </dd></dl>
 <p>In normal way, when using <a class="el" href="classmdt_sql_window.html" title="Main window for a database table view/editor. ">mdtSqlWindow</a>, local navigation is not needed. In master/detail forms, if this widget is a details (child) widget and navigation is needed, then call this method.</p>
 <p>This default implementation does nothing. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00219">219</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00228">228</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -1137,8 +1138,6 @@ validator must be a valid pointer. </dd></dl>
 </div><div class="memdoc">
 
 <p>Emitted when a error occured. </p>
-
-<p>Definition at line <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html#l00297">297</a> of file <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html">moc_mdtAbstractSqlWidget.cxx</a>.</p>
 
 </div>
 </div>
@@ -1166,9 +1165,9 @@ validator must be a valid pointer. </dd></dl>
 
 <p>Get message for the user regarding MySql error number. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00375">375</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00394">394</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00311">displayDatabaseError()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00330">displayDatabaseError()</a>.</p>
 
 </div>
 </div>
@@ -1196,9 +1195,9 @@ validator must be a valid pointer. </dd></dl>
 
 <p>Get message for the user regarding SQLite error number. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00350">350</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00369">369</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00311">displayDatabaseError()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00330">displayDatabaseError()</a>.</p>
 
 </div>
 </div>
@@ -1226,11 +1225,11 @@ validator must be a valid pointer. </dd></dl>
 <p>Insert a new row to model. </p>
 <p>Internally, <a class="el" href="classmdt_abstract_sql_widget.html#a87ca4a74a2d8073be3ae92d7215eb538" title="Emitted when insert() was called. ">insertTriggered()</a> signal will be emitted. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00271">271</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00280">280</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html#l00285">insertTriggered()</a>.</p>
+<p>References <a class="el" href="classmdt_abstract_sql_widget.html#a87ca4a74a2d8073be3ae92d7215eb538">insertTriggered()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00152">mdtSqlTableWidget::enableLocalEdition()</a>, and <a class="el" href="mdt_sql_form_8cpp_source.html#l00431">mdtSqlForm::insert()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00152">mdtSqlTableWidget::enableLocalEdition()</a>, and <a class="el" href="mdt_sql_form_8cpp_source.html#l00482">mdtSqlForm::insert()</a>.</p>
 
 </div>
 </div>
@@ -1259,8 +1258,6 @@ validator must be a valid pointer. </dd></dl>
 <p>Emitted when <a class="el" href="classmdt_abstract_sql_widget.html#a850df045ea95b8c15ddd95ae771ef785" title="Insert a new row to model. ">insert()</a> function goes enabled/disabled. </p>
 <p>This is usefull to keep GUI control coherent. For example, this is used in <a class="el" href="classmdt_sql_window.html" title="Main window for a database table view/editor. ">mdtSqlWindow</a> to enable/disable actions. </p>
 
-<p>Definition at line <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html#l00259">259</a> of file <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html">moc_mdtAbstractSqlWidget.cxx</a>.</p>
-
 <p>Referenced by <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00152">mdtSqlTableWidget::enableLocalEdition()</a>.</p>
 
 </div>
@@ -1288,9 +1285,7 @@ validator must be a valid pointer. </dd></dl>
 
 <p>Emitted when <a class="el" href="classmdt_abstract_sql_widget.html#a850df045ea95b8c15ddd95ae771ef785" title="Insert a new row to model. ">insert()</a> was called. </p>
 
-<p>Definition at line <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html#l00285">285</a> of file <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html">moc_mdtAbstractSqlWidget.cxx</a>.</p>
-
-<p>Referenced by <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00271">insert()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00280">insert()</a>.</p>
 
 </div>
 </div>
@@ -1310,9 +1305,9 @@ validator must be a valid pointer. </dd></dl>
 <p>Get current model. </p>
 <p>Can return a null pointer if model was not set. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00067">67</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00072">72</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_form_8cpp_source.html#l00097">mdtSqlForm::addChildTable()</a>, <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00310">mdtSqlTableWidget::currentSelection()</a>, <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00399">mdtSqlTableWidget::indexListOfSelectedRows()</a>, <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00343">mdtSqlTableWidget::indexListOfSelectedRowsByRowsList()</a>, <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00052">mdtSqlFormWidget::mapFormWidgets()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00237">mdtSqlForm::model()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00249">mdtSqlForm::select()</a>, <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00253">mdtSqlTableWidget::setColumnHidden()</a>, <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00460">mdtSqlTableWidget::setCurrentIndex()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00281">setCurrentRecord()</a>, <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00274">mdtSqlTableWidget::setDefaultColumnToSelect()</a>, <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00240">mdtSqlTableWidget::setHeaderData()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00064">mdtSqlForm::setMainTable()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00279">mdtSqlForm::setMainTableFilter()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00048">setModel()</a>, and <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00292">mdtSqlTableWidget::sort()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_form_8cpp_source.html#l00107">mdtSqlForm::addChildTable()</a>, <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00312">mdtSqlTableWidget::currentSelection()</a>, <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00401">mdtSqlTableWidget::indexListOfSelectedRows()</a>, <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00345">mdtSqlTableWidget::indexListOfSelectedRowsByRowsList()</a>, <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00052">mdtSqlFormWidget::mapFormWidgets()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00257">mdtSqlForm::model()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00269">mdtSqlForm::select()</a>, <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00255">mdtSqlTableWidget::setColumnHidden()</a>, <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00462">mdtSqlTableWidget::setCurrentIndex()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00290">setCurrentRecord()</a>, <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00276">mdtSqlTableWidget::setDefaultColumnToSelect()</a>, <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00242">mdtSqlTableWidget::setHeaderData()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00064">mdtSqlForm::setMainTable()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00319">mdtSqlForm::setMainTableFilter()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00052">setModel()</a>, and <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00294">mdtSqlTableWidget::sort()</a>.</p>
 
 </div>
 </div>
@@ -1340,9 +1335,7 @@ validator must be a valid pointer. </dd></dl>
 <p>Emitted when select() or setQuery() was called on (parent) model. </p>
 <p>Notes: <a class="el" href="class_q_sql_table_model.html">QSqlTableModel</a> does not provide such signal. Here, the rowsRemoved() and rowsInserted() signal are used. It's also possible that this signal is emitted two times when model is updated with select(), setQuery() or setFilter(). </p>
 
-<p>Definition at line <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html#l00346">346</a> of file <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html">moc_mdtAbstractSqlWidget.cxx</a>.</p>
-
-<p>Referenced by <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00052">mdtSqlFormWidget::mapFormWidgets()</a>, <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00092">mdtSqlTableWidget::mdtSqlTableWidget()</a>, and <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00048">setModel()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00052">mdtSqlFormWidget::mapFormWidgets()</a>, <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00092">mdtSqlTableWidget::mdtSqlTableWidget()</a>, and <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00052">setModel()</a>.</p>
 
 </div>
 </div>
@@ -1368,8 +1361,6 @@ validator must be a valid pointer. </dd></dl>
 </div><div class="memdoc">
 
 <p>Emitted when a operation succeed. </p>
-
-<p>Definition at line <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html#l00303">303</a> of file <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html">moc_mdtAbstractSqlWidget.cxx</a>.</p>
 
 </div>
 </div>
@@ -1398,9 +1389,9 @@ validator must be a valid pointer. </dd></dl>
 <p>Can be used by subclass to setup his view.</p>
 <p>Note: returned proxy model is allways valid, but has no valid source model until model was set with <a class="el" href="classmdt_abstract_sql_widget.html#a8971862741e1ef79c79e11b37e955476" title="Set the table model. ">setModel()</a>. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00448">448</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00467">467</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00130">mdtSqlTableWidget::currentRow()</a>, <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00310">mdtSqlTableWidget::currentSelection()</a>, and <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00292">mdtSqlTableWidget::sort()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00130">mdtSqlTableWidget::currentRow()</a>, <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00312">mdtSqlTableWidget::currentSelection()</a>, and <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00294">mdtSqlTableWidget::sort()</a>.</p>
 
 </div>
 </div>
@@ -1427,7 +1418,40 @@ validator must be a valid pointer. </dd></dl>
 
 <p>Get internal proxy model. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00453">453</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00472">472</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a434da68da8e11b0f25a4e3d2346c0373"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtAbstractSqlWidget::reEnterVisualizingState </td>
+          <td>(</td>
+          <td class="paramname">)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Re-enter in visualizing state. </p>
+<p>Will call onStateVisualizingEntered(), witch will emit some signals (like <a class="el" href="classmdt_abstract_sql_widget.html#acacc59096ae48f733be577a96cd2d14a" title="Emitted when submit() function goes enabled/disabled. ">submitEnabledStateChanged()</a>). This method will fail if currentState is not really Visualizing.</p>
+<p>This functionnality is used by <a class="el" href="classmdt_sql_window.html" title="Main window for a database table view/editor. ">mdtSqlWindow</a> and <a class="el" href="classmdt_sql_dialog.html" title="Dialog for a database table view/editor. ">mdtSqlDialog</a>. </p>
+
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00320">320</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00219">currentState()</a>, and <a class="el" href="mdt_abstract_sql_widget_8h_source.html#l00065">Visualizing</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_sql_dialog_8cpp_source.html#l00070">mdtSqlDialog::enableEdition()</a>, <a class="el" href="mdt_sql_window_8cpp_source.html#l00128">mdtSqlWindow::enableEdition()</a>, <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00152">mdtSqlTableWidget::enableLocalEdition()</a>, and <a class="el" href="mdt_sql_window_8cpp_source.html#l00061">mdtSqlWindow::enableNavigation()</a>.</p>
 
 </div>
 </div>
@@ -1455,9 +1479,9 @@ validator must be a valid pointer. </dd></dl>
 <p>Remove a row from model. </p>
 <p>Internally, <a class="el" href="classmdt_abstract_sql_widget.html#aea7a2ee49ce26a4069cbd8f7e0e65654" title="Emitted when remove() was called. ">removeTriggered()</a> signal will be emitted. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00276">276</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00285">285</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html#l00291">removeTriggered()</a>.</p>
+<p>References <a class="el" href="classmdt_abstract_sql_widget.html#aea7a2ee49ce26a4069cbd8f7e0e65654">removeTriggered()</a>.</p>
 
 </div>
 </div>
@@ -1486,8 +1510,6 @@ validator must be a valid pointer. </dd></dl>
 <p>Emitted when <a class="el" href="classmdt_abstract_sql_widget.html#a748f85ff383d3f11fda4db7f931edb1c" title="Remove a row from model. ">remove()</a> function goes enabled/disabled. </p>
 <p>This is usefull to keep GUI control coherent. For example, this is used in <a class="el" href="classmdt_sql_window.html" title="Main window for a database table view/editor. ">mdtSqlWindow</a> to enable/disable actions. </p>
 
-<p>Definition at line <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html#l00266">266</a> of file <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html">moc_mdtAbstractSqlWidget.cxx</a>.</p>
-
 <p>Referenced by <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00152">mdtSqlTableWidget::enableLocalEdition()</a>.</p>
 
 </div>
@@ -1515,9 +1537,7 @@ validator must be a valid pointer. </dd></dl>
 
 <p>Emitted when <a class="el" href="classmdt_abstract_sql_widget.html#a748f85ff383d3f11fda4db7f931edb1c" title="Remove a row from model. ">remove()</a> was called. </p>
 
-<p>Definition at line <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html#l00291">291</a> of file <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html">moc_mdtAbstractSqlWidget.cxx</a>.</p>
-
-<p>Referenced by <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00276">remove()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00285">remove()</a>.</p>
 
 </div>
 </div>
@@ -1552,7 +1572,7 @@ validator must be a valid pointer. </dd></dl>
 </dl>
 <dl class="section pre"><dt>Precondition</dt><dd>(Parent) model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a8971862741e1ef79c79e11b37e955476" title="Set the table model. ">setModel()</a> before calling this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00420">420</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00439">439</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
 
 <p>References <a class="el" href="classmdt_abstract_sql_widget.html#ab48f6375f55f1eaba309fb17aaaf5770">currentRow()</a>.</p>
 
@@ -1583,9 +1603,9 @@ validator must be a valid pointer. </dd></dl>
 <p>Depending on subclass choosen EditStrategy, this method has potentially no effect.</p>
 <p>Internally, <a class="el" href="classmdt_abstract_sql_widget.html#a4cd4617364c875c6c777cff1ce0187ae" title="Emitted when revert() was called. ">revertTriggered()</a> signal will be emitted. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00266">266</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00275">275</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html#l00279">revertTriggered()</a>.</p>
+<p>References <a class="el" href="classmdt_abstract_sql_widget.html#a4cd4617364c875c6c777cff1ce0187ae">revertTriggered()</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00152">mdtSqlTableWidget::enableLocalEdition()</a>.</p>
 
@@ -1616,8 +1636,6 @@ validator must be a valid pointer. </dd></dl>
 <p>Emitted when <a class="el" href="classmdt_abstract_sql_widget.html#a3108b336f4c832cb0a5b3a830fff9ce0" title="Revert current record from model. ">revert()</a> function goes enabled/disabled. </p>
 <p>This is usefull to keep GUI control coherent. For example, this is used in <a class="el" href="classmdt_sql_window.html" title="Main window for a database table view/editor. ">mdtSqlWindow</a> to enable/disable actions. </p>
 
-<p>Definition at line <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html#l00252">252</a> of file <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html">moc_mdtAbstractSqlWidget.cxx</a>.</p>
-
 <p>Referenced by <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00152">mdtSqlTableWidget::enableLocalEdition()</a>.</p>
 
 </div>
@@ -1645,9 +1663,7 @@ validator must be a valid pointer. </dd></dl>
 
 <p>Emitted when <a class="el" href="classmdt_abstract_sql_widget.html#a3108b336f4c832cb0a5b3a830fff9ce0" title="Revert current record from model. ">revert()</a> was called. </p>
 
-<p>Definition at line <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html#l00279">279</a> of file <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html">moc_mdtAbstractSqlWidget.cxx</a>.</p>
-
-<p>Referenced by <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00266">revert()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00275">revert()</a>.</p>
 
 </div>
 </div>
@@ -1667,9 +1683,9 @@ validator must be a valid pointer. </dd></dl>
 <p>Get row count. </p>
 <dl class="section pre"><dt>Precondition</dt><dd>Model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a8971862741e1ef79c79e11b37e955476" title="Set the table model. ">setModel()</a> before using this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00207">207</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00212">212</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00052">mdtSqlFormWidget::mapFormWidgets()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00281">setCurrentRecord()</a>, and <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00292">mdtSqlTableWidget::sort()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00052">mdtSqlFormWidget::mapFormWidgets()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00290">setCurrentRecord()</a>, and <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00294">mdtSqlTableWidget::sort()</a>.</p>
 
 </div>
 </div>
@@ -1706,11 +1722,11 @@ validator must be a valid pointer. </dd></dl>
 <p>Set (update) data of current row (record) for given field name. </p>
 <dl class="section pre"><dt>Precondition</dt><dd>(Parent) model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a8971862741e1ef79c79e11b37e955476" title="Set the table model. ">setModel()</a> before using this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00133">133</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00138">138</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="classmdt_abstract_sql_widget.html#ab48f6375f55f1eaba309fb17aaaf5770">currentRow()</a>, <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html#l00309">dataEdited()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00311">displayDatabaseError()</a>, and <a class="el" href="classmdt_abstract_sql_widget.html#a619725b15f305e216ba9ce9dc0ab9e3c">setCurrentIndex()</a>.</p>
+<p>References <a class="el" href="classmdt_abstract_sql_widget.html#ab48f6375f55f1eaba309fb17aaaf5770">currentRow()</a>, <a class="el" href="classmdt_abstract_sql_widget.html#a8ae6e67e3efb5051dc7a8b74571d4aa1">dataEdited()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00330">displayDatabaseError()</a>, and <a class="el" href="classmdt_abstract_sql_widget.html#a619725b15f305e216ba9ce9dc0ab9e3c">setCurrentIndex()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_form_8cpp_source.html#l00383">mdtSqlForm::setCurrentData()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_form_8cpp_source.html#l00434">mdtSqlForm::setCurrentData()</a>.</p>
 
 </div>
 </div>
@@ -1739,7 +1755,7 @@ validator must be a valid pointer. </dd></dl>
 <p>Set row as current record. </p>
 <p>Subclass must implement this method. Errors and user interactions must be handled by subclass. </p>
 
-<p>Referenced by <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00133">setCurrentData()</a>, and <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00281">setCurrentRecord()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00138">setCurrentData()</a>, and <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00290">setCurrentRecord()</a>.</p>
 
 </div>
 </div>
@@ -1785,9 +1801,11 @@ validator must be a valid pointer. </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if matching record was found (in this case, <a class="el" href="classmdt_abstract_sql_widget.html#a619725b15f305e216ba9ce9dc0ab9e3c" title="Set row as current record. ">setCurrentIndex()</a> is called to update currentRow), false else. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00281">281</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00290">290</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00067">model()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00207">rowCount()</a>, and <a class="el" href="classmdt_abstract_sql_widget.html#a619725b15f305e216ba9ce9dc0ab9e3c">setCurrentIndex()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00072">model()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00212">rowCount()</a>, and <a class="el" href="classmdt_abstract_sql_widget.html#a619725b15f305e216ba9ce9dc0ab9e3c">setCurrentIndex()</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_sql_form_8cpp_source.html#l00423">mdtSqlForm::setCurrentRecord()</a>.</p>
 
 </div>
 </div>
@@ -1811,11 +1829,11 @@ validator must be a valid pointer. </dd></dl>
 <dd>
 Internal state machine must not running. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00048">48</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00052">52</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="classmdt_abstract_sql_widget.html#aad8608a92f65790c99ca7897fbd48c30">doSetModel()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00067">model()</a>, and <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html#l00346">modelSelected()</a>.</p>
+<p>References <a class="el" href="classmdt_abstract_sql_widget.html#aad8608a92f65790c99ca7897fbd48c30">doSetModel()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00072">model()</a>, <a class="el" href="classmdt_abstract_sql_widget.html#a6787c093d9b0b64a1e8d3794ba505604">modelSelected()</a>, <a class="el" href="mdt_abstract_sql_widget_8h_source.html#l00065">Visualizing</a>, and <a class="el" href="mdt_state_machine_8cpp_source.html#l00049">mdtStateMachine::waitOnState()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_form_8cpp_source.html#l00097">mdtSqlForm::addChildTable()</a>, and <a class="el" href="mdt_sql_form_8cpp_source.html#l00064">mdtSqlForm::setMainTable()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_form_8cpp_source.html#l00107">mdtSqlForm::addChildTable()</a>, and <a class="el" href="mdt_sql_form_8cpp_source.html#l00064">mdtSqlForm::setMainTable()</a>.</p>
 
 </div>
 </div>
@@ -1835,9 +1853,9 @@ Internal state machine must not running. </dd></dl>
 
 <p>Set the user friendly table name. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00085">85</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00090">90</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_form_8cpp_source.html#l00097">mdtSqlForm::addChildTable()</a>, and <a class="el" href="mdt_sql_form_8cpp_source.html#l00064">mdtSqlForm::setMainTable()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_form_8cpp_source.html#l00107">mdtSqlForm::addChildTable()</a>, and <a class="el" href="mdt_sql_form_8cpp_source.html#l00064">mdtSqlForm::setMainTable()</a>.</p>
 
 </div>
 </div>
@@ -1867,7 +1885,7 @@ Internal state machine must not running. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_sql_table_widget.html#a5e1323816fce33680857048db8cbb255">mdtSqlTableWidget</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00257">257</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00266">266</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -1887,9 +1905,9 @@ Internal state machine must not running. </dd></dl>
 <p>Get a list of all SQL widgets. </p>
 <p>Returned list will contain the parent SQL widget and all child SQL widgets </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00119">119</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00124">124</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_form_8cpp_source.html#l00179">mdtSqlForm::sqlWidget()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_form_8cpp_source.html#l00199">mdtSqlForm::sqlWidget()</a>.</p>
 
 </div>
 </div>
@@ -1915,8 +1933,6 @@ Internal state machine must not running. </dd></dl>
 </div><div class="memdoc">
 
 <p>Emitted when Editing state was exited. </p>
-
-<p>Definition at line <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html#l00327">327</a> of file <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html">moc_mdtAbstractSqlWidget.cxx</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00052">mdtSqlFormWidget::mapFormWidgets()</a>.</p>
 
@@ -1945,8 +1961,6 @@ Internal state machine must not running. </dd></dl>
 
 <p>Emitted when Editing state was exited. </p>
 
-<p>Definition at line <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html#l00333">333</a> of file <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html">moc_mdtAbstractSqlWidget.cxx</a>.</p>
-
 <p>Referenced by <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00052">mdtSqlFormWidget::mapFormWidgets()</a>.</p>
 
 </div>
@@ -1974,8 +1988,6 @@ Internal state machine must not running. </dd></dl>
 
 <p>Emitted when Visualizing state was entered. </p>
 
-<p>Definition at line <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html#l00315">315</a> of file <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html">moc_mdtAbstractSqlWidget.cxx</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="a8f2eda6e219e49c972834a1e5c39e8ff"></a>
@@ -2000,8 +2012,6 @@ Internal state machine must not running. </dd></dl>
 </div><div class="memdoc">
 
 <p>Emitted when Visualizing state was exited. </p>
-
-<p>Definition at line <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html#l00321">321</a> of file <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html">moc_mdtAbstractSqlWidget.cxx</a>.</p>
 
 </div>
 </div>
@@ -2030,9 +2040,9 @@ Internal state machine must not running. </dd></dl>
 <p>Depending on subclass choosen EditStrategy, this method has potentially no effect.</p>
 <p>Internally, <a class="el" href="classmdt_abstract_sql_widget.html#ab3bee735c32de34c0b097f1a426bafca" title="Emitted when submit() was called. ">submitTriggered()</a> signal will be emitted. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00261">261</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00270">270</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html#l00273">submitTriggered()</a>.</p>
+<p>References <a class="el" href="classmdt_abstract_sql_widget.html#ab3bee735c32de34c0b097f1a426bafca">submitTriggered()</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00152">mdtSqlTableWidget::enableLocalEdition()</a>.</p>
 
@@ -2063,8 +2073,6 @@ Internal state machine must not running. </dd></dl>
 <p>Emitted when <a class="el" href="classmdt_abstract_sql_widget.html#a6678c45b0d46eb163f5b09d79ed001b5" title="Submit current record to model. ">submit()</a> function goes enabled/disabled. </p>
 <p>This is usefull to keep GUI control coherent. For example, this is used in <a class="el" href="classmdt_sql_window.html" title="Main window for a database table view/editor. ">mdtSqlWindow</a> to enable/disable actions. </p>
 
-<p>Definition at line <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html#l00245">245</a> of file <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html">moc_mdtAbstractSqlWidget.cxx</a>.</p>
-
 <p>Referenced by <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00152">mdtSqlTableWidget::enableLocalEdition()</a>.</p>
 
 </div>
@@ -2092,9 +2100,7 @@ Internal state machine must not running. </dd></dl>
 
 <p>Emitted when <a class="el" href="classmdt_abstract_sql_widget.html#a6678c45b0d46eb163f5b09d79ed001b5" title="Submit current record to model. ">submit()</a> was called. </p>
 
-<p>Definition at line <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html#l00273">273</a> of file <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html">moc_mdtAbstractSqlWidget.cxx</a>.</p>
-
-<p>Referenced by <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00261">submit()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00270">submit()</a>.</p>
 
 </div>
 </div>
@@ -2149,8 +2155,6 @@ Internal state machine must not running. </dd></dl>
 <p>Emitted when <a class="el" href="classmdt_abstract_sql_widget.html#aaa27731864dbb9123ec6765dd21feb7f" title="Set first record as current record. ">toFirst()</a> function goes enabled/disabled. </p>
 <p>This is usefull to keep GUI control coherent. For example, this is used in <a class="el" href="classmdt_sql_window.html" title="Main window for a database table view/editor. ">mdtSqlWindow</a> to enable/disable actions. </p>
 
-<p>Definition at line <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html#l00217">217</a> of file <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html">moc_mdtAbstractSqlWidget.cxx</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="a681cc6234976eaa2f0e158248569b502"></a>
@@ -2203,8 +2207,6 @@ Internal state machine must not running. </dd></dl>
 
 <p>Emitted when <a class="el" href="classmdt_abstract_sql_widget.html#a681cc6234976eaa2f0e158248569b502" title="Set last record as current record. ">toLast()</a> function goes enabled/disabled. </p>
 <p>This is usefull to keep GUI control coherent. For example, this is used in <a class="el" href="classmdt_sql_window.html" title="Main window for a database table view/editor. ">mdtSqlWindow</a> to enable/disable actions. </p>
-
-<p>Definition at line <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html#l00224">224</a> of file <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html">moc_mdtAbstractSqlWidget.cxx</a>.</p>
 
 </div>
 </div>
@@ -2259,8 +2261,6 @@ Internal state machine must not running. </dd></dl>
 <p>Emitted when <a class="el" href="classmdt_abstract_sql_widget.html#a8ed6bb811c992fcc8bba8da9f675cd88" title="Set next record as current record. ">toNext()</a> function goes enabled/disabled. </p>
 <p>This is usefull to keep GUI control coherent. For example, this is used in <a class="el" href="classmdt_sql_window.html" title="Main window for a database table view/editor. ">mdtSqlWindow</a> to enable/disable actions. </p>
 
-<p>Definition at line <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html#l00231">231</a> of file <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html">moc_mdtAbstractSqlWidget.cxx</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="a342b13a8258536d228f8522dae2b9df7"></a>
@@ -2314,8 +2314,6 @@ Internal state machine must not running. </dd></dl>
 <p>Emitted when <a class="el" href="classmdt_abstract_sql_widget.html#a342b13a8258536d228f8522dae2b9df7" title="Set previous record as current record. ">toPrevious()</a> function goes enabled/disabled. </p>
 <p>This is usefull to keep GUI control coherent. For example, this is used in <a class="el" href="classmdt_sql_window.html" title="Main window for a database table view/editor. ">mdtSqlWindow</a> to enable/disable actions. </p>
 
-<p>Definition at line <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html#l00238">238</a> of file <a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html">moc_mdtAbstractSqlWidget.cxx</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="a8207edaf31a7d988db5b86a4099ad4eb"></a>
@@ -2334,9 +2332,9 @@ Internal state machine must not running. </dd></dl>
 <p>Get the user friendly table name. </p>
 <p>If the user friendly table name was not set, the database table name is returned. If model was not set, a empty string is returned. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00090">90</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00095">95</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_form_8cpp_source.html#l00097">mdtSqlForm::addChildTable()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00227">allDataAreSaved()</a>, and <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00311">displayDatabaseError()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_form_8cpp_source.html#l00107">mdtSqlForm::addChildTable()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00236">allDataAreSaved()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00330">displayDatabaseError()</a>, and <a class="el" href="mdt_sql_form_8cpp_source.html#l00269">mdtSqlForm::select()</a>.</p>
 
 </div>
 </div>
@@ -2364,19 +2362,18 @@ Internal state machine must not running. </dd></dl>
 
 <p>Show a message box to the user to warn him that it should save/revert data. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00409">409</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00428">428</a> of file <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtutilsgui/<a class="el" href="mdt_abstract_sql_widget_8h_source.html">mdtAbstractSqlWidget.h</a></li>
 <li>src/mdtutilsgui/<a class="el" href="mdt_abstract_sql_widget_8cpp_source.html">mdtAbstractSqlWidget.cpp</a></li>
-<li>src/mdtutilsgui/<a class="el" href="moc__mdt_abstract_sql_widget_8cxx_source.html">moc_mdtAbstractSqlWidget.cxx</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 6 2014 09:34:21 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jun 28 2014 13:24:46 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

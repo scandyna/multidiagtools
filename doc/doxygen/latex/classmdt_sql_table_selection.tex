@@ -21,8 +21,12 @@ void \hyperlink{classmdt_sql_table_selection_a8a7fec3deddde52a3cfdb2ea96a75894}{
 \begin{DoxyCompactList}\small\item\em Set model index list. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_sql_table_selection_a411d70a724981bd47f550d05cf3858be}{row\-Count} () const 
 \begin{DoxyCompactList}\small\item\em Get row count. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_sql_table_selection_a739d9d474c3df10c01ea4094a3f8c201}{is\-Empty} () const 
+\begin{DoxyCompactList}\small\item\em Check if selection is empty. \end{DoxyCompactList}\item 
 Q\-Variant \hyperlink{classmdt_sql_table_selection_a30a3f85a56792d9641abbd2129c50bca}{data} (int row, const Q\-String \&field\-Name) const 
 \begin{DoxyCompactList}\small\item\em Get data for given row and field name. \end{DoxyCompactList}\item 
+Q\-String\-List \hyperlink{classmdt_sql_table_selection_a5885e6bb6fadabb425c4ec170c5bdfc7}{fields} (int row) const 
+\begin{DoxyCompactList}\small\item\em Get a list of fields contained in given row. \end{DoxyCompactList}\item 
 Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_sql_table_selection_a51db96b59cc388c6d4bb2d4e4fdcea51}{data\-List} (const Q\-String \&field\-Name) const 
 \begin{DoxyCompactList}\small\item\em Get a list of data for given field. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -111,6 +115,10 @@ row must be in a valid range ( 0 $<$= row $<$ \hyperlink{classmdt_sql_table_sele
 
 Definition at line 70 of file mdt\-Sql\-Table\-Selection.\-cpp.
 
+
+
+Referenced by mdt\-Tt\-Base\-::remove\-Data(), mdt\-Cl\-Link\-Beam\-::remove\-Links(), and mdt\-Cl\-Link\-::remove\-Links().
+
 \hypertarget{classmdt_sql_table_selection_a51db96b59cc388c6d4bb2d4e4fdcea51}{\index{mdt\-Sql\-Table\-Selection@{mdt\-Sql\-Table\-Selection}!data\-List@{data\-List}}
 \index{data\-List@{data\-List}!mdtSqlTableSelection@{mdt\-Sql\-Table\-Selection}}
 \subsubsection[{data\-List}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ Q\-Variant $>$ mdt\-Sql\-Table\-Selection\-::data\-List (
@@ -124,11 +132,52 @@ Get a list of data for given field.
 
 
 
+Definition at line 90 of file mdt\-Sql\-Table\-Selection.\-cpp.
+
+
+
+Referenced by mdt\-Cl\-Unit\-::remove\-Connections(), and mdt\-Tt\-Test\-Node\-Unit\-::remove\-Node\-Units().
+
+\hypertarget{classmdt_sql_table_selection_a5885e6bb6fadabb425c4ec170c5bdfc7}{\index{mdt\-Sql\-Table\-Selection@{mdt\-Sql\-Table\-Selection}!fields@{fields}}
+\index{fields@{fields}!mdtSqlTableSelection@{mdt\-Sql\-Table\-Selection}}
+\subsubsection[{fields}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String\-List mdt\-Sql\-Table\-Selection\-::fields (
+\begin{DoxyParamCaption}
+\item[{int}]{row}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_sql_table_selection_a5885e6bb6fadabb425c4ec170c5bdfc7}
+
+
+Get a list of fields contained in given row. 
+
+\begin{DoxyPrecond}{Precondition}
+row must be in a valid range ( 0 $<$= row $<$ \hyperlink{classmdt_sql_table_selection_a411d70a724981bd47f550d05cf3858be}{row\-Count()} ). 
+\end{DoxyPrecond}
+
+
 Definition at line 82 of file mdt\-Sql\-Table\-Selection.\-cpp.
 
 
 
-Referenced by mdt\-Cl\-Unit\-::remove\-Connections().
+Referenced by mdt\-Tt\-Base\-::remove\-Data().
+
+\hypertarget{classmdt_sql_table_selection_a739d9d474c3df10c01ea4094a3f8c201}{\index{mdt\-Sql\-Table\-Selection@{mdt\-Sql\-Table\-Selection}!is\-Empty@{is\-Empty}}
+\index{is\-Empty@{is\-Empty}!mdtSqlTableSelection@{mdt\-Sql\-Table\-Selection}}
+\subsubsection[{is\-Empty}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Table\-Selection\-::is\-Empty (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_table_selection_a739d9d474c3df10c01ea4094a3f8c201}
+
+
+Check if selection is empty. 
+
+
+
+Definition at line 88 of file mdt\-Sql\-Table\-Selection.\-h.
+
+
+
+Referenced by mdt\-Tt\-Base\-::remove\-Data().
 
 \hypertarget{classmdt_sql_table_selection_a411d70a724981bd47f550d05cf3858be}{\index{mdt\-Sql\-Table\-Selection@{mdt\-Sql\-Table\-Selection}!row\-Count@{row\-Count}}
 \index{row\-Count@{row\-Count}!mdtSqlTableSelection@{mdt\-Sql\-Table\-Selection}}
@@ -144,6 +193,10 @@ Get row count.
 
 
 Definition at line 84 of file mdt\-Sql\-Table\-Selection.\-h.
+
+
+
+Referenced by mdt\-Tt\-Base\-::remove\-Data(), mdt\-Cl\-Link\-Beam\-::remove\-Links(), and mdt\-Cl\-Link\-::remove\-Links().
 
 \hypertarget{classmdt_sql_table_selection_a8a7fec3deddde52a3cfdb2ea96a75894}{\index{mdt\-Sql\-Table\-Selection@{mdt\-Sql\-Table\-Selection}!set\-Index\-List@{set\-Index\-List}}
 \index{set\-Index\-List@{set\-Index\-List}!mdtSqlTableSelection@{mdt\-Sql\-Table\-Selection}}
@@ -182,7 +235,7 @@ References mdt\-Sql\-Table\-Selection\-Row\-::add\-Index(), mdt\-Sql\-Table\-Sel
 
 
 
-Referenced by mdt\-Sql\-Table\-Widget\-::current\-Selection().
+Referenced by mdt\-Sql\-Table\-Widget\-::current\-Selection(), and mdt\-Sql\-Selection\-Dialog\-::selection().
 
 
 

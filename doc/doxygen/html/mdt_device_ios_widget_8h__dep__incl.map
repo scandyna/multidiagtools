@@ -1,6 +1,5 @@
 <map id="src/mdtdevice/mdtDeviceIosWidget.h" name="src/mdtdevice/mdtDeviceIosWidget.h">
 <area shape="rect" id="node3" href="$mdt_device_ios_widget_8cpp.html" title="src/mdtdevice/mdtDeviceIos\lWidget.cpp" alt="" coords="5,102,195,149"/>
 <area shape="rect" id="node5" href="$mdt_device_window_8cpp.html" title="src/mdtdevice/mdtDeviceWindow.cpp" alt="" coords="219,111,461,140"/>
-<area shape="rect" id="node7" href="$moc__mdt_device_ios_widget_8cxx.html" title="src/mdtdevice/moc_mdtDevice\lIosWidget.cxx" alt="" coords="485,102,688,149"/>
-<area shape="rect" id="node9" href="$mdt_modbus_io_tool_8cpp.html" title="src/mdttools/mdtModbusIo\lTool.cpp" alt="" coords="712,102,888,149"/>
+<area shape="rect" id="node7" href="$mdt_modbus_io_tool_8cpp.html" title="src/mdttools/mdtModbusIo\lTool.cpp" alt="" coords="485,102,661,149"/>
 </map>

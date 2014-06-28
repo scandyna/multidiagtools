@@ -1,0 +1,193 @@
+\hypertarget{classmdt_cl_direct_link}{\section{mdt\-Cl\-Direct\-Link Class Reference}
+\label{classmdt_cl_direct_link}\index{mdt\-Cl\-Direct\-Link@{mdt\-Cl\-Direct\-Link}}
+}
+
+
+Create a temporary table with direct links informations.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Cl\-Direct\-Link.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Cl\-Direct\-Link\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=166pt]{classmdt_cl_direct_link__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Cl\-Direct\-Link\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=216pt]{classmdt_cl_direct_link__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_cl_direct_link_a6a5a5512fdac07d478af18c3c99763fd}{mdt\-Cl\-Direct\-Link} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent, Q\-Sql\-Database db)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_cl_direct_link_a4b6d24e71f1e9e4f5917176f6101c4a8}{$\sim$mdt\-Cl\-Direct\-Link} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_cl_direct_link_a1922ecf2c70985461a2b20700404ef7e}{get\-Unit\-Connection\-Id\-List\-Part\-Of\-Unit} (const Q\-List$<$ Q\-Variant $>$ \&unit\-Connection\-Id\-List, const Q\-Variant \&unit\-Id, bool $\ast$ok)
+\begin{DoxyCompactList}\small\item\em Get a list of I\-D unit connections that are part of given unit. \end{DoxyCompactList}\item 
+Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_cl_direct_link_acc3e005886f9dad09c9843df81b439e4}{get\-Unit\-Connection\-Id\-List\-Part\-Of\-Unit\-Connector} (const Q\-List$<$ Q\-Variant $>$ \&unit\-Connection\-Id\-List, const Q\-Variant \&unit\-Connector\-Id, bool $\ast$ok)
+\begin{DoxyCompactList}\small\item\em Get a list of I\-D unit connections that are part of given unit connector. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_cl_direct_link_a800b3cee7ef1acbe9271e698d62e6bf8}{add\-Link} (const Q\-Variant \&unit\-Connection\-Start\-Id, const Q\-Variant \&unit\-Connection\-End\-Id)
+\begin{DoxyCompactList}\small\item\em Will get data from Link\-List\-\_\-view for given start and end connections and put them into Direct\-Link\-\_\-tbl. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_cl_direct_link_aa7a155c3bf99b91e2d9cff85e93f332b}{add\-Links\-By\-Unit\-Connector} (const Q\-Variant unit\-Connector\-Id\-S, const Q\-Variant unit\-Connector\-Id\-E, \hyperlink{classmdt_cl_path_graph}{mdt\-Cl\-Path\-Graph} $\ast$graph)
+\begin{DoxyCompactList}\small\item\em Add direct links for connections of connectors S and E that are linked together. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Create a temporary table with direct links informations. 
+
+Real links are stored in Link\-\_\-tbl. Link\-List\-\_\-view is also avalable to get more informations.
+
+Link\-\_\-tbl references all links that exists in practice, and also all connections. With \hyperlink{classmdt_cl_path_graph}{mdt\-Cl\-Path\-Graph}, it's possible get the path, including several linked links, starting from a defined unit connection. In some cases, it can be more interesting to have a synthetic view of paths starting from a element. Typical usage could be to see witch connection from a starting connector goes to witch connection of a other connector. This result will also contain several, so called, direct links. 
+
+Definition at line 49 of file mdt\-Cl\-Direct\-Link.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_cl_direct_link_a6a5a5512fdac07d478af18c3c99763fd}{\index{mdt\-Cl\-Direct\-Link@{mdt\-Cl\-Direct\-Link}!mdt\-Cl\-Direct\-Link@{mdt\-Cl\-Direct\-Link}}
+\index{mdt\-Cl\-Direct\-Link@{mdt\-Cl\-Direct\-Link}!mdtClDirectLink@{mdt\-Cl\-Direct\-Link}}
+\subsubsection[{mdt\-Cl\-Direct\-Link}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Cl\-Direct\-Link\-::mdt\-Cl\-Direct\-Link (
+\begin{DoxyParamCaption}
+\item[{{\bf Q\-Object} $\ast$}]{parent, }
+\item[{Q\-Sql\-Database}]{db}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_direct_link_a6a5a5512fdac07d478af18c3c99763fd}
+
+
+Constructor. 
+
+Will also create Direct\-Link\-\_\-tbl temporary table.
+
+Note\-: if Direct\-Link\-\_\-tbl allready exists, it will be overwritten. 
+
+Definition at line 31 of file mdt\-Cl\-Direct\-Link.\-cpp.
+
+\hypertarget{classmdt_cl_direct_link_a4b6d24e71f1e9e4f5917176f6101c4a8}{\index{mdt\-Cl\-Direct\-Link@{mdt\-Cl\-Direct\-Link}!$\sim$mdt\-Cl\-Direct\-Link@{$\sim$mdt\-Cl\-Direct\-Link}}
+\index{$\sim$mdt\-Cl\-Direct\-Link@{$\sim$mdt\-Cl\-Direct\-Link}!mdtClDirectLink@{mdt\-Cl\-Direct\-Link}}
+\subsubsection[{$\sim$mdt\-Cl\-Direct\-Link}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Cl\-Direct\-Link\-::$\sim$mdt\-Cl\-Direct\-Link (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_direct_link_a4b6d24e71f1e9e4f5917176f6101c4a8}
+
+
+Destructor. 
+
+Will also remove Direct\-Link\-\_\-tbl. 
+
+Definition at line 37 of file mdt\-Cl\-Direct\-Link.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_cl_direct_link_a800b3cee7ef1acbe9271e698d62e6bf8}{\index{mdt\-Cl\-Direct\-Link@{mdt\-Cl\-Direct\-Link}!add\-Link@{add\-Link}}
+\index{add\-Link@{add\-Link}!mdtClDirectLink@{mdt\-Cl\-Direct\-Link}}
+\subsubsection[{add\-Link}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Direct\-Link\-::add\-Link (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{unit\-Connection\-Start\-Id, }
+\item[{const Q\-Variant \&}]{unit\-Connection\-End\-Id}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_direct_link_a800b3cee7ef1acbe9271e698d62e6bf8}
+
+
+Will get data from Link\-List\-\_\-view for given start and end connections and put them into Direct\-Link\-\_\-tbl. 
+
+
+
+Definition at line 104 of file mdt\-Cl\-Direct\-Link.\-cpp.
+
+
+
+References mdt\-Tt\-Base\-::add\-Record(), mdt\-Error\-::commit(), mdt\-Error\-::\-Error, mdt\-Sql\-Record\-::is\-Empty(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, and mdt\-Error\-::set\-Error().
+
+
+
+Referenced by add\-Links\-By\-Unit\-Connector().
+
+\hypertarget{classmdt_cl_direct_link_aa7a155c3bf99b91e2d9cff85e93f332b}{\index{mdt\-Cl\-Direct\-Link@{mdt\-Cl\-Direct\-Link}!add\-Links\-By\-Unit\-Connector@{add\-Links\-By\-Unit\-Connector}}
+\index{add\-Links\-By\-Unit\-Connector@{add\-Links\-By\-Unit\-Connector}!mdtClDirectLink@{mdt\-Cl\-Direct\-Link}}
+\subsubsection[{add\-Links\-By\-Unit\-Connector}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Direct\-Link\-::add\-Links\-By\-Unit\-Connector (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant}]{unit\-Connector\-Id\-S, }
+\item[{const Q\-Variant}]{unit\-Connector\-Id\-E, }
+\item[{{\bf mdt\-Cl\-Path\-Graph} $\ast$}]{graph}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_direct_link_aa7a155c3bf99b91e2d9cff85e93f332b}
+
+
+Add direct links for connections of connectors S and E that are linked together. 
+
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000047}{Todo}]Add transactions \end{DoxyRefDesc}
+
+
+Definition at line 160 of file mdt\-Cl\-Direct\-Link.\-cpp.
+
+
+
+References add\-Link(), mdt\-Tt\-Base\-::database(), mdt\-Cl\-Unit\-::get\-Connection\-Id\-List\-Part\-Of\-Connector\-Id(), mdt\-Cl\-Unit\-::get\-Connector\-Id\-Of\-Connection\-Id(), mdt\-Cl\-Path\-Graph\-::get\-Linked\-Connection\-Id\-List(), mdt\-Tt\-Base\-::last\-Error(), and mdt\-Tt\-Base\-::pv\-Last\-Error.
+
+\hypertarget{classmdt_cl_direct_link_a1922ecf2c70985461a2b20700404ef7e}{\index{mdt\-Cl\-Direct\-Link@{mdt\-Cl\-Direct\-Link}!get\-Unit\-Connection\-Id\-List\-Part\-Of\-Unit@{get\-Unit\-Connection\-Id\-List\-Part\-Of\-Unit}}
+\index{get\-Unit\-Connection\-Id\-List\-Part\-Of\-Unit@{get\-Unit\-Connection\-Id\-List\-Part\-Of\-Unit}!mdtClDirectLink@{mdt\-Cl\-Direct\-Link}}
+\subsubsection[{get\-Unit\-Connection\-Id\-List\-Part\-Of\-Unit}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ Q\-Variant $>$ mdt\-Cl\-Direct\-Link\-::get\-Unit\-Connection\-Id\-List\-Part\-Of\-Unit (
+\begin{DoxyParamCaption}
+\item[{const Q\-List$<$ Q\-Variant $>$ \&}]{unit\-Connection\-Id\-List, }
+\item[{const Q\-Variant \&}]{unit\-Id, }
+\item[{bool $\ast$}]{ok}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_direct_link_a1922ecf2c70985461a2b20700404ef7e}
+
+
+Get a list of I\-D unit connections that are part of given unit. 
+
+
+
+Definition at line 42 of file mdt\-Cl\-Direct\-Link.\-cpp.
+
+
+
+References mdt\-Tt\-Base\-::get\-Data().
+
+\hypertarget{classmdt_cl_direct_link_acc3e005886f9dad09c9843df81b439e4}{\index{mdt\-Cl\-Direct\-Link@{mdt\-Cl\-Direct\-Link}!get\-Unit\-Connection\-Id\-List\-Part\-Of\-Unit\-Connector@{get\-Unit\-Connection\-Id\-List\-Part\-Of\-Unit\-Connector}}
+\index{get\-Unit\-Connection\-Id\-List\-Part\-Of\-Unit\-Connector@{get\-Unit\-Connection\-Id\-List\-Part\-Of\-Unit\-Connector}!mdtClDirectLink@{mdt\-Cl\-Direct\-Link}}
+\subsubsection[{get\-Unit\-Connection\-Id\-List\-Part\-Of\-Unit\-Connector}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ Q\-Variant $>$ mdt\-Cl\-Direct\-Link\-::get\-Unit\-Connection\-Id\-List\-Part\-Of\-Unit\-Connector (
+\begin{DoxyParamCaption}
+\item[{const Q\-List$<$ Q\-Variant $>$ \&}]{unit\-Connection\-Id\-List, }
+\item[{const Q\-Variant \&}]{unit\-Connector\-Id, }
+\item[{bool $\ast$}]{ok}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_direct_link_acc3e005886f9dad09c9843df81b439e4}
+
+
+Get a list of I\-D unit connections that are part of given unit connector. 
+
+
+
+Definition at line 73 of file mdt\-Cl\-Direct\-Link.\-cpp.
+
+
+
+References mdt\-Tt\-Base\-::get\-Data().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdttools/mdttesttool/mdtcablelist/\hyperlink{mdt_cl_direct_link_8h}{mdt\-Cl\-Direct\-Link.\-h}\item 
+src/mdttools/mdttesttool/mdtcablelist/\hyperlink{mdt_cl_direct_link_8cpp}{mdt\-Cl\-Direct\-Link.\-cpp}\end{DoxyCompactItemize}

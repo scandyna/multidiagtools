@@ -432,53 +432,142 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;}</div>
 <div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;</div>
-<div class="line"><a name="l00345"></a><span class="lineno"><a class="code" href="classmdt_tt_base.html#a733fc8720c9eeabd3395883ba5a544ce">  345</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_base.html#a733fc8720c9eeabd3395883ba5a544ce" title="Beginn manually a new transaction. ">mdtTtBase::beginTransaction</a>() </div>
+<div class="line"><a name="l00345"></a><span class="lineno"><a class="code" href="classmdt_tt_base.html#a372e33909ae2912e3b69c67d05940910">  345</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_base.html#a7b328098b5813497aedfb764a1ff787f" title="Remove data from given table. ">mdtTtBase::removeData</a>(<span class="keyword">const</span> QString&amp; tableName, <span class="keyword">const</span> <a class="code" href="classmdt_sql_table_selection.html" title="Handle selection of model indexes in a QTableView. ">mdtSqlTableSelection</a> &amp; s, <span class="keywordtype">bool</span> handleTransaction)</div>
 <div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;{</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;  <span class="keywordflow">if</span>(!pvDatabase.transaction()){</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;    QSqlError sqlError = pvDatabase.lastError();</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;    <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error. ">setError</a>(tr(<span class="stringliteral">&quot;Cannot beginn transaction (database: &#39;&quot;</span>) + pvDatabase.databaseName() + tr(<span class="stringliteral">&quot;&#39;).&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;    <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno) ">setSystemError</a>(sqlError.number(), sqlError.text());</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce" title="Add source information to error. ">MDT_ERROR_SET_SRC</a>(<a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>, <span class="stringliteral">&quot;mdtTtBase&quot;</span>);</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;    <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output. ">commit</a>();</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;  }</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;}</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;</div>
-<div class="line"><a name="l00358"></a><span class="lineno"><a class="code" href="classmdt_tt_base.html#a7c736836397a8d65a28992e1a39c1be5">  358</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_base.html#a7c736836397a8d65a28992e1a39c1be5" title="Rollback manually a new transaction. ">mdtTtBase::rollbackTransaction</a>() </div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;{</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;  <span class="keywordflow">if</span>(!pvDatabase.rollback()){</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;    QSqlError sqlError = pvDatabase.lastError();</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error. ">setError</a>(tr(<span class="stringliteral">&quot;Cannot beginn rollback (database: &#39;&quot;</span>) + pvDatabase.databaseName() + tr(<span class="stringliteral">&quot;&#39;).&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;    <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno) ">setSystemError</a>(sqlError.number(), sqlError.text());</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;    <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce" title="Add source information to error. ">MDT_ERROR_SET_SRC</a>(<a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>, <span class="stringliteral">&quot;mdtTtBase&quot;</span>);</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;    <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output. ">commit</a>();</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;  }</div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;}</div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;</div>
-<div class="line"><a name="l00371"></a><span class="lineno"><a class="code" href="classmdt_tt_base.html#a32b6cbd2d6c9a055cbc97136e9958d81">  371</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_base.html#a32b6cbd2d6c9a055cbc97136e9958d81" title="Commit manually a new transaction. ">mdtTtBase::commitTransaction</a>() </div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;{</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;  <span class="keywordflow">if</span>(!pvDatabase.commit()){</div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;    QSqlError sqlError = pvDatabase.lastError();</div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;    <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error. ">setError</a>(tr(<span class="stringliteral">&quot;Cannot beginn commit (database: &#39;&quot;</span>) + pvDatabase.databaseName() + tr(<span class="stringliteral">&quot;&#39;).&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);</div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno) ">setSystemError</a>(sqlError.number(), sqlError.text());</div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;    <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce" title="Add source information to error. ">MDT_ERROR_SET_SRC</a>(<a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>, <span class="stringliteral">&quot;mdtTtBase&quot;</span>);</div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;    <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output. ">commit</a>();</div>
-<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;  }</div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;}</div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;</div>
-<div class="line"><a name="l00384"></a><span class="lineno"><a class="code" href="classmdt_tt_base.html#ad6eed5cb4ab7403ce257a4bd6e0428c8">  384</a></span>&#160;QString <a class="code" href="classmdt_tt_base.html#ad6eed5cb4ab7403ce257a4bd6e0428c8" title="Get SQL data delimiter for given data type. ">mdtTtBase::sqlDataDelimiter</a>(QVariant::Type type)</div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;{</div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="classmdt_sql_record.html#a1bc8d0787c3aa941afcf444d661c07db" title="Get SQL data delimiter for given data type. ">mdtSqlRecord::sqlDataDelimiter</a>(type);</div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;}</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;  QString sql;</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;  <span class="keywordtype">int</span> row;</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;  QStringList fieldList;</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;  QString field;</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;  QVariant data;</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;  QString delimiter;</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;  <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;  <span class="keywordflow">if</span>(s.<a class="code" href="classmdt_sql_table_selection.html#a739d9d474c3df10c01ea4094a3f8c201" title="Check if selection is empty. ">isEmpty</a>()){</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;  }</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;  <span class="comment">// Generate SQL statement</span></div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;  sql = <span class="stringliteral">&quot;DELETE FROM &quot;</span> + tableName;</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;  Q_ASSERT(s.<a class="code" href="classmdt_sql_table_selection.html#a411d70a724981bd47f550d05cf3858be" title="Get row count. ">rowCount</a>() &gt; 0);</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;  <span class="comment">// Firs row</span></div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;  sql += <span class="stringliteral">&quot; WHERE (&quot;</span>;</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;  fieldList = s.<a class="code" href="classmdt_sql_table_selection.html#a5885e6bb6fadabb425c4ec170c5bdfc7" title="Get a list of fields contained in given row. ">fields</a>(0);</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;  <span class="comment">// First field</span></div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;  <span class="keywordflow">if</span>(fieldList.size() &gt; 0){</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;    field = fieldList.at(0);</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;    data = s.<a class="code" href="classmdt_sql_table_selection.html#a30a3f85a56792d9641abbd2129c50bca" title="Get data for given row and field name. ">data</a>(0, field);</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;    delimiter = <a class="code" href="classmdt_tt_base.html#ad6eed5cb4ab7403ce257a4bd6e0428c8" title="Get SQL data delimiter for given data type. ">sqlDataDelimiter</a>(data.type());</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;    sql += field + <span class="stringliteral">&quot;=&quot;</span> + delimiter + data.toString() + delimiter;</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;  }</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;  <span class="comment">// Other fields</span></div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;  <span class="keywordflow">for</span>(i = 1; i &lt; fieldList.size(); ++i){</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;    sql += <span class="stringliteral">&quot; AND &quot;</span>;</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;    field = fieldList.at(i);</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;    data = s.<a class="code" href="classmdt_sql_table_selection.html#a30a3f85a56792d9641abbd2129c50bca" title="Get data for given row and field name. ">data</a>(0, field);</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    delimiter = <a class="code" href="classmdt_tt_base.html#ad6eed5cb4ab7403ce257a4bd6e0428c8" title="Get SQL data delimiter for given data type. ">sqlDataDelimiter</a>(data.type());</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;    sql += field + <span class="stringliteral">&quot;=&quot;</span> + delimiter + data.toString() + delimiter;</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;  }</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;  sql += <span class="stringliteral">&quot;)&quot;</span>;</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;  <span class="comment">// Other rows</span></div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;  <span class="keywordflow">for</span>(row = 1; row &lt; s.<a class="code" href="classmdt_sql_table_selection.html#a411d70a724981bd47f550d05cf3858be" title="Get row count. ">rowCount</a>(); ++row){</div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;    sql += <span class="stringliteral">&quot; OR (&quot;</span>;</div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;    fieldList = s.<a class="code" href="classmdt_sql_table_selection.html#a5885e6bb6fadabb425c4ec170c5bdfc7" title="Get a list of fields contained in given row. ">fields</a>(row);</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;    <span class="comment">// First field</span></div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;    <span class="keywordflow">if</span>(fieldList.size() &gt; 0){</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;      field = fieldList.at(0);</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;      data = s.<a class="code" href="classmdt_sql_table_selection.html#a30a3f85a56792d9641abbd2129c50bca" title="Get data for given row and field name. ">data</a>(row, field);</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;      delimiter = <a class="code" href="classmdt_tt_base.html#ad6eed5cb4ab7403ce257a4bd6e0428c8" title="Get SQL data delimiter for given data type. ">sqlDataDelimiter</a>(data.type());</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;      sql += field + <span class="stringliteral">&quot;=&quot;</span> + delimiter + data.toString() + delimiter;</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;    }</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;    <span class="comment">// Other fields</span></div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;    <span class="keywordflow">for</span>(i = 1; i &lt; fieldList.size(); ++i){</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;      sql += <span class="stringliteral">&quot; AND &quot;</span>;</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;      field = fieldList.at(i);</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;      data = s.<a class="code" href="classmdt_sql_table_selection.html#a30a3f85a56792d9641abbd2129c50bca" title="Get data for given row and field name. ">data</a>(row, field);</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;      delimiter = <a class="code" href="classmdt_tt_base.html#ad6eed5cb4ab7403ce257a4bd6e0428c8" title="Get SQL data delimiter for given data type. ">sqlDataDelimiter</a>(data.type());</div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;      sql += field + <span class="stringliteral">&quot;=&quot;</span> + delimiter + data.toString() + delimiter;</div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;    }</div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;    sql += <span class="stringliteral">&quot;)&quot;</span>;</div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;  }</div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;  <span class="comment">// Begin transaction</span></div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;  <span class="keywordflow">if</span>(handleTransaction){</div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;    <span class="keywordflow">if</span>(!<a class="code" href="classmdt_tt_base.html#a733fc8720c9eeabd3395883ba5a544ce" title="Beginn manually a new transaction. ">beginTransaction</a>()){</div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;    }</div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;  }</div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;  <span class="comment">// Submit query</span></div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;  QSqlQuery query(<a class="code" href="classmdt_tt_base.html#a82c3f795b6cb8101b12e0e0ef340c1be" title="Get database instance. ">database</a>());</div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;  <span class="keywordflow">if</span>(!query.exec(sql)){</div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;    QSqlError sqlError;</div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;    QString msg;</div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;    sqlError = query.lastError();</div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;    msg = tr(<span class="stringliteral">&quot;Cannot remove rows from table &#39;&quot;</span>) + tableName + tr(<span class="stringliteral">&quot;&#39;.&quot;</span>);</div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;    msg += <span class="stringliteral">&quot;\n&quot;</span> + tr(<span class="stringliteral">&quot;SQL statement : &#39;&quot;</span>) + sql + tr(<span class="stringliteral">&quot;&#39;.&quot;</span>);</div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;    <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error. ">setError</a>(msg, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);</div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;    <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno) ">setSystemError</a>(sqlError.number(), sqlError.text());</div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;    <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce" title="Add source information to error. ">MDT_ERROR_SET_SRC</a>(<a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>, <span class="stringliteral">&quot;mdtTtBase&quot;</span>);</div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;    <span class="keywordflow">if</span>(handleTransaction){</div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;      <a class="code" href="classmdt_tt_base.html#a7c736836397a8d65a28992e1a39c1be5" title="Rollback manually a new transaction. ">rollbackTransaction</a>();</div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;    }</div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;    <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output. ">commit</a>();</div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;  }</div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;  <span class="comment">// Commit</span></div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;  <span class="keywordflow">if</span>(handleTransaction){</div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;    <span class="keywordflow">if</span>(!<a class="code" href="classmdt_tt_base.html#a32b6cbd2d6c9a055cbc97136e9958d81" title="Commit manually a new transaction. ">commitTransaction</a>()){</div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;    }</div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;  }</div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;</div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;}</div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;</div>
+<div class="line"><a name="l00434"></a><span class="lineno"><a class="code" href="classmdt_tt_base.html#a733fc8720c9eeabd3395883ba5a544ce">  434</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_base.html#a733fc8720c9eeabd3395883ba5a544ce" title="Beginn manually a new transaction. ">mdtTtBase::beginTransaction</a>() </div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;{</div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;  <span class="keywordflow">if</span>(!pvDatabase.transaction()){</div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;    QSqlError sqlError = pvDatabase.lastError();</div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;    <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error. ">setError</a>(tr(<span class="stringliteral">&quot;Cannot beginn transaction (database: &#39;&quot;</span>) + pvDatabase.databaseName() + tr(<span class="stringliteral">&quot;&#39;).&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);</div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;    <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno) ">setSystemError</a>(sqlError.number(), sqlError.text());</div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;    <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce" title="Add source information to error. ">MDT_ERROR_SET_SRC</a>(<a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>, <span class="stringliteral">&quot;mdtTtBase&quot;</span>);</div>
+<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;    <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output. ">commit</a>();</div>
+<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;  }</div>
+<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;}</div>
+<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;</div>
+<div class="line"><a name="l00447"></a><span class="lineno"><a class="code" href="classmdt_tt_base.html#a7c736836397a8d65a28992e1a39c1be5">  447</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_base.html#a7c736836397a8d65a28992e1a39c1be5" title="Rollback manually a new transaction. ">mdtTtBase::rollbackTransaction</a>() </div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;{</div>
+<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;  <span class="keywordflow">if</span>(!pvDatabase.rollback()){</div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;    QSqlError sqlError = pvDatabase.lastError();</div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;    <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error. ">setError</a>(tr(<span class="stringliteral">&quot;Cannot beginn rollback (database: &#39;&quot;</span>) + pvDatabase.databaseName() + tr(<span class="stringliteral">&quot;&#39;).&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);</div>
+<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;    <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno) ">setSystemError</a>(sqlError.number(), sqlError.text());</div>
+<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;    <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce" title="Add source information to error. ">MDT_ERROR_SET_SRC</a>(<a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>, <span class="stringliteral">&quot;mdtTtBase&quot;</span>);</div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;    <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output. ">commit</a>();</div>
+<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;  }</div>
+<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;}</div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;</div>
+<div class="line"><a name="l00460"></a><span class="lineno"><a class="code" href="classmdt_tt_base.html#a32b6cbd2d6c9a055cbc97136e9958d81">  460</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_base.html#a32b6cbd2d6c9a055cbc97136e9958d81" title="Commit manually a new transaction. ">mdtTtBase::commitTransaction</a>() </div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;{</div>
+<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;  <span class="keywordflow">if</span>(!pvDatabase.commit()){</div>
+<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;    QSqlError sqlError = pvDatabase.lastError();</div>
+<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;    <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error. ">setError</a>(tr(<span class="stringliteral">&quot;Cannot beginn commit (database: &#39;&quot;</span>) + pvDatabase.databaseName() + tr(<span class="stringliteral">&quot;&#39;).&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);</div>
+<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;    <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno) ">setSystemError</a>(sqlError.number(), sqlError.text());</div>
+<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;    <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce" title="Add source information to error. ">MDT_ERROR_SET_SRC</a>(<a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>, <span class="stringliteral">&quot;mdtTtBase&quot;</span>);</div>
+<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;    <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output. ">commit</a>();</div>
+<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;  }</div>
+<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;}</div>
+<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;</div>
+<div class="line"><a name="l00473"></a><span class="lineno"><a class="code" href="classmdt_tt_base.html#ad6eed5cb4ab7403ce257a4bd6e0428c8">  473</a></span>&#160;QString <a class="code" href="classmdt_tt_base.html#ad6eed5cb4ab7403ce257a4bd6e0428c8" title="Get SQL data delimiter for given data type. ">mdtTtBase::sqlDataDelimiter</a>(QVariant::Type type)</div>
+<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;{</div>
+<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="classmdt_sql_record.html#a1bc8d0787c3aa941afcf444d661c07db" title="Get SQL data delimiter for given data type. ">mdtSqlRecord::sqlDataDelimiter</a>(type);</div>
+<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 6 2014 09:34:16 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jun 28 2014 13:24:41 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

@@ -1,4 +1,7 @@
 <map id="src/mdttools/mdttesttool/mdtTtBase.h" name="src/mdttools/mdttesttool/mdtTtBase.h">
-<area shape="rect" id="node3" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="191,179,274,208"/>
-<area shape="rect" id="node11" href="$mdt_sql_record_8h.html" title="mdtSqlRecord.h" alt="" coords="327,101,442,131"/>
+<area shape="rect" id="node3" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="25,179,107,208"/>
+<area shape="rect" id="node11" href="$mdt_sql_record_8h.html" title="mdtSqlRecord.h" alt="" coords="399,101,514,131"/>
+<area shape="rect" id="node27" href="$mdt_sql_table_selection_8h.html" title="mdtSqlTableSelection.h" alt="" coords="806,101,966,131"/>
+<area shape="rect" id="node29" href="$mdt_sql_table_selection_row_8h.html" title="mdtSqlTableSelectionRow.h" alt="" coords="923,179,1110,208"/>
+<area shape="rect" id="node31" href="$mdt_sql_table_selection_item_8h.html" title="mdtSqlTableSelectionItem.h" alt="" coords="910,256,1097,285"/>
 </map>

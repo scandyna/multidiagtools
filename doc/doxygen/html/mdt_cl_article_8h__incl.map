@@ -1,8 +1,11 @@
 <map id="src/mdttools/mdttesttool/mdtcablelist/mdtClArticle.h" name="src/mdttools/mdttesttool/mdtcablelist/mdtClArticle.h">
-<area shape="rect" id="node3" href="$mdt_tt_base_8h.html" title="mdtTtBase.h" alt="" coords="511,179,607,208"/>
-<area shape="rect" id="node13" href="$mdt_sql_record_8h.html" title="mdtSqlRecord.h" alt="" coords="824,256,939,285"/>
-<area shape="rect" id="node43" href="$mdt_cl_article_connection_data_8h.html" title="mdtClArticleConnectionData.h" alt="" coords="1104,179,1301,208"/>
-<area shape="rect" id="node49" href="$mdt_cl_article_connector_data_8h.html" title="mdtClArticleConnectorData.h" alt="" coords="856,101,1048,131"/>
-<area shape="rect" id="node5" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="627,333,709,363"/>
-<area shape="rect" id="node52" href="$mdt_cl_connector_data_8h.html" title="mdtClConnectorData.h" alt="" coords="875,179,1029,208"/>
+<area shape="rect" id="node3" href="$mdt_tt_base_8h.html" title="mdtTtBase.h" alt="" coords="696,101,792,131"/>
+<area shape="rect" id="node13" href="$mdt_sql_record_8h.html" title="mdtSqlRecord.h" alt="" coords="1368,256,1483,285"/>
+<area shape="rect" id="node58" href="$mdt_cl_article_connection_data_8h.html" title="mdtClArticleConnectionData.h" alt="" coords="1395,179,1592,208"/>
+<area shape="rect" id="node64" href="$mdt_cl_article_connector_data_8h.html" title="mdtClArticleConnectorData.h" alt="" coords="1096,101,1288,131"/>
+<area shape="rect" id="node5" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="1479,333,1561,363"/>
+<area shape="rect" id="node29" href="$mdt_sql_table_selection_8h.html" title="mdtSqlTableSelection.h" alt="" coords="323,179,483,208"/>
+<area shape="rect" id="node31" href="$mdt_sql_table_selection_row_8h.html" title="mdtSqlTableSelectionRow.h" alt="" coords="347,256,533,285"/>
+<area shape="rect" id="node33" href="$mdt_sql_table_selection_item_8h.html" title="mdtSqlTableSelectionItem.h" alt="" coords="405,333,592,363"/>
+<area shape="rect" id="node67" href="$mdt_cl_connector_data_8h.html" title="mdtClConnectorData.h" alt="" coords="1115,179,1269,208"/>
 </map>

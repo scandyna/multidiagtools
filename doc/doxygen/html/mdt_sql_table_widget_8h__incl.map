@@ -1,6 +1,6 @@
 <map id="src/mdtdatabase/mdtSqlTableWidget.h" name="src/mdtdatabase/mdtSqlTableWidget.h">
-<area shape="rect" id="node3" href="$mdt_abstract_sql_widget_8h.html" title="mdtAbstractSqlWidget.h" alt="" coords="334,179,497,208"/>
-<area shape="rect" id="node21" href="$mdt_sql_table_selection_8h.html" title="mdtSqlTableSelection.h" alt="" coords="734,101,894,131"/>
-<area shape="rect" id="node23" href="$mdt_sql_table_selection_row_8h.html" title="mdtSqlTableSelectionRow.h" alt="" coords="721,179,908,208"/>
+<area shape="rect" id="node3" href="$mdt_abstract_sql_widget_8h.html" title="mdtAbstractSqlWidget.h" alt="" coords="314,179,477,208"/>
+<area shape="rect" id="node21" href="$mdt_sql_table_selection_8h.html" title="mdtSqlTableSelection.h" alt="" coords="741,101,901,131"/>
+<area shape="rect" id="node23" href="$mdt_sql_table_selection_row_8h.html" title="mdtSqlTableSelectionRow.h" alt="" coords="728,179,914,208"/>
 <area shape="rect" id="node25" href="$mdt_sql_table_selection_item_8h.html" title="mdtSqlTableSelectionItem.h" alt="" coords="741,256,928,285"/>
 </map>

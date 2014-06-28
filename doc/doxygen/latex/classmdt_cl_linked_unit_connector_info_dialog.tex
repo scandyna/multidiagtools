@@ -27,57 +27,60 @@ Collaboration diagram for mdt\-Cl\-Linked\-Unit\-Connector\-Info\-Dialog\-:
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=350pt]{classmdt_cl_linked_unit_connector_info_dialog__coll__graph}
+\includegraphics[width=300pt]{classmdt_cl_linked_unit_connector_info_dialog__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classmdt_cl_linked_unit_connector_info_dialog_a36a84cc99650e182da8a771445334869}{mdt\-Cl\-Linked\-Unit\-Connector\-Info\-Dialog} (\hyperlink{class_q_widget}{Q\-Widget} $\ast$parent, Q\-Sql\-Database db)
-\item 
-void \hyperlink{classmdt_cl_linked_unit_connector_info_dialog_ac784d90906e9fadce8aadc491614cf7d}{set\-Connectors} (const Q\-Variant \&unit\-Connector\-Id, const Q\-List$<$ Q\-Variant $>$ \&linked\-Connection\-Id\-List)
-\end{DoxyCompactItemize}
-\subsection*{Additional Inherited Members}
+\hyperlink{classmdt_cl_linked_unit_connector_info_dialog_a7dd1f529a45ba71b368cc8e7196662fb}{mdt\-Cl\-Linked\-Unit\-Connector\-Info\-Dialog} (\hyperlink{class_q_widget}{Q\-Widget} $\ast$parent, Q\-Sql\-Database db, \hyperlink{classmdt_cl_path_graph}{mdt\-Cl\-Path\-Graph} $\ast$graph)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_cl_linked_unit_connector_info_dialog_acb4919bd0d95c89b1c540a1e7f9c12a4}{set\-Connector} (const Q\-Variant \&unit\-Connector\-Id)
+\begin{DoxyCompactList}\small\item\em Set connector from witch linked ones must be searched. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 Dialog that displays linked connectors to a given unit connector. 
 
-Definition at line 36 of file mdt\-Cl\-Linked\-Unit\-Connector\-Info\-Dialog.\-h.
+Definition at line 38 of file mdt\-Cl\-Linked\-Unit\-Connector\-Info\-Dialog.\-h.
 
 
 
 \subsection{Constructor \& Destructor Documentation}
-\hypertarget{classmdt_cl_linked_unit_connector_info_dialog_a36a84cc99650e182da8a771445334869}{\index{mdt\-Cl\-Linked\-Unit\-Connector\-Info\-Dialog@{mdt\-Cl\-Linked\-Unit\-Connector\-Info\-Dialog}!mdt\-Cl\-Linked\-Unit\-Connector\-Info\-Dialog@{mdt\-Cl\-Linked\-Unit\-Connector\-Info\-Dialog}}
+\hypertarget{classmdt_cl_linked_unit_connector_info_dialog_a7dd1f529a45ba71b368cc8e7196662fb}{\index{mdt\-Cl\-Linked\-Unit\-Connector\-Info\-Dialog@{mdt\-Cl\-Linked\-Unit\-Connector\-Info\-Dialog}!mdt\-Cl\-Linked\-Unit\-Connector\-Info\-Dialog@{mdt\-Cl\-Linked\-Unit\-Connector\-Info\-Dialog}}
 \index{mdt\-Cl\-Linked\-Unit\-Connector\-Info\-Dialog@{mdt\-Cl\-Linked\-Unit\-Connector\-Info\-Dialog}!mdtClLinkedUnitConnectorInfoDialog@{mdt\-Cl\-Linked\-Unit\-Connector\-Info\-Dialog}}
 \subsubsection[{mdt\-Cl\-Linked\-Unit\-Connector\-Info\-Dialog}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Cl\-Linked\-Unit\-Connector\-Info\-Dialog\-::mdt\-Cl\-Linked\-Unit\-Connector\-Info\-Dialog (
 \begin{DoxyParamCaption}
 \item[{{\bf Q\-Widget} $\ast$}]{parent, }
-\item[{Q\-Sql\-Database}]{db}
+\item[{Q\-Sql\-Database}]{db, }
+\item[{{\bf mdt\-Cl\-Path\-Graph} $\ast$}]{graph}
 \end{DoxyParamCaption}
-)}}\label{classmdt_cl_linked_unit_connector_info_dialog_a36a84cc99650e182da8a771445334869}
+)}}\label{classmdt_cl_linked_unit_connector_info_dialog_a7dd1f529a45ba71b368cc8e7196662fb}
 
 
-Definition at line 30 of file mdt\-Cl\-Linked\-Unit\-Connector\-Info\-Dialog.\-cpp.
+Constructor. 
 
 
 
-References Ui\-\_\-mdt\-Cl\-Linked\-Unit\-Connector\-Info\-Dialog\-::setup\-Ui().
+Definition at line 37 of file mdt\-Cl\-Linked\-Unit\-Connector\-Info\-Dialog.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_cl_linked_unit_connector_info_dialog_ac784d90906e9fadce8aadc491614cf7d}{\index{mdt\-Cl\-Linked\-Unit\-Connector\-Info\-Dialog@{mdt\-Cl\-Linked\-Unit\-Connector\-Info\-Dialog}!set\-Connectors@{set\-Connectors}}
-\index{set\-Connectors@{set\-Connectors}!mdtClLinkedUnitConnectorInfoDialog@{mdt\-Cl\-Linked\-Unit\-Connector\-Info\-Dialog}}
-\subsubsection[{set\-Connectors}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Cl\-Linked\-Unit\-Connector\-Info\-Dialog\-::set\-Connectors (
+\hypertarget{classmdt_cl_linked_unit_connector_info_dialog_acb4919bd0d95c89b1c540a1e7f9c12a4}{\index{mdt\-Cl\-Linked\-Unit\-Connector\-Info\-Dialog@{mdt\-Cl\-Linked\-Unit\-Connector\-Info\-Dialog}!set\-Connector@{set\-Connector}}
+\index{set\-Connector@{set\-Connector}!mdtClLinkedUnitConnectorInfoDialog@{mdt\-Cl\-Linked\-Unit\-Connector\-Info\-Dialog}}
+\subsubsection[{set\-Connector}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Cl\-Linked\-Unit\-Connector\-Info\-Dialog\-::set\-Connector (
 \begin{DoxyParamCaption}
-\item[{const Q\-Variant \&}]{unit\-Connector\-Id, }
-\item[{const Q\-List$<$ Q\-Variant $>$ \&}]{linked\-Connection\-Id\-List}
+\item[{const Q\-Variant \&}]{unit\-Connector\-Id}
 \end{DoxyParamCaption}
-)}}\label{classmdt_cl_linked_unit_connector_info_dialog_ac784d90906e9fadce8aadc491614cf7d}
+)}}\label{classmdt_cl_linked_unit_connector_info_dialog_acb4919bd0d95c89b1c540a1e7f9c12a4}
 
 
-Definition at line 37 of file mdt\-Cl\-Linked\-Unit\-Connector\-Info\-Dialog.\-cpp.
+Set connector from witch linked ones must be searched. 
+
+
+
+Definition at line 51 of file mdt\-Cl\-Linked\-Unit\-Connector\-Info\-Dialog.\-cpp.
 
 
 

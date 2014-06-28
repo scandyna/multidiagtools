@@ -122,31 +122,31 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00031"></a><span class="lineno"><a class="code" href="classmdt_items_selector_dialog.html#abfe9a59eba04870635aff550e16a1e5b">   31</a></span>&#160;<a class="code" href="classmdt_items_selector_dialog.html#abfe9a59eba04870635aff550e16a1e5b" title="Constructor. ">mdtItemsSelectorDialog::mdtItemsSelectorDialog</a>(<a class="code" href="class_q_widget.html">QWidget</a> *parent)</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; : <a class="code" href="class_q_dialog.html">QDialog</a>(parent)</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;{</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  <a class="code" href="class_ui__mdt_items_selector_dialog.html#adb513090c067d3f0a12bb03e54d3a086">setupUi</a>(<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  setupUi(<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  pvSortOptionEnabled = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <span class="comment">// Setup items views</span></div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  pvAvailableItemsModel = <span class="keyword">new</span> QStringListModel(<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <a class="code" href="class_ui__mdt_items_selector_dialog.html#a59f5bcc000500acfc8e887ab9879e356">lwAvailableItems</a>-&gt;setSelectionMode(QAbstractItemView::MultiSelection);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <a class="code" href="class_ui__mdt_items_selector_dialog.html#a59f5bcc000500acfc8e887ab9879e356">lwAvailableItems</a>-&gt;setEditTriggers(QAbstractItemView::NoEditTriggers);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <a class="code" href="class_ui__mdt_items_selector_dialog.html#a59f5bcc000500acfc8e887ab9879e356">lwAvailableItems</a>-&gt;setModel(pvAvailableItemsModel);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  lwAvailableItems-&gt;setSelectionMode(QAbstractItemView::MultiSelection);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  lwAvailableItems-&gt;setEditTriggers(QAbstractItemView::NoEditTriggers);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  lwAvailableItems-&gt;setModel(pvAvailableItemsModel);</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  pvSelectedItemsModel = <span class="keyword">new</span> QStringListModel(<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <a class="code" href="class_ui__mdt_items_selector_dialog.html#ae73e914dd34109a083c514868ebf581c">lwSelectedItems</a>-&gt;setSelectionMode(QAbstractItemView::MultiSelection);</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <a class="code" href="class_ui__mdt_items_selector_dialog.html#ae73e914dd34109a083c514868ebf581c">lwSelectedItems</a>-&gt;setEditTriggers(QAbstractItemView::NoEditTriggers);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <a class="code" href="class_ui__mdt_items_selector_dialog.html#ae73e914dd34109a083c514868ebf581c">lwSelectedItems</a>-&gt;setModel(pvSelectedItemsModel);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  lwSelectedItems-&gt;setSelectionMode(QAbstractItemView::MultiSelection);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  lwSelectedItems-&gt;setEditTriggers(QAbstractItemView::NoEditTriggers);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  lwSelectedItems-&gt;setModel(pvSelectedItemsModel);</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="comment">// Setup sort combobox</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <a class="code" href="class_ui__mdt_items_selector_dialog.html#a770d9ca2e922f8b7a7300f59dc742935">cbSortOrder</a>-&gt;addItem(tr(<span class="stringliteral">&quot;Ascending&quot;</span>), Qt::AscendingOrder);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <a class="code" href="class_ui__mdt_items_selector_dialog.html#a770d9ca2e922f8b7a7300f59dc742935">cbSortOrder</a>-&gt;addItem(tr(<span class="stringliteral">&quot;Descending&quot;</span>), Qt::DescendingOrder);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  cbSortOrder-&gt;addItem(tr(<span class="stringliteral">&quot;Ascending&quot;</span>), Qt::AscendingOrder);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  cbSortOrder-&gt;addItem(tr(<span class="stringliteral">&quot;Descending&quot;</span>), Qt::DescendingOrder);</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  connect(<a class="code" href="class_ui__mdt_items_selector_dialog.html#a27de1ffc1ccd673695cf6902b3af5197">pbLeft</a>, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(transferSelectedItemsToSelectedItems()));</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  connect(<a class="code" href="class_ui__mdt_items_selector_dialog.html#a1ebf136195b79da55228a64bf0d48eee">pbRight</a>, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(transferSelectedItemsToAvailableItems()));</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  connect(<a class="code" href="class_ui__mdt_items_selector_dialog.html#aa3963010b1fc3d53a98ebb10fb384a23">pbSelectAllAvailableItems</a>, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(selectAllAvailableItems()));</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  connect(<a class="code" href="class_ui__mdt_items_selector_dialog.html#a60522f80b3aaf215fd4003465676dfdd">pbUnselectAllAvailableItems</a>, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(unselectAllAvailableItems()));</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  connect(<a class="code" href="class_ui__mdt_items_selector_dialog.html#a680134293d78490bd18e38774f1068d6">pbSelectAllSelectedItems</a>, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(selectAllSelectedItems()));</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  connect(<a class="code" href="class_ui__mdt_items_selector_dialog.html#abc7b9edc742879adc682649d76ea7395">pbUnselectAllSelectedItems</a>, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(unselectAllSelectedItems()));</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  connect(<a class="code" href="class_ui__mdt_items_selector_dialog.html#a839d192517bfb238a497bbe27b5a9234">pbUp</a>, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(moveSelectedItemsInSelectedItemsListUp()));</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  connect(<a class="code" href="class_ui__mdt_items_selector_dialog.html#a9c2ee685c32d86d376ec9ddf22e88daf">pbTop</a>, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(moveSelectedItemsInSelectedItemsListOnTop()));</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  connect(<a class="code" href="class_ui__mdt_items_selector_dialog.html#a52172d7cd28b07d31d1a45f1e6492b7a">pbDown</a>, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(moveSelectedItemsInSelectedItemsListDown()));</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  Q_ASSERT(<a class="code" href="class_ui__mdt_items_selector_dialog.html#ae73e914dd34109a083c514868ebf581c">lwSelectedItems</a>-&gt;selectionModel() != 0);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  connect(pbLeft, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(transferSelectedItemsToSelectedItems()));</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  connect(pbRight, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(transferSelectedItemsToAvailableItems()));</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  connect(pbSelectAllAvailableItems, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(selectAllAvailableItems()));</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  connect(pbUnselectAllAvailableItems, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(unselectAllAvailableItems()));</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  connect(pbSelectAllSelectedItems, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(selectAllSelectedItems()));</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  connect(pbUnselectAllSelectedItems, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(unselectAllSelectedItems()));</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  connect(pbUp, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(moveSelectedItemsInSelectedItemsListUp()));</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  connect(pbTop, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(moveSelectedItemsInSelectedItemsListOnTop()));</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  connect(pbDown, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(moveSelectedItemsInSelectedItemsListDown()));</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  Q_ASSERT(lwSelectedItems-&gt;selectionModel() != 0);</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;}</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
 <div class="line"><a name="l00061"></a><span class="lineno"><a class="code" href="classmdt_items_selector_dialog.html#a88d371fd132aaa5c67896ffc5c208d57">   61</a></span>&#160;<a class="code" href="classmdt_items_selector_dialog.html#a88d371fd132aaa5c67896ffc5c208d57" title="Destructor. ">mdtItemsSelectorDialog::~mdtItemsSelectorDialog</a>()</div>
@@ -165,23 +165,23 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;{</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  pvSortOptionEnabled = enabled;</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <span class="keywordflow">if</span>(enabled){</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <a class="code" href="class_ui__mdt_items_selector_dialog.html#a92f69e7c6afb7da9a45d664ad55818ff">lbSortOrder</a>-&gt;show();</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <a class="code" href="class_ui__mdt_items_selector_dialog.html#a770d9ca2e922f8b7a7300f59dc742935">cbSortOrder</a>-&gt;show();</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    connect(<a class="code" href="class_ui__mdt_items_selector_dialog.html#ae73e914dd34109a083c514868ebf581c">lwSelectedItems</a>-&gt;selectionModel(), SIGNAL(currentChanged(<span class="keyword">const</span> QModelIndex&amp;, <span class="keyword">const</span> QModelIndex&amp;)),\</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    lbSortOrder-&gt;show();</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    cbSortOrder-&gt;show();</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    connect(lwSelectedItems-&gt;selectionModel(), SIGNAL(currentChanged(<span class="keyword">const</span> QModelIndex&amp;, <span class="keyword">const</span> QModelIndex&amp;)),\</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            this, SLOT(updateCbSortOrderBySelectedItem(<span class="keyword">const</span> QModelIndex&amp;, <span class="keyword">const</span> QModelIndex&amp;)));</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    connect(<a class="code" href="class_ui__mdt_items_selector_dialog.html#a770d9ca2e922f8b7a7300f59dc742935">cbSortOrder</a>, SIGNAL(currentIndexChanged(<span class="keywordtype">int</span>)), <span class="keyword">this</span>, SLOT(updateSortOrderOfCurrentItemInSelectedItemsList(<span class="keywordtype">int</span>)));</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    connect(cbSortOrder, SIGNAL(currentIndexChanged(<span class="keywordtype">int</span>)), <span class="keyword">this</span>, SLOT(updateSortOrderOfCurrentItemInSelectedItemsList(<span class="keywordtype">int</span>)));</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  }<span class="keywordflow">else</span>{</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <a class="code" href="class_ui__mdt_items_selector_dialog.html#a92f69e7c6afb7da9a45d664ad55818ff">lbSortOrder</a>-&gt;hide();</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <a class="code" href="class_ui__mdt_items_selector_dialog.html#a770d9ca2e922f8b7a7300f59dc742935">cbSortOrder</a>-&gt;hide();</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    disconnect(<a class="code" href="class_ui__mdt_items_selector_dialog.html#ae73e914dd34109a083c514868ebf581c">lwSelectedItems</a>-&gt;selectionModel(), SIGNAL(currentChanged(<span class="keyword">const</span> QModelIndex&amp;, <span class="keyword">const</span> QModelIndex&amp;)),\</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    lbSortOrder-&gt;hide();</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    cbSortOrder-&gt;hide();</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    disconnect(lwSelectedItems-&gt;selectionModel(), SIGNAL(currentChanged(<span class="keyword">const</span> QModelIndex&amp;, <span class="keyword">const</span> QModelIndex&amp;)),\</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            this, SLOT(updateCbSortOrderBySelectedItem(<span class="keyword">const</span> QModelIndex&amp;, <span class="keyword">const</span> QModelIndex&amp;)));</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    disconnect(<a class="code" href="class_ui__mdt_items_selector_dialog.html#a770d9ca2e922f8b7a7300f59dc742935">cbSortOrder</a>, SIGNAL(currentIndexChanged(<span class="keywordtype">int</span>)), <span class="keyword">this</span>, SLOT(updateSortOrderOfCurrentItemInSelectedItemsList(<span class="keywordtype">int</span>)));</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    disconnect(cbSortOrder, SIGNAL(currentIndexChanged(<span class="keywordtype">int</span>)), <span class="keyword">this</span>, SLOT(updateSortOrderOfCurrentItemInSelectedItemsList(<span class="keywordtype">int</span>)));</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  }</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;}</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
 <div class="line"><a name="l00091"></a><span class="lineno"><a class="code" href="classmdt_items_selector_dialog.html#a05cf055e72c2d86a2cc7eb92afdcddbb">   91</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_items_selector_dialog.html#a05cf055e72c2d86a2cc7eb92afdcddbb" title="Set the Available items label text. ">mdtItemsSelectorDialog::setAvailableItemsLabelText</a>(<span class="keyword">const</span> QString &amp;text)</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;{</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  <a class="code" href="class_ui__mdt_items_selector_dialog.html#a96ab760c3a735e8fed9e95c2ef1e30d8">lbAvailableItems</a>-&gt;setText(text);</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  lbAvailableItems-&gt;setText(text);</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;}</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
 <div class="line"><a name="l00096"></a><span class="lineno"><a class="code" href="classmdt_items_selector_dialog.html#ab13a8151fb748f08aebe743b5a5976b6">   96</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_items_selector_dialog.html#ab13a8151fb748f08aebe743b5a5976b6" title="Set the Available items. ">mdtItemsSelectorDialog::setAvailableItems</a>(<span class="keyword">const</span> QList&lt;mdtItemsSelectorDialogItem&gt; &amp; items)</div>
@@ -192,7 +192,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
 <div class="line"><a name="l00102"></a><span class="lineno"><a class="code" href="classmdt_items_selector_dialog.html#a09e9df0c7cac2de513846916f47aa420">  102</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_items_selector_dialog.html#a09e9df0c7cac2de513846916f47aa420" title="Set the selected items label text. ">mdtItemsSelectorDialog::setSelectedItemsLabelText</a>(<span class="keyword">const</span> QString &amp;text)</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;{</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  <a class="code" href="class_ui__mdt_items_selector_dialog.html#a4d76bc016714c9a3c987e1d3e180a70b">lbSelectedItems</a>-&gt;setText(text);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  lbSelectedItems-&gt;setText(text);</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;}</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
 <div class="line"><a name="l00107"></a><span class="lineno"><a class="code" href="classmdt_items_selector_dialog.html#a02b2ea73af9b9688b90274b3d5b5428e">  107</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_items_selector_dialog.html#a02b2ea73af9b9688b90274b3d5b5428e" title="Set the Available items. ">mdtItemsSelectorDialog::setSelectedItems</a>(<span class="keyword">const</span> QList&lt;mdtItemsSelectorDialogItem&gt; &amp; items)</div>
@@ -237,9 +237,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;</div>
 <div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;<span class="keywordtype">void</span> mdtItemsSelectorDialog::transferSelectedItemsToSelectedItems()</div>
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;{</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;  Q_ASSERT(<a class="code" href="class_ui__mdt_items_selector_dialog.html#a59f5bcc000500acfc8e887ab9879e356">lwAvailableItems</a>-&gt;selectionModel() != 0);</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;  Q_ASSERT(lwAvailableItems-&gt;selectionModel() != 0);</div>
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;  QModelIndexList indexes = <a class="code" href="class_ui__mdt_items_selector_dialog.html#a59f5bcc000500acfc8e887ab9879e356">lwAvailableItems</a>-&gt;selectionModel()-&gt;selectedIndexes();</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;  QModelIndexList indexes = lwAvailableItems-&gt;selectionModel()-&gt;selectedIndexes();</div>
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;  QModelIndex index;</div>
 <div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;  <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> ui;</div>
 <div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;  std::vector&lt;int&gt; rowList;</div>
@@ -268,9 +268,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;</div>
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;<span class="keywordtype">void</span> mdtItemsSelectorDialog::transferSelectedItemsToAvailableItems()</div>
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;{</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;  Q_ASSERT(<a class="code" href="class_ui__mdt_items_selector_dialog.html#ae73e914dd34109a083c514868ebf581c">lwSelectedItems</a>-&gt;selectionModel() != 0);</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;  Q_ASSERT(lwSelectedItems-&gt;selectionModel() != 0);</div>
 <div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  QModelIndexList indexes = <a class="code" href="class_ui__mdt_items_selector_dialog.html#ae73e914dd34109a083c514868ebf581c">lwSelectedItems</a>-&gt;selectionModel()-&gt;selectedIndexes();</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  QModelIndexList indexes = lwSelectedItems-&gt;selectionModel()-&gt;selectedIndexes();</div>
 <div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;  QModelIndex index;</div>
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;  <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> ui;</div>
 <div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;  std::vector&lt;int&gt; rowList;</div>
@@ -299,53 +299,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;</div>
 <div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;<span class="keywordtype">void</span> mdtItemsSelectorDialog::selectAllAvailableItems()</div>
 <div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;{</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;  Q_ASSERT(<a class="code" href="class_ui__mdt_items_selector_dialog.html#a59f5bcc000500acfc8e887ab9879e356">lwAvailableItems</a>-&gt;selectionModel() != 0);</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;  Q_ASSERT(lwAvailableItems-&gt;selectionModel() != 0);</div>
 <div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;</div>
 <div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;  QModelIndex topIndex = pvAvailableItemsModel-&gt;index(0, 0);</div>
 <div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;  QModelIndex bottomIndex = pvAvailableItemsModel-&gt;index(pvAvailableItemsModel-&gt;rowCount()-1, 0);</div>
 <div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;  QItemSelection selection(topIndex, bottomIndex);</div>
 <div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;  <a class="code" href="class_ui__mdt_items_selector_dialog.html#a59f5bcc000500acfc8e887ab9879e356">lwAvailableItems</a>-&gt;selectionModel()-&gt;select(selection, QItemSelectionModel::Select);</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;  lwAvailableItems-&gt;selectionModel()-&gt;select(selection, QItemSelectionModel::Select);</div>
 <div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;}</div>
 <div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;</div>
 <div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;<span class="keywordtype">void</span> mdtItemsSelectorDialog::unselectAllAvailableItems()</div>
 <div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;{</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;  Q_ASSERT(<a class="code" href="class_ui__mdt_items_selector_dialog.html#a59f5bcc000500acfc8e887ab9879e356">lwAvailableItems</a>-&gt;selectionModel() != 0);</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;  Q_ASSERT(lwAvailableItems-&gt;selectionModel() != 0);</div>
 <div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;</div>
 <div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;  QModelIndex topIndex = pvAvailableItemsModel-&gt;index(0, 0);</div>
 <div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;  QModelIndex bottomIndex = pvAvailableItemsModel-&gt;index(pvAvailableItemsModel-&gt;rowCount()-1, 0);</div>
 <div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;  QItemSelection selection(topIndex, bottomIndex);</div>
 <div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;  <a class="code" href="class_ui__mdt_items_selector_dialog.html#a59f5bcc000500acfc8e887ab9879e356">lwAvailableItems</a>-&gt;selectionModel()-&gt;select(selection, QItemSelectionModel::Deselect);</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;  lwAvailableItems-&gt;selectionModel()-&gt;select(selection, QItemSelectionModel::Deselect);</div>
 <div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;}</div>
 <div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;</div>
 <div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;<span class="keywordtype">void</span> mdtItemsSelectorDialog::selectAllSelectedItems()</div>
 <div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;{</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;  Q_ASSERT(<a class="code" href="class_ui__mdt_items_selector_dialog.html#ae73e914dd34109a083c514868ebf581c">lwSelectedItems</a>-&gt;selectionModel() != 0);</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;  Q_ASSERT(lwSelectedItems-&gt;selectionModel() != 0);</div>
 <div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;</div>
 <div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;  QModelIndex topIndex = pvSelectedItemsModel-&gt;index(0, 0);</div>
 <div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;  QModelIndex bottomIndex = pvSelectedItemsModel-&gt;index(pvSelectedItemsModel-&gt;rowCount()-1, 0);</div>
 <div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;  QItemSelection selection(topIndex, bottomIndex);</div>
 <div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;  <a class="code" href="class_ui__mdt_items_selector_dialog.html#ae73e914dd34109a083c514868ebf581c">lwSelectedItems</a>-&gt;selectionModel()-&gt;select(selection, QItemSelectionModel::Select);</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;  lwSelectedItems-&gt;selectionModel()-&gt;select(selection, QItemSelectionModel::Select);</div>
 <div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;}</div>
 <div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;</div>
 <div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;<span class="keywordtype">void</span> mdtItemsSelectorDialog::unselectAllSelectedItems()</div>
 <div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;{</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;  Q_ASSERT(<a class="code" href="class_ui__mdt_items_selector_dialog.html#ae73e914dd34109a083c514868ebf581c">lwSelectedItems</a>-&gt;selectionModel() != 0);</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;  Q_ASSERT(lwSelectedItems-&gt;selectionModel() != 0);</div>
 <div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;</div>
 <div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;  QModelIndex topIndex = pvSelectedItemsModel-&gt;index(0, 0);</div>
 <div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;  QModelIndex bottomIndex = pvSelectedItemsModel-&gt;index(pvSelectedItemsModel-&gt;rowCount()-1, 0);</div>
 <div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;  QItemSelection selection(topIndex, bottomIndex);</div>
 <div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;  <a class="code" href="class_ui__mdt_items_selector_dialog.html#ae73e914dd34109a083c514868ebf581c">lwSelectedItems</a>-&gt;selectionModel()-&gt;select(selection, QItemSelectionModel::Deselect);</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;  lwSelectedItems-&gt;selectionModel()-&gt;select(selection, QItemSelectionModel::Deselect);</div>
 <div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;}</div>
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;</div>
 <div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;<span class="keywordtype">void</span> mdtItemsSelectorDialog::moveSelectedItemsInSelectedItemsListUp()</div>
 <div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;{</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;  Q_ASSERT(<a class="code" href="class_ui__mdt_items_selector_dialog.html#ae73e914dd34109a083c514868ebf581c">lwSelectedItems</a>-&gt;selectionModel() != 0);</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;  Q_ASSERT(lwSelectedItems-&gt;selectionModel() != 0);</div>
 <div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;  QModelIndex index = <a class="code" href="class_ui__mdt_items_selector_dialog.html#ae73e914dd34109a083c514868ebf581c">lwSelectedItems</a>-&gt;selectionModel()-&gt;currentIndex();</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;  QModelIndex index = lwSelectedItems-&gt;selectionModel()-&gt;currentIndex();</div>
 <div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;  <span class="keywordtype">int</span> row;</div>
 <div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;</div>
 <div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;  <span class="keywordflow">if</span>(!index.isValid()){</div>
@@ -357,13 +357,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;</div>
 <div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;<span class="keywordtype">void</span> mdtItemsSelectorDialog::moveSelectedItemsInSelectedItemsListOnTop()</div>
 <div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;{</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;  Q_ASSERT(<a class="code" href="class_ui__mdt_items_selector_dialog.html#ae73e914dd34109a083c514868ebf581c">lwSelectedItems</a>-&gt;selectionModel() != 0);</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;  Q_ASSERT(lwSelectedItems-&gt;selectionModel() != 0);</div>
 <div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;</div>
 <div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;  QModelIndex index;</div>
 <div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;  <span class="keywordtype">int</span> row;</div>
 <div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;</div>
 <div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;  index = <a class="code" href="class_ui__mdt_items_selector_dialog.html#ae73e914dd34109a083c514868ebf581c">lwSelectedItems</a>-&gt;selectionModel()-&gt;currentIndex();</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;  index = lwSelectedItems-&gt;selectionModel()-&gt;currentIndex();</div>
 <div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;  <span class="keywordflow">if</span>(!index.isValid()){</div>
 <div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;    <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;  }</div>
@@ -373,9 +373,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;</div>
 <div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;<span class="keywordtype">void</span> mdtItemsSelectorDialog::moveSelectedItemsInSelectedItemsListDown()</div>
 <div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;{</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;  Q_ASSERT(<a class="code" href="class_ui__mdt_items_selector_dialog.html#ae73e914dd34109a083c514868ebf581c">lwSelectedItems</a>-&gt;selectionModel() != 0);</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;  Q_ASSERT(lwSelectedItems-&gt;selectionModel() != 0);</div>
 <div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;  QModelIndex index = <a class="code" href="class_ui__mdt_items_selector_dialog.html#ae73e914dd34109a083c514868ebf581c">lwSelectedItems</a>-&gt;selectionModel()-&gt;currentIndex();</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;  QModelIndex index = lwSelectedItems-&gt;selectionModel()-&gt;currentIndex();</div>
 <div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;  <span class="keywordtype">int</span> row;</div>
 <div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;</div>
 <div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;  <span class="keywordflow">if</span>(!index.isValid()){</div>
@@ -390,24 +390,24 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;  <span class="keywordtype">int</span> row;</div>
 <div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;</div>
 <div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;  <span class="keywordflow">if</span>(!current.isValid()){</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;    <a class="code" href="class_ui__mdt_items_selector_dialog.html#a770d9ca2e922f8b7a7300f59dc742935">cbSortOrder</a>-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;    cbSortOrder-&gt;setEnabled(<span class="keyword">false</span>);</div>
 <div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;    <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;  }</div>
 <div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;  row = current.row();</div>
 <div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;  <span class="keywordflow">if</span>((row &gt;= 0)&amp;&amp;(row &lt; pvSelectedItems.size())){</div>
 <div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;    <span class="keywordflow">if</span>(pvSelectedItems.at(row).sortOrder() == Qt::AscendingOrder){</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;      <a class="code" href="class_ui__mdt_items_selector_dialog.html#a770d9ca2e922f8b7a7300f59dc742935">cbSortOrder</a>-&gt;setCurrentIndex(0);</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;      cbSortOrder-&gt;setCurrentIndex(0);</div>
 <div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;    }<span class="keywordflow">else</span>{</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;      <a class="code" href="class_ui__mdt_items_selector_dialog.html#a770d9ca2e922f8b7a7300f59dc742935">cbSortOrder</a>-&gt;setCurrentIndex(1);</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;      cbSortOrder-&gt;setCurrentIndex(1);</div>
 <div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;    }</div>
 <div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;  }</div>
 <div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;}</div>
 <div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;</div>
 <div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;<span class="keywordtype">void</span> mdtItemsSelectorDialog::updateSortOrderOfCurrentItemInSelectedItemsList(<span class="keywordtype">int</span> cbSortOrderIndex)</div>
 <div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;{</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;  Q_ASSERT(<a class="code" href="class_ui__mdt_items_selector_dialog.html#ae73e914dd34109a083c514868ebf581c">lwSelectedItems</a>-&gt;selectionModel() != 0);</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;  Q_ASSERT(lwSelectedItems-&gt;selectionModel() != 0);</div>
 <div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;  QModelIndex index = <a class="code" href="class_ui__mdt_items_selector_dialog.html#ae73e914dd34109a083c514868ebf581c">lwSelectedItems</a>-&gt;selectionModel()-&gt;currentIndex();</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;  QModelIndex index = lwSelectedItems-&gt;selectionModel()-&gt;currentIndex();</div>
 <div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;  <span class="keywordtype">int</span> row;</div>
 <div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;</div>
 <div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;  <span class="keywordflow">if</span>(!index.isValid()){</div>
@@ -461,10 +461,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;  }</div>
 <div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;  pvAvailableItemsModel-&gt;setStringList(itemsTexts);</div>
 <div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;  <span class="comment">// Update selection</span></div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;  <span class="keywordflow">if</span>(<a class="code" href="class_ui__mdt_items_selector_dialog.html#a59f5bcc000500acfc8e887ab9879e356">lwAvailableItems</a>-&gt;selectionModel() != 0){</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;  <span class="keywordflow">if</span>(lwAvailableItems-&gt;selectionModel() != 0){</div>
 <div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;    unselectAllAvailableItems();</div>
 <div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;    index = pvAvailableItemsModel-&gt;index(currentRow, 0);</div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    <a class="code" href="class_ui__mdt_items_selector_dialog.html#a59f5bcc000500acfc8e887ab9879e356">lwAvailableItems</a>-&gt;selectionModel()-&gt;setCurrentIndex(index, QItemSelectionModel::Select);</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    lwAvailableItems-&gt;selectionModel()-&gt;setCurrentIndex(index, QItemSelectionModel::Select);</div>
 <div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;  }</div>
 <div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;}</div>
 <div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;</div>
@@ -479,16 +479,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;  }</div>
 <div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;  pvSelectedItemsModel-&gt;setStringList(itemsTexts);</div>
 <div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;  <span class="comment">// Update selection</span></div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;  <span class="keywordflow">if</span>(<a class="code" href="class_ui__mdt_items_selector_dialog.html#ae73e914dd34109a083c514868ebf581c">lwSelectedItems</a>-&gt;selectionModel() != 0){</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;  <span class="keywordflow">if</span>(lwSelectedItems-&gt;selectionModel() != 0){</div>
 <div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;    unselectAllSelectedItems();</div>
 <div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;    index = pvSelectedItemsModel-&gt;index(currentRow, 0);</div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;    <a class="code" href="class_ui__mdt_items_selector_dialog.html#ae73e914dd34109a083c514868ebf581c">lwSelectedItems</a>-&gt;selectionModel()-&gt;setCurrentIndex(index, QItemSelectionModel::Select);</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;    lwSelectedItems-&gt;selectionModel()-&gt;setCurrentIndex(index, QItemSelectionModel::Select);</div>
 <div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;  }</div>
 <div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 6 2014 09:34:17 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jun 28 2014 13:24:41 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

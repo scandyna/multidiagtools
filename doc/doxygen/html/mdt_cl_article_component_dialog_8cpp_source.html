@@ -129,9 +129,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  pvArticleId = <a class="code" href="classmdt_cl_article_component_dialog.html#a71ba3f37673877ef16680d8d6568799c" title="Get composite ID. ">articleId</a>;</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  pvComponentId = <a class="code" href="classmdt_cl_article_component_dialog.html#ab95b190a2bcd240266134942b74d8c45" title="Get component ID. ">componentId</a>;</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="comment">// Setup UI</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  <a class="code" href="class_ui__mdt_cl_article_component_dialog.html#a7056d3e70d0c05bf520b93ea45b47077">setupUi</a>(<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  setupUi(<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  setWindowTitle(tr(<span class="stringliteral">&quot;Article component edition&quot;</span>));</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  connect(<a class="code" href="class_ui__mdt_cl_article_component_dialog.html#a6f056c17aa9c33369e6a14677e2805a2">pbSelect</a>, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(selectComponent()));</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  connect(pbSelect, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(selectComponent()));</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="comment">// Setup article component model</span></div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  pvArticleComponentModel = <span class="keyword">new</span> QSqlQueryModel(<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  pvArticleComponentModel-&gt;setQuery(<span class="stringliteral">&quot;SELECT Article_Id_PK, Component_Id_PK, ArticleCode, DesignationEN, ComponentQty, ComponentQtyUnit&quot;</span>\</div>
@@ -163,12 +163,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
 <div class="line"><a name="l00073"></a><span class="lineno"><a class="code" href="classmdt_cl_article_component_dialog.html#a66881d6c4d4d8791bd5e29b127c913db">   73</a></span>&#160;<span class="keyword">const</span> QVariant <a class="code" href="classmdt_cl_article_component_dialog.html#a66881d6c4d4d8791bd5e29b127c913db" title="Get qty of component. ">mdtClArticleComponentDialog::qty</a>()<span class="keyword"> const</span></div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="class_ui__mdt_cl_article_component_dialog.html#a94d59140974b961351cb510dcef99581">sbQty</a>-&gt;value();</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <span class="keywordflow">return</span> sbQty-&gt;value();</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;}</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
 <div class="line"><a name="l00078"></a><span class="lineno"><a class="code" href="classmdt_cl_article_component_dialog.html#a799575d51b0a2e80985bab8e25d9c5da">   78</a></span>&#160;<span class="keyword">const</span> QVariant <a class="code" href="classmdt_cl_article_component_dialog.html#a799575d51b0a2e80985bab8e25d9c5da" title="Get qty unit. ">mdtClArticleComponentDialog::qtyUnit</a>()<span class="keyword"> const</span></div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="class_ui__mdt_cl_article_component_dialog.html#ad2128847a4dc9f61b0bacfdb63ab5e25">lbUnit</a>-&gt;text();</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  <span class="keywordflow">return</span> lbUnit-&gt;text();</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;}</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="keywordtype">void</span> mdtClArticleComponentDialog::selectComponent()</div>
@@ -202,15 +202,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  pvComponentId = dialog.selectionResult().at(0);</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  <span class="comment">// Article code</span></div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  data = dialog.selectionResult().at(1);</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  <a class="code" href="class_ui__mdt_cl_article_component_dialog.html#aed003c393f0f7343d5510d6120847f79">lbArticleCode</a>-&gt;setText(data.toString());</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  lbArticleCode-&gt;setText(data.toString());</div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;  <span class="comment">// Article designation EN</span></div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  data = dialog.selectionResult().at(2);</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  <a class="code" href="class_ui__mdt_cl_article_component_dialog.html#a37234972b732316dc0ab68ae949e7b48">lbArticleDesignationEN</a>-&gt;setText(data.toString());</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  lbArticleDesignationEN-&gt;setText(data.toString());</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  <span class="comment">// Qty</span></div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  <a class="code" href="class_ui__mdt_cl_article_component_dialog.html#a94d59140974b961351cb510dcef99581">sbQty</a>-&gt;setValue(1.0);</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  sbQty-&gt;setValue(1.0);</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  <span class="comment">// Qty unit</span></div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;  data = dialog.selectionResult().at(3);</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  <a class="code" href="class_ui__mdt_cl_article_component_dialog.html#ad2128847a4dc9f61b0bacfdb63ab5e25">lbUnit</a>-&gt;setText(data.toString());</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  lbUnit-&gt;setText(data.toString());</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;}</div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;</div>
 <div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="keywordtype">void</span> mdtClArticleComponentDialog::displayCurrentComponent()</div>
@@ -220,10 +220,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;  <span class="keywordtype">int</span> row;</div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;</div>
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;  <span class="keywordflow">if</span>(pvComponentId.isNull()){</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <a class="code" href="class_ui__mdt_cl_article_component_dialog.html#aed003c393f0f7343d5510d6120847f79">lbArticleCode</a>-&gt;clear();</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    <a class="code" href="class_ui__mdt_cl_article_component_dialog.html#a37234972b732316dc0ab68ae949e7b48">lbArticleDesignationEN</a>-&gt;clear();</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <a class="code" href="class_ui__mdt_cl_article_component_dialog.html#a94d59140974b961351cb510dcef99581">sbQty</a>-&gt;setValue(0.0);</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    <a class="code" href="class_ui__mdt_cl_article_component_dialog.html#ad2128847a4dc9f61b0bacfdb63ab5e25">lbUnit</a>-&gt;clear();</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    lbArticleCode-&gt;clear();</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    lbArticleDesignationEN-&gt;clear();</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    sbQty-&gt;setValue(0.0);</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    lbUnit-&gt;clear();</div>
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;  }</div>
 <div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;  <span class="comment">// Search component that match given component ID and display its data</span></div>
@@ -234,19 +234,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;      <span class="comment">// Display article code</span></div>
 <div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;      index = pvArticleComponentModel-&gt;index(row, 2);</div>
 <div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;      data = pvArticleComponentModel-&gt;data(index);</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;      <a class="code" href="class_ui__mdt_cl_article_component_dialog.html#aed003c393f0f7343d5510d6120847f79">lbArticleCode</a>-&gt;setText(data.toString());</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;      lbArticleCode-&gt;setText(data.toString());</div>
 <div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;      <span class="comment">// Display article designation EN</span></div>
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;      index = pvArticleComponentModel-&gt;index(row, 3);</div>
 <div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;      data = pvArticleComponentModel-&gt;data(index);</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;      <a class="code" href="class_ui__mdt_cl_article_component_dialog.html#a37234972b732316dc0ab68ae949e7b48">lbArticleDesignationEN</a>-&gt;setText(data.toString());</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;      lbArticleDesignationEN-&gt;setText(data.toString());</div>
 <div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;      <span class="comment">// Display Qty</span></div>
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;      index = pvArticleComponentModel-&gt;index(row, 4);</div>
 <div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;      data = pvArticleComponentModel-&gt;data(index);</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;      <a class="code" href="class_ui__mdt_cl_article_component_dialog.html#a94d59140974b961351cb510dcef99581">sbQty</a>-&gt;setValue(data.toDouble());</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;      sbQty-&gt;setValue(data.toDouble());</div>
 <div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;      <span class="comment">// Display Qty unit</span></div>
 <div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;      index = pvArticleComponentModel-&gt;index(row, 5);</div>
 <div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;      data = pvArticleComponentModel-&gt;data(index);</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;      <a class="code" href="class_ui__mdt_cl_article_component_dialog.html#ad2128847a4dc9f61b0bacfdb63ab5e25">lbUnit</a>-&gt;setText(data.toString());</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;      lbUnit-&gt;setText(data.toString());</div>
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;      <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    }</div>
 <div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;  }</div>
@@ -254,7 +254,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 6 2014 09:34:16 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jun 28 2014 13:24:41 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

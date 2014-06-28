@@ -187,6 +187,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a855de08e9ddb3f7898ef4ceb0b0331f9 inherit pub_methods_classmdt_sql_form"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#a855de08e9ddb3f7898ef4ceb0b0331f9">currentRow</a> (const QString &amp;tableName)</td></tr>
 <tr class="memdesc:a855de08e9ddb3f7898ef4ceb0b0331f9 inherit pub_methods_classmdt_sql_form"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current row of given table name.  <a href="#a855de08e9ddb3f7898ef4ceb0b0331f9">More...</a><br/></td></tr>
 <tr class="separator:a855de08e9ddb3f7898ef4ceb0b0331f9 inherit pub_methods_classmdt_sql_form"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d316991b1b4e83d5fb5b7b85f292b6b inherit pub_methods_classmdt_sql_form"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#a6d316991b1b4e83d5fb5b7b85f292b6b">setCurrentRecord</a> (const QString &amp;fieldName, const QVariant &amp;value)</td></tr>
+<tr class="memdesc:a6d316991b1b4e83d5fb5b7b85f292b6b inherit pub_methods_classmdt_sql_form"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the first record that matches given criteria as current record (index).  <a href="#a6d316991b1b4e83d5fb5b7b85f292b6b">More...</a><br/></td></tr>
+<tr class="separator:a6d316991b1b4e83d5fb5b7b85f292b6b inherit pub_methods_classmdt_sql_form"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa377e70f4a2e865b0b696957c0fca766 inherit pub_methods_classmdt_sql_form"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#aa377e70f4a2e865b0b696957c0fca766">setCurrentData</a> (const QString &amp;tableName, const QString &amp;fieldName, const QVariant &amp;<a class="el" href="classmdt_sql_form.html#a0c27d6a9ecbf0589f313c7193c632a62">data</a>, bool submit=true)</td></tr>
 <tr class="memdesc:aa377e70f4a2e865b0b696957c0fca766 inherit pub_methods_classmdt_sql_form"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set (update) data of current row (record) for given table and field name.  <a href="#aa377e70f4a2e865b0b696957c0fca766">More...</a><br/></td></tr>
 <tr class="separator:aa377e70f4a2e865b0b696957c0fca766 inherit pub_methods_classmdt_sql_form"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -199,6 +202,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2138e4e1236a9b1c002825ddd9e59298 inherit pub_methods_classmdt_sql_form"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#a2138e4e1236a9b1c002825ddd9e59298">insert</a> ()</td></tr>
 <tr class="memdesc:a2138e4e1236a9b1c002825ddd9e59298 inherit pub_methods_classmdt_sql_form"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call insert method on mainSqlWidget.  <a href="#a2138e4e1236a9b1c002825ddd9e59298">More...</a><br/></td></tr>
 <tr class="separator:a2138e4e1236a9b1c002825ddd9e59298 inherit pub_methods_classmdt_sql_form"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e14cbb5bf04d2eb1c703862a6084031 inherit pub_methods_classmdt_sql_form"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form.html#a1e14cbb5bf04d2eb1c703862a6084031">allDataAreSaved</a> ()</td></tr>
+<tr class="memdesc:a1e14cbb5bf04d2eb1c703862a6084031 inherit pub_methods_classmdt_sql_form"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if all data are saved.  <a href="#a1e14cbb5bf04d2eb1c703862a6084031">More...</a><br/></td></tr>
+<tr class="separator:a1e14cbb5bf04d2eb1c703862a6084031 inherit pub_methods_classmdt_sql_form"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -240,9 +246,8 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Constructor. </p>
-<p>#include "mdtSqlDialog.h" </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_node_editor_8cpp_source.html#l00046">46</a> of file <a class="el" href="mdt_tt_test_node_editor_8cpp_source.html">mdtTtTestNodeEditor.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_node_editor_8cpp_source.html#l00045">45</a> of file <a class="el" href="mdt_tt_test_node_editor_8cpp_source.html">mdtTtTestNodeEditor.cpp</a>.</p>
 
 </div>
 </div>
@@ -272,7 +277,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classmdt_sql_form.html#a27fe6e45aa5d4d7782aad9833e6de20b">mdtSqlForm</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_node_editor_8cpp_source.html#l00051">51</a> of file <a class="el" href="mdt_tt_test_node_editor_8cpp_source.html">mdtTtTestNodeEditor.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_node_editor_8cpp_source.html#l00050">50</a> of file <a class="el" href="mdt_tt_test_node_editor_8cpp_source.html">mdtTtTestNodeEditor.cpp</a>.</p>
 
 </div>
 </div>
@@ -283,7 +288,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 6 2014 09:34:23 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jun 28 2014 13:24:49 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

@@ -3,7 +3,7 @@
 }
 
 
-Storage class for test node unit.  
+\#include \char`\"{}mdt\-Cl\-Unit\-Connection\-Data.\-h\char`\"{}  
 
 
 
@@ -35,23 +35,21 @@ Collaboration diagram for mdt\-Tt\-Test\-Node\-Unit\-Data\-:\nopagebreak
 \begin{DoxyCompactList}\small\item\em Construct a empty test node data container. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_tt_test_node_unit_data_a149a8299df5a78daa85f49c680a41e21}{mdt\-Tt\-Test\-Node\-Unit\-Data} (const Q\-Sql\-Record \&record)
 \begin{DoxyCompactList}\small\item\em Construct a test node data based on a Q\-Sql\-Record. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_tt_test_node_unit_data_ad918c34094027e4ea889454a9ffb7a8e}{setup} (const Q\-Sql\-Database \&db, bool setup\-Connection\-Data)
+bool \hyperlink{classmdt_tt_test_node_unit_data_a09666f9fa0c3ea510eef5cda432f1166}{setup} (const Q\-Sql\-Database \&db)
 \begin{DoxyCompactList}\small\item\em Setup fields from Test\-Node\-Unit\-\_\-tbl. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_tt_test_node_unit_data_a774da621d18566dcf42329664a356cad}{clear\-Values} ()
 \begin{DoxyCompactList}\small\item\em Clear values. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_tt_test_node_unit_data_a51e6a518bda41df4f4a68fee0fbff472}{set\-Unit\-Data} (const \hyperlink{classmdt_sql_record}{mdt\-Sql\-Record} \&data)
 \begin{DoxyCompactList}\small\item\em Set unit data part. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_sql_record}{mdt\-Sql\-Record} \hyperlink{classmdt_tt_test_node_unit_data_afc769bf48aa7068a08b57330a509b566}{unit\-Data} () const 
-\begin{DoxyCompactList}\small\item\em Get unit data part. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_tt_test_node_unit_data_a03dfbea7ae9110cd632c4c4fda53d897}{set\-Test\-Connection\-Data} (const \hyperlink{classmdt_cl_unit_connection_data}{mdt\-Cl\-Unit\-Connection\-Data} \&data)
-\begin{DoxyCompactList}\small\item\em Set test connection data. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_cl_unit_connection_data}{mdt\-Cl\-Unit\-Connection\-Data} \hyperlink{classmdt_tt_test_node_unit_data_af2d0fadcfc6bd9e6ef5dcf267a8cea99}{test\-Connection\-Data} () const 
-\begin{DoxyCompactList}\small\item\em Get test connection data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Get unit data part. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Additional Inherited Members}
 
 
 \subsection{Detailed Description}
-Storage class for test node unit. 
+\#include \char`\"{}mdt\-Cl\-Unit\-Connection\-Data.\-h\char`\"{} 
+
+Storage class for test node unit 
 
 Definition at line 30 of file mdt\-Tt\-Test\-Node\-Unit\-Data.\-h.
 
@@ -115,30 +113,11 @@ Reimplemented from \hyperlink{classmdt_sql_record_a0bfc0fc265c6b0048698e2f5d4f84
 
 
 
-Definition at line 58 of file mdt\-Tt\-Test\-Node\-Unit\-Data.\-cpp.
+Definition at line 60 of file mdt\-Tt\-Test\-Node\-Unit\-Data.\-cpp.
 
 
 
 References mdt\-Sql\-Record\-::clear\-Values().
-
-\hypertarget{classmdt_tt_test_node_unit_data_a03dfbea7ae9110cd632c4c4fda53d897}{\index{mdt\-Tt\-Test\-Node\-Unit\-Data@{mdt\-Tt\-Test\-Node\-Unit\-Data}!set\-Test\-Connection\-Data@{set\-Test\-Connection\-Data}}
-\index{set\-Test\-Connection\-Data@{set\-Test\-Connection\-Data}!mdtTtTestNodeUnitData@{mdt\-Tt\-Test\-Node\-Unit\-Data}}
-\subsubsection[{set\-Test\-Connection\-Data}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Tt\-Test\-Node\-Unit\-Data\-::set\-Test\-Connection\-Data (
-\begin{DoxyParamCaption}
-\item[{const {\bf mdt\-Cl\-Unit\-Connection\-Data} \&}]{data}
-\end{DoxyParamCaption}
-)}}\label{classmdt_tt_test_node_unit_data_a03dfbea7ae9110cd632c4c4fda53d897}
-
-
-Set test connection data. 
-
-Will also update Test\-Connection\-\_\-\-Id\-\_\-\-F\-K 
-
-Definition at line 76 of file mdt\-Tt\-Test\-Node\-Unit\-Data.\-cpp.
-
-
-
-References mdt\-Sql\-Record\-::set\-Value(), and mdt\-Sql\-Record\-::value().
 
 \hypertarget{classmdt_tt_test_node_unit_data_a51e6a518bda41df4f4a68fee0fbff472}{\index{mdt\-Tt\-Test\-Node\-Unit\-Data@{mdt\-Tt\-Test\-Node\-Unit\-Data}!set\-Unit\-Data@{set\-Unit\-Data}}
 \index{set\-Unit\-Data@{set\-Unit\-Data}!mdtTtTestNodeUnitData@{mdt\-Tt\-Test\-Node\-Unit\-Data}}
@@ -158,20 +137,19 @@ data must contain all fields from Unit\-\_\-tbl
 \end{DoxyPrecond}
 
 
-Definition at line 65 of file mdt\-Tt\-Test\-Node\-Unit\-Data.\-cpp.
+Definition at line 67 of file mdt\-Tt\-Test\-Node\-Unit\-Data.\-cpp.
 
 
 
 References mdt\-Sql\-Record\-::contains(), mdt\-Sql\-Record\-::set\-Value(), and mdt\-Sql\-Record\-::value().
 
-\hypertarget{classmdt_tt_test_node_unit_data_ad918c34094027e4ea889454a9ffb7a8e}{\index{mdt\-Tt\-Test\-Node\-Unit\-Data@{mdt\-Tt\-Test\-Node\-Unit\-Data}!setup@{setup}}
+\hypertarget{classmdt_tt_test_node_unit_data_a09666f9fa0c3ea510eef5cda432f1166}{\index{mdt\-Tt\-Test\-Node\-Unit\-Data@{mdt\-Tt\-Test\-Node\-Unit\-Data}!setup@{setup}}
 \index{setup@{setup}!mdtTtTestNodeUnitData@{mdt\-Tt\-Test\-Node\-Unit\-Data}}
 \subsubsection[{setup}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-Node\-Unit\-Data\-::setup (
 \begin{DoxyParamCaption}
-\item[{const Q\-Sql\-Database \&}]{db, }
-\item[{bool}]{setup\-Connection\-Data}
+\item[{const Q\-Sql\-Database \&}]{db}
 \end{DoxyParamCaption}
-)}}\label{classmdt_tt_test_node_unit_data_ad918c34094027e4ea889454a9ffb7a8e}
+)}}\label{classmdt_tt_test_node_unit_data_a09666f9fa0c3ea510eef5cda432f1166}
 
 
 Setup fields from Test\-Node\-Unit\-\_\-tbl. 
@@ -182,27 +160,17 @@ Setup fields from Test\-Node\-Unit\-\_\-tbl.
 \hline
 \end{DoxyParams}
 Note\-: unit data part is allways setup. 
+\begin{DoxyParams}{Parameters}
+{\em db,bool} & setup\-Connection\-Data \\
+\hline
+\end{DoxyParams}
+
 
 Definition at line 39 of file mdt\-Tt\-Test\-Node\-Unit\-Data.\-cpp.
 
 
 
-References mdt\-Sql\-Record\-::add\-All\-Fields(), mdt\-Sql\-Record\-::last\-Error(), mdt\-Sql\-Record\-::pv\-Last\-Error, and mdt\-Cl\-Unit\-Connection\-Data\-::setup().
-
-\hypertarget{classmdt_tt_test_node_unit_data_af2d0fadcfc6bd9e6ef5dcf267a8cea99}{\index{mdt\-Tt\-Test\-Node\-Unit\-Data@{mdt\-Tt\-Test\-Node\-Unit\-Data}!test\-Connection\-Data@{test\-Connection\-Data}}
-\index{test\-Connection\-Data@{test\-Connection\-Data}!mdtTtTestNodeUnitData@{mdt\-Tt\-Test\-Node\-Unit\-Data}}
-\subsubsection[{test\-Connection\-Data}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Cl\-Unit\-Connection\-Data} mdt\-Tt\-Test\-Node\-Unit\-Data\-::test\-Connection\-Data (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_tt_test_node_unit_data_af2d0fadcfc6bd9e6ef5dcf267a8cea99}
-
-
-Get test connection data. 
-
-
-
-Definition at line 76 of file mdt\-Tt\-Test\-Node\-Unit\-Data.\-h.
+References mdt\-Sql\-Record\-::add\-All\-Fields(), mdt\-Sql\-Record\-::last\-Error(), and mdt\-Sql\-Record\-::pv\-Last\-Error.
 
 \hypertarget{classmdt_tt_test_node_unit_data_afc769bf48aa7068a08b57330a509b566}{\index{mdt\-Tt\-Test\-Node\-Unit\-Data@{mdt\-Tt\-Test\-Node\-Unit\-Data}!unit\-Data@{unit\-Data}}
 \index{unit\-Data@{unit\-Data}!mdtTtTestNodeUnitData@{mdt\-Tt\-Test\-Node\-Unit\-Data}}

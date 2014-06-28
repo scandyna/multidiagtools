@@ -133,20 +133,24 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
 <div class="line"><a name="l00084"></a><span class="lineno"><a class="code" href="classmdt_sql_table_selection.html#a411d70a724981bd47f550d05cf3858be">   84</a></span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classmdt_sql_table_selection.html#a411d70a724981bd47f550d05cf3858be" title="Get row count. ">rowCount</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> pvRowList.size(); }</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  QVariant <a class="code" href="classmdt_sql_table_selection.html#a30a3f85a56792d9641abbd2129c50bca" title="Get data for given row and field name. ">data</a>(<span class="keywordtype">int</span> row, <span class="keyword">const</span> QString &amp; fieldName) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  QList&lt;QVariant&gt; <a class="code" href="classmdt_sql_table_selection.html#a51db96b59cc388c6d4bb2d4e4fdcea51" title="Get a list of data for given field. ">dataList</a>(<span class="keyword">const</span> QString &amp; fieldName) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00088"></a><span class="lineno"><a class="code" href="classmdt_sql_table_selection.html#a739d9d474c3df10c01ea4094a3f8c201">   88</a></span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classmdt_sql_table_selection.html#a739d9d474c3df10c01ea4094a3f8c201" title="Check if selection is empty. ">isEmpty</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> pvRowList.isEmpty(); }</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  QVariant <a class="code" href="classmdt_sql_table_selection.html#a30a3f85a56792d9641abbd2129c50bca" title="Get data for given row and field name. ">data</a>(<span class="keywordtype">int</span> row, <span class="keyword">const</span> QString &amp; fieldName) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  QList&lt;mdtSqlTableSelectionRow&gt; pvRowList;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;};</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="preprocessor">#endif // #ifndef MDT_SQL_TABLE_SELECTION_H</span></div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  QStringList <a class="code" href="classmdt_sql_table_selection.html#a5885e6bb6fadabb425c4ec170c5bdfc7" title="Get a list of fields contained in given row. ">fields</a>(<span class="keywordtype">int</span> row) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  QList&lt;QVariant&gt; <a class="code" href="classmdt_sql_table_selection.html#a51db96b59cc388c6d4bb2d4e4fdcea51" title="Get a list of data for given field. ">dataList</a>(<span class="keyword">const</span> QString &amp; fieldName) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  QList&lt;mdtSqlTableSelectionRow&gt; pvRowList;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;};</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="preprocessor">#endif // #ifndef MDT_SQL_TABLE_SELECTION_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 6 2014 09:34:16 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jun 28 2014 13:24:40 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

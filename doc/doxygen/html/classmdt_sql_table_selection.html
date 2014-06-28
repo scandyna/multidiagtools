@@ -110,9 +110,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a411d70a724981bd47f550d05cf3858be"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_table_selection.html#a411d70a724981bd47f550d05cf3858be">rowCount</a> () const </td></tr>
 <tr class="memdesc:a411d70a724981bd47f550d05cf3858be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get row count.  <a href="#a411d70a724981bd47f550d05cf3858be">More...</a><br/></td></tr>
 <tr class="separator:a411d70a724981bd47f550d05cf3858be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a739d9d474c3df10c01ea4094a3f8c201"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_table_selection.html#a739d9d474c3df10c01ea4094a3f8c201">isEmpty</a> () const </td></tr>
+<tr class="memdesc:a739d9d474c3df10c01ea4094a3f8c201"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if selection is empty.  <a href="#a739d9d474c3df10c01ea4094a3f8c201">More...</a><br/></td></tr>
+<tr class="separator:a739d9d474c3df10c01ea4094a3f8c201"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a30a3f85a56792d9641abbd2129c50bca"><td class="memItemLeft" align="right" valign="top">QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_table_selection.html#a30a3f85a56792d9641abbd2129c50bca">data</a> (int row, const QString &amp;fieldName) const </td></tr>
 <tr class="memdesc:a30a3f85a56792d9641abbd2129c50bca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get data for given row and field name.  <a href="#a30a3f85a56792d9641abbd2129c50bca">More...</a><br/></td></tr>
 <tr class="separator:a30a3f85a56792d9641abbd2129c50bca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5885e6bb6fadabb425c4ec170c5bdfc7"><td class="memItemLeft" align="right" valign="top">QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_table_selection.html#a5885e6bb6fadabb425c4ec170c5bdfc7">fields</a> (int row) const </td></tr>
+<tr class="memdesc:a5885e6bb6fadabb425c4ec170c5bdfc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a list of fields contained in given row.  <a href="#a5885e6bb6fadabb425c4ec170c5bdfc7">More...</a><br/></td></tr>
+<tr class="separator:a5885e6bb6fadabb425c4ec170c5bdfc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a51db96b59cc388c6d4bb2d4e4fdcea51"><td class="memItemLeft" align="right" valign="top">QList&lt; QVariant &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_table_selection.html#a51db96b59cc388c6d4bb2d4e4fdcea51">dataList</a> (const QString &amp;fieldName) const </td></tr>
 <tr class="memdesc:a51db96b59cc388c6d4bb2d4e4fdcea51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a list of data for given field.  <a href="#a51db96b59cc388c6d4bb2d4e4fdcea51">More...</a><br/></td></tr>
 <tr class="separator:a51db96b59cc388c6d4bb2d4e4fdcea51"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -206,6 +212,8 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_sql_table_selection_8cpp_source.html#l00070">70</a> of file <a class="el" href="mdt_sql_table_selection_8cpp_source.html">mdtSqlTableSelection.cpp</a>.</p>
 
+<p>Referenced by <a class="el" href="mdt_tt_base_8cpp_source.html#l00345">mdtTtBase::removeData()</a>, <a class="el" href="mdt_cl_link_beam_8cpp_source.html#l00163">mdtClLinkBeam::removeLinks()</a>, and <a class="el" href="mdt_cl_link_8cpp_source.html#l00260">mdtClLink::removeLinks()</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a51db96b59cc388c6d4bb2d4e4fdcea51"></a>
@@ -224,9 +232,61 @@ Public Member Functions</h2></td></tr>
 
 <p>Get a list of data for given field. </p>
 
+<p>Definition at line <a class="el" href="mdt_sql_table_selection_8cpp_source.html#l00090">90</a> of file <a class="el" href="mdt_sql_table_selection_8cpp_source.html">mdtSqlTableSelection.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_cl_unit_8cpp_source.html#l00698">mdtClUnit::removeConnections()</a>, and <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00246">mdtTtTestNodeUnit::removeNodeUnits()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5885e6bb6fadabb425c4ec170c5bdfc7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QStringList mdtSqlTableSelection::fields </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>row</em>)</td><td></td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get a list of fields contained in given row. </p>
+<dl class="section pre"><dt>Precondition</dt><dd>row must be in a valid range ( 0 &lt;= row &lt; <a class="el" href="classmdt_sql_table_selection.html#a411d70a724981bd47f550d05cf3858be" title="Get row count. ">rowCount()</a> ). </dd></dl>
+
 <p>Definition at line <a class="el" href="mdt_sql_table_selection_8cpp_source.html#l00082">82</a> of file <a class="el" href="mdt_sql_table_selection_8cpp_source.html">mdtSqlTableSelection.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_cl_unit_8cpp_source.html#l00657">mdtClUnit::removeConnections()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_base_8cpp_source.html#l00345">mdtTtBase::removeData()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a739d9d474c3df10c01ea4094a3f8c201"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtSqlTableSelection::isEmpty </td>
+          <td>(</td>
+          <td class="paramname">)</td><td></td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Check if selection is empty. </p>
+
+<p>Definition at line <a class="el" href="mdt_sql_table_selection_8h_source.html#l00088">88</a> of file <a class="el" href="mdt_sql_table_selection_8h_source.html">mdtSqlTableSelection.h</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_tt_base_8cpp_source.html#l00345">mdtTtBase::removeData()</a>.</p>
 
 </div>
 </div>
@@ -254,6 +314,8 @@ Public Member Functions</h2></td></tr>
 <p>Get row count. </p>
 
 <p>Definition at line <a class="el" href="mdt_sql_table_selection_8h_source.html#l00084">84</a> of file <a class="el" href="mdt_sql_table_selection_8h_source.html">mdtSqlTableSelection.h</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_tt_base_8cpp_source.html#l00345">mdtTtBase::removeData()</a>, <a class="el" href="mdt_cl_link_beam_8cpp_source.html#l00163">mdtClLinkBeam::removeLinks()</a>, and <a class="el" href="mdt_cl_link_8cpp_source.html#l00260">mdtClLink::removeLinks()</a>.</p>
 
 </div>
 </div>
@@ -305,7 +367,7 @@ Each model index in indexList must point to given model</dd></dl>
 
 <p>References <a class="el" href="mdt_sql_table_selection_row_8cpp_source.html#l00032">mdtSqlTableSelectionRow::addIndex()</a>, <a class="el" href="mdt_sql_table_selection_row_8cpp_source.html#l00027">mdtSqlTableSelectionRow::clear()</a>, and <a class="el" href="mdt_sql_table_selection_8cpp_source.html#l00030">clear()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00310">mdtSqlTableWidget::currentSelection()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00312">mdtSqlTableWidget::currentSelection()</a>, and <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html#l00305">mdtSqlSelectionDialog::selection()</a>.</p>
 
 </div>
 </div>
@@ -316,7 +378,7 @@ Each model index in indexList must point to given model</dd></dl>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 6 2014 09:34:22 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jun 28 2014 13:24:48 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>
