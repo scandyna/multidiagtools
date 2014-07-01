@@ -37,6 +37,7 @@
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlTableSelection.h"
+#include "mdtTtBasicTester.h"
 #include <boost/concept_check.hpp>
 #include <QAction>
 #include <QMessageBox>
@@ -63,6 +64,8 @@ mdtClMainWindow::mdtClMainWindow()
   /// \todo provisoire
   initWorkDirectory();
   ///openDatabaseSqlite();
+  // Basic tester
+  pvBasicTester = 0;
   // Central widget
   pvTabWidget = 0;
 
@@ -438,6 +441,15 @@ void mdtClMainWindow::editTestItem()
   pvTestItemEditorWindow->show();
 }
 */
+
+void mdtClMainWindow::runBasicTester()
+{
+  if(pvBasicTester == 0){
+    createBasicTester();
+  }
+  pvBasicTester->raise();
+  pvBasicTester->show();
+}
 
 void mdtClMainWindow::runCableChecker()
 {
@@ -931,6 +943,16 @@ mdtTtTestModelEditor *mdtClMainWindow::createTestModelEditor()
   return editor;
 }
 
+void mdtClMainWindow::createBasicTester()
+{
+  Q_ASSERT(pvBasicTester == 0);
+
+  pvBasicTester = new mdtTtBasicTester(this, pvDatabaseManager->database());
+  if(!pvBasicTester->setupTables()){
+    displayError(pvBasicTester->lastError());
+  }
+}
+
 mdtSqlTableWidget *mdtClMainWindow::createTableView(const QString & tableName, const QString & userFriendlyTableName)
 {
   mdtSqlTableWidget *tableWidget;
@@ -1102,6 +1124,11 @@ bool mdtClMainWindow::deleteEditors()
       }
     }
   }
+  if(pvBasicTester != 0){
+    /// \todo Check that all data are saved
+    delete pvBasicTester;
+    pvBasicTester = 0;
+  }
 
   return pvOpenEditors.isEmpty();
 }
@@ -1163,6 +1190,8 @@ void mdtClMainWindow::connectActions()
   connect(actEditTest, SIGNAL(triggered()), this, SLOT(editTest()));
   // Test item edition
   connect(actEditTestItem, SIGNAL(triggered()), this, SLOT(editTestItem()));
+  // Basic tester
+  connect(actBasicTester, SIGNAL(triggered()), this, SLOT(runBasicTester()));
   // Cable checker
   connect(actCableChecker, SIGNAL(triggered()), this, SLOT(runCableChecker()));
 

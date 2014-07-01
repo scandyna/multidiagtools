@@ -14,24 +14,24 @@ set (HEADER_FILES
           #src/mdtTtTestModelItemEditor.h
           src/mdtTtCableChecker.h
           src/mdtTtCableCheckerWindow.h
-          src/mdtTtTestNodeUnitEditor.h
+          #src/mdtTtTestNodeUnitEditor.h
     )
 
 # Source files
 set (SOURCES_FILES 
           # Main
           src/main.cpp
-          src/mdtClConnectionData.cpp
+          #src/mdtClConnectionData.cpp
           src/mdtClMainWindow.cpp
           #src/mdtTtTestModelEditor.cpp
           #src/mdtTtTestModel.cpp
           #src/mdtTtTestModelItemEditor.cpp
           #src/mdtTtTestModelItem.cpp
-          src/mdtTtTest.cpp
+          #src/mdtTtTest.cpp
           src/mdtTtCableChecker.cpp
           src/mdtTtCableCheckerWindow.cpp
           #src/mdtTtTestNodeUnitSetupData.cpp
-          src/mdtTtTestNodeUnitEditor.cpp
+          #src/mdtTtTestNodeUnitEditor.cpp
     )
 
 # Qt ui files
@@ -41,7 +41,7 @@ set (FORM_FILES
           #src/mdtTtTestModelItemEditor.ui
           src/mdtTtCableChecker.ui
           src/mdtTtCableCheckerWindow.ui
-          src/mdtTtTestNodeUnitEditor.ui
+          #src/mdtTtTestNodeUnitEditor.ui
     )
 
 # Fichiers à traiter par le compilateur moc

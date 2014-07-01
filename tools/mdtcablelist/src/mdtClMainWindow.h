@@ -41,6 +41,8 @@ class mdtTtTestModelEditor;
 ///class mdtTtTestModelItemEditor;
 class mdtSqlWindow;
 class mdtTtTestConnectionCableEditor;
+class mdtTtBasicTester;
+
 class mdtTtCableChecker;
 class mdtTtCableCheckerWindow;
 class mdtClLinkBeamEditor;
@@ -152,6 +154,10 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   /*! \brief Edit test items
    */
   ///void editTestItem();
+
+  /*! \brief Run basic tester
+   */
+  void runBasicTester();
 
   /*! \brief Run cable checker
    */
@@ -275,6 +281,10 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
    */
   mdtTtTestModelEditor *createTestModelEditor();
 
+  /*! \brief Create basic tester
+   */
+  void createBasicTester();
+
   /*! \brief Create a table view
    *
    * Will create a new SQL table widget that acts on given table name.
@@ -381,6 +391,8 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   // View and editor container
   QList<mdtSqlTableWidget*> pvOpenViews;
   QList<mdtSqlWindow*> pvOpenEditors;
+  // Basic tester
+  mdtTtBasicTester *pvBasicTester;
   // Vehicle types
   QMap<QAction*, int> pvVehicleTypeActions;
   QList<QVariant> pvWorkingOnVehicleTypeList;

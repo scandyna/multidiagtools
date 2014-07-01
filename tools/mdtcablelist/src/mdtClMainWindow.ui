@@ -94,6 +94,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="actEditTest"/>
     <addaction name="actEditTestItem"/>
     <addaction name="actEditTestConnectionCable"/>
+    <addaction name="actBasicTester"/>
     <addaction name="actCableChecker"/>
    </widget>
    <widget class="QMenu" name="menuVehicle_types">
@@ -328,6 +329,11 @@ p, li { white-space: pre-wrap; }
   <action name="actViewLinkList">
    <property name="text">
     <string>&amp;View</string>
+   </property>
+  </action>
+  <action name="actBasicTester">
+   <property name="text">
+    <string>&amp;Basic tester</string>
    </property>
   </action>
  </widget>

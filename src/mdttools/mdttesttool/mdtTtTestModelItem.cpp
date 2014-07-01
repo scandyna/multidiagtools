@@ -184,7 +184,7 @@ mdtTtTestNodeUnitSetupData mdtTtTestModelItem::getNodeUnitSetupData(const QVaria
   QList<QSqlRecord> dataList;
   QString sql;
 
-  sql = "SELECT * FROM TestNodeUnitSetup_view ";
+  sql = "SELECT * FROM TestNodeUnitSetup_tbl ";
   sql += " WHERE TestModelItem_Id_FK = " + testModelItemId.toString();
   sql += " AND TestNodeUnit_Id_FK = " + testNodeUnitId.toString();
   dataList = getData(sql, ok);

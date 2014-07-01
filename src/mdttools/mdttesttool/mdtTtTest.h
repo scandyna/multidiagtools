@@ -22,6 +22,7 @@
 #define MDT_TT_TEST_H
 
 #include "mdtTtBase.h"
+#include "mdtTtTestData.h"
 #include "mdtValue.h"
 #include "mdtTtTestNodeUnitSetupData.h"
 #include <QSqlDatabase>
@@ -45,6 +46,20 @@ class mdtTtTest : public mdtTtBase
   /*! \brief Constructor
    */
   mdtTtTest(QObject *parent, QSqlDatabase db);
+
+  /*! \brief Get test data for given test ID
+   */
+  mdtTtTestData getTestData(const QVariant & testId, bool includeModelData, bool *ok);
+
+  /*! \brief Add a test
+   *
+   * \return Test ID from freshly created test, or a Null value on error
+   */
+  QVariant addTest(const mdtTtTestData & data);
+
+  /*! \brief Update data for given test data
+   */
+  bool updateTest(const QVariant & testId, const mdtTtTestData & data);
 
   /*! \brief Set test item model
    *

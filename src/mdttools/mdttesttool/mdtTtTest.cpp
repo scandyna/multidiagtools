@@ -38,6 +38,64 @@ mdtTtTest::mdtTtTest(QObject *parent, QSqlDatabase db)
   pvColIdxOfResult = -1;
 }
 
+mdtTtTestData mdtTtTest::getTestData(const QVariant & testId, bool includeModelData, bool *ok)
+{
+  Q_ASSERT(ok != 0);
+
+  QString sql;
+  QList<QSqlRecord> dataList;
+  mdtTtTestData data;
+
+  sql = "SELECT * FROM Test_tbl WHERE Id_PK = " + testId.toString();
+  dataList = getData(sql, ok);
+  if(!*ok){
+    return data;
+  }
+  if(dataList.isEmpty()){
+    pvLastError.setError(tr("Could not find data in 'Test_tbl' for Id_PK = '") + testId.toString() + "'", mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestModel");
+    pvLastError.commit();
+    *ok = false;
+    return data;
+  }
+  Q_ASSERT(dataList.size() == 1);
+  data = dataList.at(0);
+  if(includeModelData){
+    mdtTtTestModel tm(0, database());
+    data.setModelData(tm.getTestModelData(data.value("TestModel_Id_FK"), ok));
+    if(!*ok){
+      data.clearValues();
+      return data;
+    }
+  }
+
+  return data;
+}
+
+QVariant mdtTtTest::addTest(const mdtTtTestData & data)
+{
+  QVariant testId;
+  QSqlQuery query(database());
+
+  if(!beginTransaction()){
+    return testId;
+  }
+  if(!addRecord(data, "Test_tbl", query)){
+    return testId;
+  }
+  testId = query.lastInsertId();
+  if(!commitTransaction()){
+    return QVariant();
+  }
+
+  return testId;
+}
+
+bool mdtTtTest::updateTest(const QVariant & testId, const mdtTtTestData & data)
+{
+  return updateRecord("Test_tbl", data, "Id_PK", testId);
+}
+
 bool mdtTtTest::setTestItemSqlModel(QSqlTableModel *model)
 {
   Q_ASSERT(model != 0);

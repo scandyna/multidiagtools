@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>mdtTtBasicTester</class>
+ <widget class="QMainWindow" name="mdtTtBasicTester">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Basic tester</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QFrame" name="frame">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <layout class="QFormLayout" name="formLayout">
+         <item row="0" column="0">
+          <widget class="QLabel" name="lbDateLabel">
+           <property name="text">
+            <string>Date:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="lbDate">
+           <property name="text">
+            <string>date</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="lbTestDesignationENLabel">
+           <property name="text">
+            <string>Designation:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLabel" name="lbTestDesignationEN">
+           <property name="text">
+            <string>designation</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="lbSN">
+           <property name="text">
+            <string>SN:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="leSN">
+           <property name="minimumSize">
+            <size>
+             <width>200</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>300</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QLabel" name="lbTestResultLabel">
+         <property name="text">
+          <string>Result:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="lbTestResult">
+         <property name="font">
+          <font>
+           <pointsize>14</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>result</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tbTestItem">
+       <attribute name="title">
+        <string>Test sequence</string>
+       </attribute>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_File">
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+    <addaction name="actClose"/>
+   </widget>
+   <widget class="QMenu" name="menu_Test">
+    <property name="title">
+     <string>&amp;Test</string>
+    </property>
+    <addaction name="actTestNew"/>
+    <addaction name="actTestSetType"/>
+    <addaction name="actTestView"/>
+    <addaction name="actTestSave"/>
+    <addaction name="separator"/>
+    <addaction name="actTestRun"/>
+    <addaction name="actTestAbort"/>
+    <addaction name="separator"/>
+   </widget>
+   <widget class="QMenu" name="menu_Instruments">
+    <property name="title">
+     <string>&amp;Instruments</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuDUT">
+    <property name="title">
+     <string>&amp;DUT</string>
+    </property>
+   </widget>
+   <addaction name="menu_File"/>
+   <addaction name="menu_Test"/>
+   <addaction name="menu_Instruments"/>
+   <addaction name="menuDUT"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>true</bool>
+   </attribute>
+   <addaction name="actTestNew"/>
+   <addaction name="actTestSetType"/>
+   <addaction name="actTestSave"/>
+   <addaction name="separator"/>
+   <addaction name="actTestRun"/>
+   <addaction name="actTestAbort"/>
+   <addaction name="separator"/>
+  </widget>
+  <action name="actClose">
+   <property name="icon">
+    <iconset theme="window-close"/>
+   </property>
+   <property name="text">
+    <string>&amp;Close</string>
+   </property>
+   <property name="toolTip">
+    <string>Close tester</string>
+   </property>
+  </action>
+  <action name="actTestNew">
+   <property name="icon">
+    <iconset theme="document-new"/>
+   </property>
+   <property name="text">
+    <string>&amp;New</string>
+   </property>
+   <property name="toolTip">
+    <string>New test</string>
+   </property>
+  </action>
+  <action name="actTestSetType">
+   <property name="text">
+    <string>&amp;Select test type</string>
+   </property>
+   <property name="toolTip">
+    <string>Select test type</string>
+   </property>
+  </action>
+  <action name="actTestRun">
+   <property name="icon">
+    <iconset theme="system-run"/>
+   </property>
+   <property name="text">
+    <string>&amp;Run test</string>
+   </property>
+   <property name="toolTip">
+    <string>Run test (complete)</string>
+   </property>
+  </action>
+  <action name="actTestView">
+   <property name="icon">
+    <iconset theme="document-open"/>
+   </property>
+   <property name="text">
+    <string>&amp;View a test</string>
+   </property>
+   <property name="toolTip">
+    <string>View allready executed test</string>
+   </property>
+  </action>
+  <action name="actTestAbort">
+   <property name="icon">
+    <iconset theme="process-stop"/>
+   </property>
+   <property name="text">
+    <string>&amp;Abort test</string>
+   </property>
+  </action>
+  <action name="actTestSave">
+   <property name="icon">
+    <iconset theme="document-save"/>
+   </property>
+   <property name="text">
+    <string>&amp;Save</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

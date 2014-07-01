@@ -402,6 +402,9 @@ bool mdtTtDatabaseSchema::createViews()
   if(!createTestNodeUnitSetupView()){
     return false;
   }
+  if(!createTestItemView()){
+    return false;
+  }
   /**
   if(!createTestModelItemView()){
     return false;
@@ -417,9 +420,6 @@ bool mdtTtDatabaseSchema::createViews()
     return false;
   }
   if(!createTestModelItemNodeUnitView()){
-    return false;
-  }
-  if(!createTestItemView()){
     return false;
   }
   if(!createTestItemNodeUnitSetupView()){
@@ -3545,50 +3545,17 @@ bool mdtTtDatabaseSchema::createTestItemView()
 
   sql = "CREATE VIEW TestItem_view AS\n"\
         "SELECT\n"\
-        " TRI.Id_PK,\n"\
-        " TRI.Test_Id_FK,\n"\
-        " TRI.TestModelItem_Id_FK,\n"\
+        " TI.Id_PK,\n"\
+        " TI.Test_Id_FK,\n"\
+        " TI.TestModelItem_Id_FK,\n"\
         " TMI.SequenceNumber,\n"\
+        " TMI.DesignationEN,\n"\
         " TMI.ExpectedValue,\n"\
-        " TRI.MeasuredValue,\n"\
-        " TRI.Result,\n"\
-        " UCTA.Name AS TestConnectorNameBusA,\n"\
-        " UCNXTA.UnitContactName AS TestContactNameBusA,\n"\
-        " UDA.SchemaPosition AS DutUnitSchemaPositionBusA,\n"\
-        " UCDA.Name AS DutConnectorNameBusA,\n"\
-        " UCNXDA.UnitContactName AS DutContactNameBusA,\n"\
-        " UCTB.Name AS TestConnectorNameBusB,\n"\
-        " UCNXTB.UnitContactName AS TestContactNameBusB,\n"\
-        " UDB.SchemaPosition AS DutUnitSchemaPositionBusB,\n"\
-        " UCDB.Name AS DutConnectorNameBusB,\n"\
-        " UCNXDB.UnitContactName AS DutContactNameBusB\n"\
-        "FROM TestItem_tbl TRI\n"\
+        " TI.MeasuredValue,\n"\
+        " TI.Result\n"\
+        "FROM TestItem_tbl TI\n"\
         " JOIN TestModelItem_tbl TMI\n"\
-        "  ON TMI.Id_PK = TRI.TestModelItem_Id_FK\n"\
-        " LEFT JOIN TestLink_tbl LNKA\n"\
-        "  ON LNKA.Id_PK = TMI.TestLinkBusA_Id_FK\n"\
-        " LEFT JOIN UnitConnection_tbl UCNXTA\n"\
-        "  ON UCNXTA.Id_PK = LNKA.TestConnection_Id_FK\n"\
-        " LEFT JOIN UnitConnector_tbl UCTA\n"\
-        "  ON UCTA.Id_PK = UCNXTA.UnitConnector_Id_FK\n"\
-        " LEFT JOIN UnitConnection_tbl UCNXDA\n"\
-        "  ON UCNXDA.Id_PK = LNKA.DutConnection_Id_FK\n"\
-        " LEFT JOIN UnitConnector_tbl UCDA\n"\
-        "  ON UCDA.Id_PK = UCNXDA.UnitConnector_Id_FK\n"\
-        " LEFT JOIN Unit_tbl UDA\n"\
-        "  ON UDA.Id_PK = UCNXDA.Unit_Id_FK\n"\
-        " LEFT JOIN TestLink_tbl LNKB\n"\
-        "  ON LNKB.Id_PK = TMI.TestLinkBusB_Id_FK\n"\
-        " LEFT JOIN UnitConnection_tbl UCNXTB\n"\
-        "  ON UCNXTB.Id_PK = LNKB.TestConnection_Id_FK\n"\
-        " LEFT JOIN UnitConnector_tbl UCTB\n"\
-        "  ON UCTB.Id_PK = UCNXTB.UnitConnector_Id_FK\n"\
-        " LEFT JOIN UnitConnection_tbl UCNXDB\n"\
-        "  ON UCNXDB.Id_PK = LNKB.DutConnection_Id_FK\n"\
-        " LEFT JOIN UnitConnector_tbl UCDB\n"\
-        "  ON UCDB.Id_PK = UCNXDB.UnitConnector_Id_FK\n"\
-        " LEFT JOIN Unit_tbl UDB\n"\
-        "  ON UDB.Id_PK = UCNXDB.Unit_Id_FK\n"\
+        "  ON TMI.Id_PK = TI.TestModelItem_Id_FK\n"\
         "ORDER BY SequenceNumber ASC";
 
   return createView("TestItem_view", sql);

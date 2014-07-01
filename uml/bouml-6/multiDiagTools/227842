@@ -1,6 +1,6 @@
 format 206
 "DatabaseLogical" // mdttools::mdttesttool::DatabaseLogical
-  revision 43
+  revision 45
   modified_by 2 "philippe"
   // class settings
   
@@ -2751,6 +2751,18 @@ ${inlines}
 	MysqlColumn
       end
 
+      attribute 1251458 "StepNumber"
+	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
       attribute 1043074 "State"
 	private explicit_type "bool"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
@@ -3110,7 +3122,7 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 1074178 "Test_Id_FK"
+      attribute 1074178 "TestModel_Id_FK"
 	private explicit_type "int"
 	stereotype "FK"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
