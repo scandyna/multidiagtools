@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtDeviceTest.h"
 #include "mdtApplication.h"
+#include "mdtDeviceContainer.h"
 #include "mdtDeviceIos.h"
 #include "mdtDeviceIosSegment.h"
 #include "mdtDeviceIosWidget.h"
@@ -46,6 +47,42 @@
 #include <QTime>
 #include <QDebug>
 
+#include <memory>
+#include <vector>
+#include <typeinfo>
+#include <boost/any.hpp>
+
+void mdtDeviceTest::sandbox()
+{
+  std::shared_ptr<mdtDevice> dev1(new mdtDevice);
+  std::shared_ptr<mdtDevice> dev2(new mdtDeviceU3606A);
+
+  Q_ASSERT(dev1);
+  Q_ASSERT(dev2);
+
+  std::shared_ptr<mdtDeviceU3606A> devU3606;
+
+  Q_ASSERT(std::dynamic_pointer_cast<mdtDeviceU3606A>(dev2));
+  devU3606 = std::static_pointer_cast<mdtDeviceU3606A>(dev2);
+  Q_ASSERT(devU3606);
+  devU3606->setName("U3606A");
+  
+  qDebug() << "Name: " << devU3606->name() << " , " << dev2->name();
+  qDebug() << "Value: " << devU3606->getMeasureValue();
+  qDebug() << "dev1 type: " << typeid(dev1).name();
+  qDebug() << "dev2 type: " << typeid(dev2).name();
+  qDebug() << "devU3606 type: " << typeid(devU3606).name();
+  
+  boost::any adev1;
+  boost::any adev3;
+
+  adev1 = dev1;
+  adev3 = devU3606;
+  
+  qDebug() << "dev1 type: " << typeid(dev1).name() << " , adev1 type: " << adev1.type().name();
+  qDebug() << "devU3606 type: " << typeid(devU3606).name() << " , adev3 type: " << adev3.type().name();
+}
+
 void mdtDeviceTest::deviceBaseTest()
 {
   mdtDevice dev;
@@ -55,6 +92,27 @@ void mdtDeviceTest::deviceBaseTest()
   ///QVERIFY(dev.state() == mdtPortManager::Disconnected);
 
   dev.start(100);
+}
+
+void mdtDeviceTest::deviceContainerTest()
+{
+  mdtDeviceContainer c;
+  std::shared_ptr<mdtDeviceU3606A> dev;
+
+  // Initial state
+  QCOMPARE(c.deviceCount(), 0);
+  QCOMPARE(c.allDevices().size(), 0);
+  // Add a U3606A device
+  dev = c.addDevice<mdtDeviceU3606A>("U3606A");
+  QVERIFY(dev.get() != 0);
+  QVERIFY(c.device<mdtDeviceU3606A>("U3606A").get() != 0);
+  QVERIFY(c.device<mdtDeviceU3606A>("").get() == 0);
+  QVERIFY(c.device<mdtDevice>("U3606A").get() != 0);
+  QVERIFY(c.device<mdtDeviceScpi>("U3606A").get() != 0);
+  QVERIFY(c.device<mdtDeviceModbus>("U3606A").get() == 0);
+  QCOMPARE(c.deviceCount(), 1);
+  QCOMPARE(c.allDevices().size(), 1);
+  QVERIFY(c.allDevices().at(0).get() != 0);
 }
 
 void mdtDeviceTest::deviceIosSegmentTest()

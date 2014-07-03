@@ -18,40 +18,46 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_TEST_TOOL_TEST_H
-#define MDT_TEST_TOOL_TEST_H
+#ifndef MDT_TT_TEST_ITEM_NODE_SETUP_DATA_H
+#define MDT_TT_TEST_ITEM_NODE_SETUP_DATA_H
 
-#include "mdtTest.h"
-#include "mdtSqlDatabaseManager.h"
-#include <QMessageBox>
+#include "mdtTtTestNodeSetupData.h"
+#include <QList>
+#include <QVariant>
 
-class mdtTestToolTest : public mdtTest
+/*! \brief Store setup data related to a test item
+ */
+class mdtTtTestItemNodeSetupData
 {
- Q_OBJECT
+ public:
 
- private slots:
+  /*! \brief Constructor
+   */
+  mdtTtTestItemNodeSetupData();
 
-  // Will create database schema (see createDatabaseSchema() )
-  void initTestCase();
+  /*! \brief Clear data
+   */
+  void clear();
 
-  void cleanupTestCase();
+  /*! \brief Check if more step is available
+   */
+  inline bool hasMoreStep() const
+  {
+    return (pvCurrentStep < pvNodeSetupDataList.size());
+  }
 
-  void mdtTtBaseTest();
+  /*! \brief Get next step
+   */
+  mdtTtTestNodeSetupData getNextStep();
 
-  void mdtTtTestLinkDataTest();
-
-  void mdtTtTestNodeUnitDataTest();
-
-  void mdtTtTestNodeUnitTest();
-
-  void testNodeSetupDataTest();
+  /*! \brief Get device identification for current step
+   */
+  QVariant deviceIdentification() const;
 
  private:
 
-  // Create test database schema - Will FAIL on problem
-  void createDatabaseSchema();
-
-  mdtSqlDatabaseManager pvDatabaseManager;
+  int pvCurrentStep;
+  QList<mdtTtTestNodeSetupData> pvNodeSetupDataList;
 };
 
-#endif // #ifndef MDT_TEST_TOOL_TEST_H
+#endif // #ifndef MDT_TT_TEST_ITEM_NODE_SETUP_DATA_H

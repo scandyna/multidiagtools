@@ -53,11 +53,19 @@ class mdtTtTest : public mdtTtBase
 
   /*! \brief Add a test
    *
+   * \param data Test data. New test will be based on TestModel_Id_FK.
+   *              A new Test item will be created for each item
+   *              contained in TestModelItem_tbl that is part of given TestModel_Id_FK.
+   *
    * \return Test ID from freshly created test, or a Null value on error
    */
   QVariant addTest(const mdtTtTestData & data);
 
   /*! \brief Update data for given test data
+   *
+   * Note: in data, if TestModel_Id_FK is different from
+   *        those that is currently stored,
+   *        related test items will be removed, and created again, based on given test model.
    */
   bool updateTest(const QVariant & testId, const mdtTtTestData & data);
 
@@ -110,6 +118,8 @@ class mdtTtTest : public mdtTtBase
   bool addItem(const QVariant & testResultId, const QVariant & testItemId);
 
   /*! \brief Add a test items based on given test ID
+   *
+   * \deprecated Use addTestItems()
    */
   bool addItemsByTestId(const QVariant & testResultId, const QVariant & testId);
 
@@ -137,6 +147,14 @@ class mdtTtTest : public mdtTtBase
   ///void onSqlModelDestroyed(QObject *obj);
 
  private:
+
+  /*! \brief Add test items for given test ID and test model ID
+   */
+  bool addTestItems(const QVariant & testId, const QVariant & testModelId);
+
+  /*! \brief Remove test items from given test ID
+   */
+  bool removeTestItems(const QVariant & testId);
 
   /*! \brief Check if test item sql model was set
    *

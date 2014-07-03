@@ -36,6 +36,7 @@ set (TT_SOURCES_FILES
           mdtTtTestModelItemEditor.cpp
           mdtTtTestNodeUnitSetupData.cpp
           mdtTtTestNodeUnitSetupDialog.cpp
+          mdtTtTestItemNodeSetupData.cpp
           mdtTtTestNodeSetupData.cpp
           mdtTtBasicTester.cpp
           mdtTtTestModelData.cpp

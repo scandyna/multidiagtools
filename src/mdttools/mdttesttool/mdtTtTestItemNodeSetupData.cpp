@@ -18,40 +18,26 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_TEST_TOOL_TEST_H
-#define MDT_TEST_TOOL_TEST_H
+#include "mdtTtTestItemNodeSetupData.h"
 
-#include "mdtTest.h"
-#include "mdtSqlDatabaseManager.h"
-#include <QMessageBox>
-
-class mdtTestToolTest : public mdtTest
+mdtTtTestItemNodeSetupData::mdtTtTestItemNodeSetupData()
 {
- Q_OBJECT
+  pvCurrentStep = 0;
+}
 
- private slots:
 
-  // Will create database schema (see createDatabaseSchema() )
-  void initTestCase();
+void mdtTtTestItemNodeSetupData::clear()
+{
+  pvNodeSetupDataList.clear();
+  pvCurrentStep = 0;
+}
 
-  void cleanupTestCase();
+mdtTtTestNodeSetupData mdtTtTestItemNodeSetupData::getNextStep()
+{
 
-  void mdtTtBaseTest();
+}
 
-  void mdtTtTestLinkDataTest();
+QVariant mdtTtTestItemNodeSetupData::deviceIdentification() const
+{
 
-  void mdtTtTestNodeUnitDataTest();
-
-  void mdtTtTestNodeUnitTest();
-
-  void testNodeSetupDataTest();
-
- private:
-
-  // Create test database schema - Will FAIL on problem
-  void createDatabaseSchema();
-
-  mdtSqlDatabaseManager pvDatabaseManager;
-};
-
-#endif // #ifndef MDT_TEST_TOOL_TEST_H
+}

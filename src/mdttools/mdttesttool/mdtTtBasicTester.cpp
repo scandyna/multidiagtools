@@ -23,9 +23,15 @@
 #include "mdtTtTestModelData.h"
 #include "mdtSqlSelectionDialog.h"
 #include "mdtSqlTableSelection.h"
+#include "mdtSqlTableWidget.h"
 #include <QString>
 #include <QVariant>
 #include <QMessageBox>
+#include <QDate>
+#include <QVBoxLayout>
+#include <QSqlTableModel>
+#include <QSqlError>
+#include <QTableView>
 
 #include <QDebug>
 
@@ -33,6 +39,8 @@ mdtTtBasicTester::mdtTtBasicTester(QWidget *parent, QSqlDatabase db)
  : QMainWindow(parent)
 {
   pvDatabase = db;
+  pvTestItemWidget = new mdtSqlTableWidget(this);
+  pvTestItemModel = new QSqlTableModel(this, pvDatabase);
   setupUi(this);
   connectActions();
 }
@@ -43,7 +51,18 @@ bool mdtTtBasicTester::setupTables()
     pvLastError = pvTestData.lastError();
     return false;
   }
+  if(!setupTestItemTable()){
+    return false;
+  }
   return true;
+}
+
+void mdtTtBasicTester::createTest()
+{
+  pvTestData.clearValues();
+  displayTestData(false);
+  displayTestItemData();
+  setTestModel();
 }
 
 void mdtTtBasicTester::setTestModel()
@@ -82,15 +101,31 @@ void mdtTtBasicTester::setTestModel()
   }else{
     saveTestData();
   }
+  displayTestData(true);
+  displayTestItemData();
 }
+
+void mdtTtBasicTester::saveTest()
+{
+  if(pvTestData.value("Id_PK").isNull()){
+    return;
+  }
+  if(!saveTestData()){
+    return;
+  }
+  displayTestData(false);
+  displayTestItemData();
+}
+
 
 bool mdtTtBasicTester::createNewTest()
 {
   mdtTtTest test(0, pvDatabase);
   QVariant testId;
 
-  // Set test date
-  
+  // Update somes values
+  pvTestData.setValue("Date", QDate::currentDate());
+  pvTestData.setValue("DutSerialNumber", leSN->text());
   // Add test to DB
   testId = test.addTest(pvTestData);
   if(testId.isNull()){
@@ -99,7 +134,6 @@ bool mdtTtBasicTester::createNewTest()
     return false;
   }
   pvTestData.setValue("Id_PK", testId);
-  displayTestData(true);
 
   return true;
 }
@@ -108,20 +142,66 @@ bool mdtTtBasicTester::saveTestData()
 {
   mdtTtTest test(0, pvDatabase);
 
+  // Update somes values
+  ///pvTestData.setValue("Date", QDate::currentDate());
+  pvTestData.setValue("DutSerialNumber", leSN->text());
   if(!test.updateTest(pvTestData.value("Id_PK"), pvTestData)){
     pvLastError = test.lastError();
     displayLastError();
     return false;
   }
-  displayTestData(false);
 
   return true;
 }
 
 void mdtTtBasicTester::displayTestData(bool getFromDatabase)
 {
+  mdtTtTest test(0, pvDatabase);
+  bool ok;
+  QVariant testId;
+  QDate date;
 
+  // Get data from DB
+  testId = pvTestData.value("Id_PK");
+  if(getFromDatabase && (!testId.isNull())){
+    pvTestData = test.getTestData(testId, true, &ok);
+    if(!ok){
+      pvLastError = test.lastError();
+      displayLastError();
+      return;
+    }
+  }
+  // Update widgets
+  date = pvTestData.value("Date").toDate();
+  lbDate->setText(date.toString(Qt::SystemLocaleLongDate));
+  lbTestDesignationEN->setText(pvTestData.modelData().value("DesignationEN").toString());
+  leSN->setText(pvTestData.value("DutSerialNumber").toString());
+  
+
+  
 }
+
+void mdtTtBasicTester::displayTestItemData()
+{
+  Q_ASSERT(pvTestItemModel != 0);
+  Q_ASSERT(pvTestItemWidget != 0);
+  Q_ASSERT(pvTestItemWidget->model() != 0);
+
+  QVariant testId;
+  QString filter;
+
+  // Build filter statement
+  testId = pvTestData.value("Id_PK");
+  if(testId.isNull()){
+    filter = "Test_Id_FK = -1";
+  }else{
+    filter = "Test_Id_FK = " + testId.toString();
+  }
+  // Apply filter
+  pvTestItemModel->setFilter(filter);
+  pvTestItemWidget->model()->setFilter(filter);
+}
+
 
 void mdtTtBasicTester::displayLastError()
 {
@@ -133,7 +213,63 @@ void mdtTtBasicTester::displayLastError()
   msgBox.exec();
 }
 
+bool mdtTtBasicTester::setupTestItemTable()
+{
+  Q_ASSERT(pvTestItemWidget != 0);
+  Q_ASSERT(pvTestItemModel != 0);
+
+  QVBoxLayout *l;
+  QSqlTableModel *m;
+  QSqlError sqlError;
+
+  // Setup table widget in Tab widget
+  l = new QVBoxLayout;
+  l->addWidget(pvTestItemWidget);
+  tbTestItem->setLayout(l);
+  // Setup model for edition
+  pvTestItemModel->setTable("TestItem_tbl");
+  if(!pvTestItemModel->select()){
+    sqlError = pvTestItemModel->lastError();
+    pvLastError.setError(tr("Cannot select data from table 'TestItem_tbl'"), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtBasicTester");
+    pvLastError.commit();
+    return false;
+  }
+  // Setup table widget
+  m = new QSqlTableModel(pvTestItemWidget, pvDatabase);
+  m->setTable("TestItem_view");
+  if(!m->select()){
+    sqlError = m->lastError();
+    pvLastError.setError(tr("Cannot select data from table 'TestItem_view'"), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtBasicTester");
+    pvLastError.commit();
+    return false;
+  }
+  pvTestItemWidget->setModel(m);
+  // Hide technical fields
+  pvTestItemWidget->setColumnHidden("Id_PK", true);
+  pvTestItemWidget->setColumnHidden("Test_Id_FK", true);
+  pvTestItemWidget->setColumnHidden("TestModelItem_Id_FK", true);
+  // Set fields some user friendly names
+  pvTestItemWidget->setHeaderData("SequenceNumber", tr("Seq. #"));
+  pvTestItemWidget->setHeaderData("DesignationEN", tr("Designation (English)"));
+  pvTestItemWidget->setHeaderData("ExpectedValue", tr("Value\nexpected"));
+  pvTestItemWidget->setHeaderData("MeasuredValue", tr("Value\nmeasured"));
+  // Other things
+  pvTestItemWidget->addColumnToSortOrder("SequenceNumber", Qt::AscendingOrder);
+  pvTestItemWidget->sort();
+  pvTestItemWidget->tableView()->resizeColumnsToContents();
+  pvTestItemWidget->tableView()->resizeRowsToContents();
+  displayTestItemData();
+
+  return true;
+}
+
 void mdtTtBasicTester::connectActions()
 {
   connect(actTestSetType, SIGNAL(triggered()), this, SLOT(setTestModel()));
+  connect(actTestSave, SIGNAL(triggered()), this, SLOT(saveTest()));
+  connect(actTestNew, SIGNAL(triggered()), this, SLOT(createTest()));
 }

@@ -130,6 +130,14 @@ class mdtDevice : public QObject
    */
   QString name() const;
 
+  /*! \brief Set device identification
+   */
+  void setIdentification(const QVariant & id);
+
+  /*! \brief Get device identification
+   */
+  inline QVariant identification() const { return pvIdentification; }
+
   /*! \brief Search and connect to physical device.
    *
    * Will scan available ports and open the first port that
@@ -1005,6 +1013,7 @@ class mdtDevice : public QObject
   Q_DISABLE_COPY(mdtDevice);
 
   QString pvName;
+  QVariant pvIdentification;
   QTimer *pvQueryTimer;
   bool pvAutoQueryEnabled;  // Flag used for state handling
   int pvBackToReadyStateTimeout;

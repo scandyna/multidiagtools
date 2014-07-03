@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtTtTest.h"
 #include "mdtTtTestModel.h"
+#include "mdtSqlRecord.h"
 #include <QSqlTableModel>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -81,9 +82,14 @@ QVariant mdtTtTest::addTest(const mdtTtTestData & data)
     return testId;
   }
   if(!addRecord(data, "Test_tbl", query)){
+    rollbackTransaction();
     return testId;
   }
   testId = query.lastInsertId();
+  if(!addTestItems(testId, data.value("TestModel_Id_FK"))){
+    rollbackTransaction();
+    return QVariant();
+  }
   if(!commitTransaction()){
     return QVariant();
   }
@@ -93,7 +99,40 @@ QVariant mdtTtTest::addTest(const mdtTtTestData & data)
 
 bool mdtTtTest::updateTest(const QVariant & testId, const mdtTtTestData & data)
 {
-  return updateRecord("Test_tbl", data, "Id_PK", testId);
+  QString sql;
+  QList<QSqlRecord> dataList;
+  bool ok;
+
+  // Get currently stored test model ID
+  sql = "SELECT TestModel_Id_FK FROM Test_tbl WHERE Id_PK = " + testId.toString();
+  dataList = getData(sql, &ok);
+  if(!ok){
+    return false;
+  }
+  Q_ASSERT(dataList.size() == 1);
+  if(!beginTransaction()){
+    return false;
+  }
+  // If test model has changed, we have to update items
+  if(dataList.at(0).value(0) != data.value("TestModel_Id_FK")){
+    if(!removeTestItems(testId)){
+      rollbackTransaction();
+      return false;
+    }
+    if(!addTestItems(testId, data.value("TestModel_Id_FK"))){
+      rollbackTransaction();
+      return false;
+    }
+  }
+  if(!updateRecord("Test_tbl", data, "Id_PK", testId)){
+    rollbackTransaction();
+    return false;
+  }
+  if(!commitTransaction()){
+    return false;
+  }
+
+  return true;
 }
 
 bool mdtTtTest::setTestItemSqlModel(QSqlTableModel *model)
@@ -477,6 +516,45 @@ void mdtTtTest::onSqlModelDestroyed(QObject *obj)
   }
 }
 */
+
+
+bool mdtTtTest::addTestItems(const QVariant & testId, const QVariant & testModelId)
+{
+  QString sql;
+  QList<QSqlRecord> modelItemsDataList;
+  mdtSqlRecord testItemData;
+  bool ok;
+  int i;
+
+  // Get items for given test model
+  sql = "SELECT Id_PK FROM TestModelItem_tbl WHERE TestModel_Id_FK = " + testModelId.toString();
+  modelItemsDataList = getData(sql, &ok);
+  if(!ok){
+    return false;
+  }
+  // Setup test item data
+  if(!testItemData.addAllFields("TestItem_tbl", database())){
+    pvLastError = testItemData.lastError();
+    return false;
+  }
+  // Add a new test item for each model item
+  for(i = 0; i < modelItemsDataList.size(); ++i){
+    testItemData.clearValues();
+    testItemData.setValue("Test_Id_FK", testId);
+    testItemData.setValue("TestModelItem_Id_FK", modelItemsDataList.at(i).value(0));
+    if(!addRecord(testItemData, "TestItem_tbl")){
+      return false;
+    }
+  }
+
+  return true;
+}
+
+bool mdtTtTest::removeTestItems(const QVariant & testId)
+{
+  return removeData("TestItem_tbl", "Test_Id_FK", testId);
+}
+
 
 bool mdtTtTest::testItemSqlModelOk()
 {

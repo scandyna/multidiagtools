@@ -18,40 +18,27 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_TEST_TOOL_TEST_H
-#define MDT_TEST_TOOL_TEST_H
+#include "mdtDeviceContainer.h"
+#include "mdtDevice.h"
+#include "mdtDeviceU3606A.h"
 
-#include "mdtTest.h"
-#include "mdtSqlDatabaseManager.h"
-#include <QMessageBox>
+//#include <QDebug>
 
-class mdtTestToolTest : public mdtTest
+using namespace std;
+
+mdtDeviceContainer::mdtDeviceContainer()
 {
- Q_OBJECT
+}
 
- private slots:
+QList<shared_ptr<mdtDevice>> mdtDeviceContainer::allDevices()
+{
+  QList<shared_ptr<mdtDevice>> lst;
+  std::vector<std::shared_ptr<mdtDevice>>::const_iterator it;
 
-  // Will create database schema (see createDatabaseSchema() )
-  void initTestCase();
+  for(it = pvDevices.begin(); it != pvDevices.end(); ++it){
+    Q_ASSERT(*it);
+    lst.append(*it);
+  }
 
-  void cleanupTestCase();
-
-  void mdtTtBaseTest();
-
-  void mdtTtTestLinkDataTest();
-
-  void mdtTtTestNodeUnitDataTest();
-
-  void mdtTtTestNodeUnitTest();
-
-  void testNodeSetupDataTest();
-
- private:
-
-  // Create test database schema - Will FAIL on problem
-  void createDatabaseSchema();
-
-  mdtSqlDatabaseManager pvDatabaseManager;
-};
-
-#endif // #ifndef MDT_TEST_TOOL_TEST_H
+  return lst;
+}

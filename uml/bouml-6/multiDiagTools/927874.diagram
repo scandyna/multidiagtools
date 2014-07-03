@@ -31,7 +31,7 @@ end
 note 130946 "TestConnection_Id_FK is the connection on the test node that is (possibly not directly) linked to DUT. This link helps to find witch TestNodeUnit (typically a channel relay) to use for a given connection in a fast way."
   xyzwh 855.3 566.7 2000 269 151
 note 131330 "Bus and TestConnection_Id_FK are filled by a function (not directly by user)."
-  xyzwh 185.7 548.5 2000 229 134
+  xyzwh 192.7 596.5 2000 229 134
 classcanvas 131586 class_ref 805250 // Link_tbl
   classdiagramsettings member_max_width 0 end
   xyz 918.5 64.8 2022

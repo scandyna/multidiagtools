@@ -62,6 +62,11 @@ QString mdtDevice::name() const
   return pvName;
 }
 
+void mdtDevice::setIdentification(const QVariant & id)
+{
+  pvIdentification = id;
+}
+
 mdtAbstractPort::error_t mdtDevice::connectToDevice(const mdtDeviceInfo &devInfo)
 {
   return mdtAbstractPort::UnhandledError;

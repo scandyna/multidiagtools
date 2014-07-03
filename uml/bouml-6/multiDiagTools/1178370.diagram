@@ -1,0 +1,40 @@
+format 206
+
+classcanvas 128002 class_ref 1302146 // mdtTtTestNodeManagerWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 37 532 2000
+end
+classcanvas 128130 class_ref 1302018 // mdtTtTestNodeManager
+  classdiagramsettings member_max_width 0 end
+  xyz 373 158 2000
+end
+classcanvas 128258 class_ref 316162 // QWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 44 30 2006
+end
+classcanvas 128898 class_ref 1302402 // mdtTtTestNodeManagerWidgetItem
+  classdiagramsettings member_max_width 0 end
+  xyz 234 366 2000
+end
+relationcanvas 128386 relation_ref 1597954 // <generalisation>
+  decenter_begin 390
+  decenter_end 339
+  from ref 128002 z 2007 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 1598338 // <directional composition>
+  geometry HV
+  from ref 128002 z 2001 to point 533 557
+  line 129282 z 2001 to ref 128898
+  role_a_pos 545 452 3000 no_role_b
+  multiplicity_a_pos 520 452 3000 no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 1598466 // <generalisation>
+  decenter_begin 64
+  decenter_end 590
+  from ref 128898 z 2007 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

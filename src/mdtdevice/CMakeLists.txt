@@ -25,6 +25,7 @@ set (HEADER_FILES
 set (SOURCES_FILES 
           # Device
           mdtDevice.cpp
+          mdtDeviceContainer.cpp
           mdtDeviceIos.cpp
           mdtDeviceIosSegment.cpp
           mdtDeviceIosWidget.cpp

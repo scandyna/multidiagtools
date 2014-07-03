@@ -405,13 +405,16 @@ bool mdtTtDatabaseSchema::createViews()
   if(!createTestItemView()){
     return false;
   }
+  if(!createTestItemNodeUnitSetupView()){
+    return false;
+  }
   /**
-  if(!createTestModelItemView()){
+  if(!createTestModelItemNodeUnitSetupView()){
     return false;
   }
   */
   /**
-  if(!createTestModelItemNodeUnitSetupView()){
+  if(!createTestModelItemView()){
     return false;
   }
   */
@@ -420,9 +423,6 @@ bool mdtTtDatabaseSchema::createViews()
     return false;
   }
   if(!createTestModelItemNodeUnitView()){
-    return false;
-  }
-  if(!createTestItemNodeUnitSetupView()){
     return false;
   }
   */
@@ -1782,6 +1782,12 @@ bool mdtTtDatabaseSchema::setupTestNodeTable()
   field.setType(QVariant::String);
   field.setLength(50);
   table.addField(field, false);
+  // DeviceIdentification
+  field = QSqlField();
+  field.setName("DeviceIdentification");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  table.addField(field, false);
   // Indexes
   table.addIndex("VehicleType_Id_FK_PK_idx", false);
   if(!table.addFieldToIndex("VehicleType_Id_FK_PK_idx", "VehicleType_Id_FK_PK")){
@@ -2401,6 +2407,10 @@ bool mdtTtDatabaseSchema::setupTestNodeUnitSetupTable()
   field.setType(QVariant::Int);
   ///field.setRequiredStatus(QSqlField::Required);
   table.addField(field, true);
+  field = QSqlField();
+  field.setName("StepNumber");
+  field.setType(QVariant::Int);
+  table.addField(field, false);
   // State (ON/OFF)
   field = QSqlField();
   field.setName("State");
@@ -3574,12 +3584,17 @@ bool mdtTtDatabaseSchema::createTestItemNodeUnitSetupView()
         /*" TNUS.Id_PK,\n"\*/
         /*" TNUS.TestModelItem_Id_FK,\n"\*/
         " TMI.SequenceNumber,\n"\
+        " TNUS.StepNumber,\n"\
         " U.SchemaPosition,\n"\
+        " TNUS.TestNodeUnit_Id_FK,\n"\
         " TNUS.State,\n"\
         " TNUS.Value,\n"\
-        " TNU.Bus,\n"\
+        /*" TNU.Bus,\n"\*/
+        " TNU.TestNode_Id_FK,\n"\
+        " TNU.Type_Code_FK,\n"\
         " TNU.IoPosition,\n"\
-        " TN.NodeIdentification\n"\
+        " TN.NodeIdentification,\n"\
+        " TN.DeviceIdentification\n"\
         "FROM TestItem_tbl TI\n"\
         " JOIN TestModelItem_tbl TMI\n"\
         "  ON TMI.Id_PK = TI.TestModelItem_Id_FK\n"\
@@ -3591,7 +3606,7 @@ bool mdtTtDatabaseSchema::createTestItemNodeUnitSetupView()
         "  ON U.Id_PK = TNU.Unit_Id_FK_PK\n"\
         " JOIN TestNode_tbl TN\n"\
         "  ON TN.VehicleType_Id_FK_PK = TNU.TestNode_Id_FK\n"\
-        "ORDER BY SequenceNumber ASC";
+        "ORDER BY SequenceNumber ASC, TN.VehicleType_Id_FK_PK ASC, StepNumber ASC";
 
   return createView("TestItemNodeUnitSetup_view", sql);
 }

@@ -29,6 +29,9 @@
 #include "mdtTtTestNodeUnitData.h"
 #include "mdtSqlTableSelection.h"
 #include "mdtClUnitConnectionData.h"
+#include "mdtTtTestItemNodeSetupData.h"
+#include "mdtTtTestNodeSetupData.h"
+#include "mdtTtTestNodeUnitSetupData.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -363,6 +366,150 @@ void mdtTestToolTest::mdtTtTestNodeUnitTest()
 
   
 }
+
+void mdtTestToolTest::testNodeSetupDataTest()
+{
+  mdtTtTestItemNodeSetupData tiSetupData;
+  mdtTtTestNodeSetupData tnSetupData;
+  mdtTtTestNodeUnitSetupData tnuSetupData;
+  mdtSqlRecord record;
+  QSqlRecord rec;
+
+  /*
+   * Init
+   */
+  // Test item setup data - Initial state
+  QVERIFY(!tiSetupData.hasMoreStep());
+  ///QCOMPARE(tiSetupData.deviceIdentification(), QVariant());
+  // Test node setup data - Initial state
+  QCOMPARE(tnSetupData.nodeIdentification(), QString());
+  QCOMPARE(tnSetupData.unitSetupList().size(), 0);
+  // Setup test node unit setup data - Will get fields from TestNodeUnitSetup_tbl
+  QVERIFY(tnuSetupData.setup(pvDatabaseManager.database()));
+  QCOMPARE(tnuSetupData.ioType(), mdtTtTestNodeUnitSetupData::Unknown);
+  QCOMPARE(tnuSetupData.ioPosition(), 0);
+  QCOMPARE(tnuSetupData.schemaPosition(), QString());
+
+  /*
+   * Check Test node unit setup data
+   */
+  // Basic values - From TestNodeUnitSetup_tbl
+  tnuSetupData.setValue("TestNodeUnit_Id_FK", 1);
+  tnuSetupData.setValue("TestModelItem_Id_FK", 2);
+  tnuSetupData.setValue("StepNumber", 3);
+  QCOMPARE(tnuSetupData.value("TestNodeUnit_Id_FK"), QVariant(1));
+  QCOMPARE(tnuSetupData.value("TestModelItem_Id_FK"), QVariant(2));
+  QCOMPARE(tnuSetupData.value("StepNumber"), QVariant(3));
+  // Clear
+  tnuSetupData.clearValues();
+  QVERIFY(tnuSetupData.value("TestNodeUnit_Id_FK").isNull());
+  QVERIFY(tnuSetupData.value("TestModelItem_Id_FK").isNull());
+  QVERIFY(tnuSetupData.value("StepNumber").isNull());
+
+  /*
+   * Setup test node unit setup data from TestItemNodeUnitSetup_view
+   */
+  QVERIFY(record.addAllFields("TestItemNodeUnitSetup_view", pvDatabaseManager.database()));
+  rec = record;
+  tnuSetupData = rec;
+  tnuSetupData.setValue("TestNode_Id_FK", 5);
+  tnuSetupData.setValue("Type_Code_FK", "AI");
+  tnuSetupData.setValue("IoPosition", 7);
+  tnuSetupData.setValue("SchemaPosition", "K8");
+  tnuSetupData.setValue("TestModelItem_Id_FK", 9);
+  tnuSetupData.setValue("StepNumber", 10);
+  tnuSetupData.setValue("TestNodeUnit_Id_FK", 11);
+  QCOMPARE(tnuSetupData.value("TestNode_Id_FK"), QVariant(5));
+  QCOMPARE(tnuSetupData.value("Type_Code_FK"), QVariant("AI"));
+  QCOMPARE(tnuSetupData.value("IoPosition"), QVariant(7));
+  QCOMPARE(tnuSetupData.value("SchemaPosition"), QVariant("K8"));
+  QCOMPARE(tnuSetupData.value("TestModelItem_Id_FK"), QVariant(9));
+  QCOMPARE(tnuSetupData.value("StepNumber"), QVariant(10));
+  QCOMPARE(tnuSetupData.value("TestNodeUnit_Id_FK"), QVariant(11));
+  QCOMPARE(tnuSetupData.ioType(), mdtTtTestNodeUnitSetupData::AnalogInput);
+  QCOMPARE(tnuSetupData.ioPosition(), 7);
+  QCOMPARE(tnuSetupData.schemaPosition(), QString("K8"));
+  // Clear
+  tnuSetupData.clearValues();
+  QVERIFY(tnuSetupData.value("TestNode_Id_FK").isNull());
+  QVERIFY(tnuSetupData.value("Type_Code_FK").isNull());
+  QVERIFY(tnuSetupData.value("IoPosition").isNull());
+  QVERIFY(tnuSetupData.value("SchemaPosition").isNull());
+  QVERIFY(tnuSetupData.value("TestModelItem_Id_FK").isNull());
+  QVERIFY(tnuSetupData.value("StepNumber").isNull());
+  QVERIFY(tnuSetupData.value("TestNodeUnit_Id_FK").isNull());
+  QCOMPARE(tnuSetupData.ioType(), mdtTtTestNodeUnitSetupData::Unknown);
+  QCOMPARE(tnuSetupData.ioPosition(), 0);
+  QCOMPARE(tnuSetupData.schemaPosition(), QString());
+
+  /*
+   * Build a setup
+   */
+  QCOMPARE(tnSetupData.unitSetupList().size(), 0);
+  // Database independant data
+  tnSetupData.setNodeIdentification("1000");
+  tnSetupData.setDeviceIdentification("W750:1000");
+  QCOMPARE(tnSetupData.nodeIdentification(), QString("1000"));
+  QCOMPARE(tnSetupData.devicedentification(), QVariant("W750:1000"));
+  // Test model item 1, Node 10, unit 100, I/O pos. 0 (K1), step 0
+  tnuSetupData.setValue("TestModelItem_Id_FK", 1);
+  tnuSetupData.setValue("TestNode_Id_FK", 10);
+  tnuSetupData.setValue("TestNodeUnit_Id_FK", 100);
+  tnuSetupData.setValue("IoPosition", 0);
+  tnuSetupData.setValue("SchemaPosition", "K1");
+  tnuSetupData.setValue("StepNumber", 0);
+  tnSetupData.addUnitSetup(tnuSetupData);
+  QCOMPARE(tnSetupData.unitSetupList().size(), 1);
+  // Test model item 1, Node 10, unit 101, I/O pos. 1 (K2), step 0
+  tnuSetupData.setValue("TestModelItem_Id_FK", 1);
+  tnuSetupData.setValue("TestNode_Id_FK", 10);
+  tnuSetupData.setValue("TestNodeUnit_Id_FK", 101);
+  tnuSetupData.setValue("IoPosition", 1);
+  tnuSetupData.setValue("SchemaPosition", "K2");
+  tnuSetupData.setValue("StepNumber", 0);
+  tnSetupData.addUnitSetup(tnuSetupData);
+  QCOMPARE(tnSetupData.unitSetupList().size(), 2);
+  // Test model item 1, Node 10, unit 104, I/O pos. 4 (K5), step 1
+  tnuSetupData.setValue("TestModelItem_Id_FK", 1);
+  tnuSetupData.setValue("TestNode_Id_FK", 10);
+  tnuSetupData.setValue("TestNodeUnit_Id_FK", 101);
+  tnuSetupData.setValue("IoPosition", 1);
+  tnuSetupData.setValue("SchemaPosition", "K5");
+  tnuSetupData.setValue("StepNumber", 1);
+  tnSetupData.addUnitSetup(tnuSetupData);
+  QCOMPARE(tnSetupData.unitSetupList().size(), 3);
+
+
+  // Check 
+  
+  // Check clear
+  tnuSetupData.clearValues();
+  
+  // Node unit 2 , test model item 10, step 0
+  tnuSetupData.setValue("TestNodeUnit_Id_FK", 2);
+  tnuSetupData.setValue("TestModelItem_Id_FK", 10);
+  tnuSetupData.setValue("StepNumber", 0);
+  QCOMPARE(tnuSetupData.value("TestNodeUnit_Id_FK"), QVariant(2));
+  QCOMPARE(tnuSetupData.value("TestModelItem_Id_FK"), QVariant(10));
+  QCOMPARE(tnuSetupData.value("StepNumber"), QVariant(0));
+  // Node unit 3 , test model item 10, step 0
+  tnuSetupData.setValue("TestNodeUnit_Id_FK", 3);
+  tnuSetupData.setValue("TestModelItem_Id_FK", 10);
+  tnuSetupData.setValue("StepNumber", 0);
+  QCOMPARE(tnuSetupData.value("TestNodeUnit_Id_FK"), QVariant(3));
+  QCOMPARE(tnuSetupData.value("TestModelItem_Id_FK"), QVariant(10));
+  QCOMPARE(tnuSetupData.value("StepNumber"), QVariant(0));
+  // Node unit 5 , test model item 10, step 1
+  tnuSetupData.setValue("TestNodeUnit_Id_FK", 5);
+  tnuSetupData.setValue("TestModelItem_Id_FK", 10);
+  tnuSetupData.setValue("StepNumber", 1);
+  QCOMPARE(tnuSetupData.value("TestNodeUnit_Id_FK"), QVariant(5));
+  QCOMPARE(tnuSetupData.value("TestModelItem_Id_FK"), QVariant(10));
+  QCOMPARE(tnuSetupData.value("StepNumber"), QVariant(1));
+
+
+}
+
 
 /*
  * Test database helper methods

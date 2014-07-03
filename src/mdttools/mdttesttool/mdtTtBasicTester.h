@@ -27,6 +27,9 @@
 #include <QMainWindow>
 #include <QSqlDatabase>
 
+class mdtSqlTableWidget;
+class QSqlTableModel;
+
 /*! \brief Provide ability to run tests
  */
 class mdtTtBasicTester : public QMainWindow, Ui::mdtTtBasicTester
@@ -49,9 +52,17 @@ class mdtTtBasicTester : public QMainWindow, Ui::mdtTtBasicTester
 
  private slots:
 
+  /*! \brief Create a test
+   */
+  void createTest();
+
   /*! \brief Set test model
    */
   void setTestModel();
+
+  /*! \brief Save test
+   */
+  void saveTest();
 
  private:
 
@@ -62,8 +73,6 @@ class mdtTtBasicTester : public QMainWindow, Ui::mdtTtBasicTester
   bool createNewTest();
 
   /*! \brief Save data part of Test_tbl
-   *
-   * Will also call displayTestData().
    */
   bool saveTestData();
 
@@ -71,9 +80,17 @@ class mdtTtBasicTester : public QMainWindow, Ui::mdtTtBasicTester
    */
   void displayTestData(bool getFromDatabase);
 
+  /*! \brief Display data part of Test item
+   */
+  void displayTestItemData();
+
   /*! \brief Display last error to the user
    */
   void displayLastError();
+
+  /*! \brief Setup TestItem_view
+   */
+  bool setupTestItemTable();
 
   /*! \brief Connect actions to slots
    */
@@ -81,6 +98,8 @@ class mdtTtBasicTester : public QMainWindow, Ui::mdtTtBasicTester
 
   QSqlDatabase pvDatabase;
   mdtTtTestData pvTestData;
+  QSqlTableModel *pvTestItemModel;      // Act on TestItem_tbl (R/W access)
+  mdtSqlTableWidget *pvTestItemWidget;  // Display data from TestItem_view (R only access)
   mdtError pvLastError;
 };
 

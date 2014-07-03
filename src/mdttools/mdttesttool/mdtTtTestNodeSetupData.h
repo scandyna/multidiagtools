@@ -21,9 +21,6 @@
 #ifndef MDT_TT_TEST_NODE_SETUP_DATA_H
 #define MDT_TT_TEST_NODE_SETUP_DATA_H
 
-///#include "mdtSqlRecord.h"
-///#include <QSqlDatabase>
-
 #include "mdtTtTestNodeUnitSetupData.h"
 #include <QString>
 #include <QVariant>
@@ -43,6 +40,14 @@ class mdtTtTestNodeSetupData
    */
   inline QString nodeIdentification() const { return pvNodeIdentification; }
 
+  /*! \brief Set device identification
+   */
+  void setDeviceIdentification(const QVariant & id);
+
+  /*! \brief Get device identification
+   */
+  inline QVariant devicedentification() const { return pvDeviceIdentification; }
+
   /*! \brief Clear test node unit setup data list
    */
   void clearUnitSetup();
@@ -58,6 +63,7 @@ class mdtTtTestNodeSetupData
  private:
 
   QString pvNodeIdentification;
+  QVariant pvDeviceIdentification;
   QList<mdtTtTestNodeUnitSetupData> pvUnitSetupData;
 };
 
