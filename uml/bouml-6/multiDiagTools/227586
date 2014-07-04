@@ -1,6 +1,6 @@
 format 206
 "mdttesttool" // mdttools::mdttesttool
-  revision 35
+  revision 36
   modified_by 2 "philippe"
   // class settings
   
@@ -3295,7 +3295,7 @@ ${inlines}
       
       classrelation 1620482 // pvNodeSetupDataList (<directional composition>)
 	relation 1604994 *-->
-	  stereotype "list"
+	  stereotype "multimap"
 	  a role_name "pvNodeSetupDataList" multiplicity "*" private
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
 "
@@ -3306,7 +3306,23 @@ ${inlines}
       operation 2092418 "addNodeSetupData"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "setupData" type class_ref 1282178 // mdtTtTestNodeSetupData
+	  param in name "data" type class_ref 1282178 // mdtTtTestNodeSetupData
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2106114 "addNodeUnitSetupData"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "data" type class_ref 1060738 // mdtTtTestNodeUnitSetupData
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -3364,7 +3380,7 @@ ${inlines}
 	
       end
 
-      operation 2092802 "deviceIdentification"
+      operation 2092802 "currentDeviceIdentification"
 	public return_type class_ref 161154 // QVariant
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};

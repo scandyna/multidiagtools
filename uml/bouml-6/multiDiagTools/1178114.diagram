@@ -54,7 +54,7 @@ relationcanvas 129666 relation_ref 1598210 // <directional composition>
   multiplicity_a_pos 546 310 3000 no_multiplicity_b
 end
 relationcanvas 129922 relation_ref 1604994 // <directional composition>
-  from ref 129794 z 2007 stereotype "<<list>>" xyz 445.5 651 2007 to ref 128642
+  from ref 129794 z 2007 stereotype "<<multimap>>" xyz 440 729 2007 to ref 128642
   role_a_pos 398 752 3000 no_role_b
   multiplicity_a_pos 521 782 3000 no_multiplicity_b
 end

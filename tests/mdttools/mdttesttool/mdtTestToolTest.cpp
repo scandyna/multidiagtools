@@ -380,7 +380,7 @@ void mdtTestToolTest::testNodeSetupDataTest()
    */
   // Test item setup data - Initial state
   QVERIFY(!tiSetupData.hasMoreStep());
-  ///QCOMPARE(tiSetupData.deviceIdentification(), QVariant());
+  QVERIFY(tiSetupData.currentDeviceIdentification().isNull());
   // Test node setup data - Initial state
   QCOMPARE(tnSetupData.nodeIdentification(), QString());
   QCOMPARE(tnSetupData.unitSetupList().size(), 0);
@@ -444,8 +444,21 @@ void mdtTestToolTest::testNodeSetupDataTest()
 
   /*
    * Build a setup
+   *
+   * |Item|Node|Unit(pos)|Step|
+   * --------------------------
+   * |  1 | 10 | 100 (K1)|  0 |
+   * --------------------------
+   * |  1 | 10 | 101 (K2)|  0 |
+   * --------------------------
+   * |  1 | 10 | 104 (K5)|  1 |
+   * --------------------------
+   *
+   * This gives a total of 2 steps
    */
   QCOMPARE(tnSetupData.unitSetupList().size(), 0);
+  QVERIFY(!tiSetupData.hasMoreStep());
+  QVERIFY(tiSetupData.currentDeviceIdentification().isNull());
   // Database independant data
   tnSetupData.setNodeIdentification("1000");
   tnSetupData.setDeviceIdentification("W750:1000");
@@ -478,7 +491,33 @@ void mdtTestToolTest::testNodeSetupDataTest()
   tnuSetupData.setValue("StepNumber", 1);
   tnSetupData.addUnitSetup(tnuSetupData);
   QCOMPARE(tnSetupData.unitSetupList().size(), 3);
+  // Add node setup to test item setup data and check
+  tiSetupData.addNodeSetupData(tnSetupData);
+  QVERIFY(tiSetupData.hasMoreStep());
+  // Step 0
+  QCOMPARE(tiSetupData.currentDeviceIdentification(), QVariant("W750:1000"));
+  tnSetupData = tiSetupData.getNextStep();
+  QCOMPARE(tnSetupData.unitSetupList().size(), 2);
+  QCOMPARE(tnSetupData.unitSetupList().at(0).schemaPosition(), QString("K1"));
+  QCOMPARE(tnSetupData.unitSetupList().at(0).ioPosition(), 0);
+  QCOMPARE(tnSetupData.unitSetupList().at(1).schemaPosition(), QString("K2"));
+  QCOMPARE(tnSetupData.unitSetupList().at(1).ioPosition(), 1);
 
+
+  /*
+   * Build a setup
+   *
+   * |Item|Node|Unit(pos)|Step|
+   * --------------------------
+   * |  1 | 10 | 100 (K1)|  0 |
+   * --------------------------
+   * |  1 | 20 | 121(K20)|  0 |
+   * --------------------------
+   * |  1 | 10 | 104 (K5)|  1 |
+   * --------------------------
+   *
+   * This gives a total of 3 steps
+   */
 
   // Check 
   

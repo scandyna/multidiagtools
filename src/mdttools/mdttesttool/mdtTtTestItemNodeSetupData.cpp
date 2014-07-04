@@ -22,14 +22,31 @@
 
 mdtTtTestItemNodeSetupData::mdtTtTestItemNodeSetupData()
 {
-  pvCurrentStep = 0;
+  ///pvCurrentStep = 0;
+  pvStepIterator = pvNodeSetupDataMap.begin();
 }
 
+void mdtTtTestItemNodeSetupData::addNodeSetupData(const mdtTtTestNodeSetupData & data)
+{
+  // Build list of setps contained in node unit setup data list
+  
+  // For each step, build a test node setup and add unit setup that are part of the step
+  
+  // Add each node setup to the map
+  
+}
+
+/**
+void mdtTtTestItemNodeSetupData::addNodeUnitSetupData(const mdtTtTestNodeUnitSetupData & data)
+{
+}
+*/
 
 void mdtTtTestItemNodeSetupData::clear()
 {
-  pvNodeSetupDataList.clear();
-  pvCurrentStep = 0;
+  pvNodeSetupDataMap.clear();
+  ///pvCurrentStep = 0;
+  pvStepIterator = pvNodeSetupDataMap.begin();
 }
 
 mdtTtTestNodeSetupData mdtTtTestItemNodeSetupData::getNextStep()
@@ -37,7 +54,11 @@ mdtTtTestNodeSetupData mdtTtTestItemNodeSetupData::getNextStep()
 
 }
 
-QVariant mdtTtTestItemNodeSetupData::deviceIdentification() const
+QVariant mdtTtTestItemNodeSetupData::currentDeviceIdentification() const
 {
-
+  if(pvStepIterator == pvNodeSetupDataMap.end()){
+    return QVariant();
+  }else{
+    return pvStepIterator.value().devicedentification();
+  }
 }
