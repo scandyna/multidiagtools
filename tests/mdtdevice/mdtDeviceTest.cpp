@@ -113,6 +113,10 @@ void mdtDeviceTest::deviceContainerTest()
   QCOMPARE(c.deviceCount(), 1);
   QCOMPARE(c.allDevices().size(), 1);
   QVERIFY(c.allDevices().at(0).get() != 0);
+  // Clear
+  c.clear();
+  QCOMPARE(c.deviceCount(), 0);
+  QCOMPARE(c.allDevices().size(), 0);
 }
 
 void mdtDeviceTest::deviceIosSegmentTest()

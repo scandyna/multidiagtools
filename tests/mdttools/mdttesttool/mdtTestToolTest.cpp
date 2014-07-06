@@ -32,6 +32,9 @@
 #include "mdtTtTestItemNodeSetupData.h"
 #include "mdtTtTestNodeSetupData.h"
 #include "mdtTtTestNodeUnitSetupData.h"
+#include "mdtTtTestNodeManager.h"
+#include "mdtTtTestNodeManagerWidget.h"
+#include "mdtDeviceU3606A.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -407,6 +410,17 @@ void mdtTestToolTest::testNodeSetupDataTest()
   QVERIFY(tnuSetupData.value("StepNumber").isNull());
 
   /*
+   * Check test node setup data
+   */
+  tnSetupData.setNodeIdentification("1");
+  tnSetupData.setDeviceIdentification(25);
+  QCOMPARE(tnSetupData.nodeIdentification(), QString("1"));
+  QCOMPARE(tnSetupData.deviceIdentification(), QVariant(25));
+  tnSetupData.clear();
+  QVERIFY(tnSetupData.nodeIdentification().isNull());
+  QVERIFY(tnSetupData.deviceIdentification().isNull());
+
+  /*
    * Setup test node unit setup data from TestItemNodeUnitSetup_view
    */
   QVERIFY(record.addAllFields("TestItemNodeUnitSetup_view", pvDatabaseManager.database()));
@@ -463,7 +477,7 @@ void mdtTestToolTest::testNodeSetupDataTest()
   tnSetupData.setNodeIdentification("1000");
   tnSetupData.setDeviceIdentification("W750:1000");
   QCOMPARE(tnSetupData.nodeIdentification(), QString("1000"));
-  QCOMPARE(tnSetupData.devicedentification(), QVariant("W750:1000"));
+  QCOMPARE(tnSetupData.deviceIdentification(), QVariant("W750:1000"));
   // Test model item 1, Node 10, unit 100, I/O pos. 0 (K1), step 0
   tnuSetupData.setValue("TestModelItem_Id_FK", 1);
   tnuSetupData.setValue("TestNode_Id_FK", 10);
@@ -486,23 +500,35 @@ void mdtTestToolTest::testNodeSetupDataTest()
   tnuSetupData.setValue("TestModelItem_Id_FK", 1);
   tnuSetupData.setValue("TestNode_Id_FK", 10);
   tnuSetupData.setValue("TestNodeUnit_Id_FK", 101);
-  tnuSetupData.setValue("IoPosition", 1);
+  tnuSetupData.setValue("IoPosition", 4);
   tnuSetupData.setValue("SchemaPosition", "K5");
   tnuSetupData.setValue("StepNumber", 1);
   tnSetupData.addUnitSetup(tnuSetupData);
   QCOMPARE(tnSetupData.unitSetupList().size(), 3);
   // Add node setup to test item setup data and check
   tiSetupData.addNodeSetupData(tnSetupData);
-  QVERIFY(tiSetupData.hasMoreStep());
   // Step 0
-  QCOMPARE(tiSetupData.currentDeviceIdentification(), QVariant("W750:1000"));
+  QVERIFY(tiSetupData.hasMoreStep());
   tnSetupData = tiSetupData.getNextStep();
+  QCOMPARE(tiSetupData.currentDeviceIdentification(), QVariant("W750:1000"));
   QCOMPARE(tnSetupData.unitSetupList().size(), 2);
   QCOMPARE(tnSetupData.unitSetupList().at(0).schemaPosition(), QString("K1"));
   QCOMPARE(tnSetupData.unitSetupList().at(0).ioPosition(), 0);
   QCOMPARE(tnSetupData.unitSetupList().at(1).schemaPosition(), QString("K2"));
   QCOMPARE(tnSetupData.unitSetupList().at(1).ioPosition(), 1);
-
+  // Step 1
+  QVERIFY(tiSetupData.hasMoreStep());
+  tnSetupData = tiSetupData.getNextStep();
+  QCOMPARE(tiSetupData.currentDeviceIdentification(), QVariant("W750:1000"));
+  QCOMPARE(tnSetupData.unitSetupList().size(), 1);
+  QCOMPARE(tnSetupData.unitSetupList().at(0).schemaPosition(), QString("K5"));
+  QCOMPARE(tnSetupData.unitSetupList().at(0).ioPosition(), 4);
+  // End
+  QVERIFY(!tiSetupData.hasMoreStep());
+  // Clear
+  tiSetupData.clear();
+  QVERIFY(!tiSetupData.hasMoreStep());
+  QVERIFY(tiSetupData.currentDeviceIdentification().isNull());
 
   /*
    * Build a setup
@@ -518,35 +544,136 @@ void mdtTestToolTest::testNodeSetupDataTest()
    *
    * This gives a total of 3 steps
    */
-
-  // Check 
-  
-  // Check clear
+  // Test item 1, Node 10, unit 100 (K1), step 0
+  tnSetupData.clearUnitSetup();
+  QCOMPARE(tnSetupData.unitSetupList().size(), 0);
   tnuSetupData.clearValues();
-  
-  // Node unit 2 , test model item 10, step 0
-  tnuSetupData.setValue("TestNodeUnit_Id_FK", 2);
-  tnuSetupData.setValue("TestModelItem_Id_FK", 10);
+  tnSetupData.setNodeIdentification("2000");
+  tnSetupData.setDeviceIdentification("W750:2000");
+  tnuSetupData.setValue("TestModelItem_Id_FK", 1);
+  tnuSetupData.setValue("TestNode_Id_FK", 10);
+  tnuSetupData.setValue("TestNodeUnit_Id_FK", 100);
+  tnuSetupData.setValue("IoPosition", 0);
+  tnuSetupData.setValue("SchemaPosition", "K1");
   tnuSetupData.setValue("StepNumber", 0);
-  QCOMPARE(tnuSetupData.value("TestNodeUnit_Id_FK"), QVariant(2));
-  QCOMPARE(tnuSetupData.value("TestModelItem_Id_FK"), QVariant(10));
-  QCOMPARE(tnuSetupData.value("StepNumber"), QVariant(0));
-  // Node unit 3 , test model item 10, step 0
-  tnuSetupData.setValue("TestNodeUnit_Id_FK", 3);
-  tnuSetupData.setValue("TestModelItem_Id_FK", 10);
+  tnSetupData.addUnitSetup(tnuSetupData);
+  QCOMPARE(tnSetupData.unitSetupList().size(), 1);
+  tiSetupData.addNodeSetupData(tnSetupData);
+  // Test item 1, Node 20, unit 121 (K20), step 0
+  tnSetupData.clearUnitSetup();
+  QCOMPARE(tnSetupData.unitSetupList().size(), 0);
+  tnuSetupData.clearValues();
+  tnSetupData.setNodeIdentification("2200");
+  tnSetupData.setDeviceIdentification("W750:2200");
+  tnuSetupData.setValue("TestModelItem_Id_FK", 1);
+  tnuSetupData.setValue("TestNode_Id_FK", 20);
+  tnuSetupData.setValue("TestNodeUnit_Id_FK", 121);
+  tnuSetupData.setValue("IoPosition", 19);
+  tnuSetupData.setValue("SchemaPosition", "K20");
   tnuSetupData.setValue("StepNumber", 0);
-  QCOMPARE(tnuSetupData.value("TestNodeUnit_Id_FK"), QVariant(3));
-  QCOMPARE(tnuSetupData.value("TestModelItem_Id_FK"), QVariant(10));
-  QCOMPARE(tnuSetupData.value("StepNumber"), QVariant(0));
-  // Node unit 5 , test model item 10, step 1
-  tnuSetupData.setValue("TestNodeUnit_Id_FK", 5);
-  tnuSetupData.setValue("TestModelItem_Id_FK", 10);
+  tnSetupData.addUnitSetup(tnuSetupData);
+  QCOMPARE(tnSetupData.unitSetupList().size(), 1);
+  tiSetupData.addNodeSetupData(tnSetupData);
+  // Test item 1, Node 10, unit 104 (K5), step 0
+  tnSetupData.clearUnitSetup();
+  QCOMPARE(tnSetupData.unitSetupList().size(), 0);
+  tnuSetupData.clearValues();
+  tnSetupData.setNodeIdentification("2000");
+  tnSetupData.setDeviceIdentification("W750:2000");
+  tnuSetupData.setValue("TestModelItem_Id_FK", 1);
+  tnuSetupData.setValue("TestNode_Id_FK", 10);
+  tnuSetupData.setValue("TestNodeUnit_Id_FK", 14);
+  tnuSetupData.setValue("IoPosition", 4);
+  tnuSetupData.setValue("SchemaPosition", "K5");
   tnuSetupData.setValue("StepNumber", 1);
-  QCOMPARE(tnuSetupData.value("TestNodeUnit_Id_FK"), QVariant(5));
-  QCOMPARE(tnuSetupData.value("TestModelItem_Id_FK"), QVariant(10));
-  QCOMPARE(tnuSetupData.value("StepNumber"), QVariant(1));
+  tnSetupData.addUnitSetup(tnuSetupData);
+  QCOMPARE(tnSetupData.unitSetupList().size(), 1);
+  tiSetupData.addNodeSetupData(tnSetupData);
+  /*
+   * Check. Note that for step 0, node 10 and 20 will be swapped,
+   *  because QMultiMap (used in mdtTtTestItemNodeSetupData) inserts items
+   *  that shares the same keys as a LIFO.
+   */
+  // Step 0 - Node 20
+  QVERIFY(tiSetupData.hasMoreStep());
+  tnSetupData = tiSetupData.getNextStep();
+  QCOMPARE(tiSetupData.currentDeviceIdentification(), QVariant("W750:2200"));
+  QCOMPARE(tnSetupData.unitSetupList().size(), 1);
+  QCOMPARE(tnSetupData.unitSetupList().at(0).schemaPosition(), QString("K20"));
+  QCOMPARE(tnSetupData.unitSetupList().at(0).ioPosition(), 19);
+  // Step 0 - Node 10
+  QVERIFY(tiSetupData.hasMoreStep());
+  tnSetupData = tiSetupData.getNextStep();
+  QCOMPARE(tiSetupData.currentDeviceIdentification(), QVariant("W750:2000"));
+  QCOMPARE(tnSetupData.unitSetupList().size(), 1);
+  QCOMPARE(tnSetupData.unitSetupList().at(0).schemaPosition(), QString("K1"));
+  QCOMPARE(tnSetupData.unitSetupList().at(0).ioPosition(), 0);
+  // Step 1
+  QVERIFY(tiSetupData.hasMoreStep());
+  tnSetupData = tiSetupData.getNextStep();
+  QCOMPARE(tiSetupData.currentDeviceIdentification(), QVariant("W750:2000"));
+  QCOMPARE(tnSetupData.unitSetupList().size(), 1);
+  QCOMPARE(tnSetupData.unitSetupList().at(0).schemaPosition(), QString("K5"));
+  QCOMPARE(tnSetupData.unitSetupList().at(0).ioPosition(), 4);
+  // End
+  QVERIFY(!tiSetupData.hasMoreStep());
+  // Clear
+  tiSetupData.clear();
+  QVERIFY(!tiSetupData.hasMoreStep());
+  QVERIFY(tiSetupData.currentDeviceIdentification().isNull());
 
+}
 
+void mdtTestToolTest::mdtTtTestNodeManagerTest()
+{
+  std::shared_ptr<mdtTtTestNodeManager> m(new mdtTtTestNodeManager(0, pvDatabaseManager.database()));
+  mdtTtTestNodeManagerWidget w;
+  std::shared_ptr<mdtDeviceU3606A> devU3606A;
+  std::shared_ptr<mdtDeviceScpi> devScpi;
+  QList<std::shared_ptr<mdtDevice>> devList;
+
+  // Add a device that is not related to a test node
+  m->addDevice<mdtDeviceU3606A>("U3606A", "SN01", "U3606A Multimeter, SN01");
+  devU3606A = m->device<mdtDeviceU3606A>("U3606A");
+  QVERIFY(devU3606A.get() != 0);
+  devList = m->allDevices();
+  QCOMPARE(devList.size(), 1);
+  QVERIFY(devList.at(0).get() != 0);
+  // Assign manager to widget
+  w.setTestNodeManager(m);
+  w.show();
+  
+  QTest::qWait(3000);
+  
+  // Add a new SCPI device
+  devScpi = m->addDevice<mdtDeviceScpi>("SCPI", "SN005", "Generic SCPI device");
+  
+  qDebug() << "U3606A count: " << devU3606A.use_count() << " , SCPI count: " << devScpi.use_count();
+  
+  devU3606A->connectToDevice(mdtDeviceInfo());
+  QTest::qWait(5000);
+  devU3606A->disconnectFromDevice();
+  
+  QTest::qWait(2000);
+  
+  m->clear();
+  devScpi = m->addDevice<mdtDeviceScpi>("SCPI6", "SN06", "Generic SCPI device 6");
+  devScpi->connectToDevice(mdtDeviceInfo());
+  devScpi = m->addDevice<mdtDeviceScpi>("SCPI7", "SN07", "Generic SCPI device 7");
+  devScpi->connectToDevice(mdtDeviceInfo());
+  devScpi = m->addDevice<mdtDeviceScpi>("SCPI8", "SN08", "Generic SCPI device 8");
+  devScpi->connectToDevice(mdtDeviceInfo());
+  
+  devU3606A = m->addDevice<mdtDeviceU3606A>("U3606A01", "SN01", "U3606A Multimeter, SN01");
+  devU3606A->connectToDevice(mdtDeviceInfo());
+  devU3606A = m->addDevice<mdtDeviceU3606A>("U3606A02", "SN02", "U3606A Multimeter, SN02");
+  devU3606A->connectToDevice(mdtDeviceInfo());
+
+  qDebug() << "U3606A count: " << devU3606A.use_count() << " , SCPI count: " << devScpi.use_count();
+  
+  while(w.isVisible()){
+    QTest::qWait(1000);
+  }
 }
 
 

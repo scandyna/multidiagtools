@@ -25,7 +25,6 @@
 #include <vector>
 #include <memory>
 #include <typeinfo>
-///#include <boost/any.hpp>
 #include <QVariant>
 #include <QList>
 
@@ -74,6 +73,10 @@ class mdtDeviceContainer
   /*! \brief Get number of contained devices
    */
   inline int deviceCount() const { return pvDevices.size(); }
+
+  /*! \brief Remove all devices
+   */
+  void clear();
 
   /*! \brief Get a list of all devices
    *

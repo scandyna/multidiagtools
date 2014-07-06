@@ -14,6 +14,8 @@ set (TT_HEADER_FILES
           mdtTtTestModelEditor.h
           mdtTtTestModelItemEditor.h
           mdtTtTestNodeUnitSetupDialog.h
+          mdtTtTestNodeManager.h
+          mdtTtTestNodeManagerWidget.h
           mdtTtBasicTester.h
     )
 
@@ -38,6 +40,8 @@ set (TT_SOURCES_FILES
           mdtTtTestNodeUnitSetupDialog.cpp
           mdtTtTestItemNodeSetupData.cpp
           mdtTtTestNodeSetupData.cpp
+          mdtTtTestNodeManager.cpp
+          mdtTtTestNodeManagerWidget.cpp
           mdtTtBasicTester.cpp
           mdtTtTestModelData.cpp
           mdtTtTestData.cpp
@@ -152,7 +156,7 @@ add_library (mdttesttool${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES} ${MOC_H
 #target_link_libraries(mdttesttool${MDTLIB_VERSION_SUFFIX} "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
 #target_link_libraries(mdttesttool${MDTLIB_VERSION_SUFFIX} "mdtport${MDTLIB_VERSION_SUFFIX}")
 #target_link_libraries(mdttesttool${MDTLIB_VERSION_SUFFIX} "mdtserialport${MDTLIB_VERSION_SUFFIX}")
-#target_link_libraries(mdttesttool${MDTLIB_VERSION_SUFFIX} "mdtdevice${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdttesttool${MDTLIB_VERSION_SUFFIX} "mdtdevice${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdttesttool${MDTLIB_VERSION_SUFFIX} "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
 
 # Translations - We generate a .pro file, that simplify the usage of lupdate

@@ -30,6 +30,13 @@ void mdtTtTestNodeSetupData::setDeviceIdentification(const QVariant& id)
   pvDeviceIdentification = id;
 }
 
+void mdtTtTestNodeSetupData::clear()
+{
+  pvNodeIdentification.clear();
+  pvDeviceIdentification.clear();
+  clearUnitSetup();
+}
+
 void mdtTtTestNodeSetupData::clearUnitSetup()
 {
   pvUnitSetupData.clear();

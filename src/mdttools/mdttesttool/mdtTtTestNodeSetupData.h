@@ -46,7 +46,11 @@ class mdtTtTestNodeSetupData
 
   /*! \brief Get device identification
    */
-  inline QVariant devicedentification() const { return pvDeviceIdentification; }
+  inline QVariant deviceIdentification() const { return pvDeviceIdentification; }
+
+  /*! \brief Clear data
+   */
+  void clear();
 
   /*! \brief Clear test node unit setup data list
    */

@@ -36,7 +36,7 @@
 #include <QDebug>
 
 mdtTtBasicTester::mdtTtBasicTester(QWidget *parent, QSqlDatabase db)
- : QMainWindow(parent)
+ : QMainWindow(parent), pvNodeManager(0, db)
 {
   pvDatabase = db;
   pvTestItemWidget = new mdtSqlTableWidget(this);

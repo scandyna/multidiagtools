@@ -23,6 +23,7 @@
 
 #include "ui_mdtTtBasicTester.h"
 #include "mdtTtTestData.h"
+#include "mdtTtTestNodeManager.h"
 #include "mdtError.h"
 #include <QMainWindow>
 #include <QSqlDatabase>
@@ -100,6 +101,7 @@ class mdtTtBasicTester : public QMainWindow, Ui::mdtTtBasicTester
   mdtTtTestData pvTestData;
   QSqlTableModel *pvTestItemModel;      // Act on TestItem_tbl (R/W access)
   mdtSqlTableWidget *pvTestItemWidget;  // Display data from TestItem_view (R only access)
+  mdtTtTestNodeManager pvNodeManager;
   mdtError pvLastError;
 };
 

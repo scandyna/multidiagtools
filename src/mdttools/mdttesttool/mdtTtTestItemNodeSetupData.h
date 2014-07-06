@@ -107,6 +107,7 @@ class mdtTtTestItemNodeSetupData
   ///QList<mdtTtTestNodeSetupData> pvNodeSetupDataList;
   QMultiMap<int, mdtTtTestNodeSetupData> pvNodeSetupDataMap;
   QMultiMap<int, mdtTtTestNodeSetupData>::const_iterator pvStepIterator;
+  mdtTtTestNodeSetupData pvCurrentTestNodeSetupData;
 };
 
 #endif // #ifndef MDT_TT_TEST_ITEM_NODE_SETUP_DATA_H

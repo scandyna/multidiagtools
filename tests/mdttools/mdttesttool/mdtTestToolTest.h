@@ -46,6 +46,8 @@ class mdtTestToolTest : public mdtTest
 
   void testNodeSetupDataTest();
 
+  void mdtTtTestNodeManagerTest();
+
  private:
 
   // Create test database schema - Will FAIL on problem

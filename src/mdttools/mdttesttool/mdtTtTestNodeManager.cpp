@@ -18,32 +18,21 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtDeviceContainer.h"
-#include "mdtDevice.h"
-#include "mdtDeviceU3606A.h"
+#include "mdtTtTestNodeManager.h"
 
-//#include <QDebug>
-
-using namespace std;
-
-mdtDeviceContainer::mdtDeviceContainer()
+mdtTtTestNodeManager::mdtTtTestNodeManager(QObject* parent, QSqlDatabase db)
+ : QObject(parent)
 {
+  pvDatabase = db;
 }
 
-QList<shared_ptr<mdtDevice>> mdtDeviceContainer::allDevices()
+QList<std::shared_ptr<mdtDevice> > mdtTtTestNodeManager::allDevices()
 {
-  QList<shared_ptr<mdtDevice>> lst;
-  std::vector<std::shared_ptr<mdtDevice>>::const_iterator it;
-
-  for(it = pvDevices.begin(); it != pvDevices.end(); ++it){
-    Q_ASSERT(*it);
-    lst.append(*it);
-  }
-
-  return lst;
+  return pvDevices.allDevices();
 }
 
-void mdtDeviceContainer::clear()
+void mdtTtTestNodeManager::clear()
 {
   pvDevices.clear();
+  emit cleared();
 }

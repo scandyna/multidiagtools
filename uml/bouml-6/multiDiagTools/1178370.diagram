@@ -2,11 +2,11 @@ format 206
 
 classcanvas 128002 class_ref 1302146 // mdtTtTestNodeManagerWidget
   classdiagramsettings member_max_width 0 end
-  xyz 37 532 2000
+  xyz 25 368 2000
 end
 classcanvas 128130 class_ref 1302018 // mdtTtTestNodeManager
   classdiagramsettings member_max_width 0 end
-  xyz 373 158 2000
+  xyz 276 667 2000
 end
 classcanvas 128258 class_ref 316162 // QWidget
   classdiagramsettings member_max_width 0 end
@@ -14,7 +14,11 @@ classcanvas 128258 class_ref 316162 // QWidget
 end
 classcanvas 128898 class_ref 1302402 // mdtTtTestNodeManagerWidgetItem
   classdiagramsettings member_max_width 0 end
-  xyz 234 366 2000
+  xyz 230 156 2000
+end
+classcanvas 129666 class_ref 138626 // QObject
+  classdiagramsettings member_max_width 0 end
+  xyz 504 40 2006
 end
 relationcanvas 128386 relation_ref 1597954 // <generalisation>
   decenter_begin 390
@@ -25,15 +29,24 @@ relationcanvas 128386 relation_ref 1597954 // <generalisation>
 end
 relationcanvas 129026 relation_ref 1598338 // <directional composition>
   geometry HV
-  from ref 128002 z 2001 to point 533 557
+  from ref 128002 z 2001 stereotype "<<list>>" xyz 452.5 446 3000 to point 529 444
   line 129282 z 2001 to ref 128898
-  role_a_pos 545 452 3000 no_role_b
-  multiplicity_a_pos 520 452 3000 no_multiplicity_b
+  role_a_pos 541 258 3000 no_role_b
+  multiplicity_a_pos 516 258 3000 no_multiplicity_b
 end
-relationcanvas 129154 relation_ref 1598466 // <generalisation>
-  decenter_begin 64
-  decenter_end 590
-  from ref 128898 z 2007 to ref 128258
+relationcanvas 129410 relation_ref 1611522 // <unidirectional association>
+  from ref 128002 z 2001 to ref 128130
+  role_a_pos 431 644 3000 no_role_b
+  multiplicity_a_pos 389 644 3000 no_multiplicity_b
+end
+relationcanvas 129794 relation_ref 1597826 // <generalisation>
+  from ref 128130 z 2007 to ref 129666
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129922 relation_ref 1611650 // <generalisation>
+  decenter_end 260
+  from ref 128898 z 2007 to ref 129666
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
