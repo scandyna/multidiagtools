@@ -21,12 +21,14 @@
 #include "mdtDeviceContainer.h"
 #include "mdtDevice.h"
 #include "mdtDeviceU3606A.h"
+#include <QObject>
 
 //#include <QDebug>
 
 using namespace std;
 
-mdtDeviceContainer::mdtDeviceContainer()
+mdtDeviceContainer::mdtDeviceContainer(QObject *parent)
+ : QObject(parent)
 {
 }
 
@@ -46,4 +48,5 @@ QList<shared_ptr<mdtDevice>> mdtDeviceContainer::allDevices()
 void mdtDeviceContainer::clear()
 {
   pvDevices.clear();
+  emit cleared();
 }

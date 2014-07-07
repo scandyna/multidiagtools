@@ -25,6 +25,7 @@
 #include "mdtTtTestData.h"
 #include "mdtValue.h"
 #include "mdtTtTestNodeUnitSetupData.h"
+#include "mdtTtTestItemNodeSetupData.h"
 #include <QSqlDatabase>
 #include <QModelIndex>
 #include <QVariant>
@@ -32,6 +33,7 @@
 #include <QStringList>
 #include <QList>
 #include <QSqlRecord>
+#include <memory>
 
 class QSqlTableModel;
 
@@ -46,6 +48,12 @@ class mdtTtTest : public mdtTtBase
   /*! \brief Constructor
    */
   mdtTtTest(QObject *parent, QSqlDatabase db);
+
+  /*! \brief Setup test item model
+   *
+   * This is only needed to run test items.
+   */
+  bool setupTestItemModel();
 
   /*! \brief Get test data for given test ID
    */
@@ -69,6 +77,11 @@ class mdtTtTest : public mdtTtBase
    */
   bool updateTest(const QVariant & testId, const mdtTtTestData & data);
 
+  /*! \brief Get setup data for given test item ID
+   */
+  mdtTtTestItemNodeSetupData getSetupData(const QVariant & testItemId, bool & ok);
+
+
   /*! \brief Set test item model
    *
    * If a model that contains test item data
@@ -82,8 +95,10 @@ class mdtTtTest : public mdtTtBase
    *  objects for each, possibly single data, query.
    *
    * The given model will not be deleted by this class .
+   *
+   * \deprecated
    */
-  bool setTestItemSqlModel(QSqlTableModel *model);
+  ///bool setTestItemSqlModel(QSqlTableModel *model);
 
   /*! \brief Get a list of test item IDs for given test ID
    *
@@ -103,6 +118,8 @@ class mdtTtTest : public mdtTtBase
    *
    * \param testItemId Primary key of TestItem_tbl
    * \param hardwareNodeId NodeId from TestNode_tbl
+   *
+   * \deprecated
    */
   ///QList<mdtTtTestNodeUnitSetupData> getNodeUnitSetupList(const QVariant & testItemId, const QVariant & hardwareNodeId);
   QList<QSqlRecord> getNodeUnitSetupList(const QVariant & testItemId, const QVariant & hardwareNodeId);
@@ -156,6 +173,8 @@ class mdtTtTest : public mdtTtBase
    */
   bool removeTestItems(const QVariant & testId);
 
+  
+  
   /*! \brief Check if test item sql model was set
    *
    * Will store a error if not ok .
@@ -189,7 +208,8 @@ class mdtTtTest : public mdtTtBase
   Q_DISABLE_COPY(mdtTtTest);
 
   // Test item data models
-  QSqlTableModel *pvTestItemSqlModel;
+  ///QSqlTableModel *pvTestItemSqlModel;
+  std::shared_ptr<QSqlTableModel> pvTestItemTableModel;
   int pvColIdxOfTestItemId;
   int pvColIdxOfExpectedValue;
   int pvColIdxOfMeasuredValue;

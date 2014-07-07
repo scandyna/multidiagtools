@@ -9,6 +9,8 @@ project (multidiagtools)
 set (HEADER_FILES 
           # Device
           mdtDevice.h
+          mdtDeviceContainer.h
+          mdtDeviceContainerWidget.h
           mdtDeviceIos.h
           mdtDeviceIosWidget.h
           mdtDeviceWindow.h
@@ -26,6 +28,7 @@ set (SOURCES_FILES
           # Device
           mdtDevice.cpp
           mdtDeviceContainer.cpp
+          mdtDeviceContainerWidget.cpp
           mdtDeviceIos.cpp
           mdtDeviceIosSegment.cpp
           mdtDeviceIosWidget.cpp

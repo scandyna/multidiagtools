@@ -22,6 +22,7 @@
 #define MDT_TT_BASIC_TESTER_H
 
 #include "ui_mdtTtBasicTester.h"
+#include "mdtTtTest.h"
 #include "mdtTtTestData.h"
 #include "mdtTtTestNodeManager.h"
 #include "mdtError.h"
@@ -29,7 +30,7 @@
 #include <QSqlDatabase>
 
 class mdtSqlTableWidget;
-class QSqlTableModel;
+///class QSqlTableModel;
 
 /*! \brief Provide ability to run tests
  */
@@ -43,9 +44,9 @@ class mdtTtBasicTester : public QMainWindow, Ui::mdtTtBasicTester
    */
   mdtTtBasicTester(QWidget *parent, QSqlDatabase db);
 
-  /*! \brief Setup tables
+  /*! \brief Setup
    */
-  bool setupTables();
+  bool setup();
 
   /*! \brief Get last error
    */
@@ -64,6 +65,10 @@ class mdtTtBasicTester : public QMainWindow, Ui::mdtTtBasicTester
   /*! \brief Save test
    */
   void saveTest();
+
+  /*! \brief Run test
+   */
+  void runTest();
 
  private:
 
@@ -89,6 +94,18 @@ class mdtTtBasicTester : public QMainWindow, Ui::mdtTtBasicTester
    */
   void displayLastError();
 
+  /*! \brief Setup instruments
+   */
+  bool setupInstruments();
+
+  /*! \brief Connect to instruments
+   */
+  bool connectToInstruments();
+
+  /*! \brief Setup tables
+   */
+  bool setupTables();
+
   /*! \brief Setup TestItem_view
    */
   bool setupTestItemTable();
@@ -99,9 +116,10 @@ class mdtTtBasicTester : public QMainWindow, Ui::mdtTtBasicTester
 
   QSqlDatabase pvDatabase;
   mdtTtTestData pvTestData;
-  QSqlTableModel *pvTestItemModel;      // Act on TestItem_tbl (R/W access)
+  ///QSqlTableModel *pvTestItemModel;      // Act on TestItem_tbl (R/W access)
   mdtSqlTableWidget *pvTestItemWidget;  // Display data from TestItem_view (R only access)
   mdtTtTestNodeManager pvNodeManager;
+  mdtTtTest pvTest;
   mdtError pvLastError;
 };
 

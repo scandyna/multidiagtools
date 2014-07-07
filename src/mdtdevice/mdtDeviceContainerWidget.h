@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_TT_TEST_NODE_MANAGER_WIDGET_H
-#define MDT_TT_TEST_NODE_MANAGER_WIDGET_H
+#ifndef MDT_DEVICE_CONTAINER_WIDGET_H
+#define MDT_DEVICE_CONTAINER_WIDGET_H
 
 #include <QWidget>
 #include <QObject>
@@ -30,13 +30,13 @@ class QGridLayout;
 class mdtDevice;
 class QLabel;
 class mdtLed;
-class mdtTtTestNodeManager;
+class mdtDeviceContainer;
 
-namespace mdtTtTestNodeManagerWidgetPrivate
+namespace mdtDeviceContainerWidgetPrivate
 {
   /*! \internal Container for mdtTtTestNodeManagerWidget
    */
-  class mdtTtTestNodeManagerWidgetItem : public QObject
+  class mdtDeviceContainerWidgetItem : public QObject
   {
     Q_OBJECT
 
@@ -46,27 +46,29 @@ namespace mdtTtTestNodeManagerWidgetPrivate
      *
      * Will create widgets (without parent)
      */
-    mdtTtTestNodeManagerWidgetItem(QObject* parent, std::shared_ptr<mdtDevice> _device);
+    mdtDeviceContainerWidgetItem(QObject* parent, std::shared_ptr<mdtDevice> _device);
 
     std::shared_ptr<mdtDevice> device;
     std::shared_ptr<QLabel> lbDeviceName;
     std::shared_ptr<mdtLed> ldState;
     std::shared_ptr<QLabel> lbDeviceStateText;
+    std::shared_ptr<QLabel> lbMessage;
 
   public slots:
 
     void setState(int stateId, const QString & stateText, int ledColorId, bool ledIsOn);
+    void setMessage(const QString & message, const QString & details);
 
   private:
 
-    Q_DISABLE_COPY(mdtTtTestNodeManagerWidgetItem);
+    Q_DISABLE_COPY(mdtDeviceContainerWidgetItem);
   };
 
 }
 
 /*! \brief Manage device status widget items
  */
-class mdtTtTestNodeManagerWidget : public QWidget
+class mdtDeviceContainerWidget : public QWidget
 {
   Q_OBJECT
 
@@ -74,16 +76,16 @@ class mdtTtTestNodeManagerWidget : public QWidget
 
   /*! \brief Constructor
    */
-  mdtTtTestNodeManagerWidget(QWidget* parent = 0);
+  mdtDeviceContainerWidget(QWidget* parent = 0);
 
-  /*! \brief Set test node manager
+  /*! \brief Set device container
    *
-   * Will clear widget and add all devices allready set in m.
-   *  Then, signals from m are connected,
+   * Will clear widgets, then add all devices allready set in c.
+   *  Then, signals from c are connected,
    *  so this widget will be updated each time a device
-   *  is added/removed from manager m.
+   *  is added/removed from container c.
    */
-  void setTestNodeManager(std::shared_ptr<mdtTtTestNodeManager> m);
+  void setContainer(std::shared_ptr<mdtDeviceContainer> c);
 
  public slots:
 
@@ -95,23 +97,19 @@ class mdtTtTestNodeManagerWidget : public QWidget
    */
   void clear();
 
-  /*! \brief Remove a device
-   */
-  ///void removeDevice(mdtDevice* device);
-
  private:
 
-  Q_DISABLE_COPY(mdtTtTestNodeManagerWidget);
+  Q_DISABLE_COPY(mdtDeviceContainerWidget);
 
   /*! \brief Remove a widget item
    *
    * Will anly remove widgets from layout, pvItems is not changed.
    */
-  void removeItemWidgets(std::shared_ptr<mdtTtTestNodeManagerWidgetPrivate::mdtTtTestNodeManagerWidgetItem> item);
+  void removeItemWidgets(std::shared_ptr<mdtDeviceContainerWidgetPrivate::mdtDeviceContainerWidgetItem> item);
 
   QGridLayout *pvLayout;
   int pvCurrentLayoutRow;
-  QList<std::shared_ptr<mdtTtTestNodeManagerWidgetPrivate::mdtTtTestNodeManagerWidgetItem> > pvItems;
+  QList<std::shared_ptr<mdtDeviceContainerWidgetPrivate::mdtDeviceContainerWidgetItem> > pvItems;
 };
 
-#endif // #ifndef MDT_TT_TEST_NODE_MANAGER_WIDGET_H
+#endif // #ifndef MDT_DEVICE_CONTAINER_WIDGET_H

@@ -22,7 +22,7 @@ classcanvas 128770 class_ref 1060738 // mdtTtTestNodeUnitSetupData
 end
 classcanvas 129410 class_ref 1302274 // mdtDeviceContainer
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 618 303 2011
+  xyz 669 336 2011
 end
 classcanvas 129794 class_ref 1308930 // mdtTtTestItemNodeSetupData
   classdiagramsettings member_max_width 0 end
@@ -44,18 +44,23 @@ relationcanvas 128898 relation_ref 1577858 // <directional composition>
   multiplicity_a_pos 554 888 3000 no_multiplicity_b
 end
 relationcanvas 129538 relation_ref 1598082 // <directional composition>
-  from ref 129410 z 2012 stereotype "<<vector>>" xyz 636.5 230.5 2012 to ref 128130
-  role_a_pos 669 168 3000 no_role_b
-  multiplicity_a_pos 644 168 3000 no_multiplicity_b
+  from ref 129410 z 2012 stereotype "<<vector>>" xyz 660 246 2012 to ref 128130
+  role_a_pos 675 168 3000 no_role_b
+  multiplicity_a_pos 650 168 3000 no_multiplicity_b
 end
 relationcanvas 129666 relation_ref 1598210 // <directional composition>
   from ref 128002 z 2012 to ref 129410
-  role_a_pos 545 306 3000 no_role_b
-  multiplicity_a_pos 600 336 3000 no_multiplicity_b
+  role_a_pos 596 334 3000 no_role_b
+  multiplicity_a_pos 651 364 3000 no_multiplicity_b
 end
 relationcanvas 129922 relation_ref 1604994 // <directional composition>
   from ref 129794 z 2007 stereotype "<<multimap>>" xyz 421 718 2007 to ref 128642
   role_a_pos 396 751 3000 no_role_b
   multiplicity_a_pos 519 781 3000 no_multiplicity_b
+end
+relationcanvas 130050 relation_ref 1618178 // <generalisation>
+  from ref 129410 z 2012 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
 end
 end

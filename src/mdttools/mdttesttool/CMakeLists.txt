@@ -15,7 +15,7 @@ set (TT_HEADER_FILES
           mdtTtTestModelItemEditor.h
           mdtTtTestNodeUnitSetupDialog.h
           mdtTtTestNodeManager.h
-          mdtTtTestNodeManagerWidget.h
+          #mdtTtTestNodeManagerWidget.h
           mdtTtBasicTester.h
     )
 
@@ -41,7 +41,7 @@ set (TT_SOURCES_FILES
           mdtTtTestItemNodeSetupData.cpp
           mdtTtTestNodeSetupData.cpp
           mdtTtTestNodeManager.cpp
-          mdtTtTestNodeManagerWidget.cpp
+          #mdtTtTestNodeManagerWidget.cpp
           mdtTtBasicTester.cpp
           mdtTtTestModelData.cpp
           mdtTtTestData.cpp

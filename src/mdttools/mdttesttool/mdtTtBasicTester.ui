@@ -124,6 +124,11 @@
         <string>Test sequence</string>
        </attribute>
       </widget>
+      <widget class="QWidget" name="tbInstruments">
+       <attribute name="title">
+        <string>Instruments</string>
+       </attribute>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -180,7 +185,7 @@
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
-    <bool>true</bool>
+    <bool>false</bool>
    </attribute>
    <addaction name="actTestNew"/>
    <addaction name="actTestSetType"/>
@@ -192,7 +197,9 @@
   </widget>
   <action name="actClose">
    <property name="icon">
-    <iconset theme="window-close"/>
+    <iconset theme="window-close">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>&amp;Close</string>
@@ -203,7 +210,9 @@
   </action>
   <action name="actTestNew">
    <property name="icon">
-    <iconset theme="document-new"/>
+    <iconset theme="document-new">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>&amp;New</string>
@@ -222,7 +231,9 @@
   </action>
   <action name="actTestRun">
    <property name="icon">
-    <iconset theme="system-run"/>
+    <iconset theme="system-run">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>&amp;Run test</string>
@@ -233,7 +244,9 @@
   </action>
   <action name="actTestView">
    <property name="icon">
-    <iconset theme="document-open"/>
+    <iconset theme="document-open">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>&amp;View a test</string>
@@ -244,7 +257,9 @@
   </action>
   <action name="actTestAbort">
    <property name="icon">
-    <iconset theme="process-stop"/>
+    <iconset theme="process-stop">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>&amp;Abort test</string>
@@ -252,7 +267,9 @@
   </action>
   <action name="actTestSave">
    <property name="icon">
-    <iconset theme="document-save"/>
+    <iconset theme="document-save">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>&amp;Save</string>

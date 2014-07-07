@@ -103,7 +103,7 @@ void mdtDeviceTest::deviceContainerTest()
   QCOMPARE(c.deviceCount(), 0);
   QCOMPARE(c.allDevices().size(), 0);
   // Add a U3606A device
-  dev = c.addDevice<mdtDeviceU3606A>("U3606A");
+  dev = c.addDevice<mdtDeviceU3606A>("U3606A", "U3606A Multimeter");
   QVERIFY(dev.get() != 0);
   QVERIFY(c.device<mdtDeviceU3606A>("U3606A").get() != 0);
   QVERIFY(c.device<mdtDeviceU3606A>("").get() == 0);

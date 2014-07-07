@@ -1,6 +1,6 @@
 format 206
 "mdtdevice" // mdtdevice
-  revision 51
+  revision 52
   modified_by 2 "philippe"
   // class settings
   
@@ -610,6 +610,14 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+      classrelation 1633666 // <generalisation>
+	relation 1618178 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1633666 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+
       classrelation 1613570 // pvDevices (<directional composition>)
 	relation 1598082 *-->
 	  stereotype "vector"
@@ -619,6 +627,23 @@ ${inlines}
 	    classrelation_ref 1613570 // pvDevices (<directional composition>)
 	  b parent class_ref 309250 // mdtDevice
 	  association_explicit_type "shared_ptr"
+      end
+
+      operation 2120322 "mdtDeviceContainer"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 138626 // QObject
+	    defaultvalue "0"
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
 
       operation 2084226 "addDevice"
@@ -685,6 +710,246 @@ ${inlines}
 	
 	
 	
+      end
+
+      operation 2120578 "clear"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2120450 "deviceAdded"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "device" type class_ref 309250 // mdtDevice
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2120706 "cleared"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    classdiagram 1184898 "mdtDeviceContainerWidget"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 1302146 "mdtDeviceContainerWidget"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 1613442 // <generalisation>
+	relation 1597954 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1613442 // <generalisation>
+	  b parent class_ref 316162 // QWidget
+      end
+
+      classrelation 1613826 // pvItems (<directional composition>)
+	relation 1598338 *-->
+	  stereotype "list"
+	  a role_name "pvItems" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 1613826 // pvItems (<directional composition>)
+	  b parent class_ref 1302402 // mdtDeviceContainerWidgetItem
+      end
+
+      operation 2085634 "mdtDeviceContainerWidget"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 316162 // QWidget
+	    defaultvalue "0"
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2112770 "setContainer"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "c" type class_ref 1302274 // mdtDeviceContainer
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2113026 "addDevice"
+	stereotype "slot"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "device" type class_ref 309250 // mdtDevice
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2112898 "clear"
+	stereotype "slot"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2113794 "removeItem"
+	private explicit_return_type "void"
+	nparams 1
+	  param in name "item" type class_ref 1302402 // mdtDeviceContainerWidgetItem
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 1302402 "mdtDeviceContainerWidgetItem"
+      visibility protected 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 2085506 "mdtDeviceContainerWidgetItem"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "parent" type class_ref 138626 // QObject
+	  param in name "device" type class_ref 309250 // mdtDevice
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2085378 "setState"
+	stereotype "slot"
+	public explicit_return_type "void"
+	nparams 4
+	  param in name "stateId" explicit_type "int"
+	  param in name "stateText" type class_ref 161026 // QString
+	  param in name "ledColorId" explicit_type "int"
+	  param in name "ledIsOn" explicit_type "bool"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}, ${t2} ${p2}${v2}, ${t3} ${p3}${v3}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 1284738 "Device"
+	private type class_ref 309250 // mdtDevice
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 1627138 // <generalisation>
+	relation 1611650 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1627138 // <generalisation>
+	  b parent class_ref 138626 // QObject
       end
     end
   end

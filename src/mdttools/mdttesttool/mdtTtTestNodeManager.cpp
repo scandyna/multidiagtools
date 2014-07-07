@@ -19,20 +19,43 @@
  **
  ****************************************************************************/
 #include "mdtTtTestNodeManager.h"
+#include "mdtTtTest.h"
+
+#include <QDebug>
 
 mdtTtTestNodeManager::mdtTtTestNodeManager(QObject* parent, QSqlDatabase db)
- : QObject(parent)
+ : QObject(parent), pvDevices(new mdtDeviceContainer(this))
 {
   pvDatabase = db;
 }
 
 QList<std::shared_ptr<mdtDevice> > mdtTtTestNodeManager::allDevices()
 {
-  return pvDevices.allDevices();
+  return pvDevices->allDevices();
+}
+
+std::shared_ptr< mdtDeviceContainer > mdtTtTestNodeManager::container()
+{
+  return pvDevices;
 }
 
 void mdtTtTestNodeManager::clear()
 {
-  pvDevices.clear();
-  emit cleared();
+  pvDevices->clear();
+  ///emit cleared();
 }
+
+/**
+mdtTtTestItemNodeSetupData mdtTtTestNodeManager::getSetupData(const QVariant & testItemId, bool & ok)
+{
+  mdtTtTest test(0, pvDatabase);
+  mdtTtTestItemNodeSetupData data;
+
+  data = test.getSetupData(testItemId, ok);
+  if(!ok){
+    pvLastError = test.lastError();
+  }
+
+  return data;
+}
+*/

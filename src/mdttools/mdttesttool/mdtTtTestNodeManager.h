@@ -23,6 +23,8 @@
 
 #include "mdtDeviceContainer.h"
 #include "mdtDevice.h"
+#include "mdtTtTestItemNodeSetupData.h"
+#include "mdtError.h"
 #include <QObject>
 #include <QSqlDatabase>
 #include <QVariant>
@@ -54,20 +56,20 @@ class mdtTtTestNodeManager : public QObject
    */
   template <typename T> std::shared_ptr<T> addDevice(const QVariant & identification, const QString & nodeIdentification, const QString & deviceName)
   {
-    std::shared_ptr<T> device;
+    QString devName;
 
-    device = pvDevices.addDevice<T>(identification);
-    device->setName(deviceName);
-    emit deviceAdded(device);
-
-    return device;
+    devName = deviceName;
+    if(!nodeIdentification.isEmpty()){
+      devName += tr(" (Node ID: ") + nodeIdentification + tr(")");
+    }
+    return pvDevices->addDevice<T>(identification, devName);
   }
 
   /*! \brief Get device of type T and that has given identification
    */
   template <typename T> std::shared_ptr<T> device(const QVariant & identification)
   {
-    return pvDevices.device<T>(identification);
+    return pvDevices->device<T>(identification);
   }
 
   /*! \brief Get a list of all devices
@@ -76,35 +78,29 @@ class mdtTtTestNodeManager : public QObject
    */
   QList<std::shared_ptr<mdtDevice> > allDevices();
 
-  /*! \brief Set the test node manager widget
+  /*! \brief Get device container object
    */
-  ///void setTestNodeManagerWidget();
+  std::shared_ptr<mdtDeviceContainer> container();
 
   /*! \brief Remove all devices
    */
   void clear();
 
- signals:
-
-  /*! \brief Emited when a new device was added
+  /*! \brief Get setup data for given test item ID
    */
-  void deviceAdded(std::shared_ptr<mdtDevice> device);
+  ///mdtTtTestItemNodeSetupData getSetupData(const QVariant & testItemId, bool &ok);
 
-  /*! \brief Emited when a new device was removed
+  /*! \brief Get last error
    */
-  ///void deviceRemoved(mdtDevice* device);
-
-  /*! \brief Emited when container was cleared
-   */
-  void cleared();
+  inline mdtError lastError() const { return pvLastError; }
 
  private:
 
   Q_DISABLE_COPY(mdtTtTestNodeManager);
 
   QSqlDatabase pvDatabase;
-  mdtDeviceContainer pvDevices;
-  ///std::shared_ptr<mdtTtTestNodeManagerWidget> pvManagerWidget;
+  std::shared_ptr<mdtDeviceContainer> pvDevices;
+  mdtError pvLastError;
 };
 
 #endif  // #ifndef MDT_TT_TEST_NODE_MANAGER_H

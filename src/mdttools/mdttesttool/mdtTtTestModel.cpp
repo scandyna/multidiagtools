@@ -38,7 +38,7 @@ QString mdtTtTestModel::sqlForTestNodeSelection(const QVariant & testModelId) co
 
   sql = "SELECT\n"\
         " TN.VehicleType_Id_FK_PK,\n"\
-        " TN.NodeId,\n"\
+        " TN.NodeIdentification,\n"\
         " VT.Type,\n"\
         " VT.SubType,\n"\
         " VT.SeriesNumber\n"\

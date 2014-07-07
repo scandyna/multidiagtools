@@ -28,27 +28,33 @@
 #include <QVariant>
 #include <QList>
 
+class QObject;
+
 /*! \brief Contains different type of devices
  *
  * For some applications, many devices of different type must be handled.
  *
  * This class helps for this.
  */
-class mdtDeviceContainer
+class mdtDeviceContainer : public QObject
 {
+ Q_OBJECT
+
  public:
 
   /*! \brief Construct a empty container
    */
-  mdtDeviceContainer();
+  mdtDeviceContainer(QObject *parent = 0);
 
   /*! \brief Create and add a new device
    */
-  template <typename T> std::shared_ptr<T> addDevice(const QVariant & identification)
+  template <typename T> std::shared_ptr<T> addDevice(const QVariant & identification, const QString & name)
   {
     std::shared_ptr<T> dev(new T);
     dev->setIdentification(identification);
+    dev->setName(name);
     pvDevices.push_back(dev);
+    emit deviceAdded(dev);
     return dev;
   }
 
@@ -83,6 +89,16 @@ class mdtDeviceContainer
    * Note: list is rebuilt at each call of this method.
    */
   QList<std::shared_ptr<mdtDevice>> allDevices();
+
+ signals:
+
+  /*! \brief Emited when a new device was added
+   */
+  void deviceAdded(std::shared_ptr<mdtDevice> device);
+
+  /*! \brief Emited when container was cleared
+   */
+  void cleared();
 
  private:
 

@@ -33,7 +33,8 @@
 #include "mdtTtTestNodeSetupData.h"
 #include "mdtTtTestNodeUnitSetupData.h"
 #include "mdtTtTestNodeManager.h"
-#include "mdtTtTestNodeManagerWidget.h"
+#include "mdtDeviceContainer.h"
+#include "mdtDeviceContainerWidget.h"
 #include "mdtDeviceU3606A.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
@@ -627,7 +628,7 @@ void mdtTestToolTest::testNodeSetupDataTest()
 void mdtTestToolTest::mdtTtTestNodeManagerTest()
 {
   std::shared_ptr<mdtTtTestNodeManager> m(new mdtTtTestNodeManager(0, pvDatabaseManager.database()));
-  mdtTtTestNodeManagerWidget w;
+  mdtDeviceContainerWidget w;
   std::shared_ptr<mdtDeviceU3606A> devU3606A;
   std::shared_ptr<mdtDeviceScpi> devScpi;
   QList<std::shared_ptr<mdtDevice>> devList;
@@ -640,7 +641,7 @@ void mdtTestToolTest::mdtTtTestNodeManagerTest()
   QCOMPARE(devList.size(), 1);
   QVERIFY(devList.at(0).get() != 0);
   // Assign manager to widget
-  w.setTestNodeManager(m);
+  w.setContainer(m->container());
   w.show();
   
   QTest::qWait(3000);

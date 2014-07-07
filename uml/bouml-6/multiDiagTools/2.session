@@ -7,7 +7,7 @@ diagrams
     120 106 100 4 0 0
   classdiagram_ref 980738 // mdtTtTest
     888 925 100 4 0 0
-  classdiagram_ref 987394 // TestNodeSetup
+  active  classdiagram_ref 987394 // TestNodeSetup
     888 925 100 4 48 0
   classdiagram_ref 1165058 // BasicTester
     893 925 100 4 0 0
@@ -15,26 +15,23 @@ diagrams
     120 106 100 4 0 0
   classdiagram_ref 1178114 // TestNodeManager
     888 952 100 4 0 0
-  active  classdiagram_ref 1178370 // TestNodeManagerWidget
+  classdiagram_ref 1178370 // TestNodeManagerWidget
     888 925 100 4 0 0
-  classdiagram_ref 1178242 // DeviceContainer
-    120 106 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 2113794 // removeItem
+selected classdiagram_ref 987394 // TestNodeSetup
 open
-  class_ref 1302274 // mdtDeviceContainer
-  
-  package_ref 227714 // DatabaseConceptual
-  class_ref 992642 // TestNode_tbl
+  classrelation_ref 1633666 // <generalisation>
+  operation_ref 2120322 // mdtDeviceContainer
+  operation_ref 2120578 // clear
+  operation_ref 2112898 // clear
+  operation_ref 2113794 // removeItem
+  class_ref 1302402 // mdtDeviceContainerWidgetItem
+  classdiagram_ref 934402 // mdtTtTestNode
+  class_ref 1026946 // mdtTtTestModel
   classdiagram_ref 1013634 // mdtTtTestNodeUnitEditor
   class_ref 1086850 // Ui::mdtTtTestNodeUnitEditor
-  operation_ref 2099458 // setDeviceIdentification
-  operation_ref 2099586 // deviceIdentification
-  operation_ref 2092546 // clear
   class_ref 1288834 // Ui::mdtTtBasicTester
   operation_ref 2084866 // mdtTtTestNodeManager
-  operation_ref 2112898 // clear
-  class_ref 1302402 // mdtTtTestNodeManagerWidgetItem
 end
 end

@@ -948,7 +948,7 @@ void mdtClMainWindow::createBasicTester()
   Q_ASSERT(pvBasicTester == 0);
 
   pvBasicTester = new mdtTtBasicTester(this, pvDatabaseManager->database());
-  if(!pvBasicTester->setupTables()){
+  if(!pvBasicTester->setup()){
     displayError(pvBasicTester->lastError());
   }
 }

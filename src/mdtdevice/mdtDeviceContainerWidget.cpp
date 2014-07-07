@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtTtTestNodeManagerWidget.h"
-#include "mdtTtTestNodeManager.h"
+#include "mdtDeviceContainerWidget.h"
+#include "mdtDeviceContainer.h"
 #include "mdtDevice.h"
 #include "mdtPortManager.h"
 #include "mdtLed.h"
@@ -27,19 +27,19 @@
 #include <QGridLayout>
 #include <QMutableListIterator>
 
-#include <QDebug>
+//#include <QDebug>
 
 class mdtPortManager;
 
 using namespace std;
 
 /*
- * mdtTtTestNodeManagerWidgetItem implementation
+ * mdtDeviceContainerWidgetItem implementation
  */
-namespace mdtTtTestNodeManagerWidgetPrivate
+namespace mdtDeviceContainerWidgetPrivate
 {
-  mdtTtTestNodeManagerWidgetItem::mdtTtTestNodeManagerWidgetItem(QObject* parent, shared_ptr<mdtDevice> _device)
-  : QObject(parent), lbDeviceName(new QLabel), ldState(new mdtLed), lbDeviceStateText(new QLabel)
+  mdtDeviceContainerWidgetItem::mdtDeviceContainerWidgetItem(QObject* parent, shared_ptr<mdtDevice> _device)
+  : QObject(parent), lbDeviceName(new QLabel), ldState(new mdtLed), lbDeviceStateText(new QLabel), lbMessage(new QLabel)
   {
     Q_ASSERT(_device);
 
@@ -48,21 +48,27 @@ namespace mdtTtTestNodeManagerWidgetPrivate
     ldState->setFixedSize(15, 15);
   }
 
-  void mdtTtTestNodeManagerWidgetItem::setState(int stateId, const QString & stateText, int ledColorId, bool ledIsOn)
+  void mdtDeviceContainerWidgetItem::setState(int stateId, const QString & stateText, int ledColorId, bool ledIsOn)
   {
     ldState->setColor((mdtLed::color_t)ledColorId);
     ldState->setOn(ledIsOn);
     lbDeviceStateText->setText(stateText);
   }
+
+  void mdtDeviceContainerWidgetItem::setMessage(const QString& message, const QString& details)
+  {
+    lbMessage->setText(message);
+  }
+
 }
 
 /*
- * mdtTtTestNodeManagerWidget implementation
+ * mdtDeviceContainerWidget implementation
  */
 
-using namespace mdtTtTestNodeManagerWidgetPrivate;
+using namespace mdtDeviceContainerWidgetPrivate;
 
-mdtTtTestNodeManagerWidget::mdtTtTestNodeManagerWidget(QWidget* parent)
+mdtDeviceContainerWidget::mdtDeviceContainerWidget(QWidget* parent)
  : QWidget(parent)
 {
   QLabel *label;
@@ -73,34 +79,36 @@ mdtTtTestNodeManagerWidget::mdtTtTestNodeManagerWidget(QWidget* parent)
   pvLayout->addWidget(label, 0, 0);
   label = new QLabel(tr("State"));
   pvLayout->addWidget(label, 0, 1, Qt::AlignHCenter);
-  
+  ///label = new QLabel(tr("State text"));
+  ///pvLayout->addWidget(label, 0, 2);
+  label = new QLabel(tr("Message"));
+  pvLayout->addWidget(label, 0, 3);
+  pvLayout->setColumnStretch(3, 1);
   pvCurrentLayoutRow = 1;
   setLayout(pvLayout);
 }
 
-void mdtTtTestNodeManagerWidget::setTestNodeManager(shared_ptr< mdtTtTestNodeManager > m)
+void mdtDeviceContainerWidget::setContainer(shared_ptr< mdtDeviceContainer > c)
 {
-  Q_ASSERT(m);
+  Q_ASSERT(c);
 
   QList<shared_ptr<mdtDevice> > devices;
   int i;
 
-  // Add devices currently existing in manager
+  // Add devices currently existing in container
   clear();
-  devices = m->allDevices();
+  devices = c->allDevices();
   for(i = 0; i < devices.size(); ++i){
     Q_ASSERT(devices.at(i));
     addDevice(devices.at(i));
   }
-  connect(m.get(), SIGNAL(deviceAdded(std::shared_ptr<mdtDevice>)), this, SLOT(addDevice(std::shared_ptr<mdtDevice>)));
-  connect(m.get(), SIGNAL(cleared()), this, SLOT(clear()));
-  ///connect(m.get(), SIGNAL(deviceAdded(mdtDevice*)), this, SLOT(addDevice(mdtDevice*)));
-  ///connect(m.get(), SIGNAL(deviceRemoved(mdtDevice*)), this, SLOT(removeDevice(mdtDevice*)));
+  connect(c.get(), SIGNAL(deviceAdded(std::shared_ptr<mdtDevice>)), this, SLOT(addDevice(std::shared_ptr<mdtDevice>)));
+  connect(c.get(), SIGNAL(cleared()), this, SLOT(clear()));
 }
 
-void mdtTtTestNodeManagerWidget::clear()
+void mdtDeviceContainerWidget::clear()
 {
-  QMutableListIterator<shared_ptr<mdtTtTestNodeManagerWidgetItem> > it(pvItems);
+  QMutableListIterator<shared_ptr<mdtDeviceContainerWidgetItem> > it(pvItems);
 
   while(it.hasNext()){
     removeItemWidgets(it.next());
@@ -108,59 +116,34 @@ void mdtTtTestNodeManagerWidget::clear()
   }
 }
 
-void mdtTtTestNodeManagerWidget::addDevice(shared_ptr<mdtDevice> device)
+void mdtDeviceContainerWidget::addDevice(shared_ptr<mdtDevice> device)
 {
-  ///Q_ASSERT(device != 0);
   Q_ASSERT(device);
   Q_ASSERT(device->portManager() != 0);
 
-  qDebug() << "Add device: " << device->name();
-  shared_ptr<mdtTtTestNodeManagerWidgetItem> item(new mdtTtTestNodeManagerWidgetItem(this, device));
-  ///shared_ptr<mdtTtTestNodeManagerWidgetItem> item(new mdtTtTestNodeManagerWidgetItem(this, make_shared<mdtDevice>(device)));
-  ///shared_ptr<mdtTtTestNodeManagerWidgetItem> item(new mdtTtTestNodeManagerWidgetItem(this, shared_ptr<mdtDevice>(device)));
+  shared_ptr<mdtDeviceContainerWidgetItem> item(new mdtDeviceContainerWidgetItem(this, device));
 
   Q_ASSERT(item->lbDeviceName);
   Q_ASSERT(item->ldState);
   pvLayout->addWidget(item->lbDeviceName.get(), pvCurrentLayoutRow, 0);
   pvLayout->addWidget(item->ldState.get(), pvCurrentLayoutRow, 1, Qt::AlignHCenter);
   pvLayout->addWidget(item->lbDeviceStateText.get(), pvCurrentLayoutRow, 2);
+  pvLayout->addWidget(item->lbMessage.get(), pvCurrentLayoutRow, 3);
   connect(device->portManager(), SIGNAL(stateChangedForUi(int,const QString&,int,bool)), item.get(), SLOT(setState(int,const QString&,int,bool)));
+  connect(device->portManager(), SIGNAL(statusMessageChanged(const QString&, const QString&,int)), item.get(), SLOT(setMessage(const QString&, const QString&)));
   device->portManager()->notifyCurrentState();
   pvItems.append(item);
   ++pvCurrentLayoutRow;
 }
 
-/**
-void mdtTtTestNodeManagerWidget::removeDevice(mdtDevice* device)
-{
-  Q_ASSERT(device != 0);
-
-  int i;
-  shared_ptr<mdtTtTestNodeManagerWidgetItem> item;
-
-  if(!device){
-    return;
-  }
-  // Search item related to given device
-  for(i = 0; i < pvItems.size(); ++i){
-    item = pvItems.at(i);
-    Q_ASSERT(item);
-    Q_ASSERT(item->device);
-    if(item->device.get() == device){
-      removeItemWidgets(item);
-      pvItems.removeAt(i);
-      return;
-    }
-  }
-}
-*/
-
-void mdtTtTestNodeManagerWidget::removeItemWidgets(shared_ptr<mdtTtTestNodeManagerWidgetItem> item)
+void mdtDeviceContainerWidget::removeItemWidgets(shared_ptr<mdtDeviceContainerWidgetItem> item)
 {
   Q_ASSERT(item);
 
   pvLayout->removeWidget(item->lbDeviceName.get());
   pvLayout->removeWidget(item->ldState.get());
+  pvLayout->removeWidget(item->lbDeviceStateText.get());
+  pvLayout->removeWidget(item->lbMessage.get());
   --pvCurrentLayoutRow;
   Q_ASSERT(pvCurrentLayoutRow > 0); // Row 0 is the header
 }

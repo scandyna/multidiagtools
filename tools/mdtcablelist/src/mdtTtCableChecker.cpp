@@ -369,11 +369,13 @@ bool mdtTtCableChecker::setupTestItemTable()
   // Register model to test helper object
   m = model("TestItem_view");
   Q_ASSERT(m != 0);
+  /**
   if(!pvTest->setTestItemSqlModel(m)){
     pvLastError = pvTest->lastError();
     displayLastError();
     return false;
   }
+  */
 
   return true;
 }
