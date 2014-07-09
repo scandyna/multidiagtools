@@ -90,6 +90,10 @@ class mdtDeviceContainer : public QObject
    */
   QList<std::shared_ptr<mdtDevice>> allDevices();
 
+  /*! \brief Disconnect frome devices
+   */
+  void disconnectFromDevices();
+
  signals:
 
   /*! \brief Emited when a new device was added

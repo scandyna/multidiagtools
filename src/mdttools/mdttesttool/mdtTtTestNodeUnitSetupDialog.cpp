@@ -61,6 +61,8 @@ void mdtTtTestNodeUnitSetupDialog::displayData()
 {
   QVariant val;
 
+  // Update step number spinbox
+  sbStepNumber->setValue(pvData.value("StepNumber").toInt());
   // Update state checkbox
   val = pvData.value("State");
   if(val.isNull()){
@@ -82,6 +84,8 @@ void mdtTtTestNodeUnitSetupDialog::displayData()
 
 void mdtTtTestNodeUnitSetupDialog::updateData()
 {
+  // Update step number
+  pvData.setValue("StepNumber", sbStepNumber->value());
   // Update state
   switch(cbState->checkState()){
     case Qt::Checked:

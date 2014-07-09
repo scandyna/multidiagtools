@@ -48,6 +48,8 @@ class mdtTestToolTest : public mdtTest
 
   void mdtTtTestNodeManagerTest();
 
+  void mdtTtTestTest();
+
  private:
 
   // Create test database schema - Will FAIL on problem

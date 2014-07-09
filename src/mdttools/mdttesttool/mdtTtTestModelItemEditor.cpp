@@ -41,6 +41,7 @@
 #include <QMessageBox>
 #include <QList>
 #include <QStringList>
+#include <QLocale>
 
 #include <QDebug>
 
@@ -177,12 +178,20 @@ void mdtTtTestModelItemEditor::removeTestLinks()
 void mdtTtTestModelItemEditor::addNodeUnit()
 {
   mdtTtTestModelItem tmi(0, database());
+  QVariant testModelId;
   QVariant testModelItemId;
   mdtTtTestNodeUnitSetupData data;
   mdtSqlSelectionDialog selectionDialog(this);
+  QStringList fields;
   mdtSqlTableSelection s;
   QString sql;
+  QString type;
 
+  // Get test model ID
+  testModelId = currentData("TestModelItem_tbl", "TestModel_Id_FK");
+  if(testModelId.isNull()){
+    return;
+  }
   // Get test model item ID
   testModelItemId = currentData("TestModelItem_tbl", "Id_PK");
   if(testModelItemId.isNull()){
@@ -196,7 +205,7 @@ void mdtTtTestModelItemEditor::addNodeUnit()
   }
   data.setValue("TestModelItem_Id_FK", testModelItemId);
   // Setup and show dialog for test link selection
-  sql = tmi.sqlForTestNodeUnitSelection(testModelItemId);
+  sql = tmi.sqlForTestNodeUnitSelection(testModelItemId, testModelId);
   selectionDialog.setMessage(tr("Please select a test node unit to use."));
   selectionDialog.setQuery(sql, database(), false);
   selectionDialog.setColumnHidden("Unit_Id_FK_PK", true);
@@ -218,12 +227,19 @@ void mdtTtTestModelItemEditor::addNodeUnit()
   if(selectionDialog.exec() != QDialog::Accepted){
     return;
   }
-  s = selectionDialog.selection("Unit_Id_FK_PK");
+  fields << "Unit_Id_FK_PK" << "Type_Code_FK";
+  s = selectionDialog.selection(fields);
   if(s.isEmpty()){
     return;
   }
   Q_ASSERT(s.rowCount() == 1);
   data.setValue("TestNodeUnit_Id_FK", s.data(0, "Unit_Id_FK_PK"));
+  data.setValue("StepNumber", 0);
+  // Set state to ON if unit is a digital output
+  type = s.data(0, "Type_Code_FK").toString();
+  if((type == "BUSCPLREL")||(type == "CHANELREL")||(type == "DO")){
+    data.setValue("State", true);
+  }
   // Add to db
   if(!tmi.addTestNodeUnitSetup(data)){
     pvLastError = tmi.lastError();
@@ -505,13 +521,14 @@ bool mdtTtTestModelItemEditor::setupTestLinkTable()
   widget->setColumnHidden("Unit_Id_FK_PK", true);
   widget->setColumnHidden("DutUnitId", true);
   widget->setColumnHidden("VehicleType_Id_FK_PK", true);
+  widget->setColumnHidden("TestNodeUnitSchemaPosition", true);
   // Rename visible fields to something human friendly
   widget->setHeaderData("IoPosition", tr("I/O\nPos."));
-  widget->setHeaderData("TestNodeUnitSchemaPosition", tr("Test node\nunit\nschema pos."));
+  ///widget->setHeaderData("TestNodeUnitSchemaPosition", tr("Test node\nunit\nschema pos."));
   widget->setHeaderData("TestConnectorName", tr("Test\nconnector"));
   widget->setHeaderData("TestContactName", tr("Test\ncontact"));
   widget->setHeaderData("DutUnitSchemaPosition", tr("DUT\nSchema pos."));
-  widget->setHeaderData("DutUnitAlias", tr("DUT\nalias"));
+  widget->setHeaderData("DutUnitAlias", tr("DUT\n   alias   "));
   widget->setHeaderData("DutConnectorName", tr("DUT\nconnector"));
   widget->setHeaderData("DutContactName", tr("DUT\ncontact"));
   // Set some attributes on table view
@@ -539,6 +556,7 @@ bool mdtTtTestModelItemEditor::setupTestNodeUnitSetupTable()
   QPushButton *pbRemoveNodeUnits;
   ///QPushButton *pbGenerateTestNodeUnitSetup;
   ///QPushButton *pbRemoveTestNodeUnitSetup;
+  QLocale locale;
 
   if(!addChildTable("TestNodeUnitSetup_view", tr("Node unit setup"), database())){
     return false;
@@ -556,10 +574,32 @@ bool mdtTtTestModelItemEditor::setupTestNodeUnitSetupTable()
   widget->setColumnHidden("Type_Code_FK", true);
   // Set fields a user friendly name
   widget->setHeaderData("SchemaPosition", tr("Schema\npos."));
-  widget->setHeaderData("NameEN", tr("Type (English)"));
-  widget->setHeaderData("NameFR", tr("Type (Frensh)"));
-  widget->setHeaderData("NameDE", tr("Type (German)"));
-  widget->setHeaderData("NameIT", tr("Type (Italian)"));
+  // Choose Name field regarding language
+  switch(locale.language()){
+    case QLocale::French:
+      widget->setColumnHidden("NameEN", true);
+      widget->setColumnHidden("NameDE", true);
+      widget->setColumnHidden("NameIT", true);
+      widget->setHeaderData("NameFR", tr("                 Type                 "));
+      break;
+    case QLocale::German:
+      widget->setColumnHidden("NameEN", true);
+      widget->setColumnHidden("NameFR", true);
+      widget->setColumnHidden("NameIT", true);
+      widget->setHeaderData("NameDE", tr("               Type               "));
+      break;
+    case QLocale::Italian:
+      widget->setColumnHidden("NameEN", true);
+      widget->setColumnHidden("NameDE", true);
+      widget->setColumnHidden("NameFR", true);
+      widget->setHeaderData("NameIT", tr("               Type               "));
+      break;
+    default:
+      widget->setColumnHidden("NameFR", true);
+      widget->setColumnHidden("NameDE", true);
+      widget->setColumnHidden("NameIT", true);
+      widget->setHeaderData("NameEN", tr("               Type               "));
+  }
   // Set some attributes on table view
   widget->addColumnToSortOrder("SchemaPosition", Qt::AscendingOrder);
   widget->sort();

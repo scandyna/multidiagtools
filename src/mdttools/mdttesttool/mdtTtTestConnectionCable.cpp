@@ -54,7 +54,7 @@ QString mdtTtTestConnectionCable::sqlForTestNodeUnitSelection(const QVariant & t
         " VT.Type,\n"\
         " VT.SubType,\n"\
         " VT.SeriesNumber,\n"\
-        " TN.NodeId\n";
+        " TN.NodeIdentification\n";
   sql += "FROM TestNodeUnit_tbl TNU\n"\
          " JOIN TestNode_tbl TN\n"\
          "  ON TN.VehicleType_Id_FK_PK = TNU.TestNode_Id_FK\n"\

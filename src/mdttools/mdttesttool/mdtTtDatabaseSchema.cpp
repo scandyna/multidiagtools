@@ -3187,16 +3187,17 @@ bool mdtTtDatabaseSchema::createTestLinkView()
         " LNK.Identification AS TestLinkIdentification,\n"\
         " LNK.Value AS TestLinkValue,\n"\
         " TNU.Unit_Id_FK_PK,\n"\
-        " TNB.NameEN AS Bus,\n"\
-        " TNU.IoPosition,\n"\
-        " UTNU.SchemaPosition AS TestNodeUnitSchemaPosition,\n"\
-        " UCT.Name AS TestConnectorName,\n"\
-        " UCNXT.UnitContactName AS TestContactName,\n"\
+        " TNU.TestNode_Id_FK,\n"\
         " UD.Id_PK AS DutUnitId,\n"\
         " UD.SchemaPosition AS DutUnitSchemaPosition,\n"\
         " UD.Alias AS DutUnitAlias,\n"\
         " UCD.Name AS DutConnectorName,\n"\
         " UCNXD.UnitContactName AS DutContactName,\n"\
+        " UTNU.SchemaPosition AS TestNodeUnitSchemaPosition,\n"\
+        " UCT.Name AS TestConnectorName,\n"\
+        " UCNXT.UnitContactName AS TestContactName,\n"\
+        " TNB.NameEN AS Bus,\n"\
+        " TNU.IoPosition,\n"\
         " VTN.Type AS TestNodeType,\n"\
         " VTN.SubType AS TestNodeSubType,\n"\
         " VTN.SeriesNumber AS TestNodeSeriesNumber,\n"\
@@ -3283,14 +3284,21 @@ bool mdtTtDatabaseSchema::createTestCableDutUnitView()
               " A.DesignationEN,\n"\
               " A.DesignationFR,\n"\
               " A.DesignationDE,\n"\
-              " A.DesignationIT\n";
+              " A.DesignationIT,\n"\
+              " VT.Type,\n"\
+              " VT.SubType,\n"\
+              " VT.SeriesNumber\n";
   sql = "CREATE VIEW TestCable_DutUnit_view AS\n";
   sql += selectSql;
   sql += "FROM TestCable_DutUnit_tbl TCDU\n"\
          " JOIN Unit_tbl U\n"\
          "  ON U.Id_PK = TCDU.DutUnit_Id_FK"\
-         " JOIN Article_tbl A\n"\
-         "  ON A.Id_PK = U.Article_Id_FK";
+         " LEFT JOIN Article_tbl A\n"\
+         "  ON A.Id_PK = U.Article_Id_FK\n"\
+         " JOIN VehicleType_Unit_tbl VTU\n"\
+         "  ON VTU.Unit_Id_FK = U.Id_PK\n"\
+         " JOIN VehicleType_tbl VT\n"\
+         "  ON VT.Id_PK = VTU.VehicleType_Id_FK";
 
   return createView("TestCable_DutUnit_view", sql);
 }

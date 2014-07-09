@@ -25,6 +25,7 @@
 #include "mdtTtTest.h"
 #include "mdtTtTestData.h"
 #include "mdtTtTestNodeManager.h"
+#include "mdtTtTestNodeSetupData.h"
 #include "mdtError.h"
 #include <QMainWindow>
 #include <QSqlDatabase>
@@ -87,21 +88,48 @@ class mdtTtBasicTester : public QMainWindow, Ui::mdtTtBasicTester
   void displayTestData(bool getFromDatabase);
 
   /*! \brief Display data part of Test item
+   *
+   * Will reload test items from db that are part
+   *  of current test and display them.
    */
   void displayTestItemData();
+
+  /*! \brief Set data for a test item
+   *
+   * Will set data for given field
+   *  and test item ID.
+   *  Data is not saved to database.
+   */
+  void setTestItemData(const QVariant & testItemId, const QString & fieldName, const QVariant & data);
 
   /*! \brief Display last error to the user
    */
   void displayLastError();
 
-  /*! \brief Setup instruments
+  /*! \brief Add instruments
    */
-  bool setupInstruments();
+  bool addInstruments();
 
   /*! \brief Connect to instruments
    */
   bool connectToInstruments();
 
+  /*! \brief Disconnect from instruments
+   */
+  bool disconnectFromInstruments();
+
+  /*! \brief Setup instruments
+   */
+  bool setupInstruments(const QVariant & testItemId);
+
+  /*! \brief Setup a test node
+   */
+  bool setupTestNode(const mdtTtTestNodeSetupData & setupData);
+
+  /*! \brief Setup I/O coupler 0
+   */
+  bool setupIoCoupler0(const mdtTtTestNodeSetupData & setupData);
+  
   /*! \brief Setup tables
    */
   bool setupTables();

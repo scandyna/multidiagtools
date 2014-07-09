@@ -104,6 +104,7 @@ void mdtTtTestLinkDialog::setDutConnection(const QVariant & unitConnectionId)
 void mdtTtTestLinkDialog::setLinkData(const mdtTtTestLinkData & data)
 {
   pvLinkData = data;
+  leIdentification->setText(pvLinkData.value("Identification").toString());
   displayTestConnection();
   displayDutConnection();
 }
@@ -248,6 +249,7 @@ void mdtTtTestLinkDialog::selectDutConnection()
   mdtSqlSelectionDialog selectionDialog(this);
   QString sql;
   mdtClUnit unit(this, pvDatabase);
+  QStringList fields;
   mdtSqlTableSelection s;
 
   if(pvDutUnitId.isNull()){
@@ -281,10 +283,14 @@ void mdtTtTestLinkDialog::selectDutConnection()
   if(selectionDialog.exec() != QDialog::Accepted){
     return;
   }
-  s = selectionDialog.selection("UnitConnection_Id_PK");
+  fields << "UnitConnection_Id_PK" << "UnitFunctionEN";
+  s = selectionDialog.selection(fields);
   Q_ASSERT(s.rowCount() == 1);
   // Get connection data and update
   pvLinkData.setValue("DutConnection_Id_FK", s.data(0, "UnitConnection_Id_PK"));
+  if(leIdentification->text().trimmed().isEmpty()){
+    leIdentification->setText(s.data(0, "UnitFunctionEN").toString());
+  }
   displayDutConnection();
 }
 

@@ -21,6 +21,8 @@
 #include "mdtTtBasicTester.h"
 #include "mdtTtTest.h"
 #include "mdtTtTestModelData.h"
+#include "mdtTtTestItemNodeSetupData.h"
+#include "mdtTtTestNodeUnitSetupData.h"
 #include "mdtSqlSelectionDialog.h"
 #include "mdtSqlTableSelection.h"
 #include "mdtSqlTableWidget.h"
@@ -69,7 +71,7 @@ bool mdtTtBasicTester::setup()
   if(!setupTables()){
     return false;
   }
-  if(!setupInstruments()){
+  if(!addInstruments()){
     return false;
   }
   return true;
@@ -137,24 +139,42 @@ void mdtTtBasicTester::saveTest()
 
 void mdtTtBasicTester::runTest()
 {
+  QVariant testItemId;
+
   if(!connectToInstruments()){
     return;
   }
+
+  qDebug() << "Running test ...";
+  pvTest.resetTestItemCursor();
+  while(pvTest.hasMoreTestItem()){
+    testItemId = pvTest.nextTestItem();
+    qDebug() << "Curremt item: " << testItemId;
+    setTestItemData(testItemId, "Result", "Running ...");
+    if(!setupInstruments(testItemId)){
+      disconnectFromInstruments();
+      return;
+    }
+    
+    setTestItemData(testItemId, "Result", "Finished");
+  }
+
+  disconnectFromInstruments();
 }
 
 
 bool mdtTtBasicTester::createNewTest()
 {
-  mdtTtTest test(0, pvDatabase);
+  ///mdtTtTest test(0, pvDatabase);
   QVariant testId;
 
   // Update somes values
   pvTestData.setValue("Date", QDate::currentDate());
   pvTestData.setValue("DutSerialNumber", leSN->text());
   // Add test to DB
-  testId = test.addTest(pvTestData);
+  testId = pvTest.addTest(pvTestData);
   if(testId.isNull()){
-    pvLastError = test.lastError();
+    pvLastError = pvTest.lastError();
     displayLastError();
     return false;
   }
@@ -165,13 +185,13 @@ bool mdtTtBasicTester::createNewTest()
 
 bool mdtTtBasicTester::saveTestData()
 {
-  mdtTtTest test(0, pvDatabase);
+  ///mdtTtTest test(0, pvDatabase);
 
   // Update somes values
   ///pvTestData.setValue("Date", QDate::currentDate());
   pvTestData.setValue("DutSerialNumber", leSN->text());
-  if(!test.updateTest(pvTestData.value("Id_PK"), pvTestData)){
-    pvLastError = test.lastError();
+  if(!pvTest.updateTest(pvTestData.value("Id_PK"), pvTestData)){
+    pvLastError = pvTest.lastError();
     displayLastError();
     return false;
   }
@@ -181,7 +201,7 @@ bool mdtTtBasicTester::saveTestData()
 
 void mdtTtBasicTester::displayTestData(bool getFromDatabase)
 {
-  mdtTtTest test(0, pvDatabase);
+  ///mdtTtTest test(0, pvDatabase);
   bool ok;
   QVariant testId;
   QDate date;
@@ -189,9 +209,9 @@ void mdtTtBasicTester::displayTestData(bool getFromDatabase)
   // Get data from DB
   testId = pvTestData.value("Id_PK");
   if(getFromDatabase && (!testId.isNull())){
-    pvTestData = test.getTestData(testId, true, &ok);
+    pvTestData = pvTest.getTestData(testId, true, &ok);
     if(!ok){
-      pvLastError = test.lastError();
+      pvLastError = pvTest.lastError();
       displayLastError();
       return;
     }
@@ -227,6 +247,39 @@ void mdtTtBasicTester::displayTestItemData()
   pvTestItemWidget->model()->setFilter(filter);
 }
 
+void mdtTtBasicTester::setTestItemData(const QVariant & testItemId, const QString & fieldName, const QVariant & data)
+{
+  Q_ASSERT(pvTestItemWidget != 0);
+
+  QSqlTableModel *m;
+  QModelIndex index;
+  int col, row;
+
+  m = pvTestItemWidget->model();
+  Q_ASSERT(m != 0);
+
+  col = m->fieldIndex("Id_PK");
+  if(col < 0){
+    return;
+  }
+  // Make shure we have all rows cached in model
+  if(m->rowCount() < 1){
+    return;
+  }
+  while(m->canFetchMore()){
+    m->fetchMore();
+  }
+  // Search test item ID and edit
+  for(row = 0; row < m->rowCount(); ++row){
+    index = m->index(row, col);
+    if(m->data(index) == testItemId){
+      col = m->fieldIndex(fieldName);
+      index = m->index(row, col);
+      m->setData(index, data);
+      return;
+    }
+  }
+}
 
 void mdtTtBasicTester::displayLastError()
 {
@@ -238,7 +291,7 @@ void mdtTtBasicTester::displayLastError()
   msgBox.exec();
 }
 
-bool mdtTtBasicTester::setupInstruments()
+bool mdtTtBasicTester::addInstruments()
 {
   pvNodeManager.addDevice<mdtDeviceU3606A>("U3606A", "", "U3606A Multimeter");
   pvNodeManager.addDevice<mdtDeviceModbusWago>("W750", "0", "Wago 750 coupling node");
@@ -273,6 +326,105 @@ bool mdtTtBasicTester::connectToInstruments()
     displayLastError();
     return false;
   }
+  if(!coupler->detectIos()){
+    pvLastError = coupler->lastError();
+    displayLastError();
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtTtBasicTester::disconnectFromInstruments()
+{
+  Q_ASSERT(pvNodeManager.container());
+
+  pvNodeManager.container()->disconnectFromDevices();
+}
+
+bool mdtTtBasicTester::setupInstruments(const QVariant & testItemId)
+{
+  mdtTtTestItemNodeSetupData setupData;
+  mdtTtTestNodeSetupData nodeSetupData;
+  bool ok;
+
+  setupData = pvTest.getSetupData(testItemId, ok);
+  if(!ok){
+    pvLastError = pvTest.lastError();
+    displayLastError();
+    return false;
+  }
+  while(setupData.hasMoreStep()){
+    nodeSetupData = setupData.getNextStep();
+    qDebug() << " Has setup for node " << nodeSetupData.nodeIdentification();
+    if(!setupTestNode(nodeSetupData)){
+      return false;
+    }
+  }
+
+  return true;
+}
+
+bool mdtTtBasicTester::setupTestNode(const mdtTtTestNodeSetupData & setupData)
+{
+  qDebug() << "Setup node " << setupData.nodeIdentification();
+
+  if(setupData.nodeIdentification() == "0"){
+    return setupIoCoupler0(setupData);
+  }
+  
+  return true;
+}
+
+bool mdtTtBasicTester::setupIoCoupler0(const mdtTtTestNodeSetupData & setupData)
+{
+  Q_ASSERT(setupData.nodeIdentification() == "0");
+
+  QList<mdtTtTestNodeUnitSetupData> setupDataList;
+  mdtTtTestNodeUnitSetupData unitSetupData;
+  shared_ptr<mdtDeviceModbusWago> coupler;
+  int i;
+
+  coupler = pvNodeManager.device<mdtDeviceModbusWago>("W750");
+  Q_ASSERT(coupler);
+  // Set all outputs to 0
+  Q_ASSERT(coupler->ios() != 0);
+  coupler->ios()->setAnalogOutputsValue(0);
+  coupler->ios()->setDigitalOutputsValue(false);
+  // Set values of each I/O
+  setupDataList = setupData.unitSetupList();
+  for(i = 0; i < setupDataList.size(); ++i){
+    unitSetupData = setupDataList.at(i);
+    qDebug() << " Unit: " << unitSetupData.schemaPosition() << ", I/O pos: " << unitSetupData.ioPosition() << " , type: " << unitSetupData.ioType();
+    switch(unitSetupData.ioType()){
+      case mdtTtTestNodeUnitSetupData::AnalogOutput:
+        if(coupler->setAnalogOutputValueAt(unitSetupData.ioPosition(), unitSetupData.value("Value").toDouble(), false, false) < 0){
+          pvLastError = coupler->lastError();
+          displayLastError();
+          return false;
+        }
+        break;
+      case mdtTtTestNodeUnitSetupData::DigitalOutput:
+        if(coupler->setDigitalOutputValueAt(unitSetupData.ioPosition(), unitSetupData.value("State").toBool(), false, false) < 0){
+          pvLastError = coupler->lastError();
+          displayLastError();
+          return false;
+        }
+        break;
+    }
+  }
+  // Send to coupler
+  if(coupler->setAnalogOutputs(true) < 0){
+    pvLastError = coupler->lastError();
+    displayLastError();
+    return false;
+  }
+  if(coupler->setDigitalOutputs(true) < 0){
+    pvLastError = coupler->lastError();
+    displayLastError();
+    return false;
+  }
+  coupler->wait(300);
 
   return true;
 }
@@ -284,6 +436,10 @@ bool mdtTtBasicTester::setupTables()
     return false;
   }
   if(!setupTestItemTable()){
+    return false;
+  }
+  if(!pvTest.setupTestItemModel()){
+    pvLastError = pvTest.lastError();
     return false;
   }
   return true;

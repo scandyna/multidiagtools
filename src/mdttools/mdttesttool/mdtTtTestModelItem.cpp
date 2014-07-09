@@ -40,11 +40,12 @@ QString mdtTtTestModelItem::sqlForTestLinkSelection(const QVariant & testModelIt
   sql = "SELECT * FROM TestLink_view WHERE Id_PK NOT IN (";
   sql += " SELECT TestLink_Id_FK FROM TestModelItem_TestLink_tbl WHERE TestModelItem_Id_FK = " + testModelItemId.toString();
   sql += ")";
+  /// \todo Ajouter filtre sur une list de test nodes. Voir pour utiliser WHERE TestNode_Id_FK IN (Id1,Id2, ...)
 
   return sql;
 }
 
-QString mdtTtTestModelItem::sqlForTestNodeUnitSelection(const QVariant & testModelItemId, const QList<QVariant> & limitToUnitIdList) const
+QString mdtTtTestModelItem::sqlForTestNodeUnitSelection(const QVariant & testModelItemId, const QVariant & testModelId) const
 {
   QString sql;
   QLocale locale;
@@ -83,12 +84,15 @@ QString mdtTtTestModelItem::sqlForTestNodeUnitSelection(const QVariant & testMod
         " JOIN TestNode_tbl TN\n"\
         "  ON TN.VehicleType_Id_FK_PK = TNU.TestNode_Id_FK\n"\
         " JOIN VehicleType_tbl VT\n"\
-        "  ON VT.Id_PK = TN.VehicleType_Id_FK_PK";
+        "  ON VT.Id_PK = TN.VehicleType_Id_FK_PK\n"\
+        " JOIN TestModel_TestNode_tbl TMTN\n"\
+        "  ON TMTN.TestNode_Id_FK = TN.VehicleType_Id_FK_PK";
+  // Limit to test nodes that are affected to given test model
+  sql += " WHERE TMTN.TestModel_Id_FK = " + testModelId.toString();
   // Don't show allready used units
-  sql += " WHERE Unit_Id_FK_PK NOT IN(";
-  sql += " SELECT TestNodeUnit_Id_FK FROM TestNodeUnitSetup_tbl WHERE TestModelItem_Id_FK = " + testModelItemId.toString();
+  sql += " AND Unit_Id_FK_PK NOT IN(";
+  sql += "  SELECT TestNodeUnit_Id_FK FROM TestNodeUnitSetup_tbl WHERE TestModelItem_Id_FK = " + testModelItemId.toString();
   sql += ")";
-
 
   return sql;
 }

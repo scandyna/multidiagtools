@@ -32,6 +32,12 @@ mdtDeviceContainer::mdtDeviceContainer(QObject *parent)
 {
 }
 
+void mdtDeviceContainer::clear()
+{
+  pvDevices.clear();
+  emit cleared();
+}
+
 QList<shared_ptr<mdtDevice>> mdtDeviceContainer::allDevices()
 {
   QList<shared_ptr<mdtDevice>> lst;
@@ -45,8 +51,12 @@ QList<shared_ptr<mdtDevice>> mdtDeviceContainer::allDevices()
   return lst;
 }
 
-void mdtDeviceContainer::clear()
+void mdtDeviceContainer::disconnectFromDevices()
 {
-  pvDevices.clear();
-  emit cleared();
+  std::vector<std::shared_ptr<mdtDevice>>::const_iterator it;
+
+  for(it = pvDevices.begin(); it != pvDevices.end(); ++it){
+    Q_ASSERT(*it);
+    (*it)->disconnectFromDevice();
+  }
 }

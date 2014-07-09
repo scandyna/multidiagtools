@@ -846,12 +846,14 @@ bool mdtTtTestConnectionCableEditor::setupTestLinkTable()
   widget->setColumnHidden("VehicleType_Id_FK_PK", true);
   widget->setColumnHidden("Unit_Id_FK_PK", true);
   widget->setColumnHidden("DutUnitId", true);
+  widget->setColumnHidden("TestNodeUnitSchemaPosition", true);
+  widget->setColumnHidden("IoPosition", true);
   // Set fields a user friendly name
   widget->setHeaderData("TestNodeType", tr("Test node\nType"));
   widget->setHeaderData("TestNodeSubType", tr("Test node\nSub type"));
   widget->setHeaderData("TestNodeSeriesNumber", tr("Test node\nSerie"));
-  widget->setHeaderData("NodeId", tr("Test node\nNode ID"));
-  widget->setHeaderData("TestNodeUnitSchemaPosition", tr("Test node\nUnit"));
+  widget->setHeaderData("NodeIdentification", tr("Test node\nNode ID"));
+  ///widget->setHeaderData("TestNodeUnitSchemaPosition", tr("Test node\nUnit"));
   widget->setHeaderData("TestConnectorName", tr("Test\nConnector"));
   widget->setHeaderData("TestContactName", tr("Test\nContact"));
   widget->setHeaderData("TestLinkIdentification", tr("Test link\nIdentification"));

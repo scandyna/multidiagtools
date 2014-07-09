@@ -77,10 +77,37 @@ class mdtTtTest : public mdtTtBase
    */
   bool updateTest(const QVariant & testId, const mdtTtTestData & data);
 
+  /*! \brief Check if more test item is available
+   */
+  bool hasMoreTestItem() const;
+
+  /*! \brief Reset the test item cursor
+   */
+  void resetTestItemCursor();
+
+  /*! \brief Go to next test item
+   *
+   * \return The test item ID
+   */
+  QVariant nextTestItem();
+
   /*! \brief Get setup data for given test item ID
    */
   mdtTtTestItemNodeSetupData getSetupData(const QVariant & testItemId, bool & ok);
 
+  /*! \brief Convert a mdtValue to a double
+   *
+   * If value has -OL flag set, -1e300 is returned.
+   * If value has +OL flag set, 1e300 is returned.
+   */
+  static QVariant valueToDouble(const mdtValue & value);
+
+  /*! \brief Convert a double to a value
+   *
+   * If dblVal is <= -1e300, -OL flag will be set.
+   * If dblVal is >= 1e300, +OL flag will be set.
+   */
+  static mdtValue doubleToValue(const QVariant & dblVal);
 
   /*! \brief Set test item model
    *
@@ -173,6 +200,10 @@ class mdtTtTest : public mdtTtBase
    */
   bool removeTestItems(const QVariant & testId);
 
+  /*! \brief Apply filter of pvTestItemTableModel to current test ID and reset pvCurrentTestItemRow to first item
+   */
+  void resetTestItemTableModel(const QVariant & testId);
+
   
   
   /*! \brief Check if test item sql model was set
@@ -208,8 +239,10 @@ class mdtTtTest : public mdtTtBase
   Q_DISABLE_COPY(mdtTtTest);
 
   // Test item data models
-  ///QSqlTableModel *pvTestItemSqlModel;
   std::shared_ptr<QSqlTableModel> pvTestItemTableModel;
+  int pvCurrentTestItemRow;
+
+  /// \todo Obselete..
   int pvColIdxOfTestItemId;
   int pvColIdxOfExpectedValue;
   int pvColIdxOfMeasuredValue;

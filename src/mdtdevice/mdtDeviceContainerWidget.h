@@ -48,6 +48,10 @@ namespace mdtDeviceContainerWidgetPrivate
      */
     mdtDeviceContainerWidgetItem(QObject* parent, std::shared_ptr<mdtDevice> _device);
 
+    /*! \brief Destructor
+     */
+    ~mdtDeviceContainerWidgetItem();
+
     std::shared_ptr<mdtDevice> device;
     std::shared_ptr<QLabel> lbDeviceName;
     std::shared_ptr<mdtLed> ldState;

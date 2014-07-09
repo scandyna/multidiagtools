@@ -694,6 +694,7 @@ bool mdtTtTestNodeEditor::setupTestNodeUnitTable()
   ///widget->setColumnHidden("", true);
   // Set fields a user friendly name
   widget->setHeaderData("SchemaPosition", tr("Schema\nposition"));
+  widget->setHeaderData("IoPosition", tr("I/O\npos."));
   widget->setHeaderData("UnitConnectorName", tr("Connector"));
   widget->setHeaderData("UnitContactName", tr("Contact"));
   widget->setHeaderData("SignalName", tr("Signal name"));
@@ -706,6 +707,7 @@ bool mdtTtTestNodeEditor::setupTestNodeUnitTable()
   widget->setHeaderData("NameDE", tr("Type (DEU)"));
   widget->setHeaderData("NameIT", tr("Type (ITA)"));
   // Set some attributes on table view
+  widget->addColumnToSortOrder("Type_Code_FK", Qt::AscendingOrder);
   widget->addColumnToSortOrder("IoPosition", Qt::AscendingOrder);
   widget->addColumnToSortOrder("SchemaPosition", Qt::AscendingOrder);
   widget->sort();

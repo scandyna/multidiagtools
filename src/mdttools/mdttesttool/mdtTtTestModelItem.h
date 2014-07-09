@@ -35,7 +35,7 @@ class mdtTtTestModelItem : public mdtTtBase
 {
  public:
 
-  /*! \brief Coinstructor
+  /*! \brief Constructor
    */
   mdtTtTestModelItem(QObject *parent, QSqlDatabase db);
 
@@ -49,12 +49,10 @@ class mdtTtTestModelItem : public mdtTtBase
   /*! \brief Get SQL statement for test node unit selection
    *
    * List all test node units that not exists
-   *  in TestNodeUnitSetup_tbl for given testModelItemId.
-   *
-   * If limitToUnitIdList is not empty,
-   *  the statement will only include data for given IDs.
+   *  in TestNodeUnitSetup_tbl for given testModelItemId,
+   *  and that exists in TestModel_TestNode_tbl for given testModelId.
    */
-  QString sqlForTestNodeUnitSelection(const QVariant & testModelItemId, const QList<QVariant> & limitToUnitIdList = QList<QVariant>()) const;
+  QString sqlForTestNodeUnitSelection(const QVariant & testModelItemId, const QVariant & testModelId) const;
 
   /*! \brief Get a list of used node unit IDs for given test item ID
    *

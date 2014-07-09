@@ -23,6 +23,7 @@
 #include "mdtSqlRecord.h"
 #include "mdtTtTestNodeSetupData.h"
 #include <QSqlTableModel>
+#include <QModelIndex>
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QSqlError>
@@ -34,6 +35,8 @@
 mdtTtTest::mdtTtTest(QObject *parent, QSqlDatabase db)
  : mdtTtBase(parent, db) , pvTestItemTableModel(new QSqlTableModel(0, db))
 {
+  pvCurrentTestItemRow = -1;
+  
   ///pvTestItemTableModel = 0;
   pvColIdxOfTestItemId = -1;
   pvColIdxOfExpectedValue = -1;
@@ -47,8 +50,9 @@ bool mdtTtTest::setupTestItemModel()
 
   QSqlError sqlError;
 
-  pvTestItemTableModel->setTable("TestItem_tbl");
+  pvTestItemTableModel->setTable("TestItem_view");
   pvTestItemTableModel->setFilter("Test_Id_FK = -1");
+  pvTestItemTableModel->setSort(pvTestItemTableModel->fieldIndex("SequenceNumber"), Qt::AscendingOrder);
   if(!pvTestItemTableModel->select()){
     sqlError = pvTestItemTableModel->lastError();
     pvLastError.setError(tr("Cannot select data from table 'TestItem_tbl'"), mdtError::Error);
@@ -57,6 +61,7 @@ bool mdtTtTest::setupTestItemModel()
     pvLastError.commit();
     return false;
   }
+  pvCurrentTestItemRow = -1;
 
   return true;
 }
@@ -157,6 +162,40 @@ bool mdtTtTest::updateTest(const QVariant & testId, const mdtTtTestData & data)
   return true;
 }
 
+bool mdtTtTest::hasMoreTestItem() const
+{
+  Q_ASSERT(pvTestItemTableModel);
+
+  return (pvCurrentTestItemRow < pvTestItemTableModel->rowCount());
+}
+
+void mdtTtTest::resetTestItemCursor()
+{
+  pvCurrentTestItemRow = 0;
+}
+
+QVariant mdtTtTest::nextTestItem()
+{
+  Q_ASSERT(pvTestItemTableModel);
+
+  QModelIndex index;
+  int col;
+
+  col = pvTestItemTableModel->fieldIndex("Id_PK");
+  Q_ASSERT(col >= 0);
+  index = pvTestItemTableModel->index(pvCurrentTestItemRow, col);
+  
+  /// \todo Provisoire !
+  col = pvTestItemTableModel->fieldIndex("SequenceNumber");
+  QModelIndex index2;
+  index2 = pvTestItemTableModel->index(pvCurrentTestItemRow, col);
+  qDebug() << "mdtTtTest - current seq #: " << pvTestItemTableModel->data(index2);
+  
+  ++pvCurrentTestItemRow;
+
+  return pvTestItemTableModel->data(index);
+}
+
 mdtTtTestItemNodeSetupData mdtTtTest::getSetupData(const QVariant & testItemId, bool & ok)
 {
   QString sql;
@@ -196,10 +235,48 @@ mdtTtTestItemNodeSetupData mdtTtTest::getSetupData(const QVariant & testItemId, 
         tnSetupData.addUnitSetup(tnuSetupData);
       }
     }
+    // Add node setup data to test item setup data
+    tiSetupData.addNodeSetupData(tnSetupData);
   }
 
   return tiSetupData;
 }
+
+QVariant mdtTtTest::valueToDouble(const mdtValue & value)
+{
+  if(!value.isValid()){
+    return QVariant();
+  }
+  if(value.isMinusOl()){
+    return -1e300;
+  }else if(value.isPlusOl()){
+    return 1e300;
+  }else{
+    return value.valueDouble();
+  }
+}
+
+mdtValue mdtTtTest::doubleToValue(const QVariant & dblVal)
+{
+  bool ok;
+  double x;
+  mdtValue val;
+
+  x = dblVal.toDouble(&ok);
+  if(!ok){
+    return val;
+  }
+  if(x < -1.999999999999e299){
+    val.setValue(x, true, false);
+  }else if(x > 1.999999999999e299){
+    val.setValue(x, false, true);
+  }else{
+    val.setValue(x, false, false);
+  }
+
+  return val;
+}
+
 
 /**
 bool mdtTtTest::setTestItemSqlModel(QSqlTableModel *model)
@@ -609,13 +686,42 @@ bool mdtTtTest::addTestItems(const QVariant & testId, const QVariant & testModel
       return false;
     }
   }
+  resetTestItemTableModel(testId);
 
   return true;
 }
 
 bool mdtTtTest::removeTestItems(const QVariant & testId)
 {
-  return removeData("TestItem_tbl", "Test_Id_FK", testId);
+  if(!removeData("TestItem_tbl", "Test_Id_FK", testId)){
+    return false;
+  }
+  resetTestItemTableModel(testId);
+
+  return true;
+}
+
+void mdtTtTest::resetTestItemTableModel(const QVariant & testId)
+{
+  Q_ASSERT(pvTestItemTableModel);
+
+  QString filter;
+
+  // Set new filter
+  if(testId.isNull()){
+    filter = "Test_Id_FK = -1";
+  }else{
+    filter = "Test_Id_FK = " + testId.toString();
+  }
+  pvTestItemTableModel->setFilter(filter);
+  // Cache all data to model
+  if(pvTestItemTableModel->rowCount() > 0){
+    while(pvTestItemTableModel->canFetchMore()){
+      pvTestItemTableModel->fetchMore();
+    }
+  }
+  // Reset row cursor
+  pvCurrentTestItemRow = 0;
 }
 
 

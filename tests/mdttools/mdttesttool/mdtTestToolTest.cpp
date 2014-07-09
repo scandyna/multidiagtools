@@ -24,6 +24,7 @@
 #include "mdtTtDatabaseSchema.h"
 #include "mdtSqlRecord.h"
 #include "mdtTtBase.h"
+#include "mdtTtTest.h"
 #include "mdtTtTestLinkData.h"
 #include "mdtTtTestNodeUnit.h"
 #include "mdtTtTestNodeUnitData.h"
@@ -675,6 +676,39 @@ void mdtTestToolTest::mdtTtTestNodeManagerTest()
   while(w.isVisible()){
     QTest::qWait(1000);
   }
+}
+
+void mdtTestToolTest::mdtTtTestTest()
+{
+  QVariant dblVal;
+  mdtValue value;
+
+  // Check value -> double conversions
+  value.setValue(1.0, false, false);
+  dblVal = mdtTtTest::valueToDouble(value);
+  QCOMPARE(dblVal.toDouble(), 1.0);
+  value.setValue(-100, true, false);
+  dblVal = mdtTtTest::valueToDouble(value);
+  QCOMPARE(dblVal.toDouble(), -1e300);
+  value.setValue(100, false, true);
+  dblVal = mdtTtTest::valueToDouble(value);
+  QCOMPARE(dblVal.toDouble(), 1e300);
+  // Check double -> value conversions
+  value = mdtTtTest::doubleToValue(QVariant());
+  QVERIFY(!value.isValid());
+  value = mdtTtTest::doubleToValue(1.0);
+  QCOMPARE(value.valueDouble(), 1.0);
+  QVERIFY(!value.isMinusOl());
+  QVERIFY(!value.isPlusOl());
+  value = mdtTtTest::doubleToValue(-1e300);
+  QCOMPARE(value.valueDouble(), -1e300);
+  QVERIFY(value.isMinusOl());
+  QVERIFY(!value.isPlusOl());
+  value = mdtTtTest::doubleToValue(1e300);
+  QCOMPARE(value.valueDouble(), 1e300);
+  QVERIFY(!value.isMinusOl());
+  QVERIFY(value.isPlusOl());
+
 }
 
 

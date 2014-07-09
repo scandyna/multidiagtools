@@ -499,7 +499,7 @@ void mdtSqlTableWidget::onCurrentRowChanged(const QModelIndex &current, const QM
    *  else we have a problem when sorting is activ.
    */
   if(current.isValid()){
-    sort();
+    ///sort();
     if(current.model() == proxyModel()){
       QModelIndex index;
       index = proxyModel()->mapToSource(current);
@@ -574,6 +574,7 @@ void mdtSqlTableWidget::onModelSelected()
   }
   if(model()->rowCount() > 0){
     ///index = model()->index(0, pvDefaultColumnToSelect);
+    sort();
     index = proxyModel()->index(0, pvDefaultColumnToSelect);
     pvTableView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::SelectCurrent);
     qDebug() << "mdtSqlTableWidget::onModelSelected() , selected index: " << index;

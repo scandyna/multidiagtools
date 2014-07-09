@@ -46,6 +46,18 @@ namespace mdtDeviceContainerWidgetPrivate
     device = _device;
     lbDeviceName->setText(device->name());
     ldState->setFixedSize(15, 15);
+    Q_ASSERT(device->portManager() != 0);
+    connect(device->portManager(), SIGNAL(stateChangedForUi(int,const QString&,int,bool)), this, SLOT(setState(int,const QString&,int,bool)));
+    connect(device->portManager(), SIGNAL(statusMessageChanged(const QString&, const QString&,int)), this, SLOT(setMessage(const QString&, const QString&)));
+    device->portManager()->notifyCurrentState();
+  }
+
+  mdtDeviceContainerWidgetItem::~mdtDeviceContainerWidgetItem()
+  {
+    if((device)&&(device->portManager() != 0)){
+      disconnect(device->portManager(), SIGNAL(stateChangedForUi(int,const QString&,int,bool)), this, SLOT(setState(int,const QString&,int,bool)));
+      disconnect(device->portManager(), SIGNAL(statusMessageChanged(const QString&, const QString&,int)), this, SLOT(setMessage(const QString&, const QString&)));
+    }
   }
 
   void mdtDeviceContainerWidgetItem::setState(int stateId, const QString & stateText, int ledColorId, bool ledIsOn)
@@ -129,9 +141,6 @@ void mdtDeviceContainerWidget::addDevice(shared_ptr<mdtDevice> device)
   pvLayout->addWidget(item->ldState.get(), pvCurrentLayoutRow, 1, Qt::AlignHCenter);
   pvLayout->addWidget(item->lbDeviceStateText.get(), pvCurrentLayoutRow, 2);
   pvLayout->addWidget(item->lbMessage.get(), pvCurrentLayoutRow, 3);
-  connect(device->portManager(), SIGNAL(stateChangedForUi(int,const QString&,int,bool)), item.get(), SLOT(setState(int,const QString&,int,bool)));
-  connect(device->portManager(), SIGNAL(statusMessageChanged(const QString&, const QString&,int)), item.get(), SLOT(setMessage(const QString&, const QString&)));
-  device->portManager()->notifyCurrentState();
   pvItems.append(item);
   ++pvCurrentLayoutRow;
 }
