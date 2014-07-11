@@ -18,50 +18,19 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DATABASE_TEST_H
-#define MDT_DATABASE_TEST_H
+#ifndef MDT_WIDGETS_TEST_H
+#define MDT_WIDGETS_TEST_H
 
 #include "mdtTest.h"
-#include <QFileInfo>
-#include <QMessageBox>
-#include <QSqlDatabase>
 
-class mdtDatabaseTest : public mdtTest
+class mdtWidgetsTest : public mdtTest
 {
  Q_OBJECT
 
  private slots:
 
-  void initTestCase();
-  void cleanupTestCase();
-
-  void sqlSchemaTableTest();
-  void sqlSchemaTableSqliteTest();
-
-  void databaseManagerTest();
-
-  /// \todo Add mdtSqlForm test
-  /// \todo Add mdtSqlWindow test
-
-  void sqlRecordTest();
-
-  void sqlSelectionDialogTest();
-
-  void doubleValueTest();
-
- private:
-
-  /*
-   * Create the test database
-   */
-  void createTestDatabase();
-  // Populate database with some common data
-  void populateTestDatabase();
-  // Clear test database data
-  void clearTestDatabaseData();
-
-  QFileInfo pvDatabaseFileInfo;
-  QSqlDatabase pvDatabase;
+  void mdtDoubleValidatorTest();
+  void mdtDoubleEditTest();
 };
 
-#endif // #ifndef MDT_DATABASE_TEST_H
+#endif // #ifndef MDT_WIDGETS_TEST_H

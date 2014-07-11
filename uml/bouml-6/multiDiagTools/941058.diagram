@@ -1,4 +1,4 @@
-format 206
+format 207
 
 classcanvas 128002 class_ref 1006210 // TestModelItem_tbl
   classdiagramsettings member_max_width 0 end
@@ -104,7 +104,7 @@ end
 relationcanvas 128898 relation_ref 1247106 // <unidirectional association>
   geometry HV
   decenter_end 83
-  from ref 128642 z 2001 to point 399 682
+  from ref 128642 z 2001 to point 399 696
   line 133634 z 2001 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -120,8 +120,8 @@ relationcanvas 129666 relation_ref 1254402 // <unidirectional association>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130050 relation_ref 1020674 // <unidirectional association>
-  from ref 129922 z 2011 to point 432.4 52.4
-  line 130178 z 2011 to point 432.4 80.2
+  from ref 129922 z 2011 to point 432 52
+  line 130178 z 2011 to point 432 80
   line 130306 z 2011 to ref 129922
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -139,8 +139,8 @@ relationcanvas 130690 relation_ref 950530 // <unidirectional association>
 end
 relationcanvas 130818 relation_ref 1020802 // <unidirectional association>
   decenter_end 400
-  from ref 130562 z 2017 to point 961.8 29.6
-  line 130946 z 2017 to point 960.2 49.6
+  from ref 130562 z 2017 to point 961 29
+  line 130946 z 2017 to point 960 49
   line 131074 z 2017 to ref 130562
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -248,7 +248,7 @@ relationcanvas 138370 relation_ref 1557634 // <unidirectional association>
 end
 relationcanvas 138498 relation_ref 1557762 // <unidirectional association>
   geometry HV
-  from ref 138242 z 2007 to point 1047.4 963
+  from ref 138242 z 2007 to point 1047 963
   line 138626 z 2007 to ref 129410
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

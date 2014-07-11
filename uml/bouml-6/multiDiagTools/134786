@@ -1,6 +1,6 @@
-format 206
+format 207
 "Qt4" // Qt4
-  revision 78
+  revision 79
   modified_by 2 "philippe"
   // class settings
   
@@ -1549,6 +1549,14 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+      classrelation 1640578 // <generalisation>
+	relation 1625090 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1640578 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+
       operation 810498 "QValidator"
 	public explicit_return_type ""
 	nparams 1
@@ -1579,12 +1587,134 @@ ${inlines}
 	
       end
 
+      operation 2128258 "fixup"
+	const cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param inout name "input" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2128130 "locale"
+	const public return_type class_ref 418818 // QLocale
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2128386 "setLocale"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "locale" type class_ref 418818 // QLocale
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 810754 "validate"
 	abstract cpp_virtual public explicit_return_type "State"
 	nparams 2
-	  param in name "input" type class_ref 161026 // QString
-	  param in name "pos" explicit_type "int"
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${abstract};
+	  param inout name "input" type class_ref 161026 // QString
+	  param inout name "pos" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} & ${p0}, ${t1} & ${p1}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 1315586 "QDoubleValidator"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 1640450 // <generalisation>
+	relation 1624962 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1640450 // <generalisation>
+	  b parent class_ref 418690 // QValidator
+      end
+
+      operation 2128514 "QDoubleValidator"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 138626 // QObject
+	    defaultvalue "0"
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2128642 "QDoubleValidator"
+	public explicit_return_type ""
+	nparams 4
+	  param in name "bottom" explicit_type "double"
+	  param in name "top" explicit_type "double"
+	  param in name "decimals" explicit_type "double"
+	  param in name "parent" type class_ref 138626 // QObject
+	    defaultvalue "0"
+	cpp_decl "  ${comment}${inline}${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}, const ${t3} & ${p3}${v3}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, const ${t3} & ${p3}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2128770 "~QDoubleValidator"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} 
+{
+  ${body}}
 "
 	
 	
@@ -4463,6 +4593,72 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 841218 // <generalisation>
 	  b parent class_ref 316162 // QWidget
+      end
+
+      operation 2127618 "QAbstractSpinBox"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 316162 // QWidget
+	    defaultvalue "0"
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2127746 "fixup"
+	const cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param inout name "input" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2127874 "stepBy"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "steps" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2128002 "validate"
+	const cpp_virtual public explicit_return_type "QValidator::State"
+	nparams 2
+	  param inout name "input" type class_ref 161026 // QString
+	  param in name "pos" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} & ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 

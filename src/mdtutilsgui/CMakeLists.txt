@@ -10,6 +10,8 @@ set (HEADER_FILES
           # mdtLed
           mdtLed.h
           mdtBlinkLed.h
+          mdtDoubleEdit.h
+          mdtDoubleValidator.h
           # I/O Widgets
           mdtAbstractIoWidget.h
           mdtAnalogInWidget.h
@@ -49,6 +51,8 @@ set (SOURCES_FILES
           # mdtLed
           mdtLed.cpp
           mdtBlinkLed.cpp
+          mdtDoubleEdit.cpp
+          mdtDoubleValidator.cpp
           # I/O Widgets
           mdtAbstractIoWidget.cpp
           mdtAnalogInWidget.cpp

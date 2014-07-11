@@ -242,6 +242,7 @@ mdtTtTestItemNodeSetupData mdtTtTest::getSetupData(const QVariant & testItemId, 
   return tiSetupData;
 }
 
+/**
 QVariant mdtTtTest::valueToDouble(const mdtValue & value)
 {
   if(!value.isValid()){
@@ -276,6 +277,7 @@ mdtValue mdtTtTest::doubleToValue(const QVariant & dblVal)
 
   return val;
 }
+*/
 
 
 /**

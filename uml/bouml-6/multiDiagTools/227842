@@ -1,6 +1,6 @@
-format 206
+format 207
 "DatabaseLogical" // mdttools::mdttesttool::DatabaseLogical
-  revision 46
+  revision 47
   modified_by 2 "philippe"
   // class settings
   
@@ -3076,6 +3076,18 @@ ${inlines}
 	MysqlColumn
       end
 
+      attribute 1292034 "MeasuredValueIsOl"
+	private explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
       attribute 1066754 "Result"
 	private explicit_type "string"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
@@ -3562,6 +3574,5 @@ ${inlines}
 	MysqlColumn
       end
     end
-
   end
 end

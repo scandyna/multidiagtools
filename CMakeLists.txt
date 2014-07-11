@@ -225,6 +225,9 @@ add_test (mdtStateMachineTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtstat
 # mdtIoWidgetTest
 add_test (mdtIoWidgetTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutilsgui/mdtiowidgettest)
 
+# mdtWidgetsTest
+add_test (mdtWidgetsTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutilsgui/mdtwidgetstest)
+
 # mdtDataTableTest
 add_test (mdtDataTableTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutilsgui/mdtdatatabletest)
 

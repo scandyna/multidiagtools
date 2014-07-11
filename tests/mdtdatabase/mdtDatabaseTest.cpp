@@ -50,6 +50,7 @@
 #include <QAbstractButton>
 #include <QModelIndex>
 #include <QList>
+#include <limits>
 
 #include <QTableView>
 #include <QItemSelectionModel>
@@ -987,6 +988,29 @@ void mdtDatabaseTest::sqlSelectionDialogTest()
   QVERIFY(q.exec("DROP TABLE 'somedata'"));
 }
 
+void mdtDatabaseTest::doubleValueTest()
+{
+  QSqlQuery q(pvDatabase);
+
+  // -infinity
+  QVERIFY(q.prepare("INSERT INTO Value_tbl (Id_PK, Value) VALUES(:Id_PK, :Value)"));
+  q.bindValue("Id_PK", 1);
+  q.bindValue("Value", -std::numeric_limits<double>::infinity());
+  QVERIFY(q.exec());
+  QVERIFY(q.exec("SELECT Value FROM Value_tbl WHERE Id_PK = 1"));
+  QVERIFY(q.next());
+  QCOMPARE(q.value(0), QVariant(-std::numeric_limits<double>::infinity()));
+  // +infinity
+  QVERIFY(q.prepare("INSERT INTO Value_tbl (Id_PK, Value) VALUES(:Id_PK, :Value)"));
+  q.bindValue("Id_PK", 2);
+  q.bindValue("Value", std::numeric_limits<double>::infinity());
+  QVERIFY(q.exec());
+  QVERIFY(q.exec("SELECT Value FROM Value_tbl WHERE Id_PK = 2"));
+  QVERIFY(q.next());
+  QCOMPARE(q.value(0), QVariant(std::numeric_limits<double>::infinity()));
+
+}
+
 
 /*
  * Test data base manipulation methods
@@ -1054,6 +1078,16 @@ void mdtDatabaseTest::createTestDatabase()
   QVERIFY(fld.requiredStatus() == QSqlField::Required);
   fld = pvDatabase.record("Address_tbl").field("Client_Id_FK");
   QVERIFY(fld.requiredStatus() == QSqlField::Required);
+
+  /*
+   * Create Value_tbl table
+   */
+  sql = "CREATE TABLE 'Value_tbl' (";
+  sql += "'Id_PK' INTEGER PRIMARY KEY AUTOINCREMENT, ";
+  sql += "'Value' DOUBLE NOT NULL, ";
+  sql += "'Remarks' VARCHAR(500) )";
+  QVERIFY(q.exec(sql));
+
 }
 
 void mdtDatabaseTest::populateTestDatabase()
@@ -1085,6 +1119,8 @@ void mdtDatabaseTest::clearTestDatabaseData()
   sql = "DELETE FROM Address_tbl";
   QVERIFY(query.exec(sql));
   sql = "DELETE FROM Client_tbl";
+  QVERIFY(query.exec(sql));
+  sql = "DELETE FROM Value_tbl";
   QVERIFY(query.exec(sql));
 }
 

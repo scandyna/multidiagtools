@@ -100,14 +100,14 @@ class mdtTtTest : public mdtTtBase
    * If value has -OL flag set, -1e300 is returned.
    * If value has +OL flag set, 1e300 is returned.
    */
-  static QVariant valueToDouble(const mdtValue & value);
+  ///static QVariant valueToDouble(const mdtValue & value);
 
   /*! \brief Convert a double to a value
    *
    * If dblVal is <= -1e300, -OL flag will be set.
    * If dblVal is >= 1e300, +OL flag will be set.
    */
-  static mdtValue doubleToValue(const QVariant & dblVal);
+  ///static mdtValue doubleToValue(const QVariant & dblVal);
 
   /*! \brief Set test item model
    *
