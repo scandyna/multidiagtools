@@ -71,6 +71,13 @@ doc/Wago
 doc/Beckhoff
 doc/bus/canbus/CiA
 
+# Binary and Makefile files generated in QtDesigner plugin directory #
+#########################################################
+qttools/designer/plugin/debug
+qttools/designer/plugin/release
+qttools/designer/plugin/Makefile.Debug
+qttools/designer/plugin/Makefile.Release
+
 # Other files #
 ###############
 customdb

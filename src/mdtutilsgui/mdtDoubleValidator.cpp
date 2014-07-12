@@ -23,7 +23,7 @@
 #include <QChar>
 #include <limits>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtDoubleValidator::mdtDoubleValidator(QObject* parent)
  : QValidator(parent)
@@ -37,15 +37,10 @@ void mdtDoubleValidator::setSuffix(const QString& s)
 
 QValidator::State mdtDoubleValidator::validate(QString & input, int & pos) const
 {
-  qDebug() << "mdtDoubleValidator::validate() - input: " << input << " , pos: " << pos;
-  
-  ///QString inputCpy = input.left(input.size() - pvSuffix.size());
-
   /*
    * We have a special case for -inf and +inf
    */
-  if((input == "\u221E")||(input == "-\u221E")||(input == "-inf")||(input == "inf")||(input == "+inf")){
-    qDebug() << "A infinity..";
+  if((input == mdtDoubleEdit::infinityString())||(input == ("-" + mdtDoubleEdit::infinityString()))||(input == "-inf")||(input == "inf")||(input == "+inf")){
     return QValidator::Acceptable;
   }
   /*
@@ -67,16 +62,6 @@ QValidator::State mdtDoubleValidator::validate(QString & input, int & pos) const
   if(!strEndsCorrectly(input)){
     return QValidator::Intermediate;
   }
-  /*
-   * If input does not end with a power of 10 suffix,
-   *  we submit input to Qt's validator as is.
-   */
-  /**
-  if(!strEndsWithPowerOf10Suffix(input)){
-    qDebug() << "No suffix";
-    return pvValidator.validate(input, pos);
-  }
-  */
   /*
    * Here we have a number with suffix.
    * Submit number part without suffix to Qt's validator
@@ -104,9 +89,9 @@ QValidator::State mdtDoubleValidator::validate(QString & input, int & pos) const
   inputCpy.remove('E');
   inputCpy.remove(pvSuffix);
   inputCpy = inputCpy.trimmed();
-
+  // Validate number
   s = pvValidator.validate(inputCpy, posCpy);
-  qDebug() << "inputCpy: " << inputCpy << " , posCpy: " << posCpy << " , state: " << s;
+  ///qDebug() << "inputCpy: " << inputCpy << " , posCpy: " << posCpy << " , state: " << s;
 
   return s;
 }

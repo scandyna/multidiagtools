@@ -23,20 +23,22 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QHBoxLayout>
+#include <QChar>
 #include <limits>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtDoubleEdit::mdtDoubleEdit(QWidget* parent)
  : QWidget(parent)
 {
   QHBoxLayout *l = new QHBoxLayout;
+
   // Push buttons layout
   QVBoxLayout *pbLayout = new QVBoxLayout;
   pbLayout->setContentsMargins(0, 0, 0, 0);
   pbLayout->setSpacing(0);
-  pbSetInfinity = new QPushButton(" \u221E");
-  pbSetMinusInfinity = new QPushButton("-\u221E");
+  pbSetInfinity = new QPushButton(" " + infinityString());
+  pbSetMinusInfinity = new QPushButton("-" + infinityString());
   // Main layout
   pvLineEdit = new QLineEdit;
   pvLineEdit->setAlignment(Qt::AlignRight);
@@ -44,10 +46,9 @@ mdtDoubleEdit::mdtDoubleEdit(QWidget* parent)
   l->addWidget(pbSetMinusInfinity);
   l->addWidget(pbSetInfinity);
   setLayout(l);
-
   connect(pbSetMinusInfinity, SIGNAL(clicked()), this, SLOT(setMinusInfinity()));
   connect(pbSetInfinity, SIGNAL(clicked()), this, SLOT(setInfinity()));
-  
+  // Validator
   pvValidator = new mdtDoubleValidator(this);
   pvLineEdit->setValidator(pvValidator);
   connect(pvLineEdit, SIGNAL(editingFinished()), this, SLOT(setValueFromLineEdit()));
@@ -61,7 +62,6 @@ void mdtDoubleEdit::setUnit(const QString& unit)
   pvUnit = unit;
   pvValidator->setSuffix(pvUnit);
 }
-
 
 double mdtDoubleEdit::factor(const QChar & c)
 {
@@ -101,18 +101,59 @@ double mdtDoubleEdit::factor(const QChar & c)
   }
 }
 
-/**
-void mdtDoubleEdit::setValue(const QString& val)
+void mdtDoubleEdit::setValue(const QString & s, bool emitValueChanged)
 {
+  int pos = 0;
+  QString str = s;
 
+  pvValue = 0.0;
+  pvValueIsValid = false;
+  if(pvValidator->validate(str, pos) == QValidator::Acceptable){
+    convertAndSetValue(str);
+  }
+  displayValue();
+  if(emitValueChanged){
+    emit valueChanged(pvValue, pvValueIsValid);
+  }
 }
-*/
+
+void mdtDoubleEdit::setValue(double v, bool emitValueChanged)
+{
+  pvValue = v;
+  pvValueIsValid = true;
+  displayValue();
+  if(emitValueChanged){
+    emit valueChanged(pvValue, pvValueIsValid);
+  }
+}
+
+QVariant mdtDoubleEdit::value() const
+{
+  QVariant v;
+
+  if(pvValueIsValid){
+    v = pvValue;
+  }
+
+  return v;
+}
+
+QString mdtDoubleEdit::text() const
+{
+  return pvLineEdit->text();
+}
+
+QString mdtDoubleEdit::infinityString()
+{
+  return QChar(0x221E);
+}
 
 void mdtDoubleEdit::setMinusInfinity()
 {
   pvValue = -std::numeric_limits<double>::infinity();
   pvValueIsValid = true;
   displayValue();
+  emit valueChanged(pvValue, pvValueIsValid);
 }
 
 void mdtDoubleEdit::setInfinity()
@@ -120,39 +161,42 @@ void mdtDoubleEdit::setInfinity()
   pvValue = std::numeric_limits<double>::infinity();
   pvValueIsValid = true;
   displayValue();
+  emit valueChanged(pvValue, pvValueIsValid);
 }
 
 void mdtDoubleEdit::setValueFromLineEdit()
 {
   convertAndSetValue(pvLineEdit->text());
   displayValue();
+  emit valueChanged(pvValue, pvValueIsValid);
 }
 
 void mdtDoubleEdit::convertAndSetValue(QString str)
 {
-  double f;
+  double f = 1.0;
   QChar fc;
 
   str = str.trimmed();
   // Remove unit part
   str.remove(pvUnit);
   str = str.trimmed();
-  // Get power of 10 factor and remove it from str
   if(str.isEmpty()){
     pvValueIsValid = false;
     displayValue();
     return;
   }
-  fc = str.at(str.size() - 1);
-  f = factor(fc);
-  if(qAbs<double>(f - 1.0) <=  std::numeric_limits<double>::min()){
-    fc = '\0';
+  // If str is not a infinity, get power of 10 factor and remove it from str
+  if(!strIsInfinity(str)){
+    fc = str.at(str.size() - 1);
+    f = factor(fc);
+    if(qAbs<double>(f - 1.0) <=  std::numeric_limits<double>::min()){
+      fc = '\0';
+    }
+    if(!fc.isNull()){
+      str.remove(fc);
+    }
+    str = str.trimmed();
   }
-  if(!fc.isNull()){
-    str.remove(fc);
-  }
-  str = str.trimmed();
-  qDebug() << "str: " << str;
   // Do conversion
   pvValue = str.toDouble(&pvValueIsValid);
   if(pvValueIsValid){
@@ -173,22 +217,22 @@ void mdtDoubleEdit::displayValue()
   }
   // Check if we are - or + infinity
   if(pvValue == -std::numeric_limits<double>::infinity()){
-    pvLineEdit->setText("-\u221E");
+    pvLineEdit->setText("-" + infinityString());
     return;
   }
   if(pvValue == std::numeric_limits<double>::infinity()){
-    pvLineEdit->setText("\u221E");
+    pvLineEdit->setText(infinityString());
     return;
   }
   // Select a power of 10 regarding value - Note: we ignore c and d and h
   x = qAbs<double>(pvValue);
-  if(x < 1.e-18){
+  if(x < 1.e-15){
     f = 1.e18;
     fc = 'a';
-  }else if(isInRange(x, 1e-18, 1e-15)){
+  }else if(isInRange(x, 1e-15, 1e-12)){
     f = 1e15;
     fc = 'f';
-  }else if(isInRange(x, 1e-15, 1e-12)){
+  }else if(isInRange(x, 1e-12, 1e-9)){
     f = 1e12;
     fc = 'p';
   }else if(isInRange(x, 1e-9, 1e-6)){
@@ -234,18 +278,16 @@ void mdtDoubleEdit::displayValue()
 
 bool mdtDoubleEdit::isInRange(double x, double min, double max)
 {
-  ///x = qAbs<double>(x);
-  
-  // x in [min, max[ => (x >= min)&&(x < max)
-  qDebug() << "x: " << x << ", min: " << min << " , max: " << max;
   return ( ((x > min)||(qAbs<double>(x-min) < std::numeric_limits<double>::min()) ) && (x < max) );
-/**
-  if(x < 1.0){
-    // x in ]min, max] => (x > min)&&(x <= max)
-    return ((x > min) && (qAbs<double>(x-max) < std::numeric_limits<double>::min()));
-  }else{
-    // x in [min, max[ => (x >= min)&&(x < max)
-    return ((qAbs<double>(x-min) < std::numeric_limits<double>::min()) && (x < max));
+}
+
+bool mdtDoubleEdit::strIsInfinity(const QString & str) const
+{
+  if((str == "-inf")||(str == "inf")){
+    return true;
   }
-  */
+  if((str == "-\u221E")||(str == "\u221E")){
+    return true;
+  }
+  return false;
 }

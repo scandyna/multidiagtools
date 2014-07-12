@@ -23,7 +23,8 @@
 
 #include <QWidget>
 #include <QString>
-#include <QChar>
+#include <QVariant>
+///#include <QDesignerCustomWidgetInterface>
 
 class QLineEdit;
 class QPushButton;
@@ -31,9 +32,17 @@ class mdtDoubleValidator;
 
 /*! \brief Input box for double values
  */
-class mdtDoubleEdit : public QWidget
+class /**QDESIGNER_WIDGET_EXPORT*/ mdtDoubleEdit : public QWidget
 {
  Q_OBJECT
+
+ Q_PROPERTY(QString unit READ unit WRITE setUnit)
+
+  /*! \brief Special symbols for units
+   */
+  enum unitSymbol_t {
+                      OmegaCapital    /*!< Capital omega , &Omega */
+                    };
 
  public:
 
@@ -44,6 +53,10 @@ class mdtDoubleEdit : public QWidget
   /*! \brief Set unit
    */
   void setUnit(const QString & unit);
+
+  /*! \brief Get unit
+   */
+  inline QString unit() const { return pvUnit; }
 
   /*! \brief Get the factor for a given char
    *
@@ -74,14 +87,51 @@ class mdtDoubleEdit : public QWidget
   static double factor(const QChar & c);
 
   /*! \brief Set value from a string
+   *
+   * s can also contain power of 10 char
+   *  and unit. Unit must be the same than
+   *  set with setUnit().
    */
-  ///void setValue(const QString & val);
+  void setValue(const QString & s, bool emitValueChanged = true);
+
+  /*! \brief Set value
+   */
+  void setValue(double v, bool emitValueChanged = true);
+
+  /*! \brief Get value
+   */
+  inline double valueDouble() const { return pvValue; }
+
+  /*! \brief Get value
+   */
+  QVariant value() const;
+
+  /*! \brief Check if value is valid
+   */
+  inline bool valueIsValid() const { return pvValueIsValid; }
+
+  /*! \brief Get text in line edit
+   */
+  QString text() const;
+
+  /*! \brief Get infinity string
+   */
+  static QString infinityString();
+
+ signals:
+
+  /*! \brief Emitted when a new value was set
+   *
+   * Happens when user has finished editting,
+   *  or when a set functions was called with
+   *  emitValueChanged flag set.
+   */
+  void valueChanged(double value, bool isValid);
 
  private slots:
 
   void setMinusInfinity();
   void setInfinity();
-  
   void setValueFromLineEdit();
 
  private:
@@ -96,10 +146,13 @@ class mdtDoubleEdit : public QWidget
 
   /*! \Check if x is in given range from min to max
    *
-   * Returns true if |x| is > 1.0 and in [min, max[
-   *  or x is < 1.0 and in ]min, max]
+   * Returns true if x is [min, max[
    */
   bool isInRange(double x, double min, double max);
+
+  /*! \brief Check if str is a infinity (or -infinity)
+   */
+  bool strIsInfinity(const QString & str) const;
 
   Q_DISABLE_COPY(mdtDoubleEdit);
 
@@ -108,7 +161,6 @@ class mdtDoubleEdit : public QWidget
   QPushButton *pbSetMinusInfinity;
   mdtDoubleValidator *pvValidator;
   QString pvUnit;
-  ///QChar pvPo10char;
   double pvValue;
   bool pvValueIsValid;
 };

@@ -113,12 +113,80 @@ void mdtWidgetsTest::mdtDoubleEditTest()
 {
   mdtDoubleEdit e;
 
-  e.setUnit("V");
   e.show();
 
+  // Check some basic conversions
+  e.setValue("1.0");
+  QVERIFY(e.valueIsValid());
+  QVERIFY(e.value().isValid());
+  QCOMPARE(e.value(), QVariant(1.0));
+  QCOMPARE(e.valueDouble(), 1.0);
+  QCOMPARE(e.text().trimmed(), QString("1"));
+  e.setValue("-inf");
+  QVERIFY(e.valueIsValid());
+  QVERIFY(e.value().isValid());
+  QCOMPARE(e.value(), QVariant(-std::numeric_limits<double>::infinity()));
+  QCOMPARE(QVariant(e.valueDouble()), QVariant(-std::numeric_limits<double>::infinity()));  // Direct double compare fails here
+  e.setValue("inf");
+  QVERIFY(e.valueIsValid());
+  QVERIFY(e.value().isValid());
+  QCOMPARE(e.value(), QVariant(std::numeric_limits<double>::infinity()));
+  QCOMPARE(QVariant(e.valueDouble()), QVariant(std::numeric_limits<double>::infinity()));  // Direct double compare fails here
+  // Check invalid value setting
+  e.setValue("x");
+  QVERIFY(!e.valueIsValid());
+  QVERIFY(!e.value().isValid());
+  QCOMPARE(e.value(), QVariant());
+  QCOMPARE(e.valueDouble(), 0.0);
+  QCOMPARE(e.text().trimmed(), QString(""));
+  // Check scientific suffixes - simple part
+  e.setValue("1 a");
+  QCOMPARE(e.value(), QVariant(1e-18));
+  QCOMPARE(e.text().trimmed(), QString("1 a"));
+  e.setValue("1 f");
+  QCOMPARE(e.value(), QVariant(1e-15));
+  QCOMPARE(e.text().trimmed(), QString("1 f"));
+  e.setValue("1 p");
+  QCOMPARE(e.value(), QVariant(1e-12));
+  QCOMPARE(e.text().trimmed(), QString("1 p"));
+  e.setValue("1 n");
+  QCOMPARE(e.value(), QVariant(1e-9));
+  QCOMPARE(e.text().trimmed(), QString("1 n"));
+  e.setValue("1 u");
+  QCOMPARE(e.value(), QVariant(1e-6));
+  QCOMPARE(e.text().trimmed(), QString("1 u"));
+  e.setValue("1 m");
+  QCOMPARE(e.value(), QVariant(1e-3));
+  QCOMPARE(e.text().trimmed(), QString("1 m"));
+  e.setValue("1");
+  QCOMPARE(e.value(), QVariant(1.0));
+  QCOMPARE(e.text().trimmed(), QString("1"));
+  e.setValue("1 k");
+  QCOMPARE(e.value(), QVariant(1e3));
+  QCOMPARE(e.text().trimmed(), QString("1 k"));
+  e.setValue("1 M");
+  QCOMPARE(e.value(), QVariant(1e6));
+  QCOMPARE(e.text().trimmed(), QString("1 M"));
+  e.setValue("1 G");
+  QCOMPARE(e.value(), QVariant(1e9));
+  QCOMPARE(e.text().trimmed(), QString("1 G"));
+  e.setValue("1 T");
+  QCOMPARE(e.value(), QVariant(1e12));
+  QCOMPARE(e.text().trimmed(), QString("1 T"));
+  e.setValue("1 P");
+  QCOMPARE(e.value(), QVariant(1e15));
+  QCOMPARE(e.text().trimmed(), QString("1 P"));
+  e.setValue("1 E");
+  QCOMPARE(e.value(), QVariant(1e18));
+  QCOMPARE(e.text().trimmed(), QString("1 E"));
+
+  e.setUnit("V");
+
+  /*
   while(e.isVisible()){
     QTest::qWait(1000);
   }
+  */
 }
 
 

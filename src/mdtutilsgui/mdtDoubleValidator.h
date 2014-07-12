@@ -24,7 +24,6 @@
 #include <QValidator>
 #include <QDoubleValidator>
 #include <QString>
-///#include <QStringRef>
 
 /*! \brief Double validator
  *
@@ -89,12 +88,6 @@ class mdtDoubleValidator : public QValidator
   /*! \brief Check if str ends with a power of 10 suffix
    */
   bool strEndsWithPowerOf10Suffix(const QString & str) const;
-
-  /*! \brief Check if str ends with pvSuffix
-   *
-   *  \return 0 : str does not end with pvSuffix , 1 : str ends with a part of pvSuffix , 2 : str ends with pvSuffix
-   */
-  ///int strEndsWithSuffix(const QString & str) const;
 
   Q_DISABLE_COPY(mdtDoubleValidator);
 
