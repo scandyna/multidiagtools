@@ -1,12 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$class_q_thread.html" title="QThread" alt="" coords="5,59,77,88"/>
-<area shape="rect" id="node3" href="$classmdt_error_out_logger.html" title="Put errors in the log file. " alt="" coords="127,5,257,35"/>
-<area shape="rect" id="node5" href="$classmdt_file_copier.html" title="Helper class for file copy. " alt="" coords="141,59,243,88"/>
-<area shape="rect" id="node7" href="$classmdt_port_thread.html" title="mdtPortThread" alt="" coords="139,112,245,141"/>
-<area shape="rect" id="node9" href="$classmdt_port_read_thread.html" title="Reader thread for port I/O. " alt="" coords="317,5,456,35"/>
-<area shape="rect" id="node11" href="$classmdt_port_write_thread.html" title="mdtPortWriteThread" alt="" coords="317,59,456,88"/>
-<area shape="rect" id="node13" href="$classmdt_serial_port_ctl_thread.html" title="mdtSerialPortCtlThread" alt="" coords="308,112,465,141"/>
-<area shape="rect" id="node15" href="$classmdt_tcp_socket_thread.html" title="mdtTcpSocketThread" alt="" coords="313,165,460,195"/>
-<area shape="rect" id="node17" href="$classmdt_usb_port_thread.html" title="mdtUsbPortThread" alt="" coords="321,219,452,248"/>
-<area shape="rect" id="node19" href="$classmdt_usbtmc_port_thread.html" title="mdtUsbtmcPortThread" alt="" coords="515,219,669,248"/>
+<area shape="rect" id="node1" href="$class_q_state_machine.html" title="QStateMachine" alt="" coords="5,5,117,35"/>
+<area shape="rect" id="node3" href="$classmdt_state_machine.html" title="Extend Qt&#39;s QStateMachine. " alt="" coords="167,5,289,35"/>
+<area shape="rect" id="node5" href="$classmdt_port_manager_state_machine.html" title="State machine for port manager. " alt="" coords="340,5,537,35"/>
 </map>

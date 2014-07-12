@@ -12,8 +12,7 @@ Helper class for test item edition.
 
 
 
-Inheritance diagram for mdt\-Tt\-Test\-Model\-Item\-:
-\nopagebreak
+Inheritance diagram for mdt\-Tt\-Test\-Model\-Item\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -22,8 +21,7 @@ Inheritance diagram for mdt\-Tt\-Test\-Model\-Item\-:
 \end{figure}
 
 
-Collaboration diagram for mdt\-Tt\-Test\-Model\-Item\-:
-\nopagebreak
+Collaboration diagram for mdt\-Tt\-Test\-Model\-Item\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -34,10 +32,10 @@ Collaboration diagram for mdt\-Tt\-Test\-Model\-Item\-:
 \begin{DoxyCompactItemize}
 \item 
 \hyperlink{classmdt_tt_test_model_item_aa410b11d0b8f92dda5e0317f1ecd33ca}{mdt\-Tt\-Test\-Model\-Item} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent, Q\-Sql\-Database db)
-\begin{DoxyCompactList}\small\item\em Coinstructor. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
 Q\-String \hyperlink{classmdt_tt_test_model_item_a5bb3487ab4f3d9465e2257b4b946efd9}{sql\-For\-Test\-Link\-Selection} (const Q\-Variant \&test\-Model\-Item\-Id) const 
 \begin{DoxyCompactList}\small\item\em Get S\-Q\-L statement for test link selection. \end{DoxyCompactList}\item 
-Q\-String \hyperlink{classmdt_tt_test_model_item_afd2ffd41130d828a94ecc052129f4a48}{sql\-For\-Test\-Node\-Unit\-Selection} (const Q\-Variant \&test\-Model\-Item\-Id, const Q\-List$<$ Q\-Variant $>$ \&limit\-To\-Unit\-Id\-List=Q\-List$<$ Q\-Variant $>$()) const 
+Q\-String \hyperlink{classmdt_tt_test_model_item_ad9556478313d628d6b9b505137fc318e}{sql\-For\-Test\-Node\-Unit\-Selection} (const Q\-Variant \&test\-Model\-Item\-Id, const Q\-Variant \&test\-Model\-Id) const 
 \begin{DoxyCompactList}\small\item\em Get S\-Q\-L statement for test node unit selection. \end{DoxyCompactList}\item 
 Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_tt_test_model_item_a0666954f17eab46ef9ef974542486446}{get\-Used\-Node\-Unit\-Id\-List} (const Q\-Variant \&test\-Item\-Id, const Q\-Variant \&type)
 \begin{DoxyCompactList}\small\item\em Get a list of used node unit I\-Ds for given test item I\-D. \end{DoxyCompactList}\item 
@@ -86,7 +84,7 @@ Definition at line 34 of file mdt\-Tt\-Test\-Model\-Item.\-h.
 )}}\label{classmdt_tt_test_model_item_aa410b11d0b8f92dda5e0317f1ecd33ca}
 
 
-Coinstructor. 
+Constructor. 
 
 
 
@@ -109,7 +107,7 @@ Add a test link.
 
 
 
-Definition at line 155 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+Definition at line 159 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 
 
@@ -128,7 +126,7 @@ Add a test node unit to Test\-Node\-Unit\-Setup\-\_\-tbl.
 
 
 
-Definition at line 174 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+Definition at line 178 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 
 
@@ -153,7 +151,7 @@ Add a test node unit setup.
 
 
 
-Definition at line 316 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+Definition at line 320 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 
 
@@ -180,7 +178,7 @@ Prepare query for edition sql = \char`\"{}\-U\-P\-D\-A\-T\-E Test\-Model\-Item\-
 
 return true; \} 
 
-Definition at line 263 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+Definition at line 267 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 
 
@@ -205,7 +203,7 @@ Get test node unit setup data.
 
 
 
-Definition at line 179 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+Definition at line 183 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 
 
@@ -224,7 +222,7 @@ Get list of test node unit setup for given test item I\-D.
 
 
 
-Definition at line 127 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+Definition at line 131 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 
 
@@ -244,7 +242,7 @@ Get a list of used node unit I\-Ds for given test item I\-D.
 
 If given type is not null, only matching test node unit will be returned 
 
-Definition at line 96 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+Definition at line 100 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 
 
@@ -267,7 +265,7 @@ Remove test links.
 
 
 
-Definition at line 169 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+Definition at line 173 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 
 
@@ -286,7 +284,7 @@ Remove test node unit setup.
 
 
 
-Definition at line 349 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+Definition at line 353 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 
 
@@ -309,7 +307,7 @@ Remove test node units from Test\-Node\-Unit\-Setup\-\_\-tbl.
 
 
 
-Definition at line 222 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+Definition at line 226 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 
 
@@ -328,7 +326,7 @@ Remove test node unit setup.
 
 
 
-Definition at line 369 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+Definition at line 373 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 
 
@@ -347,7 +345,7 @@ Remove all test node unit setup for given test item I\-D.
 
 
 
-Definition at line 382 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+Definition at line 386 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 
 
@@ -372,23 +370,21 @@ List all test links that not exists in Test\-Model\-Item\-\_\-\-Test\-Link\-\_\-
 
 Definition at line 36 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
-\hypertarget{classmdt_tt_test_model_item_afd2ffd41130d828a94ecc052129f4a48}{\index{mdt\-Tt\-Test\-Model\-Item@{mdt\-Tt\-Test\-Model\-Item}!sql\-For\-Test\-Node\-Unit\-Selection@{sql\-For\-Test\-Node\-Unit\-Selection}}
+\hypertarget{classmdt_tt_test_model_item_ad9556478313d628d6b9b505137fc318e}{\index{mdt\-Tt\-Test\-Model\-Item@{mdt\-Tt\-Test\-Model\-Item}!sql\-For\-Test\-Node\-Unit\-Selection@{sql\-For\-Test\-Node\-Unit\-Selection}}
 \index{sql\-For\-Test\-Node\-Unit\-Selection@{sql\-For\-Test\-Node\-Unit\-Selection}!mdtTtTestModelItem@{mdt\-Tt\-Test\-Model\-Item}}
 \subsubsection[{sql\-For\-Test\-Node\-Unit\-Selection}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Tt\-Test\-Model\-Item\-::sql\-For\-Test\-Node\-Unit\-Selection (
 \begin{DoxyParamCaption}
 \item[{const Q\-Variant \&}]{test\-Model\-Item\-Id, }
-\item[{const Q\-List$<$ Q\-Variant $>$ \&}]{limit\-To\-Unit\-Id\-List = {\ttfamily QList$<$QVariant$>$()}}
+\item[{const Q\-Variant \&}]{test\-Model\-Id}
 \end{DoxyParamCaption}
-) const}}\label{classmdt_tt_test_model_item_afd2ffd41130d828a94ecc052129f4a48}
+) const}}\label{classmdt_tt_test_model_item_ad9556478313d628d6b9b505137fc318e}
 
 
 Get S\-Q\-L statement for test node unit selection. 
 
-List all test node units that not exists in Test\-Node\-Unit\-Setup\-\_\-tbl for given test\-Model\-Item\-Id.
+List all test node units that not exists in Test\-Node\-Unit\-Setup\-\_\-tbl for given test\-Model\-Item\-Id, and that exists in Test\-Model\-\_\-\-Test\-Node\-\_\-tbl for given test\-Model\-Id. 
 
-If limit\-To\-Unit\-Id\-List is not empty, the statement will only include data for given I\-Ds. 
-
-Definition at line 47 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+Definition at line 48 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 \hypertarget{classmdt_tt_test_model_item_af6835a264bcf8b20d9f748cbc4592343}{\index{mdt\-Tt\-Test\-Model\-Item@{mdt\-Tt\-Test\-Model\-Item}!update\-Node\-Unit\-Data@{update\-Node\-Unit\-Data}}
 \index{update\-Node\-Unit\-Data@{update\-Node\-Unit\-Data}!mdtTtTestModelItem@{mdt\-Tt\-Test\-Model\-Item}}
@@ -405,7 +401,7 @@ Update test node unit setup data.
 
 
 
-Definition at line 203 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+Definition at line 207 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 
 

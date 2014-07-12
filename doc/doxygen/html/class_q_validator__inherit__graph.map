@@ -1,3 +1,4 @@
 <map id="QValidator" name="QValidator">
-<area shape="rect" id="node3" href="$classmdt_uic_number_validator.html" title="Validator for UIC Number. " alt="" coords="5,83,165,112"/>
+<area shape="rect" id="node3" href="$classmdt_double_validator.html" title="Double validator. " alt="" coords="5,83,141,112"/>
+<area shape="rect" id="node5" href="$classmdt_uic_number_validator.html" title="Validator for UIC Number. " alt="" coords="165,83,325,112"/>
 </map>

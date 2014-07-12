@@ -1,0 +1,176 @@
+\hypertarget{classmdt_tt_test_data}{\section{mdt\-Tt\-Test\-Data Class Reference}
+\label{classmdt_tt_test_data}\index{mdt\-Tt\-Test\-Data@{mdt\-Tt\-Test\-Data}}
+}
+
+
+{\ttfamily \#include $<$mdt\-Tt\-Test\-Data.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Tt\-Test\-Data\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=162pt]{classmdt_tt_test_data__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Tt\-Test\-Data\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=175pt]{classmdt_tt_test_data__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_tt_test_data_a851842f98eda70ef3e13162c390619a2}{mdt\-Tt\-Test\-Data} ()
+\begin{DoxyCompactList}\small\item\em Construct a empty \hyperlink{classmdt_tt_test_data}{mdt\-Tt\-Test\-Data}. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_tt_test_data_a31ee8551d06359bfae3f84d7f9d77b05}{mdt\-Tt\-Test\-Data} (const Q\-Sql\-Record \&record)
+\begin{DoxyCompactList}\small\item\em Contruct a \hyperlink{classmdt_tt_test_data}{mdt\-Tt\-Test\-Data} from a Q\-Sql\-Record. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_test_data_aa702caa1a409448535f4288c19bb53be}{setup} (const Q\-Sql\-Database \&db, bool setup\-Model\-Data)
+\begin{DoxyCompactList}\small\item\em Setup fields from Test\-Model\-\_\-tbl. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_tt_test_data_a5e7d9bc9880747e881f0b1f807542481}{clear\-Values} ()
+\begin{DoxyCompactList}\small\item\em Clear values. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_tt_test_data_ad0ea2d854bd9fe944daab89926708380}{set\-Model\-Data} (const \hyperlink{classmdt_tt_test_model_data}{mdt\-Tt\-Test\-Model\-Data} \&data)
+\begin{DoxyCompactList}\small\item\em Set model data. \end{DoxyCompactList}\item 
+const \hyperlink{classmdt_tt_test_model_data}{mdt\-Tt\-Test\-Model\-Data} \& \hyperlink{classmdt_tt_test_data_a071f9f0bf646b44c83c3c9b6d3cc126d}{model\-Data} () const 
+\begin{DoxyCompactList}\small\item\em Get model data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 28 of file mdt\-Tt\-Test\-Data.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_tt_test_data_a851842f98eda70ef3e13162c390619a2}{\index{mdt\-Tt\-Test\-Data@{mdt\-Tt\-Test\-Data}!mdt\-Tt\-Test\-Data@{mdt\-Tt\-Test\-Data}}
+\index{mdt\-Tt\-Test\-Data@{mdt\-Tt\-Test\-Data}!mdtTtTestData@{mdt\-Tt\-Test\-Data}}
+\subsubsection[{mdt\-Tt\-Test\-Data}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Tt\-Test\-Data\-::mdt\-Tt\-Test\-Data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_data_a851842f98eda70ef3e13162c390619a2}
+
+
+Construct a empty \hyperlink{classmdt_tt_test_data}{mdt\-Tt\-Test\-Data}. 
+
+
+
+Definition at line 23 of file mdt\-Tt\-Test\-Data.\-cpp.
+
+\hypertarget{classmdt_tt_test_data_a31ee8551d06359bfae3f84d7f9d77b05}{\index{mdt\-Tt\-Test\-Data@{mdt\-Tt\-Test\-Data}!mdt\-Tt\-Test\-Data@{mdt\-Tt\-Test\-Data}}
+\index{mdt\-Tt\-Test\-Data@{mdt\-Tt\-Test\-Data}!mdtTtTestData@{mdt\-Tt\-Test\-Data}}
+\subsubsection[{mdt\-Tt\-Test\-Data}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Tt\-Test\-Data\-::mdt\-Tt\-Test\-Data (
+\begin{DoxyParamCaption}
+\item[{const Q\-Sql\-Record \&}]{record}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_data_a31ee8551d06359bfae3f84d7f9d77b05}
+
+
+Contruct a \hyperlink{classmdt_tt_test_data}{mdt\-Tt\-Test\-Data} from a Q\-Sql\-Record. 
+
+Note\-: if this method is used, setup is not relevant.
+
+\begin{DoxyPrecond}{Precondition}
+All fields from Test\-\_\-tbl must exist in record 
+\end{DoxyPrecond}
+
+
+Definition at line 28 of file mdt\-Tt\-Test\-Data.\-cpp.
+
+
+
+References mdt\-Sql\-Record\-::contains().
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_tt_test_data_a5e7d9bc9880747e881f0b1f807542481}{\index{mdt\-Tt\-Test\-Data@{mdt\-Tt\-Test\-Data}!clear\-Values@{clear\-Values}}
+\index{clear\-Values@{clear\-Values}!mdtTtTestData@{mdt\-Tt\-Test\-Data}}
+\subsubsection[{clear\-Values}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Tt\-Test\-Data\-::clear\-Values (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_tt_test_data_a5e7d9bc9880747e881f0b1f807542481}
+
+
+Clear values. 
+
+
+
+Reimplemented from \hyperlink{classmdt_sql_record_a0bfc0fc265c6b0048698e2f5d4f840a8}{mdt\-Sql\-Record}.
+
+
+
+Definition at line 47 of file mdt\-Tt\-Test\-Data.\-cpp.
+
+
+
+References mdt\-Sql\-Record\-::clear\-Values().
+
+\hypertarget{classmdt_tt_test_data_a071f9f0bf646b44c83c3c9b6d3cc126d}{\index{mdt\-Tt\-Test\-Data@{mdt\-Tt\-Test\-Data}!model\-Data@{model\-Data}}
+\index{model\-Data@{model\-Data}!mdtTtTestData@{mdt\-Tt\-Test\-Data}}
+\subsubsection[{model\-Data}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf mdt\-Tt\-Test\-Model\-Data}\& mdt\-Tt\-Test\-Data\-::model\-Data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_tt_test_data_a071f9f0bf646b44c83c3c9b6d3cc126d}
+
+
+Get model data. 
+
+
+
+Definition at line 60 of file mdt\-Tt\-Test\-Data.\-h.
+
+\hypertarget{classmdt_tt_test_data_ad0ea2d854bd9fe944daab89926708380}{\index{mdt\-Tt\-Test\-Data@{mdt\-Tt\-Test\-Data}!set\-Model\-Data@{set\-Model\-Data}}
+\index{set\-Model\-Data@{set\-Model\-Data}!mdtTtTestData@{mdt\-Tt\-Test\-Data}}
+\subsubsection[{set\-Model\-Data}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Tt\-Test\-Data\-::set\-Model\-Data (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Tt\-Test\-Model\-Data} \&}]{data}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_data_ad0ea2d854bd9fe944daab89926708380}
+
+
+Set model data. 
+
+Will also update Test\-Model\-\_\-\-Id\-\_\-\-F\-K 
+
+Definition at line 53 of file mdt\-Tt\-Test\-Data.\-cpp.
+
+
+
+References mdt\-Sql\-Record\-::contains(), mdt\-Sql\-Record\-::set\-Value(), and mdt\-Sql\-Record\-::value().
+
+\hypertarget{classmdt_tt_test_data_aa702caa1a409448535f4288c19bb53be}{\index{mdt\-Tt\-Test\-Data@{mdt\-Tt\-Test\-Data}!setup@{setup}}
+\index{setup@{setup}!mdtTtTestData@{mdt\-Tt\-Test\-Data}}
+\subsubsection[{setup}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-Data\-::setup (
+\begin{DoxyParamCaption}
+\item[{const Q\-Sql\-Database \&}]{db, }
+\item[{bool}]{setup\-Model\-Data}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_data_aa702caa1a409448535f4288c19bb53be}
+
+
+Setup fields from Test\-Model\-\_\-tbl. 
+
+
+
+Definition at line 37 of file mdt\-Tt\-Test\-Data.\-cpp.
+
+
+
+References mdt\-Sql\-Record\-::add\-All\-Fields(), and mdt\-Tt\-Test\-Model\-Data\-::setup().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdttools/mdttesttool/\hyperlink{mdt_tt_test_data_8h}{mdt\-Tt\-Test\-Data.\-h}\item 
+src/mdttools/mdttesttool/\hyperlink{mdt_tt_test_data_8cpp}{mdt\-Tt\-Test\-Data.\-cpp}\end{DoxyCompactItemize}

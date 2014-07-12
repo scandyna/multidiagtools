@@ -1,5 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$class_q_file.html" title="QFile" alt="" coords="5,32,59,61"/>
-<area shape="rect" id="node3" href="$classmdt_csv_file.html" title="Read and write CSV file. " alt="" coords="112,5,200,35"/>
-<area shape="rect" id="node5" href="$class_qt_locked_file.html" title="namespace QtLP_Private { " alt="" coords="107,59,205,88"/>
+<area shape="rect" id="node1" href="$class_q_data_widget_mapper.html" title="QDataWidgetMapper" alt="" coords="5,5,149,35"/>
+<area shape="rect" id="node3" href="$classmdt_sql_data_widget_mapper.html" title="DataWidget mapper. " alt="" coords="199,5,372,35"/>
 </map>

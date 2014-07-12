@@ -154,6 +154,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7ad893c6885dbaef5a6cb980bfe627e0 inherit pub_methods_classmdt_device"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0">name</a> () const </td></tr>
 <tr class="memdesc:a7ad893c6885dbaef5a6cb980bfe627e0 inherit pub_methods_classmdt_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get device name.  <a href="#a7ad893c6885dbaef5a6cb980bfe627e0">More...</a><br/></td></tr>
 <tr class="separator:a7ad893c6885dbaef5a6cb980bfe627e0 inherit pub_methods_classmdt_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6fddf7fba1f54e481a4f3445db64d98 inherit pub_methods_classmdt_device"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#af6fddf7fba1f54e481a4f3445db64d98">setIdentification</a> (const QVariant &amp;id)</td></tr>
+<tr class="memdesc:af6fddf7fba1f54e481a4f3445db64d98 inherit pub_methods_classmdt_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set device identification.  <a href="#af6fddf7fba1f54e481a4f3445db64d98">More...</a><br/></td></tr>
+<tr class="separator:af6fddf7fba1f54e481a4f3445db64d98 inherit pub_methods_classmdt_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54845e1af6f6f98de7de79c3df9ac7b5 inherit pub_methods_classmdt_device"><td class="memItemLeft" align="right" valign="top">QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a54845e1af6f6f98de7de79c3df9ac7b5">identification</a> () const </td></tr>
+<tr class="memdesc:a54845e1af6f6f98de7de79c3df9ac7b5 inherit pub_methods_classmdt_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get device identification.  <a href="#a54845e1af6f6f98de7de79c3df9ac7b5">More...</a><br/></td></tr>
+<tr class="separator:a54845e1af6f6f98de7de79c3df9ac7b5 inherit pub_methods_classmdt_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2b694a37d9464d27214bdeceec220998 inherit pub_methods_classmdt_device"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a2b694a37d9464d27214bdeceec220998">disconnectFromDevice</a> ()</td></tr>
 <tr class="memdesc:a2b694a37d9464d27214bdeceec220998 inherit pub_methods_classmdt_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disconnect from device.  <a href="#a2b694a37d9464d27214bdeceec220998">More...</a><br/></td></tr>
 <tr class="separator:a2b694a37d9464d27214bdeceec220998 inherit pub_methods_classmdt_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -413,7 +419,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00032">32</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_port_manager_8cpp_source.html#l00264">mdtPortManager::config()</a>, <a class="el" href="mdt_device_scpi_8h_source.html#l00175">pvUsbtmcPortManager</a>, <a class="el" href="mdt_port_config_8cpp_source.html#l00089">mdtPortConfig::readTimeout()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00182">mdtDevice::setBackToReadyStateTimeout()</a>, <a class="el" href="mdt_port_config_8cpp_source.html#l00084">mdtPortConfig::setReadTimeout()</a>, <a class="el" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d">mdtDevice::stateChanged()</a>, and <a class="el" href="mdt_port_config_8cpp_source.html#l00109">mdtPortConfig::writeTimeout()</a>.</p>
+<p>References <a class="el" href="mdt_port_manager_8cpp_source.html#l00264">mdtPortManager::config()</a>, <a class="el" href="mdt_device_scpi_8h_source.html#l00175">pvUsbtmcPortManager</a>, <a class="el" href="mdt_port_config_8cpp_source.html#l00089">mdtPortConfig::readTimeout()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00187">mdtDevice::setBackToReadyStateTimeout()</a>, <a class="el" href="mdt_port_config_8cpp_source.html#l00084">mdtPortConfig::setReadTimeout()</a>, <a class="el" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d">mdtDevice::stateChanged()</a>, and <a class="el" href="mdt_port_config_8cpp_source.html#l00109">mdtPortConfig::writeTimeout()</a>.</p>
 
 </div>
 </div>
@@ -440,7 +446,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00055">55</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_scpi_8h_source.html#l00175">pvUsbtmcPortManager</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00209">mdtDevice::stop()</a>.</p>
+<p>References <a class="el" href="mdt_device_scpi_8h_source.html#l00175">pvUsbtmcPortManager</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00214">mdtDevice::stop()</a>.</p>
 
 </div>
 </div>
@@ -467,7 +473,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00193">193</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_8cpp_source.html#l01260">mdtDevice::getNewTransaction()</a>, <a class="el" href="mdt_device_scpi_8h_source.html#l00175">pvUsbtmcPortManager</a>, <a class="el" href="mdt_frame_codec_scpi_8h_source.html#l00041">mdtFrameCodecScpi::QT_ERR</a>, <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00138">mdtUsbtmcPortManager::sendData()</a>, <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00204">mdtUsbtmcPortManager::sendReadRequest()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>, and <a class="el" href="mdt_port_transaction_8cpp_source.html#l00056">mdtPortTransaction::setType()</a>.</p>
+<p>References <a class="el" href="mdt_device_8cpp_source.html#l01265">mdtDevice::getNewTransaction()</a>, <a class="el" href="mdt_device_scpi_8h_source.html#l00175">pvUsbtmcPortManager</a>, <a class="el" href="mdt_frame_codec_scpi_8h_source.html#l00041">mdtFrameCodecScpi::QT_ERR</a>, <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00138">mdtUsbtmcPortManager::sendData()</a>, <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00204">mdtUsbtmcPortManager::sendReadRequest()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>, and <a class="el" href="mdt_port_transaction_8cpp_source.html#l00056">mdtPortTransaction::setType()</a>.</p>
 
 </div>
 </div>
@@ -509,7 +515,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00068">68</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_port_manager_8cpp_source.html#l00591">mdtPortManager::isClosed()</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00061">mdtAbstractPort::NoError</a>, <a class="el" href="mdt_device_scpi_8cpp_source.html#l00061">portManager()</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00063">mdtAbstractPort::PortNotFound</a>, <a class="el" href="mdt_device_info_8cpp_source.html#l00056">mdtDeviceInfo::productId()</a>, <a class="el" href="mdt_device_scpi_8h_source.html#l00175">pvUsbtmcPortManager</a>, <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00072">mdtUsbtmcPortManager::scan()</a>, <a class="el" href="mdt_device_info_8cpp_source.html#l00071">mdtDeviceInfo::serialId()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00245">mdtPortManager::setPortInfo()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00200">mdtDevice::start()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00213">mdtPortManager::stop()</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00084">mdtAbstractPort::UnhandledError</a>, and <a class="el" href="mdt_device_info_8cpp_source.html#l00040">mdtDeviceInfo::vendorId()</a>.</p>
+<p>References <a class="el" href="mdt_port_manager_8cpp_source.html#l00591">mdtPortManager::isClosed()</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00061">mdtAbstractPort::NoError</a>, <a class="el" href="mdt_device_scpi_8cpp_source.html#l00061">portManager()</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00063">mdtAbstractPort::PortNotFound</a>, <a class="el" href="mdt_device_info_8cpp_source.html#l00056">mdtDeviceInfo::productId()</a>, <a class="el" href="mdt_device_scpi_8h_source.html#l00175">pvUsbtmcPortManager</a>, <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00072">mdtUsbtmcPortManager::scan()</a>, <a class="el" href="mdt_device_info_8cpp_source.html#l00071">mdtDeviceInfo::serialId()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00245">mdtPortManager::setPortInfo()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00205">mdtDevice::start()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00213">mdtPortManager::stop()</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00084">mdtAbstractPort::UnhandledError</a>, and <a class="el" href="mdt_device_info_8cpp_source.html#l00040">mdtDeviceInfo::vendorId()</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_device_d_s_o1000_a_8cpp_source.html#l00045">mdtDeviceDSO1000A::connectToDevice()</a>, and <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00068">mdtDeviceU3606A::connectToDevice()</a>.</p>
 
@@ -814,7 +820,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00154">154</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_8cpp_source.html#l00192">mdtDevice::isReady()</a>, <a class="el" href="mdt_device_scpi_8cpp_source.html#l00061">portManager()</a>, and <a class="el" href="mdt_device_scpi_8cpp_source.html#l00149">sendQuery()</a>.</p>
+<p>References <a class="el" href="mdt_device_8cpp_source.html#l00197">mdtDevice::isReady()</a>, <a class="el" href="mdt_device_scpi_8cpp_source.html#l00061">portManager()</a>, and <a class="el" href="mdt_device_scpi_8cpp_source.html#l00149">sendQuery()</a>.</p>
 
 </div>
 </div>
@@ -850,7 +856,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jun 28 2014 13:24:47 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jul 12 2014 10:53:30 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

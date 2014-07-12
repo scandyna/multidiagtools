@@ -114,23 +114,39 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_sql_record_8h.html">mdtSqlRecord.h</a>&quot;</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &lt;QSqlDatabase&gt;</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
-<div class="line"><a name="l00029"></a><span class="lineno"><a class="code" href="classmdt_tt_test_node_unit_setup_data.html">   29</a></span>&#160;<span class="keyword">class </span><a class="code" href="classmdt_tt_test_node_unit_setup_data.html" title="Storage class for test node unit. ">mdtTtTestNodeUnitSetupData</a> : <span class="keyword">public</span> <a class="code" href="classmdt_sql_record.html" title="Database record container class. ">mdtSqlRecord</a></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;{</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <a class="code" href="classmdt_tt_test_node_unit_setup_data.html#a0d9372606909ab76e423f8aa180a9c38" title="Construct a empty test node data container. ">mdtTtTestNodeUnitSetupData</a>();</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  <a class="code" href="classmdt_tt_test_node_unit_setup_data.html#a0d9372606909ab76e423f8aa180a9c38" title="Construct a empty test node data container. ">mdtTtTestNodeUnitSetupData</a>(<span class="keyword">const</span> QSqlRecord &amp; record);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_test_node_unit_setup_data.html#a2a2bb93f0ceb79adec8b4692cf1afb39" title="Setup fields from TestNodeUnitSetup_tbl. ">setup</a>(<span class="keyword">const</span> QSqlDatabase &amp; db);</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;};</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;QString&gt;</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="code" href="classmdt_tt_test_node_unit_setup_data.html">   30</a></span>&#160;<span class="keyword">class </span><a class="code" href="classmdt_tt_test_node_unit_setup_data.html" title="Storage class for test node unit. ">mdtTtTestNodeUnitSetupData</a> : <span class="keyword">public</span> <a class="code" href="classmdt_sql_record.html" title="Database record container class. ">mdtSqlRecord</a></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;{</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="code" href="classmdt_tt_test_node_unit_setup_data.html#a4e69dcc72bebc34d6db64cff91dbfc54">   36</a></span>&#160;  <span class="keyword">enum</span> <a class="code" href="classmdt_tt_test_node_unit_setup_data.html#a4e69dcc72bebc34d6db64cff91dbfc54" title="I/O type. ">io_type_t</a> {</div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="code" href="classmdt_tt_test_node_unit_setup_data.html#a4e69dcc72bebc34d6db64cff91dbfc54afe3d6b133ce8a6f68baa3325766c6d90">   37</a></span>&#160;                  <a class="code" href="classmdt_tt_test_node_unit_setup_data.html#a4e69dcc72bebc34d6db64cff91dbfc54afe3d6b133ce8a6f68baa3325766c6d90">Unknown</a> = 0,    </div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="code" href="classmdt_tt_test_node_unit_setup_data.html#a4e69dcc72bebc34d6db64cff91dbfc54a8e50ceac1dcf82c3003c81b0e7320a36">   38</a></span>&#160;                  <a class="code" href="classmdt_tt_test_node_unit_setup_data.html#a4e69dcc72bebc34d6db64cff91dbfc54a8e50ceac1dcf82c3003c81b0e7320a36">AnalogInput</a>,    </div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="code" href="classmdt_tt_test_node_unit_setup_data.html#a4e69dcc72bebc34d6db64cff91dbfc54a69e7d029a1d332f903deed3fa9c790fb">   39</a></span>&#160;                  <a class="code" href="classmdt_tt_test_node_unit_setup_data.html#a4e69dcc72bebc34d6db64cff91dbfc54a69e7d029a1d332f903deed3fa9c790fb">AnalogOutput</a>,   </div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="code" href="classmdt_tt_test_node_unit_setup_data.html#a4e69dcc72bebc34d6db64cff91dbfc54ab77243295dc5311d18f9d2848d92d3ca">   40</a></span>&#160;                  <a class="code" href="classmdt_tt_test_node_unit_setup_data.html#a4e69dcc72bebc34d6db64cff91dbfc54ab77243295dc5311d18f9d2848d92d3ca">DigitalInput</a>,   </div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="code" href="classmdt_tt_test_node_unit_setup_data.html#a4e69dcc72bebc34d6db64cff91dbfc54a65bbd79cc1fe21c30b6878d859a16a6f">   41</a></span>&#160;                  <a class="code" href="classmdt_tt_test_node_unit_setup_data.html#a4e69dcc72bebc34d6db64cff91dbfc54a65bbd79cc1fe21c30b6878d859a16a6f">DigitalOutput</a>   </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                 };</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <a class="code" href="classmdt_tt_test_node_unit_setup_data.html#a0d9372606909ab76e423f8aa180a9c38" title="Construct a empty test node data container. ">mdtTtTestNodeUnitSetupData</a>();</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#endif // #ifndef MDT_TT_TEST_NODE_UNIT_SETUP_DATA_H</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <a class="code" href="classmdt_tt_test_node_unit_setup_data.html#a0d9372606909ab76e423f8aa180a9c38" title="Construct a empty test node data container. ">mdtTtTestNodeUnitSetupData</a>(<span class="keyword">const</span> QSqlRecord &amp; record);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_test_node_unit_setup_data.html#a2a2bb93f0ceb79adec8b4692cf1afb39" title="Setup fields from TestNodeUnitSetup_tbl. ">setup</a>(<span class="keyword">const</span> QSqlDatabase &amp; db);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <a class="code" href="classmdt_tt_test_node_unit_setup_data.html#a4e69dcc72bebc34d6db64cff91dbfc54" title="I/O type. ">io_type_t</a> <a class="code" href="classmdt_tt_test_node_unit_setup_data.html#a9fd9a35361e52d466ef6e62d29383aa4" title="Get I/O type. ">ioType</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  <span class="keywordtype">int</span> <a class="code" href="classmdt_tt_test_node_unit_setup_data.html#a24b6ba073f10005678ada247d2b23791" title="Get I/O position. ">ioPosition</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  QString <a class="code" href="classmdt_tt_test_node_unit_setup_data.html#a6ef0406acc3ef7b0b2ee8f168d2a3c76" title="Get schema position. ">schemaPosition</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;};</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">#endif // #ifndef MDT_TT_TEST_NODE_UNIT_SETUP_DATA_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jun 28 2014 13:24:41 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jul 12 2014 10:53:28 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

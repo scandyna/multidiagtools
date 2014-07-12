@@ -1,4 +1,8 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$class_q_shared_data.html" title="QSharedData" alt="" coords="5,5,107,35"/>
-<area shape="rect" id="node3" href="$classmdt_field_map_data.html" title="mdtFieldMapData" alt="" coords="155,5,280,35"/>
+<area shape="rect" id="node3" href="$classmdt_device_window.html" title="mdtDeviceWindow" alt="" coords="188,12,319,41"/>
+<area shape="rect" id="node6" href="$classmdt_modbus_io_tool.html" title="Minimal tool for MODBUS I/O. " alt="" coords="191,92,316,121"/>
+<area shape="rect" id="node9" href="$classmdt_port_term.html" title="Mini port treminal. " alt="" coords="204,159,303,188"/>
+<area shape="rect" id="node12" href="$classmdt_sql_window.html" title="Main window for a database table view/editor. " alt="" coords="199,219,308,248"/>
+<area shape="rect" id="node15" href="$classmdt_tt_basic_tester.html" title="class QSqlTableModel; " alt="" coords="191,272,316,301"/>
+<area shape="rect" id="node16" href="$class_q_main_window.html" title="QMainWindow" alt="" coords="19,112,125,141"/>
 </map>

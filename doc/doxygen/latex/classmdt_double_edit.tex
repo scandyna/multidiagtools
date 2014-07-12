@@ -1,0 +1,378 @@
+\hypertarget{classmdt_double_edit}{\section{mdt\-Double\-Edit Class Reference}
+\label{classmdt_double_edit}\index{mdt\-Double\-Edit@{mdt\-Double\-Edit}}
+}
+
+
+Input box for double values.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Double\-Edit.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Double\-Edit\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=160pt]{classmdt_double_edit__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Double\-Edit\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=160pt]{classmdt_double_edit__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{classmdt_double_edit_a6e94cba2a7b3fcc16b70475c2cefd8cf}{unit\-Symbol\-\_\-t} \{ \hyperlink{classmdt_double_edit_a6e94cba2a7b3fcc16b70475c2cefd8cfaaeecc523af2a2eba97a3b1a38f4518c5}{omega}, 
+\hyperlink{classmdt_double_edit_a6e94cba2a7b3fcc16b70475c2cefd8cfadad86fae09055324dd22fc15e6107fe0}{Omega\-Capital}
+ \}
+\begin{DoxyCompactList}\small\item\em Special symbols for units. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmdt_double_edit_a04275f70dcfa22b677841a108dde2561}{value\-Changed} (double \hyperlink{classmdt_double_edit_a6987992984d3cfab5f96467c2b98e511}{value}, bool is\-Valid)
+\begin{DoxyCompactList}\small\item\em Emitted when a new value was set. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_double_edit_a4b6a416aeb8594ad45fb706e79250ba7}{mdt\-Double\-Edit} (\hyperlink{class_q_widget}{Q\-Widget} $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_double_edit_a3eb1b0434235fae23fa3f795fb90066e}{set\-Unit} (const Q\-String \&u)
+\begin{DoxyCompactList}\small\item\em Set unit. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_double_edit_a7574871fecfb0130e9d8947b55629cca}{set\-Unit} (\hyperlink{classmdt_double_edit_a6e94cba2a7b3fcc16b70475c2cefd8cf}{unit\-Symbol\-\_\-t} u)
+\begin{DoxyCompactList}\small\item\em Set unit that is represented by a special symbol. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{classmdt_double_edit_ad425b7f96ae6906175c7a70fa3b8b017}{unit} () const 
+\begin{DoxyCompactList}\small\item\em Get unit. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_double_edit_a827bb0d8a34a6fbaca4a328672140bae}{set\-Value} (const Q\-String \&s, bool emit\-Value\-Changed=true)
+\begin{DoxyCompactList}\small\item\em Set value from a string. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_double_edit_a81258812b5f964042840cee3e405ed27}{set\-Value} (double v, bool emit\-Value\-Changed=true)
+\begin{DoxyCompactList}\small\item\em Set value. \end{DoxyCompactList}\item 
+double \hyperlink{classmdt_double_edit_a2ffc11c9f013ff65b49642703146ec01}{value\-Double} () const 
+\begin{DoxyCompactList}\small\item\em Get value. \end{DoxyCompactList}\item 
+Q\-Variant \hyperlink{classmdt_double_edit_a6987992984d3cfab5f96467c2b98e511}{value} () const 
+\begin{DoxyCompactList}\small\item\em Get value. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_double_edit_a530a3b818aba14e34636dc1ad36b9292}{value\-Is\-Valid} () const 
+\begin{DoxyCompactList}\small\item\em Check if value is valid. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{classmdt_double_edit_a169b321873e50e1e9bf2b15bbf12af78}{text} () const 
+\begin{DoxyCompactList}\small\item\em Get text in line edit. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static double \hyperlink{classmdt_double_edit_a8156deaebbd3256e9e7d94ca84e6a03a}{factor} (const Q\-Char \&c)
+\begin{DoxyCompactList}\small\item\em Get the factor for a given char. \end{DoxyCompactList}\item 
+static Q\-String \hyperlink{classmdt_double_edit_a09e6276d61dd02feea43e795417d8ea9}{infinity\-String} ()
+\begin{DoxyCompactList}\small\item\em Get infinity string. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+Q\-String \hyperlink{classmdt_double_edit_a163c58477dc88637f999f56714df74ee}{unit}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Input box for double values. 
+
+Definition at line 35 of file mdt\-Double\-Edit.\-h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{classmdt_double_edit_a6e94cba2a7b3fcc16b70475c2cefd8cf}{\index{mdt\-Double\-Edit@{mdt\-Double\-Edit}!unit\-Symbol\-\_\-t@{unit\-Symbol\-\_\-t}}
+\index{unit\-Symbol\-\_\-t@{unit\-Symbol\-\_\-t}!mdtDoubleEdit@{mdt\-Double\-Edit}}
+\subsubsection[{unit\-Symbol\-\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdt\-Double\-Edit\-::unit\-Symbol\-\_\-t}}}\label{classmdt_double_edit_a6e94cba2a7b3fcc16b70475c2cefd8cf}
+
+
+Special symbols for units. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{omega@{omega}!mdt\-Double\-Edit@{mdt\-Double\-Edit}}\index{mdt\-Double\-Edit@{mdt\-Double\-Edit}!omega@{omega}}\item[{\em 
+\hypertarget{classmdt_double_edit_a6e94cba2a7b3fcc16b70475c2cefd8cfaaeecc523af2a2eba97a3b1a38f4518c5}{omega}\label{classmdt_double_edit_a6e94cba2a7b3fcc16b70475c2cefd8cfaaeecc523af2a2eba97a3b1a38f4518c5}
+}]Omega (small letter) , {$\omega$} \index{Omega\-Capital@{Omega\-Capital}!mdt\-Double\-Edit@{mdt\-Double\-Edit}}\index{mdt\-Double\-Edit@{mdt\-Double\-Edit}!Omega\-Capital@{Omega\-Capital}}\item[{\em 
+\hypertarget{classmdt_double_edit_a6e94cba2a7b3fcc16b70475c2cefd8cfadad86fae09055324dd22fc15e6107fe0}{Omega\-Capital}\label{classmdt_double_edit_a6e94cba2a7b3fcc16b70475c2cefd8cfadad86fae09055324dd22fc15e6107fe0}
+}]Capital omega , {$\Omega$} \end{description}
+\end{Desc}
+
+
+Definition at line 43 of file mdt\-Double\-Edit.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_double_edit_a4b6a416aeb8594ad45fb706e79250ba7}{\index{mdt\-Double\-Edit@{mdt\-Double\-Edit}!mdt\-Double\-Edit@{mdt\-Double\-Edit}}
+\index{mdt\-Double\-Edit@{mdt\-Double\-Edit}!mdtDoubleEdit@{mdt\-Double\-Edit}}
+\subsubsection[{mdt\-Double\-Edit}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Double\-Edit\-::mdt\-Double\-Edit (
+\begin{DoxyParamCaption}
+\item[{{\bf Q\-Widget} $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_double_edit_a4b6a416aeb8594ad45fb706e79250ba7}
+
+
+Constructor. 
+
+
+
+Definition at line 31 of file mdt\-Double\-Edit.\-cpp.
+
+
+
+References infinity\-String().
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_double_edit_a8156deaebbd3256e9e7d94ca84e6a03a}{\index{mdt\-Double\-Edit@{mdt\-Double\-Edit}!factor@{factor}}
+\index{factor@{factor}!mdtDoubleEdit@{mdt\-Double\-Edit}}
+\subsubsection[{factor}]{\setlength{\rightskip}{0pt plus 5cm}double mdt\-Double\-Edit\-::factor (
+\begin{DoxyParamCaption}
+\item[{const Q\-Char \&}]{c}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{classmdt_double_edit_a8156deaebbd3256e9e7d94ca84e6a03a}
+
+
+Get the factor for a given char. 
+
+Will return factor of given char, or a 1.\-0 char is unknown.
+
+Supported chars are\-:
+
+\begin{TabularC}{3}
+\hline
+\rowcolor{lightgray}{\bf Char}&{\bf Designation}&{\bf Factor }\\\cline{1-3}
+a&atto&1e-\/18 \\\cline{1-3}
+f&femto&1e-\/15 \\\cline{1-3}
+p&pico&1e-\/12 \\\cline{1-3}
+n&nano&1e-\/9 \\\cline{1-3}
+u&micro&1e-\/6 \\\cline{1-3}
+m&milli&1e-\/3 \\\cline{1-3}
+c&centi&1e-\/2 \\\cline{1-3}
+d&deci&1e-\/1 \\\cline{1-3}
+h&hecto&1e2 \\\cline{1-3}
+k&kilo&1e3 \\\cline{1-3}
+M&mega&1e6 \\\cline{1-3}
+G&giga&1e9 \\\cline{1-3}
+T&tera&1e12 \\\cline{1-3}
+P&peta&1e15 \\\cline{1-3}
+E&exa&1e18 \\\cline{1-3}
+\end{TabularC}
+
+
+Definition at line 78 of file mdt\-Double\-Edit.\-cpp.
+
+\hypertarget{classmdt_double_edit_a09e6276d61dd02feea43e795417d8ea9}{\index{mdt\-Double\-Edit@{mdt\-Double\-Edit}!infinity\-String@{infinity\-String}}
+\index{infinity\-String@{infinity\-String}!mdtDoubleEdit@{mdt\-Double\-Edit}}
+\subsubsection[{infinity\-String}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Double\-Edit\-::infinity\-String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{classmdt_double_edit_a09e6276d61dd02feea43e795417d8ea9}
+
+
+Get infinity string. 
+
+
+
+Definition at line 158 of file mdt\-Double\-Edit.\-cpp.
+
+
+
+Referenced by mdt\-Double\-Edit(), and mdt\-Double\-Validator\-::validate().
+
+\hypertarget{classmdt_double_edit_a3eb1b0434235fae23fa3f795fb90066e}{\index{mdt\-Double\-Edit@{mdt\-Double\-Edit}!set\-Unit@{set\-Unit}}
+\index{set\-Unit@{set\-Unit}!mdtDoubleEdit@{mdt\-Double\-Edit}}
+\subsubsection[{set\-Unit}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Double\-Edit\-::set\-Unit (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{u}
+\end{DoxyParamCaption}
+)}}\label{classmdt_double_edit_a3eb1b0434235fae23fa3f795fb90066e}
+
+
+Set unit. 
+
+
+
+Definition at line 60 of file mdt\-Double\-Edit.\-cpp.
+
+
+
+References mdt\-Double\-Validator\-::set\-Suffix().
+
+
+
+Referenced by set\-Unit().
+
+\hypertarget{classmdt_double_edit_a7574871fecfb0130e9d8947b55629cca}{\index{mdt\-Double\-Edit@{mdt\-Double\-Edit}!set\-Unit@{set\-Unit}}
+\index{set\-Unit@{set\-Unit}!mdtDoubleEdit@{mdt\-Double\-Edit}}
+\subsubsection[{set\-Unit}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Double\-Edit\-::set\-Unit (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Double\-Edit\-::unit\-Symbol\-\_\-t}}]{u}
+\end{DoxyParamCaption}
+)}}\label{classmdt_double_edit_a7574871fecfb0130e9d8947b55629cca}
+
+
+Set unit that is represented by a special symbol. 
+
+
+
+Definition at line 66 of file mdt\-Double\-Edit.\-cpp.
+
+
+
+References omega, Omega\-Capital, and set\-Unit().
+
+\hypertarget{classmdt_double_edit_a827bb0d8a34a6fbaca4a328672140bae}{\index{mdt\-Double\-Edit@{mdt\-Double\-Edit}!set\-Value@{set\-Value}}
+\index{set\-Value@{set\-Value}!mdtDoubleEdit@{mdt\-Double\-Edit}}
+\subsubsection[{set\-Value}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Double\-Edit\-::set\-Value (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{s, }
+\item[{bool}]{emit\-Value\-Changed = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_double_edit_a827bb0d8a34a6fbaca4a328672140bae}
+
+
+Set value from a string. 
+
+s can also contain power of 10 char and unit. Unit must be the same than set with \hyperlink{classmdt_double_edit_a3eb1b0434235fae23fa3f795fb90066e}{set\-Unit()}. 
+
+Definition at line 116 of file mdt\-Double\-Edit.\-cpp.
+
+
+
+References mdt\-Double\-Validator\-::validate(), and value\-Changed().
+
+\hypertarget{classmdt_double_edit_a81258812b5f964042840cee3e405ed27}{\index{mdt\-Double\-Edit@{mdt\-Double\-Edit}!set\-Value@{set\-Value}}
+\index{set\-Value@{set\-Value}!mdtDoubleEdit@{mdt\-Double\-Edit}}
+\subsubsection[{set\-Value}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Double\-Edit\-::set\-Value (
+\begin{DoxyParamCaption}
+\item[{double}]{v, }
+\item[{bool}]{emit\-Value\-Changed = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_double_edit_a81258812b5f964042840cee3e405ed27}
+
+
+Set value. 
+
+
+
+Definition at line 132 of file mdt\-Double\-Edit.\-cpp.
+
+
+
+References value\-Changed().
+
+\hypertarget{classmdt_double_edit_a169b321873e50e1e9bf2b15bbf12af78}{\index{mdt\-Double\-Edit@{mdt\-Double\-Edit}!text@{text}}
+\index{text@{text}!mdtDoubleEdit@{mdt\-Double\-Edit}}
+\subsubsection[{text}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Double\-Edit\-::text (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_double_edit_a169b321873e50e1e9bf2b15bbf12af78}
+
+
+Get text in line edit. 
+
+
+
+Definition at line 153 of file mdt\-Double\-Edit.\-cpp.
+
+\hypertarget{classmdt_double_edit_ad425b7f96ae6906175c7a70fa3b8b017}{\index{mdt\-Double\-Edit@{mdt\-Double\-Edit}!unit@{unit}}
+\index{unit@{unit}!mdtDoubleEdit@{mdt\-Double\-Edit}}
+\subsubsection[{unit}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Double\-Edit\-::unit (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_double_edit_ad425b7f96ae6906175c7a70fa3b8b017}
+
+
+Get unit. 
+
+
+
+Definition at line 64 of file mdt\-Double\-Edit.\-h.
+
+\hypertarget{classmdt_double_edit_a6987992984d3cfab5f96467c2b98e511}{\index{mdt\-Double\-Edit@{mdt\-Double\-Edit}!value@{value}}
+\index{value@{value}!mdtDoubleEdit@{mdt\-Double\-Edit}}
+\subsubsection[{value}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant mdt\-Double\-Edit\-::value (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_double_edit_a6987992984d3cfab5f96467c2b98e511}
+
+
+Get value. 
+
+
+
+Definition at line 142 of file mdt\-Double\-Edit.\-cpp.
+
+\hypertarget{classmdt_double_edit_a04275f70dcfa22b677841a108dde2561}{\index{mdt\-Double\-Edit@{mdt\-Double\-Edit}!value\-Changed@{value\-Changed}}
+\index{value\-Changed@{value\-Changed}!mdtDoubleEdit@{mdt\-Double\-Edit}}
+\subsubsection[{value\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Double\-Edit\-::value\-Changed (
+\begin{DoxyParamCaption}
+\item[{double}]{value, }
+\item[{bool}]{is\-Valid}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_double_edit_a04275f70dcfa22b677841a108dde2561}
+
+
+Emitted when a new value was set. 
+
+Happens when user has finished editting, or when a set functions was called with emit\-Value\-Changed flag set. 
+
+Referenced by set\-Value().
+
+\hypertarget{classmdt_double_edit_a2ffc11c9f013ff65b49642703146ec01}{\index{mdt\-Double\-Edit@{mdt\-Double\-Edit}!value\-Double@{value\-Double}}
+\index{value\-Double@{value\-Double}!mdtDoubleEdit@{mdt\-Double\-Edit}}
+\subsubsection[{value\-Double}]{\setlength{\rightskip}{0pt plus 5cm}double mdt\-Double\-Edit\-::value\-Double (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_double_edit_a2ffc11c9f013ff65b49642703146ec01}
+
+
+Get value. 
+
+
+
+Definition at line 108 of file mdt\-Double\-Edit.\-h.
+
+\hypertarget{classmdt_double_edit_a530a3b818aba14e34636dc1ad36b9292}{\index{mdt\-Double\-Edit@{mdt\-Double\-Edit}!value\-Is\-Valid@{value\-Is\-Valid}}
+\index{value\-Is\-Valid@{value\-Is\-Valid}!mdtDoubleEdit@{mdt\-Double\-Edit}}
+\subsubsection[{value\-Is\-Valid}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Double\-Edit\-::value\-Is\-Valid (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_double_edit_a530a3b818aba14e34636dc1ad36b9292}
+
+
+Check if value is valid. 
+
+
+
+Definition at line 116 of file mdt\-Double\-Edit.\-h.
+
+
+
+\subsection{Property Documentation}
+\hypertarget{classmdt_double_edit_a163c58477dc88637f999f56714df74ee}{\index{mdt\-Double\-Edit@{mdt\-Double\-Edit}!unit@{unit}}
+\index{unit@{unit}!mdtDoubleEdit@{mdt\-Double\-Edit}}
+\subsubsection[{unit}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Double\-Edit\-::unit\hspace{0.3cm}{\ttfamily [read]}, {\ttfamily [write]}}}\label{classmdt_double_edit_a163c58477dc88637f999f56714df74ee}
+
+
+Definition at line 39 of file mdt\-Double\-Edit.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdtutilsgui/\hyperlink{mdt_double_edit_8h}{mdt\-Double\-Edit.\-h}\item 
+src/mdtutilsgui/\hyperlink{mdt_double_edit_8cpp}{mdt\-Double\-Edit.\-cpp}\end{DoxyCompactItemize}

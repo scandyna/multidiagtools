@@ -1,0 +1,520 @@
+\hypertarget{classmdt_tt_test}{\section{mdt\-Tt\-Test Class Reference}
+\label{classmdt_tt_test}\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}}
+}
+
+
+Helper class to manipulate test data.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Tt\-Test.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Tt\-Test\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=144pt]{classmdt_tt_test__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Tt\-Test\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=216pt]{classmdt_tt_test__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_tt_test_a607eadd86d30aa34dbd9daaf4c03725c}{mdt\-Tt\-Test} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent, Q\-Sql\-Database db)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_test_ace65d76861e3063f80e11e38c98d14f7}{setup\-Test\-Item\-Model} ()
+\begin{DoxyCompactList}\small\item\em Setup test item model. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_tt_test_data}{mdt\-Tt\-Test\-Data} \hyperlink{classmdt_tt_test_a8361b08fa6ac07c4c06321096c56e570}{get\-Test\-Data} (const Q\-Variant \&test\-Id, bool include\-Model\-Data, bool $\ast$ok)
+\begin{DoxyCompactList}\small\item\em Get test data for given test I\-D. \end{DoxyCompactList}\item 
+Q\-Variant \hyperlink{classmdt_tt_test_a5ae4f51487fe7d80d7b070c675f92f05}{add\-Test} (const \hyperlink{classmdt_tt_test_data}{mdt\-Tt\-Test\-Data} \&data)
+\begin{DoxyCompactList}\small\item\em Add a test. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_test_a80ebc41b5e9e23aadea11e63207ed09c}{update\-Test} (const Q\-Variant \&test\-Id, const \hyperlink{classmdt_tt_test_data}{mdt\-Tt\-Test\-Data} \&data)
+\begin{DoxyCompactList}\small\item\em Update data for given test data. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_test_a3c130673f9291a7753e691c051c12c2b}{has\-More\-Test\-Item} () const 
+\begin{DoxyCompactList}\small\item\em Check if more test item is available. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_tt_test_ae8cafeb9cebf1c11ca136a94ba75020c}{reset\-Test\-Item\-Cursor} ()
+\begin{DoxyCompactList}\small\item\em Reset the test item cursor. \end{DoxyCompactList}\item 
+Q\-Variant \hyperlink{classmdt_tt_test_aeec72867e84e374f1366e7a9e0c399a8}{next\-Test\-Item} ()
+\begin{DoxyCompactList}\small\item\em Go to next test item. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_tt_test_item_node_setup_data}{mdt\-Tt\-Test\-Item\-Node\-Setup\-Data} \hyperlink{classmdt_tt_test_adc22aa88e121f46692b41fbde5a61dc1}{get\-Setup\-Data} (const Q\-Variant \&test\-Item\-Id, bool \&ok)
+\begin{DoxyCompactList}\small\item\em Get setup data for given test item I\-D. \end{DoxyCompactList}\item 
+Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_tt_test_aa1a0dd591e8c8e013d0812823a0382d3}{get\-Test\-Item\-Id\-List\-For\-Test\-Id} (const Q\-Variant \&test\-Id)
+\begin{DoxyCompactList}\small\item\em Convert a \hyperlink{classmdt_value}{mdt\-Value} to a double. \end{DoxyCompactList}\item 
+Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_tt_test_a2c39b2ad814816be6628dff15cdefddc}{get\-Hardware\-Node\-Id\-List\-For\-Test\-Id} (const Q\-Variant \&test\-Id)
+\begin{DoxyCompactList}\small\item\em Get list of hardware node I\-D used by given test I\-D. \end{DoxyCompactList}\item 
+Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_tt_test_a55f82aed4cba7c4a989853d8a0cd1fd6}{get\-Hardware\-Node\-Id\-List\-For\-Test\-Item\-Id} (const Q\-Variant \&test\-Item\-Id)
+\begin{DoxyCompactList}\small\item\em Get list of hardware node I\-D used by given test item I\-D. \end{DoxyCompactList}\item 
+Q\-List$<$ Q\-Sql\-Record $>$ \hyperlink{classmdt_tt_test_a3f9a35da94544a9dc427a8ad75616a4c}{get\-Node\-Unit\-Setup\-List} (const Q\-Variant \&test\-Item\-Id, const Q\-Variant \&hardware\-Node\-Id)
+\begin{DoxyCompactList}\small\item\em Get test node unit setups for a given test item I\-D and hardware\-Node\-Id. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_test_a3ee695d1947da6472df7233dd66be907}{set\-Test\-Model} (const Q\-Variant \&test\-Result\-Id, const Q\-Variant \&test\-Id)
+\begin{DoxyCompactList}\small\item\em Set test model. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_test_a858c1a790c340bc00806c4ed75eda59a}{add\-Item} (const Q\-Variant \&test\-Result\-Id, const Q\-Variant \&test\-Item\-Id)
+\begin{DoxyCompactList}\small\item\em Add a test item. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_test_a7aa5fddc7b9ea6c113329d6e891d93d1}{add\-Items\-By\-Test\-Id} (const Q\-Variant \&test\-Result\-Id, const Q\-Variant \&test\-Id)
+\begin{DoxyCompactList}\small\item\em Add a test items based on given test I\-D. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_test_afa83957e4e3e0223186f87b0afdcf87d}{edit\-Item} (const Q\-Variant \&test\-Item\-Id, const Q\-String \&field\-Name, const Q\-Variant \&data)
+\begin{DoxyCompactList}\small\item\em Edit a test item. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_test_a1d3be1807a79d033bffb18a238ab32ba}{set\-Measured\-Value} (const Q\-Variant \&test\-Item\-Id, const \hyperlink{classmdt_value}{mdt\-Value} \&value)
+\begin{DoxyCompactList}\small\item\em Set measured value. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_test_a9bf7e4a4d1f43d31c0725b512f73f6d1}{submit\-Test\-Item\-Sql\-Model\-Data} ()
+\begin{DoxyCompactList}\small\item\em Submit test items S\-Q\-L model data to database. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Helper class to manipulate test data. 
+
+
+
+Definition at line 44 of file mdt\-Tt\-Test.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_tt_test_a607eadd86d30aa34dbd9daaf4c03725c}{\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!mdt\-Tt\-Test@{mdt\-Tt\-Test}}
+\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!mdtTtTest@{mdt\-Tt\-Test}}
+\subsubsection[{mdt\-Tt\-Test}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Tt\-Test\-::mdt\-Tt\-Test (
+\begin{DoxyParamCaption}
+\item[{{\bf Q\-Object} $\ast$}]{parent, }
+\item[{Q\-Sql\-Database}]{db}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_a607eadd86d30aa34dbd9daaf4c03725c}
+
+
+Constructor. 
+
+
+
+Definition at line 35 of file mdt\-Tt\-Test.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_tt_test_a858c1a790c340bc00806c4ed75eda59a}{\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!add\-Item@{add\-Item}}
+\index{add\-Item@{add\-Item}!mdtTtTest@{mdt\-Tt\-Test}}
+\subsubsection[{add\-Item}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-::add\-Item (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{test\-Result\-Id, }
+\item[{const Q\-Variant \&}]{test\-Item\-Id}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_a858c1a790c340bc00806c4ed75eda59a}
+
+
+Add a test item. 
+
+
+
+Definition at line 495 of file mdt\-Tt\-Test.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Tt\-Base\-::database(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Error\-::set\-Error(), and mdt\-Error\-::set\-System\-Error().
+
+
+
+Referenced by add\-Items\-By\-Test\-Id().
+
+\hypertarget{classmdt_tt_test_a7aa5fddc7b9ea6c113329d6e891d93d1}{\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!add\-Items\-By\-Test\-Id@{add\-Items\-By\-Test\-Id}}
+\index{add\-Items\-By\-Test\-Id@{add\-Items\-By\-Test\-Id}!mdtTtTest@{mdt\-Tt\-Test}}
+\subsubsection[{add\-Items\-By\-Test\-Id}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-::add\-Items\-By\-Test\-Id (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{test\-Result\-Id, }
+\item[{const Q\-Variant \&}]{test\-Id}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_a7aa5fddc7b9ea6c113329d6e891d93d1}
+
+
+Add a test items based on given test I\-D. 
+
+\begin{DoxyRefDesc}{Deprecated}
+\item[\hyperlink{deprecated__deprecated000014}{Deprecated}]Use add\-Test\-Items() \end{DoxyRefDesc}
+
+
+Definition at line 527 of file mdt\-Tt\-Test.\-cpp.
+
+
+
+References add\-Item(), mdt\-Tt\-Base\-::database(), mdt\-Tt\-Test\-Model\-::get\-List\-Of\-Test\-Item\-Id\-List\-By\-Test\-Id(), mdt\-Tt\-Base\-::last\-Error(), and mdt\-Tt\-Base\-::pv\-Last\-Error.
+
+
+
+Referenced by set\-Test\-Model().
+
+\hypertarget{classmdt_tt_test_a5ae4f51487fe7d80d7b070c675f92f05}{\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!add\-Test@{add\-Test}}
+\index{add\-Test@{add\-Test}!mdtTtTest@{mdt\-Tt\-Test}}
+\subsubsection[{add\-Test}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant mdt\-Tt\-Test\-::add\-Test (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Tt\-Test\-Data} \&}]{data}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_a5ae4f51487fe7d80d7b070c675f92f05}
+
+
+Add a test. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & Test data. New test will be based on Test\-Model\-\_\-\-Id\-\_\-\-F\-K. A new Test item will be created for each item contained in Test\-Model\-Item\-\_\-tbl that is part of given Test\-Model\-\_\-\-Id\-\_\-\-F\-K.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Test I\-D from freshly created test, or a Null value on error 
+\end{DoxyReturn}
+
+
+Definition at line 103 of file mdt\-Tt\-Test.\-cpp.
+
+
+
+References mdt\-Tt\-Base\-::add\-Record(), mdt\-Tt\-Base\-::begin\-Transaction(), mdt\-Tt\-Base\-::commit\-Transaction(), mdt\-Tt\-Base\-::database(), mdt\-Tt\-Base\-::rollback\-Transaction(), and mdt\-Sql\-Record\-::value().
+
+\hypertarget{classmdt_tt_test_afa83957e4e3e0223186f87b0afdcf87d}{\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!edit\-Item@{edit\-Item}}
+\index{edit\-Item@{edit\-Item}!mdtTtTest@{mdt\-Tt\-Test}}
+\subsubsection[{edit\-Item}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-::edit\-Item (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{test\-Item\-Id, }
+\item[{const Q\-String \&}]{field\-Name, }
+\item[{const Q\-Variant \&}]{data}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_afa83957e4e3e0223186f87b0afdcf87d}
+
+
+Edit a test item. 
+
+
+
+Definition at line 549 of file mdt\-Tt\-Test.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Tt\-Base\-::database(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Error\-::set\-Error(), and mdt\-Error\-::set\-System\-Error().
+
+
+
+Referenced by submit\-Test\-Item\-Sql\-Model\-Data().
+
+\hypertarget{classmdt_tt_test_a2c39b2ad814816be6628dff15cdefddc}{\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!get\-Hardware\-Node\-Id\-List\-For\-Test\-Id@{get\-Hardware\-Node\-Id\-List\-For\-Test\-Id}}
+\index{get\-Hardware\-Node\-Id\-List\-For\-Test\-Id@{get\-Hardware\-Node\-Id\-List\-For\-Test\-Id}!mdtTtTest@{mdt\-Tt\-Test}}
+\subsubsection[{get\-Hardware\-Node\-Id\-List\-For\-Test\-Id}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ Q\-Variant $>$ mdt\-Tt\-Test\-::get\-Hardware\-Node\-Id\-List\-For\-Test\-Id (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{test\-Id}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_a2c39b2ad814816be6628dff15cdefddc}
+
+
+Get list of hardware node I\-D used by given test I\-D. 
+
+
+
+Definition at line 356 of file mdt\-Tt\-Test.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Tt\-Base\-::database(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Error\-::set\-Error(), and mdt\-Error\-::set\-System\-Error().
+
+\hypertarget{classmdt_tt_test_a55f82aed4cba7c4a989853d8a0cd1fd6}{\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!get\-Hardware\-Node\-Id\-List\-For\-Test\-Item\-Id@{get\-Hardware\-Node\-Id\-List\-For\-Test\-Item\-Id}}
+\index{get\-Hardware\-Node\-Id\-List\-For\-Test\-Item\-Id@{get\-Hardware\-Node\-Id\-List\-For\-Test\-Item\-Id}!mdtTtTest@{mdt\-Tt\-Test}}
+\subsubsection[{get\-Hardware\-Node\-Id\-List\-For\-Test\-Item\-Id}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ Q\-Variant $>$ mdt\-Tt\-Test\-::get\-Hardware\-Node\-Id\-List\-For\-Test\-Item\-Id (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{test\-Item\-Id}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_a55f82aed4cba7c4a989853d8a0cd1fd6}
+
+
+Get list of hardware node I\-D used by given test item I\-D. 
+
+
+
+Definition at line 379 of file mdt\-Tt\-Test.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Tt\-Base\-::database(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Error\-::set\-Error(), and mdt\-Error\-::set\-System\-Error().
+
+\hypertarget{classmdt_tt_test_a3f9a35da94544a9dc427a8ad75616a4c}{\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!get\-Node\-Unit\-Setup\-List@{get\-Node\-Unit\-Setup\-List}}
+\index{get\-Node\-Unit\-Setup\-List@{get\-Node\-Unit\-Setup\-List}!mdtTtTest@{mdt\-Tt\-Test}}
+\subsubsection[{get\-Node\-Unit\-Setup\-List}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ Q\-Sql\-Record $>$ mdt\-Tt\-Test\-::get\-Node\-Unit\-Setup\-List (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{test\-Item\-Id, }
+\item[{const Q\-Variant \&}]{hardware\-Node\-Id}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_a3f9a35da94544a9dc427a8ad75616a4c}
+
+
+Get test node unit setups for a given test item I\-D and hardware\-Node\-Id. 
+
+Q\-List$<$mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data$>$ \hyperlink{classmdt_tt_test_a3f9a35da94544a9dc427a8ad75616a4c}{mdt\-Tt\-Test\-::get\-Node\-Unit\-Setup\-List(const Q\-Variant \& test\-Item\-Id, const Q\-Variant \& hardware\-Node\-Id)}
+
+
+\begin{DoxyParams}{Parameters}
+{\em test\-Item\-Id} & Primary key of Test\-Item\-\_\-tbl \\
+\hline
+{\em hardware\-Node\-Id} & Node\-Id from Test\-Node\-\_\-tbl\\
+\hline
+\end{DoxyParams}
+\begin{DoxyRefDesc}{Deprecated}
+\item[\hyperlink{deprecated__deprecated000013}{Deprecated}]\end{DoxyRefDesc}
+Q\-List$<$mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data$>$ \hyperlink{classmdt_tt_test_a3f9a35da94544a9dc427a8ad75616a4c}{get\-Node\-Unit\-Setup\-List(const Q\-Variant \& test\-Item\-Id, const Q\-Variant \& hardware\-Node\-Id)}; 
+
+Definition at line 403 of file mdt\-Tt\-Test.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Tt\-Base\-::database(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Error\-::set\-Error(), and mdt\-Error\-::set\-System\-Error().
+
+\hypertarget{classmdt_tt_test_adc22aa88e121f46692b41fbde5a61dc1}{\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!get\-Setup\-Data@{get\-Setup\-Data}}
+\index{get\-Setup\-Data@{get\-Setup\-Data}!mdtTtTest@{mdt\-Tt\-Test}}
+\subsubsection[{get\-Setup\-Data}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Tt\-Test\-Item\-Node\-Setup\-Data} mdt\-Tt\-Test\-::get\-Setup\-Data (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{test\-Item\-Id, }
+\item[{bool \&}]{ok}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_adc22aa88e121f46692b41fbde5a61dc1}
+
+
+Get setup data for given test item I\-D. 
+
+
+
+Definition at line 199 of file mdt\-Tt\-Test.\-cpp.
+
+
+
+References mdt\-Tt\-Test\-Item\-Node\-Setup\-Data\-::add\-Node\-Setup\-Data(), mdt\-Tt\-Test\-Node\-Setup\-Data\-::add\-Unit\-Setup(), mdt\-Tt\-Base\-::get\-Data(), mdt\-Tt\-Test\-Node\-Setup\-Data\-::node\-Identification(), mdt\-Tt\-Test\-Node\-Setup\-Data\-::set\-Node\-Identification(), and mdt\-Sql\-Record\-::value().
+
+\hypertarget{classmdt_tt_test_a8361b08fa6ac07c4c06321096c56e570}{\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!get\-Test\-Data@{get\-Test\-Data}}
+\index{get\-Test\-Data@{get\-Test\-Data}!mdtTtTest@{mdt\-Tt\-Test}}
+\subsubsection[{get\-Test\-Data}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Tt\-Test\-Data} mdt\-Tt\-Test\-::get\-Test\-Data (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{test\-Id, }
+\item[{bool}]{include\-Model\-Data, }
+\item[{bool $\ast$}]{ok}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_a8361b08fa6ac07c4c06321096c56e570}
+
+
+Get test data for given test I\-D. 
+
+
+
+Definition at line 69 of file mdt\-Tt\-Test.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Tt\-Base\-::database(), mdt\-Error\-::\-Error, mdt\-Tt\-Base\-::get\-Data(), mdt\-Tt\-Test\-Model\-::get\-Test\-Model\-Data(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, and mdt\-Error\-::set\-Error().
+
+\hypertarget{classmdt_tt_test_aa1a0dd591e8c8e013d0812823a0382d3}{\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!get\-Test\-Item\-Id\-List\-For\-Test\-Id@{get\-Test\-Item\-Id\-List\-For\-Test\-Id}}
+\index{get\-Test\-Item\-Id\-List\-For\-Test\-Id@{get\-Test\-Item\-Id\-List\-For\-Test\-Id}!mdtTtTest@{mdt\-Tt\-Test}}
+\subsubsection[{get\-Test\-Item\-Id\-List\-For\-Test\-Id}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ Q\-Variant $>$ mdt\-Tt\-Test\-::get\-Test\-Item\-Id\-List\-For\-Test\-Id (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{test\-Id}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_aa1a0dd591e8c8e013d0812823a0382d3}
+
+
+Convert a \hyperlink{classmdt_value}{mdt\-Value} to a double. 
+
+If value has -\/\-O\-L flag set, -\/1e300 is returned. If value has +\-O\-L flag set, 1e300 is returned.\-static Q\-Variant value\-To\-Double(const mdt\-Value \& value);
+
+Convert a double to a value
+
+If dbl\-Val is $<$= -\/1e300, -\/\-O\-L flag will be set. If dbl\-Val is $>$= 1e300, +\-O\-L flag will be set.\-static \hyperlink{classmdt_value}{mdt\-Value} double\-To\-Value(const Q\-Variant \& dbl\-Val);
+
+Set test item model
+
+If a model that contains test item data is allready used, for example in the G\-U\-I, it's possible to re-\/use it here. When do so, test results (measured values, states, ...) will allways be reflected to G\-U\-I.
+
+Other goal to use a model is to get/set data in a efficient way, without instanciating Q\-Sql\-Query objects for each, possibly single data, query.
+
+The given model will not be deleted by this class .
+
+\begin{DoxyRefDesc}{Deprecated}
+\item[\hyperlink{deprecated__deprecated000012}{Deprecated}]\end{DoxyRefDesc}
+bool set\-Test\-Item\-Sql\-Model(\-Q\-Sql\-Table\-Model $\ast$model);
+
+Get a list of test item I\-Ds for given test I\-D
+
+Items are sorted by sequence number, ascending
+
+Q\-Variant mdt\-Tt\-Test\-::value\-To\-Double(const mdt\-Value \& value) \{ if(!value.is\-Valid())\{ return Q\-Variant(); \} if(value.\-is\-Minus\-Ol())\{ return -\/1e300; \}else if(value.\-is\-Plus\-Ol())\{ return 1e300; \}else\{ return value.\-value\-Double(); \} \}
+
+\hyperlink{classmdt_value}{mdt\-Value} mdt\-Tt\-Test\-::double\-To\-Value(const Q\-Variant \& dbl\-Val) \{ bool ok; double x; \hyperlink{classmdt_value}{mdt\-Value} val;
+
+x = dbl\-Val.\-to\-Double(\&ok); if(!ok)\{ return val; \} if(x $<$ -\/1.\-999999999999e299)\{ val.\-set\-Value(x, true, false); \}else if(x $>$ 1.\-999999999999e299)\{ val.\-set\-Value(x, false, true); \}else\{ val.\-set\-Value(x, false, false); \}
+
+return val; \} bool mdt\-Tt\-Test\-::set\-Test\-Item\-Sql\-Model(\-Q\-Sql\-Table\-Model $\ast$model) \{ Q\-\_\-\-A\-S\-S\-E\-R\-T(model != 0);
+
+Q\-String\-List missing\-Fields; Q\-String error\-Text; int i;
+
+pv\-Test\-Item\-Table\-Model = model; /connect(pv\-Test\-Item\-Table\-Model, S\-I\-G\-N\-A\-L(destroyed(\-Q\-Object$\ast$)), this, S\-L\-O\-T(on\-Sql\-Model\-Destroyed(\-Q\-Object$\ast$))); Get index of fields that we need pv\-Col\-Idx\-Of\-Test\-Item\-Id = pv\-Test\-Item\-Table\-Model-\/$>$field\-Index(\char`\"{}\-Id\-\_\-\-P\-K\char`\"{}); if(pv\-Col\-Idx\-Of\-Test\-Item\-Id $<$ 0)\{ missing\-Fields $<$$<$ \char`\"{}\-Id\-\_\-\-P\-K\char`\"{}; \} pv\-Col\-Idx\-Of\-Expected\-Value = pv\-Test\-Item\-Table\-Model-\/$>$field\-Index(\char`\"{}\-Expected\-Value\char`\"{}); if(pv\-Col\-Idx\-Of\-Expected\-Value $<$ 0)\{ missing\-Fields $<$$<$ \char`\"{}\-Expected\-Value\char`\"{}; \} pv\-Col\-Idx\-Of\-Measured\-Value = pv\-Test\-Item\-Table\-Model-\/$>$field\-Index(\char`\"{}\-Measured\-Value\char`\"{}); if(pv\-Col\-Idx\-Of\-Measured\-Value $<$ 0)\{ missing\-Fields $<$$<$ \char`\"{}\-Measured\-Value\char`\"{}; \} pv\-Col\-Idx\-Of\-Result = pv\-Test\-Item\-Table\-Model-\/$>$field\-Index(\char`\"{}\-Result\char`\"{}); if(pv\-Col\-Idx\-Of\-Result $<$ 0)\{ missing\-Fields $<$$<$ \char`\"{}\-Result\char`\"{}; \} Check that all column indexes where found if(!missing\-Fields.is\-Empty())\{ error\-Text = Q\-Object\-::tr(\char`\"{}\-Some fields could not be found in\char`\"{}); error\-Text += \char`\"{} '\char`\"{} + pv\-Test\-Item\-Table\-Model-\/$>$table\-Name() + \char`\"{}'. \char`\"{} + Q\-Object\-::tr(\char`\"{}\-Missing fields\char`\"{}) + \char`\"{} \-: \char`\"{}; for(i = 0; i $<$ missing\-Fields.\-size(); ++i)\{ error\-Text += missing\-Fields.\-at(i); if(i $<$ (missing\-Fields.\-size() -\/ 1))\{ error\-Text += \char`\"{}, \char`\"{}; \} \} pv\-Last\-Error.\-set\-Error(error\-Text, mdt\-Error\-::\-Error); M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C(pv\-Last\-Error, \char`\"{}mdt\-Tt\-Test\char`\"{}); pv\-Last\-Error.\-commit(); pv\-Test\-Item\-Table\-Model = 0; return false; \}
+
+return true; \} 
+
+Definition at line 332 of file mdt\-Tt\-Test.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Tt\-Base\-::database(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Error\-::set\-Error(), and mdt\-Error\-::set\-System\-Error().
+
+\hypertarget{classmdt_tt_test_a3c130673f9291a7753e691c051c12c2b}{\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!has\-More\-Test\-Item@{has\-More\-Test\-Item}}
+\index{has\-More\-Test\-Item@{has\-More\-Test\-Item}!mdtTtTest@{mdt\-Tt\-Test}}
+\subsubsection[{has\-More\-Test\-Item}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-::has\-More\-Test\-Item (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_tt_test_a3c130673f9291a7753e691c051c12c2b}
+
+
+Check if more test item is available. 
+
+
+
+Definition at line 165 of file mdt\-Tt\-Test.\-cpp.
+
+\hypertarget{classmdt_tt_test_aeec72867e84e374f1366e7a9e0c399a8}{\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!next\-Test\-Item@{next\-Test\-Item}}
+\index{next\-Test\-Item@{next\-Test\-Item}!mdtTtTest@{mdt\-Tt\-Test}}
+\subsubsection[{next\-Test\-Item}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant mdt\-Tt\-Test\-::next\-Test\-Item (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_aeec72867e84e374f1366e7a9e0c399a8}
+
+
+Go to next test item. 
+
+\begin{DoxyReturn}{Returns}
+The test item I\-D 
+\end{DoxyReturn}
+
+
+Definition at line 177 of file mdt\-Tt\-Test.\-cpp.
+
+\hypertarget{classmdt_tt_test_ae8cafeb9cebf1c11ca136a94ba75020c}{\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!reset\-Test\-Item\-Cursor@{reset\-Test\-Item\-Cursor}}
+\index{reset\-Test\-Item\-Cursor@{reset\-Test\-Item\-Cursor}!mdtTtTest@{mdt\-Tt\-Test}}
+\subsubsection[{reset\-Test\-Item\-Cursor}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Tt\-Test\-::reset\-Test\-Item\-Cursor (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_ae8cafeb9cebf1c11ca136a94ba75020c}
+
+
+Reset the test item cursor. 
+
+
+
+Definition at line 172 of file mdt\-Tt\-Test.\-cpp.
+
+\hypertarget{classmdt_tt_test_a1d3be1807a79d033bffb18a238ab32ba}{\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!set\-Measured\-Value@{set\-Measured\-Value}}
+\index{set\-Measured\-Value@{set\-Measured\-Value}!mdtTtTest@{mdt\-Tt\-Test}}
+\subsubsection[{set\-Measured\-Value}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-::set\-Measured\-Value (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{test\-Item\-Id, }
+\item[{const {\bf mdt\-Value} \&}]{value}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_a1d3be1807a79d033bffb18a238ab32ba}
+
+
+Set measured value. 
+
+Note\-: value will not be stored to database immediatly, call \hyperlink{classmdt_tt_test_a9bf7e4a4d1f43d31c0725b512f73f6d1}{submit\-Test\-Item\-Sql\-Model\-Data()} to do it . 
+
+Definition at line 581 of file mdt\-Tt\-Test.\-cpp.
+
+
+
+References mdt\-Value\-::value\-Double().
+
+\hypertarget{classmdt_tt_test_a3ee695d1947da6472df7233dd66be907}{\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!set\-Test\-Model@{set\-Test\-Model}}
+\index{set\-Test\-Model@{set\-Test\-Model}!mdtTtTest@{mdt\-Tt\-Test}}
+\subsubsection[{set\-Test\-Model}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-::set\-Test\-Model (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{test\-Result\-Id, }
+\item[{const Q\-Variant \&}]{test\-Id}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_a3ee695d1947da6472df7233dd66be907}
+
+
+Set test model. 
+
+Will also add a test item for each test item . 
+
+Definition at line 455 of file mdt\-Tt\-Test.\-cpp.
+
+
+
+References add\-Items\-By\-Test\-Id(), mdt\-Error\-::commit(), mdt\-Tt\-Base\-::database(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Tt\-Base\-::remove\-Data(), mdt\-Error\-::set\-Error(), and mdt\-Error\-::set\-System\-Error().
+
+\hypertarget{classmdt_tt_test_ace65d76861e3063f80e11e38c98d14f7}{\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!setup\-Test\-Item\-Model@{setup\-Test\-Item\-Model}}
+\index{setup\-Test\-Item\-Model@{setup\-Test\-Item\-Model}!mdtTtTest@{mdt\-Tt\-Test}}
+\subsubsection[{setup\-Test\-Item\-Model}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-::setup\-Test\-Item\-Model (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_ace65d76861e3063f80e11e38c98d14f7}
+
+
+Setup test item model. 
+
+This is only needed to run test items. 
+
+Definition at line 47 of file mdt\-Tt\-Test.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Error\-::set\-Error(), and mdt\-Error\-::set\-System\-Error().
+
+\hypertarget{classmdt_tt_test_a9bf7e4a4d1f43d31c0725b512f73f6d1}{\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!submit\-Test\-Item\-Sql\-Model\-Data@{submit\-Test\-Item\-Sql\-Model\-Data}}
+\index{submit\-Test\-Item\-Sql\-Model\-Data@{submit\-Test\-Item\-Sql\-Model\-Data}!mdtTtTest@{mdt\-Tt\-Test}}
+\subsubsection[{submit\-Test\-Item\-Sql\-Model\-Data}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-::submit\-Test\-Item\-Sql\-Model\-Data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_a9bf7e4a4d1f43d31c0725b512f73f6d1}
+
+
+Submit test items S\-Q\-L model data to database. 
+
+If a error occurs, it will be available with \hyperlink{classmdt_tt_base_a92adaae105cef63b18ace2e320776ca9}{last\-Error()} . 
+
+Definition at line 599 of file mdt\-Tt\-Test.\-cpp.
+
+
+
+References mdt\-Tt\-Base\-::begin\-Transaction(), mdt\-Tt\-Base\-::commit\-Transaction(), edit\-Item(), and mdt\-Tt\-Base\-::rollback\-Transaction().
+
+\hypertarget{classmdt_tt_test_a80ebc41b5e9e23aadea11e63207ed09c}{\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!update\-Test@{update\-Test}}
+\index{update\-Test@{update\-Test}!mdtTtTest@{mdt\-Tt\-Test}}
+\subsubsection[{update\-Test}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-::update\-Test (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{test\-Id, }
+\item[{const {\bf mdt\-Tt\-Test\-Data} \&}]{data}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_a80ebc41b5e9e23aadea11e63207ed09c}
+
+
+Update data for given test data. 
+
+Note\-: in data, if Test\-Model\-\_\-\-Id\-\_\-\-F\-K is different from those that is currently stored, related test items will be removed, and created again, based on given test model. 
+
+Definition at line 127 of file mdt\-Tt\-Test.\-cpp.
+
+
+
+References mdt\-Tt\-Base\-::begin\-Transaction(), mdt\-Tt\-Base\-::commit\-Transaction(), mdt\-Tt\-Base\-::get\-Data(), mdt\-Tt\-Base\-::rollback\-Transaction(), mdt\-Tt\-Base\-::update\-Record(), and mdt\-Sql\-Record\-::value().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdttools/mdttesttool/\hyperlink{mdt_tt_test_8h}{mdt\-Tt\-Test.\-h}\item 
+src/mdttools/mdttesttool/\hyperlink{mdt_tt_test_8cpp}{mdt\-Tt\-Test.\-cpp}\end{DoxyCompactItemize}

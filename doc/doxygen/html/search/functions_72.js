@@ -86,6 +86,7 @@ var searchData=
   ['requestrecipient',['requestRecipient',['../classmdt_frame_usb_control.html#aeb7b5844c0a025ff6692b3724a21a2a4',1,'mdtFrameUsbControl']]],
   ['requesttype',['requestType',['../classmdt_frame_usb_control.html#a6af55e02c1f80cda83876825f151a28c',1,'mdtFrameUsbControl']]],
   ['requestwrite',['requestWrite',['../classmdt_port_thread_helper.html#a115ff95797925d444835e33a36f44102',1,'mdtPortThreadHelper']]],
+  ['resettestitemcursor',['resetTestItemCursor',['../classmdt_tt_test.html#ae8cafeb9cebf1c11ca136a94ba75020c',1,'mdtTtTest']]],
   ['resolution',['resolution',['../classmdt_frame_codec_scpi_u3606_a.html#a4b2d46f6256bd804c85200a2bc1d4dda',1,'mdtFrameCodecScpiU3606A']]],
   ['restorecurrentreadframetopool',['restoreCurrentReadFrameToPool',['../classmdt_port_thread_helper.html#ac531bd67a8469e414fea4e5b16214d80',1,'mdtPortThreadHelper']]],
   ['restorecurrentwriteframetopool',['restoreCurrentWriteFrameToPool',['../classmdt_port_thread_helper.html#a08f1395dda714880d62a24687821eba1',1,'mdtPortThreadHelper']]],

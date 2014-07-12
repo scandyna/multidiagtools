@@ -84,6 +84,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classmdt_tt_test_node_unit_setup_data-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -114,6 +115,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <area shape="rect" id="node2" href="classmdt_sql_record.html" title="Database record container class. " alt="" coords="52,101,156,131"/><area shape="rect" id="node4" href="classmdt_error.html" title="mdtError contains informations about a error that occured " alt="" coords="68,5,140,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a4e69dcc72bebc34d6db64cff91dbfc54"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_test_node_unit_setup_data.html#a4e69dcc72bebc34d6db64cff91dbfc54">io_type_t</a> { <br/>
+&#160;&#160;<a class="el" href="classmdt_tt_test_node_unit_setup_data.html#a4e69dcc72bebc34d6db64cff91dbfc54afe3d6b133ce8a6f68baa3325766c6d90">Unknown</a> = 0, 
+<a class="el" href="classmdt_tt_test_node_unit_setup_data.html#a4e69dcc72bebc34d6db64cff91dbfc54a8e50ceac1dcf82c3003c81b0e7320a36">AnalogInput</a>, 
+<a class="el" href="classmdt_tt_test_node_unit_setup_data.html#a4e69dcc72bebc34d6db64cff91dbfc54a69e7d029a1d332f903deed3fa9c790fb">AnalogOutput</a>, 
+<a class="el" href="classmdt_tt_test_node_unit_setup_data.html#a4e69dcc72bebc34d6db64cff91dbfc54ab77243295dc5311d18f9d2848d92d3ca">DigitalInput</a>, 
+<br/>
+&#160;&#160;<a class="el" href="classmdt_tt_test_node_unit_setup_data.html#a4e69dcc72bebc34d6db64cff91dbfc54a65bbd79cc1fe21c30b6878d859a16a6f">DigitalOutput</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:a4e69dcc72bebc34d6db64cff91dbfc54"><td class="mdescLeft">&#160;</td><td class="mdescRight">I/O type.  <a href="classmdt_tt_test_node_unit_setup_data.html#a4e69dcc72bebc34d6db64cff91dbfc54">More...</a><br/></td></tr>
+<tr class="separator:a4e69dcc72bebc34d6db64cff91dbfc54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a0d9372606909ab76e423f8aa180a9c38"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_test_node_unit_setup_data.html#a0d9372606909ab76e423f8aa180a9c38">mdtTtTestNodeUnitSetupData</a> ()</td></tr>
@@ -125,6 +140,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2a2bb93f0ceb79adec8b4692cf1afb39"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_test_node_unit_setup_data.html#a2a2bb93f0ceb79adec8b4692cf1afb39">setup</a> (const QSqlDatabase &amp;db)</td></tr>
 <tr class="memdesc:a2a2bb93f0ceb79adec8b4692cf1afb39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup fields from TestNodeUnitSetup_tbl.  <a href="#a2a2bb93f0ceb79adec8b4692cf1afb39">More...</a><br/></td></tr>
 <tr class="separator:a2a2bb93f0ceb79adec8b4692cf1afb39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fd9a35361e52d466ef6e62d29383aa4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_tt_test_node_unit_setup_data.html#a4e69dcc72bebc34d6db64cff91dbfc54">io_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_test_node_unit_setup_data.html#a9fd9a35361e52d466ef6e62d29383aa4">ioType</a> () const </td></tr>
+<tr class="memdesc:a9fd9a35361e52d466ef6e62d29383aa4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get I/O type.  <a href="#a9fd9a35361e52d466ef6e62d29383aa4">More...</a><br/></td></tr>
+<tr class="separator:a9fd9a35361e52d466ef6e62d29383aa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24b6ba073f10005678ada247d2b23791"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_test_node_unit_setup_data.html#a24b6ba073f10005678ada247d2b23791">ioPosition</a> () const </td></tr>
+<tr class="memdesc:a24b6ba073f10005678ada247d2b23791"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get I/O position.  <a href="#a24b6ba073f10005678ada247d2b23791">More...</a><br/></td></tr>
+<tr class="separator:a24b6ba073f10005678ada247d2b23791"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ef0406acc3ef7b0b2ee8f168d2a3c76"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_test_node_unit_setup_data.html#a6ef0406acc3ef7b0b2ee8f168d2a3c76">schemaPosition</a> () const </td></tr>
+<tr class="memdesc:a6ef0406acc3ef7b0b2ee8f168d2a3c76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get schema position.  <a href="#a6ef0406acc3ef7b0b2ee8f168d2a3c76">More...</a><br/></td></tr>
+<tr class="separator:a6ef0406acc3ef7b0b2ee8f168d2a3c76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classmdt_sql_record"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classmdt_sql_record')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classmdt_sql_record.html">mdtSqlRecord</a></td></tr>
 <tr class="memitem:a1b171d11ee1b270df4f56007c5609699 inherit pub_methods_classmdt_sql_record"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_record.html#a1b171d11ee1b270df4f56007c5609699">mdtSqlRecord</a> ()</td></tr>
 <tr class="memdesc:a1b171d11ee1b270df4f56007c5609699 inherit pub_methods_classmdt_sql_record"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a1b171d11ee1b270df4f56007c5609699">More...</a><br/></td></tr>
@@ -218,8 +242,42 @@ Additional Inherited Members</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Storage class for test node unit. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_setup_data_8h_source.html#l00029">29</a> of file <a class="el" href="mdt_tt_test_node_unit_setup_data_8h_source.html">mdtTtTestNodeUnitSetupData.h</a>.</p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_setup_data_8h_source.html#l00030">30</a> of file <a class="el" href="mdt_tt_test_node_unit_setup_data_8h_source.html">mdtTtTestNodeUnitSetupData.h</a>.</p>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a class="anchor" id="a4e69dcc72bebc34d6db64cff91dbfc54"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classmdt_tt_test_node_unit_setup_data.html#a4e69dcc72bebc34d6db64cff91dbfc54">mdtTtTestNodeUnitSetupData::io_type_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>I/O type. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="a4e69dcc72bebc34d6db64cff91dbfc54afe3d6b133ce8a6f68baa3325766c6d90"></a>Unknown</em>&nbsp;</td><td class="fielddoc">
+<p>Unknown I/O type </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="a4e69dcc72bebc34d6db64cff91dbfc54a8e50ceac1dcf82c3003c81b0e7320a36"></a>AnalogInput</em>&nbsp;</td><td class="fielddoc">
+<p>Analog input </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="a4e69dcc72bebc34d6db64cff91dbfc54a69e7d029a1d332f903deed3fa9c790fb"></a>AnalogOutput</em>&nbsp;</td><td class="fielddoc">
+<p>Analog output </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="a4e69dcc72bebc34d6db64cff91dbfc54ab77243295dc5311d18f9d2848d92d3ca"></a>DigitalInput</em>&nbsp;</td><td class="fielddoc">
+<p>Digital input </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="a4e69dcc72bebc34d6db64cff91dbfc54a65bbd79cc1fe21c30b6878d859a16a6f"></a>DigitalOutput</em>&nbsp;</td><td class="fielddoc">
+<p>Digital output </p>
+</td></tr>
+</table>
+
+<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_setup_data_8h_source.html#l00036">36</a> of file <a class="el" href="mdt_tt_test_node_unit_setup_data_8h_source.html">mdtTtTestNodeUnitSetupData.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a0d9372606909ab76e423f8aa180a9c38"></a>
 <div class="memitem">
 <div class="memproto">
@@ -235,7 +293,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Construct a empty test node data container. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_setup_data_8cpp_source.html#l00024">24</a> of file <a class="el" href="mdt_tt_test_node_unit_setup_data_8cpp_source.html">mdtTtTestNodeUnitSetupData.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_setup_data_8cpp_source.html#l00023">23</a> of file <a class="el" href="mdt_tt_test_node_unit_setup_data_8cpp_source.html">mdtTtTestNodeUnitSetupData.cpp</a>.</p>
 
 </div>
 </div>
@@ -256,13 +314,79 @@ Additional Inherited Members</h2></td></tr>
 <p>Construct a test node unit setup data based on a QSqlRecord. </p>
 <dl class="section pre"><dt>Precondition</dt><dd>record must contain all fields from TestNodeUnitSetup_tbl </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_setup_data_8cpp_source.html#l00028">28</a> of file <a class="el" href="mdt_tt_test_node_unit_setup_data_8cpp_source.html">mdtTtTestNodeUnitSetupData.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_setup_data_8cpp_source.html#l00027">27</a> of file <a class="el" href="mdt_tt_test_node_unit_setup_data_8cpp_source.html">mdtTtTestNodeUnitSetupData.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_sql_record_8h_source.html#l00117">mdtSqlRecord::contains()</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a24b6ba073f10005678ada247d2b23791"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int mdtTtTestNodeUnitSetupData::ioPosition </td>
+          <td>(</td>
+          <td class="paramname">)</td><td></td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get I/O position. </p>
+<p>I/O position is only avaliable if data comes from TestNodeUnitSetup_view. </p>
+
+<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_setup_data_8cpp_source.html#l00068">68</a> of file <a class="el" href="mdt_tt_test_node_unit_setup_data_8cpp_source.html">mdtTtTestNodeUnitSetupData.cpp</a>.</p>
+
+<p>References <a class="el" href="mdt_sql_record_8h_source.html#l00158">mdtSqlRecord::value()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9fd9a35361e52d466ef6e62d29383aa4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_tt_test_node_unit_setup_data.html#a4e69dcc72bebc34d6db64cff91dbfc54">mdtTtTestNodeUnitSetupData::io_type_t</a> mdtTtTestNodeUnitSetupData::ioType </td>
+          <td>(</td>
+          <td class="paramname">)</td><td></td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get I/O type. </p>
+<p>I/O type is only avaliable if data comes from TestNodeUnitSetup_view. </p>
+
+<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_setup_data_8cpp_source.html#l00045">45</a> of file <a class="el" href="mdt_tt_test_node_unit_setup_data_8cpp_source.html">mdtTtTestNodeUnitSetupData.cpp</a>.</p>
+
+<p>References <a class="el" href="mdt_tt_test_node_unit_setup_data_8h_source.html#l00038">AnalogInput</a>, <a class="el" href="mdt_tt_test_node_unit_setup_data_8h_source.html#l00039">AnalogOutput</a>, <a class="el" href="mdt_tt_test_node_unit_setup_data_8h_source.html#l00040">DigitalInput</a>, <a class="el" href="mdt_tt_test_node_unit_setup_data_8h_source.html#l00041">DigitalOutput</a>, <a class="el" href="mdt_tt_test_node_unit_setup_data_8h_source.html#l00037">Unknown</a>, and <a class="el" href="mdt_sql_record_8h_source.html#l00158">mdtSqlRecord::value()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6ef0406acc3ef7b0b2ee8f168d2a3c76"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString mdtTtTestNodeUnitSetupData::schemaPosition </td>
+          <td>(</td>
+          <td class="paramname">)</td><td></td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get schema position. </p>
+<p>Schema position is only avaliable if data comes from TestNodeUnitSetup_view. </p>
+
+<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_setup_data_8cpp_source.html#l00080">80</a> of file <a class="el" href="mdt_tt_test_node_unit_setup_data_8cpp_source.html">mdtTtTestNodeUnitSetupData.cpp</a>.</p>
+
+<p>References <a class="el" href="mdt_sql_record_8h_source.html#l00158">mdtSqlRecord::value()</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a2a2bb93f0ceb79adec8b4692cf1afb39"></a>
 <div class="memitem">
 <div class="memproto">
@@ -279,7 +403,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Setup fields from TestNodeUnitSetup_tbl. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_setup_data_8cpp_source.html#l00037">37</a> of file <a class="el" href="mdt_tt_test_node_unit_setup_data_8cpp_source.html">mdtTtTestNodeUnitSetupData.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_setup_data_8cpp_source.html#l00036">36</a> of file <a class="el" href="mdt_tt_test_node_unit_setup_data_8cpp_source.html">mdtTtTestNodeUnitSetupData.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_sql_record_8cpp_source.html#l00077">mdtSqlRecord::addAllFields()</a>.</p>
 
@@ -292,7 +416,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jun 28 2014 13:24:49 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jul 12 2014 10:53:30 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

@@ -1,0 +1,204 @@
+\hypertarget{classmdt_tt_test_node_setup_data}{\section{mdt\-Tt\-Test\-Node\-Setup\-Data Class Reference}
+\label{classmdt_tt_test_node_setup_data}\index{mdt\-Tt\-Test\-Node\-Setup\-Data@{mdt\-Tt\-Test\-Node\-Setup\-Data}}
+}
+
+
+Storage class for test node setup data.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Tt\-Test\-Node\-Setup\-Data.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmdt_tt_test_node_setup_data_a2faae3ec127611d7ccfd9f4b09d3f235}{set\-Node\-Identification} (const Q\-String \&id)
+\begin{DoxyCompactList}\small\item\em Set test node identification. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{classmdt_tt_test_node_setup_data_ae67aa6db6cc82bbba059942b3b7bba3b}{node\-Identification} () const 
+\begin{DoxyCompactList}\small\item\em Get node identification. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_tt_test_node_setup_data_afa479b37e20659b60489d3efd814a757}{set\-Device\-Identification} (const Q\-Variant \&id)
+\begin{DoxyCompactList}\small\item\em Set device identification. \end{DoxyCompactList}\item 
+Q\-Variant \hyperlink{classmdt_tt_test_node_setup_data_a506598b487dcc864d03d3be13dd3c88d}{device\-Identification} () const 
+\begin{DoxyCompactList}\small\item\em Get device identification. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_tt_test_node_setup_data_a71e59bc329caae7be7e3a3b3e0135353}{clear} ()
+\begin{DoxyCompactList}\small\item\em Clear data. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_tt_test_node_setup_data_a8002d79545e9c45463c3ed763b8271ce}{clear\-Unit\-Setup} ()
+\begin{DoxyCompactList}\small\item\em Clear test node unit setup data list. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_tt_test_node_setup_data_a7fcd914f35ddb5138b05dfa04ec1f652}{add\-Unit\-Setup} (const \hyperlink{classmdt_tt_test_node_unit_setup_data}{mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data} \&data)
+\begin{DoxyCompactList}\small\item\em Add a test node unit setup. \end{DoxyCompactList}\item 
+const Q\-List\\*
+$<$ \hyperlink{classmdt_tt_test_node_unit_setup_data}{mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data} $>$ \& \hyperlink{classmdt_tt_test_node_setup_data_a238c66d099bf18741ed436fadee5b52f}{unit\-Setup\-List} () const 
+\begin{DoxyCompactList}\small\item\em Get test node unit setup data list. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Storage class for test node setup data. 
+
+Definition at line 31 of file mdt\-Tt\-Test\-Node\-Setup\-Data.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_tt_test_node_setup_data_a7fcd914f35ddb5138b05dfa04ec1f652}{\index{mdt\-Tt\-Test\-Node\-Setup\-Data@{mdt\-Tt\-Test\-Node\-Setup\-Data}!add\-Unit\-Setup@{add\-Unit\-Setup}}
+\index{add\-Unit\-Setup@{add\-Unit\-Setup}!mdtTtTestNodeSetupData@{mdt\-Tt\-Test\-Node\-Setup\-Data}}
+\subsubsection[{add\-Unit\-Setup}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Tt\-Test\-Node\-Setup\-Data\-::add\-Unit\-Setup (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data} \&}]{data}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_node_setup_data_a7fcd914f35ddb5138b05dfa04ec1f652}
+
+
+Add a test node unit setup. 
+
+
+
+Definition at line 45 of file mdt\-Tt\-Test\-Node\-Setup\-Data.\-cpp.
+
+
+
+Referenced by mdt\-Tt\-Test\-Item\-Node\-Setup\-Data\-::add\-Node\-Setup\-Data(), and mdt\-Tt\-Test\-::get\-Setup\-Data().
+
+\hypertarget{classmdt_tt_test_node_setup_data_a71e59bc329caae7be7e3a3b3e0135353}{\index{mdt\-Tt\-Test\-Node\-Setup\-Data@{mdt\-Tt\-Test\-Node\-Setup\-Data}!clear@{clear}}
+\index{clear@{clear}!mdtTtTestNodeSetupData@{mdt\-Tt\-Test\-Node\-Setup\-Data}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Tt\-Test\-Node\-Setup\-Data\-::clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_node_setup_data_a71e59bc329caae7be7e3a3b3e0135353}
+
+
+Clear data. 
+
+
+
+Definition at line 33 of file mdt\-Tt\-Test\-Node\-Setup\-Data.\-cpp.
+
+
+
+References clear\-Unit\-Setup().
+
+
+
+Referenced by mdt\-Tt\-Test\-Item\-Node\-Setup\-Data\-::clear().
+
+\hypertarget{classmdt_tt_test_node_setup_data_a8002d79545e9c45463c3ed763b8271ce}{\index{mdt\-Tt\-Test\-Node\-Setup\-Data@{mdt\-Tt\-Test\-Node\-Setup\-Data}!clear\-Unit\-Setup@{clear\-Unit\-Setup}}
+\index{clear\-Unit\-Setup@{clear\-Unit\-Setup}!mdtTtTestNodeSetupData@{mdt\-Tt\-Test\-Node\-Setup\-Data}}
+\subsubsection[{clear\-Unit\-Setup}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Tt\-Test\-Node\-Setup\-Data\-::clear\-Unit\-Setup (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_node_setup_data_a8002d79545e9c45463c3ed763b8271ce}
+
+
+Clear test node unit setup data list. 
+
+
+
+Definition at line 40 of file mdt\-Tt\-Test\-Node\-Setup\-Data.\-cpp.
+
+
+
+Referenced by clear().
+
+\hypertarget{classmdt_tt_test_node_setup_data_a506598b487dcc864d03d3be13dd3c88d}{\index{mdt\-Tt\-Test\-Node\-Setup\-Data@{mdt\-Tt\-Test\-Node\-Setup\-Data}!device\-Identification@{device\-Identification}}
+\index{device\-Identification@{device\-Identification}!mdtTtTestNodeSetupData@{mdt\-Tt\-Test\-Node\-Setup\-Data}}
+\subsubsection[{device\-Identification}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant mdt\-Tt\-Test\-Node\-Setup\-Data\-::device\-Identification (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_tt_test_node_setup_data_a506598b487dcc864d03d3be13dd3c88d}
+
+
+Get device identification. 
+
+
+
+Definition at line 49 of file mdt\-Tt\-Test\-Node\-Setup\-Data.\-h.
+
+
+
+Referenced by mdt\-Tt\-Test\-Item\-Node\-Setup\-Data\-::add\-Node\-Setup\-Data(), and mdt\-Tt\-Test\-Item\-Node\-Setup\-Data\-::current\-Device\-Identification().
+
+\hypertarget{classmdt_tt_test_node_setup_data_ae67aa6db6cc82bbba059942b3b7bba3b}{\index{mdt\-Tt\-Test\-Node\-Setup\-Data@{mdt\-Tt\-Test\-Node\-Setup\-Data}!node\-Identification@{node\-Identification}}
+\index{node\-Identification@{node\-Identification}!mdtTtTestNodeSetupData@{mdt\-Tt\-Test\-Node\-Setup\-Data}}
+\subsubsection[{node\-Identification}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Tt\-Test\-Node\-Setup\-Data\-::node\-Identification (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_tt_test_node_setup_data_ae67aa6db6cc82bbba059942b3b7bba3b}
+
+
+Get node identification. 
+
+
+
+Definition at line 41 of file mdt\-Tt\-Test\-Node\-Setup\-Data.\-h.
+
+
+
+Referenced by mdt\-Tt\-Test\-Item\-Node\-Setup\-Data\-::add\-Node\-Setup\-Data(), and mdt\-Tt\-Test\-::get\-Setup\-Data().
+
+\hypertarget{classmdt_tt_test_node_setup_data_afa479b37e20659b60489d3efd814a757}{\index{mdt\-Tt\-Test\-Node\-Setup\-Data@{mdt\-Tt\-Test\-Node\-Setup\-Data}!set\-Device\-Identification@{set\-Device\-Identification}}
+\index{set\-Device\-Identification@{set\-Device\-Identification}!mdtTtTestNodeSetupData@{mdt\-Tt\-Test\-Node\-Setup\-Data}}
+\subsubsection[{set\-Device\-Identification}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Tt\-Test\-Node\-Setup\-Data\-::set\-Device\-Identification (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{id}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_node_setup_data_afa479b37e20659b60489d3efd814a757}
+
+
+Set device identification. 
+
+
+
+Definition at line 28 of file mdt\-Tt\-Test\-Node\-Setup\-Data.\-cpp.
+
+
+
+Referenced by mdt\-Tt\-Test\-Item\-Node\-Setup\-Data\-::add\-Node\-Setup\-Data().
+
+\hypertarget{classmdt_tt_test_node_setup_data_a2faae3ec127611d7ccfd9f4b09d3f235}{\index{mdt\-Tt\-Test\-Node\-Setup\-Data@{mdt\-Tt\-Test\-Node\-Setup\-Data}!set\-Node\-Identification@{set\-Node\-Identification}}
+\index{set\-Node\-Identification@{set\-Node\-Identification}!mdtTtTestNodeSetupData@{mdt\-Tt\-Test\-Node\-Setup\-Data}}
+\subsubsection[{set\-Node\-Identification}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Tt\-Test\-Node\-Setup\-Data\-::set\-Node\-Identification (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{id}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_node_setup_data_a2faae3ec127611d7ccfd9f4b09d3f235}
+
+
+Set test node identification. 
+
+
+
+Definition at line 23 of file mdt\-Tt\-Test\-Node\-Setup\-Data.\-cpp.
+
+
+
+Referenced by mdt\-Tt\-Test\-Item\-Node\-Setup\-Data\-::add\-Node\-Setup\-Data(), and mdt\-Tt\-Test\-::get\-Setup\-Data().
+
+\hypertarget{classmdt_tt_test_node_setup_data_a238c66d099bf18741ed436fadee5b52f}{\index{mdt\-Tt\-Test\-Node\-Setup\-Data@{mdt\-Tt\-Test\-Node\-Setup\-Data}!unit\-Setup\-List@{unit\-Setup\-List}}
+\index{unit\-Setup\-List@{unit\-Setup\-List}!mdtTtTestNodeSetupData@{mdt\-Tt\-Test\-Node\-Setup\-Data}}
+\subsubsection[{unit\-Setup\-List}]{\setlength{\rightskip}{0pt plus 5cm}const Q\-List$<${\bf mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data}$>$\& mdt\-Tt\-Test\-Node\-Setup\-Data\-::unit\-Setup\-List (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_tt_test_node_setup_data_a238c66d099bf18741ed436fadee5b52f}
+
+
+Get test node unit setup data list. 
+
+
+
+Definition at line 65 of file mdt\-Tt\-Test\-Node\-Setup\-Data.\-h.
+
+
+
+Referenced by mdt\-Tt\-Test\-Item\-Node\-Setup\-Data\-::add\-Node\-Setup\-Data().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdttools/mdttesttool/\hyperlink{mdt_tt_test_node_setup_data_8h}{mdt\-Tt\-Test\-Node\-Setup\-Data.\-h}\item 
+src/mdttools/mdttesttool/\hyperlink{mdt_tt_test_node_setup_data_8cpp}{mdt\-Tt\-Test\-Node\-Setup\-Data.\-cpp}\end{DoxyCompactItemize}

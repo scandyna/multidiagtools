@@ -153,6 +153,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7ad893c6885dbaef5a6cb980bfe627e0"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0">name</a> () const </td></tr>
 <tr class="memdesc:a7ad893c6885dbaef5a6cb980bfe627e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get device name.  <a href="#a7ad893c6885dbaef5a6cb980bfe627e0">More...</a><br/></td></tr>
 <tr class="separator:a7ad893c6885dbaef5a6cb980bfe627e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6fddf7fba1f54e481a4f3445db64d98"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#af6fddf7fba1f54e481a4f3445db64d98">setIdentification</a> (const QVariant &amp;id)</td></tr>
+<tr class="memdesc:af6fddf7fba1f54e481a4f3445db64d98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set device identification.  <a href="#af6fddf7fba1f54e481a4f3445db64d98">More...</a><br/></td></tr>
+<tr class="separator:af6fddf7fba1f54e481a4f3445db64d98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54845e1af6f6f98de7de79c3df9ac7b5"><td class="memItemLeft" align="right" valign="top">QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a54845e1af6f6f98de7de79c3df9ac7b5">identification</a> () const </td></tr>
+<tr class="memdesc:a54845e1af6f6f98de7de79c3df9ac7b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get device identification.  <a href="#a54845e1af6f6f98de7de79c3df9ac7b5">More...</a><br/></td></tr>
+<tr class="separator:a54845e1af6f6f98de7de79c3df9ac7b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abab1b6e45af527880ce469ae318474c0"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#abab1b6e45af527880ce469ae318474c0">connectToDevice</a> (const <a class="el" href="classmdt_device_info.html">mdtDeviceInfo</a> &amp;devInfo)</td></tr>
 <tr class="memdesc:abab1b6e45af527880ce469ae318474c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Search and connect to physical device.  <a href="#abab1b6e45af527880ce469ae318474c0">More...</a><br/></td></tr>
 <tr class="separator:abab1b6e45af527880ce469ae318474c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -407,7 +413,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00029">29</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_8cpp_source.html#l01177">runQueries()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00055">setName()</a>.</p>
+<p>References <a class="el" href="mdt_device_8cpp_source.html#l01182">runQueries()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00055">setName()</a>.</p>
 
 </div>
 </div>
@@ -437,7 +443,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00048">48</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_8cpp_source.html#l00070">disconnectFromDevice()</a>.</p>
+<p>References <a class="el" href="mdt_device_8cpp_source.html#l00075">disconnectFromDevice()</a>.</p>
 
 </div>
 </div>
@@ -458,7 +464,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Add a analog input. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00080">80</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00085">85</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00098">mdtDeviceIos::addAnalogInput()</a>.</p>
 
@@ -482,7 +488,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Add a digital input. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00117">117</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00122">122</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00325">mdtDeviceIos::addDigitalInput()</a>.</p>
 
@@ -504,7 +510,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Add a list of analog inputs. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00088">88</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00093">93</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00139">mdtDeviceIos::addAnalogInputs()</a>.</p>
 
@@ -528,7 +534,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Add a list of digital inputs. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00125">125</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00130">130</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00368">mdtDeviceIos::addDigitalInputs()</a>.</p>
 
@@ -550,9 +556,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Add a analog output. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00095">95</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00100">100</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00193">mdtDeviceIos::addAnalogOutput()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00532">setAnalogOutputValue()</a>.</p>
+<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00193">mdtDeviceIos::addAnalogOutput()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00537">setAnalogOutputValue()</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00031">mdtDeviceU3606A::mdtDeviceU3606A()</a>.</p>
 
@@ -574,9 +580,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Add a digital output. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00132">132</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00137">137</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00422">mdtDeviceIos::addDigitalOutput()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00993">setDigitalOutputValue()</a>.</p>
+<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00422">mdtDeviceIos::addDigitalOutput()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00998">setDigitalOutputValue()</a>.</p>
 
 </div>
 </div>
@@ -596,9 +602,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Add a list of analog outputs. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00104">104</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00109">109</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00251">mdtDeviceIos::addAnalogOutputs()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00532">setAnalogOutputValue()</a>.</p>
+<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00251">mdtDeviceIos::addAnalogOutputs()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00537">setAnalogOutputValue()</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00149">mdtDeviceModbusWago::detectIos()</a>.</p>
 
@@ -620,9 +626,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Add a list of digital outputs. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00141">141</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00146">146</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00479">mdtDeviceIos::addDigitalOutputs()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00993">setDigitalOutputValue()</a>.</p>
+<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00479">mdtDeviceIos::addDigitalOutputs()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00998">setDigitalOutputValue()</a>.</p>
 
 </div>
 </div>
@@ -661,7 +667,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#a093c6407ee69c4c7696a0c71d0acd88d">mdtDeviceModbus</a>, <a class="el" href="classmdt_device_u3606_a.html#acf3b48b13bc179ad4f94b3011b7d607a">mdtDeviceU3606A</a>, <a class="el" href="classmdt_device_scpi.html#ae8e886b362cbf9d1bf7064b48348b8e8">mdtDeviceScpi</a>, <a class="el" href="classmdt_device_modbus_wago.html#a025f0411a708a529054a0e3c0b6461cd">mdtDeviceModbusWago</a>, and <a class="el" href="classmdt_device_d_s_o1000_a.html#a84431cf929750a8a25d5218893736c72">mdtDeviceDSO1000A</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00065">65</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00070">70</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_abstract_port_8h_source.html#l00084">mdtAbstractPort::UnhandledError</a>.</p>
 
@@ -682,11 +688,11 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get device state. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01147">1147</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01152">1152</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_port_manager_8cpp_source.html#l00568">mdtPortManager::currentState()</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00208">mdtPortManager::PortClosed</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00187">portManager()</a>.</p>
+<p>References <a class="el" href="mdt_port_manager_8cpp_source.html#l00568">mdtPortManager::currentState()</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00208">mdtPortManager::PortClosed</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00192">portManager()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l01177">runQueries()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01155">setAnalogOutputValue()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01166">setDigitalOutputValue()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l01182">runQueries()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01160">setAnalogOutputValue()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01171">setDigitalOutputValue()</a>.</p>
 
 </div>
 </div>
@@ -721,7 +727,7 @@ Protected Member Functions</h2></td></tr>
 <li>Once decoding was done, the concerned I/O(s) sould be updated with new value, or set to invalid value on error (see <a class="el" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a> class). Doing so will keep (G)UI consistency. </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01190">1190</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01195">1195</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -741,9 +747,9 @@ Protected Member Functions</h2></td></tr>
 <p>Delete all I/O in container. </p>
 <p>All I/O's will be deleted, but I/O container itself will remain valid. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00154">154</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00159">159</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00285">mdtDeviceIos::analogOutputs()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00070">mdtDeviceIos::deleteIos()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00513">mdtDeviceIos::digitalOutputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00532">setAnalogOutputValue()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00993">setDigitalOutputValue()</a>.</p>
+<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00285">mdtDeviceIos::analogOutputs()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00070">mdtDeviceIos::deleteIos()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00513">mdtDeviceIos::digitalOutputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00537">setAnalogOutputValue()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00998">setDigitalOutputValue()</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00149">mdtDeviceModbusWago::detectIos()</a>.</p>
 
@@ -775,9 +781,9 @@ Protected Member Functions</h2></td></tr>
 <p>If specific work must be done, subclass can re-implement this method.</p>
 <p>Note: in the implementation, ios are keeped as they are. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00070">70</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00075">75</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_8cpp_source.html#l00187">portManager()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00209">stop()</a>, and <a class="el" href="mdt_port_manager_8cpp_source.html#l00213">mdtPortManager::stop()</a>.</p>
+<p>References <a class="el" href="mdt_device_8cpp_source.html#l00192">portManager()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00214">stop()</a>, and <a class="el" href="mdt_port_manager_8cpp_source.html#l00213">mdtPortManager::stop()</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00048">~mdtDevice()</a>.</p>
 
@@ -809,9 +815,9 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 or a ID on success. If no I/O's are set, on timeout or other error, a value &lt; 0 is returned. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00334">334</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00339">339</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00178">mdtDeviceIos::analogInputsCount()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00173">mdtDeviceIos::analogInputsSegments()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01260">getNewTransaction()</a>, <a class="el" href="mdt_device_ios_segment_8cpp_source.html#l00104">mdtDeviceIosSegment::ioCount()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01204">readAnalogInputs()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00131">mdtPortTransaction::setAddress()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00183">mdtDeviceIos::setAnalogInputsValue()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00141">mdtPortTransaction::setIoCount()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>, <a class="el" href="mdt_device_ios_segment_8cpp_source.html#l00068">mdtDeviceIosSegment::startAddressRead()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01275">waitTransactionDone()</a>.</p>
+<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00178">mdtDeviceIos::analogInputsCount()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00173">mdtDeviceIos::analogInputsSegments()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01265">getNewTransaction()</a>, <a class="el" href="mdt_device_ios_segment_8cpp_source.html#l00104">mdtDeviceIosSegment::ioCount()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01209">readAnalogInputs()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00131">mdtPortTransaction::setAddress()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00183">mdtDeviceIos::setAnalogInputsValue()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00141">mdtPortTransaction::setIoCount()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>, <a class="el" href="mdt_device_ios_segment_8cpp_source.html#l00068">mdtDeviceIosSegment::startAddressRead()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01280">waitTransactionDone()</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_device_modbus_8cpp_source.html#l00462">mdtDeviceModbus::queriesSequence()</a>.</p>
 
@@ -867,11 +873,11 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00227">227</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00232">232</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_io_8cpp_source.html#l00053">mdtAbstractIo::addressRead()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01260">getNewTransaction()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01199">readAnalogInput()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00131">mdtPortTransaction::setAddress()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00066">mdtPortTransaction::setIo()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>, <a class="el" href="mdt_analog_io_8cpp_source.html#l00143">mdtAnalogIo::setValue()</a>, <a class="el" href="mdt_abstract_io_8cpp_source.html#l00112">mdtAbstractIo::value()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01275">waitTransactionDone()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_io_8cpp_source.html#l00053">mdtAbstractIo::addressRead()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01265">getNewTransaction()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01204">readAnalogInput()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00131">mdtPortTransaction::setAddress()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00066">mdtPortTransaction::setIo()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>, <a class="el" href="mdt_analog_io_8cpp_source.html#l00143">mdtAnalogIo::setValue()</a>, <a class="el" href="mdt_abstract_io_8cpp_source.html#l00112">mdtAbstractIo::value()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01280">waitTransactionDone()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00269">getAnalogInputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00288">getAnalogInputValueAt()</a>, and <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00111">mdtDeviceU3606A::getMeasureValue()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00274">getAnalogInputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00293">getAnalogInputValueAt()</a>, and <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00111">mdtDeviceU3606A::getMeasureValue()</a>.</p>
 
 </div>
 </div>
@@ -914,9 +920,9 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="classmdt_device.html#ab828764660ba53ffce1995901ddf5a0a" title="Get analog input value. ">getAnalogInputValue(mdtAnalogIo*, bool, bool)</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00269">269</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00274">274</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00149">mdtDeviceIos::analogInputAtAddress()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_device_8cpp_source.html#l00227">getAnalogInputValue()</a>, <a class="el" href="mdt_error_8h_source.html#l00047">MDT_DEVICE_ERROR</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>.</p>
+<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00149">mdtDeviceIos::analogInputAtAddress()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_device_8cpp_source.html#l00232">getAnalogInputValue()</a>, <a class="el" href="mdt_error_8h_source.html#l00047">MDT_DEVICE_ERROR</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>.</p>
 
 </div>
 </div>
@@ -950,9 +956,9 @@ Protected Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00314">314</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00319">319</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00154">mdtDeviceIos::analogInputWithLabelShort()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_device_8cpp_source.html#l00227">getAnalogInputValue()</a>, <a class="el" href="mdt_error_8h_source.html#l00047">MDT_DEVICE_ERROR</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>.</p>
+<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00154">mdtDeviceIos::analogInputWithLabelShort()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_device_8cpp_source.html#l00232">getAnalogInputValue()</a>, <a class="el" href="mdt_error_8h_source.html#l00047">MDT_DEVICE_ERROR</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>.</p>
 
 </div>
 </div>
@@ -995,9 +1001,9 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="classmdt_device.html#ab828764660ba53ffce1995901ddf5a0a" title="Get analog input value. ">getAnalogInputValue(mdtAnalogIo*, bool, bool)</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00288">288</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00293">293</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00168">mdtDeviceIos::analogInputs()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_device_8cpp_source.html#l00227">getAnalogInputValue()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>.</p>
+<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00168">mdtDeviceIos::analogInputs()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_device_8cpp_source.html#l00232">getAnalogInputValue()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>.</p>
 
 </div>
 </div>
@@ -1027,9 +1033,9 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 or a ID on success. If no I/O's are set, on timeout or other error, a value &lt; 0 is returned. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00486">486</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00491">491</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00295">mdtDeviceIos::analogOutputsCount()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00290">mdtDeviceIos::analogOutputsSegments()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01260">getNewTransaction()</a>, <a class="el" href="mdt_device_ios_segment_8cpp_source.html#l00104">mdtDeviceIosSegment::ioCount()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01214">readAnalogOutputs()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00131">mdtPortTransaction::setAddress()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00315">mdtDeviceIos::setAnalogOutputsValue()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00141">mdtPortTransaction::setIoCount()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>, <a class="el" href="mdt_device_ios_segment_8cpp_source.html#l00068">mdtDeviceIosSegment::startAddressRead()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01275">waitTransactionDone()</a>.</p>
+<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00295">mdtDeviceIos::analogOutputsCount()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00290">mdtDeviceIos::analogOutputsSegments()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01265">getNewTransaction()</a>, <a class="el" href="mdt_device_ios_segment_8cpp_source.html#l00104">mdtDeviceIosSegment::ioCount()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01219">readAnalogOutputs()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00131">mdtPortTransaction::setAddress()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00315">mdtDeviceIos::setAnalogOutputsValue()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00141">mdtPortTransaction::setIoCount()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>, <a class="el" href="mdt_device_ios_segment_8cpp_source.html#l00068">mdtDeviceIosSegment::startAddressRead()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01280">waitTransactionDone()</a>.</p>
 
 </div>
 </div>
@@ -1083,11 +1089,11 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00380">380</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00385">385</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_io_8cpp_source.html#l00053">mdtAbstractIo::addressRead()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01260">getNewTransaction()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01209">readAnalogOutput()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00131">mdtPortTransaction::setAddress()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00066">mdtPortTransaction::setIo()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>, <a class="el" href="mdt_analog_io_8cpp_source.html#l00143">mdtAnalogIo::setValue()</a>, <a class="el" href="mdt_abstract_io_8cpp_source.html#l00112">mdtAbstractIo::value()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01275">waitTransactionDone()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_io_8cpp_source.html#l00053">mdtAbstractIo::addressRead()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01265">getNewTransaction()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01214">readAnalogOutput()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00131">mdtPortTransaction::setAddress()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00066">mdtPortTransaction::setIo()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>, <a class="el" href="mdt_analog_io_8cpp_source.html#l00143">mdtAnalogIo::setValue()</a>, <a class="el" href="mdt_abstract_io_8cpp_source.html#l00112">mdtAbstractIo::value()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01280">waitTransactionDone()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00422">getAnalogOutputValue()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00441">getAnalogOutputValueAt()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00427">getAnalogOutputValue()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00446">getAnalogOutputValueAt()</a>.</p>
 
 </div>
 </div>
@@ -1130,9 +1136,9 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="classmdt_device.html#a163ee286d905feafe50b3e4351d4bf41" title="Get analog output value. ">getAnalogOutputValue(mdtAnalogIo*, bool, bool)</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00422">422</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00427">427</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00261">mdtDeviceIos::analogOutputAtAddressRead()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_device_8cpp_source.html#l00380">getAnalogOutputValue()</a>, <a class="el" href="mdt_error_8h_source.html#l00047">MDT_DEVICE_ERROR</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>.</p>
+<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00261">mdtDeviceIos::analogOutputAtAddressRead()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_device_8cpp_source.html#l00385">getAnalogOutputValue()</a>, <a class="el" href="mdt_error_8h_source.html#l00047">MDT_DEVICE_ERROR</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>.</p>
 
 </div>
 </div>
@@ -1166,9 +1172,9 @@ Protected Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00467">467</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00472">472</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00271">mdtDeviceIos::analogOutputWithLabelShort()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_device_8cpp_source.html#l00380">getAnalogOutputValue()</a>, <a class="el" href="mdt_error_8h_source.html#l00047">MDT_DEVICE_ERROR</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>.</p>
+<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00271">mdtDeviceIos::analogOutputWithLabelShort()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_device_8cpp_source.html#l00385">getAnalogOutputValue()</a>, <a class="el" href="mdt_error_8h_source.html#l00047">MDT_DEVICE_ERROR</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>.</p>
 
 </div>
 </div>
@@ -1211,9 +1217,9 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="classmdt_device.html#a163ee286d905feafe50b3e4351d4bf41" title="Get analog output value. ">getAnalogOutputValue(mdtAnalogIo*, bool, bool)</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00441">441</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00446">446</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00285">mdtDeviceIos::analogOutputs()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_device_8cpp_source.html#l00380">getAnalogOutputValue()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>.</p>
+<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00285">mdtDeviceIos::analogOutputs()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_device_8cpp_source.html#l00385">getAnalogOutputValue()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>.</p>
 
 </div>
 </div>
@@ -1243,9 +1249,9 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 or a ID on success. If no I/O's are set, on timeout ar other error, a value &lt; 0 is returned. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00793">793</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00798">798</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00402">mdtDeviceIos::digitalInputsCount()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00407">mdtDeviceIos::digitalInputsSegments()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01260">getNewTransaction()</a>, <a class="el" href="mdt_device_ios_segment_8cpp_source.html#l00104">mdtDeviceIosSegment::ioCount()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01234">readDigitalInputs()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00131">mdtPortTransaction::setAddress()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00412">mdtDeviceIos::setDigitalInputsValue()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00141">mdtPortTransaction::setIoCount()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>, <a class="el" href="mdt_device_ios_segment_8cpp_source.html#l00068">mdtDeviceIosSegment::startAddressRead()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01275">waitTransactionDone()</a>.</p>
+<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00402">mdtDeviceIos::digitalInputsCount()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00407">mdtDeviceIos::digitalInputsSegments()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01265">getNewTransaction()</a>, <a class="el" href="mdt_device_ios_segment_8cpp_source.html#l00104">mdtDeviceIosSegment::ioCount()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01239">readDigitalInputs()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00131">mdtPortTransaction::setAddress()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00412">mdtDeviceIos::setDigitalInputsValue()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00141">mdtPortTransaction::setIoCount()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>, <a class="el" href="mdt_device_ios_segment_8cpp_source.html#l00068">mdtDeviceIosSegment::startAddressRead()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01280">waitTransactionDone()</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_device_modbus_8cpp_source.html#l00462">mdtDeviceModbus::queriesSequence()</a>.</p>
 
@@ -1301,11 +1307,11 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00687">687</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00692">692</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_io_8cpp_source.html#l00053">mdtAbstractIo::addressRead()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01260">getNewTransaction()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01229">readDigitalInput()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00131">mdtPortTransaction::setAddress()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00066">mdtPortTransaction::setIo()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>, <a class="el" href="mdt_digital_io_8cpp_source.html#l00034">mdtDigitalIo::setValue()</a>, <a class="el" href="mdt_abstract_io_8cpp_source.html#l00112">mdtAbstractIo::value()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01275">waitTransactionDone()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_io_8cpp_source.html#l00053">mdtAbstractIo::addressRead()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01265">getNewTransaction()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01234">readDigitalInput()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00131">mdtPortTransaction::setAddress()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00066">mdtPortTransaction::setIo()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>, <a class="el" href="mdt_digital_io_8cpp_source.html#l00034">mdtDigitalIo::setValue()</a>, <a class="el" href="mdt_abstract_io_8cpp_source.html#l00112">mdtAbstractIo::value()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01280">waitTransactionDone()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00729">getDigitalInputValue()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00748">getDigitalInputValueAt()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00734">getDigitalInputValue()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00753">getDigitalInputValueAt()</a>.</p>
 
 </div>
 </div>
@@ -1348,9 +1354,9 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="classmdt_device.html#afe8bd7811ccc4a2ba8088edf073e0a8d" title="Get digital input value. ">getDigitalInputValue(mdtDigitalIo*, bool, bool)</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00729">729</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00734">734</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00378">mdtDeviceIos::digitalInputAtAddress()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_device_8cpp_source.html#l00687">getDigitalInputValue()</a>, <a class="el" href="mdt_error_8h_source.html#l00047">MDT_DEVICE_ERROR</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00378">mdtDeviceIos::digitalInputAtAddress()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_device_8cpp_source.html#l00692">getDigitalInputValue()</a>, <a class="el" href="mdt_error_8h_source.html#l00047">MDT_DEVICE_ERROR</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>.</p>
 
 </div>
 </div>
@@ -1384,9 +1390,9 @@ Protected Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00774">774</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00779">779</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00383">mdtDeviceIos::digitalInputWithLabelShort()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_device_8cpp_source.html#l00687">getDigitalInputValue()</a>, <a class="el" href="mdt_error_8h_source.html#l00047">MDT_DEVICE_ERROR</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00383">mdtDeviceIos::digitalInputWithLabelShort()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_device_8cpp_source.html#l00692">getDigitalInputValue()</a>, <a class="el" href="mdt_error_8h_source.html#l00047">MDT_DEVICE_ERROR</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>.</p>
 
 </div>
 </div>
@@ -1429,9 +1435,9 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="classmdt_device.html#afe8bd7811ccc4a2ba8088edf073e0a8d" title="Get digital input value. ">getDigitalInputValue(mdtDigitalIo*, bool, bool)</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00748">748</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00753">753</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00397">mdtDeviceIos::digitalInputs()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_device_8cpp_source.html#l00687">getDigitalInputValue()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00397">mdtDeviceIos::digitalInputs()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_device_8cpp_source.html#l00692">getDigitalInputValue()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>.</p>
 
 </div>
 </div>
@@ -1461,9 +1467,9 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 or a ID on success. If no I/O's are set, on timeout ar other error, a value &lt; 0 is returned. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00946">946</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00951">951</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00523">mdtDeviceIos::digitalOutputsCount()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00518">mdtDeviceIos::digitalOutputsSegments()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01260">getNewTransaction()</a>, <a class="el" href="mdt_device_ios_segment_8cpp_source.html#l00104">mdtDeviceIosSegment::ioCount()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01244">readDigitalOutputs()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00131">mdtPortTransaction::setAddress()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00528">mdtDeviceIos::setDigitalOutputsValue()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00141">mdtPortTransaction::setIoCount()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>, <a class="el" href="mdt_device_ios_segment_8cpp_source.html#l00068">mdtDeviceIosSegment::startAddressRead()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01275">waitTransactionDone()</a>.</p>
+<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00523">mdtDeviceIos::digitalOutputsCount()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00518">mdtDeviceIos::digitalOutputsSegments()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01265">getNewTransaction()</a>, <a class="el" href="mdt_device_ios_segment_8cpp_source.html#l00104">mdtDeviceIosSegment::ioCount()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01249">readDigitalOutputs()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00131">mdtPortTransaction::setAddress()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00528">mdtDeviceIos::setDigitalOutputsValue()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00141">mdtPortTransaction::setIoCount()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>, <a class="el" href="mdt_device_ios_segment_8cpp_source.html#l00068">mdtDeviceIosSegment::startAddressRead()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01280">waitTransactionDone()</a>.</p>
 
 </div>
 </div>
@@ -1516,11 +1522,11 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00840">840</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00845">845</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_io_8cpp_source.html#l00053">mdtAbstractIo::addressRead()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01260">getNewTransaction()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01239">readDigitalOutput()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00131">mdtPortTransaction::setAddress()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00066">mdtPortTransaction::setIo()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>, <a class="el" href="mdt_digital_io_8cpp_source.html#l00034">mdtDigitalIo::setValue()</a>, <a class="el" href="mdt_abstract_io_8cpp_source.html#l00112">mdtAbstractIo::value()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01275">waitTransactionDone()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_io_8cpp_source.html#l00053">mdtAbstractIo::addressRead()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01265">getNewTransaction()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01244">readDigitalOutput()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00131">mdtPortTransaction::setAddress()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00066">mdtPortTransaction::setIo()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>, <a class="el" href="mdt_digital_io_8cpp_source.html#l00034">mdtDigitalIo::setValue()</a>, <a class="el" href="mdt_abstract_io_8cpp_source.html#l00112">mdtAbstractIo::value()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01280">waitTransactionDone()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00882">getDigitalOutputValue()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00901">getDigitalOutputValueAt()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00887">getDigitalOutputValue()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00906">getDigitalOutputValueAt()</a>.</p>
 
 </div>
 </div>
@@ -1563,9 +1569,9 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="classmdt_device.html#a978bde9f2b6177b6f3742163e7a712a9" title="Get digital output value. ">getDigitalOutputValue(mdtDigitalIo*, bool, bool)</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00882">882</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00887">887</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00489">mdtDeviceIos::digitalOutputAtAddressRead()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_device_8cpp_source.html#l00840">getDigitalOutputValue()</a>, <a class="el" href="mdt_error_8h_source.html#l00047">MDT_DEVICE_ERROR</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00489">mdtDeviceIos::digitalOutputAtAddressRead()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_device_8cpp_source.html#l00845">getDigitalOutputValue()</a>, <a class="el" href="mdt_error_8h_source.html#l00047">MDT_DEVICE_ERROR</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>.</p>
 
 </div>
 </div>
@@ -1599,9 +1605,9 @@ Protected Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00927">927</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00932">932</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00499">mdtDeviceIos::digitalOutputWithLabelShort()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_device_8cpp_source.html#l00840">getDigitalOutputValue()</a>, <a class="el" href="mdt_error_8h_source.html#l00047">MDT_DEVICE_ERROR</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00499">mdtDeviceIos::digitalOutputWithLabelShort()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_device_8cpp_source.html#l00845">getDigitalOutputValue()</a>, <a class="el" href="mdt_error_8h_source.html#l00047">MDT_DEVICE_ERROR</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>.</p>
 
 </div>
 </div>
@@ -1644,9 +1650,9 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="classmdt_device.html#a978bde9f2b6177b6f3742163e7a712a9" title="Get digital output value. ">getDigitalOutputValue(mdtDigitalIo*, bool, bool)</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00901">901</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00906">906</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00513">mdtDeviceIos::digitalOutputs()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_device_8cpp_source.html#l00840">getDigitalOutputValue()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00513">mdtDeviceIos::digitalOutputs()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_device_8cpp_source.html#l00845">getDigitalOutputValue()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>.</p>
 
 </div>
 </div>
@@ -1675,11 +1681,38 @@ Protected Member Functions</h2></td></tr>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="classmdt_port_manager.html#a75ebd3d1859e3ed38b9558981e53aac4" title="Get a new transaction. ">mdtPortManager::getNewTransaction()</a></dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd>portManager must be set before calling this method </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01260">1260</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01265">1265</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_port_manager_8cpp_source.html#l00288">mdtPortManager::getNewTransaction()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00187">portManager()</a>.</p>
+<p>References <a class="el" href="mdt_port_manager_8cpp_source.html#l00288">mdtPortManager::getNewTransaction()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00192">portManager()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_scpi_8cpp_source.html#l00193">mdtDeviceScpi::checkDeviceError()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00334">getAnalogInputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00227">getAnalogInputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00486">getAnalogOutputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00380">getAnalogOutputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00793">getDigitalInputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00687">getDigitalInputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00946">getDigitalOutputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00840">getDigitalOutputValue()</a>, <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00080">mdtDeviceU3606A::getMeasureConfiguration()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00639">setAnalogOutputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00532">setAnalogOutputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01099">setDigitalOutputs()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00993">setDigitalOutputValue()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_scpi_8cpp_source.html#l00193">mdtDeviceScpi::checkDeviceError()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00339">getAnalogInputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00232">getAnalogInputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00491">getAnalogOutputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00385">getAnalogOutputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00798">getDigitalInputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00692">getDigitalInputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00951">getDigitalOutputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00845">getDigitalOutputValue()</a>, <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00080">mdtDeviceU3606A::getMeasureConfiguration()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00644">setAnalogOutputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00537">setAnalogOutputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01104">setDigitalOutputs()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00998">setDigitalOutputValue()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a54845e1af6f6f98de7de79c3df9ac7b5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QVariant mdtDevice::identification </td>
+          <td>(</td>
+          <td class="paramname">)</td><td></td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get device identification. </p>
+
+<p>Definition at line <a class="el" href="mdt_device_8h_source.html#l00139">139</a> of file <a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>.</p>
 
 </div>
 </div>
@@ -1700,7 +1733,7 @@ Protected Member Functions</h2></td></tr>
 <p>Note: once this <a class="el" href="classmdt_device.html" title="Base class for a device connected to a port. ">mdtDevice</a> object was destroyed, the I/O container is deleted.</p>
 <dl class="section post"><dt>Postcondition</dt><dd>During the lifetime of this <a class="el" href="classmdt_device.html" title="Base class for a device connected to a port. ">mdtDevice</a> object, a valid pointer will be returned. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00175">175</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00180">180</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00149">mdtDeviceModbusWago::detectIos()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00475">mdtDeviceModbus::readAnalogInput()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00492">mdtDeviceModbus::readAnalogInputs()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00509">mdtDeviceModbus::readAnalogOutput()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00526">mdtDeviceModbus::readAnalogOutputs()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00579">mdtDeviceModbus::readDigitalInput()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00596">mdtDeviceModbus::readDigitalInputs()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00613">mdtDeviceModbus::readDigitalOutput()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00630">mdtDeviceModbus::readDigitalOutputs()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00543">mdtDeviceModbus::writeAnalogOutput()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00560">mdtDeviceModbus::writeAnalogOutputs()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00647">mdtDeviceModbus::writeDigitalOutput()</a>, and <a class="el" href="mdt_device_modbus_8cpp_source.html#l00664">mdtDeviceModbus::writeDigitalOutputs()</a>.</p>
 
@@ -1731,11 +1764,11 @@ Protected Member Functions</h2></td></tr>
 <p>This default implementation calls <a class="el" href="classmdt_port_manager.html#a6dc2798324521d177fb8f79d4f6c5f0f" title="Check if port manager is ready. ">mdtPortManager::isReady()</a> , or returns false if portManager was not set.</p>
 <p>Note: <a class="el" href="classmdt_device.html#a8887a1142d3d3be673c18cf3376e7af4" title="Check if device is ready. ">isReady()</a> should return true only if device it ready for querying. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00192">192</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00197">197</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_port_manager_8cpp_source.html#l00582">mdtPortManager::isReady()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00187">portManager()</a>.</p>
+<p>References <a class="el" href="mdt_port_manager_8cpp_source.html#l00582">mdtPortManager::isReady()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00192">portManager()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00200">start()</a>, and <a class="el" href="mdt_device_scpi_8cpp_source.html#l00154">mdtDeviceScpi::waitOperationComplete()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00205">start()</a>, and <a class="el" href="mdt_device_scpi_8cpp_source.html#l00154">mdtDeviceScpi::waitOperationComplete()</a>.</p>
 
 </div>
 </div>
@@ -1755,7 +1788,7 @@ Protected Member Functions</h2></td></tr>
 <p>Get last error. </p>
 <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Todo:</a></b></dt><dd>Not completly used currently, must be implemented in this class + subclasses . </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00222">222</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00227">227</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1782,7 +1815,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get last error for write access. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01194">1194</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01199">1199</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_device_modbus_8cpp_source.html#l00211">mdtDeviceModbus::connectToDevice()</a>.</p>
 
@@ -1805,7 +1838,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00060">60</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00149">mdtDeviceModbusWago::detectIos()</a>, <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html#l00301">mdtDeviceModbusWagoModule::deviceName()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00269">getAnalogInputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00288">getAnalogInputValueAt()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00422">getAnalogOutputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00441">getAnalogOutputValueAt()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00729">getDigitalInputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00748">getDigitalInputValueAt()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00882">getDigitalOutputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00901">getDigitalOutputValueAt()</a>, <a class="el" href="mdt_device_scpi_8cpp_source.html#l00218">mdtDeviceScpi::handleDeviceError()</a>, <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00084">mdtDeviceModbusWago::isWago750()</a>, <a class="el" href="mdt_device_scpi_8cpp_source.html#l00275">mdtDeviceScpi::logDeviceError()</a>, <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html#l00433">mdtDeviceModbusWagoModule::readRegisters()</a>, <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html#l00533">mdtDeviceModbusWagoModule::readStatusBytes()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00575">setAnalogOutputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00594">setAnalogOutputValueAt()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01035">setDigitalOutputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01054">setDigitalOutputValueAt()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00055">setName()</a>, <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html#l00577">mdtDeviceModbusWagoModule::writeControlBytes()</a>, and <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html#l00493">mdtDeviceModbusWagoModule::writeRegisters()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00149">mdtDeviceModbusWago::detectIos()</a>, <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html#l00301">mdtDeviceModbusWagoModule::deviceName()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00274">getAnalogInputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00293">getAnalogInputValueAt()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00427">getAnalogOutputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00446">getAnalogOutputValueAt()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00734">getDigitalInputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00753">getDigitalInputValueAt()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00887">getDigitalOutputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00906">getDigitalOutputValueAt()</a>, <a class="el" href="mdt_device_scpi_8cpp_source.html#l00218">mdtDeviceScpi::handleDeviceError()</a>, <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00084">mdtDeviceModbusWago::isWago750()</a>, <a class="el" href="mdt_device_scpi_8cpp_source.html#l00275">mdtDeviceScpi::logDeviceError()</a>, <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html#l00433">mdtDeviceModbusWagoModule::readRegisters()</a>, <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html#l00533">mdtDeviceModbusWagoModule::readStatusBytes()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00580">setAnalogOutputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00599">setAnalogOutputValueAt()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01040">setDigitalOutputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01059">setDigitalOutputValueAt()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00055">setName()</a>, <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html#l00577">mdtDeviceModbusWagoModule::writeControlBytes()</a>, and <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html#l00493">mdtDeviceModbusWagoModule::writeRegisters()</a>.</p>
 
 </div>
 </div>
@@ -1835,9 +1868,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classmdt_device_scpi.html#a7dc5ab8856a766a45bcc7e9cba0f54ca">mdtDeviceScpi</a>, and <a class="el" href="classmdt_device_modbus.html#aed892b501f8cbd372ccfda1a4fafa536">mdtDeviceModbus</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00187">187</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00192">192</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l01147">currentState()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00070">disconnectFromDevice()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01260">getNewTransaction()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00192">isReady()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01267">restoreTransaction()</a>, <a class="el" href="mdt_device_window_8cpp_source.html#l00041">mdtDeviceWindow::setDevice()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00215">wait()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01275">waitTransactionDone()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l01152">currentState()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00075">disconnectFromDevice()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01265">getNewTransaction()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00197">isReady()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01272">restoreTransaction()</a>, <a class="el" href="mdt_device_window_8cpp_source.html#l00041">mdtDeviceWindow::setDevice()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00220">wait()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01280">waitTransactionDone()</a>.</p>
 
 </div>
 </div>
@@ -1874,9 +1907,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#a3b83b926ed1f9c3bdf7024de2745c285">mdtDeviceModbus</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01185">1185</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01190">1190</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l01177">runQueries()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l01182">runQueries()</a>.</p>
 
 </div>
 </div>
@@ -1918,9 +1951,9 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#aa2a024793ae2a5e81c7e92260a70cd9e">mdtDeviceModbus</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01199">1199</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01204">1204</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00227">getAnalogInputValue()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00232">getAnalogInputValue()</a>.</p>
 
 </div>
 </div>
@@ -1967,9 +2000,9 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#a846af6dbf80bbf747f3f966420ef6f92">mdtDeviceModbus</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01204">1204</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01209">1209</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00334">getAnalogInputs()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00339">getAnalogInputs()</a>.</p>
 
 </div>
 </div>
@@ -2011,9 +2044,9 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#a30c815cbe5e603e8114dcbc09849e322">mdtDeviceModbus</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01209">1209</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01214">1214</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00380">getAnalogOutputValue()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00385">getAnalogOutputValue()</a>.</p>
 
 </div>
 </div>
@@ -2060,9 +2093,9 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#ae02dd44f1d873fcc15ff75d781b62b0b">mdtDeviceModbus</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01214">1214</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01219">1219</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00486">getAnalogOutputs()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00491">getAnalogOutputs()</a>.</p>
 
 </div>
 </div>
@@ -2109,9 +2142,9 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#a9dd05e51223ee5bb79970fbe84c501f9">mdtDeviceModbus</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01229">1229</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01234">1234</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00687">getDigitalInputValue()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00692">getDigitalInputValue()</a>.</p>
 
 </div>
 </div>
@@ -2158,9 +2191,9 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#a3fba9e113092f9da187cf684fb62b132">mdtDeviceModbus</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01234">1234</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01239">1239</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00793">getDigitalInputs()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00798">getDigitalInputs()</a>.</p>
 
 </div>
 </div>
@@ -2202,9 +2235,9 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#a13a334ac86135751893f37064d8f548d">mdtDeviceModbus</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01239">1239</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01244">1244</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00840">getDigitalOutputValue()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00845">getDigitalOutputValue()</a>.</p>
 
 </div>
 </div>
@@ -2251,9 +2284,9 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#a8915a036472bff0f356756992c1eae51">mdtDeviceModbus</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01244">1244</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01249">1249</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00946">getDigitalOutputs()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00951">getDigitalOutputs()</a>.</p>
 
 </div>
 </div>
@@ -2283,9 +2316,9 @@ transaction must be a valid pointer. </dd></dl>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="classmdt_port_manager.html#a5fea4a9b8e94d38e8ec699dba05c7ca8" title="Restore a transaction into pool. ">mdtPortManager::restoreTransaction()</a></dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd>portManager must be set before calling this method </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01267">1267</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01272">1272</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_8cpp_source.html#l00187">portManager()</a>, and <a class="el" href="mdt_port_manager_8cpp_source.html#l00310">mdtPortManager::restoreTransaction()</a>.</p>
+<p>References <a class="el" href="mdt_device_8cpp_source.html#l00192">portManager()</a>, and <a class="el" href="mdt_port_manager_8cpp_source.html#l00310">mdtPortManager::restoreTransaction()</a>.</p>
 
 </div>
 </div>
@@ -2313,9 +2346,9 @@ transaction must be a valid pointer. </dd></dl>
 <p>Queries to send periodically. </p>
 <p>This slot is periodically called after a call of <a class="el" href="classmdt_device.html#a721c5bf2cfa0eef5304333f08da182f7" title="Start periodic device querying. ">start()</a>. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01177">1177</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01182">1182</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_8cpp_source.html#l01147">currentState()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01185">queriesSequence()</a>, and <a class="el" href="mdt_port_manager_8h_source.html#l00219">mdtPortManager::Ready</a>.</p>
+<p>References <a class="el" href="mdt_device_8cpp_source.html#l01152">currentState()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01190">queriesSequence()</a>, and <a class="el" href="mdt_port_manager_8h_source.html#l00219">mdtPortManager::Ready</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00029">mdtDevice()</a>.</p>
 
@@ -2348,9 +2381,9 @@ transaction must be a valid pointer. </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 or a ID on success. If no I/O's are set, on timeout ar other error, a value &lt; 0 is returned. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00639">639</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00644">644</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00295">mdtDeviceIos::analogOutputsCount()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00290">mdtDeviceIos::analogOutputsSegments()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01260">getNewTransaction()</a>, <a class="el" href="mdt_device_ios_segment_8cpp_source.html#l00104">mdtDeviceIosSegment::ioCount()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00131">mdtPortTransaction::setAddress()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00776">mdtDeviceIos::setAnalogOutputsEnabled()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00315">mdtDeviceIos::setAnalogOutputsValue()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00141">mdtPortTransaction::setIoCount()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>, <a class="el" href="mdt_device_ios_segment_8cpp_source.html#l00077">mdtDeviceIosSegment::startAddressWrite()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01275">waitTransactionDone()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01224">writeAnalogOutputs()</a>.</p>
+<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00295">mdtDeviceIos::analogOutputsCount()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00290">mdtDeviceIos::analogOutputsSegments()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01265">getNewTransaction()</a>, <a class="el" href="mdt_device_ios_segment_8cpp_source.html#l00104">mdtDeviceIosSegment::ioCount()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00131">mdtPortTransaction::setAddress()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00776">mdtDeviceIos::setAnalogOutputsEnabled()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00315">mdtDeviceIos::setAnalogOutputsValue()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00141">mdtPortTransaction::setIoCount()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>, <a class="el" href="mdt_device_ios_segment_8cpp_source.html#l00077">mdtDeviceIosSegment::startAddressWrite()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01280">waitTransactionDone()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01229">writeAnalogOutputs()</a>.</p>
 
 </div>
 </div>
@@ -2411,11 +2444,11 @@ transaction must be a valid pointer. </dd></dl>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00532">532</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00537">537</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_io_8cpp_source.html#l00064">mdtAbstractIo::addressWrite()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01260">getNewTransaction()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00131">mdtPortTransaction::setAddress()</a>, <a class="el" href="mdt_abstract_io_8cpp_source.html#l00107">mdtAbstractIo::setEnabled()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00066">mdtPortTransaction::setIo()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>, <a class="el" href="mdt_analog_io_8cpp_source.html#l00143">mdtAnalogIo::setValue()</a>, <a class="el" href="mdt_abstract_io_8cpp_source.html#l00112">mdtAbstractIo::value()</a>, <a class="el" href="mdt_value_8cpp_source.html#l00121">mdtValue::valueInt()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01275">waitTransactionDone()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01219">writeAnalogOutput()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_io_8cpp_source.html#l00064">mdtAbstractIo::addressWrite()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01265">getNewTransaction()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00131">mdtPortTransaction::setAddress()</a>, <a class="el" href="mdt_abstract_io_8cpp_source.html#l00107">mdtAbstractIo::setEnabled()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00066">mdtPortTransaction::setIo()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>, <a class="el" href="mdt_analog_io_8cpp_source.html#l00143">mdtAnalogIo::setValue()</a>, <a class="el" href="mdt_abstract_io_8cpp_source.html#l00112">mdtAbstractIo::value()</a>, <a class="el" href="mdt_value_8cpp_source.html#l00121">mdtValue::valueInt()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01280">waitTransactionDone()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01224">writeAnalogOutput()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00095">addOutput()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00104">addOutputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00154">deleteIos()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00575">setAnalogOutputValue()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00594">setAnalogOutputValueAt()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00100">addOutput()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00109">addOutputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00159">deleteIos()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00580">setAnalogOutputValue()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00599">setAnalogOutputValueAt()</a>.</p>
 
 </div>
 </div>
@@ -2464,9 +2497,9 @@ transaction must be a valid pointer. </dd></dl>
 </dl>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="classmdt_device.html#a766d9adcf8c2274f61f120a4a5c5c6d9" title="Set analog output value. ">setAnalogOutputValue(mdtAnalogIo*, const mdtValue&amp;, bool, bool)</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00575">575</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00580">580</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00266">mdtDeviceIos::analogOutputAtAddressWrite()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00047">MDT_DEVICE_ERROR</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00532">setAnalogOutputValue()</a>.</p>
+<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00266">mdtDeviceIos::analogOutputAtAddressWrite()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00047">MDT_DEVICE_ERROR</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00537">setAnalogOutputValue()</a>.</p>
 
 </div>
 </div>
@@ -2506,9 +2539,9 @@ transaction must be a valid pointer. </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00620">620</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00625">625</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00271">mdtDeviceIos::analogOutputWithLabelShort()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00047">MDT_DEVICE_ERROR</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00532">setAnalogOutputValue()</a>.</p>
+<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00271">mdtDeviceIos::analogOutputWithLabelShort()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00047">MDT_DEVICE_ERROR</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00537">setAnalogOutputValue()</a>.</p>
 
 </div>
 </div>
@@ -2539,9 +2572,9 @@ transaction must be a valid pointer. </dd></dl>
 <p>This slot is used by <a class="el" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s. ">mdtDeviceIos</a> to notify that a value has changed.</p>
 <p>See <a class="el" href="classmdt_device.html#a766d9adcf8c2274f61f120a4a5c5c6d9" title="Set analog output value. ">setAnalogOutputValue(mdtAnalogIo*, const mdtValue&amp;, bool, bool)</a> for details. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01155">1155</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01160">1160</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_8cpp_source.html#l01147">currentState()</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00219">mdtPortManager::Ready</a>, <a class="el" href="mdt_device_8cpp_source.html#l00532">setAnalogOutputValue()</a>, and <a class="el" href="mdt_abstract_io_8cpp_source.html#l00112">mdtAbstractIo::value()</a>.</p>
+<p>References <a class="el" href="mdt_device_8cpp_source.html#l01152">currentState()</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00219">mdtPortManager::Ready</a>, <a class="el" href="mdt_device_8cpp_source.html#l00537">setAnalogOutputValue()</a>, and <a class="el" href="mdt_abstract_io_8cpp_source.html#l00112">mdtAbstractIo::value()</a>.</p>
 
 </div>
 </div>
@@ -2590,9 +2623,9 @@ transaction must be a valid pointer. </dd></dl>
 </dl>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="classmdt_device.html#a766d9adcf8c2274f61f120a4a5c5c6d9" title="Set analog output value. ">setAnalogOutputValue(mdtAnalogIo*, const mdtValue&amp;, bool, bool)</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00594">594</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00599">599</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00285">mdtDeviceIos::analogOutputs()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00532">setAnalogOutputValue()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>.</p>
+<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00285">mdtDeviceIos::analogOutputs()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00537">setAnalogOutputValue()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>.</p>
 
 </div>
 </div>
@@ -2621,7 +2654,7 @@ transaction must be a valid pointer. </dd></dl>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00182">182</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00187">187</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_device_modbus_8cpp_source.html#l00034">mdtDeviceModbus::mdtDeviceModbus()</a>, and <a class="el" href="mdt_device_scpi_8cpp_source.html#l00032">mdtDeviceScpi::mdtDeviceScpi()</a>.</p>
 
@@ -2655,9 +2688,9 @@ transaction must be a valid pointer. </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 or a ID on success. If no I/O's are set, on timeout ar other error, a value &lt; 0 is returned. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01099">1099</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01104">1104</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00523">mdtDeviceIos::digitalOutputsCount()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00518">mdtDeviceIos::digitalOutputsSegments()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01260">getNewTransaction()</a>, <a class="el" href="mdt_device_ios_segment_8cpp_source.html#l00104">mdtDeviceIosSegment::ioCount()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00131">mdtPortTransaction::setAddress()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00977">mdtDeviceIos::setDigitalOutputsEnabled()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00528">mdtDeviceIos::setDigitalOutputsValue()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00141">mdtPortTransaction::setIoCount()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>, <a class="el" href="mdt_device_ios_segment_8cpp_source.html#l00077">mdtDeviceIosSegment::startAddressWrite()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01275">waitTransactionDone()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01254">writeDigitalOutputs()</a>.</p>
+<p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00523">mdtDeviceIos::digitalOutputsCount()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00518">mdtDeviceIos::digitalOutputsSegments()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01265">getNewTransaction()</a>, <a class="el" href="mdt_device_ios_segment_8cpp_source.html#l00104">mdtDeviceIosSegment::ioCount()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00131">mdtPortTransaction::setAddress()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00977">mdtDeviceIos::setDigitalOutputsEnabled()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00528">mdtDeviceIos::setDigitalOutputsValue()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00141">mdtPortTransaction::setIoCount()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>, <a class="el" href="mdt_device_ios_segment_8cpp_source.html#l00077">mdtDeviceIosSegment::startAddressWrite()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01280">waitTransactionDone()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01259">writeDigitalOutputs()</a>.</p>
 
 </div>
 </div>
@@ -2718,11 +2751,11 @@ transaction must be a valid pointer. </dd></dl>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00993">993</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00998">998</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_io_8cpp_source.html#l00064">mdtAbstractIo::addressWrite()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01260">getNewTransaction()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00131">mdtPortTransaction::setAddress()</a>, <a class="el" href="mdt_abstract_io_8cpp_source.html#l00107">mdtAbstractIo::setEnabled()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00066">mdtPortTransaction::setIo()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>, <a class="el" href="mdt_digital_io_8cpp_source.html#l00034">mdtDigitalIo::setValue()</a>, <a class="el" href="mdt_value_8cpp_source.html#l00148">mdtValue::valueBool()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01275">waitTransactionDone()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01249">writeDigitalOutput()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_io_8cpp_source.html#l00064">mdtAbstractIo::addressWrite()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01265">getNewTransaction()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00131">mdtPortTransaction::setAddress()</a>, <a class="el" href="mdt_abstract_io_8cpp_source.html#l00107">mdtAbstractIo::setEnabled()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00066">mdtPortTransaction::setIo()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>, <a class="el" href="mdt_digital_io_8cpp_source.html#l00034">mdtDigitalIo::setValue()</a>, <a class="el" href="mdt_value_8cpp_source.html#l00148">mdtValue::valueBool()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01280">waitTransactionDone()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01254">writeDigitalOutput()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00132">addOutput()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00141">addOutputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00154">deleteIos()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01035">setDigitalOutputValue()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01054">setDigitalOutputValueAt()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00137">addOutput()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00146">addOutputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00159">deleteIos()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01040">setDigitalOutputValue()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01059">setDigitalOutputValueAt()</a>.</p>
 
 </div>
 </div>
@@ -2771,9 +2804,9 @@ transaction must be a valid pointer. </dd></dl>
 </dl>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="classmdt_device.html#a04564fd9be440c026e7c399f0e619485" title="Set a digital output value. ">setDigitalOutputValue(mdtDigitalIo*, const mdtValue&amp;, bool, bool)</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01035">1035</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01040">1040</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00494">mdtDeviceIos::digitalOutputAtAddressWrite()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00047">MDT_DEVICE_ERROR</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00993">setDigitalOutputValue()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00494">mdtDeviceIos::digitalOutputAtAddressWrite()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00047">MDT_DEVICE_ERROR</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00998">setDigitalOutputValue()</a>.</p>
 
 </div>
 </div>
@@ -2813,9 +2846,9 @@ transaction must be a valid pointer. </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01080">1080</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01085">1085</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00499">mdtDeviceIos::digitalOutputWithLabelShort()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00047">MDT_DEVICE_ERROR</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00993">setDigitalOutputValue()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00499">mdtDeviceIos::digitalOutputWithLabelShort()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00047">MDT_DEVICE_ERROR</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00998">setDigitalOutputValue()</a>.</p>
 
 </div>
 </div>
@@ -2846,9 +2879,9 @@ transaction must be a valid pointer. </dd></dl>
 <p>This slot is used by <a class="el" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s. ">mdtDeviceIos</a> to notify that a value has changed.</p>
 <p>See <a class="el" href="classmdt_device.html#a04564fd9be440c026e7c399f0e619485" title="Set a digital output value. ">setDigitalOutputValue(mdtDigitalIo*, const mdtValue&amp;, bool, bool)</a> for details. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01166">1166</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01171">1171</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_8cpp_source.html#l01147">currentState()</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00219">mdtPortManager::Ready</a>, <a class="el" href="mdt_device_8cpp_source.html#l00993">setDigitalOutputValue()</a>, and <a class="el" href="mdt_abstract_io_8cpp_source.html#l00112">mdtAbstractIo::value()</a>.</p>
+<p>References <a class="el" href="mdt_device_8cpp_source.html#l01152">currentState()</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00219">mdtPortManager::Ready</a>, <a class="el" href="mdt_device_8cpp_source.html#l00998">setDigitalOutputValue()</a>, and <a class="el" href="mdt_abstract_io_8cpp_source.html#l00112">mdtAbstractIo::value()</a>.</p>
 
 </div>
 </div>
@@ -2897,9 +2930,29 @@ transaction must be a valid pointer. </dd></dl>
 </dl>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="classmdt_device.html#a04564fd9be440c026e7c399f0e619485" title="Set a digital output value. ">setDigitalOutputValue(mdtDigitalIo*, const mdtValue&amp;, bool, bool)</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01054">1054</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01059">1059</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00513">mdtDeviceIos::digitalOutputs()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00993">setDigitalOutputValue()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00513">mdtDeviceIos::digitalOutputs()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_device_8cpp_source.html#l00060">name()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00998">setDigitalOutputValue()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af6fddf7fba1f54e481a4f3445db64d98"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtDevice::setIdentification </td>
+          <td>(</td>
+          <td class="paramtype">const QVariant &amp;&#160;</td>
+          <td class="paramname"><em>id</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set device identification. </p>
+
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00065">65</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -2952,9 +3005,9 @@ transaction must be a valid pointer. </dd></dl>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00200">200</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00205">205</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_8cpp_source.html#l00192">isReady()</a>.</p>
+<p>References <a class="el" href="mdt_device_8cpp_source.html#l00197">isReady()</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_device_scpi_8cpp_source.html#l00068">mdtDeviceScpi::connectToDevice()</a>, and <a class="el" href="mdt_modbus_io_tool_8cpp_source.html#l00035">mdtModbusIoTool::mdtModbusIoTool()</a>.</p>
 
@@ -3052,9 +3105,9 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Stop periodic device querying. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00209">209</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00214">214</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00070">disconnectFromDevice()</a>, and <a class="el" href="mdt_device_scpi_8cpp_source.html#l00055">mdtDeviceScpi::~mdtDeviceScpi()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00075">disconnectFromDevice()</a>, and <a class="el" href="mdt_device_scpi_8cpp_source.html#l00055">mdtDeviceScpi::~mdtDeviceScpi()</a>.</p>
 
 </div>
 </div>
@@ -3076,9 +3129,9 @@ transaction must be a valid pointer. </dd></dl>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="classmdt_port_manager.html#aaa85e0200aba0e0f4392dfe01abae2cf" title="Wait for some time. ">mdtPortManager::wait()</a> </dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd>Port manager must be set before using this method </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00215">215</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00220">220</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_8cpp_source.html#l00187">portManager()</a>, and <a class="el" href="mdt_port_manager_8cpp_source.html#l00479">mdtPortManager::wait()</a>.</p>
+<p>References <a class="el" href="mdt_device_8cpp_source.html#l00192">portManager()</a>, and <a class="el" href="mdt_port_manager_8cpp_source.html#l00479">mdtPortManager::wait()</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html#l00611">mdtDeviceModbusWagoModule::wait()</a>.</p>
 
@@ -3119,11 +3172,11 @@ transaction must be a valid pointer. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>True on success, false on timeout. If id was not found in transactions list, a warning will be generated in <a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured ">mdtError</a> system, and false will be returned. </dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd>granularity must be &gt; 0. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01275">1275</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01280">1280</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_8cpp_source.html#l00187">portManager()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00488">mdtPortManager::readenFrame()</a>, and <a class="el" href="mdt_port_manager_8cpp_source.html#l00381">mdtPortManager::waitTransactionDone()</a>.</p>
+<p>References <a class="el" href="mdt_device_8cpp_source.html#l00192">portManager()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00488">mdtPortManager::readenFrame()</a>, and <a class="el" href="mdt_port_manager_8cpp_source.html#l00381">mdtPortManager::waitTransactionDone()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00334">getAnalogInputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00227">getAnalogInputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00486">getAnalogOutputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00380">getAnalogOutputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00793">getDigitalInputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00687">getDigitalInputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00946">getDigitalOutputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00840">getDigitalOutputValue()</a>, <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00080">mdtDeviceU3606A::getMeasureConfiguration()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00639">setAnalogOutputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00532">setAnalogOutputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01099">setDigitalOutputs()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00993">setDigitalOutputValue()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00339">getAnalogInputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00232">getAnalogInputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00491">getAnalogOutputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00385">getAnalogOutputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00798">getDigitalInputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00692">getDigitalInputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00951">getDigitalOutputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00845">getDigitalOutputValue()</a>, <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00080">mdtDeviceU3606A::getMeasureConfiguration()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00644">setAnalogOutputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00537">setAnalogOutputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01104">setDigitalOutputs()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00998">setDigitalOutputValue()</a>.</p>
 
 </div>
 </div>
@@ -3176,9 +3229,9 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#ac63297a31205759622f341525c34251f">mdtDeviceModbus</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01219">1219</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01224">1224</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00532">setAnalogOutputValue()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00537">setAnalogOutputValue()</a>.</p>
 
 </div>
 </div>
@@ -3236,9 +3289,9 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#aa09d1682bef4bbc08b59b20110e613ff">mdtDeviceModbus</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01224">1224</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01229">1229</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00639">setAnalogOutputs()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00644">setAnalogOutputs()</a>.</p>
 
 </div>
 </div>
@@ -3291,9 +3344,9 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#a6950c10fc521b193fb3c754223879694">mdtDeviceModbus</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01249">1249</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01254">1254</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00993">setDigitalOutputValue()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00998">setDigitalOutputValue()</a>.</p>
 
 </div>
 </div>
@@ -3351,9 +3404,9 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#a6713edaee0bfba48791008124299b753">mdtDeviceModbus</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01254">1254</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l01259">1259</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l01099">setDigitalOutputs()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l01104">setDigitalOutputs()</a>.</p>
 
 </div>
 </div>
@@ -3364,7 +3417,7 @@ transaction must be a valid pointer. </dd></dl>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jun 28 2014 13:24:47 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jul 12 2014 10:53:29 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

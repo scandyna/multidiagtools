@@ -114,50 +114,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_tt_base_8h.html">mdtTtBase.h</a>&quot;</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_sql_table_selection_8h.html">mdtSqlTableSelection.h</a>&quot;</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;QVariant&gt;</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;QList&gt;</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;QModelIndex&gt;</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="code" href="classmdt_tt_test_model.html">   32</a></span>&#160;<span class="keyword">class </span><a class="code" href="classmdt_tt_test_model.html" title="Helper class for test edition. ">mdtTtTestModel</a> : <span class="keyword">public</span> <a class="code" href="classmdt_tt_base.html" title="Base class for helper class. ">mdtTtBase</a></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;{</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <a class="code" href="classmdt_tt_test_model.html#aa21b9dd55ddc60ee59a5d804e45a163a" title="Constructor. ">mdtTtTestModel</a>(<a class="code" href="class_q_object.html">QObject</a> *parent, QSqlDatabase db);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  QString <a class="code" href="classmdt_tt_test_model.html#a1c7dd9400f00516e054befbf4de53dbb" title="Get SQL statement for test node selection. ">sqlForTestNodeSelection</a>(<span class="keyword">const</span> QVariant &amp; testModelId) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  QList&lt;QVariant&gt; <a class="code" href="classmdt_tt_test_model.html#ae9845c11407a0b1db1e37fc40b6ae8b0" title="Get a list of test item IDs for given test ID. ">getListOfTestItemIdListByTestId</a>(<span class="keyword">const</span> QVariant &amp; testId);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  QList&lt;QVariant&gt; <a class="code" href="classmdt_tt_test_model.html#ade332c342894ccfc87bb901427a9d440" title="Get a list of node IDs (database keys) for given test ID. ">getListOfUsedNodeIdListByTestId</a>(<span class="keyword">const</span> QVariant &amp; testId);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  QList&lt;QVariant&gt; <a class="code" href="classmdt_tt_test_model.html#af3641e8ec4479fa63b0fd01dd6548a72" title="Get a list of unused node unit IDs for given test ID. ">getListOfUnusedNodeUnitIdListByTestId</a>(<span class="keyword">const</span> QVariant &amp; testId, <span class="keyword">const</span> QVariant &amp; type);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  QVariant <a class="code" href="classmdt_tt_test_model.html#aa1db929c8f78953623a75b44ac596feb" title="Get next sequence number for a given test. ">getNextSequenceNumber</a>(<span class="keyword">const</span> QVariant &amp; testModelId);</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  QList&lt;QVariant&gt; <a class="code" href="classmdt_tt_test_model.html#a75240a9cda2c24977e5b8a287ece10c8" title="Get list of test node unit setup for given test ID. ">getTestNodeUnitSetupIdList</a>(<span class="keyword">const</span> QVariant &amp; testId);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_test_model.html#a5dcbe2d3985231c373633f3b87e26f98" title="Add a test node. ">addTestNode</a>(<span class="keyword">const</span> QVariant &amp; testNodeId, <span class="keyword">const</span> QVariant &amp; testModelId);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_test_model.html#a039e7d3cc5a07bf6bdf0e76d4d6465bb" title="Remove a test node. ">removeTestNodes</a>(<span class="keyword">const</span> <a class="code" href="classmdt_sql_table_selection.html" title="Handle selection of model indexes in a QTableView. ">mdtSqlTableSelection</a> &amp; s);</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_test_model.html#ac54d391512daafe1f60a7d124d03196b" title="Add a test item. ">addTestItem</a>(<span class="keyword">const</span> QVariant &amp; testId, <span class="keyword">const</span> QVariant &amp; testLinkBusAId, <span class="keyword">const</span> QVariant &amp; testLinkBusBId, <span class="keyword">const</span> QVariant &amp; expectedValue);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_test_model.html#a1c35a7ede5b6f099f2ff04c25267c63c" title="Remove a test item. ">removeTestItem</a>(<span class="keyword">const</span> QVariant &amp; testItemId);</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_test_model.html#a5bce0f75a5004700d0cdd6f4bcc32206" title="Remove test items. ">removeTestItems</a>(<span class="keyword">const</span> QModelIndexList &amp; indexListOfSelectedRows);</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_test_model.html#a24cf327c62c5960bc8579f782e7bfee5" title="Generate test node unit setup for given test ID. ">generateTestNodeUnitSetup</a>(<span class="keyword">const</span> QVariant &amp; testId);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  Q_DISABLE_COPY(<a class="code" href="classmdt_tt_test_model.html" title="Helper class for test edition. ">mdtTtTestModel</a>);</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;};</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_tt_test_model_data_8h.html">mdtTtTestModelData.h</a>&quot;</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;QVariant&gt;</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;QList&gt;</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &lt;QModelIndex&gt;</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="code" href="classmdt_tt_test_model.html">   33</a></span>&#160;<span class="keyword">class </span><a class="code" href="classmdt_tt_test_model.html" title="Helper class for test edition. ">mdtTtTestModel</a> : <span class="keyword">public</span> <a class="code" href="classmdt_tt_base.html" title="Base class for helper class. ">mdtTtBase</a></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;{</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <a class="code" href="classmdt_tt_test_model.html#aa21b9dd55ddc60ee59a5d804e45a163a" title="Constructor. ">mdtTtTestModel</a>(<a class="code" href="class_q_object.html">QObject</a> *parent, QSqlDatabase db);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  QString <a class="code" href="classmdt_tt_test_model.html#a1c7dd9400f00516e054befbf4de53dbb" title="Get SQL statement for test node selection. ">sqlForTestNodeSelection</a>(<span class="keyword">const</span> QVariant &amp; testModelId) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <a class="code" href="classmdt_tt_test_model_data.html">mdtTtTestModelData</a> <a class="code" href="classmdt_tt_test_model.html#a5d226f2eb40de06f2a58b679c8e1df4a" title="Get test model data for given test model ID. ">getTestModelData</a>(<span class="keyword">const</span> QVariant &amp; testModelId, <span class="keywordtype">bool</span> *ok);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  QList&lt;QVariant&gt; <a class="code" href="classmdt_tt_test_model.html#ae9845c11407a0b1db1e37fc40b6ae8b0" title="Get a list of test item IDs for given test ID. ">getListOfTestItemIdListByTestId</a>(<span class="keyword">const</span> QVariant &amp; testId);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  QList&lt;QVariant&gt; <a class="code" href="classmdt_tt_test_model.html#ade332c342894ccfc87bb901427a9d440" title="Get a list of node IDs (database keys) for given test ID. ">getListOfUsedNodeIdListByTestId</a>(<span class="keyword">const</span> QVariant &amp; testId);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  QList&lt;QVariant&gt; <a class="code" href="classmdt_tt_test_model.html#af3641e8ec4479fa63b0fd01dd6548a72" title="Get a list of unused node unit IDs for given test ID. ">getListOfUnusedNodeUnitIdListByTestId</a>(<span class="keyword">const</span> QVariant &amp; testId, <span class="keyword">const</span> QVariant &amp; type);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  QVariant <a class="code" href="classmdt_tt_test_model.html#aa1db929c8f78953623a75b44ac596feb" title="Get next sequence number for a given test. ">getNextSequenceNumber</a>(<span class="keyword">const</span> QVariant &amp; testModelId);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  QList&lt;QVariant&gt; <a class="code" href="classmdt_tt_test_model.html#a75240a9cda2c24977e5b8a287ece10c8" title="Get list of test node unit setup for given test ID. ">getTestNodeUnitSetupIdList</a>(<span class="keyword">const</span> QVariant &amp; testId);</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_test_model.html#a5dcbe2d3985231c373633f3b87e26f98" title="Add a test node. ">addTestNode</a>(<span class="keyword">const</span> QVariant &amp; testNodeId, <span class="keyword">const</span> QVariant &amp; testModelId);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_test_model.html#a039e7d3cc5a07bf6bdf0e76d4d6465bb" title="Remove a test node. ">removeTestNodes</a>(<span class="keyword">const</span> <a class="code" href="classmdt_sql_table_selection.html" title="Handle selection of model indexes in a QTableView. ">mdtSqlTableSelection</a> &amp; s);</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_test_model.html#ac54d391512daafe1f60a7d124d03196b" title="Add a test item. ">addTestItem</a>(<span class="keyword">const</span> QVariant &amp; testId, <span class="keyword">const</span> QVariant &amp; testLinkBusAId, <span class="keyword">const</span> QVariant &amp; testLinkBusBId, <span class="keyword">const</span> QVariant &amp; expectedValue);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_test_model.html#a1c35a7ede5b6f099f2ff04c25267c63c" title="Remove a test item. ">removeTestItem</a>(<span class="keyword">const</span> QVariant &amp; testItemId);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_test_model.html#a5bce0f75a5004700d0cdd6f4bcc32206" title="Remove test items. ">removeTestItems</a>(<span class="keyword">const</span> QModelIndexList &amp; indexListOfSelectedRows);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_test_model.html#a24cf327c62c5960bc8579f782e7bfee5" title="Generate test node unit setup for given test ID. ">generateTestNodeUnitSetup</a>(<span class="keyword">const</span> QVariant &amp; testId);</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="preprocessor">#endif // #ifndef MDT_TT_TEST_MODEL_H</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  Q_DISABLE_COPY(<a class="code" href="classmdt_tt_test_model.html" title="Helper class for test edition. ">mdtTtTestModel</a>);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;};</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="preprocessor">#endif // #ifndef MDT_TT_TEST_MODEL_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jun 28 2014 13:24:41 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jul 12 2014 10:53:28 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

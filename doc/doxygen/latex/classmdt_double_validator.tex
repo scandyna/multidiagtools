@@ -1,0 +1,118 @@
+\hypertarget{classmdt_double_validator}{\section{mdt\-Double\-Validator Class Reference}
+\label{classmdt_double_validator}\index{mdt\-Double\-Validator@{mdt\-Double\-Validator}}
+}
+
+
+Double validator.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Double\-Validator.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Double\-Validator\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=182pt]{classmdt_double_validator__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Double\-Validator\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=182pt]{classmdt_double_validator__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_double_validator_a4b1ee52feff69d9809caa47dfdda43f6}{mdt\-Double\-Validator} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_double_validator_a9741c74656a66eb9376e230c67d1e39a}{set\-Suffix} (const Q\-String \&s)
+\begin{DoxyCompactList}\small\item\em Set a custom suffix. \end{DoxyCompactList}\item 
+Q\-Validator\-::\-State \hyperlink{classmdt_double_validator_a45b3133233d99ef2a46028eda87bad4b}{validate} (Q\-String \&input, int \&pos) const 
+\begin{DoxyCompactList}\small\item\em Validate input. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Double validator. 
+
+\hyperlink{classmdt_double_validator}{mdt\-Double\-Validator} uses Q\-Double\-Validator internally, but also accepts a power of 10 suffix. 
+
+Definition at line 33 of file mdt\-Double\-Validator.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_double_validator_a4b1ee52feff69d9809caa47dfdda43f6}{\index{mdt\-Double\-Validator@{mdt\-Double\-Validator}!mdt\-Double\-Validator@{mdt\-Double\-Validator}}
+\index{mdt\-Double\-Validator@{mdt\-Double\-Validator}!mdtDoubleValidator@{mdt\-Double\-Validator}}
+\subsubsection[{mdt\-Double\-Validator}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Double\-Validator\-::mdt\-Double\-Validator (
+\begin{DoxyParamCaption}
+\item[{{\bf Q\-Object} $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_double_validator_a4b1ee52feff69d9809caa47dfdda43f6}
+
+
+Constructor. 
+
+
+
+Definition at line 28 of file mdt\-Double\-Validator.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_double_validator_a9741c74656a66eb9376e230c67d1e39a}{\index{mdt\-Double\-Validator@{mdt\-Double\-Validator}!set\-Suffix@{set\-Suffix}}
+\index{set\-Suffix@{set\-Suffix}!mdtDoubleValidator@{mdt\-Double\-Validator}}
+\subsubsection[{set\-Suffix}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Double\-Validator\-::set\-Suffix (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{s}
+\end{DoxyParamCaption}
+)}}\label{classmdt_double_validator_a9741c74656a66eb9376e230c67d1e39a}
+
+
+Set a custom suffix. 
+
+Can be typically a unit (A, V, ...) 
+
+Definition at line 33 of file mdt\-Double\-Validator.\-cpp.
+
+
+
+Referenced by mdt\-Double\-Edit\-::set\-Unit().
+
+\hypertarget{classmdt_double_validator_a45b3133233d99ef2a46028eda87bad4b}{\index{mdt\-Double\-Validator@{mdt\-Double\-Validator}!validate@{validate}}
+\index{validate@{validate}!mdtDoubleValidator@{mdt\-Double\-Validator}}
+\subsubsection[{validate}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Validator\-::\-State mdt\-Double\-Validator\-::validate (
+\begin{DoxyParamCaption}
+\item[{Q\-String \&}]{input, }
+\item[{int \&}]{pos}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_double_validator_a45b3133233d99ef2a46028eda87bad4b}
+
+
+Validate input. 
+
+
+
+Definition at line 38 of file mdt\-Double\-Validator.\-cpp.
+
+
+
+References mdt\-Double\-Edit\-::infinity\-String().
+
+
+
+Referenced by mdt\-Double\-Edit\-::set\-Value().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdtutilsgui/\hyperlink{mdt_double_validator_8h}{mdt\-Double\-Validator.\-h}\item 
+src/mdtutilsgui/\hyperlink{mdt_double_validator_8cpp}{mdt\-Double\-Validator.\-cpp}\end{DoxyCompactItemize}

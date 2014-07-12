@@ -4,7 +4,7 @@ var searchData=
   ['tableview',['tableView',['../classmdt_sql_table_widget.html#af40eeb001ec262830daba6b311927ede',1,'mdtSqlTableWidget']]],
   ['take',['take',['../classmdt_buffer.html#a58e0f5bce9faea0f7c7195ff5377458c',1,'mdtBuffer::take()'],['../classmdt_frame.html#a36e4b85a3c671902ac3c8cc318ca726c',1,'mdtFrame::take(char *data, int len)'],['../classmdt_frame.html#ad8b184e6eb07a26fe84deaf233c1aa9b',1,'mdtFrame::take(int len)']]],
   ['takeone',['takeOne',['../classmdt_buffer.html#a690e3f41a62175de48bc73c19f69208d',1,'mdtBuffer']]],
-  ['text',['text',['../classmdt_error.html#a8630bb6b21b70edfe3d13eaff82a1baf',1,'mdtError::text()'],['../classmdt_state.html#ab6dabbc771acb33f16c3caf169414d53',1,'mdtState::text()'],['../classmdt_items_selector_dialog_item.html#a6b7064dd49e4fe8f683d2797f6caac68',1,'mdtItemsSelectorDialogItem::text()']]],
+  ['text',['text',['../classmdt_error.html#a8630bb6b21b70edfe3d13eaff82a1baf',1,'mdtError::text()'],['../classmdt_state.html#ab6dabbc771acb33f16c3caf169414d53',1,'mdtState::text()'],['../classmdt_double_edit.html#a169b321873e50e1e9bf2b15bbf12af78',1,'mdtDoubleEdit::text()'],['../classmdt_items_selector_dialog_item.html#a6b7064dd49e4fe8f683d2797f6caac68',1,'mdtItemsSelectorDialogItem::text()']]],
   ['tofirst',['toFirst',['../classmdt_abstract_sql_widget.html#aaa27731864dbb9123ec6765dd21feb7f',1,'mdtAbstractSqlWidget::toFirst()'],['../classmdt_sql_form_widget.html#a4bb7ddf419e845de2d1a7c1ef95e48a8',1,'mdtSqlFormWidget::toFirst()']]],
   ['tofirstenabledstatechanged',['toFirstEnabledStateChanged',['../classmdt_abstract_sql_widget.html#acc3e3e7e848a92a4a117f7147bc1f3c5',1,'mdtAbstractSqlWidget']]],
   ['toggleonoff',['toggleOnOff',['../classmdt_led.html#a9e86ff65f2ec1bfb6131e2b9042609e8',1,'mdtLed']]],

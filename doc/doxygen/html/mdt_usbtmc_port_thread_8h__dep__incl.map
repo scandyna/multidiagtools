@@ -1,15 +1,17 @@
 <map id="src/mdtport/mdtUsbtmcPortThread.h" name="src/mdtport/mdtUsbtmcPortThread.h">
-<area shape="rect" id="node3" href="$mdt_usbtmc_port_manager_8h.html" title="src/mdtport/mdtUsbtmcPort\lManager.h" alt="" coords="697,102,881,149"/>
-<area shape="rect" id="node30" href="$mdt_usbtmc_port_thread_8cpp.html" title="src/mdtport/mdtUsbtmcPort\lThread.cpp" alt="" coords="905,102,1089,149"/>
-<area shape="rect" id="node5" href="$mdt_device_scpi_8h.html" title="src/mdtdevice/mdtDeviceScpi.h" alt="" coords="363,207,571,236"/>
-<area shape="rect" id="node7" href="$mdt_device_d_s_o1000_a_8h.html" title="src/mdtdevice/mdtDeviceDSO1000A.h" alt="" coords="5,293,253,323"/>
-<area shape="rect" id="node13" href="$mdt_device_u3606_a_8h.html" title="src/mdtdevice/mdtDeviceU3606A.h" alt="" coords="523,293,752,323"/>
-<area shape="rect" id="node19" href="$mdt_device_u3606_a_8cpp.html" title="src/mdtdevice/mdtDeviceU3606\lA.cpp" alt="" coords="685,371,893,418"/>
-<area shape="rect" id="node24" href="$mdt_usbtmc_port_manager_8cpp.html" title="src/mdtport/mdtUsbtmcPort\lManager.cpp" alt="" coords="827,198,1011,245"/>
-<area shape="rect" id="node26" href="$mdt_usbtmc_port_setup_dialog_8cpp.html" title="src/mdtport/mdtUsbtmcPort\lSetupDialog.cpp" alt="" coords="1035,198,1219,245"/>
-<area shape="rect" id="node28" href="$mdt_port_term_8cpp.html" title="src/mdttools/mdtPortTerm.cpp" alt="" coords="1243,207,1440,236"/>
-<area shape="rect" id="node11" href="$mdt_device_scpi_8cpp.html" title="src/mdtdevice/mdtDeviceScpi.cpp" alt="" coords="277,293,499,323"/>
-<area shape="rect" id="node9" href="$mdt_device_d_s_o1000_a_8cpp.html" title="src/mdtdevice/mdtDeviceDSO1000\lA.cpp" alt="" coords="16,371,243,418"/>
-<area shape="rect" id="node15" href="$mdt_device_u3606_a_widget_8h.html" title="src/mdtdevice/linux\l/mdtDeviceU3606AWidget.h" alt="" coords="475,371,661,418"/>
-<area shape="rect" id="node17" href="$mdt_device_u3606_a_widget_8cpp.html" title="src/mdtdevice/linux\l/mdtDeviceU3606AWidget.cpp" alt="" coords="467,467,669,514"/>
+<area shape="rect" id="node3" href="$mdt_usbtmc_port_manager_8h.html" title="src/mdtport/mdtUsbtmcPort\lManager.h" alt="" coords="925,102,1109,149"/>
+<area shape="rect" id="node34" href="$mdt_usbtmc_port_thread_8cpp.html" title="src/mdtport/mdtUsbtmcPort\lThread.cpp" alt="" coords="1133,102,1317,149"/>
+<area shape="rect" id="node5" href="$mdt_device_scpi_8h.html" title="src/mdtdevice/mdtDeviceScpi.h" alt="" coords="772,207,980,236"/>
+<area shape="rect" id="node7" href="$mdt_device_u3606_a_8h.html" title="src/mdtdevice/mdtDeviceU3606A.h" alt="" coords="465,293,695,323"/>
+<area shape="rect" id="node15" href="$mdt_device_u3606_a_8cpp.html" title="src/mdtdevice/mdtDeviceU3606\lA.cpp" alt="" coords="685,371,893,418"/>
+<area shape="rect" id="node19" href="$mdt_device_d_s_o1000_a_8h.html" title="src/mdtdevice/mdtDeviceDSO1000A.h" alt="" coords="1015,293,1263,323"/>
+<area shape="rect" id="node28" href="$mdt_usbtmc_port_manager_8cpp.html" title="src/mdtport/mdtUsbtmcPort\lManager.cpp" alt="" coords="1055,198,1239,245"/>
+<area shape="rect" id="node30" href="$mdt_usbtmc_port_setup_dialog_8cpp.html" title="src/mdtport/mdtUsbtmcPort\lSetupDialog.cpp" alt="" coords="1263,198,1447,245"/>
+<area shape="rect" id="node32" href="$mdt_port_term_8cpp.html" title="src/mdttools/mdtPortTerm.cpp" alt="" coords="1471,207,1668,236"/>
+<area shape="rect" id="node23" href="$mdt_device_scpi_8cpp.html" title="src/mdtdevice/mdtDeviceScpi.cpp" alt="" coords="769,293,991,323"/>
+<area shape="rect" id="node9" href="$mdt_device_u3606_a_widget_8h.html" title="src/mdtdevice/linux\l/mdtDeviceU3606AWidget.h" alt="" coords="13,371,200,418"/>
+<area shape="rect" id="node13" href="$mdt_device_container_8cpp.html" title="src/mdtdevice/mdtDeviceContainer.cpp" alt="" coords="224,380,475,409"/>
+<area shape="rect" id="node17" href="$mdt_tt_basic_tester_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtBasicTester.cpp" alt="" coords="499,371,661,418"/>
+<area shape="rect" id="node11" href="$mdt_device_u3606_a_widget_8cpp.html" title="src/mdtdevice/linux\l/mdtDeviceU3606AWidget.cpp" alt="" coords="5,467,208,514"/>
+<area shape="rect" id="node21" href="$mdt_device_d_s_o1000_a_8cpp.html" title="src/mdtdevice/mdtDeviceDSO1000\lA.cpp" alt="" coords="1025,371,1252,418"/>
 </map>

@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['omega',['omega',['../classmdt_double_edit.html#a6e94cba2a7b3fcc16b70475c2cefd8cfaaeecc523af2a2eba97a3b1a38f4518c5',1,'mdtDoubleEdit']]],
+  ['omegacapital',['OmegaCapital',['../classmdt_double_edit.html#a6e94cba2a7b3fcc16b70475c2cefd8cfadad86fae09055324dd22fc15e6107fe0',1,'mdtDoubleEdit']]],
   ['on_5fpbclearterm_5fclicked',['on_pbClearTerm_clicked',['../classmdt_port_term.html#abb3fc55837782dbea240b069a48b18ce',1,'mdtPortTerm']]],
   ['on_5fpbsendcmdabort_5fclicked',['on_pbSendCmdAbort_clicked',['../classmdt_port_term.html#a1b232e686b401d7103eb1c682be330a9',1,'mdtPortTerm']]],
   ['onstatechanged',['onStateChanged',['../classmdt_device_u3606_a.html#a94a6f8b3f64cd35b33204c66816f3f6a',1,'mdtDeviceU3606A']]],

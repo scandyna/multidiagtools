@@ -55,6 +55,10 @@ void \hyperlink{classmdt_device_a80186f1aa6fbdc13f1652de978c35518}{set\-Name} (c
 \begin{DoxyCompactList}\small\item\em Set the device name. \end{DoxyCompactList}\item 
 Q\-String \hyperlink{classmdt_device_a7ad893c6885dbaef5a6cb980bfe627e0}{name} () const 
 \begin{DoxyCompactList}\small\item\em Get device name. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_af6fddf7fba1f54e481a4f3445db64d98}{set\-Identification} (const Q\-Variant \&id)
+\begin{DoxyCompactList}\small\item\em Set device identification. \end{DoxyCompactList}\item 
+Q\-Variant \hyperlink{classmdt_device_a54845e1af6f6f98de7de79c3df9ac7b5}{identification} () const 
+\begin{DoxyCompactList}\small\item\em Get device identification. \end{DoxyCompactList}\item 
 virtual \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdt\-Abstract\-Port\-::error\-\_\-t} \hyperlink{classmdt_device_abab1b6e45af527880ce469ae318474c0}{connect\-To\-Device} (const \hyperlink{classmdt_device_info}{mdt\-Device\-Info} \&dev\-Info)
 \begin{DoxyCompactList}\small\item\em Search and connect to physical device. \end{DoxyCompactList}\item 
 virtual void \hyperlink{classmdt_device_a2b694a37d9464d27214bdeceec220998}{disconnect\-From\-Device} ()
@@ -297,7 +301,7 @@ Add a analog input.
 
 
 
-Definition at line 80 of file mdt\-Device.\-cpp.
+Definition at line 85 of file mdt\-Device.\-cpp.
 
 
 
@@ -320,7 +324,7 @@ Add a digital input.
 
 
 
-Definition at line 117 of file mdt\-Device.\-cpp.
+Definition at line 122 of file mdt\-Device.\-cpp.
 
 
 
@@ -339,7 +343,7 @@ Add a list of analog inputs.
 
 
 
-Definition at line 88 of file mdt\-Device.\-cpp.
+Definition at line 93 of file mdt\-Device.\-cpp.
 
 
 
@@ -362,7 +366,7 @@ Add a list of digital inputs.
 
 
 
-Definition at line 125 of file mdt\-Device.\-cpp.
+Definition at line 130 of file mdt\-Device.\-cpp.
 
 
 
@@ -381,7 +385,7 @@ Add a analog output.
 
 
 
-Definition at line 95 of file mdt\-Device.\-cpp.
+Definition at line 100 of file mdt\-Device.\-cpp.
 
 
 
@@ -404,7 +408,7 @@ Add a digital output.
 
 
 
-Definition at line 132 of file mdt\-Device.\-cpp.
+Definition at line 137 of file mdt\-Device.\-cpp.
 
 
 
@@ -423,7 +427,7 @@ Add a list of analog outputs.
 
 
 
-Definition at line 104 of file mdt\-Device.\-cpp.
+Definition at line 109 of file mdt\-Device.\-cpp.
 
 
 
@@ -446,7 +450,7 @@ Add a list of digital outputs.
 
 
 
-Definition at line 141 of file mdt\-Device.\-cpp.
+Definition at line 146 of file mdt\-Device.\-cpp.
 
 
 
@@ -479,7 +483,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a093c6407ee69c4c7696a0c71d0ac
 
 
 
-Definition at line 65 of file mdt\-Device.\-cpp.
+Definition at line 70 of file mdt\-Device.\-cpp.
 
 
 
@@ -498,7 +502,7 @@ Get device state.
 
 
 
-Definition at line 1147 of file mdt\-Device.\-cpp.
+Definition at line 1152 of file mdt\-Device.\-cpp.
 
 
 
@@ -527,7 +531,7 @@ Subclass notes\-:
 \item Once decoding was done, the concerned I/\-O(s) sould be updated with new value, or set to invalid value on error (see \hyperlink{classmdt_value}{mdt\-Value} class). Doing so will keep (G)U\-I consistency. 
 \end{DoxyItemize}
 
-Definition at line 1190 of file mdt\-Device.\-cpp.
+Definition at line 1195 of file mdt\-Device.\-cpp.
 
 \hypertarget{classmdt_device_a61032f15e601eb1bd74da80014bae593}{\index{mdt\-Device@{mdt\-Device}!delete\-Ios@{delete\-Ios}}
 \index{delete\-Ios@{delete\-Ios}!mdtDevice@{mdt\-Device}}
@@ -542,7 +546,7 @@ Delete all I/\-O in container.
 
 All I/\-O's will be deleted, but I/\-O container itself will remain valid. 
 
-Definition at line 154 of file mdt\-Device.\-cpp.
+Definition at line 159 of file mdt\-Device.\-cpp.
 
 
 
@@ -569,7 +573,7 @@ If specific work must be done, subclass can re-\/implement this method.
 
 Note\-: in the implementation, ios are keeped as they are. 
 
-Definition at line 70 of file mdt\-Device.\-cpp.
+Definition at line 75 of file mdt\-Device.\-cpp.
 
 
 
@@ -606,7 +610,7 @@ Once results are available or error occured, the internal analog inputs are upda
 \end{DoxyReturn}
 
 
-Definition at line 334 of file mdt\-Device.\-cpp.
+Definition at line 339 of file mdt\-Device.\-cpp.
 
 
 
@@ -655,7 +659,7 @@ This is an overloaded member function, provided for convenience. It differs from
 \end{DoxyParams}
 
 
-Definition at line 227 of file mdt\-Device.\-cpp.
+Definition at line 232 of file mdt\-Device.\-cpp.
 
 
 
@@ -688,7 +692,7 @@ Get analog input value.
 \end{DoxySeeAlso}
 
 
-Definition at line 269 of file mdt\-Device.\-cpp.
+Definition at line 274 of file mdt\-Device.\-cpp.
 
 
 
@@ -705,7 +709,7 @@ References mdt\-Device\-Ios\-::analog\-Input\-At\-Address(), mdt\-Error\-::commi
 )}}\label{classmdt_device_a66a4c466dd6cb5c8235850f6dc23ae7b}
 
 
-Definition at line 314 of file mdt\-Device.\-cpp.
+Definition at line 319 of file mdt\-Device.\-cpp.
 
 
 
@@ -734,7 +738,7 @@ Get analog input value.
 \end{DoxySeeAlso}
 
 
-Definition at line 288 of file mdt\-Device.\-cpp.
+Definition at line 293 of file mdt\-Device.\-cpp.
 
 
 
@@ -767,7 +771,7 @@ Once results are available or error occured, the internal analog outputs are upd
 \end{DoxyReturn}
 
 
-Definition at line 486 of file mdt\-Device.\-cpp.
+Definition at line 491 of file mdt\-Device.\-cpp.
 
 
 
@@ -812,7 +816,7 @@ This is an overloaded member function, provided for convenience. It differs from
 \end{DoxyParams}
 
 
-Definition at line 380 of file mdt\-Device.\-cpp.
+Definition at line 385 of file mdt\-Device.\-cpp.
 
 
 
@@ -845,7 +849,7 @@ Get analog output value.
 \end{DoxySeeAlso}
 
 
-Definition at line 422 of file mdt\-Device.\-cpp.
+Definition at line 427 of file mdt\-Device.\-cpp.
 
 
 
@@ -862,7 +866,7 @@ References mdt\-Device\-Ios\-::analog\-Output\-At\-Address\-Read(), mdt\-Error\-
 )}}\label{classmdt_device_ad6bfbab4c93bc0136068e773dd776010}
 
 
-Definition at line 467 of file mdt\-Device.\-cpp.
+Definition at line 472 of file mdt\-Device.\-cpp.
 
 
 
@@ -891,7 +895,7 @@ Get analog output value.
 \end{DoxySeeAlso}
 
 
-Definition at line 441 of file mdt\-Device.\-cpp.
+Definition at line 446 of file mdt\-Device.\-cpp.
 
 
 
@@ -924,7 +928,7 @@ Once results are available, the internal digital inputs are updated. (See \hyper
 \end{DoxyReturn}
 
 
-Definition at line 793 of file mdt\-Device.\-cpp.
+Definition at line 798 of file mdt\-Device.\-cpp.
 
 
 
@@ -973,7 +977,7 @@ This is an overloaded member function, provided for convenience. It differs from
 \end{DoxyParams}
 
 
-Definition at line 687 of file mdt\-Device.\-cpp.
+Definition at line 692 of file mdt\-Device.\-cpp.
 
 
 
@@ -1006,7 +1010,7 @@ Get digital input value.
 \end{DoxySeeAlso}
 
 
-Definition at line 729 of file mdt\-Device.\-cpp.
+Definition at line 734 of file mdt\-Device.\-cpp.
 
 
 
@@ -1023,7 +1027,7 @@ References mdt\-Error\-::commit(), mdt\-Device\-Ios\-::digital\-Input\-At\-Addre
 )}}\label{classmdt_device_a295a2795695804cc291282d92a1c7641}
 
 
-Definition at line 774 of file mdt\-Device.\-cpp.
+Definition at line 779 of file mdt\-Device.\-cpp.
 
 
 
@@ -1052,7 +1056,7 @@ Get digital input value.
 \end{DoxySeeAlso}
 
 
-Definition at line 748 of file mdt\-Device.\-cpp.
+Definition at line 753 of file mdt\-Device.\-cpp.
 
 
 
@@ -1085,7 +1089,7 @@ Once results are available, the internal digital outputs are updated. (See \hype
 \end{DoxyReturn}
 
 
-Definition at line 946 of file mdt\-Device.\-cpp.
+Definition at line 951 of file mdt\-Device.\-cpp.
 
 
 
@@ -1128,7 +1132,7 @@ This is an overloaded member function, provided for convenience. It differs from
 \end{DoxyParams}
 
 
-Definition at line 840 of file mdt\-Device.\-cpp.
+Definition at line 845 of file mdt\-Device.\-cpp.
 
 
 
@@ -1161,7 +1165,7 @@ Get digital output value.
 \end{DoxySeeAlso}
 
 
-Definition at line 882 of file mdt\-Device.\-cpp.
+Definition at line 887 of file mdt\-Device.\-cpp.
 
 
 
@@ -1178,7 +1182,7 @@ References mdt\-Error\-::commit(), mdt\-Device\-Ios\-::digital\-Output\-At\-Addr
 )}}\label{classmdt_device_a5e7b7de4243f45d8cfa42599d51555bf}
 
 
-Definition at line 927 of file mdt\-Device.\-cpp.
+Definition at line 932 of file mdt\-Device.\-cpp.
 
 
 
@@ -1207,7 +1211,7 @@ Get digital output value.
 \end{DoxySeeAlso}
 
 
-Definition at line 901 of file mdt\-Device.\-cpp.
+Definition at line 906 of file mdt\-Device.\-cpp.
 
 
 
@@ -1232,7 +1236,7 @@ port\-Manager must be set before calling this method
 \end{DoxyPrecond}
 
 
-Definition at line 1260 of file mdt\-Device.\-cpp.
+Definition at line 1265 of file mdt\-Device.\-cpp.
 
 
 
@@ -1241,6 +1245,21 @@ References mdt\-Port\-Manager\-::get\-New\-Transaction(), and port\-Manager().
 
 
 Referenced by mdt\-Device\-Scpi\-::check\-Device\-Error(), get\-Analog\-Inputs(), get\-Analog\-Input\-Value(), get\-Analog\-Outputs(), get\-Analog\-Output\-Value(), get\-Digital\-Inputs(), get\-Digital\-Input\-Value(), get\-Digital\-Outputs(), get\-Digital\-Output\-Value(), mdt\-Device\-U3606\-A\-::get\-Measure\-Configuration(), set\-Analog\-Outputs(), set\-Analog\-Output\-Value(), set\-Digital\-Outputs(), and set\-Digital\-Output\-Value().
+
+\hypertarget{classmdt_device_a54845e1af6f6f98de7de79c3df9ac7b5}{\index{mdt\-Device@{mdt\-Device}!identification@{identification}}
+\index{identification@{identification}!mdtDevice@{mdt\-Device}}
+\subsubsection[{identification}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant mdt\-Device\-::identification (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_a54845e1af6f6f98de7de79c3df9ac7b5}
+
+
+Get device identification. 
+
+
+
+Definition at line 139 of file mdt\-Device.\-h.
 
 \hypertarget{classmdt_device_adb7099877ad2080961fae5a40117e9e5}{\index{mdt\-Device@{mdt\-Device}!ios@{ios}}
 \index{ios@{ios}!mdtDevice@{mdt\-Device}}
@@ -1260,7 +1279,7 @@ During the lifetime of this \hyperlink{classmdt_device}{mdt\-Device} object, a v
 \end{DoxyPostcond}
 
 
-Definition at line 175 of file mdt\-Device.\-cpp.
+Definition at line 180 of file mdt\-Device.\-cpp.
 
 
 
@@ -1281,7 +1300,7 @@ This default implementation calls \hyperlink{classmdt_port_manager_a6dc279832452
 
 Note\-: \hyperlink{classmdt_device_a8887a1142d3d3be673c18cf3376e7af4}{is\-Ready()} should return true only if device it ready for querying. 
 
-Definition at line 192 of file mdt\-Device.\-cpp.
+Definition at line 197 of file mdt\-Device.\-cpp.
 
 
 
@@ -1306,7 +1325,7 @@ Get last error.
 \item[\hyperlink{todo__todo000007}{Todo}]Not completly used currently, must be implemented in this class + subclasses . \end{DoxyRefDesc}
 
 
-Definition at line 222 of file mdt\-Device.\-cpp.
+Definition at line 227 of file mdt\-Device.\-cpp.
 
 \hypertarget{classmdt_device_a6e7133e8665d9113d9423f4db44b1000}{\index{mdt\-Device@{mdt\-Device}!last\-Error\-W@{last\-Error\-W}}
 \index{last\-Error\-W@{last\-Error\-W}!mdtDevice@{mdt\-Device}}
@@ -1321,7 +1340,7 @@ Get last error for write access.
 
 
 
-Definition at line 1194 of file mdt\-Device.\-cpp.
+Definition at line 1199 of file mdt\-Device.\-cpp.
 
 
 
@@ -1363,7 +1382,7 @@ Reimplemented in \hyperlink{classmdt_device_scpi_a7dc5ab8856a766a45bcc7e9cba0f54
 
 
 
-Definition at line 187 of file mdt\-Device.\-cpp.
+Definition at line 192 of file mdt\-Device.\-cpp.
 
 
 
@@ -1396,7 +1415,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a3b83b926ed1f9c3bdf7024de2745
 
 
 
-Definition at line 1185 of file mdt\-Device.\-cpp.
+Definition at line 1190 of file mdt\-Device.\-cpp.
 
 
 
@@ -1436,7 +1455,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_aa2a024793ae2a5e81c7e92260a70
 
 
 
-Definition at line 1199 of file mdt\-Device.\-cpp.
+Definition at line 1204 of file mdt\-Device.\-cpp.
 
 
 
@@ -1481,7 +1500,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a846af6dbf80bbf747f3f966420ef
 
 
 
-Definition at line 1204 of file mdt\-Device.\-cpp.
+Definition at line 1209 of file mdt\-Device.\-cpp.
 
 
 
@@ -1521,7 +1540,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a30c815cbe5e603e8114dcbc09849
 
 
 
-Definition at line 1209 of file mdt\-Device.\-cpp.
+Definition at line 1214 of file mdt\-Device.\-cpp.
 
 
 
@@ -1566,7 +1585,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_ae02dd44f1d873fcc15ff75d781b6
 
 
 
-Definition at line 1214 of file mdt\-Device.\-cpp.
+Definition at line 1219 of file mdt\-Device.\-cpp.
 
 
 
@@ -1611,7 +1630,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a9dd05e51223ee5bb79970fbe84c5
 
 
 
-Definition at line 1229 of file mdt\-Device.\-cpp.
+Definition at line 1234 of file mdt\-Device.\-cpp.
 
 
 
@@ -1656,7 +1675,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a3fba9e113092f9da187cf684fb62
 
 
 
-Definition at line 1234 of file mdt\-Device.\-cpp.
+Definition at line 1239 of file mdt\-Device.\-cpp.
 
 
 
@@ -1696,7 +1715,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a13a334ac86135751893f37064d8f
 
 
 
-Definition at line 1239 of file mdt\-Device.\-cpp.
+Definition at line 1244 of file mdt\-Device.\-cpp.
 
 
 
@@ -1741,7 +1760,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a8915a036472bff0f356756992c1e
 
 
 
-Definition at line 1244 of file mdt\-Device.\-cpp.
+Definition at line 1249 of file mdt\-Device.\-cpp.
 
 
 
@@ -1766,7 +1785,7 @@ port\-Manager must be set before calling this method
 \end{DoxyPrecond}
 
 
-Definition at line 1267 of file mdt\-Device.\-cpp.
+Definition at line 1272 of file mdt\-Device.\-cpp.
 
 
 
@@ -1785,7 +1804,7 @@ Queries to send periodically.
 
 This slot is periodically called after a call of \hyperlink{classmdt_device_a721c5bf2cfa0eef5304333f08da182f7}{start()}. 
 
-Definition at line 1177 of file mdt\-Device.\-cpp.
+Definition at line 1182 of file mdt\-Device.\-cpp.
 
 
 
@@ -1824,7 +1843,7 @@ Once results are available or on error, the internal analog outputs are updated.
 \end{DoxyReturn}
 
 
-Definition at line 639 of file mdt\-Device.\-cpp.
+Definition at line 644 of file mdt\-Device.\-cpp.
 
 
 
@@ -1872,7 +1891,7 @@ This is an overloaded member function, provided for convenience. It differs from
 \end{DoxyParams}
 
 
-Definition at line 532 of file mdt\-Device.\-cpp.
+Definition at line 537 of file mdt\-Device.\-cpp.
 
 
 
@@ -1906,7 +1925,7 @@ Set analog output value.
 \end{DoxySeeAlso}
 
 
-Definition at line 575 of file mdt\-Device.\-cpp.
+Definition at line 580 of file mdt\-Device.\-cpp.
 
 
 
@@ -1924,7 +1943,7 @@ References mdt\-Device\-Ios\-::analog\-Output\-At\-Address\-Write(), mdt\-Error\
 )}}\label{classmdt_device_a40b49f882622c37f50a57132f954e732}
 
 
-Definition at line 620 of file mdt\-Device.\-cpp.
+Definition at line 625 of file mdt\-Device.\-cpp.
 
 
 
@@ -1947,7 +1966,7 @@ This slot is used by \hyperlink{classmdt_device_ios}{mdt\-Device\-Ios} to notify
 
 See \hyperlink{classmdt_device_a766d9adcf8c2274f61f120a4a5c5c6d9}{set\-Analog\-Output\-Value(mdt\-Analog\-Io$\ast$, const mdt\-Value\&, bool, bool)} for details. 
 
-Definition at line 1155 of file mdt\-Device.\-cpp.
+Definition at line 1160 of file mdt\-Device.\-cpp.
 
 
 
@@ -1977,7 +1996,7 @@ Set analog output value.
 \end{DoxySeeAlso}
 
 
-Definition at line 594 of file mdt\-Device.\-cpp.
+Definition at line 599 of file mdt\-Device.\-cpp.
 
 
 
@@ -2007,7 +2026,7 @@ In some application, it can be usefull that state comes back automatically to re
 \end{DoxyParams}
 
 
-Definition at line 182 of file mdt\-Device.\-cpp.
+Definition at line 187 of file mdt\-Device.\-cpp.
 
 
 
@@ -2044,7 +2063,7 @@ Once results are available, the internal digital outputs are updated. (See \hype
 \end{DoxyReturn}
 
 
-Definition at line 1099 of file mdt\-Device.\-cpp.
+Definition at line 1104 of file mdt\-Device.\-cpp.
 
 
 
@@ -2092,7 +2111,7 @@ This is an overloaded member function, provided for convenience. It differs from
 \end{DoxyParams}
 
 
-Definition at line 993 of file mdt\-Device.\-cpp.
+Definition at line 998 of file mdt\-Device.\-cpp.
 
 
 
@@ -2126,7 +2145,7 @@ Set digital output value.
 \end{DoxySeeAlso}
 
 
-Definition at line 1035 of file mdt\-Device.\-cpp.
+Definition at line 1040 of file mdt\-Device.\-cpp.
 
 
 
@@ -2144,7 +2163,7 @@ References mdt\-Error\-::commit(), mdt\-Device\-Ios\-::digital\-Output\-At\-Addr
 )}}\label{classmdt_device_a2377d24cc1e767a24dfc5e34454a8737}
 
 
-Definition at line 1080 of file mdt\-Device.\-cpp.
+Definition at line 1085 of file mdt\-Device.\-cpp.
 
 
 
@@ -2167,7 +2186,7 @@ This slot is used by \hyperlink{classmdt_device_ios}{mdt\-Device\-Ios} to notify
 
 See \hyperlink{classmdt_device_a04564fd9be440c026e7c399f0e619485}{set\-Digital\-Output\-Value(mdt\-Digital\-Io$\ast$, const mdt\-Value\&, bool, bool)} for details. 
 
-Definition at line 1166 of file mdt\-Device.\-cpp.
+Definition at line 1171 of file mdt\-Device.\-cpp.
 
 
 
@@ -2197,11 +2216,26 @@ Set digital output value.
 \end{DoxySeeAlso}
 
 
-Definition at line 1054 of file mdt\-Device.\-cpp.
+Definition at line 1059 of file mdt\-Device.\-cpp.
 
 
 
 References mdt\-Error\-::commit(), mdt\-Device\-Ios\-::digital\-Outputs(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, name(), set\-Digital\-Output\-Value(), and mdt\-Error\-::set\-Error().
+
+\hypertarget{classmdt_device_af6fddf7fba1f54e481a4f3445db64d98}{\index{mdt\-Device@{mdt\-Device}!set\-Identification@{set\-Identification}}
+\index{set\-Identification@{set\-Identification}!mdtDevice@{mdt\-Device}}
+\subsubsection[{set\-Identification}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Device\-::set\-Identification (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{id}
+\end{DoxyParamCaption}
+)}}\label{classmdt_device_af6fddf7fba1f54e481a4f3445db64d98}
+
+
+Set device identification. 
+
+
+
+Definition at line 65 of file mdt\-Device.\-cpp.
 
 \hypertarget{classmdt_device_a80186f1aa6fbdc13f1652de978c35518}{\index{mdt\-Device@{mdt\-Device}!set\-Name@{set\-Name}}
 \index{set\-Name@{set\-Name}!mdtDevice@{mdt\-Device}}
@@ -2251,7 +2285,7 @@ Note\-: if device is ready, querying starts immediatly, else it will start once 
 \end{DoxyParams}
 
 
-Definition at line 200 of file mdt\-Device.\-cpp.
+Definition at line 205 of file mdt\-Device.\-cpp.
 
 
 
@@ -2312,7 +2346,7 @@ Stop periodic device querying.
 
 
 
-Definition at line 209 of file mdt\-Device.\-cpp.
+Definition at line 214 of file mdt\-Device.\-cpp.
 
 
 
@@ -2337,7 +2371,7 @@ Port manager must be set before using this method
 \end{DoxyPrecond}
 
 
-Definition at line 215 of file mdt\-Device.\-cpp.
+Definition at line 220 of file mdt\-Device.\-cpp.
 
 
 
@@ -2379,7 +2413,7 @@ granularity must be $>$ 0.
 \end{DoxyPrecond}
 
 
-Definition at line 1275 of file mdt\-Device.\-cpp.
+Definition at line 1280 of file mdt\-Device.\-cpp.
 
 
 
@@ -2426,7 +2460,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_ac63297a31205759622f341525c34
 
 
 
-Definition at line 1219 of file mdt\-Device.\-cpp.
+Definition at line 1224 of file mdt\-Device.\-cpp.
 
 
 
@@ -2474,7 +2508,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_aa09d1682bef4bbc08b59b20110e6
 
 
 
-Definition at line 1224 of file mdt\-Device.\-cpp.
+Definition at line 1229 of file mdt\-Device.\-cpp.
 
 
 
@@ -2517,7 +2551,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a6950c10fc521b193fb3c75422387
 
 
 
-Definition at line 1249 of file mdt\-Device.\-cpp.
+Definition at line 1254 of file mdt\-Device.\-cpp.
 
 
 
@@ -2565,7 +2599,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a6713edaee0bfba48791008124299
 
 
 
-Definition at line 1254 of file mdt\-Device.\-cpp.
+Definition at line 1259 of file mdt\-Device.\-cpp.
 
 
 

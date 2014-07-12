@@ -12,8 +12,7 @@ Helper class for test edition.
 
 
 
-Inheritance diagram for mdt\-Tt\-Test\-Model\-:
-\nopagebreak
+Inheritance diagram for mdt\-Tt\-Test\-Model\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -22,8 +21,7 @@ Inheritance diagram for mdt\-Tt\-Test\-Model\-:
 \end{figure}
 
 
-Collaboration diagram for mdt\-Tt\-Test\-Model\-:
-\nopagebreak
+Collaboration diagram for mdt\-Tt\-Test\-Model\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -37,6 +35,8 @@ Collaboration diagram for mdt\-Tt\-Test\-Model\-:
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
 Q\-String \hyperlink{classmdt_tt_test_model_a1c7dd9400f00516e054befbf4de53dbb}{sql\-For\-Test\-Node\-Selection} (const Q\-Variant \&test\-Model\-Id) const 
 \begin{DoxyCompactList}\small\item\em Get S\-Q\-L statement for test node selection. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_tt_test_model_data}{mdt\-Tt\-Test\-Model\-Data} \hyperlink{classmdt_tt_test_model_a5d226f2eb40de06f2a58b679c8e1df4a}{get\-Test\-Model\-Data} (const Q\-Variant \&test\-Model\-Id, bool $\ast$ok)
+\begin{DoxyCompactList}\small\item\em Get test model data for given test model I\-D. \end{DoxyCompactList}\item 
 Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_tt_test_model_ae9845c11407a0b1db1e37fc40b6ae8b0}{get\-List\-Of\-Test\-Item\-Id\-List\-By\-Test\-Id} (const Q\-Variant \&test\-Id)
 \begin{DoxyCompactList}\small\item\em Get a list of test item I\-Ds for given test I\-D. \end{DoxyCompactList}\item 
 Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_tt_test_model_ade332c342894ccfc87bb901427a9d440}{get\-List\-Of\-Used\-Node\-Id\-List\-By\-Test\-Id} (const Q\-Variant \&test\-Id)
@@ -65,7 +65,7 @@ bool \hyperlink{classmdt_tt_test_model_a24cf327c62c5960bc8579f782e7bfee5}{genera
 \subsection{Detailed Description}
 Helper class for test edition. 
 
-Definition at line 32 of file mdt\-Tt\-Test\-Model.\-h.
+Definition at line 33 of file mdt\-Tt\-Test\-Model.\-h.
 
 
 
@@ -105,7 +105,7 @@ Add a test item.
 
 
 
-Definition at line 227 of file mdt\-Tt\-Test\-Model.\-cpp.
+Definition at line 251 of file mdt\-Tt\-Test\-Model.\-cpp.
 
 
 
@@ -125,7 +125,7 @@ Add a test node.
 
 
 
-Definition at line 208 of file mdt\-Tt\-Test\-Model.\-cpp.
+Definition at line 232 of file mdt\-Tt\-Test\-Model.\-cpp.
 
 
 
@@ -144,7 +144,7 @@ Generate test node unit setup for given test I\-D.
 
 
 
-Definition at line 310 of file mdt\-Tt\-Test\-Model.\-cpp.
+Definition at line 334 of file mdt\-Tt\-Test\-Model.\-cpp.
 
 
 
@@ -163,11 +163,15 @@ Get a list of test item I\-Ds for given test I\-D.
 
 
 
-Definition at line 55 of file mdt\-Tt\-Test\-Model.\-cpp.
+Definition at line 79 of file mdt\-Tt\-Test\-Model.\-cpp.
 
 
 
 References mdt\-Error\-::commit(), mdt\-Tt\-Base\-::database(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Error\-::set\-Error(), and mdt\-Error\-::set\-System\-Error().
+
+
+
+Referenced by mdt\-Tt\-Test\-::add\-Items\-By\-Test\-Id().
 
 \hypertarget{classmdt_tt_test_model_af3641e8ec4479fa63b0fd01dd6548a72}{\index{mdt\-Tt\-Test\-Model@{mdt\-Tt\-Test\-Model}!get\-List\-Of\-Unused\-Node\-Unit\-Id\-List\-By\-Test\-Id@{get\-List\-Of\-Unused\-Node\-Unit\-Id\-List\-By\-Test\-Id}}
 \index{get\-List\-Of\-Unused\-Node\-Unit\-Id\-List\-By\-Test\-Id@{get\-List\-Of\-Unused\-Node\-Unit\-Id\-List\-By\-Test\-Id}!mdtTtTestModel@{mdt\-Tt\-Test\-Model}}
@@ -183,7 +187,7 @@ Get a list of unused node unit I\-Ds for given test I\-D.
 
 If given type is not null, only matching test node unit will be returned 
 
-Definition at line 107 of file mdt\-Tt\-Test\-Model.\-cpp.
+Definition at line 131 of file mdt\-Tt\-Test\-Model.\-cpp.
 
 
 
@@ -202,7 +206,7 @@ Get a list of node I\-Ds (database keys) for given test I\-D.
 
 
 
-Definition at line 79 of file mdt\-Tt\-Test\-Model.\-cpp.
+Definition at line 103 of file mdt\-Tt\-Test\-Model.\-cpp.
 
 
 
@@ -225,7 +229,7 @@ Get next sequence number for a given test.
 
 This method is used to create test items . It will get the highest sequence number existing for given test\-Model\-Id, and return the next number . 
 
-Definition at line 153 of file mdt\-Tt\-Test\-Model.\-cpp.
+Definition at line 177 of file mdt\-Tt\-Test\-Model.\-cpp.
 
 
 
@@ -234,6 +238,30 @@ References mdt\-Error\-::commit(), mdt\-Tt\-Base\-::database(), mdt\-Error\-::\-
 
 
 Referenced by add\-Test\-Item().
+
+\hypertarget{classmdt_tt_test_model_a5d226f2eb40de06f2a58b679c8e1df4a}{\index{mdt\-Tt\-Test\-Model@{mdt\-Tt\-Test\-Model}!get\-Test\-Model\-Data@{get\-Test\-Model\-Data}}
+\index{get\-Test\-Model\-Data@{get\-Test\-Model\-Data}!mdtTtTestModel@{mdt\-Tt\-Test\-Model}}
+\subsubsection[{get\-Test\-Model\-Data}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Tt\-Test\-Model\-Data} mdt\-Tt\-Test\-Model\-::get\-Test\-Model\-Data (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{test\-Model\-Id, }
+\item[{bool $\ast$}]{ok}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_model_a5d226f2eb40de06f2a58b679c8e1df4a}
+
+
+Get test model data for given test model I\-D. 
+
+
+
+Definition at line 55 of file mdt\-Tt\-Test\-Model.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, mdt\-Tt\-Base\-::get\-Data(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, and mdt\-Error\-::set\-Error().
+
+
+
+Referenced by mdt\-Tt\-Test\-::get\-Test\-Data().
 
 \hypertarget{classmdt_tt_test_model_a75240a9cda2c24977e5b8a287ece10c8}{\index{mdt\-Tt\-Test\-Model@{mdt\-Tt\-Test\-Model}!get\-Test\-Node\-Unit\-Setup\-Id\-List@{get\-Test\-Node\-Unit\-Setup\-Id\-List}}
 \index{get\-Test\-Node\-Unit\-Setup\-Id\-List@{get\-Test\-Node\-Unit\-Setup\-Id\-List}!mdtTtTestModel@{mdt\-Tt\-Test\-Model}}
@@ -248,7 +276,7 @@ Get list of test node unit setup for given test I\-D.
 
 
 
-Definition at line 180 of file mdt\-Tt\-Test\-Model.\-cpp.
+Definition at line 204 of file mdt\-Tt\-Test\-Model.\-cpp.
 
 
 
@@ -267,7 +295,7 @@ Remove a test item.
 
 
 
-Definition at line 277 of file mdt\-Tt\-Test\-Model.\-cpp.
+Definition at line 301 of file mdt\-Tt\-Test\-Model.\-cpp.
 
 
 
@@ -290,7 +318,7 @@ Remove test items.
 
 
 
-Definition at line 297 of file mdt\-Tt\-Test\-Model.\-cpp.
+Definition at line 321 of file mdt\-Tt\-Test\-Model.\-cpp.
 
 
 
@@ -309,7 +337,7 @@ Remove a test node.
 
 
 
-Definition at line 222 of file mdt\-Tt\-Test\-Model.\-cpp.
+Definition at line 246 of file mdt\-Tt\-Test\-Model.\-cpp.
 
 
 

@@ -9,7 +9,7 @@ var searchData=
   ['tbtestmodelitem',['tbTestModelItem',['../class_ui__mdt_tt_test_model_item_dialog.html#a3f8d368b30537ea891446850c9a14169',1,'Ui_mdtTtTestModelItemDialog']]],
   ['tbtestnodeunitsetup',['tbTestNodeUnitSetup',['../class_ui__mdt_tt_test_model_item_dialog.html#a64aab0eceb38eec9067c7d7ba2bf5fd9',1,'Ui_mdtTtTestModelItemDialog']]],
   ['terminal',['Terminal',['../classmdt_cl_path_graphics_connection.html#af26f48d07af6395c5395d8078facb3a5a3bd7f2546e9b1653f6e9b9ad3e079a6e',1,'mdtClPathGraphicsConnection']]],
-  ['text',['text',['../classmdt_error.html#a8630bb6b21b70edfe3d13eaff82a1baf',1,'mdtError::text()'],['../classmdt_state.html#ab6dabbc771acb33f16c3caf169414d53',1,'mdtState::text()'],['../classmdt_items_selector_dialog_item.html#a6b7064dd49e4fe8f683d2797f6caac68',1,'mdtItemsSelectorDialogItem::text()']]],
+  ['text',['text',['../classmdt_error.html#a8630bb6b21b70edfe3d13eaff82a1baf',1,'mdtError::text()'],['../classmdt_state.html#ab6dabbc771acb33f16c3caf169414d53',1,'mdtState::text()'],['../classmdt_double_edit.html#a169b321873e50e1e9bf2b15bbf12af78',1,'mdtDoubleEdit::text()'],['../classmdt_items_selector_dialog_item.html#a6b7064dd49e4fe8f683d2797f6caac68',1,'mdtItemsSelectorDialogItem::text()']]],
   ['todo_20list',['Todo List',['../todo.html',1,'']]],
   ['tofirst',['toFirst',['../classmdt_abstract_sql_widget.html#aaa27731864dbb9123ec6765dd21feb7f',1,'mdtAbstractSqlWidget::toFirst()'],['../classmdt_sql_form_widget.html#a4bb7ddf419e845de2d1a7c1ef95e48a8',1,'mdtSqlFormWidget::toFirst()']]],
   ['tofirstenabledstatechanged',['toFirstEnabledStateChanged',['../classmdt_abstract_sql_widget.html#acc3e3e7e848a92a4a117f7147bc1f3c5',1,'mdtAbstractSqlWidget']]],

@@ -1,4 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$class_ui__mdt_tt_test_model_item_dialog.html" title="Ui_mdtTtTestModelItemDialog" alt="" coords="5,5,205,35"/>
-<area shape="rect" id="node3" href="$class_ui_1_1mdt_tt_test_model_item_dialog.html" title="Ui::mdtTtTestModelItemDialog" alt="" coords="255,5,455,35"/>
+<area shape="rect" id="node1" href="$class_q_validator.html" title="QValidator" alt="" coords="5,32,88,61"/>
+<area shape="rect" id="node3" href="$classmdt_double_validator.html" title="Double validator. " alt="" coords="149,5,285,35"/>
+<area shape="rect" id="node5" href="$classmdt_uic_number_validator.html" title="Validator for UIC Number. " alt="" coords="137,59,297,88"/>
 </map>
