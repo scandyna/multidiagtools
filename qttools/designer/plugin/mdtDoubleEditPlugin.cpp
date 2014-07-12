@@ -90,4 +90,4 @@ void mdtDoubleEditPlugin::initialize(QDesignerCustomWidgetInterface * /*core*/)
   pvInitialized = true;
 }
 
-Q_EXPORT_PLUGIN2(mdtdoubleeditplugin, mdtDoubleEditPlugin)
+Q_EXPORT_PLUGIN2(mdtdoubleeditplugin, mdtDoubleEditPlugin)  // For Qt4

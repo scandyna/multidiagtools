@@ -196,6 +196,20 @@ bool mdtSqlForm::addRelation(const QString &parentFieldName, const QString &chil
   return true;
 }
 
+void mdtSqlForm::start()
+{
+  QList<mdtAbstractSqlWidget*> sqlWidgets;
+  int i;
+
+  sqlWidgets = pvMainSqlWidget->sqlWidgets();
+  for(i = 0; i < sqlWidgets.size(); ++i){
+    Q_ASSERT(sqlWidgets.at(i) != 0);
+    Q_ASSERT(sqlWidgets.at(i)->model() != 0);
+    sqlWidgets.at(i)->start();
+  }
+  pvMainSqlWidget->start();
+}
+
 mdtAbstractSqlWidget *mdtSqlForm::sqlWidget(const QString &tableName)
 {
   QList<mdtAbstractSqlWidget*> sqlWidgets;

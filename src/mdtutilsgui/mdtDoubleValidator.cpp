@@ -71,7 +71,8 @@ QValidator::State mdtDoubleValidator::validate(QString & input, int & pos) const
   QValidator::State s;
 
   // Copy input and remove power of 10 chars + pvSuffix + spaces
-  inputCpy = input;
+  inputCpy = input.trimmed();
+  inputCpy.remove(pvSuffix);
   inputCpy.remove('a');
   inputCpy.remove('f');
   inputCpy.remove('p');
@@ -87,7 +88,6 @@ QValidator::State mdtDoubleValidator::validate(QString & input, int & pos) const
   inputCpy.remove('T');
   inputCpy.remove('P');
   inputCpy.remove('E');
-  inputCpy.remove(pvSuffix);
   inputCpy = inputCpy.trimmed();
   // Validate number
   s = pvValidator.validate(inputCpy, posCpy);

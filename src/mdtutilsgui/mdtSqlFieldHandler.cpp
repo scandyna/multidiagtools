@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtSqlFieldHandler.h"
+#include "mdtDoubleEdit.h"
 #include "mdtError.h"
 #include <QLineEdit>
 #include <QSpinBox>
@@ -29,7 +30,7 @@
 #include <QString>
 #include <QColor>
 
-//#include <QDebug>
+#include <QDebug>
 
 /// \todo Implement other data editors (now only QLineEdit is implemented)
 
@@ -44,6 +45,7 @@
 class mdtSqlFieldHandlerAbstractDataWidget
 {
  public:
+  virtual ~mdtSqlFieldHandlerAbstractDataWidget() {}
   virtual void setData(const QVariant &data) = 0;
   virtual QVariant data() const = 0;
   virtual bool isNull() const = 0;
@@ -134,6 +136,75 @@ void mdtSqlFieldHandlerLineEdit::setMaxLength(int maxLength)
 }
 
 /*
+ * mdtDoubleEdit specialisation
+ */
+class mdtSqlFieldHandlerMdtDoubleEdit : public mdtSqlFieldHandlerAbstractDataWidget
+{
+ public:
+  mdtSqlFieldHandlerMdtDoubleEdit();
+  void setDoubleEdit(mdtDoubleEdit *e);
+  void setData(const QVariant &data);
+  QVariant data() const;
+  bool isNull() const;
+  void clear();
+  QWidget *widget();
+  void setReadOnly(bool readOnly);
+  void setMaxLength(int maxLength);
+ private:
+  mdtDoubleEdit *pvDoubleEdit;
+};
+
+mdtSqlFieldHandlerMdtDoubleEdit::mdtSqlFieldHandlerMdtDoubleEdit()
+{
+  pvDoubleEdit = 0;
+}
+
+void mdtSqlFieldHandlerMdtDoubleEdit::setDoubleEdit(mdtDoubleEdit* e)
+{
+  Q_ASSERT(e != 0);
+  pvDoubleEdit = e;
+}
+
+void mdtSqlFieldHandlerMdtDoubleEdit::setData(const QVariant& data)
+{
+  Q_ASSERT(pvDoubleEdit != 0);
+  pvDoubleEdit->setValue(data, false);
+}
+
+QVariant mdtSqlFieldHandlerMdtDoubleEdit::data() const
+{
+  Q_ASSERT(pvDoubleEdit != 0);
+  return pvDoubleEdit->value();
+}
+
+bool mdtSqlFieldHandlerMdtDoubleEdit::isNull() const
+{
+  return data().isNull();
+}
+
+void mdtSqlFieldHandlerMdtDoubleEdit::clear()
+{
+  Q_ASSERT(pvDoubleEdit != 0);
+  pvDoubleEdit->setValue(QVariant());
+}
+
+QWidget* mdtSqlFieldHandlerMdtDoubleEdit::widget()
+{
+  return pvDoubleEdit;
+}
+
+void mdtSqlFieldHandlerMdtDoubleEdit::setReadOnly(bool readOnly)
+{
+  Q_ASSERT(pvDoubleEdit != 0);
+  pvDoubleEdit->setReadOnly(readOnly);
+}
+
+void mdtSqlFieldHandlerMdtDoubleEdit::setMaxLength(int maxLength)
+{
+}
+
+
+/*
  * ==== mdtSqlFieldHandler implementation  ====
  */
 
@@ -172,16 +243,23 @@ void mdtSqlFieldHandler::setDataWidget(QWidget *widget)
   Q_ASSERT(widget != 0);
 
   QLineEdit *le;
+  mdtDoubleEdit *de;
 
   // Search what type of widget we have
   le = dynamic_cast<QLineEdit*>(widget);
   if(le != 0){
     setDataWidget(le);
-  }else{
-    mdtError e(MDT_DATABASE_ERROR, "Cannot find type of widget, object name: " + widget->objectName(), mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtSqlFieldHandler");
-    e.commit();
+    return;
   }
+  de = dynamic_cast<mdtDoubleEdit*>(widget);
+  if(de != 0){
+    setDataWidget(de);
+    return;
+  }
+  // Not supported widget type
+  mdtError e("Cannot find type of widget, object name: " + widget->objectName(), mdtError::Warning);
+  MDT_ERROR_SET_SRC(e, "mdtSqlFieldHandler");
+  e.commit();
 }
 
 void mdtSqlFieldHandler::setDataWidget(QLineEdit *widget)
@@ -195,6 +273,19 @@ void mdtSqlFieldHandler::setDataWidget(QLineEdit *widget)
   pvDataWidget = w;
   setDataWidgetAttributes();
   connect(widget, SIGNAL(textEdited(const QString&)), this, SLOT(onDataEdited(const QString&)));
+}
+
+void mdtSqlFieldHandler::setDataWidget(mdtDoubleEdit* widget)
+{
+  Q_ASSERT(widget != 0);
+
+  mdtSqlFieldHandlerMdtDoubleEdit *w;
+  clear();
+  w = new mdtSqlFieldHandlerMdtDoubleEdit;
+  w->setDoubleEdit(widget);
+  pvDataWidget = w;
+  setDataWidgetAttributes();
+  connect(widget, SIGNAL(valueChanged(double,bool)), this, SLOT(onDataEdited(double,bool)));
 }
 
 void mdtSqlFieldHandler::setDataWidget(QAbstractButton *widget)
@@ -225,6 +316,7 @@ QWidget *mdtSqlFieldHandler::dataWidget()
   return pvDataWidget->widget();
 
   /// \todo Below becomes obselète
+  /**
   if(pvAbstractButton != 0){
     return pvAbstractButton;
   }
@@ -241,17 +333,20 @@ QWidget *mdtSqlFieldHandler::dataWidget()
     return pvComboBox;
   }
   return 0;
+  */
 }
 
 void mdtSqlFieldHandler::clear()
 {
   delete pvDataWidget;
   pvDataWidget = 0;
+  /**
   pvAbstractButton = 0;
   pvDateTimeEdit = 0;
   pvDoubleSpinBox = 0;
   pvSpinBox = 0;
   pvComboBox = 0;
+  */
   // Flags
   pvIsReadOnly = false;
   pvDataEdited = false;
@@ -265,6 +360,7 @@ void mdtSqlFieldHandler::clearWidgetData()
 
   return;
   /// \todo Below becomes obselète
+  /**
   if(pvAbstractButton != 0){
     pvAbstractButton->setChecked(false);
   }else if(pvDateTimeEdit != 0){
@@ -276,6 +372,7 @@ void mdtSqlFieldHandler::clearWidgetData()
   }else if(pvComboBox != 0){
     pvComboBox->clear();
   }
+  */
 }
 
 bool mdtSqlFieldHandler::isNull() const
@@ -348,6 +445,18 @@ void mdtSqlFieldHandler::onDataEdited(const QString &text)
   // Set the data edited flag
   if(!pvDataEdited){
     pvDataEdited = true;
+    emit dataEdited();
+  }
+  setDataWidgetOk();
+}
+
+void mdtSqlFieldHandler::onDataEdited(double x, bool isValid)
+{
+  // Set the data edited flag
+  qDebug() << "mdtSqlFieldHandler::onDataEdited() - x: " << x << ", valid: " << isValid << ", pvDataEdited: " << pvDataEdited;
+  if(!pvDataEdited){
+    pvDataEdited = true;
+    qDebug() << "mdtSqlFieldHandler::onDataEdited() - emit dataEdited() ...";
     emit dataEdited();
   }
   setDataWidgetOk();

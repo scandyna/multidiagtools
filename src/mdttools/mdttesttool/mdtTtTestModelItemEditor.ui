@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>342</width>
-    <height>162</height>
+    <width>429</width>
+    <height>152</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,9 +30,6 @@
       <string>Expected value:</string>
      </property>
     </widget>
-   </item>
-   <item row="3" column="1">
-    <widget class="QLineEdit" name="fld_ExpectedValue"/>
    </item>
    <item row="2" column="1">
     <widget class="QLineEdit" name="fld_DesignationEN"/>
@@ -61,8 +58,31 @@
      </property>
     </widget>
    </item>
+   <item row="3" column="1">
+    <widget class="mdtDoubleEdit" name="fld_ExpectedValue">
+     <property name="maximumSize">
+      <size>
+       <width>200</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>mdtDoubleEdit</class>
+   <extends>QWidget</extends>
+   <header>mdtDoubleEdit.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>fld_SequenceNumber</tabstop>
+  <tabstop>fld_DesignationEN</tabstop>
+  <tabstop>fld_ValueUnit</tabstop>
+  <tabstop>doubleSpinBox</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

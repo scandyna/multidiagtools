@@ -57,9 +57,37 @@ mdtDoubleEdit::mdtDoubleEdit(QWidget* parent)
   pvValueIsValid = false;
 }
 
-void mdtDoubleEdit::setUnit(const QString& unit)
+void mdtDoubleEdit::setReadOnly(bool ro)
 {
-  pvUnit = unit;
+  pbSetMinusInfinity->setEnabled(!ro);
+  pbSetInfinity->setEnabled(!ro);
+  pvLineEdit->setReadOnly(ro);
+}
+
+void mdtDoubleEdit::setUnit(const QString & u)
+{
+  if(u == "w"){
+    setUnit(omega);
+    return;
+  }
+  if(u == "Ohm"){
+    setUnit(OmegaCapital);
+    return;
+  }
+  pvUnit = u;
+  pvValidator->setSuffix(pvUnit);
+}
+
+void mdtDoubleEdit::setUnit(mdtDoubleEdit::unitSymbol_t u)
+{
+  switch(u){
+    case omega:
+      pvUnit = QChar(0x03C9);
+      break;
+    case OmegaCapital:
+      pvUnit = QChar(0x03A9);
+      break;
+  }
   pvValidator->setSuffix(pvUnit);
 }
 
@@ -101,7 +129,7 @@ double mdtDoubleEdit::factor(const QChar & c)
   }
 }
 
-void mdtDoubleEdit::setValue(const QString & s, bool emitValueChanged)
+void mdtDoubleEdit::setValueString(const QString & s, bool emitValueChanged)
 {
   int pos = 0;
   QString str = s;
@@ -117,10 +145,27 @@ void mdtDoubleEdit::setValue(const QString & s, bool emitValueChanged)
   }
 }
 
-void mdtDoubleEdit::setValue(double v, bool emitValueChanged)
+void mdtDoubleEdit::setValueDouble(double v, bool emitValueChanged)
 {
   pvValue = v;
   pvValueIsValid = true;
+  displayValue();
+  if(emitValueChanged){
+    emit valueChanged(pvValue, pvValueIsValid);
+  }
+}
+
+void mdtDoubleEdit::setValue(const QVariant& v, bool emitValueChanged)
+{
+  if(v.isNull()){
+    pvValue = 0.0;
+    pvValueIsValid = false;
+  }else if(v.type() == QVariant::String){
+    setValueString(v.toString(), true);
+    return;
+  }else{
+    pvValue = v.toDouble(&pvValueIsValid);
+  }
   displayValue();
   if(emitValueChanged){
     emit valueChanged(pvValue, pvValueIsValid);

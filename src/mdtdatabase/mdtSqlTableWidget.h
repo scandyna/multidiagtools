@@ -334,6 +334,10 @@ class mdtSqlTableWidget : public mdtAbstractSqlWidget
    */
   void toNext();
 
+  /*! \brief Create local edition elements
+   */
+  void createLocalEditionElements();
+
   Q_DISABLE_COPY(mdtSqlTableWidget);
 
   QTableView *pvTableView;

@@ -26,7 +26,10 @@
 #include "mdtApplication.h"
 #include "mdtSqlRelation.h"
 #include "mdtSqlFieldHandler.h"
+
 #include "mdtSqlFormWidget.h"
+#include "mdtDoubleEdit.h"
+
 #include "mdtSqlTableWidget.h"
 #include "mdtSortFilterProxyModel.h"
 #include "mdtSqlWindow.h"

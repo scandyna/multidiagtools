@@ -153,6 +153,13 @@ class mdtSqlForm : public QWidget
    */
   bool addRelation(const QString &parentFieldName, const QString &childTableName, const QString &childFieldName, const QString &operatorWithPreviousItem = "AND");
 
+  /*! \brief Start internal state machines
+   *
+   * Will start state machine of each contained SQL widget.
+   *  This method is called by mdtSqlWindow and mdtSqlDialog.
+   */
+  void start();
+
   /*! \brief Get instance of the stored SQL widget related to a table name
    *
    * Returns a null pointer if widget related to tableName was not found.

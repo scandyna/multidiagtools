@@ -106,6 +106,18 @@ void mdtWidgetsTest::mdtDoubleValidatorTest()
   v.setSuffix("V");
   str = "1.5e3 mV";
   QCOMPARE(v.validate(str, pos), QValidator::Acceptable);
+  v.setSuffix("ohm");
+  str = "1";
+  QCOMPARE(v.validate(str, pos), QValidator::Acceptable);
+  str = "1400";
+  QCOMPARE(v.validate(str, pos), QValidator::Acceptable);
+  str = "1.4 k";
+  QCOMPARE(v.validate(str, pos), QValidator::Acceptable);
+  str = "1 ohm";
+  QCOMPARE(v.validate(str, pos), QValidator::Acceptable);
+  str = "1400 ohm";
+  QCOMPARE(v.validate(str, pos), QValidator::Acceptable);
+
 
 }
 
@@ -179,8 +191,32 @@ void mdtWidgetsTest::mdtDoubleEditTest()
   e.setValue("1 E");
   QCOMPARE(e.value(), QVariant(1e18));
   QCOMPARE(e.text().trimmed(), QString("1 E"));
-
+  // Check with some units
   e.setUnit("V");
+  e.setValue("1");
+  QCOMPARE(e.value(), QVariant(1.0));
+  QCOMPARE(e.text().trimmed(), QString("1 V"));
+  e.setValue("1200");
+  QCOMPARE(e.value(), QVariant(1.2e3));
+  QCOMPARE(e.text().trimmed(), QString("1.2 kV"));
+  e.setUnit("eV");
+  e.setValue("1");
+  QCOMPARE(e.value(), QVariant(1.0));
+  QCOMPARE(e.text().trimmed(), QString("1 eV"));
+  e.setValue("1300");
+  QCOMPARE(e.value(), QVariant(1.3e3));
+  QCOMPARE(e.text().trimmed(), QString("1.3 keV"));
+  e.setUnit("ohm"); // We use the false ohm, not Ohm, so it will not be converted to Omega
+  e.setValue("1");
+  QCOMPARE(e.value(), QVariant(1.0));
+  QCOMPARE(e.text().trimmed(), QString("1 ohm"));
+  e.setValue("1400");
+  QCOMPARE(e.value(), QVariant(1.4e3));
+  QCOMPARE(e.text().trimmed(), QString("1.4 kohm"));
+
+  
+  
+  ///e.setUnit(mdtDoubleEdit::OmegaCapital);
 
   /*
   while(e.isVisible()){

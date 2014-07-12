@@ -51,4 +51,3 @@ class mdtDoubleEditPlugin : public QObject, public QDesignerCustomWidgetInterfac
 };
 
 #endif // #ifndef MDT_DOUBLE_EDIT_PLUGIN_H
-

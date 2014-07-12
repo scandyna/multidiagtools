@@ -99,6 +99,26 @@ class mdtSqlWindow : public QMainWindow, public Ui::mdtSqlWindow
 
  private:
 
+  /*! \brief Create edition elements
+   */
+  void createEditionElements();
+
+  /*! \brief Connect edition elements
+   *
+   * \pre pvForm must be valid
+   */
+  void connectEditionElements();
+
+  /*! \brief Create navigation elements
+   */
+  void createNavigationElements();
+
+  /*! \brief Connect navigation elements
+   *
+   * \pre pvForm must be valid
+   */
+  void connectNavigationElements();
+
   /*! \brief Give a chance to the user to save data before close
    */
   void closeEvent(QCloseEvent *event);

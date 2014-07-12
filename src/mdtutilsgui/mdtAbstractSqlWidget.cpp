@@ -65,13 +65,25 @@ void mdtAbstractSqlWidget::setModel(QSqlTableModel *model)
   Q_ASSERT(pvModel == model);
   connect(pvModel, SIGNAL(rowsInserted(const QModelIndex&, int, int)), this, SIGNAL(modelSelected()));
   connect(pvModel, SIGNAL(rowsRemoved(const QModelIndex&, int, int)), this, SIGNAL(modelSelected()));
-  pvStateMachine->start();
-  pvStateMachine->waitOnState(Visualizing);
 }
 
 QSqlTableModel *mdtAbstractSqlWidget::model()
 {
   return pvModel;
+}
+
+void mdtAbstractSqlWidget::start()
+{
+  Q_ASSERT(pvModel != 0);
+  qDebug() << "mdtAbstractSqlWidget::start() - table: " << pvModel->tableName();
+  if(pvStateMachine->isRunning()){
+    qDebug() << "mdtAbstractSqlWidget::start() - table: " << pvModel->tableName() << " , state machine allready running !";
+    return;
+  }
+  Q_ASSERT(!pvStateMachine->isRunning());
+
+  pvStateMachine->start();
+  pvStateMachine->waitOnState(Visualizing);
 }
 
 void mdtAbstractSqlWidget::addDataValidator(mdtSqlDataValidator *validator, bool putAtTopPriority)
@@ -317,6 +329,7 @@ bool mdtAbstractSqlWidget::setCurrentRecord(const QString &fieldName, const QVar
   return false;
 }
 
+/**
 bool mdtAbstractSqlWidget::reEnterVisualizingState()
 {
   if(currentState() != Visualizing){
@@ -326,6 +339,7 @@ bool mdtAbstractSqlWidget::reEnterVisualizingState()
 
   return true;
 }
+*/
 
 void mdtAbstractSqlWidget::displayDatabaseError(QSqlError error)
 {

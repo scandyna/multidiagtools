@@ -34,16 +34,23 @@
 mdtSqlWindow::mdtSqlWindow(QWidget *parent, Qt::WindowFlags flags)
  : QMainWindow(parent, flags)
 {
+  setupUi(this);
+  pvForm = 0;
+  /**
   actSubmit = 0;
   actRevert = 0;
   actInsert = 0;
   actRemove = 0;
+  */
+  createEditionElements();
+  tlbMain->addSeparator();
+  createNavigationElements();
+  /**
   actNavToFirst = 0;
   actNavToLast = 0;
   actNavToPrevious = 0;
   actNavToNext = 0;
-  setupUi(this);
-  pvForm = 0;
+  */
 }
 
 mdtSqlWindow::~mdtSqlWindow()
@@ -56,83 +63,45 @@ void mdtSqlWindow::setSqlForm(mdtSqlForm *form)
 
   pvForm = form;
   setCentralWidget(pvForm);
+  connectEditionElements();
+  connectNavigationElements();
+  pvForm->start();
 }
 
 void mdtSqlWindow::enableNavigation()
 {
-  Q_ASSERT(pvForm != 0);
-  Q_ASSERT(pvForm->mainSqlWidget() != 0);
-
-  // Check if navigation was allready enabled
-  if(actNavToFirst != 0){
-    return;
-  }
-
-  mdtSqlFormWidget *widget = pvForm->mainSqlWidget();
-  Q_ASSERT(widget != 0);
-
-  // Create actions
-  actNavToFirst = new QAction("|<<", this);
-  actNavToFirst->setIcon(QIcon::fromTheme("go-first"));
-  actNavToPrevious = new QAction("<", this);
-  actNavToPrevious->setIcon(QIcon::fromTheme("go-previous"));
-  actNavToNext = new QAction(">", this);
-  actNavToNext->setIcon(QIcon::fromTheme("go-next"));
-  actNavToLast = new QAction(">>|", this);
-  actNavToLast->setIcon(QIcon::fromTheme("go-last"));
-  // Connect actions enable/disable
-  connect(widget, SIGNAL(toFirstEnabledStateChanged(bool)), actNavToFirst, SLOT(setEnabled(bool)));
-  connect(widget, SIGNAL(toPreviousEnabledStateChanged(bool)), actNavToPrevious, SLOT(setEnabled(bool)));
-  connect(widget, SIGNAL(toNextEnabledStateChanged(bool)), actNavToNext, SLOT(setEnabled(bool)));
-  connect(widget, SIGNAL(toLastEnabledStateChanged(bool)), actNavToLast, SLOT(setEnabled(bool)));
-  // Connect actions triggers
-  connect(actNavToFirst, SIGNAL(triggered()), widget, SLOT(toFirst()));
-  connect(actNavToPrevious, SIGNAL(triggered()), widget, SLOT(toPrevious()));
-  connect(actNavToNext, SIGNAL(triggered()), widget, SLOT(toNext()));
-  connect(actNavToLast, SIGNAL(triggered()), widget, SLOT(toLast()));
-  // Add a separator if edition is allready on toolbar
-  if(actRemove != 0){
-    tlbMain->addSeparator();
-  }
-  // Add actions to toolbar
-  tlbMain->addAction(actNavToFirst);
-  tlbMain->addAction(actNavToPrevious);
-  tlbMain->addAction(actNavToNext);
-  tlbMain->addAction(actNavToLast);
-  // Update buttons first time
-  pvForm->mainSqlWidget()->reEnterVisualizingState();
+  actNavToFirst->setVisible(true);
+  actNavToPrevious->setVisible(true);
+  actNavToNext->setVisible(true);
+  actNavToLast->setVisible(true);
 }
 
 void mdtSqlWindow::disableNavigation()
 {
-  // Check if navigation was allready diseabled
-  if(actNavToFirst == 0){
-    return;
-  }
-  tlbMain->removeAction(actNavToFirst);
-  delete actNavToFirst;
-  actNavToFirst = 0;
-  tlbMain->removeAction(actNavToPrevious);
-  delete actNavToPrevious;
-  actNavToPrevious = 0;
-  tlbMain->removeAction(actNavToNext);
-  delete actNavToNext;
-  actNavToNext = 0;
-  tlbMain->removeAction(actNavToLast);
-  delete actNavToLast;
-  actNavToLast = 0;
-  // Remove actions from toolbar
-  /// \todo Possible ?
+  actNavToFirst->setVisible(false);
+  actNavToPrevious->setVisible(false);
+  actNavToNext->setVisible(false);
+  actNavToLast->setVisible(false);
 }
 
 void mdtSqlWindow::enableEdition()
 {
-  Q_ASSERT(pvForm != 0);
+  actInsert->setVisible(true);
+  actSubmit->setVisible(true);
+  actRevert->setVisible(true);
+  actRemove->setVisible(true);
+}
 
-  mdtSqlFormWidget *widget = pvForm->mainSqlWidget();
-  Q_ASSERT(widget != 0);
+void mdtSqlWindow::disableEdition()
+{
+  actInsert->setVisible(false);
+  actSubmit->setVisible(false);
+  actRevert->setVisible(false);
+  actRemove->setVisible(false);
+}
 
-  // Create actions
+void mdtSqlWindow::createEditionElements()
+{
   actInsert = new QAction(tr("New"), this);
   actInsert->setIcon(QIcon::fromTheme("document-new"));
   actSubmit = new QAction(tr("Save"), this);
@@ -151,6 +120,21 @@ void mdtSqlWindow::enableEdition()
   actSubmit->setEnabled(false);
   actRevert->setEnabled(false);
   actRemove->setEnabled(false);
+  // Add actions to toolbar
+  tlbMain->addAction(actInsert);
+  tlbMain->addAction(actSubmit);
+  tlbMain->addAction(actRevert);
+  tlbMain->addAction(actRemove);
+}
+
+void mdtSqlWindow::connectEditionElements()
+{
+  Q_ASSERT(pvForm != 0);
+
+  mdtSqlFormWidget *widget = pvForm->mainSqlWidget();
+  Q_ASSERT(widget != 0);
+
+  // Create actions
   // Connect actions enable/disable
   connect(widget, SIGNAL(insertEnabledStateChanged(bool)), actInsert, SLOT(setEnabled(bool)));
   connect(widget, SIGNAL(submitEnabledStateChanged(bool)), actSubmit, SLOT(setEnabled(bool)));
@@ -161,21 +145,43 @@ void mdtSqlWindow::enableEdition()
   connect(actSubmit, SIGNAL(triggered()), widget, SLOT(submit()));
   connect(actRevert, SIGNAL(triggered()), widget, SLOT(revert()));
   connect(actRemove, SIGNAL(triggered()), widget, SLOT(remove()));
-  // Add a separator if navigation is allready on toolbar
-  if(actNavToLast != 0){
-    tlbMain->addSeparator();
-  }
-  // Add actions to toolbar
-  tlbMain->addAction(actInsert);
-  tlbMain->addAction(actSubmit);
-  tlbMain->addAction(actRevert);
-  tlbMain->addAction(actRemove);
-  // Update buttons first time
-  widget->reEnterVisualizingState();
 }
 
-void mdtSqlWindow::disableEdition()
+void mdtSqlWindow::createNavigationElements()
 {
+  actNavToFirst = new QAction("|<<", this);
+  actNavToFirst->setIcon(QIcon::fromTheme("go-first"));
+  actNavToPrevious = new QAction("<", this);
+  actNavToPrevious->setIcon(QIcon::fromTheme("go-previous"));
+  actNavToNext = new QAction(">", this);
+  actNavToNext->setIcon(QIcon::fromTheme("go-next"));
+  actNavToLast = new QAction(">>|", this);
+  actNavToLast->setIcon(QIcon::fromTheme("go-last"));
+  // Add actions to toolbar
+  tlbMain->addAction(actNavToFirst);
+  tlbMain->addAction(actNavToPrevious);
+  tlbMain->addAction(actNavToNext);
+  tlbMain->addAction(actNavToLast);
+}
+
+void mdtSqlWindow::connectNavigationElements()
+{
+  Q_ASSERT(pvForm != 0);
+  Q_ASSERT(pvForm->mainSqlWidget() != 0);
+
+  mdtSqlFormWidget *widget = pvForm->mainSqlWidget();
+  Q_ASSERT(widget != 0);
+
+  // Connect actions enable/disable
+  connect(widget, SIGNAL(toFirstEnabledStateChanged(bool)), actNavToFirst, SLOT(setEnabled(bool)));
+  connect(widget, SIGNAL(toPreviousEnabledStateChanged(bool)), actNavToPrevious, SLOT(setEnabled(bool)));
+  connect(widget, SIGNAL(toNextEnabledStateChanged(bool)), actNavToNext, SLOT(setEnabled(bool)));
+  connect(widget, SIGNAL(toLastEnabledStateChanged(bool)), actNavToLast, SLOT(setEnabled(bool)));
+  // Connect actions triggers
+  connect(actNavToFirst, SIGNAL(triggered()), widget, SLOT(toFirst()));
+  connect(actNavToPrevious, SIGNAL(triggered()), widget, SLOT(toPrevious()));
+  connect(actNavToNext, SIGNAL(triggered()), widget, SLOT(toNext()));
+  connect(actNavToLast, SIGNAL(triggered()), widget, SLOT(toLast()));
 }
 
 void mdtSqlWindow::closeEvent(QCloseEvent *event)

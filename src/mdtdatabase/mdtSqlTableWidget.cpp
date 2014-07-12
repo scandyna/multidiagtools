@@ -113,10 +113,13 @@ mdtSqlTableWidget::mdtSqlTableWidget(QWidget *parent)
   pbNavToPrevious = 0;
   pbNavToNext = 0;
   pbNavToLast = 0;
+  createLocalEditionElements();
+  /**
   pbInsert = 0;
   pbSubmit = 0;
   pbRevert = 0;
   pbRemove = 0;
+  */
   pvDelegateIsEditingData = false;
   pvDefaultColumnToSelect = 0;
 
@@ -151,46 +154,10 @@ void mdtSqlTableWidget::setEditionEnabled(bool enable)
 
 void mdtSqlTableWidget::enableLocalEdition()
 {
-  Q_ASSERT(layout() != 0);
-
-  QBoxLayout *boxLayout;
-
-  // Create actions
-  pbInsert = new QPushButton("New");
-  pbSubmit = new QPushButton("Save");
-  pbRevert = new QPushButton("Cancel");
-  pbRemove = new QPushButton("Delete");
-  // As default, functions are disabled
-  pbInsert->setEnabled(false);
-  pbSubmit->setEnabled(false);
-  pbRevert->setEnabled(false);
-  pbRemove->setEnabled(false);
-  // Connect actions enable/disable
-  connect(this, SIGNAL(insertEnabledStateChanged(bool)), pbInsert, SLOT(setEnabled(bool)));
-  connect(this, SIGNAL(submitEnabledStateChanged(bool)), pbSubmit, SLOT(setEnabled(bool)));
-  connect(this, SIGNAL(revertEnabledStateChanged(bool)), pbRevert, SLOT(setEnabled(bool)));
-  connect(this, SIGNAL(removeEnabledStateChanged(bool)), pbRemove, SLOT(setEnabled(bool)));
-  // Connect actions triggers
-  connect(pbInsert, SIGNAL(clicked()), this, SLOT(insert()));
-  connect(pbSubmit, SIGNAL(clicked()), this, SLOT(submit()));
-  connect(pbRevert, SIGNAL(clicked()), this, SLOT(revert()));
-  connect(pbRemove, SIGNAL(clicked()), this, SLOT(remove()));
-  // Add to layout
-  if(pvNavigationLayout == 0){
-    pvNavigationLayout = new QHBoxLayout;
-    ///pvNavigationLayout->addStretch();
-    boxLayout = dynamic_cast<QBoxLayout*>(layout());
-    Q_ASSERT(boxLayout != 0);
-    boxLayout->addLayout(pvNavigationLayout);
-  }
-  Q_ASSERT(pvNavigationLayout != 0);
-  pvNavigationLayout->addWidget(pbInsert);
-  pvNavigationLayout->addWidget(pbSubmit);
-  pvNavigationLayout->addWidget(pbRevert);
-  pvNavigationLayout->addWidget(pbRemove);
-  pvNavigationLayout->addStretch();
-  // Update buttons first time
-  reEnterVisualizingState();
+  pbInsert->setVisible(true);
+  pbSubmit->setVisible(true);
+  pbRevert->setVisible(true);
+  pbRemove->setVisible(true);
   setEditionEnabled(true);
 }
 
@@ -794,4 +761,47 @@ int mdtSqlTableWidget::firstVisibleColumnIndex()
   }
 
   return -1;
+}
+
+void mdtSqlTableWidget::createLocalEditionElements()
+{
+  Q_ASSERT(layout() != 0);
+
+  QBoxLayout *boxLayout;
+
+  // Create actions
+  pbInsert = new QPushButton("New");
+  pbSubmit = new QPushButton("Save");
+  pbRevert = new QPushButton("Cancel");
+  pbRemove = new QPushButton("Delete");
+  // As default, functions are disabled
+  pbInsert->setEnabled(false);
+  pbSubmit->setEnabled(false);
+  pbRevert->setEnabled(false);
+  pbRemove->setEnabled(false);
+  // Connect actions enable/disable
+  connect(this, SIGNAL(insertEnabledStateChanged(bool)), pbInsert, SLOT(setEnabled(bool)));
+  connect(this, SIGNAL(submitEnabledStateChanged(bool)), pbSubmit, SLOT(setEnabled(bool)));
+  connect(this, SIGNAL(revertEnabledStateChanged(bool)), pbRevert, SLOT(setEnabled(bool)));
+  connect(this, SIGNAL(removeEnabledStateChanged(bool)), pbRemove, SLOT(setEnabled(bool)));
+  // Connect actions triggers
+  connect(pbInsert, SIGNAL(clicked()), this, SLOT(insert()));
+  connect(pbSubmit, SIGNAL(clicked()), this, SLOT(submit()));
+  connect(pbRevert, SIGNAL(clicked()), this, SLOT(revert()));
+  connect(pbRemove, SIGNAL(clicked()), this, SLOT(remove()));
+  // Add to layout
+  if(pvNavigationLayout == 0){
+    pvNavigationLayout = new QHBoxLayout;
+    boxLayout = dynamic_cast<QBoxLayout*>(layout());
+    Q_ASSERT(boxLayout != 0);
+    boxLayout->addLayout(pvNavigationLayout);
+  }
+  Q_ASSERT(pvNavigationLayout != 0);
+  pvNavigationLayout->addWidget(pbInsert);
+  pvNavigationLayout->addWidget(pbSubmit);
+  pvNavigationLayout->addWidget(pbRevert);
+  pvNavigationLayout->addWidget(pbRemove);
+  pvNavigationLayout->addStretch();
+  // Update buttons first time
+  setEditionEnabled(true);
 }

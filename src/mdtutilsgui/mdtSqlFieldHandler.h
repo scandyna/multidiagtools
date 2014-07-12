@@ -28,13 +28,13 @@
 #include <QWidget>
 
 class mdtSqlFieldHandlerAbstractDataWidget;
-
 class QLineEdit;
 class QSpinBox;
 class QDoubleSpinBox;
 class QDateTimeEdit;
 class QAbstractButton;
 class QComboBox;
+class mdtDoubleEdit;
 
 /*! \brief Handle events between a SQL field and a edition widget
  *
@@ -99,6 +99,12 @@ class mdtSqlFieldHandler : public QWidget
    * \pre widget must be a valid pointer.
    */
   void setDataWidget(QLineEdit *widget);
+
+  /*! \brief Set the edit/view widget
+   *
+   * \pre widget must be a valid pointer.
+   */
+  void setDataWidget(mdtDoubleEdit *widget);
 
   /*! \brief Set the edit/view widget
    *
@@ -195,6 +201,10 @@ class mdtSqlFieldHandler : public QWidget
 
   /*! \brief Used together with edit widget to set flags
    */
+  void onDataEdited(double x, bool isValid);
+
+  /*! \brief Used together with edit widget to set flags
+   */
   void onDataEdited(bool state);
 
   /*! \brief Used together with edit widget to set flags
@@ -228,11 +238,13 @@ class mdtSqlFieldHandler : public QWidget
 
   mdtSqlFieldHandlerAbstractDataWidget *pvDataWidget;
 
+  /**
   QAbstractButton *pvAbstractButton;
   QDateTimeEdit *pvDateTimeEdit;
   QDoubleSpinBox *pvDoubleSpinBox;
   QSpinBox *pvSpinBox;
   QComboBox *pvComboBox;
+  */
   QSqlField pvSqlField;
   // Flags
   bool pvIsReadOnly;

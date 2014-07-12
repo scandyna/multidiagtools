@@ -38,21 +38,30 @@ class /**QDESIGNER_WIDGET_EXPORT*/ mdtDoubleEdit : public QWidget
 
  Q_PROPERTY(QString unit READ unit WRITE setUnit)
 
+ public:
+
   /*! \brief Special symbols for units
    */
   enum unitSymbol_t {
-                      OmegaCapital    /*!< Capital omega , &Omega */
+                      omega,          /*!< Omega (small letter) , &omega; */
+                      OmegaCapital    /*!< Capital omega , &Omega; */
                     };
-
- public:
 
   /*! \brief Constructor
    */
   mdtDoubleEdit(QWidget* parent = 0);
 
+  /*! \brief Set read only
+   */
+  void setReadOnly(bool ro);
+
   /*! \brief Set unit
    */
-  void setUnit(const QString & unit);
+  void setUnit(const QString & u);
+
+  /*! \brief Set unit that is represented by a special symbol
+   */
+  void setUnit(unitSymbol_t u);
 
   /*! \brief Get unit
    */
@@ -92,11 +101,15 @@ class /**QDESIGNER_WIDGET_EXPORT*/ mdtDoubleEdit : public QWidget
    *  and unit. Unit must be the same than
    *  set with setUnit().
    */
-  void setValue(const QString & s, bool emitValueChanged = true);
+  void setValueString(const QString & s, bool emitValueChanged = true);
 
   /*! \brief Set value
    */
-  void setValue(double v, bool emitValueChanged = true);
+  void setValueDouble(double v, bool emitValueChanged = true);
+
+  /*! \brief Set value
+   */
+  void setValue(const QVariant & v, bool emitValueChanged = true);
 
   /*! \brief Get value
    */

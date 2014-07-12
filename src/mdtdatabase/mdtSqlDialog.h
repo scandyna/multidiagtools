@@ -30,6 +30,7 @@
 
 ///class mdtAbstractSqlWidget;
 ///class QTabWidget;
+class QHBoxLayout;
 class QVBoxLayout;
 class QPushButton;
 class mdtSqlForm;
@@ -88,6 +89,22 @@ class mdtSqlDialog : public QDialog
   void reject();
 
  private:
+
+  /*! \brief Create edition elements
+   */
+  void createEditionElements(QHBoxLayout *l);
+
+  /*! \brief Connect edition elements
+   *
+   * \pre pvForm must be valid
+   */
+  void connectEditionElements();
+
+  /*! \brief Disconnect edition elements
+   *
+   * \pre pvForm must be valid
+   */
+  void disconnectEditionElements();
 
   Q_DISABLE_COPY(mdtSqlDialog);
 

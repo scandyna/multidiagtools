@@ -36,14 +36,7 @@ mdtSqlDialog::mdtSqlDialog(QWidget *parent)
   QHBoxLayout *buttonsLayout = new QHBoxLayout;
 
   pvForm = 0;
-  // Setup save/cancel buttons
-  pbSubmit = new QPushButton(tr("Save"));
-  buttonsLayout->addWidget(pbSubmit);
-  pbRevert = new QPushButton(tr("Cancel"));
-  buttonsLayout->addWidget(pbRevert);
-  // As default, edition is disabled
-  pbSubmit->hide();
-  pbRevert->hide();
+  createEditionElements(buttonsLayout);
   // Setup button box
   QDialogButtonBox *buttonBox = new QDialogButtonBox;
   buttonBox->addButton(QDialogButtonBox::Close);
@@ -63,8 +56,13 @@ void mdtSqlDialog::setSqlForm(mdtSqlForm *form)
 {
   Q_ASSERT(form != 0);
 
+  if(pvForm != 0){
+    disconnectEditionElements();
+  }
   pvForm = form;
   pvMainLayout->insertWidget(0, pvForm);
+  connectEditionElements();
+  pvForm->start();
 }
 
 void mdtSqlDialog::enableEdition()
@@ -72,31 +70,19 @@ void mdtSqlDialog::enableEdition()
   Q_ASSERT(pvForm != 0);
   Q_ASSERT(pvForm->mainSqlWidget() != 0);
 
-  mdtSqlFormWidget *widget = pvForm->mainSqlWidget();
-  Q_ASSERT(widget != 0);
-
   pbSubmit->setVisible(true);
   pbRevert->setVisible(true);
   // As default, functions are disabled
   pbSubmit->setEnabled(false);
   pbRevert->setEnabled(false);
-  // Connect buttons enable/disable
-  connect(widget, SIGNAL(submitEnabledStateChanged(bool)), pbSubmit, SLOT(setEnabled(bool)));
-  connect(widget, SIGNAL(revertEnabledStateChanged(bool)), pbRevert, SLOT(setEnabled(bool)));
-  // Connect buttons triggers
-  connect(pbSubmit, SIGNAL(clicked()), widget, SLOT(submit()));
-  connect(pbRevert, SIGNAL(clicked()), widget, SLOT(revert()));
   // Update buttons first time
-  pvForm->mainSqlWidget()->reEnterVisualizingState();
+  ///pvForm->mainSqlWidget()->reEnterVisualizingState();
 }
 
 void mdtSqlDialog::disableEdition()
 {
-  Q_ASSERT(pvForm != 0);
-
-  mdtSqlFormWidget *widget = pvForm->mainSqlWidget();
-  Q_ASSERT(widget != 0);
-
+  pbSubmit->setVisible(false);
+  pbRevert->setVisible(false);
 }
 
 void mdtSqlDialog::accept()
@@ -113,4 +99,50 @@ void mdtSqlDialog::reject()
   if((pvForm == 0) || (pvForm->mainSqlWidget()->allDataAreSaved())){
     QDialog::reject();
   }
+}
+
+void mdtSqlDialog::createEditionElements(QHBoxLayout *l)
+{
+  Q_ASSERT(l != 0);
+
+  // Setup save/cancel buttons
+  pbSubmit = new QPushButton(tr("Save"));
+  l->addWidget(pbSubmit);
+  pbRevert = new QPushButton(tr("Cancel"));
+  l->addWidget(pbRevert);
+  // As default, edition is disabled
+  pbSubmit->hide();
+  pbRevert->hide();
+}
+
+void mdtSqlDialog::connectEditionElements()
+{
+  Q_ASSERT(pvForm != 0);
+  Q_ASSERT(pvForm->mainSqlWidget() != 0);
+
+  mdtSqlFormWidget *widget = pvForm->mainSqlWidget();
+  Q_ASSERT(widget != 0);
+
+  // Connect buttons enable/disable
+  connect(widget, SIGNAL(submitEnabledStateChanged(bool)), pbSubmit, SLOT(setEnabled(bool)));
+  connect(widget, SIGNAL(revertEnabledStateChanged(bool)), pbRevert, SLOT(setEnabled(bool)));
+  // Connect buttons triggers
+  connect(pbSubmit, SIGNAL(clicked()), widget, SLOT(submit()));
+  connect(pbRevert, SIGNAL(clicked()), widget, SLOT(revert()));
+}
+
+void mdtSqlDialog::disconnectEditionElements()
+{
+  Q_ASSERT(pvForm != 0);
+  Q_ASSERT(pvForm->mainSqlWidget() != 0);
+
+  mdtSqlFormWidget *widget = pvForm->mainSqlWidget();
+  Q_ASSERT(widget != 0);
+
+  // Connect buttons enable/disable
+  disconnect(widget, SIGNAL(submitEnabledStateChanged(bool)), pbSubmit, SLOT(setEnabled(bool)));
+  disconnect(widget, SIGNAL(revertEnabledStateChanged(bool)), pbRevert, SLOT(setEnabled(bool)));
+  // Connect buttons triggers
+  disconnect(pbSubmit, SIGNAL(clicked()), widget, SLOT(submit()));
+  disconnect(pbRevert, SIGNAL(clicked()), widget, SLOT(revert()));
 }

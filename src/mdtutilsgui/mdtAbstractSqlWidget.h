@@ -98,6 +98,16 @@ class mdtAbstractSqlWidget : public QWidget
    */
   QSqlTableModel *model();
 
+  /*! \brief Start internal state machine
+   *
+   * If mdtSqlWindow or mdtSqlDialog is used,
+   *  this method will be called by them.
+   *
+   * \pre A valid model must be set with setModel()
+   * \pre Internal state machine must not running.
+   */
+  void start();
+
   /*! \brief Add a data validator
    *
    * \param validator A instance of mdtSqlDataValidator or subclass.
@@ -342,7 +352,7 @@ class mdtAbstractSqlWidget : public QWidget
    *
    * This functionnality is used by mdtSqlWindow and mdtSqlDialog.
    */
-  bool reEnterVisualizingState();
+  ///bool reEnterVisualizingState();
 
  protected:
 
