@@ -714,8 +714,9 @@ void mdtDatabaseTest::sqlFieldHandlerTest()
   QVERIFY(!fh.isReadOnly());
   QVERIFY(!le.isReadOnly());
   // Now we change the row
-  le.setText("Row 2 from DB");
-  fh.updateFlags();
+  fh.setData("Row 2 from DB");
+  ///le.setText("Row 2 from DB");
+  ///fh.updateFlags();
   // Check field handler flags
   QVERIFY(!fh.isNull());
   QVERIFY(!fh.dataWasEdited());
@@ -726,19 +727,19 @@ void mdtDatabaseTest::sqlFieldHandlerTest()
   QVERIFY(fh.isNull());
   QVERIFY(fh.dataWasEdited());
   // We change the row
-  le.setText("Row 3 from DB");
-  fh.updateFlags();
+  fh.setData("Row 3 from DB");
+  ///le.setText("Row 3 from DB");
+  ///fh.updateFlags();
   // Check field handler flags
   QVERIFY(!fh.isNull());
   QVERIFY(!fh.dataWasEdited());
   // We change the row
-  le.setText("");
-  fh.updateFlags();
+  fh.setData(QVariant());
+  ///le.setText("");
+  ///fh.updateFlags();
   // Check field handler flags
   QVERIFY(fh.isNull());
   QVERIFY(!fh.dataWasEdited());
-
-  
   // Setup field as read only
   field.setAutoValue(false);
   field.setLength(10);
@@ -751,6 +752,58 @@ void mdtDatabaseTest::sqlFieldHandlerTest()
   QVERIFY(le.isEnabled());
   QVERIFY(le.isReadOnly());
 
+  // Setup field
+  field.setAutoValue(false);
+  field.setLength(10);
+  field.setRequiredStatus(QSqlField::Required);
+  field.setReadOnly(false);
+  fh.setField(field);
+
+  /*
+   * Tests with non editable QComboBox
+   */
+  QComboBox cb;
+  cb.show();
+  cb.addItem("");
+  cb.addItem("V");
+  cb.addItem("A");
+  fh.setDataWidget(&cb);
+  // Check field handler flags and data
+  QVERIFY(fh.isNull());
+  QVERIFY(!fh.dataWasEdited());
+  QVERIFY(!fh.isReadOnly());
+  QVERIFY(fh.data().isNull());
+  // Check widget flags
+  QVERIFY(cb.isEnabled());
+  // User selects
+  cb.setCurrentIndex(1);
+  // Check field handler flags and data
+  QVERIFY(!fh.isNull());
+  QVERIFY(fh.dataWasEdited());
+  QCOMPARE(fh.data(), QVariant("V"));
+  // User selects first (empty) item
+  cb.setCurrentIndex(0);
+  // Check field handler flags and data
+  QVERIFY(fh.isNull());
+  QVERIFY(fh.dataWasEdited());
+  QVERIFY(fh.data().isNull());
+  // User selects
+  cb.setCurrentIndex(2);
+  // Check field handler flags and data
+  QVERIFY(!fh.isNull());
+  QVERIFY(fh.dataWasEdited());
+  QCOMPARE(fh.data(), QVariant("A"));
+  // Set data from DB - Existing value
+  fh.setData("V");
+  QVERIFY(!fh.isNull());
+  QVERIFY(!fh.dataWasEdited());
+  QCOMPARE(fh.data(), QVariant("V"));
+  // Set data from DB - Non existing value
+  fh.setData("P");
+  QVERIFY(fh.isNull());
+  QVERIFY(!fh.dataWasEdited());
+  QVERIFY(fh.data().isNull());
+
 
   
   
@@ -758,7 +811,7 @@ void mdtDatabaseTest::sqlFieldHandlerTest()
    * Play
    */
   /*
-  while(le.isVisible()){
+  while(cb.isVisible()){
     QTest::qWait(1000);
   }
   */
@@ -814,6 +867,7 @@ void mdtDatabaseTest::sqlFormWidgetTest()
   QVERIFY(leRemarks != 0);
   
   ///window.show();
+  sqlFormWidget->start();
   sqlFormWidget->show();
   
   /*

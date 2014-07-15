@@ -100,9 +100,6 @@ class mdtAbstractSqlWidget : public QWidget
 
   /*! \brief Start internal state machine
    *
-   * If mdtSqlWindow or mdtSqlDialog is used,
-   *  this method will be called by them.
-   *
    * \pre A valid model must be set with setModel()
    * \pre Internal state machine must not running.
    */

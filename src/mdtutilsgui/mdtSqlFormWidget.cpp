@@ -92,8 +92,10 @@ void mdtSqlFormWidget::mapFormWidgets(const QString &firstWidgetInTabOrder)
         * When we go out from Editing state, we must update flags
         */
       /// \todo Check redoundances with onCurrentIndexChanged()
+      /**
       connect(this, SIGNAL(stateEditingExited()), fieldHandler, SLOT(updateFlags()));
       connect(this, SIGNAL(stateEditingNewRowExited()), fieldHandler, SLOT(updateFlags()));
+      */
       pvFieldHandlers.append(fieldHandler);
       // If this widget is the first in focus chain, ref it
       if(w->objectName() == firstWidgetInTabOrder){
@@ -150,6 +152,10 @@ int mdtSqlFormWidget::currentRow() const
 
 void mdtSqlFormWidget::toFirst()
 {
+  if(!allDataAreSaved()){
+    return;
+  }
+  /**
   if(!childWidgetsAreInVisaluzingState()){
     return;
   }
@@ -157,11 +163,16 @@ void mdtSqlFormWidget::toFirst()
     warnUserAboutUnsavedRow();
     return;
   }
+  */
   pvWidgetMapper->toFirst();
 }
 
 void mdtSqlFormWidget::toLast()
 {
+  if(!allDataAreSaved()){
+    return;
+  }
+  /**
   if(!childWidgetsAreInVisaluzingState()){
     return;
   }
@@ -169,11 +180,16 @@ void mdtSqlFormWidget::toLast()
     warnUserAboutUnsavedRow();
     return;
   }
+  */
   pvWidgetMapper->toLast();
 }
 
 void mdtSqlFormWidget::toPrevious()
 {
+  if(!allDataAreSaved()){
+    return;
+  }
+  /**
   if(!childWidgetsAreInVisaluzingState()){
     return;
   }
@@ -181,11 +197,16 @@ void mdtSqlFormWidget::toPrevious()
     warnUserAboutUnsavedRow();
     return;
   }
+  */
   pvWidgetMapper->toPrevious();
 }
 
 void mdtSqlFormWidget::toNext()
 {
+  if(!allDataAreSaved()){
+    return;
+  }
+  /**
   if(!childWidgetsAreInVisaluzingState()){
     return;
   }
@@ -193,11 +214,16 @@ void mdtSqlFormWidget::toNext()
     warnUserAboutUnsavedRow();
     return;
   }
+  */
   pvWidgetMapper->toNext();
 }
 
 void mdtSqlFormWidget::setCurrentIndex(int row)
 {
+  if(!allDataAreSaved()){
+    return;
+  }
+  /**
   if(!childWidgetsAreInVisaluzingState()){
     return;
   }
@@ -205,6 +231,7 @@ void mdtSqlFormWidget::setCurrentIndex(int row)
     warnUserAboutUnsavedRow();
     return;
   }
+  */
   pvWidgetMapper->setCurrentIndex(row);
 }
 
@@ -239,7 +266,7 @@ void mdtSqlFormWidget::onCurrentIndexChanged(int row)
       if(!widgetsEnabled){
         fieldHandler->clearWidgetData();
       }
-      fieldHandler->updateFlags();
+      ///fieldHandler->updateFlags();
     }
   }
   // Update navigation states
@@ -452,7 +479,8 @@ void mdtSqlFormWidget::warnUserAboutUnsavedRow()
 {
   QMessageBox msgBox;
 
-  msgBox.setText(tr("Current record was modified."));
+  ///msgBox.setText(tr("Current record was modified."));
+  msgBox.setText(tr("Current record was modified in table '") + userFriendlyTableName() + "'");
   msgBox.setInformativeText(tr("Please save or cancel your modifications and try again."));
   msgBox.setIcon(QMessageBox::Warning);
   msgBox.setStandardButtons(QMessageBox::Ok);

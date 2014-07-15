@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -99,6 +99,12 @@ class mdtSqlFieldHandler : public QWidget
    * \pre widget must be a valid pointer.
    */
   void setDataWidget(QLineEdit *widget);
+
+  /*! \brief Set the edit/view widget
+   *
+   * \pre widget must be a valid pointer.
+   */
+  void setDataWidget(QComboBox *widget);
 
   /*! \brief Set the edit/view widget
    *

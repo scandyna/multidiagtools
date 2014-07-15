@@ -493,6 +493,8 @@ bool mdtTtTestModelItemEditor::setupTestItemTable()
   if(!setMainTable("TestModelItem_tbl", "Test item", database())){
     return false;
   }
+  
+  
   // Force a update
   ///mainSqlWidget()->setCurrentIndex(mainSqlWidget()->currentRow());
 

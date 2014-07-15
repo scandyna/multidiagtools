@@ -35,6 +35,21 @@ void mdtDoubleValidator::setSuffix(const QString& s)
   pvSuffix = s;
 }
 
+void mdtDoubleValidator::setBottom(double min)
+{
+  pvValidator.setBottom(min);
+}
+
+void mdtDoubleValidator::setTop(double max)
+{
+  pvValidator.setTop(max);
+}
+
+void mdtDoubleValidator::setRange(double min, double max, int decimals)
+{
+  pvValidator.setRange(min, max, decimals);
+}
+
 QValidator::State mdtDoubleValidator::validate(QString & input, int & pos) const
 {
   /*

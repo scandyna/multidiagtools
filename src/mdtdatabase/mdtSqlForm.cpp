@@ -207,7 +207,6 @@ void mdtSqlForm::start()
     Q_ASSERT(sqlWidgets.at(i)->model() != 0);
     sqlWidgets.at(i)->start();
   }
-  pvMainSqlWidget->start();
 }
 
 mdtAbstractSqlWidget *mdtSqlForm::sqlWidget(const QString &tableName)

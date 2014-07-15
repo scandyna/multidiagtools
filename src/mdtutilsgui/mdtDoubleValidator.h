@@ -46,6 +46,26 @@ class mdtDoubleValidator : public QValidator
    */
   void setSuffix(const QString & s);
 
+  /*! \brief Set bottom value
+   */
+  void setBottom(double min);
+
+  /*! \brief Get bottom value
+   */
+  inline double bottom() const { return pvValidator.bottom(); }
+
+  /*! \brief Set top value
+   */
+  void setTop(double max);
+
+  /*! \brief Get top value
+   */
+  inline double top() const { return pvValidator.top(); }
+
+  /*! \brief Set range
+   */
+  void setRange(double min, double max, int decimals = 0);
+
   /*! \brief Validate input
    */
   QValidator::State validate(QString & input, int & pos) const;

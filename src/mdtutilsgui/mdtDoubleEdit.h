@@ -37,6 +37,8 @@ class /**QDESIGNER_WIDGET_EXPORT*/ mdtDoubleEdit : public QWidget
  Q_OBJECT
 
  Q_PROPERTY(QString unit READ unit WRITE setUnit)
+ Q_PROPERTY(double minimum READ minimum WRITE setMinimum RESET setMinimumToMinusInfinity)
+ Q_PROPERTY(double maximum READ maximum WRITE setMaximum RESET setMaximumToInfinity)
 
  public:
 
@@ -55,10 +57,6 @@ class /**QDESIGNER_WIDGET_EXPORT*/ mdtDoubleEdit : public QWidget
    */
   void setReadOnly(bool ro);
 
-  /*! \brief Set unit
-   */
-  void setUnit(const QString & u);
-
   /*! \brief Set unit that is represented by a special symbol
    */
   void setUnit(unitSymbol_t u);
@@ -66,6 +64,38 @@ class /**QDESIGNER_WIDGET_EXPORT*/ mdtDoubleEdit : public QWidget
   /*! \brief Get unit
    */
   inline QString unit() const { return pvUnit; }
+
+  /*! \brief Set minimum
+   */
+  void setMinimum(double min);
+
+  /*! \brief Set minimum to -infinity
+   */
+  void setMinimumToMinusInfinity();
+
+  /*! \brief Get minimum
+   */
+  double minimum() const;
+
+  /*! \brief Set maximum
+   */
+  void setMaximum(double max);
+
+  /*! \brief Set maximum to infinity
+   */
+  void setMaximumToInfinity();
+
+  /*! \brief Get maximum
+   */
+  double maximum() const;
+
+  /*! \brief Set range
+   */
+  void setRange(double min, double max);
+
+  /*! \brief Set the full range
+   */
+  ///void setFullRange();
 
   /*! \brief Get the factor for a given char
    *
@@ -131,6 +161,12 @@ class /**QDESIGNER_WIDGET_EXPORT*/ mdtDoubleEdit : public QWidget
    */
   static QString infinityString();
 
+ public slots:
+
+  /*! \brief Set unit
+   */
+  void setUnit(const QString & u);
+
  signals:
 
   /*! \brief Emitted when a new value was set
@@ -143,6 +179,7 @@ class /**QDESIGNER_WIDGET_EXPORT*/ mdtDoubleEdit : public QWidget
 
  private slots:
 
+  void setNull();
   void setMinusInfinity();
   void setInfinity();
   void setValueFromLineEdit();
@@ -170,6 +207,7 @@ class /**QDESIGNER_WIDGET_EXPORT*/ mdtDoubleEdit : public QWidget
   Q_DISABLE_COPY(mdtDoubleEdit);
 
   QLineEdit *pvLineEdit;
+  QPushButton *pbSetNull;
   QPushButton *pbSetInfinity;
   QPushButton *pbSetMinusInfinity;
   mdtDoubleValidator *pvValidator;

@@ -7,13 +7,16 @@
     <x>0</x>
     <y>0</y>
     <width>429</width>
-    <height>152</height>
+    <height>153</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QFormLayout" name="formLayout">
+   <property name="fieldGrowthPolicy">
+    <enum>QFormLayout::ExpandingFieldsGrow</enum>
+   </property>
    <item row="0" column="0">
     <widget class="QLabel" name="lbSequenceNumber">
      <property name="text">
@@ -24,16 +27,6 @@
    <item row="0" column="1">
     <widget class="QLineEdit" name="fld_SequenceNumber"/>
    </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="lbExpectedValue">
-     <property name="text">
-      <string>Expected value:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="QLineEdit" name="fld_DesignationEN"/>
-   </item>
    <item row="2" column="0">
     <widget class="QLabel" name="lbDesignationEN">
      <property name="text">
@@ -41,20 +34,13 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="1">
-    <widget class="QLineEdit" name="fld_ValueUnit"/>
+   <item row="2" column="1">
+    <widget class="QLineEdit" name="fld_DesignationEN"/>
    </item>
-   <item row="4" column="0">
-    <widget class="QLabel" name="lbValueUnit">
+   <item row="3" column="0">
+    <widget class="QLabel" name="lbExpectedValue">
      <property name="text">
-      <string>Unit:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="1">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox">
-     <property name="maximum">
-      <double>999999.000000000000000</double>
+      <string>Expected value:</string>
      </property>
     </widget>
    </item>
@@ -66,6 +52,100 @@
        <height>16777215</height>
       </size>
      </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="lbValueUnit">
+     <property name="text">
+      <string>Unit:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <widget class="QLineEdit" name="fld_ValueUnitOLD"/>
+   </item>
+   <item row="4" column="1">
+    <widget class="QComboBox" name="fld_ValueUnit">
+     <item>
+      <property name="text">
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Ohm</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>F</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>H</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>T</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>V</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>A</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>W</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>J</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Hz</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>K</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>°C</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>°F</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>N</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Pa</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>s</string>
+      </property>
+     </item>
     </widget>
    </item>
   </layout>
@@ -80,9 +160,25 @@
  <tabstops>
   <tabstop>fld_SequenceNumber</tabstop>
   <tabstop>fld_DesignationEN</tabstop>
-  <tabstop>fld_ValueUnit</tabstop>
-  <tabstop>doubleSpinBox</tabstop>
+  <tabstop>fld_ValueUnitOLD</tabstop>
  </tabstops>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>fld_ValueUnit</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>fld_ExpectedValue</receiver>
+   <slot>setUnit(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>176</x>
+     <y>109</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>245</x>
+     <y>77</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

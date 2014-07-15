@@ -213,16 +213,36 @@ void mdtWidgetsTest::mdtDoubleEditTest()
   e.setValue("1400");
   QCOMPARE(e.value(), QVariant(1.4e3));
   QCOMPARE(e.text().trimmed(), QString("1.4 kohm"));
+  // 0 value
+  e.setUnit("");
+  e.setValue(0.0);
+  QCOMPARE(e.value(), QVariant(0.0));
+  QCOMPARE(e.text().trimmed(), QString("0"));
+  // Range
+  e.setRange(0.0, 1e6);
+  e.setValue(0.0);
+  QCOMPARE(e.value(), QVariant(0.0));
+  QCOMPARE(e.text().trimmed(), QString("0"));
+  e.setValue(-1.0);
+  QCOMPARE(e.value(), QVariant(0.0));
+  QCOMPARE(e.text().trimmed(), QString("0"));
+  e.setValue(1e6);
+  QCOMPARE(e.value(), QVariant(1e6));
+  QCOMPARE(e.text().trimmed(), QString("1 M"));
+  e.setValue(1.1e6);
+  QCOMPARE(e.value(), QVariant(1e6));
+  QCOMPARE(e.text().trimmed(), QString("1 M"));
+
 
   
   
   ///e.setUnit(mdtDoubleEdit::OmegaCapital);
 
-  /*
+  
   while(e.isVisible()){
     QTest::qWait(1000);
   }
-  */
+  
 }
 
 

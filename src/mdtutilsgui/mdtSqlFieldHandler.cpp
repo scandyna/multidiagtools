@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -136,6 +136,90 @@ void mdtSqlFieldHandlerLineEdit::setMaxLength(int maxLength)
 }
 
 /*
+ * QComboBox specialisation
+ */
+class mdtSqlFieldHandlerComboBox : public mdtSqlFieldHandlerAbstractDataWidget
+{
+ public:
+  mdtSqlFieldHandlerComboBox();
+  void setComboBox(QComboBox *cb);
+  void setData(const QVariant &data);
+  QVariant data() const;
+  bool isNull() const;
+  void clear();
+  QWidget *widget();
+  void setReadOnly(bool readOnly);
+  void setMaxLength(int maxLength);
+ private:
+  QComboBox *pvComboBox;
+};
+
+mdtSqlFieldHandlerComboBox::mdtSqlFieldHandlerComboBox()
+{
+  pvComboBox = 0;
+}
+
+void mdtSqlFieldHandlerComboBox::setComboBox(QComboBox* cb)
+{
+  Q_ASSERT(cb != 0);
+  pvComboBox = cb;
+}
+
+void mdtSqlFieldHandlerComboBox::setData(const QVariant& data)
+{
+  Q_ASSERT(pvComboBox != 0);
+
+  int index;
+
+  index = pvComboBox->findData(data, Qt::DisplayRole);
+  pvComboBox->setCurrentIndex(index);
+  if((index < 0)&&(pvComboBox->isEditable())){
+    pvComboBox->setEditText(data.toString());
+  }
+}
+
+QVariant mdtSqlFieldHandlerComboBox::data() const
+{
+  Q_ASSERT(pvComboBox != 0);
+
+  if(pvComboBox->currentText().trimmed().isEmpty()){
+    return QVariant();
+  }
+  return pvComboBox->currentText();
+}
+
+bool mdtSqlFieldHandlerComboBox::isNull() const
+{
+  Q_ASSERT(pvComboBox != 0);
+  return data().isNull();
+}
+
+void mdtSqlFieldHandlerComboBox::clear()
+{
+  Q_ASSERT(pvComboBox != 0);
+  setData(QVariant());
+}
+
+QWidget* mdtSqlFieldHandlerComboBox::widget()
+{
+  return pvComboBox;
+}
+
+void mdtSqlFieldHandlerComboBox::setReadOnly(bool readOnly)
+{
+  Q_ASSERT(pvComboBox != 0);
+  pvComboBox->setEnabled(!readOnly);
+}
+
+void mdtSqlFieldHandlerComboBox::setMaxLength(int maxLength)
+{
+  Q_ASSERT(pvComboBox != 0);
+  if(pvComboBox->lineEdit() != 0){
+    pvComboBox->lineEdit()->setMaxLength(maxLength);
+  }
+}
+
+/*
  * mdtDoubleEdit specialisation
  */
 class mdtSqlFieldHandlerMdtDoubleEdit : public mdtSqlFieldHandlerAbstractDataWidget
@@ -243,12 +327,18 @@ void mdtSqlFieldHandler::setDataWidget(QWidget *widget)
   Q_ASSERT(widget != 0);
 
   QLineEdit *le;
+  QComboBox *cb;
   mdtDoubleEdit *de;
 
   // Search what type of widget we have
   le = dynamic_cast<QLineEdit*>(widget);
   if(le != 0){
     setDataWidget(le);
+    return;
+  }
+  cb = dynamic_cast<QComboBox*>(widget);
+  if(cb != 0){
+    setDataWidget(cb);
     return;
   }
   de = dynamic_cast<mdtDoubleEdit*>(widget);
@@ -273,6 +363,20 @@ void mdtSqlFieldHandler::setDataWidget(QLineEdit *widget)
   pvDataWidget = w;
   setDataWidgetAttributes();
   connect(widget, SIGNAL(textEdited(const QString&)), this, SLOT(onDataEdited(const QString&)));
+}
+
+void mdtSqlFieldHandler::setDataWidget(QComboBox* widget)
+{
+  Q_ASSERT(widget != 0);
+
+  mdtSqlFieldHandlerComboBox *w;
+  clear();
+  w = new mdtSqlFieldHandlerComboBox;
+  w->setComboBox(widget);
+  pvDataWidget = w;
+  setDataWidgetAttributes();
+  connect(widget, SIGNAL(currentIndexChanged(const QString&)), this, SLOT(onDataEdited(const QString&)));
+  connect(widget, SIGNAL(editTextChanged(const QString&)), this, SLOT(onDataEdited(const QString&)));
 }
 
 void mdtSqlFieldHandler::setDataWidget(mdtDoubleEdit* widget)
@@ -403,11 +507,13 @@ bool mdtSqlFieldHandler::checkBeforeSubmit()
   return true;
 }
 
-void mdtSqlFieldHandler::setData(const QVariant &data)
+void mdtSqlFieldHandler::setData(const QVariant & data)
 {
   Q_ASSERT(pvDataWidget != 0);
 
+  ///qDebug() << "mdtSqlFieldHandler::setData() - " << data;
   pvDataWidget->setData(data);
+  updateFlags();
 }
 
 QVariant mdtSqlFieldHandler::data() const

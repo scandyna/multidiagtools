@@ -75,7 +75,7 @@ QSqlTableModel *mdtAbstractSqlWidget::model()
 void mdtAbstractSqlWidget::start()
 {
   Q_ASSERT(pvModel != 0);
-  qDebug() << "mdtAbstractSqlWidget::start() - table: " << pvModel->tableName();
+  ///qDebug() << "mdtAbstractSqlWidget::start() - table: " << pvModel->tableName();
   if(pvStateMachine->isRunning()){
     qDebug() << "mdtAbstractSqlWidget::start() - table: " << pvModel->tableName() << " , state machine allready running !";
     return;
@@ -247,11 +247,14 @@ void mdtAbstractSqlWidget::enableLocalEdition()
 
 bool mdtAbstractSqlWidget::allDataAreSaved()
 {
+  if(!pvStateMachine->isRunning()){
+    return true;
+  }
   // Check main SQL widget state
   if(currentState() != mdtAbstractSqlWidget::Visualizing){
     QMessageBox msgBox;
     msgBox.setText(tr("Current record was modified in table '") + userFriendlyTableName() + "'");
-    msgBox.setInformativeText(tr("Please save or cancel your modifications before closing the edition window."));
+    msgBox.setInformativeText(tr("Please save or cancel your modifications before continue."));
     msgBox.setIcon(QMessageBox::Warning);
     msgBox.setStandardButtons(QMessageBox::Ok);
     msgBox.exec();

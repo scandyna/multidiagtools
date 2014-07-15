@@ -31,21 +31,29 @@
 mdtDoubleEdit::mdtDoubleEdit(QWidget* parent)
  : QWidget(parent)
 {
-  QHBoxLayout *l = new QHBoxLayout;
+  QHBoxLayout *l;
 
   // Push buttons layout
+  /**
   QVBoxLayout *pbLayout = new QVBoxLayout;
   pbLayout->setContentsMargins(0, 0, 0, 0);
   pbLayout->setSpacing(0);
-  pbSetInfinity = new QPushButton(" " + infinityString());
+  */
+  pbSetNull = new QPushButton(QChar(0x2205));
   pbSetMinusInfinity = new QPushButton("-" + infinityString());
+  pbSetInfinity = new QPushButton(" " + infinityString());
+  
   // Main layout
+  l = new QHBoxLayout;
+  l->setSpacing(0);
   pvLineEdit = new QLineEdit;
   pvLineEdit->setAlignment(Qt::AlignRight);
   l->addWidget(pvLineEdit);
   l->addWidget(pbSetMinusInfinity);
+  l->addWidget(pbSetNull);
   l->addWidget(pbSetInfinity);
   setLayout(l);
+  connect(pbSetNull, SIGNAL(clicked()), this, SLOT(setNull()));
   connect(pbSetMinusInfinity, SIGNAL(clicked()), this, SLOT(setMinusInfinity()));
   connect(pbSetInfinity, SIGNAL(clicked()), this, SLOT(setInfinity()));
   // Validator
@@ -64,20 +72,6 @@ void mdtDoubleEdit::setReadOnly(bool ro)
   pvLineEdit->setReadOnly(ro);
 }
 
-void mdtDoubleEdit::setUnit(const QString & u)
-{
-  if(u == "w"){
-    setUnit(omega);
-    return;
-  }
-  if(u == "Ohm"){
-    setUnit(OmegaCapital);
-    return;
-  }
-  pvUnit = u;
-  pvValidator->setSuffix(pvUnit);
-}
-
 void mdtDoubleEdit::setUnit(mdtDoubleEdit::unitSymbol_t u)
 {
   switch(u){
@@ -89,6 +83,64 @@ void mdtDoubleEdit::setUnit(mdtDoubleEdit::unitSymbol_t u)
       break;
   }
   pvValidator->setSuffix(pvUnit);
+}
+
+void mdtDoubleEdit::setMinimum(double min)
+{
+  if(min > maximum()){
+    min = maximum();
+  }
+  if(min > -std::numeric_limits<double>::infinity()){
+    pbSetMinusInfinity->setVisible(false);
+  }else{
+    pbSetMinusInfinity->setVisible(true);
+  }
+  if(pvValue < min){
+    pvValue = min;
+  }
+  pvValidator->setBottom(min);
+}
+
+void mdtDoubleEdit::setMinimumToMinusInfinity()
+{
+  setMinimum(-std::numeric_limits<double>::infinity());
+}
+
+double mdtDoubleEdit::minimum() const
+{
+  return pvValidator->bottom();
+}
+
+void mdtDoubleEdit::setMaximum(double max)
+{
+  if(max < minimum()){
+    max = minimum();
+  }
+  if(max < std::numeric_limits<double>::infinity()){
+    pbSetInfinity->setVisible(false);
+  }else{
+    pbSetInfinity->setVisible(true);
+  }
+  if(pvValue > max){
+    pvValue = max;
+  }
+  pvValidator->setTop(max);
+}
+
+void mdtDoubleEdit::setMaximumToInfinity()
+{
+  setMaximum(std::numeric_limits<double>::infinity());
+}
+
+double mdtDoubleEdit::maximum() const
+{
+  return pvValidator->top();
+}
+
+void mdtDoubleEdit::setRange(double min, double max)
+{
+  setMinimum(min);
+  setMaximum(max);
 }
 
 double mdtDoubleEdit::factor(const QChar & c)
@@ -147,7 +199,13 @@ void mdtDoubleEdit::setValueString(const QString & s, bool emitValueChanged)
 
 void mdtDoubleEdit::setValueDouble(double v, bool emitValueChanged)
 {
-  pvValue = v;
+  if(v < minimum()){
+    pvValue = minimum();
+  }else if(v > maximum()){
+    pvValue = maximum();
+  }else{
+    pvValue = v;
+  }
   pvValueIsValid = true;
   displayValue();
   if(emitValueChanged){
@@ -157,6 +215,7 @@ void mdtDoubleEdit::setValueDouble(double v, bool emitValueChanged)
 
 void mdtDoubleEdit::setValue(const QVariant& v, bool emitValueChanged)
 {
+  /**
   if(v.isNull()){
     pvValue = 0.0;
     pvValueIsValid = false;
@@ -166,6 +225,21 @@ void mdtDoubleEdit::setValue(const QVariant& v, bool emitValueChanged)
   }else{
     pvValue = v.toDouble(&pvValueIsValid);
   }
+  displayValue();
+  if(emitValueChanged){
+    emit valueChanged(pvValue, pvValueIsValid);
+  }
+  */
+  if((v.type() == QVariant::Double)||(v.type() == QVariant::Int)||(v.type() == QVariant::LongLong)){
+    setValueDouble(v.toDouble(), emitValueChanged);
+    return;
+  }
+  if(v.type() == QVariant::String){
+    setValueString(v.toString(), emitValueChanged);
+    return;
+  }
+  pvValue = 0.0;
+  pvValueIsValid = false;
   displayValue();
   if(emitValueChanged){
     emit valueChanged(pvValue, pvValueIsValid);
@@ -193,20 +267,45 @@ QString mdtDoubleEdit::infinityString()
   return QChar(0x221E);
 }
 
+void mdtDoubleEdit::setUnit(const QString & u)
+{
+  if(u == "w"){
+    setUnit(omega);
+    return;
+  }
+  if(u == "Ohm"){
+    setUnit(OmegaCapital);
+    return;
+  }
+  pvUnit = u;
+  pvValidator->setSuffix(pvUnit);
+}
+
+void mdtDoubleEdit::setNull()
+{
+  setValue(QVariant(), true);
+}
+
 void mdtDoubleEdit::setMinusInfinity()
 {
+  setValueDouble(-std::numeric_limits<double>::infinity(), true);
+  /**
   pvValue = -std::numeric_limits<double>::infinity();
   pvValueIsValid = true;
   displayValue();
   emit valueChanged(pvValue, pvValueIsValid);
+  */
 }
 
 void mdtDoubleEdit::setInfinity()
 {
+  setValueDouble(std::numeric_limits<double>::infinity(), true);
+  /**
   pvValue = std::numeric_limits<double>::infinity();
   pvValueIsValid = true;
   displayValue();
   emit valueChanged(pvValue, pvValueIsValid);
+  */
 }
 
 void mdtDoubleEdit::setValueFromLineEdit()
@@ -271,7 +370,9 @@ void mdtDoubleEdit::displayValue()
   }
   // Select a power of 10 regarding value - Note: we ignore c and d and h
   x = qAbs<double>(pvValue);
-  if(x < 1.e-15){
+  if(x <= std::numeric_limits<double>::min()){
+    f = 1.0;
+  }else if(x < 1.e-15){
     f = 1.e18;
     fc = 'a';
   }else if(isInRange(x, 1e-15, 1e-12)){
@@ -312,7 +413,9 @@ void mdtDoubleEdit::displayValue()
   }
   // Build string to display
   str.setNum(pvValue * f);
-  str += " ";
+  if((!fc.isNull())||(!pvUnit.isEmpty())){
+    str += " ";
+  }
   if(!fc.isNull()){
     str += fc;
   }

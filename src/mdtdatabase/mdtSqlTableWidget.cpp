@@ -775,10 +775,16 @@ void mdtSqlTableWidget::createLocalEditionElements()
   pbRevert = new QPushButton("Cancel");
   pbRemove = new QPushButton("Delete");
   // As default, functions are disabled
+  /**
   pbInsert->setEnabled(false);
   pbSubmit->setEnabled(false);
   pbRevert->setEnabled(false);
   pbRemove->setEnabled(false);
+  */
+  pbInsert->setVisible(false);
+  pbSubmit->setVisible(false);
+  pbRevert->setVisible(false);
+  pbRemove->setVisible(false);
   // Connect actions enable/disable
   connect(this, SIGNAL(insertEnabledStateChanged(bool)), pbInsert, SLOT(setEnabled(bool)));
   connect(this, SIGNAL(submitEnabledStateChanged(bool)), pbSubmit, SLOT(setEnabled(bool)));
@@ -801,7 +807,7 @@ void mdtSqlTableWidget::createLocalEditionElements()
   pvNavigationLayout->addWidget(pbSubmit);
   pvNavigationLayout->addWidget(pbRevert);
   pvNavigationLayout->addWidget(pbRemove);
-  pvNavigationLayout->addStretch();
+  ///pvNavigationLayout->addStretch();
   // Update buttons first time
   setEditionEnabled(true);
 }
