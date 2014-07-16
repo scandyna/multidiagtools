@@ -23,7 +23,6 @@
 
 #include "mdtError.h"
 #include <QSqlDatabase>
-///#include <QQueue>
 #include <QPair>
 #include <QVariant>
 #include <QList>
@@ -39,6 +38,9 @@
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/tuple/tuple.hpp>
 #include <boost/graph/breadth_first_search.hpp>
+#include <boost/graph/dijkstra_shortest_paths.hpp>
+#include <boost/graph/properties.hpp>
+#include <boost/property_map/property_map.hpp>
 
 class mdtClPathGraphicsConnection;
 class mdtClPathGraphicsLink;
@@ -71,7 +73,6 @@ namespace mdtClPathGraphPrivate
   typedef boost::adjacency_list<
     boost::vecS, boost::vecS, boost::directedS, // OutEdgeList: vecS (std::vector) , VertexList: vecS (std::vector) , Directed: directedS (Directed graph)
     boost::no_property,                         // VertexProperties: no_property (None)
-    ///mdtClPathGraphEdgeData,                     // EdgeProperties: our custom struct
     weigth_property_t,                          // EdgeProperties: edge weigth
     boost::no_property,                         // GraphProperties: no_property (None)
     boost::listS                                // EdgeList: listS (std::list)
@@ -89,13 +90,11 @@ namespace mdtClPathGraphPrivate
     public:
 
       mdtClPathGraphVisitor();
-      ///mdtClPathGraphVisitor(QQueue<mdtClPathGraphEdgeData> *edgeQueue);
       mdtClPathGraphVisitor(QVector<edge_t> *edgeList);
       void examine_edge(edge_t e, const graph_t &g);
 
     private:
 
-      ///QQueue<mdtClPathGraphEdgeData> *pvEdgeQueue;
       QVector<edge_t> *pvVisitedEdgeList;
   };
 };  // end namespace mdtClPathGraphPrivate
@@ -118,6 +117,13 @@ class mdtClPathGraph
    */
   bool loadLinkList();
 
+  /*! \brief Add a link to the graph
+   *
+   * Can be used to add some kind of "ghost links" to the graph.
+   *  For normal usage, only call loadLinkList().
+   */
+  void addLink(const QVariant & startConnectionId, const QVariant & endConnectionId, bool isBidirectional = true, int weight = 1);
+
   /*! \brief Get a list of unit connections IDs that are linked to a given connection
    *
    * Note: fromConnectionId is not included in result.
@@ -134,6 +140,14 @@ class mdtClPathGraph
    * Note: fromConnectorId is not included in result.
    */
   QList<QVariant> getLinkedConnectorIdList(const QVariant & fromConnectorId, bool *ok, const QList<QVariant> & connectionIdListToIgnore = QList<QVariant>());
+
+  /*! \brief Get shorted path from start connection ID to end connection ID
+   *
+   * Will return a list of connections ID that represent
+   *  the shorted path from a connection ID to destination connection ID,
+   *  including given fromConnectionId and toConnectionId.
+   */
+  QList<QVariant> getShortestPath(const QVariant & fromConnectionId, const QVariant & toConnectionId);
 
   /*! \brief Draw the graphic representation starting from a connection
    */
@@ -173,15 +187,11 @@ class mdtClPathGraph
 
   QSqlDatabase pvDatabase;
   QSqlQueryModel *pvLinkListModel;
-  ///QQueue<mdtClPathGraphPrivate::mdtClPathGraphEdgeData> pvEdgeQueue;
   QHash<int, mdtClPathGraphicsConnection *> pvDrawnConnections;
   QGraphicsScene *pvGraphicsScene;
   mdtClPathGraphPrivate::graph_t pvGraph;
   QHash<int, mdtClPathGraphPrivate::vertex_t> pvGraphVertices;
-  
   std::map<mdtClPathGraphPrivate::edge_t, mdtClPathGraphPrivate::mdtClPathGraphEdgeData> pvEdgeDataMap;
-  QVector<mdtClPathGraphPrivate::edge_t> pvVisitedEdgeList;
-  
   mdtError pvLastError;
 };
 

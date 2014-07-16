@@ -118,7 +118,6 @@ void mdtCableListTest::sandbox()
   typedef boost::graph_traits<graph_t>::edge_descriptor edge_t;
 
   typedef boost::property_map<graph_t, boost::vertex_index_t>::type index_map_t;
-
   typedef boost::iterator_property_map<vertex_t*, index_map_t, vertex_t, vertex_t&> predecessor_map_t;
   typedef boost::iterator_property_map<int*, index_map_t, int, int&> distance_map_t;
 
@@ -1348,6 +1347,20 @@ void mdtCableListTest::pathGraphTest()
   QList<QVariant> idList;
   bool ok;
 
+  /*
+   * Testst with free data
+   */
+  // 
+  graph.addLink(1, 2);
+  graph.addLink(2, 3);
+  graph.addLink(1, 3);
+  
+  qDebug() << "Linked cnn from 1: " << graph.getLinkedConnectionIdList(1);
+  qDebug() << "Shortest path from 1->3: " << graph.getShortestPath(1, 3);
+
+  /*
+   * Tests with database data
+   */
   // Scenario
   pvScenario->createSenario();
   // Load link list
