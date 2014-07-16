@@ -384,10 +384,34 @@ bool mdtTtTestNodeUnit::setBusIdToConnection(const QVariant & unitConnectionId, 
   if(!ok){
     return false;
   }
+  // If connection was not found, it was simply not assigned to node (f.ex. a terminal)
+  if(dataList.isEmpty()){
+    return true;
+  }
   Q_ASSERT(dataList.size() == 1);
   record = dataList.at(0);
   // Edit record
   record.setValue("TestNodeBus_Id_FK", busId);
 
   return updateRecord("TestNodeUnitConnection_tbl", record, "UnitConnection_Id_FK_PK", unitConnectionId);
+}
+
+bool mdtTtTestNodeUnit::setBusIdToConnections(const QList<QVariant> & unitConnectionIdLits, const QVariant & busId)
+{
+  int i;
+
+  if(!beginTransaction()){
+    return false;
+  }
+  for(i = 0; i < unitConnectionIdLits.size(); ++i){
+    if(!setBusIdToConnection(unitConnectionIdLits.at(i), busId)){
+      rollbackTransaction();
+      return false;
+    }
+  }
+  if(!commitTransaction()){
+    return false;
+  }
+
+  return true;
 }

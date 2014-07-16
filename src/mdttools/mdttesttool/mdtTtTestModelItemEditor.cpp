@@ -89,6 +89,7 @@ void mdtTtTestModelItemEditor::addTestLink()
 {
   mdtTtTestModelItem tmi(0, database());
   QVariant testModelItemId;
+  QVariant testModelId;
   QVariant testLinkId;
   mdtSqlSelectionDialog selectionDialog(this);
   mdtSqlTableSelection s;
@@ -99,8 +100,13 @@ void mdtTtTestModelItemEditor::addTestLink()
   if(testModelItemId.isNull()){
     return;
   }
+  // Get test model ID
+  testModelId = currentData("TestModelItem_tbl", "TestModel_Id_FK");
+  if(testModelId.isNull()){
+    return;
+  }
   // Setup and show dialog for test link selection
-  sql = tmi.sqlForTestLinkSelection(testModelItemId);
+  sql = tmi.sqlForTestLinkSelection(testModelItemId, testModelId);
   selectionDialog.setMessage(tr("Please select a test link to use."));
   selectionDialog.setQuery(sql, database(), false);
   selectionDialog.setColumnHidden("Id_PK", true);
@@ -493,10 +499,6 @@ bool mdtTtTestModelItemEditor::setupTestItemTable()
   if(!setMainTable("TestModelItem_tbl", "Test item", database())){
     return false;
   }
-  
-  
-  // Force a update
-  ///mainSqlWidget()->setCurrentIndex(mainSqlWidget()->currentRow());
 
   return true;
 }

@@ -28,6 +28,7 @@
 #include "mdtTtTestNodeUnit.h"
 #include "mdtTtTestNodeUnitData.h"
 #include "mdtTtTestNodeUnitDialog.h"
+#include "mdtClPathGraph.h"
 #include <QSqlQueryModel>
 #include <QSqlTableModel>
 #include <QTableView>
@@ -324,10 +325,12 @@ void mdtTtTestNodeEditor::updateConnections()
 void mdtTtTestNodeEditor::setBusToUnitConnection()
 {
   mdtTtTestNodeUnit tnu(0, database());
+  mdtClPathGraph graph(database());
   mdtSqlSelectionDialog selectionDialog;
   QString sql;
   QVariant testNodeId;
   QVariant connectionId;
+  QList<QVariant> connectionIdList;
   QVariant busId;
   QString msg;
 
@@ -355,8 +358,17 @@ void mdtTtTestNodeEditor::setBusToUnitConnection()
   }
   Q_ASSERT(selectionDialog.selection("Id_PK").rowCount() == 1);
   busId = selectionDialog.selection("Id_PK").data(0, "Id_PK");
-  // Update connection
-  if(!tnu.setBusIdToConnection(connectionId, busId)){
+  // Get linked connections
+  if(!graph.loadLinkList()){
+    pvLastError = graph.lastError();
+    displayLastError();
+    return;
+  }
+  connectionIdList = graph.getLinkedConnectionIdList(connectionId);
+  connectionIdList.append(connectionId);
+  qDebug() << "CNN IDs: " << connectionIdList;
+  // Update connections
+  if(!tnu.setBusIdToConnections(connectionIdList, busId)){
     pvLastError = tnu.lastError();
     displayLastError();
     return;
@@ -746,6 +758,7 @@ bool mdtTtTestNodeEditor::setupTestNodeBusTable()
   widget->setColumnHidden("TestNode_Id_FK", true);
   // Set some attributes on table view
   widget->enableLocalEdition();
+  widget->addStretchToLocalBar();
   widget->addColumnToSortOrder("NameEN", Qt::AscendingOrder);
   widget->tableView()->resizeColumnsToContents();
 

@@ -33,13 +33,67 @@ mdtTtTestModelItem::mdtTtTestModelItem(QObject *parent, QSqlDatabase db)
 {
 }
 
-QString mdtTtTestModelItem::sqlForTestLinkSelection(const QVariant & testModelItemId) const
+QString mdtTtTestModelItem::sqlForTestLinkSelection(const QVariant & testModelItemId, const QVariant & testModelId) const
 {
   QString sql;
 
-  sql = "SELECT * FROM TestLink_view WHERE Id_PK NOT IN (";
-  sql += " SELECT TestLink_Id_FK FROM TestModelItem_TestLink_tbl WHERE TestModelItem_Id_FK = " + testModelItemId.toString();
-  sql += ")";
+  sql = "SELECT\n"\
+        " LNK.Id_PK,\n"\
+        " LNK.TestCable_Id_FK,\n"\
+        " LNK.TestConnection_Id_FK,\n"\
+        " LNK.DutConnection_Id_FK,\n"\
+        " LNK.Identification AS TestLinkIdentification,\n"\
+        " LNK.Value AS TestLinkValue,\n"\
+        " UD.SchemaPosition AS DutUnitSchemaPosition,\n"\
+        " UD.Alias AS DutUnitAlias,\n"\
+        " UCD.Name AS DutConnectorName,\n"\
+        " UCNXD.UnitContactName AS DutContactName,\n"\
+        " UTNU.SchemaPosition AS TestNodeUnitSchemaPosition,\n"\
+        " UCT.Name AS TestConnectorName,\n"\
+        " UCNXT.UnitContactName AS TestContactName,\n"\
+        " TNB.NameEN AS Bus,\n"\
+        /**" TNU.IoPosition,\n"\ */
+        " VTN.Type AS TestNodeType,\n"\
+        " VTN.SubType AS TestNodeSubType,\n"\
+        " VTN.SeriesNumber AS TestNodeSeriesNumber,\n"\
+        " TN.NodeIdentification,\n"\
+        " UVT.Type,\n"\
+        " UVT.SubType,\n"\
+        " UVT.SeriesNumber\n"\
+        "FROM TestLink_tbl LNK\n"\
+        " JOIN TestNodeUnitConnection_tbl TNUCNX\n"\
+        "  ON TNUCNX.UnitConnection_Id_FK_PK = LNK.TestConnection_Id_FK\n"\
+        " JOIN UnitConnection_tbl UCNXT\n"\
+        "  ON UCNXT.Id_PK = LNK.TestConnection_Id_FK\n"\
+        " LEFT JOIN UnitConnector_tbl UCT\n"\
+        "  ON UCT.Id_PK = UCNXT.UnitConnector_Id_FK\n"\
+        " JOIN TestNodeUnit_tbl TNU\n"\
+        "  ON TNU.Unit_Id_FK_PK = TNUCNX.TestNodeUnit_Id_FK\n"\
+        " JOIN Unit_tbl UTNU\n"\
+        "  ON UTNU.Id_PK = TNU.Unit_Id_FK_PK\n"\
+        " JOIN TestNode_tbl TN\n"\
+        "  ON TN.VehicleType_Id_FK_PK = TNU.TestNode_Id_FK\n"\
+        " JOIN VehicleType_tbl VTN\n"\
+        "  ON VTN.Id_PK = TN.VehicleType_Id_FK_PK\n"\
+        " LEFT JOIN TestNodeBus_tbl TNB\n"\
+        "  ON TNB.Id_PK = TNUCNX.TestNodeBus_Id_FK\n"\
+        " JOIN TestModel_TestNode_tbl TMTN\n"\
+        "  ON TMTN.TestNode_Id_FK = TN.VehicleType_Id_FK_PK\n"\
+        " JOIN UnitConnection_tbl UCNXD\n"\
+        "  ON UCNXD.Id_PK = LNK.DutConnection_Id_FK\n"\
+        " LEFT JOIN UnitConnector_tbl UCD\n"\
+        "  ON UCD.Id_PK = UCNXD.UnitConnector_Id_FK\n"\
+        " JOIN Unit_tbl UD\n"\
+        "  ON UD.Id_PK = UCNXD.Unit_Id_FK\n"\
+        " JOIN VehicleType_Unit_tbl UVTU\n"\
+        "  ON UVTU.Unit_Id_FK = UD.Id_PK\n"\
+        " JOIN VehicleType_tbl UVT\n"\
+        "  ON UVT.Id_PK = UVTU.VehicleType_Id_FK\n";
+  ///sql = "SELECT * FROM TestLink_view WHERE Id_PK NOT IN (";
+  sql += "WHERE TMTN.TestModel_Id_FK = " + testModelId.toString();
+  sql += " AND LNK.Id_PK NOT IN (";
+  sql += "  SELECT TestLink_Id_FK FROM TestModelItem_TestLink_tbl WHERE TestModelItem_Id_FK = " + testModelItemId.toString();
+  sql += " )";
   /// \todo Ajouter filtre sur une list de test nodes. Voir pour utiliser WHERE TestNode_Id_FK IN (Id1,Id2, ...)
 
   return sql;

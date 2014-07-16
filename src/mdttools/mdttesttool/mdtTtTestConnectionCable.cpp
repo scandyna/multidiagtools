@@ -47,10 +47,12 @@ QString mdtTtTestConnectionCable::sqlForTestNodeUnitSelection(const QVariant & t
         " U.SchemaPosition,\n"\
         " U.Alias,\n"\
         " TNU.Unit_Id_FK_PK,\n"\
+        /**
         " TNUT.NameEN AS TestNodeUnitTypeEN,\n"\
         " TNUT.NameEN AS TestNodeUnitTypeFR,\n"\
         " TNUT.NameEN AS TestNodeUnitTypeDE,\n"\
         " TNUT.NameEN AS TestNodeUnitTypeIT,\n"\
+        */
         " VT.Type,\n"\
         " VT.SubType,\n"\
         " VT.SeriesNumber,\n"\
@@ -61,11 +63,14 @@ QString mdtTtTestConnectionCable::sqlForTestNodeUnitSelection(const QVariant & t
          " JOIN VehicleType_tbl VT\n"\
          "  ON VT.Id_PK = TN.VehicleType_Id_FK_PK\n"\
          " JOIN Unit_tbl U\n"\
-         "  ON U.Id_PK = TNU.Unit_Id_FK_PK\n"\
+         "  ON U.Id_PK = TNU.Unit_Id_FK_PK\n";
+         /**
          " JOIN TestNodeUnitType_tbl TNUT\n"\
          "  ON TNUT.Code_PK = TNU.Type_Code_FK\n";
-  sql += "WHERE Unit_Id_FK_PK NOT IN (";
-  sql += "SELECT TestNodeUnit_Id_FK FROM TestCable_TestNodeUnit_tbl WHERE TestCable_Id_FK = " + testCableId.toString();
+         */
+  sql += "WHERE Type_Code_FK = 'TESTCONNECTOR' ";
+  sql += "AND Unit_Id_FK_PK NOT IN (";
+  sql += " SELECT TestNodeUnit_Id_FK FROM TestCable_TestNodeUnit_tbl WHERE TestCable_Id_FK = " + testCableId.toString();
   sql += ")";
 
   return sql;

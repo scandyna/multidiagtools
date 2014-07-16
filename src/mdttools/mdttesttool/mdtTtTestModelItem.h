@@ -42,9 +42,10 @@ class mdtTtTestModelItem : public mdtTtBase
   /*! \brief Get SQL statement for test link selection.
    *
    * List all test links that not exists in TestModelItem_TestLink_tbl
-   *  for given test model item ID
+   *  for given test model item ID, and that exist in TestModel_TestNode_tbl
+   *  for given TestModel ID.
    */
-  QString sqlForTestLinkSelection(const QVariant & testModelItemId) const;
+  QString sqlForTestLinkSelection(const QVariant & testModelItemId, const QVariant & testModelId) const;
 
   /*! \brief Get SQL statement for test node unit selection
    *

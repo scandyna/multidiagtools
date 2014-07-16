@@ -112,6 +112,10 @@ class mdtTtTestNodeUnit : public mdtTtBase
    */
   bool setBusIdToConnection(const QVariant & unitConnectionId, const QVariant & busId);
 
+  /*! \brief Set bus ID to given connection ID list
+   */
+  bool setBusIdToConnections(const QList<QVariant> & unitConnectionIdLits, const QVariant & busId);
+
  private:
 
   Q_DISABLE_COPY(mdtTtTestNodeUnit);

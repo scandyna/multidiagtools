@@ -74,6 +74,7 @@ bool mdtClConnectorEditor::setupConnectorContactTable()
   Q_ASSERT(widget != 0);
   // Enable edition
   widget->enableLocalEdition();
+  widget->addStretchToLocalBar();
   // Hide technical fields
   widget->setColumnHidden("Id_PK", true);
   widget->setColumnHidden("Connector_Id_FK", true);

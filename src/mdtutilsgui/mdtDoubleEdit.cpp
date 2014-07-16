@@ -33,16 +33,9 @@ mdtDoubleEdit::mdtDoubleEdit(QWidget* parent)
 {
   QHBoxLayout *l;
 
-  // Push buttons layout
-  /**
-  QVBoxLayout *pbLayout = new QVBoxLayout;
-  pbLayout->setContentsMargins(0, 0, 0, 0);
-  pbLayout->setSpacing(0);
-  */
   pbSetNull = new QPushButton(QChar(0x2205));
   pbSetMinusInfinity = new QPushButton("-" + infinityString());
   pbSetInfinity = new QPushButton(" " + infinityString());
-  
   // Main layout
   l = new QHBoxLayout;
   l->setSpacing(0);
@@ -215,21 +208,6 @@ void mdtDoubleEdit::setValueDouble(double v, bool emitValueChanged)
 
 void mdtDoubleEdit::setValue(const QVariant& v, bool emitValueChanged)
 {
-  /**
-  if(v.isNull()){
-    pvValue = 0.0;
-    pvValueIsValid = false;
-  }else if(v.type() == QVariant::String){
-    setValueString(v.toString(), true);
-    return;
-  }else{
-    pvValue = v.toDouble(&pvValueIsValid);
-  }
-  displayValue();
-  if(emitValueChanged){
-    emit valueChanged(pvValue, pvValueIsValid);
-  }
-  */
   if((v.type() == QVariant::Double)||(v.type() == QVariant::Int)||(v.type() == QVariant::LongLong)){
     setValueDouble(v.toDouble(), emitValueChanged);
     return;
@@ -289,23 +267,11 @@ void mdtDoubleEdit::setNull()
 void mdtDoubleEdit::setMinusInfinity()
 {
   setValueDouble(-std::numeric_limits<double>::infinity(), true);
-  /**
-  pvValue = -std::numeric_limits<double>::infinity();
-  pvValueIsValid = true;
-  displayValue();
-  emit valueChanged(pvValue, pvValueIsValid);
-  */
 }
 
 void mdtDoubleEdit::setInfinity()
 {
   setValueDouble(std::numeric_limits<double>::infinity(), true);
-  /**
-  pvValue = std::numeric_limits<double>::infinity();
-  pvValueIsValid = true;
-  displayValue();
-  emit valueChanged(pvValue, pvValueIsValid);
-  */
 }
 
 void mdtDoubleEdit::setValueFromLineEdit()

@@ -106,7 +106,6 @@ QValidator::State mdtDoubleValidator::validate(QString & input, int & pos) const
   inputCpy = inputCpy.trimmed();
   // Validate number
   s = pvValidator.validate(inputCpy, posCpy);
-  ///qDebug() << "inputCpy: " << inputCpy << " , posCpy: " << posCpy << " , state: " << s;
 
   return s;
 }

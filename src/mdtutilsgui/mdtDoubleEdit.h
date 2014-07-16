@@ -24,7 +24,6 @@
 #include <QWidget>
 #include <QString>
 #include <QVariant>
-///#include <QDesignerCustomWidgetInterface>
 
 class QLineEdit;
 class QPushButton;
@@ -32,7 +31,7 @@ class mdtDoubleValidator;
 
 /*! \brief Input box for double values
  */
-class /**QDESIGNER_WIDGET_EXPORT*/ mdtDoubleEdit : public QWidget
+class mdtDoubleEdit : public QWidget
 {
  Q_OBJECT
 
@@ -194,7 +193,7 @@ class /**QDESIGNER_WIDGET_EXPORT*/ mdtDoubleEdit : public QWidget
    */
   void displayValue();
 
-  /*! \Check if x is in given range from min to max
+  /*! \brief Check if x is in given range from min to max
    *
    * Returns true if x is [min, max[
    */

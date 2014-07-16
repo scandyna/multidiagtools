@@ -78,7 +78,7 @@ void mdtTtTestConnectionCableEditor::addTestNodeUnit()
   // Setup and show dialog
   sql = tcc.sqlForTestNodeUnitSelection(testCableId);
   selectionDialog.setQuery(sql, database(), false);
-  selectionDialog.setMessage(tr("Select a unit that is a test connector:"));
+  selectionDialog.setMessage(tr("Select test connector to use:"));
   selectionDialog.setColumnHidden("SeriesNumber", true);
   selectionDialog.setColumnHidden("Unit_Id_FK_PK", true);
   selectionDialog.setHeaderData("Type", tr("Test system"));
@@ -89,6 +89,8 @@ void mdtTtTestConnectionCableEditor::addTestNodeUnit()
   selectionDialog.setHeaderData("TestNodeUnitTypeFR", tr("Type\n(Frensh)"));
   selectionDialog.setHeaderData("TestNodeUnitTypeDE", tr("Type\n(German)"));
   selectionDialog.setHeaderData("TestNodeUnitTypeIT", tr("Type\n(Italian)"));
+  selectionDialog.addColumnToSortOrder("Type", Qt::AscendingOrder);
+  selectionDialog.addColumnToSortOrder("SubType", Qt::AscendingOrder);
   selectionDialog.addColumnToSortOrder("SchemaPosition", Qt::AscendingOrder);
   selectionDialog.sort();
   selectionDialog.resize(800, 400);

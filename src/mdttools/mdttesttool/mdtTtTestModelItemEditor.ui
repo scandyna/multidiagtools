@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>429</width>
-    <height>153</height>
+    <height>126</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -60,9 +60,6 @@
       <string>Unit:</string>
      </property>
     </widget>
-   </item>
-   <item row="5" column="1">
-    <widget class="QLineEdit" name="fld_ValueUnitOLD"/>
    </item>
    <item row="4" column="1">
     <widget class="QComboBox" name="fld_ValueUnit">
@@ -160,7 +157,6 @@
  <tabstops>
   <tabstop>fld_SequenceNumber</tabstop>
   <tabstop>fld_DesignationEN</tabstop>
-  <tabstop>fld_ValueUnitOLD</tabstop>
  </tabstops>
  <resources/>
  <connections>
