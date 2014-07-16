@@ -23,15 +23,17 @@
 
 #include "mdtError.h"
 #include <QSqlDatabase>
-#include <QQueue>
+///#include <QQueue>
 #include <QPair>
 #include <QVariant>
 #include <QList>
+#include <QVector>
 #include <QStringList>
 #include <QHash>
 #include <boost/config.hpp>
 #include <vector>
 #include <string>
+#include <map>
 #include <utility> // std::pair
 #include <boost/graph/graph_traits.hpp>
 #include <boost/graph/adjacency_list.hpp>
@@ -61,13 +63,16 @@ namespace mdtClPathGraphPrivate
     bool isComplement;
   };
 
+  typedef boost::property<boost::edge_weight_t, int> weigth_property_t;
+
   /*
    * Boost graph
    */
   typedef boost::adjacency_list<
     boost::vecS, boost::vecS, boost::directedS, // OutEdgeList: vecS (std::vector) , VertexList: vecS (std::vector) , Directed: directedS (Directed graph)
     boost::no_property,                         // VertexProperties: no_property (None)
-    mdtClPathGraphEdgeData,                     // EdgeProperties: our custom struct
+    ///mdtClPathGraphEdgeData,                     // EdgeProperties: our custom struct
+    weigth_property_t,                          // EdgeProperties: edge weigth
     boost::no_property,                         // GraphProperties: no_property (None)
     boost::listS                                // EdgeList: listS (std::list)
   > graph_t;
@@ -84,12 +89,14 @@ namespace mdtClPathGraphPrivate
     public:
 
       mdtClPathGraphVisitor();
-      mdtClPathGraphVisitor(QQueue<mdtClPathGraphEdgeData> *edgeQueue);
+      ///mdtClPathGraphVisitor(QQueue<mdtClPathGraphEdgeData> *edgeQueue);
+      mdtClPathGraphVisitor(QVector<edge_t> *edgeList);
       void examine_edge(edge_t e, const graph_t &g);
 
     private:
 
-      QQueue<mdtClPathGraphEdgeData> *pvEdgeQueue;
+      ///QQueue<mdtClPathGraphEdgeData> *pvEdgeQueue;
+      QVector<edge_t> *pvVisitedEdgeList;
   };
 };  // end namespace mdtClPathGraphPrivate
 
@@ -166,11 +173,15 @@ class mdtClPathGraph
 
   QSqlDatabase pvDatabase;
   QSqlQueryModel *pvLinkListModel;
-  QQueue<mdtClPathGraphPrivate::mdtClPathGraphEdgeData> pvEdgeQueue;
+  ///QQueue<mdtClPathGraphPrivate::mdtClPathGraphEdgeData> pvEdgeQueue;
   QHash<int, mdtClPathGraphicsConnection *> pvDrawnConnections;
   QGraphicsScene *pvGraphicsScene;
   mdtClPathGraphPrivate::graph_t pvGraph;
   QHash<int, mdtClPathGraphPrivate::vertex_t> pvGraphVertices;
+  
+  std::map<mdtClPathGraphPrivate::edge_t, mdtClPathGraphPrivate::mdtClPathGraphEdgeData> pvEdgeDataMap;
+  QVector<mdtClPathGraphPrivate::edge_t> pvVisitedEdgeList;
+  
   mdtError pvLastError;
 };
 

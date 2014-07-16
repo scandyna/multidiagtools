@@ -42,22 +42,32 @@ using namespace mdtClPathGraphPrivate;
 
 mdtClPathGraphVisitor::mdtClPathGraphVisitor()
 {
-  pvEdgeQueue = 0;
+  ///pvEdgeQueue = 0;
+  pvVisitedEdgeList = 0;
 }
 
+/**
 mdtClPathGraphVisitor::mdtClPathGraphVisitor(QQueue<mdtClPathGraphEdgeData> *edgeQueue)
 {
   Q_ASSERT(edgeQueue != 0);
-
   pvEdgeQueue = edgeQueue;
 }
+*/
 
-void mdtClPathGraphVisitor::examine_edge(edge_t e, const graph_t &g)
+mdtClPathGraphVisitor::mdtClPathGraphVisitor(QVector<edge_t> *edgeList)
 {
-  Q_ASSERT(pvEdgeQueue != 0);
+  Q_ASSERT(edgeList != 0);
+  pvVisitedEdgeList = edgeList;
+}
 
-  mdtClPathGraphEdgeData edgeData = g[e];
-  pvEdgeQueue->enqueue(edgeData);
+void mdtClPathGraphVisitor::examine_edge(edge_t e, const graph_t & g)
+{
+  ///Q_ASSERT(pvEdgeQueue != 0);
+  Q_ASSERT(pvVisitedEdgeList != 0);
+
+  ///mdtClPathGraphEdgeData edgeData = g[e];
+  ///pvEdgeQueue->enqueue(edgeData);
+  pvVisitedEdgeList->append(e);
 }
 
 
@@ -86,6 +96,7 @@ bool mdtClPathGraph::loadLinkList()
   QModelIndex index;
   QVariant data;
   mdtClPathGraphEdgeData edgeData;
+  std::pair<edge_t, bool> ep;       // To get edge added with add_edge()
   vertex_t startVertex, endVertex;
   edge_t edge;
   int startConnectionId, endConnectionId;
@@ -151,13 +162,21 @@ bool mdtClPathGraph::loadLinkList()
     edgeData.endConnectionId = data;
     // Add edge
     edgeData.isComplement = false;
-    boost::add_edge(startVertex, endVertex, edgeData, pvGraph);
+    ///boost::add_edge(startVertex, endVertex, edgeData, pvGraph);
+    ep = boost::add_edge(startVertex, endVertex, 1, pvGraph);   // We add links with a weight of 1
+    Q_ASSERT(ep.second);
+    pvEdgeDataMap.insert(std::pair<edge_t, mdtClPathGraphEdgeData>(ep.first, edgeData));
+    
     // Add complement edge if link is bidirectinnal
     index = pvLinkListModel->index(row, 2);
     data = pvLinkListModel->data(index);
     if(data.toString() == "BID"){
       edgeData.isComplement = true;
-      boost::add_edge(endVertex, startVertex, edgeData, pvGraph);
+      ///boost::add_edge(endVertex, startVertex, edgeData, pvGraph);
+      ep = boost::add_edge(endVertex, startVertex, 1, pvGraph);   // We add links with a weight of 1
+      Q_ASSERT(ep.second);
+      pvEdgeDataMap.insert(std::pair<edge_t, mdtClPathGraphEdgeData>(ep.first, edgeData));
+      
     }
     // Fetch more data if possible
     if((row > 0)&&(pvLinkListModel->canFetchMore())){
@@ -171,9 +190,11 @@ bool mdtClPathGraph::loadLinkList()
 QList<QVariant> mdtClPathGraph::getLinkedConnectionIdList(const QVariant & fromConnectionId)
 {
   QList<QVariant> connectionIdList;
-  mdtClPathGraphEdgeData edge;
-  mdtClPathGraphVisitor visitor(&pvEdgeQueue);
+  mdtClPathGraphEdgeData edgeData;
+  ///mdtClPathGraphVisitor visitor(&pvEdgeQueue);
+  mdtClPathGraphVisitor visitor(&pvVisitedEdgeList);
   vertex_t vertex;
+  int i;
 
   // Check if we have requested connection ID in the graph
   if(!pvGraphVertices.contains(fromConnectionId.toInt())){
@@ -186,10 +207,13 @@ QList<QVariant> mdtClPathGraph::getLinkedConnectionIdList(const QVariant & fromC
   }
   vertex = pvGraphVertices.value(fromConnectionId.toInt());
   // Clear previous results
-  pvEdgeQueue.clear();
+  ///pvEdgeQueue.clear();
+  pvVisitedEdgeList.clear();
+  
   // Proceed BFS
   breadth_first_search(pvGraph, vertex, boost::visitor(visitor));
   // Get connections
+  /**
   while(!pvEdgeQueue.isEmpty()){
     edge = pvEdgeQueue.dequeue();
     Q_ASSERT(!edge.startConnectionId.isNull());
@@ -200,6 +224,21 @@ QList<QVariant> mdtClPathGraph::getLinkedConnectionIdList(const QVariant & fromC
       }
       if((edge.endConnectionId != fromConnectionId)&&(!connectionIdList.contains(edge.endConnectionId))){
         connectionIdList.append(edge.endConnectionId);
+      }
+    }
+  }
+  */
+  
+  for(i = 0; i < pvVisitedEdgeList.size(); ++i){
+    edgeData = pvEdgeDataMap.at(pvVisitedEdgeList.at(i));
+    Q_ASSERT(!edgeData.startConnectionId.isNull());
+    Q_ASSERT(!edgeData.endConnectionId.isNull());
+    if(!edgeData.isComplement){
+      if((edgeData.startConnectionId != fromConnectionId)&&(!connectionIdList.contains(edgeData.startConnectionId))){
+        connectionIdList.append(edgeData.startConnectionId);
+      }
+      if((edgeData.endConnectionId != fromConnectionId)&&(!connectionIdList.contains(edgeData.endConnectionId))){
+        connectionIdList.append(edgeData.endConnectionId);
       }
     }
   }
@@ -254,12 +293,14 @@ QList<QVariant> mdtClPathGraph::getLinkedConnectorIdList(const QVariant & fromCo
 
 bool mdtClPathGraph::drawPath(const QVariant & fromConnectionId)
 {
-  mdtClPathGraphEdgeData edge;
+  mdtClPathGraphEdgeData edgeData;
   mdtClPathGraphicsConnection *startConnection, *endConnection;
   mdtClPathGraphicsLink *link;
   int startConnectionId, endConnectionId;
-  mdtClPathGraphVisitor visitor(&pvEdgeQueue);
+  ///mdtClPathGraphVisitor visitor(&pvEdgeQueue);
+  mdtClPathGraphVisitor visitor(&pvVisitedEdgeList);
   vertex_t vertex;
+  int i;
 
   // Check if we have requested connection ID in the graph
   if(!pvGraphVertices.contains(fromConnectionId.toInt())){
@@ -272,12 +313,15 @@ bool mdtClPathGraph::drawPath(const QVariant & fromConnectionId)
   }
   vertex = pvGraphVertices.value(fromConnectionId.toInt());
   // Clear previous results
-  pvEdgeQueue.clear();
+  ///pvEdgeQueue.clear();
+  pvVisitedEdgeList.clear();
+  
   pvDrawnConnections.clear();
   pvGraphicsScene->clear();
   // Proceed BFS
   breadth_first_search(pvGraph, vertex, boost::visitor(visitor));
   // draw ...
+  /**
   while(!pvEdgeQueue.isEmpty()){
     edge = pvEdgeQueue.dequeue();
     Q_ASSERT(!edge.startConnectionId.isNull());
@@ -288,6 +332,39 @@ bool mdtClPathGraph::drawPath(const QVariant & fromConnectionId)
       startConnection = pvDrawnConnections.value(startConnectionId, 0);
       // Try to get end connection
       endConnectionId = edge.endConnectionId.toInt();
+      endConnection = pvDrawnConnections.value(endConnectionId, 0);
+      // Create missing connections
+      if((startConnection == 0)&&(endConnection == 0)){
+        startConnection = newConnectionItem(startConnectionId, 0, false);
+        endConnection = newConnectionItem(endConnectionId, startConnection, false);
+      }else if(startConnection == 0){
+        Q_ASSERT(endConnection != 0);
+        startConnection = newConnectionItem(startConnectionId, endConnection, false);
+      }else{
+        Q_ASSERT(startConnection != 0);
+        endConnection = newConnectionItem(endConnectionId, startConnection, false);
+      }
+      Q_ASSERT(startConnection != 0);
+      Q_ASSERT(endConnection != 0);
+      // Draw link
+      link = new mdtClPathGraphicsLink(startConnection, endConnection);
+      pvGraphicsScene->addItem(link);
+      // Set connections and link data
+      setGraphicsItemsData(startConnection, endConnection, link, startConnectionId, endConnectionId);
+    }
+  }
+  */
+
+  for(i = 0; i < pvVisitedEdgeList.size(); ++i){
+    edgeData = pvEdgeDataMap.at(pvVisitedEdgeList.at(i));
+    Q_ASSERT(!edgeData.startConnectionId.isNull());
+    Q_ASSERT(!edgeData.endConnectionId.isNull());
+    if(!edgeData.isComplement){
+      // Try to get startConnection
+      startConnectionId = edgeData.startConnectionId.toInt();
+      startConnection = pvDrawnConnections.value(startConnectionId, 0);
+      // Try to get end connection
+      endConnectionId = edgeData.endConnectionId.toInt();
       endConnection = pvDrawnConnections.value(endConnectionId, 0);
       // Create missing connections
       if((startConnection == 0)&&(endConnection == 0)){

@@ -101,14 +101,12 @@ void mdtCableListTest::cleanupTestCase()
 void mdtCableListTest::sandbox()
 {
   typedef boost::property<boost::edge_weight_t, int> weigth_property_t;
-  ///typedef boost::property<boost::vertex_name_t, std::string> name_property_t;
 
   /*
    * Boost graph
    */
   typedef boost::adjacency_list<
     boost::vecS, boost::vecS, boost::directedS, // OutEdgeList: vecS (std::vector) , VertexList: vecS (std::vector) , Directed: directedS (Directed graph)
-    ///name_property_t,                            // VertexProperties: 
     boost::no_property,                         // VertexProperties: no_property (None)
     weigth_property_t,                          // EdgeProperties: 
     boost::no_property,                         // GraphProperties: no_property (None)
@@ -120,7 +118,6 @@ void mdtCableListTest::sandbox()
   typedef boost::graph_traits<graph_t>::edge_descriptor edge_t;
 
   typedef boost::property_map<graph_t, boost::vertex_index_t>::type index_map_t;
-  ///typedef boost::property_map<graph_t, boost::vertex_name_t>::type name_map_t;
 
   typedef boost::iterator_property_map<vertex_t*, index_map_t, vertex_t, vertex_t&> predecessor_map_t;
   typedef boost::iterator_property_map<int*, index_map_t, int, int&> distance_map_t;
@@ -128,23 +125,43 @@ void mdtCableListTest::sandbox()
   // Create graph
   graph_t g;
 
-  // Add named vertices
-  /**
-  vertex_t v0 = boost::add_vertex(std::string("v0"), g);
-  vertex_t v1 = boost::add_vertex(std::string("v1"), g);
-  vertex_t v2 = boost::add_vertex(std::string("v2"), g);
-  vertex_t v3 = boost::add_vertex(std::string("v3"), g);
-  */
+  // Create and add vertices
   vertex_t v0 = boost::add_vertex(g);
   vertex_t v1 = boost::add_vertex(g);
   vertex_t v2 = boost::add_vertex(g);
   vertex_t v3 = boost::add_vertex(g);
+
+  // Create vertices data map
+  std::map<vertex_t, QVariant> vertexDataMap;
+
+  vertexDataMap.insert(std::pair<vertex_t, QVariant>(v0, "Sommet 0"));
+  vertexDataMap.insert(std::pair<vertex_t, QVariant>(v1, "Sommet 1"));
+  vertexDataMap.insert(std::pair<vertex_t, QVariant>(v2, "Sommet 2"));
+  vertexDataMap.insert(std::pair<vertex_t, QVariant>(v3, "Sommet 3"));
 
   // Add weighted edges
   boost::add_edge(v0, v1, 5, g);
   boost::add_edge(v1, v3, 3, g);
   boost::add_edge(v0, v2, 2, g);
   boost::add_edge(v2, v3, 4, g);
+
+  // Create edges data map
+  std::map<edge_t, QVariant> edgeDataMap;
+  std::pair<edge_t, bool> ep;
+
+  ep = boost::edge(v0, v1, g);
+  Q_ASSERT(ep.second);
+  edgeDataMap.insert(std::pair<edge_t, QVariant>(ep.first, "Edge v0-v1"));
+  ep = boost::edge(v1, v3, g);
+  Q_ASSERT(ep.second);
+  edgeDataMap.insert(std::pair<edge_t, QVariant>(ep.first, "Edge v1-v3"));
+  ep = boost::edge(v0, v2, g);
+  Q_ASSERT(ep.second);
+  edgeDataMap.insert(std::pair<edge_t, QVariant>(ep.first, "Edge v0-v2"));
+  ep = boost::edge(v2, v3, g);
+  Q_ASSERT(ep.second);
+  edgeDataMap.insert(std::pair<edge_t, QVariant>(ep.first, "Edge v2-v3"));
+
 
   // Create things for Dijkstra
   std::vector<vertex_t> predecessors(boost::num_vertices(g)); // To store parents
@@ -161,53 +178,12 @@ void mdtCableListTest::sandbox()
    */
   boost::dijkstra_shortest_paths(g, v0, boost::distance_map(distanceMap).predecessor_map(predecessorMap));
 
-  // Output results
-  std::cout << "Distances and parents:" << std::endl;
-  ///name_map_t nameMap = boost::get(boost::vertex_name, g);
-  
-  /**
-  std::cout << std::endl;
-  std::cout << "boost::get(boost::vertex_name, g)[v0]: " << boost::get(boost::vertex_name, g)[v0] << std::endl;
-  std::cout << "boost::get(boost::vertex_index, g)[v0]: " << boost::get(boost::vertex_index, g)[v0] << std::endl;
-  std::cout << "boost::get(boost::vertex_index, g)[v1]: " << boost::get(boost::vertex_index, g)[v1] << std::endl;
-  std::cout << "boost::get(boost::vertex_index, g)[v2]: " << boost::get(boost::vertex_index, g)[v2] << std::endl;
-  std::cout << std::endl;
-  */
-  
-  std::map<vertex_t, QVariant> vertexMap;
-  vertexMap.insert(std::pair<vertex_t, QVariant>(v0, "Sommet 0"));
-  vertexMap.insert(std::pair<vertex_t, QVariant>(v1, "Sommet 1"));
-  vertexMap.insert(std::pair<vertex_t, QVariant>(v2, "Sommet 2"));
-  for(auto &v : vertexMap){
-    qDebug() << "key: " << v.first << ", val: " << v.second;
-  }
-  
-  std::map<edge_t, QVariant> edgeMap;
-  std::pair<edge_t, bool> ep;
-  
-  ep = boost::edge(v0, v1, g);
-  if(ep.second){
-    edgeMap.insert(std::pair<edge_t, QVariant>(ep.first, "Edge v0-v1"));
-  }
-  ep = boost::edge(v0, v2, g);
-  if(ep.second){
-    edgeMap.insert(std::pair<edge_t, QVariant>(ep.first, "Edge v0-v2"));
-  }
-  ep = boost::edge(v0, v3, g);
-  if(ep.second){
-    edgeMap.insert(std::pair<edge_t, QVariant>(ep.first, "Edge v0-v3"));
-  }
-  ep = boost::edge(v2, v1, g);
-  if(ep.second){
-    edgeMap.insert(std::pair<edge_t, QVariant>(ep.first, "Edge v2-v1"));
-  }
-
-  for(auto &e : edgeMap){
-    ///qDebug() << "key: " << e.first << ", val: " << e.second;
-    qDebug() << "val: " << e.second;
+  for(auto & v : vertexDataMap){
+    qDebug() << "Distance(" << vertexDataMap.at(v0) << ", " << v.second << "): " << distanceMap[v.first];
   }
 
   BGL_FORALL_VERTICES(v, g, graph_t){
+    ///qDebug() << "Distance(" << vertexDataMap.at(v).second << ", ";
     ///std::cout << "distance(" << nameMap[v0] << ", " << nameMap[v] << "): " << distanceMap[v];
     ///std::cout << ", predecessor(" << nameMap[v] << "): " << nameMap[predecessorMap[v]] << std::endl;
   }
@@ -215,19 +191,22 @@ void mdtCableListTest::sandbox()
 
   // Extract a shortest path
   typedef std::vector<edge_t> path_type_t;
-
   path_type_t path;
+  ///std::vector<edge_t> path;
 
   vertex_t v = v3;  // We want to start at the destination and work our way back to the source
   for(vertex_t u = predecessorMap[v]; u != v; v = u, u = predecessorMap[v]){
-    std::pair<edge_t, bool> edgePair = boost::edge(u, v, g);
-    edge_t e = edgePair.first;
+    std::pair<edge_t, bool> ep = boost::edge(u, v, g);
+    edge_t e = ep.first;
     path.push_back(e);
   }
 
   std::cout << "Shortest path from v0 to v3:" << std::endl;
-  int totalDistance = 0;
   for(path_type_t::reverse_iterator it = path.rbegin(); it != path.rend(); ++it){
+    vertex_t vs, ve;
+    vs = boost::source(*it, g);
+    ve = boost::target(*it, g);
+    qDebug() << vertexDataMap.at(vs) << " -> " << vertexDataMap.at(ve) << ": " << boost::get(boost::edge_weight, g, *it);
     ///std::cout << nameMap[boost::source(*it, g)] << " -> " << nameMap[boost::target(*it, g)] << ": " << boost::get(boost::edge_weight, g, *it) << std::endl;
   }
   std::cout << std::endl;
