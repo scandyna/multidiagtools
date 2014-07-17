@@ -68,22 +68,6 @@
 
 #include <QDebug>
 
-
-/**
- * Sanbox only
- */
-#include <boost/config.hpp>
-#include <boost/graph/adjacency_list.hpp>
-#include <boost/graph/dijkstra_shortest_paths.hpp>
-#include <boost/graph/graph_traits.hpp>
-#include <boost/graph/iteration_macros.hpp>
-#include <boost/graph/properties.hpp>
-#include <boost/property_map/property_map.hpp>
-#include <iostream>
-#include <utility>
-#include <vector>
-
-
 void mdtCableListTest::initTestCase()
 {
   createDatabaseSchema();
@@ -95,126 +79,6 @@ void mdtCableListTest::cleanupTestCase()
 {
   delete pvScenario;
 }
-
-
-
-void mdtCableListTest::sandbox()
-{
-  typedef boost::property<boost::edge_weight_t, int> weigth_property_t;
-
-  /*
-   * Boost graph
-   */
-  typedef boost::adjacency_list<
-    boost::vecS, boost::vecS, boost::directedS, // OutEdgeList: vecS (std::vector) , VertexList: vecS (std::vector) , Directed: directedS (Directed graph)
-    boost::no_property,                         // VertexProperties: no_property (None)
-    weigth_property_t,                          // EdgeProperties: 
-    boost::no_property,                         // GraphProperties: no_property (None)
-    boost::listS                                // EdgeList: listS (std::list)
-  > graph_t;
-
-  // Set vertex and edge types
-  typedef boost::graph_traits<graph_t>::vertex_descriptor vertex_t;
-  typedef boost::graph_traits<graph_t>::edge_descriptor edge_t;
-
-  typedef boost::property_map<graph_t, boost::vertex_index_t>::type index_map_t;
-  typedef boost::iterator_property_map<vertex_t*, index_map_t, vertex_t, vertex_t&> predecessor_map_t;
-  typedef boost::iterator_property_map<int*, index_map_t, int, int&> distance_map_t;
-
-  // Create graph
-  graph_t g;
-
-  // Create and add vertices
-  vertex_t v0 = boost::add_vertex(g);
-  vertex_t v1 = boost::add_vertex(g);
-  vertex_t v2 = boost::add_vertex(g);
-  vertex_t v3 = boost::add_vertex(g);
-
-  // Create vertices data map
-  std::map<vertex_t, QVariant> vertexDataMap;
-
-  vertexDataMap.insert(std::pair<vertex_t, QVariant>(v0, "Sommet 0"));
-  vertexDataMap.insert(std::pair<vertex_t, QVariant>(v1, "Sommet 1"));
-  vertexDataMap.insert(std::pair<vertex_t, QVariant>(v2, "Sommet 2"));
-  vertexDataMap.insert(std::pair<vertex_t, QVariant>(v3, "Sommet 3"));
-
-  // Add weighted edges
-  boost::add_edge(v0, v1, 5, g);
-  boost::add_edge(v1, v3, 3, g);
-  boost::add_edge(v0, v2, 2, g);
-  boost::add_edge(v2, v3, 4, g);
-
-  // Create edges data map
-  std::map<edge_t, QVariant> edgeDataMap;
-  std::pair<edge_t, bool> ep;
-
-  ep = boost::edge(v0, v1, g);
-  Q_ASSERT(ep.second);
-  edgeDataMap.insert(std::pair<edge_t, QVariant>(ep.first, "Edge v0-v1"));
-  ep = boost::edge(v1, v3, g);
-  Q_ASSERT(ep.second);
-  edgeDataMap.insert(std::pair<edge_t, QVariant>(ep.first, "Edge v1-v3"));
-  ep = boost::edge(v0, v2, g);
-  Q_ASSERT(ep.second);
-  edgeDataMap.insert(std::pair<edge_t, QVariant>(ep.first, "Edge v0-v2"));
-  ep = boost::edge(v2, v3, g);
-  Q_ASSERT(ep.second);
-  edgeDataMap.insert(std::pair<edge_t, QVariant>(ep.first, "Edge v2-v3"));
-
-
-  // Create things for Dijkstra
-  std::vector<vertex_t> predecessors(boost::num_vertices(g)); // To store parents
-  std::vector<int> distances(boost::num_vertices(g));         // To store distances
-
-  index_map_t indexMap = boost::get(boost::vertex_index, g);
-  predecessor_map_t predecessorMap(&predecessors[0], indexMap);
-  distance_map_t distanceMap(&distances[0], indexMap);
-
-  /*
-   * Calcule du chemin le plus court partant de v0 vers tous les somets.
-   * Les résultats seront disponibles dans predecessors et distances.
-   * .........
-   */
-  boost::dijkstra_shortest_paths(g, v0, boost::distance_map(distanceMap).predecessor_map(predecessorMap));
-
-  for(auto & v : vertexDataMap){
-    qDebug() << "Distance(" << vertexDataMap.at(v0) << ", " << v.second << "): " << distanceMap[v.first];
-  }
-
-  BGL_FORALL_VERTICES(v, g, graph_t){
-    ///qDebug() << "Distance(" << vertexDataMap.at(v).second << ", ";
-    ///std::cout << "distance(" << nameMap[v0] << ", " << nameMap[v] << "): " << distanceMap[v];
-    ///std::cout << ", predecessor(" << nameMap[v] << "): " << nameMap[predecessorMap[v]] << std::endl;
-  }
-  std::cout << std::endl;
-
-  // Extract a shortest path
-  typedef std::vector<edge_t> path_type_t;
-  path_type_t path;
-  ///std::vector<edge_t> path;
-
-  vertex_t v = v3;  // We want to start at the destination and work our way back to the source
-  for(vertex_t u = predecessorMap[v]; u != v; v = u, u = predecessorMap[v]){
-    std::pair<edge_t, bool> ep = boost::edge(u, v, g);
-    edge_t e = ep.first;
-    path.push_back(e);
-  }
-
-  std::cout << "Shortest path from v0 to v3:" << std::endl;
-  for(path_type_t::reverse_iterator it = path.rbegin(); it != path.rend(); ++it){
-    vertex_t vs, ve;
-    vs = boost::source(*it, g);
-    ve = boost::target(*it, g);
-    qDebug() << vertexDataMap.at(vs) << " -> " << vertexDataMap.at(ve) << ": " << boost::get(boost::edge_weight, g, *it);
-    ///std::cout << nameMap[boost::source(*it, g)] << " -> " << nameMap[boost::target(*it, g)] << ": " << boost::get(boost::edge_weight, g, *it) << std::endl;
-  }
-  std::cout << std::endl;
-
-  std::cout << "Distance: " << distanceMap[v3] << std::endl;
-}
-
-
-
 
 void mdtCableListTest::articleConnectionDataTest()
 {
@@ -1347,16 +1211,85 @@ void mdtCableListTest::pathGraphTest()
   QList<QVariant> idList;
   bool ok;
 
+  // Initial
+  idList = graph.getLinkedConnectionIdList(0);
+  QVERIFY(idList.isEmpty());
+  idList = graph.getShortestPath(0, 1);
+  QVERIFY(idList.isEmpty());
+
   /*
    * Testst with free data
    */
-  // 
+  // (1)-(2)
   graph.addLink(1, 2);
+  idList = graph.getLinkedConnectionIdList(1);
+  QCOMPARE(idList.size(), 1);
+  QCOMPARE(idList.at(0), QVariant(2));
+  idList = graph.getShortestPath(1, 2);
+  QCOMPARE(idList.size(), 2);
+  QCOMPARE(idList.at(0), QVariant(1));
+  QCOMPARE(idList.at(1), QVariant(2));
+  // (1)-(2)-(3)
   graph.addLink(2, 3);
-  graph.addLink(1, 3);
-  
-  qDebug() << "Linked cnn from 1: " << graph.getLinkedConnectionIdList(1);
-  qDebug() << "Shortest path from 1->3: " << graph.getShortestPath(1, 3);
+  idList = graph.getLinkedConnectionIdList(1);
+  QCOMPARE(idList.size(), 2);
+  QCOMPARE(idList.at(0), QVariant(2));
+  QCOMPARE(idList.at(1), QVariant(3));
+  idList = graph.getShortestPath(1, 3);
+  QCOMPARE(idList.size(), 3);
+  QCOMPARE(idList.at(0), QVariant(1));
+  QCOMPARE(idList.at(1), QVariant(2));
+  QCOMPARE(idList.at(2), QVariant(3));
+  // (1)-(2)-(3)-(4)
+  graph.addLink(3, 4);
+  idList = graph.getLinkedConnectionIdList(1);
+  QCOMPARE(idList.size(), 3);
+  QCOMPARE(idList.at(0), QVariant(2));
+  QCOMPARE(idList.at(1), QVariant(3));
+  QCOMPARE(idList.at(2), QVariant(4));
+  idList = graph.getShortestPath(1, 4);
+  QCOMPARE(idList.size(), 4);
+  QCOMPARE(idList.at(0), QVariant(1));
+  QCOMPARE(idList.at(1), QVariant(2));
+  QCOMPARE(idList.at(2), QVariant(3));
+  QCOMPARE(idList.at(3), QVariant(4));
+  // (1)-(2)-(3)-(4)     (10)-(11)
+  graph.addLink(10, 11);
+  idList = graph.getLinkedConnectionIdList(1);
+  QCOMPARE(idList.size(), 3);
+  QCOMPARE(idList.at(0), QVariant(2));
+  QCOMPARE(idList.at(1), QVariant(3));
+  QCOMPARE(idList.at(2), QVariant(4));
+  idList = graph.getLinkedConnectionIdList(10);
+  QCOMPARE(idList.size(), 1);
+  QCOMPARE(idList.at(0), QVariant(11));
+  idList = graph.getShortestPath(1, 4);
+  QCOMPARE(idList.size(), 4);
+  QCOMPARE(idList.at(0), QVariant(1));
+  QCOMPARE(idList.at(1), QVariant(2));
+  QCOMPARE(idList.at(2), QVariant(3));
+  QCOMPARE(idList.at(3), QVariant(4));
+  idList = graph.getShortestPath(10, 11);
+  QCOMPARE(idList.size(), 2);
+  QCOMPARE(idList.at(0), QVariant(10));
+  QCOMPARE(idList.at(1), QVariant(11));
+  idList = graph.getShortestPath(1, 11);
+  QCOMPARE(idList.size(), 0);
+  // (1)-(2)-(3)-(4)     (10)-(11)
+  //   \---(5)---/
+  graph.addLink(1, 5);
+  graph.addLink(5, 4);
+  idList = graph.getLinkedConnectionIdList(1);
+  QCOMPARE(idList.size(), 4);
+  QVERIFY(idList.contains(2));
+  QVERIFY(idList.contains(3));
+  QVERIFY(idList.contains(4));
+  QVERIFY(idList.contains(5));
+  idList = graph.getShortestPath(1, 4);
+  QCOMPARE(idList.size(), 3);
+  QCOMPARE(idList.at(0), QVariant(1));
+  QCOMPARE(idList.at(1), QVariant(5));
+  QCOMPARE(idList.at(2), QVariant(4));
 
   /*
    * Tests with database data
@@ -1365,6 +1298,9 @@ void mdtCableListTest::pathGraphTest()
   pvScenario->createSenario();
   // Load link list
   QVERIFY(graph.loadLinkList());
+  // Check that manually added links was cleared
+  idList = graph.getLinkedConnectionIdList(1);
+  QCOMPARE(idList.size(), 0);
   // Check linked connections
   idList = graph.getLinkedConnectionIdList(10000);
   QCOMPARE(idList.size(), 3);
@@ -1374,12 +1310,17 @@ void mdtCableListTest::pathGraphTest()
   // Check linked connectors
   idList = graph.getLinkedConnectorIdList(300000, &ok);
   QVERIFY(ok);
-  
-  qDebug() << "Connectors linked to 300000: " << idList;
-  
   QCOMPARE(idList.size(), 2);
   QVERIFY(idList.contains(400000));
   QVERIFY(idList.contains(500000));
+  // Check path from 10000 to 20001
+  idList = graph.getShortestPath(10000, 20001);
+  QCOMPARE(idList.size(), 4);
+  QCOMPARE(idList.at(0), QVariant(10000));
+  QCOMPARE(idList.at(1), QVariant(10001));
+  QCOMPARE(idList.at(2), QVariant(20000));
+  QCOMPARE(idList.at(3), QVariant(20001));
+
 
 
   pvScenario->removeScenario();

@@ -63,6 +63,10 @@ class mdtTtTestModelItemEditor : public mdtSqlForm
    */
   void addNodeUnit();
 
+  /*! \brief Edit relay to enable for a path
+   */
+  void editRelayPath();
+
   /*! \brief Setup a test node unit
    */
   void setupNodeUnit();

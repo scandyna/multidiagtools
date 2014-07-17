@@ -32,7 +32,7 @@
 #include <QModelIndex>
 #include <QObject>
 
-#include <QDebug>
+//#include <QDebug>
 
 using namespace mdtClPathGraphPrivate;
 
@@ -208,8 +208,6 @@ QList<QVariant> mdtClPathGraph::getLinkedConnectionIdList(const QVariant & fromC
     return connectionIdList;
   }
   vertex = pvGraphVertices.value(fromConnectionId.toInt());
-  // Clear previous results
-  ///pvVisitedEdgeList.clear();
   // Proceed BFS
   breadth_first_search(pvGraph, vertex, boost::visitor(visitor));
   // Get connections
@@ -309,17 +307,22 @@ QList<QVariant> mdtClPathGraph::getShortestPath(const QVariant & fromConnectionI
   toVertex = pvGraphVertices.value(toConnectionId.toInt());
   // Proceed Dijkstra shortest path search
   boost::dijkstra_shortest_paths(pvGraph, fromVertex, boost::distance_map(distanceMap).predecessor_map(predecessorMap));
-
-  vertex_t v = toVertex;  // We want to start at the destination and work our way back to the source
+  // Extract the requested shortest path itself
+  vertex_t v = toVertex;  // We start at the destination and work our way back to the source
   for(vertex_t u = predecessorMap[v]; u != v; v = u, u = predecessorMap[v]){
     std::pair<edge_t, bool> ep = boost::edge(u, v, pvGraph);
     Q_ASSERT(ep.second);
     edgeData = pvEdgeDataMap.at(ep.first);
-    qDebug() << "Start CNN: " << edgeData.startConnectionId << ", end CNN: " << edgeData.endConnectionId;
-    
     Q_ASSERT(!edgeData.startConnectionId.isNull());
     Q_ASSERT(!edgeData.endConnectionId.isNull());
-    if(!edgeData.isComplement){
+    if(edgeData.isComplement){
+      if(!connectionIdList.contains(edgeData.startConnectionId)){
+        connectionIdList.prepend(edgeData.startConnectionId);
+      }
+      if(!connectionIdList.contains(edgeData.endConnectionId)){
+        connectionIdList.prepend(edgeData.endConnectionId);
+      }
+    }else{
       if(!connectionIdList.contains(edgeData.endConnectionId)){
         connectionIdList.prepend(edgeData.endConnectionId);
       }
@@ -354,7 +357,6 @@ bool mdtClPathGraph::drawPath(const QVariant & fromConnectionId)
   }
   vertex = pvGraphVertices.value(fromConnectionId.toInt());
   // Clear previous results
-  ///pvVisitedEdgeList.clear();
   pvDrawnConnections.clear();
   pvGraphicsScene->clear();
   // Proceed BFS

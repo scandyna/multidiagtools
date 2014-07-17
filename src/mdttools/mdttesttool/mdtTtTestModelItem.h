@@ -55,6 +55,10 @@ class mdtTtTestModelItem : public mdtTtBase
    */
   QString sqlForTestNodeUnitSelection(const QVariant & testModelItemId, const QVariant & testModelId) const;
 
+  /*! \brief Get SQL statement for test node selection
+   */
+  QString sqlForTestNodeSelection(const QVariant & testModelId) const;
+
   /*! \brief Get a list of used node unit IDs for given test item ID
    *
    * If given type is not null, only matching test node unit will be returned
@@ -76,6 +80,10 @@ class mdtTtTestModelItem : public mdtTtBase
   /*! \brief Add a test node unit to TestNodeUnitSetup_tbl
    */
   bool addTestNodeUnitSetup(const mdtTtTestNodeUnitSetupData & data);
+
+  /*! \brief Add a list of test node unit to TestNodeUnitSetup_tbl
+   */
+  bool addTestNodeUnitSetupList(const QList<mdtTtTestNodeUnitSetupData> & dataList);
 
   /*! \brief Get test node unit setup data
    */

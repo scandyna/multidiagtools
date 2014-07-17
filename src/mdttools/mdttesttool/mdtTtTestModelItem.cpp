@@ -151,6 +151,27 @@ QString mdtTtTestModelItem::sqlForTestNodeUnitSelection(const QVariant & testMod
   return sql;
 }
 
+QString mdtTtTestModelItem::sqlForTestNodeSelection(const QVariant& testModelId) const
+{
+  QString sql;
+
+  sql = "SELECT\n"\
+        " TMTN.TestNode_Id_FK,\n"\
+        " TN.NodeIdentification,\n"\
+        " VT.Type,\n"\
+        " VT.SubType,\n"\
+        " VT.SeriesNumber\n"\
+        "FROM TestModel_TestNode_tbl TMTN\n"\
+        " JOIN TestNode_tbl TN\n"\
+        "  ON TN.VehicleType_Id_FK_PK = TMTN.TestNode_Id_FK\n"\
+        " JOIN VehicleType_tbl VT\n"\
+        "  ON VT.Id_PK = TN.VehicleType_Id_FK_PK\n";
+  // Limit to test nodes that are affected to given test model
+  sql += " WHERE TMTN.TestModel_Id_FK = " + testModelId.toString();
+
+  return sql;
+}
+
 QList<QVariant> mdtTtTestModelItem::getUsedNodeUnitIdList(const QVariant & testItemId, const QVariant & type)
 {
   QString sql;
@@ -232,6 +253,26 @@ bool mdtTtTestModelItem::removeTestLinks(const mdtSqlTableSelection & s)
 bool mdtTtTestModelItem::addTestNodeUnitSetup(const mdtTtTestNodeUnitSetupData & data)
 {
   return addRecord(data, "TestNodeUnitSetup_tbl");
+}
+
+bool mdtTtTestModelItem::addTestNodeUnitSetupList(const QList<mdtTtTestNodeUnitSetupData> & dataList)
+{
+  int i;
+
+  if(!beginTransaction()){
+    return false;
+  }
+  for(i = 0; i < dataList.size(); ++i){
+    if(!addTestNodeUnitSetup(dataList.at(i))){
+      rollbackTransaction();
+      return false;
+    }
+  }
+  if(!commitTransaction()){
+    return false;
+  }
+
+  return true;
 }
 
 mdtTtTestNodeUnitSetupData mdtTtTestModelItem::getNodeUnitSetupData(const QVariant & testModelItemId, const QVariant & testNodeUnitId, bool *ok)

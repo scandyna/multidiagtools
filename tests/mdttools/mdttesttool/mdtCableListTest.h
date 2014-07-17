@@ -43,8 +43,6 @@ class mdtCableListTest : public mdtTest
 
   void cleanupTestCase();
 
-  void sandbox();
-  
   void articleConnectionDataTest();
   void articleConnectorDataTest();
   void articleTest();

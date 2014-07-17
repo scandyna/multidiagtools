@@ -23,6 +23,8 @@
 #include "mdtTtTestModelItem.h"
 #include "mdtTtTestNodeUnitSetupData.h"
 #include "mdtTtTestNodeUnitSetupDialog.h"
+#include "mdtTtRelayPathDialog.h"
+#include "mdtClPathGraph.h"
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlRelation.h"
 #include "mdtSqlTableWidget.h"
@@ -210,7 +212,7 @@ void mdtTtTestModelItemEditor::addNodeUnit()
     return;
   }
   data.setValue("TestModelItem_Id_FK", testModelItemId);
-  // Setup and show dialog for test link selection
+  // Setup and show dialog for test node unit selection
   sql = tmi.sqlForTestNodeUnitSelection(testModelItemId, testModelId);
   selectionDialog.setMessage(tr("Please select a test node unit to use."));
   selectionDialog.setQuery(sql, database(), false);
@@ -229,6 +231,7 @@ void mdtTtTestModelItemEditor::addNodeUnit()
   selectionDialog.addColumnToSortOrder("SeriesNumber", Qt::AscendingOrder);
   selectionDialog.addColumnToSortOrder("SchemaPosition", Qt::AscendingOrder);
   selectionDialog.sort();
+  selectionDialog.setWindowTitle(tr("Test node unit selection"));
   selectionDialog.resize(800, 400);
   if(selectionDialog.exec() != QDialog::Accepted){
     return;
@@ -248,6 +251,83 @@ void mdtTtTestModelItemEditor::addNodeUnit()
   }
   // Add to db
   if(!tmi.addTestNodeUnitSetup(data)){
+    pvLastError = tmi.lastError();
+    displayLastError();
+    return;
+  }
+  // Update views
+  select("TestNodeUnitSetup_view");
+}
+
+void mdtTtTestModelItemEditor::editRelayPath()
+{
+  mdtTtTestModelItem tmi(0, database());
+  mdtClPathGraph graph(database());
+  mdtTtRelayPathDialog dialog(database(), &graph, this);
+  mdtSqlSelectionDialog selectionDialog(this);
+  mdtSqlTableSelection s;
+  QVariant testModelId;
+  QVariant testModelItemId;
+  QVariant testNodeId;
+  mdtTtTestNodeUnitSetupData setupData;
+  QList<mdtTtTestNodeUnitSetupData> setupDataList;
+  QList<QVariant> nodeUnitIdList;
+  QString sql;
+  int i;
+
+  // Get test model ID
+  testModelId = currentData("TestModelItem_tbl", "TestModel_Id_FK");
+  if(testModelId.isNull()){
+    return;
+  }
+  // Get test model item ID
+  testModelItemId = currentData("TestModelItem_tbl", "Id_PK");
+  if(testModelItemId.isNull()){
+    return;
+  }
+  // Setup data
+  if(!setupData.setup(database())){
+    pvLastError = setupData.lastError();
+    displayLastError();
+    return;
+  }
+  setupData.setValue("TestModelItem_Id_FK", testModelItemId);
+  // Setup and show dialog for test node selection
+  sql = tmi.sqlForTestNodeSelection(testModelId);
+  selectionDialog.setMessage(tr("Please select a test node to use:"));
+  selectionDialog.setQuery(sql, database(), false);
+  selectionDialog.setColumnHidden("TestNode_Id_FK", true);
+  selectionDialog.setHeaderData("Type", tr("Test system"));
+  selectionDialog.setHeaderData("SubType", tr("Test node"));
+  selectionDialog.addColumnToSortOrder("Type", Qt::AscendingOrder);
+  selectionDialog.addColumnToSortOrder("SubType", Qt::AscendingOrder);
+  selectionDialog.addColumnToSortOrder("SeriesNumber", Qt::AscendingOrder);
+  selectionDialog.sort();
+  selectionDialog.setWindowTitle(tr("Test node selection"));
+  selectionDialog.resize(800, 400);
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return;
+  }
+  s = selectionDialog.selection("TestNode_Id_FK");
+  if(s.isEmpty()){
+    return;
+  }
+  Q_ASSERT(s.rowCount() == 1);
+  testNodeId = s.data(0, "TestNode_Id_FK");
+  // Setup and show dialog
+  dialog.setTestNodeId(testNodeId);
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
+  nodeUnitIdList = dialog.idListOfRelaysToEnable();
+  for(i = 0; i < nodeUnitIdList.size(); ++i){
+    setupData.setValue("TestNodeUnit_Id_FK", nodeUnitIdList.at(i));
+    setupData.setValue("StepNumber", 0);
+    setupData.setValue("State", true);
+    setupDataList.append(setupData);
+  }
+  // Add to db
+  if(!tmi.addTestNodeUnitSetupList(setupDataList)){
     pvLastError = tmi.lastError();
     displayLastError();
     return;
@@ -556,6 +636,7 @@ bool mdtTtTestModelItemEditor::setupTestNodeUnitSetupTable()
 {
   mdtSqlTableWidget *widget;
   QPushButton *pbAddNodeUnit;
+  QPushButton *pbEditRelayPath;
   QPushButton *pbSetupNodeUnit;
   QPushButton *pbRemoveNodeUnits;
   ///QPushButton *pbGenerateTestNodeUnitSetup;
@@ -613,6 +694,11 @@ bool mdtTtTestModelItemEditor::setupTestNodeUnitSetupTable()
   pbAddNodeUnit->setIcon(QIcon::fromTheme("list-add"));
   connect(pbAddNodeUnit, SIGNAL(clicked()), this, SLOT(addNodeUnit()));
   widget->addWidgetToLocalBar(pbAddNodeUnit);
+  // Edit relay path button
+  pbEditRelayPath = new QPushButton(tr("Edit relay path ..."));
+  ///pbEditRelayPath->setIcon(QIcon::fromTheme("list-add"));
+  connect(pbEditRelayPath, SIGNAL(clicked()), this, SLOT(editRelayPath()));
+  widget->addWidgetToLocalBar(pbEditRelayPath);
   // Setup unit button
   pbSetupNodeUnit = new QPushButton(tr("Setup unit ..."));
   connect(pbSetupNodeUnit, SIGNAL(clicked()), this, SLOT(setupNodeUnit()));

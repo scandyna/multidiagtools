@@ -1,16 +1,14 @@
-window_sizes 1280 978 188 1086 925 0
+window_sizes 1280 978 442 832 925 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 1191426 // mdtDoubleEdit
-    888 925 100 4 0 0
-  active  statediagram_ref 686594 // mdtAbstractSqlWidgetStateMachine
-    1086 925 100 18 0 0
+  active  classdiagram_ref 1197954 // RelayPathSetup
+    832 925 100 4 0 0
 end
 show_stereotypes
-selected statediagram_ref 686594 // mdtAbstractSqlWidgetStateMachine
+selected attribute_ref 1298946 // name
 open
-  state_ref 149634 // mdtAbstractSqlWidgetStateMachine
-  class_ref 1315458 // mdtDoubleEdit
-  class_ref 1315714 // mdtDoubleValidator
+  classview_ref 635522 // mdtTtTestNode
+  class_ref 1322242 // mdtTtRelayPathDialog
+  class_ref 1322498 // mdtTtRelayPathItem
 end
 end

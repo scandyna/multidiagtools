@@ -140,11 +140,29 @@ void mdtTtBasicTester::saveTest()
 void mdtTtBasicTester::runTest()
 {
   QVariant testItemId;
+  shared_ptr<mdtDeviceU3606A> multimeter;
+  mdtValue measuredValue;
+
+  multimeter = pvNodeManager.device<mdtDeviceU3606A>("U3606A");
+  Q_ASSERT(multimeter);
 
   if(!connectToInstruments()){
     return;
   }
 
+  // Setup multimeter as Ohmmeter
+  ///multimeter->sendCommand("CONF:RES 100, 1e-3");
+  multimeter->sendCommand("CONF:RES");
+  if(multimeter->getMeasureConfiguration() != mdtFrameCodecScpiU3606A::MT_RESISTANCE){
+    pvLastError.setError(tr("Setup U3606A as ohmmeter failed"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtCableChecker");
+    pvLastError.commit();
+    displayLastError();
+    disconnectFromInstruments();
+    return;
+  }
+
+  
   qDebug() << "Running test ...";
   pvTest.resetTestItemCursor();
   while(pvTest.hasMoreTestItem()){
@@ -156,6 +174,9 @@ void mdtTtBasicTester::runTest()
       return;
     }
     
+    measuredValue = multimeter->getMeasureValue();
+    
+    setTestItemData(testItemId, "MeasuredValue", measuredValue.valueDouble());
     setTestItemData(testItemId, "Result", "Finished");
   }
 
@@ -424,7 +445,7 @@ bool mdtTtBasicTester::setupIoCoupler0(const mdtTtTestNodeSetupData & setupData)
     displayLastError();
     return false;
   }
-  coupler->wait(300);
+  ///coupler->wait(300);
 
   return true;
 }

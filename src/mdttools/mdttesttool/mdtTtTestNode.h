@@ -26,7 +26,8 @@
 #include <QList>
 #include <QVariant>
 #include <QString>
-#include <QModelIndex>
+#include <QSqlRecord>
+///#include <QModelIndex>
 
 /*! \brief Helper class for test node edition
  */
@@ -52,6 +53,12 @@ class mdtTtTestNode : public mdtTtBase
   /*! \brief Get SQL statement for unit connection selection
    */
   QString sqlForUnitConnectionSelection(const QVariant & unitId);
+
+  /*! \brief Get test node data
+   *
+   * Will include fields from TestNode_tbl and VehicleType_tbl.
+   */
+  QSqlRecord getTestNodeData(const QVariant & testNodeId, bool &ok);
 
   /*! \brief Get a list of unit connection IDs that are linked (meaning wiered) to given unit connection ID
    */

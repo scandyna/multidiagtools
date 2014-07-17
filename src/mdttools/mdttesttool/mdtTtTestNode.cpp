@@ -25,6 +25,8 @@
 #include <QSqlRecord>
 #include <QSqlError>
 
+//#include <QDebug>
+
 mdtTtTestNode::mdtTtTestNode(QObject *parent, QSqlDatabase db)
  : mdtTtBase(parent, db)
 {
@@ -84,6 +86,30 @@ QString mdtTtTestNode::sqlForUnitConnectionSelection(const QVariant & unitId)
   sql += " WHERE UnitConnection_tbl.Unit_Id_FK = " + unitId.toString();
 
   return sql;
+}
+
+QSqlRecord mdtTtTestNode::getTestNodeData(const QVariant & testNodeId, bool & ok)
+{
+  QString sql;
+  QList<QSqlRecord> dataList;
+
+  sql = "SELECT\n"\
+        " TN.VehicleType_Id_FK_PK,\n"\
+        " TN.NodeIdentification,\n"\
+        " VT.Type,\n"\
+        " VT.SubType,\n"\
+        " VT.SeriesNumber\n"\
+        "FROM TestNode_tbl TN\n"\
+        " JOIN VehicleType_tbl VT\n"\
+        "  ON VT.Id_PK = TN.VehicleType_Id_FK_PK\n";
+  sql += " WHERE TN.VehicleType_Id_FK_PK = " + testNodeId.toString();
+  dataList = getData(sql, &ok);
+  if(!ok){
+    return QSqlRecord();
+  }
+  Q_ASSERT(dataList.size() == 1);
+
+  return dataList.at(0);
 }
 
 QList<QVariant> mdtTtTestNode::getIdListOfUnitConnectionsLinkedToUnitConnectionId(const QVariant & unitConnectionId)
