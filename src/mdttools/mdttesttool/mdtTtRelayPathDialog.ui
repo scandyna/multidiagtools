@@ -51,19 +51,19 @@
      <item>
       <layout class="QFormLayout" name="formLayout">
        <item row="0" column="0">
-        <widget class="QLabel" name="lbSourceConnector">
+        <widget class="QLabel" name="lbSourceUnit">
          <property name="text">
-          <string>Source connector:</string>
+          <string>Source unit:</string>
          </property>
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QComboBox" name="cbSourceConnector"/>
+        <widget class="QComboBox" name="cbSourceUnit"/>
        </item>
        <item row="1" column="0">
         <widget class="QLabel" name="lbSourceConnection">
          <property name="text">
-          <string>Source connection</string>
+          <string>Connection</string>
          </property>
         </widget>
        </item>
@@ -79,19 +79,19 @@
      <item>
       <layout class="QFormLayout" name="formLayout_2">
        <item row="0" column="0">
-        <widget class="QLabel" name="lbDestinationConnector">
+        <widget class="QLabel" name="lbDestinationUnit">
          <property name="text">
-          <string>Destination connector:</string>
+          <string>Test connector:</string>
          </property>
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QComboBox" name="cbDestinationConnector"/>
+        <widget class="QComboBox" name="cbDestinationUnit"/>
        </item>
        <item row="1" column="0">
         <widget class="QLabel" name="lbDestinationConnection">
          <property name="text">
-          <string>Destination connection:</string>
+          <string>Connection:</string>
          </property>
         </widget>
        </item>

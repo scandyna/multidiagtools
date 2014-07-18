@@ -78,20 +78,27 @@ class mdtTtTestModelItem : public mdtTtBase
   bool removeTestLinks(const mdtSqlTableSelection & s);
 
   /*! \brief Add a test node unit to TestNodeUnitSetup_tbl
+   *
+   * If given setup allready exists (a couple of PK: TestModelItem_Id_FK, TestNodeUnit_Id_FK)
+   *  it will be updated with given data.
    */
-  bool addTestNodeUnitSetup(const mdtTtTestNodeUnitSetupData & data);
+  bool addOrUpdateTestNodeUnitSetup(const mdtTtTestNodeUnitSetupData & data);
 
   /*! \brief Add a list of test node unit to TestNodeUnitSetup_tbl
    */
-  bool addTestNodeUnitSetupList(const QList<mdtTtTestNodeUnitSetupData> & dataList);
+  bool addOrUpdateTestNodeUnitSetupList(const QList<mdtTtTestNodeUnitSetupData> & dataList);
+
+  /*! \brief Check if a node unit setup exists
+   */
+  bool testNodeUnitSetupExists(const QVariant & testModelItemId, const QVariant & testNodeUnitId, bool *ok);
 
   /*! \brief Get test node unit setup data
    */
-  mdtTtTestNodeUnitSetupData getNodeUnitSetupData(const QVariant & testModelItemId, const QVariant & testNodeUnitId, bool *ok);
+  mdtTtTestNodeUnitSetupData getTestNodeUnitSetupData(const QVariant & testModelItemId, const QVariant & testNodeUnitId, bool *ok);
 
   /*! \brief Update test node unit setup data
    */
-  bool updateNodeUnitData(const QVariant & testModelItemId, const QVariant & testNodeUnitId, const mdtTtTestNodeUnitSetupData & data);
+  bool updateTestNodeUnitData(const QVariant & testModelItemId, const QVariant & testNodeUnitId, const mdtTtTestNodeUnitSetupData & data);
 
   /*! \brief Remove test node units from TestNodeUnitSetup_tbl
    */

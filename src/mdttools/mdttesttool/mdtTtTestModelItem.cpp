@@ -250,12 +250,23 @@ bool mdtTtTestModelItem::removeTestLinks(const mdtSqlTableSelection & s)
   return removeData("TestModelItem_TestLink_tbl", s, true);
 }
 
-bool mdtTtTestModelItem::addTestNodeUnitSetup(const mdtTtTestNodeUnitSetupData & data)
+bool mdtTtTestModelItem::addOrUpdateTestNodeUnitSetup(const mdtTtTestNodeUnitSetupData & data)
 {
-  return addRecord(data, "TestNodeUnitSetup_tbl");
+  bool ok;
+  bool exists;
+
+  exists = testNodeUnitSetupExists(data.value("TestModelItem_Id_FK"), data.value("TestNodeUnit_Id_FK"), &ok);
+  if(!ok){
+    return false;
+  }
+  if(exists){
+    return updateTestNodeUnitData(data.value("TestModelItem_Id_FK"), data.value("TestNodeUnit_Id_FK"), data);
+  }else{
+    return addRecord(data, "TestNodeUnitSetup_tbl");
+  }
 }
 
-bool mdtTtTestModelItem::addTestNodeUnitSetupList(const QList<mdtTtTestNodeUnitSetupData> & dataList)
+bool mdtTtTestModelItem::addOrUpdateTestNodeUnitSetupList(const QList<mdtTtTestNodeUnitSetupData> & dataList)
 {
   int i;
 
@@ -263,7 +274,7 @@ bool mdtTtTestModelItem::addTestNodeUnitSetupList(const QList<mdtTtTestNodeUnitS
     return false;
   }
   for(i = 0; i < dataList.size(); ++i){
-    if(!addTestNodeUnitSetup(dataList.at(i))){
+    if(!addOrUpdateTestNodeUnitSetup(dataList.at(i))){
       rollbackTransaction();
       return false;
     }
@@ -275,7 +286,25 @@ bool mdtTtTestModelItem::addTestNodeUnitSetupList(const QList<mdtTtTestNodeUnitS
   return true;
 }
 
-mdtTtTestNodeUnitSetupData mdtTtTestModelItem::getNodeUnitSetupData(const QVariant & testModelItemId, const QVariant & testNodeUnitId, bool *ok)
+bool mdtTtTestModelItem::testNodeUnitSetupExists(const QVariant & testModelItemId, const QVariant & testNodeUnitId, bool *ok)
+{
+  Q_ASSERT(ok != 0);
+
+  QList<QSqlRecord> dataList;
+  QString sql;
+
+  sql = "SELECT 1 FROM TestNodeUnitSetup_tbl ";
+  sql += " WHERE TestModelItem_Id_FK = " + testModelItemId.toString();
+  sql += " AND TestNodeUnit_Id_FK = " + testNodeUnitId.toString();
+  dataList = getData(sql, ok);
+  if(!*ok){
+    return false;
+  }
+
+  return !dataList.isEmpty();
+}
+
+mdtTtTestNodeUnitSetupData mdtTtTestModelItem::getTestNodeUnitSetupData(const QVariant & testModelItemId, const QVariant & testNodeUnitId, bool *ok)
 {
   Q_ASSERT(ok != 0);
 
@@ -299,7 +328,7 @@ mdtTtTestNodeUnitSetupData mdtTtTestModelItem::getNodeUnitSetupData(const QVaria
   return data;
 }
 
-bool mdtTtTestModelItem::updateNodeUnitData(const QVariant & testModelItemId, const QVariant & testNodeUnitId, const mdtTtTestNodeUnitSetupData & data)
+bool mdtTtTestModelItem::updateTestNodeUnitData(const QVariant & testModelItemId, const QVariant & testNodeUnitId, const mdtTtTestNodeUnitSetupData & data)
 {
   mdtSqlRecord matchData;
 

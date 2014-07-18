@@ -1,0 +1,104 @@
+
+# JkjJK
+
+# Cable list and test tool
+
+# Introduction
+
+## Concept of x
+
+## Concept of y
+
+## Functionnalities
+
+<table border="1">
+  <tr>
+    <th>Functionnality</th> <th>State</th> <th>Remarks</th>
+  </tr>
+  <tr>
+    <td>Vehicle type edition</td> <td><font color="orange"><b>Work in progress</b></font></td> <td></td>
+  </tr>
+  <tr>
+    <td>Connector edition</td> <td><font color="orange"><b>Work in progress</b></font></td> <td></td>
+  </tr>
+  <tr>
+    <td>Article edition</td> <td><font color="orange"><b>Work in progress</b></font></td> <td></td>
+  </tr>
+  <tr>
+    <td>Unit edition</td> <td><font color="orange"><b>Work in progress</b></font></td> <td></td>
+  </tr>
+  <tr>
+    <td>Link edition</td> <td><font color="orange"><b>Work in progress</b></font></td> <td></td>
+  </tr>
+  <tr>
+    <td>Versionning</td> <td><font color="red"><b>Missing</b></font></td> <td></td>
+  </tr>
+  <tr>
+    <td>Test node edition</td> <td><font color="orange"><b>Work in progress</b></font></td> <td></td>
+  </tr>
+  <tr>
+    <td>Test (model) edition</td> <td><font color="orange"><b>Work in progress</b></font></td> <td></td>
+  </tr>
+  <tr>
+    <td>Test execution edition and API</td> <td><font color="orange"><b>Starting</b></font></td> <td></td>
+  </tr>
+</table>
+
+### Versionning
+
+On real life project, versionning is a very important feature.
+Imagine that many systems are allready produced, and that a new feature must be implemented.
+When used software does not provide versionning, there is needed to create documentation about modifications to do.
+This can be cumbersome and error prone.
+
+Currently, no versionning is implemented. Adding such feature will request modifications in deep (database schema and C++ classes).
+
+# Create a project
+
+## The complete workflow
+
+The complete workflow will show how we could use this tool in a project.
+We considere a project for witch we have to make the entiere engeneering,
+for example for a modification on the electrical part of a system.
+
+This requiers several tasks:
+
+* Define what to modify
+* Draw schemas
+* Define components to add or change
+* Dependent of the complexity, create cable lists
+* Create documentation for continuity check
+* Create documentation for comissioning
+
+### Create vehicle types
+
+### Create articles
+
+### Create connectors
+
+### Create units
+
+### Create test nodes
+
+### Create test (models)
+
+### Create test
+
+
+## Vehicle type
+
+## Connector
+
+## Article
+
+![Article edition](img/article-edition.jpg "Article edition")
+
+## Unit
+
+![Unit edition](img/unit-edition.jpg "Unit edition")
+
+
+## Test node
+
+## Test connection cable
+

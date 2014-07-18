@@ -91,17 +91,17 @@ class mdtTtRelayPathDialog : public QDialog, Ui::mdtTtRelayPathDialog
    */
   void displayTestNodeData(const QVariant & testNodeId);
 
-  /*! \brief Populate the source connector combobox
+  /*! \brief Populate the source test node unit combobox
    */
-  bool populateSourceConnectorCombobox(const QVariant & testNodeId);
+  bool populateSourceTestNodeUnitCombobox(const QVariant & testNodeId);
 
   /*! \brief Populate the source connection combobox
    */
   bool populateSourceConnectionCombobox(const QVariant & testNodeUnitId);
 
-  /*! \brief Populate the destination connector combobox
+  /*! \brief Populate the destination test node unit combobox
    */
-  bool populateDestinationConnectorCombobox(const QVariant & testNodeId);
+  bool populateDestinationTestNodeUnitCombobox(const QVariant & testNodeId);
 
   /*! \brief Populate the destination connection combobox
    */
@@ -123,9 +123,9 @@ class mdtTtRelayPathDialog : public QDialog, Ui::mdtTtRelayPathDialog
    */
   mdtTtRelayPathItem getChannleRelay(const QVariant & A, const QVariant & B);
 
-  /*! \brief Get SQL statement to get connector data list
+  /*! \brief Get SQL statement to get test node unit data list
    */
-  QString sqlForTestConnectorData(const QVariant & testNodeId) const;
+  ///QString sqlForTestNodeUnitData(const QVariant & testNodeId) const;
 
   /*! \brief Get SQL statement to get connection data list
    */

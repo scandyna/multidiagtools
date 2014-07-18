@@ -24,6 +24,7 @@
 #include <QSqlRecord>
 #include <QComboBox>
 #include <QMessageBox>
+#include <QLocale>
 
 #include <QDebug>
 
@@ -35,8 +36,8 @@ mdtTtRelayPathDialog::mdtTtRelayPathDialog(QSqlDatabase db, mdtClPathGraph *pg, 
   pvDatabase = db;
   pvLoadingData = false;
   setupUi(this);
-  connect(cbSourceConnector, SIGNAL(currentIndexChanged(int)), this, SLOT(updateSourceConnections(int)));
-  connect(cbDestinationConnector, SIGNAL(currentIndexChanged(int)), this, SLOT(updateDestinationConnections(int)));
+  connect(cbSourceUnit, SIGNAL(currentIndexChanged(int)), this, SLOT(updateSourceConnections(int)));
+  connect(cbDestinationUnit, SIGNAL(currentIndexChanged(int)), this, SLOT(updateDestinationConnections(int)));
   connect(cbSourceConnection, SIGNAL(currentIndexChanged(int)), this, SLOT(searchPath(int)));
   connect(cbDestinationConnection, SIGNAL(currentIndexChanged(int)), this, SLOT(searchPath(int)));
 }
@@ -46,8 +47,8 @@ void mdtTtRelayPathDialog::setTestNodeId(const QVariant & id)
   qDebug() << "Setting test node ID " << id;
   pvLoadingData = true;
   displayTestNodeData(id);
-  populateSourceConnectorCombobox(id);
-  populateDestinationConnectorCombobox(id);
+  populateSourceTestNodeUnitCombobox(id);
+  populateDestinationTestNodeUnitCombobox(id);
   pvGraph->loadLinkList();
   loadCouplingRelays(id);
   loadChannelRelays(id);
@@ -65,7 +66,7 @@ void mdtTtRelayPathDialog::updateSourceConnections(int index)
   if(index < 0){
     return;
   }
-  populateSourceConnectionCombobox(cbSourceConnector->itemData(index));
+  populateSourceConnectionCombobox(cbSourceUnit->itemData(index));
 }
 
 void mdtTtRelayPathDialog::updateDestinationConnections(int index)
@@ -74,7 +75,7 @@ void mdtTtRelayPathDialog::updateDestinationConnections(int index)
   if(index < 0){
     return;
   }
-  populateDestinationConnectionCombobox(cbDestinationConnector->itemData(index));
+  populateDestinationConnectionCombobox(cbDestinationUnit->itemData(index));
 }
 
 void mdtTtRelayPathDialog::searchPath(int index)
@@ -161,21 +162,33 @@ void mdtTtRelayPathDialog::displayTestNodeData(const QVariant& testNodeId)
   lbTestNode->setText(data.value("SubType").toString());
 }
 
-bool mdtTtRelayPathDialog::populateSourceConnectorCombobox(const QVariant & testNodeId)
+bool mdtTtRelayPathDialog::populateSourceTestNodeUnitCombobox(const QVariant & testNodeId)
 {
   mdtTtTestNode tn(0, pvDatabase);
   QList<QSqlRecord> dataList;
+  QString sql;
   bool ok;
   int i;
 
-  cbSourceConnector->clear();
-  dataList = tn.getData(sqlForTestConnectorData(testNodeId), &ok);
+  cbSourceUnit->clear();
+  sql = "SELECT\n"
+        " TNU.Unit_Id_FK_PK,\n"\
+        " U.SchemaPosition\n"\
+        "FROM TestNodeUnit_tbl TNU\n"\
+        " JOIN Unit_tbl U\n"\
+        "  ON U.Id_PK = TNU.Unit_Id_FK_PK\n"\
+        " JOIN TestNode_tbl TN\n"
+        "  ON TN.VehicleType_Id_FK_PK = TNU.TestNode_Id_FK\n";
+  sql += " WHERE TN.VehicleType_Id_FK_PK = " + testNodeId.toString();
+  sql += " AND (TNU.Type_Code_FK <> 'BUSCPLREL' AND TNU.Type_Code_FK <> 'CHANELREL' AND TNU.Type_Code_FK <> 'TESTCONNECTOR')";
+  sql += " ORDER BY U.SchemaPosition ASC";
+  dataList = tn.getData(sql, &ok);
   if(!ok){
     displayError(tn.lastError());
     return false;
   }
   for(i = 0; i < dataList.size(); ++i){
-    cbSourceConnector->addItem(dataList.at(i).value("SchemaPosition").toString(), dataList.at(i).value("Unit_Id_FK_PK"));
+    cbSourceUnit->addItem(dataList.at(i).value("SchemaPosition").toString(), dataList.at(i).value("Unit_Id_FK_PK"));
   }
 
   return true;
@@ -185,6 +198,9 @@ bool mdtTtRelayPathDialog::populateSourceConnectionCombobox(const QVariant& test
 {
   mdtTtTestNode tn(0, pvDatabase);
   QList<QSqlRecord> dataList;
+  QSqlRecord data;
+  QString text;
+  QString function;
   bool ok;
   int i;
 
@@ -195,27 +211,45 @@ bool mdtTtRelayPathDialog::populateSourceConnectionCombobox(const QVariant& test
     return false;
   }
   for(i = 0; i < dataList.size(); ++i){
-    cbSourceConnection->addItem(dataList.at(i).value("UnitContactName").toString(), dataList.at(i).value("Id_PK"));
+    data = dataList.at(i);
+    text = data.value("UnitContactName").toString();
+    function = data.value("Function").toString();
+    if(!function.isEmpty()){
+      text += " ( " + function + " )";
+    }
+    cbSourceConnection->addItem(text, data.value("Id_PK"));
   }
 
   return true;
 }
 
-bool mdtTtRelayPathDialog::populateDestinationConnectorCombobox(const QVariant& testNodeId)
+bool mdtTtRelayPathDialog::populateDestinationTestNodeUnitCombobox(const QVariant& testNodeId)
 {
   mdtTtTestNode tn(0, pvDatabase);
   QList<QSqlRecord> dataList;
+  QString sql;
   bool ok;
   int i;
 
-  cbDestinationConnector->clear();
-  dataList = tn.getData(sqlForTestConnectorData(testNodeId), &ok);
+  cbDestinationUnit->clear();
+  sql = "SELECT\n"
+        " TNU.Unit_Id_FK_PK,\n"\
+        " U.SchemaPosition\n"\
+        "FROM TestNodeUnit_tbl TNU\n"\
+        " JOIN Unit_tbl U\n"\
+        "  ON U.Id_PK = TNU.Unit_Id_FK_PK\n"\
+        " JOIN TestNode_tbl TN\n"
+        "  ON TN.VehicleType_Id_FK_PK = TNU.TestNode_Id_FK\n";
+  sql += " WHERE TN.VehicleType_Id_FK_PK = " + testNodeId.toString();
+  sql += " AND (TNU.Type_Code_FK = 'TESTCONNECTOR')";
+  sql += " ORDER BY U.SchemaPosition ASC";
+  dataList = tn.getData(sql, &ok);
   if(!ok){
     displayError(tn.lastError());
     return false;
   }
   for(i = 0; i < dataList.size(); ++i){
-    cbDestinationConnector->addItem(dataList.at(i).value("SchemaPosition").toString(), dataList.at(i).value("Unit_Id_FK_PK"));
+    cbDestinationUnit->addItem(dataList.at(i).value("SchemaPosition").toString(), dataList.at(i).value("Unit_Id_FK_PK"));
   }
 
   return true;
@@ -225,6 +259,9 @@ bool mdtTtRelayPathDialog::populateDestinationConnectionCombobox(const QVariant&
 {
   mdtTtTestNode tn(0, pvDatabase);
   QList<QSqlRecord> dataList;
+  QSqlRecord data;
+  QString text;
+  QString function;
   bool ok;
   int i;
 
@@ -235,7 +272,13 @@ bool mdtTtRelayPathDialog::populateDestinationConnectionCombobox(const QVariant&
     return false;
   }
   for(i = 0; i < dataList.size(); ++i){
-    cbDestinationConnection->addItem(dataList.at(i).value("UnitContactName").toString(), dataList.at(i).value("Id_PK"));
+    data = dataList.at(i);
+    text = data.value("UnitContactName").toString();
+    function = data.value("Function").toString();
+    if(!function.isEmpty()){
+      text += " ( " + function + " )";
+    }
+    cbDestinationConnection->addItem(text, data.value("Id_PK"));
   }
 
   return true;
@@ -377,7 +420,8 @@ mdtTtRelayPathItem mdtTtRelayPathDialog::getChannleRelay(const QVariant & A, con
   return mdtTtRelayPathItem();
 }
 
-QString mdtTtRelayPathDialog::sqlForTestConnectorData(const QVariant& testNodeId) const
+/**
+QString mdtTtRelayPathDialog::sqlForTestNodeUnitData(const QVariant& testNodeId) const
 {
   QString sql;
 
@@ -390,17 +434,33 @@ QString mdtTtRelayPathDialog::sqlForTestConnectorData(const QVariant& testNodeId
         " JOIN TestNode_tbl TN\n"
         "  ON TN.VehicleType_Id_FK_PK = TNU.TestNode_Id_FK\n";
   sql += " WHERE TN.VehicleType_Id_FK_PK = " + testNodeId.toString();
-  sql += " AND TNU.Type_Code_FK = 'TESTCONNECTOR'";
-  sql += " ORDER BY U.SchemaPosition ASC";
+  ///sql += " AND (TNU.Type_Code_FK = 'TESTCONNECTOR' OR TNU.Type_Code_FK = 'AI' OR TNU.Type_Code_FK = 'AO' OR TNU.Type_Code_FK = 'PWR' OR TNU.Type_Code_FK = 'MEASCONNECTOR')";
+  ///sql += " ORDER BY U.SchemaPosition ASC";
 
   return sql;
 }
+*/
 
 QString mdtTtRelayPathDialog::sqlForTestConnectionData(const QVariant & testNodeUnitId) const
 {
   QString sql;
+  QLocale locale;
+  QString functionFieldName;
 
-  sql = "SELECT Id_PK, UnitContactName FROM UnitConnection_tbl WHERE Unit_Id_FK = " + testNodeUnitId.toString();
+  switch(locale.language()){
+    case QLocale::French:
+      functionFieldName = "FunctionFR AS Function";
+      break;
+    case QLocale::German:
+      functionFieldName = "FunctionDE AS Function";
+      break;
+    case QLocale::Italian:
+      functionFieldName = "FunctionIT AS Function";
+      break;
+    default:
+      functionFieldName = "FunctionEN AS Function";
+  }
+  sql = "SELECT Id_PK, UnitContactName, " + functionFieldName + " FROM UnitConnection_tbl WHERE Unit_Id_FK = " + testNodeUnitId.toString();
 
   return sql;
 }

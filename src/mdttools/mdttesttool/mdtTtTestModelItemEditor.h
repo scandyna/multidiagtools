@@ -59,6 +59,10 @@ class mdtTtTestModelItemEditor : public mdtSqlForm
    */
   void removeTestLinks();
 
+  /*! \brief Route selected test link
+   */
+  void routeTestLink();
+
   /*! \brief Add a test node unit to setup list
    */
   void addNodeUnit();
@@ -100,6 +104,10 @@ class mdtTtTestModelItemEditor : public mdtSqlForm
   /*! \brief Setup test link table
    */
   bool setupTestLinkTable();
+
+  /*! \brief Setup test route table
+   */
+  bool setupTestItemRouteTable();
 
   /*! \brief Setup test node unit setup table
    */

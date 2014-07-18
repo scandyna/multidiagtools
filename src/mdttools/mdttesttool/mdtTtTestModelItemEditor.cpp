@@ -67,6 +67,9 @@ bool mdtTtTestModelItemEditor::setupTables()
   if(!setupTestLinkTable()){
     return false;
   }
+  if(!setupTestItemRouteTable()){
+    return false;
+  }
   if(!setupTestNodeUnitSetupTable()){
     return false;
   }
@@ -183,6 +186,11 @@ void mdtTtTestModelItemEditor::removeTestLinks()
   select("TestModelItem_TestLink_view");
 }
 
+void mdtTtTestModelItemEditor::routeTestLink()
+{
+
+}
+
 void mdtTtTestModelItemEditor::addNodeUnit()
 {
   mdtTtTestModelItem tmi(0, database());
@@ -250,7 +258,7 @@ void mdtTtTestModelItemEditor::addNodeUnit()
     data.setValue("State", true);
   }
   // Add to db
-  if(!tmi.addTestNodeUnitSetup(data)){
+  if(!tmi.addOrUpdateTestNodeUnitSetup(data)){
     pvLastError = tmi.lastError();
     displayLastError();
     return;
@@ -304,7 +312,7 @@ void mdtTtTestModelItemEditor::editRelayPath()
   selectionDialog.addColumnToSortOrder("SeriesNumber", Qt::AscendingOrder);
   selectionDialog.sort();
   selectionDialog.setWindowTitle(tr("Test node selection"));
-  selectionDialog.resize(800, 400);
+  selectionDialog.resize(600, 300);
   if(selectionDialog.exec() != QDialog::Accepted){
     return;
   }
@@ -327,7 +335,7 @@ void mdtTtTestModelItemEditor::editRelayPath()
     setupDataList.append(setupData);
   }
   // Add to db
-  if(!tmi.addTestNodeUnitSetupList(setupDataList)){
+  if(!tmi.addOrUpdateTestNodeUnitSetupList(setupDataList)){
     pvLastError = tmi.lastError();
     displayLastError();
     return;
@@ -356,7 +364,7 @@ void mdtTtTestModelItemEditor::setupNodeUnit()
     return;
   }
   // Get data
-  data = tmi.getNodeUnitSetupData(testModelItemId, testNodeUnitId, &ok);
+  data = tmi.getTestNodeUnitSetupData(testModelItemId, testNodeUnitId, &ok);
   if(!ok){
     pvLastError = tmi.lastError();
     displayLastError();
@@ -373,7 +381,7 @@ void mdtTtTestModelItemEditor::setupNodeUnit()
   }
   // Update in db
   data = dialog.data();
-  if(!tmi.updateNodeUnitData(testModelItemId, testNodeUnitId, data)){
+  if(!tmi.updateTestNodeUnitData(testModelItemId, testNodeUnitId, data)){
     pvLastError = tmi.lastError();
     displayLastError();
     return;
@@ -588,6 +596,7 @@ bool mdtTtTestModelItemEditor::setupTestLinkTable()
   mdtSqlTableWidget *widget;
   QPushButton *pbAddTestLink;
   QPushButton *pbRemoveTestLinks;
+  QPushButton *pbRouteLink;
 
   if(!addChildTable("TestModelItem_TestLink_view", tr("Test links"), database())){
     return false;
@@ -606,8 +615,11 @@ bool mdtTtTestModelItemEditor::setupTestLinkTable()
   widget->setColumnHidden("DutUnitId", true);
   widget->setColumnHidden("VehicleType_Id_FK_PK", true);
   widget->setColumnHidden("TestNodeUnitSchemaPosition", true);
+  widget->setColumnHidden("Value", true);
+  widget->setColumnHidden("IoPosition", true);
+  widget->setColumnHidden("TestNodeSeriesNumber", true);
   // Rename visible fields to something human friendly
-  widget->setHeaderData("IoPosition", tr("I/O\nPos."));
+  ///widget->setHeaderData("IoPosition", tr("I/O\nPos."));
   ///widget->setHeaderData("TestNodeUnitSchemaPosition", tr("Test node\nunit\nschema pos."));
   widget->setHeaderData("TestConnectorName", tr("Test\nconnector"));
   widget->setHeaderData("TestContactName", tr("Test\ncontact"));
@@ -615,6 +627,12 @@ bool mdtTtTestModelItemEditor::setupTestLinkTable()
   widget->setHeaderData("DutUnitAlias", tr("DUT\n   alias   "));
   widget->setHeaderData("DutConnectorName", tr("DUT\nconnector"));
   widget->setHeaderData("DutContactName", tr("DUT\ncontact"));
+  widget->setHeaderData("TestNodeType", tr("Test\nsystem"));
+  widget->setHeaderData("TestNodeSubType", tr("Test\nnode"));
+  widget->setHeaderData("NodeIdentification", tr("Test\nnode\nidentification"));
+  widget->setHeaderData("Type", tr("DUT\ntype"));
+  widget->setHeaderData("SubType", tr("DUT\nsub type"));
+  widget->setHeaderData("SeriesNumber", tr("DUT\ntype serie"));
   // Set some attributes on table view
   widget->tableView()->resizeColumnsToContents();
   // Add link button
@@ -627,7 +645,28 @@ bool mdtTtTestModelItemEditor::setupTestLinkTable()
   pbRemoveTestLinks->setIcon(QIcon::fromTheme("list-remove"));
   connect(pbRemoveTestLinks, SIGNAL(clicked()), this, SLOT(removeTestLinks()));
   widget->addWidgetToLocalBar(pbRemoveTestLinks);
+  // Route links button
+  pbRouteLink = new QPushButton(tr("Route ..."));
+  ///pbRouteLink->setIcon(QIcon::fromTheme("list-remove"));
+  connect(pbRouteLink, SIGNAL(clicked()), this, SLOT(routeTestLink()));
+  widget->addWidgetToLocalBar(pbRouteLink);
   widget->addStretchToLocalBar();
+
+  return true;
+}
+
+bool mdtTtTestModelItemEditor::setupTestItemRouteTable()
+{
+  mdtSqlTableWidget *widget;
+
+  if(!addChildTable("TestModelItemRoute_view", tr("Routes"), database())){
+    return false;
+  }
+  if(!addRelation("Id_PK", "TestModelItemRoute_view", "TestModelItem_Id_FK")){
+    return false;
+  }
+  widget = sqlTableWidget("TestModelItemRoute_view");
+  Q_ASSERT(widget != 0);
 
   return true;
 }

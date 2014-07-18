@@ -249,6 +249,13 @@ class mdtTtDatabaseSchema
    */
   bool setupTestNodeUnitSetupTable();
 
+  /*! \brief Setup TestModelItemRoute_tbl
+   *
+   * This table will contain routes (paths)
+   *  from a test link to node units.
+   */
+  bool setupTestModelItemRouteTable();
+
   /*! \brief Setup test result table
    *
    * \todo Move to test tool when created
@@ -377,6 +384,10 @@ class mdtTtDatabaseSchema
   /*! \brief Create TestNodeUnitSetup_view
    */
   bool createTestNodeUnitSetupView();
+
+  /*! \brief Create TestModelItemRoute_view
+   */
+  bool createTestModelItemRouteView();
 
   /*! \brief Create test item link view
    *

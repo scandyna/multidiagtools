@@ -37,7 +37,7 @@ mdtSqlRecord::~mdtSqlRecord()
 {
 }
 
-mdtSqlRecord::operator QSqlRecord()
+mdtSqlRecord::operator QSqlRecord() const
 {
   return pvRecord;
 }

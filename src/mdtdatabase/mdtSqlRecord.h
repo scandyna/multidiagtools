@@ -64,7 +64,7 @@ class mdtSqlRecord
 
   /*! \brief Get QSqlRecord version
    */
-  operator QSqlRecord();
+  operator QSqlRecord() const;
 
   /*! \brief Add a field to record
    *

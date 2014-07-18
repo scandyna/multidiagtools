@@ -1,14 +1,13 @@
-window_sizes 1280 978 442 832 925 0
+window_sizes 1280 1005 194 1080 952 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 1197954 // RelayPathSetup
-    832 925 100 4 0 0
+  active  classdiagram_ref 941058 // Test
+    1080 952 80 3 0 0
 end
 show_stereotypes
-selected attribute_ref 1298946 // name
+selected attribute_ref 1305986 // MeasureTestNodeUnitConnection_Id_FK
 open
-  classview_ref 635522 // mdtTtTestNode
-  class_ref 1322242 // mdtTtRelayPathDialog
-  class_ref 1322498 // mdtTtRelayPathItem
+  attribute_ref 1305602 // TestModelItemRoute_Id_FK
+  attribute_ref 1305858 // Id_PK
 end
 end
