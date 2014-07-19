@@ -89,6 +89,7 @@ bool mdtClPathGraph::loadLinkList()
   pvGraph.clear();
   pvGraphVertices.clear();
   pvEdgeDataMap.clear();
+  pvManuallyAddedEdges.clear();
   // Run query to get start and end connection IDs
   sql = "SELECT UnitConnectionStart_Id_FK, UnitConnectionEnd_Id_FK, LinkDirection_Code_FK FROM LinkList_view";
   pvLinkListModel->setQuery(sql, pvDatabase);
@@ -136,7 +137,7 @@ bool mdtClPathGraph::loadLinkList()
       isBidirectional = false;
     }
     // Add link
-    addLink(startConnectionId, endConnectionId, isBidirectional, 1);
+    addLinkPv(startConnectionId, endConnectionId, isBidirectional, 1, false);
     // Fetch more data if possible
     if((row > 0)&&(pvLinkListModel->canFetchMore())){
       pvLinkListModel->fetchMore();
@@ -146,46 +147,20 @@ bool mdtClPathGraph::loadLinkList()
   return true;
 }
 
-void mdtClPathGraph::addLink(const QVariant & startConnectionId, const QVariant & endConnectionId, bool isBidirectional, int weight)
+void mdtClPathGraph::addLink(const QVariant& startConnectionId, const QVariant& endConnectionId, bool isBidirectional, int weight)
 {
   Q_ASSERT(!startConnectionId.isNull());
   Q_ASSERT(!endConnectionId.isNull());
 
-  mdtClPathGraphEdgeData edgeData;
-  std::pair<edge_t, bool> ep;       // To get edge added with add_edge()
-  vertex_t startVertex, endVertex;
-  int _startConnectionId;
-  int _endConnectionId;
+  addLinkPv(startConnectionId, endConnectionId, isBidirectional, weight, true);
+}
 
-  // Get start vertex or create one if not allready exists
-  _startConnectionId = startConnectionId.toInt();
-  if(pvGraphVertices.contains(_startConnectionId)){
-    startVertex = pvGraphVertices.value(_startConnectionId);
-  }else{
-    startVertex = boost::add_vertex(pvGraph);
-    pvGraphVertices.insert(_startConnectionId, startVertex);
-  }
-  // Get end vertex or create one if not allready exists
-  _endConnectionId = endConnectionId.toInt();
-  if(pvGraphVertices.contains(_endConnectionId)){
-    endVertex = pvGraphVertices.value(_endConnectionId);
-  }else{
-    endVertex = boost::add_vertex(pvGraph);
-    pvGraphVertices.insert(_endConnectionId, endVertex);
-  }
-  // Setup edge data and add edge
-  edgeData.startConnectionId = startConnectionId;
-  edgeData.endConnectionId = endConnectionId;
-  edgeData.isComplement = false;
-  ep = boost::add_edge(startVertex, endVertex, weight, pvGraph);
-  Q_ASSERT(ep.second);
-  pvEdgeDataMap.insert(std::pair<edge_t, mdtClPathGraphEdgeData>(ep.first, edgeData));
-  // Add complement edge if link is bidirectinnal
-  if(isBidirectional){
-    edgeData.isComplement = true;
-    ep = boost::add_edge(endVertex, startVertex, weight, pvGraph);
-    Q_ASSERT(ep.second);
-    pvEdgeDataMap.insert(std::pair<edge_t, mdtClPathGraphEdgeData>(ep.first, edgeData));
+void mdtClPathGraph::removeAddedLinks()
+{
+  int i;
+
+  for(i = 0; i < pvManuallyAddedEdges.size(); ++i){
+    boost::remove_edge(pvManuallyAddedEdges.at(i), pvGraph);
   }
 }
 
@@ -416,6 +391,55 @@ QStringList mdtClPathGraph::lastErrorMessage() const
 mdtError mdtClPathGraph::lastError() const
 {
   return pvLastError;
+}
+
+void mdtClPathGraph::addLinkPv(const QVariant & startConnectionId, const QVariant & endConnectionId, bool isBidirectional, int weight, bool addToManuallyList)
+{
+  Q_ASSERT(!startConnectionId.isNull());
+  Q_ASSERT(!endConnectionId.isNull());
+
+  mdtClPathGraphEdgeData edgeData;
+  std::pair<edge_t, bool> ep;       // To get edge added with add_edge()
+  vertex_t startVertex, endVertex;
+  int _startConnectionId;
+  int _endConnectionId;
+
+  // Get start vertex or create one if not allready exists
+  _startConnectionId = startConnectionId.toInt();
+  if(pvGraphVertices.contains(_startConnectionId)){
+    startVertex = pvGraphVertices.value(_startConnectionId);
+  }else{
+    startVertex = boost::add_vertex(pvGraph);
+    pvGraphVertices.insert(_startConnectionId, startVertex);
+  }
+  // Get end vertex or create one if not allready exists
+  _endConnectionId = endConnectionId.toInt();
+  if(pvGraphVertices.contains(_endConnectionId)){
+    endVertex = pvGraphVertices.value(_endConnectionId);
+  }else{
+    endVertex = boost::add_vertex(pvGraph);
+    pvGraphVertices.insert(_endConnectionId, endVertex);
+  }
+  // Setup edge data and add edge
+  edgeData.startConnectionId = startConnectionId;
+  edgeData.endConnectionId = endConnectionId;
+  edgeData.isComplement = false;
+  ep = boost::add_edge(startVertex, endVertex, weight, pvGraph);
+  Q_ASSERT(ep.second);
+  pvEdgeDataMap.insert(std::pair<edge_t, mdtClPathGraphEdgeData>(ep.first, edgeData));
+  if(addToManuallyList){
+    pvManuallyAddedEdges.append(ep.first);
+  }
+  // Add complement edge if link is bidirectinnal
+  if(isBidirectional){
+    edgeData.isComplement = true;
+    ep = boost::add_edge(endVertex, startVertex, weight, pvGraph);
+    Q_ASSERT(ep.second);
+    pvEdgeDataMap.insert(std::pair<edge_t, mdtClPathGraphEdgeData>(ep.first, edgeData));
+    if(addToManuallyList){
+      pvManuallyAddedEdges.append(ep.first);
+    }
+  }
 }
 
 mdtClPathGraphicsConnection *mdtClPathGraph::newConnectionItem(int id, mdtClPathGraphicsConnection *itemForNextPos, bool reverse)

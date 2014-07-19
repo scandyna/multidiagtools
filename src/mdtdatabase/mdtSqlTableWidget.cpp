@@ -35,6 +35,7 @@
 #include <QKeyEvent>
 #include <QObject>
 #include <QWidget>
+#include <QIcon>
 
 #include <QDebug>
 
@@ -92,10 +93,13 @@ QWidget *mdtSqlTableWidgetItemDelegate::createEditor(QWidget *parent, const QSty
 mdtSqlTableWidget::mdtSqlTableWidget(QWidget *parent)
  : mdtAbstractSqlWidget(parent)
 {
+  QVBoxLayout *layout = new QVBoxLayout;
+  pvTopHorizontalLayout = new QHBoxLayout;
+  pvBottomHorizontalLayout = new QHBoxLayout;
+
   pvTableView = new QTableView;
   pvTableView->setSelectionBehavior(QAbstractItemView::SelectItems);
   connect(this, SIGNAL(modelSelected()), this, SLOT(onModelSelected()));
-  QVBoxLayout *layout = new QVBoxLayout;
   // Install event filter on table view to catch some key events
   mdtSqlTableWidgetKeyEventFilter *keyEventFilter = new mdtSqlTableWidgetKeyEventFilter(this);
   pvTableView->installEventFilter(keyEventFilter);
@@ -104,11 +108,20 @@ mdtSqlTableWidget::mdtSqlTableWidget(QWidget *parent)
   mdtSqlTableWidgetItemDelegate *delegate = new mdtSqlTableWidgetItemDelegate(this);
   pvTableView->setItemDelegate(delegate);
   connect(delegate, SIGNAL(dataEditionBegins()), this, SLOT(onDataEditionBegins()));
-
+  // Button to resize view to contents
+  QPushButton *pb = new QPushButton;
+  pb->setIcon(QIcon::fromTheme("zoom-fit-best"));
+  pb->setToolTip(tr("Resize view to contents"));
+  connect(pb, SIGNAL(clicked()), this, SLOT(resizeViewToContents()));
+  pvTopHorizontalLayout->addWidget(pb);
+  pvTopHorizontalLayout->addStretch();
+  // Layouts
+  layout->addLayout(pvTopHorizontalLayout);
   layout->addWidget(pvTableView);
+  layout->addLayout(pvBottomHorizontalLayout);
   setLayout(layout);
 
-  pvNavigationLayout = 0;
+  ///pvNavigationLayout = 0;
   pbNavToFirst = 0;
   pbNavToPrevious = 0;
   pbNavToNext = 0;
@@ -164,8 +177,12 @@ void mdtSqlTableWidget::enableLocalEdition()
 void mdtSqlTableWidget::addWidgetToLocalBar(QWidget *widget)
 {
   Q_ASSERT(widget != 0);
-  Q_ASSERT(layout() != 0);
+  ///Q_ASSERT(layout() != 0);
+  Q_ASSERT(pvBottomHorizontalLayout != 0);
 
+  pvBottomHorizontalLayout->addWidget(widget);
+
+  /**
   QBoxLayout *boxLayout;
 
   // Add to layout
@@ -177,12 +194,16 @@ void mdtSqlTableWidget::addWidgetToLocalBar(QWidget *widget)
   }
   Q_ASSERT(pvNavigationLayout != 0);
   pvNavigationLayout->addWidget(widget);
+  */
 }
 
 void mdtSqlTableWidget::addStretchToLocalBar()
 {
-  Q_ASSERT(layout() != 0);
+  ///Q_ASSERT(layout() != 0);
+  Q_ASSERT(pvBottomHorizontalLayout != 0);
 
+  pvBottomHorizontalLayout->addStretch();
+  /**
   QBoxLayout *boxLayout;
 
   // Add to layout
@@ -194,6 +215,7 @@ void mdtSqlTableWidget::addStretchToLocalBar()
   }
   Q_ASSERT(pvNavigationLayout != 0);
   pvNavigationLayout->addStretch();
+  */
 }
 
 QItemSelectionModel *mdtSqlTableWidget::selectionModel()
@@ -438,6 +460,14 @@ void mdtSqlTableWidget::setCurrentIndex(int row)
     index = model()->index(row, pvDefaultColumnToSelect);
   }
   pvTableView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
+}
+
+void mdtSqlTableWidget::resizeViewToContents()
+{
+  Q_ASSERT(pvTableView != 0);
+
+  pvTableView->resizeColumnsToContents();
+  pvTableView->resizeRowsToContents();
 }
 
 void mdtSqlTableWidget::onDataEditionBegins()
@@ -766,8 +796,9 @@ int mdtSqlTableWidget::firstVisibleColumnIndex()
 void mdtSqlTableWidget::createLocalEditionElements()
 {
   Q_ASSERT(layout() != 0);
+  Q_ASSERT(pvBottomHorizontalLayout != 0);
 
-  QBoxLayout *boxLayout;
+  ///QBoxLayout *boxLayout;
 
   // Create actions
   pbInsert = new QPushButton("New");
@@ -796,6 +827,7 @@ void mdtSqlTableWidget::createLocalEditionElements()
   connect(pbRevert, SIGNAL(clicked()), this, SLOT(revert()));
   connect(pbRemove, SIGNAL(clicked()), this, SLOT(remove()));
   // Add to layout
+  /**
   if(pvNavigationLayout == 0){
     pvNavigationLayout = new QHBoxLayout;
     boxLayout = dynamic_cast<QBoxLayout*>(layout());
@@ -803,10 +835,11 @@ void mdtSqlTableWidget::createLocalEditionElements()
     boxLayout->addLayout(pvNavigationLayout);
   }
   Q_ASSERT(pvNavigationLayout != 0);
-  pvNavigationLayout->addWidget(pbInsert);
-  pvNavigationLayout->addWidget(pbSubmit);
-  pvNavigationLayout->addWidget(pbRevert);
-  pvNavigationLayout->addWidget(pbRemove);
+  */
+  pvBottomHorizontalLayout->addWidget(pbInsert);
+  pvBottomHorizontalLayout->addWidget(pbSubmit);
+  pvBottomHorizontalLayout->addWidget(pbRevert);
+  pvBottomHorizontalLayout->addWidget(pbRemove);
   ///pvNavigationLayout->addStretch();
   // Update buttons first time
   setEditionEnabled(true);

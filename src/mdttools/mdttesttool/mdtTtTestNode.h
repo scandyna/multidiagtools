@@ -23,6 +23,7 @@
 
 #include "mdtTtBase.h"
 #include "mdtTtTestNodeUnitData.h"
+#include "mdtClPathGraph.h"
 #include <QList>
 #include <QVariant>
 #include <QString>
@@ -83,6 +84,17 @@ class mdtTtTestNode : public mdtTtBase
    *  will be added in TestNodeUnitConnection_tbl.
    */
   bool addMissingConnections(const QVariant & testNodeId);
+
+  /*! \brief Check that enabling a set of coupling and channel relays does not produce a short circuit between connections A and B
+   *
+   * \param connectionIdA Fisrt connection from witch it must be checked about short circuit
+   * \param connectionIdB Second connection from witch it must be checked about short circuit
+   * \param testNodeUnitIdList Test node unit ID list of coupling and channel relays that will be tirned on in given scenario
+   * \param graph Graph object. Cable list must allready be loaded (see mdtClPathGraph::loadLinkList()).
+   * \param ok Will be set false if a error occured, true else
+   * \return True if a short circuit was detected, false if OK
+   */
+  bool ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, const QVariant & connectionIdB, const QList<QVariant> & testNodeUnitIdList, mdtClPathGraph & graph, bool & ok);
 
  private:
 

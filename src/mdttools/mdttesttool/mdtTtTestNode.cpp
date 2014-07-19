@@ -20,7 +20,6 @@
  ****************************************************************************/
 #include "mdtTtTestNode.h"
 #include "mdtTtTestNodeUnit.h"
-#include "mdtClPathGraph.h"
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QSqlError>
@@ -242,4 +241,37 @@ bool mdtTtTestNode::addMissingConnections(const QVariant & testNodeId)
   }
 
   return true;
+}
+
+bool mdtTtTestNode::ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, const QVariant & connectionIdB, const QList<QVariant> & testNodeUnitIdList, mdtClPathGraph & graph, bool & ok)
+{
+  mdtTtTestNodeUnit tnu(0, database());
+  QList<QVariant> connectionIdList;
+  int i;
+  bool noShort;
+
+  // Clear previous results
+  graph.removeAddedLinks();
+  // Add given node units to graph
+  for(i = 0; i < testNodeUnitIdList.size(); ++i){
+    connectionIdList = tnu.getConnectionIdListOfUnitId(testNodeUnitIdList.at(i), &ok);
+    if(!ok){
+      return false;
+    }
+    // We only handle units with exactly 2 connections
+    if(connectionIdList.size() != 2){
+      ok = false;
+      pvLastError.setError(tr("Node unit ID ") + testNodeUnitIdList.at(i).toString() + tr(" has not exaclty 2 connections. This is not supported."), mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNode");
+      pvLastError.commit();
+      return false;
+    }
+    Q_ASSERT(connectionIdList.size() == 2);
+    graph.addLink(connectionIdList.at(0), connectionIdList.at(1), true, 2);
+  }
+  ok = true;
+  noShort = graph.getShortestPath(connectionIdA, connectionIdB).isEmpty();
+  graph.removeAddedLinks();
+
+  return noShort;
 }

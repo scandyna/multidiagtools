@@ -1290,6 +1290,10 @@ void mdtCableListTest::pathGraphTest()
   QCOMPARE(idList.at(0), QVariant(1));
   QCOMPARE(idList.at(1), QVariant(5));
   QCOMPARE(idList.at(2), QVariant(4));
+  // Clear data that we added and check
+  graph.removeAddedLinks();
+  idList = graph.getLinkedConnectionIdList(1);
+  QCOMPARE(idList.size(), 0);
 
   /*
    * Tests with database data
@@ -1320,8 +1324,22 @@ void mdtCableListTest::pathGraphTest()
   QCOMPARE(idList.at(1), QVariant(10001));
   QCOMPARE(idList.at(2), QVariant(20000));
   QCOMPARE(idList.at(3), QVariant(20001));
-
-
+  /*
+   * Call method to remove manually added links - Must change nothing
+   */
+  // Check linked connections
+  idList = graph.getLinkedConnectionIdList(10000);
+  QCOMPARE(idList.size(), 3);
+  QVERIFY(idList.contains(10001));
+  QVERIFY(idList.contains(20000));
+  QVERIFY(idList.contains(20001));
+  // Check path from 10000 to 20001
+  idList = graph.getShortestPath(10000, 20001);
+  QCOMPARE(idList.size(), 4);
+  QCOMPARE(idList.at(0), QVariant(10000));
+  QCOMPARE(idList.at(1), QVariant(10001));
+  QCOMPARE(idList.at(2), QVariant(20000));
+  QCOMPARE(idList.at(3), QVariant(20001));
 
   pvScenario->removeScenario();
 }

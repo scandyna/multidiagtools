@@ -255,6 +255,10 @@ class mdtSqlTableWidget : public mdtAbstractSqlWidget
    */
   void setCurrentIndex(int row);
 
+  /*! \brief Resize view to contents
+   */
+  void resizeViewToContents();
+
  private slots:
 
   /*! \internal Set internal delegateIsEditingData flag
@@ -341,7 +345,8 @@ class mdtSqlTableWidget : public mdtAbstractSqlWidget
   Q_DISABLE_COPY(mdtSqlTableWidget);
 
   QTableView *pvTableView;
-  QHBoxLayout *pvNavigationLayout;
+  QHBoxLayout *pvTopHorizontalLayout;
+  QHBoxLayout *pvBottomHorizontalLayout;
   // Navigation buttons
   QPushButton *pbNavToFirst;
   QPushButton *pbNavToPrevious;

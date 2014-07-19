@@ -124,6 +124,10 @@ class mdtClPathGraph
    */
   void addLink(const QVariant & startConnectionId, const QVariant & endConnectionId, bool isBidirectional = true, int weight = 1);
 
+  /*! \brief Remove links that where added with addLink()
+   */
+  void removeAddedLinks();
+
   /*! \brief Get a list of unit connections IDs that are linked to a given connection
    *
    * Note: fromConnectionId is not included in result.
@@ -175,6 +179,10 @@ class mdtClPathGraph
 
  private:
 
+  /*! \brief Add a link to the graph
+   */
+  void addLinkPv(const QVariant & startConnectionId, const QVariant & endConnectionId, bool isBidirectional, int weight, bool addToManuallyList);
+
   /*! \brief Create a new graphics connection item
    */
   mdtClPathGraphicsConnection *newConnectionItem(int id, mdtClPathGraphicsConnection *itemForNextPos, bool reverse);
@@ -192,6 +200,7 @@ class mdtClPathGraph
   mdtClPathGraphPrivate::graph_t pvGraph;
   QHash<int, mdtClPathGraphPrivate::vertex_t> pvGraphVertices;
   std::map<mdtClPathGraphPrivate::edge_t, mdtClPathGraphPrivate::mdtClPathGraphEdgeData> pvEdgeDataMap;
+  QVector<mdtClPathGraphPrivate::edge_t> pvManuallyAddedEdges;
   mdtError pvLastError;
 };
 
