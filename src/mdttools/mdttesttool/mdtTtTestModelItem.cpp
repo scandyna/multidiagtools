@@ -352,6 +352,54 @@ bool mdtTtTestModelItem::removeTestNodeUnitSetups(const mdtSqlTableSelection & s
   return removeData("TestNodeUnitSetup_tbl", s, true);
 }
 
+bool mdtTtTestModelItem::addRoute(const QVariant & testModelItemId, const QVariant & testLinkId, const QVariant & measureTestNodeUnitConnectionId, const QList<mdtTtTestNodeUnitSetupData> & dataList)
+{
+  mdtSqlRecord record;
+  mdtTtTestNodeUnitSetupData setupData;
+  QVariant testModelItemRouteId;
+  QSqlQuery query(database());
+  int i;
+
+  // Setup record for TestModelItemRoute_tbl
+  if(!record.addAllFields("TestModelItemRoute_tbl", database())){
+    pvLastError = record.lastError();
+    return false;
+  }
+  record.setValue("TestModelItem_Id_FK", testModelItemId);
+  record.setValue("TestLink_Id_FK", testLinkId);
+  record.setValue("MeasureTestNodeUnitConnection_Id_FK", measureTestNodeUnitConnectionId);
+
+  if(!beginTransaction()){
+    return false;
+  }
+  // Add route
+  if(!addRecord(record, "TestModelItemRoute_tbl", query)){
+    rollbackTransaction();
+    return false;
+  }
+  testModelItemRouteId = query.lastInsertId();
+  Q_ASSERT(!testModelItemRouteId.isNull());
+  // Add test node unit setup
+  for(i = 0; i < dataList.size(); ++i){
+    setupData = dataList.at(i);
+    setupData.setValue("TestModelItemRoute_Id_FK", testModelItemRouteId);
+    if(!addOrUpdateTestNodeUnitSetup(setupData)){
+      rollbackTransaction();
+      return false;
+    }
+  }
+  if(!commitTransaction()){
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtTtTestModelItem::removeRoutes(const mdtSqlTableSelection & s)
+{
+  return removeData("TestModelItemRoute_tbl", s, true);
+}
+
 /**
 bool mdtTtTestModelItem::setTestLink(const QVariant & testItemId, const QVariant & testLinkBusAId, const QVariant & testLinkBusBId)
 {

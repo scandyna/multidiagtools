@@ -44,20 +44,46 @@ mdtTtRelayPathDialog::mdtTtRelayPathDialog(QSqlDatabase db, mdtClPathGraph *pg, 
 
 void mdtTtRelayPathDialog::setTestNodeId(const QVariant & id)
 {
-  qDebug() << "Setting test node ID " << id;
+
+}
+
+void mdtTtRelayPathDialog::setData(const QVariant & testModelItemId, const QVariant & testNodeId)
+{
+  pvTestModelItemId = testModelItemId;
   pvLoadingData = true;
-  displayTestNodeData(id);
-  populateSourceTestNodeUnitCombobox(id);
-  populateDestinationTestNodeUnitCombobox(id);
+  displayTestNodeData(testNodeId);
+  populateSourceTestNodeUnitCombobox(testNodeId);
+  populateDestinationTestNodeUnitCombobox(testNodeId);
   pvGraph->loadLinkList();
-  loadCouplingRelays(id);
-  loadChannelRelays(id);
+  loadCouplingRelays(testNodeId);
+  loadChannelRelays(testNodeId);
   pvLoadingData = false;
+  searchPath(0);
 }
 
 QList< QVariant > mdtTtRelayPathDialog::idListOfRelaysToEnable() const
 {
   return pvRelaysToEnableIds;
+}
+
+QVariant mdtTtRelayPathDialog::selectedTestConnection() const
+{
+  int index = cbDestinationConnection->currentIndex();
+
+  if(index < 0){
+    return QVariant();
+  }
+  return cbDestinationConnection->itemData(index);
+}
+
+QVariant mdtTtRelayPathDialog::selectedMeasureConnection() const
+{
+  int index = cbSourceConnection->currentIndex();
+
+  if(index < 0){
+    return QVariant();
+  }
+  return cbSourceConnection->itemData(index);
 }
 
 void mdtTtRelayPathDialog::updateSourceConnections(int index)
@@ -262,11 +288,34 @@ bool mdtTtRelayPathDialog::populateDestinationConnectionCombobox(const QVariant&
   QSqlRecord data;
   QString text;
   QString function;
+  QString sql;
+  QLocale locale;
+  QString functionFieldName;
   bool ok;
   int i;
 
-  ///cbDestinationConnection->clear();
-  dataList = tn.getData(sqlForTestConnectionData(testNodeUnitId), &ok);
+  // Select function field and generate SQL statement
+  switch(locale.language()){
+    case QLocale::French:
+      functionFieldName = "FunctionFR AS Function";
+      break;
+    case QLocale::German:
+      functionFieldName = "FunctionDE AS Function";
+      break;
+    case QLocale::Italian:
+      functionFieldName = "FunctionIT AS Function";
+      break;
+    default:
+      functionFieldName = "FunctionEN AS Function";
+  }
+  sql = "SELECT Id_PK, UnitContactName, " + functionFieldName + " FROM UnitConnection_tbl ";
+  sql += " WHERE Unit_Id_FK = " + testNodeUnitId.toString();
+  sql += " AND Id_PK IN (";
+  sql += "  SELECT TL.TestConnection_Id_FK FROM TestLink_tbl TL JOIN TestModelItem_TestLink_tbl TMITL ON TMITL.TestLink_Id_FK = TL.Id_PK ";
+  sql += "  WHERE TMITL.TestModelItem_Id_FK = " + pvTestModelItemId.toString();
+  sql += ")";
+  // Get data and populate combobox
+  dataList = tn.getData(sql, &ok);
   if(!ok){
     displayError(tn.lastError());
     return false;

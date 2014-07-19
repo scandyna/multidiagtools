@@ -59,9 +59,13 @@ class mdtTtTestModelItemEditor : public mdtSqlForm
    */
   void removeTestLinks();
 
-  /*! \brief Route selected test link
+  /*! \brief Add a route
    */
-  void routeTestLink();
+  void addRoute();
+
+  /*! \brief Remove selected routes
+   */
+  void removeRoutes();
 
   /*! \brief Add a test node unit to setup list
    */
@@ -92,6 +96,10 @@ class mdtTtTestModelItemEditor : public mdtSqlForm
   void removeTestNodeUnitSetup();
 
  private:
+
+  /*! \brief Return test link ID for given test connection ID
+   */
+  QVariant getTestLinkIdForTestConnectionId(const QVariant & testModelItemId, const QVariant & testConnectionId);
 
   /*! \brief Select a test link
    */

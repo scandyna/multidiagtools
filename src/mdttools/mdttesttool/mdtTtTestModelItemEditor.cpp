@@ -186,9 +186,129 @@ void mdtTtTestModelItemEditor::removeTestLinks()
   select("TestModelItem_TestLink_view");
 }
 
-void mdtTtTestModelItemEditor::routeTestLink()
+void mdtTtTestModelItemEditor::addRoute()
 {
+  mdtTtTestModelItem tmi(0, database());
+  mdtClPathGraph graph(database());
+  mdtTtRelayPathDialog dialog(database(), &graph, this);
+  mdtSqlSelectionDialog selectionDialog(this);
+  mdtSqlTableSelection s;
+  QVariant testModelId;
+  QVariant testModelItemId;
+  QVariant testLinkId;
+  QVariant measureCnxId;
+  QVariant testNodeId;
+  mdtTtTestNodeUnitSetupData setupData;
+  QList<mdtTtTestNodeUnitSetupData> setupDataList;
+  QList<QVariant> nodeUnitIdList;
+  QString sql;
+  int i;
 
+  // Get test model ID
+  testModelId = currentData("TestModelItem_tbl", "TestModel_Id_FK");
+  if(testModelId.isNull()){
+    return;
+  }
+  // Get test model item ID
+  testModelItemId = currentData("TestModelItem_tbl", "Id_PK");
+  if(testModelItemId.isNull()){
+    return;
+  }
+  // Setup test node unit setup data
+  if(!setupData.setup(database())){
+    pvLastError = setupData.lastError();
+    displayLastError();
+    return;
+  }
+  setupData.setValue("TestModelItem_Id_FK", testModelItemId);
+  // Setup and show dialog for test node selection
+  sql = tmi.sqlForTestNodeSelection(testModelId);
+  selectionDialog.setMessage(tr("Please select a test node to use:"));
+  selectionDialog.setQuery(sql, database(), false);
+  selectionDialog.setColumnHidden("TestNode_Id_FK", true);
+  selectionDialog.setHeaderData("Type", tr("Test system"));
+  selectionDialog.setHeaderData("SubType", tr("Test node"));
+  selectionDialog.addColumnToSortOrder("Type", Qt::AscendingOrder);
+  selectionDialog.addColumnToSortOrder("SubType", Qt::AscendingOrder);
+  selectionDialog.addColumnToSortOrder("SeriesNumber", Qt::AscendingOrder);
+  selectionDialog.sort();
+  selectionDialog.setWindowTitle(tr("Test node selection"));
+  selectionDialog.resize(600, 300);
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return;
+  }
+  s = selectionDialog.selection("TestNode_Id_FK");
+  if(s.isEmpty()){
+    return;
+  }
+  Q_ASSERT(s.rowCount() == 1);
+  testNodeId = s.data(0, "TestNode_Id_FK");
+  // Setup and show dialog
+  ///dialog.setTestNodeId(testNodeId);
+  dialog.setData(testModelItemId, testNodeId);
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
+  nodeUnitIdList = dialog.idListOfRelaysToEnable();
+  testLinkId = getTestLinkIdForTestConnectionId(testModelItemId, dialog.selectedTestConnection());
+  if(testLinkId.isNull()){
+    return;
+  }
+  measureCnxId = dialog.selectedMeasureConnection();
+  if(measureCnxId.isNull()){
+    return;
+  }
+  for(i = 0; i < nodeUnitIdList.size(); ++i){
+    setupData.setValue("TestNodeUnit_Id_FK", nodeUnitIdList.at(i));
+    setupData.setValue("StepNumber", 0);
+    setupData.setValue("State", true);
+    setupDataList.append(setupData);
+  }
+  ///testLinkId = ???
+  ///measureCnxId = ???
+  // Add to db
+  if(!tmi.addRoute(testModelItemId, testLinkId, measureCnxId, setupDataList)){
+    pvLastError = tmi.lastError();
+    displayLastError();
+    return;
+  }
+  // Update views
+  select("TestNodeUnitSetup_view");
+  select("TestModelItemRoute_view");
+}
+
+void mdtTtTestModelItemEditor::removeRoutes()
+{
+  mdtTtTestModelItem tmi(0, database());
+  mdtSqlTableSelection s;
+  mdtSqlTableWidget *widget;
+  QMessageBox msgBox;
+
+  // Get widget and selection
+  widget = sqlTableWidget("TestModelItemRoute_view");
+  Q_ASSERT(widget != 0);
+  s = widget->currentSelection("Id_PK");
+  if(s.isEmpty()){
+    return;
+  }
+  // We ask confirmation to the user
+  msgBox.setText(tr("You are about to remove routes from current test item."));
+  msgBox.setInformativeText(tr("Do you want to continue ?"));
+  msgBox.setIcon(QMessageBox::Warning);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+  msgBox.setDefaultButton(QMessageBox::No);
+  if(msgBox.exec() != QMessageBox::Yes){
+    return;
+  }
+  // Remove selected units
+  if(!tmi.removeRoutes(s)){
+    pvLastError = tmi.lastError();
+    displayLastError();
+    return;
+  }
+  // Update views
+  select("TestNodeUnitSetup_view");
+  select("TestModelItemRoute_view");
 }
 
 void mdtTtTestModelItemEditor::addNodeUnit()
@@ -265,6 +385,7 @@ void mdtTtTestModelItemEditor::addNodeUnit()
   }
   // Update views
   select("TestNodeUnitSetup_view");
+  select("TestModelItemRoute_view");
 }
 
 void mdtTtTestModelItemEditor::editRelayPath()
@@ -342,6 +463,7 @@ void mdtTtTestModelItemEditor::editRelayPath()
   }
   // Update views
   select("TestNodeUnitSetup_view");
+  select("TestModelItemRoute_view");
 }
 
 void mdtTtTestModelItemEditor::setupNodeUnit()
@@ -388,6 +510,7 @@ void mdtTtTestModelItemEditor::setupNodeUnit()
   }
   // Update views
   select("TestNodeUnitSetup_view");
+  select("TestModelItemRoute_view");
 }
 
 void mdtTtTestModelItemEditor::removeNodeUnits()
@@ -423,6 +546,35 @@ void mdtTtTestModelItemEditor::removeNodeUnits()
   }
   // Update views
   select("TestNodeUnitSetup_view");
+  select("TestModelItemRoute_view");
+}
+
+QVariant mdtTtTestModelItemEditor::getTestLinkIdForTestConnectionId(const QVariant & testModelItemId, const QVariant & testConnectionId)
+{
+  mdtTtTestModelItem tmi(0, database());
+  QString sql;
+  QList<QSqlRecord> dataList;
+  bool ok;
+
+  if((testModelItemId.isNull())||(testConnectionId.isNull())){
+    return QVariant();
+  }
+  sql = "SELECT Id_PK FROM TestLink_tbl TL JOIN TestModelItem_TestLink_tbl TMITL ON TMITL.TestLink_Id_FK = TL.Id_PK";
+  sql += " WHERE TMITL.TestModelItem_Id_FK = " + testModelItemId.toString();
+  sql += " AND TL.TestConnection_Id_FK = " + testConnectionId.toString();
+  dataList = tmi.getData(sql, &ok);
+  if(!ok){
+    pvLastError = tmi.lastError();
+    displayLastError();
+    return QVariant();
+  }
+  if(dataList.isEmpty()){
+    return QVariant();
+  }
+  qDebug() << "Test connection ID: " << testConnectionId << " , test link ID: " << dataList;
+  Q_ASSERT(dataList.size() == 1);
+
+  return dataList.at(0).value(0);
 }
 
 
@@ -596,7 +748,6 @@ bool mdtTtTestModelItemEditor::setupTestLinkTable()
   mdtSqlTableWidget *widget;
   QPushButton *pbAddTestLink;
   QPushButton *pbRemoveTestLinks;
-  QPushButton *pbRouteLink;
 
   if(!addChildTable("TestModelItem_TestLink_view", tr("Test links"), database())){
     return false;
@@ -645,11 +796,6 @@ bool mdtTtTestModelItemEditor::setupTestLinkTable()
   pbRemoveTestLinks->setIcon(QIcon::fromTheme("list-remove"));
   connect(pbRemoveTestLinks, SIGNAL(clicked()), this, SLOT(removeTestLinks()));
   widget->addWidgetToLocalBar(pbRemoveTestLinks);
-  // Route links button
-  pbRouteLink = new QPushButton(tr("Route ..."));
-  ///pbRouteLink->setIcon(QIcon::fromTheme("list-remove"));
-  connect(pbRouteLink, SIGNAL(clicked()), this, SLOT(routeTestLink()));
-  widget->addWidgetToLocalBar(pbRouteLink);
   widget->addStretchToLocalBar();
 
   return true;
@@ -658,6 +804,8 @@ bool mdtTtTestModelItemEditor::setupTestLinkTable()
 bool mdtTtTestModelItemEditor::setupTestItemRouteTable()
 {
   mdtSqlTableWidget *widget;
+  QLocale locale;
+  QPushButton *pb;
 
   if(!addChildTable("TestModelItemRoute_view", tr("Routes"), database())){
     return false;
@@ -667,6 +815,85 @@ bool mdtTtTestModelItemEditor::setupTestItemRouteTable()
   }
   widget = sqlTableWidget("TestModelItemRoute_view");
   Q_ASSERT(widget != 0);
+  // Hide technical fields
+  widget->setColumnHidden("Id_PK", true);
+  widget->setColumnHidden("TestModelItem_Id_FK", true);
+  widget->setColumnHidden("TestLink_Id_FK", true);
+  widget->setColumnHidden("MeasureTestNodeUnitConnection_Id_FK", true);
+  widget->setColumnHidden("TestAlias", true);
+  // Choose MeasureContactFunction field regarding language
+  switch(locale.language()){
+    case QLocale::French:
+      widget->setColumnHidden("MeasureContactFunctionEN", true);
+      widget->setColumnHidden("MeasureContactFunctionDE", true);
+      widget->setColumnHidden("MeasureContactFunctionIT", true);
+      widget->setHeaderData("MeasureContactFunctionFR", tr("Measure\ncontact\nFunction"));
+      break;
+    case QLocale::German:
+      widget->setColumnHidden("MeasureContactFunctionEN", true);
+      widget->setColumnHidden("MeasureContactFunctionFR", true);
+      widget->setColumnHidden("MeasureContactFunctionIT", true);
+      widget->setHeaderData("MeasureContactFunctionDE", tr("Measure\ncontact\nFunction"));
+      break;
+    case QLocale::Italian:
+      widget->setColumnHidden("MeasureContactFunctionEN", true);
+      widget->setColumnHidden("MeasureContactFunctionDE", true);
+      widget->setColumnHidden("MeasureContactFunctionFR", true);
+      widget->setHeaderData("MeasureContactFunctionIT", tr("Measure\ncontact\nFunction"));
+      break;
+    default:
+      widget->setColumnHidden("MeasureContactFunctionEN", true);
+      widget->setColumnHidden("MeasureContactFunctionDE", true);
+      widget->setColumnHidden("MeasureContactFunctionIT", true);
+      widget->setHeaderData("MeasureContactFunctionEN", tr("Measure\ncontact\nFunction"));
+  }
+  // Choose MeasureContactFunction field regarding language
+  switch(locale.language()){
+    case QLocale::French:
+      widget->setColumnHidden("TestContactFunctionDE", true);
+      widget->setColumnHidden("TestContactFunctionEN", true);
+      widget->setColumnHidden("TestContactFunctionIT", true);
+      widget->setHeaderData("TestContactFunctionFR", tr("Test\ncontact\nFunction"));
+      break;
+    case QLocale::German:
+      widget->setColumnHidden("TestContactFunctionFR", true);
+      widget->setColumnHidden("TestContactFunctionEN", true);
+      widget->setColumnHidden("TestContactFunctionIT", true);
+      widget->setHeaderData("TestContactFunctionDE", tr("Test\ncontact\nFunction"));
+      break;
+    case QLocale::Italian:
+      widget->setColumnHidden("TestContactFunctionDE", true);
+      widget->setColumnHidden("TestContactFunctionEN", true);
+      widget->setColumnHidden("TestContactFunctionFR", true);
+      widget->setHeaderData("TestContactFunctionIT", tr("Test\ncontact\nFunction"));
+      break;
+    default:
+      widget->setColumnHidden("TestContactFunctionDE", true);
+      widget->setColumnHidden("TestContactFunctionFR", true);
+      widget->setColumnHidden("TestContactFunctionIT", true);
+      widget->setHeaderData("TestContactFunctionEN", tr("Test\ncontact\nFunction"));
+  }
+  // Rename other visible fields to something human friendly
+  widget->setHeaderData("Identification", tr("Test link\nidentification"));
+  widget->setHeaderData("TestSchemaPosition", tr("Test\nConnector"));
+  widget->setHeaderData("TestContactName", tr("Test\nContact"));
+  widget->setHeaderData("RouteTestNodeUnits", tr("Route\nrelays"));
+  widget->setHeaderData("MeasureSchemaPosition", tr("Measure\nunit"));
+  widget->setHeaderData("MeasureAlias", tr("Measure\nalias"));
+  widget->setHeaderData("MeasureContactName", tr("Measure\ncontact"));
+  // Set some attributes on table view
+  widget->tableView()->resizeColumnsToContents();
+  // Add route button
+  pb = new QPushButton(tr("Add route ..."));
+  pb->setIcon(QIcon::fromTheme("list-add"));
+  connect(pb, SIGNAL(clicked()), this, SLOT(addRoute()));
+  widget->addWidgetToLocalBar(pb);
+  // Remove route button
+  pb = new QPushButton(tr("Remove routes ..."));
+  pb->setIcon(QIcon::fromTheme("list-remove"));
+  connect(pb, SIGNAL(clicked()), this, SLOT(removeRoutes()));
+  widget->addWidgetToLocalBar(pb);
+  widget->addStretchToLocalBar();
 
   return true;
 }

@@ -67,9 +67,21 @@ class mdtTtRelayPathDialog : public QDialog, Ui::mdtTtRelayPathDialog
    */
   void setTestNodeId(const QVariant & id);
 
+  /*! \brief Set data
+   */
+  void setData(const QVariant & testModelItemId, const QVariant & testNodeId);
+
   /*! \brief Get list if relays IDs to enable
    */
   QList<QVariant> idListOfRelaysToEnable() const;
+
+  /*! \brief Get currently selected test connection
+   */
+  QVariant selectedTestConnection() const;
+
+  /*! \brief Get currently selected measure connection
+   */
+  QVariant selectedMeasureConnection() const;
 
  private slots:
 
@@ -139,6 +151,7 @@ class mdtTtRelayPathDialog : public QDialog, Ui::mdtTtRelayPathDialog
 
   QSqlDatabase pvDatabase;
   mdtClPathGraph *pvGraph;
+  QVariant pvTestModelItemId;
   QList<mdtTtRelayPathItem> pvCouplingRelays;
   QList<mdtTtRelayPathItem> pvChannelRelays;
   bool pvLoadingData;

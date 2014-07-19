@@ -104,6 +104,14 @@ class mdtTtTestModelItem : public mdtTtBase
    */
   bool removeTestNodeUnitSetups(const mdtSqlTableSelection & s);
 
+  /*! \brief Add a route to TestModelItemRoute_tbl
+   */
+  bool addRoute(const QVariant & testModelItemId, const QVariant & testLinkId, const QVariant & measureTestNodeUnitConnectionId, const QList<mdtTtTestNodeUnitSetupData> & dataList);
+
+  /*! \brief Remove a route from TestModelItemRoute_tbl
+   */
+  bool removeRoutes(const mdtSqlTableSelection & s);
+
   /*! \brief Set test link
    */
   ///bool setTestLink(const QVariant & testItemId, const QVariant & testLinkBusAId, const QVariant & testLinkBusBId);

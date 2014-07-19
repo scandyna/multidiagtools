@@ -3544,12 +3544,13 @@ bool mdtTtDatabaseSchema::createTestModelItemRouteView()
          " JOIN Unit_tbl UM\n"\
          "  ON UM.Id_PK = TNUM.Unit_Id_FK_PK\n";
          // Node units that are used to create the route
-  sql += " JOIN TestNodeUnitSetup_tbl TNUS\n"\
+  sql += " LEFT JOIN TestNodeUnitSetup_tbl TNUS\n"\
          "  ON TNUS.TestModelItemRoute_Id_FK = TMIR.Id_PK\n"\
-         " JOIN TestNodeUnit_tbl TNU\n"\
+         " LEFT JOIN TestNodeUnit_tbl TNU\n"\
          "  ON TNU.Unit_Id_FK_PK = TNUS.TestNodeUnit_Id_FK\n"\
-         " JOIN Unit_tbl U\n"\
+         " LEFT JOIN Unit_tbl U\n"\
          "  ON U.Id_PK = TNU.Unit_Id_FK_PK\n";
+  sql += "GROUP BY TMIR.Id_PK\n";
 
   return createView("TestModelItemRoute_view", sql);
 }

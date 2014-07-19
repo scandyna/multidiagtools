@@ -31,6 +31,12 @@
     <td>Link edition</td> <td><font color="orange"><b>Work in progress</b></font></td> <td></td>
   </tr>
   <tr>
+    <td>Link list reporting (printing, PDF)</td> <td><font color="red"><b>Missing</b></font></td> <td></td>
+  </tr>
+  <tr>
+    <td>Import, export, backup</td> <td><font color="red"><b>Missing</b></font></td> <td></td>
+  </tr>
+  <tr>
     <td>Versionning</td> <td><font color="red"><b>Missing</b></font></td> <td></td>
   </tr>
   <tr>
@@ -40,8 +46,15 @@
     <td>Test (model) edition</td> <td><font color="orange"><b>Work in progress</b></font></td> <td></td>
   </tr>
   <tr>
+    <td>Calibration</td> <td><font color="red"><b>Missing</b></font></td> <td></td>
+  </tr>
+  <tr>
     <td>Test execution edition and API</td> <td><font color="orange"><b>Starting</b></font></td> <td></td>
   </tr>
+  <tr>
+    <td>Test result reporting (printing, PDF)</td> <td><font color="red"><b>Missing</b></font></td> <td></td>
+  </tr>
+
 </table>
 
 ### Versionning
@@ -61,7 +74,7 @@ The complete workflow will show how we could use this tool in a project.
 We considere a project for witch we have to make the entiere engeneering,
 for example for a modification on the electrical part of a system.
 
-This requiers several tasks:
+This requiers several tasks, at least:
 
 * Define what to modify
 * Draw schemas
@@ -70,20 +83,79 @@ This requiers several tasks:
 * Create documentation for continuity check
 * Create documentation for comissioning
 
+Cable list tool is able to create a part list, link lists, continuity and isolation checks.
+This will be explained in next chapiters.
+Note that schema drawing, project management and other stuff is not, and will probably never, provided by this tool (other tools exists for this).
+
+The suggested workflow is:
+
+* Create vehicle type for each system (denomination of vehicle type will be discussed later)
+* Enter connectors
+* Enter parts of the project by creating articles
+* Take schemas and enter each position as new unit
+* Add links (in unit edition): if cable lists are needed, check that schema shows every link (most of time, this is not true) an investigate...
+* Create test nodes
+* Create test (models)
+* Create test application itself
+
+At first point of view, this seems to be a infinite task. And yes, it is.
+But, at some point of a project, if such engeneering was not made, this can give some problems.
+If you think that these steps are not relevant, then you probably not need to create any test application too.
+
 ### Create vehicle types
+
+The term 'Vehicle type' seems to be something wrong.
+The main idea here is a container for all elements (units) of a system.
+
+![Vehicle type](img/vehicle-type-edition.jpg "Vehicle type edition")
 
 ### Create articles
 
+![Article edition](img/article-edition.jpg "Article edition")
+
 ### Create connectors
+
+![Connector edition](img/connector-edition.jpg "Article edition")
 
 ### Create units
 
+![Unit edition](img/unit-edition.jpg "Unit edition")
+
+![Unit link edition](img/unit-link-edition.jpg "Unit link edition")
+
+![Link beam edition](img/link-beam-edition.jpg "Link beam edition")
+
+![Unit link path view](img/unit-link-path-view.jpg "Unit link path view")
+
+![Unit linked connections view](img/unit-linked-connections-view.jpg "Unit linked connections view")
+
 ### Create test nodes
+
+![Test node edition](img/test-node-edition.jpg "Test node edition")
+
+#### Affect units
+
+### Create test cables
+
+![Test cable edition](img/test-cable-edition.jpg "Test cable edition")
 
 ### Create test (models)
 
-### Create test
+![Test (model) edition](img/test-model-edition.jpg "Test (model) edition")
 
+#### Add routes
+
+#### Edit test node unit setup
+
+## Calibration
+
+
+
+### Create test application
+
+![Basic test tool example](img/basic-tester-example.jpg "Basic test tool example")
+
+![Basic test tool example (instruments states)](img/basic-tester-example-instruments-states.jpg "Basic test tool example (instruments sates)")
 
 ## Vehicle type
 
@@ -91,14 +163,19 @@ This requiers several tasks:
 
 ## Article
 
-![Article edition](img/article-edition.jpg "Article edition")
+
 
 ## Unit
 
-![Unit edition](img/unit-edition.jpg "Unit edition")
+
 
 
 ## Test node
 
 ## Test connection cable
+
+# Licence
+
+# Credits
+
 

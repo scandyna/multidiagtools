@@ -51,6 +51,20 @@ Link edition
   </tr>
   <tr>
     <td>
+Link list reporting (printing, PDF)
+</td> <td>
+<font color="red"><b>Missing</b></font>
+</td> <td></td>
+  </tr>
+  <tr>
+    <td>
+Import, export, backup
+</td> <td>
+<font color="red"><b>Missing</b></font>
+</td> <td></td>
+  </tr>
+  <tr>
+    <td>
 Versionning
 </td> <td>
 <font color="red"><b>Missing</b></font>
@@ -72,11 +86,26 @@ Test (model) edition
   </tr>
   <tr>
     <td>
+Calibration
+</td> <td>
+<font color="red"><b>Missing</b></font>
+</td> <td></td>
+  </tr>
+  <tr>
+    <td>
 Test execution edition and API
 </td> <td>
 <font color="orange"><b>Starting</b></font>
 </td> <td></td>
   </tr>
+  <tr>
+    <td>
+Test result reporting (printing, PDF)
+</td> <td>
+<font color="red"><b>Missing</b></font>
+</td> <td></td>
+  </tr>
+
 </table>
 
 <h3 id="versionning">Versionning</h3>
@@ -85,7 +114,7 @@ Test execution edition and API
 <h1 id="create-a-project">Create a project</h1>
 <h2 id="the-complete-workflow">The complete workflow</h2>
 <p>The complete workflow will show how we could use this tool in a project. We considere a project for witch we have to make the entiere engeneering, for example for a modification on the electrical part of a system.</p>
-<p>This requiers several tasks:</p>
+<p>This requiers several tasks, at least:</p>
 <ul>
 <li>Define what to modify</li>
 <li>Draw schemas</li>
@@ -94,22 +123,76 @@ Test execution edition and API
 <li>Create documentation for continuity check</li>
 <li>Create documentation for comissioning</li>
 </ul>
+<p>Cable list tool is able to create a part list, link lists, continuity and isolation checks. This will be explained in next chapiters. Note that schema drawing, project management and other stuff is not, and will probably never, provided by this tool (other tools exists for this).</p>
+<p>The suggested workflow is:</p>
+<ul>
+<li>Create vehicle type for each system (denomination of vehicle type will be discussed later)</li>
+<li>Enter connectors</li>
+<li>Enter parts of the project by creating articles</li>
+<li>Take schemas and enter each position as new unit</li>
+<li>Add links (in unit edition): if cable lists are needed, check that schema shows every link (most of time, this is not true) an investigate...</li>
+<li>Create test nodes</li>
+<li>Create test (models)</li>
+<li>Create test application itself</li>
+</ul>
+<p>At first point of view, this seems to be a infinite task. And yes, it is. But, at some point of a project, if such engeneering was not made, this can give some problems. If you think that these steps are not relevant, then you probably not need to create any test application too.</p>
 <h3 id="create-vehicle-types">Create vehicle types</h3>
+<p>The term 'Vehicle type' seems to be something wrong. The main idea here is a container for all elements (units) of a system.</p>
+<div class="figure">
+<img src="img/vehicle-type-edition.jpg" title="Vehicle type edition" alt="Vehicle type" /><p class="caption">Vehicle type</p>
+</div>
 <h3 id="create-articles">Create articles</h3>
-<h3 id="create-connectors">Create connectors</h3>
-<h3 id="create-units">Create units</h3>
-<h3 id="create-test-nodes">Create test nodes</h3>
-<h3 id="create-test-models">Create test (models)</h3>
-<h3 id="create-test">Create test</h3>
-<h2 id="vehicle-type">Vehicle type</h2>
-<h2 id="connector">Connector</h2>
-<h2 id="article">Article</h2>
 <div class="figure">
 <img src="img/article-edition.jpg" title="Article edition" alt="Article edition" /><p class="caption">Article edition</p>
 </div>
-<h2 id="unit">Unit</h2>
+<h3 id="create-connectors">Create connectors</h3>
+<div class="figure">
+<img src="img/connector-edition.jpg" title="Article edition" alt="Connector edition" /><p class="caption">Connector edition</p>
+</div>
+<h3 id="create-units">Create units</h3>
 <div class="figure">
 <img src="img/unit-edition.jpg" title="Unit edition" alt="Unit edition" /><p class="caption">Unit edition</p>
 </div>
+<div class="figure">
+<img src="img/unit-link-edition.jpg" title="Unit link edition" alt="Unit link edition" /><p class="caption">Unit link edition</p>
+</div>
+<div class="figure">
+<img src="img/link-beam-edition.jpg" title="Link beam edition" alt="Link beam edition" /><p class="caption">Link beam edition</p>
+</div>
+<div class="figure">
+<img src="img/unit-link-path-view.jpg" title="Unit link path view" alt="Unit link path view" /><p class="caption">Unit link path view</p>
+</div>
+<div class="figure">
+<img src="img/unit-linked-connections-view.jpg" title="Unit linked connections view" alt="Unit linked connections view" /><p class="caption">Unit linked connections view</p>
+</div>
+<h3 id="create-test-nodes">Create test nodes</h3>
+<div class="figure">
+<img src="img/test-node-edition.jpg" title="Test node edition" alt="Test node edition" /><p class="caption">Test node edition</p>
+</div>
+<h4 id="affect-units">Affect units</h4>
+<h3 id="create-test-cables">Create test cables</h3>
+<div class="figure">
+<img src="img/test-cable-edition.jpg" title="Test cable edition" alt="Test cable edition" /><p class="caption">Test cable edition</p>
+</div>
+<h3 id="create-test-models">Create test (models)</h3>
+<div class="figure">
+<img src="img/test-model-edition.jpg" title="Test (model) edition" alt="Test (model) edition" /><p class="caption">Test (model) edition</p>
+</div>
+<h4 id="add-routes">Add routes</h4>
+<h4 id="edit-test-node-unit-setup">Edit test node unit setup</h4>
+<h2 id="calibration">Calibration</h2>
+<h3 id="create-test-application">Create test application</h3>
+<div class="figure">
+<img src="img/basic-tester-example.jpg" title="Basic test tool example" alt="Basic test tool example" /><p class="caption">Basic test tool example</p>
+</div>
+<div class="figure">
+<img src="img/basic-tester-example-instruments-states.jpg" title="Basic test tool example (instruments sates)" alt="Basic test tool example (instruments states)" /><p class="caption">Basic test tool example (instruments states)</p>
+</div>
+<h2 id="vehicle-type">Vehicle type</h2>
+<h2 id="connector">Connector</h2>
+<h2 id="article">Article</h2>
+<h2 id="unit">Unit</h2>
 <h2 id="test-node">Test node</h2>
 <h2 id="test-connection-cable">Test connection cable</h2>
+<h1 id="licence">Licence</h1>
+<h1 id="credits">Credits</h1>
