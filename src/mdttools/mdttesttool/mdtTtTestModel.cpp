@@ -20,6 +20,8 @@
  ****************************************************************************/
 #include "mdtTtTestModel.h"
 #include "mdtTtTestModelItem.h"
+#include "mdtTtTestNode.h"
+#include "mdtSqlRecord.h"
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QSqlError>
@@ -329,6 +331,57 @@ bool mdtTtTestModel::removeTestItems(const QModelIndexList & indexListOfSelected
   }
 
   return true;
+}
+
+bool mdtTtTestModel::generateContinuityTest(const QVariant & testCableId, const QVariant & measureConnexionIdA, const QVariant & measureConnexionIdB, mdtClPathGraph & graph)
+{
+  mdtTtTestNode tn(0, database());
+  QList<QVariant> solvedTestConnectionIdList;
+  QList<QVariant> testConnectionIdList;
+  QList<QVariant> linkedTestConnectionIdList;
+  QList<QVariant> pathConnectionIdList;
+  QVariant otherMeasureConnection;
+  QVariant testConnectionId;
+  mdtSqlRecord routeData;
+  QString sql;
+  QList<QSqlRecord> dataList;
+  bool ok;
+  int i;
+
+  // Setup route data
+  if(!routeData.addAllFields("TestModelItemRoute_tbl", database())){
+    pvLastError = routeData.lastError();
+    return false;
+  }
+  // Get test connections from given cable
+  sql = "SELECT TestConnection_Id_FK FROM TestLink_tbl WHERE TestCable_Id_FK = " + testCableId.toString();
+  testConnectionIdList = getDataList<QVariant>(sql, ok);
+  if(!ok){
+    return false;
+  }
+  /// \todo Add relays of test node
+  
+  // Process test connections
+  for(i = 0; i < testConnectionIdList.size(); ++i){
+    testConnectionId = testConnectionIdList.at(i);
+    Q_ASSERT(!testConnectionId.isNull());
+    if(solvedTestConnectionIdList.contains(testConnectionId)){
+      continue;
+    }
+    // Search paths from test connection to a measure connection
+    otherMeasureConnection = measureConnexionIdB;
+    pathConnectionIdList = graph.getShortestPath(testConnectionId, measureConnexionIdA);
+    if(pathConnectionIdList.isEmpty()){
+      pathConnectionIdList = graph.getShortestPath(testConnectionId, measureConnexionIdB);
+      if(pathConnectionIdList.isEmpty()){
+        pvLastError.setError(tr("Cannot find a route from test connection ID ") + testConnectionId.toString() + tr(" to a measure connection."), mdtError::Error);
+        MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestModel");
+        pvLastError.commit();
+        return false;
+      }
+      otherMeasureConnection = measureConnexionIdA;
+    }
+  }
 }
 
 bool mdtTtTestModel::generateTestNodeUnitSetup(const QVariant & testId)

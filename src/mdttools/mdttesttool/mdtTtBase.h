@@ -104,6 +104,39 @@ class mdtTtBase : public QObject
    */
   QList<QSqlRecord> getData(const QString & sql, bool *ok = 0, const QStringList & expectedFields = QStringList());
 
+  /*! \brief Get data of type T for given sql statement
+   *
+   * Note that this method will not check if given SQL statement
+   *  makes a SELECT, INSERT, etc..
+   *  It is simply executed.
+   *
+   * T can be QSqlRecord, QVariant or a type that QVariant can handle.
+   *
+   * \param sql SQL statement
+   * \param ok Will contain true on success, false else (in that case, lastError() will contain error ).
+   * \param expectedFields If not empty, it will be checked that query result
+   *                        contains all listed fields, and fail if some fields are missing.
+   * \pre If T is another type than QSqlRecord, sql must select exactly on field.
+   */
+  template <typename T>
+  QList<T> getDataList(const QString & sql, bool & ok, const QStringList & expectedFields = QStringList()){
+    QSqlQuery query(database());
+    QList<T> dataList;
+    T data;
+
+    if(!processGetData(sql, query, expectedFields)){
+      ok = false;
+      return dataList;
+    }
+    while(query.next()){
+      convertRecord(data, query.record());
+      dataList.append(data);
+    }
+    ok = true;
+
+    return dataList;
+  }
+
   /*! \brief Update data for given table
    *
    * \param tableName Name of table in witch data must be updated.
@@ -213,6 +246,31 @@ class mdtTtBase : public QObject
   mdtError pvLastError;
 
  private:
+
+  /*! \brief Rund query, check errors and missing fields
+   */
+  bool processGetData(const QString & sql, QSqlQuery & query, const QStringList & expectedFields);
+
+  /*! \brief Convert a record to QSqlRecord
+   */
+  inline void convertRecord(QSqlRecord & recOut,  const QSqlRecord & record) const {
+    recOut = record;
+  }
+
+  /*! \brief Convert a record to QVariant
+   */
+  inline void convertRecord(QVariant & varOut,  const QSqlRecord & record) const {
+    Q_ASSERT(record.count() == 1);
+    varOut = record.value(0);
+  }
+
+  /*! \brief Convert a record to T
+   */
+  template <typename T>
+  inline void convertRecord(T & out,  const QSqlRecord & record) const {
+    Q_ASSERT(record.count() == 1);
+    out = record.value(0).value<T>();
+  }
 
   Q_DISABLE_COPY(mdtTtBase);
 

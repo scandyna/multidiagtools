@@ -24,6 +24,7 @@
 #include "mdtTtBase.h"
 #include "mdtSqlTableSelection.h"
 #include "mdtTtTestModelData.h"
+#include "mdtClPathGraph.h"
 #include <QVariant>
 #include <QList>
 #include <QModelIndex>
@@ -94,7 +95,19 @@ class mdtTtTestModel : public mdtTtBase
    */
   bool removeTestItems(const QModelIndexList & indexListOfSelectedRows);
 
+  /*! \brief Generate test items for a continuity check (2 wire)
+   *
+   *
+   * \param testCableId ID of test cable (TestCable_tbl) to use.
+   * \param measureConnexionIdA ID of first measure connection to use (TestNodeUnitConnection_tbl)
+   * \param measureConnexionIdB ID of second measure connection to use (TestNodeUnitConnection_tbl)
+   * \param graph Graph object. Cable list must allready be loaded (see mdtClPathGraph::loadLinkList())
+   */
+  bool generateContinuityTest(const QVariant & testCableId, const QVariant & measureConnexionIdA, const QVariant & measureConnexionIdB, mdtClPathGraph & graph);
+
   /*! \brief Generate test node unit setup for given test ID
+   * 
+   * \todo Obselete ?
    */
   bool generateTestNodeUnitSetup(const QVariant & testId);
 

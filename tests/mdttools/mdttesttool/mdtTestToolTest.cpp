@@ -90,6 +90,9 @@ void mdtTestToolTest::mdtTtBaseTest()
   mdtSqlRecord record;
   QSqlRecord data;
   QList<QSqlRecord> dataList;
+  QList<QVariant> variantList;
+  QList<int> intList;
+  QList<qlonglong> longLongList;
   bool ok;
   QString sql;
   QStringList fields;
@@ -118,6 +121,33 @@ void mdtTestToolTest::mdtTtBaseTest()
   QVERIFY(data.value("SubType").isNull());
   QCOMPARE(data.value("SeriesNumber"), QVariant(QVariant::String));
   QVERIFY(data.value("SeriesNumber").isNull());
+  // Check again with getDataList() method - Type: QSqlRecord
+  dataList = b.getDataList<QSqlRecord>(sql, ok, fields);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 1);
+  data = dataList.at(0);
+  QCOMPARE(data.value("Id_PK"), QVariant(1));
+  QCOMPARE(data.value("Type"), QVariant("Vehicle type 1"));
+  QCOMPARE(data.value("SubType"), QVariant(QVariant::String));
+  QVERIFY(data.value("SubType").isNull());
+  QCOMPARE(data.value("SeriesNumber"), QVariant(QVariant::String));
+  QVERIFY(data.value("SeriesNumber").isNull());
+  // Check again with getDataList() method - Type: QVariant
+  sql = "SELECT Id_PK FROM VehicleType_tbl";
+  variantList = b.getDataList<QVariant>(sql, ok);
+  QVERIFY(ok);
+  QCOMPARE(variantList.size(), 1);
+  QCOMPARE(variantList.at(0), QVariant(1));
+  // Check again with getDataList() method - Type: int
+  intList = b.getDataList<int>(sql, ok);
+  QVERIFY(ok);
+  QCOMPARE(intList.size(), 1);
+  QCOMPARE(intList.at(0), 1);
+  // Check again with getDataList() method - Type: int
+  longLongList = b.getDataList<qlonglong>(sql, ok);
+  QVERIFY(ok);
+  QCOMPARE(longLongList.size(), 1);
+  QCOMPARE(longLongList.at(0), static_cast<qlonglong>(1));
   // Get data from a non existing table - must fail
   sql = "SELECT * FROM jkhswjqkhkjqhwdjwhqkhj";
   dataList = b.getData(sql, &ok, fields);
