@@ -1209,6 +1209,7 @@ void mdtCableListTest::pathGraphTest()
   
   mdtClPathGraph graph(pvDatabaseManager.database());
   QList<QVariant> idList;
+  ///QVariant data;
   bool ok;
 
   // Initial
@@ -1216,6 +1217,7 @@ void mdtCableListTest::pathGraphTest()
   QVERIFY(idList.isEmpty());
   idList = graph.getShortestPath(0, 1);
   QVERIFY(idList.isEmpty());
+  QVERIFY(graph.getUserData(0, 1).isNull());
 
   /*
    * Testst with free data
@@ -1229,8 +1231,9 @@ void mdtCableListTest::pathGraphTest()
   QCOMPARE(idList.size(), 2);
   QCOMPARE(idList.at(0), QVariant(1));
   QCOMPARE(idList.at(1), QVariant(2));
+  QVERIFY(graph.getUserData(1, 2).isNull());
   // (1)-(2)-(3)
-  graph.addLink(2, 3);
+  graph.addLink(2, 3, "2-3");
   idList = graph.getLinkedConnectionIdList(1);
   QCOMPARE(idList.size(), 2);
   QCOMPARE(idList.at(0), QVariant(2));
@@ -1240,6 +1243,8 @@ void mdtCableListTest::pathGraphTest()
   QCOMPARE(idList.at(0), QVariant(1));
   QCOMPARE(idList.at(1), QVariant(2));
   QCOMPARE(idList.at(2), QVariant(3));
+  QCOMPARE(graph.getUserData(2, 3), QVariant("2-3"));
+  QCOMPARE(graph.getUserData(3, 2), QVariant("2-3"));
   // (1)-(2)-(3)-(4)
   graph.addLink(3, 4);
   idList = graph.getLinkedConnectionIdList(1);
@@ -1277,7 +1282,7 @@ void mdtCableListTest::pathGraphTest()
   QCOMPARE(idList.size(), 0);
   // (1)-(2)-(3)-(4)     (10)-(11)
   //   \---(5)---/
-  graph.addLink(1, 5);
+  graph.addLink(1, 5, 15);
   graph.addLink(5, 4);
   idList = graph.getLinkedConnectionIdList(1);
   QCOMPARE(idList.size(), 4);
@@ -1290,6 +1295,8 @@ void mdtCableListTest::pathGraphTest()
   QCOMPARE(idList.at(0), QVariant(1));
   QCOMPARE(idList.at(1), QVariant(5));
   QCOMPARE(idList.at(2), QVariant(4));
+  QCOMPARE(graph.getUserData(1, 5), QVariant(15));
+  QCOMPARE(graph.getUserData(5, 1), QVariant(15));
   // Clear data that we added and check
   graph.removeAddedLinks();
   idList = graph.getLinkedConnectionIdList(1);

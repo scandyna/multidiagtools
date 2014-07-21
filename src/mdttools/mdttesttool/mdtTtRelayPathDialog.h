@@ -28,27 +28,30 @@
 #include <QVariant>
 #include <QString>
 #include <QList>
+#include <QMap>
 
 class mdtClPathGraph;
 class QWidget;
 
 /*! \brief Container for mdtTtRelayPathDialog
  */
-struct mdtTtRelayPathItem
-{
+///struct mdtTtRelayPathItem
+///{
   /*! \brief Constructor
    */
   ///mdtTtRelayPathItem() : startConnectionId(0), endConnectionId(0) {}
 
   /*! \brief Check if item is null
    */
-  inline bool isNull() const{ return (startConnectionId.isNull() || endConnectionId.isNull()); }
+  ///inline bool isNull() const{ return (startConnectionId.isNull() || endConnectionId.isNull()); }
 
+  /**
   QVariant startConnectionId;
   QVariant endConnectionId;
   QVariant testNodeUnitId;
   QString name;
-};
+  */
+///};
 
 
 /*! \brief Edit path from a starting connection to a end connection in a test node
@@ -129,11 +132,11 @@ class mdtTtRelayPathDialog : public QDialog, Ui::mdtTtRelayPathDialog
 
   /*! \brief Get coupling relay that has given A and B connection
    */
-  mdtTtRelayPathItem getCouplingRelay(const QVariant & A, const QVariant & B);
+  ///mdtTtRelayPathItem getCouplingRelay(const QVariant & A, const QVariant & B);
 
   /*! \brief Get channel relay that has given A and B connection
    */
-  mdtTtRelayPathItem getChannleRelay(const QVariant & A, const QVariant & B);
+  ///mdtTtRelayPathItem getChannleRelay(const QVariant & A, const QVariant & B);
 
   /*! \brief Get SQL statement to get test node unit data list
    */
@@ -152,10 +155,11 @@ class mdtTtRelayPathDialog : public QDialog, Ui::mdtTtRelayPathDialog
   QSqlDatabase pvDatabase;
   mdtClPathGraph *pvGraph;
   QVariant pvTestModelItemId;
-  QList<mdtTtRelayPathItem> pvCouplingRelays;
-  QList<mdtTtRelayPathItem> pvChannelRelays;
+  ///QList<mdtTtRelayPathItem> pvCouplingRelays;
+  ///QList<mdtTtRelayPathItem> pvChannelRelays;
   bool pvLoadingData;
   QList<QVariant> pvRelaysToEnableIds;
+  QMap<int, QString> pvRelayNameMap;
 };
 
 #endif  // #ifndef MDT_TT_RELAY_PATH_DIALOG_H

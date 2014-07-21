@@ -137,7 +137,7 @@ bool mdtClPathGraph::loadLinkList()
       isBidirectional = false;
     }
     // Add link
-    addLinkPv(startConnectionId, endConnectionId, isBidirectional, 1, false);
+    addLinkPv(startConnectionId, endConnectionId, isBidirectional, 1, false, QVariant());
     // Fetch more data if possible
     if((row > 0)&&(pvLinkListModel->canFetchMore())){
       pvLinkListModel->fetchMore();
@@ -147,12 +147,58 @@ bool mdtClPathGraph::loadLinkList()
   return true;
 }
 
+/**
 void mdtClPathGraph::addLink(const QVariant& startConnectionId, const QVariant& endConnectionId, bool isBidirectional, int weight)
 {
   Q_ASSERT(!startConnectionId.isNull());
   Q_ASSERT(!endConnectionId.isNull());
 
-  addLinkPv(startConnectionId, endConnectionId, isBidirectional, weight, true);
+  addLinkPv(startConnectionId, endConnectionId, isBidirectional, weight, true, QVariant());
+}
+*/
+
+void mdtClPathGraph::addLink(const QVariant & startConnectionId, const QVariant & endConnectionId, const QVariant & userData, bool isBidirectional, int weight)
+{
+  Q_ASSERT(!startConnectionId.isNull());
+  Q_ASSERT(!endConnectionId.isNull());
+
+  addLinkPv(startConnectionId, endConnectionId, isBidirectional, weight, true, userData);
+}
+
+QVariant mdtClPathGraph::getUserData(const QVariant & startConnectionId, const QVariant & endConnectionId)
+{
+  Q_ASSERT(!startConnectionId.isNull());
+  Q_ASSERT(!endConnectionId.isNull());
+
+  vertex_t u, v;
+  std::pair<edge_t, bool> ep;
+
+  // Check if we have requested connection IDs in the graph
+  if(!pvGraphVertices.contains(startConnectionId.toInt())){
+    pvLastError.setError(QObject::tr("Cannot get user data."), mdtError::Error);
+    pvLastError.setInformativeText(QObject::tr("Plese see details for more informations."));
+    pvLastError.setSystemError(-1, QObject::tr("Start connection ID not found") + " (ID: " + startConnectionId.toString() + ").");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClPathGraph");
+    pvLastError.commit();
+    return QVariant();
+  }
+  if(!pvGraphVertices.contains(endConnectionId.toInt())){
+    pvLastError.setError(QObject::tr("Cannot get user data."), mdtError::Error);
+    pvLastError.setInformativeText(QObject::tr("Plese see details for more informations."));
+    pvLastError.setSystemError(-1, QObject::tr("End connection ID not found") + " (ID: " + endConnectionId.toString() + ").");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClPathGraph");
+    pvLastError.commit();
+    return QVariant();
+  }
+  // Get vertices, edge, and return data
+  u = pvGraphVertices.value(startConnectionId.toInt());
+  v = pvGraphVertices.value(endConnectionId.toInt());
+  ep = boost::edge(u, v, pvGraph);
+  if(!ep.second){
+    return QVariant();
+  }
+
+  return pvEdgeDataMap.at(ep.first).userData;
 }
 
 void mdtClPathGraph::removeAddedLinks()
@@ -393,7 +439,7 @@ mdtError mdtClPathGraph::lastError() const
   return pvLastError;
 }
 
-void mdtClPathGraph::addLinkPv(const QVariant & startConnectionId, const QVariant & endConnectionId, bool isBidirectional, int weight, bool addToManuallyList)
+void mdtClPathGraph::addLinkPv(const QVariant & startConnectionId, const QVariant & endConnectionId, bool isBidirectional, int weight, bool addToManuallyList, const QVariant & userData)
 {
   Q_ASSERT(!startConnectionId.isNull());
   Q_ASSERT(!endConnectionId.isNull());
@@ -424,6 +470,7 @@ void mdtClPathGraph::addLinkPv(const QVariant & startConnectionId, const QVarian
   edgeData.startConnectionId = startConnectionId;
   edgeData.endConnectionId = endConnectionId;
   edgeData.isComplement = false;
+  edgeData.userData = userData;
   ep = boost::add_edge(startVertex, endVertex, weight, pvGraph);
   Q_ASSERT(ep.second);
   pvEdgeDataMap.insert(std::pair<edge_t, mdtClPathGraphEdgeData>(ep.first, edgeData));

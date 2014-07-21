@@ -63,6 +63,7 @@ namespace mdtClPathGraphPrivate
     QVariant startConnectionId;
     QVariant endConnectionId;
     bool isComplement;
+    QVariant userData;
   };
 
   typedef boost::property<boost::edge_weight_t, int> weigth_property_t;
@@ -122,7 +123,18 @@ class mdtClPathGraph
    * Can be used to add some kind of "ghost links" to the graph.
    *  For normal usage, only call loadLinkList().
    */
-  void addLink(const QVariant & startConnectionId, const QVariant & endConnectionId, bool isBidirectional = true, int weight = 1);
+  ///void addLink(const QVariant & startConnectionId, const QVariant & endConnectionId, bool isBidirectional = true, int weight = 1);
+
+  /*! \brief Add a link to the graph
+   *
+   * Can be used to add some kind of "ghost links" to the graph.
+   *  For normal usage, only call loadLinkList().
+   */
+  void addLink(const QVariant & startConnectionId, const QVariant & endConnectionId, const QVariant & userData = QVariant(), bool isBidirectional = true, int weight = 1);
+
+  /*! \brief Get user data for item between start and end connection
+   */
+  QVariant getUserData(const QVariant & startConnectionId, const QVariant & endConnectionId);
 
   /*! \brief Remove links that where added with addLink()
    */
@@ -181,7 +193,7 @@ class mdtClPathGraph
 
   /*! \brief Add a link to the graph
    */
-  void addLinkPv(const QVariant & startConnectionId, const QVariant & endConnectionId, bool isBidirectional, int weight, bool addToManuallyList);
+  void addLinkPv(const QVariant & startConnectionId, const QVariant & endConnectionId, bool isBidirectional, int weight, bool addToManuallyList, const QVariant & userData);
 
   /*! \brief Create a new graphics connection item
    */
