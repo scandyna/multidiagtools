@@ -106,7 +106,7 @@ class mdtTtTestModelItem : public mdtTtBase
 
   /*! \brief Add a route to TestModelItemRoute_tbl
    */
-  bool addRoute(const QVariant & testModelItemId, const QVariant & testLinkId, const QVariant & measureTestNodeUnitConnectionId, const QList<mdtTtTestNodeUnitSetupData> & dataList);
+  bool addRoute(const QVariant & testModelItemId, const QVariant & testLinkId, const QVariant & measureTestNodeUnitConnectionId, const QList<mdtTtTestNodeUnitSetupData> & dataList, bool handleTransaction);
 
   /*! \brief Remove a route from TestModelItemRoute_tbl
    */

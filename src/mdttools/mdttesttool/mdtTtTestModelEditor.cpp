@@ -29,6 +29,7 @@
 #include "mdtSqlSelectionDialog.h"
 #include "mdtSqlTableSelection.h"
 #include "mdtSqlDialog.h"
+#include "mdtClPathGraph.h"
 #include <QSqlQueryModel>
 #include <QSqlTableModel>
 #include <QTableView>
@@ -307,6 +308,57 @@ void mdtTtTestModelEditor::removeTestItem()
   ///select("TestModelItemNode_view");
 }
 
+void mdtTtTestModelEditor::generateContinuityTest()
+{
+  mdtTtTestModel tm(this, database());
+  mdtClPathGraph graph(database());
+  QVariant testModelId;
+  QVariant testCableId;
+  QVariant testNodeId;
+  QVariant measureConnexionIdA;
+  QVariant measureConnexionIdB;
+
+  // Get current test ID
+  testModelId = currentData("TestModel_tbl", "Id_PK");
+  if(testModelId.isNull()){
+    return;
+  }
+  // Load link list
+  if(!graph.loadLinkList()){
+    pvLastError = graph.lastError();
+    displayLastError();
+    return;
+  }
+  // Select a cable
+  testCableId = selectTestCable();
+  if(testCableId.isNull()){
+    return;
+  }
+  // Get current test node
+  /// \todo Not good..
+  testNodeId = currentData("TestModel_TestNode_view", "TestNode_Id_FK");
+  if(testNodeId.isNull()){
+    return;
+  }
+  // Select measure connections
+  measureConnexionIdA = selectMeasureConnection(testNodeId);
+  if(measureConnexionIdA.isNull()){
+    return;
+  }
+  measureConnexionIdB = selectMeasureConnection(testNodeId);
+  if(measureConnexionIdB.isNull()){
+    return;
+  }
+
+  if(!tm.generateContinuityTest(testModelId, testCableId, testNodeId, measureConnexionIdA, measureConnexionIdB, graph)){
+    pvLastError = tm.lastError();
+    displayLastError();
+    return;
+  }
+  // Update views
+  select("TestModelItem_tbl");
+}
+
 void mdtTtTestModelEditor::generateTestNodeUnitSetupList()
 {
   mdtTtTestModel tm(this, database());
@@ -414,6 +466,31 @@ QVariant mdtTtTestModelEditor::selectTestCable()
   return selectionDialog.selectionResult().at(0);
 }
 
+QVariant mdtTtTestModelEditor::selectMeasureConnection(const QVariant & testNodeId)
+{
+  mdtSqlSelectionDialog selectionDialog(this);
+  QString sql;
+  mdtSqlTableSelection s;
+ 
+  sql = "SELECT UCNX.Id_PK, UCNX.UnitContactName ";
+  sql += "FROM TestNodeUnit_tbl TNU JOIN Unit_tbl U ON U.Id_PK = TNU.Unit_Id_FK_PK ";
+  sql += " JOIN UnitConnection_tbl UCNX ON UCNX.Unit_Id_FK = TNU.Unit_Id_FK_PK ";
+  sql += " WHERE TNU.Type_Code_FK = 'MEASCONNECTOR' ";
+  sql += " AND TNU.TestNode_Id_FK = " + testNodeId.toString();
+  selectionDialog.setMessage(tr("Please select a measure connection to use:"));
+  selectionDialog.setQuery(sql, database(), false);
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return QVariant();
+  }
+  s = selectionDialog.selection("Id_PK");
+  if(s.isEmpty()){
+    return QVariant();
+  }
+  Q_ASSERT(s.rowCount() == 1);
+
+  return s.data(0, "Id_PK");
+}
+
 QVariant mdtTtTestModelEditor::selectTestLink(const QVariant & cableId, const QString & bus)
 {
   mdtSqlSelectionDialog selectionDialog;
@@ -459,7 +536,8 @@ bool mdtTtTestModelEditor::setupTestTable()
 
   // Setup main form widget
   te.setupUi(mainSqlWidget());
-  connect(te.pbGenerateNodeUnitSetup, SIGNAL(clicked()), this, SLOT(generateTestNodeUnitSetupList()));
+  ///connect(te.pbGenerateNodeUnitSetup, SIGNAL(clicked()), this, SLOT(generateTestNodeUnitSetupList()));
+  connect(te.pbGenerateNodeUnitSetup, SIGNAL(clicked()), this, SLOT(generateContinuityTest()));
   // Setup form
   if(!setMainTable("TestModel_tbl", "Test", database())){
     return false;

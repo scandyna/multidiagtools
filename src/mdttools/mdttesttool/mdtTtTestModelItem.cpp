@@ -352,7 +352,7 @@ bool mdtTtTestModelItem::removeTestNodeUnitSetups(const mdtSqlTableSelection & s
   return removeData("TestNodeUnitSetup_tbl", s, true);
 }
 
-bool mdtTtTestModelItem::addRoute(const QVariant & testModelItemId, const QVariant & testLinkId, const QVariant & measureTestNodeUnitConnectionId, const QList<mdtTtTestNodeUnitSetupData> & dataList)
+bool mdtTtTestModelItem::addRoute(const QVariant & testModelItemId, const QVariant & testLinkId, const QVariant & measureTestNodeUnitConnectionId, const QList<mdtTtTestNodeUnitSetupData> & dataList, bool handleTransaction)
 {
   mdtSqlRecord record;
   mdtTtTestNodeUnitSetupData setupData;
@@ -369,12 +369,16 @@ bool mdtTtTestModelItem::addRoute(const QVariant & testModelItemId, const QVaria
   record.setValue("TestLink_Id_FK", testLinkId);
   record.setValue("MeasureTestNodeUnitConnection_Id_FK", measureTestNodeUnitConnectionId);
 
-  if(!beginTransaction()){
-    return false;
+  if(handleTransaction){
+    if(!beginTransaction()){
+      return false;
+    }
   }
   // Add route
   if(!addRecord(record, "TestModelItemRoute_tbl", query)){
-    rollbackTransaction();
+    if(handleTransaction){
+      rollbackTransaction();
+    }
     return false;
   }
   testModelItemRouteId = query.lastInsertId();
@@ -384,12 +388,16 @@ bool mdtTtTestModelItem::addRoute(const QVariant & testModelItemId, const QVaria
     setupData = dataList.at(i);
     setupData.setValue("TestModelItemRoute_Id_FK", testModelItemRouteId);
     if(!addOrUpdateTestNodeUnitSetup(setupData)){
+    if(handleTransaction){
       rollbackTransaction();
+    }
       return false;
     }
   }
-  if(!commitTransaction()){
-    return false;
+  if(handleTransaction){
+    if(!commitTransaction()){
+      return false;
+    }
   }
 
   return true;

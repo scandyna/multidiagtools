@@ -24,7 +24,7 @@
 #include <QSqlRecord>
 #include <QSqlError>
 
-//#include <QDebug>
+#include <QDebug>
 
 mdtTtTestNode::mdtTtTestNode(QObject *parent, QSqlDatabase db)
  : mdtTtBase(parent, db)
@@ -243,7 +243,84 @@ bool mdtTtTestNode::addMissingConnections(const QVariant & testNodeId)
   return true;
 }
 
-bool mdtTtTestNode::ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, const QVariant & connectionIdB, const QList<QVariant> & testNodeUnitIdList, mdtClPathGraph & graph, bool & ok)
+bool mdtTtTestNode::addRelaysToGraph(const QVariant & testNodeId, mdtClPathGraph & graph)
+{
+  QString sql;
+  QList<QVariant> testNodeUnitIdList;
+  QList<QVariant> connectionsList;
+  QVariant testNodeUnitId;
+  bool ok;
+  int i;
+
+  // Clear previous added relays
+  graph.removeAddedLinks();
+  // Get coupling relays
+  sql = "SELECT Unit_Id_FK_PK FROM TestNodeUnit_tbl";
+  sql += " WHERE TestNode_Id_FK = " + testNodeId.toString();
+  sql += " AND (Type_Code_FK = 'BUSCPLREL' OR Type_Code_FK = 'CHANELREL')";
+  testNodeUnitIdList = getDataList<QVariant>(sql, ok);
+  if(!ok){
+    return false;
+  }
+  for(i = 0; i < testNodeUnitIdList.size(); ++i){
+    // Get connections
+    testNodeUnitId = testNodeUnitIdList.at(i);
+    Q_ASSERT(!testNodeUnitId.isNull());
+    sql = "SELECT Id_PK FROM UnitConnection_tbl WHERE Unit_Id_FK = " + testNodeUnitId.toString();
+    connectionsList = getDataList<QVariant>(sql, ok);
+    if(!ok){
+      return false;
+    }
+    // We only handle relays with exactly 2 connections
+    if(connectionsList.size() == 2){
+      graph.addLink(connectionsList.at(0), connectionsList.at(1), testNodeUnitId, true, 2);
+    }else{
+      pvLastError.setError(tr("Relay ID ") + testNodeUnitId.toString() + tr(" has not exactly 2 connections."), mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtTtRelayPathDialog");
+      pvLastError.commit();
+      return false;
+    }
+  }
+
+  return true;
+}
+
+QList<mdtTtTestNodeUnitSetupData> mdtTtTestNode::getRelayPathSetupDataList(const QList<QVariant> & relayPathConnectionIdList, mdtClPathGraph & graph, bool & ok)
+{
+  mdtTtTestNodeUnitSetupData setupData;
+  QList<mdtTtTestNodeUnitSetupData> setupDataList;
+  QVariant testNodeUnitId;
+  int i;
+
+  // Setup data
+  if(!setupData.setup(database())){
+    ok = false;
+    return setupDataList;
+  }
+  // Process..
+  if(relayPathConnectionIdList.size() < 2){
+    ok = false;
+    pvLastError.setError(tr("Given relays path is not valid (contains less than 2 connections)."), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNode");
+    pvLastError.commit();
+    return setupDataList;
+  }
+  for(i = 1; i < relayPathConnectionIdList.size(); ++i){
+    Q_ASSERT(!relayPathConnectionIdList.at(i-1).isNull());
+    Q_ASSERT(!relayPathConnectionIdList.at(i).isNull());
+    testNodeUnitId = graph.getUserData(relayPathConnectionIdList.at(i-1), relayPathConnectionIdList.at(i));
+    if(!testNodeUnitId.isNull()){
+      setupData.clearValues();
+      setupData.setValue("TestNodeUnit_Id_FK", testNodeUnitId);
+      setupData.setValue("State", true);
+      setupDataList.append(setupData);
+    }
+  }
+
+  return setupDataList;
+}
+
+bool mdtTtTestNode::ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, const QVariant & connectionIdB, const QList<mdtTtTestNodeUnitSetupData> & testNodeUnitSetupDataList, mdtClPathGraph & graph, bool & ok)
 {
   mdtTtTestNodeUnit tnu(0, database());
   QList<QVariant> connectionIdList;
@@ -253,15 +330,16 @@ bool mdtTtTestNode::ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, 
   // Clear previous results
   graph.removeAddedLinks();
   // Add given node units to graph
-  for(i = 0; i < testNodeUnitIdList.size(); ++i){
-    connectionIdList = tnu.getConnectionIdListOfUnitId(testNodeUnitIdList.at(i), &ok);
+  for(i = 0; i < testNodeUnitSetupDataList.size(); ++i){
+    connectionIdList = tnu.getConnectionIdListOfUnitId(testNodeUnitSetupDataList.at(i).value("TestNodeUnit_Id_FK"), false, ok);
     if(!ok){
       return false;
     }
+    qDebug() << "Connections: " << connectionIdList;
     // We only handle units with exactly 2 connections
     if(connectionIdList.size() != 2){
       ok = false;
-      pvLastError.setError(tr("Node unit ID ") + testNodeUnitIdList.at(i).toString() + tr(" has not exaclty 2 connections. This is not supported."), mdtError::Error);
+      pvLastError.setError(tr("Node unit ID ") + testNodeUnitSetupDataList.at(i).value("TestNodeUnit_Id_FK").toString() + tr(" has not exaclty 2 connections. This is not supported."), mdtError::Error);
       MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNode");
       pvLastError.commit();
       return false;
@@ -274,4 +352,10 @@ bool mdtTtTestNode::ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, 
   graph.removeAddedLinks();
 
   return noShort;
+}
+
+bool mdtTtTestNode::ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, const QVariant & connectionIdB, const QList<mdtTtTestNodeUnitSetupData> & testNodeUnitSetupDataList, bool & ok)
+{
+  mdtClPathGraph graph(database());
+  return ensureAbsenceOfShortCircuit(connectionIdA, connectionIdB, testNodeUnitSetupDataList, graph, ok);
 }

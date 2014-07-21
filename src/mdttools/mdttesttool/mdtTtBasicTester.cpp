@@ -445,6 +445,8 @@ bool mdtTtBasicTester::setupIoCoupler0(const mdtTtTestNodeSetupData & setupData)
     displayLastError();
     return false;
   }
+  // Let relays some time to switch
+  coupler->wait(50);
   ///coupler->wait(300);
 
   return true;

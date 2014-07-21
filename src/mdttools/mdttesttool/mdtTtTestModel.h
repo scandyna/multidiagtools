@@ -95,15 +95,33 @@ class mdtTtTestModel : public mdtTtBase
    */
   bool removeTestItems(const QModelIndexList & indexListOfSelectedRows);
 
-  /*! \brief Generate test items for a continuity check (2 wire)
+  /*! \brief Get link ID for given cable ID and test connection ID
+   */
+  QVariant getTestLinkId(const QVariant & testCableId, const QVariant & testConnectionId, bool & ok);
+
+  /*! \brief Get a list of test connections that are linked to given test connection, via DUT connection
    *
+   * Will get the DUT connection that is linked to given fromTestConnectionId,
+   *  then search about linked DUT connections.
+   *  Finally, a list of test connection is built for each DUT connection found.
    *
    * \param testCableId ID of test cable (TestCable_tbl) to use.
+   * \param fromTestConnectionId Test connection from witch to start.
+   * \param graph Graph object. Cable list must allready be loaded (see mdtClPathGraph::loadLinkList())
+   * \param ok Will be set to true on success, false else.
+   */
+  QList<QVariant> getTestConnectionIdListLinkedToTestConnectionByDutLinks(const QVariant & testCableId, const QVariant & fromTestConnectionId, mdtClPathGraph & graph, bool & ok);
+
+  /*! \brief Generate test items for a continuity check (2 wire)
+   *
+   * \param testModelId ID of test model
+   * \param testCableId ID of test cable (TestCable_tbl) to use.
+   * \param testNodeId ID of test node to use.
    * \param measureConnexionIdA ID of first measure connection to use (TestNodeUnitConnection_tbl)
    * \param measureConnexionIdB ID of second measure connection to use (TestNodeUnitConnection_tbl)
    * \param graph Graph object. Cable list must allready be loaded (see mdtClPathGraph::loadLinkList())
    */
-  bool generateContinuityTest(const QVariant & testCableId, const QVariant & measureConnexionIdA, const QVariant & measureConnexionIdB, mdtClPathGraph & graph);
+  bool generateContinuityTest(const QVariant & testModelId, const QVariant & testCableId, const QVariant & testNodeId, const QVariant & measureConnexionIdA, const QVariant & measureConnexionIdB, mdtClPathGraph & graph);
 
   /*! \brief Generate test node unit setup for given test ID
    * 

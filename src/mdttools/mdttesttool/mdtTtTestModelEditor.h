@@ -62,6 +62,10 @@ class mdtTtTestModelEditor : public mdtSqlForm
    */
   void removeTestItem();
 
+  /*! \brief Generate a 2 wire continuity test
+   */
+  void generateContinuityTest();
+
   /*! \brief Generate test nodue unit setup
    */
   void generateTestNodeUnitSetupList();
@@ -76,6 +80,8 @@ class mdtTtTestModelEditor : public mdtSqlForm
    */
   QVariant selectTestCable();
 
+  QVariant selectMeasureConnection(const QVariant& testNodeId);
+  
   /*! \brief Select a test link
    */
   QVariant selectTestLink(const QVariant & cableId, const QString & bus);

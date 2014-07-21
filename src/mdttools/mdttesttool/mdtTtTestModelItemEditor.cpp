@@ -267,7 +267,7 @@ void mdtTtTestModelItemEditor::addRoute()
   ///testLinkId = ???
   ///measureCnxId = ???
   // Add to db
-  if(!tmi.addRoute(testModelItemId, testLinkId, measureCnxId, setupDataList)){
+  if(!tmi.addRoute(testModelItemId, testLinkId, measureCnxId, setupDataList, true)){
     pvLastError = tmi.lastError();
     displayLastError();
     return;

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>477</width>
-    <height>173</height>
+    <width>505</width>
+    <height>154</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -108,31 +108,20 @@
    </item>
    <item>
     <layout class="QFormLayout" name="formLayout_3">
+     <property name="fieldGrowthPolicy">
+      <enum>QFormLayout::ExpandingFieldsGrow</enum>
+     </property>
      <item row="0" column="0">
-      <widget class="QLabel" name="lbCouplingRelaysLabel">
+      <widget class="QLabel" name="lbRelaysLabel">
        <property name="text">
-        <string>Coupling relays to enable:</string>
+        <string>Relays to enable:</string>
        </property>
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLabel" name="lbCouplingRelays">
+      <widget class="QLabel" name="lbRelays">
        <property name="text">
         <string>......................</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="lbChannelRelaysLabel">
-       <property name="text">
-        <string>Channel relays to enable:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QLabel" name="lbChannelRelays">
-       <property name="text">
-        <string>.......................</string>
        </property>
       </widget>
      </item>

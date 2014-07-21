@@ -128,48 +128,7 @@ QList<QSqlRecord> mdtTtBase::getData(const QString & sql, bool *ok, const QStrin
 {
   QSqlQuery query(database());
   QList<QSqlRecord> dataList;
-  ///int i;
 
-  // Execute query
-  /**
-  if(!query.exec(sql)){
-    QSqlError sqlError = query.lastError();
-    pvLastError.setError(tr("Cannot exec query: '") + sql + tr("'"), mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtBase");
-    pvLastError.commit();
-    if(ok != 0){
-      *ok = false;
-    }
-    return dataList;
-  }
-  */
-  // If requested, check that expected fields exists in result
-  /**
-  if(expectedFields.size() > 0){
-    QStringList missingFields;
-    QSqlRecord record = query.record();
-    for(i = 0; i < expectedFields.size(); ++i){
-      if(record.indexOf(expectedFields.at(i)) < 0){
-        missingFields.append(expectedFields.at(i));
-      }
-    }
-    if(missingFields.size() > 0){
-      QString text = tr("A query returned not all expected fields. Missing fields:\n");
-      for(i = 0; i < missingFields.size(); ++i){
-        text += " - " + missingFields.at(i) + "\n";
-      }
-      text += tr("SQL statement: '") + sql + tr("'");
-      pvLastError.setError(text, mdtError::Error);
-      MDT_ERROR_SET_SRC(pvLastError, "mdtTtBase");
-      pvLastError.commit();
-      if(ok != 0){
-        *ok = false;
-      }
-      return dataList;
-    }
-  }
-  */
   if(!processGetData(sql, query, expectedFields)){
     if(ok != 0){
       *ok = false;

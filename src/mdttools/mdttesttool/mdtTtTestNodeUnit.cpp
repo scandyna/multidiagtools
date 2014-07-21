@@ -49,21 +49,28 @@ QString mdtTtTestNodeUnit::sqlForTestConnectionSelection(const QList<QVariant> c
   return sql;
 }
 
-QList<QVariant> mdtTtTestNodeUnit::getConnectionIdListOfUnitId(const QVariant & unitId, bool *ok)
+///QList<QVariant> mdtTtTestNodeUnit::getConnectionIdListOfUnitId(const QVariant & unitId, bool *ok)
+QList<QVariant> mdtTtTestNodeUnit::getConnectionIdListOfUnitId(const QVariant & unitId, bool excludeAllreadyAffectedToTestNode, bool  & ok)
 {
   Q_ASSERT(ok != 0);
 
   QList<QVariant> idList;
-  QList<QSqlRecord> dataList;
+  ///QList<QSqlRecord> dataList;
   QString sql;
-  int i;
+  ///int i;
 
   sql = "SELECT Id_PK FROM UnitConnection_tbl WHERE Unit_Id_FK = " + unitId.toString();
-  sql += " AND Id_PK NOT IN (";
-  sql += "SELECT UnitConnection_Id_FK_PK FROM TestNodeUnitConnection_tbl";
-  sql += ")";
-  dataList = mdtTtBase::getData(sql, ok);
-  if(!*ok){
+  if(excludeAllreadyAffectedToTestNode){
+    sql += " AND Id_PK NOT IN (";
+    sql += "SELECT UnitConnection_Id_FK_PK FROM TestNodeUnitConnection_tbl";
+    sql += ")";
+  }
+  idList = getDataList<QVariant>(sql, ok);
+
+  return idList;
+  
+  /**
+  if(!ok){
     return idList;
   }
   for(i = 0; i < dataList.size(); ++i){
@@ -72,6 +79,7 @@ QList<QVariant> mdtTtTestNodeUnit::getConnectionIdListOfUnitId(const QVariant & 
   *ok = true;
 
   return idList;
+  */
 }
 
 QList<QVariant> mdtTtTestNodeUnit::getConnectionIdListLinkedToConnectionIdList(const QList<QVariant> connectionIdList, bool *ok)
@@ -315,7 +323,7 @@ bool mdtTtTestNodeUnit::addConnections(const QVariant & testNodeUnitId, const QV
   bool ok;
 
   // Get list of connections that are part of given unit ID (i.e. testNodeUnitId)
-  idList = getConnectionIdListOfUnitId(testNodeUnitId, &ok);
+  idList = getConnectionIdListOfUnitId(testNodeUnitId, true, ok);
   if(!ok){
     return false;
   }
@@ -361,7 +369,7 @@ bool mdtTtTestNodeUnit::removeConnections(const QVariant & testNodeUnitId, bool 
   bool ok;
 
   // Get list of connections that are part of given unit ID (i.e. testNodeUnitId)
-  idList = getConnectionIdListOfUnitId(testNodeUnitId, &ok);
+  idList = getConnectionIdListOfUnitId(testNodeUnitId, true, ok);
   if(!ok){
     return false;
   }

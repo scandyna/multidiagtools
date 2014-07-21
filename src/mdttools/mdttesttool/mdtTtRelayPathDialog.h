@@ -33,27 +33,6 @@
 class mdtClPathGraph;
 class QWidget;
 
-/*! \brief Container for mdtTtRelayPathDialog
- */
-///struct mdtTtRelayPathItem
-///{
-  /*! \brief Constructor
-   */
-  ///mdtTtRelayPathItem() : startConnectionId(0), endConnectionId(0) {}
-
-  /*! \brief Check if item is null
-   */
-  ///inline bool isNull() const{ return (startConnectionId.isNull() || endConnectionId.isNull()); }
-
-  /**
-  QVariant startConnectionId;
-  QVariant endConnectionId;
-  QVariant testNodeUnitId;
-  QString name;
-  */
-///};
-
-
 /*! \brief Edit path from a starting connection to a end connection in a test node
  */
 class mdtTtRelayPathDialog : public QDialog, Ui::mdtTtRelayPathDialog
@@ -122,25 +101,13 @@ class mdtTtRelayPathDialog : public QDialog, Ui::mdtTtRelayPathDialog
    */
   bool populateDestinationConnectionCombobox(const QVariant & testNodeUnitId);
 
-  /*! \brief Load coupling relays
+  /*! \brief Load relays
    */
-  bool loadCouplingRelays(const QVariant & testNodeId);
+  bool loadRelays(const QVariant & testNodeId);
 
   /*! \brief Load channel relays
    */
-  bool loadChannelRelays(const QVariant & testNodeId);
-
-  /*! \brief Get coupling relay that has given A and B connection
-   */
-  ///mdtTtRelayPathItem getCouplingRelay(const QVariant & A, const QVariant & B);
-
-  /*! \brief Get channel relay that has given A and B connection
-   */
-  ///mdtTtRelayPathItem getChannleRelay(const QVariant & A, const QVariant & B);
-
-  /*! \brief Get SQL statement to get test node unit data list
-   */
-  ///QString sqlForTestNodeUnitData(const QVariant & testNodeId) const;
+  ///bool loadChannelRelays(const QVariant & testNodeId);
 
   /*! \brief Get SQL statement to get connection data list
    */
@@ -155,8 +122,6 @@ class mdtTtRelayPathDialog : public QDialog, Ui::mdtTtRelayPathDialog
   QSqlDatabase pvDatabase;
   mdtClPathGraph *pvGraph;
   QVariant pvTestModelItemId;
-  ///QList<mdtTtRelayPathItem> pvCouplingRelays;
-  ///QList<mdtTtRelayPathItem> pvChannelRelays;
   bool pvLoadingData;
   QList<QVariant> pvRelaysToEnableIds;
   QMap<int, QString> pvRelayNameMap;

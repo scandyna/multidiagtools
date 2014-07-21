@@ -21,6 +21,7 @@
 #include "mdtTtTestModel.h"
 #include "mdtTtTestModelItem.h"
 #include "mdtTtTestNode.h"
+#include "mdtTtTestNodeUnitSetupData.h"
 #include "mdtSqlRecord.h"
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -333,34 +334,136 @@ bool mdtTtTestModel::removeTestItems(const QModelIndexList & indexListOfSelected
   return true;
 }
 
-bool mdtTtTestModel::generateContinuityTest(const QVariant & testCableId, const QVariant & measureConnexionIdA, const QVariant & measureConnexionIdB, mdtClPathGraph & graph)
+QVariant mdtTtTestModel::getTestLinkId(const QVariant & testCableId, const QVariant & testConnectionId, bool & ok)
+{
+  QString sql;
+  QList<QVariant> dataList;
+
+  sql = "SELECT Id_PK FROM TestLink_tbl";
+  sql += " WHERE TestCable_Id_FK = " + testCableId.toString();
+  sql += " AND TestConnection_Id_FK = " + testConnectionId.toString();
+  dataList = getDataList<QVariant>(sql, ok);
+  if(!ok){
+    return QVariant();
+  }
+  if(dataList.isEmpty()){
+    return QVariant();
+  }
+  Q_ASSERT(dataList.size() == 1);
+
+  return dataList.at(0);
+}
+
+QList<QVariant> mdtTtTestModel::getTestConnectionIdListLinkedToTestConnectionByDutLinks(const QVariant & testCableId, const QVariant & fromTestConnectionId, mdtClPathGraph & graph, bool & ok)
+{
+  QString sql;
+  QVariant fromDutConnection;
+  QList<QVariant> linkedDutConnectionIdList;
+  QList<QVariant> linkedTestConnectionIdList;
+  QList<QVariant> dataList;
+  int i;
+
+  // Get DUT connection for given test connection
+  sql = "SELECT DutConnection_Id_FK FROM TestLink_tbl";
+  sql += " WHERE TestCable_Id_FK = " + testCableId.toString();
+  sql += " AND TestConnection_Id_FK = " + fromTestConnectionId.toString();
+  dataList = getDataList<QVariant>(sql, ok);
+  if(!ok){
+    return linkedTestConnectionIdList;
+  }
+  if(dataList.isEmpty()){
+    ok = false;
+    pvLastError.setError(tr("Cannot find DUT connection for test connecion ID ") + fromTestConnectionId.toString(), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestModel");
+    pvLastError.commit();
+    return linkedTestConnectionIdList;
+  }
+  Q_ASSERT(dataList.size() == 1);
+  fromDutConnection = dataList.at(0);
+  // Get linked DUT connections
+  linkedDutConnectionIdList = graph.getLinkedConnectionIdList(fromDutConnection);
+  // Build linked test connection id list
+  for(i = 0; i < linkedDutConnectionIdList.size(); ++i){
+    sql = "SELECT TestConnection_Id_FK FROM TestLink_tbl";
+    sql += " WHERE TestCable_Id_FK = " + testCableId.toString();
+    sql += " AND DutConnection_Id_FK = " + linkedDutConnectionIdList.at(i).toString();
+    sql += " AND TestConnection_Id_FK <> " + fromTestConnectionId.toString();
+    dataList = getDataList<QVariant>(sql, ok);
+    if(!ok){
+      return linkedTestConnectionIdList;
+    }
+    /**
+    if(dataList.isEmpty()){
+      ok = false;
+      pvLastError.setError(tr("Cannot find test connection for DUT connecion ID ") + linkedDutConnectionIdList.at(i).toString(), mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestModel");
+      pvLastError.commit();
+      return linkedTestConnectionIdList;
+    }
+    */
+    if(!dataList.isEmpty()){
+      Q_ASSERT(dataList.size() == 1);
+      linkedTestConnectionIdList.append(dataList.at(0));
+    }
+  }
+
+  return linkedTestConnectionIdList;
+}
+
+bool mdtTtTestModel::generateContinuityTest(const QVariant & testModelId, const QVariant & testCableId, const QVariant & testNodeId, const QVariant & measureConnexionIdA, const QVariant & measureConnexionIdB, mdtClPathGraph & graph)
 {
   mdtTtTestNode tn(0, database());
+  mdtTtTestModelItem tmi(0, database());
+  QSqlQuery query(database());
   QList<QVariant> solvedTestConnectionIdList;
   QList<QVariant> testConnectionIdList;
   QList<QVariant> linkedTestConnectionIdList;
-  QList<QVariant> pathConnectionIdList;
-  QVariant otherMeasureConnection;
+  QList<QVariant> fromTestConnectionPathConnectionIdList;
+  QList<QVariant> fromLinkedTestConnectionPathConnectionIdList;
+  QVariant forTestConnectionMeasureConnectionId;
+  QVariant forLinkedTestConnectionMeasureConnectionId;
   QVariant testConnectionId;
-  mdtSqlRecord routeData;
+  QVariant linkedTestConnectionId;
+  QVariant forTestConnectionLinkId;
+  QVariant forLinkedTestConnectionLinkId;
+  mdtSqlRecord itemData;
+  QVariant testModelItemId;
+  ///mdtSqlRecord routeData;
+  QList<mdtTtTestNodeUnitSetupData> forTestConnectionSetupDataList;
+  QList<mdtTtTestNodeUnitSetupData> forLinkedTestConnectionSetupDataList;
   QString sql;
   QList<QSqlRecord> dataList;
   bool ok;
-  int i;
+  bool noShort;
+  int i, k, m;
+  int sequenceNumber = 0;
 
+  // Setup test model item data
+  if(!itemData.addAllFields("TestModelItem_tbl", database())){
+    pvLastError = itemData.lastError();
+    return false;
+  }
   // Setup route data
+  /**
   if(!routeData.addAllFields("TestModelItemRoute_tbl", database())){
     pvLastError = routeData.lastError();
     return false;
   }
+  */
   // Get test connections from given cable
   sql = "SELECT TestConnection_Id_FK FROM TestLink_tbl WHERE TestCable_Id_FK = " + testCableId.toString();
   testConnectionIdList = getDataList<QVariant>(sql, ok);
   if(!ok){
     return false;
   }
-  /// \todo Add relays of test node
-  
+  // Add relays of test node
+  if(!tn.addRelaysToGraph(testNodeId, graph)){
+    pvLastError = tn.lastError();
+    return false;
+  }
+  if(!beginTransaction()){
+    return false;
+  }
   // Process test connections
   for(i = 0; i < testConnectionIdList.size(); ++i){
     testConnectionId = testConnectionIdList.at(i);
@@ -369,19 +472,133 @@ bool mdtTtTestModel::generateContinuityTest(const QVariant & testCableId, const 
       continue;
     }
     // Search paths from test connection to a measure connection
-    otherMeasureConnection = measureConnexionIdB;
-    pathConnectionIdList = graph.getShortestPath(testConnectionId, measureConnexionIdA);
-    if(pathConnectionIdList.isEmpty()){
-      pathConnectionIdList = graph.getShortestPath(testConnectionId, measureConnexionIdB);
-      if(pathConnectionIdList.isEmpty()){
+    forTestConnectionMeasureConnectionId = measureConnexionIdA;
+    forLinkedTestConnectionMeasureConnectionId = measureConnexionIdB;
+    fromTestConnectionPathConnectionIdList = graph.getShortestPath(testConnectionId, measureConnexionIdA);
+    if(fromTestConnectionPathConnectionIdList.isEmpty()){
+      fromTestConnectionPathConnectionIdList = graph.getShortestPath(testConnectionId, measureConnexionIdB);
+      if(fromTestConnectionPathConnectionIdList.isEmpty()){
         pvLastError.setError(tr("Cannot find a route from test connection ID ") + testConnectionId.toString() + tr(" to a measure connection."), mdtError::Error);
         MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestModel");
         pvLastError.commit();
+        rollbackTransaction();
         return false;
       }
-      otherMeasureConnection = measureConnexionIdA;
+      forTestConnectionMeasureConnectionId = measureConnexionIdB;
+      forLinkedTestConnectionMeasureConnectionId = measureConnexionIdA;
     }
+    // Build setup data list
+    forTestConnectionSetupDataList = tn.getRelayPathSetupDataList(fromTestConnectionPathConnectionIdList, graph, ok);
+    if(!ok){
+      pvLastError = tn.lastError();
+      rollbackTransaction();
+      return false;
+    }
+    // Search test connections that are linked to current test connection, passing by DUT
+    linkedTestConnectionIdList = getTestConnectionIdListLinkedToTestConnectionByDutLinks(testCableId, testConnectionId, graph, ok);
+    if(!ok){
+      rollbackTransaction();
+      return false;
+    }
+    // Get link ID
+    forTestConnectionLinkId = getTestLinkId(testCableId, testConnectionId, ok);
+    if(!ok){
+      rollbackTransaction();
+      return false;
+    }
+    Q_ASSERT(!forTestConnectionLinkId.isNull());
+    for(k = 0; k < linkedTestConnectionIdList.size(); ++k){
+      linkedTestConnectionId = linkedTestConnectionIdList.at(k);
+      Q_ASSERT(!linkedTestConnectionId.isNull());
+      // Search path from linked test connection to other measure connection
+      fromLinkedTestConnectionPathConnectionIdList = graph.getShortestPath(linkedTestConnectionId, forLinkedTestConnectionMeasureConnectionId);
+      if(fromLinkedTestConnectionPathConnectionIdList.isEmpty()){
+        pvLastError.setError(tr("Cannot find a route from test connection ID ") + linkedTestConnectionId.toString() + tr(" to a measure connection."), mdtError::Error);
+        MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestModel");
+        pvLastError.commit();
+        rollbackTransaction();
+        return false;
+      }
+      // Get setup data list
+      forLinkedTestConnectionSetupDataList = tn.getRelayPathSetupDataList(fromLinkedTestConnectionPathConnectionIdList, graph, ok);
+      if(!ok){
+        pvLastError = tn.lastError();
+        rollbackTransaction();
+        return false;
+      }
+      // Check absence of short
+      noShort = tn.ensureAbsenceOfShortCircuit(forTestConnectionMeasureConnectionId, forLinkedTestConnectionMeasureConnectionId, forTestConnectionSetupDataList + forLinkedTestConnectionSetupDataList, ok);
+      if(!ok){
+        pvLastError = tn.lastError();
+        rollbackTransaction();
+        return false;
+      }
+      if(!noShort){
+        pvLastError.setError(tr("A generated setup makes a internal short between measure connections."), mdtError::Error);
+        MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestModel");
+        pvLastError.commit();
+        rollbackTransaction();
+        return false;
+      }
+      // Get link ID
+      forLinkedTestConnectionLinkId = getTestLinkId(testCableId, linkedTestConnectionId, ok);
+      if(!ok){
+        rollbackTransaction();
+        return false;
+      }
+      Q_ASSERT(!forLinkedTestConnectionLinkId.isNull());
+      // Create a new test item
+      itemData.setValue("TestModel_Id_FK", testModelId);
+      itemData.setValue("SequenceNumber", sequenceNumber);
+      ++sequenceNumber;
+      itemData.setValue("ExpectedValue", 0.0);
+      itemData.setValue("ValueUnit", "Ohm");
+      if(!addRecord(itemData, "TestModelItem_tbl", query)){
+        rollbackTransaction();
+        return false;
+      }
+      testModelItemId = query.lastInsertId();
+      Q_ASSERT(!testModelItemId.isNull());
+      // Add test link that concern testConnectionId to item
+      if(!tmi.addTestLink(testModelItemId, forTestConnectionLinkId)){
+        rollbackTransaction();
+        pvLastError = tmi.lastError();
+        return false;
+      }
+      // Update setup data
+      for(m = 0; m < forTestConnectionSetupDataList.size(); ++m){
+        forTestConnectionSetupDataList[m].setValue("TestModelItem_Id_FK", testModelItemId);
+      }
+      // Add route from test connection to assigned measure connection
+      if(!tmi.addRoute(testModelItemId, forTestConnectionLinkId, forTestConnectionMeasureConnectionId, forTestConnectionSetupDataList, false)){
+        rollbackTransaction();
+        pvLastError = tmi.lastError();
+        return false;
+      }
+      // Add test link that concern linkedTestConnectionId to item
+      if(!tmi.addTestLink(testModelItemId, forLinkedTestConnectionLinkId)){
+        rollbackTransaction();
+        return false;
+      }
+      // Update setup data
+      for(m = 0; m < forLinkedTestConnectionSetupDataList.size(); ++m){
+        forLinkedTestConnectionSetupDataList[m].setValue("TestModelItem_Id_FK", testModelItemId);
+      }
+      // Add route from linked test connection to assigned measure connection
+      if(!tmi.addRoute(testModelItemId, forLinkedTestConnectionLinkId, forLinkedTestConnectionMeasureConnectionId, forLinkedTestConnectionSetupDataList, false)){
+        rollbackTransaction();
+        pvLastError = tmi.lastError();
+        return false;
+      }
+      solvedTestConnectionIdList.append(linkedTestConnectionId);
+    }
+    solvedTestConnectionIdList.append(testConnectionId);
   }
+  if(!commitTransaction()){
+    return false;
+  }
+
+  return true;
 }
 
 bool mdtTtTestModel::generateTestNodeUnitSetup(const QVariant & testId)

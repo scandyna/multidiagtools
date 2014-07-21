@@ -48,7 +48,7 @@ class mdtTtTestNodeUnit : public mdtTtBase
 
   /*! \brief Get a list of unit connection IDs for given unit ID
    */
-  QList<QVariant> getConnectionIdListOfUnitId(const QVariant & unitId, bool *ok);
+  QList<QVariant> getConnectionIdListOfUnitId(const QVariant & unitId, bool excludeAllreadyAffectedToTestNode, bool  & ok);
 
   /*! \brief Get unit connection IDs that are linked to given unit connection IDs
    *
