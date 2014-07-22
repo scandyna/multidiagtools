@@ -294,7 +294,7 @@ QList<QVariant> mdtClPathGraph::getLinkedConnectorIdList(const QVariant & fromCo
   return connectorIdList;
 }
 
-QList<QVariant> mdtClPathGraph::getShortestPath(const QVariant & fromConnectionId, const QVariant & toConnectionId)
+QList<QVariant> mdtClPathGraph::getShortestPath(const QVariant & fromConnectionId, const QVariant & toConnectionId, bool & ok)
 {
   QList<QVariant> connectionIdList;
   mdtClPathGraphEdgeData edgeData;
@@ -308,6 +308,7 @@ QList<QVariant> mdtClPathGraph::getShortestPath(const QVariant & fromConnectionI
 
   // Check if we have requested from connection ID in the graph
   if(!pvGraphVertices.contains(fromConnectionId.toInt())){
+    ok = false;
     pvLastError.setError(QObject::tr("Cannot get shortest path."), mdtError::Error);
     pvLastError.setInformativeText(QObject::tr("Plese see details for more informations."));
     pvLastError.setSystemError(-1, QObject::tr("Source connection ID not found") + " (ID: " + fromConnectionId.toString() + ").");
@@ -318,6 +319,7 @@ QList<QVariant> mdtClPathGraph::getShortestPath(const QVariant & fromConnectionI
   fromVertex = pvGraphVertices.value(fromConnectionId.toInt());
   // Check if we have requested to connection ID in the graph
   if(!pvGraphVertices.contains(toConnectionId.toInt())){
+    ok = false;
     pvLastError.setError(QObject::tr("Cannot get shortest path."), mdtError::Error);
     pvLastError.setInformativeText(QObject::tr("Plese see details for more informations."));
     pvLastError.setSystemError(-1, QObject::tr("Destination connection ID not found") + " (ID: " + toConnectionId.toString() + ").");
@@ -352,6 +354,7 @@ QList<QVariant> mdtClPathGraph::getShortestPath(const QVariant & fromConnectionI
       }
     }
   }
+  ok = true;
 
   return connectionIdList;
 }

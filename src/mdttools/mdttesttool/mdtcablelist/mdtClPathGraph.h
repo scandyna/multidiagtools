@@ -163,7 +163,7 @@ class mdtClPathGraph
    *  the shorted path from a connection ID to destination connection ID,
    *  including given fromConnectionId and toConnectionId.
    */
-  QList<QVariant> getShortestPath(const QVariant & fromConnectionId, const QVariant & toConnectionId);
+  QList<QVariant> getShortestPath(const QVariant & fromConnectionId, const QVariant & toConnectionId, bool & ok);
 
   /*! \brief Draw the graphic representation starting from a connection
    */

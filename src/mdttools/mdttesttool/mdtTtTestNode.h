@@ -92,7 +92,7 @@ class mdtTtTestNode : public mdtTtBase
    *  as a link with a cost of 2.
    *  The user data will also contain unit ID of each relay.
    */
-  bool addRelaysToGraph(const QVariant & testNodeId, mdtClPathGraph & graph);
+  bool addRelaysToGraph(const QVariant & testNodeId, mdtClPathGraph & graph, const QList<QVariant> & relaysToIgnoreIdList = QList<QVariant>());
 
   /*! \brief Get a list of test node unit setup data for a given path
    *
@@ -117,7 +117,7 @@ class mdtTtTestNode : public mdtTtBase
    */
   bool ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, const QVariant & connectionIdB, const QList<mdtTtTestNodeUnitSetupData> & testNodeUnitSetupDataList, mdtClPathGraph & graph, bool & ok);
 
-  bool ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, const QVariant & connectionIdB, const QList<mdtTtTestNodeUnitSetupData> & testNodeUnitSetupDataList, bool & ok);
+  ///bool ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, const QVariant & connectionIdB, const QList<mdtTtTestNodeUnitSetupData> & testNodeUnitSetupDataList, bool & ok);
 
  private:
 

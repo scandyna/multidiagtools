@@ -29,7 +29,186 @@
 #include <QList>
 #include <QModelIndex>
 
-/*! \brief Helper class for test edition
+class mdtTtTestModel;
+
+/*! \brief Helper class for test model generation
+ */
+class mdtTtTestModelAbstractGeneratorHelper
+{
+ public:
+
+  /*! \brief Action
+   */
+  enum action_t {
+                  Fail,               /*!< Fail test model generation */
+                  IgnoreCurrentItem   /*!< Do not add a item, continue processing */
+  };
+
+  /*! \brief Constructor
+   */
+  mdtTtTestModelAbstractGeneratorHelper(mdtTtTestModel *tm)
+  {
+    Q_ASSERT(tm != 0);
+    pvTestModel = tm;
+  }
+
+  /*! \brief Destructor
+   */
+  virtual ~mdtTtTestModelAbstractGeneratorHelper() {}
+
+  /*! \brief Get a list of test node unit ID of relays to not use
+   */
+  virtual QList<QVariant> relaysToIgnoreIdList();
+
+  /*! \brief Get related connections
+   *
+   * What rRelated connections are depends on implementation.
+   *  For example, for a continuity check generator,
+   *  they will be linked connections.
+   */
+  virtual QList<QVariant> getRelatedTestConnectionIdList(const QVariant & testCableId, const QVariant & fromTestConnectionId, mdtClPathGraph & graph, bool & ok) = 0;
+
+  /*! \brief Tell what to do if a setup is about to produce a short circuit in test node
+   */
+  virtual action_t actionOnShortInTestNode() = 0;
+
+  /*! \brief Get expected value (type double or Null)
+   */
+  virtual QVariant expectedValue() = 0;
+
+  /*! \brief Get value unit
+   */
+  virtual QVariant valueUnit() = 0;
+
+  /*! \brief Get a string for the test model item's designation
+   */
+  virtual QVariant getDesignationEN(const QVariant & fromTestLinkId, const QVariant & toTestLinkId);
+
+  /*! \brief Get DUT connection ID for given test connection ID
+   */
+  QVariant getDutConnectionId(const QVariant & testCableId, const QVariant & testConnectionId, bool & ok);
+
+  /*! \brief Get test connection ID for given DUT connection ID
+   */
+  QVariant getTestConnectionId(const QVariant & testCableId, const QVariant & dutConnectionId, bool & ok, const QVariant & testConnectionToExclude = QVariant());
+
+  /*! \brief Get last error
+   */
+  mdtError lastError() const {
+    return pvLastError;
+  }
+
+ protected:
+
+  mdtTtTestModel *pvTestModel;
+  mdtError pvLastError;
+
+ private:
+
+  Q_DISABLE_COPY(mdtTtTestModelAbstractGeneratorHelper);
+};
+
+/*! \brief Helper class for continuity test generation
+ */
+class mdtTtTestModelContinuityTestGeneratorHelper : public mdtTtTestModelAbstractGeneratorHelper
+{
+ public:
+
+  /*! \brief Constructor
+   */
+  mdtTtTestModelContinuityTestGeneratorHelper(mdtTtTestModel *tm);
+
+  /*! \brief Destructor
+   */
+  ~mdtTtTestModelContinuityTestGeneratorHelper();
+
+  /*! \brief Get related connections
+   *
+   * Will get the DUT connection that is linked to given fromTestConnectionId,
+   *  then search about linked DUT connections.
+   *  Finally, a list of test connection is built for each DUT connection found.
+   *
+   * \param testCableId ID of test cable (TestCable_tbl) to use.
+   * \param fromTestConnectionId Test connection from witch to start.
+   * \param graph Graph object. Cable list must allready be loaded (see mdtClPathGraph::loadLinkList())
+   * \param ok Will be set to true on success, false else.
+   */
+  QList<QVariant> getRelatedTestConnectionIdList(const QVariant & testCableId, const QVariant & fromTestConnectionId, mdtClPathGraph & graph, bool & ok);
+
+  /*! \brief Return Fail
+   */
+  action_t actionOnShortInTestNode();
+
+  /*! \brief Get expected value
+   *
+   * Return 0.0
+   */
+  QVariant expectedValue();
+
+  /*! \brief Get value unit
+   *
+   * Return "Ohm"
+   */
+  QVariant valueUnit();
+};
+
+/*! \brief Helper class for short detection and isolation test generation
+ */
+class mdtTtTestModelIsolationTestGeneratorHelper : public mdtTtTestModelAbstractGeneratorHelper
+{
+ public:
+
+  /*! \brief Constructor
+   */
+  mdtTtTestModelIsolationTestGeneratorHelper(mdtTtTestModel *tm);
+
+  /*! \brief Destructor
+   */
+  ~mdtTtTestModelIsolationTestGeneratorHelper();
+
+  /*! \brief Set a list of test node unit ID of relays to not use
+   */
+   void setRelaysToIgnoreIdList(const QList<QVariant> & idList);
+
+  /*! \brief Get a list of test node unit ID of relays to not use
+   */
+  QList<QVariant> relaysToIgnoreIdList();
+
+  /*! \brief Get related connections
+   *
+   * Will get the DUT connection that is linked to given fromTestConnectionId,
+   *  then search about not linked DUT connections.
+   *  Finally, a list of test connection is built for each DUT connection found.
+   *
+   * \param testCableId ID of test cable (TestCable_tbl) to use.
+   * \param fromTestConnectionId Test connection from witch to start.
+   * \param graph Graph object. Cable list must allready be loaded (see mdtClPathGraph::loadLinkList())
+   * \param ok Will be set to true on success, false else.
+   */
+  QList<QVariant> getRelatedTestConnectionIdList(const QVariant & testCableId, const QVariant & fromTestConnectionId, mdtClPathGraph & graph, bool & ok);
+
+  /*! \brief Return IgnoreCurrentItem
+   */
+  action_t actionOnShortInTestNode();
+
+  /*! \brief Get expected value
+   *
+   * Return 0.0
+   */
+  QVariant expectedValue();
+
+  /*! \brief Get value unit
+   *
+   * Return "Ohm"
+   */
+  QVariant valueUnit();
+
+ private:
+
+  QList<QVariant> pvRelaysToIgnoreIdList;
+};
+
+/*! \brief Helper class for test model edition
  */
 class mdtTtTestModel : public mdtTtBase
 {
@@ -83,21 +262,30 @@ class mdtTtTestModel : public mdtTtBase
    */
   bool removeTestNodes(const mdtSqlTableSelection & s);
 
+  /*! \brief Remove a test model item
+   *
+   * \param testModelItemId ID of test model item to remove
+   * \param removeSetupAndRoute If true, related items in TestNodeUnitSetup_tbl and TestModelItemRoute_tbl will be removed first.
+   * \param removeTestLinks If true, related items in TestModelItem_TestLink_tbl will be removed first.
+   * \param handleTransaction If true, transaction will be handled internally.
+   */
+  bool removeTestModelItem(const QVariant & testModelItemId, bool removeSetupAndRoute, bool removeTestLinks, bool handleTransaction);
+
+  /*! \brief Remove a list of test model items
+   */
+  bool removeTestModelItems(const mdtSqlTableSelection & s, bool removeSetupAndRoute, bool removeTestLinks);
+
   /*! \brief Add a test item
    */
-  bool addTestItem(const QVariant & testId, const QVariant & testLinkBusAId, const QVariant & testLinkBusBId, const QVariant & expectedValue);
-
-  /*! \brief Remove a test item
-   */
-  bool removeTestItem(const QVariant & testItemId);
-
-  /*! \brief Remove test items
-   */
-  bool removeTestItems(const QModelIndexList & indexListOfSelectedRows);
+  ///bool addTestItem(const QVariant & testId, const QVariant & testLinkBusAId, const QVariant & testLinkBusBId, const QVariant & expectedValue);
 
   /*! \brief Get link ID for given cable ID and test connection ID
    */
   QVariant getTestLinkId(const QVariant & testCableId, const QVariant & testConnectionId, bool & ok);
+
+  /*! \brief Get test model item identification
+   */
+  ///QVariant getTestModelItemDesignation(const QVariant & testLinkIdA, const QVariant & testLinkIdB);
 
   /*! \brief Get a list of test connections that are linked to given test connection, via DUT connection
    *
@@ -110,7 +298,7 @@ class mdtTtTestModel : public mdtTtBase
    * \param graph Graph object. Cable list must allready be loaded (see mdtClPathGraph::loadLinkList())
    * \param ok Will be set to true on success, false else.
    */
-  QList<QVariant> getTestConnectionIdListLinkedToTestConnectionByDutLinks(const QVariant & testCableId, const QVariant & fromTestConnectionId, mdtClPathGraph & graph, bool & ok);
+  ///QList<QVariant> getTestConnectionIdListLinkedToTestConnectionByDutLinks(const QVariant & testCableId, const QVariant & fromTestConnectionId, mdtClPathGraph & graph, bool & ok);
 
   /*! \brief Generate test items for a continuity check (2 wire)
    *
@@ -121,7 +309,36 @@ class mdtTtTestModel : public mdtTtBase
    * \param measureConnexionIdB ID of second measure connection to use (TestNodeUnitConnection_tbl)
    * \param graph Graph object. Cable list must allready be loaded (see mdtClPathGraph::loadLinkList())
    */
-  bool generateContinuityTest(const QVariant & testModelId, const QVariant & testCableId, const QVariant & testNodeId, const QVariant & measureConnexionIdA, const QVariant & measureConnexionIdB, mdtClPathGraph & graph);
+  bool generateContinuityTest(const QVariant & testModelId, const QVariant & testCableId, const QVariant & testNodeId,
+                              const QVariant & measureConnexionIdA, const QVariant & measureConnexionIdB, mdtClPathGraph & graph);
+
+  /*! \brief Generate test items for a short detection test
+   *
+   * \param testModelId ID of test model
+   * \param testCableId ID of test cable (TestCable_tbl) to use.
+   * \param testNodeId ID of test node to use.
+   * \param measureConnexionIdA ID of first measure connection to use (TestNodeUnitConnection_tbl)
+   * \param measureConnexionIdB ID of second measure connection to use (TestNodeUnitConnection_tbl)
+   * \param graph Graph object. Cable list must allready be loaded (see mdtClPathGraph::loadLinkList())
+   * \param relaysToIgnoreIdList List of test node unit ID of relays to not use
+   */
+  bool generateShortDetectionTest(const QVariant & testModelId, const QVariant & testCableId, const QVariant & testNodeId,
+                                  const QVariant & measureConnexionIdA, const QVariant & measureConnexionIdB, mdtClPathGraph & graph,
+                                  const QList<QVariant> & relaysToIgnoreIdList = QList<QVariant>());
+
+  /*! \brief Generate test items
+   *
+   * \param testModelId ID of test model
+   * \param testCableId ID of test cable (TestCable_tbl) to use.
+   * \param testNodeId ID of test node to use.
+   * \param measureConnexionIdA ID of first measure connection to use (TestNodeUnitConnection_tbl)
+   * \param measureConnexionIdB ID of second measure connection to use (TestNodeUnitConnection_tbl)
+   * \param graph Graph object. Cable list must allready be loaded (see mdtClPathGraph::loadLinkList())
+   * \param helper Object for a specific test generation.
+   */
+  bool generateTestModel(const QVariant & testModelId, const QVariant & testCableId, const QVariant & testNodeId, 
+                         const QVariant & measureConnexionIdA, const QVariant & measureConnexionIdB, 
+                         mdtClPathGraph & graph, mdtTtTestModelAbstractGeneratorHelper & helper);
 
   /*! \brief Generate test node unit setup for given test ID
    * 
@@ -130,6 +347,29 @@ class mdtTtTestModel : public mdtTtBase
   bool generateTestNodeUnitSetup(const QVariant & testId);
 
  private:
+
+  /*! \brief Search a path from test connection to measure connection
+   *
+   * \param testConnectionId ID of cconnection from witch to find a path
+   * \param measureConnexionId ID of measure connection to witch to find path
+   * \param pathConnectionIdList Reslut will be stored here
+   * \param graph Graph object.
+   */
+  bool searchPathFromTestConnectionToMeasureConnection(const QVariant & testConnectionId, const QVariant & measureConnexionId, QList<QVariant> & pathConnectionIdList, mdtClPathGraph & graph);
+
+  /*! \brief Search a path from test connection to measure connection A
+   *
+   * First, a path from testConnectionId to measureConnexionIdA is searched.
+   *  If no path was found, measure connections A and B are swapped,
+   *  and search begins a second time.
+   *
+   * \param testConnectionId ID of cconnection from witch to find a path
+   * \param measureConnexionIdA ID of measure connection to witch to find path
+   * \param measureConnexionIdB ID of other measure connection
+   * \param pathConnectionIdList Reslut will be stored here
+   * \param graph Graph object.
+   */
+  bool searchPathFromTestConnectionToMeasureConnection(const QVariant & testConnectionId, QVariant & measureConnexionIdA, QVariant & measureConnexionIdB, QList<QVariant> & pathConnectionIdList, mdtClPathGraph & graph);
 
   Q_DISABLE_COPY(mdtTtTestModel);
 };

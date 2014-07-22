@@ -110,6 +110,7 @@ void mdtTtRelayPathDialog::searchPath(int index)
   QList<QVariant> pathConnectionIdList;
   QString relaysStr;
   QVariant relayId;
+  bool ok;
   int i;
 
   if(pvLoadingData){
@@ -130,7 +131,11 @@ void mdtTtRelayPathDialog::searchPath(int index)
     return;
   }
   // Build path
-  pathConnectionIdList = pvGraph->getShortestPath(sourceConnectionId, destinationConnectionId);
+  pathConnectionIdList = pvGraph->getShortestPath(sourceConnectionId, destinationConnectionId, ok);
+  if(!ok){
+    displayError(pvGraph->lastError());
+    return;
+  }
   if(pathConnectionIdList.size() < 2){
     return;
   }

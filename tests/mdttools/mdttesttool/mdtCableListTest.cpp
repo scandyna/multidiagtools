@@ -1215,7 +1215,8 @@ void mdtCableListTest::pathGraphTest()
   // Initial
   idList = graph.getLinkedConnectionIdList(0);
   QVERIFY(idList.isEmpty());
-  idList = graph.getShortestPath(0, 1);
+  idList = graph.getShortestPath(0, 1, ok);
+  QVERIFY(!ok);
   QVERIFY(idList.isEmpty());
   QVERIFY(graph.getUserData(0, 1).isNull());
 
@@ -1227,7 +1228,8 @@ void mdtCableListTest::pathGraphTest()
   idList = graph.getLinkedConnectionIdList(1);
   QCOMPARE(idList.size(), 1);
   QCOMPARE(idList.at(0), QVariant(2));
-  idList = graph.getShortestPath(1, 2);
+  idList = graph.getShortestPath(1, 2, ok);
+  QVERIFY(ok);
   QCOMPARE(idList.size(), 2);
   QCOMPARE(idList.at(0), QVariant(1));
   QCOMPARE(idList.at(1), QVariant(2));
@@ -1238,7 +1240,8 @@ void mdtCableListTest::pathGraphTest()
   QCOMPARE(idList.size(), 2);
   QCOMPARE(idList.at(0), QVariant(2));
   QCOMPARE(idList.at(1), QVariant(3));
-  idList = graph.getShortestPath(1, 3);
+  idList = graph.getShortestPath(1, 3, ok);
+  QVERIFY(ok);
   QCOMPARE(idList.size(), 3);
   QCOMPARE(idList.at(0), QVariant(1));
   QCOMPARE(idList.at(1), QVariant(2));
@@ -1252,7 +1255,8 @@ void mdtCableListTest::pathGraphTest()
   QCOMPARE(idList.at(0), QVariant(2));
   QCOMPARE(idList.at(1), QVariant(3));
   QCOMPARE(idList.at(2), QVariant(4));
-  idList = graph.getShortestPath(1, 4);
+  idList = graph.getShortestPath(1, 4, ok);
+  QVERIFY(ok);
   QCOMPARE(idList.size(), 4);
   QCOMPARE(idList.at(0), QVariant(1));
   QCOMPARE(idList.at(1), QVariant(2));
@@ -1268,17 +1272,20 @@ void mdtCableListTest::pathGraphTest()
   idList = graph.getLinkedConnectionIdList(10);
   QCOMPARE(idList.size(), 1);
   QCOMPARE(idList.at(0), QVariant(11));
-  idList = graph.getShortestPath(1, 4);
+  idList = graph.getShortestPath(1, 4, ok);
+  QVERIFY(ok);
   QCOMPARE(idList.size(), 4);
   QCOMPARE(idList.at(0), QVariant(1));
   QCOMPARE(idList.at(1), QVariant(2));
   QCOMPARE(idList.at(2), QVariant(3));
   QCOMPARE(idList.at(3), QVariant(4));
-  idList = graph.getShortestPath(10, 11);
+  idList = graph.getShortestPath(10, 11, ok);
+  QVERIFY(ok);
   QCOMPARE(idList.size(), 2);
   QCOMPARE(idList.at(0), QVariant(10));
   QCOMPARE(idList.at(1), QVariant(11));
-  idList = graph.getShortestPath(1, 11);
+  idList = graph.getShortestPath(1, 11, ok);
+  QVERIFY(ok);
   QCOMPARE(idList.size(), 0);
   // (1)-(2)-(3)-(4)     (10)-(11)
   //   \---(5)---/
@@ -1290,7 +1297,8 @@ void mdtCableListTest::pathGraphTest()
   QVERIFY(idList.contains(3));
   QVERIFY(idList.contains(4));
   QVERIFY(idList.contains(5));
-  idList = graph.getShortestPath(1, 4);
+  idList = graph.getShortestPath(1, 4, ok);
+  QVERIFY(ok);
   QCOMPARE(idList.size(), 3);
   QCOMPARE(idList.at(0), QVariant(1));
   QCOMPARE(idList.at(1), QVariant(5));
@@ -1325,7 +1333,8 @@ void mdtCableListTest::pathGraphTest()
   QVERIFY(idList.contains(400000));
   QVERIFY(idList.contains(500000));
   // Check path from 10000 to 20001
-  idList = graph.getShortestPath(10000, 20001);
+  idList = graph.getShortestPath(10000, 20001, ok);
+  QVERIFY(ok);
   QCOMPARE(idList.size(), 4);
   QCOMPARE(idList.at(0), QVariant(10000));
   QCOMPARE(idList.at(1), QVariant(10001));
@@ -1341,7 +1350,8 @@ void mdtCableListTest::pathGraphTest()
   QVERIFY(idList.contains(20000));
   QVERIFY(idList.contains(20001));
   // Check path from 10000 to 20001
-  idList = graph.getShortestPath(10000, 20001);
+  idList = graph.getShortestPath(10000, 20001, ok);
+  QVERIFY(ok);
   QCOMPARE(idList.size(), 4);
   QCOMPARE(idList.at(0), QVariant(10000));
   QCOMPARE(idList.at(1), QVariant(10001));

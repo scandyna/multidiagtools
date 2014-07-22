@@ -243,7 +243,7 @@ bool mdtTtTestNode::addMissingConnections(const QVariant & testNodeId)
   return true;
 }
 
-bool mdtTtTestNode::addRelaysToGraph(const QVariant & testNodeId, mdtClPathGraph & graph)
+bool mdtTtTestNode::addRelaysToGraph(const QVariant& testNodeId, mdtClPathGraph& graph, const QList< QVariant >& relaysToIgnoreIdList)
 {
   QString sql;
   QList<QVariant> testNodeUnitIdList;
@@ -261,6 +261,10 @@ bool mdtTtTestNode::addRelaysToGraph(const QVariant & testNodeId, mdtClPathGraph
   testNodeUnitIdList = getDataList<QVariant>(sql, ok);
   if(!ok){
     return false;
+  }
+  for(i = 0; i < relaysToIgnoreIdList.size(); ++i){
+    Q_ASSERT(!relaysToIgnoreIdList.at(i).isNull());
+    testNodeUnitIdList.removeAll(relaysToIgnoreIdList.at(i));
   }
   for(i = 0; i < testNodeUnitIdList.size(); ++i){
     // Get connections
@@ -333,9 +337,10 @@ bool mdtTtTestNode::ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, 
   for(i = 0; i < testNodeUnitSetupDataList.size(); ++i){
     connectionIdList = tnu.getConnectionIdListOfUnitId(testNodeUnitSetupDataList.at(i).value("TestNodeUnit_Id_FK"), false, ok);
     if(!ok){
+      pvLastError = tnu.lastError();
       return false;
     }
-    qDebug() << "Connections: " << connectionIdList;
+    ///qDebug() << "Connections: " << connectionIdList;
     // We only handle units with exactly 2 connections
     if(connectionIdList.size() != 2){
       ok = false;
@@ -347,15 +352,20 @@ bool mdtTtTestNode::ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, 
     Q_ASSERT(connectionIdList.size() == 2);
     graph.addLink(connectionIdList.at(0), connectionIdList.at(1), true, 2);
   }
-  ok = true;
-  noShort = graph.getShortestPath(connectionIdA, connectionIdB).isEmpty();
+  ///ok = true;
+  noShort = graph.getShortestPath(connectionIdA, connectionIdB, ok).isEmpty();
+  if(!ok){
+    pvLastError = graph.lastError();
+  }
   graph.removeAddedLinks();
 
   return noShort;
 }
 
+/**
 bool mdtTtTestNode::ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, const QVariant & connectionIdB, const QList<mdtTtTestNodeUnitSetupData> & testNodeUnitSetupDataList, bool & ok)
 {
   mdtClPathGraph graph(database());
   return ensureAbsenceOfShortCircuit(connectionIdA, connectionIdB, testNodeUnitSetupDataList, graph, ok);
 }
+*/

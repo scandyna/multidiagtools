@@ -278,13 +278,14 @@ void mdtTtTestModelEditor::removeTestItem()
   mdtSqlTableWidget *widget;
   mdtTtTestModel tm(this, database());
   QMessageBox msgBox;
-  QModelIndexList indexes;
+  ///QModelIndexList indexes;
+  mdtSqlTableSelection s;
 
   widget = sqlTableWidget("TestModelItem_tbl");
   Q_ASSERT(widget != 0);
   // Get selected rows
-  indexes = widget->indexListOfSelectedRows("Id_PK");
-  if(indexes.size() < 1){
+  s = widget->currentSelection("Id_PK");
+  if(s.isEmpty()){
     return;
   }
   // We ask confirmation to the user
@@ -297,8 +298,9 @@ void mdtTtTestModelEditor::removeTestItem()
     return;
   }
   // Delete seleced rows
+  if(!tm.removeTestModelItems(s, true, true)){
   ///if(!tm.removeTestItems(indexes)){
-  if(!tm.removeData("TestModelItem_tbl", "Id_PK", indexes)){
+  ///if(!tm.removeData("TestModelItem_tbl", "Id_PK", indexes)){
     pvLastError = tm.lastError();
     displayLastError();
     return;
@@ -317,6 +319,11 @@ void mdtTtTestModelEditor::generateContinuityTest()
   QVariant testNodeId;
   QVariant measureConnexionIdA;
   QVariant measureConnexionIdB;
+  QList<QVariant> relaysToIgnore;
+  QString sql;
+  mdtSqlSelectionDialog dialog(this);
+  mdtSqlTableSelection s;
+  int i;
 
   // Get current test ID
   testModelId = currentData("TestModel_tbl", "Id_PK");
@@ -349,8 +356,21 @@ void mdtTtTestModelEditor::generateContinuityTest()
   if(measureConnexionIdB.isNull()){
     return;
   }
+  // Select relays to not use
+  sql = "SELECT * FROM TestNodeUnit_view";
+  sql += " WHERE TestNode_Id_FK = " + testNodeId.toString();
+  sql += " AND (Type_Code_FK = 'BUSCPLREL')";
+  dialog.setQuery(sql, database(), true);
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
+  s = dialog.selection("Unit_Id_FK_PK");
+  for(i = 0; i < s.rowCount(); ++i){
+    relaysToIgnore.append(s.data(i, "Unit_Id_FK_PK"));
+  }
 
-  if(!tm.generateContinuityTest(testModelId, testCableId, testNodeId, measureConnexionIdA, measureConnexionIdB, graph)){
+  ///if(!tm.generateContinuityTest(testModelId, testCableId, testNodeId, measureConnexionIdA, measureConnexionIdB, graph)){
+  if(!tm.generateShortDetectionTest(testModelId, testCableId, testNodeId, measureConnexionIdA, measureConnexionIdB, graph, relaysToIgnore)){
     pvLastError = tm.lastError();
     displayLastError();
     return;
