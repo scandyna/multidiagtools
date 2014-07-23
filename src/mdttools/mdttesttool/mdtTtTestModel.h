@@ -68,6 +68,10 @@ class mdtTtTestModelAbstractGeneratorHelper
    */
   virtual QList<QVariant> getRelatedTestConnectionIdList(const QVariant & testCableId, const QVariant & fromTestConnectionId, mdtClPathGraph & graph, bool & ok) = 0;
 
+  /*! \brief Tell if a related test connection must be queued to solved connections once processed
+   */
+  virtual bool queueRelatedConnectionToSolved() = 0;
+
   /*! \brief Tell what to do if a setup is about to produce a short circuit in test node
    */
   virtual action_t actionOnShortInTestNode() = 0;
@@ -135,6 +139,10 @@ class mdtTtTestModelContinuityTestGeneratorHelper : public mdtTtTestModelAbstrac
    */
   QList<QVariant> getRelatedTestConnectionIdList(const QVariant & testCableId, const QVariant & fromTestConnectionId, mdtClPathGraph & graph, bool & ok);
 
+  /*! \brief Tell if a related test connection must be queued to solved connections once processed
+   */
+  bool queueRelatedConnectionToSolved();
+
   /*! \brief Return Fail
    */
   action_t actionOnShortInTestNode();
@@ -186,6 +194,10 @@ class mdtTtTestModelIsolationTestGeneratorHelper : public mdtTtTestModelAbstract
    * \param ok Will be set to true on success, false else.
    */
   QList<QVariant> getRelatedTestConnectionIdList(const QVariant & testCableId, const QVariant & fromTestConnectionId, mdtClPathGraph & graph, bool & ok);
+
+  /*! \brief Tell if a related test connection must be queued to solved connections once processed
+   */
+  bool queueRelatedConnectionToSolved();
 
   /*! \brief Return IgnoreCurrentItem
    */
@@ -348,6 +360,25 @@ class mdtTtTestModel : public mdtTtBase
 
  private:
 
+  /*! \brief Search 2 path from given test connections and measure connections
+   *
+   * \param testConnectionId1 First test connection
+   * \param testConnectionId2 Second test connection
+   * \param measureConnexionIdA ID of measure connection to witch to find path
+   * \param measureConnexionIdB ID of other measure connection
+   * \param pathConnectionIdList1 First path will be stored here
+   * \param pathConnectionIdList2 Second path will be stored here
+   * \param graph Graph object.
+   */
+  bool searchPathFromTestConnectionsToMeasureConnections(const QVariant & testConnectionId1, const QVariant & testConnectionId2,
+                                                         const QVariant & measureConnexionIdA, const QVariant & measureConnexionIdB,
+                                                         QList<QVariant> & pathConnectionIdList1, QList<QVariant> & pathConnectionIdList2,
+                                                         mdtClPathGraph & graph);
+
+  /*! \brief Get contact name of given ID
+   */
+  QString getUnitContactName(const QVariant & id);
+  
   /*! \brief Search a path from test connection to measure connection
    *
    * \param testConnectionId ID of cconnection from witch to find a path
