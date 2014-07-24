@@ -217,7 +217,7 @@ bool mdtSqlSchemaTable::setupFromTable(const QString & name, QSqlDatabase db)
 
   clear();
   // Check that requested table exists
-  if(!db.tables().contains(name)){
+  if(!db.tables(QSql::AllTables).contains(name)){
     pvLastError.setError("Table '" + name + "' not found.", mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlSchemaTable");
     pvLastError.commit();

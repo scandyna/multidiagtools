@@ -17,8 +17,10 @@ set (TT_HEADER_FILES
           mdtTtTestNodeManager.h
           #mdtTtTestNodeManagerWidget.h
           mdtTtBasicTester.h
+          mdtTtBasicTesterWindow.h
           mdtTtRelayPathDialog.h
           mdtTtTestModelGenerationDialog.h
+          mdtTtAbstractTestWidget.h
     )
 
 # Sources files for mdtTestTool
@@ -45,11 +47,13 @@ set (TT_SOURCES_FILES
           mdtTtTestNodeManager.cpp
           #mdtTtTestNodeManagerWidget.cpp
           mdtTtBasicTester.cpp
+          mdtTtBasicTesterWindow.cpp
           mdtTtTestModelData.cpp
           mdtTtTestData.cpp
           mdtTtTest.cpp
           mdtTtRelayPathDialog.cpp
           mdtTtTestModelGenerationDialog.cpp
+          mdtTtAbstractTestWidget.cpp
     )
 
 # Form files for mdtTestTool
@@ -61,7 +65,7 @@ set (TT_FORM_FILES
           mdtTtTestModelEditor.ui
           mdtTtTestModelItemEditor.ui
           mdtTtTestNodeUnitSetupDialog.ui
-          mdtTtBasicTester.ui
+          mdtTtBasicTesterWindow.ui
           mdtTtRelayPathDialog.ui
           mdtTtTestModelGenerationDialog.ui
     )

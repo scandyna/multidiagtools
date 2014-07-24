@@ -38,7 +38,10 @@
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlTableSelection.h"
 #include "mdtTtBasicTester.h"
+#include "mdtTtBasicTesterWindow.h"
+
 #include <boost/concept_check.hpp>
+
 #include <QAction>
 #include <QMessageBox>
 #include <QApplication>
@@ -66,6 +69,7 @@ mdtClMainWindow::mdtClMainWindow()
   ///openDatabaseSqlite();
   // Basic tester
   pvBasicTester = 0;
+  pvBasicTesterWindow = 0;
   // Central widget
   pvTabWidget = 0;
 
@@ -447,8 +451,9 @@ void mdtClMainWindow::runBasicTester()
   if(pvBasicTester == 0){
     createBasicTester();
   }
-  pvBasicTester->raise();
-  pvBasicTester->show();
+  Q_ASSERT(pvBasicTesterWindow != 0);
+  pvBasicTesterWindow->raise();
+  pvBasicTesterWindow->show();
 }
 
 void mdtClMainWindow::runCableChecker()
@@ -946,8 +951,11 @@ mdtTtTestModelEditor *mdtClMainWindow::createTestModelEditor()
 void mdtClMainWindow::createBasicTester()
 {
   Q_ASSERT(pvBasicTester == 0);
+  Q_ASSERT(pvBasicTesterWindow == 0);
 
-  pvBasicTester = new mdtTtBasicTester(this, pvDatabaseManager->database());
+  pvBasicTester = new mdtTtBasicTester(pvDatabaseManager->database());
+  pvBasicTesterWindow = new mdtTtBasicTesterWindow(this);
+  pvBasicTesterWindow->setTesterWidget(pvBasicTester);
   if(!pvBasicTester->setup()){
     displayError(pvBasicTester->lastError());
   }

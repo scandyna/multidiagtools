@@ -1,4 +1,4 @@
-window_sizes 1280 1005 395 879 952 0
+window_sizes 1280 978 260 1014 925 0
 cleanlooks_style
 diagrams
   classdiagram_ref 954114 // mdtTtTestModel
@@ -7,18 +7,29 @@ diagrams
     879 925 100 4 0 0
   classdiagram_ref 927874 // TestNode
     120 106 100 18 0 0
-  active  classdiagram_ref 941058 // Test
-    879 952 80 3 0 90
+  classdiagram_ref 941058 // Test
+    879 952 80 3 288 0
+  active  classdiagram_ref 1204482 // mdtTtAbstractTestWidget
+    1014 925 100 4 0 0
 end
 show_stereotypes
-selected attribute_ref 1320322 // CalibrationDate
+selected classdiagram_ref 1204482 // mdtTtAbstractTestWidget
 open
-  class_ref 992770 // TestNodeUnit_tbl
-  class_ref 1013506 // TestCable_tbl
-  attribute_ref 1312898 // TestConnectionId
-  attribute_ref 1312770 // MeasureConnectionId
-  operation_ref 2143362 // mdtTtTestModelAbstractGeneratorHelper
-  operation_ref 2143490 // ~mdtTtTestModelAbstractGeneratorHelper
-  class_ref 1335938 // mdtTtTestModelContinuityTestGeneratorHelper
+  classrelation_ref 1668098 // pvTestData (<directional composition>)
+  operation_ref 2151938 // database
+  operation_ref 2153730 // testNodeManager
+  operation_ref 2152450 // createNewTest
+  operation_ref 2152066 // testIsSaved
+  operation_ref 2152706 // saveTestToDatabase
+  operation_ref 2151042 // lastError
+  operation_ref 2152578 // createTest
+  operation_ref 2152322 // openTest
+  operation_ref 2153858 // testItemTableSet
+  operation_ref 2151682 // displayLastError
+  attribute_ref 1327234 // Database
+  attribute_ref 1327362 // TestItemTableModel
+  class_ref 1288706 // mdtTtBasicTester
+  class_ref 1342594 // mdtTtBasicTesterWindow
+  classdiagram_ref 1040002 // Dialogs
 end
 end

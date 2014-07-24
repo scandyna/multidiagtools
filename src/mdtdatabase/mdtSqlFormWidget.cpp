@@ -74,17 +74,12 @@ void mdtSqlFormWidget::mapFormWidgets(const QString &firstWidgetInTabOrder)
 
   // Search widgets with fld_ as prefix in they objectName
   buildWidgetsList("fld_");
-  
   // If we want informations about fields, we must get record from database instance
   record = model()->database().record(model()->tableName());
-  qDebug() << "mdtSqlFormWidget::mapFormWidgets() - record from QSqlDatabase: " << record;
-  qDebug() << "mdtSqlFormWidget::mapFormWidgets() - record from model: " << model()->record();
-  
-  // Fetch table information
+  // Fetch table information - record returned by QSqlDatabase does not return Date and DateTime field infomration
   if(!st.setupFromTable(model()->tableName(), model()->database())){
     return;
   }
-  
   // Map found widgets
   for(i = 0; i < pvFoundWidgets.size(); ++i){
     w = pvFoundWidgets.at(i);
@@ -96,8 +91,6 @@ void mdtSqlFormWidget::mapFormWidgets(const QString &firstWidgetInTabOrder)
     // If field was found, map it
     if(fieldIndex >= 0){
       fieldHandler = new mdtSqlFieldHandler;
-      
-      ///fieldHandler->setField(record.field(fieldIndex));
       fieldHandler->setField(st.field(fieldName));
       fieldHandler->setDataWidget(w);
       connect(fieldHandler, SIGNAL(dataEdited()), this, SIGNAL(dataEdited()));

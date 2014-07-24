@@ -32,6 +32,7 @@ QT4_WRAP_UI (MDT_DATABASE_TEST_UIC_HEADERS "mdtSqlFormWidgetTestForm.ui")
 add_executable(mdtdatabasetestold "mdtDatabaseTest.cpp" ${MDT_DATABASE_TEST_MOC} ${MDT_DATABASE_TEST_UIC_HEADERS})
 target_link_libraries(mdtdatabasetestold "mdtutils${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtdatabasetestold "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtdatabasetestold "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtdatabasetestold "mdttest")
 
 # * mdtWidgetsTest executable *

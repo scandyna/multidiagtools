@@ -78,7 +78,6 @@ void mdtSqlFieldHandlerLabel::setData(const QVariant& data)
   QString str;
 
   pvRawData = data;
-  qDebug() << "RAW data: " << pvRawData;
   switch(pvRawData.type()){
     case QVariant::DateTime:
       str = locale.toString(pvRawData.toDateTime());
@@ -727,7 +726,6 @@ void mdtSqlFieldHandler::setData(const QVariant & data)
 {
   Q_ASSERT(pvDataWidget != 0);
 
-  qDebug() << "mdtSqlFieldHandler::setData() - " << data << ", field type: " << pvSqlField.type();
   // Try to handle some date/time format
   if((pvSqlField.type() == QVariant::DateTime)&&(data.type() == QVariant::String)){
     pvDataWidget->setData(QDateTime::fromString(data.toString(), Qt::ISODate));

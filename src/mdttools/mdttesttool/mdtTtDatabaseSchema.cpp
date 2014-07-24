@@ -3186,39 +3186,22 @@ bool mdtTtDatabaseSchema::createTestNodeUnitView()
 
   sql = "CREATE VIEW TestNodeUnit_view AS\n"\
         "SELECT\n"\
-        "TestNodeUnit_tbl.Unit_Id_FK_PK,\n"\
-        "TestNodeUnit_tbl.TestNode_Id_FK,\n"\
-        "TestNodeUnit_tbl.Type_Code_FK,\n"\
-        /**"TestNodeUnit_tbl.TestConnection_Id_FK,\n"\ */
-        "Unit_tbl.SchemaPosition,\n"\
-        /**"TestNodeUnit_tbl.Bus,\n"\ */
-        "TestNodeUnit_tbl.IoPosition,\n"\
-        /**"UnitConnector_tbl.Name AS UnitConnectorName,\n"\ */
-        /**
-        "UnitConnection_tbl.UnitContactName,\n"\
-        "UnitConnection_tbl.SignalName,\n"\
-        "UnitConnection_tbl.FunctionEN,\n"\
-        "UnitConnection_tbl.FunctionFR,\n"\
-        "UnitConnection_tbl.FunctionDE,\n"\
-        "UnitConnection_tbl.FunctionIT,\n"\
-        */
-        "TestNodeUnitType_tbl.NameEN,\n"\
-        "TestNodeUnitType_tbl.NameFR,\n"\
-        "TestNodeUnitType_tbl.NameDE,\n"\
-        "TestNodeUnitType_tbl.NameIT\n"\
-        "FROM TestNodeUnit_tbl\n"\
-        " JOIN Unit_tbl\n"\
-        "  ON Unit_tbl.Id_PK = TestNodeUnit_tbl.Unit_Id_FK_PK\n"\
-        /**
-        " LEFT JOIN UnitConnection_tbl\n"\
-        "  ON UnitConnection_tbl.Id_PK = TestNodeUnit_tbl.TestConnection_Id_FK\n"\
-        */
-        /**
-        " LEFT JOIN UnitConnector_tbl\n"\
-        "  ON UnitConnector_tbl.Id_PK = UnitConnection_tbl.UnitConnector_Id_FK\n"\
-        */
-        " JOIN TestNodeUnitType_tbl\n"\
-        "  ON TestNodeUnitType_tbl.Code_PK = TestNodeUnit_tbl.Type_Code_FK";
+        "TNU.Unit_Id_FK_PK,\n"\
+        "TNU.TestNode_Id_FK,\n"\
+        "TNU.Type_Code_FK,\n"\
+        "U.SchemaPosition,\n"\
+        "TNU.IoPosition,\n"\
+        "TNU.CalibrationOffset,\n"\
+        "TNU.CalibrationDate,\n"\
+        "TNUT.NameEN,\n"\
+        "TNUT.NameFR,\n"\
+        "TNUT.NameDE,\n"\
+        "TNUT.NameIT\n"\
+        "FROM TestNodeUnit_tbl TNU\n"\
+        " JOIN Unit_tbl U\n"\
+        "  ON U.Id_PK = TNU.Unit_Id_FK_PK\n"\
+        " JOIN TestNodeUnitType_tbl TNUT\n"\
+        "  ON TNUT.Code_PK = TNU.Type_Code_FK";
 
   return createView("TestNodeUnit_view", sql);
 }

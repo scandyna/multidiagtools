@@ -317,6 +317,7 @@ QList<mdtTtTestNodeUnitSetupData> mdtTtTestNode::getRelayPathSetupDataList(const
       setupData.clearValues();
       setupData.setValue("TestNodeUnit_Id_FK", testNodeUnitId);
       setupData.setValue("State", true);
+      setupData.setValue("StepNumber", 0);
       setupDataList.append(setupData);
     }
   }

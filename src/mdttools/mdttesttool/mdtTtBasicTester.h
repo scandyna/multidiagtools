@@ -21,13 +21,15 @@
 #ifndef MDT_TT_BASIC_TESTER_H
 #define MDT_TT_BASIC_TESTER_H
 
-#include "ui_mdtTtBasicTester.h"
+///#include "ui_mdtTtBasicTester.h"
+///#include <QMainWindow>
+
+#include "mdtTtAbstractTestWidget.h"
 #include "mdtTtTest.h"
 #include "mdtTtTestData.h"
 #include "mdtTtTestNodeManager.h"
 #include "mdtTtTestNodeSetupData.h"
 #include "mdtError.h"
-#include <QMainWindow>
 #include <QSqlDatabase>
 
 class mdtSqlTableWidget;
@@ -35,7 +37,7 @@ class mdtSqlTableWidget;
 
 /*! \brief Provide ability to run tests
  */
-class mdtTtBasicTester : public QMainWindow, Ui::mdtTtBasicTester
+class mdtTtBasicTester : public mdtTtAbstractTestWidget /// : public QMainWindow, Ui::mdtTtBasicTester
 {
  Q_OBJECT
 
@@ -43,7 +45,7 @@ class mdtTtBasicTester : public QMainWindow, Ui::mdtTtBasicTester
 
   /*! \brief Constructor
    */
-  mdtTtBasicTester(QWidget *parent, QSqlDatabase db);
+  mdtTtBasicTester(QSqlDatabase db, QWidget *parent = 0);
 
   /*! \brief Setup
    */
@@ -136,17 +138,12 @@ class mdtTtBasicTester : public QMainWindow, Ui::mdtTtBasicTester
 
   /*! \brief Setup TestItem_view
    */
-  bool setupTestItemTable();
+  ///bool setupTestItemTable();
 
-  /*! \brief Connect actions to slots
-   */
-  void connectActions();
-
-  QSqlDatabase pvDatabase;
-  mdtTtTestData pvTestData;
-  ///QSqlTableModel *pvTestItemModel;      // Act on TestItem_tbl (R/W access)
-  mdtSqlTableWidget *pvTestItemWidget;  // Display data from TestItem_view (R only access)
-  mdtTtTestNodeManager pvNodeManager;
+  ///QSqlDatabase pvDatabase;
+  ///mdtTtTestData pvTestData;
+  ///mdtSqlTableWidget *pvTestItemWidget;  // Display data from TestItem_view (R only access)
+  ///mdtTtTestNodeManager pvNodeManager;
   mdtTtTest pvTest;
   mdtError pvLastError;
 };

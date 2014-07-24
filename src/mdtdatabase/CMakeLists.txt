@@ -12,6 +12,7 @@ set (HEADER_FILES
           mdtSqlWindow.h
           mdtSqlDialog.h
           mdtSqlSelectionDialog.h
+          mdtSqlFormWidget.h
           mdtSqlTableWidget.h
           mdtDataTableManager.h
           mdtSqlDatabaseManager.h
@@ -24,6 +25,7 @@ set (SOURCES_FILES
           mdtSqlDialog.cpp
           mdtSqlRecord.cpp
           mdtSqlSelectionDialog.cpp
+          mdtSqlFormWidget.cpp
           mdtSqlTableWidget.cpp
           mdtSqlTableSelectionItem.cpp
           mdtSqlTableSelectionRow.cpp

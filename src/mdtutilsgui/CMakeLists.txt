@@ -34,7 +34,7 @@ set (HEADER_FILES
           mdtSqlRelation.h
           mdtSqlFieldHandler.h
           mdtAbstractSqlWidget.h
-          mdtSqlFormWidget.h
+          #mdtSqlFormWidget.h
           #mdtSqlTableWidget.h
           #mdtSqlSelectionDialog.h
           mdtSortFilterProxyModel.h
@@ -80,7 +80,7 @@ set (SOURCES_FILES
           mdtSqlRelationItem.cpp
           mdtSqlFieldHandler.cpp
           mdtAbstractSqlWidget.cpp
-          mdtSqlFormWidget.cpp
+          #mdtSqlFormWidget.cpp
           #mdtSqlTableWidget.cpp
           #mdtSqlSelectionDialog.cpp
           mdtSortFilterProxyModel.cpp

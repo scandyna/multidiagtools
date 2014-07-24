@@ -42,6 +42,7 @@ class mdtTtTestModelEditor;
 class mdtSqlWindow;
 class mdtTtTestConnectionCableEditor;
 class mdtTtBasicTester;
+class mdtTtBasicTesterWindow;
 
 class mdtTtCableChecker;
 class mdtTtCableCheckerWindow;
@@ -393,6 +394,8 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   QList<mdtSqlWindow*> pvOpenEditors;
   // Basic tester
   mdtTtBasicTester *pvBasicTester;
+  mdtTtBasicTesterWindow *pvBasicTesterWindow;
+  
   // Vehicle types
   QMap<QAction*, int> pvVehicleTypeActions;
   QList<QVariant> pvWorkingOnVehicleTypeList;
