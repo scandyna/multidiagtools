@@ -544,6 +544,123 @@ void mdtDatabaseTest::sqlSchemaTableSqliteTest()
   sql = "INSERT INTO Address2_tbl (Street, Client_Id_FK) VALUES ('Street 2', 3)";
   QVERIFY(!q.exec(sql));
 
+  /*
+   * Create a table to check various field types
+   */
+  st.clear();
+  st.setDriverName(db.driverName());
+  st.setTableName("DataTypeTest_tbl", "UTF8");
+  field = QSqlField();
+  field.setName("Id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  st.addField(field, true);
+  // String type
+  field = QSqlField();
+  field.setName("StringType");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  st.addField(field, false);
+  // Int type
+  field = QSqlField();
+  field.setName("IntType");
+  field.setType(QVariant::Int);
+  st.addField(field, false);
+  // Double type
+  field = QSqlField();
+  field.setName("DoubleType");
+  field.setType(QVariant::Double);
+  st.addField(field, false);
+  // Date type
+  field = QSqlField();
+  field.setName("DateType");
+  field.setType(QVariant::Date);
+  st.addField(field, false);
+  // Time type
+  field = QSqlField();
+  field.setName("TimeType");
+  field.setType(QVariant::Time);
+  st.addField(field, false);
+  // DateTime type
+  field = QSqlField();
+  field.setName("DateTimeType");
+  field.setType(QVariant::DateTime);
+  st.addField(field, false);
+  // Create table
+  sql = st.sqlForCreateTable();
+  QVERIFY(q.exec(sql));
+  // Clear mdtSqlSchemaTable for next step
+  st.clear();
+  field = st.field("Id_PK");
+  QVERIFY(!field.isValid());
+  field = st.field("StringType");
+  QVERIFY(!field.isValid());
+  field = st.field("IntType");
+  QVERIFY(!field.isValid());
+  field = st.field("DoubleType");
+  QVERIFY(!field.isValid());
+  field = st.field("DateType");
+  QVERIFY(!field.isValid());
+  // Check that table was correctly created
+  QVERIFY(db.tables().contains("DataTypeTest_tbl"));
+  record = db.record("DataTypeTest_tbl");
+  QCOMPARE(record.count(), 7);
+  field = record.field(0);
+  QCOMPARE(field.name(), QString("Id_PK"));
+  QCOMPARE(field.type(), QVariant::Int);
+  QVERIFY(field.isAutoValue());
+  field = record.field(1);
+  QCOMPARE(field.name(), QString("StringType"));
+  QCOMPARE(field.type(), QVariant::String);
+  field = record.field(2);
+  QCOMPARE(field.name(), QString("IntType"));
+  QCOMPARE(field.type(), QVariant::Int);
+  field = record.field(3);
+  QCOMPARE(field.name(), QString("DoubleType"));
+  QCOMPARE(field.type(), QVariant::Double);
+  field = record.field(4);
+  // Now check that mdtSqlSchemaTable fetches existing table correctly
+  QVERIFY(st.setupFromTable("DataTypeTest_tbl", db));
+  field = st.field("Id_PK");
+  QCOMPARE(field.name(), QString("Id_PK"));
+  QCOMPARE(field.type(), QVariant::Int);
+  QVERIFY(field.isAutoValue());
+  QVERIFY(field.requiredStatus() == QSqlField::Required);
+  field = st.field("StringType");
+  QCOMPARE(field.name(), QString("StringType"));
+  QCOMPARE(field.type(), QVariant::String);
+  QVERIFY(!field.isAutoValue());
+  QVERIFY(field.requiredStatus() == QSqlField::Optional);
+  field = st.field("IntType");
+  QCOMPARE(field.name(), QString("IntType"));
+  QCOMPARE(field.type(), QVariant::Int);
+  QVERIFY(!field.isAutoValue());
+  QVERIFY(field.requiredStatus() == QSqlField::Optional);
+  field = st.field("DoubleType");
+  QCOMPARE(field.name(), QString("DoubleType"));
+  QCOMPARE(field.type(), QVariant::Double);
+  QVERIFY(!field.isAutoValue());
+  QVERIFY(field.requiredStatus() == QSqlField::Optional);
+  field = st.field("DateType");
+  QCOMPARE(field.name(), QString("DateType"));
+  QCOMPARE(field.type(), QVariant::Date);
+  QVERIFY(!field.isAutoValue());
+  QVERIFY(field.requiredStatus() == QSqlField::Optional);
+  field = st.field("TimeType");
+  QCOMPARE(field.name(), QString("TimeType"));
+  QCOMPARE(field.type(), QVariant::DateTime);
+  QVERIFY(!field.isAutoValue());
+  QVERIFY(field.requiredStatus() == QSqlField::Optional);
+  field = st.field("DateTimeType");
+  QCOMPARE(field.name(), QString("DateTimeType"));
+  QCOMPARE(field.type(), QVariant::DateTime);
+  QVERIFY(!field.isAutoValue());
+  QVERIFY(field.requiredStatus() == QSqlField::Optional);
+  // Drop table
+  sql = st.sqlForDropTable();
+  QVERIFY(q.exec(sql));
+  QVERIFY(!db.tables().contains("DataTypeTest_tbl"));
+
 }
 
 void mdtDatabaseTest::databaseManagerTest()

@@ -30,6 +30,7 @@
 #include "mdtSqlTableSelection.h"
 #include "mdtSqlDialog.h"
 #include "mdtClPathGraph.h"
+#include "mdtTtTestModelGenerationDialog.h"
 #include <QSqlQueryModel>
 #include <QSqlTableModel>
 #include <QTableView>
@@ -56,6 +57,9 @@ bool mdtTtTestModelEditor::setupTables()
     return false;
   }
   if(!setupTestNodeTable()){
+    return false;
+  }
+  if(!setupTestCableTable()){
     return false;
   }
   if(!setupTestItemTable()){
@@ -105,6 +109,7 @@ void mdtTtTestModelEditor::addTestNode()
   }
   // Update views
   select("TestModel_TestNode_view");
+  select("TestNode_TestCable_view");
 }
 
 void mdtTtTestModelEditor::removeTestNodes()
@@ -140,6 +145,7 @@ void mdtTtTestModelEditor::removeTestNodes()
   }
   // Update views
   select("TestModel_TestNode_view");
+  select("TestNode_TestCable_view");
 }
 
 /**
@@ -314,20 +320,38 @@ void mdtTtTestModelEditor::generateContinuityTest()
 {
   mdtTtTestModel tm(this, database());
   mdtClPathGraph graph(database());
+  mdtTtTestModelGenerationDialog setupDialog(database(), this);
   QVariant testModelId;
   QVariant testCableId;
   QVariant testNodeId;
   QVariant measureConnexionIdA;
   QVariant measureConnexionIdB;
-  QList<QVariant> relaysToIgnore;
-  QString sql;
-  mdtSqlSelectionDialog dialog(this);
-  mdtSqlTableSelection s;
-  int i;
+  bool ok;
 
-  // Get current test ID
+  // Get current test model ID
   testModelId = currentData("TestModel_tbl", "Id_PK");
   if(testModelId.isNull()){
+    return;
+  }
+  // Let user setup a test model
+  setupDialog.setTestModelId(testModelId);
+  if(setupDialog.exec() != QDialog::Accepted){
+    return;
+  }
+  testNodeId = setupDialog.selectedTestNodeId();
+  if(testNodeId.isNull()){
+    return;
+  }
+  testCableId = setupDialog.selectedTestCableId();
+  if(testCableId.isNull()){
+    return;
+  }
+  measureConnexionIdA = setupDialog.selectedMeasureConnectionA();
+  if(measureConnexionIdA.isNull()){
+    return;
+  }
+  measureConnexionIdB = setupDialog.selectedMeasureConnectionB();
+  if(measureConnexionIdB.isNull()){
     return;
   }
   // Load link list
@@ -336,27 +360,8 @@ void mdtTtTestModelEditor::generateContinuityTest()
     displayLastError();
     return;
   }
-  // Select a cable
-  testCableId = selectTestCable();
-  if(testCableId.isNull()){
-    return;
-  }
-  // Get current test node
-  /// \todo Not good..
-  testNodeId = currentData("TestModel_TestNode_view", "TestNode_Id_FK");
-  if(testNodeId.isNull()){
-    return;
-  }
-  // Select measure connections
-  measureConnexionIdA = selectMeasureConnection(testNodeId);
-  if(measureConnexionIdA.isNull()){
-    return;
-  }
-  measureConnexionIdB = selectMeasureConnection(testNodeId);
-  if(measureConnexionIdB.isNull()){
-    return;
-  }
   // Select relays to not use
+  /**
   sql = "SELECT * FROM TestNodeUnit_view";
   sql += " WHERE TestNode_Id_FK = " + testNodeId.toString();
   sql += " AND (Type_Code_FK = 'BUSCPLREL')";
@@ -368,52 +373,26 @@ void mdtTtTestModelEditor::generateContinuityTest()
   for(i = 0; i < s.rowCount(); ++i){
     relaysToIgnore.append(s.data(i, "Unit_Id_FK_PK"));
   }
-
-  ///if(!tm.generateContinuityTest(testModelId, testCableId, testNodeId, measureConnexionIdA, measureConnexionIdB, graph)){
-  if(!tm.generateShortDetectionTest(testModelId, testCableId, testNodeId, measureConnexionIdA, measureConnexionIdB, graph, relaysToIgnore)){
+  */
+  // Generate test
+  ok = false;
+  switch(setupDialog.selectedTestModelType()){
+    case mdtTtTestModelGenerationDialog::None:
+      return;
+    case mdtTtTestModelGenerationDialog::ContinuityTest:
+      ok = tm.generateContinuityTest(testModelId, testCableId, testNodeId, measureConnexionIdA, measureConnexionIdB, graph);
+      break;
+    case mdtTtTestModelGenerationDialog::ShortDetectionTest:
+      ok = tm.generateShortDetectionTest(testModelId, testCableId, testNodeId, measureConnexionIdA, measureConnexionIdB, graph /**, relaysToIgnore*/);
+      break;
+  }
+  if(!ok){
     pvLastError = tm.lastError();
     displayLastError();
     return;
   }
   // Update views
   select("TestModelItem_tbl");
-}
-
-void mdtTtTestModelEditor::generateTestNodeUnitSetupList()
-{
-  mdtTtTestModel tm(this, database());
-  QVariant testId;
-  QList<QVariant> setupIdList;
-
-  // Get current test ID
-  testId = currentData("TestModel_tbl", "Id_PK");
-  if(testId.isNull()){
-    return;
-  }
-  // Warn user if some setup allready exists
-  setupIdList = tm.getTestNodeUnitSetupIdList(testId);
-  if(!setupIdList.isEmpty()){
-    QString text;
-    QMessageBox msgBox;
-    text = tr("Setups will be generated for current testm. ");
-    text += tr("Some setups allready exists, and they will be deleted if you continue.");
-    msgBox.setText(text);
-    msgBox.setInformativeText(tr("Do you want to continue ?"));
-    msgBox.setIcon(QMessageBox::Warning);
-    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
-    msgBox.setDefaultButton(QMessageBox::No);
-    if(msgBox.exec() != QMessageBox::Yes){
-      return;
-    }
-  }
-  // Generate setup
-  if(!tm.generateTestNodeUnitSetup(testId)){
-    pvLastError = tm.lastError();
-    displayLastError();
-    return;
-  }
-  // Update GUI
-  select("TestModelItemNodeUnitSetup_view");
 }
 
 void mdtTtTestModelEditor::removeTestNodeUnitSetup()
@@ -598,6 +577,28 @@ bool mdtTtTestModelEditor::setupTestNodeTable()
   widget->addWidgetToLocalBar(pbRemodeTestNode);
   connect(pbRemodeTestNode, SIGNAL(clicked()), this, SLOT(removeTestNodes()));
   widget->addStretchToLocalBar();
+
+  return true;
+}
+
+bool mdtTtTestModelEditor::setupTestCableTable()
+{
+  mdtSqlTableWidget *widget;
+
+  if(!addChildTable("TestNode_TestCable_view", tr("Available test cables"), database())){
+    return false;
+  }
+  if(!addRelation("Id_PK", "TestNode_TestCable_view", "TestModel_Id_FK")){
+    return false;
+  }
+  widget = sqlTableWidget("TestNode_TestCable_view");
+  Q_ASSERT(widget != 0);
+  // Hide technical fields
+  ///widget->setColumnHidden("", true);
+  // Set fields a user friendly name
+  ///widget->setHeaderData("", tr(""));
+  // Set some attributes on table view
+  widget->tableView()->resizeColumnsToContents();
 
   return true;
 }

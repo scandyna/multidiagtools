@@ -614,6 +614,7 @@ void mdtTtTestModelItemEditor::setTestLink()
 }
 */
 
+/**
 void mdtTtTestModelItemEditor::generateTestNodeUnitSetup()
 {
   mdtTtTestModelItem tmi(this, database());
@@ -656,6 +657,7 @@ void mdtTtTestModelItemEditor::generateTestNodeUnitSetup()
   // Update GUI
   select("TestModelItemNodeUnitSetup_view");
 }
+*/
 
 void mdtTtTestModelItemEditor::removeTestNodeUnitSetup()
 {

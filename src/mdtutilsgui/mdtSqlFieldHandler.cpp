@@ -21,7 +21,9 @@
 #include "mdtSqlFieldHandler.h"
 #include "mdtDoubleEdit.h"
 #include "mdtError.h"
+#include <QLabel>
 #include <QLineEdit>
+#include <QPlainTextEdit>
 #include <QSpinBox>
 #include <QDoubleSpinBox>
 #include <QDateTimeEdit>
@@ -29,32 +31,94 @@
 #include <QComboBox>
 #include <QString>
 #include <QColor>
+#include <QLocale>
+#include <QDate>
+#include <QTime>
+#include <QDateTime>
 
 #include <QDebug>
 
-/// \todo Implement other data editors (now only QLineEdit is implemented)
+/// \todo Implement other data editors
 
 /*
- * mdtSqlFieldHandler has to deal with several widgets type
- * (QLineEdit, QSpinBox, ...)
- * To avoid storing several pointer, and each time searchin
- *  wich one was set, we create a abstract class
- *  with common used methods, and specialized subclass for each widget type
+ * QLabel specialisation
  */
-
-class mdtSqlFieldHandlerAbstractDataWidget
+class mdtSqlFieldHandlerLabel : public mdtSqlFieldHandlerAbstractDataWidget
 {
  public:
-  virtual ~mdtSqlFieldHandlerAbstractDataWidget() {}
-  virtual void setData(const QVariant &data) = 0;
-  virtual QVariant data() const = 0;
-  virtual bool isNull() const = 0;
-  virtual void clear() = 0;
-  virtual QWidget *widget() = 0;
-  virtual void setReadOnly(bool readOnly) = 0;
-  virtual void setMaxLength(int maxLength) {};
-  virtual void setRange(qreal min, qreal max) {};
+  mdtSqlFieldHandlerLabel();
+  void setLabel(QLabel *lb);
+  void setData(const QVariant &data);
+  QVariant data() const;
+  bool isNull() const;
+  void clear();
+  QWidget *widget();
+  void setReadOnly(bool readOnly);
+ private:
+  QLabel *pvLabel;
+  QVariant pvRawData;
 };
+
+mdtSqlFieldHandlerLabel::mdtSqlFieldHandlerLabel()
+{
+  pvLabel = 0;
+}
+
+void mdtSqlFieldHandlerLabel::setLabel(QLabel* lb)
+{
+  Q_ASSERT(lb != 0);
+  pvLabel = lb;
+}
+
+void mdtSqlFieldHandlerLabel::setData(const QVariant& data)
+{
+  Q_ASSERT(pvLabel != 0);
+
+  QLocale locale;
+  QString str;
+
+  pvRawData = data;
+  qDebug() << "RAW data: " << pvRawData;
+  switch(pvRawData.type()){
+    case QVariant::DateTime:
+      str = locale.toString(pvRawData.toDateTime());
+      pvLabel->setText(str);
+      break;
+    default:
+      pvLabel->setText(pvRawData.toString());
+  }
+  
+}
+
+QVariant mdtSqlFieldHandlerLabel::data() const
+{
+  Q_ASSERT(pvLabel != 0);
+  return pvRawData;
+}
+
+bool mdtSqlFieldHandlerLabel::isNull() const
+{
+  Q_ASSERT(pvLabel != 0);
+  return data().isNull();
+}
+
+void mdtSqlFieldHandlerLabel::clear()
+{
+  Q_ASSERT(pvLabel != 0);
+  pvLabel->clear();
+}
+
+QWidget* mdtSqlFieldHandlerLabel::widget()
+{
+  Q_ASSERT(pvLabel != 0);
+  return pvLabel;
+}
+
+void mdtSqlFieldHandlerLabel::setReadOnly(bool readOnly)
+{
+  Q_ASSERT(pvLabel != 0);
+}
+
 
 /*
  * QLineEdit specialisation
@@ -133,6 +197,82 @@ void mdtSqlFieldHandlerLineEdit::setMaxLength(int maxLength)
   Q_ASSERT(pvLineEdit != 0);
 
   pvLineEdit->setMaxLength(maxLength);
+}
+
+/*
+ * QPlainTextEdit specialisation
+ */
+
+mdtSqlFieldHandlerPlainTextEdit::mdtSqlFieldHandlerPlainTextEdit(QObject *parent)
+ : QObject(parent)
+{
+  pvPlainTextEdit = 0;
+  pvSetDataFromDb = true;
+}
+
+void mdtSqlFieldHandlerPlainTextEdit::setPlainTextEdit(QPlainTextEdit* pte)
+{
+  Q_ASSERT(pte != 0);
+  pvPlainTextEdit = pte;
+  pvSetDataFromDb = true;
+  connect(pvPlainTextEdit, SIGNAL(textChanged()), this, SLOT(onPlainTextChanged()));
+}
+
+void mdtSqlFieldHandlerPlainTextEdit::setData(const QVariant& data)
+{
+  Q_ASSERT(pvPlainTextEdit != 0);
+  pvSetDataFromDb = true;
+  pvPlainTextEdit->setPlainText(data.toString());
+}
+
+QVariant mdtSqlFieldHandlerPlainTextEdit::data() const
+{
+  Q_ASSERT(pvPlainTextEdit != 0);
+
+  QString text = pvPlainTextEdit->toPlainText();
+  if(text.trimmed().isEmpty()){
+    return QVariant();
+  }
+  return text;
+}
+
+bool mdtSqlFieldHandlerPlainTextEdit::isNull() const
+{
+  Q_ASSERT(pvPlainTextEdit != 0);
+  return data().isNull();
+}
+
+void mdtSqlFieldHandlerPlainTextEdit::clear()
+{
+  Q_ASSERT(pvPlainTextEdit != 0);
+  pvSetDataFromDb = true;
+  pvPlainTextEdit->clear();
+}
+
+QWidget* mdtSqlFieldHandlerPlainTextEdit::widget()
+{
+  Q_ASSERT(pvPlainTextEdit != 0);
+  return pvPlainTextEdit;
+}
+
+void mdtSqlFieldHandlerPlainTextEdit::setReadOnly(bool readOnly)
+{
+  Q_ASSERT(pvPlainTextEdit != 0);
+  pvPlainTextEdit->setReadOnly(readOnly);
+}
+
+void mdtSqlFieldHandlerPlainTextEdit::setMaxLength(int maxLength)
+{
+  Q_ASSERT(pvPlainTextEdit != 0);
+  qDebug() << "mdtSqlFieldHandlerPlainTextEdit::setMaxLength(): currently not implmeneted !";
+}
+
+void mdtSqlFieldHandlerPlainTextEdit::onPlainTextChanged()
+{
+  if(!pvSetDataFromDb){
+    emit dataEdited();
+  }
+  pvSetDataFromDb = false;
 }
 
 /*
@@ -287,6 +427,72 @@ void mdtSqlFieldHandlerMdtDoubleEdit::setMaxLength(int maxLength)
 {
 }
 
+/*
+ * QDateTimeEdit specialisation
+ */
+
+class mdtSqlFieldHandlerDateTimeEdit : public mdtSqlFieldHandlerAbstractDataWidget
+{
+ public:
+  mdtSqlFieldHandlerDateTimeEdit();
+  void setDateTimeEdit(QDateTimeEdit *e);
+  void setData(const QVariant &data);
+  QVariant data() const;
+  bool isNull() const;
+  void clear();
+  QWidget *widget();
+  void setReadOnly(bool readOnly);
+ private:
+  QDateTimeEdit *pvDateTimeEdit;
+};
+
+mdtSqlFieldHandlerDateTimeEdit::mdtSqlFieldHandlerDateTimeEdit()
+{
+  pvDateTimeEdit = 0;
+}
+
+void mdtSqlFieldHandlerDateTimeEdit::setDateTimeEdit(QDateTimeEdit* e)
+{
+  Q_ASSERT(e != 0);
+  pvDateTimeEdit = e;
+}
+
+void mdtSqlFieldHandlerDateTimeEdit::setData(const QVariant& data)
+{
+  Q_ASSERT(pvDateTimeEdit != 0);
+  pvDateTimeEdit->setDateTime(data.toDateTime());
+}
+
+QVariant mdtSqlFieldHandlerDateTimeEdit::data() const
+{
+  Q_ASSERT(pvDateTimeEdit != 0);
+  return pvDateTimeEdit->dateTime();
+}
+
+bool mdtSqlFieldHandlerDateTimeEdit::isNull() const
+{
+  Q_ASSERT(pvDateTimeEdit != 0);
+  return data().isNull();
+}
+
+void mdtSqlFieldHandlerDateTimeEdit::clear()
+{
+  Q_ASSERT(pvDateTimeEdit != 0);
+  pvDateTimeEdit->clear();
+}
+
+QWidget* mdtSqlFieldHandlerDateTimeEdit::widget()
+{
+  Q_ASSERT(pvDateTimeEdit != 0);
+  return pvDateTimeEdit;
+}
+
+void mdtSqlFieldHandlerDateTimeEdit::setReadOnly(bool readOnly)
+{
+  Q_ASSERT(pvDateTimeEdit != 0);
+  pvDateTimeEdit->setReadOnly(readOnly);
+}
+
 
 /*
  * ==== mdtSqlFieldHandler implementation  ====
@@ -326,14 +532,27 @@ void mdtSqlFieldHandler::setDataWidget(QWidget *widget)
 {
   Q_ASSERT(widget != 0);
 
+  QLabel *lb;
   QLineEdit *le;
+  QPlainTextEdit *pte;
   QComboBox *cb;
-  mdtDoubleEdit *de;
+  mdtDoubleEdit *dble;
+  QDateTimeEdit *dte;
 
   // Search what type of widget we have
+  lb = dynamic_cast<QLabel*>(widget);
+  if(lb != 0){
+    setDataWidget(lb);
+    return;
+  }
   le = dynamic_cast<QLineEdit*>(widget);
   if(le != 0){
     setDataWidget(le);
+    return;
+  }
+  pte = dynamic_cast<QPlainTextEdit*>(widget);
+  if(pte != 0){
+    setDataWidget(pte);
     return;
   }
   cb = dynamic_cast<QComboBox*>(widget);
@@ -341,15 +560,32 @@ void mdtSqlFieldHandler::setDataWidget(QWidget *widget)
     setDataWidget(cb);
     return;
   }
-  de = dynamic_cast<mdtDoubleEdit*>(widget);
-  if(de != 0){
-    setDataWidget(de);
+  dble = dynamic_cast<mdtDoubleEdit*>(widget);
+  if(dble != 0){
+    setDataWidget(dble);
+    return;
+  }
+  dte = dynamic_cast<QDateTimeEdit*>(widget);
+  if(dte != 0){
+    setDataWidget(dte);
     return;
   }
   // Not supported widget type
   mdtError e("Cannot find type of widget, object name: " + widget->objectName(), mdtError::Warning);
   MDT_ERROR_SET_SRC(e, "mdtSqlFieldHandler");
   e.commit();
+}
+
+void mdtSqlFieldHandler::setDataWidget(QLabel* widget)
+{
+  Q_ASSERT(widget != 0);
+
+  mdtSqlFieldHandlerLabel *w;
+  clear();
+  w = new mdtSqlFieldHandlerLabel;
+  w->setLabel(widget);
+  pvDataWidget = w;
+  setDataWidgetAttributes();
 }
 
 void mdtSqlFieldHandler::setDataWidget(QLineEdit *widget)
@@ -363,6 +599,19 @@ void mdtSqlFieldHandler::setDataWidget(QLineEdit *widget)
   pvDataWidget = w;
   setDataWidgetAttributes();
   connect(widget, SIGNAL(textEdited(const QString&)), this, SLOT(onDataEdited(const QString&)));
+}
+
+void mdtSqlFieldHandler::setDataWidget(QPlainTextEdit* widget)
+{
+  Q_ASSERT(widget != 0);
+
+  mdtSqlFieldHandlerPlainTextEdit *w;
+  clear();
+  w = new mdtSqlFieldHandlerPlainTextEdit;
+  w->setPlainTextEdit(widget);
+  pvDataWidget = w;
+  setDataWidgetAttributes();
+  connect(w, SIGNAL(dataEdited()), this, SLOT(onDataEdited()));
 }
 
 void mdtSqlFieldHandler::setDataWidget(QComboBox* widget)
@@ -400,6 +649,14 @@ void mdtSqlFieldHandler::setDataWidget(QAbstractButton *widget)
 void mdtSqlFieldHandler::setDataWidget(QDateTimeEdit *widget)
 {
   Q_ASSERT(widget != 0);
+
+  mdtSqlFieldHandlerDateTimeEdit *w;
+  clear();
+  w = new mdtSqlFieldHandlerDateTimeEdit;
+  w->setDateTimeEdit(widget);
+  pvDataWidget = w;
+  setDataWidgetAttributes();
+  connect(widget, SIGNAL(dateTimeChanged(const QDateTime&)), this, SLOT(onDataEdited(const QDateTime&)));
 }
 
 void mdtSqlFieldHandler::setDataWidget(QDoubleSpinBox *widget)
@@ -418,39 +675,12 @@ QWidget *mdtSqlFieldHandler::dataWidget()
     return 0;
   }
   return pvDataWidget->widget();
-
-  /// \todo Below becomes obselète
-  /**
-  if(pvAbstractButton != 0){
-    return pvAbstractButton;
-  }
-  if(pvDateTimeEdit != 0){
-    return pvDateTimeEdit;
-  }
-  if(pvDoubleSpinBox != 0){
-    return pvDoubleSpinBox;
-  }
-  if(pvSpinBox != 0){
-    return pvSpinBox;
-  }
-  if(pvComboBox != 0){
-    return pvComboBox;
-  }
-  return 0;
-  */
 }
 
 void mdtSqlFieldHandler::clear()
 {
   delete pvDataWidget;
   pvDataWidget = 0;
-  /**
-  pvAbstractButton = 0;
-  pvDateTimeEdit = 0;
-  pvDoubleSpinBox = 0;
-  pvSpinBox = 0;
-  pvComboBox = 0;
-  */
   // Flags
   pvIsReadOnly = false;
   pvDataEdited = false;
@@ -463,20 +693,6 @@ void mdtSqlFieldHandler::clearWidgetData()
   pvDataWidget->clear();
 
   return;
-  /// \todo Below becomes obselète
-  /**
-  if(pvAbstractButton != 0){
-    pvAbstractButton->setChecked(false);
-  }else if(pvDateTimeEdit != 0){
-    pvDateTimeEdit->clear();
-  }else if(pvDoubleSpinBox != 0){
-    pvDoubleSpinBox->clear();
-  }else if(pvSpinBox != 0){
-    pvSpinBox->clear();
-  }else if(pvComboBox != 0){
-    pvComboBox->clear();
-  }
-  */
 }
 
 bool mdtSqlFieldHandler::isNull() const
@@ -511,8 +727,13 @@ void mdtSqlFieldHandler::setData(const QVariant & data)
 {
   Q_ASSERT(pvDataWidget != 0);
 
-  ///qDebug() << "mdtSqlFieldHandler::setData() - " << data;
-  pvDataWidget->setData(data);
+  qDebug() << "mdtSqlFieldHandler::setData() - " << data << ", field type: " << pvSqlField.type();
+  // Try to handle some date/time format
+  if((pvSqlField.type() == QVariant::DateTime)&&(data.type() == QVariant::String)){
+    pvDataWidget->setData(QDateTime::fromString(data.toString(), Qt::ISODate));
+  }else{
+    pvDataWidget->setData(data);
+  }
   updateFlags();
 }
 
@@ -556,13 +777,23 @@ void mdtSqlFieldHandler::onDataEdited(const QString &text)
   setDataWidgetOk();
 }
 
+void mdtSqlFieldHandler::onDataEdited()
+{
+  // Set the data edited flag
+  if(!pvDataEdited){
+    pvDataEdited = true;
+    emit dataEdited();
+  }
+  setDataWidgetOk();
+}
+
 void mdtSqlFieldHandler::onDataEdited(double x, bool isValid)
 {
   // Set the data edited flag
-  qDebug() << "mdtSqlFieldHandler::onDataEdited() - x: " << x << ", valid: " << isValid << ", pvDataEdited: " << pvDataEdited;
+  ///qDebug() << "mdtSqlFieldHandler::onDataEdited() - x: " << x << ", valid: " << isValid << ", pvDataEdited: " << pvDataEdited;
   if(!pvDataEdited){
     pvDataEdited = true;
-    qDebug() << "mdtSqlFieldHandler::onDataEdited() - emit dataEdited() ...";
+    ///qDebug() << "mdtSqlFieldHandler::onDataEdited() - emit dataEdited() ...";
     emit dataEdited();
   }
   setDataWidgetOk();
@@ -574,6 +805,12 @@ void mdtSqlFieldHandler::onDataEdited(bool state)
 
 void mdtSqlFieldHandler::onDataEdited(const QDateTime & datetime)
 {
+  // Set the data edited flag
+  if(!pvDataEdited){
+    pvDataEdited = true;
+    emit dataEdited();
+  }
+  setDataWidgetOk();
 }
 
 void mdtSqlFieldHandler::clearDataWidget()

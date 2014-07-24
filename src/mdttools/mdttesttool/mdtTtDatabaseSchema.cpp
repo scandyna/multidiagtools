@@ -396,6 +396,9 @@ bool mdtTtDatabaseSchema::createViews()
   if(!createTestCableDutUnitView()){
     return false;
   }
+  if(!createTestNodeTestCableView()){
+    return false;
+  }
   if(!createTestModelTestNodeView()){
     return false;
   }
@@ -1835,21 +1838,16 @@ bool mdtTtDatabaseSchema::setupTestNodeUnitTable()
   field.setLength(10);
   field.setRequiredStatus(QSqlField::Required);
   table.addField(field, false);
-  // TestConnection_Id_FK
-  /**
+  // CalibrationOffset
   field = QSqlField();
-  field.setName("TestConnection_Id_FK");
-  field.setType(QVariant::Int);
+  field.setName("CalibrationOffset");
+  field.setType(QVariant::Double);
   table.addField(field, false);
-  */
-  // (Measure) Bus
-  /**
+  // CalibrationDate
   field = QSqlField();
-  field.setName("Bus");
-  field.setType(QVariant::String);
-  field.setLength(30);
+  field.setName("CalibrationDate");
+  field.setType(QVariant::DateTime);
   table.addField(field, false);
-  */
   // IoPosition
   field = QSqlField();
   field.setName("IoPosition");
@@ -1871,13 +1869,6 @@ bool mdtTtDatabaseSchema::setupTestNodeUnitTable()
     pvLastError = table.lastError();
     return false;
   }
-  /**
-  table.addIndex("TestConnection_Id_FK_idx", false);
-  if(!table.addFieldToIndex("TestConnection_Id_FK_idx", "TestConnection_Id_FK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  */
   // Foreign keys
   table.addForeignKey("Unit_Id_FK_PK_fk", "Unit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   if(!table.addFieldToForeignKey("Unit_Id_FK_PK_fk", "Unit_Id_FK_PK", "Id_PK")){
@@ -1894,13 +1885,6 @@ bool mdtTtDatabaseSchema::setupTestNodeUnitTable()
     pvLastError = table.lastError();
     return false;
   }
-  /**
-  table.addForeignKey("TestConnection_Id_FK_fk", "UnitConnection_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("TestConnection_Id_FK_fk", "TestConnection_Id_FK", "Id_PK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  */
 
   pvTables.append(table);
 
@@ -2122,6 +2106,17 @@ bool mdtTtDatabaseSchema::setupTestCableTable()
   field.setName("Identification");
   field.setType(QVariant::String);
   field.setLength(50);
+  table.addField(field, false);
+  // DescriptionEN
+  field = QSqlField();
+  field.setName("DescriptionEN");
+  field.setType(QVariant::String);
+  field.setLength(150);
+  table.addField(field, false);
+  // OffsetResetDate
+  field = QSqlField();
+  field.setName("OffsetResetDate");
+  field.setType(QVariant::DateTime);
   table.addField(field, false);
 
   pvTables.append(table);
@@ -3354,6 +3349,31 @@ bool mdtTtDatabaseSchema::createTestCableTestNodeUnitView()
          "  ON VT.Id_PK = TN.VehicleType_Id_FK_PK\n";
 
   return createView("TestCable_TestNodeUnit_view", sql);
+}
+
+bool mdtTtDatabaseSchema::createTestNodeTestCableView()
+{
+  QString sql;
+
+  sql = "CREATE VIEW TestNode_TestCable_view AS\n"\
+        "SELECT DISTINCT\n"\
+        " TNU.TestNode_Id_FK,\n"\
+        " TMTN.TestModel_Id_FK,\n"\
+        " TCTNU.TestCable_Id_FK,\n"\
+        " TC.Identification,\n"\
+        " TC.OffsetResetDate,\n"\
+        " TC.DescriptionEN\n"\
+        "FROM TestNode_tbl TN\n"\
+        " JOIN TestModel_TestNode_tbl TMTN\n"\
+        "  ON TMTN.TestNode_Id_FK = TN.VehicleType_Id_FK_PK\n"\
+        " JOIN TestNodeUnit_tbl TNU\n"\
+        "  ON TNU.TestNode_Id_FK = TN.VehicleType_Id_FK_PK\n"\
+        " JOIN TestCable_TestNodeUnit_tbl TCTNU\n"\
+        "  ON TCTNU.TestNodeUnit_Id_FK = TNU.Unit_Id_FK_PK\n"\
+        " JOIN TestCable_tbl TC\n"\
+        "  ON TC.Id_PK = TCTNU.TestCable_Id_FK\n";
+
+  return createView("TestNode_TestCable_view", sql);
 }
 
 bool mdtTtDatabaseSchema::createTestCableDutUnitView()

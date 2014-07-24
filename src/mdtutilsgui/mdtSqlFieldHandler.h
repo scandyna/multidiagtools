@@ -28,13 +28,64 @@
 #include <QWidget>
 
 class mdtSqlFieldHandlerAbstractDataWidget;
+class QLabel;
 class QLineEdit;
+class QPlainTextEdit;
 class QSpinBox;
 class QDoubleSpinBox;
 class QDateTimeEdit;
 class QAbstractButton;
 class QComboBox;
 class mdtDoubleEdit;
+
+/*
+ * mdtSqlFieldHandler has to deal with several widgets type
+ * (QLineEdit, QSpinBox, ...)
+ * To avoid storing several pointer, and each time searchin
+ *  wich one was set, we create a abstract class
+ *  with common used methods, and specialized subclass for each widget type
+ */
+
+class mdtSqlFieldHandlerAbstractDataWidget
+{
+ public:
+  virtual ~mdtSqlFieldHandlerAbstractDataWidget() {}
+  virtual void setData(const QVariant &data) = 0;
+  virtual QVariant data() const = 0;
+  virtual bool isNull() const = 0;
+  virtual void clear() = 0;
+  virtual QWidget *widget() = 0;
+  virtual void setReadOnly(bool readOnly) = 0;
+  virtual void setMaxLength(int maxLength) {};
+  virtual void setRange(qreal min, qreal max) {};
+};
+
+/*
+ * QPlainTextEdit specialisation
+ * Note: is declared in the header to be visible by moc
+ */
+class mdtSqlFieldHandlerPlainTextEdit : public QObject, public mdtSqlFieldHandlerAbstractDataWidget
+{
+ Q_OBJECT
+ public:
+  mdtSqlFieldHandlerPlainTextEdit(QObject *parent = 0);
+  void setPlainTextEdit(QPlainTextEdit *pte);
+  void setData(const QVariant &data);
+  QVariant data() const;
+  bool isNull() const;
+  void clear();
+  QWidget *widget();
+  void setReadOnly(bool readOnly);
+  void setMaxLength(int maxLength);
+ private slots:
+  void onPlainTextChanged();
+ signals:
+  void dataEdited();
+ private:
+  QPlainTextEdit *pvPlainTextEdit;
+  bool pvSetDataFromDb;
+};
+
 
 /*! \brief Handle events between a SQL field and a edition widget
  *
@@ -98,7 +149,19 @@ class mdtSqlFieldHandler : public QWidget
    *
    * \pre widget must be a valid pointer.
    */
+  void setDataWidget(QLabel *widget);
+
+  /*! \brief Set the edit/view widget
+   *
+   * \pre widget must be a valid pointer.
+   */
   void setDataWidget(QLineEdit *widget);
+
+  /*! \brief Set the edit/view widget
+   *
+   * \pre widget must be a valid pointer.
+   */
+  void setDataWidget(QPlainTextEdit *widget);
 
   /*! \brief Set the edit/view widget
    *
@@ -204,6 +267,10 @@ class mdtSqlFieldHandler : public QWidget
   /*! \brief Used together with edit widget to set flags
    */
   void onDataEdited(const QString &text);
+
+  /*! \brief Used together with edit widget to set flags
+   */
+  void onDataEdited();
 
   /*! \brief Used together with edit widget to set flags
    */

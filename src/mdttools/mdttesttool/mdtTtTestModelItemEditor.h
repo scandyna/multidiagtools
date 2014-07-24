@@ -89,7 +89,7 @@ class mdtTtTestModelItemEditor : public mdtSqlForm
 
   /*! \brief Generate test nodue unit setup
    */
-  void generateTestNodeUnitSetup();
+  ///void generateTestNodeUnitSetup();
 
   /*! \brief Remove test node unit setup
    */

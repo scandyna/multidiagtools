@@ -1,6 +1,6 @@
 format 207
 "DatabaseLogical" // mdttools::mdttesttool::DatabaseLogical
-  revision 48
+  revision 49
   modified_by 2 "philippe"
   // class settings
   
@@ -2343,6 +2343,30 @@ ${inlines}
 	mysql_decl ""
 	MysqlColumn
       end
+
+      attribute 1320194 "CalibrationOffset"
+	private explicit_type "double"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1320322 "CalibrationDate"
+	private explicit_type "DateTime"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
     end
 
     class 992898 "TestNodeUnitType_tbl"
@@ -2859,6 +2883,18 @@ ${inlines}
 
       attribute 1051394 "Identification"
 	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1320450 "OffsetResetDate"
+	private explicit_type "DateTime"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""

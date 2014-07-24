@@ -212,11 +212,19 @@ bool mdtSqlSchemaTable::setupFromTable(const QString & name, QSqlDatabase db)
 {
   Q_ASSERT(db.isOpen());
 
-  QSqlRecord record;
-  int i;
+  ///QSqlRecord record;
+  ///int i;
 
   clear();
+  // Check that requested table exists
+  if(!db.tables().contains(name)){
+    pvLastError.setError("Table '" + name + "' not found.", mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlSchemaTable");
+    pvLastError.commit();
+    return false;
+  }
   // Get record that contains field informations
+  /**
   record = db.record(name);
   if(record.isEmpty()){
     pvLastError.setError("Table '" + name + "' not found.", mdtError::Error);
@@ -224,13 +232,19 @@ bool mdtSqlSchemaTable::setupFromTable(const QString & name, QSqlDatabase db)
     pvLastError.commit();
     return false;
   }
+  */
   // Set table and driver names
   pvTableName = name;
   pvDriverName = db.driverName();
-  // Add fields from record
+  // Add fields
+  if(!setupFieldsFromDatabase(db)){
+    return false;
+  }
+  /**
   for(i = 0; i < record.count(); ++i){
     pvFields.append(record.field(i));
   }
+  */
   // Set primary key
   pvPrimaryKey = db.primaryIndex(name);
   // Add other indexes
@@ -755,6 +769,62 @@ mdtSqlSchemaTable::foreignKeyAction_t mdtSqlSchemaTable::foreignKeyActionFromNam
     return Restrict;
   }
   return NoAction;
+}
+
+bool mdtSqlSchemaTable::setupFieldsFromDatabase(const QSqlDatabase & db)
+{
+  if(pvDriverName == "QSQLITE"){
+    return setupFieldsFromDatabaseSqlite(db);
+  }
+  QSqlRecord record = db.record(pvTableName);
+  int i;
+  Q_ASSERT(!record.isEmpty());
+  for(i = 0; i < record.count(); ++i){
+    pvFields.append(record.field(i));
+  }
+  return true;
+}
+
+bool mdtSqlSchemaTable::setupFieldsFromDatabaseSqlite(const QSqlDatabase & db)
+{
+  QSqlRecord dbRecord = db.record(pvTableName);
+  QSqlRecord record;
+  QSqlQuery query(db);
+  QString sql;
+  QSqlField field;
+  QString fieldTypeName;
+
+  Q_ASSERT(!dbRecord.isEmpty());
+
+  // Get infos from database
+  sql = "PRAGMA table_info(" + pvTableName + ")";
+  if(!query.exec(sql)){
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError("Cannot get informations for table '" + pvTableName + "'", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlSchemaTable");
+    pvLastError.commit();
+    return false;
+  }
+  // Add fields
+  while(query.next()){
+    record = query.record();
+    // Most of setup can be done via Qt's driver
+    field = dbRecord.field(record.value("name").toString());
+    // If field type is one that we want to handle, set it
+    fieldTypeName = record.value("type").toString().toUpper();
+    if(fieldTypeName == "DATE"){
+      field.setType(QVariant::Date);
+    }else if(fieldTypeName == "TIME"){
+      field.setType(QVariant::Time);
+    }else if(fieldTypeName == "DATETIME"){
+      field.setType(QVariant::DateTime);
+    }
+    // Add field
+    pvFields.append(field);
+  }
+
+  return true;
 }
 
 bool mdtSqlSchemaTable::setupIndexesFromDatabase(const QSqlDatabase & db)

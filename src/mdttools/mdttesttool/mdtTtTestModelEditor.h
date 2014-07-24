@@ -66,10 +66,6 @@ class mdtTtTestModelEditor : public mdtSqlForm
    */
   void generateContinuityTest();
 
-  /*! \brief Generate test nodue unit setup
-   */
-  void generateTestNodeUnitSetupList();
-
   /*! \brief Remove test node unit setup
    */
   void removeTestNodeUnitSetup();
@@ -93,6 +89,10 @@ class mdtTtTestModelEditor : public mdtSqlForm
   /*! \brief Setup used nodes table
    */
   bool setupTestNodeTable();
+
+  /*! \brief Setup test cable view
+   */
+  bool setupTestCableTable();
 
   /*! \brief Setup test link table
    */

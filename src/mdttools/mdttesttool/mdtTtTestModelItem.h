@@ -112,14 +112,6 @@ class mdtTtTestModelItem : public mdtTtBase
    */
   bool removeRoutes(const mdtSqlTableSelection & s);
 
-  /*! \brief Set test link
-   */
-  ///bool setTestLink(const QVariant & testItemId, const QVariant & testLinkBusAId, const QVariant & testLinkBusBId);
-
-  /*! \brief Generate test node unit setup for given test item ID
-   */
-  bool generateTestNodeUnitSetup(const QVariant & testItemId);
-
   /*! \brief Add a test node unit setup
    */
   bool addTestNodeUnitSetup(const QVariant & testItemId, const QVariant & testNodeUnitId, const QVariant & state);

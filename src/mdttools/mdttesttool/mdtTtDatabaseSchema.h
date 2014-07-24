@@ -369,6 +369,10 @@ class mdtTtDatabaseSchema
    */
   bool createTestCableTestNodeUnitView();
 
+  /*! \brief Create TestNode_TestCable_view
+   */
+  bool createTestNodeTestCableView();
+
   /*! \brief Create TestCable_DutUnit_view
    */
   bool createTestCableDutUnitView();

@@ -222,6 +222,16 @@ class mdtSqlSchemaTable
    */
   foreignKeyAction_t foreignKeyActionFromName(const QString & name) const;
 
+  /*! \brief Setup fields from database
+   *
+   * This method is used by setupFromTable()
+   */
+  bool setupFieldsFromDatabase(const QSqlDatabase & db);
+
+  /*! \brief Setup fields from database (Sqlite version)
+   */
+  bool setupFieldsFromDatabaseSqlite(const QSqlDatabase & db);
+
   /*! \brief Setup indexes from database
    *
    * This method is used by setupFromTable()

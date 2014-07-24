@@ -45,6 +45,7 @@
 #include <QWidget>
 #include <QDialog>
 #include <QLineEdit>
+#include <QPlainTextEdit>
 #include <QSpinBox>
 #include <QDoubleSpinBox>
 #include <QDateTimeEdit>
@@ -804,8 +805,110 @@ void mdtDatabaseTest::sqlFieldHandlerTest()
   QVERIFY(!fh.dataWasEdited());
   QVERIFY(fh.data().isNull());
 
+  // Setup field
+  field.setAutoValue(false);
+  field.setLength(10);
+  field.setRequiredStatus(QSqlField::Required);
+  field.setReadOnly(false);
+  fh.setField(field);
 
-  
+  /*
+   * Tests with QPlainTextEdit
+   */
+  QPlainTextEdit pte;
+  fh.setDataWidget(&pte);
+  pte.show();
+  // Check field handler flags
+  QVERIFY(fh.isNull());
+  QVERIFY(!fh.dataWasEdited());
+  QVERIFY(!fh.isReadOnly());
+  // Check widget flags
+  QVERIFY(pte.isEnabled());
+  QVERIFY(pte.toPlainText().isEmpty());
+  QVERIFY(!pte.isReadOnly());
+  // User edit ...
+  QTest::keyClicks(&pte, "ABCD");
+  // Check field handler flags
+  QVERIFY(!fh.isNull());
+  QVERIFY(fh.dataWasEdited());
+  // User edit ...
+  QTest::keyClick(&pte, Qt::Key_Backspace);
+  QTest::keyClick(&pte, Qt::Key_Backspace);
+  QTest::keyClick(&pte, Qt::Key_Backspace);
+  QTest::keyClick(&pte, Qt::Key_Backspace);
+  // Check field handler flags
+  QVERIFY(fh.isNull());
+  QVERIFY(fh.dataWasEdited());
+  // User edit ...
+  QTest::keyClicks(&pte, "123");
+  // Check field handler flags
+  QVERIFY(!fh.isNull());
+  QVERIFY(fh.dataWasEdited());
+  // User edit ...
+  pte.clear();
+  QTest::keyClicks(&pte, " ");
+  // Check field handler flags
+  QVERIFY(fh.isNull());
+  QVERIFY(fh.dataWasEdited());
+  // Field is mandatory, so check must fail
+  QVERIFY(!fh.checkBeforeSubmit());
+  // Line edit must be empty now
+  QVERIFY(pte.toPlainText().isEmpty());
+  // User edit ...
+  pte.clear();
+  QTest::keyClicks(&pte, "ZA");
+  // Check field handler flags
+  QVERIFY(!fh.isNull());
+  QVERIFY(fh.dataWasEdited());
+  // Check must be OK now
+  QVERIFY(fh.checkBeforeSubmit());
+  // User edit to much
+  /**
+  pte.clear();
+  QTest::keyClicks(&pte, "123456789ABC");
+  // Check field handler flags
+  QVERIFY(!fh.isNull());
+  QCOMPARE(pte.toPlainText(), QString("123456789A"));
+  */
+  // Set read only
+  fh.setReadOnly(true);
+  QVERIFY(fh.isReadOnly());
+  QVERIFY(pte.isReadOnly());
+  // Set editable again
+  fh.setReadOnly(false);
+  QVERIFY(!fh.isReadOnly());
+  QVERIFY(!pte.isReadOnly());
+  // Now we change the row
+  fh.setData("Row 2 from DB");
+  // Check field handler flags
+  QVERIFY(!fh.isNull());
+  QVERIFY(!fh.dataWasEdited());
+  // User edit ...
+  pte.clear();
+  QTest::keyClicks(&pte, " ");
+  // Check field handler flags
+  QVERIFY(fh.isNull());
+  QVERIFY(fh.dataWasEdited());
+  // We change the row
+  fh.setData("Row 3 from DB");
+  // Check field handler flags
+  QVERIFY(!fh.isNull());
+  QVERIFY(!fh.dataWasEdited());
+  // We change the row
+  fh.setData(QVariant());
+  // Check field handler flags
+  QVERIFY(fh.isNull());
+  QVERIFY(!fh.dataWasEdited());
+  // Setup field as read only
+  field.setAutoValue(false);
+  field.setLength(10);
+  field.setRequiredStatus(QSqlField::Required);
+  field.setReadOnly(true);
+  fh.setField(field);
+  // Check widget flags
+  QVERIFY(pte.isEnabled());
+  QVERIFY(pte.isReadOnly());
+
   
   /*
    * Play

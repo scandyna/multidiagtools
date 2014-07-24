@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,6 +22,7 @@
 #include "mdtSqlFieldHandler.h"
 #include "mdtError.h"
 #include "mdtSqlFormWidgetDataValidator.h"
+#include "mdtSqlSchemaTable.h"
 #include <QDataWidgetMapper>
 #include <QSqlDatabase>
 #include <QSqlTableModel>
@@ -60,6 +61,7 @@ void mdtSqlFormWidget::mapFormWidgets(const QString &firstWidgetInTabOrder)
   QWidget *w;
   mdtSqlFieldHandler *fieldHandler;
   QSqlRecord record;
+  mdtSqlSchemaTable st;
 
   // Clear previous mapping
   ///disconnect(this, SIGNAL(modelSelected()), pvWidgetMapper, SLOT(toFirst()));
@@ -72,6 +74,17 @@ void mdtSqlFormWidget::mapFormWidgets(const QString &firstWidgetInTabOrder)
 
   // Search widgets with fld_ as prefix in they objectName
   buildWidgetsList("fld_");
+  
+  // If we want informations about fields, we must get record from database instance
+  record = model()->database().record(model()->tableName());
+  qDebug() << "mdtSqlFormWidget::mapFormWidgets() - record from QSqlDatabase: " << record;
+  qDebug() << "mdtSqlFormWidget::mapFormWidgets() - record from model: " << model()->record();
+  
+  // Fetch table information
+  if(!st.setupFromTable(model()->tableName(), model()->database())){
+    return;
+  }
+  
   // Map found widgets
   for(i = 0; i < pvFoundWidgets.size(); ++i){
     w = pvFoundWidgets.at(i);
@@ -83,9 +96,9 @@ void mdtSqlFormWidget::mapFormWidgets(const QString &firstWidgetInTabOrder)
     // If field was found, map it
     if(fieldIndex >= 0){
       fieldHandler = new mdtSqlFieldHandler;
-      // If we want informations about fields, we must get record from database instance
-      record = model()->database().record(model()->tableName());
-      fieldHandler->setField(record.field(fieldIndex));
+      
+      ///fieldHandler->setField(record.field(fieldIndex));
+      fieldHandler->setField(st.field(fieldName));
       fieldHandler->setDataWidget(w);
       connect(fieldHandler, SIGNAL(dataEdited()), this, SIGNAL(dataEdited()));
       /*
