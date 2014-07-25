@@ -52,7 +52,7 @@ class mdtTtBasicTesterWindow : public QMainWindow, Ui::mdtTtBasicTesterWindow
 
   /*! \brief Update widget with given test data
    */
-  void displayTestData(const mdtTtTestData & data);
+  void displayTestData(const QSqlRecord & data);
 
  private:
 

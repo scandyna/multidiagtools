@@ -70,6 +70,7 @@ doc/Agilent
 doc/Wago
 doc/Beckhoff
 doc/bus/canbus/CiA
+doc/Keithley
 
 # Binary and Makefile files generated in QtDesigner plugin directory #
 #########################################################

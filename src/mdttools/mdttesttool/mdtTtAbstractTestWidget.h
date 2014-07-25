@@ -22,6 +22,7 @@
 #define MDT_TT_ABSTRACT_TEST_WIDGET_H
 
 #include "mdtError.h"
+#include "mdtTtTest.h"
 #include "mdtTtTestData.h"
 #include "mdtTtTestModelData.h"
 #include "mdtTtTestNodeManager.h"
@@ -30,8 +31,11 @@
 #include <QSqlTableModel>
 #include <QString>
 #include <QVariant>
+#include <QVector>
 
 #include <memory>
+
+class mdtSqlFormWidget;
 
 /*! \brief Base to create a test widget
  */
@@ -47,21 +51,34 @@ class mdtTtAbstractTestWidget : public QWidget
 
   /*! \brief Do some initialization
    *
-   * Will setup test data and table model for test item table (see testItemTableModel()).
+   * Will setup test data and table models for test item view and table.
+   *
+   * If testUiWidget is valid, 
    */
   virtual bool init();
+
+  /*! \brief
+   *
+   * All childs contained in widget that have a name prefixed fld_ will be mapped
+   *  to corresponding fields in Test_tbl.
+   */
+  void setTestUiWidget(QWidget *widget);
 
   /*! \brief Get database instance
    */
   QSqlDatabase database() { return pvDatabase; }
 
-  /*! \brief Get test item table model
+  /*! \brief Get table model to access data in TestItem_view
    */
-  std::shared_ptr<QSqlTableModel> testItemTableModel() { return pvTestItemTableModel; }
+  std::shared_ptr<QSqlTableModel> testItemViewTableModel() { return pvTest->testItemViewTableModel(); }
 
   /*! \brief Get test node manager object
    */
   std::shared_ptr<mdtTtTestNodeManager> testNodeManager() { return pvTestNodeManager; }
+
+  /*! \brief Get test object
+   */
+  std::shared_ptr<mdtTtTest> test() { return pvTest; }
 
   /*! \brief Set test data
    *
@@ -69,7 +86,8 @@ class mdtTtAbstractTestWidget : public QWidget
    *
    * Note: data are not sent to database.
    */
-  void setTestData(const mdtTtTestData & data);
+  ///inline void setTestData(const mdtTtTestData & data) { pvTest->setTestData(data); }
+  void setTestData(const mdtTtTestData & data) {}
 
   /*! \brief Set test data value
    *
@@ -77,13 +95,46 @@ class mdtTtAbstractTestWidget : public QWidget
    *
    * Note: value is not sent to database.
    */
-  void setTestDataValue(const QString & fieldName, const QVariant & value);
+  ///inline void setTestDataValue(const QString & fieldName, const QVariant & value) { pvTest->setTestDataValue(fieldName, value); }
+  void setTestDataValue(const QString & fieldName, const QVariant & value) {}
 
   /*! \brief Get test data
    *
    * Note: return cached data (will not get them from database).
    */
-  mdtTtTestData testData() const { return pvTestData; }
+  inline mdtTtTestData testData() const { return pvTest->testData(); }
+
+  /*! \brief Check if test is saved
+   *
+   * A test is saved if all cached data regarding Test_tbl and TestItem_tbl are stored in database.
+   */
+  inline bool testIsSaved() { return pvTest->testIsSaved(); }
+
+ public slots:
+
+  /*! \brief Create a new test
+   *
+   * This default implmementation will first check if current test is clean (saved, ...),
+   *  and warn the user if not.
+   *  Then (if test is clean, or user choosed to not keep it),
+   *  user can select a test model to use.
+   *  Finaly, test is created, based on selected test model.
+   */
+  virtual void createTest();
+
+  /*! \brief Open a existing test
+   *
+   * This default implmementation will first check if current test is clean (saved, ...),
+   *  and warn the user if not.
+   *  Then (if test is clean, or user choosed to not keep it),
+   *  user can select a test.
+   *  Finaly, selected test is set as current test.
+   */
+  virtual void openTest();
+
+  /*! \brief Set DutSerialNumber
+   */
+  void setDutSerialNumber(const QString & value);
 
  signals:
 
@@ -95,8 +146,10 @@ class mdtTtAbstractTestWidget : public QWidget
   void testItemTableSet();
 
   /*! \brief Emited when test data has changed
+   *
+   * date comes from Test_view
    */
-  void testDataChanged(const mdtTtTestData & data);
+  void testDataChanged(const QSqlRecord & data);
 
  protected:
 
@@ -104,14 +157,18 @@ class mdtTtAbstractTestWidget : public QWidget
    */
   mdtError pvLastError;
 
+  /*! \brief Display last error to the user
+   */
+  void displayLastError();
+
  private:
 
   Q_DISABLE_COPY(mdtTtAbstractTestWidget);
 
-  mdtTtTestData pvTestData;
   QSqlDatabase pvDatabase;
-  std::shared_ptr<QSqlTableModel> pvTestItemTableModel;
   std::shared_ptr<mdtTtTestNodeManager> pvTestNodeManager;
+  std::shared_ptr<mdtTtTest> pvTest;
+  mdtSqlFormWidget *pvTestFormWidget;
 };
 
 #endif // #ifndef MDT_TT_ABSTRACT_TEST_WIDGET_H

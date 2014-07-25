@@ -1,6 +1,6 @@
 format 207
 "mdttesttool" // mdttools::mdttesttool
-  revision 42
+  revision 44
   modified_by 2 "philippe"
   // class settings
   
@@ -4374,6 +4374,15 @@ ${inlines}
 	  b parent class_ref 1295362 // mdtTtTestData
       end
 
+      classrelation 1675010 // pvTest (<directional composition>)
+	relation 1659522 *-->
+	  a role_name "pvTest" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 1675010 // pvTest (<directional composition>)
+	  b parent class_ref 1053698 // mdtTtTest
+      end
+
       attribute 1326978 "LastError"
 	protected type class_ref 182402 // mdtError
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
@@ -4763,6 +4772,33 @@ ${inlines}
 "
 	    classrelation_ref 1668482 // TestNodeManager (<directional composition>)
 	  b parent class_ref 1302018 // mdtTtTestNodeManager
+      end
+
+      operation 2160514 "updateTestItemTableModelFilter"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 1334146 "pvTestDataAreSaved"
+	private explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
     end
 

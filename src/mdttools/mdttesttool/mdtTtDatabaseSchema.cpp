@@ -408,6 +408,9 @@ bool mdtTtDatabaseSchema::createViews()
   if(!createTestNodeUnitSetupView()){
     return false;
   }
+  if(!createTestView()){
+    return false;
+  }
   if(!createTestItemView()){
     return false;
   }
@@ -3701,6 +3704,24 @@ bool mdtTtDatabaseSchema::createTestModelItemNodeUnitView()
   return createView("TestModelItemNodeUnit_view", sql);
 }
 */
+
+bool mdtTtDatabaseSchema::createTestView()
+{
+  QString sql;
+
+  sql = "CREATE VIEW Test_view AS\n"\
+        "SELECT\n"\
+        " T.Id_PK,\n"\
+        " TM.DesignationEN,\n"\
+        " T.Date,\n"\
+        " T.DutName,\n"\
+        " T.DutSerialNumber\n"\
+        "FROM Test_tbl T\n"\
+        " JOIN TestModel_tbl TM\n"\
+        "  ON TM.Id_PK = T.TestModel_Id_FK\n";
+
+  return createView("Test_view", sql);
+}
 
 bool mdtTtDatabaseSchema::createTestItemView()
 {

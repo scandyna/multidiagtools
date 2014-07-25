@@ -238,7 +238,7 @@ class mdtTtTestModel : public mdtTtBase
 
   /*! \brief Get test model data for given test model ID
    */
-  mdtTtTestModelData getTestModelData(const QVariant & testModelId, bool *ok);
+  mdtTtTestModelData getTestModelData(const QVariant & testModelId, bool & ok);
 
   /*! \brief Get a list of test item IDs for given test ID
    */

@@ -47,7 +47,7 @@
 using namespace std;
 
 mdtTtBasicTester::mdtTtBasicTester(QSqlDatabase db, QWidget *parent)
- : mdtTtAbstractTestWidget(db, parent), /**pvNodeManager(0, db),*/ pvTest(0, db)
+ : mdtTtAbstractTestWidget(db, parent)
 {
   ///QVBoxLayout *l;
   ///mdtDeviceContainerWidget *deviceContainerWidget;
@@ -81,13 +81,15 @@ bool mdtTtBasicTester::setup()
   return true;
 }
 
+/**
 void mdtTtBasicTester::createTest()
 {
   ///pvTestData.clearValues();
-  displayTestData(false);
-  displayTestItemData();
+  ///displayTestData(false);
+  ///displayTestItemData();
   setTestModel();
 }
+*/
 
 void mdtTtBasicTester::setTestModel()
 {
@@ -121,7 +123,7 @@ void mdtTtBasicTester::setTestModel()
   
   // Save data and update GUI
   if(testData().value("Id_PK").isNull()){
-    createNewTest();
+    ///createNewTest();
   }else{
     saveTestData();
   }
@@ -137,8 +139,8 @@ void mdtTtBasicTester::saveTest()
   if(!saveTestData()){
     return;
   }
-  displayTestData(false);
-  displayTestItemData();
+  ///displayTestData(false);
+  ///displayTestItemData();
 }
 
 void mdtTtBasicTester::runTest()
@@ -168,9 +170,9 @@ void mdtTtBasicTester::runTest()
 
   
   qDebug() << "Running test ...";
-  pvTest.resetTestItemCursor();
-  while(pvTest.hasMoreTestItem()){
-    testItemId = pvTest.nextTestItem();
+  test()->resetTestItemCursor();
+  while(test()->hasMoreTestItem()){
+    testItemId = test()->nextTestItem();
     qDebug() << "Curremt item: " << testItemId;
     setTestItemData(testItemId, "Result", "Running ...");
     if(!setupInstruments(testItemId)){
@@ -187,7 +189,7 @@ void mdtTtBasicTester::runTest()
   disconnectFromInstruments();
 }
 
-
+/**
 bool mdtTtBasicTester::createNewTest()
 {
   QVariant testId;
@@ -196,9 +198,9 @@ bool mdtTtBasicTester::createNewTest()
   setTestDataValue("Date", QDate::currentDate());
   ///pvTestData.setValue("DutSerialNumber", leSN->text());
   // Add test to DB
-  testId = pvTest.addTest(testData());
+  testId = test()->addTest(testData());
   if(testId.isNull()){
-    pvLastError = pvTest.lastError();
+    pvLastError = test()->lastError();
     displayLastError();
     return false;
   }
@@ -206,6 +208,7 @@ bool mdtTtBasicTester::createNewTest()
 
   return true;
 }
+*/
 
 bool mdtTtBasicTester::saveTestData()
 {
@@ -214,8 +217,8 @@ bool mdtTtBasicTester::saveTestData()
   // Update somes values
   ///pvTestData.setValue("DutSerialNumber", leSN->text());
   data = testData();
-  if(!pvTest.updateTest(data.value("Id_PK"), data)){
-    pvLastError = pvTest.lastError();
+  if(!test()->updateTest(data.value("Id_PK"), data)){
+    pvLastError = test()->lastError();
     displayLastError();
     return false;
   }
@@ -224,6 +227,7 @@ bool mdtTtBasicTester::saveTestData()
   return true;
 }
 
+/**
 void mdtTtBasicTester::displayTestData(bool getFromDatabase)
 {
   bool ok;
@@ -231,19 +235,17 @@ void mdtTtBasicTester::displayTestData(bool getFromDatabase)
   QDate date;
 
   // Get data from DB
-  /**
   testId = pvTestData.value("Id_PK");
   if(getFromDatabase && (!testId.isNull())){
-    pvTestData = pvTest.getTestData(testId, true, &ok);
+    pvTestData = test()->getTestData(testId, true, &ok);
     if(!ok){
-      pvLastError = pvTest.lastError();
+      pvLastError = test()->lastError();
       displayLastError();
       return;
     }
   }
   // Update widgets
   date = pvTestData.value("Date").toDate();
-  */
   ///lbDate->setText(date.toString(Qt::SystemLocaleLongDate));
   ///lbTestDesignationEN->setText(pvTestData.modelData().value("DesignationEN").toString());
   ///leSN->setText(pvTestData.value("DutSerialNumber").toString());
@@ -251,26 +253,7 @@ void mdtTtBasicTester::displayTestData(bool getFromDatabase)
 
   
 }
-
-void mdtTtBasicTester::displayTestItemData()
-{
-  ///Q_ASSERT(pvTestItemWidget != 0);
-  ///Q_ASSERT(pvTestItemWidget->model() != 0);
-
-  QVariant testId;
-  QString filter;
-
-  // Build filter statement
-  testId = testData().value("Id_PK");
-  if(testId.isNull()){
-    filter = "Test_Id_FK = -1";
-  }else{
-    filter = "Test_Id_FK = " + testId.toString();
-  }
-  // Apply filter
-  ///pvTestItemWidget->model()->setFilter(filter);
-  testItemTableModel()->setFilter(filter);
-}
+*/
 
 void mdtTtBasicTester::setTestItemData(const QVariant & testItemId, const QString & fieldName, const QVariant & data)
 {
@@ -282,7 +265,7 @@ void mdtTtBasicTester::setTestItemData(const QVariant & testItemId, const QStrin
   int col, row;
 
   ///m = pvTestItemWidget->model();
-  m = testItemTableModel();
+  ///m = testItemTableModel();
   ///Q_ASSERT(m);
 
   col = m->fieldIndex("Id_PK");
@@ -306,16 +289,6 @@ void mdtTtBasicTester::setTestItemData(const QVariant & testItemId, const QStrin
       return;
     }
   }
-}
-
-void mdtTtBasicTester::displayLastError()
-{
-  QMessageBox msgBox;
-
-  msgBox.setText(pvLastError.text());
-  msgBox.setDetailedText(pvLastError.systemText());
-  msgBox.setIcon(pvLastError.levelIcon());
-  msgBox.exec();
 }
 
 bool mdtTtBasicTester::addInstruments()
@@ -375,9 +348,9 @@ bool mdtTtBasicTester::setupInstruments(const QVariant & testItemId)
   mdtTtTestNodeSetupData nodeSetupData;
   bool ok;
 
-  setupData = pvTest.getSetupData(testItemId, ok);
+  setupData = test()->getSetupData(testItemId, ok);
   if(!ok){
-    pvLastError = pvTest.lastError();
+    pvLastError = test()->lastError();
     displayLastError();
     return false;
   }
@@ -471,10 +444,12 @@ bool mdtTtBasicTester::setupTables()
     return false;
   }
   */
-  if(!pvTest.setupTestItemModel()){
-    pvLastError = pvTest.lastError();
+  /**
+  if(!test()->setupTestItemModel()){
+    pvLastError = test()->lastError();
     return false;
   }
+  */
   return true;
 }
 

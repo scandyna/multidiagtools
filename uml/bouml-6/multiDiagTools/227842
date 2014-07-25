@@ -1,6 +1,6 @@
 format 207
 "DatabaseLogical" // mdttools::mdttesttool::DatabaseLogical
-  revision 49
+  revision 50
   modified_by 2 "philippe"
   // class settings
   

@@ -57,15 +57,18 @@ void mdtTtBasicTesterWindow::setTesterWidget(mdtTtBasicTester* tester)
   /// \todo If pvTesterWidget was allready set, disconnect...
 
   pvTesterWidget = tester;
+  pvTesterWidget->setTestUiWidget(centralWidget());
   pvDeviceContainerWidget->setContainer(pvTesterWidget->testNodeManager()->container());
-  pvTestItemWidget->setModel(pvTesterWidget->testItemTableModel().get());
-  connect(pvTesterWidget, SIGNAL(testItemTableSet()), this, SLOT(setupTestItemTableWidget()));
+  pvTestItemWidget->setModel(pvTesterWidget->testItemViewTableModel().get());
+  ///connect(pvTesterWidget, SIGNAL(testItemTableSet()), this, SLOT(setupTestItemTableWidget()));
+  connect(pvTesterWidget, SIGNAL(testDataChanged(const QSqlRecord&)), this, SLOT(displayTestData(const QSqlRecord&)));
+  ///connect(leSN, SIGNAL(textChanged(const QString&)), pvTesterWidget, SLOT(setDutSerialNumber(const QString&)));
   connectActions();
 }
 
 void mdtTtBasicTesterWindow::setupTestItemTableWidget()
 {
-  qDebug() << "mdtTtBasicTesterWindow::setupTestItemTableWidget()  - table: " << pvTesterWidget->testItemTableModel()->tableName();
+  qDebug() << "mdtTtBasicTesterWindow::setupTestItemTableWidget()  - table: " << pvTesterWidget->testItemViewTableModel()->tableName();
   
   // Hide technical fields
   pvTestItemWidget->setColumnHidden("Id_PK", true);
@@ -82,12 +85,12 @@ void mdtTtBasicTesterWindow::setupTestItemTableWidget()
   pvTestItemWidget->resizeViewToContents();
 }
 
-void mdtTtBasicTesterWindow::displayTestData(const mdtTtTestData & data)
+void mdtTtBasicTesterWindow::displayTestData(const QSqlRecord & data)
 {
   QDate date = data.value("Date").toDate();
   lbDate->setText(date.toString(Qt::SystemLocaleLongDate));
-  lbTestDesignationEN->setText(data.modelData().value("DesignationEN").toString());
-  leSN->setText(data.value("DutSerialNumber").toString());
+  lbTestDesignationEN->setText(data.value("DesignationEN").toString());
+  ///leSN->setText(data.value("DutSerialNumber").toString());
 }
 
 void mdtTtBasicTesterWindow::connectActions()
@@ -96,5 +99,6 @@ void mdtTtBasicTesterWindow::connectActions()
   connect(actTestSetType, SIGNAL(triggered()), pvTesterWidget, SLOT(setTestModel()));
   connect(actTestSave, SIGNAL(triggered()), pvTesterWidget, SLOT(saveTest()));
   connect(actTestNew, SIGNAL(triggered()), pvTesterWidget, SLOT(createTest()));
+  connect(actTestView, SIGNAL(triggered()), pvTesterWidget, SLOT(openTest()));
   connect(actTestRun, SIGNAL(triggered()), pvTesterWidget, SLOT(runTest()));
 }

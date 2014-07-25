@@ -62,7 +62,7 @@
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QLineEdit" name="leSN">
+          <widget class="QLineEdit" name="fld_DutSerialNumber">
            <property name="minimumSize">
             <size>
              <width>200</width>

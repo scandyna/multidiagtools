@@ -50,9 +50,10 @@ mdtSqlFormWidget::~mdtSqlFormWidget()
   qDeleteAll(pvFieldHandlers);
 }
 
-void mdtSqlFormWidget::mapFormWidgets(const QString &firstWidgetInTabOrder)
+void mdtSqlFormWidget::mapFormWidgets(QWidget *widget, const QString &firstWidgetInTabOrder)
 {
-  Q_ASSERT(layout() != 0);
+  Q_ASSERT(widget != 0);
+  Q_ASSERT(widget->layout() != 0);
   Q_ASSERT(model() != 0);
 
   int i, fieldIndex;
@@ -73,7 +74,7 @@ void mdtSqlFormWidget::mapFormWidgets(const QString &firstWidgetInTabOrder)
   pvFirstDataWidget = 0;
 
   // Search widgets with fld_ as prefix in they objectName
-  buildWidgetsList("fld_");
+  buildWidgetsList(widget, "fld_");
   // If we want informations about fields, we must get record from database instance
   record = model()->database().record(model()->tableName());
   // Fetch table information - record returned by QSqlDatabase does not return Date and DateTime field infomration
@@ -132,6 +133,11 @@ void mdtSqlFormWidget::mapFormWidgets(const QString &firstWidgetInTabOrder)
   }
   // Add data validator
   addDataValidator(new mdtSqlFormWidgetDataValidator(model(), 0, pvFieldHandlers));
+}
+
+void mdtSqlFormWidget::mapFormWidgets(const QString &firstWidgetInTabOrder)
+{
+  mapFormWidgets(this, firstWidgetInTabOrder);
 }
 
 QWidgetList mdtSqlFormWidget::mappedWidgets() const
@@ -493,15 +499,16 @@ void mdtSqlFormWidget::warnUserAboutUnsavedRow()
   msgBox.exec();
 }
 
-void mdtSqlFormWidget::buildWidgetsList(const QString &prefix)
+void mdtSqlFormWidget::buildWidgetsList(QWidget *w, const QString &prefix)
 {
-  Q_ASSERT(layout() != 0);
+  Q_ASSERT(w != 0);
+  Q_ASSERT(w->layout() != 0);
 
   int i;
 
   pvFoundWidgets.clear();
-  for(i = 0; i < layout()->count(); ++i){
-    searchWidgets(layout()->itemAt(i), prefix);
+  for(i = 0; i < w->layout()->count(); ++i){
+    searchWidgets(w->layout()->itemAt(i), prefix);
   }
 }
 

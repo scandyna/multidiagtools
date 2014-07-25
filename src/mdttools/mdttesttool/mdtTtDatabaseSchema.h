@@ -411,9 +411,11 @@ class mdtTtDatabaseSchema
    */
   ///bool createTestModelItemNodeView();
 
+  /*! \brief Create Test_view
+   */
+  bool createTestView();
+
   /*! \brief Create view to get test result item
-   *
-   * \todo Move to test tool when created
    */
   bool createTestItemView();
 

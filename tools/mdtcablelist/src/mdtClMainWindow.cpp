@@ -955,10 +955,11 @@ void mdtClMainWindow::createBasicTester()
 
   pvBasicTester = new mdtTtBasicTester(pvDatabaseManager->database());
   pvBasicTesterWindow = new mdtTtBasicTesterWindow(this);
-  pvBasicTesterWindow->setTesterWidget(pvBasicTester);
+  
   if(!pvBasicTester->setup()){
     displayError(pvBasicTester->lastError());
   }
+  pvBasicTesterWindow->setTesterWidget(pvBasicTester);
 }
 
 mdtSqlTableWidget *mdtClMainWindow::createTableView(const QString & tableName, const QString & userFriendlyTableName)

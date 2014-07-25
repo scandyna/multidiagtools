@@ -21,8 +21,10 @@
 #ifndef MDT_TT_TEST_H
 #define MDT_TT_TEST_H
 
-#include "mdtTtBase.h"
 #include "mdtTtTestData.h"
+
+#include "mdtTtBase.h"
+#include "mdtTtTestModelData.h"
 #include "mdtValue.h"
 #include "mdtTtTestNodeUnitSetupData.h"
 #include "mdtTtTestItemNodeSetupData.h"
@@ -36,6 +38,7 @@
 #include <memory>
 
 class QSqlTableModel;
+class mdtSqlRelation;
 
 /*! \brief Helper class to manipulate test data
  *
@@ -43,21 +46,77 @@ class QSqlTableModel;
  */
 class mdtTtTest : public mdtTtBase
 {
+ Q_OBJECT
+
  public:
 
   /*! \brief Constructor
    */
   mdtTtTest(QObject *parent, QSqlDatabase db);
 
-  /*! \brief Setup test item model
+  /*! \brief Do some initialization
    *
-   * This is only needed to run test items.
+   * Will setup test data and table models for test item view and table.
    */
-  bool setupTestItemModel();
+  bool init();
 
-  /*! \brief Get test data for given test ID
+  /*! \brief Get table model to access data in Test_tbl
+   */
+  std::shared_ptr<QSqlTableModel> testTableModel() { return pvTestTableModel; }
+
+  /*! \brief Get table model to access data in TestItem_view
+   */
+  std::shared_ptr<QSqlTableModel> testItemViewTableModel() { return pvTestItemViewTableModel; }
+
+  /*! \brief Set test data
+   *
+   * Will also emit testDataChanged()
+   *
+   * Note: data are not sent to database.
+   */
+  ///void setTestData(const mdtTtTestData & data);
+
+  /*! \brief Set test data value
+   *
+   * Will also emit testDataChanged()
+   *
+   * Note: value is not sent to database.
+   */
+  ///void setTestDataValue(const QString & fieldName, const QVariant & value);
+
+  /*! \brief Get test data
+   *
+   * Returns data from Test_view
+   */
+  QSqlRecord testData() const;
+
+  /*! \brief Get test data value for given fieldName
+   *
+   * Note: return cached data (will not get them from database).
+   */
+  QVariant testDataValue(const QString & fieldName) const;
+
+  /*! \brief Set current test to given testId
+   *
+   * Note: will directly load data for given testId.
+   *  To check test state before, use:
+   *   - testIsSaved()
+   *   - 
+   */
+  bool setCurrentTest(const QVariant & testId);
+
+  /*! \brief Get test data from database for given test ID
    */
   mdtTtTestData getTestData(const QVariant & testId, bool includeModelData, bool *ok);
+
+  /*! \brief Create a new test based on given testModelId
+   *
+   * Note: will directly create the test.
+   *  To check test state before, use:
+   *   - testIsSaved()
+   *   - 
+   */
+  bool createTest(const QVariant & testModelId);
 
   /*! \brief Add a test
    *
@@ -67,7 +126,7 @@ class mdtTtTest : public mdtTtBase
    *
    * \return Test ID from freshly created test, or a Null value on error
    */
-  QVariant addTest(const mdtTtTestData & data);
+  ///QVariant addTest(const mdtTtTestData & data);
 
   /*! \brief Update data for given test data
    *
@@ -76,6 +135,14 @@ class mdtTtTest : public mdtTtBase
    *        related test items will be removed, and created again, based on given test model.
    */
   bool updateTest(const QVariant & testId, const mdtTtTestData & data);
+
+  /*! \brief Check if test is saved
+   *
+   * A test is saved if all cached data regarding Test_tbl and TestItem_tbl are stored in database.
+   *  If no test was set (Test_tbl.Id_PK is NULL), test is considered saved.
+   *  Note: each call of this method will check all test items.
+   */
+  bool testIsSaved();
 
   /*! \brief Check if more test item is available
    */
@@ -176,13 +243,13 @@ class mdtTtTest : public mdtTtBase
    * Note: value will not be stored to database immediatly,
    *  call submitTestItemSqlModelData() to do it .
    */
-  bool setMeasuredValue(const QVariant & testItemId, const mdtValue & value);
+  ///bool setMeasuredValue(const QVariant & testItemId, const mdtValue & value);
 
   /*! \brief Submit test items SQL model data to database
    *
    * If a error occurs, it will be available with lastError() .
    */
-  bool submitTestItemSqlModelData();
+  ///bool submitTestItemSqlModelData();
 
  ///private slots:
 
@@ -190,63 +257,85 @@ class mdtTtTest : public mdtTtBase
    */
   ///void onSqlModelDestroyed(QObject *obj);
 
+ public slots:
+
+  /*! \brief Set current index row for Test_view table model
+   */
+  void setCurrentTestIndexRow(int row);
+
+ signals:
+
+  /*! \brief Emited when test data has changed
+   *
+   * data comes from Test_view
+   */
+  void testDataChanged(const QSqlRecord & data);
+
  private:
 
-  /*! \brief Add test items for given test ID and test model ID
+  /*! \brief Set test data pvCurrentTestRow to a value that correspond to given testIt in pvTestTableModel
    */
-  bool addTestItems(const QVariant & testId, const QVariant & testModelId);
+  ///void updateCurrentTestRow(const QVariant & testId);
 
-  /*! \brief Remove test items from given test ID
+  /*! \brief Add test items for given test model ID to current test (see pvTestData)
    */
-  bool removeTestItems(const QVariant & testId);
+  bool addTestItems(const QVariant & testModelId);
+
+  /*! \brief Remove test items from current test (see pvTestData)
+   */
+  bool removeTestItems();
 
   /*! \brief Apply filter of pvTestItemTableModel to current test ID and reset pvCurrentTestItemRow to first item
    */
-  void resetTestItemTableModel(const QVariant & testId);
+  void resetTestItemTableModels();
 
-  
-  
   /*! \brief Check if test item sql model was set
    *
    * Will store a error if not ok .
    */
-  bool testItemSqlModelOk();
+  ///bool testItemSqlModelOk();
 
   /*! \brief Get index for given testItemId and column
    *
    * Will store a error if a invalid index is returned
    */
-  QModelIndex indexOfTestItem(const QVariant & testItemId, int column);
+  ///QModelIndex indexOfTestItem(const QVariant & testItemId, int column);
 
   /*! \brief Helper method to store data into test item SQL model
    *
    * If a error occurs, it will be stored .
    */
-  bool setTestItemSqlModelData(const QModelIndex & index, const QVariant & data);
+  ///bool setTestItemSqlModelData(const QModelIndex & index, const QVariant & data);
 
   /*! \brief Helper method to get data from test item SQL model
    *
    * If a error occurs, it will be stored .
    */
-  QVariant getTestItemSqlModelData(const QModelIndex & index);
+  ///QVariant getTestItemSqlModelData(const QModelIndex & index);
 
   /*! \brief Helper method to get data from test item SQL model
    *
    * \overload getTestItemSqlModelData(const QModelIndex &)
    */
-  QVariant getTestItemSqlModelData(int row, int column);
+  ///QVariant getTestItemSqlModelData(int row, int column);
 
   Q_DISABLE_COPY(mdtTtTest);
 
+  // Test data
+  mdtTtTestData pvTestData;                                 // Contains data from Test_tbl and TestModel_tbl
+  bool pvTestDataAreSaved;  // Only for data in Test_tbl
+  
+  mdtTtTestModelData pvTestModelData;                           // Contains data from TestModel_tbl
+  std::shared_ptr<QSqlTableModel> pvTestViewTableModel;         // Access data in Test_view
+  std::shared_ptr<QSqlTableModel> pvTestTableModel;             // Access data in Test_tbl
+  std::shared_ptr<mdtSqlRelation> pvTestTableRelation;          // Test_view <-> Test_tbl relation
+  int pvCurrentTestRow;
   // Test item data models
-  std::shared_ptr<QSqlTableModel> pvTestItemTableModel;
+  std::shared_ptr<QSqlTableModel> pvTestItemViewTableModel;     // Access data in TestItem_view
+  std::shared_ptr<QSqlTableModel> pvTestItemTableModel;         // Access data in TestItem_tbl
+  std::shared_ptr<mdtSqlRelation> pvTestItemTableRelation;      // TestItem_view <-> TestItem_tbl relation
+  std::shared_ptr<mdtSqlRelation> pvTestTestItemTableRelation;  // Test_tbl <-> TestItem_tbl relation
   int pvCurrentTestItemRow;
-
-  /// \todo Obselete..
-  int pvColIdxOfTestItemId;
-  int pvColIdxOfExpectedValue;
-  int pvColIdxOfMeasuredValue;
-  int pvColIdxOfResult;
 };
 
 #endif // #ifndef MDT_TT_TEST_H

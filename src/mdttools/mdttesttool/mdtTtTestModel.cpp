@@ -356,23 +356,23 @@ QString mdtTtTestModel::sqlForTestNodeSelection(const QVariant & testModelId) co
   return sql;
 }
 
-mdtTtTestModelData mdtTtTestModel::getTestModelData(const QVariant & testModelId, bool *ok)
+mdtTtTestModelData mdtTtTestModel::getTestModelData(const QVariant & testModelId, bool & ok)
 {
-  Q_ASSERT(ok != 0);
+  ///Q_ASSERT(ok != 0);
 
   QString sql;
   QList<QSqlRecord> dataList;
 
   sql = "SELECT * FROM TestModel_tbl WHERE Id_PK = " + testModelId.toString();
-  dataList = getData(sql, ok);
-  if(!*ok){
+  dataList = getDataList<QSqlRecord>(sql, ok);
+  if(!ok){
     return mdtTtTestModelData();
   }
   if(dataList.isEmpty()){
     pvLastError.setError(tr("Could not find data in 'TestModel_tbl' for Id_PK = '") + testModelId.toString() + "'", mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestModel");
     pvLastError.commit();
-    *ok = false;
+    ok = false;
     return mdtTtTestModelData();
   }
   Q_ASSERT(dataList.size() == 1);

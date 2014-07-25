@@ -1,6 +1,6 @@
 format 207
 "mdtutilsgui" // mdtutilsgui
-  revision 68
+  revision 69
   modified_by 2 "philippe"
   // class settings
   
@@ -1426,11 +1426,6 @@ ${inlines}
 	    classrelation_ref 840578 // pvSqlTableModel (<unidirectional association>)
 	  b parent class_ref 174210 // QSqlTableModel
       end
-    end
-
-    classdiagram 408706 "mdtSqlTableModel"
-      classdiagramsettings member_max_width 0 end
-      size A4
     end
 
     classdiagram 666626 "mdtSqlWindow"

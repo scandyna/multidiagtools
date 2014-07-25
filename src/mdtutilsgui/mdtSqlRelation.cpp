@@ -23,7 +23,7 @@
 #include "mdtError.h"
 #include <QSqlField>
 
-//#include <QDebug>
+#include <QDebug>
 
 mdtSqlRelation::mdtSqlRelation(QObject *parent)
  : QObject(parent)
@@ -111,6 +111,7 @@ void mdtSqlRelation::setParentCurrentIndex(int index)
   Q_ASSERT(pvChildModel != 0);
 
   pvCurrentRow = index;
+  qDebug() << "mdtSqlRelation::setParentCurrentIndex() - table " << pvParentModel->tableName() << " -> " << pvChildModel->tableName() << " - index: " << index;
   /**
   if(index < 0){
     return;
@@ -197,7 +198,7 @@ void mdtSqlRelation::generateChildModelRelationFilter(int row)
   for(i=0; i<pvRelations.size(); ++i){
     item = pvRelations.at(i);
     Q_ASSERT(item != 0);
-    ///qDebug() << "mdtSqlRelation, parent record is NULL: " << record.isNull(item->parentFieldIndex());
+    qDebug() << "mdtSqlRelation, parent record is NULL: " << record.isNull(item->parentFieldIndex());
     // Get parent model's data
     if(!record.isNull(item->parentFieldIndex())){
       data = record.value(item->parentFieldIndex());
@@ -206,7 +207,7 @@ void mdtSqlRelation::generateChildModelRelationFilter(int row)
       ///pvChildModelRelationFilter += " AND";
       pvChildModelRelationFilter += item->relationOperatorWithPreviousItem();
     }
-    ///qDebug() << "mdtSqlRelation, parent data: " << data;
+    qDebug() << "mdtSqlRelation, parent data: " << data;
     pvChildModelRelationFilter += item->nameProtection() + pvChildModel->tableName() + item->nameProtection() + "." + item->nameProtection() + item->childFieldName() + item->nameProtection() + "=";
     if(data.isValid()){
       pvChildModelRelationFilter += item->dataProtection() + data.toString() + item->dataProtection();
@@ -215,6 +216,7 @@ void mdtSqlRelation::generateChildModelRelationFilter(int row)
     }
   }
   // Apply filter
+  qDebug() << "mdtSqlRelation::generateChildModelRelationFilter() - new filter for table " << pvChildModel->tableName() << ": " << pvChildModelRelationFilter;
   generateChildModelFilter();
   pvChildModel->setFilter(pvChildModelFilter);
   emit childModelFilterApplied();

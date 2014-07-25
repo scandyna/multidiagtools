@@ -59,7 +59,7 @@ class mdtTtBasicTester : public mdtTtAbstractTestWidget /// : public QMainWindow
 
   /*! \brief Create a test
    */
-  void createTest();
+  ///void createTest();
 
   /*! \brief Set test model
    */
@@ -79,7 +79,7 @@ class mdtTtBasicTester : public mdtTtAbstractTestWidget /// : public QMainWindow
 
   /*! \brief Create new test
    */
-  bool createNewTest();
+  ///bool createNewTest();
 
   /*! \brief Save data part of Test_tbl
    */
@@ -87,14 +87,14 @@ class mdtTtBasicTester : public mdtTtAbstractTestWidget /// : public QMainWindow
 
   /*! \brief Display data part of Test_tbl
    */
-  void displayTestData(bool getFromDatabase);
+  ///void displayTestData(bool getFromDatabase);
 
   /*! \brief Display data part of Test item
    *
    * Will reload test items from db that are part
    *  of current test and display them.
    */
-  void displayTestItemData();
+  ///void displayTestItemData();
 
   /*! \brief Set data for a test item
    *
@@ -103,10 +103,6 @@ class mdtTtBasicTester : public mdtTtAbstractTestWidget /// : public QMainWindow
    *  Data is not saved to database.
    */
   void setTestItemData(const QVariant & testItemId, const QString & fieldName, const QVariant & data);
-
-  /*! \brief Display last error to the user
-   */
-  void displayLastError();
 
   /*! \brief Add instruments
    */
@@ -135,17 +131,6 @@ class mdtTtBasicTester : public mdtTtAbstractTestWidget /// : public QMainWindow
   /*! \brief Setup tables
    */
   bool setupTables();
-
-  /*! \brief Setup TestItem_view
-   */
-  ///bool setupTestItemTable();
-
-  ///QSqlDatabase pvDatabase;
-  ///mdtTtTestData pvTestData;
-  ///mdtSqlTableWidget *pvTestItemWidget;  // Display data from TestItem_view (R only access)
-  ///mdtTtTestNodeManager pvNodeManager;
-  mdtTtTest pvTest;
-  mdtError pvLastError;
 };
 
 #endif  // #ifndef MDT_TT_BASIC_TESTER_H

@@ -84,6 +84,7 @@ class mdtSqlFormWidget : public mdtAbstractSqlWidget
    *  extract widgets that have a fld_ prefix as object name.
    *  For each of them, corresponding field will be searched in model (database).
    *
+   * \param widget Widget on witch child widgets must be searched.
    * \param firstWidgetInTabOrder It's possible to specify the object name of the first widget in tab order.
    *                               This is then used by insertion to give this widget the focus.
    *
@@ -91,6 +92,12 @@ class mdtSqlFormWidget : public mdtAbstractSqlWidget
    *       Once setupUi() is done, mdtSqlFormWidget object (this) will contain a layout
    *       with all widgets (QLineEdit, QSpinBox, ...).
    * \pre Model must be set with setModel() before using this method.
+   */
+  void mapFormWidgets(QWidget *widget, const QString &firstWidgetInTabOrder = QString());
+
+  /*! \brief Map widgets to matching database fields
+   *
+   * Same than mapFormWidgets(QWidget *widget, const QString &firstWidgetInTabOrder) , but acts on this
    */
   void mapFormWidgets(const QString &firstWidgetInTabOrder = QString());
 
@@ -209,11 +216,13 @@ class mdtSqlFormWidget : public mdtAbstractSqlWidget
    */
   void warnUserAboutUnsavedRow();
 
-  /*! \brief Build the list of widgets
+  /*! \brief Build the list of widgets contained in w
    *
    * Result will be stored to pvFoundWidgets .
+   *
+   * \pre w must be valid and contain a valid layout
    */
-  void buildWidgetsList(const QString &prefix);
+  void buildWidgetsList(QWidget *w, const QString &prefix);
 
   /*! \brief Search all widgets contained in a layout item
    *

@@ -18,6 +18,7 @@ set (TT_HEADER_FILES
           #mdtTtTestNodeManagerWidget.h
           mdtTtBasicTester.h
           mdtTtBasicTesterWindow.h
+          mdtTtTest.h
           mdtTtRelayPathDialog.h
           mdtTtTestModelGenerationDialog.h
           mdtTtAbstractTestWidget.h

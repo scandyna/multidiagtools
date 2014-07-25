@@ -222,21 +222,25 @@ void mdtTtCableChecker::runTest()
     measuredValue = pvMultimeter->getMeasureValue();
     qDebug() << "-> DONE: " << measuredValue;
     // Store value
+    /**
     if(!pvTest->setMeasuredValue(testItemId, measuredValue)){
       pvLastError = pvTest->lastError();
       displayLastError();
       disconnectFromInstruments();
       return;
     }
+    */
   }
   // Disconnect from instruments
   disconnectFromInstruments();
   // Save results to database
+  /**
   if(!pvTest->submitTestItemSqlModelData()){
     pvLastError = pvTest->lastError();
     displayLastError();
     return;
   }
+  */
 }
 
 QVariant mdtTtCableChecker::selectTestModel()
