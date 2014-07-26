@@ -28,6 +28,7 @@
 #include "mdtStateMachine.h"
 #include <QState>
 #include <QStateMachine>
+#include <QVector>
 
 #include <QMessageBox>
 #include <QSqlTableModel>
@@ -41,12 +42,18 @@ mdtAbstractSqlWidget::mdtAbstractSqlWidget(QWidget *parent)
  : QWidget(parent)
 {
   pvModel = 0;
+  pvAskUserBeforeRevert = true;
   pvProxyModel = new mdtSortFilterProxyModel(this);
   buildStateMachine();
 }
 
 mdtAbstractSqlWidget::~mdtAbstractSqlWidget()
 {
+}
+
+void mdtAbstractSqlWidget::setAskUserBeforRevert(bool ask)
+{
+  pvAskUserBeforeRevert = ask;
 }
 
 void mdtAbstractSqlWidget::setModel(QSqlTableModel *model)
@@ -245,23 +252,25 @@ void mdtAbstractSqlWidget::enableLocalEdition()
 {
 }
 
-bool mdtAbstractSqlWidget::allDataAreSaved()
+bool mdtAbstractSqlWidget::allDataAreSaved(bool showMessageBoxIfNotSaved)
 {
   if(!pvStateMachine->isRunning()){
     return true;
   }
   // Check main SQL widget state
   if(currentState() != mdtAbstractSqlWidget::Visualizing){
-    QMessageBox msgBox;
-    msgBox.setText(tr("Current record was modified in table '") + userFriendlyTableName() + "'");
-    msgBox.setInformativeText(tr("Please save or cancel your modifications before continue."));
-    msgBox.setIcon(QMessageBox::Warning);
-    msgBox.setStandardButtons(QMessageBox::Ok);
-    msgBox.exec();
+    if(showMessageBoxIfNotSaved){
+      QMessageBox msgBox;
+      msgBox.setText(tr("Current record was modified in table '") + userFriendlyTableName() + "'");
+      msgBox.setInformativeText(tr("Please save or cancel your modifications before continue."));
+      msgBox.setIcon(QMessageBox::Warning);
+      msgBox.setStandardButtons(QMessageBox::Ok);
+      msgBox.exec();
+    }    
     return false;
   }
   // Check child SQL widgets
-  return childWidgetsAreInVisaluzingState();
+  return childWidgetsAreInVisaluzingState(showMessageBoxIfNotSaved);
 }
 
 void mdtAbstractSqlWidget::clearColumnsSortOrder()
@@ -280,6 +289,25 @@ void mdtAbstractSqlWidget::addColumnToSortOrder(const QString & fieldName, Qt::S
 
 void mdtAbstractSqlWidget::sort()
 {
+}
+
+bool mdtAbstractSqlWidget::submitAndWait(int timeout)
+{
+  QVector<int> expectedStates;
+
+  expectedStates << Visualizing << Editing << EditingNewRow;
+  if(!pvStateMachine->isRunning()){
+    return false;
+  }
+  submit();
+  if(!pvStateMachine->waitOnOneState(expectedStates, timeout)){
+    return false;
+  }
+  if(currentState() != Visualizing){
+    return false;
+  }
+
+  return true;
 }
 
 void mdtAbstractSqlWidget::submit()
@@ -420,7 +448,7 @@ QString mdtAbstractSqlWidget::getUserReadableTextFromMysqlError(const QSqlError 
   return text;
 }
 
-bool mdtAbstractSqlWidget::childWidgetsAreInVisaluzingState()
+bool mdtAbstractSqlWidget::childWidgetsAreInVisaluzingState(bool showMessageBoxIfNotSaved)
 {
   int i;
   mdtAbstractSqlWidget *w;
@@ -428,7 +456,7 @@ bool mdtAbstractSqlWidget::childWidgetsAreInVisaluzingState()
   for(i=0; i<pvChildWidgets.size(); ++i){
     w = pvChildWidgets.at(i);
     Q_ASSERT(w != 0);
-    if(!w->allDataAreSaved()){
+    if(!w->allDataAreSaved(showMessageBoxIfNotSaved)){
       return false;
     }
     /**
@@ -553,6 +581,14 @@ void mdtAbstractSqlWidget::onStateRevertingEntered()
   ///pvCurrentState = Reverting;
   qDebug() << __FUNCTION__;
 
+  if(!pvAskUserBeforeRevert){
+    if(doRevert()){
+      emit operationSucceed();
+    }else{
+      emit errorOccured();
+    }
+    return;
+  }
   // We ask confirmation to the user
   msgBox.setText(tr("You choosed to not save modification. This will restore data from database."));
   msgBox.setInformativeText(tr("Do you really want to loose your modification ?"));
@@ -578,7 +614,7 @@ void mdtAbstractSqlWidget::onStateInsertingEntered()
   ///pvCurrentState = Inserting;
   qDebug() << __FUNCTION__;
 
-  if(!childWidgetsAreInVisaluzingState()){
+  if(!childWidgetsAreInVisaluzingState(true)){
     emit errorOccured();
     return;
   }
@@ -630,6 +666,14 @@ void mdtAbstractSqlWidget::onStateRevertingNewRowEntered()
   ///pvCurrentState = RevertingNewRow;
   qDebug() << __FUNCTION__;
 
+  if(!pvAskUserBeforeRevert){
+    if(doRevert()){
+      emit operationSucceed();
+    }else{
+      emit errorOccured();
+    }
+    return;
+  }
   // We ask confirmation to the user
   msgBox.setText(tr("You choosed to not save data."));
   msgBox.setInformativeText(tr("Do you really want to loose new record ?"));

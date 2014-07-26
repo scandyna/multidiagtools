@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -56,6 +56,26 @@ bool mdtStateMachine::waitOnState(int state, int timeout)
     pvTimeoutTimer->start(timeout);
   }
   while(currentState() != state){
+    if(pvTimeoutOccured){
+      return false;
+    }
+    QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
+  }
+  pvTimeoutTimer->stop();
+
+  return true;
+}
+
+bool mdtStateMachine::waitOnOneState(const QVector<int> & states, int timeout)
+{
+  pvTimeoutOccured = false;
+  if(states.contains(currentState())){
+    return true;
+  }
+  if(timeout > 0){
+    pvTimeoutTimer->start(timeout);
+  }
+  while(states.contains(currentState())){
     if(pvTimeoutOccured){
       return false;
     }

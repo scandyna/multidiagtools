@@ -83,6 +83,10 @@ class mdtAbstractSqlWidget : public QWidget
    */
   virtual ~mdtAbstractSqlWidget();
 
+  /*! \brief Ask user before revert occurs
+   */
+  void setAskUserBeforRevert(bool ask);
+
   /*! \brief Set the table model
    *
    * Will call doSetModel() , then start the internall state machine.
@@ -229,7 +233,7 @@ class mdtAbstractSqlWidget : public QWidget
    *
    * \return true if all data are saved, false if a SQL widget has pending data.
    */
-  bool allDataAreSaved();
+  bool allDataAreSaved(bool showMessageBoxIfNotSaved = true);
 
   /*! \brief Clear columns sort order
    *
@@ -263,6 +267,13 @@ class mdtAbstractSqlWidget : public QWidget
    * \sa addColumnToSortOrder()
    */
   virtual void sort();
+
+  /*! \brief Submit and wait until success or failure
+   *
+   * \param timeout If > 0, wait maximum timeout, else fail.
+   *          Note: will not freeze Qt's event loop.
+   */
+  bool submitAndWait(int timeout = -1);
 
  public slots:
 
@@ -433,7 +444,7 @@ class mdtAbstractSqlWidget : public QWidget
 
   /*! \brief Check that child widgtes have no pending data
    */
-  bool childWidgetsAreInVisaluzingState();
+  bool childWidgetsAreInVisaluzingState(bool showMessageBoxIfNotSaved);
 
   /*! \brief Show a message box to the user to warn him that it should save/revert data
    */
@@ -735,6 +746,7 @@ class mdtAbstractSqlWidget : public QWidget
   // Other members
   QString pvUserFriendlyTableName;
   QList<mdtSqlDataValidator*> pvDataValidators;
+  bool pvAskUserBeforeRevert;
 
   Q_DISABLE_COPY(mdtAbstractSqlWidget);
 };

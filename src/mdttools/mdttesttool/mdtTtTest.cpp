@@ -41,12 +41,12 @@ mdtTtTest::mdtTtTest(QObject *parent, QSqlDatabase db)
    pvTestTableRelation(new mdtSqlRelation),
    pvTestItemViewTableModel(new QSqlTableModel(0, db)),
    pvTestItemTableModel(new QSqlTableModel(0, db)),
-   pvTestItemTableRelation(new mdtSqlRelation),
-   pvTestTestItemTableRelation(new mdtSqlRelation)
+   pvTestItemViewRelation(new mdtSqlRelation),
+   pvTestItemTableRelation(new mdtSqlRelation)
 {
   pvCurrentTestRow = -1;
   pvCurrentTestItemRow = -1;
-  pvTestDataAreSaved = false;
+  ///pvTestDataAreSaved = false;
 }
 
 bool mdtTtTest::init()
@@ -54,8 +54,8 @@ bool mdtTtTest::init()
   QSqlError sqlError;
 
   // Setup test view table model
+  pvTestViewTableModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
   pvTestViewTableModel->setTable("Test_view");
-  ///pvTestViewTableModel->setFilter("Id_PK = -1");
   if(!pvTestViewTableModel->select()){
     sqlError = pvTestViewTableModel->lastError();
     pvLastError.setError(tr("Cannot select data from table 'Test_view'"), mdtError::Error);
@@ -65,6 +65,7 @@ bool mdtTtTest::init()
     return false;
   }
   // Setup test table model
+  pvTestTableModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
   pvTestTableModel->setTable("Test_tbl");
   pvTestTableModel->setFilter("Id_PK = -1");
   if(!pvTestTableModel->select()){
@@ -102,6 +103,7 @@ bool mdtTtTest::init()
   }
   */
   // Setup test item view table model
+  pvTestItemViewTableModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
   pvTestItemViewTableModel->setTable("TestItem_view");
   pvTestItemViewTableModel->setFilter("Test_Id_FK = -1");
   pvTestItemViewTableModel->setSort(pvTestItemViewTableModel->fieldIndex("SequenceNumber"), Qt::AscendingOrder);
@@ -114,6 +116,7 @@ bool mdtTtTest::init()
     return false;
   }
   // Setup test item table model
+  pvTestItemTableModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
   pvTestItemTableModel->setTable("TestItem_tbl");
   pvTestItemTableModel->setFilter("Test_Id_FK = -1");
   if(!pvTestItemTableModel->select()){
@@ -124,20 +127,20 @@ bool mdtTtTest::init()
     pvLastError.commit();
     return false;
   }
-  // Setup relation between test item view and test item models
-  pvTestItemTableRelation->setParentModel(pvTestItemViewTableModel.get());
+  // Setup relation between test and test item models
+  pvTestItemTableRelation->setParentModel(pvTestViewTableModel.get());
   pvTestItemTableRelation->setChildModel(pvTestItemTableModel.get());
-  if(!pvTestItemTableRelation->addRelation("Id_PK", "Id_PK", false)){
-    pvLastError.setError(tr("Cannot add TestItem_view <-> TestItem_tbl relation"), mdtError::Error);
+  if(!pvTestItemTableRelation->addRelation("Id_PK", "Test_Id_FK", false)){
+    pvLastError.setError(tr("Cannot add Test_view <-> TestItem_tbl relation"), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
     pvLastError.commit();
     return false;
   }
   // Setup relation between test and test item view models
-  pvTestTestItemTableRelation->setParentModel(pvTestViewTableModel.get());
-  pvTestTestItemTableRelation->setChildModel(pvTestItemViewTableModel.get());
-  if(!pvTestTestItemTableRelation->addRelation("Id_PK", "Test_Id_FK", true)){
-    pvLastError.setError(tr("Cannot add Test_tbl <-> TestItem_tbl relation"), mdtError::Error);
+  pvTestItemViewRelation->setParentModel(pvTestViewTableModel.get());
+  pvTestItemViewRelation->setChildModel(pvTestItemViewTableModel.get());
+  if(!pvTestItemViewRelation->addRelation("Id_PK", "Test_Id_FK", true)){
+    pvLastError.setError(tr("Cannot add Test_view <-> TestItem_view relation"), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
     pvLastError.commit();
     return false;
@@ -186,11 +189,27 @@ QSqlRecord mdtTtTest::testData() const
   return pvTestViewTableModel->record(pvCurrentTestRow);
 }
 
-bool mdtTtTest::setCurrentTest(const QVariant & testId)
+void mdtTtTest::setCurrentTest(const QVariant & testId)
 {
   
   qDebug() << "mdtTtTest::setCurrentTest() - testId: " << testId;
   
+  QString filter;
+
+  if(testId.isNull()){
+    filter = "Id_PK = -1";
+  }else{
+    filter = "Id_PK = " + testId.toString();
+  }
+  pvTestViewTableModel->setFilter(filter);
+  if(pvTestViewTableModel->rowCount() > 0){
+    Q_ASSERT(pvTestViewTableModel->rowCount() == 1);
+    setCurrentTestIndexRow(0);
+  }else{
+    setCurrentTestIndexRow(-1);
+  }
+  
+  /**
   QModelIndex index;
   QVariant data;
   int row, col;
@@ -202,6 +221,7 @@ bool mdtTtTest::setCurrentTest(const QVariant & testId)
     setCurrentTestIndexRow(-1);
     return false;
   }
+  /// \todo Cache only if neened (while not found, .....)
   // Cache all data to model
   if(pvTestViewTableModel->rowCount() > 0){
     while(pvTestViewTableModel->canFetchMore()){
@@ -222,8 +242,9 @@ bool mdtTtTest::setCurrentTest(const QVariant & testId)
   }
   // Not found
   setCurrentTestIndexRow(-1);
+  */
 
-  return true;
+  ///return true;
 }
 
 /**
@@ -298,40 +319,125 @@ mdtTtTestData mdtTtTest::getTestData(const QVariant & testId, bool includeModelD
 
 bool mdtTtTest::createTest(const QVariant & testModelId)
 {
-  mdtTtTestModel tm(0, database());
-  QVariant testId;
   QSqlQuery query(database());
-  bool ok;
+  QVariant testId;
+  mdtSqlRecord testData;
 
-  // Set values
-  pvTestData.clearValues();
-  pvTestData.setValue("TestModel_Id_FK", testModelId);
-  pvTestData.setValue("Date", QDate::currentDate());
-  // Get test model data
-  pvTestData.setModelData(tm.getTestModelData(testModelId, ok));
-  if(!ok){
+  // Setup test data
+  if(!testData.addAllFields("Test_tbl", database())){
+    pvLastError = testData.lastError();
     return false;
   }
+  testData.setValue("TestModel_Id_FK", testModelId);
+  testData.setValue("Date", QDate::currentDate());
   // Create test
   if(!beginTransaction()){
     return false;
   }
-  if(!addRecord(pvTestData, "Test_tbl", query)){
+  if(!addRecord(testData, "Test_tbl", query)){
     rollbackTransaction();
     return false;
   }
   testId = query.lastInsertId();
-  pvTestData.setValue("Id_PK", testId);
-  if(!addTestItems(testModelId)){
+  if(!addTestItems(testId, testModelId)){
     rollbackTransaction();
     return false;
   }
   if(!commitTransaction()){
     return false;
   }
-  pvTestDataAreSaved = true;
-  resetTestItemTableModels();
-  ///emit testDataChanged(pvTestData);
+  setCurrentTest(testId);
+
+  return true;
+}
+
+bool mdtTtTest::saveCurrentTest()
+{
+  QVariant testId;
+  QSqlRecord record;
+  bool needToSave;
+  int col;
+  QModelIndex index;
+
+  testId = testData().value("Id_PK");
+  qDebug() << "->-> Save test - ID: " << testId;
+  qDebug() << "->-> Save test - Test_view rec: " << pvTestViewTableModel->record(pvCurrentTestRow);
+  qDebug() << "->-> Save test - Test_tbl  rec: " << pvTestTableModel->record(0);
+  if(testId.isNull()){
+    return true;
+  }
+  if(pvTestTableModel->rowCount() < 1){
+    return true;
+  }
+  // Save data in Test_tbl if needed
+  needToSave = false;
+  record = pvTestTableModel->record(0);
+  for(col = 0; col < pvTestTableModel->columnCount(); ++col){
+    index = pvTestTableModel->index(0, col);
+    if(pvTestTableModel->isDirty(index)){
+      needToSave = true;
+      break;
+    }
+  }
+  qDebug() << "->-> needToSave: " << needToSave;
+  if(!beginTransaction()){
+    return false;
+  }
+  if(needToSave){
+    if(!pvTestTableModel->submitAll()){
+      rollbackTransaction();
+      QSqlError sqlError;
+      sqlError = pvTestTableModel->lastError();
+      pvLastError.setError("Cannot save data in Test_tbl", mdtError::Error);
+      pvLastError.setSystemError(sqlError.number(), sqlError.text());
+      MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
+      pvLastError.commit();
+      return false;
+    }
+  }
+  // Save data in TestItem_tbl
+  qDebug() << "->-> Items count: " << pvTestItemTableModel->rowCount();
+  if(!pvTestItemTableModel->submitAll()){
+    rollbackTransaction();
+    QSqlError sqlError;
+    sqlError = pvTestItemTableModel->lastError();
+    pvLastError.setError("Cannot save data in TestItem_tbl", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
+    pvLastError.commit();
+    return false;
+  }
+  if(!commitTransaction()){
+    return false;
+  }
+  setCurrentTest(testId);
+
+  return true;
+}
+
+bool mdtTtTest::removeCurrentTest()
+{
+  QVariant testId;
+
+  testId = testData().value("Id_PK");
+  if(testId.isNull()){
+    return true;
+  }
+  if(!beginTransaction()){
+    return false;
+  }
+  if(!removeTestItems(testId)){
+    rollbackTransaction();
+    return false;
+  }
+  if(!removeData("Test_tbl", "Id_PK", testId)){
+    rollbackTransaction();
+    return false;
+  }
+  if(!commitTransaction()){
+    return false;
+  }
+  setCurrentTest(QVariant());
 
   return true;
 }
@@ -367,6 +473,7 @@ QVariant mdtTtTest::addTest(const mdtTtTestData & data)
 }
 */
 
+/**
 bool mdtTtTest::updateTest(const QVariant & testId, const mdtTtTestData & data)
 {
   bool newTestModel;
@@ -398,18 +505,72 @@ bool mdtTtTest::updateTest(const QVariant & testId, const mdtTtTestData & data)
 
   return true;
 }
+*/
+
+bool mdtTtTest::testIsEmpty() const
+{
+  QSqlRecord record;
+  int i;
+  int row;
+
+  // Check test data in Test_tbl
+  qDebug() << "++ Test is empty - row count: " << pvTestTableModel->rowCount();
+  if(pvTestTableModel->rowCount() < 1){
+    return true;
+  }
+  Q_ASSERT(pvTestTableModel->rowCount() == 1);
+  record = pvTestTableModel->record(0);
+  for(i = 0; i < record.count(); ++i){
+    qDebug() << "++ Test is empty - Test_tbl - Field " << record.fieldName(i) << " : " << record.value(i);
+    if((record.fieldName(i) != "Id_PK")&&(record.fieldName(i) != "TestModel_Id_FK")&&(record.fieldName(i) != "Date")){
+      if(!record.value(i).isNull()){
+        return false;
+      }
+    }
+  }
+  // Check in TestItem_tbl
+  for(row = 0; row < pvTestItemTableModel->rowCount(); ++row){
+    record = pvTestItemTableModel->record(row);
+    for(i = 0; i < record.count(); ++i){
+      qDebug() << "++ Test is empty - TestItem_tbl - Field " << record.fieldName(i) << " : " << record.value(i);
+      if((record.fieldName(i) != "Id_PK")&&(record.fieldName(i) != "Test_Id_FK")&&(record.fieldName(i) != "TestModelItem_Id_FK")){
+        if(!record.value(i).isNull()){
+          return false;
+        }
+      }
+    }
+  }
+
+  return true;
+}
 
 bool mdtTtTest::testIsSaved()
 {
   int row, col;
   QModelIndex index;
 
+  /**
   if(pvTestData.value("Id_PK").isNull()){
     return true;
   }
   if(!pvTestDataAreSaved){
     return false;
   }
+  */
+  // Check test data in Test_tbl
+  if(pvTestTableModel->rowCount() < 1){
+    return true;
+  }
+  Q_ASSERT(pvTestTableModel->rowCount() == 1);
+  for(col = 0; col < pvTestTableModel->columnCount(); ++col){
+    // Test_tbl model if filtered on current Id_PK, it contains only 1 row
+    index = pvTestTableModel->index(0, col);
+    qDebug() << "-- Checking in Test_tbl, data: " << pvTestTableModel->data(index);
+    if(pvTestTableModel->isDirty(index)){
+      return false;
+    }
+  }
+  // Check test items
   for(row = 0; row < pvTestItemTableModel->rowCount(); ++row){
     for(col = 0; col < pvTestItemTableModel->columnCount(); ++col){
       index = pvTestItemTableModel->index(row, col);
@@ -422,16 +583,51 @@ bool mdtTtTest::testIsSaved()
   return true;
 }
 
+void mdtTtTest::setCurrentTestItemData(const QString & fieldName, const QVariant & data)
+{
+  QVariant testItemId;
+  int testItemViewCol;
+  int testItemTableRow, testItemTableCol;
+  QModelIndex index;
+
+  if(pvTestItemViewTableModel->rowCount() < 1){
+    return;
+  }
+  Q_ASSERT(pvCurrentTestItemRow >= 0);
+  // Get column index of fieldName
+  testItemViewCol = pvTestItemViewTableModel->fieldIndex(fieldName);
+  Q_ASSERT(testItemViewCol >= 0);
+  testItemTableCol = pvTestItemTableModel->fieldIndex(fieldName);
+  Q_ASSERT(testItemTableCol >= 0);
+  // Get corresponding row in TestItem_view
+  testItemId = pvTestItemViewTableModel->record(pvCurrentTestItemRow).value("Id_PK");
+  Q_ASSERT(!testItemId.isNull());
+  testItemTableRow = getTestItemTableModelIndexRow(testItemId);
+  Q_ASSERT(testItemTableRow >= 0);
+  // Set value
+  index = pvTestItemViewTableModel->index(pvCurrentTestItemRow, testItemViewCol);
+  pvTestItemViewTableModel->setData(index, data);
+  index = pvTestItemTableModel->index(testItemTableRow, testItemTableCol);
+  pvTestItemTableModel->setData(index, data);
+}
+
 bool mdtTtTest::hasMoreTestItem() const
 {
   Q_ASSERT(pvTestItemViewTableModel);
 
-  return (pvCurrentTestItemRow < pvTestItemViewTableModel->rowCount());
+  if(pvCurrentTestItemRow < (pvTestItemViewTableModel->rowCount() - 1)){
+    return true;
+  }
+  if(pvTestItemViewTableModel->canFetchMore()){
+    pvTestItemViewTableModel->fetchMore();
+    return true;
+  }
+  return false;
 }
 
 void mdtTtTest::resetTestItemCursor()
 {
-  pvCurrentTestItemRow = 0;
+  pvCurrentTestItemRow = -1;
 }
 
 QVariant mdtTtTest::nextTestItem()
@@ -443,6 +639,9 @@ QVariant mdtTtTest::nextTestItem()
 
   col = pvTestItemViewTableModel->fieldIndex("Id_PK");
   Q_ASSERT(col >= 0);
+  
+  ++pvCurrentTestItemRow;
+  
   index = pvTestItemViewTableModel->index(pvCurrentTestItemRow, col);
   
   /// \todo Provisoire !
@@ -451,7 +650,7 @@ QVariant mdtTtTest::nextTestItem()
   index2 = pvTestItemViewTableModel->index(pvCurrentTestItemRow, col);
   qDebug() << "mdtTtTest - current seq #: " << pvTestItemViewTableModel->data(index2);
   
-  ++pvCurrentTestItemRow;
+  
 
   return pvTestItemViewTableModel->data(index);
 }
@@ -931,10 +1130,17 @@ void mdtTtTest::setCurrentTestIndexRow(int row)
   qDebug() << "mdtTtTest::setCurrentTestIndexRow() - row: " << row;
   
   pvTestTableRelation->setParentCurrentIndex(row);
-  pvTestTestItemTableRelation->setParentCurrentIndex(row);
+  pvTestItemTableRelation->setParentCurrentIndex(row);
+  pvTestItemViewRelation->setParentCurrentIndex(row);
   pvCurrentTestRow = row;
+  qDebug() << " * Current rec in Test_view: " << pvTestViewTableModel->record(pvCurrentTestRow);
+  qDebug() << " * Records in Test_tbl:  " << pvTestTableModel->rowCount();
+  qDebug() << " * Current rec in Test_tbl:  " << pvTestTableModel->record(0);
+  qDebug() << " * Records in TestItem_view: " << pvTestItemViewTableModel->rowCount();
+  qDebug() << " * Records in TestItem_tbl: " << pvTestItemTableModel->rowCount();
   ///pvTestItemTableRelation->setParentCurrentIndex(0);
   qDebug() << "mdtTtTest::setCurrentTestIndexRow() - emit testDataChanged() - data: " << testData();
+  resetTestItemCursor();
   emit testDataChanged(testData());
 }
 
@@ -973,17 +1179,17 @@ void mdtTtTest::updateCurrentTestRow(const QVariant & testId)
 }
 */
 
-bool mdtTtTest::addTestItems(const QVariant & testModelId)
+bool mdtTtTest::addTestItems(const QVariant & testId, const QVariant & testModelId)
 {
   QString sql;
   QList<QVariant> modelItemsDataList;
   mdtSqlRecord testItemData;
-  QVariant testId;
+  ///QVariant testId;
   bool ok;
   int i;
 
   // Get current test ID
-  testId = pvTestData.value("Id_PK");
+  ///testId = pvTestData.value("Id_PK");
   if(testId.isNull()){
     pvLastError.setError(tr("Could not add test items because current test id (Id_PK) is Null."), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
@@ -1010,17 +1216,13 @@ bool mdtTtTest::addTestItems(const QVariant & testModelId)
       return false;
     }
   }
-  resetTestItemTableModels();
+  ///resetTestItemTableModels();
 
   return true;
 }
 
-bool mdtTtTest::removeTestItems()
+bool mdtTtTest::removeTestItems(const QVariant & testId)
 {
-  QVariant testId;
-
-  // Get current test ID
-  testId = pvTestData.value("Id_PK");
   if(testId.isNull()){
     pvLastError.setError(tr("Could not remove test items because current test id (Id_PK) is Null."), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
@@ -1031,11 +1233,57 @@ bool mdtTtTest::removeTestItems()
   if(!removeData("TestItem_tbl", "Test_Id_FK", testId)){
     return false;
   }
-  resetTestItemTableModels();
+  ///resetTestItemTableModels();
 
   return true;
 }
 
+int mdtTtTest::getTestItemTableModelIndexRow(const QVariant& testItemId)
+{
+  int row, col;
+  QModelIndex index;
+
+  if(testItemId.isNull()){
+    return -1;
+  }
+  if(pvTestItemTableModel->rowCount() < 1){
+    return -1;
+  }
+  // Find column of Id_PK
+  col = pvTestItemTableModel->fieldIndex("Id_PK");
+  if(col < 0){
+    mdtError e(tr("Could not find field Id_PK in TestItem_tbl"), mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtTtTest");
+    e.commit();
+    return -1;
+  }
+  // Search row
+  row = 0;
+  while(true){
+    index = pvTestItemTableModel->index(row, col);
+    if(pvTestItemTableModel->data(index) == testItemId){
+      return row;
+    }
+    if(row == (pvTestItemTableModel->rowCount()-1)){
+      if(!pvTestItemTableModel->canFetchMore()){
+        return -1;
+      }
+      pvTestItemTableModel->fetchMore();
+    }
+    ++row;
+  }
+
+  return -1;
+}
+
+
+
+
+
+
+
+
+/**
 void mdtTtTest::resetTestItemTableModels()
 {
   Q_ASSERT(pvTestItemViewTableModel);
@@ -1045,7 +1293,8 @@ void mdtTtTest::resetTestItemTableModels()
   QVariant testId;
 
   // Set new filter
-  testId = pvTestData.value("Id_PK");
+  ///testId = pvTestData.value("Id_PK");
+  testData().value("Id_PK");
   if(testId.isNull()){
     filter = "Test_Id_FK = -1";
   }else{
@@ -1067,6 +1316,7 @@ void mdtTtTest::resetTestItemTableModels()
   // Reset row cursor
   resetTestItemCursor();
 }
+*/
 
 
 /**

@@ -131,6 +131,7 @@ void mdtTtBasicTester::setTestModel()
   ///displayTestItemData();
 }
 
+/**
 void mdtTtBasicTester::saveTest()
 {
   if(testData().value("Id_PK").isNull()){
@@ -142,6 +143,7 @@ void mdtTtBasicTester::saveTest()
   ///displayTestData(false);
   ///displayTestItemData();
 }
+*/
 
 void mdtTtBasicTester::runTest()
 {
@@ -174,7 +176,8 @@ void mdtTtBasicTester::runTest()
   while(test()->hasMoreTestItem()){
     testItemId = test()->nextTestItem();
     qDebug() << "Curremt item: " << testItemId;
-    setTestItemData(testItemId, "Result", "Running ...");
+    ///setTestItemData(testItemId, "Result", "Running ...");
+    test()->setCurrentTestItemData("Result", "Running ...");
     if(!setupInstruments(testItemId)){
       disconnectFromInstruments();
       return;
@@ -182,8 +185,8 @@ void mdtTtBasicTester::runTest()
     
     measuredValue = multimeter->getMeasureValue();
     
-    setTestItemData(testItemId, "MeasuredValue", measuredValue.valueDouble());
-    setTestItemData(testItemId, "Result", "Finished");
+    test()->setCurrentTestItemData("MeasuredValue", measuredValue.valueDouble());
+    test()->setCurrentTestItemData("Result", "Finished");
   }
 
   disconnectFromInstruments();
@@ -217,11 +220,13 @@ bool mdtTtBasicTester::saveTestData()
   // Update somes values
   ///pvTestData.setValue("DutSerialNumber", leSN->text());
   data = testData();
+  /**
   if(!test()->updateTest(data.value("Id_PK"), data)){
     pvLastError = test()->lastError();
     displayLastError();
     return false;
   }
+  */
   setTestData(data);
 
   return true;
@@ -255,6 +260,7 @@ void mdtTtBasicTester::displayTestData(bool getFromDatabase)
 }
 */
 
+/**
 void mdtTtBasicTester::setTestItemData(const QVariant & testItemId, const QString & fieldName, const QVariant & data)
 {
   ///Q_ASSERT(pvTestItemWidget != 0);
@@ -290,6 +296,7 @@ void mdtTtBasicTester::setTestItemData(const QVariant & testItemId, const QStrin
     }
   }
 }
+*/
 
 bool mdtTtBasicTester::addInstruments()
 {

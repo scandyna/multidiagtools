@@ -103,7 +103,7 @@ class mdtTtTest : public mdtTtBase
    *   - testIsSaved()
    *   - 
    */
-  bool setCurrentTest(const QVariant & testId);
+  void setCurrentTest(const QVariant & testId);
 
   /*! \brief Get test data from database for given test ID
    */
@@ -114,9 +114,22 @@ class mdtTtTest : public mdtTtBase
    * Note: will directly create the test.
    *  To check test state before, use:
    *   - testIsSaved()
-   *   - 
+   *   - testIsEmpty()
    */
   bool createTest(const QVariant & testModelId);
+
+  /*! \brief Save current test
+   */
+  bool saveCurrentTest();
+
+  /*! \brief Remove current test
+   *
+   * Note: will directly create the test.
+   *  To check test state before, use:
+   *   - testIsSaved()
+   *   - testIsEmpty()
+   */
+  bool removeCurrentTest();
 
   /*! \brief Add a test
    *
@@ -134,7 +147,18 @@ class mdtTtTest : public mdtTtBase
    *        those that is currently stored,
    *        related test items will be removed, and created again, based on given test model.
    */
-  bool updateTest(const QVariant & testId, const mdtTtTestData & data);
+  ///bool updateTest(const QVariant & testId, const mdtTtTestData & data);
+
+  /*! \brief Check if a test is empty
+   *
+   * When creating a new test, it must be directly stored in database.
+   *  This is because test items must allways be created.
+   *
+   * A test is empty if:
+   *  - In Test_tbl: only Id_PK, TestModel_Id_FK and Date are set
+   *  - In each related item in Test_tbl: only Id_PK, Test_Id_FK and TestModelItem_Id_FK are set
+   */
+  bool testIsEmpty() const;
 
   /*! \brief Check if test is saved
    *
@@ -143,6 +167,15 @@ class mdtTtTest : public mdtTtBase
    *  Note: each call of this method will check all test items.
    */
   bool testIsSaved();
+
+  /*! \brief Set test item data
+   */
+
+  /*! \brief Set current test item data
+   *
+   * Note: will not save to database. Use saveCurrentTest() for that.
+   */
+  void setCurrentTestItemData(const QString& fieldName, const QVariant& data);
 
   /*! \brief Check if more test item is available
    */
@@ -257,11 +290,7 @@ class mdtTtTest : public mdtTtBase
    */
   ///void onSqlModelDestroyed(QObject *obj);
 
- public slots:
-
-  /*! \brief Set current index row for Test_view table model
-   */
-  void setCurrentTestIndexRow(int row);
+ ///public slots:
 
  signals:
 
@@ -273,21 +302,29 @@ class mdtTtTest : public mdtTtBase
 
  private:
 
+  /*! \brief Set current index row for Test_view table model
+   */
+  void setCurrentTestIndexRow(int row);
+
   /*! \brief Set test data pvCurrentTestRow to a value that correspond to given testIt in pvTestTableModel
    */
   ///void updateCurrentTestRow(const QVariant & testId);
 
   /*! \brief Add test items for given test model ID to current test (see pvTestData)
    */
-  bool addTestItems(const QVariant & testModelId);
+  bool addTestItems(const QVariant & testId, const QVariant & testModelId);
 
   /*! \brief Remove test items from current test (see pvTestData)
    */
-  bool removeTestItems();
+  bool removeTestItems(const QVariant & testId);
+
+  /*! \brief Get row in pvTestItemTableModel for given testItemId
+   */
+  int getTestItemTableModelIndexRow(const QVariant & testItemId);
 
   /*! \brief Apply filter of pvTestItemTableModel to current test ID and reset pvCurrentTestItemRow to first item
    */
-  void resetTestItemTableModels();
+  ///void resetTestItemTableModels();
 
   /*! \brief Check if test item sql model was set
    *
@@ -322,8 +359,8 @@ class mdtTtTest : public mdtTtBase
   Q_DISABLE_COPY(mdtTtTest);
 
   // Test data
-  mdtTtTestData pvTestData;                                 // Contains data from Test_tbl and TestModel_tbl
-  bool pvTestDataAreSaved;  // Only for data in Test_tbl
+  ///mdtTtTestData pvTestData;                                 // Contains data from Test_tbl and TestModel_tbl
+  ///bool pvTestDataAreSaved;  // Only for data in Test_tbl
   
   mdtTtTestModelData pvTestModelData;                           // Contains data from TestModel_tbl
   std::shared_ptr<QSqlTableModel> pvTestViewTableModel;         // Access data in Test_view
@@ -333,8 +370,8 @@ class mdtTtTest : public mdtTtBase
   // Test item data models
   std::shared_ptr<QSqlTableModel> pvTestItemViewTableModel;     // Access data in TestItem_view
   std::shared_ptr<QSqlTableModel> pvTestItemTableModel;         // Access data in TestItem_tbl
-  std::shared_ptr<mdtSqlRelation> pvTestItemTableRelation;      // TestItem_view <-> TestItem_tbl relation
-  std::shared_ptr<mdtSqlRelation> pvTestTestItemTableRelation;  // Test_tbl <-> TestItem_tbl relation
+  std::shared_ptr<mdtSqlRelation> pvTestItemViewRelation;       // Test_view <-> TestItem_view relation
+  std::shared_ptr<mdtSqlRelation> pvTestItemTableRelation;      // Test_view <-> TestItem_tbl relation
   int pvCurrentTestItemRow;
 };
 

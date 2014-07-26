@@ -24,6 +24,8 @@
 #include "mdtSqlTableWidget.h"
 #include <QDate>
 #include <QVBoxLayout>
+#include <QCloseEvent>
+#include <QMessageBox>
 #include <memory>
 
 #include <QDebug>
@@ -101,4 +103,27 @@ void mdtTtBasicTesterWindow::connectActions()
   connect(actTestNew, SIGNAL(triggered()), pvTesterWidget, SLOT(createTest()));
   connect(actTestView, SIGNAL(triggered()), pvTesterWidget, SLOT(openTest()));
   connect(actTestRun, SIGNAL(triggered()), pvTesterWidget, SLOT(runTest()));
+}
+
+void mdtTtBasicTesterWindow::closeEvent(QCloseEvent* event)
+{
+  if(pvTesterWidget == 0){
+    event->accept();
+    return;
+  }
+  if(!pvTesterWidget->testIsSaved()){
+    QMessageBox msgBox(this);
+    msgBox.setText(tr("Current test was not saved."));
+    msgBox.setInformativeText(tr("If you continue, current test will be lost. Do you want to continue ?"));
+    msgBox.setIcon(QMessageBox::Warning);
+    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::No);
+    if(msgBox.exec() == QMessageBox::Yes){
+      event->accept();
+    }else{
+      event->ignore();
+    }
+  }else{
+    event->accept();
+  }
 }

@@ -67,7 +67,7 @@ class mdtTtBasicTester : public mdtTtAbstractTestWidget /// : public QMainWindow
 
   /*! \brief Save test
    */
-  void saveTest();
+  ///void saveTest();
 
   /*! \brief Run test
    */
@@ -102,7 +102,7 @@ class mdtTtBasicTester : public mdtTtAbstractTestWidget /// : public QMainWindow
    *  and test item ID.
    *  Data is not saved to database.
    */
-  void setTestItemData(const QVariant & testItemId, const QString & fieldName, const QVariant & data);
+  ///void setTestItemData(const QVariant & testItemId, const QString & fieldName, const QVariant & data);
 
   /*! \brief Add instruments
    */

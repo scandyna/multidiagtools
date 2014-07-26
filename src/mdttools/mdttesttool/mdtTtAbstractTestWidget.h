@@ -104,11 +104,22 @@ class mdtTtAbstractTestWidget : public QWidget
    */
   inline mdtTtTestData testData() const { return pvTest->testData(); }
 
+  /*! \brief Check if a test is empty
+   *
+   * When creating a new test, it must be directly stored in database.
+   *  This is because test items must allways be created.
+   *
+   * A test is empty if:
+   *  - In Test_tbl: only Id_PK, TestModel_Id_FK and Date are set
+   *  - In each related item in Test_tbl: only Id_PK, Test_Id_FK and TestModelItem_Id_FK are set
+   */
+  bool testIsEmpty() const;
+
   /*! \brief Check if test is saved
    *
    * A test is saved if all cached data regarding Test_tbl and TestItem_tbl are stored in database.
    */
-  inline bool testIsSaved() { return pvTest->testIsSaved(); }
+  bool testIsSaved() const;
 
  public slots:
 
@@ -132,9 +143,13 @@ class mdtTtAbstractTestWidget : public QWidget
    */
   virtual void openTest();
 
+  /*! \brief Save current test
+   */
+  virtual void saveTest();
+
   /*! \brief Set DutSerialNumber
    */
-  void setDutSerialNumber(const QString & value);
+  ///void setDutSerialNumber(const QString & value);
 
  signals:
 
@@ -152,6 +167,12 @@ class mdtTtAbstractTestWidget : public QWidget
   void testDataChanged(const QSqlRecord & data);
 
  protected:
+
+  /*! \brief Remove current test if it is empty
+   *
+   * see testIsEmpty()
+   */
+  bool removeTestIfEmpty();
 
   /*! \brief Contains last error that occured
    */

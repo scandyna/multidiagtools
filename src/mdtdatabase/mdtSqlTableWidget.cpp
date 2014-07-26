@@ -485,7 +485,7 @@ void mdtSqlTableWidget::onCurrentRowChanged(const QModelIndex &current, const QM
 {
   Q_ASSERT(proxyModel() != 0);
 
-  if(!childWidgetsAreInVisaluzingState()){
+  if(!childWidgetsAreInVisaluzingState(true)){
     ///pvTableView->setCurrentIndex(previous);
     return;
   }

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -25,6 +25,7 @@
 #include <QTest>
 #include <QString>
 #include <QTimer>
+#include <QVector>
 
 #include <atomic>
 
@@ -62,6 +63,7 @@ void mdtStateMachineTest::stateMachineTest()
   mdtStateMachine sm;
   mdtState *s1, *s2;
   QTimer event;
+  QVector<int> states;
 
   event.setSingleShot(true);
 
@@ -101,6 +103,15 @@ void mdtStateMachineTest::stateMachineTest()
   event.start(100);
   QVERIFY(sm.waitOnState(1, 200));
   QCOMPARE(sm.currentState(), 1);
+  // Check that waiting on s2 fails
+  QVERIFY(!sm.waitOnState(2, 100));
+  // Check waitOnOneState
+  states.clear();
+  states << 1 << 2;
+  QVERIFY(sm.waitOnOneState(states, 50));
+  // Go back to s2
+  event.start(50);
+  QVERIFY(sm.waitOnOneState(states, 100));
 }
 
 void mdtStateMachineTest::subMachineTest()

@@ -37,6 +37,8 @@ mdtTtAbstractTestWidget::mdtTtAbstractTestWidget(QSqlDatabase db, QWidget* paren
    pvTest(new mdtTtTest(0, db))
 {
   pvTestFormWidget = new mdtSqlFormWidget;
+  pvTestFormWidget->setAskUserBeforRevert(false);
+  pvTestFormWidget->setModel(pvTest->testTableModel().get());
   ///connect(pvTestFormWidget, SIGNAL(currentRowChanged(int)), pvTest.get(), SLOT(setCurrentTestIndexRow(int)));
   connect(pvTest.get(), SIGNAL(testDataChanged(const QSqlRecord&)), this, SIGNAL(testDataChanged(const QSqlRecord&)));
 }
@@ -47,7 +49,6 @@ bool mdtTtAbstractTestWidget::init()
     pvLastError = pvTest->lastError();
     return false;
   }
-  pvTestFormWidget->setModel(pvTest->testTableModel().get());
   pvTestFormWidget->setCurrentIndex(-1);
   
   ///emit testItemTableSet();
@@ -60,6 +61,23 @@ void mdtTtAbstractTestWidget::setTestUiWidget(QWidget* widget)
   Q_ASSERT(widget != 0);
   pvTestFormWidget->mapFormWidgets(widget);
   pvTestFormWidget->setCurrentIndex(-1);
+  pvTestFormWidget->start();
+}
+
+bool mdtTtAbstractTestWidget::testIsEmpty() const
+{
+  if(!pvTestFormWidget->allDataAreSaved(false)){
+    return false;
+  }
+  return pvTest->testIsEmpty();
+}
+
+bool mdtTtAbstractTestWidget::testIsSaved() const
+{
+  if(!pvTestFormWidget->allDataAreSaved(false)){
+    return false;
+  }
+  return pvTest->testIsSaved();
 }
 
 void mdtTtAbstractTestWidget::createTest()
@@ -69,8 +87,13 @@ void mdtTtAbstractTestWidget::createTest()
   QString sql;
   QVariant testModelId;
 
+  // Remove test if it is empty
+  if(!removeTestIfEmpty()){
+    displayLastError();
+    return;
+  }
   // Check if test is saved
-  if(!pvTest->testIsSaved()){
+  if(!testIsSaved()){
     QMessageBox msgBox(this);
     msgBox.setText(tr("Current test was not saved."));
     msgBox.setInformativeText(tr("If you continue, current test will be lost. Do you want to continue ?"));
@@ -80,7 +103,9 @@ void mdtTtAbstractTestWidget::createTest()
     if(msgBox.exec() != QMessageBox::Yes){
       return;
     }
+    pvTestFormWidget->revert();
   }
+  pvTestFormWidget->setCurrentIndex(-1);
   // Let the user choose a test model
   sql = "SELECT TM.Id_PK, TM.DesignationEN";
   sql += " FROM TestModel_tbl TM";
@@ -102,6 +127,7 @@ void mdtTtAbstractTestWidget::createTest()
     displayLastError();
     return;
   }
+  pvTestFormWidget->toFirst();
 }
 
 void mdtTtAbstractTestWidget::openTest()
@@ -111,8 +137,13 @@ void mdtTtAbstractTestWidget::openTest()
   QString sql;
   QVariant testId;
 
+  // Remove test if it is empty
+  if(!removeTestIfEmpty()){
+    displayLastError();
+    return;
+  }
   // Check if test is saved
-  if(!pvTest->testIsSaved()){
+  if(!testIsSaved()){
     QMessageBox msgBox(this);
     msgBox.setText(tr("Current test was not saved."));
     msgBox.setInformativeText(tr("If you continue, current test will be lost. Do you want to continue ?"));
@@ -122,6 +153,7 @@ void mdtTtAbstractTestWidget::openTest()
     if(msgBox.exec() != QMessageBox::Yes){
       return;
     }
+    pvTestFormWidget->revert();
   }
   // Get current test id
   testId = pvTest->testData().value("Id_PK");
@@ -144,13 +176,26 @@ void mdtTtAbstractTestWidget::openTest()
   Q_ASSERT(s.rowCount() == 1);
   testId = s.data(0, "Id_PK");
   // Change to selected test
-  if(!pvTest->setCurrentTest(testId)){
+  pvTest->setCurrentTest(testId);
+  pvTestFormWidget->toFirst();
+}
+
+void mdtTtAbstractTestWidget::saveTest()
+{
+  // At first, submit data from form to DB - Error message will be shown by form widget
+  if(!pvTestFormWidget->submitAndWait()){
+    return;
+  }
+  // Call mdtTtTest's save method, will also save test items
+  if(!pvTest->saveCurrentTest()){
     pvLastError = pvTest->lastError();
     displayLastError();
     return;
   }
+
 }
 
+/**
 void mdtTtAbstractTestWidget::setDutSerialNumber(const QString & value)
 {
   QString str = value.trimmed();
@@ -159,6 +204,19 @@ void mdtTtAbstractTestWidget::setDutSerialNumber(const QString & value)
   }else{
     setTestDataValue("DutSerialNumber", str);
   }
+}
+*/
+
+bool mdtTtAbstractTestWidget::removeTestIfEmpty()
+{
+  if(!testIsEmpty()){
+    return true;
+  }
+  if(!pvTest->removeCurrentTest()){
+    pvLastError = pvTest->lastError();
+    return false;
+  }
+  return true;
 }
 
 void mdtTtAbstractTestWidget::displayLastError()

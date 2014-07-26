@@ -29,6 +29,7 @@
 class mdtTtBasicTester;
 class mdtDeviceContainerWidget;
 class mdtSqlTableWidget;
+class QCloseEvent;
 
 class mdtTtBasicTesterWindow : public QMainWindow, Ui::mdtTtBasicTesterWindow
 {
@@ -59,6 +60,10 @@ class mdtTtBasicTesterWindow : public QMainWindow, Ui::mdtTtBasicTesterWindow
   /*! \brief Connect actions to slots
    */
   void connectActions();
+
+  /*! \brief Do some check before accept close event
+   */
+  void closeEvent(QCloseEvent *event);
 
   Q_DISABLE_COPY(mdtTtBasicTesterWindow);
 

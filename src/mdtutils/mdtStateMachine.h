@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -23,6 +23,7 @@
 
 #include <QStateMachine>
 #include <QString>
+#include <QVector>
 
 class mdtState;
 class QTimer;
@@ -71,6 +72,18 @@ class mdtStateMachine : public QStateMachine
    * \return True on success, false on timeout.
    */
   bool waitOnState(int state, int timeout = -1);
+
+  /*! \brief Wait until a state is reached
+   *
+   * This wait method will let the application's event loop continue working,
+   *  so it will not freeze GUI.
+   *
+   * \param states Wait of one of state in the list. If one is reached before timeout, this method returns true
+   * \param timeout Maximum time to wait [ms].
+   *                 Value < 0 means a infinite timeout.
+   * \return True on success, false on timeout.
+   */
+  bool waitOnOneState(const QVector<int> & states, int timeout = -1);
 
   /*! \brief Notify current state
    *
