@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>mdtTtValueEditionDialog</class>
+ <widget class="QDialog" name="mdtTtValueEditionDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>398</width>
+    <height>127</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QFormLayout" name="formLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="lbValue">
+     <property name="text">
+      <string>Value:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="mdtDoubleEdit" name="deValue"/>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="lbLimit">
+     <property name="text">
+      <string>Limit:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QDoubleSpinBox" name="sbLimitMin">
+       <property name="suffix">
+        <string>%</string>
+       </property>
+       <property name="minimum">
+        <double>-100.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>0.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QDoubleSpinBox" name="sbLimitMax">
+       <property name="suffix">
+        <string>%</string>
+       </property>
+       <property name="maximum">
+        <double>100.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lbLimitRange">
+       <property name="text">
+        <string>          </string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="lbFail">
+     <property name="text">
+      <string>Fail:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QDoubleSpinBox" name="sbFailMin">
+       <property name="suffix">
+        <string>%</string>
+       </property>
+       <property name="minimum">
+        <double>-100.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>0.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QDoubleSpinBox" name="sbFailMax">
+       <property name="suffix">
+        <string>%</string>
+       </property>
+       <property name="maximum">
+        <double>100.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lbFailRange">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="3" column="0" colspan="2">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>mdtDoubleEdit</class>
+   <extends>QWidget</extends>
+   <header>mdtDoubleEdit.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>mdtTtValueEditionDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>mdtTtValueEditionDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

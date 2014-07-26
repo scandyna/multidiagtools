@@ -22,6 +22,7 @@ set (TT_HEADER_FILES
           mdtTtRelayPathDialog.h
           mdtTtTestModelGenerationDialog.h
           mdtTtAbstractTestWidget.h
+          mdtTtValueEditionDialog.h
     )
 
 # Sources files for mdtTestTool
@@ -55,6 +56,7 @@ set (TT_SOURCES_FILES
           mdtTtRelayPathDialog.cpp
           mdtTtTestModelGenerationDialog.cpp
           mdtTtAbstractTestWidget.cpp
+          mdtTtValueEditionDialog.cpp
     )
 
 # Form files for mdtTestTool
@@ -69,6 +71,7 @@ set (TT_FORM_FILES
           mdtTtBasicTesterWindow.ui
           mdtTtRelayPathDialog.ui
           mdtTtTestModelGenerationDialog.ui
+          mdtTtValueEditionDialog.ui
     )
 
 # Header files for mdtCableList

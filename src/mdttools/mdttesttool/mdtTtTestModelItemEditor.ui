@@ -6,17 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>429</width>
-    <height>126</height>
+    <width>478</width>
+    <height>173</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QFormLayout" name="formLayout">
-   <property name="fieldGrowthPolicy">
-    <enum>QFormLayout::ExpandingFieldsGrow</enum>
-   </property>
    <item row="0" column="0">
     <widget class="QLabel" name="lbSequenceNumber">
      <property name="text">
@@ -27,24 +24,24 @@
    <item row="0" column="1">
     <widget class="QLineEdit" name="fld_SequenceNumber"/>
    </item>
-   <item row="2" column="0">
+   <item row="1" column="0">
     <widget class="QLabel" name="lbDesignationEN">
      <property name="text">
       <string>Designation (English):</string>
      </property>
     </widget>
    </item>
-   <item row="2" column="1">
+   <item row="1" column="1">
     <widget class="QLineEdit" name="fld_DesignationEN"/>
    </item>
-   <item row="3" column="0">
+   <item row="2" column="0">
     <widget class="QLabel" name="lbExpectedValue">
      <property name="text">
       <string>Expected value:</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="1">
+   <item row="2" column="1">
     <widget class="mdtDoubleEdit" name="fld_ExpectedValue">
      <property name="maximumSize">
       <size>
@@ -54,14 +51,85 @@
      </property>
     </widget>
    </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="lbLimitValueRange">
+     <property name="text">
+      <string>Limits:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="fld_LimitValueMin">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string> to </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="fld_LimitValueMax">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pbEditMinMax">
+       <property name="text">
+        <string>...</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
    <item row="4" column="0">
+    <widget class="QLabel" name="lbFailValueRange">
+     <property name="text">
+      <string>Fail range:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="fld_FailValueMin">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string> to </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="fld_FailValueMax">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="5" column="0">
     <widget class="QLabel" name="lbValueUnit">
      <property name="text">
       <string>Unit:</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="1">
+   <item row="5" column="1">
     <widget class="QComboBox" name="fld_ValueUnit">
      <item>
       <property name="text">

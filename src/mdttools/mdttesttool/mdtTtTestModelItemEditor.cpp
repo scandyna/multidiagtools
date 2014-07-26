@@ -30,6 +30,7 @@
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlSelectionDialog.h"
 #include "mdtSqlTableSelection.h"
+#include "mdtTtValueEditionDialog.h"
 #include <QSqlQueryModel>
 #include <QSqlTableModel>
 #include <QTableView>
@@ -87,6 +88,15 @@ void mdtTtTestModelItemEditor::setSequenceNumber(const QVariant & seqNumber)
 {
   if(!setCurrentData("TestModelItem_tbl", "SequenceNumber", seqNumber, false)){
     displayLastError();
+  }
+}
+
+void mdtTtTestModelItemEditor::editExpectedValueLimits()
+{
+  mdtTtValueEditionDialog dialog(this);
+  
+  if(dialog.exec() != QDialog::Accepted){
+    return;
   }
 }
 
@@ -741,6 +751,7 @@ bool mdtTtTestModelItemEditor::setupTestItemTable()
   if(!setMainTable("TestModelItem_tbl", "Test item", database())){
     return false;
   }
+  connect(tie.pbEditMinMax, SIGNAL(clicked()), this, SLOT(editExpectedValueLimits()));
 
   return true;
 }

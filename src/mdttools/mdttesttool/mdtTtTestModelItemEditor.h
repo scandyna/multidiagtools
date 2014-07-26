@@ -51,6 +51,10 @@ class mdtTtTestModelItemEditor : public mdtSqlForm
 
  private slots:
 
+  /*! \brief Edit expected value limits
+   */
+  void editExpectedValueLimits();
+
   /*! \brief Add a test link
    */
   void addTestLink();
