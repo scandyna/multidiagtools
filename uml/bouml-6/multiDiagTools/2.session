@@ -1,19 +1,12 @@
-window_sizes 1280 1005 438 836 952 0
+window_sizes 1280 1005 274 1000 952 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 954114 // mdtTtTestModel
-    871 917 80 18 0 0
-  classdiagram_ref 1165058 // BasicTester
-    879 925 100 4 0 0
-  classdiagram_ref 927874 // TestNode
-    120 106 100 18 0 0
-  active  classdiagram_ref 1204482 // mdtTtAbstractTestWidget
-    836 952 100 4 71 0
+  active  classdiagram_ref 941058 // Test
+    1000 952 70 3 84 0
 end
 show_stereotypes
 open
-  classview_ref 286978 // mdtDatabase
-  classdiagram_ref 967426 // mdtSqlForm
-  classview_ref 648578 // mdtSqlWidget
+  attribute_ref 1340930 // ResultValue
+  attribute_ref 1066754 // Result
 end
 end

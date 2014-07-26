@@ -41,7 +41,7 @@ class mdtTtTestModelEditor;
 ///class mdtTtTestModelItemEditor;
 class mdtSqlWindow;
 class mdtTtTestConnectionCableEditor;
-class mdtTtBasicTester;
+///class mdtTtBasicTester;
 class mdtTtBasicTesterWindow;
 
 class mdtTtCableChecker;
@@ -393,7 +393,7 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   QList<mdtSqlTableWidget*> pvOpenViews;
   QList<mdtSqlWindow*> pvOpenEditors;
   // Basic tester
-  mdtTtBasicTester *pvBasicTester;
+  ///mdtTtBasicTester *pvBasicTester;
   mdtTtBasicTesterWindow *pvBasicTesterWindow;
   
   // Vehicle types

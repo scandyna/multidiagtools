@@ -68,7 +68,7 @@ mdtClMainWindow::mdtClMainWindow()
   initWorkDirectory();
   ///openDatabaseSqlite();
   // Basic tester
-  pvBasicTester = 0;
+  ///pvBasicTester = 0;
   pvBasicTesterWindow = 0;
   // Central widget
   pvTabWidget = 0;
@@ -448,7 +448,7 @@ void mdtClMainWindow::editTestItem()
 
 void mdtClMainWindow::runBasicTester()
 {
-  if(pvBasicTester == 0){
+  if(pvBasicTesterWindow == 0){
     createBasicTester();
   }
   Q_ASSERT(pvBasicTesterWindow != 0);
@@ -950,16 +950,20 @@ mdtTtTestModelEditor *mdtClMainWindow::createTestModelEditor()
 
 void mdtClMainWindow::createBasicTester()
 {
-  Q_ASSERT(pvBasicTester == 0);
+  ///Q_ASSERT(pvBasicTester == 0);
   Q_ASSERT(pvBasicTesterWindow == 0);
 
-  pvBasicTester = new mdtTtBasicTester(pvDatabaseManager->database());
-  pvBasicTesterWindow = new mdtTtBasicTesterWindow(this);
-  
+  ///pvBasicTester = new mdtTtBasicTester(pvDatabaseManager->database());
+  pvBasicTesterWindow = new mdtTtBasicTesterWindow(pvDatabaseManager->database(), this);
+  if(!pvBasicTesterWindow->init()){
+    displayError(pvBasicTesterWindow->lastError());
+  }
+  /**
   if(!pvBasicTester->setup()){
     displayError(pvBasicTester->lastError());
   }
   pvBasicTesterWindow->setTesterWidget(pvBasicTester);
+  */
 }
 
 mdtSqlTableWidget *mdtClMainWindow::createTableView(const QString & tableName, const QString & userFriendlyTableName)
@@ -1133,10 +1137,10 @@ bool mdtClMainWindow::deleteEditors()
       }
     }
   }
-  if(pvBasicTester != 0){
+  if(pvBasicTesterWindow != 0){
     /// \todo Check that all data are saved
-    delete pvBasicTester;
-    pvBasicTester = 0;
+    delete pvBasicTesterWindow;
+    pvBasicTesterWindow = 0;
   }
 
   return pvOpenEditors.isEmpty();

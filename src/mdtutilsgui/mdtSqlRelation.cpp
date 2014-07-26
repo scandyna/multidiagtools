@@ -23,7 +23,7 @@
 #include "mdtError.h"
 #include <QSqlField>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtSqlRelation::mdtSqlRelation(QObject *parent)
  : QObject(parent)
@@ -111,12 +111,6 @@ void mdtSqlRelation::setParentCurrentIndex(int index)
   Q_ASSERT(pvChildModel != 0);
 
   pvCurrentRow = index;
-  qDebug() << "mdtSqlRelation::setParentCurrentIndex() - table " << pvParentModel->tableName() << " -> " << pvChildModel->tableName() << " - index: " << index;
-  /**
-  if(index < 0){
-    return;
-  }
-  */
   generateChildModelRelationFilter(index);
 }
 
@@ -184,7 +178,6 @@ void mdtSqlRelation::generateChildModelRelationFilter(int row)
 {
   Q_ASSERT(pvParentModel != 0);
   Q_ASSERT(pvChildModel != 0);
-  ///Q_ASSERT(row >= 0);
 
   int i;
   mdtSqlRelationItem *item;
@@ -198,16 +191,13 @@ void mdtSqlRelation::generateChildModelRelationFilter(int row)
   for(i=0; i<pvRelations.size(); ++i){
     item = pvRelations.at(i);
     Q_ASSERT(item != 0);
-    qDebug() << "mdtSqlRelation, parent record is NULL: " << record.isNull(item->parentFieldIndex());
     // Get parent model's data
     if(!record.isNull(item->parentFieldIndex())){
       data = record.value(item->parentFieldIndex());
     }
     if(i>0){
-      ///pvChildModelRelationFilter += " AND";
       pvChildModelRelationFilter += item->relationOperatorWithPreviousItem();
     }
-    qDebug() << "mdtSqlRelation, parent data: " << data;
     pvChildModelRelationFilter += item->nameProtection() + pvChildModel->tableName() + item->nameProtection() + "." + item->nameProtection() + item->childFieldName() + item->nameProtection() + "=";
     if(data.isValid()){
       pvChildModelRelationFilter += item->dataProtection() + data.toString() + item->dataProtection();
@@ -216,7 +206,6 @@ void mdtSqlRelation::generateChildModelRelationFilter(int row)
     }
   }
   // Apply filter
-  qDebug() << "mdtSqlRelation::generateChildModelRelationFilter() - new filter for table " << pvChildModel->tableName() << ": " << pvChildModelRelationFilter;
   generateChildModelFilter();
   pvChildModel->setFilter(pvChildModelFilter);
   emit childModelFilterApplied();

@@ -1,6 +1,6 @@
 format 207
 "DatabaseLogical" // mdttools::mdttesttool::DatabaseLogical
-  revision 50
+  revision 51
   modified_by 2 "philippe"
   // class settings
   
@@ -3090,19 +3090,7 @@ ${inlines}
       end
 
       attribute 1065090 "Date"
-	private explicit_type "date"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 1065218 "Time"
-	private explicit_type "time"
+	private explicit_type "datetime"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -3134,8 +3122,41 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 1292034 "MeasuredValueIsOl"
-	private explicit_type "bool"
+      classrelation 1301506 // <unidirectional association>
+	relation 1288578 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1301506 // <unidirectional association>
+	  b parent class_ref 1006210 // TestModelItem_tbl
+      end
+
+      attribute 1340674 "InstrumentRangeMin"
+	private explicit_type "double"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1340802 "InstrumentRangeMax"
+	private explicit_type "double"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1340930 "ResultValue"
+	private explicit_type "double"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -3158,13 +3179,16 @@ ${inlines}
 	MysqlColumn
       end
 
-      classrelation 1301506 // <unidirectional association>
-	relation 1288578 --->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+      attribute 1341058 "Remark"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
-	    classrelation_ref 1301506 // <unidirectional association>
-	  b parent class_ref 1006210 // TestModelItem_tbl
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
     end
 

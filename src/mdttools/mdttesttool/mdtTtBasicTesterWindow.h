@@ -23,8 +23,10 @@
 
 #include "ui_mdtTtBasicTesterWindow.h"
 #include "mdtTtTestData.h"
+#include "mdtError.h"
 #include <QWidget>
 #include <QMainWindow>
+#include <QSqlDatabase>
 
 class mdtTtBasicTester;
 class mdtDeviceContainerWidget;
@@ -39,23 +41,27 @@ class mdtTtBasicTesterWindow : public QMainWindow, Ui::mdtTtBasicTesterWindow
 
   /*! \brief Constructor
    */
-  mdtTtBasicTesterWindow(QWidget *parent);
+  mdtTtBasicTesterWindow(QSqlDatabase db, QWidget *parent);
 
-  /*! \brief Set tester widget
+  /*! \brief Init
    */
-  void setTesterWidget(mdtTtBasicTester *tester);
+  bool init();
+
+  /*! \brief Get last error
+   */
+  mdtError lastError() const;
 
  public slots:
-
-  /*! \brief Setup test item table widget
-   */
-  void setupTestItemTableWidget();
 
   /*! \brief Update widget with given test data
    */
   void displayTestData(const QSqlRecord & data);
 
  private:
+
+  /*! \brief Setup test item table widget
+   */
+  void setupTestItemTableWidget();
 
   /*! \brief Connect actions to slots
    */

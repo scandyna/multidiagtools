@@ -39,7 +39,6 @@ mdtTtAbstractTestWidget::mdtTtAbstractTestWidget(QSqlDatabase db, QWidget* paren
   pvTestFormWidget = new mdtSqlFormWidget;
   pvTestFormWidget->setAskUserBeforRevert(false);
   pvTestFormWidget->setModel(pvTest->testTableModel().get());
-  ///connect(pvTestFormWidget, SIGNAL(currentRowChanged(int)), pvTest.get(), SLOT(setCurrentTestIndexRow(int)));
   connect(pvTest.get(), SIGNAL(testDataChanged(const QSqlRecord&)), this, SIGNAL(testDataChanged(const QSqlRecord&)));
 }
 
@@ -158,8 +157,14 @@ void mdtTtAbstractTestWidget::openTest()
   // Get current test id
   testId = pvTest->testData().value("Id_PK");
   // Let the user choose a test
+  /**
   sql = "SELECT T.Id_PK, T.Date, TM.DesignationEN, T.DutSerialNumber";
   sql += " FROM Test_tbl T JOIN TestModel_tbl TM ON TM.Id_PK = T.TestModel_Id_FK";
+  if(!testId.isNull()){
+    sql += " WHERE T.Id_PK <> " + testId.toString();
+  }
+  */
+  sql = "SELECT * FROM Test_view";
   if(!testId.isNull()){
     sql += " WHERE T.Id_PK <> " + testId.toString();
   }

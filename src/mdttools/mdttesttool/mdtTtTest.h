@@ -105,10 +105,6 @@ class mdtTtTest : public mdtTtBase
    */
   void setCurrentTest(const QVariant & testId);
 
-  /*! \brief Get test data from database for given test ID
-   */
-  mdtTtTestData getTestData(const QVariant & testId, bool includeModelData, bool *ok);
-
   /*! \brief Create a new test based on given testModelId
    *
    * Note: will directly create the test.
@@ -130,24 +126,6 @@ class mdtTtTest : public mdtTtBase
    *   - testIsEmpty()
    */
   bool removeCurrentTest();
-
-  /*! \brief Add a test
-   *
-   * \param data Test data. New test will be based on TestModel_Id_FK.
-   *              A new Test item will be created for each item
-   *              contained in TestModelItem_tbl that is part of given TestModel_Id_FK.
-   *
-   * \return Test ID from freshly created test, or a Null value on error
-   */
-  ///QVariant addTest(const mdtTtTestData & data);
-
-  /*! \brief Update data for given test data
-   *
-   * Note: in data, if TestModel_Id_FK is different from
-   *        those that is currently stored,
-   *        related test items will be removed, and created again, based on given test model.
-   */
-  ///bool updateTest(const QVariant & testId, const mdtTtTestData & data);
 
   /*! \brief Check if a test is empty
    *
@@ -176,6 +154,29 @@ class mdtTtTest : public mdtTtBase
    * Note: will not save to database. Use saveCurrentTest() for that.
    */
   void setCurrentTestItemData(const QString& fieldName, const QVariant& data);
+
+  /*! \brief Get current test item data
+   *
+   * Note: will return cached value.
+   */
+  QVariant currentTestItemData(const QString & fieldName) const;
+
+  /*! \brief Set measured value to current test item
+   *
+   * Will first check if given value has -OL or +OL flag,
+   *  and set resulting value to, respectiveley, -inf or +inf if true.
+   *
+   * The resulting value is then compared to expected one,
+   *  and result is alos determined.
+   *
+   * Finally, all values are stored to current test item,
+   *  but only cached (see setCurrentTestItemData()).
+   *
+   * Note: instrumentRangeMin and instrumentRangeMax are only
+   *  informative, they are stored as they are given.
+   *  For proper limit evaluation, only mdtValue's flags are used.
+   */
+  void setMeasuredValue(const mdtValue & value, const QVariant & instrumentRangeMin, const QVariant & instrumentRangeMax);
 
   /*! \brief Check if more test item is available
    */
@@ -209,88 +210,12 @@ class mdtTtTest : public mdtTtBase
    */
   ///static mdtValue doubleToValue(const QVariant & dblVal);
 
-  /*! \brief Set test item model
-   *
-   * If a model that contains test item data
-   *  is allready used, for example in the GUI,
-   *  it's possible to re-use it here.
-   *  When do so, test results (measured values, states, ...)
-   *  will allways be reflected to GUI.
-   *
-   * Other goal to use a model is to get/set data
-   *  in a efficient way, without instanciating QSqlQuery
-   *  objects for each, possibly single data, query.
-   *
-   * The given model will not be deleted by this class .
-   *
-   * \deprecated
-   */
-  ///bool setTestItemSqlModel(QSqlTableModel *model);
-
-  /*! \brief Get a list of test item IDs for given test ID
-   *
-   * Items are sorted by sequence number, ascending
-   */
-  QList<QVariant> getTestItemIdListForTestId(const QVariant & testId);
-
-  /*! \brief Get list of hardware node ID used by given test ID
-   */
-  QList<QVariant> getHardwareNodeIdListForTestId(const QVariant & testId);
-
-  /*! \brief Get list of hardware node ID used by given test item ID
-   */
-  QList<QVariant> getHardwareNodeIdListForTestItemId(const QVariant & testItemId);
-
-  /*! \brief Get test node unit setups for a given test item ID and hardwareNodeId
-   *
-   * \param testItemId Primary key of TestItem_tbl
-   * \param hardwareNodeId NodeId from TestNode_tbl
-   *
-   * \deprecated
-   */
-  ///QList<mdtTtTestNodeUnitSetupData> getNodeUnitSetupList(const QVariant & testItemId, const QVariant & hardwareNodeId);
-  QList<QSqlRecord> getNodeUnitSetupList(const QVariant & testItemId, const QVariant & hardwareNodeId);
-
-  /*! \brief Set test model
-   *
-   * Will also add a test item for each test item .
-   */
-  bool setTestModel(const QVariant & testResultId, const QVariant & testId);
-
-  /*! \brief Add a test item
-   */
-  bool addItem(const QVariant & testResultId, const QVariant & testItemId);
-
-  /*! \brief Add a test items based on given test ID
-   *
-   * \deprecated Use addTestItems()
-   */
-  bool addItemsByTestId(const QVariant & testResultId, const QVariant & testId);
-
-  /*! \brief Edit a test item
-   */
-  bool editItem(const QVariant & testItemId, const QString & fieldName, const QVariant & data);
-
   /*! \brief Set measured value
    *
    * Note: value will not be stored to database immediatly,
    *  call submitTestItemSqlModelData() to do it .
    */
   ///bool setMeasuredValue(const QVariant & testItemId, const mdtValue & value);
-
-  /*! \brief Submit test items SQL model data to database
-   *
-   * If a error occurs, it will be available with lastError() .
-   */
-  ///bool submitTestItemSqlModelData();
-
- ///private slots:
-
-  /*! \brief Set sql model pointers tu Null whenn they are destroyed
-   */
-  ///void onSqlModelDestroyed(QObject *obj);
-
- ///public slots:
 
  signals:
 
@@ -306,10 +231,6 @@ class mdtTtTest : public mdtTtBase
    */
   void setCurrentTestIndexRow(int row);
 
-  /*! \brief Set test data pvCurrentTestRow to a value that correspond to given testIt in pvTestTableModel
-   */
-  ///void updateCurrentTestRow(const QVariant & testId);
-
   /*! \brief Add test items for given test model ID to current test (see pvTestData)
    */
   bool addTestItems(const QVariant & testId, const QVariant & testModelId);
@@ -322,47 +243,8 @@ class mdtTtTest : public mdtTtBase
    */
   int getTestItemTableModelIndexRow(const QVariant & testItemId);
 
-  /*! \brief Apply filter of pvTestItemTableModel to current test ID and reset pvCurrentTestItemRow to first item
-   */
-  ///void resetTestItemTableModels();
-
-  /*! \brief Check if test item sql model was set
-   *
-   * Will store a error if not ok .
-   */
-  ///bool testItemSqlModelOk();
-
-  /*! \brief Get index for given testItemId and column
-   *
-   * Will store a error if a invalid index is returned
-   */
-  ///QModelIndex indexOfTestItem(const QVariant & testItemId, int column);
-
-  /*! \brief Helper method to store data into test item SQL model
-   *
-   * If a error occurs, it will be stored .
-   */
-  ///bool setTestItemSqlModelData(const QModelIndex & index, const QVariant & data);
-
-  /*! \brief Helper method to get data from test item SQL model
-   *
-   * If a error occurs, it will be stored .
-   */
-  ///QVariant getTestItemSqlModelData(const QModelIndex & index);
-
-  /*! \brief Helper method to get data from test item SQL model
-   *
-   * \overload getTestItemSqlModelData(const QModelIndex &)
-   */
-  ///QVariant getTestItemSqlModelData(int row, int column);
-
   Q_DISABLE_COPY(mdtTtTest);
 
-  // Test data
-  ///mdtTtTestData pvTestData;                                 // Contains data from Test_tbl and TestModel_tbl
-  ///bool pvTestDataAreSaved;  // Only for data in Test_tbl
-  
-  mdtTtTestModelData pvTestModelData;                           // Contains data from TestModel_tbl
   std::shared_ptr<QSqlTableModel> pvTestViewTableModel;         // Access data in Test_view
   std::shared_ptr<QSqlTableModel> pvTestTableModel;             // Access data in Test_tbl
   std::shared_ptr<mdtSqlRelation> pvTestTableRelation;          // Test_view <-> Test_tbl relation

@@ -31,6 +31,8 @@
 #include <QList>
 #include <QVector>
 #include <QDate>
+#include <QDateTime>
+#include <limits>
 
 #include <QDebug>
 
@@ -46,7 +48,6 @@ mdtTtTest::mdtTtTest(QObject *parent, QSqlDatabase db)
 {
   pvCurrentTestRow = -1;
   pvCurrentTestItemRow = -1;
-  ///pvTestDataAreSaved = false;
 }
 
 bool mdtTtTest::init()
@@ -86,22 +87,6 @@ bool mdtTtTest::init()
     pvLastError.commit();
     return false;
   }
-  
-  /**
-  // Setup test model data
-  if(!pvTestModelData.setup(database())){
-    pvLastError = pvTestData.lastError();
-    return false;
-  }
-  */
-  // Setup test data
-  /**
-  pvTestDataAreSaved = false;
-  if(!pvTestData.setup(database(), true)){
-    pvLastError = pvTestData.lastError();
-    return false;
-  }
-  */
   // Setup test item view table model
   pvTestItemViewTableModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
   pvTestItemViewTableModel->setTable("TestItem_view");
@@ -146,7 +131,6 @@ bool mdtTtTest::init()
     return false;
   }
   setCurrentTestIndexRow(-1);
-  ///resetTestItemTableModels();
 
   return true;
 }
@@ -191,9 +175,6 @@ QSqlRecord mdtTtTest::testData() const
 
 void mdtTtTest::setCurrentTest(const QVariant & testId)
 {
-  
-  qDebug() << "mdtTtTest::setCurrentTest() - testId: " << testId;
-  
   QString filter;
 
   if(testId.isNull()){
@@ -208,113 +189,6 @@ void mdtTtTest::setCurrentTest(const QVariant & testId)
   }else{
     setCurrentTestIndexRow(-1);
   }
-  
-  /**
-  QModelIndex index;
-  QVariant data;
-  int row, col;
-
-  // Find column of Id_PK
-  col = pvTestViewTableModel->fieldIndex("Id_PK");
-  qDebug() << "mdtTtTest::setCurrentTest() - col: " << col;
-  if(col < 0){
-    setCurrentTestIndexRow(-1);
-    return false;
-  }
-  /// \todo Cache only if neened (while not found, .....)
-  // Cache all data to model
-  if(pvTestViewTableModel->rowCount() > 0){
-    while(pvTestViewTableModel->canFetchMore()){
-      pvTestViewTableModel->fetchMore();
-    }
-  }
-  // Find row for given test ID
-  for(row = 0; row < pvTestViewTableModel->rowCount(); ++row){
-    index = pvTestViewTableModel->index(row, col);
-    if(index.isValid()){
-      data = pvTestViewTableModel->data(index);
-      if(data == testId){
-        // Ok, found
-        setCurrentTestIndexRow(row);
-        return true;
-      }
-    }
-  }
-  // Not found
-  setCurrentTestIndexRow(-1);
-  */
-
-  ///return true;
-}
-
-/**
-bool mdtTtTest::setCurrentTest(const QVariant & testId)
-{
-  mdtTtTestModel tm(0, database());
-  QString sql;
-  QList<QSqlRecord> dataList;
-  bool ok;
-
-  // Get test data
-  sql = "SELECT * FROM Test_tbl WHERE Id_PK = " + testId.toString();
-  dataList = getDataList<QSqlRecord>(sql, ok);
-  if(!ok){
-    return false;
-  }
-  if(dataList.isEmpty()){
-    pvLastError.setError(tr("Could not find data in 'Test_tbl' for Id_PK = '") + testId.toString() + "'", mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestModel");
-    pvLastError.commit();
-    return false;
-  }
-  Q_ASSERT(dataList.size() == 1);
-  pvTestData = dataList.at(0);
-  // Get test model data
-  pvTestData.setModelData(tm.getTestModelData(pvTestData.value("TestModel_Id_FK"), ok));
-  if(!ok){
-    pvTestData.clearValues();
-    return false;
-  }
-  pvTestDataAreSaved = true;
-  resetTestItemTableModels();
-  ///emit testDataChanged(pvTestData);
-
-  return true;
-}
-*/
-
-mdtTtTestData mdtTtTest::getTestData(const QVariant & testId, bool includeModelData, bool *ok)
-{
-  Q_ASSERT(ok != 0);
-
-  QString sql;
-  QList<QSqlRecord> dataList;
-  mdtTtTestData data;
-
-  sql = "SELECT * FROM Test_tbl WHERE Id_PK = " + testId.toString();
-  dataList = getData(sql, ok);
-  if(!*ok){
-    return data;
-  }
-  if(dataList.isEmpty()){
-    pvLastError.setError(tr("Could not find data in 'Test_tbl' for Id_PK = '") + testId.toString() + "'", mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestModel");
-    pvLastError.commit();
-    *ok = false;
-    return data;
-  }
-  Q_ASSERT(dataList.size() == 1);
-  data = dataList.at(0);
-  if(includeModelData){
-    mdtTtTestModel tm(0, database());
-    data.setModelData(tm.getTestModelData(data.value("TestModel_Id_FK"), *ok));
-    if(!*ok){
-      data.clearValues();
-      return data;
-    }
-  }
-
-  return data;
 }
 
 bool mdtTtTest::createTest(const QVariant & testModelId)
@@ -360,9 +234,6 @@ bool mdtTtTest::saveCurrentTest()
   QModelIndex index;
 
   testId = testData().value("Id_PK");
-  qDebug() << "->-> Save test - ID: " << testId;
-  qDebug() << "->-> Save test - Test_view rec: " << pvTestViewTableModel->record(pvCurrentTestRow);
-  qDebug() << "->-> Save test - Test_tbl  rec: " << pvTestTableModel->record(0);
   if(testId.isNull()){
     return true;
   }
@@ -379,7 +250,6 @@ bool mdtTtTest::saveCurrentTest()
       break;
     }
   }
-  qDebug() << "->-> needToSave: " << needToSave;
   if(!beginTransaction()){
     return false;
   }
@@ -396,7 +266,6 @@ bool mdtTtTest::saveCurrentTest()
     }
   }
   // Save data in TestItem_tbl
-  qDebug() << "->-> Items count: " << pvTestItemTableModel->rowCount();
   if(!pvTestItemTableModel->submitAll()){
     rollbackTransaction();
     QSqlError sqlError;
@@ -442,71 +311,6 @@ bool mdtTtTest::removeCurrentTest()
   return true;
 }
 
-/**
-QVariant mdtTtTest::addTest(const mdtTtTestData & data)
-{
-  QVariant testId;
-  QSqlQuery query(database());
-
-  if(!beginTransaction()){
-    return testId;
-  }
-  if(!addRecord(data, "Test_tbl", query)){
-    rollbackTransaction();
-    return testId;
-  }
-  testId = query.lastInsertId();
-  pvTestData = data;
-  pvTestData.setValue("Id_PK", testId);
-  if(!addTestItems(data.value("TestModel_Id_FK"))){
-    rollbackTransaction();
-    return QVariant();
-  }
-  if(!commitTransaction()){
-    return QVariant();
-  }
-  pvTestDataAreSaved = true;
-  resetTestItemTableModels();
-  emit testDataChanged(pvTestData);
-
-  return testId;
-}
-*/
-
-/**
-bool mdtTtTest::updateTest(const QVariant & testId, const mdtTtTestData & data)
-{
-  bool newTestModel;
-
-  newTestModel = (pvTestData.value("TestModel_Id_FK") != data.value("TestModel_Id_FK"));
-  pvTestData = data;
-  if(!beginTransaction()){
-    return false;
-  }
-  // If test model has changed, we have to update items
-  if(newTestModel){
-    if(!removeTestItems()){
-      rollbackTransaction();
-      return false;
-    }
-    if(!addTestItems(pvTestData.value("TestModel_Id_FK"))){
-      rollbackTransaction();
-      return false;
-    }
-  }
-  if(!updateRecord("Test_tbl", data, "Id_PK", testId)){
-    rollbackTransaction();
-    return false;
-  }
-  if(!commitTransaction()){
-    return false;
-  }
-  pvTestDataAreSaved = true;
-
-  return true;
-}
-*/
-
 bool mdtTtTest::testIsEmpty() const
 {
   QSqlRecord record;
@@ -549,14 +353,6 @@ bool mdtTtTest::testIsSaved()
   int row, col;
   QModelIndex index;
 
-  /**
-  if(pvTestData.value("Id_PK").isNull()){
-    return true;
-  }
-  if(!pvTestDataAreSaved){
-    return false;
-  }
-  */
   // Check test data in Test_tbl
   if(pvTestTableModel->rowCount() < 1){
     return true;
@@ -609,6 +405,66 @@ void mdtTtTest::setCurrentTestItemData(const QString & fieldName, const QVariant
   pvTestItemViewTableModel->setData(index, data);
   index = pvTestItemTableModel->index(testItemTableRow, testItemTableCol);
   pvTestItemTableModel->setData(index, data);
+}
+
+QVariant mdtTtTest::currentTestItemData(const QString & fieldName) const
+{
+  int testItemViewCol;
+  QModelIndex index;
+
+  if(pvTestItemViewTableModel->rowCount() < 1){
+    return QVariant();
+  }
+  Q_ASSERT(pvCurrentTestItemRow >= 0);
+  testItemViewCol = pvTestItemViewTableModel->fieldIndex(fieldName);
+  Q_ASSERT(testItemViewCol >= 0);
+  index = pvTestItemViewTableModel->index(pvCurrentTestItemRow, testItemViewCol);
+
+  return pvTestItemViewTableModel->data(index);
+}
+
+void mdtTtTest::setMeasuredValue(const mdtValue & value, const QVariant & instrumentRangeMin, const QVariant & instrumentRangeMax)
+{
+  double resultValue;
+  QVariant expectedValue;
+  QString result;
+
+  // Check about validity
+  if(!value.isValid()){
+    setCurrentTestItemData("Date", QDateTime::currentDateTime());
+    setCurrentTestItemData("Result", "Fail");
+    setCurrentTestItemData("Remark", "Measure/instrument error");
+    return;
+  }
+  // Get expected value
+  expectedValue = currentTestItemData("ExpectedValue");
+  if(expectedValue.isNull()){
+    setCurrentTestItemData("Date", QDateTime::currentDateTime());
+    setCurrentTestItemData("Result", "Fail");
+    setCurrentTestItemData("Remark", "Expected value not set");
+    return;
+  }
+  // Check about -OL and +OL
+  if(value.isMinusOl()){
+    resultValue = -std::numeric_limits<double>::infinity();
+  }else if(value.isPlusOl()){
+    resultValue = std::numeric_limits<double>::infinity();
+  }else{
+    resultValue = value.valueDouble();
+  }
+  // Check and set result
+  if(qAbs<double>(resultValue  - expectedValue.toDouble()) < std::numeric_limits<double>::min()){
+    result = "Ok";
+  }else{
+    result = "Fail"; 
+  }
+  // Set results
+  setCurrentTestItemData("Date", QDateTime::currentDateTime());
+  setCurrentTestItemData("MeasuredValue", value.valueDouble());
+  setCurrentTestItemData("InstrumentRangeMin", instrumentRangeMin);
+  setCurrentTestItemData("InstrumentRangeMax", instrumentRangeMax);
+  setCurrentTestItemData("ResultValue", resultValue);
+  setCurrentTestItemData("Result", result);
 }
 
 bool mdtTtTest::hasMoreTestItem() const
@@ -738,305 +594,6 @@ mdtValue mdtTtTest::doubleToValue(const QVariant & dblVal)
 }
 */
 
-
-/**
-bool mdtTtTest::setTestItemSqlModel(QSqlTableModel *model)
-{
-  Q_ASSERT(model != 0);
-
-  QStringList missingFields;
-  QString errorText;
-  int i;
-
-  pvTestItemViewTableModel = model;
-  ///connect(pvTestItemViewTableModel, SIGNAL(destroyed(QObject*)), this, SLOT(onSqlModelDestroyed(QObject*)));
-  // Get index of fields that we need
-  pvColIdxOfTestItemId = pvTestItemViewTableModel->fieldIndex("Id_PK");
-  if(pvColIdxOfTestItemId < 0){
-    missingFields << "Id_PK";
-  }
-  pvColIdxOfExpectedValue = pvTestItemViewTableModel->fieldIndex("ExpectedValue");
-  if(pvColIdxOfExpectedValue < 0){
-    missingFields << "ExpectedValue";
-  }
-  pvColIdxOfMeasuredValue = pvTestItemViewTableModel->fieldIndex("MeasuredValue");
-  if(pvColIdxOfMeasuredValue < 0){
-    missingFields << "MeasuredValue";
-  }
-  pvColIdxOfResult = pvTestItemViewTableModel->fieldIndex("Result");
-  if(pvColIdxOfResult < 0){
-    missingFields << "Result";
-  }
-  // Check that all column indexes where found
-  if(!missingFields.isEmpty()){
-    errorText = QObject::tr("Some fields could not be found in");
-    errorText += " '" + pvTestItemViewTableModel->tableName() + "'. " + QObject::tr("Missing fields") + " : ";
-    for(i = 0; i < missingFields.size(); ++i){
-      errorText += missingFields.at(i);
-      if(i < (missingFields.size() - 1)){
-        errorText += ", ";
-      }
-    }
-    pvLastError.setError(errorText, mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
-    pvLastError.commit();
-    pvTestItemViewTableModel = 0;
-    return false;
-  }
-
-  return true;
-}
-*/
-
-QList<QVariant> mdtTtTest::getTestItemIdListForTestId(const QVariant & testId)
-{
-  QString sql;
-  QSqlError sqlError;
-  QSqlQuery query(database());
-  QList<QVariant> testItemIdList;
-
-  sql = "SELECT Id_PK FROM TestItem_view WHERE Test_Id_FK = " + testId.toString();
-  sql += " ORDER BY SequenceNumber ASC";
-  if(!query.exec(sql)){
-    sqlError = query.lastError();
-    pvLastError.setError("Cannot execute query to get test items", mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
-    pvLastError.commit();
-    return testItemIdList;
-  }
-  while(query.next()){
-    testItemIdList.append(query.value(0));
-  }
-
-  return testItemIdList;
-}
-
-QList<QVariant> mdtTtTest::getHardwareNodeIdListForTestId(const QVariant & testId)
-{
-  QString sql;
-  QSqlError sqlError;
-  QSqlQuery query(database());
-  QList<QVariant> nodeIdList;
-
-  sql = "SELECT DISTINCT NodeId FROM TestItemNodeUnitSetup_view WHERE Test_Id_FK = " + testId.toString();
-  if(!query.exec(sql)){
-    sqlError = query.lastError();
-    pvLastError.setError("Cannot execute query to get test nodeId list", mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
-    pvLastError.commit();
-    return nodeIdList;
-  }
-  while(query.next()){
-    nodeIdList.append(query.value(0));
-  }
-
-  return nodeIdList;
-}
-
-QList<QVariant> mdtTtTest::getHardwareNodeIdListForTestItemId(const QVariant & testItemId)
-{
-  QString sql;
-  QSqlError sqlError;
-  QSqlQuery query(database());
-  QList<QVariant> nodeIdList;
-
-  sql = "SELECT DISTINCT NodeId FROM TestItemNodeUnitSetup_view WHERE Id_PK = " + testItemId.toString();
-  if(!query.exec(sql)){
-    sqlError = query.lastError();
-    pvLastError.setError("Cannot execute query to get test nodeId list", mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
-    pvLastError.commit();
-    return nodeIdList;
-  }
-  while(query.next()){
-    nodeIdList.append(query.value(0));
-  }
-
-  return nodeIdList;
-}
-
-///QList<mdtTtTestNodeUnitSetupData> mdtTtTest::getNodeUnitSetupList(const QVariant & testItemId, const QVariant & hardwareNodeId)
-QList<QSqlRecord> mdtTtTest::getNodeUnitSetupList(const QVariant & testItemId, const QVariant & hardwareNodeId)
-{
-  ///QList<mdtTtTestNodeUnitSetupData> dataList;
-  QList<QSqlRecord> dataList;
-  QString sql;
-  QSqlError sqlError;
-  QSqlQuery query(database());
-
-  /// \todo Test node ID PK missing !
-  // Note: in this view, Id_PK is the ID of test item
-  sql = "SELECT "\
-        " Id_PK AS TestItemId,"\
-        " TestModelItem_Id_FK,"\
-        " SchemaPosition,"\
-        " IoPosition,"\
-        " State,"\
-        " Value,"\
-        " NodeId ";
-  sql += " FROM TestItemNodeUnitSetup_view ";
-  sql += " WHERE Id_PK = " + testItemId.toString() + " AND NodeId = " + hardwareNodeId.toString();
-  if(!query.exec(sql)){
-    sqlError = query.lastError();
-    pvLastError.setError("Cannot execute query to get test node unit setup.", mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
-    pvLastError.commit();
-    return dataList;
-  }
-  while(query.next()){
-    ///mdtTtTestNodeUnitSetupData data(database());
-    ///qDebug() << "mdtTtTest: rec: " << query.record();
-    ///mdtTtTestNodeUnitSetupData data = query.record();
-    dataList.append(query.record());
-    /// \todo TestItemNodeUnitSetup_tbl.Id_PK is missing in view
-    ///data.setValue("??", ??);
-    ///data.setValue("");
-    ///data.setId(QVariant()); /// \todo Implement !
-    /**
-    data.setTestItemId(query.value(0));
-    data.setTestModelItemId(query.value(1));
-    data.setSchemaPosition(query.value(2));
-    data.setState(query.value(3));
-    data.setValue(query.value(4));
-    data.setNodeId(query.value(5));
-    dataList.append(data);
-    */
-  }
-
-  return dataList;
-}
-
-
-bool mdtTtTest::setTestModel(const QVariant & testResultId, const QVariant & testId)
-{
-  QString sql;
-  QSqlError sqlError;
-  QSqlQuery query(database());
-
-  // Remove previous result items
-  if(!removeData("TestItem_tbl", "Test_Id_FK", testResultId)){
-    return false;
-  }
-  // Prepare query for edition
-  sql = "UPDATE Test_tbl SET "\
-        " TestModel_Id_FK = :TestModel_Id_FK "\
-        " WHERE Id_PK = " + testResultId.toString();
-  if(!query.prepare(sql)){
-    sqlError = query.lastError();
-    pvLastError.setError("Cannot prepare query for test result edition", mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
-    pvLastError.commit();
-    return false;
-  }
-  // Add values and execute query
-  query.bindValue(":TestModel_Id_FK", testId);
-  if(!query.exec()){
-    sqlError = query.lastError();
-    pvLastError.setError("Cannot execute query for test result edition", mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
-    pvLastError.commit();
-    return false;
-  }
-  // Add items
-  if(!addItemsByTestId(testResultId, testId)){
-    return false;
-  }
-
-  return true;
-}
-
-bool mdtTtTest::addItem(const QVariant & testResultId, const QVariant & testItemId)
-{
-  QString sql;
-  QSqlError sqlError;
-  QSqlQuery query(database());
-
-  // Prepare query for edition
-  sql = "INSERT INTO TestItem_tbl (Test_Id_FK, TestModelItem_Id_FK) "\
-        "VALUES (:Test_Id_FK, :TestModelItem_Id_FK)";
-  if(!query.prepare(sql)){
-    sqlError = query.lastError();
-    pvLastError.setError("Cannot prepare query for test result item insertion", mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
-    pvLastError.commit();
-    return false;
-  }
-  // Add values and execute query
-  query.bindValue(":Test_Id_FK", testResultId);
-  query.bindValue(":TestModelItem_Id_FK", testItemId);
-  if(!query.exec()){
-    sqlError = query.lastError();
-    pvLastError.setError("Cannot execute query for test result item insertion", mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
-    pvLastError.commit();
-    return false;
-  }
-
-  return true;
-}
-
-bool mdtTtTest::addItemsByTestId(const QVariant & testResultId, const QVariant & testId)
-{
-  mdtTtTestModel tm(this, database());
-  QList<QVariant> testItemIdList;
-  int i;
-
-  // Get base test items ID list
-  testItemIdList = tm.getListOfTestItemIdListByTestId(testId);
-  if(testItemIdList.isEmpty()){
-    pvLastError = tm.lastError();
-    return false;
-  }
-  // Add test result items
-  for(i = 0; i < testItemIdList.size(); ++i){
-    if(!addItem(testResultId, testItemIdList.at(i))){
-      return false;
-    }
-  }
-
-  return true;
-}
-
-bool mdtTtTest::editItem(const QVariant & testItemId, const QString & fieldName, const QVariant & data)
-{
-  QString sql;
-  QSqlError sqlError;
-  QSqlQuery query(database());
-
-  // Prepare query for edition
-  sql = "UPDATE TestItem_tbl SET ";
-  sql += fieldName + " = :data";
-        " WHERE Id_PK = " + testItemId.toString();
-  if(!query.prepare(sql)){
-    sqlError = query.lastError();
-    pvLastError.setError("Cannot prepare query for test item edition", mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
-    pvLastError.commit();
-    return false;
-  }
-  // Add values and execute query
-  query.bindValue(":data", data);
-  if(!query.exec()){
-    sqlError = query.lastError();
-    pvLastError.setError("Cannot execute query for test item edition", mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
-    pvLastError.commit();
-    return false;
-  }
-
-  return true;
-}
-
 /**
 bool mdtTtTest::setMeasuredValue(const QVariant & testItemId, const mdtValue & value)
 {
@@ -1057,139 +614,27 @@ bool mdtTtTest::setMeasuredValue(const QVariant & testItemId, const mdtValue & v
 }
 */
 
-/**
-bool mdtTtTest::submitTestItemSqlModelData()
-{
-  int row;
-  QModelIndex index;
-  QVariant data;
-  QVariant testItemId;
-
-  if(!testItemSqlModelOk()){
-    return false;
-  }
-  if(!beginTransaction()){
-    return false;
-  }
-  // Check each row and interesting fields and store values of them that are dirty
-  for(row = 0; row < pvTestItemViewTableModel->rowCount(); ++row){
-    // Get test item ID
-    testItemId = getTestItemSqlModelData(row, pvColIdxOfTestItemId);
-    if(testItemId.isNull()){
-      rollbackTransaction();
-      return false;
-    }
-    // MeasuredValue
-    index = pvTestItemViewTableModel->index(row, pvColIdxOfMeasuredValue);
-    qDebug() << "Checking MeasuredValue, index " << index;
-    if(pvTestItemViewTableModel->isDirty(index)){
-      qDebug() << "-> Dirty !";
-      data = pvTestItemViewTableModel->data(index);
-      if(!editItem(testItemId, "MeasuredValue", data)){
-        rollbackTransaction();
-        return false;
-      }
-    }
-    // Result
-    index = pvTestItemViewTableModel->index(row, pvColIdxOfResult);
-    qDebug() << "Checking Result, index " << index;
-    if(pvTestItemViewTableModel->isDirty(index)){
-      qDebug() << "-> Dirty !";
-      data = pvTestItemViewTableModel->data(index);
-      if(!editItem(testItemId, "Result", data)){
-        rollbackTransaction();
-        return false;
-      }
-    }
-  }
-  if(!commitTransaction()){
-    return false;
-  }
-
-  return true;
-}
-*/
-
-/**
-void mdtTtTest::onSqlModelDestroyed(QObject *obj)
-{
-  Q_ASSERT(obj != 0);
-
-  qDebug() << "mdtTtTest::onSqlModelDestroyed() - obj: " << obj;
-  if(obj == pvTestItemViewTableModel){
-    pvTestItemViewTableModel = 0;
-  }
-}
-*/
-
-
 
 
 void mdtTtTest::setCurrentTestIndexRow(int row)
 {
-  qDebug() << "mdtTtTest::setCurrentTestIndexRow() - row: " << row;
-  
   pvTestTableRelation->setParentCurrentIndex(row);
   pvTestItemTableRelation->setParentCurrentIndex(row);
   pvTestItemViewRelation->setParentCurrentIndex(row);
   pvCurrentTestRow = row;
-  qDebug() << " * Current rec in Test_view: " << pvTestViewTableModel->record(pvCurrentTestRow);
-  qDebug() << " * Records in Test_tbl:  " << pvTestTableModel->rowCount();
-  qDebug() << " * Current rec in Test_tbl:  " << pvTestTableModel->record(0);
-  qDebug() << " * Records in TestItem_view: " << pvTestItemViewTableModel->rowCount();
-  qDebug() << " * Records in TestItem_tbl: " << pvTestItemTableModel->rowCount();
-  ///pvTestItemTableRelation->setParentCurrentIndex(0);
-  qDebug() << "mdtTtTest::setCurrentTestIndexRow() - emit testDataChanged() - data: " << testData();
   resetTestItemCursor();
   emit testDataChanged(testData());
 }
-
-/**
-void mdtTtTest::updateCurrentTestRow(const QVariant & testId)
-{
-  QModelIndex index;
-  QVariant data;
-  int col;
-
-  // Find column of Id_PK
-  col = pvTestTableModel->fieldIndex("Id_PK");
-  if(col < 0){
-    pvCurrentTestRow = -1;
-    return;
-  }
-  // Cache all data to model
-  if(pvTestTableModel->rowCount() > 0){
-    while(pvTestTableModel->canFetchMore()){
-      pvTestTableModel->fetchMore();
-    }
-  }
-  // Find row for given test ID
-  for(pvCurrentTestRow = 0; pvCurrentTestRow < pvTestTableModel->rowCount(); ++pvCurrentTestRow){
-    index = pvTestTableModel->index(pvCurrentTestRow, col);
-    if(index.isValid()){
-      data = pvTestTableModel->data(index);
-      if(data == testId){
-        // Ok, found
-        return;
-      }
-    }
-  }
-  // Not found
-  pvCurrentTestRow = -1;
-}
-*/
 
 bool mdtTtTest::addTestItems(const QVariant & testId, const QVariant & testModelId)
 {
   QString sql;
   QList<QVariant> modelItemsDataList;
   mdtSqlRecord testItemData;
-  ///QVariant testId;
   bool ok;
   int i;
 
   // Get current test ID
-  ///testId = pvTestData.value("Id_PK");
   if(testId.isNull()){
     pvLastError.setError(tr("Could not add test items because current test id (Id_PK) is Null."), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
@@ -1216,7 +661,6 @@ bool mdtTtTest::addTestItems(const QVariant & testId, const QVariant & testModel
       return false;
     }
   }
-  ///resetTestItemTableModels();
 
   return true;
 }
@@ -1233,7 +677,6 @@ bool mdtTtTest::removeTestItems(const QVariant & testId)
   if(!removeData("TestItem_tbl", "Test_Id_FK", testId)){
     return false;
   }
-  ///resetTestItemTableModels();
 
   return true;
 }
@@ -1275,173 +718,3 @@ int mdtTtTest::getTestItemTableModelIndexRow(const QVariant& testItemId)
 
   return -1;
 }
-
-
-
-
-
-
-
-
-/**
-void mdtTtTest::resetTestItemTableModels()
-{
-  Q_ASSERT(pvTestItemViewTableModel);
-  Q_ASSERT(pvTestItemTableModel);
-
-  QString filter;
-  QVariant testId;
-
-  // Set new filter
-  ///testId = pvTestData.value("Id_PK");
-  testData().value("Id_PK");
-  if(testId.isNull()){
-    filter = "Test_Id_FK = -1";
-  }else{
-    filter = "Test_Id_FK = " + testId.toString();
-  }
-  pvTestItemViewTableModel->setFilter(filter);
-  pvTestItemTableModel->setFilter(filter);
-  // Cache all data to models
-  if(pvTestItemViewTableModel->rowCount() > 0){
-    while(pvTestItemViewTableModel->canFetchMore()){
-      pvTestItemViewTableModel->fetchMore();
-    }
-  }
-  if(pvTestItemTableModel->rowCount() > 0){
-    while(pvTestItemTableModel->canFetchMore()){
-      pvTestItemTableModel->fetchMore();
-    }
-  }
-  // Reset row cursor
-  resetTestItemCursor();
-}
-*/
-
-
-/**
-bool mdtTtTest::testItemSqlModelOk()
-{
-  if(pvTestItemViewTableModel == 0){
-    pvLastError.setError("SQL model for test item was not set.", mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
-    pvLastError.commit();
-    return false;
-  }
-  return true;
-}
-*/
-
-/**
-QModelIndex mdtTtTest::indexOfTestItem(const QVariant & testItemId, int column)
-{
-  Q_ASSERT(pvTestItemViewTableModel != 0);
-
-  QModelIndex index;
-  QVariant data;
-  int row;
-  bool found = false;
-
-  // Find row for given test item ID
-  for(row = 0; row < pvTestItemViewTableModel->rowCount(); ++row){
-    index = pvTestItemViewTableModel->index(row, pvColIdxOfTestItemId);
-    if(index.isValid()){
-      data = pvTestItemViewTableModel->data(index);
-      if(data == testItemId){
-        found = true;
-        break;
-      }
-    }
-  }
-  if(!found){
-    pvLastError.setError("Could not find row of test item ID " + testItemId.toString() + " in " + pvTestItemViewTableModel->tableName(), mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
-    pvLastError.commit();
-  }
-  // Get requested index
-  index = pvTestItemViewTableModel->index(row, column);
-  // Check if index is valid
-  if(!index.isValid()){
-    QSqlError sqlError;
-    sqlError = pvTestItemViewTableModel->lastError();
-    pvLastError.setError("A invalid index was returned for row " + QString::number(row) + ", column " + QString::number(column), mdtError::Error);
-    if(sqlError.isValid()){
-      pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    }
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
-    pvLastError.commit();
-  }
-
-  return index;
-}
-*/
-
-/**
-bool mdtTtTest::setTestItemSqlModelData(const QModelIndex & index, const QVariant & data)
-{
-  Q_ASSERT(pvTestItemViewTableModel != 0);
-
-  if(!pvTestItemViewTableModel->setData(index, data)){
-    QSqlError sqlError;
-    sqlError = pvTestItemViewTableModel->lastError();
-    pvLastError.setError("Could not set data in " + pvTestItemViewTableModel->tableName(), mdtError::Error);
-    if(sqlError.isValid()){
-      pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    }
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
-    pvLastError.commit();
-    return false;
-  }
-
-  return true;
-}
-*/
-
-/**
-QVariant mdtTtTest::getTestItemSqlModelData(const QModelIndex & index)
-{
-  Q_ASSERT(pvTestItemViewTableModel != 0);
-
-  QVariant data;
-
-  // Check if index is valid
-  if(!index.isValid()){
-    QSqlError sqlError;
-    sqlError = pvTestItemViewTableModel->lastError();
-    pvLastError.setError("A invalid index was returned for row " + QString::number(index.row()) + ", column " + QString::number(index.column()), mdtError::Error);
-    if(sqlError.isValid()){
-      pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    }
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
-    pvLastError.commit();
-    return data;
-  }
-  // Get data and generate a error if it is invalid
-  data = pvTestItemViewTableModel->data(index);
-  if(!data.isValid()){
-    QSqlError sqlError;
-    sqlError = pvTestItemViewTableModel->lastError();
-    pvLastError.setError("Invalid data was returned for row " + QString::number(index.row()) + ", column " + QString::number(index.column()), mdtError::Error);
-    if(sqlError.isValid()){
-      pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    }
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
-    pvLastError.commit();
-  }
-
-  return data;
-}
-*/
-
-/**
-QVariant mdtTtTest::getTestItemSqlModelData(int row, int column)
-{
-  Q_ASSERT(pvTestItemViewTableModel != 0);
-
-  QModelIndex index;
-
-  index = pvTestItemViewTableModel->index(row, column);
-
-  return getTestItemSqlModelData(index);
-}
-*/

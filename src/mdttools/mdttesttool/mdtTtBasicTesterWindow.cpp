@@ -30,75 +30,87 @@
 
 #include <QDebug>
 
-mdtTtBasicTesterWindow::mdtTtBasicTesterWindow(QWidget* parent)
+mdtTtBasicTesterWindow::mdtTtBasicTesterWindow(QSqlDatabase db, QWidget* parent)
  : QMainWindow(parent)
 {
   QVBoxLayout *l;
 
-  pvTesterWidget = 0;
   setupUi(this);
-
+  // Setup tester
+  pvTesterWidget = new mdtTtBasicTester(db);
+  connect(pvTesterWidget, SIGNAL(testDataChanged(const QSqlRecord&)), this, SLOT(displayTestData(const QSqlRecord&)));
   // Setup instruments state widget
   l = new QVBoxLayout;
   pvDeviceContainerWidget = new mdtDeviceContainerWidget;
+  pvDeviceContainerWidget->setContainer(pvTesterWidget->testNodeManager()->container());
   l->addWidget(pvDeviceContainerWidget);
   l->addStretch();
   tbInstruments->setLayout(l);
   // Setup test item table widget
   pvTestItemWidget = new mdtSqlTableWidget;
+  pvTestItemWidget->setModel(pvTesterWidget->testItemViewTableModel().get());
   l = new QVBoxLayout;
   l->addWidget(pvTestItemWidget);
   tbTestItem->setLayout(l);
-
+  
+  // Actions
+  connectActions();
 }
 
-void mdtTtBasicTesterWindow::setTesterWidget(mdtTtBasicTester* tester)
+bool mdtTtBasicTesterWindow::init()
 {
-  Q_ASSERT(tester != 0);
-  
-  /// \todo If pvTesterWidget was allready set, disconnect...
-
-  pvTesterWidget = tester;
+  /**
+  if(!pvTesterWidget->init()){
+    return false;
+  }
+  */
+  if(!pvTesterWidget->setup()){
+    return false;
+  }
   pvTesterWidget->setTestUiWidget(centralWidget());
-  pvDeviceContainerWidget->setContainer(pvTesterWidget->testNodeManager()->container());
-  pvTestItemWidget->setModel(pvTesterWidget->testItemViewTableModel().get());
-  ///connect(pvTesterWidget, SIGNAL(testItemTableSet()), this, SLOT(setupTestItemTableWidget()));
-  connect(pvTesterWidget, SIGNAL(testDataChanged(const QSqlRecord&)), this, SLOT(displayTestData(const QSqlRecord&)));
-  ///connect(leSN, SIGNAL(textChanged(const QString&)), pvTesterWidget, SLOT(setDutSerialNumber(const QString&)));
-  connectActions();
+  setupTestItemTableWidget();
+
+  return true;
+}
+
+mdtError mdtTtBasicTesterWindow::lastError() const
+{
+  return pvTesterWidget->lastError();
+}
+
+void mdtTtBasicTesterWindow::displayTestData(const QSqlRecord & data)
+{
+  lbTestDesignationEN->setText(data.value("DesignationEN").toString());
 }
 
 void mdtTtBasicTesterWindow::setupTestItemTableWidget()
 {
-  qDebug() << "mdtTtBasicTesterWindow::setupTestItemTableWidget()  - table: " << pvTesterWidget->testItemViewTableModel()->tableName();
-  
   // Hide technical fields
   pvTestItemWidget->setColumnHidden("Id_PK", true);
   pvTestItemWidget->setColumnHidden("Test_Id_FK", true);
   pvTestItemWidget->setColumnHidden("TestModelItem_Id_FK", true);
   // Set fields some user friendly names
   pvTestItemWidget->setHeaderData("SequenceNumber", tr("Seq. #"));
-  pvTestItemWidget->setHeaderData("DesignationEN", tr("Designation (English)"));
-  pvTestItemWidget->setHeaderData("ExpectedValue", tr("Value\nexpected"));
-  pvTestItemWidget->setHeaderData("MeasuredValue", tr("Value\nmeasured"));
+  pvTestItemWidget->setHeaderData("DesignationEN", tr("Designation"));
+  pvTestItemWidget->setHeaderData("MeasuredValue", tr("Measured\nvalue"));
+  pvTestItemWidget->setHeaderData("InstrumentRangeMin", tr("Instrument\nrange\nmin"));
+  pvTestItemWidget->setHeaderData("InstrumentRangeMax", tr("Instrument\nrange\nmax"));
+  pvTestItemWidget->setHeaderData("ResultValue", tr("Result\nvalue"));
+  pvTestItemWidget->setHeaderData("LimitValueMin", tr("Limit\nvalue\nmin"));
+  pvTestItemWidget->setHeaderData("LimitValueMax", tr("Limit\nvalue\nmax"));
+  pvTestItemWidget->setHeaderData("FailValueMax", tr("Fail\nvalue\nmax"));
+  pvTestItemWidget->setHeaderData("FailValueMin", tr("Fail\nvalue\nmin"));
+  pvTestItemWidget->setHeaderData("ExpectedValue", tr("Expected\nvalue"));
   // Other things
   pvTestItemWidget->addColumnToSortOrder("SequenceNumber", Qt::AscendingOrder);
   pvTestItemWidget->sort();
   pvTestItemWidget->resizeViewToContents();
 }
 
-void mdtTtBasicTesterWindow::displayTestData(const QSqlRecord & data)
-{
-  QDate date = data.value("Date").toDate();
-  lbDate->setText(date.toString(Qt::SystemLocaleLongDate));
-  lbTestDesignationEN->setText(data.value("DesignationEN").toString());
-  ///leSN->setText(data.value("DutSerialNumber").toString());
-}
-
 void mdtTtBasicTesterWindow::connectActions()
 {
   Q_ASSERT(pvTesterWidget != 0);
-  connect(actTestSetType, SIGNAL(triggered()), pvTesterWidget, SLOT(setTestModel()));
+  ///connect(actTestSetType, SIGNAL(triggered()), pvTesterWidget, SLOT(setTestModel()));
   connect(actTestSave, SIGNAL(triggered()), pvTesterWidget, SLOT(saveTest()));
   connect(actTestNew, SIGNAL(triggered()), pvTesterWidget, SLOT(createTest()));
   connect(actTestView, SIGNAL(triggered()), pvTesterWidget, SLOT(openTest()));

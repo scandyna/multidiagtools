@@ -109,11 +109,13 @@ void mdtTtCableChecker::setTestModel()
     return;
   }
   // Set test model
+  /**
   if(!pvTest->setTestModel(testResultId, baseTestId)){
     pvLastError = pvTest->lastError();
     displayLastError();
     return;
   }
+  */
   /**
   if(!t.setTestModel(testResultId, baseTestId)){
     pvLastError = t.lastError();
@@ -185,7 +187,7 @@ void mdtTtCableChecker::runTest()
     return;
   }
   // Get items for current test
-  testItemIdList = pvTest->getTestItemIdListForTestId(testId);
+  ///testItemIdList = pvTest->getTestItemIdListForTestId(testId);
   if(testItemIdList.isEmpty()){
     return;
   }
@@ -415,7 +417,7 @@ void mdtTtCableChecker::createIoNodes()
   if(testId.isNull()){
     return;
   }
-  hwNodeIdList = pvTest->getHardwareNodeIdListForTestId(testId);
+  ///hwNodeIdList = pvTest->getHardwareNodeIdListForTestId(testId);
   // Create nodes
   for(i = 0; i < hwNodeIdList.size(); ++i){
     device = new mdtDeviceModbusWago;
@@ -459,7 +461,7 @@ bool mdtTtCableChecker::connectToInstruments()
   if(testId.isNull()){
     return false;
   }
-  hwNodeIdListVar = pvTest->getHardwareNodeIdListForTestId(testId);
+  ///hwNodeIdListVar = pvTest->getHardwareNodeIdListForTestId(testId);
   for(i = 0; i < hwNodeIdListVar.size(); ++i){
     hwNodeIdList.append(hwNodeIdListVar.at(i).toInt());
   }
@@ -525,7 +527,7 @@ bool mdtTtCableChecker::setupNodes(const QVariant & testItemId)
     ioNode = pvModbusIoNodes.at(i);
     Q_ASSERT(ioNode != 0);
     // Get setup data
-    setupDataList = pvTest->getNodeUnitSetupList(testItemId, ioNode->hardwareNodeId());
+    ///setupDataList = pvTest->getNodeUnitSetupList(testItemId, ioNode->hardwareNodeId());
     // Set all outputs OFF
     Q_ASSERT(ioNode->ios() != 0);
     ioNode->ios()->setDigitalOutputsValue(false);

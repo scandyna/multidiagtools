@@ -80,24 +80,6 @@ class mdtTtAbstractTestWidget : public QWidget
    */
   std::shared_ptr<mdtTtTest> test() { return pvTest; }
 
-  /*! \brief Set test data
-   *
-   * Will also emit testDataChanged()
-   *
-   * Note: data are not sent to database.
-   */
-  ///inline void setTestData(const mdtTtTestData & data) { pvTest->setTestData(data); }
-  void setTestData(const mdtTtTestData & data) {}
-
-  /*! \brief Set test data value
-   *
-   * Will also emit testDataChanged()
-   *
-   * Note: value is not sent to database.
-   */
-  ///inline void setTestDataValue(const QString & fieldName, const QVariant & value) { pvTest->setTestDataValue(fieldName, value); }
-  void setTestDataValue(const QString & fieldName, const QVariant & value) {}
-
   /*! \brief Get test data
    *
    * Note: return cached data (will not get them from database).
@@ -146,10 +128,6 @@ class mdtTtAbstractTestWidget : public QWidget
   /*! \brief Save current test
    */
   virtual void saveTest();
-
-  /*! \brief Set DutSerialNumber
-   */
-  ///void setDutSerialNumber(const QString & value);
 
  signals:
 

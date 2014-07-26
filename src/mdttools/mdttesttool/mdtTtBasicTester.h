@@ -21,9 +21,6 @@
 #ifndef MDT_TT_BASIC_TESTER_H
 #define MDT_TT_BASIC_TESTER_H
 
-///#include "ui_mdtTtBasicTester.h"
-///#include <QMainWindow>
-
 #include "mdtTtAbstractTestWidget.h"
 #include "mdtTtTest.h"
 #include "mdtTtTestData.h"
@@ -33,7 +30,6 @@
 #include <QSqlDatabase>
 
 class mdtSqlTableWidget;
-///class QSqlTableModel;
 
 /*! \brief Provide ability to run tests
  */
@@ -57,18 +53,6 @@ class mdtTtBasicTester : public mdtTtAbstractTestWidget /// : public QMainWindow
 
  private slots:
 
-  /*! \brief Create a test
-   */
-  ///void createTest();
-
-  /*! \brief Set test model
-   */
-  void setTestModel();
-
-  /*! \brief Save test
-   */
-  ///void saveTest();
-
   /*! \brief Run test
    */
   void runTest();
@@ -76,33 +60,6 @@ class mdtTtBasicTester : public mdtTtAbstractTestWidget /// : public QMainWindow
  private:
 
   Q_DISABLE_COPY(mdtTtBasicTester);
-
-  /*! \brief Create new test
-   */
-  ///bool createNewTest();
-
-  /*! \brief Save data part of Test_tbl
-   */
-  bool saveTestData();
-
-  /*! \brief Display data part of Test_tbl
-   */
-  ///void displayTestData(bool getFromDatabase);
-
-  /*! \brief Display data part of Test item
-   *
-   * Will reload test items from db that are part
-   *  of current test and display them.
-   */
-  ///void displayTestItemData();
-
-  /*! \brief Set data for a test item
-   *
-   * Will set data for given field
-   *  and test item ID.
-   *  Data is not saved to database.
-   */
-  ///void setTestItemData(const QVariant & testItemId, const QString & fieldName, const QVariant & data);
 
   /*! \brief Add instruments
    */
@@ -127,10 +84,6 @@ class mdtTtBasicTester : public mdtTtAbstractTestWidget /// : public QMainWindow
   /*! \brief Setup I/O coupler 0
    */
   bool setupIoCoupler0(const mdtTtTestNodeSetupData & setupData);
-  
-  /*! \brief Setup tables
-   */
-  bool setupTables();
 };
 
 #endif  // #ifndef MDT_TT_BASIC_TESTER_H

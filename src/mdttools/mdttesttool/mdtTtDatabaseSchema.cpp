@@ -2298,13 +2298,31 @@ bool mdtTtDatabaseSchema::setupTestModelItemTable()
   field.setType(QVariant::String);
   field.setLength(100);
   table.addField(field, false);
-
   // ExpectedValue
   field = QSqlField();
   field.setName("ExpectedValue");
   field.setType(QVariant::Double);
   table.addField(field, false);
-  
+  // LimitValueMin
+  field = QSqlField();
+  field.setName("LimitValueMin");
+  field.setType(QVariant::Double);
+  table.addField(field, false);
+  // LimitValueMax
+  field = QSqlField();
+  field.setName("LimitValueMax");
+  field.setType(QVariant::Double);
+  table.addField(field, false);
+  // FailValueMin
+  field = QSqlField();
+  field.setName("FailValueMin");
+  field.setType(QVariant::Double);
+  table.addField(field, false);
+  // FailValueMax
+  field = QSqlField();
+  field.setName("FailValueMax");
+  field.setType(QVariant::Double);
+  table.addField(field, false);
   // ValueUnit
   field = QSqlField();
   field.setName("ValueUnit");
@@ -2613,9 +2631,29 @@ bool mdtTtDatabaseSchema::setupTestItemTable()
   field.setName("TestModelItem_Id_FK");
   field.setType(QVariant::Int);
   table.addField(field, false);
+  // Date
+  field = QSqlField();
+  field.setName("Date");
+  field.setType(QVariant::DateTime);
+  table.addField(field, false);
   // MeasuredValue
   field = QSqlField();
   field.setName("MeasuredValue");
+  field.setType(QVariant::Double);
+  table.addField(field, false);
+  // InstrumentRangeMin
+  field = QSqlField();
+  field.setName("InstrumentRangeMin");
+  field.setType(QVariant::Double);
+  table.addField(field, false);
+  // InstrumentRangeMax
+  field = QSqlField();
+  field.setName("InstrumentRangeMax");
+  field.setType(QVariant::Double);
+  table.addField(field, false);
+  // ResultValue
+  field = QSqlField();
+  field.setName("ResultValue");
   field.setType(QVariant::Double);
   table.addField(field, false);
   // Result
@@ -2623,6 +2661,12 @@ bool mdtTtDatabaseSchema::setupTestItemTable()
   field.setName("Result");
   field.setType(QVariant::String);
   field.setLength(50);
+  table.addField(field, false);
+  // Remark
+  field = QSqlField();
+  field.setName("Remark");
+  field.setType(QVariant::String);
+  field.setLength(100);
   table.addField(field, false);
   // Indexes
   table.addIndex("Test_Id_FK_idx", false);
@@ -3732,11 +3776,20 @@ bool mdtTtDatabaseSchema::createTestItemView()
         " TI.Id_PK,\n"\
         " TI.Test_Id_FK,\n"\
         " TI.TestModelItem_Id_FK,\n"\
+        " TI.Date,\n"\
         " TMI.SequenceNumber,\n"\
         " TMI.DesignationEN,\n"\
-        " TMI.ExpectedValue,\n"\
         " TI.MeasuredValue,\n"\
-        " TI.Result\n"\
+        " TI.InstrumentRangeMin,\n"\
+        " TI.InstrumentRangeMax,\n"\
+        " TI.ResultValue,\n"\
+        " TMI.ExpectedValue,\n"\
+        " TMI.LimitValueMin,\n"\
+        " TMI.LimitValueMax,\n"\
+        " TMI.FailValueMin,\n"\
+        " TMI.FailValueMax,\n"\
+        " TI.Result,\n"\
+        " TI.Remark\n"\
         "FROM TestItem_tbl TI\n"\
         " JOIN TestModelItem_tbl TMI\n"\
         "  ON TMI.Id_PK = TI.TestModelItem_Id_FK\n"\

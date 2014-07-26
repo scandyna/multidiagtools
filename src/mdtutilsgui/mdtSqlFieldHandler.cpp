@@ -83,10 +83,17 @@ void mdtSqlFieldHandlerLabel::setData(const QVariant& data)
       str = locale.toString(pvRawData.toDateTime());
       pvLabel->setText(str);
       break;
+    case QVariant::Date:
+      str = locale.toString(pvRawData.toDate());
+      pvLabel->setText(str);
+      break;
+    case QVariant::Time:
+      str = locale.toString(pvRawData.toTime());
+      pvLabel->setText(str);
+      break;
     default:
       pvLabel->setText(pvRawData.toString());
   }
-  
 }
 
 QVariant mdtSqlFieldHandlerLabel::data() const
@@ -727,8 +734,20 @@ void mdtSqlFieldHandler::setData(const QVariant & data)
   Q_ASSERT(pvDataWidget != 0);
 
   // Try to handle some date/time format
-  if((pvSqlField.type() == QVariant::DateTime)&&(data.type() == QVariant::String)){
-    pvDataWidget->setData(QDateTime::fromString(data.toString(), Qt::ISODate));
+  if(data.type() == QVariant::String){
+    switch(pvSqlField.type()){
+      case QVariant::DateTime:
+        pvDataWidget->setData(QDateTime::fromString(data.toString(), Qt::ISODate));
+        break;
+      case QVariant::Date:
+        pvDataWidget->setData(QDate::fromString(data.toString(), Qt::ISODate));
+        break;
+      case QVariant::Time:
+        pvDataWidget->setData(QTime::fromString(data.toString(), Qt::ISODate));
+        break;
+      default:
+        pvDataWidget->setData(data);
+    }
   }else{
     pvDataWidget->setData(data);
   }

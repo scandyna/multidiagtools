@@ -2,104 +2,104 @@ format 207
 
 classcanvas 128002 class_ref 1006210 // TestModelItem_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 558.4 971.8 2000
+  xyz 558.7 971.4 2000
 end
 classcanvas 128130 class_ref 992770 // TestNodeUnit_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 383.8 159.1 2000
+  xyz 383.3 159.1 2000
 end
 classcanvas 128258 class_ref 1006338 // TestSetup_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 956.2 1296.6 2000
+  xyz 956.6 1296.3 2000
 end
 classcanvas 128386 class_ref 1006466 // TestInstrument_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 922.3 1354.2 2000
+  xyz 922.9 1354.7 2000
 end
 classcanvas 128514 class_ref 1006594 // TestDevice_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 969.3 1248.5 2000
+  xyz 969.3 1248.4 2000
 end
 classcanvas 128642 class_ref 1006722 // TestNodeUnitSetup_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 119.3 623.8 2000
+  xyz 119.8 623.3 2000
 end
 classcanvas 129026 class_ref 992642 // TestNode_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 14 185.1 2006
+  xyz 14 185.6 2006
 end
 classcanvas 129282 class_ref 1013506 // TestCable_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 574.6 715.1 2000
+  xyz 574.7 715.6 2000
 end
 classcanvas 129410 class_ref 1013634 // TestLink_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 929.1 694.9 2006
+  xyz 929.1 694.4 2006
 end
 classcanvas 129922 class_ref 764802 // Unit_tbl
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 466.5 52.6 2010
+  xyz 466.1 52.9 2010
 end
 classcanvas 130562 class_ref 765314 // UnitConnection_tbl
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 992.4 39.8 2016
+  xyz 992.2 39.8 2016
 end
 note 131458 "Based on"
-  xyzwh 537.9 102 2000 106 46
+  xyzwh 537.9 102.4 2000 106 46
 note 131970 "Based on"
-  xyzwh 168 122.4 2022 86 41
+  xyzwh 168 122.6 2022 86 41
 classcanvas 132226 class_ref 1020162 // TestItem_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 546.1 1323.1 2000
+  xyz 547.1 1321.9 2000
 end
 classcanvas 132354 class_ref 1020290 // Test_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 164.7 1283.1 2000
+  xyz 164.6 1283.5 2000
 end
 classcanvas 132610 class_ref 1020418 // TestModel_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 156.8 1084.3 2000
+  xyz 156.3 1084.6 2000
 end
 classcanvas 133122 class_ref 1234562 // TestNodeBus_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 786.8 515.6 2022
+  xyz 786.7 515.1 2022
 end
 classcanvas 134786 class_ref 1249154 // TestNodeUnitConnection_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 759 166.9 2000
+  xyz 759.4 166.5 2000
 end
 classcanvas 135554 class_ref 944770 // VehicleType_tbl
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 92.3 50.7 2017
+  xyz 92 50.8 2017
 end
 note 135938 "Based on"
-  xyzwh 765.9 99.7 2022 86 41
+  xyzwh 765.7 99.6 2022 86 41
 classcanvas 136578 class_ref 992898 // TestNodeUnitType_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 199 450.9 2028
+  xyz 199 450 2028
 end
 classcanvas 137346 class_ref 1255682 // TestCable_TestNodeUnit_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 413.7 621 2000
+  xyz 413.8 621 2000
 end
 classcanvas 137474 class_ref 1255810 // TestCable_DutUnit_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 683.5 621.2 2005
+  xyz 683.6 621.2 2005
 end
 classcanvas 138242 class_ref 1262466 // TestModelItem_TestLink_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 908.6 941.3 2000
+  xyz 908.5 941.3 2000
 end
 classcanvas 138754 class_ref 1268994 // TestModel_TestNode_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 30.7 827.3 2000
+  xyz 30.5 827.9 2000
 end
 classcanvas 139138 class_ref 1329026 // TestModelItemRoute_tbl
   classdiagramsettings member_max_width 0 end
   xyz 517 830 2000
 end
 note 140290 "Pour mise à zéro et calibrations: stocker instruments de référence utilisés (Marque/modèle sous forme texte et ID, SN)"
-  xyzwh 178 931 2006 356 149
+  xyzwh 77.5 1441.5 2006 356 149
 relationcanvas 128770 relation_ref 1246978 // <unidirectional association>
   geometry VH
   decenter_begin 909
@@ -112,7 +112,7 @@ end
 relationcanvas 128898 relation_ref 1247106 // <unidirectional association>
   geometry HV
   decenter_end 83
-  from ref 128642 z 2001 to point 399 655
+  from ref 128642 z 2001 to point 399 682
   line 133634 z 2001 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -128,8 +128,8 @@ relationcanvas 129666 relation_ref 1254402 // <unidirectional association>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130050 relation_ref 1020674 // <unidirectional association>
-  from ref 129922 z 2011 to point 432.2 52.2
-  line 130178 z 2011 to point 432.2 80.6
+  from ref 129922 z 2011 to point 432.4 52.4
+  line 130178 z 2011 to point 432.4 80.2
   line 130306 z 2011 to ref 129922
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -147,8 +147,8 @@ relationcanvas 130690 relation_ref 950530 // <unidirectional association>
 end
 relationcanvas 130818 relation_ref 1020802 // <unidirectional association>
   decenter_end 400
-  from ref 130562 z 2017 to point 961.4 29.8
-  line 130946 z 2017 to point 960.6 49.8
+  from ref 130562 z 2017 to point 961.3 29.1
+  line 130946 z 2017 to point 960.2 49.1
   line 131074 z 2017 to ref 130562
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -251,14 +251,14 @@ relationcanvas 137986 relation_ref 1550978 // <unidirectional association>
 end
 relationcanvas 138370 relation_ref 1557634 // <unidirectional association>
   geometry HVr
-  from ref 138242 z 2001 to point 1037.2 1123
+  from ref 138242 z 2001 to point 1037.9 1123.5
   line 140034 z 2001 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 138498 relation_ref 1557762 // <unidirectional association>
   geometry HV
-  from ref 138242 z 2007 to point 1047.2 938
+  from ref 138242 z 2007 to point 1047.9 938
   line 138626 z 2007 to ref 129410
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
