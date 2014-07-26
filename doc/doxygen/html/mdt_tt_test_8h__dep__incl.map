@@ -1,6 +1,9 @@
 <map id="src/mdttools/mdttesttool/mdtTtTest.h" name="src/mdttools/mdttesttool/mdtTtTest.h">
-<area shape="rect" id="node3" href="$mdt_tt_basic_tester_8h.html" title="src/mdttools/mdttesttool\l/mdtTtBasicTester.h" alt="" coords="5,102,168,149"/>
-<area shape="rect" id="node5" href="$mdt_tt_basic_tester_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtBasicTester.cpp" alt="" coords="64,198,227,245"/>
-<area shape="rect" id="node8" href="$mdt_tt_test_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTest.cpp" alt="" coords="243,102,405,149"/>
-<area shape="rect" id="node10" href="$mdt_tt_test_node_manager_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestNodeManager.cpp" alt="" coords="429,102,621,149"/>
+<area shape="rect" id="node3" href="$mdt_tt_abstract_test_widget_8h.html" title="src/mdttools/mdttesttool\l/mdtTtAbstractTestWidget.h" alt="" coords="155,102,341,149"/>
+<area shape="rect" id="node7" href="$mdt_tt_basic_tester_8h.html" title="src/mdttools/mdttesttool\l/mdtTtBasicTester.h" alt="" coords="229,198,392,245"/>
+<area shape="rect" id="node9" href="$mdt_tt_basic_tester_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtBasicTester.cpp" alt="" coords="348,294,511,341"/>
+<area shape="rect" id="node15" href="$mdt_tt_test_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTest.cpp" alt="" coords="467,102,629,149"/>
+<area shape="rect" id="node17" href="$mdt_tt_test_node_manager_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestNodeManager.cpp" alt="" coords="653,102,845,149"/>
+<area shape="rect" id="node5" href="$mdt_tt_abstract_test_widget_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtAbstractTestWidget.cpp" alt="" coords="5,198,205,245"/>
+<area shape="rect" id="node11" href="$mdt_tt_basic_tester_window_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtBasicTesterWindow.cpp" alt="" coords="121,294,324,341"/>
 </map>

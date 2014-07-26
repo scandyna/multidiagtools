@@ -147,7 +147,7 @@ Public Member Functions</h2></td></tr>
 <p>This class offers some functionnality for the GUI part.</p>
 <p>It was designed to work with a subclass of <a class="el" href="classmdt_sql_form.html" title="Base class for high level SQL widgets API. ">mdtSqlForm</a> . </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_dialog_8h_source.html#l00043">43</a> of file <a class="el" href="mdt_sql_dialog_8h_source.html">mdtSqlDialog.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_dialog_8h_source.html#l00044">44</a> of file <a class="el" href="mdt_sql_dialog_8h_source.html">mdtSqlDialog.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a9588f53afba818d79ff0f2e9eaeed50f"></a>
 <div class="memitem">
@@ -167,7 +167,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_sql_dialog_8cpp_source.html#l00032">32</a> of file <a class="el" href="mdt_sql_dialog_8cpp_source.html">mdtSqlDialog.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_sql_dialog_8cpp_source.html#l00102">accept()</a>, and <a class="el" href="mdt_sql_dialog_8cpp_source.html#l00110">reject()</a>.</p>
+<p>References <a class="el" href="mdt_sql_dialog_8cpp_source.html#l00088">accept()</a>, and <a class="el" href="mdt_sql_dialog_8cpp_source.html#l00096">reject()</a>.</p>
 
 </div>
 </div>
@@ -186,7 +186,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_dialog_8cpp_source.html#l00058">58</a> of file <a class="el" href="mdt_sql_dialog_8cpp_source.html">mdtSqlDialog.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_dialog_8cpp_source.html#l00051">51</a> of file <a class="el" href="mdt_sql_dialog_8cpp_source.html">mdtSqlDialog.cpp</a>.</p>
 
 </div>
 </div>
@@ -214,9 +214,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Overloads QDialog::accept() </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_dialog_8cpp_source.html#l00102">102</a> of file <a class="el" href="mdt_sql_dialog_8cpp_source.html">mdtSqlDialog.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_dialog_8cpp_source.html#l00088">88</a> of file <a class="el" href="mdt_sql_dialog_8cpp_source.html">mdtSqlDialog.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00236">mdtAbstractSqlWidget::allDataAreSaved()</a>, and <a class="el" href="mdt_sql_form_8cpp_source.html#l00052">mdtSqlForm::mainSqlWidget()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00255">mdtAbstractSqlWidget::allDataAreSaved()</a>, and <a class="el" href="mdt_sql_form_8cpp_source.html#l00052">mdtSqlForm::mainSqlWidget()</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_sql_dialog_8cpp_source.html#l00032">mdtSqlDialog()</a>.</p>
 
@@ -238,9 +238,7 @@ Public Member Functions</h2></td></tr>
 <p>Disable edition. </p>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="classmdt_sql_dialog.html#a47de595aa2a117cdc3eb5de4a6bbf8f5" title="Enable edition. ">enableEdition()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_dialog_8cpp_source.html#l00093">93</a> of file <a class="el" href="mdt_sql_dialog_8cpp_source.html">mdtSqlDialog.cpp</a>.</p>
-
-<p>References <a class="el" href="mdt_sql_form_8cpp_source.html#l00052">mdtSqlForm::mainSqlWidget()</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_dialog_8cpp_source.html#l00082">82</a> of file <a class="el" href="mdt_sql_dialog_8cpp_source.html">mdtSqlDialog.cpp</a>.</p>
 
 </div>
 </div>
@@ -261,9 +259,9 @@ Public Member Functions</h2></td></tr>
 <p>Will add save/revert buttons</p>
 <dl class="section pre"><dt>Precondition</dt><dd>Form must be set with <a class="el" href="classmdt_sql_dialog.html#aa4b143efbe21073e1668d75cdf262a39" title="Set the SQL form. ">setSqlForm()</a> before call this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_dialog_8cpp_source.html#l00070">70</a> of file <a class="el" href="mdt_sql_dialog_8cpp_source.html">mdtSqlDialog.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_dialog_8cpp_source.html#l00068">68</a> of file <a class="el" href="mdt_sql_dialog_8cpp_source.html">mdtSqlDialog.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_sql_form_8cpp_source.html#l00052">mdtSqlForm::mainSqlWidget()</a>, and <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00320">mdtAbstractSqlWidget::reEnterVisualizingState()</a>.</p>
+<p>References <a class="el" href="mdt_sql_form_8cpp_source.html#l00052">mdtSqlForm::mainSqlWidget()</a>.</p>
 
 </div>
 </div>
@@ -290,9 +288,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Overloads QDialog::reject() </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_dialog_8cpp_source.html#l00110">110</a> of file <a class="el" href="mdt_sql_dialog_8cpp_source.html">mdtSqlDialog.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_dialog_8cpp_source.html#l00096">96</a> of file <a class="el" href="mdt_sql_dialog_8cpp_source.html">mdtSqlDialog.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00236">mdtAbstractSqlWidget::allDataAreSaved()</a>, and <a class="el" href="mdt_sql_form_8cpp_source.html#l00052">mdtSqlForm::mainSqlWidget()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00255">mdtAbstractSqlWidget::allDataAreSaved()</a>, and <a class="el" href="mdt_sql_form_8cpp_source.html#l00052">mdtSqlForm::mainSqlWidget()</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_sql_dialog_8cpp_source.html#l00032">mdtSqlDialog()</a>.</p>
 
@@ -316,7 +314,9 @@ Public Member Functions</h2></td></tr>
 <p>Note: because form will be reparented, it will be deleted when this dialog is destroyed !</p>
 <dl class="section pre"><dt>Precondition</dt><dd>form must be a valid pointer . </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_dialog_8cpp_source.html#l00062">62</a> of file <a class="el" href="mdt_sql_dialog_8cpp_source.html">mdtSqlDialog.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_dialog_8cpp_source.html#l00055">55</a> of file <a class="el" href="mdt_sql_dialog_8cpp_source.html">mdtSqlDialog.cpp</a>.</p>
+
+<p>References <a class="el" href="mdt_sql_form_8cpp_source.html#l00199">mdtSqlForm::start()</a>.</p>
 
 </div>
 </div>
@@ -327,7 +327,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 12 2014 10:53:30 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jul 26 2014 17:48:11 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

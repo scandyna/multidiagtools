@@ -122,9 +122,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a18f34b24834aa9b51b7ae328d2358e17"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_test_node_unit.html#a18f34b24834aa9b51b7ae328d2358e17">sqlForTestConnectionSelection</a> (const QList&lt; QVariant &gt; connectionIdList) const </td></tr>
 <tr class="memdesc:a18f34b24834aa9b51b7ae328d2358e17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get SQL statement for test connection selection.  <a href="#a18f34b24834aa9b51b7ae328d2358e17">More...</a><br/></td></tr>
 <tr class="separator:a18f34b24834aa9b51b7ae328d2358e17"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37ac0aafdc8bd850472be07062ea391c"><td class="memItemLeft" align="right" valign="top">QList&lt; QVariant &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_test_node_unit.html#a37ac0aafdc8bd850472be07062ea391c">getConnectionIdListOfUnitId</a> (const QVariant &amp;unitId, bool *ok)</td></tr>
-<tr class="memdesc:a37ac0aafdc8bd850472be07062ea391c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a list of unit connection IDs for given unit ID.  <a href="#a37ac0aafdc8bd850472be07062ea391c">More...</a><br/></td></tr>
-<tr class="separator:a37ac0aafdc8bd850472be07062ea391c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4430727b510df4c6b3bb6ea78074d555"><td class="memItemLeft" align="right" valign="top">QList&lt; QVariant &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_test_node_unit.html#a4430727b510df4c6b3bb6ea78074d555">getConnectionIdListOfUnitId</a> (const QVariant &amp;unitId, bool excludeAllreadyAffectedToTestNode, bool &amp;ok)</td></tr>
+<tr class="memdesc:a4430727b510df4c6b3bb6ea78074d555"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a list of unit connection IDs for given unit ID.  <a href="#a4430727b510df4c6b3bb6ea78074d555">More...</a><br/></td></tr>
+<tr class="separator:a4430727b510df4c6b3bb6ea78074d555"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6625a34706221c627ce2b7ca8b3a3b20"><td class="memItemLeft" align="right" valign="top">QList&lt; QVariant &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_test_node_unit.html#a6625a34706221c627ce2b7ca8b3a3b20">getConnectionIdListLinkedToConnectionIdList</a> (const QList&lt; QVariant &gt; connectionIdList, bool *ok)</td></tr>
 <tr class="memdesc:a6625a34706221c627ce2b7ca8b3a3b20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get unit connection IDs that are linked to given unit connection IDs.  <a href="#a6625a34706221c627ce2b7ca8b3a3b20">More...</a><br/></td></tr>
 <tr class="separator:a6625a34706221c627ce2b7ca8b3a3b20"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -167,6 +167,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4a7a0c1fcc670a7a5e518e76508fe915"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_test_node_unit.html#a4a7a0c1fcc670a7a5e518e76508fe915">setBusIdToConnection</a> (const QVariant &amp;unitConnectionId, const QVariant &amp;busId)</td></tr>
 <tr class="memdesc:a4a7a0c1fcc670a7a5e518e76508fe915"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set bus ID to given connection ID.  <a href="#a4a7a0c1fcc670a7a5e518e76508fe915">More...</a><br/></td></tr>
 <tr class="separator:a4a7a0c1fcc670a7a5e518e76508fe915"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad55390985ebad2fdd1fdc2d448cbaa61"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_test_node_unit.html#ad55390985ebad2fdd1fdc2d448cbaa61">setBusIdToConnections</a> (const QList&lt; QVariant &gt; &amp;unitConnectionIdLits, const QVariant &amp;busId)</td></tr>
+<tr class="memdesc:ad55390985ebad2fdd1fdc2d448cbaa61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set bus ID to given connection ID list.  <a href="#ad55390985ebad2fdd1fdc2d448cbaa61">More...</a><br/></td></tr>
+<tr class="separator:ad55390985ebad2fdd1fdc2d448cbaa61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classmdt_tt_base"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classmdt_tt_base')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classmdt_tt_base.html">mdtTtBase</a></td></tr>
 <tr class="memitem:a6dbd221d1518e30c3692a7ba54b57c03 inherit pub_methods_classmdt_tt_base"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_base.html#a6dbd221d1518e30c3692a7ba54b57c03">mdtTtBase</a> (<a class="el" href="class_q_object.html">QObject</a> *parent, QSqlDatabase db)</td></tr>
 <tr class="memdesc:a6dbd221d1518e30c3692a7ba54b57c03 inherit pub_methods_classmdt_tt_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a6dbd221d1518e30c3692a7ba54b57c03">More...</a><br/></td></tr>
@@ -192,6 +195,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aac6b0c135d2ff61d23ee9b37525a8ad5 inherit pub_methods_classmdt_tt_base"><td class="memItemLeft" align="right" valign="top">QList&lt; QSqlRecord &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_base.html#aac6b0c135d2ff61d23ee9b37525a8ad5">getData</a> (const QString &amp;sql, bool *ok=0, const QStringList &amp;expectedFields=QStringList())</td></tr>
 <tr class="memdesc:aac6b0c135d2ff61d23ee9b37525a8ad5 inherit pub_methods_classmdt_tt_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get data for given sql statement.  <a href="#aac6b0c135d2ff61d23ee9b37525a8ad5">More...</a><br/></td></tr>
 <tr class="separator:aac6b0c135d2ff61d23ee9b37525a8ad5 inherit pub_methods_classmdt_tt_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c0834b21432a734c6ebfb645f290716 inherit pub_methods_classmdt_tt_base"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a6c0834b21432a734c6ebfb645f290716 inherit pub_methods_classmdt_tt_base"><td class="memTemplItemLeft" align="right" valign="top">QList&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classmdt_tt_base.html#a6c0834b21432a734c6ebfb645f290716">getDataList</a> (const QString &amp;sql, bool &amp;ok, const QStringList &amp;expectedFields=QStringList())</td></tr>
+<tr class="memdesc:a6c0834b21432a734c6ebfb645f290716 inherit pub_methods_classmdt_tt_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get data of type T for given sql statement.  <a href="#a6c0834b21432a734c6ebfb645f290716">More...</a><br/></td></tr>
+<tr class="separator:a6c0834b21432a734c6ebfb645f290716 inherit pub_methods_classmdt_tt_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a40a9416a29d96518f39b2225516a2786 inherit pub_methods_classmdt_tt_base"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_base.html#a40a9416a29d96518f39b2225516a2786">updateRecord</a> (const QString &amp;tableName, const <a class="el" href="classmdt_sql_record.html">mdtSqlRecord</a> &amp;record, const QSqlRecord &amp;matchData)</td></tr>
 <tr class="memdesc:a40a9416a29d96518f39b2225516a2786 inherit pub_methods_classmdt_tt_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update data for given table.  <a href="#a40a9416a29d96518f39b2225516a2786">More...</a><br/></td></tr>
 <tr class="separator:a40a9416a29d96518f39b2225516a2786 inherit pub_methods_classmdt_tt_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -301,11 +308,11 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Add a connection. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00268">268</a> of file <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html">mdtTtTestNodeUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00276">276</a> of file <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html">mdtTtTestNodeUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_sql_record_8cpp_source.html#l00077">mdtSqlRecord::addAllFields()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00050">mdtTtBase::addRecord()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00150">mdtSqlRecord::lastError()</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00213">mdtTtBase::pvLastError</a>, and <a class="el" href="mdt_sql_record_8cpp_source.html#l00123">mdtSqlRecord::setValue()</a>.</p>
+<p>References <a class="el" href="mdt_sql_record_8cpp_source.html#l00077">mdtSqlRecord::addAllFields()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00050">mdtTtBase::addRecord()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00150">mdtSqlRecord::lastError()</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00246">mdtTtBase::pvLastError</a>, and <a class="el" href="mdt_sql_record_8cpp_source.html#l00123">mdtSqlRecord::setValue()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00286">addConnections()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00294">addConnections()</a>.</p>
 
 </div>
 </div>
@@ -347,11 +354,11 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Add a list of connections. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00286">286</a> of file <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html">mdtTtTestNodeUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00294">294</a> of file <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html">mdtTtTestNodeUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00268">addConnection()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00434">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00460">mdtTtBase::commitTransaction()</a>, and <a class="el" href="mdt_tt_base_8cpp_source.html#l00447">mdtTtBase::rollbackTransaction()</a>.</p>
+<p>References <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00276">addConnection()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00402">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00428">mdtTtBase::commitTransaction()</a>, and <a class="el" href="mdt_tt_base_8cpp_source.html#l00415">mdtTtBase::rollbackTransaction()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00312">addConnections()</a>, <a class="el" href="mdt_tt_test_node_8cpp_source.html#l00189">mdtTtTestNode::addMissingConnections()</a>, and <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00185">addNodeUnit()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00320">addConnections()</a>, <a class="el" href="mdt_tt_test_node_8cpp_source.html#l00214">mdtTtTestNode::addMissingConnections()</a>, and <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00193">addNodeUnit()</a>.</p>
 
 </div>
 </div>
@@ -387,9 +394,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Add connections that are related to given test node unit. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00312">312</a> of file <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html">mdtTtTestNodeUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00320">320</a> of file <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html">mdtTtTestNodeUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00286">addConnections()</a>, and <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00052">getConnectionIdListOfUnitId()</a>.</p>
+<p>References <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00294">addConnections()</a>, and <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00053">getConnectionIdListOfUnitId()</a>.</p>
 
 </div>
 </div>
@@ -409,9 +416,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Add a test node unit. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00185">185</a> of file <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html">mdtTtTestNodeUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00193">193</a> of file <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html">mdtTtTestNodeUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00286">addConnections()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00050">mdtTtBase::addRecord()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00434">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00460">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00447">mdtTtBase::rollbackTransaction()</a>, and <a class="el" href="mdt_sql_record_8h_source.html#l00158">mdtSqlRecord::value()</a>.</p>
+<p>References <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00294">addConnections()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00050">mdtTtBase::addRecord()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00402">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00428">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00415">mdtTtBase::rollbackTransaction()</a>, and <a class="el" href="mdt_sql_record_8h_source.html#l00158">mdtSqlRecord::value()</a>.</p>
 
 </div>
 </div>
@@ -441,9 +448,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Edit a test node unit. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00205">205</a> of file <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html">mdtTtTestNodeUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00213">213</a> of file <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html">mdtTtTestNodeUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00213">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00181">mdtTtBase::updateRecord()</a>, and <a class="el" href="mdt_sql_record_8h_source.html#l00158">mdtSqlRecord::value()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00246">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00149">mdtTtBase::updateRecord()</a>, and <a class="el" href="mdt_sql_record_8h_source.html#l00158">mdtSqlRecord::value()</a>.</p>
 
 </div>
 </div>
@@ -474,13 +481,13 @@ Additional Inherited Members</h2></td></tr>
 <p>Get unit connection IDs that are linked to given unit connection IDs. </p>
 <p>Will return IDs that not currently exists in TestNodeUnitConnection_tbl. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00077">77</a> of file <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html">mdtTtTestNodeUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00085">85</a> of file <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html">mdtTtTestNodeUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00171">mdtClPathGraph::getLinkedConnectionIdList()</a>, <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00332">mdtClPathGraph::lastError()</a>, <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00081">mdtClPathGraph::loadLinkList()</a>, and <a class="el" href="mdt_tt_base_8h_source.html#l00213">mdtTtBase::pvLastError</a>.</p>
+<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00213">mdtClPathGraph::getLinkedConnectionIdList()</a>, <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00440">mdtClPathGraph::lastError()</a>, <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00078">mdtClPathGraph::loadLinkList()</a>, and <a class="el" href="mdt_tt_base_8h_source.html#l00246">mdtTtBase::pvLastError</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a37ac0aafdc8bd850472be07062ea391c"></a>
+<a class="anchor" id="a4430727b510df4c6b3bb6ea78074d555"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -493,7 +500,13 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool *&#160;</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>excludeAllreadyAffectedToTestNode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool &amp;&#160;</td>
           <td class="paramname"><em>ok</em>&#160;</td>
         </tr>
         <tr>
@@ -505,12 +518,11 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get a list of unit connection IDs for given unit ID. </p>
+<p>QList&lt;QVariant&gt; mdtTtTestNodeUnit::getConnectionIdListOfUnitId(const QVariant &amp; unitId, bool *ok) </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00052">52</a> of file <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html">mdtTtTestNodeUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00053">53</a> of file <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html">mdtTtTestNodeUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00127">mdtTtBase::getData()</a>.</p>
-
-<p>Referenced by <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00312">addConnections()</a>, and <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00358">removeConnections()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00320">addConnections()</a>, <a class="el" href="mdt_tt_test_node_8cpp_source.html#l00328">mdtTtTestNode::ensureAbsenceOfShortCircuit()</a>, and <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00366">removeConnections()</a>.</p>
 
 </div>
 </div>
@@ -546,9 +558,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Get test node unit data. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00133">133</a> of file <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html">mdtTtTestNodeUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00141">141</a> of file <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html">mdtTtTestNodeUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00127">mdtTtBase::getData()</a>, <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00103">getUnitData()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00213">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_error_8h_source.html#l00093">mdtError::Warning</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00127">mdtTtBase::getData()</a>, <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00111">getUnitData()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00246">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_error_8h_source.html#l00093">mdtError::Warning</a>.</p>
 
 </div>
 </div>
@@ -578,11 +590,11 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Get unit data. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00103">103</a> of file <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html">mdtTtTestNodeUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00111">111</a> of file <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html">mdtTtTestNodeUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00127">mdtTtBase::getData()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00213">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_error_8h_source.html#l00093">mdtError::Warning</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00127">mdtTtBase::getData()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00246">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_error_8h_source.html#l00093">mdtError::Warning</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00133">getData()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00141">getData()</a>.</p>
 
 </div>
 </div>
@@ -602,11 +614,11 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Remove a test node unit connection from TestNodeUnitConnection_tbl. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00327">327</a> of file <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html">mdtTtTestNodeUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00335">335</a> of file <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html">mdtTtTestNodeUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00228">mdtTtBase::removeData()</a>.</p>
+<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00196">mdtTtBase::removeData()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00332">removeConnections()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00340">removeConnections()</a>.</p>
 
 </div>
 </div>
@@ -636,11 +648,11 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Remove given test node unit connections from TestNodeUnitConnection_tbl. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00332">332</a> of file <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html">mdtTtTestNodeUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00340">340</a> of file <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html">mdtTtTestNodeUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00434">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00460">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00327">removeConnection()</a>, and <a class="el" href="mdt_tt_base_8cpp_source.html#l00447">mdtTtBase::rollbackTransaction()</a>.</p>
+<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00402">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00428">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00335">removeConnection()</a>, and <a class="el" href="mdt_tt_base_8cpp_source.html#l00415">mdtTtBase::rollbackTransaction()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00358">removeConnections()</a>, and <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00216">removeNodeUnit()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00366">removeConnections()</a>, and <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00224">removeNodeUnit()</a>.</p>
 
 </div>
 </div>
@@ -670,9 +682,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Remove connections for given test node unit ID. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00358">358</a> of file <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html">mdtTtTestNodeUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00366">366</a> of file <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html">mdtTtTestNodeUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00052">getConnectionIdListOfUnitId()</a>, and <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00332">removeConnections()</a>.</p>
+<p>References <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00053">getConnectionIdListOfUnitId()</a>, and <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00340">removeConnections()</a>.</p>
 
 </div>
 </div>
@@ -703,11 +715,11 @@ Additional Inherited Members</h2></td></tr>
 <p>Remove a test node unit. </p>
 <p>Will also remove related connections from TestNodeUnitConnection_tbl </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00216">216</a> of file <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html">mdtTtTestNodeUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00224">224</a> of file <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html">mdtTtTestNodeUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00434">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00460">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00332">removeConnections()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00228">mdtTtBase::removeData()</a>, and <a class="el" href="mdt_tt_base_8cpp_source.html#l00447">mdtTtBase::rollbackTransaction()</a>.</p>
+<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00402">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00428">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00340">removeConnections()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00196">mdtTtBase::removeData()</a>, and <a class="el" href="mdt_tt_base_8cpp_source.html#l00415">mdtTtBase::rollbackTransaction()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00246">removeNodeUnits()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00254">removeNodeUnits()</a>.</p>
 
 </div>
 </div>
@@ -728,9 +740,9 @@ Additional Inherited Members</h2></td></tr>
 <p>Remove test node units. </p>
 <p>Will also remove related connections from TestNodeUnitConnection_tbl </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00246">246</a> of file <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html">mdtTtTestNodeUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00254">254</a> of file <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html">mdtTtTestNodeUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00434">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00460">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_sql_table_selection_8cpp_source.html#l00090">mdtSqlTableSelection::dataList()</a>, <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00216">removeNodeUnit()</a>, and <a class="el" href="mdt_tt_base_8cpp_source.html#l00447">mdtTtBase::rollbackTransaction()</a>.</p>
+<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00402">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00428">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_sql_table_selection_8cpp_source.html#l00090">mdtSqlTableSelection::dataList()</a>, <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00224">removeNodeUnit()</a>, and <a class="el" href="mdt_tt_base_8cpp_source.html#l00415">mdtTtBase::rollbackTransaction()</a>.</p>
 
 </div>
 </div>
@@ -760,9 +772,43 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Set bus ID to given connection ID. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00374">374</a> of file <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html">mdtTtTestNodeUnit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00382">382</a> of file <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html">mdtTtTestNodeUnit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00127">mdtTtBase::getData()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00123">mdtSqlRecord::setValue()</a>, and <a class="el" href="mdt_tt_base_8cpp_source.html#l00181">mdtTtBase::updateRecord()</a>.</p>
+<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00127">mdtTtBase::getData()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00123">mdtSqlRecord::setValue()</a>, and <a class="el" href="mdt_tt_base_8cpp_source.html#l00149">mdtTtBase::updateRecord()</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00407">setBusIdToConnections()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad55390985ebad2fdd1fdc2d448cbaa61"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtTtTestNodeUnit::setBusIdToConnections </td>
+          <td>(</td>
+          <td class="paramtype">const QList&lt; QVariant &gt; &amp;&#160;</td>
+          <td class="paramname"><em>unitConnectionIdLits</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QVariant &amp;&#160;</td>
+          <td class="paramname"><em>busId</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set bus ID to given connection ID list. </p>
+
+<p>Definition at line <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00407">407</a> of file <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html">mdtTtTestNodeUnit.cpp</a>.</p>
+
+<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00402">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00428">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00415">mdtTtBase::rollbackTransaction()</a>, and <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00382">setBusIdToConnection()</a>.</p>
 
 </div>
 </div>
@@ -793,7 +839,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 12 2014 10:53:30 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jul 26 2014 17:48:12 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

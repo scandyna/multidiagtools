@@ -1,0 +1,260 @@
+\hypertarget{classmdt_tt_test_model_isolation_test_generator_helper}{\section{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper Class Reference}
+\label{classmdt_tt_test_model_isolation_test_generator_helper}\index{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper@{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper}}
+}
+
+
+Helper class for short detection and isolation test generation.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Tt\-Test\-Model.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=246pt]{classmdt_tt_test_model_isolation_test_generator_helper__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=265pt]{classmdt_tt_test_model_isolation_test_generator_helper__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_tt_test_model_isolation_test_generator_helper_a083345ab2dea09d5f94aaf02c2e459bc}{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper} (\hyperlink{classmdt_tt_test_model}{mdt\-Tt\-Test\-Model} $\ast$tm)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_tt_test_model_isolation_test_generator_helper_ab9cb45f2fad6b83c9f6db251d13a2166}{$\sim$mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_tt_test_model_isolation_test_generator_helper_a3cef48d61b7783cb6d139a73ee1fcee9}{set\-Relays\-To\-Ignore\-Id\-List} (const Q\-List$<$ Q\-Variant $>$ \&id\-List)
+\begin{DoxyCompactList}\small\item\em Set a list of test node unit I\-D of relays to not use. \end{DoxyCompactList}\item 
+Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_tt_test_model_isolation_test_generator_helper_a7bc7afdfeb0f87abdbed39f51bdff4e1}{relays\-To\-Ignore\-Id\-List} ()
+\begin{DoxyCompactList}\small\item\em Get a list of test node unit I\-D of relays to not use. \end{DoxyCompactList}\item 
+Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_tt_test_model_isolation_test_generator_helper_a36c83afcee89bc02023876bbad514cc5}{get\-Related\-Test\-Connection\-Id\-List} (const Q\-Variant \&test\-Cable\-Id, const Q\-Variant \&from\-Test\-Connection\-Id, \hyperlink{classmdt_cl_path_graph}{mdt\-Cl\-Path\-Graph} \&graph, bool \&ok)
+\begin{DoxyCompactList}\small\item\em Get related connections. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_test_model_isolation_test_generator_helper_ab473020de47d8114ec6f71c17bde5dc2}{queue\-Related\-Connection\-To\-Solved} ()
+\begin{DoxyCompactList}\small\item\em Tell if a related test connection must be queued to solved connections once processed. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_tt_test_model_abstract_generator_helper_abc4f8e08285031633b19282d517cc0b5}{action\-\_\-t} \hyperlink{classmdt_tt_test_model_isolation_test_generator_helper_a1f0f50ed4e3b07bb04cdf18786606cfd}{action\-On\-Short\-In\-Test\-Node} ()
+\begin{DoxyCompactList}\small\item\em Return Ignore\-Current\-Item. \end{DoxyCompactList}\item 
+Q\-Variant \hyperlink{classmdt_tt_test_model_isolation_test_generator_helper_ad7b43182d7825048efb2b6fcd18c6803}{expected\-Value} ()
+\begin{DoxyCompactList}\small\item\em Get expected value. \end{DoxyCompactList}\item 
+Q\-Variant \hyperlink{classmdt_tt_test_model_isolation_test_generator_helper_a7d55e02fef9b1714da4f272c4dd11d3c}{value\-Unit} ()
+\begin{DoxyCompactList}\small\item\em Get value unit. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Helper class for short detection and isolation test generation. 
+
+Definition at line 165 of file mdt\-Tt\-Test\-Model.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_tt_test_model_isolation_test_generator_helper_a083345ab2dea09d5f94aaf02c2e459bc}{\index{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper@{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper}!mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper@{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper}}
+\index{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper@{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper}!mdtTtTestModelIsolationTestGeneratorHelper@{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper}}
+\subsubsection[{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper\-::mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Tt\-Test\-Model} $\ast$}]{tm}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_model_isolation_test_generator_helper_a083345ab2dea09d5f94aaf02c2e459bc}
+
+
+Constructor. 
+
+
+
+Definition at line 255 of file mdt\-Tt\-Test\-Model.\-cpp.
+
+\hypertarget{classmdt_tt_test_model_isolation_test_generator_helper_ab9cb45f2fad6b83c9f6db251d13a2166}{\index{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper@{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper}!$\sim$mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper@{$\sim$mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper}}
+\index{$\sim$mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper@{$\sim$mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper}!mdtTtTestModelIsolationTestGeneratorHelper@{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper}}
+\subsubsection[{$\sim$mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper\-::$\sim$mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_model_isolation_test_generator_helper_ab9cb45f2fad6b83c9f6db251d13a2166}
+
+
+Destructor. 
+
+
+
+Definition at line 260 of file mdt\-Tt\-Test\-Model.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_tt_test_model_isolation_test_generator_helper_a1f0f50ed4e3b07bb04cdf18786606cfd}{\index{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper@{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper}!action\-On\-Short\-In\-Test\-Node@{action\-On\-Short\-In\-Test\-Node}}
+\index{action\-On\-Short\-In\-Test\-Node@{action\-On\-Short\-In\-Test\-Node}!mdtTtTestModelIsolationTestGeneratorHelper@{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper}}
+\subsubsection[{action\-On\-Short\-In\-Test\-Node}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Tt\-Test\-Model\-Abstract\-Generator\-Helper\-::action\-\_\-t} mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper\-::action\-On\-Short\-In\-Test\-Node (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_tt_test_model_isolation_test_generator_helper_a1f0f50ed4e3b07bb04cdf18786606cfd}
+
+
+Return Ignore\-Current\-Item. 
+
+
+
+Implements \hyperlink{classmdt_tt_test_model_abstract_generator_helper_a16ea72cf8daeba07a1255dca73f1bc48}{mdt\-Tt\-Test\-Model\-Abstract\-Generator\-Helper}.
+
+
+
+Definition at line 314 of file mdt\-Tt\-Test\-Model.\-cpp.
+
+
+
+References mdt\-Tt\-Test\-Model\-Abstract\-Generator\-Helper\-::\-Ignore\-Current\-Item.
+
+\hypertarget{classmdt_tt_test_model_isolation_test_generator_helper_ad7b43182d7825048efb2b6fcd18c6803}{\index{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper@{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper}!expected\-Value@{expected\-Value}}
+\index{expected\-Value@{expected\-Value}!mdtTtTestModelIsolationTestGeneratorHelper@{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper}}
+\subsubsection[{expected\-Value}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper\-::expected\-Value (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_tt_test_model_isolation_test_generator_helper_ad7b43182d7825048efb2b6fcd18c6803}
+
+
+Get expected value. 
+
+Return 0.\-0 
+
+Implements \hyperlink{classmdt_tt_test_model_abstract_generator_helper_aa882003a0a623712ab308739a11204c2}{mdt\-Tt\-Test\-Model\-Abstract\-Generator\-Helper}.
+
+
+
+Definition at line 319 of file mdt\-Tt\-Test\-Model.\-cpp.
+
+\hypertarget{classmdt_tt_test_model_isolation_test_generator_helper_a36c83afcee89bc02023876bbad514cc5}{\index{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper@{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper}!get\-Related\-Test\-Connection\-Id\-List@{get\-Related\-Test\-Connection\-Id\-List}}
+\index{get\-Related\-Test\-Connection\-Id\-List@{get\-Related\-Test\-Connection\-Id\-List}!mdtTtTestModelIsolationTestGeneratorHelper@{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper}}
+\subsubsection[{get\-Related\-Test\-Connection\-Id\-List}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ Q\-Variant $>$ mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper\-::get\-Related\-Test\-Connection\-Id\-List (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{test\-Cable\-Id, }
+\item[{const Q\-Variant \&}]{from\-Test\-Connection\-Id, }
+\item[{{\bf mdt\-Cl\-Path\-Graph} \&}]{graph, }
+\item[{bool \&}]{ok}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_tt_test_model_isolation_test_generator_helper_a36c83afcee89bc02023876bbad514cc5}
+
+
+Get related connections. 
+
+Will get the D\-U\-T connection that is linked to given from\-Test\-Connection\-Id, then search about not linked D\-U\-T connections. Finally, a list of test connection is built for each D\-U\-T connection found.
+
+
+\begin{DoxyParams}{Parameters}
+{\em test\-Cable\-Id} & I\-D of test cable (Test\-Cable\-\_\-tbl) to use. \\
+\hline
+{\em from\-Test\-Connection\-Id} & Test connection from witch to start. \\
+\hline
+{\em graph} & Graph object. Cable list must allready be loaded (see \hyperlink{classmdt_cl_path_graph_a40e80f68b2600ad69a1fe74aa40393f8}{mdt\-Cl\-Path\-Graph\-::load\-Link\-List()}) \\
+\hline
+{\em ok} & Will be set to true on success, false else. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classmdt_tt_test_model_abstract_generator_helper_a17006a0517ad90e9a21e1e45775591aa}{mdt\-Tt\-Test\-Model\-Abstract\-Generator\-Helper}.
+
+
+
+Definition at line 274 of file mdt\-Tt\-Test\-Model.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, mdt\-Tt\-Base\-::get\-Data\-List(), mdt\-Tt\-Test\-Model\-Abstract\-Generator\-Helper\-::get\-Dut\-Connection\-Id(), mdt\-Cl\-Path\-Graph\-::get\-Linked\-Connection\-Id\-List(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Test\-Model\-Abstract\-Generator\-Helper\-::pv\-Last\-Error, mdt\-Tt\-Test\-Model\-Abstract\-Generator\-Helper\-::pv\-Test\-Model, and mdt\-Error\-::set\-Error().
+
+\hypertarget{classmdt_tt_test_model_isolation_test_generator_helper_ab473020de47d8114ec6f71c17bde5dc2}{\index{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper@{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper}!queue\-Related\-Connection\-To\-Solved@{queue\-Related\-Connection\-To\-Solved}}
+\index{queue\-Related\-Connection\-To\-Solved@{queue\-Related\-Connection\-To\-Solved}!mdtTtTestModelIsolationTestGeneratorHelper@{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper}}
+\subsubsection[{queue\-Related\-Connection\-To\-Solved}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper\-::queue\-Related\-Connection\-To\-Solved (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_tt_test_model_isolation_test_generator_helper_ab473020de47d8114ec6f71c17bde5dc2}
+
+
+Tell if a related test connection must be queued to solved connections once processed. 
+
+
+
+Implements \hyperlink{classmdt_tt_test_model_abstract_generator_helper_a11c9add674333027f713b45a71cc5f60}{mdt\-Tt\-Test\-Model\-Abstract\-Generator\-Helper}.
+
+
+
+Definition at line 309 of file mdt\-Tt\-Test\-Model.\-cpp.
+
+\hypertarget{classmdt_tt_test_model_isolation_test_generator_helper_a7bc7afdfeb0f87abdbed39f51bdff4e1}{\index{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper@{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper}!relays\-To\-Ignore\-Id\-List@{relays\-To\-Ignore\-Id\-List}}
+\index{relays\-To\-Ignore\-Id\-List@{relays\-To\-Ignore\-Id\-List}!mdtTtTestModelIsolationTestGeneratorHelper@{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper}}
+\subsubsection[{relays\-To\-Ignore\-Id\-List}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ Q\-Variant $>$ mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper\-::relays\-To\-Ignore\-Id\-List (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_tt_test_model_isolation_test_generator_helper_a7bc7afdfeb0f87abdbed39f51bdff4e1}
+
+
+Get a list of test node unit I\-D of relays to not use. 
+
+
+
+Reimplemented from \hyperlink{classmdt_tt_test_model_abstract_generator_helper_aa0021e5365e7f92b0feeeb5cab544373}{mdt\-Tt\-Test\-Model\-Abstract\-Generator\-Helper}.
+
+
+
+Definition at line 269 of file mdt\-Tt\-Test\-Model.\-cpp.
+
+\hypertarget{classmdt_tt_test_model_isolation_test_generator_helper_a3cef48d61b7783cb6d139a73ee1fcee9}{\index{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper@{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper}!set\-Relays\-To\-Ignore\-Id\-List@{set\-Relays\-To\-Ignore\-Id\-List}}
+\index{set\-Relays\-To\-Ignore\-Id\-List@{set\-Relays\-To\-Ignore\-Id\-List}!mdtTtTestModelIsolationTestGeneratorHelper@{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper}}
+\subsubsection[{set\-Relays\-To\-Ignore\-Id\-List}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper\-::set\-Relays\-To\-Ignore\-Id\-List (
+\begin{DoxyParamCaption}
+\item[{const Q\-List$<$ Q\-Variant $>$ \&}]{id\-List}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_model_isolation_test_generator_helper_a3cef48d61b7783cb6d139a73ee1fcee9}
+
+
+Set a list of test node unit I\-D of relays to not use. 
+
+
+
+Definition at line 264 of file mdt\-Tt\-Test\-Model.\-cpp.
+
+
+
+Referenced by mdt\-Tt\-Test\-Model\-::generate\-Short\-Detection\-Test().
+
+\hypertarget{classmdt_tt_test_model_isolation_test_generator_helper_a7d55e02fef9b1714da4f272c4dd11d3c}{\index{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper@{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper}!value\-Unit@{value\-Unit}}
+\index{value\-Unit@{value\-Unit}!mdtTtTestModelIsolationTestGeneratorHelper@{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper}}
+\subsubsection[{value\-Unit}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper\-::value\-Unit (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_tt_test_model_isolation_test_generator_helper_a7d55e02fef9b1714da4f272c4dd11d3c}
+
+
+Get value unit. 
+
+Return \char`\"{}\-Ohm\char`\"{} 
+
+Implements \hyperlink{classmdt_tt_test_model_abstract_generator_helper_a32aa097b7d462715b399433cece5a430}{mdt\-Tt\-Test\-Model\-Abstract\-Generator\-Helper}.
+
+
+
+Definition at line 324 of file mdt\-Tt\-Test\-Model.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdttools/mdttesttool/\hyperlink{mdt_tt_test_model_8h}{mdt\-Tt\-Test\-Model.\-h}\item 
+src/mdttools/mdttesttool/\hyperlink{mdt_tt_test_model_8cpp}{mdt\-Tt\-Test\-Model.\-cpp}\end{DoxyCompactItemize}

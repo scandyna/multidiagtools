@@ -1,3 +1,4 @@
 <map id="mdtTtBasicTester" name="mdtTtBasicTester">
-<area shape="rect" id="node2" href="$class_q_main_window.html" title="QMainWindow" alt="" coords="5,5,112,35"/>
+<area shape="rect" id="node2" href="$classmdt_tt_abstract_test_widget.html" title="Base to create a test widget. " alt="" coords="5,83,176,112"/>
+<area shape="rect" id="node4" href="$class_q_widget.html" title="QWidget" alt="" coords="55,5,127,35"/>
 </map>

@@ -3,7 +3,7 @@
 }
 
 
-Helper class for test node edition.  
+\#include $<$\-Q\-Model\-Index$>$  
 
 
 
@@ -39,6 +39,8 @@ Q\-String \hyperlink{classmdt_tt_test_node_a98245190a8c199d1a7238b2d1c557830}{sq
 \begin{DoxyCompactList}\small\item\em Get S\-Q\-L statement for unit selection for given list of unit I\-Ds. \end{DoxyCompactList}\item 
 Q\-String \hyperlink{classmdt_tt_test_node_a0dcbf96a31c631f8ce62e1526688ba9f}{sql\-For\-Unit\-Connection\-Selection} (const Q\-Variant \&unit\-Id)
 \begin{DoxyCompactList}\small\item\em Get S\-Q\-L statement for unit connection selection. \end{DoxyCompactList}\item 
+Q\-Sql\-Record \hyperlink{classmdt_tt_test_node_ae4fbcd11c5c65892175c59ddb1cfc074}{get\-Test\-Node\-Data} (const Q\-Variant \&test\-Node\-Id, bool \&ok)
+\begin{DoxyCompactList}\small\item\em Get test node data. \end{DoxyCompactList}\item 
 Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_tt_test_node_a3a0e95628454016a49202dfb7a40e871}{get\-Id\-List\-Of\-Unit\-Connections\-Linked\-To\-Unit\-Connection\-Id} (const Q\-Variant \&unit\-Connection\-Id)
 \begin{DoxyCompactList}\small\item\em Get a list of unit connection I\-Ds that are linked (meaning wiered) to given unit connection I\-D. \end{DoxyCompactList}\item 
 Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_tt_test_node_a6e72542d6a7e1773cc228d9cfc9f3be8}{get\-Id\-List\-Of\-Unit\-Id\-For\-Unit\-Connection\-Id\-List} (const Q\-List$<$ Q\-Variant $>$ \&unit\-Connection\-Id\-List)
@@ -48,14 +50,22 @@ Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_tt_test_node_aedbfa25bedac04b859b1
 Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_tt_test_node_a07b8cd098d61c3f14d3ba226c1d1f1cb}{get\-Channel\-Test\-Connection\-Id\-List} (const Q\-Variant \&test\-Node\-Id, const Q\-Variant \&bus\-Name)
 \begin{DoxyCompactList}\small\item\em Get a list of channel test connections for given bus name and node I\-D. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_tt_test_node_a65478d5d026969e8b17464707fc3551d}{add\-Missing\-Connections} (const Q\-Variant \&test\-Node\-Id)
-\begin{DoxyCompactList}\small\item\em Update node unit connections of given test node. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Update node unit connections of given test node. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_test_node_ade83e368a3cff8fe6704e3c194d5e211}{add\-Relays\-To\-Graph} (const Q\-Variant \&test\-Node\-Id, \hyperlink{classmdt_cl_path_graph}{mdt\-Cl\-Path\-Graph} \&graph, const Q\-List$<$ Q\-Variant $>$ \&relays\-To\-Ignore\-Id\-List=Q\-List$<$ Q\-Variant $>$())
+\begin{DoxyCompactList}\small\item\em Add (coupling and channel) relays to graph. \end{DoxyCompactList}\item 
+Q\-List$<$ \hyperlink{classmdt_tt_test_node_unit_setup_data}{mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data} $>$ \hyperlink{classmdt_tt_test_node_a2953e3744cd95cab94ef35a7fb308d12}{get\-Relay\-Path\-Setup\-Data\-List} (const Q\-List$<$ Q\-Variant $>$ \&relay\-Path\-Connection\-Id\-List, \hyperlink{classmdt_cl_path_graph}{mdt\-Cl\-Path\-Graph} \&graph, bool \&ok)
+\begin{DoxyCompactList}\small\item\em Get a list of test node unit setup data for a given path. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_test_node_a0e96e3c1ab7b93ec5b7f2b02be44a1ff}{ensure\-Absence\-Of\-Short\-Circuit} (const Q\-Variant \&connection\-Id\-A, const Q\-Variant \&connection\-Id\-B, const Q\-List$<$ \hyperlink{classmdt_tt_test_node_unit_setup_data}{mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data} $>$ \&test\-Node\-Unit\-Setup\-Data\-List, \hyperlink{classmdt_cl_path_graph}{mdt\-Cl\-Path\-Graph} \&graph, bool \&ok)
+\begin{DoxyCompactList}\small\item\em Check that enabling a set of coupling and channel relays does not produce a short circuit between connections A and B. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Additional Inherited Members}
 
 
 \subsection{Detailed Description}
-Helper class for test node edition. 
+\#include $<$\-Q\-Model\-Index$>$ 
 
-Definition at line 33 of file mdt\-Tt\-Test\-Node.\-h.
+Helper class for test node edition 
+
+Definition at line 36 of file mdt\-Tt\-Test\-Node.\-h.
 
 
 
@@ -74,7 +84,7 @@ Constructor.
 
 
 
-Definition at line 28 of file mdt\-Tt\-Test\-Node.\-cpp.
+Definition at line 29 of file mdt\-Tt\-Test\-Node.\-cpp.
 
 
 
@@ -92,11 +102,79 @@ Update node unit connections of given test node.
 
 For each unit contained in given test node, the missing connections (those that exist in Unit\-Connection\-\_\-tbl but not in Test\-Node\-Unit\-Connection\-\_\-tbl) will be added in Test\-Node\-Unit\-Connection\-\_\-tbl. 
 
-Definition at line 189 of file mdt\-Tt\-Test\-Node.\-cpp.
+Definition at line 214 of file mdt\-Tt\-Test\-Node.\-cpp.
 
 
 
 References mdt\-Tt\-Test\-Node\-Unit\-::add\-Connections(), mdt\-Tt\-Base\-::begin\-Transaction(), mdt\-Tt\-Base\-::commit\-Transaction(), mdt\-Tt\-Base\-::database(), mdt\-Tt\-Base\-::get\-Data(), mdt\-Tt\-Base\-::last\-Error(), mdt\-Tt\-Base\-::pv\-Last\-Error, and mdt\-Tt\-Base\-::rollback\-Transaction().
+
+\hypertarget{classmdt_tt_test_node_ade83e368a3cff8fe6704e3c194d5e211}{\index{mdt\-Tt\-Test\-Node@{mdt\-Tt\-Test\-Node}!add\-Relays\-To\-Graph@{add\-Relays\-To\-Graph}}
+\index{add\-Relays\-To\-Graph@{add\-Relays\-To\-Graph}!mdtTtTestNode@{mdt\-Tt\-Test\-Node}}
+\subsubsection[{add\-Relays\-To\-Graph}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-Node\-::add\-Relays\-To\-Graph (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{test\-Node\-Id, }
+\item[{{\bf mdt\-Cl\-Path\-Graph} \&}]{graph, }
+\item[{const Q\-List$<$ Q\-Variant $>$ \&}]{relays\-To\-Ignore\-Id\-List = {\ttfamily QList$<$QVariant$>$()}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_node_ade83e368a3cff8fe6704e3c194d5e211}
+
+
+Add (coupling and channel) relays to graph. 
+
+Will add all coupling and channel relays of given test node to graph as a link with a cost of 2. The user data will also contain unit I\-D of each relay. 
+
+Definition at line 246 of file mdt\-Tt\-Test\-Node.\-cpp.
+
+
+
+References mdt\-Cl\-Path\-Graph\-::add\-Link(), mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Cl\-Path\-Graph\-::remove\-Added\-Links(), and mdt\-Error\-::set\-Error().
+
+
+
+Referenced by mdt\-Tt\-Test\-Model\-::generate\-Test\-Model().
+
+\hypertarget{classmdt_tt_test_node_a0e96e3c1ab7b93ec5b7f2b02be44a1ff}{\index{mdt\-Tt\-Test\-Node@{mdt\-Tt\-Test\-Node}!ensure\-Absence\-Of\-Short\-Circuit@{ensure\-Absence\-Of\-Short\-Circuit}}
+\index{ensure\-Absence\-Of\-Short\-Circuit@{ensure\-Absence\-Of\-Short\-Circuit}!mdtTtTestNode@{mdt\-Tt\-Test\-Node}}
+\subsubsection[{ensure\-Absence\-Of\-Short\-Circuit}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-Node\-::ensure\-Absence\-Of\-Short\-Circuit (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{connection\-Id\-A, }
+\item[{const Q\-Variant \&}]{connection\-Id\-B, }
+\item[{const Q\-List$<$ {\bf mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data} $>$ \&}]{test\-Node\-Unit\-Setup\-Data\-List, }
+\item[{{\bf mdt\-Cl\-Path\-Graph} \&}]{graph, }
+\item[{bool \&}]{ok}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_node_a0e96e3c1ab7b93ec5b7f2b02be44a1ff}
+
+
+Check that enabling a set of coupling and channel relays does not produce a short circuit between connections A and B. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em connection\-Id\-A} & Fisrt connection from witch it must be checked about short circuit \\
+\hline
+{\em connection\-Id\-B} & Second connection from witch it must be checked about short circuit \\
+\hline
+{\em test\-Node\-Unit\-Setup\-Data\-List} & Test node unit setup data list of coupling and channel relays that will be turned on in given scenario \\
+\hline
+{\em graph} & Graph object. Cable list must allready be loaded (see \hyperlink{classmdt_cl_path_graph_a40e80f68b2600ad69a1fe74aa40393f8}{mdt\-Cl\-Path\-Graph\-::load\-Link\-List()}). \\
+\hline
+{\em ok} & Will be set false if a error occured, true else \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if a short circuit was detected, false if O\-K 
+\end{DoxyReturn}
+
+
+Definition at line 328 of file mdt\-Tt\-Test\-Node.\-cpp.
+
+
+
+References mdt\-Cl\-Path\-Graph\-::add\-Link(), mdt\-Error\-::commit(), mdt\-Tt\-Base\-::database(), mdt\-Error\-::\-Error, mdt\-Tt\-Test\-Node\-Unit\-::get\-Connection\-Id\-List\-Of\-Unit\-Id(), mdt\-Cl\-Path\-Graph\-::get\-Shortest\-Path(), mdt\-Tt\-Base\-::last\-Error(), mdt\-Cl\-Path\-Graph\-::last\-Error(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Cl\-Path\-Graph\-::remove\-Added\-Links(), and mdt\-Error\-::set\-Error().
+
+
+
+Referenced by mdt\-Tt\-Test\-Model\-::generate\-Test\-Model().
 
 \hypertarget{classmdt_tt_test_node_a07b8cd098d61c3f14d3ba226c1d1f1cb}{\index{mdt\-Tt\-Test\-Node@{mdt\-Tt\-Test\-Node}!get\-Channel\-Test\-Connection\-Id\-List@{get\-Channel\-Test\-Connection\-Id\-List}}
 \index{get\-Channel\-Test\-Connection\-Id\-List@{get\-Channel\-Test\-Connection\-Id\-List}!mdtTtTestNode@{mdt\-Tt\-Test\-Node}}
@@ -112,7 +190,7 @@ Get a list of channel test connections for given bus name and node I\-D.
 
 
 
-Definition at line 166 of file mdt\-Tt\-Test\-Node.\-cpp.
+Definition at line 191 of file mdt\-Tt\-Test\-Node.\-cpp.
 
 
 
@@ -131,7 +209,7 @@ Get a list of unit connection I\-Ds that are linked (meaning wiered) to given un
 
 
 
-Definition at line 89 of file mdt\-Tt\-Test\-Node.\-cpp.
+Definition at line 114 of file mdt\-Tt\-Test\-Node.\-cpp.
 
 
 
@@ -150,7 +228,7 @@ Get a list of unit connection I\-Ds that are part of given unit I\-D.
 
 
 
-Definition at line 143 of file mdt\-Tt\-Test\-Node.\-cpp.
+Definition at line 168 of file mdt\-Tt\-Test\-Node.\-cpp.
 
 
 
@@ -169,11 +247,67 @@ Get a list of unit I\-Ds for given list of unit connection I\-Ds.
 
 
 
-Definition at line 110 of file mdt\-Tt\-Test\-Node.\-cpp.
+Definition at line 135 of file mdt\-Tt\-Test\-Node.\-cpp.
 
 
 
 References mdt\-Error\-::commit(), mdt\-Tt\-Base\-::database(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Error\-::set\-Error(), and mdt\-Error\-::set\-System\-Error().
+
+\hypertarget{classmdt_tt_test_node_a2953e3744cd95cab94ef35a7fb308d12}{\index{mdt\-Tt\-Test\-Node@{mdt\-Tt\-Test\-Node}!get\-Relay\-Path\-Setup\-Data\-List@{get\-Relay\-Path\-Setup\-Data\-List}}
+\index{get\-Relay\-Path\-Setup\-Data\-List@{get\-Relay\-Path\-Setup\-Data\-List}!mdtTtTestNode@{mdt\-Tt\-Test\-Node}}
+\subsubsection[{get\-Relay\-Path\-Setup\-Data\-List}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ {\bf mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data} $>$ mdt\-Tt\-Test\-Node\-::get\-Relay\-Path\-Setup\-Data\-List (
+\begin{DoxyParamCaption}
+\item[{const Q\-List$<$ Q\-Variant $>$ \&}]{relay\-Path\-Connection\-Id\-List, }
+\item[{{\bf mdt\-Cl\-Path\-Graph} \&}]{graph, }
+\item[{bool \&}]{ok}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_node_a2953e3744cd95cab94ef35a7fb308d12}
+
+
+Get a list of test node unit setup data for a given path. 
+
+For each connection in given path, related test node unit id (i.\-e. relay I\-D) will be searched. For each relay that was found, a new setup data, with State set to true, is added to list.
+
+
+\begin{DoxyParams}{Parameters}
+{\em relay\-Path\-Connection\-Id\-List} & List of connection I\-D of path (as returned by \hyperlink{classmdt_cl_path_graph_afa0a3c6b9fd56cfd943a3bc2480c1ce0}{mdt\-Cl\-Path\-Graph\-::get\-Shortest\-Path()}). \\
+\hline
+{\em graph} & Graph object. Relays must allready been loaded (see \hyperlink{classmdt_tt_test_node_ade83e368a3cff8fe6704e3c194d5e211}{add\-Relays\-To\-Graph()}). \\
+\hline
+{\em ok} & Will be set false if a error occured, true else \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 292 of file mdt\-Tt\-Test\-Node.\-cpp.
+
+
+
+References mdt\-Sql\-Record\-::clear\-Values(), mdt\-Error\-::commit(), mdt\-Tt\-Base\-::database(), mdt\-Error\-::\-Error, mdt\-Cl\-Path\-Graph\-::get\-User\-Data(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Error\-::set\-Error(), mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data\-::setup(), and mdt\-Sql\-Record\-::set\-Value().
+
+
+
+Referenced by mdt\-Tt\-Test\-Model\-::generate\-Test\-Model().
+
+\hypertarget{classmdt_tt_test_node_ae4fbcd11c5c65892175c59ddb1cfc074}{\index{mdt\-Tt\-Test\-Node@{mdt\-Tt\-Test\-Node}!get\-Test\-Node\-Data@{get\-Test\-Node\-Data}}
+\index{get\-Test\-Node\-Data@{get\-Test\-Node\-Data}!mdtTtTestNode@{mdt\-Tt\-Test\-Node}}
+\subsubsection[{get\-Test\-Node\-Data}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Sql\-Record mdt\-Tt\-Test\-Node\-::get\-Test\-Node\-Data (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{test\-Node\-Id, }
+\item[{bool \&}]{ok}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_node_ae4fbcd11c5c65892175c59ddb1cfc074}
+
+
+Get test node data. 
+
+Will include fields from Test\-Node\-\_\-tbl and Vehicle\-Type\-\_\-tbl. 
+
+Definition at line 90 of file mdt\-Tt\-Test\-Node.\-cpp.
+
+
+
+References mdt\-Tt\-Base\-::get\-Data().
 
 \hypertarget{classmdt_tt_test_node_a0dcbf96a31c631f8ce62e1526688ba9f}{\index{mdt\-Tt\-Test\-Node@{mdt\-Tt\-Test\-Node}!sql\-For\-Unit\-Connection\-Selection@{sql\-For\-Unit\-Connection\-Selection}}
 \index{sql\-For\-Unit\-Connection\-Selection@{sql\-For\-Unit\-Connection\-Selection}!mdtTtTestNode@{mdt\-Tt\-Test\-Node}}
@@ -188,7 +322,7 @@ Get S\-Q\-L statement for unit connection selection.
 
 
 
-Definition at line 69 of file mdt\-Tt\-Test\-Node.\-cpp.
+Definition at line 70 of file mdt\-Tt\-Test\-Node.\-cpp.
 
 \hypertarget{classmdt_tt_test_node_ae1c4ba44984fb21ec36aa4aa15207ad4}{\index{mdt\-Tt\-Test\-Node@{mdt\-Tt\-Test\-Node}!sql\-For\-Unit\-Selection@{sql\-For\-Unit\-Selection}}
 \index{sql\-For\-Unit\-Selection@{sql\-For\-Unit\-Selection}!mdtTtTestNode@{mdt\-Tt\-Test\-Node}}
@@ -203,7 +337,7 @@ Get S\-Q\-L statement for units selection.
 
 Give a list of units related to given Test\-Node\-Id (i.\-e. Vehicle\-Type I\-D) that are not currently linked to a Test\-Node\-Unit . 
 
-Definition at line 33 of file mdt\-Tt\-Test\-Node.\-cpp.
+Definition at line 34 of file mdt\-Tt\-Test\-Node.\-cpp.
 
 \hypertarget{classmdt_tt_test_node_a98245190a8c199d1a7238b2d1c557830}{\index{mdt\-Tt\-Test\-Node@{mdt\-Tt\-Test\-Node}!sql\-For\-Unit\-Selection\-By\-Unit\-Id\-List@{sql\-For\-Unit\-Selection\-By\-Unit\-Id\-List}}
 \index{sql\-For\-Unit\-Selection\-By\-Unit\-Id\-List@{sql\-For\-Unit\-Selection\-By\-Unit\-Id\-List}!mdtTtTestNode@{mdt\-Tt\-Test\-Node}}
@@ -218,7 +352,7 @@ Get S\-Q\-L statement for unit selection for given list of unit I\-Ds.
 
 
 
-Definition at line 50 of file mdt\-Tt\-Test\-Node.\-cpp.
+Definition at line 51 of file mdt\-Tt\-Test\-Node.\-cpp.
 
 
 

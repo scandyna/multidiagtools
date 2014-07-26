@@ -35,6 +35,16 @@ Collaboration diagram for mdt\-Double\-Validator\-:\nopagebreak
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_double_validator_a9741c74656a66eb9376e230c67d1e39a}{set\-Suffix} (const Q\-String \&s)
 \begin{DoxyCompactList}\small\item\em Set a custom suffix. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_double_validator_a9cd93164abc582ef7ffe7a856e52cd9f}{set\-Bottom} (double min)
+\begin{DoxyCompactList}\small\item\em Set bottom value. \end{DoxyCompactList}\item 
+double \hyperlink{classmdt_double_validator_a4dd214c184264cbe0a7507982d843ca5}{bottom} () const 
+\begin{DoxyCompactList}\small\item\em Get bottom value. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_double_validator_ac063ca06299ee123cb05bfb6d64d78cf}{set\-Top} (double max)
+\begin{DoxyCompactList}\small\item\em Set top value. \end{DoxyCompactList}\item 
+double \hyperlink{classmdt_double_validator_a038ad17fe42138b70f91ba34dafdda09}{top} () const 
+\begin{DoxyCompactList}\small\item\em Get top value. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_double_validator_ac8f9282902ae5a54bba7e8feb262ae3f}{set\-Range} (double min, double max, int decimals=0)
+\begin{DoxyCompactList}\small\item\em Set range. \end{DoxyCompactList}\item 
 Q\-Validator\-::\-State \hyperlink{classmdt_double_validator_a45b3133233d99ef2a46028eda87bad4b}{validate} (Q\-String \&input, int \&pos) const 
 \begin{DoxyCompactList}\small\item\em Validate input. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -67,6 +77,57 @@ Definition at line 28 of file mdt\-Double\-Validator.\-cpp.
 
 
 \subsection{Member Function Documentation}
+\hypertarget{classmdt_double_validator_a4dd214c184264cbe0a7507982d843ca5}{\index{mdt\-Double\-Validator@{mdt\-Double\-Validator}!bottom@{bottom}}
+\index{bottom@{bottom}!mdtDoubleValidator@{mdt\-Double\-Validator}}
+\subsubsection[{bottom}]{\setlength{\rightskip}{0pt plus 5cm}double mdt\-Double\-Validator\-::bottom (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_double_validator_a4dd214c184264cbe0a7507982d843ca5}
+
+
+Get bottom value. 
+
+
+
+Definition at line 55 of file mdt\-Double\-Validator.\-h.
+
+\hypertarget{classmdt_double_validator_a9cd93164abc582ef7ffe7a856e52cd9f}{\index{mdt\-Double\-Validator@{mdt\-Double\-Validator}!set\-Bottom@{set\-Bottom}}
+\index{set\-Bottom@{set\-Bottom}!mdtDoubleValidator@{mdt\-Double\-Validator}}
+\subsubsection[{set\-Bottom}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Double\-Validator\-::set\-Bottom (
+\begin{DoxyParamCaption}
+\item[{double}]{min}
+\end{DoxyParamCaption}
+)}}\label{classmdt_double_validator_a9cd93164abc582ef7ffe7a856e52cd9f}
+
+
+Set bottom value. 
+
+
+
+Definition at line 38 of file mdt\-Double\-Validator.\-cpp.
+
+
+
+Referenced by mdt\-Double\-Edit\-::set\-Minimum().
+
+\hypertarget{classmdt_double_validator_ac8f9282902ae5a54bba7e8feb262ae3f}{\index{mdt\-Double\-Validator@{mdt\-Double\-Validator}!set\-Range@{set\-Range}}
+\index{set\-Range@{set\-Range}!mdtDoubleValidator@{mdt\-Double\-Validator}}
+\subsubsection[{set\-Range}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Double\-Validator\-::set\-Range (
+\begin{DoxyParamCaption}
+\item[{double}]{min, }
+\item[{double}]{max, }
+\item[{int}]{decimals = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_double_validator_ac8f9282902ae5a54bba7e8feb262ae3f}
+
+
+Set range. 
+
+
+
+Definition at line 48 of file mdt\-Double\-Validator.\-cpp.
+
 \hypertarget{classmdt_double_validator_a9741c74656a66eb9376e230c67d1e39a}{\index{mdt\-Double\-Validator@{mdt\-Double\-Validator}!set\-Suffix@{set\-Suffix}}
 \index{set\-Suffix@{set\-Suffix}!mdtDoubleValidator@{mdt\-Double\-Validator}}
 \subsubsection[{set\-Suffix}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Double\-Validator\-::set\-Suffix (
@@ -86,6 +147,40 @@ Definition at line 33 of file mdt\-Double\-Validator.\-cpp.
 
 Referenced by mdt\-Double\-Edit\-::set\-Unit().
 
+\hypertarget{classmdt_double_validator_ac063ca06299ee123cb05bfb6d64d78cf}{\index{mdt\-Double\-Validator@{mdt\-Double\-Validator}!set\-Top@{set\-Top}}
+\index{set\-Top@{set\-Top}!mdtDoubleValidator@{mdt\-Double\-Validator}}
+\subsubsection[{set\-Top}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Double\-Validator\-::set\-Top (
+\begin{DoxyParamCaption}
+\item[{double}]{max}
+\end{DoxyParamCaption}
+)}}\label{classmdt_double_validator_ac063ca06299ee123cb05bfb6d64d78cf}
+
+
+Set top value. 
+
+
+
+Definition at line 43 of file mdt\-Double\-Validator.\-cpp.
+
+
+
+Referenced by mdt\-Double\-Edit\-::set\-Maximum().
+
+\hypertarget{classmdt_double_validator_a038ad17fe42138b70f91ba34dafdda09}{\index{mdt\-Double\-Validator@{mdt\-Double\-Validator}!top@{top}}
+\index{top@{top}!mdtDoubleValidator@{mdt\-Double\-Validator}}
+\subsubsection[{top}]{\setlength{\rightskip}{0pt plus 5cm}double mdt\-Double\-Validator\-::top (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_double_validator_a038ad17fe42138b70f91ba34dafdda09}
+
+
+Get top value. 
+
+
+
+Definition at line 63 of file mdt\-Double\-Validator.\-h.
+
 \hypertarget{classmdt_double_validator_a45b3133233d99ef2a46028eda87bad4b}{\index{mdt\-Double\-Validator@{mdt\-Double\-Validator}!validate@{validate}}
 \index{validate@{validate}!mdtDoubleValidator@{mdt\-Double\-Validator}}
 \subsubsection[{validate}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Validator\-::\-State mdt\-Double\-Validator\-::validate (
@@ -100,7 +195,7 @@ Validate input.
 
 
 
-Definition at line 38 of file mdt\-Double\-Validator.\-cpp.
+Definition at line 53 of file mdt\-Double\-Validator.\-cpp.
 
 
 
@@ -108,7 +203,7 @@ References mdt\-Double\-Edit\-::infinity\-String().
 
 
 
-Referenced by mdt\-Double\-Edit\-::set\-Value().
+Referenced by mdt\-Double\-Edit\-::set\-Value\-String().
 
 
 

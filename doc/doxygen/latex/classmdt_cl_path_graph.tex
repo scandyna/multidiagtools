@@ -19,10 +19,18 @@ Represents the link list in a graph.
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_cl_path_graph_a40e80f68b2600ad69a1fe74aa40393f8}{load\-Link\-List} ()
 \begin{DoxyCompactList}\small\item\em Load the link list. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_cl_path_graph_a14a5580402b273eb6707939ee122fa95}{add\-Link} (const Q\-Variant \&start\-Connection\-Id, const Q\-Variant \&end\-Connection\-Id, const Q\-Variant \&user\-Data=Q\-Variant(), bool is\-Bidirectional=true, int weight=1)
+\begin{DoxyCompactList}\small\item\em Add a link to the graph. \end{DoxyCompactList}\item 
+Q\-Variant \hyperlink{classmdt_cl_path_graph_a82df1588f1b4a9df7b25760ebd9e5aa1}{get\-User\-Data} (const Q\-Variant \&start\-Connection\-Id, const Q\-Variant \&end\-Connection\-Id)
+\begin{DoxyCompactList}\small\item\em Get user data for item between start and end connection. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_cl_path_graph_a5bee589e7c93681bf9325fd9bc999eb9}{remove\-Added\-Links} ()
+\begin{DoxyCompactList}\small\item\em Remove links that where added with \hyperlink{classmdt_cl_path_graph_a14a5580402b273eb6707939ee122fa95}{add\-Link()} \end{DoxyCompactList}\item 
 Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_cl_path_graph_a09b3b342fe09d1afdbc88c8c683ab016}{get\-Linked\-Connection\-Id\-List} (const Q\-Variant \&from\-Connection\-Id)
 \begin{DoxyCompactList}\small\item\em Get a list of unit connections I\-Ds that are linked to a given connection. \end{DoxyCompactList}\item 
 Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_cl_path_graph_af5484b6efa4b9d9162de3dd1834fcb41}{get\-Linked\-Connector\-Id\-List} (const Q\-Variant \&from\-Connector\-Id, bool $\ast$ok, const Q\-List$<$ Q\-Variant $>$ \&connection\-Id\-List\-To\-Ignore=Q\-List$<$ Q\-Variant $>$())
 \begin{DoxyCompactList}\small\item\em Get a list of unit connector I\-D that are linked to given one. \end{DoxyCompactList}\item 
+Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_cl_path_graph_afa0a3c6b9fd56cfd943a3bc2480c1ce0}{get\-Shortest\-Path} (const Q\-Variant \&from\-Connection\-Id, const Q\-Variant \&to\-Connection\-Id, bool \&ok)
+\begin{DoxyCompactList}\small\item\em Get shorted path from start connection I\-D to end connection I\-D. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_cl_path_graph_ae779d0527cc984122dbf063238b59749}{draw\-Path} (const Q\-Variant \&from\-Connection\-Id)
 \begin{DoxyCompactList}\small\item\em Draw the graphic representation starting from a connection. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_cl_path_graph_a6c239942dd7f31fc2197af4febec489c}{attach\-View} (Q\-Graphics\-View $\ast$view)
@@ -36,7 +44,7 @@ Q\-String\-List \hyperlink{classmdt_cl_path_graph_a63ddfb9e8d64041ad17c992eac172
 \subsection{Detailed Description}
 Represents the link list in a graph. 
 
-Definition at line 98 of file mdt\-Cl\-Path\-Graph.\-h.
+Definition at line 105 of file mdt\-Cl\-Path\-Graph.\-h.
 
 
 
@@ -54,7 +62,7 @@ Constructor.
 
 
 
-Definition at line 68 of file mdt\-Cl\-Path\-Graph.\-cpp.
+Definition at line 65 of file mdt\-Cl\-Path\-Graph.\-cpp.
 
 \hypertarget{classmdt_cl_path_graph_aa72798f4edc19fc69d32cd5d7d643bb8}{\index{mdt\-Cl\-Path\-Graph@{mdt\-Cl\-Path\-Graph}!$\sim$mdt\-Cl\-Path\-Graph@{$\sim$mdt\-Cl\-Path\-Graph}}
 \index{$\sim$mdt\-Cl\-Path\-Graph@{$\sim$mdt\-Cl\-Path\-Graph}!mdtClPathGraph@{mdt\-Cl\-Path\-Graph}}
@@ -69,11 +77,42 @@ Destructor.
 
 
 
-Definition at line 75 of file mdt\-Cl\-Path\-Graph.\-cpp.
+Definition at line 72 of file mdt\-Cl\-Path\-Graph.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
+\hypertarget{classmdt_cl_path_graph_a14a5580402b273eb6707939ee122fa95}{\index{mdt\-Cl\-Path\-Graph@{mdt\-Cl\-Path\-Graph}!add\-Link@{add\-Link}}
+\index{add\-Link@{add\-Link}!mdtClPathGraph@{mdt\-Cl\-Path\-Graph}}
+\subsubsection[{add\-Link}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Cl\-Path\-Graph\-::add\-Link (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{start\-Connection\-Id, }
+\item[{const Q\-Variant \&}]{end\-Connection\-Id, }
+\item[{const Q\-Variant \&}]{user\-Data = {\ttfamily QVariant()}, }
+\item[{bool}]{is\-Bidirectional = {\ttfamily true}, }
+\item[{int}]{weight = {\ttfamily 1}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_path_graph_a14a5580402b273eb6707939ee122fa95}
+
+
+Add a link to the graph. 
+
+Can be used to add some kind of \char`\"{}ghost links\char`\"{} to the graph. For normal usage, only call \hyperlink{classmdt_cl_path_graph_a40e80f68b2600ad69a1fe74aa40393f8}{load\-Link\-List()}.void add\-Link(const Q\-Variant \& start\-Connection\-Id, const Q\-Variant \& end\-Connection\-Id, bool is\-Bidirectional = true, int weight = 1);
+
+Add a link to the graph
+
+Can be used to add some kind of \char`\"{}ghost links\char`\"{} to the graph. For normal usage, only call \hyperlink{classmdt_cl_path_graph_a40e80f68b2600ad69a1fe74aa40393f8}{load\-Link\-List()}.
+
+void mdt\-Cl\-Path\-Graph\-::add\-Link(const Q\-Variant\& start\-Connection\-Id, const Q\-Variant\& end\-Connection\-Id, bool is\-Bidirectional, int weight) \{ Q\-\_\-\-A\-S\-S\-E\-R\-T(!start\-Connection\-Id.is\-Null()); Q\-\_\-\-A\-S\-S\-E\-R\-T(!end\-Connection\-Id.is\-Null());
+
+add\-Link\-Pv(start\-Connection\-Id, end\-Connection\-Id, is\-Bidirectional, weight, true, Q\-Variant()); \} 
+
+Definition at line 160 of file mdt\-Cl\-Path\-Graph.\-cpp.
+
+
+
+Referenced by mdt\-Tt\-Test\-Node\-::add\-Relays\-To\-Graph(), and mdt\-Tt\-Test\-Node\-::ensure\-Absence\-Of\-Short\-Circuit().
+
 \hypertarget{classmdt_cl_path_graph_a6c239942dd7f31fc2197af4febec489c}{\index{mdt\-Cl\-Path\-Graph@{mdt\-Cl\-Path\-Graph}!attach\-View@{attach\-View}}
 \index{attach\-View@{attach\-View}!mdtClPathGraph@{mdt\-Cl\-Path\-Graph}}
 \subsubsection[{attach\-View}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Cl\-Path\-Graph\-::attach\-View (
@@ -87,7 +126,7 @@ Attach a view to the scene of the path graph.
 
 
 
-Definition at line 316 of file mdt\-Cl\-Path\-Graph.\-cpp.
+Definition at line 424 of file mdt\-Cl\-Path\-Graph.\-cpp.
 
 
 
@@ -106,7 +145,7 @@ Draw the graphic representation starting from a connection.
 
 
 
-Definition at line 255 of file mdt\-Cl\-Path\-Graph.\-cpp.
+Definition at line 362 of file mdt\-Cl\-Path\-Graph.\-cpp.
 
 
 
@@ -129,7 +168,7 @@ Get a list of unit connections I\-Ds that are linked to a given connection.
 
 Note\-: from\-Connection\-Id is not included in result. 
 
-Definition at line 171 of file mdt\-Cl\-Path\-Graph.\-cpp.
+Definition at line 213 of file mdt\-Cl\-Path\-Graph.\-cpp.
 
 
 
@@ -137,7 +176,7 @@ References mdt\-Cl\-Path\-Graph\-Private\-::mdt\-Cl\-Path\-Graph\-Edge\-Data\-::
 
 
 
-Referenced by mdt\-Cl\-Direct\-Link\-::add\-Links\-By\-Unit\-Connector(), mdt\-Tt\-Test\-Node\-Unit\-::get\-Connection\-Id\-List\-Linked\-To\-Connection\-Id\-List(), mdt\-Tt\-Test\-Connection\-Cable\-::get\-To\-Unit\-Connection\-Id\-Linked\-Unit\-Connection\-Id\-List\-Part\-Of\-Unit\-Connector(), and mdt\-Tt\-Test\-Connection\-Cable\-::get\-To\-Unit\-Connection\-Linked\-Unit\-Connector\-Id\-List().
+Referenced by mdt\-Cl\-Direct\-Link\-::add\-Links\-By\-Unit\-Connector(), mdt\-Tt\-Test\-Node\-Unit\-::get\-Connection\-Id\-List\-Linked\-To\-Connection\-Id\-List(), mdt\-Tt\-Test\-Model\-Continuity\-Test\-Generator\-Helper\-::get\-Related\-Test\-Connection\-Id\-List(), mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper\-::get\-Related\-Test\-Connection\-Id\-List(), mdt\-Tt\-Test\-Connection\-Cable\-::get\-To\-Unit\-Connection\-Id\-Linked\-Unit\-Connection\-Id\-List\-Part\-Of\-Unit\-Connector(), and mdt\-Tt\-Test\-Connection\-Cable\-::get\-To\-Unit\-Connection\-Linked\-Unit\-Connector\-Id\-List().
 
 \hypertarget{classmdt_cl_path_graph_af5484b6efa4b9d9162de3dd1834fcb41}{\index{mdt\-Cl\-Path\-Graph@{mdt\-Cl\-Path\-Graph}!get\-Linked\-Connector\-Id\-List@{get\-Linked\-Connector\-Id\-List}}
 \index{get\-Linked\-Connector\-Id\-List@{get\-Linked\-Connector\-Id\-List}!mdtClPathGraph@{mdt\-Cl\-Path\-Graph}}
@@ -161,11 +200,60 @@ Get a list of unit connector I\-D that are linked to given one.
 \end{DoxyParams}
 Note\-: from\-Connector\-Id is not included in result. 
 
-Definition at line 210 of file mdt\-Cl\-Path\-Graph.\-cpp.
+Definition at line 252 of file mdt\-Cl\-Path\-Graph.\-cpp.
 
 
 
 References mdt\-Cl\-Unit\-::get\-Connection\-Id\-List\-Part\-Of\-Connector\-Id(), mdt\-Cl\-Unit\-::get\-Connector\-Id\-Of\-Connection\-Id(), and mdt\-Tt\-Base\-::last\-Error().
+
+\hypertarget{classmdt_cl_path_graph_afa0a3c6b9fd56cfd943a3bc2480c1ce0}{\index{mdt\-Cl\-Path\-Graph@{mdt\-Cl\-Path\-Graph}!get\-Shortest\-Path@{get\-Shortest\-Path}}
+\index{get\-Shortest\-Path@{get\-Shortest\-Path}!mdtClPathGraph@{mdt\-Cl\-Path\-Graph}}
+\subsubsection[{get\-Shortest\-Path}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ Q\-Variant $>$ mdt\-Cl\-Path\-Graph\-::get\-Shortest\-Path (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{from\-Connection\-Id, }
+\item[{const Q\-Variant \&}]{to\-Connection\-Id, }
+\item[{bool \&}]{ok}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_path_graph_afa0a3c6b9fd56cfd943a3bc2480c1ce0}
+
+
+Get shorted path from start connection I\-D to end connection I\-D. 
+
+Will return a list of connections I\-D that represent the shorted path from a connection I\-D to destination connection I\-D, including given from\-Connection\-Id and to\-Connection\-Id. 
+
+Definition at line 297 of file mdt\-Cl\-Path\-Graph.\-cpp.
+
+
+
+References mdt\-Cl\-Path\-Graph\-Private\-::mdt\-Cl\-Path\-Graph\-Edge\-Data\-::end\-Connection\-Id, mdt\-Error\-::\-Error, mdt\-Cl\-Path\-Graph\-Private\-::mdt\-Cl\-Path\-Graph\-Edge\-Data\-::is\-Complement, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, and mdt\-Cl\-Path\-Graph\-Private\-::mdt\-Cl\-Path\-Graph\-Edge\-Data\-::start\-Connection\-Id.
+
+
+
+Referenced by mdt\-Tt\-Test\-Node\-::ensure\-Absence\-Of\-Short\-Circuit().
+
+\hypertarget{classmdt_cl_path_graph_a82df1588f1b4a9df7b25760ebd9e5aa1}{\index{mdt\-Cl\-Path\-Graph@{mdt\-Cl\-Path\-Graph}!get\-User\-Data@{get\-User\-Data}}
+\index{get\-User\-Data@{get\-User\-Data}!mdtClPathGraph@{mdt\-Cl\-Path\-Graph}}
+\subsubsection[{get\-User\-Data}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant mdt\-Cl\-Path\-Graph\-::get\-User\-Data (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{start\-Connection\-Id, }
+\item[{const Q\-Variant \&}]{end\-Connection\-Id}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_path_graph_a82df1588f1b4a9df7b25760ebd9e5aa1}
+
+
+Get user data for item between start and end connection. 
+
+
+
+Definition at line 168 of file mdt\-Cl\-Path\-Graph.\-cpp.
+
+
+
+References mdt\-Error\-::\-Error, and M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C.
+
+
+
+Referenced by mdt\-Tt\-Test\-Node\-::get\-Relay\-Path\-Setup\-Data\-List().
 
 \hypertarget{classmdt_cl_path_graph_ada63b3baac0bca23e5bd7f9c798a29b2}{\index{mdt\-Cl\-Path\-Graph@{mdt\-Cl\-Path\-Graph}!last\-Error@{last\-Error}}
 \index{last\-Error@{last\-Error}!mdtClPathGraph@{mdt\-Cl\-Path\-Graph}}
@@ -180,11 +268,11 @@ Get last error.
 
 
 
-Definition at line 332 of file mdt\-Cl\-Path\-Graph.\-cpp.
+Definition at line 440 of file mdt\-Cl\-Path\-Graph.\-cpp.
 
 
 
-Referenced by mdt\-Tt\-Test\-Node\-Unit\-::get\-Connection\-Id\-List\-Linked\-To\-Connection\-Id\-List(), and mdt\-Tt\-Test\-Connection\-Cable\-::load\-Link\-List().
+Referenced by mdt\-Tt\-Test\-Node\-::ensure\-Absence\-Of\-Short\-Circuit(), mdt\-Tt\-Test\-Model\-::generate\-Test\-Model(), mdt\-Tt\-Test\-Node\-Unit\-::get\-Connection\-Id\-List\-Linked\-To\-Connection\-Id\-List(), and mdt\-Tt\-Test\-Connection\-Cable\-::load\-Link\-List().
 
 \hypertarget{classmdt_cl_path_graph_a63ddfb9e8d64041ad17c992eac172a8a}{\index{mdt\-Cl\-Path\-Graph@{mdt\-Cl\-Path\-Graph}!last\-Error\-Message@{last\-Error\-Message}}
 \index{last\-Error\-Message@{last\-Error\-Message}!mdtClPathGraph@{mdt\-Cl\-Path\-Graph}}
@@ -206,7 +294,7 @@ Returned list has allways a size of 3 (detailed\-Text can simply contain a empty
 \item[\hyperlink{todo__todo000050}{Todo}]Should become Obselete . \end{DoxyRefDesc}
 
 
-Definition at line 323 of file mdt\-Cl\-Path\-Graph.\-cpp.
+Definition at line 431 of file mdt\-Cl\-Path\-Graph.\-cpp.
 
 
 
@@ -225,15 +313,34 @@ Load the link list.
 
 
 
-Definition at line 81 of file mdt\-Cl\-Path\-Graph.\-cpp.
+Definition at line 78 of file mdt\-Cl\-Path\-Graph.\-cpp.
 
 
 
-References mdt\-Cl\-Path\-Graph\-Private\-::mdt\-Cl\-Path\-Graph\-Edge\-Data\-::end\-Connection\-Id, mdt\-Error\-::\-Error, mdt\-Cl\-Path\-Graph\-Private\-::mdt\-Cl\-Path\-Graph\-Edge\-Data\-::is\-Complement, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, and mdt\-Cl\-Path\-Graph\-Private\-::mdt\-Cl\-Path\-Graph\-Edge\-Data\-::start\-Connection\-Id.
+References mdt\-Error\-::\-Error, and M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C.
 
 
 
-Referenced by mdt\-Tt\-Test\-Node\-Unit\-::get\-Connection\-Id\-List\-Linked\-To\-Connection\-Id\-List(), mdt\-Cl\-Path\-Graph\-Dialog\-::load\-Link\-List(), and mdt\-Tt\-Test\-Connection\-Cable\-::load\-Link\-List().
+Referenced by mdt\-Tt\-Test\-Model\-::generate\-Test\-Model(), mdt\-Tt\-Test\-Node\-Unit\-::get\-Connection\-Id\-List\-Linked\-To\-Connection\-Id\-List(), mdt\-Cl\-Path\-Graph\-Dialog\-::load\-Link\-List(), mdt\-Tt\-Test\-Connection\-Cable\-::load\-Link\-List(), and mdt\-Tt\-Relay\-Path\-Dialog\-::set\-Data().
+
+\hypertarget{classmdt_cl_path_graph_a5bee589e7c93681bf9325fd9bc999eb9}{\index{mdt\-Cl\-Path\-Graph@{mdt\-Cl\-Path\-Graph}!remove\-Added\-Links@{remove\-Added\-Links}}
+\index{remove\-Added\-Links@{remove\-Added\-Links}!mdtClPathGraph@{mdt\-Cl\-Path\-Graph}}
+\subsubsection[{remove\-Added\-Links}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Cl\-Path\-Graph\-::remove\-Added\-Links (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_path_graph_a5bee589e7c93681bf9325fd9bc999eb9}
+
+
+Remove links that where added with \hyperlink{classmdt_cl_path_graph_a14a5580402b273eb6707939ee122fa95}{add\-Link()} 
+
+
+
+Definition at line 204 of file mdt\-Cl\-Path\-Graph.\-cpp.
+
+
+
+Referenced by mdt\-Tt\-Test\-Node\-::add\-Relays\-To\-Graph(), and mdt\-Tt\-Test\-Node\-::ensure\-Absence\-Of\-Short\-Circuit().
 
 
 

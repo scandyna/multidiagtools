@@ -3,5 +3,5 @@
 <area shape="rect" id="node5" href="$classmdt_modbus_io_tool.html" title="Minimal tool for MODBUS I/O. " alt="" coords="160,83,285,112"/>
 <area shape="rect" id="node7" href="$classmdt_port_term.html" title="Mini port treminal. " alt="" coords="309,83,408,112"/>
 <area shape="rect" id="node9" href="$classmdt_sql_window.html" title="Main window for a database table view/editor. " alt="" coords="432,83,541,112"/>
-<area shape="rect" id="node11" href="$classmdt_tt_basic_tester.html" title="class QSqlTableModel; " alt="" coords="565,83,691,112"/>
+<area shape="rect" id="node11" href="$classmdt_tt_basic_tester_window.html" title="mdtTtBasicTesterWindow" alt="" coords="565,83,739,112"/>
 </map>

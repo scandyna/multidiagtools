@@ -67,9 +67,7 @@ virtual void \hyperlink{classmdt_abstract_sql_widget_a8ed6bb811c992fcc8bba8da9f6
 virtual void \hyperlink{classmdt_abstract_sql_widget_a619725b15f305e216ba9ce9dc0ab9e3c}{set\-Current\-Index} (int row)=0
 \begin{DoxyCompactList}\small\item\em Set row as current record. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_abstract_sql_widget_a49624704409e34459084201ccb8e9399}{set\-Current\-Record} (const Q\-String \&field\-Name, const Q\-Variant \&value)
-\begin{DoxyCompactList}\small\item\em Set the first record that matches given criteria as current record (index). \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_abstract_sql_widget_a434da68da8e11b0f25a4e3d2346c0373}{re\-Enter\-Visualizing\-State} ()
-\begin{DoxyCompactList}\small\item\em Re-\/enter in visualizing state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Set the first record that matches given criteria as current record (index). \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Signals}
 \begin{DoxyCompactItemize}
 \item 
@@ -122,10 +120,14 @@ void \hyperlink{classmdt_abstract_sql_widget_a6787c093d9b0b64a1e8d3794ba505604}{
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
 virtual \hyperlink{classmdt_abstract_sql_widget_a46dabe9e76aaea93ff20b28863e6c0ff}{$\sim$mdt\-Abstract\-Sql\-Widget} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_abstract_sql_widget_a55faa70683f8374b0ecb703c89b75267}{set\-Ask\-User\-Befor\-Revert} (bool ask)
+\begin{DoxyCompactList}\small\item\em Ask user before revert occurs. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{set\-Model} (\hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model} $\ast$\hyperlink{classmdt_abstract_sql_widget_a298d40a6540aeabbb7644e3c4fd9f3ea}{model})
 \begin{DoxyCompactList}\small\item\em Set the table model. \end{DoxyCompactList}\item 
 \hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model} $\ast$ \hyperlink{classmdt_abstract_sql_widget_a298d40a6540aeabbb7644e3c4fd9f3ea}{model} ()
 \begin{DoxyCompactList}\small\item\em Get current model. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_abstract_sql_widget_a9d901846513af3b93748c9a37e90aae1}{start} ()
+\begin{DoxyCompactList}\small\item\em Start internal state machine. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_abstract_sql_widget_a0ccf93f41b1d7c479bfe0a52df2aac06}{add\-Data\-Validator} (\hyperlink{classmdt_sql_data_validator}{mdt\-Sql\-Data\-Validator} $\ast$validator, bool put\-At\-Top\-Priority=false)
 \begin{DoxyCompactList}\small\item\em Add a data validator. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_abstract_sql_widget_ac3fe33cfebb07d461ca06ee838a9b979}{set\-User\-Friendly\-Table\-Name} (const Q\-String \&name)
@@ -152,19 +154,21 @@ virtual void \hyperlink{classmdt_abstract_sql_widget_a586e89097e9b4c27888695796c
 \begin{DoxyCompactList}\small\item\em Enable local navigation. \end{DoxyCompactList}\item 
 virtual void \hyperlink{classmdt_abstract_sql_widget_a4ad94a530c77292d122d38eb041da6e9}{enable\-Local\-Edition} ()
 \begin{DoxyCompactList}\small\item\em Enable local edition. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_abstract_sql_widget_aa5824c5fc3b0a7e118dd9ebb19084d2c}{all\-Data\-Are\-Saved} ()
+bool \hyperlink{classmdt_abstract_sql_widget_ae83b8677a38ccb7c00b9ebfeebae69c8}{all\-Data\-Are\-Saved} (bool show\-Message\-Box\-If\-Not\-Saved=true)
 \begin{DoxyCompactList}\small\item\em Check if all data are saved. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_abstract_sql_widget_abe9677dd1d70d5e67349f6fa6d2216ae}{clear\-Columns\-Sort\-Order} ()
 \begin{DoxyCompactList}\small\item\em Clear columns sort order. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_abstract_sql_widget_a3c03a6c43f4488b377aa72879c10e066}{add\-Column\-To\-Sort\-Order} (const Q\-String \&field\-Name, Qt\-::\-Sort\-Order order=Qt\-::\-Ascending\-Order)
 \begin{DoxyCompactList}\small\item\em Add a column to columns sort order. \end{DoxyCompactList}\item 
 virtual void \hyperlink{classmdt_abstract_sql_widget_a2c83a26fe75b708948c80a51887075e9}{sort} ()
-\begin{DoxyCompactList}\small\item\em Sort data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Sort data. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_abstract_sql_widget_a903905036e9c6b440e2a300f48579b2b}{submit\-And\-Wait} (int timeout=-\/1)
+\begin{DoxyCompactList}\small\item\em Submit and wait until success or failure. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 virtual void \hyperlink{classmdt_abstract_sql_widget_aad8608a92f65790c99ca7897fbd48c30}{do\-Set\-Model} (\hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model} $\ast$\hyperlink{classmdt_abstract_sql_widget_a298d40a6540aeabbb7644e3c4fd9f3ea}{model})=0
-\begin{DoxyCompactList}\small\item\em Set the table model. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Re-\/enter in visualizing state. \end{DoxyCompactList}\item 
 virtual bool \hyperlink{classmdt_abstract_sql_widget_a7a97e9c9f3b9c22650e4b55d095543ef}{do\-Submit} ()=0
 \begin{DoxyCompactList}\small\item\em Submit current row to model. \end{DoxyCompactList}\item 
 virtual bool \hyperlink{classmdt_abstract_sql_widget_a2c0cbbcd02be19767e68153ecbc2392d}{do\-Revert} ()=0
@@ -183,7 +187,7 @@ Q\-String \hyperlink{classmdt_abstract_sql_widget_aeeddeec556cc20c5c9a49559df789
 \begin{DoxyCompactList}\small\item\em Get message for the user regarding S\-Q\-Lite error number. \end{DoxyCompactList}\item 
 Q\-String \hyperlink{classmdt_abstract_sql_widget_a1081ced9b96f60b3b39c6085bfe305d4}{get\-User\-Readable\-Text\-From\-Mysql\-Error} (const Q\-Sql\-Error \&error)
 \begin{DoxyCompactList}\small\item\em Get message for the user regarding My\-Sql error number. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_abstract_sql_widget_aebd051866b148eb6f60a10c6ac648efa}{child\-Widgets\-Are\-In\-Visaluzing\-State} ()
+bool \hyperlink{classmdt_abstract_sql_widget_aba32c9a31ff594ff63652ab98a2dfbcb}{child\-Widgets\-Are\-In\-Visaluzing\-State} (bool show\-Message\-Box\-If\-Not\-Saved)
 \begin{DoxyCompactList}\small\item\em Check that child widgtes have no pending data. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_abstract_sql_widget_ad20a178299c96790587b53380bb68282}{warn\-User\-About\-Unsaved\-Row} (const Q\-String \&table\-Name)
 \begin{DoxyCompactList}\small\item\em Show a message box to the user to warn him that it should save/revert data. \end{DoxyCompactList}\item 
@@ -255,7 +259,7 @@ Constructor.
 
 Will initialize internal state machine. 
 
-Definition at line 40 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+Definition at line 41 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 \hypertarget{classmdt_abstract_sql_widget_a46dabe9e76aaea93ff20b28863e6c0ff}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!$\sim$mdt\-Abstract\-Sql\-Widget@{$\sim$mdt\-Abstract\-Sql\-Widget}}
 \index{$\sim$mdt\-Abstract\-Sql\-Widget@{$\sim$mdt\-Abstract\-Sql\-Widget}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
@@ -270,7 +274,7 @@ Destructor.
 
 
 
-Definition at line 48 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+Definition at line 50 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 
 
@@ -298,7 +302,7 @@ relation must be a valid pointer. Note\-: relation will be reparented, so it wil
 \end{DoxyPrecond}
 
 
-Definition at line 107 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+Definition at line 126 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 
 
@@ -341,7 +345,7 @@ Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79
 \end{DoxyPrecond}
 
 
-Definition at line 259 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+Definition at line 283 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 
 
@@ -375,19 +379,19 @@ validator must be a valid pointer.
 \end{DoxyPrecond}
 
 
-Definition at line 77 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+Definition at line 96 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 
 
 Referenced by mdt\-Sql\-Form\-Widget\-::map\-Form\-Widgets().
 
-\hypertarget{classmdt_abstract_sql_widget_aa5824c5fc3b0a7e118dd9ebb19084d2c}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!all\-Data\-Are\-Saved@{all\-Data\-Are\-Saved}}
+\hypertarget{classmdt_abstract_sql_widget_ae83b8677a38ccb7c00b9ebfeebae69c8}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!all\-Data\-Are\-Saved@{all\-Data\-Are\-Saved}}
 \index{all\-Data\-Are\-Saved@{all\-Data\-Are\-Saved}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
 \subsubsection[{all\-Data\-Are\-Saved}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Abstract\-Sql\-Widget\-::all\-Data\-Are\-Saved (
 \begin{DoxyParamCaption}
-{}
+\item[{bool}]{show\-Message\-Box\-If\-Not\-Saved = {\ttfamily true}}
 \end{DoxyParamCaption}
-)}}\label{classmdt_abstract_sql_widget_aa5824c5fc3b0a7e118dd9ebb19084d2c}
+)}}\label{classmdt_abstract_sql_widget_ae83b8677a38ccb7c00b9ebfeebae69c8}
 
 
 Check if all data are saved. 
@@ -401,7 +405,7 @@ true if all data are saved, false if a S\-Q\-L widget has pending data.
 \end{DoxyReturn}
 
 
-Definition at line 236 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+Definition at line 255 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 
 
@@ -409,22 +413,22 @@ References child\-Widgets\-Are\-In\-Visaluzing\-State(), current\-State(), user\
 
 
 
-Referenced by mdt\-Sql\-Dialog\-::accept(), mdt\-Sql\-Form\-::all\-Data\-Are\-Saved(), child\-Widgets\-Are\-In\-Visaluzing\-State(), and mdt\-Sql\-Dialog\-::reject().
+Referenced by mdt\-Sql\-Dialog\-::accept(), mdt\-Sql\-Form\-::all\-Data\-Are\-Saved(), child\-Widgets\-Are\-In\-Visaluzing\-State(), mdt\-Sql\-Dialog\-::reject(), mdt\-Sql\-Form\-Widget\-::set\-Current\-Index(), mdt\-Tt\-Abstract\-Test\-Widget\-::test\-Is\-Empty(), mdt\-Tt\-Abstract\-Test\-Widget\-::test\-Is\-Saved(), mdt\-Sql\-Form\-Widget\-::to\-First(), mdt\-Sql\-Form\-Widget\-::to\-Last(), mdt\-Sql\-Form\-Widget\-::to\-Next(), and mdt\-Sql\-Form\-Widget\-::to\-Previous().
 
-\hypertarget{classmdt_abstract_sql_widget_aebd051866b148eb6f60a10c6ac648efa}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!child\-Widgets\-Are\-In\-Visaluzing\-State@{child\-Widgets\-Are\-In\-Visaluzing\-State}}
+\hypertarget{classmdt_abstract_sql_widget_aba32c9a31ff594ff63652ab98a2dfbcb}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!child\-Widgets\-Are\-In\-Visaluzing\-State@{child\-Widgets\-Are\-In\-Visaluzing\-State}}
 \index{child\-Widgets\-Are\-In\-Visaluzing\-State@{child\-Widgets\-Are\-In\-Visaluzing\-State}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
 \subsubsection[{child\-Widgets\-Are\-In\-Visaluzing\-State}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Abstract\-Sql\-Widget\-::child\-Widgets\-Are\-In\-Visaluzing\-State (
 \begin{DoxyParamCaption}
-{}
+\item[{bool}]{show\-Message\-Box\-If\-Not\-Saved}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_abstract_sql_widget_aebd051866b148eb6f60a10c6ac648efa}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_abstract_sql_widget_aba32c9a31ff594ff63652ab98a2dfbcb}
 
 
 Check that child widgtes have no pending data. 
 
 
 
-Definition at line 406 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+Definition at line 451 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 
 
@@ -432,7 +436,7 @@ References all\-Data\-Are\-Saved().
 
 
 
-Referenced by all\-Data\-Are\-Saved(), mdt\-Sql\-Form\-Widget\-::set\-Current\-Index(), mdt\-Sql\-Form\-Widget\-::to\-First(), mdt\-Sql\-Form\-Widget\-::to\-Last(), mdt\-Sql\-Form\-Widget\-::to\-Next(), and mdt\-Sql\-Form\-Widget\-::to\-Previous().
+Referenced by all\-Data\-Are\-Saved().
 
 \hypertarget{classmdt_abstract_sql_widget_abe9677dd1d70d5e67349f6fa6d2216ae}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!clear\-Columns\-Sort\-Order@{clear\-Columns\-Sort\-Order}}
 \index{clear\-Columns\-Sort\-Order@{clear\-Columns\-Sort\-Order}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
@@ -450,7 +454,7 @@ Clear columns sort order.
 \end{DoxySeeAlso}
 
 
-Definition at line 252 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+Definition at line 276 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 
 
@@ -472,7 +476,7 @@ Get current data for given field name.
 \end{DoxyPrecond}
 
 
-Definition at line 176 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+Definition at line 195 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 
 
@@ -533,7 +537,7 @@ Get current state.
 
 
 
-Definition at line 219 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+Definition at line 238 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 
 
@@ -541,7 +545,7 @@ References mdt\-State\-Machine\-::current\-State().
 
 
 
-Referenced by all\-Data\-Are\-Saved(), re\-Enter\-Visualizing\-State(), mdt\-Sql\-Form\-Widget\-::set\-Current\-Index(), mdt\-Sql\-Form\-Widget\-::to\-First(), mdt\-Sql\-Form\-Widget\-::to\-Last(), mdt\-Sql\-Form\-Widget\-::to\-Next(), and mdt\-Sql\-Form\-Widget\-::to\-Previous().
+Referenced by all\-Data\-Are\-Saved(), and submit\-And\-Wait().
 
 \hypertarget{classmdt_abstract_sql_widget_a3d362ebfc2d4f4b40b48ca08db287b3c}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!data@{data}}
 \index{data@{data}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
@@ -560,7 +564,7 @@ Get data for given row and field name.
 \end{DoxyPrecond}
 
 
-Definition at line 183 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+Definition at line 202 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 
 
@@ -599,11 +603,13 @@ Display a message to the user regarding error.
 Internally, error will be logged with \hyperlink{classmdt_error}{mdt\-Error} system.
 
 \begin{DoxyPrecond}{Precondition}
-Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{set\-Model()} before using this method. 
+Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{set\-Model()} before using this method.
 \end{DoxyPrecond}
+bool mdt\-Abstract\-Sql\-Widget\-::re\-Enter\-Visualizing\-State() \{ if(\hyperlink{classmdt_abstract_sql_widget_a786eb7b7b111eef748002419984be7d9}{current\-State()} != Visualizing)\{ return false; \} on\-State\-Visualizing\-Entered();
 
+return true; \} 
 
-Definition at line 330 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+Definition at line 375 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 
 
@@ -668,7 +674,13 @@ Subclass must implement this method. On problem, subclass should explain what go
 )\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}}\label{classmdt_abstract_sql_widget_aad8608a92f65790c99ca7897fbd48c30}
 
 
-Set the table model. 
+Re-\/enter in visualizing state. 
+
+Will call on\-State\-Visualizing\-Entered(), witch will emit some signals (like \hyperlink{classmdt_abstract_sql_widget_acacc59096ae48f733be577a96cd2d14a}{submit\-Enabled\-State\-Changed()}). This method will fail if current\-State is not really Visualizing.
+
+This functionnality is used by \hyperlink{classmdt_sql_window}{mdt\-Sql\-Window} and mdt\-Sql\-Dialog.\-bool re\-Enter\-Visualizing\-State();
+
+Set the table model
 
 Subclass must implement this method.
 
@@ -724,7 +736,7 @@ Reimplemented in \hyperlink{classmdt_sql_table_widget_a39422fb9522ee73513f13d8bc
 
 
 
-Definition at line 232 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+Definition at line 251 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 \hypertarget{classmdt_abstract_sql_widget_a586e89097e9b4c27888695796ce945a0}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!enable\-Local\-Navigation@{enable\-Local\-Navigation}}
 \index{enable\-Local\-Navigation@{enable\-Local\-Navigation}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
@@ -743,7 +755,7 @@ In normal way, when using \hyperlink{classmdt_sql_window}{mdt\-Sql\-Window}, loc
 
 This default implementation does nothing. 
 
-Definition at line 228 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+Definition at line 247 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 \hypertarget{classmdt_abstract_sql_widget_a27d3a1a75cddf6653f919e5ff3f2e8b4}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!error\-Occured@{error\-Occured}}
 \index{error\-Occured@{error\-Occured}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
@@ -769,7 +781,7 @@ Get message for the user regarding My\-Sql error number.
 
 
 
-Definition at line 394 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+Definition at line 439 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 
 
@@ -788,7 +800,7 @@ Get message for the user regarding S\-Q\-Lite error number.
 
 
 
-Definition at line 369 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+Definition at line 414 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 
 
@@ -807,7 +819,7 @@ Insert a new row to model.
 
 Internally, \hyperlink{classmdt_abstract_sql_widget_a87ca4a74a2d8073be3ae92d7215eb538}{insert\-Triggered()} signal will be emitted. 
 
-Definition at line 280 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+Definition at line 323 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 
 
@@ -815,7 +827,7 @@ References insert\-Triggered().
 
 
 
-Referenced by mdt\-Sql\-Table\-Widget\-::enable\-Local\-Edition(), and mdt\-Sql\-Form\-::insert().
+Referenced by mdt\-Sql\-Form\-::insert().
 
 \hypertarget{classmdt_abstract_sql_widget_a909ba5b675f596ee5c5980e159cd2878}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!insert\-Enabled\-State\-Changed@{insert\-Enabled\-State\-Changed}}
 \index{insert\-Enabled\-State\-Changed@{insert\-Enabled\-State\-Changed}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
@@ -828,11 +840,7 @@ Referenced by mdt\-Sql\-Table\-Widget\-::enable\-Local\-Edition(), and mdt\-Sql\
 
 Emitted when \hyperlink{classmdt_abstract_sql_widget_a850df045ea95b8c15ddd95ae771ef785}{insert()} function goes enabled/disabled. 
 
-This is usefull to keep G\-U\-I control coherent. For example, this is used in \hyperlink{classmdt_sql_window}{mdt\-Sql\-Window} to enable/disable actions. 
-
-Referenced by mdt\-Sql\-Table\-Widget\-::enable\-Local\-Edition().
-
-\hypertarget{classmdt_abstract_sql_widget_a87ca4a74a2d8073be3ae92d7215eb538}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!insert\-Triggered@{insert\-Triggered}}
+This is usefull to keep G\-U\-I control coherent. For example, this is used in \hyperlink{classmdt_sql_window}{mdt\-Sql\-Window} to enable/disable actions. \hypertarget{classmdt_abstract_sql_widget_a87ca4a74a2d8073be3ae92d7215eb538}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!insert\-Triggered@{insert\-Triggered}}
 \index{insert\-Triggered@{insert\-Triggered}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
 \subsubsection[{insert\-Triggered}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::insert\-Triggered (
 \begin{DoxyParamCaption}
@@ -860,7 +868,7 @@ Get current model.
 
 Can return a null pointer if model was not set. 
 
-Definition at line 72 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+Definition at line 77 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 
 
@@ -907,7 +915,7 @@ Can be used by subclass to setup his view.
 
 Note\-: returned proxy model is allways valid, but has no valid source model until model was set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{set\-Model()}. 
 
-Definition at line 467 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+Definition at line 512 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 
 
@@ -926,32 +934,7 @@ Get internal proxy model.
 
 
 
-Definition at line 472 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
-
-\hypertarget{classmdt_abstract_sql_widget_a434da68da8e11b0f25a4e3d2346c0373}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!re\-Enter\-Visualizing\-State@{re\-Enter\-Visualizing\-State}}
-\index{re\-Enter\-Visualizing\-State@{re\-Enter\-Visualizing\-State}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
-\subsubsection[{re\-Enter\-Visualizing\-State}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Abstract\-Sql\-Widget\-::re\-Enter\-Visualizing\-State (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [slot]}}}\label{classmdt_abstract_sql_widget_a434da68da8e11b0f25a4e3d2346c0373}
-
-
-Re-\/enter in visualizing state. 
-
-Will call on\-State\-Visualizing\-Entered(), witch will emit some signals (like \hyperlink{classmdt_abstract_sql_widget_acacc59096ae48f733be577a96cd2d14a}{submit\-Enabled\-State\-Changed()}). This method will fail if current\-State is not really Visualizing.
-
-This functionnality is used by \hyperlink{classmdt_sql_window}{mdt\-Sql\-Window} and \hyperlink{classmdt_sql_dialog}{mdt\-Sql\-Dialog}. 
-
-Definition at line 320 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
-
-
-
-References current\-State(), and Visualizing.
-
-
-
-Referenced by mdt\-Sql\-Dialog\-::enable\-Edition(), mdt\-Sql\-Window\-::enable\-Edition(), mdt\-Sql\-Table\-Widget\-::enable\-Local\-Edition(), and mdt\-Sql\-Window\-::enable\-Navigation().
+Definition at line 517 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 \hypertarget{classmdt_abstract_sql_widget_a748f85ff383d3f11fda4db7f931edb1c}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!remove@{remove}}
 \index{remove@{remove}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
@@ -966,7 +949,7 @@ Remove a row from model.
 
 Internally, \hyperlink{classmdt_abstract_sql_widget_aea7a2ee49ce26a4069cbd8f7e0e65654}{remove\-Triggered()} signal will be emitted. 
 
-Definition at line 285 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+Definition at line 328 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 
 
@@ -983,11 +966,7 @@ References remove\-Triggered().
 
 Emitted when \hyperlink{classmdt_abstract_sql_widget_a748f85ff383d3f11fda4db7f931edb1c}{remove()} function goes enabled/disabled. 
 
-This is usefull to keep G\-U\-I control coherent. For example, this is used in \hyperlink{classmdt_sql_window}{mdt\-Sql\-Window} to enable/disable actions. 
-
-Referenced by mdt\-Sql\-Table\-Widget\-::enable\-Local\-Edition().
-
-\hypertarget{classmdt_abstract_sql_widget_aea7a2ee49ce26a4069cbd8f7e0e65654}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!remove\-Triggered@{remove\-Triggered}}
+This is usefull to keep G\-U\-I control coherent. For example, this is used in \hyperlink{classmdt_sql_window}{mdt\-Sql\-Window} to enable/disable actions. \hypertarget{classmdt_abstract_sql_widget_aea7a2ee49ce26a4069cbd8f7e0e65654}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!remove\-Triggered@{remove\-Triggered}}
 \index{remove\-Triggered@{remove\-Triggered}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
 \subsubsection[{remove\-Triggered}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::remove\-Triggered (
 \begin{DoxyParamCaption}
@@ -1023,7 +1002,7 @@ Restore primary key data to (parent) model.
 \end{DoxyPrecond}
 
 
-Definition at line 439 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+Definition at line 484 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 
 
@@ -1044,7 +1023,7 @@ Depending on subclass choosen Edit\-Strategy, this method has potentially no eff
 
 Internally, \hyperlink{classmdt_abstract_sql_widget_a4cd4617364c875c6c777cff1ce0187ae}{revert\-Triggered()} signal will be emitted. 
 
-Definition at line 275 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+Definition at line 318 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 
 
@@ -1052,7 +1031,7 @@ References revert\-Triggered().
 
 
 
-Referenced by mdt\-Sql\-Table\-Widget\-::enable\-Local\-Edition().
+Referenced by mdt\-Tt\-Abstract\-Test\-Widget\-::create\-Test(), and mdt\-Tt\-Abstract\-Test\-Widget\-::open\-Test().
 
 \hypertarget{classmdt_abstract_sql_widget_ada899f0c3f8388d2d3feac7c0c50884c}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!revert\-Enabled\-State\-Changed@{revert\-Enabled\-State\-Changed}}
 \index{revert\-Enabled\-State\-Changed@{revert\-Enabled\-State\-Changed}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
@@ -1065,11 +1044,7 @@ Referenced by mdt\-Sql\-Table\-Widget\-::enable\-Local\-Edition().
 
 Emitted when \hyperlink{classmdt_abstract_sql_widget_a3108b336f4c832cb0a5b3a830fff9ce0}{revert()} function goes enabled/disabled. 
 
-This is usefull to keep G\-U\-I control coherent. For example, this is used in \hyperlink{classmdt_sql_window}{mdt\-Sql\-Window} to enable/disable actions. 
-
-Referenced by mdt\-Sql\-Table\-Widget\-::enable\-Local\-Edition().
-
-\hypertarget{classmdt_abstract_sql_widget_a4cd4617364c875c6c777cff1ce0187ae}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!revert\-Triggered@{revert\-Triggered}}
+This is usefull to keep G\-U\-I control coherent. For example, this is used in \hyperlink{classmdt_sql_window}{mdt\-Sql\-Window} to enable/disable actions. \hypertarget{classmdt_abstract_sql_widget_a4cd4617364c875c6c777cff1ce0187ae}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!revert\-Triggered@{revert\-Triggered}}
 \index{revert\-Triggered@{revert\-Triggered}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
 \subsubsection[{revert\-Triggered}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::revert\-Triggered (
 \begin{DoxyParamCaption}
@@ -1100,11 +1075,30 @@ Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79
 \end{DoxyPrecond}
 
 
-Definition at line 212 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+Definition at line 231 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 
 
 Referenced by mdt\-Sql\-Form\-Widget\-::map\-Form\-Widgets(), set\-Current\-Record(), and mdt\-Sql\-Table\-Widget\-::sort().
+
+\hypertarget{classmdt_abstract_sql_widget_a55faa70683f8374b0ecb703c89b75267}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!set\-Ask\-User\-Befor\-Revert@{set\-Ask\-User\-Befor\-Revert}}
+\index{set\-Ask\-User\-Befor\-Revert@{set\-Ask\-User\-Befor\-Revert}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{set\-Ask\-User\-Befor\-Revert}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::set\-Ask\-User\-Befor\-Revert (
+\begin{DoxyParamCaption}
+\item[{bool}]{ask}
+\end{DoxyParamCaption}
+)}}\label{classmdt_abstract_sql_widget_a55faa70683f8374b0ecb703c89b75267}
+
+
+Ask user before revert occurs. 
+
+
+
+Definition at line 54 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+
+
+
+Referenced by mdt\-Tt\-Abstract\-Test\-Widget\-::mdt\-Tt\-Abstract\-Test\-Widget().
 
 \hypertarget{classmdt_abstract_sql_widget_add434461de436509b853fa9184c41360}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!set\-Current\-Data@{set\-Current\-Data}}
 \index{set\-Current\-Data@{set\-Current\-Data}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
@@ -1124,7 +1118,7 @@ Set (update) data of current row (record) for given field name.
 \end{DoxyPrecond}
 
 
-Definition at line 138 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+Definition at line 157 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 
 
@@ -1173,7 +1167,7 @@ True if matching record was found (in this case, \hyperlink{classmdt_abstract_sq
 \end{DoxyReturn}
 
 
-Definition at line 290 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+Definition at line 333 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 
 
@@ -1203,15 +1197,15 @@ Internal state machine must not running.
 \end{DoxyPrecond}
 
 
-Definition at line 52 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+Definition at line 59 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 
 
-References do\-Set\-Model(), model(), model\-Selected(), Visualizing, and mdt\-State\-Machine\-::wait\-On\-State().
+References do\-Set\-Model(), model(), and model\-Selected().
 
 
 
-Referenced by mdt\-Sql\-Form\-::add\-Child\-Table(), and mdt\-Sql\-Form\-::set\-Main\-Table().
+Referenced by mdt\-Sql\-Form\-::add\-Child\-Table(), mdt\-Tt\-Abstract\-Test\-Widget\-::mdt\-Tt\-Abstract\-Test\-Widget(), mdt\-Tt\-Basic\-Tester\-Window\-::mdt\-Tt\-Basic\-Tester\-Window(), and mdt\-Sql\-Form\-::set\-Main\-Table().
 
 \hypertarget{classmdt_abstract_sql_widget_ac3fe33cfebb07d461ca06ee838a9b979}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!set\-User\-Friendly\-Table\-Name@{set\-User\-Friendly\-Table\-Name}}
 \index{set\-User\-Friendly\-Table\-Name@{set\-User\-Friendly\-Table\-Name}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
@@ -1226,7 +1220,7 @@ Set the user friendly table name.
 
 
 
-Definition at line 90 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+Definition at line 109 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 
 
@@ -1252,7 +1246,7 @@ Reimplemented in \hyperlink{classmdt_sql_table_widget_a5e1323816fce33680857048db
 
 
 
-Definition at line 266 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+Definition at line 290 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 \hypertarget{classmdt_abstract_sql_widget_aa1b5762e5573c3e50c528bc0232a2b37}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!sql\-Widgets@{sql\-Widgets}}
 \index{sql\-Widgets@{sql\-Widgets}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
@@ -1267,11 +1261,39 @@ Get a list of all S\-Q\-L widgets.
 
 Returned list will contain the parent S\-Q\-L widget and all child S\-Q\-L widgets 
 
-Definition at line 124 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+Definition at line 143 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 
 
-Referenced by mdt\-Sql\-Form\-::sql\-Widget().
+Referenced by mdt\-Sql\-Form\-::sql\-Widget(), and mdt\-Sql\-Form\-::start().
+
+\hypertarget{classmdt_abstract_sql_widget_a9d901846513af3b93748c9a37e90aae1}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!start@{start}}
+\index{start@{start}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{start}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::start (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_abstract_sql_widget_a9d901846513af3b93748c9a37e90aae1}
+
+
+Start internal state machine. 
+
+\begin{DoxyPrecond}{Precondition}
+A valid model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{set\-Model()} 
+
+Internal state machine must not running. 
+\end{DoxyPrecond}
+
+
+Definition at line 82 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+
+
+
+References Visualizing, and mdt\-State\-Machine\-::wait\-On\-State().
+
+
+
+Referenced by mdt\-Tt\-Abstract\-Test\-Widget\-::set\-Test\-Ui\-Widget().
 
 \hypertarget{classmdt_abstract_sql_widget_a925485d7acc131d438f6ea251c9b1fb9}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!state\-Editing\-Exited@{state\-Editing\-Exited}}
 \index{state\-Editing\-Exited@{state\-Editing\-Exited}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
@@ -1284,10 +1306,6 @@ Referenced by mdt\-Sql\-Form\-::sql\-Widget().
 
 Emitted when Editing state was exited. 
 
-
-
-Referenced by mdt\-Sql\-Form\-Widget\-::map\-Form\-Widgets().
-
 \hypertarget{classmdt_abstract_sql_widget_af4ed2a005f55ffe23ce6382f1ed3f68e}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!state\-Editing\-New\-Row\-Exited@{state\-Editing\-New\-Row\-Exited}}
 \index{state\-Editing\-New\-Row\-Exited@{state\-Editing\-New\-Row\-Exited}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
 \subsubsection[{state\-Editing\-New\-Row\-Exited}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::state\-Editing\-New\-Row\-Exited (
@@ -1298,10 +1316,6 @@ Referenced by mdt\-Sql\-Form\-Widget\-::map\-Form\-Widgets().
 
 
 Emitted when Editing state was exited. 
-
-
-
-Referenced by mdt\-Sql\-Form\-Widget\-::map\-Form\-Widgets().
 
 \hypertarget{classmdt_abstract_sql_widget_a4acc0adbe6e002cd559642d3ea8e2d3a}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!state\-Visualizing\-Entered@{state\-Visualizing\-Entered}}
 \index{state\-Visualizing\-Entered@{state\-Visualizing\-Entered}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
@@ -1340,7 +1354,7 @@ Depending on subclass choosen Edit\-Strategy, this method has potentially no eff
 
 Internally, \hyperlink{classmdt_abstract_sql_widget_ab3bee735c32de34c0b097f1a426bafca}{submit\-Triggered()} signal will be emitted. 
 
-Definition at line 270 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+Definition at line 313 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 
 
@@ -1348,7 +1362,35 @@ References submit\-Triggered().
 
 
 
-Referenced by mdt\-Sql\-Table\-Widget\-::enable\-Local\-Edition().
+Referenced by submit\-And\-Wait().
+
+\hypertarget{classmdt_abstract_sql_widget_a903905036e9c6b440e2a300f48579b2b}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!submit\-And\-Wait@{submit\-And\-Wait}}
+\index{submit\-And\-Wait@{submit\-And\-Wait}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
+\subsubsection[{submit\-And\-Wait}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Abstract\-Sql\-Widget\-::submit\-And\-Wait (
+\begin{DoxyParamCaption}
+\item[{int}]{timeout = {\ttfamily -\/1}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_abstract_sql_widget_a903905036e9c6b440e2a300f48579b2b}
+
+
+Submit and wait until success or failure. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em timeout} & If $>$ 0, wait maximum timeout, else fail. Note\-: will not freeze Qt's event loop. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 294 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+
+
+
+References current\-State(), Editing, Editing\-New\-Row, submit(), Visualizing, and mdt\-State\-Machine\-::wait\-On\-One\-State().
+
+
+
+Referenced by mdt\-Tt\-Abstract\-Test\-Widget\-::save\-Test().
 
 \hypertarget{classmdt_abstract_sql_widget_acacc59096ae48f733be577a96cd2d14a}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!submit\-Enabled\-State\-Changed@{submit\-Enabled\-State\-Changed}}
 \index{submit\-Enabled\-State\-Changed@{submit\-Enabled\-State\-Changed}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
@@ -1361,11 +1403,7 @@ Referenced by mdt\-Sql\-Table\-Widget\-::enable\-Local\-Edition().
 
 Emitted when \hyperlink{classmdt_abstract_sql_widget_a6678c45b0d46eb163f5b09d79ed001b5}{submit()} function goes enabled/disabled. 
 
-This is usefull to keep G\-U\-I control coherent. For example, this is used in \hyperlink{classmdt_sql_window}{mdt\-Sql\-Window} to enable/disable actions. 
-
-Referenced by mdt\-Sql\-Table\-Widget\-::enable\-Local\-Edition().
-
-\hypertarget{classmdt_abstract_sql_widget_ab3bee735c32de34c0b097f1a426bafca}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!submit\-Triggered@{submit\-Triggered}}
+This is usefull to keep G\-U\-I control coherent. For example, this is used in \hyperlink{classmdt_sql_window}{mdt\-Sql\-Window} to enable/disable actions. \hypertarget{classmdt_abstract_sql_widget_ab3bee735c32de34c0b097f1a426bafca}{\index{mdt\-Abstract\-Sql\-Widget@{mdt\-Abstract\-Sql\-Widget}!submit\-Triggered@{submit\-Triggered}}
 \index{submit\-Triggered@{submit\-Triggered}!mdtAbstractSqlWidget@{mdt\-Abstract\-Sql\-Widget}}
 \subsubsection[{submit\-Triggered}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Widget\-::submit\-Triggered (
 \begin{DoxyParamCaption}
@@ -1481,7 +1519,7 @@ Get the user friendly table name.
 
 If the user friendly table name was not set, the database table name is returned. If model was not set, a empty string is returned. 
 
-Definition at line 95 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+Definition at line 114 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 
 
@@ -1500,7 +1538,7 @@ Show a message box to the user to warn him that it should save/revert data.
 
 
 
-Definition at line 428 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
+Definition at line 473 of file mdt\-Abstract\-Sql\-Widget.\-cpp.
 
 
 

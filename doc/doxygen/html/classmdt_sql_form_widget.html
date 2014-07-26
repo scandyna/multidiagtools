@@ -163,9 +163,6 @@ Public Slots</h2></td></tr>
 <tr class="memitem:a49624704409e34459084201ccb8e9399 inherit pub_slots_classmdt_abstract_sql_widget"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_widget.html#a49624704409e34459084201ccb8e9399">setCurrentRecord</a> (const QString &amp;fieldName, const QVariant &amp;value)</td></tr>
 <tr class="memdesc:a49624704409e34459084201ccb8e9399 inherit pub_slots_classmdt_abstract_sql_widget"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the first record that matches given criteria as current record (index).  <a href="#a49624704409e34459084201ccb8e9399">More...</a><br/></td></tr>
 <tr class="separator:a49624704409e34459084201ccb8e9399 inherit pub_slots_classmdt_abstract_sql_widget"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a434da68da8e11b0f25a4e3d2346c0373 inherit pub_slots_classmdt_abstract_sql_widget"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_widget.html#a434da68da8e11b0f25a4e3d2346c0373">reEnterVisualizingState</a> ()</td></tr>
-<tr class="memdesc:a434da68da8e11b0f25a4e3d2346c0373 inherit pub_slots_classmdt_abstract_sql_widget"><td class="mdescLeft">&#160;</td><td class="mdescRight">Re-enter in visualizing state.  <a href="#a434da68da8e11b0f25a4e3d2346c0373">More...</a><br/></td></tr>
-<tr class="separator:a434da68da8e11b0f25a4e3d2346c0373 inherit pub_slots_classmdt_abstract_sql_widget"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -175,6 +172,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a38df8efea5c216ea2b6f047e3280aac5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form_widget.html#a38df8efea5c216ea2b6f047e3280aac5">~mdtSqlFormWidget</a> ()</td></tr>
 <tr class="memdesc:a38df8efea5c216ea2b6f047e3280aac5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a38df8efea5c216ea2b6f047e3280aac5">More...</a><br/></td></tr>
 <tr class="separator:a38df8efea5c216ea2b6f047e3280aac5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7933613a2d113d403d539ac8957e044"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form_widget.html#ad7933613a2d113d403d539ac8957e044">mapFormWidgets</a> (<a class="el" href="class_q_widget.html">QWidget</a> *widget, const QString &amp;firstWidgetInTabOrder=QString())</td></tr>
+<tr class="memdesc:ad7933613a2d113d403d539ac8957e044"><td class="mdescLeft">&#160;</td><td class="mdescRight">Map widgets to matching database fields.  <a href="#ad7933613a2d113d403d539ac8957e044">More...</a><br/></td></tr>
+<tr class="separator:ad7933613a2d113d403d539ac8957e044"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace4f7fad749a4efe1233b61d071b3926"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_form_widget.html#ace4f7fad749a4efe1233b61d071b3926">mapFormWidgets</a> (const QString &amp;firstWidgetInTabOrder=QString())</td></tr>
 <tr class="memdesc:ace4f7fad749a4efe1233b61d071b3926"><td class="mdescLeft">&#160;</td><td class="mdescRight">Map widgets to matching database fields.  <a href="#ace4f7fad749a4efe1233b61d071b3926">More...</a><br/></td></tr>
 <tr class="separator:ace4f7fad749a4efe1233b61d071b3926"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -191,12 +191,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a46dabe9e76aaea93ff20b28863e6c0ff inherit pub_methods_classmdt_abstract_sql_widget"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_widget.html#a46dabe9e76aaea93ff20b28863e6c0ff">~mdtAbstractSqlWidget</a> ()</td></tr>
 <tr class="memdesc:a46dabe9e76aaea93ff20b28863e6c0ff inherit pub_methods_classmdt_abstract_sql_widget"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a46dabe9e76aaea93ff20b28863e6c0ff">More...</a><br/></td></tr>
 <tr class="separator:a46dabe9e76aaea93ff20b28863e6c0ff inherit pub_methods_classmdt_abstract_sql_widget"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55faa70683f8374b0ecb703c89b75267 inherit pub_methods_classmdt_abstract_sql_widget"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_widget.html#a55faa70683f8374b0ecb703c89b75267">setAskUserBeforRevert</a> (bool ask)</td></tr>
+<tr class="memdesc:a55faa70683f8374b0ecb703c89b75267 inherit pub_methods_classmdt_abstract_sql_widget"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ask user before revert occurs.  <a href="#a55faa70683f8374b0ecb703c89b75267">More...</a><br/></td></tr>
+<tr class="separator:a55faa70683f8374b0ecb703c89b75267 inherit pub_methods_classmdt_abstract_sql_widget"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8971862741e1ef79c79e11b37e955476 inherit pub_methods_classmdt_abstract_sql_widget"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_widget.html#a8971862741e1ef79c79e11b37e955476">setModel</a> (<a class="el" href="class_q_sql_table_model.html">QSqlTableModel</a> *<a class="el" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea">model</a>)</td></tr>
 <tr class="memdesc:a8971862741e1ef79c79e11b37e955476 inherit pub_methods_classmdt_abstract_sql_widget"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the table model.  <a href="#a8971862741e1ef79c79e11b37e955476">More...</a><br/></td></tr>
 <tr class="separator:a8971862741e1ef79c79e11b37e955476 inherit pub_methods_classmdt_abstract_sql_widget"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a298d40a6540aeabbb7644e3c4fd9f3ea inherit pub_methods_classmdt_abstract_sql_widget"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_q_sql_table_model.html">QSqlTableModel</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea">model</a> ()</td></tr>
 <tr class="memdesc:a298d40a6540aeabbb7644e3c4fd9f3ea inherit pub_methods_classmdt_abstract_sql_widget"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current model.  <a href="#a298d40a6540aeabbb7644e3c4fd9f3ea">More...</a><br/></td></tr>
 <tr class="separator:a298d40a6540aeabbb7644e3c4fd9f3ea inherit pub_methods_classmdt_abstract_sql_widget"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d901846513af3b93748c9a37e90aae1 inherit pub_methods_classmdt_abstract_sql_widget"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_widget.html#a9d901846513af3b93748c9a37e90aae1">start</a> ()</td></tr>
+<tr class="memdesc:a9d901846513af3b93748c9a37e90aae1 inherit pub_methods_classmdt_abstract_sql_widget"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start internal state machine.  <a href="#a9d901846513af3b93748c9a37e90aae1">More...</a><br/></td></tr>
+<tr class="separator:a9d901846513af3b93748c9a37e90aae1 inherit pub_methods_classmdt_abstract_sql_widget"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ccf93f41b1d7c479bfe0a52df2aac06 inherit pub_methods_classmdt_abstract_sql_widget"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_widget.html#a0ccf93f41b1d7c479bfe0a52df2aac06">addDataValidator</a> (<a class="el" href="classmdt_sql_data_validator.html">mdtSqlDataValidator</a> *validator, bool putAtTopPriority=false)</td></tr>
 <tr class="memdesc:a0ccf93f41b1d7c479bfe0a52df2aac06 inherit pub_methods_classmdt_abstract_sql_widget"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a data validator.  <a href="#a0ccf93f41b1d7c479bfe0a52df2aac06">More...</a><br/></td></tr>
 <tr class="separator:a0ccf93f41b1d7c479bfe0a52df2aac06 inherit pub_methods_classmdt_abstract_sql_widget"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -233,9 +239,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4ad94a530c77292d122d38eb041da6e9 inherit pub_methods_classmdt_abstract_sql_widget"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_widget.html#a4ad94a530c77292d122d38eb041da6e9">enableLocalEdition</a> ()</td></tr>
 <tr class="memdesc:a4ad94a530c77292d122d38eb041da6e9 inherit pub_methods_classmdt_abstract_sql_widget"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable local edition.  <a href="#a4ad94a530c77292d122d38eb041da6e9">More...</a><br/></td></tr>
 <tr class="separator:a4ad94a530c77292d122d38eb041da6e9 inherit pub_methods_classmdt_abstract_sql_widget"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5824c5fc3b0a7e118dd9ebb19084d2c inherit pub_methods_classmdt_abstract_sql_widget"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_widget.html#aa5824c5fc3b0a7e118dd9ebb19084d2c">allDataAreSaved</a> ()</td></tr>
-<tr class="memdesc:aa5824c5fc3b0a7e118dd9ebb19084d2c inherit pub_methods_classmdt_abstract_sql_widget"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if all data are saved.  <a href="#aa5824c5fc3b0a7e118dd9ebb19084d2c">More...</a><br/></td></tr>
-<tr class="separator:aa5824c5fc3b0a7e118dd9ebb19084d2c inherit pub_methods_classmdt_abstract_sql_widget"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae83b8677a38ccb7c00b9ebfeebae69c8 inherit pub_methods_classmdt_abstract_sql_widget"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_widget.html#ae83b8677a38ccb7c00b9ebfeebae69c8">allDataAreSaved</a> (bool showMessageBoxIfNotSaved=true)</td></tr>
+<tr class="memdesc:ae83b8677a38ccb7c00b9ebfeebae69c8 inherit pub_methods_classmdt_abstract_sql_widget"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if all data are saved.  <a href="#ae83b8677a38ccb7c00b9ebfeebae69c8">More...</a><br/></td></tr>
+<tr class="separator:ae83b8677a38ccb7c00b9ebfeebae69c8 inherit pub_methods_classmdt_abstract_sql_widget"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe9677dd1d70d5e67349f6fa6d2216ae inherit pub_methods_classmdt_abstract_sql_widget"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_widget.html#abe9677dd1d70d5e67349f6fa6d2216ae">clearColumnsSortOrder</a> ()</td></tr>
 <tr class="memdesc:abe9677dd1d70d5e67349f6fa6d2216ae inherit pub_methods_classmdt_abstract_sql_widget"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear columns sort order.  <a href="#abe9677dd1d70d5e67349f6fa6d2216ae">More...</a><br/></td></tr>
 <tr class="separator:abe9677dd1d70d5e67349f6fa6d2216ae inherit pub_methods_classmdt_abstract_sql_widget"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -245,6 +251,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2c83a26fe75b708948c80a51887075e9 inherit pub_methods_classmdt_abstract_sql_widget"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_widget.html#a2c83a26fe75b708948c80a51887075e9">sort</a> ()</td></tr>
 <tr class="memdesc:a2c83a26fe75b708948c80a51887075e9 inherit pub_methods_classmdt_abstract_sql_widget"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sort data.  <a href="#a2c83a26fe75b708948c80a51887075e9">More...</a><br/></td></tr>
 <tr class="separator:a2c83a26fe75b708948c80a51887075e9 inherit pub_methods_classmdt_abstract_sql_widget"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a903905036e9c6b440e2a300f48579b2b inherit pub_methods_classmdt_abstract_sql_widget"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_widget.html#a903905036e9c6b440e2a300f48579b2b">submitAndWait</a> (int timeout=-1)</td></tr>
+<tr class="memdesc:a903905036e9c6b440e2a300f48579b2b inherit pub_methods_classmdt_abstract_sql_widget"><td class="mdescLeft">&#160;</td><td class="mdescRight">Submit and wait until success or failure.  <a href="#a903905036e9c6b440e2a300f48579b2b">More...</a><br/></td></tr>
+<tr class="separator:a903905036e9c6b440e2a300f48579b2b inherit pub_methods_classmdt_abstract_sql_widget"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -339,9 +348,9 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:a1081ced9b96f60b3b39c6085bfe305d4 inherit pro_methods_classmdt_abstract_sql_widget"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_widget.html#a1081ced9b96f60b3b39c6085bfe305d4">getUserReadableTextFromMysqlError</a> (const QSqlError &amp;error)</td></tr>
 <tr class="memdesc:a1081ced9b96f60b3b39c6085bfe305d4 inherit pro_methods_classmdt_abstract_sql_widget"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get message for the user regarding MySql error number.  <a href="#a1081ced9b96f60b3b39c6085bfe305d4">More...</a><br/></td></tr>
 <tr class="separator:a1081ced9b96f60b3b39c6085bfe305d4 inherit pro_methods_classmdt_abstract_sql_widget"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aebd051866b148eb6f60a10c6ac648efa inherit pro_methods_classmdt_abstract_sql_widget"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_widget.html#aebd051866b148eb6f60a10c6ac648efa">childWidgetsAreInVisaluzingState</a> ()</td></tr>
-<tr class="memdesc:aebd051866b148eb6f60a10c6ac648efa inherit pro_methods_classmdt_abstract_sql_widget"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check that child widgtes have no pending data.  <a href="#aebd051866b148eb6f60a10c6ac648efa">More...</a><br/></td></tr>
-<tr class="separator:aebd051866b148eb6f60a10c6ac648efa inherit pro_methods_classmdt_abstract_sql_widget"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba32c9a31ff594ff63652ab98a2dfbcb inherit pro_methods_classmdt_abstract_sql_widget"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_widget.html#aba32c9a31ff594ff63652ab98a2dfbcb">childWidgetsAreInVisaluzingState</a> (bool showMessageBoxIfNotSaved)</td></tr>
+<tr class="memdesc:aba32c9a31ff594ff63652ab98a2dfbcb inherit pro_methods_classmdt_abstract_sql_widget"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check that child widgtes have no pending data.  <a href="#aba32c9a31ff594ff63652ab98a2dfbcb">More...</a><br/></td></tr>
+<tr class="separator:aba32c9a31ff594ff63652ab98a2dfbcb inherit pro_methods_classmdt_abstract_sql_widget"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad20a178299c96790587b53380bb68282 inherit pro_methods_classmdt_abstract_sql_widget"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_widget.html#ad20a178299c96790587b53380bb68282">warnUserAboutUnsavedRow</a> (const QString &amp;tableName)</td></tr>
 <tr class="memdesc:ad20a178299c96790587b53380bb68282 inherit pro_methods_classmdt_abstract_sql_widget"><td class="mdescLeft">&#160;</td><td class="mdescRight">Show a message box to the user to warn him that it should save/revert data.  <a href="#ad20a178299c96790587b53380bb68282">More...</a><br/></td></tr>
 <tr class="separator:ad20a178299c96790587b53380bb68282 inherit pro_methods_classmdt_abstract_sql_widget"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -359,7 +368,7 @@ Additional Inherited Members</h2></td></tr>
 <div class="textblock"><p>Widget that accept a user designed form and helps dealing with table model. </p>
 <p>To create a database table form, Qt offers several classes. But, if we have to create many forms, we have to deal with common problems (insertion, field mapping, etc..).</p>
 <p>It's possible to create a form, for example with Qt Designer, and add needed Widgets (QLineEdit, QSpinBox, ...). It's important to respect a convention here: For each Widget that must display/edit data from database (i.e. model), set the name of the field with fld_ prefix. For example, if we have a field called name, create a QLineEdit with fld_name as object name.</p>
-<p>Once your form was created, call his setupUi() method passing <a class="el" href="classmdt_sql_form_widget.html" title="Widget that accept a user designed form and helps dealing with table model. ">mdtSqlFormWidget</a> object as parameter. setupUi() will also create layouts and widgets with <a class="el" href="classmdt_sql_form_widget.html" title="Widget that accept a user designed form and helps dealing with table model. ">mdtSqlFormWidget</a> object as parent. As result, <a class="el" href="classmdt_sql_form_widget.html" title="Widget that accept a user designed form and helps dealing with table model. ">mdtSqlFormWidget</a> object will have a layout with all widgets. Finally, use <a class="el" href="classmdt_sql_form_widget.html#ace4f7fad749a4efe1233b61d071b3926" title="Map widgets to matching database fields. ">mapFormWidgets()</a> to do the mapping between widgets and fields in database.</p>
+<p>Once your form was created, call his setupUi() method passing <a class="el" href="classmdt_sql_form_widget.html" title="Widget that accept a user designed form and helps dealing with table model. ">mdtSqlFormWidget</a> object as parameter. setupUi() will also create layouts and widgets with <a class="el" href="classmdt_sql_form_widget.html" title="Widget that accept a user designed form and helps dealing with table model. ">mdtSqlFormWidget</a> object as parent. As result, <a class="el" href="classmdt_sql_form_widget.html" title="Widget that accept a user designed form and helps dealing with table model. ">mdtSqlFormWidget</a> object will have a layout with all widgets. Finally, use <a class="el" href="classmdt_sql_form_widget.html#ad7933613a2d113d403d539ac8957e044" title="Map widgets to matching database fields. ">mapFormWidgets()</a> to do the mapping between widgets and fields in database.</p>
 <p>To use the resulting form, set it, f.ex. as central widget of a <a class="el" href="class_q_main_window.html">QMainWindow</a>. See the list of slots to know how to use integrated actions (navigation, insertion, ...).</p>
 <p>Internally, <a class="el" href="classmdt_sql_data_widget_mapper.html" title="DataWidget mapper. ">mdtSqlDataWidgetMapper</a> is used together with <a class="el" href="classmdt_sql_field_handler.html" title="Handle events between a SQL field and a edition widget. ">mdtSqlFieldHandler</a>. Errors and user interactions are handled by this class.</p>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="classmdt_sql_window.html" title="Main window for a database table view/editor. ">mdtSqlWindow</a> </dd></dl>
@@ -382,7 +391,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Constructor. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00039">39</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00040">40</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -401,7 +410,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00047">47</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00048">48</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -432,9 +441,54 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implements <a class="el" href="classmdt_abstract_sql_widget.html#ab48f6375f55f1eaba309fb17aaaf5770">mdtAbstractSqlWidget</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00146">146</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00160">160</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_sql_form_8cpp_source.html#l00177">mdtSqlForm::addRelation()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad7933613a2d113d403d539ac8957e044"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtSqlFormWidget::mapFormWidgets </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_q_widget.html">QWidget</a> *&#160;</td>
+          <td class="paramname"><em>widget</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>firstWidgetInTabOrder</em> = <code>QString()</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Map widgets to matching database fields. </p>
+<p>Will parse all child widgets found in layout (and contained widgets layouts), extract widgets that have a fld_ prefix as object name. For each of them, corresponding field will be searched in model (database).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">widget</td><td>Widget on witch child widgets must be searched. </td></tr>
+    <tr><td class="paramname">firstWidgetInTabOrder</td><td>It's possible to specify the object name of the first widget in tab order. This is then used by insertion to give this widget the focus.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section pre"><dt>Precondition</dt><dd>The custom form's setupUi() must be called on this object before using this method. Once setupUi() is done, <a class="el" href="classmdt_sql_form_widget.html" title="Widget that accept a user designed form and helps dealing with table model. ">mdtSqlFormWidget</a> object (this) will contain a layout with all widgets (QLineEdit, QSpinBox, ...). </dd>
+<dd>
+Model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a8971862741e1ef79c79e11b37e955476" title="Set the table model. ">setModel()</a> before using this method. </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00053">53</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
+
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00096">mdtAbstractSqlWidget::addDataValidator()</a>, <a class="el" href="classmdt_abstract_sql_widget.html#a8ae6e67e3efb5051dc7a8b74571d4aa1">mdtAbstractSqlWidget::dataEdited()</a>, <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00101">mdtSqlSchemaTable::field()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00077">mdtAbstractSqlWidget::model()</a>, <a class="el" href="classmdt_abstract_sql_widget.html#a6787c093d9b0b64a1e8d3794ba505604">mdtAbstractSqlWidget::modelSelected()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00231">mdtAbstractSqlWidget::rowCount()</a>, <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00537">mdtSqlFieldHandler::setDataWidget()</a>, <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00520">mdtSqlFieldHandler::setField()</a>, <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00211">mdtSqlSchemaTable::setupFromTable()</a>, and <a class="el" href="mdt_error_8h_source.html#l00093">mdtError::Warning</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00138">mapFormWidgets()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00064">mdtSqlForm::setMainTable()</a>, and <a class="el" href="mdt_tt_abstract_test_widget_8cpp_source.html#l00058">mdtTtAbstractTestWidget::setTestUiWidget()</a>.</p>
 
 </div>
 </div>
@@ -453,22 +507,11 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Map widgets to matching database fields. </p>
-<p>Will parse all child widgets found in layout (and contained widgets layouts), extract widgets that have a fld_ prefix as object name. For each of them, corresponding field will be searched in model (database).</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">firstWidgetInTabOrder</td><td>It's possible to specify the object name of the first widget in tab order. This is then used by insertion to give this widget the focus.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section pre"><dt>Precondition</dt><dd>The custom form's setupUi() must be called on this object before using this method. Once setupUi() is done, <a class="el" href="classmdt_sql_form_widget.html" title="Widget that accept a user designed form and helps dealing with table model. ">mdtSqlFormWidget</a> object (this) will contain a layout with all widgets (QLineEdit, QSpinBox, ...). </dd>
-<dd>
-Model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a8971862741e1ef79c79e11b37e955476" title="Set the table model. ">setModel()</a> before using this method. </dd></dl>
+<p>Same than <a class="el" href="classmdt_sql_form_widget.html#ad7933613a2d113d403d539ac8957e044" title="Map widgets to matching database fields. ">mapFormWidgets(QWidget *widget, const QString &amp;firstWidgetInTabOrder)</a> , but acts on this </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00052">52</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00138">138</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00077">mdtAbstractSqlWidget::addDataValidator()</a>, <a class="el" href="classmdt_abstract_sql_widget.html#a8ae6e67e3efb5051dc7a8b74571d4aa1">mdtAbstractSqlWidget::dataEdited()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00072">mdtAbstractSqlWidget::model()</a>, <a class="el" href="classmdt_abstract_sql_widget.html#a6787c093d9b0b64a1e8d3794ba505604">mdtAbstractSqlWidget::modelSelected()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00212">mdtAbstractSqlWidget::rowCount()</a>, <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00170">mdtSqlFieldHandler::setDataWidget()</a>, <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00153">mdtSqlFieldHandler::setField()</a>, <a class="el" href="classmdt_abstract_sql_widget.html#a925485d7acc131d438f6ea251c9b1fb9">mdtAbstractSqlWidget::stateEditingExited()</a>, <a class="el" href="classmdt_abstract_sql_widget.html#af4ed2a005f55ffe23ce6382f1ed3f68e">mdtAbstractSqlWidget::stateEditingNewRowExited()</a>, and <a class="el" href="mdt_error_8h_source.html#l00093">mdtError::Warning</a>.</p>
-
-<p>Referenced by <a class="el" href="mdt_sql_form_8cpp_source.html#l00064">mdtSqlForm::setMainTable()</a>.</p>
+<p>References <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00053">mapFormWidgets()</a>.</p>
 
 </div>
 </div>
@@ -488,9 +531,9 @@ Model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a89
 <p>Get a list of mapped widgets. </p>
 <p>Note: the list is built at each call of this method. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00129">129</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00143">143</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00220">mdtSqlFieldHandler::dataWidget()</a>.</p>
+<p>References <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00678">mdtSqlFieldHandler::dataWidget()</a>.</p>
 
 </div>
 </div>
@@ -518,9 +561,11 @@ Model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a89
 
 <p>Set row as current record. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00199">199</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00233">233</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00406">mdtAbstractSqlWidget::childWidgetsAreInVisaluzingState()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00219">mdtAbstractSqlWidget::currentState()</a>, and <a class="el" href="mdt_abstract_sql_widget_8h_source.html#l00065">mdtAbstractSqlWidget::Visualizing</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00255">mdtAbstractSqlWidget::allDataAreSaved()</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_tt_abstract_test_widget_8cpp_source.html#l00082">mdtTtAbstractTestWidget::createTest()</a>, <a class="el" href="mdt_tt_abstract_test_widget_8cpp_source.html#l00045">mdtTtAbstractTestWidget::init()</a>, and <a class="el" href="mdt_tt_abstract_test_widget_8cpp_source.html#l00058">mdtTtAbstractTestWidget::setTestUiWidget()</a>.</p>
 
 </div>
 </div>
@@ -547,9 +592,11 @@ Model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a89
 
 <p>Set first record as current record. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00151">151</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00165">165</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00406">mdtAbstractSqlWidget::childWidgetsAreInVisaluzingState()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00219">mdtAbstractSqlWidget::currentState()</a>, and <a class="el" href="mdt_abstract_sql_widget_8h_source.html#l00065">mdtAbstractSqlWidget::Visualizing</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00255">mdtAbstractSqlWidget::allDataAreSaved()</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_tt_abstract_test_widget_8cpp_source.html#l00082">mdtTtAbstractTestWidget::createTest()</a>, and <a class="el" href="mdt_tt_abstract_test_widget_8cpp_source.html#l00132">mdtTtAbstractTestWidget::openTest()</a>.</p>
 
 </div>
 </div>
@@ -576,9 +623,9 @@ Model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a89
 
 <p>Set last record as current record. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00163">163</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00182">182</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00406">mdtAbstractSqlWidget::childWidgetsAreInVisaluzingState()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00219">mdtAbstractSqlWidget::currentState()</a>, and <a class="el" href="mdt_abstract_sql_widget_8h_source.html#l00065">mdtAbstractSqlWidget::Visualizing</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00255">mdtAbstractSqlWidget::allDataAreSaved()</a>.</p>
 
 </div>
 </div>
@@ -605,9 +652,9 @@ Model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a89
 
 <p>Set next record as current record. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00187">187</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00216">216</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00406">mdtAbstractSqlWidget::childWidgetsAreInVisaluzingState()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00219">mdtAbstractSqlWidget::currentState()</a>, and <a class="el" href="mdt_abstract_sql_widget_8h_source.html#l00065">mdtAbstractSqlWidget::Visualizing</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00255">mdtAbstractSqlWidget::allDataAreSaved()</a>.</p>
 
 </div>
 </div>
@@ -634,20 +681,20 @@ Model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a89
 
 <p>Set previous record as current record. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00175">175</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00199">199</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00406">mdtAbstractSqlWidget::childWidgetsAreInVisaluzingState()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00219">mdtAbstractSqlWidget::currentState()</a>, and <a class="el" href="mdt_abstract_sql_widget_8h_source.html#l00065">mdtAbstractSqlWidget::Visualizing</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00255">mdtAbstractSqlWidget::allDataAreSaved()</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>src/mdtutilsgui/<a class="el" href="mdt_sql_form_widget_8h_source.html">mdtSqlFormWidget.h</a></li>
-<li>src/mdtutilsgui/<a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a></li>
+<li>src/mdtdatabase/<a class="el" href="mdt_sql_form_widget_8h_source.html">mdtSqlFormWidget.h</a></li>
+<li>src/mdtdatabase/<a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 12 2014 10:53:30 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jul 26 2014 17:48:11 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

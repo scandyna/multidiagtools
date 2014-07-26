@@ -14,9 +14,12 @@
 <area shape="rect" id="node33" href="$classmdt_items_selector_dialog.html" title="Provide the user a dialog in witch he can choose items. " alt="" coords="145,731,308,760"/>
 <area shape="rect" id="node39" href="$classmdt_sql_dialog.html" title="Dialog for a database table view/editor. " alt="" coords="177,784,276,813"/>
 <area shape="rect" id="node41" href="$classmdt_sql_selection_dialog.html" title="Provide a way for the user to select row in a set of data. " alt="" coords="149,837,304,867"/>
-<area shape="rect" id="node43" href="$classmdt_tt_test_link_dialog.html" title="Dialog that provide test link edition. " alt="" coords="156,891,297,920"/>
-<area shape="rect" id="node45" href="$classmdt_tt_test_node_unit_dialog.html" title="Dialog for test node unit edition. " alt="" coords="140,944,313,973"/>
-<area shape="rect" id="node47" href="$classmdt_tt_test_node_unit_setup_dialog.html" title="mdtTtTestNodeUnitSetupDialog" alt="" coords="123,997,331,1027"/>
+<area shape="rect" id="node43" href="$classmdt_tt_relay_path_dialog.html" title="Edit path from a starting connection to a end connection in a test node. " alt="" coords="149,891,304,920"/>
+<area shape="rect" id="node45" href="$classmdt_tt_test_link_dialog.html" title="Dialog that provide test link edition. " alt="" coords="156,944,297,973"/>
+<area shape="rect" id="node47" href="$classmdt_tt_test_model_generation_dialog.html" title="mdtTtTestModelGeneration\lDialog" alt="" coords="137,997,316,1043"/>
+<area shape="rect" id="node49" href="$classmdt_tt_test_node_unit_dialog.html" title="Dialog for test node unit edition. " alt="" coords="140,1067,313,1096"/>
+<area shape="rect" id="node51" href="$classmdt_tt_test_node_unit_setup_dialog.html" title="mdtTtTestNodeUnitSetupDialog" alt="" coords="123,1120,331,1149"/>
+<area shape="rect" id="node53" href="$classmdt_tt_value_edition_dialog.html" title="Dialog to edit a value, limit and fail. " alt="" coords="144,1173,309,1203"/>
 <area shape="rect" id="node5" href="$classmdt_modbus_tcp_port_setup_dialog.html" title="mdtModbusTcpPortSetupDialog" alt="" coords="380,5,585,35"/>
 <area shape="rect" id="node7" href="$classmdt_serial_port_setup_dialog.html" title="Setup dialog for serial port. " alt="" coords="397,59,568,88"/>
 <area shape="rect" id="node9" href="$classmdt_usbtmc_port_setup_dialog.html" title="mdtUsbtmcPortSetupDialog" alt="" coords="391,112,575,141"/>

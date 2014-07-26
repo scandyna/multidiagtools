@@ -85,6 +85,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
+<a href="#pub-slots">Public Slots</a> &#124;
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
@@ -126,6 +127,12 @@ Public Types</h2></td></tr>
 <tr class="memdesc:a6e94cba2a7b3fcc16b70475c2cefd8cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Special symbols for units.  <a href="classmdt_double_edit.html#a6e94cba2a7b3fcc16b70475c2cefd8cf">More...</a><br/></td></tr>
 <tr class="separator:a6e94cba2a7b3fcc16b70475c2cefd8cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-slots"></a>
+Public Slots</h2></td></tr>
+<tr class="memitem:a3eb1b0434235fae23fa3f795fb90066e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_double_edit.html#a3eb1b0434235fae23fa3f795fb90066e">setUnit</a> (const QString &amp;u)</td></tr>
+<tr class="memdesc:a3eb1b0434235fae23fa3f795fb90066e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set unit.  <a href="#a3eb1b0434235fae23fa3f795fb90066e">More...</a><br/></td></tr>
+<tr class="separator:a3eb1b0434235fae23fa3f795fb90066e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="signals"></a>
 Signals</h2></td></tr>
 <tr class="memitem:a04275f70dcfa22b677841a108dde2561"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_double_edit.html#a04275f70dcfa22b677841a108dde2561">valueChanged</a> (double <a class="el" href="classmdt_double_edit.html#a6987992984d3cfab5f96467c2b98e511">value</a>, bool isValid)</td></tr>
@@ -137,21 +144,45 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4b6a416aeb8594ad45fb706e79250ba7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_double_edit.html#a4b6a416aeb8594ad45fb706e79250ba7">mdtDoubleEdit</a> (<a class="el" href="class_q_widget.html">QWidget</a> *parent=0)</td></tr>
 <tr class="memdesc:a4b6a416aeb8594ad45fb706e79250ba7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a4b6a416aeb8594ad45fb706e79250ba7">More...</a><br/></td></tr>
 <tr class="separator:a4b6a416aeb8594ad45fb706e79250ba7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3eb1b0434235fae23fa3f795fb90066e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_double_edit.html#a3eb1b0434235fae23fa3f795fb90066e">setUnit</a> (const QString &amp;u)</td></tr>
-<tr class="memdesc:a3eb1b0434235fae23fa3f795fb90066e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set unit.  <a href="#a3eb1b0434235fae23fa3f795fb90066e">More...</a><br/></td></tr>
-<tr class="separator:a3eb1b0434235fae23fa3f795fb90066e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5542c60073e80cfc5cc2f9f40167b460"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_double_edit.html#a5542c60073e80cfc5cc2f9f40167b460">setReadOnly</a> (bool ro)</td></tr>
+<tr class="memdesc:a5542c60073e80cfc5cc2f9f40167b460"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set read only.  <a href="#a5542c60073e80cfc5cc2f9f40167b460">More...</a><br/></td></tr>
+<tr class="separator:a5542c60073e80cfc5cc2f9f40167b460"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7574871fecfb0130e9d8947b55629cca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_double_edit.html#a7574871fecfb0130e9d8947b55629cca">setUnit</a> (<a class="el" href="classmdt_double_edit.html#a6e94cba2a7b3fcc16b70475c2cefd8cf">unitSymbol_t</a> u)</td></tr>
 <tr class="memdesc:a7574871fecfb0130e9d8947b55629cca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set unit that is represented by a special symbol.  <a href="#a7574871fecfb0130e9d8947b55629cca">More...</a><br/></td></tr>
 <tr class="separator:a7574871fecfb0130e9d8947b55629cca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad425b7f96ae6906175c7a70fa3b8b017"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_double_edit.html#ad425b7f96ae6906175c7a70fa3b8b017">unit</a> () const </td></tr>
 <tr class="memdesc:ad425b7f96ae6906175c7a70fa3b8b017"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get unit.  <a href="#ad425b7f96ae6906175c7a70fa3b8b017">More...</a><br/></td></tr>
 <tr class="separator:ad425b7f96ae6906175c7a70fa3b8b017"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a827bb0d8a34a6fbaca4a328672140bae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_double_edit.html#a827bb0d8a34a6fbaca4a328672140bae">setValue</a> (const QString &amp;s, bool emitValueChanged=true)</td></tr>
-<tr class="memdesc:a827bb0d8a34a6fbaca4a328672140bae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set value from a string.  <a href="#a827bb0d8a34a6fbaca4a328672140bae">More...</a><br/></td></tr>
-<tr class="separator:a827bb0d8a34a6fbaca4a328672140bae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a81258812b5f964042840cee3e405ed27"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_double_edit.html#a81258812b5f964042840cee3e405ed27">setValue</a> (double v, bool emitValueChanged=true)</td></tr>
-<tr class="memdesc:a81258812b5f964042840cee3e405ed27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set value.  <a href="#a81258812b5f964042840cee3e405ed27">More...</a><br/></td></tr>
-<tr class="separator:a81258812b5f964042840cee3e405ed27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc719b2ad6c106759f4d138b7b221a75"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_double_edit.html#abc719b2ad6c106759f4d138b7b221a75">setMinimum</a> (double min)</td></tr>
+<tr class="memdesc:abc719b2ad6c106759f4d138b7b221a75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set minimum.  <a href="#abc719b2ad6c106759f4d138b7b221a75">More...</a><br/></td></tr>
+<tr class="separator:abc719b2ad6c106759f4d138b7b221a75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6dbdee92d4704a1e2185fb56653e913"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_double_edit.html#ae6dbdee92d4704a1e2185fb56653e913">setMinimumToMinusInfinity</a> ()</td></tr>
+<tr class="memdesc:ae6dbdee92d4704a1e2185fb56653e913"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set minimum to -infinity.  <a href="#ae6dbdee92d4704a1e2185fb56653e913">More...</a><br/></td></tr>
+<tr class="separator:ae6dbdee92d4704a1e2185fb56653e913"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e0974378639708551a703b5b1dc3969"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_double_edit.html#a2e0974378639708551a703b5b1dc3969">minimum</a> () const </td></tr>
+<tr class="memdesc:a2e0974378639708551a703b5b1dc3969"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get minimum.  <a href="#a2e0974378639708551a703b5b1dc3969">More...</a><br/></td></tr>
+<tr class="separator:a2e0974378639708551a703b5b1dc3969"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b238d597fcf13bfd6b875ec228435e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_double_edit.html#a3b238d597fcf13bfd6b875ec228435e7">setMaximum</a> (double max)</td></tr>
+<tr class="memdesc:a3b238d597fcf13bfd6b875ec228435e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set maximum.  <a href="#a3b238d597fcf13bfd6b875ec228435e7">More...</a><br/></td></tr>
+<tr class="separator:a3b238d597fcf13bfd6b875ec228435e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fa7bf1b30590223ec825079e36ab375"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_double_edit.html#a4fa7bf1b30590223ec825079e36ab375">setMaximumToInfinity</a> ()</td></tr>
+<tr class="memdesc:a4fa7bf1b30590223ec825079e36ab375"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set maximum to infinity.  <a href="#a4fa7bf1b30590223ec825079e36ab375">More...</a><br/></td></tr>
+<tr class="separator:a4fa7bf1b30590223ec825079e36ab375"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59be46e6f7d976a3a3373b76e03152e9"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_double_edit.html#a59be46e6f7d976a3a3373b76e03152e9">maximum</a> () const </td></tr>
+<tr class="memdesc:a59be46e6f7d976a3a3373b76e03152e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get maximum.  <a href="#a59be46e6f7d976a3a3373b76e03152e9">More...</a><br/></td></tr>
+<tr class="separator:a59be46e6f7d976a3a3373b76e03152e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37e6542c3f29a5db083a3760409d47dc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_double_edit.html#a37e6542c3f29a5db083a3760409d47dc">setRange</a> (double min, double max)</td></tr>
+<tr class="memdesc:a37e6542c3f29a5db083a3760409d47dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set range.  <a href="#a37e6542c3f29a5db083a3760409d47dc">More...</a><br/></td></tr>
+<tr class="separator:a37e6542c3f29a5db083a3760409d47dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b7d233d74dbb7f587d062aa5ff1abdb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_double_edit.html#a6b7d233d74dbb7f587d062aa5ff1abdb">setValueString</a> (const QString &amp;s, bool emitValueChanged=true)</td></tr>
+<tr class="memdesc:a6b7d233d74dbb7f587d062aa5ff1abdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set value from a string.  <a href="#a6b7d233d74dbb7f587d062aa5ff1abdb">More...</a><br/></td></tr>
+<tr class="separator:a6b7d233d74dbb7f587d062aa5ff1abdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3c1a762df3ffd84e736f9ce1cbeb702"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_double_edit.html#ac3c1a762df3ffd84e736f9ce1cbeb702">setValueDouble</a> (double v, bool emitValueChanged=true)</td></tr>
+<tr class="memdesc:ac3c1a762df3ffd84e736f9ce1cbeb702"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set value.  <a href="#ac3c1a762df3ffd84e736f9ce1cbeb702">More...</a><br/></td></tr>
+<tr class="separator:ac3c1a762df3ffd84e736f9ce1cbeb702"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a077b00c2e4ae13e66a2d903a42c0be52"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_double_edit.html#a077b00c2e4ae13e66a2d903a42c0be52">setValue</a> (const QVariant &amp;v, bool emitValueChanged=true)</td></tr>
+<tr class="memdesc:a077b00c2e4ae13e66a2d903a42c0be52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set value.  <a href="#a077b00c2e4ae13e66a2d903a42c0be52">More...</a><br/></td></tr>
+<tr class="separator:a077b00c2e4ae13e66a2d903a42c0be52"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ffc11c9f013ff65b49642703146ec01"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_double_edit.html#a2ffc11c9f013ff65b49642703146ec01">valueDouble</a> () const </td></tr>
 <tr class="memdesc:a2ffc11c9f013ff65b49642703146ec01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value.  <a href="#a2ffc11c9f013ff65b49642703146ec01">More...</a><br/></td></tr>
 <tr class="separator:a2ffc11c9f013ff65b49642703146ec01"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -168,7 +199,7 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a8156deaebbd3256e9e7d94ca84e6a03a"><td class="memItemLeft" align="right" valign="top">static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_double_edit.html#a8156deaebbd3256e9e7d94ca84e6a03a">factor</a> (const QChar &amp;c)</td></tr>
-<tr class="memdesc:a8156deaebbd3256e9e7d94ca84e6a03a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the factor for a given char.  <a href="#a8156deaebbd3256e9e7d94ca84e6a03a">More...</a><br/></td></tr>
+<tr class="memdesc:a8156deaebbd3256e9e7d94ca84e6a03a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the full range.  <a href="#a8156deaebbd3256e9e7d94ca84e6a03a">More...</a><br/></td></tr>
 <tr class="separator:a8156deaebbd3256e9e7d94ca84e6a03a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a09e6276d61dd02feea43e795417d8ea9"><td class="memItemLeft" align="right" valign="top">static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_double_edit.html#a09e6276d61dd02feea43e795417d8ea9">infinityString</a> ()</td></tr>
 <tr class="memdesc:a09e6276d61dd02feea43e795417d8ea9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get infinity string.  <a href="#a09e6276d61dd02feea43e795417d8ea9">More...</a><br/></td></tr>
@@ -178,11 +209,15 @@ Static Public Member Functions</h2></td></tr>
 Properties</h2></td></tr>
 <tr class="memitem:a163c58477dc88637f999f56714df74ee"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_double_edit.html#a163c58477dc88637f999f56714df74ee">unit</a></td></tr>
 <tr class="separator:a163c58477dc88637f999f56714df74ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc63b2b7f47fac62e44673d51444776e"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_double_edit.html#adc63b2b7f47fac62e44673d51444776e">minimum</a></td></tr>
+<tr class="separator:adc63b2b7f47fac62e44673d51444776e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80edcc2b96d1111f608037f058596c02"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_double_edit.html#a80edcc2b96d1111f608037f058596c02">maximum</a></td></tr>
+<tr class="separator:a80edcc2b96d1111f608037f058596c02"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Input box for double values. </p>
 
-<p>Definition at line <a class="el" href="mdt_double_edit_8h_source.html#l00035">35</a> of file <a class="el" href="mdt_double_edit_8h_source.html">mdtDoubleEdit.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_double_edit_8h_source.html#l00034">34</a> of file <a class="el" href="mdt_double_edit_8h_source.html">mdtDoubleEdit.h</a>.</p>
 </div><h2 class="groupheader">Member Enumeration Documentation</h2>
 <a class="anchor" id="a6e94cba2a7b3fcc16b70475c2cefd8cf"></a>
 <div class="memitem">
@@ -204,7 +239,7 @@ Properties</h2></td></tr>
 </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="mdt_double_edit_8h_source.html#l00043">43</a> of file <a class="el" href="mdt_double_edit_8h_source.html">mdtDoubleEdit.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_double_edit_8h_source.html#l00046">46</a> of file <a class="el" href="mdt_double_edit_8h_source.html">mdtDoubleEdit.h</a>.</p>
 
 </div>
 </div>
@@ -227,7 +262,7 @@ Properties</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_double_edit_8cpp_source.html#l00031">31</a> of file <a class="el" href="mdt_double_edit_8cpp_source.html">mdtDoubleEdit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_double_edit_8cpp_source.html#l00158">infinityString()</a>.</p>
+<p>References <a class="el" href="mdt_double_edit_8cpp_source.html#l00243">infinityString()</a>.</p>
 
 </div>
 </div>
@@ -254,7 +289,9 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Get the factor for a given char. </p>
+<p>Set the full range. </p>
+<p>void setFullRange();</p>
+<p>Get the factor for a given char</p>
 <p>Will return factor of given char, or a 1.0 char is unknown.</p>
 <p>Supported chars are:</p>
 <table  border="1" cellpadding="5">
@@ -292,7 +329,7 @@ Properties</h2></td></tr>
 <td>E</td><td>exa</td><td>1e18 </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="mdt_double_edit_8cpp_source.html#l00078">78</a> of file <a class="el" href="mdt_double_edit_8cpp_source.html">mdtDoubleEdit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_double_edit_8cpp_source.html#l00139">139</a> of file <a class="el" href="mdt_double_edit_8cpp_source.html">mdtDoubleEdit.cpp</a>.</p>
 
 </div>
 </div>
@@ -319,33 +356,191 @@ Properties</h2></td></tr>
 
 <p>Get infinity string. </p>
 
-<p>Definition at line <a class="el" href="mdt_double_edit_8cpp_source.html#l00158">158</a> of file <a class="el" href="mdt_double_edit_8cpp_source.html">mdtDoubleEdit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_double_edit_8cpp_source.html#l00243">243</a> of file <a class="el" href="mdt_double_edit_8cpp_source.html">mdtDoubleEdit.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_double_edit_8cpp_source.html#l00031">mdtDoubleEdit()</a>, and <a class="el" href="mdt_double_validator_8cpp_source.html#l00038">mdtDoubleValidator::validate()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_double_edit_8cpp_source.html#l00031">mdtDoubleEdit()</a>, and <a class="el" href="mdt_double_validator_8cpp_source.html#l00053">mdtDoubleValidator::validate()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a3eb1b0434235fae23fa3f795fb90066e"></a>
+<a class="anchor" id="a59be46e6f7d976a3a3373b76e03152e9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void mdtDoubleEdit::setUnit </td>
+          <td class="memname">double mdtDoubleEdit::maximum </td>
           <td>(</td>
-          <td class="paramtype">const QString &amp;&#160;</td>
-          <td class="paramname"><em>u</em>)</td><td></td>
+          <td class="paramname">)</td><td></td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get maximum. </p>
+
+<p>Referenced by <a class="el" href="mdt_double_edit_8cpp_source.html#l00081">setMinimum()</a>, and <a class="el" href="mdt_double_edit_8cpp_source.html#l00193">setValueDouble()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2e0974378639708551a703b5b1dc3969"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double mdtDoubleEdit::minimum </td>
+          <td>(</td>
+          <td class="paramname">)</td><td></td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get minimum. </p>
+
+<p>Referenced by <a class="el" href="mdt_double_edit_8cpp_source.html#l00107">setMaximum()</a>, and <a class="el" href="mdt_double_edit_8cpp_source.html#l00193">setValueDouble()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3b238d597fcf13bfd6b875ec228435e7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtDoubleEdit::setMaximum </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>max</em>)</td><td></td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set unit. </p>
+<p>Set maximum. </p>
 
-<p>Definition at line <a class="el" href="mdt_double_edit_8cpp_source.html#l00060">60</a> of file <a class="el" href="mdt_double_edit_8cpp_source.html">mdtDoubleEdit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_double_edit_8cpp_source.html#l00107">107</a> of file <a class="el" href="mdt_double_edit_8cpp_source.html">mdtDoubleEdit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_double_validator_8cpp_source.html#l00033">mdtDoubleValidator::setSuffix()</a>.</p>
+<p>References <a class="el" href="classmdt_double_edit.html#a2e0974378639708551a703b5b1dc3969">minimum()</a>, and <a class="el" href="mdt_double_validator_8cpp_source.html#l00043">mdtDoubleValidator::setTop()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_double_edit_8cpp_source.html#l00066">setUnit()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_double_edit_8cpp_source.html#l00123">setMaximumToInfinity()</a>, and <a class="el" href="mdt_double_edit_8cpp_source.html#l00133">setRange()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4fa7bf1b30590223ec825079e36ab375"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtDoubleEdit::setMaximumToInfinity </td>
+          <td>(</td>
+          <td class="paramname">)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set maximum to infinity. </p>
+
+<p>Definition at line <a class="el" href="mdt_double_edit_8cpp_source.html#l00123">123</a> of file <a class="el" href="mdt_double_edit_8cpp_source.html">mdtDoubleEdit.cpp</a>.</p>
+
+<p>References <a class="el" href="mdt_double_edit_8cpp_source.html#l00107">setMaximum()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abc719b2ad6c106759f4d138b7b221a75"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtDoubleEdit::setMinimum </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>min</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set minimum. </p>
+
+<p>Definition at line <a class="el" href="mdt_double_edit_8cpp_source.html#l00081">81</a> of file <a class="el" href="mdt_double_edit_8cpp_source.html">mdtDoubleEdit.cpp</a>.</p>
+
+<p>References <a class="el" href="classmdt_double_edit.html#a59be46e6f7d976a3a3373b76e03152e9">maximum()</a>, and <a class="el" href="mdt_double_validator_8cpp_source.html#l00038">mdtDoubleValidator::setBottom()</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_double_edit_8cpp_source.html#l00097">setMinimumToMinusInfinity()</a>, and <a class="el" href="mdt_double_edit_8cpp_source.html#l00133">setRange()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae6dbdee92d4704a1e2185fb56653e913"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtDoubleEdit::setMinimumToMinusInfinity </td>
+          <td>(</td>
+          <td class="paramname">)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set minimum to -infinity. </p>
+
+<p>Definition at line <a class="el" href="mdt_double_edit_8cpp_source.html#l00097">97</a> of file <a class="el" href="mdt_double_edit_8cpp_source.html">mdtDoubleEdit.cpp</a>.</p>
+
+<p>References <a class="el" href="mdt_double_edit_8cpp_source.html#l00081">setMinimum()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a37e6542c3f29a5db083a3760409d47dc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtDoubleEdit::setRange </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>min</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>max</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set range. </p>
+
+<p>Definition at line <a class="el" href="mdt_double_edit_8cpp_source.html#l00133">133</a> of file <a class="el" href="mdt_double_edit_8cpp_source.html">mdtDoubleEdit.cpp</a>.</p>
+
+<p>References <a class="el" href="mdt_double_edit_8cpp_source.html#l00107">setMaximum()</a>, and <a class="el" href="mdt_double_edit_8cpp_source.html#l00081">setMinimum()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5542c60073e80cfc5cc2f9f40167b460"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtDoubleEdit::setReadOnly </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>ro</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set read only. </p>
+
+<p>Definition at line <a class="el" href="mdt_double_edit_8cpp_source.html#l00061">61</a> of file <a class="el" href="mdt_double_edit_8cpp_source.html">mdtDoubleEdit.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00426">mdtSqlFieldHandlerMdtDoubleEdit::setReadOnly()</a>.</p>
 
 </div>
 </div>
@@ -365,21 +560,53 @@ Properties</h2></td></tr>
 
 <p>Set unit that is represented by a special symbol. </p>
 
-<p>Definition at line <a class="el" href="mdt_double_edit_8cpp_source.html#l00066">66</a> of file <a class="el" href="mdt_double_edit_8cpp_source.html">mdtDoubleEdit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_double_edit_8cpp_source.html#l00068">68</a> of file <a class="el" href="mdt_double_edit_8cpp_source.html">mdtDoubleEdit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_double_edit_8h_source.html#l00044">omega</a>, <a class="el" href="mdt_double_edit_8h_source.html#l00045">OmegaCapital</a>, and <a class="el" href="mdt_double_edit_8cpp_source.html#l00060">setUnit()</a>.</p>
+<p>References <a class="el" href="mdt_double_edit_8h_source.html#l00047">omega</a>, <a class="el" href="mdt_double_edit_8h_source.html#l00048">OmegaCapital</a>, and <a class="el" href="mdt_double_validator_8cpp_source.html#l00033">mdtDoubleValidator::setSuffix()</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_double_edit_8cpp_source.html#l00248">setUnit()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a827bb0d8a34a6fbaca4a328672140bae"></a>
+<a class="anchor" id="a3eb1b0434235fae23fa3f795fb90066e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtDoubleEdit::setUnit </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>u</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set unit. </p>
+
+<p>Definition at line <a class="el" href="mdt_double_edit_8cpp_source.html#l00248">248</a> of file <a class="el" href="mdt_double_edit_8cpp_source.html">mdtDoubleEdit.cpp</a>.</p>
+
+<p>References <a class="el" href="mdt_double_edit_8h_source.html#l00047">omega</a>, <a class="el" href="mdt_double_edit_8h_source.html#l00048">OmegaCapital</a>, <a class="el" href="mdt_double_validator_8cpp_source.html#l00033">mdtDoubleValidator::setSuffix()</a>, and <a class="el" href="mdt_double_edit_8cpp_source.html#l00068">setUnit()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a077b00c2e4ae13e66a2d903a42c0be52"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void mdtDoubleEdit::setValue </td>
           <td>(</td>
-          <td class="paramtype">const QString &amp;&#160;</td>
-          <td class="paramname"><em>s</em>, </td>
+          <td class="paramtype">const QVariant &amp;&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -395,21 +622,22 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set value from a string. </p>
-<p>s can also contain power of 10 char and unit. Unit must be the same than set with <a class="el" href="classmdt_double_edit.html#a3eb1b0434235fae23fa3f795fb90066e" title="Set unit. ">setUnit()</a>. </p>
+<p>Set value. </p>
 
-<p>Definition at line <a class="el" href="mdt_double_edit_8cpp_source.html#l00116">116</a> of file <a class="el" href="mdt_double_edit_8cpp_source.html">mdtDoubleEdit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_double_edit_8cpp_source.html#l00209">209</a> of file <a class="el" href="mdt_double_edit_8cpp_source.html">mdtDoubleEdit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_double_validator_8cpp_source.html#l00038">mdtDoubleValidator::validate()</a>, and <a class="el" href="classmdt_double_edit.html#a04275f70dcfa22b677841a108dde2561">valueChanged()</a>.</p>
+<p>References <a class="el" href="mdt_double_edit_8cpp_source.html#l00193">setValueDouble()</a>, <a class="el" href="mdt_double_edit_8cpp_source.html#l00177">setValueString()</a>, and <a class="el" href="classmdt_double_edit.html#a04275f70dcfa22b677841a108dde2561">valueChanged()</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00415">mdtSqlFieldHandlerMdtDoubleEdit::clear()</a>, and <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00398">mdtSqlFieldHandlerMdtDoubleEdit::setData()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a81258812b5f964042840cee3e405ed27"></a>
+<a class="anchor" id="ac3c1a762df3ffd84e736f9ce1cbeb702"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void mdtDoubleEdit::setValue </td>
+          <td class="memname">void mdtDoubleEdit::setValueDouble </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>v</em>, </td>
@@ -430,9 +658,46 @@ Properties</h2></td></tr>
 
 <p>Set value. </p>
 
-<p>Definition at line <a class="el" href="mdt_double_edit_8cpp_source.html#l00132">132</a> of file <a class="el" href="mdt_double_edit_8cpp_source.html">mdtDoubleEdit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_double_edit_8cpp_source.html#l00193">193</a> of file <a class="el" href="mdt_double_edit_8cpp_source.html">mdtDoubleEdit.cpp</a>.</p>
 
-<p>References <a class="el" href="classmdt_double_edit.html#a04275f70dcfa22b677841a108dde2561">valueChanged()</a>.</p>
+<p>References <a class="el" href="classmdt_double_edit.html#a59be46e6f7d976a3a3373b76e03152e9">maximum()</a>, <a class="el" href="classmdt_double_edit.html#a2e0974378639708551a703b5b1dc3969">minimum()</a>, and <a class="el" href="classmdt_double_edit.html#a04275f70dcfa22b677841a108dde2561">valueChanged()</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_double_edit_8cpp_source.html#l00209">setValue()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6b7d233d74dbb7f587d062aa5ff1abdb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtDoubleEdit::setValueString </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>emitValueChanged</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set value from a string. </p>
+<p>s can also contain power of 10 char and unit. Unit must be the same than set with <a class="el" href="classmdt_double_edit.html#a7574871fecfb0130e9d8947b55629cca" title="Set unit that is represented by a special symbol. ">setUnit()</a>. </p>
+
+<p>Definition at line <a class="el" href="mdt_double_edit_8cpp_source.html#l00177">177</a> of file <a class="el" href="mdt_double_edit_8cpp_source.html">mdtDoubleEdit.cpp</a>.</p>
+
+<p>References <a class="el" href="mdt_double_validator_8cpp_source.html#l00053">mdtDoubleValidator::validate()</a>, and <a class="el" href="classmdt_double_edit.html#a04275f70dcfa22b677841a108dde2561">valueChanged()</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_double_edit_8cpp_source.html#l00209">setValue()</a>.</p>
 
 </div>
 </div>
@@ -451,7 +716,7 @@ Properties</h2></td></tr>
 
 <p>Get text in line edit. </p>
 
-<p>Definition at line <a class="el" href="mdt_double_edit_8cpp_source.html#l00153">153</a> of file <a class="el" href="mdt_double_edit_8cpp_source.html">mdtDoubleEdit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_double_edit_8cpp_source.html#l00238">238</a> of file <a class="el" href="mdt_double_edit_8cpp_source.html">mdtDoubleEdit.cpp</a>.</p>
 
 </div>
 </div>
@@ -478,7 +743,7 @@ Properties</h2></td></tr>
 
 <p>Get unit. </p>
 
-<p>Definition at line <a class="el" href="mdt_double_edit_8h_source.html#l00064">64</a> of file <a class="el" href="mdt_double_edit_8h_source.html">mdtDoubleEdit.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_double_edit_8h_source.html#l00065">65</a> of file <a class="el" href="mdt_double_edit_8h_source.html">mdtDoubleEdit.h</a>.</p>
 
 </div>
 </div>
@@ -497,7 +762,9 @@ Properties</h2></td></tr>
 
 <p>Get value. </p>
 
-<p>Definition at line <a class="el" href="mdt_double_edit_8cpp_source.html#l00142">142</a> of file <a class="el" href="mdt_double_edit_8cpp_source.html">mdtDoubleEdit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_double_edit_8cpp_source.html#l00227">227</a> of file <a class="el" href="mdt_double_edit_8cpp_source.html">mdtDoubleEdit.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00404">mdtSqlFieldHandlerMdtDoubleEdit::data()</a>.</p>
 
 </div>
 </div>
@@ -536,7 +803,7 @@ Properties</h2></td></tr>
 <p>Emitted when a new value was set. </p>
 <p>Happens when user has finished editting, or when a set functions was called with emitValueChanged flag set. </p>
 
-<p>Referenced by <a class="el" href="mdt_double_edit_8cpp_source.html#l00116">setValue()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_double_edit_8cpp_source.html#l00209">setValue()</a>, <a class="el" href="mdt_double_edit_8cpp_source.html#l00193">setValueDouble()</a>, and <a class="el" href="mdt_double_edit_8cpp_source.html#l00177">setValueString()</a>.</p>
 
 </div>
 </div>
@@ -563,7 +830,7 @@ Properties</h2></td></tr>
 
 <p>Get value. </p>
 
-<p>Definition at line <a class="el" href="mdt_double_edit_8h_source.html#l00108">108</a> of file <a class="el" href="mdt_double_edit_8h_source.html">mdtDoubleEdit.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_double_edit_8h_source.html#l00145">145</a> of file <a class="el" href="mdt_double_edit_8h_source.html">mdtDoubleEdit.h</a>.</p>
 
 </div>
 </div>
@@ -590,11 +857,55 @@ Properties</h2></td></tr>
 
 <p>Check if value is valid. </p>
 
-<p>Definition at line <a class="el" href="mdt_double_edit_8h_source.html#l00116">116</a> of file <a class="el" href="mdt_double_edit_8h_source.html">mdtDoubleEdit.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_double_edit_8h_source.html#l00153">153</a> of file <a class="el" href="mdt_double_edit_8h_source.html">mdtDoubleEdit.h</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Property Documentation</h2>
+<a class="anchor" id="a80edcc2b96d1111f608037f058596c02"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double mdtDoubleEdit::maximum</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">read</span><span class="mlabel">write</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="mdt_double_edit_8h_source.html#l00040">40</a> of file <a class="el" href="mdt_double_edit_8h_source.html">mdtDoubleEdit.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="adc63b2b7f47fac62e44673d51444776e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double mdtDoubleEdit::minimum</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">read</span><span class="mlabel">write</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="mdt_double_edit_8h_source.html#l00039">39</a> of file <a class="el" href="mdt_double_edit_8h_source.html">mdtDoubleEdit.h</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a163c58477dc88637f999f56714df74ee"></a>
 <div class="memitem">
 <div class="memproto">
@@ -613,7 +924,7 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="mdt_double_edit_8h_source.html#l00039">39</a> of file <a class="el" href="mdt_double_edit_8h_source.html">mdtDoubleEdit.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_double_edit_8h_source.html#l00038">38</a> of file <a class="el" href="mdt_double_edit_8h_source.html">mdtDoubleEdit.h</a>.</p>
 
 </div>
 </div>
@@ -624,7 +935,7 @@ Properties</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 12 2014 10:53:30 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jul 26 2014 17:48:10 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

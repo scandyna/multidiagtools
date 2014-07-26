@@ -1,3 +1,8 @@
 <map id="mdtSqlFieldHandlerAbstractDataWidget" name="mdtSqlFieldHandlerAbstractDataWidget">
-<area shape="rect" id="node3" href="$classmdt_sql_field_handler_line_edit.html" title="mdtSqlFieldHandlerLineEdit" alt="" coords="7,101,188,131"/>
+<area shape="rect" id="node3" href="$classmdt_sql_field_handler_combo_box.html" title="mdtSqlFieldHandlerComboBox" alt="" coords="252,5,452,35"/>
+<area shape="rect" id="node5" href="$classmdt_sql_field_handler_date_time_edit.html" title="mdtSqlFieldHandlerDateTimeEdit" alt="" coords="244,59,460,88"/>
+<area shape="rect" id="node7" href="$classmdt_sql_field_handler_label.html" title="mdtSqlFieldHandlerLabel" alt="" coords="269,112,435,141"/>
+<area shape="rect" id="node9" href="$classmdt_sql_field_handler_line_edit.html" title="mdtSqlFieldHandlerLineEdit" alt="" coords="261,165,443,195"/>
+<area shape="rect" id="node11" href="$classmdt_sql_field_handler_mdt_double_edit.html" title="mdtSqlFieldHandlerMdtDoubleEdit" alt="" coords="241,219,463,248"/>
+<area shape="rect" id="node13" href="$classmdt_sql_field_handler_plain_text_edit.html" title="mdtSqlFieldHandlerPlainTextEdit" alt="" coords="245,272,459,301"/>
 </map>

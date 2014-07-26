@@ -98,19 +98,22 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a9a28712932316ef1dd4caf737a6d7e07"><td class="memItemLeft" align="right" valign="top">typedef boost::adjacency_list<br class="typebreak"/>
+<tr class="memitem:a9ecaa62d3daff29e2314dec1780dbc21"><td class="memItemLeft" align="right" valign="top">typedef boost::property<br class="typebreak"/>
+&lt; boost::edge_weight_t, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemdt_cl_path_graph_private.html#a9ecaa62d3daff29e2314dec1780dbc21">weigth_property_t</a></td></tr>
+<tr class="separator:a9ecaa62d3daff29e2314dec1780dbc21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f07a8bdf4fa7671a93fe91d536b4793"><td class="memItemLeft" align="right" valign="top">typedef boost::adjacency_list<br class="typebreak"/>
 &lt; boost::vecS, boost::vecS, <br class="typebreak"/>
 boost::directedS, <br class="typebreak"/>
 boost::no_property, <br class="typebreak"/>
-<a class="el" href="structmdt_cl_path_graph_private_1_1mdt_cl_path_graph_edge_data.html">mdtClPathGraphEdgeData</a>, <br class="typebreak"/>
+<a class="el" href="namespacemdt_cl_path_graph_private.html#a9ecaa62d3daff29e2314dec1780dbc21">weigth_property_t</a>, <br class="typebreak"/>
 boost::no_property, <br class="typebreak"/>
-boost::listS &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemdt_cl_path_graph_private.html#a9a28712932316ef1dd4caf737a6d7e07">graph_t</a></td></tr>
-<tr class="separator:a9a28712932316ef1dd4caf737a6d7e07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+boost::listS &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemdt_cl_path_graph_private.html#a0f07a8bdf4fa7671a93fe91d536b4793">graph_t</a></td></tr>
+<tr class="separator:a0f07a8bdf4fa7671a93fe91d536b4793"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0aaa28f25df9a7fcd4602cc15b3b3795"><td class="memItemLeft" align="right" valign="top">typedef boost::graph_traits<br class="typebreak"/>
-&lt; <a class="el" href="namespacemdt_cl_path_graph_private.html#a9a28712932316ef1dd4caf737a6d7e07">graph_t</a> &gt;::vertex_descriptor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemdt_cl_path_graph_private.html#a0aaa28f25df9a7fcd4602cc15b3b3795">vertex_t</a></td></tr>
+&lt; <a class="el" href="namespacemdt_cl_path_graph_private.html#a0f07a8bdf4fa7671a93fe91d536b4793">graph_t</a> &gt;::vertex_descriptor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemdt_cl_path_graph_private.html#a0aaa28f25df9a7fcd4602cc15b3b3795">vertex_t</a></td></tr>
 <tr class="separator:a0aaa28f25df9a7fcd4602cc15b3b3795"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a96eb891b98d89bbea2f573cd8f3accd2"><td class="memItemLeft" align="right" valign="top">typedef boost::graph_traits<br class="typebreak"/>
-&lt; <a class="el" href="namespacemdt_cl_path_graph_private.html#a9a28712932316ef1dd4caf737a6d7e07">graph_t</a> &gt;::edge_descriptor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemdt_cl_path_graph_private.html#a96eb891b98d89bbea2f573cd8f3accd2">edge_t</a></td></tr>
+&lt; <a class="el" href="namespacemdt_cl_path_graph_private.html#a0f07a8bdf4fa7671a93fe91d536b4793">graph_t</a> &gt;::edge_descriptor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemdt_cl_path_graph_private.html#a96eb891b98d89bbea2f573cd8f3accd2">edge_t</a></td></tr>
 <tr class="separator:a96eb891b98d89bbea2f573cd8f3accd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
@@ -119,26 +122,26 @@ boost::listS &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef boost::graph_traits&lt;<a class="el" href="namespacemdt_cl_path_graph_private.html#a9a28712932316ef1dd4caf737a6d7e07">graph_t</a>&gt;::edge_descriptor <a class="el" href="namespacemdt_cl_path_graph_private.html#a96eb891b98d89bbea2f573cd8f3accd2">mdtClPathGraphPrivate::edge_t</a></td>
+          <td class="memname">typedef boost::graph_traits&lt;<a class="el" href="namespacemdt_cl_path_graph_private.html#a0f07a8bdf4fa7671a93fe91d536b4793">graph_t</a>&gt;::edge_descriptor <a class="el" href="namespacemdt_cl_path_graph_private.html#a96eb891b98d89bbea2f573cd8f3accd2">mdtClPathGraphPrivate::edge_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="mdt_cl_path_graph_8h_source.html#l00077">77</a> of file <a class="el" href="mdt_cl_path_graph_8h_source.html">mdtClPathGraph.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_path_graph_8h_source.html#l00084">84</a> of file <a class="el" href="mdt_cl_path_graph_8h_source.html">mdtClPathGraph.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a9a28712932316ef1dd4caf737a6d7e07"></a>
+<a class="anchor" id="a0f07a8bdf4fa7671a93fe91d536b4793"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef boost::adjacency_list&lt; boost::vecS, boost::vecS, boost::directedS, boost::no_property, <a class="el" href="structmdt_cl_path_graph_private_1_1mdt_cl_path_graph_edge_data.html">mdtClPathGraphEdgeData</a>, boost::no_property, boost::listS &gt; <a class="el" href="namespacemdt_cl_path_graph_private.html#a9a28712932316ef1dd4caf737a6d7e07">mdtClPathGraphPrivate::graph_t</a></td>
+          <td class="memname">typedef boost::adjacency_list&lt; boost::vecS, boost::vecS, boost::directedS, boost::no_property, <a class="el" href="namespacemdt_cl_path_graph_private.html#a9ecaa62d3daff29e2314dec1780dbc21">weigth_property_t</a>, boost::no_property, boost::listS &gt; <a class="el" href="namespacemdt_cl_path_graph_private.html#a0f07a8bdf4fa7671a93fe91d536b4793">mdtClPathGraphPrivate::graph_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="mdt_cl_path_graph_8h_source.html#l00073">73</a> of file <a class="el" href="mdt_cl_path_graph_8h_source.html">mdtClPathGraph.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_path_graph_8h_source.html#l00080">80</a> of file <a class="el" href="mdt_cl_path_graph_8h_source.html">mdtClPathGraph.h</a>.</p>
 
 </div>
 </div>
@@ -147,19 +150,33 @@ boost::listS &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef boost::graph_traits&lt;<a class="el" href="namespacemdt_cl_path_graph_private.html#a9a28712932316ef1dd4caf737a6d7e07">graph_t</a>&gt;::vertex_descriptor <a class="el" href="namespacemdt_cl_path_graph_private.html#a0aaa28f25df9a7fcd4602cc15b3b3795">mdtClPathGraphPrivate::vertex_t</a></td>
+          <td class="memname">typedef boost::graph_traits&lt;<a class="el" href="namespacemdt_cl_path_graph_private.html#a0f07a8bdf4fa7671a93fe91d536b4793">graph_t</a>&gt;::vertex_descriptor <a class="el" href="namespacemdt_cl_path_graph_private.html#a0aaa28f25df9a7fcd4602cc15b3b3795">mdtClPathGraphPrivate::vertex_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="mdt_cl_path_graph_8h_source.html#l00076">76</a> of file <a class="el" href="mdt_cl_path_graph_8h_source.html">mdtClPathGraph.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_path_graph_8h_source.html#l00083">83</a> of file <a class="el" href="mdt_cl_path_graph_8h_source.html">mdtClPathGraph.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9ecaa62d3daff29e2314dec1780dbc21"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef boost::property&lt;boost::edge_weight_t, int&gt; <a class="el" href="namespacemdt_cl_path_graph_private.html#a9ecaa62d3daff29e2314dec1780dbc21">mdtClPathGraphPrivate::weigth_property_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="mdt_cl_path_graph_8h_source.html#l00069">69</a> of file <a class="el" href="mdt_cl_path_graph_8h_source.html">mdtClPathGraph.h</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 12 2014 10:53:30 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jul 26 2014 17:48:12 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

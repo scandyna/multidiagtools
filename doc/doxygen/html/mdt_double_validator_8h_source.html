@@ -126,33 +126,43 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_double_validator.html#a9741c74656a66eb9376e230c67d1e39a" title="Set a custom suffix. ">setSuffix</a>(<span class="keyword">const</span> QString &amp; s);</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  QValidator::State <a class="code" href="classmdt_double_validator.html#a45b3133233d99ef2a46028eda87bad4b" title="Validate input. ">validate</a>(QString &amp; input, <span class="keywordtype">int</span> &amp; pos) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_double_validator.html#a9cd93164abc582ef7ffe7a856e52cd9f" title="Set bottom value. ">setBottom</a>(<span class="keywordtype">double</span> min);</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <span class="keywordtype">bool</span> strBeginIsNumber(<span class="keyword">const</span> QString &amp; str) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  <span class="keywordtype">bool</span> strHasOnlyAccpedElements(<span class="keyword">const</span> QString &amp; str) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="code" href="classmdt_double_validator.html#a4dd214c184264cbe0a7507982d843ca5">   55</a></span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="classmdt_double_validator.html#a4dd214c184264cbe0a7507982d843ca5" title="Get bottom value. ">bottom</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> pvValidator.bottom(); }</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_double_validator.html#ac063ca06299ee123cb05bfb6d64d78cf" title="Set top value. ">setTop</a>(<span class="keywordtype">double</span> max);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="code" href="classmdt_double_validator.html#a038ad17fe42138b70f91ba34dafdda09">   63</a></span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="classmdt_double_validator.html#a038ad17fe42138b70f91ba34dafdda09" title="Get top value. ">top</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> pvValidator.top(); }</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  <span class="keywordtype">bool</span> charIsAccepted(<span class="keyword">const</span> QChar &amp; c) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_double_validator.html#ac8f9282902ae5a54bba7e8feb262ae3f" title="Set range. ">setRange</a>(<span class="keywordtype">double</span> min, <span class="keywordtype">double</span> max, <span class="keywordtype">int</span> decimals = 0);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  QValidator::State <a class="code" href="classmdt_double_validator.html#a45b3133233d99ef2a46028eda87bad4b" title="Validate input. ">validate</a>(QString &amp; input, <span class="keywordtype">int</span> &amp; pos) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <span class="keywordtype">bool</span> charIsPowerOf10Suffix(<span class="keyword">const</span> QChar &amp; c) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <span class="keywordtype">bool</span> strBeginIsNumber(<span class="keyword">const</span> QString &amp; str) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  <span class="keywordtype">bool</span> strEndsCorrectly(<span class="keyword">const</span> QString &amp; str) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  <span class="keywordtype">bool</span> strEndsWithPowerOf10Suffix(<span class="keyword">const</span> QString &amp; str) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  Q_DISABLE_COPY(<a class="code" href="classmdt_double_validator.html" title="Double validator. ">mdtDoubleValidator</a>);</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  QDoubleValidator pvValidator;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  QString pvSuffix;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;};</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="preprocessor">#endif  // #ifndef MDT_DOUBLE_VALIDATOR_H</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  <span class="keywordtype">bool</span> strHasOnlyAccpedElements(<span class="keyword">const</span> QString &amp; str) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  <span class="keywordtype">bool</span> charIsAccepted(<span class="keyword">const</span> QChar &amp; c) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <span class="keywordtype">bool</span> charIsPowerOf10Suffix(<span class="keyword">const</span> QChar &amp; c) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  <span class="keywordtype">bool</span> strEndsCorrectly(<span class="keyword">const</span> QString &amp; str) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  <span class="keywordtype">bool</span> strEndsWithPowerOf10Suffix(<span class="keyword">const</span> QString &amp; str) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  Q_DISABLE_COPY(<a class="code" href="classmdt_double_validator.html" title="Double validator. ">mdtDoubleValidator</a>);</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  QDoubleValidator pvValidator;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;  QString pvSuffix;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;};</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="preprocessor">#endif  // #ifndef MDT_DOUBLE_VALIDATOR_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 12 2014 10:53:28 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jul 26 2014 17:48:03 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

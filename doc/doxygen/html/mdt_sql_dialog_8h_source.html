@@ -119,47 +119,54 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;QList&gt;</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &lt;QPair&gt;</span></div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">class </span>QVBoxLayout;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">class </span>QPushButton;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">class </span><a class="code" href="classmdt_sql_form.html" title="Base class for high level SQL widgets API. ">mdtSqlForm</a>;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00043"></a><span class="lineno"><a class="code" href="classmdt_sql_dialog.html">   43</a></span>&#160;<span class="keyword">class </span><a class="code" href="classmdt_sql_dialog.html" title="Dialog for a database table view/editor. ">mdtSqlDialog</a> : <span class="keyword">public</span> <a class="code" href="class_q_dialog.html">QDialog</a></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;{</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; Q_OBJECT</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <a class="code" href="classmdt_sql_dialog.html#a9588f53afba818d79ff0f2e9eaeed50f" title="Constructor. ">mdtSqlDialog</a>(<a class="code" href="class_q_widget.html">QWidget</a> *parent = 0);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  <a class="code" href="classmdt_sql_dialog.html#a845d9f4eef1c590d5e854540e18b00a6" title="Destructor. ">~mdtSqlDialog</a>();</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_dialog.html#aa4b143efbe21073e1668d75cdf262a39" title="Set the SQL form. ">setSqlForm</a>(<a class="code" href="classmdt_sql_form.html" title="Base class for high level SQL widgets API. ">mdtSqlForm</a> *form);</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_dialog.html#a47de595aa2a117cdc3eb5de4a6bbf8f5" title="Enable edition. ">enableEdition</a>();</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_dialog.html#a22e77e80b419d9bb23703c253b1a246e" title="Disable edition. ">disableEdition</a>();</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; <span class="keyword">public</span> slots:</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_dialog.html#affba1732b5f32db150d0e700ecc339f8" title="Overloads QDialog::accept() ">accept</a>();</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_dialog.html#ada1726d5861cb071fab7a1c31bc52abb" title="Overloads QDialog::reject() ">reject</a>();</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  Q_DISABLE_COPY(<a class="code" href="classmdt_sql_dialog.html" title="Dialog for a database table view/editor. ">mdtSqlDialog</a>);</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  QVBoxLayout *pvMainLayout;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  QPushButton *pbSubmit;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  QPushButton *pbRevert;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <a class="code" href="classmdt_sql_form.html" title="Base class for high level SQL widgets API. ">mdtSqlForm</a> *pvForm;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;};</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="preprocessor">#endif  // #ifndef MDT_SQL_DIALOG_H</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">class </span>QHBoxLayout;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">class </span>QVBoxLayout;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">class </span>QPushButton;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">class </span><a class="code" href="classmdt_sql_form.html" title="Base class for high level SQL widgets API. ">mdtSqlForm</a>;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="code" href="classmdt_sql_dialog.html">   44</a></span>&#160;<span class="keyword">class </span><a class="code" href="classmdt_sql_dialog.html" title="Dialog for a database table view/editor. ">mdtSqlDialog</a> : <span class="keyword">public</span> <a class="code" href="class_q_dialog.html">QDialog</a></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;{</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; Q_OBJECT</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <a class="code" href="classmdt_sql_dialog.html#a9588f53afba818d79ff0f2e9eaeed50f" title="Constructor. ">mdtSqlDialog</a>(<a class="code" href="class_q_widget.html">QWidget</a> *parent = 0);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <a class="code" href="classmdt_sql_dialog.html#a845d9f4eef1c590d5e854540e18b00a6" title="Destructor. ">~mdtSqlDialog</a>();</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_dialog.html#aa4b143efbe21073e1668d75cdf262a39" title="Set the SQL form. ">setSqlForm</a>(<a class="code" href="classmdt_sql_form.html" title="Base class for high level SQL widgets API. ">mdtSqlForm</a> *form);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_dialog.html#a47de595aa2a117cdc3eb5de4a6bbf8f5" title="Enable edition. ">enableEdition</a>();</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_dialog.html#a22e77e80b419d9bb23703c253b1a246e" title="Disable edition. ">disableEdition</a>();</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; <span class="keyword">public</span> slots:</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_dialog.html#affba1732b5f32db150d0e700ecc339f8" title="Overloads QDialog::accept() ">accept</a>();</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_dialog.html#ada1726d5861cb071fab7a1c31bc52abb" title="Overloads QDialog::reject() ">reject</a>();</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  <span class="keywordtype">void</span> createEditionElements(QHBoxLayout *l);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  <span class="keywordtype">void</span> connectEditionElements();</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  <span class="keywordtype">void</span> disconnectEditionElements();</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  Q_DISABLE_COPY(<a class="code" href="classmdt_sql_dialog.html" title="Dialog for a database table view/editor. ">mdtSqlDialog</a>);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  QVBoxLayout *pvMainLayout;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  QPushButton *pbSubmit;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  QPushButton *pbRevert;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  <a class="code" href="classmdt_sql_form.html" title="Base class for high level SQL widgets API. ">mdtSqlForm</a> *pvForm;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;};</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="preprocessor">#endif  // #ifndef MDT_SQL_DIALOG_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 12 2014 10:53:27 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jul 26 2014 17:48:02 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

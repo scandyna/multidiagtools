@@ -49,6 +49,8 @@ void \hyperlink{classmdt_sql_form_a86174e002c2dd5496ab74a7eb67c614c}{add\-Child\
 \begin{DoxyCompactList}\small\item\em Add a widget to the internal Q\-Tab\-Widget. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_sql_form_ab9bb1b548b71ef4e8547846b6aedec66}{add\-Relation} (const Q\-String \&parent\-Field\-Name, const Q\-String \&child\-Table\-Name, const Q\-String \&child\-Field\-Name, const Q\-String \&operator\-With\-Previous\-Item=\char`\"{}A\-N\-D\char`\"{})
 \begin{DoxyCompactList}\small\item\em Add a relation between main table and a child table. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_form_a101b73d24864dd208968ca6dfe5f8cd8}{start} ()
+\begin{DoxyCompactList}\small\item\em Start internal state machines. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_abstract_sql_widget}{mdt\-Abstract\-Sql\-Widget} $\ast$ \hyperlink{classmdt_sql_form_a345555605914bf8198d093abdd3cda1e}{sql\-Widget} (const Q\-String \&table\-Name)
 \begin{DoxyCompactList}\small\item\em Get instance of the stored S\-Q\-L widget related to a table name. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_sql_form_widget}{mdt\-Sql\-Form\-Widget} $\ast$ \hyperlink{classmdt_sql_form_a59dc3afec69c8b6a18ed7fccb42c70ad}{sql\-Form\-Widget} (const Q\-String \&table\-Name)
@@ -217,7 +219,7 @@ Definition at line 107 of file mdt\-Sql\-Form.\-cpp.
 
 
 
-References mdt\-Abstract\-Sql\-Widget\-::add\-Child\-Widget(), add\-Child\-Widget(), mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Abstract\-Sql\-Widget\-::model(), model(), pv\-Last\-Error, mdt\-Sql\-Relation\-::set\-Child\-Model(), mdt\-Error\-::set\-Error(), mdt\-Abstract\-Sql\-Widget\-::set\-Model(), mdt\-Sql\-Relation\-::set\-Parent\-Model(), mdt\-Error\-::set\-System\-Error(), mdt\-Abstract\-Sql\-Widget\-::set\-User\-Friendly\-Table\-Name(), and mdt\-Abstract\-Sql\-Widget\-::user\-Friendly\-Table\-Name().
+References add\-Child\-Widget(), mdt\-Abstract\-Sql\-Widget\-::add\-Child\-Widget(), mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Abstract\-Sql\-Widget\-::model(), model(), pv\-Last\-Error, mdt\-Sql\-Relation\-::set\-Child\-Model(), mdt\-Error\-::set\-Error(), mdt\-Abstract\-Sql\-Widget\-::set\-Model(), mdt\-Sql\-Relation\-::set\-Parent\-Model(), mdt\-Error\-::set\-System\-Error(), mdt\-Abstract\-Sql\-Widget\-::set\-User\-Friendly\-Table\-Name(), and mdt\-Abstract\-Sql\-Widget\-::user\-Friendly\-Table\-Name().
 
 \hypertarget{classmdt_sql_form_a86174e002c2dd5496ab74a7eb67c614c}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!add\-Child\-Widget@{add\-Child\-Widget}}
 \index{add\-Child\-Widget@{add\-Child\-Widget}!mdtSqlForm@{mdt\-Sql\-Form}}
@@ -285,7 +287,7 @@ true if all data are saved, false if a S\-Q\-L widget has pending data.
 \end{DoxyReturn}
 
 
-Definition at line 494 of file mdt\-Sql\-Form.\-cpp.
+Definition at line 507 of file mdt\-Sql\-Form.\-cpp.
 
 
 
@@ -310,7 +312,7 @@ Current value, or a invalid Q\-Variant on error (f.\-ex. table or field not foun
 \end{DoxyReturn}
 
 
-Definition at line 450 of file mdt\-Sql\-Form.\-cpp.
+Definition at line 463 of file mdt\-Sql\-Form.\-cpp.
 
 
 
@@ -336,7 +338,7 @@ Current row, or value $<$ 0 on error (f.\-ex. table not found).
 \end{DoxyReturn}
 
 
-Definition at line 407 of file mdt\-Sql\-Form.\-cpp.
+Definition at line 420 of file mdt\-Sql\-Form.\-cpp.
 
 
 
@@ -362,7 +364,7 @@ Current value, or a invalid Q\-Variant on error (f.\-ex. table, row or field not
 \end{DoxyReturn}
 
 
-Definition at line 466 of file mdt\-Sql\-Form.\-cpp.
+Definition at line 479 of file mdt\-Sql\-Form.\-cpp.
 
 
 
@@ -381,7 +383,7 @@ Get database that was given by constructor.
 
 
 
-Definition at line 240 of file mdt\-Sql\-Form.\-cpp.
+Definition at line 253 of file mdt\-Sql\-Form.\-cpp.
 
 \hypertarget{classmdt_sql_form_aa9c2ce2607760a8ebebf3d88779637d4}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!database@{database}}
 \index{database@{database}!mdtSqlForm@{mdt\-Sql\-Form}}
@@ -399,7 +401,7 @@ Q\-Sql\-Database object that acts on given table, or \hyperlink{classmdt_sql_for
 \end{DoxyReturn}
 
 
-Definition at line 245 of file mdt\-Sql\-Form.\-cpp.
+Definition at line 258 of file mdt\-Sql\-Form.\-cpp.
 
 
 
@@ -418,7 +420,7 @@ Display last error in a message box.
 
 
 
-Definition at line 382 of file mdt\-Sql\-Form.\-cpp.
+Definition at line 395 of file mdt\-Sql\-Form.\-cpp.
 
 
 
@@ -441,7 +443,7 @@ Call insert method on main\-Sql\-Widget.
 
 
 
-Definition at line 482 of file mdt\-Sql\-Form.\-cpp.
+Definition at line 495 of file mdt\-Sql\-Form.\-cpp.
 
 
 
@@ -469,7 +471,7 @@ m = model(table\-Name); if(m == 0)\{ /mdt\-Error e(M\-D\-T\-\_\-\-D\-A\-T\-A\-B\
 
 return m-\/$>$\hyperlink{classmdt_sql_form_a04724293298421c404e93c58015cda5e}{last\-Error()}; \} 
 
-Definition at line 377 of file mdt\-Sql\-Form.\-cpp.
+Definition at line 390 of file mdt\-Sql\-Form.\-cpp.
 
 
 
@@ -488,7 +490,7 @@ Get last\-Error ogject for write acces.
 
 Subclass can use this method to set last\-Error 
 
-Definition at line 502 of file mdt\-Sql\-Form.\-cpp.
+Definition at line 515 of file mdt\-Sql\-Form.\-cpp.
 
 
 
@@ -516,7 +518,7 @@ Definition at line 52 of file mdt\-Sql\-Form.\-cpp.
 
 
 
-Referenced by mdt\-Sql\-Dialog\-::accept(), mdt\-Sql\-Dialog\-::disable\-Edition(), mdt\-Sql\-Dialog\-::enable\-Edition(), mdt\-Sql\-Window\-::enable\-Edition(), mdt\-Sql\-Window\-::enable\-Navigation(), and mdt\-Sql\-Dialog\-::reject().
+Referenced by mdt\-Sql\-Dialog\-::accept(), mdt\-Sql\-Dialog\-::enable\-Edition(), and mdt\-Sql\-Dialog\-::reject().
 
 \hypertarget{classmdt_sql_form_ac3f257a2711f66b3cdd811804c0f11b0}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!model@{model}}
 \index{model@{model}!mdtSqlForm@{mdt\-Sql\-Form}}
@@ -534,7 +536,7 @@ Get model that acts on given table name.
 \end{DoxyReturn}
 
 
-Definition at line 257 of file mdt\-Sql\-Form.\-cpp.
+Definition at line 270 of file mdt\-Sql\-Form.\-cpp.
 
 
 
@@ -562,7 +564,7 @@ Row count, or value $<$ 0 on error (f.\-ex. table not found).
 \end{DoxyReturn}
 
 
-Definition at line 392 of file mdt\-Sql\-Form.\-cpp.
+Definition at line 405 of file mdt\-Sql\-Form.\-cpp.
 
 
 
@@ -584,7 +586,7 @@ True on success, false on error. On failure, the last error is avaliable with \h
 \end{DoxyReturn}
 
 
-Definition at line 269 of file mdt\-Sql\-Form.\-cpp.
+Definition at line 282 of file mdt\-Sql\-Form.\-cpp.
 
 
 
@@ -610,7 +612,7 @@ True on success, false if table\-Name was not found or other error. On failure, 
 \end{DoxyReturn}
 
 
-Definition at line 293 of file mdt\-Sql\-Form.\-cpp.
+Definition at line 306 of file mdt\-Sql\-Form.\-cpp.
 
 
 
@@ -632,7 +634,7 @@ Set (update) data of current row (record) for given table and field name.
 
 Note that S\-Q\-L widget related to given table\-Name is searched at each request. If several access to set\-Current\-Data is needed, it can be better to get a pointer to related widget with \hyperlink{classmdt_sql_form_a345555605914bf8198d093abdd3cda1e}{sql\-Widget()} , and call his \hyperlink{classmdt_sql_form_aa377e70f4a2e865b0b696957c0fca766}{set\-Current\-Data()} method. 
 
-Definition at line 434 of file mdt\-Sql\-Form.\-cpp.
+Definition at line 447 of file mdt\-Sql\-Form.\-cpp.
 
 
 
@@ -668,7 +670,7 @@ True if matching record was found (in this case, set\-Current\-Index() is called
 \end{DoxyReturn}
 
 
-Definition at line 423 of file mdt\-Sql\-Form.\-cpp.
+Definition at line 436 of file mdt\-Sql\-Form.\-cpp.
 
 
 
@@ -760,7 +762,7 @@ Set main table's filter.
 \end{DoxyParams}
 Internally, a S\-Q\-L statement is generated linke\-: field\-Name = match\-Data 
 
-Definition at line 319 of file mdt\-Sql\-Form.\-cpp.
+Definition at line 332 of file mdt\-Sql\-Form.\-cpp.
 
 
 
@@ -783,7 +785,7 @@ Reimplemented in \hyperlink{classmdt_cl_unit_editor_a962cfbdda9400a7cf99ba38eec0
 
 
 
-Definition at line 489 of file mdt\-Sql\-Form.\-cpp.
+Definition at line 502 of file mdt\-Sql\-Form.\-cpp.
 
 \hypertarget{classmdt_sql_form_a59dc3afec69c8b6a18ed7fccb42c70ad}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!sql\-Form\-Widget@{sql\-Form\-Widget}}
 \index{sql\-Form\-Widget@{sql\-Form\-Widget}!mdtSqlForm@{mdt\-Sql\-Form}}
@@ -794,7 +796,7 @@ Definition at line 489 of file mdt\-Sql\-Form.\-cpp.
 )}}\label{classmdt_sql_form_a59dc3afec69c8b6a18ed7fccb42c70ad}
 
 
-Definition at line 216 of file mdt\-Sql\-Form.\-cpp.
+Definition at line 229 of file mdt\-Sql\-Form.\-cpp.
 
 
 
@@ -809,7 +811,7 @@ References sql\-Widget().
 )}}\label{classmdt_sql_form_a6a17f32077fb7cc33139c3dc26a8d011}
 
 
-Definition at line 228 of file mdt\-Sql\-Form.\-cpp.
+Definition at line 241 of file mdt\-Sql\-Form.\-cpp.
 
 
 
@@ -830,7 +832,7 @@ Returns a null pointer if widget related to table\-Name was not found.
 
 This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. 
 
-Definition at line 199 of file mdt\-Sql\-Form.\-cpp.
+Definition at line 212 of file mdt\-Sql\-Form.\-cpp.
 
 
 
@@ -840,6 +842,29 @@ References mdt\-Abstract\-Sql\-Widget\-::sql\-Widgets().
 
 Referenced by current\-Data(), current\-Row(), data(), model(), select(), set\-Current\-Data(), sql\-Form\-Widget(), and sql\-Table\-Widget().
 
+\hypertarget{classmdt_sql_form_a101b73d24864dd208968ca6dfe5f8cd8}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!start@{start}}
+\index{start@{start}!mdtSqlForm@{mdt\-Sql\-Form}}
+\subsubsection[{start}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Form\-::start (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_form_a101b73d24864dd208968ca6dfe5f8cd8}
+
+
+Start internal state machines. 
+
+Will start state machine of each contained S\-Q\-L widget. This method is called by \hyperlink{classmdt_sql_window}{mdt\-Sql\-Window} and \hyperlink{classmdt_sql_dialog}{mdt\-Sql\-Dialog}. 
+
+Definition at line 199 of file mdt\-Sql\-Form.\-cpp.
+
+
+
+References mdt\-Abstract\-Sql\-Widget\-::sql\-Widgets().
+
+
+
+Referenced by mdt\-Sql\-Window\-::set\-Sql\-Form(), and mdt\-Sql\-Dialog\-::set\-Sql\-Form().
+
 
 
 \subsection{Member Data Documentation}
@@ -848,7 +873,7 @@ Referenced by current\-Data(), current\-Row(), data(), model(), select(), set\-C
 \subsubsection[{pv\-Last\-Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Error} mdt\-Sql\-Form\-::pv\-Last\-Error\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_sql_form_afc24e8dedd1249a29708347fdff560fd}
 
 
-Definition at line 319 of file mdt\-Sql\-Form.\-h.
+Definition at line 326 of file mdt\-Sql\-Form.\-h.
 
 
 

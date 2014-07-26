@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.4"/>
-<title>Multi diag tools: src/mdtutilsgui/mdtSqlFormWidget.h Source File</title>
+<title>Multi diag tools: src/mdtdatabase/mdtSqlFormWidget.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -81,7 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_6853ee7b343a1b65ec0b24bd11272af0.html">mdtutilsgui</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_7a9c9aa4b97bb4a5b319edee0793544f.html">mdtdatabase</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -133,71 +133,73 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  <a class="code" href="classmdt_sql_form_widget.html#a38df8efea5c216ea2b6f047e3280aac5" title="Destructor. ">~mdtSqlFormWidget</a>();</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_form_widget.html#ace4f7fad749a4efe1233b61d071b3926" title="Map widgets to matching database fields. ">mapFormWidgets</a>(<span class="keyword">const</span> QString &amp;firstWidgetInTabOrder = QString());</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  QWidgetList <a class="code" href="classmdt_sql_form_widget.html#a92648a10dd7e830faca0989007c49b6e" title="Get a list of mapped widgets. ">mappedWidgets</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  <span class="keywordtype">int</span> <a class="code" href="classmdt_sql_form_widget.html#a9588fdc58b30440077b8dcfa3a2fb3c0" title="Get the current row. ">currentRow</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_form_widget.html#ad7933613a2d113d403d539ac8957e044" title="Map widgets to matching database fields. ">mapFormWidgets</a>(<a class="code" href="class_q_widget.html">QWidget</a> *widget, <span class="keyword">const</span> QString &amp;firstWidgetInTabOrder = QString());</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_form_widget.html#ad7933613a2d113d403d539ac8957e044" title="Map widgets to matching database fields. ">mapFormWidgets</a>(<span class="keyword">const</span> QString &amp;firstWidgetInTabOrder = QString());</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  QWidgetList <a class="code" href="classmdt_sql_form_widget.html#a92648a10dd7e830faca0989007c49b6e" title="Get a list of mapped widgets. ">mappedWidgets</a>() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; <span class="keyword">public</span> slots:</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_form_widget.html#a4bb7ddf419e845de2d1a7c1ef95e48a8" title="Set first record as current record. ">toFirst</a>();</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_form_widget.html#aefbaa029ac6141ab3d12da2a27d30dda" title="Set last record as current record. ">toLast</a>();</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_form_widget.html#a7dc4bc0b63b10d420f7ab04a43e4f371" title="Set previous record as current record. ">toPrevious</a>();</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_form_widget.html#a49496a848e015ed8335a2bfd33906000" title="Set next record as current record. ">toNext</a>();</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_form_widget.html#a982e8e8347ec4f98bf3df6980997a2db" title="Set row as current record. ">setCurrentIndex</a>(<span class="keywordtype">int</span> row);</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160; <span class="keyword">private</span> slots:</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;  <span class="keywordtype">void</span> onCurrentIndexChanged(<span class="keywordtype">int</span> row);</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;  <span class="keywordtype">void</span> onModelSelected();</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;  <span class="keywordtype">void</span> doSetModel(<a class="code" href="class_q_sql_table_model.html">QSqlTableModel</a> *<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model. ">model</a>);</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;  <span class="keywordtype">bool</span> doSubmit();</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;  <span class="keywordtype">bool</span> doRevert();</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;  <span class="keywordtype">bool</span> doInsert();</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  <span class="keywordtype">bool</span> doSubmitNewRow();</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;  <span class="keywordtype">bool</span> doRevertNewRow();</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;  <span class="keywordtype">bool</span> doRemove();</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;  <span class="keywordtype">void</span> clearWidgets();</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;  <span class="keywordtype">void</span> setFocusOnFirstDataWidget();</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;  <span class="keywordtype">void</span> setWidgetsEnabled(<span class="keywordtype">bool</span> enabled);</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;  <span class="keywordtype">void</span> warnUserAboutUnsavedRow();</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;  <span class="keywordtype">void</span> buildWidgetsList(<span class="keyword">const</span> QString &amp;prefix);</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;  <span class="keywordtype">void</span> searchWidgets(QLayoutItem *item, <span class="keyword">const</span> QString &amp;prefix);</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;  Q_DISABLE_COPY(<a class="code" href="classmdt_sql_form_widget.html" title="Widget that accept a user designed form and helps dealing with table model. ">mdtSqlFormWidget</a>);</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;  <a class="code" href="class_q_data_widget_mapper.html">QDataWidgetMapper</a> *pvWidgetMapper;</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;  QWidgetList pvFoundWidgets;     <span class="comment">// Used temporary during mapping - see searchWidgets() and buildWidgetsList()</span></div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;  QList&lt;mdtSqlFieldHandler*&gt; pvFieldHandlers;</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;  <a class="code" href="class_q_widget.html">QWidget</a> *pvFirstDataWidget;  <span class="comment">// Keep trace of first data edit/view widget in focus chain</span></div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;};</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;<span class="preprocessor">#endif  // #ifndef MDT_SQL_FORM_WIDGET_H</span></div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;  <span class="keywordtype">int</span> <a class="code" href="classmdt_sql_form_widget.html#a9588fdc58b30440077b8dcfa3a2fb3c0" title="Get the current row. ">currentRow</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; <span class="keyword">public</span> slots:</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_form_widget.html#a4bb7ddf419e845de2d1a7c1ef95e48a8" title="Set first record as current record. ">toFirst</a>();</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_form_widget.html#aefbaa029ac6141ab3d12da2a27d30dda" title="Set last record as current record. ">toLast</a>();</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_form_widget.html#a7dc4bc0b63b10d420f7ab04a43e4f371" title="Set previous record as current record. ">toPrevious</a>();</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_form_widget.html#a49496a848e015ed8335a2bfd33906000" title="Set next record as current record. ">toNext</a>();</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_form_widget.html#a982e8e8347ec4f98bf3df6980997a2db" title="Set row as current record. ">setCurrentIndex</a>(<span class="keywordtype">int</span> row);</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160; <span class="keyword">private</span> slots:</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;  <span class="keywordtype">void</span> onCurrentIndexChanged(<span class="keywordtype">int</span> row);</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;  <span class="keywordtype">void</span> onModelSelected();</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160; <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;  <span class="keywordtype">void</span> doSetModel(<a class="code" href="class_q_sql_table_model.html">QSqlTableModel</a> *<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model. ">model</a>);</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;  <span class="keywordtype">bool</span> doSubmit();</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;  <span class="keywordtype">bool</span> doRevert();</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;  <span class="keywordtype">bool</span> doInsert();</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;  <span class="keywordtype">bool</span> doSubmitNewRow();</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;  <span class="keywordtype">bool</span> doRevertNewRow();</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;  <span class="keywordtype">bool</span> doRemove();</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;  <span class="keywordtype">void</span> clearWidgets();</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;  <span class="keywordtype">void</span> setFocusOnFirstDataWidget();</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;  <span class="keywordtype">void</span> setWidgetsEnabled(<span class="keywordtype">bool</span> enabled);</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;  <span class="keywordtype">void</span> warnUserAboutUnsavedRow();</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;  <span class="keywordtype">void</span> buildWidgetsList(<a class="code" href="class_q_widget.html">QWidget</a> *w, <span class="keyword">const</span> QString &amp;prefix);</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;  <span class="keywordtype">void</span> searchWidgets(QLayoutItem *item, <span class="keyword">const</span> QString &amp;prefix);</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;  Q_DISABLE_COPY(<a class="code" href="classmdt_sql_form_widget.html" title="Widget that accept a user designed form and helps dealing with table model. ">mdtSqlFormWidget</a>);</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;  <a class="code" href="class_q_data_widget_mapper.html">QDataWidgetMapper</a> *pvWidgetMapper;</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;  QWidgetList pvFoundWidgets;     <span class="comment">// Used temporary during mapping - see searchWidgets() and buildWidgetsList()</span></div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;  QList&lt;mdtSqlFieldHandler*&gt; pvFieldHandlers;</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;  <a class="code" href="class_q_widget.html">QWidget</a> *pvFirstDataWidget;  <span class="comment">// Keep trace of first data edit/view widget in focus chain</span></div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;};</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;<span class="preprocessor">#endif  // #ifndef MDT_SQL_FORM_WIDGET_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 12 2014 10:53:28 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jul 26 2014 17:48:02 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

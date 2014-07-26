@@ -107,12 +107,24 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a40e80f68b2600ad69a1fe74aa40393f8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_cl_path_graph.html#a40e80f68b2600ad69a1fe74aa40393f8">loadLinkList</a> ()</td></tr>
 <tr class="memdesc:a40e80f68b2600ad69a1fe74aa40393f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load the link list.  <a href="#a40e80f68b2600ad69a1fe74aa40393f8">More...</a><br/></td></tr>
 <tr class="separator:a40e80f68b2600ad69a1fe74aa40393f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14a5580402b273eb6707939ee122fa95"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_cl_path_graph.html#a14a5580402b273eb6707939ee122fa95">addLink</a> (const QVariant &amp;startConnectionId, const QVariant &amp;endConnectionId, const QVariant &amp;userData=QVariant(), bool isBidirectional=true, int weight=1)</td></tr>
+<tr class="memdesc:a14a5580402b273eb6707939ee122fa95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a link to the graph.  <a href="#a14a5580402b273eb6707939ee122fa95">More...</a><br/></td></tr>
+<tr class="separator:a14a5580402b273eb6707939ee122fa95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82df1588f1b4a9df7b25760ebd9e5aa1"><td class="memItemLeft" align="right" valign="top">QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_cl_path_graph.html#a82df1588f1b4a9df7b25760ebd9e5aa1">getUserData</a> (const QVariant &amp;startConnectionId, const QVariant &amp;endConnectionId)</td></tr>
+<tr class="memdesc:a82df1588f1b4a9df7b25760ebd9e5aa1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get user data for item between start and end connection.  <a href="#a82df1588f1b4a9df7b25760ebd9e5aa1">More...</a><br/></td></tr>
+<tr class="separator:a82df1588f1b4a9df7b25760ebd9e5aa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5bee589e7c93681bf9325fd9bc999eb9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_cl_path_graph.html#a5bee589e7c93681bf9325fd9bc999eb9">removeAddedLinks</a> ()</td></tr>
+<tr class="memdesc:a5bee589e7c93681bf9325fd9bc999eb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove links that where added with <a class="el" href="classmdt_cl_path_graph.html#a14a5580402b273eb6707939ee122fa95" title="Add a link to the graph. ">addLink()</a>  <a href="#a5bee589e7c93681bf9325fd9bc999eb9">More...</a><br/></td></tr>
+<tr class="separator:a5bee589e7c93681bf9325fd9bc999eb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a09b3b342fe09d1afdbc88c8c683ab016"><td class="memItemLeft" align="right" valign="top">QList&lt; QVariant &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_cl_path_graph.html#a09b3b342fe09d1afdbc88c8c683ab016">getLinkedConnectionIdList</a> (const QVariant &amp;fromConnectionId)</td></tr>
 <tr class="memdesc:a09b3b342fe09d1afdbc88c8c683ab016"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a list of unit connections IDs that are linked to a given connection.  <a href="#a09b3b342fe09d1afdbc88c8c683ab016">More...</a><br/></td></tr>
 <tr class="separator:a09b3b342fe09d1afdbc88c8c683ab016"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af5484b6efa4b9d9162de3dd1834fcb41"><td class="memItemLeft" align="right" valign="top">QList&lt; QVariant &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_cl_path_graph.html#af5484b6efa4b9d9162de3dd1834fcb41">getLinkedConnectorIdList</a> (const QVariant &amp;fromConnectorId, bool *ok, const QList&lt; QVariant &gt; &amp;connectionIdListToIgnore=QList&lt; QVariant &gt;())</td></tr>
 <tr class="memdesc:af5484b6efa4b9d9162de3dd1834fcb41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a list of unit connector ID that are linked to given one.  <a href="#af5484b6efa4b9d9162de3dd1834fcb41">More...</a><br/></td></tr>
 <tr class="separator:af5484b6efa4b9d9162de3dd1834fcb41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa0a3c6b9fd56cfd943a3bc2480c1ce0"><td class="memItemLeft" align="right" valign="top">QList&lt; QVariant &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_cl_path_graph.html#afa0a3c6b9fd56cfd943a3bc2480c1ce0">getShortestPath</a> (const QVariant &amp;fromConnectionId, const QVariant &amp;toConnectionId, bool &amp;ok)</td></tr>
+<tr class="memdesc:afa0a3c6b9fd56cfd943a3bc2480c1ce0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get shorted path from start connection ID to end connection ID.  <a href="#afa0a3c6b9fd56cfd943a3bc2480c1ce0">More...</a><br/></td></tr>
+<tr class="separator:afa0a3c6b9fd56cfd943a3bc2480c1ce0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae779d0527cc984122dbf063238b59749"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_cl_path_graph.html#ae779d0527cc984122dbf063238b59749">drawPath</a> (const QVariant &amp;fromConnectionId)</td></tr>
 <tr class="memdesc:ae779d0527cc984122dbf063238b59749"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draw the graphic representation starting from a connection.  <a href="#ae779d0527cc984122dbf063238b59749">More...</a><br/></td></tr>
 <tr class="separator:ae779d0527cc984122dbf063238b59749"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -129,7 +141,7 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents the link list in a graph. </p>
 
-<p>Definition at line <a class="el" href="mdt_cl_path_graph_8h_source.html#l00098">98</a> of file <a class="el" href="mdt_cl_path_graph_8h_source.html">mdtClPathGraph.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_path_graph_8h_source.html#l00105">105</a> of file <a class="el" href="mdt_cl_path_graph_8h_source.html">mdtClPathGraph.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a3d2b4b4b0f32dc166e59e3c5384492e9"></a>
 <div class="memitem">
@@ -147,7 +159,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Constructor. </p>
 
-<p>Definition at line <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00068">68</a> of file <a class="el" href="mdt_cl_path_graph_8cpp_source.html">mdtClPathGraph.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00065">65</a> of file <a class="el" href="mdt_cl_path_graph_8cpp_source.html">mdtClPathGraph.cpp</a>.</p>
 
 </div>
 </div>
@@ -166,11 +178,66 @@ Public Member Functions</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00075">75</a> of file <a class="el" href="mdt_cl_path_graph_8cpp_source.html">mdtClPathGraph.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00072">72</a> of file <a class="el" href="mdt_cl_path_graph_8cpp_source.html">mdtClPathGraph.cpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a14a5580402b273eb6707939ee122fa95"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtClPathGraph::addLink </td>
+          <td>(</td>
+          <td class="paramtype">const QVariant &amp;&#160;</td>
+          <td class="paramname"><em>startConnectionId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QVariant &amp;&#160;</td>
+          <td class="paramname"><em>endConnectionId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QVariant &amp;&#160;</td>
+          <td class="paramname"><em>userData</em> = <code>QVariant()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>isBidirectional</em> = <code>true</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>weight</em> = <code>1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add a link to the graph. </p>
+<p>Can be used to add some kind of "ghost links" to the graph. For normal usage, only call <a class="el" href="classmdt_cl_path_graph.html#a40e80f68b2600ad69a1fe74aa40393f8" title="Load the link list. ">loadLinkList()</a>.void addLink(const QVariant &amp; startConnectionId, const QVariant &amp; endConnectionId, bool isBidirectional = true, int weight = 1);</p>
+<p>Add a link to the graph</p>
+<p>Can be used to add some kind of "ghost links" to the graph. For normal usage, only call <a class="el" href="classmdt_cl_path_graph.html#a40e80f68b2600ad69a1fe74aa40393f8" title="Load the link list. ">loadLinkList()</a>.</p>
+<p>void mdtClPathGraph::addLink(const QVariant&amp; startConnectionId, const QVariant&amp; endConnectionId, bool isBidirectional, int weight) { Q_ASSERT(!startConnectionId.isNull()); Q_ASSERT(!endConnectionId.isNull());</p>
+<p>addLinkPv(startConnectionId, endConnectionId, isBidirectional, weight, true, QVariant()); } </p>
+
+<p>Definition at line <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00160">160</a> of file <a class="el" href="mdt_cl_path_graph_8cpp_source.html">mdtClPathGraph.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_tt_test_node_8cpp_source.html#l00246">mdtTtTestNode::addRelaysToGraph()</a>, and <a class="el" href="mdt_tt_test_node_8cpp_source.html#l00328">mdtTtTestNode::ensureAbsenceOfShortCircuit()</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a6c239942dd7f31fc2197af4febec489c"></a>
 <div class="memitem">
 <div class="memproto">
@@ -187,7 +254,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Attach a view to the scene of the path graph. </p>
 
-<p>Definition at line <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00316">316</a> of file <a class="el" href="mdt_cl_path_graph_8cpp_source.html">mdtClPathGraph.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00424">424</a> of file <a class="el" href="mdt_cl_path_graph_8cpp_source.html">mdtClPathGraph.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_cl_path_graph_dialog_8cpp_source.html#l00025">mdtClPathGraphDialog::mdtClPathGraphDialog()</a>.</p>
 
@@ -209,9 +276,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Draw the graphic representation starting from a connection. </p>
 
-<p>Definition at line <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00255">255</a> of file <a class="el" href="mdt_cl_path_graph_8cpp_source.html">mdtClPathGraph.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00362">362</a> of file <a class="el" href="mdt_cl_path_graph_8cpp_source.html">mdtClPathGraph.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_cl_path_graph_8h_source.html#l00060">mdtClPathGraphPrivate::mdtClPathGraphEdgeData::endConnectionId</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_cl_path_graph_8h_source.html#l00061">mdtClPathGraphPrivate::mdtClPathGraphEdgeData::isComplement</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_cl_path_graph_8h_source.html#l00059">mdtClPathGraphPrivate::mdtClPathGraphEdgeData::startConnectionId</a>.</p>
+<p>References <a class="el" href="mdt_cl_path_graph_8h_source.html#l00064">mdtClPathGraphPrivate::mdtClPathGraphEdgeData::endConnectionId</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_cl_path_graph_8h_source.html#l00065">mdtClPathGraphPrivate::mdtClPathGraphEdgeData::isComplement</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_cl_path_graph_8h_source.html#l00063">mdtClPathGraphPrivate::mdtClPathGraphEdgeData::startConnectionId</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_cl_path_graph_dialog_8cpp_source.html#l00056">mdtClPathGraphDialog::drawPath()</a>.</p>
 
@@ -234,11 +301,11 @@ Public Member Functions</h2></td></tr>
 <p>Get a list of unit connections IDs that are linked to a given connection. </p>
 <p>Note: fromConnectionId is not included in result. </p>
 
-<p>Definition at line <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00171">171</a> of file <a class="el" href="mdt_cl_path_graph_8cpp_source.html">mdtClPathGraph.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00213">213</a> of file <a class="el" href="mdt_cl_path_graph_8cpp_source.html">mdtClPathGraph.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_cl_path_graph_8h_source.html#l00060">mdtClPathGraphPrivate::mdtClPathGraphEdgeData::endConnectionId</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_cl_path_graph_8h_source.html#l00061">mdtClPathGraphPrivate::mdtClPathGraphEdgeData::isComplement</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_cl_path_graph_8h_source.html#l00059">mdtClPathGraphPrivate::mdtClPathGraphEdgeData::startConnectionId</a>.</p>
+<p>References <a class="el" href="mdt_cl_path_graph_8h_source.html#l00064">mdtClPathGraphPrivate::mdtClPathGraphEdgeData::endConnectionId</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_cl_path_graph_8h_source.html#l00065">mdtClPathGraphPrivate::mdtClPathGraphEdgeData::isComplement</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_cl_path_graph_8h_source.html#l00063">mdtClPathGraphPrivate::mdtClPathGraphEdgeData::startConnectionId</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_cl_direct_link_8cpp_source.html#l00160">mdtClDirectLink::addLinksByUnitConnector()</a>, <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00077">mdtTtTestNodeUnit::getConnectionIdListLinkedToConnectionIdList()</a>, <a class="el" href="mdt_tt_test_connection_cable_8cpp_source.html#l00262">mdtTtTestConnectionCable::getToUnitConnectionIdLinkedUnitConnectionIdListPartOfUnitConnector()</a>, and <a class="el" href="mdt_tt_test_connection_cable_8cpp_source.html#l00223">mdtTtTestConnectionCable::getToUnitConnectionLinkedUnitConnectorIdList()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_cl_direct_link_8cpp_source.html#l00160">mdtClDirectLink::addLinksByUnitConnector()</a>, <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00085">mdtTtTestNodeUnit::getConnectionIdListLinkedToConnectionIdList()</a>, <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00195">mdtTtTestModelContinuityTestGeneratorHelper::getRelatedTestConnectionIdList()</a>, <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00274">mdtTtTestModelIsolationTestGeneratorHelper::getRelatedTestConnectionIdList()</a>, <a class="el" href="mdt_tt_test_connection_cable_8cpp_source.html#l00267">mdtTtTestConnectionCable::getToUnitConnectionIdLinkedUnitConnectionIdListPartOfUnitConnector()</a>, and <a class="el" href="mdt_tt_test_connection_cable_8cpp_source.html#l00228">mdtTtTestConnectionCable::getToUnitConnectionLinkedUnitConnectorIdList()</a>.</p>
 
 </div>
 </div>
@@ -282,9 +349,84 @@ Public Member Functions</h2></td></tr>
 </dl>
 <p>Note: fromConnectorId is not included in result. </p>
 
-<p>Definition at line <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00210">210</a> of file <a class="el" href="mdt_cl_path_graph_8cpp_source.html">mdtClPathGraph.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00252">252</a> of file <a class="el" href="mdt_cl_path_graph_8cpp_source.html">mdtClPathGraph.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_cl_unit_8cpp_source.html#l00161">mdtClUnit::getConnectionIdListPartOfConnectorId()</a>, <a class="el" href="mdt_cl_unit_8cpp_source.html#l00182">mdtClUnit::getConnectorIdOfConnectionId()</a>, and <a class="el" href="mdt_tt_base_8cpp_source.html#l00045">mdtTtBase::lastError()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="afa0a3c6b9fd56cfd943a3bc2480c1ce0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QList&lt; QVariant &gt; mdtClPathGraph::getShortestPath </td>
+          <td>(</td>
+          <td class="paramtype">const QVariant &amp;&#160;</td>
+          <td class="paramname"><em>fromConnectionId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QVariant &amp;&#160;</td>
+          <td class="paramname"><em>toConnectionId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool &amp;&#160;</td>
+          <td class="paramname"><em>ok</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get shorted path from start connection ID to end connection ID. </p>
+<p>Will return a list of connections ID that represent the shorted path from a connection ID to destination connection ID, including given fromConnectionId and toConnectionId. </p>
+
+<p>Definition at line <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00297">297</a> of file <a class="el" href="mdt_cl_path_graph_8cpp_source.html">mdtClPathGraph.cpp</a>.</p>
+
+<p>References <a class="el" href="mdt_cl_path_graph_8h_source.html#l00064">mdtClPathGraphPrivate::mdtClPathGraphEdgeData::endConnectionId</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_cl_path_graph_8h_source.html#l00065">mdtClPathGraphPrivate::mdtClPathGraphEdgeData::isComplement</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_cl_path_graph_8h_source.html#l00063">mdtClPathGraphPrivate::mdtClPathGraphEdgeData::startConnectionId</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_tt_test_node_8cpp_source.html#l00328">mdtTtTestNode::ensureAbsenceOfShortCircuit()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a82df1588f1b4a9df7b25760ebd9e5aa1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QVariant mdtClPathGraph::getUserData </td>
+          <td>(</td>
+          <td class="paramtype">const QVariant &amp;&#160;</td>
+          <td class="paramname"><em>startConnectionId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QVariant &amp;&#160;</td>
+          <td class="paramname"><em>endConnectionId</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get user data for item between start and end connection. </p>
+
+<p>Definition at line <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00168">168</a> of file <a class="el" href="mdt_cl_path_graph_8cpp_source.html">mdtClPathGraph.cpp</a>.</p>
+
+<p>References <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, and <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_tt_test_node_8cpp_source.html#l00292">mdtTtTestNode::getRelayPathSetupDataList()</a>.</p>
 
 </div>
 </div>
@@ -303,9 +445,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Get last error. </p>
 
-<p>Definition at line <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00332">332</a> of file <a class="el" href="mdt_cl_path_graph_8cpp_source.html">mdtClPathGraph.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00440">440</a> of file <a class="el" href="mdt_cl_path_graph_8cpp_source.html">mdtClPathGraph.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00077">mdtTtTestNodeUnit::getConnectionIdListLinkedToConnectionIdList()</a>, and <a class="el" href="mdt_tt_test_connection_cable_8cpp_source.html#l00173">mdtTtTestConnectionCable::loadLinkList()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_test_node_8cpp_source.html#l00328">mdtTtTestNode::ensureAbsenceOfShortCircuit()</a>, <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00681">mdtTtTestModel::generateTestModel()</a>, <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00085">mdtTtTestNodeUnit::getConnectionIdListLinkedToConnectionIdList()</a>, and <a class="el" href="mdt_tt_test_connection_cable_8cpp_source.html#l00178">mdtTtTestConnectionCable::loadLinkList()</a>.</p>
 
 </div>
 </div>
@@ -327,7 +469,7 @@ Public Member Functions</h2></td></tr>
 <dl class="section post"><dt>Postcondition</dt><dd>Returned list has allways a size of 3 (detailedText can simply contain a empty string)</dd></dl>
 <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000050">Todo:</a></b></dt><dd>Should become Obselete . </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00323">323</a> of file <a class="el" href="mdt_cl_path_graph_8cpp_source.html">mdtClPathGraph.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00431">431</a> of file <a class="el" href="mdt_cl_path_graph_8cpp_source.html">mdtClPathGraph.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_cl_path_graph_dialog_8cpp_source.html#l00056">mdtClPathGraphDialog::drawPath()</a>, and <a class="el" href="mdt_cl_path_graph_dialog_8cpp_source.html#l00041">mdtClPathGraphDialog::loadLinkList()</a>.</p>
 
@@ -348,11 +490,32 @@ Public Member Functions</h2></td></tr>
 
 <p>Load the link list. </p>
 
-<p>Definition at line <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00081">81</a> of file <a class="el" href="mdt_cl_path_graph_8cpp_source.html">mdtClPathGraph.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00078">78</a> of file <a class="el" href="mdt_cl_path_graph_8cpp_source.html">mdtClPathGraph.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_cl_path_graph_8h_source.html#l00060">mdtClPathGraphPrivate::mdtClPathGraphEdgeData::endConnectionId</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_cl_path_graph_8h_source.html#l00061">mdtClPathGraphPrivate::mdtClPathGraphEdgeData::isComplement</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_cl_path_graph_8h_source.html#l00059">mdtClPathGraphPrivate::mdtClPathGraphEdgeData::startConnectionId</a>.</p>
+<p>References <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, and <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00077">mdtTtTestNodeUnit::getConnectionIdListLinkedToConnectionIdList()</a>, <a class="el" href="mdt_cl_path_graph_dialog_8cpp_source.html#l00041">mdtClPathGraphDialog::loadLinkList()</a>, and <a class="el" href="mdt_tt_test_connection_cable_8cpp_source.html#l00173">mdtTtTestConnectionCable::loadLinkList()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00681">mdtTtTestModel::generateTestModel()</a>, <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00085">mdtTtTestNodeUnit::getConnectionIdListLinkedToConnectionIdList()</a>, <a class="el" href="mdt_cl_path_graph_dialog_8cpp_source.html#l00041">mdtClPathGraphDialog::loadLinkList()</a>, <a class="el" href="mdt_tt_test_connection_cable_8cpp_source.html#l00178">mdtTtTestConnectionCable::loadLinkList()</a>, and <a class="el" href="mdt_tt_relay_path_dialog_8cpp_source.html#l00050">mdtTtRelayPathDialog::setData()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5bee589e7c93681bf9325fd9bc999eb9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtClPathGraph::removeAddedLinks </td>
+          <td>(</td>
+          <td class="paramname">)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Remove links that where added with <a class="el" href="classmdt_cl_path_graph.html#a14a5580402b273eb6707939ee122fa95" title="Add a link to the graph. ">addLink()</a> </p>
+
+<p>Definition at line <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00204">204</a> of file <a class="el" href="mdt_cl_path_graph_8cpp_source.html">mdtClPathGraph.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_tt_test_node_8cpp_source.html#l00246">mdtTtTestNode::addRelaysToGraph()</a>, and <a class="el" href="mdt_tt_test_node_8cpp_source.html#l00328">mdtTtTestNode::ensureAbsenceOfShortCircuit()</a>.</p>
 
 </div>
 </div>
@@ -363,7 +526,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 12 2014 10:53:29 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jul 26 2014 17:48:09 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

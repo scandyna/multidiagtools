@@ -46,6 +46,8 @@ int \hyperlink{classmdt_state_machine_a16a99b2d6d077e1ea39622ef0e2b5a5b}{current
 \begin{DoxyCompactList}\small\item\em Get current state. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_state_machine_ab14dc03757e493d35d510af8a1b436b6}{wait\-On\-State} (int state, int timeout=-\/1)
 \begin{DoxyCompactList}\small\item\em Wait until a state is reached. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_state_machine_a12e8c253a5ca6e92e9f1c92f1546e4b8}{wait\-On\-One\-State} (const Q\-Vector$<$ int $>$ \&states, int timeout=-\/1)
+\begin{DoxyCompactList}\small\item\em Wait until a state is reached. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_state_machine_a6fa653fc7e2ea8a58e2d160ba6d96013}{notify\-Current\-State} ()
 \begin{DoxyCompactList}\small\item\em Notify current state. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -62,7 +64,7 @@ Extend Qt's \hyperlink{class_q_state_machine}{Q\-State\-Machine}.
 
 Usually, a system based on a state machine is only event driven, and \hyperlink{class_q_state_machine}{Q\-State\-Machine} was build this way. But, for some application, we need to be able to wait until a state is reached, without breaking application's event loop, before we can continue. 
 
-Definition at line 43 of file mdt\-State\-Machine.\-h.
+Definition at line 44 of file mdt\-State\-Machine.\-h.
 
 
 
@@ -121,7 +123,7 @@ References mdt\-State\-::id().
 
 
 
-Referenced by mdt\-Abstract\-Sql\-Widget\-::current\-State(), mdt\-Port\-Manager\-::current\-State(), and wait\-On\-State().
+Referenced by mdt\-Abstract\-Sql\-Widget\-::current\-State(), mdt\-Port\-Manager\-::current\-State(), wait\-On\-One\-State(), and wait\-On\-State().
 
 \hypertarget{classmdt_state_machine_a6fa653fc7e2ea8a58e2d160ba6d96013}{\index{mdt\-State\-Machine@{mdt\-State\-Machine}!notify\-Current\-State@{notify\-Current\-State}}
 \index{notify\-Current\-State@{notify\-Current\-State}!mdtStateMachine@{mdt\-State\-Machine}}
@@ -138,7 +140,7 @@ Will emit \hyperlink{classmdt_state_machine_a57952ce2e02e44a57c70695067dc8b86}{s
 
 In normal way, signals are emitted when state changes. In some situation, it can be usefull to call this method explicitly (see \hyperlink{classmdt_port_manager_a0c460b47b12e38e708321be79f6343d8}{mdt\-Port\-Manager\-::notify\-Current\-State()} for a example). 
 
-Definition at line 69 of file mdt\-State\-Machine.\-cpp.
+Definition at line 89 of file mdt\-State\-Machine.\-cpp.
 
 
 
@@ -184,6 +186,42 @@ Emitted only if a state that must be notified is entered.
 
 Referenced by mdt\-Port\-Manager\-State\-Machine\-::build\-Main\-State\-Machine(), and notify\-Current\-State().
 
+\hypertarget{classmdt_state_machine_a12e8c253a5ca6e92e9f1c92f1546e4b8}{\index{mdt\-State\-Machine@{mdt\-State\-Machine}!wait\-On\-One\-State@{wait\-On\-One\-State}}
+\index{wait\-On\-One\-State@{wait\-On\-One\-State}!mdtStateMachine@{mdt\-State\-Machine}}
+\subsubsection[{wait\-On\-One\-State}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-State\-Machine\-::wait\-On\-One\-State (
+\begin{DoxyParamCaption}
+\item[{const Q\-Vector$<$ int $>$ \&}]{states, }
+\item[{int}]{timeout = {\ttfamily -\/1}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_state_machine_a12e8c253a5ca6e92e9f1c92f1546e4b8}
+
+
+Wait until a state is reached. 
+
+This wait method will let the application's event loop continue working, so it will not freeze G\-U\-I.
+
+
+\begin{DoxyParams}{Parameters}
+{\em states} & Wait of one of state in the list. If one is reached before timeout, this method returns true \\
+\hline
+{\em timeout} & Maximum time to wait \mbox{[}ms\mbox{]}. Value $<$ 0 means a infinite timeout. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True on success, false on timeout. 
+\end{DoxyReturn}
+
+
+Definition at line 69 of file mdt\-State\-Machine.\-cpp.
+
+
+
+References current\-State().
+
+
+
+Referenced by mdt\-Abstract\-Sql\-Widget\-::submit\-And\-Wait().
+
 \hypertarget{classmdt_state_machine_ab14dc03757e493d35d510af8a1b436b6}{\index{mdt\-State\-Machine@{mdt\-State\-Machine}!wait\-On\-State@{wait\-On\-State}}
 \index{wait\-On\-State@{wait\-On\-State}!mdtStateMachine@{mdt\-State\-Machine}}
 \subsubsection[{wait\-On\-State}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-State\-Machine\-::wait\-On\-State (
@@ -218,7 +256,7 @@ References current\-State().
 
 
 
-Referenced by mdt\-Port\-Manager\-State\-Machine\-::build\-Main\-State\-Machine(), mdt\-Abstract\-Sql\-Widget\-::set\-Model(), and mdt\-Port\-Manager\-::stop().
+Referenced by mdt\-Port\-Manager\-State\-Machine\-::build\-Main\-State\-Machine(), mdt\-Abstract\-Sql\-Widget\-::start(), and mdt\-Port\-Manager\-::stop().
 
 
 

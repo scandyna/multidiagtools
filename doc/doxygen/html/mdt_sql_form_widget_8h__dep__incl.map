@@ -1,15 +1,16 @@
-<map id="src/mdtutilsgui/mdtSqlFormWidget.h" name="src/mdtutilsgui/mdtSqlFormWidget.h">
+<map id="src/mdtdatabase/mdtSqlFormWidget.h" name="src/mdtdatabase/mdtSqlFormWidget.h">
 <area shape="rect" id="node3" href="$mdt_sql_dialog_8cpp.html" title="src/mdtdatabase/mdtSqlDialog.cpp" alt="" coords="5,119,232,148"/>
 <area shape="rect" id="node5" href="$mdt_sql_form_8cpp.html" title="src/mdtdatabase/mdtSqlForm.cpp" alt="" coords="256,119,475,148"/>
-<area shape="rect" id="node7" href="$mdt_sql_window_8cpp.html" title="src/mdtdatabase/mdtSqlWindow.cpp" alt="" coords="499,119,733,148"/>
-<area shape="rect" id="node9" href="$mdt_cl_article_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtcablelist/mdtClArticleEditor.cpp" alt="" coords="757,110,987,157"/>
-<area shape="rect" id="node11" href="$mdt_cl_connector_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtcablelist/mdtClConnectorEditor.cpp" alt="" coords="1011,110,1264,157"/>
-<area shape="rect" id="node13" href="$mdt_cl_link_beam_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtcablelist/mdtClLinkBeamEditor.cpp" alt="" coords="1288,110,1539,157"/>
-<area shape="rect" id="node15" href="$mdt_cl_unit_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtcablelist/mdtClUnitEditor.cpp" alt="" coords="1563,110,1781,157"/>
-<area shape="rect" id="node17" href="$mdt_cl_vehicle_type_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtcablelist/mdtClVehicleType\lEditor.cpp" alt="" coords="1805,101,2011,165"/>
-<area shape="rect" id="node19" href="$mdt_tt_test_connection_cable_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestConnectionCableEditor.cpp" alt="" coords="2035,110,2280,157"/>
-<area shape="rect" id="node21" href="$mdt_tt_test_model_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestModelEditor.cpp" alt="" coords="2304,110,2483,157"/>
-<area shape="rect" id="node23" href="$mdt_tt_test_model_item_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestModelItemEditor.cpp" alt="" coords="2507,110,2712,157"/>
-<area shape="rect" id="node25" href="$mdt_tt_test_node_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestNodeEditor.cpp" alt="" coords="2736,110,2912,157"/>
-<area shape="rect" id="node27" href="$mdt_sql_form_widget_8cpp.html" title="src/mdtutilsgui/mdtSqlForm\lWidget.cpp" alt="" coords="2936,110,3117,157"/>
+<area shape="rect" id="node7" href="$mdt_sql_form_widget_8cpp.html" title="src/mdtdatabase/mdtSqlForm\lWidget.cpp" alt="" coords="499,110,693,157"/>
+<area shape="rect" id="node9" href="$mdt_sql_window_8cpp.html" title="src/mdtdatabase/mdtSqlWindow.cpp" alt="" coords="717,119,952,148"/>
+<area shape="rect" id="node11" href="$mdt_cl_article_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtcablelist/mdtClArticleEditor.cpp" alt="" coords="976,110,1205,157"/>
+<area shape="rect" id="node13" href="$mdt_cl_connector_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtcablelist/mdtClConnectorEditor.cpp" alt="" coords="1229,110,1483,157"/>
+<area shape="rect" id="node15" href="$mdt_cl_link_beam_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtcablelist/mdtClLinkBeamEditor.cpp" alt="" coords="1507,110,1757,157"/>
+<area shape="rect" id="node17" href="$mdt_cl_unit_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtcablelist/mdtClUnitEditor.cpp" alt="" coords="1781,110,2000,157"/>
+<area shape="rect" id="node19" href="$mdt_cl_vehicle_type_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtcablelist/mdtClVehicleType\lEditor.cpp" alt="" coords="2024,101,2229,165"/>
+<area shape="rect" id="node21" href="$mdt_tt_abstract_test_widget_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtAbstractTestWidget.cpp" alt="" coords="2253,110,2453,157"/>
+<area shape="rect" id="node23" href="$mdt_tt_test_connection_cable_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestConnectionCableEditor.cpp" alt="" coords="2477,110,2723,157"/>
+<area shape="rect" id="node25" href="$mdt_tt_test_model_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestModelEditor.cpp" alt="" coords="2747,110,2925,157"/>
+<area shape="rect" id="node27" href="$mdt_tt_test_model_item_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestModelItemEditor.cpp" alt="" coords="2949,110,3155,157"/>
+<area shape="rect" id="node29" href="$mdt_tt_test_node_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestNodeEditor.cpp" alt="" coords="3179,110,3355,157"/>
 </map>

@@ -168,6 +168,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aac6b0c135d2ff61d23ee9b37525a8ad5 inherit pub_methods_classmdt_tt_base"><td class="memItemLeft" align="right" valign="top">QList&lt; QSqlRecord &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_base.html#aac6b0c135d2ff61d23ee9b37525a8ad5">getData</a> (const QString &amp;sql, bool *ok=0, const QStringList &amp;expectedFields=QStringList())</td></tr>
 <tr class="memdesc:aac6b0c135d2ff61d23ee9b37525a8ad5 inherit pub_methods_classmdt_tt_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get data for given sql statement.  <a href="#aac6b0c135d2ff61d23ee9b37525a8ad5">More...</a><br/></td></tr>
 <tr class="separator:aac6b0c135d2ff61d23ee9b37525a8ad5 inherit pub_methods_classmdt_tt_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c0834b21432a734c6ebfb645f290716 inherit pub_methods_classmdt_tt_base"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a6c0834b21432a734c6ebfb645f290716 inherit pub_methods_classmdt_tt_base"><td class="memTemplItemLeft" align="right" valign="top">QList&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classmdt_tt_base.html#a6c0834b21432a734c6ebfb645f290716">getDataList</a> (const QString &amp;sql, bool &amp;ok, const QStringList &amp;expectedFields=QStringList())</td></tr>
+<tr class="memdesc:a6c0834b21432a734c6ebfb645f290716 inherit pub_methods_classmdt_tt_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get data of type T for given sql statement.  <a href="#a6c0834b21432a734c6ebfb645f290716">More...</a><br/></td></tr>
+<tr class="separator:a6c0834b21432a734c6ebfb645f290716 inherit pub_methods_classmdt_tt_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a40a9416a29d96518f39b2225516a2786 inherit pub_methods_classmdt_tt_base"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_base.html#a40a9416a29d96518f39b2225516a2786">updateRecord</a> (const QString &amp;tableName, const <a class="el" href="classmdt_sql_record.html">mdtSqlRecord</a> &amp;record, const QSqlRecord &amp;matchData)</td></tr>
 <tr class="memdesc:a40a9416a29d96518f39b2225516a2786 inherit pub_methods_classmdt_tt_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update data for given table.  <a href="#a40a9416a29d96518f39b2225516a2786">More...</a><br/></td></tr>
 <tr class="separator:a40a9416a29d96518f39b2225516a2786 inherit pub_methods_classmdt_tt_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -324,7 +328,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_cl_unit_vehicle_type_8cpp_source.html#l00063">63</a> of file <a class="el" href="mdt_cl_unit_vehicle_type_8cpp_source.html">mdtClUnitVehicleType.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00213">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00246">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_cl_unit_vehicle_type_8cpp_source.html#l00054">addUnitVehicleTypeAssignment()</a>, and <a class="el" href="mdt_cl_unit_vehicle_type_8cpp_source.html#l00099">addUnitVehicleTypeAssignments()</a>.</p>
 
@@ -424,7 +428,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_cl_unit_vehicle_type_8cpp_source.html#l00122">122</a> of file <a class="el" href="mdt_cl_unit_vehicle_type_8cpp_source.html">mdtClUnitVehicleType.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00434">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00460">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00213">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_cl_link_8cpp_source.html#l00314">mdtClLink::removeVehicleTypeLinkByUnitId()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00447">mdtTtBase::rollbackTransaction()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>.</p>
+<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00402">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00428">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00246">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_cl_link_8cpp_source.html#l00314">mdtClLink::removeVehicleTypeLinkByUnitId()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00415">mdtTtBase::rollbackTransaction()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_cl_unit_vehicle_type_8cpp_source.html#l00113">removeUnitVehicleAssignment()</a>, and <a class="el" href="mdt_cl_unit_vehicle_type_8cpp_source.html#l00169">removeUnitVehicleAssignments()</a>.</p>
 
@@ -490,7 +494,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 12 2014 10:53:29 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jul 26 2014 17:48:09 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

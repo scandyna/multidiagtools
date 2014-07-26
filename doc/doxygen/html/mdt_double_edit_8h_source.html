@@ -115,85 +115,109 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &lt;QWidget&gt;</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &lt;QString&gt;</span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;QVariant&gt;</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">class </span>QLineEdit;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">class </span>QPushButton;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">class </span><a class="code" href="classmdt_double_validator.html" title="Double validator. ">mdtDoubleValidator</a>;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno"><a class="code" href="classmdt_double_edit.html">   35</a></span>&#160;<span class="keyword">class </span> <a class="code" href="classmdt_double_edit.html" title="Input box for double values. ">mdtDoubleEdit</a> : <span class="keyword">public</span> <a class="code" href="class_q_widget.html">QWidget</a></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;{</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; Q_OBJECT</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno"><a class="code" href="classmdt_double_edit.html#a163c58477dc88637f999f56714df74ee">   39</a></span>&#160; Q_PROPERTY(QString <a class="code" href="classmdt_double_edit.html#ad425b7f96ae6906175c7a70fa3b8b017" title="Get unit. ">unit</a> READ <a class="code" href="classmdt_double_edit.html#ad425b7f96ae6906175c7a70fa3b8b017" title="Get unit. ">unit</a> WRITE <a class="code" href="classmdt_double_edit.html#a3eb1b0434235fae23fa3f795fb90066e" title="Set unit. ">setUnit</a>)</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  </div>
-<div class="line"><a name="l00043"></a><span class="lineno"><a class="code" href="classmdt_double_edit.html#a6e94cba2a7b3fcc16b70475c2cefd8cf">   43</a></span>&#160;  enum <a class="code" href="classmdt_double_edit.html#a6e94cba2a7b3fcc16b70475c2cefd8cf" title="Special symbols for units. ">unitSymbol_t</a> {</div>
-<div class="line"><a name="l00044"></a><span class="lineno"><a class="code" href="classmdt_double_edit.html#a6e94cba2a7b3fcc16b70475c2cefd8cfaaeecc523af2a2eba97a3b1a38f4518c5">   44</a></span>&#160;                      <a class="code" href="classmdt_double_edit.html#a6e94cba2a7b3fcc16b70475c2cefd8cfaaeecc523af2a2eba97a3b1a38f4518c5">omega</a>,          </div>
-<div class="line"><a name="l00045"></a><span class="lineno"><a class="code" href="classmdt_double_edit.html#a6e94cba2a7b3fcc16b70475c2cefd8cfadad86fae09055324dd22fc15e6107fe0">   45</a></span>&#160;                      <a class="code" href="classmdt_double_edit.html#a6e94cba2a7b3fcc16b70475c2cefd8cfadad86fae09055324dd22fc15e6107fe0">OmegaCapital</a>    </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;                    };</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <a class="code" href="classmdt_double_edit.html#a4b6a416aeb8594ad45fb706e79250ba7" title="Constructor. ">mdtDoubleEdit</a>(<a class="code" href="class_q_widget.html">QWidget</a>* parent = 0);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_double_edit.html#a3eb1b0434235fae23fa3f795fb90066e" title="Set unit. ">setUnit</a>(<span class="keyword">const</span> QString &amp; u);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_double_edit.html#a3eb1b0434235fae23fa3f795fb90066e" title="Set unit. ">setUnit</a>(<a class="code" href="classmdt_double_edit.html#a6e94cba2a7b3fcc16b70475c2cefd8cf" title="Special symbols for units. ">unitSymbol_t</a> u);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno"><a class="code" href="classmdt_double_edit.html#ad425b7f96ae6906175c7a70fa3b8b017">   64</a></span>&#160;  <span class="keyword">inline</span> QString <a class="code" href="classmdt_double_edit.html#ad425b7f96ae6906175c7a70fa3b8b017" title="Get unit. ">unit</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> pvUnit; }</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  <span class="keyword">static</span> <span class="keywordtype">double</span> <a class="code" href="classmdt_double_edit.html#a8156deaebbd3256e9e7d94ca84e6a03a" title="Get the factor for a given char. ">factor</a>(<span class="keyword">const</span> QChar &amp; c);</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_double_edit.html#a827bb0d8a34a6fbaca4a328672140bae" title="Set value from a string. ">setValue</a>(<span class="keyword">const</span> QString &amp; s, <span class="keywordtype">bool</span> emitValueChanged = <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_double_edit.html#a827bb0d8a34a6fbaca4a328672140bae" title="Set value from a string. ">setValue</a>(<span class="keywordtype">double</span> v, <span class="keywordtype">bool</span> emitValueChanged = <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
-<div class="line"><a name="l00108"></a><span class="lineno"><a class="code" href="classmdt_double_edit.html#a2ffc11c9f013ff65b49642703146ec01">  108</a></span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="classmdt_double_edit.html#a2ffc11c9f013ff65b49642703146ec01" title="Get value. ">valueDouble</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> pvValue; }</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  QVariant <a class="code" href="classmdt_double_edit.html#a6987992984d3cfab5f96467c2b98e511" title="Get value. ">value</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
-<div class="line"><a name="l00116"></a><span class="lineno"><a class="code" href="classmdt_double_edit.html#a530a3b818aba14e34636dc1ad36b9292">  116</a></span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classmdt_double_edit.html#a530a3b818aba14e34636dc1ad36b9292" title="Check if value is valid. ">valueIsValid</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> pvValueIsValid; }</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  QString <a class="code" href="classmdt_double_edit.html#a169b321873e50e1e9bf2b15bbf12af78" title="Get text in line edit. ">text</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;  <span class="keyword">static</span> QString <a class="code" href="classmdt_double_edit.html#a09e6276d61dd02feea43e795417d8ea9" title="Get infinity string. ">infinityString</a>();</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160; signals:</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_double_edit.html#a04275f70dcfa22b677841a108dde2561" title="Emitted when a new value was set. ">valueChanged</a>(<span class="keywordtype">double</span> <a class="code" href="classmdt_double_edit.html#a6987992984d3cfab5f96467c2b98e511" title="Get value. ">value</a>, <span class="keywordtype">bool</span> isValid);</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160; <span class="keyword">private</span> slots:</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;  <span class="keywordtype">void</span> setMinusInfinity();</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;  <span class="keywordtype">void</span> setInfinity();</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;  <span class="keywordtype">void</span> setValueFromLineEdit();</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;  <span class="keywordtype">void</span> convertAndSetValue(QString str);</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;  <span class="keywordtype">void</span> displayValue();</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;  <span class="keywordtype">bool</span> isInRange(<span class="keywordtype">double</span> x, <span class="keywordtype">double</span> min, <span class="keywordtype">double</span> max);</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;  <span class="keywordtype">bool</span> strIsInfinity(<span class="keyword">const</span> QString &amp; str) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;  Q_DISABLE_COPY(<a class="code" href="classmdt_double_edit.html" title="Input box for double values. ">mdtDoubleEdit</a>);</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;  QLineEdit *pvLineEdit;</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;  QPushButton *pbSetInfinity;</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;  QPushButton *pbSetMinusInfinity;</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;  <a class="code" href="classmdt_double_validator.html" title="Double validator. ">mdtDoubleValidator</a> *pvValidator;</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;  QString pvUnit;</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;  <span class="keywordtype">double</span> pvValue;</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;  <span class="keywordtype">bool</span> pvValueIsValid;</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;};</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;<span class="preprocessor">#endif // #ifndef MDT_DOUBLE_EDIT_H</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">class </span>QLineEdit;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">class </span>QPushButton;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">class </span><a class="code" href="classmdt_double_validator.html" title="Double validator. ">mdtDoubleValidator</a>;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="code" href="classmdt_double_edit.html">   34</a></span>&#160;<span class="keyword">class </span><a class="code" href="classmdt_double_edit.html" title="Input box for double values. ">mdtDoubleEdit</a> : <span class="keyword">public</span> <a class="code" href="class_q_widget.html">QWidget</a></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;{</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; Q_OBJECT</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="code" href="classmdt_double_edit.html#a163c58477dc88637f999f56714df74ee">   38</a></span>&#160; Q_PROPERTY(QString <a class="code" href="classmdt_double_edit.html#ad425b7f96ae6906175c7a70fa3b8b017" title="Get unit. ">unit</a> READ <a class="code" href="classmdt_double_edit.html#ad425b7f96ae6906175c7a70fa3b8b017" title="Get unit. ">unit</a> WRITE <a class="code" href="classmdt_double_edit.html#a7574871fecfb0130e9d8947b55629cca" title="Set unit that is represented by a special symbol. ">setUnit</a>)</div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="code" href="classmdt_double_edit.html#adc63b2b7f47fac62e44673d51444776e">   39</a></span>&#160; Q_PROPERTY(<span class="keywordtype">double</span> <a class="code" href="classmdt_double_edit.html#a2e0974378639708551a703b5b1dc3969" title="Get minimum. ">minimum</a> READ <a class="code" href="classmdt_double_edit.html#a2e0974378639708551a703b5b1dc3969" title="Get minimum. ">minimum</a> WRITE <a class="code" href="classmdt_double_edit.html#abc719b2ad6c106759f4d138b7b221a75" title="Set minimum. ">setMinimum</a> RESET <a class="code" href="classmdt_double_edit.html#ae6dbdee92d4704a1e2185fb56653e913" title="Set minimum to -infinity. ">setMinimumToMinusInfinity</a>)</div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="code" href="classmdt_double_edit.html#a80edcc2b96d1111f608037f058596c02">   40</a></span>&#160; Q_PROPERTY(<span class="keywordtype">double</span> <a class="code" href="classmdt_double_edit.html#a59be46e6f7d976a3a3373b76e03152e9" title="Get maximum. ">maximum</a> READ <a class="code" href="classmdt_double_edit.html#a59be46e6f7d976a3a3373b76e03152e9" title="Get maximum. ">maximum</a> WRITE <a class="code" href="classmdt_double_edit.html#a3b238d597fcf13bfd6b875ec228435e7" title="Set maximum. ">setMaximum</a> RESET <a class="code" href="classmdt_double_edit.html#a4fa7bf1b30590223ec825079e36ab375" title="Set maximum to infinity. ">setMaximumToInfinity</a>)</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; public:</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="code" href="classmdt_double_edit.html#a6e94cba2a7b3fcc16b70475c2cefd8cf">   46</a></span>&#160;  enum <a class="code" href="classmdt_double_edit.html#a6e94cba2a7b3fcc16b70475c2cefd8cf" title="Special symbols for units. ">unitSymbol_t</a> {</div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="code" href="classmdt_double_edit.html#a6e94cba2a7b3fcc16b70475c2cefd8cfaaeecc523af2a2eba97a3b1a38f4518c5">   47</a></span>&#160;                      <a class="code" href="classmdt_double_edit.html#a6e94cba2a7b3fcc16b70475c2cefd8cfaaeecc523af2a2eba97a3b1a38f4518c5">omega</a>,          </div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="code" href="classmdt_double_edit.html#a6e94cba2a7b3fcc16b70475c2cefd8cfadad86fae09055324dd22fc15e6107fe0">   48</a></span>&#160;                      <a class="code" href="classmdt_double_edit.html#a6e94cba2a7b3fcc16b70475c2cefd8cfadad86fae09055324dd22fc15e6107fe0">OmegaCapital</a>    </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                    };</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <a class="code" href="classmdt_double_edit.html#a4b6a416aeb8594ad45fb706e79250ba7" title="Constructor. ">mdtDoubleEdit</a>(<a class="code" href="class_q_widget.html">QWidget</a>* parent = 0);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_double_edit.html#a5542c60073e80cfc5cc2f9f40167b460" title="Set read only. ">setReadOnly</a>(<span class="keywordtype">bool</span> ro);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_double_edit.html#a7574871fecfb0130e9d8947b55629cca" title="Set unit that is represented by a special symbol. ">setUnit</a>(<a class="code" href="classmdt_double_edit.html#a6e94cba2a7b3fcc16b70475c2cefd8cf" title="Special symbols for units. ">unitSymbol_t</a> u);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00065"></a><span class="lineno"><a class="code" href="classmdt_double_edit.html#ad425b7f96ae6906175c7a70fa3b8b017">   65</a></span>&#160;  <span class="keyword">inline</span> QString <a class="code" href="classmdt_double_edit.html#ad425b7f96ae6906175c7a70fa3b8b017" title="Get unit. ">unit</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> pvUnit; }</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_double_edit.html#abc719b2ad6c106759f4d138b7b221a75" title="Set minimum. ">setMinimum</a>(<span class="keywordtype">double</span> min);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_double_edit.html#ae6dbdee92d4704a1e2185fb56653e913" title="Set minimum to -infinity. ">setMinimumToMinusInfinity</a>();</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <span class="keywordtype">double</span> <a class="code" href="classmdt_double_edit.html#a2e0974378639708551a703b5b1dc3969" title="Get minimum. ">minimum</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_double_edit.html#a3b238d597fcf13bfd6b875ec228435e7" title="Set maximum. ">setMaximum</a>(<span class="keywordtype">double</span> max);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_double_edit.html#a4fa7bf1b30590223ec825079e36ab375" title="Set maximum to infinity. ">setMaximumToInfinity</a>();</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  <span class="keywordtype">double</span> <a class="code" href="classmdt_double_edit.html#a59be46e6f7d976a3a3373b76e03152e9" title="Get maximum. ">maximum</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_double_edit.html#a37e6542c3f29a5db083a3760409d47dc" title="Set range. ">setRange</a>(<span class="keywordtype">double</span> min, <span class="keywordtype">double</span> max);</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;  <span class="keyword">static</span> <span class="keywordtype">double</span> <a class="code" href="classmdt_double_edit.html#a8156deaebbd3256e9e7d94ca84e6a03a" title="Set the full range. ">factor</a>(<span class="keyword">const</span> QChar &amp; c);</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_double_edit.html#a6b7d233d74dbb7f587d062aa5ff1abdb" title="Set value from a string. ">setValueString</a>(<span class="keyword">const</span> QString &amp; s, <span class="keywordtype">bool</span> emitValueChanged = <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_double_edit.html#ac3c1a762df3ffd84e736f9ce1cbeb702" title="Set value. ">setValueDouble</a>(<span class="keywordtype">double</span> v, <span class="keywordtype">bool</span> emitValueChanged = <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_double_edit.html#a077b00c2e4ae13e66a2d903a42c0be52" title="Set value. ">setValue</a>(<span class="keyword">const</span> QVariant &amp; v, <span class="keywordtype">bool</span> emitValueChanged = <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;</div>
+<div class="line"><a name="l00145"></a><span class="lineno"><a class="code" href="classmdt_double_edit.html#a2ffc11c9f013ff65b49642703146ec01">  145</a></span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="classmdt_double_edit.html#a2ffc11c9f013ff65b49642703146ec01" title="Get value. ">valueDouble</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> pvValue; }</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;  QVariant <a class="code" href="classmdt_double_edit.html#a6987992984d3cfab5f96467c2b98e511" title="Get value. ">value</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;</div>
+<div class="line"><a name="l00153"></a><span class="lineno"><a class="code" href="classmdt_double_edit.html#a530a3b818aba14e34636dc1ad36b9292">  153</a></span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classmdt_double_edit.html#a530a3b818aba14e34636dc1ad36b9292" title="Check if value is valid. ">valueIsValid</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> pvValueIsValid; }</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;  QString <a class="code" href="classmdt_double_edit.html#a169b321873e50e1e9bf2b15bbf12af78" title="Get text in line edit. ">text</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;  <span class="keyword">static</span> QString <a class="code" href="classmdt_double_edit.html#a09e6276d61dd02feea43e795417d8ea9" title="Get infinity string. ">infinityString</a>();</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160; <span class="keyword">public</span> slots:</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_double_edit.html#a7574871fecfb0130e9d8947b55629cca" title="Set unit that is represented by a special symbol. ">setUnit</a>(<span class="keyword">const</span> QString &amp; u);</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160; signals:</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_double_edit.html#a04275f70dcfa22b677841a108dde2561" title="Emitted when a new value was set. ">valueChanged</a>(<span class="keywordtype">double</span> <a class="code" href="classmdt_double_edit.html#a6987992984d3cfab5f96467c2b98e511" title="Get value. ">value</a>, <span class="keywordtype">bool</span> isValid);</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160; <span class="keyword">private</span> slots:</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;  <span class="keywordtype">void</span> setNull();</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  <span class="keywordtype">void</span> setMinusInfinity();</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;  <span class="keywordtype">void</span> setInfinity();</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;  <span class="keywordtype">void</span> setValueFromLineEdit();</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160; <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  <span class="keywordtype">void</span> convertAndSetValue(QString str);</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;  <span class="keywordtype">void</span> displayValue();</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;  <span class="keywordtype">bool</span> isInRange(<span class="keywordtype">double</span> x, <span class="keywordtype">double</span> min, <span class="keywordtype">double</span> max);</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;  <span class="keywordtype">bool</span> strIsInfinity(<span class="keyword">const</span> QString &amp; str) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;  Q_DISABLE_COPY(<a class="code" href="classmdt_double_edit.html" title="Input box for double values. ">mdtDoubleEdit</a>);</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;  QLineEdit *pvLineEdit;</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;  QPushButton *pbSetNull;</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;  QPushButton *pbSetInfinity;</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;  QPushButton *pbSetMinusInfinity;</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;  <a class="code" href="classmdt_double_validator.html" title="Double validator. ">mdtDoubleValidator</a> *pvValidator;</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;  QString pvUnit;</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;  <span class="keywordtype">double</span> pvValue;</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;  <span class="keywordtype">bool</span> pvValueIsValid;</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;};</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;<span class="preprocessor">#endif // #ifndef MDT_DOUBLE_EDIT_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 12 2014 10:53:28 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jul 26 2014 17:48:03 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

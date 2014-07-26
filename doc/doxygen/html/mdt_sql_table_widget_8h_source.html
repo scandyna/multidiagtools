@@ -217,68 +217,73 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;</div>
 <div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_table_widget.html#ae4945234973dcfcb8f2e20830e571fd4" title="Set row as current record. ">setCurrentIndex</a>(<span class="keywordtype">int</span> row);</div>
 <div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160; <span class="keyword">private</span> slots:</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;  <span class="keywordtype">void</span> onDataEditionBegins();</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;  <span class="keywordtype">void</span> onDataChanged(<span class="keyword">const</span> QModelIndex &amp;, <span class="keyword">const</span> QModelIndex &amp;);</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;  <span class="keywordtype">void</span> onCurrentRowChanged(<span class="keyword">const</span> QModelIndex &amp; current, <span class="keyword">const</span> QModelIndex &amp; previous);</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_table_widget.html#a2afd70df3855ecf14f86713646ec2763" title="Resize view to contents. ">resizeViewToContents</a>();</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160; <span class="keyword">private</span> slots:</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;  <span class="keywordtype">void</span> onDataEditionBegins();</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;  <span class="keywordtype">void</span> onDataChanged(<span class="keyword">const</span> QModelIndex &amp;, <span class="keyword">const</span> QModelIndex &amp;);</div>
 <div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;  <span class="keywordtype">void</span> onTableViewKnownKeyPressed(<span class="keywordtype">int</span> key);</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;  <span class="keywordtype">void</span> onCurrentRowChanged(<span class="keyword">const</span> QModelIndex &amp; current, <span class="keyword">const</span> QModelIndex &amp; previous);</div>
 <div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;  <span class="keywordtype">void</span> onModelSelected();</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;  <span class="keywordtype">int</span> firstVisibleColumnIndex();</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;  <span class="keywordtype">void</span> onTableViewKnownKeyPressed(<span class="keywordtype">int</span> key);</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;  <span class="keywordtype">void</span> onModelSelected();</div>
 <div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;  <span class="keywordtype">void</span> doSetModel(<a class="code" href="class_q_sql_table_model.html">QSqlTableModel</a> *<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model. ">model</a>);</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;  <span class="keywordtype">bool</span> doSubmit();</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;  <span class="keywordtype">bool</span> doRevert();</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;  <span class="keywordtype">int</span> firstVisibleColumnIndex();</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160; <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;  <span class="keywordtype">void</span> doSetModel(<a class="code" href="class_q_sql_table_model.html">QSqlTableModel</a> *<a class="code" href="classmdt_abstract_sql_widget.html#a298d40a6540aeabbb7644e3c4fd9f3ea" title="Get current model. ">model</a>);</div>
 <div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;  <span class="keywordtype">bool</span> doInsert();</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;  <span class="keywordtype">bool</span> doSubmit();</div>
 <div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;  <span class="keywordtype">bool</span> doSubmitNewRow();</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;  <span class="keywordtype">bool</span> doRevert();</div>
 <div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;  <span class="keywordtype">bool</span> doRevertNewRow();</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;  <span class="keywordtype">bool</span> doInsert();</div>
 <div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;  <span class="keywordtype">bool</span> doRemove();</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;  <span class="keywordtype">bool</span> doSubmitNewRow();</div>
 <div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;  <span class="keywordtype">void</span> toFirst();</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;  <span class="keywordtype">bool</span> doRevertNewRow();</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;  <span class="keywordtype">bool</span> doRemove();</div>
 <div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;  <span class="keywordtype">void</span> toLast();</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;  <span class="keywordtype">void</span> toFirst();</div>
 <div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;  <span class="keywordtype">void</span> toPrevious();</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;  <span class="keywordtype">void</span> toLast();</div>
 <div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;  <span class="keywordtype">void</span> toNext();</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;  <span class="keywordtype">void</span> toPrevious();</div>
 <div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;  Q_DISABLE_COPY(<a class="code" href="classmdt_sql_table_widget.html" title="Table view based SQL widget. ">mdtSqlTableWidget</a>);</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;  QTableView *pvTableView;</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;  QHBoxLayout *pvNavigationLayout;</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;  <span class="comment">// Navigation buttons</span></div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;  QPushButton *pbNavToFirst;</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;  QPushButton *pbNavToPrevious;</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;  QPushButton *pbNavToNext;</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;  QPushButton *pbNavToLast;</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;  <span class="comment">// Edition buttons</span></div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;  QPushButton *pbInsert;</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;  QPushButton *pbSubmit;</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;  QPushButton *pbRevert;</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;  QPushButton *pbRemove;</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;  <span class="comment">// Flags</span></div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;  <span class="keywordtype">bool</span> pvDelegateIsEditingData;   <span class="comment">// See remark in onTableViewKnownKeyPressed()</span></div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;  <span class="keywordtype">int</span> pvDefaultColumnToSelect;    <span class="comment">// Used by setCurrentIndex()</span></div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;};</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;<span class="preprocessor">#endif  // #ifndef MDT_SQL_TABLE_WIDGET_H</span></div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;  <span class="keywordtype">void</span> toNext();</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;  <span class="keywordtype">void</span> createLocalEditionElements();</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;  Q_DISABLE_COPY(<a class="code" href="classmdt_sql_table_widget.html" title="Table view based SQL widget. ">mdtSqlTableWidget</a>);</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;  QTableView *pvTableView;</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;  QHBoxLayout *pvTopHorizontalLayout;</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;  QHBoxLayout *pvBottomHorizontalLayout;</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;  <span class="comment">// Navigation buttons</span></div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;  QPushButton *pbNavToFirst;</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;  QPushButton *pbNavToPrevious;</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;  QPushButton *pbNavToNext;</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;  QPushButton *pbNavToLast;</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;  <span class="comment">// Edition buttons</span></div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;  QPushButton *pbInsert;</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;  QPushButton *pbSubmit;</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;  QPushButton *pbRevert;</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;  QPushButton *pbRemove;</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;  <span class="comment">// Flags</span></div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;  <span class="keywordtype">bool</span> pvDelegateIsEditingData;   <span class="comment">// See remark in onTableViewKnownKeyPressed()</span></div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;  <span class="keywordtype">int</span> pvDefaultColumnToSelect;    <span class="comment">// Used by setCurrentIndex()</span></div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;};</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;<span class="preprocessor">#endif  // #ifndef MDT_SQL_TABLE_WIDGET_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 12 2014 10:53:27 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jul 26 2014 17:48:02 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

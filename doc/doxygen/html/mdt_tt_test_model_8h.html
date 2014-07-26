@@ -94,6 +94,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="textblock"><code>#include &quot;<a class="el" href="mdt_tt_base_8h_source.html">mdtTtBase.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="mdt_sql_table_selection_8h_source.html">mdtSqlTableSelection.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="mdt_tt_test_model_data_8h_source.html">mdtTtTestModelData.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="mdt_cl_path_graph_8h_source.html">mdtClPathGraph.h</a>&quot;</code><br/>
 <code>#include &lt;QVariant&gt;</code><br/>
 <code>#include &lt;QList&gt;</code><br/>
 <code>#include &lt;QModelIndex&gt;</code><br/>
@@ -104,7 +105,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="mdt_tt_test_model_8h__incl.png" border="0" usemap="#src_2mdttools_2mdttesttool_2mdt_tt_test_model_8h" alt=""/></div>
 <map name="src_2mdttools_2mdttesttool_2mdt_tt_test_model_8h" id="src_2mdttools_2mdttesttool_2mdt_tt_test_model_8h">
-<area shape="rect" id="node3" href="mdt_tt_base_8h.html" title="mdtTtBase.h" alt="" coords="672,101,768,131"/><area shape="rect" id="node29" href="mdt_sql_table_selection_8h.html" title="mdtSqlTableSelection.h" alt="" coords="968,179,1128,208"/><area shape="rect" id="node58" href="mdt_tt_test_model_data_8h.html" title="mdtTtTestModelData.h" alt="" coords="303,101,457,131"/><area shape="rect" id="node5" href="mdt_error_8h.html" title="mdtError.h" alt="" coords="368,256,451,285"/><area shape="rect" id="node13" href="mdt_sql_record_8h.html" title="mdtSqlRecord.h" alt="" coords="323,179,437,208"/><area shape="rect" id="node31" href="mdt_sql_table_selection_row_8h.html" title="mdtSqlTableSelectionRow.h" alt="" coords="955,256,1141,285"/><area shape="rect" id="node33" href="mdt_sql_table_selection_item_8h.html" title="mdtSqlTableSelectionItem.h" alt="" coords="955,333,1141,363"/></map>
+<area shape="rect" id="node3" href="mdt_tt_base_8h.html" title="mdtTtBase.h" alt="" coords="675,101,771,131"/><area shape="rect" id="node29" href="mdt_sql_table_selection_8h.html" title="mdtSqlTableSelection.h" alt="" coords="291,179,451,208"/><area shape="rect" id="node58" href="mdt_tt_test_model_data_8h.html" title="mdtTtTestModelData.h" alt="" coords="949,101,1104,131"/><area shape="rect" id="node62" href="mdt_cl_path_graph_8h.html" title="mdtClPathGraph.h" alt="" coords="1809,179,1940,208"/><area shape="rect" id="node5" href="mdt_error_8h.html" title="mdtError.h" alt="" coords="1451,265,1533,295"/><area shape="rect" id="node13" href="mdt_sql_record_8h.html" title="mdtSqlRecord.h" alt="" coords="1064,179,1179,208"/><area shape="rect" id="node31" href="mdt_sql_table_selection_row_8h.html" title="mdtSqlTableSelectionRow.h" alt="" coords="245,265,432,295"/><area shape="rect" id="node33" href="mdt_sql_table_selection_item_8h.html" title="mdtSqlTableSelectionItem.h" alt="" coords="245,352,432,381"/></map>
 </div>
 </div><div class="textblock"><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-1-trigger" src="closed.png" alt="+"/> This graph shows which files directly or indirectly include this file:</div>
@@ -113,21 +114,30 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="mdt_tt_test_model_8h__dep__incl.png" border="0" usemap="#src_2mdttools_2mdttesttool_2mdt_tt_test_model_8hdep" alt=""/></div>
 <map name="src_2mdttools_2mdttesttool_2mdt_tt_test_model_8hdep" id="src_2mdttools_2mdttesttool_2mdt_tt_test_model_8hdep">
-<area shape="rect" id="node3" href="mdt_tt_test_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTest.cpp" alt="" coords="5,102,168,149"/><area shape="rect" id="node5" href="mdt_tt_test_model_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestModel.cpp" alt="" coords="192,102,355,149"/><area shape="rect" id="node7" href="mdt_tt_test_model_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestModelEditor.cpp" alt="" coords="379,102,557,149"/></map>
+<area shape="rect" id="node3" href="mdt_tt_test_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTest.cpp" alt="" coords="5,102,168,149"/><area shape="rect" id="node5" href="mdt_tt_test_model_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestModel.cpp" alt="" coords="192,102,355,149"/><area shape="rect" id="node7" href="mdt_tt_test_model_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestModelEditor.cpp" alt="" coords="379,102,557,149"/><area shape="rect" id="node9" href="mdt_tt_test_model_generation_dialog_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestModelGenerationDialog.cpp" alt="" coords="581,102,827,149"/></map>
 </div>
 </div>
 <p><a href="mdt_tt_test_model_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_test_model_abstract_generator_helper.html">mdtTtTestModelAbstractGeneratorHelper</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper class for test model generation.  <a href="classmdt_tt_test_model_abstract_generator_helper.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_test_model_continuity_test_generator_helper.html">mdtTtTestModelContinuityTestGeneratorHelper</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper class for continuity test generation.  <a href="classmdt_tt_test_model_continuity_test_generator_helper.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_test_model_isolation_test_generator_helper.html">mdtTtTestModelIsolationTestGeneratorHelper</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper class for short detection and isolation test generation.  <a href="classmdt_tt_test_model_isolation_test_generator_helper.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_test_model.html">mdtTtTestModel</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper class for test edition.  <a href="classmdt_tt_test_model.html#details">More...</a><br/></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper class for test model edition.  <a href="classmdt_tt_test_model.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 12 2014 10:53:29 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jul 26 2014 17:48:06 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

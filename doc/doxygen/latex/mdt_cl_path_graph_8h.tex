@@ -3,28 +3,34 @@
 }
 {\ttfamily \#include \char`\"{}mdt\-Error.\-h\char`\"{}}\\*
 {\ttfamily \#include $<$Q\-Sql\-Database$>$}\\*
-{\ttfamily \#include $<$Q\-Queue$>$}\\*
 {\ttfamily \#include $<$Q\-Pair$>$}\\*
 {\ttfamily \#include $<$Q\-Variant$>$}\\*
 {\ttfamily \#include $<$Q\-List$>$}\\*
+{\ttfamily \#include $<$Q\-Vector$>$}\\*
 {\ttfamily \#include $<$Q\-String\-List$>$}\\*
 {\ttfamily \#include $<$Q\-Hash$>$}\\*
 {\ttfamily \#include $<$boost/config.\-hpp$>$}\\*
 {\ttfamily \#include $<$vector$>$}\\*
 {\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include $<$map$>$}\\*
 {\ttfamily \#include $<$utility$>$}\\*
 {\ttfamily \#include $<$boost/graph/graph\-\_\-traits.\-hpp$>$}\\*
 {\ttfamily \#include $<$boost/graph/adjacency\-\_\-list.\-hpp$>$}\\*
 {\ttfamily \#include $<$boost/tuple/tuple.\-hpp$>$}\\*
 {\ttfamily \#include $<$boost/graph/breadth\-\_\-first\-\_\-search.\-hpp$>$}\\*
-Include dependency graph for mdt\-Cl\-Path\-Graph.\-h\-:\nopagebreak
+{\ttfamily \#include $<$boost/graph/dijkstra\-\_\-shortest\-\_\-paths.\-hpp$>$}\\*
+{\ttfamily \#include $<$boost/graph/properties.\-hpp$>$}\\*
+{\ttfamily \#include $<$boost/property\-\_\-map/property\-\_\-map.\-hpp$>$}\\*
+Include dependency graph for mdt\-Cl\-Path\-Graph.\-h\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=350pt]{mdt_cl_path_graph_8h__incl}
 \end{center}
 \end{figure}
-This graph shows which files directly or indirectly include this file\-:\nopagebreak
+This graph shows which files directly or indirectly include this file\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -53,13 +59,16 @@ class \hyperlink{classmdt_cl_path_graph}{mdt\-Cl\-Path\-Graph}
 \subsection*{Typedefs}
 \begin{DoxyCompactItemize}
 \item 
+typedef boost\-::property\\*
+$<$ boost\-::edge\-\_\-weight\-\_\-t, int $>$ \hyperlink{namespacemdt_cl_path_graph_private_a9ecaa62d3daff29e2314dec1780dbc21}{mdt\-Cl\-Path\-Graph\-Private\-::weigth\-\_\-property\-\_\-t}
+\item 
 typedef boost\-::adjacency\-\_\-list\\*
 $<$ boost\-::vec\-S, boost\-::vec\-S, \\*
 boost\-::directed\-S, \\*
 boost\-::no\-\_\-property, \\*
-mdt\-Cl\-Path\-Graph\-Edge\-Data, \\*
+weigth\-\_\-property\-\_\-t, \\*
 boost\-::no\-\_\-property, \\*
-boost\-::list\-S $>$ \hyperlink{namespacemdt_cl_path_graph_private_a9a28712932316ef1dd4caf737a6d7e07}{mdt\-Cl\-Path\-Graph\-Private\-::graph\-\_\-t}
+boost\-::list\-S $>$ \hyperlink{namespacemdt_cl_path_graph_private_a0f07a8bdf4fa7671a93fe91d536b4793}{mdt\-Cl\-Path\-Graph\-Private\-::graph\-\_\-t}
 \item 
 typedef boost\-::graph\-\_\-traits\\*
 $<$ graph\-\_\-t $>$\-::vertex\-\_\-descriptor \hyperlink{namespacemdt_cl_path_graph_private_a0aaa28f25df9a7fcd4602cc15b3b3795}{mdt\-Cl\-Path\-Graph\-Private\-::vertex\-\_\-t}

@@ -1,9 +1,9 @@
 <map id="src/mdtutilsgui/mdtAbstractSqlWidget.cpp" name="src/mdtutilsgui/mdtAbstractSqlWidget.cpp">
-<area shape="rect" id="node3" href="$mdt_abstract_sql_widget_8h.html" title="mdtAbstractSqlWidget.h" alt="" coords="395,101,557,131"/>
-<area shape="rect" id="node21" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="1155,101,1237,131"/>
-<area shape="rect" id="node28" href="$mdt_sql_relation_8h.html" title="mdtSqlRelation.h" alt="" coords="581,101,704,131"/>
-<area shape="rect" id="node38" href="$mdt_sql_data_validator_8h.html" title="mdtSqlDataValidator.h" alt="" coords="728,101,880,131"/>
-<area shape="rect" id="node43" href="$mdt_sort_filter_proxy_model_8h.html" title="mdtSortFilterProxyModel.h" alt="" coords="955,101,1131,131"/>
-<area shape="rect" id="node52" href="$mdt_state_8h.html" title="mdtState.h" alt="" coords="1312,101,1397,131"/>
-<area shape="rect" id="node57" href="$mdt_state_machine_8h.html" title="mdtStateMachine.h" alt="" coords="1472,101,1605,131"/>
+<area shape="rect" id="node3" href="$mdt_abstract_sql_widget_8h.html" title="mdtAbstractSqlWidget.h" alt="" coords="349,101,512,131"/>
+<area shape="rect" id="node21" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="1109,101,1192,131"/>
+<area shape="rect" id="node28" href="$mdt_sql_relation_8h.html" title="mdtSqlRelation.h" alt="" coords="536,101,659,131"/>
+<area shape="rect" id="node38" href="$mdt_sql_data_validator_8h.html" title="mdtSqlDataValidator.h" alt="" coords="683,101,835,131"/>
+<area shape="rect" id="node43" href="$mdt_sort_filter_proxy_model_8h.html" title="mdtSortFilterProxyModel.h" alt="" coords="909,101,1085,131"/>
+<area shape="rect" id="node52" href="$mdt_state_8h.html" title="mdtState.h" alt="" coords="1216,101,1301,131"/>
+<area shape="rect" id="node57" href="$mdt_state_machine_8h.html" title="mdtStateMachine.h" alt="" coords="1376,101,1509,131"/>
 </map>

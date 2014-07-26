@@ -17,6 +17,7 @@ var searchData=
   ['bmaxpacketsize0',['bMaxPacketSize0',['../classmdt_usb_device_descriptor.html#a08b5ae262e2b966c952ee5e5bcc6fb10',1,'mdtUsbDeviceDescriptor']]],
   ['bmaxpower',['bMaxPower',['../classmdt_usb_config_descriptor.html#af0bc21aa2f6ebba7069cd9403520a41b',1,'mdtUsbConfigDescriptor']]],
   ['bmrequesttype',['bmRequestType',['../classmdt_frame_usb_control.html#a760f73ebe2d8cefc1d70c4d22f84fac3',1,'mdtFrameUsbControl']]],
+  ['bottom',['bottom',['../classmdt_double_validator.html#a4dd214c184264cbe0a7507982d843ca5',1,'mdtDoubleValidator']]],
   ['boundingrect',['boundingRect',['../classmdt_cl_path_graphics_connection.html#ad8f37d152c86b5e003e4db98a708af68',1,'mdtClPathGraphicsConnection::boundingRect()'],['../classmdt_cl_path_graphics_link.html#a282899cce5aff82c7f1ff057dfd2a7e5',1,'mdtClPathGraphicsLink::boundingRect()']]],
   ['brequest',['bRequest',['../classmdt_frame_usb_control.html#ab4c57d23805b5ef21a571d200109b403',1,'mdtFrameUsbControl']]],
   ['btag',['bTag',['../classmdt_frame_usb_tmc.html#a471c97b844331376ed1801cdb50f5cc6',1,'mdtFrameUsbTmc']]],

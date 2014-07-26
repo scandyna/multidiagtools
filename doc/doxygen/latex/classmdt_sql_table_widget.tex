@@ -32,7 +32,9 @@ Collaboration diagram for mdt\-Sql\-Table\-Widget\-:\nopagebreak
 \begin{DoxyCompactItemize}
 \item 
 void \hyperlink{classmdt_sql_table_widget_ae4945234973dcfcb8f2e20830e571fd4}{set\-Current\-Index} (int row)
-\begin{DoxyCompactList}\small\item\em Set row as current record. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Set row as current record. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_table_widget_a2afd70df3855ecf14f86713646ec2763}{resize\-View\-To\-Contents} ()
+\begin{DoxyCompactList}\small\item\em Resize view to contents. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -106,11 +108,11 @@ Constructor.
 
 Setup a Q\-Table\-View and init some other things. The table view will not be editable, use \hyperlink{classmdt_sql_table_widget_af5ef66b8ebb45a698f99ad455208f3c8}{set\-Edition\-Enabled()} to alter this. 
 
-Definition at line 92 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 93 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
-References mdt\-Abstract\-Sql\-Widget\-::model\-Selected(), and set\-Edition\-Enabled().
+References mdt\-Abstract\-Sql\-Widget\-::model\-Selected(), resize\-View\-To\-Contents(), and set\-Edition\-Enabled().
 
 \hypertarget{classmdt_sql_table_widget_ab5db8a20c64340bba4841a1b1c928d7f}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!$\sim$mdt\-Sql\-Table\-Widget@{$\sim$mdt\-Sql\-Table\-Widget}}
 \index{$\sim$mdt\-Sql\-Table\-Widget@{$\sim$mdt\-Sql\-Table\-Widget}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
@@ -125,7 +127,7 @@ Destructor.
 
 
 
-Definition at line 126 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 142 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
@@ -143,7 +145,7 @@ Add a strech to local bar.
 
 
 
-Definition at line 215 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 200 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 \hypertarget{classmdt_sql_table_widget_a9c0ae7b87d1840f2fdcee6de763fe31a}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!add\-Widget\-To\-Local\-Bar@{add\-Widget\-To\-Local\-Bar}}
 \index{add\-Widget\-To\-Local\-Bar@{add\-Widget\-To\-Local\-Bar}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
@@ -165,7 +167,7 @@ widget must be a valid pointer.
 \end{DoxyPrecond}
 
 
-Definition at line 197 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 177 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 \hypertarget{classmdt_sql_table_widget_a7612cf9cb10c69365b7ed820d71e6cb2}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!current\-Row@{current\-Row}}
 \index{current\-Row@{current\-Row}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
@@ -184,7 +186,7 @@ Implements \hyperlink{classmdt_abstract_sql_widget_ab48f6375f55f1eaba309fb17aaaf
 
 
 
-Definition at line 130 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 146 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
@@ -208,7 +210,7 @@ Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79
 \end{DoxyPrecond}
 
 
-Definition at line 312 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 301 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
@@ -236,7 +238,7 @@ Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79
 \end{DoxyPrecond}
 
 
-Definition at line 332 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 321 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
@@ -261,11 +263,11 @@ Reimplemented from \hyperlink{classmdt_abstract_sql_widget_a4ad94a530c77292d122d
 
 
 
-Definition at line 152 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 168 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
-References mdt\-Abstract\-Sql\-Widget\-::insert(), mdt\-Abstract\-Sql\-Widget\-::insert\-Enabled\-State\-Changed(), mdt\-Abstract\-Sql\-Widget\-::re\-Enter\-Visualizing\-State(), mdt\-Abstract\-Sql\-Widget\-::remove\-Enabled\-State\-Changed(), mdt\-Abstract\-Sql\-Widget\-::revert(), mdt\-Abstract\-Sql\-Widget\-::revert\-Enabled\-State\-Changed(), set\-Edition\-Enabled(), mdt\-Abstract\-Sql\-Widget\-::submit(), and mdt\-Abstract\-Sql\-Widget\-::submit\-Enabled\-State\-Changed().
+References set\-Edition\-Enabled().
 
 \hypertarget{classmdt_sql_table_widget_a9a43d9a5d2e63189f17d2bce7159e510}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!index\-List\-Of\-Selected\-Rows@{index\-List\-Of\-Selected\-Rows}}
 \index{index\-List\-Of\-Selected\-Rows@{index\-List\-Of\-Selected\-Rows}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
@@ -289,7 +291,7 @@ Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79
 \end{DoxyPrecond}
 
 
-Definition at line 401 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 390 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
@@ -327,7 +329,7 @@ This is an overloaded member function, provided for convenience. It differs from
 
 This is a variant for single column. 
 
-Definition at line 439 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 428 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
@@ -342,7 +344,7 @@ References index\-List\-Of\-Selected\-Rows(), mdt\-Abstract\-Sql\-Widget\-::mode
 )}}\label{classmdt_sql_table_widget_a9616d390c25a3b1e863e855e00172e42}
 
 
-Definition at line 454 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 443 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
@@ -370,7 +372,7 @@ Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79
 \end{DoxyPrecond}
 This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. 
 
-Definition at line 345 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 334 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
@@ -389,11 +391,30 @@ Referenced by index\-List\-Of\-Selected\-Rows\-By\-Rows\-List().
 )}}\label{classmdt_sql_table_widget_a5abe02dacc9fd8c0c33c27dbc5216d1b}
 
 
-Definition at line 386 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 375 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
 References index\-List\-Of\-Selected\-Rows\-By\-Rows\-List(), mdt\-Abstract\-Sql\-Widget\-::model(), and selection\-Model().
+
+\hypertarget{classmdt_sql_table_widget_a2afd70df3855ecf14f86713646ec2763}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!resize\-View\-To\-Contents@{resize\-View\-To\-Contents}}
+\index{resize\-View\-To\-Contents@{resize\-View\-To\-Contents}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
+\subsubsection[{resize\-View\-To\-Contents}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Table\-Widget\-::resize\-View\-To\-Contents (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{classmdt_sql_table_widget_a2afd70df3855ecf14f86713646ec2763}
+
+
+Resize view to contents. 
+
+
+
+Definition at line 465 of file mdt\-Sql\-Table\-Widget.\-cpp.
+
+
+
+Referenced by mdt\-Sql\-Table\-Widget().
 
 \hypertarget{classmdt_sql_table_widget_a47fc691f2cd9cc40749c987ce2bbea6d}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!selection\-Model@{selection\-Model}}
 \index{selection\-Model@{selection\-Model}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
@@ -408,7 +429,7 @@ Get internal table view's selection model.
 
 
 
-Definition at line 232 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 221 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
@@ -428,7 +449,7 @@ Set a coulumn as hidden.
 
 
 
-Definition at line 255 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 244 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
@@ -455,7 +476,7 @@ Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79
 \end{DoxyPrecond}
 
 
-Definition at line 263 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 252 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
@@ -474,7 +495,7 @@ Set row as current record.
 
 
 
-Definition at line 462 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 451 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
@@ -498,7 +519,7 @@ Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79
 \end{DoxyPrecond}
 
 
-Definition at line 276 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 265 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
@@ -526,7 +547,7 @@ Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79
 \end{DoxyPrecond}
 
 
-Definition at line 287 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 276 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
@@ -545,7 +566,7 @@ Set edition enabled/disabled.
 
 
 
-Definition at line 142 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 158 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
@@ -568,7 +589,7 @@ Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79
 \end{DoxyPrecond}
 
 
-Definition at line 242 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 231 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
@@ -594,7 +615,7 @@ Reimplemented from \hyperlink{classmdt_abstract_sql_widget_a2c83a26fe75b708948c8
 
 
 
-Definition at line 294 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 283 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
@@ -613,7 +634,7 @@ Get internal table view.
 
 
 
-Definition at line 237 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 226 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
