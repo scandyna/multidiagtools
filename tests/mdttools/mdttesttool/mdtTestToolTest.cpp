@@ -710,37 +710,32 @@ void mdtTestToolTest::mdtTtTestNodeManagerTest()
 
 void mdtTestToolTest::mdtTtTestTest()
 {
-  /**
-  QVariant dblVal;
-  mdtValue value;
-
-  // Check value -> double conversions
-  value.setValue(1.0, false, false);
-  dblVal = mdtTtTest::valueToDouble(value);
-  QCOMPARE(dblVal.toDouble(), 1.0);
-  value.setValue(-100, true, false);
-  dblVal = mdtTtTest::valueToDouble(value);
-  QCOMPARE(dblVal.toDouble(), -1e300);
-  value.setValue(100, false, true);
-  dblVal = mdtTtTest::valueToDouble(value);
-  QCOMPARE(dblVal.toDouble(), 1e300);
-  // Check double -> value conversions
-  value = mdtTtTest::doubleToValue(QVariant());
-  QVERIFY(!value.isValid());
-  value = mdtTtTest::doubleToValue(1.0);
-  QCOMPARE(value.valueDouble(), 1.0);
-  QVERIFY(!value.isMinusOl());
-  QVERIFY(!value.isPlusOl());
-  value = mdtTtTest::doubleToValue(-1e300);
-  QCOMPARE(value.valueDouble(), -1e300);
-  QVERIFY(value.isMinusOl());
-  QVERIFY(!value.isPlusOl());
-  value = mdtTtTest::doubleToValue(1e300);
-  QCOMPARE(value.valueDouble(), 1e300);
-  QVERIFY(!value.isMinusOl());
-  QVERIFY(value.isPlusOl());
-  */
-
+  /*
+   * Range checking.
+   *
+   *        failMin   limitMix     expectedValue      limitMax    failMax
+   * -inf------]----------]---------------|---------------[----------[------+inf
+   *
+   * ex:      800        900             1000            1100       1200
+   */
+  QVERIFY(mdtTtTest::isInOkRange(1000.0, 900.0, 1100.0));
+  QVERIFY(mdtTtTest::isInOkRange(900.1, 900.0, 1100.0));
+  QVERIFY(mdtTtTest::isInOkRange(1099.9, 900.0, 1100.0));
+  QVERIFY(!mdtTtTest::isInOkRange(900.0, 900.0, 1100.0));
+  QVERIFY(!mdtTtTest::isInOkRange(1100.0, 900.0, 1100.0));
+  QVERIFY(!mdtTtTest::isInLimitRange(1000.0, 900.0, 1100.0, 800.0, 1200.0));
+  QVERIFY(!mdtTtTest::isInLimitRange(900.1, 900.0, 1100.0, 800.0, 1200.0));
+  QVERIFY(!mdtTtTest::isInLimitRange(1099.9, 900.0, 1100.0, 800.0, 1200.0));
+  QVERIFY(mdtTtTest::isInLimitRange(900.0, 900.0, 1100.0, 800.0, 1200.0));
+  QVERIFY(mdtTtTest::isInLimitRange(1100.0, 900.0, 1100.0, 800.0, 1200.0));
+  QVERIFY(mdtTtTest::isInLimitRange(800.1, 900.0, 1100.0, 800.0, 1200.0));
+  QVERIFY(mdtTtTest::isInLimitRange(850.0, 900.0, 1100.0, 800.0, 1200.0));
+  QVERIFY(mdtTtTest::isInLimitRange(1199.9, 900.0, 1100.0, 800.0, 1200.0));
+  QVERIFY(mdtTtTest::isInLimitRange(1150.0, 900.0, 1100.0, 800.0, 1200.0));
+  QVERIFY(!mdtTtTest::isInLimitRange(800.0, 900.0, 1100.0, 800.0, 1200.0));
+  QVERIFY(!mdtTtTest::isInLimitRange(1200.0, 900.0, 1100.0, 800.0, 1200.0));
+  QVERIFY(!mdtTtTest::isInLimitRange(750.0, 900.0, 1100.0, 800.0, 1200.0));
+  QVERIFY(!mdtTtTest::isInLimitRange(1250.0, 900.0, 1100.0, 800.0, 1200.0));
 }
 
 

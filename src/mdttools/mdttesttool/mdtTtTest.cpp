@@ -427,11 +427,15 @@ void mdtTtTest::setMeasuredValue(const mdtValue & value, const QVariant & instru
 {
   double resultValue;
   QVariant expectedValue;
+  QVariant val;
+  double limitValueMin, limitValueMax;
+  double failValueMin, failValueMax;
   QString result;
 
+  // Set date
+  setCurrentTestItemData("Date", QDateTime::currentDateTime());
   // Check about validity
   if(!value.isValid()){
-    setCurrentTestItemData("Date", QDateTime::currentDateTime());
     setCurrentTestItemData("Result", "Fail");
     setCurrentTestItemData("Remark", "Measure/instrument error");
     return;
@@ -439,11 +443,40 @@ void mdtTtTest::setMeasuredValue(const mdtValue & value, const QVariant & instru
   // Get expected value
   expectedValue = currentTestItemData("ExpectedValue");
   if(expectedValue.isNull()){
-    setCurrentTestItemData("Date", QDateTime::currentDateTime());
     setCurrentTestItemData("Result", "Fail");
     setCurrentTestItemData("Remark", "Expected value not set");
     return;
   }
+  // Get limit values
+  val = currentTestItemData("LimitValueMin");
+  if(val.isNull()){
+    setCurrentTestItemData("Result", "Fail");
+    setCurrentTestItemData("Remark", "Limit value min not set");
+    return;
+  }
+  limitValueMin = val.toDouble();
+  val = currentTestItemData("LimitValueMax");
+  if(val.isNull()){
+    setCurrentTestItemData("Result", "Fail");
+    setCurrentTestItemData("Remark", "Limit value max not set");
+    return;
+  }
+  limitValueMax = val.toDouble();
+  // Get fail values
+  val = currentTestItemData("FailValueMin");
+  if(val.isNull()){
+    setCurrentTestItemData("Result", "Fail");
+    setCurrentTestItemData("Remark", "Fail value min not set");
+    return;
+  }
+  failValueMin = val.toDouble();
+  val = currentTestItemData("FailValueMax");
+  if(val.isNull()){
+    setCurrentTestItemData("Result", "Fail");
+    setCurrentTestItemData("Remark", "Fail value min not set");
+    return;
+  }
+  failValueMax = val.toDouble();
   // Check about -OL and +OL
   if(value.isMinusOl()){
     resultValue = -std::numeric_limits<double>::infinity();
@@ -453,18 +486,31 @@ void mdtTtTest::setMeasuredValue(const mdtValue & value, const QVariant & instru
     resultValue = value.valueDouble();
   }
   // Check and set result
-  if(qAbs<double>(resultValue  - expectedValue.toDouble()) < std::numeric_limits<double>::min()){
+  if(isInOkRange(resultValue, limitValueMin, limitValueMax)){
     result = "Ok";
+  }else if(isInLimitRange(resultValue, limitValueMin, limitValueMax, failValueMin, failValueMax)){
+    result = "Limit";
   }else{
-    result = "Fail"; 
+    result = "Fail";
   }
   // Set results
-  setCurrentTestItemData("Date", QDateTime::currentDateTime());
+  ///setCurrentTestItemData("Date", QDateTime::currentDateTime());
   setCurrentTestItemData("MeasuredValue", value.valueDouble());
   setCurrentTestItemData("InstrumentRangeMin", instrumentRangeMin);
   setCurrentTestItemData("InstrumentRangeMax", instrumentRangeMax);
   setCurrentTestItemData("ResultValue", resultValue);
   setCurrentTestItemData("Result", result);
+}
+
+bool mdtTtTest::isInOkRange(double x, double limitMin, double limitMax)
+{
+  return ((x > limitMin)&&(x < limitMax));
+}
+
+bool mdtTtTest::isInLimitRange(double x, double limitMin, double limitMax, double failMin, double failMax)
+{
+  return ( ( (x > failMin) && ((x < limitMin)||(qAbs(x - limitMin) < std::numeric_limits<double>::min())) )
+          || ( ((x > limitMax)||(qAbs(x - limitMax) < std::numeric_limits<double>::min())) && (x < failMax) ) );
 }
 
 bool mdtTtTest::hasMoreTestItem() const

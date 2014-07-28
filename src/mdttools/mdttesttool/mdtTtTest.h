@@ -178,6 +178,18 @@ class mdtTtTest : public mdtTtBase
    */
   void setMeasuredValue(const mdtValue & value, const QVariant & instrumentRangeMin, const QVariant & instrumentRangeMax);
 
+  /*! \brief Check if x is in OK range
+   *
+   * Return true if x is in ]limitMin;limitMax[
+   */
+  static bool isInOkRange(double x, double limitMin, double limitMax);
+
+  /*! \brief Check if x is in limit range
+   *
+   * Return true if x is in ]failMin;limitMin] or in [limitMax;failMax[
+   */
+  static bool isInLimitRange(double x, double limitMin, double limitMax, double failMin, double failMax);
+
   /*! \brief Check if more test item is available
    */
   bool hasMoreTestItem() const;

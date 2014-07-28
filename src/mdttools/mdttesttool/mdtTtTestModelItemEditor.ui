@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>478</width>
-    <height>173</height>
+    <width>692</width>
+    <height>198</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -52,37 +52,29 @@
     </widget>
    </item>
    <item row="3" column="0">
-    <widget class="QLabel" name="lbLimitValueRange">
+    <widget class="QLabel" name="lbLimitMin">
      <property name="text">
-      <string>Limits:</string>
+      <string>Limit min:</string>
      </property>
     </widget>
    </item>
    <item row="3" column="1">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QLabel" name="fld_LimitValueMin">
+      <widget class="mdtDoubleEdit" name="fld_LimitValueMin"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="lbLimitMax">
        <property name="text">
-        <string>0</string>
+        <string>limit max:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string> to </string>
-       </property>
-      </widget>
+      <widget class="mdtDoubleEdit" name="fld_LimitValueMax"/>
      </item>
      <item>
-      <widget class="QLabel" name="fld_LimitValueMax">
-       <property name="text">
-        <string>0</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pbEditMinMax">
+      <widget class="QPushButton" name="pbEditLimitMinMax">
        <property name="text">
         <string>...</string>
        </property>
@@ -91,32 +83,31 @@
     </layout>
    </item>
    <item row="4" column="0">
-    <widget class="QLabel" name="lbFailValueRange">
+    <widget class="QLabel" name="lbFailMin">
      <property name="text">
-      <string>Fail range:</string>
+      <string>Fail min:</string>
      </property>
     </widget>
    </item>
    <item row="4" column="1">
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QLabel" name="fld_FailValueMin">
+      <widget class="mdtDoubleEdit" name="fld_FailValueMin"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="lbFailMax">
        <property name="text">
-        <string>0</string>
+        <string>Fail max:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string> to </string>
-       </property>
-      </widget>
+      <widget class="mdtDoubleEdit" name="fld_FailValueMax"/>
      </item>
      <item>
-      <widget class="QLabel" name="fld_FailValueMax">
+      <widget class="QPushButton" name="pbEditFailMinMax">
        <property name="text">
-        <string>0</string>
+        <string>...</string>
        </property>
       </widget>
      </item>
@@ -241,6 +232,70 @@
     <hint type="destinationlabel">
      <x>245</x>
      <y>77</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fld_ValueUnit</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>fld_LimitValueMin</receiver>
+   <slot>setUnit(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>176</x>
+     <y>181</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>254</x>
+     <y>110</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fld_ValueUnit</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>fld_LimitValueMax</receiver>
+   <slot>setUnit(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>176</x>
+     <y>181</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>536</x>
+     <y>110</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fld_ValueUnit</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>fld_FailValueMin</receiver>
+   <slot>setUnit(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>176</x>
+     <y>181</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>255</x>
+     <y>148</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fld_ValueUnit</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>fld_FailValueMax</receiver>
+   <slot>setUnit(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>176</x>
+     <y>181</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>535</x>
+     <y>148</y>
     </hint>
    </hints>
   </connection>

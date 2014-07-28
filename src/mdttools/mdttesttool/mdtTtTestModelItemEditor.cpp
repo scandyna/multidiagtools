@@ -751,7 +751,7 @@ bool mdtTtTestModelItemEditor::setupTestItemTable()
   if(!setMainTable("TestModelItem_tbl", "Test item", database())){
     return false;
   }
-  connect(tie.pbEditMinMax, SIGNAL(clicked()), this, SLOT(editExpectedValueLimits()));
+  ///connect(tie.pbEditMinMax, SIGNAL(clicked()), this, SLOT(editExpectedValueLimits()));
 
   return true;
 }
