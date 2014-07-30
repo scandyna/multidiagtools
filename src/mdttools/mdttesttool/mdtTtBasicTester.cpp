@@ -44,8 +44,8 @@
 
 using namespace std;
 
-mdtTtBasicTester::mdtTtBasicTester(QSqlDatabase db, QWidget *parent)
- : mdtTtAbstractTestWidget(db, parent)
+mdtTtBasicTester::mdtTtBasicTester(QSqlDatabase db, QObject *parent)
+ : mdtTtAbstractTester(db, parent)
 {
 }
 

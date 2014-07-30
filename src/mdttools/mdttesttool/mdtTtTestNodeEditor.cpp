@@ -41,11 +41,17 @@
 #include <QInputDialog>
 #include <QMessageBox>
 
+#include "mdtTtBasicTestNodeCalibrationWindow.h"
+
 #include <QDebug>
 
 mdtTtTestNodeEditor::mdtTtTestNodeEditor(QWidget *parent, QSqlDatabase db)
  : mdtSqlForm(parent, db)
 {
+  /// \todo Provisoire !!
+  mdtTtBasicTestNodeCalibrationWindow *c;
+  c = new mdtTtBasicTestNodeCalibrationWindow(db, this);
+  c->show();
 }
 
 bool mdtTtTestNodeEditor::setupTables()

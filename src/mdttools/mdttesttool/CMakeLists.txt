@@ -16,12 +16,14 @@ set (TT_HEADER_FILES
           mdtTtTestNodeUnitSetupDialog.h
           mdtTtTestNodeManager.h
           #mdtTtTestNodeManagerWidget.h
-          mdtTtBasicTester.h
           mdtTtBasicTesterWindow.h
           mdtTtTest.h
           mdtTtRelayPathDialog.h
           mdtTtTestModelGenerationDialog.h
-          mdtTtAbstractTestWidget.h
+          mdtTtAbstractTester.h
+          mdtTtAbstractTestNodeCalibrationTool.h
+          mdtTtBasicTester.h
+          mdtTtBasicTestNodeCalibrationWindow.h
           mdtTtValueEditionDialog.h
     )
 
@@ -48,14 +50,16 @@ set (TT_SOURCES_FILES
           mdtTtTestNodeSetupData.cpp
           mdtTtTestNodeManager.cpp
           #mdtTtTestNodeManagerWidget.cpp
-          mdtTtBasicTester.cpp
           mdtTtBasicTesterWindow.cpp
           mdtTtTestModelData.cpp
           mdtTtTestData.cpp
           mdtTtTest.cpp
           mdtTtRelayPathDialog.cpp
           mdtTtTestModelGenerationDialog.cpp
-          mdtTtAbstractTestWidget.cpp
+          mdtTtAbstractTester.cpp
+          mdtTtAbstractTestNodeCalibrationTool.cpp
+          mdtTtBasicTester.cpp
+          mdtTtBasicTestNodeCalibrationWindow.cpp
           mdtTtValueEditionDialog.cpp
     )
 
@@ -69,6 +73,7 @@ set (TT_FORM_FILES
           mdtTtTestModelItemEditor.ui
           mdtTtTestNodeUnitSetupDialog.ui
           mdtTtBasicTesterWindow.ui
+          mdtTtBasicTestNodeCalibrationWindow.ui
           mdtTtRelayPathDialog.ui
           mdtTtTestModelGenerationDialog.ui
           mdtTtValueEditionDialog.ui

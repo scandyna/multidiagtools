@@ -37,7 +37,7 @@ mdtTtBasicTesterWindow::mdtTtBasicTesterWindow(QSqlDatabase db, QWidget* parent)
 
   setupUi(this);
   // Setup tester
-  pvTesterWidget = new mdtTtBasicTester(db);
+  pvTesterWidget = new mdtTtBasicTester(db, this);
   connect(pvTesterWidget, SIGNAL(testDataChanged(const QSqlRecord&)), this, SLOT(displayTestData(const QSqlRecord&)));
   // Setup instruments state widget
   l = new QVBoxLayout;

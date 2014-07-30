@@ -25,6 +25,7 @@
 #include "mdtTtTestModelData.h"
 #include <QSqlRecord>
 
+/// \todo Check if not obselete ?
 class mdtTtTestData : public mdtSqlRecord
 {
  public:

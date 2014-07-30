@@ -18,7 +18,7 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtTtAbstractTestWidget.h"
+#include "mdtTtAbstractTester.h"
 #include "mdtSqlSelectionDialog.h"
 #include "mdtSqlTableSelection.h"
 #include "mdtSqlFormWidget.h"
@@ -30,40 +30,42 @@
 
 using namespace std;
 
-mdtTtAbstractTestWidget::mdtTtAbstractTestWidget(QSqlDatabase db, QWidget* parent)
- : QWidget(parent),
+mdtTtAbstractTester::mdtTtAbstractTester(QSqlDatabase db, QObject* parent)
+ : QObject(parent),
    pvDatabase(db),
    pvTestNodeManager(new mdtTtTestNodeManager(0, db)),
-   pvTest(new mdtTtTest(0, db))
+   pvTest(new mdtTtTest(0, db)),
+   pvTestFormWidget(new mdtSqlFormWidget)
 {
-  pvTestFormWidget = new mdtSqlFormWidget;
+  pvParentWidget = 0;
   pvTestFormWidget->setAskUserBeforRevert(false);
   pvTestFormWidget->setModel(pvTest->testTableModel().get());
   connect(pvTest.get(), SIGNAL(testDataChanged(const QSqlRecord&)), this, SIGNAL(testDataChanged(const QSqlRecord&)));
 }
 
-bool mdtTtAbstractTestWidget::init()
+bool mdtTtAbstractTester::init()
 {
   if(!pvTest->init()){
     pvLastError = pvTest->lastError();
     return false;
   }
   pvTestFormWidget->setCurrentIndex(-1);
-  
-  ///emit testItemTableSet();
 
   return true;
 }
 
-void mdtTtAbstractTestWidget::setTestUiWidget(QWidget* widget)
+void mdtTtAbstractTester::setTestUiWidget(QWidget* widget)
 {
   Q_ASSERT(widget != 0);
+  
+  pvParentWidget = widget;
+  
   pvTestFormWidget->mapFormWidgets(widget);
   pvTestFormWidget->setCurrentIndex(-1);
   pvTestFormWidget->start();
 }
 
-bool mdtTtAbstractTestWidget::testIsEmpty() const
+bool mdtTtAbstractTester::testIsEmpty() const
 {
   if(!pvTestFormWidget->allDataAreSaved(false)){
     return false;
@@ -71,7 +73,7 @@ bool mdtTtAbstractTestWidget::testIsEmpty() const
   return pvTest->testIsEmpty();
 }
 
-bool mdtTtAbstractTestWidget::testIsSaved() const
+bool mdtTtAbstractTester::testIsSaved() const
 {
   if(!pvTestFormWidget->allDataAreSaved(false)){
     return false;
@@ -79,9 +81,9 @@ bool mdtTtAbstractTestWidget::testIsSaved() const
   return pvTest->testIsSaved();
 }
 
-void mdtTtAbstractTestWidget::createTest()
+void mdtTtAbstractTester::createTest()
 {
-  mdtSqlSelectionDialog selectionDialog(this);
+  mdtSqlSelectionDialog selectionDialog(pvParentWidget);
   mdtSqlTableSelection s;
   QString sql;
   QVariant testModelId;
@@ -93,7 +95,7 @@ void mdtTtAbstractTestWidget::createTest()
   }
   // Check if test is saved
   if(!testIsSaved()){
-    QMessageBox msgBox(this);
+    QMessageBox msgBox(pvParentWidget);
     msgBox.setText(tr("Current test was not saved."));
     msgBox.setInformativeText(tr("If you continue, current test will be lost. Do you want to continue ?"));
     msgBox.setIcon(QMessageBox::Warning);
@@ -129,9 +131,9 @@ void mdtTtAbstractTestWidget::createTest()
   pvTestFormWidget->toFirst();
 }
 
-void mdtTtAbstractTestWidget::openTest()
+void mdtTtAbstractTester::openTest()
 {
-  mdtSqlSelectionDialog selectionDialog(this);
+  mdtSqlSelectionDialog selectionDialog(pvParentWidget);
   mdtSqlTableSelection s;
   QString sql;
   QVariant testId;
@@ -143,7 +145,7 @@ void mdtTtAbstractTestWidget::openTest()
   }
   // Check if test is saved
   if(!testIsSaved()){
-    QMessageBox msgBox(this);
+    QMessageBox msgBox(pvParentWidget);
     msgBox.setText(tr("Current test was not saved."));
     msgBox.setInformativeText(tr("If you continue, current test will be lost. Do you want to continue ?"));
     msgBox.setIcon(QMessageBox::Warning);
@@ -185,7 +187,7 @@ void mdtTtAbstractTestWidget::openTest()
   pvTestFormWidget->toFirst();
 }
 
-void mdtTtAbstractTestWidget::saveTest()
+void mdtTtAbstractTester::saveTest()
 {
   // At first, submit data from form to DB - Error message will be shown by form widget
   if(!pvTestFormWidget->submitAndWait()){
@@ -200,19 +202,7 @@ void mdtTtAbstractTestWidget::saveTest()
 
 }
 
-/**
-void mdtTtAbstractTestWidget::setDutSerialNumber(const QString & value)
-{
-  QString str = value.trimmed();
-  if(str.isEmpty()){
-    setTestDataValue("DutSerialNumber", QVariant());
-  }else{
-    setTestDataValue("DutSerialNumber", str);
-  }
-}
-*/
-
-bool mdtTtAbstractTestWidget::removeTestIfEmpty()
+bool mdtTtAbstractTester::removeTestIfEmpty()
 {
   if(!testIsEmpty()){
     return true;
@@ -224,9 +214,9 @@ bool mdtTtAbstractTestWidget::removeTestIfEmpty()
   return true;
 }
 
-void mdtTtAbstractTestWidget::displayLastError()
+void mdtTtAbstractTester::displayLastError()
 {
-  QMessageBox msgBox(this);
+  QMessageBox msgBox(pvParentWidget);
 
   msgBox.setText(pvLastError.text());
   msgBox.setDetailedText(pvLastError.systemText());

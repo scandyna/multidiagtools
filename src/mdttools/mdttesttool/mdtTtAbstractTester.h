@@ -18,28 +18,28 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_TT_ABSTRACT_TEST_WIDGET_H
-#define MDT_TT_ABSTRACT_TEST_WIDGET_H
+#ifndef MDT_TT_ABSTRACT_TESTER_H
+#define MDT_TT_ABSTRACT_TESTER_H
 
 #include "mdtError.h"
 #include "mdtTtTest.h"
 #include "mdtTtTestData.h"
 #include "mdtTtTestModelData.h"
 #include "mdtTtTestNodeManager.h"
-#include <QWidget>
 #include <QSqlDatabase>
 #include <QSqlTableModel>
 #include <QString>
 #include <QVariant>
 #include <QVector>
-
+#include <QObject>
 #include <memory>
 
+class QWidget;
 class mdtSqlFormWidget;
 
-/*! \brief Base to create a test widget
+/*! \brief Base to create a tester
  */
-class mdtTtAbstractTestWidget : public QWidget
+class mdtTtAbstractTester : public QObject
 {
  Q_OBJECT
 
@@ -47,7 +47,7 @@ class mdtTtAbstractTestWidget : public QWidget
 
   /*! \brief Constructor
    */
-  mdtTtAbstractTestWidget(QSqlDatabase db, QWidget *parent = 0);
+  mdtTtAbstractTester(QSqlDatabase db, QObject *parent = 0);
 
   /*! \brief Do some initialization
    *
@@ -61,6 +61,9 @@ class mdtTtAbstractTestWidget : public QWidget
    *
    * All childs contained in widget that have a name prefixed fld_ will be mapped
    *  to corresponding fields in Test_tbl.
+   *
+   * Given widget will also be used as parent for dialogs
+   *  that are displayed (selection dialogs, message boxes).
    */
   void setTestUiWidget(QWidget *widget);
 
@@ -131,13 +134,6 @@ class mdtTtAbstractTestWidget : public QWidget
 
  signals:
 
-  /*! \brief Emited when test item table was set and select was successfull
-   *
-   * This can be used to setup a QTableView, a mdtSqlTableWidget, or what else
-   *  (f.ex. resize or rename columns, etc...).
-   */
-  void testItemTableSet();
-
   /*! \brief Emited when test data has changed
    *
    * date comes from Test_view
@@ -162,12 +158,13 @@ class mdtTtAbstractTestWidget : public QWidget
 
  private:
 
-  Q_DISABLE_COPY(mdtTtAbstractTestWidget);
+  Q_DISABLE_COPY(mdtTtAbstractTester);
 
   QSqlDatabase pvDatabase;
   std::shared_ptr<mdtTtTestNodeManager> pvTestNodeManager;
   std::shared_ptr<mdtTtTest> pvTest;
-  mdtSqlFormWidget *pvTestFormWidget;
+  std::shared_ptr<mdtSqlFormWidget> pvTestFormWidget;
+  QWidget *pvParentWidget;        // For dialogs
 };
 
-#endif // #ifndef MDT_TT_ABSTRACT_TEST_WIDGET_H
+#endif // #ifndef MDT_TT_ABSTRACT_TESTER_H

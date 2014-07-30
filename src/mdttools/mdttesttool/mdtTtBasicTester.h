@@ -21,7 +21,7 @@
 #ifndef MDT_TT_BASIC_TESTER_H
 #define MDT_TT_BASIC_TESTER_H
 
-#include "mdtTtAbstractTestWidget.h"
+#include "mdtTtAbstractTester.h"
 #include "mdtTtTest.h"
 #include "mdtTtTestData.h"
 #include "mdtTtTestNodeManager.h"
@@ -33,7 +33,7 @@ class mdtSqlTableWidget;
 
 /*! \brief Provide ability to run tests
  */
-class mdtTtBasicTester : public mdtTtAbstractTestWidget /// : public QMainWindow, Ui::mdtTtBasicTester
+class mdtTtBasicTester : public mdtTtAbstractTester /// : public QMainWindow, Ui::mdtTtBasicTester
 {
  Q_OBJECT
 
@@ -41,7 +41,7 @@ class mdtTtBasicTester : public mdtTtAbstractTestWidget /// : public QMainWindow
 
   /*! \brief Constructor
    */
-  mdtTtBasicTester(QSqlDatabase db, QWidget *parent = 0);
+  mdtTtBasicTester(QSqlDatabase db, QObject *parent = 0);
 
   /*! \brief Setup
    */

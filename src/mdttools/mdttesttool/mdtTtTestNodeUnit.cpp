@@ -52,8 +52,6 @@ QString mdtTtTestNodeUnit::sqlForTestConnectionSelection(const QList<QVariant> c
 ///QList<QVariant> mdtTtTestNodeUnit::getConnectionIdListOfUnitId(const QVariant & unitId, bool *ok)
 QList<QVariant> mdtTtTestNodeUnit::getConnectionIdListOfUnitId(const QVariant & unitId, bool excludeAllreadyAffectedToTestNode, bool  & ok)
 {
-  Q_ASSERT(ok != 0);
-
   QList<QVariant> idList;
   ///QList<QSqlRecord> dataList;
   QString sql;
@@ -347,6 +345,7 @@ bool mdtTtTestNodeUnit::removeConnections(const QList<QVariant> & unitConnection
     }
   }
   for(i = 0; i < unitConnectionIdList.size(); ++i){
+    qDebug() << "Removing test node unit connection " << unitConnectionIdList.at(i) << " ...";
     if(!removeConnection(unitConnectionIdList.at(i))){
       if(handleTransaction){
         rollbackTransaction();
@@ -369,7 +368,7 @@ bool mdtTtTestNodeUnit::removeConnections(const QVariant & testNodeUnitId, bool 
   bool ok;
 
   // Get list of connections that are part of given unit ID (i.e. testNodeUnitId)
-  idList = getConnectionIdListOfUnitId(testNodeUnitId, true, ok);
+  idList = getConnectionIdListOfUnitId(testNodeUnitId, false, ok);
   if(!ok){
     return false;
   }
