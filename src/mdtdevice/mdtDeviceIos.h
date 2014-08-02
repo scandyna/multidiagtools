@@ -49,7 +49,7 @@ class mdtDeviceIosSegment;
  *
  *  Internally, I/Os are stored in 4 QList:
  *   - 1 for analog inputs
- *   - 1 fro analog outputs
+ *   - 1 for analog outputs
  *   - 1 for digital inputs
  *   - 1 for digital outputs
  *

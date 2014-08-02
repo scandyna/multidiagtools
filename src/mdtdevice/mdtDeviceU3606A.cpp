@@ -77,6 +77,72 @@ mdtAbstractPort::error_t mdtDeviceU3606A::connectToDevice(const mdtDeviceInfo &d
   return mdtDeviceScpi::connectToDevice(device);
 }
 
+int mdtDeviceU3606A::setupResistanceMeasure(mdtDeviceU3606A::range_t range, mdtDeviceU3606A::resolution_t resolution)
+{
+  QByteArray rangeStr;
+  QByteArray resolutionStr;
+  QByteArray command;
+  int retVal;
+
+  // Set range part
+  switch(range){
+    case RangeAuto:
+      rangeStr = "AUTO";
+      break;
+    case RangeMin:
+      rangeStr = "MIN";
+      break;
+    case RangeMax:
+      rangeStr = "MAX";
+      break;
+    case Range100:
+      rangeStr = "100";
+      break;
+    case Range1k:
+      rangeStr = "1000";
+      break;
+    case Range10k:
+      rangeStr = "10000";
+      break;
+    case Range100k:
+      rangeStr = "100000";
+      break;
+    case Range1M:
+      rangeStr = "1000000";
+      break;
+    case Range10M:
+      rangeStr = "10000000";
+      break;
+    case Range100M:
+      rangeStr = "100000000";
+      break;
+    default:
+      pvLastError.setError(tr("Requested range is not supported for resistance measurement, AUTO will be used."), mdtError::Warning);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceU3606A");
+      pvLastError.commit();
+      rangeStr = "AUTO";
+  }
+  // Set resolution part
+  switch(resolution){
+    case ResolutionMin:
+      resolutionStr = "MIN";
+      break;
+    case ResolutionMax:
+      resolutionStr = "MAX";
+      break;
+  }
+  // Send command to device
+  command = "CONF:RES " + rangeStr + "," + resolutionStr;
+  retVal = sendCommand(command);
+  if(retVal < 0){
+    pvLastError.setError(tr("Device") + " " + name() + ": " + tr("Command send failed"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceU3606A");
+    pvLastError.commit();
+  }
+
+  return retVal;
+}
+
 mdtFrameCodecScpiU3606A::measure_type_t mdtDeviceU3606A::getMeasureConfiguration()
 {
   int bTag;

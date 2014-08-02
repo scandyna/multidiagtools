@@ -23,6 +23,7 @@ set (TT_HEADER_FILES
           mdtTtAbstractTester.h
           mdtTtAbstractTestNodeCalibrationTool.h
           mdtTtBasicTester.h
+          mdtTtBasicTestNodeCalibrationTool.h
           mdtTtBasicTestNodeCalibrationWindow.h
           mdtTtValueEditionDialog.h
     )
@@ -59,6 +60,7 @@ set (TT_SOURCES_FILES
           mdtTtAbstractTester.cpp
           mdtTtAbstractTestNodeCalibrationTool.cpp
           mdtTtBasicTester.cpp
+          mdtTtBasicTestNodeCalibrationTool.cpp
           mdtTtBasicTestNodeCalibrationWindow.cpp
           mdtTtValueEditionDialog.cpp
     )

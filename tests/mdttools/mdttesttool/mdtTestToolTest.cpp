@@ -711,7 +711,27 @@ void mdtTestToolTest::mdtTtTestNodeManagerTest()
 void mdtTestToolTest::mdtTtTestTest()
 {
   /*
-   * Range checking.
+   * Simple range checking
+   */
+  QVERIFY(mdtTtTest::isInRange(1.0, 0.0, 2.0));
+  QVERIFY(mdtTtTest::isInRange(0.0, 0.0, 2.0));
+  QVERIFY(mdtTtTest::isInRange(2.0, 0.0, 2.0));
+  QVERIFY(!mdtTtTest::isInRange(-0.01, 0.0, 2.0));
+  QVERIFY(!mdtTtTest::isInRange(2.01, 0.0, 2.0));
+  QVERIFY(!mdtTtTest::isInRange(-0.01, 0.0));
+  QVERIFY(mdtTtTest::isInRange(0.0, 0.0));
+  QVERIFY(mdtTtTest::isInRange(1.0, 0.0));
+  QVERIFY(mdtTtTest::isInRange(1e15, 0.0));
+  QVERIFY(mdtTtTest::isInRange(std::numeric_limits<double>::max(), 0.0));
+  QVERIFY(!mdtTtTest::isInRange(-10.01, -10.0));
+  QVERIFY(mdtTtTest::isInRange(-10.0, -10.0));
+  QVERIFY(mdtTtTest::isInRange(0.0, -10.0));
+  QVERIFY(mdtTtTest::isInRange(1.0, -10.0));
+  QVERIFY(mdtTtTest::isInRange(1e15, -10.0));
+  QVERIFY(mdtTtTest::isInRange(std::numeric_limits<double>::max(), -10.0));
+
+  /*
+   * Range checking with fail and limit values
    *
    *        failMin   limitMix     expectedValue      limitMax    failMax
    * -inf------]----------]---------------|---------------[----------[------+inf

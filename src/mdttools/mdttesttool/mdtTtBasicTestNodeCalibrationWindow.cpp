@@ -19,9 +19,44 @@
  **
  ****************************************************************************/
 #include "mdtTtBasicTestNodeCalibrationWindow.h"
+#include "mdtTtBasicTestNodeCalibrationTool.h"
+#include "mdtSqlTableWidget.h"
+#include <QDate>
+#include <QVBoxLayout>
+#include <QCloseEvent>
+#include <QMessageBox>
+#include <memory>
+
+#include <QDebug>
 
 mdtTtBasicTestNodeCalibrationWindow::mdtTtBasicTestNodeCalibrationWindow(QSqlDatabase db, QWidget* parent)
  : QMainWindow(parent)
 {
+  QVBoxLayout *l;
+
   setupUi(this);
+  // Setup tool
+  pvCalibrationTool = new mdtTtBasicTestNodeCalibrationTool(db, this);
+  // Add test node unit view
+  l = new QVBoxLayout;
+  pvTestNodeUnitWidget = new mdtSqlTableWidget;
+  pvTestNodeUnitWidget->setModel(pvCalibrationTool->testNodeUnitViewTableModel().get());
+  l->addWidget(pvTestNodeUnitWidget);
+  wTestNodeUnit->setLayout(l);
+}
+
+bool mdtTtBasicTestNodeCalibrationWindow::init()
+{
+  if(!pvCalibrationTool->init()){
+    return false;
+  }
+  pvCalibrationTool->setTestNodeUiWidget(centralWidget());
+  connectActions();
+
+  return true;
+}
+
+void mdtTtBasicTestNodeCalibrationWindow::connectActions()
+{
+  connect(actRunCalibration, SIGNAL(triggered()), pvCalibrationTool, SLOT(runCalibration()));
 }

@@ -32,6 +32,7 @@
 #include <QList>
 #include <memory>
 
+class mdtDeviceIos;
 class mdtTtTestNodeManagerWidget;
 
 /*! \brief Helper class to access test node data and devices
@@ -86,15 +87,24 @@ class mdtTtTestNodeManager : public QObject
    */
   void clear();
 
-  /*! \brief Get setup data for given test item ID
+  /*! \brief Set short label to device I/Os
+   *
+   * Will get I/Os contained in device (see mdtDeviceIos for details).
+   *  and Test node units contained in given Test node.
+   *  For each I/O, SchemaPosition of test node unit is used,
+   *  and labelShort is set to I/O.
    */
-  ///mdtTtTestItemNodeSetupData getSetupData(const QVariant & testItemId, bool &ok);
+  bool setDeviceIosLabelShort(const QVariant & testNodeId, const QVariant & deviceIdentification);
 
   /*! \brief Get last error
    */
   inline mdtError lastError() const { return pvLastError; }
 
  private:
+
+  /*! \brief Set short labels to digital outputs
+   */
+  bool setDigitalOutputsLabelShort(mdtDeviceIos *ios, const QVariant & testNodeId, const QString & deviceIdentification);
 
   Q_DISABLE_COPY(mdtTtTestNodeManager);
 

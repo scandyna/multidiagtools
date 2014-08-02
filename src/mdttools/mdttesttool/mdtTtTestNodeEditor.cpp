@@ -51,6 +51,7 @@ mdtTtTestNodeEditor::mdtTtTestNodeEditor(QWidget *parent, QSqlDatabase db)
   /// \todo Provisoire !!
   mdtTtBasicTestNodeCalibrationWindow *c;
   c = new mdtTtBasicTestNodeCalibrationWindow(db, this);
+  c->init();
   c->show();
 }
 

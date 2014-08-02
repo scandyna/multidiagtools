@@ -135,7 +135,6 @@ bool mdtTtBasicTester::connectToInstruments()
     displayLastError();
     return false;
   }
-  
   // Connect to coupler
   if(coupler->connectToDevice(mdtDeviceInfo()) != mdtAbstractPort::NoError){
     pvLastError.setError(tr("Cannot connect to ") + coupler->name(), mdtError::Error);

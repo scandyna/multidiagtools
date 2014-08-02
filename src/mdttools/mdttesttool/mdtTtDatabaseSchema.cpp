@@ -375,6 +375,9 @@ bool mdtTtDatabaseSchema::createViews()
   if(!createLinkBeamUnitStartView()){
     return false;
   }
+  if(!createTestNodeView()){
+    return false;
+  }
   if(!createLinkBeamUnitEndView()){
     return false;
   }
@@ -3225,6 +3228,23 @@ bool mdtTtDatabaseSchema::createLinkBeamUnitEndView()
          "  ON U.Id_PK = LB.Unit_Id_FK";
 
   return createView("LinkBeam_UnitEnd_view", sql);
+}
+
+bool mdtTtDatabaseSchema::createTestNodeView()
+{
+  QString sql;
+
+  sql = "CREATE VIEW TestNode_view AS\n"\
+        "SELECT\n"\
+        " TN.*,\n"\
+        " VT.Type,\n"\
+        " VT.SubType,\n"\
+        " VT.SeriesNumber\n"\
+        "FROM TestNode_tbl TN\n"\
+        " JOIN VehicleType_tbl VT\n"\
+        "  ON VT.Id_PK = TN.VehicleType_Id_FK_PK\n";
+
+  return createView("TestNode_view", sql);
 }
 
 bool mdtTtDatabaseSchema::createTestNodeUnitView()

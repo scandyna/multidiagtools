@@ -32,7 +32,6 @@
 #include <QVector>
 #include <QDate>
 #include <QDateTime>
-#include <limits>
 
 #include <QDebug>
 
@@ -500,6 +499,12 @@ void mdtTtTest::setMeasuredValue(const mdtValue & value, const QVariant & instru
   setCurrentTestItemData("InstrumentRangeMax", instrumentRangeMax);
   setCurrentTestItemData("ResultValue", resultValue);
   setCurrentTestItemData("Result", result);
+}
+
+bool mdtTtTest::isInRange(double x, double min, double max)
+{
+  return ( ( (x > min)||(qAbs(x - min) < std::numeric_limits<double>::min()) ) &&
+           ( (x < max)||(qAbs(x - max) < std::numeric_limits<double>::min()) ) );
 }
 
 bool mdtTtTest::isInOkRange(double x, double limitMin, double limitMax)

@@ -31,6 +31,7 @@ SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtTtAbstractTester.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtTtAbstractTestNodeCalibrationTool.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtTtBasicTester.cpp
+SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtTtBasicTestNodeCalibrationTool.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtTtBasicTestNodeCalibrationWindow.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtTtValueEditionDialog.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtcablelist/mdtClVehicleTypeEditor.cpp

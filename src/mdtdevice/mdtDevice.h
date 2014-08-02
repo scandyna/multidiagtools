@@ -578,11 +578,12 @@ class mdtDevice : public QObject
   /*! \brief Set a digital output value
    *
    * Set device or internal digital value.
-   *  Internal value is updated if queryDevice is set.
+   *  Depending on subclass implementation,
+   *  if queryDevice is set, output can be updated regarding device response.
    *
    * \param digitalOutput Pointer to a digital output object.
    * \param value Value to send/store.
-   * \param sendToDevice If true, value is sent device by calling writeDigitalOutput(), else value is only cached.
+   * \param sendToDevice If true, value is sent to device by calling writeDigitalOutput(), else value is only cached.
    *                      Behaviour of this method can vary, depending on device specific subclass.
    *                      (See sublcass writeDigitalOutput() for details).
    * \param waitOnReply If true, this method will wait until reply comes in, or timeout (See waitTransactionDone() ),
@@ -612,11 +613,17 @@ class mdtDevice : public QObject
 
   /*! \brief Set digital output value
    *
-   * \overload setDigitalOutputValue(mdtDigitalIo*, const mdtValue&, bool, bool)
-   *
    * \param labelShort Short label set in I/O (see mdtDigitalIo for details).
+   *
+   * \sa setDigitalOutputValue(mdtDigitalIo*, const mdtValue&, bool, bool)
    */
   int setDigitalOutputValue(const QString &labelShort, const mdtValue &value, bool sendToDevice, bool waitOnReply);
+
+  /*! \brief Set a value and validity for all digital outputs
+   *
+   * \sa setDigitalOutputValue(mdtDigitalIo*, const mdtValue&, bool, bool)
+   */
+  int setDigitalOutputsValue(const mdtValue & value, bool sendToDevice, bool waitOnReply);
 
   /*! \brief Write all digital outputs to physical device and update (G)UI representation
    *
@@ -690,8 +697,14 @@ class mdtDevice : public QObject
  protected:
 
   /*! \brief Get last error for write access
+   *
+   * \deprecated Use pvLastError directly.
    */
   mdtError & lastErrorW();
+
+  /*! \brief Last error object
+   */
+  mdtError pvLastError;
 
   /*! \brief Read one analog input on physical device
    *
@@ -1019,7 +1032,6 @@ class mdtDevice : public QObject
   int pvBackToReadyStateTimeout;
   QTimer *pvBackToReadyStateTimer;
   mdtDeviceIos *pvIos;    // I/O's container
-  mdtError pvLastError;
 };
 
 #endif  // #ifndef MDT_DEVICE_H

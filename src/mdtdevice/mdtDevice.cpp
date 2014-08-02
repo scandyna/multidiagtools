@@ -1101,6 +1101,24 @@ int mdtDevice::setDigitalOutputValue(const QString &labelShort, const mdtValue &
   return setDigitalOutputValue(digitalOutput, value, sendToDevice, waitOnReply);
 }
 
+int mdtDevice::setDigitalOutputsValue(const mdtValue& value, bool sendToDevice, bool waitOnReply)
+{
+  if(pvIos == 0){
+    return -1;
+  }
+  if(pvIos->digitalOutputsCount() < 1){
+    return -1;
+  }
+  // Cache value to all digital outputs
+  pvIos->setDigitalOutputsValue(value);
+  // Send to device if requested
+  if(sendToDevice){
+    return setDigitalOutputs(waitOnReply);
+  }
+
+  return 0;
+}
+
 int mdtDevice::setDigitalOutputs(bool waitOnReply)
 {
   int transactionId = -1;

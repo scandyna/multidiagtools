@@ -18,18 +18,15 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "ui_mdtTtBasicTestNodeCalibrationWindow.h"
-#include <QMainWindow>
+#ifndef MDT_TT_BASIC_TEST_NODE_CALIBRATION_TOOL_H
+#define MDT_TT_BASIC_TEST_NODE_CALIBRATION_TOOL_H
 
+#include "mdtTtAbstractTestNodeCalibrationTool.h"
 #include <QSqlDatabase>
 
-class mdtTtBasicTestNodeCalibrationTool;
-class mdtSqlTableWidget;
-class QCloseEvent;
-
-/*! \biref Test node calibration example
+/*! \biref Test node calibration tool example
  */
-class mdtTtBasicTestNodeCalibrationWindow : public QMainWindow, Ui::mdtTtBasicTestNodeCalibrationWindow
+class mdtTtBasicTestNodeCalibrationTool : public mdtTtAbstractTestNodeCalibrationTool
 {
  Q_OBJECT
 
@@ -37,21 +34,45 @@ class mdtTtBasicTestNodeCalibrationWindow : public QMainWindow, Ui::mdtTtBasicTe
 
   /*! \brief Constructor
    */
-  mdtTtBasicTestNodeCalibrationWindow(QSqlDatabase db, QWidget *parent = 0);
+  mdtTtBasicTestNodeCalibrationTool(QSqlDatabase db, QObject *parent = 0);
 
   /*! \brief Init
    */
   bool init();
 
+ public slots:
+
+  /*! \brief Run calibration
+   */
+  void runCalibration();
+
  private:
 
-  /*! \brief Connect actions
+  /*! \brief Calibrate K3, K4, K5, K6
    */
-  void connectActions();
+  bool calibrateSenseRelays();
 
-  Q_DISABLE_COPY(mdtTtBasicTestNodeCalibrationWindow);
+  /*! \brief Calibrate K1 and K2
+   */
+  bool calibrateIsoRelays();
 
-  ///mdtSqlTableWidget *pvTestItemWidget;
-  mdtSqlTableWidget *pvTestNodeUnitWidget;
-  mdtTtBasicTestNodeCalibrationTool *pvCalibrationTool;
+  /*! \brief Calibrate K7 and K8
+   */
+  bool calibrateForceRelays();
+
+  /*! \brief Add instruments
+   */
+  void addInstruments();
+
+  /*! \brief Connect to instruments
+   */
+  bool connectToInstruments();
+
+  /*! \brief Disconnect from instruments
+   */
+  void disconnectFromInstruments();
+
+  Q_DISABLE_COPY(mdtTtBasicTestNodeCalibrationTool);
 };
+
+#endif // #ifndef MDT_TT_BASIC_TEST_NODE_CALIBRATION_TOOL_H

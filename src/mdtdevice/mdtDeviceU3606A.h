@@ -45,6 +45,28 @@ class mdtDeviceU3606A : public mdtDeviceScpi
 
  public:
 
+  /*! \brief Range
+   */
+  enum range_t {
+                  RangeAuto = -10,  /*!< AUTO range */
+                  RangeMin,         /*!< MIN range */
+                  RangeMax,         /*!< MAX range */
+                  Range100 = 1,     /*!< 100 range */
+                  Range1k,          /*!< 1k range */
+                  Range10k,         /*!< 10k range */
+                  Range100k,        /*!< 100k range */
+                  Range1M,          /*!< 1M range */
+                  Range10M,         /*!< 10M range */
+                  Range100M         /*!< 100M range */
+               };
+
+  /*! \brief Resolution
+   */
+  enum resolution_t {
+                  ResolutionMin,    /*!< 5 1/2 digit */
+                  ResolutionMax     /*!< 4 1/2 digit */
+                    };
+
   /*! \brief Constructor
    *
    * Will create the needed codec, I/Os and configure internal port manager .
@@ -67,6 +89,15 @@ class mdtDeviceU3606A : public mdtDeviceScpi
    * \return A error listed in mdtAbstractPort::error_t (NoError on success)
    */
   mdtAbstractPort::error_t connectToDevice(const mdtDeviceInfo &devInfo);
+
+  /*! \brief Setup resistance measure
+   *
+   * \param range If range is supported by instrument, it will be set,
+   *               else AUTO range is used.
+   * \param resolution Resolution to use
+   * \return Value < 0 on error, >= 0 on success
+   */
+  int setupResistanceMeasure(range_t range, resolution_t resolution);
 
   /*! \brief Get the measure configuration
    *

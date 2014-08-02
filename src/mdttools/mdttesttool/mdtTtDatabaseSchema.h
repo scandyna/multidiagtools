@@ -353,6 +353,10 @@ class mdtTtDatabaseSchema
    */
   bool createLinkBeamUnitEndView();
 
+  /*! \brief Create TestNode_view
+   */
+  bool createTestNodeView();
+
   /*! \brief Create TestNodeUnitConnection_view
    */
   bool createTestNodeUnitView();

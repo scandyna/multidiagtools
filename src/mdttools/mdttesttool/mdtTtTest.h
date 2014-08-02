@@ -36,6 +36,7 @@
 #include <QList>
 #include <QSqlRecord>
 #include <memory>
+#include <limits>
 
 class QSqlTableModel;
 class mdtSqlRelation;
@@ -177,6 +178,12 @@ class mdtTtTest : public mdtTtBase
    *  For proper limit evaluation, only mdtValue's flags are used.
    */
   void setMeasuredValue(const mdtValue & value, const QVariant & instrumentRangeMin, const QVariant & instrumentRangeMax);
+
+  /*! \brief Check if x is in range
+   *
+   * Return true if x is in [min;max]
+   */
+  static bool isInRange(double x, double min, double max = std::numeric_limits<double>::max());
 
   /*! \brief Check if x is in OK range
    *

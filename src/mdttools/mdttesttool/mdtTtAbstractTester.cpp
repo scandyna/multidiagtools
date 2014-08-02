@@ -57,9 +57,8 @@ bool mdtTtAbstractTester::init()
 void mdtTtAbstractTester::setTestUiWidget(QWidget* widget)
 {
   Q_ASSERT(widget != 0);
-  
+
   pvParentWidget = widget;
-  
   pvTestFormWidget->mapFormWidgets(widget);
   pvTestFormWidget->setCurrentIndex(-1);
   pvTestFormWidget->start();

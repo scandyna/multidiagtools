@@ -1,6 +1,6 @@
 format 207
 "mdttesttool" // mdttools::mdttesttool
-  revision 45
+  revision 47
   modified_by 2 "philippe"
   // class settings
   
@@ -5147,7 +5147,7 @@ ${inlines}
       end
     end
 
-    classdiagram 1211138 "mdtTtAbstractTestNodeCalibrationWidget"
+    classdiagram 1211138 "mdtTtAbstractTestNodeCalibrationTool"
       classdiagramsettings member_max_width 0 end
       size A4
     end
@@ -5166,14 +5166,6 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 1681538 // <generalisation>
-	relation 1666050 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 1681538 // <generalisation>
-	  b parent class_ref 1342466 // mdtTtAbstractTester
-      end
-
       operation 2167042 "mdtTtAbstractTestNodeCalibrationTool"
 	public explicit_return_type ""
 	nparams 2
@@ -5183,6 +5175,195 @@ ${inlines}
 	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${volatile}${throw};
 "
 	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2180738 "setTestNodeUiWidget"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "QWidget" explicit_type "widget"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 1695106 // <generalisation>
+	relation 1679618 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1695106 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+
+      classrelation 1695234 // pvTestNodeForm (<directional composition>)
+	relation 1679746 *-->
+	  a role_name "pvTestNodeForm" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 1695234 // pvTestNodeForm (<directional composition>)
+	  b parent class_ref 686466 // mdtSqlFormWidget
+      end
+
+      classrelation 1695362 // pvTestNodeManager (<directional composition>)
+	relation 1679874 *-->
+	  a role_name "pvTestNodeManager" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 1695362 // pvTestNodeManager (<directional composition>)
+	  b parent class_ref 1302018 // mdtTtTestNodeManager
+      end
+
+      classrelation 1695490 // pvTest (<directional composition>)
+	relation 1680002 *-->
+	  a role_name "pvTest" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 1695490 // pvTest (<directional composition>)
+	  b parent class_ref 1053698 // mdtTtTest
+      end
+    end
+
+    classdiagram 1217666 "mdtTtBasicTestNodeCalibrationTool"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 1355650 "mdtTtBasicTestNodeCalibrationWindow"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 1688322 // <generalisation>
+	relation 1672834 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1688322 // <generalisation>
+	  b parent class_ref 552450 // QMainWindow
+      end
+
+      classrelation 1688578 // pvCalibrationTool (<directional composition>)
+	relation 1673090 *-->
+	  a role_name "pvCalibrationTool" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 1688578 // pvCalibrationTool (<directional composition>)
+	  b parent class_ref 1355778 // mdtTtBasicTestNodeCalibrationTool
+      end
+    end
+
+    class 1355778 "mdtTtBasicTestNodeCalibrationTool"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 1688450 // <generalisation>
+	relation 1672962 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1688450 // <generalisation>
+	  b parent class_ref 1349122 // mdtTtAbstractTestNodeCalibrationTool
+      end
+
+      operation 2180098 "mdtTtBasicTestNodeCalibrationTool"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	  param in name "parent" type class_ref 138626 // QObject
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2180226 "init"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2180354 "addInstrument"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2180482 "connectToInstruments"
+	private explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2180610 "runCalibration"
+	stereotype "slot"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
