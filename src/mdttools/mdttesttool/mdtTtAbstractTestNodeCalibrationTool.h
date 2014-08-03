@@ -114,8 +114,19 @@ class mdtTtAbstractTestNodeCalibrationTool : public QObject
   bool setTestNodeUnitData(const QString & schemaPosition, const QString & fieldName, const QVariant & data);
 
   /*! \brief Set calibration offset for given testNodeUnitId
+   *
+   * Note: calibration offset and date are cached in models only, not sent to database.
    */
-  
+  bool setTestNodeUnitCalibrationOffset(int testNodeUnitId, double offset);
+
+  /*! \brief Set calibration offset for given test node unit schemaPosition
+   *
+   * Notes:
+   *  - Calibration offset and date are cached in models only, not sent to database.
+   *  - The first test node unit that matches schemaPosition in current test node is considered.
+   */
+  bool setTestNodeUnitCalibrationOffset(const QString &schemaPosition, double offset);
+
  protected:
 
   /*! \brief Contains last error that occured

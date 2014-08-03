@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -31,6 +31,11 @@ class mdtIoTest : public mdtTest
 
   // mdtValue container test
   void mdtValueTest();
+
+  // Binary <-> double
+  void binaryDoubleConverterTest();
+  void wagoAnalogInputIoConversionTest();
+  void wagoAnalogOutputIoConversionTest();
 
   // Basic abstract I/O class test
   void mdtAbstractIoTest();

@@ -298,6 +298,10 @@ void mdtFrameCodecTest::scpiDecodeTest()
   QVERIFY(value.isValid());
   ///QCOMPARE(value.toDouble(), 3.197000E-06);
   QCOMPARE(value.valueDouble(), 3.197000E-06);
+  data = "+2.930320E-01\n";
+  value = codec.decodeSingleValueDouble(data);
+  QVERIFY(value.isValid());
+  QCOMPARE(value.valueDouble(), 0.2930320);
 
   // Decode single value: OL
   data = "+9.900000E+37\n";

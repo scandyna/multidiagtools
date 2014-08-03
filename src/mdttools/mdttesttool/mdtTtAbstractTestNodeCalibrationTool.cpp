@@ -23,6 +23,7 @@
 #include "mdtSqlRelation.h"
 #include <QSqlError>
 #include <QModelIndex>
+#include <QDateTime>
 
 #include <QDebug>
 
@@ -207,6 +208,42 @@ bool mdtTtAbstractTestNodeCalibrationTool::setTestNodeUnitData(const QString& sc
   Q_ASSERT(!testNodeUnitId.isNull());
 
   return setTestNodeUnitData(testNodeUnitId.toInt(), fieldName, data);
+}
+
+bool mdtTtAbstractTestNodeCalibrationTool::setTestNodeUnitCalibrationOffset(int testNodeUnitId, double offset)
+{
+  QVariant data;
+
+  // Set calibration data
+  data = QDateTime::currentDateTime().toString(Qt::ISODate);
+  if(!setTestNodeUnitData(testNodeUnitId, "CalibrationDate", data)){
+    return false;
+  }
+  // Set calibration offset
+  if(!setTestNodeUnitData(testNodeUnitId, "CalibrationOffset", offset)){
+    setTestNodeUnitData(testNodeUnitId, "CalibrationDate", QVariant());
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtTtAbstractTestNodeCalibrationTool::setTestNodeUnitCalibrationOffset(const QString& schemaPosition, double offset)
+{
+  QVariant data;
+
+  // Set calibration data
+  data = QDateTime::currentDateTime().toString(Qt::ISODate);
+  if(!setTestNodeUnitData(schemaPosition, "CalibrationDate", data)){
+    return false;
+  }
+  // Set calibration offset
+  if(!setTestNodeUnitData(schemaPosition, "CalibrationOffset", offset)){
+    setTestNodeUnitData(schemaPosition, "CalibrationDate", QVariant());
+    return false;
+  }
+
+  return true;
 }
 
 void mdtTtAbstractTestNodeCalibrationTool::displayLastError()

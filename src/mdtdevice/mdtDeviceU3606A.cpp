@@ -213,7 +213,10 @@ void mdtDeviceU3606A::decodeReadenFrame(mdtPortTransaction *transaction)
         MDT_ERROR_SET_SRC(lastErrorW(), "mdtDeviceU3606A");
         lastErrorW().commit();
       }else{
+        qDebug() << "decodeReadenFrame() - data: " << transaction->data();
         transaction->analogIo()->setValue(pvCodec->decodeSingleValueDouble(transaction->data()), false);
+        qDebug() << "decodeReadenFrame() - decoded data: " << pvCodec->decodeSingleValueDouble(transaction->data());
+        qDebug() << "decodeReadenFrame() - decoded data: " << transaction->analogIo()->value().valueDouble();
       }
       break;
     case mdtFrameCodecScpi::QT_ERR:

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -31,6 +31,14 @@
  *  For example, a analog I/O module, with a 8 bit
  *  encoding could be displayed with this class
  *  togther with mdtAnalogInWidget or mdtAnalogOutWidget.
+ *
+ * \todo Because the class must handle storage + UI interactions,
+ *       and because it can be used for a varety of cases,
+ *       conversions should be done by another class.
+ *       F.ex., if device talks "Itegral binary" , such as Waogo 750 I/O modules,
+ *       conversion must be done and stored here.
+ *       With a multimeter (f.ex. Agilent U3606A), witch talks ASCII,
+ *       conversion is allready done in frame codec, and any value must be stored here AS IS.
  */
 class mdtAnalogIo : public mdtAbstractIo
 {

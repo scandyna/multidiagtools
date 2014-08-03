@@ -180,7 +180,8 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateSenseRelays()
     return false;
   }
   // Calibrate K4 and K5  (R/2)
-  
+  setTestNodeUnitCalibrationOffset("K4", R.valueDouble() / 2.0);
+  setTestNodeUnitCalibrationOffset("K5", R.valueDouble() / 2.0);
   // Set all relays OFF
   
   // Set K3 and K6 ON
