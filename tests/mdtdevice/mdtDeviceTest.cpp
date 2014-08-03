@@ -1559,7 +1559,8 @@ void mdtDeviceTest::deviceIosWidgetTest()
   ai->setLabelShort("Vin");
   ai->setLabel("Input voltage");
   ai->setDetails("Input voltage measured from AG1\nSee schema 15G");
-  QVERIFY(ai->setRange(0.0, 10.0, 16));
+  ///QVERIFY(ai->setRange(0.0, 10.0, 16));
+  ai->setRange(0.0, 10.0, 16);
   ///ios.addAnalogInput(ai);
 
   ai = new mdtAnalogIo;
@@ -1567,7 +1568,8 @@ void mdtDeviceTest::deviceIosWidgetTest()
   ai->setLabelShort("wX_BatUBa");
   ai->setLabel("rBatSpannung");
   ai->setDetails("Batteriespannung\nSchema: 06E");
-  QVERIFY(ai->setRange(0.0, 50.0, 16));
+  ///QVERIFY(ai->setRange(0.0, 50.0, 16));
+  ai->setRange(0.0, 50.0, 16);
   ios.addAnalogInput(ai);
 
   // Add analog outputs
@@ -1576,7 +1578,8 @@ void mdtDeviceTest::deviceIosWidgetTest()
   ao->setLabelShort("Vout");
   ao->setLabel("Output voltage for AG speed");
   ao->setDetails("Output voltage for AG speed setpoint\nSee schema 16F");
-  QVERIFY(ao->setRange(0.0, 10.0, 16));
+  ///QVERIFY(ao->setRange(0.0, 10.0, 16));
+  ao->setRange(0.0, 10.0, 16);
   ios.addAnalogOutput(ao);
 
   // Add digital inputs
@@ -2295,7 +2298,8 @@ void mdtDeviceTest::modbusBeckhoffTest()
   ao->setLabelShort("AO1");
   ao->setUnit("[V]");
   ao->setDetails("Module type: KL4001");
-  QVERIFY(ao->setRange(0.0, 10.0, 12, 3, false));
+  ///QVERIFY(ao->setRange(0.0, 10.0, 12, 3, false));
+  ao->setRange(0.0, 10.0, 12, 3, false);
   ///QVERIFY(ao->setEncodeBitSettings(15, 0));
   d.addOutput(ao);
 

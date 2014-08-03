@@ -21,7 +21,6 @@
 #ifndef MDT_BINARY_DOUBLE_CONVERTER_H
 #define MDT_BINARY_DOUBLE_CONVERTER_H
 
-///#include "mdtError.h"
 #include <QtGlobal>
 #include <limits>
 
@@ -125,10 +124,6 @@ class mdtBinaryDoubleConverter
     // Store min and max
     pvMinimum = min;
     pvMaximum = max;
-    
-    qDebug() << "min: " << min << ", max: " << max;
-    qDebug() << "Q: " << pvQuantizationStep << " , 1/Q: " << pvInvQuantizationStep;
-    qDebug() << "Value mask: " << hex << pvValueMask << " , sign mask: " << hex << pvSignMask;
   }
 
   /*! \brief Get minimum value
@@ -174,66 +169,33 @@ class mdtBinaryDoubleConverter
   {
     T m;
 
-    qDebug() << "x: " << x;
-    
     // We must clip value, else we can have strongly wrong errors (underflow/overflow errors)
     if(x < (pvMinimum + pvQuantizationStep)){
       x = pvMinimum;
     }else if(x > (pvMaximum - pvQuantizationStep)){
       x = pvMaximum - pvQuantizationStep;
     }
-    
-    qDebug() << "x: " << x;
-    
-         
     // Make conversion
     if(pvValueIsSigned){
-      x = pvInvQuantizationStep * x;
+      m = pvInvQuantizationStep * x;
     }else{
       if(pvScaleFromMinToMax){
-        x = pvInvQuantizationStep * (x - pvMinimum);
+        m = pvInvQuantizationStep * (x - pvMinimum);
       }else{
-        x = pvInvQuantizationStep * x;
+        m = pvInvQuantizationStep * x;
       }
     }
-
-     
-    qDebug() << "x: " << x;
-    
-    /**
-    if(pvValueIsSigned && (x < 0.0)){
-      x = -x;
-    }
-    qDebug() << "x: " << x << " , 0x" << hex << (T)x;
-
-    x = x * pow(2.0, pvValueLsbIndex);
-    
-    qDebug() << "x: " << x << " , 0x" << hex << (T)x;
-    
-    
-    return x;
-    */
-    
-    m = x;
-    qDebug() << "m: " << m << "  - 0x" << hex << m;
-    
     // Apply C2 and negate if value < 0
     if(pvValueIsSigned && (x < 0.0)){
       m = -m;
       m = (~m) & pvValueMask; // C1
       ++m;  // C2
     }
-    qDebug() << "m: " << m << "  - 0x" << hex << m;
     m &= pvValueMask;
     m = m << pvValueLsbIndex;
-    qDebug() << "m: " << m << "  - 0x" << hex << m;
 
     return m;
   }
-
-  /*! \brief Get last error
-   */
-  ///mdtError lastError() const { return pvLastError; }
 
  private:
 
@@ -245,8 +207,7 @@ class mdtBinaryDoubleConverter
   T pvValueMask;                // Mask to extract the correct bits that contain value in binary data
   T pvSignMask;                 // Mask to extract the sign bit in binary data
   bool pvValueIsSigned;         // True if binary data represents a signed value
-  bool pvScaleFromMinToMax;     
-  ///mdtError pvLastError;
+  bool pvScaleFromMinToMax;
 };
 
 #endif

@@ -22,14 +22,19 @@
 #include "mdtError.h"
 #include <cmath>
 #include <float.h>
+#include <limits>
 
 //#include <QDebug>
 
+using namespace std;
+
 mdtAnalogIo::mdtAnalogIo(QObject *parent)
- : mdtAbstractIo(parent)
+ : mdtAbstractIo(parent),
+   pvConverter(nullptr)
 {
   pvMinimum = 0.0;
   pvMaximum = 0.0;
+  /**
   pvStepQ = 1.0;
   pvStepAD = 1.0;
   pvIntValueLsbIndex = 0;
@@ -41,6 +46,7 @@ mdtAnalogIo::mdtAnalogIo(QObject *parent)
   pvIntValueMaskEnc = -1;
   // Set sign bit mask to 0
   pvIntValueSignMask = 0;
+  */
 }
 
 mdtAnalogIo::~mdtAnalogIo()
@@ -58,11 +64,18 @@ QString mdtAnalogIo::unit() const
   return pvUnit;
 }
 
-bool mdtAnalogIo::setRange(double min, double max, int intValueBitsCount, int intValueLsbIndex, bool intValueSigned, bool scaleFromMinToMax, double conversionFactor)
+void mdtAnalogIo::setRange(double min, double max, int intValueBitsCount, int intValueLsbIndex, bool intValueSigned, bool scaleFromMinToMax, double conversionFactor)
 {
   Q_ASSERT(max > min);
   Q_ASSERT((qAbs(conversionFactor) - DBL_EPSILON) > 0.0);
 
+  if(!pvConverter){
+    pvConverter = unique_ptr<mdtBinaryDoubleConverter<int> >(new mdtBinaryDoubleConverter<int>);
+  }
+  pvConverter->setRange(min, max, intValueBitsCount, intValueLsbIndex, intValueSigned, scaleFromMinToMax, conversionFactor);
+  
+
+  /**
   int i;
 
   // Check that lsb index and bits count are in acceptable range
@@ -104,6 +117,7 @@ bool mdtAnalogIo::setRange(double min, double max, int intValueBitsCount, int in
   }
   pvIntValueSignMask = (1 << (intValueBitsCount-1) );
   pvStepAD = 1.0/pvStepQ;
+  */
 
   // Store min and max and signal
   pvMinimum = min;
@@ -116,7 +130,7 @@ bool mdtAnalogIo::setRange(double min, double max, int intValueBitsCount, int in
   pvValue.setDefaultValue(pvValue.valueInt());
   pvValue.clear();
 
-  return true;
+  ///return true;
 }
 
 double mdtAnalogIo::minimum() const
@@ -166,9 +180,23 @@ void mdtAnalogIo::setValueFromUi(double value)
 
 void mdtAnalogIo::setValueFromDouble(const mdtValue &value, bool emitValueChanged)
 {
-  int m;
+  ///int m;
   double x = value.valueDouble();
 
+  // Check if new value has changed
+  if((qAbs<double>(x - pvValue.valueDouble()) <= std::numeric_limits<double>::min()) && (value.isValid() == pvValue.isValid())){
+    return;
+  }
+  // Check validity of new value and process if true
+  if((value.isValid())&&(value.hasValueDouble())){
+    if(pvConverter){
+      pvValue.setValue(pvConverter->doubleToBinary(x));
+    }
+    pvValue.setValue(x, value.isMinusOl(), value.isPlusOl());
+  }else{
+    pvValue.clear();
+  }
+  /**
   // Check if new value has changed
   if((fabs(x - pvValue.valueDouble()) <= pvStepQ)&&(value.isValid() == pvValue.isValid())){
     return;
@@ -205,6 +233,7 @@ void mdtAnalogIo::setValueFromDouble(const mdtValue &value, bool emitValueChange
   }else{
     pvValue.clear();
   }
+  */
   // Check if new value has changed
   // Notify
   if(pvNotifyUi){
@@ -219,12 +248,21 @@ void mdtAnalogIo::setValueFromDouble(const mdtValue &value, bool emitValueChange
 void mdtAnalogIo::setValueFromInt(const mdtValue &value, bool emitValueChanged)
 {
   int m = value.valueInt();
-  double x;
+  ///double x;
 
   // Check if new value has changed
   if((m == pvValue.valueInt())&&(value.isValid() == pvValue.isValid())){
     return;
   }
+  if((value.isValid())&&(value.hasValueInt())){
+    if(pvConverter){
+      pvValue.setValue(pvConverter->binaryToDouble(m));
+    }
+    pvValue.setValue(m, value.isMinusOl(), value.isPlusOl());
+  }else{
+    pvValue.clear();
+  }
+  /**
   // Check validity of new value and process if true
   if((value.isValid())&&(value.hasValueInt())){
     m = value.valueInt();
@@ -253,6 +291,7 @@ void mdtAnalogIo::setValueFromInt(const mdtValue &value, bool emitValueChanged)
   }else{
     pvValue.clear();
   }
+  */
   // Notify
   if(pvNotifyUi){
     emit(valueChangedForUi(pvValue));

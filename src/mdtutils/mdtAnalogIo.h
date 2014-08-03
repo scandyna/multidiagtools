@@ -23,6 +23,10 @@
 
 #include "mdtAbstractIo.h"
 #include <QVariant>
+#include <memory>
+
+///class mdtBinaryDoubleConverter;
+#include "mdtBinaryDoubleConverter.h"
 
 /*! \brief Representation of a analog I/O
  *
@@ -62,32 +66,13 @@ class mdtAnalogIo : public mdtAbstractIo
    */
   QString unit() const;
 
-  /*! \brief Specify the range of values and bits decode parameters
+  /*! \brief Specify the range of values and conversion parameters
    *
    * Store the new range and set the value to the minimum.
    *  The valueChanged() signal is emitted.
    *
-   * It can happen that a I/O module returns, f.ex., 
-   *  a integer value in a 16 bits packet, but with
-   *  some additional flags. (example: Wago 750-457).
-   *  In such case, the value is, f.ex., encoded in 12 bits only.
-   *
-   * Take example of Wago 750-457:
-   *  - Value + flags are encoded in a 16 bits word
-   *  - Value is encoded in 12 bits, from b3 to b14 + 1 sign bit, b15
-   *  - Value is scaled from -10 V to 10 V
-   *
-   * In this example, this method must be called with
-   *  min = -10.0 , max = 10.0 , intValueBitsCount = 13 , intValueLsbIndex = 3 , intValueSigned = true , scaleFromMinToMax = true , conversionFactor = 1.0 .
-   *
-   * Here is another example with Wago 750-464 with Pt100 sensor and normal format:
-   *  - Value is encoded in 16 bits
-   *  - Scaling is allready done by device
-   *  - Value represents 0.1°C per digit -> we have to apply a conversion factor of 0.1
-   *
-   * In this example, this method must be called with
-   *  min = -200.0 , max = 850.0 , intValueBitsCount = 16 , intValueLsbIndex = 0 , intValueSigned = true , scaleFromMinToMax = false , conversionFactor = 0.1 .
-   *
+   * This method will also enable conversions.
+   *  See mdtBinaryDoubleConverter class for details about conversion setup.
    *
    * \param min Minimum value to display (f.ex. 0V, or 4mA)
    * \param max Maximum value to display (f.ex. 10V, or 20mA)
@@ -110,7 +95,7 @@ class mdtAnalogIo : public mdtAbstractIo
    *  - The signal rangeChangedForUi() is emited
    *  - The signal valueChangedForUi() is emited
    */
-  bool setRange(double min, double max, int intValueBitsCount, int intValueLsbIndex = 0, bool intValueSigned = false, bool scaleFromMinToMax = true, double conversionFactor = 1.0);
+  void setRange(double min, double max, int intValueBitsCount, int intValueLsbIndex = 0, bool intValueSigned = false, bool scaleFromMinToMax = true, double conversionFactor = 1.0);
 
   /*! \brief Get the minimum value of the range
    */
@@ -185,9 +170,10 @@ class mdtAnalogIo : public mdtAbstractIo
   QString pvUnit;
   double pvMinimum;
   double pvMaximum;
-  double pvStepQ;             // Quantification step, it is also the factor used for Int (encoded) -> Floating (analog value) conversion (D/A conversion)
-  double pvStepAD;            // Factor used for Floating (analog value) -> Int (encoded) conversion (A/D conversion)
+  ///double pvStepQ;             // Quantification step, it is also the factor used for Int (encoded) -> Floating (analog value) conversion (D/A conversion)
+  ///double pvStepAD;            // Factor used for Floating (analog value) -> Int (encoded) conversion (A/D conversion)
   // Members used for integer <-> float value conversion
+  /**
   int pvIntValueLsbIndex;     // Index of least significant bit, used in setValueInt()
   int pvIntValueLsbIndexEnc;  // Index of least significant bit, used in valueInt()
   int pvIntValueMask;         // Mask to extract the correct bits count, used in setValueInt()
@@ -195,6 +181,8 @@ class mdtAnalogIo : public mdtAbstractIo
   int pvIntValueSignMask;
   bool pvIntValueSigned;
   bool pvScaleFromMinToMax;
+  */
+  std::unique_ptr<mdtBinaryDoubleConverter<int> > pvConverter;
 };
 
 #endif  // #ifndef MDT_ANALOG_IO_H
