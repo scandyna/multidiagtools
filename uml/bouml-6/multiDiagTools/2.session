@@ -1,12 +1,13 @@
-window_sizes 1280 978 233 1041 925 0
+window_sizes 1280 1005 233 1041 952 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 1224194 // mdtBinaryDoubleConverter
-    1041 925 90 18 0 0
+  active  classdiagram_ref 941058 // Test
+    1041 952 80 3 428 0
 end
 show_stereotypes
-selected classview_ref 688386 // mdtBinaryDoubleConverter
+selected attribute_ref 1231746 // ValueUnit
 open
-  class_ref 1362306 // mdtBinaryDoubleConverter
+  attribute_ref 1355138 // Key
+  attribute_ref 1231746 // ValueUnit
 end
 end

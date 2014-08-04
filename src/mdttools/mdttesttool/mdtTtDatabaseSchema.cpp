@@ -2217,12 +2217,24 @@ bool mdtTtDatabaseSchema::setupTestModelTable()
   field.setType(QVariant::Int);
   field.setAutoValue(true);
   table.addField(field, true);
+  // Key
+  field = QSqlField();
+  field.setName("Key");
+  field.setType(QVariant::String);
+  field.setLength(70);
+  table.addField(field, false);
   // Designation EN
   field = QSqlField();
   field.setName("DesignationEN");
   field.setType(QVariant::String);
   field.setLength(150);
   table.addField(field, false);
+  // Indexes
+  table.addIndex("Key_idx", true);
+  if(!table.addFieldToIndex("Key_idx", "Key")){
+    pvLastError = table.lastError();
+    return false;
+  }
 
   pvTables.append(table);
 
@@ -2277,6 +2289,12 @@ bool mdtTtDatabaseSchema::setupTestModelItemTable()
   field.setName("TestModel_Id_FK");
   field.setRequiredStatus(QSqlField::Required);
   field.setType(QVariant::Int);
+  table.addField(field, false);
+  // Key
+  field = QSqlField();
+  field.setName("Key");
+  field.setType(QVariant::String);
+  field.setLength(70);
   table.addField(field, false);
   // TestLinkBusA_Id_FK
   field = QSqlField();
@@ -2333,8 +2351,12 @@ bool mdtTtDatabaseSchema::setupTestModelItemTable()
   field.setLength(10);
   table.addField(field, false);
   // Indexes
-  table.addIndex("TestModel_Id_FK_idx", false);
-  if(!table.addFieldToIndex("TestModel_Id_FK_idx", "TestModel_Id_FK")){
+  table.addIndex("TestModel_Id_FK_and_Key_idx", true);
+  if(!table.addFieldToIndex("TestModel_Id_FK_and_Key_idx", "TestModel_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  if(!table.addFieldToIndex("TestModel_Id_FK_and_Key_idx", "Key")){
     pvLastError = table.lastError();
     return false;
   }
@@ -3776,6 +3798,7 @@ bool mdtTtDatabaseSchema::createTestView()
   sql = "CREATE VIEW Test_view AS\n"\
         "SELECT\n"\
         " T.Id_PK,\n"\
+        " TM.Key,\n"\
         " TM.DesignationEN,\n"\
         " T.Date,\n"\
         " T.DutName,\n"\
@@ -3797,6 +3820,7 @@ bool mdtTtDatabaseSchema::createTestItemView()
         " TI.Test_Id_FK,\n"\
         " TI.TestModelItem_Id_FK,\n"\
         " TI.Date,\n"\
+        " TMI.Key,\n"\
         " TMI.SequenceNumber,\n"\
         " TMI.DesignationEN,\n"\
         " TI.MeasuredValue,\n"\
@@ -3830,6 +3854,7 @@ bool mdtTtDatabaseSchema::createTestItemNodeUnitSetupView()
         " TMI.TestModel_Id_FK,\n"\
         /*" TNUS.Id_PK,\n"\*/
         /*" TNUS.TestModelItem_Id_FK,\n"\*/
+        " TMI.Key,\n"\
         " TMI.SequenceNumber,\n"\
         " TNUS.StepNumber,\n"\
         " U.SchemaPosition,\n"\

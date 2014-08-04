@@ -100,9 +100,6 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateSenseRelays()
   coupler = testNodeManager()->device<mdtDeviceModbusWago>("W750");
   Q_ASSERT(coupler);
 
-  setTestNodeUnitData("K5", "CalibrationOffset", 1.25);
-  qDebug() << "K5 CAL: " << testNodeUnitData("K5", "CalibrationOffset");
-  
   // Set all relays OFF
   if(coupler->setDigitalOutputsValue(false, true, true) < 0){
     pvLastError = coupler->lastError();
@@ -163,6 +160,7 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateSenseRelays()
   // Set K4 and K5 ON
   coupler->setDigitalOutputValue("K4", true, false, false);
   coupler->setDigitalOutputValue("K5", true, false, false);
+  // Send relays states to coupler
   if(!coupler->setDigitalOutputs(true)){
     pvLastError = coupler->lastError();
     return false;
@@ -183,37 +181,258 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateSenseRelays()
   setTestNodeUnitCalibrationOffset("K4", R.valueDouble() / 2.0);
   setTestNodeUnitCalibrationOffset("K5", R.valueDouble() / 2.0);
   // Set all relays OFF
-  
+  if(coupler->setDigitalOutputsValue(false, false, false) < 0){
+    pvLastError = coupler->lastError();
+    return false;
+  }
   // Set K3 and K6 ON
-  
+  coupler->setDigitalOutputValue("K3", true, false, false);
+  coupler->setDigitalOutputValue("K6", true, false, false);
+  // Send relays states to coupler
+  if(!coupler->setDigitalOutputs(true)){
+    pvLastError = coupler->lastError();
+    return false;
+  }
+  coupler->wait(50);
   // Check that we have R < 1 Ohm
-  
+  if(multimeter->setupResistanceMeasure(mdtDeviceU3606A::RangeMin, mdtDeviceU3606A::ResolutionMin) < 0){
+    pvLastError = multimeter->lastError();
+    return false;
+  }
+  R = multimeter->getMeasureValue();
+  qDebug() << "R: " << R;
+  if(!isInRange(R, 0.0, 1.0)){
+    pvLastError.updateText(tr("Checking resistance of realys K4 and K5 failed."));
+    return false;
+  }
   // Calibrate K3 and K6  (R/2)
-  
+  setTestNodeUnitCalibrationOffset("K3", R.valueDouble() / 2.0);
+  setTestNodeUnitCalibrationOffset("K6", R.valueDouble() / 2.0);
+
   return true;
 }
 
 bool mdtTtBasicTestNodeCalibrationTool::calibrateIsoRelays()
 {
-  /// \todo Implement !
-  
+  shared_ptr<mdtDeviceU3606A> multimeter;
+  shared_ptr<mdtDeviceModbusWago> coupler;
+  mdtValue R;
+  QVariant val;
+  double r4, r6;
+  bool ok;
+
+  multimeter = testNodeManager()->device<mdtDeviceU3606A>("U3606A");
+  Q_ASSERT(multimeter);
+  coupler = testNodeManager()->device<mdtDeviceModbusWago>("W750");
+  Q_ASSERT(coupler);
+
+  // Get R of K4 and K6
+  val = testNodeUnitData("K4", "CalibrationOffset");
+  if(val.isNull()){
+    pvLastError.setError(tr("Could not get calibration offset of relay K4."), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtBasicTestNodeCalibrationTool");
+    pvLastError.commit();
+    return false;
+  }
+  r4 = val.toDouble(&ok);
+  Q_ASSERT(ok);
+  val = testNodeUnitData("K6", "CalibrationOffset");
+  if(val.isNull()){
+    pvLastError.setError(tr("Could not get calibration offset of relay K6."), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtBasicTestNodeCalibrationTool");
+    pvLastError.commit();
+    return false;
+  }
+  r6 = val.toDouble(&ok);
+  Q_ASSERT(ok);
+  // Setup multimeter to its max range
+  if(multimeter->setupResistanceMeasure(mdtDeviceU3606A::RangeMax, mdtDeviceU3606A::ResolutionMin) < 0){
+    pvLastError = multimeter->lastError();
+    return false;
+  }
   // Set all relays OFF
-  
-  // Set K1 ON
-  
+  if(coupler->setDigitalOutputsValue(false, false, false) < 0){
+    pvLastError = coupler->lastError();
+    return false;
+  }
+  // Set K4, K6 and K1 ON
+  coupler->setDigitalOutputValue("K4", true, false, false);
+  coupler->setDigitalOutputValue("K6", true, false, false);
+  coupler->setDigitalOutputValue("K1", true, false, false);
+  // Send relays states to coupler
+  if(!coupler->setDigitalOutputs(true)){
+    pvLastError = coupler->lastError();
+    return false;
+  }
+  coupler->wait(50);
   // Check that we have R infinite
-  
-  
-  
+  R = multimeter->getMeasureValue();
+  qDebug() << "R: " << R;
+  if(!isInRange(R, 1e6)){
+    pvLastError.updateText(tr("Checking about no short with K4, K6 and K1 set failed."));
+    return false;
+  }
+  // Set all relays OFF
+  if(coupler->setDigitalOutputsValue(false, false, false) < 0){
+    pvLastError = coupler->lastError();
+    return false;
+  }
+  // Set K4, K6 and K2 ON
+  coupler->setDigitalOutputValue("K4", true, false, false);
+  coupler->setDigitalOutputValue("K6", true, false, false);
+  coupler->setDigitalOutputValue("K2", true, false, false);
+  // Send relays states to coupler
+  if(!coupler->setDigitalOutputs(true)){
+    pvLastError = coupler->lastError();
+    return false;
+  }
+  coupler->wait(50);
+  // Check that we have R infinite
+  R = multimeter->getMeasureValue();
+  qDebug() << "R: " << R;
+  if(!isInRange(R, 1e6)){
+    pvLastError.updateText(tr("Checking about no short with K4, K6 and K2 set failed."));
+    return false;
+  }
+  // Set K4, K6, K1 and K2 ON
+  coupler->setDigitalOutputValue("K4", true, false, false);
+  coupler->setDigitalOutputValue("K6", true, false, false);
+  coupler->setDigitalOutputValue("K1", true, false, false);
+  coupler->setDigitalOutputValue("K2", true, false, false);
+  // Send relays states to coupler
+  if(!coupler->setDigitalOutputs(true)){
+    pvLastError = coupler->lastError();
+    return false;
+  }
+  coupler->wait(50);
+  // Setup multimeter to its min range
+  if(multimeter->setupResistanceMeasure(mdtDeviceU3606A::RangeMin, mdtDeviceU3606A::ResolutionMin) < 0){
+    pvLastError = multimeter->lastError();
+    return false;
+  }
+  // Check that we have R < 1 Ohm
+  R = multimeter->getMeasureValue();
+  qDebug() << "R: " << R;
+  if(!isInRange(R, 0.0, 2.0)){  /// \todo Provisoire ! Voir pourquoi 1.5 Ohm durant 10 secondes !
+    pvLastError.updateText(tr("Checking resistance of realys K1 and K2 failed.\nNote: did you plug the bridge between ISO+ and ISO- ?"));
+    return false;
+  }
+  // Calibrate K1 and K2 ( (R - r4 - r6)/2 )
+  setTestNodeUnitCalibrationOffset("K1", (R.valueDouble() - r4 - r6) / 2.0);
+  setTestNodeUnitCalibrationOffset("K2", (R.valueDouble() - r4 - r6) / 2.0);
+
   return true;
 }
 
 bool mdtTtBasicTestNodeCalibrationTool::calibrateForceRelays()
 {
-  /// \todo Implement !
+  shared_ptr<mdtDeviceU3606A> multimeter;
+  shared_ptr<mdtDeviceModbusWago> coupler;
+  mdtValue R;
+  QVariant val;
+  double r4, r6;
+  bool ok;
+
+  multimeter = testNodeManager()->device<mdtDeviceU3606A>("U3606A");
+  Q_ASSERT(multimeter);
+  coupler = testNodeManager()->device<mdtDeviceModbusWago>("W750");
+  Q_ASSERT(coupler);
+
+  // Get R of K4 and K6
+  // Get R of K4 and K6
+  val = testNodeUnitData("K4", "CalibrationOffset");
+  if(val.isNull()){
+    pvLastError.setError(tr("Could not get calibration offset of relay K4."), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtBasicTestNodeCalibrationTool");
+    pvLastError.commit();
+    return false;
+  }
+  r4 = val.toDouble(&ok);
+  Q_ASSERT(ok);
+  val = testNodeUnitData("K6", "CalibrationOffset");
+  if(val.isNull()){
+    pvLastError.setError(tr("Could not get calibration offset of relay K6."), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtBasicTestNodeCalibrationTool");
+    pvLastError.commit();
+    return false;
+  }
+  r6 = val.toDouble(&ok);
+  Q_ASSERT(ok);
+  // Setup multimeter to its max range
+  if(multimeter->setupResistanceMeasure(mdtDeviceU3606A::RangeMax, mdtDeviceU3606A::ResolutionMin) < 0){
+    pvLastError = multimeter->lastError();
+    return false;
+  }
+  // Set all relays OFF
+  if(coupler->setDigitalOutputsValue(false, false, false) < 0){
+    pvLastError = coupler->lastError();
+    return false;
+  }
+  // Set K4, K6 and K7 ON
+  coupler->setDigitalOutputValue("K4", true, false, false);
+  coupler->setDigitalOutputValue("K6", true, false, false);
+  coupler->setDigitalOutputValue("K7", true, false, false);
+  // Send relays states to coupler
+  if(!coupler->setDigitalOutputs(true)){
+    pvLastError = coupler->lastError();
+    return false;
+  }
+  coupler->wait(50);
+  // Check that we have R infinite
+  R = multimeter->getMeasureValue();
+  if(!isInRange(R, 1e6)){
+    pvLastError.updateText(tr("Checking about no short with K4, K6 and K2 set failed."));
+    return false;
+  }
+  // Set all relays OFF
+  if(coupler->setDigitalOutputsValue(false, false, false) < 0){
+    pvLastError = coupler->lastError();
+    return false;
+  }
+  // Set K4, K6 and K8 ON
+  coupler->setDigitalOutputValue("K4", true, false, false);
+  coupler->setDigitalOutputValue("K6", true, false, false);
+  coupler->setDigitalOutputValue("K8", true, false, false);
+  // Send relays states to coupler
+  if(!coupler->setDigitalOutputs(true)){
+    pvLastError = coupler->lastError();
+    return false;
+  }
+  coupler->wait(50);
+  // Check that we have R infinite
+  R = multimeter->getMeasureValue();
+  if(!isInRange(R, 1e6)){
+    pvLastError.updateText(tr("Checking about no short with K4, K6 and K2 set failed."));
+    return false;
+  }
+  // Set K4, K6, K7 and K8 ON
+  coupler->setDigitalOutputValue("K4", true, false, false);
+  coupler->setDigitalOutputValue("K6", true, false, false);
+  coupler->setDigitalOutputValue("K7", true, false, false);
+  coupler->setDigitalOutputValue("K8", true, false, false);
+  // Send relays states to coupler
+  if(!coupler->setDigitalOutputs(true)){
+    pvLastError = coupler->lastError();
+    return false;
+  }
+  coupler->wait(50);
+  // Setup multimeter to its min range
+  if(multimeter->setupResistanceMeasure(mdtDeviceU3606A::RangeMin, mdtDeviceU3606A::ResolutionMin) < 0){
+    pvLastError = multimeter->lastError();
+    return false;
+  }
+  // Check that we have R < 1 Ohm
+  R = multimeter->getMeasureValue();
+  if(!isInRange(R, 0.0, 1.0)){
+    pvLastError.updateText(tr("Checking resistance of realys K7 and K8 failed.\nNote: did you plug the bridge between PWR+ and PWR- ?"));
+    return false;
+  }
+  // Calibrate K7 and K8 ( (R - r4 - r6)/2 )
+  setTestNodeUnitCalibrationOffset("K7", (R.valueDouble() - r4 - r6) / 2.0);
+  setTestNodeUnitCalibrationOffset("K8", (R.valueDouble() - r4 - r6) / 2.0);
+
   return true;
 }
-
 
 void mdtTtBasicTestNodeCalibrationTool::addInstruments()
 {

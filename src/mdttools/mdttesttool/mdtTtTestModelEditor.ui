@@ -16,15 +16,25 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QFormLayout" name="formLayout">
-     <item row="0" column="0">
+     <item row="2" column="0">
       <widget class="QLabel" name="lbDesignationEN">
        <property name="text">
         <string>Designation (ENG)</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
+     <item row="2" column="1">
       <widget class="QLineEdit" name="fld_DesignationEN"/>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="fld_Key"/>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="lbKey">
+       <property name="text">
+        <string>Key:</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

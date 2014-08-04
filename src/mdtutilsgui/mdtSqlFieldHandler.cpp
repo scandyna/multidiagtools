@@ -764,6 +764,7 @@ QVariant mdtSqlFieldHandler::data() const
   }
   // If data is null, we must return a empty string for fields that are strings,
   //  and that accept null values, else mapper will revert data
+  /**
   switch(pvSqlField.type()){
     case QVariant::String:
       if(pvSqlField.requiredStatus() != QSqlField::Required){
@@ -773,6 +774,7 @@ QVariant mdtSqlFieldHandler::data() const
     default:
       return data;
   }
+  */
 
   return data;
 }
