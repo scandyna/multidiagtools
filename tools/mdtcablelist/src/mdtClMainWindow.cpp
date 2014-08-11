@@ -236,6 +236,46 @@ void mdtClMainWindow::editArticle()
   window->show();
 }
 
+void mdtClMainWindow::editSelectedArticle()
+{
+  mdtSqlTableSelection s;
+  mdtClArticleEditor *editor;
+  mdtSqlWindow *window;
+  mdtSqlTableWidget *view;
+
+  // Get article view
+  view = getTableView("Article_tbl");
+  if(view == 0){
+    return;
+  }
+  // Get ID of selected article
+  s = view->currentSelection("Id_PK");
+  if(s.isEmpty()){
+    return;
+  }
+  // Get or create editor
+  editor = getArticleEditor();
+  if(editor == 0){
+    return;
+  }
+  // Get window
+  window = getEditorWindow(editor);
+  Q_ASSERT(window != 0);
+  // Select and show
+  Q_ASSERT(editor != 0);
+  if(!editor->select()){
+    displayError(editor->lastError());
+    return;
+  }
+  Q_ASSERT(s.rowCount() == 1);
+  if(!editor->setCurrentRecord("Id_PK", s.data(0, "Id_PK"))){
+    displayError(editor->lastError());
+  }
+  window->enableNavigation();
+  window->raise();
+  window->show();
+}
+
 void mdtClMainWindow::viewUnit()
 {
   if(!displayTableView("Unit_view")){
@@ -345,6 +385,13 @@ void mdtClMainWindow::editLinkBeam()
   window->show();
 }
 
+void mdtClMainWindow::viewTestConnectionCable()
+{
+  if(!displayTableView("TestCable_tbl")){
+    createTestConnectionCableTableView();
+  }
+}
+
 void mdtClMainWindow::editTestConnectionCable()
 {
   mdtTtTestConnectionCableEditor *editor;
@@ -363,6 +410,46 @@ void mdtClMainWindow::editTestConnectionCable()
   if(!editor->select()){
     displayError(editor->lastError());
     return;
+  }
+  window->enableNavigation();
+  window->raise();
+  window->show();
+}
+
+void mdtClMainWindow::editSelectedTestConnectionCable()
+{
+  mdtSqlTableSelection s;
+  mdtTtTestConnectionCableEditor *editor;
+  mdtSqlWindow *window;
+  mdtSqlTableWidget *view;
+
+  // Get test connection cable view
+  view = getTableView("TestCable_tbl");
+  if(view == 0){
+    return;
+  }
+  // Get ID of selected test connection cable
+  s = view->currentSelection("Id_PK");
+  if(s.isEmpty()){
+    return;
+  }
+  // Get or create editor
+  editor = getTestConnectionCableEditor();
+  if(editor == 0){
+    return;
+  }
+  // Get window
+  window = getEditorWindow(editor);
+  Q_ASSERT(window != 0);
+  // Select and show
+  Q_ASSERT(editor != 0);
+  if(!editor->select()){
+    displayError(editor->lastError());
+    return;
+  }
+  Q_ASSERT(s.rowCount() == 1);
+  if(!editor->setCurrentRecord("Id_PK", s.data(0, "Id_PK"))){
+    displayError(editor->lastError());
   }
   window->enableNavigation();
   window->raise();
@@ -700,6 +787,7 @@ bool mdtClMainWindow::createArticleTableView()
   }
   // Hide technical fields
   tableWidget->setColumnHidden("Id_PK", true);
+  connect(tableWidget->tableView(), SIGNAL(doubleClicked(const QModelIndex&)),this, SLOT(editSelectedArticle()));
   // Rename fields to user friendly ones
   tableWidget->setHeaderData("ArticleCode", tr("Article\ncode"));
   tableWidget->setHeaderData("IdentificationDocument", tr("Identification\ndocument"));
@@ -832,6 +920,9 @@ bool mdtClMainWindow::createLinkBeamTableView()
   if(tableWidget == 0){
     return false;
   }
+  tableWidget->addColumnToSortOrder("Identification", Qt::AscendingOrder);
+  tableWidget->sort();
+  tableWidget->resizeViewToContents();
 
   return true;
 }
@@ -890,6 +981,25 @@ mdtTtTestNodeEditor *mdtClMainWindow::createTestNodeEditor()
   window->resize(800, 600);
 
   return editor;
+}
+
+bool mdtClMainWindow::createTestConnectionCableTableView()
+{
+  mdtSqlTableWidget *tableWidget;
+
+  tableWidget = createTableView("TestCable_tbl", tr("Test cables"));
+  if(tableWidget == 0){
+    return false;
+  }
+  connect(tableWidget->tableView(), SIGNAL(doubleClicked(const QModelIndex&)),this, SLOT(editSelectedTestConnectionCable()));
+  tableWidget->setColumnHidden("Id_PK", true);
+  tableWidget->setHeaderData("DescriptionEN", tr("Description"));
+  tableWidget->setHeaderData("OffsetResetDate", tr("Last offset reset"));
+  tableWidget->addColumnToSortOrder("Identification", Qt::AscendingOrder);
+  tableWidget->sort();
+  tableWidget->resizeViewToContents();
+
+  return true;
 }
 
 mdtTtTestConnectionCableEditor *mdtClMainWindow::getTestConnectionCableEditor()
@@ -1178,6 +1288,7 @@ void mdtClMainWindow::connectActions()
   // Article edition
   connect(actViewArticle, SIGNAL(triggered()), this, SLOT(viewArticle()));
   connect(actEditArticle, SIGNAL(triggered()), this, SLOT(editArticle()));
+  connect(actEditSelectedArticle, SIGNAL(triggered()), this, SLOT(editSelectedArticle()));
   ///connect(pbEditArticle, SIGNAL(clicked()), this, SLOT(editArticle()));
   // Unit edition
   connect(actViewUnit, SIGNAL(triggered()), this, SLOT(viewUnit()));
@@ -1191,6 +1302,7 @@ void mdtClMainWindow::connectActions()
   connect(actEditLinkBeam, SIGNAL(triggered()), this, SLOT(editLinkBeam()));
 
   // Test connection cable
+  connect(actViewTestConnectionCable, SIGNAL(triggered()), this, SLOT(viewTestConnectionCable()));
   connect(actEditTestConnectionCable, SIGNAL(triggered()), this, SLOT(editTestConnectionCable()));
   /**
   connect(actCreateTestConnectionCable, SIGNAL(triggered()), this, SLOT(createTestConnectionCable()));
@@ -1202,7 +1314,7 @@ void mdtClMainWindow::connectActions()
   // Test edition
   connect(actEditTest, SIGNAL(triggered()), this, SLOT(editTest()));
   // Test item edition
-  connect(actEditTestItem, SIGNAL(triggered()), this, SLOT(editTestItem()));
+  ///connect(actEditTestItem, SIGNAL(triggered()), this, SLOT(editTestItem()));
   // Basic tester
   connect(actBasicTester, SIGNAL(triggered()), this, SLOT(runBasicTester()));
   // Cable checker

@@ -5,9 +5,10 @@ diagrams
     1041 952 80 3 428 0
 end
 show_stereotypes
-selected attribute_ref 1231746 // ValueUnit
+selected attribute_ref 1361794 // DescriptionEN
 open
   attribute_ref 1355138 // Key
   attribute_ref 1231746 // ValueUnit
+  class_ref 1013506 // TestCable_tbl
 end
 end

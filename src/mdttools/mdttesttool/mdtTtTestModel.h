@@ -62,7 +62,7 @@ class mdtTtTestModelAbstractGeneratorHelper
 
   /*! \brief Get related connections
    *
-   * What rRelated connections are depends on implementation.
+   * What related connections are depends on implementation.
    *  For example, for a continuity check generator,
    *  they will be linked connections.
    */

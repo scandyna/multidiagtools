@@ -208,7 +208,7 @@ QList<QVariant> mdtTtTestModelContinuityTestGeneratorHelper::getRelatedTestConne
   if(fromDutConnection.isNull()){
     ok = false;
     pvLastError.setError(pvTestModel->tr("Cannot find DUT connection for test connecion ID ") + fromTestConnectionId.toString(), mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestModel");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestModelContinuityTestGeneratorHelper");
     pvLastError.commit();
     return linkedTestConnectionIdList;
   }
@@ -287,7 +287,7 @@ QList< QVariant > mdtTtTestModelIsolationTestGeneratorHelper::getRelatedTestConn
   if(fromDutConnection.isNull()){
     ok = false;
     pvLastError.setError(pvTestModel->tr("Cannot find DUT connection for test connecion ID ") + fromTestConnectionId.toString(), mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestModel");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestModelIsolationTestGeneratorHelper");
     pvLastError.commit();
     return notLinkedTestConnectionIdList;
   }
@@ -358,8 +358,6 @@ QString mdtTtTestModel::sqlForTestNodeSelection(const QVariant & testModelId) co
 
 mdtTtTestModelData mdtTtTestModel::getTestModelData(const QVariant & testModelId, bool & ok)
 {
-  ///Q_ASSERT(ok != 0);
-
   QString sql;
   QList<QSqlRecord> dataList;
 

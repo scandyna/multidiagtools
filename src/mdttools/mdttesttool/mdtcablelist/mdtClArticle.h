@@ -52,6 +52,13 @@ class mdtClArticle : public mdtTtBase
    */
   QString sqlForArticleComponentSelection(const QVariant &articleId) const;
 
+  /*! \brief Get SQL statement for connector contact selection
+   *
+   * Get a list of connector contact (including some connector data)
+   *  for witch connector exists in given articleId.
+   */
+  
+
   /*! \brief Add a article as component
    *
    * \return True on success, false else.

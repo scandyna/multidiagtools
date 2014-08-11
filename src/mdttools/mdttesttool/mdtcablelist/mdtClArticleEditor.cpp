@@ -165,6 +165,19 @@ void mdtClArticleEditor::removeComponents()
   select("ArticleComponent_view");
 }
 
+/// \note Will be implemented if a day a link exists between ArticleConnection_tbl and ConnectorContact_tbl.
+/**
+void mdtClArticleEditor::addConnection()
+{
+  
+  mdtClArticle art(this, database());
+  mdtSqlSelectionDialog selectionDialog(this);
+  mdtSqlTableSelection s;
+  // Update connections table
+  select("ArticleConnection_view");
+}
+*/
+
 void mdtClArticleEditor::addConnection()
 {
   QVariant articleId;

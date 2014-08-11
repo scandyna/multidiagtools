@@ -843,6 +843,7 @@ bool mdtTtTestConnectionCableEditor::setupTestLinkTable()
   // Hide technical fields
   widget->setColumnHidden("Id_PK", true);
   widget->setColumnHidden("TestCable_Id_FK", true);
+  widget->setColumnHidden("TestNode_Id_FK", true);
   widget->setColumnHidden("TestConnection_Id_FK", true);
   widget->setColumnHidden("DutConnection_Id_FK", true);
   widget->setColumnHidden("VehicleType_Id_FK_PK", true);
@@ -864,6 +865,10 @@ bool mdtTtTestConnectionCableEditor::setupTestLinkTable()
   widget->setHeaderData("DutUnitAlias", tr("DUT\nAlias"));
   widget->setHeaderData("DutConnectorName", tr("DUT\nConnector"));
   widget->setHeaderData("DutContactName", tr("DUT\nContact"));
+  
+  widget->setHeaderData("Type", tr("DUT\nVehicle type"));
+  widget->setHeaderData("SubType", tr("DUT\nVehicle sub type"));
+  widget->setHeaderData("SeriesNumber", tr("DUT\nVehicle type serie"));
   // Set some attributes on table view
   widget->tableView()->resizeColumnsToContents();
   // Add buttons

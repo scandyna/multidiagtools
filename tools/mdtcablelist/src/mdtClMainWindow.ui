@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>671</width>
-    <height>377</height>
+    <width>763</width>
+    <height>400</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -62,7 +62,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>671</width>
+     <width>763</width>
      <height>21</height>
     </rect>
    </property>
@@ -90,12 +90,18 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>Test</string>
     </property>
+    <widget class="QMenu" name="menuTest_connection_cable">
+     <property name="title">
+      <string>Test connection cable</string>
+     </property>
+     <addaction name="actViewTestConnectionCable"/>
+     <addaction name="actEditTestConnectionCable"/>
+    </widget>
     <addaction name="actEditTestNode"/>
     <addaction name="actEditTest"/>
-    <addaction name="actEditTestItem"/>
-    <addaction name="actEditTestConnectionCable"/>
     <addaction name="actBasicTester"/>
     <addaction name="actCableChecker"/>
+    <addaction name="menuTest_connection_cable"/>
    </widget>
    <widget class="QMenu" name="menuVehicle_types">
     <property name="title">
@@ -226,11 +232,6 @@ p, li { white-space: pre-wrap; }
     <string>Create</string>
    </property>
   </action>
-  <action name="actEditTestNode">
-   <property name="text">
-    <string>Test node edition</string>
-   </property>
-  </action>
   <action name="actConnectTestCable">
    <property name="text">
     <string>Connect test cable</string>
@@ -253,7 +254,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actEditTestConnectionCable">
    <property name="text">
-    <string>Test connection cable edition</string>
+    <string>&amp;Edit</string>
    </property>
   </action>
   <action name="actCableChecker">
@@ -334,6 +335,21 @@ p, li { white-space: pre-wrap; }
   <action name="actBasicTester">
    <property name="text">
     <string>&amp;Basic tester</string>
+   </property>
+  </action>
+  <action name="actViewTestConnectionCable">
+   <property name="text">
+    <string>&amp;View</string>
+   </property>
+  </action>
+  <action name="action_Edit">
+   <property name="text">
+    <string>&amp;Edit</string>
+   </property>
+  </action>
+  <action name="actEditTestNode">
+   <property name="text">
+    <string>Edit test node</string>
    </property>
   </action>
  </widget>

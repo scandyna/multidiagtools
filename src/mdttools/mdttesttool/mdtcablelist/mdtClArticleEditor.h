@@ -71,6 +71,10 @@ class mdtClArticleEditor : public mdtSqlForm
    */
   void addConnection();
 
+  /*! \brief Add a free connection
+   */
+  ///void addFreeConnection();
+
   /*! \brief Edit a connection
    */
   void editConnection();

@@ -26,6 +26,7 @@
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlRelation.h"
 #include "mdtSqlSelectionDialog.h"
+#include "mdtSqlTableSelection.h"
 #include "mdtError.h"
 #include "mdtClUnitVehicleType.h"
 #include "mdtClUnitConnectionDialog.h"
@@ -209,10 +210,9 @@ void mdtClUnitEditor::setBaseArticle()
 {
   mdtClUnit unit(this, database());
   mdtSqlSelectionDialog selectionDialog;
-  ///QSqlQueryModel model;
+  mdtSqlTableSelection s;
   int ret;
   QString sql;
-  QList<QVariant> selectedItem;
 
   // Check if some unit connections are related to article connections
   //  If yes, we cannot change the base article
@@ -255,23 +255,20 @@ void mdtClUnitEditor::setBaseArticle()
   }
   // Setup article selection dialog and show it to user
   sql = "SELECT * FROM Article_tbl;";
-  ///model.setQuery(sql, database());
   selectionDialog.setMessage("Please select article");
-  ///selectionDialog.setModel(&model);
   selectionDialog.setQuery(sql, database(), false);
   ///selectionDialog.setColumnHidden("Id_PK", true);
-  ///selectionDialog.setHeaderData("SubType", tr("Variant"));
-  ///selectionDialog.setHeaderData("SeriesNumber", tr("Serie"));
-  selectionDialog.addSelectionResultColumn("Id_PK");
-  selectionDialog.resize(500, 300);
+  selectionDialog.setHeaderData("ArticleCode", tr("Article code\n(internal)"));
+  selectionDialog.addColumnToSortOrder("ArticleCode", Qt::AscendingOrder);
+  selectionDialog.addColumnToSortOrder("DesignationEN", Qt::AscendingOrder);
+  selectionDialog.sort();
+  selectionDialog.resize(800, 400);
   if(selectionDialog.exec() != QDialog::Accepted){
     return;
   }
-  selectedItem = selectionDialog.selectionResult();
-  if(selectedItem.size() != 1){
-    return;
-  }
-  if(!setCurrentData("Unit_tbl", "Article_Id_FK", selectedItem.at(0))){
+  s = selectionDialog.selection("Id_PK");
+  Q_ASSERT(s.rowCount() == 1);
+  if(!setCurrentData("Unit_tbl", "Article_Id_FK", s.data(0, "Id_PK"))){
     return;
   }
 }
@@ -1472,10 +1469,14 @@ bool mdtClUnitEditor::setupUnitConnectorTable()
   widget->setHeaderData("ArticleConnectorName", tr("Article\nconnector"));
   // Add edition buttons
   pbAddConnector = new QPushButton(tr("Add free connector ..."));
+  pbAddConnector->setIcon(QIcon::fromTheme("document-new"));
   pbAddConnectorBasedConnector = new QPushButton(tr("Add connector ..."));
+  pbAddConnectorBasedConnector->setIcon(QIcon::fromTheme("document-new"));
   pbAddArticleConnectorBasedConnector = new QPushButton(tr("Add art. connector ..."));
+  pbAddArticleConnectorBasedConnector->setIcon(QIcon::fromTheme("document-new"));
   pbEditConnectorName = new QPushButton(tr("Edit name"));
   pbRemoveConnectors = new QPushButton(tr("Rem. connector"));
+  pbRemoveConnectors->setIcon(QIcon::fromTheme("edit-delete"));
   connect(pbAddConnector, SIGNAL(clicked()), this, SLOT(addConnector()));
   connect(pbAddConnectorBasedConnector, SIGNAL(clicked()), this, SLOT(addConnectorBasedConnector()));
   connect(pbAddArticleConnectorBasedConnector, SIGNAL(clicked()), this, SLOT(addArticleConnectorBasedConnector()));
@@ -1519,24 +1520,27 @@ bool mdtClUnitEditor::setupUnitConnectionTable()
   Q_ASSERT(widget != 0);
   // Add add connection button
   pbAddConnection = new QPushButton(tr("Add connection ..."));
+  pbAddConnection->setIcon(QIcon::fromTheme("document-new"));
   connect(pbAddConnection, SIGNAL(clicked()), this, SLOT(addConnection()));
   widget->addWidgetToLocalBar(pbAddConnection);
   // Add add art. connection button
   pbAddArticleConnectionBasedConnection = new QPushButton(tr("Add art. connections ..."));
+  pbAddArticleConnectionBasedConnection->setIcon(QIcon::fromTheme("document-new"));
   connect(pbAddArticleConnectionBasedConnection, SIGNAL(clicked()), this, SLOT(addArticleConnectionsBasedConnections()));
   widget->addWidgetToLocalBar(pbAddArticleConnectionBasedConnection);
   // Add edit connection button
   pbEditConnection = new QPushButton(tr("Edit connection ..."));
   connect(pbEditConnection, SIGNAL(clicked()), this, SLOT(editConnection()));
   widget->addWidgetToLocalBar(pbEditConnection);
+  // Add remove connection button
+  pbRemoveConnection = new QPushButton(tr("Remove connections"));
+  pbRemoveConnection->setIcon(QIcon::fromTheme("edit-delete"));
+  connect(pbRemoveConnection, SIGNAL(clicked()), this, SLOT(removeConnections()));
+  widget->addWidgetToLocalBar(pbRemoveConnection);
   // Add copy functions connection button
   pbCopyFunctions = new QPushButton(tr("Set functions from ..."));
   connect(pbCopyFunctions, SIGNAL(clicked()), this, SLOT(setFunctionsFromOtherConnection()));
   widget->addWidgetToLocalBar(pbCopyFunctions);
-  // Add remove connection button
-  pbRemoveConnection = new QPushButton(tr("Remove connections"));
-  connect(pbRemoveConnection, SIGNAL(clicked()), this, SLOT(removeConnections()));
-  widget->addWidgetToLocalBar(pbRemoveConnection);
   // View linked connections button
   pbViewLinkedConnections = new QPushButton(tr("Linked connections"));
   connect(pbViewLinkedConnections, SIGNAL(clicked()), this, SLOT(viewLinkedConnections()));

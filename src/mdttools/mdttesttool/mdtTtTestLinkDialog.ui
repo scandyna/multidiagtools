@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>630</width>
-    <height>301</height>
+    <height>326</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -203,6 +203,16 @@
            </widget>
           </item>
          </layout>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="cbHideAffectedDutConnections">
+          <property name="text">
+           <string>Hide allready affected connections</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QPushButton" name="pbLinkedConnectionsInfo">

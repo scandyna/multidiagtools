@@ -257,9 +257,11 @@ void mdtTtTestLinkDialog::selectDutConnection()
   }
   // Setup SQL statement
   sql = "SELECT * FROM UnitConnection_view WHERE Unit_Id_FK = " + pvDutUnitId.toString();
-  sql += " AND UnitConnection_Id_PK NOT IN (";
-  sql += "  SELECT DutConnection_Id_FK FROM TestLink_tbl WHERE TestCable_Id_FK = " + pvLinkData.value("TestCable_Id_FK").toString();
-  sql += ")";
+  if(cbHideAffectedDutConnections->isChecked()){
+    sql += " AND UnitConnection_Id_PK NOT IN (";
+    sql += "  SELECT DutConnection_Id_FK FROM TestLink_tbl WHERE TestCable_Id_FK = " + pvLinkData.value("TestCable_Id_FK").toString();
+    sql += ")";
+  }
   // Setup and show dialog
   selectionDialog.setMessage("Please select DUT connection:");
   selectionDialog.setQuery(sql, pvDatabase, false);

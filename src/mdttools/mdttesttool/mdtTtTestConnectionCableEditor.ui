@@ -16,6 +16,9 @@
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
     <layout class="QFormLayout" name="formLayout">
+     <property name="fieldGrowthPolicy">
+      <enum>QFormLayout::ExpandingFieldsGrow</enum>
+     </property>
      <item row="0" column="0">
       <widget class="QLabel" name="lbIdentification">
        <property name="text">
@@ -24,19 +27,43 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="fld_Identification"/>
+      <widget class="QLineEdit" name="fld_Identification">
+       <property name="statusTip">
+        <string>Physical cable identification</string>
+       </property>
+       <property name="whatsThis">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Physical cable identification.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
      </item>
      <item row="1" column="1">
+      <widget class="QLineEdit" name="fld_Key">
+       <property name="statusTip">
+        <string>Logical cable identification</string>
+       </property>
+       <property name="whatsThis">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Logical cable identification.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="lbOffsetResetDate">
+       <property name="text">
+        <string>Last offset reset:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
       <widget class="QLabel" name="fld_OffsetResetDate">
        <property name="text">
-        <string>                        </string>
+        <string/>
        </property>
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="lbOffsetResetDate">
+      <widget class="QLabel" name="lbKey">
        <property name="text">
-        <string>Last offset reset:</string>
+        <string>Key:</string>
        </property>
       </widget>
      </item>

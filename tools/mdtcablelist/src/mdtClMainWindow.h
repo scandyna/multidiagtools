@@ -116,6 +116,10 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
    */
   void editArticle();
 
+  /*! \brief Edit selected article
+   */
+  void editSelectedArticle();
+
   /*! \brief View units
    */
   void viewUnit();
@@ -144,9 +148,17 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
    */
   void editTestNode();
 
+  /*! \brief View test connection cable
+   */
+  void viewTestConnectionCable();
+
   /*! \brief Edit test connection cable
    */
   void editTestConnectionCable();
+
+  /*! \brief Edit selected test connection cable
+   */
+  void editSelectedTestConnectionCable();
 
   /*! \brief Edit test
    */
@@ -265,6 +277,10 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   /*! \brief Create test node editor
    */
   mdtTtTestNodeEditor *createTestNodeEditor();
+
+  /*! \brief Create test connection cable view
+   */
+  bool createTestConnectionCableTableView();
 
   /*! \brief Get test connection cable editor
    */

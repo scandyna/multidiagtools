@@ -2113,6 +2113,12 @@ bool mdtTtDatabaseSchema::setupTestCableTable()
   field.setType(QVariant::String);
   field.setLength(50);
   table.addField(field, false);
+  // Key
+  field = QSqlField();
+  field.setName("Key");
+  field.setType(QVariant::String);
+  field.setLength(70);
+  table.addField(field, false);
   // DescriptionEN
   field = QSqlField();
   field.setName("DescriptionEN");
@@ -2124,6 +2130,12 @@ bool mdtTtDatabaseSchema::setupTestCableTable()
   field.setName("OffsetResetDate");
   field.setType(QVariant::DateTime);
   table.addField(field, false);
+  // Indexes
+  table.addIndex("Key_idx2", true);
+  if(!table.addFieldToIndex("Key_idx2", "Key")){
+    pvLastError = table.lastError();
+    return false;
+  }
 
   pvTables.append(table);
 
@@ -3433,6 +3445,7 @@ bool mdtTtDatabaseSchema::createTestNodeTestCableView()
         " TMTN.TestModel_Id_FK,\n"\
         " TCTNU.TestCable_Id_FK,\n"\
         " TC.Identification,\n"\
+        " TC.Key,\n"\
         " TC.OffsetResetDate,\n"\
         " TC.DescriptionEN\n"\
         "FROM TestNode_tbl TN\n"\
