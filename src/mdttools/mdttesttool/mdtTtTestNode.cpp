@@ -243,6 +243,36 @@ bool mdtTtTestNode::addMissingConnections(const QVariant & testNodeId)
   return true;
 }
 
+bool mdtTtTestNode::setTestNodeUnitIoRange(const mdtSqlTableSelection& s, int startIoPosition)
+{
+  int i;
+  mdtSqlRecord record;
+  int ioPos;
+
+  if(!record.addAllFields("TestNodeUnit_tbl", database())){
+    pvLastError = record.lastError();
+    return false;
+  }
+  if(!beginTransaction()){
+    return false;
+  }
+  ioPos = startIoPosition;
+  for(i = 0; i < s.rowCount(); ++i){
+    Q_ASSERT(!s.data(i, "Unit_Id_FK_PK").isNull());
+    record.setValue("IoPosition", ioPos);
+    if(!updateRecord("TestNodeUnit_tbl", record, "Unit_Id_FK_PK", s.data(i, "Unit_Id_FK_PK"))){
+      rollbackTransaction();
+      return false;
+    }
+    ++ioPos;
+  }
+  if(!commitTransaction()){
+    return false;
+  }
+
+  return true;
+}
+
 bool mdtTtTestNode::addRelaysToGraph(const QVariant& testNodeId, mdtClPathGraph& graph, const QList< QVariant >& relaysToIgnoreIdList)
 {
   QString sql;

@@ -86,6 +86,15 @@ class mdtTtTestNode : public mdtTtBase
    */
   bool addMissingConnections(const QVariant & testNodeId);
 
+  /*! \brief Set I/O position for a range of test node units
+   *
+   * Note: this method will not check if all given test node units
+   *  are of the same type (AI, AO, ...).
+   *
+   * \pre Each item in selection must contain Unit_Id_FK_PK field
+   */
+  bool setTestNodeUnitIoRange(const mdtSqlTableSelection & s, int startIoPosition);
+
   /*! \brief Add (coupling and channel) relays to graph
    *
    * Will add all coupling and channel relays of given test node to graph

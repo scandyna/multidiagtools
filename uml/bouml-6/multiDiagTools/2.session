@@ -1,8 +1,8 @@
-window_sizes 1280 1005 233 1041 952 0
+window_sizes 1272 970 233 1033 917 0
 cleanlooks_style
 diagrams
   active  classdiagram_ref 941058 // Test
-    1041 952 80 3 428 0
+    1033 917 70 3 0 0
 end
 show_stereotypes
 selected attribute_ref 1361794 // DescriptionEN

@@ -66,6 +66,10 @@ class mdtTtTestNodeEditor : public mdtSqlForm
    */
   void removeUnits();
 
+  /*! \brief Set I/O pos for a range of test node units
+   */
+  void setIoPositionRange();
+
   /*! \brief Update node unit connections
    *
    * Will add connections that are missing in TestNodeUnitConnection_tbl.

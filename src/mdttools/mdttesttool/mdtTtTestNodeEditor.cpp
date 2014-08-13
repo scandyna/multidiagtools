@@ -35,6 +35,7 @@
 #include <QDataWidgetMapper>
 #include <QVariant>
 #include <QString>
+#include <QStringList>
 #include <QPushButton>
 #include <QSqlError>
 #include <QModelIndex>
@@ -327,6 +328,52 @@ void mdtTtTestNodeEditor::updateConnections()
   }
   // Update UI
   select("TestNodeUnitConnection_view");
+}
+
+void mdtTtTestNodeEditor::setIoPositionRange()
+{
+  mdtTtTestNode tn(0, database());
+  mdtSqlTableWidget *widget;
+  mdtSqlTableSelection s;
+  QStringList fields;
+  int i;
+  int startIoPos;
+
+  // Get current selection
+  widget = sqlTableWidget("TestNodeUnit_view");
+  Q_ASSERT(widget != 0);
+  fields << "Unit_Id_FK_PK" << "Type_Code_FK";
+  s = widget->currentSelection(fields);
+  if(s.isEmpty()){
+    return;
+  }
+  // Check that each item in selection is a test node unit of the same type
+  for(i = 1; i < s.rowCount(); ++i){
+    if(s.data(i, "Type_Code_FK") != s.data(i-1, "Type_Code_FK")){
+      QMessageBox msgBox(this);
+      msgBox.setText(tr("Selected units are not all of the same type."));
+      msgBox.setInformativeText(tr("To number a range of I/O position, all units must be of same type (f.ex. AI, AO, Channel relays, ..."));
+      msgBox.setIcon(QMessageBox::Critical);
+      msgBox.exec();
+      return;
+    }
+  }
+  // Ask the first I/O position to the user
+  QInputDialog startIoPosDialog(this);
+  startIoPosDialog.setInputMode(QInputDialog::IntInput);
+  startIoPosDialog.setIntRange(0, 999);
+  if(startIoPosDialog.exec() != QInputDialog::Accepted){
+    return;
+  }
+  startIoPos = startIoPosDialog.intValue();
+  // Update in database
+  if(!tn.setTestNodeUnitIoRange(s, startIoPos)){
+    pvLastError = tn.lastError();
+    displayLastError();
+    return;
+  }
+  // Update UI
+  select("TestNodeUnit_view");
 }
 
 void mdtTtTestNodeEditor::setBusToUnitConnection()
@@ -696,6 +743,7 @@ bool mdtTtTestNodeEditor::setupTestNodeUnitTable()
   QPushButton *pbAddUnit;
   QPushButton *pbEditUnit;
   QPushButton *pbRemoveUnit;
+  QPushButton *pbNumberIoPosRange;
 
   if(!addChildTable("TestNodeUnit_view", tr("Units"), database())){
     return false;
@@ -743,6 +791,11 @@ bool mdtTtTestNodeEditor::setupTestNodeUnitTable()
   pbRemoveUnit->setIcon(QIcon::fromTheme("list-remove"));
   connect(pbRemoveUnit, SIGNAL(clicked()), this, SLOT(removeUnits()));
   widget->addWidgetToLocalBar(pbRemoveUnit);
+  // # I/O pos. range
+  pbNumberIoPosRange = new QPushButton(tr("# I/O pos. range"));
+  ///pbNumberIoPosRange->setIcon(QIcon::fromTheme("list-remove"));
+  connect(pbNumberIoPosRange, SIGNAL(clicked()), this, SLOT(setIoPositionRange()));
+  widget->addWidgetToLocalBar(pbNumberIoPosRange);
   widget->addStretchToLocalBar();
 
   return true;
