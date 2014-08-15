@@ -334,7 +334,7 @@ bool mdtAbstractSqlWidget::setCurrentRecord(const QString &fieldName, const QVar
 {
   int columnIndex;
   int row;
-  int rowCount;
+  ///int rowCount;
   QModelIndex index;
 
   if(model() == 0){
@@ -346,6 +346,7 @@ bool mdtAbstractSqlWidget::setCurrentRecord(const QString &fieldName, const QVar
     return false;
   }
   // Search ...
+  /**
   rowCount = model()->rowCount();
   for(row = 0; row < rowCount; ++row){
     index = model()->index(row, columnIndex);
@@ -355,6 +356,24 @@ bool mdtAbstractSqlWidget::setCurrentRecord(const QString &fieldName, const QVar
         return true;
       }
     }
+  }
+  */
+  row = 0;
+  while(true){
+    index = model()->index(row, columnIndex);
+    if(index.isValid()){
+      if(model()->data(index) == value){
+        setCurrentIndex(row);
+        return true;
+      }
+    }
+    if(row == (model()->rowCount()-1)){
+      if(!model()->canFetchMore()){
+        return false;
+      }
+      model()->fetchMore();
+    }
+    ++row;
   }
 
   return false;

@@ -1360,7 +1360,7 @@ bool mdtClUnitEditor::setupUnitTable()
   // Setup main form widget
   ue.setupUi(mainSqlWidget());
   connect(ue.pbSetBaseArticle, SIGNAL(clicked()), this, SLOT(setBaseArticle()));
-  connect(this, SIGNAL(unitEdited()), mainSqlWidget(), SIGNAL(dataEdited()));
+  ///connect(this, SIGNAL(unitEdited()), mainSqlWidget(), SIGNAL(dataEdited()));
   // Setup form
   if(!setMainTable("Unit_tbl", "Units", database())){
     return false;

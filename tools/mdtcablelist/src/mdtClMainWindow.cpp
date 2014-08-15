@@ -89,7 +89,7 @@ mdtClMainWindow::~mdtClMainWindow()
 void mdtClMainWindow::openDatabase()
 {
   openDatabaseSqlite();
-  createVehicleTypeActions();
+  ///createVehicleTypeActions();
 }
 
 void mdtClMainWindow::closeDatabase()

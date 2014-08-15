@@ -29,6 +29,7 @@
 #include <QList>
 #include <QSqlDatabase>
 #include <QString>
+#include <QStringList>
 
 class QObject;
 
@@ -95,6 +96,10 @@ class mdtTtTestNodeUnit : public mdtTtBase
   /*! \brief Add connections that are related to given test node unit
    */
   bool addConnections(const QVariant & testNodeUnitId, const QVariant & testNodeBusId, bool handleTransaction);
+
+  /*! \brief Get a list of test links on witch depends on given test node unit connection
+   */
+  QStringList getTestLinksDependingOnConnection(const QVariant & testNodeUnitConnectionId, bool & ok);
 
   /*! \brief Remove a test node unit connection from TestNodeUnitConnection_tbl
    */

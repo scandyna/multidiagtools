@@ -181,6 +181,9 @@ void mdtSqlFormWidget::toFirst()
 
 void mdtSqlFormWidget::toLast()
 {
+  if(model() == 0){
+    return;
+  }
   if(!allDataAreSaved()){
     return;
   }
@@ -193,6 +196,11 @@ void mdtSqlFormWidget::toLast()
     return;
   }
   */
+  if(model()->rowCount() > 0){
+    while(model()->canFetchMore()){
+      model()->fetchMore();
+    }
+  }
   pvWidgetMapper->toLast();
 }
 
@@ -215,6 +223,11 @@ void mdtSqlFormWidget::toPrevious()
 
 void mdtSqlFormWidget::toNext()
 {
+  int currentRow;
+
+  if(model() == 0){
+    return;
+  }
   if(!allDataAreSaved()){
     return;
   }
@@ -227,11 +240,19 @@ void mdtSqlFormWidget::toNext()
     return;
   }
   */
+  if(model()->canFetchMore()){
+    currentRow = pvWidgetMapper->currentIndex();
+    model()->fetchMore();
+    pvWidgetMapper->setCurrentIndex(currentRow + 1);
+  }
   pvWidgetMapper->toNext();
 }
 
 void mdtSqlFormWidget::setCurrentIndex(int row)
 {
+  if(model() == 0){
+    return;
+  }
   if(!allDataAreSaved()){
     return;
   }
@@ -244,6 +265,11 @@ void mdtSqlFormWidget::setCurrentIndex(int row)
     return;
   }
   */
+  if(model()->rowCount() > 0){
+    while((row >= model()->rowCount())&&(model()->canFetchMore())){
+      model()->fetchMore();
+    }
+  }
   pvWidgetMapper->setCurrentIndex(row);
 }
 
@@ -305,6 +331,8 @@ void mdtSqlFormWidget::onModelSelected()
   if(model() == 0){
     return;
   }
+  qDebug() << "mdtSqlFormWidget::onModelSelected(): filter: " << model()->filter();
+  qDebug() << "mdtSqlFormWidget::onModelSelected(): can fetch more ? : " << model()->canFetchMore();
   if(model()->rowCount() > 0){
     pvWidgetMapper->toFirst();
   }else{
@@ -347,7 +375,16 @@ bool mdtSqlFormWidget::doSubmit()
     displayDatabaseError(model()->lastError());
     return false;
   }
-  // Go back to current row
+  /*
+   * Go back to row.
+   * Calling submitAll() will repopulate the model.
+   * Because of this, we must be shure to fetch all data until we find our row
+   */
+  if(model()->rowCount() > 0){
+    while((row >= model()->rowCount())&&(model()->canFetchMore())){
+      model()->fetchMore();
+    }
+  }
   pvWidgetMapper->setCurrentIndex(row);
 
   return true;
@@ -369,6 +406,12 @@ bool mdtSqlFormWidget::doInsert()
   if(currentState() != Inserting){
     warnUserAboutUnsavedRow();
     return false;
+  }
+  // Because we insert at end, we must fetch all available data
+  if(model()->rowCount() > 0){
+    while(model()->canFetchMore()){
+      model()->fetchMore();
+    }
   }
   // Insert new row at end
   row = model()->rowCount();
@@ -401,7 +444,8 @@ bool mdtSqlFormWidget::doRevertNewRow()
   }
   // Data was never submit to model, we simply go to last row
   clearWidgets();
-  pvWidgetMapper->setCurrentIndex(qMin(row, model()->rowCount()-1));
+  ///pvWidgetMapper->setCurrentIndex(qMin(row, model()->rowCount()-1));
+  toLast();
 
   return true;
 }
@@ -445,7 +489,16 @@ bool mdtSqlFormWidget::doRemove()
     displayDatabaseError(model()->lastError());
     return false;
   }
-  // Go back to current row
+  /*
+   * Go back to row.
+   * Calling submitAll() will repopulate the model.
+   * Because of this, we must be shure to fetch all data until we find our row
+   */
+  if(model()->rowCount() > 0){
+    while((row >= model()->rowCount())&&(model()->canFetchMore())){
+      model()->fetchMore();
+    }
+  }
   row = qMin(row, model()->rowCount()-1);
   if(row < 0){
     onCurrentIndexChanged(-1);

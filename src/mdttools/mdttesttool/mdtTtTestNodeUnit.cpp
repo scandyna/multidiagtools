@@ -362,6 +362,19 @@ bool mdtTtTestNodeUnit::removeConnections(const QList<QVariant> & unitConnection
   return true;
 }
 
+/**
+ * \todo Create a QSqlError mapping somwhere (note that error code depends on used database engine).
+ *       When a foreign key constraint was detected, check on witch table it depends,
+ *       then build a user friendly error
+ */
+QStringList mdtTtTestNodeUnit::getTestLinksDependingOnConnection(const QVariant & testNodeUnitConnectionId, bool & ok)
+{
+  QString sql;
+  QList<QSqlRecord> dataList;
+
+  sql = "SELECT Id_PK, Identification FROM TestLink_tbl WHERE TestConnection_Id_FK = " + testNodeUnitConnectionId.toString();
+}
+
 bool mdtTtTestNodeUnit::removeConnections(const QVariant & testNodeUnitId, bool handleTransaction)
 {
   QList<QVariant> idList;
