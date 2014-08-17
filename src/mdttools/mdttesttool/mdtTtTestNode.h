@@ -95,6 +95,12 @@ class mdtTtTestNode : public mdtTtBase
    */
   bool setTestNodeUnitIoRange(const mdtSqlTableSelection & s, int startIoPosition);
 
+  /*! \brief Get 2 non linked connections of given relay
+   *
+   * make
+   */
+  
+
   /*! \brief Add (coupling and channel) relays to graph
    *
    * Will add all coupling and channel relays of given test node to graph

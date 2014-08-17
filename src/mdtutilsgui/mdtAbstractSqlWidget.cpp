@@ -19,7 +19,6 @@
  **
  ****************************************************************************/
 #include "mdtAbstractSqlWidget.h"
-#include "mdtError.h"
 #include "mdtSqlRelation.h"
 #include "mdtSqlDataValidator.h"
 #include "mdtSortFilterProxyModel.h"
@@ -369,12 +368,17 @@ bool mdtAbstractSqlWidget::setCurrentRecord(const QString &fieldName, const QVar
     }
     if(row == (model()->rowCount()-1)){
       if(!model()->canFetchMore()){
-        return false;
+        ///return false;
+        break;
       }
       model()->fetchMore();
     }
     ++row;
   }
+  // Requested record was not found
+  pvLastError.setError(tr("Could not find record with ") + fieldName + tr(" = ") + value.toString(), mdtError::Error);
+  MDT_ERROR_SET_SRC(pvLastError, "mdtAbstractSqlWidget");
+  pvLastError.commit();
 
   return false;
 }

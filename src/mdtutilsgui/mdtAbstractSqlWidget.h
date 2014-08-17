@@ -21,6 +21,7 @@
 #ifndef MDT_ABSTRACT_SQL_WIDGET_H
 #define MDT_ABSTRACT_SQL_WIDGET_H
 
+#include "mdtError.h"
 #include <QWidget>
 #include <QSqlError>
 #include <QString>
@@ -32,15 +33,10 @@
 #include <QModelIndex>
 
 class QSqlTableModel;
-
 class mdtState;
 class mdtStateMachine;
-
-class QState;
-class QStateMachine;
-
-
-
+///class QState;
+///class QStateMachine;
 class QSqlTableModel;
 class mdtSqlRelation;
 class mdtSqlDataValidator;
@@ -275,6 +271,10 @@ class mdtAbstractSqlWidget : public QWidget
    */
   bool submitAndWait(int timeout = -1);
 
+  /*! \brief Get last error
+   */
+  mdtError lastError() const { return pvLastError; }
+
  public slots:
 
   /*! \brief Submit current record to model
@@ -471,6 +471,10 @@ class mdtAbstractSqlWidget : public QWidget
   /*! \brief Get internal proxy model
    */
   const mdtSortFilterProxyModel * proxyModel() const;
+
+  /*! \brief Store last error
+   */
+  mdtError pvLastError;
 
  signals:
 

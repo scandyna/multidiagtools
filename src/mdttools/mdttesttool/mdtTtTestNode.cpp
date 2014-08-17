@@ -249,6 +249,7 @@ bool mdtTtTestNode::setTestNodeUnitIoRange(const mdtSqlTableSelection& s, int st
   mdtSqlRecord record;
   int ioPos;
 
+  // Setup record
   if(!record.addAllFields("TestNodeUnit_tbl", database())){
     pvLastError = record.lastError();
     return false;

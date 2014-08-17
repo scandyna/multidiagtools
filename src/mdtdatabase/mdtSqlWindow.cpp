@@ -153,8 +153,10 @@ void mdtSqlWindow::createNavigationElements()
   actNavToFirst->setIcon(QIcon::fromTheme("go-first"));
   actNavToPrevious = new QAction("<", this);
   actNavToPrevious->setIcon(QIcon::fromTheme("go-previous"));
+  actNavToPrevious->setShortcut(Qt::ALT + Qt::Key_Left);
   actNavToNext = new QAction(">", this);
   actNavToNext->setIcon(QIcon::fromTheme("go-next"));
+  actNavToNext->setShortcut(Qt::ALT + Qt::Key_Right);
   actNavToLast = new QAction(">>|", this);
   actNavToLast->setIcon(QIcon::fromTheme("go-last"));
   // Add actions to toolbar

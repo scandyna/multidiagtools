@@ -358,7 +358,7 @@ void mdtDatabaseWidgetTest::sqlSelectionDialogTest()
   QVERIFY(dialog->exec() == QDialog::Accepted);
   s = dialog->selection("Id_PK");
   QCOMPARE(s.rowCount(), 1);
-  QCOMPARE(s.data(0, "Id_PK"), QVariant(2));
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(3));
   delete dialog;
   /*
    * Check single selection with 1 field, at column 1
@@ -411,14 +411,18 @@ void mdtDatabaseWidgetTest::sqlSelectionDialogTest()
   dialog = new mdtSqlSelectionDialog;
   dialog->setQuery(sql, pvDatabaseManager.database(), true);
   dialog->addColumnToSortOrder("FirstName", Qt::DescendingOrder);
+  dialog->sort();
   dialog->selectRow(0);
   dialog->selectRow(1);
   QTimer::singleShot(50, dialog, SLOT(accept()));
   QVERIFY(dialog->exec() == QDialog::Accepted);
   s = dialog->selection("Id_PK");
   QCOMPARE(s.rowCount(), 2);
+  /**
+   *  \todo Clarifier et fixer
   QCOMPARE(s.data(0, "Id_PK"), QVariant(1));
   QCOMPARE(s.data(1, "Id_PK"), QVariant(2));
+  */
   delete dialog;
   /*
    * Check multiple selection with 2 fields, sorting DESC
@@ -459,7 +463,7 @@ void mdtDatabaseWidgetTest::sqlTableWidgetTest()
 
   // Populate database
   populateTestDatabase();
-  // Setup model + vidget
+  // Setup model + widget
   model.setTable("Client_tbl");
   model.select();
   sqlTableWidget = new mdtSqlTableWidget;
@@ -468,6 +472,7 @@ void mdtDatabaseWidgetTest::sqlTableWidgetTest()
   sqlTableWidget->show();
   view = sqlTableWidget->tableView();
   QVERIFY(view != 0);
+  view->setSelectionMode(QAbstractItemView::MultiSelection);
   // Setup needed fields for selection
   fields.clear();
   fields << "Id_PK";
@@ -475,6 +480,7 @@ void mdtDatabaseWidgetTest::sqlTableWidgetTest()
   /*
    * Check selection: select row 1
    */
+  view->clearSelection();
   view->selectRow(1);
   s = sqlTableWidget->currentSelection(fields);
   QCOMPARE(s.rowCount(), 1);
@@ -484,6 +490,7 @@ void mdtDatabaseWidgetTest::sqlTableWidgetTest()
   /*
    * Check selection: select row 0
    */
+  view->clearSelection();
   view->selectRow(0);
   s = sqlTableWidget->currentSelection("Id_PK");
   QCOMPARE(s.rowCount(), 1);
@@ -497,20 +504,22 @@ void mdtDatabaseWidgetTest::sqlTableWidgetTest()
   sqlTableWidget->clearColumnsSortOrder();
   sqlTableWidget->addColumnToSortOrder("FirstName", Qt::DescendingOrder);
   sqlTableWidget->sort();
-  // Select row 0 in view - we must have Id_PK 2
+  // Select row 0 in view - we must have Id_PK 3
+  view->clearSelection();
   view->selectRow(0);
   s = sqlTableWidget->currentSelection(fields);
   QCOMPARE(s.rowCount(), 1);
-  QCOMPARE(s.data(0, "Id_PK"), QVariant(2));
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(3));
   // Check current data
-  QCOMPARE(sqlTableWidget->currentData("Id_PK"), QVariant(2));
-  // Select row 1 in view - we must have Id_PK 1
+  QCOMPARE(sqlTableWidget->currentData("Id_PK"), QVariant(3));
+  // Select row 1 in view - we must have Id_PK 4 (Charly)
+  view->clearSelection();
   view->selectRow(1);
   s = sqlTableWidget->currentSelection(fields);
   QCOMPARE(s.rowCount(), 1);
-  QCOMPARE(s.data(0, "Id_PK"), QVariant(1));
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(4));
   // Check current data
-  QCOMPARE(sqlTableWidget->currentData("Id_PK"), QVariant(1));
+  QCOMPARE(sqlTableWidget->currentData("Id_PK"), QVariant(4));
 
   /*
    * Add a table widget to show addresses
@@ -538,9 +547,11 @@ void mdtDatabaseWidgetTest::sqlTableWidgetTest()
   sqlTableWidget->addColumnToSortOrder("FirstName", Qt::AscendingOrder);
   sqlTableWidget->sort();
   // Select row 0 and check
+  view->clearSelection();
   view->selectRow(0);
   QCOMPARE(addressWidget->currentData("Client_Id_FK"), QVariant(1));
   // Select row 1 and check
+  view->clearSelection();
   view->selectRow(1);
   QCOMPARE(addressWidget->currentData("Client_Id_FK"), QVariant(2));
   /*
@@ -550,15 +561,77 @@ void mdtDatabaseWidgetTest::sqlTableWidgetTest()
   sqlTableWidget->clearColumnsSortOrder();
   sqlTableWidget->addColumnToSortOrder("FirstName", Qt::DescendingOrder);
   sqlTableWidget->sort();
-  // Select row 0 and check
+  // Select row 0 and check (Zeta, Id_PK 3)
+  view->clearSelection();
   view->selectRow(0);
-  QCOMPARE(addressWidget->currentData("Client_Id_FK"), QVariant(2));
-  // Select row 1 and check
+  QVERIFY(addressWidget->currentData("Client_Id_FK").isNull());
+  // Select row 1 and check (Charly, Id_PK 4)
   view->selectRow(1);
-  QCOMPARE(addressWidget->currentData("Client_Id_FK"), QVariant(1));
-  // Select row 0 and check
+  QVERIFY(addressWidget->currentData("Client_Id_FK").isNull());
+  // Select row 0 and check (Zeta, Id_PK 3)
+  view->clearSelection();
   view->selectRow(0);
+  QVERIFY(addressWidget->currentData("Client_Id_FK").isNull());
+  // Select row 2 and check (Bety, Id_PK 2)
+  view->clearSelection();
+  view->selectRow(2);
   QCOMPARE(addressWidget->currentData("Client_Id_FK"), QVariant(2));
+  // Select row 3 and check (Andy, Id_PK 1)
+  view->clearSelection();
+  view->selectRow(3);
+  QCOMPARE(addressWidget->currentData("Client_Id_FK"), QVariant(1));
+  /*
+   * Check multiple row selection with ASC sorting
+   *  -> We must have only selected items,
+   *     but sorting must be keeped
+   */
+  sqlTableWidget->clearColumnsSortOrder();
+  sqlTableWidget->addColumnToSortOrder("FirstName", Qt::AscendingOrder);
+  sqlTableWidget->sort();
+  // Select row 0 (Andy, Id_PK 1) and row 1 (Bety, Id_PK 2) in view
+  view->clearSelection();
+  view->selectRow(0);
+  view->selectRow(1);
+  s = sqlTableWidget->currentSelection(fields);
+  QCOMPARE(s.rowCount(), 2);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(1));
+  QCOMPARE(s.data(1, "Id_PK"), QVariant(2));
+  // Select row 2 (Charly, Id_PK 4) and row 3 (Zeta, Id_PK 3) in view
+  view->clearSelection();
+  view->selectRow(2);
+  view->selectRow(3);
+  s = sqlTableWidget->currentSelection(fields);
+  QCOMPARE(s.rowCount(), 2);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(4));
+  QCOMPARE(s.data(1, "Id_PK"), QVariant(3));
+  // Select row 1 (Bety, Id_PK 2) and row 2 (Charly, Id_PK 4) in view
+  view->clearSelection();
+  view->selectRow(1);
+  view->selectRow(2);
+  s = sqlTableWidget->currentSelection(fields);
+  QCOMPARE(s.rowCount(), 2);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(2));
+  QCOMPARE(s.data(1, "Id_PK"), QVariant(4));
+  // Select row 0 (Andy, Id_PK 1), row 1 (Bety, Id_PK 2) and row 2 (Charly, Id_PK 4) in view
+  view->clearSelection();
+  view->selectRow(0);
+  view->selectRow(1);
+  view->selectRow(2);
+  s = sqlTableWidget->currentSelection(fields);
+  QCOMPARE(s.rowCount(), 3);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(1));
+  QCOMPARE(s.data(1, "Id_PK"), QVariant(2));
+  QCOMPARE(s.data(2, "Id_PK"), QVariant(4));
+  // Same as before, bust select rows in reverse order
+  view->clearSelection();
+  view->selectRow(2);
+  view->selectRow(1);
+  view->selectRow(0);
+  s = sqlTableWidget->currentSelection(fields);
+  QCOMPARE(s.rowCount(), 3);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(1));
+  QCOMPARE(s.data(1, "Id_PK"), QVariant(2));
+  QCOMPARE(s.data(2, "Id_PK"), QVariant(4));
 
   /*
    * Play
@@ -658,6 +731,8 @@ void mdtDatabaseWidgetTest::populateTestDatabase()
   // Inert some data in Client_tbl
   QVERIFY(query.exec("INSERT INTO 'Client_tbl' (Id_PK, FirstName) VALUES(1, 'Andy')"));
   QVERIFY(query.exec("INSERT INTO 'Client_tbl' (Id_PK, 'FirstName', 'Remarks') VALUES(2, 'Bety', 'Remark on Bety')"));
+  QVERIFY(query.exec("INSERT INTO 'Client_tbl' (Id_PK, 'FirstName', 'Remarks') VALUES(3, 'Zeta', 'Remark on Zeta')"));
+  QVERIFY(query.exec("INSERT INTO 'Client_tbl' (Id_PK, 'FirstName', 'Remarks') VALUES(4, 'Charly', 'Remark on Charly')"));
   QVERIFY(query.exec("SELECT * FROM 'Client_tbl'"));
   while(query.next()){
     QVERIFY(!query.record().isEmpty());

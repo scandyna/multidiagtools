@@ -441,7 +441,11 @@ bool mdtSqlForm::setCurrentRecord(const QString &fieldName, const QVariant &valu
     pvLastError.commit();
     return false;
   }
-  return pvMainSqlWidget->setCurrentRecord(fieldName, value);
+  if(!pvMainSqlWidget->setCurrentRecord(fieldName, value)){
+    pvLastError = pvMainSqlWidget->lastError();
+    return false;
+  }
+  return true;
 }
 
 bool mdtSqlForm::setCurrentData(const QString &tableName, const QString &fieldName, const QVariant &data, bool submit)

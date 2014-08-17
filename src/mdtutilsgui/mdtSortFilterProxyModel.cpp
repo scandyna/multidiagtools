@@ -116,7 +116,7 @@ void mdtSortFilterProxyModel::sort(int column, Qt::SortOrder order)
   int i;
   QPair<int, Qt::SortOrder> p;
 
-  qDebug() << "mdtSortFilterProxyModel::sort() - columns: " << pvColumnsSortOrder;
+  ///qDebug() << "mdtSortFilterProxyModel::sort() - columns: " << pvColumnsSortOrder;
   
   if(pvColumnsSortOrder.isEmpty()){
     QSortFilterProxyModel::sort(column, order);

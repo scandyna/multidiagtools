@@ -341,6 +341,7 @@ void mdtClMainWindow::editSelectedUnit()
   Q_ASSERT(s.rowCount() == 1);
   if(!editor->setCurrentRecord("Id_PK", s.data(0, "Unit_Id_PK"))){
     displayError(editor->lastError());
+    return;
   }
   window->enableNavigation();
   window->raise();
@@ -866,8 +867,7 @@ bool mdtClMainWindow::createUnitTableView()
   tableWidget->addColumnToSortOrder("SchemaPosition", Qt::AscendingOrder);
   tableWidget->sort();
   // Resize
-  tableWidget->tableView()->resizeColumnsToContents();
-  tableWidget->tableView()->resizeRowsToContents();
+  tableWidget->resizeViewToContents();
 
   return true;
 }
@@ -908,6 +908,31 @@ bool mdtClMainWindow::createLinkListTableView()
   if(tableWidget == 0){
     return false;
   }
+  // Hide technical fields
+  tableWidget->setColumnHidden("UnitConnectionStart_Id_FK", true);
+  tableWidget->setColumnHidden("UnitConnectionEnd_Id_FK", true);
+  tableWidget->setColumnHidden("LinkBeam_Id_FK", true);
+  tableWidget->setColumnHidden("StartVehicleType_Id_PK", true);
+  tableWidget->setColumnHidden("SinceVersion", true);
+  tableWidget->setColumnHidden("Modification", true);
+  tableWidget->setColumnHidden("LinkDirection_Code_FK", true);
+  tableWidget->setColumnHidden("LinkType_Code_FK", true);
+  tableWidget->setColumnHidden("StartUnit_Id_PK", true);
+  tableWidget->setColumnHidden("UnitConnectorStart_Id_FK", true);
+  tableWidget->setColumnHidden("StartConnectionType_Code_FK", true);
+  tableWidget->setColumnHidden("EndVehicleType_Id_PK", true);
+  tableWidget->setColumnHidden("EndUnit_Id_PK", true);
+  tableWidget->setColumnHidden("UnitConnectorEnd_Id_FK", true);
+  // Rename fields to user friendly ones
+  
+  // Setup sorting
+  tableWidget->addColumnToSortOrder("StartVehicleType", Qt::AscendingOrder);
+  tableWidget->addColumnToSortOrder("StartVehicleSubType", Qt::AscendingOrder);
+  tableWidget->addColumnToSortOrder("StartVehicleSeriesNumber", Qt::AscendingOrder);
+  tableWidget->addColumnToSortOrder("StartSchemaPosition", Qt::AscendingOrder);
+  tableWidget->sort();
+  // Resize
+  tableWidget->resizeViewToContents();
 
   return true;
 }

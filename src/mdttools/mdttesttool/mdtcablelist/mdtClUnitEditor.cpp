@@ -1603,12 +1603,14 @@ bool mdtClUnitEditor::setupUnitLinkTable()
   Q_ASSERT(widget != 0);
   // Add the Add and remove buttons
   pbAddLink = new QPushButton(tr("Add link ..."));
+  pbAddLink->setIcon(QIcon::fromTheme("document-new"));
   connect(pbAddLink, SIGNAL(clicked()), this, SLOT(addLink()));
   widget->addWidgetToLocalBar(pbAddLink);
   pbEditLink = new QPushButton(tr("Edit link"));
   connect(pbEditLink, SIGNAL(clicked()), this, SLOT(editLink()));
   widget->addWidgetToLocalBar(pbEditLink);
   pbRemoveLinks = new QPushButton(tr("Remove links"));
+  pbRemoveLinks->setIcon(QIcon::fromTheme("edit-delete"));
   connect(pbRemoveLinks, SIGNAL(clicked()), this, SLOT(removeLinks()));
   widget->addWidgetToLocalBar(pbRemoveLinks);
   pbViewPath = new QPushButton(tr("View path"));
@@ -1691,10 +1693,12 @@ bool mdtClUnitEditor::setupVehicleTable()
   widget->setHeaderData("SeriesNumber", tr("Serie"));
   // Add vehicle button
   pbAddVehicle = new QPushButton(tr("Assign vehicle"));
+  pbAddVehicle->setIcon(QIcon::fromTheme("list-add"));
   widget->addWidgetToLocalBar(pbAddVehicle);
   connect(pbAddVehicle, SIGNAL(clicked()), this, SLOT(assignVehicle()));
   // Remove vehicle button
   pbRemoveVehicle = new QPushButton(tr("Remove vehicle"));
+  pbRemoveVehicle->setIcon(QIcon::fromTheme("list-remove"));
   widget->addWidgetToLocalBar(pbRemoveVehicle);
   connect(pbRemoveVehicle, SIGNAL(clicked()), this, SLOT(removeVehicleAssignation()));
   widget->addStretchToLocalBar();

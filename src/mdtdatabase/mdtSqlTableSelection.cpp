@@ -52,7 +52,7 @@ void mdtSqlTableSelection::setIndexList(const QModelIndexList & indexList, const
       selectedRows.append(row);
     }
   }
-  qSort(selectedRows.begin(), selectedRows.end());
+  ///qSort(selectedRows.begin(), selectedRows.end());
   // Build list with only interresting fields
   for(i = 0; i < selectedRows.size(); ++i){
     selectionRow.clear();

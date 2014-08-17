@@ -37,6 +37,8 @@
 #include <QWidget>
 #include <QIcon>
 
+#include <QItemSelection>
+
 #include <QDebug>
 
 /*
@@ -305,12 +307,30 @@ mdtSqlTableSelection mdtSqlTableWidget::currentSelection(const QStringList &fiel
   Q_ASSERT(proxyModel() != 0);
 
   mdtSqlTableSelection s;
+  ///QModelIndex index;
   QModelIndexList selectionIndexList;
   QModelIndexList modelIndexList;
+  ///int row, col;
   int i;
 
+  // We want to preserve sort order, so we iterate the entire proxy model and check if index is selected
+  /**
+  qDebug() << "selection: selected indexes: " << selectionModel()->selectedIndexes();
+  for(row = 0; row < proxyModel()->rowCount(); ++row){
+    for(col = 0; col < proxyModel()->columnCount(); ++col){
+      index = proxyModel()->index(row, col);
+      qDebug() << "selection: index: " << index;
+      if(selectionModel()->isSelected(index)){
+        modelIndexList.append(proxyModel()->mapToSource(index));
+      }
+    }
+  }
+  */
+
   selectionIndexList = selectionModel()->selectedIndexes();
+  qSort(selectionIndexList.begin(), selectionIndexList.end());
   for(i = 0; i < selectionIndexList.size(); ++i){
+    ///qDebug() << "\n\tselection - sel index: " << selectionIndexList.at(i) << " - model index: " << proxyModel()->mapToSource(selectionIndexList.at(i));
     modelIndexList.append(proxyModel()->mapToSource(selectionIndexList.at(i)));
   }
   s.setIndexList(modelIndexList, fieldList, model());
