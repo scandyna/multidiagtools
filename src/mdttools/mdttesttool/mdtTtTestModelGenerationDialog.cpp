@@ -110,6 +110,7 @@ void mdtTtTestModelGenerationDialog::populateTestCableComboBox(int index)
   QList<QSqlRecord> dataList;
   QSqlRecord data;
   QString sql;
+  QString str;
   bool ok;
   int i;
 
@@ -119,7 +120,8 @@ void mdtTtTestModelGenerationDialog::populateTestCableComboBox(int index)
   }
   testNodeId = cbTestNode->itemData(index);
   Q_ASSERT(!testNodeId.isNull());
-  sql = "SELECT DISTINCT TestCable_Id_FK, Identification FROM TestNode_TestCable_view WHERE TestNode_Id_FK = " + testNodeId.toString();
+  sql = "SELECT DISTINCT TestCable_Id_FK, Identification, Key FROM TestNode_TestCable_view WHERE TestNode_Id_FK = " + testNodeId.toString();
+  sql += " ORDER BY Identification ASC";
   dataList = tm.getDataList<QSqlRecord>(sql, ok);
   if(!ok){
     displayError(tm.lastError());
@@ -127,7 +129,11 @@ void mdtTtTestModelGenerationDialog::populateTestCableComboBox(int index)
   }
   for(i = 0; i < dataList.size(); ++i){
     data = dataList.at(i);
-    cbTestCable->addItem(data.value("Identification").toString(), data.value("TestCable_Id_FK"));
+    str = data.value("Identification").toString();
+    if(!data.value("Key").isNull()){
+      str += " (" + data.value("Key").toString() + ")";
+    }
+    cbTestCable->addItem(str, data.value("TestCable_Id_FK"));
   }
   // We get measure connection data from here, because this slot is called 1x when a new test node was selected
   getMeasureConnectionData(testNodeId);

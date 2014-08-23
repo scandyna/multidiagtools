@@ -310,9 +310,15 @@ class mdtTtDatabaseSchema
    */
   bool createUnitComponentView();
 
-  /*! \brief Create unit connector view
+  /*! \brief Create UnitConnector_view
    */
   bool createUnitConnectorView();
+
+  /*! \brief Create UnitConnectorUsage_view
+   *
+   * Display wich units uses a given connector
+   */
+  bool createUnitConnectorUsageView();
 
   /*! \brief
    */

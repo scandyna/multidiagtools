@@ -39,6 +39,12 @@
 
 #include <QItemSelection>
 
+#include <QKeyEvent>
+#include <QKeySequence>
+#include <QClipboard>
+#include <QMimeData>
+#include <QApplication>
+
 #include <QDebug>
 
 /*
@@ -98,6 +104,7 @@ mdtSqlTableWidget::mdtSqlTableWidget(QWidget *parent)
   QVBoxLayout *layout = new QVBoxLayout;
   pvTopHorizontalLayout = new QHBoxLayout;
   pvBottomHorizontalLayout = new QHBoxLayout;
+  QPushButton *pb = new QPushButton;
 
   pvTableView = new QTableView;
   pvTableView->setSelectionBehavior(QAbstractItemView::SelectItems);
@@ -111,10 +118,16 @@ mdtSqlTableWidget::mdtSqlTableWidget(QWidget *parent)
   pvTableView->setItemDelegate(delegate);
   connect(delegate, SIGNAL(dataEditionBegins()), this, SLOT(onDataEditionBegins()));
   // Button to resize view to contents
-  QPushButton *pb = new QPushButton;
+  pb = new QPushButton;
   pb->setIcon(QIcon::fromTheme("zoom-fit-best"));
   pb->setToolTip(tr("Resize view to contents"));
   connect(pb, SIGNAL(clicked()), this, SLOT(resizeViewToContents()));
+  pvTopHorizontalLayout->addWidget(pb);
+  // Button to copy table to clipboard
+  pb = new QPushButton;
+  pb->setIcon(QIcon::fromTheme("edit-copy"));
+  pb->setToolTip(tr("Copy all data to clipboard"));
+  connect(pb, SIGNAL(clicked()), this, SLOT(copyTableToClipBoard()));
   pvTopHorizontalLayout->addWidget(pb);
   pvTopHorizontalLayout->addStretch();
   // Layouts
@@ -327,6 +340,12 @@ mdtSqlTableSelection mdtSqlTableWidget::currentSelection(const QStringList &fiel
   }
   */
 
+  /*
+   * Get selected indexes. We want that data are token from top-left to bottom right,
+   *  not the order of selection.
+   *  f.ex. if user selected items from bottom to top,
+   *  we want to return items from top to bottom.
+   */
   selectionIndexList = selectionModel()->selectedIndexes();
   qSort(selectionIndexList.begin(), selectionIndexList.end());
   for(i = 0; i < selectionIndexList.size(); ++i){
@@ -599,6 +618,102 @@ void mdtSqlTableWidget::onModelSelected()
   }else{
     onCurrentRowChanged(index, index);
   }
+}
+
+void mdtSqlTableWidget::copyTableToClipBoard()
+{
+  Q_ASSERT(model() != 0);
+  Q_ASSERT(proxyModel() != 0);
+
+  QModelIndex index;
+  QClipboard *clipboard = QApplication::clipboard();
+  QString data;
+  QSortFilterProxyModel *m;
+  int row, col;
+
+  m = proxyModel();
+  // We call sort, so all data will be fetched (and sorted)
+  sort();
+  // Copy header
+  for(col = 0; col < m->columnCount(); ++col){
+    if(!pvTableView->isColumnHidden(col)){
+      data += "\"" + m->headerData(col, Qt::Horizontal).toString() + "\"";
+      if(col < (m->columnCount()-1)){
+        data += "\t";
+      }
+    }
+  }
+  data += "\n";
+  // copy data
+  for(row = 0; row < m->rowCount(); ++row){
+    for(col = 0; col < m->columnCount(); ++col){
+      index = m->index(row, col);
+      if(!pvTableView->isColumnHidden(index.column())){
+        data += "\"" + m->data(index).toString() + "\"";
+        if(col < (m->columnCount()-1)){
+          data += "\t";
+        }
+      }
+    }
+    data += "\n";
+  }
+  // Send to clipboard
+  clipboard = QApplication::clipboard();
+  Q_ASSERT(clipboard != 0);
+  QMimeData *mimeData = new QMimeData;
+  mimeData->setText(data);
+  clipboard->setMimeData(mimeData);
+}
+
+void mdtSqlTableWidget::keyPressEvent(QKeyEvent* event)
+{
+  Q_ASSERT(event != 0);
+
+  if(event->matches(QKeySequence::Copy)){
+    copySelectionToClipBoard();
+  }
+}
+
+void mdtSqlTableWidget::copySelectionToClipBoard()
+{
+  Q_ASSERT(model() != 0);
+  Q_ASSERT(selectionModel() != 0);
+  Q_ASSERT(proxyModel() != 0);
+
+  QModelIndexList selectionIndexList;
+  QModelIndex previousModelIndex, currentModelIndex;
+  QClipboard *clipboard = QApplication::clipboard();
+  QString data;
+  int i;
+
+  /*
+   * Get selected indexes. We want that data are token from top-left to bottom right,
+   *  not the order of selection.
+   *  f.ex. if user selected items from bottom to top,
+   *  we want to return items from top to bottom.
+   */
+  selectionIndexList = selectionModel()->selectedIndexes();
+  qSort(selectionIndexList.begin(), selectionIndexList.end());
+  for(i = 0; i < selectionIndexList.size(); ++i){
+    if(!pvTableView->isColumnHidden(selectionIndexList.at(i).column())){
+      currentModelIndex = proxyModel()->mapToSource(selectionIndexList.at(i));
+      if(previousModelIndex.isValid()){
+        if(currentModelIndex.row() == previousModelIndex.row()){
+          data += "\t";
+        }else{
+          data += "\n";
+        }
+      }
+      data += "\"" + model()->data(currentModelIndex).toString() + "\"";
+    }
+    previousModelIndex = currentModelIndex;
+  }
+  // Send to clipboard
+  clipboard = QApplication::clipboard();
+  Q_ASSERT(clipboard != 0);
+  QMimeData *mimeData = new QMimeData;
+  mimeData->setText(data);
+  clipboard->setMimeData(mimeData);
 }
 
 void mdtSqlTableWidget::doSetModel(QSqlTableModel *model)

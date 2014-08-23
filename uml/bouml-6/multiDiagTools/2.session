@@ -1,14 +1,14 @@
-window_sizes 1272 970 233 1033 917 0
+window_sizes 1280 1005 233 1041 952 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 941058 // Test
-    1033 917 70 3 0 0
-  active  classdiagram_ref 739586 // CableListAllTables
+  active  classdiagram_ref 941058 // Test
+    1041 952 70 3 0 0
+  classdiagram_ref 739586 // CableListAllTables
     1041 952 100 17 287 658
 end
 show_stereotypes
-selected classdiagram_ref 739586 // CableListAllTables
+selected attribute_ref 1368322 // Key
 open
-  classview_ref 483970 // CableList
+  class_ref 1013506 // TestCable_tbl
 end
 end

@@ -366,6 +366,9 @@ bool mdtTtDatabaseSchema::createViews()
   if(!createUnitConnectorView()){
     return false;
   }
+  if(!createUnitConnectorUsageView()){
+    return false;
+  }
   if(!createUnitConnectionView()){
     return false;
   }
@@ -3002,6 +3005,33 @@ bool mdtTtDatabaseSchema::createUnitConnectorView()
         "  ON ArticleConnector_tbl.Id_PK = UnitConnector_tbl.ArticleConnector_Id_FK";
 
   return createView("UnitConnector_view", sql);
+}
+
+bool mdtTtDatabaseSchema::createUnitConnectorUsageView()
+{
+  QString sql;
+
+  sql = "CREATE VIEW UnitConnectorUsage_view AS\n"\
+        "SELECT\n"\
+        " UC.Id_PK,\n"\
+        " UC.Unit_Id_FK,\n"\
+        " UC.Connector_Id_FK,\n"\
+        " UC.ArticleConnector_Id_FK,\n"\
+        " UC.Name AS UnitConnectorName,\n"\
+        " U.SchemaPosition,\n"\
+        " U.Alias,\n"\
+        " VT.Type,\n"\
+        " VT.SubType,\n"\
+        " VT.SeriesNumber\n"\
+        "FROM UnitConnector_tbl UC\n"\
+        " JOIN Unit_tbl U\n"\
+        "  ON U.Id_PK = UC.Unit_Id_FK\n"\
+        " JOIN VehicleType_Unit_tbl VTU\n"\
+        "  ON VTU.Unit_Id_FK = U.Id_PK\n"\
+        " JOIN VehicleType_tbl VT\n"\
+        "  ON VT.Id_PK = VTU.VehicleType_Id_FK";
+
+  return createView("UnitConnectorUsage_view", sql);
 }
 
 

@@ -205,6 +205,47 @@ void mdtClMainWindow::editConnector()
   window->show();
 }
 
+void mdtClMainWindow::editSelectedConnector()
+{
+  mdtSqlTableSelection s;
+  mdtClConnectorEditor *editor;
+  mdtSqlWindow *window;
+  mdtSqlTableWidget *view;
+
+  // Get article view
+  view = getTableView("Connector_tbl");
+  if(view == 0){
+    return;
+  }
+  // Get ID of selected connector
+  s = view->currentSelection("Id_PK");
+  if(s.isEmpty()){
+    return;
+  }
+  // Get or create editor
+  editor = getConnectorEditor();
+  if(editor == 0){
+    return;
+  }
+  // Get window
+  window = getEditorWindow(editor);
+  Q_ASSERT(window != 0);
+  // Select and show
+  Q_ASSERT(editor != 0);
+  if(!editor->select()){
+    displayError(editor->lastError());
+    return;
+  }
+  Q_ASSERT(s.rowCount() > 0);
+  if(!editor->setCurrentRecord("Id_PK", s.data(0, "Id_PK"))){
+    displayError(editor->lastError());
+    return;
+  }
+  window->enableNavigation();
+  window->raise();
+  window->show();
+}
+
 void mdtClMainWindow::viewArticle()
 {
   if(!displayTableView("Article_tbl")){
@@ -732,6 +773,7 @@ bool mdtClMainWindow::createConnectorTableView()
   if(tableWidget == 0){
     return false;
   }
+  connect(tableWidget->tableView(), SIGNAL(doubleClicked(const QModelIndex&)),this, SLOT(editSelectedConnector()));
   // Hide technical fields
   tableWidget->setColumnHidden("Id_PK", true);
   // Rename fields to user friendly ones
@@ -1310,6 +1352,8 @@ void mdtClMainWindow::connectActions()
   // Connector
   connect(actViewConnector, SIGNAL(triggered()), this, SLOT(viewConnector()));
   connect(actEditConnector, SIGNAL(triggered()), this, SLOT(editConnector()));
+  connect(actEditSelectedConnector, SIGNAL(triggered()), this, SLOT(editSelectedConnector()));
+  
   // Article edition
   connect(actViewArticle, SIGNAL(triggered()), this, SLOT(viewArticle()));
   connect(actEditArticle, SIGNAL(triggered()), this, SLOT(editArticle()));

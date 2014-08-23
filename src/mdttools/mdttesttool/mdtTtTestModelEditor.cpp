@@ -594,9 +594,15 @@ bool mdtTtTestModelEditor::setupTestCableTable()
   widget = sqlTableWidget("TestNode_TestCable_view");
   Q_ASSERT(widget != 0);
   // Hide technical fields
-  ///widget->setColumnHidden("", true);
+  widget->setColumnHidden("TestNode_Id_FK", true);
+  widget->setColumnHidden("TestModel_Id_FK", true);
+  widget->setColumnHidden("TestCable_Id_FK", true);
   // Set fields a user friendly name
-  ///widget->setHeaderData("", tr(""));
+  widget->setHeaderData("OffsetResetDate", tr("Last offset reset"));
+  widget->setHeaderData("DescriptionEN", tr("Description"));
+  // Setup sorting
+  widget->addColumnToSortOrder("Key", Qt::AscendingOrder);
+  widget->sort();
   // Set some attributes on table view
   widget->tableView()->resizeColumnsToContents();
 

@@ -55,6 +55,10 @@ class mdtClConnectorEditor : public mdtSqlForm
    */
   bool setupConnectorContactTable();
 
+  /*! \brief Setup unit usage table
+   */
+  bool setupUnitUsageTable();
+
   Q_DISABLE_COPY(mdtClConnectorEditor);
 };
 

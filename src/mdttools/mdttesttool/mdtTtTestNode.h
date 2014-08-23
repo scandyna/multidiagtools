@@ -29,6 +29,7 @@
 #include <QVariant>
 #include <QString>
 #include <QSqlRecord>
+#include <QPair>
 ///#include <QModelIndex>
 
 /*! \brief Helper class for test node edition
@@ -95,12 +96,6 @@ class mdtTtTestNode : public mdtTtBase
    */
   bool setTestNodeUnitIoRange(const mdtSqlTableSelection & s, int startIoPosition);
 
-  /*! \brief Get 2 non linked connections of given relay
-   *
-   * make
-   */
-  
-
   /*! \brief Add (coupling and channel) relays to graph
    *
    * Will add all coupling and channel relays of given test node to graph
@@ -135,6 +130,10 @@ class mdtTtTestNode : public mdtTtBase
   ///bool ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, const QVariant & connectionIdB, const QList<mdtTtTestNodeUnitSetupData> & testNodeUnitSetupDataList, bool & ok);
 
  private:
+
+  /*! \brief Get 2 non linked connections of given relay
+   */
+  QPair<QVariant, QVariant> getTwoRelayConnections(const QVariant & testNodeUnitId, mdtClPathGraph & graph, bool & ok);
 
   Q_DISABLE_COPY(mdtTtTestNode);
 };

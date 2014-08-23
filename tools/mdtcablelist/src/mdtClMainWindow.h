@@ -108,6 +108,10 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
    */
   void editConnector();
 
+  /*! \brief Edit connectors
+   */
+  void editSelectedConnector();
+
   /*! \brief Edit articles
    */
   void viewArticle();

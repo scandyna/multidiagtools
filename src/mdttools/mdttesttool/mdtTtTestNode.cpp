@@ -276,10 +276,17 @@ bool mdtTtTestNode::setTestNodeUnitIoRange(const mdtSqlTableSelection& s, int st
 
 bool mdtTtTestNode::addRelaysToGraph(const QVariant& testNodeId, mdtClPathGraph& graph, const QList< QVariant >& relaysToIgnoreIdList)
 {
+  struct relay_t{
+    QVariant id;
+    QVariant cnxA;
+    QVariant cnxB;
+  } relay;
   QString sql;
   QList<QVariant> testNodeUnitIdList;
-  QList<QVariant> connectionsList;
-  QVariant testNodeUnitId;
+  ///QList<QVariant> connectionsList;
+  ///QVariant testNodeUnitId;
+  QPair<QVariant, QVariant> connections;
+  QList<relay_t> relaysList;
   bool ok;
   int i;
 
@@ -297,8 +304,18 @@ bool mdtTtTestNode::addRelaysToGraph(const QVariant& testNodeId, mdtClPathGraph&
     Q_ASSERT(!relaysToIgnoreIdList.at(i).isNull());
     testNodeUnitIdList.removeAll(relaysToIgnoreIdList.at(i));
   }
+  // Build relays list
   for(i = 0; i < testNodeUnitIdList.size(); ++i){
     // Get connections
+    connections = getTwoRelayConnections(testNodeUnitIdList.at(i), graph, ok);
+    if(!ok){
+      return false;
+    }
+    relay.id = testNodeUnitIdList.at(i);
+    relay.cnxA = connections.first;
+    relay.cnxB = connections.second;
+    relaysList.append(relay);
+    /**
     testNodeUnitId = testNodeUnitIdList.at(i);
     Q_ASSERT(!testNodeUnitId.isNull());
     sql = "SELECT Id_PK FROM UnitConnection_tbl WHERE Unit_Id_FK = " + testNodeUnitId.toString();
@@ -315,6 +332,12 @@ bool mdtTtTestNode::addRelaysToGraph(const QVariant& testNodeId, mdtClPathGraph&
       pvLastError.commit();
       return false;
     }
+    */
+  }
+  // Add relays to graph
+  for(i = 0; i < relaysList.size(); ++i){
+    relay = relaysList.at(i);
+    graph.addLink(relay.cnxA, relay.cnxB, relay.id, true, 2);
   }
 
   return true;
@@ -361,18 +384,46 @@ bool mdtTtTestNode::ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, 
   mdtTtTestNodeUnit tnu(0, database());
   QList<QVariant> connectionIdList;
   int i;
-  bool noShort;
+  bool hasShort;
+  struct relay_t{
+    QVariant id;
+    QVariant cnxA;
+    QVariant cnxB;
+  } relay;
+  QList<relay_t> relaysList;
+  QPair<QVariant, QVariant> connections;
+  QVariant testNodeUnitId;
 
   // Clear previous results
   graph.removeAddedLinks();
+  // Build relays list with only given node units
+  for(i = 0; i < testNodeUnitSetupDataList.size(); ++i){
+    testNodeUnitId = testNodeUnitSetupDataList.at(i).value("TestNodeUnit_Id_FK");
+    Q_ASSERT(!testNodeUnitId.isNull());
+    // Get connections
+    connections = getTwoRelayConnections(testNodeUnitId, graph, ok);
+    if(!ok){
+      return false;
+    }
+    relay.id = testNodeUnitId;
+    relay.cnxA = connections.first;
+    relay.cnxB = connections.second;
+    relaysList.append(relay);
+  }
+  // Add relays to graph
+  for(i = 0; i < relaysList.size(); ++i){
+    relay = relaysList.at(i);
+    graph.addLink(relay.cnxA, relay.cnxB, relay.id, true, 2);
+  }
+
   // Add given node units to graph
+  /**
   for(i = 0; i < testNodeUnitSetupDataList.size(); ++i){
     connectionIdList = tnu.getConnectionIdListOfUnitId(testNodeUnitSetupDataList.at(i).value("TestNodeUnit_Id_FK"), false, ok);
     if(!ok){
       pvLastError = tnu.lastError();
       return false;
     }
-    ///qDebug() << "Connections: " << connectionIdList;
     // We only handle units with exactly 2 connections
     if(connectionIdList.size() != 2){
       ok = false;
@@ -389,11 +440,68 @@ bool mdtTtTestNode::ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, 
   if(!ok){
     pvLastError = graph.lastError();
   }
+  */
+  hasShort = graph.connectionsAreLinked(connectionIdA, connectionIdB);
   graph.removeAddedLinks();
+  if(hasShort){
+    QString sql;
+    QList<QSqlRecord> dataList;
+    QSqlRecord data;
+    QString u1, u2, relaysStr;
+    QString msg;
+    // Infos about connectionIdA
+    sql = "SELECT U.SchemaPosition, UCNX.UnitContactName FROM UnitConnection_tbl UCNX JOIN Unit_tbl U ON U.Id_PK = UCNX.Unit_Id_FK";
+    sql += " WHERE UCNX.Id_PK = " + connectionIdA.toString();
+    dataList = getDataList<QSqlRecord>(sql, ok);
+    qDebug() << "Data: " << dataList;
+    if(!ok){
+      return false;
+    }
+    Q_ASSERT(dataList.size() == 1);
+    data = dataList.at(0);
+    u1 = tr("pos. ") + data.value("SchemaPosition").toString() + tr(" connection ") + data.value("UnitContactName").toString();
+    // Infos about connectionIdB
+    sql = "SELECT U.SchemaPosition, UCNX.UnitContactName FROM UnitConnection_tbl UCNX JOIN Unit_tbl U ON U.Id_PK = UCNX.Unit_Id_FK";
+    sql += " WHERE UCNX.Id_PK = " + connectionIdB.toString();
+    dataList = getDataList<QSqlRecord>(sql, ok);
+    qDebug() << "Data: " << dataList;
+    if(!ok){
+      return false;
+    }
+    Q_ASSERT(dataList.size() == 1);
+    data = dataList.at(0);
+    u2 = tr("pos. ") + data.value("SchemaPosition").toString() + tr(" connection ") + data.value("UnitContactName").toString();
+    // Infos about used relays
+    sql = "SELECT SchemaPosition FROM Unit_tbl WHERE Id_PK IN (";
+    for(i = 0; i < (relaysList.size()-1); ++i){
+      sql += relaysList.at(i).id.toString() + ",";
+    }
+    if(i < relaysList.size()){
+      sql += relaysList.at(i).id.toString();
+    }
+    sql += ")";
+    qDebug() << "Relays SQL: " << sql;
+    dataList = getDataList<QSqlRecord>(sql, ok);
+    qDebug() << "Data: " << dataList;
+    if(!ok){
+      return false;
+    }
+    for(i = 0; i < dataList.size(); ++i){
+      relaysStr += dataList.at(i).value("SchemaPosition").toString() + " ";
+    }
+    // Form message
+    msg = tr("A generated setup makes a internal short between measure connections.") + " ";
+    msg += tr("Short is between ") + u1 + tr(" and ") + u2 + ". ";
+    msg += tr("Route relays: ") + relaysStr;
+    pvLastError.setError(msg, mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNode");
+    pvLastError.commit();
+    return false;
+  }
 
-  return noShort;
+  return true;
 }
-
+///|StartAlias|StartUnitConnectorName|||EndAlias|EndUnitConnectorName|||||StartUnit_Id_FK|EndUnit_Id_FK|
 /**
 bool mdtTtTestNode::ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, const QVariant & connectionIdB, const QList<mdtTtTestNodeUnitSetupData> & testNodeUnitSetupDataList, bool & ok)
 {
@@ -401,3 +509,45 @@ bool mdtTtTestNode::ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, 
   return ensureAbsenceOfShortCircuit(connectionIdA, connectionIdB, testNodeUnitSetupDataList, graph, ok);
 }
 */
+
+QPair<QVariant, QVariant> mdtTtTestNode::getTwoRelayConnections(const QVariant & testNodeUnitId, mdtClPathGraph & graph, bool & ok)
+{
+  Q_ASSERT(!testNodeUnitId.isNull());
+
+  QString sql;
+  QList<QVariant> connectionsList;
+  int i, m;
+
+  // Get all connections of given relay
+  sql = "SELECT Id_PK FROM UnitConnection_tbl WHERE Unit_Id_FK = " + testNodeUnitId.toString();
+  connectionsList = getDataList<QVariant>(sql, ok);
+  if(!ok){
+    return QPair<QVariant, QVariant>();
+  }
+  // Check any combinaison of of connections to find 2 non linked together connections
+  for(i = 0; i < (connectionsList.size()-1); ++i){
+    for(m = i+1; m < connectionsList.size(); ++m){
+      ///qDebug() << "Checking " << i << "-" << m;
+      if(!graph.connectionsAreLinked(connectionsList.at(i), connectionsList.at(m))){
+        ok = true;
+        return QPair<QVariant, QVariant>(connectionsList.at(i), connectionsList.at(m));
+      }
+    }
+  }
+  // Given relay has not 2 non linked connections
+  QList<QVariant> dataList;
+  QString msg;
+  sql = "SELECT SchemaPosition FROM Unit_tbl WHERE Id_PK = " + testNodeUnitId.toString();
+  dataList = getDataList<QVariant>(sql, ok);
+  if(!ok){
+    return QPair<QVariant, QVariant>();
+  }
+  Q_ASSERT(dataList.size() == 1);
+  ok = false;
+  msg = tr("Could not find 2 connections for relay ") + dataList.at(0).toString();
+  pvLastError.setError(msg, mdtError::Error);
+  MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNode");
+  pvLastError.commit();
+
+  return QPair<QVariant, QVariant>();
+}

@@ -33,6 +33,7 @@ class QHBoxLayout;
 class QPushButton;
 class QItemSelectionModel;
 class QWidget;
+class QKeyEvent;
 
 /*
  * We use on manual submit edit strategy,so we can handle errors
@@ -299,7 +300,21 @@ class mdtSqlTableWidget : public mdtAbstractSqlWidget
    */
   int firstVisibleColumnIndex();
 
+  /*! \brief Copy table to clipboard
+   */
+  void copyTableToClipBoard();
+
  private:
+
+  /*! \brief Catch the copy key sequence event
+   *
+   * Will also call copySelectionToClipBoard() if qey sequence is copy (typically ctrl+c)
+   */
+  void keyPressEvent(QKeyEvent *event);
+
+  /*! \brief Copy selection to clipboard
+   */
+  void copySelectionToClipBoard();
 
   /*! \brief Set model
    *

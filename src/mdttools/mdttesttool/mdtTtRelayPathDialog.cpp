@@ -323,16 +323,31 @@ bool mdtTtRelayPathDialog::loadRelays(const QVariant & testNodeId)
   QString sql;
   mdtTtTestNode tn(0, pvDatabase);
   QList<QSqlRecord> dataList;
-  QSqlRecord data;
-  QList<QVariant> connectionsList;
-  QVariant testNodeUnitId;
+  ///QSqlRecord data;
+  ///QList<QVariant> connectionsList;
+  ///QVariant testNodeUnitId;
   bool ok;
   int i;
 
-  // Get coupling relays
+  // Add relays to graph
+  if(!tn.addRelaysToGraph(testNodeId, *pvGraph)){
+    displayError(tn.lastError());
+    return false;
+  }
+  // Load the relays name map
   sql = "SELECT TNU.Unit_Id_FK_PK, U.SchemaPosition FROM TestNodeUnit_tbl TNU JOIN Unit_tbl U ON U.Id_PK = TNU.Unit_Id_FK_PK ";
   sql += " WHERE TNU.TestNode_Id_FK = " + testNodeId.toString();
   sql += " AND (Type_Code_FK = 'BUSCPLREL' OR Type_Code_FK = 'CHANELREL')";
+  dataList = tn.getDataList<QSqlRecord>(sql, ok);
+  if(!ok){
+    displayError(tn.lastError());
+    return false;
+  }
+  for(i = 0; i < dataList.size(); ++i){
+    Q_ASSERT(!dataList.at(i).value("Unit_Id_FK_PK").isNull());
+    pvRelayNameMap.insert(dataList.at(i).value("Unit_Id_FK_PK").toInt(), dataList.at(i).value("SchemaPosition").toString());
+  }
+  /**
   dataList = tn.getData(sql, &ok);
   if(!ok){
     displayError(tn.lastError());
@@ -359,6 +374,7 @@ bool mdtTtRelayPathDialog::loadRelays(const QVariant & testNodeId)
       e.commit();
     }
   }
+  */
 
   return true;
 }

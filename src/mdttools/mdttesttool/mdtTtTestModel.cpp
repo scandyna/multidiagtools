@@ -155,10 +155,10 @@ QVariant mdtTtTestModelAbstractGeneratorHelper::getDutConnectionId(const QVarian
   return dataList.at(0);
 }
 
-QVariant mdtTtTestModelAbstractGeneratorHelper::getTestConnectionId(const QVariant& testCableId, const QVariant& dutConnectionId, bool& ok, const QVariant& testConnectionToExclude)
+QList<QVariant> mdtTtTestModelAbstractGeneratorHelper::getTestConnectionIdList(const QVariant& testCableId, const QVariant& dutConnectionId, bool& ok, const QVariant& testConnectionToExclude)
 {
   QString sql;
-  QList<QVariant> dataList;
+  ///QList<QVariant> dataList;
 
   sql = "SELECT TestConnection_Id_FK FROM TestLink_tbl";
   sql += " WHERE TestCable_Id_FK = " + testCableId.toString();
@@ -166,6 +166,8 @@ QVariant mdtTtTestModelAbstractGeneratorHelper::getTestConnectionId(const QVaria
   if(!testConnectionToExclude.isNull()){
     sql += " AND TestConnection_Id_FK <> " + testConnectionToExclude.toString();
   }
+  return pvTestModel->getDataList<QVariant>(sql, ok);;
+  /**
   dataList = pvTestModel->getDataList<QVariant>(sql, ok);
   if(!ok){
     return QVariant();
@@ -176,6 +178,7 @@ QVariant mdtTtTestModelAbstractGeneratorHelper::getTestConnectionId(const QVaria
   Q_ASSERT(dataList.size() == 1);
 
   return dataList.at(0);
+  */
 }
 
 
@@ -196,7 +199,7 @@ QList<QVariant> mdtTtTestModelContinuityTestGeneratorHelper::getRelatedTestConne
 {
   QVariant fromDutConnection;
   QList<QVariant> linkedDutConnectionIdList;
-  QVariant linkedTestConnectionId;
+  ///QVariant linkedTestConnectionId;
   QList<QVariant> linkedTestConnectionIdList;
   int i;
 
@@ -216,6 +219,11 @@ QList<QVariant> mdtTtTestModelContinuityTestGeneratorHelper::getRelatedTestConne
   linkedDutConnectionIdList = graph.getLinkedConnectionIdList(fromDutConnection);
   // Build linked test connection id list
   for(i = 0; i < linkedDutConnectionIdList.size(); ++i){
+    linkedTestConnectionIdList += getTestConnectionIdList(testCableId, linkedDutConnectionIdList.at(i), ok, fromTestConnectionId);
+    if(!ok){
+      return QList<QVariant>();
+    }
+    /**
     linkedTestConnectionId = getTestConnectionId(testCableId, linkedDutConnectionIdList.at(i), ok, fromTestConnectionId);
     if(!ok){
       return linkedTestConnectionIdList;
@@ -223,6 +231,7 @@ QList<QVariant> mdtTtTestModelContinuityTestGeneratorHelper::getRelatedTestConne
     if(!linkedTestConnectionId.isNull()){
       linkedTestConnectionIdList.append(linkedTestConnectionId);
     }
+    */
   }
 
   return linkedTestConnectionIdList;
@@ -787,9 +796,13 @@ bool mdtTtTestModel::generateTestModel(const QVariant & testModelId, const QVari
       if(!noShort){
         switch(helper.actionOnShortInTestNode()){
           case mdtTtTestModelAbstractGeneratorHelper::Fail:
+            /**
             pvLastError.setError(tr("A generated setup makes a internal short between measure connections."), mdtError::Error);
             MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestModel");
             pvLastError.commit();
+            */
+            continue;
+            pvLastError = tn.lastError();
             rollbackTransaction();
             return false;
             break;

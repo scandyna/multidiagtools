@@ -40,6 +40,9 @@ bool mdtClConnectorEditor::setupTables()
   if(!setupConnectorContactTable()){
     return false;
   }
+  if(!setupUnitUsageTable()){
+    return false;
+  }
 
   return true;
 }
@@ -80,6 +83,42 @@ bool mdtClConnectorEditor::setupConnectorContactTable()
   widget->setColumnHidden("Connector_Id_FK", true);
   // Set fields a user friendly name
   ///widget->setHeaderData("", tr(""));
+
+  return true;
+}
+
+bool mdtClConnectorEditor::setupUnitUsageTable()
+{
+  mdtSqlTableWidget *widget;
+
+  if(!addChildTable("UnitConnectorUsage_view", tr("Used by units"), database())){
+    return false;
+  }
+  if(!addRelation("Id_PK", "UnitConnectorUsage_view", "Connector_Id_FK")){
+    return false;
+  }
+  widget = sqlTableWidget("UnitConnectorUsage_view");
+  Q_ASSERT(widget != 0);
+  // Hide technical fields
+  widget->setColumnHidden("Id_PK", true);
+  widget->setColumnHidden("Connector_Id_FK", true);
+  widget->setColumnHidden("Unit_Id_FK", true);
+  widget->setColumnHidden("ArticleConnector_Id_FK", true);
+  // Set fields a user friendly name
+  widget->setHeaderData("UnitConnectorName", tr("Unit\nConnector name"));
+  widget->setHeaderData("SchemaPosition", tr("Schema\npos."));
+  widget->setHeaderData("Type", tr("Vehicle\ntype"));
+  widget->setHeaderData("SubType", tr("Vehicle\nsub type"));
+  widget->setHeaderData("SeriesNumber", tr("Vehicle\nserie"));
+  // Setup sorting
+  widget->addColumnToSortOrder("Type", Qt::AscendingOrder);
+  widget->addColumnToSortOrder("SubType", Qt::AscendingOrder);
+  widget->addColumnToSortOrder("SeriesNumber", Qt::AscendingOrder);
+  widget->addColumnToSortOrder("SchemaPosition", Qt::AscendingOrder);
+  widget->addColumnToSortOrder("UnitConnectorName", Qt::AscendingOrder);
+  widget->sort();
+  // Other stuff
+  widget->resizeViewToContents();
 
   return true;
 }

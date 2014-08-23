@@ -1219,6 +1219,7 @@ void mdtCableListTest::pathGraphTest()
   QVERIFY(!ok);
   QVERIFY(idList.isEmpty());
   QVERIFY(graph.getUserData(0, 1).isNull());
+  QVERIFY(!graph.connectionsAreLinked(0, 1));
 
   /*
    * Testst with free data
@@ -1234,6 +1235,8 @@ void mdtCableListTest::pathGraphTest()
   QCOMPARE(idList.at(0), QVariant(1));
   QCOMPARE(idList.at(1), QVariant(2));
   QVERIFY(graph.getUserData(1, 2).isNull());
+  QVERIFY(graph.connectionsAreLinked(1, 2));
+  QVERIFY(graph.connectionsAreLinked(2, 1));
   // (1)-(2)-(3)
   graph.addLink(2, 3, "2-3");
   idList = graph.getLinkedConnectionIdList(1);
@@ -1248,6 +1251,11 @@ void mdtCableListTest::pathGraphTest()
   QCOMPARE(idList.at(2), QVariant(3));
   QCOMPARE(graph.getUserData(2, 3), QVariant("2-3"));
   QCOMPARE(graph.getUserData(3, 2), QVariant("2-3"));
+  QVERIFY(graph.connectionsAreLinked(1, 2));
+  QVERIFY(graph.connectionsAreLinked(1, 3));
+  QVERIFY(graph.connectionsAreLinked(3, 2));
+  QVERIFY(graph.connectionsAreLinked(2, 3));
+  QVERIFY(graph.connectionsAreLinked(3, 1));
   // (1)-(2)-(3)-(4)
   graph.addLink(3, 4);
   idList = graph.getLinkedConnectionIdList(1);
@@ -1262,6 +1270,7 @@ void mdtCableListTest::pathGraphTest()
   QCOMPARE(idList.at(1), QVariant(2));
   QCOMPARE(idList.at(2), QVariant(3));
   QCOMPARE(idList.at(3), QVariant(4));
+  QVERIFY(graph.connectionsAreLinked(1, 4));
   // (1)-(2)-(3)-(4)     (10)-(11)
   graph.addLink(10, 11);
   idList = graph.getLinkedConnectionIdList(1);
@@ -1305,6 +1314,9 @@ void mdtCableListTest::pathGraphTest()
   QCOMPARE(idList.at(2), QVariant(4));
   QCOMPARE(graph.getUserData(1, 5), QVariant(15));
   QCOMPARE(graph.getUserData(5, 1), QVariant(15));
+  QVERIFY(graph.connectionsAreLinked(1, 4));
+  QVERIFY(graph.connectionsAreLinked(1, 5));
+  QVERIFY(graph.connectionsAreLinked(5, 4));
   // Clear data that we added and check
   graph.removeAddedLinks();
   idList = graph.getLinkedConnectionIdList(1);

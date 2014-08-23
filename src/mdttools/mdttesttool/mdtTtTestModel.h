@@ -92,9 +92,9 @@ class mdtTtTestModelAbstractGeneratorHelper
    */
   QVariant getDutConnectionId(const QVariant & testCableId, const QVariant & testConnectionId, bool & ok);
 
-  /*! \brief Get test connection ID for given DUT connection ID
+  /*! \brief Get test connection ID list for given DUT connection ID
    */
-  QVariant getTestConnectionId(const QVariant & testCableId, const QVariant & dutConnectionId, bool & ok, const QVariant & testConnectionToExclude = QVariant());
+  QList<QVariant> getTestConnectionIdList(const QVariant & testCableId, const QVariant & dutConnectionId, bool & ok, const QVariant & testConnectionToExclude = QVariant());
 
   /*! \brief Get last error
    */

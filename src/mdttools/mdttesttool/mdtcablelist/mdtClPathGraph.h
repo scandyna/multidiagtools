@@ -165,6 +165,10 @@ class mdtClPathGraph
    */
   QList<QVariant> getShortestPath(const QVariant & fromConnectionId, const QVariant & toConnectionId, bool & ok);
 
+  /*! \brief Check if given connections are linked together
+   */
+  bool connectionsAreLinked(const QVariant & connectionIdA, const QVariant & connectionIdB);
+
   /*! \brief Draw the graphic representation starting from a connection
    */
   bool drawPath(const QVariant & fromConnectionId);

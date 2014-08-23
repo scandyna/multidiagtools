@@ -1,6 +1,6 @@
 format 207
 "DatabaseLogical" // mdttools::mdttesttool::DatabaseLogical
-  revision 55
+  revision 56
   modified_by 2 "philippe"
   // class settings
   
@@ -2930,6 +2930,18 @@ ${inlines}
       end
 
       attribute 1361794 "DescriptionEN"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1368322 "Key"
 	private explicit_type "string"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "

@@ -359,6 +359,23 @@ QList<QVariant> mdtClPathGraph::getShortestPath(const QVariant & fromConnectionI
   return connectionIdList;
 }
 
+bool mdtClPathGraph::connectionsAreLinked(const QVariant & connectionIdA, const QVariant & connectionIdB)
+{
+  bool ok;
+  bool areLinked;
+
+  if(!pvGraphVertices.contains(connectionIdA.toInt())){
+    return false;
+  }
+  if(!pvGraphVertices.contains(connectionIdB.toInt())){
+    return false;
+  }
+  areLinked = !getShortestPath(connectionIdA, connectionIdB, ok).isEmpty();
+  Q_ASSERT(ok);
+
+  return areLinked;
+}
+
 bool mdtClPathGraph::drawPath(const QVariant & fromConnectionId)
 {
   mdtClPathGraphEdgeData edgeData;
