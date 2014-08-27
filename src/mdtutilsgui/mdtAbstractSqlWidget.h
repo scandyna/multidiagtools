@@ -704,6 +704,12 @@ class mdtAbstractSqlWidget : public QWidget
    */
   void enableChildWidgets();
 
+  /*! \brief Refresh
+   *
+   * Will call select() on model if it was set
+   */
+  void refresh();
+
  private:
 
   /*! \brief Build the state machine

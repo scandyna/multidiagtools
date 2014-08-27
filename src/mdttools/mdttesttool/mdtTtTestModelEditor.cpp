@@ -235,7 +235,7 @@ void mdtTtTestModelEditor::addTestItem()
     return;
   }
   dialog.setSqlForm(tie);
-  dialog.resize(900, 500);
+  dialog.resize(900, 600);
   dialog.enableEdition();
   dialog.setWindowTitle(tr("Test item edition"));
   tie->insert();
@@ -269,7 +269,7 @@ void mdtTtTestModelEditor::editTestItem()
     return;
   }
   dialog.setSqlForm(tie);
-  dialog.resize(900, 500);
+  dialog.resize(900, 600);
   dialog.enableEdition();
   dialog.setWindowTitle(tr("Test item edition"));
   dialog.exec();

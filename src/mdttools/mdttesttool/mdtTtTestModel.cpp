@@ -660,10 +660,160 @@ QVariant mdtTtTestModel::getTestLinkId(const QVariant & testCableId, const QVari
   if(dataList.isEmpty()){
     return QVariant();
   }
+  /**
+   * Créer un message d'erreur explicant
+   *  que le raccord utilisé contient 1 DUT connection -> plusieur test connection
+   */
   Q_ASSERT(dataList.size() == 1);
 
   return dataList.at(0);
 }
+
+QVariant mdtTtTestModel::getTestLinkIdForDutConnectionId(const QVariant & testCableId, const QVariant & dutConnectionId, bool & ok)
+{
+  QString sql;
+  QList<QVariant> dataList;
+
+  sql = "SELECT Id_PK FROM TestLink_tbl";
+  sql += " WHERE TestCable_Id_FK = " + testCableId.toString();
+  sql += " AND DutConnection_Id_FK = " + dutConnectionId.toString();
+  dataList = getDataList<QVariant>(sql, ok);
+  if(!ok){
+    return QVariant();
+  }
+  if(dataList.isEmpty()){
+    return QVariant();
+  }
+  if(dataList.size() > 1){
+    ok = false;
+    QString testCableIdStr;
+    QString dutConnectionName;
+    QString msg;
+    // Get infos
+    testCableIdStr = getTestCableIdString(testCableId);
+    dutConnectionName = getUnitContactName(dutConnectionId);
+    // Build error text
+    msg = tr("A error was detected in cable '") + testCableIdStr + tr("'.");
+    pvLastError.setError(msg, mdtError::Error);
+    // Build error informative text
+    msg = tr("DUT connection '") + dutConnectionName + tr("' is linked to more than 1 test connection.");
+    pvLastError.setInformativeText(msg);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestModel");
+    pvLastError.commit();
+    return QVariant();
+  }
+  Q_ASSERT(dataList.size() == 1);
+
+  return dataList.at(0);
+}
+
+QVariant mdtTtTestModel::getTestConnectionId(const QVariant & testLinkId, const QVariant & dutConnectionId, bool & ok)
+{
+  QString sql;
+  QList<QVariant> dataList;
+
+  sql = "SELECT TestConnection_Id_FK FROM TestLink_tbl";
+  sql += " WHERE Id_PK = " + testLinkId.toString();
+  sql += " AND DutConnection_Id_FK = " + dutConnectionId.toString();
+  dataList = getDataList<QVariant>(sql, ok);
+  if(!ok){
+    return QVariant();
+  }
+  if(dataList.isEmpty()){
+    return QVariant();
+  }
+  Q_ASSERT(dataList.size() == 1);
+
+  return dataList.at(0);
+}
+
+mdtTtTestModelItemRouteData mdtTtTestModel::buildRouteData(const QVariant & testConnectionId, const QVariant & measureConnectionId, mdtClPathGraph & graph, bool & ok)
+{
+  QList<QVariant> pathConnectionIdList;
+
+  // Get path between given connections
+  pathConnectionIdList = graph.getShortestPath(testConnectionId, measureConnectionId, ok);
+  if(!ok){
+    pvLastError = graph.lastError();
+    return mdtTtTestModelItemRouteData();
+  }
+  if(pathConnectionIdList.size() < 2){
+    ok = false;
+    QString tc, mc;
+    tc = getUnitContactName(testConnectionId);
+    mc = getUnitContactName(measureConnectionId);
+    pvLastError.setError(tr("Cannot find a route from test connection ") + tc + tr(" to measure connection ") + mc , mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestModel");
+    pvLastError.commit();
+    return mdtTtTestModelItemRouteData();
+  }
+
+  return buildRouteData(pathConnectionIdList, graph, ok);
+}
+
+mdtTtTestModelItemRouteData mdtTtTestModel::buildRouteData(const QList<QVariant> & pathConnectionIdList, mdtClPathGraph & graph, bool & ok)
+{
+  Q_ASSERT(pathConnectionIdList.size() >= 2);
+
+  mdtTtTestModelItemRouteData data;
+  mdtTtTestNodeUnitSetupData setupData;
+  QVariant relayId;
+  int i;
+
+  // Setup setup data
+  if(!setupData.setup(database())){
+    ok = false;
+    pvLastError = setupData.lastError();
+    return data;
+  }
+  // Build relays list
+  for(i = 1; i < pathConnectionIdList.size(); ++i){
+    Q_ASSERT(!pathConnectionIdList.at(i-1).isNull());
+    Q_ASSERT(!pathConnectionIdList.at(i).isNull());
+    relayId = graph.getUserData(pathConnectionIdList.at(i-1), pathConnectionIdList.at(i));
+    if(!relayId.isNull()){
+      setupData.clearValues();
+      setupData.setValue("TestNodeUnit_Id_FK", relayId);
+      setupData.setValue("State", true);
+      data.addSetupData(setupData);
+    }
+  }
+  ok = true;
+
+  return data;
+}
+
+bool mdtTtTestModel::addRoutesToItemData(const QVariant & testConnectionId1, const QVariant & testConnectionId2,
+                                         const QVariant & measureConnexionIdA, const QVariant & measureConnexionIdB,
+                                         mdtTtTestModelItemData & itemData, mdtClPathGraph & graph)
+{
+  QList<QVariant> pathConnectionIdList1;
+  QList<QVariant> pathConnectionIdList2;
+  mdtTtTestModelItemRouteData routeData1;
+  mdtTtTestModelItemRouteData routeData2;
+  bool ok;
+
+  // Get path of both test connection to measure connections
+  ok = searchPathFromTestConnectionsToMeasureConnections(testConnectionId1, testConnectionId2, measureConnexionIdA, measureConnexionIdB, pathConnectionIdList1, pathConnectionIdList2, graph);
+  if(!ok){
+    return false;
+  }
+  // Build both route data
+  routeData1 = buildRouteData(pathConnectionIdList1, graph, ok);
+  if(!ok){
+    return false;
+  }
+  routeData2 = buildRouteData(pathConnectionIdList2, graph, ok);
+  if(!ok){
+    return false;
+  }
+  // Add routes to item data
+  itemData.addRouteData(routeData1);
+  itemData.addRouteData(routeData2);
+
+  return true;
+}
+
 
 bool mdtTtTestModel::generateContinuityTest(const QVariant & testModelId, const QVariant & testCableId, const QVariant & testNodeId,
                                             const QVariant & measureConnexionIdA, const QVariant & measureConnexionIdB, mdtClPathGraph & graph)
@@ -786,6 +936,9 @@ bool mdtTtTestModel::generateTestModel(const QVariant & testModelId, const QVari
         rollbackTransaction();
         return false;
       }
+      
+      qDebug() << "Processing " << helper.getDesignationEN(data.testLinkId, otherData.testLinkId).toString() << " ...";
+      
       // Check absence of short
       noShort = tn.ensureAbsenceOfShortCircuit(data.measureConnexionId, otherData.measureConnexionId, data.setupDataList + otherData.setupDataList, graphForShortDetection, ok);
       if(!ok){
@@ -793,19 +946,29 @@ bool mdtTtTestModel::generateTestModel(const QVariant & testModelId, const QVari
         rollbackTransaction();
         return false;
       }
+      
+      
+      
       if(!noShort){
+        QString msg;
         switch(helper.actionOnShortInTestNode()){
           case mdtTtTestModelAbstractGeneratorHelper::Fail:
+            msg = tr("Create test item '") + helper.getDesignationEN(data.testLinkId, otherData.testLinkId).toString() + tr("' failed.");
+            pvLastError.setError(msg, mdtError::Error);
+            msg = tn.lastError().text();
+            pvLastError.setInformativeText(msg);
+            MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestModel");
+            pvLastError.commit();
             /**
             pvLastError.setError(tr("A generated setup makes a internal short between measure connections."), mdtError::Error);
             MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestModel");
             pvLastError.commit();
             */
-            continue;
-            pvLastError = tn.lastError();
+            ///continue;
+            ///pvLastError = tn.lastError();
             rollbackTransaction();
             return false;
-            break;
+            ///break;
           case mdtTtTestModelAbstractGeneratorHelper::IgnoreCurrentItem:
             qDebug() << "Have a short at k: " << k;
             continue;
@@ -871,6 +1034,152 @@ bool mdtTtTestModel::generateTestModel(const QVariant & testModelId, const QVari
 
   return true;
 }
+
+bool mdtTtTestModel::generateTestModel(mdtTtTestModelGenerationParameter & parameters, mdtClPathGraph & graph)
+{
+  mdtTtTestNode tn(0, database());
+  ///mdtTtTestModelItem tmi(0, database());
+  ///QSqlQuery query(database());
+  QList<QVariant> dutConnectionIdList;
+  QVariant testLinkId1;
+  QVariant testConnectionId1;
+  QVariant testLinkId2;
+  QVariant testConnectionId2;
+  mdtTtTestModelItemData itemData;
+  QString sql;
+  bool ok;
+  bool linked;
+  bool noShort;
+  mdtClPathGraph graphForShortDetection(database());
+  int i, k;
+  int sequenceNumber = 0;
+  QVariant var;
+
+  // Setup test model item data
+  if(!itemData.setup(database())){
+    pvLastError = itemData.lastError();
+    return false;
+  }
+  // Get next sequence number
+  var = getNextSequenceNumber(parameters.testModelId);
+  if(var.isNull()){
+    return false;
+  }
+  sequenceNumber = var.toInt();
+  // Get DUT connections from given cable
+  sql = "SELECT DutConnection_Id_FK FROM TestLink_tbl WHERE TestCable_Id_FK = " + parameters.testCableId.toString();
+  dutConnectionIdList = getDataList<QVariant>(sql, ok);
+  if(!ok){
+    return false;
+  }
+  // Add relays of test node to graph
+  if(!tn.addRelaysToGraph(parameters.testNodeId, graph)){
+    pvLastError = tn.lastError();
+    return false;
+  }
+  // Init short detetcion graph
+  if(!graphForShortDetection.loadLinkList()){
+    pvLastError = graphForShortDetection.lastError();
+    return false;
+  }
+  if(!beginTransaction()){
+    return false;
+  }
+  // Process each DUT connections combinaison
+  for(i = 0; i < (dutConnectionIdList.size()-1); ++i){
+    for(k = i+1; k < dutConnectionIdList.size(); ++k){
+      linked = graph.connectionsAreLinked(dutConnectionIdList.at(i), dutConnectionIdList.at(k));
+      if((linked)||(parameters.generateForNonLinkedConnections)){
+        // Clear previous data
+        itemData.clearValues();
+        // Get link ID 1
+        testLinkId1 = getTestLinkIdForDutConnectionId(parameters.testCableId, dutConnectionIdList.at(i), ok);
+        if(!ok){
+          rollbackTransaction();
+          return false;
+        }
+        // Get test connection ID 1
+        testConnectionId1 = getTestConnectionId(testLinkId1, dutConnectionIdList.at(i), ok);
+        if(!ok){
+          rollbackTransaction();
+          return false;
+        }
+        // Get link ID 2
+        testLinkId2 = getTestLinkIdForDutConnectionId(parameters.testCableId, dutConnectionIdList.at(k), ok);
+        if(!ok){
+          rollbackTransaction();
+          return false;
+        }
+        // Get test connection ID 2
+        testConnectionId2 = getTestConnectionId(testLinkId1, dutConnectionIdList.at(k), ok);
+        if(!ok){
+          rollbackTransaction();
+          return false;
+        }
+        // Build routes
+        if(!addRoutesToItemData(testConnectionId1, testConnectionId2, parameters.measureConnexionIdA, parameters.measureConnexionIdB, itemData, graph)){
+          rollbackTransaction();
+          return false;
+        }
+        Q_ASSERT(itemData.routeDataList().size() == 2);
+        /**
+         * Revoir:
+         *  les données de route contiennet testLinkId, dutConnectionId, testConnectionId, measureConnectionId.
+         *  les stocker dans ce data (mdtTtTestModelItemRouteData), éviter plein de variable flottantes !!
+         *  Aussi, modifier mdtTtTestModelItem::addRoute() avec données de route en paramètre..
+         */
+        // Check absence of short
+        noShort = tn.ensureAbsenceOfShortCircuit(parameters.measureConnexionIdA, parameters.measureConnexionIdB,
+                                                 itemData.routeDataList().at(0).setupDataList() + itemData.routeDataList().at(1).setupDataList(),
+                                                 graphForShortDetection, ok);
+        if(!ok){
+          pvLastError = tn.lastError();
+          rollbackTransaction();
+          return false;
+        }
+        // Set item's expected values regarding if linked or not
+        if(linked){
+          itemData.setValue("ExcpectedValue", parameters.continuityExpectedValue);
+        }else{
+          itemData.setValue("ExcpectedValue", parameters.isolationExpectedValue);
+        }
+        // Set designation (regarding parameters)
+        itemData.setValue("DesignationEN", getDesignationEN(testLinkId1, testLinkId2));
+        // Set sequenceNumber
+        itemData.setValue("SequenceNumber", sequenceNumber);
+        ++sequenceNumber;
+        // Add test model item to DB and get ID
+
+      }
+    }
+  }
+
+  
+  if(!commitTransaction()){
+    return false;
+  }
+}
+
+
+
+
+  /*! \brief Search 2 path from given test connections and measure connections and add routes to item data
+   *
+   * \param testConnectionId1 First test connection
+   * \param testConnectionId2 Second test connection
+   * \param measureConnexionIdA ID of measure connection to witch to find path
+   * \param measureConnexionIdB ID of other measure connection
+   * \param itemData Routes will be added to itemData
+   * \param graph Graph object.
+   */
+  bool addRoutesToItemData(const QVariant & testConnectionId1, const QVariant & testConnectionId2,
+                           const QVariant & measureConnexionIdA, const QVariant & measureConnexionIdB,
+                           mdtTtTestModelItemData & itemData, mdtClPathGraph & graph);
+
+
+
+
+
 
 /**
 bool mdtTtTestModel::generateTestNodeUnitSetup(const QVariant & testId)
@@ -986,4 +1295,96 @@ QString mdtTtTestModel::getUnitContactName(const QVariant & id)
   Q_ASSERT(dataList.size() == 1);
 
   return dataList.at(0).toString();
+}
+
+QString mdtTtTestModel::getTestCableIdString(const QVariant & id)
+{
+  bool ok;
+  QString sql;
+  QList<QSqlRecord> dataList;
+  QString str;
+
+  sql = "SELECT Identification, Key FROM TestCable_tbl WHERE Id_PK = " + id.toString();
+  dataList = getDataList<QSqlRecord>(sql, ok);
+  if(!ok){
+    return "??";
+  }
+  if(dataList.isEmpty()){
+    return "??";
+  }
+  Q_ASSERT(dataList.size() == 1);
+  // Build string
+  str = dataList.at(0).value(0).toString();
+  str += " (key: " + dataList.at(0).value(1).toString() + ")";
+
+  return str;
+}
+
+QVariant mdtTtTestModel::getDesignationEN(const QVariant & fromTestLinkId, const QVariant & toTestLinkId)
+{
+  QString designation;
+  QString str;
+  QString sql;
+  QList<QSqlRecord> dataList;
+  QSqlRecord dataA;
+  QSqlRecord dataB;
+  bool ok;
+
+  // Get first link part
+  sql = "SELECT TestLinkIdentification, DutUnitSchemaPosition, DutUnitAlias, DutConnectorName, DutContactName ";
+  sql += "FROM TestLink_view";
+  sql += " WHERE Id_PK = " + fromTestLinkId.toString();
+  dataList = getDataList<QSqlRecord>(sql, ok);
+  if(!ok){
+    return "<Error!>";
+  }
+  if(dataList.isEmpty()){
+    return "<Error!>";
+  }
+  Q_ASSERT(dataList.size() == 1);
+  dataA = dataList.at(0);
+  // Get second link part
+  sql = "SELECT TestLinkIdentification, DutUnitSchemaPosition, DutUnitAlias, DutConnectorName, DutContactName ";
+  sql += "FROM TestLink_view";
+  sql += " WHERE Id_PK = " + toTestLinkId.toString();
+  dataList = getDataList<QSqlRecord>(sql, ok);
+  if(!ok){
+    return "<Error!>";
+  }
+  if(dataList.isEmpty()){
+    return "<Error!>";
+  }
+  Q_ASSERT(dataList.size() == 1);
+  dataB = dataList.at(0);
+  // Build designation
+  designation = dataA.value("TestLinkIdentification").toString() + "-" + dataB.value("TestLinkIdentification").toString();
+  designation += " ( ";
+  designation += dataA.value("DutUnitSchemaPosition").toString();
+  str = dataA.value("DutUnitAlias").toString().trimmed();
+  if(!str.isEmpty()){
+    designation += "(" + str + ") ";
+  }
+  designation += ",";
+  str = dataA.value("DutConnectorName").toString().trimmed();
+  if(!str.isEmpty()){
+    designation += str;
+  }
+  designation += ";";
+  designation += dataA.value("DutContactName").toString().trimmed();
+  designation += " - ";
+  designation += dataB.value("DutUnitSchemaPosition").toString();
+  str = dataB.value("DutUnitAlias").toString().trimmed();
+  if(!str.isEmpty()){
+    designation += "(" + str + ") ";
+  }
+  designation += ",";
+  str = dataB.value("DutConnectorName").toString().trimmed();
+  if(!str.isEmpty()){
+    designation += str;
+  }
+  designation += ";";
+  designation += dataB.value("DutContactName").toString().trimmed();
+  designation += " )";
+
+  return designation;
 }

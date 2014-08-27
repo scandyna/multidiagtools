@@ -754,6 +754,13 @@ void mdtAbstractSqlWidget::enableChildWidgets()
   }
 }
 
+void mdtAbstractSqlWidget::refresh()
+{
+  if(pvModel != 0){
+    pvModel->select();
+  }
+}
+
 void mdtAbstractSqlWidget::buildStateMachine()
 {
   // Create objects

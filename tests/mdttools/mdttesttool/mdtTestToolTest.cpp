@@ -33,6 +33,8 @@
 #include "mdtTtTestItemNodeSetupData.h"
 #include "mdtTtTestNodeSetupData.h"
 #include "mdtTtTestNodeUnitSetupData.h"
+#include "mdtTtTestModelItemData.h"
+#include "mdtTtTestModelItemRouteData.h"
 #include "mdtTtTestNodeManager.h"
 #include "mdtDeviceContainer.h"
 #include "mdtDeviceContainerWidget.h"
@@ -706,6 +708,74 @@ void mdtTestToolTest::mdtTtTestNodeManagerTest()
   while(w.isVisible()){
     QTest::qWait(1000);
   }
+}
+
+void mdtTestToolTest::mdtTtTestModelItemRouteDataTest()
+{
+  mdtTtTestModelItemRouteData data;
+  mdtTtTestNodeUnitSetupData setupData;
+
+  // Init
+  QVERIFY(setupData.setup(pvDatabaseManager.database()));
+  // Simple set/get
+  data.setId(1);
+  data.setTestModelItemId(2);
+  data.setTestLinkId(3);
+  data.setDutConnectionId(4);
+  data.setTestConnectionId(5);
+  data.setMeasureConnectionId(6);
+  QCOMPARE(data.id() ,QVariant(1));
+  QCOMPARE(data.testModelItemId() ,QVariant(2));
+  QCOMPARE(data.testLinkId() ,QVariant(3));
+  QCOMPARE(data.dutConnectionId() ,QVariant(4));
+  QCOMPARE(data.testConnectionId() ,QVariant(5));
+  QCOMPARE(data.measureConnectionId() ,QVariant(6));
+  /*
+   * Setup data
+   */
+  setupData.clearValues();
+  setupData.setValue("TestNodeUnit_Id_FK", 10);
+  data.addSetupData(setupData);
+  QCOMPARE(data.setupDataList().size() ,1);
+  QCOMPARE(data.setupDataList().at(0).value("TestModelItem_Id_FK") ,QVariant(2));
+  QCOMPARE(data.setupDataList().at(0).value("TestModelItemRoute_Id_FK") ,QVariant(1));
+  // Update ID
+  data.setId(20);
+  QCOMPARE(data.id() ,QVariant(20));
+  QCOMPARE(data.setupDataList().at(0).value("TestModelItemRoute_Id_FK") ,QVariant(20));
+  // Update test model item ID
+  data.setTestModelItemId(21);
+  QCOMPARE(data.testModelItemId() ,QVariant(21));
+  QCOMPARE(data.setupDataList().at(0).value("TestModelItem_Id_FK") ,QVariant(21));
+}
+
+void mdtTestToolTest::mdtTtTestModelItemDataTest()
+{
+  mdtTtTestModelItemData data;
+  mdtTtTestModelItemRouteData routeData;
+
+  QVERIFY(data.setup(pvDatabaseManager.database()));
+  QVERIFY(data.contains("Id_PK"));
+  // Simple set/get
+  data.setValue("Id_PK", 1);
+  QCOMPARE(data.value("Id_PK"), QVariant(1));
+  // Check route data update
+  data.addRouteData(routeData);
+  QCOMPARE(data.routeDataList().size(), 1);
+  QCOMPARE(data.routeDataList().at(0).testModelItemId(), QVariant(1));
+  data.setId(2);
+  QCOMPARE(data.value("Id_PK"), QVariant(2));
+  QCOMPARE(data.routeDataList().at(0).testModelItemId(), QVariant(2));
+  // clear values
+  data.clearValues();
+  QVERIFY(data.contains("Id_PK"));
+  QVERIFY(data.value("Id_PK").isNull());
+  QCOMPARE(data.routeDataList().size(), 0);
+  // clear
+  data.clear();
+  QVERIFY(!data.contains("Id_PK"));
+  QVERIFY(data.value("Id_PK").isNull());
+  QCOMPARE(data.routeDataList().size(), 0);
 }
 
 void mdtTestToolTest::mdtTtTestTest()

@@ -25,6 +25,8 @@
 #include "mdtSqlTableSelection.h"
 #include "mdtTtTestModelData.h"
 #include "mdtClPathGraph.h"
+#include "mdtTtTestModelItemData.h"
+#include "mdtTtTestModelItemRouteData.h"
 #include <QVariant>
 #include <QList>
 #include <QModelIndex>
@@ -220,6 +222,48 @@ class mdtTtTestModelIsolationTestGeneratorHelper : public mdtTtTestModelAbstract
   QList<QVariant> pvRelaysToIgnoreIdList;
 };
 
+
+
+/*! \brief Data container for test model generation parameters
+ */
+struct mdtTtTestModelGenerationParameter
+{
+  /*! \brief ID of test model
+   */
+  QVariant testModelId;
+
+  /*! \brief ID of test cable (TestCable_tbl) to use.
+   */
+  QVariant testCableId;
+
+  /*! \brief ID of test node to use.
+   */
+  QVariant testNodeId;
+
+  /*! \brief ID of first measure connection to use (TestNodeUnitConnection_tbl)
+   */
+  QVariant measureConnexionIdA;
+
+  /*! \brief ID of second measure connection to use (TestNodeUnitConnection_tbl)
+   */
+  QVariant measureConnexionIdB;
+
+  /*! \brief Expected value between linked connections
+   */
+  double continuityExpectedValue;
+
+  /*! \brief If true, test model items will also be generated for non linked connections
+   */
+  bool generateForNonLinkedConnections;
+
+  /*! \brief Expected value between not linked connections
+   */
+  double isolationExpectedValue;
+};
+
+
+
+
 /*! \brief Helper class for test model edition
  */
 class mdtTtTestModel : public mdtTtBase
@@ -297,6 +341,43 @@ class mdtTtTestModel : public mdtTtBase
    */
   QVariant getTestLinkId(const QVariant & testCableId, const QVariant & testConnectionId, bool & ok);
 
+  /*! \brief Get link ID for given cable ID and DUT connection ID
+   */
+  QVariant getTestLinkIdForDutConnectionId(const QVariant & testCableId, const QVariant & dutConnectionId, bool & ok);
+
+  /*! \brief Get test connection ID for given test link ID and DUT connection ID
+   */
+  QVariant getTestConnectionId(const QVariant & testLinkId, const QVariant & dutConnectionId, bool & ok);
+
+  /*! \brief Get route data for given test connection to given measure connection
+   *
+   * \param pathConnectionIdList List of connections (IDs) that represent the path from a test connection to a measure connection
+   * \return Route data with setupDataList set. All other members are not touched (route ID, testModelItemId, ...)
+   * \pre pathConnectionIdList must contain at least 2 connections
+   */
+  mdtTtTestModelItemRouteData buildRouteData(const QVariant & testConnectionId, const QVariant & measureConnectionId, mdtClPathGraph & graph, bool & ok);
+
+  /*! \brief Build route data for given path ID list
+   *
+   * \param pathConnectionIdList List of connections (IDs) that represent the path from a test connection to a measure connection
+   * \return Route data with setupDataList set. All other members are not touched (route ID, testModelItemId, ...)
+   * \pre pathConnectionIdList must contain at least 2 connections
+   */
+  mdtTtTestModelItemRouteData buildRouteData(const QList<QVariant> & pathConnectionIdList, mdtClPathGraph & graph, bool & ok);
+
+  /*! \brief Search 2 path from given test connections and measure connections and add routes to item data
+   *
+   * \param testConnectionId1 First test connection
+   * \param testConnectionId2 Second test connection
+   * \param measureConnexionIdA ID of measure connection to witch to find path
+   * \param measureConnexionIdB ID of other measure connection
+   * \param itemData Routes will be added to itemData
+   * \param graph Graph object.
+   */
+  bool addRoutesToItemData(const QVariant & testConnectionId1, const QVariant & testConnectionId2,
+                           const QVariant & measureConnexionIdA, const QVariant & measureConnexionIdB,
+                           mdtTtTestModelItemData & itemData, mdtClPathGraph & graph);
+
   /*! \brief Generate test items for a continuity check (2 wire)
    *
    * \param testModelId ID of test model
@@ -337,6 +418,13 @@ class mdtTtTestModel : public mdtTtBase
                          const QVariant & measureConnexionIdA, const QVariant & measureConnexionIdB, 
                          mdtClPathGraph & graph, mdtTtTestModelAbstractGeneratorHelper & helper);
 
+  /*! \brief Generate test items
+   *
+   * \param parameters Setup for test model
+   * \param graph Graph object. Cable list must allready be loaded (see mdtClPathGraph::loadLinkList())
+   */
+  bool generateTestModel(mdtTtTestModelGenerationParameter & parameters, mdtClPathGraph & graph);
+
   /*! \brief Generate test node unit setup for given test ID
    * 
    * \todo Obselete ?
@@ -354,15 +442,25 @@ class mdtTtTestModel : public mdtTtBase
    * \param pathConnectionIdList1 First path will be stored here
    * \param pathConnectionIdList2 Second path will be stored here
    * \param graph Graph object.
+   * \post If this method returns true, pathConnectionIdList1 and pathConnectionIdList2 has at least 2 items each.
    */
   bool searchPathFromTestConnectionsToMeasureConnections(const QVariant & testConnectionId1, const QVariant & testConnectionId2,
                                                          const QVariant & measureConnexionIdA, const QVariant & measureConnexionIdB,
                                                          QList<QVariant> & pathConnectionIdList1, QList<QVariant> & pathConnectionIdList2,
                                                          mdtClPathGraph & graph);
 
+
   /*! \brief Get contact name of given ID
    */
   QString getUnitContactName(const QVariant & id);
+
+  /*! \brief Get test cable ID string
+   */
+  QString getTestCableIdString(const QVariant & id);
+
+  /*! \brief Get a string for the test model item's designation
+   */
+  QVariant getDesignationEN(const QVariant & fromTestLinkId, const QVariant & toTestLinkId);
 
   Q_DISABLE_COPY(mdtTtTestModel);
 };

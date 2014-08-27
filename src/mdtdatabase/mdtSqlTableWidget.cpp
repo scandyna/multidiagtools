@@ -123,6 +123,12 @@ mdtSqlTableWidget::mdtSqlTableWidget(QWidget *parent)
   pb->setToolTip(tr("Resize view to contents"));
   connect(pb, SIGNAL(clicked()), this, SLOT(resizeViewToContents()));
   pvTopHorizontalLayout->addWidget(pb);
+  // Button to refresh data
+  pb = new QPushButton;
+  pb->setIcon(QIcon::fromTheme("view-refresh"));
+  pb->setToolTip(tr("Reload data"));
+  connect(pb, SIGNAL(clicked()), this, SLOT(refresh()));
+  pvTopHorizontalLayout->addWidget(pb);
   // Button to copy table to clipboard
   pb = new QPushButton;
   pb->setIcon(QIcon::fromTheme("edit-copy"));

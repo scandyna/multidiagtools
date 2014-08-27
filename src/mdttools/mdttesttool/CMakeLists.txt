@@ -44,9 +44,11 @@ set (TT_SOURCES_FILES
           mdtTtTestModelEditor.cpp
           mdtTtTestModel.cpp
           mdtTtTestModelItem.cpp
+          mdtTtTestModelItemData.cpp
           mdtTtTestModelItemEditor.cpp
           mdtTtTestNodeUnitSetupData.cpp
           mdtTtTestNodeUnitSetupDialog.cpp
+          mdtTtTestModelItemRouteData.cpp
           mdtTtTestItemNodeSetupData.cpp
           mdtTtTestNodeSetupData.cpp
           mdtTtTestNodeManager.cpp

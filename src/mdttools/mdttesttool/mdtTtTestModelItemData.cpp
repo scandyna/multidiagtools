@@ -18,48 +18,42 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_TEST_TOOL_TEST_H
-#define MDT_TEST_TOOL_TEST_H
+#include "mdtTtTestModelItemData.h"
 
-#include "mdtTest.h"
-#include "mdtSqlDatabaseManager.h"
-#include <QMessageBox>
-
-class mdtTestToolTest : public mdtTest
+mdtTtTestModelItemData::mdtTtTestModelItemData()
+ : mdtSqlRecord()
 {
- Q_OBJECT
+}
 
- private slots:
+bool mdtTtTestModelItemData::setup(const QSqlDatabase & db)
+{
+  return addAllFields("TestModelItem_tbl", db);
+}
 
-  // Will create database schema (see createDatabaseSchema() )
-  void initTestCase();
+void mdtTtTestModelItemData::clear()
+{
+  pvRouteDataList.clear();
+  mdtSqlRecord::clear();
+}
 
-  void cleanupTestCase();
+void mdtTtTestModelItemData::clearValues()
+{
+  pvRouteDataList.clear();
+  mdtSqlRecord::clearValues();
+}
 
-  void mdtTtBaseTest();
+void mdtTtTestModelItemData::setId(const QVariant& id)
+{
+  int i;
 
-  void mdtTtTestLinkDataTest();
+  setValue("Id_PK", id);
+  for(i = 0; i < pvRouteDataList.size(); ++i){
+    pvRouteDataList[i].setTestModelItemId(id);
+  }
+}
 
-  void mdtTtTestNodeUnitDataTest();
-
-  void mdtTtTestNodeUnitTest();
-
-  void testNodeSetupDataTest();
-
-  void mdtTtTestNodeManagerTest();
-
-  void mdtTtTestModelItemRouteDataTest();
-
-  void mdtTtTestModelItemDataTest();
-
-  void mdtTtTestTest();
-
- private:
-
-  // Create test database schema - Will FAIL on problem
-  void createDatabaseSchema();
-
-  mdtSqlDatabaseManager pvDatabaseManager;
-};
-
-#endif // #ifndef MDT_TEST_TOOL_TEST_H
+void mdtTtTestModelItemData::addRouteData(mdtTtTestModelItemRouteData data)
+{
+  data.setTestModelItemId(value("Id_PK"));
+  pvRouteDataList.append(data);
+}

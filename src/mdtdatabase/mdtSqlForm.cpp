@@ -397,6 +397,7 @@ void mdtSqlForm::displayLastError()
   QMessageBox msgBox;
 
   msgBox.setText(pvLastError.text());
+  msgBox.setInformativeText(pvLastError.informativeText());
   msgBox.setDetailedText(pvLastError.systemText());
   msgBox.setIcon(pvLastError.levelIcon());
   msgBox.exec();

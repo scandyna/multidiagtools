@@ -337,7 +337,7 @@ bool mdtTtTestNode::addRelaysToGraph(const QVariant& testNodeId, mdtClPathGraph&
   // Add relays to graph
   for(i = 0; i < relaysList.size(); ++i){
     relay = relaysList.at(i);
-    graph.addLink(relay.cnxA, relay.cnxB, relay.id, true, 2);
+    graph.addLink(relay.cnxA, relay.cnxB, relay.id, true, 100);
   }
 
   return true;
@@ -447,13 +447,21 @@ bool mdtTtTestNode::ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, 
     QString sql;
     QList<QSqlRecord> dataList;
     QSqlRecord data;
+    ///QString tmiDesignation;
     QString u1, u2, relaysStr;
     QString msg;
+    // Infos about test model item
+    /**
+    if(testNodeUnitSetupDataList.size() > 0){
+      sql = "SELECT DesignationEN FROM TestModelItem_tbl WHERE Id_PK = " + testNodeUnitSetupDataList.at(0).value("TestModelItem_Id_FK").toString();
+      
+    }
+    */
     // Infos about connectionIdA
     sql = "SELECT U.SchemaPosition, UCNX.UnitContactName FROM UnitConnection_tbl UCNX JOIN Unit_tbl U ON U.Id_PK = UCNX.Unit_Id_FK";
     sql += " WHERE UCNX.Id_PK = " + connectionIdA.toString();
     dataList = getDataList<QSqlRecord>(sql, ok);
-    qDebug() << "Data: " << dataList;
+    ///qDebug() << "Data: " << dataList;
     if(!ok){
       return false;
     }
@@ -464,7 +472,7 @@ bool mdtTtTestNode::ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, 
     sql = "SELECT U.SchemaPosition, UCNX.UnitContactName FROM UnitConnection_tbl UCNX JOIN Unit_tbl U ON U.Id_PK = UCNX.Unit_Id_FK";
     sql += " WHERE UCNX.Id_PK = " + connectionIdB.toString();
     dataList = getDataList<QSqlRecord>(sql, ok);
-    qDebug() << "Data: " << dataList;
+    ///qDebug() << "Data: " << dataList;
     if(!ok){
       return false;
     }
@@ -480,9 +488,9 @@ bool mdtTtTestNode::ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, 
       sql += relaysList.at(i).id.toString();
     }
     sql += ")";
-    qDebug() << "Relays SQL: " << sql;
+    ///qDebug() << "Relays SQL: " << sql;
     dataList = getDataList<QSqlRecord>(sql, ok);
-    qDebug() << "Data: " << dataList;
+    ///qDebug() << "Data: " << dataList;
     if(!ok){
       return false;
     }
