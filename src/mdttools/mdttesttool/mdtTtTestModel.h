@@ -341,11 +341,11 @@ class mdtTtTestModel : public mdtTtBase
    */
   QVariant getTestLinkId(const QVariant & testCableId, const QVariant & testConnectionId, bool & ok);
 
-  /*! \brief Get link ID for given cable ID and DUT connection ID
+  /*! \brief Get link ID list for given cable ID and DUT connection ID
    */
-  QVariant getTestLinkIdForDutConnectionId(const QVariant & testCableId, const QVariant & dutConnectionId, bool & ok);
+  QList<QVariant> getTestLinkIdListForDutConnectionId(const QVariant & testCableId, const QVariant & dutConnectionId, bool & ok);
 
-  /*! \brief Get test connection ID for given test link ID and DUT connection ID
+  /*! \brief Get test connection ID list for given test link ID and DUT connection ID
    */
   QVariant getTestConnectionId(const QVariant & testLinkId, const QVariant & dutConnectionId, bool & ok);
 
@@ -365,18 +365,21 @@ class mdtTtTestModel : public mdtTtBase
    */
   mdtTtTestModelItemRouteData buildRouteData(const QList<QVariant> & pathConnectionIdList, mdtClPathGraph & graph, bool & ok);
 
-  /*! \brief Search 2 path from given test connections and measure connections and add routes to item data
+  /*! \brief Search 2 path from given DUT connections and measure connections and add routes to item data
    *
-   * \param testConnectionId1 First test connection
-   * \param testConnectionId2 Second test connection
+   * \param dutConnectionId1 First test connection
+   * \param dutConnectionId2 Second test connection
+   * \param parameters At least testCableId, measureConnexionIdA and measureConnexionIdB must be set
    * \param measureConnexionIdA ID of measure connection to witch to find path
    * \param measureConnexionIdB ID of other measure connection
+   * \param testCableId ID of used test cable
    * \param itemData Routes will be added to itemData
    * \param graph Graph object.
+   * \param graphForShortDetection Graph object - Will be altered.
    */
-  bool addRoutesToItemData(const QVariant & testConnectionId1, const QVariant & testConnectionId2,
-                           const QVariant & measureConnexionIdA, const QVariant & measureConnexionIdB,
-                           mdtTtTestModelItemData & itemData, mdtClPathGraph & graph);
+  bool addRoutesToItemData(const QVariant & dutConnectionId1, const QVariant & dutConnectionId2,
+                           const mdtTtTestModelGenerationParameter & parameters, mdtTtTestModelItemData & itemData,
+                           mdtClPathGraph & graph, mdtClPathGraph & graphForShortDetection);
 
   /*! \brief Generate test items for a continuity check (2 wire)
    *

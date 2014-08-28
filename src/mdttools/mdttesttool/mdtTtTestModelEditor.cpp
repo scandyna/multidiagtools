@@ -326,6 +326,9 @@ void mdtTtTestModelEditor::generateContinuityTest()
   QVariant testNodeId;
   QVariant measureConnexionIdA;
   QVariant measureConnexionIdB;
+  
+  mdtTtTestModelGenerationParameter parameters;
+  
   bool ok;
 
   // Get current test model ID
@@ -374,16 +377,30 @@ void mdtTtTestModelEditor::generateContinuityTest()
     relaysToIgnore.append(s.data(i, "Unit_Id_FK_PK"));
   }
   */
+  
+  parameters.measureConnexionIdA = measureConnexionIdA;
+  parameters.measureConnexionIdB = measureConnexionIdB;
+  parameters.testCableId = testCableId;
+  parameters.testModelId = testModelId;
+  parameters.testNodeId = testNodeId;
   // Generate test
   ok = false;
   switch(setupDialog.selectedTestModelType()){
     case mdtTtTestModelGenerationDialog::None:
       return;
     case mdtTtTestModelGenerationDialog::ContinuityTest:
-      ok = tm.generateContinuityTest(testModelId, testCableId, testNodeId, measureConnexionIdA, measureConnexionIdB, graph);
+      ///ok = tm.generateContinuityTest(testModelId, testCableId, testNodeId, measureConnexionIdA, measureConnexionIdB, graph);
+      parameters.generateForNonLinkedConnections = false;
+      parameters.continuityExpectedValue = 0.0;
+      parameters.isolationExpectedValue = 1e9;
+      ok = tm.generateTestModel(parameters, graph);
       break;
     case mdtTtTestModelGenerationDialog::ShortDetectionTest:
-      ok = tm.generateShortDetectionTest(testModelId, testCableId, testNodeId, measureConnexionIdA, measureConnexionIdB, graph /**, relaysToIgnore*/);
+      ///ok = tm.generateShortDetectionTest(testModelId, testCableId, testNodeId, measureConnexionIdA, measureConnexionIdB, graph /**, relaysToIgnore*/);
+      parameters.generateForNonLinkedConnections = false;
+      parameters.continuityExpectedValue = 0.0;
+      parameters.isolationExpectedValue = 1e9;
+      ok = tm.generateTestModel(parameters, graph);
       break;
   }
   if(!ok){

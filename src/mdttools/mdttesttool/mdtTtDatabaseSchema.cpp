@@ -2550,16 +2550,19 @@ bool mdtTtDatabaseSchema::setupTestModelItemRouteTable()
   field = QSqlField();
   field.setName("TestModelItem_Id_FK");
   field.setType(QVariant::Int);
+  field.setRequired(true);
   table.addField(field, false);
   // TestLink_Id_FK
   field = QSqlField();
   field.setName("TestLink_Id_FK");
   field.setType(QVariant::Int);
+  field.setRequired(true);
   table.addField(field, false);
   // MeasureTestNodeUnitConnection_Id_FK
   field = QSqlField();
   field.setName("MeasureTestNodeUnitConnection_Id_FK");
   field.setType(QVariant::Int);
+  field.setRequired(true);
   table.addField(field, false);
   // Indexes
   table.addIndex("TestModelItem_Id_FK_idx3", false);

@@ -23,7 +23,9 @@
 
 #include "mdtTtBase.h"
 #include "mdtSqlTableSelection.h"
+#include "mdtTtTestModelItemData.h"
 #include "mdtTtTestNodeUnitSetupData.h"
+#include "mdtTtTestModelItemRouteData.h"
 #include <QVariant>
 #include <QString>
 #include <QModelIndex>
@@ -104,7 +106,22 @@ class mdtTtTestModelItem : public mdtTtBase
    */
   bool removeTestNodeUnitSetups(const mdtSqlTableSelection & s);
 
+  /*! \brief Add a test model item to TestModelItem_tbl
+   *
+   * Will also routes contained in data using addRoute(mdtTtTestModelItemRouteData, bool)
+   */
+  bool addItem(mdtTtTestModelItemData data, bool handleTransaction);
+
   /*! \brief Add a route to TestModelItemRoute_tbl
+   *
+   *  Will also add test link <-> test model item association
+   *   and add or update needed test node unit setup (for path relays)
+   */
+  bool addRoute(mdtTtTestModelItemRouteData routeData, bool handleTransaction);
+
+  /*! \brief Add a route to TestModelItemRoute_tbl
+   *
+   * \sa addRoute(mdtTtTestModelItemRouteData, bool)
    */
   bool addRoute(const QVariant & testModelItemId, const QVariant & testLinkId, const QVariant & measureTestNodeUnitConnectionId, const QList<mdtTtTestNodeUnitSetupData> & dataList, bool handleTransaction);
 

@@ -844,8 +844,8 @@ bool mdtTtTestConnectionCableEditor::setupTestLinkTable()
   widget->setColumnHidden("Id_PK", true);
   widget->setColumnHidden("TestCable_Id_FK", true);
   widget->setColumnHidden("TestNode_Id_FK", true);
-  widget->setColumnHidden("TestConnection_Id_FK", true);
-  widget->setColumnHidden("DutConnection_Id_FK", true);
+  ///widget->setColumnHidden("TestConnection_Id_FK", true);
+  ///widget->setColumnHidden("DutConnection_Id_FK", true);
   widget->setColumnHidden("VehicleType_Id_FK_PK", true);
   widget->setColumnHidden("Unit_Id_FK_PK", true);
   widget->setColumnHidden("DutUnitId", true);
