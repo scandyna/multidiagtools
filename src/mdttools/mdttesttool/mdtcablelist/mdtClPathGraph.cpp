@@ -361,6 +361,9 @@ QList<QVariant> mdtClPathGraph::getShortestPath(const QVariant & fromConnectionI
 
 bool mdtClPathGraph::connectionsAreLinked(const QVariant & connectionIdA, const QVariant & connectionIdB)
 {
+  Q_ASSERT(!connectionIdA.isNull());
+  Q_ASSERT(!connectionIdB.isNull());
+
   bool ok;
   bool areLinked;
 

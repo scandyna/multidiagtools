@@ -71,9 +71,13 @@ class mdtTtTestModelItem : public mdtTtBase
    */
   QList<QVariant> getTestNodeUnitSetupIdList(const QVariant & testItemId);
 
-  /*! \brief Add a test link
+  /*! \brief Add a test link to TestModelItem_TestLink_tbl
    */
   bool addTestLink(const QVariant & testModelItemId, const QVariant & testLinkId);
+
+  /*! \brief Check if a test link exists in TestModelItem_TestLink_tbl
+   */
+  bool testLinkExists(const QVariant & testModelItemId, const QVariant & testLinkId, bool & ok);
 
   /*! \brief Remove test links
    */

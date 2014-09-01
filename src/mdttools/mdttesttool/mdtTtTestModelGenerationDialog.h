@@ -23,6 +23,7 @@
 
 #include "ui_mdtTtTestModelGenerationDialog.h"
 #include "mdtError.h"
+#include "mdtTtTestModel.h"
 #include <QDialog>
 #include <QSqlDatabase>
 #include <QString>
@@ -54,6 +55,10 @@ class mdtTtTestModelGenerationDialog : public QDialog, Ui::mdtTtTestModelGenerat
   /*! \brief Set test model ID
    */
   void setTestModelId(const QVariant & testModelId);
+
+  /*! \brief Get selected parameters
+   */
+  mdtTtTestModelGenerationParameter selectedParameters() const;
 
   /*! \brief Get selected test type
    */
@@ -89,6 +94,10 @@ class mdtTtTestModelGenerationDialog : public QDialog, Ui::mdtTtTestModelGenerat
    */
   void populateMeasureConnectionBComboBox(int index);
 
+  /*! \brief Check selected parameters and build result if OK
+   */
+  void accept();
+
  private:
 
   /*! \brief Populate test type combo box
@@ -107,10 +116,15 @@ class mdtTtTestModelGenerationDialog : public QDialog, Ui::mdtTtTestModelGenerat
    */
   void displayError(const mdtError & error);
 
+  /*! \brief Display a error about missing parameter
+   */
+  void displayErrorAboutMissingParameter(const QString & missingParameterText);
+
   Q_DISABLE_COPY(mdtTtTestModelGenerationDialog);
 
   QSqlDatabase pvDatabase;
   QList<QSqlRecord> pvMeasureConnectionDataList;
+  mdtTtTestModelGenerationParameter pvParameters;
 };
 
 #endif  // #ifndef MDT_TT_TEST_MODEL_GENERATION_DIALOG_H

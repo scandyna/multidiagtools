@@ -381,7 +381,10 @@ QList<mdtTtTestNodeUnitSetupData> mdtTtTestNode::getRelayPathSetupDataList(const
 
 bool mdtTtTestNode::ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, const QVariant & connectionIdB, const QList<mdtTtTestNodeUnitSetupData> & testNodeUnitSetupDataList, mdtClPathGraph & graph, bool & ok)
 {
-  mdtTtTestNodeUnit tnu(0, database());
+  Q_ASSERT(!connectionIdA.isNull());
+  Q_ASSERT(!connectionIdB.isNull());
+
+  ///mdtTtTestNodeUnit tnu(0, database());
   QList<QVariant> connectionIdList;
   int i;
   bool hasShort;
@@ -414,6 +417,7 @@ bool mdtTtTestNode::ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, 
   for(i = 0; i < relaysList.size(); ++i){
     relay = relaysList.at(i);
     graph.addLink(relay.cnxA, relay.cnxB, relay.id, true, 2);
+    ///qDebug() << "Short detection: adding relay ID " << relay.id << ", relay cnxA: " << relay.cnxA << " , relay cnxB: " << relay.cnxB;
   }
 
   // Add given node units to graph
@@ -443,6 +447,9 @@ bool mdtTtTestNode::ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, 
   */
   hasShort = graph.connectionsAreLinked(connectionIdA, connectionIdB);
   graph.removeAddedLinks();
+  
+  qDebug() << "TN - Has short ? : " << hasShort;
+  
   if(hasShort){
     QString sql;
     QList<QSqlRecord> dataList;

@@ -321,12 +321,13 @@ void mdtTtTestModelEditor::generateContinuityTest()
   mdtTtTestModel tm(this, database());
   mdtClPathGraph graph(database());
   mdtTtTestModelGenerationDialog setupDialog(database(), this);
-  QVariant testModelId;
+  /**
   QVariant testCableId;
   QVariant testNodeId;
   QVariant measureConnexionIdA;
   QVariant measureConnexionIdB;
-  
+  */
+  QVariant testModelId;
   mdtTtTestModelGenerationParameter parameters;
   
   bool ok;
@@ -341,6 +342,10 @@ void mdtTtTestModelEditor::generateContinuityTest()
   if(setupDialog.exec() != QDialog::Accepted){
     return;
   }
+  parameters = setupDialog.selectedParameters();
+  // Set test model ID to parameters
+  parameters.testModelId = testModelId;
+  /**
   testNodeId = setupDialog.selectedTestNodeId();
   if(testNodeId.isNull()){
     return;
@@ -357,6 +362,7 @@ void mdtTtTestModelEditor::generateContinuityTest()
   if(measureConnexionIdB.isNull()){
     return;
   }
+  */
   // Load link list
   if(!graph.loadLinkList()){
     pvLastError = graph.lastError();
@@ -377,14 +383,16 @@ void mdtTtTestModelEditor::generateContinuityTest()
     relaysToIgnore.append(s.data(i, "Unit_Id_FK_PK"));
   }
   */
-  
+  /**
   parameters.measureConnexionIdA = measureConnexionIdA;
   parameters.measureConnexionIdB = measureConnexionIdB;
   parameters.testCableId = testCableId;
   parameters.testModelId = testModelId;
   parameters.testNodeId = testNodeId;
+  */
   // Generate test
   ok = false;
+  /**
   switch(setupDialog.selectedTestModelType()){
     case mdtTtTestModelGenerationDialog::None:
       return;
@@ -396,13 +404,15 @@ void mdtTtTestModelEditor::generateContinuityTest()
       ok = tm.generateTestModel(parameters, graph);
       break;
     case mdtTtTestModelGenerationDialog::ShortDetectionTest:
-      ///ok = tm.generateShortDetectionTest(testModelId, testCableId, testNodeId, measureConnexionIdA, measureConnexionIdB, graph /**, relaysToIgnore*/);
+      ///ok = tm.generateShortDetectionTest(testModelId, testCableId, testNodeId, measureConnexionIdA, measureConnexionIdB, graph, relaysToIgnore);
       parameters.generateForNonLinkedConnections = false;
       parameters.continuityExpectedValue = 0.0;
       parameters.isolationExpectedValue = 1e9;
       ok = tm.generateTestModel(parameters, graph);
       break;
   }
+  */
+  ok = tm.generateTestModel(parameters, graph);
   if(!ok){
     pvLastError = tm.lastError();
     displayLastError();

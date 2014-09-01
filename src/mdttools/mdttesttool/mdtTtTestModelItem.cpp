@@ -234,7 +234,18 @@ QList<QVariant> mdtTtTestModelItem::getTestNodeUnitSetupIdList(const QVariant & 
 bool mdtTtTestModelItem::addTestLink(const QVariant & testModelItemId, const QVariant & testLinkId)
 {
   mdtSqlRecord record;
+  bool ok;
+  bool exists;
 
+  // Check if test link allready exists
+  exists = testLinkExists(testModelItemId, testLinkId, ok);
+  if(!ok){
+    return false;
+  }
+  if(exists){
+    return true;
+  }
+  // Setup record and add test link
   if(!record.addAllFields("TestModelItem_TestLink_tbl", database())){
     pvLastError = record.lastError();
     return false;
@@ -243,6 +254,23 @@ bool mdtTtTestModelItem::addTestLink(const QVariant & testModelItemId, const QVa
   record.setValue("TestLink_Id_FK", testLinkId);
 
   return addRecord(record, "TestModelItem_TestLink_tbl");
+}
+
+bool mdtTtTestModelItem::testLinkExists(const QVariant & testModelItemId, const QVariant & testLinkId, bool & ok)
+{
+  QString sql;
+  QList<QVariant> dataList;
+
+  sql = "SELECT COUNT(*) FROM TestModelItem_TestLink_tbl";
+  sql += " WHERE TestModelItem_Id_FK = " + testModelItemId.toString();
+  sql += " AND TestLink_Id_FK = " + testLinkId.toString();
+  dataList = getDataList<QVariant>(sql, ok);
+  if(!ok){
+    return false;
+  }
+  Q_ASSERT(dataList.size() == 1);
+
+  return (dataList.at(0).toInt() > 0);
 }
 
 bool mdtTtTestModelItem::removeTestLinks(const mdtSqlTableSelection & s)
@@ -427,7 +455,7 @@ bool mdtTtTestModelItem::addRoute(mdtTtTestModelItemRouteData routeData, bool ha
   }
   // Add route
   
-  qDebug() << "Adding route to DB: " << record;
+  ///qDebug() << "Adding route to DB: " << record;
   
   if(!addRecord(record, "TestModelItemRoute_tbl", query)){
     if(handleTransaction){
@@ -472,58 +500,6 @@ bool mdtTtTestModelItem::addRoute(const QVariant & testModelItemId, const QVaria
   return addRoute(routeData, handleTransaction);
 }
 
-/**
-bool mdtTtTestModelItem::addRoute(const QVariant & testModelItemId, const QVariant & testLinkId, const QVariant & measureTestNodeUnitConnectionId, const QList<mdtTtTestNodeUnitSetupData> & dataList, bool handleTransaction)
-{
-  mdtSqlRecord record;
-  mdtTtTestNodeUnitSetupData setupData;
-  QVariant testModelItemRouteId;
-  QSqlQuery query(database());
-  int i;
-
-  // Setup record for TestModelItemRoute_tbl
-  if(!record.addAllFields("TestModelItemRoute_tbl", database())){
-    pvLastError = record.lastError();
-    return false;
-  }
-  record.setValue("TestModelItem_Id_FK", testModelItemId);
-  record.setValue("TestLink_Id_FK", testLinkId);
-  record.setValue("MeasureTestNodeUnitConnection_Id_FK", measureTestNodeUnitConnectionId);
-
-  if(handleTransaction){
-    if(!beginTransaction()){
-      return false;
-    }
-  }
-  // Add route
-  if(!addRecord(record, "TestModelItemRoute_tbl", query)){
-    if(handleTransaction){
-      rollbackTransaction();
-    }
-    return false;
-  }
-  testModelItemRouteId = query.lastInsertId();
-  Q_ASSERT(!testModelItemRouteId.isNull());
-  // Add test node unit setup
-  for(i = 0; i < dataList.size(); ++i){
-    setupData = dataList.at(i);
-    setupData.setValue("TestModelItemRoute_Id_FK", testModelItemRouteId);
-    if(!addOrUpdateTestNodeUnitSetup(setupData)){
-    if(handleTransaction){
-      rollbackTransaction();
-    }
-      return false;
-    }
-  }
-  if(handleTransaction){
-    if(!commitTransaction()){
-      return false;
-    }
-  }
-
-  return true;
-}
-*/
 
 bool mdtTtTestModelItem::removeRoutes(const mdtSqlTableSelection & s)
 {

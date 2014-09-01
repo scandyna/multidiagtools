@@ -43,6 +43,11 @@ void mdtTtTestModelGenerationDialog::setTestModelId(const QVariant & testModelId
   populateTestNodeComboBox(testModelId);
 }
 
+mdtTtTestModelGenerationParameter mdtTtTestModelGenerationDialog::selectedParameters() const
+{
+  return pvParameters;
+}
+
 mdtTtTestModelGenerationDialog::testType_t mdtTtTestModelGenerationDialog::selectedTestModelType() const
 {
   int index;
@@ -169,6 +174,49 @@ void mdtTtTestModelGenerationDialog::populateMeasureConnectionBComboBox(int inde
   }
 }
 
+void mdtTtTestModelGenerationDialog::accept()
+{
+  int index;
+
+  // Set test model type
+  /// \todo Implement
+  
+  // Set test node ID
+  index = cbTestNode->currentIndex();
+  if(index < 0){
+    displayErrorAboutMissingParameter(tr("No test node was selected."));
+    return;
+  }
+  pvParameters.testNodeId = cbTestNode->itemData(index);
+  // Set test cable ID
+  index = cbTestCable->currentIndex();
+  if(index < 0){
+    displayErrorAboutMissingParameter(tr("No test cable was selected."));
+    return;
+  }
+  pvParameters.testCableId = cbTestCable->itemData(index);
+  // Set measure connection A
+  index = cbMeasureConnectionA->currentIndex();
+  if(index < 0){
+    displayErrorAboutMissingParameter(tr("Measure connection A was not selected."));
+    return;
+  }
+  pvParameters.measureConnexionIdA = cbMeasureConnectionA->itemData(index);
+  // Set measure connection B
+  index = cbMeasureConnectionB->currentIndex();
+  if(index < 0){
+    displayErrorAboutMissingParameter(tr("Measure connection B was not selected."));
+    return;
+  }
+  pvParameters.measureConnexionIdB = cbMeasureConnectionB->itemData(index);
+  /// Values etc.. \todo Implement
+  pvParameters.continuityExpectedValue = 0.0;
+  pvParameters.isolationExpectedValue = 1e9;
+  pvParameters.generateForNonLinkedConnections = false;
+
+  QDialog::accept();
+}
+
 void mdtTtTestModelGenerationDialog::populateTestTypeComboBox()
 {
   cbTestModelType->clear();
@@ -228,5 +276,15 @@ void mdtTtTestModelGenerationDialog::displayError(const mdtError & error)
   msgBox.setInformativeText(error.informativeText());
   msgBox.setDetailedText(error.systemText());
   msgBox.setIcon(error.levelIcon());
+  msgBox.exec();
+}
+
+void mdtTtTestModelGenerationDialog::displayErrorAboutMissingParameter(const QString & missingParameterText)
+{
+  QMessageBox msgBox(this);
+
+  msgBox.setText(tr("Some parameters are missing. Please complete them and try again."));
+  msgBox.setInformativeText(missingParameterText);
+  msgBox.setIcon(QMessageBox::Warning);
   msgBox.exec();
 }
