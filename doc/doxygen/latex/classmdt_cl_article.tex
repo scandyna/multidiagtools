@@ -38,7 +38,7 @@ Collaboration diagram for mdt\-Cl\-Article\-:\nopagebreak
 Q\-String \hyperlink{classmdt_cl_article_ab739ef3c89503d971ded5830787dc4ff}{sql\-For\-Article\-Component\-Selection} (const Q\-Variant \&article\-Id) const 
 \begin{DoxyCompactList}\small\item\em Get S\-Q\-L statement for article component selection. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_cl_article_a01746b199b707377f29a463bfc12452d}{add\-Component} (const Q\-Variant \&article\-Id, const Q\-Variant \&component\-Id, const Q\-Variant \&qty, const Q\-Variant \&qty\-Unit)
-\begin{DoxyCompactList}\small\item\em Add a article as component. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Get S\-Q\-L statement for connector contact selection. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_cl_article_a065c948e09af084586a4c1b110afefbb}{edit\-Component} (const Q\-Variant \&article\-Id, const Q\-Variant \&current\-Component\-Id, const Q\-Variant \&new\-Component\-Id, const Q\-Variant \&qty, const Q\-Variant \&qty\-Unit)
 \begin{DoxyCompactList}\small\item\em Edit a component. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_cl_article_a05d365a0488e479a15ff158353a41aab}{remove\-Component} (const Q\-Variant \&article\-Id, const Q\-Variant \&component\-Id)
@@ -168,7 +168,11 @@ References mdt\-Sql\-Record\-::add\-All\-Fields(), mdt\-Tt\-Base\-::add\-Record(
 )}}\label{classmdt_cl_article_a01746b199b707377f29a463bfc12452d}
 
 
-Add a article as component. 
+Get S\-Q\-L statement for connector contact selection. 
+
+Get a list of connector contact (including some connector data) for witch connector exists in given article\-Id.
+
+Add a article as component
 
 \begin{DoxyReturn}{Returns}
 True on success, false else. To get reason of failure, use \hyperlink{classmdt_tt_base_a92adaae105cef63b18ace2e320776ca9}{last\-Error()} . 

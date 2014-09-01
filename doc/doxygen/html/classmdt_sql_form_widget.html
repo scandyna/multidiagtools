@@ -112,7 +112,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="classmdt_sql_form_widget__coll__graph.png" border="0" usemap="#mdt_sql_form_widget_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_sql_form_widget_coll__map" id="mdt_sql_form_widget_coll__map">
-<area shape="rect" id="node2" href="classmdt_abstract_sql_widget.html" title="Base class to create database table GUI. " alt="" coords="5,83,157,112"/><area shape="rect" id="node4" href="class_q_widget.html" title="QWidget" alt="" coords="45,5,117,35"/></map>
+<area shape="rect" id="node2" href="classmdt_abstract_sql_widget.html" title="Base class to create database table GUI. " alt="" coords="13,101,165,131"/><area shape="rect" id="node4" href="class_q_widget.html" title="QWidget" alt="" coords="5,5,77,35"/><area shape="rect" id="node6" href="classmdt_error.html" title="mdtError contains informations about a error that occured " alt="" coords="101,5,173,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-slots"></a>
@@ -254,6 +254,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a903905036e9c6b440e2a300f48579b2b inherit pub_methods_classmdt_abstract_sql_widget"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_widget.html#a903905036e9c6b440e2a300f48579b2b">submitAndWait</a> (int timeout=-1)</td></tr>
 <tr class="memdesc:a903905036e9c6b440e2a300f48579b2b inherit pub_methods_classmdt_abstract_sql_widget"><td class="mdescLeft">&#160;</td><td class="mdescRight">Submit and wait until success or failure.  <a href="#a903905036e9c6b440e2a300f48579b2b">More...</a><br/></td></tr>
 <tr class="separator:a903905036e9c6b440e2a300f48579b2b inherit pub_methods_classmdt_abstract_sql_widget"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf1cce4236f5a7e795c65c226a065726 inherit pub_methods_classmdt_abstract_sql_widget"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_error.html">mdtError</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_widget.html#acf1cce4236f5a7e795c65c226a065726">lastError</a> () const </td></tr>
+<tr class="memdesc:acf1cce4236f5a7e795c65c226a065726 inherit pub_methods_classmdt_abstract_sql_widget"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get last error.  <a href="#acf1cce4236f5a7e795c65c226a065726">More...</a><br/></td></tr>
+<tr class="separator:acf1cce4236f5a7e795c65c226a065726 inherit pub_methods_classmdt_abstract_sql_widget"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -363,6 +366,10 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:ac3b54b54289e7366c5fa80091c0d48b4 inherit pro_methods_classmdt_abstract_sql_widget"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classmdt_sort_filter_proxy_model.html">mdtSortFilterProxyModel</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_widget.html#ac3b54b54289e7366c5fa80091c0d48b4">proxyModel</a> () const </td></tr>
 <tr class="memdesc:ac3b54b54289e7366c5fa80091c0d48b4 inherit pro_methods_classmdt_abstract_sql_widget"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get internal proxy model.  <a href="#ac3b54b54289e7366c5fa80091c0d48b4">More...</a><br/></td></tr>
 <tr class="separator:ac3b54b54289e7366c5fa80091c0d48b4 inherit pro_methods_classmdt_abstract_sql_widget"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_classmdt_abstract_sql_widget"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classmdt_abstract_sql_widget')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classmdt_abstract_sql_widget.html">mdtAbstractSqlWidget</a></td></tr>
+<tr class="memitem:a90c8f40ecf210ce13bba75b8bb5966a8 inherit pro_attribs_classmdt_abstract_sql_widget"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_error.html">mdtError</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_widget.html#a90c8f40ecf210ce13bba75b8bb5966a8">pvLastError</a></td></tr>
+<tr class="memdesc:a90c8f40ecf210ce13bba75b8bb5966a8 inherit pro_attribs_classmdt_abstract_sql_widget"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store last error.  <a href="#a90c8f40ecf210ce13bba75b8bb5966a8">More...</a><br/></td></tr>
+<tr class="separator:a90c8f40ecf210ce13bba75b8bb5966a8 inherit pro_attribs_classmdt_abstract_sql_widget"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Widget that accept a user designed form and helps dealing with table model. </p>
@@ -443,7 +450,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00160">160</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_form_8cpp_source.html#l00177">mdtSqlForm::addRelation()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_form_8cpp_source.html#l00177">mdtSqlForm::addRelation()</a>, and <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00224">toNext()</a>.</p>
 
 </div>
 </div>
@@ -486,9 +493,9 @@ Model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a89
 
 <p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00053">53</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00096">mdtAbstractSqlWidget::addDataValidator()</a>, <a class="el" href="classmdt_abstract_sql_widget.html#a8ae6e67e3efb5051dc7a8b74571d4aa1">mdtAbstractSqlWidget::dataEdited()</a>, <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00101">mdtSqlSchemaTable::field()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00077">mdtAbstractSqlWidget::model()</a>, <a class="el" href="classmdt_abstract_sql_widget.html#a6787c093d9b0b64a1e8d3794ba505604">mdtAbstractSqlWidget::modelSelected()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00231">mdtAbstractSqlWidget::rowCount()</a>, <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00537">mdtSqlFieldHandler::setDataWidget()</a>, <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00520">mdtSqlFieldHandler::setField()</a>, <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00211">mdtSqlSchemaTable::setupFromTable()</a>, and <a class="el" href="mdt_error_8h_source.html#l00093">mdtError::Warning</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00095">mdtAbstractSqlWidget::addDataValidator()</a>, <a class="el" href="classmdt_abstract_sql_widget.html#a8ae6e67e3efb5051dc7a8b74571d4aa1">mdtAbstractSqlWidget::dataEdited()</a>, <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00101">mdtSqlSchemaTable::field()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00076">mdtAbstractSqlWidget::model()</a>, <a class="el" href="classmdt_abstract_sql_widget.html#a6787c093d9b0b64a1e8d3794ba505604">mdtAbstractSqlWidget::modelSelected()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00230">mdtAbstractSqlWidget::rowCount()</a>, <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00537">mdtSqlFieldHandler::setDataWidget()</a>, <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00520">mdtSqlFieldHandler::setField()</a>, <a class="el" href="mdt_sql_schema_table_8cpp_source.html#l00211">mdtSqlSchemaTable::setupFromTable()</a>, and <a class="el" href="mdt_error_8h_source.html#l00093">mdtError::Warning</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00138">mapFormWidgets()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00064">mdtSqlForm::setMainTable()</a>, and <a class="el" href="mdt_tt_abstract_test_widget_8cpp_source.html#l00058">mdtTtAbstractTestWidget::setTestUiWidget()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00138">mapFormWidgets()</a>, and <a class="el" href="mdt_sql_form_8cpp_source.html#l00064">mdtSqlForm::setMainTable()</a>.</p>
 
 </div>
 </div>
@@ -561,11 +568,9 @@ Model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a89
 
 <p>Set row as current record. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00233">233</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00251">251</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00255">mdtAbstractSqlWidget::allDataAreSaved()</a>.</p>
-
-<p>Referenced by <a class="el" href="mdt_tt_abstract_test_widget_8cpp_source.html#l00082">mdtTtAbstractTestWidget::createTest()</a>, <a class="el" href="mdt_tt_abstract_test_widget_8cpp_source.html#l00045">mdtTtAbstractTestWidget::init()</a>, and <a class="el" href="mdt_tt_abstract_test_widget_8cpp_source.html#l00058">mdtTtAbstractTestWidget::setTestUiWidget()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00254">mdtAbstractSqlWidget::allDataAreSaved()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00076">mdtAbstractSqlWidget::model()</a>, and <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00230">mdtAbstractSqlWidget::rowCount()</a>.</p>
 
 </div>
 </div>
@@ -594,9 +599,7 @@ Model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a89
 
 <p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00165">165</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00255">mdtAbstractSqlWidget::allDataAreSaved()</a>.</p>
-
-<p>Referenced by <a class="el" href="mdt_tt_abstract_test_widget_8cpp_source.html#l00082">mdtTtAbstractTestWidget::createTest()</a>, and <a class="el" href="mdt_tt_abstract_test_widget_8cpp_source.html#l00132">mdtTtAbstractTestWidget::openTest()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00254">mdtAbstractSqlWidget::allDataAreSaved()</a>.</p>
 
 </div>
 </div>
@@ -625,7 +628,7 @@ Model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a89
 
 <p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00182">182</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00255">mdtAbstractSqlWidget::allDataAreSaved()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00254">mdtAbstractSqlWidget::allDataAreSaved()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00076">mdtAbstractSqlWidget::model()</a>, and <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00230">mdtAbstractSqlWidget::rowCount()</a>.</p>
 
 </div>
 </div>
@@ -652,9 +655,9 @@ Model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a89
 
 <p>Set next record as current record. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00216">216</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00224">224</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00255">mdtAbstractSqlWidget::allDataAreSaved()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00254">mdtAbstractSqlWidget::allDataAreSaved()</a>, <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00160">currentRow()</a>, and <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00076">mdtAbstractSqlWidget::model()</a>.</p>
 
 </div>
 </div>
@@ -681,9 +684,9 @@ Model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a89
 
 <p>Set previous record as current record. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00199">199</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00207">207</a> of file <a class="el" href="mdt_sql_form_widget_8cpp_source.html">mdtSqlFormWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00255">mdtAbstractSqlWidget::allDataAreSaved()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00254">mdtAbstractSqlWidget::allDataAreSaved()</a>.</p>
 
 </div>
 </div>
@@ -694,7 +697,7 @@ Model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a89
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 26 2014 17:48:11 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Sep 1 2014 18:45:46 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

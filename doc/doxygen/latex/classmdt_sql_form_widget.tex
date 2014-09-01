@@ -21,11 +21,12 @@ Inheritance diagram for mdt\-Sql\-Form\-Widget\-:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdt\-Sql\-Form\-Widget\-:\nopagebreak
+Collaboration diagram for mdt\-Sql\-Form\-Widget\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=194pt]{classmdt_sql_form_widget__coll__graph}
+\includegraphics[width=218pt]{classmdt_sql_form_widget__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Slots}
@@ -136,7 +137,7 @@ Definition at line 160 of file mdt\-Sql\-Form\-Widget.\-cpp.
 
 
 
-Referenced by mdt\-Sql\-Form\-::add\-Relation().
+Referenced by mdt\-Sql\-Form\-::add\-Relation(), and to\-Next().
 
 \hypertarget{classmdt_sql_form_widget_ad7933613a2d113d403d539ac8957e044}{\index{mdt\-Sql\-Form\-Widget@{mdt\-Sql\-Form\-Widget}!map\-Form\-Widgets@{map\-Form\-Widgets}}
 \index{map\-Form\-Widgets@{map\-Form\-Widgets}!mdtSqlFormWidget@{mdt\-Sql\-Form\-Widget}}
@@ -174,7 +175,7 @@ References mdt\-Abstract\-Sql\-Widget\-::add\-Data\-Validator(), mdt\-Abstract\-
 
 
 
-Referenced by map\-Form\-Widgets(), mdt\-Sql\-Form\-::set\-Main\-Table(), and mdt\-Tt\-Abstract\-Test\-Widget\-::set\-Test\-Ui\-Widget().
+Referenced by map\-Form\-Widgets(), and mdt\-Sql\-Form\-::set\-Main\-Table().
 
 \hypertarget{classmdt_sql_form_widget_ace4f7fad749a4efe1233b61d071b3926}{\index{mdt\-Sql\-Form\-Widget@{mdt\-Sql\-Form\-Widget}!map\-Form\-Widgets@{map\-Form\-Widgets}}
 \index{map\-Form\-Widgets@{map\-Form\-Widgets}!mdtSqlFormWidget@{mdt\-Sql\-Form\-Widget}}
@@ -227,15 +228,11 @@ Set row as current record.
 
 
 
-Definition at line 233 of file mdt\-Sql\-Form\-Widget.\-cpp.
+Definition at line 251 of file mdt\-Sql\-Form\-Widget.\-cpp.
 
 
 
-References mdt\-Abstract\-Sql\-Widget\-::all\-Data\-Are\-Saved().
-
-
-
-Referenced by mdt\-Tt\-Abstract\-Test\-Widget\-::create\-Test(), mdt\-Tt\-Abstract\-Test\-Widget\-::init(), and mdt\-Tt\-Abstract\-Test\-Widget\-::set\-Test\-Ui\-Widget().
+References mdt\-Abstract\-Sql\-Widget\-::all\-Data\-Are\-Saved(), mdt\-Abstract\-Sql\-Widget\-::model(), and mdt\-Abstract\-Sql\-Widget\-::row\-Count().
 
 \hypertarget{classmdt_sql_form_widget_a4bb7ddf419e845de2d1a7c1ef95e48a8}{\index{mdt\-Sql\-Form\-Widget@{mdt\-Sql\-Form\-Widget}!to\-First@{to\-First}}
 \index{to\-First@{to\-First}!mdtSqlFormWidget@{mdt\-Sql\-Form\-Widget}}
@@ -256,10 +253,6 @@ Definition at line 165 of file mdt\-Sql\-Form\-Widget.\-cpp.
 
 References mdt\-Abstract\-Sql\-Widget\-::all\-Data\-Are\-Saved().
 
-
-
-Referenced by mdt\-Tt\-Abstract\-Test\-Widget\-::create\-Test(), and mdt\-Tt\-Abstract\-Test\-Widget\-::open\-Test().
-
 \hypertarget{classmdt_sql_form_widget_aefbaa029ac6141ab3d12da2a27d30dda}{\index{mdt\-Sql\-Form\-Widget@{mdt\-Sql\-Form\-Widget}!to\-Last@{to\-Last}}
 \index{to\-Last@{to\-Last}!mdtSqlFormWidget@{mdt\-Sql\-Form\-Widget}}
 \subsubsection[{to\-Last}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Form\-Widget\-::to\-Last (
@@ -277,7 +270,7 @@ Definition at line 182 of file mdt\-Sql\-Form\-Widget.\-cpp.
 
 
 
-References mdt\-Abstract\-Sql\-Widget\-::all\-Data\-Are\-Saved().
+References mdt\-Abstract\-Sql\-Widget\-::all\-Data\-Are\-Saved(), mdt\-Abstract\-Sql\-Widget\-::model(), and mdt\-Abstract\-Sql\-Widget\-::row\-Count().
 
 \hypertarget{classmdt_sql_form_widget_a49496a848e015ed8335a2bfd33906000}{\index{mdt\-Sql\-Form\-Widget@{mdt\-Sql\-Form\-Widget}!to\-Next@{to\-Next}}
 \index{to\-Next@{to\-Next}!mdtSqlFormWidget@{mdt\-Sql\-Form\-Widget}}
@@ -292,11 +285,11 @@ Set next record as current record.
 
 
 
-Definition at line 216 of file mdt\-Sql\-Form\-Widget.\-cpp.
+Definition at line 224 of file mdt\-Sql\-Form\-Widget.\-cpp.
 
 
 
-References mdt\-Abstract\-Sql\-Widget\-::all\-Data\-Are\-Saved().
+References mdt\-Abstract\-Sql\-Widget\-::all\-Data\-Are\-Saved(), current\-Row(), and mdt\-Abstract\-Sql\-Widget\-::model().
 
 \hypertarget{classmdt_sql_form_widget_a7dc4bc0b63b10d420f7ab04a43e4f371}{\index{mdt\-Sql\-Form\-Widget@{mdt\-Sql\-Form\-Widget}!to\-Previous@{to\-Previous}}
 \index{to\-Previous@{to\-Previous}!mdtSqlFormWidget@{mdt\-Sql\-Form\-Widget}}
@@ -311,7 +304,7 @@ Set previous record as current record.
 
 
 
-Definition at line 199 of file mdt\-Sql\-Form\-Widget.\-cpp.
+Definition at line 207 of file mdt\-Sql\-Form\-Widget.\-cpp.
 
 
 

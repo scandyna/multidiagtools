@@ -1,7 +1,7 @@
 <map id="src/mdtdatabase/mdtSqlWindow.cpp" name="src/mdtdatabase/mdtSqlWindow.cpp">
-<area shape="rect" id="node3" href="$mdt_sql_window_8h.html" title="mdtSqlWindow.h" alt="" coords="1343,83,1463,112"/>
-<area shape="rect" id="node11" href="$mdt_sql_form_8h.html" title="mdtSqlForm.h" alt="" coords="935,83,1039,112"/>
-<area shape="rect" id="node33" href="$mdt_abstract_sql_widget_8h.html" title="mdtAbstractSqlWidget.h" alt="" coords="245,160,408,189"/>
-<area shape="rect" id="node48" href="$mdt_sql_form_widget_8h.html" title="mdtSqlFormWidget.h" alt="" coords="485,83,629,112"/>
-<area shape="rect" id="node13" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="1227,160,1309,189"/>
+<area shape="rect" id="node3" href="$mdt_sql_window_8h.html" title="mdtSqlWindow.h" alt="" coords="249,83,369,112"/>
+<area shape="rect" id="node11" href="$mdt_sql_form_8h.html" title="mdtSqlForm.h" alt="" coords="444,160,548,189"/>
+<area shape="rect" id="node33" href="$mdt_abstract_sql_widget_8h.html" title="mdtAbstractSqlWidget.h" alt="" coords="724,160,887,189"/>
+<area shape="rect" id="node49" href="$mdt_sql_form_widget_8h.html" title="mdtSqlFormWidget.h" alt="" coords="607,83,751,112"/>
+<area shape="rect" id="node13" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="416,237,499,267"/>
 </map>

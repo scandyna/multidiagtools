@@ -80,7 +80,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><dl class="reflist">
-<dt><a class="anchor" id="_todo000075"></a>Member <a class="el" href="mdt_error_8h.html#a0f1a2f7579a33e6de2fe8a1cbb5bbbb5">mdt_error_t</a>  </dt>
+<dt><a class="anchor" id="_todo000077"></a>Member <a class="el" href="mdt_error_8h.html#a0f1a2f7579a33e6de2fe8a1cbb5bbbb5">mdt_error_t</a>  </dt>
 <dd>Check if this is not obselete ? Errors are very specific, and per module/class error enum seems to be better than a central, very big and incoherent enum ...  </dd>
 <dt><a class="anchor" id="_todo000020"></a>Class <a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a>  </dt>
 <dd>WaitingCanceled, WriteCanceled, ReadCanceled are not clean defined. The only object that knows when it must stop is the thread itself ! To be a little more clean, thread should check it's running flag each time a function returns a error, and stop if requierd !  </dd>
@@ -92,6 +92,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <dd>Comment this class  </dd>
 <dt><a class="anchor" id="_todo000045"></a>Member <a class="el" href="classmdt_abstract_serial_port.html#aaeacd26b220ab0f8c521cef74edfafdd">mdtAbstractSerialPort::getCtlStates</a>  ()=0</dt>
 <dd>Update name to : updateCtlStates ?  </dd>
+<dt><a class="anchor" id="_todo000074"></a>Class <a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a>  </dt>
+<dd>Because the class must handle storage + UI interactions, and because it can be used for a varety of cases, conversions should be done by another class. F.ex., if device talks "Itegral binary" , such as Waogo 750 I/O modules, conversion must be done and stored here. With a multimeter (f.ex. Agilent U3606A), witch talks ASCII, conversion is allready done in frame codec, and any value must be stored here AS IS.  </dd>
 <dt><a class="anchor" id="_todo000047"></a>Member <a class="el" href="classmdt_cl_direct_link.html#aa7a155c3bf99b91e2d9cff85e93f332b">mdtClDirectLink::addLinksByUnitConnector</a>  (const QVariant unitConnectorIdS, const QVariant unitConnectorIdE, <a class="el" href="classmdt_cl_path_graph.html" title="Represents the link list in a graph. ">mdtClPathGraph</a> *graph)</dt>
 <dd>Add transactions  </dd>
 <dt><a class="anchor" id="_todo000049"></a>Member <a class="el" href="classmdt_cl_link.html#ac32bfef9f23b431ea4d3d546e6c21361">mdtClLink::disconnectConnectors</a>  (const QVariant &amp;startUnitConnectorId, const QVariant &amp;endUnitConnectorId, const QList&lt; QVariant &gt; &amp;startVehicleTypeIdList, const QList&lt; QVariant &gt; &amp;endVehicleTypeIdList)</dt>
@@ -104,7 +106,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <dd>What is better ? 2 methods ?? Should coherence between article connection and article connector be done ? Or let addConnector() do it ? </dd>
 <dt><a class="anchor" id="_todo000052"></a>Member <a class="el" href="classmdt_cl_unit_connection_data.html#a6922e05be582dd95de82bfe4dd8434f9">mdtClUnitConnectionData::mdtClUnitConnectionData</a>  (const QSqlRecord &amp;record)</dt>
 <dd>Check that the generated flag is updated (use hasData() for check...)  </dd>
-<dt><a class="anchor" id="_todo000073"></a>Member <a class="el" href="classmdt_csv_file.html#afe815d4fbdc08c442c9b1dce447cda75">mdtCsvFile::clear</a>  ()</dt>
+<dt><a class="anchor" id="_todo000075"></a>Member <a class="el" href="classmdt_csv_file.html#afe815d4fbdc08c442c9b1dce447cda75">mdtCsvFile::clear</a>  ()</dt>
 <dd>Check new function in mdtAlgorithm  </dd>
 <dt><a class="anchor" id="_todo000002"></a>Member <a class="el" href="classmdt_data_table_manager.html#a8fa0924a76e8f3fec9617f690cc4e148">mdtDataTableManager::dataSetDirectory</a>  () const </dt>
 <dd>Not used yet.  </dd>
@@ -146,9 +148,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <dd>A supprimer !(?)!  </dd>
 <dt><a class="anchor" id="_todo000005"></a>Member <a class="el" href="classmdt_device_u3606_a_widget.html#a653d85749d67555d8c3a43a779b6d2a2">mdtDeviceU3606AWidget::mdtDeviceU3606AWidget</a>  (<a class="el" href="class_q_widget.html">QWidget</a> *parent=0)</dt>
 <dd>A supprimer !(?)!  </dd>
-<dt><a class="anchor" id="_todo000076"></a>Member <a class="el" href="classmdt_frame_codec_scpi.html#aa6596dc898438be704191ad282d02100">mdtFrameCodecScpi::decodeIEEEdataAscii</a>  (const QByteArray &amp;data)</dt>
+<dt><a class="anchor" id="_todo000078"></a>Member <a class="el" href="classmdt_frame_codec_scpi.html#aa6596dc898438be704191ad282d02100">mdtFrameCodecScpi::decodeIEEEdataAscii</a>  (const QByteArray &amp;data)</dt>
 <dd>Not implemented yet  </dd>
-<dt><a class="anchor" id="_todo000077"></a>Member <a class="el" href="classmdt_frame_codec_scpi.html#ab70c6c3d2d91ddff065952b6c2db8345">mdtFrameCodecScpi::decodeIEEEdataByte</a>  (const QByteArray &amp;data)</dt>
+<dt><a class="anchor" id="_todo000079"></a>Member <a class="el" href="classmdt_frame_codec_scpi.html#ab70c6c3d2d91ddff065952b6c2db8345">mdtFrameCodecScpi::decodeIEEEdataByte</a>  (const QByteArray &amp;data)</dt>
 <dd>Not implemented yet  </dd>
 <dt><a class="anchor" id="_todo000019"></a>Class <a class="el" href="classmdt_port_lock.html">mdtPortLock</a>  </dt>
 <dd>Implement UUCP format in LCK.. files  </dd>
@@ -177,13 +179,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <dd>Currently implemented in polling, should be done with a wait condition. </dd>
 <dt><a class="anchor" id="_todo000033"></a>Member <a class="el" href="classmdt_port_thread_helper_socket.html#aa77afb8d26e4863bd437e0d59efae7a7">mdtPortThreadHelperSocket::mdtPortThreadHelperSocket</a>  (<a class="el" href="class_q_object.html">QObject</a> *parent=0)</dt>
 <dd>Implement socket options (think also about <a class="el" href="classmdt_port_config.html">mdtPortConfig</a>)  </dd>
-<dt><a class="anchor" id="_todo000078"></a>Class <a class="el" href="classmdt_sql_field_handler_label.html">mdtSqlFieldHandlerLabel</a>  </dt>
+<dt><a class="anchor" id="_todo000080"></a>Class <a class="el" href="classmdt_sql_field_handler_label.html">mdtSqlFieldHandlerLabel</a>  </dt>
 <dd>Implement other data editors  </dd>
 <dt><a class="anchor" id="_todo000004"></a>Member <a class="el" href="classmdt_sql_schema_table.html#a2cea444ccb26b0802fb230db5460e167">mdtSqlSchemaTable::setupFromTable</a>  (const QString &amp;name, QSqlDatabase db)</dt>
 <dd>Add indexes + foreign keys support  </dd>
-<dt><a class="anchor" id="_todo000081"></a>Class <a class="el" href="classmdt_sql_table_model.html">mdtSqlTableModel</a>  </dt>
+<dt><a class="anchor" id="_todo000083"></a>Class <a class="el" href="classmdt_sql_table_model.html">mdtSqlTableModel</a>  </dt>
 <dd>Check if not obselete ?  </dd>
-<dt><a class="anchor" id="_todo000080"></a>Member <a class="el" href="classmdt_sql_table_model.html#ad423c1b0c74ecbbb575637b028c2574b">mdtSqlTableModel::mdtSqlTableModel</a>  (<a class="el" href="class_q_object.html">QObject</a> *parent=0, QSqlDatabase db=QSqlDatabase())</dt>
+<dt><a class="anchor" id="_todo000082"></a>Member <a class="el" href="classmdt_sql_table_model.html#ad423c1b0c74ecbbb575637b028c2574b">mdtSqlTableModel::mdtSqlTableModel</a>  (<a class="el" href="class_q_object.html">QObject</a> *parent=0, QSqlDatabase db=QSqlDatabase())</dt>
 <dd>Check if not obselete ?  </dd>
 <dt><a class="anchor" id="_todo000055"></a>Class <a class="el" href="classmdt_tt_base.html">mdtTtBase</a>  </dt>
 <dd>Should inherit <a class="el" href="class_q_object.html">QObject</a>, because:<ul>
@@ -197,6 +199,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <dd>Current version only checks that all expected tables exists . </dd>
 <dt><a class="anchor" id="_todo000069"></a>Member <a class="el" href="classmdt_tt_test_connection_cable.html#a0fcfed15264ef80fbb9e566aaf0df4e5">mdtTtTestConnectionCable::addLink</a>  (const QVariant &amp;testConnectionId, const QVariant &amp;dutConnectionId, const QVariant &amp;testCableId, const QVariant &amp;identification, const QVariant &amp;value)</dt>
 <dd>Obselete this version  </dd>
+<dt><a class="anchor" id="_todo000070"></a>Class <a class="el" href="classmdt_tt_test_data.html">mdtTtTestData</a>  </dt>
+<dd>Check if not obselete ?  </dd>
+<dt><a class="anchor" id="_todo000073"></a>Member <a class="el" href="classmdt_tt_test_node_unit.html#a9da3578291033f5f9d77f186fe2fb325">mdtTtTestNodeUnit::getTestLinksDependingOnConnection</a>  (const QVariant &amp;testNodeUnitConnectionId, bool &amp;ok)</dt>
+<dd>Create a QSqlError mapping somwhere (note that error code depends on used database engine). When a foreign key constraint was detected, check on witch table it depends, then build a user friendly error  </dd>
 <dt><a class="anchor" id="_todo000035"></a>Member <a class="el" href="classmdt_usb_device_descriptor.html#a626afc71d8e72600f12259ac6f5a5866">mdtUsbDeviceDescriptor::productName</a>  () const </dt>
 <dd>Parsing the usb.ids (see <a href="http://www.linux-usb.org">http://www.linux-usb.org</a>)  </dd>
 <dt><a class="anchor" id="_todo000034"></a>Member <a class="el" href="classmdt_usb_device_descriptor.html#ac2f746ebd5540b65bf00f82c991f5c3b">mdtUsbDeviceDescriptor::vendorName</a>  () const </dt>
@@ -213,7 +219,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 26 2014 17:48:08 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Sep 1 2014 18:45:42 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

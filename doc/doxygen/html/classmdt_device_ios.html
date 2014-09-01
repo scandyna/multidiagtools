@@ -279,8 +279,8 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p>Container for a set of I/O's. </p>
 <p>This class can contain 4 type of I/O:</p>
 <ul>
-<li>Analog input (based on <a class="el" href="classmdt_analog_io.html" title="Representation of a analog I/O. ">mdtAnalogIo</a>)</li>
-<li>Analog output (based on <a class="el" href="classmdt_analog_io.html" title="Representation of a analog I/O. ">mdtAnalogIo</a>)</li>
+<li>Analog input (based on <a class="el" href="classmdt_analog_io.html" title="class mdtBinaryDoubleConverter; ">mdtAnalogIo</a>)</li>
+<li>Analog output (based on <a class="el" href="classmdt_analog_io.html" title="class mdtBinaryDoubleConverter; ">mdtAnalogIo</a>)</li>
 <li>Digital input (based on <a class="el" href="classmdt_digital_io.html" title="Representation of a digital I/O. ">mdtDigitalIo</a>)</li>
 <li>Digital output (based on <a class="el" href="classmdt_digital_io.html" title="Representation of a digital I/O. ">mdtDigitalIo</a>)</li>
 </ul>
@@ -289,7 +289,7 @@ Public Member Functions</h2></td></tr>
 <p>Internally, I/Os are stored in 4 QList:</p>
 <ul>
 <li>1 for analog inputs</li>
-<li>1 fro analog outputs</li>
+<li>1 for analog outputs</li>
 <li>1 for digital inputs</li>
 <li>1 for digital outputs</li>
 </ul>
@@ -301,9 +301,9 @@ Public Member Functions</h2></td></tr>
 <li>Memory address of physical device</li>
 </ul>
 <p>You can choose to use this address as simple index.</p>
-<p>Note: if a address is changed by accessing directly by <a class="el" href="classmdt_analog_io.html" title="Representation of a analog I/O. ">mdtAnalogIo</a> or <a class="el" href="classmdt_digital_io.html" title="Representation of a digital I/O. ">mdtDigitalIo</a>, this will not be reflected, and stored I/O's will become incoherent. The address must allways be set before adding the I/O to this container. Example:</p>
+<p>Note: if a address is changed by accessing directly by <a class="el" href="classmdt_analog_io.html" title="class mdtBinaryDoubleConverter; ">mdtAnalogIo</a> or <a class="el" href="classmdt_digital_io.html" title="Representation of a digital I/O. ">mdtDigitalIo</a>, this will not be reflected, and stored I/O's will become incoherent. The address must allways be set before adding the I/O to this container. Example:</p>
 <ul>
-<li><a class="el" href="classmdt_analog_io.html" title="Representation of a analog I/O. ">mdtAnalogIo</a> *analogIn = new <a class="el" href="classmdt_analog_io.html" title="Representation of a analog I/O. ">mdtAnalogIo</a>;</li>
+<li><a class="el" href="classmdt_analog_io.html" title="class mdtBinaryDoubleConverter; ">mdtAnalogIo</a> *analogIn = new <a class="el" href="classmdt_analog_io.html" title="class mdtBinaryDoubleConverter; ">mdtAnalogIo</a>;</li>
 <li>analogIn-&gt;setAddress(25);</li>
 <li>ios.addAnalogInput(analogIn);</li>
 </ul>
@@ -471,7 +471,7 @@ No I/O with same address must be set as double </dd></dl>
 <p>Add a analog output. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">sortSegmentsBy</td><td>Output will be added to a segment. sortSegmentsBy gives the address access to consider. Note: if device maps addresses for read and write access in the same order, but just with a offset, this parameter is not important (The address set in <a class="el" href="classmdt_analog_io.html" title="Representation of a analog I/O. ">mdtAnalogIo</a> object are not changed).</td></tr>
+    <tr><td class="paramname">sortSegmentsBy</td><td>Output will be added to a segment. sortSegmentsBy gives the address access to consider. Note: if device maps addresses for read and write access in the same order, but just with a offset, this parameter is not important (The address set in <a class="el" href="classmdt_analog_io.html" title="class mdtBinaryDoubleConverter; ">mdtAnalogIo</a> object are not changed).</td></tr>
   </table>
   </dd>
 </dl>
@@ -601,7 +601,7 @@ No I/O with same address must be set as double </dd></dl>
 <p>Add a digital output. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">sortSegmentsBy</td><td>Output will be added to a segment. sortSegmentsBy gives the address access to consider. Note: if device maps addresses for read and write access in the same order, but just with a offset, this parameter is not important (The address set in <a class="el" href="classmdt_analog_io.html" title="Representation of a analog I/O. ">mdtAnalogIo</a> object are not changed).</td></tr>
+    <tr><td class="paramname">sortSegmentsBy</td><td>Output will be added to a segment. sortSegmentsBy gives the address access to consider. Note: if device maps addresses for read and write access in the same order, but just with a offset, this parameter is not important (The address set in <a class="el" href="classmdt_analog_io.html" title="class mdtBinaryDoubleConverter; ">mdtAnalogIo</a> object are not changed).</td></tr>
   </table>
   </dd>
 </dl>
@@ -1131,7 +1131,7 @@ No I/O with same address must be set as double </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00523">523</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00951">mdtDevice::getDigitalOutputs()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01104">mdtDevice::setDigitalOutputs()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00951">mdtDevice::getDigitalOutputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01122">mdtDevice::setDigitalOutputs()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01104">mdtDevice::setDigitalOutputsValue()</a>.</p>
 
 </div>
 </div>
@@ -1152,7 +1152,7 @@ No I/O with same address must be set as double </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00518">518</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00951">mdtDevice::getDigitalOutputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01104">mdtDevice::setDigitalOutputs()</a>, and <a class="el" href="mdt_device_ios_8cpp_source.html#l00870">updateDigitalOutputValues()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00951">mdtDevice::getDigitalOutputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01122">mdtDevice::setDigitalOutputs()</a>, and <a class="el" href="mdt_device_ios_8cpp_source.html#l00870">updateDigitalOutputValues()</a>.</p>
 
 </div>
 </div>
@@ -1342,7 +1342,7 @@ No I/O with same address must be set as double </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00977">977</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l01104">mdtDevice::setDigitalOutputs()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l01122">mdtDevice::setDigitalOutputs()</a>.</p>
 
 </div>
 </div>
@@ -1364,7 +1364,7 @@ No I/O with same address must be set as double </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00528">528</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00951">mdtDevice::getDigitalOutputs()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01104">mdtDevice::setDigitalOutputs()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00951">mdtDevice::getDigitalOutputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01122">mdtDevice::setDigitalOutputs()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01104">mdtDevice::setDigitalOutputsValue()</a>.</p>
 
 </div>
 </div>
@@ -1457,7 +1457,7 @@ No I/O with same address must be set as double </dd></dl>
 <p>Note:</p>
 <ul>
 <li>If one value is invalid, concerned input will be set invalid.</li>
-<li>Regarding on internal values type (double, int, ...), conversions will be done by internal <a class="el" href="classmdt_analog_io.html" title="Representation of a analog I/O. ">mdtAnalogIo</a>.</li>
+<li>Regarding on internal values type (double, int, ...), conversions will be done by internal <a class="el" href="classmdt_analog_io.html" title="class mdtBinaryDoubleConverter; ">mdtAnalogIo</a>.</li>
 </ul>
 <dl class="section pre"><dt>Precondition</dt><dd>n must be &lt;= values size </dd></dl>
 
@@ -1541,7 +1541,7 @@ No I/O with same address must be set as double </dd></dl>
 <p>Note:</p>
 <ul>
 <li>If one value is invalid, concerned output will be set invalid.</li>
-<li>Regarding on internal values type (double, int, ...), conversions will be done by internal <a class="el" href="classmdt_analog_io.html" title="Representation of a analog I/O. ">mdtAnalogIo</a>.</li>
+<li>Regarding on internal values type (double, int, ...), conversions will be done by internal <a class="el" href="classmdt_analog_io.html" title="class mdtBinaryDoubleConverter; ">mdtAnalogIo</a>.</li>
 </ul>
 <dl class="section pre"><dt>Precondition</dt><dd>n must be &lt;= values size </dd></dl>
 
@@ -1618,7 +1618,7 @@ No I/O with same address must be set as double </dd></dl>
 <p>Note:</p>
 <ul>
 <li>If one value is invalid, concerned input will be set invalid.</li>
-<li>Regarding on internal values type (double, int, ...), conversions will be done by internal <a class="el" href="classmdt_analog_io.html" title="Representation of a analog I/O. ">mdtAnalogIo</a>.</li>
+<li>Regarding on internal values type (double, int, ...), conversions will be done by internal <a class="el" href="classmdt_analog_io.html" title="class mdtBinaryDoubleConverter; ">mdtAnalogIo</a>.</li>
 </ul>
 <dl class="section pre"><dt>Precondition</dt><dd>n must be &lt;= values size </dd></dl>
 
@@ -1702,7 +1702,7 @@ No I/O with same address must be set as double </dd></dl>
 <p>Note:</p>
 <ul>
 <li>If one value is invalid, concerned output will be set invalid.</li>
-<li>Regarding on internal values type (double, int, ...), conversions will be done by internal <a class="el" href="classmdt_analog_io.html" title="Representation of a analog I/O. ">mdtAnalogIo</a>.</li>
+<li>Regarding on internal values type (double, int, ...), conversions will be done by internal <a class="el" href="classmdt_analog_io.html" title="class mdtBinaryDoubleConverter; ">mdtAnalogIo</a>.</li>
 </ul>
 <dl class="section pre"><dt>Precondition</dt><dd>n must be &lt;= values size </dd></dl>
 
@@ -1719,7 +1719,7 @@ No I/O with same address must be set as double </dd></dl>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 26 2014 17:48:09 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Sep 1 2014 18:45:43 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

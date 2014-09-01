@@ -414,84 +414,68 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;  QString sql;</div>
 <div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;  <a class="code" href="classmdt_tt_test_node.html" title="#include &lt;QModelIndex&gt; ">mdtTtTestNode</a> tn(0, pvDatabase);</div>
 <div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;  QList&lt;QSqlRecord&gt; dataList;</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;  QSqlRecord data;</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;  QList&lt;QVariant&gt; connectionsList;</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;  QVariant testNodeUnitId;</div>
 <div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;  <span class="keywordtype">bool</span> ok;</div>
 <div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;  <span class="keywordtype">int</span> i;</div>
 <div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;  <span class="comment">// Get coupling relays</span></div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;  sql = <span class="stringliteral">&quot;SELECT TNU.Unit_Id_FK_PK, U.SchemaPosition FROM TestNodeUnit_tbl TNU JOIN Unit_tbl U ON U.Id_PK = TNU.Unit_Id_FK_PK &quot;</span>;</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;  sql += <span class="stringliteral">&quot; WHERE TNU.TestNode_Id_FK = &quot;</span> + testNodeId.toString();</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;  sql += <span class="stringliteral">&quot; AND (Type_Code_FK = &#39;BUSCPLREL&#39; OR Type_Code_FK = &#39;CHANELREL&#39;)&quot;</span>;</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;  dataList = tn.getData(sql, &amp;ok);</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;  <span class="keywordflow">if</span>(!ok){</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    displayError(tn.lastError());</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;  }</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;  <span class="keywordflow">for</span>(i = 0; i &lt; dataList.size(); ++i){</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;    <span class="comment">// Get connections</span></div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    data = dataList.at(i);</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    sql = <span class="stringliteral">&quot;SELECT Id_PK FROM UnitConnection_tbl WHERE Unit_Id_FK = &quot;</span> + data.value(<span class="stringliteral">&quot;Unit_Id_FK_PK&quot;</span>).toString();</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    connectionsList = tn.getDataList&lt;QVariant&gt;(sql, ok);</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;    <span class="keywordflow">if</span>(!ok){</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;      displayError(tn.lastError());</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;    }</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;    <span class="comment">// We only handle relays with exactly 2 connections</span></div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    <span class="keywordflow">if</span>(connectionsList.size() == 2){</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;      testNodeUnitId = data.value(<span class="stringliteral">&quot;Unit_Id_FK_PK&quot;</span>);</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;      Q_ASSERT(!testNodeUnitId.isNull());</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;      pvGraph-&gt;<a class="code" href="classmdt_cl_path_graph.html#a14a5580402b273eb6707939ee122fa95" title="Add a link to the graph. ">addLink</a>(connectionsList.at(0), connectionsList.at(1), testNodeUnitId, <span class="keyword">true</span>, 2);</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;      pvRelayNameMap.insert(testNodeUnitId.toInt(), data.value(<span class="stringliteral">&quot;SchemaPosition&quot;</span>).toString());</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;    }<span class="keywordflow">else</span>{</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;      <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured ">mdtError</a> e(tr(<span class="stringliteral">&quot;Relay ID&quot;</span>) + data.value(<span class="stringliteral">&quot;Unit_Id_FK_PK&quot;</span>).toString() + tr(<span class="stringliteral">&quot; has not exactly 2 connections, will be ignored.&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);</div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;      <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce" title="Add source information to error. ">MDT_ERROR_SET_SRC</a>(e, <span class="stringliteral">&quot;mdtTtRelayPathDialog&quot;</span>);</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;      e.commit();</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;    }</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;  }</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;}</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;QString mdtTtRelayPathDialog::sqlForTestConnectionData(<span class="keyword">const</span> QVariant &amp; testNodeUnitId)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;  QString sql;</div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;  QLocale locale;</div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;  QString functionFieldName;</div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;  <span class="keywordflow">switch</span>(locale.language()){</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;    <span class="keywordflow">case</span> QLocale::French:</div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;      functionFieldName = <span class="stringliteral">&quot;FunctionFR AS Function&quot;</span>;</div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;      <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    <span class="keywordflow">case</span> QLocale::German:</div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;      functionFieldName = <span class="stringliteral">&quot;FunctionDE AS Function&quot;</span>;</div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;      <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;    <span class="keywordflow">case</span> QLocale::Italian:</div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;      functionFieldName = <span class="stringliteral">&quot;FunctionIT AS Function&quot;</span>;</div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;      <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;    <span class="keywordflow">default</span>:</div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;      functionFieldName = <span class="stringliteral">&quot;FunctionEN AS Function&quot;</span>;</div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;  }</div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;  sql = <span class="stringliteral">&quot;SELECT Id_PK, UnitContactName, &quot;</span> + functionFieldName + <span class="stringliteral">&quot; FROM UnitConnection_tbl WHERE Unit_Id_FK = &quot;</span> + testNodeUnitId.toString();</div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;</div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;  <span class="keywordflow">return</span> sql;</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;}</div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;</div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;<span class="keywordtype">void</span> mdtTtRelayPathDialog::displayError(<span class="keyword">const</span> <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured ">mdtError</a> &amp; error)</div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;{</div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;  QMessageBox msgBox(<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;</div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;  msgBox.setText(error.<a class="code" href="classmdt_error.html#a8630bb6b21b70edfe3d13eaff82a1baf" title="Error text. ">text</a>());</div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;  msgBox.setInformativeText(error.<a class="code" href="classmdt_error.html#adcc1905f585c327cec8a2e31af616651" title="Get informative text. ">informativeText</a>());</div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;  msgBox.setDetailedText(error.<a class="code" href="classmdt_error.html#a6cd449e657f321b86d234269b5e92cda" title="Error text returned from system, if available. ">systemText</a>());</div>
-<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;  msgBox.setIcon(error.<a class="code" href="classmdt_error.html#aac5a7cec9a5d4364f9331c80e1eafe99" title="Map the level to a QMessageBox Icon. ">levelIcon</a>());</div>
-<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;  msgBox.exec();</div>
-<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;}</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;  <span class="comment">// Add relays to graph</span></div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;  <span class="keywordflow">if</span>(!tn.addRelaysToGraph(testNodeId, *pvGraph)){</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;    displayError(tn.lastError());</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;  }</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;  <span class="comment">// Load the relays name map</span></div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;  sql = <span class="stringliteral">&quot;SELECT TNU.Unit_Id_FK_PK, U.SchemaPosition FROM TestNodeUnit_tbl TNU JOIN Unit_tbl U ON U.Id_PK = TNU.Unit_Id_FK_PK &quot;</span>;</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;  sql += <span class="stringliteral">&quot; WHERE TNU.TestNode_Id_FK = &quot;</span> + testNodeId.toString();</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;  sql += <span class="stringliteral">&quot; AND (Type_Code_FK = &#39;BUSCPLREL&#39; OR Type_Code_FK = &#39;CHANELREL&#39;)&quot;</span>;</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;  dataList = tn.getDataList&lt;QSqlRecord&gt;(sql, ok);</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;  <span class="keywordflow">if</span>(!ok){</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    displayError(tn.lastError());</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;  }</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;  <span class="keywordflow">for</span>(i = 0; i &lt; dataList.size(); ++i){</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;    Q_ASSERT(!dataList.at(i).value(<span class="stringliteral">&quot;Unit_Id_FK_PK&quot;</span>).isNull());</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;    pvRelayNameMap.insert(dataList.at(i).value(<span class="stringliteral">&quot;Unit_Id_FK_PK&quot;</span>).toInt(), dataList.at(i).value(<span class="stringliteral">&quot;SchemaPosition&quot;</span>).toString());</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;  }</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;}</div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;</div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;QString mdtTtRelayPathDialog::sqlForTestConnectionData(<span class="keyword">const</span> QVariant &amp; testNodeUnitId)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;  QString sql;</div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;  QLocale locale;</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;  QString functionFieldName;</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;  <span class="keywordflow">switch</span>(locale.language()){</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;    <span class="keywordflow">case</span> QLocale::French:</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;      functionFieldName = <span class="stringliteral">&quot;FunctionFR AS Function&quot;</span>;</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;      <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;    <span class="keywordflow">case</span> QLocale::German:</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;      functionFieldName = <span class="stringliteral">&quot;FunctionDE AS Function&quot;</span>;</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;      <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;    <span class="keywordflow">case</span> QLocale::Italian:</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;      functionFieldName = <span class="stringliteral">&quot;FunctionIT AS Function&quot;</span>;</div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;      <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;    <span class="keywordflow">default</span>:</div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;      functionFieldName = <span class="stringliteral">&quot;FunctionEN AS Function&quot;</span>;</div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;  }</div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;  sql = <span class="stringliteral">&quot;SELECT Id_PK, UnitContactName, &quot;</span> + functionFieldName + <span class="stringliteral">&quot; FROM UnitConnection_tbl WHERE Unit_Id_FK = &quot;</span> + testNodeUnitId.toString();</div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;</div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;  <span class="keywordflow">return</span> sql;</div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;}</div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;</div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;<span class="keywordtype">void</span> mdtTtRelayPathDialog::displayError(<span class="keyword">const</span> <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured ">mdtError</a> &amp; error)</div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;{</div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;  QMessageBox msgBox(<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;</div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;  msgBox.setText(error.<a class="code" href="classmdt_error.html#a8630bb6b21b70edfe3d13eaff82a1baf" title="Error text. ">text</a>());</div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;  msgBox.setInformativeText(error.<a class="code" href="classmdt_error.html#adcc1905f585c327cec8a2e31af616651" title="Get informative text. ">informativeText</a>());</div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;  msgBox.setDetailedText(error.<a class="code" href="classmdt_error.html#a6cd449e657f321b86d234269b5e92cda" title="Error text returned from system, if available. ">systemText</a>());</div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;  msgBox.setIcon(error.<a class="code" href="classmdt_error.html#aac5a7cec9a5d4364f9331c80e1eafe99" title="Map the level to a QMessageBox Icon. ">levelIcon</a>());</div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;  msgBox.exec();</div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 26 2014 17:48:03 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Sep 1 2014 18:45:36 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

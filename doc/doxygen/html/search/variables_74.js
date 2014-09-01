@@ -4,7 +4,7 @@ var searchData=
   ['tbtestlink',['tbTestLink',['../class_ui__mdt_tt_test_model_item_dialog.html#a9db4eb5ee6a811e87ff44d0a48e5be28',1,'Ui_mdtTtTestModelItemDialog']]],
   ['tbtestmodelitem',['tbTestModelItem',['../class_ui__mdt_tt_test_model_item_dialog.html#a3f8d368b30537ea891446850c9a14169',1,'Ui_mdtTtTestModelItemDialog']]],
   ['tbtestnodeunitsetup',['tbTestNodeUnitSetup',['../class_ui__mdt_tt_test_model_item_dialog.html#a64aab0eceb38eec9067c7d7ba2bf5fd9',1,'Ui_mdtTtTestModelItemDialog']]],
-  ['testconnectionid',['testConnectionId',['../struct_connection_data.html#a3da4cbc16a1095b7585cb39025ab435d',1,'ConnectionData']]],
-  ['testconnectionidlist',['testConnectionIdList',['../struct_connection_data.html#ad05beaa38c489196bb56c4ca45091679',1,'ConnectionData']]],
-  ['testlinkid',['testLinkId',['../struct_connection_data.html#a96c433ac0d7ac7d57e73d7edb37e5d32',1,'ConnectionData']]]
+  ['testcableid',['testCableId',['../structmdt_tt_test_model_generation_parameter.html#a8afb7c2e6d598b72c8af8e0dfc4a107a',1,'mdtTtTestModelGenerationParameter']]],
+  ['testmodelid',['testModelId',['../structmdt_tt_test_model_generation_parameter.html#ab79f1c298f0178458237091396789f15',1,'mdtTtTestModelGenerationParameter']]],
+  ['testnodeid',['testNodeId',['../structmdt_tt_test_model_generation_parameter.html#a8423cfc73db0e57db394d7ce457c8c8d',1,'mdtTtTestModelGenerationParameter']]]
 ];

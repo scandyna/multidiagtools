@@ -9,8 +9,9 @@
 <area shape="rect" id="node17" href="$mdt_cl_vehicle_type_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtcablelist/mdtClVehicleType\lEditor.cpp" alt="" coords="1795,101,2000,165"/>
 <area shape="rect" id="node19" href="$mdt_tt_basic_tester_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtBasicTester.cpp" alt="" coords="2024,110,2187,157"/>
 <area shape="rect" id="node21" href="$mdt_tt_basic_tester_window_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtBasicTesterWindow.cpp" alt="" coords="2211,110,2413,157"/>
-<area shape="rect" id="node23" href="$mdt_tt_test_connection_cable_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestConnectionCableEditor.cpp" alt="" coords="2437,110,2683,157"/>
-<area shape="rect" id="node25" href="$mdt_tt_test_model_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestModelEditor.cpp" alt="" coords="2707,110,2885,157"/>
-<area shape="rect" id="node27" href="$mdt_tt_test_model_item_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestModelItemEditor.cpp" alt="" coords="2909,110,3115,157"/>
-<area shape="rect" id="node29" href="$mdt_tt_test_node_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestNodeEditor.cpp" alt="" coords="3139,110,3315,157"/>
+<area shape="rect" id="node23" href="$mdt_tt_basic_test_node_calibration_window_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtBasicTestNodeCalibration\lWindow.cpp" alt="" coords="2437,101,2648,165"/>
+<area shape="rect" id="node25" href="$mdt_tt_test_connection_cable_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestConnectionCableEditor.cpp" alt="" coords="2672,110,2917,157"/>
+<area shape="rect" id="node27" href="$mdt_tt_test_model_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestModelEditor.cpp" alt="" coords="2941,110,3120,157"/>
+<area shape="rect" id="node29" href="$mdt_tt_test_model_item_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestModelItemEditor.cpp" alt="" coords="3144,110,3349,157"/>
+<area shape="rect" id="node31" href="$mdt_tt_test_node_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestNodeEditor.cpp" alt="" coords="3373,110,3549,157"/>
 </map>

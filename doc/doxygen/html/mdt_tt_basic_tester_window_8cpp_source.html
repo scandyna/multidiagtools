@@ -128,18 +128,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  setupUi(<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="comment">// Setup tester</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  pvTesterWidget = <span class="keyword">new</span> <a class="code" href="classmdt_tt_basic_tester.html" title="Provide ability to run tests. ">mdtTtBasicTester</a>(db);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  pvTesterWidget = <span class="keyword">new</span> <a class="code" href="classmdt_tt_basic_tester.html" title="Provide ability to run tests. ">mdtTtBasicTester</a>(db, <span class="keyword">this</span>);</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  connect(pvTesterWidget, SIGNAL(testDataChanged(<span class="keyword">const</span> QSqlRecord&amp;)), <span class="keyword">this</span>, SLOT(<a class="code" href="classmdt_tt_basic_tester_window.html#afaf6162daad8565f2bbcb9adf71b80b1" title="Update widget with given test data. ">displayTestData</a>(<span class="keyword">const</span> QSqlRecord&amp;)));</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="comment">// Setup instruments state widget</span></div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  l = <span class="keyword">new</span> QVBoxLayout;</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  pvDeviceContainerWidget = <span class="keyword">new</span> <a class="code" href="classmdt_device_container_widget.html" title="Manage device status widget items. ">mdtDeviceContainerWidget</a>;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  pvDeviceContainerWidget-&gt;<a class="code" href="classmdt_device_container_widget.html#aba13958bd5001cddd7db4dca6ec39f99" title="Set device container. ">setContainer</a>(pvTesterWidget-&gt;<a class="code" href="classmdt_tt_abstract_test_widget.html#aa3b498aac3e4f4fdcf5ce6b4f6d33c9f" title="Get test node manager object. ">testNodeManager</a>()-&gt;container());</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  pvDeviceContainerWidget-&gt;<a class="code" href="classmdt_device_container_widget.html#aba13958bd5001cddd7db4dca6ec39f99" title="Set device container. ">setContainer</a>(pvTesterWidget-&gt;<a class="code" href="classmdt_tt_abstract_tester.html#a7b8351e2214a3bfc57d38bfeab3e0342" title="Get test node manager object. ">testNodeManager</a>()-&gt;container());</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  l-&gt;addWidget(pvDeviceContainerWidget);</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  l-&gt;addStretch();</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  tbInstruments-&gt;setLayout(l);</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="comment">// Setup test item table widget</span></div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  pvTestItemWidget = <span class="keyword">new</span> <a class="code" href="classmdt_sql_table_widget.html" title="Table view based SQL widget. ">mdtSqlTableWidget</a>;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  pvTestItemWidget-&gt;<a class="code" href="classmdt_abstract_sql_widget.html#a8971862741e1ef79c79e11b37e955476" title="Set the table model. ">setModel</a>(pvTesterWidget-&gt;<a class="code" href="classmdt_tt_abstract_test_widget.html#a4d9c92f372471c6251c4ecab31b2a230" title="Get table model to access data in TestItem_view. ">testItemViewTableModel</a>().get());</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  pvTestItemWidget-&gt;<a class="code" href="classmdt_abstract_sql_widget.html#a8971862741e1ef79c79e11b37e955476" title="Set the table model. ">setModel</a>(pvTesterWidget-&gt;<a class="code" href="classmdt_tt_abstract_tester.html#ae8e3acab53e0d873a9eb963cfd3c71f7" title="Get table model to access data in TestItem_view. ">testItemViewTableModel</a>().get());</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  l = <span class="keyword">new</span> QVBoxLayout;</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  l-&gt;addWidget(pvTestItemWidget);</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  tbTestItem-&gt;setLayout(l);</div>
@@ -153,7 +153,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <span class="keywordflow">if</span>(!pvTesterWidget-&gt;<a class="code" href="classmdt_tt_basic_tester.html#ac831c6c6204439936c8f344f615bc50a" title="Setup. ">setup</a>()){</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  }</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  pvTesterWidget-&gt;<a class="code" href="classmdt_tt_abstract_test_widget.html#a641e76e1158883f2fb6d4edba2bea831" title="All childs contained in widget that have a name prefixed fld_ will be mapped to corresponding fields ...">setTestUiWidget</a>(centralWidget());</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  pvTesterWidget-&gt;<a class="code" href="classmdt_tt_abstract_tester.html#a7b6e46a5e8e3c22375e6462f09241aea" title="All childs contained in widget that have a name prefixed fld_ will be mapped to corresponding fields ...">setTestUiWidget</a>(centralWidget());</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  setupTestItemTableWidget();</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
@@ -208,7 +208,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    <span class="keyword">event</span>-&gt;accept();</div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;  }</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  <span class="keywordflow">if</span>(!pvTesterWidget-&gt;<a class="code" href="classmdt_tt_abstract_test_widget.html#a769fc3cde057414ee89ee51183839433" title="Check if test is saved. ">testIsSaved</a>()){</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  <span class="keywordflow">if</span>(!pvTesterWidget-&gt;<a class="code" href="classmdt_tt_abstract_tester.html#af98bb9d80bfbd14873fc356c17d31eb4" title="Check if test is saved. ">testIsSaved</a>()){</div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    QMessageBox msgBox(<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    msgBox.setText(tr(<span class="stringliteral">&quot;Current test was not saved.&quot;</span>));</div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    msgBox.setInformativeText(tr(<span class="stringliteral">&quot;If you continue, current test will be lost. Do you want to continue ?&quot;</span>));</div>
@@ -227,7 +227,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 26 2014 17:48:02 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Sep 1 2014 18:45:36 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

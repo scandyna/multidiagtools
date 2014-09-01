@@ -45,8 +45,10 @@ $<$ \hyperlink{classmdt_device_container}{mdt\-Device\-Container} $>$ \hyperlink
 \begin{DoxyCompactList}\small\item\em Get device container object. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_tt_test_node_manager_a08f1a31a70bf9f4fa30dc298a95ad89f}{clear} ()
 \begin{DoxyCompactList}\small\item\em Remove all devices. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_test_node_manager_a9fb2651af4b660c162e2c4a3391f042e}{set\-Device\-Ios\-Label\-Short} (const Q\-Variant \&test\-Node\-Id, const Q\-Variant \&device\-Identification)
+\begin{DoxyCompactList}\small\item\em Set short label to device I/\-Os. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_error}{mdt\-Error} \hyperlink{classmdt_tt_test_node_manager_a949a362bd725f88cc3a92b9047ee4737}{last\-Error} () const 
-\begin{DoxyCompactList}\small\item\em Get setup data for given test item I\-D. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Get last error. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -54,7 +56,7 @@ Helper class to access test node data and devices.
 
 
 
-Definition at line 41 of file mdt\-Tt\-Test\-Node\-Manager.\-h.
+Definition at line 42 of file mdt\-Tt\-Test\-Node\-Manager.\-h.
 
 
 
@@ -73,7 +75,7 @@ Constructor.
 
 
 
-Definition at line 26 of file mdt\-Tt\-Test\-Node\-Manager.\-cpp.
+Definition at line 31 of file mdt\-Tt\-Test\-Node\-Manager.\-cpp.
 
 
 
@@ -93,7 +95,7 @@ Add a test node.
 
 Create and add a device 
 
-Definition at line 57 of file mdt\-Tt\-Test\-Node\-Manager.\-h.
+Definition at line 58 of file mdt\-Tt\-Test\-Node\-Manager.\-h.
 
 \hypertarget{classmdt_tt_test_node_manager_ad5996a8b72cf186de386818239243c2a}{\index{mdt\-Tt\-Test\-Node\-Manager@{mdt\-Tt\-Test\-Node\-Manager}!all\-Devices@{all\-Devices}}
 \index{all\-Devices@{all\-Devices}!mdtTtTestNodeManager@{mdt\-Tt\-Test\-Node\-Manager}}
@@ -108,7 +110,7 @@ Get a list of all devices.
 
 Note\-: list is rebuilt at each call of this method. 
 
-Definition at line 32 of file mdt\-Tt\-Test\-Node\-Manager.\-cpp.
+Definition at line 37 of file mdt\-Tt\-Test\-Node\-Manager.\-cpp.
 
 \hypertarget{classmdt_tt_test_node_manager_a08f1a31a70bf9f4fa30dc298a95ad89f}{\index{mdt\-Tt\-Test\-Node\-Manager@{mdt\-Tt\-Test\-Node\-Manager}!clear@{clear}}
 \index{clear@{clear}!mdtTtTestNodeManager@{mdt\-Tt\-Test\-Node\-Manager}}
@@ -123,7 +125,7 @@ Remove all devices.
 
 
 
-Definition at line 42 of file mdt\-Tt\-Test\-Node\-Manager.\-cpp.
+Definition at line 47 of file mdt\-Tt\-Test\-Node\-Manager.\-cpp.
 
 \hypertarget{classmdt_tt_test_node_manager_aba5f78564b6ef04a748fbb02d43d18cd}{\index{mdt\-Tt\-Test\-Node\-Manager@{mdt\-Tt\-Test\-Node\-Manager}!container@{container}}
 \index{container@{container}!mdtTtTestNodeManager@{mdt\-Tt\-Test\-Node\-Manager}}
@@ -138,7 +140,7 @@ Get device container object.
 
 
 
-Definition at line 37 of file mdt\-Tt\-Test\-Node\-Manager.\-cpp.
+Definition at line 42 of file mdt\-Tt\-Test\-Node\-Manager.\-cpp.
 
 \hypertarget{classmdt_tt_test_node_manager_a7b167f9dbc72611aba52fabf4fe0d40f}{\index{mdt\-Tt\-Test\-Node\-Manager@{mdt\-Tt\-Test\-Node\-Manager}!device@{device}}
 \index{device@{device}!mdtTtTestNodeManager@{mdt\-Tt\-Test\-Node\-Manager}}
@@ -153,7 +155,7 @@ Get device of type T and that has given identification.
 
 
 
-Definition at line 70 of file mdt\-Tt\-Test\-Node\-Manager.\-h.
+Definition at line 71 of file mdt\-Tt\-Test\-Node\-Manager.\-h.
 
 \hypertarget{classmdt_tt_test_node_manager_a949a362bd725f88cc3a92b9047ee4737}{\index{mdt\-Tt\-Test\-Node\-Manager@{mdt\-Tt\-Test\-Node\-Manager}!last\-Error@{last\-Error}}
 \index{last\-Error@{last\-Error}!mdtTtTestNodeManager@{mdt\-Tt\-Test\-Node\-Manager}}
@@ -164,13 +166,31 @@ Definition at line 70 of file mdt\-Tt\-Test\-Node\-Manager.\-h.
 ) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_tt_test_node_manager_a949a362bd725f88cc3a92b9047ee4737}
 
 
-Get setup data for given test item I\-D. 
+Get last error. 
 
-\hyperlink{classmdt_tt_test_item_node_setup_data}{mdt\-Tt\-Test\-Item\-Node\-Setup\-Data} get\-Setup\-Data(const Q\-Variant \& test\-Item\-Id, bool \&ok);
 
-Get last error 
 
-Definition at line 95 of file mdt\-Tt\-Test\-Node\-Manager.\-h.
+Definition at line 101 of file mdt\-Tt\-Test\-Node\-Manager.\-h.
+
+\hypertarget{classmdt_tt_test_node_manager_a9fb2651af4b660c162e2c4a3391f042e}{\index{mdt\-Tt\-Test\-Node\-Manager@{mdt\-Tt\-Test\-Node\-Manager}!set\-Device\-Ios\-Label\-Short@{set\-Device\-Ios\-Label\-Short}}
+\index{set\-Device\-Ios\-Label\-Short@{set\-Device\-Ios\-Label\-Short}!mdtTtTestNodeManager@{mdt\-Tt\-Test\-Node\-Manager}}
+\subsubsection[{set\-Device\-Ios\-Label\-Short}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-Node\-Manager\-::set\-Device\-Ios\-Label\-Short (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{test\-Node\-Id, }
+\item[{const Q\-Variant \&}]{device\-Identification}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_node_manager_a9fb2651af4b660c162e2c4a3391f042e}
+
+
+Set short label to device I/\-Os. 
+
+Will get I/\-Os contained in device (see \hyperlink{classmdt_device_ios}{mdt\-Device\-Ios} for details). and Test node units contained in given Test node. For each I/\-O, Schema\-Position of test node unit is used, and label\-Short is set to I/\-O. 
+
+Definition at line 52 of file mdt\-Tt\-Test\-Node\-Manager.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, and mdt\-Error\-::set\-Error().
 
 
 

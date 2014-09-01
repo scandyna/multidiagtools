@@ -44,7 +44,9 @@ Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_tt_test_model_item_a0666954f17eab4
 Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_tt_test_model_item_a5db99142e311591716f80d5bf44559ad}{get\-Test\-Node\-Unit\-Setup\-Id\-List} (const Q\-Variant \&test\-Item\-Id)
 \begin{DoxyCompactList}\small\item\em Get list of test node unit setup for given test item I\-D. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_tt_test_model_item_a4084538ebd5e7b4f3df1fcb97f35c86f}{add\-Test\-Link} (const Q\-Variant \&test\-Model\-Item\-Id, const Q\-Variant \&test\-Link\-Id)
-\begin{DoxyCompactList}\small\item\em Add a test link. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Add a test link to Test\-Model\-Item\-\_\-\-Test\-Link\-\_\-tbl. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_test_model_item_ae01bdcd7ffb45011e4b40484085a2a46}{test\-Link\-Exists} (const Q\-Variant \&test\-Model\-Item\-Id, const Q\-Variant \&test\-Link\-Id, bool \&ok)
+\begin{DoxyCompactList}\small\item\em Check if a test link exists in Test\-Model\-Item\-\_\-\-Test\-Link\-\_\-tbl. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_tt_test_model_item_ab9c5c75f887d846e6079841d08a6ec3f}{remove\-Test\-Links} (const \hyperlink{classmdt_sql_table_selection}{mdt\-Sql\-Table\-Selection} \&s)
 \begin{DoxyCompactList}\small\item\em Remove test links. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_tt_test_model_item_a7aa8e5314eb09a5f56c9367c9f7eff74}{add\-Or\-Update\-Test\-Node\-Unit\-Setup} (const \hyperlink{classmdt_tt_test_node_unit_setup_data}{mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data} \&data)
@@ -59,6 +61,10 @@ bool \hyperlink{classmdt_tt_test_model_item_a28996ba0b74dc51cebd1e1581cee4500}{u
 \begin{DoxyCompactList}\small\item\em Update test node unit setup data. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_tt_test_model_item_a20d8f2715f35d5ce8c1fba6179e73a52}{remove\-Test\-Node\-Unit\-Setups} (const \hyperlink{classmdt_sql_table_selection}{mdt\-Sql\-Table\-Selection} \&s)
 \begin{DoxyCompactList}\small\item\em Remove test node units from Test\-Node\-Unit\-Setup\-\_\-tbl. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_test_model_item_a9468138aaa95944661765f3dfed563b0}{add\-Item} (\hyperlink{classmdt_tt_test_model_item_data}{mdt\-Tt\-Test\-Model\-Item\-Data} data, bool handle\-Transaction)
+\begin{DoxyCompactList}\small\item\em Add a test model item to Test\-Model\-Item\-\_\-tbl. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_test_model_item_a376af5a1f2c0778fcd14c9c78820b1c2}{add\-Route} (\hyperlink{classmdt_tt_test_model_item_route_data}{mdt\-Tt\-Test\-Model\-Item\-Route\-Data} route\-Data, bool handle\-Transaction)
+\begin{DoxyCompactList}\small\item\em Add a route to Test\-Model\-Item\-Route\-\_\-tbl. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_tt_test_model_item_a6a65e1811e99e59bb9f531e643cbb329}{add\-Route} (const Q\-Variant \&test\-Model\-Item\-Id, const Q\-Variant \&test\-Link\-Id, const Q\-Variant \&measure\-Test\-Node\-Unit\-Connection\-Id, const Q\-List$<$ \hyperlink{classmdt_tt_test_node_unit_setup_data}{mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data} $>$ \&data\-List, bool handle\-Transaction)
 \begin{DoxyCompactList}\small\item\em Add a route to Test\-Model\-Item\-Route\-\_\-tbl. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_tt_test_model_item_acb07969d5c19a22d8f3039f5f8c2010b}{remove\-Routes} (const \hyperlink{classmdt_sql_table_selection}{mdt\-Sql\-Table\-Selection} \&s)
@@ -77,7 +83,7 @@ bool \hyperlink{classmdt_tt_test_model_item_ac45849becd11e9206b2d696e0346ba71}{r
 \subsection{Detailed Description}
 Helper class for test item edition. 
 
-Definition at line 34 of file mdt\-Tt\-Test\-Model\-Item.\-h.
+Definition at line 36 of file mdt\-Tt\-Test\-Model\-Item.\-h.
 
 
 
@@ -101,6 +107,30 @@ Definition at line 31 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 
 \subsection{Member Function Documentation}
+\hypertarget{classmdt_tt_test_model_item_a9468138aaa95944661765f3dfed563b0}{\index{mdt\-Tt\-Test\-Model\-Item@{mdt\-Tt\-Test\-Model\-Item}!add\-Item@{add\-Item}}
+\index{add\-Item@{add\-Item}!mdtTtTestModelItem@{mdt\-Tt\-Test\-Model\-Item}}
+\subsubsection[{add\-Item}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-Model\-Item\-::add\-Item (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Tt\-Test\-Model\-Item\-Data}}]{data, }
+\item[{bool}]{handle\-Transaction}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_model_item_a9468138aaa95944661765f3dfed563b0}
+
+
+Add a test model item to Test\-Model\-Item\-\_\-tbl. 
+
+Will also routes contained in data using \hyperlink{classmdt_tt_test_model_item_a376af5a1f2c0778fcd14c9c78820b1c2}{add\-Route(mdt\-Tt\-Test\-Model\-Item\-Route\-Data, bool)} 
+
+Definition at line 383 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+
+
+
+References mdt\-Tt\-Base\-::add\-Record(), add\-Route(), mdt\-Tt\-Base\-::begin\-Transaction(), mdt\-Tt\-Base\-::commit\-Transaction(), mdt\-Tt\-Base\-::database(), mdt\-Tt\-Base\-::rollback\-Transaction(), mdt\-Tt\-Test\-Model\-Item\-Data\-::route\-Data\-List(), and mdt\-Tt\-Test\-Model\-Item\-Data\-::set\-Id().
+
+
+
+Referenced by mdt\-Tt\-Test\-Model\-::generate\-Test\-Model().
+
 \hypertarget{classmdt_tt_test_model_item_a7aa8e5314eb09a5f56c9367c9f7eff74}{\index{mdt\-Tt\-Test\-Model\-Item@{mdt\-Tt\-Test\-Model\-Item}!add\-Or\-Update\-Test\-Node\-Unit\-Setup@{add\-Or\-Update\-Test\-Node\-Unit\-Setup}}
 \index{add\-Or\-Update\-Test\-Node\-Unit\-Setup@{add\-Or\-Update\-Test\-Node\-Unit\-Setup}!mdtTtTestModelItem@{mdt\-Tt\-Test\-Model\-Item}}
 \subsubsection[{add\-Or\-Update\-Test\-Node\-Unit\-Setup}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-Model\-Item\-::add\-Or\-Update\-Test\-Node\-Unit\-Setup (
@@ -114,7 +144,7 @@ Add a test node unit to Test\-Node\-Unit\-Setup\-\_\-tbl.
 
 If given setup allready exists (a couple of P\-K\-: Test\-Model\-Item\-\_\-\-Id\-\_\-\-F\-K, Test\-Node\-Unit\-\_\-\-Id\-\_\-\-F\-K) it will be updated with given data. 
 
-Definition at line 253 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+Definition at line 281 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 
 
@@ -137,11 +167,35 @@ Add a list of test node unit to Test\-Node\-Unit\-Setup\-\_\-tbl.
 
 
 
-Definition at line 269 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+Definition at line 297 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 
 
 References add\-Or\-Update\-Test\-Node\-Unit\-Setup(), mdt\-Tt\-Base\-::begin\-Transaction(), mdt\-Tt\-Base\-::commit\-Transaction(), and mdt\-Tt\-Base\-::rollback\-Transaction().
+
+\hypertarget{classmdt_tt_test_model_item_a376af5a1f2c0778fcd14c9c78820b1c2}{\index{mdt\-Tt\-Test\-Model\-Item@{mdt\-Tt\-Test\-Model\-Item}!add\-Route@{add\-Route}}
+\index{add\-Route@{add\-Route}!mdtTtTestModelItem@{mdt\-Tt\-Test\-Model\-Item}}
+\subsubsection[{add\-Route}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-Model\-Item\-::add\-Route (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Tt\-Test\-Model\-Item\-Route\-Data}}]{route\-Data, }
+\item[{bool}]{handle\-Transaction}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_model_item_a376af5a1f2c0778fcd14c9c78820b1c2}
+
+
+Add a route to Test\-Model\-Item\-Route\-\_\-tbl. 
+
+Will also add test link $<$-\/$>$ test model item association and add or update needed test node unit setup (for path relays) 
+
+Definition at line 424 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+
+
+
+References add\-Or\-Update\-Test\-Node\-Unit\-Setup(), mdt\-Tt\-Base\-::add\-Record(), add\-Test\-Link(), mdt\-Tt\-Base\-::begin\-Transaction(), mdt\-Tt\-Base\-::commit\-Transaction(), mdt\-Tt\-Base\-::database(), mdt\-Tt\-Test\-Model\-Item\-Route\-Data\-::measure\-Connection\-Id(), mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Tt\-Base\-::rollback\-Transaction(), mdt\-Tt\-Test\-Model\-Item\-Route\-Data\-::set\-Id(), mdt\-Tt\-Test\-Model\-Item\-Route\-Data\-::setup\-Data\-List(), mdt\-Tt\-Test\-Model\-Item\-Route\-Data\-::test\-Link\-Id(), and mdt\-Tt\-Test\-Model\-Item\-Route\-Data\-::test\-Model\-Item\-Id().
+
+
+
+Referenced by add\-Item(), and add\-Route().
 
 \hypertarget{classmdt_tt_test_model_item_a6a65e1811e99e59bb9f531e643cbb329}{\index{mdt\-Tt\-Test\-Model\-Item@{mdt\-Tt\-Test\-Model\-Item}!add\-Route@{add\-Route}}
 \index{add\-Route@{add\-Route}!mdtTtTestModelItem@{mdt\-Tt\-Test\-Model\-Item}}
@@ -158,17 +212,16 @@ References add\-Or\-Update\-Test\-Node\-Unit\-Setup(), mdt\-Tt\-Base\-::begin\-T
 
 Add a route to Test\-Model\-Item\-Route\-\_\-tbl. 
 
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_tt_test_model_item_a376af5a1f2c0778fcd14c9c78820b1c2}{add\-Route(mdt\-Tt\-Test\-Model\-Item\-Route\-Data, bool)} 
+\end{DoxySeeAlso}
 
 
-Definition at line 355 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+Definition at line 488 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 
 
-References mdt\-Sql\-Record\-::add\-All\-Fields(), add\-Or\-Update\-Test\-Node\-Unit\-Setup(), mdt\-Tt\-Base\-::add\-Record(), mdt\-Tt\-Base\-::begin\-Transaction(), mdt\-Tt\-Base\-::commit\-Transaction(), mdt\-Tt\-Base\-::database(), mdt\-Sql\-Record\-::last\-Error(), mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Tt\-Base\-::rollback\-Transaction(), and mdt\-Sql\-Record\-::set\-Value().
-
-
-
-Referenced by mdt\-Tt\-Test\-Model\-::generate\-Test\-Model().
+References add\-Route(), mdt\-Tt\-Test\-Model\-Item\-Route\-Data\-::add\-Setup\-Data(), mdt\-Tt\-Test\-Model\-Item\-Route\-Data\-::set\-Measure\-Connection\-Id(), mdt\-Tt\-Test\-Model\-Item\-Route\-Data\-::set\-Test\-Link\-Id(), and mdt\-Tt\-Test\-Model\-Item\-Route\-Data\-::set\-Test\-Model\-Item\-Id().
 
 \hypertarget{classmdt_tt_test_model_item_a4084538ebd5e7b4f3df1fcb97f35c86f}{\index{mdt\-Tt\-Test\-Model\-Item@{mdt\-Tt\-Test\-Model\-Item}!add\-Test\-Link@{add\-Test\-Link}}
 \index{add\-Test\-Link@{add\-Test\-Link}!mdtTtTestModelItem@{mdt\-Tt\-Test\-Model\-Item}}
@@ -180,7 +233,7 @@ Referenced by mdt\-Tt\-Test\-Model\-::generate\-Test\-Model().
 )}}\label{classmdt_tt_test_model_item_a4084538ebd5e7b4f3df1fcb97f35c86f}
 
 
-Add a test link. 
+Add a test link to Test\-Model\-Item\-\_\-\-Test\-Link\-\_\-tbl. 
 
 
 
@@ -188,11 +241,11 @@ Definition at line 234 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 
 
-References mdt\-Sql\-Record\-::add\-All\-Fields(), mdt\-Tt\-Base\-::add\-Record(), mdt\-Tt\-Base\-::database(), mdt\-Sql\-Record\-::last\-Error(), mdt\-Tt\-Base\-::pv\-Last\-Error, and mdt\-Sql\-Record\-::set\-Value().
+References mdt\-Sql\-Record\-::add\-All\-Fields(), mdt\-Tt\-Base\-::add\-Record(), mdt\-Tt\-Base\-::database(), mdt\-Sql\-Record\-::last\-Error(), mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Sql\-Record\-::set\-Value(), and test\-Link\-Exists().
 
 
 
-Referenced by mdt\-Tt\-Test\-Model\-::generate\-Test\-Model().
+Referenced by add\-Route().
 
 \hypertarget{classmdt_tt_test_model_item_acac991609d4e4b39404cf1be14928947}{\index{mdt\-Tt\-Test\-Model\-Item@{mdt\-Tt\-Test\-Model\-Item}!add\-Test\-Node\-Unit\-Setup@{add\-Test\-Node\-Unit\-Setup}}
 \index{add\-Test\-Node\-Unit\-Setup@{add\-Test\-Node\-Unit\-Setup}!mdtTtTestModelItem@{mdt\-Tt\-Test\-Model\-Item}}
@@ -209,7 +262,7 @@ Add a test node unit setup.
 
 
 
-Definition at line 411 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+Definition at line 509 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 
 
@@ -230,7 +283,7 @@ Get test node unit setup data.
 
 
 
-Definition at line 307 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+Definition at line 335 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 
 
@@ -288,7 +341,7 @@ Remove a route from Test\-Model\-Item\-Route\-\_\-tbl.
 
 
 
-Definition at line 406 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+Definition at line 504 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 
 
@@ -307,7 +360,7 @@ Remove test links.
 
 
 
-Definition at line 248 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+Definition at line 276 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 
 
@@ -326,7 +379,7 @@ Remove test node unit setup.
 
 
 
-Definition at line 444 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+Definition at line 542 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 
 
@@ -349,7 +402,7 @@ Remove test node units from Test\-Node\-Unit\-Setup\-\_\-tbl.
 
 
 
-Definition at line 350 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+Definition at line 378 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 
 
@@ -368,7 +421,7 @@ Remove test node unit setup.
 
 
 
-Definition at line 464 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+Definition at line 562 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 
 
@@ -387,7 +440,7 @@ Remove all test node unit setup for given test item I\-D.
 
 
 
-Definition at line 477 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+Definition at line 575 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 
 
@@ -440,6 +493,27 @@ List all test node units that not exists in Test\-Node\-Unit\-Setup\-\_\-tbl for
 
 Definition at line 102 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
+\hypertarget{classmdt_tt_test_model_item_ae01bdcd7ffb45011e4b40484085a2a46}{\index{mdt\-Tt\-Test\-Model\-Item@{mdt\-Tt\-Test\-Model\-Item}!test\-Link\-Exists@{test\-Link\-Exists}}
+\index{test\-Link\-Exists@{test\-Link\-Exists}!mdtTtTestModelItem@{mdt\-Tt\-Test\-Model\-Item}}
+\subsubsection[{test\-Link\-Exists}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-Model\-Item\-::test\-Link\-Exists (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{test\-Model\-Item\-Id, }
+\item[{const Q\-Variant \&}]{test\-Link\-Id, }
+\item[{bool \&}]{ok}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_model_item_ae01bdcd7ffb45011e4b40484085a2a46}
+
+
+Check if a test link exists in Test\-Model\-Item\-\_\-\-Test\-Link\-\_\-tbl. 
+
+
+
+Definition at line 259 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+
+
+
+Referenced by add\-Test\-Link().
+
 \hypertarget{classmdt_tt_test_model_item_aaab456933a7b5996002243cd7debe5d8}{\index{mdt\-Tt\-Test\-Model\-Item@{mdt\-Tt\-Test\-Model\-Item}!test\-Node\-Unit\-Setup\-Exists@{test\-Node\-Unit\-Setup\-Exists}}
 \index{test\-Node\-Unit\-Setup\-Exists@{test\-Node\-Unit\-Setup\-Exists}!mdtTtTestModelItem@{mdt\-Tt\-Test\-Model\-Item}}
 \subsubsection[{test\-Node\-Unit\-Setup\-Exists}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-Model\-Item\-::test\-Node\-Unit\-Setup\-Exists (
@@ -455,7 +529,7 @@ Check if a node unit setup exists.
 
 
 
-Definition at line 289 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+Definition at line 317 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 
 
@@ -480,7 +554,7 @@ Update test node unit setup data.
 
 
 
-Definition at line 331 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+Definition at line 359 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 
 

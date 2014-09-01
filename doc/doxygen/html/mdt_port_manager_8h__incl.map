@@ -1,16 +1,17 @@
 <map id="src/mdtport/mdtPortManager.h" name="src/mdtport/mdtPortManager.h">
-<area shape="rect" id="node9" href="$mdt_abstract_port_8h.html" title="mdtAbstractPort.h" alt="" coords="1205,160,1333,189"/>
-<area shape="rect" id="node11" href="$mdt_frame_8h.html" title="mdtFrame.h" alt="" coords="1352,315,1443,344"/>
-<area shape="rect" id="node22" href="$mdt_port_config_8h.html" title="mdtPortConfig.h" alt="" coords="912,237,1029,267"/>
-<area shape="rect" id="node37" href="$mdt_port_info_8h.html" title="mdtPortInfo.h" alt="" coords="117,160,219,189"/>
-<area shape="rect" id="node49" href="$mdt_port_thread_8h.html" title="mdtPortThread.h" alt="" coords="1408,83,1525,112"/>
-<area shape="rect" id="node51" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="589,160,672,189"/>
-<area shape="rect" id="node67" href="$mdt_port_transaction_8h.html" title="mdtPortTransaction.h" alt="" coords="756,83,903,112"/>
-<area shape="rect" id="node15" href="$mdt_frame_modbus_tcp_8h.html" title="mdtFrameModbusTcp.h" alt="" coords="1579,237,1739,267"/>
-<area shape="rect" id="node19" href="$mdt_frame_ascii_8h.html" title="mdtFrameAscii.h" alt="" coords="1435,237,1555,267"/>
-<area shape="rect" id="node44" href="$mdt_device_info_8h.html" title="mdtDeviceInfo.h" alt="" coords="24,237,141,267"/>
-<area shape="rect" id="node69" href="$mdt_analog_io_8h.html" title="mdtAnalogIo.h" alt="" coords="459,160,565,189"/>
-<area shape="rect" id="node81" href="$mdt_digital_io_8h.html" title="mdtDigitalIo.h" alt="" coords="733,160,835,189"/>
-<area shape="rect" id="node71" href="$mdt_abstract_io_8h.html" title="mdtAbstractIo.h" alt="" coords="723,237,837,267"/>
-<area shape="rect" id="node73" href="$mdt_value_8h.html" title="mdtValue.h" alt="" coords="736,315,824,344"/>
+<area shape="rect" id="node9" href="$mdt_abstract_port_8h.html" title="mdtAbstractPort.h" alt="" coords="1480,160,1608,189"/>
+<area shape="rect" id="node11" href="$mdt_frame_8h.html" title="mdtFrame.h" alt="" coords="1979,315,2069,344"/>
+<area shape="rect" id="node22" href="$mdt_port_config_8h.html" title="mdtPortConfig.h" alt="" coords="2061,237,2179,267"/>
+<area shape="rect" id="node37" href="$mdt_port_info_8h.html" title="mdtPortInfo.h" alt="" coords="141,160,243,189"/>
+<area shape="rect" id="node49" href="$mdt_port_thread_8h.html" title="mdtPortThread.h" alt="" coords="1587,83,1704,112"/>
+<area shape="rect" id="node51" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="1081,160,1164,189"/>
+<area shape="rect" id="node67" href="$mdt_port_transaction_8h.html" title="mdtPortTransaction.h" alt="" coords="813,83,960,112"/>
+<area shape="rect" id="node15" href="$mdt_frame_modbus_tcp_8h.html" title="mdtFrameModbusTcp.h" alt="" coords="1683,237,1843,267"/>
+<area shape="rect" id="node19" href="$mdt_frame_ascii_8h.html" title="mdtFrameAscii.h" alt="" coords="1867,237,1987,267"/>
+<area shape="rect" id="node44" href="$mdt_device_info_8h.html" title="mdtDeviceInfo.h" alt="" coords="133,237,251,267"/>
+<area shape="rect" id="node69" href="$mdt_analog_io_8h.html" title="mdtAnalogIo.h" alt="" coords="661,160,768,189"/>
+<area shape="rect" id="node89" href="$mdt_digital_io_8h.html" title="mdtDigitalIo.h" alt="" coords="792,160,893,189"/>
+<area shape="rect" id="node71" href="$mdt_abstract_io_8h.html" title="mdtAbstractIo.h" alt="" coords="779,237,893,267"/>
+<area shape="rect" id="node83" href="$mdt_binary_double_converter_8h.html" title="mdtBinaryDoubleConverter.h" alt="" coords="275,237,464,267"/>
+<area shape="rect" id="node73" href="$mdt_value_8h.html" title="mdtValue.h" alt="" coords="721,315,809,344"/>
 </map>

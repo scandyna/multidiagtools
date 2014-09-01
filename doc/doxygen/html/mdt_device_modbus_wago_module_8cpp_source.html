@@ -395,14 +395,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;  <span class="keywordflow">return</span> pvDevice-&gt;<a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name. ">name</a>();</div>
 <div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;}</div>
 <div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;</div>
-<div class="line"><a name="l00308"></a><span class="lineno"><a class="code" href="classmdt_device_modbus_wago_module.html#aec3bf9299744d0263339d7d419955154">  308</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_device_modbus_wago_module.html#aec3bf9299744d0263339d7d419955154" title="Add a analog input. ">mdtDeviceModbusWagoModule::addAnalogInput</a>(<a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O. ">mdtAnalogIo</a> *aio)</div>
+<div class="line"><a name="l00308"></a><span class="lineno"><a class="code" href="classmdt_device_modbus_wago_module.html#aec3bf9299744d0263339d7d419955154">  308</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_device_modbus_wago_module.html#aec3bf9299744d0263339d7d419955154" title="Add a analog input. ">mdtDeviceModbusWagoModule::addAnalogInput</a>(<a class="code" href="classmdt_analog_io.html" title="class mdtBinaryDoubleConverter; ">mdtAnalogIo</a> *aio)</div>
 <div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;{</div>
 <div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;  Q_ASSERT(aio != 0);</div>
 <div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;</div>
 <div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;  pvAnalogInputs.append(aio);</div>
 <div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;}</div>
 <div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;</div>
-<div class="line"><a name="l00315"></a><span class="lineno"><a class="code" href="classmdt_device_modbus_wago_module.html#a382ba4bf293bce7c63ee861aebb71b4e">  315</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_device_modbus_wago_module.html#a382ba4bf293bce7c63ee861aebb71b4e" title="Add a analog output. ">mdtDeviceModbusWagoModule::addAnalogOutput</a>(<a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O. ">mdtAnalogIo</a> *aio)</div>
+<div class="line"><a name="l00315"></a><span class="lineno"><a class="code" href="classmdt_device_modbus_wago_module.html#a382ba4bf293bce7c63ee861aebb71b4e">  315</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_device_modbus_wago_module.html#a382ba4bf293bce7c63ee861aebb71b4e" title="Add a analog output. ">mdtDeviceModbusWagoModule::addAnalogOutput</a>(<a class="code" href="classmdt_analog_io.html" title="class mdtBinaryDoubleConverter; ">mdtAnalogIo</a> *aio)</div>
 <div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;{</div>
 <div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;  Q_ASSERT(aio != 0);</div>
 <div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;</div>
@@ -921,9 +921,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00869"></a><span class="lineno">  869</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="classmdt_device_modbus_wago_module.html#a40513e96468455295608a788eb1d8cac" title="Get size of digital outputs process image. ">digitalOutputsProcessImageSize</a>(word);</div>
 <div class="line"><a name="l00870"></a><span class="lineno">  870</span>&#160;}</div>
 <div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160;</div>
-<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160;<a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O. ">mdtAnalogIo</a> *mdtDeviceModbusWagoModule::getNewAnalogInput(<span class="keywordtype">int</span> partNumber, <span class="keywordtype">int</span> channel)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160;<a class="code" href="classmdt_analog_io.html" title="class mdtBinaryDoubleConverter; ">mdtAnalogIo</a> *mdtDeviceModbusWagoModule::getNewAnalogInput(<span class="keywordtype">int</span> partNumber, <span class="keywordtype">int</span> channel)<span class="keyword"> const</span></div>
 <div class="line"><a name="l00873"></a><span class="lineno">  873</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00874"></a><span class="lineno">  874</span>&#160;  <a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O. ">mdtAnalogIo</a> *aio;</div>
+<div class="line"><a name="l00874"></a><span class="lineno">  874</span>&#160;  <a class="code" href="classmdt_analog_io.html" title="class mdtBinaryDoubleConverter; ">mdtAnalogIo</a> *aio;</div>
 <div class="line"><a name="l00875"></a><span class="lineno">  875</span>&#160;  QVariant value;</div>
 <div class="line"><a name="l00876"></a><span class="lineno">  876</span>&#160;  <span class="keywordtype">double</span> min, max;</div>
 <div class="line"><a name="l00877"></a><span class="lineno">  877</span>&#160;  <span class="keywordtype">int</span> intValueBitsCount, intValueLsbIndex;</div>
@@ -987,23 +987,23 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00935"></a><span class="lineno">  935</span>&#160;  }</div>
 <div class="line"><a name="l00936"></a><span class="lineno">  936</span>&#160;  conversionFactor = value.toDouble();</div>
 <div class="line"><a name="l00937"></a><span class="lineno">  937</span>&#160;  <span class="comment">// Have all needed parameters, build I/O</span></div>
-<div class="line"><a name="l00938"></a><span class="lineno">  938</span>&#160;  aio = <span class="keyword">new</span> <a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O. ">mdtAnalogIo</a>;</div>
+<div class="line"><a name="l00938"></a><span class="lineno">  938</span>&#160;  aio = <span class="keyword">new</span> <a class="code" href="classmdt_analog_io.html" title="class mdtBinaryDoubleConverter; ">mdtAnalogIo</a>;</div>
 <div class="line"><a name="l00939"></a><span class="lineno">  939</span>&#160;  <span class="keywordflow">if</span>(aio == 0){</div>
 <div class="line"><a name="l00940"></a><span class="lineno">  940</span>&#160;    <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured ">mdtError</a> e(<a class="code" href="mdt_error_8h.html#a0f1a2f7579a33e6de2fe8a1cbb5bbbb5aba6f11283d5d318eae7ac9979f7f3c8d">MDT_DEVICE_ERROR</a>, <span class="stringliteral">&quot;Memory allocation failed during analog input creation (unknown part number: &quot;</span> + <a class="code" href="classmdt_device_modbus_wago_module.html#acac6ca0c286f50adbd62d055339131f9" title="Get text version of part number. ">partNumberText</a>() + <span class="stringliteral">&quot;)&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);</div>
 <div class="line"><a name="l00941"></a><span class="lineno">  941</span>&#160;    <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce" title="Add source information to error. ">MDT_ERROR_SET_SRC</a>(e, <span class="stringliteral">&quot;mdtDeviceModbusWagoModule&quot;</span>);</div>
 <div class="line"><a name="l00942"></a><span class="lineno">  942</span>&#160;    e.commit();</div>
 <div class="line"><a name="l00943"></a><span class="lineno">  943</span>&#160;    <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a name="l00944"></a><span class="lineno">  944</span>&#160;  }</div>
-<div class="line"><a name="l00945"></a><span class="lineno">  945</span>&#160;  aio-&gt;<a class="code" href="classmdt_analog_io.html#a026624e890e4f2084c88377a6e4f1b47" title="Specify the range of values and bits decode parameters. ">setRange</a>(min, max, intValueBitsCount, intValueLsbIndex, intValueSigned, scaleFromMinToMax, conversionFactor);</div>
+<div class="line"><a name="l00945"></a><span class="lineno">  945</span>&#160;  aio-&gt;<a class="code" href="classmdt_analog_io.html#a7ce54314b02625aa45aa3e48c4855948" title="Specify the range of values and conversion parameters. ">setRange</a>(min, max, intValueBitsCount, intValueLsbIndex, intValueSigned, scaleFromMinToMax, conversionFactor);</div>
 <div class="line"><a name="l00946"></a><span class="lineno">  946</span>&#160;  aio-&gt;<a class="code" href="classmdt_analog_io.html#afb4cd82bee1ac1e77148c8621b1c66fa" title="Set the unit (V, A, °C, ...) ">setUnit</a>(<span class="stringliteral">&quot;[&quot;</span> + <a class="code" href="classmdt_device_modbus_wago_module.html#adbf2b96c5ab43a1693b5d656f84e893d" title="Get unit of a analog inputs (V, A, ...) ">analogInputUnit</a>(partNumber, channel) + <span class="stringliteral">&quot;]&quot;</span>);</div>
 <div class="line"><a name="l00947"></a><span class="lineno">  947</span>&#160;  aio-&gt;<a class="code" href="classmdt_abstract_io.html#ae614f78829c59cb7b7d8265dd59e2164" title="Set the complete I/O label. ">setLabel</a>(<span class="stringliteral">&quot;Module: 750-&quot;</span> + QString::number(partNumber));</div>
 <div class="line"><a name="l00948"></a><span class="lineno">  948</span>&#160;</div>
 <div class="line"><a name="l00949"></a><span class="lineno">  949</span>&#160;  <span class="keywordflow">return</span> aio;</div>
 <div class="line"><a name="l00950"></a><span class="lineno">  950</span>&#160;}</div>
 <div class="line"><a name="l00951"></a><span class="lineno">  951</span>&#160;</div>
-<div class="line"><a name="l00952"></a><span class="lineno">  952</span>&#160;<a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O. ">mdtAnalogIo</a> *mdtDeviceModbusWagoModule::getNewAnalogOutput(<span class="keywordtype">int</span> partNumber, <span class="keywordtype">int</span> channel)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00952"></a><span class="lineno">  952</span>&#160;<a class="code" href="classmdt_analog_io.html" title="class mdtBinaryDoubleConverter; ">mdtAnalogIo</a> *mdtDeviceModbusWagoModule::getNewAnalogOutput(<span class="keywordtype">int</span> partNumber, <span class="keywordtype">int</span> channel)<span class="keyword"> const</span></div>
 <div class="line"><a name="l00953"></a><span class="lineno">  953</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00954"></a><span class="lineno">  954</span>&#160;  <a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O. ">mdtAnalogIo</a> *aio;</div>
+<div class="line"><a name="l00954"></a><span class="lineno">  954</span>&#160;  <a class="code" href="classmdt_analog_io.html" title="class mdtBinaryDoubleConverter; ">mdtAnalogIo</a> *aio;</div>
 <div class="line"><a name="l00955"></a><span class="lineno">  955</span>&#160;  QVariant value;</div>
 <div class="line"><a name="l00956"></a><span class="lineno">  956</span>&#160;  <span class="keywordtype">double</span> min, max;</div>
 <div class="line"><a name="l00957"></a><span class="lineno">  957</span>&#160;  <span class="keywordtype">int</span> intValueBitsCount, intValueLsbIndex;</div>
@@ -1067,14 +1067,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l01015"></a><span class="lineno"> 1015</span>&#160;  }</div>
 <div class="line"><a name="l01016"></a><span class="lineno"> 1016</span>&#160;  conversionFactor = value.toDouble();</div>
 <div class="line"><a name="l01017"></a><span class="lineno"> 1017</span>&#160;  <span class="comment">// Have all needed parameters, build I/O</span></div>
-<div class="line"><a name="l01018"></a><span class="lineno"> 1018</span>&#160;  aio = <span class="keyword">new</span> <a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O. ">mdtAnalogIo</a>;</div>
+<div class="line"><a name="l01018"></a><span class="lineno"> 1018</span>&#160;  aio = <span class="keyword">new</span> <a class="code" href="classmdt_analog_io.html" title="class mdtBinaryDoubleConverter; ">mdtAnalogIo</a>;</div>
 <div class="line"><a name="l01019"></a><span class="lineno"> 1019</span>&#160;  <span class="keywordflow">if</span>(aio == 0){</div>
 <div class="line"><a name="l01020"></a><span class="lineno"> 1020</span>&#160;    <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured ">mdtError</a> e(<a class="code" href="mdt_error_8h.html#a0f1a2f7579a33e6de2fe8a1cbb5bbbb5aba6f11283d5d318eae7ac9979f7f3c8d">MDT_DEVICE_ERROR</a>, <span class="stringliteral">&quot;Memory allocation failed during analog output creation (unknown part number: &quot;</span> + <a class="code" href="classmdt_device_modbus_wago_module.html#acac6ca0c286f50adbd62d055339131f9" title="Get text version of part number. ">partNumberText</a>() + <span class="stringliteral">&quot;)&quot;</span>, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);</div>
 <div class="line"><a name="l01021"></a><span class="lineno"> 1021</span>&#160;    <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce" title="Add source information to error. ">MDT_ERROR_SET_SRC</a>(e, <span class="stringliteral">&quot;mdtDeviceModbusWagoModule&quot;</span>);</div>
 <div class="line"><a name="l01022"></a><span class="lineno"> 1022</span>&#160;    e.commit();</div>
 <div class="line"><a name="l01023"></a><span class="lineno"> 1023</span>&#160;    <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a name="l01024"></a><span class="lineno"> 1024</span>&#160;  }</div>
-<div class="line"><a name="l01025"></a><span class="lineno"> 1025</span>&#160;  aio-&gt;<a class="code" href="classmdt_analog_io.html#a026624e890e4f2084c88377a6e4f1b47" title="Specify the range of values and bits decode parameters. ">setRange</a>(min, max, intValueBitsCount, intValueLsbIndex, intValueSigned, scaleFromMinToMax, conversionFactor);</div>
+<div class="line"><a name="l01025"></a><span class="lineno"> 1025</span>&#160;  aio-&gt;<a class="code" href="classmdt_analog_io.html#a7ce54314b02625aa45aa3e48c4855948" title="Specify the range of values and conversion parameters. ">setRange</a>(min, max, intValueBitsCount, intValueLsbIndex, intValueSigned, scaleFromMinToMax, conversionFactor);</div>
 <div class="line"><a name="l01026"></a><span class="lineno"> 1026</span>&#160;  aio-&gt;<a class="code" href="classmdt_analog_io.html#afb4cd82bee1ac1e77148c8621b1c66fa" title="Set the unit (V, A, °C, ...) ">setUnit</a>(<span class="stringliteral">&quot;[&quot;</span> + <a class="code" href="classmdt_device_modbus_wago_module.html#a239892e92ee3f062e1000301766877aa" title="Get unit of a analog outputs (V, A, ...) ">analogOutputUnit</a>(partNumber, channel) + <span class="stringliteral">&quot;]&quot;</span>);</div>
 <div class="line"><a name="l01027"></a><span class="lineno"> 1027</span>&#160;  aio-&gt;<a class="code" href="classmdt_abstract_io.html#ae614f78829c59cb7b7d8265dd59e2164" title="Set the complete I/O label. ">setLabel</a>(<span class="stringliteral">&quot;Module: 750-&quot;</span> + QString::number(partNumber));</div>
 <div class="line"><a name="l01028"></a><span class="lineno"> 1028</span>&#160;</div>
@@ -1085,7 +1085,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l01033"></a><span class="lineno"> 1033</span>&#160;{</div>
 <div class="line"><a name="l01034"></a><span class="lineno"> 1034</span>&#160;  <span class="keywordtype">int</span> iosCount;</div>
 <div class="line"><a name="l01035"></a><span class="lineno"> 1035</span>&#160;  <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l01036"></a><span class="lineno"> 1036</span>&#160;  <a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O. ">mdtAnalogIo</a> *aio;</div>
+<div class="line"><a name="l01036"></a><span class="lineno"> 1036</span>&#160;  <a class="code" href="classmdt_analog_io.html" title="class mdtBinaryDoubleConverter; ">mdtAnalogIo</a> *aio;</div>
 <div class="line"><a name="l01037"></a><span class="lineno"> 1037</span>&#160;</div>
 <div class="line"><a name="l01038"></a><span class="lineno"> 1038</span>&#160;  <span class="comment">// Store part number</span></div>
 <div class="line"><a name="l01039"></a><span class="lineno"> 1039</span>&#160;  pvPartNumber = <a class="code" href="classmdt_device_modbus_wago_module.html#ab694800ebccf308beb9eeb9a789b0442" title="QString typeText() const;. ">partNumber</a>;</div>
@@ -1188,7 +1188,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 26 2014 17:48:02 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Sep 1 2014 18:45:35 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

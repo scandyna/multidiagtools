@@ -155,18 +155,21 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9306ae820be056e338ca965803e64297"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_test_model.html#a9306ae820be056e338ca965803e64297">removeTestModelItems</a> (const <a class="el" href="classmdt_sql_table_selection.html">mdtSqlTableSelection</a> &amp;s, bool removeSetupAndRoute, bool removeTestLinks)</td></tr>
 <tr class="memdesc:a9306ae820be056e338ca965803e64297"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a list of test model items.  <a href="#a9306ae820be056e338ca965803e64297">More...</a><br/></td></tr>
 <tr class="separator:a9306ae820be056e338ca965803e64297"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae573a051e9d9a6b509c4fbd5235e7e5"><td class="memItemLeft" align="right" valign="top">QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_test_model.html#aae573a051e9d9a6b509c4fbd5235e7e5">getTestLinkId</a> (const QVariant &amp;testCableId, const QVariant &amp;testConnectionId, bool &amp;ok)</td></tr>
-<tr class="memdesc:aae573a051e9d9a6b509c4fbd5235e7e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get link ID for given cable ID and test connection ID.  <a href="#aae573a051e9d9a6b509c4fbd5235e7e5">More...</a><br/></td></tr>
-<tr class="separator:aae573a051e9d9a6b509c4fbd5235e7e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9aa52d7fb390b26002281c099a26c953"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_test_model.html#a9aa52d7fb390b26002281c099a26c953">generateContinuityTest</a> (const QVariant &amp;testModelId, const QVariant &amp;testCableId, const QVariant &amp;testNodeId, const QVariant &amp;measureConnexionIdA, const QVariant &amp;measureConnexionIdB, <a class="el" href="classmdt_cl_path_graph.html">mdtClPathGraph</a> &amp;graph)</td></tr>
-<tr class="memdesc:a9aa52d7fb390b26002281c099a26c953"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate test items for a continuity check (2 wire)  <a href="#a9aa52d7fb390b26002281c099a26c953">More...</a><br/></td></tr>
-<tr class="separator:a9aa52d7fb390b26002281c099a26c953"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad62a8f75f1802b6ed1edbc7317ef770a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_test_model.html#ad62a8f75f1802b6ed1edbc7317ef770a">generateShortDetectionTest</a> (const QVariant &amp;testModelId, const QVariant &amp;testCableId, const QVariant &amp;testNodeId, const QVariant &amp;measureConnexionIdA, const QVariant &amp;measureConnexionIdB, <a class="el" href="classmdt_cl_path_graph.html">mdtClPathGraph</a> &amp;graph, const QList&lt; QVariant &gt; &amp;relaysToIgnoreIdList=QList&lt; QVariant &gt;())</td></tr>
-<tr class="memdesc:ad62a8f75f1802b6ed1edbc7317ef770a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate test items for a short detection test.  <a href="#ad62a8f75f1802b6ed1edbc7317ef770a">More...</a><br/></td></tr>
-<tr class="separator:ad62a8f75f1802b6ed1edbc7317ef770a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9693584a8ae5b3f32de6608504b8376b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_test_model.html#a9693584a8ae5b3f32de6608504b8376b">generateTestModel</a> (const QVariant &amp;testModelId, const QVariant &amp;testCableId, const QVariant &amp;testNodeId, const QVariant &amp;measureConnexionIdA, const QVariant &amp;measureConnexionIdB, <a class="el" href="classmdt_cl_path_graph.html">mdtClPathGraph</a> &amp;graph, <a class="el" href="classmdt_tt_test_model_abstract_generator_helper.html">mdtTtTestModelAbstractGeneratorHelper</a> &amp;helper)</td></tr>
-<tr class="memdesc:a9693584a8ae5b3f32de6608504b8376b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate test items.  <a href="#a9693584a8ae5b3f32de6608504b8376b">More...</a><br/></td></tr>
-<tr class="separator:a9693584a8ae5b3f32de6608504b8376b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c1e48f268abfdfd13d6a2aea470c282"><td class="memItemLeft" align="right" valign="top">QList&lt; QVariant &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_test_model.html#a9c1e48f268abfdfd13d6a2aea470c282">getTestLinkIdListForDutConnectionId</a> (const QVariant &amp;testCableId, const QVariant &amp;dutConnectionId, bool &amp;ok)</td></tr>
+<tr class="memdesc:a9c1e48f268abfdfd13d6a2aea470c282"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get link ID list for given cable ID and DUT connection ID.  <a href="#a9c1e48f268abfdfd13d6a2aea470c282">More...</a><br/></td></tr>
+<tr class="separator:a9c1e48f268abfdfd13d6a2aea470c282"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf5c4348225d07bb25981b022f65f1ed"><td class="memItemLeft" align="right" valign="top">QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_test_model.html#adf5c4348225d07bb25981b022f65f1ed">getTestConnectionId</a> (const QVariant &amp;testLinkId, const QVariant &amp;dutConnectionId, bool &amp;ok)</td></tr>
+<tr class="memdesc:adf5c4348225d07bb25981b022f65f1ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get test connection ID list for given test link ID and DUT connection ID.  <a href="#adf5c4348225d07bb25981b022f65f1ed">More...</a><br/></td></tr>
+<tr class="separator:adf5c4348225d07bb25981b022f65f1ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa049741d69df67ef6abb9f56521fbe43"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_tt_test_model_item_route_data.html">mdtTtTestModelItemRouteData</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_test_model.html#aa049741d69df67ef6abb9f56521fbe43">buildRouteData</a> (const QList&lt; QVariant &gt; &amp;pathConnectionIdList, <a class="el" href="classmdt_cl_path_graph.html">mdtClPathGraph</a> &amp;graph, bool &amp;ok)</td></tr>
+<tr class="memdesc:aa049741d69df67ef6abb9f56521fbe43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build route data for given path ID list.  <a href="#aa049741d69df67ef6abb9f56521fbe43">More...</a><br/></td></tr>
+<tr class="separator:aa049741d69df67ef6abb9f56521fbe43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab687b1a66cf03bd1a12ed1051fafa5d5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_test_model.html#ab687b1a66cf03bd1a12ed1051fafa5d5">addRoutesToItemData</a> (const QVariant &amp;dutConnectionId1, const QVariant &amp;dutConnectionId2, const <a class="el" href="structmdt_tt_test_model_generation_parameter.html">mdtTtTestModelGenerationParameter</a> &amp;parameters, <a class="el" href="classmdt_tt_test_model_item_data.html">mdtTtTestModelItemData</a> &amp;itemData, <a class="el" href="classmdt_cl_path_graph.html">mdtClPathGraph</a> &amp;graph, <a class="el" href="classmdt_cl_path_graph.html">mdtClPathGraph</a> &amp;graphForShortDetection)</td></tr>
+<tr class="memdesc:ab687b1a66cf03bd1a12ed1051fafa5d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Search 2 path from given DUT connections and measure connections and add routes to item data.  <a href="#ab687b1a66cf03bd1a12ed1051fafa5d5">More...</a><br/></td></tr>
+<tr class="separator:ab687b1a66cf03bd1a12ed1051fafa5d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa696cce203330485e486929c46f2b1f0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_test_model.html#aa696cce203330485e486929c46f2b1f0">generateTestModel</a> (<a class="el" href="structmdt_tt_test_model_generation_parameter.html">mdtTtTestModelGenerationParameter</a> &amp;parameters, <a class="el" href="classmdt_cl_path_graph.html">mdtClPathGraph</a> &amp;graph)</td></tr>
+<tr class="memdesc:aa696cce203330485e486929c46f2b1f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate test items.  <a href="#aa696cce203330485e486929c46f2b1f0">More...</a><br/></td></tr>
+<tr class="separator:aa696cce203330485e486929c46f2b1f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classmdt_tt_base"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classmdt_tt_base')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classmdt_tt_base.html">mdtTtBase</a></td></tr>
 <tr class="memitem:a6dbd221d1518e30c3692a7ba54b57c03 inherit pub_methods_classmdt_tt_base"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_base.html#a6dbd221d1518e30c3692a7ba54b57c03">mdtTtBase</a> (<a class="el" href="class_q_object.html">QObject</a> *parent, QSqlDatabase db)</td></tr>
 <tr class="memdesc:a6dbd221d1518e30c3692a7ba54b57c03 inherit pub_methods_classmdt_tt_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a6dbd221d1518e30c3692a7ba54b57c03">More...</a><br/></td></tr>
@@ -240,7 +243,7 @@ Additional Inherited Members</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Helper class for test model edition. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_model_8h_source.html#l00225">225</a> of file <a class="el" href="mdt_tt_test_model_8h_source.html">mdtTtTestModel.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_model_8h_source.html#l00076">76</a> of file <a class="el" href="mdt_tt_test_model_8h_source.html">mdtTtTestModel.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="aa21b9dd55ddc60ee59a5d804e45a163a"></a>
 <div class="memitem">
@@ -268,11 +271,83 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Constructor. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00334">334</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00034">34</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="ab687b1a66cf03bd1a12ed1051fafa5d5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtTtTestModel::addRoutesToItemData </td>
+          <td>(</td>
+          <td class="paramtype">const QVariant &amp;&#160;</td>
+          <td class="paramname"><em>dutConnectionId1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QVariant &amp;&#160;</td>
+          <td class="paramname"><em>dutConnectionId2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmdt_tt_test_model_generation_parameter.html">mdtTtTestModelGenerationParameter</a> &amp;&#160;</td>
+          <td class="paramname"><em>parameters</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classmdt_tt_test_model_item_data.html">mdtTtTestModelItemData</a> &amp;&#160;</td>
+          <td class="paramname"><em>itemData</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classmdt_cl_path_graph.html">mdtClPathGraph</a> &amp;&#160;</td>
+          <td class="paramname"><em>graph</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classmdt_cl_path_graph.html">mdtClPathGraph</a> &amp;&#160;</td>
+          <td class="paramname"><em>graphForShortDetection</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Search 2 path from given DUT connections and measure connections and add routes to item data. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dutConnectionId1</td><td>First test connection </td></tr>
+    <tr><td class="paramname">dutConnectionId2</td><td>Second test connection </td></tr>
+    <tr><td class="paramname">parameters</td><td>At least testCableId, measureConnexionIdA and measureConnexionIdB must be set </td></tr>
+    <tr><td class="paramname">measureConnexionIdA</td><td>ID of measure connection to witch to find path </td></tr>
+    <tr><td class="paramname">measureConnexionIdB</td><td>ID of other measure connection </td></tr>
+    <tr><td class="paramname">testCableId</td><td>ID of used test cable </td></tr>
+    <tr><td class="paramname">itemData</td><td>Routes will be added to itemData </td></tr>
+    <tr><td class="paramname">graph</td><td>Graph object. </td></tr>
+    <tr><td class="paramname">graphForShortDetection</td><td>Graph object - Will be altered. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00425">425</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
+
+<p>References <a class="el" href="mdt_tt_test_model_item_data_8cpp_source.html#l00055">mdtTtTestModelItemData::addRouteData()</a>, <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00393">buildRouteData()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00373">getTestConnectionId()</a>, <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00339">getTestLinkIdListForDutConnectionId()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_test_model_item_route_data_8h_source.html#l00088">mdtTtTestModelItemRouteData::measureConnectionId()</a>, <a class="el" href="mdt_tt_test_model_8h_source.html#l00053">mdtTtTestModelGenerationParameter::measureConnexionIdA</a>, <a class="el" href="mdt_tt_test_model_8h_source.html#l00057">mdtTtTestModelGenerationParameter::measureConnexionIdB</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00246">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_tt_test_model_item_route_data_8cpp_source.html#l00059">mdtTtTestModelItemRouteData::setDutConnectionId()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00177">mdtError::setInformativeText()</a>, <a class="el" href="mdt_tt_test_model_item_route_data_8cpp_source.html#l00069">mdtTtTestModelItemRouteData::setMeasureConnectionId()</a>, <a class="el" href="mdt_tt_test_model_item_route_data_8cpp_source.html#l00064">mdtTtTestModelItemRouteData::setTestConnectionId()</a>, <a class="el" href="mdt_tt_test_model_item_route_data_8cpp_source.html#l00054">mdtTtTestModelItemRouteData::setTestLinkId()</a>, <a class="el" href="mdt_tt_test_model_item_route_data_8h_source.html#l00102">mdtTtTestModelItemRouteData::setupDataList()</a>, and <a class="el" href="mdt_tt_test_model_8h_source.html#l00045">mdtTtTestModelGenerationParameter::testCableId</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00549">generateTestModel()</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a5dcbe2d3985231c373633f3b87e26f98"></a>
 <div class="memitem">
 <div class="memproto">
@@ -299,45 +374,69 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Add a test node. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00535">535</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00233">233</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_sql_record_8cpp_source.html#l00077">mdtSqlRecord::addAllFields()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00050">mdtTtBase::addRecord()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00150">mdtSqlRecord::lastError()</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00246">mdtTtBase::pvLastError</a>, and <a class="el" href="mdt_sql_record_8cpp_source.html#l00123">mdtSqlRecord::setValue()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a9aa52d7fb390b26002281c099a26c953"></a>
+<a class="anchor" id="aa049741d69df67ef6abb9f56521fbe43"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool mdtTtTestModel::generateContinuityTest </td>
+          <td class="memname"><a class="el" href="classmdt_tt_test_model_item_route_data.html">mdtTtTestModelItemRouteData</a> mdtTtTestModel::buildRouteData </td>
           <td>(</td>
-          <td class="paramtype">const QVariant &amp;&#160;</td>
-          <td class="paramname"><em>testModelId</em>, </td>
+          <td class="paramtype">const QList&lt; QVariant &gt; &amp;&#160;</td>
+          <td class="paramname"><em>pathConnectionIdList</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const QVariant &amp;&#160;</td>
-          <td class="paramname"><em>testCableId</em>, </td>
+          <td class="paramtype"><a class="el" href="classmdt_cl_path_graph.html">mdtClPathGraph</a> &amp;&#160;</td>
+          <td class="paramname"><em>graph</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const QVariant &amp;&#160;</td>
-          <td class="paramname"><em>testNodeId</em>, </td>
+          <td class="paramtype">bool &amp;&#160;</td>
+          <td class="paramname"><em>ok</em>&#160;</td>
         </tr>
         <tr>
-          <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const QVariant &amp;&#160;</td>
-          <td class="paramname"><em>measureConnexionIdA</em>, </td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Build route data for given path ID list. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pathConnectionIdList</td><td>List of connections (IDs) that represent the path from a test connection to a measure connection </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Route data with setupDataList set. All other members are not touched (route ID, testModelItemId, ...) </dd></dl>
+<dl class="section pre"><dt>Precondition</dt><dd>pathConnectionIdList must contain at least 2 connections </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00393">393</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
+
+<p>References <a class="el" href="mdt_sql_record_8cpp_source.html#l00140">mdtSqlRecord::clearValues()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00168">mdtClPathGraph::getUserData()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00150">mdtSqlRecord::lastError()</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00246">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_tt_test_node_unit_setup_data_8cpp_source.html#l00036">mdtTtTestNodeUnitSetupData::setup()</a>, and <a class="el" href="mdt_sql_record_8cpp_source.html#l00123">mdtSqlRecord::setValue()</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00425">addRoutesToItemData()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa696cce203330485e486929c46f2b1f0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
         <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const QVariant &amp;&#160;</td>
-          <td class="paramname"><em>measureConnexionIdB</em>, </td>
+          <td class="memname">bool mdtTtTestModel::generateTestModel </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmdt_tt_test_model_generation_parameter.html">mdtTtTestModelGenerationParameter</a> &amp;&#160;</td>
+          <td class="paramname"><em>parameters</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -353,172 +452,18 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Generate test items for a continuity check (2 wire) </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">testModelId</td><td>ID of test model </td></tr>
-    <tr><td class="paramname">testCableId</td><td>ID of test cable (TestCable_tbl) to use. </td></tr>
-    <tr><td class="paramname">testNodeId</td><td>ID of test node to use. </td></tr>
-    <tr><td class="paramname">measureConnexionIdA</td><td>ID of first measure connection to use (TestNodeUnitConnection_tbl) </td></tr>
-    <tr><td class="paramname">measureConnexionIdB</td><td>ID of second measure connection to use (TestNodeUnitConnection_tbl) </td></tr>
-    <tr><td class="paramname">graph</td><td>Graph object. Cable list must allready be loaded (see <a class="el" href="classmdt_cl_path_graph.html#a40e80f68b2600ad69a1fe74aa40393f8" title="Load the link list. ">mdtClPathGraph::loadLinkList()</a>) </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00661">661</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
-
-<p>References <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00681">generateTestModel()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ad62a8f75f1802b6ed1edbc7317ef770a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mdtTtTestModel::generateShortDetectionTest </td>
-          <td>(</td>
-          <td class="paramtype">const QVariant &amp;&#160;</td>
-          <td class="paramname"><em>testModelId</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const QVariant &amp;&#160;</td>
-          <td class="paramname"><em>testCableId</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const QVariant &amp;&#160;</td>
-          <td class="paramname"><em>testNodeId</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const QVariant &amp;&#160;</td>
-          <td class="paramname"><em>measureConnexionIdA</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const QVariant &amp;&#160;</td>
-          <td class="paramname"><em>measureConnexionIdB</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classmdt_cl_path_graph.html">mdtClPathGraph</a> &amp;&#160;</td>
-          <td class="paramname"><em>graph</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const QList&lt; QVariant &gt; &amp;&#160;</td>
-          <td class="paramname"><em>relaysToIgnoreIdList</em> = <code>QList&lt;QVariant&gt;()</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Generate test items for a short detection test. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">testModelId</td><td>ID of test model </td></tr>
-    <tr><td class="paramname">testCableId</td><td>ID of test cable (TestCable_tbl) to use. </td></tr>
-    <tr><td class="paramname">testNodeId</td><td>ID of test node to use. </td></tr>
-    <tr><td class="paramname">measureConnexionIdA</td><td>ID of first measure connection to use (TestNodeUnitConnection_tbl) </td></tr>
-    <tr><td class="paramname">measureConnexionIdB</td><td>ID of second measure connection to use (TestNodeUnitConnection_tbl) </td></tr>
-    <tr><td class="paramname">graph</td><td>Graph object. Cable list must allready be loaded (see <a class="el" href="classmdt_cl_path_graph.html#a40e80f68b2600ad69a1fe74aa40393f8" title="Load the link list. ">mdtClPathGraph::loadLinkList()</a>) </td></tr>
-    <tr><td class="paramname">relaysToIgnoreIdList</td><td>List of test node unit ID of relays to not use </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00669">669</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
-
-<p>References <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00681">generateTestModel()</a>, and <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00264">mdtTtTestModelIsolationTestGeneratorHelper::setRelaysToIgnoreIdList()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a9693584a8ae5b3f32de6608504b8376b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mdtTtTestModel::generateTestModel </td>
-          <td>(</td>
-          <td class="paramtype">const QVariant &amp;&#160;</td>
-          <td class="paramname"><em>testModelId</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const QVariant &amp;&#160;</td>
-          <td class="paramname"><em>testCableId</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const QVariant &amp;&#160;</td>
-          <td class="paramname"><em>testNodeId</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const QVariant &amp;&#160;</td>
-          <td class="paramname"><em>measureConnexionIdA</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const QVariant &amp;&#160;</td>
-          <td class="paramname"><em>measureConnexionIdB</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classmdt_cl_path_graph.html">mdtClPathGraph</a> &amp;&#160;</td>
-          <td class="paramname"><em>graph</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classmdt_tt_test_model_abstract_generator_helper.html">mdtTtTestModelAbstractGeneratorHelper</a> &amp;&#160;</td>
-          <td class="paramname"><em>helper</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
 <p>Generate test items. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">testModelId</td><td>ID of test model </td></tr>
-    <tr><td class="paramname">testCableId</td><td>ID of test cable (TestCable_tbl) to use. </td></tr>
-    <tr><td class="paramname">testNodeId</td><td>ID of test node to use. </td></tr>
-    <tr><td class="paramname">measureConnexionIdA</td><td>ID of first measure connection to use (TestNodeUnitConnection_tbl) </td></tr>
-    <tr><td class="paramname">measureConnexionIdB</td><td>ID of second measure connection to use (TestNodeUnitConnection_tbl) </td></tr>
+    <tr><td class="paramname">parameters</td><td>Setup for test model </td></tr>
     <tr><td class="paramname">graph</td><td>Graph object. Cable list must allready be loaded (see <a class="el" href="classmdt_cl_path_graph.html#a40e80f68b2600ad69a1fe74aa40393f8" title="Load the link list. ">mdtClPathGraph::loadLinkList()</a>) </td></tr>
-    <tr><td class="paramname">helper</td><td>Object for a specific test generation. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00681">681</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00549">549</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
 
-<p>References <a class="el" href="classmdt_tt_test_model_abstract_generator_helper.html#a16ea72cf8daeba07a1255dca73f1bc48">mdtTtTestModelAbstractGeneratorHelper::actionOnShortInTestNode()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00077">mdtSqlRecord::addAllFields()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00050">mdtTtBase::addRecord()</a>, <a class="el" href="mdt_tt_test_node_8cpp_source.html#l00246">mdtTtTestNode::addRelaysToGraph()</a>, <a class="el" href="mdt_tt_test_model_item_8cpp_source.html#l00355">mdtTtTestModelItem::addRoute()</a>, <a class="el" href="mdt_tt_test_model_item_8cpp_source.html#l00234">mdtTtTestModelItem::addTestLink()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00402">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00428">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_tt_test_node_8cpp_source.html#l00328">mdtTtTestNode::ensureAbsenceOfShortCircuit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="classmdt_tt_test_model_abstract_generator_helper.html#aa882003a0a623712ab308739a11204c2">mdtTtTestModelAbstractGeneratorHelper::expectedValue()</a>, <a class="el" href="mdt_tt_test_model_8h_source.html#l00043">mdtTtTestModelAbstractGeneratorHelper::Fail</a>, <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00069">mdtTtTestModelAbstractGeneratorHelper::getDesignationEN()</a>, <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00480">getNextSequenceNumber()</a>, <a class="el" href="classmdt_tt_test_model_abstract_generator_helper.html#a17006a0517ad90e9a21e1e45775591aa">mdtTtTestModelAbstractGeneratorHelper::getRelatedTestConnectionIdList()</a>, <a class="el" href="mdt_tt_test_node_8cpp_source.html#l00292">mdtTtTestNode::getRelayPathSetupDataList()</a>, <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00641">getTestLinkId()</a>, <a class="el" href="mdt_tt_test_model_8h_source.html#l00044">mdtTtTestModelAbstractGeneratorHelper::IgnoreCurrentItem</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00045">mdtTtBase::lastError()</a>, <a class="el" href="mdt_tt_test_model_8h_source.html#l00101">mdtTtTestModelAbstractGeneratorHelper::lastError()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00150">mdtSqlRecord::lastError()</a>, <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00440">mdtClPathGraph::lastError()</a>, <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00078">mdtClPathGraph::loadLinkList()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00042">ConnectionData::measureConnexionId</a>, <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00043">ConnectionData::pathToMeasureConnection</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00246">mdtTtBase::pvLastError</a>, <a class="el" href="classmdt_tt_test_model_abstract_generator_helper.html#a11c9add674333027f713b45a71cc5f60">mdtTtTestModelAbstractGeneratorHelper::queueRelatedConnectionToSolved()</a>, <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00063">mdtTtTestModelAbstractGeneratorHelper::relaysToIgnoreIdList()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00415">mdtTtBase::rollbackTransaction()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00050">ConnectionData::setTestModelItemIdToSetupDataList()</a>, <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00045">ConnectionData::setupDataList</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00123">mdtSqlRecord::setValue()</a>, <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00040">ConnectionData::testConnectionId</a>, <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00041">ConnectionData::testConnectionIdList</a>, <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00044">ConnectionData::testLinkId</a>, and <a class="el" href="classmdt_tt_test_model_abstract_generator_helper.html#a32aa097b7d462715b399433cece5a430">mdtTtTestModelAbstractGeneratorHelper::valueUnit()</a>.</p>
-
-<p>Referenced by <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00661">generateContinuityTest()</a>, and <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00669">generateShortDetectionTest()</a>.</p>
+<p>References <a class="el" href="mdt_tt_test_model_item_8cpp_source.html#l00383">mdtTtTestModelItem::addItem()</a>, <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00425">addRoutesToItemData()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00402">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_test_model_item_data_8cpp_source.html#l00039">mdtTtTestModelItemData::clearValues()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00428">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00362">mdtClPathGraph::connectionsAreLinked()</a>, <a class="el" href="mdt_tt_test_model_8h_source.html#l00061">mdtTtTestModelGenerationParameter::continuityExpectedValue</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_tt_test_model_8h_source.html#l00065">mdtTtTestModelGenerationParameter::generateForNonLinkedConnections</a>, <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00178">getNextSequenceNumber()</a>, <a class="el" href="mdt_tt_test_model_8h_source.html#l00069">mdtTtTestModelGenerationParameter::isolationExpectedValue</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00045">mdtTtBase::lastError()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00150">mdtSqlRecord::lastError()</a>, <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00460">mdtClPathGraph::lastError()</a>, <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00078">mdtClPathGraph::loadLinkList()</a>, <a class="el" href="mdt_tt_test_model_8h_source.html#l00053">mdtTtTestModelGenerationParameter::measureConnexionIdA</a>, <a class="el" href="mdt_tt_test_model_8h_source.html#l00057">mdtTtTestModelGenerationParameter::measureConnexionIdB</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00246">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00415">mdtTtBase::rollbackTransaction()</a>, <a class="el" href="mdt_tt_test_model_item_data_8cpp_source.html#l00028">mdtTtTestModelItemData::setup()</a>, <a class="el" href="mdt_tt_test_model_8h_source.html#l00045">mdtTtTestModelGenerationParameter::testCableId</a>, <a class="el" href="mdt_tt_test_model_item_route_data_8h_source.html#l00064">mdtTtTestModelItemRouteData::testLinkId()</a>, <a class="el" href="mdt_tt_test_model_8h_source.html#l00041">mdtTtTestModelGenerationParameter::testModelId</a>, and <a class="el" href="mdt_tt_test_model_8h_source.html#l00049">mdtTtTestModelGenerationParameter::testNodeId</a>.</p>
 
 </div>
 </div>
@@ -538,7 +483,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Get a list of test item IDs for given test ID. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00383">383</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00081">81</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00246">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>.</p>
 
@@ -571,9 +516,9 @@ Additional Inherited Members</h2></td></tr>
 <p>Get a list of unused node unit IDs for given test ID. </p>
 <p>If given type is not null, only matching test node unit will be returned </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00435">435</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00133">133</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00407">getListOfUsedNodeIdListByTestId()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00246">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00105">getListOfUsedNodeIdListByTestId()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00246">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>.</p>
 
 </div>
 </div>
@@ -593,11 +538,11 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Get a list of node IDs (database keys) for given test ID. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00407">407</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00105">105</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00246">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00435">getListOfUnusedNodeUnitIdListByTestId()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00133">getListOfUnusedNodeUnitIdListByTestId()</a>.</p>
 
 </div>
 </div>
@@ -618,29 +563,29 @@ Additional Inherited Members</h2></td></tr>
 <p>Get next sequence number for a given test. </p>
 <p>This method is used to create test items . It will get the highest sequence number existing for given testModelId, and return the next number . </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00480">480</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00178">178</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00246">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00681">generateTestModel()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00549">generateTestModel()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aae573a051e9d9a6b509c4fbd5235e7e5"></a>
+<a class="anchor" id="adf5c4348225d07bb25981b022f65f1ed"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">QVariant mdtTtTestModel::getTestLinkId </td>
+          <td class="memname">QVariant mdtTtTestModel::getTestConnectionId </td>
           <td>(</td>
           <td class="paramtype">const QVariant &amp;&#160;</td>
-          <td class="paramname"><em>testCableId</em>, </td>
+          <td class="paramname"><em>testLinkId</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const QVariant &amp;&#160;</td>
-          <td class="paramname"><em>testConnectionId</em>, </td>
+          <td class="paramname"><em>dutConnectionId</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -656,11 +601,51 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get link ID for given cable ID and test connection ID. </p>
+<p>Get test connection ID list for given test link ID and DUT connection ID. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00641">641</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00373">373</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00681">generateTestModel()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00425">addRoutesToItemData()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9c1e48f268abfdfd13d6a2aea470c282"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QList&lt; QVariant &gt; mdtTtTestModel::getTestLinkIdListForDutConnectionId </td>
+          <td>(</td>
+          <td class="paramtype">const QVariant &amp;&#160;</td>
+          <td class="paramname"><em>testCableId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QVariant &amp;&#160;</td>
+          <td class="paramname"><em>dutConnectionId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool &amp;&#160;</td>
+          <td class="paramname"><em>ok</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get link ID list for given cable ID and DUT connection ID. </p>
+
+<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00339">339</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
+
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00246">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00177">mdtError::setInformativeText()</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00425">addRoutesToItemData()</a>.</p>
 
 </div>
 </div>
@@ -690,7 +675,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Get test model data for given test model ID. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00359">359</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00059">59</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00246">mdtTtBase::pvLastError</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>.</p>
 
@@ -723,7 +708,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Get a list of test node data for given test model ID. </p>
 <p>Data will contain fields from TestNode_tbl and VehicleType_tbl </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00549">549</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00247">247</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
 
 </div>
 </div>
@@ -743,7 +728,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Get list of test node unit setup for given test ID. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00507">507</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00205">205</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00246">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>.</p>
 
@@ -796,11 +781,11 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00577">577</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00275">275</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00402">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00428">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00196">mdtTtBase::removeData()</a>, and <a class="el" href="mdt_tt_base_8cpp_source.html#l00415">mdtTtBase::rollbackTransaction()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00621">removeTestModelItems()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00319">removeTestModelItems()</a>.</p>
 
 </div>
 </div>
@@ -836,9 +821,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Remove a list of test model items. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00621">621</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00319">319</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00402">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00428">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_sql_table_selection_8cpp_source.html#l00070">mdtSqlTableSelection::data()</a>, <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00577">removeTestModelItem()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00415">mdtTtBase::rollbackTransaction()</a>, and <a class="el" href="mdt_sql_table_selection_8h_source.html#l00084">mdtSqlTableSelection::rowCount()</a>.</p>
+<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00402">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00428">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_sql_table_selection_8cpp_source.html#l00070">mdtSqlTableSelection::data()</a>, <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00275">removeTestModelItem()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00415">mdtTtBase::rollbackTransaction()</a>, and <a class="el" href="mdt_sql_table_selection_8h_source.html#l00084">mdtSqlTableSelection::rowCount()</a>.</p>
 
 </div>
 </div>
@@ -858,7 +843,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Remove a test node. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00572">572</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00270">270</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00196">mdtTtBase::removeData()</a>.</p>
 
@@ -881,7 +866,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Get SQL statement for test node selection. </p>
 <p>Will list all test nodes that are not currently assigned to given test model </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00339">339</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00039">39</a> of file <a class="el" href="mdt_tt_test_model_8cpp_source.html">mdtTtTestModel.cpp</a>.</p>
 
 </div>
 </div>
@@ -892,7 +877,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 26 2014 17:48:12 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Sep 1 2014 18:45:47 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

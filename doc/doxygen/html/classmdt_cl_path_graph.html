@@ -125,6 +125,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:afa0a3c6b9fd56cfd943a3bc2480c1ce0"><td class="memItemLeft" align="right" valign="top">QList&lt; QVariant &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_cl_path_graph.html#afa0a3c6b9fd56cfd943a3bc2480c1ce0">getShortestPath</a> (const QVariant &amp;fromConnectionId, const QVariant &amp;toConnectionId, bool &amp;ok)</td></tr>
 <tr class="memdesc:afa0a3c6b9fd56cfd943a3bc2480c1ce0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get shorted path from start connection ID to end connection ID.  <a href="#afa0a3c6b9fd56cfd943a3bc2480c1ce0">More...</a><br/></td></tr>
 <tr class="separator:afa0a3c6b9fd56cfd943a3bc2480c1ce0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8714c63f42c3bfbda6432ef2f59fe186"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_cl_path_graph.html#a8714c63f42c3bfbda6432ef2f59fe186">connectionsAreLinked</a> (const QVariant &amp;connectionIdA, const QVariant &amp;connectionIdB)</td></tr>
+<tr class="memdesc:a8714c63f42c3bfbda6432ef2f59fe186"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if given connections are linked together.  <a href="#a8714c63f42c3bfbda6432ef2f59fe186">More...</a><br/></td></tr>
+<tr class="separator:a8714c63f42c3bfbda6432ef2f59fe186"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae779d0527cc984122dbf063238b59749"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_cl_path_graph.html#ae779d0527cc984122dbf063238b59749">drawPath</a> (const QVariant &amp;fromConnectionId)</td></tr>
 <tr class="memdesc:ae779d0527cc984122dbf063238b59749"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draw the graphic representation starting from a connection.  <a href="#ae779d0527cc984122dbf063238b59749">More...</a><br/></td></tr>
 <tr class="separator:ae779d0527cc984122dbf063238b59749"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -234,7 +237,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00160">160</a> of file <a class="el" href="mdt_cl_path_graph_8cpp_source.html">mdtClPathGraph.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_test_node_8cpp_source.html#l00246">mdtTtTestNode::addRelaysToGraph()</a>, and <a class="el" href="mdt_tt_test_node_8cpp_source.html#l00328">mdtTtTestNode::ensureAbsenceOfShortCircuit()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_test_node_8cpp_source.html#l00277">mdtTtTestNode::addRelaysToGraph()</a>, and <a class="el" href="mdt_tt_test_node_8cpp_source.html#l00382">mdtTtTestNode::ensureAbsenceOfShortCircuit()</a>.</p>
 
 </div>
 </div>
@@ -254,9 +257,41 @@ Public Member Functions</h2></td></tr>
 
 <p>Attach a view to the scene of the path graph. </p>
 
-<p>Definition at line <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00424">424</a> of file <a class="el" href="mdt_cl_path_graph_8cpp_source.html">mdtClPathGraph.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00444">444</a> of file <a class="el" href="mdt_cl_path_graph_8cpp_source.html">mdtClPathGraph.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_cl_path_graph_dialog_8cpp_source.html#l00025">mdtClPathGraphDialog::mdtClPathGraphDialog()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8714c63f42c3bfbda6432ef2f59fe186"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtClPathGraph::connectionsAreLinked </td>
+          <td>(</td>
+          <td class="paramtype">const QVariant &amp;&#160;</td>
+          <td class="paramname"><em>connectionIdA</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QVariant &amp;&#160;</td>
+          <td class="paramname"><em>connectionIdB</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check if given connections are linked together. </p>
+
+<p>Definition at line <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00362">362</a> of file <a class="el" href="mdt_cl_path_graph_8cpp_source.html">mdtClPathGraph.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_tt_test_node_8cpp_source.html#l00382">mdtTtTestNode::ensureAbsenceOfShortCircuit()</a>, and <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00549">mdtTtTestModel::generateTestModel()</a>.</p>
 
 </div>
 </div>
@@ -276,7 +311,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Draw the graphic representation starting from a connection. </p>
 
-<p>Definition at line <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00362">362</a> of file <a class="el" href="mdt_cl_path_graph_8cpp_source.html">mdtClPathGraph.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00382">382</a> of file <a class="el" href="mdt_cl_path_graph_8cpp_source.html">mdtClPathGraph.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_cl_path_graph_8h_source.html#l00064">mdtClPathGraphPrivate::mdtClPathGraphEdgeData::endConnectionId</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_cl_path_graph_8h_source.html#l00065">mdtClPathGraphPrivate::mdtClPathGraphEdgeData::isComplement</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_cl_path_graph_8h_source.html#l00063">mdtClPathGraphPrivate::mdtClPathGraphEdgeData::startConnectionId</a>.</p>
 
@@ -305,7 +340,7 @@ Public Member Functions</h2></td></tr>
 
 <p>References <a class="el" href="mdt_cl_path_graph_8h_source.html#l00064">mdtClPathGraphPrivate::mdtClPathGraphEdgeData::endConnectionId</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_cl_path_graph_8h_source.html#l00065">mdtClPathGraphPrivate::mdtClPathGraphEdgeData::isComplement</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_cl_path_graph_8h_source.html#l00063">mdtClPathGraphPrivate::mdtClPathGraphEdgeData::startConnectionId</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_cl_direct_link_8cpp_source.html#l00160">mdtClDirectLink::addLinksByUnitConnector()</a>, <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00085">mdtTtTestNodeUnit::getConnectionIdListLinkedToConnectionIdList()</a>, <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00195">mdtTtTestModelContinuityTestGeneratorHelper::getRelatedTestConnectionIdList()</a>, <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00274">mdtTtTestModelIsolationTestGeneratorHelper::getRelatedTestConnectionIdList()</a>, <a class="el" href="mdt_tt_test_connection_cable_8cpp_source.html#l00267">mdtTtTestConnectionCable::getToUnitConnectionIdLinkedUnitConnectionIdListPartOfUnitConnector()</a>, and <a class="el" href="mdt_tt_test_connection_cable_8cpp_source.html#l00228">mdtTtTestConnectionCable::getToUnitConnectionLinkedUnitConnectorIdList()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_cl_direct_link_8cpp_source.html#l00160">mdtClDirectLink::addLinksByUnitConnector()</a>, <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00083">mdtTtTestNodeUnit::getConnectionIdListLinkedToConnectionIdList()</a>, <a class="el" href="mdt_tt_test_connection_cable_8cpp_source.html#l00267">mdtTtTestConnectionCable::getToUnitConnectionIdLinkedUnitConnectionIdListPartOfUnitConnector()</a>, and <a class="el" href="mdt_tt_test_connection_cable_8cpp_source.html#l00228">mdtTtTestConnectionCable::getToUnitConnectionLinkedUnitConnectorIdList()</a>.</p>
 
 </div>
 </div>
@@ -392,8 +427,6 @@ Public Member Functions</h2></td></tr>
 
 <p>References <a class="el" href="mdt_cl_path_graph_8h_source.html#l00064">mdtClPathGraphPrivate::mdtClPathGraphEdgeData::endConnectionId</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_cl_path_graph_8h_source.html#l00065">mdtClPathGraphPrivate::mdtClPathGraphEdgeData::isComplement</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_cl_path_graph_8h_source.html#l00063">mdtClPathGraphPrivate::mdtClPathGraphEdgeData::startConnectionId</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_test_node_8cpp_source.html#l00328">mdtTtTestNode::ensureAbsenceOfShortCircuit()</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="a82df1588f1b4a9df7b25760ebd9e5aa1"></a>
@@ -426,7 +459,7 @@ Public Member Functions</h2></td></tr>
 
 <p>References <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, and <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_test_node_8cpp_source.html#l00292">mdtTtTestNode::getRelayPathSetupDataList()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00393">mdtTtTestModel::buildRouteData()</a>, and <a class="el" href="mdt_tt_test_node_8cpp_source.html#l00346">mdtTtTestNode::getRelayPathSetupDataList()</a>.</p>
 
 </div>
 </div>
@@ -445,9 +478,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Get last error. </p>
 
-<p>Definition at line <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00440">440</a> of file <a class="el" href="mdt_cl_path_graph_8cpp_source.html">mdtClPathGraph.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00460">460</a> of file <a class="el" href="mdt_cl_path_graph_8cpp_source.html">mdtClPathGraph.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_test_node_8cpp_source.html#l00328">mdtTtTestNode::ensureAbsenceOfShortCircuit()</a>, <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00681">mdtTtTestModel::generateTestModel()</a>, <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00085">mdtTtTestNodeUnit::getConnectionIdListLinkedToConnectionIdList()</a>, and <a class="el" href="mdt_tt_test_connection_cable_8cpp_source.html#l00178">mdtTtTestConnectionCable::loadLinkList()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00549">mdtTtTestModel::generateTestModel()</a>, <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00083">mdtTtTestNodeUnit::getConnectionIdListLinkedToConnectionIdList()</a>, and <a class="el" href="mdt_tt_test_connection_cable_8cpp_source.html#l00178">mdtTtTestConnectionCable::loadLinkList()</a>.</p>
 
 </div>
 </div>
@@ -469,7 +502,7 @@ Public Member Functions</h2></td></tr>
 <dl class="section post"><dt>Postcondition</dt><dd>Returned list has allways a size of 3 (detailedText can simply contain a empty string)</dd></dl>
 <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000050">Todo:</a></b></dt><dd>Should become Obselete . </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00431">431</a> of file <a class="el" href="mdt_cl_path_graph_8cpp_source.html">mdtClPathGraph.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00451">451</a> of file <a class="el" href="mdt_cl_path_graph_8cpp_source.html">mdtClPathGraph.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_cl_path_graph_dialog_8cpp_source.html#l00056">mdtClPathGraphDialog::drawPath()</a>, and <a class="el" href="mdt_cl_path_graph_dialog_8cpp_source.html#l00041">mdtClPathGraphDialog::loadLinkList()</a>.</p>
 
@@ -494,7 +527,7 @@ Public Member Functions</h2></td></tr>
 
 <p>References <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, and <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00681">mdtTtTestModel::generateTestModel()</a>, <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00085">mdtTtTestNodeUnit::getConnectionIdListLinkedToConnectionIdList()</a>, <a class="el" href="mdt_cl_path_graph_dialog_8cpp_source.html#l00041">mdtClPathGraphDialog::loadLinkList()</a>, <a class="el" href="mdt_tt_test_connection_cable_8cpp_source.html#l00178">mdtTtTestConnectionCable::loadLinkList()</a>, and <a class="el" href="mdt_tt_relay_path_dialog_8cpp_source.html#l00050">mdtTtRelayPathDialog::setData()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_test_model_8cpp_source.html#l00549">mdtTtTestModel::generateTestModel()</a>, <a class="el" href="mdt_tt_test_node_unit_8cpp_source.html#l00083">mdtTtTestNodeUnit::getConnectionIdListLinkedToConnectionIdList()</a>, <a class="el" href="mdt_cl_path_graph_dialog_8cpp_source.html#l00041">mdtClPathGraphDialog::loadLinkList()</a>, <a class="el" href="mdt_tt_test_connection_cable_8cpp_source.html#l00178">mdtTtTestConnectionCable::loadLinkList()</a>, and <a class="el" href="mdt_tt_relay_path_dialog_8cpp_source.html#l00050">mdtTtRelayPathDialog::setData()</a>.</p>
 
 </div>
 </div>
@@ -515,7 +548,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_cl_path_graph_8cpp_source.html#l00204">204</a> of file <a class="el" href="mdt_cl_path_graph_8cpp_source.html">mdtClPathGraph.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_test_node_8cpp_source.html#l00246">mdtTtTestNode::addRelaysToGraph()</a>, and <a class="el" href="mdt_tt_test_node_8cpp_source.html#l00328">mdtTtTestNode::ensureAbsenceOfShortCircuit()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_test_node_8cpp_source.html#l00277">mdtTtTestNode::addRelaysToGraph()</a>, and <a class="el" href="mdt_tt_test_node_8cpp_source.html#l00382">mdtTtTestNode::ensureAbsenceOfShortCircuit()</a>.</p>
 
 </div>
 </div>
@@ -526,7 +559,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 26 2014 17:48:09 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Sep 1 2014 18:45:43 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

@@ -93,7 +93,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
-<p>Representation of a analog I/O.  
+<p>class <a class="el" href="classmdt_binary_double_converter.html" title="Helper class for binary &lt;-&gt; double conversions. ">mdtBinaryDoubleConverter</a>;  
  <a href="classmdt_analog_io.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="mdt_analog_io_8h_source.html">mdtAnalogIo.h</a>&gt;</code></p>
@@ -169,9 +169,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a126d5b9bf4a0bb9ce9f2ff6a010fef0e"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_analog_io.html#a126d5b9bf4a0bb9ce9f2ff6a010fef0e">unit</a> () const </td></tr>
 <tr class="memdesc:a126d5b9bf4a0bb9ce9f2ff6a010fef0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get unit.  <a href="#a126d5b9bf4a0bb9ce9f2ff6a010fef0e">More...</a><br/></td></tr>
 <tr class="separator:a126d5b9bf4a0bb9ce9f2ff6a010fef0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a026624e890e4f2084c88377a6e4f1b47"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_analog_io.html#a026624e890e4f2084c88377a6e4f1b47">setRange</a> (double min, double max, int intValueBitsCount, int intValueLsbIndex=0, bool intValueSigned=false, bool scaleFromMinToMax=true, double conversionFactor=1.0)</td></tr>
-<tr class="memdesc:a026624e890e4f2084c88377a6e4f1b47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify the range of values and bits decode parameters.  <a href="#a026624e890e4f2084c88377a6e4f1b47">More...</a><br/></td></tr>
-<tr class="separator:a026624e890e4f2084c88377a6e4f1b47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ce54314b02625aa45aa3e48c4855948"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_analog_io.html#a7ce54314b02625aa45aa3e48c4855948">setRange</a> (double min, double max, int intValueBitsCount, int intValueLsbIndex=0, bool intValueSigned=false, bool scaleFromMinToMax=true, double conversionFactor=1.0)</td></tr>
+<tr class="memdesc:a7ce54314b02625aa45aa3e48c4855948"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify the range of values and conversion parameters.  <a href="#a7ce54314b02625aa45aa3e48c4855948">More...</a><br/></td></tr>
+<tr class="separator:a7ce54314b02625aa45aa3e48c4855948"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acd2b8cb33d5d42abf23672ad7675825e"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_analog_io.html#acd2b8cb33d5d42abf23672ad7675825e">minimum</a> () const </td></tr>
 <tr class="memdesc:acd2b8cb33d5d42abf23672ad7675825e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the minimum value of the range.  <a href="#acd2b8cb33d5d42abf23672ad7675825e">More...</a><br/></td></tr>
 <tr class="separator:acd2b8cb33d5d42abf23672ad7675825e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -242,10 +242,12 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:aa2dc002fc045276fac33f44fb20f6974 inherit pro_attribs_classmdt_abstract_io"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Representation of a analog I/O. </p>
-<p>On wide range of automation applications, it is usefull to display a I/O to the user. For example, a analog I/O module, with a 8 bit encoding could be displayed with this class togther with <a class="el" href="classmdt_analog_in_widget.html" title="Representation of a analog input. ">mdtAnalogInWidget</a> or <a class="el" href="classmdt_analog_out_widget.html" title="Representation of a analog output. ">mdtAnalogOutWidget</a>. </p>
+<div class="textblock"><p>class <a class="el" href="classmdt_binary_double_converter.html" title="Helper class for binary &lt;-&gt; double conversions. ">mdtBinaryDoubleConverter</a>; </p>
+<p>Representation of a analog I/O</p>
+<p>On wide range of automation applications, it is usefull to display a I/O to the user. For example, a analog I/O module, with a 8 bit encoding could be displayed with this class togther with <a class="el" href="classmdt_analog_in_widget.html" title="Representation of a analog input. ">mdtAnalogInWidget</a> or <a class="el" href="classmdt_analog_out_widget.html" title="Representation of a analog output. ">mdtAnalogOutWidget</a>.</p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000074">Todo:</a></b></dt><dd>Because the class must handle storage + UI interactions, and because it can be used for a varety of cases, conversions should be done by another class. F.ex., if device talks "Itegral binary" , such as Waogo 750 I/O modules, conversion must be done and stored here. With a multimeter (f.ex. Agilent U3606A), witch talks ASCII, conversion is allready done in frame codec, and any value must be stored here AS IS. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_analog_io_8h_source.html#l00035">35</a> of file <a class="el" href="mdt_analog_io_8h_source.html">mdtAnalogIo.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_analog_io_8h_source.html#l00047">47</a> of file <a class="el" href="mdt_analog_io_8h_source.html">mdtAnalogIo.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="affcdf039a10023b495cf49a5f476f829"></a>
 <div class="memitem">
@@ -263,7 +265,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Constructor. </p>
 
-<p>Definition at line <a class="el" href="mdt_analog_io_8cpp_source.html#l00028">28</a> of file <a class="el" href="mdt_analog_io_8cpp_source.html">mdtAnalogIo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_analog_io_8cpp_source.html#l00031">31</a> of file <a class="el" href="mdt_analog_io_8cpp_source.html">mdtAnalogIo.cpp</a>.</p>
 
 </div>
 </div>
@@ -282,7 +284,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="mdt_analog_io_8cpp_source.html#l00046">46</a> of file <a class="el" href="mdt_analog_io_8cpp_source.html">mdtAnalogIo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_analog_io_8cpp_source.html#l00052">52</a> of file <a class="el" href="mdt_analog_io_8cpp_source.html">mdtAnalogIo.cpp</a>.</p>
 
 </div>
 </div>
@@ -302,7 +304,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Get the maximum value of the range. </p>
 
-<p>Definition at line <a class="el" href="mdt_analog_io_8cpp_source.html#l00127">127</a> of file <a class="el" href="mdt_analog_io_8cpp_source.html">mdtAnalogIo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_analog_io_8cpp_source.html#l00141">141</a> of file <a class="el" href="mdt_analog_io_8cpp_source.html">mdtAnalogIo.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_analog_in_widget_8cpp_source.html#l00052">mdtAnalogInWidget::setIo()</a>, and <a class="el" href="mdt_analog_out_widget_8cpp_source.html#l00053">mdtAnalogOutWidget::setIo()</a>.</p>
 
@@ -323,7 +325,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Get the minimum value of the range. </p>
 
-<p>Definition at line <a class="el" href="mdt_analog_io_8cpp_source.html#l00122">122</a> of file <a class="el" href="mdt_analog_io_8cpp_source.html">mdtAnalogIo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_analog_io_8cpp_source.html#l00136">136</a> of file <a class="el" href="mdt_analog_io_8cpp_source.html">mdtAnalogIo.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_analog_in_widget_8cpp_source.html#l00052">mdtAnalogInWidget::setIo()</a>, and <a class="el" href="mdt_analog_out_widget_8cpp_source.html#l00053">mdtAnalogOutWidget::setIo()</a>.</p>
 
@@ -361,16 +363,16 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="mdt_analog_io_8cpp_source.html#l00061">setRange()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_analog_io_8cpp_source.html#l00067">setRange()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a026624e890e4f2084c88377a6e4f1b47"></a>
+<a class="anchor" id="a7ce54314b02625aa45aa3e48c4855948"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool mdtAnalogIo::setRange </td>
+          <td class="memname">void mdtAnalogIo::setRange </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>min</em>, </td>
@@ -419,23 +421,9 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Specify the range of values and bits decode parameters. </p>
+<p>Specify the range of values and conversion parameters. </p>
 <p>Store the new range and set the value to the minimum. The <a class="el" href="classmdt_abstract_io.html#a43feaa62996af78f64aea084122f1370" title="This signal is emitted whenever the value is changed. ">valueChanged()</a> signal is emitted.</p>
-<p>It can happen that a I/O module returns, f.ex., a integer value in a 16 bits packet, but with some additional flags. (example: Wago 750-457). In such case, the value is, f.ex., encoded in 12 bits only.</p>
-<p>Take example of Wago 750-457:</p>
-<ul>
-<li>Value + flags are encoded in a 16 bits word</li>
-<li>Value is encoded in 12 bits, from b3 to b14 + 1 sign bit, b15</li>
-<li>Value is scaled from -10 V to 10 V</li>
-</ul>
-<p>In this example, this method must be called with min = -10.0 , max = 10.0 , intValueBitsCount = 13 , intValueLsbIndex = 3 , intValueSigned = true , scaleFromMinToMax = true , conversionFactor = 1.0 .</p>
-<p>Here is another example with Wago 750-464 with Pt100 sensor and normal format:</p>
-<ul>
-<li>Value is encoded in 16 bits</li>
-<li>Scaling is allready done by device</li>
-<li>Value represents 0.1°C per digit -&gt; we have to apply a conversion factor of 0.1</li>
-</ul>
-<p>In this example, this method must be called with min = -200.0 , max = 850.0 , intValueBitsCount = 16 , intValueLsbIndex = 0 , intValueSigned = true , scaleFromMinToMax = false , conversionFactor = 0.1 .</p>
+<p>This method will also enable conversions. See <a class="el" href="classmdt_binary_double_converter.html" title="Helper class for binary &lt;-&gt; double conversions. ">mdtBinaryDoubleConverter</a> class for details about conversion setup.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">min</td><td>Minimum value to display (f.ex. 0V, or 4mA) </td></tr>
@@ -461,9 +449,9 @@ Additional Inherited Members</h2></td></tr>
 <li>The signal <a class="el" href="classmdt_abstract_io.html#a0241183736b9bc3abb021868b9bf4273" title="This signal is emitted whenever the value is changed. ">valueChangedForUi()</a> is emited </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_analog_io_8cpp_source.html#l00061">61</a> of file <a class="el" href="mdt_analog_io_8cpp_source.html">mdtAnalogIo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_analog_io_8cpp_source.html#l00067">67</a> of file <a class="el" href="mdt_analog_io_8cpp_source.html">mdtAnalogIo.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_value_8cpp_source.html#l00060">mdtValue::clear()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_error_8h_source.html#l00048">MDT_PARSE_ERROR</a>, <a class="el" href="mdt_abstract_io_8h_source.html#l00187">mdtAbstractIo::pvNotifyUi</a>, <a class="el" href="mdt_abstract_io_8h_source.html#l00186">mdtAbstractIo::pvValue</a>, <a class="el" href="classmdt_analog_io.html#a40735cbbf852790067a6f9b57aac4aa3">rangeChangedForUi()</a>, <a class="el" href="mdt_value_8cpp_source.html#l00073">mdtValue::setDefaultValue()</a>, <a class="el" href="mdt_value_8cpp_source.html#l00102">mdtValue::valueDouble()</a>, <a class="el" href="mdt_value_8cpp_source.html#l00121">mdtValue::valueInt()</a>, and <a class="el" href="mdt_error_8h_source.html#l00093">mdtError::Warning</a>.</p>
+<p>References <a class="el" href="mdt_value_8cpp_source.html#l00060">mdtValue::clear()</a>, <a class="el" href="mdt_abstract_io_8h_source.html#l00187">mdtAbstractIo::pvNotifyUi</a>, <a class="el" href="mdt_abstract_io_8h_source.html#l00186">mdtAbstractIo::pvValue</a>, <a class="el" href="classmdt_analog_io.html#a40735cbbf852790067a6f9b57aac4aa3">rangeChangedForUi()</a>, <a class="el" href="mdt_value_8cpp_source.html#l00073">mdtValue::setDefaultValue()</a>, <a class="el" href="mdt_value_8cpp_source.html#l00102">mdtValue::valueDouble()</a>, and <a class="el" href="mdt_value_8cpp_source.html#l00121">mdtValue::valueInt()</a>.</p>
 
 </div>
 </div>
@@ -483,9 +471,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Set the unit (V, A, °C, ...) </p>
 
-<p>Definition at line <a class="el" href="mdt_analog_io_8cpp_source.html#l00050">50</a> of file <a class="el" href="mdt_analog_io_8cpp_source.html">mdtAnalogIo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_analog_io_8cpp_source.html#l00056">56</a> of file <a class="el" href="mdt_analog_io_8cpp_source.html">mdtAnalogIo.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_analog_io_8cpp_source.html#l00056">unit()</a>, and <a class="el" href="classmdt_analog_io.html#aa81b49605f601850ecfa780f2b758e98">unitChangedForUi()</a>.</p>
+<p>References <a class="el" href="mdt_analog_io_8cpp_source.html#l00062">unit()</a>, and <a class="el" href="classmdt_analog_io.html#aa81b49605f601850ecfa780f2b758e98">unitChangedForUi()</a>.</p>
 
 </div>
 </div>
@@ -524,7 +512,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Set the value to update display. </p>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="classmdt_abstract_io.html#a3f5fc9ed13c2ec2aad0987cd15d95e31" title="Set the value to update display. ">mdtAbstractIo::setValue(const mdtValue&amp;, bool)</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_analog_io_8cpp_source.html#l00143">143</a> of file <a class="el" href="mdt_analog_io_8cpp_source.html">mdtAnalogIo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_analog_io_8cpp_source.html#l00157">157</a> of file <a class="el" href="mdt_analog_io_8cpp_source.html">mdtAnalogIo.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_value_8cpp_source.html#l00097">mdtValue::hasValueDouble()</a>, and <a class="el" href="mdt_abstract_io_8h_source.html#l00187">mdtAbstractIo::pvNotifyUi</a>.</p>
 
@@ -563,7 +551,7 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Set the integer value. </p>
-<p>Will calculate the real value depending on resolution and update display. The resolution is set with <a class="el" href="classmdt_analog_io.html#a026624e890e4f2084c88377a6e4f1b47" title="Specify the range of values and bits decode parameters. ">setRange()</a> (intValueBitsCount parameter)</p>
+<p>Will calculate the real value depending on resolution and update display. The resolution is set with <a class="el" href="classmdt_analog_io.html#a7ce54314b02625aa45aa3e48c4855948" title="Specify the range of values and conversion parameters. ">setRange()</a> (intValueBitsCount parameter)</p>
 <p>The <a class="el" href="classmdt_abstract_io.html#a43feaa62996af78f64aea084122f1370" title="This signal is emitted whenever the value is changed. ">valueChanged()</a> signal is emitted.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -578,7 +566,7 @@ Additional Inherited Members</h2></td></tr>
 <li>The signal <a class="el" href="classmdt_abstract_io.html#a0241183736b9bc3abb021868b9bf4273" title="This signal is emitted whenever the value is changed. ">valueChangedForUi()</a> is emited </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_analog_io_8cpp_source.html#l00132">132</a> of file <a class="el" href="mdt_analog_io_8cpp_source.html">mdtAnalogIo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_analog_io_8cpp_source.html#l00146">146</a> of file <a class="el" href="mdt_analog_io_8cpp_source.html">mdtAnalogIo.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_abstract_io_8h_source.html#l00187">mdtAbstractIo::pvNotifyUi</a>, and <a class="el" href="mdt_value_8cpp_source.html#l00088">mdtValue::setValue()</a>.</p>
 
@@ -599,9 +587,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Get unit. </p>
 
-<p>Definition at line <a class="el" href="mdt_analog_io_8cpp_source.html#l00056">56</a> of file <a class="el" href="mdt_analog_io_8cpp_source.html">mdtAnalogIo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_analog_io_8cpp_source.html#l00062">62</a> of file <a class="el" href="mdt_analog_io_8cpp_source.html">mdtAnalogIo.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_analog_in_widget_8cpp_source.html#l00052">mdtAnalogInWidget::setIo()</a>, <a class="el" href="mdt_analog_out_widget_8cpp_source.html#l00053">mdtAnalogOutWidget::setIo()</a>, and <a class="el" href="mdt_analog_io_8cpp_source.html#l00050">setUnit()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_analog_in_widget_8cpp_source.html#l00052">mdtAnalogInWidget::setIo()</a>, <a class="el" href="mdt_analog_out_widget_8cpp_source.html#l00053">mdtAnalogOutWidget::setIo()</a>, and <a class="el" href="mdt_analog_io_8cpp_source.html#l00056">setUnit()</a>.</p>
 
 </div>
 </div>
@@ -627,7 +615,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="mdt_analog_io_8cpp_source.html#l00050">setUnit()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_analog_io_8cpp_source.html#l00056">setUnit()</a>.</p>
 
 </div>
 </div>
@@ -638,7 +626,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 26 2014 17:48:08 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Sep 1 2014 18:45:43 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

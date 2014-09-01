@@ -1,6 +1,5 @@
 \section{Class List}
 Here are the classes, structs, unions and interfaces with brief descriptions\-:\begin{DoxyCompactList}
-\item\contentsline{section}{\hyperlink{struct_connection_data}{Connection\-Data} }{\pageref{struct_connection_data}}{}
 \item\contentsline{section}{\hyperlink{classmdt_abstract_io}{mdt\-Abstract\-Io} \\*Base class for I/\-O handling on (G)U\-I }{\pageref{classmdt_abstract_io}}{}
 \item\contentsline{section}{\hyperlink{classmdt_abstract_io_widget}{mdt\-Abstract\-Io\-Widget} \\*Base class for I/\-O widgets }{\pageref{classmdt_abstract_io_widget}}{}
 \item\contentsline{section}{\hyperlink{classmdt_abstract_port}{mdt\-Abstract\-Port} \\*Base class for port I/\-O }{\pageref{classmdt_abstract_port}}{}
@@ -8,9 +7,10 @@ Here are the classes, structs, unions and interfaces with brief descriptions\-:\
 \item\contentsline{section}{\hyperlink{classmdt_abstract_serial_port}{mdt\-Abstract\-Serial\-Port} \\*N\-O\-T\-E\-: }{\pageref{classmdt_abstract_serial_port}}{}
 \item\contentsline{section}{\hyperlink{classmdt_abstract_sql_widget}{mdt\-Abstract\-Sql\-Widget} \\*Base class to create database table G\-U\-I }{\pageref{classmdt_abstract_sql_widget}}{}
 \item\contentsline{section}{\hyperlink{classmdt_analog_in_widget}{mdt\-Analog\-In\-Widget} \\*Representation of a analog input }{\pageref{classmdt_analog_in_widget}}{}
-\item\contentsline{section}{\hyperlink{classmdt_analog_io}{mdt\-Analog\-Io} \\*Representation of a analog I/\-O }{\pageref{classmdt_analog_io}}{}
+\item\contentsline{section}{\hyperlink{classmdt_analog_io}{mdt\-Analog\-Io} \\*Class \hyperlink{classmdt_binary_double_converter}{mdt\-Binary\-Double\-Converter}; }{\pageref{classmdt_analog_io}}{}
 \item\contentsline{section}{\hyperlink{classmdt_analog_out_widget}{mdt\-Analog\-Out\-Widget} \\*Representation of a analog output }{\pageref{classmdt_analog_out_widget}}{}
 \item\contentsline{section}{\hyperlink{classmdt_application}{mdt\-Application} \\*Main application }{\pageref{classmdt_application}}{}
+\item\contentsline{section}{\hyperlink{classmdt_binary_double_converter}{mdt\-Binary\-Double\-Converter$<$ T $>$} \\*Helper class for binary $<$-\/$>$ double conversions }{\pageref{classmdt_binary_double_converter}}{}
 \item\contentsline{section}{\hyperlink{classmdt_blink_led}{mdt\-Blink\-Led} \\*Blinking L\-E\-D }{\pageref{classmdt_blink_led}}{}
 \item\contentsline{section}{\hyperlink{classmdt_buffer}{mdt\-Buffer$<$ T $>$} \\*Stockage d'éléments basé sur le principe du tampon circulaire }{\pageref{classmdt_buffer}}{}
 \item\contentsline{section}{\hyperlink{classmdt_cl_article}{mdt\-Cl\-Article} \\*Helper class for Article and related tables edition }{\pageref{classmdt_cl_article}}{}
@@ -165,10 +165,13 @@ Here are the classes, structs, unions and interfaces with brief descriptions\-:\
 \item\contentsline{section}{\hyperlink{classmdt_tcp_socket}{mdt\-Tcp\-Socket} \\*Wrapper class between Q\-Tcp\-Socket and \hyperlink{classmdt_abstract_port}{mdt\-Abstract\-Port} }{\pageref{classmdt_tcp_socket}}{}
 \item\contentsline{section}{\hyperlink{classmdt_tcp_socket_thread}{mdt\-Tcp\-Socket\-Thread} }{\pageref{classmdt_tcp_socket_thread}}{}
 \item\contentsline{section}{\hyperlink{classmdt_time}{mdt\-Time} \\*Help class based on \hyperlink{class_q_time}{Q\-Time} }{\pageref{classmdt_time}}{}
-\item\contentsline{section}{\hyperlink{classmdt_tt_abstract_test_widget}{mdt\-Tt\-Abstract\-Test\-Widget} \\*Base to create a test widget }{\pageref{classmdt_tt_abstract_test_widget}}{}
+\item\contentsline{section}{\hyperlink{classmdt_tt_abstract_tester}{mdt\-Tt\-Abstract\-Tester} \\*Base to create a tester }{\pageref{classmdt_tt_abstract_tester}}{}
+\item\contentsline{section}{\hyperlink{classmdt_tt_abstract_test_node_calibration_tool}{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool} }{\pageref{classmdt_tt_abstract_test_node_calibration_tool}}{}
 \item\contentsline{section}{\hyperlink{classmdt_tt_base}{mdt\-Tt\-Base} \\*Base class for helper class }{\pageref{classmdt_tt_base}}{}
 \item\contentsline{section}{\hyperlink{classmdt_tt_basic_tester}{mdt\-Tt\-Basic\-Tester} \\*Provide ability to run tests }{\pageref{classmdt_tt_basic_tester}}{}
 \item\contentsline{section}{\hyperlink{classmdt_tt_basic_tester_window}{mdt\-Tt\-Basic\-Tester\-Window} }{\pageref{classmdt_tt_basic_tester_window}}{}
+\item\contentsline{section}{\hyperlink{classmdt_tt_basic_test_node_calibration_tool}{mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool} }{\pageref{classmdt_tt_basic_test_node_calibration_tool}}{}
+\item\contentsline{section}{\hyperlink{classmdt_tt_basic_test_node_calibration_window}{mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Window} }{\pageref{classmdt_tt_basic_test_node_calibration_window}}{}
 \item\contentsline{section}{\hyperlink{classmdt_tt_database_schema}{mdt\-Tt\-Database\-Schema} \\*Build database schema }{\pageref{classmdt_tt_database_schema}}{}
 \item\contentsline{section}{\hyperlink{classmdt_tt_relay_path_dialog}{mdt\-Tt\-Relay\-Path\-Dialog} \\*Edit path from a starting connection to a end connection in a test node }{\pageref{classmdt_tt_relay_path_dialog}}{}
 \item\contentsline{section}{\hyperlink{classmdt_tt_test}{mdt\-Tt\-Test} \\*Helper class to manipulate test data }{\pageref{classmdt_tt_test}}{}
@@ -179,15 +182,15 @@ Here are the classes, structs, unions and interfaces with brief descriptions\-:\
 \item\contentsline{section}{\hyperlink{classmdt_tt_test_link_data}{mdt\-Tt\-Test\-Link\-Data} \\*Data container for test link }{\pageref{classmdt_tt_test_link_data}}{}
 \item\contentsline{section}{\hyperlink{classmdt_tt_test_link_dialog}{mdt\-Tt\-Test\-Link\-Dialog} \\*Dialog that provide test link edition }{\pageref{classmdt_tt_test_link_dialog}}{}
 \item\contentsline{section}{\hyperlink{classmdt_tt_test_model}{mdt\-Tt\-Test\-Model} \\*Helper class for test model edition }{\pageref{classmdt_tt_test_model}}{}
-\item\contentsline{section}{\hyperlink{classmdt_tt_test_model_abstract_generator_helper}{mdt\-Tt\-Test\-Model\-Abstract\-Generator\-Helper} \\*Helper class for test model generation }{\pageref{classmdt_tt_test_model_abstract_generator_helper}}{}
-\item\contentsline{section}{\hyperlink{classmdt_tt_test_model_continuity_test_generator_helper}{mdt\-Tt\-Test\-Model\-Continuity\-Test\-Generator\-Helper} \\*Helper class for continuity test generation }{\pageref{classmdt_tt_test_model_continuity_test_generator_helper}}{}
 \item\contentsline{section}{\hyperlink{classmdt_tt_test_model_data}{mdt\-Tt\-Test\-Model\-Data} }{\pageref{classmdt_tt_test_model_data}}{}
 \item\contentsline{section}{\hyperlink{classmdt_tt_test_model_editor}{mdt\-Tt\-Test\-Model\-Editor} \\*\#include \char`\"{}mdt\-Cl\-Editor.\-h\char`\"{} }{\pageref{classmdt_tt_test_model_editor}}{}
 \item\contentsline{section}{\hyperlink{classmdt_tt_test_model_generation_dialog}{mdt\-Tt\-Test\-Model\-Generation\-Dialog} }{\pageref{classmdt_tt_test_model_generation_dialog}}{}
-\item\contentsline{section}{\hyperlink{classmdt_tt_test_model_isolation_test_generator_helper}{mdt\-Tt\-Test\-Model\-Isolation\-Test\-Generator\-Helper} \\*Helper class for short detection and isolation test generation }{\pageref{classmdt_tt_test_model_isolation_test_generator_helper}}{}
+\item\contentsline{section}{\hyperlink{structmdt_tt_test_model_generation_parameter}{mdt\-Tt\-Test\-Model\-Generation\-Parameter} \\*Data container for test model generation parameters }{\pageref{structmdt_tt_test_model_generation_parameter}}{}
 \item\contentsline{section}{\hyperlink{classmdt_tt_test_model_item}{mdt\-Tt\-Test\-Model\-Item} \\*Helper class for test item edition }{\pageref{classmdt_tt_test_model_item}}{}
+\item\contentsline{section}{\hyperlink{classmdt_tt_test_model_item_data}{mdt\-Tt\-Test\-Model\-Item\-Data} \\*Container for test model item data }{\pageref{classmdt_tt_test_model_item_data}}{}
 \item\contentsline{section}{\hyperlink{class_ui_1_1mdt_tt_test_model_item_dialog}{Ui\-::mdt\-Tt\-Test\-Model\-Item\-Dialog} }{\pageref{class_ui_1_1mdt_tt_test_model_item_dialog}}{}
 \item\contentsline{section}{\hyperlink{classmdt_tt_test_model_item_editor}{mdt\-Tt\-Test\-Model\-Item\-Editor} \\*Test item editor }{\pageref{classmdt_tt_test_model_item_editor}}{}
+\item\contentsline{section}{\hyperlink{classmdt_tt_test_model_item_route_data}{mdt\-Tt\-Test\-Model\-Item\-Route\-Data} \\*Container for test model item route data }{\pageref{classmdt_tt_test_model_item_route_data}}{}
 \item\contentsline{section}{\hyperlink{classmdt_tt_test_node}{mdt\-Tt\-Test\-Node} \\*\#include $<$\-Q\-Model\-Index$>$ }{\pageref{classmdt_tt_test_node}}{}
 \item\contentsline{section}{\hyperlink{classmdt_tt_test_node_editor}{mdt\-Tt\-Test\-Node\-Editor} \\*This class provides a test node editor }{\pageref{classmdt_tt_test_node_editor}}{}
 \item\contentsline{section}{\hyperlink{classmdt_tt_test_node_manager}{mdt\-Tt\-Test\-Node\-Manager} \\*Helper class to access test node data and devices }{\pageref{classmdt_tt_test_node_manager}}{}

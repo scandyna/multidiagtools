@@ -21,11 +21,12 @@ Inheritance diagram for mdt\-Device\-:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdt\-Device\-:\nopagebreak
+Collaboration diagram for mdt\-Device\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=144pt]{classmdt_device__coll__graph}
+\includegraphics[width=216pt]{classmdt_device__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Slots}
@@ -147,14 +148,16 @@ int \hyperlink{classmdt_device_a6e338b959c86591b6b3401f925c49050}{get\-Digital\-
 \item 
 int \hyperlink{classmdt_device_ab35b81b8eb68e161ac06ae882be39a25}{get\-Digital\-Outputs} (bool wait\-On\-Reply)
 \begin{DoxyCompactList}\small\item\em Read all digital outputs on physical device and update (G)U\-I representation. \end{DoxyCompactList}\item 
-int \hyperlink{classmdt_device_a04564fd9be440c026e7c399f0e619485}{set\-Digital\-Output\-Value} (\hyperlink{classmdt_digital_io}{mdt\-Digital\-Io} $\ast$digital\-Output, const \hyperlink{classmdt_value}{mdt\-Value} \&value, bool send\-To\-Device, bool wait\-On\-Reply)
+int \hyperlink{classmdt_device_ad3c5aefa261a7ef8d27c2d5012886369}{set\-Digital\-Output\-Value} (\hyperlink{classmdt_digital_io}{mdt\-Digital\-Io} $\ast$digital\-Output, const \hyperlink{classmdt_value}{mdt\-Value} \&value, bool send\-To\-Device, bool wait\-On\-Reply)
 \begin{DoxyCompactList}\small\item\em Set a digital output value. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_device_a5c2514c3c31a687a01a898c874d2c45e}{set\-Digital\-Output\-Value} (int address\-Write, const \hyperlink{classmdt_value}{mdt\-Value} \&value, bool send\-To\-Device, bool wait\-On\-Reply)
 \begin{DoxyCompactList}\small\item\em Set digital output value. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_device_a6b906f01f6b0bdc8586df09a872173ef}{set\-Digital\-Output\-Value\-At} (int position, const \hyperlink{classmdt_value}{mdt\-Value} \&value, bool send\-To\-Device, bool wait\-On\-Reply)
 \begin{DoxyCompactList}\small\item\em Set digital output value. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_device_a2377d24cc1e767a24dfc5e34454a8737}{set\-Digital\-Output\-Value} (const Q\-String \&label\-Short, const \hyperlink{classmdt_value}{mdt\-Value} \&value, bool send\-To\-Device, bool wait\-On\-Reply)
-\item 
+\begin{DoxyCompactList}\small\item\em Set digital output value. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_device_aeb4eace4b537b6a9d38942f06acb7e92}{set\-Digital\-Outputs\-Value} (const \hyperlink{classmdt_value}{mdt\-Value} \&value, bool send\-To\-Device, bool wait\-On\-Reply)
+\begin{DoxyCompactList}\small\item\em Set a value and validity for all digital outputs. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_device_a7b86a816e55a91f0d62426e1741437c6}{set\-Digital\-Outputs} (bool wait\-On\-Reply)
 \begin{DoxyCompactList}\small\item\em Write all digital outputs to physical device and update (G)U\-I representation. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_port_manager_a9448339d7f08ca5e18b904df25b382da}{mdt\-Port\-Manager\-::state\-\_\-t} \hyperlink{classmdt_device_a76ddf08ac78502b835b192a8f38f963f}{current\-State} ()
@@ -201,6 +204,11 @@ void \hyperlink{classmdt_device_a4619d8be240cafe48865a89f7424de92}{restore\-Tran
 \begin{DoxyCompactList}\small\item\em Restore a transaction into pool. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_device_ab937015c1a319b7234442a4cc29a02a8}{wait\-Transaction\-Done} (int id)
 \begin{DoxyCompactList}\small\item\em Wait until a transaction is done without break the G\-U\-I's event loop. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_error}{mdt\-Error} \hyperlink{classmdt_device_ab54221195bbf9363f7e7f10ef38a3909}{pv\-Last\-Error}
+\begin{DoxyCompactList}\small\item\em Last error object. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -502,7 +510,7 @@ Get device state.
 
 
 
-Definition at line 1152 of file mdt\-Device.\-cpp.
+Definition at line 1170 of file mdt\-Device.\-cpp.
 
 
 
@@ -531,7 +539,7 @@ Subclass notes\-:
 \item Once decoding was done, the concerned I/\-O(s) sould be updated with new value, or set to invalid value on error (see \hyperlink{classmdt_value}{mdt\-Value} class). Doing so will keep (G)U\-I consistency. 
 \end{DoxyItemize}
 
-Definition at line 1195 of file mdt\-Device.\-cpp.
+Definition at line 1213 of file mdt\-Device.\-cpp.
 
 \hypertarget{classmdt_device_a61032f15e601eb1bd74da80014bae593}{\index{mdt\-Device@{mdt\-Device}!delete\-Ios@{delete\-Ios}}
 \index{delete\-Ios@{delete\-Ios}!mdtDevice@{mdt\-Device}}
@@ -742,7 +750,7 @@ Definition at line 293 of file mdt\-Device.\-cpp.
 
 
 
-References mdt\-Device\-Ios\-::analog\-Inputs(), mdt\-Error\-::commit(), mdt\-Error\-::\-Error, get\-Analog\-Input\-Value(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, name(), and mdt\-Error\-::set\-Error().
+References mdt\-Device\-Ios\-::analog\-Inputs(), mdt\-Error\-::commit(), mdt\-Error\-::\-Error, get\-Analog\-Input\-Value(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, name(), pv\-Last\-Error, and mdt\-Error\-::set\-Error().
 
 \hypertarget{classmdt_device_a78a8968cf61c1cac518b0a8af471110c}{\index{mdt\-Device@{mdt\-Device}!get\-Analog\-Outputs@{get\-Analog\-Outputs}}
 \index{get\-Analog\-Outputs@{get\-Analog\-Outputs}!mdtDevice@{mdt\-Device}}
@@ -899,7 +907,7 @@ Definition at line 446 of file mdt\-Device.\-cpp.
 
 
 
-References mdt\-Device\-Ios\-::analog\-Outputs(), mdt\-Error\-::commit(), mdt\-Error\-::\-Error, get\-Analog\-Output\-Value(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, name(), and mdt\-Error\-::set\-Error().
+References mdt\-Device\-Ios\-::analog\-Outputs(), mdt\-Error\-::commit(), mdt\-Error\-::\-Error, get\-Analog\-Output\-Value(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, name(), pv\-Last\-Error, and mdt\-Error\-::set\-Error().
 
 \hypertarget{classmdt_device_a6e338b959c86591b6b3401f925c49050}{\index{mdt\-Device@{mdt\-Device}!get\-Digital\-Inputs@{get\-Digital\-Inputs}}
 \index{get\-Digital\-Inputs@{get\-Digital\-Inputs}!mdtDevice@{mdt\-Device}}
@@ -1060,7 +1068,7 @@ Definition at line 753 of file mdt\-Device.\-cpp.
 
 
 
-References mdt\-Error\-::commit(), mdt\-Device\-Ios\-::digital\-Inputs(), mdt\-Error\-::\-Error, get\-Digital\-Input\-Value(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, name(), and mdt\-Error\-::set\-Error().
+References mdt\-Error\-::commit(), mdt\-Device\-Ios\-::digital\-Inputs(), mdt\-Error\-::\-Error, get\-Digital\-Input\-Value(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, name(), pv\-Last\-Error, and mdt\-Error\-::set\-Error().
 
 \hypertarget{classmdt_device_ab35b81b8eb68e161ac06ae882be39a25}{\index{mdt\-Device@{mdt\-Device}!get\-Digital\-Outputs@{get\-Digital\-Outputs}}
 \index{get\-Digital\-Outputs@{get\-Digital\-Outputs}!mdtDevice@{mdt\-Device}}
@@ -1215,7 +1223,7 @@ Definition at line 906 of file mdt\-Device.\-cpp.
 
 
 
-References mdt\-Error\-::commit(), mdt\-Device\-Ios\-::digital\-Outputs(), mdt\-Error\-::\-Error, get\-Digital\-Output\-Value(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, name(), and mdt\-Error\-::set\-Error().
+References mdt\-Error\-::commit(), mdt\-Device\-Ios\-::digital\-Outputs(), mdt\-Error\-::\-Error, get\-Digital\-Output\-Value(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, name(), pv\-Last\-Error, and mdt\-Error\-::set\-Error().
 
 \hypertarget{classmdt_device_a0e57cc8b749581cff447d514b9a1ff8e}{\index{mdt\-Device@{mdt\-Device}!get\-New\-Transaction@{get\-New\-Transaction}}
 \index{get\-New\-Transaction@{get\-New\-Transaction}!mdtDevice@{mdt\-Device}}
@@ -1236,7 +1244,7 @@ port\-Manager must be set before calling this method
 \end{DoxyPrecond}
 
 
-Definition at line 1265 of file mdt\-Device.\-cpp.
+Definition at line 1283 of file mdt\-Device.\-cpp.
 
 
 
@@ -1327,6 +1335,10 @@ Get last error.
 
 Definition at line 227 of file mdt\-Device.\-cpp.
 
+
+
+References pv\-Last\-Error.
+
 \hypertarget{classmdt_device_a6e7133e8665d9113d9423f4db44b1000}{\index{mdt\-Device@{mdt\-Device}!last\-Error\-W@{last\-Error\-W}}
 \index{last\-Error\-W@{last\-Error\-W}!mdtDevice@{mdt\-Device}}
 \subsubsection[{last\-Error\-W}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Error} \& mdt\-Device\-::last\-Error\-W (
@@ -1338,9 +1350,15 @@ Definition at line 227 of file mdt\-Device.\-cpp.
 
 Get last error for write access. 
 
+\begin{DoxyRefDesc}{Deprecated}
+\item[\hyperlink{deprecated__deprecated000012}{Deprecated}]Use pv\-Last\-Error directly. \end{DoxyRefDesc}
 
 
-Definition at line 1199 of file mdt\-Device.\-cpp.
+Definition at line 1217 of file mdt\-Device.\-cpp.
+
+
+
+References pv\-Last\-Error.
 
 
 
@@ -1363,7 +1381,7 @@ Definition at line 60 of file mdt\-Device.\-cpp.
 
 
 
-Referenced by mdt\-Device\-Modbus\-Wago\-::detect\-Ios(), mdt\-Device\-Modbus\-Wago\-Module\-::device\-Name(), get\-Analog\-Input\-Value(), get\-Analog\-Input\-Value\-At(), get\-Analog\-Output\-Value(), get\-Analog\-Output\-Value\-At(), get\-Digital\-Input\-Value(), get\-Digital\-Input\-Value\-At(), get\-Digital\-Output\-Value(), get\-Digital\-Output\-Value\-At(), mdt\-Device\-Scpi\-::handle\-Device\-Error(), mdt\-Device\-Modbus\-Wago\-::is\-Wago750(), mdt\-Device\-Scpi\-::log\-Device\-Error(), mdt\-Device\-Modbus\-Wago\-Module\-::read\-Registers(), mdt\-Device\-Modbus\-Wago\-Module\-::read\-Status\-Bytes(), set\-Analog\-Output\-Value(), set\-Analog\-Output\-Value\-At(), set\-Digital\-Output\-Value(), set\-Digital\-Output\-Value\-At(), set\-Name(), mdt\-Device\-Modbus\-Wago\-Module\-::write\-Control\-Bytes(), and mdt\-Device\-Modbus\-Wago\-Module\-::write\-Registers().
+Referenced by mdt\-Device\-Modbus\-Wago\-::detect\-Ios(), mdt\-Device\-Modbus\-Wago\-Module\-::device\-Name(), get\-Analog\-Input\-Value(), get\-Analog\-Input\-Value\-At(), get\-Analog\-Output\-Value(), get\-Analog\-Output\-Value\-At(), get\-Digital\-Input\-Value(), get\-Digital\-Input\-Value\-At(), get\-Digital\-Output\-Value(), get\-Digital\-Output\-Value\-At(), mdt\-Device\-Scpi\-::handle\-Device\-Error(), mdt\-Device\-Modbus\-Wago\-::is\-Wago750(), mdt\-Device\-Scpi\-::log\-Device\-Error(), mdt\-Device\-Modbus\-Wago\-Module\-::read\-Registers(), mdt\-Device\-Modbus\-Wago\-Module\-::read\-Status\-Bytes(), set\-Analog\-Output\-Value(), set\-Analog\-Output\-Value\-At(), set\-Digital\-Output\-Value(), set\-Digital\-Output\-Value\-At(), set\-Name(), mdt\-Device\-U3606\-A\-::setup\-Resistance\-Measure(), mdt\-Device\-Modbus\-Wago\-Module\-::write\-Control\-Bytes(), and mdt\-Device\-Modbus\-Wago\-Module\-::write\-Registers().
 
 \hypertarget{classmdt_device_a06d9178b4133fd7b23084e712af20976}{\index{mdt\-Device@{mdt\-Device}!port\-Manager@{port\-Manager}}
 \index{port\-Manager@{port\-Manager}!mdtDevice@{mdt\-Device}}
@@ -1415,7 +1433,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a3b83b926ed1f9c3bdf7024de2745
 
 
 
-Definition at line 1190 of file mdt\-Device.\-cpp.
+Definition at line 1208 of file mdt\-Device.\-cpp.
 
 
 
@@ -1455,7 +1473,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_aa2a024793ae2a5e81c7e92260a70
 
 
 
-Definition at line 1204 of file mdt\-Device.\-cpp.
+Definition at line 1222 of file mdt\-Device.\-cpp.
 
 
 
@@ -1500,7 +1518,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a846af6dbf80bbf747f3f966420ef
 
 
 
-Definition at line 1209 of file mdt\-Device.\-cpp.
+Definition at line 1227 of file mdt\-Device.\-cpp.
 
 
 
@@ -1540,7 +1558,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a30c815cbe5e603e8114dcbc09849
 
 
 
-Definition at line 1214 of file mdt\-Device.\-cpp.
+Definition at line 1232 of file mdt\-Device.\-cpp.
 
 
 
@@ -1585,7 +1603,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_ae02dd44f1d873fcc15ff75d781b6
 
 
 
-Definition at line 1219 of file mdt\-Device.\-cpp.
+Definition at line 1237 of file mdt\-Device.\-cpp.
 
 
 
@@ -1630,7 +1648,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a9dd05e51223ee5bb79970fbe84c5
 
 
 
-Definition at line 1234 of file mdt\-Device.\-cpp.
+Definition at line 1252 of file mdt\-Device.\-cpp.
 
 
 
@@ -1675,7 +1693,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a3fba9e113092f9da187cf684fb62
 
 
 
-Definition at line 1239 of file mdt\-Device.\-cpp.
+Definition at line 1257 of file mdt\-Device.\-cpp.
 
 
 
@@ -1715,7 +1733,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a13a334ac86135751893f37064d8f
 
 
 
-Definition at line 1244 of file mdt\-Device.\-cpp.
+Definition at line 1262 of file mdt\-Device.\-cpp.
 
 
 
@@ -1760,7 +1778,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a8915a036472bff0f356756992c1e
 
 
 
-Definition at line 1249 of file mdt\-Device.\-cpp.
+Definition at line 1267 of file mdt\-Device.\-cpp.
 
 
 
@@ -1785,7 +1803,7 @@ port\-Manager must be set before calling this method
 \end{DoxyPrecond}
 
 
-Definition at line 1272 of file mdt\-Device.\-cpp.
+Definition at line 1290 of file mdt\-Device.\-cpp.
 
 
 
@@ -1804,7 +1822,7 @@ Queries to send periodically.
 
 This slot is periodically called after a call of \hyperlink{classmdt_device_a721c5bf2cfa0eef5304333f08da182f7}{start()}. 
 
-Definition at line 1182 of file mdt\-Device.\-cpp.
+Definition at line 1200 of file mdt\-Device.\-cpp.
 
 
 
@@ -1966,7 +1984,7 @@ This slot is used by \hyperlink{classmdt_device_ios}{mdt\-Device\-Ios} to notify
 
 See \hyperlink{classmdt_device_a766d9adcf8c2274f61f120a4a5c5c6d9}{set\-Analog\-Output\-Value(mdt\-Analog\-Io$\ast$, const mdt\-Value\&, bool, bool)} for details. 
 
-Definition at line 1160 of file mdt\-Device.\-cpp.
+Definition at line 1178 of file mdt\-Device.\-cpp.
 
 
 
@@ -2000,7 +2018,7 @@ Definition at line 599 of file mdt\-Device.\-cpp.
 
 
 
-References mdt\-Device\-Ios\-::analog\-Outputs(), mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, name(), set\-Analog\-Output\-Value(), and mdt\-Error\-::set\-Error().
+References mdt\-Device\-Ios\-::analog\-Outputs(), mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, name(), pv\-Last\-Error, set\-Analog\-Output\-Value(), and mdt\-Error\-::set\-Error().
 
 \hypertarget{classmdt_device_aa241c40514683254990e742cf1bbb155}{\index{mdt\-Device@{mdt\-Device}!set\-Back\-To\-Ready\-State\-Timeout@{set\-Back\-To\-Ready\-State\-Timeout}}
 \index{set\-Back\-To\-Ready\-State\-Timeout@{set\-Back\-To\-Ready\-State\-Timeout}!mdtDevice@{mdt\-Device}}
@@ -2043,7 +2061,7 @@ Referenced by mdt\-Device\-Modbus\-::mdt\-Device\-Modbus(), and mdt\-Device\-Scp
 
 Write all digital outputs to physical device and update (G)U\-I representation. 
 
-To send the digital outputs values once. It's possible to use \hyperlink{classmdt_device_a04564fd9be440c026e7c399f0e619485}{set\-Digital\-Output\-Value()} without sending the query to device, then using this method to commit all values once.
+To send the digital outputs values once. It's possible to use \hyperlink{classmdt_device_ad3c5aefa261a7ef8d27c2d5012886369}{set\-Digital\-Output\-Value()} without sending the query to device, then using this method to commit all values once.
 
 See \hyperlink{classmdt_device_ios}{mdt\-Device\-Ios} and \hyperlink{classmdt_digital_io}{mdt\-Digital\-Io} for details.
 
@@ -2063,27 +2081,55 @@ Once results are available, the internal digital outputs are updated. (See \hype
 \end{DoxyReturn}
 
 
-Definition at line 1104 of file mdt\-Device.\-cpp.
+Definition at line 1122 of file mdt\-Device.\-cpp.
 
 
 
 References mdt\-Device\-Ios\-::digital\-Outputs\-Count(), mdt\-Device\-Ios\-::digital\-Outputs\-Segments(), get\-New\-Transaction(), mdt\-Device\-Ios\-Segment\-::io\-Count(), mdt\-Port\-Transaction\-::set\-Address(), mdt\-Device\-Ios\-::set\-Digital\-Outputs\-Enabled(), mdt\-Device\-Ios\-::set\-Digital\-Outputs\-Value(), mdt\-Port\-Transaction\-::set\-Io\-Count(), mdt\-Port\-Transaction\-::set\-Query\-Reply\-Mode(), mdt\-Device\-Ios\-Segment\-::start\-Address\-Write(), wait\-Transaction\-Done(), and write\-Digital\-Outputs().
 
-\hypertarget{classmdt_device_a04564fd9be440c026e7c399f0e619485}{\index{mdt\-Device@{mdt\-Device}!set\-Digital\-Output\-Value@{set\-Digital\-Output\-Value}}
+
+
+Referenced by set\-Digital\-Outputs\-Value().
+
+\hypertarget{classmdt_device_aeb4eace4b537b6a9d38942f06acb7e92}{\index{mdt\-Device@{mdt\-Device}!set\-Digital\-Outputs\-Value@{set\-Digital\-Outputs\-Value}}
+\index{set\-Digital\-Outputs\-Value@{set\-Digital\-Outputs\-Value}!mdtDevice@{mdt\-Device}}
+\subsubsection[{set\-Digital\-Outputs\-Value}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Device\-::set\-Digital\-Outputs\-Value (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Value} \&}]{value, }
+\item[{bool}]{send\-To\-Device, }
+\item[{bool}]{wait\-On\-Reply}
+\end{DoxyParamCaption}
+)}}\label{classmdt_device_aeb4eace4b537b6a9d38942f06acb7e92}
+
+
+Set a value and validity for all digital outputs. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_device_ad3c5aefa261a7ef8d27c2d5012886369}{set\-Digital\-Output\-Value(mdt\-Digital\-Io$\ast$, const mdt\-Value\&, bool, bool)} 
+\end{DoxySeeAlso}
+
+
+Definition at line 1104 of file mdt\-Device.\-cpp.
+
+
+
+References mdt\-Device\-Ios\-::digital\-Outputs\-Count(), set\-Digital\-Outputs(), and mdt\-Device\-Ios\-::set\-Digital\-Outputs\-Value().
+
+\hypertarget{classmdt_device_ad3c5aefa261a7ef8d27c2d5012886369}{\index{mdt\-Device@{mdt\-Device}!set\-Digital\-Output\-Value@{set\-Digital\-Output\-Value}}
 \index{set\-Digital\-Output\-Value@{set\-Digital\-Output\-Value}!mdtDevice@{mdt\-Device}}
-\subsubsection[{set\-Digital\-Output\-Value}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Device\-::set\-Digital\-Output\-Value (
+\subsubsection[{set\-Digital\-Output\-Value}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Device\-::set\-Digital\-Output\-Value (
 \begin{DoxyParamCaption}
 \item[{{\bf mdt\-Digital\-Io} $\ast$}]{digital\-Output, }
 \item[{const {\bf mdt\-Value} \&}]{value, }
 \item[{bool}]{send\-To\-Device, }
 \item[{bool}]{wait\-On\-Reply}
 \end{DoxyParamCaption}
-)}}\label{classmdt_device_a04564fd9be440c026e7c399f0e619485}
+)}}\label{classmdt_device_ad3c5aefa261a7ef8d27c2d5012886369}
 
 
 Set a digital output value. 
 
-Set device or internal digital value. Internal value is updated if query\-Device is set.
+Set device or internal digital value. Depending on subclass implementation, if query\-Device is set, output can be updated regarding device response.
 
 
 \begin{DoxyParams}{Parameters}
@@ -2091,7 +2137,7 @@ Set device or internal digital value. Internal value is updated if query\-Device
 \hline
 {\em value} & Value to send/store. \\
 \hline
-{\em send\-To\-Device} & If true, value is sent device by calling \hyperlink{classmdt_device_a0fbe57503d86554829e708b2b83d73f1}{write\-Digital\-Output()}, else value is only cached. Behaviour of this method can vary, depending on device specific subclass. (See sublcass \hyperlink{classmdt_device_a0fbe57503d86554829e708b2b83d73f1}{write\-Digital\-Output()} for details). \\
+{\em send\-To\-Device} & If true, value is sent to device by calling \hyperlink{classmdt_device_a0fbe57503d86554829e708b2b83d73f1}{write\-Digital\-Output()}, else value is only cached. Behaviour of this method can vary, depending on device specific subclass. (See sublcass \hyperlink{classmdt_device_a0fbe57503d86554829e708b2b83d73f1}{write\-Digital\-Output()} for details). \\
 \hline
 {\em wait\-On\-Reply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_device_ab937015c1a319b7234442a4cc29a02a8}{wait\-Transaction\-Done()} ), else it will return immediately after the query was sent. \\
 \hline
@@ -2100,15 +2146,8 @@ Set device or internal digital value. Internal value is updated if query\-Device
 0 or a I\-D on success. If no I/\-O's are set, on timeout, on invalid value or other error, a value $<$ 0 is returned. 
 \end{DoxyReturn}
 \begin{DoxyPrecond}{Precondition}
-digital\-Output must be valid.
+digital\-Output must be valid. 
 \end{DoxyPrecond}
-This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
-
-
-\begin{DoxyParams}{Parameters}
-{\em label\-Short} & Short label set in I/\-O (see \hyperlink{classmdt_digital_io}{mdt\-Digital\-Io} for details). \\
-\hline
-\end{DoxyParams}
 
 
 Definition at line 998 of file mdt\-Device.\-cpp.
@@ -2141,7 +2180,7 @@ Set digital output value.
 \hline
 \end{DoxyParams}
 \begin{DoxySeeAlso}{See Also}
-\hyperlink{classmdt_device_a04564fd9be440c026e7c399f0e619485}{set\-Digital\-Output\-Value(mdt\-Digital\-Io$\ast$, const mdt\-Value\&, bool, bool)} 
+\hyperlink{classmdt_device_ad3c5aefa261a7ef8d27c2d5012886369}{set\-Digital\-Output\-Value(mdt\-Digital\-Io$\ast$, const mdt\-Value\&, bool, bool)} 
 \end{DoxySeeAlso}
 
 
@@ -2161,6 +2200,18 @@ References mdt\-Error\-::commit(), mdt\-Device\-Ios\-::digital\-Output\-At\-Addr
 \item[{bool}]{wait\-On\-Reply}
 \end{DoxyParamCaption}
 )}}\label{classmdt_device_a2377d24cc1e767a24dfc5e34454a8737}
+
+
+Set digital output value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em label\-Short} & Short label set in I/\-O (see \hyperlink{classmdt_digital_io}{mdt\-Digital\-Io} for details).\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_device_ad3c5aefa261a7ef8d27c2d5012886369}{set\-Digital\-Output\-Value(mdt\-Digital\-Io$\ast$, const mdt\-Value\&, bool, bool)} 
+\end{DoxySeeAlso}
 
 
 Definition at line 1085 of file mdt\-Device.\-cpp.
@@ -2184,9 +2235,9 @@ Checks device's state and send request if Ready.
 
 This slot is used by \hyperlink{classmdt_device_ios}{mdt\-Device\-Ios} to notify that a value has changed.
 
-See \hyperlink{classmdt_device_a04564fd9be440c026e7c399f0e619485}{set\-Digital\-Output\-Value(mdt\-Digital\-Io$\ast$, const mdt\-Value\&, bool, bool)} for details. 
+See \hyperlink{classmdt_device_ad3c5aefa261a7ef8d27c2d5012886369}{set\-Digital\-Output\-Value(mdt\-Digital\-Io$\ast$, const mdt\-Value\&, bool, bool)} for details. 
 
-Definition at line 1171 of file mdt\-Device.\-cpp.
+Definition at line 1189 of file mdt\-Device.\-cpp.
 
 
 
@@ -2212,7 +2263,7 @@ Set digital output value.
 \hline
 \end{DoxyParams}
 \begin{DoxySeeAlso}{See Also}
-\hyperlink{classmdt_device_a04564fd9be440c026e7c399f0e619485}{set\-Digital\-Output\-Value(mdt\-Digital\-Io$\ast$, const mdt\-Value\&, bool, bool)} 
+\hyperlink{classmdt_device_ad3c5aefa261a7ef8d27c2d5012886369}{set\-Digital\-Output\-Value(mdt\-Digital\-Io$\ast$, const mdt\-Value\&, bool, bool)} 
 \end{DoxySeeAlso}
 
 
@@ -2220,7 +2271,7 @@ Definition at line 1059 of file mdt\-Device.\-cpp.
 
 
 
-References mdt\-Error\-::commit(), mdt\-Device\-Ios\-::digital\-Outputs(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, name(), set\-Digital\-Output\-Value(), and mdt\-Error\-::set\-Error().
+References mdt\-Error\-::commit(), mdt\-Device\-Ios\-::digital\-Outputs(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, name(), pv\-Last\-Error, set\-Digital\-Output\-Value(), and mdt\-Error\-::set\-Error().
 
 \hypertarget{classmdt_device_af6fddf7fba1f54e481a4f3445db64d98}{\index{mdt\-Device@{mdt\-Device}!set\-Identification@{set\-Identification}}
 \index{set\-Identification@{set\-Identification}!mdtDevice@{mdt\-Device}}
@@ -2413,7 +2464,7 @@ granularity must be $>$ 0.
 \end{DoxyPrecond}
 
 
-Definition at line 1280 of file mdt\-Device.\-cpp.
+Definition at line 1298 of file mdt\-Device.\-cpp.
 
 
 
@@ -2460,7 +2511,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_ac63297a31205759622f341525c34
 
 
 
-Definition at line 1224 of file mdt\-Device.\-cpp.
+Definition at line 1242 of file mdt\-Device.\-cpp.
 
 
 
@@ -2508,7 +2559,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_aa09d1682bef4bbc08b59b20110e6
 
 
 
-Definition at line 1229 of file mdt\-Device.\-cpp.
+Definition at line 1247 of file mdt\-Device.\-cpp.
 
 
 
@@ -2551,7 +2602,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a6950c10fc521b193fb3c75422387
 
 
 
-Definition at line 1254 of file mdt\-Device.\-cpp.
+Definition at line 1272 of file mdt\-Device.\-cpp.
 
 
 
@@ -2599,11 +2650,29 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a6713edaee0bfba48791008124299
 
 
 
-Definition at line 1259 of file mdt\-Device.\-cpp.
+Definition at line 1277 of file mdt\-Device.\-cpp.
 
 
 
 Referenced by set\-Digital\-Outputs().
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classmdt_device_ab54221195bbf9363f7e7f10ef38a3909}{\index{mdt\-Device@{mdt\-Device}!pv\-Last\-Error@{pv\-Last\-Error}}
+\index{pv\-Last\-Error@{pv\-Last\-Error}!mdtDevice@{mdt\-Device}}
+\subsubsection[{pv\-Last\-Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Error} mdt\-Device\-::pv\-Last\-Error\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_device_ab54221195bbf9363f7e7f10ef38a3909}
+
+
+Last error object. 
+
+
+
+Definition at line 707 of file mdt\-Device.\-h.
+
+
+
+Referenced by get\-Analog\-Input\-Value\-At(), get\-Analog\-Output\-Value\-At(), get\-Digital\-Input\-Value\-At(), get\-Digital\-Output\-Value\-At(), last\-Error(), last\-Error\-W(), set\-Analog\-Output\-Value\-At(), set\-Digital\-Output\-Value\-At(), and mdt\-Device\-U3606\-A\-::setup\-Resistance\-Measure().
 
 
 

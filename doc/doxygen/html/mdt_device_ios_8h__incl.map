@@ -1,6 +1,7 @@
 <map id="src/mdtdevice/mdtDeviceIos.h" name="src/mdtdevice/mdtDeviceIos.h">
-<area shape="rect" id="node3" href="$mdt_analog_io_8h.html" title="mdtAnalogIo.h" alt="" coords="249,83,356,112"/>
-<area shape="rect" id="node7" href="$mdt_value_8h.html" title="mdtValue.h" alt="" coords="59,237,147,267"/>
-<area shape="rect" id="node19" href="$mdt_digital_io_8h.html" title="mdtDigitalIo.h" alt="" coords="124,83,225,112"/>
-<area shape="rect" id="node5" href="$mdt_abstract_io_8h.html" title="mdtAbstractIo.h" alt="" coords="155,160,269,189"/>
+<area shape="rect" id="node3" href="$mdt_analog_io_8h.html" title="mdtAnalogIo.h" alt="" coords="291,83,397,112"/>
+<area shape="rect" id="node7" href="$mdt_value_8h.html" title="mdtValue.h" alt="" coords="464,237,552,267"/>
+<area shape="rect" id="node27" href="$mdt_digital_io_8h.html" title="mdtDigitalIo.h" alt="" coords="421,83,523,112"/>
+<area shape="rect" id="node5" href="$mdt_abstract_io_8h.html" title="mdtAbstractIo.h" alt="" coords="408,160,523,189"/>
+<area shape="rect" id="node21" href="$mdt_binary_double_converter_8h.html" title="mdtBinaryDoubleConverter.h" alt="" coords="101,160,291,189"/>
 </map>

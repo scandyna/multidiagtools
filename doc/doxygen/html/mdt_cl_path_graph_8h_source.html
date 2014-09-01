@@ -214,40 +214,42 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;</div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;  QList&lt;QVariant&gt; <a class="code" href="classmdt_cl_path_graph.html#afa0a3c6b9fd56cfd943a3bc2480c1ce0" title="Get shorted path from start connection ID to end connection ID. ">getShortestPath</a>(<span class="keyword">const</span> QVariant &amp; fromConnectionId, <span class="keyword">const</span> QVariant &amp; toConnectionId, <span class="keywordtype">bool</span> &amp; ok);</div>
 <div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classmdt_cl_path_graph.html#ae779d0527cc984122dbf063238b59749" title="Draw the graphic representation starting from a connection. ">drawPath</a>(<span class="keyword">const</span> QVariant &amp; fromConnectionId);</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classmdt_cl_path_graph.html#a8714c63f42c3bfbda6432ef2f59fe186" title="Check if given connections are linked together. ">connectionsAreLinked</a>(<span class="keyword">const</span> QVariant &amp; connectionIdA, <span class="keyword">const</span> QVariant &amp; connectionIdB);</div>
 <div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_cl_path_graph.html#a6c239942dd7f31fc2197af4febec489c" title="Attach a view to the scene of the path graph. ">attachView</a>(QGraphicsView *view);</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classmdt_cl_path_graph.html#ae779d0527cc984122dbf063238b59749" title="Draw the graphic representation starting from a connection. ">drawPath</a>(<span class="keyword">const</span> QVariant &amp; fromConnectionId);</div>
 <div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;  QStringList <a class="code" href="classmdt_cl_path_graph.html#a63ddfb9e8d64041ad17c992eac172a8a" title="Get last error message. ">lastErrorMessage</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured ">mdtError</a> <a class="code" href="classmdt_cl_path_graph.html#ada63b3baac0bca23e5bd7f9c798a29b2" title="Get last error. ">lastError</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_cl_path_graph.html#a6c239942dd7f31fc2197af4febec489c" title="Attach a view to the scene of the path graph. ">attachView</a>(QGraphicsView *view);</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  QStringList <a class="code" href="classmdt_cl_path_graph.html#a63ddfb9e8d64041ad17c992eac172a8a" title="Get last error message. ">lastErrorMessage</a>() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;  <span class="keywordtype">void</span> addLinkPv(<span class="keyword">const</span> QVariant &amp; startConnectionId, <span class="keyword">const</span> QVariant &amp; endConnectionId, <span class="keywordtype">bool</span> isBidirectional, <span class="keywordtype">int</span> weight, <span class="keywordtype">bool</span> addToManuallyList, <span class="keyword">const</span> QVariant &amp; userData);</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;  <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured ">mdtError</a> <a class="code" href="classmdt_cl_path_graph.html#ada63b3baac0bca23e5bd7f9c798a29b2" title="Get last error. ">lastError</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160; <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;  <a class="code" href="classmdt_cl_path_graphics_connection.html" title="Item that represent a connection (circle and text) in a graphics scene. ">mdtClPathGraphicsConnection</a> *newConnectionItem(<span class="keywordtype">int</span> <span class="keywordtype">id</span>, <a class="code" href="classmdt_cl_path_graphics_connection.html" title="Item that represent a connection (circle and text) in a graphics scene. ">mdtClPathGraphicsConnection</a> *itemForNextPos, <span class="keywordtype">bool</span> reverse);</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;  <span class="keywordtype">void</span> addLinkPv(<span class="keyword">const</span> QVariant &amp; startConnectionId, <span class="keyword">const</span> QVariant &amp; endConnectionId, <span class="keywordtype">bool</span> isBidirectional, <span class="keywordtype">int</span> weight, <span class="keywordtype">bool</span> addToManuallyList, <span class="keyword">const</span> QVariant &amp; userData);</div>
 <div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;  <span class="keywordtype">bool</span> setGraphicsItemsData(<a class="code" href="classmdt_cl_path_graphics_connection.html" title="Item that represent a connection (circle and text) in a graphics scene. ">mdtClPathGraphicsConnection</a> *startConnection, <a class="code" href="classmdt_cl_path_graphics_connection.html" title="Item that represent a connection (circle and text) in a graphics scene. ">mdtClPathGraphicsConnection</a> *endConnection, <a class="code" href="classmdt_cl_path_graphics_link.html" title="Item that represent a link in a graphics scene. ">mdtClPathGraphicsLink</a> *link, <span class="keywordtype">int</span> startConnectionId, <span class="keywordtype">int</span> endConnectionId);</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;  <a class="code" href="classmdt_cl_path_graphics_connection.html" title="Item that represent a connection (circle and text) in a graphics scene. ">mdtClPathGraphicsConnection</a> *newConnectionItem(<span class="keywordtype">int</span> <span class="keywordtype">id</span>, <a class="code" href="classmdt_cl_path_graphics_connection.html" title="Item that represent a connection (circle and text) in a graphics scene. ">mdtClPathGraphicsConnection</a> *itemForNextPos, <span class="keywordtype">bool</span> reverse);</div>
 <div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;  Q_DISABLE_COPY(<a class="code" href="classmdt_cl_path_graph.html" title="Represents the link list in a graph. ">mdtClPathGraph</a>);</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;  QSqlDatabase pvDatabase;</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;  QSqlQueryModel *pvLinkListModel;</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;  QHash&lt;int, mdtClPathGraphicsConnection *&gt; pvDrawnConnections;</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;  QGraphicsScene *pvGraphicsScene;</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;  <a class="code" href="namespacemdt_cl_path_graph_private.html#a0f07a8bdf4fa7671a93fe91d536b4793">mdtClPathGraphPrivate::graph_t</a> pvGraph;</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;  QHash&lt;int, mdtClPathGraphPrivate::vertex_t&gt; pvGraphVertices;</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;  std::map&lt;mdtClPathGraphPrivate::edge_t, mdtClPathGraphPrivate::mdtClPathGraphEdgeData&gt; pvEdgeDataMap;</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;  QVector&lt;mdtClPathGraphPrivate::edge_t&gt; pvManuallyAddedEdges;</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;  <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured ">mdtError</a> pvLastError;</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;};</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;<span class="preprocessor">#endif // #ifndef MDT_CL_PATH_GRAPH_H</span></div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;  <span class="keywordtype">bool</span> setGraphicsItemsData(<a class="code" href="classmdt_cl_path_graphics_connection.html" title="Item that represent a connection (circle and text) in a graphics scene. ">mdtClPathGraphicsConnection</a> *startConnection, <a class="code" href="classmdt_cl_path_graphics_connection.html" title="Item that represent a connection (circle and text) in a graphics scene. ">mdtClPathGraphicsConnection</a> *endConnection, <a class="code" href="classmdt_cl_path_graphics_link.html" title="Item that represent a link in a graphics scene. ">mdtClPathGraphicsLink</a> *link, <span class="keywordtype">int</span> startConnectionId, <span class="keywordtype">int</span> endConnectionId);</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;  Q_DISABLE_COPY(<a class="code" href="classmdt_cl_path_graph.html" title="Represents the link list in a graph. ">mdtClPathGraph</a>);</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;  QSqlDatabase pvDatabase;</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;  QSqlQueryModel *pvLinkListModel;</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;  QHash&lt;int, mdtClPathGraphicsConnection *&gt; pvDrawnConnections;</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;  QGraphicsScene *pvGraphicsScene;</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;  <a class="code" href="namespacemdt_cl_path_graph_private.html#a0f07a8bdf4fa7671a93fe91d536b4793">mdtClPathGraphPrivate::graph_t</a> pvGraph;</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;  QHash&lt;int, mdtClPathGraphPrivate::vertex_t&gt; pvGraphVertices;</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;  std::map&lt;mdtClPathGraphPrivate::edge_t, mdtClPathGraphPrivate::mdtClPathGraphEdgeData&gt; pvEdgeDataMap;</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;  QVector&lt;mdtClPathGraphPrivate::edge_t&gt; pvManuallyAddedEdges;</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;  <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured ">mdtError</a> pvLastError;</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;};</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;<span class="preprocessor">#endif // #ifndef MDT_CL_PATH_GRAPH_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 26 2014 17:48:02 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Sep 1 2014 18:45:36 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

@@ -57,6 +57,8 @@ bool \hyperlink{classmdt_tt_test_node_unit_a94fb2e68a3bdc156910ef103cbbe28f9}{ad
 \begin{DoxyCompactList}\small\item\em Add a list of connections. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_tt_test_node_unit_a69d8af3b7317ec6dee07d2ba860e2d3c}{add\-Connections} (const Q\-Variant \&test\-Node\-Unit\-Id, const Q\-Variant \&test\-Node\-Bus\-Id, bool handle\-Transaction)
 \begin{DoxyCompactList}\small\item\em Add connections that are related to given test node unit. \end{DoxyCompactList}\item 
+Q\-String\-List \hyperlink{classmdt_tt_test_node_unit_a9da3578291033f5f9d77f186fe2fb325}{get\-Test\-Links\-Depending\-On\-Connection} (const Q\-Variant \&test\-Node\-Unit\-Connection\-Id, bool \&ok)
+\begin{DoxyCompactList}\small\item\em Get a list of test links on witch depends on given test node unit connection. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_tt_test_node_unit_a80ecfabd0a6851c7542dc613d69cac26}{remove\-Connection} (const Q\-Variant \&unit\-Connection\-Id)
 \begin{DoxyCompactList}\small\item\em Remove a test node unit connection from Test\-Node\-Unit\-Connection\-\_\-tbl. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_tt_test_node_unit_a31bde37340b294c0ee5b2f85a710f29e}{remove\-Connections} (const Q\-List$<$ Q\-Variant $>$ \&unit\-Connection\-Id\-List, bool handle\-Transaction)
@@ -73,7 +75,7 @@ bool \hyperlink{classmdt_tt_test_node_unit_ad55390985ebad2fdd1fdc2d448cbaa61}{se
 \subsection{Detailed Description}
 Helper class for test node unit data manipulation. 
 
-Definition at line 37 of file mdt\-Tt\-Test\-Node\-Unit.\-h.
+Definition at line 38 of file mdt\-Tt\-Test\-Node\-Unit.\-h.
 
 
 
@@ -112,7 +114,7 @@ Add a connection.
 
 
 
-Definition at line 276 of file mdt\-Tt\-Test\-Node\-Unit.\-cpp.
+Definition at line 274 of file mdt\-Tt\-Test\-Node\-Unit.\-cpp.
 
 
 
@@ -138,7 +140,7 @@ Add a list of connections.
 
 
 
-Definition at line 294 of file mdt\-Tt\-Test\-Node\-Unit.\-cpp.
+Definition at line 292 of file mdt\-Tt\-Test\-Node\-Unit.\-cpp.
 
 
 
@@ -163,7 +165,7 @@ Add connections that are related to given test node unit.
 
 
 
-Definition at line 320 of file mdt\-Tt\-Test\-Node\-Unit.\-cpp.
+Definition at line 318 of file mdt\-Tt\-Test\-Node\-Unit.\-cpp.
 
 
 
@@ -182,7 +184,7 @@ Add a test node unit.
 
 
 
-Definition at line 193 of file mdt\-Tt\-Test\-Node\-Unit.\-cpp.
+Definition at line 191 of file mdt\-Tt\-Test\-Node\-Unit.\-cpp.
 
 
 
@@ -202,7 +204,7 @@ Edit a test node unit.
 
 
 
-Definition at line 213 of file mdt\-Tt\-Test\-Node\-Unit.\-cpp.
+Definition at line 211 of file mdt\-Tt\-Test\-Node\-Unit.\-cpp.
 
 
 
@@ -222,7 +224,7 @@ Get unit connection I\-Ds that are linked to given unit connection I\-Ds.
 
 Will return I\-Ds that not currently exists in Test\-Node\-Unit\-Connection\-\_\-tbl. 
 
-Definition at line 85 of file mdt\-Tt\-Test\-Node\-Unit.\-cpp.
+Definition at line 83 of file mdt\-Tt\-Test\-Node\-Unit.\-cpp.
 
 
 
@@ -247,7 +249,7 @@ Definition at line 53 of file mdt\-Tt\-Test\-Node\-Unit.\-cpp.
 
 
 
-Referenced by add\-Connections(), mdt\-Tt\-Test\-Node\-::ensure\-Absence\-Of\-Short\-Circuit(), and remove\-Connections().
+Referenced by add\-Connections(), and remove\-Connections().
 
 \hypertarget{classmdt_tt_test_node_unit_a155c09aa98d1b7fd00faee04abe0cf60}{\index{mdt\-Tt\-Test\-Node\-Unit@{mdt\-Tt\-Test\-Node\-Unit}!get\-Data@{get\-Data}}
 \index{get\-Data@{get\-Data}!mdtTtTestNodeUnit@{mdt\-Tt\-Test\-Node\-Unit}}
@@ -264,11 +266,29 @@ Get test node unit data.
 
 
 
-Definition at line 141 of file mdt\-Tt\-Test\-Node\-Unit.\-cpp.
+Definition at line 139 of file mdt\-Tt\-Test\-Node\-Unit.\-cpp.
 
 
 
 References mdt\-Error\-::commit(), mdt\-Tt\-Base\-::database(), mdt\-Tt\-Base\-::get\-Data(), get\-Unit\-Data(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Error\-::set\-Error(), and mdt\-Error\-::\-Warning.
+
+\hypertarget{classmdt_tt_test_node_unit_a9da3578291033f5f9d77f186fe2fb325}{\index{mdt\-Tt\-Test\-Node\-Unit@{mdt\-Tt\-Test\-Node\-Unit}!get\-Test\-Links\-Depending\-On\-Connection@{get\-Test\-Links\-Depending\-On\-Connection}}
+\index{get\-Test\-Links\-Depending\-On\-Connection@{get\-Test\-Links\-Depending\-On\-Connection}!mdtTtTestNodeUnit@{mdt\-Tt\-Test\-Node\-Unit}}
+\subsubsection[{get\-Test\-Links\-Depending\-On\-Connection}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String\-List mdt\-Tt\-Test\-Node\-Unit\-::get\-Test\-Links\-Depending\-On\-Connection (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{test\-Node\-Unit\-Connection\-Id, }
+\item[{bool \&}]{ok}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_node_unit_a9da3578291033f5f9d77f186fe2fb325}
+
+
+Get a list of test links on witch depends on given test node unit connection. 
+
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000073}{Todo}]Create a Q\-Sql\-Error mapping somwhere (note that error code depends on used database engine). When a foreign key constraint was detected, check on witch table it depends, then build a user friendly error \end{DoxyRefDesc}
+
+
+Definition at line 370 of file mdt\-Tt\-Test\-Node\-Unit.\-cpp.
 
 \hypertarget{classmdt_tt_test_node_unit_a62037b84333f04180d790942de24a927}{\index{mdt\-Tt\-Test\-Node\-Unit@{mdt\-Tt\-Test\-Node\-Unit}!get\-Unit\-Data@{get\-Unit\-Data}}
 \index{get\-Unit\-Data@{get\-Unit\-Data}!mdtTtTestNodeUnit@{mdt\-Tt\-Test\-Node\-Unit}}
@@ -284,7 +304,7 @@ Get unit data.
 
 
 
-Definition at line 111 of file mdt\-Tt\-Test\-Node\-Unit.\-cpp.
+Definition at line 109 of file mdt\-Tt\-Test\-Node\-Unit.\-cpp.
 
 
 
@@ -307,7 +327,7 @@ Remove a test node unit connection from Test\-Node\-Unit\-Connection\-\_\-tbl.
 
 
 
-Definition at line 335 of file mdt\-Tt\-Test\-Node\-Unit.\-cpp.
+Definition at line 333 of file mdt\-Tt\-Test\-Node\-Unit.\-cpp.
 
 
 
@@ -331,7 +351,7 @@ Remove given test node unit connections from Test\-Node\-Unit\-Connection\-\_\-t
 
 
 
-Definition at line 340 of file mdt\-Tt\-Test\-Node\-Unit.\-cpp.
+Definition at line 338 of file mdt\-Tt\-Test\-Node\-Unit.\-cpp.
 
 
 
@@ -355,7 +375,7 @@ Remove connections for given test node unit I\-D.
 
 
 
-Definition at line 366 of file mdt\-Tt\-Test\-Node\-Unit.\-cpp.
+Definition at line 378 of file mdt\-Tt\-Test\-Node\-Unit.\-cpp.
 
 
 
@@ -375,7 +395,7 @@ Remove a test node unit.
 
 Will also remove related connections from Test\-Node\-Unit\-Connection\-\_\-tbl 
 
-Definition at line 224 of file mdt\-Tt\-Test\-Node\-Unit.\-cpp.
+Definition at line 222 of file mdt\-Tt\-Test\-Node\-Unit.\-cpp.
 
 
 
@@ -398,7 +418,7 @@ Remove test node units.
 
 Will also remove related connections from Test\-Node\-Unit\-Connection\-\_\-tbl 
 
-Definition at line 254 of file mdt\-Tt\-Test\-Node\-Unit.\-cpp.
+Definition at line 252 of file mdt\-Tt\-Test\-Node\-Unit.\-cpp.
 
 
 
@@ -418,7 +438,7 @@ Set bus I\-D to given connection I\-D.
 
 
 
-Definition at line 382 of file mdt\-Tt\-Test\-Node\-Unit.\-cpp.
+Definition at line 394 of file mdt\-Tt\-Test\-Node\-Unit.\-cpp.
 
 
 
@@ -442,7 +462,7 @@ Set bus I\-D to given connection I\-D list.
 
 
 
-Definition at line 407 of file mdt\-Tt\-Test\-Node\-Unit.\-cpp.
+Definition at line 419 of file mdt\-Tt\-Test\-Node\-Unit.\-cpp.
 
 
 

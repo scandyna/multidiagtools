@@ -8,6 +8,7 @@
 <area shape="rect" id="node15" href="$classmdt_tt_test_data.html" title="mdtTtTestData" alt="" coords="205,325,315,355"/>
 <area shape="rect" id="node17" href="$classmdt_tt_test_link_data.html" title="Data container for test link. " alt="" coords="193,379,327,408"/>
 <area shape="rect" id="node19" href="$classmdt_tt_test_model_data.html" title="mdtTtTestModelData" alt="" coords="188,432,332,461"/>
-<area shape="rect" id="node21" href="$classmdt_tt_test_node_unit_data.html" title="#include &quot;mdtClUnitConnectionData.h&quot; " alt="" coords="177,485,343,515"/>
-<area shape="rect" id="node23" href="$classmdt_tt_test_node_unit_setup_data.html" title="Storage class for test node unit. " alt="" coords="161,539,359,568"/>
+<area shape="rect" id="node21" href="$classmdt_tt_test_model_item_data.html" title="Container for test model item data. " alt="" coords="175,485,345,515"/>
+<area shape="rect" id="node23" href="$classmdt_tt_test_node_unit_data.html" title="#include &quot;mdtClUnitConnectionData.h&quot; " alt="" coords="177,539,343,568"/>
+<area shape="rect" id="node25" href="$classmdt_tt_test_node_unit_setup_data.html" title="Storage class for test node unit. " alt="" coords="161,592,359,621"/>
 </map>

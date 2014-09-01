@@ -1,7 +1,8 @@
 <map id="src/mdtutilsgui/mdtAnalogOutWidget.cpp" name="src/mdtutilsgui/mdtAnalogOutWidget.cpp">
-<area shape="rect" id="node3" href="$mdt_analog_out_widget_8h.html" title="mdtAnalogOutWidget.h" alt="" coords="45,179,203,208"/>
-<area shape="rect" id="node17" href="$mdt_analog_io_8h.html" title="mdtAnalogIo.h" alt="" coords="209,101,316,131"/>
+<area shape="rect" id="node3" href="$mdt_analog_out_widget_8h.html" title="mdtAnalogOutWidget.h" alt="" coords="135,179,292,208"/>
+<area shape="rect" id="node17" href="$mdt_analog_io_8h.html" title="mdtAnalogIo.h" alt="" coords="496,101,603,131"/>
 <area shape="rect" id="node5" href="$mdt_abstract_io_widget_8h.html" title="mdtAbstractIoWidget.h" alt="" coords="5,256,160,285"/>
 <area shape="rect" id="node9" href="$mdt_value_8h.html" title="mdtValue.h" alt="" coords="184,256,272,285"/>
-<area shape="rect" id="node19" href="$mdt_abstract_io_8h.html" title="mdtAbstractIo.h" alt="" coords="323,179,437,208"/>
+<area shape="rect" id="node19" href="$mdt_abstract_io_8h.html" title="mdtAbstractIo.h" alt="" coords="316,179,431,208"/>
+<area shape="rect" id="node29" href="$mdt_binary_double_converter_8h.html" title="mdtBinaryDoubleConverter.h" alt="" coords="455,179,644,208"/>
 </map>

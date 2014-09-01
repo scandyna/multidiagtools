@@ -186,7 +186,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  qDebug() &lt;&lt; <span class="stringliteral">&quot;delete I/Os DONE&quot;</span>;</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;}</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
-<div class="line"><a name="l00098"></a><span class="lineno"><a class="code" href="classmdt_device_ios.html#a0e2683630eff9410003a36ae5af76b52">   98</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#a0e2683630eff9410003a36ae5af76b52" title="Add a analog input. ">mdtDeviceIos::addAnalogInput</a>(<a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O. ">mdtAnalogIo</a> *ai)</div>
+<div class="line"><a name="l00098"></a><span class="lineno"><a class="code" href="classmdt_device_ios.html#a0e2683630eff9410003a36ae5af76b52">   98</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#a0e2683630eff9410003a36ae5af76b52" title="Add a analog input. ">mdtDeviceIos::addAnalogInput</a>(<a class="code" href="classmdt_analog_io.html" title="class mdtBinaryDoubleConverter; ">mdtAnalogIo</a> *ai)</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;{</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  Q_ASSERT(ai != 0);</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
@@ -237,12 +237,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;  }</div>
 <div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;}</div>
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;</div>
-<div class="line"><a name="l00149"></a><span class="lineno"><a class="code" href="classmdt_device_ios.html#ad74dc114cec2029aa9a14714f13666c7">  149</a></span>&#160;<a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O. ">mdtAnalogIo</a> *<a class="code" href="classmdt_device_ios.html#ad74dc114cec2029aa9a14714f13666c7" title="Get analog input at given address. ">mdtDeviceIos::analogInputAtAddress</a>(<span class="keywordtype">int</span> address)</div>
+<div class="line"><a name="l00149"></a><span class="lineno"><a class="code" href="classmdt_device_ios.html#ad74dc114cec2029aa9a14714f13666c7">  149</a></span>&#160;<a class="code" href="classmdt_analog_io.html" title="class mdtBinaryDoubleConverter; ">mdtAnalogIo</a> *<a class="code" href="classmdt_device_ios.html#ad74dc114cec2029aa9a14714f13666c7" title="Get analog input at given address. ">mdtDeviceIos::analogInputAtAddress</a>(<span class="keywordtype">int</span> address)</div>
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;{</div>
 <div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;  <span class="keywordflow">return</span> pvAnalogInputsByAddressRead.value(address, 0);</div>
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;}</div>
 <div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;</div>
-<div class="line"><a name="l00154"></a><span class="lineno"><a class="code" href="classmdt_device_ios.html#ae31753e23d7ab14073f852dca85c2f9e">  154</a></span>&#160;<a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O. ">mdtAnalogIo</a> *<a class="code" href="classmdt_device_ios.html#ae31753e23d7ab14073f852dca85c2f9e" title="Get analog input with a given short label. ">mdtDeviceIos::analogInputWithLabelShort</a>(<span class="keyword">const</span> QString &amp;labelShort)</div>
+<div class="line"><a name="l00154"></a><span class="lineno"><a class="code" href="classmdt_device_ios.html#ae31753e23d7ab14073f852dca85c2f9e">  154</a></span>&#160;<a class="code" href="classmdt_analog_io.html" title="class mdtBinaryDoubleConverter; ">mdtAnalogIo</a> *<a class="code" href="classmdt_device_ios.html#ae31753e23d7ab14073f852dca85c2f9e" title="Get analog input with a given short label. ">mdtDeviceIos::analogInputWithLabelShort</a>(<span class="keyword">const</span> QString &amp;labelShort)</div>
 <div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;{</div>
 <div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;  <span class="keywordtype">int</span> i;</div>
 <div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;</div>
@@ -281,7 +281,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  }</div>
 <div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;}</div>
 <div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;</div>
-<div class="line"><a name="l00193"></a><span class="lineno"><a class="code" href="classmdt_device_ios.html#aa0e736fa9663fa133cbf337d5a4b90e2">  193</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#aa0e736fa9663fa133cbf337d5a4b90e2" title="Add a analog output. ">mdtDeviceIos::addAnalogOutput</a>(<a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O. ">mdtAnalogIo</a> *ao, <a class="code" href="classmdt_device_ios.html#a72fc3fdcd905d669b1e90496e808d6dd" title="Adress access type. ">mdtDeviceIos::addressAccess_t</a> sortSegmentsBy)</div>
+<div class="line"><a name="l00193"></a><span class="lineno"><a class="code" href="classmdt_device_ios.html#aa0e736fa9663fa133cbf337d5a4b90e2">  193</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios.html#aa0e736fa9663fa133cbf337d5a4b90e2" title="Add a analog output. ">mdtDeviceIos::addAnalogOutput</a>(<a class="code" href="classmdt_analog_io.html" title="class mdtBinaryDoubleConverter; ">mdtAnalogIo</a> *ao, <a class="code" href="classmdt_device_ios.html#a72fc3fdcd905d669b1e90496e808d6dd" title="Adress access type. ">mdtDeviceIos::addressAccess_t</a> sortSegmentsBy)</div>
 <div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;{</div>
 <div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;  Q_ASSERT(ao != 0);</div>
 <div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;</div>
@@ -349,17 +349,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;  }</div>
 <div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;}</div>
 <div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;</div>
-<div class="line"><a name="l00261"></a><span class="lineno"><a class="code" href="classmdt_device_ios.html#a74385f332753cedb68ae4133c97384be">  261</a></span>&#160;<a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O. ">mdtAnalogIo</a> *<a class="code" href="classmdt_device_ios.html#a74385f332753cedb68ae4133c97384be" title="Get analog output at given address for read access. ">mdtDeviceIos::analogOutputAtAddressRead</a>(<span class="keywordtype">int</span> address)</div>
+<div class="line"><a name="l00261"></a><span class="lineno"><a class="code" href="classmdt_device_ios.html#a74385f332753cedb68ae4133c97384be">  261</a></span>&#160;<a class="code" href="classmdt_analog_io.html" title="class mdtBinaryDoubleConverter; ">mdtAnalogIo</a> *<a class="code" href="classmdt_device_ios.html#a74385f332753cedb68ae4133c97384be" title="Get analog output at given address for read access. ">mdtDeviceIos::analogOutputAtAddressRead</a>(<span class="keywordtype">int</span> address)</div>
 <div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;{</div>
 <div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;  <span class="keywordflow">return</span> pvAnalogOutputsByAddressRead.value(address, 0);</div>
 <div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;}</div>
 <div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;</div>
-<div class="line"><a name="l00266"></a><span class="lineno"><a class="code" href="classmdt_device_ios.html#a968999a1021a96504805248e2ce04382">  266</a></span>&#160;<a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O. ">mdtAnalogIo</a> *<a class="code" href="classmdt_device_ios.html#a968999a1021a96504805248e2ce04382" title="Get analog output at given address for write access. ">mdtDeviceIos::analogOutputAtAddressWrite</a>(<span class="keywordtype">int</span> address)</div>
+<div class="line"><a name="l00266"></a><span class="lineno"><a class="code" href="classmdt_device_ios.html#a968999a1021a96504805248e2ce04382">  266</a></span>&#160;<a class="code" href="classmdt_analog_io.html" title="class mdtBinaryDoubleConverter; ">mdtAnalogIo</a> *<a class="code" href="classmdt_device_ios.html#a968999a1021a96504805248e2ce04382" title="Get analog output at given address for write access. ">mdtDeviceIos::analogOutputAtAddressWrite</a>(<span class="keywordtype">int</span> address)</div>
 <div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;{</div>
 <div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;  <span class="keywordflow">return</span> pvAnalogOutputsByAddressWrite.value(address, 0);</div>
 <div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;}</div>
 <div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;</div>
-<div class="line"><a name="l00271"></a><span class="lineno"><a class="code" href="classmdt_device_ios.html#aab2b2b1f8c887eb9f439cf495ec95fbd">  271</a></span>&#160;<a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O. ">mdtAnalogIo</a> *<a class="code" href="classmdt_device_ios.html#aab2b2b1f8c887eb9f439cf495ec95fbd" title="Get analog output with a given short label. ">mdtDeviceIos::analogOutputWithLabelShort</a>(<span class="keyword">const</span> QString &amp;labelShort)</div>
+<div class="line"><a name="l00271"></a><span class="lineno"><a class="code" href="classmdt_device_ios.html#aab2b2b1f8c887eb9f439cf495ec95fbd">  271</a></span>&#160;<a class="code" href="classmdt_analog_io.html" title="class mdtBinaryDoubleConverter; ">mdtAnalogIo</a> *<a class="code" href="classmdt_device_ios.html#aab2b2b1f8c887eb9f439cf495ec95fbd" title="Get analog output with a given short label. ">mdtDeviceIos::analogOutputWithLabelShort</a>(<span class="keyword">const</span> QString &amp;labelShort)</div>
 <div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;{</div>
 <div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;  <span class="keywordtype">int</span> i;</div>
 <div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;</div>
@@ -1077,7 +1077,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 26 2014 17:48:02 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Sep 1 2014 18:45:35 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

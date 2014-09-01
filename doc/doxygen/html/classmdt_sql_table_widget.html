@@ -112,7 +112,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="classmdt_sql_table_widget__coll__graph.png" border="0" usemap="#mdt_sql_table_widget_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_sql_table_widget_coll__map" id="mdt_sql_table_widget_coll__map">
-<area shape="rect" id="node2" href="classmdt_abstract_sql_widget.html" title="Base class to create database table GUI. " alt="" coords="5,83,157,112"/><area shape="rect" id="node4" href="class_q_widget.html" title="QWidget" alt="" coords="45,5,117,35"/></map>
+<area shape="rect" id="node2" href="classmdt_abstract_sql_widget.html" title="Base class to create database table GUI. " alt="" coords="13,101,165,131"/><area shape="rect" id="node4" href="class_q_widget.html" title="QWidget" alt="" coords="5,5,77,35"/><area shape="rect" id="node6" href="classmdt_error.html" title="mdtError contains informations about a error that occured " alt="" coords="101,5,173,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-slots"></a>
@@ -273,6 +273,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a903905036e9c6b440e2a300f48579b2b inherit pub_methods_classmdt_abstract_sql_widget"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_widget.html#a903905036e9c6b440e2a300f48579b2b">submitAndWait</a> (int timeout=-1)</td></tr>
 <tr class="memdesc:a903905036e9c6b440e2a300f48579b2b inherit pub_methods_classmdt_abstract_sql_widget"><td class="mdescLeft">&#160;</td><td class="mdescRight">Submit and wait until success or failure.  <a href="#a903905036e9c6b440e2a300f48579b2b">More...</a><br/></td></tr>
 <tr class="separator:a903905036e9c6b440e2a300f48579b2b inherit pub_methods_classmdt_abstract_sql_widget"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf1cce4236f5a7e795c65c226a065726 inherit pub_methods_classmdt_abstract_sql_widget"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_error.html">mdtError</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_widget.html#acf1cce4236f5a7e795c65c226a065726">lastError</a> () const </td></tr>
+<tr class="memdesc:acf1cce4236f5a7e795c65c226a065726 inherit pub_methods_classmdt_abstract_sql_widget"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get last error.  <a href="#acf1cce4236f5a7e795c65c226a065726">More...</a><br/></td></tr>
+<tr class="separator:acf1cce4236f5a7e795c65c226a065726 inherit pub_methods_classmdt_abstract_sql_widget"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -382,12 +385,16 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:ac3b54b54289e7366c5fa80091c0d48b4 inherit pro_methods_classmdt_abstract_sql_widget"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classmdt_sort_filter_proxy_model.html">mdtSortFilterProxyModel</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_widget.html#ac3b54b54289e7366c5fa80091c0d48b4">proxyModel</a> () const </td></tr>
 <tr class="memdesc:ac3b54b54289e7366c5fa80091c0d48b4 inherit pro_methods_classmdt_abstract_sql_widget"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get internal proxy model.  <a href="#ac3b54b54289e7366c5fa80091c0d48b4">More...</a><br/></td></tr>
 <tr class="separator:ac3b54b54289e7366c5fa80091c0d48b4 inherit pro_methods_classmdt_abstract_sql_widget"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_classmdt_abstract_sql_widget"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classmdt_abstract_sql_widget')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classmdt_abstract_sql_widget.html">mdtAbstractSqlWidget</a></td></tr>
+<tr class="memitem:a90c8f40ecf210ce13bba75b8bb5966a8 inherit pro_attribs_classmdt_abstract_sql_widget"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_error.html">mdtError</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_widget.html#a90c8f40ecf210ce13bba75b8bb5966a8">pvLastError</a></td></tr>
+<tr class="memdesc:a90c8f40ecf210ce13bba75b8bb5966a8 inherit pro_attribs_classmdt_abstract_sql_widget"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store last error.  <a href="#a90c8f40ecf210ce13bba75b8bb5966a8">More...</a><br/></td></tr>
+<tr class="separator:a90c8f40ecf210ce13bba75b8bb5966a8 inherit pro_attribs_classmdt_abstract_sql_widget"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Table view based SQL widget. </p>
 <p>Internally, QTableView is used. This class add some common needed methods, like insertion, removing, ... </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_table_widget_8h_source.html#l00081">81</a> of file <a class="el" href="mdt_sql_table_widget_8h_source.html">mdtSqlTableWidget.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_widget_8h_source.html#l00082">82</a> of file <a class="el" href="mdt_sql_table_widget_8h_source.html">mdtSqlTableWidget.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a4cf2b0d69608e88d33996148f612e58d"></a>
 <div class="memitem">
@@ -406,9 +413,9 @@ Additional Inherited Members</h2></td></tr>
 <p>Constructor. </p>
 <p>Setup a QTableView and init some other things. The table view will not be editable, use <a class="el" href="classmdt_sql_table_widget.html#af5ef66b8ebb45a698f99ad455208f3c8" title="Set edition enabled/disabled. ">setEditionEnabled()</a> to alter this. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00093">93</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00101">101</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="classmdt_abstract_sql_widget.html#a6787c093d9b0b64a1e8d3794ba505604">mdtAbstractSqlWidget::modelSelected()</a>, <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00465">resizeViewToContents()</a>, and <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00158">setEditionEnabled()</a>.</p>
+<p>References <a class="el" href="classmdt_abstract_sql_widget.html#a6787c093d9b0b64a1e8d3794ba505604">mdtAbstractSqlWidget::modelSelected()</a>, <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00510">resizeViewToContents()</a>, and <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00179">setEditionEnabled()</a>.</p>
 
 </div>
 </div>
@@ -427,7 +434,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00142">142</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00163">163</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -447,7 +454,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Add a strech to local bar. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00200">200</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00221">221</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -470,7 +477,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Note: widget will be parented to layout, so Qt will delete it itself.</p>
 <dl class="section pre"><dt>Precondition</dt><dd>widget must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00177">177</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00198">198</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -499,9 +506,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implements <a class="el" href="classmdt_abstract_sql_widget.html#ab48f6375f55f1eaba309fb17aaaf5770">mdtAbstractSqlWidget</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00146">146</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00167">167</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00512">mdtAbstractSqlWidget::proxyModel()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00535">mdtAbstractSqlWidget::proxyModel()</a>.</p>
 
 </div>
 </div>
@@ -523,11 +530,11 @@ Additional Inherited Members</h2></td></tr>
 <p>The returned selection will only contain data related to given field list.</p>
 <dl class="section pre"><dt>Precondition</dt><dd>Model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a8971862741e1ef79c79e11b37e955476" title="Set the table model. ">setModel()</a> before using this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00301">301</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00322">322</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00077">mdtAbstractSqlWidget::model()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00512">mdtAbstractSqlWidget::proxyModel()</a>, <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00221">selectionModel()</a>, and <a class="el" href="mdt_sql_table_selection_8cpp_source.html#l00035">mdtSqlTableSelection::setIndexList()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00076">mdtAbstractSqlWidget::model()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00535">mdtAbstractSqlWidget::proxyModel()</a>, <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00242">selectionModel()</a>, and <a class="el" href="mdt_sql_table_selection_8cpp_source.html#l00035">mdtSqlTableSelection::setIndexList()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00321">currentSelection()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00366">currentSelection()</a>.</p>
 
 </div>
 </div>
@@ -549,9 +556,9 @@ Additional Inherited Members</h2></td></tr>
 <p>The returned selection will only contain data related to given field.</p>
 <dl class="section pre"><dt>Precondition</dt><dd>Model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a8971862741e1ef79c79e11b37e955476" title="Set the table model. ">setModel()</a> before using this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00321">321</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00366">366</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00301">currentSelection()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00077">mdtAbstractSqlWidget::model()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00512">mdtAbstractSqlWidget::proxyModel()</a>, and <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00221">selectionModel()</a>.</p>
+<p>References <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00322">currentSelection()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00076">mdtAbstractSqlWidget::model()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00535">mdtAbstractSqlWidget::proxyModel()</a>, and <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00242">selectionModel()</a>.</p>
 
 </div>
 </div>
@@ -582,9 +589,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classmdt_abstract_sql_widget.html#a4ad94a530c77292d122d38eb041da6e9">mdtAbstractSqlWidget</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00168">168</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00189">189</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00158">setEditionEnabled()</a>.</p>
+<p>References <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00179">setEditionEnabled()</a>.</p>
 
 </div>
 </div>
@@ -607,11 +614,11 @@ Additional Inherited Members</h2></td></tr>
 <p>Will return a list of indexes that contains only coulumns specified by columnList. This alos works for multiple rows selection.</p>
 <dl class="section pre"><dt>Precondition</dt><dd>Model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a8971862741e1ef79c79e11b37e955476" title="Set the table model. ">setModel()</a> before using this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00390">390</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00435">435</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00077">mdtAbstractSqlWidget::model()</a>, and <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00221">selectionModel()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00076">mdtAbstractSqlWidget::model()</a>, and <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00242">selectionModel()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00428">indexListOfSelectedRows()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00473">indexListOfSelectedRows()</a>.</p>
 
 </div>
 </div>
@@ -637,9 +644,9 @@ Additional Inherited Members</h2></td></tr>
 <dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000011">Deprecated:</a></b></dt><dd></dd></dl>
 <p>This is a variant for single column. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00428">428</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00473">473</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00390">indexListOfSelectedRows()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00077">mdtAbstractSqlWidget::model()</a>, and <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00221">selectionModel()</a>.</p>
+<p>References <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00435">indexListOfSelectedRows()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00076">mdtAbstractSqlWidget::model()</a>, and <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00242">selectionModel()</a>.</p>
 
 </div>
 </div>
@@ -657,9 +664,9 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00443">443</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00488">488</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00390">indexListOfSelectedRows()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00077">mdtAbstractSqlWidget::model()</a>, and <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00221">selectionModel()</a>.</p>
+<p>References <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00435">indexListOfSelectedRows()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00076">mdtAbstractSqlWidget::model()</a>, and <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00242">selectionModel()</a>.</p>
 
 </div>
 </div>
@@ -683,11 +690,11 @@ Additional Inherited Members</h2></td></tr>
 <dl class="section pre"><dt>Precondition</dt><dd>Model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a8971862741e1ef79c79e11b37e955476" title="Set the table model. ">setModel()</a> before using this method.</dd></dl>
 <p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00334">334</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00379">379</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00077">mdtAbstractSqlWidget::model()</a>, and <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00221">selectionModel()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00076">mdtAbstractSqlWidget::model()</a>, and <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00242">selectionModel()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00375">indexListOfSelectedRowsByRowsList()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00420">indexListOfSelectedRowsByRowsList()</a>.</p>
 
 </div>
 </div>
@@ -705,9 +712,9 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00375">375</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00420">420</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00334">indexListOfSelectedRowsByRowsList()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00077">mdtAbstractSqlWidget::model()</a>, and <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00221">selectionModel()</a>.</p>
+<p>References <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00379">indexListOfSelectedRowsByRowsList()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00076">mdtAbstractSqlWidget::model()</a>, and <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00242">selectionModel()</a>.</p>
 
 </div>
 </div>
@@ -734,9 +741,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Resize view to contents. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00465">465</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00510">510</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00093">mdtSqlTableWidget()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00101">mdtSqlTableWidget()</a>.</p>
 
 </div>
 </div>
@@ -755,9 +762,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Get internal table view's selection model. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00221">221</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00242">242</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00301">currentSelection()</a>, <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00390">indexListOfSelectedRows()</a>, and <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00334">indexListOfSelectedRowsByRowsList()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00322">currentSelection()</a>, <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00435">indexListOfSelectedRows()</a>, and <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00379">indexListOfSelectedRowsByRowsList()</a>.</p>
 
 </div>
 </div>
@@ -787,11 +794,11 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Set a coulumn as hidden. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00244">244</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00265">265</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00077">mdtAbstractSqlWidget::model()</a>, and <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00265">setDefaultColumnToSelect()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00076">mdtAbstractSqlWidget::model()</a>, and <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00286">setDefaultColumnToSelect()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00252">setColumnHidden()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00273">setColumnHidden()</a>.</p>
 
 </div>
 </div>
@@ -822,9 +829,9 @@ Additional Inherited Members</h2></td></tr>
 <p>Set a coulumn as hidden. </p>
 <dl class="section pre"><dt>Precondition</dt><dd>Model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a8971862741e1ef79c79e11b37e955476" title="Set the table model. ">setModel()</a> before using this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00252">252</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00273">273</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00077">mdtAbstractSqlWidget::model()</a>, and <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00244">setColumnHidden()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00076">mdtAbstractSqlWidget::model()</a>, and <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00265">setColumnHidden()</a>.</p>
 
 </div>
 </div>
@@ -852,9 +859,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Set row as current record. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00451">451</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00496">496</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00077">mdtAbstractSqlWidget::model()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00076">mdtAbstractSqlWidget::model()</a>.</p>
 
 </div>
 </div>
@@ -876,11 +883,11 @@ Additional Inherited Members</h2></td></tr>
 <p>Some methods have to update selection in table view. Here it's possible to define witch column must be selected in such case.</p>
 <dl class="section pre"><dt>Precondition</dt><dd>Model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a8971862741e1ef79c79e11b37e955476" title="Set the table model. ">setModel()</a> before using this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00265">265</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00286">286</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00077">mdtAbstractSqlWidget::model()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00076">mdtAbstractSqlWidget::model()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00244">setColumnHidden()</a>, and <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00276">setDefaultColumnToSelect()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00265">setColumnHidden()</a>, and <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00297">setDefaultColumnToSelect()</a>.</p>
 
 </div>
 </div>
@@ -902,9 +909,9 @@ Additional Inherited Members</h2></td></tr>
 <p>Same as <a class="el" href="classmdt_sql_table_widget.html#a6c54d9c26f7bb6241607785586bcc52e" title="Set default column to select. ">setDefaultColumnToSelect(int)</a>, but you can give a field name.</p>
 <dl class="section pre"><dt>Precondition</dt><dd>Model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a8971862741e1ef79c79e11b37e955476" title="Set the table model. ">setModel()</a> before using this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00276">276</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00297">297</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00077">mdtAbstractSqlWidget::model()</a>, and <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00265">setDefaultColumnToSelect()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00076">mdtAbstractSqlWidget::model()</a>, and <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00286">setDefaultColumnToSelect()</a>.</p>
 
 </div>
 </div>
@@ -924,9 +931,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Set edition enabled/disabled. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00158">158</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00179">179</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00168">enableLocalEdition()</a>, and <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00093">mdtSqlTableWidget()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00189">enableLocalEdition()</a>, and <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00101">mdtSqlTableWidget()</a>.</p>
 
 </div>
 </div>
@@ -957,9 +964,9 @@ Additional Inherited Members</h2></td></tr>
 <p>Set a user friendly name for a column. </p>
 <dl class="section pre"><dt>Precondition</dt><dd>Model must be set with <a class="el" href="classmdt_abstract_sql_widget.html#a8971862741e1ef79c79e11b37e955476" title="Set the table model. ">setModel()</a> before using this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00231">231</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00252">252</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00077">mdtAbstractSqlWidget::model()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00076">mdtAbstractSqlWidget::model()</a>.</p>
 
 </div>
 </div>
@@ -989,9 +996,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classmdt_abstract_sql_widget.html#a2c83a26fe75b708948c80a51887075e9">mdtAbstractSqlWidget</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00283">283</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00304">304</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00077">mdtAbstractSqlWidget::model()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00512">mdtAbstractSqlWidget::proxyModel()</a>, and <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00231">mdtAbstractSqlWidget::rowCount()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00076">mdtAbstractSqlWidget::model()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00535">mdtAbstractSqlWidget::proxyModel()</a>, and <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00230">mdtAbstractSqlWidget::rowCount()</a>.</p>
 
 </div>
 </div>
@@ -1010,7 +1017,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Get internal table view. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00226">226</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_widget_8cpp_source.html#l00247">247</a> of file <a class="el" href="mdt_sql_table_widget_8cpp_source.html">mdtSqlTableWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -1021,7 +1028,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 26 2014 17:48:11 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Sep 1 2014 18:45:46 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

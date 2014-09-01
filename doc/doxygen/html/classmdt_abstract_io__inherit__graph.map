@@ -1,5 +1,5 @@
 <map id="mdtAbstractIo" name="mdtAbstractIo">
-<area shape="rect" id="node5" href="$classmdt_analog_io.html" title="Representation of a analog I/O. " alt="" coords="5,160,99,189"/>
+<area shape="rect" id="node5" href="$classmdt_analog_io.html" title="class mdtBinaryDoubleConverter; " alt="" coords="5,160,99,189"/>
 <area shape="rect" id="node7" href="$classmdt_digital_io.html" title="Representation of a digital I/O. " alt="" coords="123,160,213,189"/>
 <area shape="rect" id="node2" href="$class_q_object.html" title="QObject" alt="" coords="75,5,144,35"/>
 </map>

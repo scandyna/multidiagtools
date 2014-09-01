@@ -334,128 +334,268 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;}</div>
 <div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;</div>
-<div class="line"><a name="l00246"></a><span class="lineno"><a class="code" href="classmdt_tt_test_node.html#ade83e368a3cff8fe6704e3c194d5e211">  246</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_test_node.html#ade83e368a3cff8fe6704e3c194d5e211" title="Add (coupling and channel) relays to graph. ">mdtTtTestNode::addRelaysToGraph</a>(<span class="keyword">const</span> QVariant&amp; testNodeId, <a class="code" href="classmdt_cl_path_graph.html" title="Represents the link list in a graph. ">mdtClPathGraph</a>&amp; graph, <span class="keyword">const</span> QList&lt; QVariant &gt;&amp; relaysToIgnoreIdList)</div>
+<div class="line"><a name="l00246"></a><span class="lineno"><a class="code" href="classmdt_tt_test_node.html#acfc06c2a3c2ab5b1c9e09dc9ba391f5f">  246</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_test_node.html#acfc06c2a3c2ab5b1c9e09dc9ba391f5f" title="Set I/O position for a range of test node units. ">mdtTtTestNode::setTestNodeUnitIoRange</a>(<span class="keyword">const</span> <a class="code" href="classmdt_sql_table_selection.html" title="Handle selection of model indexes in a QTableView. ">mdtSqlTableSelection</a>&amp; s, <span class="keywordtype">int</span> startIoPosition)</div>
 <div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;{</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;  QString sql;</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;  QList&lt;QVariant&gt; testNodeUnitIdList;</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;  QList&lt;QVariant&gt; connectionsList;</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;  QVariant testNodeUnitId;</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;  <span class="keywordtype">bool</span> ok;</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;  <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;  <span class="comment">// Clear previous added relays</span></div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;  graph.<a class="code" href="classmdt_cl_path_graph.html#a5bee589e7c93681bf9325fd9bc999eb9" title="Remove links that where added with addLink() ">removeAddedLinks</a>();</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;  <span class="comment">// Get coupling relays</span></div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;  sql = <span class="stringliteral">&quot;SELECT Unit_Id_FK_PK FROM TestNodeUnit_tbl&quot;</span>;</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;  sql += <span class="stringliteral">&quot; WHERE TestNode_Id_FK = &quot;</span> + testNodeId.toString();</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;  sql += <span class="stringliteral">&quot; AND (Type_Code_FK = &#39;BUSCPLREL&#39; OR Type_Code_FK = &#39;CHANELREL&#39;)&quot;</span>;</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;  testNodeUnitIdList = getDataList&lt;QVariant&gt;(sql, ok);</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;  <span class="keywordflow">if</span>(!ok){</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;  }</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;  <span class="keywordflow">for</span>(i = 0; i &lt; relaysToIgnoreIdList.size(); ++i){</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;    Q_ASSERT(!relaysToIgnoreIdList.at(i).isNull());</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;    testNodeUnitIdList.removeAll(relaysToIgnoreIdList.at(i));</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;  }</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;  <span class="keywordflow">for</span>(i = 0; i &lt; testNodeUnitIdList.size(); ++i){</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    <span class="comment">// Get connections</span></div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    testNodeUnitId = testNodeUnitIdList.at(i);</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    Q_ASSERT(!testNodeUnitId.isNull());</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    sql = <span class="stringliteral">&quot;SELECT Id_PK FROM UnitConnection_tbl WHERE Unit_Id_FK = &quot;</span> + testNodeUnitId.toString();</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    connectionsList = getDataList&lt;QVariant&gt;(sql, ok);</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;    <span class="keywordflow">if</span>(!ok){</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;    }</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;    <span class="comment">// We only handle relays with exactly 2 connections</span></div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;    <span class="keywordflow">if</span>(connectionsList.size() == 2){</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;      graph.<a class="code" href="classmdt_cl_path_graph.html#a14a5580402b273eb6707939ee122fa95" title="Add a link to the graph. ">addLink</a>(connectionsList.at(0), connectionsList.at(1), testNodeUnitId, <span class="keyword">true</span>, 2);</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;    }<span class="keywordflow">else</span>{</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;      <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error. ">setError</a>(tr(<span class="stringliteral">&quot;Relay ID &quot;</span>) + testNodeUnitId.toString() + tr(<span class="stringliteral">&quot; has not exactly 2 connections.&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;      <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce" title="Add source information to error. ">MDT_ERROR_SET_SRC</a>(<a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>, <span class="stringliteral">&quot;mdtTtRelayPathDialog&quot;</span>);</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;      <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output. ">commit</a>();</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;    }</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;  }</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;}</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;</div>
-<div class="line"><a name="l00292"></a><span class="lineno"><a class="code" href="classmdt_tt_test_node.html#a2953e3744cd95cab94ef35a7fb308d12">  292</a></span>&#160;QList&lt;mdtTtTestNodeUnitSetupData&gt; <a class="code" href="classmdt_tt_test_node.html#a2953e3744cd95cab94ef35a7fb308d12" title="Get a list of test node unit setup data for a given path. ">mdtTtTestNode::getRelayPathSetupDataList</a>(<span class="keyword">const</span> QList&lt;QVariant&gt; &amp; relayPathConnectionIdList, <a class="code" href="classmdt_cl_path_graph.html" title="Represents the link list in a graph. ">mdtClPathGraph</a> &amp; graph, <span class="keywordtype">bool</span> &amp; ok)</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;{</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;  <a class="code" href="classmdt_tt_test_node_unit_setup_data.html" title="Storage class for test node unit. ">mdtTtTestNodeUnitSetupData</a> setupData;</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;  QList&lt;mdtTtTestNodeUnitSetupData&gt; setupDataList;</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;  QVariant testNodeUnitId;</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;  <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;  <span class="comment">// Setup data</span></div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;  <span class="keywordflow">if</span>(!setupData.<a class="code" href="classmdt_tt_test_node_unit_setup_data.html#a2a2bb93f0ceb79adec8b4692cf1afb39" title="Setup fields from TestNodeUnitSetup_tbl. ">setup</a>(<a class="code" href="classmdt_tt_base.html#a82c3f795b6cb8101b12e0e0ef340c1be" title="Get database instance. ">database</a>())){</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;    ok = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;    <span class="keywordflow">return</span> setupDataList;</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;  }</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;  <span class="comment">// Process..</span></div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;  <span class="keywordflow">if</span>(relayPathConnectionIdList.size() &lt; 2){</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;    ok = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;    <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error. ">setError</a>(tr(<span class="stringliteral">&quot;Given relays path is not valid (contains less than 2 connections).&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;    <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce" title="Add source information to error. ">MDT_ERROR_SET_SRC</a>(<a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>, <span class="stringliteral">&quot;mdtTtTestNode&quot;</span>);</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;    <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output. ">commit</a>();</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;    <span class="keywordflow">return</span> setupDataList;</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;  }</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;  <span class="keywordflow">for</span>(i = 1; i &lt; relayPathConnectionIdList.size(); ++i){</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;    Q_ASSERT(!relayPathConnectionIdList.at(i-1).isNull());</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;    Q_ASSERT(!relayPathConnectionIdList.at(i).isNull());</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;    testNodeUnitId = graph.<a class="code" href="classmdt_cl_path_graph.html#a82df1588f1b4a9df7b25760ebd9e5aa1" title="Get user data for item between start and end connection. ">getUserData</a>(relayPathConnectionIdList.at(i-1), relayPathConnectionIdList.at(i));</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;    <span class="keywordflow">if</span>(!testNodeUnitId.isNull()){</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;      setupData.<a class="code" href="classmdt_sql_record.html#a0bfc0fc265c6b0048698e2f5d4f840a8" title="Clear values. ">clearValues</a>();</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;      setupData.<a class="code" href="classmdt_sql_record.html#a330291ff82fb8c7803c47d30f8939ed5" title="Set value. ">setValue</a>(<span class="stringliteral">&quot;TestNodeUnit_Id_FK&quot;</span>, testNodeUnitId);</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;      setupData.<a class="code" href="classmdt_sql_record.html#a330291ff82fb8c7803c47d30f8939ed5" title="Set value. ">setValue</a>(<span class="stringliteral">&quot;State&quot;</span>, <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;      setupData.<a class="code" href="classmdt_sql_record.html#a330291ff82fb8c7803c47d30f8939ed5" title="Set value. ">setValue</a>(<span class="stringliteral">&quot;StepNumber&quot;</span>, 0);</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;      setupDataList.append(setupData);</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;    }</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;  }</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;  <span class="keywordflow">return</span> setupDataList;</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;}</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;</div>
-<div class="line"><a name="l00328"></a><span class="lineno"><a class="code" href="classmdt_tt_test_node.html#a0e96e3c1ab7b93ec5b7f2b02be44a1ff">  328</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_test_node.html#a0e96e3c1ab7b93ec5b7f2b02be44a1ff" title="Check that enabling a set of coupling and channel relays does not produce a short circuit between con...">mdtTtTestNode::ensureAbsenceOfShortCircuit</a>(<span class="keyword">const</span> QVariant &amp; connectionIdA, <span class="keyword">const</span> QVariant &amp; connectionIdB, <span class="keyword">const</span> QList&lt;mdtTtTestNodeUnitSetupData&gt; &amp; testNodeUnitSetupDataList, <a class="code" href="classmdt_cl_path_graph.html" title="Represents the link list in a graph. ">mdtClPathGraph</a> &amp; graph, <span class="keywordtype">bool</span> &amp; ok)</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;{</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;  <a class="code" href="classmdt_tt_test_node_unit.html" title="Helper class for test node unit data manipulation. ">mdtTtTestNodeUnit</a> tnu(0, <a class="code" href="classmdt_tt_base.html#a82c3f795b6cb8101b12e0e0ef340c1be" title="Get database instance. ">database</a>());</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;  QList&lt;QVariant&gt; connectionIdList;</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;  <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;  <span class="keywordtype">bool</span> noShort;</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;  <span class="comment">// Clear previous results</span></div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;  graph.<a class="code" href="classmdt_cl_path_graph.html#a5bee589e7c93681bf9325fd9bc999eb9" title="Remove links that where added with addLink() ">removeAddedLinks</a>();</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;  <span class="comment">// Add given node units to graph</span></div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;  <span class="keywordflow">for</span>(i = 0; i &lt; testNodeUnitSetupDataList.size(); ++i){</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;    connectionIdList = tnu.<a class="code" href="classmdt_tt_test_node_unit.html#a4430727b510df4c6b3bb6ea78074d555" title="Get a list of unit connection IDs for given unit ID. ">getConnectionIdListOfUnitId</a>(testNodeUnitSetupDataList.at(i).value(<span class="stringliteral">&quot;TestNodeUnit_Id_FK&quot;</span>), <span class="keyword">false</span>, ok);</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    <span class="keywordflow">if</span>(!ok){</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;      <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a> = tnu.<a class="code" href="classmdt_tt_base.html#a92adaae105cef63b18ace2e320776ca9" title="Get last error. ">lastError</a>();</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    }</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    <span class="comment">// We only handle units with exactly 2 connections</span></div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;    <span class="keywordflow">if</span>(connectionIdList.size() != 2){</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;      ok = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;      <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error. ">setError</a>(tr(<span class="stringliteral">&quot;Node unit ID &quot;</span>) + testNodeUnitSetupDataList.at(i).value(<span class="stringliteral">&quot;TestNodeUnit_Id_FK&quot;</span>).toString() + tr(<span class="stringliteral">&quot; has not exaclty 2 connections. This is not supported.&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;      <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce" title="Add source information to error. ">MDT_ERROR_SET_SRC</a>(<a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>, <span class="stringliteral">&quot;mdtTtTestNode&quot;</span>);</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;      <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output. ">commit</a>();</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;    }</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    Q_ASSERT(connectionIdList.size() == 2);</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;    graph.<a class="code" href="classmdt_cl_path_graph.html#a14a5580402b273eb6707939ee122fa95" title="Add a link to the graph. ">addLink</a>(connectionIdList.at(0), connectionIdList.at(1), <span class="keyword">true</span>, 2);</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;  }</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;  noShort = graph.<a class="code" href="classmdt_cl_path_graph.html#afa0a3c6b9fd56cfd943a3bc2480c1ce0" title="Get shorted path from start connection ID to end connection ID. ">getShortestPath</a>(connectionIdA, connectionIdB, ok).isEmpty();</div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;  <span class="keywordflow">if</span>(!ok){</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;    <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a> = graph.<a class="code" href="classmdt_cl_path_graph.html#ada63b3baac0bca23e5bd7f9c798a29b2" title="Get last error. ">lastError</a>();</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;  }</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;  graph.<a class="code" href="classmdt_cl_path_graph.html#a5bee589e7c93681bf9325fd9bc999eb9" title="Remove links that where added with addLink() ">removeAddedLinks</a>();</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;  <span class="keywordflow">return</span> noShort;</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;}</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;  <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;  <a class="code" href="classmdt_sql_record.html" title="Database record container class. ">mdtSqlRecord</a> record;</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;  <span class="keywordtype">int</span> ioPos;</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;  <span class="comment">// Setup record</span></div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;  <span class="keywordflow">if</span>(!record.<a class="code" href="classmdt_sql_record.html#a878c551b98df2653d642ec01b0101495" title="Add all fields of given table to record. ">addAllFields</a>(<span class="stringliteral">&quot;TestNodeUnit_tbl&quot;</span>, <a class="code" href="classmdt_tt_base.html#a82c3f795b6cb8101b12e0e0ef340c1be" title="Get database instance. ">database</a>())){</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a> = record.<a class="code" href="classmdt_sql_record.html#aa997bbc32402c3a254404ab74b9662f0" title="Get last error. ">lastError</a>();</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;  }</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;  <span class="keywordflow">if</span>(!<a class="code" href="classmdt_tt_base.html#a733fc8720c9eeabd3395883ba5a544ce" title="Beginn manually a new transaction. ">beginTransaction</a>()){</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;  }</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;  ioPos = startIoPosition;</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;  <span class="keywordflow">for</span>(i = 0; i &lt; s.<a class="code" href="classmdt_sql_table_selection.html#a411d70a724981bd47f550d05cf3858be" title="Get row count. ">rowCount</a>(); ++i){</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    Q_ASSERT(!s.<a class="code" href="classmdt_sql_table_selection.html#a30a3f85a56792d9641abbd2129c50bca" title="Get data for given row and field name. ">data</a>(i, <span class="stringliteral">&quot;Unit_Id_FK_PK&quot;</span>).isNull());</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    record.<a class="code" href="classmdt_sql_record.html#a330291ff82fb8c7803c47d30f8939ed5" title="Set value. ">setValue</a>(<span class="stringliteral">&quot;IoPosition&quot;</span>, ioPos);</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    <span class="keywordflow">if</span>(!<a class="code" href="classmdt_tt_base.html#a40a9416a29d96518f39b2225516a2786" title="Update data for given table. ">updateRecord</a>(<span class="stringliteral">&quot;TestNodeUnit_tbl&quot;</span>, record, <span class="stringliteral">&quot;Unit_Id_FK_PK&quot;</span>, s.<a class="code" href="classmdt_sql_table_selection.html#a30a3f85a56792d9641abbd2129c50bca" title="Get data for given row and field name. ">data</a>(i, <span class="stringliteral">&quot;Unit_Id_FK_PK&quot;</span>))){</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;      <a class="code" href="classmdt_tt_base.html#a7c736836397a8d65a28992e1a39c1be5" title="Rollback manually a new transaction. ">rollbackTransaction</a>();</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;    }</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    ++ioPos;</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;  }</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;  <span class="keywordflow">if</span>(!<a class="code" href="classmdt_tt_base.html#a32b6cbd2d6c9a055cbc97136e9958d81" title="Commit manually a new transaction. ">commitTransaction</a>()){</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;  }</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;}</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;</div>
+<div class="line"><a name="l00277"></a><span class="lineno"><a class="code" href="classmdt_tt_test_node.html#ade83e368a3cff8fe6704e3c194d5e211">  277</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_test_node.html#ade83e368a3cff8fe6704e3c194d5e211" title="Add (coupling and channel) relays to graph. ">mdtTtTestNode::addRelaysToGraph</a>(<span class="keyword">const</span> QVariant&amp; testNodeId, <a class="code" href="classmdt_cl_path_graph.html" title="Represents the link list in a graph. ">mdtClPathGraph</a>&amp; graph, <span class="keyword">const</span> QList&lt; QVariant &gt;&amp; relaysToIgnoreIdList)</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;{</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;  <span class="keyword">struct </span>relay_t{</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    QVariant id;</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;    QVariant cnxA;</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;    QVariant cnxB;</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;  } relay;</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;  QString sql;</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;  QList&lt;QVariant&gt; testNodeUnitIdList;</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;  QPair&lt;QVariant, QVariant&gt; connections;</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;  QList&lt;relay_t&gt; relaysList;</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;  <span class="keywordtype">bool</span> ok;</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;  <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;  <span class="comment">// Clear previous added relays</span></div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;  graph.<a class="code" href="classmdt_cl_path_graph.html#a5bee589e7c93681bf9325fd9bc999eb9" title="Remove links that where added with addLink() ">removeAddedLinks</a>();</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;  <span class="comment">// Get coupling relays</span></div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;  sql = <span class="stringliteral">&quot;SELECT Unit_Id_FK_PK FROM TestNodeUnit_tbl&quot;</span>;</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;  sql += <span class="stringliteral">&quot; WHERE TestNode_Id_FK = &quot;</span> + testNodeId.toString();</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;  sql += <span class="stringliteral">&quot; AND (Type_Code_FK = &#39;BUSCPLREL&#39; OR Type_Code_FK = &#39;CHANELREL&#39;)&quot;</span>;</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;  testNodeUnitIdList = getDataList&lt;QVariant&gt;(sql, ok);</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;  <span class="keywordflow">if</span>(!ok){</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;  }</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;  <span class="keywordflow">for</span>(i = 0; i &lt; relaysToIgnoreIdList.size(); ++i){</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;    Q_ASSERT(!relaysToIgnoreIdList.at(i).isNull());</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;    testNodeUnitIdList.removeAll(relaysToIgnoreIdList.at(i));</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;  }</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;  <span class="comment">// Build relays list</span></div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;  <span class="keywordflow">for</span>(i = 0; i &lt; testNodeUnitIdList.size(); ++i){</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;    <span class="comment">// Get connections</span></div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;    connections = getTwoRelayConnections(testNodeUnitIdList.at(i), graph, ok);</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;    <span class="keywordflow">if</span>(!ok){</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;    }</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;    relay.id = testNodeUnitIdList.at(i);</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;    relay.cnxA = connections.first;</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;    relay.cnxB = connections.second;</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;    relaysList.append(relay);</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;  }</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;  <span class="comment">// Add relays to graph</span></div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;  <span class="keywordflow">for</span>(i = 0; i &lt; relaysList.size(); ++i){</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;    relay = relaysList.at(i);</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    graph.<a class="code" href="classmdt_cl_path_graph.html#a14a5580402b273eb6707939ee122fa95" title="Add a link to the graph. ">addLink</a>(relay.cnxA, relay.cnxB, relay.id, <span class="keyword">true</span>, 100);</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;  }</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;}</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;</div>
+<div class="line"><a name="l00346"></a><span class="lineno"><a class="code" href="classmdt_tt_test_node.html#a2953e3744cd95cab94ef35a7fb308d12">  346</a></span>&#160;QList&lt;mdtTtTestNodeUnitSetupData&gt; <a class="code" href="classmdt_tt_test_node.html#a2953e3744cd95cab94ef35a7fb308d12" title="Get a list of test node unit setup data for a given path. ">mdtTtTestNode::getRelayPathSetupDataList</a>(<span class="keyword">const</span> QList&lt;QVariant&gt; &amp; relayPathConnectionIdList, <a class="code" href="classmdt_cl_path_graph.html" title="Represents the link list in a graph. ">mdtClPathGraph</a> &amp; graph, <span class="keywordtype">bool</span> &amp; ok)</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;{</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;  <a class="code" href="classmdt_tt_test_node_unit_setup_data.html" title="Storage class for test node unit. ">mdtTtTestNodeUnitSetupData</a> setupData;</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;  QList&lt;mdtTtTestNodeUnitSetupData&gt; setupDataList;</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;  QVariant testNodeUnitId;</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;  <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;  <span class="comment">// Setup data</span></div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;  <span class="keywordflow">if</span>(!setupData.<a class="code" href="classmdt_tt_test_node_unit_setup_data.html#a2a2bb93f0ceb79adec8b4692cf1afb39" title="Setup fields from TestNodeUnitSetup_tbl. ">setup</a>(<a class="code" href="classmdt_tt_base.html#a82c3f795b6cb8101b12e0e0ef340c1be" title="Get database instance. ">database</a>())){</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;    ok = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;    <span class="keywordflow">return</span> setupDataList;</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;  }</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;  <span class="comment">// Process..</span></div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;  <span class="keywordflow">if</span>(relayPathConnectionIdList.size() &lt; 2){</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;    ok = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;    <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error. ">setError</a>(tr(<span class="stringliteral">&quot;Given relays path is not valid (contains less than 2 connections).&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce" title="Add source information to error. ">MDT_ERROR_SET_SRC</a>(<a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>, <span class="stringliteral">&quot;mdtTtTestNode&quot;</span>);</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;    <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output. ">commit</a>();</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;    <span class="keywordflow">return</span> setupDataList;</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;  }</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;  <span class="keywordflow">for</span>(i = 1; i &lt; relayPathConnectionIdList.size(); ++i){</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;    Q_ASSERT(!relayPathConnectionIdList.at(i-1).isNull());</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;    Q_ASSERT(!relayPathConnectionIdList.at(i).isNull());</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;    testNodeUnitId = graph.<a class="code" href="classmdt_cl_path_graph.html#a82df1588f1b4a9df7b25760ebd9e5aa1" title="Get user data for item between start and end connection. ">getUserData</a>(relayPathConnectionIdList.at(i-1), relayPathConnectionIdList.at(i));</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;    <span class="keywordflow">if</span>(!testNodeUnitId.isNull()){</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;      setupData.<a class="code" href="classmdt_sql_record.html#a0bfc0fc265c6b0048698e2f5d4f840a8" title="Clear values. ">clearValues</a>();</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;      setupData.<a class="code" href="classmdt_sql_record.html#a330291ff82fb8c7803c47d30f8939ed5" title="Set value. ">setValue</a>(<span class="stringliteral">&quot;TestNodeUnit_Id_FK&quot;</span>, testNodeUnitId);</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;      setupData.<a class="code" href="classmdt_sql_record.html#a330291ff82fb8c7803c47d30f8939ed5" title="Set value. ">setValue</a>(<span class="stringliteral">&quot;State&quot;</span>, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;      setupData.<a class="code" href="classmdt_sql_record.html#a330291ff82fb8c7803c47d30f8939ed5" title="Set value. ">setValue</a>(<span class="stringliteral">&quot;StepNumber&quot;</span>, 0);</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;      setupDataList.append(setupData);</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    }</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;  }</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;  <span class="keywordflow">return</span> setupDataList;</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;}</div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;</div>
+<div class="line"><a name="l00382"></a><span class="lineno"><a class="code" href="classmdt_tt_test_node.html#a0e96e3c1ab7b93ec5b7f2b02be44a1ff">  382</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_test_node.html#a0e96e3c1ab7b93ec5b7f2b02be44a1ff" title="Check that enabling a set of coupling and channel relays does not produce a short circuit between con...">mdtTtTestNode::ensureAbsenceOfShortCircuit</a>(<span class="keyword">const</span> QVariant &amp; connectionIdA, <span class="keyword">const</span> QVariant &amp; connectionIdB, <span class="keyword">const</span> QList&lt;mdtTtTestNodeUnitSetupData&gt; &amp; testNodeUnitSetupDataList, <a class="code" href="classmdt_cl_path_graph.html" title="Represents the link list in a graph. ">mdtClPathGraph</a> &amp; graph, <span class="keywordtype">bool</span> &amp; ok)</div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;{</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;  Q_ASSERT(!connectionIdA.isNull());</div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;  Q_ASSERT(!connectionIdB.isNull());</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;  QList&lt;QVariant&gt; connectionIdList;</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;  <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;  <span class="keywordtype">bool</span> hasShort;</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;  <span class="keyword">struct </span>relay_t{</div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;    QVariant id;</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;    QVariant cnxA;</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;    QVariant cnxB;</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;  } relay;</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;  QList&lt;relay_t&gt; relaysList;</div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;  QPair&lt;QVariant, QVariant&gt; connections;</div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;  QVariant testNodeUnitId;</div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;</div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;  <span class="comment">// Clear previous results</span></div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;  graph.<a class="code" href="classmdt_cl_path_graph.html#a5bee589e7c93681bf9325fd9bc999eb9" title="Remove links that where added with addLink() ">removeAddedLinks</a>();</div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;  <span class="comment">// Build relays list with only given node units</span></div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;  <span class="keywordflow">for</span>(i = 0; i &lt; testNodeUnitSetupDataList.size(); ++i){</div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;    testNodeUnitId = testNodeUnitSetupDataList.at(i).value(<span class="stringliteral">&quot;TestNodeUnit_Id_FK&quot;</span>);</div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;    Q_ASSERT(!testNodeUnitId.isNull());</div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;    <span class="comment">// Get connections</span></div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;    connections = getTwoRelayConnections(testNodeUnitId, graph, ok);</div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;    <span class="keywordflow">if</span>(!ok){</div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;    }</div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;    relay.id = testNodeUnitId;</div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;    relay.cnxA = connections.first;</div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;    relay.cnxB = connections.second;</div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;    relaysList.append(relay);</div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;  }</div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;  <span class="comment">// Add relays to graph</span></div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;  <span class="keywordflow">for</span>(i = 0; i &lt; relaysList.size(); ++i){</div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;    relay = relaysList.at(i);</div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;    graph.<a class="code" href="classmdt_cl_path_graph.html#a14a5580402b273eb6707939ee122fa95" title="Add a link to the graph. ">addLink</a>(relay.cnxA, relay.cnxB, relay.id, <span class="keyword">true</span>, 2);</div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;  }</div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;</div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;  <span class="comment">// Add given node units to graph</span></div>
+<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;<span class="comment"></span>  hasShort = graph.<a class="code" href="classmdt_cl_path_graph.html#a8714c63f42c3bfbda6432ef2f59fe186" title="Check if given connections are linked together. ">connectionsAreLinked</a>(connectionIdA, connectionIdB);</div>
+<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;  graph.<a class="code" href="classmdt_cl_path_graph.html#a5bee589e7c93681bf9325fd9bc999eb9" title="Remove links that where added with addLink() ">removeAddedLinks</a>();</div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;  </div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;  qDebug() &lt;&lt; <span class="stringliteral">&quot;TN - Has short ? : &quot;</span> &lt;&lt; hasShort;</div>
+<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;  </div>
+<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;  <span class="keywordflow">if</span>(hasShort){</div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;    QString sql;</div>
+<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;    QList&lt;QSqlRecord&gt; dataList;</div>
+<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;    QSqlRecord data;</div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;    QString u1, u2, relaysStr;</div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;    QString msg;</div>
+<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;    <span class="comment">// Infos about test model item</span></div>
+<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;<span class="comment"></span>    <span class="comment">// Infos about connectionIdA</span></div>
+<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;    sql = <span class="stringliteral">&quot;SELECT U.SchemaPosition, UCNX.UnitContactName FROM UnitConnection_tbl UCNX JOIN Unit_tbl U ON U.Id_PK = UCNX.Unit_Id_FK&quot;</span>;</div>
+<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;    sql += <span class="stringliteral">&quot; WHERE UCNX.Id_PK = &quot;</span> + connectionIdA.toString();</div>
+<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;    dataList = getDataList&lt;QSqlRecord&gt;(sql, ok);</div>
+<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;    <span class="keywordflow">if</span>(!ok){</div>
+<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;    }</div>
+<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;    Q_ASSERT(dataList.size() == 1);</div>
+<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;    data = dataList.at(0);</div>
+<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;    u1 = tr(<span class="stringliteral">&quot;pos. &quot;</span>) + data.value(<span class="stringliteral">&quot;SchemaPosition&quot;</span>).toString() + tr(<span class="stringliteral">&quot; connection &quot;</span>) + data.value(<span class="stringliteral">&quot;UnitContactName&quot;</span>).toString();</div>
+<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;    <span class="comment">// Infos about connectionIdB</span></div>
+<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;    sql = <span class="stringliteral">&quot;SELECT U.SchemaPosition, UCNX.UnitContactName FROM UnitConnection_tbl UCNX JOIN Unit_tbl U ON U.Id_PK = UCNX.Unit_Id_FK&quot;</span>;</div>
+<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;    sql += <span class="stringliteral">&quot; WHERE UCNX.Id_PK = &quot;</span> + connectionIdB.toString();</div>
+<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;    dataList = getDataList&lt;QSqlRecord&gt;(sql, ok);</div>
+<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;    <span class="keywordflow">if</span>(!ok){</div>
+<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;    }</div>
+<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;    Q_ASSERT(dataList.size() == 1);</div>
+<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;    data = dataList.at(0);</div>
+<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;    u2 = tr(<span class="stringliteral">&quot;pos. &quot;</span>) + data.value(<span class="stringliteral">&quot;SchemaPosition&quot;</span>).toString() + tr(<span class="stringliteral">&quot; connection &quot;</span>) + data.value(<span class="stringliteral">&quot;UnitContactName&quot;</span>).toString();</div>
+<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;    <span class="comment">// Infos about used relays</span></div>
+<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;    sql = <span class="stringliteral">&quot;SELECT SchemaPosition FROM Unit_tbl WHERE Id_PK IN (&quot;</span>;</div>
+<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;    <span class="keywordflow">for</span>(i = 0; i &lt; (relaysList.size()-1); ++i){</div>
+<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;      sql += relaysList.at(i).id.toString() + <span class="stringliteral">&quot;,&quot;</span>;</div>
+<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;    }</div>
+<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;    <span class="keywordflow">if</span>(i &lt; relaysList.size()){</div>
+<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;      sql += relaysList.at(i).id.toString();</div>
+<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;    }</div>
+<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;    sql += <span class="stringliteral">&quot;)&quot;</span>;</div>
+<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;    dataList = getDataList&lt;QSqlRecord&gt;(sql, ok);</div>
+<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;    <span class="keywordflow">if</span>(!ok){</div>
+<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;    }</div>
+<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;    <span class="keywordflow">for</span>(i = 0; i &lt; dataList.size(); ++i){</div>
+<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;      relaysStr += dataList.at(i).value(<span class="stringliteral">&quot;SchemaPosition&quot;</span>).toString() + <span class="stringliteral">&quot; &quot;</span>;</div>
+<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;    }</div>
+<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;    <span class="comment">// Form message</span></div>
+<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;    msg = tr(<span class="stringliteral">&quot;A generated setup makes a internal short between measure connections.&quot;</span>) + <span class="stringliteral">&quot; &quot;</span>;</div>
+<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;    msg += tr(<span class="stringliteral">&quot;Short is between &quot;</span>) + u1 + tr(<span class="stringliteral">&quot; and &quot;</span>) + u2 + <span class="stringliteral">&quot;. &quot;</span>;</div>
+<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;    msg += tr(<span class="stringliteral">&quot;Route relays: &quot;</span>) + relaysStr;</div>
+<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;    <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error. ">setError</a>(msg, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);</div>
+<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;    <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce" title="Add source information to error. ">MDT_ERROR_SET_SRC</a>(<a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>, <span class="stringliteral">&quot;mdtTtTestNode&quot;</span>);</div>
+<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;    <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output. ">commit</a>();</div>
+<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;  }</div>
+<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;</div>
+<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;}</div>
+<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;</div>
+<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;QPair&lt;QVariant, QVariant&gt; mdtTtTestNode::getTwoRelayConnections(<span class="keyword">const</span> QVariant &amp; testNodeUnitId, <a class="code" href="classmdt_cl_path_graph.html" title="Represents the link list in a graph. ">mdtClPathGraph</a> &amp; graph, <span class="keywordtype">bool</span> &amp; ok)</div>
+<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;{</div>
+<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;  Q_ASSERT(!testNodeUnitId.isNull());</div>
+<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;</div>
+<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;  QString sql;</div>
+<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;  QList&lt;QVariant&gt; connectionsList;</div>
+<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;  <span class="keywordtype">int</span> i, m;</div>
+<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;</div>
+<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;  <span class="comment">// Get all connections of given relay</span></div>
+<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;  sql = <span class="stringliteral">&quot;SELECT Id_PK FROM UnitConnection_tbl WHERE Unit_Id_FK = &quot;</span> + testNodeUnitId.toString();</div>
+<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;  connectionsList = getDataList&lt;QVariant&gt;(sql, ok);</div>
+<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;  <span class="keywordflow">if</span>(!ok){</div>
+<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;    <span class="keywordflow">return</span> QPair&lt;QVariant, QVariant&gt;();</div>
+<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;  }</div>
+<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;  <span class="comment">// Check any combinaison of of connections to find 2 non linked together connections</span></div>
+<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;  <span class="keywordflow">for</span>(i = 0; i &lt; (connectionsList.size()-1); ++i){</div>
+<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;    <span class="keywordflow">for</span>(m = i+1; m &lt; connectionsList.size(); ++m){</div>
+<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;      <span class="keywordflow">if</span>(!graph.<a class="code" href="classmdt_cl_path_graph.html#a8714c63f42c3bfbda6432ef2f59fe186" title="Check if given connections are linked together. ">connectionsAreLinked</a>(connectionsList.at(i), connectionsList.at(m))){</div>
+<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;        ok = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;        <span class="keywordflow">return</span> QPair&lt;QVariant, QVariant&gt;(connectionsList.at(i), connectionsList.at(m));</div>
+<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;      }</div>
+<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;    }</div>
+<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;  }</div>
+<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;  <span class="comment">// Given relay has not 2 non linked connections</span></div>
+<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;  QList&lt;QVariant&gt; dataList;</div>
+<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;  QString msg;</div>
+<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;  sql = <span class="stringliteral">&quot;SELECT SchemaPosition FROM Unit_tbl WHERE Id_PK = &quot;</span> + testNodeUnitId.toString();</div>
+<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;  dataList = getDataList&lt;QVariant&gt;(sql, ok);</div>
+<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;  <span class="keywordflow">if</span>(!ok){</div>
+<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;    <span class="keywordflow">return</span> QPair&lt;QVariant, QVariant&gt;();</div>
+<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;  }</div>
+<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;  Q_ASSERT(dataList.size() == 1);</div>
+<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;  ok = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160;  msg = tr(<span class="stringliteral">&quot;Could not find 2 connections for relay &quot;</span>) + dataList.at(0).toString();</div>
+<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;  <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855" title="Set error. ">setError</a>(msg, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);</div>
+<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;  <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce" title="Add source information to error. ">MDT_ERROR_SET_SRC</a>(<a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>, <span class="stringliteral">&quot;mdtTtTestNode&quot;</span>);</div>
+<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;  <a class="code" href="classmdt_tt_base.html#aaa2bcddcfcecd1642ac24a218bccfbc7">pvLastError</a>.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output. ">commit</a>();</div>
+<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160;</div>
+<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;  <span class="keywordflow">return</span> QPair&lt;QVariant, QVariant&gt;();</div>
+<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 26 2014 17:48:03 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Sep 1 2014 18:45:36 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

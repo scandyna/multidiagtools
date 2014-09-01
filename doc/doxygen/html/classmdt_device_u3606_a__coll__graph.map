@@ -1,10 +1,11 @@
 <map id="mdtDeviceU3606A" name="mdtDeviceU3606A">
-<area shape="rect" id="node2" href="$classmdt_device_scpi.html" title="Base class for SCPI based instruments. " alt="" coords="136,784,245,813"/>
-<area shape="rect" id="node4" href="$classmdt_device.html" title="Base class for a device connected to a port. " alt="" coords="69,475,155,504"/>
-<area shape="rect" id="node6" href="$class_q_object.html" title="QObject" alt="" coords="77,275,147,304"/>
-<area shape="rect" id="node12" href="$classmdt_port_manager.html" title="Port manager base class. " alt="" coords="229,528,347,557"/>
-<area shape="rect" id="node17" href="$classmdt_abstract_port.html" title="Base class for port I/O. " alt="" coords="251,421,368,451"/>
-<area shape="rect" id="node8" href="$classmdt_usbtmc_port_manager.html" title="USBTMC port manager. " alt="" coords="188,688,351,717"/>
-<area shape="rect" id="node10" href="$classmdt_usb_port_manager.html" title="Helper class that simplify access to USB port API. " alt="" coords="203,608,344,637"/>
-<area shape="rect" id="node20" href="$classmdt_port_config.html" title="mdtPortConfig" alt="" coords="171,275,277,304"/>
+<area shape="rect" id="node2" href="$classmdt_device_scpi.html" title="Base class for SCPI based instruments. " alt="" coords="96,773,205,803"/>
+<area shape="rect" id="node4" href="$classmdt_device.html" title="Base class for a device connected to a port. " alt="" coords="44,421,129,451"/>
+<area shape="rect" id="node6" href="$class_q_object.html" title="QObject" alt="" coords="116,275,185,304"/>
+<area shape="rect" id="node14" href="$classmdt_port_manager.html" title="Port manager base class. " alt="" coords="228,517,345,547"/>
+<area shape="rect" id="node19" href="$classmdt_abstract_port.html" title="Base class for port I/O. " alt="" coords="399,421,516,451"/>
+<area shape="rect" id="node8" href="$classmdt_error.html" title="mdtError contains informations about a error that occured " alt="" coords="5,275,77,304"/>
+<area shape="rect" id="node10" href="$classmdt_usbtmc_port_manager.html" title="USBTMC port manager. " alt="" coords="149,677,312,707"/>
+<area shape="rect" id="node12" href="$classmdt_usb_port_manager.html" title="Helper class that simplify access to USB port API. " alt="" coords="172,597,313,627"/>
+<area shape="rect" id="node22" href="$classmdt_port_config.html" title="mdtPortConfig" alt="" coords="209,275,316,304"/>
 </map>

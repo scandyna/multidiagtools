@@ -348,217 +348,219 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;  }</div>
 <div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;  <span class="comment">// Setup SQL statement</span></div>
 <div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;  sql = <span class="stringliteral">&quot;SELECT * FROM UnitConnection_view WHERE Unit_Id_FK = &quot;</span> + pvDutUnitId.toString();</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;  sql += <span class="stringliteral">&quot; AND UnitConnection_Id_PK NOT IN (&quot;</span>;</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;  sql += <span class="stringliteral">&quot;  SELECT DutConnection_Id_FK FROM TestLink_tbl WHERE TestCable_Id_FK = &quot;</span> + pvLinkData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;TestCable_Id_FK&quot;</span>).toString();</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;  sql += <span class="stringliteral">&quot;)&quot;</span>;</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;  <span class="comment">// Setup and show dialog</span></div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;  selectionDialog.setMessage(<span class="stringliteral">&quot;Please select DUT connection:&quot;</span>);</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;  selectionDialog.setQuery(sql, pvDatabase, <span class="keyword">false</span>);</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;  selectionDialog.setColumnHidden(<span class="stringliteral">&quot;UnitConnection_Id_PK&quot;</span>, <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;  selectionDialog.setColumnHidden(<span class="stringliteral">&quot;Unit_Id_FK&quot;</span>, <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;  selectionDialog.setColumnHidden(<span class="stringliteral">&quot;ArticleConnection_Id_FK&quot;</span>, <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;  selectionDialog.setHeaderData(<span class="stringliteral">&quot;SchemaPage&quot;</span>, tr(<span class="stringliteral">&quot;Schema\npage&quot;</span>));</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;  selectionDialog.setHeaderData(<span class="stringliteral">&quot;UnitFunctionEN&quot;</span>, tr(<span class="stringliteral">&quot;Unit\nfunction (ENG)&quot;</span>));</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;  selectionDialog.setHeaderData(<span class="stringliteral">&quot;SignalName&quot;</span>, tr(<span class="stringliteral">&quot;Signal name&quot;</span>));</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;  selectionDialog.setHeaderData(<span class="stringliteral">&quot;SwAddress&quot;</span>, tr(<span class="stringliteral">&quot;SW address&quot;</span>));</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;  selectionDialog.setHeaderData(<span class="stringliteral">&quot;UnitConnectorName&quot;</span>, tr(<span class="stringliteral">&quot;Unit\nconnector&quot;</span>));</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;  selectionDialog.setHeaderData(<span class="stringliteral">&quot;UnitContactName&quot;</span>, tr(<span class="stringliteral">&quot;Unit\ncontact&quot;</span>));</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;  selectionDialog.setHeaderData(<span class="stringliteral">&quot;ArticleConnectorName&quot;</span>, tr(<span class="stringliteral">&quot;Article\nconnector&quot;</span>));</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;  selectionDialog.setHeaderData(<span class="stringliteral">&quot;ArticleContactName&quot;</span>, tr(<span class="stringliteral">&quot;Article\ncontact&quot;</span>));</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;  selectionDialog.setHeaderData(<span class="stringliteral">&quot;IoType&quot;</span>, tr(<span class="stringliteral">&quot;I/O type&quot;</span>));</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;  selectionDialog.setHeaderData(<span class="stringliteral">&quot;ArticleFunctionEN&quot;</span>, tr(<span class="stringliteral">&quot;Article\nfunction (ENG)&quot;</span>));</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;  selectionDialog.addColumnToSortOrder(<span class="stringliteral">&quot;UnitConnectorName&quot;</span>, Qt::AscendingOrder);</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;  selectionDialog.addColumnToSortOrder(<span class="stringliteral">&quot;UnitContactName&quot;</span>, Qt::AscendingOrder);</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;  selectionDialog.sort();</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;  selectionDialog.resize(800, 400);</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;  <span class="keywordflow">if</span>(selectionDialog.exec() != QDialog::Accepted){</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;    <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;  }</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;  fields &lt;&lt; <span class="stringliteral">&quot;UnitConnection_Id_PK&quot;</span> &lt;&lt; <span class="stringliteral">&quot;UnitFunctionEN&quot;</span>;</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;  s = selectionDialog.selection(fields);</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;  Q_ASSERT(s.<a class="code" href="classmdt_sql_table_selection.html#a411d70a724981bd47f550d05cf3858be" title="Get row count. ">rowCount</a>() == 1);</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;  <span class="comment">// Get connection data and update</span></div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;  pvLinkData.<a class="code" href="classmdt_sql_record.html#a330291ff82fb8c7803c47d30f8939ed5" title="Set value. ">setValue</a>(<span class="stringliteral">&quot;DutConnection_Id_FK&quot;</span>, s.<a class="code" href="classmdt_sql_table_selection.html#a30a3f85a56792d9641abbd2129c50bca" title="Get data for given row and field name. ">data</a>(0, <span class="stringliteral">&quot;UnitConnection_Id_PK&quot;</span>));</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;  <span class="keywordflow">if</span>(leIdentification-&gt;text().trimmed().isEmpty()){</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;    leIdentification-&gt;setText(s.<a class="code" href="classmdt_sql_table_selection.html#a30a3f85a56792d9641abbd2129c50bca" title="Get data for given row and field name. ">data</a>(0, <span class="stringliteral">&quot;UnitFunctionEN&quot;</span>).toString());</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;  }</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;  displayDutConnection();</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;}</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;<span class="keywordtype">void</span> mdtTtTestLinkDialog::viewDutLinkedConnections()</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;{</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;  <a class="code" href="classmdt_cl_linked_unit_connection_info_dialog.html" title="Display informations about unit connections linked to a given unit connection. ">mdtClLinkedUnitConnectionInfoDialog</a> dialog(<span class="keyword">this</span>, pvDatabase);</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;  <a class="code" href="classmdt_cl_path_graph.html" title="Represents the link list in a graph. ">mdtClPathGraph</a> graph(pvDatabase);</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;  QVariant connectionId;</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;  QList&lt;QVariant&gt; linkedConnectionsIdList;</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;  <span class="comment">// Get current unit connection ID</span></div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;  connectionId = pvLinkData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;DutConnection_Id_FK&quot;</span>);</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;  <span class="keywordflow">if</span>(connectionId.isNull()){</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;    <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;  }</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;  <span class="comment">// Load link list and get linked connections</span></div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;  <span class="keywordflow">if</span>(!graph.loadLinkList()){</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;    <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;  }</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;  linkedConnectionsIdList = graph.getLinkedConnectionIdList(connectionId);</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;  <span class="comment">// Setup and show dialog</span></div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;  dialog.setConnections(connectionId, linkedConnectionsIdList);</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;  dialog.exec();</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;}</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;<span class="keywordtype">void</span> mdtTtTestLinkDialog::accept() </div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;{</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;  QString msg;</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;  QStringList missingFields;</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;  <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;  <span class="comment">// Check required data</span></div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;  <span class="keywordflow">if</span>(pvLinkData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;TestConnection_Id_FK&quot;</span>).isNull()){</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;    missingFields &lt;&lt; <span class="stringliteral">&quot; - Test connection&quot;</span>;</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;  }</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;  <span class="keywordflow">if</span>(pvLinkData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;DutConnection_Id_FK&quot;</span>).isNull()){</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;    missingFields &lt;&lt; <span class="stringliteral">&quot; - DUT connection&quot;</span>;</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;  }</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;  <span class="keywordflow">if</span>(!missingFields.isEmpty()){</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;    msg = tr(<span class="stringliteral">&quot;Some data are missing. Please check:&quot;</span>) + <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    <span class="keywordflow">for</span>(i = 0; i &lt; missingFields.size(); ++i){</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;      msg += missingFields.at(i) + <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    }</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    QMessageBox msgBox(<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;    msgBox.setText(msg);</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    msgBox.setIcon(QMessageBox::Warning);</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    msgBox.setWindowTitle(tr(<span class="stringliteral">&quot;Test link data missing&quot;</span>));</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    msgBox.exec();</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;    <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;  }</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;  <span class="comment">// Store other data</span></div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;  pvLinkData.<a class="code" href="classmdt_sql_record.html#a330291ff82fb8c7803c47d30f8939ed5" title="Set value. ">setValue</a>(<span class="stringliteral">&quot;Identification&quot;</span>, leIdentification-&gt;text());</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;  pvLinkData.<a class="code" href="classmdt_sql_record.html#a330291ff82fb8c7803c47d30f8939ed5" title="Set value. ">setValue</a>(<span class="stringliteral">&quot;Value&quot;</span>, sbValue-&gt;value());</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;  QDialog::accept();</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;}</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;<span class="keywordtype">void</span> mdtTtTestLinkDialog::reject() </div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;{</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;  pvLinkData.<a class="code" href="classmdt_sql_record.html#a0bfc0fc265c6b0048698e2f5d4f840a8" title="Clear values. ">clearValues</a>();</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;  QDialog::reject();</div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;}</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;<span class="keywordtype">void</span> mdtTtTestLinkDialog::displayTestNodeUnit()</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;{</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;  <a class="code" href="classmdt_tt_test_node_unit.html" title="Helper class for test node unit data manipulation. ">mdtTtTestNodeUnit</a> tnu(0, pvDatabase);</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;  <a class="code" href="classmdt_tt_test_node_unit_data.html" title="#include &quot;mdtClUnitConnectionData.h&quot; ">mdtTtTestNodeUnitData</a> data;</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;  <span class="keywordtype">bool</span> ok;</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;  <span class="keywordflow">if</span>(pvTestNodeUnitId.isNull()){</div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;    lbTnuSchemaPosition-&gt;<a class="code" href="classmdt_sql_record.html#ad1058337837b2891d2e282001ad889d9" title="Removes all the record&#39;s fields. ">clear</a>();</div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;    lbTnuAlias-&gt;clear();</div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;  }<span class="keywordflow">else</span>{</div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;    <span class="comment">// Get test node unit data</span></div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;    data = tnu.getData(pvTestNodeUnitId, &amp;ok, <span class="keyword">false</span>);</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;    <span class="keywordflow">if</span>(!ok){</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;      lbTnuSchemaPosition-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;      lbTnuAlias-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    }</div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;    lbTnuSchemaPosition-&gt;setText(data.<a class="code" href="classmdt_tt_test_node_unit_data.html#afc769bf48aa7068a08b57330a509b566" title="Get unit data part. ">unitData</a>().<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;SchemaPosition&quot;</span>).toString());</div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;    lbTnuAlias-&gt;setText(data.<a class="code" href="classmdt_tt_test_node_unit_data.html#afc769bf48aa7068a08b57330a509b566" title="Get unit data part. ">unitData</a>().<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;Alias&quot;</span>).toString());</div>
-<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;  }</div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;}</div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;</div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;<span class="keywordtype">void</span> mdtTtTestLinkDialog::displayDutUnit()</div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;{</div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;  <a class="code" href="classmdt_cl_unit.html" title="Helper class to manage unit and related data. ">mdtClUnit</a> unit(0, pvDatabase);</div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;  QString sql;</div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;  QList&lt;QSqlRecord&gt; dataList;</div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;  QSqlRecord data;</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;  <span class="keywordtype">bool</span> ok;</div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;</div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;  <span class="keywordflow">if</span>(pvDutUnitId.isNull()){</div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;    lbDutSchemaPosition-&gt;<a class="code" href="classmdt_sql_record.html#ad1058337837b2891d2e282001ad889d9" title="Removes all the record&#39;s fields. ">clear</a>();</div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;    lbDutAlias-&gt;clear();</div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;    lbDutCabinet-&gt;clear();</div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;  }<span class="keywordflow">else</span>{</div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;    <span class="comment">// Get unit data</span></div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;    sql = <span class="stringliteral">&quot;SELECT SchemaPosition, Alias, Cabinet FROM Unit_tbl WHERE Id_PK = &quot;</span> + pvDutUnitId.toString();</div>
-<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;    dataList = unit.getData(sql, &amp;ok);</div>
-<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;    <span class="keywordflow">if</span>(!ok){</div>
-<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;      lbDutSchemaPosition-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;      lbDutAlias-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;      lbDutCabinet-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
-<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;    }</div>
-<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;    Q_ASSERT(dataList.size() == 1);</div>
-<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;    data = dataList.at(0);</div>
-<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;    lbDutSchemaPosition-&gt;setText(data.value(<span class="stringliteral">&quot;SchemaPosition&quot;</span>).toString());</div>
-<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;    lbDutAlias-&gt;setText(data.value(<span class="stringliteral">&quot;Alias&quot;</span>).toString());</div>
-<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;    lbDutCabinet-&gt;setText(data.value(<span class="stringliteral">&quot;Cabinet&quot;</span>).toString());</div>
-<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;  }</div>
-<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;}</div>
-<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;</div>
-<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;<span class="keywordtype">void</span> mdtTtTestLinkDialog::displayTestConnection() </div>
-<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;{</div>
-<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;  <a class="code" href="classmdt_cl_unit.html" title="Helper class to manage unit and related data. ">mdtClUnit</a> unit(0, pvDatabase);</div>
-<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;  <a class="code" href="classmdt_cl_unit_connection_data.html" title="Data container class for unit connection data. ">mdtClUnitConnectionData</a> connectionData;</div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;  <a class="code" href="classmdt_cl_unit_connector_data.html" title="Data container class for article connector data. ">mdtClUnitConnectorData</a> connectorData;</div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;  <span class="keywordtype">bool</span> ok;</div>
-<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;</div>
-<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;  <span class="keywordflow">if</span>(pvLinkData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;TestConnection_Id_FK&quot;</span>).isNull()){</div>
-<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;    lbTestConnector-&gt;<a class="code" href="classmdt_cl_unit_connector_data.html#a55918c459b5d4c67bbe12cffe9d006df" title="Clear values and fields. ">clear</a>();</div>
-<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;    lbTestContact-&gt;clear();</div>
-<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;  }<span class="keywordflow">else</span>{</div>
-<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;    connectionData = unit.getConnectionData(pvLinkData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;TestConnection_Id_FK&quot;</span>), <span class="keyword">false</span>, &amp;ok);</div>
-<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;    <span class="keywordflow">if</span>(!ok){</div>
-<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;      lbTestContact-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
-<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;    }<span class="keywordflow">else</span>{</div>
-<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;      lbTestContact-&gt;setText(connectionData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;UnitContactName&quot;</span>).toString());</div>
-<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;    }</div>
-<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;    <span class="comment">// Set connector name</span></div>
-<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;    <span class="keywordflow">if</span>(connectionData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;UnitConnector_Id_FK&quot;</span>).isNull()){</div>
-<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;      lbTestConnector-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;    }</div>
-<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;    connectorData = unit.getConnectorData(connectionData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;UnitConnector_Id_FK&quot;</span>), &amp;ok, <span class="keyword">false</span>, <span class="keyword">false</span>, <span class="keyword">false</span>);</div>
-<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;    <span class="keywordflow">if</span>(!ok){</div>
-<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;      lbTestConnector-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
-<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;    }</div>
-<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;    lbTestConnector-&gt;setText(connectorData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;Name&quot;</span>).toString());</div>
-<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;  }</div>
-<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;}</div>
-<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;</div>
-<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;<span class="keywordtype">void</span> mdtTtTestLinkDialog::displayDutConnection() </div>
-<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;{</div>
-<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;  <a class="code" href="classmdt_cl_unit.html" title="Helper class to manage unit and related data. ">mdtClUnit</a> unit(0, pvDatabase);</div>
-<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;  <a class="code" href="classmdt_cl_unit_connection_data.html" title="Data container class for unit connection data. ">mdtClUnitConnectionData</a> connectionData;</div>
-<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;  <a class="code" href="classmdt_cl_unit_connector_data.html" title="Data container class for article connector data. ">mdtClUnitConnectorData</a> connectorData;</div>
-<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;  <span class="keywordtype">bool</span> ok;</div>
-<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;</div>
-<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;  <span class="keywordflow">if</span>(pvLinkData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;DutConnection_Id_FK&quot;</span>).isNull()){</div>
-<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;    lbDutConnector-&gt;<a class="code" href="classmdt_cl_unit_connector_data.html#a55918c459b5d4c67bbe12cffe9d006df" title="Clear values and fields. ">clear</a>();</div>
-<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;    lbDutContact-&gt;clear();</div>
-<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;  }<span class="keywordflow">else</span>{</div>
-<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;    connectionData = unit.getConnectionData(pvLinkData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;DutConnection_Id_FK&quot;</span>), <span class="keyword">false</span>, &amp;ok);</div>
-<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;    <span class="keywordflow">if</span>(!ok){</div>
-<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;      lbDutContact-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
-<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;    }<span class="keywordflow">else</span>{</div>
-<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;      lbDutContact-&gt;setText(connectionData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;UnitContactName&quot;</span>).toString());</div>
-<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;    }</div>
-<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;    <span class="comment">// Set connector name</span></div>
-<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;    <span class="keywordflow">if</span>(connectionData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;UnitConnector_Id_FK&quot;</span>).isNull()){</div>
-<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;      lbDutConnector-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;    }</div>
-<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;    connectorData = unit.getConnectorData(connectionData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;UnitConnector_Id_FK&quot;</span>), &amp;ok, <span class="keyword">false</span>, <span class="keyword">false</span>, <span class="keyword">false</span>);</div>
-<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;    <span class="keywordflow">if</span>(!ok){</div>
-<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;      lbDutConnector-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
-<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;    }</div>
-<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;    lbDutConnector-&gt;setText(connectorData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;Name&quot;</span>).toString());</div>
-<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;  }</div>
-<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;}</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;  <span class="keywordflow">if</span>(cbHideAffectedDutConnections-&gt;isChecked()){</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    sql += <span class="stringliteral">&quot; AND UnitConnection_Id_PK NOT IN (&quot;</span>;</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    sql += <span class="stringliteral">&quot;  SELECT DutConnection_Id_FK FROM TestLink_tbl WHERE TestCable_Id_FK = &quot;</span> + pvLinkData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;TestCable_Id_FK&quot;</span>).toString();</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    sql += <span class="stringliteral">&quot;)&quot;</span>;</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;  }</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;  <span class="comment">// Setup and show dialog</span></div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;  selectionDialog.setMessage(<span class="stringliteral">&quot;Please select DUT connection:&quot;</span>);</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;  selectionDialog.setQuery(sql, pvDatabase, <span class="keyword">false</span>);</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;  selectionDialog.setColumnHidden(<span class="stringliteral">&quot;UnitConnection_Id_PK&quot;</span>, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;  selectionDialog.setColumnHidden(<span class="stringliteral">&quot;Unit_Id_FK&quot;</span>, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;  selectionDialog.setColumnHidden(<span class="stringliteral">&quot;ArticleConnection_Id_FK&quot;</span>, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;  selectionDialog.setHeaderData(<span class="stringliteral">&quot;SchemaPage&quot;</span>, tr(<span class="stringliteral">&quot;Schema\npage&quot;</span>));</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;  selectionDialog.setHeaderData(<span class="stringliteral">&quot;UnitFunctionEN&quot;</span>, tr(<span class="stringliteral">&quot;Unit\nfunction (ENG)&quot;</span>));</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;  selectionDialog.setHeaderData(<span class="stringliteral">&quot;SignalName&quot;</span>, tr(<span class="stringliteral">&quot;Signal name&quot;</span>));</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;  selectionDialog.setHeaderData(<span class="stringliteral">&quot;SwAddress&quot;</span>, tr(<span class="stringliteral">&quot;SW address&quot;</span>));</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;  selectionDialog.setHeaderData(<span class="stringliteral">&quot;UnitConnectorName&quot;</span>, tr(<span class="stringliteral">&quot;Unit\nconnector&quot;</span>));</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;  selectionDialog.setHeaderData(<span class="stringliteral">&quot;UnitContactName&quot;</span>, tr(<span class="stringliteral">&quot;Unit\ncontact&quot;</span>));</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;  selectionDialog.setHeaderData(<span class="stringliteral">&quot;ArticleConnectorName&quot;</span>, tr(<span class="stringliteral">&quot;Article\nconnector&quot;</span>));</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;  selectionDialog.setHeaderData(<span class="stringliteral">&quot;ArticleContactName&quot;</span>, tr(<span class="stringliteral">&quot;Article\ncontact&quot;</span>));</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;  selectionDialog.setHeaderData(<span class="stringliteral">&quot;IoType&quot;</span>, tr(<span class="stringliteral">&quot;I/O type&quot;</span>));</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;  selectionDialog.setHeaderData(<span class="stringliteral">&quot;ArticleFunctionEN&quot;</span>, tr(<span class="stringliteral">&quot;Article\nfunction (ENG)&quot;</span>));</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;  selectionDialog.addColumnToSortOrder(<span class="stringliteral">&quot;UnitConnectorName&quot;</span>, Qt::AscendingOrder);</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;  selectionDialog.addColumnToSortOrder(<span class="stringliteral">&quot;UnitContactName&quot;</span>, Qt::AscendingOrder);</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;  selectionDialog.sort();</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;  selectionDialog.resize(800, 400);</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;  <span class="keywordflow">if</span>(selectionDialog.exec() != QDialog::Accepted){</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;    <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;  }</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;  fields &lt;&lt; <span class="stringliteral">&quot;UnitConnection_Id_PK&quot;</span> &lt;&lt; <span class="stringliteral">&quot;UnitFunctionEN&quot;</span>;</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;  s = selectionDialog.selection(fields);</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;  Q_ASSERT(s.<a class="code" href="classmdt_sql_table_selection.html#a411d70a724981bd47f550d05cf3858be" title="Get row count. ">rowCount</a>() == 1);</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;  <span class="comment">// Get connection data and update</span></div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;  pvLinkData.<a class="code" href="classmdt_sql_record.html#a330291ff82fb8c7803c47d30f8939ed5" title="Set value. ">setValue</a>(<span class="stringliteral">&quot;DutConnection_Id_FK&quot;</span>, s.<a class="code" href="classmdt_sql_table_selection.html#a30a3f85a56792d9641abbd2129c50bca" title="Get data for given row and field name. ">data</a>(0, <span class="stringliteral">&quot;UnitConnection_Id_PK&quot;</span>));</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;  <span class="keywordflow">if</span>(leIdentification-&gt;text().trimmed().isEmpty()){</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;    leIdentification-&gt;setText(s.<a class="code" href="classmdt_sql_table_selection.html#a30a3f85a56792d9641abbd2129c50bca" title="Get data for given row and field name. ">data</a>(0, <span class="stringliteral">&quot;UnitFunctionEN&quot;</span>).toString());</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;  }</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;  displayDutConnection();</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;}</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;<span class="keywordtype">void</span> mdtTtTestLinkDialog::viewDutLinkedConnections()</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;{</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;  <a class="code" href="classmdt_cl_linked_unit_connection_info_dialog.html" title="Display informations about unit connections linked to a given unit connection. ">mdtClLinkedUnitConnectionInfoDialog</a> dialog(<span class="keyword">this</span>, pvDatabase);</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;  <a class="code" href="classmdt_cl_path_graph.html" title="Represents the link list in a graph. ">mdtClPathGraph</a> graph(pvDatabase);</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;  QVariant connectionId;</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;  QList&lt;QVariant&gt; linkedConnectionsIdList;</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;  <span class="comment">// Get current unit connection ID</span></div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;  connectionId = pvLinkData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;DutConnection_Id_FK&quot;</span>);</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;  <span class="keywordflow">if</span>(connectionId.isNull()){</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;    <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;  }</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;  <span class="comment">// Load link list and get linked connections</span></div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;  <span class="keywordflow">if</span>(!graph.loadLinkList()){</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;    <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;  }</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;  linkedConnectionsIdList = graph.getLinkedConnectionIdList(connectionId);</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;  <span class="comment">// Setup and show dialog</span></div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;  dialog.setConnections(connectionId, linkedConnectionsIdList);</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;  dialog.exec();</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;}</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;<span class="keywordtype">void</span> mdtTtTestLinkDialog::accept() </div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;{</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;  QString msg;</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;  QStringList missingFields;</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;  <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;  <span class="comment">// Check required data</span></div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;  <span class="keywordflow">if</span>(pvLinkData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;TestConnection_Id_FK&quot;</span>).isNull()){</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;    missingFields &lt;&lt; <span class="stringliteral">&quot; - Test connection&quot;</span>;</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;  }</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;  <span class="keywordflow">if</span>(pvLinkData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;DutConnection_Id_FK&quot;</span>).isNull()){</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;    missingFields &lt;&lt; <span class="stringliteral">&quot; - DUT connection&quot;</span>;</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;  }</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;  <span class="keywordflow">if</span>(!missingFields.isEmpty()){</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;    msg = tr(<span class="stringliteral">&quot;Some data are missing. Please check:&quot;</span>) + <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    <span class="keywordflow">for</span>(i = 0; i &lt; missingFields.size(); ++i){</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;      msg += missingFields.at(i) + <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;    }</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    QMessageBox msgBox(<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    msgBox.setText(msg);</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    msgBox.setIcon(QMessageBox::Warning);</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;    msgBox.setWindowTitle(tr(<span class="stringliteral">&quot;Test link data missing&quot;</span>));</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;    msgBox.exec();</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;    <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;  }</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;  <span class="comment">// Store other data</span></div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;  pvLinkData.<a class="code" href="classmdt_sql_record.html#a330291ff82fb8c7803c47d30f8939ed5" title="Set value. ">setValue</a>(<span class="stringliteral">&quot;Identification&quot;</span>, leIdentification-&gt;text());</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;  pvLinkData.<a class="code" href="classmdt_sql_record.html#a330291ff82fb8c7803c47d30f8939ed5" title="Set value. ">setValue</a>(<span class="stringliteral">&quot;Value&quot;</span>, sbValue-&gt;value());</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;  QDialog::accept();</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;}</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;<span class="keywordtype">void</span> mdtTtTestLinkDialog::reject() </div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;{</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;  pvLinkData.<a class="code" href="classmdt_sql_record.html#a0bfc0fc265c6b0048698e2f5d4f840a8" title="Clear values. ">clearValues</a>();</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;  QDialog::reject();</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;}</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;<span class="keywordtype">void</span> mdtTtTestLinkDialog::displayTestNodeUnit()</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;{</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;  <a class="code" href="classmdt_tt_test_node_unit.html" title="Helper class for test node unit data manipulation. ">mdtTtTestNodeUnit</a> tnu(0, pvDatabase);</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;  <a class="code" href="classmdt_tt_test_node_unit_data.html" title="#include &quot;mdtClUnitConnectionData.h&quot; ">mdtTtTestNodeUnitData</a> data;</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;  <span class="keywordtype">bool</span> ok;</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;  <span class="keywordflow">if</span>(pvTestNodeUnitId.isNull()){</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;    lbTnuSchemaPosition-&gt;<a class="code" href="classmdt_sql_record.html#ad1058337837b2891d2e282001ad889d9" title="Removes all the record&#39;s fields. ">clear</a>();</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;    lbTnuAlias-&gt;clear();</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;  }<span class="keywordflow">else</span>{</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;    <span class="comment">// Get test node unit data</span></div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;    data = tnu.getData(pvTestNodeUnitId, &amp;ok, <span class="keyword">false</span>);</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;    <span class="keywordflow">if</span>(!ok){</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;      lbTnuSchemaPosition-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;      lbTnuAlias-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;    }</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;    lbTnuSchemaPosition-&gt;setText(data.<a class="code" href="classmdt_tt_test_node_unit_data.html#afc769bf48aa7068a08b57330a509b566" title="Get unit data part. ">unitData</a>().<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;SchemaPosition&quot;</span>).toString());</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;    lbTnuAlias-&gt;setText(data.<a class="code" href="classmdt_tt_test_node_unit_data.html#afc769bf48aa7068a08b57330a509b566" title="Get unit data part. ">unitData</a>().<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;Alias&quot;</span>).toString());</div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;  }</div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;}</div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;<span class="keywordtype">void</span> mdtTtTestLinkDialog::displayDutUnit()</div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;{</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;  <a class="code" href="classmdt_cl_unit.html" title="Helper class to manage unit and related data. ">mdtClUnit</a> unit(0, pvDatabase);</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;  QString sql;</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;  QList&lt;QSqlRecord&gt; dataList;</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;  QSqlRecord data;</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;  <span class="keywordtype">bool</span> ok;</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;</div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;  <span class="keywordflow">if</span>(pvDutUnitId.isNull()){</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;    lbDutSchemaPosition-&gt;<a class="code" href="classmdt_sql_record.html#ad1058337837b2891d2e282001ad889d9" title="Removes all the record&#39;s fields. ">clear</a>();</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;    lbDutAlias-&gt;clear();</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;    lbDutCabinet-&gt;clear();</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;  }<span class="keywordflow">else</span>{</div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;    <span class="comment">// Get unit data</span></div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;    sql = <span class="stringliteral">&quot;SELECT SchemaPosition, Alias, Cabinet FROM Unit_tbl WHERE Id_PK = &quot;</span> + pvDutUnitId.toString();</div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;    dataList = unit.getData(sql, &amp;ok);</div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;    <span class="keywordflow">if</span>(!ok){</div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;      lbDutSchemaPosition-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;      lbDutAlias-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;      lbDutCabinet-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;    }</div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;    Q_ASSERT(dataList.size() == 1);</div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;    data = dataList.at(0);</div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;    lbDutSchemaPosition-&gt;setText(data.value(<span class="stringliteral">&quot;SchemaPosition&quot;</span>).toString());</div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;    lbDutAlias-&gt;setText(data.value(<span class="stringliteral">&quot;Alias&quot;</span>).toString());</div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;    lbDutCabinet-&gt;setText(data.value(<span class="stringliteral">&quot;Cabinet&quot;</span>).toString());</div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;  }</div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;}</div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;</div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;<span class="keywordtype">void</span> mdtTtTestLinkDialog::displayTestConnection() </div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;{</div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;  <a class="code" href="classmdt_cl_unit.html" title="Helper class to manage unit and related data. ">mdtClUnit</a> unit(0, pvDatabase);</div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;  <a class="code" href="classmdt_cl_unit_connection_data.html" title="Data container class for unit connection data. ">mdtClUnitConnectionData</a> connectionData;</div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;  <a class="code" href="classmdt_cl_unit_connector_data.html" title="Data container class for article connector data. ">mdtClUnitConnectorData</a> connectorData;</div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;  <span class="keywordtype">bool</span> ok;</div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;</div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;  <span class="keywordflow">if</span>(pvLinkData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;TestConnection_Id_FK&quot;</span>).isNull()){</div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;    lbTestConnector-&gt;<a class="code" href="classmdt_cl_unit_connector_data.html#a55918c459b5d4c67bbe12cffe9d006df" title="Clear values and fields. ">clear</a>();</div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;    lbTestContact-&gt;clear();</div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;  }<span class="keywordflow">else</span>{</div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;    connectionData = unit.getConnectionData(pvLinkData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;TestConnection_Id_FK&quot;</span>), <span class="keyword">false</span>, &amp;ok);</div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;    <span class="keywordflow">if</span>(!ok){</div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;      lbTestContact-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;    }<span class="keywordflow">else</span>{</div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;      lbTestContact-&gt;setText(connectionData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;UnitContactName&quot;</span>).toString());</div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;    }</div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;    <span class="comment">// Set connector name</span></div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;    <span class="keywordflow">if</span>(connectionData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;UnitConnector_Id_FK&quot;</span>).isNull()){</div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;      lbTestConnector-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;    }</div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;    connectorData = unit.getConnectorData(connectionData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;UnitConnector_Id_FK&quot;</span>), &amp;ok, <span class="keyword">false</span>, <span class="keyword">false</span>, <span class="keyword">false</span>);</div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;    <span class="keywordflow">if</span>(!ok){</div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;      lbTestConnector-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;    }</div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;    lbTestConnector-&gt;setText(connectorData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;Name&quot;</span>).toString());</div>
+<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;  }</div>
+<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;}</div>
+<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;</div>
+<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;<span class="keywordtype">void</span> mdtTtTestLinkDialog::displayDutConnection() </div>
+<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;{</div>
+<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;  <a class="code" href="classmdt_cl_unit.html" title="Helper class to manage unit and related data. ">mdtClUnit</a> unit(0, pvDatabase);</div>
+<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;  <a class="code" href="classmdt_cl_unit_connection_data.html" title="Data container class for unit connection data. ">mdtClUnitConnectionData</a> connectionData;</div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;  <a class="code" href="classmdt_cl_unit_connector_data.html" title="Data container class for article connector data. ">mdtClUnitConnectorData</a> connectorData;</div>
+<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;  <span class="keywordtype">bool</span> ok;</div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;</div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;  <span class="keywordflow">if</span>(pvLinkData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;DutConnection_Id_FK&quot;</span>).isNull()){</div>
+<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;    lbDutConnector-&gt;<a class="code" href="classmdt_cl_unit_connector_data.html#a55918c459b5d4c67bbe12cffe9d006df" title="Clear values and fields. ">clear</a>();</div>
+<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;    lbDutContact-&gt;clear();</div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;  }<span class="keywordflow">else</span>{</div>
+<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;    connectionData = unit.getConnectionData(pvLinkData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;DutConnection_Id_FK&quot;</span>), <span class="keyword">false</span>, &amp;ok);</div>
+<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;    <span class="keywordflow">if</span>(!ok){</div>
+<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;      lbDutContact-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;    }<span class="keywordflow">else</span>{</div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;      lbDutContact-&gt;setText(connectionData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;UnitContactName&quot;</span>).toString());</div>
+<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;    }</div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;    <span class="comment">// Set connector name</span></div>
+<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;    <span class="keywordflow">if</span>(connectionData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;UnitConnector_Id_FK&quot;</span>).isNull()){</div>
+<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;      lbDutConnector-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;    }</div>
+<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;    connectorData = unit.getConnectorData(connectionData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;UnitConnector_Id_FK&quot;</span>), &amp;ok, <span class="keyword">false</span>, <span class="keyword">false</span>, <span class="keyword">false</span>);</div>
+<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;    <span class="keywordflow">if</span>(!ok){</div>
+<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;      lbDutConnector-&gt;setText(<span class="stringliteral">&quot;&lt;Error!&gt;&quot;</span>);</div>
+<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;    }</div>
+<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;    lbDutConnector-&gt;setText(connectorData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609" title="Returns the value of the field located at position index in the record. ">value</a>(<span class="stringliteral">&quot;Name&quot;</span>).toString());</div>
+<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;  }</div>
+<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 26 2014 17:48:03 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Sep 1 2014 18:45:36 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

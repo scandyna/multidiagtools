@@ -86,6 +86,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classmdt_tt_test-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">mdtTtTest Class Reference</div>  </div>
@@ -231,6 +232,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a372e33909ae2912e3b69c67d05940910 inherit pub_methods_classmdt_tt_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove data in given selection from given table.  <a href="#a372e33909ae2912e3b69c67d05940910">More...</a><br/></td></tr>
 <tr class="separator:a372e33909ae2912e3b69c67d05940910 inherit pub_methods_classmdt_tt_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a5920961d0f32d37033a184ed76b2cf3d"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_test.html#a5920961d0f32d37033a184ed76b2cf3d">isInRange</a> (double x, double min, double max=std::numeric_limits&lt; double &gt;::max())</td></tr>
+<tr class="memdesc:a5920961d0f32d37033a184ed76b2cf3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if x is in range.  <a href="#a5920961d0f32d37033a184ed76b2cf3d">More...</a><br/></td></tr>
+<tr class="separator:a5920961d0f32d37033a184ed76b2cf3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62a8e5118129566aa897bba3ff079a4e"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_test.html#a62a8e5118129566aa897bba3ff079a4e">isInOkRange</a> (double x, double limitMin, double limitMax)</td></tr>
+<tr class="memdesc:a62a8e5118129566aa897bba3ff079a4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if x is in OK range.  <a href="#a62a8e5118129566aa897bba3ff079a4e">More...</a><br/></td></tr>
+<tr class="separator:a62a8e5118129566aa897bba3ff079a4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0384aea1eb7edde259888e5fecae976c"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_test.html#a0384aea1eb7edde259888e5fecae976c">isInLimitRange</a> (double x, double limitMin, double limitMax, double failMin, double failMax)</td></tr>
+<tr class="memdesc:a0384aea1eb7edde259888e5fecae976c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if x is in limit range.  <a href="#a0384aea1eb7edde259888e5fecae976c">More...</a><br/></td></tr>
+<tr class="separator:a0384aea1eb7edde259888e5fecae976c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_methods_classmdt_tt_base"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classmdt_tt_base')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classmdt_tt_base.html">mdtTtBase</a></td></tr>
@@ -253,7 +266,7 @@ Additional Inherited Members</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Helper class to manipulate test data. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_8h_source.html#l00047">47</a> of file <a class="el" href="mdt_tt_test_8h_source.html">mdtTtTest.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_8h_source.html#l00048">48</a> of file <a class="el" href="mdt_tt_test_8h_source.html">mdtTtTest.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a607eadd86d30aa34dbd9daaf4c03725c"></a>
 <div class="memitem">
@@ -281,7 +294,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Constructor. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00039">39</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00038">38</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
 
 </div>
 </div>
@@ -307,9 +320,9 @@ Additional Inherited Members</h2></td></tr>
 <li><a class="el" href="classmdt_tt_test.html#a01ee00b3a78c15b666d4e7a363412838" title="Check if a test is empty. ">testIsEmpty()</a> </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00194">194</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00193">193</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_sql_record_8cpp_source.html#l00077">mdtSqlRecord::addAllFields()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00050">mdtTtBase::addRecord()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00402">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00428">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00150">mdtSqlRecord::lastError()</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00246">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00415">mdtTtBase::rollbackTransaction()</a>, <a class="el" href="mdt_tt_test_8cpp_source.html#l00176">setCurrentTest()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00123">mdtSqlRecord::setValue()</a>, and <a class="el" href="mdt_tt_test_8cpp_source.html#l00171">testData()</a>.</p>
+<p>References <a class="el" href="mdt_sql_record_8cpp_source.html#l00077">mdtSqlRecord::addAllFields()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00050">mdtTtBase::addRecord()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00402">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00428">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00040">mdtTtBase::database()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00150">mdtSqlRecord::lastError()</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00246">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00415">mdtTtBase::rollbackTransaction()</a>, <a class="el" href="mdt_tt_test_8cpp_source.html#l00175">setCurrentTest()</a>, <a class="el" href="mdt_sql_record_8cpp_source.html#l00123">mdtSqlRecord::setValue()</a>, and <a class="el" href="mdt_tt_test_8cpp_source.html#l00170">testData()</a>.</p>
 
 </div>
 </div>
@@ -330,9 +343,9 @@ Additional Inherited Members</h2></td></tr>
 <p>Get current test item data. </p>
 <p>Note: will return cached value. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00410">410</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00409">409</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_test_8cpp_source.html#l00426">setMeasuredValue()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_test_8cpp_source.html#l00425">setMeasuredValue()</a>.</p>
 
 </div>
 </div>
@@ -362,7 +375,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Get setup data for given test item ID. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00514">514</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00565">565</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_tt_test_item_node_setup_data_8cpp_source.html#l00032">mdtTtTestItemNodeSetupData::addNodeSetupData()</a>, <a class="el" href="mdt_tt_test_node_setup_data_8cpp_source.html#l00045">mdtTtTestNodeSetupData::addUnitSetup()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00127">mdtTtBase::getData()</a>, <a class="el" href="mdt_tt_test_node_setup_data_8h_source.html#l00041">mdtTtTestNodeSetupData::nodeIdentification()</a>, <a class="el" href="mdt_tt_test_node_setup_data_8cpp_source.html#l00023">mdtTtTestNodeSetupData::setNodeIdentification()</a>, and <a class="el" href="mdt_sql_record_8h_source.html#l00158">mdtSqlRecord::value()</a>.</p>
 
@@ -383,7 +396,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Check if more test item is available. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00470">470</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00521">521</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
 
 </div>
 </div>
@@ -403,9 +416,162 @@ Additional Inherited Members</h2></td></tr>
 <p>Do some initialization. </p>
 <p>Will setup test data and table models for test item view and table. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00053">53</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00052">52</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00246">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0384aea1eb7edde259888e5fecae976c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtTtTest::isInLimitRange </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>limitMin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>limitMax</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>failMin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>failMax</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Check if x is in limit range. </p>
+<p>Return true if x is in ]failMin;limitMin] or in [limitMax;failMax[ </p>
+
+<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00515">515</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_tt_test_8cpp_source.html#l00425">setMeasuredValue()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a62a8e5118129566aa897bba3ff079a4e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtTtTest::isInOkRange </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>limitMin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>limitMax</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Check if x is in OK range. </p>
+<p>Return true if x is in ]limitMin;limitMax[ </p>
+
+<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00510">510</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_tt_test_8cpp_source.html#l00425">setMeasuredValue()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5920961d0f32d37033a184ed76b2cf3d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtTtTest::isInRange </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>min</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>max</em> = <code>std::numeric_limits&lt;double&gt;::max()</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Check if x is in range. </p>
+<p>Return true if x is in [min;max] </p>
+
+<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00504">504</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00298">mdtTtAbstractTestNodeCalibrationTool::isInRange()</a>.</p>
 
 </div>
 </div>
@@ -425,7 +591,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Go to next test item. </p>
 <dl class="section return"><dt>Returns</dt><dd>The test item ID </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00489">489</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00540">540</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
 
 </div>
 </div>
@@ -449,9 +615,9 @@ Additional Inherited Members</h2></td></tr>
 <li><a class="el" href="classmdt_tt_test.html#a01ee00b3a78c15b666d4e7a363412838" title="Check if a test is empty. ">testIsEmpty()</a> </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00287">287</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00286">286</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00402">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00428">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00196">mdtTtBase::removeData()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00415">mdtTtBase::rollbackTransaction()</a>, <a class="el" href="mdt_tt_test_8cpp_source.html#l00176">setCurrentTest()</a>, and <a class="el" href="mdt_tt_test_8cpp_source.html#l00171">testData()</a>.</p>
+<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00402">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00428">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00196">mdtTtBase::removeData()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00415">mdtTtBase::rollbackTransaction()</a>, <a class="el" href="mdt_tt_test_8cpp_source.html#l00175">setCurrentTest()</a>, and <a class="el" href="mdt_tt_test_8cpp_source.html#l00170">testData()</a>.</p>
 
 </div>
 </div>
@@ -470,7 +636,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reset the test item cursor. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00484">484</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00535">535</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
 
 </div>
 </div>
@@ -489,9 +655,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Save current test. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00228">228</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00227">227</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00402">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00428">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00246">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00415">mdtTtBase::rollbackTransaction()</a>, <a class="el" href="mdt_tt_test_8cpp_source.html#l00176">setCurrentTest()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>, and <a class="el" href="mdt_tt_test_8cpp_source.html#l00171">testData()</a>.</p>
+<p>References <a class="el" href="mdt_tt_base_8cpp_source.html#l00402">mdtTtBase::beginTransaction()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00428">mdtTtBase::commitTransaction()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_base_8h_source.html#l00246">mdtTtBase::pvLastError</a>, <a class="el" href="mdt_tt_base_8cpp_source.html#l00415">mdtTtBase::rollbackTransaction()</a>, <a class="el" href="mdt_tt_test_8cpp_source.html#l00175">setCurrentTest()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>, and <a class="el" href="mdt_tt_test_8cpp_source.html#l00170">testData()</a>.</p>
 
 </div>
 </div>
@@ -516,9 +682,9 @@ Additional Inherited Members</h2></td></tr>
 <li></li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00176">176</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00175">175</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_test_8cpp_source.html#l00194">createTest()</a>, <a class="el" href="mdt_tt_test_8cpp_source.html#l00287">removeCurrentTest()</a>, and <a class="el" href="mdt_tt_test_8cpp_source.html#l00228">saveCurrentTest()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_test_8cpp_source.html#l00193">createTest()</a>, <a class="el" href="mdt_tt_test_8cpp_source.html#l00286">removeCurrentTest()</a>, and <a class="el" href="mdt_tt_test_8cpp_source.html#l00227">saveCurrentTest()</a>.</p>
 
 </div>
 </div>
@@ -550,9 +716,9 @@ Additional Inherited Members</h2></td></tr>
 <p>Set current test item data</p>
 <p>Note: will not save to database. Use <a class="el" href="classmdt_tt_test.html#aed6d3ec0e08f8e02ca2d4db024e0788f" title="Save current test. ">saveCurrentTest()</a> for that. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00382">382</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00381">381</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_test_8cpp_source.html#l00426">setMeasuredValue()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_test_8cpp_source.html#l00425">setMeasuredValue()</a>.</p>
 
 </div>
 </div>
@@ -592,9 +758,9 @@ Additional Inherited Members</h2></td></tr>
 <p>Finally, all values are stored to current test item, but only cached (see <a class="el" href="classmdt_tt_test.html#afb1d31d833bb5307dbb1c953525db0e5" title="Set test item data. ">setCurrentTestItemData()</a>).</p>
 <p>Note: instrumentRangeMin and instrumentRangeMax are only informative, they are stored as they are given. For proper limit evaluation, only <a class="el" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a>'s flags are used. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00426">426</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00425">425</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_tt_test_8cpp_source.html#l00410">currentTestItemData()</a>, <a class="el" href="mdt_value_8cpp_source.html#l00126">mdtValue::isMinusOl()</a>, <a class="el" href="mdt_value_8cpp_source.html#l00131">mdtValue::isPlusOl()</a>, <a class="el" href="mdt_value_8cpp_source.html#l00153">mdtValue::isValid()</a>, <a class="el" href="mdt_tt_test_8cpp_source.html#l00382">setCurrentTestItemData()</a>, and <a class="el" href="mdt_value_8cpp_source.html#l00102">mdtValue::valueDouble()</a>.</p>
+<p>References <a class="el" href="mdt_tt_test_8cpp_source.html#l00409">currentTestItemData()</a>, <a class="el" href="mdt_tt_test_8cpp_source.html#l00515">isInLimitRange()</a>, <a class="el" href="mdt_tt_test_8cpp_source.html#l00510">isInOkRange()</a>, <a class="el" href="mdt_value_8cpp_source.html#l00126">mdtValue::isMinusOl()</a>, <a class="el" href="mdt_value_8cpp_source.html#l00131">mdtValue::isPlusOl()</a>, <a class="el" href="mdt_value_8cpp_source.html#l00153">mdtValue::isValid()</a>, <a class="el" href="mdt_tt_test_8cpp_source.html#l00381">setCurrentTestItemData()</a>, and <a class="el" href="mdt_value_8cpp_source.html#l00102">mdtValue::valueDouble()</a>.</p>
 
 </div>
 </div>
@@ -623,9 +789,9 @@ Additional Inherited Members</h2></td></tr>
 <p>newTestId = (data.value("Id_PK") != pvTestData.value("Id_PK")); pvTestData = data; pvTestDataAreSaved = false; if(newTestId){ /updateCurrentTestRow(data.value("Id_PK")); resetTestItemTableModels(); } /emit testDataChanged(pvTestData); } void mdtTtTest::setTestDataValue(const QString&amp; fieldName, const QVariant&amp; value) { bool newTestId = false;</p>
 <p>if(fieldName == "Id_PK"){ newTestId = (value != pvTestData.value("Id_PK")); } pvTestData.setValue(fieldName, value); pvTestDataAreSaved = false; if(newTestId){ resetTestItemTableModels(); } /emit testDataChanged(pvTestData); } </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00171">171</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00170">170</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_test_8cpp_source.html#l00194">createTest()</a>, <a class="el" href="mdt_tt_test_8cpp_source.html#l00287">removeCurrentTest()</a>, and <a class="el" href="mdt_tt_test_8cpp_source.html#l00228">saveCurrentTest()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_test_8cpp_source.html#l00193">createTest()</a>, <a class="el" href="mdt_tt_test_8cpp_source.html#l00286">removeCurrentTest()</a>, and <a class="el" href="mdt_tt_test_8cpp_source.html#l00227">saveCurrentTest()</a>.</p>
 
 </div>
 </div>
@@ -702,7 +868,7 @@ Additional Inherited Members</h2></td></tr>
 <li>In each related item in Test_tbl: only Id_PK, Test_Id_FK and TestModelItem_Id_FK are set </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00314">314</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00313">313</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
 
 </div>
 </div>
@@ -722,7 +888,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Check if test is saved. </p>
 <p>A test is saved if all cached data regarding Test_tbl and TestItem_tbl are stored in database. If no test was set (Test_tbl.Id_PK is NULL), test is considered saved. Note: each call of this method will check all test items. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00351">351</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00350">350</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
 
 </div>
 </div>
@@ -749,7 +915,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Get table model to access data in TestItem_view. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_8h_source.html#l00069">69</a> of file <a class="el" href="mdt_tt_test_8h_source.html">mdtTtTest.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_8h_source.html#l00070">70</a> of file <a class="el" href="mdt_tt_test_8h_source.html">mdtTtTest.h</a>.</p>
 
 </div>
 </div>
@@ -776,7 +942,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Get table model to access data in Test_tbl. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_8h_source.html#l00065">65</a> of file <a class="el" href="mdt_tt_test_8h_source.html">mdtTtTest.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_8h_source.html#l00066">66</a> of file <a class="el" href="mdt_tt_test_8h_source.html">mdtTtTest.h</a>.</p>
 
 </div>
 </div>
@@ -787,7 +953,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 26 2014 17:48:11 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Sep 1 2014 18:45:47 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

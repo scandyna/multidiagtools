@@ -138,14 +138,17 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a08f1a31a70bf9f4fa30dc298a95ad89f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_test_node_manager.html#a08f1a31a70bf9f4fa30dc298a95ad89f">clear</a> ()</td></tr>
 <tr class="memdesc:a08f1a31a70bf9f4fa30dc298a95ad89f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove all devices.  <a href="#a08f1a31a70bf9f4fa30dc298a95ad89f">More...</a><br/></td></tr>
 <tr class="separator:a08f1a31a70bf9f4fa30dc298a95ad89f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fb2651af4b660c162e2c4a3391f042e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_test_node_manager.html#a9fb2651af4b660c162e2c4a3391f042e">setDeviceIosLabelShort</a> (const QVariant &amp;testNodeId, const QVariant &amp;deviceIdentification)</td></tr>
+<tr class="memdesc:a9fb2651af4b660c162e2c4a3391f042e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set short label to device I/Os.  <a href="#a9fb2651af4b660c162e2c4a3391f042e">More...</a><br/></td></tr>
+<tr class="separator:a9fb2651af4b660c162e2c4a3391f042e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a949a362bd725f88cc3a92b9047ee4737"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_error.html">mdtError</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_test_node_manager.html#a949a362bd725f88cc3a92b9047ee4737">lastError</a> () const </td></tr>
-<tr class="memdesc:a949a362bd725f88cc3a92b9047ee4737"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get setup data for given test item ID.  <a href="#a949a362bd725f88cc3a92b9047ee4737">More...</a><br/></td></tr>
+<tr class="memdesc:a949a362bd725f88cc3a92b9047ee4737"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get last error.  <a href="#a949a362bd725f88cc3a92b9047ee4737">More...</a><br/></td></tr>
 <tr class="separator:a949a362bd725f88cc3a92b9047ee4737"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Helper class to access test node data and devices. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_node_manager_8h_source.html#l00041">41</a> of file <a class="el" href="mdt_tt_test_node_manager_8h_source.html">mdtTtTestNodeManager.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_node_manager_8h_source.html#l00042">42</a> of file <a class="el" href="mdt_tt_test_node_manager_8h_source.html">mdtTtTestNodeManager.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="ae272a2ede47ed1bf5df446acaade76de"></a>
 <div class="memitem">
@@ -173,7 +176,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Constructor. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_node_manager_8cpp_source.html#l00026">26</a> of file <a class="el" href="mdt_tt_test_node_manager_8cpp_source.html">mdtTtTestNodeManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_node_manager_8cpp_source.html#l00031">31</a> of file <a class="el" href="mdt_tt_test_node_manager_8cpp_source.html">mdtTtTestNodeManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -221,7 +224,7 @@ template&lt;typename T &gt; </div>
 <p>Add a test node. </p>
 <p>Create and add a device </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_node_manager_8h_source.html#l00057">57</a> of file <a class="el" href="mdt_tt_test_node_manager_8h_source.html">mdtTtTestNodeManager.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_node_manager_8h_source.html#l00058">58</a> of file <a class="el" href="mdt_tt_test_node_manager_8h_source.html">mdtTtTestNodeManager.h</a>.</p>
 
 </div>
 </div>
@@ -241,7 +244,7 @@ template&lt;typename T &gt; </div>
 <p>Get a list of all devices. </p>
 <p>Note: list is rebuilt at each call of this method. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_node_manager_8cpp_source.html#l00032">32</a> of file <a class="el" href="mdt_tt_test_node_manager_8cpp_source.html">mdtTtTestNodeManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_node_manager_8cpp_source.html#l00037">37</a> of file <a class="el" href="mdt_tt_test_node_manager_8cpp_source.html">mdtTtTestNodeManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -260,7 +263,7 @@ template&lt;typename T &gt; </div>
 
 <p>Remove all devices. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_node_manager_8cpp_source.html#l00042">42</a> of file <a class="el" href="mdt_tt_test_node_manager_8cpp_source.html">mdtTtTestNodeManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_node_manager_8cpp_source.html#l00047">47</a> of file <a class="el" href="mdt_tt_test_node_manager_8cpp_source.html">mdtTtTestNodeManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -279,7 +282,7 @@ template&lt;typename T &gt; </div>
 
 <p>Get device container object. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_node_manager_8cpp_source.html#l00037">37</a> of file <a class="el" href="mdt_tt_test_node_manager_8cpp_source.html">mdtTtTestNodeManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_node_manager_8cpp_source.html#l00042">42</a> of file <a class="el" href="mdt_tt_test_node_manager_8cpp_source.html">mdtTtTestNodeManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -309,7 +312,7 @@ template&lt;typename T &gt; </div>
 
 <p>Get device of type T and that has given identification. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_node_manager_8h_source.html#l00070">70</a> of file <a class="el" href="mdt_tt_test_node_manager_8h_source.html">mdtTtTestNodeManager.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_node_manager_8h_source.html#l00071">71</a> of file <a class="el" href="mdt_tt_test_node_manager_8h_source.html">mdtTtTestNodeManager.h</a>.</p>
 
 </div>
 </div>
@@ -334,11 +337,42 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Get setup data for given test item ID. </p>
-<p><a class="el" href="classmdt_tt_test_item_node_setup_data.html" title="Store setup data related to a test item. ">mdtTtTestItemNodeSetupData</a> getSetupData(const QVariant &amp; testItemId, bool &amp;ok);</p>
-<p>Get last error </p>
+<p>Get last error. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_test_node_manager_8h_source.html#l00095">95</a> of file <a class="el" href="mdt_tt_test_node_manager_8h_source.html">mdtTtTestNodeManager.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_test_node_manager_8h_source.html#l00101">101</a> of file <a class="el" href="mdt_tt_test_node_manager_8h_source.html">mdtTtTestNodeManager.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9fb2651af4b660c162e2c4a3391f042e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtTtTestNodeManager::setDeviceIosLabelShort </td>
+          <td>(</td>
+          <td class="paramtype">const QVariant &amp;&#160;</td>
+          <td class="paramname"><em>testNodeId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QVariant &amp;&#160;</td>
+          <td class="paramname"><em>deviceIdentification</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set short label to device I/Os. </p>
+<p>Will get I/Os contained in device (see <a class="el" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s. ">mdtDeviceIos</a> for details). and Test node units contained in given Test node. For each I/O, SchemaPosition of test node unit is used, and labelShort is set to I/O. </p>
+
+<p>Definition at line <a class="el" href="mdt_tt_test_node_manager_8cpp_source.html#l00052">52</a> of file <a class="el" href="mdt_tt_test_node_manager_8cpp_source.html">mdtTtTestNodeManager.cpp</a>.</p>
+
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>.</p>
 
 </div>
 </div>
@@ -349,7 +383,7 @@ template&lt;typename T &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 26 2014 17:48:12 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Sep 1 2014 18:45:47 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

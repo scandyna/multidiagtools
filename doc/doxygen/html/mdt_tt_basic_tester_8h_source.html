@@ -112,7 +112,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#ifndef MDT_TT_BASIC_TESTER_H</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define MDT_TT_BASIC_TESTER_H</span></div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_tt_abstract_test_widget_8h.html">mdtTtAbstractTestWidget.h</a>&quot;</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_tt_abstract_tester_8h.html">mdtTtAbstractTester.h</a>&quot;</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_tt_test_8h.html">mdtTtTest.h</a>&quot;</span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_tt_test_data_8h.html">mdtTtTestData.h</a>&quot;</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_tt_test_node_manager_8h.html">mdtTtTestNodeManager.h</a>&quot;</span></div>
@@ -122,17 +122,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">class </span><a class="code" href="classmdt_sql_table_widget.html" title="Table view based SQL widget. ">mdtSqlTableWidget</a>;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno"><a class="code" href="classmdt_tt_basic_tester.html">   36</a></span>&#160;<span class="keyword">class </span><a class="code" href="classmdt_tt_basic_tester.html" title="Provide ability to run tests. ">mdtTtBasicTester</a> : <span class="keyword">public</span> <a class="code" href="classmdt_tt_abstract_test_widget.html" title="Base to create a test widget. ">mdtTtAbstractTestWidget</a> </div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="code" href="classmdt_tt_basic_tester.html">   36</a></span>&#160;<span class="keyword">class </span><a class="code" href="classmdt_tt_basic_tester.html" title="Provide ability to run tests. ">mdtTtBasicTester</a> : <span class="keyword">public</span> <a class="code" href="classmdt_tt_abstract_tester.html" title="Base to create a tester. ">mdtTtAbstractTester</a> </div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;{</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; Q_OBJECT</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <a class="code" href="classmdt_tt_basic_tester.html#aa954efed08c1841b2de6d3f833557ad1" title="Constructor. ">mdtTtBasicTester</a>(QSqlDatabase db, <a class="code" href="class_q_widget.html">QWidget</a> *parent = 0);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <a class="code" href="classmdt_tt_basic_tester.html#a180ae78c3a887bb86acbb29ec42d3128" title="Constructor. ">mdtTtBasicTester</a>(QSqlDatabase db, <a class="code" href="class_q_object.html">QObject</a> *parent = 0);</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_basic_tester.html#ac831c6c6204439936c8f344f615bc50a" title="Setup. ">setup</a>();</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno"><a class="code" href="classmdt_tt_basic_tester.html#a56c25aca166611fe7a2f72e9c150c40c">   52</a></span>&#160;  <span class="keyword">inline</span> <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured ">mdtError</a> <a class="code" href="classmdt_tt_basic_tester.html#a56c25aca166611fe7a2f72e9c150c40c" title="Get last error. ">lastError</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="classmdt_tt_abstract_test_widget.html#a8faf8ab17f8a7f50d7d3a143b4e4624f" title="Contains last error that occured. ">pvLastError</a>; }</div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="code" href="classmdt_tt_basic_tester.html#a56c25aca166611fe7a2f72e9c150c40c">   52</a></span>&#160;  <span class="keyword">inline</span> <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured ">mdtError</a> <a class="code" href="classmdt_tt_basic_tester.html#a56c25aca166611fe7a2f72e9c150c40c" title="Get last error. ">lastError</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="classmdt_tt_abstract_tester.html#a99947ad3028815b144027beb8a8496ef" title="Contains last error that occured. ">pvLastError</a>; }</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; <span class="keyword">private</span> slots:</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
@@ -159,7 +159,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 26 2014 17:48:02 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Sep 1 2014 18:45:36 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

@@ -374,7 +374,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00107">107</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_sql_form_8cpp_source.html#l00161">addChildWidget()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00126">mdtAbstractSqlWidget::addChildWidget()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00077">mdtAbstractSqlWidget::model()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00270">model()</a>, <a class="el" href="mdt_sql_form_8h_source.html#l00326">pvLastError</a>, <a class="el" href="mdt_sql_relation_8cpp_source.html#l00048">mdtSqlRelation::setChildModel()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00059">mdtAbstractSqlWidget::setModel()</a>, <a class="el" href="mdt_sql_relation_8cpp_source.html#l00041">mdtSqlRelation::setParentModel()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00109">mdtAbstractSqlWidget::setUserFriendlyTableName()</a>, and <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00114">mdtAbstractSqlWidget::userFriendlyTableName()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00125">mdtAbstractSqlWidget::addChildWidget()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00161">addChildWidget()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00076">mdtAbstractSqlWidget::model()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00270">model()</a>, <a class="el" href="mdt_sql_form_8h_source.html#l00326">pvLastError</a>, <a class="el" href="mdt_sql_relation_8cpp_source.html#l00048">mdtSqlRelation::setChildModel()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00058">mdtAbstractSqlWidget::setModel()</a>, <a class="el" href="mdt_sql_relation_8cpp_source.html#l00041">mdtSqlRelation::setParentModel()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00108">mdtAbstractSqlWidget::setUserFriendlyTableName()</a>, and <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00113">mdtAbstractSqlWidget::userFriendlyTableName()</a>.</p>
 
 </div>
 </div>
@@ -480,9 +480,9 @@ Protected Attributes</h2></td></tr>
 <p>Will call <a class="el" href="classmdt_sql_form.html#a1e14cbb5bf04d2eb1c703862a6084031" title="Check if all data are saved. ">allDataAreSaved()</a> on mainSqlWidget.</p>
 <dl class="section return"><dt>Returns</dt><dd>true if all data are saved, false if a SQL widget has pending data. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00507">507</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00512">512</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00255">mdtAbstractSqlWidget::allDataAreSaved()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00254">mdtAbstractSqlWidget::allDataAreSaved()</a>.</p>
 
 </div>
 </div>
@@ -514,9 +514,9 @@ Protected Attributes</h2></td></tr>
 <p>Note that SQL widget related to given tableName is searched at each request. If several access to currentData is needed, it can be better to get a pointer to related widget with <a class="el" href="classmdt_sql_form.html#a345555605914bf8198d093abdd3cda1e" title="Get instance of the stored SQL widget related to a table name. ">sqlWidget()</a> , and call his <a class="el" href="classmdt_sql_form.html#aca283557b7e2586779cb5c498d388f14" title="Get current data for given table and field name. ">currentData()</a> method.</p>
 <dl class="section return"><dt>Returns</dt><dd>Current value, or a invalid QVariant on error (f.ex. table or field not found). </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00463">463</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00468">468</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00195">mdtAbstractSqlWidget::currentData()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_sql_form_8h_source.html#l00326">pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_sql_form_8cpp_source.html#l00212">sqlWidget()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00194">mdtAbstractSqlWidget::currentData()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_sql_form_8h_source.html#l00326">pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_sql_form_8cpp_source.html#l00212">sqlWidget()</a>.</p>
 
 </div>
 </div>
@@ -539,7 +539,7 @@ Protected Attributes</h2></td></tr>
 <p>Note that SQL widget related to given tableName is searched at each request. If several access to currentRow is needed, it can be better to get a pointer to related widget with <a class="el" href="classmdt_sql_form.html#a345555605914bf8198d093abdd3cda1e" title="Get instance of the stored SQL widget related to a table name. ">sqlWidget()</a> , and call his <a class="el" href="classmdt_sql_form.html#a855de08e9ddb3f7898ef4ceb0b0331f9" title="Get the current row of given table name. ">currentRow()</a> method.</p>
 <dl class="section return"><dt>Returns</dt><dd>Current row, or value &lt; 0 on error (f.ex. table not found). </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00420">420</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00421">421</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="classmdt_abstract_sql_widget.html#ab48f6375f55f1eaba309fb17aaaf5770">mdtAbstractSqlWidget::currentRow()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_sql_form_8h_source.html#l00326">pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_sql_form_8cpp_source.html#l00212">sqlWidget()</a>.</p>
 
@@ -579,9 +579,9 @@ Protected Attributes</h2></td></tr>
 <p>Note that SQL widget related to given tableName is searched at each request. If several access to data is needed, it can be better to get a pointer to related widget with <a class="el" href="classmdt_sql_form.html#a345555605914bf8198d093abdd3cda1e" title="Get instance of the stored SQL widget related to a table name. ">sqlWidget()</a> , and call his <a class="el" href="classmdt_sql_form.html#a0c27d6a9ecbf0589f313c7193c632a62" title="Get data for given table , row and field name. ">data()</a> method.</p>
 <dl class="section return"><dt>Returns</dt><dd>Current value, or a invalid QVariant on error (f.ex. table, row or field not found). </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00479">479</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00484">484</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00202">mdtAbstractSqlWidget::data()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_sql_form_8h_source.html#l00326">pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_sql_form_8cpp_source.html#l00212">sqlWidget()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00201">mdtAbstractSqlWidget::data()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_sql_form_8h_source.html#l00326">pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_sql_form_8cpp_source.html#l00212">sqlWidget()</a>.</p>
 
 </div>
 </div>
@@ -644,7 +644,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00395">395</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00133">mdtError::levelIcon()</a>, <a class="el" href="mdt_sql_form_8h_source.html#l00326">pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00153">mdtError::systemText()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00123">mdtError::text()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00182">mdtError::informativeText()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00133">mdtError::levelIcon()</a>, <a class="el" href="mdt_sql_form_8h_source.html#l00326">pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00153">mdtError::systemText()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00123">mdtError::text()</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_tt_test_model_item_editor_8cpp_source.html#l00087">mdtTtTestModelItemEditor::setSequenceNumber()</a>, and <a class="el" href="mdt_tt_test_model_item_editor_8cpp_source.html#l00080">mdtTtTestModelItemEditor::setTestModelId()</a>.</p>
 
@@ -665,9 +665,9 @@ Protected Attributes</h2></td></tr>
 
 <p>Call insert method on mainSqlWidget. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00495">495</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00500">500</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00323">mdtAbstractSqlWidget::insert()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00322">mdtAbstractSqlWidget::insert()</a>.</p>
 
 </div>
 </div>
@@ -721,7 +721,7 @@ Protected Attributes</h2></td></tr>
 <p>Get lastError ogject for write acces. </p>
 <p>Subclass can use this method to set lastError </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00515">515</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00520">520</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_sql_form_8h_source.html#l00326">pvLastError</a>.</p>
 
@@ -769,9 +769,9 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00270">270</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00077">mdtAbstractSqlWidget::model()</a>, and <a class="el" href="mdt_sql_form_8cpp_source.html#l00212">sqlWidget()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00076">mdtAbstractSqlWidget::model()</a>, and <a class="el" href="mdt_sql_form_8cpp_source.html#l00212">sqlWidget()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_form_8cpp_source.html#l00107">addChildTable()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00258">database()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00405">rowCount()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00306">select()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00064">setMainTable()</a>, and <a class="el" href="mdt_cl_unit_editor_8cpp_source.html#l00094">mdtClUnitEditor::setWorkingOnVehicleTypeIdList()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_form_8cpp_source.html#l00107">addChildTable()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00258">database()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00406">rowCount()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00306">select()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00064">setMainTable()</a>, and <a class="el" href="mdt_cl_unit_editor_8cpp_source.html#l00095">mdtClUnitEditor::setWorkingOnVehicleTypeIdList()</a>.</p>
 
 </div>
 </div>
@@ -793,7 +793,7 @@ Protected Attributes</h2></td></tr>
 <p>Note that SQL widget related to given tableName is searched at each request. If several access to rowCount is needed, it can be better to get a pointer to related model with <a class="el" href="classmdt_sql_form.html#ac3f257a2711f66b3cdd811804c0f11b0" title="Get model that acts on given table name. ">model()</a> , and call his <a class="el" href="classmdt_sql_form.html#a7d50c271fc506764ed20dd88914d0ddc" title="Get the row count for given table name. ">rowCount()</a> method.</p>
 <dl class="section return"><dt>Returns</dt><dd>Row count, or value &lt; 0 on error (f.ex. table not found). </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00405">405</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00406">406</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00270">model()</a>, <a class="el" href="mdt_sql_form_8h_source.html#l00326">pvLastError</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>.</p>
 
@@ -817,7 +817,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00282">282</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00077">mdtAbstractSqlWidget::model()</a>, <a class="el" href="mdt_sql_form_8h_source.html#l00326">pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>, and <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00114">mdtAbstractSqlWidget::userFriendlyTableName()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00076">mdtAbstractSqlWidget::model()</a>, <a class="el" href="mdt_sql_form_8h_source.html#l00326">pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>, and <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00113">mdtAbstractSqlWidget::userFriendlyTableName()</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_sql_form_8cpp_source.html#l00332">setMainTableFilter()</a>.</p>
 
@@ -842,7 +842,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00306">306</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00270">model()</a>, <a class="el" href="mdt_sql_form_8h_source.html#l00326">pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00212">sqlWidget()</a>, and <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00114">mdtAbstractSqlWidget::userFriendlyTableName()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00270">model()</a>, <a class="el" href="mdt_sql_form_8h_source.html#l00326">pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00212">sqlWidget()</a>, and <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00113">mdtAbstractSqlWidget::userFriendlyTableName()</a>.</p>
 
 </div>
 </div>
@@ -885,9 +885,9 @@ Protected Attributes</h2></td></tr>
 <p>Set (update) data of current row (record) for given table and field name. </p>
 <p>Note that SQL widget related to given tableName is searched at each request. If several access to setCurrentData is needed, it can be better to get a pointer to related widget with <a class="el" href="classmdt_sql_form.html#a345555605914bf8198d093abdd3cda1e" title="Get instance of the stored SQL widget related to a table name. ">sqlWidget()</a> , and call his <a class="el" href="classmdt_sql_form.html#aa377e70f4a2e865b0b696957c0fca766" title="Set (update) data of current row (record) for given table and field name. ">setCurrentData()</a> method. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00447">447</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00452">452</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_sql_form_8h_source.html#l00326">pvLastError</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00157">mdtAbstractSqlWidget::setCurrentData()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_sql_form_8cpp_source.html#l00212">sqlWidget()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_sql_form_8h_source.html#l00326">pvLastError</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00156">mdtAbstractSqlWidget::setCurrentData()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_sql_form_8cpp_source.html#l00212">sqlWidget()</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_tt_test_model_item_editor_8cpp_source.html#l00087">mdtTtTestModelItemEditor::setSequenceNumber()</a>, and <a class="el" href="mdt_tt_test_model_item_editor_8cpp_source.html#l00080">mdtTtTestModelItemEditor::setTestModelId()</a>.</p>
 
@@ -928,9 +928,9 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if matching record was found (in this case, setCurrentIndex() is called on sql widget witch acts on main table to update currentRow), false else. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00436">436</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00437">437</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_sql_form_8h_source.html#l00326">pvLastError</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00333">mdtAbstractSqlWidget::setCurrentRecord()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_abstract_sql_widget_8h_source.html#l00276">mdtAbstractSqlWidget::lastError()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_sql_form_8h_source.html#l00326">pvLastError</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00332">mdtAbstractSqlWidget::setCurrentRecord()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>.</p>
 
 </div>
 </div>
@@ -1018,7 +1018,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00064">64</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00053">mdtSqlFormWidget::mapFormWidgets()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00077">mdtAbstractSqlWidget::model()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00270">model()</a>, <a class="el" href="mdt_sql_form_8h_source.html#l00326">pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00059">mdtAbstractSqlWidget::setModel()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>, and <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00109">mdtAbstractSqlWidget::setUserFriendlyTableName()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00053">mdtSqlFormWidget::mapFormWidgets()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00076">mdtAbstractSqlWidget::model()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00270">model()</a>, <a class="el" href="mdt_sql_form_8h_source.html#l00326">pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00058">mdtAbstractSqlWidget::setModel()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>, and <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00108">mdtAbstractSqlWidget::setUserFriendlyTableName()</a>.</p>
 
 </div>
 </div>
@@ -1058,7 +1058,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00332">332</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00077">mdtAbstractSqlWidget::model()</a>, <a class="el" href="mdt_sql_form_8h_source.html#l00326">pvLastError</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00282">select()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00076">mdtAbstractSqlWidget::model()</a>, <a class="el" href="mdt_sql_form_8h_source.html#l00326">pvLastError</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00282">select()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>.</p>
 
 </div>
 </div>
@@ -1088,7 +1088,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classmdt_cl_unit_editor.html#a962cfbdda9400a7cf99ba38eec0a4155">mdtClUnitEditor</a>, <a class="el" href="classmdt_cl_article_editor.html#aded93cdb635e69fdba0f8b59054c8fce">mdtClArticleEditor</a>, <a class="el" href="classmdt_cl_vehicle_type_editor.html#aa23c76e65f52575a31616267757603ae">mdtClVehicleTypeEditor</a>, <a class="el" href="classmdt_tt_test_connection_cable_editor.html#a2a380953c8e3dce63532c70c484f2b91">mdtTtTestConnectionCableEditor</a>, <a class="el" href="classmdt_cl_connector_editor.html#a6f3fdb1041ec8d562aac777471b7892f">mdtClConnectorEditor</a>, <a class="el" href="classmdt_tt_test_node_editor.html#ac8f144b6fb17a2dd6eec9eae7a824b6b">mdtTtTestNodeEditor</a>, <a class="el" href="classmdt_cl_link_beam_editor.html#aff3668706e304470e55165d036feae80">mdtClLinkBeamEditor</a>, <a class="el" href="classmdt_tt_test_model_item_editor.html#a1281b469c8d9493e2ce97923c7ce9b33">mdtTtTestModelItemEditor</a>, and <a class="el" href="classmdt_tt_test_model_editor.html#acb871c3218f3d458b5f9ba5e49c74df9">mdtTtTestModelEditor</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00502">502</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00507">507</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
 </div>
 </div>
@@ -1152,9 +1152,9 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00212">212</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00143">mdtAbstractSqlWidget::sqlWidgets()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00142">mdtAbstractSqlWidget::sqlWidgets()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_form_8cpp_source.html#l00463">currentData()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00420">currentRow()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00479">data()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00270">model()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00306">select()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00447">setCurrentData()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00229">sqlFormWidget()</a>, and <a class="el" href="mdt_sql_form_8cpp_source.html#l00241">sqlTableWidget()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_form_8cpp_source.html#l00468">currentData()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00421">currentRow()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00484">data()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00270">model()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00306">select()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00452">setCurrentData()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00229">sqlFormWidget()</a>, and <a class="el" href="mdt_sql_form_8cpp_source.html#l00241">sqlTableWidget()</a>.</p>
 
 </div>
 </div>
@@ -1176,7 +1176,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_sql_form_8cpp_source.html#l00199">199</a> of file <a class="el" href="mdt_sql_form_8cpp_source.html">mdtSqlForm.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00143">mdtAbstractSqlWidget::sqlWidgets()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00142">mdtAbstractSqlWidget::sqlWidgets()</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_sql_window_8cpp_source.html#l00060">mdtSqlWindow::setSqlForm()</a>, and <a class="el" href="mdt_sql_dialog_8cpp_source.html#l00055">mdtSqlDialog::setSqlForm()</a>.</p>
 
@@ -1203,7 +1203,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_sql_form_8h_source.html#l00326">326</a> of file <a class="el" href="mdt_sql_form_8h_source.html">mdtSqlForm.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_form_8cpp_source.html#l00107">addChildTable()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00177">addRelation()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00463">currentData()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00420">currentRow()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00479">data()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00395">displayLastError()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00390">lastError()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00515">lastErrorW()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00405">rowCount()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00282">select()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00447">setCurrentData()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00436">setCurrentRecord()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00064">setMainTable()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00332">setMainTableFilter()</a>, and <a class="el" href="mdt_cl_unit_editor_8cpp_source.html#l00094">mdtClUnitEditor::setWorkingOnVehicleTypeIdList()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_form_8cpp_source.html#l00107">addChildTable()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00177">addRelation()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00468">currentData()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00421">currentRow()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00484">data()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00395">displayLastError()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00390">lastError()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00520">lastErrorW()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00406">rowCount()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00282">select()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00452">setCurrentData()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00437">setCurrentRecord()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00064">setMainTable()</a>, <a class="el" href="mdt_sql_form_8cpp_source.html#l00332">setMainTableFilter()</a>, and <a class="el" href="mdt_cl_unit_editor_8cpp_source.html#l00095">mdtClUnitEditor::setWorkingOnVehicleTypeIdList()</a>.</p>
 
 </div>
 </div>
@@ -1214,7 +1214,7 @@ Protected Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 26 2014 17:48:11 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Sep 1 2014 18:45:46 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>
