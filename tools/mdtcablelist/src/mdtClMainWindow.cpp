@@ -139,9 +139,11 @@ void mdtClMainWindow::updateWorkingOnVehicleTypes()
   if(editor == 0){
     return;
   }
+  /**
   if(!editor->setWorkingOnVehicleTypeIdList(pvWorkingOnVehicleTypeList)){
     displayError(editor->lastError());
   }
+  */
 }
 
 void mdtClMainWindow::updateVehicleTypeMenu()

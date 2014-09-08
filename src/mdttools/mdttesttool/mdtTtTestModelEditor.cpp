@@ -321,15 +321,8 @@ void mdtTtTestModelEditor::generateContinuityTest()
   mdtTtTestModel tm(this, database());
   mdtClPathGraph graph(database());
   mdtTtTestModelGenerationDialog setupDialog(database(), this);
-  /**
-  QVariant testCableId;
-  QVariant testNodeId;
-  QVariant measureConnexionIdA;
-  QVariant measureConnexionIdB;
-  */
   QVariant testModelId;
   mdtTtTestModelGenerationParameter parameters;
-  
   bool ok;
 
   // Get current test model ID
@@ -345,73 +338,13 @@ void mdtTtTestModelEditor::generateContinuityTest()
   parameters = setupDialog.selectedParameters();
   // Set test model ID to parameters
   parameters.testModelId = testModelId;
-  /**
-  testNodeId = setupDialog.selectedTestNodeId();
-  if(testNodeId.isNull()){
-    return;
-  }
-  testCableId = setupDialog.selectedTestCableId();
-  if(testCableId.isNull()){
-    return;
-  }
-  measureConnexionIdA = setupDialog.selectedMeasureConnectionA();
-  if(measureConnexionIdA.isNull()){
-    return;
-  }
-  measureConnexionIdB = setupDialog.selectedMeasureConnectionB();
-  if(measureConnexionIdB.isNull()){
-    return;
-  }
-  */
   // Load link list
   if(!graph.loadLinkList()){
     pvLastError = graph.lastError();
     displayLastError();
     return;
   }
-  // Select relays to not use
-  /**
-  sql = "SELECT * FROM TestNodeUnit_view";
-  sql += " WHERE TestNode_Id_FK = " + testNodeId.toString();
-  sql += " AND (Type_Code_FK = 'BUSCPLREL')";
-  dialog.setQuery(sql, database(), true);
-  if(dialog.exec() != QDialog::Accepted){
-    return;
-  }
-  s = dialog.selection("Unit_Id_FK_PK");
-  for(i = 0; i < s.rowCount(); ++i){
-    relaysToIgnore.append(s.data(i, "Unit_Id_FK_PK"));
-  }
-  */
-  /**
-  parameters.measureConnexionIdA = measureConnexionIdA;
-  parameters.measureConnexionIdB = measureConnexionIdB;
-  parameters.testCableId = testCableId;
-  parameters.testModelId = testModelId;
-  parameters.testNodeId = testNodeId;
-  */
   // Generate test
-  ok = false;
-  /**
-  switch(setupDialog.selectedTestModelType()){
-    case mdtTtTestModelGenerationDialog::None:
-      return;
-    case mdtTtTestModelGenerationDialog::ContinuityTest:
-      ///ok = tm.generateContinuityTest(testModelId, testCableId, testNodeId, measureConnexionIdA, measureConnexionIdB, graph);
-      parameters.generateForNonLinkedConnections = false;
-      parameters.continuityExpectedValue = 0.0;
-      parameters.isolationExpectedValue = 1e9;
-      ok = tm.generateTestModel(parameters, graph);
-      break;
-    case mdtTtTestModelGenerationDialog::ShortDetectionTest:
-      ///ok = tm.generateShortDetectionTest(testModelId, testCableId, testNodeId, measureConnexionIdA, measureConnexionIdB, graph, relaysToIgnore);
-      parameters.generateForNonLinkedConnections = false;
-      parameters.continuityExpectedValue = 0.0;
-      parameters.isolationExpectedValue = 1e9;
-      ok = tm.generateTestModel(parameters, graph);
-      break;
-  }
-  */
   ok = tm.generateTestModel(parameters, graph);
   if(!ok){
     pvLastError = tm.lastError();

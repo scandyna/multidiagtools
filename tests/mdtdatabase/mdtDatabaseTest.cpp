@@ -25,6 +25,7 @@
 #include "mdtSqlDatabaseManager.h"
 #include "mdtSqlSchemaTable.h"
 #include "mdtSqlRecord.h"
+#include "mdtSqlDataWidgetController.h"
 #include "mdtSqlSelectionDialog.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
@@ -956,6 +957,64 @@ void mdtDatabaseTest::sqlRecordTest()
   matchData.setValue("Remarks", "Remark 8");
   QCOMPARE(record.sqlForUpdate("Client_tbl", matchData), QString("UPDATE Client_tbl SET FirstName=? WHERE Id_PK=8 AND FirstName='Name 8' AND Remarks='Remark 8'"));
 }
+
+void mdtDatabaseTest::sqlDataWidgetControllerTest()
+{
+  mdtSqlDataWidgetController wc;
+  std::shared_ptr<QSqlTableModel> m1(new QSqlTableModel(0, pvDatabase));
+  std::shared_ptr<QSqlTableModel> m2(new QSqlTableModel(0, pvDatabase));
+
+  // Initial state
+  QVERIFY(wc.model().get() == 0);
+  QVERIFY(wc.userFriendlyTableName().isEmpty());
+
+  qDebug() << "m1 usage: " << m1.use_count();
+  qDebug() << "model usage: " << wc.model().use_count();
+
+  /*
+   * Setup a model ourself and set it to controller
+   */
+  m1->setTable("Client_tbl");
+  wc.setModel(m1);
+  QVERIFY(wc.model() == m1);
+  QCOMPARE(wc.model()->tableName(), QString("Client_tbl"));
+  QCOMPARE(wc.userFriendlyTableName(), QString("Client_tbl"));
+  /*
+   * Setup a second model, set it to controller,
+   *  and check that first model is not alterred.
+   */
+  m2->setTable("Address_tbl");
+  wc.setModel(m2);
+  QVERIFY(wc.model() == m2);
+  QCOMPARE(wc.model()->tableName(), QString("Address_tbl"));
+  QCOMPARE(wc.userFriendlyTableName(), QString("Address_tbl"));
+  QVERIFY(m1 != m2);
+  QCOMPARE(m1->tableName(), QString("Client_tbl"));
+  QCOMPARE(m2->tableName(), QString("Address_tbl"));
+  /*
+   * Set table name, and check that m2 is intact
+   */
+  wc.setTableName("Client_tbl", pvDatabase, "Clients");
+  QCOMPARE(wc.model()->tableName(), QString("Client_tbl"));
+  QCOMPARE(wc.userFriendlyTableName(), QString("Clients"));
+  QCOMPARE(m2->tableName(), QString("Address_tbl"));
+  // Reset m1 and m2
+  m1.reset();
+  m2.reset();
+  QVERIFY(wc.model().get() != 0);
+  QCOMPARE(wc.model()->tableName(), QString("Client_tbl"));
+  /*
+   * Select data and check
+   */
+  QVERIFY(wc.select());
+
+
+  qDebug() << "m1 usage: " << m1.use_count();
+  qDebug() << "m2 usage: " << m2.use_count();
+  qDebug() << "model usage: " << wc.model().use_count();
+
+}
+
 
 /** \todo This test uses the old selectionResult() API
  * A new test is included in mdtDatabaseWidgetTest module, that uses new API (with mdtSqlTableSelection)

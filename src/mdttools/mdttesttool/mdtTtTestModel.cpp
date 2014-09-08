@@ -513,9 +513,6 @@ bool mdtTtTestModel::addRoutesToItemData(const QVariant & dutConnectionId1, cons
         pvLastError = tn.lastError();
         return false;
       }
-      
-      qDebug() << "Has short ? : " << !noShort;
-      
       if(noShort){
         // Ok, we have it - Add route data to test model item data
         itemData.addRouteData(routeData1);
@@ -601,9 +598,6 @@ bool mdtTtTestModel::generateTestModel(mdtTtTestModelGenerationParameter & param
   // Process each DUT connections combinaison
   for(i = 0; i < (dutConnectionIdList.size()-1); ++i){
     for(k = i+1; k < dutConnectionIdList.size(); ++k){
-      
-      qDebug() << "Processing " << dutConnectionIdList.at(i) << "-" << dutConnectionIdList.at(k) << " ...";
-      
       linked = graph.connectionsAreLinked(dutConnectionIdList.at(i), dutConnectionIdList.at(k));
       if((linked)||(parameters.generateForNonLinkedConnections)){
         // Clear previous data

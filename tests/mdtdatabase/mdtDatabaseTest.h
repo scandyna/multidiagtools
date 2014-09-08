@@ -45,6 +45,8 @@ class mdtDatabaseTest : public mdtTest
 
   void sqlRecordTest();
 
+  void sqlDataWidgetControllerTest();
+  
   void sqlSelectionDialogTest();
 
   void doubleValueTest();

@@ -1,0 +1,20 @@
+format 207
+
+classcanvas 128002 class_ref 1376130 // mdtUiMessage
+  classdiagramsettings member_max_width 0 end
+  xyz 145 279 2000
+end
+classcanvas 128130 class_ref 1376258 // mdtMessageBox
+  classdiagramsettings member_max_width 0 end
+  xyz 557 261 2000
+end
+classcanvas 128258 class_ref 209410 // QMessageBox
+  classdiagramsettings member_max_width 0 end
+  xyz 562 131 2000
+end
+relationcanvas 128386 relation_ref 1694594 // <generalisation>
+  from ref 128130 z 2001 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

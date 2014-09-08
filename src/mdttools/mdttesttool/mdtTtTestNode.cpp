@@ -283,8 +283,6 @@ bool mdtTtTestNode::addRelaysToGraph(const QVariant& testNodeId, mdtClPathGraph&
   } relay;
   QString sql;
   QList<QVariant> testNodeUnitIdList;
-  ///QList<QVariant> connectionsList;
-  ///QVariant testNodeUnitId;
   QPair<QVariant, QVariant> connections;
   QList<relay_t> relaysList;
   bool ok;
@@ -315,24 +313,6 @@ bool mdtTtTestNode::addRelaysToGraph(const QVariant& testNodeId, mdtClPathGraph&
     relay.cnxA = connections.first;
     relay.cnxB = connections.second;
     relaysList.append(relay);
-    /**
-    testNodeUnitId = testNodeUnitIdList.at(i);
-    Q_ASSERT(!testNodeUnitId.isNull());
-    sql = "SELECT Id_PK FROM UnitConnection_tbl WHERE Unit_Id_FK = " + testNodeUnitId.toString();
-    connectionsList = getDataList<QVariant>(sql, ok);
-    if(!ok){
-      return false;
-    }
-    // We only handle relays with exactly 2 connections
-    if(connectionsList.size() == 2){
-      graph.addLink(connectionsList.at(0), connectionsList.at(1), testNodeUnitId, true, 2);
-    }else{
-      pvLastError.setError(tr("Relay ID ") + testNodeUnitId.toString() + tr(" has not exactly 2 connections."), mdtError::Error);
-      MDT_ERROR_SET_SRC(pvLastError, "mdtTtRelayPathDialog");
-      pvLastError.commit();
-      return false;
-    }
-    */
   }
   // Add relays to graph
   for(i = 0; i < relaysList.size(); ++i){
@@ -384,7 +364,6 @@ bool mdtTtTestNode::ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, 
   Q_ASSERT(!connectionIdA.isNull());
   Q_ASSERT(!connectionIdB.isNull());
 
-  ///mdtTtTestNodeUnit tnu(0, database());
   QList<QVariant> connectionIdList;
   int i;
   bool hasShort;
@@ -417,44 +396,14 @@ bool mdtTtTestNode::ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, 
   for(i = 0; i < relaysList.size(); ++i){
     relay = relaysList.at(i);
     graph.addLink(relay.cnxA, relay.cnxB, relay.id, true, 2);
-    ///qDebug() << "Short detection: adding relay ID " << relay.id << ", relay cnxA: " << relay.cnxA << " , relay cnxB: " << relay.cnxB;
   }
-
-  // Add given node units to graph
-  /**
-  for(i = 0; i < testNodeUnitSetupDataList.size(); ++i){
-    connectionIdList = tnu.getConnectionIdListOfUnitId(testNodeUnitSetupDataList.at(i).value("TestNodeUnit_Id_FK"), false, ok);
-    if(!ok){
-      pvLastError = tnu.lastError();
-      return false;
-    }
-    // We only handle units with exactly 2 connections
-    if(connectionIdList.size() != 2){
-      ok = false;
-      pvLastError.setError(tr("Node unit ID ") + testNodeUnitSetupDataList.at(i).value("TestNodeUnit_Id_FK").toString() + tr(" has not exaclty 2 connections. This is not supported."), mdtError::Error);
-      MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNode");
-      pvLastError.commit();
-      return false;
-    }
-    Q_ASSERT(connectionIdList.size() == 2);
-    graph.addLink(connectionIdList.at(0), connectionIdList.at(1), true, 2);
-  }
-  ///ok = true;
-  noShort = graph.getShortestPath(connectionIdA, connectionIdB, ok).isEmpty();
-  if(!ok){
-    pvLastError = graph.lastError();
-  }
-  */
+  // Check about shorts and reset graph
   hasShort = graph.connectionsAreLinked(connectionIdA, connectionIdB);
   graph.removeAddedLinks();
-  
-  qDebug() << "TN - Has short ? : " << hasShort;
-  
   if(hasShort){
     QString sql;
     QList<QSqlRecord> dataList;
     QSqlRecord data;
-    ///QString tmiDesignation;
     QString u1, u2, relaysStr;
     QString msg;
     // Infos about test model item
@@ -468,7 +417,6 @@ bool mdtTtTestNode::ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, 
     sql = "SELECT U.SchemaPosition, UCNX.UnitContactName FROM UnitConnection_tbl UCNX JOIN Unit_tbl U ON U.Id_PK = UCNX.Unit_Id_FK";
     sql += " WHERE UCNX.Id_PK = " + connectionIdA.toString();
     dataList = getDataList<QSqlRecord>(sql, ok);
-    ///qDebug() << "Data: " << dataList;
     if(!ok){
       return false;
     }
@@ -479,7 +427,6 @@ bool mdtTtTestNode::ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, 
     sql = "SELECT U.SchemaPosition, UCNX.UnitContactName FROM UnitConnection_tbl UCNX JOIN Unit_tbl U ON U.Id_PK = UCNX.Unit_Id_FK";
     sql += " WHERE UCNX.Id_PK = " + connectionIdB.toString();
     dataList = getDataList<QSqlRecord>(sql, ok);
-    ///qDebug() << "Data: " << dataList;
     if(!ok){
       return false;
     }
@@ -495,9 +442,7 @@ bool mdtTtTestNode::ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, 
       sql += relaysList.at(i).id.toString();
     }
     sql += ")";
-    ///qDebug() << "Relays SQL: " << sql;
     dataList = getDataList<QSqlRecord>(sql, ok);
-    ///qDebug() << "Data: " << dataList;
     if(!ok){
       return false;
     }
@@ -516,14 +461,6 @@ bool mdtTtTestNode::ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, 
 
   return true;
 }
-///|StartAlias|StartUnitConnectorName|||EndAlias|EndUnitConnectorName|||||StartUnit_Id_FK|EndUnit_Id_FK|
-/**
-bool mdtTtTestNode::ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, const QVariant & connectionIdB, const QList<mdtTtTestNodeUnitSetupData> & testNodeUnitSetupDataList, bool & ok)
-{
-  mdtClPathGraph graph(database());
-  return ensureAbsenceOfShortCircuit(connectionIdA, connectionIdB, testNodeUnitSetupDataList, graph, ok);
-}
-*/
 
 QPair<QVariant, QVariant> mdtTtTestNode::getTwoRelayConnections(const QVariant & testNodeUnitId, mdtClPathGraph & graph, bool & ok)
 {
@@ -542,7 +479,6 @@ QPair<QVariant, QVariant> mdtTtTestNode::getTwoRelayConnections(const QVariant &
   // Check any combinaison of of connections to find 2 non linked together connections
   for(i = 0; i < (connectionsList.size()-1); ++i){
     for(m = i+1; m < connectionsList.size(); ++m){
-      ///qDebug() << "Checking " << i << "-" << m;
       if(!graph.connectionsAreLinked(connectionsList.at(i), connectionsList.at(m))){
         ok = true;
         return QPair<QVariant, QVariant>(connectionsList.at(i), connectionsList.at(m));

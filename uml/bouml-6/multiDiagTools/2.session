@@ -1,21 +1,39 @@
-window_sizes 1280 978 233 1041 925 0
+window_sizes 1280 978 305 969 925 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 941058 // Test
-    1041 952 70 3 0 0
-  classdiagram_ref 739586 // CableListAllTables
-    1041 952 100 17 287 658
-  classdiagram_ref 1230722 // mdtTtTestModelItemRouteData
+  classdiagram_ref 967682 // mdtSqlDialog
     120 106 100 4 0 0
-  active  classdiagram_ref 1230850 // mdtTtTestModelItemData
-    1041 925 100 4 24 0
+  classdiagram_ref 673538 // mdtSqlWidget
+    120 106 100 4 252 0
+  classdiagram_ref 746114 // mdtSqlForm
+    120 106 100 18 0 0
+  classdiagram_ref 967426 // mdtSqlForm
+    120 106 100 3 48 0
+  classdiagram_ref 408194 // mdtDataWidgetMapper
+    120 106 100 4 0 0
+  classdiagram_ref 1237378 // mdtSqlTableWidget
+    120 106 100 4 0 0
+  classdiagram_ref 1237506 // MVC
+    120 106 100 4 24 0
+  classdiagram_ref 1237634 // mdtAbstractSqlTableController
+    969 952 90 18 0 0
+  classdiagram_ref 1238146 // mdtUiMessage
+    120 106 100 4 0 0
+  classdiagram_ref 1244674 // mdtSqlRelationInfo
+    120 106 100 4 0 0
+  active  classdiagram_ref 1237762 // mdtSqlDataWidgetController
+    969 925 100 4 0 0
+  classdiagram_ref 1237890 // mdtSqlTableViewController
+    120 106 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 2203266 // clear
+selected operation_ref 1282690 // mapFormWidgets
 open
-  class_ref 1368834 // mdtTtTestModelItemRouteData
-  operation_ref 2203010 // mdtTtTestModelItemData
-  operation_ref 2203266 // clear
-  operation_ref 2203138 // clearValues
+  class_ref 910338 // Fields
+  classdiagram_ref 1237378 // mdtSqlTableWidget
+  attribute_ref 1396354 // pvFoundWidgets
+  operation_ref 2225282 // setUiCurrentRow
+  deploymentview_ref 474498 // Data
+  classview_ref 648578 // mdtSqlWidget
 end
 end

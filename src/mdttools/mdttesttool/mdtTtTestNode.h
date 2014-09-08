@@ -30,7 +30,6 @@
 #include <QString>
 #include <QSqlRecord>
 #include <QPair>
-///#include <QModelIndex>
 
 /*! \brief Helper class for test node edition
  */
@@ -126,8 +125,6 @@ class mdtTtTestNode : public mdtTtBase
    * \return True if a short circuit was detected, false if OK
    */
   bool ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, const QVariant & connectionIdB, const QList<mdtTtTestNodeUnitSetupData> & testNodeUnitSetupDataList, mdtClPathGraph & graph, bool & ok);
-
-  ///bool ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, const QVariant & connectionIdB, const QList<mdtTtTestNodeUnitSetupData> & testNodeUnitSetupDataList, bool & ok);
 
  private:
 

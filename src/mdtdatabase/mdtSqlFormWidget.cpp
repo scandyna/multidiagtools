@@ -243,7 +243,7 @@ void mdtSqlFormWidget::toNext()
   if(model()->canFetchMore()){
     currentRow = pvWidgetMapper->currentIndex();
     model()->fetchMore();
-    pvWidgetMapper->setCurrentIndex(currentRow + 1);
+    pvWidgetMapper->setCurrentIndex(currentRow + 1);    /// \todo Why + 1 ??
   }
   pvWidgetMapper->toNext();
 }

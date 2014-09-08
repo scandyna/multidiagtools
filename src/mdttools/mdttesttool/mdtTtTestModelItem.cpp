@@ -454,9 +454,6 @@ bool mdtTtTestModelItem::addRoute(mdtTtTestModelItemRouteData routeData, bool ha
     return false;
   }
   // Add route
-  
-  ///qDebug() << "Adding route to DB: " << record;
-  
   if(!addRecord(record, "TestModelItemRoute_tbl", query)){
     if(handleTransaction){
       rollbackTransaction();

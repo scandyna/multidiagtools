@@ -1,52 +1,47 @@
-format 76
+format 207
 
 classcanvas 128002 class_ref 404610 // QDataWidgetMapper
-  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  classdiagramsettings member_max_width 0 end
   xyz 26 27 2000
 end
 classcanvas 128130 class_ref 146946 // QAbstractItemModel
-  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   xyz 626 117 2000
 end
 classcanvas 128386 class_ref 316162 // QWidget
-  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   xyz 735 278 2000
 end
-classcanvas 128642 class_ref 405250 // mdtSqlDataWidgetMapper
-  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+classcanvas 128642 class_ref 405250 // mdtSqlDataWidgetController
+  classdiagramsettings member_max_width 0 end
   xyz 23 444 2000
 end
 classcanvas 129794 class_ref 174210 // QSqlTableModel
-  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   xyz 691 417 2000
 end
 classcanvas 130050 class_ref 679042 // mdtSqlFieldHandler
-  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  classdiagramsettings member_max_width 0 end
   xyz 648 530 2000
 end
 relationcanvas 128258 relation_ref 491010 // <association>
   from ref 128002 z 2001 to ref 128130
   no_role_a no_role_b
-  multiplicity_a_pos 591 153 3000 no_multiplicity_b
-end
-relationcanvas 128514 relation_ref 491138 // <association>
-  from ref 128002 z 2001 to ref 128386
-  no_role_a no_role_b
-  multiplicity_a_pos 701 299 3000 no_multiplicity_b
-end
-relationcanvas 128770 relation_ref 491266 // <generalisation>
-  from ref 128642 z 2001 to ref 128002
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
+  multiplicity_a_pos 593 155 3000 no_multiplicity_b
 end
 relationcanvas 129922 relation_ref 831362 // <unidirectional association>
   from ref 128642 z 2001 to ref 129794
-  role_a_pos 569 427 3000 no_role_b
-  multiplicity_a_pos 656 457 3000 no_multiplicity_b
+  role_a_pos 580 433 3000 no_role_b
+  multiplicity_a_pos 658 463 3000 no_multiplicity_b
 end
-relationcanvas 130178 relation_ref 840578 // <directional composition>
-  from ref 128642 z 2001 to ref 130050
-  role_a_pos 531 654 3000 no_role_b
-  multiplicity_a_pos 614 684 3000 no_multiplicity_b
+relationcanvas 130178 relation_ref 1708034 // <directional composition>
+  from ref 128642 z 2001 to ref 128002
+  role_a_pos 303 407 3000 no_role_b
+  multiplicity_a_pos 276 407 3000 no_multiplicity_b
+end
+relationcanvas 130306 relation_ref 1708162 // <directional composition>
+  from ref 128642 z 2001 stereotype "<<list>>" xyz 586 705 3000 to ref 130050
+  role_a_pos 543 698 3000 no_role_b
+  multiplicity_a_pos 632 728 3000 no_multiplicity_b
 end
 end
