@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,15 +21,15 @@
 #ifndef MDT_SQL_DATA_VALIDATOR_H
 #define MDT_SQL_DATA_VALIDATOR_H
 
+#include "mdtUiMessageHandler.h"
 #include <QObject>
 #include <QSqlError>
 #include <QString>
-
-class QSqlTableModel;
+#include <memory>
 
 /*! \brief Helper class for data validation
  *
- * The SQL widget classes witch are usefull to create database GUI
+ * The SQL widget controllers witch are usefull to create database GUI
  *  are event driven.
  *  A internal state machine tries to keep GUI coherent.
  *  When, f.ex., the user wants to save data, a trigger is activated
@@ -41,9 +41,7 @@ class QSqlTableModel;
  *  you can subclass mdtSqlDataValidator and reimplement checkBeforeSubmit().
  *  If this method fails, the submit is not done.
  *
- * \sa mdtAbstractSqlWidget
- * \sa mdtSqlFormWidget
- * \sa mdtSqlTableWidget
+ * \sa mdtAbstractSqlTableController
  */
 class mdtSqlDataValidator : public QObject
 {
@@ -52,20 +50,16 @@ class mdtSqlDataValidator : public QObject
  public:
 
   /*! \brief Constructor
-   *
-   * \pre model must be a valid pointer.
    */
-  mdtSqlDataValidator(QSqlTableModel *model, QObject *parent = 0);
+  mdtSqlDataValidator(QObject *parent = 0);
 
   /*! \brief Destructor
    */
   virtual ~mdtSqlDataValidator();
 
-  /*! \brief Get model
-   *
-   * \post Returned pointer is allways valid.
+  /*! \brief Set message handler
    */
-  QSqlTableModel *model();
+  void setMessageHandler(std::shared_ptr<mdtUiMessageHandler> handler);
 
   /*! \brief Checks to be done before data are submitted
    *
@@ -73,31 +67,19 @@ class mdtSqlDataValidator : public QObject
    */
   virtual bool checkBeforeSubmit();
 
-  /*! \brief Display a warning to the user
-   *
-   * text and informativeText text are the same meaning as Qt's QMessageBox.
-   * Warning will be logged with mdtError system.
-   *
-   * If sqlError is valid, it will be added in the detailed text of QMessageBox,
-   *  and as system error in mdtError log.
-   */
-  void displayWarning(const QString &text, const QString &informativeText, const QSqlError &sqlError = QSqlError());
+ protected:
 
-  /*! \brief Display a error to the user
+  /*! \brief Get message handler
    *
-   * text and informativeText text are the same meaning as Qt's QMessageBox.
-   * Error will be logged with mdtError system.
-   *
-   * If sqlError is valid, it will be added in the detailed text of QMessageBox,
-   *  and as system error in mdtError log.
+   * Can return a Null pointer if no message handler was set (witch is acceptable case).
    */
-  void displayError(const QString &text, const QString &informativeText, const QSqlError &sqlError = QSqlError());
+  std::shared_ptr<mdtUiMessageHandler> messageHandler() { return pvMessageHandler; }
 
  private:
 
   Q_DISABLE_COPY(mdtSqlDataValidator);
 
-  QSqlTableModel *pvModel;
+  std::shared_ptr<mdtUiMessageHandler> pvMessageHandler;
 };
 
 #endif  // #ifndef MDT_SQL_DATA_VALIDATOR_H

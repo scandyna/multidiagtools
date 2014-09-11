@@ -132,7 +132,7 @@ void mdtSqlFormWidget::mapFormWidgets(QWidget *widget, const QString &firstWidge
     pvWidgetMapper->toFirst();
   }
   // Add data validator
-  addDataValidator(new mdtSqlFormWidgetDataValidator(model(), 0, pvFieldHandlers));
+  addDataValidator(new mdtSqlFormWidgetDataValidator(0, pvFieldHandlers));
 }
 
 void mdtSqlFormWidget::mapFormWidgets(const QString &firstWidgetInTabOrder)

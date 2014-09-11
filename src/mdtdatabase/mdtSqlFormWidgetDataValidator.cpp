@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,11 +22,9 @@
 #include "mdtSqlFieldHandler.h"
 #include <QWidget>
 
-mdtSqlFormWidgetDataValidator::mdtSqlFormWidgetDataValidator(QSqlTableModel *model, QObject *parent, const QList<mdtSqlFieldHandler*> &fieldHandlers)
- : mdtSqlDataValidator(model, parent)
+mdtSqlFormWidgetDataValidator::mdtSqlFormWidgetDataValidator(QObject *parent, const QList<mdtSqlFieldHandler*> &fieldHandlers)
+ : mdtSqlDataValidator(parent)
 {
-  Q_ASSERT(model != 0);
-
   pvFieldHandlers = fieldHandlers;
 }
 
@@ -41,7 +39,7 @@ bool mdtSqlFormWidgetDataValidator::checkBeforeSubmit()
   QWidget *firstNokWidget = 0;
 
   // We call checkBeforeSubmit() for all items
-  for(i=0; i<pvFieldHandlers.size(); ++i){
+  for(i = 0; i < pvFieldHandlers.size(); ++i){
     Q_ASSERT(pvFieldHandlers.at(i) != 0);
     if(!pvFieldHandlers.at(i)->checkBeforeSubmit()){
       allOk = false;
@@ -56,7 +54,12 @@ bool mdtSqlFormWidgetDataValidator::checkBeforeSubmit()
   }
   // Display a warning to the user
   if(!allOk){
-    displayWarning(tr("There are some errors in edited data."), tr("Fields that are not correct should be highlighted.\nMoving cursor over field with error should display the reason\nPlease correct errors, or cancel modifications, and try again.") );
+    if(messageHandler()){
+      messageHandler()->setText(tr("There are some errors in edited data."));
+      messageHandler()->setInformativeText(tr("Fields that are not correct should be highlighted.\nMoving cursor over field with error should display the reason\nPlease correct errors, or cancel modifications, and try again."));
+      messageHandler()->setType(mdtUiMessageHandler::Error);
+      messageHandler()->displayToUser();
+    }
   }
 
   return allOk;

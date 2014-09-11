@@ -31,11 +31,35 @@ mdtStateMachine::mdtStateMachine(QObject *parent)
   pvTimeoutTimer->setSingleShot(true);
   pvTimeoutOccured = false;
   connect(pvTimeoutTimer, SIGNAL(timeout()), this, SLOT(onWaitTimeout()));
+  connect(this, SIGNAL(started()), this, SLOT(setStartedFlag()));
+  connect(this, SIGNAL(stopped()), this, SLOT(setStoppedFlag()));
   pvCurrentState = 0;
 }
 
 mdtStateMachine::~mdtStateMachine()
 {
+}
+
+void mdtStateMachine::start(bool waitStarted)
+{
+  pvStarted = false;
+  QStateMachine::start();
+  if(waitStarted){
+    while(!pvStarted){
+      QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
+    }
+  }
+}
+
+void mdtStateMachine::stop(bool waitStopped)
+{
+  pvStopped = false;
+  QStateMachine::stop();
+  if(waitStopped){
+    while(!pvStopped){
+      QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
+    }
+  }
 }
 
 int mdtStateMachine::currentState() const
@@ -111,3 +135,12 @@ void mdtStateMachine::onWaitTimeout()
   pvTimeoutOccured = true;
 }
 
+void mdtStateMachine::setStartedFlag()
+{
+  pvStarted = true;
+}
+
+void mdtStateMachine::setStoppedFlag()
+{
+  pvStopped = true;
+}

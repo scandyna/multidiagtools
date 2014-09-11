@@ -49,22 +49,137 @@ class mdtSqlDataWidgetController : public mdtAbstractSqlTableController
 
   /*! \brief Map widgets to matching database fields
    *
-   * Will parse all child widgets found in layout (and contained widgets layouts),
+   * Will parse all child widgets found in given widget,
    *  extract widgets that have a fld_ prefix as object name.
    *  For each of them, corresponding field will be searched in model (database).
+   *  Note: if you create widgets by code, don't forget to set objectName (QObject::setObjectName() ).
+   *   When using Qt Designer, this is done automatically.
    *
    * \param widget Widget on witch child widgets must be searched.
    * \param firstWidgetInTabOrder It's possible to specify the object name of the first widget in tab order.
    *                               This is then used by insertion to give this widget the focus.
    *
-   * \pre The custom form's setupUi() must be called on this object before using this method.
-   *       Once setupUi() is done, mdtSqlFormWidget object (this) will contain a layout
-   *       with all widgets (QLineEdit, QSpinBox, ...).
-   * \pre Model must be set with setModel() before using this method.
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   * \pre Internal state machine must run (see start() ).
    */
   bool mapFormWidgets(QWidget *widget, const QString &firstWidgetInTabOrder = QString());
 
+  /*! \brief Get current row
+   */
+  int currentRow() const;
+
+ public slots:
+
+  /*! \brief Set first record as current record
+   */
+  void toFirst();
+
+  /*! \brief Set last record as current record
+   */
+  void toLast();
+
+  /*! \brief Set previous record as current record
+   */
+  void toPrevious();
+
+  /*! \brief Set next record as current record
+   */
+  void toNext();
+
+ signals:
+
+  /*! \brief Emitted when toFirst() function goes enabled/disabled
+   *
+   * This is usefull to keep GUI control coherent.
+   *  For example, this is used in mdtSqlWindow to enable/disable actions.
+   */
+  void toFirstEnabledStateChanged(bool enabled);
+
+  /*! \brief Emitted when toLast() function goes enabled/disabled
+   *
+   * This is usefull to keep GUI control coherent.
+   *  For example, this is used in mdtSqlWindow to enable/disable actions.
+   */
+  void toLastEnabledStateChanged(bool enabled);
+
+  /*! \brief Emitted when toNext() function goes enabled/disabled
+   *
+   * This is usefull to keep GUI control coherent.
+   *  For example, this is used in mdtSqlWindow to enable/disable actions.
+   */
+  void toNextEnabledStateChanged(bool enabled);
+
+  /*! \brief Emitted when toPrevious() function goes enabled/disabled
+   *
+   * This is usefull to keep GUI control coherent.
+   *  For example, this is used in mdtSqlWindow to enable/disable actions.
+   */
+  void toPreviousEnabledStateChanged(bool enabled);
+
+ private slots:
+
+  /*! \brief Activity after Visualizing state entered
+   *
+   * This slot is called from internal state machine
+   *  and should not be used directly.
+   */
+  void onStateVisualizingEntered();
+
+  /*! \brief Activity after Visualizing state entered
+   *
+   * This slot is called from internal state machine
+   *  and should not be used directly.
+   */
+  void onStateVisualizingExited();
+
  private:
+
+  /*! \brief Table model set event
+   */
+  void modelSetEvent();
+
+  /*! \brief Current row changed event
+   */
+  void currentRowChangedEvent(int row);
+
+  /*! \brief Submit current row to model
+   */
+  bool doSubmit();
+
+  /*! \brief Revert current row from model
+   */
+  bool doRevert();
+
+  /*! \brief Insert a new row to model
+   */
+  bool doInsert();
+
+  /*! \brief Submit new row to model
+   */
+  bool doSubmitNewRow();
+
+  /*! \brief Revert new row
+   */
+  bool doRevertNewRow();
+
+  /*! \brief Update mapped data widgets
+   *
+   * Will update enabled/disabled state
+   *  of mapped widgets regarding if a model was set,
+   *  state machine is running and current row.
+   */
+  void updateMappedWidgets();
+
+  /*! \brief Clear mapped data widgets
+   */
+  void clearMappedWidgets();
+
+  /*! \brief Update navigation controls states
+   *
+   * Will emit navigation control state signals (f.ex. toNextEnabledStateChanged() )
+   *  regarding if model was set, state machine is running and current row.
+   */
+  void updateNavigationControls();
 
   /*! \brief Build the list of widgets contained in w
    *

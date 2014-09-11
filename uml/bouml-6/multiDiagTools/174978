@@ -1,6 +1,6 @@
 format 207
 "mdtutilsgui" // mdtutilsgui
-  revision 72
+  revision 73
   modified_by 2 "philippe"
   // class settings
   
@@ -8247,8 +8247,8 @@ ${inlines}
       size A4
     end
 
-    class 1376130 "mdtUiMessage"
-      visibility package 
+    class 1376130 "mdtUiMessageHandler"
+      abstract visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
 ${members}};
@@ -8271,6 +8271,8 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+	get_oper operation_ref 2232578 // Type
+	set_oper operation_ref 2232706 // setType
       end
 
       attribute 1382530 "Text"
@@ -8283,6 +8285,8 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+	get_oper operation_ref 2232834 // Text
+	set_oper operation_ref 2232962 // setText
       end
 
       attribute 1382658 "InformativeText"
@@ -8295,6 +8299,8 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+	get_oper operation_ref 2233090 // InformativeText
+	set_oper operation_ref 2233218 // setInformativeText
       end
 
       attribute 1382786 "DetailedText"
@@ -8307,6 +8313,269 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+	get_oper operation_ref 2233346 // DetailedText
+	set_oper operation_ref 2233474 // setDetailedText
+      end
+
+      classrelation 1730178 // <dependency>
+	relation 1714690 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 1730178 // <dependency>
+	  b parent class_ref 209410 // QMessageBox
+      end
+
+      operation 2233730 "mdtUiMessageHandler"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 316162 // QWidget
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2232578 "Type"
+	force_body_gen const cpp_inline public explicit_return_type "Type_t"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}const ${type} ${name}${(}${)}${const}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}const ${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  return pvType;
+}
+"
+	cpp_name_spec "${name}"
+	final 
+	java_name_spec "get${Name}"
+	php_final 
+	php_name_spec "get${Name}"
+	
+	python_name_spec "get${Name}"
+	
+	idl_name_spec "get_${name}"
+	get_of_attribute attribute_ref 1382402 // Type
+      end
+
+      operation 2232706 "setType"
+	force_body_gen public explicit_return_type "void"
+	nparams 1
+	  param in name "value" explicit_type "Type_t"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  pvType = ${p0};
+}
+"
+	cpp_name_spec "set${name}"
+	
+	java_name_spec "set${Name}"
+	
+	php_name_spec "set${Name}"
+	
+	python_name_spec "set${Name}"
+	
+	idl_name_spec "set_${name}"
+	set_of_attribute attribute_ref 1382402 // Type
+      end
+
+      operation 2232834 "Text"
+	force_body_gen const cpp_inline public return_type class_ref 161026 // QString
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}const ${type} ${name}${(}${)}${const}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}const ${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  return pvText;
+}
+"
+	cpp_name_spec "${name}"
+	final 
+	java_name_spec "get${Name}"
+	php_final 
+	php_name_spec "get${Name}"
+	
+	python_name_spec "get${Name}"
+	
+	idl_name_spec "get_${name}"
+	get_of_attribute attribute_ref 1382530 // Text
+      end
+
+      operation 2232962 "setText"
+	force_body_gen public explicit_return_type "void"
+	nparams 1
+	  param in name "value" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  pvText = ${p0};
+}
+"
+	cpp_name_spec "set${name}"
+	
+	java_name_spec "set${Name}"
+	
+	php_name_spec "set${Name}"
+	
+	python_name_spec "set${Name}"
+	
+	idl_name_spec "set_${name}"
+	set_of_attribute attribute_ref 1382530 // Text
+      end
+
+      operation 2233090 "InformativeText"
+	force_body_gen const cpp_inline public return_type class_ref 161026 // QString
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}const ${type} ${name}${(}${)}${const}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}const ${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  return pvInformativeText;
+}
+"
+	cpp_name_spec "${name}"
+	final 
+	java_name_spec "get${Name}"
+	php_final 
+	php_name_spec "get${Name}"
+	
+	python_name_spec "get${Name}"
+	
+	idl_name_spec "get_${name}"
+	get_of_attribute attribute_ref 1382658 // InformativeText
+      end
+
+      operation 2233218 "setInformativeText"
+	force_body_gen public explicit_return_type "void"
+	nparams 1
+	  param in name "value" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  pvInformativeText = ${p0};
+}
+"
+	cpp_name_spec "set${name}"
+	
+	java_name_spec "set${Name}"
+	
+	php_name_spec "set${Name}"
+	
+	python_name_spec "set${Name}"
+	
+	idl_name_spec "set_${name}"
+	set_of_attribute attribute_ref 1382658 // InformativeText
+      end
+
+      operation 2233346 "DetailedText"
+	force_body_gen const cpp_inline public return_type class_ref 161026 // QString
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}const ${type} ${name}${(}${)}${const}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}const ${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  return pvDetailedText;
+}
+"
+	cpp_name_spec "${name}"
+	final 
+	java_name_spec "get${Name}"
+	php_final 
+	php_name_spec "get${Name}"
+	
+	python_name_spec "get${Name}"
+	
+	idl_name_spec "get_${name}"
+	get_of_attribute attribute_ref 1382786 // DetailedText
+      end
+
+      operation 2233474 "setDetailedText"
+	force_body_gen public explicit_return_type "void"
+	nparams 1
+	  param in name "value" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  pvDetailedText = ${p0};
+}
+"
+	cpp_name_spec "set${name}"
+	
+	java_name_spec "set${Name}"
+	
+	php_name_spec "set${Name}"
+	
+	python_name_spec "set${Name}"
+	
+	idl_name_spec "set_${name}"
+	set_of_attribute attribute_ref 1382786 // DetailedText
+      end
+
+      classrelation 1730306 // <dependency>
+	relation 1714818 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 1730306 // <dependency>
+	  b parent class_ref 182402 // mdtError
+      end
+
+      operation 2233602 "setError"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "error" type class_ref 182402 // mdtError
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2233986 "displayToUser"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 2234114 "promptUser"
+	abstract cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 2234242 "askUser"
+	abstract cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
       end
     end
 

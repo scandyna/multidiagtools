@@ -48,6 +48,7 @@ bool mdtSqlDataWidgetController::mapFormWidgets(QWidget* widget, const QString& 
   Q_ASSERT(widget != 0);
   Q_ASSERT(widget->layout() != 0);
   Q_ASSERT(model());
+  Q_ASSERT(currentState() == Stopped);
 
   int i, fieldIndex;
   QString fieldName;
@@ -98,11 +99,15 @@ bool mdtSqlDataWidgetController::mapFormWidgets(QWidget* widget, const QString& 
       e.commit();
     }
   }
+  // Update UI
+  updateMappedWidgets();
+  updateNavigationControls();
+
   /*
    * When calling select() , setQuery() , setFilter() or something similar on model,
    * Widget mapper will not update. This problem is not in QTableView
    *  (witch connects model's rowsInserted() , rowsRemoved(), etc signals to internal slots to handle this, I think).
-   * As workaround, we will connect a signal signal to Widget mapper.
+   * As workaround, we will connect a signal to Widget mapper.
    */
   ///connect(this, SIGNAL(modelSelected()), pvWidgetMapper, SLOT(toFirst()));
   /**
@@ -114,9 +119,272 @@ bool mdtSqlDataWidgetController::mapFormWidgets(QWidget* widget, const QString& 
   }
   */
   // Add data validator
-  ///addDataValidator(new mdtSqlFormWidgetDataValidator(model(), 0, pvFieldHandlers));
+  addDataValidator(std::shared_ptr<mdtSqlFormWidgetDataValidator>(new mdtSqlFormWidgetDataValidator(0, pvFieldHandlers)));
 
   return true;
+}
+
+int mdtSqlDataWidgetController::currentRow() const
+{
+  if(!model()){
+    return -1;
+  }
+  return pvWidgetMapper.currentIndex();
+}
+
+void mdtSqlDataWidgetController::toFirst()
+{
+  if((currentState() != Visualizing)||(!model())){
+    return;
+  }
+  setCurrentRow(0);
+}
+
+void mdtSqlDataWidgetController::toLast()
+{
+  if((currentState() != Visualizing)||(!model())){
+    return;
+  }
+  setCurrentRow(rowCount(true) - 1);
+}
+
+void mdtSqlDataWidgetController::toNext()
+{
+  if((currentState() != Visualizing)||(!model())){
+    return;
+  }
+  setCurrentRow(currentRow() + 1);
+}
+
+void mdtSqlDataWidgetController::toPrevious()
+{
+  if((currentState() != Visualizing)||(!model())){
+    return;
+  }
+  setCurrentRow(currentRow() - 1);
+}
+
+void mdtSqlDataWidgetController::onStateVisualizingEntered()
+{
+  mdtAbstractSqlTableController::onStateVisualizingEntered();
+  updateNavigationControls();
+}
+
+void mdtSqlDataWidgetController::onStateVisualizingExited()
+{
+  mdtAbstractSqlTableController::onStateVisualizingExited();
+  updateNavigationControls();
+}
+
+void mdtSqlDataWidgetController::modelSetEvent()
+{
+  Q_ASSERT(model());
+
+  model()->setEditStrategy(QSqlTableModel::OnManualSubmit);
+  pvWidgetMapper.setModel(model().get());
+}
+
+void mdtSqlDataWidgetController::currentRowChangedEvent(int row)
+{
+  Q_ASSERT(model());
+
+  pvWidgetMapper.setCurrentIndex(row);
+  updateMappedWidgets();
+  updateNavigationControls();
+}
+
+bool mdtSqlDataWidgetController::doSubmit()
+{
+  Q_ASSERT(model());
+
+  int row;
+  QSqlRecord initialRecord;
+  QSqlError sqlError;
+
+  // Remember current row (will be lost during submit)
+  row = pvWidgetMapper.currentIndex();
+  // Remember current record - will help on primary key errors
+  initialRecord = model()->record(row);
+
+  // Call widget mapper submit() (will commit data from widgets to model)
+  if(!pvWidgetMapper.submit()){
+    sqlError = model()->lastError();
+    pvLastError.setError(tr("Submitting data to model failed."), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDataWidgetController");
+    pvLastError.commit();
+    if(messageHandler()){
+      messageHandler()->setError(pvLastError);
+      messageHandler()->displayToUser();
+    }
+    return false;
+  }
+  /*
+   * We use QDataWidgetMapper::ManualSubmit submit policy and QSqlTableModel::OnManualSubmit edit strategy.
+   * Widget mapper calls submit() on model, but this has no effect with OnManualSubmit edit strategy,
+   * so we have to call submitAll() on model.
+   */
+  if(!model()->submitAll()){
+    /** \todo Implement restorePrimaryKeyDataToModel()
+    if(!restorePrimaryKeyDataToModel(initialRecord)){
+      error = model()->lastError();
+      mdtError e(MDT_DATABASE_ERROR, "Unable to restor primary key after a submitAll error, table: " + model()->tableName(), mdtError::Error);
+      e.setSystemError(error.number(), error.text());
+      MDT_ERROR_SET_SRC(e, "mdtSqlFormWidget");
+      e.commit();
+      return false;
+    }
+    */
+    sqlError = model()->lastError();
+    pvLastError.setError(tr("Submitting data to database failed."), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDataWidgetController");
+    pvLastError.commit();
+    if(messageHandler()){
+      messageHandler()->setError(pvLastError);
+      messageHandler()->displayToUser();
+    }
+    return false;
+  }
+  /*
+   * Go back to row.
+   * Calling submitAll() will repopulate the model.
+   * Because of this, we must be shure to fetch all data until we find our row
+   */
+  if(model()->rowCount() > 0){
+    while((row >= model()->rowCount())&&(model()->canFetchMore())){
+      model()->fetchMore();
+    }
+  }
+  pvWidgetMapper.setCurrentIndex(row);
+
+  return true;
+}
+
+bool mdtSqlDataWidgetController::doRevert()
+{
+  pvWidgetMapper.revert();
+
+  return true;
+}
+
+bool mdtSqlDataWidgetController::doInsert()
+{
+  Q_ASSERT(model());
+  Q_ASSERT(currentState() == Inserting);
+
+  int row;
+
+  // Insert new row at end
+  row = rowCount(true);
+  model()->insertRow(row);
+  pvWidgetMapper.setCurrentIndex(row);
+  clearMappedWidgets();
+  /// \todo Set focus on first widget...
+  
+  return true;
+}
+
+bool mdtSqlDataWidgetController::doSubmitNewRow()
+{
+  Q_ASSERT(model());
+
+  return doSubmit();
+}
+
+bool mdtSqlDataWidgetController::doRevertNewRow()
+{
+  Q_ASSERT(model());
+
+  int row;
+  QSqlError sqlError;
+
+  // Remeber current row and remove it
+  row = pvWidgetMapper.currentIndex();
+  if(!model()->removeRow(row)){
+    sqlError = model()->lastError();
+    pvLastError.setError(tr("Reverting data failed."), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDataWidgetController");
+    pvLastError.commit();
+    if(messageHandler()){
+      messageHandler()->setError(pvLastError);
+      messageHandler()->displayToUser();
+    }
+    return false;
+  }
+  // Data was never submit to model, we simply go to last row
+  /**
+  clearMappedWidgets();
+  toLast();
+  */
+  setCurrentRow(row);
+
+  return true;
+}
+
+void mdtSqlDataWidgetController::updateMappedWidgets()
+{
+  bool haveData;
+  mdtSqlFieldHandler *fieldHandler;
+  int i;
+
+  // We have valid data only if some conditions are met
+  if((model())&&(currentState() != Stopped)&&(currentRow() > -1)){
+    haveData = true;
+  }else{
+    haveData = false;
+  }
+  // Update widgets
+  for(i = 0; i < pvFieldHandlers.size(); ++i){
+    fieldHandler = pvFieldHandlers.at(i);
+    Q_ASSERT(fieldHandler != 0);
+    if(fieldHandler->dataWidget() != 0){
+      fieldHandler->dataWidget()->setEnabled(haveData);
+      if(!haveData){
+        fieldHandler->clearWidgetData();
+      }
+    }
+  }
+}
+
+void mdtSqlDataWidgetController::clearMappedWidgets()
+{
+  int i;
+
+  for(i=0; i<pvFieldHandlers.size(); ++i){
+    Q_ASSERT(pvFieldHandlers.at(i) != 0);
+    pvFieldHandlers.at(i)->clearWidgetData();
+  }
+}
+
+void mdtSqlDataWidgetController::updateNavigationControls()
+{
+  int row;
+
+  if((!model())||(currentState() != Visualizing)){
+    emit toFirstEnabledStateChanged(false);
+    emit toLastEnabledStateChanged(false);
+    emit toPreviousEnabledStateChanged(false);
+    emit toNextEnabledStateChanged(false);
+    return;
+  }
+  Q_ASSERT(model());
+  row = currentRow();
+  if(row < 1){
+    emit toFirstEnabledStateChanged(false);
+    emit toPreviousEnabledStateChanged(false);
+  }else{
+    emit toFirstEnabledStateChanged(true);
+    emit toPreviousEnabledStateChanged(true);
+  }
+  if(row < (model()->rowCount()-1)){
+    emit toLastEnabledStateChanged(true);
+    emit toNextEnabledStateChanged(true);
+  }else{
+    emit toLastEnabledStateChanged(false);
+    emit toNextEnabledStateChanged(false);
+  }
 }
 
 

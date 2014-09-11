@@ -88,7 +88,7 @@ void mdtAbstractSqlWidget::start()
   }
   Q_ASSERT(!pvStateMachine->isRunning());
 
-  pvStateMachine->start();
+  pvStateMachine->start(true);
   pvStateMachine->waitOnState(Visualizing);
 }
 

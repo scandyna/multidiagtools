@@ -78,8 +78,12 @@ void mdtStateMachineTest::stateMachineTest()
   // Check initial state
   QCOMPARE(sm.currentState(), -1);
   // Start
-  sm.start();
-  QVERIFY(sm.waitOnState(1));
+  sm.start(true);
+  QCOMPARE(sm.currentState(), 1);
+  // Stop
+  sm.stop(true);
+  // Start
+  sm.start(true);
   QCOMPARE(sm.currentState(), 1);
   // Check s1->s2 transition
   event.start(100);
@@ -134,8 +138,7 @@ void mdtStateMachineTest::subMachineTest()
   // Check initial state
   QCOMPARE(sm.currentState(), -1);
   // Start
-  sm.start();
-  QVERIFY(sm.waitOnState(11));
+  sm.start(true);
   QCOMPARE(sm.currentState(), 11);
   // Check s11 -> s12 transition
   event.start(100);

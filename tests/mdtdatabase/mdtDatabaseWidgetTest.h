@@ -27,6 +27,47 @@
 #include <QMessageBox>
 #include <QSqlDatabase>
 
+class QLineEdit;
+
+/*
+ * For sqlDataWidgetControllerTest we need a test widget
+ */
+
+class sqlDataWidgetControllerTestWidget : public QWidget
+{
+ Q_OBJECT
+
+ public:
+
+  sqlDataWidgetControllerTestWidget(QWidget *parent = 0);
+
+  QLineEdit *fld_FirstName;
+  QLineEdit *fld_Remarks;
+  // Simulate buttons states
+  bool toFirstEnabled;
+  bool toLastEnabled;
+  bool toNextEnabled;
+  bool toPreviousEnabled;
+  bool submitEnabled;
+  bool revertEnabled;
+  bool insertEnabled;
+  bool removeEnabled;
+
+ public slots:
+
+  void setToFirstEnableState(bool enable);
+  void setToLastEnableState(bool enable);
+  void setToNextEnableState(bool enable);
+  void setToPreviousEnableState(bool enable);
+  void setInsertEnableState(bool enable);
+  void setRemoveEnableState(bool enable);
+  void setSubmitEnableState(bool enable);
+  void setRevertEnableState(bool enable);
+};
+
+/*
+ * Test itself
+ */
 
 class mdtDatabaseWidgetTest : public mdtTest
 {
@@ -36,6 +77,9 @@ class mdtDatabaseWidgetTest : public mdtTest
 
   void initTestCase();
   void cleanupTestCase();
+
+  void sqlFieldHandlerTest();
+  void sqlDataWidgetControllerTest();
 
   // Table selection tests
   void sqlTableSelectionItemTest();

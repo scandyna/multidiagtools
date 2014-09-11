@@ -32,14 +32,14 @@ set (HEADER_FILES
           mdtMvColumnSelectionDialog.h
           mdtMvSortingSetupDialog.h
           mdtSqlRelation.h
-          mdtSqlFieldHandler.h
+          #mdtSqlFieldHandler.h
           mdtAbstractSqlWidget.h
           #mdtSqlFormWidget.h
           #mdtSqlTableWidget.h
           #mdtSqlSelectionDialog.h
           mdtSortFilterProxyModel.h
-          mdtSqlDataValidator.h
-          mdtSqlFormWidgetDataValidator.h
+          #mdtSqlDataValidator.h
+#          mdtSqlFormWidgetDataValidator.h
           #mdtSqlDatabaseManager.h
           # Essais
           mdtParentChildTableModel.h
@@ -78,19 +78,20 @@ set (SOURCES_FILES
           mdtMvSortingSetupDialog.cpp
           mdtSqlRelation.cpp
           mdtSqlRelationItem.cpp
-          mdtSqlFieldHandler.cpp
+          #mdtSqlFieldHandler.cpp
           mdtAbstractSqlWidget.cpp
           #mdtSqlFormWidget.cpp
           #mdtSqlTableWidget.cpp
           #mdtSqlSelectionDialog.cpp
           mdtSortFilterProxyModel.cpp
-          mdtSqlDataValidator.cpp
-          mdtSqlFormWidgetDataValidator.cpp
+          #mdtSqlDataValidator.cpp
+          #mdtSqlFormWidgetDataValidator.cpp
           #mdtSqlSchemaTable.cpp
           #mdtSqlDatabaseManager.cpp
           # Essais
           mdtParentChildTableModel.cpp
           mdtParentChildTableItem.cpp
+          mdtUiMessageHandler.cpp
     )
 
 # Qt ui files

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,45 +18,27 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_FORM_WIDGET_DATA_VALIDATOR_H
-#define MDT_SQL_FORM_WIDGET_DATA_VALIDATOR_H
-
 #include "mdtSqlDataValidator.h"
-#include <QList>
+#include "mdtError.h"
+#include <QMessageBox>
 
-/*! \brief Data validator for mdtSqlFormWidget
- *
- * This class is used by mdtSqlFormWidget .
- */
-class mdtSqlFieldHandler;
-
-class mdtSqlFormWidgetDataValidator : public mdtSqlDataValidator
+mdtSqlDataValidator::mdtSqlDataValidator(QObject *parent)
+ : QObject(parent)
 {
- Q_OBJECT
+}
 
- public:
+mdtSqlDataValidator::~mdtSqlDataValidator()
+{
+}
 
-  /*! \brief Constructor
-   *
-   * \pre model must be a valid pointer.
-   */
-  mdtSqlFormWidgetDataValidator(QSqlTableModel *model, QObject *parent, const QList<mdtSqlFieldHandler*> &fieldHandlers);
+void mdtSqlDataValidator::setMessageHandler(std::shared_ptr< mdtUiMessageHandler > handler)
+{
+  Q_ASSERT(handler);
 
-  /*! \brief Destructor
-   */
-  ~mdtSqlFormWidgetDataValidator();
+  pvMessageHandler = handler;
+}
 
-  /*! \brief Checks to be done before submit
-   *
-   * Will call checkBeforeSubmit() for every field Handlers.
-   */
-  bool checkBeforeSubmit();
-
- private:
-
-  Q_DISABLE_COPY(mdtSqlFormWidgetDataValidator);
-
-  QList<mdtSqlFieldHandler*> pvFieldHandlers;
-};
-
-#endif  // #ifndef MDT_SQL_FORM_WIDGET_DATA_VALIDATOR_H
+bool mdtSqlDataValidator::checkBeforeSubmit()
+{
+  return false;
+}

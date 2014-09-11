@@ -27,6 +27,10 @@
 #include "mdtSqlTableSelection.h"
 #include "mdtSqlRelation.h"
 #include "mdtSqlSelectionDialog.h"
+#include "mdtSqlFieldHandler.h"
+#include "mdtAbstractSqlTableController.h"
+#include "mdtSqlDataWidgetController.h"
+#include "mdtUiMessageHandler.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -35,6 +39,7 @@
 #include <QWidget>
 #include <QDialog>
 #include <QLineEdit>
+#include <QPlainTextEdit>
 #include <QSpinBox>
 #include <QDoubleSpinBox>
 #include <QDateTimeEdit>
@@ -54,8 +59,72 @@
 #include <QFileInfo>
 #include <QTableView>
 #include <QItemSelectionModel>
+#include <QVBoxLayout>
 
 #include <QDebug>
+
+/*
+ * sqlDataWidgetControllerTest implementation
+ */
+
+sqlDataWidgetControllerTestWidget::sqlDataWidgetControllerTestWidget(QWidget *parent)
+  :QWidget(parent)
+{
+  QVBoxLayout *l = new QVBoxLayout;
+  fld_FirstName = new QLineEdit;
+  fld_FirstName->setObjectName("fld_FirstName");
+  fld_Remarks = new QLineEdit;
+  fld_Remarks->setObjectName("fld_Remarks");
+  l->addWidget(fld_FirstName);
+  l->addWidget(fld_Remarks);
+  setLayout(l);
+}
+
+void sqlDataWidgetControllerTestWidget::setToFirstEnableState(bool enable)
+{
+  toFirstEnabled = enable;
+}
+
+void sqlDataWidgetControllerTestWidget::setToLastEnableState(bool enable)
+{
+  toLastEnabled = enable;
+}
+
+void sqlDataWidgetControllerTestWidget::setToNextEnableState(bool enable)
+{
+  toNextEnabled = enable;
+}
+
+void sqlDataWidgetControllerTestWidget::setToPreviousEnableState(bool enable)
+{
+  toPreviousEnabled = enable;
+}
+
+void sqlDataWidgetControllerTestWidget::setInsertEnableState(bool enable)
+{
+  insertEnabled = enable;
+}
+
+void sqlDataWidgetControllerTestWidget::setRemoveEnableState(bool enable)
+{
+
+  removeEnabled = enable;
+}
+
+void sqlDataWidgetControllerTestWidget::setSubmitEnableState(bool enable)
+{
+  submitEnabled = enable;
+}
+
+void sqlDataWidgetControllerTestWidget::setRevertEnableState(bool enable)
+{
+  revertEnabled = enable;
+}
+
+
+/*
+ * Test implementation
+ */
 
 void mdtDatabaseWidgetTest::initTestCase()
 {
@@ -70,6 +139,604 @@ void mdtDatabaseWidgetTest::initTestCase()
 void mdtDatabaseWidgetTest::cleanupTestCase()
 {
   QFile::remove(pvDatabaseManager.database().databaseName());
+}
+
+void mdtDatabaseWidgetTest::sqlFieldHandlerTest()
+{
+  mdtSqlFieldHandler fh;
+  QSqlField field;
+
+  // Check inital flags
+  QVERIFY(fh.isNull());
+  QVERIFY(!fh.dataWasEdited());
+  QVERIFY(!fh.isReadOnly());
+
+  // Setup field
+  field.setAutoValue(false);
+  field.setLength(10);
+  field.setRequiredStatus(QSqlField::Required);
+  field.setReadOnly(false);
+  fh.setField(field);
+
+  /*
+   * Tests with QLineEdit
+   */
+  QLineEdit le;
+  fh.setDataWidget(&le);
+  le.show();
+  // Check field handler flags
+  QVERIFY(fh.isNull());
+  QVERIFY(!fh.dataWasEdited());
+  QVERIFY(!fh.isReadOnly());
+  // Check widget flags
+  QVERIFY(le.isEnabled());
+  QVERIFY(le.text().isEmpty());
+  QVERIFY(!le.isReadOnly());
+  // User edit ...
+  QTest::keyClicks(&le, "ABCD");
+  // Check field handler flags
+  QVERIFY(!fh.isNull());
+  QVERIFY(fh.dataWasEdited());
+  // User edit ...
+  QTest::keyClick(&le, Qt::Key_Backspace);
+  QTest::keyClick(&le, Qt::Key_Backspace);
+  QTest::keyClick(&le, Qt::Key_Backspace);
+  QTest::keyClick(&le, Qt::Key_Backspace);
+  // Check field handler flags
+  QVERIFY(fh.isNull());
+  QVERIFY(fh.dataWasEdited());
+  // User edit ...
+  QTest::keyClicks(&le, "123");
+  // Check field handler flags
+  QVERIFY(!fh.isNull());
+  QVERIFY(fh.dataWasEdited());
+  // User edit ...
+  le.clear();
+  QTest::keyClicks(&le, " ");
+  // Check field handler flags
+  QVERIFY(fh.isNull());
+  QVERIFY(fh.dataWasEdited());
+  // Field is mandatory, so check must fail
+  QVERIFY(!fh.checkBeforeSubmit());
+  // Line edit must be empty now
+  QVERIFY(le.text().isEmpty());
+  // User edit ...
+  le.clear();
+  QTest::keyClicks(&le, "ZA");
+  // Check field handler flags
+  QVERIFY(!fh.isNull());
+  QVERIFY(fh.dataWasEdited());
+  // Check must be OK now
+  QVERIFY(fh.checkBeforeSubmit());
+  // User edit to much
+  le.clear();
+  QTest::keyClicks(&le, "123456789ABC");
+  // Check field handler flags
+  QVERIFY(!fh.isNull());
+  QCOMPARE(le.text(), QString("123456789A"));
+  // Set read only
+  fh.setReadOnly(true);
+  QVERIFY(fh.isReadOnly());
+  QVERIFY(le.isReadOnly());
+  // Set editable again
+  fh.setReadOnly(false);
+  QVERIFY(!fh.isReadOnly());
+  QVERIFY(!le.isReadOnly());
+  // Now we change the row
+  fh.setData("Row 2 from DB");
+  ///le.setText("Row 2 from DB");
+  ///fh.updateFlags();
+  // Check field handler flags
+  QVERIFY(!fh.isNull());
+  QVERIFY(!fh.dataWasEdited());
+  // User edit ...
+  le.clear();
+  QTest::keyClicks(&le, " ");
+  // Check field handler flags
+  QVERIFY(fh.isNull());
+  QVERIFY(fh.dataWasEdited());
+  // We change the row
+  fh.setData("Row 3 from DB");
+  ///le.setText("Row 3 from DB");
+  ///fh.updateFlags();
+  // Check field handler flags
+  QVERIFY(!fh.isNull());
+  QVERIFY(!fh.dataWasEdited());
+  // We change the row
+  fh.setData(QVariant());
+  ///le.setText("");
+  ///fh.updateFlags();
+  // Check field handler flags
+  QVERIFY(fh.isNull());
+  QVERIFY(!fh.dataWasEdited());
+  // Setup field as read only
+  field.setAutoValue(false);
+  field.setLength(10);
+  field.setRequiredStatus(QSqlField::Required);
+  field.setReadOnly(true);
+  fh.setField(field);
+  // Check field handler flags
+  ///QVERIFY(fh.isReadOnly());
+  // Check widget flags
+  QVERIFY(le.isEnabled());
+  QVERIFY(le.isReadOnly());
+
+  // Setup field
+  field.setAutoValue(false);
+  field.setLength(10);
+  field.setRequiredStatus(QSqlField::Required);
+  field.setReadOnly(false);
+  fh.setField(field);
+
+  /*
+   * Tests with non editable QComboBox
+   */
+  QComboBox cb;
+  cb.show();
+  cb.addItem("");
+  cb.addItem("V");
+  cb.addItem("A");
+  fh.setDataWidget(&cb);
+  // Check field handler flags and data
+  QVERIFY(fh.isNull());
+  QVERIFY(!fh.dataWasEdited());
+  QVERIFY(!fh.isReadOnly());
+  QVERIFY(fh.data().isNull());
+  // Check widget flags
+  QVERIFY(cb.isEnabled());
+  // User selects
+  cb.setCurrentIndex(1);
+  // Check field handler flags and data
+  QVERIFY(!fh.isNull());
+  QVERIFY(fh.dataWasEdited());
+  QCOMPARE(fh.data(), QVariant("V"));
+  // User selects first (empty) item
+  cb.setCurrentIndex(0);
+  // Check field handler flags and data
+  QVERIFY(fh.isNull());
+  QVERIFY(fh.dataWasEdited());
+  QVERIFY(fh.data().isNull());
+  // User selects
+  cb.setCurrentIndex(2);
+  // Check field handler flags and data
+  QVERIFY(!fh.isNull());
+  QVERIFY(fh.dataWasEdited());
+  QCOMPARE(fh.data(), QVariant("A"));
+  // Set data from DB - Existing value
+  fh.setData("V");
+  QVERIFY(!fh.isNull());
+  QVERIFY(!fh.dataWasEdited());
+  QCOMPARE(fh.data(), QVariant("V"));
+  // Set data from DB - Non existing value
+  fh.setData("P");
+  QVERIFY(fh.isNull());
+  QVERIFY(!fh.dataWasEdited());
+  QVERIFY(fh.data().isNull());
+
+  // Setup field
+  field.setAutoValue(false);
+  field.setLength(10);
+  field.setRequiredStatus(QSqlField::Required);
+  field.setReadOnly(false);
+  fh.setField(field);
+
+  /*
+   * Tests with QPlainTextEdit
+   */
+  QPlainTextEdit pte;
+  fh.setDataWidget(&pte);
+  pte.show();
+  // Check field handler flags
+  QVERIFY(fh.isNull());
+  QVERIFY(!fh.dataWasEdited());
+  QVERIFY(!fh.isReadOnly());
+  // Check widget flags
+  QVERIFY(pte.isEnabled());
+  QVERIFY(pte.toPlainText().isEmpty());
+  QVERIFY(!pte.isReadOnly());
+  // User edit ...
+  QTest::keyClicks(&pte, "ABCD");
+  // Check field handler flags
+  QVERIFY(!fh.isNull());
+  QVERIFY(fh.dataWasEdited());
+  // User edit ...
+  QTest::keyClick(&pte, Qt::Key_Backspace);
+  QTest::keyClick(&pte, Qt::Key_Backspace);
+  QTest::keyClick(&pte, Qt::Key_Backspace);
+  QTest::keyClick(&pte, Qt::Key_Backspace);
+  // Check field handler flags
+  QVERIFY(fh.isNull());
+  QVERIFY(fh.dataWasEdited());
+  // User edit ...
+  QTest::keyClicks(&pte, "123");
+  // Check field handler flags
+  QVERIFY(!fh.isNull());
+  QVERIFY(fh.dataWasEdited());
+  // User edit ...
+  pte.clear();
+  QTest::keyClicks(&pte, " ");
+  // Check field handler flags
+  QVERIFY(fh.isNull());
+  QVERIFY(fh.dataWasEdited());
+  // Field is mandatory, so check must fail
+  QVERIFY(!fh.checkBeforeSubmit());
+  // Line edit must be empty now
+  QVERIFY(pte.toPlainText().isEmpty());
+  // User edit ...
+  pte.clear();
+  QTest::keyClicks(&pte, "ZA");
+  // Check field handler flags
+  QVERIFY(!fh.isNull());
+  QVERIFY(fh.dataWasEdited());
+  // Check must be OK now
+  QVERIFY(fh.checkBeforeSubmit());
+  // User edit to much
+  /**
+  pte.clear();
+  QTest::keyClicks(&pte, "123456789ABC");
+  // Check field handler flags
+  QVERIFY(!fh.isNull());
+  QCOMPARE(pte.toPlainText(), QString("123456789A"));
+  */
+  // Set read only
+  fh.setReadOnly(true);
+  QVERIFY(fh.isReadOnly());
+  QVERIFY(pte.isReadOnly());
+  // Set editable again
+  fh.setReadOnly(false);
+  QVERIFY(!fh.isReadOnly());
+  QVERIFY(!pte.isReadOnly());
+  // Now we change the row
+  fh.setData("Row 2 from DB");
+  // Check field handler flags
+  QVERIFY(!fh.isNull());
+  QVERIFY(!fh.dataWasEdited());
+  // User edit ...
+  pte.clear();
+  QTest::keyClicks(&pte, " ");
+  // Check field handler flags
+  QVERIFY(fh.isNull());
+  QVERIFY(fh.dataWasEdited());
+  // We change the row
+  fh.setData("Row 3 from DB");
+  // Check field handler flags
+  QVERIFY(!fh.isNull());
+  QVERIFY(!fh.dataWasEdited());
+  // We change the row
+  fh.setData(QVariant());
+  // Check field handler flags
+  QVERIFY(fh.isNull());
+  QVERIFY(!fh.dataWasEdited());
+  // Setup field as read only
+  field.setAutoValue(false);
+  field.setLength(10);
+  field.setRequiredStatus(QSqlField::Required);
+  field.setReadOnly(true);
+  fh.setField(field);
+  // Check widget flags
+  QVERIFY(pte.isEnabled());
+  QVERIFY(pte.isReadOnly());
+
+  
+  /*
+   * Play
+   */
+  /*
+  while(cb.isVisible()){
+    QTest::qWait(1000);
+  }
+  */
+}
+
+void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
+{
+  sqlDataWidgetControllerTestWidget w;
+  ///std::shared_ptr<mdtUiMessageHandler> messageHandler(new mdtUiMessageHandler(&w));
+  mdtSqlDataWidgetController wc;
+  std::shared_ptr<QSqlTableModel> m1(new QSqlTableModel(0, pvDatabaseManager.database()));
+  std::shared_ptr<QSqlTableModel> m2(new QSqlTableModel(0, pvDatabaseManager.database()));
+  std::shared_ptr<QSqlTableModel> model;
+  int row, rowCount;
+  QVariant data;
+  bool ok;
+
+  // Create test data
+  populateTestDatabase();
+  // Setup
+  ///wc.setMessageHandler(messageHandler);
+  ///connect(&wc, SIGNAL(globalWidgetEnableStateChanged(bool)), &w, SLOT(setEnabled(bool)));
+  connect(&wc, SIGNAL(toFirstEnabledStateChanged(bool)), &w, SLOT(setToFirstEnableState(bool)));
+  connect(&wc, SIGNAL(toLastEnabledStateChanged(bool)), &w, SLOT(setToLastEnableState(bool)));
+  connect(&wc, SIGNAL(toNextEnabledStateChanged(bool)), &w, SLOT(setToNextEnableState(bool)));
+  connect(&wc, SIGNAL(toPreviousEnabledStateChanged(bool)), &w, SLOT(setToPreviousEnableState(bool)));
+  connect(&wc, SIGNAL(insertEnabledStateChanged(bool)), &w, SLOT(setInsertEnableState(bool)));
+  connect(&wc, SIGNAL(removeEnabledStateChanged(bool)), &w, SLOT(setRemoveEnableState(bool)));
+  connect(&wc, SIGNAL(submitEnabledStateChanged(bool)), &w, SLOT(setSubmitEnableState(bool)));
+  connect(&wc, SIGNAL(revertEnabledStateChanged(bool)), &w, SLOT(setRemoveEnableState(bool)));
+  // Initial state
+  w.show();
+  QVERIFY(w.fld_FirstName->text().isEmpty());
+  QVERIFY(w.fld_Remarks->text().isEmpty());
+  QVERIFY(wc.model().get() == 0);
+  QVERIFY(wc.userFriendlyTableName().isEmpty());
+  QCOMPARE(wc.rowCount(), 0);
+  QVERIFY(wc.currentRow() < 0);
+  QVERIFY(wc.currentState() == mdtAbstractSqlTableController::Stopped);
+
+  qDebug() << "m1 usage: " << m1.use_count();
+  qDebug() << "model usage: " << wc.model().use_count();
+
+  /*
+   * Setup a model ourself and set it to controller
+   */
+  m1->setTable("Client_tbl");
+  wc.setModel(m1);
+  QVERIFY(wc.model() == m1);
+  QCOMPARE(wc.model()->tableName(), QString("Client_tbl"));
+  QCOMPARE(wc.userFriendlyTableName(), QString("Client_tbl"));
+  QCOMPARE(wc.rowCount(), 0);
+  QVERIFY(wc.currentRow() < 0);
+  QVERIFY(!wc.setCurrentRow(-1));
+  QVERIFY(!wc.setCurrentRow(0));
+  QVERIFY(wc.currentState() == mdtAbstractSqlTableController::Stopped);
+  /*
+   * Setup a second model, set it to controller,
+   *  and check that first model is not alterred.
+   */
+  m2->setTable("Address_tbl");
+  wc.setModel(m2);
+  QVERIFY(wc.model() == m2);
+  QCOMPARE(wc.model()->tableName(), QString("Address_tbl"));
+  QCOMPARE(wc.userFriendlyTableName(), QString("Address_tbl"));
+  QVERIFY(m1 != m2);
+  QCOMPARE(m1->tableName(), QString("Client_tbl"));
+  QCOMPARE(m2->tableName(), QString("Address_tbl"));
+  /*
+   * Set table name, and check that m2 is intact
+   */
+  wc.setTableName("Client_tbl", pvDatabaseManager.database(), "Clients");
+  QCOMPARE(wc.model()->tableName(), QString("Client_tbl"));
+  QCOMPARE(wc.userFriendlyTableName(), QString("Clients"));
+  QCOMPARE(m2->tableName(), QString("Address_tbl"));
+  // Reset m1 and m2
+  m1.reset();
+  m2.reset();
+  QVERIFY(wc.model().get() != 0);
+  QCOMPARE(wc.model()->tableName(), QString("Client_tbl"));
+  QCOMPARE(wc.rowCount(), 0);
+  QVERIFY(wc.currentRow() < 0);
+  QVERIFY(!wc.setCurrentRow(-1));
+  QVERIFY(!wc.setCurrentRow(0));
+  // For next test steps, we use model pointer
+  model = wc.model();
+  QVERIFY(model.get() != 0);
+  /*
+   * Map widgets
+   */
+  QVERIFY(wc.mapFormWidgets(&w, "fld_FirstName"));
+  /// \todo Start state machine
+  // Check fields - Because state machine is not running, all widgets must be diseabled
+  QVERIFY(!w.fld_FirstName->isEnabled());
+  QVERIFY(!w.fld_Remarks->isEnabled());
+  QVERIFY(w.fld_FirstName->text().isEmpty());
+  QVERIFY(w.fld_Remarks->text().isEmpty());
+  // Check control buttons states
+  QVERIFY(!w.toFirstEnabled);
+  QVERIFY(!w.toLastEnabled);
+  QVERIFY(!w.toNextEnabled);
+  QVERIFY(!w.toPreviousEnabled);
+  QVERIFY(!w.submitEnabled);
+  QVERIFY(!w.revertEnabled);
+  QVERIFY(!w.insertEnabled); /// \todo Define the correct behaviour when model was never selected
+  QVERIFY(!w.removeEnabled); /// \todo Define the correct behaviour when model was never selected
+  /*
+   * Check start/stop of state machine
+   */
+  QVERIFY(wc.currentState() == mdtAbstractSqlTableController::Stopped);
+  wc.start();
+  QVERIFY(wc.currentState() == mdtAbstractSqlTableController::Visualizing);
+  wc.stop();
+  QVERIFY(wc.currentState() == mdtAbstractSqlTableController::Stopped);
+  wc.start();
+  QVERIFY(wc.currentState() == mdtAbstractSqlTableController::Visualizing);
+  // Check fields - Must be all OFF, because model was never selected
+  QVERIFY(!w.fld_FirstName->isEnabled());
+  QVERIFY(!w.fld_Remarks->isEnabled());
+  QVERIFY(w.fld_FirstName->text().isEmpty());
+  QVERIFY(w.fld_Remarks->text().isEmpty());
+  // Check control buttons states - Must be all OFF, because model was never selected
+  /**
+  QVERIFY(!w.toFirstEnabled);
+  QVERIFY(!w.toLastEnabled);
+  QVERIFY(!w.toNextEnabled);
+  QVERIFY(!w.toPreviousEnabled);
+  QVERIFY(!w.submitEnabled);
+  QVERIFY(!w.revertEnabled);
+  QVERIFY(!w.insertEnabled);
+  QVERIFY(!w.removeEnabled);
+  */
+  /*
+   * Select data and check
+   */
+  QVERIFY(wc.select());
+  QCOMPARE(wc.rowCount(), 4);
+  QCOMPARE(wc.currentRow(), 0);
+  QVERIFY(w.fld_FirstName->isEnabled());
+  QVERIFY(w.fld_Remarks->isEnabled());
+  QCOMPARE(w.fld_FirstName->text(), QString("Andy"));
+  QVERIFY(w.fld_Remarks->text().isEmpty());
+  // Check control buttons states
+  QVERIFY(!w.toFirstEnabled);
+  QVERIFY(w.toLastEnabled);
+  QVERIFY(w.toNextEnabled);
+  QVERIFY(!w.toPreviousEnabled);
+  QVERIFY(!w.submitEnabled);
+  QVERIFY(!w.revertEnabled);
+  QVERIFY(w.insertEnabled);
+  QVERIFY(w.removeEnabled);
+  // Check set current row
+  QVERIFY(wc.setCurrentRow(0));
+  QVERIFY(wc.setCurrentRow(1));
+  QCOMPARE(wc.currentRow(), 1);
+  QVERIFY(w.fld_FirstName->isEnabled());
+  QVERIFY(w.fld_Remarks->isEnabled());
+  QCOMPARE(w.fld_FirstName->text(), QString("Bety"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Remark on Bety"));
+  // Check control buttons states
+  QVERIFY(w.toFirstEnabled);
+  QVERIFY(w.toLastEnabled);
+  QVERIFY(w.toNextEnabled);
+  QVERIFY(w.toPreviousEnabled);
+  QVERIFY(!w.submitEnabled);
+  QVERIFY(!w.revertEnabled);
+  QVERIFY(w.insertEnabled);
+  QVERIFY(w.removeEnabled);
+  /*
+   * Check navigation - No edition
+   */
+  wc.toFirst();
+  QCOMPARE(wc.currentRow(), 0);
+  QVERIFY(w.fld_FirstName->isEnabled());
+  QVERIFY(w.fld_Remarks->isEnabled());
+  QCOMPARE(w.fld_FirstName->text(), QString("Andy"));
+  QVERIFY(w.fld_Remarks->text().isEmpty());
+  QVERIFY(!w.toFirstEnabled);
+  QVERIFY(w.toLastEnabled);
+  QVERIFY(w.toNextEnabled);
+  QVERIFY(!w.toPreviousEnabled);
+  wc.toNext();
+  QCOMPARE(wc.currentRow(), 1);
+  QVERIFY(w.fld_FirstName->isEnabled());
+  QVERIFY(w.fld_Remarks->isEnabled());
+  QCOMPARE(w.fld_FirstName->text(), QString("Bety"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Remark on Bety"));
+  QVERIFY(w.toFirstEnabled);
+  QVERIFY(w.toLastEnabled);
+  QVERIFY(w.toNextEnabled);
+  QVERIFY(w.toPreviousEnabled);
+  wc.toPrevious();
+  QCOMPARE(wc.currentRow(), 0);
+  QVERIFY(w.fld_FirstName->isEnabled());
+  QVERIFY(w.fld_Remarks->isEnabled());
+  QCOMPARE(w.fld_FirstName->text(), QString("Andy"));
+  QVERIFY(w.fld_Remarks->text().isEmpty());
+  QVERIFY(!w.toFirstEnabled);
+  QVERIFY(w.toLastEnabled);
+  QVERIFY(w.toNextEnabled);
+  QVERIFY(!w.toPreviousEnabled);
+  wc.toLast();
+  QCOMPARE(wc.currentRow(), 3);
+  QVERIFY(w.fld_FirstName->isEnabled());
+  QVERIFY(w.fld_Remarks->isEnabled());
+  QCOMPARE(w.fld_FirstName->text(), QString("Charly"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Remark on Charly"));
+  QVERIFY(w.toFirstEnabled);
+  QVERIFY(!w.toLastEnabled);
+  QVERIFY(!w.toNextEnabled);
+  QVERIFY(w.toPreviousEnabled);
+  wc.toFirst();
+  QCOMPARE(wc.currentRow(), 0);
+  QVERIFY(w.fld_FirstName->isEnabled());
+  QVERIFY(w.fld_Remarks->isEnabled());
+  QCOMPARE(w.fld_FirstName->text(), QString("Andy"));
+  QVERIFY(w.fld_Remarks->text().isEmpty());
+  QVERIFY(!w.toFirstEnabled);
+  QVERIFY(w.toLastEnabled);
+  QVERIFY(w.toNextEnabled);
+  QVERIFY(!w.toPreviousEnabled);
+  /*
+   * Check insertion
+   *  - Insert 2 records
+   *  - Check in model
+   *  - Check in form
+   *
+   * Note:
+   *  Because of mdtSqlFormWidget's internall state machine,
+   *  witch runs asynchronousliy, we must wait between each action.
+   */
+  rowCount = model->rowCount();
+  // Insert a record
+  wc.insert();
+  QTest::qWait(50);
+  QVERIFY(w.fld_FirstName->isEnabled());
+  QVERIFY(w.fld_Remarks->isEnabled());
+  QVERIFY(w.fld_FirstName->text().isEmpty());
+  QVERIFY(w.fld_Remarks->text().isEmpty());
+  QTest::keyClicks(w.fld_FirstName, "New name 1");
+  QTest::keyClicks(w.fld_Remarks, "New remark 1");
+  // Submit with asynch version
+  wc.submit();
+  QTest::qWait(1000); // Writing in DB can be very slow, f.ex. with Sqlite on HDD
+  // Check that model was updated
+  QVERIFY(model->rowCount() > rowCount);
+  rowCount = model->rowCount();
+  row = wc.currentRow();
+  data = model->data(model->index(row, model->fieldIndex("FirstName")));
+  QCOMPARE(data.toString(), QString("New name 1"));
+  data = model->data(model->index(row, model->fieldIndex("Remarks")));
+  QCOMPARE(data.toString(), QString("New remark 1"));
+  // Check that data() works
+  QCOMPARE(wc.data(row, "FirstName", ok), QVariant("New name 1"));
+  QVERIFY(ok);
+  QVERIFY(wc.data(200, "FirstName", ok).isNull());
+  QVERIFY(!ok);
+  QCOMPARE(wc.data(row, "FirstName"), QVariant("New name 1"));
+  // Check that currentData() works
+  QCOMPARE(wc.currentData("FirstName", ok), QVariant("New name 1"));
+  QVERIFY(ok);
+  QCOMPARE(wc.currentData("Remarks", ok), QVariant("New remark 1"));
+  QVERIFY(ok);
+  QCOMPARE(wc.currentData("FirstName"), QVariant("New name 1"));
+  QCOMPARE(wc.currentData("Remarks"), QVariant("New remark 1"));
+  // Check that widget displays the correct row
+  QCOMPARE(w.fld_FirstName->text(), QString("New name 1"));
+  QCOMPARE(w.fld_Remarks->text(), QString("New remark 1"));
+  // Insert a record
+  wc.insert();
+  QTest::qWait(50);
+  QVERIFY(w.fld_FirstName->isEnabled());
+  QVERIFY(w.fld_Remarks->isEnabled());
+  QVERIFY(w.fld_FirstName->text().isEmpty());
+  QVERIFY(w.fld_Remarks->text().isEmpty());
+  QTest::keyClicks(w.fld_FirstName, "New name 2");
+  QTest::keyClicks(w.fld_Remarks, "New remark 2");
+  // Submit with synch version
+  QVERIFY(wc.submitAndWait());
+  // Check that model was updated
+  QVERIFY(model->rowCount() > rowCount);
+  rowCount = model->rowCount();
+  row = wc.currentRow();
+  data = model->data(model->index(row, model->fieldIndex("FirstName")));
+  QCOMPARE(data.toString(), QString("New name 2"));
+  data = model->data(model->index(row, model->fieldIndex("Remarks")));
+  QCOMPARE(data.toString(), QString("New remark 2"));
+  // Check that widget displays the correct row
+  QCOMPARE(w.fld_FirstName->text(), QString("New name 2"));
+  QCOMPARE(w.fld_Remarks->text(), QString("New remark 2"));
+  // Try to insert a record with no name - must fail
+  wc.insert();
+  QTest::qWait(50);
+  QVERIFY(w.fld_FirstName->text().isEmpty());
+  QVERIFY(w.fld_Remarks->text().isEmpty());
+  QTest::keyClicks(w.fld_Remarks, "New remark ...");
+  wc.submit();
+  QTest::qWait(50);
+  /*
+   * We cannot check now, beacuse new row was inserted in model
+   * We will revert, then check that new inserted row is suppressed
+   */
+  wc.revert();
+  QTest::qWait(50);
+  QVERIFY(model->rowCount() > rowCount);
+  // Check that widget displays the correct row
+  QCOMPARE(w.fld_FirstName->text(), QString("New name 2"));
+  QCOMPARE(w.fld_Remarks->text(), QString("New remark 2"));
+
+
+
+
+  // Clear test data
+  clearTestDatabaseData();
 }
 
 void mdtDatabaseWidgetTest::sqlTableSelectionItemTest()
@@ -681,6 +1348,7 @@ void mdtDatabaseWidgetTest::createDatabaseSchema()
   // FirstName
   field = QSqlField();
   field.setName("FirstName");
+  field.setRequired(true);
   field.setType(QVariant::String);
   field.setLength(50);
   st.addField(field, false);

@@ -9,6 +9,9 @@ project (multidiagtools)
 # Liste des fichiers d'entêtes Qt (entêtes contenant Q_OBJECT)
 set (HEADER_FILES 
           mdtAbstractSqlTableController.h
+          mdtSqlFieldHandler.h
+          mdtSqlDataValidator.h
+          mdtSqlFormWidgetDataValidator.h
           mdtSqlDataWidgetController.h
           mdtSqlForm.h
           mdtSqlWindow.h
@@ -23,6 +26,9 @@ set (HEADER_FILES
 # Liste des fichiers sources
 set (SOURCES_FILES 
           mdtAbstractSqlTableController.cpp
+          mdtSqlFieldHandler.cpp
+          mdtSqlDataValidator.cpp
+          mdtSqlFormWidgetDataValidator.cpp
           mdtSqlDataWidgetController.cpp
           mdtSqlForm.cpp
           mdtSqlWindow.cpp

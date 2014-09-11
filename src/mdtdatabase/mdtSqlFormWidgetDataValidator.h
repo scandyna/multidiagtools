@@ -18,48 +18,43 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DATABASE_TEST_H
-#define MDT_DATABASE_TEST_H
+#ifndef MDT_SQL_FORM_WIDGET_DATA_VALIDATOR_H
+#define MDT_SQL_FORM_WIDGET_DATA_VALIDATOR_H
 
-#include "mdtTest.h"
-#include <QFileInfo>
-#include <QMessageBox>
-#include <QSqlDatabase>
+#include "mdtSqlDataValidator.h"
+#include <QList>
 
-class mdtDatabaseTest : public mdtTest
+/*! \brief Data validator for mdtSqlFormWidget
+ *
+ * This class is used by mdtSqlFormWidget .
+ */
+class mdtSqlFieldHandler;
+
+class mdtSqlFormWidgetDataValidator : public mdtSqlDataValidator
 {
  Q_OBJECT
 
- private slots:
+ public:
 
-  void initTestCase();
-  void cleanupTestCase();
+  /*! \brief Constructor
+   */
+  mdtSqlFormWidgetDataValidator(QObject *parent, const QList<mdtSqlFieldHandler*> &fieldHandlers);
 
-  void sqlSchemaTableTest();
-  void sqlSchemaTableSqliteTest();
+  /*! \brief Destructor
+   */
+  ~mdtSqlFormWidgetDataValidator();
 
-  void databaseManagerTest();
-
-  /// \todo Add mdtSqlForm test
-  /// \todo Add mdtSqlWindow test
-
-  void sqlRecordTest();
-
-  void doubleValueTest();
+  /*! \brief Checks to be done before submit
+   *
+   * Will call checkBeforeSubmit() for every field Handlers.
+   */
+  bool checkBeforeSubmit();
 
  private:
 
-  /*
-   * Create the test database
-   */
-  void createTestDatabase();
-  // Populate database with some common data
-  void populateTestDatabase();
-  // Clear test database data
-  void clearTestDatabaseData();
+  Q_DISABLE_COPY(mdtSqlFormWidgetDataValidator);
 
-  QFileInfo pvDatabaseFileInfo;
-  QSqlDatabase pvDatabase;
+  QList<mdtSqlFieldHandler*> pvFieldHandlers;
 };
 
-#endif // #ifndef MDT_DATABASE_TEST_H
+#endif  // #ifndef MDT_SQL_FORM_WIDGET_DATA_VALIDATOR_H

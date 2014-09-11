@@ -99,8 +99,8 @@ void mdtPortManagerStateMachine::buildMainStateMachine(mdtPortManager *portManag
   buildRunningSubMachine(portManager, pvRunning);
   // Start
   setInitialState(pvPortClosed);
-  start();
-  waitOnState(mdtPortManager::PortClosed);
+  start(true);
+  waitOnState(mdtPortManager::PortClosed);  /// \todo No longer relevant, bacause mdtStateMachine::start(true) will wait on initial state
 }
 
 void mdtPortManagerStateMachine::buildRunningSubMachine(mdtPortManager *portManager, mdtState *parentState)

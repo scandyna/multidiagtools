@@ -57,6 +57,18 @@ class mdtStateMachine : public QStateMachine
    */
   virtual ~mdtStateMachine();
 
+  /*! \brief Start state machine
+   *
+   * \param waitStarted If true, call will return only when state machine has started (will not break event loop)
+   */
+  void start(bool waitStarted);
+
+  /*! \brief Stop state machine
+   *
+   * \param waitStopped If true, call will return only when state machine is stopped (will not break event loop)
+   */
+  void stop(bool waitStopped);
+
   /*! \brief Get current state
    */
   int currentState() const;
@@ -117,6 +129,14 @@ class mdtStateMachine : public QStateMachine
    */
   void onWaitTimeout();
 
+  /*! \brief Set started flag
+   */
+  void setStartedFlag();
+
+  /*! \brief Set stopped flag
+   */
+  void setStoppedFlag();
+
  private:
 
   Q_DISABLE_COPY(mdtStateMachine);
@@ -124,6 +144,8 @@ class mdtStateMachine : public QStateMachine
   QTimer *pvTimeoutTimer;
   mdtState *pvCurrentState;
   bool pvTimeoutOccured;
+  bool pvStarted;
+  bool pvStopped;
 };
 
 #endif  // #ifndef MDT_STATE_MACHINE_H
