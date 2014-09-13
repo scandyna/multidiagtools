@@ -25,6 +25,7 @@
 #include "mdtStateMachine.h"
 #include "mdtUiMessageHandler.h"
 #include "mdtSqlDataValidator.h"
+#include "mdtSqlRelationInfo.h"
 #include <QObject>
 #include <QSqlDatabase>
 #include <QSqlTableModel>
@@ -34,6 +35,18 @@
 #include <memory>
 
 class mdtState;
+class mdtAbstractSqlTableController;
+class mdtSqlRelation;
+class mdtSortFilterProxyModel;
+
+/*
+ * Container for internal use
+ */
+struct mdtAbstractSqlTableControllerContainer
+{
+  std::shared_ptr<mdtAbstractSqlTableController> controller;
+  std::shared_ptr<mdtSqlRelation> relation;
+};
 
 /*! \brief Base class for SQL table controllers
  *
@@ -55,7 +68,7 @@ class mdtState;
  * Typicall usage:
  *  - Make needed signal/slot connections
  *  - Set table with setTableName() or setModel()
- *  - Start inetrnall state machine with start()
+ *  - Start inetrnal state machine with start()
  *  - Load data with select()
  */
 class mdtAbstractSqlTableController : public QObject
@@ -107,6 +120,64 @@ class mdtAbstractSqlTableController : public QObject
    * Will replace internal model if allready set.
    */
   void setModel(std::shared_ptr<QSqlTableModel> m, const QString & userFriendlyTableName = QString());
+
+  
+/** \todo Méthode pour retirer controller, qui retire LA relation concernée en même temps.
+ *        Structure nécessaire ?
+ *    NOTE: pas possible d'instancier mdtAbstractSqlTableController. créer:
+ *           - Méthode virtuelle pure ?
+*/
+  
+  /*! \brief Add a child controller
+   *
+   * Will create a controller of type T, needed relations (mdtSqlRelation objects)
+   *  and add controller to childs.
+   *
+   * \param relationInfo Informations of relation between current controller's table (parent) and child controller's table (child)
+   *               Note: parent table name is ignored.
+   * \param db QSqlDatabase object to use
+   * \param userFriendlyChildTableName User friendly table name for child controller.
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   */
+  template<typename T>
+  bool addChildController(const mdtSqlRelationInfo & relationInfo, QSqlDatabase db, const QString & userFriendlyChildTableName = QString())
+  {
+    Q_ASSERT(pvModel);
+    std::shared_ptr<T> controller(new T);
+    return setupAndAddChildController(controller, relationInfo, db, userFriendlyChildTableName);
+  }
+
+  /*! \brief Add a child controller
+   *
+   * Will create a controller of type T, needed relations (mdtSqlRelation objects)
+   *  and add controller to childs.
+   *
+   * \param relationInfo Informations of relation between current controller's table (parent) and child controller's table (child)
+   *               Note: parent table name is ignored.
+   * \param userFriendlyChildTableName User friendly table name for child controller.
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   */
+  template<typename T>
+  bool addChildController(const mdtSqlRelationInfo & relationInfo, const QString & userFriendlyChildTableName = QString())
+  {
+    Q_ASSERT(pvModel);
+    return addChildController<T>(relationInfo, pvModel->database(), userFriendlyChildTableName);
+  }
+
+  /*! \brief Get a child controller
+   *
+   *  Can return a Null pointer if no controller
+   *   is assigned to rquested table, or it exists,
+   *   but is not requested type T.
+   */
+  template<typename T>
+  std::shared_ptr<T> childController(const QString & tableName)
+  {
+    int i;
+    
+  }
 
   /*! \brief Select data in main table
    *
@@ -161,6 +232,54 @@ class mdtAbstractSqlTableController : public QObject
    */
   void addDataValidator(std::shared_ptr<mdtSqlDataValidator> validator, bool putAtTopPriority = false, bool setInternalMessageHandler = true);
 
+  /*! \brief Add a column to columns sort order
+   *
+   * Columns sort order is similar meaning
+   *  than SQL ORDER BY clause.
+   *
+   * Internally, mdtSortFilterProxyModel is used, witch provide a natural sort for strings.
+   *
+   * For example, to sort columns in order "Id_PK", "FirstName", "LastName", all ascending, call:
+   *  - clearColumnsSortOrder();
+   *  - addColumnToSortOrder("Id_PK", Qt::AscendingOrder);
+   *  - addColumnToSortOrder("FirstName", Qt::AscendingOrder);
+   *  - addColumnToSortOrder("LastName", Qt::AscendingOrder);
+   *
+   * Note: if given field not exists, it will simply be ignored.
+   *
+   * Note: to apply sorting, call sort()
+   *
+   * \pre Model must be set with setModel() before using this method.
+   */
+  void addColumnToSortOrder(const QString & fieldName, Qt::SortOrder order = Qt::AscendingOrder);
+
+  /*! \brief Clear columns sort order
+   *
+   * \sa addColumnToSortOrder()
+   */
+  void clearColumnsSortOrder();
+
+  /*! \brief Sort data
+   *
+   * \sa addColumnToSortOrder()
+   */
+  void sort();
+
+  /*! \brief Set current data for given field name
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   */
+  bool setCurrentData(const QString &fieldName, const QVariant &data, bool submit = true);
+
+  /*! \brief Set data for given row and field name
+   *
+   * Note: row is relative to sorted data model (proxyModel),
+   *   not underlaying QSqlTableModel.
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   */
+  bool setData(int row, const QString &fieldName, const QVariant &data, bool submit = true);
+
   /*! \brief Get current data for given field name
    *
    * \pre Table model must be set with setModel() or setTableName() begore calling this method.
@@ -175,11 +294,17 @@ class mdtAbstractSqlTableController : public QObject
 
   /*! \brief Get data for given row and field name
    *
+   * Note: row is relative to sorted data model (proxyModel),
+   *   not underlaying QSqlTableModel.
+   *
    * \pre Table model must be set with setModel() or setTableName() begore calling this method.
    */
   QVariant data(int row, const QString &fieldName);
 
   /*! \brief Get data for given row and field name
+   *
+   * Note: row is relative to sorted data model (proxyModel),
+   *   not underlaying QSqlTableModel.
    *
    * \pre Table model must be set with setModel() or setTableName() begore calling this method.
    */
@@ -198,6 +323,9 @@ class mdtAbstractSqlTableController : public QObject
    *   in database. If request row could not be found, false is returned.
    *
    * \param row Row to witch to go. Must be in range [-1;rowCount()-1]
+   *            Note: row is relative to sorted data model (proxyModel),
+   *             not underlaying QSqlTableModel.
+   *
    * \pre Table model must be set with setModel() or setTableName() begore calling this method.
    */
   bool setCurrentRow(int row);
@@ -273,6 +401,10 @@ class mdtAbstractSqlTableController : public QObject
    */
   std::shared_ptr<mdtUiMessageHandler> messageHandler() { return pvMessageHandler; }
 
+  /*! \brief Get internal proxy model
+   */
+  inline std::shared_ptr<mdtSortFilterProxyModel> proxyModel() { return pvProxyModel; }
+
   /*! \brief Table model set event
    *
    * Cann be re-implemented in subclass
@@ -283,6 +415,16 @@ class mdtAbstractSqlTableController : public QObject
   /*! \brief Current row changed event
    */
   virtual void currentRowChangedEvent(int row) = 0;
+
+  /*! \brief Set current row - For internal use
+   *
+   * If row is > model's cached rowCount-1, data will be fetched
+   *  in database. If request row could not be found, false is returned.
+   *
+   * \param row Row to witch to go. Must be in range [-1;rowCount()-1]
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   */
+  bool setCurrentRowPv(int row);
 
   /*! \brief Submit current row to model
    *
@@ -330,7 +472,19 @@ class mdtAbstractSqlTableController : public QObject
    */
   virtual bool doRevertNewRow() = 0;
 
+  /*! \brief Remove current row from model
+   *
+   * Subclass must implement this method.
+   *  On problem, subclass should explain
+   *  what goes wrong to the user and return false.
+   */
+  virtual bool doRemove() = 0;
+
  signals:
+
+  /*! \brief Emitted when current row has changed
+   */
+  void currentRowChanged(int row);
 
   /*! \brief Emitted when the entier widget enable state changes
    */
@@ -394,7 +548,7 @@ class mdtAbstractSqlTableController : public QObject
 
   /*! \brief Emitted when data was edited
    */
-  ///void dataEdited();
+  void dataEdited();
 
   /*! \brief Emitted when Visualizing state was entered
    */
@@ -517,6 +671,10 @@ class mdtAbstractSqlTableController : public QObject
 
  private:
 
+  /*! \brief Setup and add child controller
+   */
+  bool setupAndAddChildController(std::shared_ptr<mdtAbstractSqlTableController> controller, const mdtSqlRelationInfo & relationInfo, QSqlDatabase db, const QString & userFriendlyChildTableName);
+
   /*! \brief Call checkBeforeSubmit() for each installed validators
    *
    * \sa addDataValidator()
@@ -536,10 +694,13 @@ class mdtAbstractSqlTableController : public QObject
   Q_DISABLE_COPY(mdtAbstractSqlTableController);
 
   std::shared_ptr<QSqlTableModel> pvModel;
+  std::shared_ptr<mdtSortFilterProxyModel> pvProxyModel;
   QList<std::shared_ptr<mdtSqlDataValidator> > pvDataValidators;
   std::shared_ptr<mdtUiMessageHandler> pvMessageHandler;
   QString pvUserFriendlyTableName;
   bool pvOperationComplete;
+  ///QList<std::shared_ptr<mdtAbstractSqlTableController> > pvChildControllers;
+  QList<mdtAbstractSqlTableControllerContainer> pvChildControllerContainers;
   // State machine members
   mdtState *pvStateSelecting;
   mdtState *pvStateVisualizing;
@@ -553,6 +714,5 @@ class mdtAbstractSqlTableController : public QObject
   mdtState *pvStateRemoving;
   mdtStateMachine pvStateMachine;
 };
-
 
 #endif  // #ifndef MDT_ABSTRACT_SQL_TABLE_CONTROLLER_H

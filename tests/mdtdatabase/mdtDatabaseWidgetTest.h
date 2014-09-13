@@ -80,6 +80,7 @@ class mdtDatabaseWidgetTest : public mdtTest
 
   void sqlFieldHandlerTest();
   void sqlDataWidgetControllerTest();
+  void sqlTableViewControllerTest();
 
   // Table selection tests
   void sqlTableSelectionItemTest();
@@ -97,6 +98,8 @@ class mdtDatabaseWidgetTest : public mdtTest
 
   void populateTestDatabase();
   void clearTestDatabaseData();
+
+  void populate1000Names();
 
   mdtSqlDatabaseManager pvDatabaseManager;
 };

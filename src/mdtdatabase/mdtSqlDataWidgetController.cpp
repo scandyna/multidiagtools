@@ -23,6 +23,8 @@
 #include "mdtError.h"
 #include "mdtSqlFormWidgetDataValidator.h"
 #include "mdtSqlSchemaTable.h"
+#include "mdtSortFilterProxyModel.h"
+#include <QSortFilterProxyModel>
 #include <QSqlDatabase>
 #include <QSqlTableModel>
 #include <QLayout>
@@ -32,11 +34,13 @@
 #include <QSqlField>
 #include <QSqlIndex>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtSqlDataWidgetController::mdtSqlDataWidgetController(QObject* parent)
  : mdtAbstractSqlTableController(parent)
 {
+  pvFirstDataWidget = 0;
+  pvWidgetMapper.setModel(proxyModel().get());
 }
 
 mdtSqlDataWidgetController::~mdtSqlDataWidgetController()
@@ -84,7 +88,7 @@ bool mdtSqlDataWidgetController::mapFormWidgets(QWidget* widget, const QString& 
       fieldHandler = new mdtSqlFieldHandler;
       fieldHandler->setField(st.field(fieldName));
       fieldHandler->setDataWidget(w);
-      ///connect(fieldHandler, SIGNAL(dataEdited()), this, SIGNAL(dataEdited()));
+      connect(fieldHandler, SIGNAL(dataEdited()), this, SIGNAL(dataEdited()));
       pvFieldHandlers.append(fieldHandler);
       // If this widget is the first in focus chain, ref it
       if(w->objectName() == firstWidgetInTabOrder){
@@ -102,22 +106,6 @@ bool mdtSqlDataWidgetController::mapFormWidgets(QWidget* widget, const QString& 
   // Update UI
   updateMappedWidgets();
   updateNavigationControls();
-
-  /*
-   * When calling select() , setQuery() , setFilter() or something similar on model,
-   * Widget mapper will not update. This problem is not in QTableView
-   *  (witch connects model's rowsInserted() , rowsRemoved(), etc signals to internal slots to handle this, I think).
-   * As workaround, we will connect a signal to Widget mapper.
-   */
-  ///connect(this, SIGNAL(modelSelected()), pvWidgetMapper, SLOT(toFirst()));
-  /**
-  connect(this, SIGNAL(modelSelected()), this, SLOT(onModelSelected()));
-  if(model()->rowCount() < 1){
-    onCurrentIndexChanged(-1);
-  }else{
-    pvWidgetMapper->toFirst();
-  }
-  */
   // Add data validator
   addDataValidator(std::shared_ptr<mdtSqlFormWidgetDataValidator>(new mdtSqlFormWidgetDataValidator(0, pvFieldHandlers)));
 
@@ -134,33 +122,21 @@ int mdtSqlDataWidgetController::currentRow() const
 
 void mdtSqlDataWidgetController::toFirst()
 {
-  if((currentState() != Visualizing)||(!model())){
-    return;
-  }
   setCurrentRow(0);
 }
 
 void mdtSqlDataWidgetController::toLast()
 {
-  if((currentState() != Visualizing)||(!model())){
-    return;
-  }
   setCurrentRow(rowCount(true) - 1);
 }
 
 void mdtSqlDataWidgetController::toNext()
 {
-  if((currentState() != Visualizing)||(!model())){
-    return;
-  }
   setCurrentRow(currentRow() + 1);
 }
 
 void mdtSqlDataWidgetController::toPrevious()
 {
-  if((currentState() != Visualizing)||(!model())){
-    return;
-  }
   setCurrentRow(currentRow() - 1);
 }
 
@@ -173,7 +149,14 @@ void mdtSqlDataWidgetController::onStateVisualizingEntered()
 void mdtSqlDataWidgetController::onStateVisualizingExited()
 {
   mdtAbstractSqlTableController::onStateVisualizingExited();
-  updateNavigationControls();
+  /*
+   * Because currentState() will return Visualizing untile next state is enterred,
+   *  we cannot use updateNavigationControls() here
+   */
+  emit toFirstEnabledStateChanged(false);
+  emit toLastEnabledStateChanged(false);
+  emit toPreviousEnabledStateChanged(false);
+  emit toNextEnabledStateChanged(false);
 }
 
 void mdtSqlDataWidgetController::modelSetEvent()
@@ -181,7 +164,7 @@ void mdtSqlDataWidgetController::modelSetEvent()
   Q_ASSERT(model());
 
   model()->setEditStrategy(QSqlTableModel::OnManualSubmit);
-  pvWidgetMapper.setModel(model().get());
+  ///pvWidgetMapper.setModel(model().get());
 }
 
 void mdtSqlDataWidgetController::currentRowChangedEvent(int row)
@@ -198,13 +181,13 @@ bool mdtSqlDataWidgetController::doSubmit()
   Q_ASSERT(model());
 
   int row;
-  QSqlRecord initialRecord;
+  ///QSqlRecord initialRecord;
   QSqlError sqlError;
 
   // Remember current row (will be lost during submit)
   row = pvWidgetMapper.currentIndex();
   // Remember current record - will help on primary key errors
-  initialRecord = model()->record(row);
+  ///initialRecord = model()->record(row);
 
   // Call widget mapper submit() (will commit data from widgets to model)
   if(!pvWidgetMapper.submit()){
@@ -280,8 +263,8 @@ bool mdtSqlDataWidgetController::doInsert()
   model()->insertRow(row);
   pvWidgetMapper.setCurrentIndex(row);
   clearMappedWidgets();
-  /// \todo Set focus on first widget...
-  
+  setFocusOnFirstDataWidget();
+
   return true;
 }
 
@@ -314,11 +297,62 @@ bool mdtSqlDataWidgetController::doRevertNewRow()
     return false;
   }
   // Data was never submit to model, we simply go to last row
-  /**
-  clearMappedWidgets();
-  toLast();
-  */
-  setCurrentRow(row);
+  pvWidgetMapper.setCurrentIndex(row - 1);
+
+  return true;
+}
+
+bool mdtSqlDataWidgetController::doRemove()
+{
+  Q_ASSERT(model());
+
+  int row;
+  QSqlError sqlError;
+
+  // Remeber current row (will be lost during submit)
+  row = pvWidgetMapper.currentIndex();
+  // If we are not on a row, we do nothing
+  if(row < 0){
+    return true;
+  }
+  // Remove current row
+  if(!model()->removeRow(row)){
+    sqlError = model()->lastError();
+    pvLastError.setError(tr("Removing data failed."), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDataWidgetController");
+    pvLastError.commit();
+    if(messageHandler()){
+      messageHandler()->setError(pvLastError);
+      messageHandler()->displayToUser();
+    }
+    return false;
+  }
+  /*
+   * We use QDataWidgetMapper::ManualSubmit submit policy and QSqlTableModel::OnManualSubmit edit strategy.
+   * Widget mapper calls submit() on model, but this has no effect with OnManualSubmit edit strategy,
+   * so we have to call submitAll() on model.
+   */
+  if(!model()->submitAll()){
+    model()->revertRow(row);
+    sqlError = model()->lastError();
+    pvLastError.setError(tr("Removing data failed."), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDataWidgetController");
+    pvLastError.commit();
+    if(messageHandler()){
+      messageHandler()->setError(pvLastError);
+      messageHandler()->displayToUser();
+    }
+    return false;
+  }
+  /*
+   * Go back to row.
+   * Calling submitAll() will repopulate the model.
+   * Because of this, we must be shure to fetch all data until we find our row
+   */
+  row = qMin(row, rowCount(true) - 1);
+  setCurrentRowPv(row);
 
   return true;
 }
@@ -345,6 +379,13 @@ void mdtSqlDataWidgetController::updateMappedWidgets()
         fieldHandler->clearWidgetData();
       }
     }
+  }
+}
+
+void mdtSqlDataWidgetController::setFocusOnFirstDataWidget()
+{
+  if(pvFirstDataWidget != 0){
+    pvFirstDataWidget->setFocus();
   }
 }
 

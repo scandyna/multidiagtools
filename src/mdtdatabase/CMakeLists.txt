@@ -13,6 +13,7 @@ set (HEADER_FILES
           mdtSqlDataValidator.h
           mdtSqlFormWidgetDataValidator.h
           mdtSqlDataWidgetController.h
+          mdtSqlTableViewController.h
           mdtSqlForm.h
           mdtSqlWindow.h
           mdtSqlDialog.h
@@ -28,8 +29,10 @@ set (SOURCES_FILES
           mdtAbstractSqlTableController.cpp
           mdtSqlFieldHandler.cpp
           mdtSqlDataValidator.cpp
+          mdtSqlRelationInfo.cpp
           mdtSqlFormWidgetDataValidator.cpp
           mdtSqlDataWidgetController.cpp
+          mdtSqlTableViewController.cpp
           mdtSqlForm.cpp
           mdtSqlWindow.cpp
           mdtSqlDialog.cpp

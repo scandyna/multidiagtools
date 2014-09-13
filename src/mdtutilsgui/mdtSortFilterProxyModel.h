@@ -73,6 +73,17 @@ class mdtSortFilterProxyModel : public QSortFilterProxyModel
    */
   void addColumnToSortOrder(const QString &fieldName, Qt::SortOrder order = Qt::AscendingOrder);
 
+  /*! \brief Disable sorting
+   *
+   * Usefull if sorting must be disabled temprary,
+   *  without loosing setuped columns to sort.
+   */
+  void disableSorting() { pvSortingEnabled = false; }
+
+  /*! \brief Enable sorting
+   */
+  void enableSorting() { pvSortingEnabled = true; }
+
   /*! \brief Check if some coulumn was set to sort order
    */
   bool hasColumnToSort() const;
@@ -89,6 +100,10 @@ class mdtSortFilterProxyModel : public QSortFilterProxyModel
    *  Qt::AscendingOrder is returnded
    */
   Qt::SortOrder sortOrder(int column) const;
+
+  /*! \brief Sort
+   */
+  void sort();
 
  private:
 
@@ -110,6 +125,8 @@ class mdtSortFilterProxyModel : public QSortFilterProxyModel
   QList<QPair<int, Qt::SortOrder> >pvColumnsSortOrder;
 
   Q_DISABLE_COPY(mdtSortFilterProxyModel);
+
+  bool pvSortingEnabled;
 };
 
 #endif  // #ifndef MDT_SORT_FILTER_PROXY_MODEL_H

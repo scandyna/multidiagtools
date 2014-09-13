@@ -30,6 +30,7 @@
 #include "mdtSqlFieldHandler.h"
 #include "mdtAbstractSqlTableController.h"
 #include "mdtSqlDataWidgetController.h"
+#include "mdtSqlTableViewController.h"
 #include "mdtUiMessageHandler.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
@@ -430,16 +431,19 @@ void mdtDatabaseWidgetTest::sqlFieldHandlerTest()
 
 void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
 {
+  QSqlQuery q(pvDatabaseManager.database());
   sqlDataWidgetControllerTestWidget w;
   ///std::shared_ptr<mdtUiMessageHandler> messageHandler(new mdtUiMessageHandler(&w));
   mdtSqlDataWidgetController wc;
   std::shared_ptr<QSqlTableModel> m1(new QSqlTableModel(0, pvDatabaseManager.database()));
   std::shared_ptr<QSqlTableModel> m2(new QSqlTableModel(0, pvDatabaseManager.database()));
   std::shared_ptr<QSqlTableModel> model;
-  int row, rowCount;
+  mdtSqlRelationInfo relationInfo;
   QVariant data;
   bool ok;
 
+  // For this test, we wont foreign_keys support
+  QVERIFY(q.exec("PRAGMA foreign_keys = OFF"));
   // Create test data
   populateTestDatabase();
   // Setup
@@ -452,7 +456,7 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   connect(&wc, SIGNAL(insertEnabledStateChanged(bool)), &w, SLOT(setInsertEnableState(bool)));
   connect(&wc, SIGNAL(removeEnabledStateChanged(bool)), &w, SLOT(setRemoveEnableState(bool)));
   connect(&wc, SIGNAL(submitEnabledStateChanged(bool)), &w, SLOT(setSubmitEnableState(bool)));
-  connect(&wc, SIGNAL(revertEnabledStateChanged(bool)), &w, SLOT(setRemoveEnableState(bool)));
+  connect(&wc, SIGNAL(revertEnabledStateChanged(bool)), &w, SLOT(setRevertEnableState(bool)));
   // Initial state
   w.show();
   QVERIFY(w.fld_FirstName->text().isEmpty());
@@ -514,7 +518,6 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
    * Map widgets
    */
   QVERIFY(wc.mapFormWidgets(&w, "fld_FirstName"));
-  /// \todo Start state machine
   // Check fields - Because state machine is not running, all widgets must be diseabled
   QVERIFY(!w.fld_FirstName->isEnabled());
   QVERIFY(!w.fld_Remarks->isEnabled());
@@ -654,10 +657,13 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
    *  Because of mdtSqlFormWidget's internall state machine,
    *  witch runs asynchronousliy, we must wait between each action.
    */
-  rowCount = model->rowCount();
+  QCOMPARE(wc.rowCount(), 4);
+  QCOMPARE(wc.currentRow(), 0);
   // Insert a record
   wc.insert();
   QTest::qWait(50);
+  QCOMPARE(wc.rowCount(), 5);
+  QCOMPARE(wc.currentRow(), 4);
   QVERIFY(w.fld_FirstName->isEnabled());
   QVERIFY(w.fld_Remarks->isEnabled());
   QVERIFY(w.fld_FirstName->text().isEmpty());
@@ -668,19 +674,18 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   wc.submit();
   QTest::qWait(1000); // Writing in DB can be very slow, f.ex. with Sqlite on HDD
   // Check that model was updated
-  QVERIFY(model->rowCount() > rowCount);
-  rowCount = model->rowCount();
-  row = wc.currentRow();
-  data = model->data(model->index(row, model->fieldIndex("FirstName")));
+  QCOMPARE(wc.rowCount(), 5);
+  QCOMPARE(wc.currentRow(), 4);
+  data = model->data(model->index(4, model->fieldIndex("FirstName")));
   QCOMPARE(data.toString(), QString("New name 1"));
-  data = model->data(model->index(row, model->fieldIndex("Remarks")));
+  data = model->data(model->index(4, model->fieldIndex("Remarks")));
   QCOMPARE(data.toString(), QString("New remark 1"));
   // Check that data() works
-  QCOMPARE(wc.data(row, "FirstName", ok), QVariant("New name 1"));
+  QCOMPARE(wc.data(4, "FirstName", ok), QVariant("New name 1"));
   QVERIFY(ok);
   QVERIFY(wc.data(200, "FirstName", ok).isNull());
   QVERIFY(!ok);
-  QCOMPARE(wc.data(row, "FirstName"), QVariant("New name 1"));
+  QCOMPARE(wc.data(4, "FirstName"), QVariant("New name 1"));
   // Check that currentData() works
   QCOMPARE(wc.currentData("FirstName", ok), QVariant("New name 1"));
   QVERIFY(ok);
@@ -694,6 +699,8 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   // Insert a record
   wc.insert();
   QTest::qWait(50);
+  QCOMPARE(wc.rowCount(), 6);
+  QCOMPARE(wc.currentRow(), 5);
   QVERIFY(w.fld_FirstName->isEnabled());
   QVERIFY(w.fld_Remarks->isEnabled());
   QVERIFY(w.fld_FirstName->text().isEmpty());
@@ -703,12 +710,12 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   // Submit with synch version
   QVERIFY(wc.submitAndWait());
   // Check that model was updated
-  QVERIFY(model->rowCount() > rowCount);
-  rowCount = model->rowCount();
-  row = wc.currentRow();
-  data = model->data(model->index(row, model->fieldIndex("FirstName")));
+  QCOMPARE(model->rowCount(), 6);
+  QCOMPARE(wc.rowCount(), 6);
+  QCOMPARE(wc.currentRow(), 5);
+  data = model->data(model->index(5, model->fieldIndex("FirstName")));
   QCOMPARE(data.toString(), QString("New name 2"));
-  data = model->data(model->index(row, model->fieldIndex("Remarks")));
+  data = model->data(model->index(5, model->fieldIndex("Remarks")));
   QCOMPARE(data.toString(), QString("New remark 2"));
   // Check that widget displays the correct row
   QCOMPARE(w.fld_FirstName->text(), QString("New name 2"));
@@ -716,28 +723,480 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   // Try to insert a record with no name - must fail
   wc.insert();
   QTest::qWait(50);
+  QCOMPARE(wc.rowCount(), 7);
+  QCOMPARE(wc.currentRow(), 6);
   QVERIFY(w.fld_FirstName->text().isEmpty());
   QVERIFY(w.fld_Remarks->text().isEmpty());
   QTest::keyClicks(w.fld_Remarks, "New remark ...");
   wc.submit();
   QTest::qWait(50);
+  QCOMPARE(wc.rowCount(), 7);
+  QCOMPARE(wc.currentRow(), 6);
   /*
    * We cannot check now, beacuse new row was inserted in model
    * We will revert, then check that new inserted row is suppressed
    */
   wc.revert();
   QTest::qWait(50);
-  QVERIFY(model->rowCount() > rowCount);
+  QCOMPARE(wc.rowCount(), 6);
+  QCOMPARE(wc.currentRow(), 5);
   // Check that widget displays the correct row
   QCOMPARE(w.fld_FirstName->text(), QString("New name 2"));
   QCOMPARE(w.fld_Remarks->text(), QString("New remark 2"));
-
-
-
+  /*
+   * Check edition
+   *  - Edit current row
+   *  - Check in model
+   *  - Check in widgets
+   */
+  // Check control buttons states - before edition
+  QVERIFY(w.toFirstEnabled);
+  QVERIFY(!w.toLastEnabled);
+  QVERIFY(!w.toNextEnabled);
+  QVERIFY(w.toPreviousEnabled);
+  QVERIFY(!w.submitEnabled);
+  QVERIFY(!w.revertEnabled);
+  QVERIFY(w.insertEnabled);
+  QVERIFY(w.removeEnabled);
+  // Edit in widgets and submit
+  w.fld_FirstName->clear();
+  w.fld_Remarks->clear();
+  QTest::keyClicks(w.fld_FirstName, "Edit name A");
+  QTest::keyClicks(w.fld_Remarks, "Edit remark A");
+  // Check control buttons states - after edition
+  QVERIFY(!w.toFirstEnabled);
+  QVERIFY(!w.toLastEnabled);
+  QVERIFY(!w.toNextEnabled);
+  QVERIFY(!w.toPreviousEnabled);
+  QVERIFY(w.submitEnabled);
+  QVERIFY(w.revertEnabled);
+  QVERIFY(!w.insertEnabled);
+  QVERIFY(!w.removeEnabled);
+  // Submit
+  QVERIFY(wc.submitAndWait());
+  // Check that model was updated
+  QVERIFY(model->rowCount() == 6);
+  data = model->data(model->index(5, model->fieldIndex("FirstName")));
+  QCOMPARE(data.toString(), QString("Edit name A"));
+  data = model->data(model->index(5, model->fieldIndex("Remarks")));
+  QCOMPARE(data.toString(), QString("Edit remark A"));
+  // Check that controller returns correct row count and current row
+  QCOMPARE(wc.rowCount(), 6);
+  QCOMPARE(wc.currentRow(), 5);
+  // Check that widget displays the correct row
+  QCOMPARE(w.fld_FirstName->text(), QString("Edit name A"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Edit remark A"));
+  // Check control buttons states - after submit
+  QVERIFY(w.toFirstEnabled);
+  QVERIFY(!w.toLastEnabled);
+  QVERIFY(!w.toNextEnabled);
+  QVERIFY(w.toPreviousEnabled);
+  QVERIFY(!w.submitEnabled);
+  QVERIFY(!w.revertEnabled);
+  QVERIFY(w.insertEnabled);
+  QVERIFY(w.removeEnabled);
+  /*
+   * Check delete
+   */
+  QCOMPARE(wc.rowCount(), 6);
+  QCOMPARE(wc.currentRow(), 5);
+  wc.remove();
+  QTest::qWait(1000); // Writing in DB can be very slow, f.ex. with Sqlite on HDD
+  // Check that model was updated
+  QCOMPARE(model->rowCount(), 5);
+  QCOMPARE(wc.rowCount(), 5);
+  QCOMPARE(wc.currentRow(), 4);
+  data = model->data(model->index(4, model->fieldIndex("FirstName")));
+  QCOMPARE(data.toString(), QString("New name 1"));
+  data = model->data(model->index(4, model->fieldIndex("Remarks")));
+  QCOMPARE(data.toString(), QString("New remark 1"));
+  // Check that widget displays the correct row
+  QCOMPARE(w.fld_FirstName->text(), QString("New name 1"));
+  QCOMPARE(w.fld_Remarks->text(), QString("New remark 1"));
+  /*
+   * Remove first row
+   */
+  wc.toFirst();
+  QTest::qWait(50);
+  QCOMPARE(wc.rowCount(), 5);
+  QCOMPARE(wc.currentRow(), 0);
+  wc.remove();
+  QTest::qWait(1000); // Writing in DB can be very slow, f.ex. with Sqlite on HDD
+  QCOMPARE(wc.rowCount(), 4);
+  QCOMPARE(wc.currentRow(), 0);
+  // Check that widget displays the correct row
+  QCOMPARE(w.fld_FirstName->text(), QString("Bety"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Remark on Bety"));
+  /*
+   * Check index changing on unsaved data.
+   * Because we have no message handler, it must fail.
+   */
+  // Edit in widgets
+  w.fld_FirstName->clear();
+  w.fld_Remarks->clear();
+  QTest::keyClicks(w.fld_FirstName, "ABCD");
+  QTest::keyClicks(w.fld_Remarks, "1234");
+  // Try to go to last
+  wc.toNext();
+  QTest::qWait(50);
+  // Check that nothing changed
+  QCOMPARE(wc.currentRow(), 0);
+  QCOMPARE(w.fld_FirstName->text(), QString("ABCD"));
+  QCOMPARE(w.fld_Remarks->text(), QString("1234"));
+  // Revert and check that model's data are displayed again
+  wc.revert();
+  QTest::qWait(50);
+  QCOMPARE(wc.currentRow(), 0);
+  QCOMPARE(w.fld_FirstName->text(), QString("Bety"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Remark on Bety"));
+  // Go next (must work now)
+  wc.toNext();
+  QTest::qWait(50);
+  QCOMPARE(wc.currentRow(), 1);
+  QCOMPARE(w.fld_FirstName->text(), QString("Zeta"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Remark on Zeta"));
+  // Edit in widgets
+  w.fld_FirstName->clear();
+  w.fld_Remarks->clear();
+  QTest::keyClicks(w.fld_FirstName, "ABCD");
+  QTest::keyClicks(w.fld_Remarks, "1234");
+  // Try to go to last
+  wc.toLast();
+  QTest::qWait(50);
+  // Check that nothing changed
+  QCOMPARE(wc.currentRow(), 1);
+  QCOMPARE(w.fld_FirstName->text(), QString("ABCD"));
+  QCOMPARE(w.fld_Remarks->text(), QString("1234"));
+  // Save and check
+  QVERIFY(wc.submitAndWait());
+  QCOMPARE(wc.currentRow(), 1);
+  QCOMPARE(w.fld_FirstName->text(), QString("ABCD"));
+  QCOMPARE(w.fld_Remarks->text(), QString("1234"));
+  /*
+   * Checks on empty table
+   */
+  clearTestDatabaseData();
+  QVERIFY(wc.select());
+  QCOMPARE(wc.rowCount(), 0);
+  QCOMPARE(wc.currentRow(), -1);
+  QVERIFY(!w.fld_FirstName->isEnabled());
+  QVERIFY(!w.fld_Remarks->isEnabled());
+  QVERIFY(w.fld_FirstName->text().isEmpty());
+  QVERIFY(w.fld_Remarks->text().isEmpty());
+  QVERIFY(!w.toFirstEnabled);
+  QVERIFY(!w.toLastEnabled);
+  QVERIFY(!w.toNextEnabled);
+  QVERIFY(!w.toPreviousEnabled);
+  QVERIFY(!w.submitEnabled);
+  QVERIFY(!w.revertEnabled);
+  QVERIFY(w.insertEnabled);
+  QVERIFY(!w.removeEnabled);
+  /*
+   * Prepare table with 1000 elements
+   * (will check fetch more and related behaviours)
+   */
+  // Check navigation
+  populate1000Names();
+  QVERIFY(wc.select());
+  QCOMPARE(wc.rowCount(), 1000);
+  QCOMPARE(wc.currentRow(), 0);
+  QCOMPARE(w.fld_FirstName->text(), QString("Name 1"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Remark 1"));
+  QVERIFY(wc.select());
+  QVERIFY(wc.rowCount(false) < 1000);
+  QCOMPARE(wc.currentRow(), 0);
+  QCOMPARE(w.fld_FirstName->text(), QString("Name 1"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Remark 1"));
+  wc.toNext();
+  QTest::qWait(50);
+  QCOMPARE(wc.currentRow(), 1);
+  QCOMPARE(w.fld_FirstName->text(), QString("Name 2"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Remark 2"));
+  wc.setCurrentRow(499);
+  QCOMPARE(wc.currentRow(), 499);
+  QCOMPARE(w.fld_FirstName->text(), QString("Name 500"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Remark 500"));
+  QVERIFY(wc.rowCount(false) < 1000);
+  wc.toLast();
+  QTest::qWait(50);
+  QCOMPARE(wc.currentRow(), 999);
+  QCOMPARE(w.fld_FirstName->text(), QString("Name 1000"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Remark 1000"));
+  // Check insertion
+  QVERIFY(wc.select());
+  QVERIFY(wc.rowCount(false) < 1000);
+  QCOMPARE(wc.currentRow(), 0);
+  // Insert a record
+  wc.insert();
+  QTest::qWait(50);
+  QCOMPARE(wc.rowCount(false), 1001);
+  QCOMPARE(wc.currentRow(), 1000);
+  QVERIFY(w.fld_FirstName->isEnabled());
+  QVERIFY(w.fld_Remarks->isEnabled());
+  QVERIFY(w.fld_FirstName->text().isEmpty());
+  QVERIFY(w.fld_Remarks->text().isEmpty());
+  QTest::keyClicks(w.fld_FirstName, "New name 1001");
+  QTest::keyClicks(w.fld_Remarks, "New remark 1001");
+  // Submit with synch version
+  QVERIFY(wc.submitAndWait());
+  // Check that model was updated
+  QCOMPARE(model->rowCount(), 1001);
+  QCOMPARE(wc.rowCount(), 1001);
+  QCOMPARE(wc.currentRow(), 1000);
+  data = model->data(model->index(1000, model->fieldIndex("FirstName")));
+  QCOMPARE(data.toString(), QString("New name 1001"));
+  data = model->data(model->index(1000, model->fieldIndex("Remarks")));
+  QCOMPARE(data.toString(), QString("New remark 1001"));
+  // Check that widget displays the correct row
+  QCOMPARE(w.fld_FirstName->text(), QString("New name 1001"));
+  QCOMPARE(w.fld_Remarks->text(), QString("New remark 1001"));
+  /*
+   * Delete somewhere in the middle
+   */
+  QVERIFY(wc.select());
+  QVERIFY(wc.rowCount(false) < 1000);
+  QCOMPARE(wc.currentRow(), 0);
+  QVERIFY(wc.setCurrentRow(399));
+  QVERIFY(wc.rowCount(false) < 1000);
+  QCOMPARE(wc.currentRow(), 399);
+  // Check that widget displays the correct row
+  QCOMPARE(w.fld_FirstName->text(), QString("Name 400"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Remark 400"));
+  wc.remove();
+  QTest::qWait(1000); // Writing in DB can be very slow, f.ex. with Sqlite on HDD
+  // Check that model was updated
+  QCOMPARE(wc.currentRow(), 399);
+  // Check that widget displays the correct row
+  QCOMPARE(w.fld_FirstName->text(), QString("Name 401"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Remark 401"));
+  QCOMPARE(wc.rowCount(), 1000);
+  /*
+   * Check sorting
+   */
+  // Repopulate original test data
+  clearTestDatabaseData();
+  populateTestDatabase();
+  // Setup sorting
+  wc.addColumnToSortOrder("FirstName", Qt::AscendingOrder);
+  wc.sort();
+  // Select and check
+  QVERIFY(wc.select());
+  QCOMPARE(wc.rowCount(), 4);
+  QCOMPARE(wc.currentRow(), 0);
+  // Check that widget displays the correct data
+  QCOMPARE(w.fld_FirstName->text(), QString("Andy"));
+  QVERIFY(w.fld_Remarks->text().isEmpty());
+  // Check that currentData() works
+  QCOMPARE(wc.currentData("FirstName"), QVariant("Andy"));
+  QCOMPARE(wc.currentData("Remarks"), QVariant(""));
+  // Go to next row and check
+  wc.toNext();
+  QTest::qWait(50);
+  QCOMPARE(w.fld_FirstName->text(), QString("Bety"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Remark on Bety"));
+  QCOMPARE(wc.currentData("FirstName"), QVariant("Bety"));
+  QCOMPARE(wc.currentData("Remarks"), QVariant("Remark on Bety"));
+  // Go to next row and check
+  wc.toNext();
+  QTest::qWait(50);
+  QCOMPARE(w.fld_FirstName->text(), QString("Charly"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Remark on Charly"));
+  QCOMPARE(wc.currentData("FirstName"), QVariant("Charly"));
+  QCOMPARE(wc.currentData("Remarks"), QVariant("Remark on Charly"));
+  // Go to next row and check
+  wc.toNext();
+  QTest::qWait(50);
+  QCOMPARE(w.fld_FirstName->text(), QString("Zeta"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Remark on Zeta"));
+  QCOMPARE(wc.currentData("FirstName"), QVariant("Zeta"));
+  QCOMPARE(wc.currentData("Remarks"), QVariant("Remark on Zeta"));
+  // Go to first and check
+  wc.toFirst();
+  QTest::qWait(50);
+  QCOMPARE(w.fld_FirstName->text(), QString("Andy"));
+  QVERIFY(w.fld_Remarks->text().isEmpty());
+  QCOMPARE(wc.currentData("FirstName"), QVariant("Andy"));
+  QCOMPARE(wc.currentData("Remarks"), QVariant(""));
+  // Insert a record
+  wc.insert();
+  QTest::qWait(50);
+  QCOMPARE(wc.rowCount(), 5);
+  QCOMPARE(wc.currentRow(), 4);
+  QVERIFY(w.fld_FirstName->text().isEmpty());
+  QVERIFY(w.fld_Remarks->text().isEmpty());
+  QTest::keyClicks(w.fld_FirstName, "Laura");
+  QTest::keyClicks(w.fld_Remarks, "Remark on Laura");
+  QVERIFY(wc.submitAndWait());
+  QCOMPARE(w.fld_FirstName->text(), QString("Laura"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Remark on Laura"));
+  QCOMPARE(wc.currentData("FirstName"), QVariant("Laura"));
+  QCOMPARE(wc.currentData("Remarks"), QVariant("Remark on Laura"));
+  // Check all data again
+  wc.sort();
+  wc.toFirst();
+  QTest::qWait(50);
+  QCOMPARE(w.fld_FirstName->text(), QString("Andy"));
+  QVERIFY(w.fld_Remarks->text().isEmpty());
+  QCOMPARE(wc.currentData("FirstName"), QVariant("Andy"));
+  QCOMPARE(wc.currentData("Remarks"), QVariant(""));
+  // Go to next row and check
+  wc.toNext();
+  QTest::qWait(50);
+  QCOMPARE(w.fld_FirstName->text(), QString("Bety"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Remark on Bety"));
+  QCOMPARE(wc.currentData("FirstName"), QVariant("Bety"));
+  QCOMPARE(wc.currentData("Remarks"), QVariant("Remark on Bety"));
+  // Go to next row and check
+  wc.toNext();
+  QTest::qWait(50);
+  QCOMPARE(w.fld_FirstName->text(), QString("Charly"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Remark on Charly"));
+  QCOMPARE(wc.currentData("FirstName"), QVariant("Charly"));
+  QCOMPARE(wc.currentData("Remarks"), QVariant("Remark on Charly"));
+  // Go to next row and check
+  wc.toNext();
+  QTest::qWait(50);
+  QCOMPARE(w.fld_FirstName->text(), QString("Laura"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Remark on Laura"));
+  QCOMPARE(wc.currentData("FirstName"), QVariant("Laura"));
+  QCOMPARE(wc.currentData("Remarks"), QVariant("Remark on Laura"));
+  // Go to next row and check
+  wc.toNext();
+  QTest::qWait(50);
+  QCOMPARE(w.fld_FirstName->text(), QString("Zeta"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Remark on Zeta"));
+  QCOMPARE(wc.currentData("FirstName"), QVariant("Zeta"));
+  QCOMPARE(wc.currentData("Remarks"), QVariant("Remark on Zeta"));
+  /*
+   * Check programmed edition - No submit
+   */
+  QVERIFY(wc.setCurrentData("Remarks", "Edited remark on Zeta", false));
+  QCOMPARE(w.fld_FirstName->text(), QString("Zeta"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Edited remark on Zeta"));
+  QCOMPARE(wc.currentData("FirstName"), QVariant("Zeta"));
+  QCOMPARE(wc.currentData("Remarks"), QVariant("Edited remark on Zeta"));
+  // Check that DB is intact
+  QVERIFY(wc.select());
+  wc.sort();
+  wc.toLast();
+  QTest::qWait(50);
+  QCOMPARE(w.fld_FirstName->text(), QString("Zeta"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Remark on Zeta"));
+  QCOMPARE(wc.currentData("FirstName"), QVariant("Zeta"));
+  QCOMPARE(wc.currentData("Remarks"), QVariant("Remark on Zeta"));
+  /*
+   * Check programmed edition - With direct submit
+   */
+  QVERIFY(wc.setCurrentData("Remarks", "Edited remark on Zeta", true));
+  QCOMPARE(w.fld_FirstName->text(), QString("Zeta"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Edited remark on Zeta"));
+  QCOMPARE(wc.currentData("FirstName"), QVariant("Zeta"));
+  QCOMPARE(wc.currentData("Remarks"), QVariant("Edited remark on Zeta"));
+  QVERIFY(wc.select());
+  wc.sort();
+  wc.toLast();
+  QTest::qWait(50);
+  QCOMPARE(w.fld_FirstName->text(), QString("Zeta"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Edited remark on Zeta"));
+  QCOMPARE(wc.currentData("FirstName"), QVariant("Zeta"));
+  QCOMPARE(wc.currentData("Remarks"), QVariant("Edited remark on Zeta"));
+  /*
+   * Check programmed edition:
+   *  - Edit many rows
+   *  - Submit all at once
+   */
+  // Edit each row
+  wc.toFirst();
+  QTest::qWait(50);
+  QVERIFY(wc.setCurrentData("Remarks", "Edited remark on Andy", false));
+  wc.toNext();
+  QTest::qWait(50);
+  QVERIFY(wc.setCurrentData("Remarks", "Edited remark on Bety", false));
+  wc.toNext();
+  QTest::qWait(50);
+  QVERIFY(wc.setCurrentData("Remarks", "Edited remark on Charly", false));
+  wc.toNext();
+  QTest::qWait(50);
+  QVERIFY(wc.setCurrentData("Remarks", "Edited remark on Laura", false));
+  wc.toNext();
+  QTest::qWait(50);
+  QVERIFY(wc.setCurrentData("Remarks", "Edited remark 2 on Zeta", false));
+  // Submit all rows
+  QVERIFY(wc.submitAndWait());
+  // Check that database was updated
+  QVERIFY(wc.select());
+  wc.sort();
+  wc.toFirst();
+  QTest::qWait(50);
+  QCOMPARE(w.fld_FirstName->text(), QString("Andy"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Edited remark on Andy"));
+  QCOMPARE(wc.currentData("FirstName"), QVariant("Andy"));
+  QCOMPARE(wc.currentData("Remarks"), QVariant("Edited remark on Andy"));
+  // Go to next row and check
+  wc.toNext();
+  QTest::qWait(50);
+  QCOMPARE(w.fld_FirstName->text(), QString("Bety"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Edited remark on Bety"));
+  QCOMPARE(wc.currentData("FirstName"), QVariant("Bety"));
+  QCOMPARE(wc.currentData("Remarks"), QVariant("Edited remark on Bety"));
+  // Go to next row and check
+  wc.toNext();
+  QTest::qWait(50);
+  QCOMPARE(w.fld_FirstName->text(), QString("Charly"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Edited remark on Charly"));
+  QCOMPARE(wc.currentData("FirstName"), QVariant("Charly"));
+  QCOMPARE(wc.currentData("Remarks"), QVariant("Edited remark on Charly"));
+  // Go to next row and check
+  wc.toNext();
+  QTest::qWait(50);
+  QCOMPARE(w.fld_FirstName->text(), QString("Laura"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Edited remark on Laura"));
+  QCOMPARE(wc.currentData("FirstName"), QVariant("Laura"));
+  QCOMPARE(wc.currentData("Remarks"), QVariant("Edited remark on Laura"));
+  // Go to next row and check
+  wc.toNext();
+  QTest::qWait(50);
+  QCOMPARE(w.fld_FirstName->text(), QString("Zeta"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Edited remark 2 on Zeta"));
+  QCOMPARE(wc.currentData("FirstName"), QVariant("Zeta"));
+  QCOMPARE(wc.currentData("Remarks"), QVariant("Edited remark 2 on Zeta"));
 
   // Clear test data
   clearTestDatabaseData();
+  // Re-enable foreign_keys support
+  QVERIFY(q.exec("PRAGMA foreign_keys = ON"));
 }
+
+void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
+{
+  mdtSqlTableViewController tvc;
+  QTableView tv;
+  QSqlQuery q(pvDatabaseManager.database());
+
+  // For this test, we wont foreign_keys support
+  QVERIFY(q.exec("PRAGMA foreign_keys = OFF"));
+  // Create test data
+  populateTestDatabase();
+  /*
+   * Setup
+   */
+  tvc.setTableView(&tv);
+  tvc.setTableName("Client_tbl", pvDatabaseManager.database(), "Clients");
+  tv.show();
+  tvc.start();
+  /*
+   * Select and check
+   */
+  QVERIFY(tvc.select());
+
+  QTest::qWait(5000);
+
+  // Clear test data
+  clearTestDatabaseData();
+  // Re-enable foreign_keys support
+  QVERIFY(q.exec("PRAGMA foreign_keys = ON"));
+}
+
 
 void mdtDatabaseWidgetTest::sqlTableSelectionItemTest()
 {
@@ -1413,6 +1872,20 @@ void mdtDatabaseWidgetTest::populateTestDatabase()
   while(query.next()){
     QVERIFY(!query.record().isEmpty());
   }
+}
+
+void mdtDatabaseWidgetTest::populate1000Names()
+{
+  QSqlQuery query(pvDatabaseManager.database());
+  QString sql;
+  int i;
+
+  QVERIFY(pvDatabaseManager.database().transaction());
+  for(i = 0; i < 1000; ++i){
+    sql = QString("INSERT INTO 'Client_tbl' (Id_PK, 'FirstName', 'Remarks') VALUES(%1, 'Name %2', 'Remark %3')").arg(i+1).arg(i+1).arg(i+1);
+    QVERIFY(query.exec(sql));
+  }
+  QVERIFY(pvDatabaseManager.database().commit());
 }
 
 void mdtDatabaseWidgetTest::clearTestDatabaseData()

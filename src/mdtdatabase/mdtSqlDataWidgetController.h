@@ -35,7 +35,7 @@ class QLayoutItem;
  */
 class mdtSqlDataWidgetController : public mdtAbstractSqlTableController
 {
-  Q_OBJECT
+ Q_OBJECT
 
  public:
 
@@ -162,6 +162,10 @@ class mdtSqlDataWidgetController : public mdtAbstractSqlTableController
    */
   bool doRevertNewRow();
 
+  /*! \brief Remove current row from model
+   */
+  bool doRemove();
+
   /*! \brief Update mapped data widgets
    *
    * Will update enabled/disabled state
@@ -169,6 +173,10 @@ class mdtSqlDataWidgetController : public mdtAbstractSqlTableController
    *  state machine is running and current row.
    */
   void updateMappedWidgets();
+
+  /*! \brief Set the focus to first data widget in focus chain (if exists)
+   */
+  void setFocusOnFirstDataWidget();
 
   /*! \brief Clear mapped data widgets
    */

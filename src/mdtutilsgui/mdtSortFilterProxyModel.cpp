@@ -30,6 +30,7 @@
 mdtSortFilterProxyModel::mdtSortFilterProxyModel(QObject *parent)
  : QSortFilterProxyModel(parent)
 {
+  pvSortingEnabled = true;
 }
 
 mdtSortFilterProxyModel::~mdtSortFilterProxyModel()
@@ -99,8 +100,23 @@ Qt::SortOrder mdtSortFilterProxyModel::sortOrder(int column) const
   return pvColumnsSortOrder.at(column).second;
 }
 
+void mdtSortFilterProxyModel::sort()
+{
+  int i;
+  QPair<int, Qt::SortOrder> p;
+
+  for(i = 0; i < pvColumnsSortOrder.size(); ++i){
+    p = pvColumnsSortOrder.at(i);
+    QSortFilterProxyModel::sort(p.first, p.second);
+  }
+}
+
 bool mdtSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
+  if(!pvSortingEnabled){
+    return false;
+  }
+
   QVariant leftData = sourceModel()->data(left);
   QVariant rightData = sourceModel()->data(right);
 
@@ -113,17 +129,9 @@ bool mdtSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelInde
 
 void mdtSortFilterProxyModel::sort(int column, Qt::SortOrder order)
 {
-  int i;
-  QPair<int, Qt::SortOrder> p;
-
-  ///qDebug() << "mdtSortFilterProxyModel::sort() - columns: " << pvColumnsSortOrder;
-  
   if(pvColumnsSortOrder.isEmpty()){
     QSortFilterProxyModel::sort(column, order);
   }else{
-    for(i = 0; i < pvColumnsSortOrder.size(); ++i){
-      p = pvColumnsSortOrder.at(i);
-      QSortFilterProxyModel::sort(p.first, p.second);
-    }
+    sort();
   }
 }

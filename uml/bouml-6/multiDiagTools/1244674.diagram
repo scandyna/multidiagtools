@@ -2,6 +2,17 @@ format 207
 
 classcanvas 128002 class_ref 1382786 // mdtSqlRelationInfo
   classdiagramsettings member_max_width 0 end
-  xyz 203 238 2000
+  xyz 48.2 248.8 2000
+end
+classcanvas 128130 class_ref 1389442 // mdtSqlRelationInfoItem
+  classdiagramsettings member_max_width 0 end
+  xyz 678.9 69.4 2000
+end
+relationcanvas 128258 relation_ref 1721346 // <directional composition>
+  geometry VH
+  from ref 128002 z 2001 to point 538 125
+  line 128514 z 2001 stereotype "<<list>>" xyz 628 212 3000 to ref 128130
+  role_a_pos 614 103 3000 no_role_b
+  multiplicity_a_pos 656 135 3000 no_multiplicity_b
 end
 end

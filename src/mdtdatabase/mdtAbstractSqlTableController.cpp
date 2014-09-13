@@ -20,22 +20,28 @@
  ****************************************************************************/
 #include "mdtAbstractSqlTableController.h"
 #include "mdtState.h"
+#include "mdtSqlRelation.h"
+#include "mdtSortFilterProxyModel.h"
 #include <QSqlError>
 #include <QSqlRecord>
 #include <QCoreApplication>
+#include <QPair>
+#include <QVector>
 
 #include <QDebug>
 
 using namespace std;
 
 mdtAbstractSqlTableController::mdtAbstractSqlTableController(QObject* parent)
- : QObject(parent)
+ : QObject(parent),
+   pvProxyModel(new mdtSortFilterProxyModel)
 {
   buildStateMachine();
 }
 
 mdtAbstractSqlTableController::~mdtAbstractSqlTableController()
 {
+  qDebug() << "mdtAbstractSqlTableController::~mdtAbstractSqlTableController() - table: " << pvUserFriendlyTableName;
 }
 
 void mdtAbstractSqlTableController::setMessageHandler(shared_ptr< mdtUiMessageHandler > handler)
@@ -63,6 +69,7 @@ void mdtAbstractSqlTableController::setModel(shared_ptr< QSqlTableModel > m, con
   Q_ASSERT(m);
 
   pvModel = m;
+  pvProxyModel->setSourceModel(pvModel.get());
   if(userFriendlyTableName.isEmpty()){
     pvUserFriendlyTableName = m->tableName();
   }else{
@@ -77,6 +84,7 @@ bool mdtAbstractSqlTableController::select()
   Q_ASSERT(pvStateMachine.isRunning());
 
   bool ok;
+  int row, _currentRow;
 
   emit selectTriggered();
   pvStateMachine.waitOnState(Selecting);
@@ -92,9 +100,16 @@ bool mdtAbstractSqlTableController::select()
   }
   // Go to first row
   if(pvModel->rowCount() > 0){
-    setCurrentRow(0);
+    row = 0;
   }else{
-    setCurrentRow(-1);
+    row = -1;
+  }
+  // Set current row and force sending event (only 1x !)
+  _currentRow = currentRow();
+  setCurrentRow(row);
+  if(_currentRow == row){
+    currentRowChangedEvent(row);
+    emit currentRowChanged(row);
   }
   if(ok){
     emit operationSucceed();
@@ -108,10 +123,18 @@ void mdtAbstractSqlTableController::start()
 {
   Q_ASSERT(pvModel);
 
+  int i;
+
+  // Start this controller
   if(pvStateMachine.isRunning()){
     stop();
   }
   pvStateMachine.start(true);
+  // Start child controllers
+  for(i = 0; i < pvChildControllerContainers.size(); ++i){
+    Q_ASSERT(pvChildControllerContainers.at(i).controller);
+    pvChildControllerContainers.at(i).controller->start();
+  }
   emit globalWidgetEnableStateChanged(true);
 }
 
@@ -119,10 +142,18 @@ void mdtAbstractSqlTableController::stop()
 {
   Q_ASSERT(pvModel);
 
+  int i;
+
   if(!pvStateMachine.isRunning()){
     return;
   }
   emit globalWidgetEnableStateChanged(false);
+  // Stop child controllers
+  for(i = 0; i < pvChildControllerContainers.size(); ++i){
+    Q_ASSERT(pvChildControllerContainers.at(i).controller);
+    pvChildControllerContainers.at(i).controller->stop();
+  }
+  // Stop this controller
   pvStateMachine.stop(true);
 }
 
@@ -138,6 +169,75 @@ void mdtAbstractSqlTableController::addDataValidator(shared_ptr< mdtSqlDataValid
   }else{
     pvDataValidators.append(validator);
   }
+}
+
+void mdtAbstractSqlTableController::addColumnToSortOrder(const QString& fieldName, Qt::SortOrder order)
+{
+  pvProxyModel->addColumnToSortOrder(fieldName, order);
+}
+
+void mdtAbstractSqlTableController::clearColumnsSortOrder()
+{
+  pvProxyModel->clearColumnsSortOrder();
+}
+
+void mdtAbstractSqlTableController::sort()
+{
+  Q_ASSERT(pvModel);
+
+  if(!proxyModel()->hasColumnToSort()){
+    return;
+  }
+  // If model is empty, canFetchMore will allways return true, prevent this
+  if(model()->rowCount() < 1){
+    return;
+  }
+  while(model()->canFetchMore()){
+    model()->fetchMore();
+  }
+  // Sort
+  pvProxyModel->sort();
+}
+
+bool mdtAbstractSqlTableController::setCurrentData(const QString& fieldName, const QVariant& data, bool submit)
+{
+  Q_ASSERT(pvModel);
+
+  return setData(currentRow(), fieldName, data, submit);
+}
+
+bool mdtAbstractSqlTableController::setData(int row, const QString& fieldName, const QVariant& data, bool submit)
+{
+  Q_ASSERT(pvModel);
+
+  int column;
+  QModelIndex index;
+
+  // Get column of requested field name
+  column = pvModel->record().indexOf(fieldName);
+  if(column < 0){
+    pvLastError.setError(tr("Requested field name") + " '" + fieldName + "' " + tr("was not found in table") + " '" + pvModel->tableName() + "'", mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtAbstractSqlTableController");
+    pvLastError.commit();
+    return false;
+  }
+  // Get index
+  index = pvProxyModel->index(row, column);
+  if(!index.isValid()){
+    pvLastError.setError(tr("Index with row") + " " + QString::number(row)\
+               + " " + tr(", and column") + " " + QString::number(column) + " " + tr("is invalid, table:") + " '" + pvModel->tableName() + "'", mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtAbstractSqlTableController");
+    pvLastError.commit();
+    return false;
+  }
+  // Update model
+  pvProxyModel->setData(index, data);
+  // Submit if requested
+  if(submit){
+    return submitAndWait();
+  }
+
+  return true;
 }
 
 QVariant mdtAbstractSqlTableController::currentData(const QString& fieldName)
@@ -178,7 +278,7 @@ QVariant mdtAbstractSqlTableController::data(int row, const QString& fieldName, 
     pvLastError.commit();
     return QVariant();
   }
-  index = pvModel->index(row, column);
+  index = pvProxyModel->index(row, column);
   if(!index.isValid()){
     ok = false;
     pvLastError.setError(tr("Index with row") + " " + QString::number(row)\
@@ -189,7 +289,7 @@ QVariant mdtAbstractSqlTableController::data(int row, const QString& fieldName, 
   }
   ok = true;
 
-  return pvModel->data(index);
+  return pvProxyModel->data(index);
 }
 
 int mdtAbstractSqlTableController::rowCount(bool fetchAll) const
@@ -214,7 +314,7 @@ bool mdtAbstractSqlTableController::setCurrentRow(int row)
 
   // Check that state machine runs
   if(!pvStateMachine.isRunning()){
-    pvLastError.setError(tr("Cannot change current row because state machine is stopped."), mdtError::Error);
+    pvLastError.setError(tr("Cannot change current row because state machine is stopped. Table:") + " '" + userFriendlyTableName() + "'", mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtAbstractSqlTableController");
     pvLastError.commit();
     return false;
@@ -223,6 +323,7 @@ bool mdtAbstractSqlTableController::setCurrentRow(int row)
   if(!allDataAreSaved()){
     return false;
   }
+  /**
   // If we are allready at requested row, we do nothing (prevent cyclic calls)
   if(row == currentRow()){
     return true;
@@ -246,8 +347,9 @@ bool mdtAbstractSqlTableController::setCurrentRow(int row)
     return false;
   }
   currentRowChangedEvent(row);
+  */
 
-  return true;
+  return setCurrentRowPv(row);
 }
 
 bool mdtAbstractSqlTableController::allDataAreSaved()
@@ -273,6 +375,12 @@ bool mdtAbstractSqlTableController::submitAndWait()
 {
   Q_ASSERT(pvModel);
 
+  if((currentState() != Editing)&&(currentState() != EditingNewRow)){
+    QVector<int> states;
+    states << Editing << EditingNewRow;
+    emit dataEdited();
+    pvStateMachine.waitOnOneState(states);
+  }
   pvLastError.clear();
   pvOperationComplete = false;
   emit submitTriggered();
@@ -307,6 +415,40 @@ void mdtAbstractSqlTableController::remove()
   emit removeTriggered();
 }
 
+bool mdtAbstractSqlTableController::setCurrentRowPv(int row)
+{
+  Q_ASSERT(pvModel);
+  Q_ASSERT(pvStateMachine.isRunning());
+
+  // If we are allready at requested row, we do nothing (prevent cyclic calls)
+  if(row == currentRow()){
+    return true;
+  }
+  // With empty model, we have a special case, baucause fetchMore will allways return true (infinite loop)
+  if(pvModel->rowCount() < 1){
+    if(row >= 0){
+      return false;
+    }
+    // Send event
+    currentRowChangedEvent(-1);
+    emit currentRowChanged(-1);
+    return true;
+  }
+  // Fetch rows in database if needed
+  Q_ASSERT(pvModel->rowCount() > 0);
+  while((row >= pvModel->rowCount())&&(pvModel->canFetchMore())){
+    pvModel->fetchMore();
+  }
+  // Check range and send event if OK
+  if(row >= pvModel->rowCount()){
+    return false;
+  }
+  currentRowChangedEvent(row);
+  emit currentRowChanged(row);
+
+  return true;
+}
+
 void mdtAbstractSqlTableController::onStateSelectingEntered()
 {
   qDebug() << pvModel->tableName() <<  __FUNCTION__;
@@ -316,12 +458,17 @@ void mdtAbstractSqlTableController::onStateSelectingEntered()
 
 void mdtAbstractSqlTableController::onStateVisualizingEntered()
 {
+  Q_ASSERT(pvModel);
+
   qDebug() << pvModel->tableName() <<  __FUNCTION__;
 
-  emit globalWidgetEnableStateChanged(true);
-  ///enableChildWidgets();
+  ///emit globalWidgetEnableStateChanged(true);
+  
   emit insertEnabledStateChanged(true);
-  emit removeEnabledStateChanged(true);
+  if(currentRow() > -1){
+    emit removeEnabledStateChanged(true);
+    ///enableChildWidgets();
+  }
   pvOperationComplete = true;
 }
 
@@ -407,6 +554,7 @@ void mdtAbstractSqlTableController::onStateInsertingEntered()
 void mdtAbstractSqlTableController::onStateEditingNewRowEntered()
 {
   qDebug() << __FUNCTION__;
+  
   emit submitEnabledStateChanged(true);
   emit revertEnabledStateChanged(true);
 }
@@ -423,11 +571,22 @@ void mdtAbstractSqlTableController::onStateSubmittingNewRowEntered()
 {
   qDebug() << __FUNCTION__;
 
+  bool ok;
+
   if(!checkBeforeSubmit()){
     emit errorOccured();
     return;
   }
-  if(doSubmitNewRow()){
+  /*
+   * We temporary disable sorting,
+   *  else it is not possible to find
+   *  current row after a submit, because model is repopulated,
+   *  and also re-sorted
+   */
+  pvProxyModel->disableSorting();
+  ok = doSubmitNewRow();
+  pvProxyModel->enableSorting();
+  if(ok){
     emit operationSucceed();
   }else{
     emit errorOccured();
@@ -436,6 +595,8 @@ void mdtAbstractSqlTableController::onStateSubmittingNewRowEntered()
 
 void mdtAbstractSqlTableController::onStateRevertingNewRowEntered()
 {
+  Q_ASSERT(pvModel);
+
   bool doIt;
 
   qDebug() << __FUNCTION__;
@@ -451,7 +612,7 @@ void mdtAbstractSqlTableController::onStateRevertingNewRowEntered()
   }
   // Do revert
   if(doIt){
-    if(doRevert()){
+    if(doRevertNewRow()){
       emit operationSucceed();
     }else{
       emit errorOccured();
@@ -465,6 +626,8 @@ void mdtAbstractSqlTableController::onStateRemovingEntered()
 {
   Q_ASSERT(pvModel);
 
+  bool doIt;
+
   qDebug() << __FUNCTION__;
 
   // If no row exists, we do nothing
@@ -472,9 +635,45 @@ void mdtAbstractSqlTableController::onStateRemovingEntered()
     emit operationSucceed();
     return;
   }
+  // We ask confirmation to the user
+  if(pvMessageHandler){
+    pvMessageHandler->setText(tr("You are about to delete some data."));
+    pvMessageHandler->setInformativeText(tr("Do you want to continue ?"));
+    pvMessageHandler->setType(mdtUiMessageHandler::Warning);
+    doIt = pvMessageHandler->askUser();
+  }else{
+    doIt = true;
+  }
   // Remove - Note: we ignore return value, because we return allways to Visualizing state
-  ///doRemove();
+  if(doIt){
+    doRemove();
+  }
   emit operationSucceed();
+}
+
+bool mdtAbstractSqlTableController::setupAndAddChildController(shared_ptr< mdtAbstractSqlTableController > controller, const mdtSqlRelationInfo& relationInfo, QSqlDatabase db, const QString& userFriendlyChildTableName)
+{
+  Q_ASSERT(controller);
+
+  mdtAbstractSqlTableControllerContainer container;
+  shared_ptr<mdtSqlRelation> relation(new mdtSqlRelation);
+
+  // Setup child controller
+  controller->setTableName(relationInfo.childTableName(), db, userFriendlyChildTableName);
+  // Setup relation
+  relation->setParentModel(pvModel.get());
+  relation->setChildModel(controller->pvModel.get());
+  connect(this, SIGNAL(currentRowChanged(int)), relation.get(), SLOT(setParentCurrentIndex(int)));
+  // Add to container
+  container.controller = controller;
+  container.relation = relation;
+  pvChildControllerContainers.append(container);
+  // Start controller if we are running
+  if(pvStateMachine.isRunning()){
+    controller->start();
+  }
+
+  return true;
 }
 
 bool mdtAbstractSqlTableController::checkBeforeSubmit()
