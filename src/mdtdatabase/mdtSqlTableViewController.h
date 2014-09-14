@@ -22,10 +22,49 @@
 #define MDT_SQL_TABLE_VIEW_CONTROLLER_H
 
 #include "mdtAbstractSqlTableController.h"
+#include <QStyledItemDelegate>
 
 class QTableView;
+class QAbstractItemDelegate;
 
-/*! \brief
+/*! \brief Item delegate for SQL table view controller
+ *
+ * To handle internal state machine correctly
+ *  we need a signal that indicates that user begins to edit a item.
+ *  We create a custom delegate that provide this signal.
+ */
+class mdtSqlTableViewControllerItemDelegate : public QStyledItemDelegate
+{
+ Q_OBJECT
+
+ public:
+
+  /*! \brief Constructor
+   */
+  mdtSqlTableViewControllerItemDelegate(QObject *parent);
+
+  /*! \brief Re-implementation to emit dataEditionBegins()
+   */
+  QWidget *createEditor(QWidget * parent, const QStyleOptionViewItem &option, const QModelIndex &index ) const;
+
+  /*! \brief Re-implementation to emit dataEditionDone()
+   */
+  void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex & index) const;
+
+ signals:
+
+  /*! \brief Emited when data edition begins
+   */
+  void dataEditionBegins() const;
+
+  /*! \brief Emited when data edition begins
+   */
+  void dataEditionDone() const;
+
+};
+
+
+/*! \brief Table view controller
  */
 class mdtSqlTableViewController : public mdtAbstractSqlTableController
 {
@@ -42,8 +81,15 @@ class mdtSqlTableViewController : public mdtAbstractSqlTableController
   ~mdtSqlTableViewController();
 
   /*! \brief Set table view to control
+   *
+   * To handle states correctly during edition,
+   *  a item delegate that emits some signals is needed:
+   *   - void dataEditionBegins() : when data editing beginns
+   *   - void dataEditionDone() : when data editing is finished
+   *
+   *  If no delegate is given, a default will be created.
    */
-  void setTableView(QTableView *tv);
+  void setTableView(QTableView *tv, QAbstractItemDelegate *delegate = 0);
 
   /*! \brief Get current row
    */
@@ -55,7 +101,31 @@ class mdtSqlTableViewController : public mdtAbstractSqlTableController
    */
   void onTableViewDestroyed(QObject *obj);
 
+  /*! \brief Activity after Visualizing state entered
+   */
+  void onStateVisualizingEntered();
+
+  /*! \brief Activity after Editing state entered
+   *
+   * Will unset pvEditionDone
+   */
+  void onStateEditingEntered();
+
+  /*! \brief Activity after EditingNewRow state entered
+   *
+   * Will unset pvEditionDone
+   */
+  void onStateEditingNewRowEntered();
+
+  /*! \brief Set pvEditionDone flag
+   */
+  void onEditionDone();
+
  private:
+
+  /*! \brief Wait until edition is done
+   */
+  void waitEditionDone();
 
   /*! \brief Current row changed event
    */
@@ -92,6 +162,8 @@ class mdtSqlTableViewController : public mdtAbstractSqlTableController
   Q_DISABLE_COPY(mdtSqlTableViewController);
 
   QTableView *pvTableView;
+  int pvDefaultColumnToSelect;
+  bool pvEditionDone;
 };
 
 #endif // #ifndef MDT_SQL_TABLE_VIEW_CONTROLLER_H

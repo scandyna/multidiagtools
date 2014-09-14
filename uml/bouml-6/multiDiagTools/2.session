@@ -1,4 +1,4 @@
-window_sizes 1280 1005 305 969 952 0
+window_sizes 1272 970 305 961 917 0
 cleanlooks_style
 diagrams
   classdiagram_ref 967682 // mdtSqlDialog
@@ -16,7 +16,7 @@ diagrams
   classdiagram_ref 1238146 // mdtUiMessage
     120 106 100 4 0 0
   active  statediagram_ref 686594 // mdtAbstractSqlWidgetStateMachine
-    969 952 100 18 0 0
+    961 917 100 18 0 154
   classdiagram_ref 1237634 // mdtAbstractSqlTableController
     969 925 90 18 0 10
 end

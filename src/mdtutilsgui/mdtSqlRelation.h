@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,6 +21,7 @@
 #ifndef MDT_SQL_RELATION_H
 #define MDT_SQL_RELATION_H
 
+#include "mdtError.h"
 #include <QObject>
 #include <QSqlTableModel>
 #include <QModelIndex>
@@ -103,6 +104,10 @@ class mdtSqlRelation : public QObject
    */
   void clear();
 
+  /*! \brief Get last error
+   */
+  mdtError lastError() const { return pvLastError; }
+
  signals:
 
   /*! \brief This signal is emitted once setFilter() was called on child model
@@ -179,6 +184,7 @@ class mdtSqlRelation : public QObject
   QString pvChildModelRelationFilter;
   QString pvChildModelFilter;
   int pvCurrentRow;
+  mdtError pvLastError;
 };
 
 #endif  // #ifndef MDT_SQL_RELATION_H

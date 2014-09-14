@@ -39,6 +39,8 @@ class mdtAbstractSqlTableController;
 class mdtSqlRelation;
 class mdtSortFilterProxyModel;
 
+#include <QDebug>
+
 /*
  * Container for internal use
  */
@@ -121,13 +123,6 @@ class mdtAbstractSqlTableController : public QObject
    */
   void setModel(std::shared_ptr<QSqlTableModel> m, const QString & userFriendlyTableName = QString());
 
-  
-/** \todo Méthode pour retirer controller, qui retire LA relation concernée en même temps.
- *        Structure nécessaire ?
- *    NOTE: pas possible d'instancier mdtAbstractSqlTableController. créer:
- *           - Méthode virtuelle pure ?
-*/
-  
   /*! \brief Add a child controller
    *
    * Will create a controller of type T, needed relations (mdtSqlRelation objects)
@@ -176,7 +171,15 @@ class mdtAbstractSqlTableController : public QObject
   std::shared_ptr<T> childController(const QString & tableName)
   {
     int i;
-    
+    std::shared_ptr<mdtAbstractSqlTableController> c;
+    for(i = 0; i < pvChildControllerContainers.size(); ++i){
+      c = pvChildControllerContainers.at(i).controller;
+      Q_ASSERT(c);
+      if(c->tableName() == tableName){
+        return std::dynamic_pointer_cast<T>(c);
+      }
+    }
+    return std::shared_ptr<T>();
   }
 
   /*! \brief Select data in main table
@@ -195,6 +198,10 @@ class mdtAbstractSqlTableController : public QObject
    * \todo If not needed, make it protected and adapt tests
    */
   inline std::shared_ptr<QSqlTableModel> model() { return pvModel; }
+
+  /*! \brief Get (technical) table name
+   */
+  QString tableName() const;
 
   /*! \brief Get user friendly table name
    */
@@ -594,7 +601,7 @@ class mdtAbstractSqlTableController : public QObject
    * This slot is called from internal state machine
    *  and should not be used directly.
    */
-  void onStateEditingEntered();
+  virtual void onStateEditingEntered();
 
   /*! \brief Activity after Editing state exited
    *
@@ -633,7 +640,7 @@ class mdtAbstractSqlTableController : public QObject
    * This slot is called from internal state machine
    *  and should not be used directly.
    */
-  void onStateEditingNewRowEntered();
+  virtual void onStateEditingNewRowEntered();
 
   /*! \brief Activity after Editing state exited
    *

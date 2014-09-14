@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -20,7 +20,6 @@
  ****************************************************************************/
 #include "mdtSqlRelation.h"
 #include "mdtSqlRelationItem.h"
-#include "mdtError.h"
 #include <QSqlField>
 
 //#include <QDebug>
@@ -68,9 +67,9 @@ bool mdtSqlRelation::addRelation(const QString &parentFieldName, const QString &
   record = pvParentModel->record();
   parentFieldIndex = record.indexOf(parentFieldName);
   if(parentFieldIndex < 0){
-    mdtError e(MDT_DATABASE_ERROR, "Field '" + parentFieldName + "' not found in parent table", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtSqlRelation");
-    e.commit();
+    pvLastError.setError(tr("Field") + " '" + parentFieldName + "' " + tr("not found in parent table") + " '" + pvParentModel->tableName() + "'", mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlRelation");
+    pvLastError.commit();
     return false;
   }
   parentField = record.field(parentFieldIndex);
@@ -78,9 +77,9 @@ bool mdtSqlRelation::addRelation(const QString &parentFieldName, const QString &
   record = pvChildModel->record();
   childFieldIndex = record.indexOf(childFieldName);
   if(childFieldIndex < 0){
-    mdtError e(MDT_DATABASE_ERROR, "Field '" + childFieldName + "' not found in child table", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtSqlRelation");
-    e.commit();
+    pvLastError.setError(tr("Field") + " '" + childFieldName + "' " + tr("not found in child table") + " '" + pvChildModel->tableName() + "'", mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlRelation");
+    pvLastError.commit();
     return false;
   }
   childField = record.field(childFieldIndex);

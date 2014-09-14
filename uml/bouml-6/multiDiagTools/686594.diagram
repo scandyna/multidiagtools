@@ -16,7 +16,7 @@ pseudostatecanvas 128514 pseudostate_ref 154754 // initial
    xyz 581 65.8 2000
 end
 pseudostatecanvas 128642 pseudostate_ref 154882 // final
-   xyz 746 247 2000
+   xyz 750 218 2000
 end
 statecanvas 129794 state_ref 150274 // Submitting
   
@@ -78,8 +78,9 @@ transitioncanvas 130306 transition_ref 160898 // <transition>
   write_horizontally default show_definition default drawing_language default
 end
 transitioncanvas 130690 transition_ref 161026 // <transition>
+  decenter_begin 90
   
-  from ref 129794 z 2001 label "operationSucceed" xyz 595 266 2001 to ref 128258
+  from ref 129794 z 2001 label "operationSucceed" xyz 592.5 277 2001 to ref 128258
   write_horizontally default show_definition default drawing_language default
 end
 transitioncanvas 130946 transition_ref 161154 // <transition>
@@ -166,14 +167,21 @@ transitioncanvas 135170 transition_ref 217858 // <transition>
   decenter_begin 261
   decenter_end 189
   
-  from ref 128258 z 2001 label "selectTriggered" xyz 274.5 441 3000 to ref 134530
+  from ref 128258 z 2001 label "selectTriggered" xyz 274 441 2001 to ref 134530
   write_horizontally default show_definition default drawing_language default
 end
 transitioncanvas 135298 transition_ref 217986 // <transition>
   decenter_begin 886
   decenter_end 378
   
-  from ref 134530 z 2001 label "opperationSucceed" xyz 372 465 3000 to ref 128258
+  from ref 134530 z 2001 label "opperationSucceed" xyz 372 465 2001 to ref 128258
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 135426 transition_ref 224514 // <transition>
+  decenter_begin 918
+  decenter_end 676
+  
+  from ref 128258 z 2001 label "submitTriggered" xyz 681 295 3000 to ref 129794
   write_horizontally default show_definition default drawing_language default
 end
 end

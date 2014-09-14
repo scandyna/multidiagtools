@@ -438,7 +438,7 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   std::shared_ptr<QSqlTableModel> m1(new QSqlTableModel(0, pvDatabaseManager.database()));
   std::shared_ptr<QSqlTableModel> m2(new QSqlTableModel(0, pvDatabaseManager.database()));
   std::shared_ptr<QSqlTableModel> model;
-  mdtSqlRelationInfo relationInfo;
+  ///mdtSqlRelationInfo relationInfo;
   QVariant data;
   bool ok;
 
@@ -1172,6 +1172,8 @@ void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
   mdtSqlTableViewController tvc;
   QTableView tv;
   QSqlQuery q(pvDatabaseManager.database());
+  QModelIndex index;
+  QLineEdit *lineEdit;
 
   // For this test, we wont foreign_keys support
   QVERIFY(q.exec("PRAGMA foreign_keys = OFF"));
@@ -1182,19 +1184,340 @@ void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
    */
   tvc.setTableView(&tv);
   tvc.setTableName("Client_tbl", pvDatabaseManager.database(), "Clients");
+  tv.setEditTriggers(QAbstractItemView::EditKeyPressed);
+  tv.resize(400, 300);
   tv.show();
   tvc.start();
   /*
    * Select and check
    */
   QVERIFY(tvc.select());
+  QVERIFY(tv.model() != 0);
+  // Check that table view displays correct data - Row 0
+  index = tv.model()->index(0, 1);
+  QCOMPARE(tv.model()->data(index), QVariant("Andy"));
+  index = tv.model()->index(0, 2);
+  QCOMPARE(tv.model()->data(index), QVariant(""));
+  // Check that data() works - Row 0
+  QCOMPARE(tvc.data(0, "FirstName"), QVariant("Andy"));
+  QCOMPARE(tvc.data(0, "Remarks"), QVariant(""));
+  // Check that table view displays correct data - Row 1
+  index = tv.model()->index(1, 1);
+  QCOMPARE(tv.model()->data(index), QVariant("Bety"));
+  index = tv.model()->index(1, 2);
+  QCOMPARE(tv.model()->data(index), QVariant("Remark on Bety"));
+  // Check that data() works - Row 1
+  QCOMPARE(tvc.data(1, "FirstName"), QVariant("Bety"));
+  QCOMPARE(tvc.data(1, "Remarks"), QVariant("Remark on Bety"));
+  // Check that table view displays correct data - Row 2
+  index = tv.model()->index(2, 1);
+  QCOMPARE(tv.model()->data(index), QVariant("Zeta"));
+  index = tv.model()->index(2, 2);
+  QCOMPARE(tv.model()->data(index), QVariant("Remark on Zeta"));
+  // Check that data() works - Row 2
+  QCOMPARE(tvc.data(2, "FirstName"), QVariant("Zeta"));
+  QCOMPARE(tvc.data(2, "Remarks"), QVariant("Remark on Zeta"));
+  // Check that table view displays correct data - Row 3
+  index = tv.model()->index(3, 1);
+  QCOMPARE(tv.model()->data(index), QVariant("Charly"));
+  index = tv.model()->index(3, 2);
+  QCOMPARE(tv.model()->data(index), QVariant("Remark on Charly"));
+  // Check that data() works - Row 3
+  QCOMPARE(tvc.data(3, "FirstName"), QVariant("Charly"));
+  QCOMPARE(tvc.data(3, "Remarks"), QVariant("Remark on Charly"));
+  // Check that currentData() works
+  index = tv.model()->index(0, 0);
+  tv.setCurrentIndex(index);
+  QCOMPARE(tvc.currentData("FirstName"), QVariant("Andy"));
+  QCOMPARE(tvc.currentData("Remarks"), QVariant(""));
+  index = tv.model()->index(1, 0);
+  tv.setCurrentIndex(index);
+  QCOMPARE(tvc.currentData("FirstName"), QVariant("Bety"));
+  QCOMPARE(tvc.currentData("Remarks"), QVariant("Remark on Bety"));
+  index = tv.model()->index(2, 0);
+  tv.setCurrentIndex(index);
+  QCOMPARE(tvc.currentData("FirstName"), QVariant("Zeta"));
+  QCOMPARE(tvc.currentData("Remarks"), QVariant("Remark on Zeta"));
+  index = tv.model()->index(3, 0);
+  tv.setCurrentIndex(index);
+  QCOMPARE(tvc.currentData("FirstName"), QVariant("Charly"));
+  QCOMPARE(tvc.currentData("Remarks"), QVariant("Remark on Charly"));
+  /*
+   * Sort data and check
+   */
+  tvc.addColumnToSortOrder("FirstName", Qt::AscendingOrder);
+  tvc.sort();
+  // Check that table view displays correct data - Row 0
+  index = tv.model()->index(0, 1);
+  QCOMPARE(tv.model()->data(index), QVariant("Andy"));
+  index = tv.model()->index(0, 2);
+  QCOMPARE(tv.model()->data(index), QVariant(""));
+  // Check that data() works - Row 0
+  QCOMPARE(tvc.data(0, "FirstName"), QVariant("Andy"));
+  QCOMPARE(tvc.data(0, "Remarks"), QVariant(""));
+  // Check that table view displays correct data - Row 1
+  index = tv.model()->index(1, 1);
+  QCOMPARE(tv.model()->data(index), QVariant("Bety"));
+  index = tv.model()->index(1, 2);
+  QCOMPARE(tv.model()->data(index), QVariant("Remark on Bety"));
+  // Check that data() works - Row 1
+  QCOMPARE(tvc.data(1, "FirstName"), QVariant("Bety"));
+  QCOMPARE(tvc.data(1, "Remarks"), QVariant("Remark on Bety"));
+  // Check that table view displays correct data - Row 2
+  index = tv.model()->index(2, 1);
+  QCOMPARE(tv.model()->data(index), QVariant("Charly"));
+  index = tv.model()->index(2, 2);
+  QCOMPARE(tv.model()->data(index), QVariant("Remark on Charly"));
+  // Check that data() works - Row 2
+  QCOMPARE(tvc.data(2, "FirstName"), QVariant("Charly"));
+  QCOMPARE(tvc.data(2, "Remarks"), QVariant("Remark on Charly"));
+  // Check that table view displays correct data - Row 3
+  index = tv.model()->index(3, 1);
+  QCOMPARE(tv.model()->data(index), QVariant("Zeta"));
+  index = tv.model()->index(3, 2);
+  QCOMPARE(tv.model()->data(index), QVariant("Remark on Zeta"));
+  // Check that data() works - Row 3
+  QCOMPARE(tvc.data(3, "FirstName"), QVariant("Zeta"));
+  QCOMPARE(tvc.data(3, "Remarks"), QVariant("Remark on Zeta"));
+  // Check that currentData() works
+  index = tv.model()->index(0, 0);
+  tv.setCurrentIndex(index);
+  QCOMPARE(tvc.currentData("FirstName"), QVariant("Andy"));
+  QCOMPARE(tvc.currentData("Remarks"), QVariant(""));
+  index = tv.model()->index(1, 0);
+  tv.setCurrentIndex(index);
+  QCOMPARE(tvc.currentData("FirstName"), QVariant("Bety"));
+  QCOMPARE(tvc.currentData("Remarks"), QVariant("Remark on Bety"));
+  index = tv.model()->index(2, 0);
+  tv.setCurrentIndex(index);
+  QCOMPARE(tvc.currentData("FirstName"), QVariant("Charly"));
+  QCOMPARE(tvc.currentData("Remarks"), QVariant("Remark on Charly"));
+  index = tv.model()->index(3, 0);
+  tv.setCurrentIndex(index);
+  QCOMPARE(tvc.currentData("FirstName"), QVariant("Zeta"));
+  QCOMPARE(tvc.currentData("Remarks"), QVariant("Remark on Zeta"));
+  /*
+   * Check edition (by user) and submit
+   */
+  QVERIFY(tvc.currentState() == mdtAbstractSqlTableController::Visualizing);
+  index = tv.model()->index(0, 2);
+  tv.edit(index);
+  lineEdit = qobject_cast<QLineEdit*>(tv.indexWidget(index));
+  QVERIFY(lineEdit != 0);
+  QTest::keyClicks(lineEdit, "Edited remark on Andy");
+  QVERIFY(tvc.currentState() == mdtAbstractSqlTableController::Editing);
+  QTest::keyClick(lineEdit, Qt::Key_Enter);
+  QVERIFY(tvc.submitAndWait());
+  QVERIFY(tvc.currentState() == mdtAbstractSqlTableController::Visualizing);
+  // Select and check that database was updated
+  QVERIFY(tvc.select());
+  QCOMPARE(tvc.data(0, "FirstName"), QVariant("Andy"));
+  QCOMPARE(tvc.data(0, "Remarks"), QVariant("Edited remark on Andy"));
+  /*
+   * Check edition (by user) and revert
+   */
+  QVERIFY(tvc.currentState() == mdtAbstractSqlTableController::Visualizing);
+  index = tv.model()->index(0, 2);
+  tv.edit(index);
+  lineEdit = qobject_cast<QLineEdit*>(tv.indexWidget(index));
+  QVERIFY(lineEdit != 0);
+  QTest::keyClicks(lineEdit, "Edited remark 2 on Andy");
+  QTest::keyClick(lineEdit, Qt::Key_Enter);
+  tvc.revert();
+  QTest::qWait(50);
+  // Select and check that database was not updated
+  QVERIFY(tvc.select());
+  QCOMPARE(tvc.data(0, "FirstName"), QVariant("Andy"));
+  QCOMPARE(tvc.data(0, "Remarks"), QVariant("Edited remark on Andy"));
+  /*
+   * Check insertion (by user) and submit
+   */
+  tvc.insert();
+  QTest::qWait(50);
+  index = tv.model()->index(tvc.currentRow(), 1);
+  tv.edit(index);
+  lineEdit = qobject_cast<QLineEdit*>(tv.indexWidget(index));
+  QVERIFY(lineEdit != 0);
+  QTest::keyClicks(lineEdit, "New name 1");
+  QTest::keyClick(lineEdit, Qt::Key_Enter);
+  QVERIFY(tvc.submitAndWait());
+  // Check that data was set
+  QCOMPARE(tvc.currentData("FirstName"), QVariant("New name 1"));
+  QCOMPARE(tvc.currentData("Remarks"), QVariant(""));
+  // Select and check that database was updated
+  QVERIFY(tvc.select());
+  QCOMPARE(tvc.rowCount(), 5);
+  QCOMPARE(tvc.data(3, "FirstName"), QVariant("New name 1"));
+  QCOMPARE(tvc.data(3, "Remarks"), QVariant(""));
+  /*
+   * Check insertion (by user) and revert
+   */
+  tvc.insert();
+  QTest::qWait(50);
+  index = tv.model()->index(tvc.currentRow(), 2);
+  tv.edit(index);
+  lineEdit = qobject_cast<QLineEdit*>(tv.indexWidget(index));
+  QVERIFY(lineEdit != 0);
+  QTest::keyClicks(lineEdit, "New remark 1");
+  QTest::keyClick(lineEdit, Qt::Key_Enter);
+  tvc.revert();
+  QTest::qWait(50);
+  // Select and check that database was NOT updated
+  QVERIFY(tvc.select());
+  QCOMPARE(tvc.rowCount(), 5);
+  QCOMPARE(tvc.data(3, "FirstName"), QVariant("New name 1"));
+  QCOMPARE(tvc.data(3, "Remarks"), QVariant(""));
+  /*
+   * Check delete
+   */
+  tv.selectRow(3);
+  tvc.remove();
+  QTest::qWait(1000); // Writing in DB can be very slow, f.ex. with Sqlite on HDD
+  // Select and check that row was removed
+  tvc.addColumnToSortOrder("FirstName", Qt::AscendingOrder);
+  QVERIFY(tvc.select());
+  tvc.sort();
+  QCOMPARE(tvc.rowCount(), 4);
+  index = tv.model()->index(0, 0);
+  tv.setCurrentIndex(index);
+  QCOMPARE(tvc.currentData("FirstName"), QVariant("Andy"));
+  QCOMPARE(tvc.currentData("Remarks"), QVariant("Edited remark on Andy"));
+  index = tv.model()->index(1, 0);
+  tv.setCurrentIndex(index);
+  QCOMPARE(tvc.currentData("FirstName"), QVariant("Bety"));
+  QCOMPARE(tvc.currentData("Remarks"), QVariant("Remark on Bety"));
+  index = tv.model()->index(2, 0);
+  tv.setCurrentIndex(index);
+  QCOMPARE(tvc.currentData("FirstName"), QVariant("Charly"));
+  QCOMPARE(tvc.currentData("Remarks"), QVariant("Remark on Charly"));
+  index = tv.model()->index(3, 0);
+  tv.setCurrentIndex(index);
+  QCOMPARE(tvc.currentData("FirstName"), QVariant("Zeta"));
+  QCOMPARE(tvc.currentData("Remarks"), QVariant("Remark on Zeta"));
+  /*
+   * Check programmed edition:
+   *  - Edit many rows
+   *  - Submit all at once
+   */
+  // Edit each row
+  QVERIFY(tvc.setData(0, "Remarks", "Edited remark 2 on Andy", false));
+  QVERIFY(tvc.setData(1, "Remarks", "Edited remark on Bety", false));
+  QVERIFY(tvc.setData(2, "Remarks", "Edited remark on Charly", false));
+  QVERIFY(tvc.setData(3, "Remarks", "Edited remark on Zeta", false));
+  // Submit all rows
+  QVERIFY(tvc.submitAndWait());
+  // Check that database was updated
+  QVERIFY(tvc.select());
+  tvc.sort();
+  QCOMPARE(tvc.data(0, "FirstName"), QVariant("Andy"));
+  QCOMPARE(tvc.data(0, "Remarks"), QVariant("Edited remark 2 on Andy"));
+  QCOMPARE(tvc.data(1, "FirstName"), QVariant("Bety"));
+  QCOMPARE(tvc.data(1, "Remarks"), QVariant("Edited remark on Bety"));
+  QCOMPARE(tvc.data(2, "FirstName"), QVariant("Charly"));
+  QCOMPARE(tvc.data(2, "Remarks"), QVariant("Edited remark on Charly"));
+  QCOMPARE(tvc.data(3, "FirstName"), QVariant("Zeta"));
+  QCOMPARE(tvc.data(3, "Remarks"), QVariant("Edited remark on Zeta"));
 
-  QTest::qWait(5000);
+  /*
+   * Play
+   */
+  /*
+  while(tv.isVisible()){
+    QTest::qWait(500);
+  }
+  */
 
   // Clear test data
   clearTestDatabaseData();
   // Re-enable foreign_keys support
   QVERIFY(q.exec("PRAGMA foreign_keys = ON"));
+}
+
+void mdtDatabaseWidgetTest::sqlControllerParentChildTest()
+{
+  sqlDataWidgetControllerTestWidget clientWidget;
+  mdtSqlDataWidgetController clientController;
+  QTableView addressView;
+  std::shared_ptr<mdtSqlTableViewController> addressController;
+  mdtSqlRelationInfo relationInfo;
+  ///QVariant data;
+  ///bool ok;
+
+  // Create test data
+  populateTestDatabase();
+  /*
+   * Setup
+   */
+  // Setup client widget and controller
+  clientController.setTableName("Client_tbl", pvDatabaseManager.database(), "Clients");
+  clientController.addColumnToSortOrder("FirstName", Qt::AscendingOrder);
+  QVERIFY(clientController.mapFormWidgets(&clientWidget));
+  connect(&clientController, SIGNAL(toFirstEnabledStateChanged(bool)), &clientWidget, SLOT(setToFirstEnableState(bool)));
+  connect(&clientController, SIGNAL(toLastEnabledStateChanged(bool)), &clientWidget, SLOT(setToLastEnableState(bool)));
+  connect(&clientController, SIGNAL(toNextEnabledStateChanged(bool)), &clientWidget, SLOT(setToNextEnableState(bool)));
+  connect(&clientController, SIGNAL(toPreviousEnabledStateChanged(bool)), &clientWidget, SLOT(setToPreviousEnableState(bool)));
+  connect(&clientController, SIGNAL(insertEnabledStateChanged(bool)), &clientWidget, SLOT(setInsertEnableState(bool)));
+  connect(&clientController, SIGNAL(removeEnabledStateChanged(bool)), &clientWidget, SLOT(setRemoveEnableState(bool)));
+  connect(&clientController, SIGNAL(submitEnabledStateChanged(bool)), &clientWidget, SLOT(setSubmitEnableState(bool)));
+  connect(&clientController, SIGNAL(revertEnabledStateChanged(bool)), &clientWidget, SLOT(setRevertEnableState(bool)));
+  clientWidget.show();
+  // Setup address view and controller
+  relationInfo.setChildTableName("Address_tbl");
+  relationInfo.addRelation("Id_PK", "Client_Id_FK", true);
+  QVERIFY(clientController.addChildController<mdtSqlTableViewController>(relationInfo, "Addresses"));
+  addressController = clientController.childController<mdtSqlTableViewController>("Address_tbl");
+  QVERIFY(addressController.get() != 0);
+  addressController->setTableView(&addressView);
+  addressController->addColumnToSortOrder("StreetName", Qt::AscendingOrder);
+  addressView.resize(400, 300);
+  addressView.show();
+  // Start
+  clientController.start();
+  /*
+   * Select and check
+   */
+  QVERIFY(clientController.select());
+  clientController.sort();
+  QCOMPARE(clientController.rowCount(), 4);
+  QCOMPARE(clientController.currentRow(), 0);
+  QCOMPARE(clientWidget.fld_FirstName->text(), QString("Andy"));
+  QCOMPARE(clientWidget.fld_Remarks->text(), QString(""));
+  QCOMPARE(addressController->rowCount(), 2);
+  QCOMPARE(addressController->data(0, "StreetName"), QVariant("Andy street 1"));
+  QCOMPARE(addressController->data(1, "StreetName"), QVariant("Andy street 2"));
+  // Go to next and check
+  clientController.toNext();
+  QTest::qWait(50);
+  QCOMPARE(clientWidget.fld_FirstName->text(), QString("Bety"));
+  QCOMPARE(clientWidget.fld_Remarks->text(), QString("Remark on Bety"));
+  QCOMPARE(addressController->rowCount(), 1);
+  QCOMPARE(addressController->data(0, "StreetName"), QVariant("Bety street 1"));
+  // Go to next and check
+  clientController.toNext();
+  QTest::qWait(50);
+  QCOMPARE(clientWidget.fld_FirstName->text(), QString("Charly"));
+  QCOMPARE(clientWidget.fld_Remarks->text(), QString("Remark on Charly"));
+  QCOMPARE(addressController->rowCount(), 0);
+  /*
+   * Check insertion in child table
+   */
+  addressController->insert();
+  QTest::qWait(50);
+  addressController->setCurrentData("StreetName", "New Charly street 2", false);
+  addressController->setCurrentData("StreetNumber", 2, false);
+  QVERIFY(clientController.submitAndWait());
+  QCOMPARE(addressController->data(0, "StreetName"), QVariant("New Charly street 2"));
+  QCOMPARE(addressController->data(0, "StreetNumber"), QVariant(2));
+
+
+
+
+  /*
+   * Play
+   */
+  while(clientWidget.isVisible()){
+    QTest::qWait(500);
+  }
 }
 
 

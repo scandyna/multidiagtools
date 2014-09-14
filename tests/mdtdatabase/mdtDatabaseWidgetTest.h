@@ -81,6 +81,7 @@ class mdtDatabaseWidgetTest : public mdtTest
   void sqlFieldHandlerTest();
   void sqlDataWidgetControllerTest();
   void sqlTableViewControllerTest();
+  void sqlControllerParentChildTest();
 
   // Table selection tests
   void sqlTableSelectionItemTest();

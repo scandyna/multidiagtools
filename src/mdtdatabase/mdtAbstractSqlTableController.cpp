@@ -119,11 +119,20 @@ bool mdtAbstractSqlTableController::select()
   return ok;
 }
 
+QString mdtAbstractSqlTableController::tableName() const
+{
+  if(!pvModel){
+    return QString();
+  }
+  return pvModel->tableName();
+}
+
 void mdtAbstractSqlTableController::start()
 {
   Q_ASSERT(pvModel);
 
   int i;
+  shared_ptr<mdtAbstractSqlTableController> c;
 
   // Start this controller
   if(pvStateMachine.isRunning()){
@@ -132,8 +141,19 @@ void mdtAbstractSqlTableController::start()
   pvStateMachine.start(true);
   // Start child controllers
   for(i = 0; i < pvChildControllerContainers.size(); ++i){
-    Q_ASSERT(pvChildControllerContainers.at(i).controller);
-    pvChildControllerContainers.at(i).controller->start();
+    c = pvChildControllerContainers.at(i).controller;
+    Q_ASSERT(c);
+    c->start();
+    if(c->model()){
+      c->model()->setFilter("-1");
+      if(!c->select()){
+        pvLastError = c->lastError();
+        if(messageHandler()){
+          messageHandler()->setError(pvLastError);
+          messageHandler()->displayToUser();
+        }
+      }
+    }
   }
   emit globalWidgetEnableStateChanged(true);
 }
@@ -375,12 +395,14 @@ bool mdtAbstractSqlTableController::submitAndWait()
 {
   Q_ASSERT(pvModel);
 
+  /**
   if((currentState() != Editing)&&(currentState() != EditingNewRow)){
     QVector<int> states;
     states << Editing << EditingNewRow;
     emit dataEdited();
     pvStateMachine.waitOnOneState(states);
   }
+  */
   pvLastError.clear();
   pvOperationComplete = false;
   emit submitTriggered();
@@ -654,9 +676,13 @@ void mdtAbstractSqlTableController::onStateRemovingEntered()
 bool mdtAbstractSqlTableController::setupAndAddChildController(shared_ptr< mdtAbstractSqlTableController > controller, const mdtSqlRelationInfo& relationInfo, QSqlDatabase db, const QString& userFriendlyChildTableName)
 {
   Q_ASSERT(controller);
+  Q_ASSERT(!relationInfo.childTableName().isEmpty());
+  Q_ASSERT(!relationInfo.items().isEmpty());
 
   mdtAbstractSqlTableControllerContainer container;
   shared_ptr<mdtSqlRelation> relation(new mdtSqlRelation);
+  mdtSqlRelationInfoItem item;
+  int i;
 
   // Setup child controller
   controller->setTableName(relationInfo.childTableName(), db, userFriendlyChildTableName);
@@ -664,6 +690,13 @@ bool mdtAbstractSqlTableController::setupAndAddChildController(shared_ptr< mdtAb
   relation->setParentModel(pvModel.get());
   relation->setChildModel(controller->pvModel.get());
   connect(this, SIGNAL(currentRowChanged(int)), relation.get(), SLOT(setParentCurrentIndex(int)));
+  for(i = 0; i < relationInfo.items().size(); ++i){
+    item = relationInfo.items().at(i);
+    if(!relation->addRelation(item.parentFieldName, item.childFieldName, item.copyParentToChildOnInsertion, item.relationOperatorWithPreviousItem)){
+      pvLastError = relation->lastError();
+      return false;
+    }
+  }
   // Add to container
   container.controller = controller;
   container.relation = relation;
@@ -671,6 +704,11 @@ bool mdtAbstractSqlTableController::setupAndAddChildController(shared_ptr< mdtAb
   // Start controller if we are running
   if(pvStateMachine.isRunning()){
     controller->start();
+    controller->model()->setFilter("-1");
+    if(!controller->select()){
+      pvLastError = controller->lastError();
+      return false;
+    }
   }
 
   return true;
@@ -716,6 +754,7 @@ void mdtAbstractSqlTableController::buildStateMachine()
   connect(pvStateVisualizing, SIGNAL(exited()), this, SLOT(onStateVisualizingExited()));
   pvStateVisualizing->addTransition(this, SIGNAL(selectTriggered()), pvStateSelecting);
   pvStateVisualizing->addTransition(this, SIGNAL(dataEdited()), pvStateEditing);
+  pvStateVisualizing->addTransition(this, SIGNAL(submitTriggered()), pvStateSubmitting);
   pvStateVisualizing->addTransition(this, SIGNAL(insertTriggered()), pvStateInserting);
   pvStateVisualizing->addTransition(this, SIGNAL(removeTriggered()), pvStateRemoving);
   connect(pvStateReverting, SIGNAL(entered()), this, SLOT(onStateRevertingEntered()));

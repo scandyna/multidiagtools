@@ -1,6 +1,6 @@
 format 207
 "mdtdatabase" // mdtdatabase
-  revision 24
+  revision 25
   modified_by 2 "philippe"
   // class settings
   
@@ -2054,6 +2054,12 @@ ${inlines}
 	transition 217858 "<transition>"
 	  on state_ref 205314 // Selecting
 	    uml_trigger "selectTriggered"
+	  external 
+	end
+
+	transition 224514 "<transition>"
+	  on state_ref 150274 // Submitting
+	    uml_trigger "submitTriggered"
 	  external 
 	end
       end

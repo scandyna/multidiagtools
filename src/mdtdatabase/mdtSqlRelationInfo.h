@@ -54,7 +54,7 @@ class mdtSqlRelationInfo
 
   /*! \brief Set child table name
    */
-  void setChildTableName(const QString & tableName) { pvParentTableName = tableName; }
+  void setChildTableName(const QString & tableName) { pvChildTableName = tableName; }
 
   /*! \brief Get child table name
    */
