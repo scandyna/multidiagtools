@@ -1174,6 +1174,7 @@ void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
   QSqlQuery q(pvDatabaseManager.database());
   QModelIndex index;
   QLineEdit *lineEdit;
+  mdtSqlTableSelection s;
 
   // For this test, we wont foreign_keys support
   QVERIFY(q.exec("PRAGMA foreign_keys = OFF"));
@@ -1417,6 +1418,166 @@ void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
   QCOMPARE(tvc.data(2, "Remarks"), QVariant("Edited remark on Charly"));
   QCOMPARE(tvc.data(3, "FirstName"), QVariant("Zeta"));
   QCOMPARE(tvc.data(3, "Remarks"), QVariant("Edited remark on Zeta"));
+  /*
+   * Prepare for selection tests
+   */
+  tvc.clearColumnsSortOrder();
+  tvc.addColumnToSortOrder("Id_PK", Qt::AscendingOrder);
+  QVERIFY(tvc.select());
+  tvc.sort();
+  QCOMPARE(tvc.data(0, "Id_PK"), QVariant(1));
+  QCOMPARE(tvc.data(0, "FirstName"), QVariant("Andy"));
+  QCOMPARE(tvc.data(1, "Id_PK"), QVariant(2));
+  QCOMPARE(tvc.data(1, "FirstName"), QVariant("Bety"));
+  QCOMPARE(tvc.data(2, "Id_PK"), QVariant(3));
+  QCOMPARE(tvc.data(2, "FirstName"), QVariant("Zeta"));
+  QCOMPARE(tvc.data(3, "Id_PK"), QVariant(4));
+  QCOMPARE(tvc.data(3, "FirstName"), QVariant("Charly"));
+  /*
+   * Check selection: select row 1
+   */
+  tv.clearSelection();
+  tv.selectRow(1);
+  s = tvc.currentSelection("Id_PK");
+  QCOMPARE(s.rowCount(), 1);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(2));
+  // Check current data
+  QCOMPARE(tvc.currentData("Id_PK"), QVariant(2));
+  /*
+   * Check selection: select row 0
+   */
+  tv.clearSelection();
+  tv.selectRow(0);
+  s = tvc.currentSelection("Id_PK");
+  QCOMPARE(s.rowCount(), 1);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(1));
+  // Check current data
+  QCOMPARE(tvc.currentData("Id_PK"), QVariant(1));
+  /*
+   * Check selection: select row 2
+   */
+  tv.clearSelection();
+  tv.selectRow(2);
+  s = tvc.currentSelection("Id_PK");
+  QCOMPARE(s.rowCount(), 1);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(3));
+  // Check current data
+  QCOMPARE(tvc.currentData("Id_PK"), QVariant(3));
+  /*
+   * Check selection: select row 3
+   */
+  tv.clearSelection();
+  tv.selectRow(3);
+  s = tvc.currentSelection("Id_PK");
+  QCOMPARE(s.rowCount(), 1);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(4));
+  // Check current data
+  QCOMPARE(tvc.currentData("Id_PK"), QVariant(4));
+  /*
+   * Prepare for selection tests - Sort by FirstName
+   */
+  tv.setSelectionMode(QAbstractItemView::MultiSelection);
+  tvc.clearColumnsSortOrder();
+  tvc.addColumnToSortOrder("FirstName", Qt::AscendingOrder);
+  QVERIFY(tvc.select());
+  tvc.sort();
+  QCOMPARE(tvc.data(0, "Id_PK"), QVariant(1));
+  QCOMPARE(tvc.data(0, "FirstName"), QVariant("Andy"));
+  QCOMPARE(tvc.data(1, "Id_PK"), QVariant(2));
+  QCOMPARE(tvc.data(1, "FirstName"), QVariant("Bety"));
+  QCOMPARE(tvc.data(2, "Id_PK"), QVariant(4));
+  QCOMPARE(tvc.data(2, "FirstName"), QVariant("Charly"));
+  QCOMPARE(tvc.data(3, "Id_PK"), QVariant(3));
+  QCOMPARE(tvc.data(3, "FirstName"), QVariant("Zeta"));
+  /*
+   * Check selection: select row 0
+   */
+  tv.clearSelection();
+  tv.selectRow(0);
+  s = tvc.currentSelection("Id_PK");
+  QCOMPARE(s.rowCount(), 1);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(1));
+  // Check current data
+  QCOMPARE(tvc.currentData("Id_PK"), QVariant(1));
+  /*
+   * Check selection: select row 1
+   */
+  tv.clearSelection();
+  tv.selectRow(1);
+  s = tvc.currentSelection("Id_PK");
+  QCOMPARE(s.rowCount(), 1);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(2));
+  // Check current data
+  QCOMPARE(tvc.currentData("Id_PK"), QVariant(2));
+  /*
+   * Check selection: select row 2
+   */
+  tv.clearSelection();
+  tv.selectRow(2);
+  s = tvc.currentSelection("Id_PK");
+  QCOMPARE(s.rowCount(), 1);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(4));
+  // Check current data
+  QCOMPARE(tvc.currentData("Id_PK"), QVariant(4));
+  /*
+   * Check selection: select row 3
+   */
+  tv.clearSelection();
+  tv.selectRow(3);
+  s = tvc.currentSelection("Id_PK");
+  QCOMPARE(s.rowCount(), 1);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(3));
+  // Check current data
+  QCOMPARE(tvc.currentData("Id_PK"), QVariant(3));
+  /*
+   * Check multiple row selection with ASC sorting
+   *  -> We must have only selected items,
+   *     but sorting must be keeped
+   */
+  // Select row 0 (Andy, Id_PK 1) and row 1 (Bety, Id_PK 2) in view
+  tv.clearSelection();
+  tv.selectRow(0);
+  tv.selectRow(1);
+  s = tvc.currentSelection("Id_PK");
+  QCOMPARE(s.rowCount(), 2);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(1));
+  QCOMPARE(s.data(1, "Id_PK"), QVariant(2));
+  // Select row 2 (Charly, Id_PK 4) and row 3 (Zeta, Id_PK 3) in view
+  tv.clearSelection();
+  tv.selectRow(2);
+  tv.selectRow(3);
+  s = tvc.currentSelection("Id_PK");
+  QCOMPARE(s.rowCount(), 2);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(4));
+  QCOMPARE(s.data(1, "Id_PK"), QVariant(3));
+  // Select row 1 (Bety, Id_PK 2) and row 2 (Charly, Id_PK 4) in view
+  tv.clearSelection();
+  tv.selectRow(1);
+  tv.selectRow(2);
+  s = tvc.currentSelection("Id_PK");
+  QCOMPARE(s.rowCount(), 2);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(2));
+  QCOMPARE(s.data(1, "Id_PK"), QVariant(4));
+  // Select row 0 (Andy, Id_PK 1), row 1 (Bety, Id_PK 2) and row 2 (Charly, Id_PK 4) in view
+  tv.clearSelection();
+  tv.selectRow(0);
+  tv.selectRow(1);
+  tv.selectRow(2);
+  s = tvc.currentSelection("Id_PK");
+  QCOMPARE(s.rowCount(), 3);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(1));
+  QCOMPARE(s.data(1, "Id_PK"), QVariant(2));
+  QCOMPARE(s.data(2, "Id_PK"), QVariant(4));
+  // Same as before, bust select rows in reverse order
+  tv.clearSelection();
+  tv.selectRow(2);
+  tv.selectRow(1);
+  tv.selectRow(0);
+  s = tvc.currentSelection("Id_PK");
+  QCOMPARE(s.rowCount(), 3);
+  QCOMPARE(s.data(0, "Id_PK"), QVariant(1));
+  QCOMPARE(s.data(1, "Id_PK"), QVariant(2));
+  QCOMPARE(s.data(2, "Id_PK"), QVariant(4));
 
   /*
    * Play
@@ -1440,8 +1601,9 @@ void mdtDatabaseWidgetTest::sqlControllerParentChildTest()
   QTableView addressView;
   std::shared_ptr<mdtSqlTableViewController> addressController;
   mdtSqlRelationInfo relationInfo;
-  ///QVariant data;
-  ///bool ok;
+  QModelIndex index;
+  QLineEdit *lineEdit;
+  QSpinBox *spinBox;
 
   // Create test data
   populateTestDatabase();
@@ -1503,21 +1665,70 @@ void mdtDatabaseWidgetTest::sqlControllerParentChildTest()
    */
   addressController->insert();
   QTest::qWait(50);
-  addressController->setCurrentData("StreetName", "New Charly street 2", false);
-  addressController->setCurrentData("StreetNumber", 2, false);
-  QVERIFY(clientController.submitAndWait());
+  index = addressView.model()->index(0, 1);
+  addressView.edit(index);
+  lineEdit = qobject_cast<QLineEdit*>(addressView.indexWidget(index));
+  QVERIFY(lineEdit != 0);
+  QTest::keyClicks(lineEdit, "New Charly street 2");
+  QTest::keyClick(lineEdit, Qt::Key_Enter);
+  QTest::qWait(50);
+  index = addressView.model()->index(0, 2);
+  addressView.edit(index);
+  spinBox = qobject_cast<QSpinBox*>(addressView.indexWidget(index));
+  QVERIFY(lineEdit != 0);
+  QTest::keyClicks(spinBox, "2");
+  QTest::keyClick(spinBox, Qt::Key_Enter);
+  QTest::qWait(50);
+  QVERIFY(addressController->submitAndWait());
   QCOMPARE(addressController->data(0, "StreetName"), QVariant("New Charly street 2"));
   QCOMPARE(addressController->data(0, "StreetNumber"), QVariant(2));
-
-
+  // Go to previous and check
+  clientController.toPrevious();
+  QTest::qWait(50);
+  QCOMPARE(clientWidget.fld_FirstName->text(), QString("Bety"));
+  QCOMPARE(clientWidget.fld_Remarks->text(), QString("Remark on Bety"));
+  QCOMPARE(addressController->rowCount(), 1);
+  QCOMPARE(addressController->data(0, "StreetName"), QVariant("Bety street 1"));
+  // Go back to next and check
+  clientController.toNext();
+  QTest::qWait(50);
+  QCOMPARE(clientWidget.fld_FirstName->text(), QString("Charly"));
+  QCOMPARE(clientWidget.fld_Remarks->text(), QString("Remark on Charly"));
+  QCOMPARE(addressController->rowCount(), 1);
+  QCOMPARE(addressController->data(0, "StreetName"), QVariant("New Charly street 2"));
+  QCOMPARE(addressController->data(0, "StreetNumber"), QVariant(2));
+  /*
+   * Check row changing on usaved data in child controller
+   */
+  index = addressView.model()->index(0, 1);
+  addressView.edit(index);
+  lineEdit = qobject_cast<QLineEdit*>(addressView.indexWidget(index));
+  QVERIFY(lineEdit != 0);
+  QTest::keyClicks(lineEdit, "Edited Charly street 2");
+  QTest::qWait(50);
+  QCOMPARE(clientController.currentRow(), 2);
+  clientController.toPrevious();
+  QTest::qWait(50);
+  QCOMPARE(clientController.currentRow(), 2);
+  // Save modifycation and check
+  QTest::keyClick(lineEdit, Qt::Key_Enter);
+  QTest::qWait(50);
+  QVERIFY(addressController->submitAndWait());
+  QCOMPARE(addressController->data(0, "StreetName"), QVariant("Edited Charly street 2"));
+  QCOMPARE(addressController->data(0, "StreetNumber"), QVariant(2));
 
 
   /*
    * Play
    */
+  /*
   while(clientWidget.isVisible()){
     QTest::qWait(500);
   }
+  */
+
+  // Clear test data
+  clearTestDatabaseData();
 }
 
 
@@ -1901,10 +2112,12 @@ void mdtDatabaseWidgetTest::sqlSelectionDialogTest()
 void mdtDatabaseWidgetTest::sqlTableWidgetTest()
 {
   mdtSqlTableWidget *sqlTableWidget;
-  QSqlTableModel model;
-  QSqlTableModel *addressModel;
+  ///QSqlTableModel model;
+  ///QSqlTableModel *addressModel;
+  std::shared_ptr<mdtSqlTableViewController> addressController;
   mdtSqlTableWidget *addressWidget;
-  mdtSqlRelation *relation;
+  ///mdtSqlRelation *relation;
+  mdtSqlRelationInfo relationInfo;
   QTableView *view;
   mdtSqlTableSelection s;
   QStringList fields;
@@ -1912,16 +2125,21 @@ void mdtDatabaseWidgetTest::sqlTableWidgetTest()
 
   // Populate database
   populateTestDatabase();
-  // Setup model + widget
+  // Setup client widget
+  /**
   model.setTable("Client_tbl");
   model.select();
+  */
   sqlTableWidget = new mdtSqlTableWidget;
-  sqlTableWidget->setModel(&model);
+  ///sqlTableWidget->setModel(&model);
+  sqlTableWidget->setTableName("Client_tbl", pvDatabaseManager.database());
   sqlTableWidget->resize(500, 300);
   sqlTableWidget->show();
   view = sqlTableWidget->tableView();
   QVERIFY(view != 0);
   view->setSelectionMode(QAbstractItemView::MultiSelection);
+  sqlTableWidget->start();
+  QVERIFY(sqlTableWidget->select());
   // Setup needed fields for selection
   fields.clear();
   fields << "Id_PK";
@@ -1974,19 +2192,32 @@ void mdtDatabaseWidgetTest::sqlTableWidgetTest()
    * Add a table widget to show addresses
    */
   // Setup address model
+  /**
   addressModel = new QSqlTableModel(0, pvDatabaseManager.database());
   addressModel->setTable("Address_tbl");
   QVERIFY(addressModel->select());
+  */
   // Setup address relation
+  /**
   relation = new mdtSqlRelation;
   relation->setParentModel(sqlTableWidget->model());
   relation->setChildModel(addressModel);
   relation->addRelation("Id_PK", "Client_Id_FK", false);
+  */
+  // Setup relation
+  relationInfo.setChildTableName("Address_tbl");
+  relationInfo.addRelation("Id_PK", "Client_Id_FK", true);
+  // Add address controller
+  sqlTableWidget->addChildTable(relationInfo);
+  addressController = sqlTableWidget->tableController("Address_tbl");
+  QVERIFY(addressController.get() != 0);
   // Setup address widget
   addressWidget = new mdtSqlTableWidget;
-  addressWidget->setModel(addressModel);
+  addressWidget->setTableController(addressController);
+  ///addressWidget->setModel(addressModel);
+  ///addressController->setTableView(addressWidget->tableView());
   addressWidget->resize(500, 250);
-  sqlTableWidget->addChildWidget(addressWidget, relation);
+  ///sqlTableWidget->addChildWidget(addressWidget, relation);
   addressWidget->show();
   /*
    * Sort client ascending and check displayed addresses
@@ -2013,21 +2244,26 @@ void mdtDatabaseWidgetTest::sqlTableWidgetTest()
   // Select row 0 and check (Zeta, Id_PK 3)
   view->clearSelection();
   view->selectRow(0);
+  QCOMPARE(sqlTableWidget->currentData("Id_PK"), QVariant(3));
   QVERIFY(addressWidget->currentData("Client_Id_FK").isNull());
   // Select row 1 and check (Charly, Id_PK 4)
   view->selectRow(1);
+  QCOMPARE(sqlTableWidget->currentData("Id_PK"), QVariant(4));
   QVERIFY(addressWidget->currentData("Client_Id_FK").isNull());
   // Select row 0 and check (Zeta, Id_PK 3)
   view->clearSelection();
   view->selectRow(0);
+  QCOMPARE(sqlTableWidget->currentData("Id_PK"), QVariant(3));
   QVERIFY(addressWidget->currentData("Client_Id_FK").isNull());
   // Select row 2 and check (Bety, Id_PK 2)
   view->clearSelection();
   view->selectRow(2);
+  QCOMPARE(sqlTableWidget->currentData("Id_PK"), QVariant(2));
   QCOMPARE(addressWidget->currentData("Client_Id_FK"), QVariant(2));
   // Select row 3 and check (Andy, Id_PK 1)
   view->clearSelection();
   view->selectRow(3);
+  QCOMPARE(sqlTableWidget->currentData("Id_PK"), QVariant(1));
   QCOMPARE(addressWidget->currentData("Client_Id_FK"), QVariant(1));
   /*
    * Check multiple row selection with ASC sorting
@@ -2091,6 +2327,7 @@ void mdtDatabaseWidgetTest::sqlTableWidgetTest()
     QTest::qWait(1000);
   }
   */
+
   // Cleanup
   clearTestDatabaseData();
   delete sqlTableWidget;

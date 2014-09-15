@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtSqlForm.h"
-#include "mdtAbstractSqlWidget.h"
+///#include "mdtAbstractSqlWidget.h"
 #include "mdtSqlFormWidget.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlRelation.h"
@@ -108,7 +108,7 @@ bool mdtSqlForm::addChildTable(const QString &tableName, const QString &userFrie
 {
   QSqlTableModel *model;
   mdtSqlTableWidget *widget;
-  mdtSqlRelation *relation;
+  ///mdtSqlRelation *relation;
 
   // Check that db is open
   if(!db.isOpen()){
@@ -141,11 +141,14 @@ bool mdtSqlForm::addChildTable(const QString &tableName, const QString &userFrie
     return false;
   }
   // Setup relation
+  /**
   relation = new mdtSqlRelation;
   relation->setParentModel(pvMainSqlWidget->model());
   relation->setChildModel(model);
   pvRelationsByChildTableName.insert(tableName, relation);
+  */
   // Setup child widget
+  /**
   widget = new mdtSqlTableWidget;
   widget->setModel(model);
   if(!userFriendlyTableName.isEmpty()){
@@ -154,6 +157,7 @@ bool mdtSqlForm::addChildTable(const QString &tableName, const QString &userFrie
   // Add child widget to main widget and tab
   pvMainSqlWidget->addChildWidget(widget, relation);
   addChildWidget(widget, widget->userFriendlyTableName());
+  */
 
   return true;
 }

@@ -22,7 +22,11 @@
 #define MDT_SQL_TABLE_VIEW_CONTROLLER_H
 
 #include "mdtAbstractSqlTableController.h"
+#include "mdtSqlTableSelection.h"
 #include <QStyledItemDelegate>
+#include <QModelIndex>
+#include <QString>
+#include <QStringList>
 
 class QTableView;
 class QAbstractItemDelegate;
@@ -91,15 +95,59 @@ class mdtSqlTableViewController : public mdtAbstractSqlTableController
    */
   void setTableView(QTableView *tv, QAbstractItemDelegate *delegate = 0);
 
+  /*! \brief Set default column to select
+   *
+   * Some methods have to update selection in table view.
+   *  Here it's possible to define witch column must be selected
+   *  in such case.
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   */
+  void setDefaultColumnToSelect(int column);
+
+  /*! \brief Set default column to select
+   *
+   * Same as setDefaultColumnToSelect(int), but you can give a field name.
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   */
+  void setDefaultColumnToSelect(const QString &fieldName);
+
+  /*! \brief Get column index of first visible column
+   */
+  int firstVisibleColumnIndex();
+
   /*! \brief Get current row
    */
   int currentRow() const;
+
+  /*! \brief Get current selection
+   *
+   * The returned selection will only contain data related
+   *  to given field list.
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   */
+  mdtSqlTableSelection currentSelection(const QStringList &fieldList);
+
+  /*! \brief Get current selection
+   *
+   * The returned selection will only contain data related
+   *  to given field.
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   */
+  mdtSqlTableSelection currentSelection(const QString &field);
 
  private slots:
 
   /*! \brief Will set pvTableView pointer to Null
    */
   void onTableViewDestroyed(QObject *obj);
+
+  /*! \brief Update current row
+   */
+  void onTableViewcurrentRowChanged(const QModelIndex & current, const QModelIndex & previous);
 
   /*! \brief Activity after Visualizing state entered
    */

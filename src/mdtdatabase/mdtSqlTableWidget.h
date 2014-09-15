@@ -22,17 +22,22 @@
 #define MDT_SQL_TABLE_WIDGET_H
 
 #include "mdtAbstractSqlWidget.h"
+
+#include "mdtSqlTableViewController.h"
 #include "mdtSqlTableSelection.h"
 #include <QModelIndex>
 #include <QStyledItemDelegate>
 #include <QString>
 #include <QStringList>
+#include <QWidget>
+#include <QSqlDatabase>
+#include <memory>
 
 class QTableView;
 class QHBoxLayout;
 class QPushButton;
 class QItemSelectionModel;
-class QWidget;
+///class QWidget;
 class QKeyEvent;
 
 /*
@@ -42,6 +47,7 @@ class QKeyEvent;
  *  which is not a fast solution for table based editor.
  * This class helps to catch key press events, and permits saving and inserting rows as expected.
  */
+/**
 class mdtSqlTableWidgetKeyEventFilter : public QObject
 {
  Q_OBJECT
@@ -55,12 +61,14 @@ class mdtSqlTableWidgetKeyEventFilter : public QObject
  protected:
   bool eventFilter(QObject *obj, QEvent *event);
 };
+*/
 
 /*
  * To handle internal state machine correctly
  *  we need a signal that indicates that user begins to edit a item.
  *  We create a custom delegate that provide this signal.
  */
+/**
 class mdtSqlTableWidgetItemDelegate : public QStyledItemDelegate
 {
  Q_OBJECT
@@ -72,6 +80,7 @@ class mdtSqlTableWidgetItemDelegate : public QStyledItemDelegate
  signals:
   void dataEditionBegins() const;
 };
+*/
 
 /*! \brief Table view based SQL widget
  *
@@ -79,11 +88,20 @@ class mdtSqlTableWidgetItemDelegate : public QStyledItemDelegate
  *  This class add some common needed methods,
  *  like insertion, removing, ...
  */
-class mdtSqlTableWidget : public mdtAbstractSqlWidget
+///class mdtSqlTableWidget : public mdtAbstractSqlWidget
+class mdtSqlTableWidget :  public QWidget
 {
  Q_OBJECT
 
  public:
+
+  /**
+   * \todo TO REMOVE !!!!!!
+   */
+  QSqlTableModel *model() { return 0; }
+  void setModel(QSqlTableModel *m) {}
+  void addChildWidget(mdtAbstractSqlWidget *widget, mdtSqlRelation *relation){}
+  void addChildWidget(mdtSqlTableWidget *widget, mdtSqlRelation *relation){}
 
   /*! \brief Constructor
    *
@@ -96,9 +114,91 @@ class mdtSqlTableWidget : public mdtAbstractSqlWidget
    */
   ~mdtSqlTableWidget();
 
+  /*! \brief Set table name
+   */
+  void setTableName(const QString & tableName, QSqlDatabase db, const QString & userFriendlyTableName = QString());
+
+  /*! \brief Set user friendly table name
+   */
+  void setUserFriendlyTableName(const QString & name) { pvController->setUserFriendlyTableName(name); }
+
+  /*! \brief Set table view controller
+   *
+   * By default, a controller is created.
+   *  For simple cases, use setTableName().
+   *
+   * This method will replace internal controller
+   *  with given one.
+   */
+  void setTableController(std::shared_ptr<mdtSqlTableViewController> controller);
+
+  /*! \brief Add a child table
+   *
+   * \param relationInfo Informations of relation between current controller's table (parent) and child controller's table (child)
+   *               Note: parent table name is ignored.
+   * \param db QSqlDatabase object to use
+   * \param userFriendlyChildTableName User friendly table name for child controller.
+   *
+   * \pre Table model must be set with setTableName() begore calling this method.
+   */
+  bool addChildTable(const mdtSqlRelationInfo & relationInfo, QSqlDatabase db, const QString & userFriendlyChildTableName = QString());
+
+  /*! \brief Add a child table
+   *
+   * \param relationInfo Informations of relation between current controller's table (parent) and child controller's table (child)
+   *               Note: parent table name is ignored.
+   * \param userFriendlyChildTableName User friendly table name for child controller.
+   *
+   * \pre Table model must be set with setTableName() begore calling this method.
+   */
+  bool addChildTable(const mdtSqlRelationInfo & relationInfo, const QString & userFriendlyChildTableName = QString());
+
+  /*! \brief Get internal table controller for given tableName
+   *
+   * Can return a Null pointer if tableName was not found.
+   */
+  std::shared_ptr<mdtSqlTableViewController> tableController(const QString & tableName);
+
+  /*! \brief Start internal state machine
+   *
+   * \pre Table model must be set with setTableName() begore calling this method.
+   */
+  void start() { pvController->start(); }
+
+  /*! \brief Stop internal state machine
+   *
+   * \pre Table model must be set with setTableName() begore calling this method.
+   */
+  void stop() { pvController->stop(); }
+
+  /*! \brief Select data in main table
+   *
+   * \pre Table model must be set with setTableName() begore calling this method.
+   * \pre Internal state machine must run (see start() ).
+   */
+  bool select() { return pvController->select(); }
+
   /*! \brief Get the current row
    */
-  int currentRow() const;
+  inline int currentRow() const { return pvController->currentRow(); }
+
+  /*! \brief Get current data for given field name
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   */
+  inline QVariant currentData(const QString &fieldName)
+  {
+    return pvController->currentData(fieldName);
+  }
+
+  /*! \brief Get current data for given field name
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   */
+  inline QVariant currentData(const QString &fieldName, bool & ok)
+  {
+    return pvController->currentData(fieldName, ok);
+  }
 
   /*! \brief Set edition enabled/disabled
    */
@@ -174,11 +274,40 @@ class mdtSqlTableWidget : public mdtAbstractSqlWidget
    */
   void setDefaultColumnToSelect(const QString &fieldName);
 
+  /*! \brief Add a column to columns sort order
+   *
+   * Columns sort order is similar meaning
+   *  than SQL ORDER BY clause.
+   *
+   * Internally, mdtSortFilterProxyModel is used, witch provide a natural sort for strings.
+   *
+   * For example, to sort columns in order "Id_PK", "FirstName", "LastName", all ascending, call:
+   *  - clearColumnsSortOrder();
+   *  - addColumnToSortOrder("Id_PK", Qt::AscendingOrder);
+   *  - addColumnToSortOrder("FirstName", Qt::AscendingOrder);
+   *  - addColumnToSortOrder("LastName", Qt::AscendingOrder);
+   *
+   * Note: if given field not exists, it will simply be ignored.
+   *
+   * Note: to apply sorting, call sort()
+   *
+   * \pre Model must be set with setModel() before using this method.
+   */
+  inline void addColumnToSortOrder(const QString & fieldName, Qt::SortOrder order = Qt::AscendingOrder){
+    pvController->addColumnToSortOrder(fieldName, order);
+  }
+
+  /*! \brief Clear columns sort order
+   *
+   * \sa addColumnToSortOrder()
+   */
+  inline void clearColumnsSortOrder() { pvController->clearColumnsSortOrder(); }
+
   /*! \brief Sort data
    *
-   * \sa mdtAbstractSqlWidget::addColumnToSortOrder()
+   * \sa addColumnToSortOrder()
    */
-  void sort();
+  inline void sort() { pvController->sort(); }
 
   /*! \brief Get current selection
    *
@@ -187,7 +316,7 @@ class mdtSqlTableWidget : public mdtAbstractSqlWidget
    *
    * \pre Model must be set with setModel() before using this method.
    */
-  mdtSqlTableSelection currentSelection(const QStringList &fieldList);
+  inline mdtSqlTableSelection currentSelection(const QStringList &fieldList) { return pvController->currentSelection(fieldList); }
 
   /*! \brief Get current selection
    *
@@ -196,7 +325,7 @@ class mdtSqlTableWidget : public mdtAbstractSqlWidget
    *
    * \pre Model must be set with setModel() before using this method.
    */
-  mdtSqlTableSelection currentSelection(const QString &field);
+  inline mdtSqlTableSelection currentSelection(const QString &field) { return pvController->currentSelection(field); }
 
   /*! \brief Get a list of currently selected indexes in a list of rows
    *
@@ -253,12 +382,18 @@ class mdtSqlTableWidget : public mdtAbstractSqlWidget
  public slots:
 
   /*! \brief Set row as current record
+   * 
+   * \todo REMOVE
    */
-  void setCurrentIndex(int row);
+  ///void setCurrentIndex(int row);
 
   /*! \brief Resize view to contents
    */
   void resizeViewToContents();
+
+  /*! \brief Refresh data
+   */
+  void refresh();
 
  private slots:
 
@@ -269,21 +404,21 @@ class mdtSqlTableWidget : public mdtAbstractSqlWidget
    *
    * This slot will emit dataEdited()
    */
-  void onDataEditionBegins();
+  ///void onDataEditionBegins();
 
   /*! \internal Reset internal delegateIsEditingData
    *
    * See remark in onTableViewKnownKeyPressed()
    */
-  void onDataChanged(const QModelIndex &, const QModelIndex &);
+  ///void onDataChanged(const QModelIndex &, const QModelIndex &);
 
   /*! \brief Does some tasks when entering new row
    */
-  void onCurrentRowChanged(const QModelIndex & current, const QModelIndex & previous);
+  ///void onCurrentRowChanged(const QModelIndex & current, const QModelIndex & previous);
 
   /*! \brief Execute a action after a known key was pressed in table view
    */
-  void onTableViewKnownKeyPressed(int key);
+  ///void onTableViewKnownKeyPressed(int key);
 
   /*! \brief Select first row in table view
    *
@@ -294,11 +429,11 @@ class mdtSqlTableWidget : public mdtAbstractSqlWidget
    *  is emitted using table view's selection model,
    *  else this method will emit it with a invalid row (-1).
    */
-  void onModelSelected();
+  ///void onModelSelected();
 
   /*! \brief Get column index of first visible column
    */
-  int firstVisibleColumnIndex();
+  ///int firstVisibleColumnIndex();
 
   /*! \brief Copy table to clipboard
    */
@@ -323,35 +458,35 @@ class mdtSqlTableWidget : public mdtAbstractSqlWidget
    *
    * \pre model must be a valid pointer.
    */
-  void doSetModel(QSqlTableModel *model);
+  ///void doSetModel(QSqlTableModel *model);
 
-  bool doSubmit();
+  ///bool doSubmit();
 
-  bool doRevert();
+  ///bool doRevert();
 
-  bool doInsert();
+  ///bool doInsert();
 
-  bool doSubmitNewRow();
+  ///bool doSubmitNewRow();
 
-  bool doRevertNewRow();
+  ///bool doRevertNewRow();
 
-  bool doRemove();
+  ///bool doRemove();
 
   /*! \brief Set first record as current record
    */
-  void toFirst();
+  ///void toFirst();
 
   /*! \brief Set last record as current record
    */
-  void toLast();
+  ///void toLast();
 
   /*! \brief Set previous record as current record
    */
-  void toPrevious();
+  ///void toPrevious();
 
   /*! \brief Set next record as current record
    */
-  void toNext();
+  ///void toNext();
 
   /*! \brief Create local edition elements
    */
@@ -360,6 +495,7 @@ class mdtSqlTableWidget : public mdtAbstractSqlWidget
   Q_DISABLE_COPY(mdtSqlTableWidget);
 
   QTableView *pvTableView;
+  std::shared_ptr<mdtSqlTableViewController> pvController;
   QHBoxLayout *pvTopHorizontalLayout;
   QHBoxLayout *pvBottomHorizontalLayout;
   // Navigation buttons
@@ -373,8 +509,8 @@ class mdtSqlTableWidget : public mdtAbstractSqlWidget
   QPushButton *pbRevert;
   QPushButton *pbRemove;
   // Flags
-  bool pvDelegateIsEditingData;   // See remark in onTableViewKnownKeyPressed()
-  int pvDefaultColumnToSelect;    // Used by setCurrentIndex()
+  ///bool pvDelegateIsEditingData;   // See remark in onTableViewKnownKeyPressed()
+  ///int pvDefaultColumnToSelect;    // Used by setCurrentIndex()
 };
 
 #endif  // #ifndef MDT_SQL_TABLE_WIDGET_H

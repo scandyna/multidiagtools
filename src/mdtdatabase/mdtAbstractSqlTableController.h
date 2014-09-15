@@ -26,6 +26,7 @@
 #include "mdtUiMessageHandler.h"
 #include "mdtSqlDataValidator.h"
 #include "mdtSqlRelationInfo.h"
+#include "mdtSortFilterProxyModel.h"
 #include <QObject>
 #include <QSqlDatabase>
 #include <QSqlTableModel>
@@ -123,6 +124,38 @@ class mdtAbstractSqlTableController : public QObject
    */
   void setModel(std::shared_ptr<QSqlTableModel> m, const QString & userFriendlyTableName = QString());
 
+  /*! \brief Get index of field with fieldName
+   *
+   * Returns a value < 0 if fieldName was not found.
+   */
+  int fieldIndex(const QString & fieldName) const;
+
+  /*! \brief Set a user friendly name for a column
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   */
+  void setHeaderData(const QString &fieldName, const QString &data);
+
+  /*! \brief Get header data of given section
+   */
+  inline QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const
+  {
+    return pvProxyModel->headerData(section, orientation, role);
+  }
+
+  /*! \brief Get header data of given column
+   */
+  inline QVariant headerData(int column, int role = Qt::DisplayRole) const
+  {
+    return pvProxyModel->headerData(column, Qt::Horizontal, role);
+  }
+
+  /*! \brief Get header data of given field name
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   */
+  QVariant headerData(const QString & fieldName, int role = Qt::DisplayRole) const;
+
   /*! \brief Add a child controller
    *
    * Will create a controller of type T, needed relations (mdtSqlRelation objects)
@@ -202,6 +235,10 @@ class mdtAbstractSqlTableController : public QObject
   /*! \brief Get (technical) table name
    */
   QString tableName() const;
+
+  /*! \brief Set user friendly table name
+   */
+  void setUserFriendlyTableName(const QString & name) { pvUserFriendlyTableName = name; }
 
   /*! \brief Get user friendly table name
    */
@@ -291,13 +328,71 @@ class mdtAbstractSqlTableController : public QObject
    *
    * \pre Table model must be set with setModel() or setTableName() begore calling this method.
    */
-  QVariant currentData(const QString &fieldName);
+  inline QVariant currentData(const QString &fieldName)
+  {
+    Q_ASSERT(pvModel);
+    return data(currentRow(), fieldName);
+  }
 
   /*! \brief Get current data for given field name
    *
    * \pre Table model must be set with setModel() or setTableName() begore calling this method.
    */
-  QVariant currentData(const QString &fieldName, bool & ok);
+  inline QVariant currentData(const QString &fieldName, bool & ok)
+  {
+    Q_ASSERT(pvModel);
+    return data(currentRow(), fieldName, ok);
+  }
+
+  /*! \brief Get data for given index
+   *
+   * Note: index is relative to sorted data model (proxyModel),
+   *   not underlaying QSqlTableModel.
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   */
+  inline QVariant data(const QModelIndex & index)
+  {
+    Q_ASSERT(pvModel);
+    bool ok;
+    return data(index, ok);
+  }
+
+  /*! \brief Get data for given index
+   *
+   * Note: index is relative to sorted data model (proxyModel),
+   *   not underlaying QSqlTableModel.
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   */
+  QVariant data(const QModelIndex & index, bool & ok);
+
+  /*! \brief Get data for given row and column
+   *
+   * Note: row is relative to sorted data model (proxyModel),
+   *   not underlaying QSqlTableModel.
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   */
+  inline QVariant data(int row, int column)
+  {
+    Q_ASSERT(pvModel);
+    bool ok;
+    return data(row, column, ok);
+  }
+
+  /*! \brief Get data for given row and column
+   *
+   * Note: row is relative to sorted data model (proxyModel),
+   *   not underlaying QSqlTableModel.
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   */
+  inline QVariant data(int row, int column, bool & ok)
+  {
+    Q_ASSERT(pvModel);
+    return data(pvProxyModel->index(row, column), ok);
+  }
 
   /*! \brief Get data for given row and field name
    *
@@ -306,7 +401,12 @@ class mdtAbstractSqlTableController : public QObject
    *
    * \pre Table model must be set with setModel() or setTableName() begore calling this method.
    */
-  QVariant data(int row, const QString &fieldName);
+  inline QVariant data(int row, const QString &fieldName)
+  {
+    Q_ASSERT(pvModel);
+    bool ok;
+    return data(row, fieldName, ok);
+  }
 
   /*! \brief Get data for given row and field name
    *
@@ -316,6 +416,10 @@ class mdtAbstractSqlTableController : public QObject
    * \pre Table model must be set with setModel() or setTableName() begore calling this method.
    */
   QVariant data(int row, const QString &fieldName, bool & ok);
+
+  /*! \brief Get column count
+   */
+  inline int columnCount() const { return pvProxyModel->columnCount(); }
 
   /*! \brief Get row count
    *

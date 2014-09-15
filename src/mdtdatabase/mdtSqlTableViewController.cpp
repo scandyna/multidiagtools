@@ -76,12 +76,48 @@ void mdtSqlTableViewController::setTableView(QTableView* tv, QAbstractItemDelega
   pvTableView = tv;
   connect(pvTableView, SIGNAL(destroyed(QObject*)), this, SLOT(onTableViewDestroyed(QObject*)));
   pvTableView->setModel(proxyModel().get());
+  Q_ASSERT(pvTableView->selectionModel() != 0);
+  connect(pvTableView->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(onTableViewcurrentRowChanged(QModelIndex,QModelIndex)));
   if(delegate == 0){
     delegate = new mdtSqlTableViewControllerItemDelegate(pvTableView);
   }
   connect(delegate, SIGNAL(dataEditionBegins()), this, SIGNAL(dataEdited()));
   connect(delegate, SIGNAL(dataEditionDone()), this, SLOT(onEditionDone()));
   pvTableView->setItemDelegate(delegate);
+}
+
+void mdtSqlTableViewController::setDefaultColumnToSelect(int column)
+{
+  Q_ASSERT(model());
+
+  if((column < 0)||(column >= model()->columnCount())){
+    pvDefaultColumnToSelect = 0;
+  }else{
+    pvDefaultColumnToSelect = column;
+  }
+}
+
+void mdtSqlTableViewController::setDefaultColumnToSelect(const QString& fieldName)
+{
+  Q_ASSERT(model());
+
+  setDefaultColumnToSelect(fieldIndex(fieldName));
+}
+
+int mdtSqlTableViewController::firstVisibleColumnIndex()
+{
+  Q_ASSERT(model());
+  Q_ASSERT(pvTableView != 0);
+
+  int col;
+
+  for(col = 0; col < model()->columnCount(); ++col){
+    if(!pvTableView->isColumnHidden(col)){
+      return col;
+    }
+  }
+
+  return -1;
 }
 
 int mdtSqlTableViewController::currentRow() const
@@ -98,13 +134,66 @@ int mdtSqlTableViewController::currentRow() const
   if(index.isValid()){
     return index.row();
   }else{
-    return -1;
+    if(model()->rowCount() > 0){
+      return 0;
+    }else{
+      return -1;
+    }
   }
+}
+
+mdtSqlTableSelection mdtSqlTableViewController::currentSelection(const QStringList& fieldList)
+{
+  Q_ASSERT(model());
+  Q_ASSERT(proxyModel());
+  Q_ASSERT(pvTableView != 0);
+  Q_ASSERT(pvTableView->selectionModel() != 0);
+
+  mdtSqlTableSelection s;
+  QModelIndexList selectionIndexList;
+  QModelIndexList modelIndexList;
+  int i;
+
+  /*
+   * Get selected indexes. We want that data are token from top-left to bottom right,
+   *  not the order of selection.
+   *  f.ex. if user selected items from bottom to top,
+   *  we want to return items from top to bottom.
+   */
+  selectionIndexList = pvTableView->selectionModel()->selectedIndexes();
+  qSort(selectionIndexList.begin(), selectionIndexList.end());
+  for(i = 0; i < selectionIndexList.size(); ++i){
+    modelIndexList.append(proxyModel()->mapToSource(selectionIndexList.at(i)));
+  }
+  s.setIndexList(modelIndexList, fieldList, model().get());
+
+  return s;
+}
+
+mdtSqlTableSelection mdtSqlTableViewController::currentSelection(const QString& field)
+{
+  Q_ASSERT(model());
+  Q_ASSERT(proxyModel());
+  Q_ASSERT(pvTableView != 0);
+  Q_ASSERT(pvTableView->selectionModel() != 0);
+
+  QStringList fieldList;
+
+  fieldList.append(field);
+
+  return currentSelection(fieldList);
 }
 
 void mdtSqlTableViewController::onTableViewDestroyed(QObject* obj)
 {
   pvTableView = 0;
+}
+
+void mdtSqlTableViewController::onTableViewcurrentRowChanged(const QModelIndex& current, const QModelIndex& previous)
+{
+  QModelIndex index = proxyModel()->mapToSource(current);
+  setCurrentRow(index.row());
+  emit currentRowChanged(index.row());
 }
 
 void mdtSqlTableViewController::onStateVisualizingEntered()
