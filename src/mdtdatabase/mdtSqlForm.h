@@ -22,6 +22,9 @@
 #define MDT_SQL_FORM_H
 
 #include "mdtError.h"
+#include "mdtSqlDataWidgetController.h"
+#include "mdtSqlTableViewController.h"
+#include "mdtSqlRelationInfo.h"
 #include <QWidget>
 #include <QObject>
 #include <QString>
@@ -29,11 +32,12 @@
 #include <QHash>
 #include <QSqlError>
 #include <QIcon>
+#include <memory>
 
-class mdtAbstractSqlWidget;
-class mdtSqlFormWidget;
+///class mdtAbstractSqlWidget;
+///class mdtSqlFormWidget;
 class mdtSqlTableWidget;
-class mdtSqlRelation;
+///class mdtSqlRelation;
 class QSqlTableModel;
 class QTabWidget;
 class QVBoxLayout;
@@ -41,9 +45,10 @@ class QVBoxLayout;
 /*! \brief Base class for high level SQL widgets API
  *
  * To create SQL GUI's, some clases are available:
- *  - mdtSqlFormWidget
+ *  - mdtAbstractSqlTableController
+ *  - mdtSqlDataWidgetController
+ *  - mdtSqlTableViewController
  *  - mdtSqlTableWidget
- *  - mdtSqlRelation
  *
  * They help to deal with several common problems,
  *  but they need several code (creating objects,
@@ -51,8 +56,6 @@ class QVBoxLayout;
  *
  * This class was made to have less code for common database GUI .
  *
- * The mainSqlWidget is based on a mdtSqlFormWidget , and is placed
- *  on the upper part of the form .
  *  When adding child table with addChildTable() , a instance of mdtSqlTableWidget is created,
  *  and placed to a QTabWidget .
  *  It is also possible to add a non database related widget, using addChildWidget() .
@@ -85,34 +88,91 @@ class mdtSqlForm : public QWidget
    *
    * \post Returns a valid object.
    */
-  mdtSqlFormWidget *mainSqlWidget();
+  ///mdtSqlFormWidget *mainSqlWidget();
+
+  /*! \brief Set main table widget
+   *
+   *  If you have a UI file generated from QtDesigner,
+   *  witch has a setupUi() method, simply use setMainTableUi()
+   */
+  void setMainTableWidget(QWidget *widget);
+
+  /*! \brief Set main table UI
+   *
+   * Usefull for UI created with QtDesigner
+   */
+  template<typename T>
+  void setMainTableUi()
+  {
+    T ui;
+    setMainTableUi<T>(ui);
+  }
+
+  /*! \brief Set main table UI
+   *
+   * Usefull for UI created with QtDesigner
+   */
+  template<typename T>
+  void setMainTableUi(T & ui)
+  {
+    QWidget *w = new QWidget;
+    ui.setupUi(w);
+    setMainTableWidget(w);
+  }
 
   /*! \brief Set the main (or parent) table of the form
    *
-   * Note: be shure that your Ui::setupUi() was called on widget
-   *        returned by mainSqlWidget() before.
+   * Note: call setMainTableUi() or setMainTableWidget() before, else no data widget will be mapped.
+   *        See mdtSqlDataWidgetController for details.
    *
    * \param tableName Table on witch the form must act.
    * \param userFriendlyTableName If set, will be used at places that are visible from user.
+   * \param firstWidgetInTabOrder It's possible to specify the object name of the first widget in tab order.
+   *                               This is then used by insertion to give this widget the focus.
    * \return True on success,
    *          false if given table name does not exist or on some other errors (database not open, access privileges, ...)
    */
-  bool setMainTable(const QString &tableName, const QString &userFriendlyTableName);
+  bool setMainTable(const QString &tableName, const QString &userFriendlyTableName, const QString & firstWidgetInTabOrder = QString());
 
   /*! \brief Set the main (or parent) table of the form
    *
-   * Note: be shure that your Ui::setupUi() was called on widget
-   *        returned by mainSqlWidget() before.
+   * Note: call setMainTableUi() or setMainTableWidget() before, else no data widget will be mapped.
+   *        See mdtSqlDataWidgetController for details.
    *
    * This method is only useful if different tables have to act on different databases .
    *
    * \param tableName Table on witch the form must act.
    * \param userFriendlyTableName If set, will be used at places that are visible from user.
    * \param db Database to use (pass a QSqlDatabase() if only one database is used).
+   * \param firstWidgetInTabOrder It's possible to specify the object name of the first widget in tab order.
+   *                               This is then used by insertion to give this widget the focus.
    * \return True on success,
    *          false if given table name does not exist or on some other errors (database not open, access privileges, ...)
    */
-  bool setMainTable(const QString &tableName, const QString &userFriendlyTableName, QSqlDatabase db);
+  bool setMainTable(const QString &tableName, const QString &userFriendlyTableName, QSqlDatabase db, const QString & firstWidgetInTabOrder = QString());
+
+  /*! \brief Add a child table to the form
+   *
+   * \param relationInfo Informations about relation between main table and child table to create (note: parent table name is not used).
+   * \param userFriendlyTableName If set, will be used at places that are visible from user.
+   * \return True on success,
+   *          false if given table name does not exist or on some other errors (database not open, access privileges, ...).
+   *          False can also be returned if main table was not set (see setMainTable() ).
+   */
+  bool addChildTable(const mdtSqlRelationInfo &relationInfo, const QString &userFriendlyTableName);
+
+  /*! \brief Add a child table to the form
+   *
+   * This method is only useful if different tables have to act on different databases .
+   *
+   * \param relationInfo Informations about relation between main table and child table to create (note: parent table name is not used).
+   * \param userFriendlyTableName If set, will be used at places that are visible from user.
+   * \param db Database to use.
+   * \return True on success,
+   *          false if given table name does not exist or on some other errors (database not open, access privileges, ...).
+   *          False can also be returned if main table was not set (see setMainTable() ).
+   */
+  bool addChildTable(const mdtSqlRelationInfo &relationInfo, const QString &userFriendlyTableName, QSqlDatabase db);
 
   /*! \brief Add a child table to the form
    *
@@ -120,9 +180,9 @@ class mdtSqlForm : public QWidget
    * \param userFriendlyTableName If set, will be used at places that are visible from user.
    * \return True on success,
    *          false if given table name does not exist or on some other errors (database not open, access privileges, ...).
-   *          False can also be returned if main table was not set (see setTable() ).
+   *          False can also be returned if main table was not set (see setMainTable() ).
    */
-  bool addChildTable(const QString &tableName, const QString &userFriendlyTableName);
+  ///bool addChildTable(const QString &tableName, const QString &userFriendlyTableName);
 
   /*! \brief Add a child table to the form
    *
@@ -135,7 +195,7 @@ class mdtSqlForm : public QWidget
    *          false if given table name does not exist or on some other errors (database not open, access privileges, ...).
    *          False can also be returned if main table was not set (see setTable() ).
    */
-  bool addChildTable(const QString &tableName, const QString &userFriendlyTableName, QSqlDatabase db);
+  ///bool addChildTable(const QString &tableName, const QString &userFriendlyTableName, QSqlDatabase db);
 
   /*! \brief Add a widget to the internal QTabWidget
    *
@@ -151,7 +211,7 @@ class mdtSqlForm : public QWidget
    * \return True on succes,
    *          false if childTableName or a field does not exit.
    */
-  bool addRelation(const QString &parentFieldName, const QString &childTableName, const QString &childFieldName, const QString &operatorWithPreviousItem = "AND");
+  ///bool addRelation(const QString &parentFieldName, const QString &childTableName, const QString &childFieldName, const QString &operatorWithPreviousItem = "AND");
 
   /*! \brief Start internal state machines
    *
@@ -160,36 +220,60 @@ class mdtSqlForm : public QWidget
    */
   void start();
 
+  /*! \brief Get main table controller
+   *
+   *  Can return a Null pointer if no controller
+   *   is assigned to rquested table, or it exists,
+   *   but is not of requested type T.
+   */
+  template<typename T>
+  std::shared_ptr<T> mainTableController()
+  {
+    return std::dynamic_pointer_cast<T>(pvController);
+  }
+
+  /*! \brief Get a table controller
+   *
+   *  Can return a Null pointer if no controller
+   *   is assigned to rquested table, or it exists,
+   *   but is not of requested type T.
+   */
+  template<typename T>
+  std::shared_ptr<T> tableController(const QString & tableName)
+  {
+    std::shared_ptr<mdtAbstractSqlTableController> c;
+    if(pvController->tableName() == tableName){
+      return std::dynamic_pointer_cast<T>(pvController);
+    }
+    return pvController->childController<T>(tableName);
+  }
+
   /*! \brief Get instance of the stored SQL widget related to a table name
    *
    * Returns a null pointer if widget related to tableName was not found.
    */
-  mdtAbstractSqlWidget *sqlWidget(const QString &tableName);
+  ///mdtAbstractSqlWidget *sqlWidget(const QString &tableName);
 
-  /*! \overload sqlWidget()
-   */
-  mdtSqlFormWidget *sqlFormWidget(const QString &tableName);
-
-  /*! \overload sqlWidget()
+  /*! Get instance of the stored SQL table widget related to a table name
    */
   mdtSqlTableWidget *sqlTableWidget(const QString &tableName);
 
   /*! \brief Get database that was given by constructor
    */
-  QSqlDatabase database();
+  inline QSqlDatabase database() { return pvDatabase; }
 
   /*! \brief Get database that acts on given table name
    *
    * \return QSqlDatabase object that acts on given table,
    *          or database() if table was not found .
    */
-  QSqlDatabase database(const QString &tableName);
+  ///QSqlDatabase database(const QString &tableName);
 
   /*! \brief Get model that acts on given table name
    *
    * \return QSqlTableModel object or a null pointer if table was not found.
    */
-  QSqlTableModel *model(const QString &tableName);
+  ///QSqlTableModel *model(const QString &tableName);
 
   /*! \brief Call select on model that acts on main table name
    *
@@ -212,7 +296,59 @@ class mdtSqlForm : public QWidget
    *
    * Internally, a SQL statement is generated linke: fieldName = matchData
    */
-  bool setMainTableFilter(const QString & fieldName, const QVariant & matchData);
+  ///bool setMainTableFilter(const QString & fieldName, const QVariant & matchData);
+
+  /*! \brief Set a filter on main table
+   *
+   * Set filter based on SQL query WHERE part, without the WHERE keyword (f.ex. Id_PK = 15)
+   *
+   * \pre Main table must be set with setMainTable()
+   * \pre Internal state machine must run (see start() ).
+   */
+  inline bool setMainTableFilter(const QString & filter)
+  {
+    return pvController->setFilter(filter);
+  }
+
+  /*! \brief Set a filter on main table
+   *
+   * \param fieldName Field that must match data
+   * \param matchData Match data
+   *
+   * Internally, a SQL statement is generated linke: fieldName = matchData
+   *
+   * \pre Main table must be set with setMainTable()
+   * \pre Internal state machine must run (see start() ).
+   */
+  inline bool setMainTableFilter(const QString & fieldName, const QVariant & matchData)
+  {
+    return pvController->setFilter(fieldName, matchData);
+  }
+
+  /*! \brief Set a filter on main table
+   *
+   * \param fieldName Field that must match data
+   * \param matchDataList A list of match data
+   *
+   * Internally, a SQL statement is generated linke: fieldName IN (matchData[0], matchData[1], ...)
+   *
+   * \pre Main table must be set with setMainTable()
+   * \pre Internal state machine must run (see start() ).
+   */
+  inline bool setMainTableFilter(const QString & fieldName, const QList<QVariant> & matchDataList)
+  {
+    return pvController->setFilter(fieldName, matchDataList);
+  }
+
+  /*! \brief Clear filter of main table
+   *
+   * \pre Main table must be set with setMainTable()
+   * \pre Internal state machine must run (see start() ).
+   */
+  inline void clearMainTableFilter()
+  {
+    return pvController->clearFilter();
+  }
 
   /*! \brief Get last error of model that acts on tableName
    *
@@ -237,7 +373,7 @@ class mdtSqlForm : public QWidget
    *
    * \return Row count, or value < 0 on error (f.ex. table not found).
    */
-  int rowCount(const QString &tableName);
+  ///int rowCount(const QString &tableName);
 
   /*! \brief Get the current row of given table name
    *
@@ -252,7 +388,7 @@ class mdtSqlForm : public QWidget
    *
    * \return Current row, or value < 0 on error (f.ex. table not found).
    */
-  int currentRow(const QString &tableName);
+  ///int currentRow(const QString &tableName);
 
   /*! \brief Set the first record that matches given criteria as current record (index).
    *
@@ -264,42 +400,98 @@ class mdtSqlForm : public QWidget
    *          (in this case, setCurrentIndex() is called on sql widget witch acts on main table to update currentRow),
    *          false else.
    */
-  bool setCurrentRecord(const QString &fieldName, const QVariant &value);
+  ///bool setCurrentRecord(const QString &fieldName, const QVariant &value);
+
+  /*! \brief Set the first row that matches given criteria as current row.
+   *
+   * This variant will act on main table controller.
+   *
+   * \param fieldName Field that must contain searched value
+   * \param value Value that must matche
+   * \return True if matching record was found
+   *          (in this case, setCurrentIndex() is called on sql widget witch acts on main table to update currentRow),
+   *          false else.
+   */
+  inline bool setCurrentRow(const QString & fieldName, const QVariant & matchData)
+  {
+    return pvController->setCurrentRow(fieldName, matchData);
+  }
+
+  /*! \brief Set the first row that matches given criteria as current row.
+   *
+   * \param tableName The controller acting on this table name is used.
+   * \param fieldName Field that must contain searched value
+   * \param value Value that must matche
+   * \return True if matching record was found
+   *          (in this case, setCurrentIndex() is called on sql widget witch acts on main table to update currentRow),
+   *          false else.
+   */
+  bool setCurrentRow(const QString &tableName, const QString & fieldName, const QVariant & matchData);
 
   /*! \brief Set (update) data of current row (record) for given table and field name
    *
-   * Note that SQL widget related to given tableName is searched
+   * Note that SQL table controller related to given tableName is searched
    *  at each request. If several access to setCurrentData is needed,
-   *  it can be better to get a pointer to related widget with sqlWidget() ,
+   *  it can be better to get a pointer to related controller with tableController() ,
    *  and call his setCurrentData() method.
    */
   bool setCurrentData(const QString &tableName, const QString &fieldName, const QVariant &data, bool submit = true);
 
   /*! \brief Get current data for given table and field name
    *
-   * Note that SQL widget related to given tableName is searched
-   *  at each request. If several access to currentData is needed,
-   *  it can be better to get a pointer to related widget with sqlWidget() ,
+   * Note that SQL table controller related to given tableName is searched
+   *  at each request. If several access to setCurrentData is needed,
+   *  it can be better to get a pointer to related controller with tableController() ,
    *  and call his currentData() method.
    *
    * \return Current value, or a invalid QVariant on error (f.ex. table or field not found).
    */
-  QVariant currentData(const QString &tableName, const QString &fieldName);
+  inline QVariant currentData(const QString &tableName, const QString &fieldName)
+  {
+    bool ok;
+    return currentData(tableName, fieldName, ok);
+  }
+
+  /*! \brief Get current data for given table and field name
+   *
+   * Note that SQL table controller related to given tableName is searched
+   *  at each request. If several access to setCurrentData is needed,
+   *  it can be better to get a pointer to related controller with tableController() ,
+   *  and call his currentData() method.
+   *
+   * \return Current value, or a invalid QVariant on error (f.ex. table or field not found).
+   */
+  QVariant currentData(const QString &tableName, const QString &fieldName, bool & ok);
 
   /*! \brief Get data for given table , row and field name
    *
-   * Note that SQL widget related to given tableName is searched
-   *  at each request. If several access to data is needed,
-   *  it can be better to get a pointer to related widget with sqlWidget() ,
+   * Note that SQL table controller related to given tableName is searched
+   *  at each request. If several access to setCurrentData is needed,
+   *  it can be better to get a pointer to related controller with tableController() ,
    *  and call his data() method.
    *
    * \return Current value, or a invalid QVariant on error (f.ex. table, row or field not found).
    */
-  QVariant data(const QString &tableName, int row, const QString &fieldName);
+  inline QVariant data(const QString &tableName, int row, const QString &fieldName)
+  {
+    bool ok;
+    return data(tableName, row, fieldName, ok);
+  }
 
-  /*! \brief Call insert method on mainSqlWidget
+  /*! \brief Get data for given table , row and field name
+   *
+   * Note that SQL table controller related to given tableName is searched
+   *  at each request. If several access to setCurrentData is needed,
+   *  it can be better to get a pointer to related controller with tableController() ,
+   *  and call his data() method.
+   *
+   * \return Current value, or a invalid QVariant on error (f.ex. table, row or field not found).
    */
-  void insert();
+  QVariant data(const QString &tableName, int row, const QString &fieldName, bool & ok);
+
+  /*! \brief Call insert method on main table controller
+   */
+  void insert() { pvController->insert(); }
 
   /*! \brief Setup tables
    *
@@ -309,19 +501,13 @@ class mdtSqlForm : public QWidget
 
   /*! \brief Check if all data are saved
    *
-   * Will call allDataAreSaved() on mainSqlWidget.
+   * Will call allDataAreSaved() on main table controller.
    *
-   * \return true if all data are saved, false if a SQL widget has pending data.
+   * \return true if all data are saved, false if a SQL table controller has pending data.
    */
-  bool allDataAreSaved();
+  inline bool allDataAreSaved() { return pvController->allDataAreSaved(); }
 
  protected:
-
-  /*! \brief Get lastError ogject for write acces
-   *
-   * Subclass can use this method to set lastError
-   */
-  mdtError & lastErrorW();
 
   mdtError pvLastError;
 
@@ -329,11 +515,16 @@ class mdtSqlForm : public QWidget
 
   Q_DISABLE_COPY(mdtSqlForm);
 
-  QHash<QString, mdtSqlRelation*> pvRelationsByChildTableName;
-  mdtSqlFormWidget *pvMainSqlWidget;
+  std::shared_ptr<mdtSqlDataWidgetController> pvController;
+  QWidget *pvMainTableWidget;
   QTabWidget *pvChildsTabWidget;
+  QList<mdtSqlTableWidget*> pvChildsTableWidgets;
   QVBoxLayout *pvMainLayout;
   QSqlDatabase pvDatabase;
+
+  ///QHash<QString, mdtSqlRelation*> pvRelationsByChildTableName;
+  
+  ///mdtSqlFormWidget *pvMainSqlWidget;
 };
 
 #endif  // #ifndef MDT_SQL_FORM_H

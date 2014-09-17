@@ -254,7 +254,8 @@ void mdtClLinkBeamEditor::createLink()
   }
   // Get start units
   startUnitId = currentData("LinkBeam_UnitStart_view", "Unit_Id_FK");
-  m = model("LinkBeam_UnitStart_view");
+  ///m = model("LinkBeam_UnitStart_view");
+  m = 0;
   Q_ASSERT(m != 0);
   col = m->fieldIndex("Unit_Id_FK");
   Q_ASSERT(col >= 0);
@@ -264,7 +265,8 @@ void mdtClLinkBeamEditor::createLink()
   }
   // Get end units
   endUnitId = currentData("LinkBeam_UnitEnd_view", "Unit_Id_FK");
-  m = model("LinkBeam_UnitEnd_view");
+  ///m = model("LinkBeam_UnitEnd_view");
+  m = 0;
   Q_ASSERT(m != 0);
   col = m->fieldIndex("Unit_Id_FK");
   Q_ASSERT(col >= 0);
@@ -315,7 +317,8 @@ void mdtClLinkBeamEditor::addLink()
     return;
   }
   // Get start units
-  m = model("LinkBeam_UnitStart_view");
+  ///m = model("LinkBeam_UnitStart_view");
+  m = 0;
   Q_ASSERT(m != 0);
   col = m->fieldIndex("Unit_Id_FK");
   Q_ASSERT(col >= 0);
@@ -324,7 +327,8 @@ void mdtClLinkBeamEditor::addLink()
     startUnitIdList.append(m->data(index));
   }
   // Get end units
-  m = model("LinkBeam_UnitEnd_view");
+  ///m = model("LinkBeam_UnitEnd_view");
+  m = 0;
   Q_ASSERT(m != 0);
   col = m->fieldIndex("Unit_Id_FK");
   Q_ASSERT(col >= 0);
@@ -480,17 +484,18 @@ void mdtClLinkBeamEditor::deleteLinks()
 
 bool mdtClLinkBeamEditor::setupLinkBeamTable() 
 {
-  Ui::mdtClLinkBeamEditor lbe;
+  ///Ui::mdtClLinkBeamEditor lbe;
 
   // Setup main form widget
-  lbe.setupUi(mainSqlWidget());
+  setMainTableUi<Ui::mdtClLinkBeamEditor>();
+  ///lbe.setupUi(mainSqlWidget());
   ///connect(this, SIGNAL(unitEdited()), mainSqlWidget(), SIGNAL(dataEdited()));
   // Setup form
   if(!setMainTable("LinkBeam_tbl", "Link beams", database())){
     return false;
   }
   // Force a update
-  mainSqlWidget()->setCurrentIndex(mainSqlWidget()->currentRow());
+  ///mainSqlWidget()->setCurrentIndex(mainSqlWidget()->currentRow());
 
   return true;
 }
@@ -502,7 +507,14 @@ bool mdtClLinkBeamEditor::setupLinkTable()
   QPushButton *pbAddLink;
   QPushButton *pbRemoveLink;
   QPushButton *pbDeleteLink;
+  mdtSqlRelationInfo relationInfo;
 
+  relationInfo.setChildTableName("UnitLink_view");
+  relationInfo.addRelation("Id_PK", "LinkBeam_Id_FK", false);
+  if(!addChildTable(relationInfo, tr("Links"))){
+    return false;
+  }
+  /**
   // Add link table
   if(!addChildTable("UnitLink_view", tr("Links"), database())){
     return false;
@@ -511,6 +523,7 @@ bool mdtClLinkBeamEditor::setupLinkTable()
   if(!addRelation("Id_PK", "UnitLink_view", "LinkBeam_Id_FK")){
     return false;
   }
+  */
   // Get widget to continue setup
   widget = sqlTableWidget("UnitLink_view");
   Q_ASSERT(widget != 0);
@@ -578,7 +591,14 @@ bool mdtClLinkBeamEditor::setupStartUnitTable()
   mdtSqlTableWidget *widget;
   QPushButton *pbAddUnit;
   QPushButton *pbRemoveUnits;
+  mdtSqlRelationInfo relationInfo;
 
+  relationInfo.setChildTableName("LinkBeam_UnitStart_view");
+  relationInfo.addRelation("Id_PK", "LinkBeam_Id_FK", false);
+  if(!addChildTable(relationInfo, tr("Start units"))){
+    return false;
+  }
+  /**
   // Add link table
   if(!addChildTable("LinkBeam_UnitStart_view", tr("Start units"), database())){
     return false;
@@ -587,6 +607,7 @@ bool mdtClLinkBeamEditor::setupStartUnitTable()
   if(!addRelation("Id_PK", "LinkBeam_UnitStart_view", "LinkBeam_Id_FK")){
     return false;
   }
+  */
   // Get widget to continue setup
   widget = sqlTableWidget("LinkBeam_UnitStart_view");
   Q_ASSERT(widget != 0);
@@ -616,7 +637,14 @@ bool mdtClLinkBeamEditor::setupEndUnitTable()
   mdtSqlTableWidget *widget;
   QPushButton *pbAddUnit;
   QPushButton *pbRemoveUnits;
+  mdtSqlRelationInfo relationInfo;
 
+  relationInfo.setChildTableName("LinkBeam_UnitEnd_view");
+  relationInfo.addRelation("Id_PK", "LinkBeam_Id_FK", false);
+  if(!addChildTable(relationInfo, tr("End units"))){
+    return false;
+  }
+  /**
   // Add link table
   if(!addChildTable("LinkBeam_UnitEnd_view", tr("End units"), database())){
     return false;
@@ -625,6 +653,7 @@ bool mdtClLinkBeamEditor::setupEndUnitTable()
   if(!addRelation("Id_PK", "LinkBeam_UnitEnd_view", "LinkBeam_Id_FK")){
     return false;
   }
+  */
   // Get widget to continue setup
   widget = sqlTableWidget("LinkBeam_UnitEnd_view");
   Q_ASSERT(widget != 0);

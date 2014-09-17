@@ -697,7 +697,8 @@ bool mdtTtTestNodeEditor::setupTestNodeTable()
   mdtSqlRelation *baseVehicleTypeRelation;
 
   // Setup main form widget
-  tne.setupUi(mainSqlWidget());
+  ///tne.setupUi(mainSqlWidget());
+  setMainTableUi<Ui::mdtTtTestNodeEditor>(tne);
   connect(tne.pbSetVehicleType, SIGNAL(clicked()), this, SLOT(setBaseVehicleType()));
   ///connect(this, SIGNAL(unitEdited()), form()->mainSqlWidget(), SIGNAL(dataEdited()));
   // Setup form
@@ -707,7 +708,8 @@ bool mdtTtTestNodeEditor::setupTestNodeTable()
   /*
    * Setup base unit widget mapping
    */
-  testNodeModel = model("TestNode_tbl");
+  ///testNodeModel = model("TestNode_tbl");
+  testNodeModel = 0;
   Q_ASSERT(testNodeModel != 0);
   // Setup base article model
   baseVehicleTypeModel = new QSqlTableModel(this, database());
@@ -728,11 +730,11 @@ bool mdtTtTestNodeEditor::setupTestNodeTable()
   if(!baseVehicleTypeRelation->addRelation("VehicleType_Id_FK_PK", "Id_PK", false)){
     return false;
   }
-  connect(mainSqlWidget(), SIGNAL(currentRowChanged(int)), baseVehicleTypeRelation, SLOT(setParentCurrentIndex(int)));
+  ///connect(mainSqlWidget(), SIGNAL(currentRowChanged(int)), baseVehicleTypeRelation, SLOT(setParentCurrentIndex(int)));
   connect(baseVehicleTypeRelation, SIGNAL(childModelFilterApplied()), baseVehicleTypeMapper, SLOT(toFirst()));
   connect(baseVehicleTypeRelation, SIGNAL(childModelIsEmpty()), baseVehicleTypeMapper, SLOT(revert()));
   // Force a update
-  mainSqlWidget()->setCurrentIndex(mainSqlWidget()->currentRow());
+  ///mainSqlWidget()->setCurrentIndex(mainSqlWidget()->currentRow());
 
   return true;
 }
@@ -744,13 +746,21 @@ bool mdtTtTestNodeEditor::setupTestNodeUnitTable()
   QPushButton *pbEditUnit;
   QPushButton *pbRemoveUnit;
   QPushButton *pbNumberIoPosRange;
+  mdtSqlRelationInfo relationInfo;
 
+  relationInfo.setChildTableName("TestNodeUnit_view");
+  relationInfo.addRelation("VehicleType_Id_FK_PK", "TestNode_Id_FK", false);
+  if(!addChildTable(relationInfo, tr("Units"))){
+    return false;
+  }
+  /**
   if(!addChildTable("TestNodeUnit_view", tr("Units"), database())){
     return false;
   }
   if(!addRelation("VehicleType_Id_FK_PK", "TestNodeUnit_view", "TestNode_Id_FK")){
     return false;
   }
+  */
   widget = sqlTableWidget("TestNodeUnit_view");
   Q_ASSERT(widget != 0);
   // Hide technical fields
@@ -804,13 +814,21 @@ bool mdtTtTestNodeEditor::setupTestNodeUnitTable()
 bool mdtTtTestNodeEditor::setupTestNodeBusTable()
 {
   mdtSqlTableWidget *widget;
+  mdtSqlRelationInfo relationInfo;
 
+  relationInfo.setChildTableName("TestNodeBus_tbl");
+  relationInfo.addRelation("VehicleType_Id_FK_PK", "TestNode_Id_FK", false);
+  if(!addChildTable(relationInfo, tr("Bus"))){
+    return false;
+  }
+  /**
   if(!addChildTable("TestNodeBus_tbl", tr("Bus"), database())){
     return false;
   }
   if(!addRelation("VehicleType_Id_FK_PK", "TestNodeBus_tbl", "TestNode_Id_FK")){
     return false;
   }
+  */
   widget = sqlTableWidget("TestNodeBus_tbl");
   Q_ASSERT(widget != 0);
   // Hide technical fields
@@ -831,13 +849,21 @@ bool mdtTtTestNodeEditor::setupTestNodeUnitConnectionTable()
   QPushButton *pbUpdateConnections;
   QPushButton *pbSetBus;
   QPushButton *pbUnsetBus;
+  mdtSqlRelationInfo relationInfo;
 
+  relationInfo.setChildTableName("TestNodeUnitConnection_view");
+  relationInfo.addRelation("VehicleType_Id_FK_PK", "TestNode_Id_FK", false);
+  if(!addChildTable(relationInfo, tr("Unit connections"))){
+    return false;
+  }
+  /**
   if(!addChildTable("TestNodeUnitConnection_view", tr("Unit connections"), database())){
     return false;
   }
   if(!addRelation("VehicleType_Id_FK_PK", "TestNodeUnitConnection_view", "TestNode_Id_FK")){
     return false;
   }
+  */
   widget = sqlTableWidget("TestNodeUnitConnection_view");
   Q_ASSERT(widget != 0);
   // Hide technical fields

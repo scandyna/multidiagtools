@@ -32,6 +32,7 @@
 #include "mdtSqlDataWidgetController.h"
 #include "mdtSqlTableViewController.h"
 #include "mdtUiMessageHandler.h"
+#include "mdtSqlForm.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -440,6 +441,7 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   std::shared_ptr<QSqlTableModel> model;
   ///mdtSqlRelationInfo relationInfo;
   QVariant data;
+  QList<QVariant> dataList;
   bool ok;
 
   // For this test, we wont foreign_keys support
@@ -654,7 +656,7 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
    *  - Check in form
    *
    * Note:
-   *  Because of mdtSqlFormWidget's internall state machine,
+   *  Because of internall state machine,
    *  witch runs asynchronousliy, we must wait between each action.
    */
   QCOMPARE(wc.rowCount(), 4);
@@ -693,6 +695,8 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QVERIFY(ok);
   QCOMPARE(wc.currentData("FirstName"), QVariant("New name 1"));
   QCOMPARE(wc.currentData("Remarks"), QVariant("New remark 1"));
+  qDebug() << "Formated FirstName: " << wc.currentFormatedValue("FirstName");
+  qDebug() << "Formated FirstName: " << wc.currentFormatedValue("Remarks");
   // Check that widget displays the correct row
   QCOMPARE(w.fld_FirstName->text(), QString("New name 1"));
   QCOMPARE(w.fld_Remarks->text(), QString("New remark 1"));
@@ -971,6 +975,16 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QCOMPARE(w.fld_Remarks->text(), QString("Remark 401"));
   QCOMPARE(wc.rowCount(), 1000);
   /*
+   * Check set current row with match data
+   */
+  QVERIFY(wc.select());
+  QVERIFY(wc.rowCount(false) < 1000);
+  QCOMPARE(wc.currentRow(), 0);
+  QVERIFY(wc.setCurrentRow("FirstName", "Name 600"));
+  QCOMPARE(wc.currentData("FirstName"), QVariant("Name 600"));
+  QVERIFY(!wc.setCurrentRow("FirstName", "Non existing name"));
+  QCOMPARE(wc.currentData("FirstName"), QVariant("Name 600"));
+  /*
    * Check sorting
    */
   // Repopulate original test data
@@ -1068,6 +1082,16 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QCOMPARE(wc.currentData("FirstName"), QVariant("Zeta"));
   QCOMPARE(wc.currentData("Remarks"), QVariant("Remark on Zeta"));
   /*
+   * Check data list
+   */
+  dataList = wc.dataList("FirstName");
+  QCOMPARE(dataList.size(), 5);
+  QCOMPARE(dataList.at(0), QVariant("Andy"));
+  QCOMPARE(dataList.at(1), QVariant("Bety"));
+  QCOMPARE(dataList.at(2), QVariant("Charly"));
+  QCOMPARE(dataList.at(3), QVariant("Laura"));
+  QCOMPARE(dataList.at(4), QVariant("Zeta"));
+  /*
    * Check programmed edition - No submit
    */
   QVERIFY(wc.setCurrentData("Remarks", "Edited remark on Zeta", false));
@@ -1160,6 +1184,32 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QCOMPARE(w.fld_Remarks->text(), QString("Edited remark 2 on Zeta"));
   QCOMPARE(wc.currentData("FirstName"), QVariant("Zeta"));
   QCOMPARE(wc.currentData("Remarks"), QVariant("Edited remark 2 on Zeta"));
+  /*
+   * Check filter
+   */
+  // Check simple filter
+  QVERIFY(wc.setFilter("Id_PK", 1));
+  QCOMPARE(wc.rowCount(false), 1);
+  QCOMPARE(w.fld_FirstName->text(), QString("Andy"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Edited remark on Andy"));
+  QCOMPARE(wc.currentData("FirstName"), QVariant("Andy"));
+  QCOMPARE(wc.currentData("Remarks"), QVariant("Edited remark on Andy"));
+  // Check multiple values filter
+  dataList.clear();
+  dataList << 2 << 3 << 4;
+  QVERIFY(wc.setFilter("Id_PK", dataList));
+  QCOMPARE(wc.rowCount(false), 3);
+  QCOMPARE(w.fld_FirstName->text(), QString("Bety"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Edited remark on Bety"));
+  QCOMPARE(wc.currentData("FirstName"), QVariant("Bety"));
+  QCOMPARE(wc.currentData("Remarks"), QVariant("Edited remark on Bety"));
+  // Clear filter
+  wc.clearFilter();
+  QCOMPARE(wc.rowCount(false), 5);
+  QCOMPARE(w.fld_FirstName->text(), QString("Andy"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Edited remark on Andy"));
+  QCOMPARE(wc.currentData("FirstName"), QVariant("Andy"));
+  QCOMPARE(wc.currentData("Remarks"), QVariant("Edited remark on Andy"));
 
   // Clear test data
   clearTestDatabaseData();
@@ -1185,6 +1235,7 @@ void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
    */
   tvc.setTableView(&tv);
   tvc.setTableName("Client_tbl", pvDatabaseManager.database(), "Clients");
+  QCOMPARE(tvc.tableName(), QString("Client_tbl"));
   tv.setEditTriggers(QAbstractItemView::EditKeyPressed);
   tv.resize(400, 300);
   tv.show();
@@ -1631,10 +1682,12 @@ void mdtDatabaseWidgetTest::sqlControllerParentChildTest()
   QVERIFY(addressController.get() != 0);
   addressController->setTableView(&addressView);
   addressController->addColumnToSortOrder("StreetName", Qt::AscendingOrder);
+  connect(&clientController, SIGNAL(childWidgetEnableStateChanged(bool)), &addressView, SLOT(setEnabled(bool)));
   addressView.resize(400, 300);
   addressView.show();
   // Start
   clientController.start();
+  QVERIFY(addressView.isEnabled());
   /*
    * Select and check
    */
@@ -1710,12 +1763,21 @@ void mdtDatabaseWidgetTest::sqlControllerParentChildTest()
   clientController.toPrevious();
   QTest::qWait(50);
   QCOMPARE(clientController.currentRow(), 2);
-  // Save modifycation and check
+  // Save modification and check
   QTest::keyClick(lineEdit, Qt::Key_Enter);
   QTest::qWait(50);
   QVERIFY(addressController->submitAndWait());
   QCOMPARE(addressController->data(0, "StreetName"), QVariant("Edited Charly street 2"));
   QCOMPARE(addressController->data(0, "StreetNumber"), QVariant(2));
+  /*
+   * Check edition (by user) on in main table
+   */
+  QVERIFY(addressView.isEnabled());
+  QTest::keyClicks(clientWidget.fld_FirstName, "1");
+  QVERIFY(!addressView.isEnabled());
+  clientController.revert();
+  QTest::qWait(50);
+  QVERIFY(addressView.isEnabled());
 
 
   /*
@@ -2112,11 +2174,8 @@ void mdtDatabaseWidgetTest::sqlSelectionDialogTest()
 void mdtDatabaseWidgetTest::sqlTableWidgetTest()
 {
   mdtSqlTableWidget *sqlTableWidget;
-  ///QSqlTableModel model;
-  ///QSqlTableModel *addressModel;
   std::shared_ptr<mdtSqlTableViewController> addressController;
   mdtSqlTableWidget *addressWidget;
-  ///mdtSqlRelation *relation;
   mdtSqlRelationInfo relationInfo;
   QTableView *view;
   mdtSqlTableSelection s;
@@ -2126,12 +2185,7 @@ void mdtDatabaseWidgetTest::sqlTableWidgetTest()
   // Populate database
   populateTestDatabase();
   // Setup client widget
-  /**
-  model.setTable("Client_tbl");
-  model.select();
-  */
   sqlTableWidget = new mdtSqlTableWidget;
-  ///sqlTableWidget->setModel(&model);
   sqlTableWidget->setTableName("Client_tbl", pvDatabaseManager.database());
   sqlTableWidget->resize(500, 300);
   sqlTableWidget->show();
@@ -2191,20 +2245,7 @@ void mdtDatabaseWidgetTest::sqlTableWidgetTest()
   /*
    * Add a table widget to show addresses
    */
-  // Setup address model
-  /**
-  addressModel = new QSqlTableModel(0, pvDatabaseManager.database());
-  addressModel->setTable("Address_tbl");
-  QVERIFY(addressModel->select());
-  */
   // Setup address relation
-  /**
-  relation = new mdtSqlRelation;
-  relation->setParentModel(sqlTableWidget->model());
-  relation->setChildModel(addressModel);
-  relation->addRelation("Id_PK", "Client_Id_FK", false);
-  */
-  // Setup relation
   relationInfo.setChildTableName("Address_tbl");
   relationInfo.addRelation("Id_PK", "Client_Id_FK", true);
   // Add address controller
@@ -2214,10 +2255,7 @@ void mdtDatabaseWidgetTest::sqlTableWidgetTest()
   // Setup address widget
   addressWidget = new mdtSqlTableWidget;
   addressWidget->setTableController(addressController);
-  ///addressWidget->setModel(addressModel);
-  ///addressController->setTableView(addressWidget->tableView());
   addressWidget->resize(500, 250);
-  ///sqlTableWidget->addChildWidget(addressWidget, relation);
   addressWidget->show();
   /*
    * Sort client ascending and check displayed addresses
@@ -2331,6 +2369,58 @@ void mdtDatabaseWidgetTest::sqlTableWidgetTest()
   // Cleanup
   clearTestDatabaseData();
   delete sqlTableWidget;
+}
+
+void mdtDatabaseWidgetTest::sqlFormTest()
+{
+  mdtSqlForm form(0, pvDatabaseManager.database());
+  sqlDataWidgetControllerTestWidget clientWidget;
+  mdtSqlRelationInfo relationInfo;
+  mdtSqlTableWidget *tableWidget;
+
+  // Create test data
+  populateTestDatabase();
+  // Setup form - Main table part
+  form.setMainTableWidget(&clientWidget);
+  QVERIFY(form.setMainTable("Client_tbl", "Clients", "FirstName"));
+  // Setup address part
+  relationInfo.setChildTableName("Address_tbl");
+  relationInfo.addRelation("Id_PK", "Client_Id_FK", true);
+  QVERIFY(form.addChildTable(relationInfo, "Addresses"));
+  QVERIFY(form.sqlTableWidget("Address_tbl") != 0);
+  QVERIFY(form.sqlTableWidget("NotExisting_tbl") == 0);
+  // Start and select data
+  form.start();
+  QVERIFY(form.select());
+  ///form.start();
+  form.show();
+  /*
+   * Check data getters
+   */
+  
+  /*
+   * Check data setters
+   */
+  
+  /*
+   * Check filtering
+   */
+  
+  // Check select by table name
+  QVERIFY(form.select("Client_tbl"));
+  QVERIFY(form.select("Address_tbl"));
+  QVERIFY(!form.select("NotExisting_tbl"));
+
+  
+  /*
+   * Play
+   */
+  while(form.isVisible()){
+    QTest::qWait(500);
+  }
+
+  // Cleanup
+  clearTestDatabaseData();
 }
 
 

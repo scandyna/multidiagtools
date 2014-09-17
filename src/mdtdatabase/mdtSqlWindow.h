@@ -24,10 +24,12 @@
 #include <QWidget>
 #include <QMainWindow>
 #include "ui_mdtSqlWindow.h"
+#include <memory>
 
 class QAction;
 class QCloseEvent;
 class mdtSqlForm;
+///class mdtSqlDataWidgetController;
 
 /*! \brief Main window for a database table view/editor
  *
@@ -54,6 +56,10 @@ class mdtSqlWindow : public QMainWindow, public Ui::mdtSqlWindow
   /*! \brief Destructor
    */
   ~mdtSqlWindow();
+
+  /*! \brief Set SQL table controller
+   */
+  ///void setTableController(std::shared_ptr<mdtSqlDataWidgetController> controller);
 
   /*! \brief Set the SQL form
    *

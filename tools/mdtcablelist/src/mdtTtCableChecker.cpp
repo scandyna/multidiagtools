@@ -124,7 +124,7 @@ void mdtTtCableChecker::setTestModel()
   }
   */
   // Force a update
-  mainSqlWidget()->setCurrentIndex(mainSqlWidget()->currentRow());
+  ///mainSqlWidget()->setCurrentIndex(mainSqlWidget()->currentRow());
 
   /**
   if(!setCurrentData("Test_tbl", "TestModel_Id_FK", baseTestId)){
@@ -167,7 +167,7 @@ void mdtTtCableChecker::removeTestResult()
   }
   */
   // Delete test result
-  mainSqlWidget()->remove();
+  ///mainSqlWidget()->remove();
   // Update connections table
   ///form()->select("TestItem_view");
 }
@@ -291,7 +291,8 @@ bool mdtTtCableChecker::setupTestTable()
   mdtSqlRelation *baseTestRelation;
 
   // Setup main form widget
-  cc.setupUi(mainSqlWidget());
+  setMainTableUi<Ui::mdtTtCableChecker>(cc);
+  ///cc.setupUi(mainSqlWidget());
   // Setup form
   if(!setMainTable("Test_tbl", "Test result"/*, database()*/)){
     return false;
@@ -299,7 +300,8 @@ bool mdtTtCableChecker::setupTestTable()
   /*
    * Setup base test widget mapping
    */
-  testResultModel = model("Test_tbl");
+  ///testResultModel = model("Test_tbl");
+  testResultModel = 0;
   Q_ASSERT(testResultModel != 0);
   // Setup base test model
   baseTestModel = new QSqlTableModel(this, database());
@@ -318,11 +320,11 @@ bool mdtTtCableChecker::setupTestTable()
   if(!baseTestRelation->addRelation("TestModel_Id_FK", "Id_PK", false)){
     return false;
   }
-  connect(mainSqlWidget(), SIGNAL(currentRowChanged(int)), baseTestRelation, SLOT(setParentCurrentIndex(int)));
+  ///connect(mainSqlWidget(), SIGNAL(currentRowChanged(int)), baseTestRelation, SLOT(setParentCurrentIndex(int)));
   connect(baseTestRelation, SIGNAL(childModelFilterApplied()), baseTestMapper, SLOT(toFirst()));
   connect(baseTestRelation, SIGNAL(childModelIsEmpty()), baseTestMapper, SLOT(revert()));
   // Force a update
-  mainSqlWidget()->setCurrentIndex(mainSqlWidget()->currentRow());
+  ///mainSqlWidget()->setCurrentIndex(mainSqlWidget()->currentRow());
 
   return true;
 }
@@ -331,13 +333,21 @@ bool mdtTtCableChecker::setupTestItemTable()
 {
   mdtSqlTableWidget *widget;
   QSqlTableModel *m;
+  mdtSqlRelationInfo relationInfo;
 
-  if(!addChildTable("TestItem_view", tr("Test result items") /*,database()*/)){
+  relationInfo.setChildTableName("TestItem_view");
+  relationInfo.addRelation("Id_PK", "Test_Id_FK", false);
+  if(!addChildTable(relationInfo, tr("Test result items"))){
+    return false;
+  }
+  /**
+  if(!addChildTable("TestItem_view", tr("Test result items") ,database())){
     return false;
   }
   if(!addRelation("Id_PK", "TestItem_view", "Test_Id_FK")){
     return false;
   }
+  */
   widget = sqlTableWidget("TestItem_view");
   Q_ASSERT(widget != 0);
   // Hide technical fields
@@ -373,7 +383,8 @@ bool mdtTtCableChecker::setupTestItemTable()
   widget->addStretchToLocalBar();
   */
   // Register model to test helper object
-  m = model("TestItem_view");
+  ///m = model("TestItem_view");
+  m = 0;
   Q_ASSERT(m != 0);
   /**
   if(!pvTest->setTestItemSqlModel(m)){

@@ -494,7 +494,8 @@ bool mdtTtTestModelEditor::setupTestTable()
   Ui::mdtTtTestModelEditor te;
 
   // Setup main form widget
-  te.setupUi(mainSqlWidget());
+  ///te.setupUi(mainSqlWidget());
+  setMainTableUi<Ui::mdtTtTestModelEditor>(te);
   ///connect(te.pbGenerateNodeUnitSetup, SIGNAL(clicked()), this, SLOT(generateTestNodeUnitSetupList()));
   connect(te.pbGenerateNodeUnitSetup, SIGNAL(clicked()), this, SLOT(generateContinuityTest()));
   // Setup form
@@ -502,7 +503,7 @@ bool mdtTtTestModelEditor::setupTestTable()
     return false;
   }
   // Force a update
-  mainSqlWidget()->setCurrentIndex(mainSqlWidget()->currentRow());
+  ///mainSqlWidget()->setCurrentIndex(mainSqlWidget()->currentRow());
 
   return true;
 }
@@ -512,13 +513,21 @@ bool mdtTtTestModelEditor::setupTestNodeTable()
   mdtSqlTableWidget *widget;
   QPushButton *pbAddTestNode;
   QPushButton *pbRemodeTestNode;
+  mdtSqlRelationInfo relationInfo;
 
+  relationInfo.setChildTableName("TestModel_TestNode_view");
+  relationInfo.addRelation("Id_PK", "TestModel_Id_FK", false);
+  if(!addChildTable(relationInfo, tr("Test nodes"))){
+    return false;
+  }
+  /**
   if(!addChildTable("TestModel_TestNode_view", tr("Test nodes"), database())){
     return false;
   }
   if(!addRelation("Id_PK", "TestModel_TestNode_view", "TestModel_Id_FK")){
     return false;
   }
+  */
   widget = sqlTableWidget("TestModel_TestNode_view");
   Q_ASSERT(widget != 0);
   // Hide technical fields
@@ -544,13 +553,21 @@ bool mdtTtTestModelEditor::setupTestNodeTable()
 bool mdtTtTestModelEditor::setupTestCableTable()
 {
   mdtSqlTableWidget *widget;
+  mdtSqlRelationInfo relationInfo;
 
+  relationInfo.setChildTableName("TestNode_TestCable_view");
+  relationInfo.addRelation("Id_PK", "TestModel_Id_FK", false);
+  if(!addChildTable(relationInfo, tr("Available test cables"))){
+    return false;
+  }
+  /**
   if(!addChildTable("TestNode_TestCable_view", tr("Available test cables"), database())){
     return false;
   }
   if(!addRelation("Id_PK", "TestNode_TestCable_view", "TestModel_Id_FK")){
     return false;
   }
+  */
   widget = sqlTableWidget("TestNode_TestCable_view");
   Q_ASSERT(widget != 0);
   // Hide technical fields
@@ -575,13 +592,21 @@ bool mdtTtTestModelEditor::setupTestItemTable()
   QPushButton *pbAddTestItem;
   QPushButton *pbEditTestItem;
   QPushButton *pbRemoveTestItem;
+  mdtSqlRelationInfo relationInfo;
 
+  relationInfo.setChildTableName("TestModelItem_tbl");
+  relationInfo.addRelation("Id_PK", "TestModel_Id_FK", false);
+  if(!addChildTable(relationInfo, tr("Test items"))){
+    return false;
+  }
+  /**
   if(!addChildTable("TestModelItem_tbl", tr("Test items"), database())){
     return false;
   }
   if(!addRelation("Id_PK", "TestModelItem_tbl", "TestModel_Id_FK")){
     return false;
   }
+  */
   widget = sqlTableWidget("TestModelItem_tbl");
   Q_ASSERT(widget != 0);
   // Hide technical fields

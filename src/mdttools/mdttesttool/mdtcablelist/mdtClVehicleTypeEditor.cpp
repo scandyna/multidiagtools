@@ -67,10 +67,11 @@ QVariant mdtClVehicleTypeEditor::currentVehicleTypeId()
 
 bool mdtClVehicleTypeEditor::setupVehicleTypeTable()
 {
-  Ui::mdtClVehicleTypeEditor vte;
+  ///Ui::mdtClVehicleTypeEditor vte;
 
   // Setup main form widget
-  vte.setupUi(mainSqlWidget());
+  ///vte.setupUi(mainSqlWidget());
+  setMainTableUi<Ui::mdtClVehicleTypeEditor>();
   ///connect(this, SIGNAL(vehicleTypeEdited()), mainSqlWidget(), SIGNAL(dataEdited()));
   // Setup form
   if(!setMainTable("VehicleType_tbl", "Vehicle types", database())){
@@ -84,7 +85,14 @@ bool mdtClVehicleTypeEditor::setupVehicleTypeTable()
 bool mdtClVehicleTypeEditor::setupUnitTable()
 {
   mdtSqlTableWidget *widget;
+  mdtSqlRelationInfo relationInfo;
 
+  relationInfo.setChildTableName("VehicleType_Unit_view");
+  relationInfo.addRelation("Id_PK", "VehicleType_Id_FK", false);
+  if(!addChildTable(relationInfo, tr("Units"))){
+    return false;
+  }
+  /**
   // Add unit table
   if(!addChildTable("VehicleType_Unit_view", tr("Units"), database())){
     return false;
@@ -93,6 +101,7 @@ bool mdtClVehicleTypeEditor::setupUnitTable()
   if(!addRelation("Id_PK", "VehicleType_Unit_view", "VehicleType_Id_FK")){
     return false;
   }
+  */
   // Get widget to continue setup
   widget = sqlTableWidget("VehicleType_Unit_view");
   Q_ASSERT(widget != 0);

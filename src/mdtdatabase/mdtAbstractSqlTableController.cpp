@@ -23,6 +23,8 @@
 #include "mdtSqlRelation.h"
 #include <QSqlError>
 #include <QSqlRecord>
+#include <QSqlField>
+#include <QSqlDriver>
 #include <QCoreApplication>
 #include <QPair>
 #include <QVector>
@@ -146,6 +148,92 @@ bool mdtAbstractSqlTableController::select()
   return ok;
 }
 
+bool mdtAbstractSqlTableController::setFilter(const QString& filter)
+{
+  Q_ASSERT(pvModel);
+  Q_ASSERT(pvStateMachine.isRunning());
+
+  int row, _currentRow;
+
+  emit selectTriggered();
+  pvStateMachine.waitOnState(Selecting);
+
+  // Call select on model
+  pvModel->setFilter(filter);
+  // Go to first row
+  if(pvModel->rowCount() > 0){
+    row = 0;
+  }else{
+    row = -1;
+  }
+  // Set current row and force sending event (only 1x !)
+  _currentRow = currentRow();
+  setCurrentRow(row);
+  if(_currentRow == row){
+    currentRowChangedEvent(row);
+    emit currentRowChanged(row);
+  }
+  emit operationSucceed();
+  pvStateMachine.waitOnState(Visualizing);
+
+  return true;
+}
+
+bool mdtAbstractSqlTableController::setFilter(const QString& fieldName, const QVariant& matchData)
+{
+  Q_ASSERT(pvModel);
+  Q_ASSERT(pvStateMachine.isRunning());
+
+  QString filter;
+  bool ok;
+
+  filter = fieldName + " = " + formatValue(fieldName, matchData, ok);
+  if(!ok){
+    return false;
+  }
+
+  return setFilter(filter);
+}
+
+bool mdtAbstractSqlTableController::setFilter(const QString& fieldName, const QList< QVariant >& matchDataList)
+{
+  Q_ASSERT(pvModel);
+  Q_ASSERT(pvStateMachine.isRunning());
+
+  QString filter;
+  QSqlField field;
+  int i;
+
+  // Get requested field
+  field = pvModel->record().field(fieldName);
+  if(!field.isValid()){
+    pvLastError.setError(tr("Requested field") + " '" + fieldName + "' " + tr("was not found in table") + " '" + pvModel->tableName() + "'", mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtAbstractSqlTableController");
+    pvLastError.commit();
+    return false;
+  }
+  // Build filter
+  filter = fieldName + " IN(";
+  for(i = 0; i < matchDataList.size(); ++i){
+    field.setValue(matchDataList.at(i));
+    filter += formatValue(field);
+    if(i < (matchDataList.size()-1)){
+      filter += ",";
+    }
+  }
+  filter += ")";
+
+  return setFilter(filter);
+}
+
+void mdtAbstractSqlTableController::clearFilter()
+{
+  Q_ASSERT(pvModel);
+  Q_ASSERT(pvStateMachine.isRunning());
+
+  setFilter("");
+}
+
 QString mdtAbstractSqlTableController::tableName() const
 {
   if(!pvModel){
@@ -182,7 +270,7 @@ void mdtAbstractSqlTableController::start()
       }
     }
   }
-  emit globalWidgetEnableStateChanged(true);
+  emit mainWidgetEnableStateChanged(true);
 }
 
 void mdtAbstractSqlTableController::stop()
@@ -194,7 +282,7 @@ void mdtAbstractSqlTableController::stop()
   if(!pvStateMachine.isRunning()){
     return;
   }
-  emit globalWidgetEnableStateChanged(false);
+  emit mainWidgetEnableStateChanged(false);
   // Stop child controllers
   for(i = 0; i < pvChildControllerContainers.size(); ++i){
     Q_ASSERT(pvChildControllerContainers.at(i).controller);
@@ -382,6 +470,122 @@ QVariant mdtAbstractSqlTableController::data(int row, const QString& fieldName, 
   return data(row, column, ok);
 }
 
+QList< QVariant > mdtAbstractSqlTableController::dataList(const QString& fieldName, bool& ok, bool fetchAll)
+{
+  Q_ASSERT(pvModel);
+
+  QList<QVariant> lst;
+  QModelIndex index;
+  int row, col;
+
+  if(pvModel->rowCount() < 1){
+    ok = true;
+    return lst;
+  }
+  // Get column index of reuqested field name
+  col = pvModel->record().indexOf(fieldName);
+  if(col < 0){
+    ok = false;
+    pvLastError.setError(tr("Requested field name") + " '" + fieldName + "' " + tr("was not found in table") + " '" + pvModel->tableName() + "'", mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtAbstractSqlTableController");
+    pvLastError.commit();
+    return lst;
+  }
+  // Fetch all data if requested
+  if(fetchAll){
+    while(pvModel->canFetchMore()){
+      pvModel->fetchMore();
+    }
+  }
+  // Build data list
+  for(row = 0; row < proxyModel()->rowCount(); ++row){
+    index = proxyModel()->index(row, col);
+    lst.append(proxyModel()->data(index));
+  }
+  ok = true;
+
+  return lst;
+}
+
+QString mdtAbstractSqlTableController::formatedValue(int row, const QString& fieldName, bool& ok)
+{
+  Q_ASSERT(pvModel);
+
+  QSqlField field;
+
+  // Check row
+  if((row < 0)||(row >= pvModel->rowCount())){
+    ok = false;
+    pvLastError.setError(tr("Requested row is out of bound. Row:") + " " + QString::number(row) + " . " + tr("Table:") + " '" + pvModel->tableName() + "'", mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtAbstractSqlTableController");
+    pvLastError.commit();
+    return QString();
+  }
+  // Get requested field
+  field = pvModel->record(row).field(fieldName);
+  if(!field.isValid()){
+    ok = false;
+    pvLastError.setError(tr("Requested field") + " '" + fieldName + "' " + tr("was not found in table") + " '" + pvModel->tableName() + "'", mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtAbstractSqlTableController");
+    pvLastError.commit();
+    return QString();
+  }
+
+  return formatValue(field);
+}
+
+QString mdtAbstractSqlTableController::formatValue(const QString& fieldName, const QVariant& value, bool& ok)
+{
+  Q_ASSERT(pvModel);
+
+  QSqlField field;
+
+  // Get requested field and set value to it
+  field = pvModel->record().field(fieldName);
+  if(!field.isValid()){
+    ok = false;
+    pvLastError.setError(tr("Requested field") + " '" + fieldName + "' " + tr("was not found in table") + " '" + pvModel->tableName() + "'", mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtAbstractSqlTableController");
+    pvLastError.commit();
+    return QString();
+  }
+  field.setValue(value);
+  ok = true;
+
+  return formatValue(field);
+}
+
+QString mdtAbstractSqlTableController::formatValue(const QSqlField& field)
+{
+  Q_ASSERT(pvModel);
+  Q_ASSERT(field.isValid());
+
+  QSqlDriver *sqlDriver;
+
+  // Use SQL driver if available
+  sqlDriver = pvModel->database().driver();
+  if(sqlDriver != 0){
+    return sqlDriver->formatValue(field);
+  }
+  // Driver not available, try to format value
+  QString delimiter;
+  switch(field.type()){
+    case QVariant::String:
+    case QVariant::Char:
+      delimiter = "'";
+      break;
+    case QVariant::Bool:
+    case QVariant::Int:
+    case QVariant::UInt:
+    case QVariant::LongLong:
+    case QVariant::ULongLong:
+    case QVariant::Double:
+      break;
+
+  }
+  return delimiter + field.value().toString() + delimiter;
+}
+
 int mdtAbstractSqlTableController::rowCount(bool fetchAll) const
 {
   if(!pvModel){
@@ -415,6 +619,53 @@ bool mdtAbstractSqlTableController::setCurrentRow(int row)
   }
 
   return setCurrentRowPv(row);
+}
+
+bool mdtAbstractSqlTableController::setCurrentRow(const QString& fieldName, const QVariant& matchData)
+{
+  Q_ASSERT(pvModel);
+  Q_ASSERT(!matchData.isNull());
+
+  int row;
+  int col;
+  QModelIndex index;
+
+  if(pvModel->rowCount() < 1){
+    return 0;
+  }
+  // Get column of requested field name
+  col = pvModel->fieldIndex(fieldName);
+  if(col < 0){
+    pvLastError.setError(tr("Requested field") + " '" + fieldName + "' " + tr("was not found in table") + " '" + pvModel->tableName() + "'", mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtAbstractSqlTableController");
+    pvLastError.commit();
+    return false;
+  }
+  // Search row
+  row = 0;
+  while(true){
+    index = pvModel->index(row, col);
+    if(pvModel->data(index) == matchData){
+      return setCurrentRow(row);
+    }
+    if(row == (pvModel->rowCount()-1)){
+      if(!pvModel->canFetchMore()){
+        break;
+      }
+      pvModel->fetchMore();
+    }
+    ++row;
+  }
+  // matchData not found
+  QString msg;
+  msg = tr("Could not find value") + " '" + matchData.toString() + "' ";
+  msg += tr("for field") + " '" + fieldName + "' ";
+  msg += tr("in table") + " '" + pvModel->tableName() + "'";
+  pvLastError.setError(msg, mdtError::Error);
+  MDT_ERROR_SET_SRC(pvLastError, "mdtAbstractSqlTableController");
+  pvLastError.commit();
+
+  return false;
 }
 
 bool mdtAbstractSqlTableController::allDataAreSaved()
@@ -530,7 +781,7 @@ void mdtAbstractSqlTableController::onStateSelectingEntered()
 {
   qDebug() << pvModel->tableName() <<  __FUNCTION__;
 
-  emit globalWidgetEnableStateChanged(false);
+  ///emit globalWidgetEnableStateChanged(false);
 }
 
 void mdtAbstractSqlTableController::onStateVisualizingEntered()
@@ -539,8 +790,7 @@ void mdtAbstractSqlTableController::onStateVisualizingEntered()
 
   qDebug() << pvModel->tableName() <<  __FUNCTION__;
 
-  ///emit globalWidgetEnableStateChanged(true);
-  
+  emit childWidgetEnableStateChanged(true);
   emit insertEnabledStateChanged(true);
   if(currentRow() > -1){
     emit removeEnabledStateChanged(true);
@@ -555,6 +805,7 @@ void mdtAbstractSqlTableController::onStateVisualizingExited()
   
   ///disableChildWidgets();
   
+  emit childWidgetEnableStateChanged(false);
   emit insertEnabledStateChanged(false);
   emit removeEnabledStateChanged(false);
 }

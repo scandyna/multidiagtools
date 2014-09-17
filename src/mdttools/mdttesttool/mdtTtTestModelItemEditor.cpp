@@ -743,10 +743,11 @@ QVariant mdtTtTestModelItemEditor::selectTestLink(const QString & bus)
 
 bool mdtTtTestModelItemEditor::setupTestItemTable() 
 {
-  Ui::mdtTtTestModelItemEditor tie;
+  ///Ui::mdtTtTestModelItemEditor tie;
 
   // Setup main form widget
-  tie.setupUi(mainSqlWidget());
+  ///tie.setupUi(mainSqlWidget());
+  setMainTableUi<Ui::mdtTtTestModelItemEditor>();
   // Setup form
   if(!setMainTable("TestModelItem_tbl", "Test item", database())){
     return false;
@@ -761,13 +762,21 @@ bool mdtTtTestModelItemEditor::setupTestLinkTable()
   mdtSqlTableWidget *widget;
   QPushButton *pbAddTestLink;
   QPushButton *pbRemoveTestLinks;
+  mdtSqlRelationInfo relationInfo;
 
+  relationInfo.setChildTableName("TestModelItem_TestLink_view");
+  relationInfo.addRelation("Id_PK", "TestModelItem_Id_FK", false);
+  if(!addChildTable(relationInfo, tr("Test links"))){
+    return false;
+  }
+  /**
   if(!addChildTable("TestModelItem_TestLink_view", tr("Test links"), database())){
     return false;
   }
   if(!addRelation("Id_PK", "TestModelItem_TestLink_view", "TestModelItem_Id_FK")){
     return false;
   }
+  */
   widget = sqlTableWidget("TestModelItem_TestLink_view");
   Q_ASSERT(widget != 0);
   // Hide technical fields
@@ -819,13 +828,21 @@ bool mdtTtTestModelItemEditor::setupTestItemRouteTable()
   mdtSqlTableWidget *widget;
   QLocale locale;
   QPushButton *pb;
+  mdtSqlRelationInfo relationInfo;
 
+  relationInfo.setChildTableName("TestModelItemRoute_view");
+  relationInfo.addRelation("Id_PK", "TestModelItem_Id_FK", false);
+  if(!addChildTable(relationInfo, tr("Routes"))){
+    return false;
+  }
+  /**
   if(!addChildTable("TestModelItemRoute_view", tr("Routes"), database())){
     return false;
   }
   if(!addRelation("Id_PK", "TestModelItemRoute_view", "TestModelItem_Id_FK")){
     return false;
   }
+  */
   widget = sqlTableWidget("TestModelItemRoute_view");
   Q_ASSERT(widget != 0);
   // Hide technical fields
@@ -921,13 +938,21 @@ bool mdtTtTestModelItemEditor::setupTestNodeUnitSetupTable()
   ///QPushButton *pbGenerateTestNodeUnitSetup;
   ///QPushButton *pbRemoveTestNodeUnitSetup;
   QLocale locale;
+  mdtSqlRelationInfo relationInfo;
 
+  relationInfo.setChildTableName("TestNodeUnitSetup_view");
+  relationInfo.addRelation("Id_PK", "TestModelItem_Id_FK", false);
+  if(!addChildTable(relationInfo, tr("Node unit setup"))){
+    return false;
+  }
+  /**
   if(!addChildTable("TestNodeUnitSetup_view", tr("Node unit setup"), database())){
     return false;
   }
   if(!addRelation("Id_PK", "TestNodeUnitSetup_view", "TestModelItem_Id_FK")){
     return false;
   }
+  */
   widget = sqlTableWidget("TestNodeUnitSetup_view");
   Q_ASSERT(widget != 0);
   // Hide technical fields

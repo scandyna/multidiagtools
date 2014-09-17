@@ -122,6 +122,10 @@ class mdtSqlTableWidget :  public QWidget
    */
   void setUserFriendlyTableName(const QString & name) { pvController->setUserFriendlyTableName(name); }
 
+  /*! \brief Get table name
+   */
+  QString tableName() const { return pvController->tableName(); }
+
   /*! \brief Set table view controller
    *
    * By default, a controller is created.

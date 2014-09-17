@@ -239,7 +239,7 @@ void mdtClMainWindow::editSelectedConnector()
     return;
   }
   Q_ASSERT(s.rowCount() > 0);
-  if(!editor->setCurrentRecord("Id_PK", s.data(0, "Id_PK"))){
+  if(!editor->setCurrentRow("Id_PK", s.data(0, "Id_PK"))){
     displayError(editor->lastError());
     return;
   }
@@ -311,7 +311,7 @@ void mdtClMainWindow::editSelectedArticle()
     return;
   }
   Q_ASSERT(s.rowCount() == 1);
-  if(!editor->setCurrentRecord("Id_PK", s.data(0, "Id_PK"))){
+  if(!editor->setCurrentRow("Id_PK", s.data(0, "Id_PK"))){
     displayError(editor->lastError());
   }
   window->enableNavigation();
@@ -382,7 +382,7 @@ void mdtClMainWindow::editSelectedUnit()
     return;
   }
   Q_ASSERT(s.rowCount() == 1);
-  if(!editor->setCurrentRecord("Id_PK", s.data(0, "Unit_Id_PK"))){
+  if(!editor->setCurrentRow("Id_PK", s.data(0, "Unit_Id_PK"))){
     displayError(editor->lastError());
     return;
   }
@@ -492,7 +492,7 @@ void mdtClMainWindow::editSelectedTestConnectionCable()
     return;
   }
   Q_ASSERT(s.rowCount() == 1);
-  if(!editor->setCurrentRecord("Id_PK", s.data(0, "Id_PK"))){
+  if(!editor->setCurrentRow("Id_PK", s.data(0, "Id_PK"))){
     displayError(editor->lastError());
   }
   window->enableNavigation();
@@ -755,8 +755,10 @@ mdtClVehicleTypeEditor *mdtClMainWindow::createVehicleTypeEditor()
   mdtSqlWindow *window;
 
   editor = new mdtClVehicleTypeEditor(0, pvDatabaseManager->database());
+  /**
   Q_ASSERT(editor->mainSqlWidget() != 0);
   connect(editor->mainSqlWidget(), SIGNAL(stateVisualizingEntered()), this, SLOT(updateVehicleTypeMenu()));
+  */
   window = setupEditor(editor);
   if(window == 0){
     return 0;

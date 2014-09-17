@@ -20,9 +20,10 @@
  ****************************************************************************/
 #include "mdtSqlForm.h"
 ///#include "mdtAbstractSqlWidget.h"
-#include "mdtSqlFormWidget.h"
+///#include "mdtSqlFormWidget.h"
 #include "mdtSqlTableWidget.h"
-#include "mdtSqlRelation.h"
+///#include "mdtSqlRelation.h"
+#include "mdtUiMessageHandler.h"
 #include <QSqlTableModel>
 #include <QSqlField>
 #include <QSqlError>
@@ -33,14 +34,18 @@
 
 #include <QDebug> 
 
+using namespace std;
+
 mdtSqlForm::mdtSqlForm(QWidget *parent, QSqlDatabase db)
- : QWidget(parent)
+ : QWidget(parent),
+   pvController(new mdtSqlDataWidgetController)
 {
   pvDatabase = db;
-  pvMainSqlWidget = new mdtSqlFormWidget;
+  ///pvMainSqlWidget = new mdtSqlFormWidget;
+  pvMainTableWidget = 0;
   pvChildsTabWidget = 0;
   pvMainLayout = new QVBoxLayout;
-  pvMainLayout->addWidget(pvMainSqlWidget);
+  ///pvMainLayout->addWidget(pvMainSqlWidget);
   setLayout(pvMainLayout);
 }
 
@@ -49,21 +54,33 @@ mdtSqlForm::~mdtSqlForm()
   qDebug() << "mdtSqlForm::~mdtSqlForm()";
 }
 
+/**
 mdtSqlFormWidget *mdtSqlForm::mainSqlWidget()
 {
   Q_ASSERT(pvMainSqlWidget != 0);
 
   return pvMainSqlWidget;
 }
+*/
 
-bool mdtSqlForm::setMainTable(const QString &tableName, const QString &userFriendlyTableName)
+void mdtSqlForm::setMainTableWidget(QWidget* widget)
 {
-  return setMainTable(tableName, userFriendlyTableName, pvDatabase);
+  Q_ASSERT(widget != 0);
+
+  pvMainTableWidget = widget;
+  pvMainLayout->addWidget(pvMainTableWidget);
+  connect(pvController.get(), SIGNAL(mainWidgetEnableStateChanged(bool)), pvMainTableWidget, SLOT(setEnabled(bool)));
 }
 
-bool mdtSqlForm::setMainTable(const QString &tableName, const QString &userFriendlyTableName, QSqlDatabase db)
+bool mdtSqlForm::setMainTable(const QString& tableName, const QString& userFriendlyTableName, const QString& firstWidgetInTabOrder)
 {
-  QSqlTableModel *model;
+  return setMainTable(tableName, userFriendlyTableName, pvDatabase, firstWidgetInTabOrder);
+}
+
+bool mdtSqlForm::setMainTable(const QString& tableName, const QString& userFriendlyTableName, QSqlDatabase db, const QString& firstWidgetInTabOrder)
+{
+  Q_ASSERT(pvMainTableWidget != 0);
+  ///QSqlTableModel *model;
 
   // Check that db is open
   if(!db.isOpen()){
@@ -75,7 +92,10 @@ bool mdtSqlForm::setMainTable(const QString &tableName, const QString &userFrien
     pvLastError.commit();
     return false;
   }
+  // Setup controller
+  pvController->setTableName(tableName, db, userFriendlyTableName);
   // Setup model
+  /**
   model = pvMainSqlWidget->model();
   if(model == 0){
     model = new QSqlTableModel(this, db);
@@ -89,26 +109,35 @@ bool mdtSqlForm::setMainTable(const QString &tableName, const QString &userFrien
     pvLastError.commit();
     return false;
   }
+  */
   // Setup main widget
+  if(!pvController->mapFormWidgets(pvMainTableWidget, firstWidgetInTabOrder)){
+    pvLastError = pvController->lastError();
+    return false;
+  }
+  /**
   pvMainSqlWidget->setModel(model);
   if(!userFriendlyTableName.isEmpty()){
     pvMainSqlWidget->setUserFriendlyTableName(userFriendlyTableName);
   }
   pvMainSqlWidget->mapFormWidgets();
+  */
+  // Setup message handler
+  std::shared_ptr<mdtUiMessageHandler> messageHandler(new mdtUiMessageHandler(this));
+  pvController->setMessageHandler(messageHandler);
 
   return true;
 }
 
-bool mdtSqlForm::addChildTable(const QString &tableName, const QString &userFriendlyTableName)
+bool mdtSqlForm::addChildTable(const mdtSqlRelationInfo& relationInfo, const QString& userFriendlyTableName)
 {
-  return addChildTable(tableName, userFriendlyTableName, pvDatabase);
+  return addChildTable(relationInfo, userFriendlyTableName, pvDatabase);
 }
 
-bool mdtSqlForm::addChildTable(const QString &tableName, const QString &userFriendlyTableName, QSqlDatabase db)
+bool mdtSqlForm::addChildTable(const mdtSqlRelationInfo& relationInfo, const QString& userFriendlyTableName, QSqlDatabase db)
 {
-  QSqlTableModel *model;
   mdtSqlTableWidget *widget;
-  ///mdtSqlRelation *relation;
+  std::shared_ptr<mdtSqlTableViewController> controller;
 
   // Check that db is open
   if(!db.isOpen()){
@@ -120,47 +149,87 @@ bool mdtSqlForm::addChildTable(const QString &tableName, const QString &userFrie
     pvLastError.commit();
     return false;
   }
-  // Check that main table was set
-  if(pvMainSqlWidget->model() == 0){
-    pvLastError.setError(tr("Cannot add child table '") + tableName + tr("' because no main table was set"), mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlForm");
-    pvLastError.commit();
+  // Add child controller
+  if(!pvController->addChildController<mdtSqlTableViewController>(relationInfo, db, userFriendlyTableName)){
+    pvLastError = pvController->lastError();
     return false;
   }
-  Q_ASSERT(pvMainSqlWidget->model() != 0);
-  // Setup model
-  model = new QSqlTableModel(this, db);
-  model->setTable(tableName);
-  if(!model->select()){
-    QSqlError sqlError = model->lastError();
-    pvLastError.setError(tr("Unable to select data in table '") + tableName + tr("'"), mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlForm");
-    pvLastError.commit();
-    delete model;
-    return false;
-  }
-  // Setup relation
-  /**
-  relation = new mdtSqlRelation;
-  relation->setParentModel(pvMainSqlWidget->model());
-  relation->setChildModel(model);
-  pvRelationsByChildTableName.insert(tableName, relation);
-  */
-  // Setup child widget
-  /**
+  controller = pvController->childController<mdtSqlTableViewController>(relationInfo.childTableName());
+  Q_ASSERT(controller);
+  // Setup child widget and add it to tab widget
   widget = new mdtSqlTableWidget;
-  widget->setModel(model);
-  if(!userFriendlyTableName.isEmpty()){
-    widget->setUserFriendlyTableName(userFriendlyTableName);
-  }
-  // Add child widget to main widget and tab
-  pvMainSqlWidget->addChildWidget(widget, relation);
-  addChildWidget(widget, widget->userFriendlyTableName());
-  */
+  widget->setTableController(controller);
+  connect(pvController.get(), SIGNAL(childWidgetEnableStateChanged(bool)), widget, SLOT(setEnabled(bool)));
+  pvChildsTableWidgets.append(widget);
+  addChildWidget(widget, controller->userFriendlyTableName());
 
   return true;
 }
+
+/**
+bool mdtSqlForm::addChildTable(const QString &tableName, const QString &userFriendlyTableName)
+{
+  return addChildTable(tableName, userFriendlyTableName, pvDatabase);
+}
+*/
+
+// bool mdtSqlForm::addChildTable(const QString &tableName, const QString &userFriendlyTableName, QSqlDatabase db)
+// {
+//   QSqlTableModel *model;
+//   mdtSqlTableWidget *widget;
+//   ///mdtSqlRelation *relation;
+// 
+//   // Check that db is open
+//   if(!db.isOpen()){
+//     QString msg;
+//     msg = tr("Database is not open.") + "\n";
+//     msg += tr("Please open a database and try again.");
+//     pvLastError.setError(msg, mdtError::Error);
+//     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlForm");
+//     pvLastError.commit();
+//     return false;
+//   }
+//   // Check that main table was set
+//   if(pvMainSqlWidget->model() == 0){
+//     pvLastError.setError(tr("Cannot add child table '") + tableName + tr("' because no main table was set"), mdtError::Error);
+//     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlForm");
+//     pvLastError.commit();
+//     return false;
+//   }
+//   Q_ASSERT(pvMainSqlWidget->model() != 0);
+//   // Setup model
+//   model = new QSqlTableModel(this, db);
+//   model->setTable(tableName);
+//   if(!model->select()){
+//     QSqlError sqlError = model->lastError();
+//     pvLastError.setError(tr("Unable to select data in table '") + tableName + tr("'"), mdtError::Error);
+//     pvLastError.setSystemError(sqlError.number(), sqlError.text());
+//     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlForm");
+//     pvLastError.commit();
+//     delete model;
+//     return false;
+//   }
+//   // Setup relation
+//   /**
+//   relation = new mdtSqlRelation;
+//   relation->setParentModel(pvMainSqlWidget->model());
+//   relation->setChildModel(model);
+//   pvRelationsByChildTableName.insert(tableName, relation);
+//   */
+//   // Setup child widget
+//   /**
+//   widget = new mdtSqlTableWidget;
+//   widget->setModel(model);
+//   if(!userFriendlyTableName.isEmpty()){
+//     widget->setUserFriendlyTableName(userFriendlyTableName);
+//   }
+//   // Add child widget to main widget and tab
+//   pvMainSqlWidget->addChildWidget(widget, relation);
+//   addChildWidget(widget, widget->userFriendlyTableName());
+//   */
+// 
+//   return true;
+// }
 
 void mdtSqlForm::addChildWidget(QWidget *widget, const QString & label, const QIcon & icon)
 {
@@ -178,6 +247,7 @@ void mdtSqlForm::addChildWidget(QWidget *widget, const QString & label, const QI
   }
 }
 
+/**
 bool mdtSqlForm::addRelation(const QString &parentFieldName, const QString &childTableName, const QString &childFieldName, const QString &operatorWithPreviousItem)
 {
   mdtSqlRelation *relation;
@@ -199,9 +269,12 @@ bool mdtSqlForm::addRelation(const QString &parentFieldName, const QString &chil
 
   return true;
 }
+*/
 
 void mdtSqlForm::start()
 {
+  pvController->start();
+  /**
   QList<mdtAbstractSqlWidget*> sqlWidgets;
   int i;
 
@@ -211,8 +284,10 @@ void mdtSqlForm::start()
     Q_ASSERT(sqlWidgets.at(i)->model() != 0);
     sqlWidgets.at(i)->start();
   }
+  */
 }
 
+/**
 mdtAbstractSqlWidget *mdtSqlForm::sqlWidget(const QString &tableName)
 {
   QList<mdtAbstractSqlWidget*> sqlWidgets;
@@ -229,19 +304,9 @@ mdtAbstractSqlWidget *mdtSqlForm::sqlWidget(const QString &tableName)
 
   return 0;
 }
+*/
 
-mdtSqlFormWidget *mdtSqlForm::sqlFormWidget(const QString &tableName)
-{
-  mdtAbstractSqlWidget *w;
-
-  w = sqlWidget(tableName);
-  if(w == 0){
-    return 0;
-  }
-
-  return dynamic_cast<mdtSqlFormWidget*>(w);
-}
-
+/**
 mdtSqlTableWidget *mdtSqlForm::sqlTableWidget(const QString &tableName)
 {
   mdtAbstractSqlWidget *w;
@@ -253,12 +318,30 @@ mdtSqlTableWidget *mdtSqlForm::sqlTableWidget(const QString &tableName)
 
   return dynamic_cast<mdtSqlTableWidget*>(w);
 }
+*/
 
+mdtSqlTableWidget *mdtSqlForm::sqlTableWidget(const QString &tableName)
+{
+  int i;
+
+  for(i = 0; i < pvChildsTableWidgets.size(); ++i){
+    Q_ASSERT(pvChildsTableWidgets.at(i) != 0);
+    if(pvChildsTableWidgets.at(i)->tableName() == tableName){
+      return pvChildsTableWidgets.at(i);
+    }
+  }
+
+  return 0;
+}
+
+/**
 QSqlDatabase mdtSqlForm::database()
 {
   return pvDatabase;
 }
+*/
 
+/**
 QSqlDatabase mdtSqlForm::database(const QString &tableName)
 {
   QSqlTableModel *m;
@@ -270,7 +353,9 @@ QSqlDatabase mdtSqlForm::database(const QString &tableName)
 
   return m->database();
 }
+*/
 
+/**
 QSqlTableModel *mdtSqlForm::model(const QString &tableName)
 {
   mdtAbstractSqlWidget *w;
@@ -282,9 +367,16 @@ QSqlTableModel *mdtSqlForm::model(const QString &tableName)
 
   return w->model();
 }
+*/
 
 bool mdtSqlForm::select()
 {
+  if(!pvController->select()){
+    pvLastError = pvController->lastError();
+    return false;
+  }
+  return true;
+  /**
   QSqlTableModel *m;
 
   m = pvMainSqlWidget->model();
@@ -305,10 +397,32 @@ bool mdtSqlForm::select()
   }
 
   return true;
+  */
 }
 
 bool mdtSqlForm::select(const QString &tableName)
 {
+  if(pvController->tableName() == tableName){
+    if(!pvController->select()){
+      pvLastError = pvController->lastError();
+      return false;
+    }
+    return true;
+  }
+  std::shared_ptr<mdtSqlTableViewController> controller;
+  controller = pvController->childController<mdtSqlTableViewController>(tableName);
+  if(!controller){
+    pvLastError.setError(tr("Cannot find controller that acts on table '") + tableName + tr("'"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlForm");
+    pvLastError.commit();
+    return false;
+  }
+  if(!controller->select()){
+    pvLastError = controller->lastError();
+    return false;
+  }
+  return true;
+  /**
   QSqlTableModel *m;
 
   m = model(tableName);
@@ -331,8 +445,10 @@ bool mdtSqlForm::select(const QString &tableName)
   }
 
   return true;
+  */
 }
 
+/**
 bool mdtSqlForm::setMainTableFilter(const QString & fieldName, const QVariant & matchData)
 {
   QSqlTableModel *m;
@@ -372,6 +488,7 @@ bool mdtSqlForm::setMainTableFilter(const QString & fieldName, const QVariant & 
 
   return select();
 }
+*/
 
 /**
 QSqlError mdtSqlForm::lastSqlError(const QString &tableName)
@@ -407,6 +524,7 @@ void mdtSqlForm::displayLastError()
   msgBox.exec();
 }
 
+/**
 int mdtSqlForm::rowCount(const QString &tableName)
 {
   QSqlTableModel *m;
@@ -421,7 +539,9 @@ int mdtSqlForm::rowCount(const QString &tableName)
 
   return m->rowCount();
 }
+*/
 
+/**
 int mdtSqlForm::currentRow(const QString &tableName)
 {
   mdtAbstractSqlWidget *w;
@@ -437,7 +557,9 @@ int mdtSqlForm::currentRow(const QString &tableName)
 
   return w->currentRow();
 }
+*/
 
+/**
 bool mdtSqlForm::setCurrentRecord(const QString &fieldName, const QVariant &value)
 {
   if(pvMainSqlWidget == 0){
@@ -452,9 +574,35 @@ bool mdtSqlForm::setCurrentRecord(const QString &fieldName, const QVariant &valu
   }
   return true;
 }
+*/
+
+bool mdtSqlForm::setCurrentRow(const QString& tableName, const QString& fieldName, const QVariant& matchData)
+{
+  std::shared_ptr<mdtAbstractSqlTableController> controller;
+
+  controller = tableController<mdtAbstractSqlTableController>(tableName);
+  Q_ASSERT(controller);
+  if(!controller->setCurrentRow(fieldName, matchData)){
+    pvLastError = controller->lastError();
+    return false;
+  }
+
+  return true;
+}
 
 bool mdtSqlForm::setCurrentData(const QString &tableName, const QString &fieldName, const QVariant &data, bool submit)
 {
+  std::shared_ptr<mdtAbstractSqlTableController> controller;
+
+  controller = tableController<mdtAbstractSqlTableController>(tableName);
+  Q_ASSERT(controller);
+  if(!controller->setCurrentData(fieldName, data, submit)){
+    pvLastError = controller->lastError();
+    return false;
+  }
+
+  return true;
+  /**
   mdtAbstractSqlWidget *w;
 
   // Find SQL widget
@@ -467,10 +615,18 @@ bool mdtSqlForm::setCurrentData(const QString &tableName, const QString &fieldNa
   }
 
   return w->setCurrentData(fieldName, data, submit);
+  */
 }
 
-QVariant mdtSqlForm::currentData(const QString &tableName, const QString &fieldName)
+QVariant mdtSqlForm::currentData(const QString &tableName, const QString &fieldName, bool & ok)
 {
+  std::shared_ptr<mdtAbstractSqlTableController> controller;
+
+  controller = tableController<mdtAbstractSqlTableController>(tableName);
+  Q_ASSERT(controller);
+
+  return controller->currentData(fieldName, ok);
+  /**
   mdtAbstractSqlWidget *w;
 
   // Find SQL widget
@@ -483,10 +639,19 @@ QVariant mdtSqlForm::currentData(const QString &tableName, const QString &fieldN
   }
 
   return w->currentData(fieldName);
+  */
 }
 
-QVariant mdtSqlForm::data(const QString &tableName, int row, const QString &fieldName)
+QVariant mdtSqlForm::data(const QString &tableName, int row, const QString &fieldName, bool & ok)
 {
+  std::shared_ptr<mdtAbstractSqlTableController> controller;
+
+  controller = tableController<mdtAbstractSqlTableController>(tableName);
+  Q_ASSERT(controller);
+
+  return controller->data(row, fieldName, ok);
+
+  /**
   mdtAbstractSqlWidget *w;
 
   // Find SQL widget
@@ -499,20 +664,24 @@ QVariant mdtSqlForm::data(const QString &tableName, int row, const QString &fiel
   }
 
   return w->data(row, fieldName);
+  */
 }
 
+/**
 void mdtSqlForm::insert()
 {
   Q_ASSERT(pvMainSqlWidget != 0);
 
   pvMainSqlWidget->insert();
 }
+*/
 
 bool mdtSqlForm::setupTables()
 {
   return false;
 }
 
+/**
 bool mdtSqlForm::allDataAreSaved()
 {
   if(pvMainSqlWidget == 0){
@@ -520,8 +689,4 @@ bool mdtSqlForm::allDataAreSaved()
   }
   return pvMainSqlWidget->allDataAreSaved();
 }
-
-mdtError & mdtSqlForm::lastErrorW()
-{
-  return pvLastError;
-}
+*/

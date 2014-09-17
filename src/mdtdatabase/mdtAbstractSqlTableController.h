@@ -39,6 +39,7 @@ class mdtState;
 class mdtAbstractSqlTableController;
 class mdtSqlRelation;
 class mdtSortFilterProxyModel;
+class QSqlField;
 
 #include <QDebug>
 
@@ -222,6 +223,43 @@ class mdtAbstractSqlTableController : public QObject
    */
   bool select();
 
+  /*! \brief Set a filter on main table
+   *
+   * Set filter based on SQL query WHERE part, without the WHERE keyword (f.ex. Id_PK = 15)
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   * \pre Internal state machine must run (see start() ).
+   */
+  bool setFilter(const QString & filter);
+
+  /*! \brief Set a filter on main table
+   *
+   * \param fieldName Field that must match data
+   * \param matchData Match data
+   *
+   * Internally, a SQL statement is generated linke: fieldName = matchData
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   * \pre Internal state machine must run (see start() ).
+   */
+  bool setFilter(const QString & fieldName, const QVariant & matchData);
+
+  /*! \brief Set a filter on main table
+   *
+   * \param fieldName Field that must match data
+   * \param matchDataList A list of match data
+   *
+   * Internally, a SQL statement is generated linke: fieldName IN (matchData[0], matchData[1], ...)
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   * \pre Internal state machine must run (see start() ).
+   */
+  bool setFilter(const QString & fieldName, const QList<QVariant> & matchDataList);
+
+  /*! \brief Clear filter
+   */
+  void clearFilter();
+
   /*! \brief Get model (read only access)
    */
   inline const std::shared_ptr<QSqlTableModel> model() const { return pvModel; }
@@ -344,6 +382,23 @@ class mdtAbstractSqlTableController : public QObject
     return data(currentRow(), fieldName, ok);
   }
 
+  /*! \brief Get formated current value for SQL query
+   */
+  inline QString currentFormatedValue(const QString & fieldName)
+  {
+    Q_ASSERT(pvModel);
+    bool ok;
+    return currentFormatedValue(fieldName, ok);
+  }
+
+  /*! \brief Get formated current value for SQL query
+   */
+  inline QString currentFormatedValue(const QString & fieldName, bool & ok)
+  {
+    Q_ASSERT(pvModel);
+    return formatedValue(currentRow(), fieldName, ok);
+  }
+
   /*! \brief Get data for given index
    *
    * Note: index is relative to sorted data model (proxyModel),
@@ -417,6 +472,73 @@ class mdtAbstractSqlTableController : public QObject
    */
   QVariant data(int row, const QString &fieldName, bool & ok);
 
+  /*! \brief Get a list of data for given field name
+   *
+   * If fetchAll is true, all available data will be fetched from database
+   *  (regarding applied filter), else only cached data are returned
+   *  (see QSqlQueryModel::fetchMore() for details).
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   */
+  inline QList<QVariant> dataList(const QString &fieldName, bool fetchAll = true)
+  {
+    Q_ASSERT(pvModel);
+    bool ok;
+    return dataList(fieldName, ok, fetchAll);
+  }
+
+  /*! \brief Get a list of data for given field name
+   *
+   * If fetchAll is true, all available data will be fetched from database
+   *  (regarding applied filter), else only cached data are returned
+   *  (see QSqlQueryModel::fetchMore() for details).
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   */
+  QList<QVariant> dataList(const QString &fieldName, bool & ok, bool fetchAll = true);
+
+  /*! \brief Get formated value for SQL query
+   */
+  inline QString formatedValue(int row, const QString & fieldName)
+  {
+    Q_ASSERT(pvModel);
+    bool ok;
+    return formatedValue(row, fieldName, ok);
+  }
+
+  /*! \brief Get formated value for SQL query
+   *
+   * Will add delimiter to value,
+   *  regarding field type.
+   */
+  QString formatedValue(int row, const QString & fieldName, bool & ok);
+
+  /*! \brief Get formated value for SQL query
+   *
+   * Will add delimiter to value,
+   *  regarding field type.
+   */
+  inline QString formatValue(const QString & fieldName, const QVariant & value)
+  {
+    Q_ASSERT(pvModel);
+    bool ok;
+    return formatValue(fieldName, value, ok);
+  }
+
+  /*! \brief Get formated value for SQL query
+   *
+   * Will add delimiter to value,
+   *  regarding field type.
+   */
+  QString formatValue(const QString & fieldName, const QVariant & value, bool & ok);
+
+  /*! \brief Get formated value for SQL query
+   *
+   * Will add delimiter to value,
+   *  regarding field type.
+   */
+  QString formatValue(const QSqlField & field);
+
   /*! \brief Get column count
    */
   inline int columnCount() const { return pvProxyModel->columnCount(); }
@@ -440,6 +562,15 @@ class mdtAbstractSqlTableController : public QObject
    * \pre Table model must be set with setModel() or setTableName() begore calling this method.
    */
   bool setCurrentRow(int row);
+
+  /*! \brief Set current row
+   *
+   * Will search the first record that contains
+   *  match data for given field name.
+   *
+   * \sa setCurrentRow(int).
+   */
+  bool setCurrentRow(const QString & fieldName, const QVariant & matchData);
 
   /*! \brief Get current row
    */
@@ -599,7 +730,11 @@ class mdtAbstractSqlTableController : public QObject
 
   /*! \brief Emitted when the entier widget enable state changes
    */
-  void globalWidgetEnableStateChanged(bool enabled);
+  void mainWidgetEnableStateChanged(bool enabled);
+
+  /*! \brief Emitted when the entier widget enable state changes for a child widget
+   */
+  void childWidgetEnableStateChanged(bool enabled);
 
   /*! \brief Emitted when submit() function goes enabled/disabled
    *

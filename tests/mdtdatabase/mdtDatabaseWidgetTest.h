@@ -92,6 +92,8 @@ class mdtDatabaseWidgetTest : public mdtTest
 
   void sqlTableWidgetTest();
 
+  void sqlFormTest();
+
  private:
 
   // Create test database schema - Will FAIL on problem

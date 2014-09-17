@@ -397,7 +397,8 @@ void mdtClArticleEditor::removeConnectors()
   QMessageBox msgBox;
   QModelIndexList indexes;
 
-  widget = sqlTableWidget("ArticleConnector_view");
+  ///widget = sqlTableWidget("ArticleConnector_view");
+  widget = 0;
   Q_ASSERT(widget != 0);
   // Get selected rows
   indexes = widget->indexListOfSelectedRows("Id_PK");
@@ -430,14 +431,14 @@ void mdtClArticleEditor::addLink()
   mdtClArticle art(this, database());
 
   // Check if some connection exists
-  if(rowCount("ArticleConnection_view") < 1){
+  ///if(rowCount("ArticleConnection_view") < 1){
     QMessageBox msgBox;
     msgBox.setText(tr("There is no connection available for current article"));
     msgBox.setInformativeText(tr("You must add connections to be able to link them"));
     msgBox.setIcon(QMessageBox::Warning);
     msgBox.exec();
     return;
-  }
+  ///}
   // Setup and show dialog
   if(dialog.exec() != QDialog::Accepted){
     return;
@@ -463,7 +464,8 @@ void mdtClArticleEditor::editLink()
   if(currentArticleId().isNull()){
     return;
   }
-  widget = sqlWidget("ArticleLink_view");
+  ///widget = sqlWidget("ArticleLink_view");
+  widget = 0;
   Q_ASSERT(widget != 0);
   // Check that a link is selected
   row = widget->rowCount();
@@ -643,10 +645,11 @@ QList<QVariant> mdtClArticleEditor::selectConnectorContacts(const QVariant &conn
 
 bool mdtClArticleEditor::setupArticleTable()
 {
-  Ui::mdtClArticleEditor ae;
+  ///Ui::mdtClArticleEditor ae;
 
   // Setup main form widget
-  ae.setupUi(mainSqlWidget());
+  setMainTableUi<Ui::mdtClArticleEditor>();
+  ///ae.setupUi(mainSqlWidget());
   ///connect(this, SIGNAL(unitEdited()), mainSqlWidget(), SIGNAL(dataEdited()));
   // Setup form
   if(!setMainTable("Article_tbl", "Article", database())){
@@ -662,13 +665,21 @@ bool mdtClArticleEditor::setupArticleComponentTable()
   QPushButton *pbAddComponent;
   QPushButton *pbEditComponent;
   QPushButton *pbRemoveComponents;
+  mdtSqlRelationInfo relationInfo;
 
+  relationInfo.setChildTableName("ArticleComponent_view");
+  relationInfo.addRelation("Id_PK", "Article_Id_PK", false);
+  if(!addChildTable(relationInfo, tr("Components"))){
+    return false;
+  }
+  /**
   if(!addChildTable("ArticleComponent_view", tr("Components"), database())){
     return false;
   }
   if(!addRelation("Id_PK", "ArticleComponent_view", "Article_Id_PK")){
     return false;
   }
+  */
   widget = sqlTableWidget("ArticleComponent_view");
   Q_ASSERT(widget != 0);
   // Hide technical fields
@@ -699,13 +710,21 @@ bool mdtClArticleEditor::setupArticleComponentTable()
 bool mdtClArticleEditor::setupArticleUsedByTable()
 {
   mdtSqlTableWidget *widget;
+  mdtSqlRelationInfo relationInfo;
 
+  relationInfo.setChildTableName("ArticleComponentUsage_view");
+  relationInfo.addRelation("Id_PK", "Component_Id_PK", false);
+  if(!addChildTable(relationInfo, tr("Used by article"))){
+    return false;
+  }
+  /**
   if(!addChildTable("ArticleComponentUsage_view", tr("Used by"), database())){
     return false;
   }
   if(!addRelation("Id_PK", "ArticleComponentUsage_view", "Component_Id_PK")){
     return false;
   }
+  */
   widget = sqlTableWidget("ArticleComponentUsage_view");
   Q_ASSERT(widget != 0);
   // Hide technical fields
@@ -726,13 +745,21 @@ bool mdtClArticleEditor::setupArticleConnectorTable()
   QPushButton *pbAddConnector;
   QPushButton *pbEditConnectorName;
   QPushButton *pbRemoveConnectors;
+  mdtSqlRelationInfo relationInfo;
 
+  relationInfo.setChildTableName("ArticleConnector_view");
+  relationInfo.addRelation("Id_PK", "Article_Id_FK", false);
+  if(!addChildTable(relationInfo, tr("Connectors"))){
+    return false;
+  }
+  /**
   if(!addChildTable("ArticleConnector_view", tr("Connectors"), database())){
     return false;
   }
   if(!addRelation("Id_PK", "ArticleConnector_view", "Article_Id_FK")){
     return false;
   }
+  */
   widget = sqlTableWidget("ArticleConnector_view");
   Q_ASSERT(widget != 0);
   // Hide technical fields
@@ -764,13 +791,21 @@ bool mdtClArticleEditor::setupArticleConnectionTable()
   QPushButton *pbAddConnection;
   QPushButton *pbEditConnection;
   QPushButton *pbRemoveConnections;
+  mdtSqlRelationInfo relationInfo;
 
+  relationInfo.setChildTableName("ArticleConnection_view");
+  relationInfo.addRelation("Id_PK", "Article_Id_FK", false);
+  if(!addChildTable(relationInfo, tr("Connections"))){
+    return false;
+  }
+  /**
   if(!addChildTable("ArticleConnection_view", tr("Connections"), database())){
     return false;
   }
   if(!addRelation("Id_PK", "ArticleConnection_view", "Article_Id_FK")){
     return false;
   }
+  */
   widget = sqlTableWidget("ArticleConnection_view");
   Q_ASSERT(widget != 0);
   // Hide technical fields
@@ -807,7 +842,15 @@ bool mdtClArticleEditor::setupArticleLinkTable()
   QPushButton *pbAddLink;
   QPushButton *pbEditLink;
   QPushButton *pbRemoveLinks;
+  mdtSqlRelationInfo relationInfo;
 
+  relationInfo.setChildTableName("ArticleLink_view");
+  relationInfo.addRelation("Id_PK", "StartArticle_Id_FK", false);
+  relationInfo.addRelation("Id_PK", "EndArticle_Id_FK", false);
+  if(!addChildTable(relationInfo, tr("Links"))){
+    return false;
+  }
+  /**
   if(!addChildTable("ArticleLink_view", tr("Links"), database())){
     return false;
   }
@@ -817,6 +860,7 @@ bool mdtClArticleEditor::setupArticleLinkTable()
   if(!addRelation("Id_PK", "ArticleLink_view", "EndArticle_Id_FK")){
     return false;
   }
+  */
   widget = sqlTableWidget("ArticleLink_view");
   Q_ASSERT(widget != 0);
   Q_ASSERT(widget->tableView() != 0);

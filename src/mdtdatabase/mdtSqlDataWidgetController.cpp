@@ -108,6 +108,8 @@ bool mdtSqlDataWidgetController::mapFormWidgets(QWidget* widget, const QString& 
   updateNavigationControls();
   // Add data validator
   addDataValidator(std::shared_ptr<mdtSqlFormWidgetDataValidator>(new mdtSqlFormWidgetDataValidator(0, pvFieldHandlers)));
+  // Found widgets are not needed anymore
+  pvFoundWidgets.clear();
 
   return true;
 }

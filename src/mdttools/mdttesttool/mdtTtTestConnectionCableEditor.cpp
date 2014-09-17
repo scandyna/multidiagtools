@@ -260,7 +260,8 @@ void mdtTtTestConnectionCableEditor::addLink()
   }
   // Get test node units
   testNodeUnitId = currentData("TestCable_TestNodeUnit_view", "TestNodeUnit_Id_FK");
-  m = model("TestCable_TestNodeUnit_view");
+  ///m = model("TestCable_TestNodeUnit_view");
+  m = 0;
   Q_ASSERT(m != 0);
   col = m->fieldIndex("TestNodeUnit_Id_FK");
   Q_ASSERT(col >= 0);
@@ -270,7 +271,8 @@ void mdtTtTestConnectionCableEditor::addLink()
   }
   // Get DUT units
   dutUnitId = currentData("TestCable_DutUnit_view", "DutUnit_Id_FK");
-  m = model("TestCable_DutUnit_view");
+  ///m = model("TestCable_DutUnit_view");
+  m = 0;
   Q_ASSERT(m != 0);
   col = m->fieldIndex("DutUnit_Id_FK");
   Q_ASSERT(col >= 0);
@@ -332,7 +334,8 @@ void mdtTtTestConnectionCableEditor::editLink()
   }
   // Get test node units
   testNodeUnitId = widget->currentData("Unit_Id_FK_PK");
-  m = model("TestCable_TestNodeUnit_view");
+  ///m = model("TestCable_TestNodeUnit_view");
+  m = 0;
   Q_ASSERT(m != 0);
   col = m->fieldIndex("TestNodeUnit_Id_FK");
   Q_ASSERT(col >= 0);
@@ -342,7 +345,8 @@ void mdtTtTestConnectionCableEditor::editLink()
   }
   // Get DUT units
   dutUnitId = widget->currentData("DutUnitId");
-  m = model("TestCable_DutUnit_view");
+  ///m = model("TestCable_DutUnit_view");
+  m = 0;
   Q_ASSERT(m != 0);
   col = m->fieldIndex("DutUnit_Id_FK");
   Q_ASSERT(col >= 0);
@@ -810,10 +814,11 @@ QList<QVariant> mdtTtTestConnectionCableEditor::selectEndConnectorIdList(const Q
 
 bool mdtTtTestConnectionCableEditor::setupTestCableTable()
 {
-  Ui::mdtTtTestConnectionCableEditor tcce;
+  ///Ui::mdtTtTestConnectionCableEditor tcce;
 
   // Setup main form widget
-  tcce.setupUi(mainSqlWidget());
+  ///tcce.setupUi(mainSqlWidget());
+  setMainTableUi<Ui::mdtTtTestConnectionCableEditor>();
   // Setup form
   if(!setMainTable("TestCable_tbl", "Test cable", database())){
     return false;
@@ -831,13 +836,21 @@ bool mdtTtTestConnectionCableEditor::setupTestLinkTable()
   QPushButton *pbEditLink;
   ///QPushButton *pbGenerateLinks;
   QPushButton *pbRemoveLinks;
+  mdtSqlRelationInfo relationInfo;
 
+  relationInfo.setChildTableName("TestLink_view");
+  relationInfo.addRelation("Id_PK", "TestCable_Id_FK", false);
+  if(!addChildTable(relationInfo, tr("Links"))){
+    return false;
+  }
+  /**
   if(!addChildTable("TestLink_view", tr("Links"), database())){
     return false;
   }
   if(!addRelation("Id_PK", "TestLink_view", "TestCable_Id_FK")){
     return false;
   }
+  */
   widget = sqlTableWidget("TestLink_view");
   Q_ASSERT(widget != 0);
   // Hide technical fields
@@ -902,8 +915,15 @@ bool mdtTtTestConnectionCableEditor::setupTestCableTestNodeUnitTable()
   mdtSqlTableWidget *widget;
   QPushButton *pbAddUnit;
   QPushButton *pbRemoveUnits;
+  mdtSqlRelationInfo relationInfo;
 
   // Add link table
+  relationInfo.setChildTableName("TestCable_TestNodeUnit_view");
+  relationInfo.addRelation("Id_PK", "TestCable_Id_FK", false);
+  if(!addChildTable(relationInfo, tr("Test node units"))){
+    return false;
+  }
+  /**
   if(!addChildTable("TestCable_TestNodeUnit_view", tr("Test node units"), database())){
     return false;
   }
@@ -911,6 +931,7 @@ bool mdtTtTestConnectionCableEditor::setupTestCableTestNodeUnitTable()
   if(!addRelation("Id_PK", "TestCable_TestNodeUnit_view", "TestCable_Id_FK")){
     return false;
   }
+  */
   // Get widget to continue setup
   widget = sqlTableWidget("TestCable_TestNodeUnit_view");
   Q_ASSERT(widget != 0);
@@ -957,6 +978,15 @@ bool mdtTtTestConnectionCableEditor::setupTestCableDutUnitTable()
   QPushButton *pbAddUnit;
   QPushButton *pbRemoveUnits;
 
+  mdtSqlRelationInfo relationInfo;
+
+  // Add DUT unit view
+  relationInfo.setChildTableName("TestCable_DutUnit_view");
+  relationInfo.addRelation("Id_PK", "TestCable_Id_FK", false);
+  if(!addChildTable(relationInfo, tr("DUT units"))){
+    return false;
+  }
+  /**
   // Add link table
   if(!addChildTable("TestCable_DutUnit_view", tr("DUT units"), database())){
     return false;
@@ -965,6 +995,7 @@ bool mdtTtTestConnectionCableEditor::setupTestCableDutUnitTable()
   if(!addRelation("Id_PK", "TestCable_DutUnit_view", "TestCable_Id_FK")){
     return false;
   }
+  */
   // Get widget to continue setup
   widget = sqlTableWidget("TestCable_DutUnit_view");
   Q_ASSERT(widget != 0);

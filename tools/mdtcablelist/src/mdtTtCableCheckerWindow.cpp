@@ -39,7 +39,8 @@ void mdtTtCableCheckerWindow::setCableChecker(mdtTtCableChecker *cc)
   setCentralWidget(pvCableChecker);
 
   // Setup actions
-  fw = pvCableChecker->mainSqlWidget();
+  ///fw = pvCableChecker->mainSqlWidget();
+  fw = 0;
   Q_ASSERT(fw != 0);
   // As default, functions are disabled
   ///actNew->setEnabled(false);

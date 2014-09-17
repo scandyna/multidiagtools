@@ -49,10 +49,11 @@ bool mdtClConnectorEditor::setupTables()
 
 bool mdtClConnectorEditor::setupConnectorTable()
 {
-  Ui::mdtClConnectorEditor ce;
+  ///Ui::mdtClConnectorEditor ce;
 
   // Setup main form widget
-  ce.setupUi(mainSqlWidget());
+  ///ce.setupUi(mainSqlWidget());
+  setMainTableUi<Ui::mdtClConnectorEditor>();
   ///connect(this, SIGNAL(unitEdited()), form()->mainSqlWidget(), SIGNAL(dataEdited()));
   // Setup form
   if(!setMainTable("Connector_tbl", "Connector", database())){
@@ -66,13 +67,21 @@ bool mdtClConnectorEditor::setupConnectorTable()
 bool mdtClConnectorEditor::setupConnectorContactTable()
 {
   mdtSqlTableWidget *widget;
+  mdtSqlRelationInfo relationInfo;
 
+  relationInfo.setChildTableName("ConnectorContact_tbl");
+  relationInfo.addRelation("Id_PK", "Connector_Id_FK", true);
+  if(!addChildTable(relationInfo, tr("Contacts"))){
+    return false;
+  }
+  /**
   if(!addChildTable("ConnectorContact_tbl", tr("Contacts"), database())){
     return false;
   }
   if(!addRelation("Id_PK", "ConnectorContact_tbl", "Connector_Id_FK")){
     return false;
   }
+  */
   widget = sqlTableWidget("ConnectorContact_tbl");
   Q_ASSERT(widget != 0);
   // Enable edition
@@ -90,13 +99,21 @@ bool mdtClConnectorEditor::setupConnectorContactTable()
 bool mdtClConnectorEditor::setupUnitUsageTable()
 {
   mdtSqlTableWidget *widget;
+  mdtSqlRelationInfo relationInfo;
 
+  relationInfo.setChildTableName("UnitConnectorUsage_view");
+  relationInfo.addRelation("Id_PK", "Connector_Id_FK", false);
+  if(!addChildTable(relationInfo, tr("Contacts"))){
+    return false;
+  }
+  /**
   if(!addChildTable("UnitConnectorUsage_view", tr("Used by units"), database())){
     return false;
   }
   if(!addRelation("Id_PK", "UnitConnectorUsage_view", "Connector_Id_FK")){
     return false;
   }
+  */
   widget = sqlTableWidget("UnitConnectorUsage_view");
   Q_ASSERT(widget != 0);
   // Hide technical fields
