@@ -41,8 +41,6 @@ class mdtSqlRelation;
 class mdtSortFilterProxyModel;
 class QSqlField;
 
-#include <QDebug>
-
 /*
  * Container for internal use
  */
@@ -973,7 +971,6 @@ class mdtAbstractSqlTableController : public QObject
   std::shared_ptr<mdtUiMessageHandler> pvMessageHandler;
   QString pvUserFriendlyTableName;
   bool pvOperationComplete;
-  ///QList<std::shared_ptr<mdtAbstractSqlTableController> > pvChildControllers;
   QList<mdtAbstractSqlTableControllerContainer> pvChildControllerContainers;
   // State machine members
   mdtState *pvStateSelecting;

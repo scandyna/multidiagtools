@@ -55,11 +55,9 @@ bool mdtSqlDataWidgetController::mapFormWidgets(QWidget* widget, const QString& 
   Q_ASSERT(model());
   Q_ASSERT(currentState() == Stopped);
 
-  int i; ///, fieldIndex;
+  int i;
   QString fieldName;
   QWidget *w;
-  ///mdtSqlFieldHandler *fieldHandler;
-  ///QSqlRecord record;
   mdtSqlSchemaTable st;
   bool isFirstWidgetInTabOrder;
 
@@ -70,8 +68,6 @@ bool mdtSqlDataWidgetController::mapFormWidgets(QWidget* widget, const QString& 
   pvFirstDataWidget = 0;
   // Search widgets with fld_ as prefix in they objectName
   buildWidgetsList(widget, "fld_");
-  // If we want informations about fields, we must get record from database instance
-  ///record = model()->database().record(model()->tableName());
   // Fetch table information - record returned by QSqlDatabase does not return Date and DateTime field infomration
   if(!st.setupFromTable(model()->tableName(), model()->database())){
     pvLastError = st.lastError();
@@ -91,28 +87,6 @@ bool mdtSqlDataWidgetController::mapFormWidgets(QWidget* widget, const QString& 
       pvFirstDataWidget = 0;
       return false;
     }
-    /**
-    fieldIndex = model()->record().indexOf(fieldName);
-    // If field was found, map it
-    if(fieldIndex >= 0){
-      fieldHandler = new mdtSqlFieldHandler;
-      fieldHandler->setField(st.field(fieldName));
-      fieldHandler->setDataWidget(w);
-      connect(fieldHandler, SIGNAL(dataEdited()), this, SIGNAL(dataEdited()));
-      pvFieldHandlers.append(fieldHandler);
-      // If this widget is the first in focus chain, ref it
-      if(w->objectName() == firstWidgetInTabOrder){
-        pvFirstDataWidget = w;
-      }
-      // Add to widget mapper
-      pvWidgetMapper.addMapping(fieldHandler, fieldIndex, "data");
-    }else{
-      w->setEnabled(false);
-      mdtError e(tr("Cannot find field for widget '") + w->objectName() + tr("'"), mdtError::Warning);
-      MDT_ERROR_SET_SRC(e, "mdtSqlFormWidget");
-      e.commit();
-    }
-    */
   }
   // Update UI
   updateMappedWidgets();
@@ -227,7 +201,6 @@ void mdtSqlDataWidgetController::modelSetEvent()
   Q_ASSERT(model());
 
   model()->setEditStrategy(QSqlTableModel::OnManualSubmit);
-  ///pvWidgetMapper.setModel(model().get());
 }
 
 void mdtSqlDataWidgetController::currentRowChangedEvent(int row)

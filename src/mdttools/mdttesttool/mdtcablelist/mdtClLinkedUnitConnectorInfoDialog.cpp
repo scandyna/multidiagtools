@@ -20,7 +20,9 @@
  ****************************************************************************/
 #include "mdtClLinkedUnitConnectorInfoDialog.h"
 #include "mdtSqlTableWidget.h"
-#include "mdtSqlRelation.h"
+///#include "mdtSqlRelation.h"
+#include "mdtSqlTableViewController.h"
+#include "mdtSqlRelationInfo.h"
 #include "mdtClPathGraph.h"
 #include "mdtClDirectLink.h"
 #include "mdtClUnit.h"
@@ -155,10 +157,11 @@ void mdtClLinkedUnitConnectorInfoDialog::setupConnectorTable()
 
 void mdtClLinkedUnitConnectorInfoDialog::setupLinkedConnectorsTable() 
 {
-  QSqlTableModel *model;
+  ///QSqlTableModel *model;
   QVBoxLayout *layout;
 
   // Setup model
+  /**
   model = new QSqlTableModel(this, pvDatabase);
   model->setTable("UnitConnector_view");
   if(!model->select()){
@@ -170,17 +173,27 @@ void mdtClLinkedUnitConnectorInfoDialog::setupLinkedConnectorsTable()
     displayError(e);
   }
   model->setFilter("Id_PK = -1");
+  */
   // Setup widget
   pvLinkedConnectorsWidget = new mdtSqlTableWidget;
-  pvLinkedConnectorsWidget->setModel(model);
+  pvLinkedConnectorsWidget->setTableName("UnitConnector_view", pvDatabase, tr("Unit connectors"));
+  pvLinkedConnectorsWidget->start();
+  if(!pvLinkedConnectorsWidget->select()){
+    displayError(pvLinkedConnectorsWidget->lastError());
+    return;
+  }
+  ///pvLinkedConnectorsWidget->setModel(model);
   pvLinkedConnectorsWidget->setColumnHidden("Id_PK", true);
   pvLinkedConnectorsWidget->setColumnHidden("Unit_Id_FK", true);
   pvLinkedConnectorsWidget->setColumnHidden("Connector_Id_FK", true);
   pvLinkedConnectorsWidget->setColumnHidden("ArticleConnector_Id_FK", true);
   pvLinkedConnectorsWidget->addColumnToSortOrder("UnitConnectorName", Qt::AscendingOrder);
   ///widget->sort();
+  pvLinkedConnectorsWidget->resizeViewToContents();
+  /**
   Q_ASSERT(pvLinkedConnectorsWidget->tableView() != 0);
   pvLinkedConnectorsWidget->tableView()->resizeColumnsToContents();
+  */
   // Setup direct link widget
   pvDirectLinksWidget = new mdtSqlTableWidget;
   // Layout in gbLinkedConnectors
@@ -196,14 +209,18 @@ void mdtClLinkedUnitConnectorInfoDialog::setupDirectLinkTable()
   Q_ASSERT(pvLinkedConnectorsWidget->model() != 0);
   Q_ASSERT(pvDirectLinksWidget != 0);
 
-  QSqlTableModel *model;
-  mdtSqlRelation *relation;
+  ///QSqlTableModel *model;
+  ///mdtSqlRelation *relation;
+  mdtSqlRelationInfo relationInfo;
 
   // Setup direct link
   pvDirectLink = new mdtClDirectLink(this, pvDatabase);
+  
   // Setup model
+  /**
   model = new QSqlTableModel(this, pvDatabase);
   model->setTable("DirectLink_tbl");
+  */
   /**
   if(!model->select()){
     QSqlError sqlError = model->lastError();
@@ -214,7 +231,14 @@ void mdtClLinkedUnitConnectorInfoDialog::setupDirectLinkTable()
     displayError(e);
   }
   */
-  // Setup relation
+  // Setup relation and child widget
+  relationInfo.setChildTableName("DirectLink_tbl");
+  relationInfo.addRelation("Id_PK", "UnitConnectorEnd_Id_FK", false);
+  if(!pvDirectLinksWidget->addChildTable(relationInfo, tr("Direct links"))){
+    displayError(pvDirectLinksWidget->lastError());
+    return;
+  }
+  /**
   relation = new mdtSqlRelation;
   relation->setParentModel(pvLinkedConnectorsWidget->model());
   relation->setChildModel(model);
@@ -224,9 +248,10 @@ void mdtClLinkedUnitConnectorInfoDialog::setupDirectLinkTable()
     e.commit();
     displayError(e);
   }
+  */
 
   // Setup widget
-  pvDirectLinksWidget->setModel(model);
+  ///pvDirectLinksWidget->setModel(model);
   // Hide relation fields and PK
   pvDirectLinksWidget->setColumnHidden("StartVehicleType_Id_PK", true);
   pvDirectLinksWidget->setColumnHidden("StartVehicleType", true);
@@ -293,10 +318,13 @@ void mdtClLinkedUnitConnectorInfoDialog::setupDirectLinkTable()
   pvDirectLinksWidget->setHeaderData("EndSignalName", tr("End\nsignal"));
   pvDirectLinksWidget->setHeaderData("StartSwAddress", tr("Start\nSW address"));
   pvDirectLinksWidget->setHeaderData("EndSwAddress", tr("End\nSW address"));
+  pvDirectLinksWidget->resizeViewToContents();
+  /**
   Q_ASSERT(pvDirectLinksWidget->tableView() != 0);
   pvDirectLinksWidget->tableView()->resizeColumnsToContents();
+  */
 
-  pvLinkedConnectorsWidget->addChildWidget(pvDirectLinksWidget, relation);
+  ///pvLinkedConnectorsWidget->addChildWidget(pvDirectLinksWidget, relation);
   // Force a update a first time
   ///relation->setParentCurrentIndex(pvLinkedConnectorsWidget->currentRow());
   

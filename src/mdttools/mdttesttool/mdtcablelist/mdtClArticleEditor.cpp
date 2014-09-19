@@ -20,10 +20,11 @@
  ****************************************************************************/
 #include "mdtClArticleEditor.h"
 #include "ui_mdtClArticleEditor.h"
-#include "mdtSqlFormWidget.h"
+#include "mdtSqlTableSelection.h"
+///#include "mdtSqlFormWidget.h"
 #include "mdtSqlTableWidget.h"
-#include "mdtAbstractSqlWidget.h"
-#include "mdtSqlRelation.h"
+///#include "mdtAbstractSqlWidget.h"
+///#include "mdtSqlRelation.h"
 #include "mdtSqlSelectionDialog.h"
 #include "mdtError.h"
 #include "mdtClArticleComponentDialog.h"
@@ -129,17 +130,24 @@ void mdtClArticleEditor::removeComponents()
   mdtSqlTableWidget *widget;
   mdtClArticle art(this, database());
   QMessageBox msgBox;
-  QModelIndexList indexes;
+  ///QModelIndexList indexes;
+  mdtSqlTableSelection s;
   QSqlError sqlError;
   int ret;
 
   widget = sqlTableWidget("ArticleComponent_view");
   Q_ASSERT(widget != 0);
   // Get selected rows
+  s = widget->currentSelection("Component_Id_PK");
+  if(s.isEmpty()){
+    return;
+  }
+  /**
   indexes = widget->indexListOfSelectedRows("Component_Id_PK");
   if(indexes.size() < 1){
     return;
   }
+  */
   // We ask confirmation to the user
   msgBox.setText(tr("You are about to remove components from current article."));
   msgBox.setInformativeText(tr("Do you want to continue ?"));
@@ -151,7 +159,7 @@ void mdtClArticleEditor::removeComponents()
     return;
   }
   // Delete seleced rows
-  if(!art.removeComponents(currentArticleId(), indexes)){
+  if(!art.removeComponents(currentArticleId(), s)){
     ///sqlError = art.lastError();
     QMessageBox msgBox;
     msgBox.setText(tr("Components removing failed."));
@@ -268,15 +276,22 @@ void mdtClArticleEditor::removeConnections()
   mdtSqlTableWidget *widget;
   mdtClArticle art(this, database());
   QMessageBox msgBox;
-  QModelIndexList indexes;
+  ///QModelIndexList indexes;
+  mdtSqlTableSelection s;
 
   widget = sqlTableWidget("ArticleConnection_view");
   Q_ASSERT(widget != 0);
   // Get selected rows
+  s = widget->currentSelection("Id_PK");
+  if(s.isEmpty()){
+    return;
+  }
+  /**
   indexes = widget->indexListOfSelectedRows("Id_PK");
   if(indexes.size() < 1){
     return;
   }
+  */
   // We ask confirmation to the user
   msgBox.setText(tr("You are about to remove connections from current article."));
   msgBox.setInformativeText(tr("Do you want to continue ?"));
@@ -287,7 +302,7 @@ void mdtClArticleEditor::removeConnections()
     return;
   }
   // Delete seleced rows
-  if(!art.removeConnections(indexes)){
+  if(!art.removeConnections(s)){
     pvLastError = art.lastError();
     displayLastError();
     return;
@@ -395,16 +410,23 @@ void mdtClArticleEditor::removeConnectors()
   mdtSqlTableWidget *widget;
   mdtClArticle art(this, database());
   QMessageBox msgBox;
-  QModelIndexList indexes;
+  ///QModelIndexList indexes;
+  mdtSqlTableSelection s;
 
   ///widget = sqlTableWidget("ArticleConnector_view");
   widget = 0;
   Q_ASSERT(widget != 0);
   // Get selected rows
+  s = widget->currentSelection("Id_PK");
+  if(s.isEmpty()){
+    return;
+  }
+  /**
   indexes = widget->indexListOfSelectedRows("Id_PK");
   if(indexes.size() < 1){
     return;
   }
+  */
   // We ask confirmation to the user
   msgBox.setText(tr("You are about to remove connectors and related connections from current article."));
   msgBox.setInformativeText(tr("Do you want to continue ?"));
@@ -415,7 +437,7 @@ void mdtClArticleEditor::removeConnectors()
     return;
   }
   // Delete seleced rows
-  if(!art.removeConnectors(indexes)){
+  if(!art.removeConnectors(s)){
     pvLastError = art.lastError();
     displayLastError();
     return;
@@ -456,30 +478,53 @@ void mdtClArticleEditor::addLink()
 void mdtClArticleEditor::editLink()
 {
   mdtClArticleLinkDialog dialog(0, database(), currentArticleId());
-  int row;
-  mdtAbstractSqlWidget *widget;
+  ///int row;
+  ///mdtAbstractSqlWidget *widget;
+  mdtSqlTableWidget *widget;
   mdtClArticle art(this, database());
   QVariant articleConnectionStartId, articleConnectionEndId;
+  mdtSqlTableSelection s;
+  QStringList fields;
 
   if(currentArticleId().isNull()){
     return;
   }
   ///widget = sqlWidget("ArticleLink_view");
-  widget = 0;
+  widget = sqlTableWidget("ArticleLink_view");
   Q_ASSERT(widget != 0);
+  // Get selected links
+  fields << "ArticleConnectionStart_Id_FK" << "ArticleConnectionEnd_Id_FK" << "LinkType_Code_FK" << "LinkDirection_Code_FK" << "Value";
+  s = widget->currentSelection(fields);
+  if(s.isEmpty()){
+    return;
+  }
   // Check that a link is selected
+  /**
   row = widget->rowCount();
   if(row < 0){
     return;
   }
+  */
+  Q_ASSERT(s.rowCount() > 0);
   // Get start and end connection ID
   /// \todo OK if Null ??
+  /**
   articleConnectionStartId = widget->currentData("ArticleConnectionStart_Id_FK");
   articleConnectionEndId = widget->currentData("ArticleConnectionEnd_Id_FK");
+  */
+  articleConnectionStartId = s.data(0, "ArticleConnectionStart_Id_FK");
+  articleConnectionEndId = s.data(0, "ArticleConnectionEnd_Id_FK");
   // Setup and show dialog
+  /**
   dialog.setLinkTypeCode(widget->currentData("LinkType_Code_FK"));
   dialog.setLinkDirectionCode(widget->currentData("LinkDirection_Code_FK"));
   dialog.setValue(widget->currentData("Value"));
+  dialog.setStartConnectionId(articleConnectionStartId);
+  dialog.setEndConnectionId(articleConnectionEndId);
+  */
+  dialog.setLinkTypeCode(s.data(0, "LinkType_Code_FK"));
+  dialog.setLinkDirectionCode(s.data(0, "LinkDirection_Code_FK"));
+  dialog.setValue(s.data(0, "Value"));
   dialog.setStartConnectionId(articleConnectionStartId);
   dialog.setEndConnectionId(articleConnectionEndId);
   if(dialog.exec() != QDialog::Accepted){
@@ -501,7 +546,8 @@ void mdtClArticleEditor::removeLinks()
   mdtClArticle art(this, database());
   QMessageBox msgBox;
   QStringList fields;
-  QList<QModelIndexList> indexes;
+  ///QList<QModelIndexList> indexes;
+  mdtSqlTableSelection s;
   QSqlError sqlError;
   int ret;
 
@@ -509,10 +555,16 @@ void mdtClArticleEditor::removeLinks()
   Q_ASSERT(widget != 0);
   // Get selected rows
   fields << "ArticleConnectionStart_Id_FK" << "ArticleConnectionEnd_Id_FK";
+  s = widget->currentSelection(fields);
+  if(s.isEmpty()){
+    return;
+  }
+  /**
   indexes = widget->indexListOfSelectedRowsByRowsList(fields);
   if(indexes.size() < 1){
     return;
   }
+  */
   // We ask confirmation to the user
   msgBox.setText(tr("You are about to remove links for current article."));
   msgBox.setInformativeText(tr("Do you want to continue ?"));
@@ -524,7 +576,7 @@ void mdtClArticleEditor::removeLinks()
     return;
   }
   // Delete seleced rows
-  if(!art.removeLinks(indexes)){
+  if(!art.removeLinks(s)){
     pvLastError = art.lastError();
     displayLastError();
     return;

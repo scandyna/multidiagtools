@@ -25,6 +25,7 @@
 #include "mdtSqlRecord.h"
 #include "mdtClArticleConnectionData.h"
 #include "mdtClArticleConnectorData.h"
+#include "mdtSqlTableSelection.h"
 #include <QSqlDatabase>
 #include <QSqlQueryModel>
 #include <QSqlRecord>
@@ -88,7 +89,8 @@ class mdtClArticle : public mdtTtBase
    * \return True on success, false else.
    *          To get reason of failure, use lastError() .
    */
-  bool removeComponents(const QVariant &articleId, const QModelIndexList & indexListOfSelectedRows);
+  ///bool removeComponents(const QVariant &articleId, const QModelIndexList & indexListOfSelectedRows);
+  bool removeComponents(const QVariant &articleId, const mdtSqlTableSelection & s);
 
   /*! \brief Get a list of connector contact data for given connector contact ID list
    *
@@ -149,7 +151,8 @@ class mdtClArticle : public mdtTtBase
    * \return True on success, false else.
    *          To get reason of failure, use lastError() .
    */
-  bool removeConnections(const QModelIndexList & indexListOfSelectedRows);
+  ///bool removeConnections(const QModelIndexList & indexListOfSelectedRows);
+  bool removeConnections(const mdtSqlTableSelection & s);
 
   /*! \brief Remove connections for a given article connector
    *
@@ -189,7 +192,8 @@ class mdtClArticle : public mdtTtBase
    * \return True on success, false else.
    *          To get reason of failure, use lastError() .
    */
-  bool removeConnectors(const QModelIndexList & indexListOfSelectedRows);
+  ///bool removeConnectors(const QModelIndexList & indexListOfSelectedRows);
+  bool removeConnectors(const mdtSqlTableSelection & s);
 
   /*! \brief Add a record in Link table
    *
@@ -236,7 +240,8 @@ class mdtClArticle : public mdtTtBase
 
   /*! \brief Remove each unit link that is contained in selection
    */
-  bool removeLinks(const QList<QModelIndexList> &indexListOfSelectedRowsByRows);
+  ///bool removeLinks(const QList<QModelIndexList> &indexListOfSelectedRowsByRows);
+  bool removeLinks(const mdtSqlTableSelection & s);
 
  private:
 

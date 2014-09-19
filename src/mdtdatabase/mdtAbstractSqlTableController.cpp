@@ -29,7 +29,7 @@
 #include <QPair>
 #include <QVector>
 
-#include <QDebug>
+//#include <QDebug>
 
 using namespace std;
 
@@ -42,7 +42,6 @@ mdtAbstractSqlTableController::mdtAbstractSqlTableController(QObject* parent)
 
 mdtAbstractSqlTableController::~mdtAbstractSqlTableController()
 {
-  qDebug() << "mdtAbstractSqlTableController::~mdtAbstractSqlTableController() - table: " << pvUserFriendlyTableName;
 }
 
 void mdtAbstractSqlTableController::setMessageHandler(shared_ptr< mdtUiMessageHandler > handler)
@@ -122,7 +121,7 @@ bool mdtAbstractSqlTableController::select()
   Q_ASSERT(pvStateMachine.isRunning());
 
   bool ok;
-  int row, _currentRow;
+  int row; ///, _currentRow;
 
   emit selectTriggered();
   pvStateMachine.waitOnState(Selecting);
@@ -143,18 +142,9 @@ bool mdtAbstractSqlTableController::select()
     row = -1;
   }
   // Set current row and force sending event (only 1x !)
-  qDebug() << "Table " << pvModel->tableName() << ": select called";
   if(!setCurrentRowPv(row, true)){
     return false;
   }
-  /**
-  _currentRow = currentRow();
-  setCurrentRow(row);
-  if(_currentRow == row){
-    currentRowChangedEvent(row);
-    ///emit currentRowChanged(row);
-  }
-  */
   if(ok){
     emit operationSucceed();
     pvStateMachine.waitOnState(Visualizing);
@@ -390,31 +380,6 @@ bool mdtAbstractSqlTableController::setData(int row, const QString& fieldName, c
   return true;
 }
 
-// QVariant mdtAbstractSqlTableController::currentData(const QString& fieldName)
-// {
-//   Q_ASSERT(pvModel);
-// 
-//   return data(currentRow(), fieldName);
-// }
-// 
-// QVariant mdtAbstractSqlTableController::currentData(const QString& fieldName, bool & ok)
-// {
-//   Q_ASSERT(pvModel);
-// 
-//   return data(currentRow(), fieldName, ok);
-// }
-
-/**
-QVariant mdtAbstractSqlTableController::data(const QModelIndex& index)
-{
-  Q_ASSERT(pvModel);
-
-  bool ok;
-
-  return data(index, ok);
-}
-*/
-
 QVariant mdtAbstractSqlTableController::data(const QModelIndex& index, bool& ok)
 {
   Q_ASSERT(pvModel);
@@ -431,41 +396,6 @@ QVariant mdtAbstractSqlTableController::data(const QModelIndex& index, bool& ok)
 
   return pvProxyModel->data(index);
 }
-
-/**
-QVariant mdtAbstractSqlTableController::data(int row, int column)
-{
-  Q_ASSERT(pvModel);
-
-  bool ok;
-
-  return data(row, column, ok);
-}
-*/
-
-/**
-QVariant mdtAbstractSqlTableController::data(int row, int column, bool& ok)
-{
-  Q_ASSERT(pvModel);
-
-  QModelIndex index;
-
-  index = pvProxyModel->index(row, column);
-
-  return data(index, ok);
-}
-*/
-
-/**
-QVariant mdtAbstractSqlTableController::data(int row, const QString& fieldName)
-{
-  Q_ASSERT(pvModel);
-
-  bool ok;
-
-  return data(row, fieldName, ok);
-}
-*/
 
 QVariant mdtAbstractSqlTableController::data(int row, const QString& fieldName, bool & ok)
 {
@@ -621,8 +551,6 @@ bool mdtAbstractSqlTableController::setCurrentRow(int row)
 {
   Q_ASSERT(pvModel);
 
-  qDebug() << "Table " << pvModel->tableName() << " - setCurrentRow() - row: " << row;
-
   // Check that state machine runs
   if(!pvStateMachine.isRunning()){
     pvLastError.setError(tr("Cannot change current row because state machine is stopped. Table:") + " '" + userFriendlyTableName() + "'", mdtError::Error);
@@ -695,7 +623,6 @@ bool mdtAbstractSqlTableController::allDataAreSaved()
   if(currentRow() < 0){
     return true;
   }
-  qDebug() << "Table " << pvModel->tableName() << ": allDataAreSaved - state: " << currentState();
   // Check this controller
   if((currentState() != Visualizing)&&(currentState() != Selecting)&&(currentState() != Stopped)){
     if(pvMessageHandler){
@@ -727,14 +654,6 @@ bool mdtAbstractSqlTableController::submitAndWait()
 {
   Q_ASSERT(pvModel);
 
-  /**
-  if((currentState() != Editing)&&(currentState() != EditingNewRow)){
-    QVector<int> states;
-    states << Editing << EditingNewRow;
-    emit dataEdited();
-    pvStateMachine.waitOnOneState(states);
-  }
-  */
   pvLastError.clear();
   pvOperationComplete = false;
   emit submitTriggered();
@@ -819,7 +738,6 @@ bool mdtAbstractSqlTableController::setCurrentRowPv(int row, bool forceSendCurre
   Q_ASSERT(pvModel);
   Q_ASSERT(pvStateMachine.isRunning());
 
-  qDebug() << "Table: " << pvModel->tableName() << ": setCurrentRow() - row: " << row << ", currentRow: " << currentRow() << " - force: " << forceSendCurrentRowChanedEvent;
   // If we are allready at requested row, we not call currentRowChangedEvent() (prevent cyclic calls)
   if((row == currentRow())&&(!forceSendCurrentRowChanedEvent)){
     return true;
@@ -851,24 +769,18 @@ bool mdtAbstractSqlTableController::setCurrentRowPv(int row, bool forceSendCurre
 
 void mdtAbstractSqlTableController::onStateSelectingEntered()
 {
-  qDebug() << pvModel->tableName() <<  __FUNCTION__;
-
-  ///emit globalWidgetEnableStateChanged(false);
+  ///qDebug() << pvModel->tableName() <<  __FUNCTION__;
 }
 
 void mdtAbstractSqlTableController::onRelationFilterApplied()
 {
   Q_ASSERT(pvModel);
-  ///Q_ASSERT(pvStateMachine.isRunning());
 
   int row;
 
   if(!pvStateMachine.isRunning()){
     return;
   }
-  
-  qDebug() << "Table " << pvModel->tableName() << ": filter applayed ba relation";
-  
   // Go to first row
   if(pvModel->rowCount() > 0){
     row = 0;
@@ -882,7 +794,7 @@ void mdtAbstractSqlTableController::onStateVisualizingEntered()
 {
   Q_ASSERT(pvModel);
 
-  qDebug() << pvModel->tableName() <<  __FUNCTION__;
+  ///qDebug() << pvModel->tableName() <<  __FUNCTION__;
 
   emit currentRowChanged(currentRow()); // Childs must display related data again
   emit childWidgetEnableStateChanged(true);
@@ -896,10 +808,7 @@ void mdtAbstractSqlTableController::onStateVisualizingEntered()
 
 void mdtAbstractSqlTableController::onStateVisualizingExited()
 {
-  qDebug() << __FUNCTION__;
-  
-  ///disableChildWidgets();
-  
+  ///qDebug() << __FUNCTION__;
   emit childWidgetEnableStateChanged(false);
   emit insertEnabledStateChanged(false);
   emit removeEnabledStateChanged(false);
@@ -907,7 +816,7 @@ void mdtAbstractSqlTableController::onStateVisualizingExited()
 
 void mdtAbstractSqlTableController::onStateEditingEntered()
 {
-  qDebug() << __FUNCTION__;
+  ///qDebug() << __FUNCTION__;
 
   emit submitEnabledStateChanged(true);
   emit revertEnabledStateChanged(true);
@@ -915,7 +824,7 @@ void mdtAbstractSqlTableController::onStateEditingEntered()
 
 void mdtAbstractSqlTableController::onStateEditingExited()
 {
-  qDebug() << __FUNCTION__;
+  ///qDebug() << __FUNCTION__;
   emit submitEnabledStateChanged(false);
   emit revertEnabledStateChanged(false);
   emit stateEditingExited();
@@ -923,7 +832,7 @@ void mdtAbstractSqlTableController::onStateEditingExited()
 
 void mdtAbstractSqlTableController::onStateSubmittingEntered()
 {
-  qDebug() << __FUNCTION__;
+  ///qDebug() << __FUNCTION__;
 
   if(!checkBeforeSubmit()){
     emit errorOccured();
@@ -940,7 +849,7 @@ void mdtAbstractSqlTableController::onStateRevertingEntered()
 {
   bool doIt;
 
-  qDebug() << __FUNCTION__;
+  ///qDebug() << __FUNCTION__;
 
   // We ask confirmation to the user
   if(pvMessageHandler){
@@ -965,7 +874,7 @@ void mdtAbstractSqlTableController::onStateRevertingEntered()
 
 void mdtAbstractSqlTableController::onStateInsertingEntered()
 {
-  qDebug() << __FUNCTION__;
+  ///qDebug() << __FUNCTION__;
 
   emit currentRowChanged(-1); // Childs must display nothing
   if(doInsert()){
@@ -977,7 +886,7 @@ void mdtAbstractSqlTableController::onStateInsertingEntered()
 
 void mdtAbstractSqlTableController::onStateEditingNewRowEntered()
 {
-  qDebug() << __FUNCTION__;
+  ///qDebug() << __FUNCTION__;
   
   emit submitEnabledStateChanged(true);
   emit revertEnabledStateChanged(true);
@@ -985,7 +894,7 @@ void mdtAbstractSqlTableController::onStateEditingNewRowEntered()
 
 void mdtAbstractSqlTableController::onStateEditingNewRowExited()
 {
-  qDebug() << __FUNCTION__;
+  ///qDebug() << __FUNCTION__;
   emit submitEnabledStateChanged(false);
   emit revertEnabledStateChanged(false);
   emit stateEditingNewRowExited();
@@ -993,7 +902,7 @@ void mdtAbstractSqlTableController::onStateEditingNewRowExited()
 
 void mdtAbstractSqlTableController::onStateSubmittingNewRowEntered()
 {
-  qDebug() << __FUNCTION__;
+  ///qDebug() << __FUNCTION__;
 
   bool ok;
 
@@ -1023,7 +932,7 @@ void mdtAbstractSqlTableController::onStateRevertingNewRowEntered()
 
   bool doIt;
 
-  qDebug() << __FUNCTION__;
+  ///qDebug() << __FUNCTION__;
 
   // We ask confirmation to the user
   if(pvMessageHandler){
@@ -1052,7 +961,7 @@ void mdtAbstractSqlTableController::onStateRemovingEntered()
 
   bool doIt;
 
-  qDebug() << __FUNCTION__;
+  ///qDebug() << __FUNCTION__;
 
   // If no row exists, we do nothing
   if(rowCount() < 1){

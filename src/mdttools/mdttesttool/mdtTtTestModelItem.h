@@ -143,7 +143,7 @@ class mdtTtTestModelItem : public mdtTtBase
 
   /*! \brief Remove test node unit setup
    */
-  bool removeTestNodeUnitSetups(const QModelIndexList & indexListOfSelectedRows);
+  ///bool removeTestNodeUnitSetups(const QModelIndexList & indexListOfSelectedRows);
 
   /*! \brief Remove all test node unit setup for given test item ID
    */

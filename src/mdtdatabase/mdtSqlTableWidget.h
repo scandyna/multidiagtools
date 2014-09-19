@@ -21,8 +21,7 @@
 #ifndef MDT_SQL_TABLE_WIDGET_H
 #define MDT_SQL_TABLE_WIDGET_H
 
-#include "mdtAbstractSqlWidget.h"
-
+#include "mdtError.h"
 #include "mdtSqlTableViewController.h"
 #include "mdtSqlTableSelection.h"
 #include <QModelIndex>
@@ -37,7 +36,6 @@ class QTableView;
 class QHBoxLayout;
 class QPushButton;
 class QItemSelectionModel;
-///class QWidget;
 class QKeyEvent;
 
 /*
@@ -88,7 +86,6 @@ class mdtSqlTableWidgetItemDelegate : public QStyledItemDelegate
  *  This class add some common needed methods,
  *  like insertion, removing, ...
  */
-///class mdtSqlTableWidget : public mdtAbstractSqlWidget
 class mdtSqlTableWidget :  public QWidget
 {
  Q_OBJECT
@@ -99,9 +96,6 @@ class mdtSqlTableWidget :  public QWidget
    * \todo TO REMOVE !!!!!!
    */
   QSqlTableModel *model() { return 0; }
-  void setModel(QSqlTableModel *m) {}
-  void addChildWidget(mdtAbstractSqlWidget *widget, mdtSqlRelation *relation){}
-  void addChildWidget(mdtSqlTableWidget *widget, mdtSqlRelation *relation){}
 
   /*! \brief Constructor
    *
@@ -121,6 +115,10 @@ class mdtSqlTableWidget :  public QWidget
   /*! \brief Set user friendly table name
    */
   void setUserFriendlyTableName(const QString & name) { pvController->setUserFriendlyTableName(name); }
+
+  /*! \brief Get user friendly table name
+   */
+  QString userFriendlyTableName() const { return pvController->userFriendlyTableName(); }
 
   /*! \brief Get table name
    */
@@ -331,65 +329,11 @@ class mdtSqlTableWidget :  public QWidget
    */
   inline mdtSqlTableSelection currentSelection(const QString &field) { return pvController->currentSelection(field); }
 
-  /*! \brief Get a list of currently selected indexes in a list of rows
-   *
-   * \deprecated
-   *
-   * Will return a list of indexes that contains only coulumns
-   *  specified by columnList.
-   * This alos works for multiple rows selection.
-   *
-   * \pre Model must be set with setModel() before using this method.
+  /*! \brief Get last error
    */
-  QList<QModelIndexList> indexListOfSelectedRowsByRowsList(const QList<int> &columnList);
-
-  /*! \brief Get a list of currently selected indexes in a list of rows
-   *
-   * \overload indexListOfSelectedRowsByRowsList(const QList<int> &)
-   */
-  QList<QModelIndexList> indexListOfSelectedRowsByRowsList(const QStringList &fieldList);
-
-  /*! \brief Get a list of currently selected indexes
-   *
-   * \deprecated
-   *
-   * Will return a list of indexes that contains only coulumns
-   *  specified by columnList.
-   * This alos works for multiple rows selection.
-   *
-   * \pre Model must be set with setModel() before using this method.
-   */
-  QModelIndexList indexListOfSelectedRows(const QList<int> &columnList);
-
-  /*! \brief Get a list of currently selected indexes
-   *
-   * \deprecated
-   *
-   * Will return a list of indexes that contains only fields
-   *  specified by fieldList.
-   * This alos works for multiple rows selection.
-   *
-   * \pre Model must be set with setModel() before using this method.
-   */
-  QModelIndexList indexListOfSelectedRows(const QStringList &fieldList);
-
-  /*! \brief Get a list of currently selected indexes
-   *
-   * \deprecated
-   *
-   * \overload indexListOfSelectedRows(const QStringList &)
-   *
-   * This is a variant for single column.
-   */
-  QModelIndexList indexListOfSelectedRows(const QString &field);
+  inline mdtError lastError() const { return pvController->lastError(); }
 
  public slots:
-
-  /*! \brief Set row as current record
-   * 
-   * \todo REMOVE
-   */
-  ///void setCurrentIndex(int row);
 
   /*! \brief Resize view to contents
    */
@@ -401,39 +345,10 @@ class mdtSqlTableWidget :  public QWidget
 
  private slots:
 
-  /*! \internal Set internal delegateIsEditingData flag
-   *
-   * This slot is called by mdtSqlTableWidgetItemDelegate when editor was created.
-   *  See remark in onTableViewKnownKeyPressed()
-   *
-   * This slot will emit dataEdited()
-   */
-  ///void onDataEditionBegins();
-
-  /*! \internal Reset internal delegateIsEditingData
-   *
-   * See remark in onTableViewKnownKeyPressed()
-   */
-  ///void onDataChanged(const QModelIndex &, const QModelIndex &);
-
-  /*! \brief Does some tasks when entering new row
-   */
-  ///void onCurrentRowChanged(const QModelIndex & current, const QModelIndex & previous);
-
   /*! \brief Execute a action after a known key was pressed in table view
    */
   ///void onTableViewKnownKeyPressed(int key);
 
-  /*! \brief Select first row in table view
-   *
-   * When select() or similar method is called on model,
-   *  QTableView's selection is loosed.
-   *  If a child widget is attached, it is also not updated.
-   * If model has data after select() was called, currentRowChanged() signal
-   *  is emitted using table view's selection model,
-   *  else this method will emit it with a invalid row (-1).
-   */
-  ///void onModelSelected();
 
   /*! \brief Get column index of first visible column
    */
@@ -455,43 +370,6 @@ class mdtSqlTableWidget :  public QWidget
    */
   void copySelectionToClipBoard();
 
-  /*! \brief Set model
-   *
-   * Set the model that handle database.
-   *  (See Qt's QSqlTableModel documentation for details).
-   *
-   * \pre model must be a valid pointer.
-   */
-  ///void doSetModel(QSqlTableModel *model);
-
-  ///bool doSubmit();
-
-  ///bool doRevert();
-
-  ///bool doInsert();
-
-  ///bool doSubmitNewRow();
-
-  ///bool doRevertNewRow();
-
-  ///bool doRemove();
-
-  /*! \brief Set first record as current record
-   */
-  ///void toFirst();
-
-  /*! \brief Set last record as current record
-   */
-  ///void toLast();
-
-  /*! \brief Set previous record as current record
-   */
-  ///void toPrevious();
-
-  /*! \brief Set next record as current record
-   */
-  ///void toNext();
-
   /*! \brief Create local edition elements
    */
   void createLocalEditionElements();
@@ -507,19 +385,11 @@ class mdtSqlTableWidget :  public QWidget
   std::shared_ptr<mdtSqlTableViewController> pvController;
   QHBoxLayout *pvTopHorizontalLayout;
   QHBoxLayout *pvBottomHorizontalLayout;
-  // Navigation buttons
-  QPushButton *pbNavToFirst;
-  QPushButton *pbNavToPrevious;
-  QPushButton *pbNavToNext;
-  QPushButton *pbNavToLast;
   // Edition buttons
   QPushButton *pbInsert;
   QPushButton *pbSubmit;
   QPushButton *pbRevert;
   QPushButton *pbRemove;
-  // Flags
-  ///bool pvDelegateIsEditingData;   // See remark in onTableViewKnownKeyPressed()
-  ///int pvDefaultColumnToSelect;    // Used by setCurrentIndex()
 };
 
 #endif  // #ifndef MDT_SQL_TABLE_WIDGET_H

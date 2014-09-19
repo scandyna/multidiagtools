@@ -385,15 +385,22 @@ void mdtTtTestConnectionCableEditor::removeLinks()
   mdtSqlTableWidget *widget;
   mdtTtTestConnectionCable tcc(this, database());
   QMessageBox msgBox;
-  QModelIndexList indexes;
+  ///QModelIndexList indexes;
+  mdtSqlTableSelection s;
 
   widget = sqlTableWidget("TestLink_view");
   Q_ASSERT(widget != 0);
   // Get selected rows
+  s = widget->currentSelection("Id_PK");
+  if(s.isEmpty()){
+    return;
+  }
+  /**
   indexes = widget->indexListOfSelectedRows("Id_PK");
   if(indexes.size() < 1){
     return;
   }
+  */
   // We ask confirmation to the user
   msgBox.setText(tr("You are about to remove selected links."));
   msgBox.setInformativeText(tr("Do you want to continue ?"));
@@ -404,7 +411,8 @@ void mdtTtTestConnectionCableEditor::removeLinks()
     return;
   }
   // Delete seleced rows
-  if(!tcc.removeData("TestLink_tbl", "Id_PK", indexes)){
+  if(!tcc.removeData("TestLink_tbl", s, true)){
+  ///if(!tcc.removeData("TestLink_tbl", "Id_PK", indexes)){
     pvLastError = tcc.lastError();
     displayLastError();
     return;

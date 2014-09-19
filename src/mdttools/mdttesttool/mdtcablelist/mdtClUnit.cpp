@@ -473,6 +473,7 @@ bool mdtClUnit::removeComponents(const QList<QVariant> &componentIdList)
   return true;
 }
 
+/**
 bool mdtClUnit::removeComponents(const QModelIndexList & indexListOfSelectedRows)
 {
   int i;
@@ -481,6 +482,17 @@ bool mdtClUnit::removeComponents(const QModelIndexList & indexListOfSelectedRows
   for(i = 0; i < indexListOfSelectedRows.size(); ++i){
     idList.append(indexListOfSelectedRows.at(i).data());
   }
+
+  return removeComponents(idList);
+}
+*/
+
+bool mdtClUnit::removeComponents(const mdtSqlTableSelection & s)
+{
+  int i;
+  QList<QVariant> idList;
+
+  idList = s.dataList("UnitComponent_Id_PK");
 
   return removeComponents(idList);
 }
@@ -820,12 +832,27 @@ bool mdtClUnit::removeConnector(const QVariant& unitConnectorId)
   return true;
 }
 
+/**
 bool mdtClUnit::removeConnectors(const QModelIndexList & indexListOfSelectedRows)
 {
   int i;
 
   for(i = 0; i < indexListOfSelectedRows.size(); ++i){
     if(!removeConnector(indexListOfSelectedRows.at(i).data())){
+      return false;
+    }
+  }
+
+  return true;
+}
+*/
+
+bool mdtClUnit::removeConnectors(const mdtSqlTableSelection & s)
+{
+  int i;
+
+  for(i = 0; i < s.rowCount(); ++i){
+    if(!removeConnector(s.data(i, "Id_PK"))){
       return false;
     }
   }

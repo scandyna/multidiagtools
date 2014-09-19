@@ -161,6 +161,7 @@ bool mdtClArticle::removeComponents(const QVariant &articleId, const QList<QVari
   return true;
 }
 
+/**
 bool mdtClArticle::removeComponents(const QVariant &articleId, const QModelIndexList & indexListOfSelectedRows)
 {
   int i;
@@ -169,6 +170,17 @@ bool mdtClArticle::removeComponents(const QVariant &articleId, const QModelIndex
   for(i = 0; i < indexListOfSelectedRows.size(); ++i){
     idList.append(indexListOfSelectedRows.at(i).data());
   }
+
+  return removeComponents(articleId, idList);
+}
+*/
+
+bool mdtClArticle::removeComponents(const QVariant &articleId, const mdtSqlTableSelection & s)
+{
+  int i;
+  QList<QVariant> idList;
+
+  idList = s.dataList("Component_Id_PK");
 
   return removeComponents(articleId, idList);
 }
@@ -355,6 +367,7 @@ bool mdtClArticle::removeConnections(const QList<QVariant> & articleConnectionId
   return true;
 }
 
+/**
 bool mdtClArticle::removeConnections(const QModelIndexList & indexListOfSelectedRows)
 {
   int i;
@@ -363,6 +376,17 @@ bool mdtClArticle::removeConnections(const QModelIndexList & indexListOfSelected
   for(i = 0; i < indexListOfSelectedRows.size(); ++i){
     idList.append(indexListOfSelectedRows.at(i).data());
   }
+
+  return removeConnections(idList);
+}
+*/
+
+bool mdtClArticle::removeConnections(const mdtSqlTableSelection & s)
+{
+  int i;
+  QList<QVariant> idList;
+
+  idList = s.dataList("Id_PK");
 
   return removeConnections(idList);
 }
@@ -502,6 +526,7 @@ bool mdtClArticle::removeConnector(const QVariant & articleConnectorId)
   return true;
 }
 
+/**
 bool mdtClArticle::removeConnectors(const QModelIndexList & indexListOfSelectedRows)
 {
   if(!beginTransaction()){
@@ -514,6 +539,29 @@ bool mdtClArticle::removeConnectors(const QModelIndexList & indexListOfSelectedR
   }
   // Remove connectors
   if(!removeData("ArticleConnector_tbl", "Id_PK", indexListOfSelectedRows)){
+    rollbackTransaction();
+    return false;
+  }
+  if(!commitTransaction()){
+    return false;
+  }
+
+  return true;
+}
+*/
+
+bool mdtClArticle::removeConnectors(const mdtSqlTableSelection & s)
+{
+  if(!beginTransaction()){
+    return false;
+  }
+  // Remove connections
+  if(!removeData("ArticleConnection_tbl", s, false)){
+    rollbackTransaction();
+    return false;
+  }
+  // Remove connectors
+  if(!removeData("ArticleConnector_tbl", s, false)){
     rollbackTransaction();
     return false;
   }
@@ -588,6 +636,7 @@ bool mdtClArticle::removeLink(const QVariant & articleConnectionStartId, const Q
   return removeData("ArticleLink_tbl", "ArticleConnectionStart_Id_FK", articleConnectionStartId, "ArticleConnectionEnd_Id_FK", articleConnectionEndId);
 }
 
+/**
 bool mdtClArticle::removeLinks(const QList<QModelIndexList> &indexListOfSelectedRowsByRows)
 {
   int row;
@@ -600,6 +649,25 @@ bool mdtClArticle::removeLinks(const QList<QModelIndexList> &indexListOfSelected
     indexes = indexListOfSelectedRowsByRows.at(row);
     Q_ASSERT(indexes.size() == 2);
     if(!removeLink(indexes.at(0).data(), indexes.at(1).data())){
+      rollbackTransaction();
+      return false;
+    }
+  }
+
+  return commitTransaction();
+}
+*/
+
+bool mdtClArticle::removeLinks(const mdtSqlTableSelection & s)
+{
+  int row;
+  QModelIndexList indexes;
+
+  if(!beginTransaction()){
+    return false;
+  }
+  for(row = 0; row < s.rowCount(); ++row){
+    if(!removeLink(s.data(row, "ArticleConnectionStart_Id_FK"), s.data(row, "ArticleConnectionEnd_Id_FK"))){
       rollbackTransaction();
       return false;
     }

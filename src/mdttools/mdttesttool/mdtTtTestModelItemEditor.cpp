@@ -674,15 +674,22 @@ void mdtTtTestModelItemEditor::removeTestNodeUnitSetup()
   mdtSqlTableWidget *widget;
   mdtTtTestModelItem tmi(this, database());
   QMessageBox msgBox;
-  QModelIndexList indexes;
+  ///QModelIndexList indexes;
+  mdtSqlTableSelection s;
 
   widget = sqlTableWidget("TestModelItemNodeUnitSetup_view");
   Q_ASSERT(widget != 0);
   // Get selected rows
+  s = widget->currentSelection("Id_PK");
+  if(s.isEmpty()){
+    return;
+  }
+  /**
   indexes = widget->indexListOfSelectedRows("Id_PK");
   if(indexes.size() < 1){
     return;
   }
+  */
   // We ask confirmation to the user
   msgBox.setText(tr("You are about to remove selected setup items."));
   msgBox.setInformativeText(tr("Do you want to continue ?"));
@@ -693,7 +700,7 @@ void mdtTtTestModelItemEditor::removeTestNodeUnitSetup()
     return;
   }
   // Delete seleced rows
-  if(!tmi.removeTestNodeUnitSetups(indexes)){
+  if(!tmi.removeTestNodeUnitSetups(s)){
     pvLastError = tmi.lastError();
     displayLastError();
     return;

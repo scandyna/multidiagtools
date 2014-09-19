@@ -22,6 +22,7 @@
 #define MDT_CL_UNIT_VEHICLE_TYPE_H
 
 #include "mdtTtBase.h"
+#include "mdtSqlTableSelection.h"
 #include <QSqlDatabase>
 #include <QList>
 #include <QVariant>
@@ -74,7 +75,8 @@ class mdtClUnitVehicleType : public mdtTtBase
 
   /*! \brief Remove unit <-> vehicle type assignments
    */
-  bool removeUnitVehicleAssignments(const QVariant & unitId, const QModelIndexList & vehicleTypeIdList);
+  ///bool removeUnitVehicleAssignments(const QVariant & unitId, const QModelIndexList & vehicleTypeIdList);
+  bool removeUnitVehicleAssignments(const QVariant & unitId, const mdtSqlTableSelection & vehicleTypeIdListSelection);
 
  private:
 

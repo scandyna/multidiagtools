@@ -48,7 +48,8 @@ mdtTtBasicTesterWindow::mdtTtBasicTesterWindow(QSqlDatabase db, QWidget* parent)
   tbInstruments->setLayout(l);
   // Setup test item table widget
   pvTestItemWidget = new mdtSqlTableWidget;
-  pvTestItemWidget->setModel(pvTesterWidget->testItemViewTableModel().get());
+  /// \todo Adapter !
+  ///pvTestItemWidget->setModel(pvTesterWidget->testItemViewTableModel().get());
   l = new QVBoxLayout;
   l->addWidget(pvTestItemWidget);
   tbTestItem->setLayout(l);

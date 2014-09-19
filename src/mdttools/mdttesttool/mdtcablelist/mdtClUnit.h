@@ -219,7 +219,8 @@ class mdtClUnit : public mdtTtBase
    * \return True on success, false else.
    *          To get reason of failure, use lastError() .
    */
-  bool removeComponents(const QModelIndexList & indexListOfSelectedRows);
+  ///bool removeComponents(const QModelIndexList & indexListOfSelectedRows);
+  bool removeComponents(const mdtSqlTableSelection & s);
 
   /*! \brief Return the number unit connections that are related to article connections
    *
@@ -296,7 +297,8 @@ class mdtClUnit : public mdtTtBase
    * \return True on success, false else.
    *          To get reason of failure, use lastError() .
    */
-  bool removeConnectors(const QModelIndexList & indexListOfSelectedRows);
+  ///bool removeConnectors(const QModelIndexList & indexListOfSelectedRows);
+  bool removeConnectors(const mdtSqlTableSelection & s);
 
   /*! \brief
    */

@@ -1150,14 +1150,15 @@ void mdtClMainWindow::createBasicTester()
 mdtSqlTableWidget *mdtClMainWindow::createTableView(const QString & tableName, const QString & userFriendlyTableName)
 {
   mdtSqlTableWidget *tableWidget;
-  QSqlTableModel *model;
-  QString uftn;
+  ///QSqlTableModel *model;
+  ///QString uftn;
 
   // Check that we have currently a database open
   if(!pvDatabaseManager->database().isOpen()){
     displayWarning(tr("No database is open."), tr("Please open a database and try again."));
     return 0;
   }
+  /**
   // Set user friendly table name
   if(userFriendlyTableName.isEmpty()){
     uftn = tableName;
@@ -1177,10 +1178,12 @@ mdtSqlTableWidget *mdtClMainWindow::createTableView(const QString & tableName, c
     delete model;
     return 0;
   }
+  */
   // Setup widget
   tableWidget = new mdtSqlTableWidget;
-  tableWidget->setModel(model);
-  tableWidget->setUserFriendlyTableName(uftn);
+  tableWidget->setTableName(tableName, pvDatabaseManager->database(), userFriendlyTableName);
+  ///tableWidget->setModel(model);
+  ///tableWidget->setUserFriendlyTableName(uftn);
   // Setup tab widget (if needed)
   if(pvTabWidget == 0){
     pvTabWidget = new QTabWidget;
@@ -1188,8 +1191,15 @@ mdtSqlTableWidget *mdtClMainWindow::createTableView(const QString & tableName, c
     setCentralWidget(pvTabWidget);  /// \todo Check if current central widget deleted ..
     connect(pvTabWidget, SIGNAL(tabCloseRequested(int)), this, SLOT(closeTableView(int)));
   }
+  // Start table widget
+  tableWidget->start();
+  if(!tableWidget->select()){
+    displayError(tableWidget->lastError());
+    delete tableWidget;
+    return 0;
+  }
   // Add view
-  pvTabWidget->addTab(tableWidget, uftn);
+  pvTabWidget->addTab(tableWidget, tableWidget->userFriendlyTableName());
   pvOpenViews.append(tableWidget);
   pvTabWidget->setCurrentWidget(tableWidget);
 

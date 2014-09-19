@@ -175,7 +175,8 @@ void mdtClUnitEditor::removeVehicleAssignation()
   int ret;
   QMessageBox msgBox;
   mdtSqlTableWidget *vehicleTypeWidget;
-  QModelIndexList indexes;
+  ///QModelIndexList indexes;
+  mdtSqlTableSelection s;
   mdtClUnitVehicleType uvt(0, database());
 
   // Get vehicle widget
@@ -188,10 +189,16 @@ void mdtClUnitEditor::removeVehicleAssignation()
     return;
   }
   // Get selected rows
+  s = vehicleTypeWidget->currentSelection("VehicleType_Id_FK");
+  if(s.isEmpty()){
+    return;
+  }
+  /**
   indexes = vehicleTypeWidget->indexListOfSelectedRows("VehicleType_Id_FK");
   if(indexes.size() < 1){
     return;
   }
+  */
   // We ask confirmation to the user
   msgBox.setText(tr("You are about to remove assignations between selected vehicles and current unit."));
   msgBox.setInformativeText(tr("Do you want to continue ?"));
@@ -203,7 +210,7 @@ void mdtClUnitEditor::removeVehicleAssignation()
     return;
   }
   // Delete seleced rows
-  if(!uvt.removeUnitVehicleAssignments(unitId, indexes)){
+  if(!uvt.removeUnitVehicleAssignments(unitId, s)){
     pvLastError = uvt.lastError();
     displayLastError();
     return;
@@ -319,16 +326,23 @@ void mdtClUnitEditor::removeComponents()
   mdtSqlTableWidget *widget;
   mdtClUnit unit(this, database());
   QMessageBox msgBox;
-  QModelIndexList indexes;
+  ///QModelIndexList indexes;
+  mdtSqlTableSelection s;
   int ret;
 
   widget = sqlTableWidget("UnitComponent_view");
   Q_ASSERT(widget != 0);
   // Get selected rows
+  s = widget->currentSelection("UnitComponent_Id_PK");
+  if(s.isEmpty()){
+    return;
+  }
+  /**
   indexes = widget->indexListOfSelectedRows("UnitComponent_Id_PK");
   if(indexes.size() < 1){
     return;
   }
+  */
   // We ask confirmation to the user
   msgBox.setText(tr("You are about to remove components from current unit."));
   msgBox.setInformativeText(tr("Do you want to continue ?"));
@@ -340,7 +354,7 @@ void mdtClUnitEditor::removeComponents()
     return;
   }
   // Delete seleced rows
-  if(!unit.removeComponents(indexes)){
+  if(!unit.removeComponents(s)){
     pvLastError = unit.lastError();
     displayLastError();
     return;
@@ -562,15 +576,22 @@ void mdtClUnitEditor::removeConnectors()
   mdtSqlTableWidget *widget;
   mdtClUnit unit(this, database());
   QMessageBox msgBox;
-  QModelIndexList indexes;
+  ///QModelIndexList indexes;
+  mdtSqlTableSelection s;
 
   widget = sqlTableWidget("UnitConnector_view");
   Q_ASSERT(widget != 0);
   // Get selected rows
+  s = widget->currentSelection("Id_PK");
+  if(s.isEmpty()){
+    return;
+  }
+  /**
   indexes = widget->indexListOfSelectedRows("Id_PK");
   if(indexes.size() < 1){
     return;
   }
+  */
   // We ask confirmation to the user
   msgBox.setText(tr("You are about to remove connectors from current unit. This will also remove related connections."));
   msgBox.setInformativeText(tr("Do you want to continue ?"));
@@ -581,7 +602,7 @@ void mdtClUnitEditor::removeConnectors()
     return;
   }
   // Remove connectors
-  if(!unit.removeConnectors(indexes)){
+  if(!unit.removeConnectors(s)){
     pvLastError = unit.lastError();
     displayLastError();
     return;

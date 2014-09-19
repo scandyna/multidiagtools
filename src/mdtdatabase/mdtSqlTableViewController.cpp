@@ -28,7 +28,7 @@
 #include <QSqlError>
 #include <QCoreApplication>
 
-#include <QDebug>
+//#include <QDebug>
 
 /*
  * mdtSqlTableViewControllerItemDelegate implementation
@@ -53,7 +53,6 @@ QWidget* mdtSqlTableViewControllerItemDelegate::createEditor(QWidget* parent, co
 
 void mdtSqlTableViewControllerItemDelegate::setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const
 {
-  qDebug() << "setModelData() ...";
   QStyledItemDelegate::setModelData(editor, model, index);
   emit dataEditionDone();
 }
@@ -247,10 +246,8 @@ void mdtSqlTableViewController::currentRowChangedEvent(int row)
 void mdtSqlTableViewController::modelSetEvent()
 {
   Q_ASSERT(model());
-  ///Q_ASSERT(pvTableView != 0);
 
   model()->setEditStrategy(QSqlTableModel::OnManualSubmit);
-  ///pvTableView->setModel(model().get());
 }
 
 bool mdtSqlTableViewController::doSubmit()
@@ -265,24 +262,6 @@ bool mdtSqlTableViewController::doSubmit()
 
   // Remember current index (will be lost during submit)
   ///row = currentRow();
-  
-  int row, col;
-  QModelIndex index;
-  QWidget *w;
-  QAbstractItemDelegate *d;
-  d = pvTableView->itemDelegate();
-  Q_ASSERT(d != 0);
-  for(row = 0; row < proxyModel()->rowCount(); ++row){
-    for(col = 0; col < proxyModel()->columnCount(); ++col){
-      index = proxyModel()->index(row, col);
-      qDebug() << "index: " << index;
-      w = pvTableView->indexWidget(index);
-      if(w != 0){
-        qDebug() << "Widget at row " << row << ", col " << col;
-        d->setModelData(w, proxyModel().get(), index);
-      }
-    }
-  }
 
   waitEditionDone();
   // Submit to database

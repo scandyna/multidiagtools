@@ -556,6 +556,7 @@ bool mdtTtTestModelItem::removeTestNodeUnitSetup(const QVariant & tnusId)
   return true;
 }
 
+/**
 bool mdtTtTestModelItem::removeTestNodeUnitSetups(const QModelIndexList & indexListOfSelectedRows)
 {
   int row;
@@ -568,6 +569,7 @@ bool mdtTtTestModelItem::removeTestNodeUnitSetups(const QModelIndexList & indexL
 
   return true;
 }
+*/
 
 bool mdtTtTestModelItem::removeTestNodeUnitSetupsForTestItemId(const QVariant & testItemId)
 {

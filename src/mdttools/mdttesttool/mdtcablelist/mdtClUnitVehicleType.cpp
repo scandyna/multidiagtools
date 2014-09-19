@@ -166,6 +166,7 @@ bool mdtClUnitVehicleType::removeUnitVehicleAssignments(const QVariant& unitId, 
   return true;
 }
 
+/**
 bool mdtClUnitVehicleType::removeUnitVehicleAssignments(const QVariant & unitId, const QModelIndexList & vehicleTypeIdList)
 {
   QList<QVariant> idList;
@@ -175,6 +176,18 @@ bool mdtClUnitVehicleType::removeUnitVehicleAssignments(const QVariant & unitId,
   for(i = 0; i < vehicleTypeIdList.size(); ++i){
     idList.append(vehicleTypeIdList.at(i).data());
   }
+
+  return removeUnitVehicleAssignments(unitId, idList);
+}
+*/
+
+bool mdtClUnitVehicleType::removeUnitVehicleAssignments(const QVariant & unitId, const mdtSqlTableSelection & vehicleTypeIdListSelection)
+{
+  QList<QVariant> idList;
+  int i;
+
+  // Add entries for each vehicle type ID
+  idList = vehicleTypeIdListSelection.dataList("VehicleType_Id_FK");
 
   return removeUnitVehicleAssignments(unitId, idList);
 }
