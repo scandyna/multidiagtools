@@ -58,6 +58,15 @@ void mdtAbstractSqlTableController::setMessageHandler(shared_ptr< mdtUiMessageHa
   }
 }
 
+bool mdtAbstractSqlTableController::hasMessageHandler() const
+{
+  if(pvMessageHandler){
+    return true;
+  }else{
+    return false;
+  }
+}
+
 void mdtAbstractSqlTableController::setTableName(const QString& tableName, QSqlDatabase db, const QString& userFriendlyTableName)
 {
   shared_ptr<QSqlTableModel> m(new QSqlTableModel(0, db));
@@ -134,12 +143,18 @@ bool mdtAbstractSqlTableController::select()
     row = -1;
   }
   // Set current row and force sending event (only 1x !)
+  qDebug() << "Table " << pvModel->tableName() << ": select called";
+  if(!setCurrentRowPv(row, true)){
+    return false;
+  }
+  /**
   _currentRow = currentRow();
   setCurrentRow(row);
   if(_currentRow == row){
     currentRowChangedEvent(row);
-    emit currentRowChanged(row);
+    ///emit currentRowChanged(row);
   }
+  */
   if(ok){
     emit operationSucceed();
     pvStateMachine.waitOnState(Visualizing);
@@ -606,6 +621,8 @@ bool mdtAbstractSqlTableController::setCurrentRow(int row)
 {
   Q_ASSERT(pvModel);
 
+  qDebug() << "Table " << pvModel->tableName() << " - setCurrentRow() - row: " << row;
+
   // Check that state machine runs
   if(!pvStateMachine.isRunning()){
     pvLastError.setError(tr("Cannot change current row because state machine is stopped. Table:") + " '" + userFriendlyTableName() + "'", mdtError::Error);
@@ -618,7 +635,7 @@ bool mdtAbstractSqlTableController::setCurrentRow(int row)
     return false;
   }
 
-  return setCurrentRowPv(row);
+  return setCurrentRowPv(row, false);
 }
 
 bool mdtAbstractSqlTableController::setCurrentRow(const QString& fieldName, const QVariant& matchData)
@@ -644,8 +661,8 @@ bool mdtAbstractSqlTableController::setCurrentRow(const QString& fieldName, cons
   // Search row
   row = 0;
   while(true){
-    index = pvModel->index(row, col);
-    if(pvModel->data(index) == matchData){
+    index = proxyModel()->index(row, col);
+    if(proxyModel()->data(index) == matchData){
       return setCurrentRow(row);
     }
     if(row == (pvModel->rowCount()-1)){
@@ -670,8 +687,15 @@ bool mdtAbstractSqlTableController::setCurrentRow(const QString& fieldName, cons
 
 bool mdtAbstractSqlTableController::allDataAreSaved()
 {
+  Q_ASSERT(pvModel);
+
   int i;
 
+  // If current row is < 0 , we have no data to check
+  if(currentRow() < 0){
+    return true;
+  }
+  qDebug() << "Table " << pvModel->tableName() << ": allDataAreSaved - state: " << currentState();
   // Check this controller
   if((currentState() != Visualizing)&&(currentState() != Selecting)&&(currentState() != Stopped)){
     if(pvMessageHandler){
@@ -682,6 +706,8 @@ bool mdtAbstractSqlTableController::allDataAreSaved()
       msg += tr(": some data are not saved.");
       pvMessageHandler->setText(msg);
       msg = tr("Please save or cancel modifications and try again.");
+      pvMessageHandler->setInformativeText(msg);
+      pvMessageHandler->setType(mdtUiMessageHandler::Warning);
       pvMessageHandler->displayToUser();
     }
     return false;
@@ -743,13 +769,59 @@ void mdtAbstractSqlTableController::remove()
   emit removeTriggered();
 }
 
-bool mdtAbstractSqlTableController::setCurrentRowPv(int row)
+bool mdtAbstractSqlTableController::beginTransaction()
+{
+  Q_ASSERT(pvModel);
+
+  if(!pvModel->database().transaction()){
+    QSqlError sqlError = pvModel->database().lastError();
+    pvLastError.setError(tr("Cannot beginn transaction (database: '") + pvModel->database().databaseName() + tr("')."), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtAbstractSqlTableController");
+    pvLastError.commit();
+    return false;
+  }
+  return true;
+}
+
+bool mdtAbstractSqlTableController::rollbackTransaction()
+{
+  Q_ASSERT(pvModel);
+
+  if(!pvModel->database().rollback()){
+    QSqlError sqlError = pvModel->database().lastError();
+    pvLastError.setError(tr("Cannot rollback transaction (database: '") + pvModel->database().databaseName() + tr("')."), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtAbstractSqlTableController");
+    pvLastError.commit();
+    return false;
+  }
+  return true;
+}
+
+bool mdtAbstractSqlTableController::commitTransaction()
+{
+  Q_ASSERT(pvModel);
+
+  if(!pvModel->database().commit()){
+    QSqlError sqlError = pvModel->database().lastError();
+    pvLastError.setError(tr("Cannot commit transaction (database: '") + pvModel->database().databaseName() + tr("')."), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtAbstractSqlTableController");
+    pvLastError.commit();
+    return false;
+  }
+  return true;
+}
+
+bool mdtAbstractSqlTableController::setCurrentRowPv(int row, bool forceSendCurrentRowChanedEvent)
 {
   Q_ASSERT(pvModel);
   Q_ASSERT(pvStateMachine.isRunning());
 
+  qDebug() << "Table: " << pvModel->tableName() << ": setCurrentRow() - row: " << row << ", currentRow: " << currentRow() << " - force: " << forceSendCurrentRowChanedEvent;
   // If we are allready at requested row, we not call currentRowChangedEvent() (prevent cyclic calls)
-  if(row == currentRow()){
+  if((row == currentRow())&&(!forceSendCurrentRowChanedEvent)){
     return true;
   }
   // With empty model, we have a special case, baucause fetchMore will allways return true (infinite loop)
@@ -784,12 +856,35 @@ void mdtAbstractSqlTableController::onStateSelectingEntered()
   ///emit globalWidgetEnableStateChanged(false);
 }
 
+void mdtAbstractSqlTableController::onRelationFilterApplied()
+{
+  Q_ASSERT(pvModel);
+  ///Q_ASSERT(pvStateMachine.isRunning());
+
+  int row;
+
+  if(!pvStateMachine.isRunning()){
+    return;
+  }
+  
+  qDebug() << "Table " << pvModel->tableName() << ": filter applayed ba relation";
+  
+  // Go to first row
+  if(pvModel->rowCount() > 0){
+    row = 0;
+  }else{
+    row = -1;
+  }
+  setCurrentRowPv(row, true);
+}
+
 void mdtAbstractSqlTableController::onStateVisualizingEntered()
 {
   Q_ASSERT(pvModel);
 
   qDebug() << pvModel->tableName() <<  __FUNCTION__;
 
+  emit currentRowChanged(currentRow()); // Childs must display related data again
   emit childWidgetEnableStateChanged(true);
   emit insertEnabledStateChanged(true);
   if(currentRow() > -1){
@@ -872,6 +967,7 @@ void mdtAbstractSqlTableController::onStateInsertingEntered()
 {
   qDebug() << __FUNCTION__;
 
+  emit currentRowChanged(-1); // Childs must display nothing
   if(doInsert()){
     emit operationSucceed();
   }else{
@@ -998,6 +1094,7 @@ bool mdtAbstractSqlTableController::setupAndAddChildController(shared_ptr< mdtAb
   relation->setParentModel(pvModel.get());
   relation->setChildModel(controller->pvModel.get());
   connect(this, SIGNAL(currentRowChanged(int)), relation.get(), SLOT(setParentCurrentIndex(int)));
+  connect(relation.get(), SIGNAL(childModelFilterApplied()), controller.get(), SLOT(onRelationFilterApplied()));
   for(i = 0; i < relationInfo.items().size(); ++i){
     item = relationInfo.items().at(i);
     if(!relation->addRelation(item.parentFieldName, item.childFieldName, item.copyParentToChildOnInsertion, item.relationOperatorWithPreviousItem)){

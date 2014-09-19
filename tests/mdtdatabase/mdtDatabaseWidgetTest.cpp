@@ -748,11 +748,26 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QCOMPARE(w.fld_FirstName->text(), QString("New name 2"));
   QCOMPARE(w.fld_Remarks->text(), QString("New remark 2"));
   /*
+   * Check currentRow after inert, revert
+   */
+  wc.toFirst();
+  QTest::qWait(50);
+  wc.toNext();
+  QTest::qWait(50);
+  QCOMPARE(wc.currentRow(), 1);
+  wc.insert();
+  QTest::qWait(50);
+  wc.revert();
+  QTest::qWait(50);
+  QCOMPARE(wc.currentRow(), 1);
+  /*
    * Check edition
    *  - Edit current row
    *  - Check in model
    *  - Check in widgets
    */
+  wc.toLast();
+  QTest::qWait(50);
   // Check control buttons states - before edition
   QVERIFY(w.toFirstEnabled);
   QVERIFY(!w.toLastEnabled);
@@ -1351,6 +1366,9 @@ void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
   /*
    * Check edition (by user) and submit
    */
+  
+  qDebug() << "TEST - check edition + submit...";
+  
   QVERIFY(tvc.currentState() == mdtAbstractSqlTableController::Visualizing);
   index = tv.model()->index(0, 2);
   tv.edit(index);
@@ -1368,6 +1386,10 @@ void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
   /*
    * Check edition (by user) and revert
    */
+  
+  qDebug() << "TEST - check edition + revert ...";
+
+  QCOMPARE(tvc.rowCount(), 4);
   QVERIFY(tvc.currentState() == mdtAbstractSqlTableController::Visualizing);
   index = tv.model()->index(0, 2);
   tv.edit(index);
@@ -1384,19 +1406,28 @@ void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
   /*
    * Check insertion (by user) and submit
    */
-  tvc.insert();
+  
+  qDebug() << "TEST - check insertion + submit ...";
+  tvc.setDefaultColumnToSelect("FirstName");
+  QCOMPARE(tvc.rowCount(), 4);
+  tvc.insert();   // Will also call edit itself
   QTest::qWait(50);
-  index = tv.model()->index(tvc.currentRow(), 1);
-  tv.edit(index);
+  QCOMPARE(tvc.rowCount(false), 5);
+  index = tv.model()->index(4, 1);
+  ///tv.edit(index);
   lineEdit = qobject_cast<QLineEdit*>(tv.indexWidget(index));
   QVERIFY(lineEdit != 0);
   QTest::keyClicks(lineEdit, "New name 1");
   QTest::keyClick(lineEdit, Qt::Key_Enter);
   QVERIFY(tvc.submitAndWait());
   // Check that data was set
-  QCOMPARE(tvc.currentData("FirstName"), QVariant("New name 1"));
-  QCOMPARE(tvc.currentData("Remarks"), QVariant(""));
+  ///QCOMPARE(tvc.currentData("FirstName"), QVariant("New name 1"));
+  ///QCOMPARE(tvc.currentData("Remarks"), QVariant(""));
   // Select and check that database was updated
+  /*
+   * Select and check
+   * Note: because of sorting, we find New name 1 at row 3 after select()
+   */
   QVERIFY(tvc.select());
   QCOMPARE(tvc.rowCount(), 5);
   QCOMPARE(tvc.data(3, "FirstName"), QVariant("New name 1"));
@@ -1404,10 +1435,16 @@ void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
   /*
    * Check insertion (by user) and revert
    */
+  
+  qDebug() << "TEST - check insertion + revert ...";
+  tvc.setDefaultColumnToSelect("Remarks");
+  QCOMPARE(tvc.rowCount(), 5);
   tvc.insert();
   QTest::qWait(50);
-  index = tv.model()->index(tvc.currentRow(), 2);
-  tv.edit(index);
+  QCOMPARE(tvc.rowCount(false), 6);
+  ///index = tv.model()->index(tvc.currentRow(), 2);
+  index = tv.model()->index(5, 2);
+  ///tv.edit(index);
   lineEdit = qobject_cast<QLineEdit*>(tv.indexWidget(index));
   QVERIFY(lineEdit != 0);
   QTest::keyClicks(lineEdit, "New remark 1");
@@ -1422,9 +1459,11 @@ void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
   /*
    * Check delete
    */
+  QCOMPARE(tvc.rowCount(), 5);
   tv.selectRow(3);
   tvc.remove();
   QTest::qWait(1000); // Writing in DB can be very slow, f.ex. with Sqlite on HDD
+  QCOMPARE(tvc.rowCount(), 4);
   // Select and check that row was removed
   tvc.addColumnToSortOrder("FirstName", Qt::AscendingOrder);
   QVERIFY(tvc.select());
@@ -1713,13 +1752,40 @@ void mdtDatabaseWidgetTest::sqlControllerParentChildTest()
   QCOMPARE(clientWidget.fld_FirstName->text(), QString("Charly"));
   QCOMPARE(clientWidget.fld_Remarks->text(), QString("Remark on Charly"));
   QCOMPARE(addressController->rowCount(), 0);
+  // Go to previous and check
+  clientController.toPrevious();
+  QTest::qWait(50);
+  QCOMPARE(clientWidget.fld_FirstName->text(), QString("Bety"));
+  QCOMPARE(clientWidget.fld_Remarks->text(), QString("Remark on Bety"));
+  QCOMPARE(addressController->rowCount(), 1);
+  QCOMPARE(addressController->data(0, "StreetName"), QVariant("Bety street 1"));
+  // Go to last and check
+  clientController.toLast();
+  QTest::qWait(50);
+  QCOMPARE(clientWidget.fld_FirstName->text(), QString("Zeta"));
+  QCOMPARE(clientWidget.fld_Remarks->text(), QString("Remark on Zeta"));
+  QCOMPARE(addressController->rowCount(), 0);
+  // Go to first and check
+  clientController.toFirst();
+  QTest::qWait(50);
+  QCOMPARE(clientWidget.fld_FirstName->text(), QString("Andy"));
+  QCOMPARE(clientWidget.fld_Remarks->text(), QString(""));
+  QCOMPARE(addressController->rowCount(), 2);
+  QCOMPARE(addressController->data(0, "StreetName"), QVariant("Andy street 1"));
+  QCOMPARE(addressController->data(1, "StreetName"), QVariant("Andy street 2"));
+  // Go to Id_PK 4 (Charly) and check
+  QVERIFY(clientController.setCurrentRow("Id_PK", 4));
+  QCOMPARE(clientWidget.fld_FirstName->text(), QString("Charly"));
+  QCOMPARE(clientWidget.fld_Remarks->text(), QString("Remark on Charly"));
+  QCOMPARE(addressController->rowCount(), 0);
   /*
    * Check insertion in child table
    */
-  addressController->insert();
+  addressController->setDefaultColumnToSelect("StreetName");
+  addressController->insert();  // Will also call edit itself
   QTest::qWait(50);
   index = addressView.model()->index(0, 1);
-  addressView.edit(index);
+  ///addressView.edit(index);
   lineEdit = qobject_cast<QLineEdit*>(addressView.indexWidget(index));
   QVERIFY(lineEdit != 0);
   QTest::keyClicks(lineEdit, "New Charly street 2");
@@ -1767,6 +1833,7 @@ void mdtDatabaseWidgetTest::sqlControllerParentChildTest()
   QTest::keyClick(lineEdit, Qt::Key_Enter);
   QTest::qWait(50);
   QVERIFY(addressController->submitAndWait());
+  QCOMPARE(addressController->rowCount(), 1);
   QCOMPARE(addressController->data(0, "StreetName"), QVariant("Edited Charly street 2"));
   QCOMPARE(addressController->data(0, "StreetNumber"), QVariant(2));
   /*
@@ -1778,7 +1845,21 @@ void mdtDatabaseWidgetTest::sqlControllerParentChildTest()
   clientController.revert();
   QTest::qWait(50);
   QVERIFY(addressView.isEnabled());
-
+  /*
+   * Check insertion in main table
+   */
+  QVERIFY(addressView.isEnabled());
+  QCOMPARE(addressController->rowCount(), 1);
+  clientController.insert();
+  QTest::qWait(50);
+  QVERIFY(!addressView.isEnabled());
+  QCOMPARE(addressController->rowCount(), 0);
+  // Revert and check
+  clientController.revert();
+  QTest::qWait(50);
+  QCOMPARE(clientController.currentRow(), 2);
+  QVERIFY(addressView.isEnabled());
+  QCOMPARE(addressController->rowCount(), 1);
 
   /*
    * Play
@@ -2411,13 +2492,14 @@ void mdtDatabaseWidgetTest::sqlFormTest()
   QVERIFY(form.select("Address_tbl"));
   QVERIFY(!form.select("NotExisting_tbl"));
 
-  
   /*
    * Play
    */
+  /*
   while(form.isVisible()){
     QTest::qWait(500);
   }
+  */
 
   // Cleanup
   clearTestDatabaseData();

@@ -113,6 +113,10 @@ class mdtAbstractSqlTableController : public QObject
    */
   void setMessageHandler(std::shared_ptr<mdtUiMessageHandler> handler);
 
+  /*! \brief Check if a message handler was allready set
+   */
+  bool hasMessageHandler() const;
+
   /*! \brief Set table name
    *
    * Will replace internal model if allready set.
@@ -647,6 +651,24 @@ class mdtAbstractSqlTableController : public QObject
    */
   inline std::shared_ptr<mdtSortFilterProxyModel> proxyModel() { return pvProxyModel; }
 
+  /*! \brief Beginn manually a new transaction
+   *
+   * On error, false is returned and error is available with lastError() .
+   */
+  bool beginTransaction();
+
+  /*! \brief Rollback manually a new transaction
+   *
+   * On error, false is returned and error is available with lastError() .
+   */
+  bool rollbackTransaction();
+
+  /*! \brief Commit manually a new transaction
+   *
+   * On error, false is returned and error is available with lastError() .
+   */
+  bool commitTransaction();
+
   /*! \brief Table model set event
    *
    * Cann be re-implemented in subclass
@@ -664,9 +686,11 @@ class mdtAbstractSqlTableController : public QObject
    *  in database. If request row could not be found, false is returned.
    *
    * \param row Row to witch to go. Must be in range [-1;rowCount()-1]
+   * \param forceSendCurrentRowChanedEvent If true, currentRowChangedEvent() will be called, not regarding if
+   *                                        row has changed (usefull when filter was applyed)
    * \pre Table model must be set with setModel() or setTableName() begore calling this method.
    */
-  bool setCurrentRowPv(int row);
+  bool setCurrentRowPv(int row, bool forceSendCurrentRowChanedEvent);
 
   /*! \brief Submit current row to model
    *
@@ -820,6 +844,10 @@ class mdtAbstractSqlTableController : public QObject
    *  and should not be used directly.
    */
   void onStateSelectingEntered();
+
+  /*! \brief Called by mdtSqlRelation whenn it applied filter
+   */
+  void onRelationFilterApplied();
 
   /*! \brief Activity after Visualizing state entered
    *

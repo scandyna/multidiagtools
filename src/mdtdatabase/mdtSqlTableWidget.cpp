@@ -44,6 +44,7 @@
 #include <QClipboard>
 #include <QMimeData>
 #include <QApplication>
+#include <memory>
 
 #include <QDebug>
 
@@ -162,6 +163,7 @@ mdtSqlTableWidget::mdtSqlTableWidget(QWidget *parent)
   pbNavToNext = 0;
   pbNavToLast = 0;
   createLocalEditionElements();
+  connectLocalEditionSignals();
   ///pvDelegateIsEditingData = false;
   ///pvDefaultColumnToSelect = 0;
 
@@ -181,8 +183,10 @@ void mdtSqlTableWidget::setTableController(shared_ptr< mdtSqlTableViewController
 {
   Q_ASSERT(controller);
 
+  disconnectLocalEditionSignals();
   pvController = controller;
   pvController->setTableView(pvTableView);
+  connectLocalEditionSignals();
 }
 
 bool mdtSqlTableWidget::addChildTable(const mdtSqlRelationInfo& relationInfo, QSqlDatabase db, const QString& userFriendlyChildTableName)
@@ -1046,22 +1050,12 @@ void mdtSqlTableWidget::createLocalEditionElements()
   pbSubmit->setVisible(false);
   pbRevert->setVisible(false);
   pbRemove->setVisible(false);
-  // Connect actions enable/disable
-  connect(pvController.get(), SIGNAL(insertEnabledStateChanged(bool)), pbInsert, SLOT(setEnabled(bool)));
-  connect(pvController.get(), SIGNAL(submitEnabledStateChanged(bool)), pbSubmit, SLOT(setEnabled(bool)));
-  connect(pvController.get(), SIGNAL(revertEnabledStateChanged(bool)), pbRevert, SLOT(setEnabled(bool)));
-  connect(pvController.get(), SIGNAL(removeEnabledStateChanged(bool)), pbRemove, SLOT(setEnabled(bool)));
   /**
   connect(this, SIGNAL(insertEnabledStateChanged(bool)), pbInsert, SLOT(setEnabled(bool)));
   connect(this, SIGNAL(submitEnabledStateChanged(bool)), pbSubmit, SLOT(setEnabled(bool)));
   connect(this, SIGNAL(revertEnabledStateChanged(bool)), pbRevert, SLOT(setEnabled(bool)));
   connect(this, SIGNAL(removeEnabledStateChanged(bool)), pbRemove, SLOT(setEnabled(bool)));
   */
-  // Connect actions triggers
-  connect(pbInsert, SIGNAL(clicked()), pvController.get(), SLOT(insert()));
-  connect(pbSubmit, SIGNAL(clicked()), pvController.get(), SLOT(submit()));
-  connect(pbRevert, SIGNAL(clicked()), pvController.get(), SLOT(revert()));
-  connect(pbRemove, SIGNAL(clicked()), pvController.get(), SLOT(remove()));
   /**
   connect(pbInsert, SIGNAL(clicked()), this, SLOT(insert()));
   connect(pbSubmit, SIGNAL(clicked()), this, SLOT(submit()));
@@ -1074,5 +1068,33 @@ void mdtSqlTableWidget::createLocalEditionElements()
   pvBottomHorizontalLayout->addWidget(pbRevert);
   pvBottomHorizontalLayout->addWidget(pbRemove);
   // Update buttons first time
-  setEditionEnabled(true);
+  ///setEditionEnabled(true);
+}
+
+void mdtSqlTableWidget::connectLocalEditionSignals()
+{
+  // Connect actions enable/disable
+  connect(pvController.get(), SIGNAL(insertEnabledStateChanged(bool)), pbInsert, SLOT(setEnabled(bool)));
+  connect(pvController.get(), SIGNAL(submitEnabledStateChanged(bool)), pbSubmit, SLOT(setEnabled(bool)));
+  connect(pvController.get(), SIGNAL(revertEnabledStateChanged(bool)), pbRevert, SLOT(setEnabled(bool)));
+  connect(pvController.get(), SIGNAL(removeEnabledStateChanged(bool)), pbRemove, SLOT(setEnabled(bool)));
+  // Connect actions triggers
+  connect(pbInsert, SIGNAL(clicked()), pvController.get(), SLOT(insert()));
+  connect(pbSubmit, SIGNAL(clicked()), pvController.get(), SLOT(submit()));
+  connect(pbRevert, SIGNAL(clicked()), pvController.get(), SLOT(revert()));
+  connect(pbRemove, SIGNAL(clicked()), pvController.get(), SLOT(remove()));
+}
+
+void mdtSqlTableWidget::disconnectLocalEditionSignals()
+{
+  // Connect actions enable/disable
+  disconnect(pvController.get(), SIGNAL(insertEnabledStateChanged(bool)), pbInsert, SLOT(setEnabled(bool)));
+  disconnect(pvController.get(), SIGNAL(submitEnabledStateChanged(bool)), pbSubmit, SLOT(setEnabled(bool)));
+  disconnect(pvController.get(), SIGNAL(revertEnabledStateChanged(bool)), pbRevert, SLOT(setEnabled(bool)));
+  disconnect(pvController.get(), SIGNAL(removeEnabledStateChanged(bool)), pbRemove, SLOT(setEnabled(bool)));
+  // Connect actions triggers
+  disconnect(pbInsert, SIGNAL(clicked()), pvController.get(), SLOT(insert()));
+  disconnect(pbSubmit, SIGNAL(clicked()), pvController.get(), SLOT(submit()));
+  disconnect(pbRevert, SIGNAL(clicked()), pvController.get(), SLOT(revert()));
+  disconnect(pbRemove, SIGNAL(clicked()), pvController.get(), SLOT(remove()));
 }

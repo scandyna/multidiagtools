@@ -22,9 +22,12 @@
 #include "mdtClUnit.h"
 #include "mdtClLink.h"
 #include "ui_mdtClUnitEditor.h"
-#include "mdtSqlFormWidget.h"
+///#include "mdtSqlFormWidget.h"
 #include "mdtSqlTableWidget.h"
-#include "mdtSqlRelation.h"
+///#include "mdtSqlRelation.h"
+#include "mdtAbstractSqlTableController.h"
+#include "mdtSqlDataWidgetController.h"
+#include "mdtSqlRelationInfo.h"
 #include "mdtSqlSelectionDialog.h"
 #include "mdtSqlTableSelection.h"
 #include "mdtError.h"
@@ -50,6 +53,7 @@
 #include <QWidget>
 #include <QDataWidgetMapper>
 #include <QTableView>
+#include <memory>
 
 #include <QDebug>
 
@@ -1353,16 +1357,18 @@ QList<QVariant> mdtClUnitEditor::selectByArticleIdArticleConnectionIdList(const 
 bool mdtClUnitEditor::setupUnitTable()
 {
   Ui::mdtClUnitEditor ue;
-  QSqlTableModel *unitModel;
-  QDataWidgetMapper *baseArticleMapper;
-  QSqlTableModel *baseArticleModel;
-  mdtSqlRelation *baseArticleRelation;
+  std::shared_ptr<mdtSqlDataWidgetController> unitController;
+  std::shared_ptr<mdtSqlDataWidgetController> articleController;
+  mdtSqlRelationInfo relationInfo;
+  ///QSqlTableModel *unitModel;
+  ///QDataWidgetMapper *baseArticleMapper;
+  ///QSqlTableModel *baseArticleModel;
+  ///mdtSqlRelation *baseArticleRelation;
 
   // Setup main form widget
   ///ue.setupUi(mainSqlWidget());
   setMainTableUi<Ui::mdtClUnitEditor>(ue);
   connect(ue.pbSetBaseArticle, SIGNAL(clicked()), this, SLOT(setBaseArticle()));
-  ///connect(this, SIGNAL(unitEdited()), mainSqlWidget(), SIGNAL(dataEdited()));
   // Setup form
   if(!setMainTable("Unit_tbl", "Units", database())){
     return false;
@@ -1370,6 +1376,29 @@ bool mdtClUnitEditor::setupUnitTable()
   /*
    * Setup base article widget mapping
    */
+  // Get unit controller and add it a new controller for Article_tbl
+  unitController = tableController<mdtSqlDataWidgetController>("Unit_tbl");
+  Q_ASSERT(unitController);
+  relationInfo.setChildTableName("Article_tbl");
+  relationInfo.addRelation("Article_Id_FK", "Id_PK", false);
+  if(!unitController->addChildController<mdtSqlDataWidgetController>(relationInfo, tr("Base article"))){
+    pvLastError = unitController->lastError();
+    return false;
+  }
+  // Get freshly added article controller and map widgets to it
+  articleController = tableController<mdtSqlDataWidgetController>("Article_tbl");
+  Q_ASSERT(articleController);
+  
+  qDebug() << unitController->tableName();
+  qDebug() << articleController->tableName();
+  
+  articleController->addMapping(ue.leArticle_Id_FK, "Id_PK");
+  articleController->addMapping(ue.leArticleCode, "ArticleCode");
+  articleController->addMapping(ue.leArticleDesignationEN, "DesignationEN");
+  articleController->addMapping(ue.leArticleDesignationFR, "DesignationFR");
+  articleController->addMapping(ue.leArticleDesignationDE, "DesignationDE");
+  articleController->addMapping(ue.leArticleDesignationIT, "DesignationIT");
+  /**
   ///unitModel = model("Unit_tbl");
   unitModel = 0;
   Q_ASSERT(unitModel != 0);
@@ -1400,6 +1429,7 @@ bool mdtClUnitEditor::setupUnitTable()
   connect(baseArticleRelation, SIGNAL(childModelIsEmpty()), baseArticleMapper, SLOT(revert()));
   // Force a update
   ///mainSqlWidget()->setCurrentIndex(mainSqlWidget()->currentRow());
+  */
 
   return true;
 }

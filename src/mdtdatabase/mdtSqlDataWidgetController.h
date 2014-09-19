@@ -30,6 +30,7 @@
 class mdtSqlFieldHandler;
 class QSqlTableModel;
 class QLayoutItem;
+class mdtSqlSchemaTable;
 
 /*! \brief
  */
@@ -63,6 +64,23 @@ class mdtSqlDataWidgetController : public mdtAbstractSqlTableController
    * \pre Internal state machine must run (see start() ).
    */
   bool mapFormWidgets(QWidget *widget, const QString &firstWidgetInTabOrder = QString());
+
+  /*! \brief Add mapping between widget and fieldName
+   *
+   * \param widget Widget that will act on fieldName.
+   * \param fieldName Field name on witch widget must act.
+   * \param isFirstWidgetInTabOrder If true, given widget will obtain focus during insertion.
+   */
+  bool addMapping(QWidget *widget, const QString & fieldName, bool isFirstWidgetInTabOrder = false);
+
+  /*! \brief Add mapping between widget and fieldName
+   *
+   * \param widget Widget that will act on fieldName.
+   * \param fieldName Field name on witch widget must act.
+   * \param schemaTable Is used to fetch field informations. Must be initialized with mdtSqlSchemaTable::setupFromTable().
+   * \param isFirstWidgetInTabOrder If true, given widget will obtain focus during insertion.
+   */
+  bool addMapping(QWidget *widget, const QString & fieldName, const mdtSqlSchemaTable & st, bool isFirstWidgetInTabOrder = false);
 
   /*! \brief Get current row
    */
@@ -209,6 +227,7 @@ class mdtSqlDataWidgetController : public mdtAbstractSqlTableController
   QWidgetList pvFoundWidgets;       // Used temporary during mapping - see searchWidgets() and buildWidgetsList()
   QList<mdtSqlFieldHandler*> pvFieldHandlers;
   QWidget *pvFirstDataWidget;       // Keep trace of first data edit/view widget in focus chain
+  int pvBeforeInsertCurrentRow;
 };
 
 #endif  // #ifndef MDT_SQL_DATA_WIDGET_CONTROLLER_H

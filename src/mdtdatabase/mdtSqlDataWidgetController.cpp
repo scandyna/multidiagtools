@@ -45,6 +45,7 @@ mdtSqlDataWidgetController::mdtSqlDataWidgetController(QObject* parent)
 
 mdtSqlDataWidgetController::~mdtSqlDataWidgetController()
 {
+  qDeleteAll(pvFieldHandlers);
 }
 
 bool mdtSqlDataWidgetController::mapFormWidgets(QWidget* widget, const QString& firstWidgetInTabOrder)
@@ -54,12 +55,13 @@ bool mdtSqlDataWidgetController::mapFormWidgets(QWidget* widget, const QString& 
   Q_ASSERT(model());
   Q_ASSERT(currentState() == Stopped);
 
-  int i, fieldIndex;
+  int i; ///, fieldIndex;
   QString fieldName;
   QWidget *w;
-  mdtSqlFieldHandler *fieldHandler;
-  QSqlRecord record;
+  ///mdtSqlFieldHandler *fieldHandler;
+  ///QSqlRecord record;
   mdtSqlSchemaTable st;
+  bool isFirstWidgetInTabOrder;
 
   // Clear previous mapping
   qDeleteAll(pvFieldHandlers);
@@ -69,7 +71,7 @@ bool mdtSqlDataWidgetController::mapFormWidgets(QWidget* widget, const QString& 
   // Search widgets with fld_ as prefix in they objectName
   buildWidgetsList(widget, "fld_");
   // If we want informations about fields, we must get record from database instance
-  record = model()->database().record(model()->tableName());
+  ///record = model()->database().record(model()->tableName());
   // Fetch table information - record returned by QSqlDatabase does not return Date and DateTime field infomration
   if(!st.setupFromTable(model()->tableName(), model()->database())){
     pvLastError = st.lastError();
@@ -80,8 +82,16 @@ bool mdtSqlDataWidgetController::mapFormWidgets(QWidget* widget, const QString& 
     w = pvFoundWidgets.at(i);
     Q_ASSERT(w != 0);
     fieldName = w->objectName();
-    // Search matching field in model
     fieldName = fieldName.right(fieldName.length()-4);
+    isFirstWidgetInTabOrder = (w->objectName() == firstWidgetInTabOrder);
+    if(!addMapping(w, fieldName, st, isFirstWidgetInTabOrder)){
+      qDeleteAll(pvFieldHandlers);
+      pvFieldHandlers.clear();
+      pvWidgetMapper.clearMapping();
+      pvFirstDataWidget = 0;
+      return false;
+    }
+    /**
     fieldIndex = model()->record().indexOf(fieldName);
     // If field was found, map it
     if(fieldIndex >= 0){
@@ -102,6 +112,7 @@ bool mdtSqlDataWidgetController::mapFormWidgets(QWidget* widget, const QString& 
       MDT_ERROR_SET_SRC(e, "mdtSqlFormWidget");
       e.commit();
     }
+    */
   }
   // Update UI
   updateMappedWidgets();
@@ -110,6 +121,56 @@ bool mdtSqlDataWidgetController::mapFormWidgets(QWidget* widget, const QString& 
   addDataValidator(std::shared_ptr<mdtSqlFormWidgetDataValidator>(new mdtSqlFormWidgetDataValidator(0, pvFieldHandlers)));
   // Found widgets are not needed anymore
   pvFoundWidgets.clear();
+
+  return true;
+}
+
+bool mdtSqlDataWidgetController::addMapping(QWidget* widget, const QString& fieldName, bool isFirstWidgetInTabOrder)
+{
+  Q_ASSERT(widget != 0);
+  Q_ASSERT(model());
+  Q_ASSERT(currentState() == Stopped);
+
+  mdtSqlSchemaTable st;
+
+  if(!st.setupFromTable(model()->tableName(), model()->database())){
+    pvLastError = st.lastError();
+    return false;
+  }
+
+  return addMapping(widget, fieldName, st, isFirstWidgetInTabOrder);
+}
+
+bool mdtSqlDataWidgetController::addMapping(QWidget* widget, const QString& fieldName, const mdtSqlSchemaTable& st, bool isFirstWidgetInTabOrder)
+{
+  Q_ASSERT(widget != 0);
+  Q_ASSERT(model());
+  Q_ASSERT(currentState() == Stopped);
+
+  int fieldIndex;
+  mdtSqlFieldHandler *fieldHandler;
+
+  // Search matching field in model
+  fieldIndex = model()->record().indexOf(fieldName);
+  // If field was found, map it
+  if(fieldIndex >= 0){
+    fieldHandler = new mdtSqlFieldHandler;
+    fieldHandler->setField(st.field(fieldName));
+    fieldHandler->setDataWidget(widget);
+    connect(fieldHandler, SIGNAL(dataEdited()), this, SIGNAL(dataEdited()));
+    pvFieldHandlers.append(fieldHandler);
+    // If this widget is the first in focus chain, ref it
+    if(isFirstWidgetInTabOrder){
+      pvFirstDataWidget = widget;
+    }
+    // Add to widget mapper
+    pvWidgetMapper.addMapping(fieldHandler, fieldIndex, "data");
+  }else{
+    widget->setEnabled(false);
+    mdtError e(tr("Cannot find field for widget '") + widget->objectName() + tr("'"), mdtError::Warning);
+    MDT_ERROR_SET_SRC(e, "mdtSqlFormWidget");
+    e.commit();
+  }
 
   return true;
 }
@@ -248,6 +309,8 @@ bool mdtSqlDataWidgetController::doSubmit()
 
 bool mdtSqlDataWidgetController::doRevert()
 {
+  Q_ASSERT(model());
+
   pvWidgetMapper.revert();
 
   return true;
@@ -260,6 +323,8 @@ bool mdtSqlDataWidgetController::doInsert()
 
   int row;
 
+  // Remember current row, on case user wants to revert
+  pvBeforeInsertCurrentRow = currentRow();
   // Insert new row at end
   row = rowCount(true);
   model()->insertRow(row);
@@ -298,8 +363,7 @@ bool mdtSqlDataWidgetController::doRevertNewRow()
     }
     return false;
   }
-  // Data was never submit to model, we simply go to last row
-  pvWidgetMapper.setCurrentIndex(row - 1);
+  pvWidgetMapper.setCurrentIndex(pvBeforeInsertCurrentRow);
 
   return true;
 }
@@ -354,7 +418,7 @@ bool mdtSqlDataWidgetController::doRemove()
    * Because of this, we must be shure to fetch all data until we find our row
    */
   row = qMin(row, rowCount(true) - 1);
-  setCurrentRowPv(row);
+  setCurrentRowPv(row, false);
 
   return true;
 }

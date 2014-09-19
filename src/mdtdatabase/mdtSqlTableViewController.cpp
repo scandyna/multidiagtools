@@ -41,8 +41,14 @@ mdtSqlTableViewControllerItemDelegate::mdtSqlTableViewControllerItemDelegate(QOb
 
 QWidget* mdtSqlTableViewControllerItemDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
+  QWidget *editor;
+
   emit dataEditionBegins();
-  return QStyledItemDelegate::createEditor(parent, option, index);
+  editor = QStyledItemDelegate::createEditor(parent, option, index);
+  Q_ASSERT(editor != 0);
+  connect(editor, SIGNAL(destroyed(QObject*)), this, SIGNAL(dataEditionDone()));
+
+  return editor;
 }
 
 void mdtSqlTableViewControllerItemDelegate::setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const
@@ -191,8 +197,15 @@ void mdtSqlTableViewController::onTableViewDestroyed(QObject* obj)
 
 void mdtSqlTableViewController::onTableViewcurrentRowChanged(const QModelIndex& current, const QModelIndex& previous)
 {
+  /*
+   * Table view will send currentRowChanged() when user changed selection,
+   *  and then model was updated (rows removed or added).
+   *  We only accept this change in Visualizing state.
+   */
+  if(currentState() != Visualizing){
+    return;
+  }
   QModelIndex index = proxyModel()->mapToSource(current);
-  setCurrentRow(index.row());
   emit currentRowChanged(index.row());
 }
 
@@ -247,11 +260,29 @@ bool mdtSqlTableViewController::doSubmit()
   Q_ASSERT(pvTableView->itemDelegate() != 0);
 
   QSqlError sqlError;
-  QModelIndex index;
-  int row;
+  ///QModelIndex index;
+  ///int row;
 
   // Remember current index (will be lost during submit)
-  row = currentRow();
+  ///row = currentRow();
+  
+  int row, col;
+  QModelIndex index;
+  QWidget *w;
+  QAbstractItemDelegate *d;
+  d = pvTableView->itemDelegate();
+  Q_ASSERT(d != 0);
+  for(row = 0; row < proxyModel()->rowCount(); ++row){
+    for(col = 0; col < proxyModel()->columnCount(); ++col){
+      index = proxyModel()->index(row, col);
+      qDebug() << "index: " << index;
+      w = pvTableView->indexWidget(index);
+      if(w != 0){
+        qDebug() << "Widget at row " << row << ", col " << col;
+        d->setModelData(w, proxyModel().get(), index);
+      }
+    }
+  }
 
   waitEditionDone();
   // Submit to database
@@ -272,6 +303,7 @@ bool mdtSqlTableViewController::doSubmit()
    * Calling submitAll() will repopulate the model.
    * Because of this, we must be shure to fetch all data until we find our row
    */
+  /**
   if(model()->rowCount() > 0){
     while((row >= model()->rowCount())&&(model()->canFetchMore())){
       model()->fetchMore();
@@ -281,6 +313,7 @@ bool mdtSqlTableViewController::doSubmit()
   pvTableView->setCurrentIndex(index);
   
   qDebug() << "Submit done - go to index " << index;
+  */
 
   return true;
 }
@@ -306,7 +339,8 @@ bool mdtSqlTableViewController::doInsert()
   row = rowCount(true);
   proxyModel()->insertRow(row);
   index = proxyModel()->index(row, pvDefaultColumnToSelect);
-  pvTableView->setCurrentIndex(index);
+  ///pvTableView->setCurrentIndex(index);
+  pvTableView->edit(index); // Will create a editor, and cause editionDone() to be allways called (see delegate)
 
   return true;
 }
@@ -384,6 +418,13 @@ bool mdtSqlTableViewController::doRemove()
       return false;
     }
   }
+  if(!beginTransaction()){
+    if(messageHandler()){
+      messageHandler()->setError(pvLastError);
+      messageHandler()->displayToUser();
+    }
+    return false;
+  }
   if(!model()->submitAll()){
     model()->revert();
     sqlError = model()->lastError();
@@ -391,6 +432,14 @@ bool mdtSqlTableViewController::doRemove()
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlTableViewController");
     pvLastError.commit();
+    if(messageHandler()){
+      messageHandler()->setError(pvLastError);
+      messageHandler()->displayToUser();
+    }
+    rollbackTransaction();
+    return false;
+  }
+  if(!commitTransaction()){
     if(messageHandler()){
       messageHandler()->setError(pvLastError);
       messageHandler()->displayToUser();

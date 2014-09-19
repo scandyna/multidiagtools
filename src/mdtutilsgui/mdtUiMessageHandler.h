@@ -45,7 +45,11 @@ class mdtUiMessageHandler
    *
    * \param parent Parent widget for dialog
    */
-  mdtUiMessageHandler(QWidget *parent = 0) : pvParentWidget(parent) {}
+  mdtUiMessageHandler(QWidget *parent = 0);
+
+  /*! \brief Clear
+   */
+  void clear();
 
   /*! \brief Set type
    */
@@ -56,8 +60,10 @@ class mdtUiMessageHandler
   inline Type_t type() const { return pvType; }
 
   /*! \brief Set text
+   *
+   * Will also clear handler first
    */
-  void setText(const QString & txt) { pvText = txt; }
+  void setText(const QString & txt);
 
   /*! \brief Get text
    */

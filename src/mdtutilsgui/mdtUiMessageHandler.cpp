@@ -21,6 +21,26 @@
 #include "mdtUiMessageHandler.h"
 #include <QMessageBox>
 
+mdtUiMessageHandler::mdtUiMessageHandler(QWidget *parent)
+ : pvParentWidget(parent)
+{
+  pvType = Information;
+}
+
+void mdtUiMessageHandler::clear()
+{
+  pvType = Information;
+  pvText.clear();
+  pvInformativeText.clear();
+  pvDetailedText.clear();
+}
+
+void mdtUiMessageHandler::setText(const QString& txt)
+{
+  clear();
+  pvText = txt;
+}
+
 void mdtUiMessageHandler::setError(const mdtError& err)
 {
   pvText = err.text();
@@ -131,7 +151,7 @@ bool mdtUiMessageHandler::askUser()
   msgBox.setInformativeText(pvInformativeText);
   msgBox.setDetailedText(pvDetailedText);
   msgBox.setIcon(icon);
-  msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::No | QMessageBox::Cancel);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
   msgBox.setDefaultButton(QMessageBox::Cancel);
   switch(msgBox.exec()){
     case QMessageBox::Ok:

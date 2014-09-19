@@ -30,6 +30,7 @@
 
 class QTableView;
 class QAbstractItemDelegate;
+class QEvent;
 
 /*! \brief Item delegate for SQL table view controller
  *

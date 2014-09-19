@@ -496,6 +496,11 @@ class mdtSqlTableWidget :  public QWidget
    */
   void createLocalEditionElements();
 
+  /*! \brief Make table controller <-> edit actions connection
+   */
+  void connectLocalEditionSignals();
+  void disconnectLocalEditionSignals();
+
   Q_DISABLE_COPY(mdtSqlTableWidget);
 
   QTableView *pvTableView;
