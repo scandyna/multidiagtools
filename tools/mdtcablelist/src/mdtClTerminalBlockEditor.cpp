@@ -20,8 +20,8 @@
  ****************************************************************************/
 #include "mdtClTerminalBlockEditor.h"
 #include "ui_mdtClTerminalBlockEditor.h"
-#include "mdtSqlWindowOld.h"
-#include "mdtSqlFormWidget.h"
+///#include "mdtSqlWindowOld.h"
+///#include "mdtSqlFormWidget.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlRelation.h"
 #include "mdtSqlSelectionDialog.h"

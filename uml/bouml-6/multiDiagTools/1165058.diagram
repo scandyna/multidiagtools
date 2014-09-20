@@ -25,7 +25,7 @@ note 128770 "Instrument/nodes handler:
  - Other interactions ?
 "
   xyzwh 382 673 2000 369 147
-classcanvas 128898 class_ref 1342466 // mdtTtAbstractTestWidget
+classcanvas 128898 class_ref 1342466 // mdtTtAbstractTester
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   xyz 30 49 2005
 end

@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "mdtTtCableCheckerWindow.h"
 #include "mdtTtCableChecker.h"
-#include "mdtSqlFormWidget.h"
+//#include "mdtSqlFormWidget.h"
 
 mdtTtCableCheckerWindow::mdtTtCableCheckerWindow(QWidget *parent)
  : QMainWindow(parent)
@@ -33,33 +33,33 @@ void mdtTtCableCheckerWindow::setCableChecker(mdtTtCableChecker *cc)
 {
   Q_ASSERT(cc != 0);
 
-  mdtSqlFormWidget *fw;
-
-  pvCableChecker = cc;
-  setCentralWidget(pvCableChecker);
-
-  // Setup actions
-  ///fw = pvCableChecker->mainSqlWidget();
-  fw = 0;
-  Q_ASSERT(fw != 0);
-  // As default, functions are disabled
-  ///actNew->setEnabled(false);
-  ///actSubmit->setEnabled(false);
-  ///actRevert->setEnabled(false);
-  actSave->setEnabled(false);
-  // Connect actions enable/disable
-  connect(fw, SIGNAL(insertEnabledStateChanged(bool)), actNew, SLOT(setEnabled(bool)));
-  connect(fw, SIGNAL(submitEnabledStateChanged(bool)), actSave, SLOT(setEnabled(bool)));
-  ///connect(fw, SIGNAL(revertEnabledStateChanged(bool)), actRevert, SLOT(setEnabled(bool)));
-  ///connect(fw, SIGNAL(removeEnabledStateChanged(bool)), actRemove, SLOT(setEnabled(bool)));
-  // Connect actions triggers
-  connect(actNew, SIGNAL(triggered()), fw, SLOT(insert()));
-  connect(actSave, SIGNAL(triggered()), fw, SLOT(submit()));
-  ///connect(actRevert, SIGNAL(triggered()), fw, SLOT(revert()));
-  ///connect(actRemove, SIGNAL(triggered()), fw, SLOT(remove()));
-  connect(actSetTest, SIGNAL(triggered()), pvCableChecker, SLOT(setTestModel()));
-  connect(actRemove, SIGNAL(triggered()), pvCableChecker, SLOT(removeTestResult()));
-  connect(actRunTest, SIGNAL(triggered()), pvCableChecker, SLOT(runTest()));
+//   mdtSqlFormWidget *fw;
+// 
+//   pvCableChecker = cc;
+//   setCentralWidget(pvCableChecker);
+// 
+//   // Setup actions
+//   ///fw = pvCableChecker->mainSqlWidget();
+//   fw = 0;
+//   Q_ASSERT(fw != 0);
+//   // As default, functions are disabled
+//   ///actNew->setEnabled(false);
+//   ///actSubmit->setEnabled(false);
+//   ///actRevert->setEnabled(false);
+//   actSave->setEnabled(false);
+//   // Connect actions enable/disable
+//   connect(fw, SIGNAL(insertEnabledStateChanged(bool)), actNew, SLOT(setEnabled(bool)));
+//   connect(fw, SIGNAL(submitEnabledStateChanged(bool)), actSave, SLOT(setEnabled(bool)));
+//   ///connect(fw, SIGNAL(revertEnabledStateChanged(bool)), actRevert, SLOT(setEnabled(bool)));
+//   ///connect(fw, SIGNAL(removeEnabledStateChanged(bool)), actRemove, SLOT(setEnabled(bool)));
+//   // Connect actions triggers
+//   connect(actNew, SIGNAL(triggered()), fw, SLOT(insert()));
+//   connect(actSave, SIGNAL(triggered()), fw, SLOT(submit()));
+//   ///connect(actRevert, SIGNAL(triggered()), fw, SLOT(revert()));
+//   ///connect(actRemove, SIGNAL(triggered()), fw, SLOT(remove()));
+//   connect(actSetTest, SIGNAL(triggered()), pvCableChecker, SLOT(setTestModel()));
+//   connect(actRemove, SIGNAL(triggered()), pvCableChecker, SLOT(removeTestResult()));
+//   connect(actRunTest, SIGNAL(triggered()), pvCableChecker, SLOT(runTest()));
 
 }
 

@@ -26,7 +26,7 @@
 #include <QSqlError>
 
 class mdtSqlWindowOld;
-class mdtSqlFormWidget;
+///class mdtSqlFormWidget;
 class mdtSqlTableWidget;
 class mdtSqlRelation;
 class QSqlTableModel;
@@ -117,7 +117,7 @@ class mdtClTerminalBlockEditor : public QObject
 
   QSqlDatabase pvDatabase;
   // Unit objects
-  mdtSqlFormWidget *pvUnitWidget;
+  ///mdtSqlFormWidget *pvUnitWidget;
   QSqlTableModel *pvUnitModel;
   // Terminal ( = Unit connection) view objects
   mdtSqlTableWidget *pvTerminalEditWidget;

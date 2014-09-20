@@ -6,27 +6,27 @@ classcanvas 128002 class_ref 1376002 // mdtAbstractSqlTableController
 end
 classcanvas 128130 class_ref 138626 // QObject
   classdiagramsettings member_max_width 0 end
-  xyz 373.4 83.3 2006
+  xyz 373.4 83.9 2006
 end
 classcanvas 128386 class_ref 182402 // mdtError
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 980.2 351.4 2000
+  xyz 980.8 351.2 2000
 end
 classcanvas 128514 class_ref 852226 // mdtState
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 918.6 270.2 2000
+  xyz 918.5 270.1 2000
 end
 classcanvas 128642 class_ref 852354 // mdtStateMachine
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 910.7 183.3 2005
+  xyz 910.8 183.9 2005
 end
 classcanvas 128770 class_ref 405122 // QSqlDatabase
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 914.3 520.1 2000
+  xyz 914.9 520 2000
 end
 classcanvas 128898 class_ref 174210 // QSqlTableModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 901.8 443.6 2005
+  xyz 901 443.2 2005
 end
 classcanvas 129154 class_ref 652418 // mdtSqlRelation
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
@@ -39,8 +39,8 @@ relationcanvas 128258 relation_ref 1693954 // <generalisation>
 end
 relationcanvas 129026 relation_ref 1694338 // <directional composition>
   from ref 128002 z 2006 to ref 128642
-  role_a_pos 842 193 3000 no_role_b
-  multiplicity_a_pos 916 225 3000 no_multiplicity_b
+  role_a_pos 842 192 3000 no_role_b
+  multiplicity_a_pos 916 224 3000 no_multiplicity_b
 end
 relationcanvas 129282 relation_ref 797442 // <generalisation>
   from ref 129154 z 3006 to ref 128130
@@ -60,15 +60,15 @@ end
 relationcanvas 129666 relation_ref 1694466 // <directional composition>
   decenter_begin 28
   decenter_end 274
-  from ref 128002 z 2001 stereotype "<<list>>" xyz 90.5 294 3000 to point 78 288.9
-  line 129794 z 2001 to point 78.9 368
+  from ref 128002 z 2001 stereotype "<<list>>" xyz 90 294 3000 to point 78 288
+  line 129794 z 2001 to point 78 368
   line 129922 z 2001 to ref 128002
   role_a_pos 44 380 3000 no_role_b
   multiplicity_a_pos 135 412 3000 no_multiplicity_b
 end
 relationcanvas 130050 relation_ref 1701250 // <directional composition>
   from ref 128002 z 2001 to ref 128386
-  role_a_pos 899 353 3000 no_role_b
-  multiplicity_a_pos 960 385 3000 no_multiplicity_b
+  role_a_pos 898 353 3000 no_role_b
+  multiplicity_a_pos 959 385 3000 no_multiplicity_b
 end
 end

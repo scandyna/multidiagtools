@@ -25,7 +25,7 @@
 #include "mdtDevice.h"
 #include <mdtDeviceIos.h>
 #include "mdtDeviceModbusWago.h"
-#include "mdtSqlFormWidget.h"
+//#include "mdtSqlFormWidget.h"
 #include "mdtSqlRelation.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlSelectionDialog.h"

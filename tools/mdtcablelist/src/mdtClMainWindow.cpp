@@ -35,7 +35,7 @@
 #include "mdtTtCableChecker.h"
 #include "mdtTtCableCheckerWindow.h"
 #include "mdtSqlTableWidget.h"
-#include "mdtSqlFormWidget.h"
+///#include "mdtSqlFormWidget.h"
 #include "mdtSqlTableSelection.h"
 #include "mdtTtBasicTester.h"
 #include "mdtTtBasicTesterWindow.h"

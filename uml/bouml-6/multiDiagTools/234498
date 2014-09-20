@@ -1,6 +1,6 @@
 format 207
 "mdtdatabase" // mdtdatabase
-  revision 25
+  revision 26
   modified_by 2 "philippe"
   // class settings
   
@@ -69,15 +69,6 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 1294082 // <generalisation>
 	  b parent class_ref 316162 // QWidget
-      end
-
-      classrelation 1294722 // pvMainSqlWidget (<directional composition>)
-	relation 1281794 *-->
-	  a role_name "pvMainSqlWidget" multiplicity "1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 1294722 // pvMainSqlWidget (<directional composition>)
-	  b parent class_ref 686338 // mdtAbstractSqlWidget
       end
 
       operation 1797122 "mdtSqlForm"
@@ -192,7 +183,7 @@ ${inlines}
       end
 
       operation 1799042 "sqlWidget"
-	public return_type class_ref 686338 // mdtAbstractSqlWidget
+	public explicit_return_type "mdtAbstractSqlWidget"
 	nparams 1
 	  param in name "tableName" type class_ref 161026 // QString
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
@@ -208,7 +199,7 @@ ${inlines}
       end
 
       operation 1799170 "sqlFormWidget"
-	public return_type class_ref 686466 // mdtSqlFormWidget
+	public explicit_return_type "mdtSqlFormWidget"
 	nparams 1
 	  param in name "tableName" type class_ref 161026 // QString
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
@@ -660,14 +651,6 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 849410 // <generalisation>
-	relation 840194 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 849410 // <generalisation>
-	  b parent class_ref 686338 // mdtAbstractSqlWidget
-      end
-
       operation 1280898 "mdtSqlTableWidget"
 	public explicit_return_type ""
 	nparams 1
@@ -784,6 +767,14 @@ ${inlines}
 	
 	
       end
+
+      classrelation 1743490 // <generalisation>
+	relation 1728002 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1743490 // <generalisation>
+	  b parent class_ref 316162 // QWidget
+      end
     end
   end
 
@@ -805,81 +796,7 @@ ${inlines}
      end
     classdiagram 1237506 "MVC"
       classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-      size A4
-    end
-
-    class 1375490 "SomeUserWindow"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 1708674 // <generalisation>
-	relation 1693186 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 1708674 // <generalisation>
-	  b parent class_ref 552450 // QMainWindow
-      end
-
-      classrelation 1708930 // CentralWidget (<unidirectional association>)
-	relation 1693442 --->
-	  a role_name "CentralWidget" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 1708930 // CentralWidget (<unidirectional association>)
-	  b parent class_ref 1375618 // SomeUserMainWidget
-      end
-    end
-
-    class 1375618 "SomeUserMainWidget"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 1709058 // TableAWidgetMapper (<unidirectional association>)
-	relation 1693570 --->
-	  a role_name "TableAWidgetMapper" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 1709058 // TableAWidgetMapper (<unidirectional association>)
-	  b parent class_ref 405250 // mdtSqlDataWidgetController
-      end
-
-      classrelation 1709186 // TableBWidgetMapper (<unidirectional association>)
-	relation 1693698 --->
-	  a role_name "TableBWidgetMapper" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 1709186 // TableBWidgetMapper (<unidirectional association>)
-	  b parent class_ref 405250 // mdtSqlDataWidgetController
-      end
-
-      classrelation 1709314 // TableCTableWidget (<unidirectional association>)
-	relation 1693826 --->
-	  a role_name "TableCTableWidget" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 1709314 // TableCTableWidget (<unidirectional association>)
-	  b parent class_ref 686594 // mdtSqlTableWidget
-      end
+      size A4-Landscape
     end
 
     classdiagram 640258 "mdtSqlRelation"

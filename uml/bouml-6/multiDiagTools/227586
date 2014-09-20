@@ -1,6 +1,6 @@
 format 207
 "mdttesttool" // mdttools::mdttesttool
-  revision 49
+  revision 51
   modified_by 2 "philippe"
   // class settings
   
@@ -2363,6 +2363,16 @@ ${inlines}
     
     activitydiagramsettings
      end
+    classdiagram 1251330 "TesterOverview"
+      classdiagramsettings hide_attributes yes hide_operations yes hide_getset_operations yes member_max_width 0 end
+      size A4
+    end
+
+    classdiagram 1251458 "CalibrationToolOverview"
+      classdiagramsettings hide_attributes yes hide_operations yes hide_getset_operations yes member_max_width 0 end
+      size A4
+    end
+
     classdiagram 934402 "mdtTtTestNode"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -2909,6 +2919,84 @@ ${inlines}
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 1750018 // pvTestTableController (<directional composition>)
+	relation 1734530 *-->
+	  a role_name "pvTestTableController" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 1750018 // pvTestTableController (<directional composition>)
+	  b parent class_ref 405250 // mdtSqlDataWidgetController
+      end
+
+      classrelation 1750146 // <directional composition>
+	relation 1734658 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 1750146 // <directional composition>
+	  b parent class_ref 405250 // mdtSqlDataWidgetController
+      end
+
+      operation 2248706 "testTableController"
+	public return_type class_ref 405250 // mdtSqlDataWidgetController
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2248834 "testModelTableController"
+	public return_type class_ref 405250 // mdtSqlDataWidgetController
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2248962 "testItemTableController"
+	public return_type class_ref 1375746 // mdtSqlTableViewController
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2249090 "testItemViewController"
+	public return_type class_ref 1375746 // mdtSqlTableViewController
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -4784,21 +4872,110 @@ ${inlines}
 	MysqlColumn
       end
 
-      classrelation 1681666 // pvTestFormWidget (<directional composition>)
-	relation 1666178 *-->
-	  a role_name "pvTestFormWidget" multiplicity "1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 1681666 // pvTestFormWidget (<directional composition>)
-	  b parent class_ref 686466 // mdtSqlFormWidget
-      end
-
       classrelation 1681794 // <generalisation>
 	relation 1666306 ---|>
 	  a public
 	    cpp default "${type}"
 	    classrelation_ref 1681794 // <generalisation>
 	  b parent class_ref 138626 // QObject
+      end
+
+      operation 2248066 "mapTestFormWidgets"
+	public explicit_return_type "bool"
+	nparams 2
+	  param in name "widget" type class_ref 316162 // QWidget
+	  param in name "firstWidgetInTabOrder" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 1409538 "pvFoundTestFormWidgets"
+	private type class_ref 316162 // QWidget
+	multiplicity "*"
+	stereotype "list"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 2248194 "buildWidgetsList"
+	private explicit_return_type "void"
+	nparams 2
+	  param in name "w" type class_ref 316162 // QWidget
+	  param in name "prefix" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2248322 "searchWidgets"
+	private explicit_return_type "void"
+	nparams 2
+	  param in name "item" explicit_type "QLayoutItem"
+	  param in name "prefix" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2248450 "mapTestTableWidgets"
+	private explicit_return_type "bool"
+	nparams 2
+	  param in name "w" type class_ref 316162 // QWidget
+	  param in name "firstWidgetInTabOrder" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2248578 "mapTestModelTableWidgets"
+	private explicit_return_type "bool"
+	nparams 1
+	  param in name "w" type class_ref 316162 // QWidget
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 
@@ -5206,15 +5383,6 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 1695106 // <generalisation>
 	  b parent class_ref 138626 // QObject
-      end
-
-      classrelation 1695234 // pvTestNodeForm (<directional composition>)
-	relation 1679746 *-->
-	  a role_name "pvTestNodeForm" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 1695234 // pvTestNodeForm (<directional composition>)
-	  b parent class_ref 686466 // mdtSqlFormWidget
       end
 
       classrelation 1695362 // pvTestNodeManager (<directional composition>)

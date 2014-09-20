@@ -23,7 +23,7 @@
 #include "mdtTtTestModel.h"
 #include "mdtTtTestModelItem.h"
 #include "mdtTtTestModelItemEditor.h"
-#include "mdtSqlFormWidget.h"
+///#include "mdtSqlFormWidget.h"
 #include "mdtSqlRelation.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlSelectionDialog.h"

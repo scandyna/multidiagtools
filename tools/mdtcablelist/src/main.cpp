@@ -26,7 +26,7 @@
 ///#include "mdtSqlWindow.h"
 
 ///#include "mdtClLinkEditor.h"
-#include "mdtClTerminalBlockEditor.h"
+///#include "mdtClTerminalBlockEditor.h"
 
 
 #include <QInputDialog>
@@ -54,7 +54,7 @@ int main(int argc, char **argv)
   ///mdtClUnitEditor *unitEditor;
   // Terminal block editor
   ///mdtSqlWindow terminalBlockEditorWindow;
-  mdtClTerminalBlockEditor *terminalBlockEditor;
+  ///mdtClTerminalBlockEditor *terminalBlockEditor;
   // Link editor
   ///mdtClLinkEditor *linkEditor;
   ///mdtSqlWindow linkEditorWindow;
@@ -73,7 +73,6 @@ int main(int argc, char **argv)
   
   ///mdtSqlDatabaseManager dbManager;
 
-  
   // Setup DB connection
   /**
   db = QSqlDatabase::addDatabase("QMYSQL");
@@ -148,7 +147,7 @@ int main(int argc, char **argv)
   ///delete articleEditor;
   ///delete vehicleTypeEditor;
   ///delete linkEditor;
-  delete terminalBlockEditor;
+  ///delete terminalBlockEditor;
 
   return retVal;
 }

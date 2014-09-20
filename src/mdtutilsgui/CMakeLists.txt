@@ -33,7 +33,7 @@ set (HEADER_FILES
           mdtMvSortingSetupDialog.h
           mdtSqlRelation.h
           #mdtSqlFieldHandler.h
-          mdtAbstractSqlWidget.h
+          #mdtAbstractSqlWidget.h
           #mdtSqlFormWidget.h
           #mdtSqlTableWidget.h
           #mdtSqlSelectionDialog.h
@@ -79,7 +79,7 @@ set (SOURCES_FILES
           mdtSqlRelation.cpp
           mdtSqlRelationItem.cpp
           #mdtSqlFieldHandler.cpp
-          mdtAbstractSqlWidget.cpp
+          #mdtAbstractSqlWidget.cpp
           #mdtSqlFormWidget.cpp
           #mdtSqlTableWidget.cpp
           #mdtSqlSelectionDialog.cpp

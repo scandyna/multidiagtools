@@ -21,7 +21,7 @@
 #include "mdtTtAbstractTester.h"
 #include "mdtSqlSelectionDialog.h"
 #include "mdtSqlTableSelection.h"
-#include "mdtSqlFormWidget.h"
+///#include "mdtSqlFormWidget.h"
 #include <QSqlError>
 #include <QModelIndex>
 #include <QMessageBox>
