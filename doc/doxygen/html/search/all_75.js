@@ -47,7 +47,7 @@ var searchData=
   ['usbwritestall',['UsbWriteStall',['../classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eaf89af56394b281f71247cd2eb4eaac62',1,'mdtAbstractPort']]],
   ['userdata',['userData',['../structmdt_cl_path_graph_private_1_1mdt_cl_path_graph_edge_data.html#a64c472d1739bbf6deed62f2e96d01f55',1,'mdtClPathGraphPrivate::mdtClPathGraphEdgeData']]],
   ['usereadtimeoutprotocol',['useReadTimeoutProtocol',['../classmdt_port_config.html#ad90a88b06f0efebd1ee9f6d4370dec33',1,'mdtPortConfig']]],
-  ['userfriendlytablename',['userFriendlyTableName',['../classmdt_abstract_sql_widget.html#a8207edaf31a7d988db5b86a4099ad4eb',1,'mdtAbstractSqlWidget']]],
+  ['userfriendlytablename',['userFriendlyTableName',['../classmdt_abstract_sql_table_controller.html#a1a9b3d3e4009acd32fc4a083f738fc62',1,'mdtAbstractSqlTableController::userFriendlyTableName()'],['../classmdt_sql_table_widget.html#a3ed02d8946711f9f0f16b55285467839',1,'mdtSqlTableWidget::userFriendlyTableName()']]],
   ['userscalinggain',['userScalingGain',['../classmdt_device_modbus_wago_module_rtd.html#a5bf6697432dc475533db1e36889a6ad4',1,'mdtDeviceModbusWagoModuleRtd']]],
   ['userscalingisenabled',['userScalingIsEnabled',['../classmdt_device_modbus_wago_module_rtd.html#a6144f959f5ecb425d1526871ef99a4d0',1,'mdtDeviceModbusWagoModuleRtd']]],
   ['userscalingoffset',['userScalingOffset',['../classmdt_device_modbus_wago_module_rtd.html#a0a1c2980fe4b3b0fb774b1f41280d890',1,'mdtDeviceModbusWagoModuleRtd']]],

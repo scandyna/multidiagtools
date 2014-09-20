@@ -91,12 +91,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">mdtSqlTableWidget.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="mdt_abstract_sql_widget_8h_source.html">mdtAbstractSqlWidget.h</a>&quot;</code><br/>
+<div class="textblock"><code>#include &quot;<a class="el" href="mdt_error_8h_source.html">mdtError.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="mdt_sql_table_view_controller_8h_source.html">mdtSqlTableViewController.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="mdt_sql_table_selection_8h_source.html">mdtSqlTableSelection.h</a>&quot;</code><br/>
 <code>#include &lt;QModelIndex&gt;</code><br/>
 <code>#include &lt;QStyledItemDelegate&gt;</code><br/>
 <code>#include &lt;QString&gt;</code><br/>
 <code>#include &lt;QStringList&gt;</code><br/>
+<code>#include &lt;QWidget&gt;</code><br/>
+<code>#include &lt;QSqlDatabase&gt;</code><br/>
+<code>#include &lt;memory&gt;</code><br/>
 </div><div class="textblock"><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Include dependency graph for mdtSqlTableWidget.h:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -104,7 +108,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="mdt_sql_table_widget_8h__incl.png" border="0" usemap="#src_2mdtdatabase_2mdt_sql_table_widget_8h" alt=""/></div>
 <map name="src_2mdtdatabase_2mdt_sql_table_widget_8h" id="src_2mdtdatabase_2mdt_sql_table_widget_8h">
-<area shape="rect" id="node3" href="mdt_abstract_sql_widget_8h.html" title="mdtAbstractSqlWidget.h" alt="" coords="493,179,656,208"/><area shape="rect" id="node28" href="mdt_sql_table_selection_8h.html" title="mdtSqlTableSelection.h" alt="" coords="959,101,1119,131"/><area shape="rect" id="node5" href="mdt_error_8h.html" title="mdtError.h" alt="" coords="71,256,153,285"/><area shape="rect" id="node30" href="mdt_sql_table_selection_row_8h.html" title="mdtSqlTableSelectionRow.h" alt="" coords="945,179,1132,208"/><area shape="rect" id="node32" href="mdt_sql_table_selection_item_8h.html" title="mdtSqlTableSelectionItem.h" alt="" coords="945,256,1132,285"/></map>
+<area shape="rect" id="node3" href="mdt_error_8h.html" title="mdtError.h" alt="" coords="2099,411,2181,440"/><area shape="rect" id="node11" href="mdt_sql_table_view_controller_8h.html" title="mdtSqlTableViewController.h" alt="" coords="704,101,893,131"/><area shape="rect" id="node61" href="mdt_sql_table_selection_8h.html" title="mdtSqlTableSelection.h" alt="" coords="415,179,575,208"/><area shape="rect" id="node13" href="mdt_abstract_sql_table_controller_8h.html" title="mdtAbstractSqlTableController.h" alt="" coords="1067,179,1277,208"/><area shape="rect" id="node16" href="mdt_state_machine_8h.html" title="mdtStateMachine.h" alt="" coords="1819,256,1952,285"/><area shape="rect" id="node23" href="mdt_ui_message_handler_8h.html" title="mdtUiMessageHandler.h" alt="" coords="1179,333,1344,363"/><area shape="rect" id="node27" href="mdt_sql_data_validator_8h.html" title="mdtSqlDataValidator.h" alt="" coords="1075,256,1227,285"/><area shape="rect" id="node37" href="mdt_sql_relation_info_8h.html" title="mdtSqlRelationInfo.h" alt="" coords="856,256,1000,285"/><area shape="rect" id="node42" href="mdt_sort_filter_proxy_model_8h.html" title="mdtSortFilterProxyModel.h" alt="" coords="1544,256,1720,285"/><area shape="rect" id="node63" href="mdt_sql_table_selection_row_8h.html" title="mdtSqlTableSelectionRow.h" alt="" coords="245,256,432,285"/><area shape="rect" id="node65" href="mdt_sql_table_selection_item_8h.html" title="mdtSqlTableSelectionItem.h" alt="" coords="245,333,432,363"/></map>
 </div>
 </div><div class="textblock"><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-1-trigger" src="closed.png" alt="+"/> This graph shows which files directly or indirectly include this file:</div>
@@ -120,10 +124,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_table_widget_key_event_filter.html">mdtSqlTableWidgetKeyEventFilter</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_table_widget_item_delegate.html">mdtSqlTableWidgetItemDelegate</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_table_widget.html">mdtSqlTableWidget</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Table view based SQL widget.  <a href="classmdt_sql_table_widget.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -131,7 +131,7 @@ Classes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Sep 1 2014 18:45:37 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Sep 20 2014 15:23:37 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

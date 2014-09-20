@@ -23,5 +23,5 @@ var searchData=
   ['vendorname',['vendorName',['../classmdt_device_info.html#a207d7b6b49fd65726232e95cd9e0568c',1,'mdtDeviceInfo::vendorName()'],['../classmdt_usb_device_descriptor.html#ac2f746ebd5540b65bf00f82c991f5c3b',1,'mdtUsbDeviceDescriptor::vendorName()']]],
   ['vertex_5ft',['vertex_t',['../namespacemdt_cl_path_graph_private.html#a0aaa28f25df9a7fcd4602cc15b3b3795',1,'mdtClPathGraphPrivate']]],
   ['verticallayout',['verticalLayout',['../class_ui__mdt_tt_test_model_item_dialog.html#ab9d49ef493d8a1e57d1d15f2eed4a85f',1,'Ui_mdtTtTestModelItemDialog']]],
-  ['visualizing',['Visualizing',['../classmdt_abstract_sql_widget.html#a54e6a7f2b41fb3edfa1e4ed62abf4072ae067e0561127490a4af5a28e844169a2',1,'mdtAbstractSqlWidget']]]
+  ['visualizing',['Visualizing',['../classmdt_abstract_sql_table_controller.html#a63536182561f551ccb7616e1786793cdae670b852d1d3c41f28d9dba14bd2fe56',1,'mdtAbstractSqlTableController']]]
 ];

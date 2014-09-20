@@ -91,7 +91,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <a href="mdt_sql_relation_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/****************************************************************************</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> **</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> ** Copyright (C) 2011-2013 Philippe Steinmann.</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> ** Copyright (C) 2011-2014 Philippe Steinmann.</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> **</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> ** This file is part of multiDiagTools library.</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"> **</span></div>
@@ -112,75 +112,79 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#ifndef MDT_SQL_RELATION_H</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define MDT_SQL_RELATION_H</span></div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &lt;QObject&gt;</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &lt;QSqlTableModel&gt;</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;QModelIndex&gt;</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;QString&gt;</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;QList&gt;</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &lt;QSqlRecord&gt;</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">class </span><a class="code" href="classmdt_sql_relation_item.html" title="Keep informations about a parent/child SQL relation. ">mdtSqlRelationItem</a>;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00046"></a><span class="lineno"><a class="code" href="classmdt_sql_relation.html">   46</a></span>&#160;<span class="keyword">class </span><a class="code" href="classmdt_sql_relation.html" title="Handle parent/child relations between 2 QSqlTableModels. ">mdtSqlRelation</a> : <span class="keyword">public</span> <a class="code" href="class_q_object.html">QObject</a></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;{</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; Q_OBJECT</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <a class="code" href="classmdt_sql_relation.html#a65d9602a4663c8c356938ba9a217704f" title="Create a empty relation. ">mdtSqlRelation</a>(<a class="code" href="class_q_object.html">QObject</a> *parent = 0);</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  <a class="code" href="classmdt_sql_relation.html#a22c7de1daa71abbde33199a08541310b" title="Destructor. ">~mdtSqlRelation</a>();</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_relation.html#a5ac3a82c5d3e33b5e40b86acfe7e2a03" title="Set the parent model. ">setParentModel</a>(<a class="code" href="class_q_sql_table_model.html">QSqlTableModel</a> *model);</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_relation.html#ad74021dcf86c528044bf67220ed36833" title="Set the child model. ">setChildModel</a>(<a class="code" href="class_q_sql_table_model.html">QSqlTableModel</a> *model);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classmdt_sql_relation.html#a5980d1df4582971666ffe1c1d7639799" title="Add a relation. ">addRelation</a>(<span class="keyword">const</span> QString &amp;parentFieldName, <span class="keyword">const</span> QString &amp;childFieldName, <span class="keywordtype">bool</span> copyParentToChildOnInsertion, <span class="keyword">const</span> QString &amp;operatorWithPreviousItem = <span class="stringliteral">&quot;AND&quot;</span>);</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_relation.html#a01469fb1baf7327ca6ddbcd1595e0d7c" title="Clear relations. ">clear</a>();</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; signals:</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_relation.html#a86656619d8156638ebfbde2b334d40e2" title="This signal is emitted once setFilter() was called on child model. ">childModelFilterApplied</a>();</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_relation.html#ae30eb691c46263cb4021f55b03d0d111" title="This signal is emitted after childModelFilterApplied() if child model becomes empty. ">childModelIsEmpty</a>();</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; <span class="keyword">public</span> slots:</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_relation.html#a39fbecb027a5783277df1cc995485917" title="Update child model. ">setParentCurrentIndex</a>(<span class="keywordtype">int</span> index);</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_relation.html#a39fbecb027a5783277df1cc995485917" title="Update child model. ">setParentCurrentIndex</a>(<span class="keyword">const</span> QModelIndex &amp;index);</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_relation.html#a39fbecb027a5783277df1cc995485917" title="Update child model. ">setParentCurrentIndex</a>(<span class="keyword">const</span> QModelIndex &amp;current, <span class="keyword">const</span> QModelIndex &amp;previous);</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160; <span class="keyword">private</span> slots:</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;  <span class="keywordtype">void</span> onChildBeforeInsert(QSqlRecord &amp;childRecord);</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;  <span class="keywordtype">void</span> setChildForeingKeyValues(QSqlRecord &amp;parentRecord, QSqlRecord &amp;childRecord);</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;  <span class="keywordtype">void</span> generateChildModelRelationFilter(<span class="keywordtype">int</span> row);</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;  <span class="keywordtype">void</span> generateChildModelFilter();</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;  Q_DISABLE_COPY(<a class="code" href="classmdt_sql_relation.html" title="Handle parent/child relations between 2 QSqlTableModels. ">mdtSqlRelation</a>);</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;  QList&lt;mdtSqlRelationItem*&gt; pvRelations;</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;  <a class="code" href="class_q_sql_table_model.html">QSqlTableModel</a> *pvParentModel;</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;  <a class="code" href="class_q_sql_table_model.html">QSqlTableModel</a> *pvChildModel;</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;  QString pvChildModelUserFilter;</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;  QString pvChildModelRelationFilter;</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;  QString pvChildModelFilter;</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;  <span class="keywordtype">int</span> pvCurrentRow;</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;};</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;<span class="preprocessor">#endif  // #ifndef MDT_SQL_RELATION_H</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_error_8h.html">mdtError.h</a>&quot;</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &lt;QObject&gt;</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;QSqlTableModel&gt;</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;QModelIndex&gt;</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;QString&gt;</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &lt;QList&gt;</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;QSqlRecord&gt;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">class </span><a class="code" href="classmdt_sql_relation_item.html" title="Keep informations about a parent/child SQL relation. ">mdtSqlRelationItem</a>;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="code" href="classmdt_sql_relation.html">   47</a></span>&#160;<span class="keyword">class </span><a class="code" href="classmdt_sql_relation.html" title="Handle parent/child relations between 2 QSqlTableModels. ">mdtSqlRelation</a> : <span class="keyword">public</span> <a class="code" href="class_q_object.html">QObject</a></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;{</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; Q_OBJECT</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  <a class="code" href="classmdt_sql_relation.html#a65d9602a4663c8c356938ba9a217704f" title="Create a empty relation. ">mdtSqlRelation</a>(<a class="code" href="class_q_object.html">QObject</a> *parent = 0);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  <a class="code" href="classmdt_sql_relation.html#a22c7de1daa71abbde33199a08541310b" title="Destructor. ">~mdtSqlRelation</a>();</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_relation.html#a5ac3a82c5d3e33b5e40b86acfe7e2a03" title="Set the parent model. ">setParentModel</a>(<a class="code" href="class_q_sql_table_model.html">QSqlTableModel</a> *model);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_relation.html#ad74021dcf86c528044bf67220ed36833" title="Set the child model. ">setChildModel</a>(<a class="code" href="class_q_sql_table_model.html">QSqlTableModel</a> *model);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classmdt_sql_relation.html#a5980d1df4582971666ffe1c1d7639799" title="Add a relation. ">addRelation</a>(<span class="keyword">const</span> QString &amp;parentFieldName, <span class="keyword">const</span> QString &amp;childFieldName, <span class="keywordtype">bool</span> copyParentToChildOnInsertion, <span class="keyword">const</span> QString &amp;operatorWithPreviousItem = <span class="stringliteral">&quot;AND&quot;</span>);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_relation.html#a01469fb1baf7327ca6ddbcd1595e0d7c" title="Clear relations. ">clear</a>();</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
+<div class="line"><a name="l00109"></a><span class="lineno"><a class="code" href="classmdt_sql_relation.html#a51cf2e1741445d465456d71293a738cc">  109</a></span>&#160;  <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured ">mdtError</a> <a class="code" href="classmdt_sql_relation.html#a51cf2e1741445d465456d71293a738cc" title="Get last error. ">lastError</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> pvLastError; }</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; signals:</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_relation.html#a86656619d8156638ebfbde2b334d40e2" title="This signal is emitted once setFilter() was called on child model. ">childModelFilterApplied</a>();</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_relation.html#ae30eb691c46263cb4021f55b03d0d111" title="This signal is emitted after childModelFilterApplied() if child model becomes empty. ">childModelIsEmpty</a>();</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160; <span class="keyword">public</span> slots:</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_relation.html#a39fbecb027a5783277df1cc995485917" title="Update child model. ">setParentCurrentIndex</a>(<span class="keywordtype">int</span> index);</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_relation.html#a39fbecb027a5783277df1cc995485917" title="Update child model. ">setParentCurrentIndex</a>(<span class="keyword">const</span> QModelIndex &amp;index);</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_sql_relation.html#a39fbecb027a5783277df1cc995485917" title="Update child model. ">setParentCurrentIndex</a>(<span class="keyword">const</span> QModelIndex &amp;current, <span class="keyword">const</span> QModelIndex &amp;previous);</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160; <span class="keyword">private</span> slots:</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;  <span class="keywordtype">void</span> onChildBeforeInsert(QSqlRecord &amp;childRecord);</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160; <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;  <span class="keywordtype">void</span> setChildForeingKeyValues(QSqlRecord &amp;parentRecord, QSqlRecord &amp;childRecord);</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;  <span class="keywordtype">void</span> generateChildModelRelationFilter(<span class="keywordtype">int</span> row);</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;  <span class="keywordtype">void</span> generateChildModelFilter();</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;  Q_DISABLE_COPY(<a class="code" href="classmdt_sql_relation.html" title="Handle parent/child relations between 2 QSqlTableModels. ">mdtSqlRelation</a>);</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;  QList&lt;mdtSqlRelationItem*&gt; pvRelations;</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;  <a class="code" href="class_q_sql_table_model.html">QSqlTableModel</a> *pvParentModel;</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  <a class="code" href="class_q_sql_table_model.html">QSqlTableModel</a> *pvChildModel;</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;  QString pvChildModelUserFilter;</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;  QString pvChildModelRelationFilter;</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;  QString pvChildModelFilter;</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;  <span class="keywordtype">int</span> pvCurrentRow;</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;  <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured ">mdtError</a> pvLastError;</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;};</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;<span class="preprocessor">#endif  // #ifndef MDT_SQL_RELATION_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Sep 1 2014 18:45:36 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Sep 20 2014 15:23:36 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

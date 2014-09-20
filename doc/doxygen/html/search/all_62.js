@@ -8,7 +8,7 @@ var searchData=
   ['bdeviceclass',['bDeviceClass',['../classmdt_usb_device_descriptor.html#a94e04915c8df9102db54068911b92532',1,'mdtUsbDeviceDescriptor']]],
   ['bdeviceprotocol',['bDeviceProtocol',['../classmdt_usb_device_descriptor.html#aac1207bd8cb91e04f48f6748b1a8ca16',1,'mdtUsbDeviceDescriptor']]],
   ['bdevicesubclass',['bDeviceSubClass',['../classmdt_usb_device_descriptor.html#a50b483ed26f546017bde4ae6f9762268',1,'mdtUsbDeviceDescriptor']]],
-  ['begintransaction',['beginTransaction',['../classmdt_tt_base.html#a733fc8720c9eeabd3395883ba5a544ce',1,'mdtTtBase']]],
+  ['begintransaction',['beginTransaction',['../classmdt_abstract_sql_table_controller.html#ad262dacf15c09cc04057d4e98fff2a0e',1,'mdtAbstractSqlTableController::beginTransaction()'],['../classmdt_tt_base.html#a733fc8720c9eeabd3395883ba5a544ce',1,'mdtTtBase::beginTransaction()']]],
   ['binarytodouble',['binaryToDouble',['../classmdt_binary_double_converter.html#a1369ff9f4138f8cd2158c263e5b35ec6',1,'mdtBinaryDoubleConverter']]],
   ['binterfaceclass',['bInterfaceClass',['../classmdt_usb_interface_descriptor.html#a345952007f1822d7decc6b115883a250',1,'mdtUsbInterfaceDescriptor']]],
   ['binterfaceprotocol',['bInterfaceProtocol',['../classmdt_usb_interface_descriptor.html#a9be6f58db4a2fdf1e3a1a0acf1b838f7',1,'mdtUsbInterfaceDescriptor']]],

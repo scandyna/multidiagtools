@@ -329,7 +329,7 @@ Protected Attributes</h2></td></tr>
 <p>Get a new frame for reading data from port. </p>
 <p>This is a helper method to get a new frame in port's read frames pool.</p>
 <p>It can hapen that the read frames pool is empty. In this case, a error will be generated in the <a class="el" href="classmdt_error.html" title="mdtError contains informations about a error that occured ">mdtError</a> log system, and notified with ReadPoolEmpty error. This method will also block ( sleep ) until a frame is available in read pool.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000032">Todo:</a></b></dt><dd>Currently implemented in polling, should be done with a wait condition.</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000036">Todo:</a></b></dt><dd>Currently implemented in polling, should be done with a wait condition.</dd></dl>
 <p>Note about port mutex handling:<br/>
  The port mutext must be locked before calling this method. Internally, it will be unlocked during wait, and will be locked again. So, the port mutex is allways locked when this method returns.</p>
 <p>Note: internally, currentReadFrame is updated.</p>
@@ -970,7 +970,7 @@ data must be valid. </dd></dl>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Sep 1 2014 18:45:45 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Sep 20 2014 15:23:43 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

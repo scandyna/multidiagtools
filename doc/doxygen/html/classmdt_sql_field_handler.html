@@ -208,7 +208,7 @@ Properties</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Handle events between a SQL field and a edition widget. </p>
-<p>When writing a GUI for a SQL database, Qt offers several classes. For example, <a class="el" href="class_q_sql_table_model.html">QSqlTableModel</a>, <a class="el" href="class_q_data_widget_mapper.html">QDataWidgetMapper</a>, QLineEdit, ...</p>
+<p>When writing a GUI for a SQL database, Qt offers several classes. For example, <a class="el" href="class_q_sql_table_model.html">QSqlTableModel</a>, QDataWidgetMapper, QLineEdit, ...</p>
 <p><a class="el" href="classmdt_sql_field_handler.html" title="Handle events between a SQL field and a edition widget. ">mdtSqlFieldHandler</a> add some functions that will help keeping the GUI more coherent with the underlaying database.</p>
 <p>To use this class, first set the field with <a class="el" href="classmdt_sql_field_handler.html#a5c0b3077cf5f2622dd107b892ddde76c" title="Set SQL field. ">setField()</a>, then add your edition/view widget with <a class="el" href="classmdt_sql_field_handler.html#ad337249c9e123d31c53ed199384825d0" title="Set the edit/view widget. ">setDataWidget()</a>.</p>
 <p>If field must be read only (independent of field access set in QSqlField), use setReaOnly(). </p>
@@ -412,8 +412,6 @@ Properties</h2></td></tr>
 
 <p>References <a class="el" href="classmdt_sql_field_handler_abstract_data_widget.html#a460c76d650eba635ffb42951c7adbb50">mdtSqlFieldHandlerAbstractDataWidget::widget()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00143">mdtSqlFormWidget::mappedWidgets()</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="a32c52fa21b4a0e2165e1fbbb8f7fe3b7"></a>
@@ -502,7 +500,7 @@ Properties</h2></td></tr>
 
 <p>References <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_error_8h_source.html#l00093">mdtError::Warning</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00053">mdtSqlFormWidget::mapFormWidgets()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_data_widget_controller_8cpp_source.html#l00118">mdtSqlDataWidgetController::addMapping()</a>.</p>
 
 </div>
 </div>
@@ -726,7 +724,7 @@ Properties</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00520">520</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_form_widget_8cpp_source.html#l00053">mdtSqlFormWidget::mapFormWidgets()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_data_widget_controller_8cpp_source.html#l00118">mdtSqlDataWidgetController::addMapping()</a>.</p>
 
 </div>
 </div>
@@ -806,13 +804,13 @@ Properties</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>src/mdtutilsgui/<a class="el" href="mdt_sql_field_handler_8h_source.html">mdtSqlFieldHandler.h</a></li>
-<li>src/mdtutilsgui/<a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a></li>
+<li>src/mdtdatabase/<a class="el" href="mdt_sql_field_handler_8h_source.html">mdtSqlFieldHandler.h</a></li>
+<li>src/mdtdatabase/<a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Sep 1 2014 18:45:45 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Sep 20 2014 15:23:43 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

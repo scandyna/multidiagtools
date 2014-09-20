@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.4"/>
-<title>Multi diag tools: src/mdtutilsgui/mdtSqlDataValidator.cpp Source File</title>
+<title>Multi diag tools: src/mdtdatabase/mdtSqlDataValidator.cpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -81,7 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_6853ee7b343a1b65ec0b24bd11272af0.html">mdtutilsgui</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_7a9c9aa4b97bb4a5b319edee0793544f.html">mdtdatabase</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -91,7 +91,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <a href="mdt_sql_data_validator_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/****************************************************************************</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> **</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> ** Copyright (C) 2011-2013 Philippe Steinmann.</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> ** Copyright (C) 2011-2014 Philippe Steinmann.</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> **</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> ** This file is part of multiDiagTools library.</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"> **</span></div>
@@ -112,78 +112,31 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_sql_data_validator_8h.html">mdtSqlDataValidator.h</a>&quot;</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_error_8h.html">mdtError.h</a>&quot;</span></div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;QMessageBox&gt;</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &lt;QSqlTableModel&gt;</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
-<div class="line"><a name="l00026"></a><span class="lineno"><a class="code" href="classmdt_sql_data_validator.html#a609bc3f4378f092a74e47907dc3e0222">   26</a></span>&#160;<a class="code" href="classmdt_sql_data_validator.html#a609bc3f4378f092a74e47907dc3e0222" title="Constructor. ">mdtSqlDataValidator::mdtSqlDataValidator</a>(<a class="code" href="class_q_sql_table_model.html">QSqlTableModel</a> *model, <a class="code" href="class_q_object.html">QObject</a> *parent)</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; : <a class="code" href="class_q_object.html">QObject</a>(parent)</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;{</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  Q_ASSERT(model != 0);</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  pvModel = <a class="code" href="classmdt_sql_data_validator.html#a4970687a15ac3c8099c13164fba58291" title="Get model. ">model</a>;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="code" href="classmdt_sql_data_validator.html#a24a295e08cac39244b35d409f48095f6">   25</a></span>&#160;<a class="code" href="classmdt_sql_data_validator.html#a24a295e08cac39244b35d409f48095f6" title="Constructor. ">mdtSqlDataValidator::mdtSqlDataValidator</a>(<a class="code" href="class_q_object.html">QObject</a> *parent)</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; : <a class="code" href="class_q_object.html">QObject</a>(parent)</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;{</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;}</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="code" href="classmdt_sql_data_validator.html#a2d1348a7035ac4fcf4f4cd47a6c2fa52">   30</a></span>&#160;<a class="code" href="classmdt_sql_data_validator.html#a2d1348a7035ac4fcf4f4cd47a6c2fa52" title="Destructor. ">mdtSqlDataValidator::~mdtSqlDataValidator</a>()</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;{</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;}</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno"><a class="code" href="classmdt_sql_data_validator.html#a2d1348a7035ac4fcf4f4cd47a6c2fa52">   34</a></span>&#160;<a class="code" href="classmdt_sql_data_validator.html#a2d1348a7035ac4fcf4f4cd47a6c2fa52" title="Destructor. ">mdtSqlDataValidator::~mdtSqlDataValidator</a>()</div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="code" href="classmdt_sql_data_validator.html#af09f6966469821b8e5d569bff0f51834">   34</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_sql_data_validator.html#af09f6966469821b8e5d569bff0f51834" title="Set message handler. ">mdtSqlDataValidator::setMessageHandler</a>(std::shared_ptr&lt; mdtUiMessageHandler &gt; handler)</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;{</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;}</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  Q_ASSERT(handler);</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno"><a class="code" href="classmdt_sql_data_validator.html#a4970687a15ac3c8099c13164fba58291">   38</a></span>&#160;<a class="code" href="class_q_sql_table_model.html">QSqlTableModel</a> *<a class="code" href="classmdt_sql_data_validator.html#a4970687a15ac3c8099c13164fba58291" title="Get model. ">mdtSqlDataValidator::model</a>()</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;{</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  Q_ASSERT(pvModel != 0);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="keywordflow">return</span> pvModel;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;}</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
-<div class="line"><a name="l00045"></a><span class="lineno"><a class="code" href="classmdt_sql_data_validator.html#af291c18e9c8994085ed4664db3fdcb7c">   45</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_sql_data_validator.html#af291c18e9c8994085ed4664db3fdcb7c" title="Checks to be done before data are submitted. ">mdtSqlDataValidator::checkBeforeSubmit</a>()</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;{</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;}</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno"><a class="code" href="classmdt_sql_data_validator.html#aef49b35ed8861accd9547b35aabc4ef4">   50</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_sql_data_validator.html#aef49b35ed8861accd9547b35aabc4ef4" title="Display a warning to the user. ">mdtSqlDataValidator::displayWarning</a>(<span class="keyword">const</span> QString &amp;text, <span class="keyword">const</span> QString &amp;informativeText, <span class="keyword">const</span> QSqlError &amp;sqlError)</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;{</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  QMessageBox msgBox;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="comment">// Log warning</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured ">mdtError</a> e(<a class="code" href="mdt_error_8h.html#a0f1a2f7579a33e6de2fe8a1cbb5bbbb5a7e794a8babdb710f4442175715121d58">MDT_DATABASE_ERROR</a>, text + <span class="stringliteral">&quot;\nInfo: &quot;</span> + informativeText, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a>);</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <span class="keywordflow">if</span>(sqlError.isValid()){</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    e.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno) ">setSystemError</a>(sqlError.number(), sqlError.text());</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  }</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce" title="Add source information to error. ">MDT_ERROR_SET_SRC</a>(e, <span class="stringliteral">&quot;mdtSqlDataValidator&quot;</span>);</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output. ">commit</a>();</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  <span class="comment">// Show warning</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  msgBox.setText(text);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  msgBox.setInformativeText(informativeText);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  <span class="keywordflow">if</span>(sqlError.isValid()){</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    msgBox.setDetailedText(sqlError.text());</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  }</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  msgBox.setIcon(QMessageBox::Warning);</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  msgBox.exec();</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;}</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
-<div class="line"><a name="l00071"></a><span class="lineno"><a class="code" href="classmdt_sql_data_validator.html#a9d21a05e4e426235c908ba16437e9554">   71</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_sql_data_validator.html#a9d21a05e4e426235c908ba16437e9554" title="Display a error to the user. ">mdtSqlDataValidator::displayError</a>(<span class="keyword">const</span> QString &amp;text, <span class="keyword">const</span> QString &amp;informativeText, <span class="keyword">const</span> QSqlError &amp;sqlError)</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;{</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  QMessageBox msgBox;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <span class="comment">// Log warning</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <a class="code" href="classmdt_error.html" title="mdtError contains informations about a error that occured ">mdtError</a> e(<a class="code" href="mdt_error_8h.html#a0f1a2f7579a33e6de2fe8a1cbb5bbbb5a7e794a8babdb710f4442175715121d58">MDT_DATABASE_ERROR</a>, text + <span class="stringliteral">&quot;\nInfo: &quot;</span> + informativeText, <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <span class="keywordflow">if</span>(sqlError.isValid()){</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    e.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno) ">setSystemError</a>(sqlError.number(), sqlError.text());</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  }</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce" title="Add source information to error. ">MDT_ERROR_SET_SRC</a>(e, <span class="stringliteral">&quot;mdtSqlDataValidator&quot;</span>);</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output. ">commit</a>();</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  <span class="comment">// Show warning</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  msgBox.setText(text);</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  msgBox.setInformativeText(informativeText);</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  <span class="keywordflow">if</span>(sqlError.isValid()){</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    msgBox.setDetailedText(sqlError.text());</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  }</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  msgBox.setIcon(QMessageBox::Critical);</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  msgBox.exec();</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;}</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  pvMessageHandler = handler;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;}</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="code" href="classmdt_sql_data_validator.html#af291c18e9c8994085ed4664db3fdcb7c">   41</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_sql_data_validator.html#af291c18e9c8994085ed4664db3fdcb7c" title="Checks to be done before data are submitted. ">mdtSqlDataValidator::checkBeforeSubmit</a>()</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;{</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Sep 1 2014 18:45:36 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Sep 20 2014 15:23:34 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

@@ -42,6 +42,10 @@ void \hyperlink{classmdt_state_machine_a3ff507d3d9256107038ceb0c3dfba9c8}{state\
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
 virtual \hyperlink{classmdt_state_machine_ac32776aa0587ec290576e6e2cafb631f}{$\sim$mdt\-State\-Machine} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_state_machine_a1dcc7d12c50500cdbda8b7ef1e141901}{start} (bool wait\-Started)
+\begin{DoxyCompactList}\small\item\em Start state machine. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_state_machine_a1a4d6288c13cc1ed334de850836132a8}{stop} (bool wait\-Stopped)
+\begin{DoxyCompactList}\small\item\em Stop state machine. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_state_machine_a16a99b2d6d077e1ea39622ef0e2b5a5b}{current\-State} () const 
 \begin{DoxyCompactList}\small\item\em Get current state. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_state_machine_ab14dc03757e493d35d510af8a1b436b6}{wait\-On\-State} (int state, int timeout=-\/1)
@@ -97,7 +101,7 @@ Destructor.
 
 
 
-Definition at line 37 of file mdt\-State\-Machine.\-cpp.
+Definition at line 39 of file mdt\-State\-Machine.\-cpp.
 
 
 
@@ -115,7 +119,7 @@ Get current state.
 
 
 
-Definition at line 41 of file mdt\-State\-Machine.\-cpp.
+Definition at line 65 of file mdt\-State\-Machine.\-cpp.
 
 
 
@@ -123,7 +127,7 @@ References mdt\-State\-::id().
 
 
 
-Referenced by mdt\-Abstract\-Sql\-Widget\-::current\-State(), mdt\-Port\-Manager\-::current\-State(), wait\-On\-One\-State(), and wait\-On\-State().
+Referenced by mdt\-Abstract\-Sql\-Table\-Controller\-::current\-State(), mdt\-Port\-Manager\-::current\-State(), wait\-On\-One\-State(), and wait\-On\-State().
 
 \hypertarget{classmdt_state_machine_a6fa653fc7e2ea8a58e2d160ba6d96013}{\index{mdt\-State\-Machine@{mdt\-State\-Machine}!notify\-Current\-State@{notify\-Current\-State}}
 \index{notify\-Current\-State@{notify\-Current\-State}!mdtStateMachine@{mdt\-State\-Machine}}
@@ -140,7 +144,7 @@ Will emit \hyperlink{classmdt_state_machine_a57952ce2e02e44a57c70695067dc8b86}{s
 
 In normal way, signals are emitted when state changes. In some situation, it can be usefull to call this method explicitly (see \hyperlink{classmdt_port_manager_a0c460b47b12e38e708321be79f6343d8}{mdt\-Port\-Manager\-::notify\-Current\-State()} for a example). 
 
-Definition at line 89 of file mdt\-State\-Machine.\-cpp.
+Definition at line 113 of file mdt\-State\-Machine.\-cpp.
 
 
 
@@ -149,6 +153,30 @@ References mdt\-State\-::id(), mdt\-State\-::led\-Color\-Id(), mdt\-State\-::led
 
 
 Referenced by mdt\-Port\-Manager\-::notify\-Current\-State().
+
+\hypertarget{classmdt_state_machine_a1dcc7d12c50500cdbda8b7ef1e141901}{\index{mdt\-State\-Machine@{mdt\-State\-Machine}!start@{start}}
+\index{start@{start}!mdtStateMachine@{mdt\-State\-Machine}}
+\subsubsection[{start}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-State\-Machine\-::start (
+\begin{DoxyParamCaption}
+\item[{bool}]{wait\-Started}
+\end{DoxyParamCaption}
+)}}\label{classmdt_state_machine_a1dcc7d12c50500cdbda8b7ef1e141901}
+
+
+Start state machine. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em wait\-Started} & If true, call will return only when state machine has started (will not break event loop) \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 43 of file mdt\-State\-Machine.\-cpp.
+
+
+
+Referenced by mdt\-Port\-Manager\-State\-Machine\-::build\-Main\-State\-Machine(), and mdt\-Abstract\-Sql\-Table\-Controller\-::start().
 
 \hypertarget{classmdt_state_machine_a57952ce2e02e44a57c70695067dc8b86}{\index{mdt\-State\-Machine@{mdt\-State\-Machine}!state\-Changed@{state\-Changed}}
 \index{state\-Changed@{state\-Changed}!mdtStateMachine@{mdt\-State\-Machine}}
@@ -186,6 +214,30 @@ Emitted only if a state that must be notified is entered.
 
 Referenced by mdt\-Port\-Manager\-State\-Machine\-::build\-Main\-State\-Machine(), and notify\-Current\-State().
 
+\hypertarget{classmdt_state_machine_a1a4d6288c13cc1ed334de850836132a8}{\index{mdt\-State\-Machine@{mdt\-State\-Machine}!stop@{stop}}
+\index{stop@{stop}!mdtStateMachine@{mdt\-State\-Machine}}
+\subsubsection[{stop}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-State\-Machine\-::stop (
+\begin{DoxyParamCaption}
+\item[{bool}]{wait\-Stopped}
+\end{DoxyParamCaption}
+)}}\label{classmdt_state_machine_a1a4d6288c13cc1ed334de850836132a8}
+
+
+Stop state machine. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em wait\-Stopped} & If true, call will return only when state machine is stopped (will not break event loop) \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 54 of file mdt\-State\-Machine.\-cpp.
+
+
+
+Referenced by mdt\-Abstract\-Sql\-Table\-Controller\-::stop().
+
 \hypertarget{classmdt_state_machine_a12e8c253a5ca6e92e9f1c92f1546e4b8}{\index{mdt\-State\-Machine@{mdt\-State\-Machine}!wait\-On\-One\-State@{wait\-On\-One\-State}}
 \index{wait\-On\-One\-State@{wait\-On\-One\-State}!mdtStateMachine@{mdt\-State\-Machine}}
 \subsubsection[{wait\-On\-One\-State}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-State\-Machine\-::wait\-On\-One\-State (
@@ -212,15 +264,11 @@ True on success, false on timeout.
 \end{DoxyReturn}
 
 
-Definition at line 69 of file mdt\-State\-Machine.\-cpp.
+Definition at line 93 of file mdt\-State\-Machine.\-cpp.
 
 
 
 References current\-State().
-
-
-
-Referenced by mdt\-Abstract\-Sql\-Widget\-::submit\-And\-Wait().
 
 \hypertarget{classmdt_state_machine_ab14dc03757e493d35d510af8a1b436b6}{\index{mdt\-State\-Machine@{mdt\-State\-Machine}!wait\-On\-State@{wait\-On\-State}}
 \index{wait\-On\-State@{wait\-On\-State}!mdtStateMachine@{mdt\-State\-Machine}}
@@ -248,7 +296,7 @@ True on success, false on timeout.
 \end{DoxyReturn}
 
 
-Definition at line 49 of file mdt\-State\-Machine.\-cpp.
+Definition at line 73 of file mdt\-State\-Machine.\-cpp.
 
 
 
@@ -256,7 +304,7 @@ References current\-State().
 
 
 
-Referenced by mdt\-Port\-Manager\-State\-Machine\-::build\-Main\-State\-Machine(), mdt\-Abstract\-Sql\-Widget\-::start(), and mdt\-Port\-Manager\-::stop().
+Referenced by mdt\-Port\-Manager\-State\-Machine\-::build\-Main\-State\-Machine(), mdt\-Abstract\-Sql\-Table\-Controller\-::select(), mdt\-Abstract\-Sql\-Table\-Controller\-::set\-Filter(), and mdt\-Port\-Manager\-::stop().
 
 
 

@@ -110,7 +110,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment"> **</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment"> ****************************************************************************/</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_tt_abstract_test_node_calibration_tool_8h.html">mdtTtAbstractTestNodeCalibrationTool.h</a>&quot;</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_sql_form_widget_8h.html">mdtSqlFormWidget.h</a>&quot;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;mdtSqlFormWidget.h&quot;</span></div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_sql_relation_8h.html">mdtSqlRelation.h</a>&quot;</span></div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &lt;QSqlError&gt;</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &lt;QModelIndex&gt;</span></div>
@@ -124,7 +124,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;   pvTestNodeManager(new <a class="code" href="classmdt_tt_test_node_manager.html" title="Helper class to access test node data and devices. ">mdtTtTestNodeManager</a>(0, db)),</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;   pvTest(new <a class="code" href="classmdt_tt_test.html" title="Helper class to manipulate test data. ">mdtTtTest</a>(0, db)),</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;   pvTestNodeTableModel(new <a class="code" href="class_q_sql_table_model.html">QSqlTableModel</a>(0, db)),</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;   pvTestNodeForm(new <a class="code" href="classmdt_sql_form_widget.html" title="Widget that accept a user designed form and helps dealing with table model. ">mdtSqlFormWidget</a>),</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;   pvTestNodeForm(new mdtSqlFormWidget),</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;   pvTestNodeUnitViewTableModel(new <a class="code" href="class_q_sql_table_model.html">QSqlTableModel</a>(0, db)),</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;   pvTestNodeUnitViewRelation(new <a class="code" href="classmdt_sql_relation.html" title="Handle parent/child relations between 2 QSqlTableModels. ">mdtSqlRelation</a>),</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;   pvTestNodeUnitTableModel(new <a class="code" href="class_q_sql_table_model.html">QSqlTableModel</a>(0, db)),</div>
@@ -503,7 +503,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Sep 1 2014 18:45:36 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Sep 20 2014 15:23:35 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

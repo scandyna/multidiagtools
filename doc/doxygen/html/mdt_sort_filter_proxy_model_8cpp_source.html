@@ -121,106 +121,115 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00030"></a><span class="lineno"><a class="code" href="classmdt_sort_filter_proxy_model.html#a83bcd157f655c4d675e5a30d97fa16ba">   30</a></span>&#160;<a class="code" href="classmdt_sort_filter_proxy_model.html#a83bcd157f655c4d675e5a30d97fa16ba" title="Constructor. ">mdtSortFilterProxyModel::mdtSortFilterProxyModel</a>(<a class="code" href="class_q_object.html">QObject</a> *parent)</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; : <a class="code" href="class_q_sort_filter_proxy_model.html">QSortFilterProxyModel</a>(parent)</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;{</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;}</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno"><a class="code" href="classmdt_sort_filter_proxy_model.html#a5d1c4647657a13d4b225e790a6b8d1a3">   35</a></span>&#160;<a class="code" href="classmdt_sort_filter_proxy_model.html#a5d1c4647657a13d4b225e790a6b8d1a3" title="Destructor. ">mdtSortFilterProxyModel::~mdtSortFilterProxyModel</a>()</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;{</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;}</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno"><a class="code" href="classmdt_sort_filter_proxy_model.html#aad45b85d23fe3c2eb6198a9eece685d2">   39</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_sort_filter_proxy_model.html#aad45b85d23fe3c2eb6198a9eece685d2" title="Clear columns sort order. ">mdtSortFilterProxyModel::clearColumnsSortOrder</a>()</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;{</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  pvColumnsSortOrder.clear();</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;}</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
-<div class="line"><a name="l00044"></a><span class="lineno"><a class="code" href="classmdt_sort_filter_proxy_model.html#a22d0f84ebcc9af078f3c004dbe790fe8">   44</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_sort_filter_proxy_model.html#a22d0f84ebcc9af078f3c004dbe790fe8" title="Add a column to columns sort order. ">mdtSortFilterProxyModel::addColumnToSortOrder</a>(<span class="keywordtype">int</span> column, Qt::SortOrder order)</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;{</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="comment">// To sort columns in a given order, we simply sort each of them in reverse direction.</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="comment">// Here, we simply prepend each column. We do column index checking here.</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keywordflow">if</span>(column &lt; 0){</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  }</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <span class="keywordflow">if</span>(column &gt;= columnCount()){</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  }</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  pvColumnsSortOrder.prepend(QPair&lt;int, Qt::SortOrder&gt;(column, order));</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;}</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
-<div class="line"><a name="l00057"></a><span class="lineno"><a class="code" href="classmdt_sort_filter_proxy_model.html#ae447c8f1449b1314fac2448c8b004885">   57</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_sort_filter_proxy_model.html#a22d0f84ebcc9af078f3c004dbe790fe8" title="Add a column to columns sort order. ">mdtSortFilterProxyModel::addColumnToSortOrder</a>(<span class="keyword">const</span> QString &amp;fieldName, Qt::SortOrder order)</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;{</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  QSqlQueryModel *m;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  <span class="keywordtype">int</span> column;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  m = <span class="keyword">dynamic_cast&lt;</span>QSqlQueryModel*<span class="keyword">&gt;</span>(sourceModel());</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  <span class="keywordflow">if</span>(m == 0){</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  }</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  column = m-&gt;record().indexOf(fieldName);</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <span class="keywordflow">if</span>(column &gt;= 0){</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <a class="code" href="classmdt_sort_filter_proxy_model.html#a22d0f84ebcc9af078f3c004dbe790fe8" title="Add a column to columns sort order. ">addColumnToSortOrder</a>(column, order);</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  }</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;}</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno"><a class="code" href="classmdt_sort_filter_proxy_model.html#a2dcbaa1d5ffb38368a87e6b4834053f1">   72</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_sort_filter_proxy_model.html#a2dcbaa1d5ffb38368a87e6b4834053f1" title="Check if some coulumn was set to sort order. ">mdtSortFilterProxyModel::hasColumnToSort</a>()<span class="keyword"> const</span></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <span class="keywordflow">return</span> (pvColumnsSortOrder.size() &gt; 0);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;}</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
-<div class="line"><a name="l00077"></a><span class="lineno"><a class="code" href="classmdt_sort_filter_proxy_model.html#a1a4d9fcee3a6817ae668c07ca2ec472f">   77</a></span>&#160;QVector&lt;int&gt; <a class="code" href="classmdt_sort_filter_proxy_model.html#a1a4d9fcee3a6817ae668c07ca2ec472f" title="Get list of indexes of columns that are in sort order. ">mdtSortFilterProxyModel::sortedColumns</a>()<span class="keyword"> const</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  QVector&lt;int&gt; lst;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  <span class="keywordflow">for</span>(i = (pvColumnsSortOrder.size() - 1); i &gt;= 0; --i){</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    lst.append(pvColumnsSortOrder.at(i).first);</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  }</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  <span class="keywordflow">return</span> lst;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;}</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
-<div class="line"><a name="l00089"></a><span class="lineno"><a class="code" href="classmdt_sort_filter_proxy_model.html#a506fff2a1f483ff67989c64b2c4e3491">   89</a></span>&#160;Qt::SortOrder <a class="code" href="classmdt_sort_filter_proxy_model.html#a506fff2a1f483ff67989c64b2c4e3491" title="Get sort order for given column. ">mdtSortFilterProxyModel::sortOrder</a>(<span class="keywordtype">int</span> column)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  <span class="keywordflow">for</span>(i = 0; i &lt; pvColumnsSortOrder.size(); ++i){</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordflow">if</span>(pvColumnsSortOrder.at(i).first == column){</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;      <span class="keywordflow">return</span> pvColumnsSortOrder.at(i).second;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    }</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  }</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  <span class="keywordflow">return</span> pvColumnsSortOrder.at(column).second;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;}</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="keywordtype">bool</span> mdtSortFilterProxyModel::lessThan(<span class="keyword">const</span> QModelIndex &amp;left, <span class="keyword">const</span> QModelIndex &amp;right)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  QVariant leftData = sourceModel()-&gt;data(left);</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  QVariant rightData = sourceModel()-&gt;data(right);</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  <span class="keywordflow">if</span>((leftData.type() == QVariant::String) &amp;&amp; (rightData.type() == QVariant::String)){</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="namespacemdt_algorithms.html#af22a54e83499afe31d22fac9bc521c54" title="Compare 2 strings using natural sort. ">mdtAlgorithms::naturalCompareLessThan</a>(leftData.toString(), rightData.toString(), sortCaseSensitivity());</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  }</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  <span class="keywordflow">return</span> QSortFilterProxyModel::lessThan(left, right);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  pvSortingEnabled = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;}</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="code" href="classmdt_sort_filter_proxy_model.html#a5d1c4647657a13d4b225e790a6b8d1a3">   36</a></span>&#160;<a class="code" href="classmdt_sort_filter_proxy_model.html#a5d1c4647657a13d4b225e790a6b8d1a3" title="Destructor. ">mdtSortFilterProxyModel::~mdtSortFilterProxyModel</a>()</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;{</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;}</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="code" href="classmdt_sort_filter_proxy_model.html#aad45b85d23fe3c2eb6198a9eece685d2">   40</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_sort_filter_proxy_model.html#aad45b85d23fe3c2eb6198a9eece685d2" title="Clear columns sort order. ">mdtSortFilterProxyModel::clearColumnsSortOrder</a>()</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;{</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  pvColumnsSortOrder.clear();</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;}</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="code" href="classmdt_sort_filter_proxy_model.html#a22d0f84ebcc9af078f3c004dbe790fe8">   45</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_sort_filter_proxy_model.html#a22d0f84ebcc9af078f3c004dbe790fe8" title="Add a column to columns sort order. ">mdtSortFilterProxyModel::addColumnToSortOrder</a>(<span class="keywordtype">int</span> column, Qt::SortOrder order)</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;{</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="comment">// To sort columns in a given order, we simply sort each of them in reverse direction.</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="comment">// Here, we simply prepend each column. We do column index checking here.</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="keywordflow">if</span>(column &lt; 0){</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  }</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <span class="keywordflow">if</span>(column &gt;= columnCount()){</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  }</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  pvColumnsSortOrder.prepend(QPair&lt;int, Qt::SortOrder&gt;(column, order));</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;}</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="code" href="classmdt_sort_filter_proxy_model.html#ae447c8f1449b1314fac2448c8b004885">   58</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_sort_filter_proxy_model.html#a22d0f84ebcc9af078f3c004dbe790fe8" title="Add a column to columns sort order. ">mdtSortFilterProxyModel::addColumnToSortOrder</a>(<span class="keyword">const</span> QString &amp;fieldName, Qt::SortOrder order)</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;{</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  QSqlQueryModel *m;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  <span class="keywordtype">int</span> column;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  m = <span class="keyword">dynamic_cast&lt;</span>QSqlQueryModel*<span class="keyword">&gt;</span>(sourceModel());</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  <span class="keywordflow">if</span>(m == 0){</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  }</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  column = m-&gt;record().indexOf(fieldName);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  <span class="keywordflow">if</span>(column &gt;= 0){</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <a class="code" href="classmdt_sort_filter_proxy_model.html#a22d0f84ebcc9af078f3c004dbe790fe8" title="Add a column to columns sort order. ">addColumnToSortOrder</a>(column, order);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  }</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;}</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
+<div class="line"><a name="l00073"></a><span class="lineno"><a class="code" href="classmdt_sort_filter_proxy_model.html#a2dcbaa1d5ffb38368a87e6b4834053f1">   73</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_sort_filter_proxy_model.html#a2dcbaa1d5ffb38368a87e6b4834053f1" title="Check if some coulumn was set to sort order. ">mdtSortFilterProxyModel::hasColumnToSort</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <span class="keywordflow">return</span> (pvColumnsSortOrder.size() &gt; 0);</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;}</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="code" href="classmdt_sort_filter_proxy_model.html#a1a4d9fcee3a6817ae668c07ca2ec472f">   78</a></span>&#160;QVector&lt;int&gt; <a class="code" href="classmdt_sort_filter_proxy_model.html#a1a4d9fcee3a6817ae668c07ca2ec472f" title="Get list of indexes of columns that are in sort order. ">mdtSortFilterProxyModel::sortedColumns</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  QVector&lt;int&gt; lst;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  <span class="keywordflow">for</span>(i = (pvColumnsSortOrder.size() - 1); i &gt;= 0; --i){</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    lst.append(pvColumnsSortOrder.at(i).first);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  }</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  <span class="keywordflow">return</span> lst;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;}</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
+<div class="line"><a name="l00090"></a><span class="lineno"><a class="code" href="classmdt_sort_filter_proxy_model.html#a506fff2a1f483ff67989c64b2c4e3491">   90</a></span>&#160;Qt::SortOrder <a class="code" href="classmdt_sort_filter_proxy_model.html#a506fff2a1f483ff67989c64b2c4e3491" title="Get sort order for given column. ">mdtSortFilterProxyModel::sortOrder</a>(<span class="keywordtype">int</span> column)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  <span class="keywordflow">for</span>(i = 0; i &lt; pvColumnsSortOrder.size(); ++i){</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordflow">if</span>(pvColumnsSortOrder.at(i).first == column){</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;      <span class="keywordflow">return</span> pvColumnsSortOrder.at(i).second;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    }</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  }</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  <span class="keywordflow">return</span> pvColumnsSortOrder.at(column).second;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;}</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
+<div class="line"><a name="l00103"></a><span class="lineno"><a class="code" href="classmdt_sort_filter_proxy_model.html#a45e0d00b0e1a6918d9eae5d276a9614c">  103</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_sort_filter_proxy_model.html#a45e0d00b0e1a6918d9eae5d276a9614c" title="Sort. ">mdtSortFilterProxyModel::sort</a>()</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;{</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  QPair&lt;int, Qt::SortOrder&gt; p;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  <span class="keywordflow">for</span>(i = 0; i &lt; pvColumnsSortOrder.size(); ++i){</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    p = pvColumnsSortOrder.at(i);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    QSortFilterProxyModel::sort(p.first, p.second);</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  }</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;}</div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="keywordtype">void</span> mdtSortFilterProxyModel::sort(<span class="keywordtype">int</span> column, Qt::SortOrder order)</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;{</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  QPair&lt;int, Qt::SortOrder&gt; p;</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  </div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;  <span class="keywordflow">if</span>(pvColumnsSortOrder.isEmpty()){</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    QSortFilterProxyModel::sort(column, order);</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;  }<span class="keywordflow">else</span>{</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    <span class="keywordflow">for</span>(i = 0; i &lt; pvColumnsSortOrder.size(); ++i){</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;      p = pvColumnsSortOrder.at(i);</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;      QSortFilterProxyModel::sort(p.first, p.second);</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    }</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;  }</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;}</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="keywordtype">bool</span> mdtSortFilterProxyModel::lessThan(<span class="keyword">const</span> QModelIndex &amp;left, <span class="keyword">const</span> QModelIndex &amp;right)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  <span class="keywordflow">if</span>(!pvSortingEnabled){</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  }</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  QVariant leftData = sourceModel()-&gt;data(left);</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;  QVariant rightData = sourceModel()-&gt;data(right);</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;  <span class="keywordflow">if</span>((leftData.type() == QVariant::String) &amp;&amp; (rightData.type() == QVariant::String)){</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="namespacemdt_algorithms.html#af22a54e83499afe31d22fac9bc521c54" title="Compare 2 strings using natural sort. ">mdtAlgorithms::naturalCompareLessThan</a>(leftData.toString(), rightData.toString(), sortCaseSensitivity());</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;  }</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;  <span class="keywordflow">return</span> QSortFilterProxyModel::lessThan(left, right);</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;}</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_sort_filter_proxy_model.html#a45e0d00b0e1a6918d9eae5d276a9614c" title="Sort. ">mdtSortFilterProxyModel::sort</a>(<span class="keywordtype">int</span> column, Qt::SortOrder order)</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;{</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;  <span class="keywordflow">if</span>(pvColumnsSortOrder.isEmpty()){</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    QSortFilterProxyModel::sort(column, order);</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;  }<span class="keywordflow">else</span>{</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    <a class="code" href="classmdt_sort_filter_proxy_model.html#a45e0d00b0e1a6918d9eae5d276a9614c" title="Sort. ">sort</a>();</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;  }</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Sep 1 2014 18:45:36 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Sep 20 2014 15:23:36 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

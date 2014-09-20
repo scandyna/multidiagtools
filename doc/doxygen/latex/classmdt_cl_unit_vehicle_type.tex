@@ -47,7 +47,7 @@ bool \hyperlink{classmdt_cl_unit_vehicle_type_a399321985befccc70d82a2aff09c409e}
 \begin{DoxyCompactList}\small\item\em Remove unit $<$-\/$>$ vehicle type assignment. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_cl_unit_vehicle_type_a18480c7eb4f54f4006747d17c18679e5}{remove\-Unit\-Vehicle\-Assignments} (const Q\-Variant \&unit\-Id, const Q\-List$<$ Q\-Variant $>$ \&vehicle\-Type\-Id\-List)
 \begin{DoxyCompactList}\small\item\em Remove unit $<$-\/$>$ vehicle type assignments. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_cl_unit_vehicle_type_aec5d0729ab36a35c83e472e6e69f2e86}{remove\-Unit\-Vehicle\-Assignments} (const Q\-Variant \&unit\-Id, const Q\-Model\-Index\-List \&vehicle\-Type\-Id\-List)
+bool \hyperlink{classmdt_cl_unit_vehicle_type_a3e97833e0489fe75bb50968e7d9db906}{remove\-Unit\-Vehicle\-Assignments} (const Q\-Variant \&unit\-Id, const \hyperlink{classmdt_sql_table_selection}{mdt\-Sql\-Table\-Selection} \&vehicle\-Type\-Id\-List\-Selection)
 \begin{DoxyCompactList}\small\item\em Remove unit $<$-\/$>$ vehicle type assignments. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Additional Inherited Members}
 
@@ -55,7 +55,7 @@ bool \hyperlink{classmdt_cl_unit_vehicle_type_aec5d0729ab36a35c83e472e6e69f2e86}
 \subsection{Detailed Description}
 Helper class for Unit $<$-\/$>$ Vehicle\-Type assignments. 
 
-Definition at line 33 of file mdt\-Cl\-Unit\-Vehicle\-Type.\-h.
+Definition at line 34 of file mdt\-Cl\-Unit\-Vehicle\-Type.\-h.
 
 
 
@@ -205,25 +205,31 @@ References mdt\-Tt\-Base\-::begin\-Transaction(), mdt\-Error\-::commit(), mdt\-T
 
 Referenced by remove\-Unit\-Vehicle\-Assignment(), and remove\-Unit\-Vehicle\-Assignments().
 
-\hypertarget{classmdt_cl_unit_vehicle_type_aec5d0729ab36a35c83e472e6e69f2e86}{\index{mdt\-Cl\-Unit\-Vehicle\-Type@{mdt\-Cl\-Unit\-Vehicle\-Type}!remove\-Unit\-Vehicle\-Assignments@{remove\-Unit\-Vehicle\-Assignments}}
+\hypertarget{classmdt_cl_unit_vehicle_type_a3e97833e0489fe75bb50968e7d9db906}{\index{mdt\-Cl\-Unit\-Vehicle\-Type@{mdt\-Cl\-Unit\-Vehicle\-Type}!remove\-Unit\-Vehicle\-Assignments@{remove\-Unit\-Vehicle\-Assignments}}
 \index{remove\-Unit\-Vehicle\-Assignments@{remove\-Unit\-Vehicle\-Assignments}!mdtClUnitVehicleType@{mdt\-Cl\-Unit\-Vehicle\-Type}}
 \subsubsection[{remove\-Unit\-Vehicle\-Assignments}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Unit\-Vehicle\-Type\-::remove\-Unit\-Vehicle\-Assignments (
 \begin{DoxyParamCaption}
 \item[{const Q\-Variant \&}]{unit\-Id, }
-\item[{const Q\-Model\-Index\-List \&}]{vehicle\-Type\-Id\-List}
+\item[{const {\bf mdt\-Sql\-Table\-Selection} \&}]{vehicle\-Type\-Id\-List\-Selection}
 \end{DoxyParamCaption}
-)}}\label{classmdt_cl_unit_vehicle_type_aec5d0729ab36a35c83e472e6e69f2e86}
+)}}\label{classmdt_cl_unit_vehicle_type_a3e97833e0489fe75bb50968e7d9db906}
 
 
 Remove unit $<$-\/$>$ vehicle type assignments. 
 
+bool remove\-Unit\-Vehicle\-Assignments(const Q\-Variant \& unit\-Id, const Q\-Model\-Index\-List \& vehicle\-Type\-Id\-List);
+
+bool mdt\-Cl\-Unit\-Vehicle\-Type\-::remove\-Unit\-Vehicle\-Assignments(const Q\-Variant \& unit\-Id, const Q\-Model\-Index\-List \& vehicle\-Type\-Id\-List) \{ Q\-List$<$\-Q\-Variant$>$ id\-List; int i;
+
+Add entries for each vehicle type I\-D for(i = 0; i $<$ vehicle\-Type\-Id\-List.\-size(); ++i)\{ id\-List.\-append(vehicle\-Type\-Id\-List.\-at(i).data()); \}
+
+return remove\-Unit\-Vehicle\-Assignments(unit\-Id, id\-List); \} 
+
+Definition at line 184 of file mdt\-Cl\-Unit\-Vehicle\-Type.\-cpp.
 
 
-Definition at line 169 of file mdt\-Cl\-Unit\-Vehicle\-Type.\-cpp.
 
-
-
-References remove\-Unit\-Vehicle\-Assignments().
+References mdt\-Sql\-Table\-Selection\-::data\-List(), and remove\-Unit\-Vehicle\-Assignments().
 
 \hypertarget{classmdt_cl_unit_vehicle_type_a94e443219c2136b359b9c3202c489bc9}{\index{mdt\-Cl\-Unit\-Vehicle\-Type@{mdt\-Cl\-Unit\-Vehicle\-Type}!sql\-For\-Vehicle\-Type\-Not\-Assigned\-To\-Unit@{sql\-For\-Vehicle\-Type\-Not\-Assigned\-To\-Unit}}
 \index{sql\-For\-Vehicle\-Type\-Not\-Assigned\-To\-Unit@{sql\-For\-Vehicle\-Type\-Not\-Assigned\-To\-Unit}!mdtClUnitVehicleType@{mdt\-Cl\-Unit\-Vehicle\-Type}}

@@ -1,4 +1,15 @@
 <map id="src/mdttools/mdttesttool/mdtTtTestModelEditor.h" name="src/mdttools/mdttesttool/mdtTtTestModelEditor.h">
-<area shape="rect" id="node3" href="$mdt_sql_form_8h.html" title="mdtSqlForm.h" alt="" coords="335,101,439,131"/>
-<area shape="rect" id="node5" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="93,179,176,208"/>
+<area shape="rect" id="node3" href="$mdt_sql_form_8h.html" title="mdtSqlForm.h" alt="" coords="492,101,596,131"/>
+<area shape="rect" id="node5" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="116,488,199,517"/>
+<area shape="rect" id="node13" href="$mdt_sql_data_widget_controller_8h.html" title="mdtSqlDataWidgetController.h" alt="" coords="237,179,435,208"/>
+<area shape="rect" id="node39" href="$mdt_sql_relation_info_8h.html" title="mdtSqlRelationInfo.h" alt="" coords="1504,333,1648,363"/>
+<area shape="rect" id="node69" href="$mdt_sql_table_view_controller_8h.html" title="mdtSqlTableViewController.h" alt="" coords="1797,179,1987,208"/>
+<area shape="rect" id="node15" href="$mdt_abstract_sql_table_controller_8h.html" title="mdtAbstractSqlTableController.h" alt="" coords="756,256,967,285"/>
+<area shape="rect" id="node18" href="$mdt_state_machine_8h.html" title="mdtStateMachine.h" alt="" coords="899,333,1032,363"/>
+<area shape="rect" id="node25" href="$mdt_ui_message_handler_8h.html" title="mdtUiMessageHandler.h" alt="" coords="519,411,684,440"/>
+<area shape="rect" id="node29" href="$mdt_sql_data_validator_8h.html" title="mdtSqlDataValidator.h" alt="" coords="429,333,581,363"/>
+<area shape="rect" id="node44" href="$mdt_sort_filter_proxy_model_8h.html" title="mdtSortFilterProxyModel.h" alt="" coords="1107,333,1283,363"/>
+<area shape="rect" id="node72" href="$mdt_sql_table_selection_8h.html" title="mdtSqlTableSelection.h" alt="" coords="1812,256,1972,285"/>
+<area shape="rect" id="node74" href="$mdt_sql_table_selection_row_8h.html" title="mdtSqlTableSelectionRow.h" alt="" coords="1824,333,2011,363"/>
+<area shape="rect" id="node76" href="$mdt_sql_table_selection_item_8h.html" title="mdtSqlTableSelectionItem.h" alt="" coords="1820,411,2007,440"/>
 </map>

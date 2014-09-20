@@ -1,5 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$class_q_validator.html" title="QValidator" alt="" coords="5,32,88,61"/>
-<area shape="rect" id="node3" href="$classmdt_double_validator.html" title="Double validator. " alt="" coords="149,5,285,35"/>
-<area shape="rect" id="node5" href="$classmdt_uic_number_validator.html" title="Validator for UIC Number. " alt="" coords="137,59,297,88"/>
+<area shape="rect" id="node1" href="$class_q_state_machine.html" title="QStateMachine" alt="" coords="5,5,117,35"/>
+<area shape="rect" id="node3" href="$classmdt_state_machine.html" title="Extend Qt&#39;s QStateMachine. " alt="" coords="167,5,289,35"/>
+<area shape="rect" id="node5" href="$classmdt_port_manager_state_machine.html" title="State machine for port manager. " alt="" coords="340,5,537,35"/>
 </map>

@@ -111,133 +111,135 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment"> ****************************************************************************/</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_sql_dialog_8h.html">mdtSqlDialog.h</a>&quot;</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_sql_form_8h.html">mdtSqlForm.h</a>&quot;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_sql_form_widget_8h.html">mdtSqlFormWidget.h</a>&quot;</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &lt;QVBoxLayout&gt;</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &lt;QHBoxLayout&gt;</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;QTabWidget&gt;</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;QDialogButtonBox&gt;</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;QPushButton&gt;</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;QDebug&gt;</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="code" href="classmdt_sql_dialog.html#a9588f53afba818d79ff0f2e9eaeed50f">   32</a></span>&#160;<a class="code" href="classmdt_sql_dialog.html#a9588f53afba818d79ff0f2e9eaeed50f" title="Constructor. ">mdtSqlDialog::mdtSqlDialog</a>(<a class="code" href="class_q_widget.html">QWidget</a> *parent)</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; : <a class="code" href="class_q_dialog.html">QDialog</a>(parent)</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;{</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  pvMainLayout = <span class="keyword">new</span> QVBoxLayout;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  QHBoxLayout *buttonsLayout = <span class="keyword">new</span> QHBoxLayout;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  pvForm = 0;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  createEditionElements(buttonsLayout);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="comment">// Setup button box</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  QDialogButtonBox *buttonBox = <span class="keyword">new</span> QDialogButtonBox;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  buttonBox-&gt;addButton(QDialogButtonBox::Close);</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  connect(buttonBox, SIGNAL(accepted()), <span class="keyword">this</span>, SLOT(<a class="code" href="classmdt_sql_dialog.html#affba1732b5f32db150d0e700ecc339f8" title="Overloads QDialog::accept() ">accept</a>()));</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  connect(buttonBox, SIGNAL(rejected()), <span class="keyword">this</span>, SLOT(<a class="code" href="classmdt_sql_dialog.html#ada1726d5861cb071fab7a1c31bc52abb" title="Overloads QDialog::reject() ">reject</a>()));</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  buttonsLayout-&gt;addWidget(buttonBox);</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="comment">// Setup layout</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  pvMainLayout-&gt;addLayout(buttonsLayout);</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  setLayout(pvMainLayout);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;}</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
-<div class="line"><a name="l00051"></a><span class="lineno"><a class="code" href="classmdt_sql_dialog.html#a845d9f4eef1c590d5e854540e18b00a6">   51</a></span>&#160;<a class="code" href="classmdt_sql_dialog.html#a845d9f4eef1c590d5e854540e18b00a6" title="Destructor. ">mdtSqlDialog::~mdtSqlDialog</a>()</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;{</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_sql_data_widget_controller_8h.html">mdtSqlDataWidgetController.h</a>&quot;</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;QVBoxLayout&gt;</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;QHBoxLayout&gt;</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &lt;QTabWidget&gt;</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;QDialogButtonBox&gt;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &lt;QPushButton&gt;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &lt;QDebug&gt;</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="code" href="classmdt_sql_dialog.html#a9588f53afba818d79ff0f2e9eaeed50f">   36</a></span>&#160;<a class="code" href="classmdt_sql_dialog.html#a9588f53afba818d79ff0f2e9eaeed50f" title="Constructor. ">mdtSqlDialog::mdtSqlDialog</a>(<a class="code" href="class_q_widget.html">QWidget</a> *parent)</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; : <a class="code" href="class_q_dialog.html">QDialog</a>(parent)</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;{</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  pvMainLayout = <span class="keyword">new</span> QVBoxLayout;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  QHBoxLayout *buttonsLayout = <span class="keyword">new</span> QHBoxLayout;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  pvForm = 0;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  createEditionElements(buttonsLayout);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="comment">// Setup button box</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  QDialogButtonBox *buttonBox = <span class="keyword">new</span> QDialogButtonBox;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  buttonBox-&gt;addButton(QDialogButtonBox::Close);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  connect(buttonBox, SIGNAL(accepted()), <span class="keyword">this</span>, SLOT(<a class="code" href="classmdt_sql_dialog.html#affba1732b5f32db150d0e700ecc339f8" title="Overloads QDialog::accept() ">accept</a>()));</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  connect(buttonBox, SIGNAL(rejected()), <span class="keyword">this</span>, SLOT(<a class="code" href="classmdt_sql_dialog.html#ada1726d5861cb071fab7a1c31bc52abb" title="Overloads QDialog::reject() ">reject</a>()));</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  buttonsLayout-&gt;addWidget(buttonBox);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <span class="comment">// Setup layout</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  pvMainLayout-&gt;addLayout(buttonsLayout);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  setLayout(pvMainLayout);</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;}</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno"><a class="code" href="classmdt_sql_dialog.html#aa4b143efbe21073e1668d75cdf262a39">   55</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_sql_dialog.html#aa4b143efbe21073e1668d75cdf262a39" title="Set the SQL form. ">mdtSqlDialog::setSqlForm</a>(<a class="code" href="classmdt_sql_form.html" title="Base class for high level SQL widgets API. ">mdtSqlForm</a> *form)</div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="code" href="classmdt_sql_dialog.html#a845d9f4eef1c590d5e854540e18b00a6">   55</a></span>&#160;<a class="code" href="classmdt_sql_dialog.html#a845d9f4eef1c590d5e854540e18b00a6" title="Destructor. ">mdtSqlDialog::~mdtSqlDialog</a>()</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;{</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  Q_ASSERT(form != 0);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;}</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  <span class="keywordflow">if</span>(pvForm != 0){</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    disconnectEditionElements();</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  }</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  pvForm = form;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  pvMainLayout-&gt;insertWidget(0, pvForm);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  connectEditionElements();</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  pvForm-&gt;<a class="code" href="classmdt_sql_form.html#a101b73d24864dd208968ca6dfe5f8cd8" title="Start internal state machines. ">start</a>();</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;}</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00068"></a><span class="lineno"><a class="code" href="classmdt_sql_dialog.html#a47de595aa2a117cdc3eb5de4a6bbf8f5">   68</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_sql_dialog.html#a47de595aa2a117cdc3eb5de4a6bbf8f5" title="Enable edition. ">mdtSqlDialog::enableEdition</a>()</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;{</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  Q_ASSERT(pvForm != 0);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  Q_ASSERT(pvForm-&gt;<a class="code" href="classmdt_sql_form.html#a857fc9370e2054408ae8b42e8deedbf5" title="Get the main SQL widget. ">mainSqlWidget</a>() != 0);</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  pbSubmit-&gt;setVisible(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  pbRevert-&gt;setVisible(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <span class="comment">// As default, functions are disabled</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  pbSubmit-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  pbRevert-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <span class="comment">// Update buttons first time</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="comment"></span>}</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
-<div class="line"><a name="l00082"></a><span class="lineno"><a class="code" href="classmdt_sql_dialog.html#a22e77e80b419d9bb23703c253b1a246e">   82</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_sql_dialog.html#a22e77e80b419d9bb23703c253b1a246e" title="Disable edition. ">mdtSqlDialog::disableEdition</a>()</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;{</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  pbSubmit-&gt;setVisible(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  pbRevert-&gt;setVisible(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;}</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
-<div class="line"><a name="l00088"></a><span class="lineno"><a class="code" href="classmdt_sql_dialog.html#affba1732b5f32db150d0e700ecc339f8">   88</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_sql_dialog.html#affba1732b5f32db150d0e700ecc339f8" title="Overloads QDialog::accept() ">mdtSqlDialog::accept</a>()</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;{</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  <span class="keywordflow">if</span>((pvForm == 0) || (pvForm-&gt;<a class="code" href="classmdt_sql_form.html#a857fc9370e2054408ae8b42e8deedbf5" title="Get the main SQL widget. ">mainSqlWidget</a>()-&gt;<a class="code" href="classmdt_abstract_sql_widget.html#ae83b8677a38ccb7c00b9ebfeebae69c8" title="Check if all data are saved. ">allDataAreSaved</a>())){</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    QDialog::reject();</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  }</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;}</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
-<div class="line"><a name="l00096"></a><span class="lineno"><a class="code" href="classmdt_sql_dialog.html#ada1726d5861cb071fab7a1c31bc52abb">   96</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_sql_dialog.html#ada1726d5861cb071fab7a1c31bc52abb" title="Overloads QDialog::reject() ">mdtSqlDialog::reject</a>()</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;{</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  <span class="keywordflow">if</span>((pvForm == 0) || (pvForm-&gt;<a class="code" href="classmdt_sql_form.html#a857fc9370e2054408ae8b42e8deedbf5" title="Get the main SQL widget. ">mainSqlWidget</a>()-&gt;<a class="code" href="classmdt_abstract_sql_widget.html#ae83b8677a38ccb7c00b9ebfeebae69c8" title="Check if all data are saved. ">allDataAreSaved</a>())){</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    QDialog::reject();</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  }</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;}</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="keywordtype">void</span> mdtSqlDialog::createEditionElements(QHBoxLayout *l)</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;{</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  Q_ASSERT(l != 0);</div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="code" href="classmdt_sql_dialog.html#aa4b143efbe21073e1668d75cdf262a39">   59</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_sql_dialog.html#aa4b143efbe21073e1668d75cdf262a39" title="Set the SQL form. ">mdtSqlDialog::setSqlForm</a>(<a class="code" href="classmdt_sql_form.html" title="Base class for high level SQL widgets API. ">mdtSqlForm</a> *form)</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;{</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  Q_ASSERT(form != 0);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  <span class="keywordflow">if</span>(pvForm != 0){</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    disconnectEditionElements();</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  }</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  pvForm = form;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  pvMainLayout-&gt;insertWidget(0, pvForm);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  connectEditionElements();</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  pvForm-&gt;<a class="code" href="classmdt_sql_form.html#a101b73d24864dd208968ca6dfe5f8cd8" title="Start internal state machines. ">start</a>();</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;}</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00072"></a><span class="lineno"><a class="code" href="classmdt_sql_dialog.html#a47de595aa2a117cdc3eb5de4a6bbf8f5">   72</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_sql_dialog.html#a47de595aa2a117cdc3eb5de4a6bbf8f5" title="Enable edition. ">mdtSqlDialog::enableEdition</a>()</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;{</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  Q_ASSERT(pvForm != 0);</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  pbSubmit-&gt;setVisible(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  pbRevert-&gt;setVisible(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  <span class="comment">// As default, functions are disabled</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  pbSubmit-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  pbRevert-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  <span class="comment">// Update buttons first time</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="comment"></span>}</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
+<div class="line"><a name="l00086"></a><span class="lineno"><a class="code" href="classmdt_sql_dialog.html#a22e77e80b419d9bb23703c253b1a246e">   86</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_sql_dialog.html#a22e77e80b419d9bb23703c253b1a246e" title="Disable edition. ">mdtSqlDialog::disableEdition</a>()</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;{</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  pbSubmit-&gt;setVisible(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  pbRevert-&gt;setVisible(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;}</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="code" href="classmdt_sql_dialog.html#affba1732b5f32db150d0e700ecc339f8">   92</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_sql_dialog.html#affba1732b5f32db150d0e700ecc339f8" title="Overloads QDialog::accept() ">mdtSqlDialog::accept</a>()</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;{</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  <span class="keywordflow">if</span>((pvForm == 0) || (pvForm-&gt;<a class="code" href="classmdt_sql_form.html#a1e14cbb5bf04d2eb1c703862a6084031" title="Check if all data are saved. ">allDataAreSaved</a>())){</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    QDialog::reject();</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  }</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;}</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
+<div class="line"><a name="l00100"></a><span class="lineno"><a class="code" href="classmdt_sql_dialog.html#ada1726d5861cb071fab7a1c31bc52abb">  100</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_sql_dialog.html#ada1726d5861cb071fab7a1c31bc52abb" title="Overloads QDialog::reject() ">mdtSqlDialog::reject</a>()</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;{</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  <span class="keywordflow">if</span>((pvForm == 0) || (pvForm-&gt;<a class="code" href="classmdt_sql_form.html#a1e14cbb5bf04d2eb1c703862a6084031" title="Check if all data are saved. ">allDataAreSaved</a>())){</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    QDialog::reject();</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  }</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;}</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  <span class="comment">// Setup save/cancel buttons</span></div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  pbSubmit = <span class="keyword">new</span> QPushButton(tr(<span class="stringliteral">&quot;Save&quot;</span>));</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  l-&gt;addWidget(pbSubmit);</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  pbRevert = <span class="keyword">new</span> QPushButton(tr(<span class="stringliteral">&quot;Cancel&quot;</span>));</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  l-&gt;addWidget(pbRevert);</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  <span class="comment">// As default, edition is disabled</span></div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  pbSubmit-&gt;hide();</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;  pbRevert-&gt;hide();</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;}</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="keywordtype">void</span> mdtSqlDialog::connectEditionElements()</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;{</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  Q_ASSERT(pvForm != 0);</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;  Q_ASSERT(pvForm-&gt;<a class="code" href="classmdt_sql_form.html#a857fc9370e2054408ae8b42e8deedbf5" title="Get the main SQL widget. ">mainSqlWidget</a>() != 0);</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;  <a class="code" href="classmdt_sql_form_widget.html" title="Widget that accept a user designed form and helps dealing with table model. ">mdtSqlFormWidget</a> *widget = pvForm-&gt;<a class="code" href="classmdt_sql_form.html#a857fc9370e2054408ae8b42e8deedbf5" title="Get the main SQL widget. ">mainSqlWidget</a>();</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;  Q_ASSERT(widget != 0);</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  <span class="comment">// Connect buttons enable/disable</span></div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;  connect(widget, SIGNAL(submitEnabledStateChanged(<span class="keywordtype">bool</span>)), pbSubmit, SLOT(setEnabled(<span class="keywordtype">bool</span>)));</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;  connect(widget, SIGNAL(revertEnabledStateChanged(<span class="keywordtype">bool</span>)), pbRevert, SLOT(setEnabled(<span class="keywordtype">bool</span>)));</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;  <span class="comment">// Connect buttons triggers</span></div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;  connect(pbSubmit, SIGNAL(clicked()), widget, SLOT(submit()));</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;  connect(pbRevert, SIGNAL(clicked()), widget, SLOT(revert()));</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;}</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="keywordtype">void</span> mdtSqlDialog::createEditionElements(QHBoxLayout *l)</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;{</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  Q_ASSERT(l != 0);</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  <span class="comment">// Setup save/cancel buttons</span></div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  pbSubmit = <span class="keyword">new</span> QPushButton(tr(<span class="stringliteral">&quot;Save&quot;</span>));</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  l-&gt;addWidget(pbSubmit);</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;  pbRevert = <span class="keyword">new</span> QPushButton(tr(<span class="stringliteral">&quot;Cancel&quot;</span>));</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  l-&gt;addWidget(pbRevert);</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  <span class="comment">// As default, edition is disabled</span></div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  pbSubmit-&gt;hide();</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  pbRevert-&gt;hide();</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;}</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="keywordtype">void</span> mdtSqlDialog::connectEditionElements()</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;{</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;  Q_ASSERT(pvForm != 0);</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;  std::shared_ptr&lt;mdtSqlDataWidgetController&gt; controller;</div>
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="keywordtype">void</span> mdtSqlDialog::disconnectEditionElements()</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;{</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;  Q_ASSERT(pvForm != 0);</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;  Q_ASSERT(pvForm-&gt;<a class="code" href="classmdt_sql_form.html#a857fc9370e2054408ae8b42e8deedbf5" title="Get the main SQL widget. ">mainSqlWidget</a>() != 0);</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;  <a class="code" href="classmdt_sql_form_widget.html" title="Widget that accept a user designed form and helps dealing with table model. ">mdtSqlFormWidget</a> *widget = pvForm-&gt;<a class="code" href="classmdt_sql_form.html#a857fc9370e2054408ae8b42e8deedbf5" title="Get the main SQL widget. ">mainSqlWidget</a>();</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;  Q_ASSERT(widget != 0);</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;  <span class="comment">// Connect buttons enable/disable</span></div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;  disconnect(widget, SIGNAL(submitEnabledStateChanged(<span class="keywordtype">bool</span>)), pbSubmit, SLOT(setEnabled(<span class="keywordtype">bool</span>)));</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;  disconnect(widget, SIGNAL(revertEnabledStateChanged(<span class="keywordtype">bool</span>)), pbRevert, SLOT(setEnabled(<span class="keywordtype">bool</span>)));</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;  <span class="comment">// Connect buttons triggers</span></div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;  disconnect(pbSubmit, SIGNAL(clicked()), widget, SLOT(submit()));</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;  disconnect(pbRevert, SIGNAL(clicked()), widget, SLOT(revert()));</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;}</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;  controller = pvForm-&gt;<a class="code" href="classmdt_sql_form.html#ac32b24ebb2d203cbefb6c7bdb8d9867b" title="Get main table controller. ">mainTableController</a>&lt;<a class="code" href="classmdt_sql_data_widget_controller.html">mdtSqlDataWidgetController</a>&gt;();</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;  Q_ASSERT(controller);</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;  <span class="comment">// Connect buttons enable/disable</span></div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;  connect(controller.get(), SIGNAL(submitEnabledStateChanged(<span class="keywordtype">bool</span>)), pbSubmit, SLOT(setEnabled(<span class="keywordtype">bool</span>)));</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;  connect(controller.get(), SIGNAL(revertEnabledStateChanged(<span class="keywordtype">bool</span>)), pbRevert, SLOT(setEnabled(<span class="keywordtype">bool</span>)));</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;  <span class="comment">// Connect buttons triggers</span></div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;  connect(pbSubmit, SIGNAL(clicked()), controller.get(), SLOT(submit()));</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;  connect(pbRevert, SIGNAL(clicked()), controller.get(), SLOT(revert()));</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;}</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;<span class="keywordtype">void</span> mdtSqlDialog::disconnectEditionElements()</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;{</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;  Q_ASSERT(pvForm != 0);</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;  std::shared_ptr&lt;mdtSqlDataWidgetController&gt; controller;</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;  controller = pvForm-&gt;<a class="code" href="classmdt_sql_form.html#ac32b24ebb2d203cbefb6c7bdb8d9867b" title="Get main table controller. ">mainTableController</a>&lt;<a class="code" href="classmdt_sql_data_widget_controller.html">mdtSqlDataWidgetController</a>&gt;();</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;  Q_ASSERT(controller);</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;  <span class="comment">// Connect buttons enable/disable</span></div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;  disconnect(controller.get(), SIGNAL(submitEnabledStateChanged(<span class="keywordtype">bool</span>)), pbSubmit, SLOT(setEnabled(<span class="keywordtype">bool</span>)));</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;  disconnect(controller.get(), SIGNAL(revertEnabledStateChanged(<span class="keywordtype">bool</span>)), pbRevert, SLOT(setEnabled(<span class="keywordtype">bool</span>)));</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;  <span class="comment">// Connect buttons triggers</span></div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;  disconnect(pbSubmit, SIGNAL(clicked()), controller.get(), SLOT(submit()));</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;  disconnect(pbRevert, SIGNAL(clicked()), controller.get(), SLOT(revert()));</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Sep 1 2014 18:45:35 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Sep 20 2014 15:23:34 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

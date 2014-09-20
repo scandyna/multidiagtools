@@ -2,7 +2,6 @@ var searchData=
 [
   ['qabstractitemmodel',['QAbstractItemModel',['../class_q_abstract_item_model.html',1,'']]],
   ['qapplication',['QApplication',['../class_q_application.html',1,'']]],
-  ['qdatawidgetmapper',['QDataWidgetMapper',['../class_q_data_widget_mapper.html',1,'']]],
   ['qdialog',['QDialog',['../class_q_dialog.html',1,'']]],
   ['qfile',['QFile',['../class_q_file.html',1,'']]],
   ['qgraphicsitem',['QGraphicsItem',['../class_q_graphics_item.html',1,'']]],

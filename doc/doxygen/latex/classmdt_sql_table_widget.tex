@@ -12,11 +12,12 @@ Table view based S\-Q\-L widget.
 
 
 
-Inheritance diagram for mdt\-Sql\-Table\-Widget\-:\nopagebreak
+Inheritance diagram for mdt\-Sql\-Table\-Widget\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=194pt]{classmdt_sql_table_widget__inherit__graph}
+\includegraphics[width=182pt]{classmdt_sql_table_widget__inherit__graph}
 \end{center}
 \end{figure}
 
@@ -26,25 +27,54 @@ Collaboration diagram for mdt\-Sql\-Table\-Widget\-:
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=218pt]{classmdt_sql_table_widget__coll__graph}
+\includegraphics[width=182pt]{classmdt_sql_table_widget__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Slots}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{classmdt_sql_table_widget_ae4945234973dcfcb8f2e20830e571fd4}{set\-Current\-Index} (int row)
-\begin{DoxyCompactList}\small\item\em Set row as current record. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_sql_table_widget_a2afd70df3855ecf14f86713646ec2763}{resize\-View\-To\-Contents} ()
-\begin{DoxyCompactList}\small\item\em Resize view to contents. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Resize view to contents. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_table_widget_a5145e57ff2361ad845c37dde16dfecac}{refresh} ()
+\begin{DoxyCompactList}\small\item\em Refresh data. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model} $\ast$ \hyperlink{classmdt_sql_table_widget_a188d79ad6acb3e3a7984e1bbeee09798}{model} ()
 \item 
 \hyperlink{classmdt_sql_table_widget_a4cf2b0d69608e88d33996148f612e58d}{mdt\-Sql\-Table\-Widget} (\hyperlink{class_q_widget}{Q\-Widget} $\ast$parent=0)
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_sql_table_widget_ab5db8a20c64340bba4841a1b1c928d7f}{$\sim$mdt\-Sql\-Table\-Widget} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_table_widget_a36eb282b41ced6d07ffd550594101b23}{set\-Table\-Name} (const Q\-String \&\hyperlink{classmdt_sql_table_widget_a5ebff43d17810531de12c7c3eb208a85}{table\-Name}, Q\-Sql\-Database db, const Q\-String \&\hyperlink{classmdt_sql_table_widget_a3ed02d8946711f9f0f16b55285467839}{user\-Friendly\-Table\-Name}=Q\-String())
+\begin{DoxyCompactList}\small\item\em Set table name. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_table_widget_aa4756dd0ac75f70327077696184960cd}{set\-User\-Friendly\-Table\-Name} (const Q\-String \&name)
+\begin{DoxyCompactList}\small\item\em Set user friendly table name. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{classmdt_sql_table_widget_a3ed02d8946711f9f0f16b55285467839}{user\-Friendly\-Table\-Name} () const 
+\begin{DoxyCompactList}\small\item\em Get user friendly table name. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{classmdt_sql_table_widget_a5ebff43d17810531de12c7c3eb208a85}{table\-Name} () const 
+\begin{DoxyCompactList}\small\item\em Get table name. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_table_widget_a4855a76905a856cfe82d3ca3f969f17a}{set\-Table\-Controller} (std\-::shared\-\_\-ptr$<$ \hyperlink{classmdt_sql_table_view_controller}{mdt\-Sql\-Table\-View\-Controller} $>$ controller)
+\begin{DoxyCompactList}\small\item\em Set table view controller. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_sql_table_widget_a2a12dbb0c50177aca0ac57edea6af18d}{add\-Child\-Table} (const \hyperlink{classmdt_sql_relation_info}{mdt\-Sql\-Relation\-Info} \&relation\-Info, Q\-Sql\-Database db, const Q\-String \&user\-Friendly\-Child\-Table\-Name=Q\-String())
+\begin{DoxyCompactList}\small\item\em Add a child table. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_sql_table_widget_ae80d69e391c277b7e4563aea2b1c92d6}{add\-Child\-Table} (const \hyperlink{classmdt_sql_relation_info}{mdt\-Sql\-Relation\-Info} \&relation\-Info, const Q\-String \&user\-Friendly\-Child\-Table\-Name=Q\-String())
+\begin{DoxyCompactList}\small\item\em Add a child table. \end{DoxyCompactList}\item 
+std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{classmdt_sql_table_view_controller}{mdt\-Sql\-Table\-View\-Controller} $>$ \hyperlink{classmdt_sql_table_widget_a3fdef8f8a617da5d93460f328d5a38fb}{table\-Controller} (const Q\-String \&\hyperlink{classmdt_sql_table_widget_a5ebff43d17810531de12c7c3eb208a85}{table\-Name})
+\begin{DoxyCompactList}\small\item\em Get internal table controller for given table\-Name. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_table_widget_abfab2f8ad93b0efdb41dd23007db0bbb}{start} ()
+\begin{DoxyCompactList}\small\item\em Start internal state machine. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_table_widget_a071ab9cd7de514a8ba4341234fefce64}{stop} ()
+\begin{DoxyCompactList}\small\item\em Stop internal state machine. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_sql_table_widget_af276a4ddd2d0effd26f979a0bcad9b82}{select} ()
+\begin{DoxyCompactList}\small\item\em Select data in main table. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_sql_table_widget_a7612cf9cb10c69365b7ed820d71e6cb2}{current\-Row} () const 
 \begin{DoxyCompactList}\small\item\em Get the current row. \end{DoxyCompactList}\item 
+Q\-Variant \hyperlink{classmdt_sql_table_widget_a13d3d5db07aedf14265a36c5ff2ad7cb}{current\-Data} (const Q\-String \&field\-Name)
+\begin{DoxyCompactList}\small\item\em Get current data for given field name. \end{DoxyCompactList}\item 
+Q\-Variant \hyperlink{classmdt_sql_table_widget_a02015aa0da93113547615cd951278042}{current\-Data} (const Q\-String \&field\-Name, bool \&ok)
+\begin{DoxyCompactList}\small\item\em Get current data for given field name. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_sql_table_widget_af5ef66b8ebb45a698f99ad455208f3c8}{set\-Edition\-Enabled} (bool enable)
 \begin{DoxyCompactList}\small\item\em Set edition enabled/disabled. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_sql_table_widget_a39422fb9522ee73513f13d8bcb91a143}{enable\-Local\-Edition} ()
@@ -57,7 +87,7 @@ Q\-Item\-Selection\-Model $\ast$ \hyperlink{classmdt_sql_table_widget_a47fc691f2
 \begin{DoxyCompactList}\small\item\em Get internal table view's selection model. \end{DoxyCompactList}\item 
 Q\-Table\-View $\ast$ \hyperlink{classmdt_sql_table_widget_af40eeb001ec262830daba6b311927ede}{table\-View} ()
 \begin{DoxyCompactList}\small\item\em Get internal table view. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_sql_table_widget_a591461ee19f22008a5c310609461081e}{set\-Header\-Data} (const Q\-String \&field\-Name, const Q\-String \&\hyperlink{classmdt_abstract_sql_widget_a3d362ebfc2d4f4b40b48ca08db287b3c}{data})
+void \hyperlink{classmdt_sql_table_widget_a591461ee19f22008a5c310609461081e}{set\-Header\-Data} (const Q\-String \&field\-Name, const Q\-String \&data)
 \begin{DoxyCompactList}\small\item\em Set a user friendly name for a column. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_sql_table_widget_a466ff75bee2a0efd99c62994f65a5d18}{set\-Column\-Hidden} (int column, bool hide)
 \begin{DoxyCompactList}\small\item\em Set a coulumn as hidden. \end{DoxyCompactList}\item 
@@ -67,31 +97,38 @@ void \hyperlink{classmdt_sql_table_widget_a6c54d9c26f7bb6241607785586bcc52e}{set
 \begin{DoxyCompactList}\small\item\em Set default column to select. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_sql_table_widget_a17d60fda061030fdfe15be5445eadc76}{set\-Default\-Column\-To\-Select} (const Q\-String \&field\-Name)
 \begin{DoxyCompactList}\small\item\em Set default column to select. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_table_widget_af15137a744ce87cb4b5009e2df9fca35}{add\-Column\-To\-Sort\-Order} (const Q\-String \&field\-Name, Qt\-::\-Sort\-Order order=Qt\-::\-Ascending\-Order)
+\begin{DoxyCompactList}\small\item\em Add a column to columns sort order. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_table_widget_a54e2e47d9dffe0845e1748fb36c2ea7f}{clear\-Columns\-Sort\-Order} ()
+\begin{DoxyCompactList}\small\item\em Clear columns sort order. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_sql_table_widget_a5e1323816fce33680857048db8cbb255}{sort} ()
 \begin{DoxyCompactList}\small\item\em Sort data. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_sql_table_selection}{mdt\-Sql\-Table\-Selection} \hyperlink{classmdt_sql_table_widget_a65f1bb0ebf82f73ef4a61e53ec4a26a7}{current\-Selection} (const Q\-String\-List \&field\-List)
 \begin{DoxyCompactList}\small\item\em Get current selection. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_sql_table_selection}{mdt\-Sql\-Table\-Selection} \hyperlink{classmdt_sql_table_widget_adb4792d2ed64a9cce61bc429986ae9a1}{current\-Selection} (const Q\-String \&field)
 \begin{DoxyCompactList}\small\item\em Get current selection. \end{DoxyCompactList}\item 
-Q\-List$<$ Q\-Model\-Index\-List $>$ \hyperlink{classmdt_sql_table_widget_af28a5a54efb31c29734fb5b2d7f0e2fa}{index\-List\-Of\-Selected\-Rows\-By\-Rows\-List} (const Q\-List$<$ int $>$ \&column\-List)
-\begin{DoxyCompactList}\small\item\em Get a list of currently selected indexes in a list of rows. \end{DoxyCompactList}\item 
-Q\-List$<$ Q\-Model\-Index\-List $>$ \hyperlink{classmdt_sql_table_widget_a5abe02dacc9fd8c0c33c27dbc5216d1b}{index\-List\-Of\-Selected\-Rows\-By\-Rows\-List} (const Q\-String\-List \&field\-List)
-\item 
-Q\-Model\-Index\-List \hyperlink{classmdt_sql_table_widget_a9a43d9a5d2e63189f17d2bce7159e510}{index\-List\-Of\-Selected\-Rows} (const Q\-List$<$ int $>$ \&column\-List)
-\begin{DoxyCompactList}\small\item\em Get a list of currently selected indexes. \end{DoxyCompactList}\item 
-Q\-Model\-Index\-List \hyperlink{classmdt_sql_table_widget_abe241fe0b24552b5403cb15593e18cdd}{index\-List\-Of\-Selected\-Rows} (const Q\-String\-List \&field\-List)
-\begin{DoxyCompactList}\small\item\em Get a list of currently selected indexes. \end{DoxyCompactList}\item 
-Q\-Model\-Index\-List \hyperlink{classmdt_sql_table_widget_a9616d390c25a3b1e863e855e00172e42}{index\-List\-Of\-Selected\-Rows} (const Q\-String \&field)
-\end{DoxyCompactItemize}
-\subsection*{Additional Inherited Members}
+\hyperlink{classmdt_error}{mdt\-Error} \hyperlink{classmdt_sql_table_widget_a15ca772be92e80bbb964a72a8706fbeb}{last\-Error} () const 
+\begin{DoxyCompactList}\small\item\em Get last error. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 Table view based S\-Q\-L widget. 
 
+class mdt\-Sql\-Table\-Widget\-Key\-Event\-Filter \-: public \hyperlink{class_q_object}{Q\-Object} \{ Q\-\_\-\-O\-B\-J\-E\-C\-T
+
+public\-: mdt\-Sql\-Table\-Widget\-Key\-Event\-Filter(\-Q\-Object $\ast$parent);
+
+signals\-: void known\-Key\-Pressed(int key);
+
+protected\-: bool event\-Filter(\-Q\-Object $\ast$obj, Q\-Event $\ast$event); \}; class mdt\-Sql\-Table\-Widget\-Item\-Delegate \-: public \hyperlink{class_q_styled_item_delegate}{Q\-Styled\-Item\-Delegate} \{ Q\-\_\-\-O\-B\-J\-E\-C\-T
+
+public\-: mdt\-Sql\-Table\-Widget\-Item\-Delegate(\-Q\-Object $\ast$parent); \hyperlink{class_q_widget}{Q\-Widget} $\ast$create\-Editor(\hyperlink{class_q_widget}{Q\-Widget} $\ast$ parent, const Q\-Style\-Option\-View\-Item \&option, const Q\-Model\-Index \&index ) const;
+
+signals\-: void data\-Edition\-Begins() const; \};
+
 Internally, Q\-Table\-View is used. This class add some common needed methods, like insertion, removing, ... 
 
-Definition at line 82 of file mdt\-Sql\-Table\-Widget.\-h.
+Definition at line 89 of file mdt\-Sql\-Table\-Widget.\-h.
 
 
 
@@ -107,13 +144,19 @@ Definition at line 82 of file mdt\-Sql\-Table\-Widget.\-h.
 
 Constructor. 
 
-Setup a Q\-Table\-View and init some other things. The table view will not be editable, use \hyperlink{classmdt_sql_table_widget_af5ef66b8ebb45a698f99ad455208f3c8}{set\-Edition\-Enabled()} to alter this. 
+Setup a Q\-Table\-View and init some other things. The table view will not be editable, use \hyperlink{classmdt_sql_table_widget_af5ef66b8ebb45a698f99ad455208f3c8}{set\-Edition\-Enabled()} to alter this.
 
-Definition at line 101 of file mdt\-Sql\-Table\-Widget.\-cpp.
+mdt\-Sql\-Table\-Widget\-Key\-Event\-Filter\-::mdt\-Sql\-Table\-Widget\-Key\-Event\-Filter(\-Q\-Object $\ast$parent) \-: Q\-Object(parent) \{ \}
+
+bool mdt\-Sql\-Table\-Widget\-Key\-Event\-Filter\-::event\-Filter(\-Q\-Object $\ast$obj, Q\-Event $\ast$event) \{ Q\-\_\-\-A\-S\-S\-E\-R\-T(obj != 0); Q\-\_\-\-A\-S\-S\-E\-R\-T(event != 0);
+
+if(event-\/$>$type() == Q\-Event\-::\-Key\-Press)\{ Q\-Key\-Event {\itshape key\-Event = static\-\_\-cast$<$Q\-Key\-Event}$>$(event); emit signal if we have a known key switch(key\-Event-\/$>$key())\{ case Qt\-::\-Key\-\_\-\-Enter\-: case Qt\-::\-Key\-\_\-\-Return\-: case Qt\-::\-Key\-\_\-\-Delete\-: case Qt\-::\-Key\-\_\-\-Down\-: emit known\-Key\-Pressed(key\-Event-\/$>$key()); return true; default\-: return false; \} \}else\{ return Q\-Object\-::event\-Filter(obj, event); \} \} 
+
+Definition at line 93 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
-References mdt\-Abstract\-Sql\-Widget\-::model\-Selected(), resize\-View\-To\-Contents(), and set\-Edition\-Enabled().
+References refresh(), resize\-View\-To\-Contents(), and set\-Edition\-Enabled().
 
 \hypertarget{classmdt_sql_table_widget_ab5db8a20c64340bba4841a1b1c928d7f}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!$\sim$mdt\-Sql\-Table\-Widget@{$\sim$mdt\-Sql\-Table\-Widget}}
 \index{$\sim$mdt\-Sql\-Table\-Widget@{$\sim$mdt\-Sql\-Table\-Widget}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
@@ -128,11 +171,101 @@ Destructor.
 
 
 
-Definition at line 163 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 142 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
+\hypertarget{classmdt_sql_table_widget_a2a12dbb0c50177aca0ac57edea6af18d}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!add\-Child\-Table@{add\-Child\-Table}}
+\index{add\-Child\-Table@{add\-Child\-Table}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
+\subsubsection[{add\-Child\-Table}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Table\-Widget\-::add\-Child\-Table (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Sql\-Relation\-Info} \&}]{relation\-Info, }
+\item[{Q\-Sql\-Database}]{db, }
+\item[{const Q\-String \&}]{user\-Friendly\-Child\-Table\-Name = {\ttfamily QString()}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_table_widget_a2a12dbb0c50177aca0ac57edea6af18d}
+
+
+Add a child table. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em relation\-Info} & Informations of relation between current controller's table (parent) and child controller's table (child) Note\-: parent table name is ignored. \\
+\hline
+{\em db} & Q\-Sql\-Database object to use \\
+\hline
+{\em user\-Friendly\-Child\-Table\-Name} & User friendly table name for child controller.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+Table model must be set with \hyperlink{classmdt_sql_table_widget_a36eb282b41ced6d07ffd550594101b23}{set\-Table\-Name()} begore calling this method. 
+\end{DoxyPrecond}
+
+
+Definition at line 161 of file mdt\-Sql\-Table\-Widget.\-cpp.
+
+\hypertarget{classmdt_sql_table_widget_ae80d69e391c277b7e4563aea2b1c92d6}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!add\-Child\-Table@{add\-Child\-Table}}
+\index{add\-Child\-Table@{add\-Child\-Table}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
+\subsubsection[{add\-Child\-Table}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Table\-Widget\-::add\-Child\-Table (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Sql\-Relation\-Info} \&}]{relation\-Info, }
+\item[{const Q\-String \&}]{user\-Friendly\-Child\-Table\-Name = {\ttfamily QString()}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_table_widget_ae80d69e391c277b7e4563aea2b1c92d6}
+
+
+Add a child table. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em relation\-Info} & Informations of relation between current controller's table (parent) and child controller's table (child) Note\-: parent table name is ignored. \\
+\hline
+{\em user\-Friendly\-Child\-Table\-Name} & User friendly table name for child controller.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+Table model must be set with \hyperlink{classmdt_sql_table_widget_a36eb282b41ced6d07ffd550594101b23}{set\-Table\-Name()} begore calling this method. 
+\end{DoxyPrecond}
+
+
+Definition at line 166 of file mdt\-Sql\-Table\-Widget.\-cpp.
+
+\hypertarget{classmdt_sql_table_widget_af15137a744ce87cb4b5009e2df9fca35}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!add\-Column\-To\-Sort\-Order@{add\-Column\-To\-Sort\-Order}}
+\index{add\-Column\-To\-Sort\-Order@{add\-Column\-To\-Sort\-Order}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
+\subsubsection[{add\-Column\-To\-Sort\-Order}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Table\-Widget\-::add\-Column\-To\-Sort\-Order (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{field\-Name, }
+\item[{Qt\-::\-Sort\-Order}]{order = {\ttfamily Qt\-:\-:AscendingOrder}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_table_widget_af15137a744ce87cb4b5009e2df9fca35}
+
+
+Add a column to columns sort order. 
+
+Columns sort order is similar meaning than S\-Q\-L O\-R\-D\-E\-R B\-Y clause.
+
+Internally, \hyperlink{classmdt_sort_filter_proxy_model}{mdt\-Sort\-Filter\-Proxy\-Model} is used, witch provide a natural sort for strings.
+
+For example, to sort columns in order \char`\"{}\-Id\-\_\-\-P\-K\char`\"{}, \char`\"{}\-First\-Name\char`\"{}, \char`\"{}\-Last\-Name\char`\"{}, all ascending, call\-:
+\begin{DoxyItemize}
+\item \hyperlink{classmdt_sql_table_widget_a54e2e47d9dffe0845e1748fb36c2ea7f}{clear\-Columns\-Sort\-Order()};
+\item add\-Column\-To\-Sort\-Order(\char`\"{}\-Id\-\_\-\-P\-K\char`\"{}, Qt\-::\-Ascending\-Order);
+\item add\-Column\-To\-Sort\-Order(\char`\"{}\-First\-Name\char`\"{}, Qt\-::\-Ascending\-Order);
+\item add\-Column\-To\-Sort\-Order(\char`\"{}\-Last\-Name\char`\"{}, Qt\-::\-Ascending\-Order);
+\end{DoxyItemize}
+
+Note\-: if given field not exists, it will simply be ignored.
+
+Note\-: to apply sorting, call \hyperlink{classmdt_sql_table_widget_a5e1323816fce33680857048db8cbb255}{sort()}
+
+\begin{DoxyPrecond}{Precondition}
+Model must be set with set\-Model() before using this method. 
+\end{DoxyPrecond}
+
+
+Definition at line 298 of file mdt\-Sql\-Table\-Widget.\-h.
+
 \hypertarget{classmdt_sql_table_widget_a6cf9f08b98dd3df16d36c29db7175633}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!add\-Stretch\-To\-Local\-Bar@{add\-Stretch\-To\-Local\-Bar}}
 \index{add\-Stretch\-To\-Local\-Bar@{add\-Stretch\-To\-Local\-Bar}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
 \subsubsection[{add\-Stretch\-To\-Local\-Bar}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Table\-Widget\-::add\-Stretch\-To\-Local\-Bar (
@@ -146,7 +279,7 @@ Add a strech to local bar.
 
 
 
-Definition at line 221 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 205 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 \hypertarget{classmdt_sql_table_widget_a9c0ae7b87d1840f2fdcee6de763fe31a}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!add\-Widget\-To\-Local\-Bar@{add\-Widget\-To\-Local\-Bar}}
 \index{add\-Widget\-To\-Local\-Bar@{add\-Widget\-To\-Local\-Bar}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
@@ -168,7 +301,62 @@ widget must be a valid pointer.
 \end{DoxyPrecond}
 
 
-Definition at line 198 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 197 of file mdt\-Sql\-Table\-Widget.\-cpp.
+
+\hypertarget{classmdt_sql_table_widget_a54e2e47d9dffe0845e1748fb36c2ea7f}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!clear\-Columns\-Sort\-Order@{clear\-Columns\-Sort\-Order}}
+\index{clear\-Columns\-Sort\-Order@{clear\-Columns\-Sort\-Order}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
+\subsubsection[{clear\-Columns\-Sort\-Order}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Table\-Widget\-::clear\-Columns\-Sort\-Order (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_table_widget_a54e2e47d9dffe0845e1748fb36c2ea7f}
+
+
+Clear columns sort order. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_sql_table_widget_af15137a744ce87cb4b5009e2df9fca35}{add\-Column\-To\-Sort\-Order()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 306 of file mdt\-Sql\-Table\-Widget.\-h.
+
+\hypertarget{classmdt_sql_table_widget_a13d3d5db07aedf14265a36c5ff2ad7cb}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!current\-Data@{current\-Data}}
+\index{current\-Data@{current\-Data}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
+\subsubsection[{current\-Data}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant mdt\-Sql\-Table\-Widget\-::current\-Data (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{field\-Name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_table_widget_a13d3d5db07aedf14265a36c5ff2ad7cb}
+
+
+Get current data for given field name. 
+
+\begin{DoxyPrecond}{Precondition}
+Table model must be set with set\-Model() or \hyperlink{classmdt_sql_table_widget_a36eb282b41ced6d07ffd550594101b23}{set\-Table\-Name()} begore calling this method. 
+\end{DoxyPrecond}
+
+
+Definition at line 191 of file mdt\-Sql\-Table\-Widget.\-h.
+
+\hypertarget{classmdt_sql_table_widget_a02015aa0da93113547615cd951278042}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!current\-Data@{current\-Data}}
+\index{current\-Data@{current\-Data}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
+\subsubsection[{current\-Data}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant mdt\-Sql\-Table\-Widget\-::current\-Data (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{field\-Name, }
+\item[{bool \&}]{ok}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_table_widget_a02015aa0da93113547615cd951278042}
+
+
+Get current data for given field name. 
+
+\begin{DoxyPrecond}{Precondition}
+Table model must be set with set\-Model() or \hyperlink{classmdt_sql_table_widget_a36eb282b41ced6d07ffd550594101b23}{set\-Table\-Name()} begore calling this method. 
+\end{DoxyPrecond}
+
+
+Definition at line 200 of file mdt\-Sql\-Table\-Widget.\-h.
 
 \hypertarget{classmdt_sql_table_widget_a7612cf9cb10c69365b7ed820d71e6cb2}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!current\-Row@{current\-Row}}
 \index{current\-Row@{current\-Row}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
@@ -176,22 +364,14 @@ Definition at line 198 of file mdt\-Sql\-Table\-Widget.\-cpp.
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_sql_table_widget_a7612cf9cb10c69365b7ed820d71e6cb2}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_table_widget_a7612cf9cb10c69365b7ed820d71e6cb2}
 
 
 Get the current row. 
 
 
 
-Implements \hyperlink{classmdt_abstract_sql_widget_ab48f6375f55f1eaba309fb17aaaf5770}{mdt\-Abstract\-Sql\-Widget}.
-
-
-
-Definition at line 167 of file mdt\-Sql\-Table\-Widget.\-cpp.
-
-
-
-References mdt\-Abstract\-Sql\-Widget\-::proxy\-Model().
+Definition at line 185 of file mdt\-Sql\-Table\-Widget.\-h.
 
 \hypertarget{classmdt_sql_table_widget_a65f1bb0ebf82f73ef4a61e53ec4a26a7}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!current\-Selection@{current\-Selection}}
 \index{current\-Selection@{current\-Selection}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
@@ -199,7 +379,7 @@ References mdt\-Abstract\-Sql\-Widget\-::proxy\-Model().
 \begin{DoxyParamCaption}
 \item[{const Q\-String\-List \&}]{field\-List}
 \end{DoxyParamCaption}
-)}}\label{classmdt_sql_table_widget_a65f1bb0ebf82f73ef4a61e53ec4a26a7}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_table_widget_a65f1bb0ebf82f73ef4a61e53ec4a26a7}
 
 
 Get current selection. 
@@ -207,19 +387,11 @@ Get current selection.
 The returned selection will only contain data related to given field list.
 
 \begin{DoxyPrecond}{Precondition}
-Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{set\-Model()} before using this method. 
+Model must be set with set\-Model() before using this method. 
 \end{DoxyPrecond}
 
 
-Definition at line 322 of file mdt\-Sql\-Table\-Widget.\-cpp.
-
-
-
-References mdt\-Abstract\-Sql\-Widget\-::model(), mdt\-Abstract\-Sql\-Widget\-::proxy\-Model(), selection\-Model(), and mdt\-Sql\-Table\-Selection\-::set\-Index\-List().
-
-
-
-Referenced by current\-Selection().
+Definition at line 321 of file mdt\-Sql\-Table\-Widget.\-h.
 
 \hypertarget{classmdt_sql_table_widget_adb4792d2ed64a9cce61bc429986ae9a1}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!current\-Selection@{current\-Selection}}
 \index{current\-Selection@{current\-Selection}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
@@ -227,7 +399,7 @@ Referenced by current\-Selection().
 \begin{DoxyParamCaption}
 \item[{const Q\-String \&}]{field}
 \end{DoxyParamCaption}
-)}}\label{classmdt_sql_table_widget_adb4792d2ed64a9cce61bc429986ae9a1}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_table_widget_adb4792d2ed64a9cce61bc429986ae9a1}
 
 
 Get current selection. 
@@ -235,15 +407,11 @@ Get current selection.
 The returned selection will only contain data related to given field.
 
 \begin{DoxyPrecond}{Precondition}
-Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{set\-Model()} before using this method. 
+Model must be set with set\-Model() before using this method. 
 \end{DoxyPrecond}
 
 
-Definition at line 366 of file mdt\-Sql\-Table\-Widget.\-cpp.
-
-
-
-References current\-Selection(), mdt\-Abstract\-Sql\-Widget\-::model(), mdt\-Abstract\-Sql\-Widget\-::proxy\-Model(), and selection\-Model().
+Definition at line 330 of file mdt\-Sql\-Table\-Widget.\-h.
 
 \hypertarget{classmdt_sql_table_widget_a39422fb9522ee73513f13d8bcb91a143}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!enable\-Local\-Edition@{enable\-Local\-Edition}}
 \index{enable\-Local\-Edition@{enable\-Local\-Edition}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
@@ -251,7 +419,7 @@ References current\-Selection(), mdt\-Abstract\-Sql\-Widget\-::model(), mdt\-Abs
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_sql_table_widget_a39422fb9522ee73513f13d8bcb91a143}
+)}}\label{classmdt_sql_table_widget_a39422fb9522ee73513f13d8bcb91a143}
 
 
 Enable local edition. 
@@ -260,143 +428,62 @@ Will add insert/revert/save/delete buttons.
 
 In normal way, when using \hyperlink{classmdt_sql_window}{mdt\-Sql\-Window}, local navigation is not needed. In master/detail forms, if this widget is a details (child) widget and edition is needed, then call this method. 
 
-Reimplemented from \hyperlink{classmdt_abstract_sql_widget_a4ad94a530c77292d122d38eb041da6e9}{mdt\-Abstract\-Sql\-Widget}.
-
-
-
-Definition at line 189 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 188 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
 References set\-Edition\-Enabled().
 
-\hypertarget{classmdt_sql_table_widget_a9a43d9a5d2e63189f17d2bce7159e510}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!index\-List\-Of\-Selected\-Rows@{index\-List\-Of\-Selected\-Rows}}
-\index{index\-List\-Of\-Selected\-Rows@{index\-List\-Of\-Selected\-Rows}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
-\subsubsection[{index\-List\-Of\-Selected\-Rows}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Model\-Index\-List mdt\-Sql\-Table\-Widget\-::index\-List\-Of\-Selected\-Rows (
+\hypertarget{classmdt_sql_table_widget_a15ca772be92e80bbb964a72a8706fbeb}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!last\-Error@{last\-Error}}
+\index{last\-Error@{last\-Error}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
+\subsubsection[{last\-Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Error} mdt\-Sql\-Table\-Widget\-::last\-Error (
 \begin{DoxyParamCaption}
-\item[{const Q\-List$<$ int $>$ \&}]{column\-List}
+{}
 \end{DoxyParamCaption}
-)}}\label{classmdt_sql_table_widget_a9a43d9a5d2e63189f17d2bce7159e510}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_table_widget_a15ca772be92e80bbb964a72a8706fbeb}
 
 
-Get a list of currently selected indexes. 
-
-\begin{DoxyRefDesc}{Deprecated}
-\item[\hyperlink{deprecated__deprecated000009}{Deprecated}]\end{DoxyRefDesc}
-
-
-Will return a list of indexes that contains only coulumns specified by column\-List. This alos works for multiple rows selection.
-
-\begin{DoxyPrecond}{Precondition}
-Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{set\-Model()} before using this method. 
-\end{DoxyPrecond}
-
-
-Definition at line 435 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Get last error. 
 
 
 
-References mdt\-Abstract\-Sql\-Widget\-::model(), and selection\-Model().
+Definition at line 334 of file mdt\-Sql\-Table\-Widget.\-h.
 
-
-
-Referenced by index\-List\-Of\-Selected\-Rows().
-
-\hypertarget{classmdt_sql_table_widget_abe241fe0b24552b5403cb15593e18cdd}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!index\-List\-Of\-Selected\-Rows@{index\-List\-Of\-Selected\-Rows}}
-\index{index\-List\-Of\-Selected\-Rows@{index\-List\-Of\-Selected\-Rows}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
-\subsubsection[{index\-List\-Of\-Selected\-Rows}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Sql\-Table\-Widget\-::index\-List\-Of\-Selected\-Rows (
+\hypertarget{classmdt_sql_table_widget_a188d79ad6acb3e3a7984e1bbeee09798}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!model@{model}}
+\index{model@{model}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
+\subsubsection[{model}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Q\-Sql\-Table\-Model}$\ast$ mdt\-Sql\-Table\-Widget\-::model (
 \begin{DoxyParamCaption}
-\item[{const Q\-String\-List \&}]{field\-List}
+{}
 \end{DoxyParamCaption}
-)}}\label{classmdt_sql_table_widget_abe241fe0b24552b5403cb15593e18cdd}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_table_widget_a188d79ad6acb3e3a7984e1bbeee09798}
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000008}{Todo}]T\-O R\-E\-M\-O\-V\-E !!!!!! \end{DoxyRefDesc}
 
 
-Get a list of currently selected indexes. 
+Definition at line 98 of file mdt\-Sql\-Table\-Widget.\-h.
 
-\begin{DoxyRefDesc}{Deprecated}
-\item[\hyperlink{deprecated__deprecated000010}{Deprecated}]\end{DoxyRefDesc}
-
-
-Will return a list of indexes that contains only fields specified by field\-List. This alos works for multiple rows selection.
-
-\begin{DoxyPrecond}{Precondition}
-Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{set\-Model()} before using this method.
-\end{DoxyPrecond}
-This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
-
-\begin{DoxyRefDesc}{Deprecated}
-\item[\hyperlink{deprecated__deprecated000011}{Deprecated}]\end{DoxyRefDesc}
-
-
-This is a variant for single column. 
-
-Definition at line 473 of file mdt\-Sql\-Table\-Widget.\-cpp.
-
-
-
-References index\-List\-Of\-Selected\-Rows(), mdt\-Abstract\-Sql\-Widget\-::model(), and selection\-Model().
-
-\hypertarget{classmdt_sql_table_widget_a9616d390c25a3b1e863e855e00172e42}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!index\-List\-Of\-Selected\-Rows@{index\-List\-Of\-Selected\-Rows}}
-\index{index\-List\-Of\-Selected\-Rows@{index\-List\-Of\-Selected\-Rows}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
-\subsubsection[{index\-List\-Of\-Selected\-Rows}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Model\-Index\-List mdt\-Sql\-Table\-Widget\-::index\-List\-Of\-Selected\-Rows (
+\hypertarget{classmdt_sql_table_widget_a5145e57ff2361ad845c37dde16dfecac}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!refresh@{refresh}}
+\index{refresh@{refresh}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
+\subsubsection[{refresh}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Table\-Widget\-::refresh (
 \begin{DoxyParamCaption}
-\item[{const Q\-String \&}]{field}
+{}
 \end{DoxyParamCaption}
-)}}\label{classmdt_sql_table_widget_a9616d390c25a3b1e863e855e00172e42}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{classmdt_sql_table_widget_a5145e57ff2361ad845c37dde16dfecac}
 
 
-Definition at line 488 of file mdt\-Sql\-Table\-Widget.\-cpp.
-
-
-
-References index\-List\-Of\-Selected\-Rows(), mdt\-Abstract\-Sql\-Widget\-::model(), and selection\-Model().
-
-\hypertarget{classmdt_sql_table_widget_af28a5a54efb31c29734fb5b2d7f0e2fa}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!index\-List\-Of\-Selected\-Rows\-By\-Rows\-List@{index\-List\-Of\-Selected\-Rows\-By\-Rows\-List}}
-\index{index\-List\-Of\-Selected\-Rows\-By\-Rows\-List@{index\-List\-Of\-Selected\-Rows\-By\-Rows\-List}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
-\subsubsection[{index\-List\-Of\-Selected\-Rows\-By\-Rows\-List}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Sql\-Table\-Widget\-::index\-List\-Of\-Selected\-Rows\-By\-Rows\-List (
-\begin{DoxyParamCaption}
-\item[{const Q\-List$<$ int $>$ \&}]{column\-List}
-\end{DoxyParamCaption}
-)}}\label{classmdt_sql_table_widget_af28a5a54efb31c29734fb5b2d7f0e2fa}
-
-
-Get a list of currently selected indexes in a list of rows. 
-
-\begin{DoxyRefDesc}{Deprecated}
-\item[\hyperlink{deprecated__deprecated000008}{Deprecated}]\end{DoxyRefDesc}
-
-
-Will return a list of indexes that contains only coulumns specified by column\-List. This alos works for multiple rows selection.
-
-\begin{DoxyPrecond}{Precondition}
-Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{set\-Model()} before using this method.
-\end{DoxyPrecond}
-This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. 
-
-Definition at line 379 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Refresh data. 
 
 
 
-References mdt\-Abstract\-Sql\-Widget\-::model(), and selection\-Model().
+Definition at line 256 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
-Referenced by index\-List\-Of\-Selected\-Rows\-By\-Rows\-List().
-
-\hypertarget{classmdt_sql_table_widget_a5abe02dacc9fd8c0c33c27dbc5216d1b}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!index\-List\-Of\-Selected\-Rows\-By\-Rows\-List@{index\-List\-Of\-Selected\-Rows\-By\-Rows\-List}}
-\index{index\-List\-Of\-Selected\-Rows\-By\-Rows\-List@{index\-List\-Of\-Selected\-Rows\-By\-Rows\-List}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
-\subsubsection[{index\-List\-Of\-Selected\-Rows\-By\-Rows\-List}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ Q\-Model\-Index\-List $>$ mdt\-Sql\-Table\-Widget\-::index\-List\-Of\-Selected\-Rows\-By\-Rows\-List (
-\begin{DoxyParamCaption}
-\item[{const Q\-String\-List \&}]{field\-List}
-\end{DoxyParamCaption}
-)}}\label{classmdt_sql_table_widget_a5abe02dacc9fd8c0c33c27dbc5216d1b}
-
-
-Definition at line 420 of file mdt\-Sql\-Table\-Widget.\-cpp.
+References mdt\-Ui\-Message\-Handler\-::display\-To\-User(), and mdt\-Ui\-Message\-Handler\-::set\-Error().
 
 
 
-References index\-List\-Of\-Selected\-Rows\-By\-Rows\-List(), mdt\-Abstract\-Sql\-Widget\-::model(), and selection\-Model().
+Referenced by mdt\-Sql\-Table\-Widget().
 
 \hypertarget{classmdt_sql_table_widget_a2afd70df3855ecf14f86713646ec2763}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!resize\-View\-To\-Contents@{resize\-View\-To\-Contents}}
 \index{resize\-View\-To\-Contents@{resize\-View\-To\-Contents}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
@@ -411,11 +498,31 @@ Resize view to contents.
 
 
 
-Definition at line 510 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 248 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
 Referenced by mdt\-Sql\-Table\-Widget().
+
+\hypertarget{classmdt_sql_table_widget_af276a4ddd2d0effd26f979a0bcad9b82}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!select@{select}}
+\index{select@{select}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
+\subsubsection[{select}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Table\-Widget\-::select (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_table_widget_af276a4ddd2d0effd26f979a0bcad9b82}
+
+
+Select data in main table. 
+
+\begin{DoxyPrecond}{Precondition}
+Table model must be set with \hyperlink{classmdt_sql_table_widget_a36eb282b41ced6d07ffd550594101b23}{set\-Table\-Name()} begore calling this method. 
+
+Internal state machine must run (see \hyperlink{classmdt_sql_table_widget_abfab2f8ad93b0efdb41dd23007db0bbb}{start()} ). 
+\end{DoxyPrecond}
+
+
+Definition at line 181 of file mdt\-Sql\-Table\-Widget.\-h.
 
 \hypertarget{classmdt_sql_table_widget_a47fc691f2cd9cc40749c987ce2bbea6d}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!selection\-Model@{selection\-Model}}
 \index{selection\-Model@{selection\-Model}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
@@ -430,11 +537,7 @@ Get internal table view's selection model.
 
 
 
-Definition at line 242 of file mdt\-Sql\-Table\-Widget.\-cpp.
-
-
-
-Referenced by current\-Selection(), index\-List\-Of\-Selected\-Rows(), and index\-List\-Of\-Selected\-Rows\-By\-Rows\-List().
+Definition at line 212 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 \hypertarget{classmdt_sql_table_widget_a466ff75bee2a0efd99c62994f65a5d18}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!set\-Column\-Hidden@{set\-Column\-Hidden}}
 \index{set\-Column\-Hidden@{set\-Column\-Hidden}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
@@ -450,11 +553,7 @@ Set a coulumn as hidden.
 
 
 
-Definition at line 265 of file mdt\-Sql\-Table\-Widget.\-cpp.
-
-
-
-References mdt\-Abstract\-Sql\-Widget\-::model(), and set\-Default\-Column\-To\-Select().
+Definition at line 227 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
@@ -473,34 +572,15 @@ Referenced by set\-Column\-Hidden().
 Set a coulumn as hidden. 
 
 \begin{DoxyPrecond}{Precondition}
-Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{set\-Model()} before using this method. 
+Model must be set with set\-Model() before using this method. 
 \end{DoxyPrecond}
 
 
-Definition at line 273 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 233 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
-References mdt\-Abstract\-Sql\-Widget\-::model(), and set\-Column\-Hidden().
-
-\hypertarget{classmdt_sql_table_widget_ae4945234973dcfcb8f2e20830e571fd4}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!set\-Current\-Index@{set\-Current\-Index}}
-\index{set\-Current\-Index@{set\-Current\-Index}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
-\subsubsection[{set\-Current\-Index}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Table\-Widget\-::set\-Current\-Index (
-\begin{DoxyParamCaption}
-\item[{int}]{row}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [slot]}}}\label{classmdt_sql_table_widget_ae4945234973dcfcb8f2e20830e571fd4}
-
-
-Set row as current record. 
-
-
-
-Definition at line 496 of file mdt\-Sql\-Table\-Widget.\-cpp.
-
-
-
-References mdt\-Abstract\-Sql\-Widget\-::model().
+References set\-Column\-Hidden().
 
 \hypertarget{classmdt_sql_table_widget_a6c54d9c26f7bb6241607785586bcc52e}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!set\-Default\-Column\-To\-Select@{set\-Default\-Column\-To\-Select}}
 \index{set\-Default\-Column\-To\-Select@{set\-Default\-Column\-To\-Select}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
@@ -516,19 +596,11 @@ Set default column to select.
 Some methods have to update selection in table view. Here it's possible to define witch column must be selected in such case.
 
 \begin{DoxyPrecond}{Precondition}
-Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{set\-Model()} before using this method. 
+Model must be set with set\-Model() before using this method. 
 \end{DoxyPrecond}
 
 
-Definition at line 286 of file mdt\-Sql\-Table\-Widget.\-cpp.
-
-
-
-References mdt\-Abstract\-Sql\-Widget\-::model().
-
-
-
-Referenced by set\-Column\-Hidden(), and set\-Default\-Column\-To\-Select().
+Definition at line 238 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 \hypertarget{classmdt_sql_table_widget_a17d60fda061030fdfe15be5445eadc76}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!set\-Default\-Column\-To\-Select@{set\-Default\-Column\-To\-Select}}
 \index{set\-Default\-Column\-To\-Select@{set\-Default\-Column\-To\-Select}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
@@ -544,15 +616,11 @@ Set default column to select.
 Same as \hyperlink{classmdt_sql_table_widget_a6c54d9c26f7bb6241607785586bcc52e}{set\-Default\-Column\-To\-Select(int)}, but you can give a field name.
 
 \begin{DoxyPrecond}{Precondition}
-Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{set\-Model()} before using this method. 
+Model must be set with set\-Model() before using this method. 
 \end{DoxyPrecond}
 
 
-Definition at line 297 of file mdt\-Sql\-Table\-Widget.\-cpp.
-
-
-
-References mdt\-Abstract\-Sql\-Widget\-::model(), and set\-Default\-Column\-To\-Select().
+Definition at line 243 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 \hypertarget{classmdt_sql_table_widget_af5ef66b8ebb45a698f99ad455208f3c8}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!set\-Edition\-Enabled@{set\-Edition\-Enabled}}
 \index{set\-Edition\-Enabled@{set\-Edition\-Enabled}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
@@ -586,15 +654,64 @@ Referenced by enable\-Local\-Edition(), and mdt\-Sql\-Table\-Widget().
 Set a user friendly name for a column. 
 
 \begin{DoxyPrecond}{Precondition}
-Model must be set with \hyperlink{classmdt_abstract_sql_widget_a8971862741e1ef79c79e11b37e955476}{set\-Model()} before using this method. 
+Model must be set with set\-Model() before using this method. 
 \end{DoxyPrecond}
 
 
-Definition at line 252 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 222 of file mdt\-Sql\-Table\-Widget.\-cpp.
+
+\hypertarget{classmdt_sql_table_widget_a4855a76905a856cfe82d3ca3f969f17a}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!set\-Table\-Controller@{set\-Table\-Controller}}
+\index{set\-Table\-Controller@{set\-Table\-Controller}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
+\subsubsection[{set\-Table\-Controller}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Table\-Widget\-::set\-Table\-Controller (
+\begin{DoxyParamCaption}
+\item[{std\-::shared\-\_\-ptr$<$ {\bf mdt\-Sql\-Table\-View\-Controller} $>$}]{controller}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_table_widget_a4855a76905a856cfe82d3ca3f969f17a}
+
+
+Set table view controller. 
+
+By default, a controller is created. For simple cases, use \hyperlink{classmdt_sql_table_widget_a36eb282b41ced6d07ffd550594101b23}{set\-Table\-Name()}.
+
+This method will replace internal controller with given one. 
+
+Definition at line 151 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
-References mdt\-Abstract\-Sql\-Widget\-::model().
+Referenced by mdt\-Sql\-Form\-::add\-Child\-Table().
+
+\hypertarget{classmdt_sql_table_widget_a36eb282b41ced6d07ffd550594101b23}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!set\-Table\-Name@{set\-Table\-Name}}
+\index{set\-Table\-Name@{set\-Table\-Name}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
+\subsubsection[{set\-Table\-Name}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Table\-Widget\-::set\-Table\-Name (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{table\-Name, }
+\item[{Q\-Sql\-Database}]{db, }
+\item[{const Q\-String \&}]{user\-Friendly\-Table\-Name = {\ttfamily QString()}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_table_widget_a36eb282b41ced6d07ffd550594101b23}
+
+
+Set table name. 
+
+
+
+Definition at line 146 of file mdt\-Sql\-Table\-Widget.\-cpp.
+
+\hypertarget{classmdt_sql_table_widget_aa4756dd0ac75f70327077696184960cd}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!set\-User\-Friendly\-Table\-Name@{set\-User\-Friendly\-Table\-Name}}
+\index{set\-User\-Friendly\-Table\-Name@{set\-User\-Friendly\-Table\-Name}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
+\subsubsection[{set\-User\-Friendly\-Table\-Name}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Table\-Widget\-::set\-User\-Friendly\-Table\-Name (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_table_widget_aa4756dd0ac75f70327077696184960cd}
+
+
+Set user friendly table name. 
+
+
+
+Definition at line 117 of file mdt\-Sql\-Table\-Widget.\-h.
 
 \hypertarget{classmdt_sql_table_widget_a5e1323816fce33680857048db8cbb255}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!sort@{sort}}
 \index{sort@{sort}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
@@ -602,25 +719,91 @@ References mdt\-Abstract\-Sql\-Widget\-::model().
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_sql_table_widget_a5e1323816fce33680857048db8cbb255}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_table_widget_a5e1323816fce33680857048db8cbb255}
 
 
 Sort data. 
 
 \begin{DoxySeeAlso}{See Also}
-\hyperlink{classmdt_abstract_sql_widget_a3c03a6c43f4488b377aa72879c10e066}{mdt\-Abstract\-Sql\-Widget\-::add\-Column\-To\-Sort\-Order()} 
+\hyperlink{classmdt_sql_table_widget_af15137a744ce87cb4b5009e2df9fca35}{add\-Column\-To\-Sort\-Order()} 
 \end{DoxySeeAlso}
 
 
-Reimplemented from \hyperlink{classmdt_abstract_sql_widget_a2c83a26fe75b708948c80a51887075e9}{mdt\-Abstract\-Sql\-Widget}.
+Definition at line 312 of file mdt\-Sql\-Table\-Widget.\-h.
+
+\hypertarget{classmdt_sql_table_widget_abfab2f8ad93b0efdb41dd23007db0bbb}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!start@{start}}
+\index{start@{start}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
+\subsubsection[{start}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Table\-Widget\-::start (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_table_widget_abfab2f8ad93b0efdb41dd23007db0bbb}
+
+
+Start internal state machine. 
+
+\begin{DoxyPrecond}{Precondition}
+Table model must be set with \hyperlink{classmdt_sql_table_widget_a36eb282b41ced6d07ffd550594101b23}{set\-Table\-Name()} begore calling this method. 
+\end{DoxyPrecond}
+
+
+Definition at line 168 of file mdt\-Sql\-Table\-Widget.\-h.
+
+\hypertarget{classmdt_sql_table_widget_a071ab9cd7de514a8ba4341234fefce64}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!stop@{stop}}
+\index{stop@{stop}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
+\subsubsection[{stop}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Table\-Widget\-::stop (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_table_widget_a071ab9cd7de514a8ba4341234fefce64}
+
+
+Stop internal state machine. 
+
+\begin{DoxyPrecond}{Precondition}
+Table model must be set with \hyperlink{classmdt_sql_table_widget_a36eb282b41ced6d07ffd550594101b23}{set\-Table\-Name()} begore calling this method. 
+\end{DoxyPrecond}
+
+
+Definition at line 174 of file mdt\-Sql\-Table\-Widget.\-h.
+
+\hypertarget{classmdt_sql_table_widget_a3fdef8f8a617da5d93460f328d5a38fb}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!table\-Controller@{table\-Controller}}
+\index{table\-Controller@{table\-Controller}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
+\subsubsection[{table\-Controller}]{\setlength{\rightskip}{0pt plus 5cm}shared\-\_\-ptr$<$ {\bf mdt\-Sql\-Table\-View\-Controller} $>$ mdt\-Sql\-Table\-Widget\-::table\-Controller (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{table\-Name}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_table_widget_a3fdef8f8a617da5d93460f328d5a38fb}
+
+
+Get internal table controller for given table\-Name. 
+
+Can return a Null pointer if table\-Name was not found. 
+
+Definition at line 171 of file mdt\-Sql\-Table\-Widget.\-cpp.
 
 
 
-Definition at line 304 of file mdt\-Sql\-Table\-Widget.\-cpp.
+References table\-Name().
+
+\hypertarget{classmdt_sql_table_widget_a5ebff43d17810531de12c7c3eb208a85}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!table\-Name@{table\-Name}}
+\index{table\-Name@{table\-Name}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
+\subsubsection[{table\-Name}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Sql\-Table\-Widget\-::table\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_table_widget_a5ebff43d17810531de12c7c3eb208a85}
+
+
+Get table name. 
 
 
 
-References mdt\-Abstract\-Sql\-Widget\-::model(), mdt\-Abstract\-Sql\-Widget\-::proxy\-Model(), and mdt\-Abstract\-Sql\-Widget\-::row\-Count().
+Definition at line 125 of file mdt\-Sql\-Table\-Widget.\-h.
+
+
+
+Referenced by table\-Controller().
 
 \hypertarget{classmdt_sql_table_widget_af40eeb001ec262830daba6b311927ede}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!table\-View@{table\-View}}
 \index{table\-View@{table\-View}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
@@ -635,7 +818,26 @@ Get internal table view.
 
 
 
-Definition at line 247 of file mdt\-Sql\-Table\-Widget.\-cpp.
+Definition at line 217 of file mdt\-Sql\-Table\-Widget.\-cpp.
+
+\hypertarget{classmdt_sql_table_widget_a3ed02d8946711f9f0f16b55285467839}{\index{mdt\-Sql\-Table\-Widget@{mdt\-Sql\-Table\-Widget}!user\-Friendly\-Table\-Name@{user\-Friendly\-Table\-Name}}
+\index{user\-Friendly\-Table\-Name@{user\-Friendly\-Table\-Name}!mdtSqlTableWidget@{mdt\-Sql\-Table\-Widget}}
+\subsubsection[{user\-Friendly\-Table\-Name}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Sql\-Table\-Widget\-::user\-Friendly\-Table\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_table_widget_a3ed02d8946711f9f0f16b55285467839}
+
+
+Get user friendly table name. 
+
+
+
+Definition at line 121 of file mdt\-Sql\-Table\-Widget.\-h.
+
+
+
+Referenced by mdt\-Sql\-Form\-::add\-Child\-Table().
 
 
 

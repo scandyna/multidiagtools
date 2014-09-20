@@ -3,7 +3,6 @@ var searchData=
   ['q_5fdeclare_5fmetatype',['Q_DECLARE_METATYPE',['../mdt_port_transaction_8h.html#a50f409d25e7b76eb7371effcf32d649c',1,'Q_DECLARE_METATYPE(mdtPortTransaction):&#160;mdtPortTransaction.h'],['../mdt_field_map_field_8h.html#a27aaf91577cccebc0db35821d4f82a56',1,'Q_DECLARE_METATYPE(mdtFieldMapField):&#160;mdtFieldMapField.h'],['../mdt_field_map_item_8h.html#ac8a02bbcc7c79708a93a3c44f0d48c56',1,'Q_DECLARE_METATYPE(mdtFieldMapItem *):&#160;mdtFieldMapItem.h']]],
   ['qabstractitemmodel',['QAbstractItemModel',['../class_q_abstract_item_model.html',1,'']]],
   ['qapplication',['QApplication',['../class_q_application.html',1,'']]],
-  ['qdatawidgetmapper',['QDataWidgetMapper',['../class_q_data_widget_mapper.html',1,'']]],
   ['qdialog',['QDialog',['../class_q_dialog.html',1,'']]],
   ['qfile',['QFile',['../class_q_file.html',1,'']]],
   ['qgraphicsitem',['QGraphicsItem',['../class_q_graphics_item.html',1,'']]],
@@ -40,6 +39,7 @@ var searchData=
   ['qtyunit',['qtyUnit',['../classmdt_cl_article_component_dialog.html#a799575d51b0a2e80985bab8e25d9c5da',1,'mdtClArticleComponentDialog']]],
   ['queriessequence',['queriesSequence',['../classmdt_device.html#acba50968d201ad95c4eaa2ab2ed48b4f',1,'mdtDevice::queriesSequence()'],['../classmdt_device_modbus.html#a3b83b926ed1f9c3bdf7024de2745c285',1,'mdtDeviceModbus::queriesSequence()']]],
   ['query_5ftype_5ft',['query_type_t',['../classmdt_frame_codec_scpi.html#a2dbce7589140e915f3e253c3523b3b9a',1,'mdtFrameCodecScpi']]],
+  ['question',['Question',['../classmdt_ui_message_handler.html#a115062a2ab56f3d7386d35e34f075fcfa151426e75df30b9ce13235cdbab922d1',1,'mdtUiMessageHandler']]],
   ['qvalidator',['QValidator',['../class_q_validator.html',1,'']]],
   ['qwidget',['QWidget',['../class_q_widget.html',1,'']]]
 ];

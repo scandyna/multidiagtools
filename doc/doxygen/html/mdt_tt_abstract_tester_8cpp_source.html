@@ -112,7 +112,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_tt_abstract_tester_8h.html">mdtTtAbstractTester.h</a>&quot;</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_sql_selection_dialog_8h.html">mdtSqlSelectionDialog.h</a>&quot;</span></div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_sql_table_selection_8h.html">mdtSqlTableSelection.h</a>&quot;</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_sql_form_widget_8h.html">mdtSqlFormWidget.h</a>&quot;</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &lt;QSqlError&gt;</span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;QModelIndex&gt;</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;QMessageBox&gt;</span></div>
@@ -126,7 +125,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;   pvDatabase(db),</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;   pvTestNodeManager(new <a class="code" href="classmdt_tt_test_node_manager.html" title="Helper class to access test node data and devices. ">mdtTtTestNodeManager</a>(0, db)),</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;   pvTest(new <a class="code" href="classmdt_tt_test.html" title="Helper class to manipulate test data. ">mdtTtTest</a>(0, db)),</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;   pvTestFormWidget(new <a class="code" href="classmdt_sql_form_widget.html" title="Widget that accept a user designed form and helps dealing with table model. ">mdtSqlFormWidget</a>)</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;   pvTestFormWidget(new mdtSqlFormWidget)</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;{</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  pvParentWidget = 0;</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  pvTestFormWidget-&gt;setAskUserBeforRevert(<span class="keyword">false</span>);</div>
@@ -309,7 +308,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Sep 1 2014 18:45:36 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Sep 20 2014 15:23:35 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

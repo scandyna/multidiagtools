@@ -73,7 +73,5 @@ var searchData=
   ['getunitdata',['getUnitData',['../classmdt_tt_test_node_unit.html#a62037b84333f04180d790942de24a927',1,'mdtTtTestNodeUnit']]],
   ['getusednodeunitidlist',['getUsedNodeUnitIdList',['../classmdt_tt_test_model_item.html#a0666954f17eab46ef9ef974542486446',1,'mdtTtTestModelItem']]],
   ['getuserdata',['getUserData',['../classmdt_cl_path_graph.html#a82df1588f1b4a9df7b25760ebd9e5aa1',1,'mdtClPathGraph']]],
-  ['getuserreadabletextfrommysqlerror',['getUserReadableTextFromMysqlError',['../classmdt_abstract_sql_widget.html#a1081ced9b96f60b3b39c6085bfe305d4',1,'mdtAbstractSqlWidget']]],
-  ['getuserreadabletextfromsqliteerror',['getUserReadableTextFromSqliteError',['../classmdt_abstract_sql_widget.html#aeeddeec556cc20c5c9a49559df7898d9',1,'mdtAbstractSqlWidget']]],
   ['getvehicletypelinkdatabyunitid',['getVehicleTypeLinkDataByUnitId',['../classmdt_cl_link.html#ad7c30c7cfae5f38fc38133f550e2dd01',1,'mdtClLink']]]
 ];

@@ -111,7 +111,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment"> ****************************************************************************/</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_cl_vehicle_type_editor_8h.html">mdtClVehicleTypeEditor.h</a>&quot;</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;ui_mdtClVehicleTypeEditor.h&quot;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_sql_form_widget_8h.html">mdtSqlFormWidget.h</a>&quot;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &quot;mdtSqlFormWidget.h&quot;</span></div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_sql_table_widget_8h.html">mdtSqlTableWidget.h</a>&quot;</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_sql_relation_8h.html">mdtSqlRelation.h</a>&quot;</span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_sql_selection_dialog_8h.html">mdtSqlSelectionDialog.h</a>&quot;</span></div>
@@ -158,55 +158,52 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="keywordtype">bool</span> mdtClVehicleTypeEditor::setupVehicleTypeTable()</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;{</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  Ui::mdtClVehicleTypeEditor vte;</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  <span class="comment">// Setup main form widget</span></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  vte.setupUi(<a class="code" href="classmdt_sql_form.html#a857fc9370e2054408ae8b42e8deedbf5" title="Get the main SQL widget. ">mainSqlWidget</a>());</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <span class="comment">// Setup form</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <span class="keywordflow">if</span>(!<a class="code" href="classmdt_sql_form.html#ab03dd80e9de62362dd77161ef6bd6fc2" title="Set the main (or parent) table of the form. ">setMainTable</a>(<span class="stringliteral">&quot;VehicleType_tbl&quot;</span>, <span class="stringliteral">&quot;Vehicle types&quot;</span>, <a class="code" href="classmdt_sql_form.html#ac8423f91a1f8a6fa7408cd61be86a89c" title="Get database that was given by constructor. ">database</a>())){</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  }</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  setWindowTitle(tr(<span class="stringliteral">&quot;Vehicle types edition&quot;</span>));</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;}</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="keywordtype">bool</span> mdtClVehicleTypeEditor::setupUnitTable()</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;{</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  <a class="code" href="classmdt_sql_table_widget.html" title="Table view based SQL widget. ">mdtSqlTableWidget</a> *widget;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  <span class="comment">// Add unit table</span></div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  <span class="keywordflow">if</span>(!<a class="code" href="classmdt_sql_form.html#a3504a54f26777ed38efce5cc151a1dbf" title="Add a child table to the form. ">addChildTable</a>(<span class="stringliteral">&quot;VehicleType_Unit_view&quot;</span>, tr(<span class="stringliteral">&quot;Units&quot;</span>), <a class="code" href="classmdt_sql_form.html#ac8423f91a1f8a6fa7408cd61be86a89c" title="Get database that was given by constructor. ">database</a>())){</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  }</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  <span class="comment">// Setup Unit &lt;-&gt; VehicleType relation</span></div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  <span class="keywordflow">if</span>(!<a class="code" href="classmdt_sql_form.html#ab9bb1b548b71ef4e8547846b6aedec66" title="Add a relation between main table and a child table. ">addRelation</a>(<span class="stringliteral">&quot;Id_PK&quot;</span>, <span class="stringliteral">&quot;VehicleType_Unit_view&quot;</span>, <span class="stringliteral">&quot;VehicleType_Id_FK&quot;</span>)){</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  }</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  <span class="comment">// Get widget to continue setup</span></div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  widget = <a class="code" href="classmdt_sql_form.html#a6a17f32077fb7cc33139c3dc26a8d011">sqlTableWidget</a>(<span class="stringliteral">&quot;VehicleType_Unit_view&quot;</span>);</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  Q_ASSERT(widget != 0);</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  <span class="comment">// Hide relation fields and PK</span></div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  widget-&gt;<a class="code" href="classmdt_sql_table_widget.html#a466ff75bee2a0efd99c62994f65a5d18" title="Set a coulumn as hidden. ">setColumnHidden</a>(<span class="stringliteral">&quot;Type&quot;</span>, <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  widget-&gt;<a class="code" href="classmdt_sql_table_widget.html#a466ff75bee2a0efd99c62994f65a5d18" title="Set a coulumn as hidden. ">setColumnHidden</a>(<span class="stringliteral">&quot;SubType&quot;</span>, <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  widget-&gt;<a class="code" href="classmdt_sql_table_widget.html#a466ff75bee2a0efd99c62994f65a5d18" title="Set a coulumn as hidden. ">setColumnHidden</a>(<span class="stringliteral">&quot;SeriesNumber&quot;</span>, <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  widget-&gt;<a class="code" href="classmdt_sql_table_widget.html#a466ff75bee2a0efd99c62994f65a5d18" title="Set a coulumn as hidden. ">setColumnHidden</a>(<span class="stringliteral">&quot;VehicleType_Unit_Id_PK&quot;</span>, <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  widget-&gt;<a class="code" href="classmdt_sql_table_widget.html#a466ff75bee2a0efd99c62994f65a5d18" title="Set a coulumn as hidden. ">setColumnHidden</a>(<span class="stringliteral">&quot;VehicleType_Id_FK&quot;</span>, <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  widget-&gt;<a class="code" href="classmdt_sql_table_widget.html#a466ff75bee2a0efd99c62994f65a5d18" title="Set a coulumn as hidden. ">setColumnHidden</a>(<span class="stringliteral">&quot;Unit_Id_FK&quot;</span>, <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  <span class="comment">// Give fields a user friendly name</span></div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  widget-&gt;<a class="code" href="classmdt_sql_table_widget.html#a591461ee19f22008a5c310609461081e" title="Set a user friendly name for a column. ">setHeaderData</a>(<span class="stringliteral">&quot;SchemaPosition&quot;</span>, tr(<span class="stringliteral">&quot;Schema position&quot;</span>));</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  <span class="comment">// Enable sorting</span></div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  widget-&gt;<a class="code" href="classmdt_abstract_sql_widget.html#a3c03a6c43f4488b377aa72879c10e066" title="Add a column to columns sort order. ">addColumnToSortOrder</a>(<span class="stringliteral">&quot;SchemaPosition&quot;</span>, Qt::AscendingOrder);</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  widget-&gt;<a class="code" href="classmdt_sql_table_widget.html#a5e1323816fce33680857048db8cbb255" title="Sort data. ">sort</a>();</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  <span class="comment">// Set some attributes on table view</span></div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  widget-&gt;<a class="code" href="classmdt_sql_table_widget.html#af40eeb001ec262830daba6b311927ede" title="Get internal table view. ">tableView</a>()-&gt;resizeColumnsToContents();</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;}</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="comment"></span>  setMainTableUi&lt;Ui::mdtClVehicleTypeEditor&gt;();</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <span class="comment">// Setup form</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <span class="keywordflow">if</span>(!<a class="code" href="classmdt_sql_form.html#abe4cc1a317d8e76aed7b408184c8712e" title="Set the main (or parent) table of the form. ">setMainTable</a>(<span class="stringliteral">&quot;VehicleType_tbl&quot;</span>, <span class="stringliteral">&quot;Vehicle types&quot;</span>, <a class="code" href="classmdt_sql_form.html#ac8423f91a1f8a6fa7408cd61be86a89c" title="Get database that was given by constructor. ">database</a>())){</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  }</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  setWindowTitle(tr(<span class="stringliteral">&quot;Vehicle types edition&quot;</span>));</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;}</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="keywordtype">bool</span> mdtClVehicleTypeEditor::setupUnitTable()</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;{</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  <a class="code" href="classmdt_sql_table_widget.html" title="Table view based SQL widget. ">mdtSqlTableWidget</a> *widget;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  <a class="code" href="classmdt_sql_relation_info.html" title="Container for SQL relation informations. ">mdtSqlRelationInfo</a> relationInfo;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  relationInfo.<a class="code" href="classmdt_sql_relation_info.html#a41097c0e1ecedfacfb1ac0e4055bc006" title="Set child table name. ">setChildTableName</a>(<span class="stringliteral">&quot;VehicleType_Unit_view&quot;</span>);</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  relationInfo.<a class="code" href="classmdt_sql_relation_info.html#a2e1c524c9e6db3d5359c2639a794f65f" title="Add a relation. ">addRelation</a>(<span class="stringliteral">&quot;Id_PK&quot;</span>, <span class="stringliteral">&quot;VehicleType_Id_FK&quot;</span>, <span class="keyword">false</span>);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  <span class="keywordflow">if</span>(!<a class="code" href="classmdt_sql_form.html#a9c48a7af83effbc50e9171a8d7ff3889" title="Add a child table to the form. ">addChildTable</a>(relationInfo, tr(<span class="stringliteral">&quot;Units&quot;</span>))){</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  }</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  <span class="comment">// Get widget to continue setup</span></div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  widget = <a class="code" href="classmdt_sql_form.html#a6a17f32077fb7cc33139c3dc26a8d011">sqlTableWidget</a>(<span class="stringliteral">&quot;VehicleType_Unit_view&quot;</span>);</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  Q_ASSERT(widget != 0);</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  <span class="comment">// Hide relation fields and PK</span></div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  widget-&gt;<a class="code" href="classmdt_sql_table_widget.html#a466ff75bee2a0efd99c62994f65a5d18" title="Set a coulumn as hidden. ">setColumnHidden</a>(<span class="stringliteral">&quot;Type&quot;</span>, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  widget-&gt;<a class="code" href="classmdt_sql_table_widget.html#a466ff75bee2a0efd99c62994f65a5d18" title="Set a coulumn as hidden. ">setColumnHidden</a>(<span class="stringliteral">&quot;SubType&quot;</span>, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  widget-&gt;<a class="code" href="classmdt_sql_table_widget.html#a466ff75bee2a0efd99c62994f65a5d18" title="Set a coulumn as hidden. ">setColumnHidden</a>(<span class="stringliteral">&quot;SeriesNumber&quot;</span>, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  widget-&gt;<a class="code" href="classmdt_sql_table_widget.html#a466ff75bee2a0efd99c62994f65a5d18" title="Set a coulumn as hidden. ">setColumnHidden</a>(<span class="stringliteral">&quot;VehicleType_Unit_Id_PK&quot;</span>, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  widget-&gt;<a class="code" href="classmdt_sql_table_widget.html#a466ff75bee2a0efd99c62994f65a5d18" title="Set a coulumn as hidden. ">setColumnHidden</a>(<span class="stringliteral">&quot;VehicleType_Id_FK&quot;</span>, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  widget-&gt;<a class="code" href="classmdt_sql_table_widget.html#a466ff75bee2a0efd99c62994f65a5d18" title="Set a coulumn as hidden. ">setColumnHidden</a>(<span class="stringliteral">&quot;Unit_Id_FK&quot;</span>, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;  <span class="comment">// Give fields a user friendly name</span></div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  widget-&gt;<a class="code" href="classmdt_sql_table_widget.html#a591461ee19f22008a5c310609461081e" title="Set a user friendly name for a column. ">setHeaderData</a>(<span class="stringliteral">&quot;SchemaPosition&quot;</span>, tr(<span class="stringliteral">&quot;Schema position&quot;</span>));</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  <span class="comment">// Enable sorting</span></div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  widget-&gt;<a class="code" href="classmdt_sql_table_widget.html#af15137a744ce87cb4b5009e2df9fca35" title="Add a column to columns sort order. ">addColumnToSortOrder</a>(<span class="stringliteral">&quot;SchemaPosition&quot;</span>, Qt::AscendingOrder);</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  widget-&gt;<a class="code" href="classmdt_sql_table_widget.html#a5e1323816fce33680857048db8cbb255" title="Sort data. ">sort</a>();</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  <span class="comment">// Set some attributes on table view</span></div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;  widget-&gt;<a class="code" href="classmdt_sql_table_widget.html#af40eeb001ec262830daba6b311927ede" title="Get internal table view. ">tableView</a>()-&gt;resizeColumnsToContents();</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Sep 1 2014 18:45:36 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Sep 20 2014 15:23:35 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

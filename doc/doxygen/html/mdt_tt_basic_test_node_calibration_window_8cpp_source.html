@@ -131,30 +131,29 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="comment">// Add test node unit view</span></div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  l = <span class="keyword">new</span> QVBoxLayout;</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  pvTestNodeUnitWidget = <span class="keyword">new</span> <a class="code" href="classmdt_sql_table_widget.html" title="Table view based SQL widget. ">mdtSqlTableWidget</a>;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  pvTestNodeUnitWidget-&gt;<a class="code" href="classmdt_abstract_sql_widget.html#a8971862741e1ef79c79e11b37e955476" title="Set the table model. ">setModel</a>(pvCalibrationTool-&gt;<a class="code" href="classmdt_tt_abstract_test_node_calibration_tool.html#a5a82c1c133acc47083def43ec45e76f9" title="Get table model to access data in TestNodeUnit_view. ">testNodeUnitViewTableModel</a>().get());</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  l-&gt;addWidget(pvTestNodeUnitWidget);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  wTestNodeUnit-&gt;setLayout(l);</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;}</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
-<div class="line"><a name="l00048"></a><span class="lineno"><a class="code" href="classmdt_tt_basic_test_node_calibration_window.html#a9ee28a2f55b8a5bfc5ee3a6af54d5c5d">   48</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_basic_test_node_calibration_window.html#a9ee28a2f55b8a5bfc5ee3a6af54d5c5d" title="Init. ">mdtTtBasicTestNodeCalibrationWindow::init</a>()</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;{</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <span class="keywordflow">if</span>(!pvCalibrationTool-&gt;<a class="code" href="classmdt_tt_basic_test_node_calibration_tool.html#af7fe717bef7b4af47ef90a2e90bfb288" title="Init. ">init</a>()){</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  }</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  pvCalibrationTool-&gt;<a class="code" href="classmdt_tt_abstract_test_node_calibration_tool.html#a7fab42cef3cbbfe711adaf684d1f5af8" title="All childs contained in widget that have a name prefixed fld_ will be mapped to corresponding fields ...">setTestNodeUiWidget</a>(centralWidget());</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  connectActions();</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;}</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keywordtype">void</span> mdtTtBasicTestNodeCalibrationWindow::connectActions()</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;{</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  connect(actRunCalibration, SIGNAL(triggered()), pvCalibrationTool, SLOT(runCalibration()));</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;}</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  l-&gt;addWidget(pvTestNodeUnitWidget);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  wTestNodeUnit-&gt;setLayout(l);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;}</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="code" href="classmdt_tt_basic_test_node_calibration_window.html#a9ee28a2f55b8a5bfc5ee3a6af54d5c5d">   49</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_basic_test_node_calibration_window.html#a9ee28a2f55b8a5bfc5ee3a6af54d5c5d" title="Init. ">mdtTtBasicTestNodeCalibrationWindow::init</a>()</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;{</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <span class="keywordflow">if</span>(!pvCalibrationTool-&gt;<a class="code" href="classmdt_tt_basic_test_node_calibration_tool.html#af7fe717bef7b4af47ef90a2e90bfb288" title="Init. ">init</a>()){</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  }</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  pvCalibrationTool-&gt;<a class="code" href="classmdt_tt_abstract_test_node_calibration_tool.html#a7fab42cef3cbbfe711adaf684d1f5af8" title="All childs contained in widget that have a name prefixed fld_ will be mapped to corresponding fields ...">setTestNodeUiWidget</a>(centralWidget());</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  connectActions();</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;}</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="keywordtype">void</span> mdtTtBasicTestNodeCalibrationWindow::connectActions()</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;{</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  connect(actRunCalibration, SIGNAL(triggered()), pvCalibrationTool, SLOT(runCalibration()));</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Sep 1 2014 18:45:36 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Sep 20 2014 15:23:35 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

@@ -1,5 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$class_q_styled_item_delegate.html" title="QStyledItemDelegate" alt="" coords="5,32,152,61"/>
-<area shape="rect" id="node3" href="$classmdt_data_table_item_delegate.html" title="Delegate to display table items in custom way. " alt="" coords="217,5,399,35"/>
-<area shape="rect" id="node5" href="$classmdt_sql_table_widget_item_delegate.html" title="mdtSqlTableWidgetItemDelegate" alt="" coords="201,59,415,88"/>
+<area shape="rect" id="node1" href="$class_q_sort_filter_proxy_model.html" title="QSortFilterProxyModel" alt="" coords="5,5,160,35"/>
+<area shape="rect" id="node3" href="$classmdt_sort_filter_proxy_model.html" title="Provide natural sort for Qt model/view. " alt="" coords="209,5,375,35"/>
 </map>

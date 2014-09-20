@@ -73,10 +73,8 @@ bool \hyperlink{classmdt_tt_test_model_item_acac991609d4e4b39404cf1be14928947}{a
 \begin{DoxyCompactList}\small\item\em Add a test node unit setup. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_tt_test_model_item_a6424038eadcf2e2d11ee5aa269b562c7}{remove\-Test\-Node\-Unit\-Setup} (const Q\-Variant \&tnus\-Id)
 \begin{DoxyCompactList}\small\item\em Remove test node unit setup. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_tt_test_model_item_a3e6d86258dde0d8cb0fb14e9195cabd9}{remove\-Test\-Node\-Unit\-Setups} (const Q\-Model\-Index\-List \&index\-List\-Of\-Selected\-Rows)
-\begin{DoxyCompactList}\small\item\em Remove test node unit setup. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_tt_test_model_item_ac45849becd11e9206b2d696e0346ba71}{remove\-Test\-Node\-Unit\-Setups\-For\-Test\-Item\-Id} (const Q\-Variant \&test\-Item\-Id)
-\begin{DoxyCompactList}\small\item\em Remove all test node unit setup for given test item I\-D. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Remove test node unit setup. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Additional Inherited Members}
 
 
@@ -217,7 +215,7 @@ Add a route to Test\-Model\-Item\-Route\-\_\-tbl.
 \end{DoxySeeAlso}
 
 
-Definition at line 488 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+Definition at line 485 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 
 
@@ -262,7 +260,7 @@ Add a test node unit setup.
 
 
 
-Definition at line 509 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+Definition at line 506 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 
 
@@ -341,7 +339,7 @@ Remove a route from Test\-Model\-Item\-Route\-\_\-tbl.
 
 
 
-Definition at line 504 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+Definition at line 501 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 
 
@@ -379,15 +377,11 @@ Remove test node unit setup.
 
 
 
-Definition at line 542 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+Definition at line 539 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 
 
 References mdt\-Error\-::commit(), mdt\-Tt\-Base\-::database(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Error\-::set\-Error(), and mdt\-Error\-::set\-System\-Error().
-
-
-
-Referenced by remove\-Test\-Node\-Unit\-Setups().
 
 \hypertarget{classmdt_tt_test_model_item_a20d8f2715f35d5ce8c1fba6179e73a52}{\index{mdt\-Tt\-Test\-Model\-Item@{mdt\-Tt\-Test\-Model\-Item}!remove\-Test\-Node\-Unit\-Setups@{remove\-Test\-Node\-Unit\-Setups}}
 \index{remove\-Test\-Node\-Unit\-Setups@{remove\-Test\-Node\-Unit\-Setups}!mdtTtTestModelItem@{mdt\-Tt\-Test\-Model\-Item}}
@@ -408,25 +402,6 @@ Definition at line 378 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 References mdt\-Tt\-Base\-::remove\-Data().
 
-\hypertarget{classmdt_tt_test_model_item_a3e6d86258dde0d8cb0fb14e9195cabd9}{\index{mdt\-Tt\-Test\-Model\-Item@{mdt\-Tt\-Test\-Model\-Item}!remove\-Test\-Node\-Unit\-Setups@{remove\-Test\-Node\-Unit\-Setups}}
-\index{remove\-Test\-Node\-Unit\-Setups@{remove\-Test\-Node\-Unit\-Setups}!mdtTtTestModelItem@{mdt\-Tt\-Test\-Model\-Item}}
-\subsubsection[{remove\-Test\-Node\-Unit\-Setups}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-Model\-Item\-::remove\-Test\-Node\-Unit\-Setups (
-\begin{DoxyParamCaption}
-\item[{const Q\-Model\-Index\-List \&}]{index\-List\-Of\-Selected\-Rows}
-\end{DoxyParamCaption}
-)}}\label{classmdt_tt_test_model_item_a3e6d86258dde0d8cb0fb14e9195cabd9}
-
-
-Remove test node unit setup. 
-
-
-
-Definition at line 562 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
-
-
-
-References remove\-Test\-Node\-Unit\-Setup().
-
 \hypertarget{classmdt_tt_test_model_item_ac45849becd11e9206b2d696e0346ba71}{\index{mdt\-Tt\-Test\-Model\-Item@{mdt\-Tt\-Test\-Model\-Item}!remove\-Test\-Node\-Unit\-Setups\-For\-Test\-Item\-Id@{remove\-Test\-Node\-Unit\-Setups\-For\-Test\-Item\-Id}}
 \index{remove\-Test\-Node\-Unit\-Setups\-For\-Test\-Item\-Id@{remove\-Test\-Node\-Unit\-Setups\-For\-Test\-Item\-Id}!mdtTtTestModelItem@{mdt\-Tt\-Test\-Model\-Item}}
 \subsubsection[{remove\-Test\-Node\-Unit\-Setups\-For\-Test\-Item\-Id}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-Model\-Item\-::remove\-Test\-Node\-Unit\-Setups\-For\-Test\-Item\-Id (
@@ -436,11 +411,19 @@ References remove\-Test\-Node\-Unit\-Setup().
 )}}\label{classmdt_tt_test_model_item_ac45849becd11e9206b2d696e0346ba71}
 
 
-Remove all test node unit setup for given test item I\-D. 
+Remove test node unit setup. 
 
+bool remove\-Test\-Node\-Unit\-Setups(const Q\-Model\-Index\-List \& index\-List\-Of\-Selected\-Rows);
 
+Remove all test node unit setup for given test item I\-D
 
-Definition at line 575 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
+bool mdt\-Tt\-Test\-Model\-Item\-::remove\-Test\-Node\-Unit\-Setups(const Q\-Model\-Index\-List \& index\-List\-Of\-Selected\-Rows) \{ int row;
+
+for(row = 0; row $<$ index\-List\-Of\-Selected\-Rows.\-size(); ++row)\{ if(!remove\-Test\-Node\-Unit\-Setup(index\-List\-Of\-Selected\-Rows.\-at(row).data()))\{ return false; \} \}
+
+return true; \} 
+
+Definition at line 574 of file mdt\-Tt\-Test\-Model\-Item.\-cpp.
 
 
 

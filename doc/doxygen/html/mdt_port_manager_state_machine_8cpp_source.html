@@ -190,8 +190,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  <a class="code" href="classmdt_port_manager_state_machine.html#a174b87f542465ddf3ee0d5db734eff40" title="Build the Running sub machine. ">buildRunningSubMachine</a>(portManager, pvRunning);</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  <span class="comment">// Start</span></div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  setInitialState(pvPortClosed);</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  start();</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  <a class="code" href="classmdt_state_machine.html#ab14dc03757e493d35d510af8a1b436b6" title="Wait until a state is reached. ">waitOnState</a>(<a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daabac9679c411402c9db01399ecb72b84d">mdtPortManager::PortClosed</a>);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  <a class="code" href="classmdt_state_machine.html#a1dcc7d12c50500cdbda8b7ef1e141901" title="Start state machine. ">start</a>(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  <a class="code" href="classmdt_state_machine.html#ab14dc03757e493d35d510af8a1b436b6" title="Wait until a state is reached. ">waitOnState</a>(<a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daabac9679c411402c9db01399ecb72b84d">mdtPortManager::PortClosed</a>);  </div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;}</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
 <div class="line"><a name="l00106"></a><span class="lineno"><a class="code" href="classmdt_port_manager_state_machine.html#a174b87f542465ddf3ee0d5db734eff40">  106</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_port_manager_state_machine.html#a174b87f542465ddf3ee0d5db734eff40" title="Build the Running sub machine. ">mdtPortManagerStateMachine::buildRunningSubMachine</a>(<a class="code" href="classmdt_port_manager.html" title="Port manager base class. ">mdtPortManager</a> *portManager, <a class="code" href="classmdt_state.html" title="Representation of a state in mdtStateMachine. ">mdtState</a> *parentState)</div>
@@ -259,7 +259,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Sep 1 2014 18:45:35 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Sep 20 2014 15:23:35 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

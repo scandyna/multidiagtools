@@ -131,6 +131,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae447c8f1449b1314fac2448c8b004885"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sort_filter_proxy_model.html#ae447c8f1449b1314fac2448c8b004885">addColumnToSortOrder</a> (const QString &amp;fieldName, Qt::SortOrder order=Qt::AscendingOrder)</td></tr>
 <tr class="memdesc:ae447c8f1449b1314fac2448c8b004885"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a field to columns sort order.  <a href="#ae447c8f1449b1314fac2448c8b004885">More...</a><br/></td></tr>
 <tr class="separator:ae447c8f1449b1314fac2448c8b004885"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adcd8faebb7fb2ccf9f95cbcfea4a1c14"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sort_filter_proxy_model.html#adcd8faebb7fb2ccf9f95cbcfea4a1c14">disableSorting</a> ()</td></tr>
+<tr class="memdesc:adcd8faebb7fb2ccf9f95cbcfea4a1c14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable sorting.  <a href="#adcd8faebb7fb2ccf9f95cbcfea4a1c14">More...</a><br/></td></tr>
+<tr class="separator:adcd8faebb7fb2ccf9f95cbcfea4a1c14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad241f4666aa20dd45e952196d41611d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sort_filter_proxy_model.html#ad241f4666aa20dd45e952196d41611d8">enableSorting</a> ()</td></tr>
+<tr class="memdesc:ad241f4666aa20dd45e952196d41611d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable sorting.  <a href="#ad241f4666aa20dd45e952196d41611d8">More...</a><br/></td></tr>
+<tr class="separator:ad241f4666aa20dd45e952196d41611d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2dcbaa1d5ffb38368a87e6b4834053f1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sort_filter_proxy_model.html#a2dcbaa1d5ffb38368a87e6b4834053f1">hasColumnToSort</a> () const </td></tr>
 <tr class="memdesc:a2dcbaa1d5ffb38368a87e6b4834053f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if some coulumn was set to sort order.  <a href="#a2dcbaa1d5ffb38368a87e6b4834053f1">More...</a><br/></td></tr>
 <tr class="separator:a2dcbaa1d5ffb38368a87e6b4834053f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -140,6 +146,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a506fff2a1f483ff67989c64b2c4e3491"><td class="memItemLeft" align="right" valign="top">Qt::SortOrder&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sort_filter_proxy_model.html#a506fff2a1f483ff67989c64b2c4e3491">sortOrder</a> (int column) const </td></tr>
 <tr class="memdesc:a506fff2a1f483ff67989c64b2c4e3491"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get sort order for given column.  <a href="#a506fff2a1f483ff67989c64b2c4e3491">More...</a><br/></td></tr>
 <tr class="separator:a506fff2a1f483ff67989c64b2c4e3491"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45e0d00b0e1a6918d9eae5d276a9614c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sort_filter_proxy_model.html#a45e0d00b0e1a6918d9eae5d276a9614c">sort</a> ()</td></tr>
+<tr class="memdesc:a45e0d00b0e1a6918d9eae5d276a9614c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sort.  <a href="#a45e0d00b0e1a6918d9eae5d276a9614c">More...</a><br/></td></tr>
+<tr class="separator:a45e0d00b0e1a6918d9eae5d276a9614c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Provide natural sort for Qt model/view. </p>
@@ -181,7 +190,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html#l00035">35</a> of file <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html">mdtSortFilterProxyModel.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html#l00036">36</a> of file <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html">mdtSortFilterProxyModel.cpp</a>.</p>
 
 </div>
 </div>
@@ -221,9 +230,9 @@ Public Member Functions</h2></td></tr>
 </ul>
 <p>Note: if given column is out of bound, it will simply be ignored. </p>
 
-<p>Definition at line <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html#l00044">44</a> of file <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html">mdtSortFilterProxyModel.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html#l00045">45</a> of file <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html">mdtSortFilterProxyModel.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html#l00057">addColumnToSortOrder()</a>, <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html#l00124">mdtSqlSelectionDialog::addColumnToSortOrder()</a>, and <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00282">mdtAbstractSqlWidget::addColumnToSortOrder()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html#l00058">addColumnToSortOrder()</a>, and <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html#l00124">mdtSqlSelectionDialog::addColumnToSortOrder()</a>.</p>
 
 </div>
 </div>
@@ -254,9 +263,9 @@ Public Member Functions</h2></td></tr>
 <p>Add a field to columns sort order. </p>
 <p>Here it's possible to define a field name. Note that this method does nothing if sourceModel is not based on QSqlQueryModel. </p>
 
-<p>Definition at line <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html#l00057">57</a> of file <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html">mdtSortFilterProxyModel.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html#l00058">58</a> of file <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html">mdtSortFilterProxyModel.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html#l00044">addColumnToSortOrder()</a>.</p>
+<p>References <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html#l00045">addColumnToSortOrder()</a>.</p>
 
 </div>
 </div>
@@ -276,9 +285,64 @@ Public Member Functions</h2></td></tr>
 <p>Clear columns sort order. </p>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="classmdt_sort_filter_proxy_model.html#a22d0f84ebcc9af078f3c004dbe790fe8" title="Add a column to columns sort order. ">addColumnToSortOrder()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html#l00039">39</a> of file <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html">mdtSortFilterProxyModel.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html#l00040">40</a> of file <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html">mdtSortFilterProxyModel.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html#l00117">mdtSqlSelectionDialog::clearColumnsSortOrder()</a>, and <a class="el" href="mdt_abstract_sql_widget_8cpp_source.html#l00275">mdtAbstractSqlWidget::clearColumnsSortOrder()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_selection_dialog_8cpp_source.html#l00117">mdtSqlSelectionDialog::clearColumnsSortOrder()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="adcd8faebb7fb2ccf9f95cbcfea4a1c14"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtSortFilterProxyModel::disableSorting </td>
+          <td>(</td>
+          <td class="paramname">)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Disable sorting. </p>
+<p>Usefull if sorting must be disabled temprary, without loosing setuped columns to sort. </p>
+
+<p>Definition at line <a class="el" href="mdt_sort_filter_proxy_model_8h_source.html#l00081">81</a> of file <a class="el" href="mdt_sort_filter_proxy_model_8h_source.html">mdtSortFilterProxyModel.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad241f4666aa20dd45e952196d41611d8"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtSortFilterProxyModel::enableSorting </td>
+          <td>(</td>
+          <td class="paramname">)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Enable sorting. </p>
+
+<p>Definition at line <a class="el" href="mdt_sort_filter_proxy_model_8h_source.html#l00085">85</a> of file <a class="el" href="mdt_sort_filter_proxy_model_8h_source.html">mdtSortFilterProxyModel.h</a>.</p>
 
 </div>
 </div>
@@ -297,7 +361,26 @@ Public Member Functions</h2></td></tr>
 
 <p>Check if some coulumn was set to sort order. </p>
 
-<p>Definition at line <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html#l00072">72</a> of file <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html">mdtSortFilterProxyModel.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html#l00073">73</a> of file <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html">mdtSortFilterProxyModel.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a45e0d00b0e1a6918d9eae5d276a9614c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtSortFilterProxyModel::sort </td>
+          <td>(</td>
+          <td class="paramname">)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sort. </p>
+
+<p>Definition at line <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html#l00103">103</a> of file <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html">mdtSortFilterProxyModel.cpp</a>.</p>
 
 </div>
 </div>
@@ -317,7 +400,7 @@ Public Member Functions</h2></td></tr>
 <p>Get list of indexes of columns that are in sort order. </p>
 <p>Note: each call of this method will rebuild the list. </p>
 
-<p>Definition at line <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html#l00077">77</a> of file <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html">mdtSortFilterProxyModel.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html#l00078">78</a> of file <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html">mdtSortFilterProxyModel.cpp</a>.</p>
 
 </div>
 </div>
@@ -338,7 +421,7 @@ Public Member Functions</h2></td></tr>
 <p>Get sort order for given column. </p>
 <p>If column is not in sorted columns list, Qt::AscendingOrder is returnded </p>
 
-<p>Definition at line <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html#l00089">89</a> of file <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html">mdtSortFilterProxyModel.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html#l00090">90</a> of file <a class="el" href="mdt_sort_filter_proxy_model_8cpp_source.html">mdtSortFilterProxyModel.cpp</a>.</p>
 
 </div>
 </div>
@@ -349,7 +432,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Sep 1 2014 18:45:45 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Sep 20 2014 15:23:43 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

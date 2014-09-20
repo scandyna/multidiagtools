@@ -1,3 +1,5 @@
-<map id="src/mdtutilsgui/mdtSqlFormWidgetDataValidator.h" name="src/mdtutilsgui/mdtSqlFormWidgetDataValidator.h">
-<area shape="rect" id="node3" href="$mdt_sql_data_validator_8h.html" title="mdtSqlDataValidator.h" alt="" coords="61,101,213,131"/>
+<map id="src/mdtdatabase/mdtSqlFormWidgetDataValidator.h" name="src/mdtdatabase/mdtSqlFormWidgetDataValidator.h">
+<area shape="rect" id="node3" href="$mdt_sql_data_validator_8h.html" title="mdtSqlDataValidator.h" alt="" coords="197,101,349,131"/>
+<area shape="rect" id="node5" href="$mdt_ui_message_handler_8h.html" title="mdtUiMessageHandler.h" alt="" coords="49,179,215,208"/>
+<area shape="rect" id="node7" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="100,256,183,285"/>
 </map>

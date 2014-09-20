@@ -1,0 +1,218 @@
+\hypertarget{classmdt_sql_relation_info}{\section{mdt\-Sql\-Relation\-Info Class Reference}
+\label{classmdt_sql_relation_info}\index{mdt\-Sql\-Relation\-Info@{mdt\-Sql\-Relation\-Info}}
+}
+
+
+Container for S\-Q\-L relation informations.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Sql\-Relation\-Info.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_sql_relation_info_a9c3ae415ee5382a78d28aaf67d625249}{mdt\-Sql\-Relation\-Info} ()
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_relation_info_a604239ad101c1f8f48e9deb10dbc386d}{set\-Parent\-Table\-Name} (const Q\-String \&table\-Name)
+\begin{DoxyCompactList}\small\item\em Set parent table name. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{classmdt_sql_relation_info_a335960a14e3d165fd190703a87389184}{parent\-Table\-Name} () const 
+\begin{DoxyCompactList}\small\item\em Get parent table name. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_relation_info_a41097c0e1ecedfacfb1ac0e4055bc006}{set\-Child\-Table\-Name} (const Q\-String \&table\-Name)
+\begin{DoxyCompactList}\small\item\em Set child table name. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{classmdt_sql_relation_info_adb76a1ea4923af459c61717853fd6bf6}{child\-Table\-Name} () const 
+\begin{DoxyCompactList}\small\item\em Get child table name. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_relation_info_a67f5ae2032eb1a4a05761d94c9df267c}{set\-Copy\-Parent\-To\-Child\-On\-Insertion} (bool enable)
+\begin{DoxyCompactList}\small\item\em Set copy\-Parent\-To\-Child\-On\-Insertion flag. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_sql_relation_info_a2b6d4736c32243e7e7d059aa62bd866f}{copy\-Parent\-To\-Child\-On\-Insertion} () const 
+\begin{DoxyCompactList}\small\item\em Get copy\-Parent\-To\-Child\-On\-Insertion flag. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_relation_info_a2e1c524c9e6db3d5359c2639a794f65f}{add\-Relation} (const Q\-String \&parent\-Field\-Name, const Q\-String \&child\-Field\-Name, bool \hyperlink{classmdt_sql_relation_info_a2b6d4736c32243e7e7d059aa62bd866f}{copy\-Parent\-To\-Child\-On\-Insertion}, const Q\-String \&operator\-With\-Previous\-Item=\char`\"{}A\-N\-D\char`\"{})
+\begin{DoxyCompactList}\small\item\em Add a relation. \end{DoxyCompactList}\item 
+const Q\-List\\*
+$<$ \hyperlink{structmdt_sql_relation_info_item}{mdt\-Sql\-Relation\-Info\-Item} $>$ \& \hyperlink{classmdt_sql_relation_info_ac3978c4426c21c2a3db3bc3ad008aa8f}{items} () const 
+\begin{DoxyCompactList}\small\item\em Get relation items list. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Container for S\-Q\-L relation informations. 
+
+Definition at line 39 of file mdt\-Sql\-Relation\-Info.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_sql_relation_info_a9c3ae415ee5382a78d28aaf67d625249}{\index{mdt\-Sql\-Relation\-Info@{mdt\-Sql\-Relation\-Info}!mdt\-Sql\-Relation\-Info@{mdt\-Sql\-Relation\-Info}}
+\index{mdt\-Sql\-Relation\-Info@{mdt\-Sql\-Relation\-Info}!mdtSqlRelationInfo@{mdt\-Sql\-Relation\-Info}}
+\subsubsection[{mdt\-Sql\-Relation\-Info}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Sql\-Relation\-Info\-::mdt\-Sql\-Relation\-Info (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_relation_info_a9c3ae415ee5382a78d28aaf67d625249}
+
+
+Constructor. 
+
+
+
+Definition at line 45 of file mdt\-Sql\-Relation\-Info.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_sql_relation_info_a2e1c524c9e6db3d5359c2639a794f65f}{\index{mdt\-Sql\-Relation\-Info@{mdt\-Sql\-Relation\-Info}!add\-Relation@{add\-Relation}}
+\index{add\-Relation@{add\-Relation}!mdtSqlRelationInfo@{mdt\-Sql\-Relation\-Info}}
+\subsubsection[{add\-Relation}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Relation\-Info\-::add\-Relation (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{parent\-Field\-Name, }
+\item[{const Q\-String \&}]{child\-Field\-Name, }
+\item[{bool}]{copy\-Parent\-To\-Child\-On\-Insertion, }
+\item[{const Q\-String \&}]{operator\-With\-Previous\-Item = {\ttfamily \char`\"{}AND\char`\"{}}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_relation_info_a2e1c524c9e6db3d5359c2639a794f65f}
+
+
+Add a relation. 
+
+The parent\-Field\-Name is a field name from the parent table (typically a field from primary key). The child\-Field\-Name is a field from child table (typically a field from foreing keys).
+
+
+\begin{DoxyParams}{Parameters}
+{\em parent\-Field\-Name} & Field of parent model to use in relation (usually P\-K) \\
+\hline
+{\em child\-Field\-Name} & Field of child model to use in relation (usually F\-K) \\
+\hline
+{\em copy\-Parent\-To\-Child\-On\-Insertion} & If true, data from parent model will be copied to child model for this fields. (See \hyperlink{classmdt_sql_relation_item}{mdt\-Sql\-Relation\-Item} for details). \\
+\hline
+{\em operator\-With\-Previous\-Item} & Most of cases, the operator between multiple relation items is A\-N\-D. If another is needed (f.\-ex. O\-R), specify it here. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 23 of file mdt\-Sql\-Relation\-Info.\-cpp.
+
+
+
+References mdt\-Sql\-Relation\-Info\-Item\-::child\-Field\-Name, mdt\-Sql\-Relation\-Info\-Item\-::copy\-Parent\-To\-Child\-On\-Insertion, copy\-Parent\-To\-Child\-On\-Insertion(), mdt\-Sql\-Relation\-Info\-Item\-::parent\-Field\-Name, and mdt\-Sql\-Relation\-Info\-Item\-::relation\-Operator\-With\-Previous\-Item.
+
+\hypertarget{classmdt_sql_relation_info_adb76a1ea4923af459c61717853fd6bf6}{\index{mdt\-Sql\-Relation\-Info@{mdt\-Sql\-Relation\-Info}!child\-Table\-Name@{child\-Table\-Name}}
+\index{child\-Table\-Name@{child\-Table\-Name}!mdtSqlRelationInfo@{mdt\-Sql\-Relation\-Info}}
+\subsubsection[{child\-Table\-Name}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Sql\-Relation\-Info\-::child\-Table\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_relation_info_adb76a1ea4923af459c61717853fd6bf6}
+
+
+Get child table name. 
+
+
+
+Definition at line 61 of file mdt\-Sql\-Relation\-Info.\-h.
+
+
+
+Referenced by mdt\-Sql\-Form\-::add\-Child\-Table().
+
+\hypertarget{classmdt_sql_relation_info_a2b6d4736c32243e7e7d059aa62bd866f}{\index{mdt\-Sql\-Relation\-Info@{mdt\-Sql\-Relation\-Info}!copy\-Parent\-To\-Child\-On\-Insertion@{copy\-Parent\-To\-Child\-On\-Insertion}}
+\index{copy\-Parent\-To\-Child\-On\-Insertion@{copy\-Parent\-To\-Child\-On\-Insertion}!mdtSqlRelationInfo@{mdt\-Sql\-Relation\-Info}}
+\subsubsection[{copy\-Parent\-To\-Child\-On\-Insertion}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Relation\-Info\-::copy\-Parent\-To\-Child\-On\-Insertion (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_relation_info_a2b6d4736c32243e7e7d059aa62bd866f}
+
+
+Get copy\-Parent\-To\-Child\-On\-Insertion flag. 
+
+
+
+Definition at line 75 of file mdt\-Sql\-Relation\-Info.\-h.
+
+
+
+Referenced by add\-Relation().
+
+\hypertarget{classmdt_sql_relation_info_ac3978c4426c21c2a3db3bc3ad008aa8f}{\index{mdt\-Sql\-Relation\-Info@{mdt\-Sql\-Relation\-Info}!items@{items}}
+\index{items@{items}!mdtSqlRelationInfo@{mdt\-Sql\-Relation\-Info}}
+\subsubsection[{items}]{\setlength{\rightskip}{0pt plus 5cm}const Q\-List$<${\bf mdt\-Sql\-Relation\-Info\-Item}$>$\& mdt\-Sql\-Relation\-Info\-::items (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_relation_info_ac3978c4426c21c2a3db3bc3ad008aa8f}
+
+
+Get relation items list. 
+
+
+
+Definition at line 94 of file mdt\-Sql\-Relation\-Info.\-h.
+
+\hypertarget{classmdt_sql_relation_info_a335960a14e3d165fd190703a87389184}{\index{mdt\-Sql\-Relation\-Info@{mdt\-Sql\-Relation\-Info}!parent\-Table\-Name@{parent\-Table\-Name}}
+\index{parent\-Table\-Name@{parent\-Table\-Name}!mdtSqlRelationInfo@{mdt\-Sql\-Relation\-Info}}
+\subsubsection[{parent\-Table\-Name}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Sql\-Relation\-Info\-::parent\-Table\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_relation_info_a335960a14e3d165fd190703a87389184}
+
+
+Get parent table name. 
+
+
+
+Definition at line 53 of file mdt\-Sql\-Relation\-Info.\-h.
+
+\hypertarget{classmdt_sql_relation_info_a41097c0e1ecedfacfb1ac0e4055bc006}{\index{mdt\-Sql\-Relation\-Info@{mdt\-Sql\-Relation\-Info}!set\-Child\-Table\-Name@{set\-Child\-Table\-Name}}
+\index{set\-Child\-Table\-Name@{set\-Child\-Table\-Name}!mdtSqlRelationInfo@{mdt\-Sql\-Relation\-Info}}
+\subsubsection[{set\-Child\-Table\-Name}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Relation\-Info\-::set\-Child\-Table\-Name (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{table\-Name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_relation_info_a41097c0e1ecedfacfb1ac0e4055bc006}
+
+
+Set child table name. 
+
+
+
+Definition at line 57 of file mdt\-Sql\-Relation\-Info.\-h.
+
+\hypertarget{classmdt_sql_relation_info_a67f5ae2032eb1a4a05761d94c9df267c}{\index{mdt\-Sql\-Relation\-Info@{mdt\-Sql\-Relation\-Info}!set\-Copy\-Parent\-To\-Child\-On\-Insertion@{set\-Copy\-Parent\-To\-Child\-On\-Insertion}}
+\index{set\-Copy\-Parent\-To\-Child\-On\-Insertion@{set\-Copy\-Parent\-To\-Child\-On\-Insertion}!mdtSqlRelationInfo@{mdt\-Sql\-Relation\-Info}}
+\subsubsection[{set\-Copy\-Parent\-To\-Child\-On\-Insertion}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Relation\-Info\-::set\-Copy\-Parent\-To\-Child\-On\-Insertion (
+\begin{DoxyParamCaption}
+\item[{bool}]{enable}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_relation_info_a67f5ae2032eb1a4a05761d94c9df267c}
+
+
+Set copy\-Parent\-To\-Child\-On\-Insertion flag. 
+
+Usually, a parent/child relation is based on a primary key in parent table and foreing key (that refers to parent P\-K) in child model. When inserting a new record in child table, parent table's primary key must be copied into foreing key fields in child table. Set this flag to true to enable this behaviour (see \hyperlink{classmdt_sql_relation}{mdt\-Sql\-Relation} for more details).
+
+By default, this flag is false. 
+
+Definition at line 71 of file mdt\-Sql\-Relation\-Info.\-h.
+
+\hypertarget{classmdt_sql_relation_info_a604239ad101c1f8f48e9deb10dbc386d}{\index{mdt\-Sql\-Relation\-Info@{mdt\-Sql\-Relation\-Info}!set\-Parent\-Table\-Name@{set\-Parent\-Table\-Name}}
+\index{set\-Parent\-Table\-Name@{set\-Parent\-Table\-Name}!mdtSqlRelationInfo@{mdt\-Sql\-Relation\-Info}}
+\subsubsection[{set\-Parent\-Table\-Name}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Relation\-Info\-::set\-Parent\-Table\-Name (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{table\-Name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_relation_info_a604239ad101c1f8f48e9deb10dbc386d}
+
+
+Set parent table name. 
+
+
+
+Definition at line 49 of file mdt\-Sql\-Relation\-Info.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdtdatabase/\hyperlink{mdt_sql_relation_info_8h}{mdt\-Sql\-Relation\-Info.\-h}\item 
+src/mdtdatabase/\hyperlink{mdt_sql_relation_info_8cpp}{mdt\-Sql\-Relation\-Info.\-cpp}\end{DoxyCompactItemize}

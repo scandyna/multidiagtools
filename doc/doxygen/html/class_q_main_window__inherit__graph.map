@@ -2,7 +2,7 @@
 <area shape="rect" id="node3" href="$classmdt_device_window.html" title="mdtDeviceWindow" alt="" coords="199,5,329,35"/>
 <area shape="rect" id="node5" href="$classmdt_modbus_io_tool.html" title="Minimal tool for MODBUS I/O. " alt="" coords="201,59,327,88"/>
 <area shape="rect" id="node7" href="$classmdt_port_term.html" title="Mini port treminal. " alt="" coords="215,112,313,141"/>
-<area shape="rect" id="node9" href="$classmdt_sql_window.html" title="Main window for a database table view/editor. " alt="" coords="209,165,319,195"/>
+<area shape="rect" id="node9" href="$classmdt_sql_window.html" title="class mdtSqlDataWidgetController; " alt="" coords="209,165,319,195"/>
 <area shape="rect" id="node11" href="$classmdt_tt_basic_tester_window.html" title="mdtTtBasicTesterWindow" alt="" coords="177,219,351,248"/>
 <area shape="rect" id="node13" href="$classmdt_tt_basic_test_node_calibration_window.html" title="mdtTtBasicTestNodeCalibration\lWindow" alt="" coords="160,271,368,318"/>
 </map>
