@@ -28,7 +28,7 @@
 #include <QSqlError>
 #include <QCoreApplication>
 
-//#include <QDebug>
+#include <QDebug>
 
 /*
  * mdtSqlTableViewControllerItemDelegate implementation
@@ -68,6 +68,7 @@ mdtSqlTableViewController::mdtSqlTableViewController(QObject* parent)
   pvTableView = 0;
   pvDefaultColumnToSelect = 0;
   pvEditionDone = true;
+  pvRowChangingByInternalEvent = false;
 }
 
 mdtSqlTableViewController::~mdtSqlTableViewController()
@@ -78,6 +79,7 @@ void mdtSqlTableViewController::setTableView(QTableView* tv, QAbstractItemDelega
 {
   Q_ASSERT(tv != 0);
 
+  pvRowChangingByInternalEvent = false;
   pvTableView = tv;
   connect(pvTableView, SIGNAL(destroyed(QObject*)), this, SLOT(onTableViewDestroyed(QObject*)));
   pvTableView->setModel(proxyModel().get());
@@ -125,6 +127,7 @@ int mdtSqlTableViewController::firstVisibleColumnIndex()
   return -1;
 }
 
+/**
 int mdtSqlTableViewController::currentRow() const
 {
   QModelIndex index;
@@ -146,6 +149,7 @@ int mdtSqlTableViewController::currentRow() const
     }
   }
 }
+*/
 
 mdtSqlTableSelection mdtSqlTableViewController::currentSelection(const QStringList& fieldList)
 {
@@ -201,11 +205,33 @@ void mdtSqlTableViewController::onTableViewcurrentRowChanged(const QModelIndex& 
    *  and then model was updated (rows removed or added).
    *  We only accept this change in Visualizing state.
    */
+  /**
   if(currentState() != Visualizing){
     return;
   }
   QModelIndex index = proxyModel()->mapToSource(current);
   emit currentRowChanged(index.row());
+  */
+  qDebug() << "RX row change event from view - index: " << current;
+  if(!pvRowChangingByInternalEvent){
+    qDebug() << " -> set current row to " << current.row();
+    /*
+     * If model was reset (after select, setFilter, 
+     *  Table view will not keep a current index.
+     *  So, if we receive a invalid index,
+     *  we check if we have som rows. If yes, we set the first, 0, as current.
+     */
+    if(current.isValid()){
+      setCurrentRow(current.row());
+    }else{
+      if(rowCount(false) > 0){
+        setCurrentRow(0);
+      }else{
+        setCurrentRow(-1);
+      }
+    }
+  }
+  pvRowChangingByInternalEvent = false;
 }
 
 void mdtSqlTableViewController::onStateVisualizingEntered()
@@ -240,7 +266,22 @@ void mdtSqlTableViewController::waitEditionDone()
 
 void mdtSqlTableViewController::currentRowChangedEvent(int row)
 {
+  pvRowChangingByInternalEvent = true;
+  if(pvTableView != 0){
+    QModelIndex index = proxyModel()->index(row, pvDefaultColumnToSelect);
+    pvTableView->setCurrentIndex(index);
+  }
+}
 
+void mdtSqlTableViewController::insertDoneEvent(int row)
+{
+  Q_ASSERT(model());
+  Q_ASSERT(currentState() == Inserting);
+
+  QModelIndex index;
+
+  index = proxyModel()->index(row, pvDefaultColumnToSelect);
+  pvTableView->edit(index); // Will create a editor, and cause editionDone() to be allways called (see delegate)
 }
 
 void mdtSqlTableViewController::modelSetEvent()
@@ -306,6 +347,7 @@ bool mdtSqlTableViewController::doRevert()
   return true;
 }
 
+/**
 bool mdtSqlTableViewController::doInsert()
 {
   Q_ASSERT(model());
@@ -323,12 +365,14 @@ bool mdtSqlTableViewController::doInsert()
 
   return true;
 }
+*/
 
 bool mdtSqlTableViewController::doSubmitNewRow()
 {
   return doSubmit();
 }
 
+/**
 bool mdtSqlTableViewController::doRevertNewRow()
 {
   Q_ASSERT(model());
@@ -357,6 +401,7 @@ bool mdtSqlTableViewController::doRevertNewRow()
 
   return true;
 }
+*/
 
 bool mdtSqlTableViewController::doRemove()
 {

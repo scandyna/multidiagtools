@@ -84,7 +84,7 @@ class mdtSqlDataWidgetController : public mdtAbstractSqlTableController
 
   /*! \brief Get current row
    */
-  int currentRow() const;
+  ///int currentRow() const;
 
  public slots:
 
@@ -160,6 +160,10 @@ class mdtSqlDataWidgetController : public mdtAbstractSqlTableController
    */
   void currentRowChangedEvent(int row);
 
+  /*! \brief Insert done event
+   */
+  void insertDoneEvent(int row);
+
   /*! \brief Submit current row to model
    */
   bool doSubmit();
@@ -170,7 +174,7 @@ class mdtSqlDataWidgetController : public mdtAbstractSqlTableController
 
   /*! \brief Insert a new row to model
    */
-  bool doInsert();
+  ///bool doInsert();
 
   /*! \brief Submit new row to model
    */
@@ -178,7 +182,7 @@ class mdtSqlDataWidgetController : public mdtAbstractSqlTableController
 
   /*! \brief Revert new row
    */
-  bool doRevertNewRow();
+  ///bool doRevertNewRow();
 
   /*! \brief Remove current row from model
    */
@@ -227,7 +231,7 @@ class mdtSqlDataWidgetController : public mdtAbstractSqlTableController
   QWidgetList pvFoundWidgets;       // Used temporary during mapping - see searchWidgets() and buildWidgetsList()
   QList<mdtSqlFieldHandler*> pvFieldHandlers;
   QWidget *pvFirstDataWidget;       // Keep trace of first data edit/view widget in focus chain
-  int pvBeforeInsertCurrentRow;
+  ///int pvBeforeInsertCurrentRow;
 };
 
 #endif  // #ifndef MDT_SQL_DATA_WIDGET_CONTROLLER_H

@@ -120,7 +120,7 @@ class mdtSqlTableViewController : public mdtAbstractSqlTableController
 
   /*! \brief Get current row
    */
-  int currentRow() const;
+  ///int currentRow() const;
 
   /*! \brief Get current selection
    *
@@ -180,6 +180,10 @@ class mdtSqlTableViewController : public mdtAbstractSqlTableController
    */
   void currentRowChangedEvent(int row);
 
+  /*! \brief Insert done event
+   */
+  void insertDoneEvent(int row);
+
   /*! \brief Table model set event
    */
   void modelSetEvent();
@@ -194,7 +198,7 @@ class mdtSqlTableViewController : public mdtAbstractSqlTableController
 
   /*! \brief Insert a new row to model
    */
-  bool doInsert();
+  ///bool doInsert();
 
   /*! \brief Submit new row to model
    */
@@ -202,7 +206,7 @@ class mdtSqlTableViewController : public mdtAbstractSqlTableController
 
   /*! \brief Revert new row
    */
-  bool doRevertNewRow();
+  ///bool doRevertNewRow();
 
   /*! \brief Remove current row from model
    */
@@ -213,6 +217,7 @@ class mdtSqlTableViewController : public mdtAbstractSqlTableController
   QTableView *pvTableView;
   int pvDefaultColumnToSelect;
   bool pvEditionDone;
+  bool pvRowChangingByInternalEvent;
 };
 
 #endif // #ifndef MDT_SQL_TABLE_VIEW_CONTROLLER_H

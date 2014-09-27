@@ -63,12 +63,12 @@ relationcanvas 129666 relation_ref 1694466 // <directional composition>
   from ref 128002 z 2001 stereotype "<<list>>" xyz 90 300.5 3000 to point 78 288
   line 129794 z 2001 to point 78 368
   line 129922 z 2001 to ref 128002
-  role_a_pos 167 487 3000 no_role_b
-  multiplicity_a_pos 142 487 3000 no_multiplicity_b
+  role_a_pos 167 499 3000 no_role_b
+  multiplicity_a_pos 142 499 3000 no_multiplicity_b
 end
 relationcanvas 130050 relation_ref 1701250 // <directional composition>
   from ref 128002 z 2001 to ref 128386
-  role_a_pos 902 364 3000 no_role_b
-  multiplicity_a_pos 962 394 3000 no_multiplicity_b
+  role_a_pos 903 364 3000 no_role_b
+  multiplicity_a_pos 963 394 3000 no_multiplicity_b
 end
 end

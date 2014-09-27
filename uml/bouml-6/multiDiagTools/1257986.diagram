@@ -24,21 +24,15 @@ durationcanvas 129666 classinstance_ref 128130 // :mdtAbstractSqlTableController
   xyzwh 127 147 2010 11 40
 end
 durationcanvas 129922 classinstance_ref 128130 // :mdtAbstractSqlTableController
-  xyzwh 127 236 2010 11 40
+  xyzwh 127 215 2010 11 40
 end
 durationcanvas 130178 classinstance_ref 128130 // :mdtAbstractSqlTableController
-  xyzwh 127 308 2010 11 251
-  overlappingdurationcanvas 130434
-    xyzwh 133 461 2020 11 93
-    overlappingdurationcanvas 135682
-      xyzwh 139 515 2030 11 25
-    end
+  xyzwh 127 274 2010 11 286
+  overlappingdurationcanvas 136194
+    xyzwh 133 390 2020 11 25
   end
-  overlappingdurationcanvas 134402
-    xyzwh 133 339 2020 11 36
-  end
-  overlappingdurationcanvas 135170
-    xyzwh 133 399 2020 11 38
+  overlappingdurationcanvas 136450
+    xyzwh 133 307 2020 11 27
   end
 end
 durationcanvas 130818 classinstance_ref 128130 // :mdtAbstractSqlTableController
@@ -53,14 +47,11 @@ end
 durationcanvas 133378 classinstance_ref 133122 // someChildController:mdtAbstractSqlTableController
   xyzwh 670 684 2010 11 79
 end
-durationcanvas 134658 classinstance_ref 133762 // :QSqlTableModel
-  xyzwh 336 355 2010 11 25
+durationcanvas 135938 classinstance_ref 133762 // :QSqlTableModel
+  xyzwh 336 349 2010 11 29
 end
-durationcanvas 134914 classinstance_ref 133762 // :QSqlTableModel
-  xyzwh 336 481 2010 11 38
-end
-durationcanvas 135426 classinstance_ref 133762 // :QSqlTableModel
-  xyzwh 336 419 2010 11 25
+durationcanvas 136706 classinstance_ref 133762 // :QSqlTableModel
+  xyzwh 336 315 2010 11 29
 end
 reflexivemsg 129538 synchronous
   to durationcanvas_ref 129410
@@ -74,19 +65,14 @@ reflexivemsg 129794 asynchronous
   label_xy 100 130
 reflexivemsg 130050 synchronous
   to durationcanvas_ref 129922
-  yz 236 2015 msg operation_ref 2269314 // "onStateVisualizingExited() : void"
+  yz 215 2015 msg operation_ref 2269314 // "onStateVisualizingExited() : void"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 71 219
+  label_xy 71 198
 reflexivemsg 130306 synchronous
   to durationcanvas_ref 130178
-  yz 308 2015 msg operation_ref 2269442 // "onStateInsertingEntered() : void"
+  yz 274 2015 msg operation_ref 2269442 // "onStateInsertingEntered() : void"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 73 291
-reflexivemsg 130562 synchronous
-  to durationcanvas_ref 130434
-  yz 461 2025 msg operation_ref 2269570 // "setCurrentRowPv(in row : int, in forceSendCurrentRowChanedEvent : bool) : bool"
-  show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 97 444
+  label_xy 73 257
 reflexivemsg 130946 synchronous
   to durationcanvas_ref 130818
   yz 587 2015 msg operation_ref 2270082 // "updateChildControllersAfterInsert() : void"
@@ -110,40 +96,29 @@ msg 133506 synchronous
   yz 697 2015 msg operation_ref 2216962 // "insert() : void"
   show_full_operations_definition default drawing_language default show_context_mode default
   label_xy 319 680
-reflexivemsg 134530 synchronous
-  to durationcanvas_ref 134402
-  yz 339 2025 msg operation_ref 2217346 // "currentRow() : int"
+msg 136066 synchronous
+  from durationcanvas_ref 130178
+  to durationcanvas_ref 135938
+  yz 349 2025 msg operation_ref 2270594 // "insertRow(in row : int, in parent : QModelIndex = QModelIndex()) : bool"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 204 332
+reflexivemsg 136322 synchronous
+  to durationcanvas_ref 136194
+  yz 390 2025 msg operation_ref 2279938 // "insertDoneEvent(in row : int) : void"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 101 373
+reflexivemsg 136578 synchronous
+  to durationcanvas_ref 136450
+  yz 307 2030 msg operation_ref 2218626 // "rowCount(in fetchAll : bool = true) : int"
   show_full_operations_definition default drawing_language default show_context_mode default
   args "true"
-  label_xy 116 322
-msg 134786 synchronous
-  from durationcanvas_ref 134402
-  to durationcanvas_ref 134658
-  yz 355 2030 msg operation_ref 2269698 // "fetchMore(in parent : QModelIndex = QModelIndex()) : void"
+  label_xy 110 290
+msg 136834 synchronous
+  from durationcanvas_ref 136450
+  to durationcanvas_ref 136706
+  yz 315 3005 msg operation_ref 2269698 // "fetchMore(in parent : QModelIndex = QModelIndex()) : void"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 207 338
-msg 135042 synchronous
-  from durationcanvas_ref 130434
-  to durationcanvas_ref 134914
-  yz 483 2030 msg operation_ref 2269698 // "fetchMore(in parent : QModelIndex = QModelIndex()) : void"
-  show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 207 466
-reflexivemsg 135298 synchronous
-  to durationcanvas_ref 135170
-  yz 399 2025 msg operation_ref 2271490 // "doInsert() : bool"
-  show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 126 382
-msg 135554 synchronous
-  from durationcanvas_ref 135170
-  to durationcanvas_ref 135426
-  yz 419 2025 msg operation_ref 2270594 // "insertRow(in row : int, in parent : QModelIndex = QModelIndex()) : bool"
-  show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 207 402
-reflexivemsg 135810 synchronous
-  to durationcanvas_ref 135682
-  yz 515 2035 msg operation_ref 2269826 // "currentRowChangedEvent(in row : int) : void"
-  show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 79 498
+  label_xy 207 298
 line 133634 -_-_
   from ref 132098 z 2016 to ref 133506
 end

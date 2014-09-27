@@ -92,7 +92,7 @@ msg 130306 synchronous
   label_xy 240 304
 reflexivemsg 130946 synchronous
   to durationcanvas_ref 130818
-  yz 374 2015 msg operation_ref 2280066 // "updateChildControllersAfterSubmit() : bool"
+  yz 374 2015 msg operation_ref 2271874 // "updateChildControllersAfterSubmitNewRow() : bool"
   show_full_operations_definition default drawing_language default show_context_mode default
   label_xy -14 357
 msg 131202 synchronous

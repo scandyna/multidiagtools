@@ -149,6 +149,7 @@ bool mdtSqlDataWidgetController::addMapping(QWidget* widget, const QString& fiel
   return true;
 }
 
+/**
 int mdtSqlDataWidgetController::currentRow() const
 {
   if(!model()){
@@ -156,6 +157,7 @@ int mdtSqlDataWidgetController::currentRow() const
   }
   return pvWidgetMapper.currentIndex();
 }
+*/
 
 void mdtSqlDataWidgetController::toFirst()
 {
@@ -212,16 +214,26 @@ void mdtSqlDataWidgetController::currentRowChangedEvent(int row)
   updateNavigationControls();
 }
 
+void mdtSqlDataWidgetController::insertDoneEvent(int row)
+{
+  Q_ASSERT(model());
+  Q_ASSERT(currentState() == Inserting);
+
+  pvWidgetMapper.setCurrentIndex(row);
+  clearMappedWidgets();
+  setFocusOnFirstDataWidget();
+}
+
 bool mdtSqlDataWidgetController::doSubmit()
 {
   Q_ASSERT(model());
 
-  int row;
+  ///int row;
   ///QSqlRecord initialRecord;
   QSqlError sqlError;
 
   // Remember current row (will be lost during submit)
-  row = pvWidgetMapper.currentIndex();
+  ///row = pvWidgetMapper.currentIndex();
   // Remember current record - will help on primary key errors
   ///initialRecord = model()->record(row);
 
@@ -270,12 +282,14 @@ bool mdtSqlDataWidgetController::doSubmit()
    * Calling submitAll() will repopulate the model.
    * Because of this, we must be shure to fetch all data until we find our row
    */
+  /**
   if(model()->rowCount() > 0){
     while((row >= model()->rowCount())&&(model()->canFetchMore())){
       model()->fetchMore();
     }
   }
   pvWidgetMapper.setCurrentIndex(row);
+  */
 
   return true;
 }
@@ -289,6 +303,7 @@ bool mdtSqlDataWidgetController::doRevert()
   return true;
 }
 
+/**
 bool mdtSqlDataWidgetController::doInsert()
 {
   Q_ASSERT(model());
@@ -307,6 +322,7 @@ bool mdtSqlDataWidgetController::doInsert()
 
   return true;
 }
+*/
 
 bool mdtSqlDataWidgetController::doSubmitNewRow()
 {
@@ -315,6 +331,7 @@ bool mdtSqlDataWidgetController::doSubmitNewRow()
   return doSubmit();
 }
 
+/**
 bool mdtSqlDataWidgetController::doRevertNewRow()
 {
   Q_ASSERT(model());
@@ -336,26 +353,29 @@ bool mdtSqlDataWidgetController::doRevertNewRow()
     }
     return false;
   }
-  pvWidgetMapper.setCurrentIndex(pvBeforeInsertCurrentRow);
+  ///pvWidgetMapper.setCurrentIndex(pvBeforeInsertCurrentRow);
 
   return true;
 }
+*/
 
 bool mdtSqlDataWidgetController::doRemove()
 {
   Q_ASSERT(model());
 
-  int row;
+  ///int row;
   QSqlError sqlError;
 
   // Remeber current row (will be lost during submit)
-  row = pvWidgetMapper.currentIndex();
+  ///row = pvWidgetMapper.currentIndex();
   // If we are not on a row, we do nothing
+  /**
   if(row < 0){
     return true;
   }
+  */
   // Remove current row
-  if(!model()->removeRow(row)){
+  if(!model()->removeRow(currentRow())){
     sqlError = model()->lastError();
     pvLastError.setError(tr("Removing data failed."), mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
@@ -373,7 +393,7 @@ bool mdtSqlDataWidgetController::doRemove()
    * so we have to call submitAll() on model.
    */
   if(!model()->submitAll()){
-    model()->revertRow(row);
+    model()->revertRow(currentRow());
     sqlError = model()->lastError();
     pvLastError.setError(tr("Removing data failed."), mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
@@ -390,8 +410,8 @@ bool mdtSqlDataWidgetController::doRemove()
    * Calling submitAll() will repopulate the model.
    * Because of this, we must be shure to fetch all data until we find our row
    */
-  row = qMin(row, rowCount(true) - 1);
-  setCurrentRowPv(row, false);
+  ///row = qMin(row, rowCount(true) - 1);
+  ///setCurrentRowPv(row, false);
 
   return true;
 }

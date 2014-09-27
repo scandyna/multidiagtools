@@ -609,7 +609,8 @@ class mdtAbstractSqlTableController : public QObject
 
   /*! \brief Get current row
    */
-  virtual int currentRow() const = 0;
+  ///virtual int currentRow() const = 0;
+  inline int currentRow() const { return pvCurrentRow; }
 
   /*! \brief Check if all data are saved
    *
@@ -633,6 +634,14 @@ class mdtAbstractSqlTableController : public QObject
    * \pre Table model must be set with setModel() or setTableName() begore calling this method.
    */
   bool submitAndWait();
+
+  /*! \brief Remove and wait until success or failure
+   *
+   *  Note: will not freeze Qt's event loop.
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   */
+  bool removeAndWait();
 
  public slots:
 
@@ -708,20 +717,38 @@ class mdtAbstractSqlTableController : public QObject
   virtual void modelSetEvent() {}
 
   /*! \brief Current row changed event
+   *
+   * Subclass can re-implement this method
+   *  if some tasks should be done after current row changed.
+   *
+   * Note: don't wory about child controllers or other things,
+   *  they are handled in this base class.
    */
-  virtual void currentRowChangedEvent(int row) = 0;
+  virtual void currentRowChangedEvent(int row) {}
+
+  /*! \brief Insert done event
+   *
+   * Subclass can re-implement this method
+   *  if some tasks should be done after current row changed.
+   *
+   * Note: don't wory about child controllers or other things,
+   *  they are handled in this base class.
+   *
+   * \param row Row (index) that was freshly insert. Note: row refers to proxyModel.
+   */
+  virtual void insertDoneEvent(int row) {}
 
   /*! \brief Set current row - For internal use
    *
    * If row is > model's cached rowCount-1, data will be fetched
    *  in database. If request row could not be found, false is returned.
    *
+   * Will call currentRowChangedEvent() , but will not update child controllers.
+   *
    * \param row Row to witch to go. Must be in range [-1;rowCount()-1]
-   * \param forceSendCurrentRowChanedEvent If true, currentRowChangedEvent() will be called, not regarding if
-   *                                        row has changed (usefull when filter was applyed)
    * \pre Table model must be set with setModel() or setTableName() begore calling this method.
    */
-  bool setCurrentRowPv(int row, bool forceSendCurrentRowChanedEvent);
+  bool setCurrentRowPv(int row);
 
   /*! \brief Submit current row to model
    *
@@ -729,8 +756,8 @@ class mdtAbstractSqlTableController : public QObject
    *  On problem, subclass should explain
    *  what goes wrong to the user and return false.
    *
-   * Depending on subclass choosen EditStrategy,
-   *  this method has potentially no effect.
+   * Note: current row will be updated after successfull
+   *  call of this method, calling then currentRowChangedEvent().
    */
   virtual bool doSubmit() = 0;
 
@@ -750,14 +777,20 @@ class mdtAbstractSqlTableController : public QObject
    * Subclass must implement this method.
    *  On problem, subclass should explain
    *  what goes wrong to the user and return false.
+   *
+   * Note: current row will be updated after successfull
+   *  call of this method, calling then currentRowChangedEvent().
    */
-  virtual bool doInsert() = 0;
+  ///virtual bool doInsert() = 0;
 
   /*! \brief Submit new row to model
    *
    * Subclass must implement this method.
    *  On problem, subclass should explain
    *  what goes wrong to the user and return false.
+   *
+   * Note: current row will be updated after successfull
+   *  call of this method, calling then currentRowChangedEvent().
    */
   virtual bool doSubmitNewRow() = 0;
 
@@ -767,7 +800,7 @@ class mdtAbstractSqlTableController : public QObject
    *  On problem, subclass should explain
    *  what goes wrong to the user and return false.
    */
-  virtual bool doRevertNewRow() = 0;
+  ///virtual bool doRevertNewRow() = 0;
 
   /*! \brief Remove current row from model
    *
@@ -781,7 +814,7 @@ class mdtAbstractSqlTableController : public QObject
 
   /*! \brief Emitted when current row has changed
    */
-  void currentRowChanged(int row);
+  ///void currentRowChanged(int row);
 
   /*! \brief Emitted when the entier widget enable state changes
    */
@@ -878,7 +911,7 @@ class mdtAbstractSqlTableController : public QObject
 
   /*! \brief Called by mdtSqlRelation whenn it applied filter
    */
-  void onRelationFilterApplied();
+  ///void onRelationFilterApplied();
 
   /*! \brief Activity after Visualizing state entered
    *
@@ -988,6 +1021,10 @@ class mdtAbstractSqlTableController : public QObject
    */
   void updateChildControllersAfterInsert();
 
+  /*! \brief Update child controllers just after submit was done (in main table)
+   */
+  bool updateChildControllersAfterSubmit();
+
   /*! \brief Update child controllers just after new row was submitted (in main table)
    */
   bool updateChildControllersAfterSubmitNewRow();
@@ -1025,6 +1062,8 @@ class mdtAbstractSqlTableController : public QObject
   QString pvUserFriendlyTableName;
   bool pvOperationComplete;
   QList<mdtAbstractSqlTableControllerContainer> pvChildControllerContainers;
+  int pvCurrentRow;
+  int pvBeforeInsertCurrentRow; // To go back by reverting new row
   // State machine members
   mdtState *pvStateSelecting;
   mdtState *pvStateVisualizing;

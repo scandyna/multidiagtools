@@ -1,6 +1,6 @@
 format 207
 "mdtdatabase" // mdtdatabase
-  revision 27
+  revision 28
   modified_by 2 "philippe"
   // class settings
   
@@ -2087,6 +2087,21 @@ ${inlines}
 	
       end
 
+      operation 2280066 "updateChildControllersAfterSubmit"
+	private explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 2271874 "updateChildControllersAfterSubmitNewRow"
 	private explicit_return_type "bool"
 	nparams 0
@@ -2265,6 +2280,22 @@ ${inlines}
 	abstract cpp_virtual protected explicit_return_type "bool"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 2279938 "insertDoneEvent"
+	protected explicit_return_type "void"
+	nparams 1
+	  param in name "row" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
 "
 	
 	
@@ -2942,6 +2973,11 @@ ${inlines}
     end
 
     sequencediagram 1258626 "onStateRemovingEntered"
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
+
+    sequencediagram 1265154 "onStateSubmittingEntered"
       sequencediagramsettings end
       overlapping_bars size A4
     end

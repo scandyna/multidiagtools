@@ -893,7 +893,7 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
    *  - Check in form
    *
    * Note:
-   *  Because of internall state machine,
+   *  Because of internal state machine,
    *  witch runs asynchronousliy, we must wait between each action.
    */
   QCOMPARE(wc.rowCount(), 4);
@@ -1076,8 +1076,11 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QTest::qWait(50);
   QCOMPARE(wc.rowCount(), 5);
   QCOMPARE(wc.currentRow(), 0);
+  QVERIFY(wc.removeAndWait());
+  /**
   wc.remove();
   QTest::qWait(1000); // Writing in DB can be very slow, f.ex. with Sqlite on HDD
+  */
   QCOMPARE(wc.rowCount(), 4);
   QCOMPARE(wc.currentRow(), 0);
   // Check that widget displays the correct row
@@ -1218,8 +1221,11 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   // Check that widget displays the correct row
   QCOMPARE(w.fld_FirstName->text(), QString("Name 400"));
   QCOMPARE(w.fld_Remarks->text(), QString("Remark 400"));
+  QVERIFY(wc.removeAndWait());
+  /**
   wc.remove();
   QTest::qWait(1000); // Writing in DB can be very slow, f.ex. with Sqlite on HDD
+  */
   // Check that model was updated
   QCOMPARE(wc.currentRow(), 399);
   // Check that widget displays the correct row
@@ -1528,8 +1534,6 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
 
 void mdtDatabaseWidgetTest::sqlDataWidgetController2tableTest()
 {
-  return; /// \todo Provisoire !!!
-
   QSqlQuery q(pvDatabaseManager.database());
   sqlDataWidgetControllerTestWidget w;
   mdtSqlDataWidgetController clientController;
@@ -2211,12 +2215,14 @@ void mdtDatabaseWidgetTest::sqlControllerParentChildTest()
    * Check row changing on usaved data in child controller
    */
   index = addressView.model()->index(0, 1);
+  qDebug() << "TEST - editing data in address table ...";
   addressView.edit(index);
   lineEdit = qobject_cast<QLineEdit*>(addressView.indexWidget(index));
   QVERIFY(lineEdit != 0);
   QTest::keyClicks(lineEdit, "Edited Charly street 2");
   QTest::qWait(50);
   QCOMPARE(clientController.currentRow(), 2);
+  qDebug() << "TEST - Trying toPrevious() on unsaved data - current row: " << clientController.currentRow();
   clientController.toPrevious();
   QTest::qWait(50);
   QCOMPARE(clientController.currentRow(), 2);
