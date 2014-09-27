@@ -61,7 +61,7 @@ class mdtSqlDataWidgetController : public mdtAbstractSqlTableController
    *                               This is then used by insertion to give this widget the focus.
    *
    * \pre Table model must be set with setModel() or setTableName() begore calling this method.
-   * \pre Internal state machine must run (see start() ).
+   * \pre Internal state machine must not run.
    */
   bool mapFormWidgets(QWidget *widget, const QString &firstWidgetInTabOrder = QString());
 

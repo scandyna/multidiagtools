@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "mdtClConnectorEditor.h"
 #include "ui_mdtClConnectorEditor.h"
-#include "mdtSqlFormWidget.h"
+///#include "mdtSqlFormWidget.h"
 #include "mdtSqlTableWidget.h"
 
 mdtClConnectorEditor::mdtClConnectorEditor(QWidget *parent, QSqlDatabase db)

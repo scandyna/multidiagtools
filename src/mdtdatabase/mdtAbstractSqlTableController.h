@@ -27,10 +27,12 @@
 #include "mdtSqlDataValidator.h"
 #include "mdtSqlRelationInfo.h"
 #include "mdtSortFilterProxyModel.h"
+#include "mdtSqlRecord.h"
 #include <QObject>
 #include <QSqlDatabase>
 #include <QSqlTableModel>
 #include <QString>
+#include <QStringList>
 #include <QVariant>
 #include <QList>
 #include <memory>
@@ -48,6 +50,7 @@ struct mdtAbstractSqlTableControllerContainer
 {
   std::shared_ptr<mdtAbstractSqlTableController> controller;
   std::shared_ptr<mdtSqlRelation> relation;
+  mdtSqlRelationInfo::relationType_t relationType;
 };
 
 /*! \brief Base class for SQL table controllers
@@ -68,8 +71,9 @@ struct mdtAbstractSqlTableControllerContainer
  *  Use existing one, or create your own if needed.
  *
  * Typicall usage:
- *  - Make needed signal/slot connections
- *  - Set table with setTableName() or setModel()
+ *  - Make needed signal/slot connections with GUI actions
+ *  - Set table with setTableName()
+ *  - If needed, add child controllers with addChildController()
  *  - Start inetrnal state machine with start()
  *  - Load data with select()
  */
@@ -473,6 +477,35 @@ class mdtAbstractSqlTableController : public QObject
    * \pre Table model must be set with setModel() or setTableName() begore calling this method.
    */
   QVariant data(int row, const QString &fieldName, bool & ok);
+
+  /*! \brief Get a record that contains given field names for given row
+   */
+  inline mdtSqlRecord record(int row, const QStringList & fieldNames)
+  {
+    Q_ASSERT(pvModel);
+    bool ok;
+    return record(row, fieldNames, ok);
+  }
+
+  /*! \brief Get a record that contains given field names for given row
+   */
+  mdtSqlRecord record(int row, const QStringList & fieldNames, bool & ok);
+
+  /*! \brief Get a record that contains given field names for current row
+   */
+  inline mdtSqlRecord currentRecord(const QStringList & fieldNames, bool & ok)
+  {
+    Q_ASSERT(pvModel);
+    return record(currentRow(), fieldNames, ok);
+  }
+
+  /*! \brief Get a record that contains given field names for current row
+   */
+  inline mdtSqlRecord currentRecord(const QStringList & fieldNames)
+  {
+    Q_ASSERT(pvModel);
+    return record(currentRow(), fieldNames);
+  }
 
   /*! \brief Get a list of data for given field name
    *
@@ -946,6 +979,26 @@ class mdtAbstractSqlTableController : public QObject
   /*! \brief Setup and add child controller
    */
   bool setupAndAddChildController(std::shared_ptr<mdtAbstractSqlTableController> controller, const mdtSqlRelationInfo & relationInfo, QSqlDatabase db, const QString & userFriendlyChildTableName);
+
+  /*! \brief Update child controllers after current row changed
+   */
+  void updateChildControllersAfterCurrentRowChanged();
+
+  /*! \brief Update child controllers just after a insertion was done (in main table)
+   */
+  void updateChildControllersAfterInsert();
+
+  /*! \brief Update child controllers just after new row was submitted (in main table)
+   */
+  bool updateChildControllersAfterSubmitNewRow();
+
+  /*! \brief Update cgild controllers just after new row was removed
+   */
+  void updateChildControllersAfterNewRowRemoved();
+
+  /*! \brief Update child controllers before removing a row (in main table)
+   */
+  bool updateChildControllersBeforeRemoveRow();
 
   /*! \brief Call checkBeforeSubmit() for each installed validators
    *

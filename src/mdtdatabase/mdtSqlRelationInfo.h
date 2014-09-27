@@ -40,9 +40,32 @@ class mdtSqlRelationInfo
 {
  public:
 
-  /*! \brief Constructor
+  /*! \brief Relation type
    */
-  mdtSqlRelationInfo() : pvCopyParentToChildOnInsertion(false) {}
+  enum relationType_t {
+                OneToMany = 0,  /*!< One to many relation */
+                OneToOne        /*!< One to one relation.
+                                      In 1-1 relation, inserting a record in parent model will also
+                                       insert one in child model. When parent model is saved,
+                                       child model is updated with parent model's primary key.
+                                       When removing a record in parent model, related record
+                                       (if exists) will be removed first in child model.
+                                 */
+  };
+
+  /*! \brief Constructor
+   *
+   * Will set relationType to OneToMany.
+   */
+  mdtSqlRelationInfo() : pvRelationType(OneToMany) {}
+
+  /*! \brief Set relation type
+   */
+  void setRelationType(relationType_t type);
+
+  /*! \brief Get relation type
+   */
+  inline relationType_t relationType() const { return pvRelationType; }
 
   /*! \brief Set parent table name
    */
@@ -59,20 +82,6 @@ class mdtSqlRelationInfo
   /*! \brief Get child table name
    */
   inline QString childTableName() const { return pvChildTableName; }
-
-  /*! \brief Set copyParentToChildOnInsertion flag. 
-   *
-   * Usually, a parent/child relation is based on a primary key in parent table and foreing key (that refers to parent PK) in child model.
-   *  When inserting a new record in child table, parent table's primary key must be copied into foreing key fields in child table.
-   *  Set this flag to true to enable this behaviour (see mdtSqlRelation for more details).
-   *
-   * By default, this flag is false. 
-   */
-  void setCopyParentToChildOnInsertion(bool enable) { pvCopyParentToChildOnInsertion = enable; }
-
-  /*! \brief Get copyParentToChildOnInsertion flag. 
-   */
-  inline bool copyParentToChildOnInsertion() const { return pvCopyParentToChildOnInsertion; }
 
   /*! \brief Add a relation
    *
@@ -93,12 +102,16 @@ class mdtSqlRelationInfo
    */
   inline const QList<mdtSqlRelationInfoItem> & items() const { return pvItems; }
 
+  /*! \brief Clear
+   */
+  void clear();
+
  private:
 
   QString pvParentTableName;
   QString pvChildTableName;
-  bool pvCopyParentToChildOnInsertion;
   QList<mdtSqlRelationInfoItem> pvItems;
+  relationType_t pvRelationType;
 };
 
 #endif // #ifndef MDT_SQL_RELATION_INFO_H

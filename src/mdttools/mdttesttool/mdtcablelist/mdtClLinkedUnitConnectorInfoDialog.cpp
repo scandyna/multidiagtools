@@ -120,9 +120,9 @@ void mdtClLinkedUnitConnectorInfoDialog::displayLinkedConnectors(const QVariant&
   Q_ASSERT(pvLinkedConnectorsWidget != 0);
 
   QList<QVariant> linkedConnectorIdList;
-  QString filter;
+  ///QString filter;
   bool ok;
-  int i;
+  ///int i;
 
   // Get linked connector ID list
   linkedConnectorIdList = pvGraph->getLinkedConnectorIdList(fromConnectorId, &ok);
@@ -134,14 +134,17 @@ void mdtClLinkedUnitConnectorInfoDialog::displayLinkedConnectors(const QVariant&
   if(linkedConnectorIdList.isEmpty()){
     return;
   }
+  /**
   Q_ASSERT(linkedConnectorIdList.size() > 0);
   filter = "Id_PK = " + linkedConnectorIdList.at(0).toString();
   for(i = 1; i < linkedConnectorIdList.size(); ++i){
     filter += " OR Id_PK = " + linkedConnectorIdList.at(i).toString();
   }
+  */
   // Apply filter
-  Q_ASSERT(pvLinkedConnectorsWidget->model() != 0);
-  pvLinkedConnectorsWidget->model()->setFilter(filter);
+  ///Q_ASSERT(pvLinkedConnectorsWidget->model() != 0);
+  ///pvLinkedConnectorsWidget->model()->setFilter(filter);
+  pvLinkedConnectorsWidget->setFilter("Id_PK", linkedConnectorIdList);
   pvLinkedConnectorsWidget->sort();
   // Populate direct links table
   populateDirectLinkTable(fromConnectorId, linkedConnectorIdList);
@@ -206,7 +209,7 @@ void mdtClLinkedUnitConnectorInfoDialog::setupLinkedConnectorsTable()
 void mdtClLinkedUnitConnectorInfoDialog::setupDirectLinkTable()
 {
   Q_ASSERT(pvLinkedConnectorsWidget != 0);
-  Q_ASSERT(pvLinkedConnectorsWidget->model() != 0);
+  ///Q_ASSERT(pvLinkedConnectorsWidget->model() != 0);
   Q_ASSERT(pvDirectLinksWidget != 0);
 
   ///QSqlTableModel *model;
@@ -338,16 +341,22 @@ void mdtClLinkedUnitConnectorInfoDialog::populateDirectLinkTable(const QVariant 
   Q_ASSERT(pvDirectLinksWidget != 0);
 
   int i;
-  QSqlTableModel *model;
+  ///QSqlTableModel *model;
 
+  /**
   model = pvDirectLinksWidget->model();
   Q_ASSERT(model != 0);
+  */
   for(i = 0; i < linkedConnectorsIdList.size(); ++i){
     if(!pvDirectLink->addLinksByUnitConnector(fromConnectorId, linkedConnectorsIdList.at(i), pvGraph)){
       displayError(pvDirectLink->lastError());
       return;
     }
   }
+  if(!pvDirectLinksWidget->select()){
+    displayError(pvDirectLinksWidget->lastError());
+  }
+  /**
   if(!model->select()){
     QSqlError sqlError = model->lastError();
     mdtError e(tr("Unable to select data in table 'DirectLink_tbl'"), mdtError::Error);
@@ -356,6 +365,7 @@ void mdtClLinkedUnitConnectorInfoDialog::populateDirectLinkTable(const QVariant 
     e.commit();
     displayError(e);
   }
+  */
 }
 
 void mdtClLinkedUnitConnectorInfoDialog::displayError(const mdtError & error) 

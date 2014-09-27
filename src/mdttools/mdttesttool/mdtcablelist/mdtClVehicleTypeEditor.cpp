@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "mdtClVehicleTypeEditor.h"
 #include "ui_mdtClVehicleTypeEditor.h"
-#include "mdtSqlFormWidget.h"
+///#include "mdtSqlFormWidget.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlRelation.h"
 #include "mdtSqlSelectionDialog.h"

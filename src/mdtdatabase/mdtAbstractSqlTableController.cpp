@@ -415,6 +415,29 @@ QVariant mdtAbstractSqlTableController::data(int row, const QString& fieldName, 
   return data(row, column, ok);
 }
 
+mdtSqlRecord mdtAbstractSqlTableController::record(int row, const QStringList & fieldNames, bool & ok)
+{
+  Q_ASSERT(pvModel);
+
+  mdtSqlRecord rec;
+  int i;
+
+  for(i = 0; i < fieldNames.size(); ++i){
+    if(!rec.addField(fieldNames.at(i), pvModel->tableName(), pvModel->database())){
+      ok = false;
+      pvLastError = rec.lastError();
+      return mdtSqlRecord();
+    }
+    rec.setValue(fieldNames.at(i), data(row, fieldNames.at(i), ok));
+    if(!ok){
+      return mdtSqlRecord();
+    }
+  }
+  ok = true;
+
+  return rec;
+}
+
 QList< QVariant > mdtAbstractSqlTableController::dataList(const QString& fieldName, bool& ok, bool fetchAll)
 {
   Q_ASSERT(pvModel);
@@ -1003,7 +1026,7 @@ bool mdtAbstractSqlTableController::setupAndAddChildController(shared_ptr< mdtAb
   relation->setParentModel(pvModel.get());
   relation->setChildModel(controller->pvModel.get());
   connect(this, SIGNAL(currentRowChanged(int)), relation.get(), SLOT(setParentCurrentIndex(int)));
-  connect(relation.get(), SIGNAL(childModelFilterApplied()), controller.get(), SLOT(onRelationFilterApplied()));
+  ///connect(relation.get(), SIGNAL(childModelFilterApplied()), controller.get(), SLOT(onRelationFilterApplied()));
   for(i = 0; i < relationInfo.items().size(); ++i){
     item = relationInfo.items().at(i);
     if(!relation->addRelation(item.parentFieldName, item.childFieldName, item.copyParentToChildOnInsertion, item.relationOperatorWithPreviousItem)){
@@ -1014,6 +1037,7 @@ bool mdtAbstractSqlTableController::setupAndAddChildController(shared_ptr< mdtAb
   // Add to container
   container.controller = controller;
   container.relation = relation;
+  container.relationType = relationInfo.relationType();
   pvChildControllerContainers.append(container);
   // Start controller if we are running
   if(pvStateMachine.isRunning()){

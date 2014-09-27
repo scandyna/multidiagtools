@@ -21,7 +21,7 @@
 #include "mdtClLinkBeamEditor.h"
 #include "ui_mdtClLinkBeamEditor.h"
 #include "mdtClLinkBeam.h"
-#include "mdtSqlFormWidget.h"
+///#include "mdtSqlFormWidget.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlSelectionDialog.h"
 #include "mdtSqlTableSelection.h"

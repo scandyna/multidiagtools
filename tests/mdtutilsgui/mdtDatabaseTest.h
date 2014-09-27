@@ -40,7 +40,7 @@ class mdtDatabaseTest : public mdtTest
 
   void relationsTest();
 
-  void sqlFormWidgetTest();
+  ///void sqlFormWidgetTest();
 
   void sortFilterProxyModelTest();
 

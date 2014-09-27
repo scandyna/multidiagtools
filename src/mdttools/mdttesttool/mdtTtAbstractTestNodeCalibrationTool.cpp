@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtTtAbstractTestNodeCalibrationTool.h"
-#include "mdtSqlFormWidget.h"
+///#include "mdtSqlFormWidget.h"
 #include "mdtSqlRelation.h"
 #include <QSqlError>
 #include <QModelIndex>
@@ -33,15 +33,17 @@ mdtTtAbstractTestNodeCalibrationTool::mdtTtAbstractTestNodeCalibrationTool(QSqlD
    pvTestNodeManager(new mdtTtTestNodeManager(0, db)),
    pvTest(new mdtTtTest(0, db)),
    pvTestNodeTableModel(new QSqlTableModel(0, db)),
-   pvTestNodeForm(new mdtSqlFormWidget),
+   /**pvTestNodeForm(new mdtSqlFormWidget),*/
    pvTestNodeUnitViewTableModel(new QSqlTableModel(0, db)),
    pvTestNodeUnitViewRelation(new mdtSqlRelation),
    pvTestNodeUnitTableModel(new QSqlTableModel(0, db)),
    pvTestNodeUnitRelation(new mdtSqlRelation)
 {
   pvParentWidget = 0;
+  /**
   pvTestNodeForm->setAskUserBeforRevert(false);
   pvTestNodeForm->setModel(pvTest->testTableModel().get());
+  */
 }
 
 bool mdtTtAbstractTestNodeCalibrationTool::init()
@@ -64,8 +66,10 @@ bool mdtTtAbstractTestNodeCalibrationTool::init()
     pvLastError.commit();
     return false;
   }
+  /**
   pvTestNodeForm->setAskUserBeforRevert(false);
   pvTestNodeForm->setModel(pvTestNodeTableModel.get());
+  */
   ///pvTestNodeForm->setCurrentIndex(-1);
   // Setup test node unit table view
   pvTestNodeUnitViewTableModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
@@ -88,7 +92,7 @@ bool mdtTtAbstractTestNodeCalibrationTool::init()
     pvLastError.commit();
     return false;
   }
-  connect(pvTestNodeForm.get(), SIGNAL(currentRowChanged(int)), pvTestNodeUnitViewRelation.get(), SLOT(setParentCurrentIndex(int)));
+  ///connect(pvTestNodeForm.get(), SIGNAL(currentRowChanged(int)), pvTestNodeUnitViewRelation.get(), SLOT(setParentCurrentIndex(int)));
 
   // Setup test node unit table
   pvTestNodeUnitTableModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
@@ -111,10 +115,10 @@ bool mdtTtAbstractTestNodeCalibrationTool::init()
     pvLastError.commit();
     return false;
   }
-  connect(pvTestNodeForm.get(), SIGNAL(currentRowChanged(int)), pvTestNodeUnitRelation.get(), SLOT(setParentCurrentIndex(int)));
+  ///connect(pvTestNodeForm.get(), SIGNAL(currentRowChanged(int)), pvTestNodeUnitRelation.get(), SLOT(setParentCurrentIndex(int)));
 
   
-  pvTestNodeForm->toFirst();
+  ///pvTestNodeForm->toFirst();
 
   return true;
 }
@@ -124,14 +128,16 @@ void mdtTtAbstractTestNodeCalibrationTool::setTestNodeUiWidget(QWidget* widget)
   Q_ASSERT(widget != 0);
 
   pvParentWidget = widget;
+  /**
   pvTestNodeForm->mapFormWidgets(widget);
   pvTestNodeForm->setCurrentIndex(-1);
   pvTestNodeForm->start();
+  */
 }
 
 QVariant mdtTtAbstractTestNodeCalibrationTool::currentTestNodeData(const QString& fieldName)
 {
-  return pvTestNodeForm->currentData(fieldName);
+  ///return pvTestNodeForm->currentData(fieldName);
 }
 
 QVariant mdtTtAbstractTestNodeCalibrationTool::testNodeUnitData(int testNodeUnitId, const QString& fieldName)

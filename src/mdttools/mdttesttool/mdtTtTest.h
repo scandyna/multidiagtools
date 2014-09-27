@@ -28,6 +28,8 @@
 #include "mdtValue.h"
 #include "mdtTtTestNodeUnitSetupData.h"
 #include "mdtTtTestItemNodeSetupData.h"
+#include "mdtSqlDataWidgetController.h"
+#include "mdtSqlTableViewController.h"
 #include <QSqlDatabase>
 #include <QModelIndex>
 #include <QVariant>
@@ -61,13 +63,30 @@ class mdtTtTest : public mdtTtBase
    */
   bool init();
 
+  /*! \brief Access controller that acts on Test_view
+   */
+  std::shared_ptr<mdtSqlDataWidgetController> testViewController()
+  {
+    return pvTestViewController;
+  }
+
+  /*! \brief Access controller that acts on TestItem_view
+   *
+   * \pre init() must be done before calling this method.
+   */
+  std::shared_ptr<mdtSqlTableViewController> testItemViewController()
+  {
+    Q_ASSERT(pvTestItemViewController);
+    return pvTestItemViewController;
+  }
+
   /*! \brief Get table model to access data in Test_tbl
    */
-  std::shared_ptr<QSqlTableModel> testTableModel() { return pvTestTableModel; }
+  ///std::shared_ptr<QSqlTableModel> testTableModel() { return pvTestTableModel; }
 
   /*! \brief Get table model to access data in TestItem_view
    */
-  std::shared_ptr<QSqlTableModel> testItemViewTableModel() { return pvTestItemViewTableModel; }
+  ///std::shared_ptr<QSqlTableModel> testItemViewTableModel() { return pvTestItemViewTableModel; }
 
   /*! \brief Set test data
    *
@@ -89,13 +108,13 @@ class mdtTtTest : public mdtTtBase
    *
    * Returns data from Test_view
    */
-  QSqlRecord testData() const;
+  ///QSqlRecord testData() const;
 
   /*! \brief Get test data value for given fieldName
    *
    * Note: return cached data (will not get them from database).
    */
-  QVariant testDataValue(const QString & fieldName) const;
+  ///QVariant testDataValue(const QString & fieldName) const;
 
   /*! \brief Set current test to given testId
    *
@@ -242,13 +261,13 @@ class mdtTtTest : public mdtTtBase
    *
    * data comes from Test_view
    */
-  void testDataChanged(const QSqlRecord & data);
+  ///void testDataChanged(const QSqlRecord & data);
 
  private:
 
   /*! \brief Set current index row for Test_view table model
    */
-  void setCurrentTestIndexRow(int row);
+  ///void setCurrentTestIndexRow(int row);
 
   /*! \brief Add test items for given test model ID to current test (see pvTestData)
    */
@@ -260,19 +279,27 @@ class mdtTtTest : public mdtTtBase
 
   /*! \brief Get row in pvTestItemTableModel for given testItemId
    */
-  int getTestItemTableModelIndexRow(const QVariant & testItemId);
+  ///int getTestItemTableModelIndexRow(const QVariant & testItemId);
 
   Q_DISABLE_COPY(mdtTtTest);
 
+  QSqlDatabase pvDatabase;
+  /**
   std::shared_ptr<QSqlTableModel> pvTestViewTableModel;         // Access data in Test_view
   std::shared_ptr<QSqlTableModel> pvTestTableModel;             // Access data in Test_tbl
   std::shared_ptr<mdtSqlRelation> pvTestTableRelation;          // Test_view <-> Test_tbl relation
-  int pvCurrentTestRow;
+  */
+  std::shared_ptr<mdtSqlDataWidgetController> pvTestViewController; // Access data in Test_view
+  ///int pvCurrentTestRow;
   // Test item data models
+  /**
   std::shared_ptr<QSqlTableModel> pvTestItemViewTableModel;     // Access data in TestItem_view
   std::shared_ptr<QSqlTableModel> pvTestItemTableModel;         // Access data in TestItem_tbl
   std::shared_ptr<mdtSqlRelation> pvTestItemViewRelation;       // Test_view <-> TestItem_view relation
   std::shared_ptr<mdtSqlRelation> pvTestItemTableRelation;      // Test_view <-> TestItem_tbl relation
+  */
+  // Test item data
+  std::shared_ptr<mdtSqlTableViewController> pvTestItemViewController;  // Access data in TestItem_view
   int pvCurrentTestItemRow;
 };
 

@@ -1,6 +1,6 @@
 format 207
 "mdtdatabase" // mdtdatabase
-  revision 26
+  revision 27
   modified_by 2 "philippe"
   // class settings
   
@@ -924,11 +924,11 @@ ${inlines}
 	
       end
 
-      operation 1224706 "setParentCurrentIndex"
+      operation 1224706 "setParentCurrentRow"
 	stereotype "slot"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "index" explicit_type "int"
+	  param in name "row" explicit_type "int"
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
@@ -1053,6 +1053,71 @@ ${inlines}
 "
 	    classrelation_ref 876674 // pvChildModel (<unidirectional association>)
 	  b parent class_ref 174210 // QSqlTableModel
+      end
+
+      operation 2270338 "childModelFilterApplied"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2270722 "insertRowToChildModel"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2272386 "onChildBeforeInsert"
+	stereotype "slot"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "childRecord" type class_ref 404994 // QSqlRecord
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2272514 "setChildForeingKeyValues"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "parentRecord" type class_ref 404994 // QSqlRecord
+	  param in name "childRecord" type class_ref 404994 // QSqlRecord
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 
@@ -1778,6 +1843,36 @@ ${inlines}
 	
       end
 
+      operation 2272002 "submitAndWait"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2273410 "removeAndWait"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 2218626 "rowCount"
 	public explicit_return_type "int"
 	nparams 1
@@ -1895,6 +1990,281 @@ ${inlines}
 	nparams 1
 	  param in name "row" explicit_type "int"
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 2269058 "allDataAreSaved"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2269186 "insertTriggered"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2269570 "setCurrentRowPv"
+	protected explicit_return_type "bool"
+	nparams 2
+	  param in name "row" explicit_type "int"
+	  param in name "forceSendCurrentRowChanedEvent" explicit_type "bool"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2269826 "currentRowChangedEvent"
+	abstract cpp_virtual protected explicit_return_type "void"
+	nparams 1
+	  param in name "row" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 2269954 "updateChildControllersAfterCurrentRowChanged"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2270082 "updateChildControllersAfterInsert"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2271874 "updateChildControllersAfterSubmitNewRow"
+	private explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2272770 "updateChildControllersAfterNewRowRemoved"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2273282 "updateChildControllersBeforeRemoveRow"
+	private explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2269314 "onStateVisualizingExited"
+	stereotype "slot"
+	protected explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2270466 "onRelationFilterApplied"
+	stereotype "slot"
+	protected explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2269442 "onStateInsertingEntered"
+	stereotype "slot"
+	abstract cpp_virtual protected explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 2270850 "onStateSubmittingNewRowEntered"
+	stereotype "slot"
+	protected explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2272898 "onStateRevertingNewRowEntered"
+	stereotype "slot"
+	protected explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2273026 "onStateRemovingEntered"
+	stereotype "slot"
+	protected explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2270978 "checkBeforeSubmit"
+	private explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2271362 "doSubmitNewRow"
+	abstract cpp_virtual protected explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 2271490 "doInsert"
+	abstract cpp_virtual protected explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 2273154 "doRemove"
+	abstract cpp_virtual protected explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
 	
 	
@@ -2389,6 +2759,191 @@ ${inlines}
 	    classrelation_ref 1716994 // pvTableView (<directional composition>)
 	  b parent class_ref 638338 // QTableView
       end
+    end
+
+    sequencediagram 1257986 "insert"
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
+
+    classinstance 135810 ""
+      type class_ref 1376002 // mdtAbstractSqlTableController
+      attributes
+        end
+      relations
+        end
+    end
+
+    classinstance 135938 ""
+      type class_ref 1376002 // mdtAbstractSqlTableController
+      attributes
+        end
+      relations
+        end
+    end
+
+    classinstance 136066 ""
+      type class_ref 174210 // QSqlTableModel
+      attributes
+        end
+      relations
+        end
+    end
+
+    sequencediagram 1258114 "setCurrentRow"
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
+
+    classinstance 136194 ""
+      type class_ref 1376002 // mdtAbstractSqlTableController
+      attributes
+        end
+      relations
+        end
+    end
+
+    classinstance 136322 "pvModel"
+      type class_ref 174210 // QSqlTableModel
+      attributes
+        end
+      relations
+        end
+    end
+
+    classinstance 136450 ""
+      type class_ref 652418 // mdtSqlRelation
+      attributes
+        end
+      relations
+        end
+    end
+
+    classinstance 136578 ""
+      type class_ref 652418 // mdtSqlRelation
+      attributes
+        end
+      relations
+        end
+    end
+
+    classinstance 136706 "pvChildModel"
+      type class_ref 174210 // QSqlTableModel
+      attributes
+        end
+      relations
+        end
+    end
+
+    sequencediagram 1258242 "onStateSubmittingNewRowEntered"
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
+
+    classinstance 136834 ""
+      type class_ref 1376002 // mdtAbstractSqlTableController
+      attributes
+        end
+      relations
+        end
+    end
+
+    classinstance 136962 ""
+      type class_ref 720002 // mdtSortFilterProxyModel
+      attributes
+        end
+      relations
+        end
+    end
+
+    classinstance 137090 ""
+      type class_ref 652418 // mdtSqlRelation
+      attributes
+        end
+      relations
+        end
+    end
+
+    classinstance 137218 "childModel"
+      type class_ref 174210 // QSqlTableModel
+      attributes
+        end
+      relations
+        end
+    end
+
+    classinstance 137346 "someChildController"
+      type class_ref 1376002 // mdtAbstractSqlTableController
+      attributes
+        end
+      relations
+        end
+    end
+
+    classinstance 137474 ""
+      type class_ref 174210 // QSqlTableModel
+      attributes
+        end
+      relations
+        end
+    end
+
+    classinstance 137602 ""
+      type class_ref 174210 // QSqlTableModel
+      attributes
+        end
+      relations
+        end
+    end
+
+    classinstance 137730 ""
+      type class_ref 174210 // QSqlTableModel
+      attributes
+        end
+      relations
+        end
+    end
+
+    sequencediagram 1258370 "onStateRevertingNewRowEntered"
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
+
+    classinstance 137858 ""
+      type class_ref 1376002 // mdtAbstractSqlTableController
+      attributes
+        end
+      relations
+        end
+    end
+
+    classinstance 137986 ""
+      type class_ref 174210 // QSqlTableModel
+      attributes
+        end
+      relations
+        end
+    end
+
+    classinstance 138114 ""
+      type class_ref 652418 // mdtSqlRelation
+      attributes
+        end
+      relations
+        end
+    end
+
+    classinstance 138242 ""
+      type class_ref 720002 // mdtSortFilterProxyModel
+      attributes
+        end
+      relations
+        end
+    end
+
+    sequencediagram 1258626 "onStateRemovingEntered"
+      sequencediagramsettings end
+      overlapping_bars size A4
     end
   end
 

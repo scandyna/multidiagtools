@@ -22,7 +22,8 @@
 #include "mdtTtTestModel.h"
 #include "mdtSqlRecord.h"
 #include "mdtTtTestNodeSetupData.h"
-#include "mdtSqlRelation.h"
+///#include "mdtSqlRelation.h"
+#include "mdtSqlRelationInfo.h"
 #include <QSqlTableModel>
 #include <QModelIndex>
 #include <QSqlQuery>
@@ -35,6 +36,7 @@
 
 #include <QDebug>
 
+/**
 mdtTtTest::mdtTtTest(QObject *parent, QSqlDatabase db)
  : mdtTtBase(parent, db),
    pvTestViewTableModel(new QSqlTableModel(0, db)),
@@ -48,7 +50,36 @@ mdtTtTest::mdtTtTest(QObject *parent, QSqlDatabase db)
   pvCurrentTestRow = -1;
   pvCurrentTestItemRow = -1;
 }
+*/
 
+mdtTtTest::mdtTtTest(QObject *parent, QSqlDatabase db)
+ : mdtTtBase(parent, db),
+   pvTestViewController(new mdtSqlDataWidgetController)
+{
+  pvDatabase = db;
+  pvCurrentTestItemRow = -1;
+}
+
+bool mdtTtTest::init()
+{
+  mdtSqlRelationInfo relationInfo;
+
+  // Setup Test_view controller
+  pvTestViewController->setTableName("Test_view", pvDatabase, tr("Test"));
+  // Setup TestItem_view controller
+  relationInfo.setChildTableName("TestItem_view");
+  relationInfo.addRelation("Id_PK", "Test_Id_FK", true);
+  if(!pvTestViewController->addChildController<mdtSqlTableViewController>(relationInfo, tr("Test items"))){
+    pvLastError = pvTestViewController->lastError();
+    return false;
+  }
+  pvTestItemViewController = pvTestViewController->childController<mdtSqlTableViewController>("TestItem_view");
+  Q_ASSERT(pvTestItemViewController);
+
+  return true;
+}
+
+/**
 bool mdtTtTest::init()
 {
   QSqlError sqlError;
@@ -133,6 +164,7 @@ bool mdtTtTest::init()
 
   return true;
 }
+*/
 
 /**
 void mdtTtTest::setTestData(const mdtTtTestData& data)
@@ -167,11 +199,14 @@ void mdtTtTest::setTestDataValue(const QString& fieldName, const QVariant& value
 }
 */
 
+/**
 QSqlRecord mdtTtTest::testData() const
 {
   return pvTestViewTableModel->record(pvCurrentTestRow);
 }
+*/
 
+/**
 void mdtTtTest::setCurrentTest(const QVariant & testId)
 {
   QString filter;
@@ -187,6 +222,16 @@ void mdtTtTest::setCurrentTest(const QVariant & testId)
     setCurrentTestIndexRow(0);
   }else{
     setCurrentTestIndexRow(-1);
+  }
+}
+*/
+
+void mdtTtTest::setCurrentTest(const QVariant & testId)
+{
+  if(testId.isNull()){
+    pvTestViewController->setCurrentRow(-1);
+  }else{
+    pvTestViewController->setCurrentRow("Id_PK", testId);
   }
 }
 
@@ -224,6 +269,30 @@ bool mdtTtTest::createTest(const QVariant & testModelId)
   return true;
 }
 
+bool mdtTtTest::saveCurrentTest()
+{
+  QStringList fields;
+  mdtSqlRecord record;
+  bool ok;
+
+  // Get current test data to save into Test_tbl
+  fields << "Id_PK" << "TestModel_Id_FK" << "Date" << "DutName" << "DutSerialNumber";
+  record = pvTestViewController->currentRecord(fields, ok);
+  if(!ok){
+    pvLastError = pvTestViewController->lastError();
+    return false;
+  }
+  /// \todo Save test items
+  
+  // Save Test_tbl data part
+  if(!updateRecord("Test_tbl", record, "Id_PK", record.value("Id_PK"))){
+    return false;
+  }
+
+  return true;
+}
+
+/**
 bool mdtTtTest::saveCurrentTest()
 {
   QVariant testId;
@@ -282,12 +351,14 @@ bool mdtTtTest::saveCurrentTest()
 
   return true;
 }
+*/
 
 bool mdtTtTest::removeCurrentTest()
 {
   QVariant testId;
 
-  testId = testData().value("Id_PK");
+  ///testId = testData().value("Id_PK");
+  testId = pvTestViewController->currentData("Id_PK");
   if(testId.isNull()){
     return true;
   }
@@ -312,34 +383,36 @@ bool mdtTtTest::removeCurrentTest()
 
 bool mdtTtTest::testIsEmpty() const
 {
-  QSqlRecord record;
+  QStringList fields;
+  ///QSqlRecord record;
+  mdtSqlRecord record;
   int i;
   int row;
 
   // Check test data in Test_tbl
+  /**
   qDebug() << "++ Test is empty - row count: " << pvTestTableModel->rowCount();
   if(pvTestTableModel->rowCount() < 1){
     return true;
   }
   Q_ASSERT(pvTestTableModel->rowCount() == 1);
   record = pvTestTableModel->record(0);
+  */
+  fields << "DutName" << "DutSerialNumber";
+  record = pvTestViewController->currentRecord(fields);
   for(i = 0; i < record.count(); ++i){
-    qDebug() << "++ Test is empty - Test_tbl - Field " << record.fieldName(i) << " : " << record.value(i);
-    if((record.fieldName(i) != "Id_PK")&&(record.fieldName(i) != "TestModel_Id_FK")&&(record.fieldName(i) != "Date")){
-      if(!record.value(i).isNull()){
-        return false;
-      }
+    if(!record.value(i).isNull()){
+      return false;
     }
   }
   // Check in TestItem_tbl
-  for(row = 0; row < pvTestItemTableModel->rowCount(); ++row){
-    record = pvTestItemTableModel->record(row);
+  fields.clear();
+  fields << "Date" << "MeasuredValue" << "ResultValue" << "Result" << "Remark";
+  for(row = 0; row < pvTestItemViewController->rowCount(); ++row){
+    record = pvTestItemViewController->record(row, fields);
     for(i = 0; i < record.count(); ++i){
-      qDebug() << "++ Test is empty - TestItem_tbl - Field " << record.fieldName(i) << " : " << record.value(i);
-      if((record.fieldName(i) != "Id_PK")&&(record.fieldName(i) != "Test_Id_FK")&&(record.fieldName(i) != "TestModelItem_Id_FK")){
-        if(!record.value(i).isNull()){
-          return false;
-        }
+      if(!record.value(i).isNull()){
+        return false;
       }
     }
   }
@@ -349,6 +422,8 @@ bool mdtTtTest::testIsEmpty() const
 
 bool mdtTtTest::testIsSaved()
 {
+  return false;
+  /**
   int row, col;
   QModelIndex index;
 
@@ -376,19 +451,26 @@ bool mdtTtTest::testIsSaved()
   }
 
   return true;
+  */
 }
 
 void mdtTtTest::setCurrentTestItemData(const QString & fieldName, const QVariant & data)
 {
+  /**
   QVariant testItemId;
   int testItemViewCol;
   int testItemTableRow, testItemTableCol;
   QModelIndex index;
+  */
 
+  /**
   if(pvTestItemViewTableModel->rowCount() < 1){
     return;
   }
+  */
   Q_ASSERT(pvCurrentTestItemRow >= 0);
+  pvTestViewController->setData(pvCurrentTestItemRow, fieldName, data, false);
+  /**
   // Get column index of fieldName
   testItemViewCol = pvTestItemViewTableModel->fieldIndex(fieldName);
   Q_ASSERT(testItemViewCol >= 0);
@@ -404,22 +486,28 @@ void mdtTtTest::setCurrentTestItemData(const QString & fieldName, const QVariant
   pvTestItemViewTableModel->setData(index, data);
   index = pvTestItemTableModel->index(testItemTableRow, testItemTableCol);
   pvTestItemTableModel->setData(index, data);
+  */
 }
 
 QVariant mdtTtTest::currentTestItemData(const QString & fieldName) const
 {
+  /**
   int testItemViewCol;
   QModelIndex index;
 
   if(pvTestItemViewTableModel->rowCount() < 1){
     return QVariant();
   }
+  */
   Q_ASSERT(pvCurrentTestItemRow >= 0);
+  return pvTestItemViewController->data(pvCurrentTestItemRow, fieldName);
+  /**
   testItemViewCol = pvTestItemViewTableModel->fieldIndex(fieldName);
   Q_ASSERT(testItemViewCol >= 0);
   index = pvTestItemViewTableModel->index(pvCurrentTestItemRow, testItemViewCol);
 
   return pvTestItemViewTableModel->data(index);
+  */
 }
 
 void mdtTtTest::setMeasuredValue(const mdtValue & value, const QVariant & instrumentRangeMin, const QVariant & instrumentRangeMax)
@@ -520,13 +608,19 @@ bool mdtTtTest::isInLimitRange(double x, double limitMin, double limitMax, doubl
 
 bool mdtTtTest::hasMoreTestItem() const
 {
-  Q_ASSERT(pvTestItemViewTableModel);
+  ///Q_ASSERT(pvTestItemViewTableModel);
+  Q_ASSERT(pvTestItemViewController);
 
+  /**
   if(pvCurrentTestItemRow < (pvTestItemViewTableModel->rowCount() - 1)){
     return true;
   }
   if(pvTestItemViewTableModel->canFetchMore()){
     pvTestItemViewTableModel->fetchMore();
+    return true;
+  }
+  */
+  if(pvCurrentTestItemRow < (pvTestItemViewController->rowCount(true) - 1)){
     return true;
   }
   return false;
@@ -539,6 +633,7 @@ void mdtTtTest::resetTestItemCursor()
 
 QVariant mdtTtTest::nextTestItem()
 {
+  /**
   Q_ASSERT(pvTestItemViewTableModel);
 
   QModelIndex index;
@@ -546,9 +641,13 @@ QVariant mdtTtTest::nextTestItem()
 
   col = pvTestItemViewTableModel->fieldIndex("Id_PK");
   Q_ASSERT(col >= 0);
+  */
   
   ++pvCurrentTestItemRow;
+
+  return pvTestItemViewController->data(pvCurrentTestItemRow, "Id_PK");
   
+  /**
   index = pvTestItemViewTableModel->index(pvCurrentTestItemRow, col);
   
   /// \todo Provisoire !
@@ -560,6 +659,7 @@ QVariant mdtTtTest::nextTestItem()
   
 
   return pvTestItemViewTableModel->data(index);
+  */
 }
 
 mdtTtTestItemNodeSetupData mdtTtTest::getSetupData(const QVariant & testItemId, bool & ok)
@@ -666,7 +766,7 @@ bool mdtTtTest::setMeasuredValue(const QVariant & testItemId, const mdtValue & v
 */
 
 
-
+/**
 void mdtTtTest::setCurrentTestIndexRow(int row)
 {
   pvTestTableRelation->setParentCurrentIndex(row);
@@ -676,6 +776,7 @@ void mdtTtTest::setCurrentTestIndexRow(int row)
   resetTestItemCursor();
   emit testDataChanged(testData());
 }
+*/
 
 bool mdtTtTest::addTestItems(const QVariant & testId, const QVariant & testModelId)
 {
@@ -732,6 +833,7 @@ bool mdtTtTest::removeTestItems(const QVariant & testId)
   return true;
 }
 
+/**
 int mdtTtTest::getTestItemTableModelIndexRow(const QVariant& testItemId)
 {
   int row, col;
@@ -769,3 +871,4 @@ int mdtTtTest::getTestItemTableModelIndexRow(const QVariant& testItemId)
 
   return -1;
 }
+*/

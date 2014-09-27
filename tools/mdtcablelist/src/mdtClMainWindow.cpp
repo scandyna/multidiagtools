@@ -1209,18 +1209,23 @@ mdtSqlTableWidget *mdtClMainWindow::createTableView(const QString & tableName, c
 mdtSqlTableWidget *mdtClMainWindow::getTableView(const QString & tableName)
 {
   mdtSqlTableWidget *tableWidget;
-  QSqlTableModel *model;
+  ///QSqlTableModel *model;
   int i;
 
   // Search requested table widget
   for(i = 0; i < pvOpenViews.size(); ++i){
     tableWidget = pvOpenViews.at(i);
     Q_ASSERT(tableWidget != 0);
+    if(tableWidget->tableName() == tableName){
+      return tableWidget;
+    }
+    /**
     model = tableWidget->model();
     Q_ASSERT(model != 0);
     if(model->tableName() == tableName){
       return tableWidget;
     }
+    */
   }
 
   return 0;
@@ -1229,7 +1234,7 @@ mdtSqlTableWidget *mdtClMainWindow::getTableView(const QString & tableName)
 bool mdtClMainWindow::displayTableView(const QString& tableName)
 {
   mdtSqlTableWidget *tableWidget;
-  QSqlTableModel *model;
+  ///QSqlTableModel *model;
   ///int i;
 
   // Search requested table widget
@@ -1239,6 +1244,11 @@ bool mdtClMainWindow::displayTableView(const QString& tableName)
   }
   // We have the requested widget, refresh data
   Q_ASSERT(tableWidget != 0);
+  if(!tableWidget->select()){
+    displayError(tableWidget->lastError());
+    return false;
+  }
+  /**
   model = tableWidget->model();
   Q_ASSERT(model != 0);
   if(!model->select()){
@@ -1249,6 +1259,7 @@ bool mdtClMainWindow::displayTableView(const QString& tableName)
     e.commit();
     return false;
   }
+  */
   // Show the widget - If a view exists in pvOpenViews, tab widget was allready created
   Q_ASSERT(pvTabWidget != 0);
   pvTabWidget->setCurrentWidget(tableWidget);

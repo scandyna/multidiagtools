@@ -34,12 +34,15 @@ mdtTtAbstractTester::mdtTtAbstractTester(QSqlDatabase db, QObject* parent)
  : QObject(parent),
    pvDatabase(db),
    pvTestNodeManager(new mdtTtTestNodeManager(0, db)),
-   pvTest(new mdtTtTest(0, db)),
+   pvTest(new mdtTtTest(0, db))/**,
    pvTestFormWidget(new mdtSqlFormWidget)
+   */
 {
   pvParentWidget = 0;
+  /**
   pvTestFormWidget->setAskUserBeforRevert(false);
   pvTestFormWidget->setModel(pvTest->testTableModel().get());
+  */
   connect(pvTest.get(), SIGNAL(testDataChanged(const QSqlRecord&)), this, SIGNAL(testDataChanged(const QSqlRecord&)));
 }
 
@@ -49,7 +52,7 @@ bool mdtTtAbstractTester::init()
     pvLastError = pvTest->lastError();
     return false;
   }
-  pvTestFormWidget->setCurrentIndex(-1);
+  ///pvTestFormWidget->setCurrentIndex(-1);
 
   return true;
 }
@@ -59,24 +62,30 @@ void mdtTtAbstractTester::setTestUiWidget(QWidget* widget)
   Q_ASSERT(widget != 0);
 
   pvParentWidget = widget;
+  /**
   pvTestFormWidget->mapFormWidgets(widget);
   pvTestFormWidget->setCurrentIndex(-1);
   pvTestFormWidget->start();
+  */
 }
 
 bool mdtTtAbstractTester::testIsEmpty() const
 {
+  /**
   if(!pvTestFormWidget->allDataAreSaved(false)){
     return false;
   }
+  */
   return pvTest->testIsEmpty();
 }
 
 bool mdtTtAbstractTester::testIsSaved() const
 {
+  /**
   if(!pvTestFormWidget->allDataAreSaved(false)){
     return false;
   }
+  */
   return pvTest->testIsSaved();
 }
 
@@ -103,9 +112,9 @@ void mdtTtAbstractTester::createTest()
     if(msgBox.exec() != QMessageBox::Yes){
       return;
     }
-    pvTestFormWidget->revert();
+    ///pvTestFormWidget->revert();
   }
-  pvTestFormWidget->setCurrentIndex(-1);
+  ///pvTestFormWidget->setCurrentIndex(-1);
   // Let the user choose a test model
   sql = "SELECT TM.Id_PK, TM.DesignationEN";
   sql += " FROM TestModel_tbl TM";
@@ -127,7 +136,7 @@ void mdtTtAbstractTester::createTest()
     displayLastError();
     return;
   }
-  pvTestFormWidget->toFirst();
+  ///pvTestFormWidget->toFirst();
 }
 
 void mdtTtAbstractTester::openTest()
@@ -153,10 +162,10 @@ void mdtTtAbstractTester::openTest()
     if(msgBox.exec() != QMessageBox::Yes){
       return;
     }
-    pvTestFormWidget->revert();
+    ///pvTestFormWidget->revert();
   }
   // Get current test id
-  testId = pvTest->testData().value("Id_PK");
+  ///testId = pvTest->testData().value("Id_PK");
   // Let the user choose a test
   /**
   sql = "SELECT T.Id_PK, T.Date, TM.DesignationEN, T.DutSerialNumber";
@@ -183,15 +192,17 @@ void mdtTtAbstractTester::openTest()
   testId = s.data(0, "Id_PK");
   // Change to selected test
   pvTest->setCurrentTest(testId);
-  pvTestFormWidget->toFirst();
+  ///pvTestFormWidget->toFirst();
 }
 
 void mdtTtAbstractTester::saveTest()
 {
   // At first, submit data from form to DB - Error message will be shown by form widget
+  /**
   if(!pvTestFormWidget->submitAndWait()){
     return;
   }
+  */
   // Call mdtTtTest's save method, will also save test items
   if(!pvTest->saveCurrentTest()){
     pvLastError = pvTest->lastError();

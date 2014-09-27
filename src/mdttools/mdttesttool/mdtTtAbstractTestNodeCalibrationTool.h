@@ -37,7 +37,7 @@
 #include <memory>
 #include <limits>
 
-class mdtSqlFormWidget;
+///class mdtSqlFormWidget;
 class mdtSqlRelation;
 class QWidget;
 
@@ -187,7 +187,7 @@ class mdtTtAbstractTestNodeCalibrationTool : public QObject
   std::shared_ptr<mdtTtTestNodeManager> pvTestNodeManager;
   std::shared_ptr<mdtTtTest> pvTest;
   std::shared_ptr<QSqlTableModel> pvTestNodeTableModel;
-  std::shared_ptr<mdtSqlFormWidget> pvTestNodeForm;
+  ///std::shared_ptr<mdtSqlFormWidget> pvTestNodeForm;
   std::shared_ptr<QSqlTableModel> pvTestNodeUnitViewTableModel; // Access data in TestNodeUnit_view (RO)
   std::shared_ptr<mdtSqlRelation> pvTestNodeUnitViewRelation;
   std::shared_ptr<QSqlTableModel> pvTestNodeUnitTableModel;     // Access data in TestNodeUnit_tbl (R/W)

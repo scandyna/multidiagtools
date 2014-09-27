@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -57,25 +57,25 @@ class mdtSqlRelationItem
 
   /*! \brief Get parent field name
    */
-  QString parentFieldName() const;
+  inline QString parentFieldName() const { return pvParentField.name(); }
 
   /*! \brief Get parent field index
    */
-  int parentFieldIndex() const;
+  inline int parentFieldIndex() const { return pvParentFieldIndex; }
 
   /*! \brief Get child field name
    */
-  QString childFieldName() const;
+  inline QString childFieldName() const { return pvChildField.name(); }
 
   /*! \brief Get child field index
    */
-  int childFieldIndex() const;
+  inline int childFieldIndex() const { return pvChildFieldIndex; }
 
   /*! \brief Get table/field protection
    *
    * Typical name protection is `
    */
-  QString nameProtection() const;
+  inline QString nameProtection() const { return "`"; }
 
   /*! \brief Get data protection
    *
@@ -83,11 +83,11 @@ class mdtSqlRelationItem
    *  - ' for string type
    *  - nothing for numeric type
    */
-  QString dataProtection() const;
+  inline QString dataProtection() const { return pvDataProtection; }
 
   /*! \brief Get data type
    */
-  QVariant::Type dataType() const;
+  inline QVariant::Type dataType() const { return pvParentField.type(); }
 
   /*! \brief Get value for a filter that gives no data
    *
@@ -95,7 +95,7 @@ class mdtSqlRelationItem
    *  - empty string
    *  - -1 for numeric field
    */
-  QVariant valueForNoDataFilter() const;
+  inline QVariant valueForNoDataFilter() const { return pvValueForNoDataFilter; }
 
   /*! \brief Set copyParentToChildOnInsertion flag
    *
@@ -111,9 +111,10 @@ class mdtSqlRelationItem
   void setCopyParentToChildOnInsertion(bool enable);
 
   /*! \brief Set copyParentToChildOnInsertion flag
+   *
    * \sa setCopyParentToChildOnInsertion()
    */
-  bool copyParentToChildOnInsertion() const;
+  inline bool copyParentToChildOnInsertion() const { return pvCopyParentToChildOnInsertion; }
 
   /*! \brief Set relation operator with previous item
    *
@@ -128,7 +129,7 @@ class mdtSqlRelationItem
    *
    * \sa setRelationOperatorWithPreviousItem()
    */
-  QString relationOperatorWithPreviousItem() const;
+  inline QString relationOperatorWithPreviousItem() const { return pvRelationOperatorWithPreviousItem; }
 
  private:
 

@@ -20,6 +20,11 @@
  ****************************************************************************/
 #include "mdtSqlRelationInfo.h"
 
+void mdtSqlRelationInfo::setRelationType(mdtSqlRelationInfo::relationType_t type)
+{
+  pvRelationType = type;
+}
+
 void mdtSqlRelationInfo::addRelation(const QString& parentFieldName, const QString& childFieldName, bool copyParentToChildOnInsertion, const QString& operatorWithPreviousItem)
 {
   mdtSqlRelationInfoItem item;
@@ -30,4 +35,11 @@ void mdtSqlRelationInfo::addRelation(const QString& parentFieldName, const QStri
   item.relationOperatorWithPreviousItem = operatorWithPreviousItem;
 
   pvItems.append(item);
+}
+
+void mdtSqlRelationInfo::clear()
+{
+  pvParentTableName.clear();
+  pvChildTableName.clear();
+  pvItems.clear();
 }

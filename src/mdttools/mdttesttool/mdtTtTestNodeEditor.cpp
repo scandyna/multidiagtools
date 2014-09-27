@@ -22,7 +22,9 @@
 #include "mdtTtTestNode.h"
 #include "ui_mdtTtTestNodeEditor.h"
 ///#include "mdtSqlFormWidget.h"
-#include "mdtSqlRelation.h"
+///#include "mdtSqlRelation.h"
+#include "mdtSqlDataWidgetController.h"
+#include "mdtSqlRelationInfo.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlSelectionDialog.h"
 #include "mdtTtTestNodeUnit.h"
@@ -41,6 +43,7 @@
 #include <QModelIndex>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <memory>
 
 #include "mdtTtBasicTestNodeCalibrationWindow.h"
 
@@ -688,53 +691,45 @@ bool mdtTtTestNodeEditor::assignTestConnectionToTestNodeUnitLits(const QList<QVa
 }
 */
 
+/**
+ * \todo Dans mdtAbstractSqlTableController:
+ *   - Proposer auto-connection signaux/slots pour actions d'éditions lors de l'ajout d'un child controller
+ *   - Serait une solution à l'édition multi-table !
+ *   (- Proposer aussi reprise message handler du contrôleur parent)
+ *   - Pour la reprise des PK->FK: notion de relation inverse
+ */
 bool mdtTtTestNodeEditor::setupTestNodeTable()
 {
   Ui::mdtTtTestNodeEditor tne;
-  QSqlTableModel *testNodeModel;
-  QDataWidgetMapper *baseVehicleTypeMapper;
-  QSqlTableModel *baseVehicleTypeModel;
-  mdtSqlRelation *baseVehicleTypeRelation;
+  std::shared_ptr<mdtSqlDataWidgetController> tnController;
+  std::shared_ptr<mdtSqlDataWidgetController> vtController;
+  mdtSqlRelationInfo relationInfo;
 
   // Setup main form widget
-  ///tne.setupUi(mainSqlWidget());
   setMainTableUi<Ui::mdtTtTestNodeEditor>(tne);
   connect(tne.pbSetVehicleType, SIGNAL(clicked()), this, SLOT(setBaseVehicleType()));
-  ///connect(this, SIGNAL(unitEdited()), form()->mainSqlWidget(), SIGNAL(dataEdited()));
   // Setup form
   if(!setMainTable("TestNode_tbl", "Test node", database())){
     return false;
   }
   /*
-   * Setup base unit widget mapping
+   * Setup base vehicle type widget mapping
    */
-  ///testNodeModel = model("TestNode_tbl");
-  testNodeModel = 0;
-  Q_ASSERT(testNodeModel != 0);
-  // Setup base article model
-  baseVehicleTypeModel = new QSqlTableModel(this, database());
-  baseVehicleTypeModel->setTable("VehicleType_tbl");
-  if(!baseVehicleTypeModel->select()){
+  // Get test node controller and add it a new controller for Article_tbl
+  tnController = tableController<mdtSqlDataWidgetController>("TestNode_tbl");
+  Q_ASSERT(tnController);
+  relationInfo.setChildTableName("VehicleType_tbl");
+  relationInfo.addRelation("VehicleType_Id_FK_PK", "Id_PK", false);
+  if(!tnController->addChildController<mdtSqlDataWidgetController>(relationInfo, tr("Base vehicle type"))){
+    pvLastError = tnController->lastError();
     return false;
   }
-  // Setup base article widget mapper
-  baseVehicleTypeMapper = new QDataWidgetMapper(this);
-  baseVehicleTypeMapper->setModel(baseVehicleTypeModel);
-  baseVehicleTypeMapper->addMapping(tne.leType, baseVehicleTypeModel->fieldIndex("Type"));
-  baseVehicleTypeMapper->addMapping(tne.leSubType, baseVehicleTypeModel->fieldIndex("SubType"));
-  baseVehicleTypeMapper->addMapping(tne.leSeriesNumber, baseVehicleTypeModel->fieldIndex("SeriesNumber"));
-  // Setup base article relation
-  baseVehicleTypeRelation = new mdtSqlRelation(this);
-  baseVehicleTypeRelation->setParentModel(testNodeModel);
-  baseVehicleTypeRelation->setChildModel(baseVehicleTypeModel);
-  if(!baseVehicleTypeRelation->addRelation("VehicleType_Id_FK_PK", "Id_PK", false)){
-    return false;
-  }
-  ///connect(mainSqlWidget(), SIGNAL(currentRowChanged(int)), baseVehicleTypeRelation, SLOT(setParentCurrentIndex(int)));
-  connect(baseVehicleTypeRelation, SIGNAL(childModelFilterApplied()), baseVehicleTypeMapper, SLOT(toFirst()));
-  connect(baseVehicleTypeRelation, SIGNAL(childModelIsEmpty()), baseVehicleTypeMapper, SLOT(revert()));
-  // Force a update
-  ///mainSqlWidget()->setCurrentIndex(mainSqlWidget()->currentRow());
+  // Get freshly added vehicle type controller and map widgets to it
+  vtController = tableController<mdtSqlDataWidgetController>("VehicleType_tbl");
+  Q_ASSERT(vtController);
+  vtController->addMapping(tne.leType, "Type");
+  vtController->addMapping(tne.leSubType, "SubType");
+  vtController->addMapping(tne.leSeriesNumber, "SeriesNumber");
 
   return true;
 }

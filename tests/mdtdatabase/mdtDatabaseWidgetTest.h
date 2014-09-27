@@ -41,8 +41,11 @@ class sqlDataWidgetControllerTestWidget : public QWidget
 
   sqlDataWidgetControllerTestWidget(QWidget *parent = 0);
 
+  // Widgets acting on Client_tbl
   QLineEdit *fld_FirstName;
   QLineEdit *fld_Remarks;
+  // Widgets acting on ClientDetail_tbl
+  QLineEdit *fld_Detail;
   // Simulate buttons states
   bool toFirstEnabled;
   bool toLastEnabled;
@@ -78,8 +81,10 @@ class mdtDatabaseWidgetTest : public mdtTest
   void initTestCase();
   void cleanupTestCase();
 
+  void sqlRelationTest();
   void sqlFieldHandlerTest();
   void sqlDataWidgetControllerTest();
+  void sqlDataWidgetController2tableTest();
   void sqlTableViewControllerTest();
   void sqlControllerParentChildTest();
 

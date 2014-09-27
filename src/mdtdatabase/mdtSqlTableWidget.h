@@ -92,11 +92,6 @@ class mdtSqlTableWidget :  public QWidget
 
  public:
 
-  /**
-   * \todo TO REMOVE !!!!!!
-   */
-  QSqlTableModel *model() { return 0; }
-
   /*! \brief Constructor
    *
    * Setup a QTableView and init some other things.
@@ -179,6 +174,55 @@ class mdtSqlTableWidget :  public QWidget
    * \pre Internal state machine must run (see start() ).
    */
   bool select() { return pvController->select(); }
+
+  /*! \brief Set a filter on main table
+   *
+   * Set filter based on SQL query WHERE part, without the WHERE keyword (f.ex. Id_PK = 15)
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   * \pre Internal state machine must run (see start() ).
+   */
+  bool setFilter(const QString & filter)
+  {
+    return pvController->setFilter(filter);
+  }
+
+  /*! \brief Set a filter on main table
+   *
+   * \param fieldName Field that must match data
+   * \param matchData Match data
+   *
+   * Internally, a SQL statement is generated linke: fieldName = matchData
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   * \pre Internal state machine must run (see start() ).
+   */
+  bool setFilter(const QString & fieldName, const QVariant & matchData)
+  {
+    return pvController->setFilter(fieldName, matchData);
+  }
+
+  /*! \brief Set a filter on main table
+   *
+   * \param fieldName Field that must match data
+   * \param matchDataList A list of match data
+   *
+   * Internally, a SQL statement is generated linke: fieldName IN (matchData[0], matchData[1], ...)
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   * \pre Internal state machine must run (see start() ).
+   */
+  bool setFilter(const QString & fieldName, const QList<QVariant> & matchDataList)
+  {
+    return pvController->setFilter(fieldName, matchDataList);
+  }
+
+  /*! \brief Clear filter
+   */
+  void clearFilter()
+  {
+    pvController->clearFilter();
+  }
 
   /*! \brief Get the current row
    */

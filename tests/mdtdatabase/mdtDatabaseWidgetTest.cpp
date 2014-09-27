@@ -77,8 +77,11 @@ sqlDataWidgetControllerTestWidget::sqlDataWidgetControllerTestWidget(QWidget *pa
   fld_FirstName->setObjectName("fld_FirstName");
   fld_Remarks = new QLineEdit;
   fld_Remarks->setObjectName("fld_Remarks");
+  fld_Detail = new QLineEdit;
+  fld_Detail->setObjectName("fld_Detail");
   l->addWidget(fld_FirstName);
   l->addWidget(fld_Remarks);
+  l->addWidget(fld_Detail);
   setLayout(l);
 }
 
@@ -141,6 +144,238 @@ void mdtDatabaseWidgetTest::initTestCase()
 void mdtDatabaseWidgetTest::cleanupTestCase()
 {
   QFile::remove(pvDatabaseManager.database().databaseName());
+}
+
+void mdtDatabaseWidgetTest::sqlRelationTest()
+{
+  QSqlTableModel clientModel;
+  QSqlTableModel detailModel;
+  QSqlTableModel addressModel;
+  mdtSqlRelation clientDetailRelation;
+  mdtSqlRelation clientAdressRelation;
+  mdtSqlRelationInfo relationInfo;
+  QModelIndex index;
+
+  // Create test data
+  populateTestDatabase();
+  // Setup models
+  clientModel.setEditStrategy(QSqlTableModel::OnManualSubmit);
+  clientModel.setTable("Client_tbl");
+  QVERIFY(clientModel.select());
+  detailModel.setEditStrategy(QSqlTableModel::OnManualSubmit);
+  detailModel.setTable("ClientDetail_tbl");
+  QVERIFY(detailModel.select());
+  addressModel.setTable("Address_tbl");
+  QVERIFY(addressModel.select());
+  /*
+   * Check 1-many relation
+   */
+  // Setup relation
+  clientAdressRelation.setParentModel(&clientModel);
+  clientAdressRelation.setChildModel(&addressModel);
+  relationInfo.addRelation("Id_PK", "Client_Id_FK", true);
+  QVERIFY(clientAdressRelation.addRelations(relationInfo));
+  // Go to first client
+  clientAdressRelation.setParentCurrentIndex(0);
+  // Check client data
+  QCOMPARE(clientModel.rowCount(), 4);
+  index = clientModel.index(0, 0);  // Id_PK
+  QCOMPARE(clientModel.data(index), QVariant(1));
+  index = clientModel.index(0, 1);  // FirstName
+  QCOMPARE(clientModel.data(index), QVariant("Andy"));
+  // Check address count
+  QCOMPARE(addressModel.rowCount(), 2);
+  // Check address data - row 0
+  index = addressModel.index(0, 1); // StreetName
+  QCOMPARE(addressModel.data(index), QVariant("Andy street 1"));
+  index = addressModel.index(0, 3); // Client_Id_FK
+  QCOMPARE(addressModel.data(index), QVariant(1));
+  // Check address data - row 1
+  index = addressModel.index(1, 1); // StreetName
+  QCOMPARE(addressModel.data(index), QVariant("Andy street 2"));
+  index = addressModel.index(1, 3); // Client_Id_FK
+  QCOMPARE(addressModel.data(index), QVariant(1));
+  // Go to second client
+  clientAdressRelation.setParentCurrentIndex(1);
+  // Check client data
+  QCOMPARE(clientModel.rowCount(), 4);
+  index = clientModel.index(1, 0);  // Id_PK
+  QCOMPARE(clientModel.data(index), QVariant(2));
+  index = clientModel.index(1, 1);  // FirstName
+  QCOMPARE(clientModel.data(index), QVariant("Bety"));
+  // Check address count
+  QCOMPARE(addressModel.rowCount(), 1);
+  // Check address data - row 0
+  index = addressModel.index(0, 1); // StreetName
+  QCOMPARE(addressModel.data(index), QVariant("Bety street 1"));
+  index = addressModel.index(0, 3); // Client_Id_FK
+  QCOMPARE(addressModel.data(index), QVariant(2));
+  // Go to third client
+  clientAdressRelation.setParentCurrentIndex(2);
+  // Check client data
+  QCOMPARE(clientModel.rowCount(), 4);
+  index = clientModel.index(2, 0);  // Id_PK
+  QCOMPARE(clientModel.data(index), QVariant(3));
+  index = clientModel.index(2, 1);  // FirstName
+  QCOMPARE(clientModel.data(index), QVariant("Zeta"));
+  // Check address count
+  QCOMPARE(addressModel.rowCount(), 0);
+  // Insert a new address
+  QVERIFY(addressModel.insertRows(0, 1));
+  index = addressModel.index(0, 1); // StreetName
+  QVERIFY(addressModel.setData(index, "Zeta street 1"));
+  QVERIFY(addressModel.submitAll());
+  // Check address count
+  QCOMPARE(addressModel.rowCount(), 1);
+  // Check address data - row 0
+  index = addressModel.index(0, 1); // StreetName
+  QCOMPARE(addressModel.data(index), QVariant("Zeta street 1"));
+  index = addressModel.index(0, 3); // Client_Id_FK
+  QCOMPARE(addressModel.data(index), QVariant(3));
+  // Go to last client
+  clientAdressRelation.setParentCurrentIndex(3);
+  // Check client data
+  QCOMPARE(clientModel.rowCount(), 4);
+  index = clientModel.index(3, 0);  // Id_PK
+  QCOMPARE(clientModel.data(index), QVariant(4));
+  index = clientModel.index(3, 1);  // FirstName
+  QCOMPARE(clientModel.data(index), QVariant("Charly"));
+  // Check address count
+  QCOMPARE(addressModel.rowCount(), 0);
+  // Go back to third client
+  clientAdressRelation.setParentCurrentIndex(2);
+  // Check client data
+  QCOMPARE(clientModel.rowCount(), 4);
+  index = clientModel.index(2, 0);  // Id_PK
+  QCOMPARE(clientModel.data(index), QVariant(3));
+  index = clientModel.index(2, 1);  // FirstName
+  QCOMPARE(clientModel.data(index), QVariant("Zeta"));
+  // Check address count
+  QCOMPARE(addressModel.rowCount(), 1);
+  // Check address data - row 0
+  index = addressModel.index(0, 1); // StreetName
+  QCOMPARE(addressModel.data(index), QVariant("Zeta street 1"));
+  index = addressModel.index(0, 3); // Client_Id_FK
+  QCOMPARE(addressModel.data(index), QVariant(3));
+  /*
+   * Check 1-1 relation
+   */
+  // Setup relation
+  clientDetailRelation.setParentModel(&clientModel);
+  clientDetailRelation.setChildModel(&detailModel);
+  relationInfo.clear();
+  relationInfo.setRelationType(mdtSqlRelationInfo::OneToOne);
+  relationInfo.addRelation("Id_PK", "Client_Id_FK_PK", true);
+  QVERIFY(clientDetailRelation.addRelations(relationInfo));
+  // Go to first client
+  clientDetailRelation.setParentCurrentIndex(0);
+  QCOMPARE(clientModel.rowCount(), 4);
+  index = clientModel.index(0, 0);  // Id_PK
+  QCOMPARE(clientModel.data(index), QVariant(1));
+  index = clientModel.index(0, 1);  // FirstName
+  QCOMPARE(clientModel.data(index), QVariant("Andy"));
+  // Check details count
+  QCOMPARE(detailModel.rowCount(), 0);
+  // Insert a new client
+  QVERIFY(clientModel.insertRow(4));
+  QCOMPARE(clientModel.rowCount(), 5);
+  clientDetailRelation.setParentCurrentRow(4);
+  QVERIFY(detailModel.insertRow(0));
+  QCOMPARE(detailModel.rowCount(), 1);
+  // Edit new record
+  index = clientModel.index(4, 1); // FirstName
+  QVERIFY(clientModel.setData(index, "New client 1"));
+  index = detailModel.index(0, 1);
+  QVERIFY(detailModel.setData(index, "Detail about New client 1"));
+  // Save new record
+  QVERIFY(clientModel.submitAll());
+  QVERIFY(detailModel.submitAll());
+  clientDetailRelation.setParentCurrentRow(4);
+  // Check client data
+  QCOMPARE(clientModel.rowCount(), 5);
+  index = clientModel.index(4, 0);  // Id_PK
+  QCOMPARE(clientModel.data(index), QVariant(5));
+  index = clientModel.index(4, 1);  // FirstName
+  QCOMPARE(clientModel.data(index), QVariant("New client 1"));
+  // Check detail data
+  QCOMPARE(detailModel.rowCount(), 1);
+  index = detailModel.index(0, 0);  // Client_Id_FK_PK
+  QCOMPARE(detailModel.data(index), QVariant(5));
+  index = detailModel.index(0, 1);  // Detail
+  QCOMPARE(detailModel.data(index), QVariant("Detail about New client 1"));
+  // Go to first client
+  clientDetailRelation.setParentCurrentRow(0);
+  QCOMPARE(clientModel.rowCount(), 5);
+  index = clientModel.index(0, 0);  // Id_PK
+  QCOMPARE(clientModel.data(index), QVariant(1));
+  index = clientModel.index(0, 1);  // FirstName
+  QCOMPARE(clientModel.data(index), QVariant("Andy"));
+  // Check details count
+  QCOMPARE(detailModel.rowCount(), 0);
+  // Go back to last client
+  clientDetailRelation.setParentCurrentRow(4);
+  QCOMPARE(clientModel.rowCount(), 5);
+  index = clientModel.index(4, 0);  // Id_PK
+  QCOMPARE(clientModel.data(index), QVariant(5));
+  index = clientModel.index(4, 1);  // FirstName
+  QCOMPARE(clientModel.data(index), QVariant("New client 1"));
+  // Check details count
+  QCOMPARE(detailModel.rowCount(), 1);
+  // Check detail data
+  QCOMPARE(detailModel.rowCount(), 1);
+  index = detailModel.index(0, 0);  // Client_Id_FK_PK
+  QCOMPARE(detailModel.data(index), QVariant(5));
+  index = detailModel.index(0, 1);  // Detail
+  QCOMPARE(detailModel.data(index), QVariant("Detail about New client 1"));
+  // Insert a new client
+  QVERIFY(clientModel.insertRow(5));
+  QCOMPARE(clientModel.rowCount(), 6);
+  clientDetailRelation.setParentCurrentRow(5);
+  QVERIFY(detailModel.insertRow(0));
+  QCOMPARE(detailModel.rowCount(), 1);
+  // Edit new record
+  index = clientModel.index(5, 1); // FirstName
+  QVERIFY(clientModel.setData(index, "New client 2"));
+  index = detailModel.index(0, 1);
+  QVERIFY(detailModel.setData(index, "Detail about New client 2"));
+  // Revert new record
+  QCOMPARE(clientModel.rowCount(), 6);
+  QVERIFY(clientModel.removeRow(5));
+  QVERIFY(detailModel.removeRow(0));
+  clientDetailRelation.setParentCurrentRow(4);
+  // Check that are back to New client 1
+  QCOMPARE(clientModel.rowCount(), 5);
+  index = clientModel.index(4, 0);  // Id_PK
+  QCOMPARE(clientModel.data(index), QVariant(5));
+  index = clientModel.index(4, 1);  // FirstName
+  QCOMPARE(clientModel.data(index), QVariant("New client 1"));
+  // Check details count
+  QCOMPARE(detailModel.rowCount(), 1);
+  // Check detail data
+  QCOMPARE(detailModel.rowCount(), 1);
+  index = detailModel.index(0, 0);  // Client_Id_FK_PK
+  QCOMPARE(detailModel.data(index), QVariant(5));
+  index = detailModel.index(0, 1);  // Detail
+  QCOMPARE(detailModel.data(index), QVariant("Detail about New client 1"));
+  // Remove client
+  QVERIFY(detailModel.removeRow(0));
+  detailModel.submitAll();
+  qDebug() << detailModel.lastError();
+  QVERIFY(detailModel.submitAll());
+  QVERIFY(clientModel.removeRow(4));
+  QVERIFY(clientModel.submitAll());
+  clientDetailRelation.setParentCurrentRow(4);
+  // Check that are back to Charly
+  QCOMPARE(clientModel.rowCount(), 4);
+  index = clientModel.index(3, 0);  // Id_PK
+  QCOMPARE(clientModel.data(index), QVariant(4));
+  index = clientModel.index(3, 1);  // FirstName
+  QCOMPARE(clientModel.data(index), QVariant("Charly"));
+  // Check details count
+  QCOMPARE(detailModel.rowCount(), 0);
+
+  // Clear test data
+  clearTestDatabaseData();
 }
 
 void mdtDatabaseWidgetTest::sqlFieldHandlerTest()
@@ -441,6 +676,8 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   std::shared_ptr<QSqlTableModel> model;
   ///mdtSqlRelationInfo relationInfo;
   QVariant data;
+  QStringList fields;
+  mdtSqlRecord rec;
   QList<QVariant> dataList;
   bool ok;
 
@@ -1225,7 +1462,161 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QCOMPARE(w.fld_Remarks->text(), QString("Edited remark on Andy"));
   QCOMPARE(wc.currentData("FirstName"), QVariant("Andy"));
   QCOMPARE(wc.currentData("Remarks"), QVariant("Edited remark on Andy"));
+  /*
+   * Check record() method
+   */
+  fields.clear();
+  fields << "Id_PK" << "FirstName";
+  rec = wc.record(0, fields);
+  QCOMPARE(rec.count(), 2);
+  QVERIFY(rec.field("Id_PK").type() == QVariant::Int);
+  QVERIFY(rec.field("FirstName").type() == QVariant::String);
+  QCOMPARE(rec.value("Id_PK"), QVariant(1));
+  QCOMPARE(rec.value("FirstName"), QVariant("Andy"));
+  fields.clear();
+  fields << "Remarks" << "FirstName";
+  rec = wc.record(0, fields);
+  QCOMPARE(rec.count(), 2);
+  QVERIFY(rec.field("FirstName").type() == QVariant::String);
+  QVERIFY(rec.field("Remarks").type() == QVariant::String);
+  QCOMPARE(rec.value("FirstName"), QVariant("Andy"));
+  QCOMPARE(rec.value("Remarks"), QVariant("Edited remark on Andy"));
+  rec = wc.record(2, fields);
+  QCOMPARE(rec.count(), 2);
+  QVERIFY(rec.field("FirstName").type() == QVariant::String);
+  QVERIFY(rec.field("Remarks").type() == QVariant::String);
+  QCOMPARE(rec.value("FirstName"), QVariant("Charly"));
+  QCOMPARE(rec.value("Remarks"), QVariant("Edited remark on Charly"));
+  fields.clear();
+  fields << "FirstName" << "Remarks";
+  rec = wc.record(0, fields);
+  QCOMPARE(rec.count(), 2);
+  QVERIFY(rec.field("FirstName").type() == QVariant::String);
+  QVERIFY(rec.field("Remarks").type() == QVariant::String);
+  QCOMPARE(rec.value("FirstName"), QVariant("Andy"));
+  QCOMPARE(rec.value("Remarks"), QVariant("Edited remark on Andy"));
+  rec = wc.record(1, fields);
+  QCOMPARE(rec.count(), 2);
+  QVERIFY(rec.field("FirstName").type() == QVariant::String);
+  QVERIFY(rec.field("Remarks").type() == QVariant::String);
+  QCOMPARE(rec.value("FirstName"), QVariant("Bety"));
+  QCOMPARE(rec.value("Remarks"), QVariant("Edited remark on Bety"));
+  rec = wc.record(2, fields);
+  QCOMPARE(rec.count(), 2);
+  QVERIFY(rec.field("FirstName").type() == QVariant::String);
+  QVERIFY(rec.field("Remarks").type() == QVariant::String);
+  QCOMPARE(rec.value("FirstName"), QVariant("Charly"));
+  QCOMPARE(rec.value("Remarks"), QVariant("Edited remark on Charly"));
+  rec = wc.record(3, fields);
+  QCOMPARE(rec.count(), 2);
+  QVERIFY(rec.field("FirstName").type() == QVariant::String);
+  QVERIFY(rec.field("Remarks").type() == QVariant::String);
+  QCOMPARE(rec.value("FirstName"), QVariant("Laura"));
+  QCOMPARE(rec.value("Remarks"), QVariant("Edited remark on Laura"));
+  rec = wc.record(4, fields);
+  QCOMPARE(rec.count(), 2);
+  QVERIFY(rec.field("FirstName").type() == QVariant::String);
+  QVERIFY(rec.field("Remarks").type() == QVariant::String);
+  QCOMPARE(rec.value("FirstName"), QVariant("Zeta"));
+  QCOMPARE(rec.value("Remarks"), QVariant("Edited remark 2 on Zeta"));
 
+  // Clear test data
+  clearTestDatabaseData();
+  // Re-enable foreign_keys support
+  QVERIFY(q.exec("PRAGMA foreign_keys = ON"));
+}
+
+void mdtDatabaseWidgetTest::sqlDataWidgetController2tableTest()
+{
+  return; /// \todo Provisoire !!!
+
+  QSqlQuery q(pvDatabaseManager.database());
+  sqlDataWidgetControllerTestWidget w;
+  mdtSqlDataWidgetController clientController;
+  std::shared_ptr<mdtSqlDataWidgetController> detailController;
+  mdtSqlRelationInfo relationInfo;
+  QVariant data;
+  QStringList fields;
+  mdtSqlRecord rec;
+  QList<QVariant> dataList;
+  bool ok;
+
+  // For this test, we wont foreign_keys support
+  QVERIFY(q.exec("PRAGMA foreign_keys = OFF"));
+  // Create test data
+  populateTestDatabase();
+  // Setup
+  connect(&clientController, SIGNAL(toFirstEnabledStateChanged(bool)), &w, SLOT(setToFirstEnableState(bool)));
+  connect(&clientController, SIGNAL(toLastEnabledStateChanged(bool)), &w, SLOT(setToLastEnableState(bool)));
+  connect(&clientController, SIGNAL(toNextEnabledStateChanged(bool)), &w, SLOT(setToNextEnableState(bool)));
+  connect(&clientController, SIGNAL(toPreviousEnabledStateChanged(bool)), &w, SLOT(setToPreviousEnableState(bool)));
+  connect(&clientController, SIGNAL(insertEnabledStateChanged(bool)), &w, SLOT(setInsertEnableState(bool)));
+  connect(&clientController, SIGNAL(removeEnabledStateChanged(bool)), &w, SLOT(setRemoveEnableState(bool)));
+  connect(&clientController, SIGNAL(submitEnabledStateChanged(bool)), &w, SLOT(setSubmitEnableState(bool)));
+  connect(&clientController, SIGNAL(revertEnabledStateChanged(bool)), &w, SLOT(setRevertEnableState(bool)));
+  clientController.setTableName("Client_tbl", pvDatabaseManager.database(), "Client");
+  relationInfo.setChildTableName("ClientDetail_tbl");
+  relationInfo.addRelation("Id_PK", "Client_Id_FK_PK", true);
+  QVERIFY(clientController.addChildController<mdtSqlDataWidgetController>(relationInfo, tr("Client")));
+  // Map widgets
+  QVERIFY(clientController.mapFormWidgets(&w));
+  detailController = clientController.childController<mdtSqlDataWidgetController>("ClientDetail_tbl");
+  QVERIFY(detailController.get() != 0);
+  QVERIFY(detailController->mapFormWidgets(&w));
+  // Initial state
+  clientController.start();
+  w.show();
+  QVERIFY(w.fld_FirstName->text().isEmpty());
+  QVERIFY(w.fld_Remarks->text().isEmpty());
+  QVERIFY(w.fld_Detail->text().isEmpty());
+  QVERIFY(!w.fld_FirstName->isEnabled());
+  QVERIFY(!w.fld_Remarks->isEnabled());
+  QVERIFY(!w.fld_Detail->isEnabled());
+  // Select
+  QVERIFY(clientController.select());
+  QVERIFY(w.fld_FirstName->isEnabled());
+  QVERIFY(w.fld_Remarks->isEnabled());
+  QCOMPARE(w.fld_FirstName->text(), QString("Andy"));
+  QVERIFY(w.fld_Remarks->text().isEmpty());
+  QVERIFY(w.fld_Detail->text().isEmpty());
+  /*
+   * Because database was created without any relation
+   *  between Client_tbl and ClientDetail_tbl,
+   *  the entry for current client not exists in ClientDetail_tbl.
+   * We do a insertion, and check that entry is correctly created for Client_tbl and ClientDetail_tbl.
+   */
+  clientController.insert();
+  QTest::qWait(50);
+  // Check GUI state
+  QVERIFY(w.fld_FirstName->isEnabled());
+  QVERIFY(w.fld_Remarks->isEnabled());
+  QVERIFY(w.fld_Detail->isEnabled());
+  QVERIFY(w.fld_FirstName->text().isEmpty());
+  QVERIFY(w.fld_Remarks->text().isEmpty());
+  QVERIFY(w.fld_Detail->text().isEmpty());
+  // Edit new record
+  QTest::keyClicks(w.fld_FirstName, "Laura");
+  QTest::keyClicks(w.fld_Remarks, "Remark on Laura");
+  QTest::keyClicks(w.fld_Detail, "Detail on Laura");
+  // Submit and check
+  QVERIFY(clientController.submitAndWait());
+  QCOMPARE(clientController.currentData("Id_PK"), QVariant(5));
+  QCOMPARE(detailController->currentData("Client_Id_FK_PK"), QVariant(5));
+  // Check GUI state
+  QVERIFY(w.fld_FirstName->isEnabled());
+  QVERIFY(w.fld_Remarks->isEnabled());
+  QVERIFY(w.fld_Detail->isEnabled());
+  QCOMPARE(w.fld_FirstName->text(), QString("Laura"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Remark on Laura"));
+  QCOMPARE(w.fld_Detail->text(), QString("Detail on Laura"));
+  
+  /*
+   * Play
+   */
+  while(w.isVisible()){
+    QTest::qWait(500);
+  }
+  
   // Clear test data
   clearTestDatabaseData();
   // Re-enable foreign_keys support
@@ -2546,6 +2937,25 @@ void mdtDatabaseWidgetTest::createDatabaseSchema()
   // Remarks
   field = QSqlField();
   field.setName("Remarks");
+  field.setType(QVariant::String);
+  field.setLength(100);
+  st.addField(field, false);
+  QVERIFY(pvDatabaseManager.createTable(st, mdtSqlDatabaseManager::OverwriteExisting));
+  // ClientDetail_tbl - Linked 1-1 to Client_tbl (Real cases would be SomeTable_tbl based on Client_tbl)
+  st.clear();
+  st.setTableName("ClientDetail_tbl", "UTF8");
+  // Client_Id_FK_PK
+  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.setName("Client_Id_FK_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(false);
+  st.addField(field, true);
+  st.addForeignKey("Client_Id_FK_PK_fk", "Client_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  QVERIFY(st.addFieldToForeignKey("Client_Id_FK_PK_fk", "Client_Id_FK_PK", "Id_PK"));
+  // Detail
+  field = QSqlField();
+  field.setName("Detail");
+  field.setRequired(true);
   field.setType(QVariant::String);
   field.setLength(100);
   st.addField(field, false);
