@@ -34,7 +34,7 @@
 #include <QSqlField>
 #include <QSqlIndex>
 
-//#include <QDebug>
+#include <QDebug>
 
 mdtSqlDataWidgetController::mdtSqlDataWidgetController(QObject* parent)
  : mdtAbstractSqlTableController(parent)
@@ -141,7 +141,7 @@ bool mdtSqlDataWidgetController::addMapping(QWidget* widget, const QString& fiel
     pvWidgetMapper.addMapping(fieldHandler, fieldIndex, "data");
   }else{
     widget->setEnabled(false);
-    mdtError e(tr("Cannot find field for widget '") + widget->objectName() + tr("'"), mdtError::Warning);
+    mdtError e(tr("For table '") + tableName() + tr("': cannot find field for widget '") + widget->objectName() + tr("'"), mdtError::Warning);
     MDT_ERROR_SET_SRC(e, "mdtSqlFormWidget");
     e.commit();
   }
@@ -209,6 +209,7 @@ void mdtSqlDataWidgetController::currentRowChangedEvent(int row)
 {
   Q_ASSERT(model());
 
+  qDebug() << tableName() << ": currentRowChangedEvent(" << row << ")";
   pvWidgetMapper.setCurrentIndex(row);
   updateMappedWidgets();
   updateNavigationControls();
@@ -219,8 +220,10 @@ void mdtSqlDataWidgetController::insertDoneEvent(int row)
   Q_ASSERT(model());
   Q_ASSERT(currentState() == Inserting);
 
+  qDebug() << tableName() << ": insertDoneEvent(" << row << ")";
   pvWidgetMapper.setCurrentIndex(row);
   clearMappedWidgets();
+  updateMappedWidgets();
   setFocusOnFirstDataWidget();
 }
 
@@ -237,6 +240,8 @@ bool mdtSqlDataWidgetController::doSubmit()
   // Remember current record - will help on primary key errors
   ///initialRecord = model()->record(row);
 
+  qDebug() << tableName() << ": doSubmit() - 1) - row count: " << model()->rowCount();
+  
   // Call widget mapper submit() (will commit data from widgets to model)
   if(!pvWidgetMapper.submit()){
     sqlError = model()->lastError();
@@ -250,6 +255,9 @@ bool mdtSqlDataWidgetController::doSubmit()
     }
     return false;
   }
+  
+  qDebug() << tableName() << ": doSubmit() - 2) - row count: " << model()->rowCount();
+  
   /*
    * We use QDataWidgetMapper::ManualSubmit submit policy and QSqlTableModel::OnManualSubmit edit strategy.
    * Widget mapper calls submit() on model, but this has no effect with OnManualSubmit edit strategy,
@@ -277,6 +285,11 @@ bool mdtSqlDataWidgetController::doSubmit()
     }
     return false;
   }
+  
+  qDebug() << tableName() << ": doSubmit() - 3) - row count: " << model()->rowCount();
+  
+  qDebug() << tableName() << ": filter: " << model()->filter();
+  
   /*
    * Go back to row.
    * Calling submitAll() will repopulate the model.
@@ -423,11 +436,14 @@ void mdtSqlDataWidgetController::updateMappedWidgets()
   int i;
 
   // We have valid data only if some conditions are met
-  if((model())&&(currentState() != Stopped)&&(currentRow() > -1)){
+  if((model())&&(currentState() != Stopped)&&(currentRow() >= 0)){
     haveData = true;
   }else{
     haveData = false;
   }
+  
+  qDebug() << tableName() << ": updateMappedWidgets() - haveData: " << haveData;
+  
   // Update widgets
   for(i = 0; i < pvFieldHandlers.size(); ++i){
     fieldHandler = pvFieldHandlers.at(i);

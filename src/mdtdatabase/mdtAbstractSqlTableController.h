@@ -1029,9 +1029,9 @@ class mdtAbstractSqlTableController : public QObject
    */
   bool updateChildControllersAfterSubmitNewRow();
 
-  /*! \brief Update cgild controllers just after new row was removed
+  /*! \brief Update cgild controllers just after revert was done (on main table)
    */
-  void updateChildControllersAfterNewRowRemoved();
+  void updateChildControllersAfterRevert();
 
   /*! \brief Update child controllers before removing a row (in main table)
    */

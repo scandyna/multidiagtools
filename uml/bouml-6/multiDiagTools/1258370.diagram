@@ -70,7 +70,7 @@ reflexivemsg 129538 synchronous
 msg 129794 synchronous
   from durationcanvas_ref 129410
   to durationcanvas_ref 129666
-  yz 418 2015 msg operation_ref 2217090 // "remove() : void"
+  yz 418 2015 msg operation_ref 2216834 // "revert() : void"
   show_full_operations_definition default drawing_language default show_context_mode default
   label_xy 270 401
 reflexivemsg 130050 synchronous

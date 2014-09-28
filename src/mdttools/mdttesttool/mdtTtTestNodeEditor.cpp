@@ -701,21 +701,42 @@ bool mdtTtTestNodeEditor::assignTestConnectionToTestNodeUnitLits(const QList<QVa
 bool mdtTtTestNodeEditor::setupTestNodeTable()
 {
   Ui::mdtTtTestNodeEditor tne;
-  std::shared_ptr<mdtSqlDataWidgetController> tnController;
   std::shared_ptr<mdtSqlDataWidgetController> vtController;
+  std::shared_ptr<mdtSqlDataWidgetController> tnController;
   mdtSqlRelationInfo relationInfo;
 
   // Setup main form widget
   setMainTableUi<Ui::mdtTtTestNodeEditor>(tne);
   connect(tne.pbSetVehicleType, SIGNAL(clicked()), this, SLOT(setBaseVehicleType()));
   // Setup form
+  if(!setMainTable("VehicleType_tbl", "Test node", database())){
+    return false;
+  }
+  // Get vehicle type controller and add TestNode_tbl as child to it
+  vtController = tableController<mdtSqlDataWidgetController>("VehicleType_tbl");
+  Q_ASSERT(vtController);
+  relationInfo.setChildTableName("TestNode_tbl");
+  relationInfo.addRelation("Id_PK", "VehicleType_Id_FK_PK", true);
+  relationInfo.setRelationType(mdtSqlRelationInfo::OneToOne);
+  if(!vtController->addChildController<mdtSqlDataWidgetController>(relationInfo, tr("Test node"))){
+    pvLastError = vtController->lastError();
+    return false;
+  }
+  // Get test node controller and map widgets to it
+  tnController = vtController->childController<mdtSqlDataWidgetController>("TestNode_tbl");
+  Q_ASSERT(tnController);
+  tnController->addMapping(tne.fld_DeviceIdentification, "DeviceIdentification");
+  tnController->addMapping(tne.fld_NodeIdentification, "NodeIdentification");
+  /**
   if(!setMainTable("TestNode_tbl", "Test node", database())){
     return false;
   }
+  */
   /*
    * Setup base vehicle type widget mapping
    */
   // Get test node controller and add it a new controller for Article_tbl
+  /**
   tnController = tableController<mdtSqlDataWidgetController>("TestNode_tbl");
   Q_ASSERT(tnController);
   relationInfo.setChildTableName("VehicleType_tbl");
@@ -730,6 +751,7 @@ bool mdtTtTestNodeEditor::setupTestNodeTable()
   vtController->addMapping(tne.leType, "Type");
   vtController->addMapping(tne.leSubType, "SubType");
   vtController->addMapping(tne.leSeriesNumber, "SeriesNumber");
+  */
 
   return true;
 }
@@ -744,7 +766,8 @@ bool mdtTtTestNodeEditor::setupTestNodeUnitTable()
   mdtSqlRelationInfo relationInfo;
 
   relationInfo.setChildTableName("TestNodeUnit_view");
-  relationInfo.addRelation("VehicleType_Id_FK_PK", "TestNode_Id_FK", false);
+  ///relationInfo.addRelation("VehicleType_Id_FK_PK", "TestNode_Id_FK", false);
+  relationInfo.addRelation("Id_PK", "TestNode_Id_FK", false);
   if(!addChildTable(relationInfo, tr("Units"))){
     return false;
   }
@@ -812,7 +835,8 @@ bool mdtTtTestNodeEditor::setupTestNodeBusTable()
   mdtSqlRelationInfo relationInfo;
 
   relationInfo.setChildTableName("TestNodeBus_tbl");
-  relationInfo.addRelation("VehicleType_Id_FK_PK", "TestNode_Id_FK", false);
+  ///relationInfo.addRelation("VehicleType_Id_FK_PK", "TestNode_Id_FK", false);
+  relationInfo.addRelation("Id_PK", "TestNode_Id_FK", false);
   if(!addChildTable(relationInfo, tr("Bus"))){
     return false;
   }
@@ -847,7 +871,8 @@ bool mdtTtTestNodeEditor::setupTestNodeUnitConnectionTable()
   mdtSqlRelationInfo relationInfo;
 
   relationInfo.setChildTableName("TestNodeUnitConnection_view");
-  relationInfo.addRelation("VehicleType_Id_FK_PK", "TestNode_Id_FK", false);
+  ///relationInfo.addRelation("VehicleType_Id_FK_PK", "TestNode_Id_FK", false);
+  relationInfo.addRelation("Id_PK", "TestNode_Id_FK", false);
   if(!addChildTable(relationInfo, tr("Unit connections"))){
     return false;
   }
