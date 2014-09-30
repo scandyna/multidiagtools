@@ -764,6 +764,7 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QVERIFY(w.fld_FirstName->text().isEmpty());
   QVERIFY(w.fld_Remarks->text().isEmpty());
   // Check control buttons states
+  /**
   QVERIFY(!w.toFirstEnabled);
   QVERIFY(!w.toLastEnabled);
   QVERIFY(!w.toNextEnabled);
@@ -772,6 +773,7 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QVERIFY(!w.revertEnabled);
   QVERIFY(!w.insertEnabled); /// \todo Define the correct behaviour when model was never selected
   QVERIFY(!w.removeEnabled); /// \todo Define the correct behaviour when model was never selected
+  */
   /*
    * Check start/stop of state machine
    */
@@ -1223,10 +1225,6 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QCOMPARE(w.fld_FirstName->text(), QString("Name 400"));
   QCOMPARE(w.fld_Remarks->text(), QString("Remark 400"));
   QVERIFY(wc.removeAndWait());
-  /**
-  wc.remove();
-  QTest::qWait(1000); // Writing in DB can be very slow, f.ex. with Sqlite on HDD
-  */
   // Check that model was updated
   QCOMPARE(wc.currentRow(), 399);
   // Check that widget displays the correct row
@@ -1243,6 +1241,20 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QCOMPARE(wc.currentData("FirstName"), QVariant("Name 600"));
   QVERIFY(!wc.setCurrentRow("FirstName", "Non existing name"));
   QCOMPARE(wc.currentData("FirstName"), QVariant("Name 600"));
+  /*
+   * Check data with match data
+   */
+  QVERIFY(wc.select());
+  QVERIFY(wc.rowCount(false) < 1000);
+  QCOMPARE(wc.data("FirstName", "Name 10", "Remarks", ok), QVariant("Remark 10"));
+  QVERIFY(ok);
+  QCOMPARE(wc.data("FirstName", "Name 1000", "Remarks", ok), QVariant("Remark 1000"));
+  QVERIFY(ok);
+  QCOMPARE(wc.data("FirstName", "Name 500", "Remarks", ok), QVariant("Remark 500"));
+  QVERIFY(ok);
+  QVERIFY(wc.data("FirstName", "Name 99999999", "Remarks", ok).isNull());
+  QVERIFY(!ok);
+  QCOMPARE(wc.data("FirstName", "Name 2", "Remarks"), QVariant("Remark 2"));
   /*
    * Check sorting
    */
@@ -1526,6 +1538,61 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QVERIFY(rec.field("Remarks").type() == QVariant::String);
   QCOMPARE(rec.value("FirstName"), QVariant("Zeta"));
   QCOMPARE(rec.value("Remarks"), QVariant("Edited remark 2 on Zeta"));
+  /*
+   * Check record() method with match
+   */
+  fields.clear();
+  fields << "Id_PK" << "FirstName";
+  rec = wc.record("Id_PK", 1, fields, ok);
+  QVERIFY(ok);
+  QCOMPARE(rec.count(), 2);
+  QVERIFY(rec.field("Id_PK").type() == QVariant::Int);
+  QVERIFY(rec.field("FirstName").type() == QVariant::String);
+  QCOMPARE(rec.value("Id_PK"), QVariant(1));
+  QCOMPARE(rec.value("FirstName"), QVariant("Andy"));
+  rec = wc.record("Id_PK", 4, fields);
+  QCOMPARE(rec.count(), 2);
+  QVERIFY(rec.field("Id_PK").type() == QVariant::Int);
+  QVERIFY(rec.field("FirstName").type() == QVariant::String);
+  QCOMPARE(rec.value("Id_PK"), QVariant(4));
+  QCOMPARE(rec.value("FirstName"), QVariant("Charly"));
+  /*
+   * Check programmed edition with match data - No submit
+   */
+  QCOMPARE(wc.data("Id_PK", 2, "FirstName"), QVariant("Bety"));
+  QVERIFY(wc.setData("Id_PK", 2, "FirstName", "Bety (P edited)", false));
+  QCOMPARE(wc.data("Id_PK", 2, "FirstName"), QVariant("Bety (P edited)"));
+  QVERIFY(wc.select());
+  QCOMPARE(wc.data("Id_PK", 2, "FirstName"), QVariant("Bety"));
+  /*
+   * Check programmed edition with match data - Direct submit
+   */
+  QVERIFY(wc.setData("Id_PK", 2, "FirstName", "Bety (P edited)", true));
+  QCOMPARE(wc.data("Id_PK", 2, "FirstName"), QVariant("Bety (P edited)"));
+  QVERIFY(wc.select());
+  QCOMPARE(wc.data("Id_PK", 2, "FirstName"), QVariant("Bety (P edited)"));
+  /*
+   * Check programmed edition:
+   *  - Edit many rows
+   *  - Submit all at once
+   */
+  // Edit each row
+  QVERIFY(wc.setData("Id_PK", 1, "FirstName", "Andy (P edited)", false));
+  QVERIFY(wc.setData("Id_PK", 2, "FirstName", "Bety (P edited)", false));
+  QVERIFY(wc.setData("Id_PK", 3, "FirstName", "Zeta (P edited)", false));
+  QVERIFY(wc.setData("Id_PK", 4, "FirstName", "Charly (P edited)", false));
+  // Check cache
+  QCOMPARE(wc.data("Id_PK", 1, "FirstName"), QVariant("Andy (P edited)"));
+  QCOMPARE(wc.data("Id_PK", 2, "FirstName"), QVariant("Bety (P edited)"));
+  QCOMPARE(wc.data("Id_PK", 3, "FirstName"), QVariant("Zeta (P edited)"));
+  QCOMPARE(wc.data("Id_PK", 4, "FirstName"), QVariant("Charly (P edited)"));
+  // Submit, select and check
+  QVERIFY(wc.submitAndWait());
+  QVERIFY(wc.select());
+  QCOMPARE(wc.data("Id_PK", 1, "FirstName"), QVariant("Andy (P edited)"));
+  QCOMPARE(wc.data("Id_PK", 2, "FirstName"), QVariant("Bety (P edited)"));
+  QCOMPARE(wc.data("Id_PK", 3, "FirstName"), QVariant("Zeta (P edited)"));
+  QCOMPARE(wc.data("Id_PK", 4, "FirstName"), QVariant("Charly (P edited)"));
 
   // Clear test data
   clearTestDatabaseData();
@@ -1767,9 +1834,11 @@ void mdtDatabaseWidgetTest::sqlDataWidgetController2tableTest()
   /*
    * Play
    */
+  /*
   while(w.isVisible()){
     QTest::qWait(500);
   }
+  */
   
   // Clear test data
   clearTestDatabaseData();

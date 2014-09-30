@@ -26,6 +26,8 @@
 #include "mdtTtTest.h"
 #include "mdtTtTestNodeManager.h"
 #include "mdtValue.h"
+#include "mdtSqlDataWidgetController.h"
+#include "mdtSqlTableViewController.h"
 #include <QObject>
 #include <QSqlDatabase>
 #include <QSqlTableModel>
@@ -53,9 +55,14 @@ class mdtTtAbstractTestNodeCalibrationTool : public QObject
    */
   mdtTtAbstractTestNodeCalibrationTool(QSqlDatabase db, QObject *parent = 0);
 
-  /*! \brief Do some initialization
+  /*! \brief Do setup
+   *
+   * Will setup database controllers and map widgets contained in testNodeFormWidget.
+   *
+   * Note: connect signals and slots before calling this method,
+   *  else UI will be incoherent at initial state.
    */
-  virtual bool init();
+  virtual bool setup(QWidget *testNodeFormWidget);
 
   /*! \brief
    *
@@ -66,7 +73,7 @@ class mdtTtAbstractTestNodeCalibrationTool : public QObject
    * Given widget will also be used as parent for dialogs
    *  that are displayed (selection dialogs, message boxes).
    */
-  void setTestNodeUiWidget(QWidget *widget);
+  ///void setTestNodeUiWidget(QWidget *widget);
 
   /*! \brief Get database instance
    */
@@ -74,7 +81,13 @@ class mdtTtAbstractTestNodeCalibrationTool : public QObject
 
   /*! \brief Get table model to access data in TestNodeUnit_view
    */
-  std::shared_ptr<QSqlTableModel> testNodeUnitViewTableModel() { return pvTestNodeUnitViewTableModel; }
+  ///std::shared_ptr<QSqlTableModel> testNodeUnitViewTableModel() { return pvTestNodeUnitViewTableModel; }
+
+  /*! \brief Get table controller to access data in TestNodeUnit_view
+   *
+   * Will be invalid until setup was done with setup().
+   */
+  std::shared_ptr<mdtSqlTableViewController> testNodeUnitViewTableController() { return pvTestNodeUnitTableController; }
 
   /*! \brief Get test node manager object
    */
@@ -86,32 +99,59 @@ class mdtTtAbstractTestNodeCalibrationTool : public QObject
 
   /*! \brief Get current test node data for given field
    */
-  QVariant currentTestNodeData(const QString & fieldName);
+  inline QVariant currentTestNodeData(const QString & fieldName)
+  {
+    return pvTestNodeTableController->currentData(fieldName);
+  }
 
   /*! \brief Get test node unit data for given test node unit ID and field name
+   *
+   * \pre setup() must be called first.
    */
-  QVariant testNodeUnitData(int testNodeUnitId, const QString & fieldName);
+  inline QVariant testNodeUnitData(int testNodeUnitId, const QString & fieldName)
+  {
+    Q_ASSERT(pvTestNodeUnitTableController);
+    return pvTestNodeUnitTableController->data("Unit_Id_FK_PK", testNodeUnitId, fieldName);
+  }
 
   /*! \brief Get test node unit data for given test node unit schema position and field name
    *
    * Will return the data for first test node unit that matches given schemaPosition,
    *  in current test node.
+   *
+   * \pre setup() must be called first.
    */
-  QVariant testNodeUnitData(const QString & schemaPosition, const QString & fieldName);
+  inline QVariant testNodeUnitData(const QString & schemaPosition, const QString & fieldName)
+  {
+    Q_ASSERT(pvTestNodeUnitTableController);
+    return pvTestNodeUnitTableController->data("SchemaPosition", schemaPosition, fieldName);
+  }
 
   /*! \brief Set test node unit data for given test node unit ID and field name
    *
    * Note: data are cached in models only, not sent to database.
+   *
+   * \pre setup() must be called first.
    */
-  bool setTestNodeUnitData(int testNodeUnitId, const QString & fieldName, const QVariant & data);
+  inline bool setTestNodeUnitData(int testNodeUnitId, const QString & fieldName, const QVariant & data)
+  {
+    Q_ASSERT(pvTestNodeUnitTableController);
+    return pvTestNodeUnitTableController->setData("Unit_Id_FK_PK", testNodeUnitId, fieldName, data, false);
+  }
 
   /*! \brief Set test node unit data for given test node unit schemaPosition and field name
    *
    * Notes:
    *  - Data are cached in models only, not sent to database.
    *  - The first test node unit that matches schemaPosition in current test node is considered.
+   *
+   * \pre setup() must be called first.
    */
-  bool setTestNodeUnitData(const QString & schemaPosition, const QString & fieldName, const QVariant & data);
+  inline bool setTestNodeUnitData(const QString & schemaPosition, const QString & fieldName, const QVariant & data)
+  {
+    Q_ASSERT(pvTestNodeUnitTableController);
+    return pvTestNodeUnitTableController->setData("SchemaPosition", schemaPosition, fieldName, data, false);
+  }
 
   /*! \brief Set calibration offset for given testNodeUnitId
    *
@@ -169,29 +209,34 @@ class mdtTtAbstractTestNodeCalibrationTool : public QObject
 
   /*! \brief Get row in pvTestNodeUnitViewTableModel that matches given testNodeUnitId
    */
-  int testNodeUnitViewTableModelRow(int testNodeUnitId);
+  ///int testNodeUnitViewTableModelRow(int testNodeUnitId);
 
   /*! \brief Get row in pvTestNodeUnitViewTableModel that matches given schemaPosition
    *
    * Note: will return first match for current test node
    */
-  int testNodeUnitViewTableModelRow(const QString & schemaPosition);
+  ///int testNodeUnitViewTableModelRow(const QString & schemaPosition);
 
   /*! \brief Get row in pvTestNodeUnitTableModel that matches given testNodeUnitId
    */
-  int testNodeUnitTableModelRow(int testNodeUnitId);
+  ///int testNodeUnitTableModelRow(int testNodeUnitId);
 
   Q_DISABLE_COPY(mdtTtAbstractTestNodeCalibrationTool);
 
   QSqlDatabase pvDatabase;
   std::shared_ptr<mdtTtTestNodeManager> pvTestNodeManager;
   std::shared_ptr<mdtTtTest> pvTest;
-  std::shared_ptr<QSqlTableModel> pvTestNodeTableModel;
+  std::shared_ptr<mdtSqlDataWidgetController> pvTestNodeTableController;
+  std::shared_ptr<mdtSqlTableViewController> pvTestNodeUnitTableController;
+  
+  ///std::shared_ptr<QSqlTableModel> pvTestNodeTableModel;
   ///std::shared_ptr<mdtSqlFormWidget> pvTestNodeForm;
+  /**
   std::shared_ptr<QSqlTableModel> pvTestNodeUnitViewTableModel; // Access data in TestNodeUnit_view (RO)
   std::shared_ptr<mdtSqlRelation> pvTestNodeUnitViewRelation;
   std::shared_ptr<QSqlTableModel> pvTestNodeUnitTableModel;     // Access data in TestNodeUnit_tbl (R/W)
   std::shared_ptr<mdtSqlRelation> pvTestNodeUnitRelation;
+  */
   QWidget *pvParentWidget;        // For dialogs
 };
 

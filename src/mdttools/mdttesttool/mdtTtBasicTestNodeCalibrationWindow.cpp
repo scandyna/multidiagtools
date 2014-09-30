@@ -48,11 +48,14 @@ mdtTtBasicTestNodeCalibrationWindow::mdtTtBasicTestNodeCalibrationWindow(QSqlDat
 
 bool mdtTtBasicTestNodeCalibrationWindow::init()
 {
-  if(!pvCalibrationTool->init()){
+  connectActions();
+  if(!pvCalibrationTool->setup(centralWidget())){
     return false;
   }
+  pvTestNodeUnitWidget->setTableController(pvCalibrationTool->testNodeUnitViewTableController());
+  /**
   pvCalibrationTool->setTestNodeUiWidget(centralWidget());
-  connectActions();
+  */
 
   return true;
 }

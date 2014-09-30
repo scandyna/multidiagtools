@@ -368,6 +368,17 @@ class mdtAbstractSqlTableController : public QObject
    */
   bool setData(int row, const QString &fieldName, const QVariant &data, bool submit = true);
 
+  /*! \brief Set data for given match and field name
+   *
+   * \param matchFieldName Field name in witch matchData must be searched
+   * \param matchData Data that must match in matchFieldName
+   * \param dataFieldName Field name in witch data must be set
+   * \param data Data to set
+   * \param submit If true, data will be submitted to database, else it will be cached only in model.
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   */
+  bool setData(const QString & matchFieldName, const QVariant & matchData, const QString & dataFieldName, const QVariant &data, bool submit = true);
+
   /*! \brief Get current data for given field name
    *
    * \pre Table model must be set with setModel() or setTableName() begore calling this method.
@@ -478,6 +489,27 @@ class mdtAbstractSqlTableController : public QObject
    */
   QVariant data(int row, const QString &fieldName, bool & ok);
 
+  /*! \brief Get data for given match and field name
+   *
+   * \param matchFieldName Field name in witch matchData must be searched
+   * \param matchData Data that must match in matchFieldName
+   * \param dataFieldName Field name in witch data must be returned
+   */
+  QVariant data(const QString & matchFieldName, const QVariant & matchData, const QString & dataFieldName, bool & ok);
+
+  /*! \brief Get data for given match and field name
+   *
+   * \param matchFieldName Field name in witch matchData must be searched
+   * \param matchData Data that must match in matchFieldName
+   * \param dataFieldName Field name in witch data must be returned
+   */
+  inline QVariant data(const QString & matchFieldName, const QVariant & matchData, const QString & dataFieldName)
+  {
+    Q_ASSERT(pvModel);
+    bool ok;
+    return data(matchFieldName, matchData, dataFieldName, ok);
+  }
+
   /*! \brief Get a record that contains given field names for given row
    */
   inline mdtSqlRecord record(int row, const QStringList & fieldNames)
@@ -490,6 +522,27 @@ class mdtAbstractSqlTableController : public QObject
   /*! \brief Get a record that contains given field names for given row
    */
   mdtSqlRecord record(int row, const QStringList & fieldNames, bool & ok);
+
+  /*! \brief Get a record for given match and that contains given field names
+   *
+   * \param matchFieldName Field name in witch matchData must be searched
+   * \param matchData Data that must match in matchFieldName
+   * \param fieldNames List of fields that must be contained in returned record
+   */
+  mdtSqlRecord record(const QString & matchFieldName, const QVariant & matchData, const QStringList & fieldNames, bool & ok);
+
+  /*! \brief Get a record for given match and that contains given field names
+   *
+   * \param matchFieldName Field name in witch matchData must be searched
+   * \param matchData Data that must match in matchFieldName
+   * \param fieldNames List of fields that must be contained in returned record
+   */
+  inline mdtSqlRecord record(const QString & matchFieldName, const QVariant & matchData, const QStringList & fieldNames)
+  {
+    Q_ASSERT(pvModel);
+    bool ok;
+    return record(matchFieldName, matchData, fieldNames, ok);
+  }
 
   /*! \brief Get a record that contains given field names for current row
    */
@@ -609,7 +662,6 @@ class mdtAbstractSqlTableController : public QObject
 
   /*! \brief Get current row
    */
-  ///virtual int currentRow() const = 0;
   inline int currentRow() const { return pvCurrentRow; }
 
   /*! \brief Check if all data are saved
@@ -772,17 +824,6 @@ class mdtAbstractSqlTableController : public QObject
    */
   virtual bool doRevert() = 0;
 
-  /*! \brief Insert a new row to model
-   *
-   * Subclass must implement this method.
-   *  On problem, subclass should explain
-   *  what goes wrong to the user and return false.
-   *
-   * Note: current row will be updated after successfull
-   *  call of this method, calling then currentRowChangedEvent().
-   */
-  ///virtual bool doInsert() = 0;
-
   /*! \brief Submit new row to model
    *
    * Subclass must implement this method.
@@ -794,14 +835,6 @@ class mdtAbstractSqlTableController : public QObject
    */
   virtual bool doSubmitNewRow() = 0;
 
-  /*! \brief Revert new row
-   *
-   * Subclass must implement this method.
-   *  On problem, subclass should explain
-   *  what goes wrong to the user and return false.
-   */
-  ///virtual bool doRevertNewRow() = 0;
-
   /*! \brief Remove current row from model
    *
    * Subclass must implement this method.
@@ -811,10 +844,6 @@ class mdtAbstractSqlTableController : public QObject
   virtual bool doRemove() = 0;
 
  signals:
-
-  /*! \brief Emitted when current row has changed
-   */
-  ///void currentRowChanged(int row);
 
   /*! \brief Emitted when the entier widget enable state changes
    */
@@ -884,14 +913,6 @@ class mdtAbstractSqlTableController : public QObject
    */
   void dataEdited();
 
-  /*! \brief Emitted when Visualizing state was entered
-   */
-  ///void stateVisualizingEntered();
-
-  /*! \brief Emitted when Visualizing state was exited
-   */
-  ///void stateVisualizingExited();
-
   /*! \brief Emitted when Editing state was exited
    */
   void stateEditingExited();
@@ -908,10 +929,6 @@ class mdtAbstractSqlTableController : public QObject
    *  and should not be used directly.
    */
   void onStateSelectingEntered();
-
-  /*! \brief Called by mdtSqlRelation whenn it applied filter
-   */
-  ///void onRelationFilterApplied();
 
   /*! \brief Activity after Visualizing state entered
    *
@@ -1008,6 +1025,16 @@ class mdtAbstractSqlTableController : public QObject
   void onStateRemovingEntered();
 
  private:
+
+  /*! \brief Get the fisrt row for witch data in column matches matchData
+   *
+   * Note: row is relative to sorted data model (proxyModel),
+   *   not underlaying QSqlTableModel.
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   * \pre column must exit in model.
+   */
+  int firstMatchingRow(int column, const QVariant & matchData);
 
   /*! \brief Setup and add child controller
    */

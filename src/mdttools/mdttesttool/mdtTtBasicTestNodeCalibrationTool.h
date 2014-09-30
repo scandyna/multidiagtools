@@ -36,9 +36,14 @@ class mdtTtBasicTestNodeCalibrationTool : public mdtTtAbstractTestNodeCalibratio
    */
   mdtTtBasicTestNodeCalibrationTool(QSqlDatabase db, QObject *parent = 0);
 
-  /*! \brief Init
+  /*! \brief Do setup
+   *
+   * Will setup database controllers and map widgets contained in testNodeFormWidget.
+   *
+   * Note: connect signals and slots before calling this method,
+   *  else UI will be incoherent at initial state.
    */
-  bool init();
+  bool setup(QWidget *testNodeFormWidget);
 
  public slots:
 

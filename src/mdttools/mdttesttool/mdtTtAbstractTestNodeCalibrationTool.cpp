@@ -20,7 +20,8 @@
  ****************************************************************************/
 #include "mdtTtAbstractTestNodeCalibrationTool.h"
 ///#include "mdtSqlFormWidget.h"
-#include "mdtSqlRelation.h"
+#include "mdtSqlRelationInfo.h"
+#include "mdtUiMessageHandler.h"
 #include <QSqlError>
 #include <QModelIndex>
 #include <QDateTime>
@@ -32,12 +33,15 @@ mdtTtAbstractTestNodeCalibrationTool::mdtTtAbstractTestNodeCalibrationTool(QSqlD
    pvDatabase(db),
    pvTestNodeManager(new mdtTtTestNodeManager(0, db)),
    pvTest(new mdtTtTest(0, db)),
-   pvTestNodeTableModel(new QSqlTableModel(0, db)),
+   pvTestNodeTableController(new mdtSqlDataWidgetController)
+   /**pvTestNodeTableModel(new QSqlTableModel(0, db)),*/
    /**pvTestNodeForm(new mdtSqlFormWidget),*/
+   /**
    pvTestNodeUnitViewTableModel(new QSqlTableModel(0, db)),
    pvTestNodeUnitViewRelation(new mdtSqlRelation),
    pvTestNodeUnitTableModel(new QSqlTableModel(0, db)),
    pvTestNodeUnitRelation(new mdtSqlRelation)
+   */
 {
   pvParentWidget = 0;
   /**
@@ -46,15 +50,41 @@ mdtTtAbstractTestNodeCalibrationTool::mdtTtAbstractTestNodeCalibrationTool(QSqlD
   */
 }
 
-bool mdtTtAbstractTestNodeCalibrationTool::init()
+bool mdtTtAbstractTestNodeCalibrationTool::setup(QWidget *testNodeFormWidget)
 {
+  Q_ASSERT(testNodeFormWidget != 0);
+
   QSqlError sqlError;
+  mdtSqlRelationInfo relationInfo;
 
   if(!pvTest->init()){
     pvLastError = pvTest->lastError();
     return false;
   }
   // Setup test node table
+  pvTestNodeTableController->setTableName("TestNode_view", pvDatabase, tr("Test node"));
+  ///pvTestNodeTableController->setMessageHandler(std::shared_ptr<mdtUiMessageHandler>(new mdtUiMessageHandler(testNodeFormWidget)));
+  if(!pvTestNodeTableController->mapFormWidgets(testNodeFormWidget)){
+    pvLastError = pvTestNodeTableController->lastError();
+    return false;
+  }
+  // Setup test node unit table
+  relationInfo.setChildTableName("TestNodeUnit_view");
+  relationInfo.addRelation("VehicleType_Id_FK_PK", "TestNode_Id_FK", false);
+  if(!pvTestNodeTableController->addChildController<mdtSqlTableViewController>(relationInfo, tr("Test node units"))){
+    pvLastError = pvTestNodeTableController->lastError();
+    return false;
+  }
+  pvTestNodeUnitTableController = pvTestNodeTableController->childController<mdtSqlTableViewController>("TestNodeUnit_view");
+  Q_ASSERT(pvTestNodeUnitTableController);
+  // Start controllers
+  pvTestNodeTableController->start();
+  if(!pvTestNodeTableController->select()){
+    pvLastError = pvTestNodeTableController->lastError();
+    return false;
+  }
+
+  /**
   pvTestNodeTableModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
   pvTestNodeTableModel->setTable("TestNode_view");
   ///pvTestNodeTableModel->setFilter("VehicleType_Id_FK_PK = -1");
@@ -66,12 +96,14 @@ bool mdtTtAbstractTestNodeCalibrationTool::init()
     pvLastError.commit();
     return false;
   }
+  */
   /**
   pvTestNodeForm->setAskUserBeforRevert(false);
   pvTestNodeForm->setModel(pvTestNodeTableModel.get());
   */
   ///pvTestNodeForm->setCurrentIndex(-1);
   // Setup test node unit table view
+  /**
   pvTestNodeUnitViewTableModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
   pvTestNodeUnitViewTableModel->setTable("TestNodeUnit_view");
   pvTestNodeUnitViewTableModel->setFilter("Unit_Id_FK_PK = -1");
@@ -92,9 +124,16 @@ bool mdtTtAbstractTestNodeCalibrationTool::init()
     pvLastError.commit();
     return false;
   }
+  */
   ///connect(pvTestNodeForm.get(), SIGNAL(currentRowChanged(int)), pvTestNodeUnitViewRelation.get(), SLOT(setParentCurrentIndex(int)));
 
+  /** \toso Idée:
+   *  - Travailler tous sur un controlleur pointant sur TestNodeUnit_view (y compris affichage des résultats en live)
+   *  - Créer une méthode de sauvegarde reprenant les données depuis ce contrôleur, mais correspondant aux champs
+   *     à sauvegarder dans TestNodeUnit_tbl, créer une liste de mdtSqlRecord et sauvegarder d'une transaction.
+   */
   // Setup test node unit table
+  /**
   pvTestNodeUnitTableModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
   pvTestNodeUnitTableModel->setTable("TestNodeUnit_tbl");
   pvTestNodeUnitTableModel->setFilter("Unit_Id_FK_PK = -1");
@@ -115,31 +154,38 @@ bool mdtTtAbstractTestNodeCalibrationTool::init()
     pvLastError.commit();
     return false;
   }
+  */
   ///connect(pvTestNodeForm.get(), SIGNAL(currentRowChanged(int)), pvTestNodeUnitRelation.get(), SLOT(setParentCurrentIndex(int)));
 
   
   ///pvTestNodeForm->toFirst();
+  
+  
+  pvParentWidget = testNodeFormWidget;
 
   return true;
 }
 
+/**
 void mdtTtAbstractTestNodeCalibrationTool::setTestNodeUiWidget(QWidget* widget)
 {
   Q_ASSERT(widget != 0);
 
   pvParentWidget = widget;
-  /**
   pvTestNodeForm->mapFormWidgets(widget);
   pvTestNodeForm->setCurrentIndex(-1);
   pvTestNodeForm->start();
-  */
 }
+*/
 
+/**
 QVariant mdtTtAbstractTestNodeCalibrationTool::currentTestNodeData(const QString& fieldName)
 {
   ///return pvTestNodeForm->currentData(fieldName);
 }
+*/
 
+/**
 QVariant mdtTtAbstractTestNodeCalibrationTool::testNodeUnitData(int testNodeUnitId, const QString& fieldName)
 {
   int row, col;
@@ -158,7 +204,9 @@ QVariant mdtTtAbstractTestNodeCalibrationTool::testNodeUnitData(int testNodeUnit
 
   return pvTestNodeUnitViewTableModel->data(index);
 }
+*/
 
+/**
 QVariant mdtTtAbstractTestNodeCalibrationTool::testNodeUnitData(const QString& schemaPosition, const QString& fieldName)
 {
   int row, col;
@@ -177,7 +225,9 @@ QVariant mdtTtAbstractTestNodeCalibrationTool::testNodeUnitData(const QString& s
 
   return pvTestNodeUnitViewTableModel->data(index);
 }
+*/
 
+/**
 bool mdtTtAbstractTestNodeCalibrationTool::setTestNodeUnitData(int testNodeUnitId, const QString& fieldName, const QVariant& data)
 {
   int row, col;
@@ -205,7 +255,9 @@ bool mdtTtAbstractTestNodeCalibrationTool::setTestNodeUnitData(int testNodeUnitI
 
   return true;
 }
+*/
 
+/**
 bool mdtTtAbstractTestNodeCalibrationTool::setTestNodeUnitData(const QString& schemaPosition, const QString& fieldName, const QVariant& data)
 {
   QVariant testNodeUnitId;
@@ -215,6 +267,7 @@ bool mdtTtAbstractTestNodeCalibrationTool::setTestNodeUnitData(const QString& sc
 
   return setTestNodeUnitData(testNodeUnitId.toInt(), fieldName, data);
 }
+*/
 
 bool mdtTtAbstractTestNodeCalibrationTool::setTestNodeUnitCalibrationOffset(int testNodeUnitId, double offset)
 {
@@ -328,6 +381,7 @@ bool mdtTtAbstractTestNodeCalibrationTool::isInRange(const mdtValue & value, dou
   return true;
 }
 
+/**
 int mdtTtAbstractTestNodeCalibrationTool::testNodeUnitViewTableModelRow(int testNodeUnitId)
 {
   int row, col;
@@ -357,7 +411,9 @@ int mdtTtAbstractTestNodeCalibrationTool::testNodeUnitViewTableModelRow(int test
 
   return -1;
 }
+*/
 
+/**
 int mdtTtAbstractTestNodeCalibrationTool::testNodeUnitViewTableModelRow(const QString& schemaPosition)
 {
   int row, col;
@@ -387,7 +443,9 @@ int mdtTtAbstractTestNodeCalibrationTool::testNodeUnitViewTableModelRow(const QS
 
   return -1;
 }
+*/
 
+/**
 int mdtTtAbstractTestNodeCalibrationTool::testNodeUnitTableModelRow(int testNodeUnitId)
 {
   int row, col;
@@ -417,3 +475,4 @@ int mdtTtAbstractTestNodeCalibrationTool::testNodeUnitTableModelRow(int testNode
 
   return -1;
 }
+*/

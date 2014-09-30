@@ -22,9 +22,7 @@
 #include "mdtSqlRelationItem.h"
 #include <QSqlField>
 
-#include <QSqlError>
-
-#include <QDebug>
+//#include <QDebug>
 
 mdtSqlRelation::mdtSqlRelation(QObject *parent)
  : QObject(parent)
@@ -32,8 +30,6 @@ mdtSqlRelation::mdtSqlRelation(QObject *parent)
   pvParentModel = 0;
   pvChildModel = 0;
   pvCurrentRow = -1;
-  pvRelationType = mdtSqlRelationInfo::OneToMany;
-  ///pvEditingOneToOneRelationRecord = false;
 }
 
 mdtSqlRelation::~mdtSqlRelation()
@@ -96,7 +92,6 @@ bool mdtSqlRelation::addRelation(const mdtSqlRelationInfoItem & relationInfoItem
   item->setCopyParentToChildOnInsertion(relationInfoItem.copyParentToChildOnInsertion);
   item->setRelationOperatorWithPreviousItem(" " + relationInfoItem.relationOperatorWithPreviousItem.trimmed() + " ");
   pvRelations.append(item);
-  ///pvEditingOneToOneRelationRecord = false;
 
   return true;
 }
@@ -114,46 +109,6 @@ bool mdtSqlRelation::addRelation(const QString &parentFieldName, const QString &
   item.relationOperatorWithPreviousItem = operatorWithPreviousItem;
 
   return addRelation(item);
-
-  /**
-  QSqlRecord record;
-  int parentFieldIndex;
-  QSqlField parentField;
-  int childFieldIndex;
-  QSqlField childField;
-
-  // Get parent  field index, check that it exist
-  record = pvParentModel->record();
-  parentFieldIndex = record.indexOf(parentFieldName);
-  if(parentFieldIndex < 0){
-    pvLastError.setError(tr("Field") + " '" + parentFieldName + "' " + tr("not found in parent table") + " '" + pvParentModel->tableName() + "'", mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlRelation");
-    pvLastError.commit();
-    return false;
-  }
-  parentField = record.field(parentFieldIndex);
-  // Get child field index, check that it exist
-  record = pvChildModel->record();
-  childFieldIndex = record.indexOf(childFieldName);
-  if(childFieldIndex < 0){
-    pvLastError.setError(tr("Field") + " '" + childFieldName + "' " + tr("not found in child table") + " '" + pvChildModel->tableName() + "'", mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlRelation");
-    pvLastError.commit();
-    return false;
-  }
-  childField = record.field(childFieldIndex);
-  // Add relation informations
-  mdtSqlRelationItem *item = new mdtSqlRelationItem;
-  item->setParentField(parentField);
-  item->setParentFieldIndex(parentFieldIndex);
-  item->setChildField(childField);
-  item->setChildFieldIndex(childFieldIndex);
-  item->setCopyParentToChildOnInsertion(copyParentToChildOnInsertion);
-  item->setRelationOperatorWithPreviousItem(" " + operatorWithPreviousItem.trimmed() + " ");
-  pvRelations.append(item);
-
-  return true;
-  */
 }
 
 bool mdtSqlRelation::addRelations(const mdtSqlRelationInfo & relationInfo)
@@ -163,14 +118,6 @@ bool mdtSqlRelation::addRelations(const mdtSqlRelationInfo & relationInfo)
 
   int i;
 
-  pvRelationType = relationInfo.relationType();
-  /**
-  if(pvRelationType == mdtSqlRelationInfo::OneToOne){
-    qDebug() << "Relation type 1-1 - connect parent beforeInsert() ...";
-    connect(pvParentModel, SIGNAL(primeInsert(int,QSqlRecord&)), this, SLOT(insertRowInChildModel()));
-  }
-  */
-  ///connect(pvChildModel, SIGNAL(beforeInsert(QSqlRecord&)), this, SLOT(onChildBeforeInsert(QSqlRecord&)));
   for(i = 0; i < relationInfo.items().size(); ++i){
     if(!addRelation(relationInfo.items().at(i))){
       return false;
@@ -186,7 +133,6 @@ void mdtSqlRelation::clear()
   pvRelations.clear();
   pvParentModel = 0;
   pvChildModel = 0;
-  ///pvEditingOneToOneRelationRecord = false;
 }
 
 void mdtSqlRelation::setParentCurrentRow(int row)
@@ -204,11 +150,6 @@ void mdtSqlRelation::setParentCurrentIndex(int index)
   Q_ASSERT(pvChildModel != 0);
 
   pvCurrentRow = index;
-  /**
-  if(pvEditingOneToOneRelationRecord){
-    return;
-  }
-  */
   generateChildModelRelationFilter(index);
 }
 
@@ -232,47 +173,6 @@ void mdtSqlRelation::setParentCurrentIndex(const QModelIndex &current, const QMo
   setParentCurrentIndex(current);
 }
 
-// void mdtSqlRelation::onParentInsertDone()
-// {
-//   Q_ASSERT(pvParentModel != 0);
-//   Q_ASSERT(pvChildModel != 0);
-// 
-//   /**
-//   QSqlRecord parentRecord;
-//   QSqlRecord childRecord;
-// 
-//   
-//   // Get data record of the parent model
-//   parentRecord = pvParentModel->record(pvCurrentRow);
-//   // Get data record of the child model
-//   Q_ASSERT(pvChildModel->rowCount() == 1);
-//   childRecord = pvChildModel->record(0);
-//   // Update childs
-//   setChildForeingKeyValues(parentRecord, childRecord);
-//   
-//   qDebug() << "onParentInsertDone():\n" << " -> Parent record: " << parentRecord << "\n -> Child record: " << childRecord;
-//   
-//   */
-//   /// \todo Provisoire (faire méthode séparée)
-//   if(!pvChildModel->submitAll()){
-//     qDebug() << "ERR: " << pvChildModel->lastError();
-//   }
-//   generateChildModelRelationFilter(pvCurrentRow);
-//   // Reset edit flag
-//   ///pvEditingOneToOneRelationRecord = false;
-// }
-
-/**
-void mdtSqlRelation::insertRowInChildModel()
-{
-  Q_ASSERT(pvChildModel != 0);
-
-  qDebug() << "Insert a row in model " << pvChildModel->tableName();
-  pvChildModel->insertRows(0, 1);
-  ///pvEditingOneToOneRelationRecord = true;
-}
-*/
-
 void mdtSqlRelation::onChildBeforeInsert(QSqlRecord &childRecord)
 {
   Q_ASSERT(pvParentModel != 0);
@@ -280,12 +180,6 @@ void mdtSqlRelation::onChildBeforeInsert(QSqlRecord &childRecord)
 
   QSqlRecord parentRecord;
 
-  // On 1-1 relation, we cannot update now
-  /**
-  if(pvRelationType == mdtSqlRelationInfo::OneToOne){
-    return;
-  }
-  */
   // On invalid index, we do nothing
   if(pvCurrentRow < 0){
     return;
@@ -294,8 +188,6 @@ void mdtSqlRelation::onChildBeforeInsert(QSqlRecord &childRecord)
   parentRecord = pvParentModel->record(pvCurrentRow);
   // Update childs
   setChildForeingKeyValues(parentRecord, childRecord);
-  
-  qDebug() << "onChildBeforeInsert():\n" << " -> Parent record: " << parentRecord << "\n -> Child record: " << childRecord;
 }
 
 void mdtSqlRelation::setChildForeingKeyValues(QSqlRecord &parentRecord, QSqlRecord &childRecord)

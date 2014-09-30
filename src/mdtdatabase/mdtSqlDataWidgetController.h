@@ -82,10 +82,6 @@ class mdtSqlDataWidgetController : public mdtAbstractSqlTableController
    */
   bool addMapping(QWidget *widget, const QString & fieldName, const mdtSqlSchemaTable & st, bool isFirstWidgetInTabOrder = false);
 
-  /*! \brief Get current row
-   */
-  ///int currentRow() const;
-
  public slots:
 
   /*! \brief Set first record as current record
@@ -172,17 +168,9 @@ class mdtSqlDataWidgetController : public mdtAbstractSqlTableController
    */
   bool doRevert();
 
-  /*! \brief Insert a new row to model
-   */
-  ///bool doInsert();
-
   /*! \brief Submit new row to model
    */
   bool doSubmitNewRow();
-
-  /*! \brief Revert new row
-   */
-  ///bool doRevertNewRow();
 
   /*! \brief Remove current row from model
    */
@@ -231,7 +219,6 @@ class mdtSqlDataWidgetController : public mdtAbstractSqlTableController
   QWidgetList pvFoundWidgets;       // Used temporary during mapping - see searchWidgets() and buildWidgetsList()
   QList<mdtSqlFieldHandler*> pvFieldHandlers;
   QWidget *pvFirstDataWidget;       // Keep trace of first data edit/view widget in focus chain
-  ///int pvBeforeInsertCurrentRow;
 };
 
 #endif  // #ifndef MDT_SQL_DATA_WIDGET_CONTROLLER_H

@@ -34,7 +34,7 @@
 #include <QSqlField>
 #include <QSqlIndex>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtSqlDataWidgetController::mdtSqlDataWidgetController(QObject* parent)
  : mdtAbstractSqlTableController(parent)
@@ -149,16 +149,6 @@ bool mdtSqlDataWidgetController::addMapping(QWidget* widget, const QString& fiel
   return true;
 }
 
-/**
-int mdtSqlDataWidgetController::currentRow() const
-{
-  if(!model()){
-    return -1;
-  }
-  return pvWidgetMapper.currentIndex();
-}
-*/
-
 void mdtSqlDataWidgetController::toFirst()
 {
   setCurrentRow(0);
@@ -209,7 +199,6 @@ void mdtSqlDataWidgetController::currentRowChangedEvent(int row)
 {
   Q_ASSERT(model());
 
-  qDebug() << tableName() << ": currentRowChangedEvent(" << row << ")";
   pvWidgetMapper.setCurrentIndex(row);
   updateMappedWidgets();
   updateNavigationControls();
@@ -220,7 +209,6 @@ void mdtSqlDataWidgetController::insertDoneEvent(int row)
   Q_ASSERT(model());
   Q_ASSERT(currentState() == Inserting);
 
-  qDebug() << tableName() << ": insertDoneEvent(" << row << ")";
   pvWidgetMapper.setCurrentIndex(row);
   clearMappedWidgets();
   updateMappedWidgets();
@@ -231,17 +219,8 @@ bool mdtSqlDataWidgetController::doSubmit()
 {
   Q_ASSERT(model());
 
-  ///int row;
-  ///QSqlRecord initialRecord;
   QSqlError sqlError;
 
-  // Remember current row (will be lost during submit)
-  ///row = pvWidgetMapper.currentIndex();
-  // Remember current record - will help on primary key errors
-  ///initialRecord = model()->record(row);
-
-  qDebug() << tableName() << ": doSubmit() - 1) - row count: " << model()->rowCount();
-  
   // Call widget mapper submit() (will commit data from widgets to model)
   if(!pvWidgetMapper.submit()){
     sqlError = model()->lastError();
@@ -255,25 +234,12 @@ bool mdtSqlDataWidgetController::doSubmit()
     }
     return false;
   }
-  
-  qDebug() << tableName() << ": doSubmit() - 2) - row count: " << model()->rowCount();
-  
   /*
    * We use QDataWidgetMapper::ManualSubmit submit policy and QSqlTableModel::OnManualSubmit edit strategy.
    * Widget mapper calls submit() on model, but this has no effect with OnManualSubmit edit strategy,
    * so we have to call submitAll() on model.
    */
   if(!model()->submitAll()){
-    /** \todo Implement restorePrimaryKeyDataToModel()
-    if(!restorePrimaryKeyDataToModel(initialRecord)){
-      error = model()->lastError();
-      mdtError e(MDT_DATABASE_ERROR, "Unable to restor primary key after a submitAll error, table: " + model()->tableName(), mdtError::Error);
-      e.setSystemError(error.number(), error.text());
-      MDT_ERROR_SET_SRC(e, "mdtSqlFormWidget");
-      e.commit();
-      return false;
-    }
-    */
     sqlError = model()->lastError();
     pvLastError.setError(tr("Submitting data to database failed."), mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
@@ -285,24 +251,6 @@ bool mdtSqlDataWidgetController::doSubmit()
     }
     return false;
   }
-  
-  qDebug() << tableName() << ": doSubmit() - 3) - row count: " << model()->rowCount();
-  
-  qDebug() << tableName() << ": filter: " << model()->filter();
-  
-  /*
-   * Go back to row.
-   * Calling submitAll() will repopulate the model.
-   * Because of this, we must be shure to fetch all data until we find our row
-   */
-  /**
-  if(model()->rowCount() > 0){
-    while((row >= model()->rowCount())&&(model()->canFetchMore())){
-      model()->fetchMore();
-    }
-  }
-  pvWidgetMapper.setCurrentIndex(row);
-  */
 
   return true;
 }
@@ -316,27 +264,6 @@ bool mdtSqlDataWidgetController::doRevert()
   return true;
 }
 
-/**
-bool mdtSqlDataWidgetController::doInsert()
-{
-  Q_ASSERT(model());
-  Q_ASSERT(currentState() == Inserting);
-
-  int row;
-
-  // Remember current row, on case user wants to revert
-  pvBeforeInsertCurrentRow = currentRow();
-  // Insert new row at end
-  row = rowCount(true);
-  model()->insertRow(row);
-  pvWidgetMapper.setCurrentIndex(row);
-  clearMappedWidgets();
-  setFocusOnFirstDataWidget();
-
-  return true;
-}
-*/
-
 bool mdtSqlDataWidgetController::doSubmitNewRow()
 {
   Q_ASSERT(model());
@@ -344,49 +271,12 @@ bool mdtSqlDataWidgetController::doSubmitNewRow()
   return doSubmit();
 }
 
-/**
-bool mdtSqlDataWidgetController::doRevertNewRow()
-{
-  Q_ASSERT(model());
-
-  int row;
-  QSqlError sqlError;
-
-  // Remeber current row and remove it
-  row = pvWidgetMapper.currentIndex();
-  if(!model()->removeRow(row)){
-    sqlError = model()->lastError();
-    pvLastError.setError(tr("Reverting data failed."), mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDataWidgetController");
-    pvLastError.commit();
-    if(messageHandler()){
-      messageHandler()->setError(pvLastError);
-      messageHandler()->displayToUser();
-    }
-    return false;
-  }
-  ///pvWidgetMapper.setCurrentIndex(pvBeforeInsertCurrentRow);
-
-  return true;
-}
-*/
-
 bool mdtSqlDataWidgetController::doRemove()
 {
   Q_ASSERT(model());
 
-  ///int row;
   QSqlError sqlError;
 
-  // Remeber current row (will be lost during submit)
-  ///row = pvWidgetMapper.currentIndex();
-  // If we are not on a row, we do nothing
-  /**
-  if(row < 0){
-    return true;
-  }
-  */
   // Remove current row
   if(!model()->removeRow(currentRow())){
     sqlError = model()->lastError();
@@ -418,13 +308,6 @@ bool mdtSqlDataWidgetController::doRemove()
     }
     return false;
   }
-  /*
-   * Go back to row.
-   * Calling submitAll() will repopulate the model.
-   * Because of this, we must be shure to fetch all data until we find our row
-   */
-  ///row = qMin(row, rowCount(true) - 1);
-  ///setCurrentRowPv(row, false);
 
   return true;
 }
@@ -441,9 +324,6 @@ void mdtSqlDataWidgetController::updateMappedWidgets()
   }else{
     haveData = false;
   }
-  
-  qDebug() << tableName() << ": updateMappedWidgets() - haveData: " << haveData;
-  
   // Update widgets
   for(i = 0; i < pvFieldHandlers.size(); ++i){
     fieldHandler = pvFieldHandlers.at(i);

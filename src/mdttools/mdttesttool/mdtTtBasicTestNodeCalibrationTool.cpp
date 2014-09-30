@@ -35,9 +35,9 @@ mdtTtBasicTestNodeCalibrationTool::mdtTtBasicTestNodeCalibrationTool(QSqlDatabas
 {
 }
 
-bool mdtTtBasicTestNodeCalibrationTool::init()
+bool mdtTtBasicTestNodeCalibrationTool::setup(QWidget *testNodeFormWidget)
 {
-  if(!mdtTtAbstractTestNodeCalibrationTool::init()){
+  if(!mdtTtAbstractTestNodeCalibrationTool::setup(testNodeFormWidget)){
     return false;
   }
   addInstruments();

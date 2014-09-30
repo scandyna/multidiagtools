@@ -47,7 +47,7 @@
 #include <QApplication>
 #include <memory>
 
-#include <QDebug>
+//#include <QDebug>
 
 using namespace std;
 

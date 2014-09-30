@@ -69,82 +69,12 @@ void mdtSqlRelationItem::setChildFieldIndex(int index)
   pvChildFieldIndex = index;
 }
 
-/**
-QString mdtSqlRelationItem::parentFieldName() const
-{
-  return pvParentField.name();
-}
-*/
-
-/**
-int mdtSqlRelationItem::parentFieldIndex() const
-{
-  return pvParentFieldIndex;
-}
-*/
-
-/**
-QString mdtSqlRelationItem::childFieldName() const
-{
-  return pvChildField.name();
-}
-*/
-
-/**
-int mdtSqlRelationItem::childFieldIndex() const
-{
-  return pvChildFieldIndex;
-}
-*/
-
-/**
-QString mdtSqlRelationItem::nameProtection() const
-{
-  return "`";
-}
-*/
-
-/**
-QString mdtSqlRelationItem::dataProtection() const
-{
-  return pvDataProtection;
-}
-*/
-
-/**
-QVariant::Type mdtSqlRelationItem::dataType() const
-{
-  return pvParentField.type();
-}
-*/
-
-/**
-QVariant mdtSqlRelationItem::valueForNoDataFilter() const
-{
-  return pvValueForNoDataFilter;
-}
-*/
-
 void mdtSqlRelationItem::setCopyParentToChildOnInsertion(bool enable)
 {
   pvCopyParentToChildOnInsertion = enable;
 }
 
-/**
-bool mdtSqlRelationItem::copyParentToChildOnInsertion() const
-{
-  return pvCopyParentToChildOnInsertion;
-}
-*/
-
 void mdtSqlRelationItem::setRelationOperatorWithPreviousItem(const QString &operatorWithPreviousItem)
 {
   pvRelationOperatorWithPreviousItem = operatorWithPreviousItem;
 }
-
-/**
-QString mdtSqlRelationItem::relationOperatorWithPreviousItem() const
-{
-  return pvRelationOperatorWithPreviousItem;
-}
-*/

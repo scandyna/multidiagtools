@@ -1413,12 +1413,12 @@ bool mdtClUnitEditor::setupUnitTable()
   qDebug() << unitController->tableName();
   qDebug() << articleController->tableName();
   
-  articleController->addMapping(ue.leArticle_Id_FK, "Id_PK");
-  articleController->addMapping(ue.leArticleCode, "ArticleCode");
-  articleController->addMapping(ue.leArticleDesignationEN, "DesignationEN");
-  articleController->addMapping(ue.leArticleDesignationFR, "DesignationFR");
-  articleController->addMapping(ue.leArticleDesignationDE, "DesignationDE");
-  articleController->addMapping(ue.leArticleDesignationIT, "DesignationIT");
+  articleController->addMapping(ue.lbl_Article_Id_FK, "Id_PK");
+  articleController->addMapping(ue.lbl_ArticleCode, "ArticleCode");
+  articleController->addMapping(ue.lbl_ArticleDesignationEN, "DesignationEN");
+  articleController->addMapping(ue.lbl_ArticleDesignationFR, "DesignationFR");
+  articleController->addMapping(ue.lbl_ArticleDesignationDE, "DesignationDE");
+  articleController->addMapping(ue.lbl_ArticleDesignationIT, "DesignationIT");
   /**
   ///unitModel = model("Unit_tbl");
   unitModel = 0;

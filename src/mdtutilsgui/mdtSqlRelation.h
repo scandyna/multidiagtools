@@ -175,25 +175,7 @@ class mdtSqlRelation : public QObject
    */
   void setParentCurrentIndex(const QModelIndex &current, const QModelIndex &previous);
 
-  /*! \brief Tasks to be done after a insertion was completly done in parent model
-   *
-   * By a 1-1 relation, once a record from parent model was saved in database,
-   *  child model's foreing keys must be updated with parent model's primary keys.
-   *
-   * Because mdtSqlRelation has no way to catch this event from QSqlTableModel,
-   *  this slot must be called wxplicitly at the right moment
-   *  (once submitAll() was done on parent model).
-   *
-   * \pre Parent model must be set with setParentModel() before using this method.
-   * \pre Child model must be set with setChildModel() before using this method.
-   */
-  ///void onParentInsertDone();
-
  private slots:
-
-  /*! \brief Insert a row into child model
-   */
-  ///void insertRowInChildModel();
 
   /*! \brief Tasks to be done before inserting child record into database
    *
@@ -224,13 +206,11 @@ class mdtSqlRelation : public QObject
   QList<mdtSqlRelationItem*> pvRelations;
   QSqlTableModel *pvParentModel;
   QSqlTableModel *pvChildModel;
-  mdtSqlRelationInfo::relationType_t pvRelationType;
   QString pvChildModelUserFilter;
   QString pvChildModelRelationFilter;
   QString pvChildModelFilter;
   int pvCurrentRow;
   mdtError pvLastError;
-  ///bool pvEditingOneToOneRelationRecord;
 };
 
 #endif  // #ifndef MDT_SQL_RELATION_H

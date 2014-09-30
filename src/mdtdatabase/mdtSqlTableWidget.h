@@ -61,25 +61,6 @@ class mdtSqlTableWidgetKeyEventFilter : public QObject
 };
 */
 
-/*
- * To handle internal state machine correctly
- *  we need a signal that indicates that user begins to edit a item.
- *  We create a custom delegate that provide this signal.
- */
-/**
-class mdtSqlTableWidgetItemDelegate : public QStyledItemDelegate
-{
- Q_OBJECT
-
- public:
-  mdtSqlTableWidgetItemDelegate(QObject *parent);
-  QWidget *createEditor(QWidget * parent, const QStyleOptionViewItem &option, const QModelIndex &index ) const;
-
- signals:
-  void dataEditionBegins() const;
-};
-*/
-
 /*! \brief Table view based SQL widget
  *
  * Internally, QTableView is used.

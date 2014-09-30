@@ -65,7 +65,6 @@ class mdtSqlTableViewControllerItemDelegate : public QStyledItemDelegate
   /*! \brief Emited when data edition begins
    */
   void dataEditionDone() const;
-
 };
 
 
@@ -117,10 +116,6 @@ class mdtSqlTableViewController : public mdtAbstractSqlTableController
   /*! \brief Get column index of first visible column
    */
   int firstVisibleColumnIndex();
-
-  /*! \brief Get current row
-   */
-  ///int currentRow() const;
 
   /*! \brief Get current selection
    *
@@ -196,17 +191,9 @@ class mdtSqlTableViewController : public mdtAbstractSqlTableController
    */
   bool doRevert();
 
-  /*! \brief Insert a new row to model
-   */
-  ///bool doInsert();
-
   /*! \brief Submit new row to model
    */
   bool doSubmitNewRow();
-
-  /*! \brief Revert new row
-   */
-  ///bool doRevertNewRow();
 
   /*! \brief Remove current row from model
    */
