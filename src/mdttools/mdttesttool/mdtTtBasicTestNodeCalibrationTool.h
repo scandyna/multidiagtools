@@ -65,6 +65,10 @@ class mdtTtBasicTestNodeCalibrationTool : public mdtTtAbstractTestNodeCalibratio
    */
   bool calibrateForceRelays();
 
+  /*! \brief calibrate channel relays
+   */
+  bool calibrateChannelRelays();
+
   /*! \brief Add instruments
    */
   void addInstruments();

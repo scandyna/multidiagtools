@@ -131,6 +131,28 @@ class mdtAbstractSqlTableController : public QObject
    */
   void setModel(std::shared_ptr<QSqlTableModel> m, const QString & userFriendlyTableName = QString());
 
+  /*! \brief Set the canWriteToDatabase flag
+   *
+   * If this flag is true (the default),
+   *  calling submit will send data to database
+   *  (see QSqlTableModel::submitAll() for details).
+   *  For some cases, typically when working on a view,
+   *  it's not possible to store data to DB by a default method.
+   *  A way to deal with this is to only cache data to model,
+   *  and save data to each corresponding tables in a manual way.
+   *  For such usage, set this flag false.
+   */
+  void setCanWriteToDatabase(bool canWrite);
+
+  /*! \brief Set the canWriteToDatabase flag
+   *
+   * \sa setCanWriteToDatabase().
+   */
+  inline bool canWriteToDatabase() const
+  {
+    return pvCanWriteToDatabase;
+  }
+
   /*! \brief Get index of field with fieldName
    *
    * Returns a value < 0 if fieldName was not found.
@@ -363,6 +385,9 @@ class mdtAbstractSqlTableController : public QObject
    *
    * Note: row is relative to sorted data model (proxyModel),
    *   not underlaying QSqlTableModel.
+   *
+   * Note: if submit is true, but canWriteToDatabase flag is false,
+   *  submit flag is silently ignored.
    *
    * \pre Table model must be set with setModel() or setTableName() begore calling this method.
    */
@@ -671,9 +696,13 @@ class mdtAbstractSqlTableController : public QObject
    *  If one of them is not in Visualizing, Selecting or Stopped state,
    *  some data are not saved.
    *
+   * If checkAboutDirtyIndex is true, current state of controllers are also checked,
+   *  but in addition, each index for each cached row will be checked using QSqlTableModel::isDirty().
+   *  This is slower, but works also after data was edited with setData().
+   *
    * \return true if all data are saved, false if there are pending data.
    */
-  bool allDataAreSaved();
+  bool allDataAreSaved(bool checkAboutDirtyIndex = false);
 
   /*! \brief Get last error
    */
@@ -697,10 +726,11 @@ class mdtAbstractSqlTableController : public QObject
 
  public slots:
 
-  /*! \brief Submit current record to model
+  /*! \brief Submit data
    *
-   * Depending on subclass choosen EditStrategy,
-   *  this method has potentially no effect.
+   * If canWriteToDatabase flag is true,
+   *  data will be stored to database,
+   *  else they will only be keeped cached in model.
    *
    * Internally, submitTriggered() signal will be emitted.
    */
@@ -802,6 +832,22 @@ class mdtAbstractSqlTableController : public QObject
    */
   bool setCurrentRowPv(int row);
 
+  /*! \brief Submit data to model
+   *
+   * Subclass must implement this method.
+   *  On problem, subclass should explain
+   *  what goes wrong to the user and return false.
+   *
+   * Note: current row will be updated after successfull
+   *  call of this method, calling then currentRowChangedEvent(),
+   *  so subclass does not have to worry about this.
+   */
+  virtual bool submitToModel() = 0;
+
+  /*! \brief Submit data from model to database
+   */
+  bool submitToDatabase();
+
   /*! \brief Submit current row to model
    *
    * Subclass must implement this method.
@@ -811,7 +857,7 @@ class mdtAbstractSqlTableController : public QObject
    * Note: current row will be updated after successfull
    *  call of this method, calling then currentRowChangedEvent().
    */
-  virtual bool doSubmit() = 0;
+  //virtual bool doSubmit() = 0;
 
   /*! \brief Revert current row from model
    *
@@ -833,7 +879,7 @@ class mdtAbstractSqlTableController : public QObject
    * Note: current row will be updated after successfull
    *  call of this method, calling then currentRowChangedEvent().
    */
-  virtual bool doSubmitNewRow() = 0;
+  //virtual bool doSubmitNewRow() = 0;
 
   /*! \brief Remove current row from model
    *
@@ -1091,6 +1137,7 @@ class mdtAbstractSqlTableController : public QObject
   QList<mdtAbstractSqlTableControllerContainer> pvChildControllerContainers;
   int pvCurrentRow;
   int pvBeforeInsertCurrentRow; // To go back by reverting new row
+  bool pvCanWriteToDatabase;    // If true, submit will call model's submitAll(), else not
   // State machine members
   mdtState *pvStateSelecting;
   mdtState *pvStateVisualizing;

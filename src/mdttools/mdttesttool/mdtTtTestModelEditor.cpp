@@ -262,13 +262,19 @@ void mdtTtTestModelEditor::editTestItem()
     displayLastError();
     return;
   }
+  dialog.setSqlForm(tie);
   if(!tie->setMainTableFilter("Id_PK", currentTestItemId)){
     pvLastError = tie->lastError();
     displayLastError();
     delete tie;
     return;
   }
-  dialog.setSqlForm(tie);
+  if(!tie->select()){
+    pvLastError = tie->lastError();
+    displayLastError();
+    delete tie;
+    return;
+  }
   dialog.resize(900, 600);
   dialog.enableEdition();
   dialog.setWindowTitle(tr("Test item edition"));

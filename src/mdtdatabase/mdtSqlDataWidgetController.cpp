@@ -215,7 +215,7 @@ void mdtSqlDataWidgetController::insertDoneEvent(int row)
   setFocusOnFirstDataWidget();
 }
 
-bool mdtSqlDataWidgetController::doSubmit()
+bool mdtSqlDataWidgetController::submitToModel()
 {
   Q_ASSERT(model());
 
@@ -234,26 +234,49 @@ bool mdtSqlDataWidgetController::doSubmit()
     }
     return false;
   }
-  /*
-   * We use QDataWidgetMapper::ManualSubmit submit policy and QSqlTableModel::OnManualSubmit edit strategy.
-   * Widget mapper calls submit() on model, but this has no effect with OnManualSubmit edit strategy,
-   * so we have to call submitAll() on model.
-   */
-  if(!model()->submitAll()){
-    sqlError = model()->lastError();
-    pvLastError.setError(tr("Submitting data to database failed."), mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDataWidgetController");
-    pvLastError.commit();
-    if(messageHandler()){
-      messageHandler()->setError(pvLastError);
-      messageHandler()->displayToUser();
-    }
-    return false;
-  }
 
   return true;
 }
+
+// bool mdtSqlDataWidgetController::doSubmit()
+// {
+//   Q_ASSERT(model());
+// 
+//   QSqlError sqlError;
+// 
+//   // Call widget mapper submit() (will commit data from widgets to model)
+//   if(!pvWidgetMapper.submit()){
+//     sqlError = model()->lastError();
+//     pvLastError.setError(tr("Submitting data to model failed."), mdtError::Error);
+//     pvLastError.setSystemError(sqlError.number(), sqlError.text());
+//     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDataWidgetController");
+//     pvLastError.commit();
+//     if(messageHandler()){
+//       messageHandler()->setError(pvLastError);
+//       messageHandler()->displayToUser();
+//     }
+//     return false;
+//   }
+//   /*
+//    * We use QDataWidgetMapper::ManualSubmit submit policy and QSqlTableModel::OnManualSubmit edit strategy.
+//    * Widget mapper calls submit() on model, but this has no effect with OnManualSubmit edit strategy,
+//    * so we have to call submitAll() on model.
+//    */
+//   if(!model()->submitAll()){
+//     sqlError = model()->lastError();
+//     pvLastError.setError(tr("Submitting data to database failed."), mdtError::Error);
+//     pvLastError.setSystemError(sqlError.number(), sqlError.text());
+//     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDataWidgetController");
+//     pvLastError.commit();
+//     if(messageHandler()){
+//       messageHandler()->setError(pvLastError);
+//       messageHandler()->displayToUser();
+//     }
+//     return false;
+//   }
+// 
+//   return true;
+// }
 
 bool mdtSqlDataWidgetController::doRevert()
 {
@@ -264,12 +287,12 @@ bool mdtSqlDataWidgetController::doRevert()
   return true;
 }
 
-bool mdtSqlDataWidgetController::doSubmitNewRow()
-{
-  Q_ASSERT(model());
-
-  return doSubmit();
-}
+// bool mdtSqlDataWidgetController::doSubmitNewRow()
+// {
+//   Q_ASSERT(model());
+// 
+//   return doSubmit();
+// }
 
 bool mdtSqlDataWidgetController::doRemove()
 {

@@ -29,7 +29,7 @@
 #include <QPair>
 #include <QVector>
 
-//#include <QDebug>
+#include <QDebug>
 
 using namespace std;
 
@@ -39,6 +39,7 @@ mdtAbstractSqlTableController::mdtAbstractSqlTableController(QObject* parent)
 {
   buildStateMachine();
   pvCurrentRow = -1;
+  pvCanWriteToDatabase = true;
 }
 
 mdtAbstractSqlTableController::~mdtAbstractSqlTableController()
@@ -86,6 +87,11 @@ void mdtAbstractSqlTableController::setModel(shared_ptr< QSqlTableModel > m, con
     pvUserFriendlyTableName = userFriendlyTableName;
   }
   modelSetEvent();
+}
+
+void mdtAbstractSqlTableController::setCanWriteToDatabase(bool canWrite)
+{
+  pvCanWriteToDatabase = canWrite;
 }
 
 int mdtAbstractSqlTableController::fieldIndex(const QString& fieldName) const
@@ -381,7 +387,7 @@ bool mdtAbstractSqlTableController::setData(int row, const QString& fieldName, c
   // Update model
   pvProxyModel->setData(index, data);
   // Submit if requested
-  if(submit){
+  if(submit && pvCanWriteToDatabase){
     return submitAndWait();
   }
 
@@ -756,7 +762,7 @@ bool mdtAbstractSqlTableController::setCurrentRow(const QString& fieldName, cons
   */
 }
 
-bool mdtAbstractSqlTableController::allDataAreSaved()
+bool mdtAbstractSqlTableController::allDataAreSaved(bool checkAboutDirtyIndex)
 {
   Q_ASSERT(pvModel);
 
@@ -780,12 +786,36 @@ bool mdtAbstractSqlTableController::allDataAreSaved()
       pvMessageHandler->setType(mdtUiMessageHandler::Warning);
       pvMessageHandler->displayToUser();
     }
+    
+    qDebug() << "allDataAreSaved() - table " << tableName() << " NOT saved (state check).";
+    
     return false;
+  }
+  /*
+   * If requested, check about dirty indexes.
+   * We take only cached rows, because it's not possible to edit one
+   *  that is not cached.
+   */
+  if(checkAboutDirtyIndex){
+    int row, col;
+    QModelIndex index;
+    for(row = 0; row < pvModel->rowCount(); ++row){
+      for(col = 0; col < pvModel->columnCount(); ++col){
+        index = pvModel->index(row, col);
+        if(pvModel->isDirty(index)){
+          // We generate no message, because this situation should only happen for programmed edition with setData()
+          
+          qDebug() << "allDataAreSaved() - table " << tableName() << " NOT saved (found dirty index).";
+          
+          return false;
+        }
+      }
+    }
   }
   // Check child controllers
   for(i = 0; i < pvChildControllerContainers.size(); ++i){
     Q_ASSERT(pvChildControllerContainers.at(i).controller);
-    if(!pvChildControllerContainers.at(i).controller->allDataAreSaved()){
+    if(!pvChildControllerContainers.at(i).controller->allDataAreSaved(checkAboutDirtyIndex)){
       return false;
     }
   }
@@ -918,6 +948,28 @@ bool mdtAbstractSqlTableController::setCurrentRowPv(int row)
   return true;
 }
 
+bool mdtAbstractSqlTableController::submitToDatabase()
+{
+  Q_ASSERT(model());
+
+  QSqlError sqlError;
+
+  if(!model()->submitAll()){
+    sqlError = model()->lastError();
+    pvLastError.setError(tr("Submitting data to database failed."), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtAbstractSqlTableController");
+    pvLastError.commit();
+    if(messageHandler()){
+      messageHandler()->setError(pvLastError);
+      messageHandler()->displayToUser();
+    }
+    return false;
+  }
+
+  return true;
+}
+
 void mdtAbstractSqlTableController::onStateSelectingEntered()
 {
 }
@@ -962,10 +1014,22 @@ void mdtAbstractSqlTableController::onStateSubmittingEntered()
     emit errorOccured();
     return;
   }
+  if(!submitToModel()){
+    emit errorOccured();
+    return;
+  }
+  if(pvCanWriteToDatabase){
+    if(!submitToDatabase()){
+      emit errorOccured();
+      return;
+    }
+  }
+  /**
   if(!doSubmit()){
     emit errorOccured();
     return;
   }
+  */
   /*
    * Go back to row.
    * Calling submitAll() will repopulate the model.
@@ -1056,10 +1120,22 @@ void mdtAbstractSqlTableController::onStateSubmittingNewRowEntered()
    *  and also re-sorted
    */
   pvProxyModel->disableSorting();
+  if(!submitToModel()){
+    emit errorOccured();
+    return;
+  }
+  if(pvCanWriteToDatabase){
+    if(!submitToDatabase()){
+      emit errorOccured();
+      return;
+    }
+  }
+  /**
   if(!doSubmitNewRow()){
     emit errorOccured();
     return;
   }
+  */
   if(!updateChildControllersAfterSubmitNewRow()){
     emit errorOccured();
     return;

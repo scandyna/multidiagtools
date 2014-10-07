@@ -26,6 +26,8 @@
 ///#include "mdtTtTestData.h"
 ///#include "mdtTtTestModelData.h"
 #include "mdtTtTestNodeManager.h"
+#include "mdtSqlDataWidgetController.h"
+#include "mdtSqlTableViewController.h"
 #include <QSqlDatabase>
 #include <QSqlTableModel>
 #include <QString>
@@ -38,6 +40,12 @@ class QWidget;
 class mdtSqlFormWidget;
 
 /*! \brief Base to create a tester
+ *
+ * Typical usage:
+ *  - Do base initialization with setup()
+ *  - Do signal/slot connections
+ *  - Set GUI widget with setTestUiWidget()
+ *  - Load data from database and start state machines with start()
  */
 class mdtTtAbstractTester : public QObject
 {
@@ -49,27 +57,55 @@ class mdtTtAbstractTester : public QObject
    */
   mdtTtAbstractTester(QSqlDatabase db, QObject *parent = 0);
 
-  /*! \brief Do some initialization
+  /*! \brief Do setup
    *
-   * Will setup test data and table models for test item view and table.
-   *
-   * If testUiWidget is valid, 
+   * Will setup internal SQL table controllers
+   *  to access Test_view and TestItem_view.
    */
-  virtual bool init();
+  virtual bool setup();
 
   /*! \brief
    *
    * All childs contained in widget that have a name prefixed fld_ will be mapped
-   *  to corresponding fields in Test_tbl.
+   *  to corresponding fields in Test_view.
+   *  They cann be written, but internally used mdtAbstractSqlTableController's submit() slot will not work.
+   *  Data will be really stored in Test_tbl by saveTest(). \todo Update if method takes another name..
    *
    * Given widget will also be used as parent for dialogs
    *  that are displayed (selection dialogs, message boxes).
    */
-  void setTestUiWidget(QWidget *widget);
+  bool setTestUiWidget(QWidget *widget);
+
+  /*! \brief Start state machines
+   *
+   * Will load data from database and start internal state machines.
+   *  After this call, use setCurrentTest() to go to a existing test,
+   *  or createTest() to create a new one.
+   *
+   * \sa mdtTtTest::start().
+   */
+  bool start();
 
   /*! \brief Get database instance
    */
   QSqlDatabase database() { return pvDatabase; }
+
+  /*! \brief Access controller that acts on Test_view
+   */
+  std::shared_ptr<mdtSqlDataWidgetController> testViewController()
+  {
+    return pvTestViewController;
+  }
+
+  /*! \brief Access controller that acts on TestItem_view
+   *
+   * \pre init() must be done before calling this method.
+   */
+  std::shared_ptr<mdtSqlTableViewController> testItemViewController()
+  {
+    Q_ASSERT(pvTestItemViewController);
+    return pvTestItemViewController;
+  }
 
   /*! \brief Get table model to access data in TestItem_view
    */
@@ -103,8 +139,13 @@ class mdtTtAbstractTester : public QObject
   /*! \brief Check if test is saved
    *
    * A test is saved if all cached data regarding Test_tbl and TestItem_tbl are stored in database.
+   *  If no test was set (Test_tbl.Id_PK is NULL), test is considered saved. \todo Toujours vrais ?
+   *  Note: each call of this method will check all test items.
    */
-  bool testIsSaved() const;
+  inline bool testIsSaved() const
+  {
+    return pvTestViewController->allDataAreSaved(true);
+  }
 
  public slots:
 
@@ -148,6 +189,10 @@ class mdtTtAbstractTester : public QObject
    */
   bool removeTestIfEmpty();
 
+  /*! \brief Remove current test
+   */
+  bool removeCurrentTestPv();
+
   /*! \brief Contains last error that occured
    */
   mdtError pvLastError;
@@ -161,6 +206,8 @@ class mdtTtAbstractTester : public QObject
   Q_DISABLE_COPY(mdtTtAbstractTester);
 
   QSqlDatabase pvDatabase;
+  std::shared_ptr<mdtSqlDataWidgetController> pvTestViewController;     // Access data in Test_view
+  std::shared_ptr<mdtSqlTableViewController> pvTestItemViewController;  // Access data in TestItem_view
   std::shared_ptr<mdtTtTestNodeManager> pvTestNodeManager;
   std::shared_ptr<mdtTtTest> pvTest;
   ///std::shared_ptr<mdtSqlFormWidget> pvTestFormWidget;

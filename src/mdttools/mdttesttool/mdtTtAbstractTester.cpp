@@ -21,10 +21,13 @@
 #include "mdtTtAbstractTester.h"
 #include "mdtSqlSelectionDialog.h"
 #include "mdtSqlTableSelection.h"
-///#include "mdtSqlFormWidget.h"
+#include "mdtSqlRelationInfo.h"
+#include "mdtSqlRecord.h"
 #include <QSqlError>
 #include <QModelIndex>
 #include <QMessageBox>
+#include <QList>
+#include <QStringList>
 
 #include <QDebug>
 
@@ -33,35 +36,59 @@ using namespace std;
 mdtTtAbstractTester::mdtTtAbstractTester(QSqlDatabase db, QObject* parent)
  : QObject(parent),
    pvDatabase(db),
+   pvTestViewController(new mdtSqlDataWidgetController),
    pvTestNodeManager(new mdtTtTestNodeManager(0, db)),
-   pvTest(new mdtTtTest(0, db))/**,
-   pvTestFormWidget(new mdtSqlFormWidget)
-   */
+   pvTest(new mdtTtTest(0, db))
 {
   pvParentWidget = 0;
   /**
   pvTestFormWidget->setAskUserBeforRevert(false);
   pvTestFormWidget->setModel(pvTest->testTableModel().get());
   */
-  connect(pvTest.get(), SIGNAL(testDataChanged(const QSqlRecord&)), this, SIGNAL(testDataChanged(const QSqlRecord&)));
+  ///connect(pvTest.get(), SIGNAL(testDataChanged(const QSqlRecord&)), this, SIGNAL(testDataChanged(const QSqlRecord&)));
 }
 
-bool mdtTtAbstractTester::init()
+bool mdtTtAbstractTester::setup()
 {
-  if(!pvTest->init()){
-    pvLastError = pvTest->lastError();
+  mdtSqlRelationInfo relationInfo;
+
+  // Setup Test_view controller
+  pvTestViewController->setCanWriteToDatabase(false); // We act on a view - controller can only submit data to model itself, not to database tables
+  pvTestViewController->setTableName("Test_view", pvDatabase, tr("Test"));
+  // Setup TestItem_view controller
+  relationInfo.setChildTableName("TestItem_view");
+  relationInfo.addRelation("Id_PK", "Test_Id_FK", false);
+  if(!pvTestViewController->addChildController<mdtSqlTableViewController>(relationInfo, tr("Test items"))){
+    pvLastError = pvTestViewController->lastError();
     return false;
   }
-  ///pvTestFormWidget->setCurrentIndex(-1);
+  pvTestItemViewController = pvTestViewController->childController<mdtSqlTableViewController>("TestItem_view");
+  Q_ASSERT(pvTestItemViewController);
+  pvTestItemViewController->setCanWriteToDatabase(false);
 
   return true;
+  /**
+  if(!pvTest->setup()){
+    pvLastError = pvTest->lastError();
+    displayLastError();
+    return false;
+  }
+  return true;
+  */
 }
 
-void mdtTtAbstractTester::setTestUiWidget(QWidget* widget)
+bool mdtTtAbstractTester::setTestUiWidget(QWidget* widget)
 {
   Q_ASSERT(widget != 0);
 
   pvParentWidget = widget;
+  if(!pvTestViewController->mapFormWidgets(widget)){
+    pvLastError = pvTestViewController->lastError();
+    displayLastError();
+    return false;
+  }
+
+  return true;
   /**
   pvTestFormWidget->mapFormWidgets(widget);
   pvTestFormWidget->setCurrentIndex(-1);
@@ -69,25 +96,99 @@ void mdtTtAbstractTester::setTestUiWidget(QWidget* widget)
   */
 }
 
-bool mdtTtAbstractTester::testIsEmpty() const
+bool mdtTtAbstractTester::start()
 {
-  /**
-  if(!pvTestFormWidget->allDataAreSaved(false)){
+  Q_ASSERT(pvTestItemViewController);
+
+  pvTestViewController->start();
+  if(!pvTestViewController->setFilter("Id_PK=-1")){
+    pvLastError = pvTestViewController->lastError();
     return false;
   }
+  if(!pvTestViewController->select()){
+    pvLastError = pvTestViewController->lastError();
+    return false;
+  }
+
+  return true;
+
+  /**
+  if(!pvTestViewController->start()){
+    pvLastError = pvTestViewController->lastError();
+    displayLastError();
+    return false;
+  }
+
+  return true;
   */
-  return pvTest->testIsEmpty();
 }
 
+bool mdtTtAbstractTester::testIsEmpty() const
+{
+  QStringList fields;
+  mdtSqlRecord record;
+  int i;
+  int row, rowCount;
+
+  // Check test data in Test_tbl
+  if(pvTestViewController->rowCount(false) < 1){
+    return true;
+  }
+  fields << "DutName" << "DutSerialNumber";
+  record = pvTestViewController->currentRecord(fields);
+  for(i = 0; i < record.count(); ++i){
+    if(!record.value(i).isNull()){
+      return false;
+    }
+  }
+  // Check in TestItem_tbl
+  fields.clear();
+  fields << "Date" << "MeasuredValue" << "ResultValue" << "Result" << "Remark";
+  rowCount = pvTestItemViewController->rowCount(true);
+  for(row = 0; row < rowCount; ++row){
+    record = pvTestItemViewController->record(row, fields);
+    for(i = 0; i < record.count(); ++i){
+      if(!record.value(i).isNull()){
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
+/**
 bool mdtTtAbstractTester::testIsSaved() const
 {
-  /**
-  if(!pvTestFormWidget->allDataAreSaved(false)){
-    return false;
+  int row, col;
+  QModelIndex index;
+
+  // Check test data in Test_tbl
+  if(pvTestTableModel->rowCount() < 1){
+    return true;
   }
-  */
-  return pvTest->testIsSaved();
+  Q_ASSERT(pvTestTableModel->rowCount() == 1);
+  for(col = 0; col < pvTestTableModel->columnCount(); ++col){
+    // Test_tbl model if filtered on current Id_PK, it contains only 1 row
+    index = pvTestTableModel->index(0, col);
+    qDebug() << "-- Checking in Test_tbl, data: " << pvTestTableModel->data(index);
+    if(pvTestTableModel->isDirty(index)){
+      return false;
+    }
+  }
+  // Check test items
+  for(row = 0; row < pvTestItemTableModel->rowCount(); ++row){
+    for(col = 0; col < pvTestItemTableModel->columnCount(); ++col){
+      index = pvTestItemTableModel->index(row, col);
+      if(pvTestItemTableModel->isDirty(index)){
+        return false;
+      }
+    }
+  }
+
+  return true;
 }
+*/
 
 void mdtTtAbstractTester::createTest()
 {
@@ -95,6 +196,7 @@ void mdtTtAbstractTester::createTest()
   mdtSqlTableSelection s;
   QString sql;
   QVariant testModelId;
+  QVariant testId;
 
   // Remove test if it is empty
   if(!removeTestIfEmpty()){
@@ -112,9 +214,12 @@ void mdtTtAbstractTester::createTest()
     if(msgBox.exec() != QMessageBox::Yes){
       return;
     }
-    ///pvTestFormWidget->revert();
+    // Remove current test
+    if(!removeCurrentTestPv()){
+      displayLastError();
+      return;
+    }
   }
-  ///pvTestFormWidget->setCurrentIndex(-1);
   // Let the user choose a test model
   sql = "SELECT TM.Id_PK, TM.DesignationEN";
   sql += " FROM TestModel_tbl TM";
@@ -131,12 +236,18 @@ void mdtTtAbstractTester::createTest()
   Q_ASSERT(s.rowCount() == 1);
   testModelId = s.data(0, "Id_PK");
   // Create the new test
-  if(!pvTest->createTest(testModelId)){
+  testId = pvTest->createTest(testModelId);
+  if(testId.isNull()){
     pvLastError = pvTest->lastError();
     displayLastError();
     return;
   }
-  ///pvTestFormWidget->toFirst();
+  // Go to created test
+  if(!pvTestViewController->setFilter("Id_PK", testId)){
+    pvLastError = pvTestViewController->lastError();
+    displayLastError();
+    return;
+  }
 }
 
 void mdtTtAbstractTester::openTest()
@@ -162,9 +273,14 @@ void mdtTtAbstractTester::openTest()
     if(msgBox.exec() != QMessageBox::Yes){
       return;
     }
-    ///pvTestFormWidget->revert();
+    // Remove current test
+    if(!removeCurrentTestPv()){
+      displayLastError();
+      return;
+    }
   }
   // Get current test id
+  testId = pvTestViewController->currentData("Id_PK");
   ///testId = pvTest->testData().value("Id_PK");
   // Let the user choose a test
   /**
@@ -176,7 +292,7 @@ void mdtTtAbstractTester::openTest()
   */
   sql = "SELECT * FROM Test_view";
   if(!testId.isNull()){
-    sql += " WHERE T.Id_PK <> " + testId.toString();
+    sql += " WHERE Id_PK <> " + testId.toString();
   }
   selectionDialog.setQuery(sql, database(), false);
   selectionDialog.setMessage(tr("Select test to view:"));
@@ -191,12 +307,65 @@ void mdtTtAbstractTester::openTest()
   Q_ASSERT(s.rowCount() == 1);
   testId = s.data(0, "Id_PK");
   // Change to selected test
-  pvTest->setCurrentTest(testId);
+  if(!pvTestViewController->setFilter("Id_PK", testId)){
+    pvLastError = pvTestViewController->lastError();
+    displayLastError();
+    return;
+  }
+  ///pvTest->setCurrentTest(testId);
   ///pvTestFormWidget->toFirst();
 }
 
 void mdtTtAbstractTester::saveTest()
 {
+  Q_ASSERT(pvTestItemViewController);
+
+  mdtSqlRecord testRecord;
+  QList<mdtSqlRecord> testItemRecords;
+  QStringList fields;
+  bool ok;
+  int row;
+  int rowCount;
+
+  // Test part was edited by user, let controller submit data to model
+  if(!pvTestViewController->submitAndWait()){
+    pvLastError = pvTestViewController->lastError();
+    displayLastError();
+    return;
+  }
+  // Get record for part that we have to save to Test_tbl
+  fields << "Id_PK" << /**"TestModel_Id_FK" <<*/ "Date" << "DutName" << "DutSerialNumber";
+  testRecord = pvTestViewController->currentRecord(fields, ok);
+  if(!ok){
+    pvLastError = pvTestViewController->lastError();
+    displayLastError();
+    return;
+  }
+  // Get part for TestItem_tbl
+  fields.clear();
+  fields << "Id_PK" << "Test_Id_FK" << "TestModelItem_Id_FK" << "Date" << "MeasuredValue" << "InstrumentRangeMin" << "InstrumentRangeMax"\
+         << "ResultValue" << "Result" << "Remark";
+  rowCount = pvTestItemViewController->rowCount(false);
+  for(row = 0; row < rowCount; ++row){
+    testItemRecords << pvTestItemViewController->record(row, fields, ok);
+    if(!ok){
+      pvLastError = pvTestItemViewController->lastError();
+      displayLastError();
+      return;
+    }
+  }
+  // Save test
+  if(!pvTest->saveTest(testRecord, testItemRecords)){
+    pvLastError = pvTest->lastError();
+    displayLastError();
+    return;
+  }
+
+  if(!pvTestViewController->setFilter("Id_PK", testRecord.value("Id_PK"))){
+    pvLastError = pvTestViewController->lastError();
+    return;
+  }
+
   // At first, submit data from form to DB - Error message will be shown by form widget
   /**
   if(!pvTestFormWidget->submitAndWait()){
@@ -204,23 +373,60 @@ void mdtTtAbstractTester::saveTest()
   }
   */
   // Call mdtTtTest's save method, will also save test items
+  /**
   if(!pvTest->saveCurrentTest()){
     pvLastError = pvTest->lastError();
     displayLastError();
     return;
   }
+  */
 
 }
 
 bool mdtTtAbstractTester::removeTestIfEmpty()
 {
+  QVariant testId;
+
+  testId = pvTestViewController->currentData("Id_PK");
+  if(testId.isNull()){
+    return true;
+  }
   if(!testIsEmpty()){
     return true;
   }
-  if(!pvTest->removeCurrentTest()){
+  pvTestViewController->revert();
+  if(!pvTest->removeTest(testId)){
     pvLastError = pvTest->lastError();
     return false;
   }
+  if(!pvTestViewController->setFilter("Id_PK=-1")){
+    pvLastError = pvTestViewController->lastError();
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtTtAbstractTester::removeCurrentTestPv()
+{
+  QVariant testId;
+
+  if(pvTestViewController->rowCount(false) < 1){
+    return true;
+  }
+  testId = pvTestViewController->currentData("Id_PK");
+  if(!testId.isNull()){
+    pvTestViewController->revert();
+    if(!pvTest->removeTest(testId)){
+      pvLastError = pvTest->lastError();
+      return false;
+    }
+  }
+  if(!pvTestViewController->setFilter("Id_PK=-1")){
+    pvLastError = pvTestViewController->lastError();
+    return false;
+  }
+
   return true;
 }
 

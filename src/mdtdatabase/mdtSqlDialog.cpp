@@ -21,8 +21,6 @@
 #include "mdtSqlDialog.h"
 #include "mdtSqlForm.h"
 
-///#include "mdtSqlFormWidget.h"
-
 #include "mdtSqlDataWidgetController.h"
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -72,7 +70,6 @@ void mdtSqlDialog::setSqlForm(mdtSqlForm *form)
 void mdtSqlDialog::enableEdition()
 {
   Q_ASSERT(pvForm != 0);
-  ///Q_ASSERT(pvForm->mainSqlWidget() != 0);
 
   pbSubmit->setVisible(true);
   pbRevert->setVisible(true);
@@ -122,18 +119,11 @@ void mdtSqlDialog::createEditionElements(QHBoxLayout *l)
 void mdtSqlDialog::connectEditionElements()
 {
   Q_ASSERT(pvForm != 0);
-  /**
-  Q_ASSERT(pvForm->mainSqlWidget() != 0);
-
-  mdtSqlFormWidget *widget = pvForm->mainSqlWidget();
-  Q_ASSERT(widget != 0);
-  */
 
   std::shared_ptr<mdtSqlDataWidgetController> controller;
 
   controller = pvForm->mainTableController<mdtSqlDataWidgetController>();
   Q_ASSERT(controller);
-
   // Connect buttons enable/disable
   connect(controller.get(), SIGNAL(submitEnabledStateChanged(bool)), pbSubmit, SLOT(setEnabled(bool)));
   connect(controller.get(), SIGNAL(revertEnabledStateChanged(bool)), pbRevert, SLOT(setEnabled(bool)));
@@ -145,18 +135,10 @@ void mdtSqlDialog::connectEditionElements()
 void mdtSqlDialog::disconnectEditionElements()
 {
   Q_ASSERT(pvForm != 0);
-  /**
-  Q_ASSERT(pvForm->mainSqlWidget() != 0);
-
-  mdtSqlFormWidget *widget = pvForm->mainSqlWidget();
-  Q_ASSERT(widget != 0);
-  */
-
   std::shared_ptr<mdtSqlDataWidgetController> controller;
 
   controller = pvForm->mainTableController<mdtSqlDataWidgetController>();
   Q_ASSERT(controller);
-
   // Connect buttons enable/disable
   disconnect(controller.get(), SIGNAL(submitEnabledStateChanged(bool)), pbSubmit, SLOT(setEnabled(bool)));
   disconnect(controller.get(), SIGNAL(revertEnabledStateChanged(bool)), pbRevert, SLOT(setEnabled(bool)));

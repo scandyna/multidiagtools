@@ -810,6 +810,7 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QVERIFY(w.fld_Remarks->isEnabled());
   QCOMPARE(w.fld_FirstName->text(), QString("Andy"));
   QVERIFY(w.fld_Remarks->text().isEmpty());
+  QVERIFY(wc.allDataAreSaved());
   // Check control buttons states
   QVERIFY(!w.toFirstEnabled);
   QVERIFY(w.toLastEnabled);
@@ -912,10 +913,12 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QVERIFY(w.fld_Remarks->text().isEmpty());
   QTest::keyClicks(w.fld_FirstName, "New name 1");
   QTest::keyClicks(w.fld_Remarks, "New remark 1");
+  QVERIFY(!wc.allDataAreSaved());
   // Submit with asynch version
   wc.submit();
   QTest::qWait(1000); // Writing in DB can be very slow, f.ex. with Sqlite on HDD
   // Check that model was updated
+  QVERIFY(wc.allDataAreSaved());
   QCOMPARE(wc.rowCount(), 5);
   QCOMPARE(wc.currentRow(), 4);
   data = model->data(model->index(4, model->fieldIndex("FirstName")));
@@ -951,8 +954,10 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QVERIFY(w.fld_Remarks->text().isEmpty());
   QTest::keyClicks(w.fld_FirstName, "New name 2");
   QTest::keyClicks(w.fld_Remarks, "New remark 2");
+  QVERIFY(!wc.allDataAreSaved());
   // Submit with synch version
   QVERIFY(wc.submitAndWait());
+  QVERIFY(wc.allDataAreSaved());
   // Check that model was updated
   QCOMPARE(model->rowCount(), 6);
   QCOMPARE(wc.rowCount(), 6);
@@ -1365,7 +1370,9 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   /*
    * Check programmed edition - No submit
    */
+  QVERIFY(wc.allDataAreSaved(true));
   QVERIFY(wc.setCurrentData("Remarks", "Edited remark on Zeta", false));
+  QVERIFY(!wc.allDataAreSaved(true));
   QCOMPARE(w.fld_FirstName->text(), QString("Zeta"));
   QCOMPARE(w.fld_Remarks->text(), QString("Edited remark on Zeta"));
   QCOMPARE(wc.currentData("FirstName"), QVariant("Zeta"));
@@ -1382,7 +1389,9 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   /*
    * Check programmed edition - With direct submit
    */
+  QVERIFY(wc.allDataAreSaved(true));
   QVERIFY(wc.setCurrentData("Remarks", "Edited remark on Zeta", true));
+  QVERIFY(wc.allDataAreSaved(true));
   QCOMPARE(w.fld_FirstName->text(), QString("Zeta"));
   QCOMPARE(w.fld_Remarks->text(), QString("Edited remark on Zeta"));
   QCOMPARE(wc.currentData("FirstName"), QVariant("Zeta"));
@@ -1416,8 +1425,10 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   wc.toNext();
   QTest::qWait(50);
   QVERIFY(wc.setCurrentData("Remarks", "Edited remark 2 on Zeta", false));
+  QVERIFY(!wc.allDataAreSaved(true));
   // Submit all rows
   QVERIFY(wc.submitAndWait());
+  QVERIFY(wc.allDataAreSaved(true));
   // Check that database was updated
   QVERIFY(wc.select());
   wc.sort();
@@ -1600,6 +1611,145 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QVERIFY(q.exec("PRAGMA foreign_keys = ON"));
 }
 
+void mdtDatabaseWidgetTest::sqlDataWidgetControllerRoTest()
+{
+  QSqlQuery q(pvDatabaseManager.database());
+  sqlDataWidgetControllerTestWidget w;
+  mdtSqlDataWidgetController wc;
+  QVariant data;
+  QStringList fields;
+  mdtSqlRecord rec;
+  QList<QVariant> dataList;
+  bool ok;
+
+  // For this test, we wont foreign_keys support
+  QVERIFY(q.exec("PRAGMA foreign_keys = OFF"));
+  // Create test data
+  populateTestDatabase();
+  // Setup
+  connect(&wc, SIGNAL(toFirstEnabledStateChanged(bool)), &w, SLOT(setToFirstEnableState(bool)));
+  connect(&wc, SIGNAL(toLastEnabledStateChanged(bool)), &w, SLOT(setToLastEnableState(bool)));
+  connect(&wc, SIGNAL(toNextEnabledStateChanged(bool)), &w, SLOT(setToNextEnableState(bool)));
+  connect(&wc, SIGNAL(toPreviousEnabledStateChanged(bool)), &w, SLOT(setToPreviousEnableState(bool)));
+  connect(&wc, SIGNAL(insertEnabledStateChanged(bool)), &w, SLOT(setInsertEnableState(bool)));
+  connect(&wc, SIGNAL(removeEnabledStateChanged(bool)), &w, SLOT(setRemoveEnableState(bool)));
+  connect(&wc, SIGNAL(submitEnabledStateChanged(bool)), &w, SLOT(setSubmitEnableState(bool)));
+  connect(&wc, SIGNAL(revertEnabledStateChanged(bool)), &w, SLOT(setRevertEnableState(bool)));
+  // Initial state
+  w.show();
+  QVERIFY(w.fld_FirstName->text().isEmpty());
+  QVERIFY(w.fld_Remarks->text().isEmpty());
+  QCOMPARE(wc.rowCount(), 0);
+  QVERIFY(wc.currentRow() < 0);
+  QVERIFY(wc.currentState() == mdtAbstractSqlTableController::Stopped);
+  /*
+   * Set table name (and tell controller that we cannot write to it)
+   */
+  wc.setCanWriteToDatabase(false);
+  wc.setTableName("Client_tbl", pvDatabaseManager.database(), "Clients");
+  QCOMPARE(wc.userFriendlyTableName(), QString("Clients"));
+  QCOMPARE(wc.rowCount(), 0);
+  QVERIFY(wc.currentRow() < 0);
+  QVERIFY(!wc.setCurrentRow(-1));
+  QVERIFY(!wc.setCurrentRow(0));
+  /*
+   * Map widgets
+   */
+  QVERIFY(wc.mapFormWidgets(&w, "fld_FirstName"));
+  // Check fields - Because state machine is not running, all widgets must be diseabled
+  QVERIFY(!w.fld_FirstName->isEnabled());
+  QVERIFY(!w.fld_Remarks->isEnabled());
+  QVERIFY(w.fld_FirstName->text().isEmpty());
+  QVERIFY(w.fld_Remarks->text().isEmpty());
+  /*
+   * Start of state machine
+   */
+  QVERIFY(wc.currentState() == mdtAbstractSqlTableController::Stopped);
+  wc.start();
+  QVERIFY(wc.currentState() == mdtAbstractSqlTableController::Visualizing);
+  // Check fields - Must be all OFF, because model was never selected
+  QVERIFY(!w.fld_FirstName->isEnabled());
+  QVERIFY(!w.fld_Remarks->isEnabled());
+  QVERIFY(w.fld_FirstName->text().isEmpty());
+  QVERIFY(w.fld_Remarks->text().isEmpty());
+  /*
+   * Select data and check
+   */
+  QVERIFY(wc.select());
+  QCOMPARE(wc.rowCount(), 4);
+  QCOMPARE(wc.currentRow(), 0);
+  QVERIFY(w.fld_FirstName->isEnabled());
+  QVERIFY(w.fld_Remarks->isEnabled());
+  QCOMPARE(w.fld_FirstName->text(), QString("Andy"));
+  QVERIFY(w.fld_Remarks->text().isEmpty());
+  QVERIFY(wc.allDataAreSaved());
+  QCOMPARE(wc.currentData("FirstName", ok), QVariant("Andy"));
+  QVERIFY(ok);
+  QVERIFY(wc.currentData("Remarks", ok).isNull());
+  QVERIFY(ok);
+  /*
+   * Check edition
+   *  - Edit current row
+   *  - Check in model
+   *  - Check in widgets
+   *  - Check that database was not updated
+   */
+  // Check control buttons states - before edition
+  QVERIFY(!w.toFirstEnabled);
+  QVERIFY(w.toLastEnabled);
+  QVERIFY(w.toNextEnabled);
+  QVERIFY(!w.toPreviousEnabled);
+  QVERIFY(!w.submitEnabled);
+  QVERIFY(!w.revertEnabled);
+  QVERIFY(w.insertEnabled);
+  QVERIFY(w.removeEnabled);
+  // Edit in widgets and submit
+  QTest::keyClicks(w.fld_Remarks, "Edited remark on Andy");
+  QVERIFY(!wc.allDataAreSaved());
+  // Check control buttons states - after edition
+  QVERIFY(!w.toFirstEnabled);
+  QVERIFY(!w.toLastEnabled);
+  QVERIFY(!w.toNextEnabled);
+  QVERIFY(!w.toPreviousEnabled);
+  QVERIFY(w.submitEnabled);
+  QVERIFY(w.revertEnabled);
+  QVERIFY(!w.insertEnabled);
+  QVERIFY(!w.removeEnabled);
+  // Submit
+  QVERIFY(wc.submitAndWait());
+  // Check that model was updated
+  QVERIFY(wc.allDataAreSaved());
+  QCOMPARE(wc.currentRow(), 0);
+  QCOMPARE(wc.currentData("FirstName", ok), QVariant("Andy"));
+  QVERIFY(ok);
+  QCOMPARE(wc.currentData("Remarks", ok), QVariant("Edited remark on Andy"));
+  QVERIFY(ok);
+  // Check that widget displays the correct row
+  QCOMPARE(w.fld_FirstName->text(), QString("Andy"));
+  QCOMPARE(w.fld_Remarks->text(), QString("Edited remark on Andy"));
+  // Check control buttons states - after submit
+  QVERIFY(!w.toFirstEnabled);
+  QVERIFY(w.toLastEnabled);
+  QVERIFY(w.toNextEnabled);
+  QVERIFY(!w.toPreviousEnabled);
+  QVERIFY(!w.submitEnabled);
+  QVERIFY(!w.revertEnabled);
+  QVERIFY(w.insertEnabled);
+  QVERIFY(w.removeEnabled);
+  // Select data and check that database was not updated
+  QVERIFY(wc.select());
+  QCOMPARE(wc.currentRow(), 0);
+  QCOMPARE(wc.currentData("FirstName", ok), QVariant("Andy"));
+  QVERIFY(ok);
+  QVERIFY(wc.currentData("Remarks", ok).isNull());
+  QVERIFY(ok);
+
+  // Clear test data
+  clearTestDatabaseData();
+  // Re-enable foreign_keys support
+  QVERIFY(q.exec("PRAGMA foreign_keys = ON"));
+}
+
 void mdtDatabaseWidgetTest::sqlDataWidgetController2tableTest()
 {
   QSqlQuery q(pvDatabaseManager.database());
@@ -1612,7 +1762,7 @@ void mdtDatabaseWidgetTest::sqlDataWidgetController2tableTest()
   QStringList fields;
   mdtSqlRecord rec;
   QList<QVariant> dataList;
-  bool ok;
+  ///bool ok;
 
   // For this test, we wont foreign_keys support
   ///QVERIFY(q.exec("PRAGMA foreign_keys = OFF"));

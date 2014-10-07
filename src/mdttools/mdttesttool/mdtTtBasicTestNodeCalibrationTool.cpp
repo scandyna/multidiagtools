@@ -25,6 +25,7 @@
 #include "mdtValue.h"
 #include "mdtTtTest.h"
 #include <QString>
+#include <QSqlQuery>
 
 #include <QDebug>
 
@@ -313,7 +314,7 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateIsoRelays()
   // Check that we have R < 1 Ohm
   R = multimeter->getMeasureValue();
   qDebug() << "R: " << R;
-  if(!isInRange(R, 0.0, 2.0)){  /// \todo Provisoire ! Voir pourquoi 1.5 Ohm durant 10 secondes !
+  if(!isInRange(R, 0.0, 1.0)){
     pvLastError.updateText(tr("Checking resistance of realys K1 and K2 failed.\nNote: did you plug the bridge between ISO+ and ISO- ?"));
     return false;
   }
@@ -432,6 +433,18 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateForceRelays()
   setTestNodeUnitCalibrationOffset("K8", (R.valueDouble() - r4 - r6) / 2.0);
 
   return true;
+}
+
+bool mdtTtBasicTestNodeCalibrationTool::calibrateChannelRelays()
+{
+
+  // Select TestModel with KEY xy
+  
+  // Create QSqlQuery for data in TestModelItem_tbl for selecte TestModel
+  
+  // For each entry, get setup
+  
+  // ...
 }
 
 void mdtTtBasicTestNodeCalibrationTool::addInstruments()

@@ -19,7 +19,6 @@
  **
  ****************************************************************************/
 #include "mdtTtAbstractTestNodeCalibrationTool.h"
-///#include "mdtSqlFormWidget.h"
 #include "mdtSqlRelationInfo.h"
 #include "mdtUiMessageHandler.h"
 #include <QSqlError>
@@ -34,20 +33,8 @@ mdtTtAbstractTestNodeCalibrationTool::mdtTtAbstractTestNodeCalibrationTool(QSqlD
    pvTestNodeManager(new mdtTtTestNodeManager(0, db)),
    pvTest(new mdtTtTest(0, db)),
    pvTestNodeTableController(new mdtSqlDataWidgetController)
-   /**pvTestNodeTableModel(new QSqlTableModel(0, db)),*/
-   /**pvTestNodeForm(new mdtSqlFormWidget),*/
-   /**
-   pvTestNodeUnitViewTableModel(new QSqlTableModel(0, db)),
-   pvTestNodeUnitViewRelation(new mdtSqlRelation),
-   pvTestNodeUnitTableModel(new QSqlTableModel(0, db)),
-   pvTestNodeUnitRelation(new mdtSqlRelation)
-   */
 {
   pvParentWidget = 0;
-  /**
-  pvTestNodeForm->setAskUserBeforRevert(false);
-  pvTestNodeForm->setModel(pvTest->testTableModel().get());
-  */
 }
 
 bool mdtTtAbstractTestNodeCalibrationTool::setup(QWidget *testNodeFormWidget)
@@ -57,10 +44,12 @@ bool mdtTtAbstractTestNodeCalibrationTool::setup(QWidget *testNodeFormWidget)
   QSqlError sqlError;
   mdtSqlRelationInfo relationInfo;
 
-  if(!pvTest->init()){
+  /**
+  if(!pvTest->setup()){
     pvLastError = pvTest->lastError();
     return false;
   }
+  */
   // Setup test node table
   pvTestNodeTableController->setTableName("TestNode_view", pvDatabase, tr("Test node"));
   ///pvTestNodeTableController->setMessageHandler(std::shared_ptr<mdtUiMessageHandler>(new mdtUiMessageHandler(testNodeFormWidget)));
@@ -77,197 +66,26 @@ bool mdtTtAbstractTestNodeCalibrationTool::setup(QWidget *testNodeFormWidget)
   }
   pvTestNodeUnitTableController = pvTestNodeTableController->childController<mdtSqlTableViewController>("TestNodeUnit_view");
   Q_ASSERT(pvTestNodeUnitTableController);
+  pvTestNodeUnitTableController->addColumnToSortOrder("IoPosition", Qt::AscendingOrder);
   // Start controllers
   pvTestNodeTableController->start();
   if(!pvTestNodeTableController->select()){
     pvLastError = pvTestNodeTableController->lastError();
     return false;
   }
-
-  /**
-  pvTestNodeTableModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
-  pvTestNodeTableModel->setTable("TestNode_view");
-  ///pvTestNodeTableModel->setFilter("VehicleType_Id_FK_PK = -1");
-  if(!pvTestNodeTableModel->select()){
-    sqlError = pvTestNodeTableModel->lastError();
-    pvLastError.setError(tr("Cannot select data from table 'TestNode_view'"), mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtAbstractTestNodeCalibrationTool");
-    pvLastError.commit();
-    return false;
-  }
-  */
-  /**
-  pvTestNodeForm->setAskUserBeforRevert(false);
-  pvTestNodeForm->setModel(pvTestNodeTableModel.get());
-  */
-  ///pvTestNodeForm->setCurrentIndex(-1);
-  // Setup test node unit table view
-  /**
-  pvTestNodeUnitViewTableModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
-  pvTestNodeUnitViewTableModel->setTable("TestNodeUnit_view");
-  pvTestNodeUnitViewTableModel->setFilter("Unit_Id_FK_PK = -1");
-  if(!pvTestNodeUnitViewTableModel->select()){
-    sqlError = pvTestNodeTableModel->lastError();
-    pvLastError.setError(tr("Cannot select data from table 'TestNodeUnit_view'"), mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtAbstractTestNodeCalibrationTool");
-    pvLastError.commit();
-    return false;
-  }
-  // Setup TestNode_view -> TestNodeUnit_view relation
-  pvTestNodeUnitViewRelation->setParentModel(pvTestNodeTableModel.get());
-  pvTestNodeUnitViewRelation->setChildModel(pvTestNodeUnitViewTableModel.get());
-  if(!pvTestNodeUnitViewRelation->addRelation("VehicleType_Id_FK_PK", "TestNode_Id_FK", false)){
-    pvLastError.setError(tr("Cannot add TestNode_view <-> TestNodeUnit_view relation"), mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtAbstractTestNodeCalibrationTool");
-    pvLastError.commit();
-    return false;
-  }
-  */
-  ///connect(pvTestNodeForm.get(), SIGNAL(currentRowChanged(int)), pvTestNodeUnitViewRelation.get(), SLOT(setParentCurrentIndex(int)));
+  pvTestNodeUnitTableController->sort();
 
   /** \toso Idée:
    *  - Travailler tous sur un controlleur pointant sur TestNodeUnit_view (y compris affichage des résultats en live)
    *  - Créer une méthode de sauvegarde reprenant les données depuis ce contrôleur, mais correspondant aux champs
    *     à sauvegarder dans TestNodeUnit_tbl, créer une liste de mdtSqlRecord et sauvegarder d'une transaction.
    */
-  // Setup test node unit table
-  /**
-  pvTestNodeUnitTableModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
-  pvTestNodeUnitTableModel->setTable("TestNodeUnit_tbl");
-  pvTestNodeUnitTableModel->setFilter("Unit_Id_FK_PK = -1");
-  if(!pvTestNodeUnitTableModel->select()){
-    sqlError = pvTestNodeTableModel->lastError();
-    pvLastError.setError(tr("Cannot select data from table 'TestNodeUnit_tbl'"), mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtAbstractTestNodeCalibrationTool");
-    pvLastError.commit();
-    return false;
-  }
-  // Setup TestNode_view -> TestNodeUnit_tbl relation
-  pvTestNodeUnitRelation->setParentModel(pvTestNodeTableModel.get());
-  pvTestNodeUnitRelation->setChildModel(pvTestNodeUnitTableModel.get());
-  if(!pvTestNodeUnitRelation->addRelation("VehicleType_Id_FK_PK", "TestNode_Id_FK", false)){
-    pvLastError.setError(tr("Cannot add TestNode_view <-> TestNodeUnit_tbl relation"), mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtAbstractTestNodeCalibrationTool");
-    pvLastError.commit();
-    return false;
-  }
-  */
-  ///connect(pvTestNodeForm.get(), SIGNAL(currentRowChanged(int)), pvTestNodeUnitRelation.get(), SLOT(setParentCurrentIndex(int)));
 
-  
-  ///pvTestNodeForm->toFirst();
-  
-  
   pvParentWidget = testNodeFormWidget;
 
   return true;
 }
 
-/**
-void mdtTtAbstractTestNodeCalibrationTool::setTestNodeUiWidget(QWidget* widget)
-{
-  Q_ASSERT(widget != 0);
-
-  pvParentWidget = widget;
-  pvTestNodeForm->mapFormWidgets(widget);
-  pvTestNodeForm->setCurrentIndex(-1);
-  pvTestNodeForm->start();
-}
-*/
-
-/**
-QVariant mdtTtAbstractTestNodeCalibrationTool::currentTestNodeData(const QString& fieldName)
-{
-  ///return pvTestNodeForm->currentData(fieldName);
-}
-*/
-
-/**
-QVariant mdtTtAbstractTestNodeCalibrationTool::testNodeUnitData(int testNodeUnitId, const QString& fieldName)
-{
-  int row, col;
-  QModelIndex index;
-
-  if(pvTestNodeUnitViewTableModel->rowCount() < 1){
-    return QVariant();
-  }
-  // Find column of requested field name
-  col = pvTestNodeUnitViewTableModel->fieldIndex(fieldName);
-  Q_ASSERT(col >= 0);
-  // Search row
-  row = testNodeUnitViewTableModelRow(testNodeUnitId);
-  Q_ASSERT(row >= 0);
-  index = pvTestNodeUnitViewTableModel->index(row, col);
-
-  return pvTestNodeUnitViewTableModel->data(index);
-}
-*/
-
-/**
-QVariant mdtTtAbstractTestNodeCalibrationTool::testNodeUnitData(const QString& schemaPosition, const QString& fieldName)
-{
-  int row, col;
-  QModelIndex index;
-
-  if(pvTestNodeUnitViewTableModel->rowCount() < 1){
-    return QVariant();
-  }
-  // Find column of requested field name
-  col = pvTestNodeUnitViewTableModel->fieldIndex(fieldName);
-  Q_ASSERT(col >= 0);
-  // Search row
-  row = testNodeUnitViewTableModelRow(schemaPosition);
-  Q_ASSERT(row >= 0);
-  index = pvTestNodeUnitViewTableModel->index(row, col);
-
-  return pvTestNodeUnitViewTableModel->data(index);
-}
-*/
-
-/**
-bool mdtTtAbstractTestNodeCalibrationTool::setTestNodeUnitData(int testNodeUnitId, const QString& fieldName, const QVariant& data)
-{
-  int row, col;
-  QModelIndex testNodeUnitViewIndex;
-  QModelIndex testNodeUnitTableIndex;
-
-  // Find index in TestNodeUnit_view
-  col = pvTestNodeUnitViewTableModel->fieldIndex(fieldName);
-  Q_ASSERT(col >= 0);
-  row = testNodeUnitViewTableModelRow(testNodeUnitId);
-  Q_ASSERT(row >= 0);
-  testNodeUnitViewIndex = pvTestNodeUnitViewTableModel->index(row, col);
-  Q_ASSERT(testNodeUnitViewIndex.isValid());
-  // Find index in TestNodeUnit_tbl
-  col = pvTestNodeUnitTableModel->fieldIndex(fieldName);
-  Q_ASSERT(col >= 0);
-  row = testNodeUnitTableModelRow(testNodeUnitId);
-  Q_ASSERT(row >= 0);
-  testNodeUnitTableIndex = pvTestNodeUnitViewTableModel->index(row, col);
-  Q_ASSERT(testNodeUnitTableIndex.isValid());
-
-  // Set data
-  pvTestNodeUnitViewTableModel->setData(testNodeUnitViewIndex, data);
-  pvTestNodeUnitTableModel->setData(testNodeUnitTableIndex, data);
-
-  return true;
-}
-*/
-
-/**
-bool mdtTtAbstractTestNodeCalibrationTool::setTestNodeUnitData(const QString& schemaPosition, const QString& fieldName, const QVariant& data)
-{
-  QVariant testNodeUnitId;
-
-  testNodeUnitId = testNodeUnitData(schemaPosition, "Unit_Id_FK_PK");
-  Q_ASSERT(!testNodeUnitId.isNull());
-
-  return setTestNodeUnitData(testNodeUnitId.toInt(), fieldName, data);
-}
-*/
 
 bool mdtTtAbstractTestNodeCalibrationTool::setTestNodeUnitCalibrationOffset(int testNodeUnitId, double offset)
 {
@@ -380,99 +198,3 @@ bool mdtTtAbstractTestNodeCalibrationTool::isInRange(const mdtValue & value, dou
 
   return true;
 }
-
-/**
-int mdtTtAbstractTestNodeCalibrationTool::testNodeUnitViewTableModelRow(int testNodeUnitId)
-{
-  int row, col;
-  QModelIndex index;
-
-  if(pvTestNodeUnitViewTableModel->rowCount() < 1){
-    return -1;
-  }
-  // Find column of Unit_Id_FK_PK
-  col = pvTestNodeUnitViewTableModel->fieldIndex("Unit_Id_FK_PK");
-  Q_ASSERT(col >= 0);
-  // Search row
-  row = 0;
-  while(true){
-    index = pvTestNodeUnitViewTableModel->index(row, col);
-    if(pvTestNodeUnitViewTableModel->data(index).toInt() == testNodeUnitId){
-      return row;
-    }
-    if(row == (pvTestNodeUnitViewTableModel->rowCount()-1)){
-      if(!pvTestNodeUnitViewTableModel->canFetchMore()){
-        return -1;
-      }
-      pvTestNodeUnitViewTableModel->fetchMore();
-    }
-    ++row;
-  }
-
-  return -1;
-}
-*/
-
-/**
-int mdtTtAbstractTestNodeCalibrationTool::testNodeUnitViewTableModelRow(const QString& schemaPosition)
-{
-  int row, col;
-  QModelIndex index;
-
-  if(pvTestNodeUnitViewTableModel->rowCount() < 1){
-    return -1;
-  }
-  // Find column of SchemaPosition
-  col = pvTestNodeUnitViewTableModel->fieldIndex("SchemaPosition");
-  Q_ASSERT(col >= 0);
-  // Search row
-  row = 0;
-  while(true){
-    index = pvTestNodeUnitViewTableModel->index(row, col);
-    if(pvTestNodeUnitViewTableModel->data(index).toString() == schemaPosition){
-      return row;
-    }
-    if(row == (pvTestNodeUnitViewTableModel->rowCount()-1)){
-      if(!pvTestNodeUnitViewTableModel->canFetchMore()){
-        return -1;
-      }
-      pvTestNodeUnitViewTableModel->fetchMore();
-    }
-    ++row;
-  }
-
-  return -1;
-}
-*/
-
-/**
-int mdtTtAbstractTestNodeCalibrationTool::testNodeUnitTableModelRow(int testNodeUnitId)
-{
-  int row, col;
-  QModelIndex index;
-
-  if(pvTestNodeUnitTableModel->rowCount() < 1){
-    return -1;
-  }
-  // Find column of Unit_Id_FK_PK
-  col = pvTestNodeUnitTableModel->fieldIndex("Unit_Id_FK_PK");
-  Q_ASSERT(col >= 0);
-  // Search row
-  row = 0;
-  while(true){
-    index = pvTestNodeUnitTableModel->index(row, col);
-    if(pvTestNodeUnitTableModel->data(index).toInt() == testNodeUnitId){
-      return row;
-    }
-    if(row == (pvTestNodeUnitTableModel->rowCount()-1)){
-      if(!pvTestNodeUnitTableModel->canFetchMore()){
-        return -1;
-      }
-      pvTestNodeUnitTableModel->fetchMore();
-    }
-    ++row;
-  }
-
-  return -1;
-}
-*/

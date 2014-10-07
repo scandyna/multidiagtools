@@ -183,9 +183,13 @@ class mdtSqlTableViewController : public mdtAbstractSqlTableController
    */
   void modelSetEvent();
 
+  /*! \brief Submit data to model
+   */
+  bool submitToModel();
+
   /*! \brief Submit current row to model
    */
-  bool doSubmit();
+  //bool doSubmit();
 
   /*! \brief Revert current row from model
    */
@@ -193,7 +197,7 @@ class mdtSqlTableViewController : public mdtAbstractSqlTableController
 
   /*! \brief Submit new row to model
    */
-  bool doSubmitNewRow();
+  //bool doSubmitNewRow();
 
   /*! \brief Remove current row from model
    */

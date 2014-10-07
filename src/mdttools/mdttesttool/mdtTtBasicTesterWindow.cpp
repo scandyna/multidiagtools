@@ -37,19 +37,19 @@ mdtTtBasicTesterWindow::mdtTtBasicTesterWindow(QSqlDatabase db, QWidget* parent)
 
   setupUi(this);
   // Setup tester
-  pvTesterWidget = new mdtTtBasicTester(db, this);
-  connect(pvTesterWidget, SIGNAL(testDataChanged(const QSqlRecord&)), this, SLOT(displayTestData(const QSqlRecord&)));
+  pvTester = new mdtTtBasicTester(db, this);
+  ///connect(pvTester, SIGNAL(testDataChanged(const QSqlRecord&)), this, SLOT(displayTestData(const QSqlRecord&)));
   // Setup instruments state widget
   l = new QVBoxLayout;
   pvDeviceContainerWidget = new mdtDeviceContainerWidget;
-  pvDeviceContainerWidget->setContainer(pvTesterWidget->testNodeManager()->container());
+  pvDeviceContainerWidget->setContainer(pvTester->testNodeManager()->container());
   l->addWidget(pvDeviceContainerWidget);
   l->addStretch();
   tbInstruments->setLayout(l);
   // Setup test item table widget
   pvTestItemWidget = new mdtSqlTableWidget;
   /// \todo Adapter !
-  ///pvTestItemWidget->setModel(pvTesterWidget->testItemViewTableModel().get());
+  ///pvTestItemWidget->setModel(pvTester->testItemViewTableModel().get());
   l = new QVBoxLayout;
   l->addWidget(pvTestItemWidget);
   tbTestItem->setLayout(l);
@@ -58,34 +58,49 @@ mdtTtBasicTesterWindow::mdtTtBasicTesterWindow(QSqlDatabase db, QWidget* parent)
   connectActions();
 }
 
+/// \todo Error dialog !!
 bool mdtTtBasicTesterWindow::init()
 {
+  ///Q_ASSERT(pvTester->test()->testViewController());
+
   /**
-  if(!pvTesterWidget->init()){
+  if(!pvTester->init()){
     return false;
   }
   */
-  if(!pvTesterWidget->setup()){
+  if(!pvTester->setup()){
     return false;
   }
-  pvTesterWidget->setTestUiWidget(centralWidget());
+  if(!pvTester->setTestUiWidget(centralWidget())){
+    return false;
+  }
   setupTestItemTableWidget();
+  ///pvTester->test()->testViewController()->start();
+  if(!pvTester->start()){
+    return false;
+  }
 
   return true;
 }
 
 mdtError mdtTtBasicTesterWindow::lastError() const
 {
-  return pvTesterWidget->lastError();
+  return pvTester->lastError();
 }
 
+/**
 void mdtTtBasicTesterWindow::displayTestData(const QSqlRecord & data)
 {
   lbTestDesignationEN->setText(data.value("DesignationEN").toString());
 }
+*/
 
 void mdtTtBasicTesterWindow::setupTestItemTableWidget()
 {
+  Q_ASSERT(pvTester->testItemViewController());
+
+  pvTestItemWidget->setTableController(pvTester->testItemViewController());
+  connect(pvTester->testViewController().get(), SIGNAL(childWidgetEnableStateChanged(bool)), pvTestItemWidget, SLOT(setEnabled(bool)));
   // Hide technical fields
   pvTestItemWidget->setColumnHidden("Id_PK", true);
   pvTestItemWidget->setColumnHidden("Test_Id_FK", true);
@@ -110,21 +125,21 @@ void mdtTtBasicTesterWindow::setupTestItemTableWidget()
 
 void mdtTtBasicTesterWindow::connectActions()
 {
-  Q_ASSERT(pvTesterWidget != 0);
-  ///connect(actTestSetType, SIGNAL(triggered()), pvTesterWidget, SLOT(setTestModel()));
-  connect(actTestSave, SIGNAL(triggered()), pvTesterWidget, SLOT(saveTest()));
-  connect(actTestNew, SIGNAL(triggered()), pvTesterWidget, SLOT(createTest()));
-  connect(actTestView, SIGNAL(triggered()), pvTesterWidget, SLOT(openTest()));
-  connect(actTestRun, SIGNAL(triggered()), pvTesterWidget, SLOT(runTest()));
+  Q_ASSERT(pvTester != 0);
+  ///connect(actTestSetType, SIGNAL(triggered()), pvTester, SLOT(setTestModel()));
+  connect(actTestSave, SIGNAL(triggered()), pvTester, SLOT(saveTest()));
+  connect(actTestNew, SIGNAL(triggered()), pvTester, SLOT(createTest()));
+  connect(actTestView, SIGNAL(triggered()), pvTester, SLOT(openTest()));
+  connect(actTestRun, SIGNAL(triggered()), pvTester, SLOT(runTest()));
 }
 
 void mdtTtBasicTesterWindow::closeEvent(QCloseEvent* event)
 {
-  if(pvTesterWidget == 0){
+  if(pvTester == 0){
     event->accept();
     return;
   }
-  if(!pvTesterWidget->testIsSaved()){
+  if(!pvTester->testIsSaved()){
     QMessageBox msgBox(this);
     msgBox.setText(tr("Current test was not saved."));
     msgBox.setInformativeText(tr("If you continue, current test will be lost. Do you want to continue ?"));

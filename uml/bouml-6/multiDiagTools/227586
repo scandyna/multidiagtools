@@ -1,6 +1,6 @@
 format 207
 "mdttesttool" // mdttools::mdttesttool
-  revision 54
+  revision 55
   modified_by 2 "philippe"
   // class settings
   
@@ -2893,15 +2893,16 @@ ${inlines}
 	
       end
 
-      operation 2077314 "getTestData"
-	public return_type class_ref 1295362 // mdtTtTestData
+      operation 2286594 "isInRange"
+	class_operation public explicit_return_type "bool"
 	nparams 3
-	  param in name "testId" type class_ref 161154 // QVariant
-	  param in name "includeModelData" explicit_type "bool"
-	  param in name "ok" explicit_type "bool"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+	  param in name "x" explicit_type "double"
+	  param in name "min" explicit_type "double"
+	  param in name "max" explicit_type "double"
+	    defaultvalue "infinity"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -2911,14 +2912,15 @@ ${inlines}
 	
       end
 
-      operation 2077698 "updateTestData"
-	public explicit_return_type "bool"
-	nparams 2
-	  param in name "testId" type class_ref 161154 // QVariant
-	  param in name "data" type class_ref 1295362 // mdtTtTestData
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+      operation 2286722 "isInOkRange"
+	class_operation public explicit_return_type "bool"
+	nparams 3
+	  param in name "x" explicit_type "double"
+	  param in name "limitMin" explicit_type "double"
+	  param in name "limitMax" explicit_type "double"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -2928,30 +2930,17 @@ ${inlines}
 	
       end
 
-      classrelation 1750018 // pvTestTableController (<directional composition>)
-	relation 1734530 *-->
-	  a role_name "pvTestTableController" multiplicity "1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+      operation 2286850 "isInLimitRange"
+	class_operation public explicit_return_type "bool"
+	nparams 5
+	  param in name "x" explicit_type "double"
+	  param in name "limitMin" explicit_type "double"
+	  param in name "limitMax" explicit_type "double"
+	  param in name "failMin" explicit_type "double"
+	  param in name "failMax" explicit_type "double"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}, ${t3} ${p3}${v3}, ${t4} ${p4}${v4}${)}${const}${volatile}${throw}${abstract};
 "
-	    classrelation_ref 1750018 // pvTestTableController (<directional composition>)
-	  b parent class_ref 405250 // mdtSqlDataWidgetController
-      end
-
-      classrelation 1750146 // <directional composition>
-	relation 1734658 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 1750146 // <directional composition>
-	  b parent class_ref 405250 // mdtSqlDataWidgetController
-      end
-
-      operation 2248706 "testViewController"
-	public return_type class_ref 405250 // mdtSqlDataWidgetController
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}, ${t4} ${p4}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -2961,8 +2950,8 @@ ${inlines}
 	
       end
 
-      operation 2249090 "testItemViewController"
-	public return_type class_ref 1375746 // mdtSqlTableViewController
+      operation 2286978 "getSetupData"
+	public return_type class_ref 1308930 // mdtTtTestItemNodeSetupData
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -4398,7 +4387,7 @@ ${inlines}
 
     classdiagram 1204482 "mdtTtAbstractTester"
       classdiagramsettings member_max_width 0 end
-      size A4
+      size A4-Landscape
     end
 
     class 1342466 "mdtTtAbstractTester"
@@ -4683,6 +4672,23 @@ ${inlines}
 	
       end
 
+      classrelation 1756930 // pvTestViewController (<directional composition>)
+	relation 1741442 *-->
+	  a role_name "pvTestViewController" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 1756930 // pvTestViewController (<directional composition>)
+	  b parent class_ref 405250 // mdtSqlDataWidgetController
+      end
+
+      classrelation 1757058 // pvTestItemViewController (<directional composition>)
+	relation 1741570 *-->
+	  a role_name "pvTestItemViewController" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 1757058 // pvTestItemViewController (<directional composition>)
+	  b parent class_ref 1375746 // mdtSqlTableViewController
+      end
     end
 
     classdiagram 1165058 "BasicTester"
@@ -5032,7 +5038,7 @@ ${inlines}
 
     classdiagram 1211138 "mdtTtAbstractTestNodeCalibrationTool"
       classdiagramsettings member_max_width 0 end
-      size A4
+      size A4-Landscape
     end
 
     class 1349122 "mdtTtAbstractTestNodeCalibrationTool"
@@ -5146,6 +5152,24 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 1756674 // pvTestNodeTableController (<directional composition>)
+	relation 1741186 *-->
+	  a role_name "pvTestNodeTableController" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 1756674 // pvTestNodeTableController (<directional composition>)
+	  b parent class_ref 405250 // mdtSqlDataWidgetController
+      end
+
+      classrelation 1756802 // pvTestNodeUnitTableController (<directional composition>)
+	relation 1741314 *-->
+	  a role_name "pvTestNodeUnitTableController" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 1756802 // pvTestNodeUnitTableController (<directional composition>)
+	  b parent class_ref 1375746 // mdtSqlTableViewController
       end
     end
 

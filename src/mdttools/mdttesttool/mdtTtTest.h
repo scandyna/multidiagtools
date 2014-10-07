@@ -42,10 +42,14 @@
 
 class QSqlTableModel;
 class mdtSqlRelation;
+class QWidget;
 
 /*! \brief Helper class to manipulate test data
  *
- * 
+ * Typical usage:
+ *  - Do base initialization with setup()
+ *  - Do signal/slot connections
+ *  - Load data from database and start state machines with start()
  */
 class mdtTtTest : public mdtTtBase
 {
@@ -57,28 +61,43 @@ class mdtTtTest : public mdtTtBase
    */
   mdtTtTest(QObject *parent, QSqlDatabase db);
 
-  /*! \brief Do some initialization
+  /*! \brief Do setup
    *
-   * Will setup test data and table models for test item view and table.
+   * Will setup internal SQL table controllers
+   *  to access Test_view and TestItem_view.
    */
-  bool init();
+  ///bool setup();
+
+  /*! \brief Start state machines
+   *
+   * Will load data from database and start internal state machines.
+   *  After this call, use setCurrentTest() to go to a existing test,
+   *  or createTest() to create a new one.
+   *
+   * \pre setup() must be called before using this method.
+   */
+  ///bool start();
 
   /*! \brief Access controller that acts on Test_view
    */
+  /**
   std::shared_ptr<mdtSqlDataWidgetController> testViewController()
   {
     return pvTestViewController;
   }
+  */
 
   /*! \brief Access controller that acts on TestItem_view
    *
    * \pre init() must be done before calling this method.
    */
+  /**
   std::shared_ptr<mdtSqlTableViewController> testItemViewController()
   {
     Q_ASSERT(pvTestItemViewController);
     return pvTestItemViewController;
   }
+  */
 
   /*! \brief Get table model to access data in Test_tbl
    */
@@ -123,20 +142,29 @@ class mdtTtTest : public mdtTtBase
    *   - testIsSaved()
    *   - 
    */
-  void setCurrentTest(const QVariant & testId);
+  //bool setCurrentTest(const QVariant & testId);
 
   /*! \brief Create a new test based on given testModelId
    *
-   * Note: will directly create the test.
-   *  To check test state before, use:
-   *   - testIsSaved()
-   *   - testIsEmpty()
+   * Will also create test items.
+   *
+   * \return Test ID of created test or a Null value on error.
    */
-  bool createTest(const QVariant & testModelId);
+  QVariant createTest(const QVariant & testModelId);
+
+  /*! \brief Save a test and related test items
+   */
+  bool saveTest(const mdtSqlRecord & testRecord, const QList<mdtSqlRecord> & testItemRecords);
 
   /*! \brief Save current test
    */
-  bool saveCurrentTest();
+  //bool saveCurrentTest();
+
+  /*! \brief Remove a test
+   *
+   * Will also remove test items.
+   */
+  bool removeTest(const QVariant & testId);
 
   /*! \brief Remove current test
    *
@@ -145,7 +173,7 @@ class mdtTtTest : public mdtTtBase
    *   - testIsSaved()
    *   - testIsEmpty()
    */
-  bool removeCurrentTest();
+  //bool removeCurrentTest();
 
   /*! \brief Check if a test is empty
    *
@@ -156,7 +184,7 @@ class mdtTtTest : public mdtTtBase
    *  - In Test_tbl: only Id_PK, TestModel_Id_FK and Date are set
    *  - In each related item in Test_tbl: only Id_PK, Test_Id_FK and TestModelItem_Id_FK are set
    */
-  bool testIsEmpty() const;
+  //bool testIsEmpty() const;
 
   /*! \brief Check if test is saved
    *
@@ -164,7 +192,7 @@ class mdtTtTest : public mdtTtBase
    *  If no test was set (Test_tbl.Id_PK is NULL), test is considered saved.
    *  Note: each call of this method will check all test items.
    */
-  bool testIsSaved();
+  //bool testIsSaved();
 
   /*! \brief Set test item data
    */
@@ -173,13 +201,13 @@ class mdtTtTest : public mdtTtBase
    *
    * Note: will not save to database. Use saveCurrentTest() for that.
    */
-  void setCurrentTestItemData(const QString& fieldName, const QVariant& data);
+  //void setCurrentTestItemData(const QString& fieldName, const QVariant& data);
 
   /*! \brief Get current test item data
    *
    * Note: will return cached value.
    */
-  QVariant currentTestItemData(const QString & fieldName) const;
+  //QVariant currentTestItemData(const QString & fieldName) const;
 
   /*! \brief Set measured value to current test item
    *
@@ -196,7 +224,7 @@ class mdtTtTest : public mdtTtBase
    *  informative, they are stored as they are given.
    *  For proper limit evaluation, only mdtValue's flags are used.
    */
-  void setMeasuredValue(const mdtValue & value, const QVariant & instrumentRangeMin, const QVariant & instrumentRangeMax);
+  //void setMeasuredValue(const mdtValue & value, const QVariant & instrumentRangeMin, const QVariant & instrumentRangeMax);
 
   /*! \brief Check if x is in range
    *
@@ -218,7 +246,7 @@ class mdtTtTest : public mdtTtBase
 
   /*! \brief Check if more test item is available
    */
-  bool hasMoreTestItem() const;
+  //bool hasMoreTestItem() const;
 
   /*! \brief Reset the test item cursor
    */
@@ -228,7 +256,7 @@ class mdtTtTest : public mdtTtBase
    *
    * \return The test item ID
    */
-  QVariant nextTestItem();
+  //QVariant nextTestItem();
 
   /*! \brief Get setup data for given test item ID
    */
@@ -289,7 +317,7 @@ class mdtTtTest : public mdtTtBase
   std::shared_ptr<QSqlTableModel> pvTestTableModel;             // Access data in Test_tbl
   std::shared_ptr<mdtSqlRelation> pvTestTableRelation;          // Test_view <-> Test_tbl relation
   */
-  std::shared_ptr<mdtSqlDataWidgetController> pvTestViewController; // Access data in Test_view
+  ///std::shared_ptr<mdtSqlDataWidgetController> pvTestViewController; // Access data in Test_view
   ///int pvCurrentTestRow;
   // Test item data models
   /**
@@ -299,7 +327,7 @@ class mdtTtTest : public mdtTtBase
   std::shared_ptr<mdtSqlRelation> pvTestItemTableRelation;      // Test_view <-> TestItem_tbl relation
   */
   // Test item data
-  std::shared_ptr<mdtSqlTableViewController> pvTestItemViewController;  // Access data in TestItem_view
+  ///std::shared_ptr<mdtSqlTableViewController> pvTestItemViewController;  // Access data in TestItem_view
   int pvCurrentTestItemRow;
 };
 

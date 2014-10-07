@@ -51,7 +51,7 @@ mdtTtBasicTester::mdtTtBasicTester(QSqlDatabase db, QObject *parent)
 
 bool mdtTtBasicTester::setup()
 {
-  if(!init()){
+  if(!mdtTtAbstractTester::setup()){
     return false;
   }
   if(!addInstruments()){
@@ -88,23 +88,23 @@ void mdtTtBasicTester::runTest()
   
   qDebug() << "Running test ...";
   test()->resetTestItemCursor();
-  while(test()->hasMoreTestItem()){
-    testItemId = test()->nextTestItem();
-    qDebug() << "Curremt item: " << testItemId;
-    ///setTestItemData(testItemId, "Result", "Running ...");
-    test()->setCurrentTestItemData("Result", "Running ...");
-    if(!setupInstruments(testItemId)){
-      disconnectFromInstruments();
-      return;
-    }
-    
-    measuredValue = multimeter->getMeasureValue();
-    qDebug() << "MeasuredValue: " << measuredValue;
-    
-    test()->setMeasuredValue(measuredValue, QVariant(), QVariant());
-    ///test()->setCurrentTestItemData("MeasuredValue", measuredValue.valueDouble());
-    ///test()->setCurrentTestItemData("Result", "Finished");
-  }
+//   while(test()->hasMoreTestItem()){
+//     testItemId = test()->nextTestItem();
+//     qDebug() << "Curremt item: " << testItemId;
+//     ///setTestItemData(testItemId, "Result", "Running ...");
+//     test()->setCurrentTestItemData("Result", "Running ...");
+//     if(!setupInstruments(testItemId)){
+//       disconnectFromInstruments();
+//       return;
+//     }
+//     
+//     measuredValue = multimeter->getMeasureValue();
+//     qDebug() << "MeasuredValue: " << measuredValue;
+//     
+//     test()->setMeasuredValue(measuredValue, QVariant(), QVariant());
+//     ///test()->setCurrentTestItemData("MeasuredValue", measuredValue.valueDouble());
+//     ///test()->setCurrentTestItemData("Result", "Finished");
+//   }
 
   disconnectFromInstruments();
 }

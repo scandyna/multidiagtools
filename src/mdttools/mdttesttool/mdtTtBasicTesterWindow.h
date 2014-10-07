@@ -55,7 +55,7 @@ class mdtTtBasicTesterWindow : public QMainWindow, Ui::mdtTtBasicTesterWindow
 
   /*! \brief Update widget with given test data
    */
-  void displayTestData(const QSqlRecord & data);
+  ///void displayTestData(const QSqlRecord & data);
 
  private:
 
@@ -73,7 +73,7 @@ class mdtTtBasicTesterWindow : public QMainWindow, Ui::mdtTtBasicTesterWindow
 
   Q_DISABLE_COPY(mdtTtBasicTesterWindow);
 
-  mdtTtBasicTester *pvTesterWidget;
+  mdtTtBasicTester *pvTester;
   mdtDeviceContainerWidget *pvDeviceContainerWidget;
   mdtSqlTableWidget *pvTestItemWidget;  // Display data from TestItem_view (R only access)
 };

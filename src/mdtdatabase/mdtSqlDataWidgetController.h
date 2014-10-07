@@ -160,9 +160,13 @@ class mdtSqlDataWidgetController : public mdtAbstractSqlTableController
    */
   void insertDoneEvent(int row);
 
+  /*! \brief Submit data to model
+   */
+  bool submitToModel();
+
   /*! \brief Submit current row to model
    */
-  bool doSubmit();
+  //bool doSubmit();
 
   /*! \brief Revert current row from model
    */
@@ -170,7 +174,7 @@ class mdtSqlDataWidgetController : public mdtAbstractSqlTableController
 
   /*! \brief Submit new row to model
    */
-  bool doSubmitNewRow();
+  //bool doSubmitNewRow();
 
   /*! \brief Remove current row from model
    */

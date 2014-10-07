@@ -39,8 +39,6 @@
 #include <memory>
 #include <limits>
 
-///class mdtSqlFormWidget;
-class mdtSqlRelation;
 class QWidget;
 
 /*! \biref Test node calibration tool base class
@@ -58,30 +56,18 @@ class mdtTtAbstractTestNodeCalibrationTool : public QObject
   /*! \brief Do setup
    *
    * Will setup database controllers and map widgets contained in testNodeFormWidget.
+   *  All childs contained in widget that have a name prefixed fld_ will be mapped
+   *  to corresponding fields in TestNode_view.
+   *  Note that this for a read only access.
    *
    * Note: connect signals and slots before calling this method,
    *  else UI will be incoherent at initial state.
    */
   virtual bool setup(QWidget *testNodeFormWidget);
 
-  /*! \brief
-   *
-   * All childs contained in widget that have a name prefixed fld_ will be mapped
-   *  to corresponding fields in TestNode_view.
-   *  Note that this a read only access.
-   *
-   * Given widget will also be used as parent for dialogs
-   *  that are displayed (selection dialogs, message boxes).
-   */
-  ///void setTestNodeUiWidget(QWidget *widget);
-
   /*! \brief Get database instance
    */
   QSqlDatabase database() { return pvDatabase; }
-
-  /*! \brief Get table model to access data in TestNodeUnit_view
-   */
-  ///std::shared_ptr<QSqlTableModel> testNodeUnitViewTableModel() { return pvTestNodeUnitViewTableModel; }
 
   /*! \brief Get table controller to access data in TestNodeUnit_view
    *
@@ -207,20 +193,6 @@ class mdtTtAbstractTestNodeCalibrationTool : public QObject
 
  private:
 
-  /*! \brief Get row in pvTestNodeUnitViewTableModel that matches given testNodeUnitId
-   */
-  ///int testNodeUnitViewTableModelRow(int testNodeUnitId);
-
-  /*! \brief Get row in pvTestNodeUnitViewTableModel that matches given schemaPosition
-   *
-   * Note: will return first match for current test node
-   */
-  ///int testNodeUnitViewTableModelRow(const QString & schemaPosition);
-
-  /*! \brief Get row in pvTestNodeUnitTableModel that matches given testNodeUnitId
-   */
-  ///int testNodeUnitTableModelRow(int testNodeUnitId);
-
   Q_DISABLE_COPY(mdtTtAbstractTestNodeCalibrationTool);
 
   QSqlDatabase pvDatabase;
@@ -228,15 +200,6 @@ class mdtTtAbstractTestNodeCalibrationTool : public QObject
   std::shared_ptr<mdtTtTest> pvTest;
   std::shared_ptr<mdtSqlDataWidgetController> pvTestNodeTableController;
   std::shared_ptr<mdtSqlTableViewController> pvTestNodeUnitTableController;
-  
-  ///std::shared_ptr<QSqlTableModel> pvTestNodeTableModel;
-  ///std::shared_ptr<mdtSqlFormWidget> pvTestNodeForm;
-  /**
-  std::shared_ptr<QSqlTableModel> pvTestNodeUnitViewTableModel; // Access data in TestNodeUnit_view (RO)
-  std::shared_ptr<mdtSqlRelation> pvTestNodeUnitViewRelation;
-  std::shared_ptr<QSqlTableModel> pvTestNodeUnitTableModel;     // Access data in TestNodeUnit_tbl (R/W)
-  std::shared_ptr<mdtSqlRelation> pvTestNodeUnitRelation;
-  */
   QWidget *pvParentWidget;        // For dialogs
 };
 

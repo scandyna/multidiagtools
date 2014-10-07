@@ -84,6 +84,7 @@ class mdtDatabaseWidgetTest : public mdtTest
   void sqlRelationTest();
   void sqlFieldHandlerTest();
   void sqlDataWidgetControllerTest();
+  void sqlDataWidgetControllerRoTest();
   void sqlDataWidgetController2tableTest();
   void sqlTableViewControllerTest();
   void sqlControllerParentChildTest();

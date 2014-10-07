@@ -3844,6 +3844,7 @@ bool mdtTtDatabaseSchema::createTestView()
   sql = "CREATE VIEW Test_view AS\n"\
         "SELECT\n"\
         " T.Id_PK,\n"\
+        /**" T.Id_PK,\n"\ */
         " TM.Key,\n"\
         " TM.DesignationEN,\n"\
         " T.Date,\n"\
@@ -3880,8 +3881,8 @@ bool mdtTtDatabaseSchema::createTestItemView()
         " TMI.FailValueMax,\n"\
         " TI.Result,\n"\
         " TI.Remark\n"\
-        "FROM TestItem_tbl TI\n"\
-        " JOIN TestModelItem_tbl TMI\n"\
+        "FROM TestModelItem_tbl TMI\n"\
+        " JOIN TestItem_tbl TI\n"\
         "  ON TMI.Id_PK = TI.TestModelItem_Id_FK\n"\
         "ORDER BY SequenceNumber ASC";
 

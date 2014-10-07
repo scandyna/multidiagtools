@@ -265,31 +265,37 @@ void mdtSqlTableViewController::modelSetEvent()
   model()->setEditStrategy(QSqlTableModel::OnManualSubmit);
 }
 
-bool mdtSqlTableViewController::doSubmit()
+bool mdtSqlTableViewController::submitToModel()
 {
-  Q_ASSERT(model());
-  Q_ASSERT(pvTableView != 0);
-  Q_ASSERT(pvTableView->itemDelegate() != 0);
-
-  QSqlError sqlError;
-
   waitEditionDone();
-  // Submit to database
-  if(!model()->submitAll()){
-    sqlError = model()->lastError();
-    pvLastError.setError(tr("Submitting data to database failed."), mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlTableViewController");
-    pvLastError.commit();
-    if(messageHandler()){
-      messageHandler()->setError(pvLastError);
-      messageHandler()->displayToUser();
-    }
-    return false;
-  }
-
   return true;
 }
+
+// bool mdtSqlTableViewController::doSubmit()
+// {
+//   Q_ASSERT(model());
+//   Q_ASSERT(pvTableView != 0);
+//   Q_ASSERT(pvTableView->itemDelegate() != 0);
+// 
+//   QSqlError sqlError;
+// 
+//   waitEditionDone();
+//   // Submit to database
+//   if(!model()->submitAll()){
+//     sqlError = model()->lastError();
+//     pvLastError.setError(tr("Submitting data to database failed."), mdtError::Error);
+//     pvLastError.setSystemError(sqlError.number(), sqlError.text());
+//     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlTableViewController");
+//     pvLastError.commit();
+//     if(messageHandler()){
+//       messageHandler()->setError(pvLastError);
+//       messageHandler()->displayToUser();
+//     }
+//     return false;
+//   }
+// 
+//   return true;
+// }
 
 bool mdtSqlTableViewController::doRevert()
 {
@@ -300,10 +306,10 @@ bool mdtSqlTableViewController::doRevert()
   return true;
 }
 
-bool mdtSqlTableViewController::doSubmitNewRow()
-{
-  return doSubmit();
-}
+// bool mdtSqlTableViewController::doSubmitNewRow()
+// {
+//   return doSubmit();
+// }
 
 bool mdtSqlTableViewController::doRemove()
 {

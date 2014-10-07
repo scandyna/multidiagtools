@@ -21,9 +21,6 @@
 #include "mdtSqlWindow.h"
 
 #include "mdtSqlForm.h"
-///#include "mdtAbstractSqlWidget.h"
-///#include "mdtSqlFormWidget.h"
-
 #include "mdtSqlDataWidgetController.h"
 #include <QAction>
 #include <QCloseEvent>
@@ -39,38 +36,14 @@ mdtSqlWindow::mdtSqlWindow(QWidget *parent, Qt::WindowFlags flags)
 {
   setupUi(this);
   pvForm = 0;
-  /**
-  actSubmit = 0;
-  actRevert = 0;
-  actInsert = 0;
-  actRemove = 0;
-  */
   createEditionElements();
   tlbMain->addSeparator();
   createNavigationElements();
-  /**
-  actNavToFirst = 0;
-  actNavToLast = 0;
-  actNavToPrevious = 0;
-  actNavToNext = 0;
-  */
 }
 
 mdtSqlWindow::~mdtSqlWindow()
 {
 }
-
-/**
-void mdtSqlWindow::setTableController(std::shared_ptr< mdtSqlDataWidgetController > controller)
-{
-  Q_ASSERT(controller);
-
-  pvController = controller;
-  connectEditionElements();
-  connectNavigationElements();
-  pvController->start();
-}
-*/
 
 void mdtSqlWindow::setSqlForm(mdtSqlForm *form)
 {
@@ -146,38 +119,20 @@ void mdtSqlWindow::connectEditionElements()
 {
   Q_ASSERT(pvForm != 0);
 
-  /**
-  mdtSqlFormWidget *widget = pvForm->mainSqlWidget();
-  Q_ASSERT(widget != 0);
-  */
-
   std::shared_ptr<mdtSqlDataWidgetController> controller;
 
   controller = pvForm->mainTableController<mdtSqlDataWidgetController>();
   Q_ASSERT(controller);
-
   // Connect actions enable/disable
   connect(controller.get(), SIGNAL(insertEnabledStateChanged(bool)), actInsert, SLOT(setEnabled(bool)));
   connect(controller.get(), SIGNAL(submitEnabledStateChanged(bool)), actSubmit, SLOT(setEnabled(bool)));
   connect(controller.get(), SIGNAL(revertEnabledStateChanged(bool)), actRevert, SLOT(setEnabled(bool)));
   connect(controller.get(), SIGNAL(removeEnabledStateChanged(bool)), actRemove, SLOT(setEnabled(bool)));
-  /**
-  connect(widget, SIGNAL(insertEnabledStateChanged(bool)), actInsert, SLOT(setEnabled(bool)));
-  connect(widget, SIGNAL(submitEnabledStateChanged(bool)), actSubmit, SLOT(setEnabled(bool)));
-  connect(widget, SIGNAL(revertEnabledStateChanged(bool)), actRevert, SLOT(setEnabled(bool)));
-  connect(widget, SIGNAL(removeEnabledStateChanged(bool)), actRemove, SLOT(setEnabled(bool)));
-  */
   // Connect actions triggers
   connect(actInsert, SIGNAL(triggered()), controller.get(), SLOT(insert()));
   connect(actSubmit, SIGNAL(triggered()), controller.get(), SLOT(submit()));
   connect(actRevert, SIGNAL(triggered()), controller.get(), SLOT(revert()));
   connect(actRemove, SIGNAL(triggered()), controller.get(), SLOT(remove()));
-  /**
-  connect(actInsert, SIGNAL(triggered()), widget, SLOT(insert()));
-  connect(actSubmit, SIGNAL(triggered()), widget, SLOT(submit()));
-  connect(actRevert, SIGNAL(triggered()), widget, SLOT(revert()));
-  connect(actRemove, SIGNAL(triggered()), widget, SLOT(remove()));
-  */
 }
 
 void mdtSqlWindow::createNavigationElements()
@@ -202,40 +157,21 @@ void mdtSqlWindow::createNavigationElements()
 void mdtSqlWindow::connectNavigationElements()
 {
   Q_ASSERT(pvForm != 0);
-  /**
-  Q_ASSERT(pvForm->mainSqlWidget() != 0);
-
-  mdtSqlFormWidget *widget = pvForm->mainSqlWidget();
-  Q_ASSERT(widget != 0);
-  */
 
   std::shared_ptr<mdtSqlDataWidgetController> controller;
 
   controller = pvForm->mainTableController<mdtSqlDataWidgetController>();
   Q_ASSERT(controller);
-
   // Connect actions enable/disable
   connect(controller.get(), SIGNAL(toFirstEnabledStateChanged(bool)), actNavToFirst, SLOT(setEnabled(bool)));
   connect(controller.get(), SIGNAL(toPreviousEnabledStateChanged(bool)), actNavToPrevious, SLOT(setEnabled(bool)));
   connect(controller.get(), SIGNAL(toNextEnabledStateChanged(bool)), actNavToNext, SLOT(setEnabled(bool)));
   connect(controller.get(), SIGNAL(toLastEnabledStateChanged(bool)), actNavToLast, SLOT(setEnabled(bool)));
-  /**
-  connect(widget, SIGNAL(toFirstEnabledStateChanged(bool)), actNavToFirst, SLOT(setEnabled(bool)));
-  connect(widget, SIGNAL(toPreviousEnabledStateChanged(bool)), actNavToPrevious, SLOT(setEnabled(bool)));
-  connect(widget, SIGNAL(toNextEnabledStateChanged(bool)), actNavToNext, SLOT(setEnabled(bool)));
-  connect(widget, SIGNAL(toLastEnabledStateChanged(bool)), actNavToLast, SLOT(setEnabled(bool)));
-  */
   // Connect actions triggers
   connect(actNavToFirst, SIGNAL(triggered()), controller.get(), SLOT(toFirst()));
   connect(actNavToPrevious, SIGNAL(triggered()), controller.get(), SLOT(toPrevious()));
   connect(actNavToNext, SIGNAL(triggered()), controller.get(), SLOT(toNext()));
   connect(actNavToLast, SIGNAL(triggered()), controller.get(), SLOT(toLast()));
-  /**
-  connect(actNavToFirst, SIGNAL(triggered()), widget, SLOT(toFirst()));
-  connect(actNavToPrevious, SIGNAL(triggered()), widget, SLOT(toPrevious()));
-  connect(actNavToNext, SIGNAL(triggered()), widget, SLOT(toNext()));
-  connect(actNavToLast, SIGNAL(triggered()), widget, SLOT(toLast()));
-  */
 }
 
 void mdtSqlWindow::closeEvent(QCloseEvent *event)

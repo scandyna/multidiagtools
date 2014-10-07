@@ -21,7 +21,7 @@
 #include "mdtState.h"
 #include "mdtStateMachine.h"
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtState::mdtState(int id, QState *parent)
  : QState(parent)
@@ -90,7 +90,6 @@ bool mdtState::notifyEnteredToUi() const
 
 void mdtState::onStateEntered()
 {
-  qDebug() << "mdtState, current state ID: " << pvId << " , text: " << pvText;
   if((!pvConnectedToStateMachine)&&(machine() != 0)){
     mdtStateMachine *sm = dynamic_cast<mdtStateMachine*>(machine());
     Q_ASSERT(sm != 0);
