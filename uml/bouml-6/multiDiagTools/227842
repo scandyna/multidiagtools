@@ -1,6 +1,6 @@
 format 207
 "DatabaseLogical" // mdttools::mdttesttool::DatabaseLogical
-  revision 56
+  revision 58
   modified_by 2 "philippe"
   // class settings
   
@@ -2878,7 +2878,102 @@ ${inlines}
       size A4-Landscape
     end
 
-    class 1013506 "TestCable_tbl"
+    class 1395970 "TestCable_tbl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 1763586 // <unidirectional association>
+	relation 1748098 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1763586 // <unidirectional association>
+	  b parent class_ref 764802 // Unit_tbl
+      end
+
+      attribute 1422594 "Unit_Id_FK_PK"
+	private explicit_type "int"
+	stereotype "PK, FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1422722 "OffsetResetTestModel_Id_FK"
+	private explicit_type "int"
+	stereotype "FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1051394 "Identification"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1361794 "DescriptionEN"
+	private explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1320450 "OffsetResetDate"
+	private explicit_type "DateTime"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 1763842 // <unidirectional association>
+	relation 1748354 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1763842 // <unidirectional association>
+	  b parent class_ref 1020418 // TestModel_tbl
+      end
+    end
+
+    class 1013506 "LogicalTestCable_tbl"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -2905,32 +3000,9 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 1051394 "Identification"
-	private explicit_type "string"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 1320450 "OffsetResetDate"
-	private explicit_type "DateTime"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 1361794 "DescriptionEN"
-	private explicit_type "string"
+      attribute 1422850 "TestCable_Id_FK"
+	private explicit_type "int"
+	stereotype "FK"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -2951,6 +3023,15 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+      end
+
+      classrelation 1763714 // <unidirectional association>
+	relation 1748226 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1763714 // <unidirectional association>
+	  b parent class_ref 1395970 // TestCable_tbl
       end
     end
 
@@ -3007,7 +3088,7 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 1051266 "TestCable_Id_FK"
+      attribute 1051266 "LogicalTestCable_Id_FK"
 	private explicit_type "int"
 	stereotype "FK"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
@@ -3032,7 +3113,7 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 1051010 "Value"
+      attribute 1051010 "Resistance"
 	private explicit_type "double"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
@@ -3059,7 +3140,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 1267330 // <unidirectional association>
-	  b parent class_ref 1013506 // TestCable_tbl
+	  b parent class_ref 1013506 // LogicalTestCable_tbl
       end
 
       classrelation 1565570 // (TestConnection_Id_FK)
@@ -3469,7 +3550,7 @@ ${inlines}
       end
     end
 
-    class 1255682 "TestCable_TestNodeUnit_tbl"
+    class 1255682 "LogicalTestCable_TestNodeUnit_tbl"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -3489,7 +3570,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 1565698 // <unidirectional association>
-	  b parent class_ref 1013506 // TestCable_tbl
+	  b parent class_ref 1013506 // LogicalTestCable_tbl
       end
 
       classrelation 1565954 // <unidirectional association>
@@ -3514,7 +3595,7 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 1204226 "TestCable_Id_FK"
+      attribute 1204226 "LogicalTestCable_Id_FK"
 	private explicit_type "int"
 	stereotype "PK, FK"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
@@ -3528,7 +3609,7 @@ ${inlines}
       end
     end
 
-    class 1255810 "TestCable_DutUnit_tbl"
+    class 1255810 "LogicalTestCable_DutUnit_tbl"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -3548,7 +3629,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 1565826 // <unidirectional association>
-	  b parent class_ref 1013506 // TestCable_tbl
+	  b parent class_ref 1013506 // LogicalTestCable_tbl
       end
 
       classrelation 1566082 // <unidirectional association>
@@ -3573,7 +3654,7 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 1204482 "TestCable_Id_FK"
+      attribute 1204482 "LogicalTestCable_Id_FK"
 	private explicit_type "int"
 	stereotype "PK, FK"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};

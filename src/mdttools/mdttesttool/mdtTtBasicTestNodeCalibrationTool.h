@@ -53,13 +53,25 @@ class mdtTtBasicTestNodeCalibrationTool : public mdtTtAbstractTestNodeCalibratio
 
  private:
 
+  /*! \brief Check K3, K4, K5, K6
+   */
+  bool checkSenseRelays();
+
   /*! \brief Calibrate K3, K4, K5, K6
    */
   bool calibrateSenseRelays();
 
+  /*! \brief Check K1 and K2
+   */
+  bool checkIsoRelays();
+
   /*! \brief Calibrate K1 and K2
    */
   bool calibrateIsoRelays();
+
+  /*! \brief Check K7 and K8
+   */
+  bool checkForceRelays();
 
   /*! \brief Calibrate K7 and K8
    */

@@ -255,6 +255,11 @@ class mdtAbstractSqlTableController : public QObject
    *
    * Set filter based on SQL query WHERE part, without the WHERE keyword (f.ex. Id_PK = 15)
    *
+   *  Note: if internal controller's model is allready populated with data,
+   *  i.e. select() was called before, filter is applied directly, else,
+   *  select must be called explicitly after setMainTableFilter()
+   *  (this is the same behaviour as QSqlTableModel).
+   *
    * \pre Table model must be set with setModel() or setTableName() begore calling this method.
    * \pre Internal state machine must run (see start() ).
    */
@@ -267,6 +272,11 @@ class mdtAbstractSqlTableController : public QObject
    *
    * Internally, a SQL statement is generated linke: fieldName = matchData
    *
+   *  Note: if internal controller's model is allready populated with data,
+   *  i.e. select() was called before, filter is applied directly, else,
+   *  select must be called explicitly after setMainTableFilter()
+   *  (this is the same behaviour as QSqlTableModel).
+   *
    * \pre Table model must be set with setModel() or setTableName() begore calling this method.
    * \pre Internal state machine must run (see start() ).
    */
@@ -278,6 +288,11 @@ class mdtAbstractSqlTableController : public QObject
    * \param matchDataList A list of match data
    *
    * Internally, a SQL statement is generated linke: fieldName IN (matchData[0], matchData[1], ...)
+   *
+   *  Note: if internal controller's model is allready populated with data,
+   *  i.e. select() was called before, filter is applied directly, else,
+   *  select must be called explicitly after setMainTableFilter()
+   *  (this is the same behaviour as QSqlTableModel).
    *
    * \pre Table model must be set with setModel() or setTableName() begore calling this method.
    * \pre Internal state machine must run (see start() ).
@@ -411,6 +426,9 @@ class mdtAbstractSqlTableController : public QObject
   inline QVariant currentData(const QString &fieldName)
   {
     Q_ASSERT(pvModel);
+    if(currentRow() < 0){
+      return QVariant();
+    }
     return data(currentRow(), fieldName);
   }
 
@@ -421,6 +439,9 @@ class mdtAbstractSqlTableController : public QObject
   inline QVariant currentData(const QString &fieldName, bool & ok)
   {
     Q_ASSERT(pvModel);
+    if(currentRow() < 0){
+      return QVariant();
+    }
     return data(currentRow(), fieldName, ok);
   }
 

@@ -221,6 +221,10 @@ class mdtTtDatabaseSchema
    */
   bool setupTestCableTable();
 
+  /*! \brief Setup LogicalTestCable_tbl
+   */
+  bool setupLogicalTestCableTable();
+
   /*! \brief Setup TestLink_tbl
    */
   bool setupTestLinkTable();
@@ -362,6 +366,12 @@ class mdtTtDatabaseSchema
   /*! \brief Create TestNode_view
    */
   bool createTestNodeView();
+
+  /*! \brief Create Unit_TestNode_view
+   *
+   * Display test nodes that are related to given unit
+   */
+  bool createUnitTestNodeView();
 
   /*! \brief Create TestNodeUnitConnection_view
    */

@@ -215,6 +215,16 @@ void mdtSqlForm::displayLastError()
   msgBox.exec();
 }
 
+int mdtSqlForm::rowCount(const QString& tableName, bool fetchAll)
+{
+  std::shared_ptr<mdtAbstractSqlTableController> controller;
+
+  controller = tableController<mdtAbstractSqlTableController>(tableName);
+  Q_ASSERT(controller);
+
+  return controller->rowCount(fetchAll);
+}
+
 bool mdtSqlForm::setCurrentRow(const QString& tableName, const QString& fieldName, const QVariant& matchData)
 {
   std::shared_ptr<mdtAbstractSqlTableController> controller;
@@ -261,6 +271,16 @@ QVariant mdtSqlForm::data(const QString &tableName, int row, const QString &fiel
   Q_ASSERT(controller);
 
   return controller->data(row, fieldName, ok);
+}
+
+QList< QVariant > mdtSqlForm::dataList(const QString& tableName, const QString& fieldName, bool& ok, bool fetchAll)
+{
+  std::shared_ptr<mdtAbstractSqlTableController> controller;
+
+  controller = tableController<mdtAbstractSqlTableController>(tableName);
+  Q_ASSERT(controller);
+
+  return controller->dataList(fieldName, ok, fetchAll);
 }
 
 bool mdtSqlForm::setupTables()

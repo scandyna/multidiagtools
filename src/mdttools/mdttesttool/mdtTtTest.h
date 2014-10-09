@@ -61,51 +61,6 @@ class mdtTtTest : public mdtTtBase
    */
   mdtTtTest(QObject *parent, QSqlDatabase db);
 
-  /*! \brief Do setup
-   *
-   * Will setup internal SQL table controllers
-   *  to access Test_view and TestItem_view.
-   */
-  ///bool setup();
-
-  /*! \brief Start state machines
-   *
-   * Will load data from database and start internal state machines.
-   *  After this call, use setCurrentTest() to go to a existing test,
-   *  or createTest() to create a new one.
-   *
-   * \pre setup() must be called before using this method.
-   */
-  ///bool start();
-
-  /*! \brief Access controller that acts on Test_view
-   */
-  /**
-  std::shared_ptr<mdtSqlDataWidgetController> testViewController()
-  {
-    return pvTestViewController;
-  }
-  */
-
-  /*! \brief Access controller that acts on TestItem_view
-   *
-   * \pre init() must be done before calling this method.
-   */
-  /**
-  std::shared_ptr<mdtSqlTableViewController> testItemViewController()
-  {
-    Q_ASSERT(pvTestItemViewController);
-    return pvTestItemViewController;
-  }
-  */
-
-  /*! \brief Get table model to access data in Test_tbl
-   */
-  ///std::shared_ptr<QSqlTableModel> testTableModel() { return pvTestTableModel; }
-
-  /*! \brief Get table model to access data in TestItem_view
-   */
-  ///std::shared_ptr<QSqlTableModel> testItemViewTableModel() { return pvTestItemViewTableModel; }
 
   /*! \brief Set test data
    *
@@ -135,15 +90,6 @@ class mdtTtTest : public mdtTtBase
    */
   ///QVariant testDataValue(const QString & fieldName) const;
 
-  /*! \brief Set current test to given testId
-   *
-   * Note: will directly load data for given testId.
-   *  To check test state before, use:
-   *   - testIsSaved()
-   *   - 
-   */
-  //bool setCurrentTest(const QVariant & testId);
-
   /*! \brief Create a new test based on given testModelId
    *
    * Will also create test items.
@@ -156,43 +102,11 @@ class mdtTtTest : public mdtTtBase
    */
   bool saveTest(const mdtSqlRecord & testRecord, const QList<mdtSqlRecord> & testItemRecords);
 
-  /*! \brief Save current test
-   */
-  //bool saveCurrentTest();
-
   /*! \brief Remove a test
    *
    * Will also remove test items.
    */
   bool removeTest(const QVariant & testId);
-
-  /*! \brief Remove current test
-   *
-   * Note: will directly create the test.
-   *  To check test state before, use:
-   *   - testIsSaved()
-   *   - testIsEmpty()
-   */
-  //bool removeCurrentTest();
-
-  /*! \brief Check if a test is empty
-   *
-   * When creating a new test, it must be directly stored in database.
-   *  This is because test items must allways be created.
-   *
-   * A test is empty if:
-   *  - In Test_tbl: only Id_PK, TestModel_Id_FK and Date are set
-   *  - In each related item in Test_tbl: only Id_PK, Test_Id_FK and TestModelItem_Id_FK are set
-   */
-  //bool testIsEmpty() const;
-
-  /*! \brief Check if test is saved
-   *
-   * A test is saved if all cached data regarding Test_tbl and TestItem_tbl are stored in database.
-   *  If no test was set (Test_tbl.Id_PK is NULL), test is considered saved.
-   *  Note: each call of this method will check all test items.
-   */
-  //bool testIsSaved();
 
   /*! \brief Set test item data
    */
@@ -258,9 +172,9 @@ class mdtTtTest : public mdtTtBase
    */
   //QVariant nextTestItem();
 
-  /*! \brief Get setup data for given test item ID
+  /*! \brief Get setup data for given test model item ID
    */
-  mdtTtTestItemNodeSetupData getSetupData(const QVariant & testItemId, bool & ok);
+  mdtTtTestItemNodeSetupData getSetupData(const QVariant & testModelItemId, bool & ok);
 
   /*! \brief Convert a mdtValue to a double
    *

@@ -53,6 +53,7 @@ void mdtSqlWindow::setSqlForm(mdtSqlForm *form)
   setCentralWidget(pvForm);
   connectEditionElements();
   connectNavigationElements();
+  pvForm->addMenus(menuBar());
   pvForm->start();
 }
 

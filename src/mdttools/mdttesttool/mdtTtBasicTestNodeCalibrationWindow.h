@@ -51,7 +51,6 @@ class mdtTtBasicTestNodeCalibrationWindow : public QMainWindow, Ui::mdtTtBasicTe
 
   Q_DISABLE_COPY(mdtTtBasicTestNodeCalibrationWindow);
 
-  ///mdtSqlTableWidget *pvTestItemWidget;
   mdtSqlTableWidget *pvTestNodeUnitWidget;
   mdtTtBasicTestNodeCalibrationTool *pvCalibrationTool;
 };

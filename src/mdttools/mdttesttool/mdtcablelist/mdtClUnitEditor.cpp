@@ -1199,22 +1199,25 @@ QVariant mdtClUnitEditor::selectBaseConnector()
   selectionDialog.addColumnToSortOrder("ContactQty", Qt::AscendingOrder);
   selectionDialog.addColumnToSortOrder("ManufacturerConfigCode", Qt::AscendingOrder);
   selectionDialog.sort();
-  selectionDialog.addSelectionResultColumn("Id_PK");
+  ///selectionDialog.addSelectionResultColumn("Id_PK");
   selectionDialog.resize(700, 400);
   selectionDialog.setWindowTitle(tr("Connector selection"));
   if(selectionDialog.exec() != QDialog::Accepted){
     return QVariant();
   }
-  Q_ASSERT(selectionDialog.selectionResult().size() == 1);
+  Q_ASSERT(selectionDialog.selection("Id_PK").rowCount() == 1);
+  ///Q_ASSERT(selectionDialog.selectionResult().size() == 1);
 
-  return selectionDialog.selectionResult().at(0);
+  ///return selectionDialog.selectionResult().at(0);
+  return selectionDialog.selection("Id_PK").data(0, "Id_PK");
 }
 
 QList<QVariant> mdtClUnitEditor::selectBaseConnectorContactIdList(const QVariant & connectorId, bool multiSelection)
 {
   mdtSqlSelectionDialog selectionDialog;
   QString sql;
-  QModelIndexList selectedItems;
+  ///QModelIndexList selectedItems;
+  mdtSqlTableSelection s;
   QList<QVariant> idList;
   int i;
 
@@ -1231,16 +1234,22 @@ QList<QVariant> mdtClUnitEditor::selectBaseConnectorContactIdList(const QVariant
   selectionDialog.setColumnHidden("Connector_Id_FK", true);
   selectionDialog.addColumnToSortOrder("Name", Qt::AscendingOrder);
   selectionDialog.sort();
-  selectionDialog.addSelectionResultColumn("Id_PK");
+  ///selectionDialog.addSelectionResultColumn("Id_PK");
   selectionDialog.resize(400, 300);
   selectionDialog.setWindowTitle(tr("Contacts selection"));
   if(selectionDialog.exec() != QDialog::Accepted){
     return idList;
   }
+  s = selectionDialog.selection("Id_PK");
+  for(i = 0; i < s.rowCount(); ++i){
+    idList.append(s.data(i, "Id_PK"));
+  }
+  /**
   selectedItems = selectionDialog.selectionResults();
   for(i = 0; i < selectedItems.size(); ++i){
     idList.append(selectedItems.at(i).data());
   }
+  */
 
   return idList;
 }

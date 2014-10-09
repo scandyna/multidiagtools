@@ -7,7 +7,9 @@ project (multidiagtools)
 
 # Header files for mdtTestTool
 set (TT_HEADER_FILES 
-          mdtTtTestConnectionCableEditor.h
+          mdtTtTestCableEditor.h
+          mdtTtLogicalTestCableEditor.h
+          mdtTtTestCableOffsetTool.h
           mdtTtTestLinkDialog.h
           mdtTtTestNodeEditor.h
           mdtTtTestNodeUnitDialog.h
@@ -34,8 +36,10 @@ set (TT_SOURCES_FILES
           mdtTtDatabaseSchema.cpp
           mdtTtTestLinkData.cpp
           mdtTtTestLinkDialog.cpp
-          mdtTtTestConnectionCable.cpp
-          mdtTtTestConnectionCableEditor.cpp
+          mdtTtTestCableEditor.cpp
+          mdtTtLogicalTestCable.cpp
+          mdtTtLogicalTestCableEditor.cpp
+          mdtTtTestCableOffsetTool.cpp
           mdtTtTestNode.cpp
           mdtTtTestNodeEditor.cpp
           mdtTtTestNodeUnit.cpp
@@ -69,7 +73,8 @@ set (TT_SOURCES_FILES
 
 # Form files for mdtTestTool
 set (TT_FORM_FILES
-          mdtTtTestConnectionCableEditor.ui
+          mdtTtTestCableEditor.ui
+          mdtTtLogicalTestCableEditor.ui
           mdtTtTestLinkDialog.ui
           mdtTtTestNodeEditor.ui
           mdtTtTestNodeUnitDialog.ui

@@ -107,10 +107,6 @@ class mdtTtAbstractTester : public QObject
     return pvTestItemViewController;
   }
 
-  /*! \brief Get table model to access data in TestItem_view
-   */
-  ///std::shared_ptr<QSqlTableModel> testItemViewTableModel() { return pvTest->testItemViewTableModel(); }
-
   /*! \brief Get test node manager object
    */
   std::shared_ptr<mdtTtTestNodeManager> testNodeManager() { return pvTestNodeManager; }
@@ -118,12 +114,6 @@ class mdtTtAbstractTester : public QObject
   /*! \brief Get test object
    */
   std::shared_ptr<mdtTtTest> test() { return pvTest; }
-
-  /*! \brief Get test data
-   *
-   * Note: return cached data (will not get them from database).
-   */
-  ///inline mdtTtTestData testData() const { return pvTest->testData(); }
 
   /*! \brief Check if a test is empty
    *
@@ -210,7 +200,6 @@ class mdtTtAbstractTester : public QObject
   std::shared_ptr<mdtSqlTableViewController> pvTestItemViewController;  // Access data in TestItem_view
   std::shared_ptr<mdtTtTestNodeManager> pvTestNodeManager;
   std::shared_ptr<mdtTtTest> pvTest;
-  ///std::shared_ptr<mdtSqlFormWidget> pvTestFormWidget;
   QWidget *pvParentWidget;        // For dialogs
 };
 

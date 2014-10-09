@@ -375,6 +375,9 @@ bool mdtClLink::removeVehicleTypeLinks(const QList<mdtClVehicleTypeLinkData> & v
   return true;
 }
 
+/**
+ * \todo Aussi prendre en compte le type borne "T" , qui peut être interconecté sans autre
+ */
 QList<mdtClLinkData> mdtClLink::getConnectionLinkListByName(const QList<mdtClUnitConnectionData> & A, const QList<mdtClUnitConnectionData> & B)
 {
   mdtClLinkData data;

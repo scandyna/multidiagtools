@@ -18,7 +18,7 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtTtTestConnectionCable.h"
+#include "mdtTtLogicalTestCable.h"
 #include "mdtClPathGraph.h"
 #include "mdtClUnit.h"
 #include "mdtSqlRecord.h"
@@ -28,18 +28,18 @@
 
 #include <QDebug>
 
-mdtTtTestConnectionCable::mdtTtTestConnectionCable(QObject *parent, QSqlDatabase db)
+mdtTtLogicalTestCable::mdtTtLogicalTestCable(QObject *parent, QSqlDatabase db)
  : mdtTtBase(parent, db)
 {
   pvPathGraph = new mdtClPathGraph(db);
 }
 
-mdtTtTestConnectionCable::~mdtTtTestConnectionCable()
+mdtTtLogicalTestCable::~mdtTtLogicalTestCable()
 {
   delete pvPathGraph;
 }
 
-QString mdtTtTestConnectionCable::sqlForTestNodeUnitSelection(const QVariant & testCableId)
+QString mdtTtLogicalTestCable::sqlForTestNodeUnitSelection(const QVariant & testCableId)
 {
   QString sql;
 
@@ -70,65 +70,65 @@ QString mdtTtTestConnectionCable::sqlForTestNodeUnitSelection(const QVariant & t
          */
   sql += "WHERE Type_Code_FK = 'TESTCONNECTOR' ";
   sql += "AND Unit_Id_FK_PK NOT IN (";
-  sql += " SELECT TestNodeUnit_Id_FK FROM TestCable_TestNodeUnit_tbl WHERE TestCable_Id_FK = " + testCableId.toString();
+  sql += " SELECT TestNodeUnit_Id_FK FROM LogicalTestCable_TestNodeUnit_tbl WHERE LogicalTestCable_Id_FK = " + testCableId.toString();
   sql += ")";
 
   return sql;
 }
 
-QString mdtTtTestConnectionCable::sqlForDutUnitSelection(const QVariant & testCableId)
+QString mdtTtLogicalTestCable::sqlForDutUnitSelection(const QVariant & testCableId)
 {
   QString sql;
 
   sql = "SELECT * FROM Unit_view ";
   sql += "WHERE Unit_Id_PK NOT IN (";
-  sql += "SELECT DutUnit_Id_FK FROM TestCable_DutUnit_tbl WHERE TestCable_Id_FK = " + testCableId.toString();
+  sql += "SELECT DutUnit_Id_FK FROM LogicalTestCable_DutUnit_tbl WHERE LogicalTestCable_Id_FK = " + testCableId.toString();
   sql += ")";
 
   return sql;
 }
 
-bool mdtTtTestConnectionCable::addTestNodeUnit(const QVariant & testNodeUnitId, const QVariant & testCableId)
+bool mdtTtLogicalTestCable::addTestNodeUnit(const QVariant & testNodeUnitId, const QVariant & testCableId)
 {
   mdtSqlRecord record;
 
-  if(!record.addAllFields("TestCable_TestNodeUnit_tbl", database())){
+  if(!record.addAllFields("LogicalTestCable_TestNodeUnit_tbl", database())){
     pvLastError = record.lastError();
     return false;
   }
   record.setValue("TestNodeUnit_Id_FK", testNodeUnitId);
-  record.setValue("TestCable_Id_FK", testCableId);
+  record.setValue("LogicalTestCable_Id_FK", testCableId);
 
-  return addRecord(record, "TestCable_TestNodeUnit_tbl");
+  return addRecord(record, "LogicalTestCable_TestNodeUnit_tbl");
 }
 
-bool mdtTtTestConnectionCable::removeTestNodeUnits(const mdtSqlTableSelection & s)
+bool mdtTtLogicalTestCable::removeTestNodeUnits(const mdtSqlTableSelection & s)
 {
-  return removeData("TestCable_TestNodeUnit_tbl", s, true);
+  return removeData("LogicalTestCable_TestNodeUnit_tbl", s, true);
 }
 
-bool mdtTtTestConnectionCable::addDutUnit(const QVariant & unitId, const QVariant & testCableId)
+bool mdtTtLogicalTestCable::addDutUnit(const QVariant & unitId, const QVariant & testCableId)
 {
   mdtSqlRecord record;
 
-  if(!record.addAllFields("TestCable_DutUnit_tbl", database())){
+  if(!record.addAllFields("LogicalTestCable_DutUnit_tbl", database())){
     pvLastError = record.lastError();
     return false;
   }
   record.setValue("DutUnit_Id_FK", unitId);
-  record.setValue("TestCable_Id_FK", testCableId);
+  record.setValue("LogicalTestCable_Id_FK", testCableId);
 
-  return addRecord(record, "TestCable_DutUnit_tbl");
+  return addRecord(record, "LogicalTestCable_DutUnit_tbl");
 }
 
-bool mdtTtTestConnectionCable::removeDutUnits(const mdtSqlTableSelection & s)
+bool mdtTtLogicalTestCable::removeDutUnits(const mdtSqlTableSelection & s)
 {
-  return removeData("TestCable_DutUnit_tbl", s, true);
+  return removeData("LogicalTestCable_DutUnit_tbl", s, true);
 }
 
 
 
-QString mdtTtTestConnectionCable::sqlForTestNodeSelection() const
+QString mdtTtLogicalTestCable::sqlForTestNodeSelection() const
 {
   QString sql;
 
@@ -140,7 +140,7 @@ QString mdtTtTestConnectionCable::sqlForTestNodeSelection() const
   return sql;
 }
 
-QString mdtTtTestConnectionCable::sqlForStartConnectorSelection(const QVariant & dutUnitId) const
+QString mdtTtLogicalTestCable::sqlForStartConnectorSelection(const QVariant & dutUnitId) const
 {
   QString sql;
 
@@ -150,7 +150,7 @@ QString mdtTtTestConnectionCable::sqlForStartConnectorSelection(const QVariant &
   return sql;
 }
 
-QString mdtTtTestConnectionCable::sqlForUnitConnectorSelectionFromUnitConnectorIdList(const QList<QVariant> & connectorIdList) const
+QString mdtTtLogicalTestCable::sqlForUnitConnectorSelectionFromUnitConnectorIdList(const QList<QVariant> & connectorIdList) const
 {
   QString sql;
   int i;
@@ -166,7 +166,7 @@ QString mdtTtTestConnectionCable::sqlForUnitConnectorSelectionFromUnitConnectorI
   return sql;
 }
 
-QString mdtTtTestConnectionCable::sqlForTestCableSelection()
+QString mdtTtLogicalTestCable::sqlForTestCableSelection()
 {
   QString sql;
 
@@ -175,7 +175,7 @@ QString mdtTtTestConnectionCable::sqlForTestCableSelection()
   return sql;
 }
 
-bool mdtTtTestConnectionCable::loadLinkList()
+bool mdtTtLogicalTestCable::loadLinkList()
 {
   if(!pvPathGraph->loadLinkList()){
     pvLastError = pvPathGraph->lastError();
@@ -184,7 +184,7 @@ bool mdtTtTestConnectionCable::loadLinkList()
   return true;
 }
 
-QList<QVariant> mdtTtTestConnectionCable::getToUnitConnectorRelatedUnitConnectionIdList(const QVariant & unitConnectorId)
+QList<QVariant> mdtTtLogicalTestCable::getToUnitConnectorRelatedUnitConnectionIdList(const QVariant & unitConnectorId)
 {
   QList<QVariant> connectionIdList;
   QString sql;
@@ -196,7 +196,7 @@ QList<QVariant> mdtTtTestConnectionCable::getToUnitConnectorRelatedUnitConnectio
     sqlError = query.lastError();
     pvLastError.setError("Cannot execute query to get unit connection ID list", mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestConnectionCable");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtLogicalTestCable");
     pvLastError.commit();
     return connectionIdList;
   }
@@ -208,7 +208,7 @@ QList<QVariant> mdtTtTestConnectionCable::getToUnitConnectorRelatedUnitConnectio
 }
 
 /**
-QList<QVariant> mdtTtTestConnectionCable::getToUnitConnectorRelatedUnitConnectionIdList(const QVariant & unitConnectorId, const QList<QVariant> & unitConnectionIdList)
+QList<QVariant> mdtTtLogicalTestCable::getToUnitConnectorRelatedUnitConnectionIdList(const QVariant & unitConnectorId, const QList<QVariant> & unitConnectionIdList)
 {
   QList<QVariant> allConnectionIdList;
   QList<QVariant> connectionIdList;
@@ -225,7 +225,7 @@ QList<QVariant> mdtTtTestConnectionCable::getToUnitConnectorRelatedUnitConnectio
 }
 */
 
-QList<QVariant> mdtTtTestConnectionCable::getToUnitConnectionLinkedUnitConnectorIdList(const QVariant & fromUnitConnectionId)
+QList<QVariant> mdtTtLogicalTestCable::getToUnitConnectionLinkedUnitConnectorIdList(const QVariant & fromUnitConnectionId)
 {
   Q_ASSERT(!fromUnitConnectionId.isNull());
 
@@ -250,7 +250,7 @@ QList<QVariant> mdtTtTestConnectionCable::getToUnitConnectionLinkedUnitConnector
     sqlError = query.lastError();
     pvLastError.setError("Cannot execute query to get unit connection ID list", mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestConnectionCable");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtLogicalTestCable");
     pvLastError.commit();
     return unitConnectorIdList;
   }
@@ -264,7 +264,7 @@ QList<QVariant> mdtTtTestConnectionCable::getToUnitConnectionLinkedUnitConnector
   return unitConnectorIdList;
 }
 
-QList<QVariant> mdtTtTestConnectionCable::getToUnitConnectionIdLinkedUnitConnectionIdListPartOfUnitConnector(const QVariant & fromUnitConnectionId, const QVariant & unitConnectorId)
+QList<QVariant> mdtTtLogicalTestCable::getToUnitConnectionIdLinkedUnitConnectionIdListPartOfUnitConnector(const QVariant & fromUnitConnectionId, const QVariant & unitConnectorId)
 {
   Q_ASSERT(!fromUnitConnectionId.isNull());
   Q_ASSERT(!unitConnectorId.isNull());
@@ -293,7 +293,7 @@ QList<QVariant> mdtTtTestConnectionCable::getToUnitConnectionIdLinkedUnitConnect
     sqlError = query.lastError();
     pvLastError.setError("Cannot execute query to get unit connection ID list", mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestConnectionCable");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtLogicalTestCable");
     pvLastError.commit();
     return unitConnectionIdList;
   }
@@ -307,7 +307,7 @@ QList<QVariant> mdtTtTestConnectionCable::getToUnitConnectionIdLinkedUnitConnect
   return unitConnectionIdList;
 }
 
-QList<QVariant> mdtTtTestConnectionCable::getToUnitConnectionIdLinkedUnitConnectionIdListPartOfUnitConnectorList(const QVariant & fromUnitConnectionId, const QList<QVariant> & unitConnectorIdList)
+QList<QVariant> mdtTtLogicalTestCable::getToUnitConnectionIdLinkedUnitConnectionIdListPartOfUnitConnectorList(const QVariant & fromUnitConnectionId, const QList<QVariant> & unitConnectorIdList)
 {
   Q_ASSERT(!fromUnitConnectionId.isNull());
 
@@ -329,7 +329,7 @@ QList<QVariant> mdtTtTestConnectionCable::getToUnitConnectionIdLinkedUnitConnect
   return unitConnectionIdList;
 }
 
-QList<QVariant> mdtTtTestConnectionCable::getToUnitConnectionIdListLinkedUnitConnectionIdListPartOfUnitConnectorList(QList<QVariant> & fromUnitConnectionIdList, const QList<QVariant> & unitConnectorIdList)
+QList<QVariant> mdtTtLogicalTestCable::getToUnitConnectionIdListLinkedUnitConnectionIdListPartOfUnitConnectorList(QList<QVariant> & fromUnitConnectionIdList, const QList<QVariant> & unitConnectorIdList)
 {
   QList<QVariant> unitConnectionIdList;
   QList<QVariant> tempIdList;
@@ -356,7 +356,7 @@ QList<QVariant> mdtTtTestConnectionCable::getToUnitConnectionIdListLinkedUnitCon
   return unitConnectionIdList;
 }
 
-bool mdtTtTestConnectionCable::createTestCable(const QVariant & nodeId, const QList<QVariant> & busAtestConnectionIdList, const QList<QVariant> & busAdutConnectionIdList, const QList<QVariant> & busBtestConnectionIdList, const QList<QVariant> & busBdutConnectionIdList)
+bool mdtTtLogicalTestCable::createTestCable(const QVariant & nodeId, const QList<QVariant> & busAtestConnectionIdList, const QList<QVariant> & busAdutConnectionIdList, const QList<QVariant> & busBtestConnectionIdList, const QList<QVariant> & busBdutConnectionIdList)
 {
   QString sql;
   QSqlQuery query(database());
@@ -378,7 +378,7 @@ bool mdtTtTestConnectionCable::createTestCable(const QVariant & nodeId, const QL
     sqlError = query.lastError();
     pvLastError.setError("Cannot execute query to get test cable ID for test links insertion", mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestConnectionCable");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtLogicalTestCable");
     pvLastError.commit();
     return false;
   }
@@ -388,7 +388,7 @@ bool mdtTtTestConnectionCable::createTestCable(const QVariant & nodeId, const QL
     QSqlError sqlError = query.lastError();
     pvLastError.setError("Cannot get test cable ID for test links inertion", mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestConnectionCable");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtLogicalTestCable");
     pvLastError.commit();
     return false;
   }
@@ -410,7 +410,7 @@ bool mdtTtTestConnectionCable::createTestCable(const QVariant & nodeId, const QL
   return true;
 }
 
-mdtTtTestLinkData mdtTtTestConnectionCable::getLinkData(const QVariant & testConnectionId, const QVariant & dutConnectionId, bool *ok)
+mdtTtTestLinkData mdtTtLogicalTestCable::getLinkData(const QVariant & testConnectionId, const QVariant & dutConnectionId, bool *ok)
 {
   Q_ASSERT(ok != 0);
 
@@ -431,7 +431,7 @@ mdtTtTestLinkData mdtTtTestConnectionCable::getLinkData(const QVariant & testCon
     msg = tr("No link exists from TestConnection_Id_FK ") + testConnectionId.toString();
     msg += tr(" to DutConnection_Id_FK ") + dutConnectionId.toString();
     pvLastError.setError(msg, mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestConnectionCable");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtLogicalTestCable");
     pvLastError.commit();
     *ok = false;
     return linkData;
@@ -444,12 +444,12 @@ mdtTtTestLinkData mdtTtTestConnectionCable::getLinkData(const QVariant & testCon
   return linkData;
 }
 
-bool mdtTtTestConnectionCable::addLink(const mdtTtTestLinkData & data)
+bool mdtTtLogicalTestCable::addLink(const mdtTtTestLinkData & data)
 {
   return addRecord(data, "TestLink_tbl");
 }
 
-bool mdtTtTestConnectionCable::addLinks(const QVariant & nodeId, const QVariant & testCableId, const QList<QVariant> & testConnectionIdList, const QList<QVariant> & dutConnectionIdList)
+bool mdtTtLogicalTestCable::addLinks(const QVariant & nodeId, const QVariant & testCableId, const QList<QVariant> & testConnectionIdList, const QList<QVariant> & dutConnectionIdList)
 {
   Q_ASSERT(dutConnectionIdList.size() <= testConnectionIdList.size());
 
@@ -468,7 +468,7 @@ bool mdtTtTestConnectionCable::addLinks(const QVariant & nodeId, const QVariant 
 
 }
 
-bool mdtTtTestConnectionCable::editLink(const QVariant & testConnectionId, const QVariant & dutConnectionId, const mdtTtTestLinkData & linkData)
+bool mdtTtLogicalTestCable::editLink(const QVariant & testConnectionId, const QVariant & dutConnectionId, const mdtTtTestLinkData & linkData)
 {
   if(!beginTransaction()){
     return false;
@@ -488,12 +488,12 @@ bool mdtTtTestConnectionCable::editLink(const QVariant & testConnectionId, const
   return true;
 }
 
-bool mdtTtTestConnectionCable::removeLink(const QVariant & testConnectionId, const QVariant & dutConnectionId)
+bool mdtTtLogicalTestCable::removeLink(const QVariant & testConnectionId, const QVariant & dutConnectionId)
 {
   return removeData("TestLink_tbl", "TestConnection_Id_FK", testConnectionId, "DutConnection_Id_FK", dutConnectionId);
 }
 
-bool mdtTtTestConnectionCable::addCable(const QVariant & identification)
+bool mdtTtLogicalTestCable::addCable(const QVariant & identification)
 {
   QString sql;
   QSqlQuery query(database());
@@ -506,7 +506,7 @@ bool mdtTtTestConnectionCable::addCable(const QVariant & identification)
     sqlError = query.lastError();
     pvLastError.setError("Cannot prepare query for inertion into TestCable_tbl", mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestConnectionCable");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtLogicalTestCable");
     pvLastError.commit();
     return false;
   }
@@ -516,7 +516,7 @@ bool mdtTtTestConnectionCable::addCable(const QVariant & identification)
     sqlError = query.lastError();
     pvLastError.setError("Cannot execute query for inertion into TestCable_tbl", mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestConnectionCable");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtLogicalTestCable");
     pvLastError.commit();
     return false;
   }
@@ -524,7 +524,7 @@ bool mdtTtTestConnectionCable::addCable(const QVariant & identification)
   return true;
 }
 
-bool mdtTtTestConnectionCable::addLink(const QVariant & testConnectionId, const QVariant & dutConnectionId, const QVariant & testCableId, const QVariant & identification, const QVariant & value)
+bool mdtTtLogicalTestCable::addLink(const QVariant & testConnectionId, const QVariant & dutConnectionId, const QVariant & testCableId, const QVariant & identification, const QVariant & value)
 {
   QString sql;
   QSqlQuery query(database());
@@ -537,7 +537,7 @@ bool mdtTtTestConnectionCable::addLink(const QVariant & testConnectionId, const 
     sqlError = query.lastError();
     pvLastError.setError("Cannot prepare query for inertion into TestLink_tbl", mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestConnectionCable");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtLogicalTestCable");
     pvLastError.commit();
     return false;
   }
@@ -551,7 +551,7 @@ bool mdtTtTestConnectionCable::addLink(const QVariant & testConnectionId, const 
     sqlError = query.lastError();
     pvLastError.setError("Cannot execute query for inertion into TestLink_tbl", mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestConnectionCable");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtLogicalTestCable");
     pvLastError.commit();
     return false;
   }
@@ -560,7 +560,7 @@ bool mdtTtTestConnectionCable::addLink(const QVariant & testConnectionId, const 
 }
 
 /**
-mdtClLinkData mdtTtTestConnectionCable::getTestLinkData(const QVariant & testLinkId)
+mdtClLinkData mdtTtLogicalTestCable::getTestLinkData(const QVariant & testLinkId)
 {
   QString sql;
   QSqlError sqlError;
@@ -576,7 +576,7 @@ mdtClLinkData mdtTtTestConnectionCable::getTestLinkData(const QVariant & testLin
     sqlError = query.lastError();
     pvLastError.setError("Cannot get test link data", mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestConnectionCable");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtLogicalTestCable");
     pvLastError.commit();
     return data;
   }
@@ -596,7 +596,7 @@ mdtClLinkData mdtTtTestConnectionCable::getTestLinkData(const QVariant & testLin
 
 
 /**
-bool mdtTtTestConnectionCable::addLinks(const QVariant & nodeId, const QList<QVariant> & testConnectionIdList, const QVariant & dutVehicleId, const QList<QVariant> & dutConnectionIdList)
+bool mdtTtLogicalTestCable::addLinks(const QVariant & nodeId, const QList<QVariant> & testConnectionIdList, const QVariant & dutVehicleId, const QList<QVariant> & dutConnectionIdList)
 {
   Q_ASSERT(dutConnectionIdList.size() <= testConnectionIdList.size());
 
@@ -631,7 +631,7 @@ bool mdtTtTestConnectionCable::addLinks(const QVariant & nodeId, const QList<QVa
 */
 
 /**
-QList<mdtClLinkData> mdtTtTestConnectionCable::getTestLinkDataByTestCableId(const QVariant & testCableId)
+QList<mdtClLinkData> mdtTtLogicalTestCable::getTestLinkDataByTestCableId(const QVariant & testCableId)
 {
   QString sql;
   QSqlError sqlError;
@@ -647,7 +647,7 @@ QList<mdtClLinkData> mdtTtTestConnectionCable::getTestLinkDataByTestCableId(cons
     sqlError = query.lastError();
     pvLastError.setError("Cannot get test link data", mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestConnectionCable");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtLogicalTestCable");
     pvLastError.commit();
     return dataList;
   }
@@ -666,9 +666,9 @@ QList<mdtClLinkData> mdtTtTestConnectionCable::getTestLinkDataByTestCableId(cons
 }
 */
 
-bool mdtTtTestConnectionCable::connectTestCable(const QVariant & testCableId, const QVariant & testNodeId, const QVariant & dutVehicleTypeId)
+bool mdtTtLogicalTestCable::connectTestCable(const QVariant & testCableId, const QVariant & testNodeId, const QVariant & dutVehicleTypeId)
 {
-  qDebug() << "mdtTtTestConnectionCable::connectTestCable() - CURRENTLY NOT IMPLEMENTED !!";
+  qDebug() << "mdtTtLogicalTestCable::connectTestCable() - CURRENTLY NOT IMPLEMENTED !!";
   return false;
   /**
   QList<mdtClLinkData> testLinkDataList;
@@ -702,9 +702,9 @@ bool mdtTtTestConnectionCable::connectTestCable(const QVariant & testCableId, co
   return true;
 }
 
-bool mdtTtTestConnectionCable::disconnectTestCable(const QVariant & testCableId)
+bool mdtTtLogicalTestCable::disconnectTestCable(const QVariant & testCableId)
 {
-  qDebug() << "mdtTtTestConnectionCable::disconnectTestCable() - CURRENTLY NOT IMPLEMENTED !!";
+  qDebug() << "mdtTtLogicalTestCable::disconnectTestCable() - CURRENTLY NOT IMPLEMENTED !!";
   return false;
   /**
   QList<mdtClLinkData> testLinkDataList;

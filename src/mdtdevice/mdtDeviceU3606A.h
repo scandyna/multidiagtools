@@ -51,7 +51,9 @@ class mdtDeviceU3606A : public mdtDeviceScpi
                   RangeAuto = -10,  /*!< AUTO range */
                   RangeMin,         /*!< MIN range */
                   RangeMax,         /*!< MAX range */
-                  Range100 = 1,     /*!< 100 range */
+                  Range100m = 1,    /*!< 100m (milli) range */
+                  Range1,           /*!< 1 range */
+                  Range100,         /*!< 100 range */
                   Range1k,          /*!< 1k range */
                   Range10k,         /*!< 10k range */
                   Range100k,        /*!< 100k range */
@@ -98,6 +100,15 @@ class mdtDeviceU3606A : public mdtDeviceScpi
    * \return Value < 0 on error, >= 0 on success
    */
   int setupResistanceMeasure(range_t range, resolution_t resolution);
+
+  /*! \brief Setup low resistance measure (4 wires)
+   *
+   * \param range If range is supported by instrument, it will be set,
+   *               else AUTO range is used.
+   * \param resolution Resolution to use
+   * \return Value < 0 on error, >= 0 on success
+   */
+  int setupLowResistanceMeasure(range_t range, resolution_t resolution);
 
   /*! \brief Get the measure configuration
    *

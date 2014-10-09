@@ -232,6 +232,7 @@ void mdtTtTestModelEditor::addTestItem()
   if(!tie->setupTables()){
     pvLastError = tie->lastError();
     displayLastError();
+    delete tie;
     return;
   }
   dialog.setSqlForm(tie);

@@ -277,6 +277,13 @@ p, li { white-space: pre-wrap; }
            </spacer>
           </item>
           <item>
+           <widget class="QCheckBox" name="cbShowOnlyUnusedStartConnections">
+            <property name="text">
+             <string>Show unused only</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="pbStartConnection">
             <property name="text">
              <string>...</string>
@@ -479,6 +486,13 @@ p, li { white-space: pre-wrap; }
              </size>
             </property>
            </spacer>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cbShowOnlyUnusedEndConnections">
+            <property name="text">
+             <string>Show unused only</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QPushButton" name="pbEndConnection">

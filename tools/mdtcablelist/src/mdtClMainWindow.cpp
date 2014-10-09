@@ -28,7 +28,8 @@
 #include "mdtClUnitEditor.h"
 #include "mdtClLinkBeamEditor.h"
 #include "mdtClArticleEditor.h"
-#include "mdtTtTestConnectionCableEditor.h"
+#include "mdtTtTestCableEditor.h"
+#include "mdtTtLogicalTestCableEditor.h"
 #include "mdtTtTestNodeEditor.h"
 #include "mdtTtTestModelEditor.h"
 ///#include "mdtTtTestModelItemEditor.h"
@@ -39,8 +40,9 @@
 #include "mdtSqlTableSelection.h"
 #include "mdtTtBasicTester.h"
 #include "mdtTtBasicTesterWindow.h"
+#include "mdtTtBasicTestNodeCalibrationWindow.h"
 
-#include <boost/concept_check.hpp>
+//#include <boost/concept_check.hpp>
 
 #include <QAction>
 #include <QMessageBox>
@@ -70,6 +72,9 @@ mdtClMainWindow::mdtClMainWindow()
   // Basic tester
   ///pvBasicTester = 0;
   pvBasicTesterWindow = 0;
+  
+  pvW750CalibrationWindow = 0;
+
   // Central widget
   pvTabWidget = 0;
 
@@ -78,6 +83,7 @@ mdtClMainWindow::mdtClMainWindow()
   ///pvTestItemEditorWindow = 0;
   pvCableChecker = 0;
   pvCableCheckerWindow = 0;
+
 
   connectActions();
 }
@@ -438,11 +444,11 @@ void mdtClMainWindow::viewTestConnectionCable()
 
 void mdtClMainWindow::editTestConnectionCable()
 {
-  mdtTtTestConnectionCableEditor *editor;
+  mdtTtTestCableEditor *editor;
   mdtSqlWindow *window;
 
   // Get or create editor
-  editor = getTestConnectionCableEditor();
+  editor = getTestCableEditor();
   if(editor == 0){
     return;
   }
@@ -463,7 +469,7 @@ void mdtClMainWindow::editTestConnectionCable()
 void mdtClMainWindow::editSelectedTestConnectionCable()
 {
   mdtSqlTableSelection s;
-  mdtTtTestConnectionCableEditor *editor;
+  mdtTtTestCableEditor *editor;
   mdtSqlWindow *window;
   mdtSqlTableWidget *view;
 
@@ -473,12 +479,12 @@ void mdtClMainWindow::editSelectedTestConnectionCable()
     return;
   }
   // Get ID of selected test connection cable
-  s = view->currentSelection("Id_PK");
+  s = view->currentSelection("Unit_Id_FK_PK");
   if(s.isEmpty()){
     return;
   }
   // Get or create editor
-  editor = getTestConnectionCableEditor();
+  editor = getTestCableEditor();
   if(editor == 0){
     return;
   }
@@ -492,7 +498,8 @@ void mdtClMainWindow::editSelectedTestConnectionCable()
     return;
   }
   Q_ASSERT(s.rowCount() == 1);
-  if(!editor->setCurrentRow("Id_PK", s.data(0, "Id_PK"))){
+  /// \todo Corriger !! + filtre ??
+  if(!editor->setCurrentRow("Id_PK", s.data(0, "Unit_Id_FK_PK"))){
     displayError(editor->lastError());
   }
   window->enableNavigation();
@@ -522,6 +529,21 @@ void mdtClMainWindow::editTestNode()
   window->enableNavigation();
   window->raise();
   window->show();
+}
+
+void mdtClMainWindow::calibrateW750TestNode()
+{
+  if(pvW750CalibrationWindow == 0){
+    pvW750CalibrationWindow = new mdtTtBasicTestNodeCalibrationWindow(pvDatabaseManager->database(), this);
+    if(!pvW750CalibrationWindow->init()){
+      delete pvW750CalibrationWindow;
+      pvW750CalibrationWindow = 0;
+      return;
+    }
+  }
+  Q_ASSERT(pvW750CalibrationWindow != 0);
+  pvW750CalibrationWindow->raise();
+  pvW750CalibrationWindow->show();
 }
 
 void mdtClMainWindow::editTest()
@@ -615,21 +637,21 @@ void mdtClMainWindow::runCableChecker()
 /**
 void mdtClMainWindow::createTestConnectionCable()
 {
-  mdtTtTestConnectionCableEditor editor(this, pvDatabaseManager->database());
+  mdtTtLogicalTestCableEditor editor(this, pvDatabaseManager->database());
 
   editor.createCable();
 }
 
 void mdtClMainWindow::connectTestCable()
 {
-  mdtTtTestConnectionCableEditor editor(this, pvDatabaseManager->database());
+  mdtTtLogicalTestCableEditor editor(this, pvDatabaseManager->database());
 
   editor.connectTestCable();
 }
 
 void mdtClMainWindow::disconnectTestCable()
 {
-  mdtTtTestConnectionCableEditor editor(this, pvDatabaseManager->database());
+  mdtTtLogicalTestCableEditor editor(this, pvDatabaseManager->database());
 
   editor.disconnectTestCable();
 }
@@ -1073,24 +1095,24 @@ bool mdtClMainWindow::createTestConnectionCableTableView()
   return true;
 }
 
-mdtTtTestConnectionCableEditor *mdtClMainWindow::getTestConnectionCableEditor()
+mdtTtTestCableEditor *mdtClMainWindow::getTestCableEditor()
 {
-  mdtTtTestConnectionCableEditor *editor;
+  mdtTtTestCableEditor *editor;
 
-  editor = getEditor<mdtTtTestConnectionCableEditor>();
+  editor = getEditor<mdtTtTestCableEditor>();
   if(editor != 0){
     return editor;
   }else{
-    return createTestConnectionCableEditor();
+    return createTestCableEditor();
   }
 }
 
-mdtTtTestConnectionCableEditor *mdtClMainWindow::createTestConnectionCableEditor()
+mdtTtTestCableEditor *mdtClMainWindow::createTestCableEditor()
 {
-  mdtTtTestConnectionCableEditor *editor;
+  mdtTtTestCableEditor *editor;
   mdtSqlWindow *window;
 
-  editor = new mdtTtTestConnectionCableEditor(0, pvDatabaseManager->database());
+  editor = new mdtTtTestCableEditor(0, pvDatabaseManager->database());
   window = setupEditor(editor);
   if(window == 0){
     return 0;
@@ -1150,40 +1172,15 @@ void mdtClMainWindow::createBasicTester()
 mdtSqlTableWidget *mdtClMainWindow::createTableView(const QString & tableName, const QString & userFriendlyTableName)
 {
   mdtSqlTableWidget *tableWidget;
-  ///QSqlTableModel *model;
-  ///QString uftn;
 
   // Check that we have currently a database open
   if(!pvDatabaseManager->database().isOpen()){
     displayWarning(tr("No database is open."), tr("Please open a database and try again."));
     return 0;
   }
-  /**
-  // Set user friendly table name
-  if(userFriendlyTableName.isEmpty()){
-    uftn = tableName;
-  }else{
-    uftn = userFriendlyTableName;
-  }
-  // Setup model
-  model = new QSqlTableModel(this, pvDatabaseManager->database());
-  model->setTable(tableName);
-  if(!model->select()){
-    QSqlError sqlError = model->lastError();
-    mdtError e(tr("Unable to select data in table '") + tableName + tr("'"), mdtError::Error);
-    e.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(e, "mdtClMainWindow");
-    e.commit();
-    displayError(e);
-    delete model;
-    return 0;
-  }
-  */
   // Setup widget
   tableWidget = new mdtSqlTableWidget;
   tableWidget->setTableName(tableName, pvDatabaseManager->database(), userFriendlyTableName);
-  ///tableWidget->setModel(model);
-  ///tableWidget->setUserFriendlyTableName(uftn);
   // Setup tab widget (if needed)
   if(pvTabWidget == 0){
     pvTabWidget = new QTabWidget;
@@ -1209,7 +1206,6 @@ mdtSqlTableWidget *mdtClMainWindow::createTableView(const QString & tableName, c
 mdtSqlTableWidget *mdtClMainWindow::getTableView(const QString & tableName)
 {
   mdtSqlTableWidget *tableWidget;
-  ///QSqlTableModel *model;
   int i;
 
   // Search requested table widget
@@ -1219,13 +1215,6 @@ mdtSqlTableWidget *mdtClMainWindow::getTableView(const QString & tableName)
     if(tableWidget->tableName() == tableName){
       return tableWidget;
     }
-    /**
-    model = tableWidget->model();
-    Q_ASSERT(model != 0);
-    if(model->tableName() == tableName){
-      return tableWidget;
-    }
-    */
   }
 
   return 0;
@@ -1234,8 +1223,6 @@ mdtSqlTableWidget *mdtClMainWindow::getTableView(const QString & tableName)
 bool mdtClMainWindow::displayTableView(const QString& tableName)
 {
   mdtSqlTableWidget *tableWidget;
-  ///QSqlTableModel *model;
-  ///int i;
 
   // Search requested table widget
   tableWidget = getTableView(tableName);
@@ -1248,18 +1235,6 @@ bool mdtClMainWindow::displayTableView(const QString& tableName)
     displayError(tableWidget->lastError());
     return false;
   }
-  /**
-  model = tableWidget->model();
-  Q_ASSERT(model != 0);
-  if(!model->select()){
-    QSqlError sqlError = model->lastError();
-    mdtError e(tr("Unable to select data in table '") + tableName + tr("'"), mdtError::Error);
-    e.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(e, "mdtClMainWindow");
-    e.commit();
-    return false;
-  }
-  */
   // Show the widget - If a view exists in pvOpenViews, tab widget was allready created
   Q_ASSERT(pvTabWidget != 0);
   pvTabWidget->setCurrentWidget(tableWidget);
@@ -1405,6 +1380,7 @@ void mdtClMainWindow::connectActions()
   */
   // Test node edition
   connect(actEditTestNode, SIGNAL(triggered()), this, SLOT(editTestNode()));
+  connect(actCalibrateW750_2BusNode, SIGNAL(triggered()), this, SLOT(calibrateW750TestNode()));
   // Test edition
   connect(actEditTest, SIGNAL(triggered()), this, SLOT(editTest()));
   // Test item edition

@@ -280,6 +280,9 @@ bool mdtTtDatabaseSchema::setupTables()
   if(!setupTestCableTable()){
     return false;
   }
+  if(!setupLogicalTestCableTable()){
+    return false;
+  }
   if(!setupTestCableTestNodeUnitTable()){
     return false;
   }
@@ -388,6 +391,9 @@ bool mdtTtDatabaseSchema::createViews()
     return false;
   }
   if(!createTestNodeUnitView()){
+    return false;
+  }
+  if(!createUnitTestNodeView()){
     return false;
   }
   if(!createTestNodeUnitConnectionView()){
@@ -2040,14 +2046,14 @@ bool mdtTtDatabaseSchema::setupTestCableTestNodeUnitTable()
   mdtSqlSchemaTable table;
   QSqlField field;
 
-  table.setTableName("TestCable_TestNodeUnit_tbl", "UTF8");
+  table.setTableName("LogicalTestCable_TestNodeUnit_tbl", "UTF8");
   // TestNodeUnit_Id_FK
   field.setName("TestNodeUnit_Id_FK");
   field.setType(QVariant::Int);
   table.addField(field, true);
   // TestCable_Id_FK
   field = QSqlField();
-  field.setName("TestCable_Id_FK");
+  field.setName("LogicalTestCable_Id_FK");
   field.setType(QVariant::Int);
   table.addField(field, true);
   // Foreign keys
@@ -2056,8 +2062,8 @@ bool mdtTtDatabaseSchema::setupTestCableTestNodeUnitTable()
     pvLastError = table.lastError();
     return false;
   }
-  table.addForeignKey("TestCable_Id_FK_fk2", "TestCable_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("TestCable_Id_FK_fk2", "TestCable_Id_FK", "Id_PK")){
+  table.addForeignKey("LogicalTestCable_Id_FK_fk2", "LogicalTestCable_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("LogicalTestCable_Id_FK_fk2", "LogicalTestCable_Id_FK", "Id_PK")){
     pvLastError = table.lastError();
     return false;
   }
@@ -2072,14 +2078,14 @@ bool mdtTtDatabaseSchema::setupTestCableDutUnitTable()
   mdtSqlSchemaTable table;
   QSqlField field;
 
-  table.setTableName("TestCable_DutUnit_tbl", "UTF8");
+  table.setTableName("LogicalTestCable_DutUnit_tbl", "UTF8");
   // TestNodeUnit_Id_FK
   field.setName("DutUnit_Id_FK");
   field.setType(QVariant::Int);
   table.addField(field, true);
-  // TestCable_Id_FK
+  // LogicalTestCable_Id_FK
   field = QSqlField();
-  field.setName("TestCable_Id_FK");
+  field.setName("LogicalTestCable_Id_FK");
   field.setType(QVariant::Int);
   table.addField(field, true);
   // Foreign keys
@@ -2088,8 +2094,8 @@ bool mdtTtDatabaseSchema::setupTestCableDutUnitTable()
     pvLastError = table.lastError();
     return false;
   }
-  table.addForeignKey("TestCable_Id_FK_fk3", "TestCable_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("TestCable_Id_FK_fk3", "TestCable_Id_FK", "Id_PK")){
+  table.addForeignKey("LogicalTestCable_Id_FK_fk3", "LogicalTestCable_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("LogicalTestCable_Id_FK_fk3", "LogicalTestCable_Id_FK", "Id_PK")){
     pvLastError = table.lastError();
     return false;
   }
@@ -2105,22 +2111,20 @@ bool mdtTtDatabaseSchema::setupTestCableTable()
   QSqlField field;
 
   table.setTableName("TestCable_tbl", "UTF8");
-  // Id_PK
-  field.setName("Id_PK");
+  // Unit_Id_FK_PK
+  field.setName("Unit_Id_FK_PK");
   field.setType(QVariant::Int);
-  field.setAutoValue(true);
   table.addField(field, true);
+  // OffsetResetTestModel_Id_FK
+  field = QSqlField();
+  field.setName("OffsetResetTestModel_Id_FK");
+  field.setType(QVariant::Int);
+  table.addField(field, false);
   // Identification
   field = QSqlField();
   field.setName("Identification");
   field.setType(QVariant::String);
   field.setLength(50);
-  table.addField(field, false);
-  // Key
-  field = QSqlField();
-  field.setName("Key");
-  field.setType(QVariant::String);
-  field.setLength(70);
   table.addField(field, false);
   // DescriptionEN
   field = QSqlField();
@@ -2133,9 +2137,55 @@ bool mdtTtDatabaseSchema::setupTestCableTable()
   field.setName("OffsetResetDate");
   field.setType(QVariant::DateTime);
   table.addField(field, false);
+  // Foreign keys
+  table.addForeignKey("Unit_Id_FK_PK_fk2", "Unit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("Unit_Id_FK_PK_fk2", "Unit_Id_FK_PK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addForeignKey("OffsetResetTestModel_Id_FK_fk", "TestModel_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("OffsetResetTestModel_Id_FK_fk", "OffsetResetTestModel_Id_FK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+
+  pvTables.append(table);
+
+  return true;
+}
+
+bool mdtTtDatabaseSchema::setupLogicalTestCableTable()
+{
+  mdtSqlSchemaTable table;
+  QSqlField field;
+
+  table.setTableName("LogicalTestCable_tbl", "UTF8");
+  // Id_PK
+  field.setName("Id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  table.addField(field, true);
+  // TestCable_Id_FK
+  field = QSqlField();
+  field.setName("TestCable_Id_FK");
+  field.setType(QVariant::Int);
+  field.setRequired(true);
+  table.addField(field, false);
+  // Key
+  field = QSqlField();
+  field.setName("Key");
+  field.setType(QVariant::String);
+  field.setLength(70);
+  table.addField(field, false);
   // Indexes
   table.addIndex("Key_idx2", true);
   if(!table.addFieldToIndex("Key_idx2", "Key")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  // Foreign keys
+  table.addForeignKey("TestCable_Id_FK_fk", "TestCable_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("TestCable_Id_FK_fk", "TestCable_Id_FK", "Unit_Id_FK_PK")){
     pvLastError = table.lastError();
     return false;
   }
@@ -2168,7 +2218,7 @@ bool mdtTtDatabaseSchema::setupTestLinkTable()
   table.addField(field, false);
   // TestCable_Id_FK
   field = QSqlField();
-  field.setName("TestCable_Id_FK");
+  field.setName("LogicalTestCable_Id_FK");
   field.setType(QVariant::Int);
   field.setRequiredStatus(QSqlField::Required);
   table.addField(field, false);
@@ -2178,9 +2228,9 @@ bool mdtTtDatabaseSchema::setupTestLinkTable()
   field.setType(QVariant::String);
   field.setLength(50);
   table.addField(field, false);
-  // Value
+  // Resistance
   field = QSqlField();
-  field.setName("Value");
+  field.setName("Resistance");
   field.setType(QVariant::Double);
   table.addField(field, false);
   // Indexes
@@ -2194,8 +2244,8 @@ bool mdtTtDatabaseSchema::setupTestLinkTable()
     pvLastError = table.lastError();
     return false;
   }
-  table.addIndex("TestCable_Id_FK_idx", false);
-  if(!table.addFieldToIndex("TestCable_Id_FK_idx", "TestCable_Id_FK")){
+  table.addIndex("LogicalTestCable_Id_FK_idx", false);
+  if(!table.addFieldToIndex("LogicalTestCable_Id_FK_idx", "LogicalTestCable_Id_FK")){
     pvLastError = table.lastError();
     return false;
   }
@@ -2210,8 +2260,8 @@ bool mdtTtDatabaseSchema::setupTestLinkTable()
     pvLastError = table.lastError();
     return false;
   }
-  table.addForeignKey("TestCable_Id_FK_fk", "TestCable_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("TestCable_Id_FK_fk", "TestCable_Id_FK", "Id_PK")){
+  table.addForeignKey("LogicalTestCable_Id_FK_fk", "LogicalTestCable_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("LogicalTestCable_Id_FK_fk", "LogicalTestCable_Id_FK", "Id_PK")){
     pvLastError = table.lastError();
     return false;
   }
@@ -3314,6 +3364,27 @@ bool mdtTtDatabaseSchema::createTestNodeView()
   return createView("TestNode_view", sql);
 }
 
+bool mdtTtDatabaseSchema::createUnitTestNodeView()
+{
+  QString sql;
+
+  sql = "CREATE VIEW Unit_TestNode_view AS\n"\
+        "SELECT\n"\
+        " TN.*,\n"\
+        " VT.Type ,\n"\
+        " VT.SubType ,\n"\
+        " VT.SeriesNumber ,\n"\
+        " VTU.Unit_Id_FK\n"\
+        "FROM TestNode_tbl TN\n"\
+        " JOIN VehicleType_tbl VT\n"\
+        "  ON VT.Id_PK = TN.VehicleType_Id_FK_PK\n"\
+        " JOIN VehicleType_Unit_tbl VTU\n"\
+        "  ON VTU.VehicleType_Id_FK = VT.Id_PK";
+
+  return createView("Unit_TestNode_view", sql);
+
+}
+
 bool mdtTtDatabaseSchema::createTestNodeUnitView()
 {
   QString sql;
@@ -3379,11 +3450,11 @@ bool mdtTtDatabaseSchema::createTestLinkView()
   sql = "CREATE VIEW TestLink_view AS\n"\
         "SELECT\n"\
         " LNK.Id_PK,\n"\
-        " LNK.TestCable_Id_FK,\n"\
+        " LNK.LogicalTestCable_Id_FK,\n"\
         " LNK.TestConnection_Id_FK,\n"\
         " LNK.DutConnection_Id_FK,\n"\
         " LNK.Identification AS TestLinkIdentification,\n"\
-        " LNK.Value AS TestLinkValue,\n"\
+        " LNK.Resistance AS TestLinkResistance,\n"\
         " TNU.Unit_Id_FK_PK,\n"\
         " TNU.TestNode_Id_FK,\n"\
         " UD.Id_PK AS DutUnitId,\n"\
@@ -3440,7 +3511,7 @@ bool mdtTtDatabaseSchema::createTestCableTestNodeUnitView()
   QString sql, selectSql;
 
   selectSql = "SELECT\n"\
-              " TCTNU.*,\n"\
+              " LTCTNU.*,\n"\
               " U.SchemaPosition,\n"\
               " U.Alias,\n"\
               " TNU.*,\n"\
@@ -3451,11 +3522,11 @@ bool mdtTtDatabaseSchema::createTestCableTestNodeUnitView()
               " VT.Type,\n"\
               " VT.SubType,\n"\
               " VT.SeriesNumber\n";
-  sql = "CREATE VIEW TestCable_TestNodeUnit_view AS\n";
+  sql = "CREATE VIEW LogicalTestCable_TestNodeUnit_view AS\n";
   sql += selectSql;
-  sql += "FROM TestCable_TestNodeUnit_tbl TCTNU\n"\
+  sql += "FROM LogicalTestCable_TestNodeUnit_tbl LTCTNU\n"\
          " JOIN TestNodeUnit_tbl TNU\n"\
-         "  ON TNU.Unit_Id_FK_PK = TCTNU.TestNodeUnit_Id_FK\n"\
+         "  ON TNU.Unit_Id_FK_PK = LTCTNU.TestNodeUnit_Id_FK\n"\
          " JOIN Unit_tbl U\n"\
          "  ON U.Id_PK = TNU.Unit_Id_FK_PK\n"\
          " JOIN TestNodeUnitType_tbl TNUT\n"\
@@ -3465,20 +3536,20 @@ bool mdtTtDatabaseSchema::createTestCableTestNodeUnitView()
          " JOIN VehicleType_tbl VT\n"\
          "  ON VT.Id_PK = TN.VehicleType_Id_FK_PK\n";
 
-  return createView("TestCable_TestNodeUnit_view", sql);
+  return createView("LogicalTestCable_TestNodeUnit_view", sql);
 }
 
 bool mdtTtDatabaseSchema::createTestNodeTestCableView()
 {
   QString sql;
 
-  sql = "CREATE VIEW TestNode_TestCable_view AS\n"\
+  sql = "CREATE VIEW TestNode_LogicalTestCable_view AS\n"\
         "SELECT DISTINCT\n"\
         " TNU.TestNode_Id_FK,\n"\
         " TMTN.TestModel_Id_FK,\n"\
-        " TCTNU.TestCable_Id_FK,\n"\
+        " LTCTNU.LogicalTestCable_Id_FK,\n"\
         " TC.Identification,\n"\
-        " TC.Key,\n"\
+        " LTC.Key,\n"\
         " TC.OffsetResetDate,\n"\
         " TC.DescriptionEN\n"\
         "FROM TestNode_tbl TN\n"\
@@ -3486,12 +3557,14 @@ bool mdtTtDatabaseSchema::createTestNodeTestCableView()
         "  ON TMTN.TestNode_Id_FK = TN.VehicleType_Id_FK_PK\n"\
         " JOIN TestNodeUnit_tbl TNU\n"\
         "  ON TNU.TestNode_Id_FK = TN.VehicleType_Id_FK_PK\n"\
-        " JOIN TestCable_TestNodeUnit_tbl TCTNU\n"\
-        "  ON TCTNU.TestNodeUnit_Id_FK = TNU.Unit_Id_FK_PK\n"\
+        " JOIN LogicalTestCable_TestNodeUnit_tbl LTCTNU\n"\
+        "  ON LTCTNU.TestNodeUnit_Id_FK = TNU.Unit_Id_FK_PK\n"\
+        " JOIN LogicalTestCable_tbl LTC\n"\
+        "  ON LTC.Id_PK = LTCTNU.LogicalTestCable_Id_FK\n"\
         " JOIN TestCable_tbl TC\n"\
-        "  ON TC.Id_PK = TCTNU.TestCable_Id_FK\n";
+        "  ON TC.Unit_Id_FK_PK = LTC.TestCable_Id_FK\n";
 
-  return createView("TestNode_TestCable_view", sql);
+  return createView("TestNode_LogicalTestCable_view", sql);
 }
 
 bool mdtTtDatabaseSchema::createTestCableDutUnitView()
@@ -3499,7 +3572,7 @@ bool mdtTtDatabaseSchema::createTestCableDutUnitView()
   QString sql, selectSql;
 
   selectSql = "SELECT\n"\
-              " TCDU.*,\n"\
+              " LTCDU.*,\n"\
               " U.SchemaPosition,\n"\
               " U.Alias,\n"\
               " U.Cabinet,\n"\
@@ -3512,11 +3585,11 @@ bool mdtTtDatabaseSchema::createTestCableDutUnitView()
               " VT.Type,\n"\
               " VT.SubType,\n"\
               " VT.SeriesNumber\n";
-  sql = "CREATE VIEW TestCable_DutUnit_view AS\n";
+  sql = "CREATE VIEW LogicalTestCable_DutUnit_view AS\n";
   sql += selectSql;
-  sql += "FROM TestCable_DutUnit_tbl TCDU\n"\
+  sql += "FROM LogicalTestCable_DutUnit_tbl LTCDU\n"\
          " JOIN Unit_tbl U\n"\
-         "  ON U.Id_PK = TCDU.DutUnit_Id_FK"\
+         "  ON U.Id_PK = LTCDU.DutUnit_Id_FK"\
          " LEFT JOIN Article_tbl A\n"\
          "  ON A.Id_PK = U.Article_Id_FK\n"\
          " JOIN VehicleType_Unit_tbl VTU\n"\
@@ -3524,7 +3597,7 @@ bool mdtTtDatabaseSchema::createTestCableDutUnitView()
          " JOIN VehicleType_tbl VT\n"\
          "  ON VT.Id_PK = VTU.VehicleType_Id_FK";
 
-  return createView("TestCable_DutUnit_view", sql);
+  return createView("LogicalTestCable_DutUnit_view", sql);
 }
 
 bool mdtTtDatabaseSchema::createTestModelTestNodeView()
@@ -3557,7 +3630,7 @@ bool mdtTtDatabaseSchema::createTestModelItemTestLinkView()
         " TL.TestConnection_Id_FK,\n"\
         " TL.DutConnection_Id_FK,\n"\
         " TL.Identification,\n"\
-        " TL.Value,\n"\
+        " TL.Resistance,\n"\
         " TNU.Unit_Id_FK_PK,\n"\
         " TNB.NameEN AS Bus,\n"\
         " TNU.IoPosition,\n"\

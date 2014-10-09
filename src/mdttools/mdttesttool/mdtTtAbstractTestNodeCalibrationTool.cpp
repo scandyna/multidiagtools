@@ -44,13 +44,8 @@ bool mdtTtAbstractTestNodeCalibrationTool::setup(QWidget *testNodeFormWidget)
   QSqlError sqlError;
   mdtSqlRelationInfo relationInfo;
 
-  /**
-  if(!pvTest->setup()){
-    pvLastError = pvTest->lastError();
-    return false;
-  }
-  */
   // Setup test node table
+  pvTestNodeTableController->setCanWriteToDatabase(false);   // We act on a view - controller can only submit data to model itself, not to database tables
   pvTestNodeTableController->setTableName("TestNode_view", pvDatabase, tr("Test node"));
   ///pvTestNodeTableController->setMessageHandler(std::shared_ptr<mdtUiMessageHandler>(new mdtUiMessageHandler(testNodeFormWidget)));
   if(!pvTestNodeTableController->mapFormWidgets(testNodeFormWidget)){
@@ -66,6 +61,7 @@ bool mdtTtAbstractTestNodeCalibrationTool::setup(QWidget *testNodeFormWidget)
   }
   pvTestNodeUnitTableController = pvTestNodeTableController->childController<mdtSqlTableViewController>("TestNodeUnit_view");
   Q_ASSERT(pvTestNodeUnitTableController);
+  pvTestNodeUnitTableController->setCanWriteToDatabase(false);
   pvTestNodeUnitTableController->addColumnToSortOrder("IoPosition", Qt::AscendingOrder);
   // Start controllers
   pvTestNodeTableController->start();
@@ -83,6 +79,16 @@ bool mdtTtAbstractTestNodeCalibrationTool::setup(QWidget *testNodeFormWidget)
 
   pvParentWidget = testNodeFormWidget;
 
+  return true;
+}
+
+bool mdtTtAbstractTestNodeCalibrationTool::setTestNode(const QVariant& testNodeId)
+{
+  if(!pvTestNodeTableController->setFilter("VehicleType_Id_FK_PK", testNodeId)){
+    pvLastError = pvTestNodeTableController->lastError();
+    displayLastError();
+    return false;
+  }
   return true;
 }
 

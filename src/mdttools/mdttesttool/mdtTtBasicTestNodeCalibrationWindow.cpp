@@ -40,8 +40,6 @@ mdtTtBasicTestNodeCalibrationWindow::mdtTtBasicTestNodeCalibrationWindow(QSqlDat
   // Add test node unit view
   l = new QVBoxLayout;
   pvTestNodeUnitWidget = new mdtSqlTableWidget;
-  /// \todo Adapter !!
-  ///pvTestNodeUnitWidget->setModel(pvCalibrationTool->testNodeUnitViewTableModel().get());
   l->addWidget(pvTestNodeUnitWidget);
   wTestNodeUnit->setLayout(l);
 }
@@ -53,9 +51,11 @@ bool mdtTtBasicTestNodeCalibrationWindow::init()
     return false;
   }
   pvTestNodeUnitWidget->setTableController(pvCalibrationTool->testNodeUnitViewTableController());
-  /**
-  pvCalibrationTool->setTestNodeUiWidget(centralWidget());
-  */
+  // Go to test node
+  /// \todo Make a Key field or something similar
+  if(!pvCalibrationTool->setTestNode(2)){
+    return false;
+  }
 
   return true;
 }

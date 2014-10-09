@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_TT_TEST_CONNECTION_CABLE_H
-#define MDT_TT_TEST_CONNECTION_CABLE_H
+#ifndef MDT_TT_LOGICAL_TEST_CABLE_H
+#define MDT_TT_LOGICAL_TEST_CABLE_H
 
 #include "mdtTtBase.h"
 #include "mdtClLinkData.h"  /// \todo Obselete ??
@@ -32,17 +32,17 @@ class mdtClPathGraph;
 
 /*! \brief Helper class for test connection cable edition
  */
-class mdtTtTestConnectionCable : public mdtTtBase
+class mdtTtLogicalTestCable : public mdtTtBase
 {
  public:
 
   /*! \brief Constructor
    */
-  mdtTtTestConnectionCable(QObject *parent, QSqlDatabase db);
+  mdtTtLogicalTestCable(QObject *parent, QSqlDatabase db);
 
   /*! \brief Destructor
    */
-  ~mdtTtTestConnectionCable();
+  ~mdtTtLogicalTestCable();
 
   /*! \brief Get SQL statement for test node unit selection
    *
@@ -193,9 +193,9 @@ class mdtTtTestConnectionCable : public mdtTtBase
 
  private:
 
-  Q_DISABLE_COPY(mdtTtTestConnectionCable);
+  Q_DISABLE_COPY(mdtTtLogicalTestCable);
 
   mdtClPathGraph *pvPathGraph;
 };
 
-#endif // #ifndef MDT_TT_TEST_CONNECTION_CABLE_H
+#endif // #ifndef MDT_TT_LOGICAL_TEST_CABLE_H

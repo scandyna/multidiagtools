@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_TT_TEST_CONNECTION_CABLE_EDITOR_H
-#define MDT_TT_TEST_CONNECTION_CABLE_EDITOR_H
+#ifndef MDT_TT_LOGICAL_TEST_CABLE_EDITOR_H
+#define MDT_TT_LOGICAL_TEST_CABLE_EDITOR_H
 
 ///#include "mdtError.h"
 #include "mdtSqlForm.h"
@@ -29,10 +29,11 @@
 #include <QList>
 
 class QWidget;
+class mdtTtTestCableOffsetTool;
 
-/*! \brief Class for test connection cable edition
+/*! \brief Class for logical test connection cable edition
  */
-class mdtTtTestConnectionCableEditor : public mdtSqlForm
+class mdtTtLogicalTestCableEditor : public mdtSqlForm
 {
  Q_OBJECT
 
@@ -40,11 +41,15 @@ class mdtTtTestConnectionCableEditor : public mdtSqlForm
 
   /*! \brief Constructor
    */
-  mdtTtTestConnectionCableEditor(QWidget *parent, QSqlDatabase db);
+  mdtTtLogicalTestCableEditor(QWidget *parent, QSqlDatabase db);
 
   /*! \brief Setup all tables
    */
   bool setupTables();
+
+  /*! \brief Add menus to menu bar
+   */
+  void addMenus(QMenuBar *menuBar);
 
   /*! \brief Create a test connection cable
    */
@@ -135,7 +140,9 @@ class mdtTtTestConnectionCableEditor : public mdtSqlForm
    */
   bool setupTestCableDutUnitTable();
 
-  Q_DISABLE_COPY(mdtTtTestConnectionCableEditor);
+  Q_DISABLE_COPY(mdtTtLogicalTestCableEditor);
+
+  mdtTtTestCableOffsetTool *pvCableOffsetTool;
 };
 
-#endif // #ifndef MDT_TT_TEST_CONNECTION_CABLE_EDITOR_H
+#endif // #ifndef MDT_TT_LOGICAL_TEST_CABLE_EDITOR_H

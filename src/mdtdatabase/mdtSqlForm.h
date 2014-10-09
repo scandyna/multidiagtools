@@ -38,6 +38,7 @@ class mdtSqlTableWidget;
 class QSqlTableModel;
 class QTabWidget;
 class QVBoxLayout;
+class QMenuBar;
 
 /*! \brief Base class for high level SQL widgets API
  *
@@ -106,6 +107,18 @@ class mdtSqlForm : public QWidget
     QWidget *w = new QWidget;
     ui.setupUi(w);
     setMainTableWidget(w);
+  }
+
+  /*! \brief Add menus to menu bar
+   *
+   * This method is called by mdtSqlWindow,
+   *  and let subclass (of mdtSqlForm) add menus.
+   *  Add all needed stuff using given menuBar pointer.
+   *
+   * This default implementation dows nothing.
+   */
+  virtual void addMenus(QMenuBar *menuBar)
+  {
   }
 
   /*! \brief Set the main (or parent) table of the form
@@ -232,6 +245,11 @@ class mdtSqlForm : public QWidget
    *
    * Set filter based on SQL query WHERE part, without the WHERE keyword (f.ex. Id_PK = 15)
    *
+   *  Note: if internal controller's model is allready populated with data,
+   *  i.e. select() was called before, filter is applied directly, else,
+   *  select must be called explicitly after setMainTableFilter()
+   *  (this is the same behaviour as QSqlTableModel).
+   *
    * \pre Main table must be set with setMainTable()
    * \pre Internal state machine must run (see start() ).
    */
@@ -247,6 +265,11 @@ class mdtSqlForm : public QWidget
    *
    * Internally, a SQL statement is generated linke: fieldName = matchData
    *
+   *  Note: if internal controller's model is allready populated with data,
+   *  i.e. select() was called before, filter is applied directly, else,
+   *  select must be called explicitly after setMainTableFilter()
+   *  (this is the same behaviour as QSqlTableModel).
+   *
    * \pre Main table must be set with setMainTable()
    * \pre Internal state machine must run (see start() ).
    */
@@ -261,6 +284,11 @@ class mdtSqlForm : public QWidget
    * \param matchDataList A list of match data
    *
    * Internally, a SQL statement is generated linke: fieldName IN (matchData[0], matchData[1], ...)
+   *
+   *  Note: if internal controller's model is allready populated with data,
+   *  i.e. select() was called before, filter is applied directly, else,
+   *  select must be called explicitly after setMainTableFilter()
+   *  (this is the same behaviour as QSqlTableModel).
    *
    * \pre Main table must be set with setMainTable()
    * \pre Internal state machine must run (see start() ).
@@ -287,6 +315,14 @@ class mdtSqlForm : public QWidget
   /*! \brief Display last error in a message box
    */
   void displayLastError();
+
+  /*! \brief Get row count for given tableName
+   *
+   * Note: this will search internall controller at each request.
+   *   If repeated calls of this method is required, get a instance of
+   *   needed controller with tableController(), and call its rowCount() method.
+   */
+  int rowCount(const QString & tableName, bool fetchAll = false);
 
   /*! \brief Set the first row that matches given criteria as current row.
    *
@@ -374,6 +410,26 @@ class mdtSqlForm : public QWidget
    * \return Current value, or a invalid QVariant on error (f.ex. table, row or field not found).
    */
   QVariant data(const QString &tableName, int row, const QString &fieldName, bool & ok);
+
+  /*! \brief Get a list of data for given table and field name
+   *
+   * If fetchAll is true, all available data will be fetched from database
+   *  (regarding applied filter), else only cached data are returned
+   *  (see QSqlQueryModel::fetchMore() for details).
+   */
+  inline QList<QVariant> dataList(const QString &tableName, const QString &fieldName, bool fetchAll = true)
+  {
+    bool ok;
+    return dataList(tableName, fieldName, ok, fetchAll);
+  }
+
+  /*! \brief Get a list of data for given table and field name
+   *
+   * If fetchAll is true, all available data will be fetched from database
+   *  (regarding applied filter), else only cached data are returned
+   *  (see QSqlQueryModel::fetchMore() for details).
+   */
+  QList<QVariant> dataList(const QString &tableName, const QString &fieldName, bool & ok, bool fetchAll = true);
 
   /*! \brief Call insert method on main table controller
    */

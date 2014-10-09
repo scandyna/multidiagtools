@@ -21,7 +21,6 @@
 #ifndef MDT_TT_ABSTRACT_TEST_NODE_CALIBRATION_TOOL_H
 #define MDT_TT_ABSTRACT_TEST_NODE_CALIBRATION_TOOL_H
 
-///#include "mdtTtAbstractTester.h"
 #include "mdtError.h"
 #include "mdtTtTest.h"
 #include "mdtTtTestNodeManager.h"
@@ -64,6 +63,12 @@ class mdtTtAbstractTestNodeCalibrationTool : public QObject
    *  else UI will be incoherent at initial state.
    */
   virtual bool setup(QWidget *testNodeFormWidget);
+
+  /*! \brief Set test node to calibrate
+   *
+   * \todo Add a Key field or something similar.
+   */
+  bool setTestNode(const QVariant & testNodeId);
 
   /*! \brief Get database instance
    */

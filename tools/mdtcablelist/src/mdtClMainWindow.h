@@ -40,9 +40,11 @@ class mdtTtTestNodeEditor;
 class mdtTtTestModelEditor;
 ///class mdtTtTestModelItemEditor;
 class mdtSqlWindow;
-class mdtTtTestConnectionCableEditor;
+class mdtTtTestCableEditor;
+class mdtTtLogicalTestCableEditor;
 ///class mdtTtBasicTester;
 class mdtTtBasicTesterWindow;
+class mdtTtBasicTestNodeCalibrationWindow;
 
 class mdtTtCableChecker;
 class mdtTtCableCheckerWindow;
@@ -151,6 +153,10 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   /*! \brief Edit test node
    */
   void editTestNode();
+
+  /*! \brief Calibrate W750 test node
+   */
+  void calibrateW750TestNode();
 
   /*! \brief View test connection cable
    */
@@ -288,11 +294,11 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
 
   /*! \brief Get test connection cable editor
    */
-  mdtTtTestConnectionCableEditor *getTestConnectionCableEditor();
+  mdtTtTestCableEditor *getTestCableEditor();
 
   /*! \brief Create test connection cable editor
    */
-  mdtTtTestConnectionCableEditor *createTestConnectionCableEditor();
+  mdtTtTestCableEditor *createTestCableEditor();
 
   /*! \brief Get test model editor
    */
@@ -431,6 +437,9 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   // Cable checker
   mdtTtCableChecker *pvCableChecker;
   mdtTtCableCheckerWindow *pvCableCheckerWindow;
+  
+  // Calibration tool
+  mdtTtBasicTestNodeCalibrationWindow *pvW750CalibrationWindow;
 };
 
 #endif // #ifndef MDT_CL_MAIN_WINDOW_H

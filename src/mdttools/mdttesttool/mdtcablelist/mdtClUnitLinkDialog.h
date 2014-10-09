@@ -77,6 +77,14 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
    */
   void clearEndUnitSelectionList();
 
+  /*! \brief Set show only unused start connections
+   */
+  void setShowOnlyUnusedStartConnection(bool onlyUnused);
+
+  /*! \brief Set show only unused end connections
+   */
+  void setShowOnlyUnusedEndConnection(bool onlyUnused);
+
   /*! \brief Set the vehicle type ID list on witch we are working on
    *
    * This will limit the unit selections to those that exists for given vehicle types.

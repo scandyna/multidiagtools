@@ -143,6 +143,57 @@ int mdtDeviceU3606A::setupResistanceMeasure(mdtDeviceU3606A::range_t range, mdtD
   return retVal;
 }
 
+int mdtDeviceU3606A::setupLowResistanceMeasure(mdtDeviceU3606A::range_t range, mdtDeviceU3606A::resolution_t resolution)
+{
+  QByteArray rangeStr;
+  QByteArray resolutionStr;
+  QByteArray command;
+  int retVal;
+
+  // Set range part
+  switch(range){
+    case RangeAuto:
+      rangeStr = "AUTO";
+      break;
+    case RangeMin:
+      rangeStr = "MIN";
+      break;
+    case RangeMax:
+      rangeStr = "MAX";
+      break;
+    case Range100m:
+      rangeStr = "0.1";
+      break;
+    case Range1:
+      rangeStr = "1";
+      break;
+    default:
+      pvLastError.setError(tr("Requested range is not supported for low resistance measurement, AUTO will be used."), mdtError::Warning);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceU3606A");
+      pvLastError.commit();
+      rangeStr = "AUTO";
+  }
+  // Set resolution part
+  switch(resolution){
+    case ResolutionMin:
+      resolutionStr = "MIN";
+      break;
+    case ResolutionMax:
+      resolutionStr = "MAX";
+      break;
+  }
+  // Send command to device
+  command = "CONF:LRES " + rangeStr + "," + resolutionStr;
+  retVal = sendCommand(command);
+  if(retVal < 0){
+    pvLastError.setError(tr("Device") + " " + name() + ": " + tr("Command send failed"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceU3606A");
+    pvLastError.commit();
+  }
+
+  return retVal;
+}
+
 mdtFrameCodecScpiU3606A::measure_type_t mdtDeviceU3606A::getMeasureConfiguration()
 {
   int bTag;

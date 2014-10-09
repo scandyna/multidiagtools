@@ -29,7 +29,7 @@
 #include <QPair>
 #include <QVector>
 
-#include <QDebug>
+//#include <QDebug>
 
 using namespace std;
 
@@ -786,9 +786,6 @@ bool mdtAbstractSqlTableController::allDataAreSaved(bool checkAboutDirtyIndex)
       pvMessageHandler->setType(mdtUiMessageHandler::Warning);
       pvMessageHandler->displayToUser();
     }
-    
-    qDebug() << "allDataAreSaved() - table " << tableName() << " NOT saved (state check).";
-    
     return false;
   }
   /*
@@ -804,9 +801,6 @@ bool mdtAbstractSqlTableController::allDataAreSaved(bool checkAboutDirtyIndex)
         index = pvModel->index(row, col);
         if(pvModel->isDirty(index)){
           // We generate no message, because this situation should only happen for programmed edition with setData()
-          
-          qDebug() << "allDataAreSaved() - table " << tableName() << " NOT saved (found dirty index).";
-          
           return false;
         }
       }
@@ -1298,6 +1292,9 @@ bool mdtAbstractSqlTableController::setupAndAddChildController(shared_ptr< mdtAb
       pvLastError = relation->lastError();
       return false;
     }
+  }
+  if(relationInfo.relationType() == mdtSqlRelationInfo::OneToOne){
+    connect(controller.get(), SIGNAL(dataEdited()), this, SIGNAL(dataEdited()));
   }
   // Add to container
   container.controller = controller;

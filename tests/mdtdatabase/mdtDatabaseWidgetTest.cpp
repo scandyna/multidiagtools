@@ -1897,6 +1897,58 @@ void mdtDatabaseWidgetTest::sqlDataWidgetController2tableTest()
   QVERIFY(w.fld_Detail->isEnabled());
   QCOMPARE(w.fld_Detail->text(), QString("Detail on Laura (edited detail)"));
   /*
+   * Check edition by editing only fld_Detail
+   * Check that edition buttons are updated + that submit works properly
+   */
+  // Check edition buttons states
+  QVERIFY(!w.submitEnabled);
+  QVERIFY(!w.revertEnabled);
+  QVERIFY(w.insertEnabled);
+  QVERIFY(w.removeEnabled);
+  // Edit and check that widgets displays correctly ...
+  QTest::keyClicks(w.fld_Detail, " 2");
+  QCOMPARE(w.fld_Detail->text(), QString("Detail on Laura (edited detail) 2"));
+  // Check edition buttons states
+  QVERIFY(w.submitEnabled);
+  QVERIFY(w.revertEnabled);
+  QVERIFY(!w.insertEnabled);
+  QVERIFY(!w.removeEnabled);
+  // Submit and check
+  QVERIFY(clientController.submitAndWait());
+  clientId = clientController.currentData("Id_PK");
+  QVERIFY(!clientId.isNull());
+  QCOMPARE(detailController->currentData("Client_Id_FK_PK"), clientId);
+  QCOMPARE(clientController.currentData("FirstName"), QVariant("Laura (edited)"));
+  QCOMPARE(detailController->currentData("Detail"), QVariant("Detail on Laura (edited detail) 2"));
+  // Check GUI state
+  QVERIFY(w.fld_FirstName->isEnabled());
+  QVERIFY(w.fld_Detail->isEnabled());
+  QCOMPARE(w.fld_FirstName->text(), QString("Laura (edited)"));
+  QCOMPARE(w.fld_Detail->text(), QString("Detail on Laura (edited detail) 2"));
+  // Check edition buttons states
+  QVERIFY(!w.submitEnabled);
+  QVERIFY(!w.revertEnabled);
+  QVERIFY(w.insertEnabled);
+  QVERIFY(w.removeEnabled);
+  // Go back
+  clientController.toPrevious();
+  QTest::qWait(50);
+  QCOMPARE(clientController.currentData("FirstName"), QVariant("Charly"));
+  QVERIFY(w.fld_FirstName->isEnabled());
+  QCOMPARE(w.fld_FirstName->text(), QString("Charly"));
+  QVERIFY(detailController->currentData("Detail").isNull());
+  QVERIFY(!w.fld_Detail->isEnabled());
+  QVERIFY(w.fld_Detail->text().isEmpty());
+  // Come back to Laura and check
+  clientController.toNext();
+  QTest::qWait(50);
+  QCOMPARE(clientController.currentData("FirstName"), QVariant("Laura (edited)"));
+  QVERIFY(w.fld_FirstName->isEnabled());
+  QCOMPARE(w.fld_FirstName->text(), QString("Laura (edited)"));
+  QCOMPARE(detailController->currentData("Detail"), QVariant("Detail on Laura (edited detail) 2"));
+  QVERIFY(w.fld_Detail->isEnabled());
+  QCOMPARE(w.fld_Detail->text(), QString("Detail on Laura (edited detail) 2"));
+  /*
    * Check insertion + revert
    */
   clientController.insert();
@@ -1922,16 +1974,16 @@ void mdtDatabaseWidgetTest::sqlDataWidgetController2tableTest()
   QCOMPARE(clientController.currentData("FirstName"), QVariant("Laura (edited)"));
   QVERIFY(w.fld_FirstName->isEnabled());
   QCOMPARE(w.fld_FirstName->text(), QString("Laura (edited)"));
-  QCOMPARE(detailController->currentData("Detail"), QVariant("Detail on Laura (edited detail)"));
+  QCOMPARE(detailController->currentData("Detail"), QVariant("Detail on Laura (edited detail) 2"));
   QVERIFY(w.fld_Detail->isEnabled());
-  QCOMPARE(w.fld_Detail->text(), QString("Detail on Laura (edited detail)"));
+  QCOMPARE(w.fld_Detail->text(), QString("Detail on Laura (edited detail) 2"));
   /*
    * Check edition + revert
    */
   // Edit and check that widgets displays correctly ...
   QTest::keyClicks(w.fld_FirstName, " 2");
   QCOMPARE(w.fld_FirstName->text(), QString("Laura (edited) 2"));
-  QTest::keyClicks(w.fld_Detail, " 2.2");
+  QTest::keyClicks(w.fld_Detail, ".2");
   QCOMPARE(w.fld_Detail->text(), QString("Detail on Laura (edited detail) 2.2"));
   // Revert and check
   clientController.revert();
@@ -1939,9 +1991,9 @@ void mdtDatabaseWidgetTest::sqlDataWidgetController2tableTest()
   QCOMPARE(clientController.currentData("FirstName"), QVariant("Laura (edited)"));
   QVERIFY(w.fld_FirstName->isEnabled());
   QCOMPARE(w.fld_FirstName->text(), QString("Laura (edited)"));
-  QCOMPARE(detailController->currentData("Detail"), QVariant("Detail on Laura (edited detail)"));
+  QCOMPARE(detailController->currentData("Detail"), QVariant("Detail on Laura (edited detail) 2"));
   QVERIFY(w.fld_Detail->isEnabled());
-  QCOMPARE(w.fld_Detail->text(), QString("Detail on Laura (edited detail)"));
+  QCOMPARE(w.fld_Detail->text(), QString("Detail on Laura (edited detail) 2"));
   // Go back
   clientController.toPrevious();
   QTest::qWait(50);
@@ -1957,9 +2009,62 @@ void mdtDatabaseWidgetTest::sqlDataWidgetController2tableTest()
   QCOMPARE(clientController.currentData("FirstName"), QVariant("Laura (edited)"));
   QVERIFY(w.fld_FirstName->isEnabled());
   QCOMPARE(w.fld_FirstName->text(), QString("Laura (edited)"));
-  QCOMPARE(detailController->currentData("Detail"), QVariant("Detail on Laura (edited detail)"));
+  QCOMPARE(detailController->currentData("Detail"), QVariant("Detail on Laura (edited detail) 2"));
   QVERIFY(w.fld_Detail->isEnabled());
-  QCOMPARE(w.fld_Detail->text(), QString("Detail on Laura (edited detail)"));
+  QCOMPARE(w.fld_Detail->text(), QString("Detail on Laura (edited detail) 2"));
+  /*
+   * Check edition by editing only fld_Detail
+   * Check that edition buttons are updated + that revert works properly
+   */
+  // Check edition buttons states
+  QVERIFY(!w.submitEnabled);
+  QVERIFY(!w.revertEnabled);
+  QVERIFY(w.insertEnabled);
+  QVERIFY(w.removeEnabled);
+  // Edit and check that widgets displays correctly ...
+  QTest::keyClicks(w.fld_Detail, " 3");
+  QCOMPARE(w.fld_Detail->text(), QString("Detail on Laura (edited detail) 2 3"));
+  // Check edition buttons states
+  QVERIFY(w.submitEnabled);
+  QVERIFY(w.revertEnabled);
+  QVERIFY(!w.insertEnabled);
+  QVERIFY(!w.removeEnabled);
+  // Revert and check
+  clientController.revert();
+  QTest::qWait(50);
+  clientId = clientController.currentData("Id_PK");
+  QVERIFY(!clientId.isNull());
+  QCOMPARE(detailController->currentData("Client_Id_FK_PK"), clientId);
+  QCOMPARE(clientController.currentData("FirstName"), QVariant("Laura (edited)"));
+  QCOMPARE(detailController->currentData("Detail"), QVariant("Detail on Laura (edited detail) 2"));
+  // Check GUI state
+  QVERIFY(w.fld_FirstName->isEnabled());
+  QVERIFY(w.fld_Detail->isEnabled());
+  QCOMPARE(w.fld_FirstName->text(), QString("Laura (edited)"));
+  QCOMPARE(w.fld_Detail->text(), QString("Detail on Laura (edited detail) 2"));
+  // Check edition buttons states
+  QVERIFY(!w.submitEnabled);
+  QVERIFY(!w.revertEnabled);
+  QVERIFY(w.insertEnabled);
+  QVERIFY(w.removeEnabled);
+  // Go back
+  clientController.toPrevious();
+  QTest::qWait(50);
+  QCOMPARE(clientController.currentData("FirstName"), QVariant("Charly"));
+  QVERIFY(w.fld_FirstName->isEnabled());
+  QCOMPARE(w.fld_FirstName->text(), QString("Charly"));
+  QVERIFY(detailController->currentData("Detail").isNull());
+  QVERIFY(!w.fld_Detail->isEnabled());
+  QVERIFY(w.fld_Detail->text().isEmpty());
+  // Come back to Laura and check
+  clientController.toNext();
+  QTest::qWait(50);
+  QCOMPARE(clientController.currentData("FirstName"), QVariant("Laura (edited)"));
+  QVERIFY(w.fld_FirstName->isEnabled());
+  QCOMPARE(w.fld_FirstName->text(), QString("Laura (edited)"));
+  QCOMPARE(detailController->currentData("Detail"), QVariant("Detail on Laura (edited detail) 2"));
+  QVERIFY(w.fld_Detail->isEnabled());
+  QCOMPARE(w.fld_Detail->text(), QString("Detail on Laura (edited detail) 2"));
   /*
    * Check remove
    */

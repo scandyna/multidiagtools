@@ -33,6 +33,7 @@
 #include <QComboBox>
 #include <QString>
 #include <QMessageBox>
+#include <QCheckBox>
 
 #include <QDebug>
 
@@ -132,6 +133,16 @@ void mdtClUnitLinkDialog::setEndUnitSelectionList(const QList< QVariant >& idLis
 void mdtClUnitLinkDialog::clearEndUnitSelectionList()
 {
   pvEndUnitSelectionIdList.clear();
+}
+
+void mdtClUnitLinkDialog::setShowOnlyUnusedStartConnection(bool onlyUnused)
+{
+  cbShowOnlyUnusedStartConnections->setChecked(onlyUnused);
+}
+
+void mdtClUnitLinkDialog::setShowOnlyUnusedEndConnection(bool onlyUnused)
+{
+  cbShowOnlyUnusedEndConnections->setChecked(onlyUnused);
 }
 
 void mdtClUnitLinkDialog::setWorkingOnVehicleTypeIdList(const QList<QVariant> & vtIdList)
@@ -457,6 +468,11 @@ void mdtClUnitLinkDialog::selectStartConnection()
 
   // Setup and run query
   sql = "SELECT * FROM UnitConnection_view WHERE Unit_Id_FK = " + pvStartUnitId.toString();
+  if(cbShowOnlyUnusedStartConnections->isChecked()){
+    sql += " AND UnitConnection_Id_PK NOT IN (";
+    sql += "  SELECT UnitConnectionStart_Id_FK FROM UnitLink_view WHERE Unit_Id_FK = " + pvStartUnitId.toString();
+    sql += ")";
+  }
   ///model.setQuery(sql, pvDatabase);
   // Setup and show dialog
   selectionDialog.setMessage("Please select start connection");
@@ -501,6 +517,11 @@ void mdtClUnitLinkDialog::selectEndConnection()
 
   // Setup and run query
   sql = "SELECT * FROM UnitConnection_view WHERE Unit_Id_FK = " + pvEndUnitId.toString();
+  if(cbShowOnlyUnusedEndConnections->isChecked()){
+    sql += " AND UnitConnection_Id_PK NOT IN (";
+    sql += "  SELECT UnitConnectionEnd_Id_FK FROM UnitLink_view WHERE Unit_Id_FK = " + pvStartUnitId.toString();
+    sql += ")";
+  }
   ///model.setQuery(sql, pvDatabase);
   // Setup and show dialog
   selectionDialog.setMessage(tr("Please select end connection:"));

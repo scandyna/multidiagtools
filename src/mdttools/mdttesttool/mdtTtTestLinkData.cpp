@@ -31,9 +31,9 @@ mdtTtTestLinkData::mdtTtTestLinkData(const QSqlRecord & record)
   Q_ASSERT(contains("Id_PK"));
   Q_ASSERT(contains("TestConnection_Id_FK"));
   Q_ASSERT(contains("DutConnection_Id_FK"));
-  Q_ASSERT(contains("TestCable_Id_FK"));
+  Q_ASSERT(contains("LogicalTestCable_Id_FK"));
   Q_ASSERT(contains("Identification"));
-  Q_ASSERT(contains("Value"));
+  Q_ASSERT(contains("Resistance"));
 }
 
 bool mdtTtTestLinkData::setup(const QSqlDatabase & db) 

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>mdtTtTestConnectionCableEditor</class>
- <widget class="QWidget" name="mdtTtTestConnectionCableEditor">
+ <class>mdtTtTestCableEditor</class>
+ <widget class="QWidget" name="mdtTtTestCableEditor">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>662</width>
+    <width>598</width>
     <height>86</height>
    </rect>
   </property>
@@ -19,32 +19,18 @@
      <property name="fieldGrowthPolicy">
       <enum>QFormLayout::ExpandingFieldsGrow</enum>
      </property>
-     <item row="0" column="0">
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="fld_SchemaPosition"/>
+     </item>
+     <item row="1" column="0">
       <widget class="QLabel" name="lbIdentification">
        <property name="text">
         <string>Identification:</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="fld_Identification">
-       <property name="statusTip">
-        <string>Physical cable identification</string>
-       </property>
-       <property name="whatsThis">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Physical cable identification.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-     </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="fld_Key">
-       <property name="statusTip">
-        <string>Logical cable identification</string>
-       </property>
-       <property name="whatsThis">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Logical cable identification.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
+      <widget class="QLineEdit" name="fld_Identification"/>
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="lbOffsetResetDate">
@@ -56,14 +42,14 @@
      <item row="2" column="1">
       <widget class="QLabel" name="fld_OffsetResetDate">
        <property name="text">
-        <string/>
+        <string>....</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="lbKey">
+     <item row="0" column="0">
+      <widget class="QLabel" name="lbSchemaPosition">
        <property name="text">
-        <string>Key:</string>
+        <string>Schema pos.:</string>
        </property>
       </widget>
      </item>
