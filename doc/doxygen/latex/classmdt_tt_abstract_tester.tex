@@ -47,21 +47,25 @@ void \hyperlink{classmdt_tt_abstract_tester_af7aaec93927106040b137fa92a597d1b}{t
 \item 
 \hyperlink{classmdt_tt_abstract_tester_a8585d02e83ba1512b59d5e3984540b0a}{mdt\-Tt\-Abstract\-Tester} (Q\-Sql\-Database db, \hyperlink{class_q_object}{Q\-Object} $\ast$parent=0)
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
-virtual bool \hyperlink{classmdt_tt_abstract_tester_a1066de965e6621c9c1fe7abdf5d7d23c}{init} ()
-\begin{DoxyCompactList}\small\item\em Do some initialization. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_tt_abstract_tester_a7b6e46a5e8e3c22375e6462f09241aea}{set\-Test\-Ui\-Widget} (\hyperlink{class_q_widget}{Q\-Widget} $\ast$widget)
-\begin{DoxyCompactList}\small\item\em All childs contained in widget that have a name prefixed fld\-\_\- will be mapped to corresponding fields in Test\-\_\-tbl. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classmdt_tt_abstract_tester_a08e423ef173c8f925b351110637c8050}{setup} ()
+\begin{DoxyCompactList}\small\item\em Do setup. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_abstract_tester_a9cc3f5bfe9e27ac0ae376ea1c82e8585}{set\-Test\-Ui\-Widget} (\hyperlink{class_q_widget}{Q\-Widget} $\ast$widget)
+\begin{DoxyCompactList}\small\item\em All childs contained in widget that have a name prefixed fld\-\_\- will be mapped to corresponding fields in Test\-\_\-view. They cann be written, but internally used \hyperlink{classmdt_abstract_sql_table_controller}{mdt\-Abstract\-Sql\-Table\-Controller}'s submit() slot will not work. Data will be really stored in Test\-\_\-tbl by \hyperlink{classmdt_tt_abstract_tester_a36fe4f0ba9940455a975538f89660327}{save\-Test()}. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_abstract_tester_ab1095b5fc987c9d52de66b6c02ec7785}{start} ()
+\begin{DoxyCompactList}\small\item\em Start state machines. \end{DoxyCompactList}\item 
 Q\-Sql\-Database \hyperlink{classmdt_tt_abstract_tester_a43687d08109c032bc83ed287e8fdecc4}{database} ()
 \begin{DoxyCompactList}\small\item\em Get database instance. \end{DoxyCompactList}\item 
-std\-::shared\-\_\-ptr$<$ \hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model} $>$ \hyperlink{classmdt_tt_abstract_tester_ae8e3acab53e0d873a9eb963cfd3c71f7}{test\-Item\-View\-Table\-Model} ()
-\begin{DoxyCompactList}\small\item\em Get table model to access data in Test\-Item\-\_\-view. \end{DoxyCompactList}\item 
+std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{classmdt_sql_data_widget_controller}{mdt\-Sql\-Data\-Widget\-Controller} $>$ \hyperlink{classmdt_tt_abstract_tester_af85c7e2df1cc879b979024706848304c}{test\-View\-Controller} ()
+\begin{DoxyCompactList}\small\item\em Access controller that acts on Test\-\_\-view. \end{DoxyCompactList}\item 
+std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{classmdt_sql_table_view_controller}{mdt\-Sql\-Table\-View\-Controller} $>$ \hyperlink{classmdt_tt_abstract_tester_a06b95c567684157712ae4a6155404297}{test\-Item\-View\-Controller} ()
+\begin{DoxyCompactList}\small\item\em Access controller that acts on Test\-Item\-\_\-view. \end{DoxyCompactList}\item 
 std\-::shared\-\_\-ptr\\*
 $<$ \hyperlink{classmdt_tt_test_node_manager}{mdt\-Tt\-Test\-Node\-Manager} $>$ \hyperlink{classmdt_tt_abstract_tester_a7b8351e2214a3bfc57d38bfeab3e0342}{test\-Node\-Manager} ()
 \begin{DoxyCompactList}\small\item\em Get test node manager object. \end{DoxyCompactList}\item 
 std\-::shared\-\_\-ptr$<$ \hyperlink{classmdt_tt_test}{mdt\-Tt\-Test} $>$ \hyperlink{classmdt_tt_abstract_tester_a096db7bd6418195ba2a372ba1bec923f}{test} ()
 \begin{DoxyCompactList}\small\item\em Get test object. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_tt_test_data}{mdt\-Tt\-Test\-Data} \hyperlink{classmdt_tt_abstract_tester_a638dc8049de3a5e5ef6f753444800e19}{test\-Data} () const 
-\begin{DoxyCompactList}\small\item\em Get test data. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_tt_abstract_tester_ac9eead60ccacb39581dd792d00a18466}{test\-Is\-Empty} () const 
 \begin{DoxyCompactList}\small\item\em Check if a test is empty. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_tt_abstract_tester_af98bb9d80bfbd14873fc356c17d31eb4}{test\-Is\-Saved} () const 
@@ -71,6 +75,8 @@ bool \hyperlink{classmdt_tt_abstract_tester_af98bb9d80bfbd14873fc356c17d31eb4}{t
 \item 
 bool \hyperlink{classmdt_tt_abstract_tester_a75396c57e71377ef9224d49ec3273209}{remove\-Test\-If\-Empty} ()
 \begin{DoxyCompactList}\small\item\em Remove current test if it is empty. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_abstract_tester_a2f19f51c28b6ec0741e7d0fc59b9f708}{remove\-Current\-Test\-Pv} ()
+\begin{DoxyCompactList}\small\item\em Remove current test. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_tt_abstract_tester_afc2325803369ec4d4225b9584c915c83}{display\-Last\-Error} ()
 \begin{DoxyCompactList}\small\item\em Display last error to the user. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
@@ -83,7 +89,15 @@ void \hyperlink{classmdt_tt_abstract_tester_afc2325803369ec4d4225b9584c915c83}{d
 \subsection{Detailed Description}
 Base to create a tester. 
 
-Definition at line 42 of file mdt\-Tt\-Abstract\-Tester.\-h.
+Typical usage\-:
+\begin{DoxyItemize}
+\item Do base initialization with \hyperlink{classmdt_tt_abstract_tester_a08e423ef173c8f925b351110637c8050}{setup()}
+\item Do signal/slot connections
+\item Set G\-U\-I widget with \hyperlink{classmdt_tt_abstract_tester_a9cc3f5bfe9e27ac0ae376ea1c82e8585}{set\-Test\-Ui\-Widget()}
+\item Load data from database and start state machines with \hyperlink{classmdt_tt_abstract_tester_ab1095b5fc987c9d52de66b6c02ec7785}{start()} 
+\end{DoxyItemize}
+
+Definition at line 50 of file mdt\-Tt\-Abstract\-Tester.\-h.
 
 
 
@@ -102,11 +116,7 @@ Constructor.
 
 
 
-Definition at line 33 of file mdt\-Tt\-Abstract\-Tester.\-cpp.
-
-
-
-References test\-Data\-Changed().
+Definition at line 36 of file mdt\-Tt\-Abstract\-Tester.\-cpp.
 
 
 
@@ -124,11 +134,11 @@ Create a new test.
 
 This default implmementation will first check if current test is clean (saved, ...), and warn the user if not. Then (if test is clean, or user choosed to not keep it), user can select a test model to use. Finaly, test is created, based on selected test model. 
 
-Definition at line 83 of file mdt\-Tt\-Abstract\-Tester.\-cpp.
+Definition at line 132 of file mdt\-Tt\-Abstract\-Tester.\-cpp.
 
 
 
-References mdt\-Sql\-Table\-Selection\-::data(), database(), display\-Last\-Error(), mdt\-Sql\-Table\-Selection\-::is\-Empty(), pv\-Last\-Error, remove\-Test\-If\-Empty(), mdt\-Sql\-Table\-Selection\-::row\-Count(), and test\-Is\-Saved().
+References mdt\-Sql\-Table\-Selection\-::data(), database(), display\-Last\-Error(), mdt\-Sql\-Table\-Selection\-::is\-Empty(), pv\-Last\-Error, remove\-Current\-Test\-Pv(), remove\-Test\-If\-Empty(), mdt\-Sql\-Table\-Selection\-::row\-Count(), and test\-Is\-Saved().
 
 \hypertarget{classmdt_tt_abstract_tester_a43687d08109c032bc83ed287e8fdecc4}{\index{mdt\-Tt\-Abstract\-Tester@{mdt\-Tt\-Abstract\-Tester}!database@{database}}
 \index{database@{database}!mdtTtAbstractTester@{mdt\-Tt\-Abstract\-Tester}}
@@ -143,7 +153,7 @@ Get database instance.
 
 
 
-Definition at line 72 of file mdt\-Tt\-Abstract\-Tester.\-h.
+Definition at line 91 of file mdt\-Tt\-Abstract\-Tester.\-h.
 
 
 
@@ -162,7 +172,7 @@ Display last error to the user.
 
 
 
-Definition at line 216 of file mdt\-Tt\-Abstract\-Tester.\-cpp.
+Definition at line 346 of file mdt\-Tt\-Abstract\-Tester.\-cpp.
 
 
 
@@ -170,32 +180,7 @@ References mdt\-Error\-::level\-Icon(), pv\-Last\-Error, mdt\-Error\-::system\-T
 
 
 
-Referenced by create\-Test(), open\-Test(), and save\-Test().
-
-\hypertarget{classmdt_tt_abstract_tester_a1066de965e6621c9c1fe7abdf5d7d23c}{\index{mdt\-Tt\-Abstract\-Tester@{mdt\-Tt\-Abstract\-Tester}!init@{init}}
-\index{init@{init}!mdtTtAbstractTester@{mdt\-Tt\-Abstract\-Tester}}
-\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Abstract\-Tester\-::init (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_tt_abstract_tester_a1066de965e6621c9c1fe7abdf5d7d23c}
-
-
-Do some initialization. 
-
-Will setup test data and table models for test item view and table.
-
-If test\-Ui\-Widget is valid, 
-
-Definition at line 46 of file mdt\-Tt\-Abstract\-Tester.\-cpp.
-
-
-
-References pv\-Last\-Error.
-
-
-
-Referenced by mdt\-Tt\-Basic\-Tester\-::setup().
+Referenced by create\-Test(), open\-Test(), save\-Test(), and set\-Test\-Ui\-Widget().
 
 \hypertarget{classmdt_tt_abstract_tester_a6eaa05aeaa2fd8d77c1fbfe7eb06cec6}{\index{mdt\-Tt\-Abstract\-Tester@{mdt\-Tt\-Abstract\-Tester}!open\-Test@{open\-Test}}
 \index{open\-Test@{open\-Test}!mdtTtAbstractTester@{mdt\-Tt\-Abstract\-Tester}}
@@ -210,11 +195,34 @@ Open a existing test.
 
 This default implmementation will first check if current test is clean (saved, ...), and warn the user if not. Then (if test is clean, or user choosed to not keep it), user can select a test. Finaly, selected test is set as current test. 
 
-Definition at line 133 of file mdt\-Tt\-Abstract\-Tester.\-cpp.
+Definition at line 192 of file mdt\-Tt\-Abstract\-Tester.\-cpp.
 
 
 
-References mdt\-Sql\-Table\-Selection\-::data(), database(), display\-Last\-Error(), mdt\-Sql\-Table\-Selection\-::is\-Empty(), remove\-Test\-If\-Empty(), mdt\-Sql\-Table\-Selection\-::row\-Count(), and test\-Is\-Saved().
+References mdt\-Sql\-Table\-Selection\-::data(), database(), display\-Last\-Error(), mdt\-Sql\-Table\-Selection\-::is\-Empty(), pv\-Last\-Error, remove\-Current\-Test\-Pv(), remove\-Test\-If\-Empty(), mdt\-Sql\-Table\-Selection\-::row\-Count(), and test\-Is\-Saved().
+
+\hypertarget{classmdt_tt_abstract_tester_a2f19f51c28b6ec0741e7d0fc59b9f708}{\index{mdt\-Tt\-Abstract\-Tester@{mdt\-Tt\-Abstract\-Tester}!remove\-Current\-Test\-Pv@{remove\-Current\-Test\-Pv}}
+\index{remove\-Current\-Test\-Pv@{remove\-Current\-Test\-Pv}!mdtTtAbstractTester@{mdt\-Tt\-Abstract\-Tester}}
+\subsubsection[{remove\-Current\-Test\-Pv}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Abstract\-Tester\-::remove\-Current\-Test\-Pv (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_tt_abstract_tester_a2f19f51c28b6ec0741e7d0fc59b9f708}
+
+
+Remove current test. 
+
+
+
+Definition at line 323 of file mdt\-Tt\-Abstract\-Tester.\-cpp.
+
+
+
+References pv\-Last\-Error.
+
+
+
+Referenced by create\-Test(), and open\-Test().
 
 \hypertarget{classmdt_tt_abstract_tester_a75396c57e71377ef9224d49ec3273209}{\index{mdt\-Tt\-Abstract\-Tester@{mdt\-Tt\-Abstract\-Tester}!remove\-Test\-If\-Empty@{remove\-Test\-If\-Empty}}
 \index{remove\-Test\-If\-Empty@{remove\-Test\-If\-Empty}!mdtTtAbstractTester@{mdt\-Tt\-Abstract\-Tester}}
@@ -229,7 +237,7 @@ Remove current test if it is empty.
 
 see \hyperlink{classmdt_tt_abstract_tester_ac9eead60ccacb39581dd792d00a18466}{test\-Is\-Empty()} 
 
-Definition at line 204 of file mdt\-Tt\-Abstract\-Tester.\-cpp.
+Definition at line 299 of file mdt\-Tt\-Abstract\-Tester.\-cpp.
 
 
 
@@ -252,26 +260,89 @@ Save current test.
 
 
 
-Definition at line 189 of file mdt\-Tt\-Abstract\-Tester.\-cpp.
+Definition at line 248 of file mdt\-Tt\-Abstract\-Tester.\-cpp.
+
+
+
+References display\-Last\-Error(), pv\-Last\-Error, and mdt\-Sql\-Record\-::value().
+
+\hypertarget{classmdt_tt_abstract_tester_a9cc3f5bfe9e27ac0ae376ea1c82e8585}{\index{mdt\-Tt\-Abstract\-Tester@{mdt\-Tt\-Abstract\-Tester}!set\-Test\-Ui\-Widget@{set\-Test\-Ui\-Widget}}
+\index{set\-Test\-Ui\-Widget@{set\-Test\-Ui\-Widget}!mdtTtAbstractTester@{mdt\-Tt\-Abstract\-Tester}}
+\subsubsection[{set\-Test\-Ui\-Widget}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Abstract\-Tester\-::set\-Test\-Ui\-Widget (
+\begin{DoxyParamCaption}
+\item[{{\bf Q\-Widget} $\ast$}]{widget}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_abstract_tester_a9cc3f5bfe9e27ac0ae376ea1c82e8585}
+
+
+All childs contained in widget that have a name prefixed fld\-\_\- will be mapped to corresponding fields in Test\-\_\-view. They cann be written, but internally used \hyperlink{classmdt_abstract_sql_table_controller}{mdt\-Abstract\-Sql\-Table\-Controller}'s submit() slot will not work. Data will be really stored in Test\-\_\-tbl by \hyperlink{classmdt_tt_abstract_tester_a36fe4f0ba9940455a975538f89660327}{save\-Test()}. 
+
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000058}{Todo}]Update if method takes another name..\end{DoxyRefDesc}
+
+
+Given widget will also be used as parent for dialogs that are displayed (selection dialogs, message boxes). 
+
+Definition at line 67 of file mdt\-Tt\-Abstract\-Tester.\-cpp.
 
 
 
 References display\-Last\-Error(), and pv\-Last\-Error.
 
-\hypertarget{classmdt_tt_abstract_tester_a7b6e46a5e8e3c22375e6462f09241aea}{\index{mdt\-Tt\-Abstract\-Tester@{mdt\-Tt\-Abstract\-Tester}!set\-Test\-Ui\-Widget@{set\-Test\-Ui\-Widget}}
-\index{set\-Test\-Ui\-Widget@{set\-Test\-Ui\-Widget}!mdtTtAbstractTester@{mdt\-Tt\-Abstract\-Tester}}
-\subsubsection[{set\-Test\-Ui\-Widget}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Tt\-Abstract\-Tester\-::set\-Test\-Ui\-Widget (
+
+
+Referenced by mdt\-Tt\-Basic\-Tester\-Window\-::init().
+
+\hypertarget{classmdt_tt_abstract_tester_a08e423ef173c8f925b351110637c8050}{\index{mdt\-Tt\-Abstract\-Tester@{mdt\-Tt\-Abstract\-Tester}!setup@{setup}}
+\index{setup@{setup}!mdtTtAbstractTester@{mdt\-Tt\-Abstract\-Tester}}
+\subsubsection[{setup}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Abstract\-Tester\-::setup (
 \begin{DoxyParamCaption}
-\item[{{\bf Q\-Widget} $\ast$}]{widget}
+{}
 \end{DoxyParamCaption}
-)}}\label{classmdt_tt_abstract_tester_a7b6e46a5e8e3c22375e6462f09241aea}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_tt_abstract_tester_a08e423ef173c8f925b351110637c8050}
 
 
-All childs contained in widget that have a name prefixed fld\-\_\- will be mapped to corresponding fields in Test\-\_\-tbl. 
+Do setup. 
 
-Given widget will also be used as parent for dialogs that are displayed (selection dialogs, message boxes). 
+Will setup internal S\-Q\-L table controllers to access Test\-\_\-view and Test\-Item\-\_\-view. 
 
-Definition at line 57 of file mdt\-Tt\-Abstract\-Tester.\-cpp.
+Reimplemented in \hyperlink{classmdt_tt_basic_tester_ac831c6c6204439936c8f344f615bc50a}{mdt\-Tt\-Basic\-Tester}.
+
+
+
+Definition at line 46 of file mdt\-Tt\-Abstract\-Tester.\-cpp.
+
+
+
+References mdt\-Sql\-Relation\-Info\-::add\-Relation(), pv\-Last\-Error, and mdt\-Sql\-Relation\-Info\-::set\-Child\-Table\-Name().
+
+
+
+Referenced by mdt\-Tt\-Basic\-Tester\-::setup().
+
+\hypertarget{classmdt_tt_abstract_tester_ab1095b5fc987c9d52de66b6c02ec7785}{\index{mdt\-Tt\-Abstract\-Tester@{mdt\-Tt\-Abstract\-Tester}!start@{start}}
+\index{start@{start}!mdtTtAbstractTester@{mdt\-Tt\-Abstract\-Tester}}
+\subsubsection[{start}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Abstract\-Tester\-::start (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_abstract_tester_ab1095b5fc987c9d52de66b6c02ec7785}
+
+
+Start state machines. 
+
+Will load data from database and start internal state machines. After this call, use set\-Current\-Test() to go to a existing test, or \hyperlink{classmdt_tt_abstract_tester_aab3ece519008d5553528aa041875fa2b}{create\-Test()} to create a new one.
+
+\begin{DoxySeeAlso}{See Also}
+mdt\-Tt\-Test\-::start(). 
+\end{DoxySeeAlso}
+
+
+Definition at line 81 of file mdt\-Tt\-Abstract\-Tester.\-cpp.
+
+
+
+References pv\-Last\-Error.
 
 
 
@@ -290,22 +361,7 @@ Get test object.
 
 
 
-Definition at line 84 of file mdt\-Tt\-Abstract\-Tester.\-h.
-
-\hypertarget{classmdt_tt_abstract_tester_a638dc8049de3a5e5ef6f753444800e19}{\index{mdt\-Tt\-Abstract\-Tester@{mdt\-Tt\-Abstract\-Tester}!test\-Data@{test\-Data}}
-\index{test\-Data@{test\-Data}!mdtTtAbstractTester@{mdt\-Tt\-Abstract\-Tester}}
-\subsubsection[{test\-Data}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Tt\-Test\-Data} mdt\-Tt\-Abstract\-Tester\-::test\-Data (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_tt_abstract_tester_a638dc8049de3a5e5ef6f753444800e19}
-
-
-Get test data. 
-
-Note\-: return cached data (will not get them from database). 
-
-Definition at line 90 of file mdt\-Tt\-Abstract\-Tester.\-h.
+Definition at line 116 of file mdt\-Tt\-Abstract\-Tester.\-h.
 
 \hypertarget{classmdt_tt_abstract_tester_af7aaec93927106040b137fa92a597d1b}{\index{mdt\-Tt\-Abstract\-Tester@{mdt\-Tt\-Abstract\-Tester}!test\-Data\-Changed@{test\-Data\-Changed}}
 \index{test\-Data\-Changed@{test\-Data\-Changed}!mdtTtAbstractTester@{mdt\-Tt\-Abstract\-Tester}}
@@ -318,11 +374,7 @@ Definition at line 90 of file mdt\-Tt\-Abstract\-Tester.\-h.
 
 Emited when test data has changed. 
 
-date comes from Test\-\_\-view 
-
-Referenced by mdt\-Tt\-Abstract\-Tester().
-
-\hypertarget{classmdt_tt_abstract_tester_ac9eead60ccacb39581dd792d00a18466}{\index{mdt\-Tt\-Abstract\-Tester@{mdt\-Tt\-Abstract\-Tester}!test\-Is\-Empty@{test\-Is\-Empty}}
+date comes from Test\-\_\-view \hypertarget{classmdt_tt_abstract_tester_ac9eead60ccacb39581dd792d00a18466}{\index{mdt\-Tt\-Abstract\-Tester@{mdt\-Tt\-Abstract\-Tester}!test\-Is\-Empty@{test\-Is\-Empty}}
 \index{test\-Is\-Empty@{test\-Is\-Empty}!mdtTtAbstractTester@{mdt\-Tt\-Abstract\-Tester}}
 \subsubsection[{test\-Is\-Empty}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Abstract\-Tester\-::test\-Is\-Empty (
 \begin{DoxyParamCaption}
@@ -341,7 +393,11 @@ A test is empty if\-:
 \item In each related item in Test\-\_\-tbl\-: only Id\-\_\-\-P\-K, Test\-\_\-\-Id\-\_\-\-F\-K and Test\-Model\-Item\-\_\-\-Id\-\_\-\-F\-K are set 
 \end{DoxyItemize}
 
-Definition at line 67 of file mdt\-Tt\-Abstract\-Tester.\-cpp.
+Definition at line 98 of file mdt\-Tt\-Abstract\-Tester.\-cpp.
+
+
+
+References mdt\-Sql\-Record\-::count(), and mdt\-Sql\-Record\-::value().
 
 
 
@@ -353,33 +409,38 @@ Referenced by remove\-Test\-If\-Empty().
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}\label{classmdt_tt_abstract_tester_af98bb9d80bfbd14873fc356c17d31eb4}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_tt_abstract_tester_af98bb9d80bfbd14873fc356c17d31eb4}
 
 
 Check if test is saved. 
 
-A test is saved if all cached data regarding Test\-\_\-tbl and Test\-Item\-\_\-tbl are stored in database. 
+A test is saved if all cached data regarding Test\-\_\-tbl and Test\-Item\-\_\-tbl are stored in database. If no test was set (Test\-\_\-tbl.\-Id\-\_\-\-P\-K is N\-U\-L\-L), test is considered saved.\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000059}{Todo}]Toujours vrais ? Note\-: each call of this method will check all test items. \end{DoxyRefDesc}
 
-Definition at line 75 of file mdt\-Tt\-Abstract\-Tester.\-cpp.
+
+Definition at line 135 of file mdt\-Tt\-Abstract\-Tester.\-h.
 
 
 
 Referenced by create\-Test(), and open\-Test().
 
-\hypertarget{classmdt_tt_abstract_tester_ae8e3acab53e0d873a9eb963cfd3c71f7}{\index{mdt\-Tt\-Abstract\-Tester@{mdt\-Tt\-Abstract\-Tester}!test\-Item\-View\-Table\-Model@{test\-Item\-View\-Table\-Model}}
-\index{test\-Item\-View\-Table\-Model@{test\-Item\-View\-Table\-Model}!mdtTtAbstractTester@{mdt\-Tt\-Abstract\-Tester}}
-\subsubsection[{test\-Item\-View\-Table\-Model}]{\setlength{\rightskip}{0pt plus 5cm}std\-::shared\-\_\-ptr$<${\bf Q\-Sql\-Table\-Model}$>$ mdt\-Tt\-Abstract\-Tester\-::test\-Item\-View\-Table\-Model (
+\hypertarget{classmdt_tt_abstract_tester_a06b95c567684157712ae4a6155404297}{\index{mdt\-Tt\-Abstract\-Tester@{mdt\-Tt\-Abstract\-Tester}!test\-Item\-View\-Controller@{test\-Item\-View\-Controller}}
+\index{test\-Item\-View\-Controller@{test\-Item\-View\-Controller}!mdtTtAbstractTester@{mdt\-Tt\-Abstract\-Tester}}
+\subsubsection[{test\-Item\-View\-Controller}]{\setlength{\rightskip}{0pt plus 5cm}std\-::shared\-\_\-ptr$<${\bf mdt\-Sql\-Table\-View\-Controller}$>$ mdt\-Tt\-Abstract\-Tester\-::test\-Item\-View\-Controller (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_tt_abstract_tester_ae8e3acab53e0d873a9eb963cfd3c71f7}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_tt_abstract_tester_a06b95c567684157712ae4a6155404297}
 
 
-Get table model to access data in Test\-Item\-\_\-view. 
+Access controller that acts on Test\-Item\-\_\-view. 
+
+\begin{DoxyPrecond}{Precondition}
+init() must be done before calling this method. 
+\end{DoxyPrecond}
 
 
-
-Definition at line 76 of file mdt\-Tt\-Abstract\-Tester.\-h.
+Definition at line 104 of file mdt\-Tt\-Abstract\-Tester.\-h.
 
 \hypertarget{classmdt_tt_abstract_tester_a7b8351e2214a3bfc57d38bfeab3e0342}{\index{mdt\-Tt\-Abstract\-Tester@{mdt\-Tt\-Abstract\-Tester}!test\-Node\-Manager@{test\-Node\-Manager}}
 \index{test\-Node\-Manager@{test\-Node\-Manager}!mdtTtAbstractTester@{mdt\-Tt\-Abstract\-Tester}}
@@ -394,11 +455,26 @@ Get test node manager object.
 
 
 
-Definition at line 80 of file mdt\-Tt\-Abstract\-Tester.\-h.
+Definition at line 112 of file mdt\-Tt\-Abstract\-Tester.\-h.
 
 
 
 Referenced by mdt\-Tt\-Basic\-Tester\-Window\-::mdt\-Tt\-Basic\-Tester\-Window().
+
+\hypertarget{classmdt_tt_abstract_tester_af85c7e2df1cc879b979024706848304c}{\index{mdt\-Tt\-Abstract\-Tester@{mdt\-Tt\-Abstract\-Tester}!test\-View\-Controller@{test\-View\-Controller}}
+\index{test\-View\-Controller@{test\-View\-Controller}!mdtTtAbstractTester@{mdt\-Tt\-Abstract\-Tester}}
+\subsubsection[{test\-View\-Controller}]{\setlength{\rightskip}{0pt plus 5cm}std\-::shared\-\_\-ptr$<${\bf mdt\-Sql\-Data\-Widget\-Controller}$>$ mdt\-Tt\-Abstract\-Tester\-::test\-View\-Controller (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_tt_abstract_tester_af85c7e2df1cc879b979024706848304c}
+
+
+Access controller that acts on Test\-\_\-view. 
+
+
+
+Definition at line 95 of file mdt\-Tt\-Abstract\-Tester.\-h.
 
 
 
@@ -412,11 +488,11 @@ Contains last error that occured.
 
 
 
-Definition at line 153 of file mdt\-Tt\-Abstract\-Tester.\-h.
+Definition at line 188 of file mdt\-Tt\-Abstract\-Tester.\-h.
 
 
 
-Referenced by create\-Test(), display\-Last\-Error(), init(), mdt\-Tt\-Basic\-Tester\-::last\-Error(), remove\-Test\-If\-Empty(), and save\-Test().
+Referenced by create\-Test(), display\-Last\-Error(), mdt\-Tt\-Basic\-Tester\-::last\-Error(), open\-Test(), remove\-Current\-Test\-Pv(), remove\-Test\-If\-Empty(), save\-Test(), set\-Test\-Ui\-Widget(), setup(), and start().
 
 
 

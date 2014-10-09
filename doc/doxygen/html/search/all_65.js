@@ -7,7 +7,7 @@ var searchData=
   ['editconnectorname',['editConnectorName',['../classmdt_cl_article.html#aed8a2fc638636a618409694a655e9819',1,'mdtClArticle::editConnectorName()'],['../classmdt_cl_unit.html#a7bb1ff9cc5469f45dbf244fd26d60329',1,'mdtClUnit::editConnectorName()']]],
   ['editing',['Editing',['../classmdt_abstract_sql_table_controller.html#a63536182561f551ccb7616e1786793cdad9f859c81ed0b39a10d33566df6f1507',1,'mdtAbstractSqlTableController']]],
   ['editingnewrow',['EditingNewRow',['../classmdt_abstract_sql_table_controller.html#a63536182561f551ccb7616e1786793cda566f0999f0177d32abd74771f07ee18e',1,'mdtAbstractSqlTableController']]],
-  ['editlink',['editLink',['../classmdt_cl_article.html#a3c627720a87e6003bb78c0727ec2ba64',1,'mdtClArticle::editLink()'],['../classmdt_cl_link.html#a20d0c8888a1674a6977940fcde654f60',1,'mdtClLink::editLink()'],['../classmdt_tt_test_connection_cable.html#a7d2c08b218bd95e50a20f42bce242d83',1,'mdtTtTestConnectionCable::editLink()']]],
+  ['editlink',['editLink',['../classmdt_cl_article.html#a3c627720a87e6003bb78c0727ec2ba64',1,'mdtClArticle::editLink()'],['../classmdt_cl_link.html#a20d0c8888a1674a6977940fcde654f60',1,'mdtClLink::editLink()'],['../classmdt_tt_logical_test_cable.html#ad786c86aa5b62a7f9537f0b4e4cab05c',1,'mdtTtLogicalTestCable::editLink()']]],
   ['editnodeunit',['editNodeUnit',['../classmdt_tt_test_node_unit.html#ab7b6cbf0c8d4fb6d9495216e946571d3',1,'mdtTtTestNodeUnit']]],
   ['elapsed',['elapsed',['../classmdt_time.html#abbd22fa3b8a33b8c82e0544c20c41af1',1,'mdtTime']]],
   ['elapsedsec',['elapsedSec',['../classmdt_time.html#aabd78c0447eea8a95a9fd88adc4cb6a0',1,'mdtTime']]],

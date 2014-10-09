@@ -31,6 +31,8 @@ Collaboration diagram for mdt\-Sql\-Relation\-:\nopagebreak
 \subsection*{Public Slots}
 \begin{DoxyCompactItemize}
 \item 
+void \hyperlink{classmdt_sql_relation_a583cbae232142029eeacffaac7bb5978}{set\-Parent\-Current\-Row} (int row)
+\begin{DoxyCompactList}\small\item\em Set parent current row. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_sql_relation_a39fbecb027a5783277df1cc995485917}{set\-Parent\-Current\-Index} (int index)
 \begin{DoxyCompactList}\small\item\em Update child model. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_sql_relation_a4381f7f5bd39337fa5cbccf9b87ff0f6}{set\-Parent\-Current\-Index} (const Q\-Model\-Index \&index)
@@ -55,8 +57,12 @@ void \hyperlink{classmdt_sql_relation_a5ac3a82c5d3e33b5e40b86acfe7e2a03}{set\-Pa
 \begin{DoxyCompactList}\small\item\em Set the parent model. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_sql_relation_ad74021dcf86c528044bf67220ed36833}{set\-Child\-Model} (\hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model} $\ast$model)
 \begin{DoxyCompactList}\small\item\em Set the child model. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_sql_relation_a53c649cbf59fef6ea61dd9f2ab40d770}{add\-Relation} (const \hyperlink{structmdt_sql_relation_info_item}{mdt\-Sql\-Relation\-Info\-Item} \&relation\-Info\-Item)
+\begin{DoxyCompactList}\small\item\em Add a relation. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_sql_relation_a5980d1df4582971666ffe1c1d7639799}{add\-Relation} (const Q\-String \&parent\-Field\-Name, const Q\-String \&child\-Field\-Name, bool copy\-Parent\-To\-Child\-On\-Insertion, const Q\-String \&operator\-With\-Previous\-Item=\char`\"{}A\-N\-D\char`\"{})
 \begin{DoxyCompactList}\small\item\em Add a relation. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_sql_relation_ac43366a401dc567b9aafd16058010e5f}{add\-Relations} (const \hyperlink{classmdt_sql_relation_info}{mdt\-Sql\-Relation\-Info} \&relation\-Info)
+\begin{DoxyCompactList}\small\item\em Add all relations contained in given relation\-Info. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_sql_relation_a01469fb1baf7327ca6ddbcd1595e0d7c}{clear} ()
 \begin{DoxyCompactList}\small\item\em Clear relations. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_error}{mdt\-Error} \hyperlink{classmdt_sql_relation_a51cf2e1741445d465456d71293a738cc}{last\-Error} () const 
@@ -71,12 +77,12 @@ This is usefull to create data/details forms.
 Typical usage\-:
 \begin{DoxyItemize}
 \item Set the parent and child models, using \hyperlink{classmdt_sql_relation_a5ac3a82c5d3e33b5e40b86acfe7e2a03}{set\-Parent\-Model()} and \hyperlink{classmdt_sql_relation_ad74021dcf86c528044bf67220ed36833}{set\-Child\-Model()}
-\item Add parent/child tables fields that must match with \hyperlink{classmdt_sql_relation_a5980d1df4582971666ffe1c1d7639799}{add\-Relation()}
+\item Add parent/child tables fields that must match with \hyperlink{classmdt_sql_relation_a53c649cbf59fef6ea61dd9f2ab40d770}{add\-Relation()}
 \item Connect the parent view's current\-Xy\-Changed() signal to \hyperlink{classmdt_sql_relation_a39fbecb027a5783277df1cc995485917}{set\-Parent\-Current\-Index()} slot. If you use a Q\-Table\-View, this signal is in its selection\-Model(). For Q\-Data\-Widget\-Mapper, the current\-Index\-Changed() signal is directly available.
 \item If a Q\-Data\-Widget\-Mapper is used directly on a child model, connect \hyperlink{classmdt_sql_relation_a86656619d8156638ebfbde2b334d40e2}{child\-Model\-Filter\-Applied()} signal to Q\-Data\-Widget\-Mapper's to\-First() slot. 
 \end{DoxyItemize}
 
-Definition at line 47 of file mdt\-Sql\-Relation.\-h.
+Definition at line 48 of file mdt\-Sql\-Relation.\-h.
 
 
 
@@ -118,6 +124,39 @@ References clear().
 
 
 \subsection{Member Function Documentation}
+\hypertarget{classmdt_sql_relation_a53c649cbf59fef6ea61dd9f2ab40d770}{\index{mdt\-Sql\-Relation@{mdt\-Sql\-Relation}!add\-Relation@{add\-Relation}}
+\index{add\-Relation@{add\-Relation}!mdtSqlRelation@{mdt\-Sql\-Relation}}
+\subsubsection[{add\-Relation}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Relation\-::add\-Relation (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Sql\-Relation\-Info\-Item} \&}]{relation\-Info\-Item}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_relation_a53c649cbf59fef6ea61dd9f2ab40d770}
+
+
+Add a relation. 
+
+Note that this method will fetch some information about fields in parent and child model (data type, field index, ...), so parent and child models must be set before.
+
+\begin{DoxyReturn}{Returns}
+True on succes, false if a field could not be found. 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+Parent model must be set with \hyperlink{classmdt_sql_relation_a5ac3a82c5d3e33b5e40b86acfe7e2a03}{set\-Parent\-Model()} before using this method. 
+
+Child model must be set with \hyperlink{classmdt_sql_relation_ad74021dcf86c528044bf67220ed36833}{set\-Child\-Model()} before using this method. 
+\end{DoxyPrecond}
+
+
+Definition at line 55 of file mdt\-Sql\-Relation.\-cpp.
+
+
+
+References mdt\-Sql\-Relation\-Info\-Item\-::child\-Field\-Name, mdt\-Error\-::commit(), mdt\-Sql\-Relation\-Info\-Item\-::copy\-Parent\-To\-Child\-On\-Insertion, mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Sql\-Relation\-Info\-Item\-::parent\-Field\-Name, mdt\-Sql\-Relation\-Info\-Item\-::relation\-Operator\-With\-Previous\-Item, mdt\-Sql\-Relation\-Item\-::set\-Child\-Field(), mdt\-Sql\-Relation\-Item\-::set\-Child\-Field\-Index(), mdt\-Sql\-Relation\-Item\-::set\-Copy\-Parent\-To\-Child\-On\-Insertion(), mdt\-Error\-::set\-Error(), mdt\-Sql\-Relation\-Item\-::set\-Parent\-Field(), mdt\-Sql\-Relation\-Item\-::set\-Parent\-Field\-Index(), and mdt\-Sql\-Relation\-Item\-::set\-Relation\-Operator\-With\-Previous\-Item().
+
+
+
+Referenced by add\-Relation(), and add\-Relations().
+
 \hypertarget{classmdt_sql_relation_a5980d1df4582971666ffe1c1d7639799}{\index{mdt\-Sql\-Relation@{mdt\-Sql\-Relation}!add\-Relation@{add\-Relation}}
 \index{add\-Relation@{add\-Relation}!mdtSqlRelation@{mdt\-Sql\-Relation}}
 \subsubsection[{add\-Relation}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Relation\-::add\-Relation (
@@ -157,11 +196,33 @@ Child model must be set with \hyperlink{classmdt_sql_relation_ad74021dcf86c52804
 \end{DoxyPrecond}
 
 
-Definition at line 55 of file mdt\-Sql\-Relation.\-cpp.
+Definition at line 99 of file mdt\-Sql\-Relation.\-cpp.
 
 
 
-References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Sql\-Relation\-Item\-::set\-Child\-Field(), mdt\-Sql\-Relation\-Item\-::set\-Child\-Field\-Index(), mdt\-Sql\-Relation\-Item\-::set\-Copy\-Parent\-To\-Child\-On\-Insertion(), mdt\-Error\-::set\-Error(), mdt\-Sql\-Relation\-Item\-::set\-Parent\-Field(), mdt\-Sql\-Relation\-Item\-::set\-Parent\-Field\-Index(), and mdt\-Sql\-Relation\-Item\-::set\-Relation\-Operator\-With\-Previous\-Item().
+References add\-Relation(), mdt\-Sql\-Relation\-Info\-Item\-::child\-Field\-Name, mdt\-Sql\-Relation\-Info\-Item\-::copy\-Parent\-To\-Child\-On\-Insertion, mdt\-Sql\-Relation\-Info\-Item\-::parent\-Field\-Name, and mdt\-Sql\-Relation\-Info\-Item\-::relation\-Operator\-With\-Previous\-Item.
+
+\hypertarget{classmdt_sql_relation_ac43366a401dc567b9aafd16058010e5f}{\index{mdt\-Sql\-Relation@{mdt\-Sql\-Relation}!add\-Relations@{add\-Relations}}
+\index{add\-Relations@{add\-Relations}!mdtSqlRelation@{mdt\-Sql\-Relation}}
+\subsubsection[{add\-Relations}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Relation\-::add\-Relations (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Sql\-Relation\-Info} \&}]{relation\-Info}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_relation_ac43366a401dc567b9aafd16058010e5f}
+
+
+Add all relations contained in given relation\-Info. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_sql_relation_a53c649cbf59fef6ea61dd9f2ab40d770}{add\-Relation(const mdt\-Sql\-Relation\-Info\-Item\&)}. 
+\end{DoxySeeAlso}
+
+
+Definition at line 114 of file mdt\-Sql\-Relation.\-cpp.
+
+
+
+References add\-Relation(), and mdt\-Sql\-Relation\-Info\-::items().
 
 \hypertarget{classmdt_sql_relation_a86656619d8156638ebfbde2b334d40e2}{\index{mdt\-Sql\-Relation@{mdt\-Sql\-Relation}!child\-Model\-Filter\-Applied@{child\-Model\-Filter\-Applied}}
 \index{child\-Model\-Filter\-Applied@{child\-Model\-Filter\-Applied}!mdtSqlRelation@{mdt\-Sql\-Relation}}
@@ -198,7 +259,7 @@ Clear relations.
 
 Will clear all added relations and references to parent and child models. (will not delete models). 
 
-Definition at line 99 of file mdt\-Sql\-Relation.\-cpp.
+Definition at line 130 of file mdt\-Sql\-Relation.\-cpp.
 
 
 
@@ -217,7 +278,7 @@ Get last error.
 
 
 
-Definition at line 109 of file mdt\-Sql\-Relation.\-h.
+Definition at line 127 of file mdt\-Sql\-Relation.\-h.
 
 \hypertarget{classmdt_sql_relation_ad74021dcf86c528044bf67220ed36833}{\index{mdt\-Sql\-Relation@{mdt\-Sql\-Relation}!set\-Child\-Model@{set\-Child\-Model}}
 \index{set\-Child\-Model@{set\-Child\-Model}!mdtSqlRelation@{mdt\-Sql\-Relation}}
@@ -257,7 +318,7 @@ Child model must be set with \hyperlink{classmdt_sql_relation_ad74021dcf86c52804
 \end{DoxyPrecond}
 
 
-Definition at line 107 of file mdt\-Sql\-Relation.\-cpp.
+Definition at line 147 of file mdt\-Sql\-Relation.\-cpp.
 
 
 
@@ -281,7 +342,7 @@ Child model must be set with \hyperlink{classmdt_sql_relation_ad74021dcf86c52804
 \end{DoxyPrecond}
 
 
-Definition at line 116 of file mdt\-Sql\-Relation.\-cpp.
+Definition at line 156 of file mdt\-Sql\-Relation.\-cpp.
 
 
 
@@ -306,11 +367,36 @@ Child model must be set with \hyperlink{classmdt_sql_relation_ad74021dcf86c52804
 \end{DoxyPrecond}
 
 
-Definition at line 128 of file mdt\-Sql\-Relation.\-cpp.
+Definition at line 168 of file mdt\-Sql\-Relation.\-cpp.
 
 
 
 References set\-Parent\-Current\-Index().
+
+\hypertarget{classmdt_sql_relation_a583cbae232142029eeacffaac7bb5978}{\index{mdt\-Sql\-Relation@{mdt\-Sql\-Relation}!set\-Parent\-Current\-Row@{set\-Parent\-Current\-Row}}
+\index{set\-Parent\-Current\-Row@{set\-Parent\-Current\-Row}!mdtSqlRelation@{mdt\-Sql\-Relation}}
+\subsubsection[{set\-Parent\-Current\-Row}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Relation\-::set\-Parent\-Current\-Row (
+\begin{DoxyParamCaption}
+\item[{int}]{row}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{classmdt_sql_relation_a583cbae232142029eeacffaac7bb5978}
+
+
+Set parent current row. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em row} & The new current row for parent model \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+Parent model must be set with \hyperlink{classmdt_sql_relation_a5ac3a82c5d3e33b5e40b86acfe7e2a03}{set\-Parent\-Model()} before using this method. 
+
+Child model must be set with \hyperlink{classmdt_sql_relation_ad74021dcf86c528044bf67220ed36833}{set\-Child\-Model()} before using this method. 
+\end{DoxyPrecond}
+
+
+Definition at line 138 of file mdt\-Sql\-Relation.\-cpp.
 
 \hypertarget{classmdt_sql_relation_a5ac3a82c5d3e33b5e40b86acfe7e2a03}{\index{mdt\-Sql\-Relation@{mdt\-Sql\-Relation}!set\-Parent\-Model@{set\-Parent\-Model}}
 \index{set\-Parent\-Model@{set\-Parent\-Model}!mdtSqlRelation@{mdt\-Sql\-Relation}}

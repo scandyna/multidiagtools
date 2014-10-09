@@ -129,18 +129,23 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8585d02e83ba1512b59d5e3984540b0a inherit pub_methods_classmdt_tt_abstract_tester"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_tester.html#a8585d02e83ba1512b59d5e3984540b0a">mdtTtAbstractTester</a> (QSqlDatabase db, <a class="el" href="class_q_object.html">QObject</a> *parent=0)</td></tr>
 <tr class="memdesc:a8585d02e83ba1512b59d5e3984540b0a inherit pub_methods_classmdt_tt_abstract_tester"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a8585d02e83ba1512b59d5e3984540b0a">More...</a><br/></td></tr>
 <tr class="separator:a8585d02e83ba1512b59d5e3984540b0a inherit pub_methods_classmdt_tt_abstract_tester"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1066de965e6621c9c1fe7abdf5d7d23c inherit pub_methods_classmdt_tt_abstract_tester"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_tester.html#a1066de965e6621c9c1fe7abdf5d7d23c">init</a> ()</td></tr>
-<tr class="memdesc:a1066de965e6621c9c1fe7abdf5d7d23c inherit pub_methods_classmdt_tt_abstract_tester"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do some initialization.  <a href="#a1066de965e6621c9c1fe7abdf5d7d23c">More...</a><br/></td></tr>
-<tr class="separator:a1066de965e6621c9c1fe7abdf5d7d23c inherit pub_methods_classmdt_tt_abstract_tester"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b6e46a5e8e3c22375e6462f09241aea inherit pub_methods_classmdt_tt_abstract_tester"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_tester.html#a7b6e46a5e8e3c22375e6462f09241aea">setTestUiWidget</a> (<a class="el" href="class_q_widget.html">QWidget</a> *widget)</td></tr>
-<tr class="memdesc:a7b6e46a5e8e3c22375e6462f09241aea inherit pub_methods_classmdt_tt_abstract_tester"><td class="mdescLeft">&#160;</td><td class="mdescRight">All childs contained in widget that have a name prefixed fld_ will be mapped to corresponding fields in Test_tbl.  <a href="#a7b6e46a5e8e3c22375e6462f09241aea">More...</a><br/></td></tr>
-<tr class="separator:a7b6e46a5e8e3c22375e6462f09241aea inherit pub_methods_classmdt_tt_abstract_tester"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9cc3f5bfe9e27ac0ae376ea1c82e8585 inherit pub_methods_classmdt_tt_abstract_tester"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_tester.html#a9cc3f5bfe9e27ac0ae376ea1c82e8585">setTestUiWidget</a> (<a class="el" href="class_q_widget.html">QWidget</a> *widget)</td></tr>
+<tr class="memdesc:a9cc3f5bfe9e27ac0ae376ea1c82e8585 inherit pub_methods_classmdt_tt_abstract_tester"><td class="mdescLeft">&#160;</td><td class="mdescRight">All childs contained in widget that have a name prefixed fld_ will be mapped to corresponding fields in Test_view. They cann be written, but internally used <a class="el" href="classmdt_abstract_sql_table_controller.html" title="Base class for SQL table controllers. ">mdtAbstractSqlTableController</a>'s submit() slot will not work. Data will be really stored in Test_tbl by <a class="el" href="classmdt_tt_abstract_tester.html#a36fe4f0ba9940455a975538f89660327" title="Save current test. ">saveTest()</a>.  <a href="#a9cc3f5bfe9e27ac0ae376ea1c82e8585">More...</a><br/></td></tr>
+<tr class="separator:a9cc3f5bfe9e27ac0ae376ea1c82e8585 inherit pub_methods_classmdt_tt_abstract_tester"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1095b5fc987c9d52de66b6c02ec7785 inherit pub_methods_classmdt_tt_abstract_tester"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_tester.html#ab1095b5fc987c9d52de66b6c02ec7785">start</a> ()</td></tr>
+<tr class="memdesc:ab1095b5fc987c9d52de66b6c02ec7785 inherit pub_methods_classmdt_tt_abstract_tester"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start state machines.  <a href="#ab1095b5fc987c9d52de66b6c02ec7785">More...</a><br/></td></tr>
+<tr class="separator:ab1095b5fc987c9d52de66b6c02ec7785 inherit pub_methods_classmdt_tt_abstract_tester"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a43687d08109c032bc83ed287e8fdecc4 inherit pub_methods_classmdt_tt_abstract_tester"><td class="memItemLeft" align="right" valign="top">QSqlDatabase&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_tester.html#a43687d08109c032bc83ed287e8fdecc4">database</a> ()</td></tr>
 <tr class="memdesc:a43687d08109c032bc83ed287e8fdecc4 inherit pub_methods_classmdt_tt_abstract_tester"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get database instance.  <a href="#a43687d08109c032bc83ed287e8fdecc4">More...</a><br/></td></tr>
 <tr class="separator:a43687d08109c032bc83ed287e8fdecc4 inherit pub_methods_classmdt_tt_abstract_tester"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae8e3acab53e0d873a9eb963cfd3c71f7 inherit pub_methods_classmdt_tt_abstract_tester"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="class_q_sql_table_model.html">QSqlTableModel</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_tester.html#ae8e3acab53e0d873a9eb963cfd3c71f7">testItemViewTableModel</a> ()</td></tr>
-<tr class="memdesc:ae8e3acab53e0d873a9eb963cfd3c71f7 inherit pub_methods_classmdt_tt_abstract_tester"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get table model to access data in TestItem_view.  <a href="#ae8e3acab53e0d873a9eb963cfd3c71f7">More...</a><br/></td></tr>
-<tr class="separator:ae8e3acab53e0d873a9eb963cfd3c71f7 inherit pub_methods_classmdt_tt_abstract_tester"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af85c7e2df1cc879b979024706848304c inherit pub_methods_classmdt_tt_abstract_tester"><td class="memItemLeft" align="right" valign="top">std::shared_ptr<br class="typebreak"/>
+&lt; <a class="el" href="classmdt_sql_data_widget_controller.html">mdtSqlDataWidgetController</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_tester.html#af85c7e2df1cc879b979024706848304c">testViewController</a> ()</td></tr>
+<tr class="memdesc:af85c7e2df1cc879b979024706848304c inherit pub_methods_classmdt_tt_abstract_tester"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access controller that acts on Test_view.  <a href="#af85c7e2df1cc879b979024706848304c">More...</a><br/></td></tr>
+<tr class="separator:af85c7e2df1cc879b979024706848304c inherit pub_methods_classmdt_tt_abstract_tester"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06b95c567684157712ae4a6155404297 inherit pub_methods_classmdt_tt_abstract_tester"><td class="memItemLeft" align="right" valign="top">std::shared_ptr<br class="typebreak"/>
+&lt; <a class="el" href="classmdt_sql_table_view_controller.html">mdtSqlTableViewController</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_tester.html#a06b95c567684157712ae4a6155404297">testItemViewController</a> ()</td></tr>
+<tr class="memdesc:a06b95c567684157712ae4a6155404297 inherit pub_methods_classmdt_tt_abstract_tester"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access controller that acts on TestItem_view.  <a href="#a06b95c567684157712ae4a6155404297">More...</a><br/></td></tr>
+<tr class="separator:a06b95c567684157712ae4a6155404297 inherit pub_methods_classmdt_tt_abstract_tester"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b8351e2214a3bfc57d38bfeab3e0342 inherit pub_methods_classmdt_tt_abstract_tester"><td class="memItemLeft" align="right" valign="top">std::shared_ptr<br class="typebreak"/>
 &lt; <a class="el" href="classmdt_tt_test_node_manager.html">mdtTtTestNodeManager</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_tester.html#a7b8351e2214a3bfc57d38bfeab3e0342">testNodeManager</a> ()</td></tr>
 <tr class="memdesc:a7b8351e2214a3bfc57d38bfeab3e0342 inherit pub_methods_classmdt_tt_abstract_tester"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get test node manager object.  <a href="#a7b8351e2214a3bfc57d38bfeab3e0342">More...</a><br/></td></tr>
@@ -148,9 +153,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a096db7bd6418195ba2a372ba1bec923f inherit pub_methods_classmdt_tt_abstract_tester"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classmdt_tt_test.html">mdtTtTest</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_tester.html#a096db7bd6418195ba2a372ba1bec923f">test</a> ()</td></tr>
 <tr class="memdesc:a096db7bd6418195ba2a372ba1bec923f inherit pub_methods_classmdt_tt_abstract_tester"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get test object.  <a href="#a096db7bd6418195ba2a372ba1bec923f">More...</a><br/></td></tr>
 <tr class="separator:a096db7bd6418195ba2a372ba1bec923f inherit pub_methods_classmdt_tt_abstract_tester"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a638dc8049de3a5e5ef6f753444800e19 inherit pub_methods_classmdt_tt_abstract_tester"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_tt_test_data.html">mdtTtTestData</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_tester.html#a638dc8049de3a5e5ef6f753444800e19">testData</a> () const </td></tr>
-<tr class="memdesc:a638dc8049de3a5e5ef6f753444800e19 inherit pub_methods_classmdt_tt_abstract_tester"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get test data.  <a href="#a638dc8049de3a5e5ef6f753444800e19">More...</a><br/></td></tr>
-<tr class="separator:a638dc8049de3a5e5ef6f753444800e19 inherit pub_methods_classmdt_tt_abstract_tester"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac9eead60ccacb39581dd792d00a18466 inherit pub_methods_classmdt_tt_abstract_tester"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_tester.html#ac9eead60ccacb39581dd792d00a18466">testIsEmpty</a> () const </td></tr>
 <tr class="memdesc:ac9eead60ccacb39581dd792d00a18466 inherit pub_methods_classmdt_tt_abstract_tester"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a test is empty.  <a href="#ac9eead60ccacb39581dd792d00a18466">More...</a><br/></td></tr>
 <tr class="separator:ac9eead60ccacb39581dd792d00a18466 inherit pub_methods_classmdt_tt_abstract_tester"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -178,6 +180,9 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:a75396c57e71377ef9224d49ec3273209 inherit pro_methods_classmdt_tt_abstract_tester"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_tester.html#a75396c57e71377ef9224d49ec3273209">removeTestIfEmpty</a> ()</td></tr>
 <tr class="memdesc:a75396c57e71377ef9224d49ec3273209 inherit pro_methods_classmdt_tt_abstract_tester"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove current test if it is empty.  <a href="#a75396c57e71377ef9224d49ec3273209">More...</a><br/></td></tr>
 <tr class="separator:a75396c57e71377ef9224d49ec3273209 inherit pro_methods_classmdt_tt_abstract_tester"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f19f51c28b6ec0741e7d0fc59b9f708 inherit pro_methods_classmdt_tt_abstract_tester"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_tester.html#a2f19f51c28b6ec0741e7d0fc59b9f708">removeCurrentTestPv</a> ()</td></tr>
+<tr class="memdesc:a2f19f51c28b6ec0741e7d0fc59b9f708 inherit pro_methods_classmdt_tt_abstract_tester"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove current test.  <a href="#a2f19f51c28b6ec0741e7d0fc59b9f708">More...</a><br/></td></tr>
+<tr class="separator:a2f19f51c28b6ec0741e7d0fc59b9f708 inherit pro_methods_classmdt_tt_abstract_tester"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc2325803369ec4d4225b9584c915c83 inherit pro_methods_classmdt_tt_abstract_tester"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_tester.html#afc2325803369ec4d4225b9584c915c83">displayLastError</a> ()</td></tr>
 <tr class="memdesc:afc2325803369ec4d4225b9584c915c83 inherit pro_methods_classmdt_tt_abstract_tester"><td class="mdescLeft">&#160;</td><td class="mdescRight">Display last error to the user.  <a href="#afc2325803369ec4d4225b9584c915c83">More...</a><br/></td></tr>
 <tr class="separator:afc2325803369ec4d4225b9584c915c83 inherit pro_methods_classmdt_tt_abstract_tester"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -248,15 +253,18 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_tt_basic_tester_8h_source.html#l00052">52</a> of file <a class="el" href="mdt_tt_basic_tester_8h_source.html">mdtTtBasicTester.h</a>.</p>
 
-<p>References <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00153">mdtTtAbstractTester::pvLastError</a>.</p>
+<p>References <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00188">mdtTtAbstractTester::pvLastError</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_basic_tester_window_8cpp_source.html#l00077">mdtTtBasicTesterWindow::lastError()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_basic_tester_window_8cpp_source.html#l00086">mdtTtBasicTesterWindow::lastError()</a>.</p>
 
 </div>
 </div>
 <a class="anchor" id="ac831c6c6204439936c8f344f615bc50a"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">bool mdtTtBasicTester::setup </td>
@@ -265,15 +273,22 @@ Additional Inherited Members</h2></td></tr>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Setup. </p>
 
+<p>Reimplemented from <a class="el" href="classmdt_tt_abstract_tester.html#a08e423ef173c8f925b351110637c8050">mdtTtAbstractTester</a>.</p>
+
 <p>Definition at line <a class="el" href="mdt_tt_basic_tester_8cpp_source.html#l00052">52</a> of file <a class="el" href="mdt_tt_basic_tester_8cpp_source.html">mdtTtBasicTester.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00046">mdtTtAbstractTester::init()</a>.</p>
+<p>References <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00046">mdtTtAbstractTester::setup()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_basic_tester_window_8cpp_source.html#l00061">mdtTtBasicTesterWindow::init()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_basic_tester_window_8cpp_source.html#l00062">mdtTtBasicTesterWindow::init()</a>.</p>
 
 </div>
 </div>
@@ -284,7 +299,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Sep 20 2014 15:23:44 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Oct 9 2014 17:04:19 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

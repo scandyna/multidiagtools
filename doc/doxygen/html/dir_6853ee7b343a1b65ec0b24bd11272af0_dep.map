@@ -1,6 +1,10 @@
 <map id="src/mdtutilsgui" name="src/mdtutilsgui">
 <area shape="rect" id="node2" href="dir_6853ee7b343a1b65ec0b24bd11272af0.html" title="mdtutilsgui" alt="" coords="27,55,112,103"/>
-<area shape="rect" id="node3" href="dir_47679c28969174664ac341dbd2fb3019.html" title="mdtutils" alt="" coords="33,151,105,199"/>
-<area shape="rect" id="edge3" href="dir_000014_000011.html" title="15" alt="" coords="70,123,85,141"/>
+<area shape="rect" id="node3" href="dir_7a9c9aa4b97bb4a5b319edee0793544f.html" title="mdtdatabase" alt="" coords="136,55,232,103"/>
+<area shape="rect" id="edge3" href="dir_000014_000001.html" title="1" alt="" coords="114,62,122,79"/>
+<area shape="rect" id="node4" href="dir_47679c28969174664ac341dbd2fb3019.html" title="mdtutils" alt="" coords="91,151,163,199"/>
+<area shape="rect" id="edge5" href="dir_000014_000011.html" title="15" alt="" coords="103,122,117,139"/>
+<area shape="rect" id="edge7" href="dir_000001_000014.html" title="14" alt="" coords="123,78,138,96"/>
+<area shape="rect" id="edge9" href="dir_000001_000011.html" title="14" alt="" coords="151,130,165,148"/>
 <area shape="rect" id="graph2" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html" title="src" alt="" coords="16,16,123,113"/>
 </map>

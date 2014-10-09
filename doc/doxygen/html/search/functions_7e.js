@@ -116,7 +116,7 @@ var searchData=
   ['_7emdttcpsocket',['~mdtTcpSocket',['../classmdt_tcp_socket.html#ac1e7831d297471d6e5b920de5e9bb675',1,'mdtTcpSocket']]],
   ['_7emdtttbase',['~mdtTtBase',['../classmdt_tt_base.html#ab5081719f8d49a8d6547240c5cc01699',1,'mdtTtBase']]],
   ['_7emdtttdatabaseschema',['~mdtTtDatabaseSchema',['../classmdt_tt_database_schema.html#a5da7511641b7e81ef6981b442469b4ac',1,'mdtTtDatabaseSchema']]],
-  ['_7emdttttestconnectioncable',['~mdtTtTestConnectionCable',['../classmdt_tt_test_connection_cable.html#acca8a9ed0ac97e056d4917c7fa077609',1,'mdtTtTestConnectionCable']]],
+  ['_7emdtttlogicaltestcable',['~mdtTtLogicalTestCable',['../classmdt_tt_logical_test_cable.html#ab616c2d7e2d637c333bb4fdca0c04433',1,'mdtTtLogicalTestCable']]],
   ['_7emdttttestlinkdialog',['~mdtTtTestLinkDialog',['../classmdt_tt_test_link_dialog.html#a5732e2c5680256dd468540ae47172fbe',1,'mdtTtTestLinkDialog']]],
   ['_7emdtuicnumber',['~mdtUicNumber',['../classmdt_uic_number.html#adc0a1c93fca982de4e7e014fea5fdd34',1,'mdtUicNumber']]],
   ['_7emdtuicnumberitem',['~mdtUicNumberItem',['../classmdt_uic_number_item.html#ad2bbf5a57cd6a6a9ffa6b5820b20b319',1,'mdtUicNumberItem']]],

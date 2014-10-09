@@ -33,8 +33,8 @@ void \hyperlink{classmdt_tt_basic_test_node_calibration_tool_a0a524857582a178cbe
 \item 
 \hyperlink{classmdt_tt_basic_test_node_calibration_tool_aeddd296806f3e2b7ea99ba220171a3c6}{mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool} (Q\-Sql\-Database db, \hyperlink{class_q_object}{Q\-Object} $\ast$parent=0)
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_tt_basic_test_node_calibration_tool_af7fe717bef7b4af47ef90a2e90bfb288}{init} ()
-\begin{DoxyCompactList}\small\item\em Init. \end{DoxyCompactList}\end{DoxyCompactItemize}
+bool \hyperlink{classmdt_tt_basic_test_node_calibration_tool_a471178c597a57866a6cefe86c4fba19e}{setup} (\hyperlink{class_q_widget}{Q\-Widget} $\ast$test\-Node\-Form\-Widget)
+\begin{DoxyCompactList}\small\item\em Do setup. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Additional Inherited Members}
 
 
@@ -60,38 +60,11 @@ Constructor.
 
 
 
-Definition at line 33 of file mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool.\-cpp.
+Definition at line 39 of file mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_tt_basic_test_node_calibration_tool_af7fe717bef7b4af47ef90a2e90bfb288}{\index{mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool@{mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool}!init@{init}}
-\index{init@{init}!mdtTtBasicTestNodeCalibrationTool@{mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool}}
-\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool\-::init (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_tt_basic_test_node_calibration_tool_af7fe717bef7b4af47ef90a2e90bfb288}
-
-
-Init. 
-
-
-
-Reimplemented from \hyperlink{classmdt_tt_abstract_test_node_calibration_tool_a7ad90715222060f29c01c13bc4bbf417}{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}.
-
-
-
-Definition at line 38 of file mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool.\-cpp.
-
-
-
-References mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool\-::init().
-
-
-
-Referenced by mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Window\-::init().
-
 \hypertarget{classmdt_tt_basic_test_node_calibration_tool_a0a524857582a178cbea54775cf526985}{\index{mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool@{mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool}!run\-Calibration@{run\-Calibration}}
 \index{run\-Calibration@{run\-Calibration}!mdtTtBasicTestNodeCalibrationTool@{mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool}}
 \subsubsection[{run\-Calibration}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool\-::run\-Calibration (
@@ -105,11 +78,40 @@ Run calibration.
 
 
 
-Definition at line 48 of file mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool.\-cpp.
+Definition at line 54 of file mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool.\-cpp.
 
 
 
 References mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool\-::display\-Last\-Error(), and mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool\-::prompt\-User().
+
+\hypertarget{classmdt_tt_basic_test_node_calibration_tool_a471178c597a57866a6cefe86c4fba19e}{\index{mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool@{mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool}!setup@{setup}}
+\index{setup@{setup}!mdtTtBasicTestNodeCalibrationTool@{mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool}}
+\subsubsection[{setup}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool\-::setup (
+\begin{DoxyParamCaption}
+\item[{{\bf Q\-Widget} $\ast$}]{test\-Node\-Form\-Widget}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_tt_basic_test_node_calibration_tool_a471178c597a57866a6cefe86c4fba19e}
+
+
+Do setup. 
+
+Will setup database controllers and map widgets contained in test\-Node\-Form\-Widget.
+
+Note\-: connect signals and slots before calling this method, else U\-I will be incoherent at initial state. 
+
+Reimplemented from \hyperlink{classmdt_tt_abstract_test_node_calibration_tool_a89e27cd930547aef0ba143519408ce1b}{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}.
+
+
+
+Definition at line 44 of file mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool.\-cpp.
+
+
+
+References mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool\-::setup().
+
+
+
+Referenced by mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Window\-::init().
 
 
 

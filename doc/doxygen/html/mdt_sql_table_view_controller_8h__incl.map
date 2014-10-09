@@ -1,12 +1,13 @@
 <map id="src/mdtdatabase/mdtSqlTableViewController.h" name="src/mdtdatabase/mdtSqlTableViewController.h">
-<area shape="rect" id="node3" href="$mdt_abstract_sql_table_controller_8h.html" title="mdtAbstractSqlTableController.h" alt="" coords="513,101,724,131"/>
-<area shape="rect" id="node58" href="$mdt_sql_table_selection_8h.html" title="mdtSqlTableSelection.h" alt="" coords="1551,101,1711,131"/>
-<area shape="rect" id="node5" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="124,333,207,363"/>
-<area shape="rect" id="node13" href="$mdt_state_machine_8h.html" title="mdtStateMachine.h" alt="" coords="697,179,831,208"/>
-<area shape="rect" id="node20" href="$mdt_ui_message_handler_8h.html" title="mdtUiMessageHandler.h" alt="" coords="92,256,257,285"/>
-<area shape="rect" id="node24" href="$mdt_sql_data_validator_8h.html" title="mdtSqlDataValidator.h" alt="" coords="404,179,556,208"/>
-<area shape="rect" id="node34" href="$mdt_sql_relation_info_8h.html" title="mdtSqlRelationInfo.h" alt="" coords="1071,179,1215,208"/>
-<area shape="rect" id="node39" href="$mdt_sort_filter_proxy_model_8h.html" title="mdtSortFilterProxyModel.h" alt="" coords="871,179,1047,208"/>
-<area shape="rect" id="node60" href="$mdt_sql_table_selection_row_8h.html" title="mdtSqlTableSelectionRow.h" alt="" coords="1537,179,1724,208"/>
-<area shape="rect" id="node62" href="$mdt_sql_table_selection_item_8h.html" title="mdtSqlTableSelectionItem.h" alt="" coords="1508,256,1695,285"/>
+<area shape="rect" id="node3" href="$mdt_abstract_sql_table_controller_8h.html" title="mdtAbstractSqlTableController.h" alt="" coords="878,101,1089,131"/>
+<area shape="rect" id="node72" href="$mdt_sql_table_selection_8h.html" title="mdtSqlTableSelection.h" alt="" coords="1980,101,2140,131"/>
+<area shape="rect" id="node5" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="184,333,266,363"/>
+<area shape="rect" id="node13" href="$mdt_state_machine_8h.html" title="mdtStateMachine.h" alt="" coords="1238,179,1372,208"/>
+<area shape="rect" id="node20" href="$mdt_ui_message_handler_8h.html" title="mdtUiMessageHandler.h" alt="" coords="118,256,284,285"/>
+<area shape="rect" id="node24" href="$mdt_sql_data_validator_8h.html" title="mdtSqlDataValidator.h" alt="" coords="321,179,473,208"/>
+<area shape="rect" id="node34" href="$mdt_sql_relation_info_8h.html" title="mdtSqlRelationInfo.h" alt="" coords="1596,179,1740,208"/>
+<area shape="rect" id="node39" href="$mdt_sort_filter_proxy_model_8h.html" title="mdtSortFilterProxyModel.h" alt="" coords="1396,179,1572,208"/>
+<area shape="rect" id="node48" href="$mdt_sql_record_8h.html" title="mdtSqlRecord.h" alt="" coords="806,179,921,208"/>
+<area shape="rect" id="node74" href="$mdt_sql_table_selection_row_8h.html" title="mdtSqlTableSelectionRow.h" alt="" coords="1966,179,2153,208"/>
+<area shape="rect" id="node76" href="$mdt_sql_table_selection_item_8h.html" title="mdtSqlTableSelectionItem.h" alt="" coords="1966,256,2153,285"/>
 </map>

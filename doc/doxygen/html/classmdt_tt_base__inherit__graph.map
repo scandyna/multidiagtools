@@ -1,15 +1,15 @@
 <map id="mdtTtBase" name="mdtTtBase">
-<area shape="rect" id="node5" href="$classmdt_cl_article.html" title="Helper class for Article and related tables edition. " alt="" coords="307,5,400,35"/>
-<area shape="rect" id="node7" href="$classmdt_cl_direct_link.html" title="Create a temporary table with direct links informations. " alt="" coords="296,59,411,88"/>
-<area shape="rect" id="node9" href="$classmdt_cl_link.html" title="Helper class for link management. " alt="" coords="313,112,393,141"/>
-<area shape="rect" id="node11" href="$classmdt_cl_link_beam.html" title="Helper class for link beam edition. " alt="" coords="296,165,411,195"/>
-<area shape="rect" id="node13" href="$classmdt_cl_unit.html" title="Helper class to manage unit and related data. " alt="" coords="313,219,393,248"/>
-<area shape="rect" id="node15" href="$classmdt_cl_unit_vehicle_type.html" title="Helper class for Unit &lt;&#45;&gt; VehicleType assignments. " alt="" coords="277,272,429,301"/>
-<area shape="rect" id="node17" href="$classmdt_tt_test.html" title="Helper class to manipulate test data. " alt="" coords="312,325,395,355"/>
-<area shape="rect" id="node19" href="$classmdt_tt_test_connection_cable.html" title="Helper class for test connection cable edition. " alt="" coords="263,379,444,408"/>
-<area shape="rect" id="node21" href="$classmdt_tt_test_model.html" title="Helper class for test model edition. " alt="" coords="295,432,412,461"/>
-<area shape="rect" id="node23" href="$classmdt_tt_test_model_item.html" title="Helper class for test item edition. " alt="" coords="283,485,424,515"/>
-<area shape="rect" id="node25" href="$classmdt_tt_test_node.html" title="Helper class for test node edition. " alt="" coords="297,539,409,568"/>
-<area shape="rect" id="node27" href="$classmdt_tt_test_node_unit.html" title="Helper class for test node unit data manipulation. " alt="" coords="285,592,421,621"/>
+<area shape="rect" id="node5" href="$classmdt_cl_article.html" title="Helper class for Article and related tables edition. " alt="" coords="293,5,387,35"/>
+<area shape="rect" id="node7" href="$classmdt_cl_direct_link.html" title="Create a temporary table with direct links informations. " alt="" coords="283,59,397,88"/>
+<area shape="rect" id="node9" href="$classmdt_cl_link.html" title="Helper class for link management. " alt="" coords="300,112,380,141"/>
+<area shape="rect" id="node11" href="$classmdt_cl_link_beam.html" title="Helper class for link beam edition. " alt="" coords="283,165,397,195"/>
+<area shape="rect" id="node13" href="$classmdt_cl_unit.html" title="Helper class to manage unit and related data. " alt="" coords="300,219,380,248"/>
+<area shape="rect" id="node15" href="$classmdt_cl_unit_vehicle_type.html" title="Helper class for Unit &lt;&#45;&gt; VehicleType assignments. " alt="" coords="264,272,416,301"/>
+<area shape="rect" id="node17" href="$classmdt_tt_logical_test_cable.html" title="Helper class for test connection cable edition. " alt="" coords="261,325,419,355"/>
+<area shape="rect" id="node19" href="$classmdt_tt_test.html" title="Helper class to manipulate test data. " alt="" coords="299,379,381,408"/>
+<area shape="rect" id="node21" href="$classmdt_tt_test_model.html" title="Helper class for test model edition. " alt="" coords="281,432,399,461"/>
+<area shape="rect" id="node23" href="$classmdt_tt_test_model_item.html" title="Helper class for test item edition. " alt="" coords="269,485,411,515"/>
+<area shape="rect" id="node25" href="$classmdt_tt_test_node.html" title="Helper class for test node edition. " alt="" coords="284,539,396,568"/>
+<area shape="rect" id="node27" href="$classmdt_tt_test_node_unit.html" title="Helper class for test node unit data manipulation. " alt="" coords="272,592,408,621"/>
 <area shape="rect" id="node2" href="$class_q_object.html" title="QObject" alt="" coords="7,299,76,328"/>
 </map>

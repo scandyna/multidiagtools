@@ -2,9 +2,10 @@ var searchData=
 [
   ['r10r1200',['R10R1200',['../classmdt_device_modbus_wago_module_rtd.html#a3ef847ef5be945559be1271e15905fb0a49dced9911f2b03c950071afcdb1e30f',1,'mdtDeviceModbusWagoModuleRtd']]],
   ['r10r5000',['R10R5000',['../classmdt_device_modbus_wago_module_rtd.html#a3ef847ef5be945559be1271e15905fb0a0690048c3a5da4a12499c19f41796411',1,'mdtDeviceModbusWagoModuleRtd']]],
+  ['range1',['Range1',['../classmdt_device_u3606_a.html#ae05c254d19a66c1728d30100f7c600dcad4cb6a1f93329a4dae7420069516e201',1,'mdtDeviceU3606A']]],
   ['range100',['Range100',['../classmdt_device_u3606_a.html#ae05c254d19a66c1728d30100f7c600dca724e28864e513d31ac8a9c3525a0a5aa',1,'mdtDeviceU3606A']]],
   ['range100k',['Range100k',['../classmdt_device_u3606_a.html#ae05c254d19a66c1728d30100f7c600dca4baa02141d972c77f493a53691bae435',1,'mdtDeviceU3606A']]],
-  ['range100m',['Range100M',['../classmdt_device_u3606_a.html#ae05c254d19a66c1728d30100f7c600dca20e91ee2eeb1a64e2353586c8c8b3cea',1,'mdtDeviceU3606A']]],
+  ['range100m',['Range100m',['../classmdt_device_u3606_a.html#ae05c254d19a66c1728d30100f7c600dca4739252c609e06deb38be4e6fb6d33e9',1,'mdtDeviceU3606A::Range100m()'],['../classmdt_device_u3606_a.html#ae05c254d19a66c1728d30100f7c600dca20e91ee2eeb1a64e2353586c8c8b3cea',1,'mdtDeviceU3606A::Range100M()']]],
   ['range10k',['Range10k',['../classmdt_device_u3606_a.html#ae05c254d19a66c1728d30100f7c600dca50d29071b501dc633b5a12fac4f23a53',1,'mdtDeviceU3606A']]],
   ['range10m',['Range10M',['../classmdt_device_u3606_a.html#ae05c254d19a66c1728d30100f7c600dcadf4218b4809f09c734ee289fbfc06108',1,'mdtDeviceU3606A']]],
   ['range1k',['Range1k',['../classmdt_device_u3606_a.html#ae05c254d19a66c1728d30100f7c600dca7c08dab5ef9ed34a00304f8aa0b8f17f',1,'mdtDeviceU3606A']]],

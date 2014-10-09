@@ -7,8 +7,7 @@
 
 
 
-Inheritance diagram for mdt\-Sql\-Data\-Widget\-Controller\-:
-\nopagebreak
+Inheritance diagram for mdt\-Sql\-Data\-Widget\-Controller\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -17,8 +16,7 @@ Inheritance diagram for mdt\-Sql\-Data\-Widget\-Controller\-:
 \end{figure}
 
 
-Collaboration diagram for mdt\-Sql\-Data\-Widget\-Controller\-:
-\nopagebreak
+Collaboration diagram for mdt\-Sql\-Data\-Widget\-Controller\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -59,9 +57,7 @@ bool \hyperlink{classmdt_sql_data_widget_controller_a2bec243fc6c4c908a9c98494691
 bool \hyperlink{classmdt_sql_data_widget_controller_a8234727b0d1ef9b2350775d25b2b49fb}{add\-Mapping} (\hyperlink{class_q_widget}{Q\-Widget} $\ast$widget, const Q\-String \&field\-Name, bool is\-First\-Widget\-In\-Tab\-Order=false)
 \begin{DoxyCompactList}\small\item\em Add mapping between widget and field\-Name. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_sql_data_widget_controller_a6a63b9b4d7e4c17e1fc257d43322763e}{add\-Mapping} (\hyperlink{class_q_widget}{Q\-Widget} $\ast$widget, const Q\-String \&field\-Name, const \hyperlink{classmdt_sql_schema_table}{mdt\-Sql\-Schema\-Table} \&st, bool is\-First\-Widget\-In\-Tab\-Order=false)
-\begin{DoxyCompactList}\small\item\em Add mapping between widget and field\-Name. \end{DoxyCompactList}\item 
-int \hyperlink{classmdt_sql_data_widget_controller_ad757e08bd5dad5d1934885a83324fdf5}{current\-Row} () const 
-\begin{DoxyCompactList}\small\item\em Get current row. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Add mapping between widget and field\-Name. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Additional Inherited Members}
 
 
@@ -175,34 +171,7 @@ Definition at line 118 of file mdt\-Sql\-Data\-Widget\-Controller.\-cpp.
 
 
 
-References mdt\-Abstract\-Sql\-Table\-Controller\-::current\-State(), mdt\-Abstract\-Sql\-Table\-Controller\-::data\-Edited(), mdt\-Sql\-Schema\-Table\-::field(), mdt\-Abstract\-Sql\-Table\-Controller\-::field\-Index(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Abstract\-Sql\-Table\-Controller\-::model(), mdt\-Sql\-Field\-Handler\-::set\-Data\-Widget(), mdt\-Sql\-Field\-Handler\-::set\-Field(), mdt\-Abstract\-Sql\-Table\-Controller\-::\-Stopped, and mdt\-Error\-::\-Warning.
-
-\hypertarget{classmdt_sql_data_widget_controller_ad757e08bd5dad5d1934885a83324fdf5}{\index{mdt\-Sql\-Data\-Widget\-Controller@{mdt\-Sql\-Data\-Widget\-Controller}!current\-Row@{current\-Row}}
-\index{current\-Row@{current\-Row}!mdtSqlDataWidgetController@{mdt\-Sql\-Data\-Widget\-Controller}}
-\subsubsection[{current\-Row}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Sql\-Data\-Widget\-Controller\-::current\-Row (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-) const\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_sql_data_widget_controller_ad757e08bd5dad5d1934885a83324fdf5}
-
-
-Get current row. 
-
-
-
-Implements \hyperlink{classmdt_abstract_sql_table_controller_ac1288973791ca0ef4ac41d4a3f42a45e}{mdt\-Abstract\-Sql\-Table\-Controller}.
-
-
-
-Definition at line 152 of file mdt\-Sql\-Data\-Widget\-Controller.\-cpp.
-
-
-
-References mdt\-Abstract\-Sql\-Table\-Controller\-::model().
-
-
-
-Referenced by to\-Next(), and to\-Previous().
+References mdt\-Abstract\-Sql\-Table\-Controller\-::current\-State(), mdt\-Abstract\-Sql\-Table\-Controller\-::data\-Edited(), mdt\-Sql\-Schema\-Table\-::field(), mdt\-Abstract\-Sql\-Table\-Controller\-::field\-Index(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Abstract\-Sql\-Table\-Controller\-::model(), mdt\-Sql\-Field\-Handler\-::set\-Data\-Widget(), mdt\-Sql\-Field\-Handler\-::set\-Field(), mdt\-Abstract\-Sql\-Table\-Controller\-::\-Stopped, mdt\-Abstract\-Sql\-Table\-Controller\-::table\-Name(), and mdt\-Error\-::\-Warning.
 
 \hypertarget{classmdt_sql_data_widget_controller_a2bec243fc6c4c908a9c984946919e244}{\index{mdt\-Sql\-Data\-Widget\-Controller@{mdt\-Sql\-Data\-Widget\-Controller}!map\-Form\-Widgets@{map\-Form\-Widgets}}
 \index{map\-Form\-Widgets@{map\-Form\-Widgets}!mdtSqlDataWidgetController@{mdt\-Sql\-Data\-Widget\-Controller}}
@@ -228,7 +197,7 @@ Will parse all child widgets found in given widget, extract widgets that have a 
 \begin{DoxyPrecond}{Precondition}
 Table model must be set with \hyperlink{classmdt_abstract_sql_table_controller_ac9e64cf30e552ec65ed5fdd861320676}{set\-Model()} or \hyperlink{classmdt_abstract_sql_table_controller_a5a94417dc46a7dc6de8b5ba0593494a7}{set\-Table\-Name()} begore calling this method. 
 
-Internal state machine must run (see \hyperlink{classmdt_abstract_sql_table_controller_a06b594e9ebed9417ab15edcddaf0f05b}{start()} ). 
+Internal state machine must not run. 
 \end{DoxyPrecond}
 
 
@@ -251,7 +220,7 @@ Set first record as current record.
 
 
 
-Definition at line 160 of file mdt\-Sql\-Data\-Widget\-Controller.\-cpp.
+Definition at line 152 of file mdt\-Sql\-Data\-Widget\-Controller.\-cpp.
 
 
 
@@ -281,7 +250,7 @@ Set last record as current record.
 
 
 
-Definition at line 165 of file mdt\-Sql\-Data\-Widget\-Controller.\-cpp.
+Definition at line 157 of file mdt\-Sql\-Data\-Widget\-Controller.\-cpp.
 
 
 
@@ -311,11 +280,11 @@ Set next record as current record.
 
 
 
-Definition at line 170 of file mdt\-Sql\-Data\-Widget\-Controller.\-cpp.
+Definition at line 162 of file mdt\-Sql\-Data\-Widget\-Controller.\-cpp.
 
 
 
-References current\-Row(), and mdt\-Abstract\-Sql\-Table\-Controller\-::set\-Current\-Row().
+References mdt\-Abstract\-Sql\-Table\-Controller\-::current\-Row(), and mdt\-Abstract\-Sql\-Table\-Controller\-::set\-Current\-Row().
 
 \hypertarget{classmdt_sql_data_widget_controller_affaa268b3c1ab9db67c97f8b2dce37c4}{\index{mdt\-Sql\-Data\-Widget\-Controller@{mdt\-Sql\-Data\-Widget\-Controller}!to\-Next\-Enabled\-State\-Changed@{to\-Next\-Enabled\-State\-Changed}}
 \index{to\-Next\-Enabled\-State\-Changed@{to\-Next\-Enabled\-State\-Changed}!mdtSqlDataWidgetController@{mdt\-Sql\-Data\-Widget\-Controller}}
@@ -341,11 +310,11 @@ Set previous record as current record.
 
 
 
-Definition at line 175 of file mdt\-Sql\-Data\-Widget\-Controller.\-cpp.
+Definition at line 167 of file mdt\-Sql\-Data\-Widget\-Controller.\-cpp.
 
 
 
-References current\-Row(), and mdt\-Abstract\-Sql\-Table\-Controller\-::set\-Current\-Row().
+References mdt\-Abstract\-Sql\-Table\-Controller\-::current\-Row(), and mdt\-Abstract\-Sql\-Table\-Controller\-::set\-Current\-Row().
 
 \hypertarget{classmdt_sql_data_widget_controller_a37fcddb456a135a0748a892918d6eee3}{\index{mdt\-Sql\-Data\-Widget\-Controller@{mdt\-Sql\-Data\-Widget\-Controller}!to\-Previous\-Enabled\-State\-Changed@{to\-Previous\-Enabled\-State\-Changed}}
 \index{to\-Previous\-Enabled\-State\-Changed@{to\-Previous\-Enabled\-State\-Changed}!mdtSqlDataWidgetController@{mdt\-Sql\-Data\-Widget\-Controller}}

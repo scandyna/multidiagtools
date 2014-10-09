@@ -1,8 +1,9 @@
 <map id="src/mdttools/mdttesttool/mdtTtTestLinkData.h" name="src/mdttools/mdttesttool/mdtTtTestLinkData.h">
-<area shape="rect" id="node3" href="$mdt_tt_test_connection_cable_8h.html" title="src/mdttools/mdttesttool\l/mdtTtTestConnectionCable.h" alt="" coords="161,102,359,149"/>
-<area shape="rect" id="node9" href="$mdt_tt_test_link_dialog_8h.html" title="src/mdttools/mdttesttool\l/mdtTtTestLinkDialog.h" alt="" coords="383,102,545,149"/>
-<area shape="rect" id="node14" href="$mdt_tt_test_link_data_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestLinkData.cpp" alt="" coords="569,102,732,149"/>
-<area shape="rect" id="node5" href="$mdt_tt_test_connection_cable_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestConnectionCable.cpp" alt="" coords="5,198,216,245"/>
-<area shape="rect" id="node7" href="$mdt_tt_test_connection_cable_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestConnectionCableEditor.cpp" alt="" coords="240,198,485,245"/>
-<area shape="rect" id="node12" href="$mdt_tt_test_link_dialog_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestLinkDialog.cpp" alt="" coords="509,198,680,245"/>
+<area shape="rect" id="node3" href="$mdt_tt_logical_test_cable_8h.html" title="src/mdttools/mdttesttool\l/mdtTtLogicalTestCable.h" alt="" coords="236,102,407,149"/>
+<area shape="rect" id="node11" href="$mdt_tt_test_link_dialog_8h.html" title="src/mdttools/mdttesttool\l/mdtTtTestLinkDialog.h" alt="" coords="447,102,609,149"/>
+<area shape="rect" id="node16" href="$mdt_tt_test_link_data_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestLinkData.cpp" alt="" coords="633,102,796,149"/>
+<area shape="rect" id="node5" href="$mdt_tt_logical_test_cable_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtLogicalTestCable.cpp" alt="" coords="5,198,192,245"/>
+<area shape="rect" id="node7" href="$mdt_tt_logical_test_cable_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtLogicalTestCableEditor.cpp" alt="" coords="419,198,637,245"/>
+<area shape="rect" id="node9" href="$mdt_tt_test_cable_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestCableEditor.cpp" alt="" coords="216,198,395,245"/>
+<area shape="rect" id="node14" href="$mdt_tt_test_link_dialog_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestLinkDialog.cpp" alt="" coords="661,198,832,245"/>
 </map>

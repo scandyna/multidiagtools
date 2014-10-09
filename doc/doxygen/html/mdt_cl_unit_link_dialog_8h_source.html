@@ -146,92 +146,96 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_cl_unit_link_dialog.html#ac27cc9700c46dc37f810ddedcf843548" title="Clear end unit selection list. ">clearEndUnitSelectionList</a>();</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_cl_unit_link_dialog.html#a9a3bc3f1de4e3d7dc6bc090965ab7bbc" title="Set the vehicle type ID list on witch we are working on. ">setWorkingOnVehicleTypeIdList</a>(<span class="keyword">const</span> QList&lt;QVariant&gt; &amp; vtIdList);</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_cl_unit_link_dialog.html#a35865311a515cd14f4d6b5d4830238a2" title="Clear the working on vehicle type list. ">clearWorkingOnVehicleTypeList</a>();</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  <span class="keyword">const</span> QList&lt;QVariant&gt; <a class="code" href="classmdt_cl_unit_link_dialog.html#a38fb21e39ed2f2e1d65a68a424895ac4" title="Get selected start vehicle types. ">startVehicleTypeIdList</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  <span class="keyword">const</span> QList&lt;QVariant&gt; <a class="code" href="classmdt_cl_unit_link_dialog.html#abe96eb187294372b022b2a8ba9c645b6" title="Get selected end vehicle types. ">endVehicleTypeIdList</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_cl_unit_link_dialog.html#a14665de1075d3a309584ceff17c26f0c" title="Set show only unused start connections. ">setShowOnlyUnusedStartConnection</a>(<span class="keywordtype">bool</span> onlyUnused);</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_cl_unit_link_dialog.html#a1a2c3bcd9cdc90b57363a2b34b180f4c" title="Set show only unused end connections. ">setShowOnlyUnusedEndConnection</a>(<span class="keywordtype">bool</span> onlyUnused);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_cl_unit_link_dialog.html#a9a3bc3f1de4e3d7dc6bc090965ab7bbc" title="Set the vehicle type ID list on witch we are working on. ">setWorkingOnVehicleTypeIdList</a>(<span class="keyword">const</span> QList&lt;QVariant&gt; &amp; vtIdList);</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_cl_unit_link_dialog.html#a35865311a515cd14f4d6b5d4830238a2" title="Clear the working on vehicle type list. ">clearWorkingOnVehicleTypeList</a>();</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_cl_unit_link_dialog.html#a34ab2fabffeb5b889be8db9ac08add22" title="Display link type in combobox. ">setLinkTypeCode</a>(<span class="keyword">const</span> QVariant &amp; code);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  <span class="keyword">const</span> QList&lt;QVariant&gt; <a class="code" href="classmdt_cl_unit_link_dialog.html#a38fb21e39ed2f2e1d65a68a424895ac4" title="Get selected start vehicle types. ">startVehicleTypeIdList</a>() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  QVariant <a class="code" href="classmdt_cl_unit_link_dialog.html#aa7d8b93582d68113b6d00922e4979e78" title="Get selected link type code. ">linkTypeCode</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  <span class="keyword">const</span> QList&lt;QVariant&gt; <a class="code" href="classmdt_cl_unit_link_dialog.html#abe96eb187294372b022b2a8ba9c645b6" title="Get selected end vehicle types. ">endVehicleTypeIdList</a>() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_cl_unit_link_dialog.html#a23220c3ea0f051e9155ee9a2a052b5ea" title="Display link direction in combobox. ">setLinkDirectionCode</a>(<span class="keyword">const</span> QVariant &amp; code);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_cl_unit_link_dialog.html#a34ab2fabffeb5b889be8db9ac08add22" title="Display link type in combobox. ">setLinkTypeCode</a>(<span class="keyword">const</span> QVariant &amp; code);</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  QVariant <a class="code" href="classmdt_cl_unit_link_dialog.html#a4ed022bb559da23be2d192b9e83c40e2" title="Get selected link direction code. ">linkDirectionCode</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  QVariant <a class="code" href="classmdt_cl_unit_link_dialog.html#aa7d8b93582d68113b6d00922e4979e78" title="Get selected link type code. ">linkTypeCode</a>() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_cl_unit_link_dialog.html#a43ee4d2a395f42dcaa2667170e5ad0bc" title="Set link data. ">setLinkData</a>(<a class="code" href="classmdt_cl_link_data.html" title="Data container class for link data. ">mdtClLinkData</a> &amp;data);</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_cl_unit_link_dialog.html#a23220c3ea0f051e9155ee9a2a052b5ea" title="Display link direction in combobox. ">setLinkDirectionCode</a>(<span class="keyword">const</span> QVariant &amp; code);</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  <a class="code" href="classmdt_cl_link_data.html" title="Data container class for link data. ">mdtClLinkData</a> <a class="code" href="classmdt_cl_unit_link_dialog.html#a9553b27b636bec6af4139afa11a5a2db" title="Get link data. ">linkData</a>();</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  QVariant <a class="code" href="classmdt_cl_unit_link_dialog.html#a4ed022bb559da23be2d192b9e83c40e2" title="Get selected link direction code. ">linkDirectionCode</a>() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; <span class="keyword">private</span> slots:</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;  <span class="keywordtype">void</span> onCbLinkTypeCurrentIndexChanged(<span class="keywordtype">int</span> row);</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;  <span class="keywordtype">void</span> onCbLinkDirectionCurrentIndexChanged(<span class="keywordtype">int</span> row);</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_cl_unit_link_dialog.html#a43ee4d2a395f42dcaa2667170e5ad0bc" title="Set link data. ">setLinkData</a>(<a class="code" href="classmdt_cl_link_data.html" title="Data container class for link data. ">mdtClLinkData</a> &amp;data);</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;  <a class="code" href="classmdt_cl_link_data.html" title="Data container class for link data. ">mdtClLinkData</a> <a class="code" href="classmdt_cl_unit_link_dialog.html#a9553b27b636bec6af4139afa11a5a2db" title="Get link data. ">linkData</a>();</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160; <span class="keyword">private</span> slots:</div>
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;  <span class="keywordtype">void</span> selectStartUnit();</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;  <span class="keywordtype">void</span> onCbLinkTypeCurrentIndexChanged(<span class="keywordtype">int</span> row);</div>
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;  <span class="keywordtype">void</span> selectEndUnit();</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;  <span class="keywordtype">void</span> onCbLinkDirectionCurrentIndexChanged(<span class="keywordtype">int</span> row);</div>
 <div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;  <span class="keywordtype">void</span> selectStartConnection();</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;  <span class="keywordtype">void</span> selectStartUnit();</div>
 <div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;  <span class="keywordtype">void</span> selectEndConnection();</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;  <span class="keywordtype">void</span> selectEndUnit();</div>
 <div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;  <span class="keywordtype">void</span> selectStartVehicleTypes();</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;  <span class="keywordtype">void</span> selectStartConnection();</div>
 <div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;  <span class="keywordtype">void</span> selectEndVehicleTypes();</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;  <span class="keywordtype">void</span> selectEndConnection();</div>
 <div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;  <span class="keywordtype">void</span> accept();</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;  <span class="keywordtype">void</span> selectStartVehicleTypes();</div>
 <div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;  <span class="keywordtype">void</span> updateModificationCombobox(<span class="keyword">const</span> QVariant &amp;data);</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;  <span class="keywordtype">void</span> updateSinceVersionCombobox(<span class="keyword">const</span> QVariant &amp;data);</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;  <span class="keywordtype">void</span> selectEndVehicleTypes();</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;  <span class="keywordtype">void</span> accept();</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160; <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;  <span class="keywordtype">void</span> updateStartUnit();</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;  <span class="keywordtype">void</span> updateModificationCombobox(<span class="keyword">const</span> QVariant &amp;data);</div>
 <div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;  <span class="keywordtype">void</span> updateEndUnit();</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;  <span class="keywordtype">void</span> updateSinceVersionCombobox(<span class="keyword">const</span> QVariant &amp;data);</div>
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  <span class="keywordtype">void</span> updateStartConnection();</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  <span class="keywordtype">void</span> updateStartUnit();</div>
 <div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;  <span class="keywordtype">void</span> updateEndConnection();</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;  <span class="keywordtype">void</span> updateEndUnit();</div>
 <div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  <span class="keywordtype">void</span> setStartVehicleTypes(<span class="keyword">const</span> QVariant &amp;unitId);</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  <span class="keywordtype">void</span> updateStartConnection();</div>
 <div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;  <span class="keywordtype">void</span> updateStartVehicleTypes();</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;  <span class="keywordtype">void</span> updateEndConnection();</div>
 <div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;  <span class="keywordtype">void</span> setEndVehicleTypes(<span class="keyword">const</span> QVariant &amp;unitId);</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;  <span class="keywordtype">void</span> setStartVehicleTypes(<span class="keyword">const</span> QVariant &amp;unitId);</div>
 <div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;  <span class="keywordtype">void</span> updateEndVehicleTypes();</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;  <span class="keywordtype">void</span> updateStartVehicleTypes();</div>
 <div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;  <span class="keywordtype">bool</span> buildVehicleTypeLinkDataList();</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;  <span class="keywordtype">void</span> setEndVehicleTypes(<span class="keyword">const</span> QVariant &amp;unitId);</div>
 <div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;  Q_DISABLE_COPY(<a class="code" href="classmdt_cl_unit_link_dialog.html" title="Dialog that let the user edit a unit link. ">mdtClUnitLinkDialog</a>);</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;  QSqlDatabase pvDatabase;</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;  QVariant pvStartUnitId;</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;  QList&lt;QVariant&gt; pvStartUnitSelectionIdList;</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;  QVariant pvEndUnitId;</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;  QList&lt;QVariant&gt; pvEndUnitSelectionIdList;</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;  QSqlQueryModel *pvLinkTypeModel;</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;  QSqlQueryModel *pvLinkDirectionModel;</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;  <a class="code" href="classmdt_cl_link_data.html" title="Data container class for link data. ">mdtClLinkData</a> pvLinkData;</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;  QSqlQueryModel *pvStartVehicleTypesModel;</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;  QList&lt;QVariant&gt; pvStartVehicleTypesIdList;</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;  QSqlQueryModel *pvEndVehicleTypesModel;</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;  QList&lt;QVariant&gt; pvEndVehicleTypesIdList;</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;  QList&lt;QVariant&gt; pvWorkingOnVehicleTypeIdList;</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;};</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;<span class="preprocessor">#endif // #ifndef MDT_CL_UNIT_LINK_DIALOG_H</span></div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;  <span class="keywordtype">void</span> updateEndVehicleTypes();</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;  <span class="keywordtype">bool</span> buildVehicleTypeLinkDataList();</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;  Q_DISABLE_COPY(<a class="code" href="classmdt_cl_unit_link_dialog.html" title="Dialog that let the user edit a unit link. ">mdtClUnitLinkDialog</a>);</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;  QSqlDatabase pvDatabase;</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;  QVariant pvStartUnitId;</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;  QList&lt;QVariant&gt; pvStartUnitSelectionIdList;</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;  QVariant pvEndUnitId;</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;  QList&lt;QVariant&gt; pvEndUnitSelectionIdList;</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;  QSqlQueryModel *pvLinkTypeModel;</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;  QSqlQueryModel *pvLinkDirectionModel;</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;  <a class="code" href="classmdt_cl_link_data.html" title="Data container class for link data. ">mdtClLinkData</a> pvLinkData;</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;  QSqlQueryModel *pvStartVehicleTypesModel;</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;  QList&lt;QVariant&gt; pvStartVehicleTypesIdList;</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;  QSqlQueryModel *pvEndVehicleTypesModel;</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;  QList&lt;QVariant&gt; pvEndVehicleTypesIdList;</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;  QList&lt;QVariant&gt; pvWorkingOnVehicleTypeIdList;</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;};</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;<span class="preprocessor">#endif // #ifndef MDT_CL_UNIT_LINK_DIALOG_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Sep 20 2014 15:23:35 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Oct 9 2014 17:04:10 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

@@ -1,12 +1,13 @@
 <map id="mdtSqlForm" name="mdtSqlForm">
-<area shape="rect" id="node5" href="$classmdt_cl_article_editor.html" title="Cable list&#39;s article editor. " alt="" coords="297,5,425,35"/>
-<area shape="rect" id="node7" href="$classmdt_cl_connector_editor.html" title="Class for connector edition. " alt="" coords="287,59,436,88"/>
-<area shape="rect" id="node9" href="$classmdt_cl_link_beam_editor.html" title="Provides link beam edition to the user. " alt="" coords="287,112,436,141"/>
-<area shape="rect" id="node11" href="$classmdt_cl_unit_editor.html" title="Cable list&#39;s device editor. " alt="" coords="304,165,419,195"/>
-<area shape="rect" id="node13" href="$classmdt_cl_vehicle_type_editor.html" title="Vehicle type editor. " alt="" coords="280,219,443,248"/>
-<area shape="rect" id="node15" href="$classmdt_tt_test_connection_cable_editor.html" title="Class for test connection cable edition. " alt="" coords="271,271,452,318"/>
-<area shape="rect" id="node17" href="$classmdt_tt_test_model_editor.html" title="#include &quot;mdtClEditor.h&quot; " alt="" coords="287,341,436,371"/>
-<area shape="rect" id="node19" href="$classmdt_tt_test_model_item_editor.html" title="Test item editor. " alt="" coords="273,395,449,424"/>
-<area shape="rect" id="node21" href="$classmdt_tt_test_node_editor.html" title="This class provides a test node editor. " alt="" coords="288,448,435,477"/>
-<area shape="rect" id="node2" href="$class_q_widget.html" title="QWidget" alt="" coords="7,219,79,248"/>
+<area shape="rect" id="node5" href="$classmdt_cl_article_editor.html" title="Cable list&#39;s article editor. " alt="" coords="301,5,429,35"/>
+<area shape="rect" id="node7" href="$classmdt_cl_connector_editor.html" title="Class for connector edition. " alt="" coords="291,59,440,88"/>
+<area shape="rect" id="node9" href="$classmdt_cl_link_beam_editor.html" title="Provides link beam edition to the user. " alt="" coords="291,112,440,141"/>
+<area shape="rect" id="node11" href="$classmdt_cl_unit_editor.html" title="Cable list&#39;s device editor. " alt="" coords="308,165,423,195"/>
+<area shape="rect" id="node13" href="$classmdt_cl_vehicle_type_editor.html" title="Vehicle type editor. " alt="" coords="284,219,447,248"/>
+<area shape="rect" id="node15" href="$classmdt_tt_logical_test_cable_editor.html" title="Class for logical test connection cable edition. " alt="" coords="271,272,460,301"/>
+<area shape="rect" id="node17" href="$classmdt_tt_test_cable_editor.html" title="Class for physical test connection cable edition. " alt="" coords="291,325,440,355"/>
+<area shape="rect" id="node19" href="$classmdt_tt_test_model_editor.html" title="#include &quot;mdtClEditor.h&quot; " alt="" coords="291,379,440,408"/>
+<area shape="rect" id="node21" href="$classmdt_tt_test_model_item_editor.html" title="Test item editor. " alt="" coords="277,432,453,461"/>
+<area shape="rect" id="node23" href="$classmdt_tt_test_node_editor.html" title="This class provides a test node editor. " alt="" coords="292,485,439,515"/>
+<area shape="rect" id="node2" href="$class_q_widget.html" title="QWidget" alt="" coords="7,245,79,275"/>
 </map>

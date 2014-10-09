@@ -134,9 +134,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a62da5915a170ad19bb123d600732ee26"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_table_view_controller.html#a62da5915a170ad19bb123d600732ee26">firstVisibleColumnIndex</a> ()</td></tr>
 <tr class="memdesc:a62da5915a170ad19bb123d600732ee26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get column index of first visible column.  <a href="#a62da5915a170ad19bb123d600732ee26">More...</a><br/></td></tr>
 <tr class="separator:a62da5915a170ad19bb123d600732ee26"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0dcd5f3c5410d453d83799f4e015e2a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_table_view_controller.html#af0dcd5f3c5410d453d83799f4e015e2a">currentRow</a> () const </td></tr>
-<tr class="memdesc:af0dcd5f3c5410d453d83799f4e015e2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current row.  <a href="#af0dcd5f3c5410d453d83799f4e015e2a">More...</a><br/></td></tr>
-<tr class="separator:af0dcd5f3c5410d453d83799f4e015e2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a81a3558f5c00c6709c4060e5dbceb31b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_sql_table_selection.html">mdtSqlTableSelection</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_table_view_controller.html#a81a3558f5c00c6709c4060e5dbceb31b">currentSelection</a> (const QStringList &amp;fieldList)</td></tr>
 <tr class="memdesc:a81a3558f5c00c6709c4060e5dbceb31b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current selection.  <a href="#a81a3558f5c00c6709c4060e5dbceb31b">More...</a><br/></td></tr>
 <tr class="separator:a81a3558f5c00c6709c4060e5dbceb31b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -162,6 +159,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ac9e64cf30e552ec65ed5fdd861320676 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#ac9e64cf30e552ec65ed5fdd861320676">setModel</a> (std::shared_ptr&lt; <a class="el" href="class_q_sql_table_model.html">QSqlTableModel</a> &gt; m, const QString &amp;<a class="el" href="classmdt_abstract_sql_table_controller.html#a1a9b3d3e4009acd32fc4a083f738fc62">userFriendlyTableName</a>=QString())</td></tr>
 <tr class="memdesc:ac9e64cf30e552ec65ed5fdd861320676 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set table model.  <a href="#ac9e64cf30e552ec65ed5fdd861320676">More...</a><br/></td></tr>
 <tr class="separator:ac9e64cf30e552ec65ed5fdd861320676 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51f1f0be0e906cbd4aff671aac3945a4 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#a51f1f0be0e906cbd4aff671aac3945a4">setCanWriteToDatabase</a> (bool canWrite)</td></tr>
+<tr class="memdesc:a51f1f0be0e906cbd4aff671aac3945a4 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the canWriteToDatabase flag.  <a href="#a51f1f0be0e906cbd4aff671aac3945a4">More...</a><br/></td></tr>
+<tr class="separator:a51f1f0be0e906cbd4aff671aac3945a4 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a118eb88b5cda87933f63bfa699d845dd inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#a118eb88b5cda87933f63bfa699d845dd">canWriteToDatabase</a> () const </td></tr>
+<tr class="memdesc:a118eb88b5cda87933f63bfa699d845dd inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the canWriteToDatabase flag.  <a href="#a118eb88b5cda87933f63bfa699d845dd">More...</a><br/></td></tr>
+<tr class="separator:a118eb88b5cda87933f63bfa699d845dd inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8cdca2d31b1129caa20cf5a0e583f068 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#a8cdca2d31b1129caa20cf5a0e583f068">fieldIndex</a> (const QString &amp;fieldName) const </td></tr>
 <tr class="memdesc:a8cdca2d31b1129caa20cf5a0e583f068 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get index of field with fieldName.  <a href="#a8cdca2d31b1129caa20cf5a0e583f068">More...</a><br/></td></tr>
 <tr class="separator:a8cdca2d31b1129caa20cf5a0e583f068 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -247,6 +250,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:abe56526399b9d9b0ab68139539ec616c inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#abe56526399b9d9b0ab68139539ec616c">setData</a> (int row, const QString &amp;fieldName, const QVariant &amp;<a class="el" href="classmdt_abstract_sql_table_controller.html#a1801a01c0ce073c2e389b20f58a3d3ff">data</a>, bool <a class="el" href="classmdt_abstract_sql_table_controller.html#a14f3e2a91fc30ca0e018944f4f95bc33">submit</a>=true)</td></tr>
 <tr class="memdesc:abe56526399b9d9b0ab68139539ec616c inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set data for given row and field name.  <a href="#abe56526399b9d9b0ab68139539ec616c">More...</a><br/></td></tr>
 <tr class="separator:abe56526399b9d9b0ab68139539ec616c inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e694e6dab9c883f1a276787a3723086 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#a3e694e6dab9c883f1a276787a3723086">setData</a> (const QString &amp;matchFieldName, const QVariant &amp;matchData, const QString &amp;dataFieldName, const QVariant &amp;<a class="el" href="classmdt_abstract_sql_table_controller.html#a1801a01c0ce073c2e389b20f58a3d3ff">data</a>, bool <a class="el" href="classmdt_abstract_sql_table_controller.html#a14f3e2a91fc30ca0e018944f4f95bc33">submit</a>=true)</td></tr>
+<tr class="memdesc:a3e694e6dab9c883f1a276787a3723086 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set data for given match and field name.  <a href="#a3e694e6dab9c883f1a276787a3723086">More...</a><br/></td></tr>
+<tr class="separator:a3e694e6dab9c883f1a276787a3723086 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a055b69caef2670ea1ba6a5095167663f inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top">QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#a055b69caef2670ea1ba6a5095167663f">currentData</a> (const QString &amp;fieldName)</td></tr>
 <tr class="memdesc:a055b69caef2670ea1ba6a5095167663f inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current data for given field name.  <a href="#a055b69caef2670ea1ba6a5095167663f">More...</a><br/></td></tr>
 <tr class="separator:a055b69caef2670ea1ba6a5095167663f inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -277,6 +283,30 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a99a52795749a325b8b96096cffe60866 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top">QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#a99a52795749a325b8b96096cffe60866">data</a> (int row, const QString &amp;fieldName, bool &amp;ok)</td></tr>
 <tr class="memdesc:a99a52795749a325b8b96096cffe60866 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get data for given row and field name.  <a href="#a99a52795749a325b8b96096cffe60866">More...</a><br/></td></tr>
 <tr class="separator:a99a52795749a325b8b96096cffe60866 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40af55ec0b11a0a81f748662c912b761 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top">QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#a40af55ec0b11a0a81f748662c912b761">data</a> (const QString &amp;matchFieldName, const QVariant &amp;matchData, const QString &amp;dataFieldName, bool &amp;ok)</td></tr>
+<tr class="memdesc:a40af55ec0b11a0a81f748662c912b761 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get data for given match and field name.  <a href="#a40af55ec0b11a0a81f748662c912b761">More...</a><br/></td></tr>
+<tr class="separator:a40af55ec0b11a0a81f748662c912b761 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a497441f3486c77cc832181fe34bd6492 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top">QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#a497441f3486c77cc832181fe34bd6492">data</a> (const QString &amp;matchFieldName, const QVariant &amp;matchData, const QString &amp;dataFieldName)</td></tr>
+<tr class="memdesc:a497441f3486c77cc832181fe34bd6492 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get data for given match and field name.  <a href="#a497441f3486c77cc832181fe34bd6492">More...</a><br/></td></tr>
+<tr class="separator:a497441f3486c77cc832181fe34bd6492 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1bf49f87908a1468bea5b9f3fc833a7c inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_sql_record.html">mdtSqlRecord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#a1bf49f87908a1468bea5b9f3fc833a7c">record</a> (int row, const QStringList &amp;fieldNames)</td></tr>
+<tr class="memdesc:a1bf49f87908a1468bea5b9f3fc833a7c inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a record that contains given field names for given row.  <a href="#a1bf49f87908a1468bea5b9f3fc833a7c">More...</a><br/></td></tr>
+<tr class="separator:a1bf49f87908a1468bea5b9f3fc833a7c inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1f088f168d52b6253628a9a337a3adf inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_sql_record.html">mdtSqlRecord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#ae1f088f168d52b6253628a9a337a3adf">record</a> (int row, const QStringList &amp;fieldNames, bool &amp;ok)</td></tr>
+<tr class="memdesc:ae1f088f168d52b6253628a9a337a3adf inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a record that contains given field names for given row.  <a href="#ae1f088f168d52b6253628a9a337a3adf">More...</a><br/></td></tr>
+<tr class="separator:ae1f088f168d52b6253628a9a337a3adf inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b83c25b5b8027bef36ab314be0b2a1c inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_sql_record.html">mdtSqlRecord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#a9b83c25b5b8027bef36ab314be0b2a1c">record</a> (const QString &amp;matchFieldName, const QVariant &amp;matchData, const QStringList &amp;fieldNames, bool &amp;ok)</td></tr>
+<tr class="memdesc:a9b83c25b5b8027bef36ab314be0b2a1c inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a record for given match and that contains given field names.  <a href="#a9b83c25b5b8027bef36ab314be0b2a1c">More...</a><br/></td></tr>
+<tr class="separator:a9b83c25b5b8027bef36ab314be0b2a1c inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a074c3b2a60e38acff2f754c6f2b787d8 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_sql_record.html">mdtSqlRecord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#a074c3b2a60e38acff2f754c6f2b787d8">record</a> (const QString &amp;matchFieldName, const QVariant &amp;matchData, const QStringList &amp;fieldNames)</td></tr>
+<tr class="memdesc:a074c3b2a60e38acff2f754c6f2b787d8 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a record for given match and that contains given field names.  <a href="#a074c3b2a60e38acff2f754c6f2b787d8">More...</a><br/></td></tr>
+<tr class="separator:a074c3b2a60e38acff2f754c6f2b787d8 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68a9b5aa1baa7ed556c14111b07dd57a inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_sql_record.html">mdtSqlRecord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#a68a9b5aa1baa7ed556c14111b07dd57a">currentRecord</a> (const QStringList &amp;fieldNames, bool &amp;ok)</td></tr>
+<tr class="memdesc:a68a9b5aa1baa7ed556c14111b07dd57a inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a record that contains given field names for current row.  <a href="#a68a9b5aa1baa7ed556c14111b07dd57a">More...</a><br/></td></tr>
+<tr class="separator:a68a9b5aa1baa7ed556c14111b07dd57a inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f397fe1d28fe99360a31479c023629f inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_sql_record.html">mdtSqlRecord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#a0f397fe1d28fe99360a31479c023629f">currentRecord</a> (const QStringList &amp;fieldNames)</td></tr>
+<tr class="memdesc:a0f397fe1d28fe99360a31479c023629f inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a record that contains given field names for current row.  <a href="#a0f397fe1d28fe99360a31479c023629f">More...</a><br/></td></tr>
+<tr class="separator:a0f397fe1d28fe99360a31479c023629f inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a46896c6920f306f2c2ad03281ec64c74 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top">QList&lt; QVariant &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#a46896c6920f306f2c2ad03281ec64c74">dataList</a> (const QString &amp;fieldName, bool fetchAll=true)</td></tr>
 <tr class="memdesc:a46896c6920f306f2c2ad03281ec64c74 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a list of data for given field name.  <a href="#a46896c6920f306f2c2ad03281ec64c74">More...</a><br/></td></tr>
 <tr class="separator:a46896c6920f306f2c2ad03281ec64c74 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -310,15 +340,21 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a496e148f79e951c42bb13230ea49ccd1 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#a496e148f79e951c42bb13230ea49ccd1">setCurrentRow</a> (const QString &amp;fieldName, const QVariant &amp;matchData)</td></tr>
 <tr class="memdesc:a496e148f79e951c42bb13230ea49ccd1 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set current row.  <a href="#a496e148f79e951c42bb13230ea49ccd1">More...</a><br/></td></tr>
 <tr class="separator:a496e148f79e951c42bb13230ea49ccd1 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8880c4a868ebff351f91b13247762163 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#a8880c4a868ebff351f91b13247762163">allDataAreSaved</a> ()</td></tr>
-<tr class="memdesc:a8880c4a868ebff351f91b13247762163 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if all data are saved.  <a href="#a8880c4a868ebff351f91b13247762163">More...</a><br/></td></tr>
-<tr class="separator:a8880c4a868ebff351f91b13247762163 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a111a56537a1ed200e631e1efcd4a2244 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#a111a56537a1ed200e631e1efcd4a2244">currentRow</a> () const </td></tr>
+<tr class="memdesc:a111a56537a1ed200e631e1efcd4a2244 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current row.  <a href="#a111a56537a1ed200e631e1efcd4a2244">More...</a><br/></td></tr>
+<tr class="separator:a111a56537a1ed200e631e1efcd4a2244 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabbf1bff271014d55a8d6e9391c691a6 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#aabbf1bff271014d55a8d6e9391c691a6">allDataAreSaved</a> (bool checkAboutDirtyIndex=false)</td></tr>
+<tr class="memdesc:aabbf1bff271014d55a8d6e9391c691a6 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if all data are saved.  <a href="#aabbf1bff271014d55a8d6e9391c691a6">More...</a><br/></td></tr>
+<tr class="separator:aabbf1bff271014d55a8d6e9391c691a6 inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a085ff6b261917b19b130e30123a166ad inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_error.html">mdtError</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#a085ff6b261917b19b130e30123a166ad">lastError</a> () const </td></tr>
 <tr class="memdesc:a085ff6b261917b19b130e30123a166ad inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get last error.  <a href="#a085ff6b261917b19b130e30123a166ad">More...</a><br/></td></tr>
 <tr class="separator:a085ff6b261917b19b130e30123a166ad inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab1d75ed2eb77baf4324cea09e281c91e inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#ab1d75ed2eb77baf4324cea09e281c91e">submitAndWait</a> ()</td></tr>
 <tr class="memdesc:ab1d75ed2eb77baf4324cea09e281c91e inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Submit and wait until success or failure.  <a href="#ab1d75ed2eb77baf4324cea09e281c91e">More...</a><br/></td></tr>
 <tr class="separator:ab1d75ed2eb77baf4324cea09e281c91e inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a066b7b828b6249b7ac2431d6d57c234d inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#a066b7b828b6249b7ac2431d6d57c234d">removeAndWait</a> ()</td></tr>
+<tr class="memdesc:a066b7b828b6249b7ac2431d6d57c234d inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove and wait until success or failure.  <a href="#a066b7b828b6249b7ac2431d6d57c234d">More...</a><br/></td></tr>
+<tr class="separator:a066b7b828b6249b7ac2431d6d57c234d inherit pub_methods_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -343,7 +379,7 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:a63536182561f551ccb7616e1786793cd inherit pub_types_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_slots_classmdt_abstract_sql_table_controller"><td colspan="2" onclick="javascript:toggleInherit('pub_slots_classmdt_abstract_sql_table_controller')"><img src="closed.png" alt="-"/>&#160;Public Slots inherited from <a class="el" href="classmdt_abstract_sql_table_controller.html">mdtAbstractSqlTableController</a></td></tr>
 <tr class="memitem:a14f3e2a91fc30ca0e018944f4f95bc33 inherit pub_slots_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#a14f3e2a91fc30ca0e018944f4f95bc33">submit</a> ()</td></tr>
-<tr class="memdesc:a14f3e2a91fc30ca0e018944f4f95bc33 inherit pub_slots_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Submit current record to model.  <a href="#a14f3e2a91fc30ca0e018944f4f95bc33">More...</a><br/></td></tr>
+<tr class="memdesc:a14f3e2a91fc30ca0e018944f4f95bc33 inherit pub_slots_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Submit data.  <a href="#a14f3e2a91fc30ca0e018944f4f95bc33">More...</a><br/></td></tr>
 <tr class="separator:a14f3e2a91fc30ca0e018944f4f95bc33 inherit pub_slots_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36af2665b6d742aba3bc7f6ee6b2a6c4 inherit pub_slots_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#a36af2665b6d742aba3bc7f6ee6b2a6c4">revert</a> ()</td></tr>
 <tr class="memdesc:a36af2665b6d742aba3bc7f6ee6b2a6c4 inherit pub_slots_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Revert current record from model.  <a href="#a36af2665b6d742aba3bc7f6ee6b2a6c4">More...</a><br/></td></tr>
@@ -355,9 +391,6 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memdesc:a7bbe0f951403acbcc01c99f5916b9204 inherit pub_slots_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a row from model.  <a href="#a7bbe0f951403acbcc01c99f5916b9204">More...</a><br/></td></tr>
 <tr class="separator:a7bbe0f951403acbcc01c99f5916b9204 inherit pub_slots_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header signals_classmdt_abstract_sql_table_controller"><td colspan="2" onclick="javascript:toggleInherit('signals_classmdt_abstract_sql_table_controller')"><img src="closed.png" alt="-"/>&#160;Signals inherited from <a class="el" href="classmdt_abstract_sql_table_controller.html">mdtAbstractSqlTableController</a></td></tr>
-<tr class="memitem:a04005dbd5022ff779b56fc9334c41c3c inherit signals_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#a04005dbd5022ff779b56fc9334c41c3c">currentRowChanged</a> (int row)</td></tr>
-<tr class="memdesc:a04005dbd5022ff779b56fc9334c41c3c inherit signals_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when current row has changed.  <a href="#a04005dbd5022ff779b56fc9334c41c3c">More...</a><br/></td></tr>
-<tr class="separator:a04005dbd5022ff779b56fc9334c41c3c inherit signals_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8d66e50ce83d61646fbf1da25f146a91 inherit signals_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#a8d66e50ce83d61646fbf1da25f146a91">mainWidgetEnableStateChanged</a> (bool enabled)</td></tr>
 <tr class="memdesc:a8d66e50ce83d61646fbf1da25f146a91 inherit signals_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when the entier widget enable state changes.  <a href="#a8d66e50ce83d61646fbf1da25f146a91">More...</a><br/></td></tr>
 <tr class="separator:a8d66e50ce83d61646fbf1da25f146a91 inherit signals_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -365,7 +398,7 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memdesc:afe193a790eadc0912cc9a7dc4a307721 inherit signals_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when the entier widget enable state changes for a child widget.  <a href="#afe193a790eadc0912cc9a7dc4a307721">More...</a><br/></td></tr>
 <tr class="separator:afe193a790eadc0912cc9a7dc4a307721 inherit signals_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3690e3c30d0fb7519915022253372376 inherit signals_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#a3690e3c30d0fb7519915022253372376">submitEnabledStateChanged</a> (bool enabled)</td></tr>
-<tr class="memdesc:a3690e3c30d0fb7519915022253372376 inherit signals_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when <a class="el" href="classmdt_abstract_sql_table_controller.html#a14f3e2a91fc30ca0e018944f4f95bc33" title="Submit current record to model. ">submit()</a> function goes enabled/disabled.  <a href="#a3690e3c30d0fb7519915022253372376">More...</a><br/></td></tr>
+<tr class="memdesc:a3690e3c30d0fb7519915022253372376 inherit signals_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when <a class="el" href="classmdt_abstract_sql_table_controller.html#a14f3e2a91fc30ca0e018944f4f95bc33" title="Submit data. ">submit()</a> function goes enabled/disabled.  <a href="#a3690e3c30d0fb7519915022253372376">More...</a><br/></td></tr>
 <tr class="separator:a3690e3c30d0fb7519915022253372376 inherit signals_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af735dd48338c652562977f98c65dc345 inherit signals_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#af735dd48338c652562977f98c65dc345">revertEnabledStateChanged</a> (bool enabled)</td></tr>
 <tr class="memdesc:af735dd48338c652562977f98c65dc345 inherit signals_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when <a class="el" href="classmdt_abstract_sql_table_controller.html#a36af2665b6d742aba3bc7f6ee6b2a6c4" title="Revert current record from model. ">revert()</a> function goes enabled/disabled.  <a href="#af735dd48338c652562977f98c65dc345">More...</a><br/></td></tr>
@@ -380,7 +413,7 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memdesc:a4254d5b68587417f53384381f44c29ff inherit signals_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when <a class="el" href="classmdt_abstract_sql_table_controller.html#ae26ede862ac54ece9243b264ea22cefb" title="Select data in main table. ">select()</a> or <a class="el" href="classmdt_abstract_sql_table_controller.html#a28b24065dc465fdc0944464708adf63f" title="Set a filter on main table. ">setFilter()</a> was called.  <a href="#a4254d5b68587417f53384381f44c29ff">More...</a><br/></td></tr>
 <tr class="separator:a4254d5b68587417f53384381f44c29ff inherit signals_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a07bebc4d4fec28edf3468920fa0cf285 inherit signals_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#a07bebc4d4fec28edf3468920fa0cf285">submitTriggered</a> ()</td></tr>
-<tr class="memdesc:a07bebc4d4fec28edf3468920fa0cf285 inherit signals_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when <a class="el" href="classmdt_abstract_sql_table_controller.html#a14f3e2a91fc30ca0e018944f4f95bc33" title="Submit current record to model. ">submit()</a> was called.  <a href="#a07bebc4d4fec28edf3468920fa0cf285">More...</a><br/></td></tr>
+<tr class="memdesc:a07bebc4d4fec28edf3468920fa0cf285 inherit signals_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when <a class="el" href="classmdt_abstract_sql_table_controller.html#a14f3e2a91fc30ca0e018944f4f95bc33" title="Submit data. ">submit()</a> was called.  <a href="#a07bebc4d4fec28edf3468920fa0cf285">More...</a><br/></td></tr>
 <tr class="separator:a07bebc4d4fec28edf3468920fa0cf285 inherit signals_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34238105f2b767e684f309c8af961572 inherit signals_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#a34238105f2b767e684f309c8af961572">revertTriggered</a> ()</td></tr>
 <tr class="memdesc:a34238105f2b767e684f309c8af961572 inherit signals_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when <a class="el" href="classmdt_abstract_sql_table_controller.html#a36af2665b6d742aba3bc7f6ee6b2a6c4" title="Revert current record from model. ">revert()</a> was called.  <a href="#a34238105f2b767e684f309c8af961572">More...</a><br/></td></tr>
@@ -401,7 +434,7 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memdesc:afa4068a87a3c53a290835115a863f51b inherit signals_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when data was edited.  <a href="#afa4068a87a3c53a290835115a863f51b">More...</a><br/></td></tr>
 <tr class="separator:afa4068a87a3c53a290835115a863f51b inherit signals_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac164ad9f43047cb2e5c70c2418bd9eb6 inherit signals_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#ac164ad9f43047cb2e5c70c2418bd9eb6">stateEditingExited</a> ()</td></tr>
-<tr class="memdesc:ac164ad9f43047cb2e5c70c2418bd9eb6 inherit signals_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when Visualizing state was entered.  <a href="#ac164ad9f43047cb2e5c70c2418bd9eb6">More...</a><br/></td></tr>
+<tr class="memdesc:ac164ad9f43047cb2e5c70c2418bd9eb6 inherit signals_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when Editing state was exited.  <a href="#ac164ad9f43047cb2e5c70c2418bd9eb6">More...</a><br/></td></tr>
 <tr class="separator:ac164ad9f43047cb2e5c70c2418bd9eb6 inherit signals_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4fd23a5a2aa859671adc19568f856c36 inherit signals_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#a4fd23a5a2aa859671adc19568f856c36">stateEditingNewRowExited</a> ()</td></tr>
 <tr class="memdesc:a4fd23a5a2aa859671adc19568f856c36 inherit signals_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when Editing state was exited.  <a href="#a4fd23a5a2aa859671adc19568f856c36">More...</a><br/></td></tr>
@@ -410,9 +443,6 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:a70bcc01ddd639fc05663b356df3e137e inherit pro_slots_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#a70bcc01ddd639fc05663b356df3e137e">onStateSelectingEntered</a> ()</td></tr>
 <tr class="memdesc:a70bcc01ddd639fc05663b356df3e137e inherit pro_slots_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Activity after Selecting state entered.  <a href="#a70bcc01ddd639fc05663b356df3e137e">More...</a><br/></td></tr>
 <tr class="separator:a70bcc01ddd639fc05663b356df3e137e inherit pro_slots_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45c1bd8be73435191d385ba3b6282937 inherit pro_slots_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#a45c1bd8be73435191d385ba3b6282937">onRelationFilterApplied</a> ()</td></tr>
-<tr class="memdesc:a45c1bd8be73435191d385ba3b6282937 inherit pro_slots_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by <a class="el" href="classmdt_sql_relation.html" title="Handle parent/child relations between 2 QSqlTableModels. ">mdtSqlRelation</a> whenn it applied filter.  <a href="#a45c1bd8be73435191d385ba3b6282937">More...</a><br/></td></tr>
-<tr class="separator:a45c1bd8be73435191d385ba3b6282937 inherit pro_slots_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a120e99bd86672ff9d019a359b45d4e71 inherit pro_slots_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#a120e99bd86672ff9d019a359b45d4e71">onStateVisualizingEntered</a> ()</td></tr>
 <tr class="memdesc:a120e99bd86672ff9d019a359b45d4e71 inherit pro_slots_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Activity after Visualizing state entered.  <a href="#a120e99bd86672ff9d019a359b45d4e71">More...</a><br/></td></tr>
 <tr class="separator:a120e99bd86672ff9d019a359b45d4e71 inherit pro_slots_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -467,9 +497,12 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:ac529dd23135fc62502ba820548b2ceec inherit pro_methods_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#ac529dd23135fc62502ba820548b2ceec">commitTransaction</a> ()</td></tr>
 <tr class="memdesc:ac529dd23135fc62502ba820548b2ceec inherit pro_methods_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Commit manually a new transaction.  <a href="#ac529dd23135fc62502ba820548b2ceec">More...</a><br/></td></tr>
 <tr class="separator:ac529dd23135fc62502ba820548b2ceec inherit pro_methods_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a12c35f97b31198ec484a199cb59525da inherit pro_methods_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#a12c35f97b31198ec484a199cb59525da">setCurrentRowPv</a> (int row, bool forceSendCurrentRowChanedEvent)</td></tr>
-<tr class="memdesc:a12c35f97b31198ec484a199cb59525da inherit pro_methods_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set current row - For internal use.  <a href="#a12c35f97b31198ec484a199cb59525da">More...</a><br/></td></tr>
-<tr class="separator:a12c35f97b31198ec484a199cb59525da inherit pro_methods_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a3e91269bf2d9d0a37b3ff6b428eb2f inherit pro_methods_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#a2a3e91269bf2d9d0a37b3ff6b428eb2f">setCurrentRowPv</a> (int row)</td></tr>
+<tr class="memdesc:a2a3e91269bf2d9d0a37b3ff6b428eb2f inherit pro_methods_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set current row - For internal use.  <a href="#a2a3e91269bf2d9d0a37b3ff6b428eb2f">More...</a><br/></td></tr>
+<tr class="separator:a2a3e91269bf2d9d0a37b3ff6b428eb2f inherit pro_methods_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af45fb81b4630134de0816744c44a411a inherit pro_methods_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#af45fb81b4630134de0816744c44a411a">submitToDatabase</a> ()</td></tr>
+<tr class="memdesc:af45fb81b4630134de0816744c44a411a inherit pro_methods_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Submit data from model to database.  <a href="#af45fb81b4630134de0816744c44a411a">More...</a><br/></td></tr>
+<tr class="separator:af45fb81b4630134de0816744c44a411a inherit pro_methods_classmdt_abstract_sql_table_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classmdt_abstract_sql_table_controller"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classmdt_abstract_sql_table_controller')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classmdt_abstract_sql_table_controller.html">mdtAbstractSqlTableController</a></td></tr>
 <tr class="memitem:ab84254456716151208b9e5eb3610a90b inherit pro_attribs_classmdt_abstract_sql_table_controller"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_error.html">mdtError</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_sql_table_controller.html#ab84254456716151208b9e5eb3610a90b">pvLastError</a></td></tr>
 <tr class="memdesc:ab84254456716151208b9e5eb3610a90b inherit pro_attribs_classmdt_abstract_sql_table_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Last error (for write access)  <a href="#ab84254456716151208b9e5eb3610a90b">More...</a><br/></td></tr>
@@ -478,7 +511,7 @@ Additional Inherited Members</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Table view controller. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_table_view_controller_8h_source.html#l00074">74</a> of file <a class="el" href="mdt_sql_table_view_controller_8h_source.html">mdtSqlTableViewController.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_view_controller_8h_source.html#l00073">73</a> of file <a class="el" href="mdt_sql_table_view_controller_8h_source.html">mdtSqlTableViewController.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a45353c87eb09e39286b1223cbbe57264"></a>
 <div class="memitem">
@@ -515,42 +548,11 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html#l00073">73</a> of file <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html">mdtSqlTableViewController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html#l00074">74</a> of file <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html">mdtSqlTableViewController.cpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="af0dcd5f3c5410d453d83799f4e015e2a"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">int mdtSqlTableViewController::currentRow </td>
-          <td>(</td>
-          <td class="paramname">)</td><td></td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Get current row. </p>
-
-<p>Implements <a class="el" href="classmdt_abstract_sql_table_controller.html#ac1288973791ca0ef4ac41d4a3f42a45e">mdtAbstractSqlTableController</a>.</p>
-
-<p>Definition at line <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html#l00128">128</a> of file <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html">mdtSqlTableViewController.cpp</a>.</p>
-
-<p>References <a class="el" href="mdt_abstract_sql_table_controller_8h_source.html#l00267">mdtAbstractSqlTableController::model()</a>, and <a class="el" href="mdt_abstract_sql_table_controller_8cpp_source.html#l00534">mdtAbstractSqlTableController::rowCount()</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="a81a3558f5c00c6709c4060e5dbceb31b"></a>
 <div class="memitem">
 <div class="memproto">
@@ -569,11 +571,11 @@ Additional Inherited Members</h2></td></tr>
 <p>The returned selection will only contain data related to given field list.</p>
 <dl class="section pre"><dt>Precondition</dt><dd>Table model must be set with <a class="el" href="classmdt_abstract_sql_table_controller.html#ac9e64cf30e552ec65ed5fdd861320676" title="Set table model. ">setModel()</a> or <a class="el" href="classmdt_abstract_sql_table_controller.html#a5a94417dc46a7dc6de8b5ba0593494a7" title="Set table name. ">setTableName()</a> begore calling this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html#l00150">150</a> of file <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html">mdtSqlTableViewController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html#l00130">130</a> of file <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html">mdtSqlTableViewController.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_table_controller_8h_source.html#l00267">mdtAbstractSqlTableController::model()</a>, and <a class="el" href="mdt_abstract_sql_table_controller_8h_source.html#l00650">mdtAbstractSqlTableController::proxyModel()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_table_controller_8h_source.html#l00308">mdtAbstractSqlTableController::model()</a>, and <a class="el" href="mdt_abstract_sql_table_controller_8h_source.html#l00795">mdtAbstractSqlTableController::proxyModel()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html#l00178">currentSelection()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html#l00158">currentSelection()</a>.</p>
 
 </div>
 </div>
@@ -595,9 +597,9 @@ Additional Inherited Members</h2></td></tr>
 <p>The returned selection will only contain data related to given field.</p>
 <dl class="section pre"><dt>Precondition</dt><dd>Table model must be set with <a class="el" href="classmdt_abstract_sql_table_controller.html#ac9e64cf30e552ec65ed5fdd861320676" title="Set table model. ">setModel()</a> or <a class="el" href="classmdt_abstract_sql_table_controller.html#a5a94417dc46a7dc6de8b5ba0593494a7" title="Set table name. ">setTableName()</a> begore calling this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html#l00178">178</a> of file <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html">mdtSqlTableViewController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html#l00158">158</a> of file <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html">mdtSqlTableViewController.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html#l00150">currentSelection()</a>, <a class="el" href="mdt_abstract_sql_table_controller_8h_source.html#l00267">mdtAbstractSqlTableController::model()</a>, and <a class="el" href="mdt_abstract_sql_table_controller_8h_source.html#l00650">mdtAbstractSqlTableController::proxyModel()</a>.</p>
+<p>References <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html#l00130">currentSelection()</a>, <a class="el" href="mdt_abstract_sql_table_controller_8h_source.html#l00308">mdtAbstractSqlTableController::model()</a>, and <a class="el" href="mdt_abstract_sql_table_controller_8h_source.html#l00795">mdtAbstractSqlTableController::proxyModel()</a>.</p>
 
 </div>
 </div>
@@ -616,9 +618,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Get column index of first visible column. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html#l00112">112</a> of file <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html">mdtSqlTableViewController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html#l00114">114</a> of file <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html">mdtSqlTableViewController.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_table_controller_8h_source.html#l00267">mdtAbstractSqlTableController::model()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_table_controller_8h_source.html#l00308">mdtAbstractSqlTableController::model()</a>.</p>
 
 </div>
 </div>
@@ -640,11 +642,11 @@ Additional Inherited Members</h2></td></tr>
 <p>Some methods have to update selection in table view. Here it's possible to define witch column must be selected in such case.</p>
 <dl class="section pre"><dt>Precondition</dt><dd>Table model must be set with <a class="el" href="classmdt_abstract_sql_table_controller.html#ac9e64cf30e552ec65ed5fdd861320676" title="Set table model. ">setModel()</a> or <a class="el" href="classmdt_abstract_sql_table_controller.html#a5a94417dc46a7dc6de8b5ba0593494a7" title="Set table name. ">setTableName()</a> begore calling this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html#l00094">94</a> of file <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html">mdtSqlTableViewController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html#l00096">96</a> of file <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html">mdtSqlTableViewController.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_table_controller_8h_source.html#l00546">mdtAbstractSqlTableController::columnCount()</a>, and <a class="el" href="mdt_abstract_sql_table_controller_8h_source.html#l00267">mdtAbstractSqlTableController::model()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_table_controller_8h_source.html#l00678">mdtAbstractSqlTableController::columnCount()</a>, and <a class="el" href="mdt_abstract_sql_table_controller_8h_source.html#l00308">mdtAbstractSqlTableController::model()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html#l00105">setDefaultColumnToSelect()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html#l00107">setDefaultColumnToSelect()</a>.</p>
 
 </div>
 </div>
@@ -666,9 +668,9 @@ Additional Inherited Members</h2></td></tr>
 <p>Same as <a class="el" href="classmdt_sql_table_view_controller.html#ab3c8ab8d57f4d8429de3197416c499a0" title="Set default column to select. ">setDefaultColumnToSelect(int)</a>, but you can give a field name.</p>
 <dl class="section pre"><dt>Precondition</dt><dd>Table model must be set with <a class="el" href="classmdt_abstract_sql_table_controller.html#ac9e64cf30e552ec65ed5fdd861320676" title="Set table model. ">setModel()</a> or <a class="el" href="classmdt_abstract_sql_table_controller.html#a5a94417dc46a7dc6de8b5ba0593494a7" title="Set table name. ">setTableName()</a> begore calling this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html#l00105">105</a> of file <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html">mdtSqlTableViewController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html#l00107">107</a> of file <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html">mdtSqlTableViewController.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_sql_table_controller_8cpp_source.html#l00090">mdtAbstractSqlTableController::fieldIndex()</a>, <a class="el" href="mdt_abstract_sql_table_controller_8h_source.html#l00267">mdtAbstractSqlTableController::model()</a>, and <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html#l00094">setDefaultColumnToSelect()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_sql_table_controller_8cpp_source.html#l00097">mdtAbstractSqlTableController::fieldIndex()</a>, <a class="el" href="mdt_abstract_sql_table_controller_8h_source.html#l00308">mdtAbstractSqlTableController::model()</a>, and <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html#l00096">setDefaultColumnToSelect()</a>.</p>
 
 </div>
 </div>
@@ -704,9 +706,9 @@ Additional Inherited Members</h2></td></tr>
 </ul>
 <p>If no delegate is given, a default will be created. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html#l00077">77</a> of file <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html">mdtSqlTableViewController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html#l00078">78</a> of file <a class="el" href="mdt_sql_table_view_controller_8cpp_source.html">mdtSqlTableViewController.cpp</a>.</p>
 
-<p>References <a class="el" href="classmdt_abstract_sql_table_controller.html#afa4068a87a3c53a290835115a863f51b">mdtAbstractSqlTableController::dataEdited()</a>, and <a class="el" href="mdt_abstract_sql_table_controller_8h_source.html#l00650">mdtAbstractSqlTableController::proxyModel()</a>.</p>
+<p>References <a class="el" href="classmdt_abstract_sql_table_controller.html#afa4068a87a3c53a290835115a863f51b">mdtAbstractSqlTableController::dataEdited()</a>, and <a class="el" href="mdt_abstract_sql_table_controller_8h_source.html#l00795">mdtAbstractSqlTableController::proxyModel()</a>.</p>
 
 </div>
 </div>
@@ -717,7 +719,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Sep 20 2014 15:23:44 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Oct 9 2014 17:04:18 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

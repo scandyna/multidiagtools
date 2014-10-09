@@ -141,18 +141,26 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8585d02e83ba1512b59d5e3984540b0a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_tester.html#a8585d02e83ba1512b59d5e3984540b0a">mdtTtAbstractTester</a> (QSqlDatabase db, <a class="el" href="class_q_object.html">QObject</a> *parent=0)</td></tr>
 <tr class="memdesc:a8585d02e83ba1512b59d5e3984540b0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a8585d02e83ba1512b59d5e3984540b0a">More...</a><br/></td></tr>
 <tr class="separator:a8585d02e83ba1512b59d5e3984540b0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1066de965e6621c9c1fe7abdf5d7d23c"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_tester.html#a1066de965e6621c9c1fe7abdf5d7d23c">init</a> ()</td></tr>
-<tr class="memdesc:a1066de965e6621c9c1fe7abdf5d7d23c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do some initialization.  <a href="#a1066de965e6621c9c1fe7abdf5d7d23c">More...</a><br/></td></tr>
-<tr class="separator:a1066de965e6621c9c1fe7abdf5d7d23c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b6e46a5e8e3c22375e6462f09241aea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_tester.html#a7b6e46a5e8e3c22375e6462f09241aea">setTestUiWidget</a> (<a class="el" href="class_q_widget.html">QWidget</a> *widget)</td></tr>
-<tr class="memdesc:a7b6e46a5e8e3c22375e6462f09241aea"><td class="mdescLeft">&#160;</td><td class="mdescRight">All childs contained in widget that have a name prefixed fld_ will be mapped to corresponding fields in Test_tbl.  <a href="#a7b6e46a5e8e3c22375e6462f09241aea">More...</a><br/></td></tr>
-<tr class="separator:a7b6e46a5e8e3c22375e6462f09241aea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08e423ef173c8f925b351110637c8050"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_tester.html#a08e423ef173c8f925b351110637c8050">setup</a> ()</td></tr>
+<tr class="memdesc:a08e423ef173c8f925b351110637c8050"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do setup.  <a href="#a08e423ef173c8f925b351110637c8050">More...</a><br/></td></tr>
+<tr class="separator:a08e423ef173c8f925b351110637c8050"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9cc3f5bfe9e27ac0ae376ea1c82e8585"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_tester.html#a9cc3f5bfe9e27ac0ae376ea1c82e8585">setTestUiWidget</a> (<a class="el" href="class_q_widget.html">QWidget</a> *widget)</td></tr>
+<tr class="memdesc:a9cc3f5bfe9e27ac0ae376ea1c82e8585"><td class="mdescLeft">&#160;</td><td class="mdescRight">All childs contained in widget that have a name prefixed fld_ will be mapped to corresponding fields in Test_view. They cann be written, but internally used <a class="el" href="classmdt_abstract_sql_table_controller.html" title="Base class for SQL table controllers. ">mdtAbstractSqlTableController</a>'s submit() slot will not work. Data will be really stored in Test_tbl by <a class="el" href="classmdt_tt_abstract_tester.html#a36fe4f0ba9940455a975538f89660327" title="Save current test. ">saveTest()</a>.  <a href="#a9cc3f5bfe9e27ac0ae376ea1c82e8585">More...</a><br/></td></tr>
+<tr class="separator:a9cc3f5bfe9e27ac0ae376ea1c82e8585"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1095b5fc987c9d52de66b6c02ec7785"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_tester.html#ab1095b5fc987c9d52de66b6c02ec7785">start</a> ()</td></tr>
+<tr class="memdesc:ab1095b5fc987c9d52de66b6c02ec7785"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start state machines.  <a href="#ab1095b5fc987c9d52de66b6c02ec7785">More...</a><br/></td></tr>
+<tr class="separator:ab1095b5fc987c9d52de66b6c02ec7785"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a43687d08109c032bc83ed287e8fdecc4"><td class="memItemLeft" align="right" valign="top">QSqlDatabase&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_tester.html#a43687d08109c032bc83ed287e8fdecc4">database</a> ()</td></tr>
 <tr class="memdesc:a43687d08109c032bc83ed287e8fdecc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get database instance.  <a href="#a43687d08109c032bc83ed287e8fdecc4">More...</a><br/></td></tr>
 <tr class="separator:a43687d08109c032bc83ed287e8fdecc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae8e3acab53e0d873a9eb963cfd3c71f7"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="class_q_sql_table_model.html">QSqlTableModel</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_tester.html#ae8e3acab53e0d873a9eb963cfd3c71f7">testItemViewTableModel</a> ()</td></tr>
-<tr class="memdesc:ae8e3acab53e0d873a9eb963cfd3c71f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get table model to access data in TestItem_view.  <a href="#ae8e3acab53e0d873a9eb963cfd3c71f7">More...</a><br/></td></tr>
-<tr class="separator:ae8e3acab53e0d873a9eb963cfd3c71f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af85c7e2df1cc879b979024706848304c"><td class="memItemLeft" align="right" valign="top">std::shared_ptr<br class="typebreak"/>
+&lt; <a class="el" href="classmdt_sql_data_widget_controller.html">mdtSqlDataWidgetController</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_tester.html#af85c7e2df1cc879b979024706848304c">testViewController</a> ()</td></tr>
+<tr class="memdesc:af85c7e2df1cc879b979024706848304c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access controller that acts on Test_view.  <a href="#af85c7e2df1cc879b979024706848304c">More...</a><br/></td></tr>
+<tr class="separator:af85c7e2df1cc879b979024706848304c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06b95c567684157712ae4a6155404297"><td class="memItemLeft" align="right" valign="top">std::shared_ptr<br class="typebreak"/>
+&lt; <a class="el" href="classmdt_sql_table_view_controller.html">mdtSqlTableViewController</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_tester.html#a06b95c567684157712ae4a6155404297">testItemViewController</a> ()</td></tr>
+<tr class="memdesc:a06b95c567684157712ae4a6155404297"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access controller that acts on TestItem_view.  <a href="#a06b95c567684157712ae4a6155404297">More...</a><br/></td></tr>
+<tr class="separator:a06b95c567684157712ae4a6155404297"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b8351e2214a3bfc57d38bfeab3e0342"><td class="memItemLeft" align="right" valign="top">std::shared_ptr<br class="typebreak"/>
 &lt; <a class="el" href="classmdt_tt_test_node_manager.html">mdtTtTestNodeManager</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_tester.html#a7b8351e2214a3bfc57d38bfeab3e0342">testNodeManager</a> ()</td></tr>
 <tr class="memdesc:a7b8351e2214a3bfc57d38bfeab3e0342"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get test node manager object.  <a href="#a7b8351e2214a3bfc57d38bfeab3e0342">More...</a><br/></td></tr>
@@ -160,9 +168,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a096db7bd6418195ba2a372ba1bec923f"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classmdt_tt_test.html">mdtTtTest</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_tester.html#a096db7bd6418195ba2a372ba1bec923f">test</a> ()</td></tr>
 <tr class="memdesc:a096db7bd6418195ba2a372ba1bec923f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get test object.  <a href="#a096db7bd6418195ba2a372ba1bec923f">More...</a><br/></td></tr>
 <tr class="separator:a096db7bd6418195ba2a372ba1bec923f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a638dc8049de3a5e5ef6f753444800e19"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_tt_test_data.html">mdtTtTestData</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_tester.html#a638dc8049de3a5e5ef6f753444800e19">testData</a> () const </td></tr>
-<tr class="memdesc:a638dc8049de3a5e5ef6f753444800e19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get test data.  <a href="#a638dc8049de3a5e5ef6f753444800e19">More...</a><br/></td></tr>
-<tr class="separator:a638dc8049de3a5e5ef6f753444800e19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac9eead60ccacb39581dd792d00a18466"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_tester.html#ac9eead60ccacb39581dd792d00a18466">testIsEmpty</a> () const </td></tr>
 <tr class="memdesc:ac9eead60ccacb39581dd792d00a18466"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a test is empty.  <a href="#ac9eead60ccacb39581dd792d00a18466">More...</a><br/></td></tr>
 <tr class="separator:ac9eead60ccacb39581dd792d00a18466"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -175,6 +180,9 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a75396c57e71377ef9224d49ec3273209"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_tester.html#a75396c57e71377ef9224d49ec3273209">removeTestIfEmpty</a> ()</td></tr>
 <tr class="memdesc:a75396c57e71377ef9224d49ec3273209"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove current test if it is empty.  <a href="#a75396c57e71377ef9224d49ec3273209">More...</a><br/></td></tr>
 <tr class="separator:a75396c57e71377ef9224d49ec3273209"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f19f51c28b6ec0741e7d0fc59b9f708"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_tester.html#a2f19f51c28b6ec0741e7d0fc59b9f708">removeCurrentTestPv</a> ()</td></tr>
+<tr class="memdesc:a2f19f51c28b6ec0741e7d0fc59b9f708"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove current test.  <a href="#a2f19f51c28b6ec0741e7d0fc59b9f708">More...</a><br/></td></tr>
+<tr class="separator:a2f19f51c28b6ec0741e7d0fc59b9f708"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc2325803369ec4d4225b9584c915c83"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_tester.html#afc2325803369ec4d4225b9584c915c83">displayLastError</a> ()</td></tr>
 <tr class="memdesc:afc2325803369ec4d4225b9584c915c83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Display last error to the user.  <a href="#afc2325803369ec4d4225b9584c915c83">More...</a><br/></td></tr>
 <tr class="separator:afc2325803369ec4d4225b9584c915c83"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -187,8 +195,15 @@ Protected Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base to create a tester. </p>
+<p>Typical usage:</p>
+<ul>
+<li>Do base initialization with <a class="el" href="classmdt_tt_abstract_tester.html#a08e423ef173c8f925b351110637c8050" title="Do setup. ">setup()</a></li>
+<li>Do signal/slot connections</li>
+<li>Set GUI widget with <a class="el" href="classmdt_tt_abstract_tester.html#a9cc3f5bfe9e27ac0ae376ea1c82e8585" title="All childs contained in widget that have a name prefixed fld_ will be mapped to corresponding fields ...">setTestUiWidget()</a></li>
+<li>Load data from database and start state machines with <a class="el" href="classmdt_tt_abstract_tester.html#ab1095b5fc987c9d52de66b6c02ec7785" title="Start state machines. ">start()</a> </li>
+</ul>
 
-<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00042">42</a> of file <a class="el" href="mdt_tt_abstract_tester_8h_source.html">mdtTtAbstractTester.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00050">50</a> of file <a class="el" href="mdt_tt_abstract_tester_8h_source.html">mdtTtAbstractTester.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a8585d02e83ba1512b59d5e3984540b0a"></a>
 <div class="memitem">
@@ -216,9 +231,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Constructor. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00033">33</a> of file <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html">mdtTtAbstractTester.cpp</a>.</p>
-
-<p>References <a class="el" href="classmdt_tt_abstract_tester.html#af7aaec93927106040b137fa92a597d1b">testDataChanged()</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00036">36</a> of file <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html">mdtTtAbstractTester.cpp</a>.</p>
 
 </div>
 </div>
@@ -247,9 +260,9 @@ Protected Attributes</h2></td></tr>
 <p>Create a new test. </p>
 <p>This default implmementation will first check if current test is clean (saved, ...), and warn the user if not. Then (if test is clean, or user choosed to not keep it), user can select a test model to use. Finaly, test is created, based on selected test model. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00083">83</a> of file <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html">mdtTtAbstractTester.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00132">132</a> of file <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html">mdtTtAbstractTester.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_sql_table_selection_8cpp_source.html#l00070">mdtSqlTableSelection::data()</a>, <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00072">database()</a>, <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00216">displayLastError()</a>, <a class="el" href="mdt_sql_table_selection_8h_source.html#l00088">mdtSqlTableSelection::isEmpty()</a>, <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00153">pvLastError</a>, <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00204">removeTestIfEmpty()</a>, <a class="el" href="mdt_sql_table_selection_8h_source.html#l00084">mdtSqlTableSelection::rowCount()</a>, and <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00075">testIsSaved()</a>.</p>
+<p>References <a class="el" href="mdt_sql_table_selection_8cpp_source.html#l00070">mdtSqlTableSelection::data()</a>, <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00091">database()</a>, <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00346">displayLastError()</a>, <a class="el" href="mdt_sql_table_selection_8h_source.html#l00088">mdtSqlTableSelection::isEmpty()</a>, <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00188">pvLastError</a>, <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00323">removeCurrentTestPv()</a>, <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00299">removeTestIfEmpty()</a>, <a class="el" href="mdt_sql_table_selection_8h_source.html#l00084">mdtSqlTableSelection::rowCount()</a>, and <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00135">testIsSaved()</a>.</p>
 
 </div>
 </div>
@@ -276,9 +289,9 @@ Protected Attributes</h2></td></tr>
 
 <p>Get database instance. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00072">72</a> of file <a class="el" href="mdt_tt_abstract_tester_8h_source.html">mdtTtAbstractTester.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00091">91</a> of file <a class="el" href="mdt_tt_abstract_tester_8h_source.html">mdtTtAbstractTester.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00083">createTest()</a>, and <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00133">openTest()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00132">createTest()</a>, and <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00192">openTest()</a>.</p>
 
 </div>
 </div>
@@ -305,44 +318,11 @@ Protected Attributes</h2></td></tr>
 
 <p>Display last error to the user. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00216">216</a> of file <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html">mdtTtAbstractTester.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00346">346</a> of file <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html">mdtTtAbstractTester.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00133">mdtError::levelIcon()</a>, <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00153">pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00153">mdtError::systemText()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00123">mdtError::text()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00133">mdtError::levelIcon()</a>, <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00188">pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00153">mdtError::systemText()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00123">mdtError::text()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00083">createTest()</a>, <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00133">openTest()</a>, and <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00189">saveTest()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a1066de965e6621c9c1fe7abdf5d7d23c"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mdtTtAbstractTester::init </td>
-          <td>(</td>
-          <td class="paramname">)</td><td></td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Do some initialization. </p>
-<p>Will setup test data and table models for test item view and table.</p>
-<p>If testUiWidget is valid, </p>
-
-<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00046">46</a> of file <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html">mdtTtAbstractTester.cpp</a>.</p>
-
-<p>References <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00153">pvLastError</a>.</p>
-
-<p>Referenced by <a class="el" href="mdt_tt_basic_tester_8cpp_source.html#l00052">mdtTtBasicTester::setup()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00132">createTest()</a>, <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00192">openTest()</a>, <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00248">saveTest()</a>, and <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00067">setTestUiWidget()</a>.</p>
 
 </div>
 </div>
@@ -370,9 +350,40 @@ Protected Attributes</h2></td></tr>
 <p>Open a existing test. </p>
 <p>This default implmementation will first check if current test is clean (saved, ...), and warn the user if not. Then (if test is clean, or user choosed to not keep it), user can select a test. Finaly, selected test is set as current test. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00133">133</a> of file <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html">mdtTtAbstractTester.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00192">192</a> of file <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html">mdtTtAbstractTester.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_sql_table_selection_8cpp_source.html#l00070">mdtSqlTableSelection::data()</a>, <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00072">database()</a>, <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00216">displayLastError()</a>, <a class="el" href="mdt_sql_table_selection_8h_source.html#l00088">mdtSqlTableSelection::isEmpty()</a>, <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00204">removeTestIfEmpty()</a>, <a class="el" href="mdt_sql_table_selection_8h_source.html#l00084">mdtSqlTableSelection::rowCount()</a>, and <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00075">testIsSaved()</a>.</p>
+<p>References <a class="el" href="mdt_sql_table_selection_8cpp_source.html#l00070">mdtSqlTableSelection::data()</a>, <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00091">database()</a>, <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00346">displayLastError()</a>, <a class="el" href="mdt_sql_table_selection_8h_source.html#l00088">mdtSqlTableSelection::isEmpty()</a>, <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00188">pvLastError</a>, <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00323">removeCurrentTestPv()</a>, <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00299">removeTestIfEmpty()</a>, <a class="el" href="mdt_sql_table_selection_8h_source.html#l00084">mdtSqlTableSelection::rowCount()</a>, and <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00135">testIsSaved()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2f19f51c28b6ec0741e7d0fc59b9f708"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtTtAbstractTester::removeCurrentTestPv </td>
+          <td>(</td>
+          <td class="paramname">)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Remove current test. </p>
+
+<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00323">323</a> of file <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html">mdtTtAbstractTester.cpp</a>.</p>
+
+<p>References <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00188">pvLastError</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00132">createTest()</a>, and <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00192">openTest()</a>.</p>
 
 </div>
 </div>
@@ -400,11 +411,11 @@ Protected Attributes</h2></td></tr>
 <p>Remove current test if it is empty. </p>
 <p>see <a class="el" href="classmdt_tt_abstract_tester.html#ac9eead60ccacb39581dd792d00a18466" title="Check if a test is empty. ">testIsEmpty()</a> </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00204">204</a> of file <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html">mdtTtAbstractTester.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00299">299</a> of file <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html">mdtTtAbstractTester.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00153">pvLastError</a>, and <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00067">testIsEmpty()</a>.</p>
+<p>References <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00188">pvLastError</a>, and <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00098">testIsEmpty()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00083">createTest()</a>, and <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00133">openTest()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00132">createTest()</a>, and <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00192">openTest()</a>.</p>
 
 </div>
 </div>
@@ -431,18 +442,18 @@ Protected Attributes</h2></td></tr>
 
 <p>Save current test. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00189">189</a> of file <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html">mdtTtAbstractTester.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00248">248</a> of file <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html">mdtTtAbstractTester.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00216">displayLastError()</a>, and <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00153">pvLastError</a>.</p>
+<p>References <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00346">displayLastError()</a>, <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00188">pvLastError</a>, and <a class="el" href="mdt_sql_record_8h_source.html#l00158">mdtSqlRecord::value()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a7b6e46a5e8e3c22375e6462f09241aea"></a>
+<a class="anchor" id="a9cc3f5bfe9e27ac0ae376ea1c82e8585"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void mdtTtAbstractTester::setTestUiWidget </td>
+          <td class="memname">bool mdtTtAbstractTester::setTestUiWidget </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_q_widget.html">QWidget</a> *&#160;</td>
           <td class="paramname"><em>widget</em>)</td><td></td>
@@ -451,12 +462,74 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>All childs contained in widget that have a name prefixed fld_ will be mapped to corresponding fields in Test_tbl. </p>
+<p>All childs contained in widget that have a name prefixed fld_ will be mapped to corresponding fields in Test_view. They cann be written, but internally used <a class="el" href="classmdt_abstract_sql_table_controller.html" title="Base class for SQL table controllers. ">mdtAbstractSqlTableController</a>'s submit() slot will not work. Data will be really stored in Test_tbl by <a class="el" href="classmdt_tt_abstract_tester.html#a36fe4f0ba9940455a975538f89660327" title="Save current test. ">saveTest()</a>. </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000058">Todo:</a></b></dt><dd>Update if method takes another name..</dd></dl>
 <p>Given widget will also be used as parent for dialogs that are displayed (selection dialogs, message boxes). </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00057">57</a> of file <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html">mdtTtAbstractTester.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00067">67</a> of file <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html">mdtTtAbstractTester.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_basic_tester_window_8cpp_source.html#l00061">mdtTtBasicTesterWindow::init()</a>.</p>
+<p>References <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00346">displayLastError()</a>, and <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00188">pvLastError</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_tt_basic_tester_window_8cpp_source.html#l00062">mdtTtBasicTesterWindow::init()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a08e423ef173c8f925b351110637c8050"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtTtAbstractTester::setup </td>
+          <td>(</td>
+          <td class="paramname">)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Do setup. </p>
+<p>Will setup internal SQL table controllers to access Test_view and TestItem_view. </p>
+
+<p>Reimplemented in <a class="el" href="classmdt_tt_basic_tester.html#ac831c6c6204439936c8f344f615bc50a">mdtTtBasicTester</a>.</p>
+
+<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00046">46</a> of file <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html">mdtTtAbstractTester.cpp</a>.</p>
+
+<p>References <a class="el" href="mdt_sql_relation_info_8cpp_source.html#l00028">mdtSqlRelationInfo::addRelation()</a>, <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00188">pvLastError</a>, and <a class="el" href="mdt_sql_relation_info_8h_source.html#l00080">mdtSqlRelationInfo::setChildTableName()</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_tt_basic_tester_8cpp_source.html#l00052">mdtTtBasicTester::setup()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab1095b5fc987c9d52de66b6c02ec7785"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtTtAbstractTester::start </td>
+          <td>(</td>
+          <td class="paramname">)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Start state machines. </p>
+<p>Will load data from database and start internal state machines. After this call, use setCurrentTest() to go to a existing test, or <a class="el" href="classmdt_tt_abstract_tester.html#aab3ece519008d5553528aa041875fa2b" title="Create a new test. ">createTest()</a> to create a new one.</p>
+<dl class="section see"><dt>See Also</dt><dd>mdtTtTest::start(). </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00081">81</a> of file <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html">mdtTtAbstractTester.cpp</a>.</p>
+
+<p>References <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00188">pvLastError</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_tt_basic_tester_window_8cpp_source.html#l00062">mdtTtBasicTesterWindow::init()</a>.</p>
 
 </div>
 </div>
@@ -483,35 +556,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Get test object. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00084">84</a> of file <a class="el" href="mdt_tt_abstract_tester_8h_source.html">mdtTtAbstractTester.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a638dc8049de3a5e5ef6f753444800e19"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classmdt_tt_test_data.html">mdtTtTestData</a> mdtTtAbstractTester::testData </td>
-          <td>(</td>
-          <td class="paramname">)</td><td></td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Get test data. </p>
-<p>Note: return cached data (will not get them from database). </p>
-
-<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00090">90</a> of file <a class="el" href="mdt_tt_abstract_tester_8h_source.html">mdtTtAbstractTester.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00116">116</a> of file <a class="el" href="mdt_tt_abstract_tester_8h_source.html">mdtTtAbstractTester.h</a>.</p>
 
 </div>
 </div>
@@ -540,8 +585,6 @@ Protected Attributes</h2></td></tr>
 <p>Emited when test data has changed. </p>
 <p>date comes from Test_view </p>
 
-<p>Referenced by <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00033">mdtTtAbstractTester()</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="ac9eead60ccacb39581dd792d00a18466"></a>
@@ -565,15 +608,20 @@ Protected Attributes</h2></td></tr>
 <li>In each related item in Test_tbl: only Id_PK, Test_Id_FK and TestModelItem_Id_FK are set </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00067">67</a> of file <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html">mdtTtAbstractTester.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00098">98</a> of file <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html">mdtTtAbstractTester.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00204">removeTestIfEmpty()</a>.</p>
+<p>References <a class="el" href="mdt_sql_record_8h_source.html#l00093">mdtSqlRecord::count()</a>, and <a class="el" href="mdt_sql_record_8h_source.html#l00158">mdtSqlRecord::value()</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00299">removeTestIfEmpty()</a>.</p>
 
 </div>
 </div>
 <a class="anchor" id="af98bb9d80bfbd14873fc356c17d31eb4"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">bool mdtTtAbstractTester::testIsSaved </td>
@@ -582,18 +630,24 @@ Protected Attributes</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Check if test is saved. </p>
-<p>A test is saved if all cached data regarding Test_tbl and TestItem_tbl are stored in database. </p>
+<p>A test is saved if all cached data regarding Test_tbl and TestItem_tbl are stored in database. If no test was set (Test_tbl.Id_PK is NULL), test is considered saved.</p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000059">Todo:</a></b></dt><dd>Toujours vrais ? Note: each call of this method will check all test items. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00075">75</a> of file <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html">mdtTtAbstractTester.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00135">135</a> of file <a class="el" href="mdt_tt_abstract_tester_8h_source.html">mdtTtAbstractTester.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00083">createTest()</a>, and <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00133">openTest()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00132">createTest()</a>, and <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00192">openTest()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ae8e3acab53e0d873a9eb963cfd3c71f7"></a>
+<a class="anchor" id="a06b95c567684157712ae4a6155404297"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -601,7 +655,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt;<a class="el" href="class_q_sql_table_model.html">QSqlTableModel</a>&gt; mdtTtAbstractTester::testItemViewTableModel </td>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classmdt_sql_table_view_controller.html">mdtSqlTableViewController</a>&gt; mdtTtAbstractTester::testItemViewController </td>
           <td>(</td>
           <td class="paramname">)</td><td></td>
           <td></td>
@@ -614,9 +668,10 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Get table model to access data in TestItem_view. </p>
+<p>Access controller that acts on TestItem_view. </p>
+<dl class="section pre"><dt>Precondition</dt><dd>init() must be done before calling this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00076">76</a> of file <a class="el" href="mdt_tt_abstract_tester_8h_source.html">mdtTtAbstractTester.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00104">104</a> of file <a class="el" href="mdt_tt_abstract_tester_8h_source.html">mdtTtAbstractTester.h</a>.</p>
 
 </div>
 </div>
@@ -643,9 +698,36 @@ Protected Attributes</h2></td></tr>
 
 <p>Get test node manager object. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00080">80</a> of file <a class="el" href="mdt_tt_abstract_tester_8h_source.html">mdtTtAbstractTester.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00112">112</a> of file <a class="el" href="mdt_tt_abstract_tester_8h_source.html">mdtTtAbstractTester.h</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_tt_basic_tester_window_8cpp_source.html#l00033">mdtTtBasicTesterWindow::mdtTtBasicTesterWindow()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af85c7e2df1cc879b979024706848304c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classmdt_sql_data_widget_controller.html">mdtSqlDataWidgetController</a>&gt; mdtTtAbstractTester::testViewController </td>
+          <td>(</td>
+          <td class="paramname">)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Access controller that acts on Test_view. </p>
+
+<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00095">95</a> of file <a class="el" href="mdt_tt_abstract_tester_8h_source.html">mdtTtAbstractTester.h</a>.</p>
 
 </div>
 </div>
@@ -670,9 +752,9 @@ Protected Attributes</h2></td></tr>
 
 <p>Contains last error that occured. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00153">153</a> of file <a class="el" href="mdt_tt_abstract_tester_8h_source.html">mdtTtAbstractTester.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_abstract_tester_8h_source.html#l00188">188</a> of file <a class="el" href="mdt_tt_abstract_tester_8h_source.html">mdtTtAbstractTester.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00083">createTest()</a>, <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00216">displayLastError()</a>, <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00046">init()</a>, <a class="el" href="mdt_tt_basic_tester_8h_source.html#l00052">mdtTtBasicTester::lastError()</a>, <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00204">removeTestIfEmpty()</a>, and <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00189">saveTest()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00132">createTest()</a>, <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00346">displayLastError()</a>, <a class="el" href="mdt_tt_basic_tester_8h_source.html#l00052">mdtTtBasicTester::lastError()</a>, <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00192">openTest()</a>, <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00323">removeCurrentTestPv()</a>, <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00299">removeTestIfEmpty()</a>, <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00248">saveTest()</a>, <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00067">setTestUiWidget()</a>, <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00046">setup()</a>, and <a class="el" href="mdt_tt_abstract_tester_8cpp_source.html#l00081">start()</a>.</p>
 
 </div>
 </div>
@@ -683,7 +765,7 @@ Protected Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Sep 20 2014 15:23:44 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Oct 9 2014 17:04:19 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

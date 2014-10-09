@@ -118,18 +118,19 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af74473766d512098c3e528e4f5865ade"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_test_node_calibration_tool.html#af74473766d512098c3e528e4f5865ade">mdtTtAbstractTestNodeCalibrationTool</a> (QSqlDatabase db, <a class="el" href="class_q_object.html">QObject</a> *parent=0)</td></tr>
 <tr class="memdesc:af74473766d512098c3e528e4f5865ade"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#af74473766d512098c3e528e4f5865ade">More...</a><br/></td></tr>
 <tr class="separator:af74473766d512098c3e528e4f5865ade"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ad90715222060f29c01c13bc4bbf417"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_test_node_calibration_tool.html#a7ad90715222060f29c01c13bc4bbf417">init</a> ()</td></tr>
-<tr class="memdesc:a7ad90715222060f29c01c13bc4bbf417"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do some initialization.  <a href="#a7ad90715222060f29c01c13bc4bbf417">More...</a><br/></td></tr>
-<tr class="separator:a7ad90715222060f29c01c13bc4bbf417"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7fab42cef3cbbfe711adaf684d1f5af8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_test_node_calibration_tool.html#a7fab42cef3cbbfe711adaf684d1f5af8">setTestNodeUiWidget</a> (<a class="el" href="class_q_widget.html">QWidget</a> *widget)</td></tr>
-<tr class="memdesc:a7fab42cef3cbbfe711adaf684d1f5af8"><td class="mdescLeft">&#160;</td><td class="mdescRight">All childs contained in widget that have a name prefixed fld_ will be mapped to corresponding fields in TestNode_view. Note that this a read only access.  <a href="#a7fab42cef3cbbfe711adaf684d1f5af8">More...</a><br/></td></tr>
-<tr class="separator:a7fab42cef3cbbfe711adaf684d1f5af8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89e27cd930547aef0ba143519408ce1b"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_test_node_calibration_tool.html#a89e27cd930547aef0ba143519408ce1b">setup</a> (<a class="el" href="class_q_widget.html">QWidget</a> *testNodeFormWidget)</td></tr>
+<tr class="memdesc:a89e27cd930547aef0ba143519408ce1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do setup.  <a href="#a89e27cd930547aef0ba143519408ce1b">More...</a><br/></td></tr>
+<tr class="separator:a89e27cd930547aef0ba143519408ce1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85c47fe2b501769f5966a27aeb3f051a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_test_node_calibration_tool.html#a85c47fe2b501769f5966a27aeb3f051a">setTestNode</a> (const QVariant &amp;testNodeId)</td></tr>
+<tr class="memdesc:a85c47fe2b501769f5966a27aeb3f051a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set test node to calibrate.  <a href="#a85c47fe2b501769f5966a27aeb3f051a">More...</a><br/></td></tr>
+<tr class="separator:a85c47fe2b501769f5966a27aeb3f051a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd953e46ec2e7d2295ec03cd697ffd7e"><td class="memItemLeft" align="right" valign="top">QSqlDatabase&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_test_node_calibration_tool.html#abd953e46ec2e7d2295ec03cd697ffd7e">database</a> ()</td></tr>
 <tr class="memdesc:abd953e46ec2e7d2295ec03cd697ffd7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get database instance.  <a href="#abd953e46ec2e7d2295ec03cd697ffd7e">More...</a><br/></td></tr>
 <tr class="separator:abd953e46ec2e7d2295ec03cd697ffd7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a82c1c133acc47083def43ec45e76f9"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="class_q_sql_table_model.html">QSqlTableModel</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_test_node_calibration_tool.html#a5a82c1c133acc47083def43ec45e76f9">testNodeUnitViewTableModel</a> ()</td></tr>
-<tr class="memdesc:a5a82c1c133acc47083def43ec45e76f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get table model to access data in TestNodeUnit_view.  <a href="#a5a82c1c133acc47083def43ec45e76f9">More...</a><br/></td></tr>
-<tr class="separator:a5a82c1c133acc47083def43ec45e76f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d11cc7bad0c02615b2d636a67de5c76"><td class="memItemLeft" align="right" valign="top">std::shared_ptr<br class="typebreak"/>
+&lt; <a class="el" href="classmdt_sql_table_view_controller.html">mdtSqlTableViewController</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_test_node_calibration_tool.html#a0d11cc7bad0c02615b2d636a67de5c76">testNodeUnitViewTableController</a> ()</td></tr>
+<tr class="memdesc:a0d11cc7bad0c02615b2d636a67de5c76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get table controller to access data in TestNodeUnit_view.  <a href="#a0d11cc7bad0c02615b2d636a67de5c76">More...</a><br/></td></tr>
+<tr class="separator:a0d11cc7bad0c02615b2d636a67de5c76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeba30ff3f083a8a3c65dce704b132ba7"><td class="memItemLeft" align="right" valign="top">std::shared_ptr<br class="typebreak"/>
 &lt; <a class="el" href="classmdt_tt_test_node_manager.html">mdtTtTestNodeManager</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tt_abstract_test_node_calibration_tool.html#aeba30ff3f083a8a3c65dce704b132ba7">testNodeManager</a> ()</td></tr>
 <tr class="memdesc:aeba30ff3f083a8a3c65dce704b132ba7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get test node manager object.  <a href="#aeba30ff3f083a8a3c65dce704b132ba7">More...</a><br/></td></tr>
@@ -186,7 +187,7 @@ Protected Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Test node calibration tool base class </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html#l00046">46</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html">mdtTtAbstractTestNodeCalibrationTool.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html#l00045">45</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html">mdtTtAbstractTestNodeCalibrationTool.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="af74473766d512098c3e528e4f5865ade"></a>
 <div class="memitem">
@@ -266,15 +267,18 @@ Protected Attributes</h2></td></tr>
 <p>Ask a question to the user. </p>
 <dl class="section return"><dt>Returns</dt><dd>True if user accepted the message box (typically if he clicked Ok, Yes, ..), false if he rejected it (typically if Cancel, No, ... was clicked). </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00276">276</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html">mdtTtAbstractTestNodeCalibrationTool.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00159">159</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html">mdtTtAbstractTestNodeCalibrationTool.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00271">promptUser()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00154">promptUser()</a>.</p>
 
 </div>
 </div>
 <a class="anchor" id="a42d8aaef4d70f5afe2eca46f3d1ed32b"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">QVariant mdtTtAbstractTestNodeCalibrationTool::currentTestNodeData </td>
@@ -284,11 +288,16 @@ Protected Attributes</h2></td></tr>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Get current test node data for given field. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00132">132</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html">mdtTtAbstractTestNodeCalibrationTool.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html#l00093">93</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html">mdtTtAbstractTestNodeCalibrationTool.h</a>.</p>
 
 </div>
 </div>
@@ -315,7 +324,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Get database instance. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html#l00073">73</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html">mdtTtAbstractTestNodeCalibrationTool.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html#l00075">75</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html">mdtTtAbstractTestNodeCalibrationTool.h</a>.</p>
 
 </div>
 </div>
@@ -342,11 +351,11 @@ Protected Attributes</h2></td></tr>
 
 <p>Display last error to the user. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00249">249</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html">mdtTtAbstractTestNodeCalibrationTool.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00132">132</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html">mdtTtAbstractTestNodeCalibrationTool.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00182">mdtError::informativeText()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00133">mdtError::levelIcon()</a>, <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html#l00134">pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00153">mdtError::systemText()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00123">mdtError::text()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00182">mdtError::informativeText()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00133">mdtError::levelIcon()</a>, <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html#l00165">pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00153">mdtError::systemText()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00123">mdtError::text()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_basic_test_node_calibration_tool_8cpp_source.html#l00048">mdtTtBasicTestNodeCalibrationTool::runCalibration()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_basic_test_node_calibration_tool_8cpp_source.html#l00054">mdtTtBasicTestNodeCalibrationTool::runCalibration()</a>, and <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00085">setTestNode()</a>.</p>
 
 </div>
 </div>
@@ -390,40 +399,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Display a message to the user. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00260">260</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html">mdtTtAbstractTestNodeCalibrationTool.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a7ad90715222060f29c01c13bc4bbf417"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mdtTtAbstractTestNodeCalibrationTool::init </td>
-          <td>(</td>
-          <td class="paramname">)</td><td></td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Do some initialization. </p>
-
-<p>Reimplemented in <a class="el" href="classmdt_tt_basic_test_node_calibration_tool.html#af7fe717bef7b4af47ef90a2e90bfb288">mdtTtBasicTestNodeCalibrationTool</a>.</p>
-
-<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00047">47</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html">mdtTtAbstractTestNodeCalibrationTool.cpp</a>.</p>
-
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html#l00134">pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00082">mdtError::setSystemError()</a>.</p>
-
-<p>Referenced by <a class="el" href="mdt_tt_basic_test_node_calibration_tool_8cpp_source.html#l00038">mdtTtBasicTestNodeCalibrationTool::init()</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00143">143</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html">mdtTtAbstractTestNodeCalibrationTool.cpp</a>.</p>
 
 </div>
 </div>
@@ -469,9 +445,9 @@ Protected Attributes</h2></td></tr>
 <p>Return true if value is in [min;max] If value is out of range, a descriptive text is stored to pvLastError You can use pvLastError.updateText() to set the main error text.</p>
 <p>Note: if value has -OL or +OL flag set, -infinity, respecively +infinity value is considered. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00298">298</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html">mdtTtAbstractTestNodeCalibrationTool.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00181">181</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html">mdtTtAbstractTestNodeCalibrationTool.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_tt_test_8cpp_source.html#l00504">mdtTtTest::isInRange()</a>, <a class="el" href="mdt_value_8cpp_source.html#l00126">mdtValue::isMinusOl()</a>, <a class="el" href="mdt_value_8cpp_source.html#l00131">mdtValue::isPlusOl()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html#l00134">pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00177">mdtError::setInformativeText()</a>, and <a class="el" href="mdt_value_8cpp_source.html#l00102">mdtValue::valueDouble()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00113">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00094">mdtError::Error</a>, <a class="el" href="mdt_tt_test_8cpp_source.html#l00299">mdtTtTest::isInRange()</a>, <a class="el" href="mdt_value_8cpp_source.html#l00126">mdtValue::isMinusOl()</a>, <a class="el" href="mdt_value_8cpp_source.html#l00131">mdtValue::isPlusOl()</a>, <a class="el" href="mdt_error_8h_source.html#l00059">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html#l00165">pvLastError</a>, <a class="el" href="mdt_error_8cpp_source.html#l00058">mdtError::setError()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00177">mdtError::setInformativeText()</a>, and <a class="el" href="mdt_value_8cpp_source.html#l00102">mdtValue::valueDouble()</a>.</p>
 
 </div>
 </div>
@@ -522,34 +498,36 @@ Protected Attributes</h2></td></tr>
 <p>Prompt the user to do a action. </p>
 <dl class="section return"><dt>Returns</dt><dd>True if user accepted the message box (typically if he clicked Ok, Yes, ..), false if he rejected it (typically if Cancel, No, ... was clicked). </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00271">271</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html">mdtTtAbstractTestNodeCalibrationTool.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00154">154</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html">mdtTtAbstractTestNodeCalibrationTool.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00276">askUser()</a>.</p>
+<p>References <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00159">askUser()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_basic_test_node_calibration_tool_8cpp_source.html#l00048">mdtTtBasicTestNodeCalibrationTool::runCalibration()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_basic_test_node_calibration_tool_8cpp_source.html#l00054">mdtTtBasicTestNodeCalibrationTool::runCalibration()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a7fab42cef3cbbfe711adaf684d1f5af8"></a>
+<a class="anchor" id="a85c47fe2b501769f5966a27aeb3f051a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void mdtTtAbstractTestNodeCalibrationTool::setTestNodeUiWidget </td>
+          <td class="memname">bool mdtTtAbstractTestNodeCalibrationTool::setTestNode </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_q_widget.html">QWidget</a> *&#160;</td>
-          <td class="paramname"><em>widget</em>)</td><td></td>
+          <td class="paramtype">const QVariant &amp;&#160;</td>
+          <td class="paramname"><em>testNodeId</em>)</td><td></td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>All childs contained in widget that have a name prefixed fld_ will be mapped to corresponding fields in TestNode_view. Note that this a read only access. </p>
-<p>Given widget will also be used as parent for dialogs that are displayed (selection dialogs, message boxes). </p>
+<p>Set test node to calibrate. </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000060">Todo:</a></b></dt><dd>Add a Key field or something similar. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00122">122</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html">mdtTtAbstractTestNodeCalibrationTool.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00085">85</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html">mdtTtAbstractTestNodeCalibrationTool.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_basic_test_node_calibration_window_8cpp_source.html#l00049">mdtTtBasicTestNodeCalibrationWindow::init()</a>.</p>
+<p>References <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00132">displayLastError()</a>, and <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html#l00165">pvLastError</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_tt_basic_test_node_calibration_window_8cpp_source.html#l00047">mdtTtBasicTestNodeCalibrationWindow::init()</a>.</p>
 
 </div>
 </div>
@@ -580,9 +558,9 @@ Protected Attributes</h2></td></tr>
 <p>Set calibration offset for given testNodeUnitId. </p>
 <p>Note: calibration offset and date are cached in models only, not sent to database. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00213">213</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html">mdtTtAbstractTestNodeCalibrationTool.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00096">96</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html">mdtTtAbstractTestNodeCalibrationTool.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00175">setTestNodeUnitData()</a>.</p>
+<p>References <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html#l00127">setTestNodeUnitData()</a>.</p>
 
 </div>
 </div>
@@ -617,15 +595,18 @@ Protected Attributes</h2></td></tr>
 <li>The first test node unit that matches schemaPosition in current test node is considered. </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00231">231</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html">mdtTtAbstractTestNodeCalibrationTool.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00114">114</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html">mdtTtAbstractTestNodeCalibrationTool.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00175">setTestNodeUnitData()</a>.</p>
+<p>References <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html#l00127">setTestNodeUnitData()</a>.</p>
 
 </div>
 </div>
 <a class="anchor" id="a0e1be9284aaa5ac0ac836d3b81db0616"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">bool mdtTtAbstractTestNodeCalibrationTool::setTestNodeUnitData </td>
@@ -651,20 +632,29 @@ Protected Attributes</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Set test node unit data for given test node unit ID and field name. </p>
-<p>Note: data are cached in models only, not sent to database. </p>
+<p>Note: data are cached in models only, not sent to database.</p>
+<dl class="section pre"><dt>Precondition</dt><dd><a class="el" href="classmdt_tt_abstract_test_node_calibration_tool.html#a89e27cd930547aef0ba143519408ce1b" title="Do setup. ">setup()</a> must be called first. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00175">175</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html">mdtTtAbstractTestNodeCalibrationTool.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html#l00127">127</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html">mdtTtAbstractTestNodeCalibrationTool.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00213">setTestNodeUnitCalibrationOffset()</a>, and <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00203">setTestNodeUnitData()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00096">setTestNodeUnitCalibrationOffset()</a>.</p>
 
 </div>
 </div>
 <a class="anchor" id="a07f66a52481291172896b8bb6bf7d233"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">bool mdtTtAbstractTestNodeCalibrationTool::setTestNodeUnitData </td>
@@ -690,18 +680,58 @@ Protected Attributes</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Set test node unit data for given test node unit schemaPosition and field name. </p>
 <p>Notes:</p>
 <ul>
 <li>Data are cached in models only, not sent to database.</li>
-<li>The first test node unit that matches schemaPosition in current test node is considered. </li>
+<li>The first test node unit that matches schemaPosition in current test node is considered.</li>
 </ul>
+<dl class="section pre"><dt>Precondition</dt><dd><a class="el" href="classmdt_tt_abstract_test_node_calibration_tool.html#a89e27cd930547aef0ba143519408ce1b" title="Do setup. ">setup()</a> must be called first. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00203">203</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html">mdtTtAbstractTestNodeCalibrationTool.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html#l00141">141</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html">mdtTtAbstractTestNodeCalibrationTool.h</a>.</p>
 
-<p>References <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00175">setTestNodeUnitData()</a>, and <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00137">testNodeUnitData()</a>.</p>
+</div>
+</div>
+<a class="anchor" id="a89e27cd930547aef0ba143519408ce1b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtTtAbstractTestNodeCalibrationTool::setup </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_q_widget.html">QWidget</a> *&#160;</td>
+          <td class="paramname"><em>testNodeFormWidget</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Do setup. </p>
+<p>Will setup database controllers and map widgets contained in testNodeFormWidget. All childs contained in widget that have a name prefixed fld_ will be mapped to corresponding fields in TestNode_view. Note that this for a read only access.</p>
+<p>Note: connect signals and slots before calling this method, else UI will be incoherent at initial state. </p>
+
+<p>Reimplemented in <a class="el" href="classmdt_tt_basic_test_node_calibration_tool.html#a471178c597a57866a6cefe86c4fba19e">mdtTtBasicTestNodeCalibrationTool</a>.</p>
+
+<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00040">40</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html">mdtTtAbstractTestNodeCalibrationTool.cpp</a>.</p>
+
+<p>References <a class="el" href="mdt_sql_relation_info_8cpp_source.html#l00028">mdtSqlRelationInfo::addRelation()</a>, <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html#l00165">pvLastError</a>, and <a class="el" href="mdt_sql_relation_info_8h_source.html#l00080">mdtSqlRelationInfo::setChildTableName()</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_tt_basic_test_node_calibration_tool_8cpp_source.html#l00044">mdtTtBasicTestNodeCalibrationTool::setup()</a>.</p>
 
 </div>
 </div>
@@ -728,7 +758,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Get test object. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html#l00085">85</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html">mdtTtAbstractTestNodeCalibrationTool.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html#l00089">89</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html">mdtTtAbstractTestNodeCalibrationTool.h</a>.</p>
 
 </div>
 </div>
@@ -755,13 +785,16 @@ Protected Attributes</h2></td></tr>
 
 <p>Get test node manager object. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html#l00081">81</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html">mdtTtAbstractTestNodeCalibrationTool.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html#l00085">85</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html">mdtTtAbstractTestNodeCalibrationTool.h</a>.</p>
 
 </div>
 </div>
 <a class="anchor" id="ab9303ff1fa75268af20c920e5c14ef8a"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">QVariant mdtTtAbstractTestNodeCalibrationTool::testNodeUnitData </td>
@@ -781,19 +814,26 @@ Protected Attributes</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Get test node unit data for given test node unit ID and field name. </p>
+<dl class="section pre"><dt>Precondition</dt><dd><a class="el" href="classmdt_tt_abstract_test_node_calibration_tool.html#a89e27cd930547aef0ba143519408ce1b" title="Do setup. ">setup()</a> must be called first. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00137">137</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html">mdtTtAbstractTestNodeCalibrationTool.cpp</a>.</p>
-
-<p>Referenced by <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00203">setTestNodeUnitData()</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html#l00102">102</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html">mdtTtAbstractTestNodeCalibrationTool.h</a>.</p>
 
 </div>
 </div>
 <a class="anchor" id="a56ea21dd9edf2abb6be1c4bf872f13c0"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">QVariant mdtTtAbstractTestNodeCalibrationTool::testNodeUnitData </td>
@@ -813,16 +853,22 @@ Protected Attributes</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Get test node unit data for given test node unit schema position and field name. </p>
-<p>Will return the data for first test node unit that matches given schemaPosition, in current test node. </p>
+<p>Will return the data for first test node unit that matches given schemaPosition, in current test node.</p>
+<dl class="section pre"><dt>Precondition</dt><dd><a class="el" href="classmdt_tt_abstract_test_node_calibration_tool.html#a89e27cd930547aef0ba143519408ce1b" title="Do setup. ">setup()</a> must be called first. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00156">156</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html">mdtTtAbstractTestNodeCalibrationTool.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html#l00115">115</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html">mdtTtAbstractTestNodeCalibrationTool.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a5a82c1c133acc47083def43ec45e76f9"></a>
+<a class="anchor" id="a0d11cc7bad0c02615b2d636a67de5c76"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -830,7 +876,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt;<a class="el" href="class_q_sql_table_model.html">QSqlTableModel</a>&gt; mdtTtAbstractTestNodeCalibrationTool::testNodeUnitViewTableModel </td>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classmdt_sql_table_view_controller.html">mdtSqlTableViewController</a>&gt; mdtTtAbstractTestNodeCalibrationTool::testNodeUnitViewTableController </td>
           <td>(</td>
           <td class="paramname">)</td><td></td>
           <td></td>
@@ -843,9 +889,12 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Get table model to access data in TestNodeUnit_view. </p>
+<p>Get table controller to access data in TestNodeUnit_view. </p>
+<p>Will be invalid until setup was done with <a class="el" href="classmdt_tt_abstract_test_node_calibration_tool.html#a89e27cd930547aef0ba143519408ce1b" title="Do setup. ">setup()</a>. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html#l00077">77</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html">mdtTtAbstractTestNodeCalibrationTool.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html#l00081">81</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html">mdtTtAbstractTestNodeCalibrationTool.h</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_tt_basic_test_node_calibration_window_8cpp_source.html#l00047">mdtTtBasicTestNodeCalibrationWindow::init()</a>.</p>
 
 </div>
 </div>
@@ -870,9 +919,9 @@ Protected Attributes</h2></td></tr>
 
 <p>Contains last error that occured. </p>
 
-<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html#l00134">134</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html">mdtTtAbstractTestNodeCalibrationTool.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html#l00165">165</a> of file <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8h_source.html">mdtTtAbstractTestNodeCalibrationTool.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00249">displayLastError()</a>, <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00047">init()</a>, and <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00298">isInRange()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00132">displayLastError()</a>, <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00181">isInRange()</a>, <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00085">setTestNode()</a>, and <a class="el" href="mdt_tt_abstract_test_node_calibration_tool_8cpp_source.html#l00040">setup()</a>.</p>
 
 </div>
 </div>
@@ -883,7 +932,7 @@ Protected Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Sep 20 2014 15:23:44 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Oct 9 2014 17:04:19 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

@@ -28,14 +28,15 @@ Collaboration diagram for mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool\-:\no
 \item 
 \hyperlink{classmdt_tt_abstract_test_node_calibration_tool_af74473766d512098c3e528e4f5865ade}{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool} (Q\-Sql\-Database db, \hyperlink{class_q_object}{Q\-Object} $\ast$parent=0)
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
-virtual bool \hyperlink{classmdt_tt_abstract_test_node_calibration_tool_a7ad90715222060f29c01c13bc4bbf417}{init} ()
-\begin{DoxyCompactList}\small\item\em Do some initialization. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_tt_abstract_test_node_calibration_tool_a7fab42cef3cbbfe711adaf684d1f5af8}{set\-Test\-Node\-Ui\-Widget} (\hyperlink{class_q_widget}{Q\-Widget} $\ast$widget)
-\begin{DoxyCompactList}\small\item\em All childs contained in widget that have a name prefixed fld\-\_\- will be mapped to corresponding fields in Test\-Node\-\_\-view. Note that this a read only access. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classmdt_tt_abstract_test_node_calibration_tool_a89e27cd930547aef0ba143519408ce1b}{setup} (\hyperlink{class_q_widget}{Q\-Widget} $\ast$test\-Node\-Form\-Widget)
+\begin{DoxyCompactList}\small\item\em Do setup. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_abstract_test_node_calibration_tool_a85c47fe2b501769f5966a27aeb3f051a}{set\-Test\-Node} (const Q\-Variant \&test\-Node\-Id)
+\begin{DoxyCompactList}\small\item\em Set test node to calibrate. \end{DoxyCompactList}\item 
 Q\-Sql\-Database \hyperlink{classmdt_tt_abstract_test_node_calibration_tool_abd953e46ec2e7d2295ec03cd697ffd7e}{database} ()
 \begin{DoxyCompactList}\small\item\em Get database instance. \end{DoxyCompactList}\item 
-std\-::shared\-\_\-ptr$<$ \hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model} $>$ \hyperlink{classmdt_tt_abstract_test_node_calibration_tool_a5a82c1c133acc47083def43ec45e76f9}{test\-Node\-Unit\-View\-Table\-Model} ()
-\begin{DoxyCompactList}\small\item\em Get table model to access data in Test\-Node\-Unit\-\_\-view. \end{DoxyCompactList}\item 
+std\-::shared\-\_\-ptr\\*
+$<$ \hyperlink{classmdt_sql_table_view_controller}{mdt\-Sql\-Table\-View\-Controller} $>$ \hyperlink{classmdt_tt_abstract_test_node_calibration_tool_a0d11cc7bad0c02615b2d636a67de5c76}{test\-Node\-Unit\-View\-Table\-Controller} ()
+\begin{DoxyCompactList}\small\item\em Get table controller to access data in Test\-Node\-Unit\-\_\-view. \end{DoxyCompactList}\item 
 std\-::shared\-\_\-ptr\\*
 $<$ \hyperlink{classmdt_tt_test_node_manager}{mdt\-Tt\-Test\-Node\-Manager} $>$ \hyperlink{classmdt_tt_abstract_test_node_calibration_tool_aeba30ff3f083a8a3c65dce704b132ba7}{test\-Node\-Manager} ()
 \begin{DoxyCompactList}\small\item\em Get test node manager object. \end{DoxyCompactList}\item 
@@ -78,7 +79,7 @@ bool \hyperlink{classmdt_tt_abstract_test_node_calibration_tool_a056ac13971e84d1
 \subsection{Detailed Description}
 Test node calibration tool base class 
 
-Definition at line 46 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-h.
+Definition at line 45 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-h.
 
 
 
@@ -121,7 +122,7 @@ True if user accepted the message box (typically if he clicked Ok, Yes, ..), fal
 \end{DoxyReturn}
 
 
-Definition at line 276 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
+Definition at line 159 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
 
 
 
@@ -133,14 +134,14 @@ Referenced by prompt\-User().
 \begin{DoxyParamCaption}
 \item[{const Q\-String \&}]{field\-Name}
 \end{DoxyParamCaption}
-)}}\label{classmdt_tt_abstract_test_node_calibration_tool_a42d8aaef4d70f5afe2eca46f3d1ed32b}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_tt_abstract_test_node_calibration_tool_a42d8aaef4d70f5afe2eca46f3d1ed32b}
 
 
 Get current test node data for given field. 
 
 
 
-Definition at line 132 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
+Definition at line 93 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-h.
 
 \hypertarget{classmdt_tt_abstract_test_node_calibration_tool_abd953e46ec2e7d2295ec03cd697ffd7e}{\index{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}!database@{database}}
 \index{database@{database}!mdtTtAbstractTestNodeCalibrationTool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}}
@@ -155,7 +156,7 @@ Get database instance.
 
 
 
-Definition at line 73 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-h.
+Definition at line 75 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-h.
 
 \hypertarget{classmdt_tt_abstract_test_node_calibration_tool_a4b1c2b5340a0352dde18bf838b378334}{\index{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}!display\-Last\-Error@{display\-Last\-Error}}
 \index{display\-Last\-Error@{display\-Last\-Error}!mdtTtAbstractTestNodeCalibrationTool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}}
@@ -170,7 +171,7 @@ Display last error to the user.
 
 
 
-Definition at line 249 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
+Definition at line 132 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
 
 
 
@@ -178,7 +179,7 @@ References mdt\-Error\-::informative\-Text(), mdt\-Error\-::level\-Icon(), pv\-L
 
 
 
-Referenced by mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool\-::run\-Calibration().
+Referenced by mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool\-::run\-Calibration(), and set\-Test\-Node().
 
 \hypertarget{classmdt_tt_abstract_test_node_calibration_tool_ad5c0a41531d0dbd9c774f59a72664687}{\index{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}!display\-Message@{display\-Message}}
 \index{display\-Message@{display\-Message}!mdtTtAbstractTestNodeCalibrationTool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}}
@@ -195,34 +196,7 @@ Display a message to the user.
 
 
 
-Definition at line 260 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
-
-\hypertarget{classmdt_tt_abstract_test_node_calibration_tool_a7ad90715222060f29c01c13bc4bbf417}{\index{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}!init@{init}}
-\index{init@{init}!mdtTtAbstractTestNodeCalibrationTool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}}
-\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool\-::init (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_tt_abstract_test_node_calibration_tool_a7ad90715222060f29c01c13bc4bbf417}
-
-
-Do some initialization. 
-
-
-
-Reimplemented in \hyperlink{classmdt_tt_basic_test_node_calibration_tool_af7fe717bef7b4af47ef90a2e90bfb288}{mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool}.
-
-
-
-Definition at line 47 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
-
-
-
-References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, pv\-Last\-Error, mdt\-Error\-::set\-Error(), and mdt\-Error\-::set\-System\-Error().
-
-
-
-Referenced by mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool\-::init().
+Definition at line 143 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
 
 \hypertarget{classmdt_tt_abstract_test_node_calibration_tool_a056ac13971e84d14bd5bc5106e181baa}{\index{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}!is\-In\-Range@{is\-In\-Range}}
 \index{is\-In\-Range@{is\-In\-Range}!mdtTtAbstractTestNodeCalibrationTool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}}
@@ -241,7 +215,7 @@ Return true if value is in \mbox{[}min;max\mbox{]} If value is out of range, a d
 
 Note\-: if value has -\/\-O\-L or +\-O\-L flag set, -\/infinity, respecively +infinity value is considered. 
 
-Definition at line 298 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
+Definition at line 181 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
 
 
 
@@ -266,7 +240,7 @@ True if user accepted the message box (typically if he clicked Ok, Yes, ..), fal
 \end{DoxyReturn}
 
 
-Definition at line 271 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
+Definition at line 154 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
 
 
 
@@ -276,20 +250,26 @@ References ask\-User().
 
 Referenced by mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool\-::run\-Calibration().
 
-\hypertarget{classmdt_tt_abstract_test_node_calibration_tool_a7fab42cef3cbbfe711adaf684d1f5af8}{\index{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}!set\-Test\-Node\-Ui\-Widget@{set\-Test\-Node\-Ui\-Widget}}
-\index{set\-Test\-Node\-Ui\-Widget@{set\-Test\-Node\-Ui\-Widget}!mdtTtAbstractTestNodeCalibrationTool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}}
-\subsubsection[{set\-Test\-Node\-Ui\-Widget}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool\-::set\-Test\-Node\-Ui\-Widget (
+\hypertarget{classmdt_tt_abstract_test_node_calibration_tool_a85c47fe2b501769f5966a27aeb3f051a}{\index{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}!set\-Test\-Node@{set\-Test\-Node}}
+\index{set\-Test\-Node@{set\-Test\-Node}!mdtTtAbstractTestNodeCalibrationTool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}}
+\subsubsection[{set\-Test\-Node}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool\-::set\-Test\-Node (
 \begin{DoxyParamCaption}
-\item[{{\bf Q\-Widget} $\ast$}]{widget}
+\item[{const Q\-Variant \&}]{test\-Node\-Id}
 \end{DoxyParamCaption}
-)}}\label{classmdt_tt_abstract_test_node_calibration_tool_a7fab42cef3cbbfe711adaf684d1f5af8}
+)}}\label{classmdt_tt_abstract_test_node_calibration_tool_a85c47fe2b501769f5966a27aeb3f051a}
 
 
-All childs contained in widget that have a name prefixed fld\-\_\- will be mapped to corresponding fields in Test\-Node\-\_\-view. Note that this a read only access. 
+Set test node to calibrate. 
 
-Given widget will also be used as parent for dialogs that are displayed (selection dialogs, message boxes). 
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000060}{Todo}]Add a Key field or something similar. \end{DoxyRefDesc}
 
-Definition at line 122 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
+
+Definition at line 85 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
+
+
+
+References display\-Last\-Error(), and pv\-Last\-Error.
 
 
 
@@ -309,7 +289,7 @@ Set calibration offset for given test\-Node\-Unit\-Id.
 
 Note\-: calibration offset and date are cached in models only, not sent to database. 
 
-Definition at line 213 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
+Definition at line 96 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
 
 
 
@@ -333,7 +313,7 @@ Notes\-:
 \item The first test node unit that matches schema\-Position in current test node is considered. 
 \end{DoxyItemize}
 
-Definition at line 231 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
+Definition at line 114 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
 
 
 
@@ -347,18 +327,23 @@ References set\-Test\-Node\-Unit\-Data().
 \item[{const Q\-String \&}]{field\-Name, }
 \item[{const Q\-Variant \&}]{data}
 \end{DoxyParamCaption}
-)}}\label{classmdt_tt_abstract_test_node_calibration_tool_a0e1be9284aaa5ac0ac836d3b81db0616}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_tt_abstract_test_node_calibration_tool_a0e1be9284aaa5ac0ac836d3b81db0616}
 
 
 Set test node unit data for given test node unit I\-D and field name. 
 
-Note\-: data are cached in models only, not sent to database. 
+Note\-: data are cached in models only, not sent to database.
 
-Definition at line 175 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{classmdt_tt_abstract_test_node_calibration_tool_a89e27cd930547aef0ba143519408ce1b}{setup()} must be called first. 
+\end{DoxyPrecond}
+
+
+Definition at line 127 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-h.
 
 
 
-Referenced by set\-Test\-Node\-Unit\-Calibration\-Offset(), and set\-Test\-Node\-Unit\-Data().
+Referenced by set\-Test\-Node\-Unit\-Calibration\-Offset().
 
 \hypertarget{classmdt_tt_abstract_test_node_calibration_tool_a07f66a52481291172896b8bb6bf7d233}{\index{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}!set\-Test\-Node\-Unit\-Data@{set\-Test\-Node\-Unit\-Data}}
 \index{set\-Test\-Node\-Unit\-Data@{set\-Test\-Node\-Unit\-Data}!mdtTtAbstractTestNodeCalibrationTool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}}
@@ -368,7 +353,7 @@ Referenced by set\-Test\-Node\-Unit\-Calibration\-Offset(), and set\-Test\-Node\
 \item[{const Q\-String \&}]{field\-Name, }
 \item[{const Q\-Variant \&}]{data}
 \end{DoxyParamCaption}
-)}}\label{classmdt_tt_abstract_test_node_calibration_tool_a07f66a52481291172896b8bb6bf7d233}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_tt_abstract_test_node_calibration_tool_a07f66a52481291172896b8bb6bf7d233}
 
 
 Set test node unit data for given test node unit schema\-Position and field name. 
@@ -376,14 +361,44 @@ Set test node unit data for given test node unit schema\-Position and field name
 Notes\-:
 \begin{DoxyItemize}
 \item Data are cached in models only, not sent to database.
-\item The first test node unit that matches schema\-Position in current test node is considered. 
+\item The first test node unit that matches schema\-Position in current test node is considered.
 \end{DoxyItemize}
 
-Definition at line 203 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{classmdt_tt_abstract_test_node_calibration_tool_a89e27cd930547aef0ba143519408ce1b}{setup()} must be called first. 
+\end{DoxyPrecond}
+
+
+Definition at line 141 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-h.
+
+\hypertarget{classmdt_tt_abstract_test_node_calibration_tool_a89e27cd930547aef0ba143519408ce1b}{\index{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}!setup@{setup}}
+\index{setup@{setup}!mdtTtAbstractTestNodeCalibrationTool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}}
+\subsubsection[{setup}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool\-::setup (
+\begin{DoxyParamCaption}
+\item[{{\bf Q\-Widget} $\ast$}]{test\-Node\-Form\-Widget}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_tt_abstract_test_node_calibration_tool_a89e27cd930547aef0ba143519408ce1b}
+
+
+Do setup. 
+
+Will setup database controllers and map widgets contained in test\-Node\-Form\-Widget. All childs contained in widget that have a name prefixed fld\-\_\- will be mapped to corresponding fields in Test\-Node\-\_\-view. Note that this for a read only access.
+
+Note\-: connect signals and slots before calling this method, else U\-I will be incoherent at initial state. 
+
+Reimplemented in \hyperlink{classmdt_tt_basic_test_node_calibration_tool_a471178c597a57866a6cefe86c4fba19e}{mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool}.
 
 
 
-References set\-Test\-Node\-Unit\-Data(), and test\-Node\-Unit\-Data().
+Definition at line 40 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
+
+
+
+References mdt\-Sql\-Relation\-Info\-::add\-Relation(), pv\-Last\-Error, and mdt\-Sql\-Relation\-Info\-::set\-Child\-Table\-Name().
+
+
+
+Referenced by mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool\-::setup().
 
 \hypertarget{classmdt_tt_abstract_test_node_calibration_tool_ab3db9df8cd757adca0dabf085a31374e}{\index{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}!test@{test}}
 \index{test@{test}!mdtTtAbstractTestNodeCalibrationTool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}}
@@ -398,7 +413,7 @@ Get test object.
 
 
 
-Definition at line 85 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-h.
+Definition at line 89 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-h.
 
 \hypertarget{classmdt_tt_abstract_test_node_calibration_tool_aeba30ff3f083a8a3c65dce704b132ba7}{\index{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}!test\-Node\-Manager@{test\-Node\-Manager}}
 \index{test\-Node\-Manager@{test\-Node\-Manager}!mdtTtAbstractTestNodeCalibrationTool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}}
@@ -413,7 +428,7 @@ Get test node manager object.
 
 
 
-Definition at line 81 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-h.
+Definition at line 85 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-h.
 
 \hypertarget{classmdt_tt_abstract_test_node_calibration_tool_ab9303ff1fa75268af20c920e5c14ef8a}{\index{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}!test\-Node\-Unit\-Data@{test\-Node\-Unit\-Data}}
 \index{test\-Node\-Unit\-Data@{test\-Node\-Unit\-Data}!mdtTtAbstractTestNodeCalibrationTool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}}
@@ -422,18 +437,17 @@ Definition at line 81 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\
 \item[{int}]{test\-Node\-Unit\-Id, }
 \item[{const Q\-String \&}]{field\-Name}
 \end{DoxyParamCaption}
-)}}\label{classmdt_tt_abstract_test_node_calibration_tool_ab9303ff1fa75268af20c920e5c14ef8a}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_tt_abstract_test_node_calibration_tool_ab9303ff1fa75268af20c920e5c14ef8a}
 
 
 Get test node unit data for given test node unit I\-D and field name. 
 
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{classmdt_tt_abstract_test_node_calibration_tool_a89e27cd930547aef0ba143519408ce1b}{setup()} must be called first. 
+\end{DoxyPrecond}
 
 
-Definition at line 137 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
-
-
-
-Referenced by set\-Test\-Node\-Unit\-Data().
+Definition at line 102 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-h.
 
 \hypertarget{classmdt_tt_abstract_test_node_calibration_tool_a56ea21dd9edf2abb6be1c4bf872f13c0}{\index{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}!test\-Node\-Unit\-Data@{test\-Node\-Unit\-Data}}
 \index{test\-Node\-Unit\-Data@{test\-Node\-Unit\-Data}!mdtTtAbstractTestNodeCalibrationTool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}}
@@ -442,29 +456,38 @@ Referenced by set\-Test\-Node\-Unit\-Data().
 \item[{const Q\-String \&}]{schema\-Position, }
 \item[{const Q\-String \&}]{field\-Name}
 \end{DoxyParamCaption}
-)}}\label{classmdt_tt_abstract_test_node_calibration_tool_a56ea21dd9edf2abb6be1c4bf872f13c0}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_tt_abstract_test_node_calibration_tool_a56ea21dd9edf2abb6be1c4bf872f13c0}
 
 
 Get test node unit data for given test node unit schema position and field name. 
 
-Will return the data for first test node unit that matches given schema\-Position, in current test node. 
+Will return the data for first test node unit that matches given schema\-Position, in current test node.
 
-Definition at line 156 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{classmdt_tt_abstract_test_node_calibration_tool_a89e27cd930547aef0ba143519408ce1b}{setup()} must be called first. 
+\end{DoxyPrecond}
 
-\hypertarget{classmdt_tt_abstract_test_node_calibration_tool_a5a82c1c133acc47083def43ec45e76f9}{\index{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}!test\-Node\-Unit\-View\-Table\-Model@{test\-Node\-Unit\-View\-Table\-Model}}
-\index{test\-Node\-Unit\-View\-Table\-Model@{test\-Node\-Unit\-View\-Table\-Model}!mdtTtAbstractTestNodeCalibrationTool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}}
-\subsubsection[{test\-Node\-Unit\-View\-Table\-Model}]{\setlength{\rightskip}{0pt plus 5cm}std\-::shared\-\_\-ptr$<${\bf Q\-Sql\-Table\-Model}$>$ mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool\-::test\-Node\-Unit\-View\-Table\-Model (
+
+Definition at line 115 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-h.
+
+\hypertarget{classmdt_tt_abstract_test_node_calibration_tool_a0d11cc7bad0c02615b2d636a67de5c76}{\index{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}!test\-Node\-Unit\-View\-Table\-Controller@{test\-Node\-Unit\-View\-Table\-Controller}}
+\index{test\-Node\-Unit\-View\-Table\-Controller@{test\-Node\-Unit\-View\-Table\-Controller}!mdtTtAbstractTestNodeCalibrationTool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}}
+\subsubsection[{test\-Node\-Unit\-View\-Table\-Controller}]{\setlength{\rightskip}{0pt plus 5cm}std\-::shared\-\_\-ptr$<${\bf mdt\-Sql\-Table\-View\-Controller}$>$ mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool\-::test\-Node\-Unit\-View\-Table\-Controller (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_tt_abstract_test_node_calibration_tool_a5a82c1c133acc47083def43ec45e76f9}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_tt_abstract_test_node_calibration_tool_a0d11cc7bad0c02615b2d636a67de5c76}
 
 
-Get table model to access data in Test\-Node\-Unit\-\_\-view. 
+Get table controller to access data in Test\-Node\-Unit\-\_\-view. 
+
+Will be invalid until setup was done with \hyperlink{classmdt_tt_abstract_test_node_calibration_tool_a89e27cd930547aef0ba143519408ce1b}{setup()}. 
+
+Definition at line 81 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-h.
 
 
 
-Definition at line 77 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-h.
+Referenced by mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Window\-::init().
 
 
 
@@ -478,11 +501,11 @@ Contains last error that occured.
 
 
 
-Definition at line 134 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-h.
+Definition at line 165 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-h.
 
 
 
-Referenced by display\-Last\-Error(), init(), and is\-In\-Range().
+Referenced by display\-Last\-Error(), is\-In\-Range(), set\-Test\-Node(), and setup().
 
 
 

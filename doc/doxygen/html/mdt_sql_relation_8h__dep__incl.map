@@ -1,11 +1,8 @@
 <map id="src/mdtutilsgui/mdtSqlRelation.h" name="src/mdtutilsgui/mdtSqlRelation.h">
 <area shape="rect" id="node3" href="$mdt_abstract_sql_table_controller_8cpp.html" title="src/mdtdatabase/mdtAbstract\lSqlTableController.cpp" alt="" coords="5,91,200,138"/>
 <area shape="rect" id="node5" href="$mdt_cl_vehicle_type_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtcablelist/mdtClVehicleType\lEditor.cpp" alt="" coords="224,83,429,147"/>
-<area shape="rect" id="node7" href="$mdt_tt_abstract_test_node_calibration_tool_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtAbstractTestNodeCalibration\lTool.cpp" alt="" coords="453,83,680,147"/>
-<area shape="rect" id="node9" href="$mdt_tt_test_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTest.cpp" alt="" coords="704,91,867,138"/>
-<area shape="rect" id="node11" href="$mdt_tt_test_connection_cable_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestConnectionCableEditor.cpp" alt="" coords="891,91,1136,138"/>
-<area shape="rect" id="node13" href="$mdt_tt_test_model_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestModelEditor.cpp" alt="" coords="1160,91,1339,138"/>
-<area shape="rect" id="node15" href="$mdt_tt_test_model_item_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestModelItemEditor.cpp" alt="" coords="1363,91,1568,138"/>
-<area shape="rect" id="node17" href="$mdt_tt_test_node_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestNodeEditor.cpp" alt="" coords="1592,91,1768,138"/>
-<area shape="rect" id="node19" href="$mdt_sql_relation_8cpp.html" title="src/mdtutilsgui/mdtSqlRelation.cpp" alt="" coords="1792,100,2016,129"/>
+<area shape="rect" id="node7" href="$mdt_tt_logical_test_cable_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtLogicalTestCableEditor.cpp" alt="" coords="453,91,672,138"/>
+<area shape="rect" id="node9" href="$mdt_tt_test_model_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestModelEditor.cpp" alt="" coords="696,91,875,138"/>
+<area shape="rect" id="node11" href="$mdt_tt_test_model_item_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestModelItemEditor.cpp" alt="" coords="899,91,1104,138"/>
+<area shape="rect" id="node13" href="$mdt_sql_relation_8cpp.html" title="src/mdtutilsgui/mdtSqlRelation.cpp" alt="" coords="1128,100,1352,129"/>
 </map>

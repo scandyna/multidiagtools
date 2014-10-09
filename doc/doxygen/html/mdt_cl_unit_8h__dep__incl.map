@@ -8,8 +8,9 @@
 <area shape="rect" id="node15" href="$mdt_cl_unit_connection_dialog_8cpp.html" title="src/mdttools/mdttesttool\l/mdtcablelist/mdtClUnitConnection\lDialog.cpp" alt="" coords="1475,101,1699,165"/>
 <area shape="rect" id="node17" href="$mdt_cl_unit_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtcablelist/mdtClUnitEditor.cpp" alt="" coords="1723,110,1941,157"/>
 <area shape="rect" id="node19" href="$mdt_cl_unit_link_dialog_8cpp.html" title="src/mdttools/mdttesttool\l/mdtcablelist/mdtClUnitLinkDialog.cpp" alt="" coords="1965,110,2211,157"/>
-<area shape="rect" id="node21" href="$mdt_tt_test_connection_cable_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestConnectionCable.cpp" alt="" coords="2235,110,2445,157"/>
-<area shape="rect" id="node23" href="$mdt_tt_test_link_dialog_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestLinkDialog.cpp" alt="" coords="2469,110,2640,157"/>
-<area shape="rect" id="node25" href="$mdt_tt_test_node_unit_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestNodeUnit.cpp" alt="" coords="2664,110,2829,157"/>
-<area shape="rect" id="node27" href="$mdt_tt_test_node_unit_dialog_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestNodeUnitDialog.cpp" alt="" coords="2853,110,3056,157"/>
+<area shape="rect" id="node21" href="$mdt_tt_logical_test_cable_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtLogicalTestCable.cpp" alt="" coords="2235,110,2421,157"/>
+<area shape="rect" id="node23" href="$mdt_tt_test_cable_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestCableEditor.cpp" alt="" coords="2445,110,2624,157"/>
+<area shape="rect" id="node25" href="$mdt_tt_test_link_dialog_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestLinkDialog.cpp" alt="" coords="2648,110,2819,157"/>
+<area shape="rect" id="node27" href="$mdt_tt_test_node_unit_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestNodeUnit.cpp" alt="" coords="2843,110,3008,157"/>
+<area shape="rect" id="node29" href="$mdt_tt_test_node_unit_dialog_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestNodeUnitDialog.cpp" alt="" coords="3032,110,3235,157"/>
 </map>

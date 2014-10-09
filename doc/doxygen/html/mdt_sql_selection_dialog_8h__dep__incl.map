@@ -11,10 +11,11 @@
 <area shape="rect" id="node21" href="$mdt_cl_vehicle_type_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtcablelist/mdtClVehicleType\lEditor.cpp" alt="" coords="2277,101,2483,165"/>
 <area shape="rect" id="node23" href="$mdt_tt_abstract_tester_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtAbstractTester.cpp" alt="" coords="2507,110,2677,157"/>
 <area shape="rect" id="node25" href="$mdt_tt_basic_tester_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtBasicTester.cpp" alt="" coords="2701,110,2864,157"/>
-<area shape="rect" id="node27" href="$mdt_tt_test_connection_cable_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestConnectionCableEditor.cpp" alt="" coords="2888,110,3133,157"/>
-<area shape="rect" id="node29" href="$mdt_tt_test_link_dialog_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestLinkDialog.cpp" alt="" coords="3157,110,3328,157"/>
-<area shape="rect" id="node31" href="$mdt_tt_test_model_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestModelEditor.cpp" alt="" coords="3352,110,3531,157"/>
-<area shape="rect" id="node33" href="$mdt_tt_test_model_item_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestModelItemEditor.cpp" alt="" coords="3555,110,3760,157"/>
-<area shape="rect" id="node35" href="$mdt_tt_test_node_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestNodeEditor.cpp" alt="" coords="3784,110,3960,157"/>
-<area shape="rect" id="node37" href="$mdt_tt_test_node_unit_dialog_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestNodeUnitDialog.cpp" alt="" coords="3984,110,4187,157"/>
+<area shape="rect" id="node27" href="$mdt_tt_logical_test_cable_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtLogicalTestCableEditor.cpp" alt="" coords="2888,110,3107,157"/>
+<area shape="rect" id="node29" href="$mdt_tt_test_cable_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestCableEditor.cpp" alt="" coords="3131,110,3309,157"/>
+<area shape="rect" id="node31" href="$mdt_tt_test_link_dialog_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestLinkDialog.cpp" alt="" coords="3333,110,3504,157"/>
+<area shape="rect" id="node33" href="$mdt_tt_test_model_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestModelEditor.cpp" alt="" coords="3528,110,3707,157"/>
+<area shape="rect" id="node35" href="$mdt_tt_test_model_item_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestModelItemEditor.cpp" alt="" coords="3731,110,3936,157"/>
+<area shape="rect" id="node37" href="$mdt_tt_test_node_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestNodeEditor.cpp" alt="" coords="3960,110,4136,157"/>
+<area shape="rect" id="node39" href="$mdt_tt_test_node_unit_dialog_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestNodeUnitDialog.cpp" alt="" coords="4160,110,4363,157"/>
 </map>

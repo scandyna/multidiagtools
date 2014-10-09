@@ -1,4 +1,4 @@
 <map id="src/mdttools/mdttesttool/mdtTtTestLinkDialog.h" name="src/mdttools/mdttesttool/mdtTtTestLinkDialog.h">
-<area shape="rect" id="node3" href="$mdt_tt_test_connection_cable_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestConnectionCableEditor.cpp" alt="" coords="5,102,251,149"/>
-<area shape="rect" id="node5" href="$mdt_tt_test_link_dialog_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestLinkDialog.cpp" alt="" coords="275,102,445,149"/>
+<area shape="rect" id="node3" href="$mdt_tt_logical_test_cable_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtLogicalTestCableEditor.cpp" alt="" coords="5,102,224,149"/>
+<area shape="rect" id="node5" href="$mdt_tt_test_link_dialog_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestLinkDialog.cpp" alt="" coords="248,102,419,149"/>
 </map>

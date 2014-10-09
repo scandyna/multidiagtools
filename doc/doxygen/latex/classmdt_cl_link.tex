@@ -211,7 +211,7 @@ Check if unit connector S can be connected with unit connector E.
 
 Currently, this method will only check if at least S and E have a socket/pin (or pin/socket) that have the same contact name. 
 
-Definition at line 433 of file mdt\-Cl\-Link.\-cpp.
+Definition at line 436 of file mdt\-Cl\-Link.\-cpp.
 
 
 
@@ -236,7 +236,7 @@ Check if unit connector start can be connected with unit connector end.
 
 Currently, this method will only check if at least S and E have a socket/pin (or pin/socket) that have the same contact name. 
 
-Definition at line 438 of file mdt\-Cl\-Link.\-cpp.
+Definition at line 441 of file mdt\-Cl\-Link.\-cpp.
 
 
 
@@ -258,7 +258,7 @@ Connect start and end connector by contact name.
 
 Will create a link of type C\-O\-N\-N\-E\-C\-T\-I\-O\-N for each connection from start connector to a connection of end connector that can be connected. See \hyperlink{classmdt_cl_link_a13c49a669e9e5a7d228aeb6a238c8633}{get\-Connection\-Link\-List\-By\-Name()} for details. 
 
-Definition at line 522 of file mdt\-Cl\-Link.\-cpp.
+Definition at line 525 of file mdt\-Cl\-Link.\-cpp.
 
 
 
@@ -284,7 +284,7 @@ Connect start and end connector by contact name.
 
 Will create a link of type C\-O\-N\-N\-E\-C\-T\-I\-O\-N for each connection from start connector to a connection of end connector that can be connected. See \hyperlink{classmdt_cl_link_a13c49a669e9e5a7d228aeb6a238c8633}{get\-Connection\-Link\-List\-By\-Name()} for details. 
 
-Definition at line 553 of file mdt\-Cl\-Link.\-cpp.
+Definition at line 556 of file mdt\-Cl\-Link.\-cpp.
 
 
 
@@ -308,7 +308,7 @@ Disconnect connector S from E.
 \item[\hyperlink{todo__todo000053}{Todo}]In current version, vehicle type list are not token in acount. This will be the case once \hyperlink{classmdt_cl_link_a865c0cee1fab1c9209d139dcd70f9fbd}{remove\-Link()} is fixed. \end{DoxyRefDesc}
 
 
-Definition at line 574 of file mdt\-Cl\-Link.\-cpp.
+Definition at line 577 of file mdt\-Cl\-Link.\-cpp.
 
 
 
@@ -356,10 +356,14 @@ For each link that was found, following fields are also set\-:
 \item Unit\-Connection\-Start\-\_\-\-Id\-\_\-\-F\-K \-: I\-D of item in A
 \item Unit\-Connection\-End\-\_\-\-Id\-\_\-\-F\-K \-: I\-D of item in B
 \item Link\-Type\-\_\-\-Code\-\_\-\-F\-K \-: C\-O\-N\-N\-E\-C\-T\-I\-O\-N
-\item Link\-Direction\-\_\-\-Code\-\_\-\-F\-K \-: B\-I\-D 
+\item Link\-Direction\-\_\-\-Code\-\_\-\-F\-K \-: B\-I\-D
 \end{DoxyItemize}
 
-Definition at line 378 of file mdt\-Cl\-Link.\-cpp.
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000052}{Todo}]Aussi prendre en compte le type borne \char`\"{}\-T\char`\"{} , qui peut être interconecté sans autre \end{DoxyRefDesc}
+
+
+Definition at line 381 of file mdt\-Cl\-Link.\-cpp.
 
 
 
@@ -453,7 +457,7 @@ Remove a unit link.
 Will also remove all vehicle type related links
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000052}{Todo}]Wrong way for delete\-: will delete links for all vehicle type assoc. Check about a overloaded method that limits vehicle type assoc. , that only remove the link in Link\-\_\-tbl when no entry exists in Vehicle\-Type\-\_\-\-Link\-\_\-tbl \end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000051}{Todo}]Wrong way for delete\-: will delete links for all vehicle type assoc. Check about a overloaded method that limits vehicle type assoc. , that only remove the link in Link\-\_\-tbl when no entry exists in Vehicle\-Type\-\_\-\-Link\-\_\-tbl \end{DoxyRefDesc}
 
 
 Definition at line 229 of file mdt\-Cl\-Link.\-cpp.
@@ -553,7 +557,7 @@ S\-Q\-L statement, or empty string on error.
 \end{DoxyReturn}
 
 
-Definition at line 461 of file mdt\-Cl\-Link.\-cpp.
+Definition at line 464 of file mdt\-Cl\-Link.\-cpp.
 
 
 

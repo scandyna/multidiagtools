@@ -112,7 +112,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_state_8h.html">mdtState.h</a>&quot;</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_state_machine_8h.html">mdtStateMachine.h</a>&quot;</span></div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &lt;QDebug&gt;</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">//#include &lt;QDebug&gt;</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
 <div class="line"><a name="l00026"></a><span class="lineno"><a class="code" href="classmdt_state.html#a8a6c3059b9ace83fc20feb0fcc7159df">   26</a></span>&#160;<a class="code" href="classmdt_state.html#a8a6c3059b9ace83fc20feb0fcc7159df" title="Constructor. ">mdtState::mdtState</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>, <a class="code" href="class_q_state.html">QState</a> *parent)</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; : <a class="code" href="class_q_state.html">QState</a>(parent)</div>
@@ -181,19 +181,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="keywordtype">void</span> mdtState::onStateEntered()</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;{</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtState, current state ID: &quot;</span> &lt;&lt; pvId &lt;&lt; <span class="stringliteral">&quot; , text: &quot;</span> &lt;&lt; pvText;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  <span class="keywordflow">if</span>((!pvConnectedToStateMachine)&amp;&amp;(machine() != 0)){</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <a class="code" href="classmdt_state_machine.html" title="Extend Qt&#39;s QStateMachine. ">mdtStateMachine</a> *sm = <span class="keyword">dynamic_cast&lt;</span><a class="code" href="classmdt_state_machine.html" title="Extend Qt&#39;s QStateMachine. ">mdtStateMachine</a>*<span class="keyword">&gt;</span>(machine());</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    Q_ASSERT(sm != 0);</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    connect(<span class="keyword">this</span>, SIGNAL(<a class="code" href="classmdt_state.html#af439b403568bc41b3db70e037bfd8456" title="Emited each time state was enterd. ">entered</a>(<a class="code" href="classmdt_state.html" title="Representation of a state in mdtStateMachine. ">mdtState</a>*)), sm, SLOT(onStateEntered(<a class="code" href="classmdt_state.html" title="Representation of a state in mdtStateMachine. ">mdtState</a>*)));</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    pvConnectedToStateMachine = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  }</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  emit <a class="code" href="classmdt_state.html#af439b403568bc41b3db70e037bfd8456" title="Emited each time state was enterd. ">entered</a>(<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;}</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  <span class="keywordflow">if</span>((!pvConnectedToStateMachine)&amp;&amp;(machine() != 0)){</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <a class="code" href="classmdt_state_machine.html" title="Extend Qt&#39;s QStateMachine. ">mdtStateMachine</a> *sm = <span class="keyword">dynamic_cast&lt;</span><a class="code" href="classmdt_state_machine.html" title="Extend Qt&#39;s QStateMachine. ">mdtStateMachine</a>*<span class="keyword">&gt;</span>(machine());</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    Q_ASSERT(sm != 0);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    connect(<span class="keyword">this</span>, SIGNAL(<a class="code" href="classmdt_state.html#af439b403568bc41b3db70e037bfd8456" title="Emited each time state was enterd. ">entered</a>(<a class="code" href="classmdt_state.html" title="Representation of a state in mdtStateMachine. ">mdtState</a>*)), sm, SLOT(onStateEntered(<a class="code" href="classmdt_state.html" title="Representation of a state in mdtStateMachine. ">mdtState</a>*)));</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    pvConnectedToStateMachine = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  }</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  emit <a class="code" href="classmdt_state.html#af439b403568bc41b3db70e037bfd8456" title="Emited each time state was enterd. ">entered</a>(<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Sep 20 2014 15:23:36 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Oct 9 2014 17:04:11 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

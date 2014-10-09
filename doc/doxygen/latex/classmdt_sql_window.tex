@@ -75,11 +75,9 @@ Definition at line 41 of file mdt\-Sql\-Window.\-h.
 
 Constructor. 
 
-Will construct a empty window. Use set\-Sql\-Widget() to set central widget, \hyperlink{classmdt_sql_window_a6d4d853c8c64a99ff2e396b99ea63a87}{enable\-Navigation()} to build navigaton bar and \hyperlink{classmdt_sql_window_a42d1283a05eddd2a48af74cf764ef240}{enable\-Edition()} to add edition buttons.
+Will construct a empty window. Use set\-Sql\-Widget() to set central widget, \hyperlink{classmdt_sql_window_a6d4d853c8c64a99ff2e396b99ea63a87}{enable\-Navigation()} to build navigaton bar and \hyperlink{classmdt_sql_window_a42d1283a05eddd2a48af74cf764ef240}{enable\-Edition()} to add edition buttons. 
 
-\#include \char`\"{}mdt\-Abstract\-Sql\-Widget.\-h\char`\"{} include \char`\"{}mdt\-Sql\-Form\-Widget.\-h\char`\"{} 
-
-Definition at line 37 of file mdt\-Sql\-Window.\-cpp.
+Definition at line 34 of file mdt\-Sql\-Window.\-cpp.
 
 \hypertarget{classmdt_sql_window_a050588d255a48722438421b754b808f3}{\index{mdt\-Sql\-Window@{mdt\-Sql\-Window}!$\sim$mdt\-Sql\-Window@{$\sim$mdt\-Sql\-Window}}
 \index{$\sim$mdt\-Sql\-Window@{$\sim$mdt\-Sql\-Window}!mdtSqlWindow@{mdt\-Sql\-Window}}
@@ -94,7 +92,7 @@ Destructor.
 
 
 
-Definition at line 59 of file mdt\-Sql\-Window.\-cpp.
+Definition at line 44 of file mdt\-Sql\-Window.\-cpp.
 
 
 
@@ -115,7 +113,7 @@ Disable edition.
 \end{DoxySeeAlso}
 
 
-Definition at line 110 of file mdt\-Sql\-Window.\-cpp.
+Definition at line 84 of file mdt\-Sql\-Window.\-cpp.
 
 \hypertarget{classmdt_sql_window_a961d587d63b0997a10db6728773a108f}{\index{mdt\-Sql\-Window@{mdt\-Sql\-Window}!disable\-Navigation@{disable\-Navigation}}
 \index{disable\-Navigation@{disable\-Navigation}!mdtSqlWindow@{mdt\-Sql\-Window}}
@@ -133,7 +131,7 @@ Disable navigation.
 \end{DoxySeeAlso}
 
 
-Definition at line 94 of file mdt\-Sql\-Window.\-cpp.
+Definition at line 68 of file mdt\-Sql\-Window.\-cpp.
 
 \hypertarget{classmdt_sql_window_a42d1283a05eddd2a48af74cf764ef240}{\index{mdt\-Sql\-Window@{mdt\-Sql\-Window}!enable\-Edition@{enable\-Edition}}
 \index{enable\-Edition@{enable\-Edition}!mdtSqlWindow@{mdt\-Sql\-Window}}
@@ -153,7 +151,7 @@ Form must be set with \hyperlink{classmdt_sql_window_ad9a237b7bea72d92a4743f09c2
 \end{DoxyPrecond}
 
 
-Definition at line 102 of file mdt\-Sql\-Window.\-cpp.
+Definition at line 76 of file mdt\-Sql\-Window.\-cpp.
 
 \hypertarget{classmdt_sql_window_a6d4d853c8c64a99ff2e396b99ea63a87}{\index{mdt\-Sql\-Window@{mdt\-Sql\-Window}!enable\-Navigation@{enable\-Navigation}}
 \index{enable\-Navigation@{enable\-Navigation}!mdtSqlWindow@{mdt\-Sql\-Window}}
@@ -173,7 +171,7 @@ Form must be set with \hyperlink{classmdt_sql_window_ad9a237b7bea72d92a4743f09c2
 \end{DoxyPrecond}
 
 
-Definition at line 86 of file mdt\-Sql\-Window.\-cpp.
+Definition at line 60 of file mdt\-Sql\-Window.\-cpp.
 
 \hypertarget{classmdt_sql_window_ad9a237b7bea72d92a4743f09c28e38ae}{\index{mdt\-Sql\-Window@{mdt\-Sql\-Window}!set\-Sql\-Form@{set\-Sql\-Form}}
 \index{set\-Sql\-Form@{set\-Sql\-Form}!mdtSqlWindow@{mdt\-Sql\-Window}}
@@ -191,17 +189,15 @@ void set\-Table\-Controller(std\-::shared\-\_\-ptr$<$mdt\-Sql\-Data\-Widget\-Con
 Set the S\-Q\-L form
 
 \begin{DoxyPrecond}{Precondition}
-form must be a valid pointer .
+form must be a valid pointer . 
 \end{DoxyPrecond}
-void mdt\-Sql\-Window\-::set\-Table\-Controller(std\-::shared\-\_\-ptr$<$ mdt\-Sql\-Data\-Widget\-Controller $>$ controller) \{ Q\-\_\-\-A\-S\-S\-E\-R\-T(controller);
 
-pv\-Controller = controller; connect\-Edition\-Elements(); connect\-Navigation\-Elements(); pv\-Controller-\/$>$start(); \} 
 
-Definition at line 75 of file mdt\-Sql\-Window.\-cpp.
+Definition at line 48 of file mdt\-Sql\-Window.\-cpp.
 
 
 
-References mdt\-Sql\-Form\-::start().
+References mdt\-Sql\-Form\-::add\-Menus(), and mdt\-Sql\-Form\-::start().
 
 \hypertarget{classmdt_sql_window_acf5dc11eb376693ba8114230ff75cfe7}{\index{mdt\-Sql\-Window@{mdt\-Sql\-Window}!sql\-Form@{sql\-Form}}
 \index{sql\-Form@{sql\-Form}!mdtSqlWindow@{mdt\-Sql\-Window}}

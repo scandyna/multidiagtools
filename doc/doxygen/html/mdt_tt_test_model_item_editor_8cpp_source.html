@@ -643,7 +643,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;{</div>
 <div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;  <a class="code" href="classmdt_tt_test_model_item.html" title="Helper class for test item edition. ">mdtTtTestModelItem</a> tmi(0, <a class="code" href="classmdt_sql_form.html#ac8423f91a1f8a6fa7408cd61be86a89c" title="Get database that was given by constructor. ">database</a>());</div>
 <div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;  QString sql;</div>
-<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160;  QList&lt;QSqlRecord&gt; dataList;</div>
+<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160;  QList&lt;QSqlRecord&gt; <a class="code" href="classmdt_sql_form.html#a15a92b2116f2fd3a37344afb66b77a3d" title="Get a list of data for given table and field name. ">dataList</a>;</div>
 <div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;  <span class="keywordtype">bool</span> ok;</div>
 <div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;</div>
 <div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160;  <span class="keywordflow">if</span>((testModelItemId.isNull())||(testConnectionId.isNull())){</div>
@@ -661,7 +661,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160;  <span class="keywordflow">if</span>(dataList.isEmpty()){</div>
 <div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;    <span class="keywordflow">return</span> QVariant();</div>
 <div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;  }</div>
-<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;  qDebug() &lt;&lt; <span class="stringliteral">&quot;Test connection ID: &quot;</span> &lt;&lt; testConnectionId &lt;&lt; <span class="stringliteral">&quot; , test link ID: &quot;</span> &lt;&lt; dataList;</div>
+<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;  qDebug() &lt;&lt; <span class="stringliteral">&quot;Test connection ID: &quot;</span> &lt;&lt; testConnectionId &lt;&lt; <span class="stringliteral">&quot; , test link ID: &quot;</span> &lt;&lt; <a class="code" href="classmdt_sql_form.html#a15a92b2116f2fd3a37344afb66b77a3d" title="Get a list of data for given table and field name. ">dataList</a>;</div>
 <div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;  Q_ASSERT(dataList.size() == 1);</div>
 <div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;</div>
 <div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;  <span class="keywordflow">return</span> dataList.at(0).value(0);</div>
@@ -973,7 +973,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Sep 20 2014 15:23:35 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Oct 9 2014 17:04:10 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

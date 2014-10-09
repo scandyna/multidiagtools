@@ -142,7 +142,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
 <div class="line"><a name="l00052"></a><span class="lineno"><a class="code" href="classmdt_tt_basic_tester.html#ac831c6c6204439936c8f344f615bc50a">   52</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_tt_basic_tester.html#ac831c6c6204439936c8f344f615bc50a" title="Setup. ">mdtTtBasicTester::setup</a>()</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;{</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="keywordflow">if</span>(!<a class="code" href="classmdt_tt_abstract_tester.html#a1066de965e6621c9c1fe7abdf5d7d23c" title="Do some initialization. ">init</a>()){</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="keywordflow">if</span>(!<a class="code" href="classmdt_tt_abstract_tester.html#a08e423ef173c8f925b351110637c8050" title="Do setup. ">mdtTtAbstractTester::setup</a>()){</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  }</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <span class="keywordflow">if</span>(!addInstruments()){</div>
@@ -178,20 +178,23 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  </div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  qDebug() &lt;&lt; <span class="stringliteral">&quot;Running test ...&quot;</span>;</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  <a class="code" href="classmdt_tt_abstract_tester.html#a096db7bd6418195ba2a372ba1bec923f" title="Get test object. ">test</a>()-&gt;resetTestItemCursor();</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  <span class="keywordflow">while</span>(<a class="code" href="classmdt_tt_abstract_tester.html#a096db7bd6418195ba2a372ba1bec923f" title="Get test object. ">test</a>()-&gt;hasMoreTestItem()){</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    testItemId = <a class="code" href="classmdt_tt_abstract_tester.html#a096db7bd6418195ba2a372ba1bec923f" title="Get test object. ">test</a>()-&gt;nextTestItem();</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    qDebug() &lt;&lt; <span class="stringliteral">&quot;Curremt item: &quot;</span> &lt;&lt; testItemId;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <a class="code" href="classmdt_tt_abstract_tester.html#a096db7bd6418195ba2a372ba1bec923f" title="Get test object. ">test</a>()-&gt;setCurrentTestItemData(<span class="stringliteral">&quot;Result&quot;</span>, <span class="stringliteral">&quot;Running ...&quot;</span>);</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keywordflow">if</span>(!setupInstruments(testItemId)){</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;      disconnectFromInstruments();</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    }</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    </div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    measuredValue = multimeter-&gt;getMeasureValue();</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    qDebug() &lt;&lt; <span class="stringliteral">&quot;MeasuredValue: &quot;</span> &lt;&lt; measuredValue;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    </div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <a class="code" href="classmdt_tt_abstract_tester.html#a096db7bd6418195ba2a372ba1bec923f" title="Get test object. ">test</a>()-&gt;setMeasuredValue(measuredValue, QVariant(), QVariant());</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  }</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="comment">//   while(test()-&gt;hasMoreTestItem()){</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="comment">//     testItemId = test()-&gt;nextTestItem();</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="comment">//     qDebug() &lt;&lt; &quot;Curremt item: &quot; &lt;&lt; testItemId;</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="comment">//     ///setTestItemData(testItemId, &quot;Result&quot;, &quot;Running ...&quot;);</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="comment">//     test()-&gt;setCurrentTestItemData(&quot;Result&quot;, &quot;Running ...&quot;);</span></div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="comment">//     if(!setupInstruments(testItemId)){</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="comment">//       disconnectFromInstruments();</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="comment">//       return;</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="comment">//     }</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="comment">//     </span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="comment">//     measuredValue = multimeter-&gt;getMeasureValue();</span></div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="comment">//     qDebug() &lt;&lt; &quot;MeasuredValue: &quot; &lt;&lt; measuredValue;</span></div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="comment">//     </span></div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="comment">//     test()-&gt;setMeasuredValue(measuredValue, QVariant(), QVariant());</span></div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="comment">//     ///test()-&gt;setCurrentTestItemData(&quot;MeasuredValue&quot;, measuredValue.valueDouble());</span></div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="comment">//     ///test()-&gt;setCurrentTestItemData(&quot;Result&quot;, &quot;Finished&quot;);</span></div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="comment">//   }</span></div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  disconnectFromInstruments();</div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;}</div>
@@ -334,7 +337,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Sep 20 2014 15:23:35 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Oct 9 2014 17:04:10 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

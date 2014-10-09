@@ -90,7 +90,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p>This is the complete list of members for <a class="el" href="classmdt_sql_relation.html">mdtSqlRelation</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="classmdt_sql_relation.html#a5980d1df4582971666ffe1c1d7639799">addRelation</a>(const QString &amp;parentFieldName, const QString &amp;childFieldName, bool copyParentToChildOnInsertion, const QString &amp;operatorWithPreviousItem=&quot;AND&quot;)</td><td class="entry"><a class="el" href="classmdt_sql_relation.html">mdtSqlRelation</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classmdt_sql_relation.html#a53c649cbf59fef6ea61dd9f2ab40d770">addRelation</a>(const mdtSqlRelationInfoItem &amp;relationInfoItem)</td><td class="entry"><a class="el" href="classmdt_sql_relation.html">mdtSqlRelation</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classmdt_sql_relation.html#a5980d1df4582971666ffe1c1d7639799">addRelation</a>(const QString &amp;parentFieldName, const QString &amp;childFieldName, bool copyParentToChildOnInsertion, const QString &amp;operatorWithPreviousItem=&quot;AND&quot;)</td><td class="entry"><a class="el" href="classmdt_sql_relation.html">mdtSqlRelation</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classmdt_sql_relation.html#ac43366a401dc567b9aafd16058010e5f">addRelations</a>(const mdtSqlRelationInfo &amp;relationInfo)</td><td class="entry"><a class="el" href="classmdt_sql_relation.html">mdtSqlRelation</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classmdt_sql_relation.html#a86656619d8156638ebfbde2b334d40e2">childModelFilterApplied</a>()</td><td class="entry"><a class="el" href="classmdt_sql_relation.html">mdtSqlRelation</a></td><td class="entry"><span class="mlabel">signal</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classmdt_sql_relation.html#ae30eb691c46263cb4021f55b03d0d111">childModelIsEmpty</a>()</td><td class="entry"><a class="el" href="classmdt_sql_relation.html">mdtSqlRelation</a></td><td class="entry"><span class="mlabel">signal</span></td></tr>
   <tr><td class="entry"><a class="el" href="classmdt_sql_relation.html#a01469fb1baf7327ca6ddbcd1595e0d7c">clear</a>()</td><td class="entry"><a class="el" href="classmdt_sql_relation.html">mdtSqlRelation</a></td><td class="entry"></td></tr>
@@ -100,12 +102,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <tr><td class="entry"><a class="el" href="classmdt_sql_relation.html#a39fbecb027a5783277df1cc995485917">setParentCurrentIndex</a>(int index)</td><td class="entry"><a class="el" href="classmdt_sql_relation.html">mdtSqlRelation</a></td><td class="entry"><span class="mlabel">slot</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classmdt_sql_relation.html#a4381f7f5bd39337fa5cbccf9b87ff0f6">setParentCurrentIndex</a>(const QModelIndex &amp;index)</td><td class="entry"><a class="el" href="classmdt_sql_relation.html">mdtSqlRelation</a></td><td class="entry"><span class="mlabel">slot</span></td></tr>
   <tr><td class="entry"><a class="el" href="classmdt_sql_relation.html#a82a90b12bb78a4b0f9751244f134889d">setParentCurrentIndex</a>(const QModelIndex &amp;current, const QModelIndex &amp;previous)</td><td class="entry"><a class="el" href="classmdt_sql_relation.html">mdtSqlRelation</a></td><td class="entry"><span class="mlabel">slot</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classmdt_sql_relation.html#a5ac3a82c5d3e33b5e40b86acfe7e2a03">setParentModel</a>(QSqlTableModel *model)</td><td class="entry"><a class="el" href="classmdt_sql_relation.html">mdtSqlRelation</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classmdt_sql_relation.html#a22c7de1daa71abbde33199a08541310b">~mdtSqlRelation</a>()</td><td class="entry"><a class="el" href="classmdt_sql_relation.html">mdtSqlRelation</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classmdt_sql_relation.html#a583cbae232142029eeacffaac7bb5978">setParentCurrentRow</a>(int row)</td><td class="entry"><a class="el" href="classmdt_sql_relation.html">mdtSqlRelation</a></td><td class="entry"><span class="mlabel">slot</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classmdt_sql_relation.html#a5ac3a82c5d3e33b5e40b86acfe7e2a03">setParentModel</a>(QSqlTableModel *model)</td><td class="entry"><a class="el" href="classmdt_sql_relation.html">mdtSqlRelation</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classmdt_sql_relation.html#a22c7de1daa71abbde33199a08541310b">~mdtSqlRelation</a>()</td><td class="entry"><a class="el" href="classmdt_sql_relation.html">mdtSqlRelation</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Sep 20 2014 15:23:43 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Oct 9 2014 17:04:18 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

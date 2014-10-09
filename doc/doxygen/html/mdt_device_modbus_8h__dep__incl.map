@@ -1,10 +1,11 @@
 <map id="src/mdtdevice/mdtDeviceModbus.h" name="src/mdtdevice/mdtDeviceModbus.h">
-<area shape="rect" id="node3" href="$mdt_device_modbus_8cpp.html" title="src/mdtdevice/mdtDeviceModbus.cpp" alt="" coords="328,92,571,121"/>
-<area shape="rect" id="node5" href="$mdt_device_modbus_wago_8h.html" title="src/mdtdevice/mdtDeviceModbus\lWago.h" alt="" coords="595,83,811,130"/>
+<area shape="rect" id="node3" href="$mdt_device_modbus_8cpp.html" title="src/mdtdevice/mdtDeviceModbus.cpp" alt="" coords="439,92,681,121"/>
+<area shape="rect" id="node5" href="$mdt_device_modbus_wago_8h.html" title="src/mdtdevice/mdtDeviceModbus\lWago.h" alt="" coords="705,83,921,130"/>
 <area shape="rect" id="node7" href="$mdt_device_modbus_wago_8cpp.html" title="src/mdtdevice/mdtDeviceModbus\lWago.cpp" alt="" coords="5,187,221,234"/>
 <area shape="rect" id="node9" href="$mdt_device_modbus_wago_module_8cpp.html" title="src/mdtdevice/mdtDeviceModbus\lWagoModule.cpp" alt="" coords="245,187,461,234"/>
 <area shape="rect" id="node11" href="$mdt_device_modbus_wago_module_rtd_8cpp.html" title="src/mdtdevice/mdtDeviceModbus\lWagoModuleRtd.cpp" alt="" coords="485,187,701,234"/>
 <area shape="rect" id="node13" href="$mdt_modbus_io_tool_8cpp.html" title="src/mdttools/mdtModbusIo\lTool.cpp" alt="" coords="725,187,901,234"/>
 <area shape="rect" id="node15" href="$mdt_tt_basic_tester_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtBasicTester.cpp" alt="" coords="925,187,1088,234"/>
 <area shape="rect" id="node17" href="$mdt_tt_basic_test_node_calibration_tool_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtBasicTestNodeCalibration\lTool.cpp" alt="" coords="1112,179,1323,243"/>
+<area shape="rect" id="node19" href="$mdt_tt_test_cable_offset_tool_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestCableOffsetTool.cpp" alt="" coords="1347,187,1552,234"/>
 </map>

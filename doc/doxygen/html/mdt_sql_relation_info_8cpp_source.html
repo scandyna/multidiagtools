@@ -111,21 +111,33 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment"> ****************************************************************************/</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_sql_relation_info_8h.html">mdtSqlRelationInfo.h</a>&quot;</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
-<div class="line"><a name="l00023"></a><span class="lineno"><a class="code" href="classmdt_sql_relation_info.html#a2e1c524c9e6db3d5359c2639a794f65f">   23</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_sql_relation_info.html#a2e1c524c9e6db3d5359c2639a794f65f" title="Add a relation. ">mdtSqlRelationInfo::addRelation</a>(<span class="keyword">const</span> QString&amp; parentFieldName, <span class="keyword">const</span> QString&amp; childFieldName, <span class="keywordtype">bool</span> copyParentToChildOnInsertion, <span class="keyword">const</span> QString&amp; operatorWithPreviousItem)</div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="code" href="classmdt_sql_relation_info.html#a31c364e3a994f99f2f817b6e824fb723">   23</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_sql_relation_info.html#a31c364e3a994f99f2f817b6e824fb723" title="Set relation type. ">mdtSqlRelationInfo::setRelationType</a>(<a class="code" href="classmdt_sql_relation_info.html#af36930de03b1cb16976f35987df2029e" title="Relation type. ">mdtSqlRelationInfo::relationType_t</a> type)</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;{</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <a class="code" href="structmdt_sql_relation_info_item.html" title="Container for mdtSqlRelationInfo. ">mdtSqlRelationInfoItem</a> item;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  item.<a class="code" href="structmdt_sql_relation_info_item.html#a2ab8ed9e084a85cc0303b7d983f5e270">parentFieldName</a> = parentFieldName;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  item.<a class="code" href="structmdt_sql_relation_info_item.html#a472e45de5f24377bb92740ece7f34a07">childFieldName</a> = childFieldName;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  item.<a class="code" href="structmdt_sql_relation_info_item.html#ad0c6a47d4463fd80f1696bbfc6c3b402">copyParentToChildOnInsertion</a> = <a class="code" href="classmdt_sql_relation_info.html#a2b6d4736c32243e7e7d059aa62bd866f" title="Get copyParentToChildOnInsertion flag. ">copyParentToChildOnInsertion</a>;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  item.<a class="code" href="structmdt_sql_relation_info_item.html#a30754ae8014357e546d00698d1d79d32">relationOperatorWithPreviousItem</a> = operatorWithPreviousItem;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  pvRelationType = type;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;}</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="code" href="classmdt_sql_relation_info.html#a2e1c524c9e6db3d5359c2639a794f65f">   28</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_sql_relation_info.html#a2e1c524c9e6db3d5359c2639a794f65f" title="Add a relation. ">mdtSqlRelationInfo::addRelation</a>(<span class="keyword">const</span> QString&amp; parentFieldName, <span class="keyword">const</span> QString&amp; childFieldName, <span class="keywordtype">bool</span> copyParentToChildOnInsertion, <span class="keyword">const</span> QString&amp; operatorWithPreviousItem)</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;{</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <a class="code" href="structmdt_sql_relation_info_item.html" title="Container for mdtSqlRelationInfo. ">mdtSqlRelationInfoItem</a> item;</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  pvItems.append(item);</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;}</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  item.<a class="code" href="structmdt_sql_relation_info_item.html#a2ab8ed9e084a85cc0303b7d983f5e270">parentFieldName</a> = parentFieldName;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  item.<a class="code" href="structmdt_sql_relation_info_item.html#a472e45de5f24377bb92740ece7f34a07">childFieldName</a> = childFieldName;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  item.<a class="code" href="structmdt_sql_relation_info_item.html#ad0c6a47d4463fd80f1696bbfc6c3b402">copyParentToChildOnInsertion</a> = copyParentToChildOnInsertion;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  item.<a class="code" href="structmdt_sql_relation_info_item.html#a30754ae8014357e546d00698d1d79d32">relationOperatorWithPreviousItem</a> = operatorWithPreviousItem;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  pvItems.append(item);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;}</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="code" href="classmdt_sql_relation_info.html#a547e97218a9b01cc50d70270c615b76d">   40</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_sql_relation_info.html#a547e97218a9b01cc50d70270c615b76d" title="Clear. ">mdtSqlRelationInfo::clear</a>()</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;{</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  pvParentTableName.clear();</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  pvChildTableName.clear();</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  pvItems.clear();</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Sep 20 2014 15:23:34 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Oct 9 2014 17:04:09 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

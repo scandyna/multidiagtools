@@ -12,7 +12,8 @@ Base class for high level S\-Q\-L widgets A\-P\-I.
 
 
 
-Inheritance diagram for mdt\-Sql\-Form\-:\nopagebreak
+Inheritance diagram for mdt\-Sql\-Form\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -41,6 +42,8 @@ void \hyperlink{classmdt_sql_form_ab1fee5cecde1e2faf4b4c1bf1ee672b1}{set\-Main\-
 \begin{DoxyCompactList}\small\item\em Set main table U\-I. \end{DoxyCompactList}\item 
 {\footnotesize template$<$typename T $>$ }\\void \hyperlink{classmdt_sql_form_ab4e3d6512a68eba681be79d1602b6d44}{set\-Main\-Table\-Ui} (T \&ui)
 \begin{DoxyCompactList}\small\item\em Set main table U\-I. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classmdt_sql_form_a696cdbda10abab368ca9cbf1bbdd1bf1}{add\-Menus} (Q\-Menu\-Bar $\ast$menu\-Bar)
+\begin{DoxyCompactList}\small\item\em Add menus to menu bar. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_sql_form_abe4cc1a317d8e76aed7b408184c8712e}{set\-Main\-Table} (const Q\-String \&table\-Name, const Q\-String \&user\-Friendly\-Table\-Name, const Q\-String \&first\-Widget\-In\-Tab\-Order=Q\-String())
 \begin{DoxyCompactList}\small\item\em Set the main (or parent) table of the form. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_sql_form_aee00ca6122b6a18a72b861e691fd035a}{set\-Main\-Table} (const Q\-String \&table\-Name, const Q\-String \&user\-Friendly\-Table\-Name, Q\-Sql\-Database db, const Q\-String \&first\-Widget\-In\-Tab\-Order=Q\-String())
@@ -77,6 +80,8 @@ void \hyperlink{classmdt_sql_form_a37cd63844276e50bda58fe8edafc704e}{clear\-Main
 \begin{DoxyCompactList}\small\item\em Get last error. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_sql_form_a7521d231f24663ee1d2acb904387353b}{display\-Last\-Error} ()
 \begin{DoxyCompactList}\small\item\em Display last error in a message box. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_sql_form_a533d58efc54f9ecc180467cd13b8e511}{row\-Count} (const Q\-String \&table\-Name, bool fetch\-All=false)
+\begin{DoxyCompactList}\small\item\em Get row count for given table\-Name. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_sql_form_a268cedc485a92877a551cee34cf0eecc}{set\-Current\-Row} (const Q\-String \&field\-Name, const Q\-Variant \&match\-Data)
 \begin{DoxyCompactList}\small\item\em Set the first row that matches given criteria as current row. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_sql_form_abd4c01483812a53edc4be116a7dd2612}{set\-Current\-Row} (const Q\-String \&table\-Name, const Q\-String \&field\-Name, const Q\-Variant \&match\-Data)
@@ -91,6 +96,10 @@ Q\-Variant \hyperlink{classmdt_sql_form_a0c27d6a9ecbf0589f313c7193c632a62}{data}
 \begin{DoxyCompactList}\small\item\em Get data for given table , row and field name. \end{DoxyCompactList}\item 
 Q\-Variant \hyperlink{classmdt_sql_form_ab0c251a35567dd34f244fea715a7a3d4}{data} (const Q\-String \&table\-Name, int row, const Q\-String \&field\-Name, bool \&ok)
 \begin{DoxyCompactList}\small\item\em Get data for given table , row and field name. \end{DoxyCompactList}\item 
+Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_sql_form_a15a92b2116f2fd3a37344afb66b77a3d}{data\-List} (const Q\-String \&table\-Name, const Q\-String \&field\-Name, bool fetch\-All=true)
+\begin{DoxyCompactList}\small\item\em Get a list of data for given table and field name. \end{DoxyCompactList}\item 
+Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_sql_form_a271b8bc1adac05a36d2db24d0b9cdaff}{data\-List} (const Q\-String \&table\-Name, const Q\-String \&field\-Name, bool \&ok, bool fetch\-All=true)
+\begin{DoxyCompactList}\small\item\em Get a list of data for given table and field name. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_sql_form_a2138e4e1236a9b1c002825ddd9e59298}{insert} ()
 \begin{DoxyCompactList}\small\item\em Call insert method on main table controller. \end{DoxyCompactList}\item 
 virtual bool \hyperlink{classmdt_sql_form_a27fe6e45aa5d4d7782aad9833e6de20b}{setup\-Tables} ()
@@ -121,7 +130,7 @@ This class was made to have less code for common database G\-U\-I .
 
 When adding child table with \hyperlink{classmdt_sql_form_a9c48a7af83effbc50e9171a8d7ff3889}{add\-Child\-Table()} , a instance of \hyperlink{classmdt_sql_table_widget}{mdt\-Sql\-Table\-Widget} is created, and placed to a Q\-Tab\-Widget . It is also possible to add a non database related widget, using \hyperlink{classmdt_sql_form_a86174e002c2dd5496ab74a7eb67c614c}{add\-Child\-Widget()} . In this case, the given widget is simply added to the internal Q\-Tab\-Widget . 
 
-Definition at line 61 of file mdt\-Sql\-Form.\-h.
+Definition at line 62 of file mdt\-Sql\-Form.\-h.
 
 
 
@@ -246,6 +255,31 @@ Definition at line 134 of file mdt\-Sql\-Form.\-cpp.
 
 Referenced by add\-Child\-Table().
 
+\hypertarget{classmdt_sql_form_a696cdbda10abab368ca9cbf1bbdd1bf1}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!add\-Menus@{add\-Menus}}
+\index{add\-Menus@{add\-Menus}!mdtSqlForm@{mdt\-Sql\-Form}}
+\subsubsection[{add\-Menus}]{\setlength{\rightskip}{0pt plus 5cm}virtual void mdt\-Sql\-Form\-::add\-Menus (
+\begin{DoxyParamCaption}
+\item[{Q\-Menu\-Bar $\ast$}]{menu\-Bar}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{classmdt_sql_form_a696cdbda10abab368ca9cbf1bbdd1bf1}
+
+
+Add menus to menu bar. 
+
+This method is called by \hyperlink{classmdt_sql_window}{mdt\-Sql\-Window}, and let subclass (of \hyperlink{classmdt_sql_form}{mdt\-Sql\-Form}) add menus. Add all needed stuff using given menu\-Bar pointer.
+
+This default implementation dows nothing. 
+
+Reimplemented in \hyperlink{classmdt_tt_logical_test_cable_editor_a2cd7a8a56c8ce4f6aa1c7cd8c3add0c5}{mdt\-Tt\-Logical\-Test\-Cable\-Editor}, and \hyperlink{classmdt_tt_test_cable_editor_afc87688d1fd0e3a48ca5239b95154827}{mdt\-Tt\-Test\-Cable\-Editor}.
+
+
+
+Definition at line 120 of file mdt\-Sql\-Form.\-h.
+
+
+
+Referenced by mdt\-Sql\-Window\-::set\-Sql\-Form().
+
 \hypertarget{classmdt_sql_form_a1e14cbb5bf04d2eb1c703862a6084031}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!all\-Data\-Are\-Saved@{all\-Data\-Are\-Saved}}
 \index{all\-Data\-Are\-Saved@{all\-Data\-Are\-Saved}!mdtSqlForm@{mdt\-Sql\-Form}}
 \subsubsection[{all\-Data\-Are\-Saved}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Sql\-Form\-::all\-Data\-Are\-Saved (
@@ -264,7 +298,7 @@ true if all data are saved, false if a S\-Q\-L table controller has pending data
 \end{DoxyReturn}
 
 
-Definition at line 394 of file mdt\-Sql\-Form.\-h.
+Definition at line 450 of file mdt\-Sql\-Form.\-h.
 
 
 
@@ -288,7 +322,7 @@ Internal state machine must run (see \hyperlink{classmdt_sql_form_a101b73d24864d
 \end{DoxyPrecond}
 
 
-Definition at line 278 of file mdt\-Sql\-Form.\-h.
+Definition at line 306 of file mdt\-Sql\-Form.\-h.
 
 \hypertarget{classmdt_sql_form_aca283557b7e2586779cb5c498d388f14}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!current\-Data@{current\-Data}}
 \index{current\-Data@{current\-Data}!mdtSqlForm@{mdt\-Sql\-Form}}
@@ -309,7 +343,7 @@ Current value, or a invalid Q\-Variant on error (f.\-ex. table or field not foun
 \end{DoxyReturn}
 
 
-Definition at line 335 of file mdt\-Sql\-Form.\-h.
+Definition at line 371 of file mdt\-Sql\-Form.\-h.
 
 \hypertarget{classmdt_sql_form_af24711f9c18a1009352b62d47b9758d7}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!current\-Data@{current\-Data}}
 \index{current\-Data@{current\-Data}!mdtSqlForm@{mdt\-Sql\-Form}}
@@ -331,7 +365,7 @@ Current value, or a invalid Q\-Variant on error (f.\-ex. table or field not foun
 \end{DoxyReturn}
 
 
-Definition at line 246 of file mdt\-Sql\-Form.\-cpp.
+Definition at line 256 of file mdt\-Sql\-Form.\-cpp.
 
 \hypertarget{classmdt_sql_form_a0c27d6a9ecbf0589f313c7193c632a62}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!data@{data}}
 \index{data@{data}!mdtSqlForm@{mdt\-Sql\-Form}}
@@ -353,7 +387,7 @@ Current value, or a invalid Q\-Variant on error (f.\-ex. table, row or field not
 \end{DoxyReturn}
 
 
-Definition at line 361 of file mdt\-Sql\-Form.\-h.
+Definition at line 397 of file mdt\-Sql\-Form.\-h.
 
 \hypertarget{classmdt_sql_form_ab0c251a35567dd34f244fea715a7a3d4}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!data@{data}}
 \index{data@{data}!mdtSqlForm@{mdt\-Sql\-Form}}
@@ -376,7 +410,7 @@ Current value, or a invalid Q\-Variant on error (f.\-ex. table, row or field not
 \end{DoxyReturn}
 
 
-Definition at line 256 of file mdt\-Sql\-Form.\-cpp.
+Definition at line 266 of file mdt\-Sql\-Form.\-cpp.
 
 \hypertarget{classmdt_sql_form_ac8423f91a1f8a6fa7408cd61be86a89c}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!database@{database}}
 \index{database@{database}!mdtSqlForm@{mdt\-Sql\-Form}}
@@ -391,7 +425,42 @@ Get database that was given by constructor.
 
 
 
-Definition at line 215 of file mdt\-Sql\-Form.\-h.
+Definition at line 228 of file mdt\-Sql\-Form.\-h.
+
+\hypertarget{classmdt_sql_form_a15a92b2116f2fd3a37344afb66b77a3d}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!data\-List@{data\-List}}
+\index{data\-List@{data\-List}!mdtSqlForm@{mdt\-Sql\-Form}}
+\subsubsection[{data\-List}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$Q\-Variant$>$ mdt\-Sql\-Form\-::data\-List (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{table\-Name, }
+\item[{const Q\-String \&}]{field\-Name, }
+\item[{bool}]{fetch\-All = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_form_a15a92b2116f2fd3a37344afb66b77a3d}
+
+
+Get a list of data for given table and field name. 
+
+If fetch\-All is true, all available data will be fetched from database (regarding applied filter), else only cached data are returned (see Q\-Sql\-Query\-Model\-::fetch\-More() for details). 
+
+Definition at line 420 of file mdt\-Sql\-Form.\-h.
+
+\hypertarget{classmdt_sql_form_a271b8bc1adac05a36d2db24d0b9cdaff}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!data\-List@{data\-List}}
+\index{data\-List@{data\-List}!mdtSqlForm@{mdt\-Sql\-Form}}
+\subsubsection[{data\-List}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ Q\-Variant $>$ mdt\-Sql\-Form\-::data\-List (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{table\-Name, }
+\item[{const Q\-String \&}]{field\-Name, }
+\item[{bool \&}]{ok, }
+\item[{bool}]{fetch\-All = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_form_a271b8bc1adac05a36d2db24d0b9cdaff}
+
+
+Get a list of data for given table and field name. 
+
+If fetch\-All is true, all available data will be fetched from database (regarding applied filter), else only cached data are returned (see Q\-Sql\-Query\-Model\-::fetch\-More() for details). 
+
+Definition at line 276 of file mdt\-Sql\-Form.\-cpp.
 
 \hypertarget{classmdt_sql_form_a7521d231f24663ee1d2acb904387353b}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!display\-Last\-Error@{display\-Last\-Error}}
 \index{display\-Last\-Error@{display\-Last\-Error}!mdtSqlForm@{mdt\-Sql\-Form}}
@@ -429,7 +498,7 @@ Call insert method on main table controller.
 
 
 
-Definition at line 380 of file mdt\-Sql\-Form.\-h.
+Definition at line 436 of file mdt\-Sql\-Form.\-h.
 
 \hypertarget{classmdt_sql_form_a04724293298421c404e93c58015cda5e}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!last\-Error@{last\-Error}}
 \index{last\-Error@{last\-Error}!mdtSqlForm@{mdt\-Sql\-Form}}
@@ -463,7 +532,23 @@ Get main table controller.
 
 Can return a Null pointer if no controller is assigned to rquested table, or it exists, but is not of requested type T. 
 
-Definition at line 188 of file mdt\-Sql\-Form.\-h.
+Definition at line 201 of file mdt\-Sql\-Form.\-h.
+
+\hypertarget{classmdt_sql_form_a533d58efc54f9ecc180467cd13b8e511}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!row\-Count@{row\-Count}}
+\index{row\-Count@{row\-Count}!mdtSqlForm@{mdt\-Sql\-Form}}
+\subsubsection[{row\-Count}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Sql\-Form\-::row\-Count (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{table\-Name, }
+\item[{bool}]{fetch\-All = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_form_a533d58efc54f9ecc180467cd13b8e511}
+
+
+Get row count for given table\-Name. 
+
+Note\-: this will search internall controller at each request. If repeated calls of this method is required, get a instance of needed controller with \hyperlink{classmdt_sql_form_ae812518bc0c786b918dbc63bc8a69741}{table\-Controller()}, and call its \hyperlink{classmdt_sql_form_a533d58efc54f9ecc180467cd13b8e511}{row\-Count()} method. 
+
+Definition at line 218 of file mdt\-Sql\-Form.\-cpp.
 
 \hypertarget{classmdt_sql_form_a2a2f564fe934cc8997b07f90abb771e1}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!select@{select}}
 \index{select@{select}!mdtSqlForm@{mdt\-Sql\-Form}}
@@ -525,7 +610,7 @@ Set (update) data of current row (record) for given table and field name.
 
 Note that S\-Q\-L table controller related to given table\-Name is searched at each request. If several access to set\-Current\-Data is needed, it can be better to get a pointer to related controller with \hyperlink{classmdt_sql_form_ae812518bc0c786b918dbc63bc8a69741}{table\-Controller()} , and call his \hyperlink{classmdt_sql_form_aa377e70f4a2e865b0b696957c0fca766}{set\-Current\-Data()} method. 
 
-Definition at line 232 of file mdt\-Sql\-Form.\-cpp.
+Definition at line 242 of file mdt\-Sql\-Form.\-cpp.
 
 
 
@@ -561,7 +646,7 @@ True if matching record was found (in this case, set\-Current\-Index() is called
 \end{DoxyReturn}
 
 
-Definition at line 301 of file mdt\-Sql\-Form.\-h.
+Definition at line 337 of file mdt\-Sql\-Form.\-h.
 
 \hypertarget{classmdt_sql_form_abd4c01483812a53edc4be116a7dd2612}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!set\-Current\-Row@{set\-Current\-Row}}
 \index{set\-Current\-Row@{set\-Current\-Row}!mdtSqlForm@{mdt\-Sql\-Form}}
@@ -590,7 +675,7 @@ True if matching record was found (in this case, set\-Current\-Index() is called
 \end{DoxyReturn}
 
 
-Definition at line 218 of file mdt\-Sql\-Form.\-cpp.
+Definition at line 228 of file mdt\-Sql\-Form.\-cpp.
 
 
 
@@ -680,6 +765,8 @@ Set a filter on main table.
 
 Set filter based on S\-Q\-L query W\-H\-E\-R\-E part, without the W\-H\-E\-R\-E keyword (f.\-ex. Id\-\_\-\-P\-K = 15)
 
+Note\-: if internal controller's model is allready populated with data, i.\-e. \hyperlink{classmdt_sql_form_a2a2f564fe934cc8997b07f90abb771e1}{select()} was called before, filter is applied directly, else, select must be called explicitly after \hyperlink{classmdt_sql_form_a86c870d9875efbd83262f5dd28df5177}{set\-Main\-Table\-Filter()} (this is the same behaviour as \hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model}).
+
 \begin{DoxyPrecond}{Precondition}
 Main table must be set with \hyperlink{classmdt_sql_form_abe4cc1a317d8e76aed7b408184c8712e}{set\-Main\-Table()} 
 
@@ -687,7 +774,7 @@ Internal state machine must run (see \hyperlink{classmdt_sql_form_a101b73d24864d
 \end{DoxyPrecond}
 
 
-Definition at line 238 of file mdt\-Sql\-Form.\-h.
+Definition at line 256 of file mdt\-Sql\-Form.\-h.
 
 \hypertarget{classmdt_sql_form_abfc6d7f49debf02f5016923cbd422f2f}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!set\-Main\-Table\-Filter@{set\-Main\-Table\-Filter}}
 \index{set\-Main\-Table\-Filter@{set\-Main\-Table\-Filter}!mdtSqlForm@{mdt\-Sql\-Form}}
@@ -710,6 +797,8 @@ Set a filter on main table.
 \end{DoxyParams}
 Internally, a S\-Q\-L statement is generated linke\-: field\-Name = match\-Data
 
+Note\-: if internal controller's model is allready populated with data, i.\-e. \hyperlink{classmdt_sql_form_a2a2f564fe934cc8997b07f90abb771e1}{select()} was called before, filter is applied directly, else, select must be called explicitly after \hyperlink{classmdt_sql_form_a86c870d9875efbd83262f5dd28df5177}{set\-Main\-Table\-Filter()} (this is the same behaviour as \hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model}).
+
 \begin{DoxyPrecond}{Precondition}
 Main table must be set with \hyperlink{classmdt_sql_form_abe4cc1a317d8e76aed7b408184c8712e}{set\-Main\-Table()} 
 
@@ -717,7 +806,7 @@ Internal state machine must run (see \hyperlink{classmdt_sql_form_a101b73d24864d
 \end{DoxyPrecond}
 
 
-Definition at line 253 of file mdt\-Sql\-Form.\-h.
+Definition at line 276 of file mdt\-Sql\-Form.\-h.
 
 \hypertarget{classmdt_sql_form_a61c0a1a4a2c53ca5571168e9761adff8}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!set\-Main\-Table\-Filter@{set\-Main\-Table\-Filter}}
 \index{set\-Main\-Table\-Filter@{set\-Main\-Table\-Filter}!mdtSqlForm@{mdt\-Sql\-Form}}
@@ -740,6 +829,8 @@ Set a filter on main table.
 \end{DoxyParams}
 Internally, a S\-Q\-L statement is generated linke\-: field\-Name I\-N (match\-Data\mbox{[}0\mbox{]}, match\-Data\mbox{[}1\mbox{]}, ...)
 
+Note\-: if internal controller's model is allready populated with data, i.\-e. \hyperlink{classmdt_sql_form_a2a2f564fe934cc8997b07f90abb771e1}{select()} was called before, filter is applied directly, else, select must be called explicitly after \hyperlink{classmdt_sql_form_a86c870d9875efbd83262f5dd28df5177}{set\-Main\-Table\-Filter()} (this is the same behaviour as \hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model}).
+
 \begin{DoxyPrecond}{Precondition}
 Main table must be set with \hyperlink{classmdt_sql_form_abe4cc1a317d8e76aed7b408184c8712e}{set\-Main\-Table()} 
 
@@ -747,7 +838,7 @@ Internal state machine must run (see \hyperlink{classmdt_sql_form_a101b73d24864d
 \end{DoxyPrecond}
 
 
-Definition at line 268 of file mdt\-Sql\-Form.\-h.
+Definition at line 296 of file mdt\-Sql\-Form.\-h.
 
 \hypertarget{classmdt_sql_form_ae3651d94b995dc84665f934ba9c7458f}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!set\-Main\-Table\-Ui@{set\-Main\-Table\-Ui}}
 \index{set\-Main\-Table\-Ui@{set\-Main\-Table\-Ui}!mdtSqlForm@{mdt\-Sql\-Form}}
@@ -762,7 +853,7 @@ Set main table U\-I.
 
 Usefull for U\-I created with Qt\-Designer 
 
-Definition at line 93 of file mdt\-Sql\-Form.\-h.
+Definition at line 94 of file mdt\-Sql\-Form.\-h.
 
 \hypertarget{classmdt_sql_form_ab4e3d6512a68eba681be79d1602b6d44}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!set\-Main\-Table\-Ui@{set\-Main\-Table\-Ui}}
 \index{set\-Main\-Table\-Ui@{set\-Main\-Table\-Ui}!mdtSqlForm@{mdt\-Sql\-Form}}
@@ -777,7 +868,7 @@ Set main table U\-I.
 
 Usefull for U\-I created with Qt\-Designer 
 
-Definition at line 104 of file mdt\-Sql\-Form.\-h.
+Definition at line 105 of file mdt\-Sql\-Form.\-h.
 
 
 
@@ -815,11 +906,11 @@ Setup tables.
 
 Must be re-\/implemented in subclass, default implementation does nothing . 
 
-Reimplemented in \hyperlink{classmdt_cl_unit_editor_a962cfbdda9400a7cf99ba38eec0a4155}{mdt\-Cl\-Unit\-Editor}, \hyperlink{classmdt_cl_article_editor_aded93cdb635e69fdba0f8b59054c8fce}{mdt\-Cl\-Article\-Editor}, \hyperlink{classmdt_cl_vehicle_type_editor_aa23c76e65f52575a31616267757603ae}{mdt\-Cl\-Vehicle\-Type\-Editor}, \hyperlink{classmdt_tt_test_connection_cable_editor_a2a380953c8e3dce63532c70c484f2b91}{mdt\-Tt\-Test\-Connection\-Cable\-Editor}, \hyperlink{classmdt_cl_connector_editor_a6f3fdb1041ec8d562aac777471b7892f}{mdt\-Cl\-Connector\-Editor}, \hyperlink{classmdt_tt_test_node_editor_ac8f144b6fb17a2dd6eec9eae7a824b6b}{mdt\-Tt\-Test\-Node\-Editor}, \hyperlink{classmdt_cl_link_beam_editor_aff3668706e304470e55165d036feae80}{mdt\-Cl\-Link\-Beam\-Editor}, \hyperlink{classmdt_tt_test_model_item_editor_a1281b469c8d9493e2ce97923c7ce9b33}{mdt\-Tt\-Test\-Model\-Item\-Editor}, and \hyperlink{classmdt_tt_test_model_editor_acb871c3218f3d458b5f9ba5e49c74df9}{mdt\-Tt\-Test\-Model\-Editor}.
+Reimplemented in \hyperlink{classmdt_cl_unit_editor_a962cfbdda9400a7cf99ba38eec0a4155}{mdt\-Cl\-Unit\-Editor}, \hyperlink{classmdt_cl_article_editor_aded93cdb635e69fdba0f8b59054c8fce}{mdt\-Cl\-Article\-Editor}, \hyperlink{classmdt_tt_logical_test_cable_editor_a5b2d693df300953d3af67dad87cb5a0b}{mdt\-Tt\-Logical\-Test\-Cable\-Editor}, \hyperlink{classmdt_cl_vehicle_type_editor_aa23c76e65f52575a31616267757603ae}{mdt\-Cl\-Vehicle\-Type\-Editor}, \hyperlink{classmdt_cl_connector_editor_a6f3fdb1041ec8d562aac777471b7892f}{mdt\-Cl\-Connector\-Editor}, \hyperlink{classmdt_tt_test_cable_editor_a8feb6a7ed2e1ad3de6e1c61cca8e5185}{mdt\-Tt\-Test\-Cable\-Editor}, \hyperlink{classmdt_tt_test_node_editor_ac8f144b6fb17a2dd6eec9eae7a824b6b}{mdt\-Tt\-Test\-Node\-Editor}, \hyperlink{classmdt_cl_link_beam_editor_aff3668706e304470e55165d036feae80}{mdt\-Cl\-Link\-Beam\-Editor}, \hyperlink{classmdt_tt_test_model_item_editor_a1281b469c8d9493e2ce97923c7ce9b33}{mdt\-Tt\-Test\-Model\-Item\-Editor}, and \hyperlink{classmdt_tt_test_model_editor_acb871c3218f3d458b5f9ba5e49c74df9}{mdt\-Tt\-Test\-Model\-Editor}.
 
 
 
-Definition at line 266 of file mdt\-Sql\-Form.\-cpp.
+Definition at line 286 of file mdt\-Sql\-Form.\-cpp.
 
 \hypertarget{classmdt_sql_form_a6a17f32077fb7cc33139c3dc26a8d011}{\index{mdt\-Sql\-Form@{mdt\-Sql\-Form}!sql\-Table\-Widget@{sql\-Table\-Widget}}
 \index{sql\-Table\-Widget@{sql\-Table\-Widget}!mdtSqlForm@{mdt\-Sql\-Form}}
@@ -864,7 +955,7 @@ Get a table controller.
 
 Can return a Null pointer if no controller is assigned to rquested table, or it exists, but is not of requested type T. 
 
-Definition at line 200 of file mdt\-Sql\-Form.\-h.
+Definition at line 213 of file mdt\-Sql\-Form.\-h.
 
 
 
@@ -874,7 +965,7 @@ Definition at line 200 of file mdt\-Sql\-Form.\-h.
 \subsubsection[{pv\-Last\-Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Error} mdt\-Sql\-Form\-::pv\-Last\-Error\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_sql_form_afc24e8dedd1249a29708347fdff560fd}
 
 
-Definition at line 398 of file mdt\-Sql\-Form.\-h.
+Definition at line 454 of file mdt\-Sql\-Form.\-h.
 
 
 
