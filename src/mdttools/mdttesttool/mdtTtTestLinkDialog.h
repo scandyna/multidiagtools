@@ -23,6 +23,7 @@
 
 #include "mdtTtTestLinkData.h"
 #include "ui_mdtTtTestLinkDialog.h"
+#include "mdtClLink.h"
 #include <QSqlDatabase>
 #include <QDialog>
 #include <QVariant>
@@ -44,6 +45,10 @@ class mdtTtTestLinkDialog : public QDialog, public Ui::mdtTtTestLinkDialog
   /*! \brief
    */
   ~mdtTtTestLinkDialog();
+
+  /*! \brief Set physical test cable link
+   */
+  void setTestCableLink(const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId);
 
   /*! \brief Set test node unit
    */
@@ -75,9 +80,13 @@ class mdtTtTestLinkDialog : public QDialog, public Ui::mdtTtTestLinkDialog
 
   /*! \brief Get link data
    */
-  inline mdtTtTestLinkData linkData() const { return pvLinkData; };
+  inline mdtTtTestLinkData linkData() const { return pvTestLinkData; };
 
  private slots:
+
+  /*! \brief Select test cable link
+   */
+  void selectTestCableLink();
 
   /*! \brief Select test unit
    */
@@ -109,6 +118,16 @@ class mdtTtTestLinkDialog : public QDialog, public Ui::mdtTtTestLinkDialog
 
  private:
 
+  /*! \brief Display test cable
+   *
+   * Will display data from physical and logical test cable
+   */
+  void displayTestCable();
+
+  /*! \brief Display test cable link
+   */
+  void displayTestCableLink();
+
   /*! \brief Display test node unit informations
    */
   void displayTestNodeUnit();
@@ -128,7 +147,8 @@ class mdtTtTestLinkDialog : public QDialog, public Ui::mdtTtTestLinkDialog
   Q_DISABLE_COPY(mdtTtTestLinkDialog);
 
   QSqlDatabase pvDatabase;
-  mdtTtTestLinkData pvLinkData;
+  mdtTtTestLinkData pvTestLinkData;
+  mdtClLinkData pvTestCableLinkData;
   QVariant pvTestNodeUnitId;
   QList<QVariant> pvTestNodeUnitSelectionIdList;
   QVariant pvDutUnitId;

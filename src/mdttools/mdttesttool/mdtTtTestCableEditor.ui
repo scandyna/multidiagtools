@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>598</width>
-    <height>86</height>
+    <width>860</width>
+    <height>117</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,6 +19,13 @@
      <property name="fieldGrowthPolicy">
       <enum>QFormLayout::ExpandingFieldsGrow</enum>
      </property>
+     <item row="0" column="0">
+      <widget class="QLabel" name="lbSchemaPosition">
+       <property name="text">
+        <string>Schema pos.:</string>
+       </property>
+      </widget>
+     </item>
      <item row="0" column="1">
       <widget class="QLineEdit" name="fld_SchemaPosition"/>
      </item>
@@ -32,13 +39,6 @@
      <item row="1" column="1">
       <widget class="QLineEdit" name="fld_Identification"/>
      </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="lbOffsetResetDate">
-       <property name="text">
-        <string>Last offset reset:</string>
-       </property>
-      </widget>
-     </item>
      <item row="2" column="1">
       <widget class="QLabel" name="fld_OffsetResetDate">
        <property name="text">
@@ -46,10 +46,38 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="lbSchemaPosition">
+     <item row="2" column="0">
+      <widget class="QLabel" name="lbOffsetResetDate">
        <property name="text">
-        <string>Schema pos.:</string>
+        <string>Last offset reset:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLabel" name="lbOffsetResetTestModelDesignationEN">
+       <property name="text">
+        <string>Test description</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="lbOffsetResetTestModelDesignationENLabel">
+       <property name="text">
+        <string>Offset reset test:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QLabel" name="lbOffsetResetTestModelKey">
+       <property name="text">
+        <string>Test model key</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="lbOffsetResetTestModelKeyLabel">
+       <property name="text">
+        <string>Offset reset test key:</string>
        </property>
       </widget>
      </item>

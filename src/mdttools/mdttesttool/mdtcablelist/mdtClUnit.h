@@ -98,6 +98,18 @@ class mdtClUnit : public mdtTtBase
    */
   mdtClUnitConnectionData getConnectionData(const QVariant & unitConnectionId, bool includeArticleConnectionData, bool *ok);
 
+  /*! \brief Get unit contact name for given unit connection ID
+   */
+  inline QVariant getContactName(const QVariant & unitConnectionId)
+  {
+    bool ok;
+    return getContactName(unitConnectionId, ok);
+  }
+
+  /*! \brief Get unit contact name for given unit connection ID
+   */
+  QVariant getContactName(const QVariant & unitConnectionId, bool  & ok);
+
   /*! \brief Get unit connector data
    *
    * \param unitConnectorId Unit connector ID
@@ -128,6 +140,18 @@ class mdtClUnit : public mdtTtBase
   /*! \brief Get unit connector ID of given unit connection ID
    */
   QVariant getConnectorIdOfConnectionId(const QVariant & unitConnectionId, bool *ok);
+
+  /*! \brief Get unit connector name for given unit connection ID
+   */
+  inline QVariant getConnectorNameOfConnectionId(const QVariant & unitConnectionId)
+  {
+    bool ok;
+    return getConnectorNameOfConnectionId(unitConnectionId, ok);
+  }
+
+  /*! \brief Get unit connector name for given unit connection ID
+   */
+  QVariant getConnectorNameOfConnectionId(const QVariant & unitConnectionId, bool  & ok);
 
   /*! \brief Add unit connections into unit connector data based on a list of given connector contact ID list
    *

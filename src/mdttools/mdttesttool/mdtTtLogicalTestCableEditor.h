@@ -29,7 +29,6 @@
 #include <QList>
 
 class QWidget;
-class mdtTtTestCableOffsetTool;
 
 /*! \brief Class for logical test connection cable edition
  */
@@ -142,7 +141,6 @@ class mdtTtLogicalTestCableEditor : public mdtSqlForm
 
   Q_DISABLE_COPY(mdtTtLogicalTestCableEditor);
 
-  mdtTtTestCableOffsetTool *pvCableOffsetTool;
 };
 
 #endif // #ifndef MDT_TT_LOGICAL_TEST_CABLE_EDITOR_H

@@ -28,7 +28,6 @@
 #include "mdtSqlTableWidget.h"
 #include "mdtTtTestLinkDialog.h"
 #include "mdtSqlTableViewController.h"
-#include "mdtTtTestCableOffsetTool.h"
 #include <QSqlQueryModel>
 #include <QSqlTableModel>
 #include <QModelIndex>
@@ -48,7 +47,6 @@
 mdtTtLogicalTestCableEditor::mdtTtLogicalTestCableEditor(QWidget *parent, QSqlDatabase db)
  : mdtSqlForm(parent, db)
 {
-  pvCableOffsetTool = new mdtTtTestCableOffsetTool(db, this);
 }
 
 bool mdtTtLogicalTestCableEditor::setupTables()
@@ -70,14 +68,6 @@ bool mdtTtLogicalTestCableEditor::setupTables()
 
 void mdtTtLogicalTestCableEditor::addMenus(QMenuBar* menuBar)
 {
-  Q_ASSERT(menuBar != 0);
-
-  QMenu *offsetResetMenu;
-  QAction *actRunOffsetReset;
-
-  offsetResetMenu = menuBar->addMenu(tr("&Offset reset"));
-  actRunOffsetReset = offsetResetMenu->addAction(QIcon::fromTheme("system-run"), tr("&Run"));
-  connect(actRunOffsetReset, SIGNAL(triggered(bool)), pvCableOffsetTool, SLOT(runOffsetReset()));
 }
 
 void mdtTtLogicalTestCableEditor::addTestNodeUnit()
@@ -96,9 +86,6 @@ void mdtTtLogicalTestCableEditor::addTestNodeUnit()
   }
   // Setup and show dialog
   sql = tcc.sqlForTestNodeUnitSelection(testCableId);
-  
-  qDebug() << "SQL: " << sql;
-  
   selectionDialog.setQuery(sql, database(), false);
   selectionDialog.setMessage(tr("Select test connector to use:"));
   selectionDialog.setColumnHidden("SeriesNumber", true);
@@ -184,9 +171,6 @@ void mdtTtLogicalTestCableEditor::addDutUnit()
   }
   // Setup and show dialog
   sql = tcc.sqlForDutUnitSelection(testCableId);
-  
-  qDebug() << "SQL: " << sql;
-  
   selectionDialog.setQuery(sql, database(), false);
   selectionDialog.setMessage(tr("Select a unit (DUT):"));
   selectionDialog.setColumnHidden("VehicleType_Id_PK", true);
@@ -267,10 +251,6 @@ void mdtTtLogicalTestCableEditor::addLink()
   QList<QVariant> testNodeUnitIdList;
   QVariant dutUnitId;
   QList<QVariant> dutUnitIdList;
-  ///QSqlTableModel *m;
-  ///QModelIndex index;
-  ///int row;
-  ///int col;
 
   // Setup link data
   if(!linkData.setup(database())){
@@ -286,31 +266,9 @@ void mdtTtLogicalTestCableEditor::addLink()
   // Get test node units
   testNodeUnitId = currentData("LogicalTestCable_TestNodeUnit_view", "TestNodeUnit_Id_FK");
   testNodeUnitIdList = dataList("LogicalTestCable_TestNodeUnit_view", "TestNodeUnit_Id_FK");
-  /**
-  ///m = model("TestCable_TestNodeUnit_view");
-  m = 0;
-  Q_ASSERT(m != 0);
-  col = m->fieldIndex("TestNodeUnit_Id_FK");
-  Q_ASSERT(col >= 0);
-  for(row = 0; row < m->rowCount(); ++row){
-    index = m->index(row, col);
-    testNodeUnitIdList.append(m->data(index));
-  }
-  */
   // Get DUT units
   dutUnitId = currentData("LogicalTestCable_DutUnit_view", "DutUnit_Id_FK");
   dutUnitIdList = dataList("LogicalTestCable_DutUnit_view", "DutUnit_Id_FK");
-  /**
-  ///m = model("TestCable_DutUnit_view");
-  m = 0;
-  Q_ASSERT(m != 0);
-  col = m->fieldIndex("DutUnit_Id_FK");
-  Q_ASSERT(col >= 0);
-  for(row = 0; row < m->rowCount(); ++row){
-    index = m->index(row, col);
-    dutUnitIdList.append(m->data(index));
-  }
-  */
   // Setup and show dialog
   linkData.setValue("LogicalTestCable_Id_FK", cableId);
   dialog.setLinkData(linkData);
@@ -344,12 +302,6 @@ void mdtTtLogicalTestCableEditor::editLink()
   QVariant dutUnitId;
   QList<QVariant> dutUnitIdList;
   QVariant dutConnectionId;
-  /**
-  QSqlTableModel *m;
-  QModelIndex index;
-  int row;
-  int col;
-  */
   mdtTtTestLinkData linkData;
   bool ok;
 
@@ -368,31 +320,9 @@ void mdtTtLogicalTestCableEditor::editLink()
   // Get test node units
   testNodeUnitId = widget->currentData("Unit_Id_FK_PK");
   testNodeUnitIdList = dataList("LogicalTestCable_TestNodeUnit_view", "TestNodeUnit_Id_FK");
-  ///m = model("TestCable_TestNodeUnit_view");
-  /**
-  m = 0;
-  Q_ASSERT(m != 0);
-  col = m->fieldIndex("TestNodeUnit_Id_FK");
-  Q_ASSERT(col >= 0);
-  for(row = 0; row < m->rowCount(); ++row){
-    index = m->index(row, col);
-    testNodeUnitIdList.append(m->data(index));
-  }
-  */
   // Get DUT units
   dutUnitId = widget->currentData("DutUnitId");
   dutUnitIdList = dataList("LogicalTestCable_DutUnit_view", "DutUnit_Id_FK");
-  ///m = model("TestCable_DutUnit_view");
-  /**
-  m = 0;
-  Q_ASSERT(m != 0);
-  col = m->fieldIndex("DutUnit_Id_FK");
-  Q_ASSERT(col >= 0);
-  for(row = 0; row < m->rowCount(); ++row){
-    index = m->index(row, col);
-    dutUnitIdList.append(m->data(index));
-  }
-  */
   // Get link data
   linkData = tcc.getLinkData(testConnectionId, dutConnectionId, &ok);
   if(!ok){
@@ -884,7 +814,6 @@ bool mdtTtLogicalTestCableEditor::setupTestLinkTable()
   ///QPushButton *pbGenerateLinks;
   QPushButton *pbRemoveLinks;
   mdtSqlRelationInfo relationInfo;
-  std::shared_ptr<mdtSqlTableViewController> tvc;
 
   // Add test link table
   relationInfo.setChildTableName("TestLink_view");
@@ -892,10 +821,6 @@ bool mdtTtLogicalTestCableEditor::setupTestLinkTable()
   if(!addChildTable(relationInfo, tr("Links"))){
     return false;
   }
-  // Get added table controller and set it to offset tool
-  tvc = tableController<mdtSqlTableViewController>("TestLink_view");
-  Q_ASSERT(tvc);
-  pvCableOffsetTool->setTestLinkTableController(tvc);
   // Get added sql widget and do some setup on it
   widget = sqlTableWidget("TestLink_view");
   Q_ASSERT(widget != 0);

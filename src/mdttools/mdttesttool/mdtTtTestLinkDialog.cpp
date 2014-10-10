@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtTtTestLinkDialog.h"
+#include "mdtClLinkData.h"
 #include "mdtClUnit.h"
 #include "mdtTtTestNodeUnit.h"
 #include "mdtTtTestNodeUnitData.h"
@@ -39,24 +40,38 @@ mdtTtTestLinkDialog::mdtTtTestLinkDialog(QWidget *parent, QSqlDatabase db)
  : QDialog(parent)
 {
   pvDatabase = db;
-  // Setup link data
-  if(!pvLinkData.setup(pvDatabase)){
+  // Setup test link data
+  if(!pvTestLinkData.setup(pvDatabase)){
     QMessageBox msgBox;
-    msgBox.setText(pvLinkData.lastError().text());
-    msgBox.setDetailedText(pvLinkData.lastError().systemText());
+    msgBox.setText(pvTestLinkData.lastError().text());
+    msgBox.setDetailedText(pvTestLinkData.lastError().systemText());
     msgBox.setIcon(QMessageBox::Critical);
     msgBox.setWindowTitle(tr("Test link data setup error"));
     msgBox.exec();
     reject();
     return;
   }
+  // Setup test link data
+  if(!pvTestCableLinkData.setup(pvDatabase)){
+    QMessageBox msgBox;
+    msgBox.setText(pvTestCableLinkData.lastError().text());
+    msgBox.setDetailedText(pvTestCableLinkData.lastError().systemText());
+    msgBox.setIcon(QMessageBox::Critical);
+    msgBox.setWindowTitle(tr("Test cable link data setup error"));
+    msgBox.exec();
+    reject();
+    return;
+  }
   // Setup UI
   setupUi(this);
+  connect(pbSelectTestCableLink, SIGNAL(clicked()), this, SLOT(selectTestCableLink()));
   connect(pbSelectTestUnit, SIGNAL(clicked()), this, SLOT(selectTestNodeUnit()));
   connect(pbSelectDutUnit, SIGNAL(clicked()), this, SLOT(selectDutUnit()));
   connect(pbSelectTestConnection, SIGNAL(clicked()), this, SLOT(selectTestConnection()));
   connect(pbSelectDutConnection, SIGNAL(clicked()), this, SLOT(selectDutConnection()));
   connect(pbLinkedConnectionsInfo, SIGNAL(clicked()), this, SLOT(viewDutLinkedConnections()));
+  displayTestCable();
+  displayTestCableLink();
   displayTestNodeUnit();
   displayDutUnit();
   displayTestConnection();
@@ -65,6 +80,83 @@ mdtTtTestLinkDialog::mdtTtTestLinkDialog(QWidget *parent, QSqlDatabase db)
 
 mdtTtTestLinkDialog::~mdtTtTestLinkDialog() 
 {
+}
+
+void mdtTtTestLinkDialog::setTestCableLink(const QVariant& unitConnectionStartId, const QVariant& unitConnectionEndId)
+{
+  pvTestCableLinkData.setValue("UnitConnectionStart_Id_FK", unitConnectionStartId);
+  pvTestCableLinkData.setValue("UnitConnectionEnd_Id_FK", unitConnectionEndId);
+  displayTestCableLink();
+}
+
+/**
+  relationInfo.setChildTableName("UnitLink_view");
+  relationInfo.addRelation("Id_PK", "StartUnit_Id_FK", false);
+  relationInfo.addRelation("Id_PK", "EndUnit_Id_FK", false, "OR");
+*/
+void mdtTtTestLinkDialog::selectTestCableLink()
+{
+  mdtClUnit unit(0, pvDatabase);
+  mdtSqlSelectionDialog selectionDialog(this);
+  mdtSqlTableSelection s;
+  QString sql;
+  QVariant physicalTestCableId;
+  QVariant logicalTestCableId;
+  QList<QVariant> dataList;
+  QStringList fields;
+  bool ok;
+
+  // Get logical cable ID
+  logicalTestCableId = pvTestLinkData.value("LogicalTestCable_Id_FK");
+  if(logicalTestCableId.isNull()){
+    return;
+  }
+  // Get physical cable ID
+  sql = "SELECT Unit_Id_FK_PK FROM TestCable_tbl TC JOIN LogicalTestCable_tbl LTC ON LTC.TestCable_Id_FK = TC.Unit_Id_FK_PK";
+  sql += " WHERE LTC.Id_PK = " + logicalTestCableId.toString();
+  dataList = unit.getDataList<QVariant>(sql, ok);
+  if(!ok){
+    QMessageBox msgBox(this);
+    msgBox.setText(tr("Getting physical cable ID failed."));
+    msgBox.setIcon(QMessageBox::Critical);
+    msgBox.exec();
+    return;
+  }
+  Q_ASSERT(dataList.size() == 1);
+  physicalTestCableId = dataList.at(0);
+  // Build SQL query
+  sql = "SELECT * FROM UnitLink_view";
+  sql += " WHERE StartUnit_Id_FK = " + physicalTestCableId.toString();
+  sql += " OR EndUnit_Id_FK = " + physicalTestCableId.toString();
+  // Setup and show dialog
+  selectionDialog.setMessage(tr("Please select test cable link:"));
+  selectionDialog.setQuery(sql, pvDatabase, false);
+  selectionDialog.setColumnHidden("LinkBeam_Id_FK", true);
+  selectionDialog.setColumnHidden("StartSchemaPosition", true);
+  selectionDialog.setColumnHidden("StartAlias", true);
+  selectionDialog.setColumnHidden("EndSchemaPosition", true);
+  selectionDialog.setColumnHidden("EndAlias", true);
+  selectionDialog.setHeaderData("StartUnitConnectorName", tr("Start\nconnector"));
+  selectionDialog.setHeaderData("StartUnitContactName", tr("Start\ncontact"));
+  selectionDialog.setHeaderData("EndUnitConnectorName", tr("End\nconnector"));
+  selectionDialog.setHeaderData("EndUnitContactName", tr("End\ncontact"));
+  selectionDialog.addColumnToSortOrder("StartUnitConnectorName", Qt::AscendingOrder);
+  selectionDialog.addColumnToSortOrder("StartUnitContactName", Qt::AscendingOrder);
+  selectionDialog.sort();
+  selectionDialog.resize(800, 300);
+  selectionDialog.setWindowTitle(tr("Test cable selection link"));
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return;
+  }
+  fields << "UnitConnectionStart_Id_FK" << "UnitConnectionEnd_Id_FK";
+  s = selectionDialog.selection(fields);
+  Q_ASSERT(s.rowCount() == 1);
+  // Update data
+  pvTestLinkData.setValue("TestCableUnitConnectionStart_Id_FK", s.data(0, "UnitConnectionStart_Id_FK"));
+  pvTestLinkData.setValue("TestCableUnitConnectionEnd_Id_FK", s.data(0, "UnitConnectionEnd_Id_FK"));
+  pvTestCableLinkData.setValue("UnitConnectionStart_Id_FK", s.data(0, "UnitConnectionStart_Id_FK"));
+  pvTestCableLinkData.setValue("UnitConnectionEnd_Id_FK", s.data(0, "UnitConnectionEnd_Id_FK"));
+  displayTestCableLink();
 }
 
 void mdtTtTestLinkDialog::setTestNodeUnit(const QVariant & nodeUnitId) 
@@ -91,20 +183,22 @@ void mdtTtTestLinkDialog::setDutUnitSelectionList(const QList< QVariant >& idLis
 
 void mdtTtTestLinkDialog::setTestConnection(const QVariant & unitConnectionId) 
 {
-  pvLinkData.setValue("TestConnection_Id_FK", unitConnectionId);
+  pvTestLinkData.setValue("TestConnection_Id_FK", unitConnectionId);
   displayTestConnection();
 }
 
 void mdtTtTestLinkDialog::setDutConnection(const QVariant & unitConnectionId) 
 {
-  pvLinkData.setValue("DutConnection_Id_FK", unitConnectionId);
+  pvTestLinkData.setValue("DutConnection_Id_FK", unitConnectionId);
   displayDutConnection();
 }
 
 void mdtTtTestLinkDialog::setLinkData(const mdtTtTestLinkData & data)
 {
-  pvLinkData = data;
-  leIdentification->setText(pvLinkData.value("Identification").toString());
+  pvTestLinkData = data;
+  ///leIdentification->setText(pvTestLinkData.value("Identification").toString());
+  displayTestCable();
+  displayTestCableLink();
   displayTestConnection();
   displayDutConnection();
 }
@@ -213,7 +307,7 @@ void mdtTtTestLinkDialog::selectTestConnection()
   // Setup SQL statement
   sql = "SELECT * FROM UnitConnection_view WHERE Unit_Id_FK = " + pvTestNodeUnitId.toString();
   sql += " AND UnitConnection_Id_PK NOT IN (";
-  sql += "  SELECT TestConnection_Id_FK FROM TestLink_tbl WHERE LogicalTestCable_Id_FK = " + pvLinkData.value("LogicalTestCable_Id_FK").toString();
+  sql += "  SELECT TestConnection_Id_FK FROM TestLink_tbl WHERE LogicalTestCable_Id_FK = " + pvTestLinkData.value("LogicalTestCable_Id_FK").toString();
   sql += ")";
   // Setup and show dialog
   selectionDialog.setMessage("Please select DUT connection:");
@@ -240,7 +334,7 @@ void mdtTtTestLinkDialog::selectTestConnection()
   }
   s = selectionDialog.selection("UnitConnection_Id_PK");
   Q_ASSERT(s.rowCount() == 1);
-  pvLinkData.setValue("TestConnection_Id_FK", s.data(0, "UnitConnection_Id_PK"));
+  pvTestLinkData.setValue("TestConnection_Id_FK", s.data(0, "UnitConnection_Id_PK"));
   displayTestConnection();
 }
 
@@ -259,7 +353,7 @@ void mdtTtTestLinkDialog::selectDutConnection()
   sql = "SELECT * FROM UnitConnection_view WHERE Unit_Id_FK = " + pvDutUnitId.toString();
   if(cbHideAffectedDutConnections->isChecked()){
     sql += " AND UnitConnection_Id_PK NOT IN (";
-    sql += "  SELECT DutConnection_Id_FK FROM TestLink_tbl WHERE LogicalTestCable_Id_FK = " + pvLinkData.value("LogicalTestCable_Id_FK").toString();
+    sql += "  SELECT DutConnection_Id_FK FROM TestLink_tbl WHERE LogicalTestCable_Id_FK = " + pvTestLinkData.value("LogicalTestCable_Id_FK").toString();
     sql += ")";
   }
   // Setup and show dialog
@@ -289,10 +383,12 @@ void mdtTtTestLinkDialog::selectDutConnection()
   s = selectionDialog.selection(fields);
   Q_ASSERT(s.rowCount() == 1);
   // Get connection data and update
-  pvLinkData.setValue("DutConnection_Id_FK", s.data(0, "UnitConnection_Id_PK"));
+  pvTestLinkData.setValue("DutConnection_Id_FK", s.data(0, "UnitConnection_Id_PK"));
+  /**
   if(leIdentification->text().trimmed().isEmpty()){
     leIdentification->setText(s.data(0, "UnitFunctionEN").toString());
   }
+  */
   displayDutConnection();
 }
 
@@ -304,7 +400,7 @@ void mdtTtTestLinkDialog::viewDutLinkedConnections()
   QList<QVariant> linkedConnectionsIdList;
 
   // Get current unit connection ID
-  connectionId = pvLinkData.value("DutConnection_Id_FK");
+  connectionId = pvTestLinkData.value("DutConnection_Id_FK");
   if(connectionId.isNull()){
     return;
   }
@@ -329,10 +425,10 @@ void mdtTtTestLinkDialog::accept()
   int i;
 
   // Check required data
-  if(pvLinkData.value("TestConnection_Id_FK").isNull()){
+  if(pvTestLinkData.value("TestConnection_Id_FK").isNull()){
     missingFields << " - Test connection";
   }
-  if(pvLinkData.value("DutConnection_Id_FK").isNull()){
+  if(pvTestLinkData.value("DutConnection_Id_FK").isNull()){
     missingFields << " - DUT connection";
   }
   if(!missingFields.isEmpty()){
@@ -348,15 +444,116 @@ void mdtTtTestLinkDialog::accept()
     return;
   }
   // Store other data
-  pvLinkData.setValue("Identification", leIdentification->text());
-  pvLinkData.setValue("Value", sbValue->value());
+  /**
+  pvTestLinkData.setValue("Identification", leIdentification->text());
+  pvTestLinkData.setValue("Value", sbValue->value());
+  */
   QDialog::accept();
 }
 
 void mdtTtTestLinkDialog::reject() 
 {
-  pvLinkData.clearValues();
+  pvTestLinkData.clearValues();
   QDialog::reject();
+}
+
+void mdtTtTestLinkDialog::displayTestCable()
+{
+  mdtClUnit unit(0, pvDatabase);
+  QList<QVariant> dataList;
+  QVariant id;
+  QString sql;
+  bool ok;
+
+  // Clear all widgets
+  lbTestCableIdentification->clear();
+  lbTestCableKey->clear();
+  // Get logical test cable ID
+  id = pvTestLinkData.value("LogicalTestCable_Id_FK");
+  if(id.isNull()){
+    return;
+  }
+  // Get physical cable Identification
+  sql = "SELECT Identification FROM TestCable_tbl TC JOIN LogicalTestCable_tbl LTC ON LTC.TestCable_Id_FK = TC.Unit_Id_FK_PK";
+  sql += " WHERE LTC.Id_PK = " + id.toString();
+  dataList = unit.getDataList<QVariant>(sql, ok);
+  if(!ok){
+    lbTestCableIdentification->setText("<Error>");
+    return;
+  }
+  Q_ASSERT(dataList.size() == 1);
+  lbTestCableIdentification->setText(dataList.at(0).toString());
+  // Get logical cable key
+  sql = "SELECT Key FROM LogicalTestCable_tbl WHERE Id_PK = " + id.toString();
+  dataList = unit.getDataList<QVariant>(sql, ok);
+  if(!ok){
+    lbTestCableKey->setText("<Error>");
+    return;
+  }
+  Q_ASSERT(dataList.size() == 1);
+  lbTestCableKey->setText(dataList.at(0).toString());
+}
+
+/// \todo Supprimer pvTestCableLinkData et reprendre infos de pvTestLinkData (éviter de devoir gérer 36 membres ...)
+void mdtTtTestLinkDialog::displayTestCableLink()
+{
+  mdtClLink lnk(0, pvDatabase);
+  mdtClUnit unit(0, pvDatabase);
+  mdtClLinkData linkData;
+  QVariant var;
+  QVariant id;
+  bool ok;
+
+  // Clear all widgets
+  lbIdentification->clear();  /// \todo Adapter si on veut réutiliser Identification du TestLink_tbl !
+  lbTestCableLinkStartConnector->clear();
+  lbTestCableLinkStartContact->clear();
+  lbTestCableLinkEndConnector->clear();
+  lbTestCableLinkEndContact->clear();
+  // Get link data
+  if(pvTestCableLinkData.value("UnitConnectionStart_Id_FK").isNull()){
+    return;
+  }
+  if(pvTestCableLinkData.value("UnitConnectionEnd_Id_FK").isNull()){
+    return;
+  }
+  pvTestCableLinkData = lnk.getLinkData(pvTestCableLinkData.value("UnitConnectionStart_Id_FK"), pvTestCableLinkData.value("UnitConnectionEnd_Id_FK"), false, false, &ok);
+  if(!ok){
+    pvTestCableLinkData.clearValues();
+    lbIdentification->setText("<Error>");
+    return;
+  }
+  lbIdentification->setText(pvTestCableLinkData.value("").toString());
+  // Get start connectors name
+  id = pvTestCableLinkData.value("UnitConnectionStart_Id_FK");
+  var = unit.getConnectorNameOfConnectionId(id, ok);
+  if(!ok){
+    lbTestCableLinkStartConnector->setText("<Error>");
+    return;
+  }
+  lbTestCableLinkStartConnector->setText(var.toString());
+  // Get start contact name
+  var = unit.getContactName(id, ok);
+  if(!ok){
+    lbTestCableLinkStartContact->setText("<Error>");
+    return;
+  }
+  lbTestCableLinkStartContact->setText(var.toString());
+  // Get end connector name
+  id = pvTestCableLinkData.value("UnitConnectionEnd_Id_FK");
+  var = unit.getConnectorNameOfConnectionId(id, ok);
+  if(!ok){
+     lbTestCableLinkEndConnector->setText("<Error>");
+     return;
+  }
+  lbTestCableLinkEndConnector->setText(var.toString());
+  // Get end contact name
+  var = unit.getContactName(id, ok);
+  if(!ok){
+    lbTestCableLinkEndContact->setText("<Error>");
+    return;
+  }
+  lbTestCableLinkEndContact->setText(var.toString());
 }
 
 void mdtTtTestLinkDialog::displayTestNodeUnit()
@@ -418,11 +615,11 @@ void mdtTtTestLinkDialog::displayTestConnection()
   mdtClUnitConnectorData connectorData;
   bool ok;
 
-  if(pvLinkData.value("TestConnection_Id_FK").isNull()){
+  if(pvTestLinkData.value("TestConnection_Id_FK").isNull()){
     lbTestConnector->clear();
     lbTestContact->clear();
   }else{
-    connectionData = unit.getConnectionData(pvLinkData.value("TestConnection_Id_FK"), false, &ok);
+    connectionData = unit.getConnectionData(pvTestLinkData.value("TestConnection_Id_FK"), false, &ok);
     if(!ok){
       lbTestContact->setText("<Error!>");
     }else{
@@ -448,11 +645,11 @@ void mdtTtTestLinkDialog::displayDutConnection()
   mdtClUnitConnectorData connectorData;
   bool ok;
 
-  if(pvLinkData.value("DutConnection_Id_FK").isNull()){
+  if(pvTestLinkData.value("DutConnection_Id_FK").isNull()){
     lbDutConnector->clear();
     lbDutContact->clear();
   }else{
-    connectionData = unit.getConnectionData(pvLinkData.value("DutConnection_Id_FK"), false, &ok);
+    connectionData = unit.getConnectionData(pvTestLinkData.value("DutConnection_Id_FK"), false, &ok);
     if(!ok){
       lbDutContact->setText("<Error!>");
     }else{

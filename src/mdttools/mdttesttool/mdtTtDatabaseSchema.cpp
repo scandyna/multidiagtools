@@ -2206,6 +2206,16 @@ bool mdtTtDatabaseSchema::setupTestLinkTable()
   field.setType(QVariant::Int);
   field.setAutoValue(true);
   table.addField(field, true);
+  // TestCableUnitConnectionStart_Id_FK
+  field = QSqlField();
+  field.setName("TestCableUnitConnectionStart_Id_FK");
+  field.setType(QVariant::Int);
+  table.addField(field, false);
+  // TestCableUnitConnectionEnd_Id_FK
+  field = QSqlField();
+  field.setName("TestCableUnitConnectionEnd_Id_FK");
+  field.setType(QVariant::Int);
+  table.addField(field, false);
   // TestConnection_Id_FK
   field = QSqlField();
   field.setName("TestConnection_Id_FK");
@@ -2229,11 +2239,22 @@ bool mdtTtDatabaseSchema::setupTestLinkTable()
   field.setLength(50);
   table.addField(field, false);
   // Resistance
+  /**
   field = QSqlField();
   field.setName("Resistance");
   field.setType(QVariant::Double);
   table.addField(field, false);
+  */
   // Indexes
+  table.addIndex("Link_Id_FK_idx", false);
+  if(!table.addFieldToIndex("Link_Id_FK_idx", "TestCableUnitConnectionStart_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  if(!table.addFieldToIndex("Link_Id_FK_idx", "TestCableUnitConnectionEnd_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
   table.addIndex("TestConnection_Id_FK_idx", false);
   if(!table.addFieldToIndex("TestConnection_Id_FK_idx", "TestConnection_Id_FK")){
     pvLastError = table.lastError();
@@ -2250,6 +2271,15 @@ bool mdtTtDatabaseSchema::setupTestLinkTable()
     return false;
   }
   // Foreign keys
+  table.addForeignKey("Link_Id_FK_fk", "Link_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("Link_Id_FK_fk", "TestCableUnitConnectionStart_Id_FK", "UnitConnectionStart_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  if(!table.addFieldToForeignKey("Link_Id_FK_fk", "TestCableUnitConnectionEnd_Id_FK", "UnitConnectionEnd_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
   table.addForeignKey("TestConnection_Id_FK_fk2", "TestNodeUnitConnection_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   if(!table.addFieldToForeignKey("TestConnection_Id_FK_fk2", "TestConnection_Id_FK", "UnitConnection_Id_FK_PK")){
     pvLastError = table.lastError();
@@ -3454,7 +3484,7 @@ bool mdtTtDatabaseSchema::createTestLinkView()
         " LNK.TestConnection_Id_FK,\n"\
         " LNK.DutConnection_Id_FK,\n"\
         " LNK.Identification AS TestLinkIdentification,\n"\
-        " LNK.Resistance AS TestLinkResistance,\n"\
+        /**" LNK.Resistance AS TestLinkResistance,\n"\ */
         " TNU.Unit_Id_FK_PK,\n"\
         " TNU.TestNode_Id_FK,\n"\
         " UD.Id_PK AS DutUnitId,\n"\
@@ -3630,7 +3660,7 @@ bool mdtTtDatabaseSchema::createTestModelItemTestLinkView()
         " TL.TestConnection_Id_FK,\n"\
         " TL.DutConnection_Id_FK,\n"\
         " TL.Identification,\n"\
-        " TL.Resistance,\n"\
+        /**" TL.Resistance,\n"\ */
         " TNU.Unit_Id_FK_PK,\n"\
         " TNB.NameEN AS Bus,\n"\
         " TNU.IoPosition,\n"\

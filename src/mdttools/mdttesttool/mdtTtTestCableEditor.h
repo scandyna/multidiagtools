@@ -28,6 +28,7 @@
 #include <QList>
 
 class QWidget;
+class mdtTtTestCableOffsetTool;
 
 /*! \brief Class for physical test connection cable edition
  */
@@ -107,6 +108,14 @@ class mdtTtTestCableEditor : public mdtSqlForm
    */
   void removeLogicalTestCables();
 
+  /*! \brief Select a test model for offset reset
+   */
+  void selectOffsetResetTestModel();
+
+  /*! \brief Run offset reset
+   */
+  void runOffsetReset();
+
  private:
 
   /*! \brief Let user choose a connector (from Connector table)
@@ -126,6 +135,8 @@ class mdtTtTestCableEditor : public mdtSqlForm
   }
 
   /*! \brief Setup test cable table
+   *
+   * Will also setup offset reset test model
    */
   bool setupTestCableTable();
 
@@ -151,6 +162,7 @@ class mdtTtTestCableEditor : public mdtSqlForm
 
   Q_DISABLE_COPY(mdtTtTestCableEditor);
 
+  mdtTtTestCableOffsetTool *pvCableOffsetTool;
 };
 
 #endif  // #ifndef MDT_TT_TEST_CABLE_EDITOR_H

@@ -569,7 +569,7 @@ bool mdtTtTestModelEditor::setupTestCableTable()
   mdtSqlTableWidget *widget;
   mdtSqlRelationInfo relationInfo;
 
-  relationInfo.setChildTableName("TestNode_TestCable_view");
+  relationInfo.setChildTableName("TestNode_LogicalTestCable_view");
   relationInfo.addRelation("Id_PK", "TestModel_Id_FK", false);
   if(!addChildTable(relationInfo, tr("Available test cables"))){
     return false;
@@ -582,12 +582,12 @@ bool mdtTtTestModelEditor::setupTestCableTable()
     return false;
   }
   */
-  widget = sqlTableWidget("TestNode_TestCable_view");
+  widget = sqlTableWidget("TestNode_LogicalTestCable_view");
   Q_ASSERT(widget != 0);
   // Hide technical fields
   widget->setColumnHidden("TestNode_Id_FK", true);
   widget->setColumnHidden("TestModel_Id_FK", true);
-  widget->setColumnHidden("TestCable_Id_FK", true);
+  widget->setColumnHidden("LogicalTestCable_Id_FK", true);
   // Set fields a user friendly name
   widget->setHeaderData("OffsetResetDate", tr("Last offset reset"));
   widget->setHeaderData("DescriptionEN", tr("Description"));

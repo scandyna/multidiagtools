@@ -140,6 +140,24 @@ mdtClUnitConnectionData mdtClUnit::getConnectionData(const QVariant & unitConnec
   return getConnectionDataPv(sql, includeArticleConnectionData, ok);
 }
 
+QVariant mdtClUnit::getContactName(const QVariant& unitConnectionId, bool& ok)
+{
+  QString sql;
+  QList<QVariant> dataList;
+
+  sql = "SELECT UnitContactName FROM UnitConnection_tbl WHERE Id_PK = " + unitConnectionId.toString();
+  dataList = getDataList<QVariant>(sql, ok);
+  if(!ok){
+    return QVariant();
+  }
+  if(dataList.isEmpty()){
+    return QVariant();
+  }
+  Q_ASSERT(dataList.size() == 1);
+
+  return dataList.at(0);
+}
+
 mdtClUnitConnectorData mdtClUnit::getConnectorData(const QVariant& unitConnectorId, bool* ok, bool includeConnectionData, bool includeArticleConnectorData, bool includeBaseConnectorData)
 {
   Q_ASSERT(ok != 0);
@@ -197,6 +215,25 @@ QVariant mdtClUnit::getConnectorIdOfConnectionId(const QVariant & unitConnection
   Q_ASSERT(dataList.size() == 1);
 
   return dataList.at(0).value(0);
+}
+
+QVariant mdtClUnit::getConnectorNameOfConnectionId(const QVariant& unitConnectionId, bool& ok)
+{
+  QString sql;
+  QList<QVariant> dataList;
+
+  sql = "SELECT Name FROM UnitConnector_tbl UCNR JOIN UnitConnection_tbl UCNX ON UCNX.UnitConnector_Id_FK = UCNR.Id_PK";
+  sql += " WHERE UCNX.Id_PK = " + unitConnectionId.toString();
+  dataList = getDataList<QVariant>(sql, ok);
+  if(!ok){
+    return QVariant();
+  }
+  if(dataList.isEmpty()){
+    return QVariant();
+  }
+  Q_ASSERT(dataList.size() == 1);
+
+  return dataList.at(0);
 }
 
 bool mdtClUnit::addConnectionDataListFromConnectorContactIdList(mdtClUnitConnectorData& data, const QList< QVariant >& connectorContactIdList)

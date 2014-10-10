@@ -226,7 +226,7 @@ class mdtAbstractSqlTableController : public QObject
   /*! \brief Get a child controller
    *
    *  Can return a Null pointer if no controller
-   *   is assigned to rquested table, or it exists,
+   *   is assigned to requested table, or it exists,
    *   but is not requested type T.
    */
   template<typename T>
@@ -239,6 +239,11 @@ class mdtAbstractSqlTableController : public QObject
       Q_ASSERT(c);
       if(c->tableName() == tableName){
         return std::dynamic_pointer_cast<T>(c);
+      }
+      // Try in child controller's childs
+      auto tc = c->childController<T>(tableName);
+      if(tc){
+        return tc;
       }
     }
     return std::shared_ptr<T>();
@@ -709,6 +714,12 @@ class mdtAbstractSqlTableController : public QObject
   /*! \brief Get current row
    */
   inline int currentRow() const { return pvCurrentRow; }
+
+  /*! \brief Update controllers with data for current row
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   */
+  void update();
 
   /*! \brief Check if all data are saved
    *

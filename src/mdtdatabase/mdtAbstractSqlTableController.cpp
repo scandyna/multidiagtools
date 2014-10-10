@@ -388,7 +388,8 @@ bool mdtAbstractSqlTableController::setData(int row, const QString& fieldName, c
   pvProxyModel->setData(index, data);
   // Submit if requested
   if(submit && pvCanWriteToDatabase){
-    return submitAndWait();
+    ///return submitAndWait();
+    return submitToDatabase();
   }
 
   return true;
@@ -717,49 +718,14 @@ bool mdtAbstractSqlTableController::setCurrentRow(const QString& fieldName, cons
   }
 
   return setCurrentRow(row);
+}
 
-  /**
-  int row;
-  int col;
-  QModelIndex index;
+void mdtAbstractSqlTableController::update()
+{
+  Q_ASSERT(pvModel);
 
-  if(pvModel->rowCount() < 1){
-    return false;
-  }
-  // Get column of requested field name
-  col = pvModel->fieldIndex(fieldName);
-  if(col < 0){
-    pvLastError.setError(tr("Requested field") + " '" + fieldName + "' " + tr("was not found in table") + " '" + pvModel->tableName() + "'", mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtAbstractSqlTableController");
-    pvLastError.commit();
-    return false;
-  }
-  // Search row
-  row = 0;
-  while(true){
-    index = proxyModel()->index(row, col);
-    if(proxyModel()->data(index) == matchData){
-      return setCurrentRow(row);
-    }
-    if(row == (pvModel->rowCount()-1)){
-      if(!pvModel->canFetchMore()){
-        break;
-      }
-      pvModel->fetchMore();
-    }
-    ++row;
-  }
-  // matchData not found
-  QString msg;
-  msg = tr("Could not find value") + " '" + matchData.toString() + "' ";
-  msg += tr("for field") + " '" + fieldName + "' ";
-  msg += tr("in table") + " '" + pvModel->tableName() + "'";
-  pvLastError.setError(msg, mdtError::Error);
-  MDT_ERROR_SET_SRC(pvLastError, "mdtAbstractSqlTableController");
-  pvLastError.commit();
-
-  return false;
-  */
+  currentRowChangedEvent(pvCurrentRow);
+  updateChildControllersAfterCurrentRowChanged();
 }
 
 bool mdtAbstractSqlTableController::allDataAreSaved(bool checkAboutDirtyIndex)
@@ -1124,12 +1090,6 @@ void mdtAbstractSqlTableController::onStateSubmittingNewRowEntered()
       return;
     }
   }
-  /**
-  if(!doSubmitNewRow()){
-    emit errorOccured();
-    return;
-  }
-  */
   if(!updateChildControllersAfterSubmitNewRow()){
     emit errorOccured();
     return;
@@ -1325,7 +1285,8 @@ void mdtAbstractSqlTableController::updateChildControllersAfterCurrentRowChanged
     Q_ASSERT(pvChildControllerContainers.at(i).relation);
     Q_ASSERT(pvChildControllerContainers.at(i).controller);
     pvChildControllerContainers.at(i).relation->setParentCurrentRow(sourceIndex.row());
-    pvChildControllerContainers.at(i).controller->setCurrentRowPv(0);
+    ///pvChildControllerContainers.at(i).controller->setCurrentRowPv(0);
+    pvChildControllerContainers.at(i).controller->setCurrentRow(0);
   }
 }
 
@@ -1376,7 +1337,23 @@ bool mdtAbstractSqlTableController::updateChildControllersAfterSubmit()
 
 bool mdtAbstractSqlTableController::updateChildControllersAfterSubmitNewRow()
 {
-  return updateChildControllersAfterSubmit();
+  int i;
+  QModelIndex proxyIndex, sourceIndex;
+
+  proxyIndex = pvProxyModel->index(pvCurrentRow, 0);
+  sourceIndex = pvProxyModel->mapToSource(proxyIndex);
+  for(i = 0; i < pvChildControllerContainers.size(); ++i){
+    if(pvChildControllerContainers.at(i).relationType == mdtSqlRelationInfo::OneToOne){
+      Q_ASSERT(pvChildControllerContainers.at(i).controller);
+      if(!pvChildControllerContainers.at(i).controller->submitAndWait()){
+        return false;
+      }
+      // Here, child controller has updated his FKs, we must update relation filter now
+      pvChildControllerContainers.at(i).relation->setParentCurrentRow(sourceIndex.row());
+    }
+  }
+
+  return true;
 }
 
 bool mdtAbstractSqlTableController::updateChildControllersBeforeRemoveRow()

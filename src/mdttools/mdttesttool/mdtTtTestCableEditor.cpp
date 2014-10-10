@@ -21,6 +21,7 @@
 #include "mdtTtTestCableEditor.h"
 #include "ui_mdtTtTestCableEditor.h"
 #include "mdtSqlDataWidgetController.h"
+#include "mdtSqlTableViewController.h"
 #include "mdtSqlRelationInfo.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtClUnit.h"
@@ -33,8 +34,13 @@
 #include "mdtTtLogicalTestCableEditor.h"
 #include "mdtTtLogicalTestCable.h"
 #include "mdtSqlDialog.h"
+#include "mdtTtTestCableOffsetTool.h"
 #include <QPushButton>
 #include <QInputDialog>
+#include <QMenuBar>
+#include <QMenu>
+#include <QAction>
+#include <QIcon>
 #include <memory>
 
 #include <QDebug>
@@ -42,7 +48,7 @@
 mdtTtTestCableEditor::mdtTtTestCableEditor(QWidget* parent, QSqlDatabase db)
  : mdtSqlForm(parent, db)
 {
-
+  pvCableOffsetTool = new mdtTtTestCableOffsetTool(db, this);
 }
 
 bool mdtTtTestCableEditor::setupTables()
@@ -70,6 +76,19 @@ bool mdtTtTestCableEditor::setupTables()
 
 void mdtTtTestCableEditor::addMenus(QMenuBar* menuBar)
 {
+  Q_ASSERT(menuBar != 0);
+
+  QMenu *offsetResetMenu;
+  QAction *actRunOffsetReset;
+  QAction *actSelectOffsetResetTestModel;
+
+  offsetResetMenu = menuBar->addMenu(tr("&Offset reset"));
+  // Run offset reset action
+  actRunOffsetReset = offsetResetMenu->addAction(QIcon::fromTheme("system-run"), tr("&Run"));
+  connect(actRunOffsetReset, SIGNAL(triggered(bool)), this, SLOT(runOffsetReset()));
+  // Select offset reset action
+  actSelectOffsetResetTestModel = offsetResetMenu->addAction(tr("&Select test"));
+  connect(actSelectOffsetResetTestModel, SIGNAL(triggered(bool)), this, SLOT(selectOffsetResetTestModel()));
 }
 
 void mdtTtTestCableEditor::assignTestNode()
@@ -650,6 +669,51 @@ void mdtTtTestCableEditor::removeLogicalTestCables()
   select("LogicalTestCable_tbl");
 }
 
+void mdtTtTestCableEditor::selectOffsetResetTestModel()
+{
+  mdtSqlSelectionDialog selectionDialog(this);
+  QString sql;
+  QVariant offsetResetTestModelId;
+
+  // Build SQL query to select test models
+  sql = "SELECT * FROM TestModel_tbl";
+  // Setup and show selection dialog
+  selectionDialog.setMessage("Please select a test:");
+  selectionDialog.setQuery(sql, database(), false);
+  ///selectionDialog.setColumnHidden("Id_PK", true);
+  selectionDialog.resize(700, 400);
+  selectionDialog.setWindowTitle(tr("Offset reset test selection"));
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return;
+  }
+  Q_ASSERT(selectionDialog.selection("Id_PK").rowCount() == 1);
+  offsetResetTestModelId = selectionDialog.selection("Id_PK").data(0, "Id_PK");
+  // Set selected test model
+  if(!setCurrentData("TestCable_tbl", "OffsetResetTestModel_Id_FK", offsetResetTestModelId, true)){
+    return;
+  }
+  // Update
+  auto unitController = mainTableController<mdtSqlDataWidgetController>();
+  Q_ASSERT(unitController);
+  unitController->update();
+}
+
+/**
+ * \todo Mettre en place test tool ici ?
+ *  Actuellement, est fait dans setupUnitLinkTable()
+ *  -> a méditer ...
+ */
+void mdtTtTestCableEditor::runOffsetReset()
+{
+  QVariant offsetResetTestModelId;
+
+  // Get current test model offset ID
+  offsetResetTestModelId = currentData("TestCable_tbl", "OffsetResetTestModel_Id_FK");
+  if(offsetResetTestModelId.isNull()){
+    return;
+  }
+}
+
 QVariant mdtTtTestCableEditor::selectBaseConnector()
 {
   mdtSqlSelectionDialog selectionDialog;
@@ -721,6 +785,7 @@ bool mdtTtTestCableEditor::setupTestCableTable()
   Ui::mdtTtTestCableEditor tce;
   std::shared_ptr<mdtSqlDataWidgetController> unitController;
   std::shared_ptr<mdtSqlDataWidgetController> tcController;
+  std::shared_ptr<mdtSqlDataWidgetController> testModelController;
   mdtSqlRelationInfo relationInfo;
 
   // Setup main form widget
@@ -745,6 +810,19 @@ bool mdtTtTestCableEditor::setupTestCableTable()
   tcController->addMapping(tce.fld_Identification, "Identification");
   tcController->addMapping(tce.fld_DescriptionEN, "DescriptionEN");
   tcController->addMapping(tce.fld_OffsetResetDate, "OffsetResetDate");
+  // Add a child controller that displays test model data
+  relationInfo.clear();
+  relationInfo.setChildTableName("TestModel_tbl");
+  relationInfo.addRelation("OffsetResetTestModel_Id_FK", "Id_PK", false);
+  if(!tcController->addChildController<mdtSqlDataWidgetController>(relationInfo, tr("Offset reset test model"))){
+    pvLastError = tcController->lastError();
+    return false;
+  }
+  // Get test model controller and map widgets to it
+  testModelController = tcController->childController<mdtSqlDataWidgetController>("TestModel_tbl");
+  Q_ASSERT(testModelController);
+  testModelController->addMapping(tce.lbOffsetResetTestModelDesignationEN, "DesignationEN");
+  testModelController->addMapping(tce.lbOffsetResetTestModelKey, "Key");
 
   return true;
 }
@@ -934,6 +1012,7 @@ bool mdtTtTestCableEditor::setupUnitLinkTable()
   QPushButton *pbEditLink;
   QPushButton *pbRemoveLinks;
   mdtSqlRelationInfo relationInfo;
+  std::shared_ptr<mdtSqlTableViewController> tvc;
 
   relationInfo.setChildTableName("UnitLink_view");
   relationInfo.addRelation("Id_PK", "StartUnit_Id_FK", false);
@@ -941,6 +1020,11 @@ bool mdtTtTestCableEditor::setupUnitLinkTable()
   if(!addChildTable(relationInfo, tr("Links"))){
     return false;
   }
+  // Get added table controller and set it to offset tool
+  tvc = tableController<mdtSqlTableViewController>("UnitLink_view");
+  Q_ASSERT(tvc);
+  pvCableOffsetTool->setTestLinkTableController(tvc);
+  // Get added widget to do some setup
   widget = sqlTableWidget("UnitLink_view");
   Q_ASSERT(widget != 0);
   // Setup add link button
