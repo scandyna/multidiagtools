@@ -32,6 +32,74 @@
 #include <QString>
 #include <QModelIndex>
 
+
+/*! \brief Criteria that defines if 2 connectors are connectable
+ *
+ * 
+ */
+struct mdtClConnectableCriteria
+{
+  /*! \brief Contruct a default criteria struct.
+   *
+   * Will set parameters as follow:
+   *  - checkGenderAreOpposite: true
+   *  - checkContactCount: true
+   *  - checkContactType: true
+   *  - checkForm: true
+   *  - checkInsert: true
+   *  - checkInsertRotation: true
+   */
+  mdtClConnectableCriteria()
+   : checkGenderAreOpposite(true),
+     checkContactCount(true),
+     checkContactType(true),
+     checkForm(true),
+     checkInsert(true),
+     checkInsertRotation(true)
+  {
+  }
+
+  /*! \brief Gender must be opposite
+   *
+   * If true, gender of both connectors must be opposite (male and female)
+   *  Note: this concerns the connector gender, not necessarely the gender contacts.
+   *   See checkContactType for contact gender checking.
+   */
+  bool checkGenderAreOpposite;
+
+  /*! \brief Contact quantity must be the same
+   *
+   * If true, it will be checked that both connectors have the same quantity of contacts.
+   */
+  bool checkContactCount;
+
+  /*! \brief Contact gender must be compatible
+   *
+   * If true, each contact gender are checked:
+   *  - A socket (S) can be connected to a pin (P) , and reverse (P to T)
+   *  - Terminal (T) can be connected to a terminal (T)
+   */
+  bool checkContactType;
+
+  /*! \brief Form must match for both connectors
+   *
+   * If true, it will be check that both connectors have the same form
+   */
+  bool checkForm;
+
+  /*! \brief Insert must match for both connector
+   *
+   * If true, it will be checked that both connectors have the same insert (f.ex. 24-5)
+   */
+  bool checkInsert;
+
+  /*! \brief Insert rotation code must match for both connector
+   *
+   * If true, it will be checked that both connectors have the same insert rotation code (Q, X, W, ...)
+   */
+  bool checkInsertRotation;
+};
+
 /*! \brief Helper class for link management
  */
 class mdtClLink : public mdtTtBase
@@ -121,19 +189,26 @@ class mdtClLink : public mdtTtBase
    */
   QList<mdtClLinkData> getConnectionLinkListByName(const QList<mdtClUnitConnectionData> & A, const QList<mdtClUnitConnectionData> & B);
 
+  /*! \brief Check if unit connection S can be connected with unit connection E
+   *
+   * \pre Following fields must be set (not null) for S and E:
+   *    - ConnectionType_Code_FK
+   */
+  bool canConnectConnections(const mdtClUnitConnectionData & S, const mdtClUnitConnectionData & E, const mdtClConnectableCriteria & criteria);
+
   /*! \brief Check if unit connector S can be connected with unit connector E
    *
    * Currently, this method will only check if at least S and E have
    *  a socket/pin (or pin/socket) that have the same contact name.
    */
-  bool canConnectConnectors(const mdtClUnitConnectorData & S, const mdtClUnitConnectorData & E);
+  bool canConnectConnectors(const mdtClUnitConnectorData & S, const mdtClUnitConnectorData & E, const mdtClConnectableCriteria & criteria);
 
   /*! \brief Check if unit connector start can be connected with unit connector end
    *
    * Currently, this method will only check if at least S and E have
    *  a socket/pin (or pin/socket) that have the same contact name.
    */
-  bool canConnectConnectors(const QVariant & startUnitConnectorId, const QVariant & endUnitConnectorId, bool *ok);
+  bool canConnectConnectors(const QVariant & startUnitConnectorId, const QVariant & endUnitConnectorId, const mdtClConnectableCriteria & criteria, bool & ok);
 
   /*! \brief Get SQL statement for connectable unit connector selection
    *
@@ -168,6 +243,23 @@ class mdtClLink : public mdtTtBase
   bool disconnectConnectors(const QVariant & startUnitConnectorId, const QVariant & endUnitConnectorId, const QList<QVariant> & startVehicleTypeIdList, const QList<QVariant> & endVehicleTypeIdList);
 
  private:
+
+  /*! \brief Get a list of connection links between A and B connections, by name
+   *
+   * Will search connections that have the same name, and that can be connected together, in A and B list
+   *  regarding given criteria.
+   *
+   * This method is typically used to create connections links between 2 connectors (i.e. connect them).
+   *
+   * If connectionLinkDataList pointer is not null, a list of found links is also created.
+   *  In this case, for each link that was found, following fields are also set:
+   *  - UnitConnectionStart_Id_FK : ID of item in A
+   *  - UnitConnectionEnd_Id_FK : ID of item in B
+   *  - LinkType_Code_FK : CONNECTION
+   *  - LinkDirection_Code_FK : BID
+   */
+  bool checkOrBuildConnectionLinkListByName(const QList<mdtClUnitConnectionData> & A, const QList<mdtClUnitConnectionData> & B, 
+                                            const mdtClConnectableCriteria & criteria, QList<mdtClLinkData> *connectionLinkDataList = 0);
 
   /*! \brief Check vehicle type start and end ID lists
    */

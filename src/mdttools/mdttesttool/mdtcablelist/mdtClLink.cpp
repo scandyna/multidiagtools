@@ -403,6 +403,7 @@ QList<mdtClLinkData> mdtClLink::getConnectionLinkListByName(const QList<mdtClUni
   Q_ASSERT(C->size() >= D->size());
   // Setup link data
   if(!data.setup(database())){
+    pvLastError = data.lastError();
     return linkDataList;
   }
   // Search in C
@@ -433,32 +434,99 @@ QList<mdtClLinkData> mdtClLink::getConnectionLinkListByName(const QList<mdtClUni
   return linkDataList;
 }
 
-bool mdtClLink::canConnectConnectors(const mdtClUnitConnectorData & S, const mdtClUnitConnectorData & E)
+bool mdtClLink::canConnectConnections(const mdtClUnitConnectionData& S, const mdtClUnitConnectionData& E, const mdtClConnectableCriteria& criteria)
 {
-  return (getConnectionLinkListByName(S.connectionDataList(), E.connectionDataList()).size() > 0);
+  Q_ASSERT(!S.value("ConnectionType_Code_FK").isNull());
+  Q_ASSERT(!E.value("ConnectionType_Code_FK").isNull());
+
+  if(!criteria.checkContactType){
+    return true;
+  }
+  // Get contact types of S and E
+  QString sType = S.value("ConnectionType_Code_FK").toString();
+  QString eType = E.value("ConnectionType_Code_FK").toString();
+  // Check ...
+  if((sType == "T")&&(eType == "T")){
+    return true;
+  }
+  if((sType == "P")&&(eType == "S")){
+    return true;
+  }
+  if((sType == "S")&&(eType == "P")){
+    return true;
+  }
+
+  return false;
 }
 
-bool mdtClLink::canConnectConnectors(const QVariant & startUnitConnectorId, const QVariant & endUnitConnectorId, bool *ok)
+bool mdtClLink::canConnectConnectors(const mdtClUnitConnectorData& S, const mdtClUnitConnectorData& E, const mdtClConnectableCriteria& criteria)
 {
-  Q_ASSERT(ok != 0);
+  mdtClConnectorData cnrS, cnrE;
+
+  // Get connector data
+  cnrS = S.connectorData();
+  cnrE = E.connectorData();
+  // Check for gender if requested
+  /**
+   * \todo Currently, gender is a simple free text.
+   *   Clarify how to enshure that user can only select 2 strings (f.ex. Male/Female),
+   *   or something else that is cleaner that now,
+   *   and fix this broken check !
+   */
+  if(criteria.checkGenderAreOpposite){
+    if(cnrS.value("Gender").toString().trimmed() == cnrE.value("Gender").toString().trimmed()){
+      return false;
+    }
+  }
+  // Check for contact count if requested
+  if(criteria.checkContactCount){
+    if(S.connectionDataList().size() != E.connectionDataList().size()){
+      return false;
+    }
+  }
+  // Check for form if requested
+  if(criteria.checkForm){
+    if(cnrS.value("Form").toString().trimmed() != cnrE.value("Form").toString().trimmed()){
+      return false;
+    }
+  }
+  // Check for insert if requested
+  if(criteria.checkInsert){
+    if(cnrS.value("Insert").toString().trimmed() != cnrE.value("Insert").toString().trimmed()){
+      return false;
+    }
+  }
+  // Check for insert rotation if requested
+  if(criteria.checkInsertRotation){
+    if(cnrS.value("InsertRotation").toString().trimmed() != cnrE.value("InsertRotation").toString().trimmed()){
+      return false;
+    }
+  }
+  // Check connections
+  return checkOrBuildConnectionLinkListByName(S.connectionDataList(), E.connectionDataList(), criteria);
+}
+
+bool mdtClLink::canConnectConnectors(const QVariant& startUnitConnectorId, const QVariant& endUnitConnectorId, const mdtClConnectableCriteria& criteria, bool& ok)
+{
+  ///Q_ASSERT(ok != 0);
 
   mdtClUnit unit(0, database());
   mdtClUnitConnectorData S, E;
 
   // Get start and end connector data
-  S = unit.getConnectorData(startUnitConnectorId, ok, true, false, false);
-  if(!*ok){
+  S = unit.getConnectorData(startUnitConnectorId, &ok, true, false, false);
+  if(!ok){
     pvLastError = unit.lastError();
     return false;
   }
-  E = unit.getConnectorData(endUnitConnectorId, ok, true, false, false);
-  if(!*ok){
+  E = unit.getConnectorData(endUnitConnectorId, &ok, true, false, false);
+  if(!ok){
     pvLastError = unit.lastError();
     return false;
   }
-  *ok = true;
+  ok = true;
 
-  return canConnectConnectors(S, E);
+  return canConnectConnectors(S, E, criteria);
 }
 
 QString mdtClLink::sqlForConnectableUnitConnectorsSelection(const QVariant & unitConnectorId, const QVariant & unitId, bool *ok)
@@ -488,7 +556,7 @@ QString mdtClLink::sqlForConnectableUnitConnectorsSelection(const QVariant & uni
   for(i = 0; i < dataList.size(); ++i){
     id = dataList.at(i).value("Id_PK");
     if(id != unitConnectorId){
-      if(canConnectConnectors(unitConnectorId, id, ok)){
+      if(canConnectConnectors(unitConnectorId, id, mdtClConnectableCriteria() , *ok)){  /// \todo Adapter !!
         if(!*ok){
           return QString();
         }
@@ -609,6 +677,62 @@ bool mdtClLink::disconnectConnectors(const QVariant & startUnitConnectorId, cons
   return true;
 }
 
+bool mdtClLink::checkOrBuildConnectionLinkListByName(const QList< mdtClUnitConnectionData >& A, const QList< mdtClUnitConnectionData >& B, const mdtClConnectableCriteria& criteria, QList< mdtClLinkData >* connectionLinkDataList)
+{
+  mdtClLinkData data;
+  mdtClUnitConnectionData c;
+  const QList<mdtClUnitConnectionData> *C = 0;
+  mdtClUnitConnectionData d;
+  const QList<mdtClUnitConnectionData> *D = 0;
+  QVariant var;
+  int i, j;
+
+  // Assign lists
+  if(A.size() >= B.size()){
+    C = &A;
+    D = &B;
+  }else{
+    C = &B;
+    D = &A;
+  }
+  Q_ASSERT(C != 0);
+  Q_ASSERT(D != 0);
+  Q_ASSERT(C->size() >= D->size());
+  // Setup link data if required
+  if(connectionLinkDataList != 0){
+    if(!data.setup(database())){
+      pvLastError = data.lastError();
+      return false;
+    }
+  }
+  // Search in C
+  for(i = 0; i < C->size(); ++i){
+    c = C->at(i);
+    var = c.value("UnitContactName");
+    // Search connection with same name in D
+    for(j = 0; j < D->size(); ++j){
+      if(D->at(j).value("UnitContactName") == var){
+        d = D->at(j);
+        // Check if we can connect c and d connections
+        if(canConnectConnections(c, d, criteria)){
+          // If requested, add to connection link list
+          if(connectionLinkDataList != 0){
+            data.clearValues();
+            data.setStartConnectionData(c);
+            data.setEndConnectionData(d);
+            data.setValue("LinkType_Code_FK", "CONNECTION");
+            data.setValue("LinkDirection_Code_FK", "BID");
+            connectionLinkDataList->append(data);
+          }
+          // DONE for current c connection
+          break;
+        }
+      }
+    }
+  }
+
+  return true;
+}
 
 bool mdtClLink::checkVehicleTypeStartEndIdLists(const QList<QVariant> & vtStartIdList, const QList<QVariant> & vtEndIdList)
 {

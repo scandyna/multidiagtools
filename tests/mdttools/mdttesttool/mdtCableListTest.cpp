@@ -989,6 +989,174 @@ void mdtCableListTest::linkTest()
   pvScenario->removeScenario();
 }
 
+void mdtCableListTest::linkConnectableConnectorTest()
+{
+  mdtClLink lnk(0, pvDatabaseManager.database());
+  mdtClConnectableCriteria criteria;
+  mdtClUnitConnectionData cnxA, cnxB;
+  mdtClConnectorData cnrS, cnrE;
+  mdtClUnitConnectorData ucnrS, ucnrE;
+
+  /*
+   * Setup data
+   */
+  QVERIFY(cnxA.setup(pvDatabaseManager.database(), false));
+  QVERIFY(cnxB.setup(pvDatabaseManager.database(), false));
+  QVERIFY(cnrS.setup(pvDatabaseManager.database()));
+  QVERIFY(cnrE.setup(pvDatabaseManager.database()));
+  QVERIFY(ucnrS.setup(pvDatabaseManager.database(), false, false));
+  QVERIFY(ucnrE.setup(pvDatabaseManager.database(), false, false));
+  /*
+   * Check contact checking method.
+   * In current version, only checkContactType has sense here
+   */
+  criteria.checkContactType = true;
+  /*
+   * Setup connections:
+   *  A is a socket
+   *  B is a socket
+   *  -> Must return false
+   */
+  cnxA.setValue("ConnectionType_Code_FK", "S");
+  cnxB.setValue("ConnectionType_Code_FK", "S");
+  QVERIFY(!lnk.canConnectConnections(cnxA, cnxB, criteria));
+  /*
+   * Setup connections:
+   *  A is a socket
+   *  B is a pin
+   *  -> Must return true
+   */
+  cnxA.setValue("ConnectionType_Code_FK", "S");
+  cnxB.setValue("ConnectionType_Code_FK", "P");
+  QVERIFY(lnk.canConnectConnections(cnxA, cnxB, criteria));
+  /*
+   * Setup connections:
+   *  A is a pin
+   *  B is a socket
+   *  -> Must return true
+   */
+  cnxA.setValue("ConnectionType_Code_FK", "P");
+  cnxB.setValue("ConnectionType_Code_FK", "S");
+  QVERIFY(lnk.canConnectConnections(cnxA, cnxB, criteria));
+  /*
+   * Setup connections:
+   *  A is a terminal
+   *  B is a terminal
+   *  -> Must return true
+   */
+  cnxA.setValue("ConnectionType_Code_FK", "T");
+  cnxB.setValue("ConnectionType_Code_FK", "T");
+  QVERIFY(lnk.canConnectConnections(cnxA, cnxB, criteria));
+  /*
+   * Setup connections:
+   *  A is a terminal
+   *  B is a socket
+   *  -> Must return false
+   */
+  cnxA.setValue("ConnectionType_Code_FK", "T");
+  cnxB.setValue("ConnectionType_Code_FK", "S");
+  QVERIFY(!lnk.canConnectConnections(cnxA, cnxB, criteria));
+  /*
+   * Setup connections:
+   *  A is a terminal
+   *  B is a pin
+   *  -> Must return false
+   */
+  cnxA.setValue("ConnectionType_Code_FK", "T");
+  cnxB.setValue("ConnectionType_Code_FK", "P");
+  QVERIFY(!lnk.canConnectConnections(cnxA, cnxB, criteria));
+  /*
+   * Setup connections:
+   *  A is a socket
+   *  B is a terminal
+   *  -> Must return false
+   */
+  cnxA.setValue("ConnectionType_Code_FK", "S");
+  cnxB.setValue("ConnectionType_Code_FK", "T");
+  QVERIFY(!lnk.canConnectConnections(cnxA, cnxB, criteria));
+  /*
+   * Setup connections:
+   *  A is a terminal
+   *  B is a pin
+   *  -> Must return false
+   */
+  cnxA.setValue("ConnectionType_Code_FK", "T");
+  cnxB.setValue("ConnectionType_Code_FK", "P");
+  QVERIFY(!lnk.canConnectConnections(cnxA, cnxB, criteria));
+  /*
+   * Setup criteria for connector checking
+   */
+  criteria.checkContactCount = true;
+  criteria.checkContactType = true;
+  criteria.checkForm = true;
+  criteria.checkGenderAreOpposite = true;
+  criteria.checkInsert = true;
+  criteria.checkInsertRotation = true;
+  /*
+   * Setup 2 compatible connectors:
+   *  - Start:
+   *   -> Female
+   *   -> Form: Round
+   *   -> Insert 12-3 (fake)
+   *   -> Insert rotation code: none
+   *   -> 2 sockets (A, B)
+   *   -> 1 terminal (GND)
+   *  - End:
+   *   -> Male
+   *   -> Form: Round
+   *   -> Insert 12-3 (fake)
+   *   -> Insert rotation code: none
+   *   -> 2 pins (A, B)
+   *   -> 1 terminal (GND)
+   */
+  // Setup start connector
+  cnrS.clearValues();
+  ucnrS.clearValues();
+  cnrS.setValue("Gender", "Female");
+  cnrS.setValue("Insert", "12-3");
+  cnrS.setValue("InsertRotation", QVariant());  // To check null with empty string values comparison
+  ucnrS.setConnectorData(cnrS);
+  // Setup start contact A
+  cnxA.clearValues();
+  cnxA.setValue("UnitContactName", "A");
+  cnxA.setValue("ConnectionType_Code_FK", "S");
+  ucnrS.addConnectionData(cnxA);
+  // Setup start contact B
+  cnxA.clearValues();
+  cnxA.setValue("UnitContactName", "B");
+  cnxA.setValue("ConnectionType_Code_FK", "S");
+  ucnrS.addConnectionData(cnxA);
+  // Setup start contact GND
+  cnxA.clearValues();
+  cnxA.setValue("UnitContactName", "GND");
+  cnxA.setValue("ConnectionType_Code_FK", "T");
+  ucnrS.addConnectionData(cnxA);
+  // Setup end connector
+  cnrE.clearValues();
+  ucnrE.clearValues();
+  cnrE.setValue("Gender", "Male");
+  cnrE.setValue("Insert", "12-3");
+  cnrE.setValue("InsertRotation", "");  // To check null with empty string values comparison
+  ucnrE.setConnectorData(cnrE);
+  // Setup end contact A
+  cnxB.clearValues();
+  cnxB.setValue("UnitContactName", "A");
+  cnxB.setValue("ConnectionType_Code_FK", "S");
+  ucnrE.addConnectionData(cnxB);
+  // Setup end contact B
+  cnxB.clearValues();
+  cnxB.setValue("UnitContactName", "B");
+  cnxB.setValue("ConnectionType_Code_FK", "S");
+  ucnrE.addConnectionData(cnxB);
+  // Setup end contact GND
+  cnxB.clearValues();
+  cnxB.setValue("UnitContactName", "GND");
+  cnxB.setValue("ConnectionType_Code_FK", "T");
+  ucnrE.addConnectionData(cnxB);
+  // Check
+  QVERIFY(lnk.canConnectConnectors(ucnrS, ucnrE, criteria));
+}
+
 void mdtCableListTest::linkAutoConnectionTest()
 {
   mdtClLink lnk(0, pvDatabaseManager.database());
