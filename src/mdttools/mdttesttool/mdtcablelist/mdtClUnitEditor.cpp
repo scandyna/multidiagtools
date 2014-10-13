@@ -1043,6 +1043,7 @@ void mdtClUnitEditor::connectConnectors()
   QVariant startVehicleTypeId, endVehicleTypeId;
   QVariant startConnectorId, endConnectorId;
   QVariant startUnitId, endUnitId;
+  mdtClConnectableCriteria connectableCriteria; /// \todo Currently, we give default connectable criteria
   bool ok;
 
   // Get current unit ID
@@ -1080,7 +1081,8 @@ void mdtClUnitEditor::connectConnectors()
     return;
   }
   // Select end connector
-  sql = lnk.sqlForConnectableUnitConnectorsSelection(startConnectorId, endUnitId, &ok);
+  
+  sql = lnk.sqlForConnectableUnitConnectorsSelection(startConnectorId, endUnitId, connectableCriteria , ok);
   if(!ok){
     pvLastError = lnk.lastError();
     displayLastError();
@@ -1091,7 +1093,7 @@ void mdtClUnitEditor::connectConnectors()
     return;
   }
   // Make connection
-  if(!lnk.connectByContactName(startConnectorId, endConnectorId, startVehicleTypeId, endVehicleTypeId)){
+  if(!lnk.connectByContactName(startConnectorId, endConnectorId, startVehicleTypeId, endVehicleTypeId, connectableCriteria)){
     pvLastError = lnk.lastError();
     displayLastError();
     return;

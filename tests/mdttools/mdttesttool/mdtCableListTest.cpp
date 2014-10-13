@@ -1212,7 +1212,8 @@ void mdtCableListTest::linkAutoConnectionTest()
   b.setValue("ConnectionType_Code_FK", "S");
   B << b;
   // Build link data list and check
-  cnnLinkDataList = lnk.getConnectionLinkListByName(A, B);
+  /// \todo Connectable criteria
+  cnnLinkDataList = lnk.getConnectionLinkListByName(A, B, mdtClConnectableCriteria());
   QCOMPARE(cnnLinkDataList.size(), 3);
   // Check base data
   QCOMPARE(cnnLinkDataList.at(0).value("LinkType_Code_FK"), QVariant("CONNECTION"));
@@ -1257,7 +1258,8 @@ void mdtCableListTest::linkAutoConnectionTest()
   b.setValue("ConnectionType_Code_FK", "S");
   B << b;
   // Build link data list and check
-  cnnLinkDataList = lnk.getConnectionLinkListByName(A, B);
+  /// \todo Connectable criteria
+  cnnLinkDataList = lnk.getConnectionLinkListByName(A, B, mdtClConnectableCriteria());
   QCOMPARE(cnnLinkDataList.size(), 1);
   // Check base data
   QCOMPARE(cnnLinkDataList.at(0).value("LinkType_Code_FK"), QVariant("CONNECTION"));
@@ -1292,7 +1294,8 @@ void mdtCableListTest::linkAutoConnectionTest()
   b.setValue("ConnectionType_Code_FK", "S");
   B << b;
   // Build link data list and check
-  cnnLinkDataList = lnk.getConnectionLinkListByName(A, B);
+  /// \todo Connectable criteria
+  cnnLinkDataList = lnk.getConnectionLinkListByName(A, B, mdtClConnectableCriteria());
   QCOMPARE(cnnLinkDataList.size(), 1);
   // Check base data
   QCOMPARE(cnnLinkDataList.at(0).value("LinkType_Code_FK"), QVariant("CONNECTION"));
@@ -1332,7 +1335,8 @@ void mdtCableListTest::linkAutoConnectionTest()
    *  - END : Id_PK : 2
    */
   // Create connection (i.e. links)
-  QVERIFY(lnk.connectByContactName(400000, 500000, 1, 2));
+  /// \todo Connectable criteria
+  QVERIFY(lnk.connectByContactName(400000, 500000, 1, 2, mdtClConnectableCriteria()));
   /*
    * Check link data
    */

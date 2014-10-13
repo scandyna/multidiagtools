@@ -186,8 +186,14 @@ class mdtClLink : public mdtTtBase
    *  - UnitConnectionEnd_Id_FK : ID of item in B
    *  - LinkType_Code_FK : CONNECTION
    *  - LinkDirection_Code_FK : BID
+   *
+   * Note: this method is mainly used for unit testing. Consider following helper functions:
+   *  - canConnectConnections()
+   *  - canConnectConnectors()
+   *  - sqlForConnectableUnitConnectorsSelection()
+   *  - connectByContactName()
    */
-  QList<mdtClLinkData> getConnectionLinkListByName(const QList<mdtClUnitConnectionData> & A, const QList<mdtClUnitConnectionData> & B);
+  QList<mdtClLinkData> getConnectionLinkListByName(const QList<mdtClUnitConnectionData> & A, const QList<mdtClUnitConnectionData> & B, const mdtClConnectableCriteria & criteria);
 
   /*! \brief Check if unit connection S can be connected with unit connection E
    *
@@ -197,16 +203,10 @@ class mdtClLink : public mdtTtBase
   bool canConnectConnections(const mdtClUnitConnectionData & S, const mdtClUnitConnectionData & E, const mdtClConnectableCriteria & criteria);
 
   /*! \brief Check if unit connector S can be connected with unit connector E
-   *
-   * Currently, this method will only check if at least S and E have
-   *  a socket/pin (or pin/socket) that have the same contact name.
    */
   bool canConnectConnectors(const mdtClUnitConnectorData & S, const mdtClUnitConnectorData & E, const mdtClConnectableCriteria & criteria);
 
   /*! \brief Check if unit connector start can be connected with unit connector end
-   *
-   * Currently, this method will only check if at least S and E have
-   *  a socket/pin (or pin/socket) that have the same contact name.
    */
   bool canConnectConnectors(const QVariant & startUnitConnectorId, const QVariant & endUnitConnectorId, const mdtClConnectableCriteria & criteria, bool & ok);
 
@@ -218,7 +218,23 @@ class mdtClLink : public mdtTtBase
    *
    * \return SQL statement, or empty string on error.
    */
-  QString sqlForConnectableUnitConnectorsSelection(const QVariant & unitConnectorId, const QVariant & unitId, bool *ok);
+  QString sqlForConnectableUnitConnectorsSelection(const QVariant & unitConnectorId, const QVariant & unitId, const mdtClConnectableCriteria & criteria, bool & ok);
+
+  /*! \brief Connect start and end connector by contact name
+   *
+   * Will create a link of type CONNECTION for each
+   *  connection from start connector to a connection of end connector
+   *  that can be connected regarding given criteria.
+   *
+   * For each link that was found, following fields are also set:
+   *  - UnitConnectionStart_Id_FK : ID of item in S
+   *  - UnitConnectionEnd_Id_FK : ID of item in E
+   *  - LinkType_Code_FK : CONNECTION
+   *  - LinkDirection_Code_FK : BID
+   */
+  bool connectByContactName(const mdtClUnitConnectorData & S, const mdtClUnitConnectorData & E,
+                            const QVariant & startVehicleTypeId, const QVariant & endVehicleTypeId,
+                            const mdtClConnectableCriteria & criteria);
 
   /*! \brief Connect start and end connector by contact name
    *
@@ -226,15 +242,9 @@ class mdtClLink : public mdtTtBase
    *  connection from start connector to a connection of end connector
    *  that can be connected. See getConnectionLinkListByName() for details.
    */
-  bool connectByContactName(const mdtClUnitConnectorData & S, const mdtClUnitConnectorData & E, const QVariant & startVehicleTypeId, const QVariant & endVehicleTypeId);
-
-  /*! \brief Connect start and end connector by contact name
-   *
-   * Will create a link of type CONNECTION for each
-   *  connection from start connector to a connection of end connector
-   *  that can be connected. See getConnectionLinkListByName() for details.
-   */
-  bool connectByContactName(const QVariant & startUnitConnectorId, const QVariant & endUnitConnectorId, const QVariant & startVehicleTypeId, const QVariant & endVehicleTypeId);
+  bool connectByContactName(const QVariant & startUnitConnectorId, const QVariant & endUnitConnectorId,
+                            const QVariant & startVehicleTypeId, const QVariant & endVehicleTypeId,
+                            const mdtClConnectableCriteria & criteria);
 
   /*! \brief Disconnect connector S from E
    *

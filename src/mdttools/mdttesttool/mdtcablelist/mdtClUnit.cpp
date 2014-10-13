@@ -526,7 +526,6 @@ bool mdtClUnit::removeComponents(const QModelIndexList & indexListOfSelectedRows
 
 bool mdtClUnit::removeComponents(const mdtSqlTableSelection & s)
 {
-  int i;
   QList<QVariant> idList;
 
   idList = s.dataList("UnitComponent_Id_PK");

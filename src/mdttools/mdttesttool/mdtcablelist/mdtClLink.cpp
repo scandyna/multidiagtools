@@ -375,9 +375,19 @@ bool mdtClLink::removeVehicleTypeLinks(const QList<mdtClVehicleTypeLinkData> & v
   return true;
 }
 
+QList<mdtClLinkData> mdtClLink::getConnectionLinkListByName(const QList< mdtClUnitConnectionData >& A, const QList< mdtClUnitConnectionData >& B, const mdtClConnectableCriteria& criteria)
+{
+  QList<mdtClLinkData> linkDataList;
+
+  if(!checkOrBuildConnectionLinkListByName(A, B, criteria, &linkDataList)){
+    linkDataList.clear();
+    return linkDataList;
+  }
+
+  return linkDataList;
+}
+
 /**
- * \todo Aussi prendre en compte le type borne "T" , qui peut être interconecté sans autre
- */
 QList<mdtClLinkData> mdtClLink::getConnectionLinkListByName(const QList<mdtClUnitConnectionData> & A, const QList<mdtClUnitConnectionData> & B)
 {
   mdtClLinkData data;
@@ -433,6 +443,7 @@ QList<mdtClLinkData> mdtClLink::getConnectionLinkListByName(const QList<mdtClUni
 
   return linkDataList;
 }
+*/
 
 bool mdtClLink::canConnectConnections(const mdtClUnitConnectionData& S, const mdtClUnitConnectionData& E, const mdtClConnectableCriteria& criteria)
 {
@@ -508,8 +519,6 @@ bool mdtClLink::canConnectConnectors(const mdtClUnitConnectorData& S, const mdtC
 
 bool mdtClLink::canConnectConnectors(const QVariant& startUnitConnectorId, const QVariant& endUnitConnectorId, const mdtClConnectableCriteria& criteria, bool& ok)
 {
-  ///Q_ASSERT(ok != 0);
-
   mdtClUnit unit(0, database());
   mdtClUnitConnectorData S, E;
 
@@ -529,12 +538,13 @@ bool mdtClLink::canConnectConnectors(const QVariant& startUnitConnectorId, const
   return canConnectConnectors(S, E, criteria);
 }
 
-QString mdtClLink::sqlForConnectableUnitConnectorsSelection(const QVariant & unitConnectorId, const QVariant & unitId, bool *ok)
+QString mdtClLink::sqlForConnectableUnitConnectorsSelection(const QVariant& unitConnectorId, const QVariant& unitId, const mdtClConnectableCriteria& criteria, bool& ok)
 {
-  Q_ASSERT(ok != 0);
+  ///Q_ASSERT(ok != 0);
 
   QString sql;
-  QList<QSqlRecord> dataList;
+  ///QList<QSqlRecord> dataList;
+  QList<QVariant> dataList;
   QVariant id;
   QList<QVariant> idList;
   int i;
@@ -546,18 +556,18 @@ QString mdtClLink::sqlForConnectableUnitConnectorsSelection(const QVariant & uni
   if(!unitId.isNull()){
     sql += " WHERE Unit_Id_FK = " + unitId.toString();
   }
-  dataList = getData(sql, ok);
-  if(!*ok){
+  dataList = getDataList<QVariant>(sql, ok);
+  if(!ok){
     return QString();
   }
   /*
    * For each unit connector ID, that is not given ID, check if it is connectable to given connector ID
    */
   for(i = 0; i < dataList.size(); ++i){
-    id = dataList.at(i).value("Id_PK");
+    id = dataList.at(i);
     if(id != unitConnectorId){
-      if(canConnectConnectors(unitConnectorId, id, mdtClConnectableCriteria() , *ok)){  /// \todo Adapter !!
-        if(!*ok){
+      if(canConnectConnectors(unitConnectorId, id, criteria , ok)){
+        if(!ok){
           return QString();
         }
         idList.append(id);
@@ -571,7 +581,7 @@ QString mdtClLink::sqlForConnectableUnitConnectorsSelection(const QVariant & uni
     pvLastError.setError(tr("Could not find connectable connectors."), mdtError::Warning);
     MDT_ERROR_SET_SRC(pvLastError, "mdtClLink");
     pvLastError.commit();
-    *ok = false;
+    ok = false;
     return QString();
   }
   sql = "SELECT * FROM UnitConnector_view ";
@@ -585,20 +595,23 @@ QString mdtClLink::sqlForConnectableUnitConnectorsSelection(const QVariant & uni
   for(i = 1; i < idList.size(); ++i){
     sql += " OR Id_PK = " + idList.at(i).toString();
   }
-  *ok = true;
+  ok = true;
 
   return sql;
 }
 
-bool mdtClLink::connectByContactName(const mdtClUnitConnectorData & S, const mdtClUnitConnectorData & E, const QVariant & startVehicleTypeId, const QVariant & endVehicleTypeId)
+bool mdtClLink::connectByContactName(const mdtClUnitConnectorData & S, const mdtClUnitConnectorData & E,
+                                     const QVariant & startVehicleTypeId, const QVariant & endVehicleTypeId,
+                                     const mdtClConnectableCriteria & criteria)
 {
   QList<mdtClLinkData> linkDataList;
   QList<QVariant> vtStartIdList, vtEndIdList;
   int i;
 
   // Get connection links
-  linkDataList = getConnectionLinkListByName(S.connectionDataList(), E.connectionDataList());
-  if(linkDataList.isEmpty()){
+  ///linkDataList = getConnectionLinkListByName(S.connectionDataList(), E.connectionDataList());
+  if(!checkOrBuildConnectionLinkListByName(S.connectionDataList(), E.connectionDataList(), criteria, &linkDataList)){
+  ///if(linkDataList.isEmpty()){
     QString msg;
     msg = tr("Could not find connections that can be connected from connector:");
     msg += " '" + S.value("Name").toString() + "' ";
@@ -621,7 +634,9 @@ bool mdtClLink::connectByContactName(const mdtClUnitConnectorData & S, const mdt
   return addLinks(linkDataList, true);
 }
 
-bool mdtClLink::connectByContactName(const QVariant & startUnitConnectorId, const QVariant & endUnitConnectorId, const QVariant & startVehicleTypeId, const QVariant & endVehicleTypeId)
+bool mdtClLink::connectByContactName(const QVariant & startUnitConnectorId, const QVariant & endUnitConnectorId,
+                                     const QVariant & startVehicleTypeId, const QVariant & endVehicleTypeId,
+                                     const mdtClConnectableCriteria & criteria)
 {
   mdtClUnit unit(0, database());
   mdtClUnitConnectorData S, E;
@@ -639,7 +654,7 @@ bool mdtClLink::connectByContactName(const QVariant & startUnitConnectorId, cons
     return false;
   }
 
-  return connectByContactName(S, E, startVehicleTypeId, endVehicleTypeId);
+  return connectByContactName(S, E, startVehicleTypeId, endVehicleTypeId, criteria);
 }
 
 bool mdtClLink::disconnectConnectors(const QVariant & startUnitConnectorId, const QVariant & endUnitConnectorId, const QList<QVariant> & startVehicleTypeIdList, const QList<QVariant> & endVehicleTypeIdList)
