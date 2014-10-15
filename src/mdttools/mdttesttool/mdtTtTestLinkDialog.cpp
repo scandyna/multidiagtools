@@ -52,6 +52,7 @@ mdtTtTestLinkDialog::mdtTtTestLinkDialog(QWidget *parent, QSqlDatabase db)
     return;
   }
   // Setup test link data
+  /**
   if(!pvTestCableLinkData.setup(pvDatabase)){
     QMessageBox msgBox;
     msgBox.setText(pvTestCableLinkData.lastError().text());
@@ -62,6 +63,7 @@ mdtTtTestLinkDialog::mdtTtTestLinkDialog(QWidget *parent, QSqlDatabase db)
     reject();
     return;
   }
+  */
   // Setup UI
   setupUi(this);
   connect(pbSelectTestCableLink, SIGNAL(clicked()), this, SLOT(selectTestCableLink()));
@@ -84,8 +86,12 @@ mdtTtTestLinkDialog::~mdtTtTestLinkDialog()
 
 void mdtTtTestLinkDialog::setTestCableLink(const QVariant& unitConnectionStartId, const QVariant& unitConnectionEndId)
 {
+  /**
   pvTestCableLinkData.setValue("UnitConnectionStart_Id_FK", unitConnectionStartId);
   pvTestCableLinkData.setValue("UnitConnectionEnd_Id_FK", unitConnectionEndId);
+  */
+  pvTestLinkData.setValue("TestCableUnitConnectionStart_Id_FK", unitConnectionStartId);
+  pvTestLinkData.setValue("TestCableUnitConnectionEnd_Id_FK", unitConnectionEndId);
   displayTestCableLink();
 }
 
@@ -154,8 +160,10 @@ void mdtTtTestLinkDialog::selectTestCableLink()
   // Update data
   pvTestLinkData.setValue("TestCableUnitConnectionStart_Id_FK", s.data(0, "UnitConnectionStart_Id_FK"));
   pvTestLinkData.setValue("TestCableUnitConnectionEnd_Id_FK", s.data(0, "UnitConnectionEnd_Id_FK"));
+  /**
   pvTestCableLinkData.setValue("UnitConnectionStart_Id_FK", s.data(0, "UnitConnectionStart_Id_FK"));
   pvTestCableLinkData.setValue("UnitConnectionEnd_Id_FK", s.data(0, "UnitConnectionEnd_Id_FK"));
+  */
   displayTestCableLink();
 }
 
@@ -196,6 +204,9 @@ void mdtTtTestLinkDialog::setDutConnection(const QVariant & unitConnectionId)
 void mdtTtTestLinkDialog::setLinkData(const mdtTtTestLinkData & data)
 {
   pvTestLinkData = data;
+  
+  qDebug() << "setLinkData() - pvTestLinkData: " << pvTestLinkData;
+  
   ///leIdentification->setText(pvTestLinkData.value("Identification").toString());
   displayTestCable();
   displayTestCableLink();
@@ -499,24 +510,51 @@ void mdtTtTestLinkDialog::displayTestCableLink()
 {
   mdtClLink lnk(0, pvDatabase);
   mdtClUnit unit(0, pvDatabase);
-  mdtClLinkData linkData;
   QVariant var;
   QVariant id;
+  QString sql;
+  QList<QVariant> dataList;
   bool ok;
 
   // Clear all widgets
-  lbIdentification->clear();  /// \todo Adapter si on veut réutiliser Identification du TestLink_tbl !
+  lbTestCableLinkIdentification->clear();
   lbTestCableLinkStartConnector->clear();
   lbTestCableLinkStartContact->clear();
   lbTestCableLinkEndConnector->clear();
   lbTestCableLinkEndContact->clear();
   // Get link data
-  if(pvTestCableLinkData.value("UnitConnectionStart_Id_FK").isNull()){
+  if(pvTestLinkData.value("TestCableUnitConnectionStart_Id_FK").isNull()){
     return;
   }
-  if(pvTestCableLinkData.value("UnitConnectionEnd_Id_FK").isNull()){
+  if(pvTestLinkData.value("TestCableUnitConnectionEnd_Id_FK").isNull()){
     return;
   }
+  // Get Test cable link identification
+  /**
+  sql = "SELECT TC.Identification FROM TestCable_tbl TC";
+  sql += " JOIN LogicalTestCable_tbl LTC ON LTC.TestCable_Id_FK = TC.Unit_Id_FK_PK";
+  sql += " JOIN TestLink_tbl TL ON TL.LogicalTestCable_Id_FK = LTC.Id_PK";
+  */
+  sql = "SELECT Identification FROM Link_tbl L";
+  sql += " WHERE L.UnitConnectionStart_Id_FK = " + pvTestLinkData.value("TestCableUnitConnectionStart_Id_FK").toString();
+  sql += " AND L.UnitConnectionEnd_Id_FK = " + pvTestLinkData.value("TestCableUnitConnectionEnd_Id_FK").toString();
+  
+  
+  qDebug() << "displayTestCableLink() - SQL: " << sql;
+  
+
+  
+  dataList = lnk.getDataList<QVariant>(sql, ok);
+  if(!ok){
+    lbTestCableLinkIdentification->setText("<Error>");
+    return;
+  }
+  
+  qDebug() << "dataList.size(): " << dataList.size();
+  
+  Q_ASSERT(dataList.size() == 1);
+  lbTestCableLinkIdentification->setText(dataList.at(0).toString());
+  /**
   pvTestCableLinkData = lnk.getLinkData(pvTestCableLinkData.value("UnitConnectionStart_Id_FK"), pvTestCableLinkData.value("UnitConnectionEnd_Id_FK"), false, false, &ok);
   if(!ok){
     pvTestCableLinkData.clearValues();
@@ -524,8 +562,10 @@ void mdtTtTestLinkDialog::displayTestCableLink()
     return;
   }
   lbIdentification->setText(pvTestCableLinkData.value("").toString());
+  */
   // Get start connectors name
-  id = pvTestCableLinkData.value("UnitConnectionStart_Id_FK");
+  ///id = pvTestCableLinkData.value("UnitConnectionStart_Id_FK");
+  id = pvTestLinkData.value("TestCableUnitConnectionStart_Id_FK");
   var = unit.getConnectorNameOfConnectionId(id, ok);
   if(!ok){
     lbTestCableLinkStartConnector->setText("<Error>");
@@ -540,7 +580,8 @@ void mdtTtTestLinkDialog::displayTestCableLink()
   }
   lbTestCableLinkStartContact->setText(var.toString());
   // Get end connector name
-  id = pvTestCableLinkData.value("UnitConnectionEnd_Id_FK");
+  ///id = pvTestCableLinkData.value("UnitConnectionEnd_Id_FK");
+  id = pvTestLinkData.value("TestCableUnitConnectionEnd_Id_FK");
   var = unit.getConnectorNameOfConnectionId(id, ok);
   if(!ok){
      lbTestCableLinkEndConnector->setText("<Error>");

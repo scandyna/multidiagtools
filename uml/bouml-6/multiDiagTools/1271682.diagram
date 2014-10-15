@@ -1,0 +1,52 @@
+format 207
+
+classcanvas 128002 class_ref 1402498 // mdtTtTestCableDialog
+  classdiagramsettings member_max_width 0 end
+  xyz 659 194 2000
+end
+classcanvas 128130 class_ref 370434 // QDialog
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 704 91 2000
+end
+classcanvas 128386 class_ref 1402626 // mdtTtLogicalTestCableDutWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 36 397 2000
+end
+classcanvas 128514 class_ref 1402754 // mdtTtLogicalTestCableTcWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 318 392 2000
+end
+classcanvas 128642 class_ref 1402882 // mdtTtLogicalTestCableTsWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 591 394 2000
+end
+classcanvas 128770 class_ref 316162 // QWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 206 89 2006
+end
+relationcanvas 128258 relation_ref 1761410 // <generalisation>
+  from ref 128002 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 453762 // <generalisation>
+  from ref 128130 z 2007 to ref 128770
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 1761538 // <generalisation>
+  from ref 128386 z 2007 to ref 128770
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 1761666 // <generalisation>
+  from ref 128514 z 2007 to ref 128770
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129282 relation_ref 1761794 // <generalisation>
+  from ref 128642 z 2007 to ref 128770
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

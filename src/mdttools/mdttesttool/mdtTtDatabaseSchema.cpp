@@ -3126,6 +3126,8 @@ bool mdtTtDatabaseSchema::createUnitConnectionView()
         "SELECT\n"\
         " UnitConnection_tbl.Id_PK AS UnitConnection_Id_PK ,\n"\
         " UnitConnection_tbl.Unit_Id_FK ,\n"\
+        " UnitConnection_tbl.UnitConnector_Id_FK ,\n"\
+        " UnitConnection_tbl.ConnectionType_Code_FK ,\n"\
         " UnitConnection_tbl.ArticleConnection_Id_FK,\n"\
         " UnitConnector_tbl.Name AS UnitConnectorName ,\n"\
         " UnitConnection_tbl.UnitContactName ,\n"\
@@ -3212,7 +3214,9 @@ bool mdtTtDatabaseSchema::createUnitLinkView()
               " UCNXE.SwAddress AS EndSwAddress ,\n"\
               " LNK.UnitConnectionStart_Id_FK ,\n"\
               " LNK.UnitConnectionEnd_Id_FK ,\n"\
+              " UCNXS.UnitConnector_Id_FK AS StartUnitConnector_Id_FK ,\n"\
               " UCNXS.Unit_Id_FK AS StartUnit_Id_FK ,\n"\
+              " UCNXE.UnitConnector_Id_FK AS EndUnitConnector_Id_FK ,\n"\
               " UCNXE.Unit_Id_FK AS EndUnit_Id_FK ,\n"\
               " LNK.LinkType_Code_FK ,\n"\
               " LNK.LinkDirection_Code_FK ,\n"\

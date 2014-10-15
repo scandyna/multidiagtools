@@ -35,6 +35,9 @@
 #include "mdtTtLogicalTestCable.h"
 #include "mdtSqlDialog.h"
 #include "mdtTtTestCableOffsetTool.h"
+
+#include "mdtTtLogicalTestCableDialog.h"
+
 #include <QPushButton>
 #include <QInputDialog>
 #include <QMenuBar>
@@ -557,44 +560,58 @@ void mdtTtTestCableEditor::removeLinks()
 
 void mdtTtTestCableEditor::addLogicalTestCable()
 {
-  mdtTtLogicalTestCableEditor *ltce;
-  mdtSqlDialog dialog;
-  QVariant unitId;
+  mdtTtLogicalTestCableDialog dialog(this, database());
+  QVariant testCableId;
 
-  unitId = currentUnitId();
-  if(unitId.isNull()){
+  // Get test cable ID
+  testCableId = currentUnitId();
+  if(testCableId.isNull()){
     return;
   }
-  // Create editor and dialog
-  ltce = new mdtTtLogicalTestCableEditor(0, database());
-  if(!ltce->setupTables()){
-    pvLastError = ltce->lastError();
-    displayLastError();
-    delete ltce;
+  // Setup and show dialog
+  dialog.setTestCable(testCableId);
+  if(dialog.exec() != QDialog::Accepted){
     return;
   }
-  dialog.setSqlForm(ltce);
-  dialog.resize(900, 700);
-  dialog.enableEdition();
-  /**
-  if(!ltce->setMainTableFilter("Id_PK=-1")){
-    pvLastError = ltce->lastError();
-    displayLastError();
-    return;
-  }
-  */
-  if(!ltce->select()){
-    pvLastError = ltce->lastError();
-    displayLastError();
-    return;
-  }
-  ltce->insert();
-  if(!ltce->setCurrentData("LogicalTestCable_tbl", "TestCable_Id_FK", unitId)){
-    pvLastError = ltce->lastError();
-    displayLastError();
-    return;
-  }
-  dialog.exec();
+
+//   mdtTtLogicalTestCableEditor *ltce;
+//   mdtSqlDialog dialog;
+//   QVariant unitId;
+// 
+//   unitId = currentUnitId();
+//   if(unitId.isNull()){
+//     return;
+//   }
+//   // Create editor and dialog
+//   ltce = new mdtTtLogicalTestCableEditor(0, database());
+//   if(!ltce->setupTables()){
+//     pvLastError = ltce->lastError();
+//     displayLastError();
+//     delete ltce;
+//     return;
+//   }
+//   dialog.setSqlForm(ltce);
+//   dialog.resize(900, 700);
+//   dialog.enableEdition();
+//   /**
+//   if(!ltce->setMainTableFilter("Id_PK=-1")){
+//     pvLastError = ltce->lastError();
+//     displayLastError();
+//     return;
+//   }
+//   */
+//   if(!ltce->select()){
+//     pvLastError = ltce->lastError();
+//     displayLastError();
+//     return;
+//   }
+//   ltce->insert();
+//   if(!ltce->setCurrentData("LogicalTestCable_tbl", "TestCable_Id_FK", unitId)){
+//     pvLastError = ltce->lastError();
+//     displayLastError();
+//     return;
+//   }
+//   dialog.exec();
   // Update logical test cable table
   select("LogicalTestCable_tbl");
 }

@@ -1,20 +1,12 @@
 window_sizes 1280 1005 397 877 952 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 1204482 // mdtTtAbstractTester
-    749 761 90 18 0 19
-  active  classdiagram_ref 941058 // Test
-    877 952 80 3 36 92
+  active  classdiagram_ref 1271682 // TestCable
+    877 952 100 4 0 0
 end
 show_stereotypes
-selected attribute_ref 1429506 // TestCableUnitConnectionEnd_Id_FK
+selected classdiagram_ref 1271682 // TestCable
 open
-  attribute_ref 1051394 // Identification
-  attribute_ref 1320450 // OffsetResetDate
-  attribute_ref 1422850 // TestCable_Id_FK
-  attribute_ref 1368322 // Key
-  attribute_ref 1429506 // TestCableUnitConnectionEnd_Id_FK
-  class_ref 1255682 // LogicalTestCable_TestNodeUnit_tbl
-  class_ref 1255810 // LogicalTestCable_DutUnit_tbl
+  classview_ref 576258 // TestTool
 end
 end

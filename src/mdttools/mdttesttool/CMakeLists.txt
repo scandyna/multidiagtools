@@ -9,6 +9,10 @@ project (multidiagtools)
 set (TT_HEADER_FILES 
           mdtTtTestCableEditor.h
           mdtTtLogicalTestCableEditor.h
+          mdtTtLogicalTestCableDialog.h
+          mdtTtLogicalTestCableDutWidget.h
+          mdtTtLogicalTestCableTcWidget.h
+          mdtTtLogicalTestCableTsWidget.h
           mdtTtTestCableOffsetTool.h
           mdtTtTestLinkDialog.h
           mdtTtTestNodeEditor.h
@@ -39,6 +43,10 @@ set (TT_SOURCES_FILES
           mdtTtTestCableEditor.cpp
           mdtTtLogicalTestCable.cpp
           mdtTtLogicalTestCableEditor.cpp
+          mdtTtLogicalTestCableDialog.cpp
+          mdtTtLogicalTestCableDutWidget.cpp
+          mdtTtLogicalTestCableTcWidget.cpp
+          mdtTtLogicalTestCableTsWidget.cpp
           mdtTtTestCableOffsetTool.cpp
           mdtTtTestNode.cpp
           mdtTtTestNodeEditor.cpp
@@ -75,6 +83,10 @@ set (TT_SOURCES_FILES
 set (TT_FORM_FILES
           mdtTtTestCableEditor.ui
           mdtTtLogicalTestCableEditor.ui
+          mdtTtLogicalTestCableDialog.ui
+          mdtTtLogicalTestCableDutWidget.ui
+          mdtTtLogicalTestCableTcWidget.ui
+          mdtTtLogicalTestCableTsWidget.ui
           mdtTtTestLinkDialog.ui
           mdtTtTestNodeEditor.ui
           mdtTtTestNodeUnitDialog.ui

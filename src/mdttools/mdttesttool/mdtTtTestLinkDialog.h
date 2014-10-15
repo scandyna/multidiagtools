@@ -148,7 +148,7 @@ class mdtTtTestLinkDialog : public QDialog, public Ui::mdtTtTestLinkDialog
 
   QSqlDatabase pvDatabase;
   mdtTtTestLinkData pvTestLinkData;
-  mdtClLinkData pvTestCableLinkData;
+  ///mdtClLinkData pvTestCableLinkData;
   QVariant pvTestNodeUnitId;
   QList<QVariant> pvTestNodeUnitSelectionIdList;
   QVariant pvDutUnitId;
