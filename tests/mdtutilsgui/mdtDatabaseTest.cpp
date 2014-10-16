@@ -944,10 +944,13 @@ void mdtDatabaseTest::sortFilterProxyModelTest()
   QVERIFY(q.exec("INSERT INTO 'somedata' ('name', 'remarks') VALUES('Bety', 'REM 15')"));
 
   // Setup model and proxy
+  QVERIFY(!proxy.hasColumnToSort());
   model.setTable("somedata");
   proxy.setSourceModel(&model);
   proxy.addColumnToSortOrder(1);
+  QVERIFY(proxy.hasColumnToSort());
   proxy.addColumnToSortOrder("remarks");
+  QVERIFY(proxy.hasColumnToSort());
   view.setModel(&proxy);
   model.select();
 

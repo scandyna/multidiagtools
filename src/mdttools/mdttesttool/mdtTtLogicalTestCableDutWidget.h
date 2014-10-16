@@ -24,6 +24,9 @@
 #include "ui_mdtTtLogicalTestCableDutWidget.h"
 #include <QGroupBox>
 #include <QVariant>
+#include <QSqlDatabase>
+
+class mdtError;
 
 /*! \brief Helper class for logical test cable generation
  */
@@ -35,7 +38,7 @@ class mdtTtLogicalTestCableDutWidget : public QGroupBox, Ui::mdtTtLogicalTestCab
 
   /*! \brief Constructor
    */
-  mdtTtLogicalTestCableDutWidget(QWidget * parent = 0);
+  mdtTtLogicalTestCableDutWidget(QWidget * parent, QSqlDatabase db);
 
   /*! \brief Set test cable connector
    */
@@ -57,6 +60,18 @@ class mdtTtLogicalTestCableDutWidget : public QGroupBox, Ui::mdtTtLogicalTestCab
 
  private:
 
+  /*! \brief Select DUT connector
+   */
+  void selectDutConnector();
+
+  /*! \brief Select DUT connection
+   */
+  void selectDutConnection();
+
+  /*! \brief Display a error
+   */
+  void displayError(const mdtError & error);
+
   // CN type enum
   enum cnType_t{
     Connector,
@@ -65,8 +80,11 @@ class mdtTtLogicalTestCableDutWidget : public QGroupBox, Ui::mdtTtLogicalTestCab
 
   Q_DISABLE_COPY(mdtTtLogicalTestCableDutWidget);
 
+  QVariant pvTestCableCnId;
+  QVariant pvUnitId;
   cnType_t pvCnType;
   QVariant pvCnId;
+  QSqlDatabase pvDatabase;
 };
 
 #endif // #ifndef MDT_TT_LOGICAL_TEST_CABLE_DUT_WIDGET_H

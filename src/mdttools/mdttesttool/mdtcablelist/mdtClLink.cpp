@@ -491,7 +491,8 @@ QString mdtClLink::sqlForConnectableUnitConnectorsSelection(const QVariant& unit
   /*
    * Get a list of all unit connectors
    */
-  sql = "SELECT Id_PK FROM UnitConnector_view ";  /// \todo Could be UnitConnector_tbl here ?
+  ///sql = "SELECT Id_PK FROM UnitConnector_view ";  /// \todo Could be UnitConnector_tbl here ?
+  sql = "SELECT Id_PK FROM UnitConnector_tbl ";
   if(!unitId.isNull()){
     sql += " WHERE Unit_Id_FK = " + unitId.toString();
   }

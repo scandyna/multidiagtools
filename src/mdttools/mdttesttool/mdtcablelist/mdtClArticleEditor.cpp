@@ -881,9 +881,14 @@ bool mdtClArticleEditor::setupArticleConnectionTable()
   connect(pbRemoveConnections, SIGNAL(clicked()), this, SLOT(removeConnections()));
   widget->addWidgetToLocalBar(pbRemoveConnections);
   widget->addStretchToLocalBar();
+  // Enable sorting
+  widget->addColumnToSortOrder("ArticleConnectorName", Qt::AscendingOrder);
+  widget->addColumnToSortOrder("ArticleContactName", Qt::AscendingOrder);
+  ///widget->sort();
   // On double click, we edit connection
   Q_ASSERT(widget->tableView() != 0);
   connect(widget->tableView(), SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(editConnection(const QModelIndex &)));
+  widget->resizeViewToContents();
 
   return true;
 }

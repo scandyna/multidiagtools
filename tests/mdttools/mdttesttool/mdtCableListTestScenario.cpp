@@ -886,9 +886,14 @@ void mdtCableListTestScenario::createTestUnitConnectors()
   idList << 25;
   connectionDataList = unit.getUnitConnectionDataListFromArticleConnectionIdList(2000, idList, true, &ok);
   QVERIFY(ok);
+  // We must edit Id_PK , else we will obtain an other (auto increment PK)
+  QCOMPARE(connectionDataList.size(), 1);
+  connectionDataList[0].setValue("Id_PK", 20005);
+  connectionDataList[0].setValue("UnitContactName", "Unit contact 20005"); /// \todo Check if getUnitConnectionDataListFromArticleConnectionIdList() acts correctly
   // Add connection and check
   QVERIFY(unit.addConnections(connectionDataList));
-  connectionData = connectorData.connectionData(20005, &ok);
+  connectionData = unit.getConnectionData(20005, true, &ok);
+  ///connectionData = connectorData.connectionData(20005, &ok);
   QVERIFY(ok);
   QCOMPARE(connectionData.value("Id_PK"), QVariant(20005));
   QCOMPARE(connectionData.value("Unit_Id_FK"), QVariant(2000));

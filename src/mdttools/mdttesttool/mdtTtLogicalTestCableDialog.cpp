@@ -77,7 +77,7 @@ void mdtTtLogicalTestCableDialog::setTestCable(const QVariant& testCableId)
     return;
   }
   for(i = 0; i < recList.size(); ++i){
-    mdtTtLogicalTestCableDutWidget *w = new mdtTtLogicalTestCableDutWidget;
+    mdtTtLogicalTestCableDutWidget *w = new mdtTtLogicalTestCableDutWidget(0, pvDatabase);
     w->setTestCableConnector(recList.at(i).value("StartUnitConnector_Id_FK"), recList.at(i).value("StartUnitConnectorName").toString());
     addAffectation(w);
   }
@@ -93,7 +93,7 @@ void mdtTtLogicalTestCableDialog::setTestCable(const QVariant& testCableId)
     return;
   }
   for(i = 0; i < recList.size(); ++i){
-    mdtTtLogicalTestCableDutWidget *w = new mdtTtLogicalTestCableDutWidget;
+    mdtTtLogicalTestCableDutWidget *w = new mdtTtLogicalTestCableDutWidget(0, pvDatabase);
     w->setTestCableConnection(recList.at(i).value("UnitConnectionStart_Id_FK"), recList.at(i).value("StartUnitContactName").toString());
     addAffectation(w);
   }
@@ -110,7 +110,7 @@ void mdtTtLogicalTestCableDialog::setTestCable(const QVariant& testCableId)
     return;
   }
   for(i = 0; i < recList.size(); ++i){
-    mdtTtLogicalTestCableTsWidget *w = new mdtTtLogicalTestCableTsWidget;
+    mdtTtLogicalTestCableTsWidget *w = new mdtTtLogicalTestCableTsWidget(0, pvDatabase);
     w->setTestCableConnector(recList.at(i).value("EndUnitConnector_Id_FK"), recList.at(i).value("EndUnitConnectorName").toString());
     addAffectation(w);
   }
@@ -126,7 +126,7 @@ void mdtTtLogicalTestCableDialog::setTestCable(const QVariant& testCableId)
     return;
   }
   for(i = 0; i < recList.size(); ++i){
-    mdtTtLogicalTestCableTsWidget *w = new mdtTtLogicalTestCableTsWidget;
+    mdtTtLogicalTestCableTsWidget *w = new mdtTtLogicalTestCableTsWidget(0, pvDatabase);
     w->setTestCableConnection(recList.at(i).value("UnitConnectionEnd_Id_FK"), recList.at(i).value("EndUnitContactName").toString());
     addAffectation(w);
   }

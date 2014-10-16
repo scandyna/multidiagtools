@@ -33,6 +33,9 @@ mdtClUnitConnectorData::mdtClUnitConnectorData(const QSqlRecord& record)
   Q_ASSERT(contains("Connector_Id_FK"));
   Q_ASSERT(contains("ArticleConnector_Id_FK"));
   Q_ASSERT(contains("Name"));
+  pvConnectionDataList.clear();
+  pvArticleConnectorData.clearValues();
+  pvConnectorData.clearValues();
 }
 
 

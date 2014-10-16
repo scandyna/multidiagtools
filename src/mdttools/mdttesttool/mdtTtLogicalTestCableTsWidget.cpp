@@ -24,8 +24,9 @@
 #include <QString>
 #include <QVariant>
 
-mdtTtLogicalTestCableTsWidget::mdtTtLogicalTestCableTsWidget(QWidget* parent)
- : QGroupBox(parent)
+mdtTtLogicalTestCableTsWidget::mdtTtLogicalTestCableTsWidget(QWidget* parent, QSqlDatabase db)
+ : QGroupBox(parent),
+   pvDatabase(db)
 {
   setupUi(this);
 

@@ -25,7 +25,7 @@
 #include <QSqlQueryModel>
 #include <QSqlRecord>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtSortFilterProxyModel::mdtSortFilterProxyModel(QObject *parent)
  : QSortFilterProxyModel(parent)

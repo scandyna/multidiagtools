@@ -161,6 +161,8 @@ bool mdtAbstractSqlTableController::select()
     emit operationSucceed();
     pvStateMachine.waitOnState(Visualizing);
   }
+  // Call sort
+  sort();
 
   return ok;
 }

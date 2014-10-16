@@ -715,6 +715,56 @@ void mdtCableListTest::unitConnectionTest()
   removeTestVehicleTypes();
 }
 
+void mdtCableListTest::unitConnectorTest()
+{
+  mdtClUnit unit(0, pvDatabaseManager.database());
+  ///mdtClLink lnk(0, pvDatabaseManager.database());
+  mdtClUnitConnectorData connectorData;
+  bool ok;
+
+  // Create base structure
+  createTestVehicleTypes();
+  createTestArticles();
+  createTestConnectors();
+  createTestArticleConnections();
+  createTestArticleLinks();
+  createTestArticleConnectors();
+  createTestUnits();
+  createTestVehicleTypeUnitAssignations();
+  createTestUnitConnections();
+  createTestUnitConnectors();
+
+  /*
+   * Get unit connector ID 100000
+   */
+  connectorData = unit.getConnectorData(100000, &ok, true, false, false);
+  QVERIFY(ok);
+  QCOMPARE(connectorData.value("Id_PK"), QVariant(100000));
+  QCOMPARE(connectorData.connectionDataList().size(), 1);
+  QCOMPARE(connectorData.connectionDataList().at(0).value("Id_PK"), QVariant(10005));
+  /*
+   * Get unit connector ID 200000, witch is based on a article connector,
+   *  but request only unit connector data part.
+   */
+  connectorData = unit.getConnectorData(200000, &ok, true, false, false);
+  QVERIFY(ok);
+  QCOMPARE(connectorData.value("Id_PK"), QVariant(200000));
+  QCOMPARE(connectorData.connectionDataList().size(), 1);
+  QCOMPARE(connectorData.connectionDataList().at(0).value("Id_PK"), QVariant(20005));
+
+  // Remove base structure
+  removeTestUnitConnectors();
+  removeTestUnitConnections();
+  removeTestVehicleTypeUnitAssignations();
+  removeTestUnits();
+  removeTestArticleLinks();
+  removeTestArticleConnections();
+  removeTestArticleConnectors();
+  removeTestConnectors();
+  removeTestArticles();
+  removeTestVehicleTypes();
+}
+
 void mdtCableListTest::mdtClLinkDataTest()
 {
   mdtClLinkData linkData;

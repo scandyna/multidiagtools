@@ -23,6 +23,7 @@
 
 #include "ui_mdtTtLogicalTestCableTsWidget.h"
 #include <QGroupBox>
+#include <QSqlDatabase>
 
 /*! \brief Helper class for logical test cable generation
  */
@@ -34,7 +35,7 @@ class mdtTtLogicalTestCableTsWidget : public QGroupBox, Ui::mdtTtLogicalTestCabl
 
   /*! \brief Constructor
    */
-  mdtTtLogicalTestCableTsWidget(QWidget * parent = 0);
+  mdtTtLogicalTestCableTsWidget(QWidget * parent, QSqlDatabase db);
 
   /*! \brief Set test cable connector
    */
@@ -56,6 +57,7 @@ class mdtTtLogicalTestCableTsWidget : public QGroupBox, Ui::mdtTtLogicalTestCabl
 
   cnType_t pvCnType;
   QVariant pvCnId;
+  QSqlDatabase pvDatabase;
 };
 
 #endif // #ifndef MDT_TT_LOGICAL_TEST_CABLE_TS_WIDGET_H
