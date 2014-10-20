@@ -27,7 +27,7 @@
 #include <QSqlError>
 #include <QSqlRecord>
 
-//#include <QDebug>
+#include <QDebug>
 
 mdtClLink::mdtClLink(QObject* parent, QSqlDatabase db)
  : mdtTtBase(parent, db)
@@ -392,13 +392,46 @@ bool mdtClLink::canConnectConnections(const mdtClUnitConnectionData& S, const md
   Q_ASSERT(!S.value("ConnectionType_Code_FK").isNull());
   Q_ASSERT(!E.value("ConnectionType_Code_FK").isNull());
 
+  /*
+   * Check contact name if required
+   */
+  if(criteria.checkContactName){
+    if(S.value("UnitContactName").toString().trimmed() != E.value("UnitContactName").toString().trimmed()){
+      return false;
+    }
+  }
+  /*
+   * Check contact type if required
+   */
   if(!criteria.checkContactType){
     return true;
   }
   // Get contact types of S and E
   QString sType = S.value("ConnectionType_Code_FK").toString();
   QString eType = E.value("ConnectionType_Code_FK").toString();
-  // Check ...
+  /*
+   * Check if connection is part of a connector:
+   *  - Both can simply be free (not a connector contact)
+   *  - Both can be a connector contact, in this case, they must have the same name
+   */
+  // Check if connections are free (not part of a connector)
+  if((S.value("UnitConnector_Id_FK").isNull())&&(E.value("UnitConnector_Id_FK").isNull())){
+    return true;
+  }
+  // If only one connection is part of a connector, they cannot be connected together
+  if((S.value("UnitConnector_Id_FK").isNull())&&(!E.value("UnitConnector_Id_FK").isNull())){
+    return false;
+  }
+  if((!S.value("UnitConnector_Id_FK").isNull())&&(E.value("UnitConnector_Id_FK").isNull())){
+    return false;
+  }
+  // Here, both connections are part of a connector, check that contact names matches
+  Q_ASSERT(!S.value("UnitConnector_Id_FK").isNull());
+  Q_ASSERT(!E.value("UnitConnector_Id_FK").isNull());
+  if(S.value("UnitContactName").toString().trimmed() != E.value("UnitContactName").toString().trimmed()){
+    return true;
+  }
+  // Check contact types
   if((sType == "T")&&(eType == "T")){
     return true;
   }
@@ -410,6 +443,47 @@ bool mdtClLink::canConnectConnections(const mdtClUnitConnectionData& S, const md
   }
 
   return false;
+}
+
+bool mdtClLink::canConnectConnections(const QVariant& unitConnectionIdA, const QVariant& unitConnectionIdB, const mdtClConnectableCriteria& criteria, bool& ok)
+{
+  mdtClUnit unit(0, database());
+  mdtClUnitConnectionData A, B;
+
+  // Get A and B connections data
+  A = unit.getConnectionData(unitConnectionIdA, false, &ok);
+  if(!ok){
+    pvLastError = unit.lastError();
+    return false;
+  }
+  if(A.value("ConnectionType_Code_FK").isNull()){
+    QString msg = tr("Connection");
+    msg += " " + A.value("UnitContactName").toString() + " ";
+    msg += tr("has not type (Pin, Socket or Terminal");
+    pvLastError.setError(msg, mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClLink");
+    pvLastError.commit();
+    ok = false;
+    return false;
+  }
+  B = unit.getConnectionData(unitConnectionIdB, false, &ok);
+  if(!ok){
+    pvLastError = unit.lastError();
+    return false;
+  }
+  if(B.value("ConnectionType_Code_FK").isNull()){
+    QString msg = tr("Connection");
+    msg += " " + B.value("UnitContactName").toString() + " ";
+    msg += tr("has not type (Pin, Socket or Terminal");
+    pvLastError.setError(msg, mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClLink");
+    pvLastError.commit();
+    ok = false;
+    return false;
+  }
+  ok = true;
+
+  return canConnectConnections(A, B, criteria);
 }
 
 bool mdtClLink::canConnectConnectors(const mdtClUnitConnectorData& S, const mdtClUnitConnectorData& E, const mdtClConnectableCriteria& criteria)
@@ -465,12 +539,12 @@ bool mdtClLink::canConnectConnectors(const QVariant& startUnitConnectorId, const
   mdtClUnitConnectorData S, E;
 
   // Get start and end connector data
-  S = unit.getConnectorData(startUnitConnectorId, &ok, true, false, false);
+  S = unit.getConnectorData(startUnitConnectorId, &ok, true, false, true);
   if(!ok){
     pvLastError = unit.lastError();
     return false;
   }
-  E = unit.getConnectorData(endUnitConnectorId, &ok, true, false, false);
+  E = unit.getConnectorData(endUnitConnectorId, &ok, true, false, true);
   if(!ok){
     pvLastError = unit.lastError();
     return false;
@@ -478,6 +552,71 @@ bool mdtClLink::canConnectConnectors(const QVariant& startUnitConnectorId, const
   ok = true;
 
   return canConnectConnectors(S, E, criteria);
+}
+
+QString mdtClLink::sqlForConnectableUnitConnectionsSelection(const QVariant& unitConnectionId, const QVariant& unitId, const mdtClConnectableCriteria& criteria)
+{
+  QString sql;
+  QList<QVariant> dataList;
+  QVariant id;
+  QList<QVariant> idList;
+  int i;
+  bool ok;
+
+  /*
+   * Get a list of all unit connections
+   */
+  sql = "SELECT Id_PK FROM UnitConnection_tbl WHERE ConnectionType_Code_FK IS NOT NULL ";
+  if(!unitId.isNull()){
+    sql += " AND Unit_Id_FK = " + unitId.toString();
+  }
+  dataList = getDataList<QVariant>(sql, ok);
+  if(!ok){
+    return QString();
+  }
+  /*
+   * For each unit connection ID, that is not the ID of given connection, check if it is connectable to given connection ID
+   */
+  for(i = 0; i < dataList.size(); ++i){
+    id = dataList.at(i);
+    if(id != unitConnectionId){
+      if(canConnectConnections(unitConnectionId, id, criteria , ok)){
+        idList.append(id);
+      }else{
+        if(!ok){
+          return QString();
+        }
+      }
+    }
+  }
+  /*
+   * Generate SQL statement
+   */
+  if(idList.isEmpty()){
+    pvLastError.setError(tr("Could not find connectable connections."), mdtError::Warning);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClLink");
+    pvLastError.commit();
+    ok = false;
+    return QString();
+  }
+  sql = "SELECT * FROM UnitConnection_view ";
+  if(unitId.isNull()){
+    sql += " WHERE ";
+  }else{
+    sql += " WHERE (Unit_Id_FK = " + unitId.toString() + ") AND ";
+  }
+  Q_ASSERT(idList.size() > 0);
+  sql += " UnitConnection_Id_PK IN (";
+  for(i = 0; i < idList.size(); ++i){
+    sql += idList.at(i).toString();
+    if(i < (idList.size() - 1)){
+      sql += ",";
+    }
+  }
+  sql += ")";
+  ok = true;
+
+  return sql;
 }
 
 QString mdtClLink::sqlForConnectableUnitConnectorsSelection(const QVariant& unitConnectorId, const QVariant& unitId, const mdtClConnectableCriteria& criteria, bool& ok)
@@ -491,7 +630,6 @@ QString mdtClLink::sqlForConnectableUnitConnectorsSelection(const QVariant& unit
   /*
    * Get a list of all unit connectors
    */
-  ///sql = "SELECT Id_PK FROM UnitConnector_view ";  /// \todo Could be UnitConnector_tbl here ?
   sql = "SELECT Id_PK FROM UnitConnector_tbl ";
   if(!unitId.isNull()){
     sql += " WHERE Unit_Id_FK = " + unitId.toString();
@@ -507,10 +645,11 @@ QString mdtClLink::sqlForConnectableUnitConnectorsSelection(const QVariant& unit
     id = dataList.at(i);
     if(id != unitConnectorId){
       if(canConnectConnectors(unitConnectorId, id, criteria , ok)){
+        idList.append(id);
+      }else{
         if(!ok){
           return QString();
         }
-        idList.append(id);
       }
     }
   }

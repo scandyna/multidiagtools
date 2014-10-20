@@ -98,6 +98,7 @@ bool mdtTtBase::addRecord(const mdtSqlRecord & record, const QString & tableName
   return true;
 }
 
+/**
 bool mdtTtBase::addRecordList(const QList<mdtSqlRecord> & recordList, const QString & tableName, bool singleTransaction )
 {
   int i;
@@ -123,6 +124,7 @@ bool mdtTtBase::addRecordList(const QList<mdtSqlRecord> & recordList, const QStr
 
   return true;  
 }
+*/
 
 QList<QSqlRecord> mdtTtBase::getData(const QString & sql, bool *ok, const QStringList & expectedFields)
 {

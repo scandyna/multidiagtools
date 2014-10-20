@@ -22,8 +22,10 @@
 #define MDT_TT_LOGICAL_TEST_CABLE_DUT_WIDGET_H
 
 #include "ui_mdtTtLogicalTestCableDutWidget.h"
+#include "mdtTtLogicalTestCableDialog.h"
 #include <QGroupBox>
 #include <QVariant>
+#include <QList>
 #include <QSqlDatabase>
 
 class mdtError;
@@ -47,6 +49,43 @@ class mdtTtLogicalTestCableDutWidget : public QGroupBox, Ui::mdtTtLogicalTestCab
   /*! \brief Set test cable connection
    */
   void setTestCableConnection(const QVariant & connectionId, const QString & name);
+
+  /*! \brief Set DUT unit
+   */
+  void setDutUnit(const QVariant & unitId);
+
+  /*! \brief Get cn type
+   */
+  inline mdtTtLogicalTestCableDialog::cnType_t cnType() const
+  {
+    return pvCnType;
+  }
+
+  /*! \brief Get cn ID
+   */
+  inline QVariant cnId() const{
+    return pvCnId;
+  }
+
+  /*! \brief Get test cable cn name
+   */
+  QString testCableCnName() const
+  {
+    return lbTestCableCn->text();
+  }
+
+  /*! \brief Check if this affectation contains given (physical) test cable connection
+   */
+  bool containsTestCableConnection(const QVariant & testCableConnectionId, bool & ok);
+
+  /*! \brief Get list of unit connections
+   *
+   * If affectation's type is a connector,
+   *  all connections that are part of affected DUT connector will be returned.
+   * If affectation's type is a connection,
+   *  DUT affected connection will be returned.
+   */
+  QList<QVariant> getAffectedDutConnections(bool & ok);
 
  private slots:
 
@@ -73,16 +112,19 @@ class mdtTtLogicalTestCableDutWidget : public QGroupBox, Ui::mdtTtLogicalTestCab
   void displayError(const mdtError & error);
 
   // CN type enum
+  /**
   enum cnType_t{
     Connector,
     Connection
   };
+  */
 
   Q_DISABLE_COPY(mdtTtLogicalTestCableDutWidget);
 
   QVariant pvTestCableCnId;
   QVariant pvUnitId;
-  cnType_t pvCnType;
+  ///cnType_t pvCnType;
+  mdtTtLogicalTestCableDialog::cnType_t pvCnType;
   QVariant pvCnId;
   QSqlDatabase pvDatabase;
 };

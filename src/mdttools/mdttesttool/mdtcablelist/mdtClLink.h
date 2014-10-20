@@ -45,6 +45,7 @@ struct mdtClConnectableCriteria
    *  - checkGenderAreOpposite: true
    *  - checkContactCount: true
    *  - checkContactType: true
+   *  - checkContactName: true
    *  - checkForm: true
    *  - checkInsert: true
    *  - checkInsertRotation: true
@@ -53,6 +54,7 @@ struct mdtClConnectableCriteria
    : checkGenderAreOpposite(true),
      checkContactCount(true),
      checkContactType(true),
+     checkContactName(true),
      checkForm(true),
      checkInsert(true),
      checkInsertRotation(true)
@@ -80,6 +82,10 @@ struct mdtClConnectableCriteria
    *  - Terminal (T) can be connected to a terminal (T)
    */
   bool checkContactType;
+
+  /*! \brief Contact name must match (be the same)
+   */
+  bool checkContactName;
 
   /*! \brief Form must match for both connectors
    *
@@ -202,6 +208,10 @@ class mdtClLink : public mdtTtBase
    */
   bool canConnectConnections(const mdtClUnitConnectionData & S, const mdtClUnitConnectionData & E, const mdtClConnectableCriteria & criteria);
 
+  /*! \brief Check if unit connection ID A can be connected with unit connection ID B
+   */
+  bool canConnectConnections(const QVariant & unitConnectionIdA, const QVariant & unitConnectionIdB, const mdtClConnectableCriteria & criteria, bool & ok);
+
   /*! \brief Check if unit connector S can be connected with unit connector E
    */
   bool canConnectConnectors(const mdtClUnitConnectorData & S, const mdtClUnitConnectorData & E, const mdtClConnectableCriteria & criteria);
@@ -209,6 +219,16 @@ class mdtClLink : public mdtTtBase
   /*! \brief Check if unit connector start can be connected with unit connector end
    */
   bool canConnectConnectors(const QVariant & startUnitConnectorId, const QVariant & endUnitConnectorId, const mdtClConnectableCriteria & criteria, bool & ok);
+
+  /*! \brief Get SQL statement for connectable unit connection selection
+   *
+   * SQL statement will select unit connections that can be connected
+   *  to given unitConnectionId.
+   *  If given unit ID is not null, only connections related to this unit will be included.
+   *
+   * \return SQL statement, or empty string on error.
+   */
+  QString sqlForConnectableUnitConnectionsSelection(const QVariant & unitConnectionId, const QVariant & unitId, const mdtClConnectableCriteria & criteria);
 
   /*! \brief Get SQL statement for connectable unit connector selection
    *

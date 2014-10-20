@@ -88,7 +88,32 @@ class mdtTtBase : public QObject
    *  adding all records. If you need to handle a transaction
    *  outside, set this parameter to false.
    */
-  bool addRecordList(const QList<mdtSqlRecord> & recordList, const QString & tableName, bool singleTransaction = false);
+  template <typename T>
+  bool addRecordList(const QList<T> & recordList, const QString & tableName, bool singleTransaction = false)
+  {
+    int i;
+
+    if(singleTransaction){
+      if(!beginTransaction()){
+        return false;
+      }
+    }
+    for(i = 0; i < recordList.size(); ++i){
+      if(!addRecord(recordList.at(i), tableName)){
+        if(singleTransaction){
+          rollbackTransaction();
+        }
+        return false;
+      }
+    }
+    if(singleTransaction){
+      if(!commitTransaction()){
+        return false;
+      }
+    }
+
+    return true;  
+  }
 
   /*! \brief Get data for given sql statement
    *

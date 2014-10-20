@@ -141,7 +141,18 @@ class mdtTtLogicalTestCable : public mdtTtBase
 
   /*! \brief Create a test cable
    */
-  bool createTestCable(const QVariant & nodeId, const QList<QVariant> & busAtestConnectionIdList, const QList<QVariant> & busAdutConnectionIdList, const QList<QVariant> & busBtestConnectionIdList, const QList<QVariant> & busBdutConnectionIdList);
+  ///bool createTestCable(const QVariant & nodeId, const QList<QVariant> & busAtestConnectionIdList, const QList<QVariant> & busAdutConnectionIdList, const QList<QVariant> & busBtestConnectionIdList, const QList<QVariant> & busBdutConnectionIdList);
+
+  /*! \brief Check if a logical test cable with key allready exists
+   */
+  bool cableExistsByKey(const QString & key, bool & ok);
+
+  /*! \brief Create a logical test cable
+   *
+   * For each item in linkDataList, field LogicalTestCable_Id_FK will be updated
+   *  with freashly created logical test cable.
+   */
+  bool createCable(const mdtSqlRecord & cableData, QList<mdtTtTestLinkData> & linkDataList);
 
   /*! \brief Get test link data
    */

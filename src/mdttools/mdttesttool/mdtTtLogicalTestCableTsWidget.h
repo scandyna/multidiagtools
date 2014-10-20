@@ -22,8 +22,13 @@
 #define MDT_TT_LOGICAL_TEST_CABLE_TS_WIDGET_H
 
 #include "ui_mdtTtLogicalTestCableTsWidget.h"
+#include "mdtTtLogicalTestCableDialog.h"
 #include <QGroupBox>
 #include <QSqlDatabase>
+#include <QString>
+
+class mdtError;
+class mdtClConnectableCriteria;
 
 /*! \brief Helper class for logical test cable generation
  */
@@ -45,17 +50,85 @@ class mdtTtLogicalTestCableTsWidget : public QGroupBox, Ui::mdtTtLogicalTestCabl
    */
   void setTestCableConnection(const QVariant & connectionId, const QString & name);
 
+  /*! \brief Set test system
+   */
+  void setTestSystem(const QVariant & tsVtId);
+
+  /*! \brief Get cn type
+   */
+  inline mdtTtLogicalTestCableDialog::cnType_t cnType() const
+  {
+    return pvCnType;
+  }
+
+  /*! \brief Get cn ID
+   */
+  inline QVariant cnId() const{
+    return pvCnId;
+  }
+
+  /*! \brief Get test cable cn name
+   */
+  QString testCableCnName() const
+  {
+    return lbTestCableCn->text();
+  }
+
+  /*! \brief Check if this affectation contains given (physical) test cable connection
+   */
+  bool containsTestCableConnection(const QVariant & testCableConnectionId, bool & ok);
+
+  /*! \brief Get list of unit connections
+   *
+   * If affectation's type is a connector,
+   *  all connections that are part of affected test system connector will be returned.
+   * If affectation's type is a connection,
+   *  test system affected connection will be returned.
+   */
+  QList<QVariant> getAffectedTsConnections(bool & ok);
+
+ private slots:
+
+  /*! \brief Select test system
+   */
+  void selectTestSystem();
+
+  /*! \brief Select connector or connection
+   */
+  void selectCn();
+
  private:
 
+  /*! \brief Select test system connector
+   */
+  void selectTsConnector();
+
+  /*! \brief Select test system connection
+   */
+  void selectTsConnection();
+
+  /*! \brief Get SQL query to list connectable connectors
+   */
+  QString sqlForConnectableTsConnectors(const mdtClConnectableCriteria & criteria);
+
+  /*! \brief Display a error
+   */
+  void displayError(const mdtError & error);
+
   // CN type enum
+  /**
   enum cnType_t{
     Connector,
     Connection
   };
+  */
 
   Q_DISABLE_COPY(mdtTtLogicalTestCableTsWidget);
 
-  cnType_t pvCnType;
+  QVariant pvTestCableCnId;
+  QVariant pvTestSystemId;
+  ///cnType_t pvCnType;
+  mdtTtLogicalTestCableDialog::cnType_t pvCnType;
   QVariant pvCnId;
   QSqlDatabase pvDatabase;
 };

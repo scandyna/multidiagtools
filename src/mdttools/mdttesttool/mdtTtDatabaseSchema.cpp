@@ -1342,6 +1342,7 @@ bool mdtTtDatabaseSchema::setupUnitConnectionTable()
   field.setType(QVariant::String);
   field.setLength(1);
   /// \todo Remove default value
+  /// \todo Set required
   field.setDefaultValue("T");
   table.addField(field, false);
   // IsATestPoint
@@ -2210,27 +2211,31 @@ bool mdtTtDatabaseSchema::setupTestLinkTable()
   field = QSqlField();
   field.setName("TestCableUnitConnectionStart_Id_FK");
   field.setType(QVariant::Int);
+  field.setRequired(true);
   table.addField(field, false);
   // TestCableUnitConnectionEnd_Id_FK
   field = QSqlField();
   field.setName("TestCableUnitConnectionEnd_Id_FK");
   field.setType(QVariant::Int);
+  field.setRequired(true);
   table.addField(field, false);
   // TestConnection_Id_FK
   field = QSqlField();
   field.setName("TestConnection_Id_FK");
   field.setType(QVariant::Int);
+  field.setRequired(true);
   table.addField(field, false);
   // DutConnection_Id_FK
   field = QSqlField();
   field.setName("DutConnection_Id_FK");
   field.setType(QVariant::Int);
+  field.setRequired(true);
   table.addField(field, false);
   // TestCable_Id_FK
   field = QSqlField();
   field.setName("LogicalTestCable_Id_FK");
   field.setType(QVariant::Int);
-  field.setRequiredStatus(QSqlField::Required);
+  field.setRequired(true);
   table.addField(field, false);
   // Identification
   field = QSqlField();

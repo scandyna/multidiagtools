@@ -35,6 +35,7 @@
 #include "mdtTtLogicalTestCable.h"
 #include "mdtSqlDialog.h"
 #include "mdtTtTestCableOffsetTool.h"
+#include "mdtTtTestLinkData.h"
 
 #include "mdtTtLogicalTestCableDialog.h"
 
@@ -560,8 +561,17 @@ void mdtTtTestCableEditor::removeLinks()
 
 void mdtTtTestCableEditor::addLogicalTestCable()
 {
+  mdtTtLogicalTestCable ltc(0, database());
   mdtTtLogicalTestCableDialog dialog(this, database());
   QVariant testCableId;
+  QList<QSqlRecord> testCableLinkDataList;
+  mdtSqlRecord logicalTestCableData;
+  mdtTtTestLinkData testLinkData;
+  QList<mdtTtTestLinkData> testLinkDataList;
+  QVariant id;
+  QString sql;
+  int i;
+  bool ok;
 
   // Get test cable ID
   testCableId = currentUnitId();
@@ -573,6 +583,61 @@ void mdtTtTestCableEditor::addLogicalTestCable()
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
+  // Setup data
+  if(!logicalTestCableData.addAllFields("LogicalTestCable_tbl", database())){
+    pvLastError = logicalTestCableData.lastError();
+    displayLastError();
+    return;
+  }
+  if(!testLinkData.setup(database())){
+    pvLastError = testLinkData.lastError();
+    displayLastError();
+    return;
+  }
+  // Build logical test cable data
+  logicalTestCableData.setValue("TestCable_Id_FK", testCableId);
+  logicalTestCableData.setValue("Key", dialog.key());
+  // Get links from (physical) test cable
+  sql = "SELECT * FROM UnitLink_view";
+  sql += " WHERE StartUnit_Id_FK = " + testCableId.toString();
+  sql += " AND EndUnit_Id_FK = " + testCableId.toString();
+  testCableLinkDataList = ltc.getDataList<QSqlRecord>(sql, ok);
+  if(!ok){
+    pvLastError = ltc.lastError();
+    displayLastError();
+    return;
+  }
+  // Build test link data list based on each test cable link data
+  for(i = 0; i < testCableLinkDataList.size(); ++i){
+    testLinkData.clearValues();
+    // Set test cable connections
+    testLinkData.setValue("TestCableUnitConnectionStart_Id_FK", testCableLinkDataList.at(i).value("UnitConnectionStart_Id_FK"));
+    testLinkData.setValue("TestCableUnitConnectionEnd_Id_FK", testCableLinkDataList.at(i).value("UnitConnectionEnd_Id_FK"));
+    // Set DUT connection
+    id = dialog.getDutConnectionId(testLinkData.value("TestCableUnitConnectionStart_Id_FK"), ok);
+    if(!ok){
+      /// \todo Error message
+      return;
+    }
+    testLinkData.setValue("DutConnection_Id_FK", id);
+    // Set test system connection
+    id = dialog.getTsConnectionId(testLinkData.value("TestCableUnitConnectionEnd_Id_FK"), ok);
+    if(!ok){
+      /// \todo Error message
+      return;
+    }
+    testLinkData.setValue("TestConnection_Id_FK", id);
+    // Add data to list
+    testLinkDataList.append(testLinkData);
+  }
+  // Create cable
+  if(!ltc.createCable(logicalTestCableData, testLinkDataList)){
+    pvLastError = ltc.lastError();
+    displayLastError();
+    return;
+  }
+  // Update logical test cable table
+  select("LogicalTestCable_tbl");
 
 //   mdtTtLogicalTestCableEditor *ltce;
 //   mdtSqlDialog dialog;
@@ -613,7 +678,7 @@ void mdtTtTestCableEditor::addLogicalTestCable()
 //   }
 //   dialog.exec();
   // Update logical test cable table
-  select("LogicalTestCable_tbl");
+///  select("LogicalTestCable_tbl");
 }
 
 void mdtTtTestCableEditor::editLogicalTestCable()

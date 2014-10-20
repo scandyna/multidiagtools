@@ -23,6 +23,8 @@
 ///#include "mdtTtLogicalTestCableTcWidget.h"
 #include "mdtTtLogicalTestCableTsWidget.h"
 #include "mdtClUnit.h"
+#include "mdtClLink.h"
+#include "mdtTtLogicalTestCable.h"
 #include <QVBoxLayout>
 #include <QString>
 #include <QSqlRecord>
@@ -130,8 +132,86 @@ void mdtTtLogicalTestCableDialog::setTestCable(const QVariant& testCableId)
     w->setTestCableConnection(recList.at(i).value("UnitConnectionEnd_Id_FK"), recList.at(i).value("EndUnitContactName").toString());
     addAffectation(w);
   }
+}
 
+QVariant mdtTtLogicalTestCableDialog::getDutConnectionId(const QVariant& testCableConnectionId, bool& ok)
+{
+  mdtClLink lnk(0, pvDatabase);
+  QList<QVariant> dutConnectionIdList;
+  mdtClConnectableCriteria c;
+  int i, k;
 
+  // Setup connectability check criteria
+  c.checkContactType = true;
+  // Find affectation that cocerns given testCableConnectionId
+  for(i = 0; i < pvDutSideAffectationWidgets.size(); ++i){
+    Q_ASSERT(pvDutSideAffectationWidgets.at(i) != 0);
+    if(pvDutSideAffectationWidgets.at(i)->cnType() == Connector){
+      c.checkContactName = true;
+    }else{
+      c.checkContactName = false;
+    }
+    if(pvDutSideAffectationWidgets.at(i)->containsTestCableConnection(testCableConnectionId, ok)){
+      dutConnectionIdList = pvDutSideAffectationWidgets.at(i)->getAffectedDutConnections(ok);
+      if(!ok){
+        return QVariant();
+      }
+      // Search about DUT connection
+      for(k = 0; k < dutConnectionIdList.size(); ++k){
+        if(lnk.canConnectConnections(testCableConnectionId, dutConnectionIdList.at(k), c, ok)){
+          return dutConnectionIdList.at(k);
+        }else{
+          if(!ok){
+            return QVariant();
+          }
+        }
+      }
+    }else{
+      if(!ok){
+        return QVariant();
+      }
+    }
+  }
+
+  return QVariant();
+}
+
+QVariant mdtTtLogicalTestCableDialog::getTsConnectionId(const QVariant& testCableConnectionId, bool& ok)
+{
+  mdtClLink lnk(0, pvDatabase);
+  QList<QVariant> tsConnectionIdList;
+  mdtClConnectableCriteria c;
+  int i, k;
+
+  // Setup connectability check criteria
+  c.checkContactType = true;
+  c.checkContactName = true;
+  // Find affectation that conerns given testCableConnectionId
+  for(i = 0; i < pvTsSideAffectationWidgets.size(); ++i){
+    Q_ASSERT(pvTsSideAffectationWidgets.at(i) != 0);
+    if(pvTsSideAffectationWidgets.at(i)->containsTestCableConnection(testCableConnectionId, ok)){
+      tsConnectionIdList = pvTsSideAffectationWidgets.at(i)->getAffectedTsConnections(ok);
+      if(!ok){
+        return QVariant();
+      }
+      // Search about DUT connection
+      for(k = 0; k < tsConnectionIdList.size(); ++k){
+        if(lnk.canConnectConnections(testCableConnectionId, tsConnectionIdList.at(k), c, ok)){
+          return tsConnectionIdList.at(k);
+        }else{
+          if(!ok){
+            return QVariant();
+          }
+        }
+      }
+    }else{
+      if(!ok){
+        return QVariant();
+      }
+    }
+  }
+
+  return QVariant();
 }
 
 void mdtTtLogicalTestCableDialog::addAffectation(mdtTtLogicalTestCableDutWidget* w)
@@ -139,7 +219,7 @@ void mdtTtLogicalTestCableDialog::addAffectation(mdtTtLogicalTestCableDutWidget*
   Q_ASSERT(w != 0);
 
   pvAffectationLayout->addWidget(w);
-  pvDutSideAffectations.append(w);
+  pvDutSideAffectationWidgets.append(w);
 }
 
 void mdtTtLogicalTestCableDialog::addAffectation(mdtTtLogicalTestCableTsWidget* w)
@@ -147,7 +227,53 @@ void mdtTtLogicalTestCableDialog::addAffectation(mdtTtLogicalTestCableTsWidget* 
   Q_ASSERT(w != 0);
 
   pvAffectationLayout->addWidget(w);
-  pvTsSideAffectations.append(w);
+  pvTsSideAffectationWidgets.append(w);
+}
+
+void mdtTtLogicalTestCableDialog::accept()
+{
+  mdtTtLogicalTestCable ltc(0, pvDatabase);
+  int i;
+  bool ok;
+  bool exists;
+
+  // Check that user enterred a Key
+  if(leLogicalCableKey->text().trimmed().isEmpty()){
+    mdtError e(tr("Please enter a Key"), mdtError::Warning);
+    displayError(e);
+    return;
+  }
+  // Check that key does not allready exist
+  exists = ltc.cableExistsByKey(leLogicalCableKey->text().trimmed(), ok);
+  if(!ok){
+    displayError(ltc.lastError());
+    return;
+  }
+  if(exists){
+    mdtError e(tr("A logical test cable with this key allready exists."), mdtError::Warning);
+    displayError(e);
+    return;
+  }
+  // Check that user selected a connector or connection for each DUT affectation widget at DUT side
+  for(i = 0; i < pvDutSideAffectationWidgets.size(); ++i){
+    Q_ASSERT(pvDutSideAffectationWidgets.at(i) != 0);
+    if(pvDutSideAffectationWidgets.at(i)->cnId().isNull()){
+      mdtError e(tr("Please affect something to ") + pvDutSideAffectationWidgets.at(i)->testCableCnName(), mdtError::Warning);
+      displayError(e);
+      return;
+    }
+  }
+  // Check that user selected a connector or connection for each test system affectation widget at DUT side
+  for(i = 0; i < pvTsSideAffectationWidgets.size(); ++i){
+    Q_ASSERT(pvTsSideAffectationWidgets.at(i) != 0);
+    if(pvTsSideAffectationWidgets.at(i)->cnId().isNull()){
+      mdtError e(tr("Please affect something to ") + pvTsSideAffectationWidgets.at(i)->testCableCnName(), mdtError::Warning);
+      displayError(e);
+      return;
+    }
+  }
+
+  QDialog::accept();
 }
 
 

@@ -356,6 +356,7 @@ QList<QVariant> mdtTtLogicalTestCable::getToUnitConnectionIdListLinkedUnitConnec
   return unitConnectionIdList;
 }
 
+/**
 bool mdtTtLogicalTestCable::createTestCable(const QVariant & nodeId, const QList<QVariant> & busAtestConnectionIdList, const QList<QVariant> & busAdutConnectionIdList, const QList<QVariant> & busBtestConnectionIdList, const QList<QVariant> & busBdutConnectionIdList)
 {
   QString sql;
@@ -399,6 +400,60 @@ bool mdtTtLogicalTestCable::createTestCable(const QVariant & nodeId, const QList
   }
   // Add BUSB links
   if(!addLinks(nodeId, testCableId, busBtestConnectionIdList, busBdutConnectionIdList)){
+    rollbackTransaction();
+    return false;
+  }
+  // Commit transaction
+  if(!commitTransaction()){
+    return false;
+  }
+
+  return true;
+}
+*/
+
+bool mdtTtLogicalTestCable::cableExistsByKey(const QString& key, bool& ok)
+{
+  QString sql;
+  QList<QVariant> dataList;
+
+  sql = "SELECT COUNT(*) FROM LogicalTestCable_tbl WHERE Key = '" + key +"'";
+  dataList = getDataList<QVariant>(sql, ok);
+  if(!ok){
+    return false;
+  }
+  Q_ASSERT(dataList.size() == 1);
+  if(dataList.at(0).toInt() > 0){
+    return true;
+  }
+
+  return false;
+}
+
+bool mdtTtLogicalTestCable::createCable(const mdtSqlRecord& cableData, QList< mdtTtTestLinkData >& linkDataList)
+{
+  int i;
+  QSqlQuery query(database());
+  QVariant ltcId;
+
+  // Begin a transaction
+  if(!beginTransaction()){
+    return false;
+  }
+  // Add logical test cable data
+  if(!addRecord(cableData, "LogicalTestCable_tbl", query)){
+    rollbackTransaction();
+    return false;
+  }
+  // Get freashly created logical test cable ID
+  ltcId = query.lastInsertId();
+  Q_ASSERT(!ltcId.isNull());
+  // Update each link data
+  for(i = 0; i < linkDataList.size(); ++i){
+    linkDataList[i].setValue("LogicalTestCable_Id_FK", ltcId);
+  }
+  // Add all test link data
+  if(!addRecordList(linkDataList, "TestLink_tbl", false)){
     rollbackTransaction();
     return false;
   }
