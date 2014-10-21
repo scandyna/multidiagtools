@@ -63,6 +63,10 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
    */
   void clearStartUnitSelectionList();
 
+  /*! \brief Change start connection label
+   */
+  void setStartConnectionLabel(const QString & labelText);
+
   /*! \brief Set end unit
    *
    * This will also clear end connection and set end vehicle types.
@@ -76,6 +80,10 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
   /*! \brief Clear end unit selection list
    */
   void clearEndUnitSelectionList();
+
+  /*! \brief Change end connection label
+   */
+  void setEndConnectionLabel(const QString & labelText);
 
   /*! \brief Set show only unused start connections
    */

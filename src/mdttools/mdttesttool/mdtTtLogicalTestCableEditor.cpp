@@ -66,9 +66,11 @@ bool mdtTtLogicalTestCableEditor::setupTables()
   return true;
 }
 
+/**
 void mdtTtLogicalTestCableEditor::addMenus(QMenuBar* menuBar)
 {
 }
+*/
 
 void mdtTtLogicalTestCableEditor::addTestNodeUnit()
 {

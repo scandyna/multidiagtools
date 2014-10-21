@@ -48,7 +48,7 @@ class mdtTtLogicalTestCableEditor : public mdtSqlForm
 
   /*! \brief Add menus to menu bar
    */
-  void addMenus(QMenuBar *menuBar);
+  ///void addMenus(QMenuBar *menuBar);
 
   /*! \brief Create a test connection cable
    */

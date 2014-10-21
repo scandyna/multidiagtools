@@ -11,7 +11,6 @@ set (TT_HEADER_FILES
           mdtTtLogicalTestCableEditor.h
           mdtTtLogicalTestCableDialog.h
           mdtTtLogicalTestCableDutWidget.h
-          mdtTtLogicalTestCableTcWidget.h
           mdtTtLogicalTestCableTsWidget.h
           mdtTtTestCableOffsetTool.h
           mdtTtTestLinkDialog.h
@@ -45,7 +44,6 @@ set (TT_SOURCES_FILES
           mdtTtLogicalTestCableEditor.cpp
           mdtTtLogicalTestCableDialog.cpp
           mdtTtLogicalTestCableDutWidget.cpp
-          mdtTtLogicalTestCableTcWidget.cpp
           mdtTtLogicalTestCableTsWidget.cpp
           mdtTtTestCableOffsetTool.cpp
           mdtTtTestNode.cpp
@@ -85,7 +83,6 @@ set (TT_FORM_FILES
           mdtTtLogicalTestCableEditor.ui
           mdtTtLogicalTestCableDialog.ui
           mdtTtLogicalTestCableDutWidget.ui
-          mdtTtLogicalTestCableTcWidget.ui
           mdtTtLogicalTestCableTsWidget.ui
           mdtTtTestLinkDialog.ui
           mdtTtTestNodeEditor.ui

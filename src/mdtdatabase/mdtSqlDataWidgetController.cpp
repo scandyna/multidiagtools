@@ -221,10 +221,13 @@ bool mdtSqlDataWidgetController::submitToModel()
 
   QSqlError sqlError;
 
+  if(!canWriteToDatabase()){
+    return true;
+  }
   // Call widget mapper submit() (will commit data from widgets to model)
   if(!pvWidgetMapper.submit()){
     sqlError = model()->lastError();
-    pvLastError.setError(tr("Submitting data to model failed."), mdtError::Error);
+    pvLastError.setError(tr("Submitting data to model failed for") + " '" + userFriendlyTableName() + "' (" + tableName() + ")", mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDataWidgetController");
     pvLastError.commit();

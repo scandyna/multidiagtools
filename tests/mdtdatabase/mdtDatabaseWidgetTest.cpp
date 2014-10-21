@@ -1687,6 +1687,9 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerRoTest()
   QVERIFY(ok);
   QVERIFY(wc.currentData("Remarks", ok).isNull());
   QVERIFY(ok);
+  /**
+   * \todo Corriger ! Read Only ici
+   */
   /*
    * Check edition
    *  - Edit current row

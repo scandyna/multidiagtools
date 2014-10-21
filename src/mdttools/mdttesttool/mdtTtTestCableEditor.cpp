@@ -462,7 +462,9 @@ void mdtTtTestCableEditor::addLink()
     return;
   }
   dialog.setStartUnit(unitId);
+  dialog.setStartConnectionLabel(tr("DUT side connection"));
   dialog.setEndUnit(unitId);
+  dialog.setEndConnectionLabel(tr("Test system side connection"));
   dialog.setShowOnlyUnusedStartConnection(true);
   dialog.setShowOnlyUnusedEndConnection(true);
   if(dialog.exec() != QDialog::Accepted){
@@ -905,6 +907,7 @@ bool mdtTtTestCableEditor::setupTestCableTable()
   Q_ASSERT(testModelController);
   testModelController->addMapping(tce.lbOffsetResetTestModelDesignationEN, "DesignationEN");
   testModelController->addMapping(tce.lbOffsetResetTestModelKey, "Key");
+  testModelController->setCanWriteToDatabase(false);
 
   return true;
 }
@@ -1060,7 +1063,9 @@ bool mdtTtTestCableEditor::setupUnitConnectionTable()
   widget->setColumnHidden("UnitConnection_Id_PK", true);
   widget->setColumnHidden("Unit_Id_FK", true);
   widget->setColumnHidden("ArticleConnection_Id_FK", true);
+  widget->setColumnHidden("UnitConnector_Id_FK", true);
   // Give fields a user friendly name
+  widget->setHeaderData("ConnectionType_Code_FK", tr("Contact\ntype"));
   widget->setHeaderData("SchemaPage", tr("Vehicle\nSchema\npage"));
   widget->setHeaderData("UnitFunctionEN", tr("Unit\nfunction\n(English)"));
   widget->setHeaderData("UnitFunctionFR", tr("Unit\nfunction\n(French)"));
@@ -1135,15 +1140,20 @@ bool mdtTtTestCableEditor::setupUnitLinkTable()
   widget->setColumnHidden("LinkDirection_Code_FK", true);
   widget->setColumnHidden("ArticleConnectionStart_Id_FK", true);
   widget->setColumnHidden("ArticleConnectionEnd_Id_FK", true);
+  widget->setColumnHidden("LinkBeam_Id_FK", true);
+  widget->setColumnHidden("StartSchemaPosition", true);
+  widget->setColumnHidden("EndSchemaPosition", true);
+  widget->setColumnHidden("StartAlias", true);
+  widget->setColumnHidden("EndAlias", true);
   // Give fields a user friendly name
-  widget->setHeaderData("StartSchemaPosition", tr("Start\nschema pos."));
-  widget->setHeaderData("StartAlias", tr("Start\nalias"));
-  widget->setHeaderData("StartUnitConnectorName", tr("Start\nconnector"));
-  widget->setHeaderData("StartUnitContactName", tr("Start\ncontact"));
-  widget->setHeaderData("EndSchemaPosition", tr("End\nschema pos."));
-  widget->setHeaderData("EndAlias", tr("End\nalias"));
-  widget->setHeaderData("EndUnitConnectorName", tr("End\nconnector"));
-  widget->setHeaderData("EndUnitContactName", tr("End\ncontact"));
+  ///widget->setHeaderData("StartSchemaPosition", tr("Start\nschema pos."));
+  ///widget->setHeaderData("StartAlias", tr("Start\nalias"));
+  widget->setHeaderData("StartUnitConnectorName", tr("DUT\nside\nconnector"));
+  widget->setHeaderData("StartUnitContactName", tr("DUT\nside\ncontact"));
+  ///widget->setHeaderData("EndSchemaPosition", tr("End\nschema pos."));
+  ///widget->setHeaderData("EndAlias", tr("End\nalias"));
+  widget->setHeaderData("EndUnitConnectorName", tr("Test\nsys. side\nconnector"));
+  widget->setHeaderData("EndUnitContactName", tr("Test\nsys. side\ncontact"));
   widget->setHeaderData("SinceVersion", tr("Since\nversion"));
   widget->setHeaderData("LinkTypeNameEN", tr("Link type"));
   widget->setHeaderData("ValueUnit", tr("Unit"));

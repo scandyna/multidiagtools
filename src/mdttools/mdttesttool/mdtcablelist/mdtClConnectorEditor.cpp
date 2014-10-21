@@ -103,7 +103,7 @@ bool mdtClConnectorEditor::setupUnitUsageTable()
 
   relationInfo.setChildTableName("UnitConnectorUsage_view");
   relationInfo.addRelation("Id_PK", "Connector_Id_FK", false);
-  if(!addChildTable(relationInfo, tr("Contacts"))){
+  if(!addChildTable(relationInfo, tr("Usage (in units)"))){
     return false;
   }
   /**

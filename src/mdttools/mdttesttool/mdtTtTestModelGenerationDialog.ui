@@ -32,7 +32,11 @@
     </widget>
    </item>
    <item row="1" column="1">
-    <widget class="QComboBox" name="cbTestNode"/>
+    <widget class="QComboBox" name="cbTestNode">
+     <property name="sizeAdjustPolicy">
+      <enum>QComboBox::AdjustToContents</enum>
+     </property>
+    </widget>
    </item>
    <item row="2" column="0">
     <widget class="QLabel" name="lbTestCable">
@@ -42,7 +46,11 @@
     </widget>
    </item>
    <item row="2" column="1">
-    <widget class="QComboBox" name="cbTestCable"/>
+    <widget class="QComboBox" name="cbTestCable">
+     <property name="sizeAdjustPolicy">
+      <enum>QComboBox::AdjustToContents</enum>
+     </property>
+    </widget>
    </item>
    <item row="3" column="0">
     <widget class="QLabel" name="lbMeasureConnectionA">
@@ -52,7 +60,11 @@
     </widget>
    </item>
    <item row="3" column="1">
-    <widget class="QComboBox" name="cbMeasureConnectionA"/>
+    <widget class="QComboBox" name="cbMeasureConnectionA">
+     <property name="sizeAdjustPolicy">
+      <enum>QComboBox::AdjustToContents</enum>
+     </property>
+    </widget>
    </item>
    <item row="4" column="0">
     <widget class="QLabel" name="lbMeasureConnectionB">
@@ -62,7 +74,11 @@
     </widget>
    </item>
    <item row="4" column="1">
-    <widget class="QComboBox" name="cbMeasureConnectionB"/>
+    <widget class="QComboBox" name="cbMeasureConnectionB">
+     <property name="sizeAdjustPolicy">
+      <enum>QComboBox::AdjustToContents</enum>
+     </property>
+    </widget>
    </item>
    <item row="5" column="1">
     <widget class="QDialogButtonBox" name="buttonBox">

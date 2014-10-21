@@ -30,24 +30,7 @@
 
 class QVBoxLayout;
 class mdtTtLogicalTestCableDutWidget;
-///class mdtTtLogicalTestCableTcWidget;
 class mdtTtLogicalTestCableTsWidget;
-///class mdtTtLogicalTestCableDialog;
-
-/*
- * Struct for affectation storage
- * See at end of this file for details
- */
-///struct mdtTtLogicalTestCableDialogAffectation;
-
-/**
-struct mdtTtLogicalTestCableDialogAffectation
-{
-  mdtTtLogicalTestCableDutWidget *dutWidget;
-  mdtTtLogicalTestCableTcWidget *testCableWidget;
-  mdtTtLogicalTestCableTsWidget *testSystemWidget;
-};
-*/
 
 /*! \brief Helper class for logical test cable generation
  */
@@ -114,25 +97,8 @@ class mdtTtLogicalTestCableDialog : public QDialog, Ui::mdtTtLogicalTestCableDia
 
   QSqlDatabase pvDatabase;
   QVBoxLayout *pvAffectationLayout;
-  ///QList<mdtTtLogicalTestCableDialogAffectation> pvAffectations;
   QList<mdtTtLogicalTestCableDutWidget*> pvDutSideAffectationWidgets;
   QList<mdtTtLogicalTestCableTsWidget*> pvTsSideAffectationWidgets;
-  /**
-  QList<mdtTtLogicalTestCableDialogAffectation> pvDutSideAffectations;
-  QList<mdtTtLogicalTestCableDialogAffectation> pvTsSideAffectations;
-  */
 };
-
-/*
- * Struct for affectation storage
- */
-/**
-struct mdtTtLogicalTestCableDialogAffectation
-{
-  mdtTtLogicalTestCableDialog::cnType_t cnType;
-  QVariant testCableCnId;   // Test cable connector or connection
-  QVariant toPlugCnId;      // DUT or test system's connector or connection that will be connected
-};
-*/
 
 #endif // #ifndef MDT_TT_LOGICAL_TEST_CABLE_DIALOG_H

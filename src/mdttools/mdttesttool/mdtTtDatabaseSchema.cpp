@@ -3084,6 +3084,9 @@ bool mdtTtDatabaseSchema::createUnitConnectorView()
         " Connector_tbl.Gender,\n"\
         " Connector_tbl.Form,\n"\
         " Connector_tbl.Manufacturer,\n"\
+        " Connector_tbl.Housing,\n"\
+        " Connector_tbl.`Insert`,\n"\
+        " Connector_tbl.InsertRotation,\n"\
         " Connector_tbl.ManufacturerConfigCode,\n"\
         " Connector_tbl.ManufacturerArticleCode\n"\
         "FROM UnitConnector_tbl\n"\

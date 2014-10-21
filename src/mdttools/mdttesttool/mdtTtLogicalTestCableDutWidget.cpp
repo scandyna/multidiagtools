@@ -152,7 +152,14 @@ void mdtTtLogicalTestCableDutWidget::selectDut()
   // Setup and show dialog
   selectionDialog.setMessage(tr("Select DUT unit:"));
   selectionDialog.setQuery(sql, pvDatabase, false);
-  
+  selectionDialog.setColumnHidden("Unit_Id_PK", true);
+  selectionDialog.setHeaderData("SchemaPosition", tr("Schema\nposition"));
+  selectionDialog.addColumnToSortOrder("Type", Qt::AscendingOrder);
+  selectionDialog.addColumnToSortOrder("SubType", Qt::AscendingOrder);
+  selectionDialog.addColumnToSortOrder("SchemaPosition", Qt::AscendingOrder);
+  selectionDialog.sort();
+  selectionDialog.setWindowTitle(tr("DUT selection"));
+  selectionDialog.resize(700, 500);
   if(selectionDialog.exec() != QDialog::Accepted){
     return;
   }

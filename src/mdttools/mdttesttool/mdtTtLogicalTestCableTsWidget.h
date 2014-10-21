@@ -115,19 +115,10 @@ class mdtTtLogicalTestCableTsWidget : public QGroupBox, Ui::mdtTtLogicalTestCabl
    */
   void displayError(const mdtError & error);
 
-  // CN type enum
-  /**
-  enum cnType_t{
-    Connector,
-    Connection
-  };
-  */
-
   Q_DISABLE_COPY(mdtTtLogicalTestCableTsWidget);
 
   QVariant pvTestCableCnId;
   QVariant pvTestSystemId;
-  ///cnType_t pvCnType;
   mdtTtLogicalTestCableDialog::cnType_t pvCnType;
   QVariant pvCnId;
   QSqlDatabase pvDatabase;

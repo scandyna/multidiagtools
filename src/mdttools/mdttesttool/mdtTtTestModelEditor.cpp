@@ -109,7 +109,7 @@ void mdtTtTestModelEditor::addTestNode()
   }
   // Update views
   select("TestModel_TestNode_view");
-  select("TestNode_TestCable_view");
+  select("TestNode_LogicalTestCable_view");
 }
 
 void mdtTtTestModelEditor::removeTestNodes()
@@ -145,7 +145,7 @@ void mdtTtTestModelEditor::removeTestNodes()
   }
   // Update views
   select("TestModel_TestNode_view");
-  select("TestNode_TestCable_view");
+  select("TestNode_LogicalTestCable_view");
 }
 
 /**
@@ -571,14 +571,14 @@ bool mdtTtTestModelEditor::setupTestCableTable()
 
   relationInfo.setChildTableName("TestNode_LogicalTestCable_view");
   relationInfo.addRelation("Id_PK", "TestModel_Id_FK", false);
-  if(!addChildTable(relationInfo, tr("Available test cables"))){
+  if(!addChildTable(relationInfo, tr("Available logical test cables"))){
     return false;
   }
   /**
-  if(!addChildTable("TestNode_TestCable_view", tr("Available test cables"), database())){
+  if(!addChildTable("TestNode_LogicalTestCable_view", tr("Available test cables"), database())){
     return false;
   }
-  if(!addRelation("Id_PK", "TestNode_TestCable_view", "TestModel_Id_FK")){
+  if(!addRelation("Id_PK", "TestNode_LogicalTestCable_view", "TestModel_Id_FK")){
     return false;
   }
   */

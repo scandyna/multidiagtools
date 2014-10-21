@@ -342,7 +342,7 @@ QList<QVariant> mdtTtTestModel::getTestLinkIdListForDutConnectionId(const QVaria
   QList<QVariant> dataList;
 
   sql = "SELECT Id_PK FROM TestLink_tbl";
-  sql += " WHERE TestCable_Id_FK = " + testCableId.toString();
+  sql += " WHERE LogicalTestCable_Id_FK = " + testCableId.toString();
   sql += " AND DutConnection_Id_FK = " + dutConnectionId.toString();
   dataList = getDataList<QVariant>(sql, ok);
   if(!ok){
@@ -577,7 +577,7 @@ bool mdtTtTestModel::generateTestModel(mdtTtTestModelGenerationParameter & param
   }
   sequenceNumber = var.toInt();
   // Get DUT connections from given cable
-  sql = "SELECT DutConnection_Id_FK FROM TestLink_tbl WHERE TestCable_Id_FK = " + parameters.testCableId.toString();
+  sql = "SELECT DutConnection_Id_FK FROM TestLink_tbl WHERE LogicalTestCable_Id_FK = " + parameters.testCableId.toString();
   dutConnectionIdList = getDataList<QVariant>(sql, ok);
   if(!ok){
     return false;
