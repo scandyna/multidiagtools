@@ -39,11 +39,11 @@ QString mdtTtTestModelItem::sqlForTestLinkSelection(const QVariant & testModelIt
 
   sql = "SELECT\n"\
         " LNK.Id_PK,\n"\
-        " LNK.TestCable_Id_FK,\n"\
+        " LNK.LogicalTestCable_Id_FK,\n"\
         " LNK.TestConnection_Id_FK,\n"\
         " LNK.DutConnection_Id_FK,\n"\
         " LNK.Identification AS TestLinkIdentification,\n"\
-        " LNK.Value AS TestLinkValue,\n"\
+        /**" LNK.Value AS TestLinkValue,\n"\ */
         " UD.SchemaPosition AS DutUnitSchemaPosition,\n"\
         " UD.Alias AS DutUnitAlias,\n"\
         " UCD.Name AS DutConnectorName,\n"\

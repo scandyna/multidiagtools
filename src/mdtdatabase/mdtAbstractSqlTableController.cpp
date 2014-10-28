@@ -29,7 +29,7 @@
 #include <QPair>
 #include <QVector>
 
-//#include <QDebug>
+#include <QDebug>
 
 using namespace std;
 
@@ -341,6 +341,7 @@ void mdtAbstractSqlTableController::sort()
 {
   Q_ASSERT(pvModel);
 
+  qDebug() << "mdtAbstractSqlTableController::sort() - table: " << tableName() << " - called ...";
   if(!proxyModel()->hasColumnToSort()){
     return;
   }
@@ -352,6 +353,7 @@ void mdtAbstractSqlTableController::sort()
     model()->fetchMore();
   }
   // Sort
+  qDebug() << "mdtAbstractSqlTableController::sort() - table: " << tableName() << " - sort ...";
   pvProxyModel->sort();
 }
 
@@ -414,6 +416,39 @@ bool mdtAbstractSqlTableController::setData(const QString & matchFieldName, cons
   }
   // Get row that matches
   row = firstMatchingRow(matchColumn, matchData);
+  if(row < 0){
+    return false;
+  }
+
+  return setData(row, dataFieldName, data, submit);
+}
+
+bool mdtAbstractSqlTableController::setData(const QString& matchFieldName1, const QVariant& key1, const QString& matchFieldName2, const QVariant& key2,
+                                            const QString& dataFieldName, const QVariant& data, bool submit)
+{
+  Q_ASSERT(pvModel);
+
+  int row;
+  int matchColumn1;
+  int matchColumn2;
+
+  // Get columns for match fields
+  matchColumn1 = pvModel->record().indexOf(matchFieldName1);
+  if(matchColumn1 < 0){
+    pvLastError.setError(tr("Requested field name for key1") + " '" + matchFieldName1 + "' " + tr("was not found in table") + " '" + pvModel->tableName() + "'", mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtAbstractSqlTableController");
+    pvLastError.commit();
+    return false;
+  }
+  matchColumn2 = pvModel->record().indexOf(matchFieldName2);
+  if(matchColumn2 < 0){
+    pvLastError.setError(tr("Requested field name for key2") + " '" + matchFieldName2 + "' " + tr("was not found in table") + " '" + pvModel->tableName() + "'", mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtAbstractSqlTableController");
+    pvLastError.commit();
+    return false;
+  }
+  // Get row that matches
+  row = firstMatchingRow(matchColumn1, key1, matchColumn2, key2);
   if(row < 0){
     return false;
   }
@@ -484,6 +519,50 @@ QVariant mdtAbstractSqlTableController::data(const QString & matchFieldName, con
   }
   // Get row that matches
   row = firstMatchingRow(matchColumn, matchData);
+  if(row < 0){
+    ok = false;
+    return QVariant();
+  }
+
+  return data(row, dataColumn, ok);
+}
+
+QVariant mdtAbstractSqlTableController::data(const QString& matchFieldName1, const QVariant& key1, const QString& matchFieldName2, const QVariant& key2, const QString& dataFieldName, bool& ok)
+{
+  Q_ASSERT(pvModel);
+
+  int row;
+  int matchColumn1, matchColumn2;
+  int dataColumn;
+
+  // Get columns for match fields
+  matchColumn1 = pvModel->record().indexOf(matchFieldName1);
+  if(matchColumn1 < 0){
+    ok = false;
+    pvLastError.setError(tr("Requested field name for key1") + " '" + matchFieldName1 + "' " + tr("was not found in table") + " '" + pvModel->tableName() + "'", mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtAbstractSqlTableController");
+    pvLastError.commit();
+    return QVariant();
+  }
+  matchColumn2 = pvModel->record().indexOf(matchFieldName2);
+  if(matchColumn2 < 0){
+    ok = false;
+    pvLastError.setError(tr("Requested field name for key2") + " '" + matchFieldName2 + "' " + tr("was not found in table") + " '" + pvModel->tableName() + "'", mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtAbstractSqlTableController");
+    pvLastError.commit();
+    return QVariant();
+  }
+  // Get column for data field
+  dataColumn = pvModel->record().indexOf(dataFieldName);
+  if(dataColumn < 0){
+    ok = false;
+    pvLastError.setError(tr("Requested field name") + " '" + dataFieldName + "' " + tr("was not found in table") + " '" + pvModel->tableName() + "'", mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtAbstractSqlTableController");
+    pvLastError.commit();
+    return QVariant();
+  }
+  // Get row that matches
+  row = firstMatchingRow(matchColumn1, key1, matchColumn2, key2);
   if(row < 0){
     ok = false;
     return QVariant();
@@ -1230,6 +1309,54 @@ int mdtAbstractSqlTableController::firstMatchingRow(int column, const QVariant& 
   return -1;
 }
 
+int mdtAbstractSqlTableController::firstMatchingRow(int column1, const QVariant& key1, int column2, const QVariant& key2)
+{
+  Q_ASSERT(pvModel);
+  Q_ASSERT(!key1.isNull());
+  Q_ASSERT(!key2.isNull());
+  Q_ASSERT(column1 >= 0);
+  Q_ASSERT(column1 < proxyModel()->columnCount());
+  Q_ASSERT(column2 >= 0);
+  Q_ASSERT(column2 < proxyModel()->columnCount());
+
+  int row;
+  QModelIndex index;
+
+  if(pvModel->rowCount() < 1){
+    return -1;
+  }
+  // Search row
+  row = 0;
+  while(true){
+    index = proxyModel()->index(row, column1);
+    if(proxyModel()->data(index) == key1){
+      index = proxyModel()->index(row, column2);
+      if(proxyModel()->data(index) == key2){
+        return row;
+      }
+    }
+    if(row == (pvModel->rowCount()-1)){
+      if(!pvModel->canFetchMore()){
+        break;
+      }
+      pvModel->fetchMore();
+    }
+    ++row;
+  }
+  // No matching row found
+  QString msg;
+  msg = tr("Could not find record with key") + " '" + key1.toString() + "' ";
+  msg += tr("for field") + " '" + pvModel->record().fieldName(column1) + "' ";
+  msg += tr("and key") + " '" + key2.toString() + "' ";
+  msg += tr("for field") + " '" + pvModel->record().fieldName(column2) + "' ";
+  msg += tr("in table") + " '" + pvModel->tableName() + "'";
+  pvLastError.setError(msg, mdtError::Error);
+  MDT_ERROR_SET_SRC(pvLastError, "mdtAbstractSqlTableController");
+  pvLastError.commit();
+
+  return -1;
+}
+
 bool mdtAbstractSqlTableController::setupAndAddChildController(shared_ptr< mdtAbstractSqlTableController > controller, const mdtSqlRelationInfo& relationInfo, QSqlDatabase db, const QString& userFriendlyChildTableName)
 {
   Q_ASSERT(pvModel);
@@ -1289,6 +1416,7 @@ void mdtAbstractSqlTableController::updateChildControllersAfterCurrentRowChanged
     pvChildControllerContainers.at(i).relation->setParentCurrentRow(sourceIndex.row());
     ///pvChildControllerContainers.at(i).controller->setCurrentRowPv(0);
     pvChildControllerContainers.at(i).controller->setCurrentRow(0);
+    pvChildControllerContainers.at(i).controller->sort();
   }
 }
 

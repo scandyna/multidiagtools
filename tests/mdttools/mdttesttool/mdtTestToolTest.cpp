@@ -200,7 +200,9 @@ void mdtTestToolTest::mdtTtBaseTest()
   data = dataList.at(0);
   QCOMPARE(data.value("Id_PK"), QVariant(2));
   QCOMPARE(data.value("Type"), QVariant("Vehicle type 2"));
-  // Edit row
+  /*
+   * Check updateRecord with 1 key
+   */
   record.clearValues();
   record.setValue("Type", "Vehicle type 22");
   QVERIFY(b.updateRecord("VehicleType_tbl", record, "Id_PK", 2));
@@ -219,6 +221,97 @@ void mdtTestToolTest::mdtTtBaseTest()
   // Get data and check
   sql = "SELECT * FROM VehicleType_tbl";
   dataList = b.getData(sql, &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 1);
+  data = dataList.at(0);
+  QCOMPARE(data.value("Id_PK"), QVariant(2));
+  QVERIFY(data.value("Type").isNull());
+  /*
+   * Add 2 records for next tests
+   */
+  record.clearValues();
+  // Add data
+  record.setValue("Id_PK", 3);
+  record.setValue("Type", "Vehicle type 3");
+  QVERIFY(b.addRecord(record, "VehicleType_tbl"));
+  record.clearValues();
+  record.setValue("Id_PK", 4);
+  record.setValue("Type", "Vehicle type 4");
+  QVERIFY(b.addRecord(record, "VehicleType_tbl"));
+  // Get data and check
+  sql = "SELECT * FROM VehicleType_tbl";
+  dataList = b.getDataList<QSqlRecord>(sql, ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 3);
+  data = dataList.at(0);
+  QCOMPARE(data.value("Id_PK"), QVariant(2));
+  QVERIFY(data.value("Type").isNull());
+  data = dataList.at(1);
+  QCOMPARE(data.value("Id_PK"), QVariant(3));
+  QCOMPARE(data.value("Type"), QVariant("Vehicle type 3"));
+  data = dataList.at(2);
+  QCOMPARE(data.value("Id_PK"), QVariant(4));
+  QCOMPARE(data.value("Type"), QVariant("Vehicle type 4"));
+  /*
+   * Check updateRecord with 2 keys
+   */
+  // Update
+  record.clearValues();
+  record.setValue("Type", "Vehicle type 33");
+  QVERIFY(b.updateRecord("VehicleType_tbl", record, "Id_PK", 3, "Type", "Vehicle type 3"));
+  // Get data and check
+  sql = "SELECT * FROM VehicleType_tbl";
+  dataList = b.getDataList<QSqlRecord>(sql, ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 3);
+  data = dataList.at(0);
+  QCOMPARE(data.value("Id_PK"), QVariant(2));
+  QVERIFY(data.value("Type").isNull());
+  data = dataList.at(1);
+  QCOMPARE(data.value("Id_PK"), QVariant(3));
+  QCOMPARE(data.value("Type"), QVariant("Vehicle type 33"));
+  data = dataList.at(2);
+  QCOMPARE(data.value("Id_PK"), QVariant(4));
+  QCOMPARE(data.value("Type"), QVariant("Vehicle type 4"));
+  // Update
+  record.clearValues();
+  record.setValue("Type", "Vehicle type 44");
+  QVERIFY(b.updateRecord("VehicleType_tbl", record, "Id_PK", 4, "Type", "Vehicle type 4"));
+  // Get data and check
+  sql = "SELECT * FROM VehicleType_tbl";
+  dataList = b.getDataList<QSqlRecord>(sql, ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 3);
+  data = dataList.at(0);
+  QCOMPARE(data.value("Id_PK"), QVariant(2));
+  QVERIFY(data.value("Type").isNull());
+  data = dataList.at(1);
+  QCOMPARE(data.value("Id_PK"), QVariant(3));
+  QCOMPARE(data.value("Type"), QVariant("Vehicle type 33"));
+  data = dataList.at(2);
+  QCOMPARE(data.value("Id_PK"), QVariant(4));
+  QCOMPARE(data.value("Type"), QVariant("Vehicle type 44"));
+  /*
+   * Check data removing with 2 keys
+   */
+  // Remove a record
+  QVERIFY(b.removeData("VehicleType_tbl", "Id_PK", 3, "Type", "Vehicle type 33"));
+  // Get data and check
+  sql = "SELECT * FROM VehicleType_tbl";
+  dataList = b.getDataList<QSqlRecord>(sql, ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 2);
+  data = dataList.at(0);
+  QCOMPARE(data.value("Id_PK"), QVariant(2));
+  QVERIFY(data.value("Type").isNull());
+  data = dataList.at(1);
+  QCOMPARE(data.value("Id_PK"), QVariant(4));
+  QCOMPARE(data.value("Type"), QVariant("Vehicle type 44"));
+  // Remove a record
+  QVERIFY(b.removeData("VehicleType_tbl", "Id_PK", 4, "Type", "Vehicle type 44"));
+  // Get data and check
+  sql = "SELECT * FROM VehicleType_tbl";
+  dataList = b.getDataList<QSqlRecord>(sql, ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 1);
   data = dataList.at(0);

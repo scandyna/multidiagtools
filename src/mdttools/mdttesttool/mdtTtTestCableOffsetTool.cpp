@@ -22,6 +22,14 @@
 #include "mdtTtTestNodeManager.h"
 #include "mdtDeviceU3606A.h"
 #include "mdtDeviceModbusWago.h"
+#include "mdtTtTestItemNodeSetupData.h"
+#include "mdtTtTestNodeSetupData.h"
+#include "mdtTtTestNodeUnitSetupData.h"
+#include "mdtTtBase.h"
+#include "mdtValue.h"
+#include "mdtSqlRecord.h"
+#include <QSqlQuery>
+#include <QSqlError>
 
 #include <QDebug>
 
@@ -50,20 +58,276 @@ void mdtTtTestCableOffsetTool::setTestLinkTableController(std::shared_ptr< mdtSq
   pvTestLinkTableController = controller;
 }
 
-void mdtTtTestCableOffsetTool::runOffsetReset()
+bool mdtTtTestCableOffsetTool::runOffsetReset(const QVariant& testModelId)
 {
   Q_ASSERT(pvTestLinkTableController);
 
+  QString sql;
+  QSqlQuery query(pvDatabase);
+  shared_ptr<mdtDeviceU3606A> multimeter;
+  QSqlRecord itemRecord;
+  QVariant testModelItemId;
+  mdtValue R;
+  QList<QSqlRecord> logicalTestLinks;
+  bool ok;
+  int linkCount;
+  int i;
+  double r;
+
+  // Get instance of multimeter
+  multimeter = pvTestNodeManager->device<mdtDeviceU3606A>("U3606A");
+  Q_ASSERT(multimeter);
   // Connect to instruments
   if(!connectToInstruments()){
     displayLastError();
-    return;
+    return false;
   }
-  
-  
-  
+  // Set SQL to get TestModelItems related to TestModel with given ID
+  sql = "SELECT TMI.* FROM TestModelItem_tbl TMI JOIN TestModel_tbl TM ON TM.Id_PK = TMI.TestModel_Id_FK";
+  sql += " WHERE TM.Id_PK = " + testModelId.toString();
+  sql += " ORDER BY SequenceNumber ASC";
+  if(!query.exec(sql)){
+    pvLastError.setError(query.lastError().text(), mdtError::Error);
+    displayLastError();
+    disconnectFromInstruments();
+    return false;
+  }
+  // Setup multimeter to its min range
+  if(multimeter->setupResistanceMeasure(mdtDeviceU3606A::RangeMin, mdtDeviceU3606A::ResolutionMin) < 0){
+    pvLastError = multimeter->lastError();
+    displayLastError();
+    disconnectFromInstruments();
+    return false;
+  }
+  // Run all test model items
+  while(query.next()){
+    itemRecord = query.record();
+    testModelItemId = itemRecord.value("Id_PK");
+    Q_ASSERT(!testModelItemId.isNull());
+    // Setup I/O test node
+    if(!setupTestNodes(testModelItemId)){
+      displayLastError();
+      disconnectFromInstruments();
+      return false;
+    }
+    // Get R
+    R = multimeter->getMeasureValue();
+    if(!R.isValid()){
+      pvLastError = multimeter->lastError();
+      displayLastError();
+      disconnectFromInstruments();
+      return false;
+    }
+    // Get logical test links
+    logicalTestLinks = getLogicalTestLinkData(testModelItemId, ok);
+    if(!ok){
+      displayLastError();
+      disconnectFromInstruments();
+      return false;
+    }
+    // Update
+    linkCount = logicalTestLinks.size();
+    if(linkCount < 1){
+      continue;
+    }
+    Q_ASSERT(linkCount > 0);
+    r = R.valueDouble() / static_cast<double>(linkCount);
+    for(i = 0; i < linkCount; ++i){
+      if(!pvTestLinkTableController->setData("UnitConnectionStart_Id_FK", logicalTestLinks.at(i).value("TestCableUnitConnectionStart_Id_FK"),
+                                             "UnitConnectionEnd_Id_FK", logicalTestLinks.at(i).value("TestCableUnitConnectionEnd_Id_FK"),
+                                             "Value", r, false) )
+      {
+        pvLastError = pvTestLinkTableController->lastError();
+        displayLastError();
+        disconnectFromInstruments();
+        return false;
+      }
+    }
+  }
   // Disconnect
   disconnectFromInstruments();
+  // Save
+  if(!saveOffsetValues()){
+    return false;
+  }
+
+  return true;
+}
+
+QList< QSqlRecord > mdtTtTestCableOffsetTool::getLogicalTestLinkData(const QVariant& testModelItemId, bool & ok)
+{
+  mdtTtBase b(0, pvDatabase);
+  QList<QSqlRecord> dataList;
+  QString sql;
+
+  sql = "SELECT TL.Id_PK, TL.TestCableUnitConnectionStart_Id_FK, TL.TestCableUnitConnectionEnd_Id_FK";
+  sql += " FROM TestModelItem_TestLink_tbl TMITL JOIN TestLink_tbl TL ON TL.Id_PK = TMITL.TestLink_Id_FK";
+  sql += " WHERE TMITL.TestModelItem_Id_FK = " + testModelItemId.toString();
+  dataList = b.getDataList<QSqlRecord>(sql, ok);
+  if(!ok){
+    pvLastError = b.lastError();
+    return dataList;
+  }
+
+  return dataList;
+}
+
+bool mdtTtTestCableOffsetTool::saveOffsetValues()
+{
+  Q_ASSERT(pvTestLinkTableController);
+
+  mdtTtBase b(0, pvDatabase);
+  int N;
+  int i;
+  QVariant startCnxId;
+  QVariant endCnxId;
+  QVariant r;
+  bool ok;
+  mdtSqlRecord record;
+
+  // Setup record with fields to update
+  /**
+  if(!record.addField("UnitConnectionStart_Id_FK", "Link_tbl", pvDatabase)){
+    pvLastError = record.lastError();
+    return false;
+  }
+  if(!record.addField("UnitConnectionEnd_Id_FK", "Link_tbl", pvDatabase)){
+    pvLastError = record.lastError();
+    return false;
+  }
+  */
+  if(!record.addField("Value", "Link_tbl", pvDatabase)){
+    pvLastError = record.lastError();
+    return false;
+  }
+  // Beginn a transaction
+  if(!beginTransaction()){
+    return false;
+  }
+  // Save each value
+  N = pvTestLinkTableController->rowCount(true);
+  for(i = 0; i < N; ++i){
+    // Get cached values (from UnitLink_view)
+    startCnxId = pvTestLinkTableController->data(i, "UnitConnectionStart_Id_FK", ok);
+    if(!ok){
+      pvLastError = pvTestLinkTableController->lastError();
+      rollbackTransaction();
+      return false;
+    }
+    endCnxId = pvTestLinkTableController->data(i, "UnitConnectionEnd_Id_FK", ok);
+    if(!ok){
+      pvLastError = pvTestLinkTableController->lastError();
+      rollbackTransaction();
+      return false;
+    }
+    r = pvTestLinkTableController->data(i, "Value", ok);
+    if(!ok){
+      pvLastError = pvTestLinkTableController->lastError();
+      rollbackTransaction();
+      return false;
+    }
+    // Save to Link_tbl
+    record.clearValues();
+    record.setValue("Value", r);
+    if(!b.updateRecord("Link_tbl", record, "UnitConnectionStart_Id_FK", startCnxId, "UnitConnectionEnd_Id_FK", endCnxId)){
+      pvLastError = b.lastError();
+      rollbackTransaction();
+      return false;
+    }
+  }
+  // Commit trasaction
+  if(!commitTransaction()){
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtTtTestCableOffsetTool::setupTestNodes(const QVariant& testModelItemId)
+{
+  mdtTtTestItemNodeSetupData itemSetupData;
+  mdtTtTestNodeSetupData nodeSetupData;
+  bool ok;
+
+  itemSetupData = pvTest->getSetupData(testModelItemId, ok);
+  if(!ok){
+    pvLastError = pvTest->lastError();
+    displayLastError();
+    return false;
+  }
+  while(itemSetupData.hasMoreStep()){
+    nodeSetupData = itemSetupData.getNextStep();
+    ///qDebug() << " Has setup for node " << nodeSetupData.nodeIdentification();
+    if(nodeSetupData.nodeIdentification() == "0"){
+      if(!setupIoCoupler(nodeSetupData)){
+        return false;
+      }
+    }else{
+      pvLastError.setError(tr("Have setup for a unknown node: ") + nodeSetupData.nodeIdentification(), mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestCableOffsetTool");
+      pvLastError.commit();
+      return false;
+    }
+  }
+
+  return true;
+
+}
+
+bool mdtTtTestCableOffsetTool::setupIoCoupler(const mdtTtTestNodeSetupData& nodeSetupData/**, const QString& nodeIdentification*/)
+{
+  QList<mdtTtTestNodeUnitSetupData> unitSetupDataList;
+  mdtTtTestNodeUnitSetupData unitSetupData;
+  shared_ptr<mdtDeviceModbusWago> coupler;
+  int i;
+
+  coupler = pvTestNodeManager->device<mdtDeviceModbusWago>("W750");
+  Q_ASSERT(coupler);
+  // Set all outputs to 0
+  /// \todo Set analog outputs to 0
+  coupler->setDigitalOutputsValue(false, false, false);
+  // Set values of each I/O
+  unitSetupDataList = nodeSetupData.unitSetupList();
+  for(i = 0; i < unitSetupDataList.size(); ++i){
+    unitSetupData = unitSetupDataList.at(i);
+    qDebug() << " Unit: " << unitSetupData.schemaPosition() << ", I/O pos: " << unitSetupData.ioPosition() << " , type: " << unitSetupData.ioType();
+    switch(unitSetupData.ioType()){
+      case mdtTtTestNodeUnitSetupData::AnalogOutput:
+        if(coupler->setAnalogOutputValueAt(unitSetupData.ioPosition(), unitSetupData.value("Value").toDouble(), false, false) < 0){
+          pvLastError = coupler->lastError();
+          displayLastError();
+          return false;
+        }
+        break;
+      case mdtTtTestNodeUnitSetupData::DigitalOutput:
+        if(coupler->setDigitalOutputValueAt(unitSetupData.ioPosition(), unitSetupData.value("State").toBool(), false, false) < 0){
+          pvLastError = coupler->lastError();
+          displayLastError();
+          return false;
+        }
+        break;
+      case mdtTtTestNodeUnitSetupData::AnalogInput:
+      case mdtTtTestNodeUnitSetupData::DigitalInput:
+      case mdtTtTestNodeUnitSetupData::Unknown:
+        // Nothing to do
+        break;
+    }
+  }
+  // Send to coupler
+  if(coupler->setAnalogOutputs(true) < 0){
+    pvLastError = coupler->lastError();
+    displayLastError();
+    return false;
+  }
+  if(coupler->setDigitalOutputs(true) < 0){
+    pvLastError = coupler->lastError();
+    displayLastError();
+    return false;
+  }
+  // Let relays some time to switch
+  coupler->wait(50);
+
+  return true;
 }
 
 void mdtTtTestCableOffsetTool::displayLastError()
@@ -231,4 +495,43 @@ void mdtTtTestCableOffsetTool::disconnectFromInstruments()
 
   // Disconnect
   pvTestNodeManager->container()->disconnectFromDevices();
+}
+
+bool mdtTtTestCableOffsetTool::beginTransaction() 
+{
+  if(!pvDatabase.transaction()){
+    QSqlError sqlError = pvDatabase.lastError();
+    pvLastError.setError(tr("Cannot beginn transaction (database: '") + pvDatabase.databaseName() + tr("')."), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestCableOffsetTool");
+    pvLastError.commit();
+    return false;
+  }
+  return true;
+}
+
+bool mdtTtTestCableOffsetTool::rollbackTransaction() 
+{
+  if(!pvDatabase.rollback()){
+    QSqlError sqlError = pvDatabase.lastError();
+    pvLastError.setError(tr("Cannot beginn rollback (database: '") + pvDatabase.databaseName() + tr("')."), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestCableOffsetTool");
+    pvLastError.commit();
+    return false;
+  }
+  return true;
+}
+
+bool mdtTtTestCableOffsetTool::commitTransaction() 
+{
+  if(!pvDatabase.commit()){
+    QSqlError sqlError = pvDatabase.lastError();
+    pvLastError.setError(tr("Cannot beginn commit (database: '") + pvDatabase.databaseName() + tr("')."), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestCableOffsetTool");
+    pvLastError.commit();
+    return false;
+  }
+  return true;
 }

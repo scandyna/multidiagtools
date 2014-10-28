@@ -424,6 +424,20 @@ class mdtAbstractSqlTableController : public QObject
    */
   bool setData(const QString & matchFieldName, const QVariant & matchData, const QString & dataFieldName, const QVariant &data, bool submit = true);
 
+  /*! \brief Set data for given match and field name
+   *
+   * \param matchFieldName1 Field name in witch key1 must be searched
+   * \param key1 Data that must match in matchFieldName1
+   * \param matchFieldName2 Field name in witch key2 must be searched
+   * \param key2 Data that must match in matchFieldName2
+   * \param dataFieldName Field name in witch data must be set
+   * \param data Data to set
+   * \param submit If true, data will be submitted to database, else it will be cached only in model.
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   */
+  bool setData(const QString & matchFieldName1, const QVariant & key1, const QString & matchFieldName2, const QVariant & key2,
+               const QString & dataFieldName, const QVariant &data, bool submit = true);
+
   /*! \brief Get current data for given field name
    *
    * \pre Table model must be set with setModel() or setTableName() begore calling this method.
@@ -559,6 +573,31 @@ class mdtAbstractSqlTableController : public QObject
     Q_ASSERT(pvModel);
     bool ok;
     return data(matchFieldName, matchData, dataFieldName, ok);
+  }
+
+  /*! \brief Get data for given match and field name
+   *
+   * \param matchFieldName1 Field name in witch key1 must be searched
+   * \param key1 Data that must match in matchFieldName1
+   * \param matchFieldName2 Field name in witch key2 must be searched
+   * \param key2 Data that must match in matchFieldName2
+   * \param dataFieldName Field name in witch data must be returned
+   */
+  QVariant data(const QString & matchFieldName1, const QVariant & key1, const QString & matchFieldName2, const QVariant & key2, const QString & dataFieldName, bool & ok);
+
+  /*! \brief Get data for given match and field name
+   *
+   * \param matchFieldName1 Field name in witch key1 must be searched
+   * \param key1 Data that must match in matchFieldName1
+   * \param matchFieldName2 Field name in witch key2 must be searched
+   * \param key2 Data that must match in matchFieldName2
+   * \param dataFieldName Field name in witch data must be returned
+   */
+  inline QVariant data(const QString & matchFieldName1, const QVariant & key1, const QString & matchFieldName2, const QVariant & key2, const QString & dataFieldName)
+  {
+    Q_ASSERT(pvModel);
+    bool ok;
+    return data(matchFieldName1, key1, matchFieldName2, key2, dataFieldName, ok);
   }
 
   /*! \brief Get a record that contains given field names for given row
@@ -717,7 +756,7 @@ class mdtAbstractSqlTableController : public QObject
 
   /*! \brief Update controllers with data for current row
    *
-   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   * \pre Table model must be set with setModel() or setTableName() before calling this method.
    */
   void update();
 
@@ -1110,9 +1149,19 @@ class mdtAbstractSqlTableController : public QObject
    *   not underlaying QSqlTableModel.
    *
    * \pre Table model must be set with setModel() or setTableName() begore calling this method.
-   * \pre column must exit in model.
+   * \pre column must exist in model.
    */
   int firstMatchingRow(int column, const QVariant & matchData);
+
+  /*! \brief Get the fisrt row for witch data in column1 matches key1 and data in column2 matches key2
+   *
+   * Note: row is relative to sorted data model (proxyModel),
+   *   not underlaying QSqlTableModel.
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   * \pre column must exist in model.
+   */
+  int firstMatchingRow(int column1, const QVariant & key1, int column2, const QVariant & key2);
 
   /*! \brief Setup and add child controller
    */

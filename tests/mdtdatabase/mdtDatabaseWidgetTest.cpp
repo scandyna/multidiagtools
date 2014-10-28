@@ -1604,6 +1604,34 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QCOMPARE(wc.data("Id_PK", 2, "FirstName"), QVariant("Bety (P edited)"));
   QCOMPARE(wc.data("Id_PK", 3, "FirstName"), QVariant("Zeta (P edited)"));
   QCOMPARE(wc.data("Id_PK", 4, "FirstName"), QVariant("Charly (P edited)"));
+  /*
+   * Check data() method with 2 keys
+   */
+  QCOMPARE(wc.data("Id_PK", 1, "FirstName", "Andy (P edited)", "Remarks", ok), QVariant("Edited remark on Andy"));
+  QVERIFY(ok);
+  QCOMPARE(wc.data("Id_PK", 1, "FirstName", "Non existing", "Remarks", ok), QVariant());
+  QVERIFY(!ok);
+
+  /*
+   * Check programmed edition with 2 keys:
+   *  - Edit many rows
+   *  - Submit all at once
+   */
+  // Edit some rows
+  QVERIFY(wc.setData("Id_PK", 1, "FirstName", "Andy (P edited)", "Remarks", "Changed remark on Andy", false));
+  QVERIFY(wc.setData("Id_PK", 2, "FirstName", "Bety (P edited)", "Remarks", "Changed remark on Bety", false));
+  // Check cache
+  QCOMPARE(wc.data("Id_PK", 1, "Remarks", ok), QVariant("Changed remark on Andy"));
+  QVERIFY(ok);
+  QCOMPARE(wc.data("Id_PK", 2, "Remarks", ok), QVariant("Changed remark on Bety"));
+  QVERIFY(ok);
+  // Submit, select and check
+  QVERIFY(wc.submitAndWait());
+  QVERIFY(wc.select());
+  QCOMPARE(wc.data("Id_PK", 1, "Remarks", ok), QVariant("Changed remark on Andy"));
+  QVERIFY(ok);
+  QCOMPARE(wc.data("Id_PK", 2, "Remarks", ok), QVariant("Changed remark on Bety"));
+  QVERIFY(ok);
 
   // Clear test data
   clearTestDatabaseData();

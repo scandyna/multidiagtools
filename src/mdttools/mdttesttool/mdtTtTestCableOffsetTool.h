@@ -34,11 +34,15 @@
 #include <QVariant>
 #include <QVector>
 #include <QObject>
+#include <QList>
+#include <QSqlRecord>
 #include <QMessageBox>
 #include <memory>
 #include <limits>
 
 class QWidget;
+///class mdtTtTestItemNodeSetupData;
+class mdtTtTestNodeSetupData;
 
 /*! \biref Tool to reset offset of test connection cables
  */
@@ -56,13 +60,29 @@ class mdtTtTestCableOffsetTool : public QObject
    */
   void setTestLinkTableController(std::shared_ptr<mdtSqlTableViewController> controller);
 
- public slots:
+ ///public slots:
 
   /*! \brief Run offset reset
    */
-  void runOffsetReset();
+  bool runOffsetReset(const QVariant & testModelId);
 
  private:
+
+  /*! \brief Get logical test link data for givent test model item ID
+   */
+  QList<QSqlRecord> getLogicalTestLinkData(const QVariant & testModelItemId, bool & ok);
+
+  /*! \brief Save offset values to database
+   */
+  bool saveOffsetValues();
+
+  /*! \brief Setup test nodes
+   */
+  bool setupTestNodes(const QVariant & testModelItemId);
+
+  /*! \brief Setup I/O coupler
+   */
+  bool setupIoCoupler(const mdtTtTestNodeSetupData & nodeSetupData/**, const QString & nodeIdentification*/);
 
   /*! \brief Contains last error that occured
    */
@@ -111,6 +131,24 @@ class mdtTtTestCableOffsetTool : public QObject
   /*! \brief Disconnect from instruments
    */
   void disconnectFromInstruments();
+
+  /*! \brief Beginn manually a new transaction
+   *
+   * On error, false is returned and error is available with lastError() .
+   */
+  bool beginTransaction();
+
+  /*! \brief Rollback manually a new transaction
+   *
+   * On error, false is returned and error is available with lastError() .
+   */
+  bool rollbackTransaction();
+
+  /*! \brief Commit manually a new transaction
+   *
+   * On error, false is returned and error is available with lastError() .
+   */
+  bool commitTransaction();
 
   Q_DISABLE_COPY(mdtTtTestCableOffsetTool);
 

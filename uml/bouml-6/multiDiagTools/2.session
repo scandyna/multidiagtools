@@ -1,11 +1,11 @@
-window_sizes 1280 1005 397 877 952 0
+window_sizes 1280 978 397 877 925 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 1271682 // TestCable
-    877 952 100 4 0 0
+  active  classdiagram_ref 987394 // TestNodeSetup
+    877 925 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 1271682 // TestCable
+selected classdiagram_ref 987394 // TestNodeSetup
 open
   classview_ref 576258 // TestTool
 end

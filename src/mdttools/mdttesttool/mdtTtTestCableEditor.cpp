@@ -789,13 +789,21 @@ void mdtTtTestCableEditor::selectOffsetResetTestModel()
  */
 void mdtTtTestCableEditor::runOffsetReset()
 {
+  Q_ASSERT(pvCableOffsetTool != 0);
+
   QVariant offsetResetTestModelId;
 
   // Get current test model offset ID
   offsetResetTestModelId = currentData("TestCable_tbl", "OffsetResetTestModel_Id_FK");
   if(offsetResetTestModelId.isNull()){
+    pvLastError.setError(tr("No test was affected for offset reset of this cable."), mdtError::Warning);
+    displayLastError();
     return;
   }
+  
+  pvCableOffsetTool->runOffsetReset(offsetResetTestModelId);
+  // Update
+  select("UnitLink_view");
 }
 
 QVariant mdtTtTestCableEditor::selectBaseConnector()

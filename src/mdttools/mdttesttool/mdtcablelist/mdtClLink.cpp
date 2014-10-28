@@ -403,12 +403,24 @@ bool mdtClLink::canConnectConnections(const mdtClUnitConnectionData& S, const md
   /*
    * Check contact type if required
    */
-  if(!criteria.checkContactType){
-    return true;
+  if(criteria.checkContactType){
+    QString sType = S.value("ConnectionType_Code_FK").toString();
+    QString eType = E.value("ConnectionType_Code_FK").toString();
+    // Check case of terminals
+    if((sType == "T")&&(eType != "T")){
+      return false;
+    }
+    if((eType == "T")&&(sType != "T")){
+      return false;
+    }
+    // Here, we have Socket and Pin
+    if((sType == "P")&&(eType == "P")){
+      return false;
+    }
+    if((sType == "S")&&(eType == "S")){
+      return false;
+    }
   }
-  // Get contact types of S and E
-  QString sType = S.value("ConnectionType_Code_FK").toString();
-  QString eType = E.value("ConnectionType_Code_FK").toString();
   /*
    * Check if connection is part of a connector:
    *  - Both can simply be free (not a connector contact)
@@ -429,16 +441,6 @@ bool mdtClLink::canConnectConnections(const mdtClUnitConnectionData& S, const md
   Q_ASSERT(!S.value("UnitConnector_Id_FK").isNull());
   Q_ASSERT(!E.value("UnitConnector_Id_FK").isNull());
   if(S.value("UnitContactName").toString().trimmed() != E.value("UnitContactName").toString().trimmed()){
-    return true;
-  }
-  // Check contact types
-  if((sType == "T")&&(eType == "T")){
-    return true;
-  }
-  if((sType == "P")&&(eType == "S")){
-    return true;
-  }
-  if((sType == "S")&&(eType == "P")){
     return true;
   }
 

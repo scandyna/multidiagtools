@@ -195,6 +195,26 @@ bool mdtTtBase::updateRecord(const QString & tableName, const mdtSqlRecord & rec
   return updateRecord(tableName, record, matchRecord);
 }
 
+bool mdtTtBase::updateRecord(const QString& tableName, const mdtSqlRecord& record, const QString& matchField1, const QVariant& key1, const QString& matchField2, const QVariant& key2)
+{
+  mdtSqlRecord matchRecord;
+
+  // Setup match record
+  if(!matchRecord.addField(matchField1, tableName, database())){
+    pvLastError = matchRecord.lastError();
+    return false;
+  }
+  if(!matchRecord.addField(matchField2, tableName, database())){
+    pvLastError = matchRecord.lastError();
+    return false;
+  }
+  // Add match values
+  matchRecord.setValue(matchField1, key1);
+  matchRecord.setValue(matchField2, key2);
+
+  return updateRecord(tableName, record, matchRecord);
+}
+
 bool mdtTtBase::removeData(const QString & tableName, const QStringList & fields, const QModelIndexList & indexes)
 {
   int i;

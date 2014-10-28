@@ -180,6 +180,18 @@ class mdtTtBase : public QObject
    */
   bool updateRecord(const QString & tableName, const mdtSqlRecord & record, const QString & matchField, const QVariant & matchData);
 
+  /*! \brief Update data for given table
+   *
+   * \param tableName Name of table in witch data must be updated.
+   * \param record Record containing data to update.
+   * \param matchField1 Field for witch key1 must match.
+   * \param key1 Key that matches matchField1.
+   * \param matchField2 Field for witch key2 must match.
+   * \param key2 Key that matches matchField2.
+   */
+  bool updateRecord(const QString & tableName, const mdtSqlRecord & record, 
+                    const QString & matchField1, const QVariant & key1, const QString & matchField2, const QVariant & key2);
+
   /*! \brief Remove data from given table
    *
    * This method can be used with result of mdtSqlTableWidget::indexListOfSelectedRows()

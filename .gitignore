@@ -85,4 +85,5 @@ customdb
 .kdev4
 multiDiagTools.kdev4
 uml/bouml-6/multiDiagTools/cpp_gen/
+.kdev_include_paths
 

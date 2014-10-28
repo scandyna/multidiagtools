@@ -3485,6 +3485,7 @@ bool mdtTtDatabaseSchema::createTestNodeUnitConnectionView()
   return createView("TestNodeUnitConnection_view", sql);
 }
 
+/**
 bool mdtTtDatabaseSchema::createTestLinkView()
 {
   QString sql;
@@ -3496,7 +3497,6 @@ bool mdtTtDatabaseSchema::createTestLinkView()
         " LNK.TestConnection_Id_FK,\n"\
         " LNK.DutConnection_Id_FK,\n"\
         " LNK.Identification AS TestLinkIdentification,\n"\
-        /**" LNK.Resistance AS TestLinkResistance,\n"\ */
         " TNU.Unit_Id_FK_PK,\n"\
         " TNU.TestNode_Id_FK,\n"\
         " UD.Id_PK AS DutUnitId,\n"\
@@ -3544,6 +3544,129 @@ bool mdtTtDatabaseSchema::createTestLinkView()
         "  ON UVTU.Unit_Id_FK = UD.Id_PK\n"\
         " JOIN VehicleType_tbl UVT\n"\
         "  ON UVT.Id_PK = UVTU.VehicleType_Id_FK\n";
+
+  return createView("TestLink_view", sql);
+}
+*/
+
+bool mdtTtDatabaseSchema::createTestLinkView()
+{
+  QString sql;
+
+  sql = "CREATE VIEW TestLink_view AS\n"\
+        "SELECT\n"\
+        " TL.*,\n"\
+        " LTC.Key AS LogicalTestCableKey,\n"\
+        " DUTU.SchemaPosition AS DutSchemaPosition,\n"\
+        " DUTU.Alias AS DutAlias,\n"\
+        " DUTUCNR.Name AS DutConnectorName,\n"\
+        " DUTUCNX.UnitConnector_Id_FK AS DutUnitConnector_Id_FK,\n"\
+        " DUTUCNX.Unit_Id_FK AS DutUnit_Id_FK,\n"\
+        " DUTUCNX.UnitContactName AS DutContactName,\n"\
+        " TCDUCNR.Name AS TestCableDutSideConnectorName,\n"\
+        " TCDUCNX.UnitContactName AS TestCableDutSideContactName,\n"\
+        " TCL.Identification AS TestCableLinkIdentification,\n"\
+        " TCL.Value AS TestCableLinkResistance,\n"\
+        " TCTUCNR.Name AS TestCableTestSideConnectorName,\n"\
+        " TCTUCNX.UnitContactName AS TestCableTestSideContactName,\n"\
+        " TNUCNR.Name AS TestNodeConnectorName,\n"\
+        " TNUCNX.UnitConnector_Id_FK AS TestNodeUnitConnector_Id_FK,\n"\
+        " TNUCNX.UnitContactName AS TestNodeContactName\n"\
+        /**
+        " LNK.Id_PK,\n"\
+        " LNK.LogicalTestCable_Id_FK,\n"\
+        " LNK.TestConnection_Id_FK,\n"\
+        " LNK.DutConnection_Id_FK,\n"\
+        " LNK.Identification AS TestLinkIdentification,\n"\
+        " TNU.Unit_Id_FK_PK,\n"\
+        " TNU.TestNode_Id_FK,\n"\
+        " UD.Id_PK AS DutUnitId,\n"\
+        " UD.SchemaPosition AS DutUnitSchemaPosition,\n"\
+        " UD.Alias AS DutUnitAlias,\n"\
+        " UCD.Name AS DutConnectorName,\n"\
+        " UCNXD.UnitContactName AS DutContactName,\n"\
+        " UTNU.SchemaPosition AS TestNodeUnitSchemaPosition,\n"\
+        " UCT.Name AS TestConnectorName,\n"\
+        " UCNXT.UnitContactName AS TestContactName,\n"\
+        " TNB.NameEN AS Bus,\n"\
+        " TNU.IoPosition,\n"\
+        " VTN.Type AS TestNodeType,\n"\
+        " VTN.SubType AS TestNodeSubType,\n"\
+        " VTN.SeriesNumber AS TestNodeSeriesNumber,\n"\
+        " TN.VehicleType_Id_FK_PK,\n"\
+        " TN.NodeIdentification,\n"\
+        " UVT.Type,\n"\
+        " UVT.SubType,\n"\
+        " UVT.SeriesNumber\n"\
+        */
+        "FROM TestLink_tbl TL\n"\
+        " JOIN Link_tbl TCL\n"\
+        "  ON TCL.UnitConnectionStart_Id_FK = TL.TestCableUnitConnectionStart_Id_FK\n"\
+        "  AND TCL.UnitConnectionEnd_Id_FK = TL.TestCableUnitConnectionEnd_Id_FK\n"\
+        " JOIN UnitConnection_tbl TCDUCNX\n"\
+        "  ON TCDUCNX.Id_PK = TCL.UnitConnectionStart_Id_FK\n"\
+        " LEFT JOIN UnitConnector_tbl TCDUCNR\n"\
+        "  ON TCDUCNR.Id_PK = TCDUCNX.UnitConnector_Id_FK\n"\
+        " JOIN UnitConnection_tbl TCTUCNX\n"\
+        "  ON TCTUCNX.Id_PK = TCL.UnitConnectionEnd_Id_FK\n"\
+        " LEFT JOIN UnitConnector_tbl TCTUCNR\n"\
+        "  ON TCTUCNR.Id_PK = TCTUCNX.UnitConnector_Id_FK\n"\
+        /**
+        " JOIN 
+        " JOIN Unit_tbl TCU\n"\
+        "  ON TCU.Id_PK = TCDUCNX.Unit_Id_FK\n"\
+        "  AND TCU.Id_PK = TCTUCNX.Unit_Id_FK\n"\
+        */
+        " JOIN UnitConnection_tbl DUTUCNX\n"\
+        "  ON DUTUCNX.Id_PK = TL.DutConnection_Id_FK\n"\
+        " LEFT JOIN UnitConnector_tbl DUTUCNR\n"\
+        "  ON DUTUCNR.Id_PK = DUTUCNX.UnitConnector_Id_FK\n"\
+        " JOIN Unit_tbl DUTU\n"\
+        "  ON DUTU.Id_PK = DUTUCNX.Unit_Id_FK\n"\
+        " JOIN TestNodeUnitConnection_tbl\n"\
+        "  ON TestNodeUnitConnection_tbl.UnitConnection_Id_FK_PK = TL.TestConnection_Id_FK\n"\
+        " JOIN UnitConnection_tbl TNUCNX\n"\
+        "  ON TNUCNX.Id_PK = TestNodeUnitConnection_tbl.UnitConnection_Id_FK_PK\n"\
+        " LEFT JOIN UnitConnector_tbl TNUCNR\n"\
+        "  ON TNUCNR.Id_PK = TNUCNX.UnitConnector_Id_FK\n"\
+        /**
+        " JOIN TestNodeUnit_tbl TNU\n"\
+        "  ON TNU.Unit_Id_FK_PK = TNUCNX.TestNodeUnit_Id_FK\n"\
+        " JOIN TestNode_tbl TN\n"\
+        "  ON TN.VehicleType_Id_FK_PK = TNU.TestNode_Id_FK\n"\
+        " JOIN VehicleType_tbl VTN\n"\
+        "  ON VTN.Id_PK = TN.VehicleType_Id_FK_PK\n"\
+        */
+        " JOIN LogicalTestCable_tbl LTC\n"\
+        "  ON LTC.Id_PK = TL.LogicalTestCable_Id_FK\n";
+        /**
+        " JOIN TestNodeUnitConnection_tbl TNUCNX\n"\
+        "  ON TNUCNX.UnitConnection_Id_FK_PK = LNK.TestConnection_Id_FK\n"\
+        " JOIN UnitConnection_tbl UCNXT\n"\
+        "  ON UCNXT.Id_PK = LNK.TestConnection_Id_FK\n"\
+        " LEFT JOIN UnitConnector_tbl UCT\n"\
+        "  ON UCT.Id_PK = UCNXT.UnitConnector_Id_FK\n"\
+        " JOIN TestNodeUnit_tbl TNU\n"\
+        "  ON TNU.Unit_Id_FK_PK = TNUCNX.TestNodeUnit_Id_FK\n"\
+        " JOIN Unit_tbl UTNU\n"\
+        "  ON UTNU.Id_PK = TNU.Unit_Id_FK_PK\n"\
+        " JOIN TestNode_tbl TN\n"\
+        "  ON TN.VehicleType_Id_FK_PK = TNU.TestNode_Id_FK\n"\
+        " JOIN VehicleType_tbl VTN\n"\
+        "  ON VTN.Id_PK = TN.VehicleType_Id_FK_PK\n"\
+        " LEFT JOIN TestNodeBus_tbl TNB\n"\
+        "  ON TNB.Id_PK = TNUCNX.TestNodeBus_Id_FK\n"\
+        " JOIN UnitConnection_tbl UCNXD\n"\
+        "  ON UCNXD.Id_PK = LNK.DutConnection_Id_FK\n"\
+        " LEFT JOIN UnitConnector_tbl UCD\n"\
+        "  ON UCD.Id_PK = UCNXD.UnitConnector_Id_FK\n"\
+        " JOIN Unit_tbl UD\n"\
+        "  ON UD.Id_PK = UCNXD.Unit_Id_FK\n"\
+        " JOIN VehicleType_Unit_tbl UVTU\n"\
+        "  ON UVTU.Unit_Id_FK = UD.Id_PK\n"\
+        " JOIN VehicleType_tbl UVT\n"\
+        "  ON UVT.Id_PK = UVTU.VehicleType_Id_FK\n";
+	*/
 
   return createView("TestLink_view", sql);
 }
@@ -4004,6 +4127,7 @@ bool mdtTtDatabaseSchema::createTestItemView()
   return createView("TestItem_view", sql);
 }
 
+/**
 bool mdtTtDatabaseSchema::createTestItemNodeUnitSetupView()
 {
   QString sql;
@@ -4014,8 +4138,6 @@ bool mdtTtDatabaseSchema::createTestItemNodeUnitSetupView()
         " TI.Test_Id_FK,\n"\
         " TI.TestModelItem_Id_FK,\n"\
         " TMI.TestModel_Id_FK,\n"\
-        /*" TNUS.Id_PK,\n"\*/
-        /*" TNUS.TestModelItem_Id_FK,\n"\*/
         " TMI.Key,\n"\
         " TMI.SequenceNumber,\n"\
         " TNUS.StepNumber,\n"\
@@ -4023,7 +4145,6 @@ bool mdtTtDatabaseSchema::createTestItemNodeUnitSetupView()
         " TNUS.TestNodeUnit_Id_FK,\n"\
         " TNUS.State,\n"\
         " TNUS.Value,\n"\
-        /*" TNU.Bus,\n"\*/
         " TNU.TestNode_Id_FK,\n"\
         " TNU.Type_Code_FK,\n"\
         " TNU.IoPosition,\n"\
@@ -4032,6 +4153,41 @@ bool mdtTtDatabaseSchema::createTestItemNodeUnitSetupView()
         "FROM TestItem_tbl TI\n"\
         " JOIN TestModelItem_tbl TMI\n"\
         "  ON TMI.Id_PK = TI.TestModelItem_Id_FK\n"\
+        " JOIN TestNodeUnitSetup_tbl TNUS\n"\
+        "  ON TNUS.TestModelItem_Id_FK = TMI.Id_PK\n"\
+        " JOIN TestNodeUnit_tbl TNU\n"\
+        "  ON TNU.Unit_Id_FK_PK = TNUS.TestNodeUnit_Id_FK\n"\
+        " JOIN Unit_tbl U\n"\
+        "  ON U.Id_PK = TNU.Unit_Id_FK_PK\n"\
+        " JOIN TestNode_tbl TN\n"\
+        "  ON TN.VehicleType_Id_FK_PK = TNU.TestNode_Id_FK\n"\
+        "ORDER BY SequenceNumber ASC, TN.VehicleType_Id_FK_PK ASC, StepNumber ASC";
+
+  return createView("TestItemNodeUnitSetup_view", sql);
+}
+*/
+
+bool mdtTtDatabaseSchema::createTestItemNodeUnitSetupView()
+{
+  QString sql;
+
+  sql = "CREATE VIEW TestItemNodeUnitSetup_view AS\n"\
+        "SELECT\n"\
+        " TMI.Id_PK AS TestModelItem_Id_FK,\n"\
+        " TMI.TestModel_Id_FK,\n"\
+        " TMI.Key,\n"\
+        " TMI.SequenceNumber,\n"\
+        " TNUS.StepNumber,\n"\
+        " U.SchemaPosition,\n"\
+        " TNUS.TestNodeUnit_Id_FK,\n"\
+        " TNUS.State,\n"\
+        " TNUS.Value,\n"\
+        " TNU.TestNode_Id_FK,\n"\
+        " TNU.Type_Code_FK,\n"\
+        " TNU.IoPosition,\n"\
+        " TN.NodeIdentification,\n"\
+        " TN.DeviceIdentification\n"\
+        "FROM TestModelItem_tbl TMI\n"\
         " JOIN TestNodeUnitSetup_tbl TNUS\n"\
         "  ON TNUS.TestModelItem_Id_FK = TMI.Id_PK\n"\
         " JOIN TestNodeUnit_tbl TNU\n"\

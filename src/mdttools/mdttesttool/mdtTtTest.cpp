@@ -382,7 +382,8 @@ mdtTtTestItemNodeSetupData mdtTtTest::getSetupData(const QVariant & testModelIte
   // Get data from db
   ///sql = "SELECT * FROM TestItemNodeUnitSetup_view WHERE Id_PK = " + testItemId.toString();
   sql = "SELECT * FROM TestItemNodeUnitSetup_view WHERE TestModelItem_Id_FK = " + testModelItemId.toString();
-  dataList = getData(sql, &ok);
+  ///dataList = getData(sql, &ok);
+  dataList = getDataList<QSqlRecord>(sql, ok);
   if(!ok){
     return tiSetupData;
   }

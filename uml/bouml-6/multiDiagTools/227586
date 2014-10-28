@@ -1,6 +1,6 @@
 format 207
 "mdttesttool" // mdttools::mdttesttool
-  revision 56
+  revision 57
   modified_by 2 "philippe"
   // class settings
   
@@ -5358,29 +5358,6 @@ ${inlines}
 	  a public
 	    cpp default "${type}"
 	    classrelation_ref 1777026 // <generalisation>
-	  b parent class_ref 316162 // QWidget
-      end
-    end
-
-    class 1402754 "mdtTtLogicalTestCableTcWidget"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 1777154 // <generalisation>
-	relation 1761666 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 1777154 // <generalisation>
 	  b parent class_ref 316162 // QWidget
       end
     end

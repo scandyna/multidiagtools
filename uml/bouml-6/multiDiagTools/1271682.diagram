@@ -12,10 +12,6 @@ classcanvas 128386 class_ref 1402626 // mdtTtLogicalTestCableDutWidget
   classdiagramsettings member_max_width 0 end
   xyz 36 397 2000
 end
-classcanvas 128514 class_ref 1402754 // mdtTtLogicalTestCableTcWidget
-  classdiagramsettings member_max_width 0 end
-  xyz 318 392 2000
-end
 classcanvas 128642 class_ref 1402882 // mdtTtLogicalTestCableTsWidget
   classdiagramsettings member_max_width 0 end
   xyz 591 394 2000
@@ -36,11 +32,6 @@ relationcanvas 128898 relation_ref 453762 // <generalisation>
 end
 relationcanvas 129026 relation_ref 1761538 // <generalisation>
   from ref 128386 z 2007 to ref 128770
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 129154 relation_ref 1761666 // <generalisation>
-  from ref 128514 z 2007 to ref 128770
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

@@ -125,7 +125,7 @@ void mdtTtTestModelItemEditor::addTestLink()
   selectionDialog.setMessage(tr("Please select a test link to use."));
   selectionDialog.setQuery(sql, database(), false);
   selectionDialog.setColumnHidden("Id_PK", true);
-  selectionDialog.setColumnHidden("TestCable_Id_FK", true);
+  selectionDialog.setColumnHidden("LogicalTestCable_Id_FK", true);
   selectionDialog.setColumnHidden("TestConnection_Id_FK", true);
   selectionDialog.setColumnHidden("DutConnection_Id_FK", true);
   selectionDialog.setColumnHidden("TestLinkValue", true);
