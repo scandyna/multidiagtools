@@ -153,10 +153,8 @@ bool mdtClLink::linkExists(const QVariant & unitConnectionStartId, const QVarian
   return (dataList.size() > 0);
 }
 
-mdtClLinkData mdtClLink::getLinkData(const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId, bool includeConnectionData, bool includeVehicleTypeLinkData, bool *ok)
+mdtClLinkData mdtClLink::getLinkData(const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId, bool includeConnectionData, bool includeVehicleTypeLinkData, bool & ok)
 {
-  Q_ASSERT(ok != 0);
-
   mdtClLinkData linkData;
   QList<QSqlRecord> dataList;
   QString sql;
@@ -165,8 +163,8 @@ mdtClLinkData mdtClLink::getLinkData(const QVariant & unitConnectionStartId, con
   sql = "SELECT * FROM Link_tbl";
   sql += " WHERE UnitConnectionStart_Id_FK = " + unitConnectionStartId.toString();
   sql += " AND UnitConnectionEnd_Id_FK = " + unitConnectionEndId.toString();
-  dataList = getData(sql, ok);
-  if(!*ok){
+  dataList = getDataList<QSqlRecord>(sql, ok);
+  if(!ok){
     return linkData;
   }
   if(dataList.isEmpty()){
@@ -176,7 +174,7 @@ mdtClLinkData mdtClLink::getLinkData(const QVariant & unitConnectionStartId, con
     pvLastError.setError(msg, mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtClLink");
     pvLastError.commit();
-    *ok = false;
+    ok = false;
     return linkData;
   }
   Q_ASSERT(dataList.size() == 1);
@@ -184,25 +182,34 @@ mdtClLinkData mdtClLink::getLinkData(const QVariant & unitConnectionStartId, con
   // Get unit connection data part if required
   if(includeConnectionData){
     if(!getConnectionData(linkData, unitConnectionStartId, unitConnectionEndId)){
-      *ok = false;
+      ok = false;
       return linkData;
     }
   }
   // Get vehicle type link data if required
   if(includeVehicleTypeLinkData){
     if(!getVehicleTypeLinkData(linkData, unitConnectionStartId, unitConnectionEndId)){
-      *ok = false;
+      ok = false;
       return linkData;
     }
   }
   // Done
-  *ok = true;
+  ok = true;
 
   return linkData;
 }
 
 bool mdtClLink::editLink(const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId, const mdtClLinkData & linkData)
 {
+  /*
+   * If PK and vehicle types has no changes, we make a simple edition in Link_tbl
+   */
+  if((!linkData.hasValue("UnitConnectionStart_Id_FK"))&&(!linkData.hasValue("UnitConnectionEnd_Id_FK"))&&(!linkData.vehicleTypeLinksEdited())){
+    return updateRecord("Link_tbl", linkData, "UnitConnectionStart_Id_FK", unitConnectionStartId, "UnitConnectionEnd_Id_FK", unitConnectionEndId);
+  }
+  /*
+   * Here, we remove and re-add the link
+   */
   // We update many tables, so use manually a transaction
   if(!beginTransaction()){
     return false;
@@ -437,6 +444,10 @@ bool mdtClLink::canConnectConnections(const mdtClUnitConnectionData& S, const md
   if((!S.value("UnitConnector_Id_FK").isNull())&&(E.value("UnitConnector_Id_FK").isNull())){
     return false;
   }
+  
+  return true;
+  
+  /**
   // Here, both connections are part of a connector, check that contact names matches
   Q_ASSERT(!S.value("UnitConnector_Id_FK").isNull());
   Q_ASSERT(!E.value("UnitConnector_Id_FK").isNull());
@@ -445,6 +456,7 @@ bool mdtClLink::canConnectConnections(const mdtClUnitConnectionData& S, const md
   }
 
   return false;
+  */
 }
 
 bool mdtClLink::canConnectConnections(const QVariant& unitConnectionIdA, const QVariant& unitConnectionIdB, const mdtClConnectableCriteria& criteria, bool& ok)
@@ -1027,7 +1039,7 @@ bool mdtClLink::getVehicleTypeLinkData(mdtClLinkData & linkData, const QVariant 
     vtlData.setUnitConnectionEndId(data.value("UnitConnectionEnd_Id_FK"));
     vtlData.setVehicleTypeStartId(data.value("VehicleTypeStart_Id_FK"));
     vtlData.setVehicleTypeEndId(data.value("VehicleTypeEnd_Id_FK"));
-    linkData.addVehicleTypeLinkData(vtlData);
+    linkData.addVehicleTypeLinkData(vtlData, false);
   }
 
   return true;

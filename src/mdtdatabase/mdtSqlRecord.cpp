@@ -120,6 +120,15 @@ QStringList mdtSqlRecord::fieldNames() const
   return names;
 }
 
+void mdtSqlRecord::clearHasValueFlags()
+{
+  int i;
+
+  for(i = 0; i < count(); ++i){
+    pvRecord.setGenerated(i, false);
+  }
+}
+
 void mdtSqlRecord::setValue(int fieldIndex, const QVariant & val)
 {
   pvRecord.setGenerated(fieldIndex, true);
@@ -139,11 +148,7 @@ void mdtSqlRecord::clear()
 
 void mdtSqlRecord::clearValues()
 {
-  int i;
-
-  for(i = 0; i < count(); ++i){
-    pvRecord.setGenerated(i, false);
-  }
+  clearHasValueFlags();
   pvRecord.clearValues();
 }
 

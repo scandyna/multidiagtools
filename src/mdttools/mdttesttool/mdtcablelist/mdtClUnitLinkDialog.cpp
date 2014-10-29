@@ -72,6 +72,7 @@ mdtClUnitLinkDialog::mdtClUnitLinkDialog(QWidget *parent, QSqlDatabase db)
   // Setup connections
   connect(pbStartConnection, SIGNAL(clicked()), this, SLOT(selectStartConnection()));
   connect(pbEndConnection, SIGNAL(clicked()), this, SLOT(selectEndConnection()));
+  pvUnitConnectionChanged = false;
   // Setup vehicle types
   pvStartVehicleTypesModel = new QSqlQueryModel(this);
   twStartVehicles->setModel(pvStartVehicleTypesModel);
@@ -79,6 +80,7 @@ mdtClUnitLinkDialog::mdtClUnitLinkDialog(QWidget *parent, QSqlDatabase db)
   pvEndVehicleTypesModel = new QSqlQueryModel(this);
   twEndVehicles->setModel(pvEndVehicleTypesModel);
   connect(pbEndVehicles, SIGNAL(clicked()), this, SLOT(selectEndVehicleTypes()));
+  pvVehicleTypesEdited = false;
   // Clear field labels
   lbStartSchemaPosition->clear();
   lbStartAlias->clear();
@@ -289,6 +291,8 @@ void mdtClUnitLinkDialog::setLinkData(mdtClLinkData &data)
   }
   updateStartVehicleTypes();
   updateEndVehicleTypes();
+  pvVehicleTypesEdited = false;
+  pvUnitConnectionChanged = false;
 }
 
 mdtClLinkData mdtClUnitLinkDialog::linkData()
@@ -529,6 +533,7 @@ void mdtClUnitLinkDialog::selectStartConnection()
   // Get connection data and update
   pvLinkData.setValue("UnitConnectionStart_Id_FK", s.data(0, "UnitConnection_Id_PK"));
   updateStartConnection();
+  pvUnitConnectionChanged = true;
   /**
   result = selectionDialog.selectionResult();
   Q_ASSERT(result.size() == 1);
@@ -585,6 +590,7 @@ void mdtClUnitLinkDialog::selectEndConnection()
   // Get connection data and update
   pvLinkData.setValue("UnitConnectionEnd_Id_FK", s.data(0, "UnitConnection_Id_PK"));
   updateEndConnection();
+  pvUnitConnectionChanged = true;
   /**
   result = selectionDialog.selectionResult();
   Q_ASSERT(result.size() == 1);
@@ -598,8 +604,6 @@ void mdtClUnitLinkDialog::selectStartVehicleTypes()
 {
   mdtSqlSelectionDialog selectionDialog(this);
   QString sql;
-  ///QSqlQueryModel model;
-  ///QSqlError sqlError;
   int row;
   QModelIndex index;
   QModelIndexList vehicleIdList;
@@ -617,10 +621,8 @@ void mdtClUnitLinkDialog::selectStartVehicleTypes()
   // Setup and run query
   sql = "SELECT Type, SubType, SeriesNumber, VehicleType_Id_FK FROM Unit_VehicleType_view WHERE Unit_Id_FK = " + pvStartUnitId.toString();
   sql += " ORDER BY VehicleType_Id_FK ASC";
-  ///model.setQuery(sql, pvDatabase);
   // Setup and show dialog
   selectionDialog.setMessage("Please select start vehicles");
-  ///selectionDialog.setModel(&model, true);
   selectionDialog.setQuery(sql, pvDatabase, true);
   selectionDialog.setAllowEmptyResult(true);
   for(row = 0; row < pvStartVehicleTypesModel->rowCount(); ++row){
@@ -642,6 +644,7 @@ void mdtClUnitLinkDialog::selectStartVehicleTypes()
   for(row = 0; row < vehicleIdList.size(); ++row){
     pvStartVehicleTypesIdList.append(vehicleIdList.at(row).data());
   }
+  pvVehicleTypesEdited = true;
   updateStartVehicleTypes();
 }
 
@@ -693,6 +696,7 @@ void mdtClUnitLinkDialog::selectEndVehicleTypes()
   for(row = 0; row < vehicleIdList.size(); ++row){
     pvEndVehicleTypesIdList.append(vehicleIdList.at(row).data());
   }
+  pvVehicleTypesEdited = true;
   updateEndVehicleTypes();
 }
 
@@ -703,9 +707,22 @@ void mdtClUnitLinkDialog::accept()
   pvLinkData.setValue("Modification", cbModification->currentText());
   pvLinkData.setValue("SinceVersion", cbSinceVersion->currentText());
   pvLinkData.setValue("Value", sbValue->value());
-  if(!buildVehicleTypeLinkDataList()){
-    return;
+  /*
+   * If a unit connection was changed,
+   *  we must regenerate vehicle types
+   *  (case of a adding a link, or changing star/end connection).
+   * Else, setup data to avoid remove/add
+   * ( see mdtClLink::editLink() )
+   */
+  if(pvVehicleTypesEdited || pvUnitConnectionChanged){
+    if(!buildVehicleTypeLinkDataList()){
+      return;
+    }    
+  }else{
+    pvLinkData.setHasValue("UnitConnectionStart_Id_FK", false);
+    pvLinkData.setHasValue("UnitConnectionEnd_Id_FK", false);
   }
+  
   
   /// \todo checks
   

@@ -139,6 +139,28 @@ class mdtSqlRecord
    */
   inline bool hasValue(const QString & fieldName) const { return pvRecord.isGenerated(fieldName); }
 
+  /*! \brief Set the hasValue flag manually
+   *
+   * See hasValue() to know more about this flag.
+   *  For normal use, this flag must not be set manually,
+   *  setValue() handles it.
+   */
+  void setHasValue(int fieldIndex, bool hv){ pvRecord.setGenerated(fieldIndex, hv); }
+
+  /*! \brief Set the hasValue flag manually
+   *
+   * See hasValue() to know more about this flag.
+   *  For normal use, this flag must not be set manually,
+   *  setValue() handles it.
+   */
+  void setHasValue(const QString & fieldName, bool hv){ pvRecord.setGenerated(fieldName, hv); }
+
+  /*! \brief Clear the hasValue flags
+   *
+   * \sa hasValue()
+   */
+  void clearHasValueFlags();
+
   /*! \brief Set value
    *
    * Set the hasValue flag and set value.

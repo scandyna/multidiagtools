@@ -151,9 +151,18 @@ class mdtClLink : public mdtTtBase
 
   /*! \brief Get link data
    */
-  mdtClLinkData getLinkData(const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId, bool includeConnectionData, bool includeVehicleTypeLinkData , bool *ok);
+  mdtClLinkData getLinkData(const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId, bool includeConnectionData, bool includeVehicleTypeLinkData , bool & ok);
 
   /*! \brief Edit a unit link
+   *
+   * If linkData has following criteria:
+   *  - Flag hasValue set false for UnitConnectionStart_Id_FK
+   *  - Flag hasValue set false for UnitConnectionEnd_Id_FK
+   *  - Flag vehicleTypeLinksEdited not set
+   *
+   * then, data are only updated in database.
+   * For other cases, record will be removed then created again
+   *  (this is due to complexity because of handling vehicle type links).
    */
   bool editLink(const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId, const mdtClLinkData & linkData);
 

@@ -774,6 +774,7 @@ void mdtCableListTest::mdtClLinkDataTest()
   QVERIFY(linkData.setup(pvDatabaseManager.database()));
   QVERIFY(startConnectionData.setup(pvDatabaseManager.database(), true));
   QVERIFY(endConnectionData.setup(pvDatabaseManager.database(), true));
+  QVERIFY(!linkData.vehicleTypeLinksEdited());
 
   // Setup connections data
   startConnectionData.setValue("Id_PK", 1);
@@ -784,7 +785,9 @@ void mdtCableListTest::mdtClLinkDataTest()
   // Set link data
   linkData.setConnectionData(startConnectionData, endConnectionData);
   linkData.setValue("Identification", "Link 12");
+  QVERIFY(!linkData.vehicleTypeLinksEdited());
   linkData.addVehicleTypeLinkData(vtLinkData);
+  QVERIFY(linkData.vehicleTypeLinksEdited());
   // Check
   QCOMPARE(linkData.value("Identification"), QVariant("Link 12"));
   QCOMPARE(linkData.value("UnitConnectionStart_Id_FK"), QVariant(1));
@@ -808,6 +811,7 @@ void mdtCableListTest::mdtClLinkDataTest()
   QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).unitConnectionEndId() , QVariant(4));
   // Clear
   linkData.clearValues();
+  QVERIFY(!linkData.vehicleTypeLinksEdited());
   QCOMPARE(linkData.value("Identification"), QVariant(QVariant::String));
   QCOMPARE(linkData.value("UnitConnectionStart_Id_FK"), QVariant(QVariant::Int));
   QCOMPARE(linkData.startConnectionData().value("Id_PK"), QVariant(QVariant::Int));
@@ -880,7 +884,7 @@ void mdtCableListTest::linkTest()
   // Create base structure
   pvScenario->createSenario();
   // Get link data for a non existing link, ok must be false
-  linkData = lnk.getLinkData(135, 45687, true, true, &ok);
+  linkData = lnk.getLinkData(135, 45687, true, true, ok);
   QVERIFY(!ok);
   /*
    * Simple link edition
@@ -888,11 +892,16 @@ void mdtCableListTest::linkTest()
    *  Edit link 10000<->10001:
    *   -> Identification : Edited link
    */
-  linkData = lnk.getLinkData(10000, 10001, true, true, &ok);
+  linkData = lnk.getLinkData(10000, 10001, true, true, ok);
   QVERIFY(ok);
+  // Set PK as non generated, so mdtClLink will only update (not remove/add)
+  linkData.setHasValue("UnitConnectionStart_Id_FK", false);
+  linkData.setHasValue("UnitConnectionEnd_Id_FK", false);
+  QVERIFY(!linkData.vehicleTypeLinksEdited());
+  // Update link data
   linkData.setValue("Identification", "Edited link");
   QVERIFY(lnk.editLink(10000, 10001, linkData));
-  linkData = lnk.getLinkData(10000, 10001, true, true, &ok);
+  linkData = lnk.getLinkData(10000, 10001, true, true, ok);
   QVERIFY(ok);
   QCOMPARE(linkData.value("Identification"), QVariant("Edited link"));
   QCOMPARE(linkData.value("UnitConnectionStart_Id_FK"), QVariant(10000));
@@ -906,8 +915,11 @@ void mdtCableListTest::linkTest()
   QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).unitConnectionEndId(), QVariant(10001));
   // Restore original data
   linkData.setValue("Identification", "Link 10000<->10001");
+  linkData.setHasValue("UnitConnectionStart_Id_FK", false);
+  linkData.setHasValue("UnitConnectionEnd_Id_FK", false);
+  QVERIFY(!linkData.vehicleTypeLinksEdited());
   QVERIFY(lnk.editLink(10000, 10001, linkData));
-  linkData = lnk.getLinkData(10000, 10001, true, true, &ok);
+  linkData = lnk.getLinkData(10000, 10001, true, true, ok);
   QVERIFY(ok);
   QCOMPARE(linkData.value("Identification"), QVariant("Link 10000<->10001"));
   QCOMPARE(linkData.value("UnitConnectionStart_Id_FK"), QVariant(10000));
@@ -927,7 +939,7 @@ void mdtCableListTest::linkTest()
    */
   QVERIFY(!lnk.linkExists(10000, 20000, &ok));
   QVERIFY(ok);
-  linkData = lnk.getLinkData(10000, 10001, true, true, &ok);
+  linkData = lnk.getLinkData(10000, 10001, true, true, ok);
   QVERIFY(ok);
   // Update end connection data
   connectionData = unit.getConnectionData(20000, false, &ok);
@@ -944,7 +956,7 @@ void mdtCableListTest::linkTest()
   QVERIFY(lnk.editLink(10000, 10001, linkData));
   QVERIFY(lnk.linkExists(10000, 20000, &ok));
   QVERIFY(ok);
-  linkData = lnk.getLinkData(10000, 20000, true, true, &ok);
+  linkData = lnk.getLinkData(10000, 20000, true, true, ok);
   QVERIFY(ok);
   QCOMPARE(linkData.value("UnitConnectionStart_Id_FK"), QVariant(10000));
   QCOMPARE(linkData.value("UnitConnectionEnd_Id_FK"), QVariant(20000));
@@ -963,7 +975,7 @@ void mdtCableListTest::linkTest()
    */
   QVERIFY(!lnk.linkExists(10000, 10001, &ok));
   QVERIFY(ok);
-  linkData = lnk.getLinkData(10000, 20000, true, true, &ok);
+  linkData = lnk.getLinkData(10000, 20000, true, true, ok);
   QVERIFY(ok);
   // Update end connection data
   connectionData = unit.getConnectionData(10001, false, &ok);
@@ -980,7 +992,7 @@ void mdtCableListTest::linkTest()
   QVERIFY(lnk.editLink(10000, 20000, linkData));
   QVERIFY(lnk.linkExists(10000, 10001, &ok));
   QVERIFY(ok);
-  linkData = lnk.getLinkData(10000, 10001, true, true, &ok);
+  linkData = lnk.getLinkData(10000, 10001, true, true, ok);
   QVERIFY(ok);
   QCOMPARE(linkData.value("Identification"), QVariant("Link 10000<->10001"));
   QCOMPARE(linkData.value("UnitConnectionStart_Id_FK"), QVariant(10000));
@@ -1212,6 +1224,7 @@ void mdtCableListTest::linkAutoConnectionTest()
   mdtClLink lnk(0, pvDatabaseManager.database());
   QList<mdtClLinkData> cnnLinkDataList;
   mdtClLinkData cnnLinkData;
+  mdtClConnectableCriteria criteria;
   mdtClUnitConnectionData a, b;
   QList<mdtClUnitConnectionData> A, B;
   QList<QVariant> vtStartIdList, vtEndIdList;
@@ -1261,9 +1274,16 @@ void mdtCableListTest::linkAutoConnectionTest()
   b.setValue("UnitContactName", "3");
   b.setValue("ConnectionType_Code_FK", "S");
   B << b;
+  // Setup criteria: we check only contact genders here (P, S, T)
+  criteria.checkGenderAreOpposite = false;
+  criteria.checkContactCount = false;
+  criteria.checkContactType = true;
+  criteria.checkContactName = false;
+  criteria.checkForm = false;
+  criteria.checkInsert = false;
+  criteria.checkInsertRotation = false;
   // Build link data list and check
-  /// \todo Connectable criteria
-  cnnLinkDataList = lnk.getConnectionLinkListByName(A, B, mdtClConnectableCriteria());
+  cnnLinkDataList = lnk.getConnectionLinkListByName(A, B, criteria);
   QCOMPARE(cnnLinkDataList.size(), 3);
   // Check base data
   QCOMPARE(cnnLinkDataList.at(0).value("LinkType_Code_FK"), QVariant("CONNECTION"));
@@ -1307,9 +1327,16 @@ void mdtCableListTest::linkAutoConnectionTest()
   b.setValue("UnitContactName", "2");
   b.setValue("ConnectionType_Code_FK", "S");
   B << b;
+  // Setup criteria: we check only contact genders here (P, S, T)
+  criteria.checkGenderAreOpposite = false;
+  criteria.checkContactCount = false;
+  criteria.checkContactType = true;
+  criteria.checkContactName = false;
+  criteria.checkForm = false;
+  criteria.checkInsert = false;
+  criteria.checkInsertRotation = false;
   // Build link data list and check
-  /// \todo Connectable criteria
-  cnnLinkDataList = lnk.getConnectionLinkListByName(A, B, mdtClConnectableCriteria());
+  cnnLinkDataList = lnk.getConnectionLinkListByName(A, B, criteria);
   QCOMPARE(cnnLinkDataList.size(), 1);
   // Check base data
   QCOMPARE(cnnLinkDataList.at(0).value("LinkType_Code_FK"), QVariant("CONNECTION"));
@@ -1384,16 +1411,23 @@ void mdtCableListTest::linkAutoConnectionTest()
    *  - START: Id_PK : 1
    *  - END : Id_PK : 2
    */
+  // Setup criteria: we check only contact names and genders here (P, S, T)
+  criteria.checkGenderAreOpposite = false;
+  criteria.checkContactCount = false;
+  criteria.checkContactType = true;
+  criteria.checkContactName = true;
+  criteria.checkForm = false;
+  criteria.checkInsert = false;
+  criteria.checkInsertRotation = false;
   // Create connection (i.e. links)
-  /// \todo Connectable criteria
-  QVERIFY(lnk.connectByContactName(400000, 500000, 1, 2, mdtClConnectableCriteria()));
+  QVERIFY(lnk.connectByContactName(400000, 500000, 1, 2, criteria));
   /*
    * Check link data
    */
   // Get link from connection 40005 -> 50005 : must exist
   QVERIFY(lnk.linkExists(40005, 50005, &ok));
   QVERIFY(ok);
-  cnnLinkData = lnk.getLinkData(40005, 50005, true, true, &ok);
+  cnnLinkData = lnk.getLinkData(40005, 50005, true, true, ok);
   QVERIFY(ok);
   QCOMPARE(cnnLinkData.value("LinkType_Code_FK"), QVariant("CONNECTION"));
   QCOMPARE(cnnLinkData.value("LinkDirection_Code_FK"), QVariant("BID"));

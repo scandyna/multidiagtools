@@ -503,7 +503,7 @@ void mdtTtTestCableEditor::editLink()
     return;
   }
   // Get current link data
-  linkData = lnk.getLinkData(startConnectionId, endConnectionId,true, true, &ok);
+  linkData = lnk.getLinkData(startConnectionId, endConnectionId,true, true, ok);
   if(!ok){
     pvLastError = lnk.lastError();
     displayLastError();
@@ -1131,6 +1131,9 @@ bool mdtTtTestCableEditor::setupUnitLinkTable()
   pbEditLink = new QPushButton(tr("Edit link"));
   connect(pbEditLink, SIGNAL(clicked()), this, SLOT(editLink()));
   widget->addWidgetToLocalBar(pbEditLink);
+  // On double click, we edit link
+  Q_ASSERT(widget->tableView() != 0);
+  connect(widget->tableView(), SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(editLink()));
   // Setup remove link button
   pbRemoveLinks = new QPushButton(tr("Remove links"));
   pbRemoveLinks->setIcon(QIcon::fromTheme("edit-delete"));

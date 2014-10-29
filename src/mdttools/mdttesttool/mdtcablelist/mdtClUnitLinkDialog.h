@@ -236,6 +236,8 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
   QSqlQueryModel *pvEndVehicleTypesModel;
   QList<QVariant> pvEndVehicleTypesIdList;
   QList<QVariant> pvWorkingOnVehicleTypeIdList;
+  bool pvVehicleTypesEdited;
+  bool pvUnitConnectionChanged;
 };
 
 #endif // #ifndef MDT_CL_UNIT_LINK_DIALOG_H

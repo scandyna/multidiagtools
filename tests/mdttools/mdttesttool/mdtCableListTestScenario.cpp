@@ -1187,7 +1187,7 @@ void mdtCableListTestScenario::createTestLinks()
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 1);
   // Check also with getLinkData
-  linkData = lnk.getLinkData(10001, 20000, true, true, &ok);
+  linkData = lnk.getLinkData(10001, 20000, true, true, ok);
   QVERIFY(ok);
   QCOMPARE(linkData.value("Identification"), QVariant("Link 10001<->20000"));
   QCOMPARE(linkData.value("UnitConnectionStart_Id_FK"), QVariant(10001));
@@ -1226,7 +1226,7 @@ void mdtCableListTestScenario::createTestLinks()
   QVERIFY(lnk.linkExists(30005, 40005, &ok));
   QVERIFY(ok);
   // Check back
-  linkData = lnk.getLinkData(30005, 40005, true, true, &ok);
+  linkData = lnk.getLinkData(30005, 40005, true, true, ok);
   QVERIFY(ok);
   QCOMPARE(linkData.value("Identification"), QVariant("Link 30005<->40005"));
   QCOMPARE(linkData.value("UnitConnectionStart_Id_FK"), QVariant(30005));
@@ -1266,7 +1266,7 @@ void mdtCableListTestScenario::createTestLinks()
   QVERIFY(lnk.linkExists(40005, 50005, &ok));
   QVERIFY(ok);
   // Check back
-  linkData = lnk.getLinkData(40005, 50005, true, true, &ok);
+  linkData = lnk.getLinkData(40005, 50005, true, true, ok);
   QVERIFY(ok);
   QCOMPARE(linkData.value("Identification"), QVariant("Link 40005<->50005"));
   QCOMPARE(linkData.value("UnitConnectionStart_Id_FK"), QVariant(40005));

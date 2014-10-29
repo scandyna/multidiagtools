@@ -31,7 +31,7 @@
 
 /*! \brief Data container class for link data
  *
- * Permit to echange data with Link_tbl.
+ * Permit to exchange data with Link_tbl.
  *
  * This class was made for data edition.
  *  It is also mandatory that fields matches Link_tbl.
@@ -102,12 +102,16 @@ class mdtClLinkData : public mdtSqlRecord
    */
   inline const mdtClUnitConnectionData & endConnectionData() const { return pvEndConnectionData; }
 
+  /*! \brief Check if a vehicle type link was edited
+   */
+  inline bool vehicleTypeLinksEdited() const { return pvVehicleTypeLinksEdited; }
+
   /*! \brief Add vehicle type link data
    *
    * Note: in given data, unitConnectionStartId and unitConnectionEndId are not relevant,
    *  because they are set internally.
    */
-  void addVehicleTypeLinkData(const mdtClVehicleTypeLinkData & data);
+  void addVehicleTypeLinkData(const mdtClVehicleTypeLinkData & data, bool updateVehicleLinksEditedFlags = true);
 
   /*! \brief Get list of vehicle type link data
    */
@@ -122,6 +126,7 @@ class mdtClLinkData : public mdtSqlRecord
   mdtClUnitConnectionData pvStartConnectionData;
   mdtClUnitConnectionData pvEndConnectionData;
   QList<mdtClVehicleTypeLinkData> pvVehicleTypeLinkDataList;
+  bool pvVehicleTypeLinksEdited;
 };
 
 #endif // #ifndef MDT_CL_LINK_DATA_H

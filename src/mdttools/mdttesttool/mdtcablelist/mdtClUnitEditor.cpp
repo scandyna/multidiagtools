@@ -941,7 +941,7 @@ void mdtClUnitEditor::editLink()
     return;
   }
   // Get current link data
-  linkData = lnk.getLinkData(startConnectionId, endConnectionId,true, true, &ok);
+  linkData = lnk.getLinkData(startConnectionId, endConnectionId,true, true, ok);
   if(!ok){
     pvLastError = lnk.lastError();
     displayLastError();

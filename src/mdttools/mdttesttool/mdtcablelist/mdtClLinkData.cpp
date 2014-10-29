@@ -23,6 +23,7 @@
 mdtClLinkData::mdtClLinkData()
  : mdtSqlRecord()
 {
+  pvVehicleTypeLinksEdited = false;
 }
 
 mdtClLinkData::mdtClLinkData(const QSqlRecord & record)
@@ -38,6 +39,7 @@ mdtClLinkData::mdtClLinkData(const QSqlRecord & record)
   Q_ASSERT(indexOf("SinceVersion") >= 0);
   Q_ASSERT(indexOf("Modification") >= 0);
   Q_ASSERT(indexOf("Value") >= 0);
+  clearVehicleTypeLinkDataList();
   /*
    * Currently, mdtClUnit::getArticleLinkListUsingConnectionId() takes data from
    *  ArticleLink_UnitConnection_view, witch doesen't contain LinkBeam_Id_FK.
@@ -68,7 +70,8 @@ void mdtClLinkData::clearValues()
   mdtSqlRecord::clearValues();
   pvStartConnectionData.clearValues();
   pvEndConnectionData.clearValues();
-  pvVehicleTypeLinkDataList.clear();
+  ///pvVehicleTypeLinkDataList.clear();
+  clearVehicleTypeLinkDataList();
 }
 
 void mdtClLinkData::setStartConnectionData(const mdtClUnitConnectionData & cnnData)
@@ -101,16 +104,20 @@ void mdtClLinkData::setConnectionData(const mdtClUnitConnectionData & startCnnDa
   setEndConnectionData(endCnnData);
 }
 
-void mdtClLinkData::addVehicleTypeLinkData(const mdtClVehicleTypeLinkData& data)
+void mdtClLinkData::addVehicleTypeLinkData(const mdtClVehicleTypeLinkData & data, bool updateVehicleLinksEditedFlags)
 {
   mdtClVehicleTypeLinkData _data = data;
 
   _data.setUnitConnectionStartId(value("UnitConnectionStart_Id_FK"));
   _data.setUnitConnectionEndId(value("UnitConnectionEnd_Id_FK"));
   pvVehicleTypeLinkDataList.append(_data);
+  if(updateVehicleLinksEditedFlags){
+    pvVehicleTypeLinksEdited = true;
+  }
 }
 
 void mdtClLinkData::clearVehicleTypeLinkDataList()
 {
   pvVehicleTypeLinkDataList.clear();
+  pvVehicleTypeLinksEdited = false;
 }
