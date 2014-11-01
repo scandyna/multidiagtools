@@ -249,6 +249,16 @@ class mdtClLink : public mdtTtBase
    */
   QString sqlForConnectableUnitConnectorsSelection(const QVariant & unitConnectorId, const QVariant & unitId, const mdtClConnectableCriteria & criteria, bool & ok);
 
+  /*! \brief Get SQL statement for connectable unit connector selection
+   *
+   * SQL statement will select unit connectors that can be connected
+   *  to given unitConnectorId.
+   *  If given unit ID list contains IDs, only connectors related to this units will be included.
+   *
+   * \return SQL statement, or empty string on error.
+   */
+  QString sqlForConnectableUnitConnectorsSelection(const QVariant & unitConnectorId, const QList<QVariant> & unitIdList, const mdtClConnectableCriteria & criteria, bool & ok);
+
   /*! \brief Get SQL statement for connectable unit connector's connections selection
    *
    * SQL statement will select unit connection for connectors that can be connected

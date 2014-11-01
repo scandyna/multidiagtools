@@ -21,6 +21,7 @@
 #include "mdtTtLogicalTestCableDutWidget.h"
 #include "mdtSqlSelectionDialog.h"
 #include "mdtSqlTableSelection.h"
+#include "mdtClConnectableConnectorDialog.h"
 #include "mdtClLink.h"
 #include "mdtClUnit.h"
 #include "mdtError.h"
@@ -29,6 +30,7 @@
 #include <QVariant>
 #include <QMessageBox>
 #include <QSqlRecord>
+#include <QCheckBox>
 
 mdtTtLogicalTestCableDutWidget::mdtTtLogicalTestCableDutWidget(QWidget* parent, QSqlDatabase db)
  : QGroupBox(parent),
@@ -39,7 +41,7 @@ mdtTtLogicalTestCableDutWidget::mdtTtLogicalTestCableDutWidget(QWidget* parent, 
   connect(pbSelectCn, SIGNAL(clicked()), this, SLOT(selectCn()));
   lbSchemaPosition->clear();
   lbAlias->clear();
-  lbCn->clear();
+  lbCnName->clear();
 }
 
 void mdtTtLogicalTestCableDutWidget::setTestCableConnector(const QVariant& connectorId, const QString& name)
@@ -87,7 +89,7 @@ void mdtTtLogicalTestCableDutWidget::setDutUnit(const QVariant& unitId)
   }
   // Update CN
   pvCnId.clear();
-  lbCn->clear();
+  lbCnName->clear();
 }
 
 bool mdtTtLogicalTestCableDutWidget::containsTestCableConnection(const QVariant& testCableConnectionId, bool& ok)
@@ -195,6 +197,18 @@ void mdtTtLogicalTestCableDutWidget::selectCn()
 
 void mdtTtLogicalTestCableDutWidget::selectDutConnector()
 {
+  mdtClConnectableConnectorDialog dialog(this, pvDatabase);
+
+  dialog.setStartConnectorLabel(tr("Test cable connector"));
+  dialog.setEndConnectorLabel(tr("DUT connector"));
+  dialog.setStartConnector(pvTestCableCnId);
+  dialog.setEndUnitId(pvUnitId);
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
+  pvCnId = dialog.endUnitConnectorId();
+  lbCnName->setText(dialog.endUnitConnectorName());
+  /**
   mdtClLink lnk(0, pvDatabase);
   mdtSqlSelectionDialog selectionDialog(this);
   mdtSqlTableSelection s;
@@ -204,12 +218,12 @@ void mdtTtLogicalTestCableDutWidget::selectDutConnector()
   bool ok;
 
   // Setup connectability check criteria
-  c.checkContactCount = true;
-  c.checkContactType = true;
-  c.checkForm = true;
-  c.checkGenderAreOpposite = true;
-  c.checkInsert = true;
-  c.checkInsertRotation = true;
+  c.checkContactCount = cbCheckContactCount->isChecked();
+  c.checkContactType = cbCheckContactType->isChecked();
+  c.checkForm = cbCheckForm->isChecked();
+  c.checkGenderAreOpposite = cbCheckGenderAreOpposite->isChecked();
+  c.checkInsert = cbCheckInsert->isChecked();
+  c.checkInsertRotation = cbCheckInsertRotation->isChecked();
   // Get SQL query
   sql = lnk.sqlForConnectableUnitConnectorsSelection(pvTestCableCnId, pvUnitId, c, ok);
   if(!ok){
@@ -238,6 +252,7 @@ void mdtTtLogicalTestCableDutWidget::selectDutConnector()
   Q_ASSERT(s.rowCount() == 1);
   pvCnId = s.data(0, "Id_PK");
   lbCn->setText(s.data(0, "UnitConnectorName").toString());
+  */
 }
 
 void mdtTtLogicalTestCableDutWidget::selectDutConnection()
@@ -279,7 +294,7 @@ void mdtTtLogicalTestCableDutWidget::selectDutConnection()
   }
   Q_ASSERT(s.rowCount() == 1);
   pvCnId = s.data(0, "UnitConnection_Id_PK");
-  lbCn->setText(s.data(0, "UnitContactName").toString());
+  lbCnName->setText(s.data(0, "UnitContactName").toString());
 }
 
 void mdtTtLogicalTestCableDutWidget::displayError(const mdtError& error)

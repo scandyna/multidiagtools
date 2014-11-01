@@ -73,6 +73,21 @@ void mdtTtBasicTestNodeCalibrationTool::runCalibration()
     displayLastError();
     return;
   }
+  
+  
+  
+  /// \todo Provisoire !
+  // Calibrate channel relays
+  if(!calibrateChannelRelays()){
+    disconnectFromInstruments();
+    displayLastError();
+    return;
+  }
+  disconnectFromInstruments();
+  return;
+
+
+  
   // Check K3 to K6
   if(!checkSenseRelays()){
     disconnectFromInstruments();
@@ -150,6 +165,15 @@ void mdtTtBasicTestNodeCalibrationTool::runCalibration()
   
   // Disconnect from instruments
   disconnectFromInstruments();
+}
+
+void mdtTtBasicTestNodeCalibrationTool::saveCalibration()
+{
+
+  if(!saveTestNodeUnitCalibrationOffsets()){
+    displayLastError();
+    return;
+  }
 }
 
 bool mdtTtBasicTestNodeCalibrationTool::checkSenseRelays()
@@ -425,6 +449,7 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateIsoRelays()
   shared_ptr<mdtDeviceU3606A> multimeter;
   shared_ptr<mdtDeviceModbusWago> coupler;
   mdtValue R;
+  mdtValue Rk;
   QVariant val;
   double r4, r6;
   bool ok;
@@ -473,12 +498,17 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateIsoRelays()
   R = multimeter->getMeasureValue();
   qDebug() << "R: " << R;
   if(!isInRange(R, 0.0, 1.0)){
-    pvLastError.updateText(tr("Checking resistance of realys K1 and K2 failed.\nNote: did you plug the bridge between ISO+ and ISO- ?"));
+    pvLastError.updateText(tr("Calibrating resistance of realys K1 and K2 failed.\nNote: did you plug the bridge between ISO+ and ISO- ?"));
     return false;
   }
   // Calibrate K1 and K2 ( (R - r4 - r6)/2 )
-  setTestNodeUnitCalibrationOffset("K1", (R.valueDouble() - r4 - r6) / 2.0);
-  setTestNodeUnitCalibrationOffset("K2", (R.valueDouble() - r4 - r6) / 2.0);
+  Rk = (R.valueDouble() - r4 - r6) / 2.0;
+  if(!isInRange(Rk, 0.0, 1.0)){
+    pvLastError.updateText(tr("Calibrating resistance of realys K1 and K2 failed.\nNote: did you plug the bridge between ISO+ and ISO- ?"));
+    return false;
+  }
+  setTestNodeUnitCalibrationOffset("K1", Rk.valueDouble());
+  setTestNodeUnitCalibrationOffset("K2", Rk.valueDouble());
 
   return true;
 }
@@ -572,6 +602,7 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateForceRelays()
   shared_ptr<mdtDeviceU3606A> multimeter;
   shared_ptr<mdtDeviceModbusWago> coupler;
   mdtValue R;
+  mdtValue Rk;
   QVariant val;
   double r4, r6;
   bool ok;
@@ -619,12 +650,17 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateForceRelays()
   // Check that we have R < 1 Ohm
   R = multimeter->getMeasureValue();
   if(!isInRange(R, 0.0, 1.0)){
-    pvLastError.updateText(tr("Checking resistance of realys K7 and K8 failed.\nNote: did you plug the bridge between PWR+ and PWR- ?"));
+    pvLastError.updateText(tr("Calibrating resistance of realys K7 and K8 failed.\nNote: did you plug the bridge between PWR+ and PWR- ?"));
     return false;
   }
   // Calibrate K7 and K8 ( (R - r4 - r6)/2 )
-  setTestNodeUnitCalibrationOffset("K7", (R.valueDouble() - r4 - r6) / 2.0);
-  setTestNodeUnitCalibrationOffset("K8", (R.valueDouble() - r4 - r6) / 2.0);
+  Rk = (R.valueDouble() - r4 - r6) / 2.0;
+  if(!isInRange(Rk, 0.0, 1.0)){
+    pvLastError.updateText(tr("Calibrating resistance of realys K7 and K8 failed.\nNote: did you plug the bridge between PWR+ and PWR- ?"));
+    return false;
+  }
+  setTestNodeUnitCalibrationOffset("K7", Rk.valueDouble());
+  setTestNodeUnitCalibrationOffset("K8", Rk.valueDouble());
 
   return true;
 }
@@ -660,6 +696,12 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateChannelRelays()
     pvLastError.setError(query.lastError().text(), mdtError::Error);
     return false;
   }
+  // Check that we found test model
+  if(!query.next()){
+    pvLastError.setError(tr("Test model with key W750CAL not found, or it is empty."), mdtError::Error);
+    return false;
+  }
+  query.first();
   // Setup multimeter to its min range
   if(multimeter->setupResistanceMeasure(mdtDeviceU3606A::RangeMin, mdtDeviceU3606A::ResolutionMin) < 0){
     pvLastError = multimeter->lastError();

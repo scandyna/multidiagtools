@@ -112,6 +112,7 @@ set (CL_HEADER_FILES
           mdtcablelist/mdtClLinkedUnitConnectionInfoDialog.h
           mdtcablelist/mdtClLinkedUnitConnectorInfoDialog.h
           mdtcablelist/mdtClLinkBeamEditor.h
+          mdtcablelist/mdtClConnectableConnectorDialog.h
     )
 
 # Source files for mdtCableList
@@ -145,6 +146,7 @@ set (CL_SOURCES_FILES
           mdtcablelist/mdtClLinkedUnitConnectorInfoDialog.cpp
           mdtcablelist/mdtClLinkBeam.cpp
           mdtcablelist/mdtClLinkBeamEditor.cpp
+          mdtcablelist/mdtClConnectableConnectorDialog.cpp
     )
 
 # Form files for mdtCableList
@@ -162,6 +164,7 @@ set (CL_FORM_FILES
           mdtcablelist/mdtClLinkedUnitConnectionInfoDialog.ui
           mdtcablelist/mdtClLinkedUnitConnectorInfoDialog.ui
           mdtcablelist/mdtClLinkBeamEditor.ui
+          mdtcablelist/mdtClConnectableConnectorDialog.ui
     )
 
 # Header files for complete test tool

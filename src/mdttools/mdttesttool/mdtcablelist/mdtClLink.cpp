@@ -635,18 +635,92 @@ QString mdtClLink::sqlForConnectableUnitConnectionsSelection(const QVariant& uni
 
 QString mdtClLink::sqlForConnectableUnitConnectorsSelection(const QVariant& unitConnectorId, const QVariant& unitId, const mdtClConnectableCriteria& criteria, bool& ok)
 {
+  QList<QVariant> unitIdList;
+
+  if(!unitId.isNull()){
+    unitIdList.append(unitId);
+  }
+
+  return sqlForConnectableUnitConnectorsSelection(unitConnectorId, unitIdList, criteria, ok);
+
+//   QString sql;
+//   QList<QVariant> dataList;
+//   QVariant id;
+//   QList<QVariant> idList;
+//   int i;
+// 
+//   /*
+//    * Get a list of all unit connectors
+//    */
+//   sql = "SELECT Id_PK FROM UnitConnector_tbl ";
+//   if(!unitId.isNull()){
+//     sql += " WHERE Unit_Id_FK = " + unitId.toString();
+//   }
+//   dataList = getDataList<QVariant>(sql, ok);
+//   if(!ok){
+//     return QString();
+//   }
+//   /*
+//    * For each unit connector ID, that is not the ID of given connector, check if it is connectable to given connector ID
+//    */
+//   for(i = 0; i < dataList.size(); ++i){
+//     id = dataList.at(i);
+//     if(id != unitConnectorId){
+//       if(canConnectConnectors(unitConnectorId, id, criteria , ok)){
+//         idList.append(id);
+//       }else{
+//         if(!ok){
+//           return QString();
+//         }
+//       }
+//     }
+//   }
+//   /*
+//    * Generate SQL statement
+//    */
+//   if(idList.isEmpty()){
+//     pvLastError.setError(tr("Could not find connectable connectors."), mdtError::Warning);
+//     MDT_ERROR_SET_SRC(pvLastError, "mdtClLink");
+//     pvLastError.commit();
+//     ok = false;
+//     return QString();
+//   }
+//   sql = "SELECT * FROM UnitConnector_view ";
+//   if(unitId.isNull()){
+//     sql += " WHERE ";
+//   }else{
+//     sql += " WHERE (Unit_Id_FK = " + unitId.toString() + ") AND ";
+//   }
+//   Q_ASSERT(idList.size() > 0);
+//   sql += " Id_PK = " + idList.at(0).toString();
+//   for(i = 1; i < idList.size(); ++i){
+//     sql += " OR Id_PK = " + idList.at(i).toString();
+//   }
+//   ok = true;
+// 
+//   return sql;
+}
+
+QString mdtClLink::sqlForConnectableUnitConnectorsSelection(const QVariant& unitConnectorId, const QList< QVariant >& unitIdList, const mdtClConnectableCriteria& criteria, bool& ok)
+{
   QString sql;
   QList<QVariant> dataList;
   QVariant id;
   QList<QVariant> idList;
   int i;
+  int lastIndex;
 
   /*
    * Get a list of all unit connectors
    */
-  sql = "SELECT Id_PK FROM UnitConnector_tbl ";
-  if(!unitId.isNull()){
-    sql += " WHERE Unit_Id_FK = " + unitId.toString();
+  sql = "SELECT Id_PK FROM UnitConnector_tbl";
+  if(!unitIdList.isEmpty()){
+    sql += " WHERE Unit_Id_FK IN(";
+    lastIndex = unitIdList.size() - 1;
+    for(i = 0; i < lastIndex; ++i){
+      sql += unitIdList.at(i).toString() + ",";
+    }
+    sql += unitIdList.at(lastIndex).toString() + ")";
   }
   dataList = getDataList<QVariant>(sql, ok);
   if(!ok){
@@ -677,17 +751,13 @@ QString mdtClLink::sqlForConnectableUnitConnectorsSelection(const QVariant& unit
     ok = false;
     return QString();
   }
-  sql = "SELECT * FROM UnitConnector_view ";
-  if(unitId.isNull()){
-    sql += " WHERE ";
-  }else{
-    sql += " WHERE (Unit_Id_FK = " + unitId.toString() + ") AND ";
-  }
   Q_ASSERT(idList.size() > 0);
-  sql += " Id_PK = " + idList.at(0).toString();
+  sql = "SELECT * FROM UnitConnector_view WHERE Id_PK IN(";
+  lastIndex = idList.size() - 1;
   for(i = 1; i < idList.size(); ++i){
-    sql += " OR Id_PK = " + idList.at(i).toString();
+    sql += idList.at(i).toString() + ",";
   }
+  sql += idList.at(lastIndex).toString() + ")";
   ok = true;
 
   return sql;

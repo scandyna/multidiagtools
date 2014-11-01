@@ -119,6 +119,11 @@ void mdtClUnitLinkDialog::clearStartUnitSelectionList()
   pvStartUnitSelectionIdList.clear();
 }
 
+void mdtClUnitLinkDialog::setStartConnectorLimitIdList(const QList<QVariant> & unitConnectorIdList)
+{
+  pvStartConnectorLimitIdList = unitConnectorIdList;
+}
+
 void mdtClUnitLinkDialog::setStartConnectionLabel(const QString& labelText)
 {
   gbStartConnection->setTitle(labelText);
@@ -141,6 +146,11 @@ void mdtClUnitLinkDialog::setEndUnitSelectionList(const QList< QVariant >& idLis
 void mdtClUnitLinkDialog::clearEndUnitSelectionList()
 {
   pvEndUnitSelectionIdList.clear();
+}
+
+void mdtClUnitLinkDialog::setEndConnectorLimitIdList(const QList<QVariant> & unitConnectorIdList)
+{
+  pvEndConnectorLimitIdList = unitConnectorIdList;
 }
 
 void mdtClUnitLinkDialog::setEndConnectionLabel(const QString& labelText)
@@ -493,9 +503,19 @@ void mdtClUnitLinkDialog::selectStartConnection()
   QString sql;
   ///QList<QVariant> result;
   mdtClUnit unit(this, pvDatabase);
+  int i;
+  int lastIndex;
 
   // Setup and run query
   sql = "SELECT * FROM UnitConnection_view WHERE Unit_Id_FK = " + pvStartUnitId.toString();
+  if(!pvStartConnectorLimitIdList.isEmpty()){
+    sql += " AND UnitConnector_Id_FK IN(";
+    lastIndex = pvStartConnectorLimitIdList.size() - 1;
+    for(i = 0; i < lastIndex; ++i){
+      sql += pvStartConnectorLimitIdList.at(i).toString();
+    }
+    sql += pvStartConnectorLimitIdList.at(lastIndex).toString() + ")";
+  }
   if(cbShowOnlyUnusedStartConnections->isChecked()){
     sql += " AND UnitConnection_Id_PK NOT IN (";
     sql += "  SELECT UnitConnectionStart_Id_FK FROM UnitLink_view WHERE Unit_Id_FK = " + pvStartUnitId.toString();
@@ -550,9 +570,19 @@ void mdtClUnitLinkDialog::selectEndConnection()
   QString sql;
   ///QList<QVariant> result;
   mdtClUnit unit(this, pvDatabase);
+  int i;
+  int lastIndex;
 
   // Setup and run query
   sql = "SELECT * FROM UnitConnection_view WHERE Unit_Id_FK = " + pvEndUnitId.toString();
+  if(!pvEndConnectorLimitIdList.isEmpty()){
+    sql += " AND UnitConnector_Id_FK IN(";
+    lastIndex = pvEndConnectorLimitIdList.size() - 1;
+    for(i = 0; i < lastIndex; ++i){
+      sql += pvEndConnectorLimitIdList.at(i).toString();
+    }
+    sql += pvEndConnectorLimitIdList.at(lastIndex).toString() + ")";
+  }
   if(cbShowOnlyUnusedEndConnections->isChecked()){
     sql += " AND UnitConnection_Id_PK NOT IN (";
     sql += "  SELECT UnitConnectionEnd_Id_FK FROM UnitLink_view WHERE Unit_Id_FK = " + pvStartUnitId.toString();
@@ -717,7 +747,7 @@ void mdtClUnitLinkDialog::accept()
   if(pvVehicleTypesEdited || pvUnitConnectionChanged){
     if(!buildVehicleTypeLinkDataList()){
       return;
-    }    
+    }
   }else{
     pvLinkData.setHasValue("UnitConnectionStart_Id_FK", false);
     pvLinkData.setHasValue("UnitConnectionEnd_Id_FK", false);

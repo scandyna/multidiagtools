@@ -21,6 +21,7 @@
 #include "mdtTtAbstractTestNodeCalibrationTool.h"
 #include "mdtSqlRelationInfo.h"
 #include "mdtUiMessageHandler.h"
+#include "mdtSqlRecord.h"
 #include <QSqlError>
 #include <QModelIndex>
 #include <QDateTime>
@@ -129,6 +130,72 @@ bool mdtTtAbstractTestNodeCalibrationTool::setTestNodeUnitCalibrationOffset(cons
   return true;
 }
 
+bool mdtTtAbstractTestNodeCalibrationTool::saveTestNodeUnitCalibrationOffsets()
+{
+  Q_ASSERT(pvTestNodeUnitTableController);
+
+  mdtSqlRecord record;
+  int N;
+  int i;
+  bool ok;
+  QVariant tnuId;
+  QVariant var;
+
+  // Setup record with fields to update
+  if(!record.addField("CalibrationOffset", "TestNodeUnit_tbl", pvDatabase)){
+    pvLastError = record.lastError();
+    return false;
+  }
+  if(!record.addField("CalibrationDate", "TestNodeUnit_tbl", pvDatabase)){
+    pvLastError = record.lastError();
+    return false;
+  }
+  // Beginn a transaction
+  if(!beginTransaction()){
+    return false;
+  }
+  // Save each value
+  N = pvTestNodeUnitTableController->rowCount(true);
+  for(i = 0; i < N; ++i){
+    record.clearValues();
+    // Get test node unit ID
+    tnuId = pvTestNodeUnitTableController->data(i, "Unit_Id_FK_PK", ok);
+    if(!ok){
+      pvLastError = pvTestNodeUnitTableController->lastError();
+      rollbackTransaction();
+      return false;
+    }
+    // Get offset value
+    var = pvTestNodeUnitTableController->data(i, "CalibrationOffset", ok);
+    if(!ok){
+      pvLastError = pvTestNodeUnitTableController->lastError();
+      rollbackTransaction();
+      return false;
+    }
+    record.setValue("CalibrationOffset", var);
+    // Get offset date
+    var = pvTestNodeUnitTableController->data(i, "CalibrationDate", ok);
+    if(!ok){
+      pvLastError = pvTestNodeUnitTableController->lastError();
+      rollbackTransaction();
+      return false;
+    }
+    record.setValue("CalibrationDate", var);
+    // Save to TestNodeUnit_tbl
+    if(!pvTest->updateRecord("TestNodeUnit_tbl", record, "Unit_Id_FK_PK", tnuId)){
+      pvLastError = pvTest->lastError();
+      rollbackTransaction();
+      return false;
+    }
+  }
+  // Commit trasaction
+  if(!commitTransaction()){
+    return false;
+  }
+
+  return true;
+}
+
 void mdtTtAbstractTestNodeCalibrationTool::displayLastError()
 {
   QMessageBox msgBox(pvParentWidget);
@@ -202,5 +269,44 @@ bool mdtTtAbstractTestNodeCalibrationTool::isInRange(const mdtValue & value, dou
     return false;
   }
 
+  return true;
+}
+
+bool mdtTtAbstractTestNodeCalibrationTool::beginTransaction() 
+{
+  if(!pvDatabase.transaction()){
+    QSqlError sqlError = pvDatabase.lastError();
+    pvLastError.setError(tr("Cannot beginn transaction (database: '") + pvDatabase.databaseName() + tr("')."), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtAbstractTestNodeCalibrationTool");
+    pvLastError.commit();
+    return false;
+  }
+  return true;
+}
+
+bool mdtTtAbstractTestNodeCalibrationTool::rollbackTransaction() 
+{
+  if(!pvDatabase.rollback()){
+    QSqlError sqlError = pvDatabase.lastError();
+    pvLastError.setError(tr("Cannot beginn rollback (database: '") + pvDatabase.databaseName() + tr("')."), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtAbstractTestNodeCalibrationTool");
+    pvLastError.commit();
+    return false;
+  }
+  return true;
+}
+
+bool mdtTtAbstractTestNodeCalibrationTool::commitTransaction() 
+{
+  if(!pvDatabase.commit()){
+    QSqlError sqlError = pvDatabase.lastError();
+    pvLastError.setError(tr("Cannot beginn commit (database: '") + pvDatabase.databaseName() + tr("')."), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtAbstractTestNodeCalibrationTool");
+    pvLastError.commit();
+    return false;
+  }
   return true;
 }

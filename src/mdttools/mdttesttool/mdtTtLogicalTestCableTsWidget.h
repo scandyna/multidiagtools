@@ -107,6 +107,10 @@ class mdtTtLogicalTestCableTsWidget : public QGroupBox, Ui::mdtTtLogicalTestCabl
    */
   void selectTsConnection();
 
+  /*! \brief Get list of unit ID that are test connectors
+   */
+  QList<QVariant> getTestConnectorUnitIdList(bool & ok);
+
   /*! \brief Get SQL query to list connectable connectors
    */
   QString sqlForConnectableTsConnectors(const mdtClConnectableCriteria & criteria);

@@ -63,4 +63,5 @@ bool mdtTtBasicTestNodeCalibrationWindow::init()
 void mdtTtBasicTestNodeCalibrationWindow::connectActions()
 {
   connect(actRunCalibration, SIGNAL(triggered()), pvCalibrationTool, SLOT(runCalibration()));
+  connect(actSaveCalibration, SIGNAL(triggered()), pvCalibrationTool, SLOT(saveCalibration()));
 }

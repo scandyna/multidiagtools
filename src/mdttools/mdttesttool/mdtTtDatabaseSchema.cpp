@@ -3891,6 +3891,7 @@ bool mdtTtDatabaseSchema::createTestModelItemRouteView()
         " UCNXT.FunctionDE AS TestContactFunctionDE,\n"\
         " UCNXT.FunctionIT AS TestContactFunctionIT,\n"\
         " GROUP_CONCAT(U.SchemaPosition, ', ') AS RouteTestNodeUnits,\n"\
+        " SUM(TNU.CalibrationOffset) AS RouteResistance,\n"\
         " UM.SchemaPosition AS MeasureSchemaPosition,\n"\
         " UM.Alias AS MeasureAlias,\n"\
         " UCNXM.UnitContactName AS MeasureContactName,\n"\
@@ -4185,6 +4186,8 @@ bool mdtTtDatabaseSchema::createTestItemNodeUnitSetupView()
         " TNU.TestNode_Id_FK,\n"\
         " TNU.Type_Code_FK,\n"\
         " TNU.IoPosition,\n"\
+        " TNU.CalibrationOffset,\n"\
+        " TNU.CalibrationDate,\n"\
         " TN.NodeIdentification,\n"\
         " TN.DeviceIdentification\n"\
         "FROM TestModelItem_tbl TMI\n"\

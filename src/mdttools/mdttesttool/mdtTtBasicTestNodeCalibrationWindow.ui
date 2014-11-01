@@ -86,7 +86,7 @@
      <x>0</x>
      <y>0</y>
      <width>668</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_Calibration">
@@ -95,6 +95,7 @@
     </property>
     <addaction name="actSelectCalibrationModel"/>
     <addaction name="actRunCalibration"/>
+    <addaction name="actSaveCalibration"/>
    </widget>
    <addaction name="menu_Calibration"/>
   </widget>
@@ -110,6 +111,7 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actRunCalibration"/>
+   <addaction name="actSaveCalibration"/>
   </widget>
   <action name="actSelectCalibrationModel">
    <property name="text">
@@ -117,8 +119,25 @@
    </property>
   </action>
   <action name="actRunCalibration">
+   <property name="icon">
+    <iconset theme="system-run"/>
+   </property>
    <property name="text">
     <string>&amp;Run</string>
+   </property>
+   <property name="toolTip">
+    <string>Run calibration</string>
+   </property>
+  </action>
+  <action name="actSaveCalibration">
+   <property name="icon">
+    <iconset theme="document-save"/>
+   </property>
+   <property name="text">
+    <string>&amp;Save</string>
+   </property>
+   <property name="toolTip">
+    <string>Save calibration to database</string>
    </property>
   </action>
  </widget>

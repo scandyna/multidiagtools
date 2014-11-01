@@ -63,6 +63,10 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
    */
   void clearStartUnitSelectionList();
 
+  /*! \brief Limit start connection selection to given connectors
+   */
+  void setStartConnectorLimitIdList(const QList<QVariant> & unitConnectorIdList);
+
   /*! \brief Change start connection label
    */
   void setStartConnectionLabel(const QString & labelText);
@@ -76,6 +80,10 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
   /*! \brief Limit end unit selection to given list
    */
   void setEndUnitSelectionList(const QList<QVariant> & idList);
+
+  /*! \brief Limit end connection selection to given connectors
+   */
+  void setEndConnectorLimitIdList(const QList<QVariant> & unitConnectorIdList);
 
   /*! \brief Clear end unit selection list
    */
@@ -226,8 +234,10 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
   QSqlDatabase pvDatabase;
   QVariant pvStartUnitId;
   QList<QVariant> pvStartUnitSelectionIdList;
+  QList<QVariant> pvStartConnectorLimitIdList;  // If not empty, start connection selection will be limited to these connectors
   QVariant pvEndUnitId;
   QList<QVariant> pvEndUnitSelectionIdList;
+  QList<QVariant> pvEndConnectorLimitIdList;    // If not empty, end connection selection will be limited to these connectors
   QSqlQueryModel *pvLinkTypeModel;
   QSqlQueryModel *pvLinkDirectionModel;
   mdtClLinkData pvLinkData;

@@ -434,8 +434,19 @@ bool mdtTtLogicalTestCable::createCable(const mdtSqlRecord& cableData, QList< md
 {
   int i;
   QSqlQuery query(database());
+  mdtTtTestLinkData linkData;
   QVariant ltcId;
+  QList<QVariant> testLinkIdList;
+  QList<QVariant> testConnectorUnitIdList;
+  mdtSqlRecord record;
+  QVariant id;
+  bool ok;
 
+  // Setup record for LogicalTestCable_TestNodeUnit_tbl
+  if(!record.addAllFields("LogicalTestCable_TestNodeUnit_tbl", database())){
+    pvLastError = record.lastError();
+    return false;
+  }
   // Begin a transaction
   if(!beginTransaction()){
     return false;
@@ -449,13 +460,44 @@ bool mdtTtLogicalTestCable::createCable(const mdtSqlRecord& cableData, QList< md
   ltcId = query.lastInsertId();
   Q_ASSERT(!ltcId.isNull());
   // Update each link data
+  /**
   for(i = 0; i < linkDataList.size(); ++i){
     linkDataList[i].setValue("LogicalTestCable_Id_FK", ltcId);
+    testLinkIdList.append(linkDataList.at(i).value("Id_PK"));
   }
+  */
   // Add all test link data
+  for(i = 0; i < linkDataList.size(); ++i){
+    linkData = linkDataList.at(i);
+    linkData.setValue("LogicalTestCable_Id_FK", ltcId);
+    if(!addRecord(linkData, "TestLink_tbl", query)){
+      rollbackTransaction();
+      return false;
+    }
+    id = query.lastInsertId();
+    Q_ASSERT(!id.isNull());
+    testLinkIdList.append(id);
+  }
+  /**
   if(!addRecordList(linkDataList, "TestLink_tbl", false)){
     rollbackTransaction();
     return false;
+  }
+  */
+  // Get related test connector unit IDs
+  testConnectorUnitIdList = getUnitIdListOfTestConnectorsUsedInTestLinks(testLinkIdList, ok);
+  if(!ok){
+    rollbackTransaction();
+    return false;
+  }
+  for(i = 0; i < testConnectorUnitIdList.size(); ++i){
+    record.clearValues();
+    record.setValue("TestNodeUnit_Id_FK", testConnectorUnitIdList.at(i));
+    record.setValue("LogicalTestCable_Id_FK", ltcId);
+    if(!addRecord(record, "LogicalTestCable_TestNodeUnit_tbl")){
+      rollbackTransaction();
+      return false;
+    }
   }
   // Commit transaction
   if(!commitTransaction()){
@@ -784,4 +826,33 @@ bool mdtTtLogicalTestCable::disconnectTestCable(const QVariant & testCableId)
   */
 
   return true;
+}
+
+QList< QVariant > mdtTtLogicalTestCable::getUnitIdListOfTestConnectorsUsedInTestLinks(const QList< QVariant > testLinkIdList, bool& ok)
+{
+  QString sql;
+  QList<QVariant> idList;
+  int i;
+  int lastIndex;
+
+  if(testLinkIdList.isEmpty()){
+    return idList;
+  }
+  // Build SQL query
+  sql = "SELECT DISTINCT TNUC.TestNodeUnit_Id_FK FROM TestNodeUnitConnection_tbl TNUC";
+  sql += " JOIN TestLink_tbl TL ON TL.TestConnection_Id_FK = TNUC.UnitConnection_Id_FK_PK";
+  Q_ASSERT(testLinkIdList.size() > 0);
+  lastIndex = testLinkIdList.size() - 1;
+  sql += " WHERE TL.Id_PK IN(";
+  for(i = 0; i < lastIndex; ++i){
+    sql += testLinkIdList.at(i).toString() + ",";
+  }
+  sql += testLinkIdList.at(lastIndex).toString() + ")";
+  
+  qDebug() << "SQL: " << sql;
+  
+  // Get ID list
+  idList = getDataList<QVariant>(sql, ok);
+
+  return idList;
 }

@@ -444,6 +444,11 @@ void mdtTtTestCableEditor::addLink()
   mdtClUnitLinkDialog dialog(0, database());
   QVariant unitId;
   mdtClLink lnk(0, database());
+  QList<QVariant> idList;
+  QList<QVariant> startConnectorIdList;
+  QList<QVariant> endConnectorIdList;
+  bool ok;
+  int i;
 
   // Check that at least 1 test system was assigned
   if(rowCount("Unit_TestNode_view") < 1){
@@ -456,6 +461,29 @@ void mdtTtTestCableEditor::addLink()
     msgBox.exec();
     return;
   }
+  // If a link allready exist, we can limit start and end connectors
+  idList = dataList("UnitLink_view", "StartUnitConnector_Id_FK", ok, true);
+  if(!ok){
+    displayLastError();
+    return;
+  }
+  for(i = 0; i < idList.size(); ++i){
+    if(!startConnectorIdList.contains(idList.at(i))){
+      startConnectorIdList.append(idList.at(i));
+    }
+  }
+  dialog.setStartConnectorLimitIdList(startConnectorIdList);
+  idList = dataList("UnitLink_view", "EndUnitConnector_Id_FK", ok, true);
+  if(!ok){
+    displayLastError();
+    return;
+  }
+  for(i = 0; i < idList.size(); ++i){
+    if(!endConnectorIdList.contains(idList.at(i))){
+      endConnectorIdList.append(idList.at(i));
+    }
+  }
+  dialog.setEndConnectorLimitIdList(endConnectorIdList);
   // Setup and show dialog
   unitId = currentUnitId();
   if(unitId.isNull()){

@@ -51,6 +51,10 @@ class mdtTtBasicTestNodeCalibrationTool : public mdtTtAbstractTestNodeCalibratio
    */
   void runCalibration();
 
+  /*! \brief Save calibration
+   */
+  void saveCalibration();
+
  private:
 
   /*! \brief Check K3, K4, K5, K6

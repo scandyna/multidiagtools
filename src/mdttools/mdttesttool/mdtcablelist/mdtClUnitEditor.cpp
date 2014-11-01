@@ -22,9 +22,7 @@
 #include "mdtClUnit.h"
 #include "mdtClLink.h"
 #include "ui_mdtClUnitEditor.h"
-///#include "mdtSqlFormWidget.h"
 #include "mdtSqlTableWidget.h"
-///#include "mdtSqlRelation.h"
 #include "mdtAbstractSqlTableController.h"
 #include "mdtSqlDataWidgetController.h"
 #include "mdtSqlRelationInfo.h"
@@ -39,6 +37,7 @@
 #include "mdtClPathGraphDialog.h"
 #include "mdtClLinkedUnitConnectionInfoDialog.h"
 #include "mdtClLinkedUnitConnectorInfoDialog.h"
+#include "mdtClConnectableConnectorDialog.h"
 #include <QSqlTableModel>
 #include <QSqlQueryModel>
 #include <QSqlQuery>
@@ -1043,7 +1042,8 @@ void mdtClUnitEditor::connectConnectors()
   QVariant startVehicleTypeId, endVehicleTypeId;
   QVariant startConnectorId, endConnectorId;
   QVariant startUnitId, endUnitId;
-  mdtClConnectableCriteria connectableCriteria; /// \todo Currently, we give default connectable criteria
+  mdtClConnectableCriteria connectableCriteria;
+  mdtClConnectableConnectorDialog connectorSelectionDialog(this, database());
   bool ok;
 
   // Get current unit ID
@@ -1081,7 +1081,14 @@ void mdtClUnitEditor::connectConnectors()
     return;
   }
   // Select end connector
-  
+  connectorSelectionDialog.setStartConnector(startConnectorId);
+  connectorSelectionDialog.setEndUnitId(endUnitId);
+  if(connectorSelectionDialog.exec() != QDialog::Accepted){
+    return;
+  }
+  endConnectorId = connectorSelectionDialog.endUnitConnectorId();
+  connectableCriteria = connectorSelectionDialog.getConnectableCriteria();
+  /**
   sql = lnk.sqlForConnectableUnitConnectorsSelection(startConnectorId, endUnitId, connectableCriteria , ok);
   if(!ok){
     pvLastError = lnk.lastError();
@@ -1089,6 +1096,7 @@ void mdtClUnitEditor::connectConnectors()
     return;
   }
   endConnectorId = selectUnitConnector(tr("Select end connector:"), sql);
+  */
   if(endConnectorId.isNull()){
     return;
   }

@@ -204,6 +204,10 @@ class mdtTtLogicalTestCable : public mdtTtBase
 
  private:
 
+  /*! \brief Get unit ID list of connectors used by a list of test links
+   */
+  QList<QVariant> getUnitIdListOfTestConnectorsUsedInTestLinks(const QList<QVariant> testLinkIdList, bool & ok);
+
   Q_DISABLE_COPY(mdtTtLogicalTestCable);
 
   mdtClPathGraph *pvPathGraph;

@@ -158,6 +158,12 @@ class mdtTtAbstractTestNodeCalibrationTool : public QObject
    */
   bool setTestNodeUnitCalibrationOffset(const QString &schemaPosition, double offset);
 
+  /*! \brief Save calibration results to TestNodeUnit_tbl
+   *
+   * \pre setup() must be called first.
+   */
+  bool saveTestNodeUnitCalibrationOffsets();
+
  protected:
 
   /*! \brief Contains last error that occured
@@ -195,6 +201,24 @@ class mdtTtAbstractTestNodeCalibrationTool : public QObject
    * Note: if value has -OL or +OL flag set, -infinity, respecively +infinity value is considered.
    */
   bool isInRange(const mdtValue & value, double min, double max = std::numeric_limits<double>::max());
+
+  /*! \brief Beginn manually a new transaction
+   *
+   * On error, false is returned and error is available with lastError() .
+   */
+  bool beginTransaction();
+
+  /*! \brief Rollback manually a new transaction
+   *
+   * On error, false is returned and error is available with lastError() .
+   */
+  bool rollbackTransaction();
+
+  /*! \brief Commit manually a new transaction
+   *
+   * On error, false is returned and error is available with lastError() .
+   */
+  bool commitTransaction();
 
  private:
 

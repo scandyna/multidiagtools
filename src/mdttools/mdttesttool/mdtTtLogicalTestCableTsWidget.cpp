@@ -21,6 +21,7 @@
 #include "mdtTtLogicalTestCableTsWidget.h"
 #include "mdtSqlSelectionDialog.h"
 #include "mdtSqlTableSelection.h"
+#include "mdtClConnectableConnectorDialog.h"
 #include "mdtClLink.h"
 #include "mdtClUnit.h"
 #include "mdtError.h"
@@ -39,7 +40,7 @@ mdtTtLogicalTestCableTsWidget::mdtTtLogicalTestCableTsWidget(QWidget* parent, QS
   connect(pbSelectCn, SIGNAL(clicked()), this, SLOT(selectCn()));
   lbSystem->clear();
   lbNode->clear();
-  lbCn->clear();
+  lbCnName->clear();
 }
 
 void mdtTtLogicalTestCableTsWidget::setTestCableConnector(const QVariant& connectorId, const QString& name)
@@ -91,7 +92,7 @@ void mdtTtLogicalTestCableTsWidget::setTestSystem(const QVariant& tsVtId)
   }
   // Update CN
   pvCnId.clear();
-  lbCn->clear();
+  lbCnName->clear();
 }
 
 QList< QVariant > mdtTtLogicalTestCableTsWidget::getAffectedTsConnections(bool& ok)
@@ -199,6 +200,27 @@ void mdtTtLogicalTestCableTsWidget::selectCn()
 
 void mdtTtLogicalTestCableTsWidget::selectTsConnector()
 {
+  mdtClConnectableConnectorDialog dialog(this, pvDatabase);
+  QList<QVariant> tsUnitIdList;
+  bool ok;
+  
+  
+  // Get list of units that are test connectors
+  tsUnitIdList = getTestConnectorUnitIdList(ok);
+  if(!ok){
+    return;
+  }
+  // Setup and show connectable connectors dialog
+  dialog.setStartConnectorLabel(tr("Test cable connector"));
+  dialog.setEndConnectorLabel(tr("Test system connector"));
+  dialog.setStartConnector(pvTestCableCnId);
+  dialog.setEndUnitIdList(tsUnitIdList);
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
+  pvCnId = dialog.endUnitConnectorId();
+  lbCnName->setText(dialog.endUnitConnectorName());
+  /**
   mdtSqlSelectionDialog selectionDialog(this);
   mdtSqlTableSelection s;
   mdtClConnectableCriteria c;
@@ -206,12 +228,12 @@ void mdtTtLogicalTestCableTsWidget::selectTsConnector()
   QStringList fields;
 
   // Setup connectability check criteria
-  c.checkContactCount = false;
-  c.checkContactType = true;
-  c.checkForm = true;
-  c.checkGenderAreOpposite = true;
-  c.checkInsert = false;
-  c.checkInsertRotation = true;
+  c.checkContactCount = cbCheckContactCount->isChecked();
+  c.checkContactType = cbCheckContactType->isChecked();
+  c.checkForm = cbCheckForm->isChecked();
+  c.checkGenderAreOpposite = cbCheckGenderAreOpposite->isChecked();
+  c.checkInsert = cbCheckInsert->isChecked();
+  c.checkInsertRotation = cbCheckInsertRotation->isChecked();
   // Get SQL query
   sql = sqlForConnectableTsConnectors(c);
   if(sql.isEmpty()){
@@ -237,6 +259,7 @@ void mdtTtLogicalTestCableTsWidget::selectTsConnector()
   Q_ASSERT(s.rowCount() == 1);
   pvCnId = s.data(0, "Id_PK");
   lbCn->setText(s.data(0, "UnitConnectorName").toString());
+  */
 }
 
 void mdtTtLogicalTestCableTsWidget::selectTsConnection()
@@ -246,6 +269,24 @@ void mdtTtLogicalTestCableTsWidget::selectTsConnection()
   msgBox.setText(tr("This functionnality is not implemented yet."));
   msgBox.setIcon(QMessageBox::Critical);
   msgBox.exec();
+}
+
+QList< QVariant > mdtTtLogicalTestCableTsWidget::getTestConnectorUnitIdList(bool& ok)
+{
+  mdtClLink lnk(0, pvDatabase);
+  QList<QVariant> tsUnitIdList;
+  QString sql;
+
+  // Get all unit IDs of pvTestSystemId that are a test connector
+  sql = "SELECT Unit_Id_FK_PK FROM TestNodeUnit_view";
+  sql += " WHERE TestNode_Id_FK = " + pvTestSystemId.toString();
+  sql += " AND Type_Code_FK = 'TESTCONNECTOR'";
+  tsUnitIdList = lnk.getDataList<QVariant>(sql, ok);
+  if(!ok){
+    displayError(lnk.lastError());
+  }
+
+  return tsUnitIdList;
 }
 
 QString mdtTtLogicalTestCableTsWidget::sqlForConnectableTsConnectors(const mdtClConnectableCriteria& criteria)
@@ -285,7 +326,7 @@ QString mdtTtLogicalTestCableTsWidget::sqlForConnectableTsConnectors(const mdtCl
     displayError(lnk.lastError());
     return QString();
   }
-  // For each connector, add these that are connectable tp pvTestCableCnId to list
+  // For each connector, add these that are connectable to pvTestCableCnId to list
   for(i = 0; i < tsConnectorIdList.size(); ++i){
     id = tsConnectorIdList.at(i);
     if(id != pvTestCableCnId){
