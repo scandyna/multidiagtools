@@ -46,7 +46,6 @@ mdtTtLogicalTestCableTsWidget::mdtTtLogicalTestCableTsWidget(QWidget* parent, QS
 void mdtTtLogicalTestCableTsWidget::setTestCableConnector(const QVariant& connectorId, const QString& name)
 {
   pvTestCableCnId = connectorId;
-  ///pvCnType = Connector;
   pvCnType = mdtTtLogicalTestCableDialog::Connector;
   lbTestCableCnLabel->setText(tr("Test cable connector:"));
   lbTestCableCn->setText(name);
@@ -56,7 +55,6 @@ void mdtTtLogicalTestCableTsWidget::setTestCableConnector(const QVariant& connec
 void mdtTtLogicalTestCableTsWidget::setTestCableConnection(const QVariant& connectionId, const QString& name)
 {
   pvTestCableCnId = connectionId;
-  ///pvCnType = Connection;
   pvCnType = mdtTtLogicalTestCableDialog::Connection;
   lbTestCableCnLabel->setText(tr("Test cable connection:"));
   lbTestCableCn->setText(name);
@@ -75,10 +73,6 @@ void mdtTtLogicalTestCableTsWidget::setTestSystem(const QVariant& tsVtId)
     lbSystem->clear();
     lbNode->clear();
   }else{
-    /**
-    sql = "SELECT Type, SubType FROM VehicleType_tbl VT JOIN TestNode_tbl TN ON TN.VehicleType_Id_FK_PK = VT.Id_PK";
-    sql += " WHERE VT.Id_PK = " + pvTestSystemId.toString();
-    */
     sql = "SELECT Type, SubType FROM TestNode_view WHERE VehicleType_Id_FK_PK = " + pvTestSystemId.toString();
     dataList = unit.getDataList<QSqlRecord>(sql, ok);
     if(ok && (!dataList.isEmpty())){
@@ -203,8 +197,7 @@ void mdtTtLogicalTestCableTsWidget::selectTsConnector()
   mdtClConnectableConnectorDialog dialog(this, pvDatabase);
   QList<QVariant> tsUnitIdList;
   bool ok;
-  
-  
+
   // Get list of units that are test connectors
   tsUnitIdList = getTestConnectorUnitIdList(ok);
   if(!ok){
@@ -220,46 +213,6 @@ void mdtTtLogicalTestCableTsWidget::selectTsConnector()
   }
   pvCnId = dialog.endUnitConnectorId();
   lbCnName->setText(dialog.endUnitConnectorName());
-  /**
-  mdtSqlSelectionDialog selectionDialog(this);
-  mdtSqlTableSelection s;
-  mdtClConnectableCriteria c;
-  QString sql;
-  QStringList fields;
-
-  // Setup connectability check criteria
-  c.checkContactCount = cbCheckContactCount->isChecked();
-  c.checkContactType = cbCheckContactType->isChecked();
-  c.checkForm = cbCheckForm->isChecked();
-  c.checkGenderAreOpposite = cbCheckGenderAreOpposite->isChecked();
-  c.checkInsert = cbCheckInsert->isChecked();
-  c.checkInsertRotation = cbCheckInsertRotation->isChecked();
-  // Get SQL query
-  sql = sqlForConnectableTsConnectors(c);
-  if(sql.isEmpty()){
-    return; // Error message was allready displayed by sqlForConnectableTsConnectors()
-  }
-  // Setup and show dialog
-  selectionDialog.setMessage(tr("Select test system connector:"));
-  selectionDialog.setQuery(sql, pvDatabase, false);
-  selectionDialog.setColumnHidden("Id_PK", true);
-  selectionDialog.setColumnHidden("Unit_Id_FK", true);
-  selectionDialog.setColumnHidden("Connector_Id_FK", true);
-  selectionDialog.setColumnHidden("ArticleConnector_Id_FK", true);
-  selectionDialog.setHeaderData("UnitConnectorName", tr("Connector"));
-  if(selectionDialog.exec() != QDialog::Accepted){
-    return;
-  }
-  // Store selected connector
-  fields << "Id_PK" << "UnitConnectorName";
-  s = selectionDialog.selection(fields);
-  if(s.isEmpty()){
-    return;
-  }
-  Q_ASSERT(s.rowCount() == 1);
-  pvCnId = s.data(0, "Id_PK");
-  lbCn->setText(s.data(0, "UnitConnectorName").toString());
-  */
 }
 
 void mdtTtLogicalTestCableTsWidget::selectTsConnection()
@@ -287,76 +240,6 @@ QList< QVariant > mdtTtLogicalTestCableTsWidget::getTestConnectorUnitIdList(bool
   }
 
   return tsUnitIdList;
-}
-
-QString mdtTtLogicalTestCableTsWidget::sqlForConnectableTsConnectors(const mdtClConnectableCriteria& criteria)
-{
-  mdtClLink lnk(0, pvDatabase);
-  QString sql;
-  QList<QVariant> tsUnitIdList;
-  QList<QVariant> tsConnectorIdList;
-  QList<QVariant> connectabeConnectorIdList;
-  QVariant id;
-  bool ok;
-  int i;
-  
-  // Get all unit IDs of pvTestSystemId that are a test connector
-  sql = "SELECT Unit_Id_FK_PK FROM TestNodeUnit_view";
-  sql += " WHERE TestNode_Id_FK = " + pvTestSystemId.toString();
-  sql += " AND Type_Code_FK = 'TESTCONNECTOR'";
-  tsUnitIdList = lnk.getDataList<QVariant>(sql, ok);
-  if(!ok){
-    displayError(lnk.lastError());
-    return QString();
-  }
-  if(tsUnitIdList.isEmpty()){
-    mdtError e(tr("Could not find a unit that is a test connector in given test system."), mdtError::Warning);
-    displayError(e);
-    return QString();
-  }
-  // For each found unit, get connectors
-  sql = "SELECT Id_PK FROM UnitConnector_tbl ";
-  Q_ASSERT(tsUnitIdList.size() > 0);
-  sql += " WHERE Unit_Id_FK = " + tsUnitIdList.at(0).toString();
-  for(i = 1; i < tsUnitIdList.size(); ++i){
-    sql += " OR Unit_Id_FK = " + tsUnitIdList.at(i).toString();
-  }
-  tsConnectorIdList = lnk.getDataList<QVariant>(sql, ok);
-  if(!ok){
-    displayError(lnk.lastError());
-    return QString();
-  }
-  // For each connector, add these that are connectable to pvTestCableCnId to list
-  for(i = 0; i < tsConnectorIdList.size(); ++i){
-    id = tsConnectorIdList.at(i);
-    if(id != pvTestCableCnId){
-      if(lnk.canConnectConnectors(pvTestCableCnId, id, criteria, ok)){
-        connectabeConnectorIdList.append(id);
-      }else{
-        if(!ok){
-          displayError(lnk.lastError());
-          return QString();
-        }
-      }
-    }
-  }
-  if(connectabeConnectorIdList.isEmpty()){
-    mdtError e(tr("Could not find a test connector that can be connected to test cable."), mdtError::Warning);
-    displayError(e);
-    return QString();
-  }
-  // Build SQL query for connector selection
-  sql = "SELECT * FROM UnitConnector_view WHERE Id_PK IN (";
-  Q_ASSERT(connectabeConnectorIdList.size() > 0);
-  for(i = 0; i < connectabeConnectorIdList.size(); ++i){
-    sql += connectabeConnectorIdList.at(i).toString();
-    if(i < (connectabeConnectorIdList.size() - 1)){
-      sql += ",";
-    }
-  }
-  sql += ")";
-
-  return sql;
 }
 
 void mdtTtLogicalTestCableTsWidget::displayError(const mdtError& error)

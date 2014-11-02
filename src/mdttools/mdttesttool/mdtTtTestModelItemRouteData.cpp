@@ -20,6 +20,31 @@
  ****************************************************************************/
 #include "mdtTtTestModelItemRouteData.h"
 
+mdtTtTestModelItemRouteData::mdtTtTestModelItemRouteData()
+{
+}
+
+mdtTtTestModelItemRouteData::mdtTtTestModelItemRouteData(const QSqlRecord& record)
+{
+  Q_ASSERT(record.contains("Id_PK"));
+  Q_ASSERT(record.contains("TestModelItem_Id_FK"));
+  Q_ASSERT(record.contains("TestLink_Id_FK"));
+  Q_ASSERT(record.contains("MeasureTestNodeUnitConnection_Id_FK"));
+
+  // Set data
+  setId(record.value("Id_PK"));
+  setTestModelItemId(record.value("TestModelItem_Id_FK"));
+  setTestLinkId(record.value("TestLink_Id_FK"));
+  setMeasureConnectionId(record.value("MeasureTestNodeUnitConnection_Id_FK"));
+  // If record contains additionnal fields, seup data
+  if(record.contains("TestConnection_Id_FK")){
+    setTestConnectionId(record.value("TestConnection_Id_FK"));
+  }
+  if(record.contains("DutConnection_Id_FK")){
+    setDutConnectionId(record.value("DutConnection_Id_FK"));
+  }
+}
+
 void mdtTtTestModelItemRouteData::clearData()
 {
   pvId.clear();
@@ -79,4 +104,74 @@ void mdtTtTestModelItemRouteData::addSetupData(mdtTtTestNodeUnitSetupData data)
   data.setValue("TestModelItem_Id_FK", pvTestModelItemId);
   data.setValue("TestModelItemRoute_Id_FK", pvId);
   pvSetupDataList.append(data);
+}
+
+mdtValue mdtTtTestModelItemRouteData::routeResistance() const
+{
+  int i;
+  double r = 0.0;
+
+  for(i = 0; i < pvSetupDataList.size(); ++i){
+    r += pvSetupDataList.at(i).value("CalibrationOffset").toDouble();
+  }
+
+  return r;
+}
+
+mdtValue mdtTtTestModelItemRouteData::busCouplingRelaysResistance() const
+{
+  int i;
+  double r = 0.0;
+
+  for(i = 0; i < pvSetupDataList.size(); ++i){
+    if(pvSetupDataList.at(i).value("Type_Code_FK").toString() == "BUSCPLREL"){
+      r += pvSetupDataList.at(i).value("CalibrationOffset").toDouble();
+    }
+  }
+
+  return r;
+}
+
+mdtValue mdtTtTestModelItemRouteData::channelRelaysResistance() const
+{
+  int i;
+  double r = 0.0;
+
+  for(i = 0; i < pvSetupDataList.size(); ++i){
+    if(pvSetupDataList.at(i).value("Type_Code_FK").toString() == "CHANELREL"){
+      r += pvSetupDataList.at(i).value("CalibrationOffset").toDouble();
+    }
+  }
+
+  return r;
+}
+
+QList< QVariant > mdtTtTestModelItemRouteData::busCouplingRelaysIdList() const
+{
+  int i;
+  QList<QVariant> idList;
+
+  for(i = 0; i < pvSetupDataList.size(); ++i){
+    if(pvSetupDataList.at(i).value("Type_Code_FK").toString() == "BUSCPLREL"){
+      Q_ASSERT(!pvSetupDataList.at(i).value("TestNodeUnit_Id_FK").isNull());
+      idList << pvSetupDataList.at(i).value("TestNodeUnit_Id_FK");
+    }
+  }
+
+  return idList;
+}
+
+QList< QVariant > mdtTtTestModelItemRouteData::channelRelaysIdList() const
+{
+  int i;
+  QList<QVariant> idList;
+
+  for(i = 0; i < pvSetupDataList.size(); ++i){
+    if(pvSetupDataList.at(i).value("Type_Code_FK").toString() == "CHANELREL"){
+      Q_ASSERT(!pvSetupDataList.at(i).value("TestNodeUnit_Id_FK").isNull());
+      idList << pvSetupDataList.at(i).value("TestNodeUnit_Id_FK");
+    }
+  }
+
+  return idList;
 }

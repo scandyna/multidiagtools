@@ -497,7 +497,261 @@ void mdtTestToolTest::mdtTtTestNodeUnitTest()
   
 }
 
-void mdtTestToolTest::testNodeSetupDataTest()
+void mdtTestToolTest::mdtTtTestNodeManagerTest()
+{
+  std::shared_ptr<mdtTtTestNodeManager> m(new mdtTtTestNodeManager(0, pvDatabaseManager.database()));
+  mdtDeviceContainerWidget w;
+  std::shared_ptr<mdtDeviceU3606A> devU3606A;
+  std::shared_ptr<mdtDeviceScpi> devScpi;
+  QList<std::shared_ptr<mdtDevice>> devList;
+
+  // Add a device that is not related to a test node
+  m->addDevice<mdtDeviceU3606A>("U3606A", "SN01", "U3606A Multimeter, SN01");
+  devU3606A = m->device<mdtDeviceU3606A>("U3606A");
+  QVERIFY(devU3606A.get() != 0);
+  devList = m->allDevices();
+  QCOMPARE(devList.size(), 1);
+  QVERIFY(devList.at(0).get() != 0);
+  // Assign manager to widget
+  w.setContainer(m->container());
+  w.show();
+  
+  QTest::qWait(3000);
+  
+  // Add a new SCPI device
+  devScpi = m->addDevice<mdtDeviceScpi>("SCPI", "SN005", "Generic SCPI device");
+  
+  qDebug() << "U3606A count: " << devU3606A.use_count() << " , SCPI count: " << devScpi.use_count();
+  
+  devU3606A->connectToDevice(mdtDeviceInfo());
+  QTest::qWait(5000);
+  devU3606A->disconnectFromDevice();
+  
+  QTest::qWait(2000);
+  
+  m->clear();
+  devScpi = m->addDevice<mdtDeviceScpi>("SCPI6", "SN06", "Generic SCPI device 6");
+  devScpi->connectToDevice(mdtDeviceInfo());
+  devScpi = m->addDevice<mdtDeviceScpi>("SCPI7", "SN07", "Generic SCPI device 7");
+  devScpi->connectToDevice(mdtDeviceInfo());
+  devScpi = m->addDevice<mdtDeviceScpi>("SCPI8", "SN08", "Generic SCPI device 8");
+  devScpi->connectToDevice(mdtDeviceInfo());
+  
+  devU3606A = m->addDevice<mdtDeviceU3606A>("U3606A01", "SN01", "U3606A Multimeter, SN01");
+  devU3606A->connectToDevice(mdtDeviceInfo());
+  devU3606A = m->addDevice<mdtDeviceU3606A>("U3606A02", "SN02", "U3606A Multimeter, SN02");
+  devU3606A->connectToDevice(mdtDeviceInfo());
+
+  qDebug() << "U3606A count: " << devU3606A.use_count() << " , SCPI count: " << devScpi.use_count();
+  
+  while(w.isVisible()){
+    QTest::qWait(1000);
+  }
+}
+
+void mdtTestToolTest::mdtTtTestModelItemRouteDataTest()
+{
+  mdtTtTestModelItemRouteData routeData;
+  mdtTtTestNodeUnitSetupData setupData;
+  mdtSqlRecord record;
+
+  // Init
+  QVERIFY(setupData.setup(pvDatabaseManager.database()));
+  // Simple set/get
+  routeData.setId(1);
+  routeData.setTestModelItemId(2);
+  routeData.setTestLinkId(3);
+  routeData.setDutConnectionId(4);
+  routeData.setTestConnectionId(5);
+  routeData.setMeasureConnectionId(6);
+  QCOMPARE(routeData.id() ,QVariant(1));
+  QCOMPARE(routeData.testModelItemId() ,QVariant(2));
+  QCOMPARE(routeData.testLinkId() ,QVariant(3));
+  QCOMPARE(routeData.dutConnectionId() ,QVariant(4));
+  QCOMPARE(routeData.testConnectionId() ,QVariant(5));
+  QCOMPARE(routeData.measureConnectionId() ,QVariant(6));
+  /*
+   * Setup data
+   */
+  setupData.clearValues();
+  setupData.setValue("TestNodeUnit_Id_FK", 10);
+  routeData.addSetupData(setupData);
+  QCOMPARE(routeData.setupDataList().size() ,1);
+  QCOMPARE(routeData.setupDataList().at(0).value("TestModelItem_Id_FK") ,QVariant(2));
+  QCOMPARE(routeData.setupDataList().at(0).value("TestModelItemRoute_Id_FK") ,QVariant(1));
+  // Update ID
+  routeData.setId(20);
+  QCOMPARE(routeData.id() ,QVariant(20));
+  QCOMPARE(routeData.setupDataList().at(0).value("TestModelItemRoute_Id_FK") ,QVariant(20));
+  // Update test model item ID
+  routeData.setTestModelItemId(21);
+  QCOMPARE(routeData.testModelItemId() ,QVariant(21));
+  QCOMPARE(routeData.setupDataList().at(0).value("TestModelItem_Id_FK") ,QVariant(21));
+  /*
+   * Setup data from TestModelItemRoute_tbl
+   */
+  // Setup record
+  QVERIFY(record.addAllFields("TestModelItemRoute_tbl", pvDatabaseManager.database()));
+  record.setValue("Id_PK", 10);
+  record.setValue("TestModelItem_Id_FK", 11);
+  record.setValue("TestLink_Id_FK", 12);
+  record.setValue("MeasureTestNodeUnitConnection_Id_FK", 15);
+  routeData = mdtTtTestModelItemRouteData(record);
+  // Check route data
+  QCOMPARE(routeData.id() ,QVariant(10));
+  QCOMPARE(routeData.testModelItemId() ,QVariant(11));
+  QCOMPARE(routeData.testLinkId() ,QVariant(12));
+  QVERIFY(routeData.dutConnectionId().isNull());
+  QVERIFY(routeData.testConnectionId().isNull());
+  QCOMPARE(routeData.measureConnectionId() ,QVariant(15));
+  QCOMPARE(routeData.setupDataList().size() ,0);
+  /*
+   * Setup data from TestModelItemRoute_view
+   */
+  // Setup record
+  QVERIFY(record.addAllFields("TestModelItemRoute_view", pvDatabaseManager.database()));
+  record.setValue("Id_PK", 20);
+  record.setValue("TestModelItem_Id_FK", 21);
+  record.setValue("TestLink_Id_FK", 22);
+  record.setValue("DutConnection_Id_FK", 23);
+  record.setValue("TestConnection_Id_FK", 24);
+  record.setValue("MeasureTestNodeUnitConnection_Id_FK", 25);
+  routeData = mdtTtTestModelItemRouteData(record);
+  // Check route data
+  QCOMPARE(routeData.id() ,QVariant(20));
+  QCOMPARE(routeData.testModelItemId() ,QVariant(21));
+  QCOMPARE(routeData.testLinkId() ,QVariant(22));
+  QCOMPARE(routeData.dutConnectionId() ,QVariant(23));
+  QCOMPARE(routeData.testConnectionId() ,QVariant(24));
+  QCOMPARE(routeData.measureConnectionId() ,QVariant(25));
+  QCOMPARE(routeData.setupDataList().size() ,0);
+  /*
+   * Build a list of test node unit setup data,
+   *  with fields commeing from TestNodeUnitSetup_view.
+   *  So, we have informations about test node units (offset, schema pos., ...)
+   *
+   * Note: here, we are at TestModelItem_Id_FK 100
+   */
+  // Update test route data to test model item 100
+  routeData.setTestModelItemId(100);
+  QCOMPARE(routeData.testModelItemId() ,QVariant(100));
+  // Setup record
+  QVERIFY(record.addAllFields("TestNodeUnitSetup_view", pvDatabaseManager.database()));
+  // Setup for K1, witch is a bus coupling relay
+  record.setValue("TestNodeUnit_Id_FK", 1);
+  record.setValue("StepNumber", 0);
+  record.setValue("State", true);
+  record.setValue("Type_Code_FK", "BUSCPLREL");
+  record.setValue("IoPosition", 1);
+  record.setValue("SchemaPosition", "K1");
+  record.setValue("CalibrationOffset", 0.1);
+  // Add to route data and check
+  setupData = mdtTtTestNodeUnitSetupData(record);
+  routeData.addSetupData(setupData);
+  QCOMPARE(routeData.setupDataList().size() ,1);
+  QCOMPARE(routeData.setupDataList().at(0).value("TestModelItem_Id_FK") ,QVariant(100));
+  QCOMPARE(routeData.setupDataList().at(0).value("TestNodeUnit_Id_FK") ,QVariant(1));
+  QCOMPARE(routeData.setupDataList().at(0).value("StepNumber") ,QVariant(0));
+  QCOMPARE(routeData.setupDataList().at(0).value("State") ,QVariant(true));
+  QCOMPARE(routeData.setupDataList().at(0).value("Type_Code_FK") ,QVariant("BUSCPLREL"));
+  QCOMPARE(routeData.setupDataList().at(0).value("IoPosition") ,QVariant(1));
+  QCOMPARE(routeData.setupDataList().at(0).value("SchemaPosition") ,QVariant("K1"));
+  QCOMPARE(routeData.setupDataList().at(0).value("CalibrationOffset") ,QVariant(0.1));
+  QCOMPARE(routeData.routeResistance().valueDouble(), 0.1);
+  QCOMPARE(routeData.busCouplingRelaysResistance().valueDouble(), 0.1);
+  QCOMPARE(routeData.channelRelaysResistance().valueDouble(), 0.0);
+  QCOMPARE(routeData.busCouplingRelaysIdList().size(), 1);
+  QCOMPARE(routeData.busCouplingRelaysIdList().at(0), QVariant(1));
+  QCOMPARE(routeData.channelRelaysIdList().size(), 0);
+  // Setup for K2, witch is a bus coupling relay
+  record.clearValues();
+  record.setValue("TestNodeUnit_Id_FK", 2);
+  record.setValue("StepNumber", 0);
+  record.setValue("State", true);
+  record.setValue("Type_Code_FK", "BUSCPLREL");
+  record.setValue("IoPosition", 2);
+  record.setValue("SchemaPosition", "K2");
+  record.setValue("CalibrationOffset", 0.2);
+  // Add to route data and check
+  setupData = mdtTtTestNodeUnitSetupData(record);
+  routeData.addSetupData(setupData);
+  QCOMPARE(routeData.setupDataList().size() ,2);
+  QCOMPARE(routeData.setupDataList().at(1).value("TestModelItem_Id_FK") ,QVariant(100));
+  QCOMPARE(routeData.setupDataList().at(1).value("TestNodeUnit_Id_FK") ,QVariant(2));
+  QCOMPARE(routeData.setupDataList().at(1).value("StepNumber") ,QVariant(0));
+  QCOMPARE(routeData.setupDataList().at(1).value("State") ,QVariant(true));
+  QCOMPARE(routeData.setupDataList().at(1).value("Type_Code_FK") ,QVariant("BUSCPLREL"));
+  QCOMPARE(routeData.setupDataList().at(1).value("IoPosition") ,QVariant(2));
+  QCOMPARE(routeData.setupDataList().at(1).value("SchemaPosition") ,QVariant("K2"));
+  QCOMPARE(routeData.setupDataList().at(1).value("CalibrationOffset") ,QVariant(0.2));
+  QCOMPARE(routeData.routeResistance().valueDouble(), 0.3);
+  QCOMPARE(routeData.busCouplingRelaysResistance().valueDouble(), 0.3);
+  QCOMPARE(routeData.channelRelaysResistance().valueDouble(), 0.0);
+  QCOMPARE(routeData.busCouplingRelaysIdList().size(), 2);
+  QCOMPARE(routeData.busCouplingRelaysIdList().at(1), QVariant(2));
+  QCOMPARE(routeData.channelRelaysIdList().size(), 0);
+  // Setup for K30, witch is a channel relay
+  record.clearValues();
+  record.setValue("TestNodeUnit_Id_FK", 30);
+  record.setValue("StepNumber", 0);
+  record.setValue("State", true);
+  record.setValue("Type_Code_FK", "CHANELREL");
+  record.setValue("IoPosition", 30);
+  record.setValue("SchemaPosition", "K30");
+  record.setValue("CalibrationOffset", 0.4);
+  // Add to route data and check
+  setupData = mdtTtTestNodeUnitSetupData(record);
+  routeData.addSetupData(setupData);
+  QCOMPARE(routeData.setupDataList().size() ,3);
+  QCOMPARE(routeData.setupDataList().at(2).value("TestModelItem_Id_FK") ,QVariant(100));
+  QCOMPARE(routeData.setupDataList().at(2).value("TestNodeUnit_Id_FK") ,QVariant(30));
+  QCOMPARE(routeData.setupDataList().at(2).value("StepNumber") ,QVariant(0));
+  QCOMPARE(routeData.setupDataList().at(2).value("State") ,QVariant(true));
+  QCOMPARE(routeData.setupDataList().at(2).value("Type_Code_FK") ,QVariant("CHANELREL"));
+  QCOMPARE(routeData.setupDataList().at(2).value("IoPosition") ,QVariant(30));
+  QCOMPARE(routeData.setupDataList().at(2).value("SchemaPosition") ,QVariant("K30"));
+  QCOMPARE(routeData.setupDataList().at(2).value("CalibrationOffset") ,QVariant(0.4));
+  QCOMPARE(routeData.routeResistance().valueDouble(), 0.7);
+  QCOMPARE(routeData.busCouplingRelaysResistance().valueDouble(), 0.3);
+  QCOMPARE(routeData.channelRelaysResistance().valueDouble(), 0.4);
+  QCOMPARE(routeData.busCouplingRelaysIdList().size(), 2);
+  QCOMPARE(routeData.busCouplingRelaysIdList().at(0), QVariant(1));
+  QCOMPARE(routeData.busCouplingRelaysIdList().at(1), QVariant(2));
+  QCOMPARE(routeData.channelRelaysIdList().size(), 1);
+  QCOMPARE(routeData.channelRelaysIdList().at(0), QVariant(30));
+  // Setup for K31, witch is a channel relay
+  record.clearValues();
+  record.setValue("TestNodeUnit_Id_FK", 31);
+  record.setValue("StepNumber", 0);
+  record.setValue("State", true);
+  record.setValue("Type_Code_FK", "CHANELREL");
+  record.setValue("IoPosition", 31);
+  record.setValue("SchemaPosition", "K31");
+  record.setValue("CalibrationOffset", 0.5);
+  // Add to route data and check
+  setupData = mdtTtTestNodeUnitSetupData(record);
+  routeData.addSetupData(setupData);
+  QCOMPARE(routeData.setupDataList().size() ,4);
+  QCOMPARE(routeData.setupDataList().at(3).value("TestModelItem_Id_FK") ,QVariant(100));
+  QCOMPARE(routeData.setupDataList().at(3).value("TestNodeUnit_Id_FK") ,QVariant(31));
+  QCOMPARE(routeData.setupDataList().at(3).value("StepNumber") ,QVariant(0));
+  QCOMPARE(routeData.setupDataList().at(3).value("State") ,QVariant(true));
+  QCOMPARE(routeData.setupDataList().at(3).value("Type_Code_FK") ,QVariant("CHANELREL"));
+  QCOMPARE(routeData.setupDataList().at(3).value("IoPosition") ,QVariant(31));
+  QCOMPARE(routeData.setupDataList().at(3).value("SchemaPosition") ,QVariant("K31"));
+  QCOMPARE(routeData.setupDataList().at(3).value("CalibrationOffset") ,QVariant(0.5));
+  QCOMPARE(routeData.routeResistance().valueDouble(), 1.2);
+  QCOMPARE(routeData.busCouplingRelaysResistance().valueDouble(), 0.3);
+  QCOMPARE(routeData.channelRelaysResistance().valueDouble(), 0.9);
+  QCOMPARE(routeData.busCouplingRelaysIdList().size(), 2);
+  QCOMPARE(routeData.busCouplingRelaysIdList().at(0), QVariant(1));
+  QCOMPARE(routeData.busCouplingRelaysIdList().at(1), QVariant(2));
+  QCOMPARE(routeData.channelRelaysIdList().size(), 2);
+  QCOMPARE(routeData.channelRelaysIdList().at(0), QVariant(30));
+  QCOMPARE(routeData.channelRelaysIdList().at(1), QVariant(31));
+}
+
+void mdtTestToolTest::testItemNodeNodeSetupDataTest()
 {
   mdtTtTestItemNodeSetupData tiSetupData;
   mdtTtTestNodeSetupData tnSetupData;
@@ -751,97 +1005,7 @@ void mdtTestToolTest::testNodeSetupDataTest()
 
 }
 
-void mdtTestToolTest::mdtTtTestNodeManagerTest()
-{
-  std::shared_ptr<mdtTtTestNodeManager> m(new mdtTtTestNodeManager(0, pvDatabaseManager.database()));
-  mdtDeviceContainerWidget w;
-  std::shared_ptr<mdtDeviceU3606A> devU3606A;
-  std::shared_ptr<mdtDeviceScpi> devScpi;
-  QList<std::shared_ptr<mdtDevice>> devList;
-
-  // Add a device that is not related to a test node
-  m->addDevice<mdtDeviceU3606A>("U3606A", "SN01", "U3606A Multimeter, SN01");
-  devU3606A = m->device<mdtDeviceU3606A>("U3606A");
-  QVERIFY(devU3606A.get() != 0);
-  devList = m->allDevices();
-  QCOMPARE(devList.size(), 1);
-  QVERIFY(devList.at(0).get() != 0);
-  // Assign manager to widget
-  w.setContainer(m->container());
-  w.show();
-  
-  QTest::qWait(3000);
-  
-  // Add a new SCPI device
-  devScpi = m->addDevice<mdtDeviceScpi>("SCPI", "SN005", "Generic SCPI device");
-  
-  qDebug() << "U3606A count: " << devU3606A.use_count() << " , SCPI count: " << devScpi.use_count();
-  
-  devU3606A->connectToDevice(mdtDeviceInfo());
-  QTest::qWait(5000);
-  devU3606A->disconnectFromDevice();
-  
-  QTest::qWait(2000);
-  
-  m->clear();
-  devScpi = m->addDevice<mdtDeviceScpi>("SCPI6", "SN06", "Generic SCPI device 6");
-  devScpi->connectToDevice(mdtDeviceInfo());
-  devScpi = m->addDevice<mdtDeviceScpi>("SCPI7", "SN07", "Generic SCPI device 7");
-  devScpi->connectToDevice(mdtDeviceInfo());
-  devScpi = m->addDevice<mdtDeviceScpi>("SCPI8", "SN08", "Generic SCPI device 8");
-  devScpi->connectToDevice(mdtDeviceInfo());
-  
-  devU3606A = m->addDevice<mdtDeviceU3606A>("U3606A01", "SN01", "U3606A Multimeter, SN01");
-  devU3606A->connectToDevice(mdtDeviceInfo());
-  devU3606A = m->addDevice<mdtDeviceU3606A>("U3606A02", "SN02", "U3606A Multimeter, SN02");
-  devU3606A->connectToDevice(mdtDeviceInfo());
-
-  qDebug() << "U3606A count: " << devU3606A.use_count() << " , SCPI count: " << devScpi.use_count();
-  
-  while(w.isVisible()){
-    QTest::qWait(1000);
-  }
-}
-
-void mdtTestToolTest::mdtTtTestModelItemRouteDataTest()
-{
-  mdtTtTestModelItemRouteData data;
-  mdtTtTestNodeUnitSetupData setupData;
-
-  // Init
-  QVERIFY(setupData.setup(pvDatabaseManager.database()));
-  // Simple set/get
-  data.setId(1);
-  data.setTestModelItemId(2);
-  data.setTestLinkId(3);
-  data.setDutConnectionId(4);
-  data.setTestConnectionId(5);
-  data.setMeasureConnectionId(6);
-  QCOMPARE(data.id() ,QVariant(1));
-  QCOMPARE(data.testModelItemId() ,QVariant(2));
-  QCOMPARE(data.testLinkId() ,QVariant(3));
-  QCOMPARE(data.dutConnectionId() ,QVariant(4));
-  QCOMPARE(data.testConnectionId() ,QVariant(5));
-  QCOMPARE(data.measureConnectionId() ,QVariant(6));
-  /*
-   * Setup data
-   */
-  setupData.clearValues();
-  setupData.setValue("TestNodeUnit_Id_FK", 10);
-  data.addSetupData(setupData);
-  QCOMPARE(data.setupDataList().size() ,1);
-  QCOMPARE(data.setupDataList().at(0).value("TestModelItem_Id_FK") ,QVariant(2));
-  QCOMPARE(data.setupDataList().at(0).value("TestModelItemRoute_Id_FK") ,QVariant(1));
-  // Update ID
-  data.setId(20);
-  QCOMPARE(data.id() ,QVariant(20));
-  QCOMPARE(data.setupDataList().at(0).value("TestModelItemRoute_Id_FK") ,QVariant(20));
-  // Update test model item ID
-  data.setTestModelItemId(21);
-  QCOMPARE(data.testModelItemId() ,QVariant(21));
-  QCOMPARE(data.setupDataList().at(0).value("TestModelItem_Id_FK") ,QVariant(21));
-}
-
+/// \todo Is mdtTtTestModelItemData obselete ?
 void mdtTestToolTest::mdtTtTestModelItemDataTest()
 {
   mdtTtTestModelItemData data;

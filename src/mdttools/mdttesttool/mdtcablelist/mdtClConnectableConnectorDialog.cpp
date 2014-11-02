@@ -108,15 +108,6 @@ void mdtClConnectableConnectorDialog::selectEndConnector()
 
   // Get connectability check criteria
   c = getConnectableCriteria();
-  /**
-  c.checkContactCount = cbCheckContactCount->isChecked();
-  c.checkContactName = cbCheckContactName->isChecked();
-  c.checkContactType = cbCheckContactType->isChecked();
-  c.checkForm = cbCheckForm->isChecked();
-  c.checkGenderAreOpposite = cbCheckGenderAreOpposite->isChecked();
-  c.checkInsert = cbCheckInsert->isChecked();
-  c.checkInsertRotation = cbCheckInsertRotation->isChecked();
-  */
   // Get SQL query
   sql = lnk.sqlForConnectableUnitConnectorsSelection(pvStartUnitConnectorId, pvEndUnitIdList, c, ok);
   if(!ok){

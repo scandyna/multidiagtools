@@ -44,11 +44,10 @@ class mdtTestToolTest : public mdtTest
 
   void mdtTtTestNodeUnitTest();
 
-  void testNodeSetupDataTest();
-
   void mdtTtTestNodeManagerTest();
 
   void mdtTtTestModelItemRouteDataTest();
+  void testItemNodeNodeSetupDataTest();
 
   void mdtTtTestModelItemDataTest();
 

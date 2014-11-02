@@ -66,12 +66,6 @@ bool mdtTtLogicalTestCableEditor::setupTables()
   return true;
 }
 
-/**
-void mdtTtLogicalTestCableEditor::addMenus(QMenuBar* menuBar)
-{
-}
-*/
-
 void mdtTtLogicalTestCableEditor::addTestNodeUnit()
 {
   mdtTtLogicalTestCable tcc(0, database());
@@ -356,7 +350,6 @@ void mdtTtLogicalTestCableEditor::removeLinks()
   mdtSqlTableWidget *widget;
   mdtTtLogicalTestCable tcc(this, database());
   QMessageBox msgBox;
-  ///QModelIndexList indexes;
   mdtSqlTableSelection s;
 
   widget = sqlTableWidget("TestLink_view");
@@ -366,12 +359,6 @@ void mdtTtLogicalTestCableEditor::removeLinks()
   if(s.isEmpty()){
     return;
   }
-  /**
-  indexes = widget->indexListOfSelectedRows("Id_PK");
-  if(indexes.size() < 1){
-    return;
-  }
-  */
   // We ask confirmation to the user
   msgBox.setText(tr("You are about to remove selected links."));
   msgBox.setInformativeText(tr("Do you want to continue ?"));
@@ -383,7 +370,6 @@ void mdtTtLogicalTestCableEditor::removeLinks()
   }
   // Delete seleced rows
   if(!tcc.removeData("TestLink_tbl", s, true)){
-  ///if(!tcc.removeData("TestLink_tbl", "Id_PK", indexes)){
     pvLastError = tcc.lastError();
     displayLastError();
     return;

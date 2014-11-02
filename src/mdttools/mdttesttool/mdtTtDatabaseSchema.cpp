@@ -3857,6 +3857,8 @@ bool mdtTtDatabaseSchema::createTestNodeUnitSetupView()
         " TNU.TestNode_Id_FK,\n"\
         " TNU.Type_Code_FK,\n"\
         " TNU.IoPosition,\n"\
+        " TNU.CalibrationOffset,\n"\
+        " TNU.CalibrationDate,\n"\
         " U.SchemaPosition,\n"\
         " U.Alias,\n"\
         " TNUS.*,\n"\
@@ -3882,6 +3884,8 @@ bool mdtTtDatabaseSchema::createTestModelItemRouteView()
   sql = "CREATE VIEW TestModelItemRoute_view AS\n"\
         "SELECT\n"\
         " TMIR.*,\n"\
+        " TL.TestConnection_Id_FK,\n"\
+        " TL.DutConnection_Id_FK,\n"\
         " TL.Identification,\n"\
         " UT.SchemaPosition AS TestSchemaPosition,\n"\
         " UT.Alias AS TestAlias,\n"\

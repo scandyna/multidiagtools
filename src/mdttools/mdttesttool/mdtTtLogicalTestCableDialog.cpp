@@ -20,7 +20,6 @@
  ****************************************************************************/
 #include "mdtTtLogicalTestCableDialog.h"
 #include "mdtTtLogicalTestCableDutWidget.h"
-///#include "mdtTtLogicalTestCableTcWidget.h"
 #include "mdtTtLogicalTestCableTsWidget.h"
 #include "mdtClUnit.h"
 #include "mdtClLink.h"
@@ -47,7 +46,7 @@ mdtTtLogicalTestCableDialog::mdtTtLogicalTestCableDialog(QWidget* parent, QSqlDa
   }
   wAffectationWidget->setLayout(pvAffectationLayout);
 }
-///|StartUnitConnectorName|StartUnitContactName||EndUnitConnectorName|EndUnitContactName|||UnitConnectionStart_Id_FK|UnitConnectionEnd_Id_FK|StartUnit_Id_FK|EndUnit_Id_FK|LinkType_Code_FK|
+
 void mdtTtLogicalTestCableDialog::setTestCable(const QVariant& testCableId)
 {
   mdtClUnit unit(0, pvDatabase);
@@ -275,30 +274,6 @@ void mdtTtLogicalTestCableDialog::accept()
 
   QDialog::accept();
 }
-
-
-/**
-void mdtTtLogicalTestCableDialog::addAffectation(mdtTtLogicalTestCableDutWidget* dutWidget, mdtTtLogicalTestCableTcWidget* testCableWidget, mdtTtLogicalTestCableTsWidget* testSystemWidget)
-{
-  Q_ASSERT(dutWidget != 0);
-  Q_ASSERT(testCableWidget != 0);
-  Q_ASSERT(testSystemWidget != 0);
-
-  mdtTtLogicalTestCableDialogAffectation a;
-  int row = pvAffectationLayout->rowCount();
-
-  // set widgets to container struct
-  a.dutWidget = dutWidget;
-  a.testCableWidget = testCableWidget;
-  a.testSystemWidget = testSystemWidget;
-  // Add widgets to layout
-  pvAffectationLayout->addWidget(a.dutWidget, row, 0);
-  pvAffectationLayout->addWidget(a.testCableWidget, row, 1);
-  pvAffectationLayout->addWidget(a.testSystemWidget, row, 2);
-  // Add container struct to container
-  pvAffectations.append(a);
-}
-*/
 
 void mdtTtLogicalTestCableDialog::displayError(const mdtError& error)
 {

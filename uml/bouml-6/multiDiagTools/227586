@@ -1,6 +1,6 @@
 format 207
 "mdttesttool" // mdttools::mdttesttool
-  revision 57
+  revision 59
   modified_by 2 "philippe"
   // class settings
   
@@ -3068,7 +3068,7 @@ ${inlines}
 
     classdiagram 987394 "TestNodeSetup"
       classdiagramsettings member_max_width 0 end
-      size A4
+      size A4-Landscape
     end
 
     class 1060738 "mdtTtTestNodeUnitSetupData"
@@ -3172,6 +3172,21 @@ ${inlines}
 
       operation 2054658 "schemaPosition"
 	public explicit_return_type "string"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2294402 "calibrationOffset"
+	public explicit_return_type "mdtValue"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -3316,7 +3331,36 @@ ${inlines}
       end
 
       operation 2055298 "unitSetupList"
-	public explicit_return_type "QList<mdtTtTestNodeUnitSetupData>"
+	stereotype "list"
+	public explicit_return_type "mdtTtTestNodeUnitSetupData"
+	multiplicity "*"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 1790466 // pvRouteData (<directional composition>)
+	relation 1774978 *-->
+	  stereotype "list"
+	  a role_name "pvRouteData" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 1790466 // pvRouteData (<directional composition>)
+	  b parent class_ref 1368834 // mdtTtTestModelItemRouteData
+      end
+
+      operation 2294018 "routeDataList"
+	stereotype "list"
+	public return_type class_ref 1368834 // mdtTtTestModelItemRouteData
+	multiplicity "*"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -5607,423 +5651,148 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      attribute 1374850 "Id"
-	private type class_ref 161154 // QVariant
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-	get_oper operation_ref 2194434 // Id
-	set_oper operation_ref 2194562 // setId
+      classrelation 1783810 // <generalisation>
+	relation 1768322 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1783810 // <generalisation>
+	  b parent class_ref 1067266 // mdtSqlRecord
       end
 
-      attribute 1374978 "TestModelItemId"
-	private type class_ref 161154 // QVariant
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+      classrelation 1790338 // pvUnitSetupData (<directional composition>)
+	relation 1774850 *-->
+	  stereotype "list"
+	  a role_name "pvUnitSetupData" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
 "
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-	get_oper operation_ref 2194690 // TestModelItemId
-	set_oper operation_ref 2194818 // setTestModelItemId
+	    classrelation_ref 1790338 // pvUnitSetupData (<directional composition>)
+	  b parent class_ref 1060738 // mdtTtTestNodeUnitSetupData
       end
 
-      attribute 1375106 "TestLinkId"
-	private type class_ref 161154 // QVariant
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+      operation 2293506 "mdtTtTestModelItemRouteData"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${inline}${name}${(}${)}${volatile}${throw};
 "
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-	get_oper operation_ref 2194946 // TestLinkId
-	set_oper operation_ref 2195074 // setTestLinkId
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
 
-      attribute 1375234 "DutConnectionId"
-	private type class_ref 161154 // QVariant
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+      operation 2293634 "mdtTtTestModelItemRouteData"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "record" type class_ref 404994 // QSqlRecord
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
 "
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-	get_oper operation_ref 2195202 // DutConnectionId
-	set_oper operation_ref 2195330 // setDutConnectionId
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
 
-      attribute 1375362 "TestConnectionId"
-	private type class_ref 161154 // QVariant
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+      operation 2293762 "setup"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-	get_oper operation_ref 2195458 // TestConnectionId
-	set_oper operation_ref 2195586 // setTestConnectionId
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
 
-      attribute 1375490 "MeasureConnectionId"
-	private type class_ref 161154 // QVariant
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+      operation 2294530 "busCouplingRelaysResistance"
+	public explicit_return_type "mdtValue"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-	get_oper operation_ref 2195714 // MeasureConnectionId
-	set_oper operation_ref 2195842 // setMeasureConnectionId
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
 
-      attribute 1375618 "SetupDataList"
-	private type class_ref 1282178 // mdtTtTestNodeSetupData
-	multiplicity "*"
+      operation 2294658 "channelRelaysResistance"
+	public explicit_return_type "mdtValue"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2293890 "routeResistance"
+	public explicit_return_type "mdtValue"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2294146 "busCouplingRelayIdList"
 	stereotype "list"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-	get_oper operation_ref 2195970 // SetupDataList
-	set_oper operation_ref 2196098 // setSetupDataList
-      end
-
-      operation 2194434 "Id"
-	force_body_gen const cpp_inline public return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}const ${type} ${name}${(}${)}${const}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}const ${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  return pvId;
-}
-"
-	cpp_name_spec "${name}"
-	final 
-	java_name_spec "get${Name}"
-	php_final 
-	php_name_spec "get${Name}"
-	
-	python_name_spec "get${Name}"
-	
-	idl_name_spec "get_${name}"
-	get_of_attribute attribute_ref 1374850 // Id
-      end
-
-      operation 2194562 "setId"
-	force_body_gen public explicit_return_type "void"
-	nparams 1
-	  param in name "value" type class_ref 161154 // QVariant
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  pvId = ${p0};
-}
-"
-	cpp_name_spec "set${name}"
-	
-	java_name_spec "set${Name}"
-	
-	php_name_spec "set${Name}"
-	
-	python_name_spec "set${Name}"
-	
-	idl_name_spec "set_${name}"
-	set_of_attribute attribute_ref 1374850 // Id
-      end
-
-      operation 2194690 "TestModelItemId"
-	force_body_gen const cpp_inline public return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}const ${type} ${name}${(}${)}${const}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}const ${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  return pvTestModelItemId;
-}
-"
-	cpp_name_spec "${name}"
-	final 
-	java_name_spec "get${Name}"
-	php_final 
-	php_name_spec "get${Name}"
-	
-	python_name_spec "get${Name}"
-	
-	idl_name_spec "get_${name}"
-	get_of_attribute attribute_ref 1374978 // TestModelItemId
-      end
-
-      operation 2194818 "setTestModelItemId"
-	force_body_gen public explicit_return_type "void"
-	nparams 1
-	  param in name "value" type class_ref 161154 // QVariant
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  pvTestModelItemId = ${p0};
-}
-"
-	cpp_name_spec "set${name}"
-	
-	java_name_spec "set${Name}"
-	
-	php_name_spec "set${Name}"
-	
-	python_name_spec "set${Name}"
-	
-	idl_name_spec "set_${name}"
-	set_of_attribute attribute_ref 1374978 // TestModelItemId
-      end
-
-      operation 2194946 "TestLinkId"
-	force_body_gen const cpp_inline public return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}const ${type} ${name}${(}${)}${const}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}const ${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  return pvTestLinkId;
-}
-"
-	cpp_name_spec "${name}"
-	final 
-	java_name_spec "get${Name}"
-	php_final 
-	php_name_spec "get${Name}"
-	
-	python_name_spec "get${Name}"
-	
-	idl_name_spec "get_${name}"
-	get_of_attribute attribute_ref 1375106 // TestLinkId
-      end
-
-      operation 2195074 "setTestLinkId"
-	force_body_gen public explicit_return_type "void"
-	nparams 1
-	  param in name "value" type class_ref 161154 // QVariant
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  pvTestLinkId = ${p0};
-}
-"
-	cpp_name_spec "set${name}"
-	
-	java_name_spec "set${Name}"
-	
-	php_name_spec "set${Name}"
-	
-	python_name_spec "set${Name}"
-	
-	idl_name_spec "set_${name}"
-	set_of_attribute attribute_ref 1375106 // TestLinkId
-      end
-
-      operation 2195202 "DutConnectionId"
-	force_body_gen const cpp_inline public return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}const ${type} ${name}${(}${)}${const}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}const ${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  return pvDutConnectionId;
-}
-"
-	cpp_name_spec "${name}"
-	final 
-	java_name_spec "get${Name}"
-	php_final 
-	php_name_spec "get${Name}"
-	
-	python_name_spec "get${Name}"
-	
-	idl_name_spec "get_${name}"
-	get_of_attribute attribute_ref 1375234 // DutConnectionId
-      end
-
-      operation 2195330 "setDutConnectionId"
-	force_body_gen public explicit_return_type "void"
-	nparams 1
-	  param in name "value" type class_ref 161154 // QVariant
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  pvDutConnectionId = ${p0};
-}
-"
-	cpp_name_spec "set${name}"
-	
-	java_name_spec "set${Name}"
-	
-	php_name_spec "set${Name}"
-	
-	python_name_spec "set${Name}"
-	
-	idl_name_spec "set_${name}"
-	set_of_attribute attribute_ref 1375234 // DutConnectionId
-      end
-
-      operation 2195458 "TestConnectionId"
-	force_body_gen const cpp_inline public return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}const ${type} ${name}${(}${)}${const}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}const ${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  return pvTestConnectionId;
-}
-"
-	cpp_name_spec "${name}"
-	final 
-	java_name_spec "get${Name}"
-	php_final 
-	php_name_spec "get${Name}"
-	
-	python_name_spec "get${Name}"
-	
-	idl_name_spec "get_${name}"
-	get_of_attribute attribute_ref 1375362 // TestConnectionId
-      end
-
-      operation 2195586 "setTestConnectionId"
-	force_body_gen public explicit_return_type "void"
-	nparams 1
-	  param in name "value" type class_ref 161154 // QVariant
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  pvTestConnectionId = ${p0};
-}
-"
-	cpp_name_spec "set${name}"
-	
-	java_name_spec "set${Name}"
-	
-	php_name_spec "set${Name}"
-	
-	python_name_spec "set${Name}"
-	
-	idl_name_spec "set_${name}"
-	set_of_attribute attribute_ref 1375362 // TestConnectionId
-      end
-
-      operation 2195714 "MeasureConnectionId"
-	force_body_gen const cpp_inline public return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}const ${type} ${name}${(}${)}${const}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}const ${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  return pvMeasureConnectionId;
-}
-"
-	cpp_name_spec "${name}"
-	final 
-	java_name_spec "get${Name}"
-	php_final 
-	php_name_spec "get${Name}"
-	
-	python_name_spec "get${Name}"
-	
-	idl_name_spec "get_${name}"
-	get_of_attribute attribute_ref 1375490 // MeasureConnectionId
-      end
-
-      operation 2195842 "setMeasureConnectionId"
-	force_body_gen public explicit_return_type "void"
-	nparams 1
-	  param in name "value" type class_ref 161154 // QVariant
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  pvMeasureConnectionId = ${p0};
-}
-"
-	cpp_name_spec "set${name}"
-	
-	java_name_spec "set${Name}"
-	
-	php_name_spec "set${Name}"
-	
-	python_name_spec "set${Name}"
-	
-	idl_name_spec "set_${name}"
-	set_of_attribute attribute_ref 1375490 // MeasureConnectionId
-      end
-
-      operation 2195970 "SetupDataList"
-	stereotype "list"
-	force_body_gen const cpp_inline public return_type class_ref 1282178 // mdtTtTestNodeSetupData
+	public return_type class_ref 161154 // QVariant
 	multiplicity "*"
 	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}const ${stereotype}<${type}> & ${name}${(}${)}${const}${volatile}${throw};
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}const ${stereotype}<${type}> & ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
 {
-  return SetupDataList;
-}
+  ${body}}
 "
-	cpp_name_spec "${name}"
-	final 
-	java_name_spec "get${Name}"
-	php_final 
-	php_name_spec "get${Name}"
 	
-	python_name_spec "get${Name}"
 	
-	idl_name_spec "get_${name}"
-	get_of_attribute attribute_ref 1375618 // SetupDataList
+	
+	
       end
 
-      operation 2196098 "setSetupDataList"
+      operation 2294274 "channelRelayIdList"
 	stereotype "list"
-	force_body_gen public explicit_return_type "void"
+	public return_type class_ref 161154 // QVariant
 	multiplicity "*"
-	nparams 1
-	  param in name "value" type class_ref 1282178 // mdtTtTestNodeSetupData
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${stereotype}<${t0}> & ${p0}${)}${const}${volatile}${throw};
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${stereotype}<${t0}> & ${p0}${)}${const}${volatile}${throw}${staticnl}
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
 {
-  SetupDataList = ${p0};
-}
+  ${body}}
 "
-	cpp_name_spec "set${name}"
 	
-	java_name_spec "set${Name}"
 	
-	php_name_spec "set${Name}"
 	
-	python_name_spec "set${Name}"
 	
-	idl_name_spec "set_${name}"
-	set_of_attribute attribute_ref 1375618 // SetupDataList
       end
     end
 

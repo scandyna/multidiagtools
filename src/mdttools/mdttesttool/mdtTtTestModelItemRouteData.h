@@ -22,14 +22,35 @@
 #define MDT_TT_TEST_MODEL_ITEM_ROUTE_DATA_H
 
 #include "mdtTtTestNodeUnitSetupData.h"
+#include "mdtValue.h"
 #include <QVariant>
 #include <QList>
+#include <QSqlRecord>
 
 /*! \brief Container for test model item route data
+ *
+ * Contains data from TestModelItemRoute_tbl.
+ *
+ * A route is way that links a measure connection to a test connection
+ *  in a coupler (a test node).
  */
 class mdtTtTestModelItemRouteData
 {
  public:
+
+  /*! \brief Construct a empty route data
+   */
+  mdtTtTestModelItemRouteData();
+
+  /*! \brief Construct data from a sql record
+   *
+   * Given record must contain all fields from TestModelItemRoute_tbl.
+   *  If record includes TestConnection_Id_FK, testConnectionId will also be set.
+   *  If record includes DutConnection_Id_FK, dutConnectionId will also be set.
+   *
+   * \pre record must contain following fields: Id_PK, TestModelItem_Id_FK, TestLink_Id_FK and MeasureTestNodeUnitConnection_Id_FK.
+   */
+  mdtTtTestModelItemRouteData(const QSqlRecord & record);
 
   /*! \brief Clear
    */
@@ -100,6 +121,37 @@ class mdtTtTestModelItemRouteData
   /*! \brief Get test node unit setup data list
    */
   inline const QList<mdtTtTestNodeUnitSetupData> & setupDataList() const { return pvSetupDataList; }
+
+  /*! \brief Get route resistance
+   *
+   * Route resistance is due to coupler (test node)
+   *  relays. This values are set during a test node calibration.
+   *
+   * Note: this value is only available if added setup data were constructed from TestNodeUnitSetup_view.
+   */
+  mdtValue routeResistance() const;
+
+  /*! \brief Get route resistance for bus coupling relays part
+   *
+   * This function is similar to routeResistance(),
+   *  but returns only sum for bus coupling relays.
+   */
+  mdtValue busCouplingRelaysResistance() const;
+
+  /*! \brief Get route resistance for channel relays part
+   *
+   * This function is similar to routeResistance(),
+   *  but returns only sum for channel relays.
+   */
+  mdtValue channelRelaysResistance() const;
+
+  /*! \brief Get ID list of bus coupling relays that are part of route
+   */
+  QList<QVariant> busCouplingRelaysIdList() const;
+
+  /*! \brief Get ID list of channel relays that are part of route
+   */
+  QList<QVariant> channelRelaysIdList() const;
 
  private:
 

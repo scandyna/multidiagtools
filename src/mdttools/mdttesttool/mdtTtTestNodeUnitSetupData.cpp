@@ -21,6 +21,7 @@
 #include "mdtTtTestNodeUnitSetupData.h"
 
 mdtTtTestNodeUnitSetupData::mdtTtTestNodeUnitSetupData()
+ : mdtSqlRecord()
 {
 }
 

@@ -356,62 +356,6 @@ QList<QVariant> mdtTtLogicalTestCable::getToUnitConnectionIdListLinkedUnitConnec
   return unitConnectionIdList;
 }
 
-/**
-bool mdtTtLogicalTestCable::createTestCable(const QVariant & nodeId, const QList<QVariant> & busAtestConnectionIdList, const QList<QVariant> & busAdutConnectionIdList, const QList<QVariant> & busBtestConnectionIdList, const QList<QVariant> & busBdutConnectionIdList)
-{
-  QString sql;
-  QSqlQuery query(database());
-  QSqlError sqlError;
-  QVariant testCableId;
-
-  if(!beginTransaction()){
-    return false;
-  }
-  // Add test cable
-  if(!addCable("A test cable beta")){
-    rollbackTransaction();
-    return false;
-  }
-  // Get freshly inserted test cable ID
-  sql = "SELECT Id_PK FROM TestCable_tbl";
-  if(!query.exec(sql)){
-    rollbackTransaction();
-    sqlError = query.lastError();
-    pvLastError.setError("Cannot execute query to get test cable ID for test links insertion", mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtLogicalTestCable");
-    pvLastError.commit();
-    return false;
-  }
-  testCableId = query.lastInsertId();
-  if(testCableId.isNull()){
-    rollbackTransaction();
-    QSqlError sqlError = query.lastError();
-    pvLastError.setError("Cannot get test cable ID for test links inertion", mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtLogicalTestCable");
-    pvLastError.commit();
-    return false;
-  }
-  // Add BUSA links
-  if(!addLinks(nodeId, testCableId, busAtestConnectionIdList, busAdutConnectionIdList)){
-    rollbackTransaction();
-    return false;
-  }
-  // Add BUSB links
-  if(!addLinks(nodeId, testCableId, busBtestConnectionIdList, busBdutConnectionIdList)){
-    rollbackTransaction();
-    return false;
-  }
-  // Commit transaction
-  if(!commitTransaction()){
-    return false;
-  }
-
-  return true;
-}
-*/
-
 bool mdtTtLogicalTestCable::cableExistsByKey(const QString& key, bool& ok)
 {
   QString sql;
@@ -459,13 +403,6 @@ bool mdtTtLogicalTestCable::createCable(const mdtSqlRecord& cableData, QList< md
   // Get freashly created logical test cable ID
   ltcId = query.lastInsertId();
   Q_ASSERT(!ltcId.isNull());
-  // Update each link data
-  /**
-  for(i = 0; i < linkDataList.size(); ++i){
-    linkDataList[i].setValue("LogicalTestCable_Id_FK", ltcId);
-    testLinkIdList.append(linkDataList.at(i).value("Id_PK"));
-  }
-  */
   // Add all test link data
   for(i = 0; i < linkDataList.size(); ++i){
     linkData = linkDataList.at(i);
@@ -478,12 +415,6 @@ bool mdtTtLogicalTestCable::createCable(const mdtSqlRecord& cableData, QList< md
     Q_ASSERT(!id.isNull());
     testLinkIdList.append(id);
   }
-  /**
-  if(!addRecordList(linkDataList, "TestLink_tbl", false)){
-    rollbackTransaction();
-    return false;
-  }
-  */
   // Get related test connector unit IDs
   testConnectorUnitIdList = getUnitIdListOfTestConnectorsUsedInTestLinks(testLinkIdList, ok);
   if(!ok){
@@ -848,9 +779,6 @@ QList< QVariant > mdtTtLogicalTestCable::getUnitIdListOfTestConnectorsUsedInTest
     sql += testLinkIdList.at(i).toString() + ",";
   }
   sql += testLinkIdList.at(lastIndex).toString() + ")";
-  
-  qDebug() << "SQL: " << sql;
-  
   // Get ID list
   idList = getDataList<QVariant>(sql, ok);
 

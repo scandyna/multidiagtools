@@ -501,7 +501,6 @@ void mdtClUnitLinkDialog::selectStartConnection()
   mdtSqlSelectionDialog selectionDialog(this);
   mdtSqlTableSelection s;
   QString sql;
-  ///QList<QVariant> result;
   mdtClUnit unit(this, pvDatabase);
   int i;
   int lastIndex;
@@ -522,7 +521,6 @@ void mdtClUnitLinkDialog::selectStartConnection()
     sql += ")";
   }
   // Setup and show dialog
-  ///selectionDialog.setMessage("Please select start connection");
   selectionDialog.setMessage(tr("Please select") + " " + gbStartConnection->title() + " :");
   selectionDialog.setQuery(sql, pvDatabase, false);
   selectionDialog.setColumnHidden("UnitConnection_Id_PK", true);
@@ -543,7 +541,6 @@ void mdtClUnitLinkDialog::selectStartConnection()
   selectionDialog.addColumnToSortOrder("UnitConnectorName", Qt::AscendingOrder);
   selectionDialog.addColumnToSortOrder("UnitContactName", Qt::AscendingOrder);
   selectionDialog.sort();
-  ///selectionDialog.addSelectionResultColumn("UnitConnection_Id_PK");
   selectionDialog.resize(700, 400);
   if(selectionDialog.exec() != QDialog::Accepted){
     return;
@@ -554,13 +551,6 @@ void mdtClUnitLinkDialog::selectStartConnection()
   pvLinkData.setValue("UnitConnectionStart_Id_FK", s.data(0, "UnitConnection_Id_PK"));
   updateStartConnection();
   pvUnitConnectionChanged = true;
-  /**
-  result = selectionDialog.selectionResult();
-  Q_ASSERT(result.size() == 1);
-  // Get connection data and update
-  pvLinkData.setValue("UnitConnectionStart_Id_FK", result.at(0));
-  updateStartConnection();
-  */
 }
 
 void mdtClUnitLinkDialog::selectEndConnection()
@@ -568,7 +558,6 @@ void mdtClUnitLinkDialog::selectEndConnection()
   mdtSqlSelectionDialog selectionDialog(this);
   mdtSqlTableSelection s;
   QString sql;
-  ///QList<QVariant> result;
   mdtClUnit unit(this, pvDatabase);
   int i;
   int lastIndex;
@@ -589,7 +578,6 @@ void mdtClUnitLinkDialog::selectEndConnection()
     sql += ")";
   }
   // Setup and show dialog
-  ///selectionDialog.setMessage(tr("Please select end connection:"));
   selectionDialog.setMessage(tr("Please select") + " " + gbEndConnection->title() + " :");
   selectionDialog.setQuery(sql, pvDatabase, false);
   selectionDialog.setColumnHidden("UnitConnection_Id_PK", true);
@@ -610,7 +598,6 @@ void mdtClUnitLinkDialog::selectEndConnection()
   selectionDialog.addColumnToSortOrder("UnitConnectorName", Qt::AscendingOrder);
   selectionDialog.addColumnToSortOrder("UnitContactName", Qt::AscendingOrder);
   selectionDialog.sort();
-  ///selectionDialog.addSelectionResultColumn("UnitConnection_Id_PK");
   selectionDialog.resize(700, 400);
   if(selectionDialog.exec() != QDialog::Accepted){
     return;
@@ -621,13 +608,6 @@ void mdtClUnitLinkDialog::selectEndConnection()
   pvLinkData.setValue("UnitConnectionEnd_Id_FK", s.data(0, "UnitConnection_Id_PK"));
   updateEndConnection();
   pvUnitConnectionChanged = true;
-  /**
-  result = selectionDialog.selectionResult();
-  Q_ASSERT(result.size() == 1);
-  // Get connection data and update
-  pvLinkData.setValue("UnitConnectionEnd_Id_FK", result.at(0));
-  updateEndConnection();
-  */
 }
 
 void mdtClUnitLinkDialog::selectStartVehicleTypes()

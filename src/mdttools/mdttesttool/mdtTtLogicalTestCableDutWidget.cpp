@@ -47,7 +47,6 @@ mdtTtLogicalTestCableDutWidget::mdtTtLogicalTestCableDutWidget(QWidget* parent, 
 void mdtTtLogicalTestCableDutWidget::setTestCableConnector(const QVariant& connectorId, const QString& name)
 {
   pvTestCableCnId = connectorId;
-  ///pvCnType = Connector;
   pvCnType = mdtTtLogicalTestCableDialog::Connector;
   lbTestCableCnLabel->setText(tr("Test cable connector:"));
   lbTestCableCn->setText(name);
@@ -57,7 +56,6 @@ void mdtTtLogicalTestCableDutWidget::setTestCableConnector(const QVariant& conne
 void mdtTtLogicalTestCableDutWidget::setTestCableConnection(const QVariant& connectionId, const QString& name)
 {
   pvTestCableCnId = connectionId;
-  ///pvCnType = Connection;
   pvCnType = mdtTtLogicalTestCableDialog::Connection;
   lbTestCableCnLabel->setText(tr("Test cable connection:"));
   lbTestCableCn->setText(name);
@@ -208,51 +206,6 @@ void mdtTtLogicalTestCableDutWidget::selectDutConnector()
   }
   pvCnId = dialog.endUnitConnectorId();
   lbCnName->setText(dialog.endUnitConnectorName());
-  /**
-  mdtClLink lnk(0, pvDatabase);
-  mdtSqlSelectionDialog selectionDialog(this);
-  mdtSqlTableSelection s;
-  mdtClConnectableCriteria c;
-  QString sql;
-  QStringList fields;
-  bool ok;
-
-  // Setup connectability check criteria
-  c.checkContactCount = cbCheckContactCount->isChecked();
-  c.checkContactType = cbCheckContactType->isChecked();
-  c.checkForm = cbCheckForm->isChecked();
-  c.checkGenderAreOpposite = cbCheckGenderAreOpposite->isChecked();
-  c.checkInsert = cbCheckInsert->isChecked();
-  c.checkInsertRotation = cbCheckInsertRotation->isChecked();
-  // Get SQL query
-  sql = lnk.sqlForConnectableUnitConnectorsSelection(pvTestCableCnId, pvUnitId, c, ok);
-  if(!ok){
-    displayError(lnk.lastError());
-    return;
-  }
-  // Setup and show dialog
-  selectionDialog.setMessage(tr("Select DUT connector:"));
-  selectionDialog.setQuery(sql, pvDatabase, false);
-  selectionDialog.setColumnHidden("Id_PK", true);
-  selectionDialog.setColumnHidden("Unit_Id_FK", true);
-  selectionDialog.setColumnHidden("Connector_Id_FK", true);
-  selectionDialog.setColumnHidden("ArticleConnector_Id_FK", true);
-  selectionDialog.setColumnHidden("ArticleConnectorName", true);
-  selectionDialog.setColumnHidden("Id_PK", true);
-  selectionDialog.setHeaderData("UnitConnectorName", tr("Connector"));
-  if(selectionDialog.exec() != QDialog::Accepted){
-    return;
-  }
-  // Store selected DUT connector ID
-  fields << "Id_PK" << "UnitConnectorName";
-  s = selectionDialog.selection(fields);
-  if(s.isEmpty()){
-    return;
-  }
-  Q_ASSERT(s.rowCount() == 1);
-  pvCnId = s.data(0, "Id_PK");
-  lbCn->setText(s.data(0, "UnitConnectorName").toString());
-  */
 }
 
 void mdtTtLogicalTestCableDutWidget::selectDutConnection()

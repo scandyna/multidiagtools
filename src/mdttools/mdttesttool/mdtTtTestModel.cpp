@@ -513,12 +513,14 @@ bool mdtTtTestModel::addRoutesToItemData(const QVariant & dutConnectionId1, cons
         pvLastError = tn.lastError();
         return false;
       }
-      if(noShort){
-        // Ok, we have it - Add route data to test model item data
-        itemData.addRouteData(routeData1);
-        itemData.addRouteData(routeData2);
-        return true;
+      if(!noShort){
+        pvLastError = tn.lastError();
+        return false;
       }
+      // Ok, we have it - Add route data to test model item data
+      itemData.addRouteData(routeData1);
+      itemData.addRouteData(routeData2);
+      return true;
     }
   }
   // We did not found 2 routes
@@ -534,7 +536,7 @@ bool mdtTtTestModel::addRoutesToItemData(const QVariant & dutConnectionId1, cons
   msg = tr("A problem was detected in cable '") + testCableIdStr + tr("'.");
   pvLastError.setError(msg, mdtError::Error);
   // Build error informative text
-  msg = tr("Could not find routes to for checks between DUT connection '") + dutConnectionName1 + tr("' and DUT connection '") + dutConnectionName2 + tr("'");
+  msg = tr("Could not find routes for checks between DUT connection '") + dutConnectionName1 + tr("' and DUT connection '") + dutConnectionName2 + tr("'");
   pvLastError.setInformativeText(msg);
   MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestModel");
   pvLastError.commit();
@@ -734,7 +736,7 @@ QString mdtTtTestModel::getTestCableIdString(const QVariant & id)
   QList<QSqlRecord> dataList;
   QString str;
 
-  sql = "SELECT Identification, Key FROM TestCable_tbl WHERE Id_PK = " + id.toString();
+  sql = "SELECT Key FROM LogicalTestCable_tbl WHERE Id_PK = " + id.toString();
   dataList = getDataList<QSqlRecord>(sql, ok);
   if(!ok){
     return "??";
@@ -744,8 +746,9 @@ QString mdtTtTestModel::getTestCableIdString(const QVariant & id)
   }
   Q_ASSERT(dataList.size() == 1);
   // Build string
+  ///str = dataList.at(0).value(0).toString();
+  ///str += "Logical test cable key: " + dataList.at(0).value(0).toString();
   str = dataList.at(0).value(0).toString();
-  str += " (key: " + dataList.at(0).value(1).toString() + ")";
 
   return str;
 }
@@ -761,7 +764,7 @@ QVariant mdtTtTestModel::getDesignationEN(const QVariant & fromTestLinkId, const
   bool ok;
 
   // Get first link part
-  sql = "SELECT TestLinkIdentification, DutUnitSchemaPosition, DutUnitAlias, DutConnectorName, DutContactName ";
+  sql = "SELECT TestCableLinkIdentification, DutSchemaPosition, DutAlias, DutConnectorName, DutContactName ";
   sql += "FROM TestLink_view";
   sql += " WHERE Id_PK = " + fromTestLinkId.toString();
   dataList = getDataList<QSqlRecord>(sql, ok);
@@ -774,7 +777,7 @@ QVariant mdtTtTestModel::getDesignationEN(const QVariant & fromTestLinkId, const
   Q_ASSERT(dataList.size() == 1);
   dataA = dataList.at(0);
   // Get second link part
-  sql = "SELECT TestLinkIdentification, DutUnitSchemaPosition, DutUnitAlias, DutConnectorName, DutContactName ";
+  sql = "SELECT TestCableLinkIdentification, DutSchemaPosition, DutAlias, DutConnectorName, DutContactName ";
   sql += "FROM TestLink_view";
   sql += " WHERE Id_PK = " + toTestLinkId.toString();
   dataList = getDataList<QSqlRecord>(sql, ok);
@@ -787,10 +790,10 @@ QVariant mdtTtTestModel::getDesignationEN(const QVariant & fromTestLinkId, const
   Q_ASSERT(dataList.size() == 1);
   dataB = dataList.at(0);
   // Build designation
-  designation = dataA.value("TestLinkIdentification").toString() + "-" + dataB.value("TestLinkIdentification").toString();
+  designation = dataA.value("TestCableLinkIdentification").toString() + "-" + dataB.value("TestCableLinkIdentification").toString();
   designation += " ( ";
-  designation += dataA.value("DutUnitSchemaPosition").toString();
-  str = dataA.value("DutUnitAlias").toString().trimmed();
+  designation += dataA.value("DutSchemaPosition").toString();
+  str = dataA.value("DutAlias").toString().trimmed();
   if(!str.isEmpty()){
     designation += "(" + str + ") ";
   }
@@ -802,8 +805,8 @@ QVariant mdtTtTestModel::getDesignationEN(const QVariant & fromTestLinkId, const
   designation += ";";
   designation += dataA.value("DutContactName").toString().trimmed();
   designation += " - ";
-  designation += dataB.value("DutUnitSchemaPosition").toString();
-  str = dataB.value("DutUnitAlias").toString().trimmed();
+  designation += dataB.value("DutSchemaPosition").toString();
+  str = dataB.value("DutAlias").toString().trimmed();
   if(!str.isEmpty()){
     designation += "(" + str + ") ";
   }

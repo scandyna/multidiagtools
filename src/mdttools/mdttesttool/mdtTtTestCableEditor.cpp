@@ -668,47 +668,6 @@ void mdtTtTestCableEditor::addLogicalTestCable()
   }
   // Update logical test cable table
   select("LogicalTestCable_tbl");
-
-//   mdtTtLogicalTestCableEditor *ltce;
-//   mdtSqlDialog dialog;
-//   QVariant unitId;
-// 
-//   unitId = currentUnitId();
-//   if(unitId.isNull()){
-//     return;
-//   }
-//   // Create editor and dialog
-//   ltce = new mdtTtLogicalTestCableEditor(0, database());
-//   if(!ltce->setupTables()){
-//     pvLastError = ltce->lastError();
-//     displayLastError();
-//     delete ltce;
-//     return;
-//   }
-//   dialog.setSqlForm(ltce);
-//   dialog.resize(900, 700);
-//   dialog.enableEdition();
-//   /**
-//   if(!ltce->setMainTableFilter("Id_PK=-1")){
-//     pvLastError = ltce->lastError();
-//     displayLastError();
-//     return;
-//   }
-//   */
-//   if(!ltce->select()){
-//     pvLastError = ltce->lastError();
-//     displayLastError();
-//     return;
-//   }
-//   ltce->insert();
-//   if(!ltce->setCurrentData("LogicalTestCable_tbl", "TestCable_Id_FK", unitId)){
-//     pvLastError = ltce->lastError();
-//     displayLastError();
-//     return;
-//   }
-//   dialog.exec();
-  // Update logical test cable table
-///  select("LogicalTestCable_tbl");
 }
 
 void mdtTtTestCableEditor::editLogicalTestCable()

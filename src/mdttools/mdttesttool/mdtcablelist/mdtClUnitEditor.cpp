@@ -967,7 +967,6 @@ void mdtClUnitEditor::removeLinks()
   mdtSqlTableWidget *widget;
   mdtClLink lnk(0, database());
   QMessageBox msgBox;
-  ///QList<QModelIndexList> indexes;
   mdtSqlTableSelection s;
   QSqlError sqlError;
   QStringList fields;
@@ -980,12 +979,6 @@ void mdtClUnitEditor::removeLinks()
   if(s.isEmpty()){
     return;
   }
-  /**
-  indexes = widget->indexListOfSelectedRowsByRowsList(fields);
-  if(indexes.size() < 1){
-    return;
-  }
-  */
   // We ask confirmation to the user
   msgBox.setText(tr("You are about to remove links attached to current unit."));
   msgBox.setInformativeText(tr("Do you want to continue ?"));
@@ -1070,10 +1063,6 @@ void mdtClUnitEditor::connectConnectors()
     return;
   }
   // Select end unit
-  /**
-  sql = "SELECT * FROM Unit_view WHERE Unit_Id_PK <> " + startUnitId.toString();
-  sql += " AND VehicleType_Id_PK = " + endVehicleTypeId.toString();
-  */
   sql = "SELECT * FROM Unit_view ";
   sql += " WHERE VehicleType_Id_PK = " + endVehicleTypeId.toString();
   endUnitId = selectUnit(tr("Select end unit:"), sql);
@@ -1088,15 +1077,6 @@ void mdtClUnitEditor::connectConnectors()
   }
   endConnectorId = connectorSelectionDialog.endUnitConnectorId();
   connectableCriteria = connectorSelectionDialog.getConnectableCriteria();
-  /**
-  sql = lnk.sqlForConnectableUnitConnectorsSelection(startConnectorId, endUnitId, connectableCriteria , ok);
-  if(!ok){
-    pvLastError = lnk.lastError();
-    displayLastError();
-    return;
-  }
-  endConnectorId = selectUnitConnector(tr("Select end connector:"), sql);
-  */
   if(endConnectorId.isNull()){
     return;
   }
