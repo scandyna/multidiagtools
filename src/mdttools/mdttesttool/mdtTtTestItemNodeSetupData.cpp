@@ -21,7 +21,7 @@
 #include "mdtTtTestItemNodeSetupData.h"
 #include <QVector>
 
-//#include <QDebug>
+#include <QDebug>
 
 mdtTtTestItemNodeSetupData::mdtTtTestItemNodeSetupData()
 {
@@ -29,6 +29,7 @@ mdtTtTestItemNodeSetupData::mdtTtTestItemNodeSetupData()
   pvStepIterator = pvNodeSetupDataMap.begin();
 }
 
+/// \todo Obselete !
 void mdtTtTestItemNodeSetupData::addNodeSetupData(const mdtTtTestNodeSetupData & data)
 {
   QList<mdtTtTestNodeUnitSetupData> unitSetupDataList;
@@ -36,15 +37,19 @@ void mdtTtTestItemNodeSetupData::addNodeSetupData(const mdtTtTestNodeSetupData &
   QVector<int> steps;
   int i, k;
 
+  qDebug() << "TISD - adding node setup data - unit setup list items: " << data.unitSetupList().size() << " ...";
+  
   // Build list of setps contained in node unit setup data list
   unitSetupDataList = data.unitSetupList();
   for(i = 0; i < unitSetupDataList.size(); ++i){
+    qDebug() << "TISD - getting step number for data: " << unitSetupDataList.at(i);
     step = unitSetupDataList.at(i).value("StepNumber").toInt();
     if(!steps.contains(step)){
       steps.append(step);
     }
   }
   // For each step, build a test node setup and add unit setup that are part of the step
+  qDebug() << "TISD - have " << steps.size() << " steps ...";
   for(i = 0; i < steps.size(); ++i){
     // Setup a new node setup
     mdtTtTestNodeSetupData nodeSetupData;
@@ -61,6 +66,17 @@ void mdtTtTestItemNodeSetupData::addNodeSetupData(const mdtTtTestNodeSetupData &
   }
   pvStepIterator = pvNodeSetupDataMap.begin();
 }
+
+void mdtTtTestItemNodeSetupData::addNodeSetupData(int stepNumber, const QList< mdtTtTestNodeSetupData >& nodeSetupDataList)
+{
+  int i;
+
+  for(i = 0; i < nodeSetupDataList.size(); ++i){
+    pvNodeSetupDataMap.insert(stepNumber, nodeSetupDataList.at(i));
+  }
+  pvStepIterator = pvNodeSetupDataMap.begin();
+}
+
 
 /**
 void mdtTtTestItemNodeSetupData::addNodeUnitSetupData(const mdtTtTestNodeUnitSetupData & data)

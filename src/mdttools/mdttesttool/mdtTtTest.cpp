@@ -22,6 +22,7 @@
 #include "mdtTtTestModel.h"
 #include "mdtSqlRecord.h"
 #include "mdtTtTestNodeSetupData.h"
+#include "mdtTtTestModelItemRouteData.h"
 #include "mdtSqlRelationInfo.h"
 #include <QSqlTableModel>
 #include <QModelIndex>
@@ -369,53 +370,143 @@ void mdtTtTest::resetTestItemCursor()
 //   */
 // }
 
-mdtTtTestItemNodeSetupData mdtTtTest::getSetupData(const QVariant & testModelItemId, bool & ok)
-{
-  QString sql;
-  QList<QSqlRecord> dataList;
-  mdtTtTestItemNodeSetupData tiSetupData;
-  mdtTtTestNodeUnitSetupData tnuSetupData;
-  QVector<int> nodeIdList;
-  int i, k;
-  int id;
+// mdtTtTestItemNodeSetupData mdtTtTest::getSetupData(const QVariant & testModelItemId, bool & ok)
+// {
+//   QString sql;
+//   QList<QSqlRecord> dataList;
+//   mdtTtTestItemNodeSetupData tiSetupData;
+//   mdtTtTestNodeUnitSetupData tnuSetupData;
+//   QVector<int> nodeIdList;
+//   int i, k;
+//   int id;
+// 
+//   // Get data from db
+//   ///sql = "SELECT * FROM TestItemNodeUnitSetup_view WHERE Id_PK = " + testItemId.toString();
+//   sql = "SELECT * FROM TestItemNodeUnitSetup_view WHERE TestModelItem_Id_FK = " + testModelItemId.toString();
+//   ///dataList = getData(sql, &ok);
+//   dataList = getDataList<QSqlRecord>(sql, ok);
+//   if(!ok){
+//     return tiSetupData;
+//   }
+//   // Build a list of nodes
+//   for(i = 0; i < dataList.size(); ++i){
+//     Q_ASSERT(!dataList.at(i).value("TestNode_Id_FK").isNull());
+//     id = dataList.at(i).value("TestNode_Id_FK").toInt();
+//     if(!nodeIdList.contains(id)){
+//       nodeIdList.append(id);
+//     }
+//   }
+//   ///qDebug() << "Nodes: " << nodeIdList;
+//   // For each test node, build test node setup data
+//   for(i = 0; i < nodeIdList.size(); ++i){
+//     qDebug() << "Buil setup data for node " << nodeIdList.at(i) << " ...";
+//     mdtTtTestNodeSetupData tnSetupData;
+//     // Add route data
+//     /**
+//     if(!addRouteDataToTestNodeSetupData(tnSetupData, testModelItemId, nodeIdList.at(i))){
+//       ok = false;
+//       return tiSetupData;
+//     }
+//     */
+//     // Add other setup data
+//     /**
+//     if(!addNodeUnitSetupDataToTestNodeSetupData(tnSetupData, testModelItemId, nodeIdList.at(i))){
+//       ok = false;
+//       return tiSetupData;
+//     }
+//     */
+//     // Set node identification
+//     /// \todo Can find better way...
+//     for(k = 0; k < dataList.size(); ++k){
+//       id = dataList.at(k).value("TestNode_Id_FK").toInt();
+//       if(nodeIdList.at(i) == id){
+//         ///qDebug() << "Updating node identification for node " << id << ": " << dataList.at(k).value("NodeIdentification");
+//         if(tnSetupData.nodeIdentification().isEmpty()){
+//           tnSetupData.setNodeIdentification(dataList.at(k).value("NodeIdentification").toString());
+//         }
+//       }
+//     }
+// 
+//     /**
+//     // Add all unit setup data that are part of current node
+//     for(k = 0; k < dataList.size(); ++k){
+//       id = dataList.at(k).value("TestNode_Id_FK").toInt();
+//       if(nodeIdList.at(i) == id){
+//         tnuSetupData = dataList.at(k);
+//         if(tnSetupData.nodeIdentification().isEmpty()){
+//           tnSetupData.setNodeIdentification(tnuSetupData.value("NodeIdentification").toString());
+//         }
+//         tnSetupData.addUnitSetup(tnuSetupData);
+//       }
+//     }
+//     */
+//     // Add node setup data to test item setup data
+//     tiSetupData.addNodeSetupData(tnSetupData);
+//     ///qDebug() << "Data built for test node " << tnSetupData.nodeIdentification();
+//   }
+// 
+//   return tiSetupData;
+// }
 
-  // Get data from db
-  ///sql = "SELECT * FROM TestItemNodeUnitSetup_view WHERE Id_PK = " + testItemId.toString();
-  sql = "SELECT * FROM TestItemNodeUnitSetup_view WHERE TestModelItem_Id_FK = " + testModelItemId.toString();
-  ///dataList = getData(sql, &ok);
-  dataList = getDataList<QSqlRecord>(sql, ok);
+mdtTtTestItemNodeSetupData mdtTtTest::getSetupData(const QVariant& testModelItemId, bool& ok)
+{
+  QList<QVariant> stepNumberList;
+  QVariant stepNumber;
+  QList<mdtTtTestNodeSetupData> nodeSetupDataList;
+  mdtTtTestItemNodeSetupData tiSetupData;
+  int i;
+
+  // Get setps for given test model item
+  stepNumberList = getStepNumberList(testModelItemId, ok);
   if(!ok){
     return tiSetupData;
   }
-  // Build a list of nodes
-  for(i = 0; i < dataList.size(); ++i){
-    Q_ASSERT(!dataList.at(i).value("TestNode_Id_FK").isNull());
-    id = dataList.at(i).value("TestNode_Id_FK").toInt();
-    if(!nodeIdList.contains(id)){
-      nodeIdList.append(id);
+  // For each step, add related test node setups
+  for(i = 0; i < stepNumberList.size(); ++i){
+    stepNumber = stepNumberList.at(i);
+    nodeSetupDataList = getTestNodeSetupDataList(testModelItemId, stepNumber, ok);
+    if(!ok){
+      return tiSetupData;
     }
-  }
-  ///qDebug() << "Nodes: " << nodeIdList;
-  // For each test node, build test node setup data
-  for(i = 0; i < nodeIdList.size(); ++i){
-    mdtTtTestNodeSetupData tnSetupData;
-    // Add all unit setup data that are part of current node
-    for(k = 0; k < dataList.size(); ++k){
-      id = dataList.at(k).value("TestNode_Id_FK").toInt();
-      if(nodeIdList.at(i) == id){
-        tnuSetupData = dataList.at(k);
-        if(tnSetupData.nodeIdentification().isEmpty()){
-          tnSetupData.setNodeIdentification(tnuSetupData.value("NodeIdentification").toString());
-        }
-        tnSetupData.addUnitSetup(tnuSetupData);
-      }
-    }
-    // Add node setup data to test item setup data
-    tiSetupData.addNodeSetupData(tnSetupData);
+    tiSetupData.addNodeSetupData(stepNumber.toInt(), nodeSetupDataList);
   }
 
   return tiSetupData;
 }
+
+
+// bool mdtTtTest::addRouteDataToTestNodeSetupData(mdtTtTestNodeSetupData & tnSetupData, const QVariant& testModelItemId, const QVariant& testNodeId)
+// {
+//   QString sql;
+//   QList<QSqlRecord> routeDataList;
+//   bool ok;
+//   int i;
+// 
+//   ///qDebug() << "-> Building routes for model item " << testModelItemId << " and node " << testNodeId << " ...";
+//   
+//   // Get route data
+//   sql = "SELECT * FROM TestModelItemRoute_view";
+//   sql += " WHERE TestModelItem_Id_FK = " + testModelItemId.toString();
+//   sql += " AND TestNode_Id_FK = " + testNodeId.toString();
+//   routeDataList = getDataList<QSqlRecord>(sql, ok);
+//   if(!ok){
+//     return false;
+//   }
+//   
+//   ///qDebug() << "-> data list: " << routeDataList;
+//   
+//   // Add node unit setups for each route
+//   for(i = 0; i < routeDataList.size(); ++i){
+//     mdtTtTestModelItemRouteData routeData(routeDataList.at(i));
+//     if(!addNodeUnitSetupDataToRouteData(routeData)){
+//       return false;
+//     }
+//     tnSetupData.addRouteData(routeData);
+//   }
+// 
+//   return true;
+// }
+
 
 /**
 QVariant mdtTtTest::valueToDouble(const mdtValue & value)
@@ -474,6 +565,145 @@ bool mdtTtTest::setMeasuredValue(const QVariant & testItemId, const mdtValue & v
 }
 */
 
+QList<QVariant> mdtTtTest::getStepNumberList(const QVariant& testModelItemId, bool & ok)
+{
+  QString sql;
+
+  sql = "SELECT DISTINCT StepNumber FROM TestNodeUnitSetup_tbl";
+  sql += " WHERE TestModelItem_Id_FK = " + testModelItemId.toString();
+
+  return getDataList<QVariant>(sql, ok);
+}
+
+QList<mdtTtTestNodeSetupData> mdtTtTest::getTestNodeSetupDataList(const QVariant& testModelItemId, const QVariant& stepNumber, bool& ok)
+{
+  QString sql;
+  QList<QSqlRecord> dataList;
+  QSqlRecord data;
+  QList<mdtTtTestNodeSetupData> nodeSetupDataList;
+  int i;
+
+  sql = "SELECT DISTINCT TN.* FROM TestNode_tbl TN";
+  sql += " JOIN TestNodeUnit_tbl TNU ON TNU.TestNode_Id_FK = TN.VehicleType_Id_FK_PK";
+  sql += " JOIN TestNodeUnitSetup_tbl TNUS ON TNUS.TestNodeUnit_Id_FK = TNU.Unit_Id_FK_PK";
+  sql += " WHERE TNUS.TestModelItem_Id_FK = " + testModelItemId.toString();
+  if(!stepNumber.isNull()){
+    sql += " AND TNUS.StepNumber = " + stepNumber.toString();
+  }
+  dataList = getDataList<QSqlRecord>(sql, ok);
+  if(!ok){
+    return nodeSetupDataList;
+  }
+  for(i = 0; i < dataList.size(); ++i){
+    data = dataList.at(i);
+    mdtTtTestNodeSetupData nodeSetupData;
+    nodeSetupData.setId(data.value("VehicleType_Id_FK_PK"));
+    nodeSetupData.setDeviceIdentification(data.value("DeviceIdentification"));
+    nodeSetupData.setNodeIdentification(data.value("NodeIdentification").toString());
+    // Add route data
+    if(!addRouteDataToTestNodeSetupData(nodeSetupData, testModelItemId, stepNumber, nodeSetupData.id())){
+      ok = false;
+      return nodeSetupDataList;
+    }
+    // Add other setup data
+    if(!addNodeUnitSetupDataToTestNodeSetupData(nodeSetupData, testModelItemId, stepNumber, nodeSetupData.id())){
+      ok = false;
+      return nodeSetupDataList;
+    }
+    // Add node setup data to list
+    nodeSetupDataList.append(nodeSetupData);
+  }
+
+  return nodeSetupDataList;
+}
+
+bool mdtTtTest::addRouteDataToTestNodeSetupData(mdtTtTestNodeSetupData & tnSetupData, const QVariant& testModelItemId, const QVariant& stepNumber, const QVariant& testNodeId)
+{
+  QString sql;
+  QList<QSqlRecord> dataList;
+  bool ok;
+  int i;
+
+  sql = "SELECT DISTINCT TMIR.*";
+  sql += " FROM TestModelItemRoute_tbl TMIR";
+  sql += " JOIN TestNodeUnitSetup_tbl TNUS ON TNUS.TestModelItemRoute_Id_FK = TMIR.Id_PK";
+  sql += " JOIN TestNodeUnit_tbl TNU ON TNU.Unit_Id_FK_PK = TNUS.TestNodeUnit_Id_FK";
+  sql += " WHERE TMIR.TestModelItem_Id_FK = " + testModelItemId.toString();
+  if(!stepNumber.isNull()){
+    sql += " AND TNUS.StepNumber = " + stepNumber.toString();
+  }
+  sql += " AND TNU.TestNode_Id_FK = " + testNodeId.toString();
+  // Get data and build route data for each record.
+  //  Note: we not include test connectiona and DUT connection
+  dataList = getDataList<QSqlRecord>(sql, ok);
+  if(!ok){
+    return false;
+  }
+  for(i = 0; i < dataList.size(); ++i){
+    mdtTtTestModelItemRouteData routeData(dataList.at(i));
+    if(!addNodeUnitSetupDataToRouteData(routeData)){
+      return false;
+    }
+    tnSetupData.addRouteData(routeData);
+  }
+
+  return true;
+}
+
+bool mdtTtTest::addNodeUnitSetupDataToRouteData(mdtTtTestModelItemRouteData & routeData)
+{
+  Q_ASSERT(!routeData.id().isNull());
+
+  QString sql;
+  QList<QSqlRecord> dataList;
+  bool ok;
+  int i;
+
+  sql = "SELECT TNUS.* , TNU.IoPosition, TNU.CalibrationOffset, TNU.Type_Code_FK, U.SchemaPosition";
+  sql += " FROM TestNodeUnitSetup_tbl TNUS";
+  sql += " JOIN TestNodeUnit_tbl TNU ON TNU.Unit_Id_FK_PK = TNUS.TestNodeUnit_Id_FK";
+  sql += " JOIN Unit_tbl U ON U.Id_PK = TNU.Unit_Id_FK_PK";
+  sql += " WHERE TestModelItemRoute_Id_FK = " + routeData.id().toString();
+  dataList = getDataList<QSqlRecord>(sql, ok);
+  if(!ok){
+    return false;
+  }
+  for(i = 0; i < dataList.size(); ++i){
+    mdtTtTestNodeUnitSetupData tnuSetupData(dataList.at(i));
+    routeData.addSetupData(tnuSetupData);
+  }
+
+  return true;
+}
+
+bool mdtTtTest::addNodeUnitSetupDataToTestNodeSetupData(mdtTtTestNodeSetupData & tnSetupData, const QVariant& testModelItemId, const QVariant & stepNumber, const QVariant& testNodeId)
+{
+  QString sql;
+  QList<QSqlRecord> dataList;
+  bool ok;
+  int i;
+
+  sql = "SELECT TNUS.* , TNU.IoPosition, TNU.CalibrationOffset, TNU.Type_Code_FK, U.SchemaPosition";
+  sql += " FROM TestNodeUnitSetup_tbl TNUS";
+  sql += " JOIN TestNodeUnit_tbl TNU ON TNU.Unit_Id_FK_PK = TNUS.TestNodeUnit_Id_FK";
+  sql += " JOIN Unit_tbl U ON U.Id_PK = TNU.Unit_Id_FK_PK";
+  sql += " WHERE TNUS.TestModelItemRoute_Id_FK IS NULL";
+  sql += " AND TNUS.TestModelItem_Id_FK = " + testModelItemId.toString();
+  if(!stepNumber.isNull()){
+    sql += " AND TNUS.StepNumber = " + stepNumber.toString();
+  }
+  sql += " AND TNU.TestNode_Id_FK = " + testNodeId.toString();
+  dataList = getDataList<QSqlRecord>(sql, ok);
+  if(!ok){
+    return false;
+  }
+  for(i = 0; i < dataList.size(); ++i){
+    mdtTtTestNodeUnitSetupData tnuSetupData(dataList.at(i));
+    tnSetupData.addUnitSetup(tnuSetupData);
+  }
+
+  return true;
+}
 
 /**
 void mdtTtTest::setCurrentTestIndexRow(int row)

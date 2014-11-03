@@ -2,11 +2,11 @@ format 207
 
 classcanvas 128130 class_ref 1060738 // mdtTtTestNodeUnitSetupData
   classdiagramsettings member_max_width 0 end
-  xyz 605.8 414.4 2000
+  xyz 638.8 456.8 2000
 end
 classcanvas 128258 class_ref 1067266 // mdtSqlRecord
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 940.6 342 2000
+  xyz 940 342.2 2000
 end
 classcanvas 128514 class_ref 1282178 // mdtTtTestNodeSetupData
   classdiagramsettings member_max_width 0 end
@@ -14,11 +14,11 @@ classcanvas 128514 class_ref 1282178 // mdtTtTestNodeSetupData
 end
 classcanvas 129026 class_ref 1308930 // mdtTtTestItemNodeSetupData
   classdiagramsettings member_max_width 0 end
-  xyz 22.2 572 2000
+  xyz 32.8 565.8 2000
 end
 classcanvas 129282 class_ref 1368834 // mdtTtTestModelItemRouteData
   classdiagramsettings member_max_width 0 end
-  xyz 602.9 113 2006
+  xyz 602.3 112 2006
 end
 relationcanvas 128386 relation_ref 1577730 // <generalisation>
   from ref 128130 z 2001 to ref 128258
@@ -28,15 +28,15 @@ end
 relationcanvas 128642 relation_ref 1577858 // <directional composition>
   geometry VH
   decenter_begin 514
-  from ref 128514 z 2001 to point 238 503
-  line 128898 z 2001 stereotype "<<list>>" xyz 316 481 3000 to ref 128130
-  role_a_pos 491 481 3000 no_role_b
-  multiplicity_a_pos 588 515 3000 no_multiplicity_b
+  from ref 128514 z 2001 to point 238 534
+  line 128898 z 2001 stereotype "<<list>>" xyz 332 516 3000 to ref 128130
+  role_a_pos 524 522 3000 no_role_b
+  multiplicity_a_pos 621 556 3000 no_multiplicity_b
 end
 relationcanvas 129154 relation_ref 1604994 // <directional composition>
   decenter_begin 290
   decenter_end 265
-  from ref 129026 z 2001 stereotype "<<multimap>>" xyz 96.5 455 3000 to ref 128514
+  from ref 129026 z 2001 stereotype "<<multimap>>" xyz 101 451 3000 to ref 128514
   role_a_pos 157 343 3000 no_role_b
   multiplicity_a_pos 128 343 3000 no_multiplicity_b
 end
@@ -47,13 +47,13 @@ relationcanvas 129410 relation_ref 1768322 // <generalisation>
 end
 relationcanvas 129538 relation_ref 1774850 // <directional composition>
   decenter_end 458
-  from ref 129282 z 2007 stereotype "<<list>>" xyz 750 365.5 3000 to ref 128130
-  role_a_pos 779 395 3000 no_role_b
-  multiplicity_a_pos 734 395 3000 no_multiplicity_b
+  from ref 129282 z 2007 stereotype "<<list>>" xyz 775 396 3000 to ref 128130
+  role_a_pos 810 436 3000 no_role_b
+  multiplicity_a_pos 765 436 3000 no_multiplicity_b
 end
 relationcanvas 129666 relation_ref 1774978 // <directional composition>
-  from ref 128514 z 2007 stereotype "<<list>>" xyz 491 222.5 3000 to ref 129282
-  role_a_pos 511 195 3000 no_role_b
-  multiplicity_a_pos 569 228 3000 no_multiplicity_b
+  from ref 128514 z 2007 stereotype "<<list>>" xyz 491 227.5 3000 to ref 129282
+  role_a_pos 511 202 3000 no_role_b
+  multiplicity_a_pos 569 236 3000 no_multiplicity_b
 end
 end

@@ -46,3 +46,32 @@ void mdtTtTestNodeSetupData::addUnitSetup(const mdtTtTestNodeUnitSetupData& data
 {
   pvUnitSetupData.append(data);
 }
+
+void mdtTtTestNodeSetupData::addUnitSetupList(const QList< mdtTtTestNodeUnitSetupData >& datalist)
+{
+  pvUnitSetupData.append(datalist);
+}
+
+void mdtTtTestNodeSetupData::addRouteData(const mdtTtTestModelItemRouteData& data)
+{
+  pvRouteDataList.append(data);
+  pvUnitSetupData.append(data.setupDataList());
+}
+
+void mdtTtTestNodeSetupData::addRouteDataList(const QList< mdtTtTestModelItemRouteData >& dataList)
+{
+  int i;
+
+  for(i = 0; i < dataList.size(); ++i){
+    addRouteData(dataList.at(i));
+  }
+}
+
+QList< mdtTtTestModelItemRouteData > mdtTtTestNodeSetupData::routeDataListForStepNumber(int stepNumber) const
+{
+  int i, k;
+
+  for(i = 0; i < pvRouteDataList.size(); ++i){
+    
+  }
+}

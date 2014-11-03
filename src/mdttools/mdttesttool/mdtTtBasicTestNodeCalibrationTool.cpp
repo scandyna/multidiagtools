@@ -25,8 +25,9 @@
 #include "mdtValue.h"
 #include "mdtTtTest.h"
 #include "mdtTtTestItemNodeSetupData.h"
-#include <mdtTtTestNodeSetupData.h>
-#include <mdtTtTestNodeUnitSetupData.h>
+#include "mdtTtTestNodeSetupData.h"
+#include "mdtTtTestNodeUnitSetupData.h"
+#include "mdtTtTestModelItemRouteData.h"
 #include <QString>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -679,7 +680,7 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateChannelRelays()
   mdtValue R;
   QVariant val;
   bool ok;
-  int i;
+  int i, k;
   QVariant relay1Id, relay2Id;
 
   // Get instruments
@@ -712,7 +713,7 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateChannelRelays()
     itemRecord = query.record();
     testModelItemId = itemRecord.value("Id_PK");
     Q_ASSERT(!testModelItemId.isNull());
-    ///qDebug() << "Running TMI " << itemRecord << " ...";
+    qDebug() << "Running TMI " << itemRecord << " ...";
     // Set all relays OFF
     if(coupler->setDigitalOutputsValue(false, false, false) < 0){
       pvLastError = coupler->lastError();
@@ -726,13 +727,32 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateChannelRelays()
     }
     while(itemSetupData.hasMoreStep()){
       nodeSetupData = itemSetupData.getNextStep();
-      ///qDebug() << "++ setup for ID : " << nodeSetupData.nodeIdentification();
+      qDebug() << "++ setup for ID : " << nodeSetupData.nodeIdentification();
       if(nodeSetupData.nodeIdentification() == "0"){
+        qDebug() << "-> Routes: " << nodeSetupData.routeDataList().size();
+        ///qDebug() << "-> Setup data: " << nodeSetupData.unitSetupList().size();
+        for(i = 0; i < nodeSetupData.routeDataList().size(); ++i){
+          mdtTtTestModelItemRouteData routeData = nodeSetupData.routeDataList().at(i);
+          qDebug() << "--> Route ID " << routeData.id() << ":";
+          qDebug() << "--> Bus coupling relays: " << routeData.busCouplingRelaysIdList();
+          qDebug() << "--> Bus coupling relays res: " << routeData.busCouplingRelaysResistance().valueDouble() << " Ohm";
+          qDebug() << "--> Channel relays: " << routeData.channelRelaysIdList();
+          for(k = 0; k < routeData.setupDataList().size(); ++k){
+            unitSetupData = routeData.setupDataList().at(k);
+            ///qDebug() << "Unit setup data: " << unitSetupData;
+            qDebug() << "---> Setting relay " << unitSetupData.value("SchemaPosition").toString() << " ON ...";
+            if(unitSetupData.ioType() == mdtTtTestNodeUnitSetupData::DigitalOutput){
+              coupler->setDigitalOutputValue(unitSetupData.ioPosition(), true, false, false);
+            }
+          }
+        }
+        
         // Set all given relays ON
+        /**
         for(i = 0; i < nodeSetupData.unitSetupList().size(); ++i){
           unitSetupData = nodeSetupData.unitSetupList().at(i);
           
-          ///qDebug() << "Unit setup data: " << unitSetupData;
+          qDebug() << "Unit setup data: " << unitSetupData;
           
           relay2Id = unitSetupData.value("TestNodeUnit_Id_FK");
           
@@ -740,6 +760,7 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateChannelRelays()
             coupler->setDigitalOutputValue(unitSetupData.ioPosition(), true, false, false);
           }
         }
+        */
       }
     }
     // Send relays states to coupler

@@ -1,6 +1,6 @@
 format 207
 "mdttesttool" // mdttools::mdttesttool
-  revision 59
+  revision 61
   modified_by 2 "philippe"
   // class settings
   
@@ -5781,6 +5781,23 @@ ${inlines}
       operation 2294274 "channelRelayIdList"
 	stereotype "list"
 	public return_type class_ref 161154 // QVariant
+	multiplicity "*"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2301186 "setupDataList"
+	stereotype "list"
+	public return_type class_ref 1060738 // mdtTtTestNodeUnitSetupData
 	multiplicity "*"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};

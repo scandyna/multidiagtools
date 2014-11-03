@@ -74,8 +74,14 @@ class mdtTtTestItemNodeSetupData
    *
    * Will add node setup data, regarding deviceIdentification
    *  and stepNumber of each unit setup stored inside.
+   *
+   * \deprecated
    */
   void addNodeSetupData(const mdtTtTestNodeSetupData & data);
+
+  /*! \brief Add a list of node setup data for given step
+   */
+  void addNodeSetupData(int stepNumber, const QList<mdtTtTestNodeSetupData> & nodeSetupDataList);
 
   /*! \brief Add test node unit setup data
    */

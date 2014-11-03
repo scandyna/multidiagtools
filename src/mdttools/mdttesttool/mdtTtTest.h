@@ -42,6 +42,8 @@
 
 class QSqlTableModel;
 class mdtSqlRelation;
+class mdtTtTestNodeSetupData;
+class mdtTtTestModelItemRouteData;
 class QWidget;
 
 /*! \brief Helper class to manipulate test data
@@ -197,7 +199,7 @@ class mdtTtTest : public mdtTtBase
    */
   ///bool setMeasuredValue(const QVariant & testItemId, const mdtValue & value);
 
- signals:
+ ///signals:
 
   /*! \brief Emited when test data has changed
    *
@@ -206,6 +208,32 @@ class mdtTtTest : public mdtTtBase
   ///void testDataChanged(const QSqlRecord & data);
 
  private:
+
+  /*! \brief Get a list of step number for given testModelItemId
+   */
+  QList<QVariant> getStepNumberList(const QVariant & testModelItemId, bool & ok);
+
+  /*! \brief Get test node setup data list for given testModelItemId and getStepNumber
+   *
+   * Will also include related route data, and other setup data that are not related to any route.
+   */
+  QList<mdtTtTestNodeSetupData> getTestNodeSetupDataList(const QVariant & testModelItemId, const QVariant & stepNumber, bool & ok);
+
+  /*! \brief Add route data to test node data for given testModelItemId, stepNumber and testNodeId
+   */
+  bool addRouteDataToTestNodeSetupData(mdtTtTestNodeSetupData & tnSetupData, const QVariant & testModelItemId, const QVariant & stepNumber, const QVariant & testNodeId);
+
+  /*! \brief Add node setup data to route data
+   *
+   * \pre Route data ID must be set
+   */
+  bool addNodeUnitSetupDataToRouteData(mdtTtTestModelItemRouteData & routeData);
+
+  /*! \brief Add node setup data to test node data for given testModelItemId, stepNumber and testNodeId
+   *
+   * Will add entries that are not part of a route
+   */
+  bool addNodeUnitSetupDataToTestNodeSetupData(mdtTtTestNodeSetupData & tnSetupData, const QVariant & testModelItemId, const QVariant & stepNumber, const QVariant & testNodeId);
 
   /*! \brief Set current index row for Test_view table model
    */

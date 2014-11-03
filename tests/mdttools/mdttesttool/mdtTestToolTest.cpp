@@ -751,10 +751,16 @@ void mdtTestToolTest::mdtTtTestModelItemRouteDataTest()
   QCOMPARE(routeData.channelRelaysIdList().at(1), QVariant(31));
 }
 
+
+
+
+
+
 void mdtTestToolTest::testItemNodeNodeSetupDataTest()
 {
   mdtTtTestItemNodeSetupData tiSetupData;
   mdtTtTestNodeSetupData tnSetupData;
+  mdtTtTestModelItemRouteData routeData;
   mdtTtTestNodeUnitSetupData tnuSetupData;
   mdtSqlRecord record;
   QSqlRecord rec;
@@ -804,6 +810,7 @@ void mdtTestToolTest::testItemNodeNodeSetupDataTest()
   /*
    * Setup test node unit setup data from TestItemNodeUnitSetup_view
    */
+  /// \todo Obselete ?
   QVERIFY(record.addAllFields("TestItemNodeUnitSetup_view", pvDatabaseManager.database()));
   rec = record;
   tnuSetupData = rec;
@@ -838,52 +845,80 @@ void mdtTestToolTest::testItemNodeNodeSetupDataTest()
   QCOMPARE(tnuSetupData.schemaPosition(), QString());
 
   /*
+   * Setup test node unit setup data from TestNodeUnitSetup_view
+   */
+  QVERIFY(tnuSetupData.addAllFields("TestNodeUnitSetup_view", pvDatabaseManager.database()));
+  QVERIFY(tnuSetupData.contains("TestModelItem_Id_FK"));
+  QVERIFY(tnuSetupData.contains("TestNodeUnit_Id_FK"));
+  QVERIFY(tnuSetupData.contains("TestModelItemRoute_Id_FK"));
+  QVERIFY(tnuSetupData.contains("StepNumber"));
+  QVERIFY(tnuSetupData.contains("State"));
+  QVERIFY(tnuSetupData.contains("Value"));
+  QVERIFY(tnuSetupData.contains("IoPosition"));
+  QVERIFY(tnuSetupData.contains("SchemaPosition"));
+  QVERIFY(tnuSetupData.contains("CalibrationOffset"));
+
+  /*
    * Build a setup
    *
-   * |Item|Node|Unit(pos)|Step|
-   * --------------------------
-   * |  1 | 10 | 100 (K1)|  0 |
-   * --------------------------
-   * |  1 | 10 | 101 (K2)|  0 |
-   * --------------------------
-   * |  1 | 10 | 104 (K5)|  1 |
-   * --------------------------
+   * |Item|Node|Unit(pos)|Step|Route|
+   * --------------------------------
+   * |  1 | 10 | 100 (K1)|  0 | 20  |
+   * --------------------------------
+   * |  1 | 10 | 101 (K2)|  0 | 20  |
+   * --------------------------------
+   * |  1 | 10 | 104 (AO)|  1 |null |
+   * --------------------------------
    *
    * This gives a total of 2 steps
    */
-  QCOMPARE(tnSetupData.unitSetupList().size(), 0);
   QVERIFY(!tiSetupData.hasMoreStep());
   QVERIFY(tiSetupData.currentDeviceIdentification().isNull());
-  // Database independant data
+  QCOMPARE(tnSetupData.unitSetupList().size(), 0);
+  QCOMPARE(routeData.setupDataList().size(), 0);
+  // Set test node base data
   tnSetupData.setNodeIdentification("1000");
   tnSetupData.setDeviceIdentification("W750:1000");
   QCOMPARE(tnSetupData.nodeIdentification(), QString("1000"));
   QCOMPARE(tnSetupData.deviceIdentification(), QVariant("W750:1000"));
-  // Test model item 1, Node 10, unit 100, I/O pos. 0 (K1), step 0
+  // Setup route data 20
+  routeData.setId(20);
+  routeData.setTestModelItemId(1);
+  // Setup node unit data for K1
   tnuSetupData.setValue("TestModelItem_Id_FK", 1);
   tnuSetupData.setValue("TestNode_Id_FK", 10);
   tnuSetupData.setValue("TestNodeUnit_Id_FK", 100);
+  tnuSetupData.setValue("Type_Code_FK", "BUSCPLREL");
   tnuSetupData.setValue("IoPosition", 0);
   tnuSetupData.setValue("SchemaPosition", "K1");
   tnuSetupData.setValue("StepNumber", 0);
-  tnSetupData.addUnitSetup(tnuSetupData);
-  QCOMPARE(tnSetupData.unitSetupList().size(), 1);
-  // Test model item 1, Node 10, unit 101, I/O pos. 1 (K2), step 0
+  // Add node unit setup of K1 to route data 20
+  routeData.addSetupData(tnuSetupData);
+  QCOMPARE(routeData.setupDataList().size(), 1);
+  // Setup node unit data for K2
+  tnuSetupData.clearValues();
   tnuSetupData.setValue("TestModelItem_Id_FK", 1);
   tnuSetupData.setValue("TestNode_Id_FK", 10);
   tnuSetupData.setValue("TestNodeUnit_Id_FK", 101);
+  tnuSetupData.setValue("Type_Code_FK", "CHANELREL");
   tnuSetupData.setValue("IoPosition", 1);
   tnuSetupData.setValue("SchemaPosition", "K2");
   tnuSetupData.setValue("StepNumber", 0);
-  tnSetupData.addUnitSetup(tnuSetupData);
+  // Add node unit setup of K2 to route data 20
+  routeData.addSetupData(tnuSetupData);
+  QCOMPARE(routeData.setupDataList().size(), 2);
+  // Add route data to test node data
+  tnSetupData.addRouteData(routeData);
+  QCOMPARE(tnSetupData.routeDataList().size(), 1);
   QCOMPARE(tnSetupData.unitSetupList().size(), 2);
-  // Test model item 1, Node 10, unit 104, I/O pos. 4 (K5), step 1
+  // Setup node unit data for AO
   tnuSetupData.setValue("TestModelItem_Id_FK", 1);
   tnuSetupData.setValue("TestNode_Id_FK", 10);
   tnuSetupData.setValue("TestNodeUnit_Id_FK", 101);
   tnuSetupData.setValue("IoPosition", 4);
   tnuSetupData.setValue("SchemaPosition", "K5");
   tnuSetupData.setValue("StepNumber", 1);
+  // Add node unit data to test node data
   tnSetupData.addUnitSetup(tnuSetupData);
   QCOMPARE(tnSetupData.unitSetupList().size(), 3);
   // Add node setup to test item setup data and check
@@ -897,6 +932,16 @@ void mdtTestToolTest::testItemNodeNodeSetupDataTest()
   QCOMPARE(tnSetupData.unitSetupList().at(0).ioPosition(), 0);
   QCOMPARE(tnSetupData.unitSetupList().at(1).schemaPosition(), QString("K2"));
   QCOMPARE(tnSetupData.unitSetupList().at(1).ioPosition(), 1);
+  QCOMPARE(tnSetupData.routeDataList().size(), 1);
+  QCOMPARE(tnSetupData.routeDataList().at(0).id(), QVariant(20));
+  QCOMPARE(tnSetupData.routeDataList().at(0).testModelItemId(), QVariant(1));
+  QCOMPARE(tnSetupData.routeDataList().at(0).busCouplingRelaysIdList().size(), 1);
+  QCOMPARE(tnSetupData.routeDataList().at(0).busCouplingRelaysIdList().at(0), QVariant(100));
+  QCOMPARE(tnSetupData.routeDataList().at(0).channelRelaysIdList().size(), 1);
+  QCOMPARE(tnSetupData.routeDataList().at(0).channelRelaysIdList().at(0), QVariant(101));
+  QCOMPARE(tnSetupData.routeDataList().at(0).setupDataList().size(), 2);
+  QCOMPARE(tnSetupData.routeDataList().at(0).setupDataList().at(0).schemaPosition(), QString("K1"));
+  QCOMPARE(tnSetupData.routeDataList().at(0).setupDataList().at(0).schemaPosition(), QString("K2"));
   // Step 1
   QVERIFY(tiSetupData.hasMoreStep());
   tnSetupData = tiSetupData.getNextStep();

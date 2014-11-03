@@ -22,6 +22,7 @@
 #define MDT_TT_TEST_NODE_SETUP_DATA_H
 
 #include "mdtTtTestNodeUnitSetupData.h"
+#include "mdtTtTestModelItemData.h"
 #include <QString>
 #include <QVariant>
 #include <QList>
@@ -31,6 +32,19 @@
 class mdtTtTestNodeSetupData
 {
  public:
+
+  /*! \brief Set ID (primary key)
+   */
+  void setId(const QVariant & id){
+    pvId = id;
+  }
+
+  /*! \brief Get ID (primary key)
+   */
+  inline QVariant id() const
+  {
+    return pvId;
+  }
 
   /*! \brief Set test node identification
    */
@@ -60,15 +74,44 @@ class mdtTtTestNodeSetupData
    */
   void addUnitSetup(const mdtTtTestNodeUnitSetupData & data);
 
-  /*! \brief Get test node unit setup data list
+  /*! \brief Add a list of test node unit setup
+   */
+  void addUnitSetupList(const QList<mdtTtTestNodeUnitSetupData> & datalist);
+
+  /*! \brief Get all test node unit setup data list
    */
   inline const QList<mdtTtTestNodeUnitSetupData> & unitSetupList() const { return pvUnitSetupData; }
 
+  /*! \brief Add route data
+   *
+   * Will also add test node unit setup data contained in data to list
+   */
+  void addRouteData(const mdtTtTestModelItemRouteData & data);
+
+  /*! \brief Add a list of route data
+   *
+   * Will also add test node unit setup data contained in data to list
+   */
+  void addRouteDataList(const QList<mdtTtTestModelItemRouteData> & dataList);
+
+  /*! \brief Get route data list
+   */
+  inline const QList<mdtTtTestModelItemRouteData> & routeDataList() const
+  {
+    return pvRouteDataList;
+  }
+
+  /*! \brief Get route data list for given stepNumber
+   */
+  QList<mdtTtTestModelItemRouteData> routeDataListForStepNumber(int stepNumber) const;
+
  private:
 
+  QVariant pvId;  // Primary key
   QString pvNodeIdentification;
   QVariant pvDeviceIdentification;
   QList<mdtTtTestNodeUnitSetupData> pvUnitSetupData;
+  QList<mdtTtTestModelItemRouteData> pvRouteDataList;
 };
 
 #endif // #ifndef MDT_TT_TEST_NODE_SETUP_DATA_H

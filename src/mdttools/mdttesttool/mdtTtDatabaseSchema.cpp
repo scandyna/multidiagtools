@@ -3896,6 +3896,7 @@ bool mdtTtDatabaseSchema::createTestModelItemRouteView()
         " UCNXT.FunctionIT AS TestContactFunctionIT,\n"\
         " GROUP_CONCAT(U.SchemaPosition, ', ') AS RouteTestNodeUnits,\n"\
         " SUM(TNU.CalibrationOffset) AS RouteResistance,\n"\
+        " TNU.TestNode_Id_FK,\n"\
         " UM.SchemaPosition AS MeasureSchemaPosition,\n"\
         " UM.Alias AS MeasureAlias,\n"\
         " UCNXM.UnitContactName AS MeasureContactName,\n"\
@@ -4172,6 +4173,7 @@ bool mdtTtDatabaseSchema::createTestItemNodeUnitSetupView()
 }
 */
 
+/// \todo Obselete ?
 bool mdtTtDatabaseSchema::createTestItemNodeUnitSetupView()
 {
   QString sql;
