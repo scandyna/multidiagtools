@@ -1,6 +1,6 @@
 format 207
 "mdtutils" // mdtutils
-  revision 134
+  revision 135
   modified_by 2 "philippe"
   // class settings
   
@@ -2631,7 +2631,7 @@ ${inlines}
       size A4
     end
 
-    class 1200386 "ObjectDictionary"
+    class 1200386 "ObjectDictionaryItem"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -2646,7 +2646,7 @@ ${inlines}
       mysql_decl ""
       
       attribute 1163266 "Index"
-	private explicit_type ""
+	private explicit_type "uint16_t"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -2658,7 +2658,7 @@ ${inlines}
       end
 
       attribute 1163394 "SubIndex"
-	private explicit_type ""
+	private explicit_type "uint8_t"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""

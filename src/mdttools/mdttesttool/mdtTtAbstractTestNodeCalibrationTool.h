@@ -222,6 +222,17 @@ class mdtTtAbstractTestNodeCalibrationTool : public QObject
 
  private:
 
+  /*! \brief resize message box
+   *
+   * QMessageBox calculate its width only regarding given text.
+   * If text is short and informativeText is longer,
+   *  displayed message box will be high and small.
+   *
+   * This method will calculate the width of the longest line
+   *  in text and informativeText, and resize given msgBox.
+   */
+  void resizeMessageBox(QMessageBox & msgBox);
+
   Q_DISABLE_COPY(mdtTtAbstractTestNodeCalibrationTool);
 
   QSqlDatabase pvDatabase;

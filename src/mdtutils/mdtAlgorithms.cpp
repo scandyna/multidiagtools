@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -386,4 +386,31 @@ QStringList mdtAlgorithms::splitString(const QString &str, const QString &separa
     fields.append("");
   }
   return fields;
+}
+
+QString mdtAlgorithms::longestLineInString(const QString & str, const QString & sep)
+{
+  int len;
+  int i;
+  int maxLen = 0;
+  int maxLenIndex = -1;
+  QStringList strList;
+
+  if(str.isEmpty()){
+    return QString();
+  }
+  strList = str.split(sep);
+  for(i = 0; i < strList.size(); ++i){
+    len = strList.at(i).size();
+    if(len > maxLen){
+      maxLen = len;
+      maxLenIndex = i;
+    }
+  }
+  if(maxLenIndex < 0){
+    return QString();
+  }
+  Q_ASSERT(maxLenIndex < strList.size());
+
+  return strList.at(maxLenIndex);
 }

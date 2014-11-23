@@ -1345,6 +1345,18 @@ bool mdtTtDatabaseSchema::setupUnitConnectionTable()
   /// \todo Set required
   field.setDefaultValue("T");
   table.addField(field, false);
+  // UnitContactName
+  field = QSqlField();
+  field.setName("UnitContactName");
+  field.setType(QVariant::String);
+  field.setLength(30);
+  table.addField(field, false);
+  // Resistance
+  field = QSqlField();
+  field.setName("Resistance");
+  field.setType(QVariant::Double);
+  field.setDefaultValue(0.0);
+  table.addField(field, false);
   // IsATestPoint
   field = QSqlField();
   field.setName("IsATestPoint");
@@ -1390,12 +1402,6 @@ bool mdtTtDatabaseSchema::setupUnitConnectionTable()
   field = QSqlField();
   field.setName("SwAddress");
   field.setType(QVariant::Int);
-  table.addField(field, false);
-  // UnitContactName
-  field = QSqlField();
-  field.setName("UnitContactName");
-  field.setType(QVariant::String);
-  field.setLength(30);
   table.addField(field, false);
   // Indexes
   table.addIndex("Unit_Id_FK_ArticleConnection_Id_FK_idx", true);
@@ -1806,6 +1812,7 @@ bool mdtTtDatabaseSchema::setupTestNodeTable()
   field.setName("NodeIdentification");
   field.setType(QVariant::String);
   field.setLength(50);
+  ///field.setRequired(true);
   table.addField(field, false);
   // DeviceIdentification
   field = QSqlField();
@@ -1814,8 +1821,15 @@ bool mdtTtDatabaseSchema::setupTestNodeTable()
   field.setLength(50);
   table.addField(field, false);
   // Indexes
+  /**
   table.addIndex("VehicleType_Id_FK_PK_idx", false);
   if(!table.addFieldToIndex("VehicleType_Id_FK_PK_idx", "VehicleType_Id_FK_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  */
+  table.addIndex("NodeIdentification_idx", true);
+  if(!table.addFieldToIndex("NodeIdentification_idx", "NodeIdentification")){
     pvLastError = table.lastError();
     return false;
   }
@@ -3139,6 +3153,7 @@ bool mdtTtDatabaseSchema::createUnitConnectionView()
         " UnitConnection_tbl.ArticleConnection_Id_FK,\n"\
         " UnitConnector_tbl.Name AS UnitConnectorName ,\n"\
         " UnitConnection_tbl.UnitContactName ,\n"\
+        " UnitConnection_tbl.Resistance AS UnitConnectionResistance,\n"\
         " UnitConnection_tbl.SchemaPage ,\n"\
         " UnitConnection_tbl.FunctionEN AS UnitFunctionEN,\n"\
         " UnitConnection_tbl.FunctionFR AS UnitFunctionFR,\n"\
@@ -3202,10 +3217,12 @@ bool mdtTtDatabaseSchema::createUnitLinkView()
               " US.Alias AS StartAlias,\n"\
               " UCS.Name AS StartUnitConnectorName ,\n"\
               " UCNXS.UnitContactName AS StartUnitContactName ,\n"\
+              " UCNXS.Resistance AS StartUnitConnectionResistance ,\n"\
               " UE.SchemaPosition AS EndSchemaPosition ,\n"\
               " UE.Alias AS EndAlias,\n"\
               " UCE.Name AS EndUnitConnectorName ,\n"\
               " UCNXE.UnitContactName AS EndUnitContactName ,\n"\
+              " UCNXE.Resistance AS EndUnitConnectionResistance ,\n"\
               " LNK.SinceVersion ,\n"\
               " LNK.Modification ,\n"\
               " LinkType_tbl.NameEN AS LinkTypeNameEN ,\n"\
@@ -3469,6 +3486,7 @@ bool mdtTtDatabaseSchema::createTestNodeUnitConnectionView()
         "TNUCNX.TestNodeUnit_Id_FK,\n"\
         "TNUCNX.TestNodeBus_Id_FK,\n"\
         "UCNX.UnitContactName,\n"\
+        "UCNX.Resistance AS UnitConnectionResistance,\n"\
         "TNB.NameEN AS Bus\n"\
         "FROM TestNodeUnitConnection_tbl TNUCNX\n"\
         " JOIN UnitConnection_tbl UCNX\n"\
@@ -3563,15 +3581,19 @@ bool mdtTtDatabaseSchema::createTestLinkView()
         " DUTUCNX.UnitConnector_Id_FK AS DutUnitConnector_Id_FK,\n"\
         " DUTUCNX.Unit_Id_FK AS DutUnit_Id_FK,\n"\
         " DUTUCNX.UnitContactName AS DutContactName,\n"\
+        " DUTUCNX.Resistance AS DutConnectionResistance,\n"\
         " TCDUCNR.Name AS TestCableDutSideConnectorName,\n"\
         " TCDUCNX.UnitContactName AS TestCableDutSideContactName,\n"\
+        " TCDUCNX.Resistance AS TestCableDutSideConnectionResistance,\n"\
         " TCL.Identification AS TestCableLinkIdentification,\n"\
         " TCL.Value AS TestCableLinkResistance,\n"\
         " TCTUCNR.Name AS TestCableTestSideConnectorName,\n"\
         " TCTUCNX.UnitContactName AS TestCableTestSideContactName,\n"\
+        " TCTUCNX.Resistance AS TestCableTestSideConnectionResistance,\n"\
         " TNUCNR.Name AS TestNodeConnectorName,\n"\
         " TNUCNX.UnitConnector_Id_FK AS TestNodeUnitConnector_Id_FK,\n"\
-        " TNUCNX.UnitContactName AS TestNodeContactName\n"\
+        " TNUCNX.UnitContactName AS TestNodeContactName,\n"\
+        " TNUCNX.Resistance AS TestNodeConnectionResistance\n"\
         /**
         " LNK.Id_PK,\n"\
         " LNK.LogicalTestCable_Id_FK,\n"\

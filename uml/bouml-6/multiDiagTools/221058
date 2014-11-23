@@ -1,6 +1,6 @@
-format 206
+format 207
 "sandbox" // sandbox
-  revision 14
+  revision 15
   modified_by 2 "philippe"
   // class settings
   
@@ -690,4 +690,25 @@ ${inlines}
     end
   end
 
+  classview 708226 "CanOpen"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 1278210 "OverView"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+  end
 end

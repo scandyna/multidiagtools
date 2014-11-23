@@ -35,6 +35,7 @@
 #include "mdtClArticleConnectorData.h"
 #include "mdtClArticleConnectionData.h"
 #include "mdtSqlRecord.h"
+#include "mdtSqlFieldSelectionDialog.h"
 #include <QSqlTableModel>
 #include <QSqlQueryModel>
 #include <QSqlQuery>
@@ -269,6 +270,22 @@ void mdtClArticleEditor::editConnection()
 void mdtClArticleEditor::editConnection(const QModelIndex &)
 {
   editConnection();
+}
+
+void mdtClArticleEditor::updateRelatedUnitConnections()
+{
+  mdtSqlFieldSelectionDialog fsDialog(this, database());
+
+  // Setup and show dialog
+  fsDialog.setMessage(tr("Select fields that must be updated in related unit connections:"));
+  fsDialog.addField("FldNameA", tr("Field A"), true);
+  fsDialog.addField("FldNameB", tr("Field B"), true);
+  fsDialog.addField("FldNameC", tr("Field Z"), true);
+  fsDialog.addField("FldNameC", tr("Field G"), true);
+  fsDialog.addField("FldNameC", tr("Field GF"), true);
+  fsDialog.addField("FldNameC", tr("Field 3"), true);
+  fsDialog.addField("FldNameC", tr("Field 46"), true);
+  fsDialog.exec();
 }
 
 void mdtClArticleEditor::removeConnections()
@@ -842,6 +859,7 @@ bool mdtClArticleEditor::setupArticleConnectionTable()
   mdtSqlTableWidget *widget;
   QPushButton *pbAddConnection;
   QPushButton *pbEditConnection;
+  QPushButton *pb;
   QPushButton *pbRemoveConnections;
   mdtSqlRelationInfo relationInfo;
 
@@ -877,6 +895,11 @@ bool mdtClArticleEditor::setupArticleConnectionTable()
   pbEditConnection = new QPushButton(tr("Edit connection ..."));
   connect(pbEditConnection, SIGNAL(clicked()), this, SLOT(editConnection()));
   widget->addWidgetToLocalBar(pbEditConnection);
+  // Add related unit connections editions button
+  pb = new QPushButton(tr("Update related unit connections ..."));
+  connect(pb, SIGNAL(clicked()), this, SLOT(updateRelatedUnitConnections()));
+  widget->addWidgetToLocalBar(pb);
+  // Add remove connections button
   pbRemoveConnections = new QPushButton(tr("Remove connections"));
   connect(pbRemoveConnections, SIGNAL(clicked()), this, SLOT(removeConnections()));
   widget->addWidgetToLocalBar(pbRemoveConnections);

@@ -937,7 +937,7 @@ void mdtCableListTest::linkTest()
    *  Edit link 10000<->10001:
    *   -> UnitConnectionStart_Id_FK : 10000 , UnitConnectionEnd_Id_FK : 20000 , Identification : Edited link
    */
-  QVERIFY(!lnk.linkExists(10000, 20000, &ok));
+  QVERIFY(!lnk.linkExists(10000, 20000, ok));
   QVERIFY(ok);
   linkData = lnk.getLinkData(10000, 10001, true, true, ok);
   QVERIFY(ok);
@@ -954,7 +954,7 @@ void mdtCableListTest::linkTest()
   QVERIFY(lnk.buildVehicleTypeLinkDataList(linkData, vtStartIdList, vtEndIdList));
   // Edit link and check
   QVERIFY(lnk.editLink(10000, 10001, linkData));
-  QVERIFY(lnk.linkExists(10000, 20000, &ok));
+  QVERIFY(lnk.linkExists(10000, 20000, ok));
   QVERIFY(ok);
   linkData = lnk.getLinkData(10000, 20000, true, true, ok);
   QVERIFY(ok);
@@ -973,7 +973,7 @@ void mdtCableListTest::linkTest()
    *  Edit link 10000<->20000:
    *   -> UnitConnectionStart_Id_FK : 10000 , UnitConnectionEnd_Id_FK : 10001 , Identification : Edited link
    */
-  QVERIFY(!lnk.linkExists(10000, 10001, &ok));
+  QVERIFY(!lnk.linkExists(10000, 10001, ok));
   QVERIFY(ok);
   linkData = lnk.getLinkData(10000, 20000, true, true, ok);
   QVERIFY(ok);
@@ -990,7 +990,7 @@ void mdtCableListTest::linkTest()
   QVERIFY(lnk.buildVehicleTypeLinkDataList(linkData, vtStartIdList, vtEndIdList));
   // Edit link and check
   QVERIFY(lnk.editLink(10000, 20000, linkData));
-  QVERIFY(lnk.linkExists(10000, 10001, &ok));
+  QVERIFY(lnk.linkExists(10000, 10001, ok));
   QVERIFY(ok);
   linkData = lnk.getLinkData(10000, 10001, true, true, ok);
   QVERIFY(ok);
@@ -1425,14 +1425,14 @@ void mdtCableListTest::linkAutoConnectionTest()
    * Check link data
    */
   // Get link from connection 40005 -> 50005 : must exist
-  QVERIFY(lnk.linkExists(40005, 50005, &ok));
+  QVERIFY(lnk.linkExists(40005, 50005, ok));
   QVERIFY(ok);
   cnnLinkData = lnk.getLinkData(40005, 50005, true, true, ok);
   QVERIFY(ok);
   QCOMPARE(cnnLinkData.value("LinkType_Code_FK"), QVariant("CONNECTION"));
   QCOMPARE(cnnLinkData.value("LinkDirection_Code_FK"), QVariant("BID"));
   // Check that link from 40006 -> 50006 not exists
-  QVERIFY(!lnk.linkExists(40006, 50006, &ok));
+  QVERIFY(!lnk.linkExists(40006, 50006, ok));
   QVERIFY(ok);
 
 
@@ -1444,7 +1444,7 @@ void mdtCableListTest::linkAutoConnectionTest()
   vtStartIdList << 1;
   vtEndIdList << 2;
   QVERIFY(lnk.disconnectConnectors(400000, 500000, vtStartIdList, vtEndIdList));
-  QVERIFY(!lnk.linkExists(40005, 50005, &ok));
+  QVERIFY(!lnk.linkExists(40005, 50005, ok));
 
   // Remove base structure
   removeTestUnitConnectors();

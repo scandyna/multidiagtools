@@ -28,6 +28,7 @@
 #include "mdtTtTestNodeSetupData.h"
 #include "mdtTtTestNodeUnitSetupData.h"
 #include "mdtTtTestModelItemRouteData.h"
+#include "mdtClLinkData.h"
 #include <QString>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -38,7 +39,8 @@
 using namespace std;
 
 mdtTtBasicTestNodeCalibrationTool::mdtTtBasicTestNodeCalibrationTool(QSqlDatabase db, QObject* parent)
- : mdtTtAbstractTestNodeCalibrationTool(db, parent)
+ : mdtTtAbstractTestNodeCalibrationTool(db, parent),
+   pvGraph(db)
 {
 }
 
@@ -55,18 +57,22 @@ bool mdtTtBasicTestNodeCalibrationTool::setup(QWidget *testNodeFormWidget)
 void mdtTtBasicTestNodeCalibrationTool::runCalibration()
 {
   QString msg;
-  QString whiteSpaces;  // Used to have a raisonnable message box width
   shared_ptr<mdtDeviceU3606A> multimeter;
 
+  // Load link list to graph - Will be used to get links resistances
+  if(!pvGraph.loadLinkList()){
+    pvLastError = pvGraph.lastError();
+    displayLastError();
+    return;
+  }
   // Let the user proceed to initial setup
-  whiteSpaces = "                                                                    ";
   msg  = tr("- Be shure that U3606A was calibrated recently") + "\n";
   msg += tr("- Connect U3606A Sense inputs to couplers Sense+ and Sense-") + "\n";
   msg += tr("- Check that U3606A Force outputs are NOT connected to coupler") + "\n";
   msg += tr("- Connect calibration plug to X4") + "\n";
   msg += tr("- Connect shortest possible bridge between ISO+ and ISO-") + "\n";
   msg += tr("- Connect shortest possible bridge between Force+ and Force-");
-  if(!promptUser(tr("Calibration setup (step 1)") + whiteSpaces, msg)){
+  if(!promptUser(tr("Calibration setup (step 1: coupler checks)"), msg)){
     return;
   }
   // Connect to instruments
@@ -74,21 +80,7 @@ void mdtTtBasicTestNodeCalibrationTool::runCalibration()
     displayLastError();
     return;
   }
-  
-  
-  
-  /// \todo Provisoire !
-  // Calibrate channel relays
-  if(!calibrateChannelRelays()){
-    disconnectFromInstruments();
-    displayLastError();
-    return;
-  }
-  disconnectFromInstruments();
-  return;
-
-
-  
+  /**
   // Check K3 to K6
   if(!checkSenseRelays()){
     disconnectFromInstruments();
@@ -107,15 +99,16 @@ void mdtTtBasicTestNodeCalibrationTool::runCalibration()
     displayLastError();
     return;
   }
+  
+  */
   /// \todo check channel relays
   
   // Let user proceed to next setup
-  whiteSpaces = "                                                                    ";
   msg  = tr("- Unplug bridge between ISO+ and ISO-") + "\n";
   msg += tr("- Unplug bridge between Force+ and Force-") + "\n";
   msg += tr("- Connect U3606A Force outputs to couplers Sense+ and Sense-") + "\n";
   msg += tr("- Connect U3606A Sense inputs to couplers Sense+ and Sense-");
-  if(!promptUser(tr("Calibration setup (step 2)") + whiteSpaces, msg)){
+  if(!promptUser(tr("Calibration setup (step 2: sense relays calibration K3 to K6)"), msg)){
     return;
   }
   // Calibrate K3 to K6
@@ -125,10 +118,9 @@ void mdtTtBasicTestNodeCalibrationTool::runCalibration()
     return;
   }
   // Let user proceed to next setup
-  whiteSpaces = "                                                                    ";
   msg  = tr("- Connect U3606A Force outputs to couplers ISO+ and ISO-") + "\n";
   msg += tr("- Connect U3606A Sense inputs to couplers ISO+ and ISO-");
-  if(!promptUser(tr("Calibration setup (step 3)") + whiteSpaces, msg)){
+  if(!promptUser(tr("Calibration setup (step 3: ISO relays calibration K1 and K2)"), msg)){
     return;
   }
   // Calibrate K1 and K2
@@ -138,10 +130,9 @@ void mdtTtBasicTestNodeCalibrationTool::runCalibration()
     return;
   }
   // Let user proceed to next setup
-  whiteSpaces = "                                                                    ";
   msg  = tr("- Connect U3606A Force outputs to couplers Force+ and Force-") + "\n";
   msg += tr("- Connect U3606A Sense inputs to couplers Force+ and Force-");
-  if(!promptUser(tr("Calibration setup (step 4)") + whiteSpaces, msg)){
+  if(!promptUser(tr("Calibration setup (step 4: PWR realys Calibration K7 and K8)"), msg)){
     return;
   }
   // Calibrate K7 and K8
@@ -151,10 +142,9 @@ void mdtTtBasicTestNodeCalibrationTool::runCalibration()
     return;
   }
   // Let user proceed to next setup
-  whiteSpaces = "                                                                    ";
   msg  = tr("- Connect U3606A Force outputs to couplers Force+ and Force-") + "\n";
   msg += tr("- Connect U3606A Sense inputs to couplers Sense+ and Sense-");
-  if(!promptUser(tr("Calibration setup (step 5)") + whiteSpaces, msg)){
+  if(!promptUser(tr("Calibration setup (step 5: channel relays calibration)"), msg)){
     return;
   }
   // Calibrate channel relays
@@ -166,6 +156,8 @@ void mdtTtBasicTestNodeCalibrationTool::runCalibration()
   
   // Disconnect from instruments
   disconnectFromInstruments();
+  
+  /// \todo Inform user about success
 }
 
 void mdtTtBasicTestNodeCalibrationTool::saveCalibration()
@@ -175,6 +167,27 @@ void mdtTtBasicTestNodeCalibrationTool::saveCalibration()
     displayLastError();
     return;
   }
+}
+
+double mdtTtBasicTestNodeCalibrationTool::measureBridge()
+{
+  shared_ptr<mdtDeviceU3606A> multimeter;
+  mdtValue R;
+
+  multimeter = testNodeManager()->device<mdtDeviceU3606A>("U3606A");
+  Q_ASSERT(multimeter);
+  if(multimeter->setupResistanceMeasure(mdtDeviceU3606A::RangeMin, mdtDeviceU3606A::ResolutionMin) < 0){
+    pvLastError = multimeter->lastError();
+    return -1.0;
+  }
+  R = multimeter->getMeasureValue();
+  qDebug() << "R of bridge: " << R;
+  if(!isInRange(R, 0.0, 1.0)){
+    pvLastError.updateText(tr("Checking resistance of a bridge failed."));
+    return -1.0;
+  }
+
+  return R.valueDouble();
 }
 
 bool mdtTtBasicTestNodeCalibrationTool::checkSenseRelays()
@@ -294,7 +307,11 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateSenseRelays()
 {
   shared_ptr<mdtDeviceU3606A> multimeter;
   shared_ptr<mdtDeviceModbusWago> coupler;
+  QStringList relays;
   mdtValue R;
+  double Rlinks;
+  double r;
+  bool ok;
 
   multimeter = testNodeManager()->device<mdtDeviceU3606A>("U3606A");
   Q_ASSERT(multimeter);
@@ -322,14 +339,25 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateSenseRelays()
   coupler->wait(50);
   // Check that we have R < 1 Ohm
   R = multimeter->getMeasureValue();
-  qDebug() << "R: " << R;
   if(!isInRange(R, 0.0, 1.0)){
-    pvLastError.updateText(tr("Checking resistance of realys K4 and K5 failed."));
+    pvLastError.updateText(tr("Calibrating resistance of realys K4 and K5 failed."));
     return false;
   }
-  // Calibrate K4 and K5  (R/2)
-  setTestNodeUnitCalibrationOffset("K4", R.valueDouble() / 2.0);
-  setTestNodeUnitCalibrationOffset("K5", R.valueDouble() / 2.0);
+  // Get links resistance from SENSE+ to SENSE-
+  relays << "K4" << "K5";
+  Rlinks = getLinkResistanceForRoute("XSENS+", "", "XSENS+", "XSENS-", "", "XSENS-", relays, ok);
+  if(!ok){
+    return false;
+  }
+  // Calibrate K4 and K5: (R-Rlinks)/2
+  r = (R.valueDouble() - Rlinks) / 2.0;
+  qDebug() << "R K4-K5: " << R.valueDouble() << " , Rlinks: " << Rlinks << " , r: " << r;
+  if(!isInRange(r, 0.0, 1.0)){
+    pvLastError.updateText(tr("Calibrating resistance of realys K4 and K5 failed."));
+    return false;
+  }
+  setTestNodeUnitCalibrationOffset("K4", r);
+  setTestNodeUnitCalibrationOffset("K5", r);
   // Set all relays OFF
   if(coupler->setDigitalOutputsValue(false, false, false) < 0){
     pvLastError = coupler->lastError();
@@ -346,14 +374,26 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateSenseRelays()
   coupler->wait(50);
   // Check that we have R < 1 Ohm
   R = multimeter->getMeasureValue();
-  qDebug() << "R: " << R;
   if(!isInRange(R, 0.0, 1.0)){
-    pvLastError.updateText(tr("Checking resistance of realys K4 and K5 failed."));
+    pvLastError.updateText(tr("Calibrating resistance of realys K3 and K6 failed."));
     return false;
   }
-  // Calibrate K3 and K6  (R/2)
-  setTestNodeUnitCalibrationOffset("K3", R.valueDouble() / 2.0);
-  setTestNodeUnitCalibrationOffset("K6", R.valueDouble() / 2.0);
+  // Get links resistance from SENSE+ to SENSE-
+  relays.clear();
+  relays << "K3" << "K6";
+  Rlinks = getLinkResistanceForRoute("XSENS+", "", "XSENS+", "XSENS-", "", "XSENS-", relays, ok);
+  if(!ok){
+    return false;
+  }
+  r = (R.valueDouble() - Rlinks) / 2.0;
+  qDebug() << "R K3-K6: " << R.valueDouble() << " , Rlinks: " << Rlinks << " , r: " << r;
+  if(!isInRange(r, 0.0, 1.0)){
+    pvLastError.updateText(tr("Calibrating resistance of realys K3 and K6 failed."));
+    return false;
+  }
+  // Calibrate K3 and K6: (R-Rlinks)/2
+  setTestNodeUnitCalibrationOffset("K3", r);
+  setTestNodeUnitCalibrationOffset("K6", r);
 
   return true;
 }
@@ -449,10 +489,13 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateIsoRelays()
 {
   shared_ptr<mdtDeviceU3606A> multimeter;
   shared_ptr<mdtDeviceModbusWago> coupler;
+  QStringList relays;
   mdtValue R;
-  mdtValue Rk;
+  ///mdtValue Rk;
   QVariant val;
-  double r4, r6;
+  double r3, r4, r5, r6;
+  double Rlinks;
+  double r;
   bool ok;
 
   multimeter = testNodeManager()->device<mdtDeviceU3606A>("U3606A");
@@ -460,7 +503,16 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateIsoRelays()
   coupler = testNodeManager()->device<mdtDeviceModbusWago>("W750");
   Q_ASSERT(coupler);
 
-  // Get R of K4 and K6
+  // Get R of K3, K4, K5 and K6
+  val = testNodeUnitData("K3", "CalibrationOffset");
+  if(val.isNull()){
+    pvLastError.setError(tr("Could not get calibration offset of relay K3."), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtBasicTestNodeCalibrationTool");
+    pvLastError.commit();
+    return false;
+  }
+  r3 = val.toDouble(&ok);
+  Q_ASSERT(ok);
   val = testNodeUnitData("K4", "CalibrationOffset");
   if(val.isNull()){
     pvLastError.setError(tr("Could not get calibration offset of relay K4."), mdtError::Error);
@@ -469,6 +521,15 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateIsoRelays()
     return false;
   }
   r4 = val.toDouble(&ok);
+  Q_ASSERT(ok);
+  val = testNodeUnitData("K5", "CalibrationOffset");
+  if(val.isNull()){
+    pvLastError.setError(tr("Could not get calibration offset of relay K5."), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtBasicTestNodeCalibrationTool");
+    pvLastError.commit();
+    return false;
+  }
+  r5 = val.toDouble(&ok);
   Q_ASSERT(ok);
   val = testNodeUnitData("K6", "CalibrationOffset");
   if(val.isNull()){
@@ -479,8 +540,10 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateIsoRelays()
   }
   r6 = val.toDouble(&ok);
   Q_ASSERT(ok);
-  // Set K4, K6, K1 and K2 ON
+  // Set K3, K4, K5, K6, K1 and K2 ON
+  coupler->setDigitalOutputValue("K3", true, false, false);
   coupler->setDigitalOutputValue("K4", true, false, false);
+  coupler->setDigitalOutputValue("K5", true, false, false);
   coupler->setDigitalOutputValue("K6", true, false, false);
   coupler->setDigitalOutputValue("K1", true, false, false);
   coupler->setDigitalOutputValue("K2", true, false, false);
@@ -499,17 +562,37 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateIsoRelays()
   R = multimeter->getMeasureValue();
   qDebug() << "R: " << R;
   if(!isInRange(R, 0.0, 1.0)){
-    pvLastError.updateText(tr("Calibrating resistance of realys K1 and K2 failed.\nNote: did you plug the bridge between ISO+ and ISO- ?"));
+    pvLastError.updateText(tr("Calibrating resistance of realys K1 and K2 failed."));
     return false;
   }
+  // Get links resistance from XISO+ to XISO-
+  relays.clear();
+  relays << "K1" << "K2" << "K3" << "K4" << "K5" << "K6";
+  Rlinks = getLinkResistanceForRoute("XISO+", "", "XISO+", "XISO-", "", "XISO-", relays, ok);
+  if(!ok){
+    return false;
+  }
+  // Calculate resistance of K1 and K2
+  r = (R.valueDouble() - Rlinks - r3- r4 - r5 - r6) / 2.0;
+  qDebug() << "R K1-K2: " << R.valueDouble() << " , Rlinks: " << Rlinks << " , r: " << r;
+  if(!isInRange(r, 0.0, 1.0)){
+    pvLastError.updateText(tr("Calibrating resistance of realys K1 and K2 failed."));
+    return false;
+  }
+  // Set resistances
+  setTestNodeUnitCalibrationOffset("K1", r);
+  setTestNodeUnitCalibrationOffset("K2", r);
+
+  /**
   // Calibrate K1 and K2 ( (R - r4 - r6)/2 )
-  Rk = (R.valueDouble() - r4 - r6) / 2.0;
+  Rk = (R.valueDouble() - r3- r4 - r5 - r6) / 2.0;
   if(!isInRange(Rk, 0.0, 1.0)){
-    pvLastError.updateText(tr("Calibrating resistance of realys K1 and K2 failed.\nNote: did you plug the bridge between ISO+ and ISO- ?"));
+    pvLastError.updateText(tr("Calibrating resistance of realys K1 and K2 failed."));
     return false;
   }
   setTestNodeUnitCalibrationOffset("K1", Rk.valueDouble());
   setTestNodeUnitCalibrationOffset("K2", Rk.valueDouble());
+  */
 
   return true;
 }
@@ -678,6 +761,7 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateChannelRelays()
   QVariant testModelItemId;
   QSqlRecord itemRecord;
   mdtValue R;
+  double offset;
   QVariant val;
   bool ok;
   int i, k;
@@ -702,7 +786,7 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateChannelRelays()
     pvLastError.setError(tr("Test model with key W750CAL not found, or it is empty."), mdtError::Error);
     return false;
   }
-  query.first();
+  query.previous();
   // Setup multimeter to its min range
   if(multimeter->setupResistanceMeasure(mdtDeviceU3606A::RangeMin, mdtDeviceU3606A::ResolutionMin) < 0){
     pvLastError = multimeter->lastError();
@@ -714,61 +798,16 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateChannelRelays()
     testModelItemId = itemRecord.value("Id_PK");
     Q_ASSERT(!testModelItemId.isNull());
     qDebug() << "Running TMI " << itemRecord << " ...";
-    // Set all relays OFF
-    if(coupler->setDigitalOutputsValue(false, false, false) < 0){
-      pvLastError = coupler->lastError();
-      return false;
-    }
-    // Setup relays regarding test model item setup
-    itemSetupData = test()->getSetupData(testModelItemId, ok);
+    // Get setup data for coupler
+    nodeSetupData = test()->getTestNodeSetupData(testModelItemId, "0", ok);
     if(!ok){
       pvLastError = test()->lastError();
       return false;
     }
-    while(itemSetupData.hasMoreStep()){
-      nodeSetupData = itemSetupData.getNextStep();
-      qDebug() << "++ setup for ID : " << nodeSetupData.nodeIdentification();
-      if(nodeSetupData.nodeIdentification() == "0"){
-        qDebug() << "-> Routes: " << nodeSetupData.routeDataList().size();
-        ///qDebug() << "-> Setup data: " << nodeSetupData.unitSetupList().size();
-        for(i = 0; i < nodeSetupData.routeDataList().size(); ++i){
-          mdtTtTestModelItemRouteData routeData = nodeSetupData.routeDataList().at(i);
-          qDebug() << "--> Route ID " << routeData.id() << ":";
-          qDebug() << "--> Bus coupling relays: " << routeData.busCouplingRelaysIdList();
-          qDebug() << "--> Bus coupling relays res: " << routeData.busCouplingRelaysResistance().valueDouble() << " Ohm";
-          qDebug() << "--> Channel relays: " << routeData.channelRelaysIdList();
-          for(k = 0; k < routeData.setupDataList().size(); ++k){
-            unitSetupData = routeData.setupDataList().at(k);
-            ///qDebug() << "Unit setup data: " << unitSetupData;
-            qDebug() << "---> Setting relay " << unitSetupData.value("SchemaPosition").toString() << " ON ...";
-            if(unitSetupData.ioType() == mdtTtTestNodeUnitSetupData::DigitalOutput){
-              coupler->setDigitalOutputValue(unitSetupData.ioPosition(), true, false, false);
-            }
-          }
-        }
-        
-        // Set all given relays ON
-        /**
-        for(i = 0; i < nodeSetupData.unitSetupList().size(); ++i){
-          unitSetupData = nodeSetupData.unitSetupList().at(i);
-          
-          qDebug() << "Unit setup data: " << unitSetupData;
-          
-          relay2Id = unitSetupData.value("TestNodeUnit_Id_FK");
-          
-          if(unitSetupData.ioType() == mdtTtTestNodeUnitSetupData::DigitalOutput){
-            coupler->setDigitalOutputValue(unitSetupData.ioPosition(), true, false, false);
-          }
-        }
-        */
-      }
-    }
-    // Send relays states to coupler
-    if(!coupler->setDigitalOutputs(true)){
-      pvLastError = coupler->lastError();
+    // Setup coupler's routes
+    if(!setupIoCouplerRoutes(nodeSetupData.routeDataList())){
       return false;
     }
-    coupler->wait(50);
     // Check that we have R < 1 Ohm
     /// \todo Adapter ... prendre valeurs du test model item, message d'erreur plus parlant, etc...
     R = multimeter->getMeasureValue();
@@ -776,19 +815,93 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateChannelRelays()
       pvLastError.updateText(tr("Checking resistance of some channel realys failed."));
       ///return false;
     }
+    /// \todo Adapter en cas de passage aux mesures 4 fils
+    /*
+     * Calculate resistance of channel relays.
+     * For each test model item, we have exactly 2 routes in coupler
+     * For each route in I/O coupler, we have exactly 1 coupling relay and 1 channel relay.
+     * If this is not the case, something is wrong in test model (item).
+     */
+    // Check that we have exactly 2 routes in I/O coupler
+    if(nodeSetupData.routeDataList().size() != 2){
+      QString msg = tr("By channel relays calibration, a test item returned a wrong number of routes (expected: 2). ");
+      msg += tr("Check test 'W750CAL' and try again.");
+      pvLastError.setError(msg, mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtTtBasicTestNodeCalibrationTool");
+      pvLastError.commit();
+      return false;
+    }
+    Q_ASSERT(nodeSetupData.routeDataList().size() == 2);
+    // Get first and second route
+    auto route1 = nodeSetupData.routeDataList().at(0);
+    auto route2 = nodeSetupData.routeDataList().at(1);
+    // Check that we have exactly 1 channel relay in first route
+    if(route1.channelRelaysIdList().size() != 1){
+      QString msg = tr("By channel relays calibration, a test item returned a wrong number of channel relays (expected: 1). ");
+      msg += tr("Check test 'W750CAL' and try again.");
+      pvLastError.setError(msg, mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtTtBasicTestNodeCalibrationTool");
+      pvLastError.commit();
+      return false;
+    }
+    // Check that we have exactly 1 channel relay in second route
+    if(route2.channelRelaysIdList().size() != 1){
+      QString msg = tr("By channel relays calibration, a test item returned a wrong number of channel relays (expected: 1). ");
+      msg += tr("Check test 'W750CAL' and try again.");
+      pvLastError.setError(msg, mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtTtBasicTestNodeCalibrationTool");
+      pvLastError.commit();
+      return false;
+    }
+    Q_ASSERT(route1.channelRelaysIdList().size() == 1);
+    Q_ASSERT(route2.channelRelaysIdList().size() == 1);
+    // Get ID of relays to calibrate
+    relay1Id = route1.channelRelaysIdList().at(0);
+    relay2Id = route2.channelRelaysIdList().at(0);
+    // Calculate offset
+    offset = R.valueDouble() - route1.busCouplingRelaysResistance().valueDouble() - route2.busCouplingRelaysResistance().valueDouble();
+    /// \todo Check that offset is correct (>= 0, ...)
     // Set result
-    /// \todo FAUX - corriger (avec offset des relais de cannaux, etc...)
-    setTestNodeUnitCalibrationOffset(relay2Id.toInt(), R.valueDouble() / 2.0);
-
+    setTestNodeUnitCalibrationOffset(relay1Id.toInt(), offset / 2.0);
+    setTestNodeUnitCalibrationOffset(relay2Id.toInt(), offset / 2.0);
   }
 
-  // Select TestModel with KEY xy
-  
-  // Create QSqlQuery for data in TestModelItem_tbl for selecte TestModel
-  
-  // For each entry, get setup
-  
-  // ...
+  pvLastError.setError("Channel relays testing not complete", mdtError::Info);
+  return false;
+}
+
+bool mdtTtBasicTestNodeCalibrationTool::setupIoCouplerRoutes(const QList< mdtTtTestModelItemRouteData >& routeDataList)
+{
+  shared_ptr<mdtDeviceModbusWago> coupler;
+  int i, k;
+
+  // Get coupler instance
+  coupler = testNodeManager()->device<mdtDeviceModbusWago>("W750");
+  Q_ASSERT(coupler);
+  // Set all relays OFF
+  if(coupler->setDigitalOutputsValue(false, false, false) < 0){
+    pvLastError = coupler->lastError();
+    return false;
+  }
+  // Cache all relays sates
+  for(i = 0; i < routeDataList.size(); ++i){
+    auto setupDataList = routeDataList.at(i).setupDataList();
+    for(k = 0; k < setupDataList.size(); ++k){
+      auto unitSetupData = setupDataList.at(k);
+      qDebug() << "---> Setting relay " << unitSetupData.value("SchemaPosition").toString() << " ON ...";
+      if(unitSetupData.ioType() == mdtTtTestNodeUnitSetupData::DigitalOutput){
+        coupler->setDigitalOutputValue(unitSetupData.ioPosition(), true, false, false);
+      }
+    }
+  }
+  // Send relays states to coupler
+  if(!coupler->setDigitalOutputs(true)){
+    pvLastError = coupler->lastError();
+    return false;
+  }
+  coupler->wait(50);
+
+  return true;
 }
 
 void mdtTtBasicTestNodeCalibrationTool::addInstruments()
@@ -876,4 +989,25 @@ void mdtTtBasicTestNodeCalibrationTool::disconnectFromInstruments()
 
   // Disconnect
   testNodeManager()->container()->disconnectFromDevices();
+}
+
+double mdtTtBasicTestNodeCalibrationTool::getLinkResistanceForRoute(const QString & schemaPositionA, const QString & connectorA, const QString & contactA,
+                                                                    const QString & schemaPositionB, const QString & connectorB, const QString & contactB,
+                                                                    const QStringList & relaysToEnable, bool & ok)
+{
+  QVariant testNodeId;
+  QList<mdtClLinkData> linkDataList;
+
+  testNodeId = currentTestNodeData("VehicleType_Id_FK_PK");
+  if(testNodeId.isNull()){
+    ok = false;
+    return 0.0;
+  }
+  linkDataList = test()->getLinkDataListForRoute(testNodeId, schemaPositionA, connectorA, contactA, schemaPositionB, connectorB, contactB, relaysToEnable, pvGraph, ok);
+  if(!ok){
+    pvLastError = test()->lastError();
+    return 0.0;
+  }
+
+  return test()->linkPathResistance(linkDataList);
 }

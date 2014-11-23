@@ -30,6 +30,7 @@
 #include "mdtTtTestItemNodeSetupData.h"
 #include "mdtSqlDataWidgetController.h"
 #include "mdtSqlTableViewController.h"
+#include "mdtClLinkData.h"
 #include <QSqlDatabase>
 #include <QModelIndex>
 #include <QVariant>
@@ -45,6 +46,7 @@ class mdtSqlRelation;
 class mdtTtTestNodeSetupData;
 class mdtTtTestModelItemRouteData;
 class QWidget;
+class mdtClPathGraph;
 
 /*! \brief Helper class to manipulate test data
  *
@@ -175,8 +177,81 @@ class mdtTtTest : public mdtTtBase
   //QVariant nextTestItem();
 
   /*! \brief Get setup data for given test model item ID
+   *
+   * This version is usefull for complex test items with
+   *  many nodes, and handle stepNumber.
    */
   mdtTtTestItemNodeSetupData getSetupData(const QVariant & testModelItemId, bool & ok);
+
+  /*! \brief Get test node setup data for given testModelItemId and nodeIdentification
+   *
+   * This version is usefull for single test items.
+   *  StepNumber is not handled here.
+   *
+   * Will also include related route data, and other setup data that are not related to any route.
+   */
+  mdtTtTestNodeSetupData getTestNodeSetupData(const QVariant & testModelItemId, const QString & nodeIdentification, bool & ok);
+
+  /*! \brief Get a list of links that are travsersed from connectionIdA to connectionIdB
+   *
+   * Usefull to get all links of a route in a coupler (test node),
+   *  for example from a test connection to a measure connection.
+   *
+   * \param connectionIdA Starting connection (f.ex. a measure connection)
+   * \param connectionIdB Ending connection (f.ex. a test connection)
+   * \param testNodeUnitSetupDataList Test node unit setup data list of coupling and channel relays that are turned on
+   * \param graph Graph object. Cable list must allready be loaded (see mdtClPathGraph::loadLinkList()).
+   * \param ok Will be set false if a error occured, true else
+   */
+  QList<mdtClLinkData> getLinkDataListForRoute(const QVariant & connectionIdA, const QVariant & connectionIdB,
+                                               const QList<mdtTtTestNodeUnitSetupData> & testNodeUnitSetupDataList,
+                                               mdtClPathGraph & graph, bool & ok);
+
+  /*! \brief Get a list of links that are travsersed for given route
+   *
+   * Usefull to get all links of a route in a coupler (test node),
+   *  for example from a test connection to a measure connection.
+   *
+   * \param routeData Data that contains route from test connection and measure connection.
+   *                   Must also include setup data list of relays to enable.
+   * \param graph Graph object. Cable list must allready be loaded (see mdtClPathGraph::loadLinkList()).
+   * \param ok Will be set false if a error occured, true else
+   */
+  QList<mdtClLinkData> getLinkDataListForRoute(const mdtTtTestModelItemRouteData & routeData , mdtClPathGraph & graph, bool & ok);
+
+  /*! \brief Get a list of links that are travsersed for given connections
+   *
+   * Usefull to get all links of a route in a coupler (test node),
+   *  for example from a test connection to a measure connection.
+   *
+   * \param testNodeId ID of test node (primary key)
+   * \param schemaPositionA Schema position that contains connection A
+   * \param connectorA Name of connector that contains connection A
+   * \param contactA Name of contact that contains connection A
+   * \param schemaPositionB Schema position that contains connection B
+   * \param connectorB Name of connector that contains connection B
+   * \param contactB Name of contact that contains connection B
+   * \param relaysToEnable List of coupling and channel relays that are turned on (give schema position for each)
+   * \param graph Graph object. Cable list must allready be loaded (see mdtClPathGraph::loadLinkList()).
+   * \param ok Will be set false if a error occured, true else
+   */
+  QList<mdtClLinkData> getLinkDataListForRoute(const QVariant & testNodeId , 
+                                               const QString & schemaPositionA, const QString & connectorA, const QString & contactA,
+                                               const QString & schemaPositionB, const QString & connectorB, const QString & contactB,
+                                               const QStringList & relaysToEnable,
+                                               mdtClPathGraph & graph, bool & ok);
+
+  /*! \brief Get link part resistance of a path
+   */
+  double linkPathResistance(const QList<mdtClLinkData> & linkDataList) const;
+
+  /*! \brief Get unit connection ID for given criteria
+   * \param testNodeId ID of test node (primary key)
+   * \param schemaPositionA Schema position that contains connection
+   * \param connectorA Name of connector that contains connection
+   * \param contactA Name of contact that contains connection
+   */
+  QVariant getConnectionId(const QVariant & testNodeId, const QString & schemaPosition, const QString & connector, const QString & contact, bool & ok);
 
   /*! \brief Convert a mdtValue to a double
    *
@@ -213,7 +288,19 @@ class mdtTtTest : public mdtTtBase
    */
   QList<QVariant> getStepNumberList(const QVariant & testModelItemId, bool & ok);
 
-  /*! \brief Get test node setup data list for given testModelItemId and getStepNumber
+  /*! \brief Get test node setup data for given testModelItemId and testNodeId (primary key)
+   *
+   * Will also include related route data, and other setup data that are not related to any route.
+   *  Note: stepNumber is only passed by internally called function.
+   *        To get only test node data setup for given step, use getTestNodeSetupDataList().
+   */
+  mdtTtTestNodeSetupData getTestNodeSetupDataByTnPk(const QVariant & testModelItemId, const QVariant & stepNumber, const QVariant & testNodeId, bool & ok);
+
+  /*! \brief Build unit setup data list for given test node and list of unit schema position
+   */
+  QList<mdtTtTestNodeUnitSetupData> buildUnitSetupDataListBySchemaPostionList(const QVariant & testNodeId, const QStringList & schemaPositionList, bool & ok);
+
+  /*! \brief Get test node setup data list for given testModelItemId and stepNumber
    *
    * Will also include related route data, and other setup data that are not related to any route.
    */

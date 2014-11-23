@@ -22,9 +22,17 @@
 #include "mdtSqlRelationInfo.h"
 #include "mdtUiMessageHandler.h"
 #include "mdtSqlRecord.h"
+#include "mdtAlgorithms.h"
 #include <QSqlError>
 #include <QModelIndex>
 #include <QDateTime>
+#include <QSpacerItem>
+#include <QGridLayout>
+#include <QSizePolicy>
+#include <QFontMetrics>
+#include <QStringList>
+#include <QPixmap>
+#include <algorithm>
 
 #include <QDebug>
 
@@ -204,6 +212,7 @@ void mdtTtAbstractTestNodeCalibrationTool::displayLastError()
   msgBox.setInformativeText(pvLastError.informativeText());
   msgBox.setDetailedText(pvLastError.systemText());
   msgBox.setIcon(pvLastError.levelIcon());
+  resizeMessageBox(msgBox);
   msgBox.exec();
 }
 
@@ -215,6 +224,7 @@ void mdtTtAbstractTestNodeCalibrationTool::displayMessage(const QString& text, c
   msgBox.setInformativeText(informativeText);
   msgBox.setIcon(icon);
   msgBox.setStandardButtons(QMessageBox::Ok);
+  resizeMessageBox(msgBox);
   msgBox.exec();
 }
 
@@ -231,6 +241,7 @@ bool mdtTtAbstractTestNodeCalibrationTool::askUser(const QString& text, const QS
   msgBox.setInformativeText(informativeText);
   msgBox.setIcon(icon);
   msgBox.setStandardButtons(buttons);
+  resizeMessageBox(msgBox);
   switch(msgBox.exec()){
     case QMessageBox::Ok:
     case QMessageBox::Open:
@@ -309,4 +320,31 @@ bool mdtTtAbstractTestNodeCalibrationTool::commitTransaction()
     return false;
   }
   return true;
+}
+
+void mdtTtAbstractTestNodeCalibrationTool::resizeMessageBox ( QMessageBox& msgBox )
+{
+  QString str;
+  int textWidth;
+  int informativeTextWidth;
+  int width;
+  QFontMetrics fm = msgBox.fontMetrics();
+
+  // Get width of longest line in text and informativeText
+  str = mdtAlgorithms::longestLineInString(msgBox.text());
+  textWidth = fm.width(str);
+  str = mdtAlgorithms::longestLineInString(msgBox.informativeText());
+  informativeTextWidth = fm.width(str);
+  // Fix width for message box
+  width = std::max(textWidth, informativeTextWidth);
+  width += msgBox.iconPixmap().width();
+  width += 50;
+  if(width > 800){
+    width = 800;
+  }
+  // Resize message box - We use a hack found at http://www.qtcentre.org/threads/22298-QMessageBox-Controlling-the-width?p=113348#post113348
+  QSpacerItem *hSpacer = new QSpacerItem(width, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+  QGridLayout *gl = static_cast<QGridLayout*>(msgBox.layout());
+  Q_ASSERT(gl != 0);
+  gl->addItem(hSpacer, gl->rowCount(), 0, 1, gl->columnCount());
 }

@@ -24,6 +24,8 @@
 #include "mdtTtTestNodeSetupData.h"
 #include "mdtTtTestModelItemRouteData.h"
 #include "mdtSqlRelationInfo.h"
+#include "mdtClPathGraph.h"
+#include "mdtTtTestNode.h"
 #include <QSqlTableModel>
 #include <QModelIndex>
 #include <QSqlQuery>
@@ -474,6 +476,143 @@ mdtTtTestItemNodeSetupData mdtTtTest::getSetupData(const QVariant& testModelItem
   return tiSetupData;
 }
 
+mdtTtTestNodeSetupData mdtTtTest::getTestNodeSetupData(const QVariant& testModelItemId, const QString & nodeIdentification, bool& ok)
+{
+  QString sql;
+  QList<QVariant> idList;
+  mdtTtTestNodeSetupData nodeSetupData;
+
+  // Get node setup data from database
+  sql = "SELECT VehicleType_Id_FK_PK FROM TestNode_tbl";
+  sql += " WHERE NodeIdentification = " + nodeIdentification;
+  idList = getDataList<QVariant>(sql, ok);
+  if(!ok){
+    return nodeSetupData;
+  }
+  if(idList.isEmpty()){
+    QString msg = tr("Could not find a node with identification") + " '" + nodeIdentification + "' ";
+    msg += tr("for test item ID") + " " + testModelItemId.toString();
+    pvLastError.setError(msg , mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
+    pvLastError.commit();
+    ok = false;
+    return nodeSetupData;
+  }
+  Q_ASSERT(idList.size() == 1);
+
+  return getTestNodeSetupDataByTnPk(testModelItemId, QVariant(), idList.at(0), ok);
+}
+
+QList<mdtClLinkData> mdtTtTest::getLinkDataListForRoute(const QVariant& connectionIdA, const QVariant& connectionIdB,
+                                                        const QList< mdtTtTestNodeUnitSetupData >& testNodeUnitSetupDataList,
+                                                        mdtClPathGraph& graph, bool& ok)
+{
+  mdtTtTestNode tn(0, database());
+  QList<mdtClLinkData> linkDataList;
+
+  linkDataList = tn.getLinkDataListForPath(connectionIdA, connectionIdB, testNodeUnitSetupDataList, graph, ok);
+  if(!ok){
+    pvLastError = tn.lastError();
+  }
+
+  return linkDataList;
+}
+
+QList<mdtClLinkData> mdtTtTest::getLinkDataListForRoute(const mdtTtTestModelItemRouteData& routeData, mdtClPathGraph& graph, bool& ok)
+{
+  return getLinkDataListForRoute(routeData.testConnectionId(), routeData.measureConnectionId(), routeData.setupDataList(), graph, ok);
+}
+
+QList<mdtClLinkData> mdtTtTest::getLinkDataListForRoute(const QVariant& testNodeId, 
+                                                        const QString & schemaPositionA, const QString & connectorA, const QString & contactA,
+                                                        const QString & schemaPositionB, const QString & connectorB, const QString & contactB,
+                                                        const QStringList & relaysToEnable,
+                                                        mdtClPathGraph & graph, bool & ok)
+{
+  QString sql;
+  QList<QSqlRecord> dataList;
+  QVariant connectionIdA, connectionIdB;
+  QList<mdtTtTestNodeUnitSetupData> testNodeUnitSetupDataList;
+
+  // Get connections ID for A
+  connectionIdA = getConnectionId(testNodeId, schemaPositionA, connectorA, contactA, ok);
+  if(!ok){
+    return QList<mdtClLinkData>();
+  }
+  Q_ASSERT(!connectionIdA.isNull());
+  // Get connections ID for B
+  connectionIdB = getConnectionId(testNodeId, schemaPositionB, connectorB, contactB, ok);
+  if(!ok){
+    return QList<mdtClLinkData>();
+  }
+  Q_ASSERT(!connectionIdB.isNull());
+  // Build test node unit setup data for given unit schema positions
+  testNodeUnitSetupDataList = buildUnitSetupDataListBySchemaPostionList(testNodeId, relaysToEnable, ok);
+  if(!ok){
+    return QList<mdtClLinkData>();
+  }
+
+  return getLinkDataListForRoute(connectionIdA, connectionIdB, testNodeUnitSetupDataList, graph, ok);
+}
+
+double mdtTtTest::linkPathResistance(const QList< mdtClLinkData >& linkDataList) const
+{
+  int i;
+  double r = 0.0;
+
+  for(i = 0; i < linkDataList.size(); ++i){
+    mdtClLinkData linkData = linkDataList.at(i);
+    qDebug() << "Link R: " << linkData.value("Value");
+    qDebug() << "Start CNX R: " << linkData.startConnectionData().value("Resistance").toDouble();
+    qDebug() << "End CNX R: " << linkData.endConnectionData().value("Resistance").toDouble();
+    
+    r += linkData.value("Value").toDouble();
+    r += linkData.startConnectionData().value("Resistance").toDouble() / 2.0;
+    r += linkData.endConnectionData().value("Resistance").toDouble() / 2.0;
+  }
+  qDebug() << "r: " << r;
+
+  return r;
+}
+
+QVariant mdtTtTest::getConnectionId(const QVariant & testNodeId, const QString & schemaPosition, const QString & connector, const QString & contact, bool & ok)
+{
+  QString sql;
+  QList<QVariant> dataList;
+  QVariant connectionId;
+
+  sql = "SELECT UCNX.Id_PK FROM UnitConnection_tbl UCNX";
+  sql += " LEFT JOIN UnitConnector_tbl UCNR ON UCNR.Id_PK = UCNX.UnitConnector_Id_FK";
+  sql += " JOIN Unit_tbl U ON U.Id_PK = UCNX.Unit_Id_FK";
+  sql += " JOIN VehicleType_Unit_tbl VTU ON VTU.Unit_Id_FK = UCNX.Unit_Id_FK";
+  sql += " WHERE U.SchemaPosition = '" + schemaPosition + "'";
+  if(!connector.isEmpty()){
+    sql += " AND UCNR.Name = '" + connector + "'";
+  }
+  sql += " AND UCNX.UnitContactName = '" + contact + "'";
+  sql += " AND VTU.VehicleType_Id_FK = " + testNodeId.toString();
+  dataList = getDataList<QVariant>(sql, ok);
+  if(!ok){
+    return QVariant();
+  }
+  if(dataList.isEmpty()){
+    pvLastError.setError(tr("Could not find ID of requested connection.") + sql, mdtError::Error);
+    pvLastError.setSystemError(0, tr("SQL query: ") + sql);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
+    ok = false;
+    return QVariant();
+  }
+  if(dataList.size() > 1){
+    pvLastError.setError(tr("Criteria for connection returned more than 1 connection.") + sql, mdtError::Error);
+    pvLastError.setSystemError(0, tr("SQL query: ") + sql);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
+    ok = false;
+    return QVariant();
+  }
+  Q_ASSERT(dataList.size() == 1);
+
+  return dataList.at(0);
+}
 
 // bool mdtTtTest::addRouteDataToTestNodeSetupData(mdtTtTestNodeSetupData & tnSetupData, const QVariant& testModelItemId, const QVariant& testNodeId)
 // {
@@ -575,39 +714,116 @@ QList<QVariant> mdtTtTest::getStepNumberList(const QVariant& testModelItemId, bo
   return getDataList<QVariant>(sql, ok);
 }
 
+mdtTtTestNodeSetupData mdtTtTest::getTestNodeSetupDataByTnPk(const QVariant& testModelItemId, const QVariant & stepNumber, const QVariant& testNodeId, bool& ok)
+{
+  QString sql;
+  QSqlRecord data;
+  QList<QSqlRecord> dataList;
+  mdtTtTestNodeSetupData nodeSetupData;
+
+  // Get node setup data from database
+  sql = "SELECT * FROM TestNode_tbl";
+  sql += " WHERE VehicleType_Id_FK_PK = " + testNodeId.toString();
+  dataList = getDataList<QSqlRecord>(sql, ok);
+  if(!ok){
+    return nodeSetupData;
+  }
+  if(dataList.isEmpty()){
+    QString msg = tr("Could not find a node with ID (PK)") + " '" + testNodeId.toString() + "' ";
+    msg += tr("for test item ID") + " " + testModelItemId.toString();
+    pvLastError.setError(msg , mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTest");
+    pvLastError.commit();
+    ok = false;
+    return nodeSetupData;
+  }
+  Q_ASSERT(dataList.size() == 1);
+  // Set node setup data values
+  data = dataList.at(0);
+  nodeSetupData.setId(data.value("VehicleType_Id_FK_PK"));
+  nodeSetupData.setDeviceIdentification(data.value("DeviceIdentification"));
+  nodeSetupData.setNodeIdentification(data.value("NodeIdentification").toString());
+  // Add route data
+  if(!addRouteDataToTestNodeSetupData(nodeSetupData, testModelItemId, stepNumber, nodeSetupData.id())){
+    ok = false;
+    return nodeSetupData;
+  }
+  // Add other setup data
+  if(!addNodeUnitSetupDataToTestNodeSetupData(nodeSetupData, testModelItemId, stepNumber, nodeSetupData.id())){
+    ok = false;
+    return nodeSetupData;
+  }
+
+  return nodeSetupData;
+}
+
+QList< mdtTtTestNodeUnitSetupData > mdtTtTest::buildUnitSetupDataListBySchemaPostionList(const QVariant& testNodeId, const QStringList& schemaPositionList, bool& ok)
+{
+  mdtTtTestNodeUnitSetupData setupData;
+  QList<mdtTtTestNodeUnitSetupData> setupDataList;
+  QString sql;
+  QList<QVariant> unitIdList;
+  int i;
+  int lastIndex;
+
+  // Setup setup data
+  if(!setupData.setup(database())){
+    ok = false;
+    pvLastError = setupData.lastError();
+    return setupDataList;
+  }
+  // Get ID of each test node unit schema postion
+  sql = "SELECT U.Id_PK FROM TestNodeUnit_tbl TNU JOIN Unit_tbl U ON U.Id_PK = TNU.Unit_Id_FK_PK";
+  sql += " WHERE TNU.TestNode_Id_FK = " + testNodeId.toString();
+  sql += " AND U.SchemaPosition IN(";
+  lastIndex = schemaPositionList.size() - 1;
+  for(i = 0; i < lastIndex; ++i){
+    sql += "'" + schemaPositionList.at(i) + "',";
+  }
+  sql += "'" + schemaPositionList.at(lastIndex) + "')";
+  
+  qDebug() << "SQL for relays: " << sql;
+  
+  unitIdList = getDataList<QVariant>(sql, ok);
+  if(!ok){
+    return setupDataList;
+  }
+  
+  qDebug() << "Realys ID list: " << unitIdList;
+  
+  // Build unit setup data list
+  for(i = 0; i < unitIdList.size(); ++i){
+    setupData.clearValues();
+    setupData.setValue("TestNodeUnit_Id_FK", unitIdList.at(i));
+    setupData.setValue("State", true);
+    setupDataList.append(setupData);
+  }
+  ok = true;
+
+  return setupDataList;
+}
+
 QList<mdtTtTestNodeSetupData> mdtTtTest::getTestNodeSetupDataList(const QVariant& testModelItemId, const QVariant& stepNumber, bool& ok)
 {
   QString sql;
-  QList<QSqlRecord> dataList;
-  QSqlRecord data;
+  QList<QVariant> idList;
   QList<mdtTtTestNodeSetupData> nodeSetupDataList;
   int i;
 
-  sql = "SELECT DISTINCT TN.* FROM TestNode_tbl TN";
+  sql = "SELECT DISTINCT TN.VehicleType_Id_FK_PK FROM TestNode_tbl TN";
   sql += " JOIN TestNodeUnit_tbl TNU ON TNU.TestNode_Id_FK = TN.VehicleType_Id_FK_PK";
   sql += " JOIN TestNodeUnitSetup_tbl TNUS ON TNUS.TestNodeUnit_Id_FK = TNU.Unit_Id_FK_PK";
   sql += " WHERE TNUS.TestModelItem_Id_FK = " + testModelItemId.toString();
   if(!stepNumber.isNull()){
     sql += " AND TNUS.StepNumber = " + stepNumber.toString();
   }
-  dataList = getDataList<QSqlRecord>(sql, ok);
+  idList = getDataList<QVariant>(sql, ok);
   if(!ok){
     return nodeSetupDataList;
   }
-  for(i = 0; i < dataList.size(); ++i){
-    data = dataList.at(i);
-    mdtTtTestNodeSetupData nodeSetupData;
-    nodeSetupData.setId(data.value("VehicleType_Id_FK_PK"));
-    nodeSetupData.setDeviceIdentification(data.value("DeviceIdentification"));
-    nodeSetupData.setNodeIdentification(data.value("NodeIdentification").toString());
-    // Add route data
-    if(!addRouteDataToTestNodeSetupData(nodeSetupData, testModelItemId, stepNumber, nodeSetupData.id())){
-      ok = false;
-      return nodeSetupDataList;
-    }
-    // Add other setup data
-    if(!addNodeUnitSetupDataToTestNodeSetupData(nodeSetupData, testModelItemId, stepNumber, nodeSetupData.id())){
-      ok = false;
+  for(i = 0; i < idList.size(); ++i){
+    mdtTtTestNodeSetupData nodeSetupData = getTestNodeSetupDataByTnPk(testModelItemId, stepNumber, idList.at(i), ok);
+    if(!ok){
       return nodeSetupDataList;
     }
     // Add node setup data to list

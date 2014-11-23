@@ -138,17 +138,15 @@ bool mdtClLink::addLinks(const QList<mdtClLinkData> & linkDataList, bool handleT
   return true;
 }
 
-bool mdtClLink::linkExists(const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId, bool* ok)
+bool mdtClLink::linkExists(const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId, bool & ok)
 {
-  Q_ASSERT(ok != 0);
-
   QList<QSqlRecord> dataList;
   QString sql;
 
   sql = "SELECT UnitConnectionStart_Id_FK, UnitConnectionEnd_Id_FK FROM Link_tbl ";
   sql += " WHERE UnitConnectionStart_Id_FK = " + unitConnectionStartId.toString();
   sql += " AND UnitConnectionEnd_Id_FK = " + unitConnectionEndId.toString();
-  dataList = getData(sql, ok);
+  dataList = getDataList<QSqlRecord>(sql, ok);
 
   return (dataList.size() > 0);
 }

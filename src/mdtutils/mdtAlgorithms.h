@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -134,6 +134,10 @@ namespace mdtAlgorithms
    * \return The list of found fields
    */
   QStringList splitString(const QString &str, const QString &separator, const QString &dataProtection, const QChar &escapeChar = QChar());
+
+  /*! \brief Get the string of longest line in given string
+   */
+  QString longestLineInString(const QString & str, const QString & sep = "\n");
 };
 
 #endif  // #ifndef MDT_ALGORITHMS_H

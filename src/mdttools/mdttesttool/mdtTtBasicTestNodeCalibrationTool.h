@@ -22,7 +22,13 @@
 #define MDT_TT_BASIC_TEST_NODE_CALIBRATION_TOOL_H
 
 #include "mdtTtAbstractTestNodeCalibrationTool.h"
+#include "mdtClPathGraph.h"
 #include <QSqlDatabase>
+#include <QList>
+#include <QString>
+#include <QStringList>
+
+class mdtTtTestModelItemRouteData;
 
 /*! \biref Test node calibration tool example
  */
@@ -57,6 +63,12 @@ class mdtTtBasicTestNodeCalibrationTool : public mdtTtAbstractTestNodeCalibratio
 
  private:
 
+  /*! \brief Measure bridge
+   *
+   * \return Resistance of bridge, or a value < 0 on error.
+   */
+  double measureBridge();
+
   /*! \brief Check K3, K4, K5, K6
    */
   bool checkSenseRelays();
@@ -85,6 +97,10 @@ class mdtTtBasicTestNodeCalibrationTool : public mdtTtAbstractTestNodeCalibratio
    */
   bool calibrateChannelRelays();
 
+  /*! \brief Set I/O coupler routes
+   */
+  bool setupIoCouplerRoutes(const QList<mdtTtTestModelItemRouteData> & routeDataList);
+
   /*! \brief Add instruments
    */
   void addInstruments();
@@ -97,7 +113,24 @@ class mdtTtBasicTestNodeCalibrationTool : public mdtTtAbstractTestNodeCalibratio
    */
   void disconnectFromInstruments();
 
+  /*! \brief Get resistance of links that are travsersed for given connections
+   *
+   * \param schemaPositionA Schema position that contains connection A
+   * \param connectorA Name of connector that contains connection A
+   * \param contactA Name of contact that contains connection A
+   * \param schemaPositionB Schema position that contains connection B
+   * \param connectorB Name of connector that contains connection B
+   * \param contactB Name of contact that contains connection B
+   * \param relaysToEnable List of coupling and channel relays that are turned on (give schema position for each)
+   * \param ok Will be set false if a error occured, true else
+   */
+  double getLinkResistanceForRoute(const QString & schemaPositionA, const QString & connectorA, const QString & contactA,
+                                   const QString & schemaPositionB, const QString & connectorB, const QString & contactB,
+                                   const QStringList & relaysToEnable, bool & ok);
+
   Q_DISABLE_COPY(mdtTtBasicTestNodeCalibrationTool);
+
+  mdtClPathGraph pvGraph;
 };
 
 #endif // #ifndef MDT_TT_BASIC_TEST_NODE_CALIBRATION_TOOL_H

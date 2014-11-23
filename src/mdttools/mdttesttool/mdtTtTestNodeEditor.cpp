@@ -21,8 +21,6 @@
 #include "mdtTtTestNodeEditor.h"
 #include "mdtTtTestNode.h"
 #include "ui_mdtTtTestNodeEditor.h"
-///#include "mdtSqlFormWidget.h"
-///#include "mdtSqlRelation.h"
 #include "mdtSqlDataWidgetController.h"
 #include "mdtSqlRelationInfo.h"
 #include "mdtSqlTableWidget.h"
@@ -45,18 +43,11 @@
 #include <QMessageBox>
 #include <memory>
 
-#include "mdtTtBasicTestNodeCalibrationWindow.h"
-
 #include <QDebug>
 
 mdtTtTestNodeEditor::mdtTtTestNodeEditor(QWidget *parent, QSqlDatabase db)
  : mdtSqlForm(parent, db)
 {
-  /// \todo Provisoire !!
-  mdtTtBasicTestNodeCalibrationWindow *c;
-  c = new mdtTtBasicTestNodeCalibrationWindow(db, this);
-  c->init();
-  c->show();
 }
 
 bool mdtTtTestNodeEditor::setupTables()

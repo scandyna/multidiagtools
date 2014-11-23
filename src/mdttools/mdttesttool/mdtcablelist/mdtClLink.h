@@ -147,7 +147,7 @@ class mdtClLink : public mdtTtBase
 
   /*! \brief Check if a link exists
    */
-  bool linkExists(const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId, bool *ok);
+  bool linkExists(const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId, bool & ok);
 
   /*! \brief Get link data
    */

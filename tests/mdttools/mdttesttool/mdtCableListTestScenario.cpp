@@ -1132,10 +1132,10 @@ void mdtCableListTestScenario::createTestLinks()
   linkData.setValue("LinkDirection_Code_FK", "BID");
   QVERIFY(lnk.buildVehicleTypeLinkDataList(linkData, vtStartIdList, vtEndIdList));
   // Add link
-  QVERIFY(!lnk.linkExists(10000, 10001, &ok));
+  QVERIFY(!lnk.linkExists(10000, 10001, ok));
   QVERIFY(ok);
   QVERIFY(lnk.addLink(linkData));
-  QVERIFY(lnk.linkExists(10000, 10001, &ok));
+  QVERIFY(lnk.linkExists(10000, 10001, ok));
   QVERIFY(ok);
   // Check back in Link_tbl
   dataList = lnk.getData("SELECT * FROM LinkList_view WHERE UnitConnectionStart_Id_FK = 10000 AND UnitConnectionEnd_Id_FK = 10001", &ok);
@@ -1169,10 +1169,10 @@ void mdtCableListTestScenario::createTestLinks()
   linkData.setValue("LinkDirection_Code_FK", "BID");
   QVERIFY(lnk.buildVehicleTypeLinkDataList(linkData, vtStartIdList, vtEndIdList));
   // Add link
-  QVERIFY(!lnk.linkExists(10001, 20000, &ok));
+  QVERIFY(!lnk.linkExists(10001, 20000, ok));
   QVERIFY(ok);
   QVERIFY(lnk.addLink(linkData));
-  QVERIFY(lnk.linkExists(10001, 20000, &ok));
+  QVERIFY(lnk.linkExists(10001, 20000, ok));
   QVERIFY(ok);
   // Check back in Link_tbl - We take UnitLink_view because it include ArticleConnectionStart/End_Id_FK
   dataList = lnk.getData("SELECT * FROM UnitLink_view WHERE UnitConnectionStart_Id_FK = 10001 AND UnitConnectionEnd_Id_FK = 20000", &ok, expectedFields);
@@ -1220,10 +1220,10 @@ void mdtCableListTestScenario::createTestLinks()
   linkData.setValue("LinkDirection_Code_FK", "BID");
   QVERIFY(lnk.buildVehicleTypeLinkDataList(linkData, vtStartIdList, vtEndIdList));
   // Add link
-  QVERIFY(!lnk.linkExists(30005, 40005, &ok));
+  QVERIFY(!lnk.linkExists(30005, 40005, ok));
   QVERIFY(ok);
   QVERIFY(lnk.addLink(linkData));
-  QVERIFY(lnk.linkExists(30005, 40005, &ok));
+  QVERIFY(lnk.linkExists(30005, 40005, ok));
   QVERIFY(ok);
   // Check back
   linkData = lnk.getLinkData(30005, 40005, true, true, ok);
@@ -1260,10 +1260,10 @@ void mdtCableListTestScenario::createTestLinks()
   linkData.setValue("LinkDirection_Code_FK", "BID");
   QVERIFY(lnk.buildVehicleTypeLinkDataList(linkData, vtStartIdList, vtEndIdList));
   // Add link
-  QVERIFY(!lnk.linkExists(40005, 50005, &ok));
+  QVERIFY(!lnk.linkExists(40005, 50005, ok));
   QVERIFY(ok);
   QVERIFY(lnk.addLink(linkData));
-  QVERIFY(lnk.linkExists(40005, 50005, &ok));
+  QVERIFY(lnk.linkExists(40005, 50005, ok));
   QVERIFY(ok);
   // Check back
   linkData = lnk.getLinkData(40005, 50005, true, true, ok);

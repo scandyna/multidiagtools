@@ -1,0 +1,19 @@
+format 207
+
+classcanvas 128002 class_ref 1200386 // ObjectDictionaryItem
+  classdiagramsettings member_max_width 0 end
+  xyz 225 114 2000
+end
+classcanvas 128130 class_ref 1200514 // ServiceDataObject
+  classdiagramsettings member_max_width 0 end
+  xyz 502 120 2000
+end
+classcanvas 128258 class_ref 1200642 // ElectronicDataSheet
+  classdiagramsettings member_max_width 0 end
+  xyz 332 479 2000
+end
+classcanvas 128386 class_ref 1200770 // ProcessDataObject
+  classdiagramsettings member_max_width 0 end
+  xyz 503 223 2000
+end
+end

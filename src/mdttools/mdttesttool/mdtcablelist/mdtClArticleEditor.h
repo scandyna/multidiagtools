@@ -83,6 +83,10 @@ class mdtClArticleEditor : public mdtSqlForm
    */
   void editConnection(const QModelIndex &);
 
+  /*! \brief Update related unit connections data from article connection
+   */
+  void updateRelatedUnitConnections();
+
   /*! \brief Remove connections
    */
   void removeConnections();

@@ -25,6 +25,7 @@
 #include "mdtTtTestNodeUnitData.h"
 #include "mdtTtTestNodeUnitSetupData.h"
 #include "mdtClPathGraph.h"
+#include "mdtClLinkData.h"
 #include <QList>
 #include <QVariant>
 #include <QString>
@@ -126,11 +127,27 @@ class mdtTtTestNode : public mdtTtBase
    */
   bool ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, const QVariant & connectionIdB, const QList<mdtTtTestNodeUnitSetupData> & testNodeUnitSetupDataList, mdtClPathGraph & graph, bool & ok);
 
+  /*! \brief Get a list of links that are travsersed from connectionIdA to connectionIdB
+   *
+   * \param connectionIdA Starting connection (f.ex. a measure connection)
+   * \param connectionIdB Ending connection (f.ex. a test connection)
+   * \param testNodeUnitSetupDataList Test node unit setup data list of coupling and channel relays that are turned on
+   * \param graph Graph object. Cable list must allready be loaded (see mdtClPathGraph::loadLinkList()).
+   * \param ok Will be set false if a error occured, true else
+   */
+  QList<mdtClLinkData> getLinkDataListForPath(const QVariant & connectionIdA, const QVariant & connectionIdB,
+                                              const QList<mdtTtTestNodeUnitSetupData> & testNodeUnitSetupDataList,
+                                              mdtClPathGraph & graph, bool & ok);
+
  private:
 
   /*! \brief Get 2 non linked connections of given relay
    */
   QPair<QVariant, QVariant> getTwoRelayConnections(const QVariant & testNodeUnitId, mdtClPathGraph & graph, bool & ok);
+
+  /*! \brief Add given list of relays to graph
+   */
+  bool addRelayListToGraphPv(const QList<QVariant> & testNodeUnitIdList, mdtClPathGraph & graph, int relayCost);
 
   Q_DISABLE_COPY(mdtTtTestNode);
 };

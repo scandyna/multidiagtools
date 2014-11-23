@@ -548,6 +548,11 @@ void mdtClUnitConnectionDialog::updateDialog()
   leSignalName->setText(pvData.value("SignalName").toString());
   sbSwAddress->setValue(pvData.value("SwAddress").toInt());
   leUnitContactName->setText(pvData.value("UnitContactName").toString());
+  if(pvData.value("Resistance").isNull()){
+    sbConnectionResistance->setValue(sbConnectionResistance->minimum());
+  }else{
+    sbConnectionResistance->setValue(pvData.value("Resistance").toDouble());
+  }
 }
 
 void mdtClUnitConnectionDialog::updateData()
@@ -592,6 +597,11 @@ void mdtClUnitConnectionDialog::updateData()
     pvData.setValue("UnitContactName", QVariant());
   }else{
     pvData.setValue("UnitContactName", leUnitContactName->text());
+  }
+  if(sbConnectionResistance->value() < 0.0){
+    pvData.setValue("Resistance", QVariant());
+  }else{
+    pvData.setValue("Resistance", sbConnectionResistance->value());
   }
 }
 

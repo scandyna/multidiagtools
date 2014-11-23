@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -462,4 +462,14 @@ int main(int argc, char **argv)
   }
 
   return QTest::qExec(&test, argc, argv);
+}
+
+void mdtAlgorithmsTest::longestLineInStringTest()
+{
+  QCOMPARE(longestLineInString(""), QString(""));
+  QCOMPARE(longestLineInString("A"), QString("A"));
+  QCOMPARE(longestLineInString("A\n"), QString("A"));
+  QCOMPARE(longestLineInString("A\nBC"), QString("BC"));
+  QCOMPARE(longestLineInString("AB\nC"), QString("AB"));
+  QCOMPARE(longestLineInString("AB\nC\nDEF"), QString("DEF"));
 }

@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtTtTestNode.h"
 #include "mdtTtTestNodeUnit.h"
+#include "mdtClLink.h"
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QSqlError>
@@ -276,15 +277,17 @@ bool mdtTtTestNode::setTestNodeUnitIoRange(const mdtSqlTableSelection& s, int st
 
 bool mdtTtTestNode::addRelaysToGraph(const QVariant& testNodeId, mdtClPathGraph& graph, const QList< QVariant >& relaysToIgnoreIdList)
 {
+  /**
   struct relay_t{
     QVariant id;
     QVariant cnxA;
     QVariant cnxB;
   } relay;
+  */
   QString sql;
   QList<QVariant> testNodeUnitIdList;
-  QPair<QVariant, QVariant> connections;
-  QList<relay_t> relaysList;
+  ///QPair<QVariant, QVariant> connections;
+  ///QList<relay_t> relaysList;
   bool ok;
   int i;
 
@@ -302,6 +305,9 @@ bool mdtTtTestNode::addRelaysToGraph(const QVariant& testNodeId, mdtClPathGraph&
     Q_ASSERT(!relaysToIgnoreIdList.at(i).isNull());
     testNodeUnitIdList.removeAll(relaysToIgnoreIdList.at(i));
   }
+
+  return addRelayListToGraphPv(testNodeUnitIdList, graph, 100);
+  /**
   // Build relays list
   for(i = 0; i < testNodeUnitIdList.size(); ++i){
     // Get connections
@@ -321,6 +327,7 @@ bool mdtTtTestNode::addRelaysToGraph(const QVariant& testNodeId, mdtClPathGraph&
   }
 
   return true;
+  */
 }
 
 QList<mdtTtTestNodeUnitSetupData> mdtTtTestNode::getRelayPathSetupDataList(const QList<QVariant> & relayPathConnectionIdList, mdtClPathGraph & graph, bool & ok)
@@ -364,9 +371,10 @@ bool mdtTtTestNode::ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, 
   Q_ASSERT(!connectionIdA.isNull());
   Q_ASSERT(!connectionIdB.isNull());
 
-  QList<QVariant> connectionIdList;
+  ///QList<QVariant> connectionIdList;
   int i;
   bool hasShort;
+  /**
   struct relay_t{
     QVariant id;
     QVariant cnxA;
@@ -374,10 +382,29 @@ bool mdtTtTestNode::ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, 
   } relay;
   QList<relay_t> relaysList;
   QPair<QVariant, QVariant> connections;
-  QVariant testNodeUnitId;
+  */
+  ///QVariant testNodeUnitId;
+  QList<QVariant> testNodeUnitIdList;
 
   // Clear previous results
   graph.removeAddedLinks();
+  // Add relays of given node units to graph
+  for(i = 0; i < testNodeUnitSetupDataList.size(); ++i){
+    testNodeUnitIdList << testNodeUnitSetupDataList.at(i).value("TestNodeUnit_Id_FK");
+  }
+  if(!addRelayListToGraphPv(testNodeUnitIdList, graph, 2)){
+    return false;
+  }
+  /**
+  for(i = 0; i < testNodeUnitSetupDataList.size(); ++i){
+    testNodeUnitId = testNodeUnitSetupDataList.at(i).value("TestNodeUnit_Id_FK");
+    Q_ASSERT(!testNodeUnitId.isNull());
+    if(!addRelayToGraphPv(testNodeUnitId, graph, 2)){
+      return false;
+    }
+  }
+  */
+  /**
   // Build relays list with only given node units
   for(i = 0; i < testNodeUnitSetupDataList.size(); ++i){
     testNodeUnitId = testNodeUnitSetupDataList.at(i).value("TestNodeUnit_Id_FK");
@@ -397,6 +424,7 @@ bool mdtTtTestNode::ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, 
     relay = relaysList.at(i);
     graph.addLink(relay.cnxA, relay.cnxB, relay.id, true, 2);
   }
+  */
   // Check about shorts and reset graph
   hasShort = graph.connectionsAreLinked(connectionIdA, connectionIdB);
   graph.removeAddedLinks();
@@ -406,13 +434,7 @@ bool mdtTtTestNode::ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, 
     QSqlRecord data;
     QString u1, u2, relaysStr;
     QString msg;
-    // Infos about test model item
-    /**
-    if(testNodeUnitSetupDataList.size() > 0){
-      sql = "SELECT DesignationEN FROM TestModelItem_tbl WHERE Id_PK = " + testNodeUnitSetupDataList.at(0).value("TestModelItem_Id_FK").toString();
-      
-    }
-    */
+    int lastIndex;
     // Infos about connectionIdA
     sql = "SELECT U.SchemaPosition, UCNX.UnitContactName FROM UnitConnection_tbl UCNX JOIN Unit_tbl U ON U.Id_PK = UCNX.Unit_Id_FK";
     sql += " WHERE UCNX.Id_PK = " + connectionIdA.toString();
@@ -435,6 +457,12 @@ bool mdtTtTestNode::ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, 
     u2 = tr("pos. ") + data.value("SchemaPosition").toString() + tr(" connection ") + data.value("UnitContactName").toString();
     // Infos about used relays
     sql = "SELECT SchemaPosition FROM Unit_tbl WHERE Id_PK IN (";
+    lastIndex = testNodeUnitSetupDataList.size() - 1;
+    for(i = 0; i < lastIndex; ++i){
+      sql += testNodeUnitSetupDataList.at(i).value("TestNodeUnit_Id_FK").toString() + ",";
+    }
+    sql += testNodeUnitSetupDataList.at(lastIndex).value("TestNodeUnit_Id_FK").toString() + ")";
+    /**
     for(i = 0; i < (relaysList.size()-1); ++i){
       sql += relaysList.at(i).id.toString() + ",";
     }
@@ -442,6 +470,7 @@ bool mdtTtTestNode::ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, 
       sql += relaysList.at(i).id.toString();
     }
     sql += ")";
+    */
     dataList = getDataList<QSqlRecord>(sql, ok);
     if(!ok){
       return false;
@@ -462,6 +491,87 @@ bool mdtTtTestNode::ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, 
   return true;
 }
 
+QList< mdtClLinkData > mdtTtTestNode::getLinkDataListForPath(const QVariant& connectionIdA, const QVariant& connectionIdB,
+                                                             const QList< mdtTtTestNodeUnitSetupData >& testNodeUnitSetupDataList,
+                                                             mdtClPathGraph& graph, bool& ok)
+{
+  Q_ASSERT(!connectionIdA.isNull());
+  Q_ASSERT(!connectionIdB.isNull());
+
+  mdtClLink lnk(0, database());
+  QList<QVariant> connectionIdList;
+  QVariant startConnectionId;
+  QVariant endConnectionId;
+  mdtClLinkData linkData;
+  QList<mdtClLinkData> linkDataList;
+  QList<QVariant> testNodeUnitIdList;
+  int i;
+  bool exists;
+
+  // Clear previous results
+  graph.removeAddedLinks();
+  // Add relays of given node units to graph
+  for(i = 0; i < testNodeUnitSetupDataList.size(); ++i){
+    testNodeUnitIdList << testNodeUnitSetupDataList.at(i).value("TestNodeUnit_Id_FK");
+  }
+  if(!addRelayListToGraphPv(testNodeUnitIdList, graph, 2)){
+    ok = false;
+    return linkDataList;
+  }
+  /**
+  for(i = 0; i < testNodeUnitSetupDataList.size(); ++i){
+    testNodeUnitId = testNodeUnitSetupDataList.at(i).value("TestNodeUnit_Id_FK");
+    Q_ASSERT(!testNodeUnitId.isNull());
+    if(!addRelayToGraphPv(testNodeUnitId, graph, 2)){
+      ok = false;
+      return linkDataList;
+    }
+  }
+  */
+  // Get shortest path
+  connectionIdList = graph.getShortestPath(connectionIdA, connectionIdB, ok);
+  if(!ok){
+    pvLastError = graph.lastError();
+    return linkDataList;
+  }
+  /*
+   * Get link data from Link_tbl
+   * If 2 connection not exists in table,
+   *  they are "virtual" links representing relay contact,
+   *  i.e. those added previously with addRelayToGraphPv().
+   */
+  for(i = 1; i < connectionIdList.size(); ++i){
+    startConnectionId = connectionIdList.at(i-1);
+    endConnectionId = connectionIdList.at(i);
+    exists = lnk.linkExists(startConnectionId, endConnectionId, ok);
+    if(!ok){
+      pvLastError = lnk.lastError();
+      return linkDataList;
+    }
+    if(!exists){
+      startConnectionId = connectionIdList.at(i);
+      endConnectionId = connectionIdList.at(i-1);
+      exists = lnk.linkExists(startConnectionId, endConnectionId, ok);
+      if(!ok){
+        pvLastError = lnk.lastError();
+        return linkDataList;
+      }
+    }
+    if(exists){
+      linkData = lnk.getLinkData(startConnectionId, endConnectionId, true, false, ok);
+      if(!ok){
+        pvLastError = lnk.lastError();
+        return linkDataList;
+      }
+      linkDataList.append(linkData);
+    }
+  }
+  // Remove added relays from graph
+  graph.removeAddedLinks();
+
+  return linkDataList;
+}
+
 QPair<QVariant, QVariant> mdtTtTestNode::getTwoRelayConnections(const QVariant & testNodeUnitId, mdtClPathGraph & graph, bool & ok)
 {
   Q_ASSERT(!testNodeUnitId.isNull());
@@ -476,9 +586,15 @@ QPair<QVariant, QVariant> mdtTtTestNode::getTwoRelayConnections(const QVariant &
   if(!ok){
     return QPair<QVariant, QVariant>();
   }
-  // Check any combinaison of of connections to find 2 non linked together connections
+  
+  qDebug() << "Relay ID " << testNodeUnitId << " - connections: " << connectionsList;
+  
+  // Check any combinaison of connections to find 2 non linked together connections
   for(i = 0; i < (connectionsList.size()-1); ++i){
     for(m = i+1; m < connectionsList.size(); ++m){
+      
+      qDebug() << "Shortest path from " << connectionsList.at(i) << " to " << connectionsList.at(m) << ": " << graph.getShortestPath(connectionsList.at(i), connectionsList.at(m), ok);
+      
       if(!graph.connectionsAreLinked(connectionsList.at(i), connectionsList.at(m))){
         ok = true;
         return QPair<QVariant, QVariant>(connectionsList.at(i), connectionsList.at(m));
@@ -501,4 +617,47 @@ QPair<QVariant, QVariant> mdtTtTestNode::getTwoRelayConnections(const QVariant &
   pvLastError.commit();
 
   return QPair<QVariant, QVariant>();
+}
+
+bool mdtTtTestNode::addRelayListToGraphPv(const QList<QVariant> & testNodeUnitIdList, mdtClPathGraph & graph, int relayCost)
+{
+  int i;
+  QPair<QVariant, QVariant> connections;
+  QVector<QPair<QVariant, QVariant> > connectionsList;
+  bool ok;
+
+  /*
+   * First version of this method added relays one after the other
+   * with a helper method.
+   * By doing so, problem occured with getTwoRelayConnections()
+   * because a loop existed outside a relay, so the function could
+   * not find 2 not linked connections of the relay.
+   *
+   * To fix this problem, we build relays connections list first,
+   * then add them to graph.
+   */
+  // Build relays connections list
+  for(i = 0; i < testNodeUnitIdList.size(); ++i){
+    connections = getTwoRelayConnections(testNodeUnitIdList.at(i), graph, ok);
+    if(!ok){
+      return false;
+    }
+    connectionsList.append(connections);
+  }
+  // Add relays connections to graph
+  Q_ASSERT(connectionsList.size() == testNodeUnitIdList.size());
+  for(i = 0; i < connectionsList.size(); ++i){
+    connections = connectionsList.at(i);
+    graph.addLink(connections.first, connections.second, testNodeUnitIdList.at(i), true, relayCost);
+  }
+  /**
+  // Build relays list with only given node units
+  for(i = 0; i < testNodeUnitIdList.size(); ++i){
+    if(!addRelayToGraphPv(testNodeUnitIdList.at(i), graph, relayCost)){
+      return false;
+    }
+  }
+  */
+
+  return true;
 }

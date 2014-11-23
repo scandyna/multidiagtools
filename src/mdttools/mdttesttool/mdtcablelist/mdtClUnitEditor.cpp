@@ -1629,6 +1629,7 @@ bool mdtClUnitEditor::setupUnitConnectionTable()
   connect(widget->tableView(), SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(editConnection()));
   // Hide relation fields and PK
   widget->setColumnHidden("UnitConnection_Id_PK", true);
+  widget->setColumnHidden("UnitConnector_Id_FK", true);
   widget->setColumnHidden("Unit_Id_FK", true);
   widget->setColumnHidden("ArticleConnection_Id_FK", true);
   // Give fields a user friendly name
@@ -1641,6 +1642,7 @@ bool mdtClUnitEditor::setupUnitConnectionTable()
   widget->setHeaderData("SwAddress", tr("SW address"));
   widget->setHeaderData("UnitConnectorName", tr("Unit\nconnector"));
   widget->setHeaderData("UnitContactName", tr("Unit\ncontact"));
+  widget->setHeaderData("UnitConnectionResistance", tr("Unit\nconnection\nresistance"));
   widget->setHeaderData("ArticleConnectorName", tr("Article\nconnector"));
   widget->setHeaderData("ArticleContactName", tr("Article\ncontact"));
   widget->setHeaderData("IoType", tr("I/O type"));
@@ -1723,10 +1725,12 @@ bool mdtClUnitEditor::setupUnitLinkTable()
   widget->setHeaderData("StartAlias", tr("Start\nalias"));
   widget->setHeaderData("StartUnitConnectorName", tr("Start\nconnector"));
   widget->setHeaderData("StartUnitContactName", tr("Start\ncontact"));
+  widget->setHeaderData("StartUnitConnectionResistance", tr("Start\nconnection\nresistance"));
   widget->setHeaderData("EndSchemaPosition", tr("End\nschema pos."));
   widget->setHeaderData("EndAlias", tr("End\nalias"));
   widget->setHeaderData("EndUnitConnectorName", tr("End\nconnector"));
   widget->setHeaderData("EndUnitContactName", tr("End\ncontact"));
+  widget->setHeaderData("EndUnitConnectionResistance", tr("End\nconnection\nresistance"));
   widget->setHeaderData("SinceVersion", tr("Since\nversion"));
   widget->setHeaderData("LinkTypeNameEN", tr("Link type"));
   widget->setHeaderData("ValueUnit", tr("Unit"));

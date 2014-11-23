@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -43,6 +43,8 @@ class mdtAlgorithmsTest : public mdtTest
 
   // Split string test
   void splitStringTest();
+
+  void longestLineInStringTest();
 };
 
 #endif  // #ifndef MDT_ALGORITHMS_TEST_H
