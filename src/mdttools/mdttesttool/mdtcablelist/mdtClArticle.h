@@ -154,6 +154,25 @@ class mdtClArticle : public mdtTtBase
   ///bool removeConnections(const QModelIndexList & indexListOfSelectedRows);
   bool removeConnections(const mdtSqlTableSelection & s);
 
+  /*! \brief Update unit connections with data from given article connection
+   *
+   * For each unit connection that is based on given article connection,
+   *  data will be updated with given fields values.
+   *
+   * \param fields Article field names. Matching is done internally.
+   *               Supported fields are: ArticleContactName, FunctionEN,
+   *               FunctionFR, FunctionDE, FunctionIT and Resistance.
+   * \param connectionId Article connection ID.
+   * \param handleTransaction If true, a transaction will be used internally.
+   */
+  bool updateUnitConnections(const QStringList & fields, const QVariant & connectionId);
+
+  /*! \brief Update unit connections with data from given article connection
+   *
+   * See bool updateUnitConnections(const QStringList &, const QVariant &);
+   */
+  bool updateUnitConnections(const QStringList & fields, const mdtSqlTableSelection & s);
+
   /*! \brief Remove connections for a given article connector
    *
    * If single transaction is set, a transaction is used .

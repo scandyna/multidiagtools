@@ -1000,6 +1000,12 @@ bool mdtTtDatabaseSchema::setupArticleConnectionTable()
   field.setType(QVariant::String);
   field.setLength(30);
   table.addField(field, false);
+  // Resistance
+  field = QSqlField();
+  field.setName("Resistance");
+  field.setType(QVariant::Double);
+  field.setDefaultValue(0.0);
+  table.addField(field, false);
   // IoType
   field = QSqlField();
   field.setName("IoType");

@@ -22,9 +22,9 @@
 #define MDT_SQL_FIELD_SELECTION_DIALOG_H
 
 #include "ui_mdtSqlFieldSelectionDialog.h"
-#include <QSqlDatabase>
 #include <QString>
-#include <QMap>
+#include <QStringList>
+#include <QList>
 
 class QCheckBox;
 
@@ -53,7 +53,7 @@ class mdtSqlFieldSelectionDialog : public QDialog, Ui::mdtSqlFieldSelectionDialo
 
   /*! \brief Constructor
    */
-  mdtSqlFieldSelectionDialog(QWidget * parent, QSqlDatabase db);
+  mdtSqlFieldSelectionDialog(QWidget * parent);
 
   /*! \brief Set message
    */
@@ -69,20 +69,33 @@ class mdtSqlFieldSelectionDialog : public QDialog, Ui::mdtSqlFieldSelectionDialo
    */
   void addField(const QString & fieldName, const QString & labelName, bool setSelected);
 
+  /*! \brief Sort fields
+   *
+   * Fields will be sorted by label names.
+   */
+  void sort(Qt::SortOrder sortOrder = Qt::AscendingOrder);
+
+  /*! \brief Get a list of all field names
+   *
+   * Note: list will be built a each call of this function.
+   */
+  QStringList getFieldNames() const;
+
+  /*! \brief Get a list of selected field names
+   *
+   * Note: list will be built a each call of this function.
+   */
+  QStringList getSelectedFieldNames() const;
+
  private:
 
-  /*! \brief Display items
+  /*! \brief Remove item widgets
    */
-  void displayItems();
-
-  /*! \brief Remove items
-   */
-  void removeItems();
+  void removeItemWidgets();
 
   Q_DISABLE_COPY(mdtSqlFieldSelectionDialog);
 
-  QMap<QString, mdtSqlFieldSelectionDialogPrivate::selectionItem> pvItems;
-  QSqlDatabase pvDatabase;  /// \todo Voir si utile..
+  QList<mdtSqlFieldSelectionDialogPrivate::selectionItem> pvItemList;
 };
 
 #endif // #ifndef MDT_SQL_FIELD_SELECTION_DIALOG_H

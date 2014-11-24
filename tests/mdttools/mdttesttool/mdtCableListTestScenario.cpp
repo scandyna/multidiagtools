@@ -298,6 +298,7 @@ void mdtCableListTestScenario::createTestArticleConnections()
   connectionData.setValue("Article_Id_FK", 1);
   connectionData.setValue("ConnectionType_Code_FK", "T");
   connectionData.setValue("ArticleContactName", "10");
+  connectionData.setValue("Resistance", 0.1);
   QVERIFY(art.addConnection(connectionData));
   // Add contact ID 20 to article ID 2
   connectionData.clearValues();
@@ -305,6 +306,7 @@ void mdtCableListTestScenario::createTestArticleConnections()
   connectionData.setValue("Article_Id_FK", 2);
   connectionData.setValue("ConnectionType_Code_FK", "T");
   connectionData.setValue("ArticleContactName", "20");
+  connectionData.setValue("Resistance", 0.2);
   QVERIFY(art.addConnection(connectionData));
   // Add contact ID 21 to article ID 2
   connectionData.clearValues();
@@ -312,6 +314,7 @@ void mdtCableListTestScenario::createTestArticleConnections()
   connectionData.setValue("Article_Id_FK", 2);
   connectionData.setValue("ConnectionType_Code_FK", "T");
   connectionData.setValue("ArticleContactName", "21");
+  connectionData.setValue("Resistance", 0.21);
   QVERIFY(art.addConnection(connectionData));
   // Check back data
   connectionData = art.getConnectionData(10, &ok);
@@ -320,18 +323,21 @@ void mdtCableListTestScenario::createTestArticleConnections()
   QCOMPARE(connectionData.value("Article_Id_FK"), QVariant(1));
   QCOMPARE(connectionData.value("ConnectionType_Code_FK"), QVariant("T"));
   QCOMPARE(connectionData.value("ArticleContactName"), QVariant("10"));
+  QCOMPARE(connectionData.value("Resistance"), QVariant(0.1));
   connectionData = art.getConnectionData(20, &ok);
   QVERIFY(ok);
   QCOMPARE(connectionData.value("Id_PK"), QVariant(20));
   QCOMPARE(connectionData.value("Article_Id_FK"), QVariant(2));
   QCOMPARE(connectionData.value("ConnectionType_Code_FK"), QVariant("T"));
   QCOMPARE(connectionData.value("ArticleContactName"), QVariant("20"));
+  QCOMPARE(connectionData.value("Resistance"), QVariant(0.2));
   connectionData = art.getConnectionData(21, &ok);
   QVERIFY(ok);
   QCOMPARE(connectionData.value("Id_PK"), QVariant(21));
   QCOMPARE(connectionData.value("Article_Id_FK"), QVariant(2));
   QCOMPARE(connectionData.value("ConnectionType_Code_FK"), QVariant("T"));
   QCOMPARE(connectionData.value("ArticleContactName"), QVariant("21"));
+  QCOMPARE(connectionData.value("Resistance"), QVariant(0.21));
   // Check connections data list getter method
   idList.clear();
   idList << 20 << 21;
@@ -343,12 +349,14 @@ void mdtCableListTestScenario::createTestArticleConnections()
   QCOMPARE(connectionData.value("Article_Id_FK"), QVariant(2));
   QCOMPARE(connectionData.value("ConnectionType_Code_FK"), QVariant("T"));
   QCOMPARE(connectionData.value("ArticleContactName"), QVariant("20"));
+  QCOMPARE(connectionData.value("Resistance"), QVariant(0.2));
   connectionData = art.getConnectionData(21, &ok);
   connectionData = connectionDataList.at(1);
   QCOMPARE(connectionData.value("Id_PK"), QVariant(21));
   QCOMPARE(connectionData.value("Article_Id_FK"), QVariant(2));
   QCOMPARE(connectionData.value("ConnectionType_Code_FK"), QVariant("T"));
   QCOMPARE(connectionData.value("ArticleContactName"), QVariant("21"));
+  QCOMPARE(connectionData.value("Resistance"), QVariant(0.21));
 }
 
 void mdtCableListTestScenario::removeTestArticleConnections()

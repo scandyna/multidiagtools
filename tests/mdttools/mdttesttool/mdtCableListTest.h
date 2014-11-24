@@ -46,6 +46,7 @@ class mdtCableListTest : public mdtTest
   void articleConnectionDataTest();
   void articleConnectorDataTest();
   void articleTest();
+  void unitConnectionUpdateTest();
 
   void unitConnectionDataTest();
   void unitConnectorDataTest();

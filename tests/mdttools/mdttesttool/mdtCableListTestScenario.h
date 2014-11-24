@@ -77,9 +77,9 @@ class mdtCableListTestScenario
 
   /*
    * Create some article connections for tests:
-   *  - Id_PK : 10 , Article_Id_FK : 1 , ConnectionType_Code_FK : T , ArticleContactName : Article contact 10
-   *  - Id_PK : 20 , Article_Id_FK : 2 , ConnectionType_Code_FK : T , ArticleContactName : Article contact 20
-   *  - Id_PK : 21 , Article_Id_FK : 2 , ConnectionType_Code_FK : T , ArticleContactName : Article contact 21
+   *  - Id_PK : 10 , Article_Id_FK : 1 , ConnectionType_Code_FK : T , ArticleContactName : 10 , Resistance : 0.1
+   *  - Id_PK : 20 , Article_Id_FK : 2 , ConnectionType_Code_FK : T , ArticleContactName : 20 , Resistance : 0.2
+   *  - Id_PK : 21 , Article_Id_FK : 2 , ConnectionType_Code_FK : T , ArticleContactName : 21 , Resistance : 0.21
    */
   void createTestArticleConnections();
   /*

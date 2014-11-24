@@ -383,12 +383,103 @@ bool mdtClArticle::removeConnections(const QModelIndexList & indexListOfSelected
 
 bool mdtClArticle::removeConnections(const mdtSqlTableSelection & s)
 {
-  int i;
   QList<QVariant> idList;
 
   idList = s.dataList("Id_PK");
 
   return removeConnections(idList);
+}
+
+bool mdtClArticle::updateUnitConnections(const QStringList & fields, const QVariant & connectionId)
+{
+  QList<QSqlRecord> articleConnectionDataList;
+  QSqlRecord articleConnectionData;
+  mdtSqlRecord unitConnectionRecord;
+  QString fieldName;
+  QSqlDatabase db = database();
+  QString sql;
+  bool ok;
+  int i;
+
+  // Get data from ArticleConnection_tbl
+  sql = "SELECT * FROM ArticleConnection_tbl WHERE Id_PK = " + connectionId.toString();
+  articleConnectionDataList = getDataList<QSqlRecord>(sql, ok);
+  if(!ok){
+    return false;
+  }
+  Q_ASSERT(articleConnectionDataList.size() == 1);
+  articleConnectionData = articleConnectionDataList.at(0);
+  // Map and copy article connection fields to unit fields
+  for(i = 0; i < fields.size(); ++i){
+    fieldName = fields.at(i);
+    // Resistance
+    if(fieldName == "Resistance"){
+      if(!unitConnectionRecord.addField("Resistance", "UnitConnection_tbl", db)){
+        pvLastError = unitConnectionRecord.lastError();
+        return false;
+      }
+      unitConnectionRecord.setValue("Resistance", articleConnectionData.value("Resistance"));
+    }else if(fieldName == "ArticleContactName"){
+      // Contact name
+      if(!unitConnectionRecord.addField("UnitContactName", "UnitConnection_tbl", db)){
+        pvLastError = unitConnectionRecord.lastError();
+        return false;
+      }
+      unitConnectionRecord.setValue("UnitContactName", articleConnectionData.value("ArticleContactName"));
+    }else if(fieldName == "FunctionEN"){
+      // FunctionEN
+      if(!unitConnectionRecord.addField("FunctionEN", "UnitConnection_tbl", db)){
+        pvLastError = unitConnectionRecord.lastError();
+        return false;
+      }
+      unitConnectionRecord.setValue("FunctionEN", articleConnectionData.value("FunctionEN"));
+    }else if(fieldName == "FunctionFR"){
+      // FunctionFR
+      if(!unitConnectionRecord.addField("FunctionFR", "UnitConnection_tbl", db)){
+        pvLastError = unitConnectionRecord.lastError();
+        return false;
+      }
+      unitConnectionRecord.setValue("FunctionFR", articleConnectionData.value("FunctionFR"));
+    }else if(fieldName == "FunctionDE"){
+      // FunctionDE
+      if(!unitConnectionRecord.addField("FunctionDE", "UnitConnection_tbl", db)){
+        pvLastError = unitConnectionRecord.lastError();
+        return false;
+      }
+      unitConnectionRecord.setValue("FunctionDE", articleConnectionData.value("FunctionDE"));
+    }else if(fieldName == "FunctionIT"){
+      // FunctionIT
+      if(!unitConnectionRecord.addField("FunctionIT", "UnitConnection_tbl", db)){
+        pvLastError = unitConnectionRecord.lastError();
+        return false;
+      }
+      unitConnectionRecord.setValue("FunctionIT", articleConnectionData.value("FunctionIT"));
+    }else{
+      pvLastError.setError(tr("Source field") + " '" + fieldName + "' " + tr("cannot be mapped."), mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtClArticle");
+      pvLastError.commit();
+      return false;
+    }
+  }
+
+  return updateRecord("UnitConnection_tbl", unitConnectionRecord, "ArticleConnection_Id_FK", connectionId);
+}
+
+bool mdtClArticle::updateUnitConnections(const QStringList & fields, const mdtSqlTableSelection & s)
+{
+  int row;
+
+  if(!beginTransaction()){
+    return false;
+  }
+  for(row = 0; row < s.rowCount(); ++row){
+    if(!updateUnitConnections(fields, s.data(row, "Id_PK"))){
+      rollbackTransaction();
+      return false;
+    }
+  }
+
+  return commitTransaction();
 }
 
 bool mdtClArticle::removeConnectorConnections(const QVariant & articleConnectorId)

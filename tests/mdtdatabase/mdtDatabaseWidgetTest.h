@@ -100,6 +100,8 @@ class mdtDatabaseWidgetTest : public mdtTest
 
   void sqlFormTest();
 
+  void sqlFieldSelectionDialogTest();
+
  private:
 
   // Create test database schema - Will FAIL on problem

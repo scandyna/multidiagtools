@@ -274,18 +274,56 @@ void mdtClArticleEditor::editConnection(const QModelIndex &)
 
 void mdtClArticleEditor::updateRelatedUnitConnections()
 {
-  mdtSqlFieldSelectionDialog fsDialog(this, database());
+  mdtClArticle art(this, database());
+  mdtSqlFieldSelectionDialog fsDialog(this);
+  QMessageBox msgBox(this);
+  mdtSqlTableSelection s;
+  mdtSqlTableWidget *widget;
+  QStringList fields;
 
+  widget = sqlTableWidget("ArticleConnection_view");
+  Q_ASSERT(widget != 0);
+  // Get selected rows
+  s = widget->currentSelection("Id_PK");
+  if(s.isEmpty()){
+    return;
+  }
   // Setup and show dialog
   fsDialog.setMessage(tr("Select fields that must be updated in related unit connections:"));
-  fsDialog.addField("FldNameA", tr("Field A"), true);
-  fsDialog.addField("FldNameB", tr("Field B"), true);
-  fsDialog.addField("FldNameC", tr("Field Z"), true);
-  fsDialog.addField("FldNameC", tr("Field G"), true);
-  fsDialog.addField("FldNameC", tr("Field GF"), true);
-  fsDialog.addField("FldNameC", tr("Field 3"), true);
-  fsDialog.addField("FldNameC", tr("Field 46"), true);
-  fsDialog.exec();
+  fsDialog.addField("ArticleContactName", tr("Contact name"), false);
+  fsDialog.addField("Resistance", tr("Connection resistance"), false);
+  fsDialog.addField("FunctionFR", tr("Function (French)"), false);
+  fsDialog.addField("FunctionEN", tr("Function (English)"), false);
+  fsDialog.addField("FunctionDE", tr("Function (German)"), false);
+  fsDialog.addField("FunctionIT", tr("Function (Italian)"), false);
+  fsDialog.sort();
+  if(fsDialog.exec() != QDialog::Accepted){
+    return;
+  }
+  fields = fsDialog.getSelectedFieldNames();
+  if(fields.isEmpty()){
+    return;
+  }
+  // We ask confirmation to the user
+  msgBox.setText(tr("You are about to update all unit connections related to selected connection."));
+  msgBox.setInformativeText(tr("Do you want to continue ?"));
+  msgBox.setIcon(QMessageBox::Warning);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+  msgBox.setDefaultButton(QMessageBox::No);
+  if(msgBox.exec() != QMessageBox::Yes){
+    return;
+  }
+  // Update unit connections
+  if(!art.updateUnitConnections(fields, s)){
+    pvLastError = art.lastError();
+    displayLastError();
+    return;
+  }
+  msgBox.setText(tr("Unit connections update done."));
+  msgBox.setInformativeText("");
+  msgBox.setIcon(QMessageBox::Information);
+  msgBox.setStandardButtons(QMessageBox::Yes);
+  msgBox.exec();
 }
 
 void mdtClArticleEditor::removeConnections()
