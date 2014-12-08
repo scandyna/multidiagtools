@@ -42,6 +42,10 @@ class mdtUsbPortTest : public mdtTest
   void standardCallBenchmark();
   void virtualCallBenchmark();
 
+  // USBTMC part tests
+  void usbtmcFrameTest();
+  void usbtmcFrameBenchmark();
+
   // Make some tests with Velleman k8055 board
   void vellemanK8055Test();
 

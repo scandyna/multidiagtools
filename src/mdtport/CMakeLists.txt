@@ -76,6 +76,8 @@ set (SOURCES_FILES
           mdtAbstractPortSetupDialog.cpp
           mdtUsbtmcPortSetupDialog.cpp
           mdtModbusTcpPortSetupDialog.cpp
+          # New USBTMC API
+          mdtUsbtmcFrame.cpp
     )
 
 # Liste des fichiers ui

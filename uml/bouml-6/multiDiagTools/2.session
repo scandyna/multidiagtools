@@ -1,7 +1,13 @@
-window_sizes 1280 916 393 881 863 0
+window_sizes 1280 916 264 1010 863 0
 cleanlooks_style
+diagrams
+  active  classdiagram_ref 1298690 // Usbtmc
+    1010 863 100 8 72 307
+  statediagram_ref 1312002 // Main
+    120 106 80 17 0 24
+end
 show_stereotypes
-selected attribute_ref 1507330 // pvRequest
+selected classdiagram_ref 1298690 // Usbtmc
 open
   class_ref 1409794 // UsbPort
   class_ref 1430530 // UsbTransfer
@@ -9,11 +15,12 @@ open
   classrelation_ref 1831938 // pvTransferPool (<directional composition>)
   class_ref 1471874 // UsbPortThread
   class_ref 1423362 // UsbtmcPort
-  class_ref 1423618 // UsbtmcFrame
+  class_ref 1423618 // mdtUsbtmcFrame
   class_ref 1451906 // Error
   operation_ref 2353154 // transferHandler
   class_ref 1485570 // UsbTmcBulkTransfer
   operation_ref 2360450 // transferHandler
+  state_ref 219266 // UsbtmcTransferHandlerStateMachine
   classview_ref 722434 // Scpi
   classview_ref 722306 // ModbusTcp
   class_ref 1444482 // ModbusTransaction

@@ -1,6 +1,6 @@
 format 207
 "newPortApiSandbox" // mdtport::newPortApiSandbox
-  revision 17
+  revision 18
   modified_by 2 "philippe"
   // class settings
   
@@ -1371,7 +1371,7 @@ ${inlines}
       end
     end
 
-    class 1423618 "UsbtmcFrame"
+    class 1423618 "mdtUsbtmcFrame"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -1872,7 +1872,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	    classrelation_ref 1839874 // <directional composition>
-	  b parent class_ref 1423618 // UsbtmcFrame
+	  b parent class_ref 1423618 // mdtUsbtmcFrame
       end
 
       classrelation 1840386 // <generalisation>
@@ -2210,8 +2210,8 @@ ${inlines}
 
       state 219650 "BulkOutTransfer"
 	transition 239490 "<transition>"
-	  on state_ref 220162 // InitiateAbortBulkOut
-	    uml_trigger "bulkOutTransferCancelled"
+	  on state_ref 220162 // AbortBulkOutTransfer
+	    uml_trigger "abortTransfers"
 	  external 
 	end
 
@@ -2221,14 +2221,15 @@ ${inlines}
 	  external 
 	end
 
-	transition 249090 "<transition>"
-	  on state_ref 219778 // BulkOutStopped
+	transition 256386 "<transition>"
+	  on state_ref 235010 // TransferError
 	    uml_trigger "bulkOutStall"
 	  external 
 	end
       end
 
       state 219778 "BulkOutStopped"
+	  uml_do_activity "queueError"
 	transition 249218 "<transition>"
 	  on state_ref 228226 // ClearEndpointHalt
 	  external 
@@ -2246,23 +2247,9 @@ ${inlines}
       state 220034 "BulkInStopped"
       end
 
-      state 220162 "InitiateAbortBulkOut"
+      state 220162 "AbortBulkOutTransfer"
 	  uml_on_entry "cancelBulkOutTransfer"
 	  uml_do_activity "sendInitiateAbortBulkOut"
-	transition 240258 "<transition>"
-	  on state_ref 220930 // WaitingInitiateAbortBulkOutResponse
-	    uml_trigger "controlTransferSubmitted"
-	  external 
-	end
-      end
-
-      state 220290 "CheckAbortBulkOutStatus"
-	  uml_do_activity "sendCheckAbortBulkOutStatus"
-	transition 240770 "<transition>"
-	  on state_ref 221058 // WaitingCheckAbortBulkOutStatusResponse
-	    uml_trigger "controlTransferSubmitted"
-	  external 
-	end
       end
 
       state 220418 "Waiting"
@@ -2279,79 +2266,8 @@ ${inlines}
       state 220802 "CheckAbortBulkInStatus"
       end
 
-      state 220930 "WaitingInitiateAbortBulkOutResponse"
-	transition 240386 "<transition>"
-	  on state_ref 220162 // InitiateAbortBulkOut
-	    uml_trigger "IABORD"
-	    uml_guard "status==NOT_IN_PROGRESS"
-	  external 
-	end
-
-	transition 240642 "<transition>"
-	  on state_ref 220290 // CheckAbortBulkOutStatus
-	    uml_trigger "IABORD"
-	    uml_guard "status==SUCCESS"
-	  external 
-	end
-
-	transition 248834 "<transition>"
-	  on state_ref 228098 // SendingUsbtmcMessage
-	    uml_trigger "IABORD"
-	    uml_guard "status==else"
-	  external 
-	end
-      end
-
-      state 221058 "WaitingCheckAbortBulkOutStatusResponse"
-	transition 240898 "<transition>"
-	  on state_ref 220290 // CheckAbortBulkOutStatus
-	    uml_trigger "CABOSRD"
-	    uml_guard "status==PENDING"
-	  external 
-	end
-
-	transition 241026 "<transition>"
-	  on state_ref 219778 // BulkOutStopped
-	    uml_trigger "CABOSRD"
-	    uml_guard "status==else"
-	  external 
-	end
-      end
-
-      state 227586 "InitiateClear"
+      state 227586 "Clear"
 	  uml_do_activity "sendInitiateClear"
-	transition 247554 "<transition>"
-	  on state_ref 227714 // WaitingInitiateClearResponse
-	    uml_trigger "controlTransferSubmitted"
-	  external 
-	end
-      end
-
-      state 227714 "WaitingInitiateClearResponse"
-	transition 247682 "<transition>"
-	  on state_ref 227842 // CheckClearStatus
-	    uml_trigger "ICRD"
-	    uml_guard "status==SUCCESS"
-	  external 
-	end
-      end
-
-      state 227842 "CheckClearStatus"
-	  uml_do_activity "sendCheckClearStatus"
-	transition 247810 "<transition>"
-	  on state_ref 227970 // WaitingCheckClearStatusResponse
-	    uml_trigger "controlTransferSubmitted"
-	  external 
-	end
-      end
-
-      state 227970 "WaitingCheckClearStatusResponse"
-	transition 247938 "<transition>"
-	  on state_ref 219778 // BulkOutStopped
-	    uml_trigger "CCSRD"
-	    uml_expr "status==else"
-	  external 
-	end
       end
 
       state 228098 "SendingUsbtmcMessage"
@@ -2368,8 +2284,8 @@ ${inlines}
 	end
 
 	transition 248962 "<transition>"
-	  on state_ref 227586 // InitiateClear
-	    uml_trigger "abortSendCommandQueued"
+	  on state_ref 227586 // Clear
+	    uml_trigger "abortTransfers"
 	  external 
 	end
       end
@@ -2387,6 +2303,17 @@ ${inlines}
 	transition 249474 "<transition>"
 	  on state_ref 219522 // Idle
 	    uml_trigger "controlTransferDone"
+	  external 
+	end
+      end
+
+      state 234882 "ClearBulkOutHalt"
+      end
+
+      state 235010 "TransferError"
+	transition 256258 "<transition>"
+	  on state_ref 219522 // Idle
+	    uml_trigger "resetError"
 	  external 
 	end
       end

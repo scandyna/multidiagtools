@@ -31,6 +31,10 @@
 #include "mdtFrame.h"
 #include "mdtFrameCodecK8055.h"
 #include "mdtFrameUsbTmc.h"
+
+// New USBTMC API
+#include "mdtUsbtmcFrame.h"
+
 #include <QByteArray>
 #include <mutex>
 
@@ -143,6 +147,252 @@ void mdtUsbPortTest::virtualCallBenchmark()
     r = 2;
   }
 }
+
+/*
+ * USBTMC tests
+ */
+
+void mdtUsbPortTest::usbtmcFrameTest()
+{
+  mdtUsbtmcFrame f;
+
+  // Check initial values
+  QCOMPARE(f.capacity(), 4096);
+  QCOMPARE(f.bufferLength(), 12);
+  for(int i = 0; i < f.bufferLength(); ++i){
+    QCOMPARE(f.buffer()[i], (uint8_t)0);
+  }
+  QCOMPARE(f.msgID(), mdtUsbtmcFrame::msgId_t::MSG_ZERO);
+  /*
+   * DEV_DEP_MSG_OUT encoding
+   */
+  // Check header encoding for DEV_DEP_MSG_OUT - case 1 (no explicit data)
+  f.setMsgID(mdtUsbtmcFrame::msgId_t::DEV_DEP_MSG_OUT);
+  f.setbTag(0x5B);
+  QCOMPARE(f.bufferLength(), 12);
+  QCOMPARE(f.buffer()[0], (uint8_t)1);      // MsgID
+  QCOMPARE(f.buffer()[1], (uint8_t)0x5B);   // bTag
+  QCOMPARE(f.buffer()[2], (uint8_t)0xA4);   // bTagInverse
+  QCOMPARE(f.buffer()[3], (uint8_t)0);      // Reserved
+  QCOMPARE(f.buffer()[4], (uint8_t)0);      // TransferSize, LLSB
+  QCOMPARE(f.buffer()[5], (uint8_t)0);      // TransferSize, LSB
+  QCOMPARE(f.buffer()[6], (uint8_t)0);      // TransferSize, MSB
+  QCOMPARE(f.buffer()[7], (uint8_t)0);      // TransferSize, MMSB
+  QCOMPARE(f.buffer()[8], (uint8_t)0);      // bmTransferAttributes (EOM not set)
+  QCOMPARE(f.buffer()[9], (uint8_t)0);      // Reserved
+  QCOMPARE(f.buffer()[10], (uint8_t)0);     // Reserved
+  QCOMPARE(f.buffer()[11], (uint8_t)0);     // Reserved
+  QCOMPARE(f.msgID(), mdtUsbtmcFrame::msgId_t::DEV_DEP_MSG_OUT);
+  QCOMPARE(f.bTag(), (uint8_t)0x5B);
+  QCOMPARE(f.bTagInverse(), (uint8_t)0xA4);
+  QCOMPARE((int)f.transferSize(), 0);
+  // Check correct encoding for DEV_DEP_MSG_OUT - case 2 (explicit data)
+  f.setMsgID(mdtUsbtmcFrame::msgId_t::DEV_DEP_MSG_OUT);
+  f.setbTag(0x01);
+  f.setData("*IDN?\n");
+  QCOMPARE(f.bufferLength(), 20);           // 12 (header) + 6 (data) + 2 (alignment bytes)
+  QCOMPARE(f.buffer()[0], (uint8_t)1);      // MsgID
+  QCOMPARE(f.buffer()[1], (uint8_t)0x01);   // bTag
+  QCOMPARE(f.buffer()[2], (uint8_t)0xFE);   // bTagInverse
+  QCOMPARE(f.buffer()[3], (uint8_t)0);      // Reserved
+  QCOMPARE(f.buffer()[4], (uint8_t)6);      // TransferSize, LLSB
+  QCOMPARE(f.buffer()[5], (uint8_t)0);      // TransferSize, LSB
+  QCOMPARE(f.buffer()[6], (uint8_t)0);      // TransferSize, MSB
+  QCOMPARE(f.buffer()[7], (uint8_t)0);      // TransferSize, MMSB
+  QCOMPARE(f.buffer()[8], (uint8_t)0);      // bmTransferAttributes (EOM not set)
+  QCOMPARE(f.buffer()[9], (uint8_t)0);      // Reserved
+  QCOMPARE(f.buffer()[10], (uint8_t)0);     // Reserved
+  QCOMPARE(f.buffer()[11], (uint8_t)0);     // Reserved
+  QCOMPARE((char)f.buffer()[12], '*');      // Data
+  QCOMPARE((char)f.buffer()[13], 'I');      // Data
+  QCOMPARE((char)f.buffer()[14], 'D');      // Data
+  QCOMPARE((char)f.buffer()[15], 'N');      // Data
+  QCOMPARE((char)f.buffer()[16], '?');      // Data
+  QCOMPARE((char)f.buffer()[17], '\n');     // Data
+  QCOMPARE((int)f.buffer()[18], 0);         // Alignment byte
+  QCOMPARE((int)f.buffer()[19], 0);         // Alignment byte
+  QCOMPARE(f.msgID(), mdtUsbtmcFrame::msgId_t::DEV_DEP_MSG_OUT);
+  QCOMPARE(f.bTag(), (uint8_t)0x01);
+  QCOMPARE(f.bTagInverse(), (uint8_t)0xFE);
+  QCOMPARE((int)f.transferSize(), 6);
+  QCOMPARE(f.data(), QByteArray("*IDN?\n"));
+  // Check Alignment bytes
+  f.setData("A");
+  QCOMPARE((int)f.transferSize(), 1);
+  QCOMPARE(f.bufferLength(), 16);
+  QCOMPARE((char)f.buffer()[12], 'A');  // Data
+  QCOMPARE((int)f.buffer()[13], 0);     // Alignment byte
+  QCOMPARE((int)f.buffer()[14], 0);     // Alignment byte
+  QCOMPARE((int)f.buffer()[15], 0);     // Alignment byte
+  f.setData("12");
+  QCOMPARE((int)f.transferSize(), 2);
+  QCOMPARE(f.bufferLength(), 16);
+  QCOMPARE((char)f.buffer()[12], '1');  // Data
+  QCOMPARE((char)f.buffer()[13], '2');  // Data
+  QCOMPARE((int)f.buffer()[14], 0);     // Alignment byte
+  QCOMPARE((int)f.buffer()[15], 0);     // Alignment byte
+  f.setData("ABC");
+  QCOMPARE((int)f.transferSize(), 3);
+  QCOMPARE(f.bufferLength(), 16);
+  QCOMPARE((char)f.buffer()[12], 'A');  // Data
+  QCOMPARE((char)f.buffer()[13], 'B');  // Data
+  QCOMPARE((char)f.buffer()[14], 'C');  // Data
+  QCOMPARE((int)f.buffer()[15], 0);     // Alignment byte
+  f.setData("1234");
+  QCOMPARE((int)f.transferSize(), 4);
+  QCOMPARE(f.bufferLength(), 16);
+  QCOMPARE((char)f.buffer()[12], '1');  // Data
+  QCOMPARE((char)f.buffer()[13], '2');  // Data
+  QCOMPARE((char)f.buffer()[14], '3');  // Data
+  QCOMPARE((char)f.buffer()[15], '4');  // Data
+  f.setData("A");
+  QCOMPARE((int)f.transferSize(), 1);
+  QCOMPARE(f.bufferLength(), 16);
+  QCOMPARE((char)f.buffer()[12], 'A');  // Data
+  QCOMPARE((int)f.buffer()[13], 0);     // Alignment byte
+  QCOMPARE((int)f.buffer()[14], 0);     // Alignment byte
+  QCOMPARE((int)f.buffer()[15], 0);     // Alignment byte
+  // Check clear
+  f.clear();
+  QCOMPARE(f.capacity(), 4096);
+  QCOMPARE(f.bufferLength(), 12);
+  for(int i = 0; i < f.bufferLength(); ++i){
+    QCOMPARE(f.buffer()[i], (uint8_t)0);
+  }
+  QCOMPARE(f.msgID(), mdtUsbtmcFrame::msgId_t::MSG_ZERO);
+  /*
+   * DEV_DEP_MSG_IN encoding
+   */
+  // Check correct encoding for DEV_DEP_MSG_IN - case 1: TermChar not used
+  f.setMsgID(mdtUsbtmcFrame::msgId_t::DEV_DEP_MSG_IN);
+  f.setbTag(0x02);
+  f.setTransferSize(0x0987);
+  f.resetTermChar();
+  QCOMPARE(f.bufferLength(), 12);           // 12 (header)
+  QCOMPARE(f.buffer()[0], (uint8_t)2);      // MsgID
+  QCOMPARE(f.buffer()[1], (uint8_t)0x02);   // bTag
+  QCOMPARE(f.buffer()[2], (uint8_t)0xFD);   // bTagInverse
+  QCOMPARE(f.buffer()[3], (uint8_t)0);      // Reserved
+  QCOMPARE(f.buffer()[4], (uint8_t)0x87);   // TransferSize, LLSB
+  QCOMPARE(f.buffer()[5], (uint8_t)0x09);   // TransferSize, LSB
+  QCOMPARE(f.buffer()[6], (uint8_t)0);      // TransferSize, MSB
+  QCOMPARE(f.buffer()[7], (uint8_t)0);      // TransferSize, MMSB
+  QCOMPARE(f.buffer()[8], (uint8_t)0);      // bmTransferAttributes (TermCharEnabled not set)
+  QCOMPARE(f.buffer()[9], (uint8_t)0);      // TermChar
+  QCOMPARE(f.buffer()[10], (uint8_t)0);     // Reserved
+  QCOMPARE(f.buffer()[11], (uint8_t)0);     // Reserved
+  QCOMPARE(f.msgID(), mdtUsbtmcFrame::msgId_t::DEV_DEP_MSG_IN);
+  QCOMPARE(f.bTag(), (uint8_t)0x02);
+  QCOMPARE(f.bTagInverse(), (uint8_t)0xFD);
+  QCOMPARE((int)f.transferSize(), 0x0987);
+  // Check correct encoding for DEV_DEP_MSG_IN - case 2: TermChar: \n
+  f.setMsgID(mdtUsbtmcFrame::msgId_t::DEV_DEP_MSG_IN);
+  f.setbTag(0x03);
+  f.setTransferSize(0x0485);
+  f.setTermChar('\n');
+  QCOMPARE(f.bufferLength(), 12);           // 12 (header)
+  QCOMPARE(f.buffer()[0], (uint8_t)2);      // MsgID
+  QCOMPARE(f.buffer()[1], (uint8_t)0x03);   // bTag
+  QCOMPARE(f.buffer()[2], (uint8_t)0xFC);   // bTagInverse
+  QCOMPARE(f.buffer()[3], (uint8_t)0);      // Reserved
+  QCOMPARE(f.buffer()[4], (uint8_t)0x85);   // TransferSize, LLSB
+  QCOMPARE(f.buffer()[5], (uint8_t)0x04);   // TransferSize, LSB
+  QCOMPARE(f.buffer()[6], (uint8_t)0);      // TransferSize, MSB
+  QCOMPARE(f.buffer()[7], (uint8_t)0);      // TransferSize, MMSB
+  QCOMPARE(f.buffer()[8], (uint8_t)0b00000010); // bmTransferAttributes (TermCharEnabled set)
+  QCOMPARE((char)f.buffer()[9], '\n');      // TermChar
+  QCOMPARE(f.buffer()[10], (uint8_t)0);     // Reserved
+  QCOMPARE(f.buffer()[11], (uint8_t)0);     // Reserved
+  QCOMPARE(f.msgID(), mdtUsbtmcFrame::msgId_t::DEV_DEP_MSG_IN);
+  QCOMPARE(f.bTag(), (uint8_t)0x03);
+  QCOMPARE(f.bTagInverse(), (uint8_t)0xFC);
+  QCOMPARE((int)f.transferSize(), 0x0485);
+  // Check header encoding for DEV_DEP_MSG_OUT - case 3: big TransferSize, TermChar not set
+  mdtUsbtmcFrame f2(0x20000);
+  f2.setMsgID(mdtUsbtmcFrame::msgId_t::DEV_DEP_MSG_IN);
+  f2.setbTag(0xEF);
+  f2.setTransferSize(0x12345);
+  QCOMPARE(f2.bufferLength(), 12);            // 12 (header)
+  QCOMPARE(f2.buffer()[0], (uint8_t)2);       // MsgID
+  QCOMPARE(f2.buffer()[1], (uint8_t)0xEF);    // bTag
+  QCOMPARE(f2.buffer()[2], (uint8_t)0x10);    // bTagInverse
+  QCOMPARE(f2.buffer()[3], (uint8_t)0);       // Reserved
+  QCOMPARE(f2.buffer()[4], (uint8_t)0x45);    // TransferSize, LLSB
+  QCOMPARE(f2.buffer()[5], (uint8_t)0x23);    // TransferSize, LSB
+  QCOMPARE(f2.buffer()[6], (uint8_t)0x01);    // TransferSize, MSB
+  QCOMPARE(f2.buffer()[7], (uint8_t)0);       // TransferSize, MMSB
+  QCOMPARE(f2.buffer()[8], (uint8_t)0);       // bmTransferAttributes (TermCharEnabled not set)
+  QCOMPARE(f2.buffer()[9], (uint8_t)0);       // TermChar
+  QCOMPARE(f2.buffer()[10], (uint8_t)0);      // Reserved
+  QCOMPARE(f2.buffer()[11], (uint8_t)0);      // Reserved
+  QCOMPARE(f2.msgID(), mdtUsbtmcFrame::msgId_t::DEV_DEP_MSG_IN);
+  QCOMPARE(f2.bTag(), (uint8_t)0xEF);
+  QCOMPARE(f2.bTagInverse(), (uint8_t)0x10);
+  QCOMPARE((int)f2.transferSize(), 0x12345);
+  // Rset EOM and check
+  f2.setEOM(false);
+  QCOMPARE(f2.buffer()[8], (uint8_t)0b00000000); // bmTransferAttributes (EOM not set)
+  /*
+   * DEV_DEP_MSG_IN decoding - case 1: we not check data, TermChar was set in request, is supported and set in this frame by device. EOM set
+   */
+  f.clear();
+  QCOMPARE(f.capacity(), 4096);
+  QCOMPARE((int)f.transferSize(), 0);
+  QCOMPARE(f.EOMset(), false);
+  QCOMPARE(f.TermCharset(), false);
+  f.buffer()[0] = 2;      // MsgID
+  f.buffer()[1] = 0x1F;   // bTag
+  f.buffer()[2] = 0xE0;   // bTagInverse
+  f.buffer()[3] = 2;      // Reserved
+  f.buffer()[4] = 0x56;   // TransferSize, LLSB
+  f.buffer()[5] = 0x03;   // TransferSize, LSB
+  f.buffer()[6] = 0;      // TransferSize, MSB
+  f.buffer()[7] = 0;      // TransferSize, MMSB
+  f.buffer()[8] = 0b00000011; // bmTransferAttributes: TermChar set, EOM set
+  f.buffer()[9] = 0;      // Reserved
+  f.buffer()[10] = 0;     // Reserved
+  f.buffer()[11] = 0;     // Reserved
+  QCOMPARE(f2.msgID(), mdtUsbtmcFrame::msgId_t::DEV_DEP_MSG_IN);
+  QCOMPARE(f.bTag(), (uint8_t)0x1F);
+  QCOMPARE(f.bTagInverse(), (uint8_t)0xE0);
+  QCOMPARE((int)f.transferSize(), 0x0356);
+  QCOMPARE(f.EOMset(), true);
+  QCOMPARE(f.TermCharset(), true);
+
+
+  /*
+   * TODO: VENDOR_SPECIFIC_OUT / VENDOR_SPECIFIC_IN
+   */
+}
+
+void mdtUsbPortTest::usbtmcFrameBenchmark()
+{
+  mdtUsbtmcFrame f;
+  QByteArray query = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  QByteArray result;
+  mdtUsbtmcFrame::msgId_t msgID;
+  uint8_t bTag;
+  uint8_t bTagInverse;
+  uint32_t transferSize;
+
+  QBENCHMARK{
+    f.clear();
+    f.setMsgID(mdtUsbtmcFrame::msgId_t::DEV_DEP_MSG_OUT);
+    f.setbTag(0x5B);
+    f.setData(query);
+    msgID = f.msgID();
+    bTag = f.bTag();
+    bTagInverse = f.bTagInverse();
+    transferSize = f.transferSize();
+    result = f.data();
+  }
+  QCOMPARE((int)msgID, 1);
+  QCOMPARE(bTag, (uint8_t)0x5B);
+  QCOMPARE(bTagInverse, (uint8_t)0xA4);
+  QCOMPARE(transferSize, (uint32_t)26);
+  QCOMPARE(result, QByteArray("ABCDEFGHIJKLMNOPQRSTUVWXYZ"));
+}
+
 
 /*
  * Tests
