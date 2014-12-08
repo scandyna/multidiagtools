@@ -1,0 +1,122 @@
+format 207
+
+classcanvas 128002 class_ref 1409794 // UsbPort
+  classdiagramsettings member_max_width 0 end
+  xyz 11.9 412.1 2000
+end
+classcanvas 128130 class_ref 1409922 // UsbDevice
+  classdiagramsettings member_max_width 0 end
+  xyz 141.6 136.4 2000
+end
+classcanvas 128258 class_ref 1410050 // UsbPortConfig
+  classdiagramsettings member_max_width 0 end
+  xyz 723.5 282.2 2000
+end
+classcanvas 128386 class_ref 1423362 // UsbtmcPort
+  classdiagramsettings member_max_width 0 end
+  xyz 137.2 183.1 2000
+end
+classcanvas 128514 class_ref 1423490 // UsbFrame
+  classdiagramsettings member_max_width 0 end
+  xyz 379.4 150.9 2000
+end
+classcanvas 128642 class_ref 1423618 // UsbTmcFrame
+  classdiagramsettings member_max_width 0 end
+  xyz 377.4 197.9 2000
+end
+classcanvas 129538 class_ref 1430530 // UsbTransfer
+  classdiagramsettings member_max_width 0 end
+  xyz 217.1 21.9 2000
+end
+classcanvas 130050 class_ref 1437058 // libusb_transfer
+  classdiagramsettings member_max_width 0 end
+  xyz 835.2 0.3 2000
+end
+classcanvas 130178 class_ref 1437186 // libusb_device_handle
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 832.6 355.2 2000
+end
+classcanvas 130434 class_ref 1437314 // libusb_iso_packet_descriptor
+  classdiagramsettings member_max_width 0 end
+  xyz 1059.7 323.2 3005
+end
+classcanvas 130690 class_ref 1437442 // libusb_control_setup
+  classdiagramsettings member_max_width 0 end
+  xyz 620.6 629 2000
+end
+classcanvas 130946 class_ref 1443970 // libusb_device_descriptor
+  classdiagramsettings member_max_width 0 end
+  xyz 910.8 612 2000
+end
+classcanvas 131074 class_ref 1445122 // UserApplication
+  classdiagramsettings member_max_width 0 end
+  xyz 5.9 149.9 2005
+end
+classcanvas 131202 class_ref 1465090 // UsbTransferPool
+  classdiagramsettings member_max_width 0 end
+  xyz 505 302 2000
+end
+classcanvas 131458 class_ref 1444098 // ScpiCodec
+  classdiagramsettings member_max_width 0 end
+  xyz 62.1 227.4 3011
+end
+classcanvas 131586 class_ref 1471618 // libusb_device
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 687 220.5 2005
+end
+classcanvas 131714 class_ref 1471746 // UsbTransferHandler
+  classdiagramsettings member_max_width 0 end
+  xyz 436 532.8 2005
+end
+classcanvas 131842 class_ref 1471874 // UsbPortThread
+  classdiagramsettings member_max_width 0 end
+  xyz 205.9 680.9 2000
+end
+classcanvas 132610 class_ref 1472002 // UsbTransferDoneHandler
+  classdiagramsettings member_max_width 0 end
+  xyz 125.4 511.8 2000
+end
+classcanvas 132738 class_ref 1472130 // UsbTransferErrorHandler
+  classdiagramsettings member_max_width 0 end
+  xyz 123.6 570.4 2011
+end
+classcanvas 132866 class_ref 1472258 // UsbTransferHandshake
+  classdiagramsettings member_max_width 0 end
+  xyz 162.5 626 2011
+end
+relationcanvas 130306 relation_ref 1795330 // <unidirectional association>
+  from ref 130050 z 2001 to ref 130178
+  role_a_pos 920 332 3000 no_role_b
+  multiplicity_a_pos 875 332 3000 no_multiplicity_b
+end
+relationcanvas 130562 relation_ref 1795458 // <unidirectional association>
+  from ref 130050 z 3006 to ref 130434
+  role_a_pos 1029 311 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130818 relation_ref 1795586 // <directional composition>
+  from ref 129538 z 2001 to ref 130050
+  role_a_pos 810 102 3000 no_role_b
+  multiplicity_a_pos 867 134 3000 no_multiplicity_b
+end
+relationcanvas 131330 relation_ref 1809026 // <directional composition>
+  from ref 131202 z 2001 to ref 129538
+  role_a_pos 574 161 3000 no_role_b
+  multiplicity_a_pos 547 161 3000 no_multiplicity_b
+end
+relationcanvas 132226 relation_ref 1815810 // <directional composition>
+  from ref 128002 z 2006 to ref 131714
+  role_a_pos 462 512 3000 no_role_b
+  multiplicity_a_pos 565 544 3000 no_multiplicity_b
+end
+relationcanvas 132354 relation_ref 1815938 // <unidirectional association>
+  from ref 131842 z 2006 to ref 131714
+  role_a_pos 481 580 3000 no_role_b
+  multiplicity_a_pos 584 612 3000 no_multiplicity_b
+end
+relationcanvas 132482 relation_ref 1816066 // <directional composition>
+  from ref 131714 z 2006 to ref 131202
+  role_a_pos 623 365 3000 no_role_b
+  multiplicity_a_pos 594 365 3000 no_multiplicity_b
+end
+end

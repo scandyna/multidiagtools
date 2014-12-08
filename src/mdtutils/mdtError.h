@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -24,6 +24,7 @@
 #include <QString>
 #include <QMetaType>
 #include <QMessageBox>
+#include <type_traits>
 
 class QObject;
 
@@ -71,6 +72,8 @@ enum mdt_error_t{
  *          Access: setSystemError() , systemText() , systemErrorString() .
  *  - informativeText (optional) : can be used the same way than QMessageBox .
  *         Access : setInformativeText() , informativeText() .
+ *  - type : a enum of error type .
+ *         Access : setType() , type() .
  *
  * number : currently used with mdt_error_t enum, but it seems that this is not a good idea,
  *           and this will change once a better one is found ...
@@ -94,7 +97,9 @@ class mdtError
     Error = 0x04      /*!< Error that was not handled */
   };
 
-  /*! \brief Constructor
+  /*! \brief Construct a empty error
+   *
+   * Will set level to NoError, type to 0.
    */
   mdtError();
 
@@ -119,6 +124,28 @@ class mdtError
    * Will set error text, but does not clear error .
    */
   void updateText(const QString & text);
+
+  /*! \brief Set error type
+   *
+   * Given error type must be a enum .
+   */
+  template<typename T>
+  void setType(T eType)
+  {
+    static_assert(std::is_enum<T>::value, "mdtError::setType(): T must be a enum type");
+    pvType = eType;
+  }
+
+  /*! \brief Get error type
+   *
+   * Given error type must be a enum .
+   */
+  template<typename T>
+  inline T type() const
+  {
+    static_assert(std::is_enum<T>::value, "mdtError::type(): T must be a enum type");
+    return static_cast<T>(pvType);
+  }
 
   /*! \brief Clear
    */
@@ -212,6 +239,8 @@ class mdtError
   QString pvFunctionName;
   QString pvFileName;
   int pvFileLine;
+  
+  int pvType;   // Store a enum variable
 };
 
 Q_DECLARE_METATYPE(mdtError)

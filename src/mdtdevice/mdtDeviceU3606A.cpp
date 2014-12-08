@@ -77,6 +77,69 @@ mdtAbstractPort::error_t mdtDeviceU3606A::connectToDevice(const mdtDeviceInfo &d
   return mdtDeviceScpi::connectToDevice(device);
 }
 
+int mdtDeviceU3606A::setupVoltageDcMeasure ( mdtDeviceU3606A::range_t range, mdtDeviceU3606A::resolution_t resolution )
+{
+  QByteArray rangeStr;
+  QByteArray resolutionStr;
+  QByteArray command;
+  int retVal;
+
+  // Set range part
+  switch(range){
+    case RangeAuto:
+      rangeStr = "AUTO";
+      break;
+    case RangeMin:
+      rangeStr = "MIN";
+      break;
+    case RangeMax:
+      rangeStr = "MAX";
+      break;
+    case Range20m:
+      rangeStr = "0.02";
+      break;
+    case Range100m:
+      rangeStr = "0.1";
+      break;
+    case Range1:
+      rangeStr = "1";
+      break;
+    case Range10:
+      rangeStr = "10";
+      break;
+    case Range100:
+      rangeStr = "100";
+      break;
+    case Range1k:
+      rangeStr = "1000";
+      break;
+    default:
+      pvLastError.setError(tr("Requested range is not supported for DC voltage measurement, AUTO will be used."), mdtError::Warning);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceU3606A");
+      pvLastError.commit();
+      rangeStr = "AUTO";
+  }
+  // Set resolution part
+  switch(resolution){
+    case ResolutionMin:
+      resolutionStr = "MIN";
+      break;
+    case ResolutionMax:
+      resolutionStr = "MAX";
+      break;
+  }
+  // Send command to device
+  command = "CONF:VOLT:DC " + rangeStr + "," + resolutionStr;
+  retVal = sendCommand(command);
+  if(retVal < 0){
+    pvLastError.setError(tr("Device") + " " + name() + ": " + tr("Command send failed"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceU3606A");
+    pvLastError.commit();
+  }
+
+  return retVal;
+}
+
 int mdtDeviceU3606A::setupResistanceMeasure(mdtDeviceU3606A::range_t range, mdtDeviceU3606A::resolution_t resolution)
 {
   QByteArray rangeStr;
@@ -228,6 +291,65 @@ mdtFrameCodecScpiU3606A::measure_type_t mdtDeviceU3606A::getMeasureConfiguration
 mdtValue mdtDeviceU3606A::getMeasureValue()
 {
   return getAnalogInputValue(0, true, true);
+}
+
+bool mdtDeviceU3606A::setOutputState ( bool state )
+{
+  QByteArray cmd = "OUTP:STAT ";
+
+  if(state){
+    cmd += "1";
+  }else{
+    cmd += "0";
+  }
+  if(sendCommand(cmd) < 0){
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtDeviceU3606A::setSourceRange( mdtDeviceU3606A::sourceRange_t range )
+{
+  QByteArray cmd = "SOUR:VOLT:RANG ";
+
+  switch(range){
+    case S1_30V1A:
+      cmd += "30";
+      break;
+    case S2_8V3A:
+      cmd += "8";
+      break;
+  }
+  if(sendCommand(cmd) < 0){
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtDeviceU3606A::setSourceVoltageLimit ( double v )
+{
+  QByteArray cmd = "SOUR:VOLT:LIM ";
+
+  cmd += QByteArray::number(v);
+  if(sendCommand(cmd) < 0){
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtDeviceU3606A::setSourceCurrent ( double x )
+{
+  QByteArray cmd = "SOUR:CURR ";
+
+  cmd += QByteArray::number(x);
+  if(sendCommand(cmd) < 0){
+    return false;
+  }
+
+  return true;
 }
 
 void mdtDeviceU3606A::onStateChanged(int state)

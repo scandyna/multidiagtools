@@ -318,11 +318,6 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateSenseRelays()
   coupler = testNodeManager()->device<mdtDeviceModbusWago>("W750");
   Q_ASSERT(coupler);
 
-  // Setup multimeter for low resistance measurement
-  if(multimeter->setupLowResistanceMeasure(mdtDeviceU3606A::RangeAuto, mdtDeviceU3606A::ResolutionMin) < 0){
-    pvLastError = multimeter->lastError();
-    return false;
-  }
   // Set all relays OFF
   if(coupler->setDigitalOutputsValue(false, false, false) < 0){
     pvLastError = coupler->lastError();
@@ -337,6 +332,16 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateSenseRelays()
     return false;
   }
   coupler->wait(50);
+  // Frit line
+  if(!fritLine()){
+    pvLastError.updateText(tr("Fritting line of realys K4 and K5 failed."));
+    return false;
+  }
+  // Setup multimeter for low resistance measurement
+  if(multimeter->setupLowResistanceMeasure(mdtDeviceU3606A::RangeAuto, mdtDeviceU3606A::ResolutionMin) < 0){
+    pvLastError = multimeter->lastError();
+    return false;
+  }
   // Check that we have R < 1 Ohm
   R = multimeter->getMeasureValue();
   if(!isInRange(R, 0.0, 1.0)){
@@ -1010,4 +1015,61 @@ double mdtTtBasicTestNodeCalibrationTool::getLinkResistanceForRoute(const QStrin
   }
 
   return test()->linkPathResistance(linkDataList);
+}
+
+bool mdtTtBasicTestNodeCalibrationTool::fritLine()
+{
+  Q_ASSERT(testNodeManager()->container());
+
+  shared_ptr<mdtDeviceU3606A> multimeter;
+
+  multimeter = testNodeManager()->device<mdtDeviceU3606A>("U3606A");
+  Q_ASSERT(multimeter);
+
+  if(!multimeter->setupVoltageDcMeasure(mdtDeviceU3606A::Range10, mdtDeviceU3606A::ResolutionMin)){
+    pvLastError = multimeter->lastError();
+    return false;
+  }
+  if(!multimeter->setOutputState(false)){
+    pvLastError = multimeter->lastError();
+    return false;
+  }
+  if(!multimeter->setSourceRange(mdtDeviceU3606A::S1_30V1A)){
+    pvLastError = multimeter->lastError();
+    return false;
+  }
+  if(!multimeter->setSourceCurrent(1.0)){
+    pvLastError = multimeter->lastError();
+    return false;
+  }
+  if(!multimeter->setSourceVoltageLimit(30.0)){
+    pvLastError = multimeter->lastError();
+    return false;
+  }
+  if(!multimeter->setOutputState(true)){
+    pvLastError = multimeter->lastError();
+    return false;
+  }
+  multimeter->wait(50);
+  /// tetss..
+  qDebug() << "U (=R): " << multimeter->getMeasureValue();
+  multimeter->wait(1000);
+  qDebug() << "U (=R): " << multimeter->getMeasureValue();
+  multimeter->wait(1000);
+  qDebug() << "U (=R): " << multimeter->getMeasureValue();
+  multimeter->wait(1000);
+  qDebug() << "U (=R): " << multimeter->getMeasureValue();
+  multimeter->wait(1000);
+  qDebug() << "U (=R): " << multimeter->getMeasureValue();
+  multimeter->wait(1000);
+  qDebug() << "U (=R): " << multimeter->getMeasureValue();
+  multimeter->wait(1000);
+  
+  if(!multimeter->setOutputState(false)){
+    pvLastError = multimeter->lastError();
+    return false;
+  }
+  multimeter->wait(50);
+
+  return true;
 }

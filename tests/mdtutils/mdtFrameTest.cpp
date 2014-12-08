@@ -197,6 +197,38 @@ void mdtFrameTest::putDataTest()
   QVERIFY(fa == "01234");
 }
 
+void mdtFrameTest::putDataRawBenchmark()
+{
+  mdtFrame f;
+  QFETCH(int, frameCapacity);
+  QFETCH(QByteArray, data);
+  int written = 0;
+
+  f.reserve(frameCapacity);
+  QBENCHMARK{
+    written = f.putData(data.data(), data.size());
+  }
+  // Make something with written
+  if(written < 1){
+    QVERIFY(f.isFull());
+  }
+}
+
+void mdtFrameTest::putDataRawBenchmark_data()
+{
+  QTest::addColumn<int>("frameCapacity");
+  QTest::addColumn<QByteArray>("data");
+  QByteArray ba;
+
+  QTest::newRow("Low capacity - short data") << 100 << QByteArray("A");
+  QTest::newRow("Low capacity - mid len data") << 100 << QByteArray("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+  ba.clear();
+  for(int i = 0; i < 150; ++i){
+    ba.append(QByteArray::number(i));
+  }
+  QTest::newRow("Low capacity - long data") << 100 << ba;
+}
+
 void mdtFrameTest::asciiReceptionTest()
 {
   mdtFrame f;
@@ -728,6 +760,95 @@ void mdtFrameTest::asciiReceptionEofStrIgnoreNullValuesTest()
   QVERIFY(!f.isFull());
   QVERIFY(f.bytesToStore() == 5);
   QVERIFY(!f.isComplete());  
+}
+
+void mdtFrameTest::putUntilTest()
+{
+  mdtFrame f;
+  QFETCH(int, frameCapacity);
+  QFETCH(bool, ignoreNullValues);
+  QFETCH(QByteArray, data);
+  QFETCH(QByteArray, eof);
+  QFETCH(QByteArray, result);
+  QFETCH(bool, frameComplete);
+
+  f.reserve(frameCapacity);
+  f.setIgnoreNullValues(ignoreNullValues);
+
+  if(eof.size() == 1){
+    f.putUntil(data.data(), eof.at(0), data.size());
+  }else{
+    f.putUntil(data.data(), eof, data.size());
+  }
+  QVERIFY(f == result);
+  QCOMPARE(f.isComplete(), frameComplete);
+}
+
+void mdtFrameTest::putUntilTest_data()
+{
+  QTest::addColumn<int>("frameCapacity");
+  QTest::addColumn<bool>("ignoreNullValues");
+  QTest::addColumn<QByteArray>("data");
+  QTest::addColumn<QByteArray>("eof");
+  QTest::addColumn<QByteArray>("result");
+  QTest::addColumn<bool>("frameComplete");
+  QByteArray dataBa, resultBa;
+
+  QTest::newRow("Low capacity - data: A* - EOF: *") << 100 << false << QByteArray("A*") << QByteArray("*") << QByteArray("A") << true;
+  QTest::newRow("Low capacity - data: A*B* - EOF: *") << 100 << false << QByteArray("A*B*") << QByteArray("*") << QByteArray("A") << true;
+  QTest::newRow("Low capacity - mid len data - EOF: *") << 100 << false  << QByteArray("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ*") << QByteArray("*")\
+                                                        << QByteArray("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ") << true;
+  dataBa.clear();
+  for(int i = 0; i < 150; ++i){
+    dataBa.append("A");
+  }
+  dataBa.append("*");
+  resultBa.clear();
+  for(int i = 0; i < 100; ++i){
+    resultBa.append("A");
+  }
+  QTest::newRow("Low capacity - long data - EOF: *") << 100 << false  << dataBa << QByteArray("*") << resultBa << false;
+}
+
+void mdtFrameTest::putUntilBenchmark()
+{
+  mdtFrame f;
+  QFETCH(int, frameCapacity);
+  QFETCH(QByteArray, data);
+  QFETCH(QByteArray, eof);
+  int written = 0;
+
+  f.reserve(frameCapacity);
+  if(eof.size() == 1){
+    QBENCHMARK{
+      written = f.putUntil(data.data(), eof.at(0), data.size());
+    }
+  }else{
+    QBENCHMARK{
+      written = f.putUntil(data.data(), eof, data.size());
+    }
+  }
+  // Make something with written
+  if(written < 1){
+    QCOMPARE(written, 0);
+  }
+}
+
+void mdtFrameTest::putUntilBenchmark_data()
+{
+  QTest::addColumn<int>("frameCapacity");
+  QTest::addColumn<QByteArray>("data");
+  QTest::addColumn<QByteArray>("eof");
+  QByteArray ba;
+
+  QTest::newRow("Low capacity - short data - EOF: *") << 100 << QByteArray("A*") << QByteArray("*");
+  QTest::newRow("Low capacity - mid len data - EOF: *") << 100 << QByteArray("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ*") << QByteArray("*");
+  ba.clear();
+  for(int i = 0; i < 150; ++i){
+    ba.append(QByteArray::number(i));
+  }
+  ba.append("<eof>");
+  QTest::newRow("Low capacity - long data - EOF: <eof>") << 100 << ba << QByteArray("<eof>");
 }
 
 void mdtFrameTest::takeDataTest()

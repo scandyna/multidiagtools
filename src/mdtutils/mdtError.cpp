@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -29,6 +29,7 @@
 mdtError::mdtError()
 {
   pvLevel = NoError;
+  pvType = 0;
 }
 
 mdtError::mdtError(int number, const QString &text, mdtError::level_t level)
@@ -53,6 +54,7 @@ mdtError::mdtError(const QString &text, level_t level)
   pvFunctionName = "";
   pvFileName = "";
   pvFileLine = 0;
+  pvType = 0;
 }
 
 void mdtError::setError(const QString &text, level_t level)
@@ -77,6 +79,7 @@ void mdtError::clear()
   pvFunctionName.clear();
   pvFileName.clear();
   pvFileLine = 0;
+  pvType = 0;
 }
 
 void mdtError::setSystemError(int number, const QString &text)

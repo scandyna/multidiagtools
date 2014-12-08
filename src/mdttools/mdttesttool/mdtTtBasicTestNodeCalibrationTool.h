@@ -128,6 +128,12 @@ class mdtTtBasicTestNodeCalibrationTool : public mdtTtAbstractTestNodeCalibratio
                                    const QString & schemaPositionB, const QString & connectorB, const QString & contactB,
                                    const QStringList & relaysToEnable, bool & ok);
 
+  /*! \brief Frit line
+   *
+   * 
+   */
+  bool fritLine();
+
   Q_DISABLE_COPY(mdtTtBasicTestNodeCalibrationTool);
 
   mdtClPathGraph pvGraph;

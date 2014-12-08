@@ -31,6 +31,8 @@ class mdtStateMachineTest : public mdtTest
 
   void sandbox();
 
+  void basicStateMachineTest();
+
   void stateTest();
 
   void stateMachineTest();

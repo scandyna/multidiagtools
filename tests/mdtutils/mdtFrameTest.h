@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -35,6 +35,8 @@ class mdtFrameTest : public mdtTest
 
   // Verify putData() function
   void putDataTest();
+  void putDataRawBenchmark();
+  void putDataRawBenchmark_data();
 
   // Verify state and values by ASCII frames
   void asciiReceptionTest();
@@ -42,6 +44,11 @@ class mdtFrameTest : public mdtTest
   // Same. but the EOF is a string
   void asciiReceptionEofStrTest();
   void asciiReceptionEofStrIgnoreNullValuesTest();
+  // putUntil() tests and benchs
+  void putUntilTest();
+  void putUntilTest_data();
+  void putUntilBenchmark();
+  void putUntilBenchmark_data();
 
   // Verify states and values by taking data
   void takeDataTest();

@@ -781,16 +781,10 @@ QList< mdtTtTestNodeUnitSetupData > mdtTtTest::buildUnitSetupDataListBySchemaPos
     sql += "'" + schemaPositionList.at(i) + "',";
   }
   sql += "'" + schemaPositionList.at(lastIndex) + "')";
-  
-  qDebug() << "SQL for relays: " << sql;
-  
   unitIdList = getDataList<QVariant>(sql, ok);
   if(!ok){
     return setupDataList;
   }
-  
-  qDebug() << "Realys ID list: " << unitIdList;
-  
   // Build unit setup data list
   for(i = 0; i < unitIdList.size(); ++i){
     setupData.clearValues();

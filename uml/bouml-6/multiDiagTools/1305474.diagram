@@ -1,0 +1,37 @@
+format 207
+
+classcanvas 128002 class_ref 1444354 // ScpiDevice
+  classdiagramsettings member_max_width 0 end
+  xyz 51 384 2000
+end
+classcanvas 128130 class_ref 1444098 // ScpiCodec
+  classdiagramsettings member_max_width 0 end
+  xyz 510 498 2000
+end
+classcanvas 128258 class_ref 1444226 // ScpiTransaction
+  classdiagramsettings member_max_width 0 end
+  xyz 600 697 2000
+end
+classcanvas 128386 class_ref 329474 // QTcpSocket
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 439 156 2000
+end
+classcanvas 128514 class_ref 329474 // QTcpSocket
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 577 283 2000
+end
+classcanvas 128642 class_ref 1452034 // ScpiSocketThread
+  classdiagramsettings member_max_width 0 end
+  xyz 241 413 2000
+end
+relationcanvas 128770 relation_ref 1802114 // <composition>
+  from ref 128642 z 2001 to ref 128386
+  role_a_pos 472 206 3000 no_role_b
+  multiplicity_a_pos 445 206 3000 no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 1802242 // <composition>
+  from ref 128642 z 2001 to ref 128514
+  role_a_pos 482 295 3000 no_role_b
+  multiplicity_a_pos 559 325 3000 no_multiplicity_b
+end
+end

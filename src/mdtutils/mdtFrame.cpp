@@ -41,7 +41,7 @@ void mdtFrame::setIgnoreNullValues(bool ignoreNullValues)
 int mdtFrame::putUntil(const char *data, char token, int maxLen)
 {
   Q_ASSERT(data != 0);
-  Q_ASSERT(data != QByteArray::data());
+  Q_ASSERT(data != QByteArray::data()); /// \todo ???
 
   // Get max size that can be stored
   if(maxLen > remainCapacity()){

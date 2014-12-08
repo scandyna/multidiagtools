@@ -45,14 +45,16 @@ class mdtDeviceU3606A : public mdtDeviceScpi
 
  public:
 
-  /*! \brief Range
+  /*! \brief Range for measure
    */
   enum range_t {
                   RangeAuto = -10,  /*!< AUTO range */
                   RangeMin,         /*!< MIN range */
                   RangeMax,         /*!< MAX range */
-                  Range100m = 1,    /*!< 100m (milli) range */
+                  Range20m = 1,     /*!< 20 milli range */
+                  Range100m,        /*!< 100 milli range */
                   Range1,           /*!< 1 range */
+                  Range10,          /*!< 10 range */
                   Range100,         /*!< 100 range */
                   Range1k,          /*!< 1k range */
                   Range10k,         /*!< 10k range */
@@ -68,6 +70,13 @@ class mdtDeviceU3606A : public mdtDeviceScpi
                   ResolutionMin,    /*!< 5 1/2 digit */
                   ResolutionMax     /*!< 4 1/2 digit */
                     };
+
+  /*! \brief Range of source subsystem
+   */
+  enum sourceRange_t {
+                      S1_30V1A,  /*!< Range S1: 30V / 1A */
+                      S2_8V3A    /*!< Range S2: 8V / 3A */
+                     };
 
   /*! \brief Constructor
    *
@@ -91,6 +100,15 @@ class mdtDeviceU3606A : public mdtDeviceScpi
    * \return A error listed in mdtAbstractPort::error_t (NoError on success)
    */
   mdtAbstractPort::error_t connectToDevice(const mdtDeviceInfo &devInfo);
+
+  /*! \brief Setup DC voltage measure
+   *
+   * \param range If range is supported by instrument, it will be set,
+   *               else AUTO range is used.
+   * \param resolution Resolution to use
+   * \return Value < 0 on error, >= 0 on success
+   */
+  int setupVoltageDcMeasure(range_t range, resolution_t resolution);
 
   /*! \brief Setup resistance measure
    *
@@ -126,6 +144,34 @@ class mdtDeviceU3606A : public mdtDeviceScpi
    * This is similar to call getAnalogInputValue("MEASURE", true, true) .
    */
   mdtValue getMeasureValue();
+
+  /*! \brief Set source output state (On/Off)
+   */
+  bool setOutputState(bool state);
+
+  /*! \brief Set source range
+   *
+   * Note: source range can ba changed only whenn output is OFF.
+   *
+   * \sa setOutputState()
+   */
+  bool setSourceRange(sourceRange_t range);
+
+  /*! \brief Set source voltage limit
+   *
+   * This voltage limit is used for constant current source mode.
+   * Refers to [SOURce:]VOLTage:LIMit in programmers reference guide.
+   */
+  bool setSourceVoltageLimit(double v);
+
+  /*! \brief Set source current
+   *
+   * Will setup source for constant current mode,
+   *  with given current.
+   *
+   * Refers to [SOURce:]CURRent[:LEVel][:IMMediate][:AMPLitude] in programmers reference guide.
+   */
+  bool setSourceCurrent(double x);
 
  public slots:
 

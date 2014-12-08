@@ -586,15 +586,9 @@ QPair<QVariant, QVariant> mdtTtTestNode::getTwoRelayConnections(const QVariant &
   if(!ok){
     return QPair<QVariant, QVariant>();
   }
-  
-  qDebug() << "Relay ID " << testNodeUnitId << " - connections: " << connectionsList;
-  
   // Check any combinaison of connections to find 2 non linked together connections
   for(i = 0; i < (connectionsList.size()-1); ++i){
     for(m = i+1; m < connectionsList.size(); ++m){
-      
-      qDebug() << "Shortest path from " << connectionsList.at(i) << " to " << connectionsList.at(m) << ": " << graph.getShortestPath(connectionsList.at(i), connectionsList.at(m), ok);
-      
       if(!graph.connectionsAreLinked(connectionsList.at(i), connectionsList.at(m))){
         ok = true;
         return QPair<QVariant, QVariant>(connectionsList.at(i), connectionsList.at(m));

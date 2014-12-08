@@ -1,6 +1,6 @@
 format 207
 "mdtutils" // mdtutils
-  revision 135
+  revision 137
   modified_by 2 "philippe"
   // class settings
   
@@ -1506,6 +1506,99 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+    end
+
+    state 211842 "FrameStateMachine"
+      stereotype "machine"
+      statediagram 1284994 "FrameStateMachine"
+	statediagramsettings show_trans_definition yes draw_all_relations no
+	 end
+	size A4
+      end
+
+      pseudostate 181250 initial 
+	transition 231810 "<transition>"
+	  on state_ref 212610 // Empty
+	  external 
+	end
+      end
+
+      state 211970 "DecodingHeader"
+	transition 231298 "bytesWritten"
+	  on state_ref 212226 // StoringData
+	    uml_trigger "bytesWritten"
+	    uml_guard "headerIsComplete"
+	    uml_expr "storeData"
+	  external 
+	end
+
+	transition 232066 "clear"
+	  on state_ref 212610 // Empty
+	  external 
+	end
+
+	transition 232194 "clear"
+	  on state_ref 212610 // Empty
+	  external 
+	end
+
+	transition 232706 "decodeError"
+	  on state_ref 212738 // BadFrame
+	  external 
+	end
+      end
+
+      state 212098 "Complete"
+	transition 232578 "clear"
+	  on state_ref 212610 // Empty
+	  external 
+	end
+      end
+
+      state 212226 "StoringData"
+	transition 231426 "dataSectionComplete"
+	  on state_ref 212482 // StoringCrc
+	  external 
+	end
+
+	transition 232322 "clear"
+	  on state_ref 212610 // Empty
+	  external 
+	end
+      end
+
+      state 212482 "StoringCrc"
+	transition 231554 "CrcOk"
+	  on state_ref 212098 // Complete
+	  external 
+	end
+
+	transition 232450 "clear"
+	  on state_ref 212610 // Empty
+	  external 
+	end
+
+	transition 232834 "decodeError"
+	  on state_ref 212738 // BadFrame
+	  external 
+	end
+      end
+
+      state 212610 "Empty"
+	transition 231938 "bytesWritten"
+	  on state_ref 211970 // DecodingHeader
+	    uml_trigger "bytesWritten"
+	    uml_expr "decodeHeader"
+	  external 
+	end
+      end
+
+      state 212738 "BadFrame"
+	transition 232962 "clear"
+	  on state_ref 212610 // Empty
+	  external 
+	end
+      end
     end
   end
 

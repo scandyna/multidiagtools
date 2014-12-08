@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -31,7 +31,16 @@ class mdtUsbPortTest : public mdtTest
 {
  Q_OBJECT
 
+ private:
+
+  void fillBuffer(unsigned char *buffer, int bSize);
+
  private slots:
+
+  void basicAllocFreeBenchMarks();
+  void basicLockUnlockBenchmark();
+  void standardCallBenchmark();
+  void virtualCallBenchmark();
 
   // Make some tests with Velleman k8055 board
   void vellemanK8055Test();

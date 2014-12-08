@@ -1,12 +1,22 @@
-window_sizes 1280 996 274 1000 943 0
+window_sizes 1280 916 393 881 863 0
 cleanlooks_style
-diagrams
-  active  classdiagram_ref 739586 // CableListAllTables
-    1000 943 80 17 22 0
-end
 show_stereotypes
-selected attribute_ref 1436034 // Resistance
+selected attribute_ref 1507330 // pvRequest
 open
-  attribute_ref 1436034 // Resistance
+  class_ref 1409794 // UsbPort
+  class_ref 1430530 // UsbTransfer
+  class_ref 1465090 // UsbTransferPool
+  classrelation_ref 1831938 // pvTransferPool (<directional composition>)
+  class_ref 1471874 // UsbPortThread
+  class_ref 1423362 // UsbtmcPort
+  class_ref 1423618 // UsbtmcFrame
+  class_ref 1451906 // Error
+  operation_ref 2353154 // transferHandler
+  class_ref 1485570 // UsbTmcBulkTransfer
+  operation_ref 2360450 // transferHandler
+  classview_ref 722434 // Scpi
+  classview_ref 722306 // ModbusTcp
+  class_ref 1444482 // ModbusTransaction
+  classview_ref 722562 // UserApplication
 end
 end

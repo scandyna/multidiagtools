@@ -175,6 +175,11 @@ void mdtClArticleConnectionDialog::updateDialog()
 
   // Update article connections data
   fld_ArticleContactName->setText(pvData.value("ArticleContactName").toString());
+  if(pvData.value("Resistance").isNull()){
+    sbConnectionResistance->setValue(sbConnectionResistance->minimum());
+  }else{
+    sbConnectionResistance->setValue(pvData.value("Resistance").toDouble());
+  }
   fld_IoType->setText(pvData.value("IoType").toString());
   fld_FunctionEN->setText(pvData.value("FunctionEN").toString());
   fld_FunctionFR->setText(pvData.value("FunctionFR").toString());
@@ -195,6 +200,11 @@ void mdtClArticleConnectionDialog::updateDialog()
 void mdtClArticleConnectionDialog::updateData()
 {
   pvData.setValue("ConnectionType_Code_FK", cbConnectionType->currentText());
+  if(sbConnectionResistance->value() < 0.0){
+    pvData.setValue("Resistance", QVariant());
+  }else{
+    pvData.setValue("Resistance", sbConnectionResistance->value());
+  }
   pvData.setValue("ArticleContactName", fld_ArticleContactName->text());
   pvData.setValue("IoType", fld_IoType->text());
   pvData.setValue("FunctionEN", fld_FunctionEN->text());

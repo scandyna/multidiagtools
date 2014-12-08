@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -32,8 +32,121 @@
 #include "mdtFrameCodecK8055.h"
 #include "mdtFrameUsbTmc.h"
 #include <QByteArray>
+#include <mutex>
 
 #include <QDebug>
+
+/*
+ * Test classes to compare standard calls vs virtual calls
+ */
+
+class StandardCallTestClass
+{
+ public:
+  int processData(int m, int n)
+  {
+    return m + n;
+  }
+};
+
+class VirtualCallBaseTestClass
+{
+ public:
+  virtual int processData(int m, int n)
+  {
+    return m + n;
+  }
+};
+
+class VirtualCallTestClass : public VirtualCallBaseTestClass
+{
+ public:
+  int processData(int m, int n)
+  {
+    return m + n;
+  }
+};
+
+/*
+ * Helper methods for alloc/free vs mutex benchamrks
+ */
+
+void mdtUsbPortTest::fillBuffer ( unsigned char* buffer, int bSize )
+{
+  for(int i = 0; i < bSize; ++i){
+    buffer[i] = i;
+  }
+}
+
+/*
+ * Benchmarks
+ */
+
+void mdtUsbPortTest::basicAllocFreeBenchMarks()
+{
+  unsigned char *buffer;
+  int N = 10;
+  int bSize = 100;
+  int i;
+
+  QBENCHMARK{
+    for(i = 0; i < N; ++i){
+      buffer = new unsigned char[bSize];
+      fillBuffer(buffer, bSize);
+      delete[] buffer;
+    }
+  }
+}
+
+void mdtUsbPortTest::basicLockUnlockBenchmark()
+{
+  unsigned char *buffer;
+  std::mutex mutex;
+  int N = 10;
+  int bSize = 100;
+  int i;
+
+  buffer = new unsigned char[bSize];
+  QBENCHMARK{
+    for(i = 0; i < N; ++i){
+      std::lock_guard<std::mutex> lock(mutex);
+      fillBuffer(buffer, bSize);
+    }
+  }
+  delete[] buffer;
+}
+
+void mdtUsbPortTest::standardCallBenchmark()
+{
+  StandardCallTestClass *c = new StandardCallTestClass;
+  int r;
+
+  QBENCHMARK{
+    r = c->processData(2, 5);
+  }
+  // Do something with r
+  if(r > 5){
+    r = 2;
+  }
+}
+
+void mdtUsbPortTest::virtualCallBenchmark()
+{
+  VirtualCallBaseTestClass *c = new VirtualCallTestClass;
+  int r;
+
+  QBENCHMARK{
+    r = c->processData(2, 5);
+  }
+  // Do something with r
+  if(r > 5){
+    r = 2;
+  }
+}
+
+/*
+ * Tests
+ */
 
 void mdtUsbPortTest::vellemanK8055Test()
 {

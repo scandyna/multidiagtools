@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -25,9 +25,11 @@
 #include <QTest>
 #include <QFile>
 
+/// \todo Check if number is usable anymore, and update test if needed.
 void mdtErrorTest::simpleTest()
 {
   mdtError e(1, "One", mdtError::Error);
+  enum errorType { A = -1, B, C};
 
   // Check given values
   QVERIFY(e.number() == 1);
@@ -48,6 +50,17 @@ void mdtErrorTest::simpleTest()
   QVERIFY(e.fileLine() == (__LINE__ - 1));
   //QVERIFY(e.fileName() == __FILE__);
   QVERIFY(e.functionName() == "mdtErrorTest::simpleTest()");
+  /*
+   * Check type storage
+   */
+  e.setType<errorType>(A);
+  QVERIFY(e.type<errorType>() == A);
+  /*
+   * Following expressions must not compile
+   */
+  //e.setType<int>(0);
+  //QVERIFY(e.type<int>() == 0);
+  //auto a = e.type<int>();
 }
 
 void mdtErrorTest::errorOutInitTest()

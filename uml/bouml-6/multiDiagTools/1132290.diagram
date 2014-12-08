@@ -1,4 +1,4 @@
-format 206
+format 207
 
 classcanvas 128002 class_ref 322818 // QIODevice
   classdiagramsettings member_max_width 0 end
@@ -41,7 +41,7 @@ relationcanvas 128898 relation_ref 1508482 // <generalisation>
 end
 relationcanvas 129154 relation_ref 1508098 // <directional composition>
   from ref 129026 z 2007 stereotype "<<vector>>" xyz 176 462 2007 to ref 128642
-  role_a_pos 211 514 3000 no_role_b
-  multiplicity_a_pos 186 514 3000 no_multiplicity_b
+  role_a_pos 212 514 3000 no_role_b
+  multiplicity_a_pos 187 514 3000 no_multiplicity_b
 end
 end

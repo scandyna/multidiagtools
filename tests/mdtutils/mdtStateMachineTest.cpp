@@ -21,6 +21,7 @@
 #include "mdtStateMachineTest.h"
 #include "mdtState.h"
 #include "mdtStateMachine.h"
+#include "mdtBasicStateMachine.h"
 #include "mdtApplication.h"
 #include <QTest>
 #include <QString>
@@ -40,6 +41,29 @@ void mdtStateMachineTest::sandbox()
   qDebug() << "i: " << i.load();
 }
 
+void mdtStateMachineTest::basicStateMachineTest()
+{
+  /*
+   * State machine for tests:
+   * | Current state | Event         | Target state   | Action     | Guard             |
+   * -----------------------------------------------------------------------------------
+   * |  Empty        | PutData       | Decoding       | putData()  |                   |
+   * -----------------------------------------------------------------------------------
+   * |  Decoding     | PutData       | Decoding       | putData()  |                   |
+   * -----------------------------------------------------------------------------------
+   * |  Decoding     | PutData       | Decoding       | putData()  |                   |
+   * -----------------------------------------------------------------------------------
+   * |  Idle         | OpenPort  | Idle           | openPort() | openPort() successful |
+   * -----------------------------------------------------------------------------------
+   * 
+   */
+  enum state_t { Stopped, Starting, Idle, Running };
+
+  mdtBasicStateMachine<state_t> bsm(Stopped);
+  QVERIFY(bsm.currentState() == Stopped);
+  bsm.setCurrentState(Starting);
+  QVERIFY(bsm.currentState() == Starting);
+}
 
 void mdtStateMachineTest::stateTest()
 {

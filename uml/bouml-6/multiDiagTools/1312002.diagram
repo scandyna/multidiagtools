@@ -1,0 +1,255 @@
+format 207
+
+pseudostatecanvas 128002 pseudostate_ref 187778 // initial
+   xyz 105.1 57.4 2000
+end
+statecanvas 128130 state_ref 219394 // Starting
+  
+  xyzwh 398.9 53.2 2000 71 43
+end
+statecanvas 128258 state_ref 219522 // Idle
+  
+  xyzwh 376.2 160.4 2000 43 43
+end
+statecanvas 128386 state_ref 219650 // BulkOutTransfer
+  
+  xyzwh 917.4 165.5 2000 140 43
+end
+statecanvas 128514 state_ref 219778 // BulkOutStopped
+  
+  xyzwh 815.5 989.9 2000 125 43
+end
+statecanvas 128642 state_ref 219906 // BulkInTransfer
+  
+  xyzwh 166.9 200.6 2000 116 43
+end
+statecanvas 128770 state_ref 220034 // BulkInStopped
+  
+  xyzwh 34.4 895.4 2000 115 43
+end
+statecanvas 128898 state_ref 220162 // InitiateAbortBulkOut
+  
+  xyzwh 860.5 309.4 2000 227 97
+end
+statecanvas 129282 state_ref 220290 // CheckAbortBulkOutStatus
+  
+  xyzwh 866.2 642.8 2000 263 81
+end
+statecanvas 129666 state_ref 220546 // DeviceDisconnected
+  
+  xyzwh 164.7 51.7 2000 151 43
+end
+statecanvas 129922 state_ref 220674 // InitiateAbortBulkIn
+  
+  xyzwh 117.5 353.5 2000 216 97
+end
+statecanvas 130178 state_ref 220802 // CheckAbortBulkInStatus
+  
+  xyzwh 134.3 596.4 2000 179 43
+end
+statecanvas 130434 state_ref 220930 // WaitingInitiateAbortBulkOutResponse
+  
+  xyzwh 851.2 520.7 2005 263 43
+end
+note 130946 "Legend:
+IABORD: InitiateAbortBulkOutResponseDecoded
+CABOSRD: CheckAbortBulkOutRStatusResponseDceoded
+ICRD: InitiateClearRsponseDecoded
+CCSRD: CheckClearStatusResponseDecoded"
+  xyzwh 602.4 31.1 2000 523 101
+statecanvas 131586 state_ref 221058 // WaitingCheckAbortBulkOutStatusResponse
+  
+  xyzwh 869.3 818 2000 301 43
+end
+statecanvas 132098 state_ref 227586 // InitiateClear
+  
+  xyzwh 415.5 587.9 2000 171 81
+end
+statecanvas 132226 state_ref 227714 // WaitingInitiateClearResponse
+  
+  xyzwh 397.2 736.5 2000 209 43
+end
+statecanvas 132482 state_ref 227842 // CheckClearStatus
+  
+  xyzwh 385.9 849.8 2000 209 81
+end
+statecanvas 132738 state_ref 227970 // WaitingCheckClearStatusResponse
+  
+  xyzwh 355.6 992.4 2000 247 43
+end
+statecanvas 133506 state_ref 228098 // SendingUsbtmcMessage
+  
+  xyzwh 545 162.9 2006 179 43
+end
+statecanvas 135298 state_ref 228226 // ClearEndpointHalt
+  
+  xyzwh 103.4 1059.2 2000 261 81
+end
+statecanvas 135682 state_ref 228354 // WaitingClearEndpointHaltResponse
+  
+  xyzwh 116 843.8 2006 249 43
+end
+note 136066 "Retry ?"
+  xyzwh 1293.6 738.4 2000 93 67
+note 136194 "Lister évènements possible selon LIBUSB-USBTMC
+ - ControlTransferComplete
+ - ControlTransferTimeout
+ - ControlTransferError
+ - ControlTransferCancelled
+ - BulkOutTransferComplete
+ - BulkOutTransferTimeout
+ - BulkOutTransferError
+ - BulkOutTransferCancelled
+ - BulkInTransferComplete
+ - BulkInTransferTimeout
+ - BulkInTransferError
+ - BulkInTransferCancelled
+ - InterruptInTransferComplete
+ - InterruptInTransferTimeout
+ - InterruptInTransferError
+ - InterruptInTransferCancelled"
+  xyzwh 591.9 582.1 2000 430 319
+transitioncanvas 129026 transition_ref 239490 // <transition>
+  decenter_begin 403
+  
+  from ref 128386 z 2001 label "bulkOutTransferCancelled" xyz 894 249 2001 to ref 128898
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 130050 transition_ref 240002 // <transition>
+  
+  from ref 128642 z 2001 label "synchronizationLost" xyz 165 286 2001 to ref 129922
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 130562 transition_ref 240258 // <transition>
+  decenter_begin 39
+  decenter_end 34
+  
+  from ref 128898 z 2006 label "controlTransferSubmitted" xyz 789 452 2006 to ref 130434
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 130818 transition_ref 240386 // <transition>
+  decenter_begin 936
+  decenter_end 960
+  
+  from ref 130434 z 2006 label "IABORD [status==NOT_IN_PROGRESS]" xyz 964 452 2006 to ref 128898
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 131202 transition_ref 240642 // <transition>
+  decenter_end 448
+  
+  from ref 130434 z 2006 label "IABORD [status==SUCCESS]" xyz 819 592 2006 to ref 129282
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 131714 transition_ref 240770 // <transition>
+  decenter_begin 222
+  decenter_end 46
+  
+  from ref 129282 z 2001 label "controlTransferSubmitted" xyz 828 760 2001 to ref 131586
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 131842 transition_ref 240898 // <transition>
+  decenter_begin 903
+  decenter_end 914
+  
+  from ref 131586 z 2001 label "CABOSRD [status==PENDING]" xyz 1026 760 2001 to ref 129282
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 131970 transition_ref 241026 // <transition>
+  geometry HVr
+  decenter_end 200
+  
+  from ref 131586 z 2001 label "CABOSRD [status==else]" xyz 938 919 2001 to point 1016 995
+  line 134786 z 2001 to ref 128514
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 132354 transition_ref 247554 // <transition>
+  
+  from ref 132098 z 2001 label "controlTransferSubmitted" xyz 426 692 2001 to ref 132226
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 132610 transition_ref 247682 // <transition>
+  
+  from ref 132226 z 2001 label "ICRD [status==SUCCESS]" xyz 414 803 2001 to ref 132482
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 132866 transition_ref 247810 // <transition>
+  decenter_begin 165
+  decenter_end 126
+  
+  from ref 132482 z 2001 label "controlTransferSubmitted" xyz 327 948 2001 to ref 132738
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 132994 transition_ref 247938 // <transition>
+  
+  from ref 132738 z 2001 label "CCSRD / status==else" xyz 641 1001 2001 to ref 128514
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 133634 transition_ref 248322 // <transition>
+  decenter_begin 228
+  decenter_end 216
+  
+  from ref 133506 z 2007 label "submitBulkOutTransfer" xyz 749 163 2007 to ref 128386
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 133762 transition_ref 248450 // <transition>
+  decenter_begin 783
+  decenter_end 771
+  
+  from ref 128386 z 2007 label "bulkOutTransferDone" xyz 756 186 2007 to ref 133506
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 133890 transition_ref 248578 // <transition>
+  decenter_begin 222
+  decenter_end 228
+  
+  from ref 128258 z 2007 label "sendCommand" xyz 434 161 2007 to ref 133506
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 134018 transition_ref 248706 // <transition>
+  decenter_begin 771
+  decenter_end 777
+  
+  from ref 133506 z 2007 label "commandSent" xyz 439 184 2007 to ref 128258
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 134146 transition_ref 248834 // <transition>
+  geometry VHr
+  decenter_end 584
+  
+  from ref 130434 z 2007 label "IABORD [status==else]" xyz 641 424 2007 to point 647 538
+  line 134402 z 2007 to ref 133506
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 134530 transition_ref 248962 // <transition>
+  decenter_begin 182
+  
+  from ref 133506 z 2007 label "abortSendCommandQueued" xyz 454 386 2007 to ref 132098
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 134914 transition_ref 249090 // <transition>
+  decenter_end 800
+  
+  from ref 128386 z 2001 label "bulkOutStall" xyz 1341 485 2001 to point 1372.8 183.5
+  line 135042 z 2001 to point 1364.2 1018
+  line 135170 z 2001 to ref 128514
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 135426 transition_ref 249218 // <transition>
+  geometry HVr
+  
+  from ref 128514 z 2001 to point 874.2 1096.6
+  line 135554 z 2001 to ref 135298
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 135810 transition_ref 249346 // <transition>
+  
+  from ref 135298 z 2007 label "controlTransferSubmitted" xyz 162 962 2007 to ref 135682
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 135938 transition_ref 249474 // <transition>
+  decenter_begin 791
+  
+  from ref 135682 z 2007 label "controlTransferDone" xyz 291 512 2007 to ref 128258
+  write_horizontally default show_definition default drawing_language default
+end
+end
