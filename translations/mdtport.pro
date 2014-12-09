@@ -33,6 +33,7 @@ SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtPortConfig
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtAbstractPortSetupDialog.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtUsbtmcPortSetupDialog.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtModbusTcpPortSetupDialog.cpp
+SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtUsbDeviceList.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtUsbtmcFrame.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/linux/mdtPort.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/linux/mdtPortLock.cpp

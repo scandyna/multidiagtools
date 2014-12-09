@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -20,51 +20,76 @@
  ****************************************************************************/
 #include "mdtUsbConfigDescriptor.h"
 #include "mdtUsbInterfaceDescriptor.h"
+#include <cstring>
 
 mdtUsbConfigDescriptor::mdtUsbConfigDescriptor()
+ : pvIsEmpty(true)
 {
+  ::memset(&pvDescriptor, 0, sizeof(pvDescriptor));
+  /**
   pvbDescriptorType = 0;
   pvbConfigurationValue = 0;
   pviConfiguration = 0;
   pvbmAttributes = 0;
   pvbMaxPower = 0;
+  */
 }
 
-mdtUsbConfigDescriptor::~mdtUsbConfigDescriptor()
+mdtUsbConfigDescriptor::mdtUsbConfigDescriptor ( libusb_config_descriptor descriptor )
 {
-  qDeleteAll(pvInterfaces);
-}
-
-void mdtUsbConfigDescriptor::fetchAttributes(struct libusb_config_descriptor *descriptor)
-{
-  Q_ASSERT(descriptor != 0);
-
-  quint8 i;
+  uint8_t i;
   int j;
-  mdtUsbInterfaceDescriptor *ifaceDescriptor;
 
-  // Store attributes
-  pvbDescriptorType = descriptor->bDescriptorType;
-  pvbConfigurationValue = descriptor->bConfigurationValue;
-  pviConfiguration = descriptor->iConfiguration;
-  pvbmAttributes = descriptor->bmAttributes;
-  pvbMaxPower = descriptor->MaxPower;
+  pvDescriptor = descriptor;
   // Get interfaces
-  qDeleteAll(pvInterfaces);
-  pvInterfaces.clear();
-  for(i=0; i<descriptor->bNumInterfaces; i++){
-    Q_ASSERT(descriptor->interface != 0);
-    Q_ASSERT(descriptor->interface[i].altsetting != 0);
+  for(i = 0; i < pvDescriptor.bNumInterfaces; ++i){
+    Q_ASSERT(pvDescriptor.interface != 0);
+    Q_ASSERT(pvDescriptor.interface[i].altsetting != 0);
     // Get interface descriptors
-    for(j=0; j<descriptor->interface[i].num_altsetting; j++){
-      ifaceDescriptor = new mdtUsbInterfaceDescriptor;
-      Q_ASSERT(ifaceDescriptor != 0);
-      ifaceDescriptor->fetchAttributes((libusb_interface_descriptor*)&descriptor->interface[i].altsetting[j]);
-      pvInterfaces.append(ifaceDescriptor);
+    for(j = 0; j < pvDescriptor.interface[i].num_altsetting; ++j){
+      pvInterfaces.append(mdtUsbInterfaceDescriptor(pvDescriptor.interface[i].altsetting[j]));
     }
   }
 }
 
+/**
+mdtUsbConfigDescriptor::~mdtUsbConfigDescriptor()
+{
+  qDeleteAll(pvInterfaces);
+}
+*/
+
+// void mdtUsbConfigDescriptor::fetchAttributes(struct libusb_config_descriptor *descriptor)
+// {
+//   Q_ASSERT(descriptor != 0);
+// 
+//   quint8 i;
+//   int j;
+//   mdtUsbInterfaceDescriptor *ifaceDescriptor;
+// 
+//   // Store attributes
+//   pvbDescriptorType = descriptor->bDescriptorType;
+//   pvbConfigurationValue = descriptor->bConfigurationValue;
+//   pviConfiguration = descriptor->iConfiguration;
+//   pvbmAttributes = descriptor->bmAttributes;
+//   pvbMaxPower = descriptor->MaxPower;
+//   // Get interfaces
+//   qDeleteAll(pvInterfaces);
+//   pvInterfaces.clear();
+//   for(i=0; i<descriptor->bNumInterfaces; i++){
+//     Q_ASSERT(descriptor->interface != 0);
+//     Q_ASSERT(descriptor->interface[i].altsetting != 0);
+//     // Get interface descriptors
+//     for(j=0; j<descriptor->interface[i].num_altsetting; j++){
+//       ifaceDescriptor = new mdtUsbInterfaceDescriptor;
+//       Q_ASSERT(ifaceDescriptor != 0);
+//       ifaceDescriptor->fetchAttributes((libusb_interface_descriptor*)&descriptor->interface[i].altsetting[j]);
+//       pvInterfaces.append(ifaceDescriptor);
+//     }
+//   }
+// }
+
+/**
 quint8 mdtUsbConfigDescriptor::bDescriptorType() const
 {
   return pvbDescriptorType;
@@ -84,17 +109,21 @@ quint8 mdtUsbConfigDescriptor::bmAttributes() const
 {
   return pvbmAttributes;
 }
+*/
 
 bool mdtUsbConfigDescriptor::isSelfPowered() const
 {
-  return (pvbmAttributes & 0x40);
+  ///return (pvbmAttributes & 0x40);
+  return (pvDescriptor.bmAttributes & 0x40);
 }
 
 bool mdtUsbConfigDescriptor::supportsRemoteWakeup() const
 {
-  return (pvbmAttributes & 0x20);
+  ///return (pvbmAttributes & 0x20);
+  return (pvDescriptor.bmAttributes & 0x20);
 }
 
+/**
 quint8 mdtUsbConfigDescriptor::bMaxPower() const
 {
   return pvbMaxPower;
@@ -104,8 +133,11 @@ int mdtUsbConfigDescriptor::maxPower() const
 {
   return 2*pvbMaxPower;
 }
+*/
 
+/**
 QList<mdtUsbInterfaceDescriptor*> &mdtUsbConfigDescriptor::interfaces()
 {
   return pvInterfaces;
 }
+*/

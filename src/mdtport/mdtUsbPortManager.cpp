@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -70,8 +70,8 @@ QList<mdtPortInfo*> mdtUsbPortManager::scan(int bDeviceClass, int bDeviceSubClas
   libusb_context *ctx;
   libusb_device **devicesList;
   mdtUsbDeviceDescriptor deviceDescriptor;
-  mdtUsbConfigDescriptor *configDescriptor;
-  mdtUsbInterfaceDescriptor *ifaceDescriptor;
+  ///mdtUsbConfigDescriptor *configDescriptor;
+  ///mdtUsbInterfaceDescriptor *ifaceDescriptor;
   QString portName;
   libusb_device *device;
   ssize_t devicesCount;
@@ -110,26 +110,26 @@ QList<mdtPortInfo*> mdtUsbPortManager::scan(int bDeviceClass, int bDeviceSubClas
     portInfo = new mdtPortInfo;
     // Search interfaces in various configurations
     for(j=0; j<deviceDescriptor.configurations().size(); j++){
-      configDescriptor = deviceDescriptor.configurations().at(j);
-      Q_ASSERT(configDescriptor != 0);
-      for(k=0; k<configDescriptor->interfaces().size(); k++){
-        ifaceDescriptor = configDescriptor->interfaces().at(k);
-        Q_ASSERT(ifaceDescriptor != 0);
+      mdtUsbConfigDescriptor configDescriptor = deviceDescriptor.configurations().at(j);
+      ///Q_ASSERT(configDescriptor != 0);
+      for(k=0; k<configDescriptor.interfaces().size(); k++){
+        mdtUsbInterfaceDescriptor ifaceDescriptor = configDescriptor.interfaces().at(k);
+        ///Q_ASSERT(ifaceDescriptor != 0);
         // See if a specific bDeviceClass was requested
         if(bDeviceClass >= 0){
-          if(ifaceDescriptor->bInterfaceClass() != (quint8)bDeviceClass){
+          if(ifaceDescriptor.bInterfaceClass() != (quint8)bDeviceClass){
             continue;
           }
         }
         // See if a specific bDeviceSubClass was requested
         if(bDeviceSubClass >= 0){
-          if(ifaceDescriptor->bInterfaceSubClass() != (quint8)bDeviceSubClass){
+          if(ifaceDescriptor.bInterfaceSubClass() != (quint8)bDeviceSubClass){
             continue;
           }
         }
         // See if a specific bDeviceProtocol was requested
         if(bDeviceProtocol >= 0){
-          if(ifaceDescriptor->bInterfaceProtocol() != (quint8)bDeviceProtocol){
+          if(ifaceDescriptor.bInterfaceProtocol() != (quint8)bDeviceProtocol){
             continue;
           }
         }
@@ -147,7 +147,7 @@ QList<mdtPortInfo*> mdtUsbPortManager::scan(int bDeviceClass, int bDeviceSubClas
         deviceInfo->setVendorId(deviceDescriptor.idVendor());
         deviceInfo->setProductId(deviceDescriptor.idProduct());
         deviceInfo->setSerialId(deviceDescriptor.serialNumber());
-        deviceInfo->setProtocolId(ifaceDescriptor->bInterfaceProtocol());
+        deviceInfo->setProtocolId(ifaceDescriptor.bInterfaceProtocol());
         // Add interface to list
         portInfo->addDevice(deviceInfo);
       }

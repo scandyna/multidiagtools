@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -1318,8 +1318,8 @@ mdtAbstractPort::error_t mdtUsbPort::pvSetup()
 
   libusb_device *device;
   mdtUsbDeviceDescriptor deviceDescriptor;
-  mdtUsbEndpointDescriptor *bulkEndpointDescriptor;
-  mdtUsbEndpointDescriptor *interruptEndpointDescriptor;
+  mdtUsbEndpointDescriptor bulkEndpointDescriptor;
+  mdtUsbEndpointDescriptor interruptEndpointDescriptor;
   int err;
 
   // Search devices endpoints
@@ -1337,37 +1337,37 @@ mdtAbstractPort::error_t mdtUsbPort::pvSetup()
   // Find device's output endpoints
   bulkEndpointDescriptor = deviceDescriptor.firstBulkOutEndpoint(0, 0, true);
   interruptEndpointDescriptor = deviceDescriptor.firstInterruptOutEndpoint(0, 0, true);
-  if((bulkEndpointDescriptor == 0)&&(interruptEndpointDescriptor == 0)){
+  if((bulkEndpointDescriptor.isEmpty())&&(interruptEndpointDescriptor.isEmpty())){
     mdtError e(MDT_USB_IO_ERROR, "Found no output endpoint for data in device " + pvPortName, mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtUsbPort");
     e.commit();
     return SetupError;
   }
-  if((bulkEndpointDescriptor != 0)&&(interruptEndpointDescriptor != 0)){
+  if((!bulkEndpointDescriptor.isEmpty())&&(!interruptEndpointDescriptor.isEmpty())){
     mdtError e(MDT_USB_IO_ERROR, "Found output bulk and interrupt, choose bulk out endpoint for data in device " + pvPortName, mdtError::Warning);
     MDT_ERROR_SET_SRC(e, "mdtUsbPort");
     e.commit();
     // Choose bulk out
-    interruptEndpointDescriptor = 0;
+    interruptEndpointDescriptor = mdtUsbEndpointDescriptor();
   }
-  if(bulkEndpointDescriptor != 0){
-    pvWriteBufferSize = bulkEndpointDescriptor->transactionsCountPerMicroFrame();
+  if(!bulkEndpointDescriptor.isEmpty()){
+    pvWriteBufferSize = bulkEndpointDescriptor.transactionsCountPerMicroFrame();
     if(pvWriteBufferSize < 1){
       pvWriteBufferSize = 1;
     }
-    pvWriteBufferSize *= bulkEndpointDescriptor->maxPacketSize();
-    pvWriteEndpointAddress = bulkEndpointDescriptor->address() | LIBUSB_ENDPOINT_OUT;
+    pvWriteBufferSize *= bulkEndpointDescriptor.maxPacketSize();
+    pvWriteEndpointAddress = bulkEndpointDescriptor.address() | LIBUSB_ENDPOINT_OUT;
     pvWriteTransfertType = LIBUSB_TRANSFER_TYPE_BULK;
     //////qDebug() << "Bulk OUT address: 0x" << hex << pvWriteEndpointAddress;
     //////qDebug() << " Max packet size: " << pvWriteBufferSize;
   }
-  if(interruptEndpointDescriptor != 0){
-    pvWriteBufferSize = interruptEndpointDescriptor->transactionsCountPerMicroFrame();
+  if(!interruptEndpointDescriptor.isEmpty()){
+    pvWriteBufferSize = interruptEndpointDescriptor.transactionsCountPerMicroFrame();
     if(pvWriteBufferSize < 1){
       pvWriteBufferSize = 1;
     }
-    pvWriteBufferSize *= interruptEndpointDescriptor->maxPacketSize();
-    pvWriteEndpointAddress = interruptEndpointDescriptor->address() | LIBUSB_ENDPOINT_OUT;
+    pvWriteBufferSize *= interruptEndpointDescriptor.maxPacketSize();
+    pvWriteEndpointAddress = interruptEndpointDescriptor.address() | LIBUSB_ENDPOINT_OUT;
     pvWriteTransfertType = LIBUSB_TRANSFER_TYPE_INTERRUPT;
     //////qDebug() << "Interrupt OUT address: 0x" << hex << pvWriteEndpointAddress;
     //////qDebug() << " Max packet size: " << pvWriteBufferSize;
@@ -1375,46 +1375,46 @@ mdtAbstractPort::error_t mdtUsbPort::pvSetup()
   // Find device's input endpoints
   bulkEndpointDescriptor = deviceDescriptor.firstBulkInEndpoint(0, 0, true);
   interruptEndpointDescriptor = deviceDescriptor.firstInterruptInEndpoint(0, 0, true);
-  if((bulkEndpointDescriptor == 0)&&(interruptEndpointDescriptor == 0)){
+  if((bulkEndpointDescriptor.isEmpty())&&(interruptEndpointDescriptor.isEmpty())){
     mdtError e(MDT_USB_IO_ERROR, "Found no input endpoint for data in device " + pvPortName, mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtUsbPort");
     e.commit();
     return SetupError;
   }
-  if(bulkEndpointDescriptor != 0){
-    pvReadBufferSize = bulkEndpointDescriptor->transactionsCountPerMicroFrame();
+  if(!bulkEndpointDescriptor.isEmpty()){
+    pvReadBufferSize = bulkEndpointDescriptor.transactionsCountPerMicroFrame();
     if(pvReadBufferSize < 1){
       pvReadBufferSize = 1;
     }
-    pvReadBufferSize *= bulkEndpointDescriptor->maxPacketSize();
-    pvReadEndpointAddress = bulkEndpointDescriptor->address() | LIBUSB_ENDPOINT_IN;
+    pvReadBufferSize *= bulkEndpointDescriptor.maxPacketSize();
+    pvReadEndpointAddress = bulkEndpointDescriptor.address() | LIBUSB_ENDPOINT_IN;
     pvReadTransfertType = LIBUSB_TRANSFER_TYPE_BULK;
     //////qDebug() << "Bulk IN address: 0x" << hex << pvReadEndpointAddress;
     //////qDebug() << " Max packet size: " << pvReadBufferSize;
   }
-  if(interruptEndpointDescriptor != 0){
+  if(!interruptEndpointDescriptor.isEmpty()){
     //////qDebug() << "Interrupt IN address: " << interruptEndpointDescriptor->address();
     //////qDebug() << " Max packet size: " << interruptEndpointDescriptor->maxPacketSize();
     // Some device have a Bulk IN + Interrupt IN
-    if(bulkEndpointDescriptor != 0){
+    if(!bulkEndpointDescriptor.isEmpty()){
       //////qDebug() << "Additionnal interrupt IN , currently not supported..";
       // Use this interrupt IN endpoint as message IN
-      pvMessageInBufferSize = interruptEndpointDescriptor->transactionsCountPerMicroFrame();
+      pvMessageInBufferSize = interruptEndpointDescriptor.transactionsCountPerMicroFrame();
       if(pvMessageInBufferSize < 1){
         pvMessageInBufferSize = 1;
       }
-      pvMessageInBufferSize *= interruptEndpointDescriptor->maxPacketSize();
-      pvMessageInEndpointAddress = interruptEndpointDescriptor->address() | LIBUSB_ENDPOINT_IN;
+      pvMessageInBufferSize *= interruptEndpointDescriptor.maxPacketSize();
+      pvMessageInEndpointAddress = interruptEndpointDescriptor.address() | LIBUSB_ENDPOINT_IN;
       //////qDebug() << "Interrupt IN (for messages) address: 0x" << hex << pvMessageInEndpointAddress;
       //////qDebug() << " Max packet size: " << pvMessageInBufferSize;
     }else{
       // Use this interrupt IN endpoint as read
-      pvReadBufferSize = interruptEndpointDescriptor->transactionsCountPerMicroFrame();
+      pvReadBufferSize = interruptEndpointDescriptor.transactionsCountPerMicroFrame();
       if(pvReadBufferSize < 1){
         pvReadBufferSize = 1;
       }
-      pvReadBufferSize *= interruptEndpointDescriptor->maxPacketSize();
-      pvReadEndpointAddress = interruptEndpointDescriptor->address() | LIBUSB_ENDPOINT_IN;
+      pvReadBufferSize *= interruptEndpointDescriptor.maxPacketSize();
+      pvReadEndpointAddress = interruptEndpointDescriptor.address() | LIBUSB_ENDPOINT_IN;
       pvReadTransfertType = LIBUSB_TRANSFER_TYPE_INTERRUPT;
       //////qDebug() << "Interrupt IN address: 0x" << hex << pvReadEndpointAddress;
       //////qDebug() << " Max packet size: " << pvReadBufferSize;

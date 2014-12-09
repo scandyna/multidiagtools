@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,7 +22,10 @@
 #define MDT_USB_ENDPOINT_DESCRIPTOR_H
 
 #include <QtGlobal>
+#include <QString>
 #include <libusb-1.0/libusb.h>
+#include <cstdint>
+#include <vector>
 
 /*! \brief USB endpoint descriptor
  */
@@ -30,21 +33,37 @@ class mdtUsbEndpointDescriptor
 {
  public:
 
+  /*! \brief Construct a empty endpoint descriptor
+   */
   mdtUsbEndpointDescriptor();
-  ~mdtUsbEndpointDescriptor();
+
+  /*! \brief Constructor
+   *
+   * Will copy all members of passed descriptor.
+   *  This descriptor can be freed after construction was done.
+   */
+  mdtUsbEndpointDescriptor(libusb_endpoint_descriptor descriptor);
+
+  /*! \brief Check if descriptor is empty
+   */
+  bool isEmpty() const{
+    return pvIsEmpty;
+  }
+
+  ///~mdtUsbEndpointDescriptor();
 
   /*! \brief Ftech the endpoint descriptor's attributes
    *
    * \pre descriptor must be a valid pointer
    */
-  void fetchAttributes(libusb_endpoint_descriptor *descriptor);
+  ///void fetchAttributes(libusb_endpoint_descriptor *descriptor);
 
   /*! \brief Endpoint address (number)
    *
    * Note: this is the decoded address,
    *   i.e. bits 3..0 extracted from bEndpointAddress
    */
-  quint8 address();
+  uint8_t address();
 
   /*! \brief Endpoint direction
    */
@@ -115,14 +134,28 @@ class mdtUsbEndpointDescriptor
    *
    * Value is returned as read in bInterval field (in libusb strcture)
    */
-  quint8 bInterval();
+  uint8_t bInterval();
+
+  /*! \brief Extra (unknown) descriptors
+   */
+  std::vector<unsigned char> extra() const
+  {
+    return pvExtra;
+  }
 
  private:
 
+  libusb_endpoint_descriptor pvDescriptor;
+  std::vector<unsigned char> pvExtra;
+  bool pvIsEmpty;
+
+  /// \todo Obselete
+  /**
   quint8 pvbEndpointAddress;
   quint8 pvbmAttributes;
   quint16 pvwMaxPacketSize;
   quint8 pvbInterval;
+  */
 };
 
 #endif  // #ifndef MDT_USB_ENDPOINT_DESCRIPTOR_H

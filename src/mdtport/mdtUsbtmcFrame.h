@@ -93,6 +93,17 @@ class mdtUsbtmcFrame
     return pvBufferLength;
   }
 
+  /*! \brief Check if tranfer is complete (valid for bulk IN transfer)
+   *
+   * After a bulk IN transfer completed, tell how many data was written
+   *  to buffer. This is typically available from libusb_transfer::actual_length.
+   *  Frame is considered complete if (written - 12) >= transferSize.
+   */
+  bool isComplete(int written) const
+  {
+    return (written-12) >= (int)transferSize();
+  }
+
   /*! \brief Set MsgID
    *
    * See Table 2 in USBTMC specifications for details.

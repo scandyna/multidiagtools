@@ -18,44 +18,55 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_USB_PORT_TEST_H
-#define MDT_USB_PORT_TEST_H
+#ifndef MDT_USB_DEVICE_LIST_H
+#define MDT_USB_DEVICE_LIST_H
 
-#include "mdtTest.h"
-
-// Pour les essais ...
+#include "mdtError.h"
+#include "mdtUsbDeviceDescriptor.h"
+#include <QList>
 #include <libusb-1.0/libusb.h>
 
-/// \todo Add start/stop test
-class mdtUsbPortTest : public mdtTest
+/*! \brief Helper class to enumerate and search USB devices that are attached on system
+ */
+class mdtUsbDeviceList
 {
- Q_OBJECT
+ public:
+
+  /*! \brief Constructor
+   *
+   * Given contex must be initialized (see libusb_init()).
+   */
+  mdtUsbDeviceList(libusb_context *ctx);
+
+  /*! \brief Destructor
+   *
+   * \todo Comment about to get device handle before this class dies.
+   */
+  ~mdtUsbDeviceList();
+
+  /*! \brief Enumerate any attached USB devices
+   */
+  bool scan();
+
+  /*! \brief Get last error
+   */
+  mdtError lastError() const
+  {
+    return pvLastError;
+  }
 
  private:
 
-  void fillBuffer(unsigned char *buffer, int bSize);
+  Q_DISABLE_COPY(mdtUsbDeviceList);
 
- private slots:
+  /*! \brief Build devices list
+   */
+  bool buildDevicesList();
 
-  void basicAllocFreeBenchMarks();
-  void basicLockUnlockBenchmark();
-  void standardCallBenchmark();
-  void virtualCallBenchmark();
-
-  // USB part tests
-  void usbEndpointDescriptorTest();
-  void deviceListTest();
-
-  // USBTMC part tests
-  void usbtmcFrameTest();
-  void usbtmcFrameBenchmark();
-
-  // Make some tests with Velleman k8055 board
-  void vellemanK8055Test();
-
-  // Some data exchange test with Agilent DSO1000
-  void agilentDso1000Test();
-
+  libusb_context *pvUsbContext;
+  libusb_device **pvDeviceList;
+  mdtError pvLastError;
+  QList<mdtUsbDeviceDescriptor> pvDeviceDescriptors;
 };
 
-#endif // MDT_USB_PORT_TEST_H
+#endif // #ifndef MDT_USB_DEVICE_LIST_H

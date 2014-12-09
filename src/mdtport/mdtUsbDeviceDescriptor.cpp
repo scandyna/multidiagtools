@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,11 +21,16 @@
 #include "mdtUsbDeviceDescriptor.h"
 #include "mdtError.h"
 #include <QString>
+#include <cstring>
 
 #include <QDebug>
 
 mdtUsbDeviceDescriptor::mdtUsbDeviceDescriptor()
+ : pvIsEmpty(false)
 {
+  ::memset(&pvDescriptor, 0, sizeof(pvDescriptor));
+
+  /**
   pvbDescriptorType = 0;
   pvbcdUSB = 0;
   pvbDeviceClass = 0;
@@ -37,34 +42,37 @@ mdtUsbDeviceDescriptor::mdtUsbDeviceDescriptor()
   pvbcdDevice = 0;
   pviManufactuer = 0;
   pviProduct = 0;
+  */
   ///pviSerialNumber = 0;
 }
 
 mdtUsbDeviceDescriptor::~mdtUsbDeviceDescriptor()
 {
-  qDeleteAll(pvConfigs);
+  ///qDeleteAll(pvConfigs);
 }
 
 int mdtUsbDeviceDescriptor::fetchAttributes(libusb_device *device, bool fetchActiveConfigOnly)
 {
   Q_ASSERT(device != 0);
 
-  struct libusb_device_descriptor descriptor;
+  ///struct libusb_device_descriptor descriptor;
   struct libusb_config_descriptor *configDescriptor;
   libusb_device_handle *handle;
   int err;
   quint8 i;
-  mdtUsbConfigDescriptor *config;
+  ///mdtUsbConfigDescriptor *config;
   unsigned char uSerialNumber[256] = {'\0'};
   char serialNumber[256] = {'\0'};
   int serialNumberLength;
 
+  pvIsEmpty = true;
   // Open descriptor
-  err = libusb_get_device_descriptor(device, &descriptor);
+  err = libusb_get_device_descriptor(device, &pvDescriptor);
   if(err != 0){
     return err;
   }
   // Store attributes
+  /**
   pvbDescriptorType = descriptor.bDescriptorType;
   pvbcdUSB = descriptor.bcdUSB;
   pvbDeviceClass = descriptor.bDeviceClass;
@@ -74,11 +82,12 @@ int mdtUsbDeviceDescriptor::fetchAttributes(libusb_device *device, bool fetchAct
   pvidVendor = descriptor.idVendor;
   pvidProduct = descriptor.idProduct;
   pvbcdDevice = descriptor.bcdDevice;
+  */
   // Try to get serial number
   handle = 0;
   if(libusb_open(device, &handle) == 0){
     Q_ASSERT(handle != 0);
-    serialNumberLength = libusb_get_string_descriptor_ascii(handle, descriptor.iSerialNumber, uSerialNumber, 255);
+    serialNumberLength = libusb_get_string_descriptor_ascii(handle, pvDescriptor.iSerialNumber, uSerialNumber, 255);
     if(serialNumberLength > 0){
       Q_ASSERT(serialNumberLength < 256);
       for(i=0; i<serialNumberLength; i++){
@@ -89,17 +98,22 @@ int mdtUsbDeviceDescriptor::fetchAttributes(libusb_device *device, bool fetchAct
     libusb_close(handle);
   }
   // Get configuration(s)
-  qDeleteAll(pvConfigs);
+  ///qDeleteAll(pvConfigs);
   pvConfigs.clear();
   if(fetchActiveConfigOnly){
     err = libusb_get_active_config_descriptor(device, &configDescriptor);
     switch(err){
       case 0:
+        Q_ASSERT(configDescriptor != 0);
+        pvConfigs.append(mdtUsbConfigDescriptor(*configDescriptor));
+        libusb_free_config_descriptor(configDescriptor);
+        /**
         config = new mdtUsbConfigDescriptor;
         Q_ASSERT(config != 0);
         config->fetchAttributes(configDescriptor);
         libusb_free_config_descriptor(configDescriptor);
         pvConfigs.append(config);
+        */
         break;
       case LIBUSB_ERROR_NOT_FOUND:
       {
@@ -112,15 +126,20 @@ int mdtUsbDeviceDescriptor::fetchAttributes(libusb_device *device, bool fetchAct
         return err;
     }
   }else{
-    for(i=0; i<descriptor.bNumConfigurations; i++){
+    for(i = 0; i < pvDescriptor.bNumConfigurations; i++){
       err = libusb_get_config_descriptor(device, i, &configDescriptor);
       switch(err){
         case 0:
+          Q_ASSERT(configDescriptor != 0);
+          pvConfigs.append(mdtUsbConfigDescriptor(*configDescriptor));
+          libusb_free_config_descriptor(configDescriptor);
+          /**
           config = new mdtUsbConfigDescriptor;
           Q_ASSERT(config != 0);
           config->fetchAttributes(configDescriptor);
           libusb_free_config_descriptor(configDescriptor);
           pvConfigs.append(config);
+          */
           break;
         case LIBUSB_ERROR_NOT_FOUND:
         {
@@ -130,16 +149,18 @@ int mdtUsbDeviceDescriptor::fetchAttributes(libusb_device *device, bool fetchAct
           break;
         }
         default:
-          qDeleteAll(pvConfigs);
+          ///qDeleteAll(pvConfigs);
           pvConfigs.clear();
           return err;
       }
     }
   }
+  pvIsEmpty = false;
 
   return 0;
 }
 
+/**
 quint8 mdtUsbDeviceDescriptor::bDescriptorType() const
 {
   return pvbDescriptorType;
@@ -174,10 +195,11 @@ quint16 mdtUsbDeviceDescriptor::idVendor() const
 {
   return pvidVendor;
 }
+*/
 
 QString mdtUsbDeviceDescriptor::vendorName() const
 {
-  switch(pvidVendor){
+  switch(pvDescriptor.idVendor){
     case 2391:
       return "Agilent Technologies, Inc.";
     case 1133:
@@ -187,23 +209,25 @@ QString mdtUsbDeviceDescriptor::vendorName() const
     case 1470:
       return "Tyco Electronics";
     default:
-      return "VID: 0x" + QString::number(pvidVendor, 16);
+      return "VID: 0x" + QString::number(pvDescriptor.idVendor, 16);
   }
 }
 
+/**
 quint16 mdtUsbDeviceDescriptor::idProduct() const
 {
   return pvidProduct;
 }
+*/
 
 QString mdtUsbDeviceDescriptor::productName() const
 {
-  QString defStr = "PID: 0x" + QString::number(pvidProduct, 16);
+  QString defStr = "PID: 0x" + QString::number(pvDescriptor.idProduct, 16);
 
-  switch(pvidVendor){
+  switch(pvDescriptor.idVendor){
     // Agilent products
     case 2391:
-      switch(pvidProduct){
+      switch(pvDescriptor.idProduct){
         case 0x0588:
           return "DSO1000 series oscilloscope";
         case 0x4d18:
@@ -222,75 +246,74 @@ QString mdtUsbDeviceDescriptor::serialNumber() const
   return pvSerialNumber;
 }
 
+/**
 quint16 mdtUsbDeviceDescriptor::bcdDevice() const
 {
   return pvbcdDevice;
 }
+*/
 
+/**
 QList<mdtUsbConfigDescriptor*> &mdtUsbDeviceDescriptor::configurations()
 {
   return pvConfigs;
 }
+*/
 
-mdtUsbInterfaceDescriptor *mdtUsbDeviceDescriptor::interface(int configIndex, int ifaceIndex)
+mdtUsbInterfaceDescriptor mdtUsbDeviceDescriptor::interface(int configIndex, int ifaceIndex)
 {
-  mdtUsbConfigDescriptor *configDescriptor;
-
   if(configIndex < 0){
-    return 0;
+    return mdtUsbInterfaceDescriptor();
   }
   if(configIndex >= pvConfigs.size()){
-    return 0;
+    return mdtUsbInterfaceDescriptor();
   }
   if(ifaceIndex < 0){
-    return 0;
+    return mdtUsbInterfaceDescriptor();
   }
-  configDescriptor = pvConfigs.at(configIndex);
-  Q_ASSERT(configDescriptor != 0);
-  if(ifaceIndex >= configDescriptor->interfaces().size()){
-    return 0;
+  mdtUsbConfigDescriptor configDescriptor = pvConfigs.at(configIndex);
+  ///Q_ASSERT(configDescriptor != 0);
+  if(ifaceIndex >= configDescriptor.interfaces().size()){
+    return mdtUsbInterfaceDescriptor();
   }
 
-  return configDescriptor->interfaces().at(ifaceIndex);
+  return configDescriptor.interfaces().at(ifaceIndex);
 }
 
-mdtUsbEndpointDescriptor *mdtUsbDeviceDescriptor::endpoint(int configIndex, int ifaceIndex, int endpointIndex)
+mdtUsbEndpointDescriptor mdtUsbDeviceDescriptor::endpoint(int configIndex, int ifaceIndex, int endpointIndex)
 {
-  mdtUsbInterfaceDescriptor *interfaceDescriptor;
-
-  interfaceDescriptor = interface(configIndex, ifaceIndex);
-  if(interfaceDescriptor == 0){
-    return 0;
+  mdtUsbInterfaceDescriptor interfaceDescriptor = interface(configIndex, ifaceIndex);
+  if(interfaceDescriptor.isEmpty()){
+    return mdtUsbEndpointDescriptor();
   }
   if(endpointIndex < 0){
-    return 0;
+    return mdtUsbEndpointDescriptor();
   }
-  if(endpointIndex >= interfaceDescriptor->endpoints().size()){
-    return 0;
+  if(endpointIndex >= interfaceDescriptor.endpoints().size()){
+    return mdtUsbEndpointDescriptor();
   }
 
-  return interfaceDescriptor->endpoints().at(endpointIndex);
+  return interfaceDescriptor.endpoints().at(endpointIndex);
 }
 
-mdtUsbEndpointDescriptor *mdtUsbDeviceDescriptor::firstBulkOutEndpoint(int configIndex, int ifaceIndex, bool dataEndpointOnly)
+mdtUsbEndpointDescriptor mdtUsbDeviceDescriptor::firstBulkOutEndpoint(int configIndex, int ifaceIndex, bool dataEndpointOnly)
 {
-  mdtUsbInterfaceDescriptor *interfaceDescriptor;
-  mdtUsbEndpointDescriptor *endpointDescriptor;
+  mdtUsbEndpointDescriptor endpointDescriptor;
   int i;
 
-  interfaceDescriptor = interface(configIndex, ifaceIndex);
-  if(interfaceDescriptor == 0){
-    return 0;
+  mdtUsbInterfaceDescriptor interfaceDescriptor = interface(configIndex, ifaceIndex);
+  if(interfaceDescriptor.isEmpty()){
+    return mdtUsbEndpointDescriptor();
   }
   // Search in available enpoints
-  for(i=0; i<interfaceDescriptor->endpoints().size(); i++){
-    endpointDescriptor = interfaceDescriptor->endpoints().at(i);
-    Q_ASSERT(endpointDescriptor != 0);
+  for(i=0; i<interfaceDescriptor.endpoints().size(); i++){
+    endpointDescriptor = interfaceDescriptor.endpoints().at(i);
+    ///Q_ASSERT(endpointDescriptor != 0);
     // Check if current endpoint is direction OUT and Bulk transfert
-    if((endpointDescriptor->isDirectionOUT())&&(endpointDescriptor->isTransfertTypeBulk())){
+    if((endpointDescriptor.isDirectionOUT())&&(endpointDescriptor.isTransfertTypeBulk())){
       // Here we found a bulk out endpoint. If needed, check if it's a data endpoint
       if(dataEndpointOnly){
-        if(endpointDescriptor->isDataEndpoint()){
+        if(endpointDescriptor.isDataEndpoint()){
           return endpointDescriptor;
         }
       }else{
@@ -299,29 +322,28 @@ mdtUsbEndpointDescriptor *mdtUsbDeviceDescriptor::firstBulkOutEndpoint(int confi
     }
   }
 
-  // Nothing found, return a null pointer
-  return 0;
+  // Nothing found
+  return mdtUsbEndpointDescriptor();
 }
 
-mdtUsbEndpointDescriptor *mdtUsbDeviceDescriptor::firstBulkInEndpoint(int configIndex, int ifaceIndex, bool dataEndpointOnly)
+mdtUsbEndpointDescriptor mdtUsbDeviceDescriptor::firstBulkInEndpoint(int configIndex, int ifaceIndex, bool dataEndpointOnly)
 {
-  mdtUsbInterfaceDescriptor *interfaceDescriptor;
-  mdtUsbEndpointDescriptor *endpointDescriptor;
+  mdtUsbEndpointDescriptor endpointDescriptor;
   int i;
 
-  interfaceDescriptor = interface(configIndex, ifaceIndex);
-  if(interfaceDescriptor == 0){
-    return 0;
+  mdtUsbInterfaceDescriptor interfaceDescriptor = interface(configIndex, ifaceIndex);
+  if(interfaceDescriptor.isEmpty()){
+    return mdtUsbEndpointDescriptor();
   }
   // Search in available enpoints
-  for(i=0; i<interfaceDescriptor->endpoints().size(); i++){
-    endpointDescriptor = interfaceDescriptor->endpoints().at(i);
-    Q_ASSERT(endpointDescriptor != 0);
+  for(i=0; i<interfaceDescriptor.endpoints().size(); i++){
+    endpointDescriptor = interfaceDescriptor.endpoints().at(i);
+    ///Q_ASSERT(endpointDescriptor != 0);
     // Check if current endpoint is direction IN and Bulk transfert
-    if((endpointDescriptor->isDirectionIN())&&(endpointDescriptor->isTransfertTypeBulk())){
+    if((endpointDescriptor.isDirectionIN())&&(endpointDescriptor.isTransfertTypeBulk())){
       // Here we found a bulk in endpoint. If needed, check if it's a data endpoint
       if(dataEndpointOnly){
-        if(endpointDescriptor->isDataEndpoint()){
+        if(endpointDescriptor.isDataEndpoint()){
           return endpointDescriptor;
         }
       }else{
@@ -330,29 +352,28 @@ mdtUsbEndpointDescriptor *mdtUsbDeviceDescriptor::firstBulkInEndpoint(int config
     }
   }
 
-  // Nothing found, return a null pointer
-  return 0;
+  // Nothing found
+  return mdtUsbEndpointDescriptor();
 }
 
-mdtUsbEndpointDescriptor *mdtUsbDeviceDescriptor::firstInterruptOutEndpoint(int configIndex, int ifaceIndex, bool dataEndpointOnly)
+mdtUsbEndpointDescriptor mdtUsbDeviceDescriptor::firstInterruptOutEndpoint(int configIndex, int ifaceIndex, bool dataEndpointOnly)
 {
-  mdtUsbInterfaceDescriptor *interfaceDescriptor;
-  mdtUsbEndpointDescriptor *endpointDescriptor;
+  mdtUsbEndpointDescriptor endpointDescriptor;
   int i;
 
-  interfaceDescriptor = interface(configIndex, ifaceIndex);
-  if(interfaceDescriptor == 0){
-    return 0;
+  mdtUsbInterfaceDescriptor interfaceDescriptor = interface(configIndex, ifaceIndex);
+  if(interfaceDescriptor.isEmpty()){
+    return mdtUsbEndpointDescriptor();
   }
   // Search in available enpoints
-  for(i=0; i<interfaceDescriptor->endpoints().size(); i++){
-    endpointDescriptor = interfaceDescriptor->endpoints().at(i);
-    Q_ASSERT(endpointDescriptor != 0);
+  for(i=0; i<interfaceDescriptor.endpoints().size(); i++){
+    endpointDescriptor = interfaceDescriptor.endpoints().at(i);
+    ///Q_ASSERT(endpointDescriptor != 0);
     // Check if current endpoint is direction OUT and Interrupt transfert
-    if((endpointDescriptor->isDirectionOUT())&&(endpointDescriptor->isTransfertTypeInterrupt())){
+    if((endpointDescriptor.isDirectionOUT())&&(endpointDescriptor.isTransfertTypeInterrupt())){
       // Here we found a interrupt out endpoint. If needed, chack if it's a data endpoint
       if(dataEndpointOnly){
-        if(endpointDescriptor->isDataEndpoint()){
+        if(endpointDescriptor.isDataEndpoint()){
           return endpointDescriptor;
         }
       }else{
@@ -361,29 +382,28 @@ mdtUsbEndpointDescriptor *mdtUsbDeviceDescriptor::firstInterruptOutEndpoint(int 
     }
   }
 
-  // Nothing found, return a null pointer
-  return 0;
+  // Nothing found
+  return mdtUsbEndpointDescriptor();
 }
 
-mdtUsbEndpointDescriptor *mdtUsbDeviceDescriptor::firstInterruptInEndpoint(int configIndex, int ifaceIndex, bool dataEndpointOnly)
+mdtUsbEndpointDescriptor mdtUsbDeviceDescriptor::firstInterruptInEndpoint(int configIndex, int ifaceIndex, bool dataEndpointOnly)
 {
-  mdtUsbInterfaceDescriptor *interfaceDescriptor;
-  mdtUsbEndpointDescriptor *endpointDescriptor;
+  mdtUsbEndpointDescriptor endpointDescriptor;
   int i;
 
-  interfaceDescriptor = interface(configIndex, ifaceIndex);
-  if(interfaceDescriptor == 0){
-    return 0;
+  mdtUsbInterfaceDescriptor interfaceDescriptor = interface(configIndex, ifaceIndex);
+  if(interfaceDescriptor.isEmpty()){
+    return mdtUsbEndpointDescriptor();
   }
   // Search in available enpoints
-  for(i=0; i<interfaceDescriptor->endpoints().size(); i++){
-    endpointDescriptor = interfaceDescriptor->endpoints().at(i);
-    Q_ASSERT(endpointDescriptor != 0);
+  for(i=0; i<interfaceDescriptor.endpoints().size(); i++){
+    endpointDescriptor = interfaceDescriptor.endpoints().at(i);
+    ///Q_ASSERT(endpointDescriptor != 0);
     // Check if current endpoint is direction IN and Interrupt transfert
-    if((endpointDescriptor->isDirectionIN())&&(endpointDescriptor->isTransfertTypeInterrupt())){
+    if((endpointDescriptor.isDirectionIN())&&(endpointDescriptor.isTransfertTypeInterrupt())){
       // Here we found a interrupt in endpoint. If needed, chack if it's a data endpoint
       if(dataEndpointOnly){
-        if(endpointDescriptor->isDataEndpoint()){
+        if(endpointDescriptor.isDataEndpoint()){
           return endpointDescriptor;
         }
       }else{
@@ -392,6 +412,6 @@ mdtUsbEndpointDescriptor *mdtUsbDeviceDescriptor::firstInterruptInEndpoint(int c
     }
   }
 
-  // Nothing found, return a null pointer
-  return 0;
+  // Nothing found
+  return mdtUsbEndpointDescriptor();
 }

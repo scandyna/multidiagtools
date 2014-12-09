@@ -76,6 +76,9 @@ set (SOURCES_FILES
           mdtAbstractPortSetupDialog.cpp
           mdtUsbtmcPortSetupDialog.cpp
           mdtModbusTcpPortSetupDialog.cpp
+          
+          # New USB API
+          mdtUsbDeviceList.cpp
           # New USBTMC API
           mdtUsbtmcFrame.cpp
     )

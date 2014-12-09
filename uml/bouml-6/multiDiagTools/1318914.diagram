@@ -1,0 +1,15 @@
+format 207
+
+classcanvas 128002 class_ref 478722 // mdtUsbInterfaceDescriptor
+  classdiagramsettings member_max_width 0 end
+  xyz 42 243 2000
+end
+classcanvas 128130 class_ref 1498882 // libusb_interface_descriptor
+  classdiagramsettings member_max_width 0 end
+  xyz 547 342 2000
+end
+classcanvas 128258 class_ref 1505538 // libusb_interface
+  classdiagramsettings member_max_width 0 end
+  xyz 144 91 2000
+end
+end

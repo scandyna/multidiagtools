@@ -1,0 +1,16 @@
+format 207
+
+classcanvas 128002 class_ref 478850 // mdtUsbEndointDescriptor
+  classdiagramsettings member_max_width 0 end
+  xyz 27 224 2000
+end
+classcanvas 128130 class_ref 1499010 // libusb_endpoint_descriptor
+  classdiagramsettings member_max_width 0 end
+  xyz 582 455 2000
+end
+relationcanvas 128258 relation_ref 1844738 // <directional composition>
+  from ref 128002 z 2001 to ref 128130
+  role_a_pos 496 470 3000 no_role_b
+  multiplicity_a_pos 564 500 3000 no_multiplicity_b
+end
+end

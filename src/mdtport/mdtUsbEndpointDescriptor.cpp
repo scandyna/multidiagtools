@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,9 +19,11 @@
  **
  ****************************************************************************/
 #include "mdtUsbEndpointDescriptor.h"
+#include <cstring>
 
 #include <QDebug>
 
+/**
 mdtUsbEndpointDescriptor::mdtUsbEndpointDescriptor()
 {
   pvbEndpointAddress = 0;
@@ -29,11 +31,36 @@ mdtUsbEndpointDescriptor::mdtUsbEndpointDescriptor()
   pvwMaxPacketSize = 0;
   pvbInterval = 0;
 }
+*/
 
+mdtUsbEndpointDescriptor::mdtUsbEndpointDescriptor()
+ : pvIsEmpty(true)
+{
+  ::memset(&pvDescriptor, 0, sizeof(pvDescriptor));
+  qDebug() << "mdtUsbEndpointDescriptor::mdtUsbEndpointDescriptor() - bLength: " << pvDescriptor.bLength;
+  qDebug() << "mdtUsbEndpointDescriptor::mdtUsbEndpointDescriptor() - bSynchAddress: " << pvDescriptor.bSynchAddress;
+  qDebug() << "mdtUsbEndpointDescriptor::mdtUsbEndpointDescriptor() - extra_length: " << pvDescriptor.extra_length;
+}
+
+mdtUsbEndpointDescriptor::mdtUsbEndpointDescriptor ( libusb_endpoint_descriptor descriptor )
+{
+  int i;
+
+  pvDescriptor = descriptor;
+  for(i = 0; i < descriptor.extra_length; ++i){
+    Q_ASSERT(descriptor.extra != 0);
+    pvExtra.push_back(descriptor.extra[i]);
+  }
+  pvIsEmpty = false;
+}
+
+/**
 mdtUsbEndpointDescriptor::~mdtUsbEndpointDescriptor()
 {
 }
+*/
 
+/**
 void mdtUsbEndpointDescriptor::fetchAttributes(libusb_endpoint_descriptor *descriptor)
 {
   Q_ASSERT(descriptor != 0);
@@ -44,15 +71,18 @@ void mdtUsbEndpointDescriptor::fetchAttributes(libusb_endpoint_descriptor *descr
   pvwMaxPacketSize = descriptor->wMaxPacketSize;
   pvbInterval = descriptor->bInterval;
 }
+*/
 
-quint8 mdtUsbEndpointDescriptor::address()
+uint8_t mdtUsbEndpointDescriptor::address()
 {
-  return (pvbEndpointAddress & 0x0F);
+  ///return (pvbEndpointAddress & 0x0F);
+  return (pvDescriptor.bEndpointAddress & 0x0F);
 }
 
 bool mdtUsbEndpointDescriptor::isDirectionIN()
 {
-  return (pvbEndpointAddress & 0x80);
+  ///return (pvbEndpointAddress & 0x80);
+  return (pvDescriptor.bEndpointAddress & 0x80);
 }
 
 bool mdtUsbEndpointDescriptor::isDirectionOUT()
@@ -62,66 +92,79 @@ bool mdtUsbEndpointDescriptor::isDirectionOUT()
 
 bool mdtUsbEndpointDescriptor::isTransfertTypeControl()
 {
-  return ((pvbmAttributes & 0x03) == 0x00);
+  ///return ((pvbmAttributes & 0x03) == 0x00);
+  return ((pvDescriptor.bmAttributes & 0x03) == 0x00);
 }
 
 bool mdtUsbEndpointDescriptor::isTransfertTypeIsochronus()
 {
-  return ((pvbmAttributes & 0x03) == 0x01);
+  ///return ((pvbmAttributes & 0x03) == 0x01);
+  return ((pvDescriptor.bmAttributes & 0x03) == 0x01);
 }
 
 bool mdtUsbEndpointDescriptor::isTransfertTypeBulk()
 {
-  return ((pvbmAttributes & 0x03) == 0x02);
+  ///return ((pvbmAttributes & 0x03) == 0x02);
+  return ((pvDescriptor.bmAttributes & 0x03) == 0x02);
 }
 
 bool mdtUsbEndpointDescriptor::isTransfertTypeInterrupt()
 {
-  return ((pvbmAttributes & 0x03) == 0x03);
+  ///return ((pvbmAttributes & 0x03) == 0x03);
+  return ((pvDescriptor.bmAttributes & 0x03) == 0x03);
 }
 
 bool mdtUsbEndpointDescriptor::isAsynchronous()
 {
-  return ((pvbmAttributes & 0x0C) == 0x04);
+  ///return ((pvbmAttributes & 0x0C) == 0x04);
+  return ((pvDescriptor.bmAttributes & 0x0C) == 0x04);
 }
 
 bool mdtUsbEndpointDescriptor::isAdaptative()
 {
-  return ((pvbmAttributes & 0x0C) == 0x08);
+  ///return ((pvbmAttributes & 0x0C) == 0x08);
+  return ((pvDescriptor.bmAttributes & 0x0C) == 0x08);
 }
 
 bool mdtUsbEndpointDescriptor::isSynchronous()
 {
-  return ((pvbmAttributes & 0x0C) == 0x0C);
+  ///return ((pvbmAttributes & 0x0C) == 0x0C);
+  return ((pvDescriptor.bmAttributes & 0x0C) == 0x0C);
 }
 
 bool mdtUsbEndpointDescriptor::isDataEndpoint()
 {
-  return ((pvbmAttributes & 0x30) == 0x00);
+  ///return ((pvbmAttributes & 0x30) == 0x00);
+  return ((pvDescriptor.bmAttributes & 0x30) == 0x00);
 }
 
 bool mdtUsbEndpointDescriptor::isFeedbackEndpoint()
 {
-  return ((pvbmAttributes & 0x30) == 0x10);
+  ///return ((pvbmAttributes & 0x30) == 0x10);
+  return ((pvDescriptor.bmAttributes & 0x30) == 0x10);
 }
 
 bool mdtUsbEndpointDescriptor::isImplicitFeedbackEndpoint()
 {
-  return ((pvbmAttributes & 0x30) == 0x20);
+  ///return ((pvbmAttributes & 0x30) == 0x20);
+  return ((pvDescriptor.bmAttributes & 0x30) == 0x20);
 }
 
 int mdtUsbEndpointDescriptor::maxPacketSize()
 {
-  return pvwMaxPacketSize & 0x07FF;
+  ///return pvwMaxPacketSize & 0x07FF;
+  return (pvDescriptor.wMaxPacketSize & 0x07FF);
 }
 
 int mdtUsbEndpointDescriptor::transactionsCountPerMicroFrame()
 {
-  return ((pvwMaxPacketSize & 0x1800) >> 10) + 1;
+  ///return ((pvwMaxPacketSize & 0x1800) >> 10) + 1;
+  return ((pvDescriptor.wMaxPacketSize & 0x1800) >> 10) + 1;
 }
 
-quint8 mdtUsbEndpointDescriptor::bInterval()
+uint8_t mdtUsbEndpointDescriptor::bInterval()
 {
-  return pvbInterval;
+  ///return pvbInterval;
+  return pvDescriptor.bInterval;
 }
 

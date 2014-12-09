@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,11 +21,11 @@
 #ifndef MDT_USB_INTERFACE_DESCRIPTOR_H
 #define MDT_USB_INTERFACE_DESCRIPTOR_H
 
+#include "mdtUsbEndpointDescriptor.h"
 #include <libusb-1.0/libusb.h>
 #include <QtGlobal>
 #include <QList>
-
-class mdtUsbEndpointDescriptor;
+#include <cstdint>
 
 /*! \brief USB interface descriptor
  */
@@ -33,47 +33,86 @@ class mdtUsbInterfaceDescriptor
 {
  public:
 
+  /*! \brief Construct a empty interface descriptor
+   */
   mdtUsbInterfaceDescriptor();
-  ~mdtUsbInterfaceDescriptor();
+
+  /*! \brief Constructor
+   *
+   * Will copy all members of passed descriptor.
+   *  This given descriptor can be freed after construction was done.
+   */
+  mdtUsbInterfaceDescriptor(libusb_interface_descriptor descriptor);
+
+  ///~mdtUsbInterfaceDescriptor();
+
+  /*! \brief Check if descriptor is empty
+   */
+  bool isEmpty() const{
+    return pvIsEmpty;
+  }
 
   /*! \brief Ftech the interface descriptor's attributes
    *
    * \pre descriptor must be a valid pointer
    */
-  void fetchAttributes(libusb_interface_descriptor *descriptor);
+  //void fetchAttributes(libusb_interface_descriptor *descriptor);
 
   /*! \brief INTERFACE Descriptor Type
    */
-  quint8 bDescriptorType() const;
+  uint8_t bDescriptorType() const
+  {
+    return pvDescriptor.bDescriptorType;
+  }
 
   /*! \brief Class code (assigned by the USB-IF)
    */
-  quint8 bInterfaceClass() const;
+  uint8_t bInterfaceClass() const
+  {
+    return pvDescriptor.bInterfaceClass;
+  }
 
   /*! \brief Subclass code (assigned by the USB-IF)
    */
-  quint8 bInterfaceSubClass() const;
+  uint8_t bInterfaceSubClass() const
+  {
+    return pvDescriptor.bInterfaceSubClass;
+  }
 
   /*! \brief Protocol code (assigned by the USB)
    */
-  quint8 bInterfaceProtocol() const;
+  uint8_t bInterfaceProtocol() const
+  {
+    return pvDescriptor.bInterfaceProtocol;
+  }
 
   /*! \brief Index of string descriptor describing this interface
    */
-  quint8 iInterface() const;
+  uint8_t iInterface() const
+  {
+    return pvDescriptor.iInterface;
+  }
 
   /*! \brief List of avaliable enpoints
    */
-  QList<mdtUsbEndpointDescriptor*> &endpoints();
+  ///QList<mdtUsbEndpointDescriptor*> &endpoints();
+  QList<mdtUsbEndpointDescriptor> endpoints() const{
+    return pvEndpoints;
+  }
 
  private:
 
+  /**
   quint8 pvbDescriptorType;
   quint8 pvbInterfaceClass;
   quint8 pvbInterfaceSubClass;
   quint8 pvbInterfaceProtocol;
   quint8 pviInterface;
-  QList<mdtUsbEndpointDescriptor*> pvEndpoints;
+  */
+  
+  libusb_interface_descriptor pvDescriptor;
+  QList<mdtUsbEndpointDescriptor> pvEndpoints;
+  bool pvIsEmpty;
 };
 
 #endif  // #ifndef MDT_USB_INTERFACE_DESCRIPTOR_H

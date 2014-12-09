@@ -1,29 +1,19 @@
-window_sizes 1280 916 264 1010 863 0
+window_sizes 1280 996 447 827 943 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 1298690 // Usbtmc
-    1010 863 100 8 72 307
-  statediagram_ref 1312002 // Main
-    120 106 80 17 0 24
+  classdiagram_ref 468610 // mdtUsbPort
+    661 690 100 4 0 0
+  classdiagram_ref 1318658 // UsbDeviceList
+    120 106 100 4 0 0
+  active  classdiagram_ref 1318530 // UsbDeviceDescriptor
+    827 943 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 1298690 // Usbtmc
+selected classdiagram_ref 1318530 // UsbDeviceDescriptor
 open
   class_ref 1409794 // UsbPort
   class_ref 1430530 // UsbTransfer
-  class_ref 1465090 // UsbTransferPool
-  classrelation_ref 1831938 // pvTransferPool (<directional composition>)
-  class_ref 1471874 // UsbPortThread
-  class_ref 1423362 // UsbtmcPort
-  class_ref 1423618 // mdtUsbtmcFrame
-  class_ref 1451906 // Error
-  operation_ref 2353154 // transferHandler
-  class_ref 1485570 // UsbTmcBulkTransfer
-  operation_ref 2360450 // transferHandler
-  state_ref 219266 // UsbtmcTransferHandlerStateMachine
-  classview_ref 722434 // Scpi
   classview_ref 722306 // ModbusTcp
-  class_ref 1444482 // ModbusTransaction
-  classview_ref 722562 // UserApplication
+  class_ref 1437186 // libusb_device_handle
 end
 end

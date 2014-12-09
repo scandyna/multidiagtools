@@ -10,19 +10,7 @@ classcanvas 128130 class_ref 1409922 // UsbDevice
 end
 classcanvas 128258 class_ref 1410050 // UsbPortConfig
   classdiagramsettings member_max_width 0 end
-  xyz 723.5 282.2 2000
-end
-classcanvas 128386 class_ref 1423362 // UsbtmcPort
-  classdiagramsettings member_max_width 0 end
-  xyz 137.2 183.1 2000
-end
-classcanvas 128514 class_ref 1423490 // UsbFrame
-  classdiagramsettings member_max_width 0 end
-  xyz 379.4 150.9 2000
-end
-classcanvas 128642 class_ref 1423618 // UsbTmcFrame
-  classdiagramsettings member_max_width 0 end
-  xyz 377.4 197.9 2000
+  xyz 26.5 270.2 2000
 end
 classcanvas 129538 class_ref 1430530 // UsbTransfer
   classdiagramsettings member_max_width 0 end
@@ -46,7 +34,7 @@ classcanvas 130690 class_ref 1437442 // libusb_control_setup
 end
 classcanvas 130946 class_ref 1443970 // libusb_device_descriptor
   classdiagramsettings member_max_width 0 end
-  xyz 910.8 612 2000
+  xyz 969.8 446 2000
 end
 classcanvas 131074 class_ref 1445122 // UserApplication
   classdiagramsettings member_max_width 0 end
@@ -56,13 +44,9 @@ classcanvas 131202 class_ref 1465090 // UsbTransferPool
   classdiagramsettings member_max_width 0 end
   xyz 505 302 2000
 end
-classcanvas 131458 class_ref 1444098 // ScpiCodec
-  classdiagramsettings member_max_width 0 end
-  xyz 62.1 227.4 3011
-end
 classcanvas 131586 class_ref 1471618 // libusb_device
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 687 220.5 2005
+  xyz 252 220.5 2005
 end
 classcanvas 131714 class_ref 1471746 // UsbTransferHandler
   classdiagramsettings member_max_width 0 end

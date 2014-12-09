@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -28,6 +28,7 @@
 #include "mdtUsbConfigDescriptor.h"
 #include "mdtUsbInterfaceDescriptor.h"
 #include "mdtUsbEndpointDescriptor.h"
+#include <cstdint>
 
 /*! \brief USB device descriptor
  *
@@ -58,10 +59,19 @@ class mdtUsbDeviceDescriptor
 {
  public:
 
+  /*! \brief Construct a empty device descriptor
+   */
   mdtUsbDeviceDescriptor();
+
   ~mdtUsbDeviceDescriptor();
 
-  /*! \brief Ftech the device descriptor's attributes
+  /*! \brief Check if descriptor is empty
+   */
+  bool isEmpty() const{
+    return pvIsEmpty;
+  }
+
+  /*! \brief Fetch the device descriptor's attributes
    *
    * \param fetchActiveConfigOnly If true, the interfaces and endpoints informations will be fetched
    *                               only for active configuration. Else, all device's available configurations
@@ -73,35 +83,56 @@ class mdtUsbDeviceDescriptor
 
   /*! \brief Device descriptor type
    */
-  quint8 bDescriptorType() const;
+  uint8_t bDescriptorType() const
+  {
+    return pvDescriptor.bDescriptorType;
+  }
 
   /*! \brief USB Specification Release Number
    *
    * Coded in BCD. F.ex. USB 2.0 will be 0x0200.
    */
-  quint16 bcdUSB() const;
+  uint16_t bcdUSB() const
+  {
+    return pvDescriptor.bcdUSB;
+  }
 
   /*! \brief Class code (assigned by the USB-IF)
    */
-  quint8 bDeviceClass() const;
+  uint8_t bDeviceClass() const
+  {
+    return pvDescriptor.bDeviceClass;
+  }
 
   /*! \brief Subclass code (assigned by the USB-IF)
    */
-  quint8 bDeviceSubClass() const;
+  uint8_t bDeviceSubClass() const
+  {
+    return pvDescriptor.bDeviceSubClass;
+  }
 
   /*! \brief Protocol code (assigned by the USB-IF)
    */
-  quint8 bDeviceProtocol() const;
+  uint8_t bDeviceProtocol() const
+  {
+    return pvDescriptor.bDeviceProtocol;
+  }
 
   /*! \brief Maximum packet size for endpoint zero
    *
    * (only 8, 16, 32, or 64 are valid)
    */
-  quint8 bMaxPacketSize0() const;
+  uint8_t bMaxPacketSize0() const
+  {
+    return pvDescriptor.bMaxPacketSize0;
+  }
 
   /*! \brief Vendor ID (assigned by the USB-IF)
    */
-  quint16 idVendor() const;
+  uint16_t idVendor() const
+  {
+    return pvDescriptor.idVendor;
+  }
 
   /*! \brief Vendor name (assigned by the USB-IF)
    *
@@ -114,7 +145,10 @@ class mdtUsbDeviceDescriptor
 
   /*! \brief Product ID
    */
-  quint16 idProduct() const;
+  uint16_t idProduct() const
+  {
+    return pvDescriptor.idProduct;
+  }
 
   /*! \brief Product name
    *
@@ -133,77 +167,83 @@ class mdtUsbDeviceDescriptor
    *
    * Coded in BCD.
    */
-  quint16 bcdDevice() const;
+  uint16_t bcdDevice() const
+  {
+    return pvDescriptor.bcdDevice;
+  }
 
   /*! \brief Access configurations
    *
    * Configurations are available after a call of fetchAttributes()
    */
-  QList<mdtUsbConfigDescriptor*> &configurations();
+  QList<mdtUsbConfigDescriptor> configurations() const{
+    return pvConfigs;
+  }
 
   /*! \brief Get a interface descriptor by index
    *
-   * Index checking is done in this method, and 0 (NULL pointer)
+   * Index checking is done in this method, and empty descriptor
    *  is returned on wrong index.
    *
    * \param configIndex Index of configuration (unsorted, ordered as during discovery)
    * \param ifaceIndex Index of interface (unsorted, ordered as during discovery)
-   * \return Pointer to interface descriptor, or 0 on error
+   * \return Interface descriptor filled with devices values, or a empty one on error.
    */
-  mdtUsbInterfaceDescriptor *interface(int configIndex, int ifaceIndex);
+  mdtUsbInterfaceDescriptor interface(int configIndex, int ifaceIndex);
 
   /*! \brief Get a endpoint descriptor by index
    *
-   * Index checking is done in this method, and 0 (NULL pointer)
+   * Index checking is done in this method, and a empty descriptor
    *  is returned on wrong index.
    *
    * \param configIndex Index of configuration (unsorted, ordered as during discovery)
    * \param ifaceIndex Index of interface (unsorted, ordered as during discovery)
    * \param endpointIndex Index of endpoint (unsorted, ordered as during discovery)
-   * \return Pointer to endpoint descriptor, or 0 on error
+   * \return End point descriptor filled with devices values, or a empty one on error.
    */
-  mdtUsbEndpointDescriptor *endpoint(int configIndex, int ifaceIndex, int endpointIndex);
+  mdtUsbEndpointDescriptor endpoint(int configIndex, int ifaceIndex, int endpointIndex);
 
   /*! \brief Find the first bulk transfert endpoint with OUT direction
    *
    * \param configIndex Index of configuration (unsorted, ordered as during discovery)
    * \param ifaceIndex Index of interface (unsorted, ordered as during discovery)
    * \param dataEndpointOnly If true, only data endpoints will be considered (feedback and other are ignored)
-   * \return Pointer to endpoint descriptor, 0 if none found, or on error
+   * \return End point descriptor filled with devices values, or a empty one on error.
    */
-  mdtUsbEndpointDescriptor *firstBulkOutEndpoint(int configIndex, int ifaceIndex, bool dataEndpointOnly);
+  mdtUsbEndpointDescriptor firstBulkOutEndpoint(int configIndex, int ifaceIndex, bool dataEndpointOnly);
 
   /*! \brief Find the first bulk transfert endpoint with IN direction
    *
    * \param configIndex Index of configuration (unsorted, ordered as during discovery)
    * \param ifaceIndex Index of interface (unsorted, ordered as during discovery)
    * \param dataEndpointOnly If true, only data endpoints will be considered (feedback and other are ignored)
-   * \return Pointer to endpoint descriptor, 0 if none found, or on error
+   * \return End point descriptor filled with devices values, or a empty one on error.
    */
-  mdtUsbEndpointDescriptor *firstBulkInEndpoint(int configIndex, int ifaceIndex, bool dataEndpointOnly);
+  mdtUsbEndpointDescriptor firstBulkInEndpoint(int configIndex, int ifaceIndex, bool dataEndpointOnly);
 
   /*! \brief Find the first interrupt transfert endpoint with OUT direction
    *
    * \param configIndex Index of configuration (unsorted, ordered as during discovery)
    * \param ifaceIndex Index of interface (unsorted, ordered as during discovery)
    * \param dataEndpointOnly If true, only data endpoints will be considered (feedback and other are ignored)
-   * \return Pointer to endpoint descriptor, 0 if none found, or on error
+   * \return End point descriptor filled with devices values, or a empty one on error.
    */
-  mdtUsbEndpointDescriptor *firstInterruptOutEndpoint(int configIndex, int ifaceIndex, bool dataEndpointOnly);
+  mdtUsbEndpointDescriptor firstInterruptOutEndpoint(int configIndex, int ifaceIndex, bool dataEndpointOnly);
 
   /*! \brief Find the first interrupt transfert endpoint with IN direction
    *
    * \param configIndex Index of configuration (unsorted, ordered as during discovery)
    * \param ifaceIndex Index of interface (unsorted, ordered as during discovery)
    * \param dataEndpointOnly If true, only data endpoints will be considered (feedback and other are ignored)
-   * \return Pointer to endpoint descriptor, 0 if none found, or on error
+   * \return End point descriptor filled with devices values, or a empty one on error.
    */
-  mdtUsbEndpointDescriptor *firstInterruptInEndpoint(int configIndex, int ifaceIndex, bool dataEndpointOnly);
+  mdtUsbEndpointDescriptor firstInterruptInEndpoint(int configIndex, int ifaceIndex, bool dataEndpointOnly);
 
  private:
 
-  Q_DISABLE_COPY(mdtUsbDeviceDescriptor);
+  ///Q_DISABLE_COPY(mdtUsbDeviceDescriptor);
 
+  /**
   quint8 pvbDescriptorType;
   quint16 pvbcdUSB;
   quint8 pvbDeviceClass;
@@ -215,9 +255,13 @@ class mdtUsbDeviceDescriptor
   quint16 pvbcdDevice;
   quint8 pviManufactuer;
   quint8 pviProduct;
+  */
   ///quint8 pviSerialNumber;
+  
+  libusb_device_descriptor pvDescriptor;
+  bool pvIsEmpty;
   QString pvSerialNumber;
-  QList<mdtUsbConfigDescriptor*> pvConfigs;
+  QList<mdtUsbConfigDescriptor> pvConfigs;
 };
 
 #endif  // #ifndef MDT_USB_DEVICE_DESCRIPTOR_H

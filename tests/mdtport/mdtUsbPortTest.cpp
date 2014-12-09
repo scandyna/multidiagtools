@@ -32,6 +32,8 @@
 #include "mdtFrameCodecK8055.h"
 #include "mdtFrameUsbTmc.h"
 
+#include "mdtUsbDeviceList.h"
+
 // New USBTMC API
 #include "mdtUsbtmcFrame.h"
 
@@ -147,6 +149,32 @@ void mdtUsbPortTest::virtualCallBenchmark()
     r = 2;
   }
 }
+
+/*
+ * USB tests
+ */
+
+void mdtUsbPortTest::usbEndpointDescriptorTest()
+{
+  QSKIP("Not implemented yet", SkipAll);
+}
+
+void mdtUsbPortTest::deviceListTest()
+{
+  libusb_context *usbCtx = 0;
+  int ret;
+
+  // Init lubusb
+  ret = libusb_init(&usbCtx);
+  QVERIFY(ret == 0);
+
+  mdtUsbDeviceList devList(usbCtx);
+  QVERIFY(devList.scan());
+  
+  // Free ressources
+  libusb_exit(usbCtx);
+}
+
 
 /*
  * USBTMC tests
@@ -343,7 +371,7 @@ void mdtUsbPortTest::usbtmcFrameTest()
   f.buffer()[0] = 2;      // MsgID
   f.buffer()[1] = 0x1F;   // bTag
   f.buffer()[2] = 0xE0;   // bTagInverse
-  f.buffer()[3] = 2;      // Reserved
+  f.buffer()[3] = 0;      // Reserved
   f.buffer()[4] = 0x56;   // TransferSize, LLSB
   f.buffer()[5] = 0x03;   // TransferSize, LSB
   f.buffer()[6] = 0;      // TransferSize, MSB
@@ -358,6 +386,49 @@ void mdtUsbPortTest::usbtmcFrameTest()
   QCOMPARE((int)f.transferSize(), 0x0356);
   QCOMPARE(f.EOMset(), true);
   QCOMPARE(f.TermCharset(), true);
+  QVERIFY(!f.isComplete(25 + 12));
+  QVERIFY(f.isComplete(0x0356 + 12));
+  QVERIFY(f.isComplete(0x0357 + 12));
+  /*
+   * DEV_DEP_MSG_IN decoding - case 2: put data, TermChar not used, EOM set
+   */
+  f.clear();
+  QCOMPARE(f.capacity(), 4096);
+  QCOMPARE((int)f.transferSize(), 0);
+  QCOMPARE(f.EOMset(), false);
+  QCOMPARE(f.TermCharset(), false);
+  f.buffer()[0] = 2;      // MsgID
+  f.buffer()[1] = 0x2F;   // bTag
+  f.buffer()[2] = 0xD0;   // bTagInverse
+  f.buffer()[3] = 0;      // Reserved
+  f.buffer()[4] = 10;     // TransferSize, LLSB
+  f.buffer()[5] = 0;      // TransferSize, LSB
+  f.buffer()[6] = 0;      // TransferSize, MSB
+  f.buffer()[7] = 0;      // TransferSize, MMSB
+  f.buffer()[8] = 0b00000001; // bmTransferAttributes: TermChar not set (say we dindn't request it), EOM set
+  f.buffer()[9] = 0;      // Reserved
+  f.buffer()[10] = 0;     // Reserved
+  f.buffer()[11] = 0;     // Reserved
+  f.buffer()[12] = (uint8_t)'A';  // Data
+  f.buffer()[13] = (uint8_t)'B';  // Data
+  f.buffer()[14] = (uint8_t)'C';  // Data
+  f.buffer()[15] = (uint8_t)'D';  // Data
+  f.buffer()[16] = (uint8_t)',';  // Data
+  f.buffer()[17] = (uint8_t)'1';  // Data
+  f.buffer()[18] = (uint8_t)'2';  // Data
+  f.buffer()[19] = (uint8_t)'3';  // Data
+  f.buffer()[20] = (uint8_t)'4';  // Data
+  f.buffer()[21] = (uint8_t)'\n'; // Data
+  QCOMPARE(f2.msgID(), mdtUsbtmcFrame::msgId_t::DEV_DEP_MSG_IN);
+  QCOMPARE(f.bTag(), (uint8_t)0x2F);
+  QCOMPARE(f.bTagInverse(), (uint8_t)0xD0);
+  QCOMPARE((int)f.transferSize(), 10);
+  QCOMPARE(f.EOMset(), true);
+  QCOMPARE(f.TermCharset(), false);
+  QVERIFY(!f.isComplete(9 + 12));
+  QVERIFY(f.isComplete(10 + 12));
+  QVERIFY(f.isComplete(11 + 12));
+  QCOMPARE(f.data(), QByteArray("ABCD,1234\n"));
 
 
   /*

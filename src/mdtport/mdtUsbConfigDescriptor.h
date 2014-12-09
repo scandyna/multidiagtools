@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -24,6 +24,7 @@
 #include <QtGlobal>
 #include <QList>
 #include <libusb-1.0/libusb.h>
+#include <cstdint>
 
 class mdtUsbInterfaceDescriptor;
 
@@ -33,33 +34,61 @@ class mdtUsbConfigDescriptor
 {
  public:
 
+  /*! \brief Construct a empty config descriptor
+   */
   mdtUsbConfigDescriptor();
-  ~mdtUsbConfigDescriptor();
+
+  /*! \brief Constructor
+   *
+   * Will copy all members of passed descriptor.
+   *  This given descriptor can be freed after construction was done.
+   */
+  mdtUsbConfigDescriptor(libusb_config_descriptor descriptor);
+
+  ///~mdtUsbConfigDescriptor();
+
+  /*! \brief Check if descriptor is empty
+   */
+  bool isEmpty() const{
+    return pvIsEmpty;
+  }
 
   /*! \brief Ftech the configuration descriptor's attributes
    *
    * \pre descriptor must be a valid pointer
    */
-  void fetchAttributes(struct libusb_config_descriptor *descriptor);
+  ///void fetchAttributes(struct libusb_config_descriptor *descriptor);
 
   /*! \brief CONFIGURATION Descriptor Type
    */
-  quint8 bDescriptorType() const;
+  uint8_t bDescriptorType() const
+  {
+    return pvDescriptor.bDescriptorType;
+  }
 
   /*! \brief Value to use as an argument to the SetConfiguration() request to select this configuration
    */
-  quint8 bConfigurationValue() const;
+  uint8_t bConfigurationValue() const
+  {
+    return pvDescriptor.bConfigurationValue;
+  }
 
   /*! \brief Index of string descriptor describing this configuration
    */
-  quint8 iConfiguration() const;
+  uint8_t iConfiguration() const
+  {
+    return pvDescriptor.iConfiguration;
+  }
 
   /*! \brief Configuration characteristics
    *
    * \sa isSelfPowered()
    * \sa supportsRemoteWakeup()
    */
-  quint8 bmAttributes() const;
+  uint8_t bmAttributes() const
+  {
+    return pvDescriptor.bmAttributes;
+  }
 
   /*! \brief Return true if device is self powered with this configuration
    *
@@ -79,22 +108,37 @@ class mdtUsbConfigDescriptor
    *
    * \sa maxPower()
    */
-  quint8 bMaxPower() const;
+  uint8_t bMaxPower() const
+  {
+    return pvDescriptor.MaxPower;
+  }
 
   /*! \brief Max power [mA]
    */
-  int maxPower() const;
+  int maxPower() const
+  {
+    return 2 * pvDescriptor.MaxPower;
+  }
 
-  QList<mdtUsbInterfaceDescriptor*> &interfaces();
+  /*! \brief Get interface descriptors
+   */
+  QList<mdtUsbInterfaceDescriptor> interfaces()
+  {
+    return pvInterfaces;
+  }
 
  private:
 
+  /**
   quint8 pvbDescriptorType;
   quint8 pvbConfigurationValue;
   quint8 pviConfiguration;
   quint8 pvbmAttributes;
   quint8 pvbMaxPower;
-  QList<mdtUsbInterfaceDescriptor*> pvInterfaces;
+  */
+  bool pvIsEmpty;
+  libusb_config_descriptor pvDescriptor;
+  QList<mdtUsbInterfaceDescriptor> pvInterfaces;
 };
 
 #endif  // #ifndef MDT_USB_CONFIG_DESCRIPTOR_H
