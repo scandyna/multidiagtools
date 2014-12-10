@@ -25,6 +25,7 @@
 #include <QtGlobal>
 #include <QList>
 #include <QString>
+#include "mdtError.h"
 #include "mdtUsbConfigDescriptor.h"
 #include "mdtUsbInterfaceDescriptor.h"
 #include "mdtUsbEndpointDescriptor.h"
@@ -63,7 +64,9 @@ class mdtUsbDeviceDescriptor
    */
   mdtUsbDeviceDescriptor();
 
-  ~mdtUsbDeviceDescriptor();
+  /*! \brief Clear
+   */
+  void clear();
 
   /*! \brief Check if descriptor is empty
    */
@@ -75,11 +78,20 @@ class mdtUsbDeviceDescriptor
    *
    * \param fetchActiveConfigOnly If true, the interfaces and endpoints informations will be fetched
    *                               only for active configuration. Else, all device's available configurations
-   *                               will be scanned.
-   * \return 0 on success, libusb error code else. On error, the attributes must be considered as invalid.
+   *                               will be scanned. See USB (2.0 or 3.1) specifications, chap. 9.6.3 .
+   * \return True on success. On error, isEmpty() will be true, and lastError() contains error.
    * \pre device must be a valid pointer
    */
-  int fetchAttributes(libusb_device *device, bool fetchActiveConfigOnly);
+  bool fetchAttributes(libusb_device *device, bool fetchActiveConfigOnly);
+
+  /*! \brief Get libusb device
+   *
+   * Will return the device passed to fetchAttributes().
+   */
+  libusb_device *libusbDevice()
+  {
+    return pvLibusbDevice;
+  }
 
   /*! \brief Device descriptor type
    */
@@ -163,6 +175,10 @@ class mdtUsbDeviceDescriptor
    */
   QString serialNumber() const;
 
+  /*! \brief Get a string with vendor ID, product ID and serial number if available
+   */
+  QString idString() const;
+
   /*! \brief Device release number id
    *
    * Coded in BCD.
@@ -239,29 +255,23 @@ class mdtUsbDeviceDescriptor
    */
   mdtUsbEndpointDescriptor firstInterruptInEndpoint(int configIndex, int ifaceIndex, bool dataEndpointOnly);
 
+  /*! \brief Get last error
+   */
+  mdtError lastError() const
+  {
+    return pvLastError;
+  }
+
  private:
 
   ///Q_DISABLE_COPY(mdtUsbDeviceDescriptor);
 
-  /**
-  quint8 pvbDescriptorType;
-  quint16 pvbcdUSB;
-  quint8 pvbDeviceClass;
-  quint8 pvbDeviceSubClass;
-  quint8 pvbDeviceProtocol;
-  quint8 pvbMaxPacketSize0;
-  quint16 pvidVendor;
-  quint16 pvidProduct;
-  quint16 pvbcdDevice;
-  quint8 pviManufactuer;
-  quint8 pviProduct;
-  */
-  ///quint8 pviSerialNumber;
-  
   libusb_device_descriptor pvDescriptor;
+  libusb_device *pvLibusbDevice;
   bool pvIsEmpty;
   QString pvSerialNumber;
   QList<mdtUsbConfigDescriptor> pvConfigs;
+  mdtError pvLastError;
 };
 
 #endif  // #ifndef MDT_USB_DEVICE_DESCRIPTOR_H

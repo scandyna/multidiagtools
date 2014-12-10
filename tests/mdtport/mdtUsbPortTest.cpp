@@ -171,7 +171,14 @@ void mdtUsbPortTest::deviceListTest()
   mdtUsbDeviceList devList(usbCtx);
   QVERIFY(devList.scan());
   
+  libusb_device_handle *handle;
+  handle = devList.openDevice(0x0957, 0x4d18, "MY51040034");
+  ///handle = devList.openDevice(0x046d, 0xc512);
+  
   // Free ressources
+  if(handle != 0){
+    libusb_close(handle);
+  }
   libusb_exit(usbCtx);
 }
 

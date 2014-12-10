@@ -26,66 +26,47 @@
 #include <QDebug>
 
 mdtUsbDeviceDescriptor::mdtUsbDeviceDescriptor()
- : pvIsEmpty(false)
+ :  pvLibusbDevice(0),
+    pvIsEmpty(false)
 {
   ::memset(&pvDescriptor, 0, sizeof(pvDescriptor));
-
-  /**
-  pvbDescriptorType = 0;
-  pvbcdUSB = 0;
-  pvbDeviceClass = 0;
-  pvbDeviceSubClass = 0;
-  pvbDeviceProtocol = 0;
-  pvbMaxPacketSize0 = 0;
-  pvidVendor = 0;
-  pvidProduct = 0;
-  pvbcdDevice = 0;
-  pviManufactuer = 0;
-  pviProduct = 0;
-  */
-  ///pviSerialNumber = 0;
 }
 
-mdtUsbDeviceDescriptor::~mdtUsbDeviceDescriptor()
+void mdtUsbDeviceDescriptor::clear()
 {
-  ///qDeleteAll(pvConfigs);
+  ::memset(&pvDescriptor, 0, sizeof(pvDescriptor));
+  pvIsEmpty = true;
+  pvSerialNumber.clear();
+  pvConfigs.clear();
+  pvLibusbDevice = 0;
 }
 
-int mdtUsbDeviceDescriptor::fetchAttributes(libusb_device *device, bool fetchActiveConfigOnly)
+bool mdtUsbDeviceDescriptor::fetchAttributes(libusb_device *device, bool fetchActiveConfigOnly)
 {
   Q_ASSERT(device != 0);
 
-  ///struct libusb_device_descriptor descriptor;
   struct libusb_config_descriptor *configDescriptor;
   libusb_device_handle *handle;
   int err;
-  quint8 i;
-  ///mdtUsbConfigDescriptor *config;
+  uint8_t i;
   unsigned char uSerialNumber[256] = {'\0'};
   char serialNumber[256] = {'\0'};
   int serialNumberLength;
 
-  pvIsEmpty = true;
+  clear();
+  pvLibusbDevice = device;
   // Open descriptor
-  err = libusb_get_device_descriptor(device, &pvDescriptor);
+  err = libusb_get_device_descriptor(pvLibusbDevice, &pvDescriptor);
   if(err != 0){
-    return err;
+    pvLastError.setError(QObject::tr("Failed to get device descriptor."), mdtError::Error);
+    pvLastError.setSystemError(err, libusb_error_name(err));
+    MDT_ERROR_SET_SRC(pvLastError, "mdtUsbDeviceDescriptor");
+    pvLastError.commit();
+    return false;
   }
-  // Store attributes
-  /**
-  pvbDescriptorType = descriptor.bDescriptorType;
-  pvbcdUSB = descriptor.bcdUSB;
-  pvbDeviceClass = descriptor.bDeviceClass;
-  pvbDeviceSubClass = descriptor.bDeviceSubClass;
-  pvbDeviceProtocol = descriptor.bDeviceProtocol;
-  pvbMaxPacketSize0 = descriptor.bMaxPacketSize0;
-  pvidVendor = descriptor.idVendor;
-  pvidProduct = descriptor.idProduct;
-  pvbcdDevice = descriptor.bcdDevice;
-  */
   // Try to get serial number
   handle = 0;
-  if(libusb_open(device, &handle) == 0){
+  if(libusb_open(pvLibusbDevice, &handle) == 0){
     Q_ASSERT(handle != 0);
     serialNumberLength = libusb_get_string_descriptor_ascii(handle, pvDescriptor.iSerialNumber, uSerialNumber, 255);
     if(serialNumberLength > 0){
@@ -98,104 +79,43 @@ int mdtUsbDeviceDescriptor::fetchAttributes(libusb_device *device, bool fetchAct
     libusb_close(handle);
   }
   // Get configuration(s)
-  ///qDeleteAll(pvConfigs);
-  pvConfigs.clear();
   if(fetchActiveConfigOnly){
-    err = libusb_get_active_config_descriptor(device, &configDescriptor);
-    switch(err){
-      case 0:
+    err = libusb_get_active_config_descriptor(pvLibusbDevice, &configDescriptor);
+    if(err != 0){
+      pvLastError.setError(QObject::tr("Failed to get active configuration descriptor."), mdtError::Error);
+      pvLastError.setSystemError(err, libusb_error_name(err));
+      MDT_ERROR_SET_SRC(pvLastError, "mdtUsbDeviceDescriptor");
+      pvLastError.commit();
+      return false;
+    }
+    Q_ASSERT(configDescriptor != 0);
+    pvConfigs.append(mdtUsbConfigDescriptor(*configDescriptor));
+    libusb_free_config_descriptor(configDescriptor);
+  }else{
+    for(i = 0; i < pvDescriptor.bNumConfigurations; ++i){
+      err = libusb_get_config_descriptor(pvLibusbDevice, i, &configDescriptor);
+      if(err == 0){
         Q_ASSERT(configDescriptor != 0);
         pvConfigs.append(mdtUsbConfigDescriptor(*configDescriptor));
         libusb_free_config_descriptor(configDescriptor);
-        /**
-        config = new mdtUsbConfigDescriptor;
-        Q_ASSERT(config != 0);
-        config->fetchAttributes(configDescriptor);
-        libusb_free_config_descriptor(configDescriptor);
-        pvConfigs.append(config);
-        */
-        break;
-      case LIBUSB_ERROR_NOT_FOUND:
-      {
-        mdtError e(MDT_USB_IO_ERROR, "Unable to find get current configuration descriptor", mdtError::Warning);
-        MDT_ERROR_SET_SRC(e, "mdtUsbDeviceDescriptor");
-        e.commit();
-        break;
-      }
-      default:
-        return err;
-    }
-  }else{
-    for(i = 0; i < pvDescriptor.bNumConfigurations; i++){
-      err = libusb_get_config_descriptor(device, i, &configDescriptor);
-      switch(err){
-        case 0:
-          Q_ASSERT(configDescriptor != 0);
-          pvConfigs.append(mdtUsbConfigDescriptor(*configDescriptor));
-          libusb_free_config_descriptor(configDescriptor);
-          /**
-          config = new mdtUsbConfigDescriptor;
-          Q_ASSERT(config != 0);
-          config->fetchAttributes(configDescriptor);
-          libusb_free_config_descriptor(configDescriptor);
-          pvConfigs.append(config);
-          */
-          break;
-        case LIBUSB_ERROR_NOT_FOUND:
-        {
-          mdtError e(MDT_USB_IO_ERROR, "Unable to find get configuration descriptor at index " + QString::number(i), mdtError::Warning);
-          MDT_ERROR_SET_SRC(e, "mdtUsbDeviceDescriptor");
-          e.commit();
-          break;
-        }
-        default:
-          ///qDeleteAll(pvConfigs);
-          pvConfigs.clear();
-          return err;
+      }else{
+        pvLastError.setError(QObject::tr("Failed to get a configuration descriptor."), mdtError::Warning);
+        pvLastError.setSystemError(err, libusb_error_name(err));
+        MDT_ERROR_SET_SRC(pvLastError, "mdtUsbDeviceDescriptor");
+        pvLastError.commit();
       }
     }
   }
+  if(pvConfigs.isEmpty()){
+    pvLastError.setError(QObject::tr("Failed to get any configuration descriptor."), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtUsbDeviceDescriptor");
+    pvLastError.commit();
+    return false;
+  }
   pvIsEmpty = false;
 
-  return 0;
+  return true;
 }
-
-/**
-quint8 mdtUsbDeviceDescriptor::bDescriptorType() const
-{
-  return pvbDescriptorType;
-}
-
-quint16 mdtUsbDeviceDescriptor::bcdUSB() const
-{
-  return pvbcdUSB;
-}
-
-quint8 mdtUsbDeviceDescriptor::bDeviceClass() const
-{
-  return pvbDeviceClass;
-}
-
-quint8 mdtUsbDeviceDescriptor::bDeviceSubClass() const
-{
-  return pvbDeviceSubClass;
-}
-
-quint8 mdtUsbDeviceDescriptor::bDeviceProtocol() const
-{
-  return pvbDeviceProtocol;
-}
-
-quint8 mdtUsbDeviceDescriptor::bMaxPacketSize0() const
-{
-  return pvbMaxPacketSize0;
-}
-
-quint16 mdtUsbDeviceDescriptor::idVendor() const
-{
-  return pvidVendor;
-}
-*/
 
 QString mdtUsbDeviceDescriptor::vendorName() const
 {
@@ -212,13 +132,6 @@ QString mdtUsbDeviceDescriptor::vendorName() const
       return "VID: 0x" + QString::number(pvDescriptor.idVendor, 16);
   }
 }
-
-/**
-quint16 mdtUsbDeviceDescriptor::idProduct() const
-{
-  return pvidProduct;
-}
-*/
 
 QString mdtUsbDeviceDescriptor::productName() const
 {
@@ -246,19 +159,23 @@ QString mdtUsbDeviceDescriptor::serialNumber() const
   return pvSerialNumber;
 }
 
-/**
-quint16 mdtUsbDeviceDescriptor::bcdDevice() const
+QString mdtUsbDeviceDescriptor::idString() const
 {
-  return pvbcdDevice;
-}
-*/
+  QString str;
 
-/**
-QList<mdtUsbConfigDescriptor*> &mdtUsbDeviceDescriptor::configurations()
-{
-  return pvConfigs;
+  if(pvIsEmpty){
+    return str;
+  }
+  // Currently, we format like lsusb
+  str = "ID ";
+  str += QString("0x%1:0x%2 ").arg(pvDescriptor.idVendor, 4, 16, QChar('0')).arg(pvDescriptor.idProduct, 4, 16, QChar('0'));
+  str += vendorName() + " " + productName();
+  if(!pvSerialNumber.isEmpty()){
+    str += " (SN:" + pvSerialNumber + ")";
+  }
+
+  return str;
 }
-*/
 
 mdtUsbInterfaceDescriptor mdtUsbDeviceDescriptor::interface(int configIndex, int ifaceIndex)
 {
@@ -272,7 +189,6 @@ mdtUsbInterfaceDescriptor mdtUsbDeviceDescriptor::interface(int configIndex, int
     return mdtUsbInterfaceDescriptor();
   }
   mdtUsbConfigDescriptor configDescriptor = pvConfigs.at(configIndex);
-  ///Q_ASSERT(configDescriptor != 0);
   if(ifaceIndex >= configDescriptor.interfaces().size()){
     return mdtUsbInterfaceDescriptor();
   }

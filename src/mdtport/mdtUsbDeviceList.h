@@ -25,6 +25,7 @@
 #include "mdtUsbDeviceDescriptor.h"
 #include <QList>
 #include <libusb-1.0/libusb.h>
+#include <cstdint>
 
 /*! \brief Helper class to enumerate and search USB devices that are attached on system
  */
@@ -48,6 +49,27 @@ class mdtUsbDeviceList
    */
   bool scan();
 
+  /*! \brief Get devices descriptors list
+   *
+   * Will contain valid result after successfull scan.
+   */
+  QList<mdtUsbDeviceDescriptor> deviceList() const
+  {
+    return pvDeviceDescriptors;
+  }
+
+  /*! \brief Open a device with given vendor ID, product ID and serial number if not empty
+   *
+   * Note: serial number is not requeired for all class/subclass.
+   * For USBTMC, it is required (see USBTMC 1.0 spec, chap. 5.1)
+   *
+   * \return A valid handle on success, or a null pointer on error
+   *         (on failure, use lastError()).
+   *         Note: caller is responsible to free the handle
+   *               with libusb_close() once not longer used.
+   */
+  libusb_device_handle *openDevice(uint16_t idVendor, uint16_t idProduct, const QString & serialNumber = QString());
+
   /*! \brief Get last error
    */
   mdtError lastError() const
@@ -59,12 +81,45 @@ class mdtUsbDeviceList
 
   Q_DISABLE_COPY(mdtUsbDeviceList);
 
+  /*! \brief Matche device by idVendor and idProduct
+   */
+  struct deviceMatchDataVidPid
+  {
+    bool operator() (const mdtUsbDeviceDescriptor & d){
+      return ( (d.idVendor() == idVendor) && (d.idProduct() == idProduct) );
+    }
+    uint16_t idVendor;
+    uint16_t idProduct;
+  };
+
+  /*! \brief Matche device by idVendor, idProduct and serial number
+   */
+  struct deviceMatchDataVidPidSn
+  {
+    bool operator() (const mdtUsbDeviceDescriptor & d){
+      return ( (d.idVendor() == idVendor) && (d.idProduct() == idProduct) && (d.serialNumber() == serialNumber) );
+    }
+    uint16_t idVendor;
+    uint16_t idProduct;
+    QString serialNumber;
+  };
+
   /*! \brief Build devices list
    */
-  bool buildDevicesList();
+  bool buildDevicesList(bool fetchDeviceActiveConfigOnly, bool freeLibusbListAfterBuild);
+
+  /*! \brief Free libusb devices list
+   */
+  void freeLibusbDeviceList();
+
+  /*! \brief Clear
+   *
+   * Will clear devices list and call freeLibusbDeviceList()
+   */
+  void clear();
 
   libusb_context *pvUsbContext;
-  libusb_device **pvDeviceList;
+  libusb_device **pvLibusDeviceList;
   mdtError pvLastError;
   QList<mdtUsbDeviceDescriptor> pvDeviceDescriptors;
 };

@@ -1,18 +1,17 @@
-window_sizes 1280 996 447 827 943 0
+window_sizes 1280 916 447 827 863 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 468610 // mdtUsbPort
-    661 690 100 4 0 0
-  classdiagram_ref 1318658 // UsbDeviceList
-    120 106 100 4 0 0
-  active  classdiagram_ref 1318530 // UsbDeviceDescriptor
-    827 943 100 4 0 0
+  classdiagram_ref 1291906 // UsbPort
+    661 690 100 18 0 0
+  active  classdiagram_ref 1298690 // Usbtmc
+    827 863 80 8 0 0
 end
 show_stereotypes
-selected classdiagram_ref 1318530 // UsbDeviceDescriptor
+selected classdiagram_ref 1298690 // Usbtmc
 open
   class_ref 1409794 // UsbPort
   class_ref 1430530 // UsbTransfer
+  classview_ref 722178 // Usbtmc
   classview_ref 722306 // ModbusTcp
   class_ref 1437186 // libusb_device_handle
 end
