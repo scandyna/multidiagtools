@@ -1,6 +1,6 @@
 format 208
 "newPortApiSandbox" // mdtport::newPortApiSandbox
-  revision 20
+  revision 24
   modified_by 2 "philippe"
   // class settings
   
@@ -453,7 +453,12 @@ ${inlines}
       
     end
 
-    class 1430530 "UsbTransfer"
+    classdiagram 1325570 "UsbTransfer"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 1430530 "mdtUsbTransfer"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -484,7 +489,7 @@ ${members}};
 	  b parent class_ref 1437058 // libusb_transfer
       end
 
-      operation 2314626 "UsbTransfer"
+      operation 2314626 "mdtUsbTransfer"
 	public explicit_return_type ""
 	nparams 2
 	  param in name "dev_handle" type class_ref 1437186 // libusb_device_handle
@@ -502,7 +507,7 @@ ${members}};
 	
       end
 
-      operation 2314754 "~UsbTransfer"
+      operation 2314754 "~mdtUsbTransfer"
 	public explicit_return_type ""
 	nparams 0
 	cpp_decl "  ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
@@ -517,6 +522,18 @@ ${members}};
 	
       end
 
+      attribute 1528706 "pvDeviceHandle"
+	private type class_ref 1437186 // libusb_device_handle
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
       attribute 1507202 "completed"
 	public explicit_type "int"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
@@ -528,10 +545,143 @@ ${members}};
 	mysql_decl ""
 	MysqlColumn
       end
+
+      operation 2375042 "allocOk"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2375170 "deviceHandle"
+	protected return_type class_ref 1437186 // libusb_device_handle
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2381698 "transfer"
+	protected return_type class_ref 1437058 // libusb_transfer
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 1512066 "mdtUsbControlTransfer"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 1500546 "pvBuffer"
+	private explicit_type "std::vector<uchar>"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 1873666 // <generalisation>
+	relation 1857794 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1873666 // <generalisation>
+	  b parent class_ref 1430530 // mdtUsbTransfer
+      end
+
+      operation 2388226 "mdtUsbControlTransfer"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "dev_handle" type class_ref 1437186 // libusb_device_handle
+	  param in name "bufferSize" explicit_type "int"
+	    defaultvalue "1024"
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2388354 "setupClearFeature"
+	public explicit_return_type "void"
+	nparams 3
+	  param in name "recipient" explicit_type "RequestRecipient_t"
+	  param in name "feature" explicit_type "StandardFeatureSelector_t"
+	  param in name "recipientNumber" explicit_type "uint8"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2388482 "fillTransfer"
+	protected explicit_return_type "void"
+	nparams 2
+	  param in name "th" explicit_type "TransferHandlerType"
+	  param in name "ctlSetup" type class_ref 1437442 // libusb_control_setup
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
 
     class 1437058 "libusb_transfer"
-      visibility package 
+      visibility protected 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
 ${members}};
@@ -815,7 +965,7 @@ ${members}};
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
 "
 	    classrelation_ref 1824898 // pvTransfers (<directional composition>)
-	  b parent class_ref 1430530 // UsbTransfer
+	  b parent class_ref 1430530 // mdtUsbTransfer
       end
 
       operation 2343938 "getTransfer"
@@ -876,7 +1026,28 @@ ${members}};
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	    classrelation_ref 1840258 // <directional composition>
-	  b parent class_ref 1458562 // UsbtmcControlTransfer
+	  b parent class_ref 1458562 // mdtUsbtmcControlTransfer
+      end
+
+      classrelation 1867138 // <directional composition>
+	relation 1851266 *-->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 1867138 // <directional composition>
+	  b parent class_ref 1492098 // UsbtmcInterruptTransfer
+      end
+
+      attribute 1528578 "pvDeviceHandle"
+	private type class_ref 1437186 // libusb_device_handle
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
     end
 
@@ -1007,7 +1178,7 @@ ${members}};
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 1838978 // <unidirectional association>
-	  b parent class_ref 1478914 // UsbtmcTransferHandler
+	  b parent class_ref 1478914 // mdtUsbtmcTransferHandler
       end
     end
 
@@ -1113,7 +1284,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	    classrelation_ref 1839106 // pvTransferHandler (<directional composition>)
-	  b parent class_ref 1478914 // UsbtmcTransferHandler
+	  b parent class_ref 1478914 // mdtUsbtmcTransferHandler
       end
 
       classrelation 1839234 // pvThread (<directional composition>)
@@ -1541,7 +1712,7 @@ ${inlines}
       
     end
 
-    class 1458562 "UsbtmcControlTransfer"
+    class 1458562 "mdtUsbtmcControlTransfer"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -1555,14 +1726,15 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      operation 2353282 "UsbtmcControlTransfer"
+      operation 2353282 "mdtUsbtmcControlTransfer"
 	public explicit_return_type ""
 	nparams 2
-	  param in name "th" type class_ref 1478914 // UsbtmcTransferHandler
 	  param in name "dev_handle" type class_ref 1437186 // libusb_device_handle
-	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${volatile}${throw};
+	  param in name "bufferSize" explicit_type "int"
+	    defaultvalue "1024"
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}${)}${volatile}${throw};
 "
-	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw} 
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${volatile}${throw} 
 {
   ${body}}
 "
@@ -1572,51 +1744,58 @@ ${inlines}
 	
       end
 
-      classrelation 1839490 // <generalisation>
-	relation 1823618 ---|>
+      operation 2374914 "setupInitiateAbortBulkOut"
+	public explicit_return_type "void"
+	nparams 3
+	  param in name "transferHandler" type class_ref 1478914 // mdtUsbtmcTransferHandler
+	  param in name "bTag" explicit_type ""
+	  param in name "timeout" explicit_type "uint"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 1507330 "pvUsbtmcRequest"
+	private explicit_type "UsbtmcRequest_t"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 2374786 "fillTransfer"
+	private explicit_return_type "void"
+	nparams 1
+	  param in name "transferHandler" type class_ref 1478914 // mdtUsbtmcTransferHandler
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 1873794 // <generalisation>
+	relation 1857922 ---|>
 	  a public
 	    cpp default "${type}"
-	    classrelation_ref 1839490 // <generalisation>
-	  b parent class_ref 1430530 // UsbTransfer
-      end
-
-      operation 2353154 "transferHandler"
-	public return_type class_ref 1478914 // UsbtmcTransferHandler
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      attribute 1500546 "pvBuffer"
-	private explicit_type "std::vector<uchar>"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 1507330 "pvRequest"
-	private explicit_type "request_t"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
+	    classrelation_ref 1873794 // <generalisation>
+	  b parent class_ref 1512066 // mdtUsbControlTransfer
       end
     end
 
@@ -1637,7 +1816,7 @@ ${inlines}
       operation 2353410 "UsbTmcBulkTransfer"
 	public explicit_return_type ""
 	nparams 2
-	  param in name "th" type class_ref 1478914 // UsbtmcTransferHandler
+	  param in name "th" type class_ref 1478914 // mdtUsbtmcTransferHandler
 	  param in name "dev_handle" type class_ref 1437186 // libusb_device_handle
 	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${volatile}${throw};
 "
@@ -1665,11 +1844,11 @@ ${inlines}
 	  a public
 	    cpp default "${type}"
 	    classrelation_ref 1840386 // <generalisation>
-	  b parent class_ref 1430530 // UsbTransfer
+	  b parent class_ref 1430530 // mdtUsbTransfer
       end
 
       operation 2353538 "transferHandler"
-	public return_type class_ref 1478914 // UsbtmcTransferHandler
+	public return_type class_ref 1478914 // mdtUsbtmcTransferHandler
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -1681,6 +1860,18 @@ ${inlines}
 	
 	
 	
+      end
+
+      attribute 1528450 "pvEndpoint"
+	private explicit_type "uchar"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
     end
 
@@ -1701,7 +1892,7 @@ ${inlines}
       operation 2360322 "UsbtmcInterruptTransfer"
 	public explicit_return_type ""
 	nparams 2
-	  param in name "th" type class_ref 1478914 // UsbtmcTransferHandler
+	  param in name "th" type class_ref 1478914 // mdtUsbtmcTransferHandler
 	  param in name "dev_handle" type class_ref 1437186 // libusb_device_handle
 	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${volatile}${throw};
 "
@@ -1716,7 +1907,7 @@ ${inlines}
       end
 
       operation 2360450 "transferHandler"
-	public return_type class_ref 1478914 // UsbtmcTransferHandler
+	public return_type class_ref 1478914 // mdtUsbtmcTransferHandler
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -1735,11 +1926,11 @@ ${inlines}
 	  a public
 	    cpp default "${type}"
 	    classrelation_ref 1847042 // <generalisation>
-	  b parent class_ref 1430530 // UsbTransfer
+	  b parent class_ref 1430530 // mdtUsbTransfer
       end
     end
 
-    class 1478914 "UsbtmcTransferHandler"
+    class 1478914 "mdtUsbtmcTransferHandler"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -1886,7 +2077,7 @@ ${inlines}
       operation 2351362 "handleControlTransferComplete"
 	private explicit_return_type "void"
 	nparams 1
-	  param in name "transfer" type class_ref 1430530 // UsbTransfer
+	  param in name "transfer" type class_ref 1430530 // mdtUsbTransfer
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -1902,7 +2093,7 @@ ${inlines}
       operation 2352258 "handleInterruptInTransferComplete"
 	private explicit_return_type "void"
 	nparams 1
-	  param in name "transfer" type class_ref 1430530 // UsbTransfer
+	  param in name "transfer" type class_ref 1430530 // mdtUsbTransfer
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -1948,7 +2139,7 @@ ${inlines}
       operation 2360194 "waitTransferComplete"
 	private explicit_return_type "int"
 	nparams 1
-	  param in name "transfer" type class_ref 1430530 // UsbTransfer
+	  param in name "transfer" type class_ref 1430530 // mdtUsbTransfer
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}

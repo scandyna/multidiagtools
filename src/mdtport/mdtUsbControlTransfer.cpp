@@ -18,45 +18,11 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_USB_PORT_TEST_H
-#define MDT_USB_PORT_TEST_H
+#include "mdtUsbControlTransfer.h"
 
-#include "mdtTest.h"
-
-// Pour les essais ...
-#include <libusb-1.0/libusb.h>
-
-/// \todo Add start/stop test
-class mdtUsbPortTest : public mdtTest
+mdtUsbControlTransfer::mdtUsbControlTransfer ( libusb_device_handle* dev_handle, int bufferSize ) : mdtUsbTransfer ( dev_handle, bufferSize )
 {
- Q_OBJECT
+  Q_ASSERT(bufferSize >= 8);
 
- private:
-
-  void fillBuffer(unsigned char *buffer, int bSize);
-
- private slots:
-
-  void basicAllocFreeBenchMarks();
-  void basicLockUnlockBenchmark();
-  void standardCallBenchmark();
-  void virtualCallBenchmark();
-
-  // USB part tests
-  void usbEndpointDescriptorTest();
-  void deviceListTest();
-
-  // USBTMC part tests
-  void usbtmcFrameTest();
-  void usbtmcFrameBenchmark();
-  void usbtmcControlTransferTest();
-
-  // Make some tests with Velleman k8055 board
-  void vellemanK8055Test();
-
-  // Some data exchange test with Agilent DSO1000
-  void agilentDso1000Test();
-
-};
-
-#endif // MDT_USB_PORT_TEST_H
+  pvBuffer.assign(bufferSize, 0);
+}

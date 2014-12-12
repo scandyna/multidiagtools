@@ -79,8 +79,12 @@ set (SOURCES_FILES
           
           # New USB API
           mdtUsbDeviceList.cpp
+          mdtUsbTransfer.cpp
+          mdtUsbControlTransfer.cpp
           # New USBTMC API
           mdtUsbtmcFrame.cpp
+          mdtUsbtmcControlTransfer.cpp
+          mdtUsbtmcTransferHandler.cpp
     )
 
 # Liste des fichiers ui

@@ -1,81 +1,85 @@
-format 207
+format 208
 
 classcanvas 128258 class_ref 1423618 // mdtUsbtmcFrame
   classdiagramsettings member_max_width 0 end
-  xyz 790.2 806.6 2000
+  xyz 790.5 806.1 2000
 end
-classcanvas 128386 class_ref 1430530 // UsbTransfer
+classcanvas 128386 class_ref 1430530 // mdtUsbTransfer
   classdiagramsettings member_max_width 0 end
-  xyz 576.5 367.4 2000
+  xyz 579.1 366.5 2000
 end
 classcanvas 128514 class_ref 1444994 // UsbtmcThread
   classdiagramsettings member_max_width 0 end
-  xyz 39.4 913.5 2000
+  xyz 39.9 913.3 2000
 end
 classcanvas 128770 class_ref 1445122 // UserApplication
   classdiagramsettings member_max_width 0 end
-  xyz 254.3 46.1 2000
+  xyz 254 46 2000
 end
 classcanvas 128898 class_ref 1409922 // UsbDevice
   classdiagramsettings member_max_width 0 end
-  xyz 285.5 1059.1 2000
+  xyz 285 1059.1 2000
 end
 classcanvas 129154 class_ref 1444354 // ScpiDevice
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 403.8 1069.9 2000
+  xyz 403.6 1069.9 2000
 end
 classcanvas 130178 class_ref 425730 // QCoreApplication
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 72.8 46.1 2000
+  xyz 72.6 46 2000
 end
-classcanvas 130690 class_ref 1458562 // UsbtmcControlTransfer
+classcanvas 130690 class_ref 1458562 // mdtUsbtmcControlTransfer
   classdiagramsettings member_max_width 0 end
-  xyz 96 634.1 2000
+  xyz 73.3 786 2000
 end
 classcanvas 130946 class_ref 1465090 // UsbTransferPool
   classdiagramsettings member_max_width 0 end
-  xyz 1125.4 318.7 3005
+  xyz 1125.4 316.4 3005
 end
 classcanvas 131330 class_ref 1423362 // UsbtmcPort
   classdiagramsettings member_max_width 0 end
-  xyz 34.4 118.3 2000
+  xyz 34 118.8 2000
 end
 classcanvas 131458 class_ref 1444098 // ScpiCodec
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 311.3 1149.1 2000
+  xyz 311 1149.1 2000
 end
-classcanvas 131714 class_ref 1478914 // UsbtmcTransferHandler
+classcanvas 131714 class_ref 1478914 // mdtUsbtmcTransferHandler
   classdiagramsettings member_max_width 0 end
-  xyz 447.9 68.2 2000
+  xyz 447.9 69 2000
 end
 classcanvas 131842 class_ref 1471874 // UsbPortThread
   classdiagramsettings member_max_width 0 end
-  xyz 31 374.5 2011
+  xyz 31.2 374.3 2011
 end
 classcanvas 133506 class_ref 1485570 // UsbTmcBulkTransfer
   classdiagramsettings member_max_width 0 end
-  xyz 716.7 636.6 2005
+  xyz 791.4 638.5 2005
 end
 classcanvas 134018 class_ref 1465090 // UsbTransferPool
   classdiagramsettings member_max_width 0 end
-  xyz 304.2 437.6 2000
+  xyz 57.6 466.7 2000
 end
 classcanvas 136578 class_ref 1465090 // UsbTransferPool
   classdiagramsettings member_max_width 0 end
-  xyz 1418 322 2000
+  xyz 1419.4 321 2000
 end
 classcanvas 136962 class_ref 1492098 // UsbtmcInterruptTransfer
   classdiagramsettings member_max_width 0 end
-  xyz 1356.6 640.6 2000
+  xyz 1355.4 640.1 2000
+end
+classcanvas 137986 class_ref 1512066 // mdtUsbControlTransfer
+  classdiagramsettings member_max_width 0 end
+  xyz 26.5 634.7 2011
 end
 relationcanvas 132610 relation_ref 1822978 // <directional composition>
   geometry HV
   decenter_begin 572
   decenter_end 590
-  from ref 131714 z 3006 to point 1265 227
+  from ref 131714 z 3006 to point 1278 228
   line 134914 z 3006 to ref 130946
-  role_a_pos 1278 295 3000 no_role_b
-  multiplicity_a_pos 1246 295 3000 no_multiplicity_b
+  role_a_pos 1292 295 3000 no_role_b
+  multiplicity_a_pos 1260 295 3000 no_multiplicity_b
 end
 relationcanvas 132738 relation_ref 1823106 // <unidirectional association>
   from ref 131842 z 2012 to ref 131714
@@ -92,15 +96,6 @@ relationcanvas 132994 relation_ref 1823362 // <directional composition>
   role_a_pos 156 351 3000 no_role_b
   multiplicity_a_pos 123 351 3000 no_multiplicity_b
 end
-relationcanvas 133250 relation_ref 1823618 // <generalisation>
-  geometry VHV
-  decenter_begin 913
-  from ref 130690 z 2001 to point 624 545
-  line 136322 z 2001 to point 823 545
-  line 136450 z 2001 to ref 128386
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
 relationcanvas 133762 relation_ref 1824002 // <directional composition>
   from ref 133506 z 2006 to ref 128258
   no_role_a no_role_b
@@ -111,26 +106,27 @@ relationcanvas 133890 relation_ref 1824130 // <directional composition>
   decenter_end 841
   from ref 130946 z 3006 to ref 133506
   no_role_a no_role_b
-  multiplicity_a_pos 1179 613 3000 no_multiplicity_b
+  multiplicity_a_pos 1271 616 3000 no_multiplicity_b
 end
 relationcanvas 134146 relation_ref 1824258 // <directional composition>
-  decenter_begin 71
-  decenter_end 462
-  from ref 131714 z 2001 to ref 134018
-  role_a_pos 435 415 3000 no_role_b
-  multiplicity_a_pos 402 415 3000 no_multiplicity_b
+  geometry HVr
+  decenter_begin 86
+  from ref 131714 z 2001 to point 493 532
+  line 137858 z 2001 to ref 134018
+  role_a_pos 332 510 3000 no_role_b
+  multiplicity_a_pos 331 543 3000 no_multiplicity_b
 end
 relationcanvas 134402 relation_ref 1824386 // <directional composition>
   decenter_begin 445
   from ref 134018 z 2001 to ref 130690
   no_role_a no_role_b
-  multiplicity_a_pos 375 612 3000 no_multiplicity_b
+  multiplicity_a_pos 322 763 3000 no_multiplicity_b
 end
 relationcanvas 135042 relation_ref 1824514 // <generalisation>
   geometry VHV
   decenter_end 498
-  from ref 133506 z 2006 to point 997 546
-  line 135810 z 2006 to point 823 546
+  from ref 133506 z 2006 to point 1079 589
+  line 135810 z 2006 to point 837 589
   line 135938 z 2006 to ref 128386
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -138,16 +134,28 @@ end
 relationcanvas 136706 relation_ref 1831042 // <directional composition>
   geometry HV
   decenter_begin 390
-  from ref 131714 z 2001 to point 1535 176
+  from ref 131714 z 2001 to point 1547 177
   line 136834 z 2001 to ref 136578
-  role_a_pos 1547 299 3000 no_role_b
-  multiplicity_a_pos 1520 299 3000 no_multiplicity_b
+  role_a_pos 1558 298 3000 no_role_b
+  multiplicity_a_pos 1531 298 3000 no_multiplicity_b
 end
 relationcanvas 137090 relation_ref 1831170 // <generalisation>
   geometry VHV
-  from ref 136962 z 2001 to point 1646 548
-  line 137474 z 2001 to point 823 548
+  decenter_begin 507
+  from ref 136962 z 2001 to point 1662 590
+  line 137474 z 2001 to point 828 590
   line 137602 z 2001 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 137730 relation_ref 1851266 // <directional composition>
+  decenter_end 240
+  from ref 136578 z 2001 to ref 136962
+  no_role_a no_role_b
+  multiplicity_a_pos 1487 618 3000 no_multiplicity_b
+end
+relationcanvas 138114 relation_ref 1857922 // <generalisation>
+  from ref 130690 z 2012 to ref 137986
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

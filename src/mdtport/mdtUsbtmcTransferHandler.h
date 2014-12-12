@@ -18,45 +18,30 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_USB_PORT_TEST_H
-#define MDT_USB_PORT_TEST_H
+#ifndef MDT_USBTMC_TRANSFER_HANDLER_H
+#define MDT_USBTMC_TRANSFER_HANDLER_H
 
-#include "mdtTest.h"
-
-// Pour les essais ...
+#include <QtGlobal>
 #include <libusb-1.0/libusb.h>
+#include <cstdint>
 
-/// \todo Add start/stop test
-class mdtUsbPortTest : public mdtTest
+/*! \brief USBTMC transfer handler
+ */
+class mdtUsbtmcTransferHandler
 {
- Q_OBJECT
+ public:
+
+  /*! \brief Constructor
+   */
+  mdtUsbtmcTransferHandler();
+
+  /*! \brief Control transfer callback
+   */
+  static void controlTransferCallback(libusb_transfer *transfer);
 
  private:
 
-  void fillBuffer(unsigned char *buffer, int bSize);
-
- private slots:
-
-  void basicAllocFreeBenchMarks();
-  void basicLockUnlockBenchmark();
-  void standardCallBenchmark();
-  void virtualCallBenchmark();
-
-  // USB part tests
-  void usbEndpointDescriptorTest();
-  void deviceListTest();
-
-  // USBTMC part tests
-  void usbtmcFrameTest();
-  void usbtmcFrameBenchmark();
-  void usbtmcControlTransferTest();
-
-  // Make some tests with Velleman k8055 board
-  void vellemanK8055Test();
-
-  // Some data exchange test with Agilent DSO1000
-  void agilentDso1000Test();
-
+  Q_DISABLE_COPY(mdtUsbtmcTransferHandler);
 };
 
-#endif // MDT_USB_PORT_TEST_H
+#endif  // #ifndef MDT_USBTMC_TRANSFER_HANDLER_H

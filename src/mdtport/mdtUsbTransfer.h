@@ -18,45 +18,59 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_USB_PORT_TEST_H
-#define MDT_USB_PORT_TEST_H
+#ifndef MDT_USB_TRANSFER_H
+#define MDT_USB_TRANSFER_H
 
-#include "mdtTest.h"
-
-// Pour les essais ...
 #include <libusb-1.0/libusb.h>
+#include <cstdint>
 
-/// \todo Add start/stop test
-class mdtUsbPortTest : public mdtTest
+/*! \brief USB transfer
+ *
+ * libusb_transfer wrapper class.
+ */
+class mdtUsbTransfer
 {
- Q_OBJECT
+ public:
+
+  /*! \brief Constructor
+   */
+  mdtUsbTransfer(libusb_device_handle *dev_handle, int isoPacketsCount = 0);
+
+  /*! \brief Destructor
+   */
+  ~mdtUsbTransfer();
+
+  /*! \brief Check that allocation not failed
+   */
+  bool allocOk() const
+  {
+    return (pvTransfer != 0);
+  }
+
+  // Disable copy
+  mdtUsbTransfer(const mdtUsbTransfer & rhs) = delete;
+  mdtUsbTransfer & operator=(const mdtUsbTransfer & rhs) = delete;
+
+ protected:
+
+  /*! \brief Get device handle
+   */
+  inline libusb_device_handle *deviceHandle()
+  {
+    return pvDeviceHandle;
+  }
+
+  /*! \brief Access libusb transfer
+   */
+  inline libusb_transfer *transfer()
+  {
+    return pvTransfer;
+  }
 
  private:
 
-  void fillBuffer(unsigned char *buffer, int bSize);
-
- private slots:
-
-  void basicAllocFreeBenchMarks();
-  void basicLockUnlockBenchmark();
-  void standardCallBenchmark();
-  void virtualCallBenchmark();
-
-  // USB part tests
-  void usbEndpointDescriptorTest();
-  void deviceListTest();
-
-  // USBTMC part tests
-  void usbtmcFrameTest();
-  void usbtmcFrameBenchmark();
-  void usbtmcControlTransferTest();
-
-  // Make some tests with Velleman k8055 board
-  void vellemanK8055Test();
-
-  // Some data exchange test with Agilent DSO1000
-  void agilentDso1000Test();
-
+  libusb_transfer *pvTransfer;
+  libusb_device_handle *pvDeviceHandle;
 };
 
-#endif // MDT_USB_PORT_TEST_H
+#endif // MDT_USB_TRANSFER_H

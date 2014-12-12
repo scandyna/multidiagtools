@@ -32,10 +32,11 @@
 #include "mdtFrameCodecK8055.h"
 #include "mdtFrameUsbTmc.h"
 
+// New USB/USBTMC API
 #include "mdtUsbDeviceList.h"
-
-// New USBTMC API
 #include "mdtUsbtmcFrame.h"
+#include "mdtUsbtmcControlTransfer.h"
+#include "mdtUsbtmcTransferHandler.h"
 
 #include <QByteArray>
 #include <mutex>
@@ -180,6 +181,8 @@ void mdtUsbPortTest::deviceListTest()
     libusb_close(handle);
   }
   libusb_exit(usbCtx);
+  
+  QSKIP("Not implemented yet", SkipAll);
 }
 
 
@@ -469,6 +472,39 @@ void mdtUsbPortTest::usbtmcFrameBenchmark()
   QCOMPARE(bTagInverse, (uint8_t)0xA4);
   QCOMPARE(transferSize, (uint32_t)26);
   QCOMPARE(result, QByteArray("ABCDEFGHIJKLMNOPQRSTUVWXYZ"));
+}
+
+void mdtUsbPortTest::usbtmcControlTransferTest()
+{
+  libusb_context *usbCtx = 0;
+  libusb_device_handle *handle;
+  int ret;
+
+  // Init libusb
+  ret = libusb_init(&usbCtx);
+  QVERIFY(ret == 0);
+
+  // Open a USBTMC device
+  /// \todo Implement a USBTMC scan method (wich filters on class/subClass)
+  mdtUsbDeviceList devList(usbCtx);
+  handle = devList.openDevice(0x0957, 0x4d18);  // Agilent U3606A DC power/multimeter
+  if(handle == 0){
+    libusb_exit(usbCtx);
+    QSKIP("Found no USBTMC device attached (i.e. U3606A)", SkipAll);
+  }
+  Q_ASSERT(handle != 0);
+  /*
+   * In this phase, we not send data to device,
+   *  but a device handle is required by USBTMC transfer class.
+   */
+  mdtUsbtmcTransferHandler th;
+  mdtUsbtmcControlTransfer transfer(handle);
+  
+  // Free ressources
+  if(handle != 0){
+    libusb_close(handle);
+  }
+  libusb_exit(usbCtx);
 }
 
 
