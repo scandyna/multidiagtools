@@ -88,10 +88,27 @@ class mdtUsbDeviceDescriptor
    *
    * Will return the device passed to fetchAttributes().
    */
+  /**
   libusb_device *libusbDevice()
   {
     return pvLibusbDevice;
   }
+  */
+
+  /*! \brief Open current device
+   *
+   * After successfull open, I/O can be performed
+   *  with returned handle (see libusb_open() for details).
+   *
+   * Note: destroying current descriptor object will not invalidate handle.
+   *
+   * \return A valid handle on success, or a null pointer on error
+   *         (on failure, use lastError()).
+   *         Note: caller is responsible to free the handle
+   *               with libusb_close() once no longer used.
+   * \pre Current descriptor mus be valid, i.e. fetchAttributes() must be successfull before calling this function.
+   */
+  libusb_device_handle *open();
 
   /*! \brief Device descriptor type
    */
@@ -196,6 +213,45 @@ class mdtUsbDeviceDescriptor
     return pvConfigs;
   }
 
+  /*! \brief Get number of interface that is of given class and sub class
+   */
+  int interfacesCount(uint8_t bInterfaceClass, uint8_t bInterfaceSubClass) const;
+
+  /*! \brief Get list of bulk IN endpoints
+   *
+   * Note: if device contains many configuration/interfaces,
+   *  returned result will probably be wrong.
+   */
+  QList<mdtUsbEndpointDescriptor> bulkInEndpoints() const;
+
+  /*! \brief Get list of bulk OUT endpoints
+   *
+   * Note: if device contains many configuration/interfaces,
+   *  returned result will probably be wrong.
+   */
+  QList<mdtUsbEndpointDescriptor> bulkOutEndpoints() const;
+
+  /*! \brief Get list of interrupt IN endpoints
+   *
+   * Note: if device contains many configuration/interfaces,
+   *  returned result will probably be wrong.
+   */
+  QList<mdtUsbEndpointDescriptor> interruptInEndpoints() const;
+
+  /*! \brief Get list of interrupt OUT endpoints
+   *
+   * Note: if device contains many configuration/interfaces,
+   *  returned result will probably be wrong.
+   */
+  QList<mdtUsbEndpointDescriptor> interruptOutEndpoints() const;
+
+  /*! \brief Get a interface descriptor by bInterfaceNumber
+   */
+  mdtUsbInterfaceDescriptor interface(uint8_t bInterfaceNumber);
+
+  
+  
+  
   /*! \brief Get a interface descriptor by index
    *
    * Index checking is done in this method, and empty descriptor

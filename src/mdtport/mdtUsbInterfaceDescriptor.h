@@ -52,11 +52,22 @@ class mdtUsbInterfaceDescriptor
     return pvIsEmpty;
   }
 
+  /*! \brief Clear descriptor
+   */
+  void clear();
+
   /*! \brief Ftech the interface descriptor's attributes
    *
    * \pre descriptor must be a valid pointer
    */
   //void fetchAttributes(libusb_interface_descriptor *descriptor);
+
+  /*! \brief Get bInterfaceNumber
+   */
+  uint8_t bInterfaceNumber() const
+  {
+    return pvDescriptor.bInterfaceNumber;
+  }
 
   /*! \brief INTERFACE Descriptor Type
    */
@@ -99,6 +110,22 @@ class mdtUsbInterfaceDescriptor
   QList<mdtUsbEndpointDescriptor> endpoints() const{
     return pvEndpoints;
   }
+
+  /*! \brief Get a list of bulk IN endpoints
+   */
+  QList<mdtUsbEndpointDescriptor> bulkInEndpoints() const;
+
+  /*! \brief Get a list of bulk OUT endpoints
+   */
+  QList<mdtUsbEndpointDescriptor> bulkOutEndpoints() const;
+
+  /*! \brief Get a list of interrupt IN endpoints
+   */
+  QList<mdtUsbEndpointDescriptor> interruptInEndpoints() const;
+
+  /*! \brief Get a list of interrupt OUT endpoints
+   */
+  QList<mdtUsbEndpointDescriptor> interruptOutEndpoints() const;
 
  private:
 

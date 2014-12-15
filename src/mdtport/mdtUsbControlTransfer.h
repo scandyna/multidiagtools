@@ -84,7 +84,7 @@ class mdtUsbControlTransfer : public mdtUsbTransfer
    *
    * \todo Complete this enum (USB 3.1 missing)
    */
-  enum class StandardFeatureSelector_t : uint8_t
+  enum class StandardFeatureSelector_t : uint16_t
   {
     DEVICE_REMOTE_WAKEUP = 1, /*!< Recipient: Device */
     ENDPOINT_HALT = 0,        /*!< Recipient: Endpoint */
@@ -109,15 +109,23 @@ class mdtUsbControlTransfer : public mdtUsbTransfer
    *                         Must provide a static function called controlTransferCallback(),
    *                         with the libusb_transfer_cb_fn signature.
    *                         This transferHandler will be passed to user_data in libusb_transfer.
+   * 
+   * \param callback A static function that will be called (by libusb) when transfer fihishes.
+   *                  As documented in libusb API, this callback will receive a instance of libusb_transfer
+   *                  struct. The user_data part of this struct will also contain current transfer class pointer (this pointer).
    * \param recipient Recipient, can be Device, Interface or Endpoint.
    * \param feature Supported feature depends on recipient (see USB 2.0 standards, section 9.4.1).
    * \param recipientNumber Index/number of recipient (f.ex. endpoint number if recipient is a endpoint).
+   * \param timeout timeout for the transfer in milliseconds.
    */
-  template<typename T>
-  void setupClearFeature(T & transferHandler, RequestRecipient_t recipient, StandardFeatureSelector_t feature, uint8_t recipientNumber, unsigned int timeout)
+  ///template<typename T>
+  void setupClearFeature(libusb_transfer_cb_fn callback, RequestRecipient_t recipient, StandardFeatureSelector_t feature, uint16_t recipientNumber, unsigned int timeout)
   {
     Q_ASSERT((int)pvBuffer.capacity() >= 8);
-    fillTransfer(transferHandler, recipient, StandardRequestCode_t::CLEAR_FEATURE, feature, recipientNumber, 0, timeout);
+    fillTransfer(callback,
+                 static_cast<uint8_t>(recipient), static_cast<uint8_t>(StandardRequestCode_t::CLEAR_FEATURE), static_cast<uint16_t>(feature), recipientNumber, 0,
+                 ///recipient, StandardRequestCode_t::CLEAR_FEATURE, feature, recipientNumber, 0,
+                 timeout);
   }
 
  protected:
@@ -133,6 +141,10 @@ class mdtUsbControlTransfer : public mdtUsbTransfer
    *                         Must provide a static function called controlTransferCallback(),
    *                         with the libusb_transfer_cb_fn signature.
    *                         This transferHandler will be passed to user_data in libusb_transfer.
+   *
+   * \param callback A static function that will be called (by libusb) when transfer fihishes.
+   *                  As documented in libusb API, this callback will receive a instance of libusb_transfer
+   *                  struct. The user_data part of this struct will also contain current transfer class pointer (this pointer).
    * \param bmRequestType Request characteristics (direction, type, recipient). Must be set correctly by caller.
    * \param bRequest Specific request (see USB spec.)
    * \param wValue See USB spec.
@@ -140,8 +152,8 @@ class mdtUsbControlTransfer : public mdtUsbTransfer
    * \param wLength Number of bytes to transfer. Has only sense for direction device-to-host (should be 0 else).
    * \pre Internal buffer size (witch was given to constructor) must be >= 8 + wLength.
    */
-  template<typename T>
-  void fillTransfer(T & transferHandler,
+  ///template<typename T>
+  void fillTransfer(libusb_transfer_cb_fn callback,
                     uint8_t bmRequestType, uint8_t bRequest, uint16_t wValue, uint16_t wIndex, uint16_t wLength,
                     unsigned int timeout);
 
@@ -155,6 +167,10 @@ class mdtUsbControlTransfer : public mdtUsbTransfer
    *                         Must provide a static function called controlTransferCallback(),
    *                         with the libusb_transfer_cb_fn signature.
    *                         This transferHandler will be passed to user_data in libusb_transfer.
+   *
+   * \param callback A static function that will be called (by libusb) when transfer fihishes.
+   *                  As documented in libusb API, this callback will receive a instance of libusb_transfer
+   *                  struct. The user_data part of this struct will also contain current transfer class pointer (this pointer).
    * \param bmRequestType Request characteristics (direction, type, recipient). Must be set correctly by caller.
    * \param bRequest Specific request (see USB spec.)
    * \param wValue See USB spec.
@@ -162,8 +178,8 @@ class mdtUsbControlTransfer : public mdtUsbTransfer
    * \param data Data that will be transferred to the device. Note: will also set wLength regarding data length.
    * \pre Internal buffer size (witch was given to constructor) must be >= 8 + data length.
    */
-  template<typename T>
-  void fillTransfer(T & transferHandler,
+  ///template<typename T>
+  void fillTransfer(libusb_transfer_cb_fn callback,
                     uint8_t bmRequestType, uint8_t bRequest, uint16_t wValue, uint16_t wIndex, const std::vector<unsigned char> & data,
                     unsigned int timeout);
 
@@ -172,19 +188,20 @@ class mdtUsbControlTransfer : public mdtUsbTransfer
   std::vector<unsigned char> pvBuffer;
 };
 
+/**
 template<typename T>
-void mdtUsbControlTransfer::fillTransfer(T & transferHandler,
+void mdtUsbControlTransfer::fillTransfer(libusb_transfer_cb_fn callback,
                                          uint8_t bmRequestType, uint8_t bRequest, uint16_t wValue, uint16_t wIndex, uint16_t wLength,
                                          unsigned int timeout)
 {
   Q_ASSERT((int)pvBuffer.capacity() >= (8 + wLength));
 
   libusb_fill_control_setup(pvBuffer.data(), bmRequestType, bRequest, wValue, wIndex, wLength);
-  libusb_fill_control_transfer(transfer(), deviceHandle(), pvBuffer.data(), transferHandler.controlTransferCallback, static_cast<void*>(&transferHandler), timeout);
+  libusb_fill_control_transfer(transfer(), deviceHandle(), pvBuffer.data(), callback, static_cast<void*>(this), timeout);
 }
 
 template<typename T>
-void mdtUsbControlTransfer::fillTransfer(T & transferHandler,
+void mdtUsbControlTransfer::fillTransfer(libusb_transfer_cb_fn callback,
                                          uint8_t bmRequestType, uint8_t bRequest, uint16_t wValue, uint16_t wIndex, const std::vector< unsigned char>& data,
                                          unsigned int timeout )
 {
@@ -194,7 +211,8 @@ void mdtUsbControlTransfer::fillTransfer(T & transferHandler,
 
   ::memcpy(pvBuffer.data()+8, data.data(), wLength);
   libusb_fill_control_setup(pvBuffer.data(), bmRequestType, bRequest, wValue, wIndex, wLength);
-  libusb_fill_control_transfer(transfer(), deviceHandle(), pvBuffer.data(), transferHandler.controlTransferCallback, static_cast<void*>(&transferHandler), timeout);
+  libusb_fill_control_transfer(transfer(), deviceHandle(), pvBuffer.data(), callback, static_cast<void*>(this), timeout);
 }
+*/
 
 #endif // #ifndef MDT_USB_CONTROL_TRANSFER_H

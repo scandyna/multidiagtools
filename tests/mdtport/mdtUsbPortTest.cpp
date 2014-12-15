@@ -34,7 +34,9 @@
 
 // New USB/USBTMC API
 #include "mdtUsbDeviceList.h"
+#include "mdtUsbTransferPool.h"
 #include "mdtUsbtmcFrame.h"
+#include "mdtUsbtmcPort.h"
 #include "mdtUsbtmcControlTransfer.h"
 #include "mdtUsbtmcTransferHandler.h"
 
@@ -172,8 +174,8 @@ void mdtUsbPortTest::deviceListTest()
   mdtUsbDeviceList devList(usbCtx);
   QVERIFY(devList.scan());
   
-  libusb_device_handle *handle;
-  handle = devList.openDevice(0x0957, 0x4d18, "MY51040034");
+  libusb_device_handle *handle = 0;
+  ///handle = devList.openDevice(0x0957, 0x4d18, "MY51040034");
   ///handle = devList.openDevice(0x046d, 0xc512);
   
   // Free ressources
@@ -478,28 +480,133 @@ void mdtUsbPortTest::usbtmcControlTransferTest()
 {
   libusb_context *usbCtx = 0;
   libusb_device_handle *handle;
+  mdtUsbDeviceDescriptor deviceDescriptor;
+  mdtUsbInterfaceDescriptor interface;
+  mdtUsbEndpointDescriptor bulkOutEpd;
+  mdtUsbEndpointDescriptor bulkInEpd;
+  mdtUsbEndpointDescriptor interruptInEpd;
   int ret;
 
   // Init libusb
   ret = libusb_init(&usbCtx);
   QVERIFY(ret == 0);
 
-  // Open a USBTMC device
-  /// \todo Implement a USBTMC scan method (wich filters on class/subClass)
+  // Search USBTMC device
   mdtUsbDeviceList devList(usbCtx);
-  handle = devList.openDevice(0x0957, 0x4d18);  // Agilent U3606A DC power/multimeter
-  if(handle == 0){
-    libusb_exit(usbCtx);
-    QSKIP("Found no USBTMC device attached (i.e. U3606A)", SkipAll);
+  QVERIFY(devList.scan());
+  deviceDescriptor = devList.findFirstUsbtmcDevice();
+  if(deviceDescriptor.isEmpty()){
+    QSKIP("Found no USBTMC device attached", SkipAll);
   }
-  Q_ASSERT(handle != 0);
+  // Get interface
+  interface = deviceDescriptor.interface(0);
+  QVERIFY(!interface.isEmpty());
+  // Get device's attributes
+  qDebug() << "Found USBTMC device: " << deviceDescriptor.idString();
+  qDebug() << "Bulk IN enpoints: " << interface.bulkInEndpoints().size();
+  qDebug() << "Bulk OUT enpoints: " << interface.bulkOutEndpoints().size();
+  qDebug() << "Interrupt IN enpoints: " << interface.interruptInEndpoints().size();
+  qDebug() << "Interrupt OUT enpoints: " << interface.interruptOutEndpoints().size();
+  // Get bulk IN enpoint
+  QCOMPARE(interface.bulkInEndpoints().size(), 1);
+  bulkInEpd = interface.bulkInEndpoints().at(0);
+  QVERIFY(!bulkInEpd.isEmpty());
+  // Get bulk OUT enpoint
+  QCOMPARE(interface.bulkOutEndpoints().size(), 1);
+  bulkOutEpd = interface.bulkOutEndpoints().at(0);
+  QVERIFY(!bulkOutEpd.isEmpty());
+  // Get Interrupt IN enpoint
+  if(interface.interruptInEndpoints().size() == 1){
+    interruptInEpd = interface.interruptInEndpoints().at(0);
+  }
+  
+  qDebug() << "Bulk OUT - address (RAW): " << bulkOutEpd.address() << " , number: " << bulkOutEpd.number();
+  qDebug() << "Bulk IN - address (RAW): " << bulkInEpd.address() << " , number: " << bulkInEpd.number();
+  qDebug() << "Interrupt IN - address (RAW): " << interruptInEpd.address() << " , number: " << interruptInEpd.number();
+  
+  // Open device
+  handle = deviceDescriptor.open();
+  QVERIFY(handle != 0);
+  devList.clear();
+  QCOMPARE(libusb_set_auto_detach_kernel_driver(handle, 1), 0);
+  QCOMPARE(libusb_claim_interface(handle, interface.bInterfaceNumber()), 0);
+
   /*
    * In this phase, we not send data to device,
    *  but a device handle is required by USBTMC transfer class.
    */
   mdtUsbtmcTransferHandler th;
-  mdtUsbtmcControlTransfer transfer(handle);
+  mdtUsbtmcControlTransfer transfer(th, handle);
+  QVERIFY(transfer.allocOk());
+  // Check some flags
+  QVERIFY(!(transfer.flags() & LIBUSB_TRANSFER_FREE_BUFFER));
+  QVERIFY(!(transfer.flags() & LIBUSB_TRANSFER_FREE_TRANSFER));
+  // Setup .......
   
+  transfer.setupClearEndpointHalt(bulkOutEpd.number(), 30000);
+  QVERIFY(transfer.submit());
+  
+  ret = libusb_handle_events(usbCtx);
+  if(ret != 0){
+    qDebug() << "Handle event error: " << ret << " (" << libusb_strerror((libusb_error)ret) << ")";
+  }
+  
+  
+  // Free ressources
+  if(handle != 0){
+    libusb_release_interface(handle, interface.bInterfaceNumber());
+    libusb_close(handle);
+  }
+  libusb_exit(usbCtx);
+}
+
+void mdtUsbPortTest::usbtmcTransferPoolTest()
+{
+  int ret;
+  libusb_context *usbCtx = 0;
+  libusb_device_handle *handle;
+  mdtUsbDeviceDescriptor deviceDescriptor;
+  mdtUsbtmcTransferHandler th;
+
+  // Init libusb
+  ret = libusb_init(&usbCtx);
+  QVERIFY(ret == 0);
+  // Search USBTMC device
+  mdtUsbDeviceList devList(usbCtx);
+  QVERIFY(devList.scan());
+  deviceDescriptor = devList.findFirstUsbtmcDevice();
+  if(deviceDescriptor.isEmpty()){
+    QSKIP("Found no USBTMC device attached", SkipAll);
+  }
+  // Open device
+  handle = deviceDescriptor.open();
+  QVERIFY(handle != 0);
+  devList.clear();
+
+  /*
+   * Build a USBTMC control transfer pool.
+   *  - Guard size: 3
+   *  - Alloc 2
+   */
+  mdtUsbTransferPool<mdtUsbtmcControlTransfer> controlTransferPool(3);
+  QVERIFY(controlTransferPool.allocTransfers(2, th, handle));
+  // Get 2 transfers
+  mdtUsbtmcControlTransfer *controlTransfer1, *controlTransfer2, *controlTransfer3;
+  controlTransfer1 = controlTransferPool.getTransfer(th);
+  controlTransfer2 = controlTransferPool.getTransfer(th);
+  QVERIFY(controlTransfer1 != 0);
+  QVERIFY(controlTransfer2 != 0);
+  // Get 1 more transfer (must be allocated)
+  controlTransfer3 = controlTransferPool.getTransfer(th);
+  QVERIFY(controlTransfer3 != 0);
+  // The 2 following lines must fail (uncomment to try..)
+  //mdtUsbtmcControlTransfer *controlTransfer4 = controlTransferPool.getTransfer(th);
+  //controlTransferPool.restoreTransfer(controlTransfer4);
+  // Restore transfers
+  controlTransferPool.restoreTransfer(controlTransfer1);
+  controlTransferPool.restoreTransfer(controlTransfer2);
+  controlTransferPool.restoreTransfer(controlTransfer3);
+
   // Free ressources
   if(handle != 0){
     libusb_close(handle);
@@ -507,6 +614,55 @@ void mdtUsbPortTest::usbtmcControlTransferTest()
   libusb_exit(usbCtx);
 }
 
+void mdtUsbPortTest::usbtmcTransferPoolBenchmark()
+{
+  int N = 1000000;
+  int ret;
+  libusb_context *usbCtx = 0;
+  libusb_device_handle *handle;
+  mdtUsbDeviceDescriptor deviceDescriptor;
+  mdtUsbtmcTransferHandler th;
+
+  // Init libusb
+  ret = libusb_init(&usbCtx);
+  QVERIFY(ret == 0);
+  // Search USBTMC device
+  mdtUsbDeviceList devList(usbCtx);
+  QVERIFY(devList.scan());
+  deviceDescriptor = devList.findFirstUsbtmcDevice();
+  if(deviceDescriptor.isEmpty()){
+    QSKIP("Found no USBTMC device attached", SkipAll);
+  }
+  // Open device
+  handle = deviceDescriptor.open();
+  QVERIFY(handle != 0);
+  devList.clear();
+
+  /*
+   * Build a USBTMC control transfer pool.
+   */
+  mdtUsbTransferPool<mdtUsbtmcControlTransfer> controlTransferPool(30);
+  QVERIFY(controlTransferPool.allocTransfers(10, th, handle));
+  // Bench get/restore
+  mdtUsbtmcControlTransfer *controlTransfer;
+  int i;
+  QBENCHMARK{
+    for(i = 0; i < N; ++i){
+      controlTransfer = controlTransferPool.getTransfer(th);
+      if(controlTransfer == 0){
+        qDebug() << "A null transfer ?!?";
+      }
+      controlTransferPool.restoreTransfer(controlTransfer);
+    }
+  }
+  QVERIFY(controlTransfer != 0);
+
+  // Free ressources
+  if(handle != 0){
+    libusb_close(handle);
+  }
+  libusb_exit(usbCtx);
+}
 
 /*
  * Tests

@@ -28,6 +28,13 @@
 #include <cstdint>
 
 /*! \brief Helper class to enumerate and search USB devices that are attached on system
+ *
+ * Finding and opening a device can be done in several steps:
+ *  - Build a list of attached devices by using scan()
+ *  - Find interresting device with findDevice()
+ *  - Setup system based on returned device descriptor (interfaces, endpoints, ...)
+ *  - Open device with its mdtUsbDeviceDescriptor::open() function
+ *  - Clear search result with clear()
  */
 class mdtUsbDeviceList
 {
@@ -58,6 +65,35 @@ class mdtUsbDeviceList
     return pvDeviceDescriptors;
   }
 
+  /*! \brief Get a list of devices of given class, sub class and protocol
+   */
+  QList<mdtUsbDeviceDescriptor> deviceList(uint8_t bDeviceClass, uint8_t bDeviceSubClass, uint8_t bDeviceProtocol) const;
+
+  /*! \brief Get a list of attached USBTMC devices
+   */
+  QList<mdtUsbDeviceDescriptor> usbtmcDeviceList() const;
+
+  /*! \brief Find a device with given vendor ID, product ID and serial number if not empty
+   *
+   * Note: serial number is not requeired for all class/subclass.
+   * For USBTMC, it is required (see USBTMC 1.0 spec, chap. 5.1)
+   *
+   * \return A valid device descriptor on success, or a empty one on failure (use lastError() on this case).
+   */
+  mdtUsbDeviceDescriptor findDevice(uint16_t idVendor, uint16_t idProduct, const QString & serialNumber = QString());
+
+  /*! \brief Get first device that is a USBTMC device
+   *
+   * This function is mostly used by unit testing.
+   */
+  mdtUsbDeviceDescriptor findFirstUsbtmcDevice() const;
+
+  /*! \brief Clear
+   *
+   * Will clear devices list and call freeLibusbDeviceList()
+   */
+  void clear();
+
   /*! \brief Open a device with given vendor ID, product ID and serial number if not empty
    *
    * Note: serial number is not requeired for all class/subclass.
@@ -68,7 +104,7 @@ class mdtUsbDeviceList
    *         Note: caller is responsible to free the handle
    *               with libusb_close() once not longer used.
    */
-  libusb_device_handle *openDevice(uint16_t idVendor, uint16_t idProduct, const QString & serialNumber = QString());
+  ///libusb_device_handle *openDevice(uint16_t idVendor, uint16_t idProduct, const QString & serialNumber = QString());
 
   /*! \brief Get last error
    */
@@ -106,17 +142,11 @@ class mdtUsbDeviceList
 
   /*! \brief Build devices list
    */
-  bool buildDevicesList(bool fetchDeviceActiveConfigOnly, bool freeLibusbListAfterBuild);
+  bool buildDevicesList(bool fetchDeviceActiveConfigOnly);
 
   /*! \brief Free libusb devices list
    */
   void freeLibusbDeviceList();
-
-  /*! \brief Clear
-   *
-   * Will clear devices list and call freeLibusbDeviceList()
-   */
-  void clear();
 
   libusb_context *pvUsbContext;
   libusb_device **pvLibusDeviceList;

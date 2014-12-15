@@ -21,6 +21,7 @@
 #ifndef MDT_USB_TRANSFER_H
 #define MDT_USB_TRANSFER_H
 
+#include "mdtError.h"
 #include <libusb-1.0/libusb.h>
 #include <cstdint>
 
@@ -47,6 +48,38 @@ class mdtUsbTransfer
     return (pvTransfer != 0);
   }
 
+  /*! \brief Get transfer flags
+   */
+  uint8_t flags() const{
+    Q_ASSERT(pvTransfer != 0);
+    return pvTransfer->flags;
+  }
+
+  /*! \brief Submit transfer
+   *
+   * Will use libusb_submit_transfer()
+   *
+   * \pre Internall transfer must be valid ( see allocOk() ).
+   */
+  bool submit();
+
+  /*! \brief Get transfer status
+   *
+   * \pre Internall transfer must be valid ( see allocOk() ).
+   */
+  libusb_transfer_status status() const
+  {
+    Q_ASSERT(pvTransfer != 0);
+    return pvTransfer->status;
+  }
+
+  /*! \brief Get last error
+   */
+  mdtError lastError() const
+  {
+    return pvLastError;
+  }
+
   // Disable copy
   mdtUsbTransfer(const mdtUsbTransfer & rhs) = delete;
   mdtUsbTransfer & operator=(const mdtUsbTransfer & rhs) = delete;
@@ -71,6 +104,7 @@ class mdtUsbTransfer
 
   libusb_transfer *pvTransfer;
   libusb_device_handle *pvDeviceHandle;
+  mdtError pvLastError;
 };
 
 #endif // MDT_USB_TRANSFER_H

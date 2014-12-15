@@ -19,15 +19,28 @@
  **
  ****************************************************************************/
 #include "mdtUsbtmcTransferHandler.h"
+#include "mdtUsbtmcControlTransfer.h"
 
 #include <QDebug>
 
 mdtUsbtmcTransferHandler::mdtUsbtmcTransferHandler()
 {
-
 }
 
 void mdtUsbtmcTransferHandler::controlTransferCallback(libusb_transfer* transfer)
 {
+  Q_ASSERT(transfer != 0);
+
+  mdtUsbtmcControlTransfer *uct = static_cast<mdtUsbtmcControlTransfer*>(transfer->user_data);
+  
   qDebug() << "Control transfer callback called ! :-)";
+  
+  uct->transferHandler().handleControlTransferComplete(uct);
+}
+
+void mdtUsbtmcTransferHandler::handleControlTransferComplete(mdtUsbtmcControlTransfer *transfer )
+{
+  Q_ASSERT(transfer != 0);
+
+  qDebug() << "Control transfer status: " << transfer->status();
 }

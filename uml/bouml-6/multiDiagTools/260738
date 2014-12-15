@@ -1,6 +1,6 @@
 format 208
 "newPortApiSandbox" // mdtport::newPortApiSandbox
-  revision 24
+  revision 25
   modified_by 2 "philippe"
   // class settings
   
@@ -561,6 +561,51 @@ ${members}};
 	
       end
 
+      operation 2395010 "submit"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2395394 "status"
+	public explicit_return_type "libusb_transfer_status"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2395138 "lastError"
+	public return_type class_ref 182402 // mdtError
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 2375170 "deviceHandle"
 	protected return_type class_ref 1437186 // libusb_device_handle
 	nparams 0
@@ -589,6 +634,18 @@ ${members}};
 	
 	
 	
+      end
+
+      attribute 1535234 "pvLastError"
+	private type class_ref 182402 // mdtError
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
     end
 
@@ -678,6 +735,7 @@ ${inlines}
 	
 	
       end
+
     end
 
     class 1437058 "libusb_transfer"
@@ -937,7 +995,7 @@ ${inlines}
       end
     end
 
-    class 1465090 "UsbTransferPool"
+    class 1465090 "mdtUsbTransferPool"
       visibility package stereotype "template"
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -1105,7 +1163,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	    classrelation_ref 1831938 // pvTransferPool (<directional composition>)
-	  b parent class_ref 1465090 // UsbTransferPool
+	  b parent class_ref 1465090 // mdtUsbTransferPool
       end
 
       operation 2314882 "transferCallback"
@@ -1728,13 +1786,14 @@ ${inlines}
       
       operation 2353282 "mdtUsbtmcControlTransfer"
 	public explicit_return_type ""
-	nparams 2
+	nparams 3
+	  param in name "th" type class_ref 1478914 // mdtUsbtmcTransferHandler
 	  param in name "dev_handle" type class_ref 1437186 // libusb_device_handle
 	  param in name "bufferSize" explicit_type "int"
 	    defaultvalue "1024"
-	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}${)}${volatile}${throw};
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, ${t2} ${p2}${v2}${)}${volatile}${throw};
 "
-	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${volatile}${throw} 
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, ${t2} ${p2}${)}${volatile}${throw} 
 {
   ${body}}
 "
@@ -1774,13 +1833,29 @@ ${inlines}
 	MysqlColumn
       end
 
-      operation 2374786 "fillTransfer"
-	private explicit_return_type "void"
-	nparams 1
-	  param in name "transferHandler" type class_ref 1478914 // mdtUsbtmcTransferHandler
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+      classrelation 1873794 // <generalisation>
+	relation 1857922 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1873794 // <generalisation>
+	  b parent class_ref 1512066 // mdtUsbControlTransfer
+      end
+
+      classrelation 1880450 // <unidirectional association>
+	relation 1864578 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+	    classrelation_ref 1880450 // <unidirectional association>
+	  b parent class_ref 1478914 // mdtUsbtmcTransferHandler
+      end
+
+      operation 2395266 "transferHandler"
+	public return_type class_ref 1478914 // mdtUsbtmcTransferHandler
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -1788,14 +1863,6 @@ ${inlines}
 	
 	
 	
-      end
-
-      classrelation 1873794 // <generalisation>
-	relation 1857922 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 1873794 // <generalisation>
-	  b parent class_ref 1512066 // mdtUsbControlTransfer
       end
     end
 
@@ -2077,7 +2144,7 @@ ${inlines}
       operation 2351362 "handleControlTransferComplete"
 	private explicit_return_type "void"
 	nparams 1
-	  param in name "transfer" type class_ref 1430530 // mdtUsbTransfer
+	  param in name "transfer" type class_ref 1458562 // mdtUsbtmcControlTransfer
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -2112,7 +2179,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	    classrelation_ref 1838850 // pvBulkTransferPool (<directional composition>)
-	  b parent class_ref 1465090 // UsbTransferPool
+	  b parent class_ref 1465090 // mdtUsbTransferPool
       end
 
       attribute 1500418 "pvStateMachine"
@@ -2133,7 +2200,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	    classrelation_ref 1840130 // pvControlTransferPool (<directional composition>)
-	  b parent class_ref 1465090 // UsbTransferPool
+	  b parent class_ref 1465090 // mdtUsbTransferPool
       end
 
       operation 2360194 "waitTransferComplete"
@@ -2158,7 +2225,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	    classrelation_ref 1846914 // pvInterruptTransferPool (<directional composition>)
-	  b parent class_ref 1465090 // UsbTransferPool
+	  b parent class_ref 1465090 // mdtUsbTransferPool
       end
     end
 

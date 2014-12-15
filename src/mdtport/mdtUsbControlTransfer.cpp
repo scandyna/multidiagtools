@@ -26,3 +26,26 @@ mdtUsbControlTransfer::mdtUsbControlTransfer ( libusb_device_handle* dev_handle,
 
   pvBuffer.assign(bufferSize, 0);
 }
+
+void mdtUsbControlTransfer::fillTransfer(libusb_transfer_cb_fn callback,
+                                         uint8_t bmRequestType, uint8_t bRequest, uint16_t wValue, uint16_t wIndex, uint16_t wLength,
+                                         unsigned int timeout)
+{
+  Q_ASSERT((int)pvBuffer.capacity() >= (8 + wLength));
+
+  libusb_fill_control_setup(pvBuffer.data(), bmRequestType, bRequest, wValue, wIndex, wLength);
+  libusb_fill_control_transfer(transfer(), deviceHandle(), pvBuffer.data(), callback, static_cast<void*>(this), timeout);
+}
+
+void mdtUsbControlTransfer::fillTransfer(libusb_transfer_cb_fn callback,
+                                         uint8_t bmRequestType, uint8_t bRequest, uint16_t wValue, uint16_t wIndex, const std::vector< unsigned char>& data,
+                                         unsigned int timeout )
+{
+  int16_t wLength = data.size();
+
+  Q_ASSERT((int16_t)pvBuffer.capacity() >= (8 + wLength));
+
+  ::memcpy(pvBuffer.data()+8, data.data(), wLength);
+  libusb_fill_control_setup(pvBuffer.data(), bmRequestType, bRequest, wValue, wIndex, wLength);
+  libusb_fill_control_transfer(transfer(), deviceHandle(), pvBuffer.data(), callback, static_cast<void*>(this), timeout);
+}

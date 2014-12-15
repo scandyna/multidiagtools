@@ -19,36 +19,19 @@
  **
  ****************************************************************************/
 #include "mdtUsbtmcControlTransfer.h"
-///#include "mdtUsbtmcTransferHandler.h"
+#include "mdtUsbtmcTransferHandler.h"
 #include <QtGlobal>
 #include <cstring>
 
-mdtUsbtmcControlTransfer::mdtUsbtmcControlTransfer ( libusb_device_handle* dev_handle, int bufferSize )
- : mdtUsbControlTransfer (dev_handle, bufferSize)
+mdtUsbtmcControlTransfer::mdtUsbtmcControlTransfer (mdtUsbtmcTransferHandler & th, libusb_device_handle* dev_handle, int bufferSize )
+ : mdtUsbControlTransfer(dev_handle, bufferSize),
+   pvTransferHandler(th)
 {
-  /**
-  Q_ASSERT(bufferSize >= 8);
-  pvBuffer.assign(bufferSize, 0);
-  */
 }
 
-/**
-void mdtUsbtmcControlTransfer::fillTransfer (mdtUsbtmcTransferHandler& th, uint8_t bmRequestType, uint8_t bRquest, uint16_t wValue, uint16_t wIndex, uint16_t wLength, unsigned int timeout)
+void mdtUsbtmcControlTransfer::setupClearEndpointHalt(uint8_t endpointNumber, unsigned int timeout)
 {
-  Q_ASSERT((int)pvBuffer.capacity() >= (8 + wLength));
-
-  libusb_fill_control_setup(pvBuffer.data(), bmRequestType, bRquest, wValue, wIndex, wLength);
-  libusb_fill_control_transfer(transfer(), deviceHandle(), pvBuffer.data(), th.controlTransferCallback, static_cast<void*>(&th), timeout);
+  setupClearFeature(pvTransferHandler.controlTransferCallback,
+                    mdtUsbControlTransfer::RequestRecipient_t::Endpoint, mdtUsbControlTransfer::StandardFeatureSelector_t::ENDPOINT_HALT, endpointNumber,
+                    timeout);
 }
-
-void mdtUsbtmcControlTransfer::fillTransfer (mdtUsbtmcTransferHandler& th, uint8_t bmRequestType, uint8_t bRquest, uint16_t wValue, uint16_t wIndex, const std::vector<unsigned char>& data, unsigned int timeout)
-{
-  int16_t wLength = data.size();
-
-  Q_ASSERT((int16_t)pvBuffer.capacity() >= (8 + wLength));
-
-  ::memcpy(pvBuffer.data()+8, data.data(), wLength);
-  libusb_fill_control_setup(pvBuffer.data(), bmRequestType, bRquest, wValue, wIndex, wLength);
-  libusb_fill_control_transfer(transfer(), deviceHandle(), pvBuffer.data(), th.controlTransferCallback, static_cast<void*>(&th), timeout);
-}
-*/

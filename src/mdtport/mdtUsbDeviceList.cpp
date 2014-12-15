@@ -32,14 +32,14 @@ mdtUsbDeviceList::mdtUsbDeviceList (libusb_context* ctx)
 
 mdtUsbDeviceList::~mdtUsbDeviceList()
 {
-  freeLibusbDeviceList();
+  clear();
 }
 
 bool mdtUsbDeviceList::scan()
 {
   // Free previous results and build list
   clear();
-  if(!buildDevicesList(true, true)){
+  if(!buildDevicesList(true)){
     return false;
   }
   for(int i = 0; i < pvDeviceDescriptors.size(); ++i){
@@ -50,6 +50,94 @@ bool mdtUsbDeviceList::scan()
   return true;
 }
 
+QList< mdtUsbDeviceDescriptor > mdtUsbDeviceList::deviceList ( uint8_t bDeviceClass, uint8_t bDeviceSubClass, uint8_t bDeviceProtocol ) const
+{
+  QList<mdtUsbDeviceDescriptor> lst;
+
+  for(auto device : pvDeviceDescriptors){
+    if( (device.bDeviceClass() == bDeviceClass) && (device.bDeviceSubClass() == bDeviceSubClass) && (device.bDeviceProtocol() == bDeviceProtocol) ){
+      lst.append(device);
+    }
+  }
+
+  return lst;
+}
+
+QList<mdtUsbDeviceDescriptor> mdtUsbDeviceList::usbtmcDeviceList() const
+{
+  QList<mdtUsbDeviceDescriptor> devices;
+  QList<mdtUsbDeviceDescriptor> lst;
+
+  devices = deviceList(0x00, 0x00, 0x00);
+  for(auto device : devices){
+    if(device.interfacesCount(0xFE, 0x03) > 0){
+      lst.append(device);
+    }
+  }
+
+  return lst;
+}
+
+mdtUsbDeviceDescriptor mdtUsbDeviceList::findDevice ( uint16_t idVendor, uint16_t idProduct, const QString& serialNumber )
+{
+  // Be shure we have at least one device in our list
+  if(pvDeviceDescriptors.isEmpty()){
+    pvLastError.setError(QObject::tr("Failed to find any device because descriptors list is empty (did you scan ?)"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtUsbDeviceList");
+    pvLastError.commit();
+    return mdtUsbDeviceDescriptor();
+  }
+  // Search requested device
+  auto foundIt = pvDeviceDescriptors.end();
+  if(serialNumber.isEmpty()){
+    // Search by idVendor and idProduct
+    deviceMatchDataVidPid md;
+    md.idProduct = idProduct;
+    md.idVendor = idVendor;
+    foundIt = std::find_if(pvDeviceDescriptors.begin(), pvDeviceDescriptors.end(), md);
+  }else{
+    // Search by idVendor, idProduct and SN
+    deviceMatchDataVidPidSn md;
+    md.idProduct = idProduct;
+    md.idVendor = idVendor;
+    md.serialNumber = serialNumber;
+    foundIt = std::find_if(pvDeviceDescriptors.begin(), pvDeviceDescriptors.end(), md);
+  }
+  if(foundIt == pvDeviceDescriptors.end()){
+    // Device not found
+    clear();
+    QString str;
+    str = "ID ";
+    str += QString("0x%1:0x%2 ").arg(idVendor, 4, 16, QChar('0')).arg(idProduct, 4, 16, QChar('0'));
+    str += " (SN:" + serialNumber + ")";
+    pvLastError.setError(QObject::tr("Could not find device ") + str, mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtUsbDeviceList");
+    pvLastError.commit();
+    return mdtUsbDeviceDescriptor();
+  }
+
+  return *foundIt;
+}
+
+mdtUsbDeviceDescriptor mdtUsbDeviceList::findFirstUsbtmcDevice() const
+{
+  QList<mdtUsbDeviceDescriptor> lst;
+
+  lst = usbtmcDeviceList();
+  if(lst.isEmpty()){
+    return mdtUsbDeviceDescriptor();
+  }
+
+  return lst.at(0);
+}
+
+void mdtUsbDeviceList::clear()
+{
+  pvDeviceDescriptors.clear();
+  freeLibusbDeviceList();
+}
+
+/**
 libusb_device_handle* mdtUsbDeviceList::openDevice ( uint16_t idVendor, uint16_t idProduct, const QString& serialNumber )
 {
   libusb_device_handle *dev_handle = 0;
@@ -104,8 +192,9 @@ libusb_device_handle* mdtUsbDeviceList::openDevice ( uint16_t idVendor, uint16_t
 
   return dev_handle;
 }
+*/
 
-bool mdtUsbDeviceList::buildDevicesList(bool fetchDeviceActiveConfigOnly, bool freeLibusbListAfterBuild)
+bool mdtUsbDeviceList::buildDevicesList(bool fetchDeviceActiveConfigOnly)
 {
   ssize_t devCount;
   ssize_t i;
@@ -129,10 +218,6 @@ bool mdtUsbDeviceList::buildDevicesList(bool fetchDeviceActiveConfigOnly, bool f
     }
     pvDeviceDescriptors.append(device);
   }
-  // Free libusb's list
-  if(freeLibusbListAfterBuild){
-    freeLibusbDeviceList();
-  }
 
   return true;
 }
@@ -143,10 +228,4 @@ void mdtUsbDeviceList::freeLibusbDeviceList()
     libusb_free_device_list(pvLibusDeviceList, 1);
     pvLibusDeviceList = 0;
   }
-}
-
-void mdtUsbDeviceList::clear()
-{
-  pvDeviceDescriptors.clear();
-  freeLibusbDeviceList();
 }

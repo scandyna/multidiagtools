@@ -27,7 +27,7 @@
 
 mdtUsbDeviceDescriptor::mdtUsbDeviceDescriptor()
  :  pvLibusbDevice(0),
-    pvIsEmpty(false)
+    pvIsEmpty(true)
 {
   ::memset(&pvDescriptor, 0, sizeof(pvDescriptor));
 }
@@ -62,6 +62,7 @@ bool mdtUsbDeviceDescriptor::fetchAttributes(libusb_device *device, bool fetchAc
     pvLastError.setSystemError(err, libusb_error_name(err));
     MDT_ERROR_SET_SRC(pvLastError, "mdtUsbDeviceDescriptor");
     pvLastError.commit();
+    clear();
     return false;
   }
   // Try to get serial number
@@ -86,6 +87,7 @@ bool mdtUsbDeviceDescriptor::fetchAttributes(libusb_device *device, bool fetchAc
       pvLastError.setSystemError(err, libusb_error_name(err));
       MDT_ERROR_SET_SRC(pvLastError, "mdtUsbDeviceDescriptor");
       pvLastError.commit();
+      clear();
       return false;
     }
     Q_ASSERT(configDescriptor != 0);
@@ -110,11 +112,33 @@ bool mdtUsbDeviceDescriptor::fetchAttributes(libusb_device *device, bool fetchAc
     pvLastError.setError(QObject::tr("Failed to get any configuration descriptor."), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtUsbDeviceDescriptor");
     pvLastError.commit();
+    clear();
     return false;
   }
   pvIsEmpty = false;
 
   return true;
+}
+
+libusb_device_handle* mdtUsbDeviceDescriptor::open()
+{
+  Q_ASSERT(pvLibusbDevice != 0);
+
+  libusb_device_handle *dev_handle = 0;
+  int err;
+
+  err = libusb_open(pvLibusbDevice, &dev_handle);
+  if(err != 0){
+    pvLastError.setError(QObject::tr("Failed to open device ") + idString(), mdtError::Error);
+    pvLastError.setSystemError(err, libusb_strerror((libusb_error)err));
+    MDT_ERROR_SET_SRC(pvLastError, "mdtUsbDeviceDescriptor");
+    pvLastError.commit();
+    return 0;
+  }
+  // Ok, cleanup and return handle
+  Q_ASSERT(dev_handle != 0);
+
+  return dev_handle;
 }
 
 QString mdtUsbDeviceDescriptor::vendorName() const
@@ -177,6 +201,85 @@ QString mdtUsbDeviceDescriptor::idString() const
   return str;
 }
 
+int mdtUsbDeviceDescriptor::interfacesCount ( uint8_t bInterfaceClass, uint8_t bInterfaceSubClass ) const
+{
+  int n = 0;
+
+  for(auto cfg : pvConfigs){
+    for(auto iface : cfg.interfaces()){
+      n += cfg.interfacesCount(bInterfaceClass, bInterfaceSubClass);
+    }
+  }
+
+  return n;
+}
+
+QList< mdtUsbEndpointDescriptor > mdtUsbDeviceDescriptor::bulkInEndpoints() const
+{
+  QList<mdtUsbEndpointDescriptor> lst;
+
+  for(auto cfg : pvConfigs){
+    for(auto iface : cfg.interfaces()){
+      lst.append(iface.bulkInEndpoints());
+    }
+  }
+
+  return lst;
+}
+
+QList< mdtUsbEndpointDescriptor > mdtUsbDeviceDescriptor::bulkOutEndpoints() const
+{
+  QList<mdtUsbEndpointDescriptor> lst;
+
+  for(auto cfg : pvConfigs){
+    for(auto iface : cfg.interfaces()){
+      lst.append(iface.bulkOutEndpoints());
+    }
+  }
+
+  return lst;
+}
+
+QList< mdtUsbEndpointDescriptor > mdtUsbDeviceDescriptor::interruptInEndpoints() const
+{
+  QList<mdtUsbEndpointDescriptor> lst;
+
+  for(auto cfg : pvConfigs){
+    for(auto iface : cfg.interfaces()){
+      lst.append(iface.interruptInEndpoints());
+    }
+  }
+
+  return lst;
+}
+
+QList< mdtUsbEndpointDescriptor > mdtUsbDeviceDescriptor::interruptOutEndpoints() const
+{
+  QList<mdtUsbEndpointDescriptor> lst;
+
+  for(auto cfg : pvConfigs){
+    for(auto iface : cfg.interfaces()){
+      lst.append(iface.interruptOutEndpoints());
+    }
+  }
+
+  return lst;
+}
+
+mdtUsbInterfaceDescriptor mdtUsbDeviceDescriptor::interface(uint8_t bInterfaceNumber )
+{
+  for(auto cfg : pvConfigs){
+    for(mdtUsbInterfaceDescriptor iface : cfg.interfaces()){
+      if(iface.bInterfaceNumber() == bInterfaceNumber){
+        return iface;
+      }
+    }
+  }
+  return mdtUsbInterfaceDescriptor();
+}
+
+
+
 mdtUsbInterfaceDescriptor mdtUsbDeviceDescriptor::interface(int configIndex, int ifaceIndex)
 {
   if(configIndex < 0){
@@ -226,7 +329,7 @@ mdtUsbEndpointDescriptor mdtUsbDeviceDescriptor::firstBulkOutEndpoint(int config
     endpointDescriptor = interfaceDescriptor.endpoints().at(i);
     ///Q_ASSERT(endpointDescriptor != 0);
     // Check if current endpoint is direction OUT and Bulk transfert
-    if((endpointDescriptor.isDirectionOUT())&&(endpointDescriptor.isTransfertTypeBulk())){
+    if((endpointDescriptor.isDirectionOUT())&&(endpointDescriptor.isTransferTypeBulk())){
       // Here we found a bulk out endpoint. If needed, check if it's a data endpoint
       if(dataEndpointOnly){
         if(endpointDescriptor.isDataEndpoint()){
@@ -256,7 +359,7 @@ mdtUsbEndpointDescriptor mdtUsbDeviceDescriptor::firstBulkInEndpoint(int configI
     endpointDescriptor = interfaceDescriptor.endpoints().at(i);
     ///Q_ASSERT(endpointDescriptor != 0);
     // Check if current endpoint is direction IN and Bulk transfert
-    if((endpointDescriptor.isDirectionIN())&&(endpointDescriptor.isTransfertTypeBulk())){
+    if((endpointDescriptor.isDirectionIN())&&(endpointDescriptor.isTransferTypeBulk())){
       // Here we found a bulk in endpoint. If needed, check if it's a data endpoint
       if(dataEndpointOnly){
         if(endpointDescriptor.isDataEndpoint()){
@@ -286,7 +389,7 @@ mdtUsbEndpointDescriptor mdtUsbDeviceDescriptor::firstInterruptOutEndpoint(int c
     endpointDescriptor = interfaceDescriptor.endpoints().at(i);
     ///Q_ASSERT(endpointDescriptor != 0);
     // Check if current endpoint is direction OUT and Interrupt transfert
-    if((endpointDescriptor.isDirectionOUT())&&(endpointDescriptor.isTransfertTypeInterrupt())){
+    if((endpointDescriptor.isDirectionOUT())&&(endpointDescriptor.isTransferTypeInterrupt())){
       // Here we found a interrupt out endpoint. If needed, chack if it's a data endpoint
       if(dataEndpointOnly){
         if(endpointDescriptor.isDataEndpoint()){
@@ -316,7 +419,7 @@ mdtUsbEndpointDescriptor mdtUsbDeviceDescriptor::firstInterruptInEndpoint(int co
     endpointDescriptor = interfaceDescriptor.endpoints().at(i);
     ///Q_ASSERT(endpointDescriptor != 0);
     // Check if current endpoint is direction IN and Interrupt transfert
-    if((endpointDescriptor.isDirectionIN())&&(endpointDescriptor.isTransfertTypeInterrupt())){
+    if((endpointDescriptor.isDirectionIN())&&(endpointDescriptor.isTransferTypeInterrupt())){
       // Here we found a interrupt in endpoint. If needed, chack if it's a data endpoint
       if(dataEndpointOnly){
         if(endpointDescriptor.isDataEndpoint()){

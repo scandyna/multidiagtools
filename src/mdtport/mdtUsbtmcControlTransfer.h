@@ -39,7 +39,24 @@ class mdtUsbtmcControlTransfer : public mdtUsbControlTransfer
    *
    * \pre bufferSize must be >= 8.
    */
-  mdtUsbtmcControlTransfer(libusb_device_handle *dev_handle, int bufferSize = 1024);
+  mdtUsbtmcControlTransfer(mdtUsbtmcTransferHandler & th, libusb_device_handle *dev_handle, int bufferSize = 1024);
+
+  /*! \brief Setup a clear endpoint halt transfer
+   *
+   * See USBTMC specifications, section 4.1.1 (CLEAR_FEATURE request wValue = ENDPOINT_HALT)
+   *
+   * \param transferHandler This transferHandler will be passed to user_data in libusb_transfer.
+   * \param endpointNumber Endpoint number. \todo Must be number or raw address ?
+   * \param timeout timeout for the transfer in milliseconds.
+   */
+  void setupClearEndpointHalt(uint8_t endpointNumber, unsigned int timeout);
+
+  /*! \brief Get transfer handler
+   */
+  mdtUsbtmcTransferHandler & transferHandler()
+  {
+    return pvTransferHandler;
+  }
 
   // Disable copy
   mdtUsbtmcControlTransfer(const mdtUsbtmcControlTransfer & rhs) = delete;
@@ -47,38 +64,7 @@ class mdtUsbtmcControlTransfer : public mdtUsbControlTransfer
 
  private:
 
-  /*! \brief Fill transfer
-   *
-   * This version is mostly usefull for queries without data,
-   *  or with data sended from device to host.
-   *
-   * For details about USB specific arguments, see USB 3.1 spec, chap. 9.3 .
-   *
-   * \param bmRequestType Request characteristics (direction, type, recipient). Must be set correctly by caller.
-   * \param bRquest Specific request (see USB spec.)
-   * \param wValue See USB spec.
-   * \param wIndex See USB spec.
-   * \param wLength Number of bytes to transfer. Has only sense for direction device-to-host (should be 0 else).
-   * \pre Internal buffer size (witch was given to constructor) must be >= 8 + wLength.
-   */
-  ///void fillTransfer(mdtUsbtmcTransferHandler & th, uint8_t bmRequestType, uint8_t bRquest, uint16_t wValue, uint16_t wIndex, uint16_t wLength, unsigned int timeout);
-
-  /*! \brief Fill transfer
-   *
-   * This version is mostly usefull for queries with data sended from host to device.
-   *
-   * For details about USB specific arguments, see USB 3.1 spec, chap. 9.3 .
-   *
-   * \param bmRequestType Request characteristics (direction, type, recipient). Must be set correctly by caller.
-   * \param bRquest Specific request (see USB spec.)
-   * \param wValue See USB spec.
-   * \param wIndex See USB spec.
-   * \param data Data that will be transferred to the device. Note: will also set wLength regarding data length.
-   * \pre Internal buffer size (witch was given to constructor) must be >= 8 + data length.
-   */
-  ///void fillTransfer(mdtUsbtmcTransferHandler & th, uint8_t bmRequestType, uint8_t bRquest, uint16_t wValue, uint16_t wIndex, const std::vector<unsigned char> & data, unsigned int timeout);
-
-  ///std::vector<unsigned char> pvBuffer;
+  mdtUsbtmcTransferHandler & pvTransferHandler;
 };
 
 #endif // #ifndef MDT_USBTMC_CONTROL_TRANSFER_H

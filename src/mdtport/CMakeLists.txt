@@ -35,6 +35,9 @@ set (HEADER_FILES
           mdtAbstractPortSetupDialog.h
           mdtUsbtmcPortSetupDialog.h
           mdtModbusTcpPortSetupDialog.h
+          
+          # New USBTMC API
+          mdtUsbtmcPort.h
     )
 
 # Liste des fichiers sources
@@ -81,10 +84,12 @@ set (SOURCES_FILES
           mdtUsbDeviceList.cpp
           mdtUsbTransfer.cpp
           mdtUsbControlTransfer.cpp
+          #mdtUsbTransferPool.cpp
           # New USBTMC API
           mdtUsbtmcFrame.cpp
           mdtUsbtmcControlTransfer.cpp
           mdtUsbtmcTransferHandler.cpp
+          mdtUsbtmcPort.cpp
     )
 
 # Liste des fichiers ui

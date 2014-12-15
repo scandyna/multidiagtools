@@ -73,22 +73,22 @@ void mdtUsbEndpointDescriptor::fetchAttributes(libusb_endpoint_descriptor *descr
 }
 */
 
-uint8_t mdtUsbEndpointDescriptor::address()
-{
-  ///return (pvbEndpointAddress & 0x0F);
-  return (pvDescriptor.bEndpointAddress & 0x0F);
-}
+// uint8_t mdtUsbEndpointDescriptor::address()
+// {
+//   ///return (pvbEndpointAddress & 0x0F);
+//   return (pvDescriptor.bEndpointAddress & 0x0F);
+// }
 
-bool mdtUsbEndpointDescriptor::isDirectionIN()
-{
-  ///return (pvbEndpointAddress & 0x80);
-  return (pvDescriptor.bEndpointAddress & 0x80);
-}
+// bool mdtUsbEndpointDescriptor::isDirectionIN()
+// {
+//   ///return (pvbEndpointAddress & 0x80);
+//   return (pvDescriptor.bEndpointAddress & 0x80);
+// }
 
-bool mdtUsbEndpointDescriptor::isDirectionOUT()
-{
-  return !isDirectionIN();
-}
+// bool mdtUsbEndpointDescriptor::isDirectionOUT()
+// {
+//   return !isDirectionIN();
+// }
 
 bool mdtUsbEndpointDescriptor::isTransfertTypeControl()
 {
@@ -102,17 +102,17 @@ bool mdtUsbEndpointDescriptor::isTransfertTypeIsochronus()
   return ((pvDescriptor.bmAttributes & 0x03) == 0x01);
 }
 
-bool mdtUsbEndpointDescriptor::isTransfertTypeBulk()
-{
-  ///return ((pvbmAttributes & 0x03) == 0x02);
-  return ((pvDescriptor.bmAttributes & 0x03) == 0x02);
-}
+// bool mdtUsbEndpointDescriptor::isTransfertTypeBulk()
+// {
+//   ///return ((pvbmAttributes & 0x03) == 0x02);
+//   return ((pvDescriptor.bmAttributes & 0x03) == 0x02);
+// }
 
-bool mdtUsbEndpointDescriptor::isTransfertTypeInterrupt()
-{
-  ///return ((pvbmAttributes & 0x03) == 0x03);
-  return ((pvDescriptor.bmAttributes & 0x03) == 0x03);
-}
+// bool mdtUsbEndpointDescriptor::isTransfertTypeInterrupt()
+// {
+//   ///return ((pvbmAttributes & 0x03) == 0x03);
+//   return ((pvDescriptor.bmAttributes & 0x03) == 0x03);
+// }
 
 bool mdtUsbEndpointDescriptor::isAsynchronous()
 {

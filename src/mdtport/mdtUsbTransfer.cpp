@@ -28,6 +28,9 @@ mdtUsbTransfer::mdtUsbTransfer ( libusb_device_handle* dev_handle, int isoPacket
   Q_ASSERT(dev_handle != 0);
 
   pvTransfer = libusb_alloc_transfer(isoPacketsCount);
+  // Make shure that automatic free are disabled
+  pvTransfer->flags &= (~LIBUSB_TRANSFER_FREE_BUFFER);
+  pvTransfer->flags &= (~LIBUSB_TRANSFER_FREE_TRANSFER);
 }
 
 mdtUsbTransfer::~mdtUsbTransfer()
@@ -35,4 +38,22 @@ mdtUsbTransfer::~mdtUsbTransfer()
   if(pvTransfer != 0){
     libusb_free_transfer(pvTransfer);
   }
+}
+
+bool mdtUsbTransfer::submit()
+{
+  Q_ASSERT(pvTransfer != 0);
+
+  int err;
+
+  err = libusb_submit_transfer(pvTransfer);
+  if(err != 0){
+    pvLastError.setError(QObject::tr("Failed to submit transfer"), mdtError::Error);
+    pvLastError.setSystemError(err, libusb_strerror((libusb_error)err));
+    MDT_ERROR_SET_SRC(pvLastError, "mdtUsbTransfer");
+    pvLastError.commit();
+    return false;
+  }
+
+  return true;
 }

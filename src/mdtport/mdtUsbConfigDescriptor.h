@@ -122,10 +122,14 @@ class mdtUsbConfigDescriptor
 
   /*! \brief Get interface descriptors
    */
-  QList<mdtUsbInterfaceDescriptor> interfaces()
+  QList<mdtUsbInterfaceDescriptor> interfaces() const
   {
     return pvInterfaces;
   }
+
+  /*! \brief Get number of interface that is of given class and sub class
+   */
+  int interfacesCount(uint8_t bInterfaceClass, uint8_t bInterfaceSubClass) const;
 
  private:
 

@@ -58,20 +58,31 @@ class mdtUsbEndpointDescriptor
    */
   ///void fetchAttributes(libusb_endpoint_descriptor *descriptor);
 
-  /*! \brief Endpoint address (number)
+  /*! \brief Endpoint address (bEndpointAddress)
+   */
+  uint8_t address() const{
+    return pvDescriptor.bEndpointAddress;
+  }
+
+  /*! \brief Get endpoint number
    *
-   * Note: this is the decoded address,
-   *   i.e. bits 3..0 extracted from bEndpointAddress
+   * Returns bits 3..0 extracted from bEndpointAddress.
    */
-  uint8_t address();
+  uint8_t number() const{
+    return (pvDescriptor.bEndpointAddress & 0x0F);
+  }
 
   /*! \brief Endpoint direction
    */
-  bool isDirectionIN();
+  bool isDirectionIN() const{
+    return (pvDescriptor.bEndpointAddress & 0x80);
+  }
 
   /*! \brief Endpoint direction
    */
-  bool isDirectionOUT();
+  bool isDirectionOUT() const{
+    return !isDirectionIN();
+  }
 
   /*! \brief Endpoint transfert type
    */
@@ -83,11 +94,15 @@ class mdtUsbEndpointDescriptor
 
   /*! \brief Endpoint transfert type
    */
-  bool isTransfertTypeBulk();
+  bool isTransferTypeBulk() const{
+    return ((pvDescriptor.bmAttributes & 0x03) == 0x02);
+  }
 
   /*! \brief Endpoint transfert type
    */
-  bool isTransfertTypeInterrupt();
+  bool isTransferTypeInterrupt() const{
+    return ((pvDescriptor.bmAttributes & 0x03) == 0x03);
+  }
 
   /*! \brief Endpoint synchronization type
    */

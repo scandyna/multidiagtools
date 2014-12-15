@@ -44,6 +44,12 @@ mdtUsbInterfaceDescriptor::mdtUsbInterfaceDescriptor ( libusb_interface_descript
   }
 }
 
+void mdtUsbInterfaceDescriptor::clear()
+{
+  pvEndpoints.clear();
+  ::memset(&pvDescriptor, 0, sizeof(pvDescriptor));
+}
+
 /**
 mdtUsbInterfaceDescriptor::~mdtUsbInterfaceDescriptor()
 {
@@ -111,3 +117,55 @@ QList<mdtUsbEndpointDescriptor*> &mdtUsbInterfaceDescriptor::endpoints()
   return pvEndpoints;
 }
 */
+
+QList< mdtUsbEndpointDescriptor > mdtUsbInterfaceDescriptor::bulkInEndpoints() const
+{
+  QList<mdtUsbEndpointDescriptor> lst;
+
+  for(auto epd : pvEndpoints){
+    if((epd.isDirectionIN())&&(epd.isTransferTypeBulk())){
+      lst.append(epd);
+    }
+  }
+
+  return lst;
+}
+
+QList< mdtUsbEndpointDescriptor > mdtUsbInterfaceDescriptor::bulkOutEndpoints() const
+{
+  QList<mdtUsbEndpointDescriptor> lst;
+
+  for(auto epd : pvEndpoints){
+    if((epd.isDirectionOUT())&&(epd.isTransferTypeBulk())){
+      lst.append(epd);
+    }
+  }
+
+  return lst;
+}
+
+QList< mdtUsbEndpointDescriptor > mdtUsbInterfaceDescriptor::interruptInEndpoints() const
+{
+  QList<mdtUsbEndpointDescriptor> lst;
+
+  for(auto epd : pvEndpoints){
+    if((epd.isDirectionIN())&&(epd.isTransferTypeInterrupt())){
+      lst.append(epd);
+    }
+  }
+
+  return lst;
+}
+
+QList< mdtUsbEndpointDescriptor > mdtUsbInterfaceDescriptor::interruptOutEndpoints() const
+{
+  QList<mdtUsbEndpointDescriptor> lst;
+
+  for(auto epd : pvEndpoints){
+    if((epd.isDirectionOUT())&&(epd.isTransferTypeInterrupt())){
+      lst.append(epd);
+    }
+  }
+
+  return lst;
+}

@@ -18,39 +18,63 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_USBTMC_TRANSFER_HANDLER_H
-#define MDT_USBTMC_TRANSFER_HANDLER_H
+#ifndef MDT_USBTMC_PORT_H
+#define MDT_USBTMC_PORT_H
 
-#include "mdtUsbTransferPool.h"
-#include <QtGlobal>
+#include "mdtUsbDeviceDescriptor.h"
+#include "mdtUsbInterfaceDescriptor.h"
+#include "mdtError.h"
+#include <QObject>
 #include <libusb-1.0/libusb.h>
 #include <cstdint>
 
-class mdtUsbtmcControlTransfer;
-
-/*! \brief USBTMC transfer handler
+/*! \brief Port to communicate with a USBTMC device
  */
-class mdtUsbtmcTransferHandler
+class mdtUsbtmcPort : public QObject
 {
+ Q_OBJECT
+
  public:
 
   /*! \brief Constructor
    */
-  mdtUsbtmcTransferHandler();
+  mdtUsbtmcPort(QObject *parent = 0);
 
-  /*! \brief Control transfer callback
+  /*! \brief Destructor
    */
-  static void controlTransferCallback(libusb_transfer *transfer);
+  ~mdtUsbtmcPort();
 
-  /*! \brief Handle control transfer complete
+  /*! \brief Open device represented by given descriptor
+   *
+   * \pre deviceDescriptor must not be empty.
    */
-  void handleControlTransferComplete(mdtUsbtmcControlTransfer *transfer);
+  bool openDevice(mdtUsbDeviceDescriptor & deviceDescriptor, uint8_t bInterfaceNumber = 0);
+
+  /*! \brief Close
+   */
+  void close();
+
+  /*! \brief Get last error
+   */
+  mdtError lastError() const
+  {
+    return pvLastError;
+  }
 
  private:
 
-  Q_DISABLE_COPY(mdtUsbtmcTransferHandler);
+  /*! \brief Init libusb context
+   *
+   * \pre must be called only once
+   */
+  bool initLibusbConext();
 
-  mdtUsbTransferPool<mdtUsbtmcControlTransfer> pvControlTransferPool;
+  Q_DISABLE_COPY(mdtUsbtmcPort);
+
+  libusb_context *pvUsbContext;
+  libusb_device_handle *pvDeviceHandle;
+  mdtError pvLastError;
+  mdtUsbInterfaceDescriptor pvInterfaceDescriptor;
 };
 
-#endif  // #ifndef MDT_USBTMC_TRANSFER_HANDLER_H
+#endif // #ifndef MDT_USBTMC_PORT_H

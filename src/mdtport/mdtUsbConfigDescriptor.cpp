@@ -123,6 +123,20 @@ bool mdtUsbConfigDescriptor::supportsRemoteWakeup() const
   return (pvDescriptor.bmAttributes & 0x20);
 }
 
+int mdtUsbConfigDescriptor::interfacesCount ( uint8_t bInterfaceClass, uint8_t bInterfaceSubClass ) const
+{
+  int n = 0;
+
+  for(auto iface : pvInterfaces){
+    if((iface.bInterfaceClass() == bInterfaceClass) && (iface.bInterfaceSubClass() == bInterfaceSubClass)){
+      ++n;
+    }
+  }
+
+  return n;
+}
+
+
 /**
 quint8 mdtUsbConfigDescriptor::bMaxPower() const
 {
