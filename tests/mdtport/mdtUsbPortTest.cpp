@@ -582,28 +582,82 @@ void mdtUsbPortTest::usbtmcControlTransferTest()
   handle = deviceDescriptor.open();
   QVERIFY(handle != 0);
   devList.clear();
+  /**
   QCOMPARE(libusb_set_auto_detach_kernel_driver(handle, 1), 0);
   QCOMPARE(libusb_claim_interface(handle, interface.bInterfaceNumber()), 0);
+  */
 
   /*
    * In this phase, we not send data to device,
    *  but a device handle is required by USBTMC transfer class.
    */
-  mdtUsbtmcTransferHandler th;
+  mdtUsbtmcTransferHandler th(usbCtx);
   mdtUsbtmcControlTransfer transfer(th, handle);
   QVERIFY(transfer.allocOk());
   // Check some flags
   QVERIFY(!(transfer.flags() & LIBUSB_TRANSFER_FREE_BUFFER));
   QVERIFY(!(transfer.flags() & LIBUSB_TRANSFER_FREE_TRANSFER));
-  // Setup .......
+  // Check completed flag
+  QVERIFY(transfer.completedPointer() != 0);
+  QVERIFY(*transfer.completedPointer() == 0);
+  QVERIFY(!transfer.isCompleted());
+  *transfer.completedPointer() = 1;
+  QVERIFY(transfer.isCompleted());
+  *transfer.completedPointer() = 0;
+  QVERIFY(!transfer.isCompleted());
+  transfer.setCompleted();
+  QVERIFY(transfer.isCompleted());
+  QVERIFY(*transfer.completedPointer() == 1);
+  // Check sync flag (can only check default without calling submit() or cancel())
+  QVERIFY(!transfer.isSync());
+  /*
+   * Setup a CLEAR_FEATURE request with wValue = ENDPOINT_HALT for enpoint number 2
+   */
+  transfer.setupClearEndpointHalt(2, 30000);
+  // Check bmRequestType: D7=0(host->dev) , D6..D5=00(Standard) , D4..D0:00010(Endpoint) -> 0000 0010
+  QCOMPARE(transfer.bmRequestType(), (uint8_t)0b00000010);
+  QCOMPARE(transfer.bRequest(), (uint8_t)1);  // 1 (CLEAR_FEATURE)
+  QCOMPARE(transfer.wValue(), (uint16_t)0);   // 0 (Feature: ENDPOINT_HALT)
+  QCOMPARE(transfer.wIndex(), (uint16_t)2);   // 2 (endpoint 2)
+  QCOMPARE(transfer.wLength(), (uint16_t)0);  // 0 (No data)
+  /*
+   * Setup INITIATE_ABORT_BULK_OUT request for endpoint 1, bTag 235
+   */
+  transfer.setupInitiateAbortBulkOut(235, 1, 30000);
+  QCOMPARE(transfer.bmRequestType(), (uint8_t)0xA2);  // Directly given in USBTMC 1.0, table 18
+  QCOMPARE(transfer.bRequest(), (uint8_t)1);          // 1 (INITIATE_ABORT_BULK_OUT)
+  QCOMPARE(transfer.wValue(), (uint16_t)235);         // 235 (bTag)
+  QCOMPARE(transfer.wIndex(), (uint16_t)1);           // 1 (Dir=OUT, endpoint 1)
+  QCOMPARE(transfer.wLength(), (uint16_t)2);          // 2 (Expected data of length 2)
+  /*
+   * Setup CHECK_ABORT_BULK_OUT_STATUS request for endpoint 1
+   */
+  transfer.setupCheckAbortBulkOutStatus(1, 30000);
+  QCOMPARE(transfer.bmRequestType(), (uint8_t)0xA2);  // Directly given in USBTMC 1.0, table 21
+  QCOMPARE(transfer.bRequest(), (uint8_t)2);          // 2 (CHECK_ABORT_BULK_OUT_STATUS)
+  QCOMPARE(transfer.wValue(), (uint16_t)0);           // 0
+  QCOMPARE(transfer.wIndex(), (uint16_t)1);           // 1 (Dir=OUT, endpoint 1)
+  QCOMPARE(transfer.wLength(), (uint16_t)8);          // 2 (Expected data of length 8)
+  /*
+   * Setup INITIATE_ABORT_BULK_IN request for endpoint 2, bTag 246
+   */
+  transfer.setupInitiateAbortBulkOut(246, 2, 30000);
+  QCOMPARE(transfer.bmRequestType(), (uint8_t)0xA2);    // Directly given in USBTMC 1.0, table 18
+  QCOMPARE(transfer.bRequest(), (uint8_t)3);            // 1 (INITIATE_ABORT_BULK_IN)
+  QCOMPARE(transfer.wValue(), (uint16_t)246);           // 246 (bTag)
+  QCOMPARE(transfer.wIndex(), (uint16_t)(0b10000000+2)); // 1 (Dir=IN, endpoint 2)
+  QCOMPARE(transfer.wLength(), (uint16_t)2);            // 2 (Expected data of length 2)
+
   
-  transfer.setupClearEndpointHalt(bulkOutEpd.number(), 30000);
-  QVERIFY(transfer.submit());
   
+  ///QVERIFY(transfer.submit());
+  
+  /**
   ret = libusb_handle_events(usbCtx);
   if(ret != 0){
     qDebug() << "Handle event error: " << ret << " (" << libusb_strerror((libusb_error)ret) << ")";
   }
+  */
   
   
   // Free ressources
@@ -620,7 +674,6 @@ void mdtUsbPortTest::usbtmcTransferPoolTest()
   libusb_context *usbCtx = 0;
   libusb_device_handle *handle;
   mdtUsbDeviceDescriptor deviceDescriptor;
-  mdtUsbtmcTransferHandler th;
   mdtUsbtmcControlTransfer *controlTransfer1, *controlTransfer2, *controlTransfer3;
 
   // Init libusb
@@ -643,6 +696,7 @@ void mdtUsbPortTest::usbtmcTransferPoolTest()
    *  - Guard size: 3
    *  - Alloc 2
    */
+  mdtUsbtmcTransferHandler th(usbCtx);
   mdtUsbTransferPool<mdtUsbtmcControlTransfer> controlTransferPool(3);
   QVERIFY(controlTransferPool.allocTransfers(2, th, handle));
   QCOMPARE(controlTransferPool.pendingTransferCount(), 0);
@@ -721,7 +775,6 @@ void mdtUsbPortTest::usbtmcTransferPoolBenchmark()
   libusb_context *usbCtx = 0;
   libusb_device_handle *handle;
   mdtUsbDeviceDescriptor deviceDescriptor;
-  mdtUsbtmcTransferHandler th;
 
   // Init libusb
   ret = libusb_init(&usbCtx);
@@ -741,6 +794,7 @@ void mdtUsbPortTest::usbtmcTransferPoolBenchmark()
   /*
    * Build a USBTMC control transfer pool.
    */
+  mdtUsbtmcTransferHandler th(usbCtx);
   mdtUsbTransferPool<mdtUsbtmcControlTransfer> controlTransferPool(30);
   QVERIFY(controlTransferPool.allocTransfers(10, th, handle));
   // Bench get/restore
@@ -766,7 +820,6 @@ void mdtUsbPortTest::usbtmcTransferPoolBenchmark()
 
 void mdtUsbPortTest::usbtmcPortThreadTest()
 {
-  mdtUsbtmcTransferHandler th;
   libusb_context *usbCtx = 0;
   mdtUsbDeviceDescriptor deviceDescriptor;
   int ret;
@@ -774,7 +827,7 @@ void mdtUsbPortTest::usbtmcPortThreadTest()
   // Init libusb
   ret = libusb_init(&usbCtx);
   QVERIFY(ret == 0);
-  libusb_set_debug(usbCtx, 2);
+  libusb_set_debug(usbCtx, 255);
 
   // Search USBTMC device
   mdtUsbDeviceList devList(usbCtx);
@@ -786,6 +839,7 @@ void mdtUsbPortTest::usbtmcPortThreadTest()
   QVERIFY(!deviceDescriptor.interface(0).isEmpty());
 
   // Build thread
+  mdtUsbtmcTransferHandler th(usbCtx);
   mdtUsbtmcPortThreadNew thd(th, usbCtx);
   // Check start/stop
   QVERIFY(thd.start(deviceDescriptor, 0));
@@ -797,9 +851,10 @@ void mdtUsbPortTest::usbtmcPortThreadTest()
   // Send some control requests
   qDebug() << "TEST: submit a control transfer ...";
   QVERIFY(th.submitClearBulkOutEndpointHalt(30000));
-  qDebug() << "TEST: submit a control transfer ...";
-  QVERIFY(th.submitClearBulkInEndpointHalt(30000));
+  ///qDebug() << "TEST: submit a control transfer ...";
+  ///QVERIFY(th.submitClearBulkInEndpointHalt(30000));
 
+  usleep(10000);
 
   // Stop..
   thd.stop();

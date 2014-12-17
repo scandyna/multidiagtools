@@ -61,10 +61,40 @@ class mdtUsbtmcControlTransfer : public mdtUsbControlTransfer
    * See USBTMC specifications, section 4.1.1 (CLEAR_FEATURE request wValue = ENDPOINT_HALT)
    *
    * \param transferHandler This transferHandler will be passed to user_data in libusb_transfer.
-   * \param endpointNumber Endpoint number. \todo Must be number or raw address ?
+   * \param endpointNumber Endpoint number.
    * \param timeout timeout for the transfer in milliseconds.
    */
   void setupClearEndpointHalt(uint8_t endpointNumber, unsigned int timeout);
+
+  /*! \brief Setup a INITIATE_ABORT_BULK_OUT transfer
+   *
+   * See USBTMC specifications, section 4.2.1.2
+   *
+   * \param bTag bTag of the bulk out transfer to abort.
+   * \param endpointNumber Endpoint number.
+   * \param timeout timeout for the transfer in milliseconds.
+   */
+  void setupInitiateAbortBulkOut(uint8_t bTag, uint8_t endpointNumber, unsigned int timeout);
+
+  /*! \brief Setup a CHECK_ABORT_BULK_OUT_STATUS transfer
+   *
+   * See USBTMC specifications, section 4.2.1.3
+   *
+   * \param bTag bTag of the bulk out transfer to abort.
+   * \param endpointNumber Endpoint number.
+   * \param timeout timeout for the transfer in milliseconds.
+   */
+  void setupCheckAbortBulkOutStatus(uint8_t endpointNumber, unsigned int timeout);
+
+  /*! \brief Setup a INITIATE_ABORT_BULK_IN transfer
+   *
+   * See USBTMC specifications, section 4.2.1.4
+   *
+   * \param bTag bTag of the bulk out transfer to abort.
+   * \param endpointNumber Endpoint number.
+   * \param timeout timeout for the transfer in milliseconds.
+   */
+  void setupInitiateAbortBulkIn(uint8_t bTag, uint8_t endpointNumber, unsigned int timeout);
 
   /*! \brief Get transfer handler
    */

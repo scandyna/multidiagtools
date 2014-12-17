@@ -41,6 +41,10 @@ class mdtUsbTransfer
    */
   ~mdtUsbTransfer();
 
+  // Disable copy
+  mdtUsbTransfer(const mdtUsbTransfer & rhs) = delete;
+  mdtUsbTransfer & operator=(const mdtUsbTransfer & rhs) = delete;
+
   /*! \brief Check that allocation not failed
    */
   bool allocOk() const
@@ -57,11 +61,11 @@ class mdtUsbTransfer
 
   /*! \brief Submit transfer
    *
-   * Will use libusb_submit_transfer()
+   * Will use libusb_submit_transfer().
    *
    * \pre Internall transfer must be valid ( see allocOk() ).
    */
-  bool submit();
+  bool submit(bool sync = false);
 
   /*! \brief Cancel transfer
    *
@@ -71,7 +75,7 @@ class mdtUsbTransfer
    *
    * \pre Internall transfer must be valid ( see allocOk() ).
    */
-  bool cancel();
+  bool cancel(bool sync = false);
 
   /*! \brief Get transfer status
    *
@@ -90,9 +94,40 @@ class mdtUsbTransfer
     return pvLastError;
   }
 
-  // Disable copy
-  mdtUsbTransfer(const mdtUsbTransfer & rhs) = delete;
-  mdtUsbTransfer & operator=(const mdtUsbTransfer & rhs) = delete;
+  /*! \brief Check if transfer is a synchronous transfer
+   *
+   * This can help transfer callback.
+   *  If this flag is set, all it should have to do is call setCompleted(),
+   *  else. process regarding application.
+   */
+  inline bool isSync() const
+  {
+    return pvIsSync;
+  }
+
+  /*! \brief Access completed flag
+   *
+   * Can be used with libusb_handle_events_completed().
+   */
+  inline int *completedPointer()
+  {
+    return &pvCompleted;
+  }
+
+  /*! \brief Set completed flag
+   */
+  void setCompleted()
+  {
+    pvCompleted = 1;
+    pvIsSync = false;
+  }
+
+  /*! \brief Check completed flag
+   */
+  inline bool isCompleted() const
+  {
+    return (pvCompleted != 0);
+  }
 
  protected:
 
@@ -115,6 +150,8 @@ class mdtUsbTransfer
   libusb_transfer *pvTransfer;
   libusb_device_handle *pvDeviceHandle;
   mdtError pvLastError;
+  int pvCompleted;
+  bool pvIsSync;  // True means synchronous transfer
 };
 
 #endif // MDT_USB_TRANSFER_H

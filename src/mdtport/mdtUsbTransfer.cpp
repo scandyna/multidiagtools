@@ -23,7 +23,9 @@
 
 mdtUsbTransfer::mdtUsbTransfer ( libusb_device_handle* dev_handle, int isoPacketsCount )
  : pvTransfer(0),
-   pvDeviceHandle(dev_handle)
+   pvDeviceHandle(dev_handle),
+   pvCompleted(0),
+   pvIsSync(false)
 {
   Q_ASSERT(dev_handle != 0);
 
@@ -40,12 +42,14 @@ mdtUsbTransfer::~mdtUsbTransfer()
   }
 }
 
-bool mdtUsbTransfer::submit()
+bool mdtUsbTransfer::submit(bool sync)
 {
   Q_ASSERT(pvTransfer != 0);
 
   int err;
 
+  pvIsSync = sync;
+  pvCompleted = false;
   err = libusb_submit_transfer(pvTransfer);
   if(err != 0){
     pvLastError.setError(QObject::tr("Failed to submit transfer"), mdtError::Error);
@@ -58,12 +62,14 @@ bool mdtUsbTransfer::submit()
   return true;
 }
 
-bool mdtUsbTransfer::cancel()
+bool mdtUsbTransfer::cancel(bool sync)
 {
   Q_ASSERT(pvTransfer != 0);
 
   int err;
 
+  pvIsSync = sync;
+  pvCompleted = false;
   err = libusb_cancel_transfer(pvTransfer);
   if((err != 0) && (err != LIBUSB_ERROR_NOT_FOUND)){
     pvLastError.setError(QObject::tr("Failed to submit transfer canecl request"), mdtError::Error);

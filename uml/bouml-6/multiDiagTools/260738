@@ -1,6 +1,6 @@
 format 208
 "newPortApiSandbox" // mdtport::newPortApiSandbox
-  revision 28
+  revision 29
   modified_by 2 "philippe"
   // class settings
   
@@ -534,8 +534,8 @@ ${members}};
 	MysqlColumn
       end
 
-      attribute 1507202 "completed"
-	public explicit_type "int"
+      attribute 1507202 "pvCompleted"
+	private explicit_type "int"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -606,6 +606,21 @@ ${members}};
 	
       end
 
+      operation 2417410 "completedPointer"
+	public explicit_return_type "int"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 2375170 "deviceHandle"
 	protected return_type class_ref 1437186 // libusb_device_handle
 	nparams 0
@@ -646,6 +661,21 @@ ${members}};
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+      end
+
+      operation 2417538 "isCompleted"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 
@@ -1491,7 +1521,6 @@ ${members}};
 	mysql_decl ""
 	MysqlColumn
       end
-
     end
 
     class 1472002 "UsbTransferDoneHandler"

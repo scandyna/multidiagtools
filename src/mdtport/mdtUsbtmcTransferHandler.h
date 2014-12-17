@@ -53,7 +53,7 @@ class mdtUsbtmcTransferHandler
 
   /*! \brief Constructor
    */
-  mdtUsbtmcTransferHandler();
+  mdtUsbtmcTransferHandler(libusb_context *usbContext);
 
   /*! \brief Setup handler
    */
@@ -71,6 +71,13 @@ class mdtUsbtmcTransferHandler
   {
     return submitClearEndpointHalt(pvBulkInDescriptor.number(), timeout);
   }
+
+  /*! \brief Begin to abort a bulk-OUT transfer
+   *
+   * Will submit INITIATE_ABORT_BULK_OUT request
+   *  and return. When complete, continueAbortBulkOutTransfer() will be called.
+   */
+  bool beginAbortBulkOutTransfer();
 
   /*! \brief Submit control transfers cancellation
    */
@@ -90,6 +97,20 @@ class mdtUsbtmcTransferHandler
   /*! \brief Handle control transfer complete
    */
   void handleControlTransferComplete(mdtUsbtmcControlTransfer *transfer);
+
+  /*! \brief Start synchornous events
+   *
+   * It's not possible to start a synchronous transfer from a callback
+   *  (or a function called from a callback).
+   *  If done so, a deadlock will be produced in op_handle_events(),
+   *  and it seems to be the libusb_context::open_devs_lock (true for linux_usbfs.c).
+   *  The callback must return before any call of libusb_handle_events()
+   *  (or variants, all are calling libusb_handle_events_timeout_completed()).
+   *
+   * As workaround, the USBTMC port thread will call current function once
+   *  libusb_handle_events() returns.
+   */
+  void handleSyncEvents();
 
   /*! \brief Check if there are pending transfers
    */
@@ -117,8 +138,23 @@ class mdtUsbtmcTransferHandler
 
  private:
 
+  /*! \brief Begin to abort a bulk-OUT transfer
+   */
+  bool continueAbortBulkOutTransfer();
+
+  /*! \brief Process synchronous control transfer
+   *
+   * Note: must be called only from port thread,
+   *  i.e. from a function that was called by a transfer callback.
+   *
+   * This function handles no lock and no transfer pool,
+   *  caller is responsible of this.
+   */
+  bool processSyncControlTransfer(mdtUsbtmcControlTransfer *transfer);
+
   Q_DISABLE_COPY(mdtUsbtmcTransferHandler);
 
+  libusb_context *pvUsbContext;
   libusb_device_handle *pvDeviceHandle;
   mdtBasicStateMachine<State_t> pvStateMachine;
   // Descriptors

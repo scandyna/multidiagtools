@@ -103,6 +103,41 @@ class mdtUsbControlTransfer : public mdtUsbTransfer
   mdtUsbControlTransfer(const mdtUsbControlTransfer & rhs) = delete;
   mdtUsbControlTransfer & operator=(const mdtUsbControlTransfer & rhs) = delete;
 
+  /*! \brief Get bmRequestType part
+   */
+  uint8_t bmRequestType() const
+  {
+    return pvBuffer[0];
+  }
+
+  /*! \brief Get bRequest part
+   */
+  uint8_t bRequest() const
+  {
+    return pvBuffer[1];
+  }
+
+  /*! \brief Get wValue
+   */
+  uint16_t wValue() const
+  {
+    return (pvBuffer[3] << 8) + pvBuffer[2];
+  }
+
+  /*! \brief Get wIndex
+   */
+  uint16_t wIndex() const
+  {
+    return (pvBuffer[5] << 8) + pvBuffer[4];
+  }
+
+  /*! \brief Get wLength
+   */
+  uint16_t wLength() const
+  {
+    return (pvBuffer[7] << 8) + pvBuffer[6];
+  }
+
   /*! \brief Setup a Clear feature transfer
    *
    * \param transferHandler Application specific transfer handler.
@@ -118,13 +153,11 @@ class mdtUsbControlTransfer : public mdtUsbTransfer
    * \param recipientNumber Index/number of recipient (f.ex. endpoint number if recipient is a endpoint).
    * \param timeout timeout for the transfer in milliseconds.
    */
-  ///template<typename T>
   void setupClearFeature(libusb_transfer_cb_fn callback, RequestRecipient_t recipient, StandardFeatureSelector_t feature, uint16_t recipientNumber, unsigned int timeout)
   {
     Q_ASSERT((int)pvBuffer.capacity() >= 8);
     fillTransfer(callback,
                  static_cast<uint8_t>(recipient), static_cast<uint8_t>(StandardRequestCode_t::CLEAR_FEATURE), static_cast<uint16_t>(feature), recipientNumber, 0,
-                 ///recipient, StandardRequestCode_t::CLEAR_FEATURE, feature, recipientNumber, 0,
                  timeout);
   }
 
@@ -152,7 +185,6 @@ class mdtUsbControlTransfer : public mdtUsbTransfer
    * \param wLength Number of bytes to transfer. Has only sense for direction device-to-host (should be 0 else).
    * \pre Internal buffer size (witch was given to constructor) must be >= 8 + wLength.
    */
-  ///template<typename T>
   void fillTransfer(libusb_transfer_cb_fn callback,
                     uint8_t bmRequestType, uint8_t bRequest, uint16_t wValue, uint16_t wIndex, uint16_t wLength,
                     unsigned int timeout);
@@ -178,7 +210,6 @@ class mdtUsbControlTransfer : public mdtUsbTransfer
    * \param data Data that will be transferred to the device. Note: will also set wLength regarding data length.
    * \pre Internal buffer size (witch was given to constructor) must be >= 8 + data length.
    */
-  ///template<typename T>
   void fillTransfer(libusb_transfer_cb_fn callback,
                     uint8_t bmRequestType, uint8_t bRequest, uint16_t wValue, uint16_t wIndex, const std::vector<unsigned char> & data,
                     unsigned int timeout);
@@ -187,32 +218,5 @@ class mdtUsbControlTransfer : public mdtUsbTransfer
 
   std::vector<unsigned char> pvBuffer;
 };
-
-/**
-template<typename T>
-void mdtUsbControlTransfer::fillTransfer(libusb_transfer_cb_fn callback,
-                                         uint8_t bmRequestType, uint8_t bRequest, uint16_t wValue, uint16_t wIndex, uint16_t wLength,
-                                         unsigned int timeout)
-{
-  Q_ASSERT((int)pvBuffer.capacity() >= (8 + wLength));
-
-  libusb_fill_control_setup(pvBuffer.data(), bmRequestType, bRequest, wValue, wIndex, wLength);
-  libusb_fill_control_transfer(transfer(), deviceHandle(), pvBuffer.data(), callback, static_cast<void*>(this), timeout);
-}
-
-template<typename T>
-void mdtUsbControlTransfer::fillTransfer(libusb_transfer_cb_fn callback,
-                                         uint8_t bmRequestType, uint8_t bRequest, uint16_t wValue, uint16_t wIndex, const std::vector< unsigned char>& data,
-                                         unsigned int timeout )
-{
-  int16_t wLength = data.size();
-
-  Q_ASSERT((int16_t)pvBuffer.capacity() >= (8 + wLength));
-
-  ::memcpy(pvBuffer.data()+8, data.data(), wLength);
-  libusb_fill_control_setup(pvBuffer.data(), bmRequestType, bRequest, wValue, wIndex, wLength);
-  libusb_fill_control_transfer(transfer(), deviceHandle(), pvBuffer.data(), callback, static_cast<void*>(this), timeout);
-}
-*/
 
 #endif // #ifndef MDT_USB_CONTROL_TRANSFER_H

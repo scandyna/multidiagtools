@@ -35,3 +35,29 @@ void mdtUsbtmcControlTransfer::setupClearEndpointHalt(uint8_t endpointNumber, un
                     mdtUsbControlTransfer::RequestRecipient_t::Endpoint, mdtUsbControlTransfer::StandardFeatureSelector_t::ENDPOINT_HALT, endpointNumber,
                     timeout);
 }
+
+void mdtUsbtmcControlTransfer::setupInitiateAbortBulkOut(uint8_t bTag, uint8_t endpointNumber, unsigned int timeout)
+{
+  fillTransfer(pvTransferHandler.controlTransferCallback,
+               0xA2, static_cast<uint8_t>(USBTMCbRequest::INITIATE_ABORT_BULK_OUT), bTag, endpointNumber, 2,
+               timeout);
+}
+
+void mdtUsbtmcControlTransfer::setupCheckAbortBulkOutStatus(uint8_t endpointNumber, unsigned int timeout)
+{
+  fillTransfer(pvTransferHandler.controlTransferCallback,
+               0xA2, static_cast<uint8_t>(USBTMCbRequest::CHECK_ABORT_BULK_OUT_STATUS), 0, endpointNumber, 8,
+               timeout);
+}
+
+void mdtUsbtmcControlTransfer::setupInitiateAbortBulkIn ( uint8_t bTag, uint8_t endpointNumber, unsigned int timeout )
+{
+  fillTransfer(pvTransferHandler.controlTransferCallback,
+               0xA2, static_cast<uint8_t>(USBTMCbRequest::INITIATE_ABORT_BULK_IN), bTag, (0b10000000 | endpointNumber), 2,
+               timeout);
+}
+
+//   void fillTransfer(libusb_transfer_cb_fn callback,
+//                     uint8_t bmRequestType, uint8_t bRequest, uint16_t wValue, uint16_t wIndex, uint16_t wLength,
+//                     unsigned int timeout);
+

@@ -22,11 +22,13 @@
 #include "mdtUsbtmcTransferHandler.h"
 
 #include <QDebug>
+#include <iostream>
 
 mdtUsbtmcPortThreadNew::mdtUsbtmcPortThreadNew ( mdtUsbtmcTransferHandler& th, libusb_context* usbContext, QObject* parent )
  : mdtUsbPortThreadNew (usbContext, parent),
    pvTransferHandler(th)
 {
+  std::cout << "USBTMC main thd: id: " << std::this_thread::get_id() << std::endl;
 }
 
 void mdtUsbtmcPortThreadNew::aboutToClose()
@@ -53,6 +55,8 @@ void mdtUsbtmcPortThreadNew::run()
   libusb_device_handle *handle;
 
   qDebug() << "USBTMC THD: starting ...";
+  std::cout << "USBTMC THD: id: " << std::this_thread::get_id() << std::endl;
+  
   // Open USB device
   if(!openDevice()){
     setCurrentState(State_t::Error);
@@ -87,6 +91,8 @@ void mdtUsbtmcPortThreadNew::run()
       qDebug() << "USBTMC THD: stopping ...";
       break;
     }
+    // Let transfer handler do his synchronous tasks (if any)
+    pvTransferHandler.handleSyncEvents();
   }
   pvTransferHandler.setCurrentState(mdtUsbtmcTransferHandler::State_t::Stopped);
   qDebug() << "USBTMC THD: END ...";

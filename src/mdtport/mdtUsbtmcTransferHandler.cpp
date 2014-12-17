@@ -25,11 +25,15 @@
 #include <QString>
 
 #include <QDebug>
+#include <thread>
+#include <iostream>
 
-mdtUsbtmcTransferHandler::mdtUsbtmcTransferHandler()
- : pvDeviceHandle(0),
+mdtUsbtmcTransferHandler::mdtUsbtmcTransferHandler(libusb_context *usbContext)
+ : pvUsbContext(usbContext),
+   pvDeviceHandle(0),
    pvStateMachine(State_t::Stopped)
 {
+  Q_ASSERT(pvUsbContext != 0);
 }
 
 bool mdtUsbtmcTransferHandler::setup ( libusb_device_handle* handle, const mdtUsbDeviceDescriptor & descriptor, uint8_t bInterfaceNumber )
@@ -109,6 +113,11 @@ bool mdtUsbtmcTransferHandler::submitClearEndpointHalt(uint8_t endpointNumber, u
   return true;
 }
 
+bool mdtUsbtmcTransferHandler::beginAbortBulkOutTransfer()
+{
+
+}
+
 bool mdtUsbtmcTransferHandler::submitControlTransfersCancel()
 {
   /*
@@ -159,6 +168,12 @@ void mdtUsbtmcTransferHandler::handleControlTransferComplete(mdtUsbtmcControlTra
 {
   Q_ASSERT(transfer != 0);
 
+  // For synchronous transfers, we allways set them completed
+  if(transfer->isSync()){
+    transfer->setCompleted();
+    return;
+  }
+  // Check state before acting
   if(currentState() != State_t::Running){
     qDebug() << "No more running, do nothing more ...";
     return;
@@ -166,6 +181,14 @@ void mdtUsbtmcTransferHandler::handleControlTransferComplete(mdtUsbtmcControlTra
   std::lock_guard<std::mutex> lg(pvControlTransferMutex);
   qDebug() << "Control transfer status: " << transfer->status();
   pvControlTransferPool.restoreTransfer(transfer);
+  
+  
+}
+
+void mdtUsbtmcTransferHandler::handleSyncEvents()
+{
+  ///  \todo A supprimer..
+  continueAbortBulkOutTransfer();
 }
 
 bool mdtUsbtmcTransferHandler::hasPendingTransfers() const
@@ -173,4 +196,75 @@ bool mdtUsbtmcTransferHandler::hasPendingTransfers() const
   // Note: we ignore control transfers
   
   return false;
+}
+
+bool mdtUsbtmcTransferHandler::continueAbortBulkOutTransfer()
+{
+  if(currentState() != State_t::Running){
+    return true;
+  }
+  /// \todo Adapter, juste pour un essais..
+  
+  qDebug() << "continueAbortBulkOutTransfer() ...";
+  // Get a transfer from pool
+  ///std::lock_guard<std::mutex> lg(pvControlTransferMutex);
+  ///pvControlTransferMutex.lock();
+  mdtUsbtmcControlTransfer *transfer = pvControlTransferPool.getTransfer(*this);
+  Q_ASSERT(transfer != 0);
+  // Setup transfer and submit it
+  transfer->setupClearEndpointHalt(pvBulkOutDescriptor.number(), 30000);
+  pvControlTransferMutex.unlock();
+  // Process transfer ...
+  processSyncControlTransfer(transfer);
+  // Restore transfer back to pool
+  pvControlTransferMutex.lock();
+  pvControlTransferPool.restoreTransfer(transfer);
+  pvControlTransferMutex.unlock();
+  
+  qDebug() << "continueAbortBulkOutTransfer() DONE";
+}
+
+bool mdtUsbtmcTransferHandler::processSyncControlTransfer(mdtUsbtmcControlTransfer *transfer)
+{
+  Q_ASSERT(transfer != 0);
+
+  int err;
+
+  // Submit transfer in sync mode
+  if(!transfer->submit(true)){
+    pvLastError = transfer->lastError();  /// \todo error MUTEX
+    return false;
+  }
+  // Wait on its completion
+  while(!transfer->isCompleted()){
+    qDebug() << "USB sync wait ...";
+    std::cout << " -> thd: id: " << std::this_thread::get_id() << std::endl;
+    err = libusb_handle_events_completed(pvUsbContext, transfer->completedPointer());
+    qDebug() << "USB sync Event !";
+    if(err < 0){
+      if(err == LIBUSB_ERROR_INTERRUPTED){
+        continue;
+      }
+      // Unhandled error, cancel transfer
+      pvLastError.setError(QObject::tr("USB event handling failed (libusb_handle_events())"), mdtError::Error);
+      pvLastError.setSystemError(err, libusb_strerror((libusb_error)err));
+      MDT_ERROR_SET_SRC(pvLastError, "mdtUsbtmcTransferHandler");
+      pvLastError.commit();
+      // Submit cancel request
+      if(!transfer->cancel(true)){
+        pvLastError = transfer->lastError();  /// \todo error MUTEX
+        return false;
+      }
+      // Wait on cancel completion
+      while(!transfer->isCompleted()){
+        err = libusb_handle_events_completed(pvUsbContext, transfer->completedPointer());
+        if(err < 0){
+          break;
+        }
+      }
+      return false;
+    }
+  }
+
+  return true;
 }
