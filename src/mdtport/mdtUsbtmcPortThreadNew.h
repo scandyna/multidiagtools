@@ -18,51 +18,38 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_USB_PORT_TEST_H
-#define MDT_USB_PORT_TEST_H
+#ifndef MDT_USBTMC_PORT_THREAD_NEW_H
+#define MDT_USBTMC_PORT_THREAD_NEW_H
 
-#include "mdtTest.h"
+#include "mdtUsbPortThreadNew.h"
 
-// Pour les essais ...
-#include <libusb-1.0/libusb.h>
+class mdtUsbtmcTransferHandler;
 
-/// \todo Add start/stop test
-class mdtUsbPortTest : public mdtTest
+/*! \brief USBTMC port thread
+ */
+class mdtUsbtmcPortThreadNew : public mdtUsbPortThreadNew
 {
- Q_OBJECT
+ public:
+
+  /*! \brief Constructor
+   */
+  mdtUsbtmcPortThreadNew(mdtUsbtmcTransferHandler & th, libusb_context *usbContext, QObject *parent = 0);
+
+  // Disable copy
+  mdtUsbtmcPortThreadNew(const mdtUsbtmcPortThreadNew & rhs) = delete;
+  mdtUsbtmcPortThreadNew & operator=(const mdtUsbtmcPortThreadNew & rhs) = delete;
 
  private:
 
-  void fillBuffer(unsigned char *buffer, int bSize);
+  /*! \brief Things to do before closing
+   */
+  void aboutToClose();
 
- private slots:
+  /*! \brief Thread implementation
+   */
+  void run();
 
-  void basicAllocFreeBenchMarks();
-  void basicLockUnlockBenchmark();
-  void standardCallBenchmark();
-  void virtualCallBenchmark();
-
-  // USB part tests
-  void usbEndpointDescriptorTest();
-  void deviceListTest();
-  void usbPortThreadTest();
-
-  // USBTMC part tests
-  void usbtmcFrameTest();
-  void usbtmcFrameBenchmark();
-  void usbtmcControlTransferTest();
-  
-  void usbtmcTransferPoolTest();
-  void usbtmcTransferPoolBenchmark();
-  
-  void usbtmcPortThreadTest();
-
-  // Make some tests with Velleman k8055 board
-  void vellemanK8055Test();
-
-  // Some data exchange test with Agilent DSO1000
-  void agilentDso1000Test();
-
+  mdtUsbtmcTransferHandler & pvTransferHandler;
 };
 
-#endif // MDT_USB_PORT_TEST_H
+#endif // #ifndef MDT_USBTMC_PORT_THREAD_NEW_H

@@ -42,12 +42,14 @@ mdtUsbInterfaceDescriptor::mdtUsbInterfaceDescriptor ( libusb_interface_descript
   for(i = 0; i < pvDescriptor.bNumEndpoints; ++i){
     pvEndpoints.append(mdtUsbEndpointDescriptor(pvDescriptor.endpoint[i]));
   }
+  pvIsEmpty = false;
 }
 
 void mdtUsbInterfaceDescriptor::clear()
 {
   pvEndpoints.clear();
   ::memset(&pvDescriptor, 0, sizeof(pvDescriptor));
+  pvIsEmpty = true;
 }
 
 /**

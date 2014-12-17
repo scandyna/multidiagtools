@@ -63,6 +63,16 @@ class mdtUsbTransfer
    */
   bool submit();
 
+  /*! \brief Cancel transfer
+   *
+   * Will use libusb_cancel_transfer().
+   *  Note: this function returns directly after cancel was submitted
+   *        (exactly as libusb_cancel_transfer() does).
+   *
+   * \pre Internall transfer must be valid ( see allocOk() ).
+   */
+  bool cancel();
+
   /*! \brief Get transfer status
    *
    * \pre Internall transfer must be valid ( see allocOk() ).

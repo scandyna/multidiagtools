@@ -54,7 +54,7 @@ QList< mdtUsbDeviceDescriptor > mdtUsbDeviceList::deviceList ( uint8_t bDeviceCl
 {
   QList<mdtUsbDeviceDescriptor> lst;
 
-  for(auto device : pvDeviceDescriptors){
+  for(auto & device : pvDeviceDescriptors){
     if( (device.bDeviceClass() == bDeviceClass) && (device.bDeviceSubClass() == bDeviceSubClass) && (device.bDeviceProtocol() == bDeviceProtocol) ){
       lst.append(device);
     }
@@ -69,7 +69,7 @@ QList<mdtUsbDeviceDescriptor> mdtUsbDeviceList::usbtmcDeviceList() const
   QList<mdtUsbDeviceDescriptor> lst;
 
   devices = deviceList(0x00, 0x00, 0x00);
-  for(auto device : devices){
+  for(auto & device : devices){
     if(device.interfacesCount(0xFE, 0x03) > 0){
       lst.append(device);
     }

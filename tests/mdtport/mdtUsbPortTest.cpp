@@ -37,11 +37,15 @@
 #include "mdtUsbTransferPool.h"
 #include "mdtUsbtmcFrame.h"
 #include "mdtUsbtmcPort.h"
+#include "mdtUsbPortThreadNew.h"
 #include "mdtUsbtmcControlTransfer.h"
 #include "mdtUsbtmcTransferHandler.h"
+#include "mdtUsbtmcPortThreadNew.h"
 
 #include <QByteArray>
 #include <mutex>
+
+#include <unistd.h> ///  \todo remove
 
 #include <QDebug>
 
@@ -165,26 +169,76 @@ void mdtUsbPortTest::usbEndpointDescriptorTest()
 void mdtUsbPortTest::deviceListTest()
 {
   libusb_context *usbCtx = 0;
+  mdtUsbDeviceDescriptor deviceDescriptor1, deviceDescriptor2;
+  mdtUsbInterfaceDescriptor interfaceDescriptor;
   int ret;
 
   // Init lubusb
   ret = libusb_init(&usbCtx);
   QVERIFY(ret == 0);
 
+  // Check descriptors initial state
+  QVERIFY(deviceDescriptor1.isEmpty());
+  QVERIFY(deviceDescriptor2.isEmpty());
+  QVERIFY(interfaceDescriptor.isEmpty());
+
+  // Enumerate attached USB devices
   mdtUsbDeviceList devList(usbCtx);
   QVERIFY(devList.scan());
-  
-  libusb_device_handle *handle = 0;
-  ///handle = devList.openDevice(0x0957, 0x4d18, "MY51040034");
-  ///handle = devList.openDevice(0x046d, 0xc512);
-  
-  // Free ressources
-  if(handle != 0){
-    libusb_close(handle);
+  if(devList.deviceList().isEmpty()){
+    QSKIP("Found no USB devices.", SkipAll);
   }
+  deviceDescriptor1 = devList.deviceList().at(0);
+  QVERIFY(!deviceDescriptor1.isEmpty());
+  QVERIFY(deviceDescriptor2.isEmpty());
+  // Check copy of device descriptor
+  deviceDescriptor2 = deviceDescriptor1;
+  QVERIFY(!deviceDescriptor2.isEmpty());
+  // Hope we have 1 interface in this device
+  interfaceDescriptor = deviceDescriptor1.interface(0);
+  QVERIFY(!interfaceDescriptor.isEmpty());
+  // Check that copy has also interface
+  interfaceDescriptor = deviceDescriptor2.interface(0);
+  QVERIFY(!interfaceDescriptor.isEmpty());
+
+  // Free libusb
   libusb_exit(usbCtx);
-  
-  QSKIP("Not implemented yet", SkipAll);
+
+  QSKIP("Not completly implemented yet", SkipAll);
+}
+
+void mdtUsbPortTest::usbPortThreadTest()
+{
+  libusb_context *usbCtx = 0;
+  mdtUsbDeviceDescriptor deviceDescriptor;
+  int ret;
+
+  // Init libusb
+  ret = libusb_init(&usbCtx);
+  QVERIFY(ret == 0);
+  libusb_set_debug(usbCtx, 2);
+
+  // Search USBTMC device
+  mdtUsbDeviceList devList(usbCtx);
+  QVERIFY(devList.scan());
+  deviceDescriptor = devList.findFirstUsbtmcDevice();
+  if(deviceDescriptor.isEmpty()){
+    QSKIP("Found no USBTMC device attached", SkipAll);
+  }
+
+  // Build thread
+  mdtUsbPortThreadNew thd(usbCtx);
+  // Check start/stop
+  QVERIFY(thd.start(deviceDescriptor, 0));
+  thd.stop();
+  QVERIFY(!thd.start(deviceDescriptor, 50));
+  QVERIFY(thd.start(deviceDescriptor, 0));
+  devList.clear();
+  // Stop..
+  thd.stop();
+
+  // Free libusb
+  libusb_exit(usbCtx);
 }
 
 
@@ -567,6 +621,7 @@ void mdtUsbPortTest::usbtmcTransferPoolTest()
   libusb_device_handle *handle;
   mdtUsbDeviceDescriptor deviceDescriptor;
   mdtUsbtmcTransferHandler th;
+  mdtUsbtmcControlTransfer *controlTransfer1, *controlTransfer2, *controlTransfer3;
 
   // Init libusb
   ret = libusb_init(&usbCtx);
@@ -590,22 +645,67 @@ void mdtUsbPortTest::usbtmcTransferPoolTest()
    */
   mdtUsbTransferPool<mdtUsbtmcControlTransfer> controlTransferPool(3);
   QVERIFY(controlTransferPool.allocTransfers(2, th, handle));
-  // Get 2 transfers
-  mdtUsbtmcControlTransfer *controlTransfer1, *controlTransfer2, *controlTransfer3;
+  QCOMPARE(controlTransferPool.pendingTransferCount(), 0);
+  // Get 1. transfer
   controlTransfer1 = controlTransferPool.getTransfer(th);
-  controlTransfer2 = controlTransferPool.getTransfer(th);
   QVERIFY(controlTransfer1 != 0);
+  QCOMPARE(controlTransferPool.pendingTransferCount(), 1);
+  QVERIFY(controlTransferPool.getPendingTransfer() == controlTransfer1);
+  QCOMPARE(controlTransferPool.pendingTransferCount(), 1);
+  // Get 2. transfer
+  controlTransfer2 = controlTransferPool.getTransfer(th);
   QVERIFY(controlTransfer2 != 0);
+  QCOMPARE(controlTransferPool.pendingTransferCount(), 2);
+  QVERIFY(controlTransferPool.getPendingTransfer() == controlTransfer2);
+  QCOMPARE(controlTransferPool.pendingTransferCount(), 2);
   // Get 1 more transfer (must be allocated)
   controlTransfer3 = controlTransferPool.getTransfer(th);
   QVERIFY(controlTransfer3 != 0);
+  QCOMPARE(controlTransferPool.pendingTransferCount(), 3);
+  QVERIFY(controlTransferPool.getPendingTransfer() == controlTransfer3);
+  QCOMPARE(controlTransferPool.pendingTransferCount(), 3);
   // The 2 following lines must fail (uncomment to try..)
   //mdtUsbtmcControlTransfer *controlTransfer4 = controlTransferPool.getTransfer(th);
   //controlTransferPool.restoreTransfer(controlTransfer4);
   // Restore transfers
+  QCOMPARE(controlTransferPool.pendingTransferCount(), 3);
   controlTransferPool.restoreTransfer(controlTransfer1);
+  QCOMPARE(controlTransferPool.pendingTransferCount(), 2);
   controlTransferPool.restoreTransfer(controlTransfer2);
+  QCOMPARE(controlTransferPool.pendingTransferCount(), 1);
   controlTransferPool.restoreTransfer(controlTransfer3);
+  QCOMPARE(controlTransferPool.pendingTransferCount(), 0);
+  // Clear - must not fail - Ideal case, we restored all transfers
+  controlTransferPool.clear();
+  /*
+   * Re-alloc pool and check that clear restores pending transfers
+   */
+  QVERIFY(controlTransferPool.allocTransfers(2, th, handle));
+  QCOMPARE(controlTransferPool.pendingTransferCount(), 0);
+  // Get 1. transfer
+  controlTransfer1 = controlTransferPool.getTransfer(th);
+  QVERIFY(controlTransfer1 != 0);
+  QCOMPARE(controlTransferPool.pendingTransferCount(), 1);
+  // Get 2. transfer
+  controlTransfer2 = controlTransferPool.getTransfer(th);
+  QVERIFY(controlTransfer2 != 0);
+  QCOMPARE(controlTransferPool.pendingTransferCount(), 2);
+  // Get 1 more transfer (must be allocated)
+  controlTransfer3 = controlTransferPool.getTransfer(th);
+  QVERIFY(controlTransfer3 != 0);
+  QCOMPARE(controlTransferPool.pendingTransferCount(), 3);
+  // Restor only 1 transfer
+  controlTransferPool.restoreTransfer(controlTransfer1);
+  QCOMPARE(controlTransferPool.pendingTransferCount(), 2);
+  // Clear - must not fail
+  controlTransferPool.clear();
+
+  
+  /*
+   * Build a pool for pending control transfers
+   *  - Guard size: 3
+   *  - Alloc: 0
+   */
 
   // Free ressources
   if(handle != 0){
@@ -664,9 +764,48 @@ void mdtUsbPortTest::usbtmcTransferPoolBenchmark()
   libusb_exit(usbCtx);
 }
 
-/*
- * Tests
- */
+void mdtUsbPortTest::usbtmcPortThreadTest()
+{
+  mdtUsbtmcTransferHandler th;
+  libusb_context *usbCtx = 0;
+  mdtUsbDeviceDescriptor deviceDescriptor;
+  int ret;
+
+  // Init libusb
+  ret = libusb_init(&usbCtx);
+  QVERIFY(ret == 0);
+  libusb_set_debug(usbCtx, 2);
+
+  // Search USBTMC device
+  mdtUsbDeviceList devList(usbCtx);
+  QVERIFY(devList.scan());
+  deviceDescriptor = devList.findFirstUsbtmcDevice();
+  if(deviceDescriptor.isEmpty()){
+    QSKIP("Found no USBTMC device attached", SkipAll);
+  }
+  QVERIFY(!deviceDescriptor.interface(0).isEmpty());
+
+  // Build thread
+  mdtUsbtmcPortThreadNew thd(th, usbCtx);
+  // Check start/stop
+  QVERIFY(thd.start(deviceDescriptor, 0));
+  thd.stop();
+  QVERIFY(!thd.start(deviceDescriptor, 50));
+  QVERIFY(thd.start(deviceDescriptor, 0));
+  devList.clear();
+
+  // Send some control requests
+  qDebug() << "TEST: submit a control transfer ...";
+  QVERIFY(th.submitClearBulkOutEndpointHalt(30000));
+  qDebug() << "TEST: submit a control transfer ...";
+  QVERIFY(th.submitClearBulkInEndpointHalt(30000));
+
+
+  // Stop..
+  thd.stop();
+  // Free libusb
+  libusb_exit(usbCtx);
+}
 
 void mdtUsbPortTest::vellemanK8055Test()
 {

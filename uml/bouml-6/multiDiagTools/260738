@@ -1,6 +1,6 @@
 format 208
 "newPortApiSandbox" // mdtport::newPortApiSandbox
-  revision 25
+  revision 28
   modified_by 2 "philippe"
   // class settings
   
@@ -735,7 +735,6 @@ ${inlines}
 	
 	
       end
-
     end
 
     class 1437058 "libusb_transfer"
@@ -1041,18 +1040,6 @@ ${members}};
 	
       end
 
-      attribute 1500290 "pvMutex"
-	private explicit_type "std::mutex"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
       operation 2353026 "restoreTransfer"
 	public explicit_return_type "void"
 	nparams 1
@@ -1183,8 +1170,13 @@ ${inlines}
       end
     end
 
+    classdiagram 1332098 "UsbPortThread"
+      classdiagramsettings member_max_width 0 end
+      size A3-Landscape
+    end
+
     class 1471874 "UsbPortThread"
-      visibility package stereotype "template"
+      abstract visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
 ${members}};
@@ -1205,10 +1197,110 @@ ${members}};
       explicit_switch_type ""
       mysql_decl ""
       
-      operation 2343554 "setTransferHandler"
+      classrelation 1886978 // <generalisation>
+	relation 1871106 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1886978 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+
+      operation 2401922 "UsbPortThread"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "ctx" explicit_type "libusb_context"
+	  param in name "parent" type class_ref 138626 // QObject
+	    defaultvalue "0"
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2402050 "~UsbPortThread"
+	abstract cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	
+	
+	
+	
+      end
+
+      operation 2402434 "start"
+	public explicit_return_type "bool"
+	nparams 2
+	  param in name "deviceDescriptor" type class_ref 478466 // mdtUsbDeviceDescriptor
+	  param in name "bInterfaceNumber" explicit_type "uint8"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2408962 "stop"
 	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2410242 "lastError"
+	public return_type class_ref 182402 // mdtError
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2409090 "threadStateChanged"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2409602 "setCurrentState"
+	protected explicit_return_type "void"
 	nparams 1
-	  param in name "th" explicit_type "T"
+	  param in name "s" explicit_type "State_t"
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -1221,23 +1313,185 @@ ${members}};
 	
       end
 
-      classrelation 1831810 // pvTransferHandler (<unidirectional association>)
-	relation 1815938 --->
-	  a role_name "pvTransferHandler" multiplicity "1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+      operation 2409730 "currentState"
+	protected explicit_return_type "State_t"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
-	    classrelation_ref 1831810 // pvTransferHandler (<unidirectional association>)
-	  b parent class_ref 1471746 // UsbTransferHandler
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
 
-      classrelation 1838978 // <unidirectional association>
-	relation 1823106 --->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+      operation 2410882 "usbContext"
+	protected explicit_return_type "libusb_context"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
-	    classrelation_ref 1838978 // <unidirectional association>
-	  b parent class_ref 1478914 // mdtUsbtmcTransferHandler
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
+
+      operation 2410114 "openDevice"
+	protected explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2410370 "aboutToClose"
+	abstract cpp_virtual protected explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 2409986 "run"
+	abstract force_body_gen cpp_virtual protected explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 2409218 "onThreadStateChanged"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 1548674 "pvThread"
+	private explicit_type "std::thread"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1548802 "pvStateMachine"
+	private type class_ref 1220866 // mdtBasicStateMachine
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1548930 "pvUsbContext"
+	private explicit_type "libusb_context"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1549058 "pvDeviceHandle"
+	private type class_ref 1437186 // libusb_device_handle
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1549186 "pvDeviceDescriptor"
+	private type class_ref 478466 // mdtUsbDeviceDescriptor
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1549314 "pvbInterfaceNumber"
+	private explicit_type "uint8"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1548546 "pvLastError"
+	private type class_ref 182402 // mdtError
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1549570 "pvLastErrorMutex"
+	private explicit_type "std::mutex"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
     end
 
     class 1472002 "UsbTransferDoneHandler"
@@ -1345,15 +1599,6 @@ ${inlines}
 	  b parent class_ref 1478914 // mdtUsbtmcTransferHandler
       end
 
-      classrelation 1839234 // pvThread (<directional composition>)
-	relation 1823362 *-->
-	  a role_name "pvThread" multiplicity "1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 1839234 // pvThread (<directional composition>)
-	  b parent class_ref 1471874 // UsbPortThread
-      end
-
       operation 2352514 "sendCommand"
 	public explicit_return_type ""
 	nparams 0
@@ -1382,6 +1627,35 @@ ${inlines}
 	
 	
 	
+      end
+
+      attribute 1541890 "pvUsbContext"
+	private explicit_type "libusb_context"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 1894018 // <generalisation>
+	relation 1878018 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1894018 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+
+      classrelation 1894274 // <directional composition>
+	relation 1878274 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 1894274 // <directional composition>
+	  b parent class_ref 1444994 // UsbtmcPortThread
       end
     end
 
@@ -1412,7 +1686,7 @@ ${inlines}
       end
     end
 
-    class 1444994 "UsbtmcThread"
+    class 1444994 "UsbtmcPortThread"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -1426,6 +1700,25 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+      operation 2410754 "UsbtmcPortThread"
+	public explicit_return_type ""
+	nparams 3
+	  param in name "th" type class_ref 1478914 // mdtUsbtmcTransferHandler
+	  param in name "ctx" explicit_type "libusb_context"
+	  param in name "parent" type class_ref 138626 // QObject
+	    defaultvalue "0"
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 2321666 "getDeviceList"
 	public explicit_return_type ""
 	nparams 0
@@ -1516,18 +1809,6 @@ ${inlines}
 	
       end
 
-      attribute 1467266 "State"
-	private explicit_type ""
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
       operation 2322306 "waitTransactionDone"
 	public explicit_return_type ""
 	nparams 0
@@ -1558,39 +1839,56 @@ ${inlines}
 	
       end
 
-      operation 2329474 "start"
-	public explicit_return_type ""
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 2329602 "stop"
-	public explicit_return_type ""
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
       operation 2337026 "transactionDone"
 	stereotype "slot"
 	public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 1894146 // <generalisation>
+	relation 1878146 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1894146 // <generalisation>
+	  b parent class_ref 1471874 // UsbPortThread
+      end
+
+      classrelation 1894402 // pvTransferHandler (<unidirectional association>)
+	relation 1878402 --->
+	  a role_name "pvTransferHandler" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1894402 // pvTransferHandler (<unidirectional association>)
+	  b parent class_ref 1478914 // mdtUsbtmcTransferHandler
+      end
+
+      operation 2410498 "aboutToClose"
+	cpp_virtual private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2410626 "run"
+	force_body_gen cpp_virtual private explicit_return_type "void"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -2011,6 +2309,39 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+      operation 2402178 "setup"
+	public explicit_return_type "bool"
+	nparams 3
+	  param in name "handle" type class_ref 1437186 // libusb_device_handle
+	  param in name "descriptor" type class_ref 478466 // mdtUsbDeviceDescriptor
+	  param in name "bInterfaceNumber" explicit_type "uint8"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2402306 "closeEvent"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 2352002 "sendCommand"
 	public explicit_return_type ""
 	nparams 0
@@ -2226,6 +2557,30 @@ ${inlines}
 "
 	    classrelation_ref 1846914 // pvInterruptTransferPool (<directional composition>)
 	  b parent class_ref 1465090 // mdtUsbTransferPool
+      end
+
+      attribute 1541762 "pvLastError"
+	private type class_ref 182402 // mdtError
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1542018 "pvControlTransferMutex"
+	private explicit_type "mutex"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
     end
 

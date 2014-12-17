@@ -33,6 +33,21 @@ class mdtUsbtmcControlTransfer : public mdtUsbControlTransfer
 {
  public:
 
+  /*! \brief USBTMC bRequest
+   *
+   * See Table 15 in USBTMC 1.0 specifications, section 4.2.1.
+   */
+  enum class USBTMCbRequest : uint8_t
+  {
+    None = 0,                         /*!< Marked as reserved in specification, but... */
+    INITIATE_ABORT_BULK_OUT = 1,      /*!< Abort a Bulk-OUT transfer. */
+    CHECK_ABORT_BULK_OUT_STATUS = 2,  /*!< Returns the status of the previously sent INITIATE_ABORT_BULK_OUT request. */
+    INITIATE_ABORT_BULK_IN = 3,       /*!< Abort a Bulk-IN transfer. */
+    CHECK_ABORT_BULK_IN_STATUS = 4,   /*!< Returns the status of the previously sent INITIATE_ABORT_BULK_IN request. */
+
+    Other = 3       /*!< Other recipient */
+  };
+
   /*! \brief Constructor
    *
    * \todo Fix a realistic bufferSize

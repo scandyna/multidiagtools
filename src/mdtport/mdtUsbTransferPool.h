@@ -27,6 +27,37 @@
 #include <libusb-1.0/libusb.h>
 
 /*! \brief Storage of USB transfers
+ *
+ * This class handles 2 transfer queues:
+ *  - Pool: available transfers to initiate I/O requests
+ *  - Pending: transfers that where submitted
+ *
+ * To get a transfer, use getTransfer(). This will directly
+ *  put returned transfer to pending queue.
+ *
+ * Because submitting a transfer, and cancelling the same transfer,
+ *  can be done in concurrent way, a lock should be used to prevent this.
+ *
+ *  For example, submitting could be something like:
+ *   1) Lock mutex
+ *   2) transfer = getTransfer(); // Transfer will immediatly be available in pending queue.
+ *   3) Fill transfer
+ *   4) Submit transfer
+ *   5) Unlock mutex
+ *
+ * Cancel function could be like:
+ *   1) Lock mutex
+ *   2) transfer = getPendingTransfer();
+ *   3) Cancel transfer (submition only, libusb_cancel_transfer() will return before completion)
+ *   4) Unlock mutex
+ *
+ * Finally, the transfer callback could be like:
+ *   1) Lock mutex
+ *   2) restoreTransfer()
+ *   3) Unlock mutex
+ *   4) If required, submit a new transfer (whenn the mutex is unlocked!)
+ *
+ * Because several tasks must be done in a atomic way, it was chosen to not put any lock in this class.
  */
 template<typename T>
 class mdtUsbTransferPool
@@ -60,10 +91,12 @@ class mdtUsbTransferPool
    */
   void clear()
   {
+    restorePendingTransfers();
     Q_ASSERT(pvTransfers.size() == pvAllocatedTransfers);
     for(T *transfer : pvTransfers){
       delete transfer;
     }
+    pvAllocatedTransfers = 0;
     pvTransfers.clear();
     pvDeviceHandle = 0;
   }
@@ -102,9 +135,11 @@ class mdtUsbTransferPool
     return true;
   }
 
-  /*! \brief Get a transfer
+  /*! \brief Get a transfer from pool
    *
    * Will create a new transfer if pool is empty.
+   *
+   * The transfer is also filed into pending queue.
    *
    * \return A valid pointer to transfer (or 0 on memory allocation failure)
    */
@@ -115,18 +150,23 @@ class mdtUsbTransferPool
 
     T *transfer;
 
+    // Allocate a new transfer if required and permitted
     if(pvTransfers.empty()){
       Q_ASSERT(pvAllocatedTransfers < pvMaxTransfers);
       if(pvAllocatedTransfers < pvMaxTransfers){
         ++pvAllocatedTransfers;
-        return new T(th, pvDeviceHandle);
+        transfer = new T(th, pvDeviceHandle);
+        pvPendingTransfers.push_back(transfer);
+        return transfer;
       }else{
         return 0;
       }
     }
+    // Have in pool, get one
     transfer = pvTransfers.back();
     Q_ASSERT(transfer != 0);
     pvTransfers.pop_back();
+    pvPendingTransfers.push_back(transfer);
 
     return transfer;
   }
@@ -136,8 +176,43 @@ class mdtUsbTransferPool
   void restoreTransfer(T *transfer)
   {
     Q_ASSERT(transfer != 0);
-    Q_ASSERT(std::find(pvTransfers.begin(), pvTransfers.end(), transfer) == pvTransfers.end());
+    // Restore to pool
+    Q_ASSERT(std::find(pvTransfers.begin(), pvTransfers.end(), transfer) == pvTransfers.end()); // Check that pool not allready contains transfer
     pvTransfers.push_back(transfer);
+    // Remove from pending queue
+    auto it = std::find(pvPendingTransfers.begin(), pvPendingTransfers.end(), transfer);
+    Q_ASSERT(it != pvPendingTransfers.end()); // transfer must exist in pending queue
+    pvPendingTransfers.erase(it);
+  }
+
+  /*! \brief Get number of pending transfers
+   */
+  int pendingTransferCount() const{
+    return pvPendingTransfers.size();
+  }
+
+  /*! \brief Get a pending transfer
+   *
+   * Will return 0 if no transfer is pending.
+   *  This function will simply return the last
+   *  transfer in pending queue, and not remove it.
+   *  Removal from pending queue is done by restoreTransfer()
+   *  or restorePendingTransfers().
+   */
+  T *getPendingTransfer(){
+    if(pvPendingTransfers.empty()){
+      return 0;
+    }
+    return pvPendingTransfers.back();
+  }
+
+  /*! \brief Restore pending transfers to pool
+   */
+  void restorePendingTransfers(){
+    for(T *transfer : pvPendingTransfers){
+      pvTransfers.push_back(transfer);
+    }
+    pvPendingTransfers.clear();
   }
 
  private:
@@ -145,6 +220,7 @@ class mdtUsbTransferPool
   Q_DISABLE_COPY(mdtUsbTransferPool);
 
   std::vector<T*> pvTransfers;
+  std::vector<T*> pvPendingTransfers;
   libusb_device_handle *pvDeviceHandle;
   unsigned int pvMaxTransfers;
   unsigned int pvAllocatedTransfers;

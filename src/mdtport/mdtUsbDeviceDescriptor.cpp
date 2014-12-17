@@ -266,10 +266,10 @@ QList< mdtUsbEndpointDescriptor > mdtUsbDeviceDescriptor::interruptOutEndpoints(
   return lst;
 }
 
-mdtUsbInterfaceDescriptor mdtUsbDeviceDescriptor::interface(uint8_t bInterfaceNumber )
+mdtUsbInterfaceDescriptor mdtUsbDeviceDescriptor::interface(uint8_t bInterfaceNumber) const
 {
-  for(auto cfg : pvConfigs){
-    for(mdtUsbInterfaceDescriptor iface : cfg.interfaces()){
+  for(auto & cfg : pvConfigs){
+    for(mdtUsbInterfaceDescriptor & iface : cfg.interfaces()){
       if(iface.bInterfaceNumber() == bInterfaceNumber){
         return iface;
       }

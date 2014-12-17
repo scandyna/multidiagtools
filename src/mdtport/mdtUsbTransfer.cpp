@@ -57,3 +57,21 @@ bool mdtUsbTransfer::submit()
 
   return true;
 }
+
+bool mdtUsbTransfer::cancel()
+{
+  Q_ASSERT(pvTransfer != 0);
+
+  int err;
+
+  err = libusb_cancel_transfer(pvTransfer);
+  if((err != 0) && (err != LIBUSB_ERROR_NOT_FOUND)){
+    pvLastError.setError(QObject::tr("Failed to submit transfer canecl request"), mdtError::Error);
+    pvLastError.setSystemError(err, libusb_strerror((libusb_error)err));
+    MDT_ERROR_SET_SRC(pvLastError, "mdtUsbTransfer");
+    pvLastError.commit();
+    return false;
+  }
+
+  return true;
+}

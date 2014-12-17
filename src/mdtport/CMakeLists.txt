@@ -36,7 +36,8 @@ set (HEADER_FILES
           mdtUsbtmcPortSetupDialog.h
           mdtModbusTcpPortSetupDialog.h
           
-          # New USBTMC API
+          # New USB/USBTMC API
+          mdtUsbPortThreadNew.h
           mdtUsbtmcPort.h
     )
 
@@ -84,11 +85,13 @@ set (SOURCES_FILES
           mdtUsbDeviceList.cpp
           mdtUsbTransfer.cpp
           mdtUsbControlTransfer.cpp
+          mdtUsbPortThreadNew.cpp
           #mdtUsbTransferPool.cpp
           # New USBTMC API
           mdtUsbtmcFrame.cpp
           mdtUsbtmcControlTransfer.cpp
           mdtUsbtmcTransferHandler.cpp
+          mdtUsbtmcPortThreadNew.cpp
           mdtUsbtmcPort.cpp
     )
 

@@ -247,7 +247,7 @@ class mdtUsbDeviceDescriptor
 
   /*! \brief Get a interface descriptor by bInterfaceNumber
    */
-  mdtUsbInterfaceDescriptor interface(uint8_t bInterfaceNumber);
+  mdtUsbInterfaceDescriptor interface(uint8_t bInterfaceNumber) const;
 
   
   
