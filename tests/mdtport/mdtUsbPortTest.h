@@ -50,6 +50,10 @@ class mdtUsbPortTest : public mdtTest
   // USBTMC part tests
   void usbtmcFrameTest();
   void usbtmcFrameBenchmark();
+  void usbtmcMessageTest();
+  void usbtmcMessageBenchmark();
+  void usbtmcBulkTransferTest();
+  
   void usbtmcControlTransferTest();
   
   void usbtmcTransferPoolTest();

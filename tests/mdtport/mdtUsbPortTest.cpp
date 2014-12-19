@@ -36,14 +36,17 @@
 #include "mdtUsbDeviceList.h"
 #include "mdtUsbTransferPool.h"
 #include "mdtUsbtmcFrame.h"
+#include "mdtUsbtmcMessage.h"
 #include "mdtUsbtmcPort.h"
 #include "mdtUsbPortThreadNew.h"
+#include "mdtUsbtmcBulkTransfer.h"
 #include "mdtUsbtmcControlTransfer.h"
 #include "mdtUsbtmcTransferHandler.h"
 #include "mdtUsbtmcPortThreadNew.h"
 
 #include <QByteArray>
 #include <mutex>
+#include <cstring>
 
 #include <unistd.h> ///  \todo remove
 
@@ -86,9 +89,12 @@ class VirtualCallTestClass : public VirtualCallBaseTestClass
 
 void mdtUsbPortTest::fillBuffer ( unsigned char* buffer, int bSize )
 {
+  /**
   for(int i = 0; i < bSize; ++i){
     buffer[i] = i;
   }
+  */
+  ::memset(buffer, 0, bSize);
 }
 
 /*
@@ -99,7 +105,7 @@ void mdtUsbPortTest::basicAllocFreeBenchMarks()
 {
   unsigned char *buffer;
   int N = 10;
-  int bSize = 100;
+  int bSize = 128;
   int i;
 
   QBENCHMARK{
@@ -116,7 +122,7 @@ void mdtUsbPortTest::basicLockUnlockBenchmark()
   unsigned char *buffer;
   std::mutex mutex;
   int N = 10;
-  int bSize = 100;
+  int bSize = 128;
   int i;
 
   buffer = new unsigned char[bSize];
@@ -248,19 +254,21 @@ void mdtUsbPortTest::usbPortThreadTest()
 
 void mdtUsbPortTest::usbtmcFrameTest()
 {
-  mdtUsbtmcFrame f;
+  mdtUsbtmcFrame f(4096);
+  QByteArray ba;
+  mdtUsbtmcMessage message(ba);
 
   // Check initial values
   QCOMPARE(f.capacity(), 4096);
   QCOMPARE(f.bufferLength(), 12);
-  for(int i = 0; i < f.bufferLength(); ++i){
+  for(int i = 0; i < 12; ++i){
     QCOMPARE(f.buffer()[i], (uint8_t)0);
   }
   QCOMPARE(f.msgID(), mdtUsbtmcFrame::msgId_t::MSG_ZERO);
   /*
    * DEV_DEP_MSG_OUT encoding
    */
-  // Check header encoding for DEV_DEP_MSG_OUT - case 1 (no explicit data)
+  // Check header encoding for DEV_DEP_MSG_OUT - case 1 (no data)
   f.setMsgID(mdtUsbtmcFrame::msgId_t::DEV_DEP_MSG_OUT);
   f.setbTag(0x5B);
   QCOMPARE(f.bufferLength(), 12);
@@ -280,10 +288,14 @@ void mdtUsbPortTest::usbtmcFrameTest()
   QCOMPARE(f.bTag(), (uint8_t)0x5B);
   QCOMPARE(f.bTagInverse(), (uint8_t)0xA4);
   QCOMPARE((int)f.transferSize(), 0);
-  // Check correct encoding for DEV_DEP_MSG_OUT - case 2 (explicit data)
+  // Check correct encoding for DEV_DEP_MSG_OUT - case 2 (with data)
+  ba = "*IDN?\n";
+  message.reset();
+  f.clear();
   f.setMsgID(mdtUsbtmcFrame::msgId_t::DEV_DEP_MSG_OUT);
   f.setbTag(0x01);
-  f.setData("*IDN?\n");
+  ///f.setData("*IDN?\n");
+  f.setData(message);
   QCOMPARE(f.bufferLength(), 20);           // 12 (header) + 6 (data) + 2 (alignment bytes)
   QCOMPARE(f.buffer()[0], (uint8_t)1);      // MsgID
   QCOMPARE(f.buffer()[1], (uint8_t)0x01);   // bTag
@@ -309,37 +321,55 @@ void mdtUsbPortTest::usbtmcFrameTest()
   QCOMPARE(f.bTag(), (uint8_t)0x01);
   QCOMPARE(f.bTagInverse(), (uint8_t)0xFE);
   QCOMPARE((int)f.transferSize(), 6);
-  QCOMPARE(f.data(), QByteArray("*IDN?\n"));
+  message.reset();
+  f.getData(message);
+  QCOMPARE(ba, QByteArray("*IDN?\n"));
+  ///QCOMPARE(f.data(), QByteArray("*IDN?\n"));
   // Check Alignment bytes
-  f.setData("A");
+  ba = "A";
+  message.reset();
+  f.setData(message);
+  ///f.setData("A");
   QCOMPARE((int)f.transferSize(), 1);
   QCOMPARE(f.bufferLength(), 16);
   QCOMPARE((char)f.buffer()[12], 'A');  // Data
   QCOMPARE((int)f.buffer()[13], 0);     // Alignment byte
   QCOMPARE((int)f.buffer()[14], 0);     // Alignment byte
   QCOMPARE((int)f.buffer()[15], 0);     // Alignment byte
-  f.setData("12");
+  ba = "12";
+  message.reset();
+  f.setData(message);
+  ///f.setData("12");
   QCOMPARE((int)f.transferSize(), 2);
   QCOMPARE(f.bufferLength(), 16);
   QCOMPARE((char)f.buffer()[12], '1');  // Data
   QCOMPARE((char)f.buffer()[13], '2');  // Data
   QCOMPARE((int)f.buffer()[14], 0);     // Alignment byte
   QCOMPARE((int)f.buffer()[15], 0);     // Alignment byte
-  f.setData("ABC");
+  ba = "ABC";
+  message.reset();
+  f.setData(message);
+  ///f.setData("ABC");
   QCOMPARE((int)f.transferSize(), 3);
   QCOMPARE(f.bufferLength(), 16);
   QCOMPARE((char)f.buffer()[12], 'A');  // Data
   QCOMPARE((char)f.buffer()[13], 'B');  // Data
   QCOMPARE((char)f.buffer()[14], 'C');  // Data
   QCOMPARE((int)f.buffer()[15], 0);     // Alignment byte
-  f.setData("1234");
+  ba = "1234";
+  message.reset();
+  f.setData(message);
+  ///f.setData("1234");
   QCOMPARE((int)f.transferSize(), 4);
   QCOMPARE(f.bufferLength(), 16);
   QCOMPARE((char)f.buffer()[12], '1');  // Data
   QCOMPARE((char)f.buffer()[13], '2');  // Data
   QCOMPARE((char)f.buffer()[14], '3');  // Data
   QCOMPARE((char)f.buffer()[15], '4');  // Data
-  f.setData("A");
+  ba = "A";
+  message.reset();
+  f.setData(message);
+  ///f.setData("A");
   QCOMPARE((int)f.transferSize(), 1);
   QCOMPARE(f.bufferLength(), 16);
   QCOMPARE((char)f.buffer()[12], 'A');  // Data
@@ -423,7 +453,7 @@ void mdtUsbPortTest::usbtmcFrameTest()
   QCOMPARE(f2.bTag(), (uint8_t)0xEF);
   QCOMPARE(f2.bTagInverse(), (uint8_t)0x10);
   QCOMPARE((int)f2.transferSize(), 0x12345);
-  // Rset EOM and check
+  // Reset EOM and check
   f2.setEOM(false);
   QCOMPARE(f2.buffer()[8], (uint8_t)0b00000000); // bmTransferAttributes (EOM not set)
   /*
@@ -494,8 +524,10 @@ void mdtUsbPortTest::usbtmcFrameTest()
   QVERIFY(!f.isComplete(9 + 12));
   QVERIFY(f.isComplete(10 + 12));
   QVERIFY(f.isComplete(11 + 12));
-  QCOMPARE(f.data(), QByteArray("ABCD,1234\n"));
-
+  ///QCOMPARE(f.data(), QByteArray("ABCD,1234\n"));
+  message.reset();
+  f.getData(message);
+  QCOMPARE(ba, QByteArray("ABCD,1234\n"));
 
   /*
    * TODO: VENDOR_SPECIFIC_OUT / VENDOR_SPECIFIC_IN
@@ -504,9 +536,11 @@ void mdtUsbPortTest::usbtmcFrameTest()
 
 void mdtUsbPortTest::usbtmcFrameBenchmark()
 {
-  mdtUsbtmcFrame f;
+  mdtUsbtmcFrame f(4096);
   QByteArray query = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  mdtUsbtmcMessage queryMessage(query);
   QByteArray result;
+  mdtUsbtmcMessage resultMessage(result);
   mdtUsbtmcFrame::msgId_t msgID;
   uint8_t bTag;
   uint8_t bTagInverse;
@@ -514,20 +548,199 @@ void mdtUsbPortTest::usbtmcFrameBenchmark()
 
   QBENCHMARK{
     f.clear();
+    queryMessage.reset();
+    resultMessage.reset();
     f.setMsgID(mdtUsbtmcFrame::msgId_t::DEV_DEP_MSG_OUT);
     f.setbTag(0x5B);
-    f.setData(query);
+    ///f.setData(query);
+    f.setData(queryMessage);
     msgID = f.msgID();
     bTag = f.bTag();
     bTagInverse = f.bTagInverse();
     transferSize = f.transferSize();
-    result = f.data();
+    ///result = f.data();
+    f.getData(resultMessage);
   }
   QCOMPARE((int)msgID, 1);
   QCOMPARE(bTag, (uint8_t)0x5B);
   QCOMPARE(bTagInverse, (uint8_t)0xA4);
   QCOMPARE(transferSize, (uint32_t)26);
   QCOMPARE(result, QByteArray("ABCDEFGHIJKLMNOPQRSTUVWXYZ"));
+}
+
+void mdtUsbPortTest::usbtmcMessageTest()
+{
+  QByteArray ba;
+  std::vector<uint8_t> buffer;
+  int n;
+
+  // Init
+  buffer.reserve(4);
+  ba = "123456789";
+  mdtUsbtmcMessage message(ba);
+  QCOMPARE(ba, QByteArray("123456789"));
+  QCOMPARE(message.bytesToRead(), 9);
+  QVERIFY(message.hasBytesToRead());
+  // Read 1
+  n = message.read(buffer.data(), buffer.capacity());
+  QCOMPARE(n, 4);
+  QCOMPARE((char)buffer[0], '1');
+  QCOMPARE((char)buffer[1], '2');
+  QCOMPARE((char)buffer[2], '3');
+  QCOMPARE((char)buffer[3], '4');
+  QCOMPARE(message.bytesToRead(), 5);
+  QVERIFY(message.hasBytesToRead());
+  QCOMPARE(ba, QByteArray("123456789"));
+  // Read 2
+  n = message.read(buffer.data(), buffer.capacity());
+  QCOMPARE(n, 4);
+  QCOMPARE((char)buffer[0], '5');
+  QCOMPARE((char)buffer[1], '6');
+  QCOMPARE((char)buffer[2], '7');
+  QCOMPARE((char)buffer[3], '8');
+  QCOMPARE(message.bytesToRead(), 1);
+  QVERIFY(message.hasBytesToRead());
+  QCOMPARE(ba, QByteArray("123456789"));
+  // Read 3
+  n = message.read(buffer.data(), buffer.capacity());
+  QCOMPARE(n, 1);
+  QCOMPARE((char)buffer[0], '9');
+  QCOMPARE(message.bytesToRead(), 0);
+  QVERIFY(!message.hasBytesToRead());
+  QCOMPARE(ba, QByteArray("123456789"));
+  // Read 4 - Must copy nothing and not fail
+  n = message.read(buffer.data(), buffer.capacity());
+  QCOMPARE(message.bytesToRead(), 0);
+  QVERIFY(!message.hasBytesToRead());
+  QCOMPARE(ba, QByteArray("123456789"));
+  // Clear byte array and check that nothing fails
+  ba.clear();
+  QVERIFY(ba.isEmpty());
+  n = message.read(buffer.data(), buffer.capacity());
+  QCOMPARE(message.bytesToRead(), 0);
+  QVERIFY(!message.hasBytesToRead());
+  // Write 1
+  buffer[0] = 'A';
+  buffer[1] = 'B';
+  buffer[2] = 'C';
+  buffer[3] = 'D';
+  message.write(buffer.data(), buffer.capacity());
+  QCOMPARE(ba, QByteArray("ABCD"));
+  // Write 2
+  buffer[0] = 'E';
+  buffer[1] = 'F';
+  buffer[2] = 'G';
+  buffer[3] = 'H';
+  message.write(buffer.data(), buffer.capacity());
+  QCOMPARE(ba, QByteArray("ABCDEFGH"));
+  // Write 3
+  buffer[0] = 'I';
+  message.write(buffer.data(), 1);
+  QCOMPARE(ba, QByteArray("ABCDEFGHI"));
+  // Write 4
+  message.write(buffer.data(), 0);
+  QCOMPARE(ba, QByteArray("ABCDEFGHI"));
+  // Reset and write
+  message.reset();
+  buffer[0] = '1';
+  message.write(buffer.data(), 1);
+  QCOMPARE(ba, QByteArray("1"));
+}
+
+void mdtUsbPortTest::usbtmcMessageBenchmark()
+{
+  std::vector<uint8_t> buffer;
+
+  // Init
+  buffer.reserve(4096);
+  QByteArray ba(10000, 'A');
+  mdtUsbtmcMessage message(ba);
+
+  QBENCHMARK{
+    message.read(buffer.data(), buffer.capacity());
+    message.reset();
+    message.write(buffer.data(), buffer.capacity());
+    message.reset();
+  }
+}
+
+void mdtUsbPortTest::usbtmcBulkTransferTest()
+{
+  libusb_context *usbCtx = 0;
+  libusb_device_handle *handle;
+  mdtUsbDeviceDescriptor deviceDescriptor;
+  mdtUsbInterfaceDescriptor interface;
+  mdtUsbEndpointDescriptor bulkOutEpd;
+  mdtUsbEndpointDescriptor bulkInEpd;
+  QByteArray ba;
+  mdtUsbtmcMessage message(ba);
+  int ret;
+
+  // Init libusb
+  ret = libusb_init(&usbCtx);
+  QVERIFY(ret == 0);
+
+  // Search USBTMC device
+  mdtUsbDeviceList devList(usbCtx);
+  QVERIFY(devList.scan());
+  deviceDescriptor = devList.findFirstUsbtmcDevice();
+  if(deviceDescriptor.isEmpty()){
+    QSKIP("Found no USBTMC device attached", SkipAll);
+  }
+  // Get interface
+  interface = deviceDescriptor.interface(0);
+  QVERIFY(!interface.isEmpty());
+  // Get bulk OUT enpoint
+  QCOMPARE(interface.bulkOutEndpoints().size(), 1);
+  bulkOutEpd = interface.bulkOutEndpoints().at(0);
+  QVERIFY(!bulkOutEpd.isEmpty());
+  // Get bulk IN enpoint
+  QCOMPARE(interface.bulkInEndpoints().size(), 1);
+  bulkInEpd = interface.bulkInEndpoints().at(0);
+  QVERIFY(!bulkInEpd.isEmpty());
+  // Open device
+  handle = deviceDescriptor.open();
+  QVERIFY(handle != 0);
+  devList.clear();
+
+  /*
+   * In this phase, we not send data to device,
+   *  but a device handle is required by USBTMC transfer class.
+   */
+  mdtUsbtmcTransferHandler th(usbCtx);
+  mdtUsbtmcBulkTransfer transfer(th, bulkOutEpd, handle);
+  QVERIFY(transfer.allocOk());
+  /*
+   * Check some flags
+   */
+  // Check some flags
+  QVERIFY(!(transfer.flags() & LIBUSB_TRANSFER_FREE_BUFFER));
+  QVERIFY(!(transfer.flags() & LIBUSB_TRANSFER_FREE_TRANSFER));
+  // Check completed flag
+  QVERIFY(transfer.completedPointer() != 0);
+  QVERIFY(*transfer.completedPointer() == 0);
+  QVERIFY(!transfer.isCompleted());
+  *transfer.completedPointer() = 1;
+  QVERIFY(transfer.isCompleted());
+  *transfer.completedPointer() = 0;
+  QVERIFY(!transfer.isCompleted());
+  transfer.setCompleted();
+  QVERIFY(transfer.isCompleted());
+  QVERIFY(*transfer.completedPointer() == 1);
+  // Check sync flag (can only check default without calling submit() or cancel())
+  QVERIFY(!transfer.isSync());
+  /*
+   * Setup DEV_DEP_MSG_OUT transfer
+   */
+  ba = "*IDN?\n";
+  message.reset();
+  transfer.setupDevDepMsgOut(1, message, 30000);
+
+  // Free ressources
+  if(handle != 0){
+    libusb_close(handle);
+  }
+  libusb_exit(usbCtx);
 }
 
 void mdtUsbPortTest::usbtmcControlTransferTest()
@@ -611,6 +824,13 @@ void mdtUsbPortTest::usbtmcControlTransferTest()
   // Check sync flag (can only check default without calling submit() or cancel())
   QVERIFY(!transfer.isSync());
   /*
+   * Check simple set/get
+   */
+  transfer.setByteValue(0, 0x12);
+  QCOMPARE(transfer.byteValue(0), (uint8_t)0x12);
+  transfer.setWordValue(0, 0x1234);
+  QCOMPARE(transfer.wordValue(0), (uint16_t)0x1234);
+  /*
    * Setup a CLEAR_FEATURE request with wValue = ENDPOINT_HALT for enpoint number 2
    */
   transfer.setupClearEndpointHalt(2, 30000);
@@ -629,6 +849,7 @@ void mdtUsbPortTest::usbtmcControlTransferTest()
   QCOMPARE(transfer.wValue(), (uint16_t)235);         // 235 (bTag)
   QCOMPARE(transfer.wIndex(), (uint16_t)1);           // 1 (Dir=OUT, endpoint 1)
   QCOMPARE(transfer.wLength(), (uint16_t)2);          // 2 (Expected data of length 2)
+  QVERIFY(transfer.usbtmcRequest() == mdtUsbtmcControlTransfer::USBTMCbRequest::INITIATE_ABORT_BULK_OUT);
   /*
    * Setup CHECK_ABORT_BULK_OUT_STATUS request for endpoint 1
    */
@@ -637,18 +858,86 @@ void mdtUsbPortTest::usbtmcControlTransferTest()
   QCOMPARE(transfer.bRequest(), (uint8_t)2);          // 2 (CHECK_ABORT_BULK_OUT_STATUS)
   QCOMPARE(transfer.wValue(), (uint16_t)0);           // 0
   QCOMPARE(transfer.wIndex(), (uint16_t)1);           // 1 (Dir=OUT, endpoint 1)
-  QCOMPARE(transfer.wLength(), (uint16_t)8);          // 2 (Expected data of length 8)
+  QCOMPARE(transfer.wLength(), (uint16_t)8);          // 8 (Expected data of length 8)
+  QVERIFY(transfer.usbtmcRequest() == mdtUsbtmcControlTransfer::USBTMCbRequest::CHECK_ABORT_BULK_OUT_STATUS);
   /*
    * Setup INITIATE_ABORT_BULK_IN request for endpoint 2, bTag 246
    */
-  transfer.setupInitiateAbortBulkOut(246, 2, 30000);
+  transfer.setupInitiateAbortBulkIn(246, 2, 30000);
   QCOMPARE(transfer.bmRequestType(), (uint8_t)0xA2);    // Directly given in USBTMC 1.0, table 18
-  QCOMPARE(transfer.bRequest(), (uint8_t)3);            // 1 (INITIATE_ABORT_BULK_IN)
+  QCOMPARE(transfer.bRequest(), (uint8_t)3);            // 3 (INITIATE_ABORT_BULK_IN)
   QCOMPARE(transfer.wValue(), (uint16_t)246);           // 246 (bTag)
   QCOMPARE(transfer.wIndex(), (uint16_t)(0b10000000+2)); // 1 (Dir=IN, endpoint 2)
   QCOMPARE(transfer.wLength(), (uint16_t)2);            // 2 (Expected data of length 2)
+  QVERIFY(transfer.usbtmcRequest() == mdtUsbtmcControlTransfer::USBTMCbRequest::INITIATE_ABORT_BULK_IN);
+  /*
+   * Setup CHECK_ABORT_BULK_IN_STATUS request for endpoint 2
+   */
+  transfer.setupCheckAbortBulkInStatus(2, 30000);
+  QCOMPARE(transfer.bmRequestType(), (uint8_t)0xA2);  // Directly given in USBTMC 1.0, table 27
+  QCOMPARE(transfer.bRequest(), (uint8_t)4);          // 4 (CHECK_ABORT_BULK_IN_STATUS)
+  QCOMPARE(transfer.wValue(), (uint16_t)0);           // 0
+  QCOMPARE(transfer.wIndex(), (uint16_t)(0b10000000+2)); // 1 (Dir=IN, endpoint 2)
+  QCOMPARE(transfer.wLength(), (uint16_t)8);          // 8 (Expected data of length 8)
+  QVERIFY(transfer.usbtmcRequest() == mdtUsbtmcControlTransfer::USBTMCbRequest::CHECK_ABORT_BULK_IN_STATUS);
+  /*
+   * Setup INITIATE_CLEAR request for interface 1
+   */
+  transfer.setupInitiateClear(1, 30000);
+  QCOMPARE(transfer.bmRequestType(), (uint8_t)0xA1);  // Directly given in USBTMC 1.0, table 30
+  QCOMPARE(transfer.bRequest(), (uint8_t)5);          // 4 (INITIATE_CLEAR)
+  QCOMPARE(transfer.wValue(), (uint16_t)0);           // 0
+  QCOMPARE(transfer.wIndex(), (uint16_t)1);           // 1 (interface 1)
+  QCOMPARE(transfer.wLength(), (uint16_t)1);          // 1 (Expected data of length 1)
+  QVERIFY(transfer.usbtmcRequest() == mdtUsbtmcControlTransfer::USBTMCbRequest::INITIATE_CLEAR);
+  /*
+   * Setup CHECK_CLEAR_STATUS request for interface 1
+   */
+  transfer.setupCheckClearStatus(1, 30000);
+  QCOMPARE(transfer.bmRequestType(), (uint8_t)0xA1);  // Directly given in USBTMC 1.0, table 33
+  QCOMPARE(transfer.bRequest(), (uint8_t)6);          // 6 (CHECK_CLEAR_STATUS)
+  QCOMPARE(transfer.wValue(), (uint16_t)0);           // 0
+  QCOMPARE(transfer.wIndex(), (uint16_t)1);           // 1 (interface 1)
+  QCOMPARE(transfer.wLength(), (uint16_t)2);          // 2 (Expected data of length 2)
+  QVERIFY(transfer.usbtmcRequest() == mdtUsbtmcControlTransfer::USBTMCbRequest::CHECK_CLEAR_STATUS);
+  /*
+   * Setup GET_CAPABILITIES request for interface 1
+   */
+  transfer.setupGetCapabilities(1, 30000);
+  QCOMPARE(transfer.bmRequestType(), (uint8_t)0xA1);  // Directly given in USBTMC 1.0, table 36
+  QCOMPARE(transfer.bRequest(), (uint8_t)7);          // 7 (GET_CAPABILITIES)
+  QCOMPARE(transfer.wValue(), (uint16_t)0);           // 0
+  QCOMPARE(transfer.wIndex(), (uint16_t)1);           // 1 (interface 1)
+  QCOMPARE(transfer.wLength(), (uint16_t)0x18);       // 0x18 (Expected data of length 24)
+  QVERIFY(transfer.usbtmcRequest() == mdtUsbtmcControlTransfer::USBTMCbRequest::GET_CAPABILITIES);
+  /*
+   * Setup INDICATOR_PULSE request for interface 1
+   */
+  transfer.setupIndicatorPulse(1, 30000);
+  QCOMPARE(transfer.bmRequestType(), (uint8_t)0xA1);  // Directly given in USBTMC 1.0, table 38
+  QCOMPARE(transfer.bRequest(), (uint8_t)64);         // 64 (INDICATOR_PULSE)
+  QCOMPARE(transfer.wValue(), (uint16_t)0);           // 0
+  QCOMPARE(transfer.wIndex(), (uint16_t)1);           // 1 (interface 1)
+  QCOMPARE(transfer.wLength(), (uint16_t)1);          // 1 (Expected data of length 1)
+  QVERIFY(transfer.usbtmcRequest() == mdtUsbtmcControlTransfer::USBTMCbRequest::INDICATOR_PULSE);
+  /*
+   * Check USBTMC_status response value
+   * Note: data part is written starting at offset 8 by libusb.
+   */
+  transfer.setByteValue(8, 0x01);
+  QVERIFY(transfer.usbtmcStatus() == mdtUsbtmcControlTransfer::USBTMCstatus::STATUS_SUCCESS);
+  transfer.setByteValue(8, 0x02);
+  QVERIFY(transfer.usbtmcStatus() == mdtUsbtmcControlTransfer::USBTMCstatus::STATUS_PENDING);
+  transfer.setByteValue(8, 0x80);
+  QVERIFY(transfer.usbtmcStatus() == mdtUsbtmcControlTransfer::USBTMCstatus::STATUS_FAILED);
+  transfer.setByteValue(8, 0x81);
+  QVERIFY(transfer.usbtmcStatus() == mdtUsbtmcControlTransfer::USBTMCstatus::STATUS_TRANSFER_NOT_IN_PROGRESS);
+  transfer.setByteValue(8, 0x82);
+  QVERIFY(transfer.usbtmcStatus() == mdtUsbtmcControlTransfer::USBTMCstatus::STATUS_SPLIT_NOT_IN_PROGRESS);
+  transfer.setByteValue(8, 0x83);
+  QVERIFY(transfer.usbtmcStatus() == mdtUsbtmcControlTransfer::USBTMCstatus::STATUS_SPLIT_IN_PROGRESS);
+  transfer.setByteValue(8, 0x00);
 
-  
   
   ///QVERIFY(transfer.submit());
   
@@ -827,7 +1116,7 @@ void mdtUsbPortTest::usbtmcPortThreadTest()
   // Init libusb
   ret = libusb_init(&usbCtx);
   QVERIFY(ret == 0);
-  libusb_set_debug(usbCtx, 255);
+  libusb_set_debug(usbCtx, 0b00000011);
 
   // Search USBTMC device
   mdtUsbDeviceList devList(usbCtx);
@@ -849,12 +1138,12 @@ void mdtUsbPortTest::usbtmcPortThreadTest()
   devList.clear();
 
   // Send some control requests
-  qDebug() << "TEST: submit a control transfer ...";
-  QVERIFY(th.submitClearBulkOutEndpointHalt(30000));
   ///qDebug() << "TEST: submit a control transfer ...";
-  ///QVERIFY(th.submitClearBulkInEndpointHalt(30000));
+  ///QVERIFY(th.submitClearBulkOutEndpointHalt(30000));
+  qDebug() << "TEST: submit a control transfer ...";
+  th.beginClearBulkIo();
 
-  usleep(10000);
+  usleep(100000);
 
   // Stop..
   thd.stop();

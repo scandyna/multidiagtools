@@ -1,6 +1,6 @@
 format 208
 "Qt4" // Qt4
-  revision 89
+  revision 90
   modified_by 2 "philippe"
   // class settings
   
@@ -80,7 +80,6 @@ ${inlines}
 	
 	
       end
-
     end
 
     classdiagram 141954 "QTime"

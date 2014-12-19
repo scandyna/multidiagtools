@@ -87,6 +87,20 @@ class mdtUsbTransfer
     return pvTransfer->status;
   }
 
+  /*! \brief Get actual length
+   *
+   * Actual length of data that was transferred.
+   *  Read-only, and only for use within transfer callback function. Not valid for isochronous endpoint transfers.
+   *  See libusb documentation for details.
+   *
+   * \pre Internall transfer must be valid ( see allocOk() ).
+   */
+  int actualLength() const
+  {
+    Q_ASSERT(pvTransfer != 0);
+    return pvTransfer->actual_length;
+  }
+
   /*! \brief Get last error
    */
   mdtError lastError() const

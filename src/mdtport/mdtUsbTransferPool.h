@@ -21,6 +21,7 @@
 #ifndef MDT_USB_TRANSFER_POOL_H
 #define MDT_USB_TRANSFER_POOL_H
 
+#include "mdtUsbEndpointDescriptor.h"
 #include <QtGlobal>
 #include <vector>
 #include <algorithm>
@@ -116,6 +117,37 @@ class mdtUsbTransferPool
     Q_ASSERT(devHandle != 0);
     Q_ASSERT(n <= pvMaxTransfers);
 
+    transferAllocator<TransferHandlerType> ta(th, devHandle);
+
+    return allocTransfers<TransferHandlerType>(n, ta);
+    /**
+    int i;
+    T *transfer;
+
+    clear();
+    pvDeviceHandle = devHandle;
+    pvTransfers.reserve(n);
+    for(i = 0; i < n; ++i){
+      transfer = new T(th, pvDeviceHandle);
+      if(transfer == 0){
+        clear();
+        return false;
+      }
+      pvTransfers.push_back(transfer);
+    }
+    pvAllocatedTransfers = pvTransfers.size();
+
+    return true;
+    */
+  }
+
+  /**
+  template<typename TransferHandlerType>
+  bool allocTransfers(unsigned int n, TransferHandlerType & th, libusb_device_handle *devHandle)
+  {
+    Q_ASSERT(devHandle != 0);
+    Q_ASSERT(n <= pvMaxTransfers);
+
     int i;
     T *transfer;
 
@@ -134,6 +166,26 @@ class mdtUsbTransferPool
 
     return true;
   }
+  */
+
+  /*! \brief Alloc transfers
+   *
+   * \param n Number of transfers
+   * \param th Application specific transfer handler
+   * \param devHandle Must be a valid pointer to currently open device.
+   * \param endpointDescriptor USB endpoint descriptor.
+   * \pre n must be <= maxTransfers (given in constructor)
+   */
+  template<typename TransferHandlerType>
+  bool allocTransfers(unsigned int n, TransferHandlerType & th, mdtUsbEndpointDescriptor endpointDescriptor, libusb_device_handle *devHandle)
+  {
+    Q_ASSERT(devHandle != 0);
+    Q_ASSERT(n <= pvMaxTransfers);
+
+    transferAllocatorEpd<TransferHandlerType> ta(th, endpointDescriptor, devHandle);
+
+    return allocTransfers<TransferHandlerType>(n, ta);
+  }
 
   /*! \brief Get a transfer from pool
    *
@@ -148,6 +200,10 @@ class mdtUsbTransferPool
   {
     Q_ASSERT(pvDeviceHandle != 0);
 
+    transferAllocator<TransferHandlerType> ta(th, pvDeviceHandle);
+
+    return getTransfer<TransferHandlerType>(ta);
+    /**
     T *transfer;
 
     // Allocate a new transfer if required and permitted
@@ -169,6 +225,25 @@ class mdtUsbTransferPool
     pvPendingTransfers.push_back(transfer);
 
     return transfer;
+    */
+  }
+
+  /*! \brief Get a transfer from pool
+   *
+   * Will create a new transfer if pool is empty.
+   *
+   * The transfer is also filed into pending queue.
+   *
+   * \return A valid pointer to transfer (or 0 on memory allocation failure)
+   */
+  template<typename TransferHandlerType>
+  T *getTransfer(TransferHandlerType & th, mdtUsbEndpointDescriptor endpointDescriptor)
+  {
+    Q_ASSERT(pvDeviceHandle != 0);
+
+    transferAllocatorEpd<TransferHandlerType> ta(th, endpointDescriptor, pvDeviceHandle);
+
+    return getTransfer<TransferHandlerType>(ta);
   }
 
   /*! \brief Restore a transfer
@@ -216,6 +291,113 @@ class mdtUsbTransferPool
   }
 
  private:
+
+  /*! \brief Allocator for transfer class without endpoint descriptor
+   */
+  template<typename TransferHandlerType>
+  class transferAllocator
+  {
+   public:
+    // Constructor
+    transferAllocator(TransferHandlerType & th, libusb_device_handle *handle)
+     : deviceHandle(handle),
+       pvTh(th)
+    {
+    }
+    // Allocation function
+    T *allocateNewTransfer() const
+    {
+      return new T(pvTh, deviceHandle);
+    }
+    // Members
+    libusb_device_handle *deviceHandle;
+   private:
+    TransferHandlerType & pvTh;
+  };
+
+  /*! \brief Allocator for transfer class with endpoint descriptor
+   */
+  template<typename TransferHandlerType>
+  class transferAllocatorEpd
+  {
+   public:
+    // Constructor
+    transferAllocatorEpd(TransferHandlerType & th, mdtUsbEndpointDescriptor d, libusb_device_handle *handle)
+     : deviceHandle(handle),
+       pvTh(th),
+       pvD(d)
+    {
+    }
+    // Allocation function
+    T *allocateNewTransfer() const
+    {
+      return new T(pvTh, pvD, deviceHandle);
+    }
+    // Members
+    libusb_device_handle *deviceHandle;
+   private:
+    TransferHandlerType & pvTh;
+    mdtUsbEndpointDescriptor pvD;
+  };
+
+  /*! \brief Alloc transfers
+   *
+   * \param n Number of transfers
+   * \param allocator Allocator
+   */
+  template<typename TransferHandlerType, typename A>
+  bool allocTransfers(unsigned int n, const A & allocator)
+  {
+    Q_ASSERT(n <= pvMaxTransfers);
+
+    int i;
+    T *transfer;
+
+    clear();
+    pvDeviceHandle = allocator.deviceHandle;
+    pvTransfers.reserve(n);
+    for(i = 0; i < n; ++i){
+      transfer = allocator.allocateNewTransfer();
+      if(transfer == 0){
+        clear();
+        return false;
+      }
+      pvTransfers.push_back(transfer);
+    }
+    pvAllocatedTransfers = pvTransfers.size();
+
+    return true;
+  }
+
+  /*! \brief Get a transfer from pool
+   */
+  template<typename TransferHandlerType, typename A>
+  T *getTransfer(const A & allocator)
+  {
+    Q_ASSERT(pvDeviceHandle != 0);
+
+    T *transfer;
+
+    // Allocate a new transfer if required and permitted
+    if(pvTransfers.empty()){
+      Q_ASSERT(pvAllocatedTransfers < pvMaxTransfers);
+      if(pvAllocatedTransfers < pvMaxTransfers){
+        ++pvAllocatedTransfers;
+        transfer = allocator.allocateNewTransfer();
+        pvPendingTransfers.push_back(transfer);
+        return transfer;
+      }else{
+        return 0;
+      }
+    }
+    // Have in pool, get one
+    transfer = pvTransfers.back();
+    Q_ASSERT(transfer != 0);
+    pvTransfers.pop_back();
+    pvPendingTransfers.push_back(transfer);
+
+    return transfer;
+  }
 
   Q_DISABLE_COPY(mdtUsbTransferPool);
 

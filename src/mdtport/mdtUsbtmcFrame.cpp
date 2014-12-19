@@ -29,7 +29,8 @@ mdtUsbtmcFrame::mdtUsbtmcFrame ( int bufferSize )
   Q_ASSERT(bufferSize >= 512);
   Q_ASSERT((bufferSize % 4) == 0);
 
-  pvBuffer.assign(bufferSize, 0);
+  pvBuffer.reserve(bufferSize);
+  pvBuffer.assign(12, 0);
   pvBufferLength = 12;
 }
 
@@ -50,6 +51,36 @@ void mdtUsbtmcFrame::setTransferSize ( uint32_t size )
   pvBuffer[7] = (size >> 24) & 0xFF;
 }
 
+void mdtUsbtmcFrame::setData(mdtUsbtmcMessage & message)
+{
+  Q_ASSERT(message.bytesToRead() > 0);
+
+  // Calculate how many data we must copy
+  int n = std::min(message.bytesToRead(), capacity()-12);
+  int abc = n % 4;   // Alignment bytes count
+  if(abc != 0){
+    abc = 4 - (n % 4);
+  }
+  if((n + 12 + abc) > capacity()){
+    n -= abc;
+  }
+  Q_ASSERT((12 + n + abc) <= capacity());
+  // Copy data
+  auto *dest = pvBuffer.data() + 12;
+  message.read(dest, n);
+  setTransferSize(n);
+  // Fill with aligment bytes
+  dest += n;
+  for(auto i = 0; i < abc; ++i){
+    *dest = 0;
+    ++dest;
+  }
+  // Update buffen length
+  pvBufferLength = 12 + n + abc;
+  Q_ASSERT(pvBufferLength <= capacity());
+}
+
+/**
 void mdtUsbtmcFrame::setData ( const QByteArray & ba )
 {
   Q_ASSERT(ba.size() > 0);
@@ -73,7 +104,9 @@ void mdtUsbtmcFrame::setData ( const QByteArray & ba )
     ++dest;
   }
 }
+*/
 
+/**
 QByteArray mdtUsbtmcFrame::data() const
 {
   int size = transferSize();
@@ -87,3 +120,4 @@ QByteArray mdtUsbtmcFrame::data() const
 
   return ba;
 }
+*/

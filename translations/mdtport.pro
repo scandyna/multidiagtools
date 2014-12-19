@@ -36,6 +36,7 @@ SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtModbusTcpP
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtUsbDeviceList.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtUsbTransfer.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtUsbControlTransfer.cpp
+SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtUsbtmcBulkTransfer.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtUsbPortThreadNew.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtUsbtmcFrame.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtUsbtmcControlTransfer.cpp

@@ -1,6 +1,6 @@
 format 208
 "newPortApiSandbox" // mdtport::newPortApiSandbox
-  revision 29
+  revision 31
   modified_by 2 "philippe"
   // class settings
   
@@ -1092,7 +1092,7 @@ ${members}};
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
 "
 	    classrelation_ref 1840002 // <directional composition>
-	  b parent class_ref 1485570 // UsbTmcBulkTransfer
+	  b parent class_ref 1485570 // mdtUsbtmcBulkTransfer
       end
 
       classrelation 1840258 // <directional composition>
@@ -2193,7 +2193,7 @@ ${inlines}
       end
     end
 
-    class 1485570 "UsbTmcBulkTransfer"
+    class 1485570 "mdtUsbtmcBulkTransfer"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -2207,14 +2207,16 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      operation 2353410 "UsbTmcBulkTransfer"
+      operation 2353410 "mdtUsbtmcBulkTransfer"
 	public explicit_return_type ""
-	nparams 2
+	nparams 3
 	  param in name "th" type class_ref 1478914 // mdtUsbtmcTransferHandler
 	  param in name "dev_handle" type class_ref 1437186 // libusb_device_handle
-	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${volatile}${throw};
+	  param in name "bufferSize" explicit_type "int"
+	    defaultvalue "4096"
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, ${t2} ${p2}${v2}${)}${volatile}${throw};
 "
-	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw} 
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, ${t2} ${p2}${)}${volatile}${throw} 
 {
   ${body}}
 "
@@ -2256,17 +2258,6 @@ ${inlines}
 	
       end
 
-      attribute 1528450 "pvEndpoint"
-	private explicit_type "uchar"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
     end
 
     class 1492098 "UsbtmcInterruptTransfer"
@@ -2743,6 +2734,76 @@ ${inlines}
 	    uml_trigger "resetError"
 	  external 
 	end
+      end
+    end
+
+    class 1518594 "UsbtmcMessage"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 1556098 "pvCurrentPos"
+	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 2424066 "takeData"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "output" explicit_type "vector"
+	  param in name "n" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2424194 "putData"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "input" explicit_type "vector"
+	  param in name "n" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 1901058 // <unidirectional association>
+	relation 1885058 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1901058 // <unidirectional association>
+	  b parent class_ref 236162 // QByteArray
       end
     end
   end

@@ -103,6 +103,47 @@ class mdtUsbControlTransfer : public mdtUsbTransfer
   mdtUsbControlTransfer(const mdtUsbControlTransfer & rhs) = delete;
   mdtUsbControlTransfer & operator=(const mdtUsbControlTransfer & rhs) = delete;
 
+  /*! \brief Set value at offset
+   *
+   * \pre offset must be < internal buffer's capacity
+   */
+  void setByteValue(unsigned int offset, uint8_t value)
+  {
+    Q_ASSERT(offset < pvBuffer.capacity());
+    pvBuffer[offset] = value;
+  }
+
+  /*! \brief Get value at offset
+   *
+   * \pre offset must be < internal buffer's capacity
+   */
+  uint8_t byteValue(unsigned int offset) const
+  {
+    Q_ASSERT(offset < pvBuffer.capacity());
+    return pvBuffer[offset];
+  }
+
+  /*! \brief Set value at offset
+   *
+   * \pre offset+1 must be < internal buffer's capacity
+   */
+  void setWordValue(unsigned int offset, uint16_t value)
+  {
+    Q_ASSERT((offset + 1) < pvBuffer.capacity());
+    pvBuffer[offset] = (value & 0x00FF);
+    pvBuffer[offset+1] = (value >> 8);
+  }
+
+  /*! \brief Get value at offset
+   *
+   * \pre offset+1 must be < internal buffer's capacity
+   */
+  uint16_t wordValue(unsigned int offset) const
+  {
+    Q_ASSERT((offset + 1) < pvBuffer.capacity());
+    return (pvBuffer[offset+1] << 8) + pvBuffer[offset];
+  }
+
   /*! \brief Get bmRequestType part
    */
   uint8_t bmRequestType() const
@@ -119,23 +160,26 @@ class mdtUsbControlTransfer : public mdtUsbTransfer
 
   /*! \brief Get wValue
    */
-  uint16_t wValue() const
+  inline uint16_t wValue() const
   {
-    return (pvBuffer[3] << 8) + pvBuffer[2];
+    return wordValue(2);
+    ///return (pvBuffer[3] << 8) + pvBuffer[2];
   }
 
   /*! \brief Get wIndex
    */
-  uint16_t wIndex() const
+  inline uint16_t wIndex() const
   {
-    return (pvBuffer[5] << 8) + pvBuffer[4];
+    return wordValue(4);
+    ///return (pvBuffer[5] << 8) + pvBuffer[4];
   }
 
   /*! \brief Get wLength
    */
-  uint16_t wLength() const
+  inline uint16_t wLength() const
   {
-    return (pvBuffer[7] << 8) + pvBuffer[6];
+    return wordValue(6);
+    ///return (pvBuffer[7] << 8) + pvBuffer[6];
   }
 
   /*! \brief Setup a Clear feature transfer

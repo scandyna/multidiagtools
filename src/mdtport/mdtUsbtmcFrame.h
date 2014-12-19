@@ -21,24 +21,45 @@
 #ifndef MDT_USBTMC_FRAME_H
 #define MDT_USBTMC_FRAME_H
 
-#include <QByteArray>
+#include "mdtUsbtmcMessage.h"
+///#include <QByteArray>
 #include <cstdint>
 #include <vector>
-
 
 /**
  * \todo Check header whenn receiving data.
 */
 
-/*! \brief USBTMC frame
+/*! \brief USBTMC frame (i.e. USBTMC bulk transfer)
  *
  * Used by USBTMC API to send en receive frames in USBTMC standard
- *  over bulk pipes.
+ *  over bulk pipes. The name frame was choosen because
+ *  transfer is close to libusb_transfer, and that part is handled by mdtUsbtmcBulkTransfer.
  *
  * References:
  *  - USBTMC Revision 1.0 (2003)
  *  - http://www.usb.org/developers/devclass_docs#approved
  *  - http://www.usb.org/developers/devclass_docs/USBTMC_1_006a.zip
+ *
+ * To avoid continious alloc/free, the frame has internal fixed capacity.
+ * Different capacity and sizes are available. To clarify them,
+ *  see a USBTMC frame (bulk transfer) format:
+ *
+ * -------------------------------------------------------
+ * | USBTMC |             Data bytes         | Alignment |
+ * | header |       (USBTMC TransferSize)    |  bytes    |
+ * -------------------------------------------------------
+ *
+ * Capacity of the frame is defined as below:
+ *  - capacity: USBTMC header + Data bytes + alignemnt bytes (is simply the capacity of internal buffer)
+ *
+ * Size of the frame is defined as below:
+ *  - transferSize: data bytes only (without header and without alignment bytes)
+ *  - bufferLength: USBTMC header + data bytes + alignment bytes (useful for Bulk-OUT transfer)
+ *
+ * Note:
+ *  - For Bulk-OUT transfer, use bufferLength to tell libusb how many bytes must be sent to device.
+ *  - For Bulk-IN transfer, use capacity to tell libusb how many bytes it can put into buffer.
  */
 class mdtUsbtmcFrame
 {
@@ -63,7 +84,7 @@ class mdtUsbtmcFrame
    * \param bufferSize Internal buffer size.
    * \pre bufferSize must be at least 512 and a multiple of 4
    */
-  mdtUsbtmcFrame(int bufferSize = 4096);
+  mdtUsbtmcFrame(int bufferSize);
 
   /*! \brief Clear frame
    *
@@ -97,7 +118,13 @@ class mdtUsbtmcFrame
    *
    * After a bulk IN transfer completed, tell how many data was written
    *  to buffer. This is typically available from libusb_transfer::actual_length.
-   *  Frame is considered complete if (written - 12) >= transferSize.
+   *
+   * Note: we assume that libusb handles transfer in one shot,
+   *       i.e. that, when transfer is completed, all data that device
+   *       has queued are available.
+   *
+   * Assuming this note and that clear() is called before each transfer,
+   *  we can assume that frame is complete if (written - 12) >= transferSize.
    */
   bool isComplete(int written) const
   {
@@ -155,16 +182,26 @@ class mdtUsbtmcFrame
    *  When setting up a frame for DEV_DEP_MSG_OUT or VENDOR_SPECIFIC_OUT,
    *  use setData() witch will also ajust TransferSize.
    *
-   * \pre size must be > 0 and <= capacity-12
+   * \pre size must be > 0 and <= totalCapacity-12
    */
   void setTransferSize(uint32_t size);
+
+  /*! \brief Set TransferSize to maximum possible size
+   *
+   * Useful when setting up frame for DEV_DEP_MSG_IN or VENDOR_SPECIFIC_IN query.
+   */
+  void setTransferSizeToMax()
+  {
+    // Because buffer size must be multiple of 4 (see constructor), we can simply set capacity()-12
+    setTransferSize(capacity() - 12);
+  }
 
   /*! \brief Get TransferSize
    *
    * Returns number of message bytes,
    *  without USBTMC header and without extra alignment bytes.
    *
-   * See Table 3 in USBTMC specifications for details.
+   * See, for example, Table 3 in USBTMC 1.0 specifications for details.
    */
   uint32_t transferSize() const{
     return pvBuffer[4] + (pvBuffer[5] << 8) + (pvBuffer[6] << 16) + (pvBuffer[7] << 24);
@@ -222,22 +259,47 @@ class mdtUsbtmcFrame
 
   /*! \brief Set data
    *
+   * Will read data from given message and copy them to internal buffer.
+   *  If all data of message can be hold in tranfer, EOM bit will be set, else not.
+   *
+   * TransferSize will also be adjusted.
+   *
+   * \pre message must have at least 1 byte of data to read from
+   */
+  void setData(mdtUsbtmcMessage & message);
+
+  /*! \brief Get data
+   *
+   * Will write (by copy) data part to given message.
+   */
+  void getData(mdtUsbtmcMessage & message)
+  {
+    message.write(pvBuffer.data()+12, transferSize());
+  }
+
+  /*! \brief Set data
+   *
    * Will copy given ba to internal buffer.
    * Note: will also set TransferSize.
    *
    * \pre ba must not be empty, and its size must be <= capacity-12-alignemnt bytes
    */
-  void setData(const QByteArray & ba);
+  ///void setData(const QByteArray & ba);
 
   /*! \brief Get data
    *
    * Returns a copy of data part from internal buffer
    */
-  QByteArray data() const;
+  ///QByteArray data() const;
 
  private:
 
   std::vector<uint8_t> pvBuffer;
+  /*
+   * Because vector::resize() will erase data,
+   * and writing directly to vector::data() or with operator[] will not affect vector::size(),
+   * we handle really available size with a separate attribute.
+   */
   int pvBufferLength;
 };
 

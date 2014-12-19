@@ -51,11 +51,6 @@ bool mdtUsbPortThreadNew::start(const mdtUsbDeviceDescriptor & deviceDescriptor,
   // Start port thread and wait until starting finishes
   pvThread = std::thread(&mdtUsbPortThreadNew::run, std::ref(*this));
   waitOnStateElseThan(State_t::Starting);
-  /**
-  while(pvStateMachine.currentState() == State_t::Starting){
-    QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
-  }
-  */
   // Check current state and return result regarding it
   if(pvStateMachine.currentState() != State_t::Running){
     stop();
@@ -67,8 +62,7 @@ bool mdtUsbPortThreadNew::start(const mdtUsbDeviceDescriptor & deviceDescriptor,
 
 void mdtUsbPortThreadNew::stop()
 {
-  /**pvStateMachine.*/setCurrentState(State_t::Stopping);
-
+  setCurrentState(State_t::Stopping);
   // Close device is one was open
   if(pvDeviceHandle != 0){
     aboutToClose();
@@ -126,16 +120,6 @@ bool mdtUsbPortThreadNew::openDevice()
 
   int err;
 
-  // Get descriptor of requested interface
-  /**
-  pvInterfaceDescriptor = deviceDescriptor.interface(bInterfaceNumber);
-  if(pvInterfaceDescriptor.isEmpty()){
-    pvLastError.setError(QObject::tr("Requested bInterfaceNumber ") + QString::number(bInterfaceNumber) + tr(" was not found in given device descriptor."), mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtUsbPortThreadNew");
-    pvLastError.commit();
-    return false;
-  }
-  */
   // Open device
   pvDeviceHandle = pvDeviceDescriptor.open();
   if(pvDeviceHandle == 0){
