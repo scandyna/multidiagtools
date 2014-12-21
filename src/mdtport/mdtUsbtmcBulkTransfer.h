@@ -35,6 +35,22 @@ class mdtUsbtmcBulkTransfer : public mdtUsbTransfer
 {
  public:
 
+  /*! \brief USBTMC split action
+   *
+   * Helps to deal with USBTMC split transaction
+   *  defined in USBTMC 1.0 specification, section 4.2.1.1
+   *
+   * This is used by bulk transfer callbacks to know if they have
+   *  something to do (submit a INITIATE or a CHECK control query).
+   */
+  enum class SplitAction_t
+  {
+    NoAction = 0,       /*!< No action to perform */
+    INITIATE_ABORT,     /*!< Begin aborting transfer with INITIATE_ABORT_BULK_[OUT/IN] */
+    CHECK_ABORT_STATUS, /*!< Check status with CHECK_ABORT_BULK_[OUT/IN]_STATUS */
+    INITIATE_CLEAR      /*!< Begin INITIATE_CLEAR \todo Voir si utile */
+  };
+
   /*! \brief Constructor
    *
    * \param th Transfer handler
@@ -141,6 +157,33 @@ class mdtUsbtmcBulkTransfer : public mdtUsbTransfer
     return pvResponseExpected;
   }
 
+  /*! \brief Set split action
+   */
+  void setSplitAction(SplitAction_t action){
+    pvSplitAction = action;
+  }
+
+  /*! \brief Clear split action
+   */
+  void clearSplitAction()
+  {
+    pvSplitAction = SplitAction_t::NoAction;
+  }
+
+  /*! \brief Check if a split action is to be performed
+   */
+  bool splitActionRequired() const
+  {
+    return (pvSplitAction != SplitAction_t::NoAction);
+  }
+
+  /*! \brief Get split action to perform
+   */
+  SplitAction_t splitAction() const
+  {
+    return pvSplitAction;
+  }
+
   /*! \brief Setup a custom transfer
    *
    * Used for debug and testing.
@@ -155,6 +198,7 @@ class mdtUsbtmcBulkTransfer : public mdtUsbTransfer
   mdtUsbtmcTransferHandler & pvTransferHandler;
   mdtUsbEndpointDescriptor pvEndpointDescriptor;
   bool pvResponseExpected;
+  SplitAction_t pvSplitAction;
 };
 
 #endif // #ifndef MDT_USBTMC_BULK_TRANSFER_H

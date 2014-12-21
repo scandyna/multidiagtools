@@ -30,12 +30,14 @@ mdtUsbtmcBulkTransfer::mdtUsbtmcBulkTransfer(mdtUsbtmcTransferHandler& th, mdtUs
    pvResponseExpected(false)
 {
   Q_ASSERT(!pvEndpointDescriptor.isEmpty());
+  clearSplitAction();
 }
 
 void mdtUsbtmcBulkTransfer::setupDevDepMsgOut(uint8_t bTag, mdtUsbtmcMessage & message, bool responseExpected, unsigned int timeout)
 {
   Q_ASSERT(bTag != 0);
 
+  clearSplitAction();
   pvFrame.clear();
   pvFrame.setMsgID(mdtUsbtmcFrame::msgId_t::DEV_DEP_MSG_OUT);
   pvFrame.setbTag(bTag);
@@ -52,6 +54,7 @@ void mdtUsbtmcBulkTransfer::setupRequestDevDepMsgIn(uint8_t bTag, bool termCharE
 {
   Q_ASSERT(bTag != 0);
 
+  clearSplitAction();
   pvFrame.clear();
   pvFrame.setMsgID(mdtUsbtmcFrame::msgId_t::DEV_DEP_MSG_IN);
   pvFrame.setbTag(bTag);
@@ -68,6 +71,7 @@ void mdtUsbtmcBulkTransfer::setupRequestDevDepMsgIn(uint8_t bTag, bool termCharE
 
 void mdtUsbtmcBulkTransfer::setupBulkInRequest ( unsigned int timeout )
 {
+  clearSplitAction();
   pvFrame.clear();
   pvResponseExpected = false;
   libusb_fill_bulk_transfer(transfer(), deviceHandle(),
@@ -81,6 +85,7 @@ void mdtUsbtmcBulkTransfer::dbgSetupCustom(uint8_t msgID, uint8_t bTag, uint8_t 
 {
   Q_ASSERT(transferBufferLength <= pvFrame.capacity());
 
+  clearSplitAction();
   pvFrame.clear();
   pvFrame.setMsgID(static_cast<mdtUsbtmcFrame::msgId_t>(msgID));
   pvFrame.setbTag(bTag);

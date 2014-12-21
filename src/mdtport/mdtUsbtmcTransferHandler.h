@@ -27,6 +27,7 @@
 #include "mdtUsbInterfaceDescriptor.h"
 #include "mdtUsbEndpointDescriptor.h"
 #include "mdtUsbTransfer.h"
+#include "mdtUsbtmcBulkTransfer.h"
 #include "mdtUsbtmcMessage.h"
 #include "mdtBasicStateMachine.h"
 #include <QObject>
@@ -36,7 +37,7 @@
 #include <mutex>
 
 class mdtUsbtmcControlTransfer;
-class mdtUsbtmcBulkTransfer;
+///class mdtUsbtmcBulkTransfer;
 
 /*! \brief USBTMC transfer handler
  */
@@ -48,13 +49,15 @@ class mdtUsbtmcTransferHandler
    */
   enum class State_t
   {
-    Stopped = 0,    /*!< USB port thread is stopped */
-    Setup,          /*!< USB port thread is starting and has called setup() */
-    Running,        /*!< USB port thread is running (ready for I/O) */
-    AbortingBulkIo, /*!< Currently aborting Bulk-OUT/IN - No bulk transfer possible */
-    Stopping,       /*!< USB port thread is stopping (No I/O, submit no more transfer) */
-    Disconnected,   /*!< Device is no more present */
-    Error           /*!< USB port thread is stopped due to a error (No I/O) */
+    Stopped = 0,      /*!< USB port thread is stopped */
+    Setup,            /*!< USB port thread is starting and has called setup() */
+    Running,          /*!< USB port thread is running (ready for I/O) */
+    ///AbortingBulkOut,  /*!< Currently aborting a Bulk-OUT transfer - No bulk transfer possible */
+    ///AbortingBulkIn,   /*!< Currently aborting a Bulk-IN transfer - No bulk transfer possible */
+    AbortingBulkIo,      /*!< Currently aborting a Bulk-OU/Bulk-OUT transfer - No bulk transfer possible */
+    Stopping,         /*!< USB port thread is stopping (No I/O, submit no more transfer) */
+    Disconnected,     /*!< Device is no more present */
+    Error             /*!< USB port thread is stopped due to a error (No I/O) */
   };
 
   /*! \brief Constructor
@@ -71,13 +74,21 @@ class mdtUsbtmcTransferHandler
    */
   void submitCommand(mdtUsbtmcMessage & message, bool responseExpected, unsigned int timeout);
 
+  /*! \brief Abort a Bulk-OUT transfer
+   */
+  ///void submitAbortBulkOutTransfer();
+
+  /*! \brief Abort a Bulk-IN transfer
+   */
+  ///void submitAbortBulkInTransfer();
+
   /*! \brief Submit cancellation of all bulk-OUT transfers
    */
-  void submitBulkOutTransfersCancellation();
+  ///void submitBulkOutTransfersCancellation();
 
   /*! \brief Submit cancellation of all bulk-IN transfers
    */
-  void submitBulkInTransfersCancellation();
+  ///void submitBulkInTransfersCancellation();
 
   /*! \brief Submit a custom transfer
    *
@@ -86,6 +97,20 @@ class mdtUsbtmcTransferHandler
    */
   void dbgSubmitCustomBulkOutTransfer(uint8_t msgID, uint8_t bTag, uint8_t bTagInverse, uint32_t transferSize, uint8_t bmTransferAttributes, uint8_t termChar,
                                       bool responseExpected, int transferBufferLength, unsigned int timeout);
+
+  /*! \brief Force to abort a pending Bulk-OUT transfer
+   *
+   * Will get a pending Bulk-OUT transfer and proceed abort it.
+   *  Used for debug and testing.
+   */
+  void dbgSubmitAbortOnePendingBulkOutTransfer();
+
+  /*! \brief Force to abort a pending Bulk-IN transfer
+   *
+   * Will get a pending Bulk-IN transfer and proceed abort it.
+   *  Used for debug and testing.
+   */
+  void dbgSubmitAbortOnePendingBulkInTransfer();
 
   /*! \brief Submit a CLEAR_FEATURE control request with wValue = ENDPOINT_HALT for given endpoint
    */
@@ -175,6 +200,8 @@ class mdtUsbtmcTransferHandler
     switch(currentState()){
       case State_t::Running:
       case State_t::AbortingBulkIo:
+      ///case State_t::AbortingBulkOut:
+      ///case State_t::AbortingBulkIn:
         return false;
       default:
         return true;
@@ -229,14 +256,6 @@ class mdtUsbtmcTransferHandler
    */
   void submitRequestDevDepMsgIn(unsigned int timeout);
 
-  /*! \brief Submit a Bulk-IN transfer
-   */
-  void submitBulkInTransfer(unsigned int timeout);
-
-  /*! \brief Handle Bulk-IN transfer complete
-   */
-  void handleBulkInTransferComplete(mdtUsbtmcBulkTransfer *transfer);
-
   /*! \brief Get next bTag for bulk-OUT endpoint
    */
   uint8_t nextBulkOutbTag()
@@ -247,6 +266,68 @@ class mdtUsbtmcTransferHandler
     }
     return pvBulkOutbTag;
   }
+
+  /*! \brief Retire IRPs for given transfer
+   */
+  void submitRetireBulkIRPs(mdtUsbtmcBulkTransfer *transfer);
+
+  /*! \brief Submit a Bulk-IN transfer
+   */
+  void submitBulkInTransfer(unsigned int timeout, mdtUsbtmcBulkTransfer::SplitAction_t action = mdtUsbtmcBulkTransfer::SplitAction_t::NoAction);
+
+  /*! \brief Handle Bulk-IN transfer complete
+   */
+  void handleBulkInTransferComplete(mdtUsbtmcBulkTransfer *transfer);
+
+  /*! \brief Begin to abort a bulk-IN transfer
+   *
+   * At first, current state is set to AbortingBulkIo,
+   *  preventing new bulk request to be accepted.
+   *
+   * Will retire IRPs for all pending bulk-OUT transfers
+   *  that expect a response and submit the first INITIATE_ABORT_BULK_IN request.
+   *
+   *  Later on, handleControlTransferComplete() will receive a response,
+   *  then calls handleInitiateAbortBulkInResponse().
+   */
+  void beginAbortBulkInTransfer(uint8_t bTag);
+
+  /*! \brief Handle INITIATE_ABORT_BULK_IN response
+   *
+   * This function is called by handleControlTransferComplete()
+   *  when a INITIATE_ABORT_BULK_IN response was received.
+   *
+   * If device returned STATUS_SUCCESS, split action will be set to CHECK_ABORT_STATUS for a pending bulk-IN transfer.
+   *  This way, handleInitiateAbortBulkInResponse() knows that it must call submitCheckAbortBulkInStatusRequest().
+   *
+   * Regarding other USBTMC status:
+   *  - INITIATE_ABORT_BULK_IN can be resubmitted
+   *  - If done, retires bulk-IN IRPs and current state will be updated back to Running
+   */
+  void handleInitiateAbortBulkInResponse(mdtUsbtmcControlTransfer *transfer);
+
+  /*! \brief Submit CHECK_ABORT_BULK_IN_STATUS query
+   *
+   * Called by handleBulkInTransferComplete()
+   *  if transfer split action was set to CHECK_ABORT_STATUS.
+   */
+  void submitCheckAbortBulkInStatusRequest(mdtUsbtmcControlTransfer *controlTransfer = 0);
+
+  /*! \brief Handle CHECK_ABORT_BULK_IN_STATUS resonse
+   *
+   * This function is called by handleControlTransferComplete()
+   *  when a CHECK_ABORT_BULK_IN_STATUS response was received.
+   *
+   * If device returned STATUS_PENDING with bmAbortBulkIn.D0=1 :
+   *  - If a pending bulk-IN transfer exists, its action will be set to CHECK_ABORT_STATUS
+   *  - Else, a new bulk-IN transfer is initiated with action set to CHECK_ABORT_STATUS
+   *
+   * If device returned STATUS_PENDING with bmAbortBulkIn.D0=0 :
+   *  - submitCheckAbortBulkInStatusRequest() is called after some time.
+   *
+   * If device returned a other status, current state will be updated back to Running.
+   */
+  void handleCheckAbortBulkInStatusResponse(mdtUsbtmcControlTransfer *transfer);
 
   /*! \brief Handle control transfer complete
    */

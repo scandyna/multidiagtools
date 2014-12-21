@@ -713,10 +713,11 @@ void mdtUsbPortTest::usbtmcBulkTransferTest()
   /*
    * Check some flags
    */
-  // Check some flags
   QVERIFY(!(transfer.flags() & LIBUSB_TRANSFER_FREE_BUFFER));
   QVERIFY(!(transfer.flags() & LIBUSB_TRANSFER_FREE_TRANSFER));
   QVERIFY(!transfer.responseExpected());
+  QVERIFY(transfer.splitAction() == mdtUsbtmcBulkTransfer::SplitAction_t::NoAction);
+  QVERIFY(!transfer.splitActionRequired());
   // Check completed flag
   QVERIFY(transfer.completedPointer() != 0);
   QVERIFY(*transfer.completedPointer() == 0);
@@ -730,6 +731,16 @@ void mdtUsbPortTest::usbtmcBulkTransferTest()
   QVERIFY(*transfer.completedPointer() == 1);
   // Check sync flag (can only check default without calling submit() or cancel())
   QVERIFY(!transfer.isSync());
+  /*
+   * Check Split action
+   */
+  transfer.setSplitAction(mdtUsbtmcBulkTransfer::SplitAction_t::INITIATE_ABORT);
+  QVERIFY(transfer.splitAction() == mdtUsbtmcBulkTransfer::SplitAction_t::INITIATE_ABORT);
+  QVERIFY(transfer.splitActionRequired());
+  transfer.clearSplitAction();
+  QVERIFY(transfer.splitAction() == mdtUsbtmcBulkTransfer::SplitAction_t::NoAction);
+  QVERIFY(!transfer.splitActionRequired());
+
   /*
    * Setup DEV_DEP_MSG_OUT transfer
    */
@@ -748,6 +759,13 @@ void mdtUsbPortTest::usbtmcBulkTransferTest()
   transfer.setupDevDepMsgOut(3, message, true, 30000);
   QVERIFY(transfer.responseExpected());
   QCOMPARE(transfer.bTag(), (uint8_t)3);
+  // Check Split action reset
+  ba = "*CLS\n";
+  message.reset();
+  transfer.setSplitAction(mdtUsbtmcBulkTransfer::SplitAction_t::INITIATE_ABORT);
+  QVERIFY(transfer.splitActionRequired());
+  transfer.setupDevDepMsgOut(2, message, false, 30000);
+  QVERIFY(!transfer.splitActionRequired());
 
   /*
    * Setup REQUEST_DEV_DEP_MSG_IN
@@ -755,6 +773,11 @@ void mdtUsbPortTest::usbtmcBulkTransferTest()
   transfer.setupRequestDevDepMsgIn(4, false, '\0', 30000);
   QVERIFY(!transfer.responseExpected());
   QCOMPARE(transfer.bTag(), (uint8_t)4);
+  // Check Split action reset
+  transfer.setSplitAction(mdtUsbtmcBulkTransfer::SplitAction_t::INITIATE_ABORT);
+  QVERIFY(transfer.splitActionRequired());
+  transfer.setupRequestDevDepMsgIn(4, false, '\0', 30000);
+  QVERIFY(!transfer.splitActionRequired());
 
   // Free ressources
   if(handle != 0){
@@ -1189,9 +1212,13 @@ void mdtUsbPortTest::usbtmcPortThreadTest()
   th.submitCommand(message, true, 30000);
   ba = "*CLS\n";
   // Cancel bulk-OUT transfers
+  ///th.dbgSubmitAbortOnePendingBulkOutTransfer();
+  th.dbgSubmitAbortOnePendingBulkInTransfer();
+  
+  ///th.submitAbortBulkOutTransfer();
   ///th.submitBulkOutTransfersCancellation();
   // Cancel bulk-IN transfers
-  th.submitBulkInTransfersCancellation();
+  ///th.submitBulkInTransfersCancellation();
 
   
   /*
