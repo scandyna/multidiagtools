@@ -142,7 +142,7 @@ class mdtUsbtmcFrame
 
   /*! \brief Get MsgID
    *
-   * See Table 2 in USBTMC specifications for details.
+   * See Table 2 in USBTMC 1.0 specifications for details.
    */
   msgId_t msgID() const{
     return static_cast<msgId_t>(pvBuffer[0]);
@@ -150,7 +150,7 @@ class mdtUsbtmcFrame
 
   /*! \brief Set bTag
    *
-   * See Table 1 in USBTMC specifications for details.
+   * See Table 1 in USBTMC 1.0 specifications for details.
    * Note: will also set bTagInverse
    */
   void setbTag(uint8_t bTag){
@@ -274,7 +274,19 @@ class mdtUsbtmcFrame
    */
   void getData(mdtUsbtmcMessage & message)
   {
+    /// \todo Should transferSize be checked before writing ?
     message.write(pvBuffer.data()+12, transferSize());
+  }
+
+  /*! \brief Set custom value
+   *
+   * Used for debug and testing
+   * \pre offset must be < capacity
+   */
+  void dbgSetCustomValue(int offset, uint8_t value)
+  {
+    Q_ASSERT(offset < capacity());
+    pvBuffer[offset] = value;
   }
 
   /*! \brief Set data

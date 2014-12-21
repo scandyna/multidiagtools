@@ -56,11 +56,76 @@ class mdtUsbtmcBulkTransfer : public mdtUsbTransfer
    *
    * \param bTag See USBTMC 1.0 specifications, Table 1 for details
    * \param message Message in witch data must be transferred.
+   * \param responseExpected If message is a query that expects a response, like *IDN?, set this flag.
    * \param timeout Timeout [ms]
    * 
    * \pre bTag must be in range [1;255]
    */
-  void setupDevDepMsgOut(uint8_t bTag, mdtUsbtmcMessage & message, unsigned int timeout);
+  void setupDevDepMsgOut(uint8_t bTag, mdtUsbtmcMessage & message, bool responseExpected, unsigned int timeout);
+
+  /*! \brief Setup REQUEST_DEV_DEP_MSG_IN transfer
+   *
+   * See USBTMC 1.0 specifications, section 3.2.1.2
+   *
+   * \param bTag See USBTMC 1.0 specifications, Table 1 for details
+   * \param termCharEnabled Set true if required and device support it.
+   * \param termChar Term char. Is ignored if termCharEnabled is false.
+   * \param timeout Timeout [ms]
+   * 
+   * \pre bTag must be in range [1;255]
+   */
+  void setupRequestDevDepMsgIn(uint8_t bTag, bool termCharEnabled, char termChar , unsigned int timeout);
+
+  /*! \brief Setup bulk-IN transfer
+   *
+   * See USBTMC 1.0 specifications, section 3.3
+   *
+   * \param timeout Timeout [ms]
+   */
+  void setupBulkInRequest(unsigned int timeout);
+
+  /*! \brief Get bTag
+   */
+  inline uint8_t bTag() const
+  {
+    return pvFrame.bTag();
+  }
+
+  /*! \brief Check if bTagInverse is the innverse of bTag
+   *
+   * Uuseful to check bulk-IN transfers.
+   */
+  bool bTagIsOk() const
+  {
+    return (pvFrame.bTag() == static_cast<uint8_t>(~pvFrame.bTagInverse()));
+  }
+
+  /*! \brief Get MsgID
+   *
+   * See Table 2 in USBTMC 1.0 specifications for details.
+   */
+  inline mdtUsbtmcFrame::msgId_t msgID() const
+  {
+    return pvFrame.msgID();
+  }
+
+  /*! \brief Check if all data anounced in TransferSize by device are available
+   *
+   * \param rxLength The actual length that libusb set in transfer struct
+   */
+  bool receivedAllData(int rxLength)
+  {
+    return pvFrame.isComplete(rxLength);
+  }
+
+  /*! \brief Get data
+   *
+   * Will write (by copy) data part to given message.
+   */
+  void getData(mdtUsbtmcMessage & message)
+  {
+    pvFrame.getData(message);
+  }
 
   /*! \brief Get transfer handler
    */
@@ -69,11 +134,27 @@ class mdtUsbtmcBulkTransfer : public mdtUsbTransfer
     return pvTransferHandler;
   }
 
+  /*! \brief Check if a response is expected
+   */
+  bool responseExpected() const
+  {
+    return pvResponseExpected;
+  }
+
+  /*! \brief Setup a custom transfer
+   *
+   * Used for debug and testing.
+   * \pre transferBufferLength must be <= Internal frame capacity
+   */
+  void dbgSetupCustom(uint8_t msgID, uint8_t bTag, uint8_t bTagInverse, uint32_t transferSize, uint8_t bmTransferAttributes, uint8_t termChar,
+                      bool responseExpected, int transferBufferLength, unsigned int timeout);
+
  private:
 
   mdtUsbtmcFrame pvFrame;
   mdtUsbtmcTransferHandler & pvTransferHandler;
   mdtUsbEndpointDescriptor pvEndpointDescriptor;
+  bool pvResponseExpected;
 };
 
 #endif // #ifndef MDT_USBTMC_BULK_TRANSFER_H

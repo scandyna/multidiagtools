@@ -20,7 +20,8 @@
  ****************************************************************************/
 #include "mdtUsbControlTransfer.h"
 
-mdtUsbControlTransfer::mdtUsbControlTransfer ( libusb_device_handle* dev_handle, int bufferSize ) : mdtUsbTransfer ( dev_handle, bufferSize )
+mdtUsbControlTransfer::mdtUsbControlTransfer(libusb_device_handle* dev_handle, int bufferSize )
+ : mdtUsbTransfer(dev_handle, bufferSize)
 {
   Q_ASSERT(bufferSize >= 8);
 

@@ -89,13 +89,23 @@ void mdtUsbtmcPortThreadNew::run()
       break;
     }
     // Check transfer handler state - If not Running, some error happend
-    if(pvTransferHandler.currentState() != mdtUsbtmcTransferHandler::State_t::Running){
+    if(pvTransferHandler.mustBeStopped()){
       /// \todo Error handling !
       qDebug() << "Transfer handler in error ?";
       break;
     }
     // Let transfer handler do his synchronous tasks (if any)
+    /**
+    qDebug() << "USBTMC THD: handle sync events ...";
     pvTransferHandler.handleSyncEvents();
+    qDebug() << "USBTMC THD: handle sync events DONE";
+    // Check transfer handler state - If not Running, some error happend
+    if(pvTransferHandler.mustBeStopped()){
+      /// \todo Error handling !
+      qDebug() << "Transfer handler in error ?";
+      break;
+    }
+    */
   }
   pvTransferHandler.setCurrentState(mdtUsbtmcTransferHandler::State_t::Stopped);
   qDebug() << "USBTMC THD: END ...";

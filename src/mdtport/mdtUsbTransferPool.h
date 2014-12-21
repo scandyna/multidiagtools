@@ -31,10 +31,10 @@
  *
  * This class handles 2 transfer queues:
  *  - Pool: available transfers to initiate I/O requests
- *  - Pending: transfers that where submitted
+ *  - Pending: transfers that where submitted but not yet completed
  *
  * To get a transfer, use getTransfer(). This will directly
- *  put returned transfer to pending queue.
+ *  put returned transfer to pending (but not yet completed) queue.
  *
  * Because submitting a transfer, and cancelling the same transfer,
  *  can be done in concurrent way, a lock should be used to prevent this.
@@ -102,8 +102,6 @@ class mdtUsbTransferPool
     pvDeviceHandle = 0;
   }
 
-  ///mdtUsbtmcControlTransfer(mdtUsbtmcTransferHandler & th, libusb_device_handle *dev_handle, int bufferSize = 1024);
-
   /*! \brief Alloc transfers
    *
    * \param n Number of transfers
@@ -120,53 +118,7 @@ class mdtUsbTransferPool
     transferAllocator<TransferHandlerType> ta(th, devHandle);
 
     return allocTransfers<TransferHandlerType>(n, ta);
-    /**
-    int i;
-    T *transfer;
-
-    clear();
-    pvDeviceHandle = devHandle;
-    pvTransfers.reserve(n);
-    for(i = 0; i < n; ++i){
-      transfer = new T(th, pvDeviceHandle);
-      if(transfer == 0){
-        clear();
-        return false;
-      }
-      pvTransfers.push_back(transfer);
-    }
-    pvAllocatedTransfers = pvTransfers.size();
-
-    return true;
-    */
   }
-
-  /**
-  template<typename TransferHandlerType>
-  bool allocTransfers(unsigned int n, TransferHandlerType & th, libusb_device_handle *devHandle)
-  {
-    Q_ASSERT(devHandle != 0);
-    Q_ASSERT(n <= pvMaxTransfers);
-
-    int i;
-    T *transfer;
-
-    clear();
-    pvDeviceHandle = devHandle;
-    pvTransfers.reserve(n);
-    for(i = 0; i < n; ++i){
-      transfer = new T(th, pvDeviceHandle);
-      if(transfer == 0){
-        clear();
-        return false;
-      }
-      pvTransfers.push_back(transfer);
-    }
-    pvAllocatedTransfers = pvTransfers.size();
-
-    return true;
-  }
-  */
 
   /*! \brief Alloc transfers
    *
@@ -203,29 +155,6 @@ class mdtUsbTransferPool
     transferAllocator<TransferHandlerType> ta(th, pvDeviceHandle);
 
     return getTransfer<TransferHandlerType>(ta);
-    /**
-    T *transfer;
-
-    // Allocate a new transfer if required and permitted
-    if(pvTransfers.empty()){
-      Q_ASSERT(pvAllocatedTransfers < pvMaxTransfers);
-      if(pvAllocatedTransfers < pvMaxTransfers){
-        ++pvAllocatedTransfers;
-        transfer = new T(th, pvDeviceHandle);
-        pvPendingTransfers.push_back(transfer);
-        return transfer;
-      }else{
-        return 0;
-      }
-    }
-    // Have in pool, get one
-    transfer = pvTransfers.back();
-    Q_ASSERT(transfer != 0);
-    pvTransfers.pop_back();
-    pvPendingTransfers.push_back(transfer);
-
-    return transfer;
-    */
   }
 
   /*! \brief Get a transfer from pool
@@ -279,6 +208,18 @@ class mdtUsbTransferPool
       return 0;
     }
     return pvPendingTransfers.back();
+  }
+
+  /*! \brief Get all pending transfers
+   *
+   * Note that returned transfers are not removed
+   *  from pending queue. Be aware that another thread,
+   *  or a callback, could restore a transfer at the same time,
+   *  and that will invalidate returned queue.
+   */
+  std::vector<T*> getAllPendingTransfers()
+  {
+    return pvPendingTransfers;
   }
 
   /*! \brief Restore pending transfers to pool

@@ -1,12 +1,15 @@
 window_sizes 1280 916 258 1016 863 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 1298690 // Usbtmc
+  classdiagram_ref 1298690 // Usbtmc
     1016 863 80 8 0 0
   classdiagram_ref 1332098 // UsbPortThread
     120 106 80 17 12 0
+  active  statediagram_ref 1312002 // Main
+    1016 863 100 17 0 0
 end
 show_stereotypes
+selected statediagram_ref 1312002 // Main
 open
   operation_ref 2417410 // completedPointer
   classrelation_ref 1886978 // <generalisation>
@@ -24,6 +27,7 @@ open
   operation_ref 2374914 // setupInitiateAbortBulkOut
   class_ref 1485570 // mdtUsbtmcBulkTransfer
   class_ref 1478914 // mdtUsbtmcTransferHandler
+  state_ref 219266 // UsbtmcTransferHandlerStateMachine
   class_ref 1518594 // UsbtmcMessage
   classview_ref 722306 // ModbusTcp
   class_ref 1437186 // libusb_device_handle

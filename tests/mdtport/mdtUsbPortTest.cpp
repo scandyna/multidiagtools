@@ -716,6 +716,7 @@ void mdtUsbPortTest::usbtmcBulkTransferTest()
   // Check some flags
   QVERIFY(!(transfer.flags() & LIBUSB_TRANSFER_FREE_BUFFER));
   QVERIFY(!(transfer.flags() & LIBUSB_TRANSFER_FREE_TRANSFER));
+  QVERIFY(!transfer.responseExpected());
   // Check completed flag
   QVERIFY(transfer.completedPointer() != 0);
   QVERIFY(*transfer.completedPointer() == 0);
@@ -734,7 +735,26 @@ void mdtUsbPortTest::usbtmcBulkTransferTest()
    */
   ba = "*IDN?\n";
   message.reset();
-  transfer.setupDevDepMsgOut(1, message, 30000);
+  transfer.setupDevDepMsgOut(1, message, true, 30000);
+  QVERIFY(transfer.responseExpected());
+  QCOMPARE(transfer.bTag(), (uint8_t)1);
+  ba = "*CLS\n";
+  message.reset();
+  transfer.setupDevDepMsgOut(2, message, false, 30000);
+  QVERIFY(!transfer.responseExpected());
+  QCOMPARE(transfer.bTag(), (uint8_t)2);
+  ba = "*IDN?\n";
+  message.reset();
+  transfer.setupDevDepMsgOut(3, message, true, 30000);
+  QVERIFY(transfer.responseExpected());
+  QCOMPARE(transfer.bTag(), (uint8_t)3);
+
+  /*
+   * Setup REQUEST_DEV_DEP_MSG_IN
+   */
+  transfer.setupRequestDevDepMsgIn(4, false, '\0', 30000);
+  QVERIFY(!transfer.responseExpected());
+  QCOMPARE(transfer.bTag(), (uint8_t)4);
 
   // Free ressources
   if(handle != 0){
@@ -807,6 +827,7 @@ void mdtUsbPortTest::usbtmcControlTransferTest()
   mdtUsbtmcTransferHandler th(usbCtx);
   mdtUsbtmcControlTransfer transfer(th, handle);
   QVERIFY(transfer.allocOk());
+  QCOMPARE(transfer.actualLength(), 0);
   // Check some flags
   QVERIFY(!(transfer.flags() & LIBUSB_TRANSFER_FREE_BUFFER));
   QVERIFY(!(transfer.flags() & LIBUSB_TRANSFER_FREE_TRANSFER));
@@ -1111,6 +1132,8 @@ void mdtUsbPortTest::usbtmcPortThreadTest()
 {
   libusb_context *usbCtx = 0;
   mdtUsbDeviceDescriptor deviceDescriptor;
+  QByteArray ba;
+  mdtUsbtmcMessage message(ba);
   int ret;
 
   // Init libusb
@@ -1137,13 +1160,68 @@ void mdtUsbPortTest::usbtmcPortThreadTest()
   QVERIFY(thd.start(deviceDescriptor, 0));
   devList.clear();
 
+  // Submit a normal query
+  ba = "*IDN?\n";
+  message.reset();
+  qDebug() << "TEST: submit bulk message ...";
+  th.submitCommand(message, true, 30000);
+  QTest::qWait(100);
+  /// \todo Check that data was returned
+  
+  // Produce error: submit a command that expects no response, but tell we want one back
+  ba = "*CLS\n";
+  message.reset();
+  qDebug() << "TEST: submit bulk message *CLS ...";
+  th.submitCommand(message, true, 30000);
+  QTest::qWait(100);
+  // Submit a normal query
+  ba = "*IDN?\n";
+  message.reset();
+  qDebug() << "TEST: submit bulk message ...";
+  th.submitCommand(message, true, 30000);
+  QTest::qWait(100);
+  /// \todo Check that data was returned
+  
+  // Produce error: submit a query + command without waiting
+  ba = "*IDN?\n";
+  message.reset();
+  qDebug() << "TEST: submit *IDN? + *ClS bulk message ...";
+  th.submitCommand(message, true, 30000);
+  ba = "*CLS\n";
+  // Cancel bulk-OUT transfers
+  ///th.submitBulkOutTransfersCancellation();
+  // Cancel bulk-IN transfers
+  th.submitBulkInTransfersCancellation();
+
+  
+  /*
+   * Send a custom transfer with invalid MsgID:
+   * - MsgID: 0 (invalid)
+   * - bTag : 5
+   * - bTagInverse: ~5
+   * - transferSize: 12
+   * - bmTransferAttributes: 0
+   * - TermChar: 0
+   */
+  ///th.dbgSubmitCustomBulkOutTransfer(1, 5, ~5, 12, 0, 0, false, 12, 30000);
+  ///QTest::qWait(100);
+
+  // Submit a normal query
+  ba = "*IDN?\n";
+  message.reset();
+  qDebug() << "TEST: submit bulk message ...";
+  th.submitCommand(message, true, 30000);
+  /// \todo Check that data was returned
+  
+  QTest::qWait(1000);
+
   // Send some control requests
   ///qDebug() << "TEST: submit a control transfer ...";
   ///QVERIFY(th.submitClearBulkOutEndpointHalt(30000));
-  qDebug() << "TEST: submit a control transfer ...";
-  th.beginClearBulkIo();
+  ///qDebug() << "TEST: submit a control transfer ...";
+  ///th.beginClearBulkIo();
 
-  usleep(100000);
+  ///usleep(100000);
 
   // Stop..
   thd.stop();

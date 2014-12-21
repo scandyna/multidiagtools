@@ -27,6 +27,7 @@
 #include "mdtUsbInterfaceDescriptor.h"
 #include "mdtUsbEndpointDescriptor.h"
 #include "mdtUsbTransfer.h"
+#include "mdtUsbtmcMessage.h"
 #include "mdtBasicStateMachine.h"
 #include <QObject>
 #include <QString>
@@ -47,11 +48,13 @@ class mdtUsbtmcTransferHandler
    */
   enum class State_t
   {
-    Stopped = 0,  /*!< USB port thread is stopped */
-    Setup,        /*!< USB port thread is starting and has called setup() */
-    Running,      /*!< USB port thread is running (ready for I/O) */
-    Stopping,     /*!< USB port thread is stopping (No I/O, submit no more transfer) */
-    Error         /*!< USB port thread is stopped due to a error (No I/O) */
+    Stopped = 0,    /*!< USB port thread is stopped */
+    Setup,          /*!< USB port thread is starting and has called setup() */
+    Running,        /*!< USB port thread is running (ready for I/O) */
+    AbortingBulkIo, /*!< Currently aborting Bulk-OUT/IN - No bulk transfer possible */
+    Stopping,       /*!< USB port thread is stopping (No I/O, submit no more transfer) */
+    Disconnected,   /*!< Device is no more present */
+    Error           /*!< USB port thread is stopped due to a error (No I/O) */
   };
 
   /*! \brief Constructor
@@ -61,6 +64,28 @@ class mdtUsbtmcTransferHandler
   /*! \brief Setup handler
    */
   bool setup(libusb_device_handle *handle, const mdtUsbDeviceDescriptor & descriptor, uint8_t bInterfaceNumber);
+
+  /*! \brief Submit a command
+   * 
+   * \param responseExpected If message is a query that expects a response, like *IDN?, set this flag.
+   */
+  void submitCommand(mdtUsbtmcMessage & message, bool responseExpected, unsigned int timeout);
+
+  /*! \brief Submit cancellation of all bulk-OUT transfers
+   */
+  void submitBulkOutTransfersCancellation();
+
+  /*! \brief Submit cancellation of all bulk-IN transfers
+   */
+  void submitBulkInTransfersCancellation();
+
+  /*! \brief Submit a custom transfer
+   *
+   * Used for debug and testing.
+   * \pre transferBufferLength must be <= Internal frame capacity
+   */
+  void dbgSubmitCustomBulkOutTransfer(uint8_t msgID, uint8_t bTag, uint8_t bTagInverse, uint32_t transferSize, uint8_t bmTransferAttributes, uint8_t termChar,
+                                      bool responseExpected, int transferBufferLength, unsigned int timeout);
 
   /*! \brief Submit a CLEAR_FEATURE control request with wValue = ENDPOINT_HALT for given endpoint
    */
@@ -80,13 +105,6 @@ class mdtUsbtmcTransferHandler
     submitClearEndpointHalt(pvBulkInDescriptor.number(), timeout);
   }
 
-  /*! \brief Begin to abort a bulk-OUT transfer
-   *
-   * Will submit INITIATE_ABORT_BULK_OUT request
-   *  and return. When complete, continueAbortBulkOutTransfer() will be called.
-   */
-  bool beginAbortBulkOutTransfer();
-
   /*! \brief Begin clear bulk I/O
    *
    * Will begin bulk I/O clear and submit INITIATE_CLEAR request and return.
@@ -102,17 +120,13 @@ class mdtUsbtmcTransferHandler
    */
   static void controlTransferCallback(libusb_transfer *transfer);
 
-  /*! \brief Handle control transfer complete
-   */
-  void handleControlTransferComplete(mdtUsbtmcControlTransfer *transfer);
-
   /*! \brief Bulk-OUT transfer callback
    */
   static void bulkOutTransferCallback(libusb_transfer *transfer);
 
-  /*! \brief Handle Bulk-OUT transfer complete
+  /*! \brief Bulk-IN transfer callback
    */
-  void handleBulkOutTransferComplete(mdtUsbtmcBulkTransfer *transfer);
+  static void bulkInTransferCallback(libusb_transfer *transfer);
 
   /*! \brief Start synchornous events
    *
@@ -126,7 +140,7 @@ class mdtUsbtmcTransferHandler
    * As workaround, the USBTMC port thread will call current function once
    *  libusb_handle_events() returns.
    */
-  void handleSyncEvents();
+  ///void handleSyncEvents();
 
   /*! \brief Check if there are pending transfers
    */
@@ -152,7 +166,91 @@ class mdtUsbtmcTransferHandler
     return pvStateMachine.currentState();
   }
 
+  /*! \brief Check if handler must be stopped
+   *
+   * Is called by port thread to know if it must exit.
+   */
+  bool mustBeStopped() const
+  {
+    switch(currentState()){
+      case State_t::Running:
+      case State_t::AbortingBulkIo:
+        return false;
+      default:
+        return true;
+    }
+  }
+
  private:
+
+  /*! \brief Handle Bulk-OUT transfer complete
+   */
+  void handleBulkOutTransferComplete(mdtUsbtmcBulkTransfer *transfer);
+
+  /*! \brief Begin to abort a bulk-OUT transfer
+   *
+   * Will submit the first INITIATE_ABORT_BULK_OUT request and return.
+   *  Later on, handleControlTransferComplete() will receive a response,
+   *  then calls handleInitiateAbortBulkOutResponse().
+   */
+  void beginAbortBulkOutTransfer(uint8_t bTag);
+
+  /*! \brief Handle INITIATE_ABORT_BULK_OUT response
+   *
+   * This function is called by handleControlTransferComplete()
+   *  when a INITIATE_ABORT_BULK_OUT response was received.
+   *
+   * Regarding USBTMC status:
+   *  - INITIATE_ABORT_BULK_OUT can be resubmitted
+   *  - CHECK_ABORT_BULK_OUT_STATUS request can be sent
+   *  - If done, current state will be updated back to Running
+   */
+  void handleInitiateAbortBulkOutResponse(mdtUsbtmcControlTransfer *transfer);
+
+  /*! \brief Handle CHECK_ABORT_BULK_OUT_STATUS resonse
+   *
+   * This function is called by handleControlTransferComplete()
+   *  when a CHECK_ABORT_BULK_OUT_STATUS response was received.
+   *
+   * Regarding USBTMC status:
+   * 
+   */
+  void handleCheckAbortBulkOutStatusResponse(mdtUsbtmcControlTransfer *transfer);
+
+  /*! \brief Continue to abort a bulk-OUT transfer
+   *
+   * This function does synchronous transfer, be care about.
+   *
+   * \sa See handleSyncEvents()
+   */
+  ///void continueAbortBulkOutTransfer(mdtUsbtmcControlTransfer *transfer);
+
+  /*! \brief Submit a REQUEST_DEV_DEP_MSG_IN
+   */
+  void submitRequestDevDepMsgIn(unsigned int timeout);
+
+  /*! \brief Submit a Bulk-IN transfer
+   */
+  void submitBulkInTransfer(unsigned int timeout);
+
+  /*! \brief Handle Bulk-IN transfer complete
+   */
+  void handleBulkInTransferComplete(mdtUsbtmcBulkTransfer *transfer);
+
+  /*! \brief Get next bTag for bulk-OUT endpoint
+   */
+  uint8_t nextBulkOutbTag()
+  {
+    ++pvBulkOutbTag;
+    if(pvBulkOutbTag == 0){
+      ++pvBulkOutbTag;
+    }
+    return pvBulkOutbTag;
+  }
+
+  /*! \brief Handle control transfer complete
+   */
+  void handleControlTransferComplete(mdtUsbtmcControlTransfer *transfer);
 
   /*! \brief Submit a GET_CAPABILITIES request and \todo Comment..
    *
@@ -161,14 +259,6 @@ class mdtUsbtmcTransferHandler
    * \sa See handleSyncEvents()
    */
   bool getCapabilities(uint8_t interfaceNumber, unsigned int timeout);
-
-  /*! \brief Continue to abort a bulk-OUT transfer
-   *
-   * This function does synchronous transfer, be care about.
-   *
-   * \sa See handleSyncEvents()
-   */
-  bool continueAbortBulkOutTransfer();
 
   /*! \brief Continue clear bulk I/O
    *
@@ -189,12 +279,38 @@ class mdtUsbtmcTransferHandler
    */
   bool processSyncControlTransfer(mdtUsbtmcControlTransfer *transfer);
 
+  /*! \brief Restore bulk-OUT transfer to pool
+   */
+  void restoreBulkOutTransferToPool(mdtUsbtmcBulkTransfer *transfer, bool lockMutex);
+
+  /*! \brief Restore bulk-IN transfer to pool
+   */
+  void restoreBulkInTransferToPool(mdtUsbtmcBulkTransfer *transfer, bool lockMutex);
+
+  /*! \brief Restore control transfer to pool
+   */
+  void restoreControlTransferToPool(mdtUsbtmcControlTransfer *transfer, bool lockMutex);
+
   /*! \brief Get device identification string
    *
    * Helper function for error messages generation.
    *  Will simply get pvDeviceDescriptor::idString() with some "decoration text", will not query device.
    */
   QString deviceIdString() const;
+
+  /*! \brief Set last error regarding bulk-OUT transfer status code
+   */
+  void setLastErrorFromBulkOutTransferStatus(mdtUsbtmcBulkTransfer *transfer, mdtError::level_t level, bool lockMutex);
+
+  /*! \brief Set last error regarding bulk-IN transfer status code
+   */
+  void setLastErrorFromBulkInTransferStatus(mdtUsbtmcBulkTransfer *transfer, mdtError::level_t level, bool lockMutex);
+
+  /*! \brief Set last error regarding transfer status code
+   *
+   * Note: will only set the systemError part
+   */
+  void setLastErrorFromTransferStatus(libusb_transfer_status status, bool lockMutex);
 
   /*! \brief Set state regarding libusb_error
    */
@@ -213,7 +329,12 @@ class mdtUsbtmcTransferHandler
   mdtUsbEndpointDescriptor pvInterruptInDescriptor;
   // Bulk-OUT transfer members
   mdtUsbTransferPool<mdtUsbtmcBulkTransfer> pvBulkOutTransferPool;
+  uint8_t pvBulkOutbTag;
   std::mutex pvBulkOutTransferMutex;
+  // Bulk-IN transfer members
+  mdtUsbTransferPool<mdtUsbtmcBulkTransfer> pvBulkInTransferPool;
+  ///uint8_t pvBulkInbTag;
+  std::mutex pvBulkInTransferMutex;
   // Control transfer members
   mdtUsbTransferPool<mdtUsbtmcControlTransfer> pvControlTransferPool;
   std::mutex pvControlTransferMutex;

@@ -26,12 +26,13 @@ mdtUsbtmcBulkTransfer::mdtUsbtmcBulkTransfer(mdtUsbtmcTransferHandler& th, mdtUs
  : mdtUsbTransfer(dev_handle, bufferSize),
    pvFrame(bufferSize),
    pvTransferHandler(th),
-   pvEndpointDescriptor(endpointDescriptor)
+   pvEndpointDescriptor(endpointDescriptor),
+   pvResponseExpected(false)
 {
   Q_ASSERT(!pvEndpointDescriptor.isEmpty());
 }
 
-void mdtUsbtmcBulkTransfer::setupDevDepMsgOut(uint8_t bTag, mdtUsbtmcMessage & message, unsigned int timeout)
+void mdtUsbtmcBulkTransfer::setupDevDepMsgOut(uint8_t bTag, mdtUsbtmcMessage & message, bool responseExpected, unsigned int timeout)
 {
   Q_ASSERT(bTag != 0);
 
@@ -40,8 +41,56 @@ void mdtUsbtmcBulkTransfer::setupDevDepMsgOut(uint8_t bTag, mdtUsbtmcMessage & m
   pvFrame.setbTag(bTag);
   pvFrame.setData(message);
   pvFrame.setEOM(message.hasBytesToRead());
+  pvResponseExpected = responseExpected;
   libusb_fill_bulk_transfer(transfer(), deviceHandle(),
                             pvEndpointDescriptor.address(), pvFrame.buffer(), pvFrame.bufferLength(),
+                            pvTransferHandler.bulkOutTransferCallback, static_cast<void*>(this),
+                            timeout);
+}
+
+void mdtUsbtmcBulkTransfer::setupRequestDevDepMsgIn(uint8_t bTag, bool termCharEnabled, char termChar, unsigned int timeout)
+{
+  Q_ASSERT(bTag != 0);
+
+  pvFrame.clear();
+  pvFrame.setMsgID(mdtUsbtmcFrame::msgId_t::DEV_DEP_MSG_IN);
+  pvFrame.setbTag(bTag);
+  pvFrame.setTransferSizeToMax();
+  pvResponseExpected = false;
+  if(termCharEnabled){
+    pvFrame.setTermChar(termChar);
+  }
+  libusb_fill_bulk_transfer(transfer(), deviceHandle(),
+                            pvEndpointDescriptor.address(), pvFrame.buffer(), 12,
+                            pvTransferHandler.bulkOutTransferCallback, static_cast<void*>(this),
+                            timeout);
+}
+
+void mdtUsbtmcBulkTransfer::setupBulkInRequest ( unsigned int timeout )
+{
+  pvFrame.clear();
+  pvResponseExpected = false;
+  libusb_fill_bulk_transfer(transfer(), deviceHandle(),
+                            pvEndpointDescriptor.address(), pvFrame.buffer(), pvFrame.capacity(),
+                            pvTransferHandler.bulkInTransferCallback, static_cast<void*>(this),
+                            timeout);
+}
+
+void mdtUsbtmcBulkTransfer::dbgSetupCustom(uint8_t msgID, uint8_t bTag, uint8_t bTagInverse, uint32_t transferSize, uint8_t bmTransferAttributes, uint8_t termChar,
+                                           bool responseExpected, int transferBufferLength, unsigned int timeout)
+{
+  Q_ASSERT(transferBufferLength <= pvFrame.capacity());
+
+  pvFrame.clear();
+  pvFrame.setMsgID(static_cast<mdtUsbtmcFrame::msgId_t>(msgID));
+  pvFrame.setbTag(bTag);
+  pvFrame.dbgSetCustomValue(2, bTagInverse);
+  pvFrame.setTransferSize(transferSize);
+  pvFrame.dbgSetCustomValue(8, bmTransferAttributes);
+  pvFrame.dbgSetCustomValue(9, termChar);
+  pvResponseExpected = responseExpected;
+  libusb_fill_bulk_transfer(transfer(), deviceHandle(),
+                            pvEndpointDescriptor.address(), pvFrame.buffer(), transferBufferLength,
                             pvTransferHandler.bulkOutTransferCallback, static_cast<void*>(this),
                             timeout);
 }
