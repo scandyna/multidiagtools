@@ -74,6 +74,13 @@ class mdtUsbtmcTransferHandler
    */
   void submitCommand(mdtUsbtmcMessage & message, bool responseExpected, unsigned int timeout);
 
+  /*! \brief Will cancel all pending bulk-OUT and bulk-IN transfers
+   *
+   * Once all transfers are cancelled, INITIATE_CLEAR and, if needed,
+   *  CHECK_CLEAR_STATUS is sent to device.
+   */
+  void submitBulkTransfersCancellation();
+
   /*! \brief Abort a Bulk-OUT transfer
    */
   ///void submitAbortBulkOutTransfer();
@@ -254,7 +261,7 @@ class mdtUsbtmcTransferHandler
 
   /*! \brief Submit a REQUEST_DEV_DEP_MSG_IN
    */
-  void submitRequestDevDepMsgIn(unsigned int timeout);
+  void submitRequestDevDepMsgIn(mdtUsbtmcBulkTransfer *transfer);
 
   /*! \brief Get next bTag for bulk-OUT endpoint
    */
@@ -270,6 +277,18 @@ class mdtUsbtmcTransferHandler
   /*! \brief Retire IRPs for given transfer
    */
   void submitRetireBulkIRPs(mdtUsbtmcBulkTransfer *transfer);
+
+  /*! \brief Submit cancel for all Bulk-OUT transfers
+   *
+   * If a action is given as argument, it will be set to last transfer cancel request.
+   */
+  void submitCancelAllBulkOutTransfers(bool lockMutex, mdtUsbtmcBulkTransfer::SplitAction_t action = mdtUsbtmcBulkTransfer::SplitAction_t::NoAction);
+
+  /*! \brief Submit cancel for all Bulk-IN transfers
+   *
+   * If a action is given as argument, it will be set to last transfer cancel request.
+   */
+  void submitCancelAllBulkInTransfers(bool lockMutex, mdtUsbtmcBulkTransfer::SplitAction_t action = mdtUsbtmcBulkTransfer::SplitAction_t::NoAction);
 
   /*! \brief Submit a Bulk-IN transfer
    */
@@ -329,6 +348,37 @@ class mdtUsbtmcTransferHandler
    */
   void handleCheckAbortBulkInStatusResponse(mdtUsbtmcControlTransfer *transfer);
 
+  /*! \brief Submit INITIATE_CLEAR request
+   *
+   * This function is called by handleBulkOutTransferComplete() and/or handleBulkInTransferComplete() or directly by submitBulkTransfersCancellation()
+   *  when completed transfer has split action INITIATE_CLEAR.
+   *
+   * This function will really submit the request if there is not pending
+   *  bulk transfer, that to prevent sending INITIATE_CLEAR more than once.
+   */
+  void submitInitiateClearRequest();
+
+  /*! \brief Handle INITIATE_CLEAR response
+   *
+   * This function is called by handleControlTransferComplete()
+   *  when a INITIATE_CLEAR response was received.
+   */
+  void handleInitiateClearResponse(mdtUsbtmcControlTransfer *transfer);
+
+  /*! \brief Submit CHECK_CLEAR_STATUS query
+   *
+   * Can be called by handleBulkInTransferComplete()
+   *  if transfer split action was set to CHECK_CLEAR_STATUS
+   */
+  void submitCheckClearStatusRequest(mdtUsbtmcControlTransfer *controlTransfer = 0);
+
+  /*! \brief Handle CHECK_CLEAR_STATUS response
+   *
+   * This function is called by handleControlTransferComplete()
+   *  when a CHECK_CLEAR_STATUS response was received.
+   */
+  void handleCheckClearStatusResponse(mdtUsbtmcControlTransfer *transfer);
+
   /*! \brief Handle control transfer complete
    */
   void handleControlTransferComplete(mdtUsbtmcControlTransfer *transfer);
@@ -348,7 +398,7 @@ class mdtUsbtmcTransferHandler
    *
    * \sa See handleSyncEvents()
    */
-  void continueClearBulkIo(mdtUsbtmcControlTransfer * transfer);
+  ///void continueClearBulkIo(mdtUsbtmcControlTransfer * transfer);
 
   /*! \brief Process synchronous control transfer
    *

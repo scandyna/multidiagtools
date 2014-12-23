@@ -89,6 +89,17 @@ class mdtUsbtmcControlTransfer : public mdtUsbControlTransfer
    */
   void setupClearEndpointHalt(uint8_t endpointNumber, unsigned int timeout);
 
+  /*! \brief Check if this is a CLEAR_FEATURE request with wValue = ENDPOINT_HALT for given endpoint
+   */
+  bool isClearEndpointHaltRequest(uint8_t endpointNumber) const
+  {
+    return ( ( (bmRequestType() & 0b00011111) == static_cast<uint8_t>(mdtUsbControlTransfer::RequestRecipient_t::Endpoint) )
+             && ( bRequest() == static_cast<uint8_t>(mdtUsbControlTransfer::StandardRequestCode_t::CLEAR_FEATURE) )
+             && ( wValue() == static_cast<uint8_t>(mdtUsbControlTransfer::StandardFeatureSelector_t::ENDPOINT_HALT) )
+             && ( wIndex() == static_cast<uint16_t>(endpointNumber) )
+           );
+  }
+
   /*! \brief Setup a INITIATE_ABORT_BULK_OUT transfer
    *
    * See USBTMC specifications, section 4.2.1.2

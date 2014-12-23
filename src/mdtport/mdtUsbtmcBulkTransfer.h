@@ -48,7 +48,9 @@ class mdtUsbtmcBulkTransfer : public mdtUsbTransfer
     NoAction = 0,       /*!< No action to perform */
     INITIATE_ABORT,     /*!< Begin aborting transfer with INITIATE_ABORT_BULK_[OUT/IN] */
     CHECK_ABORT_STATUS, /*!< Check status with CHECK_ABORT_BULK_[OUT/IN]_STATUS */
-    INITIATE_CLEAR      /*!< Begin INITIATE_CLEAR \todo Voir si utile */
+    INITIATE_CLEAR,     /*!< Begin INITIATE_CLEAR */
+    CHECK_CLEAR_STATUS, /*!< Send a CHECK_CLEAR_STATUS request */
+    CLEAR_ENDPOINT_HALT /*!< Send a CLEAR_FEATURE request with wValue = ENDPOINT_HALT */
   };
 
   /*! \brief Constructor

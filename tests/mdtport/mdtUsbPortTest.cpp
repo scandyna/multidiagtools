@@ -854,6 +854,7 @@ void mdtUsbPortTest::usbtmcControlTransferTest()
   // Check some flags
   QVERIFY(!(transfer.flags() & LIBUSB_TRANSFER_FREE_BUFFER));
   QVERIFY(!(transfer.flags() & LIBUSB_TRANSFER_FREE_TRANSFER));
+  QVERIFY(!transfer.isClearEndpointHaltRequest(1));
   // Check completed flag
   QVERIFY(transfer.completedPointer() != 0);
   QVERIFY(*transfer.completedPointer() == 0);
@@ -884,6 +885,8 @@ void mdtUsbPortTest::usbtmcControlTransferTest()
   QCOMPARE(transfer.wValue(), (uint16_t)0);   // 0 (Feature: ENDPOINT_HALT)
   QCOMPARE(transfer.wIndex(), (uint16_t)2);   // 2 (endpoint 2)
   QCOMPARE(transfer.wLength(), (uint16_t)0);  // 0 (No data)
+  QVERIFY(!transfer.isClearEndpointHaltRequest(1));
+  QVERIFY(transfer.isClearEndpointHaltRequest(2));
   /*
    * Setup INITIATE_ABORT_BULK_OUT request for endpoint 1, bTag 235
    */
@@ -894,6 +897,7 @@ void mdtUsbPortTest::usbtmcControlTransferTest()
   QCOMPARE(transfer.wIndex(), (uint16_t)1);           // 1 (Dir=OUT, endpoint 1)
   QCOMPARE(transfer.wLength(), (uint16_t)2);          // 2 (Expected data of length 2)
   QVERIFY(transfer.usbtmcRequest() == mdtUsbtmcControlTransfer::USBTMCbRequest::INITIATE_ABORT_BULK_OUT);
+  QVERIFY(!transfer.isClearEndpointHaltRequest(1));
   /*
    * Setup CHECK_ABORT_BULK_OUT_STATUS request for endpoint 1
    */
@@ -904,6 +908,7 @@ void mdtUsbPortTest::usbtmcControlTransferTest()
   QCOMPARE(transfer.wIndex(), (uint16_t)1);           // 1 (Dir=OUT, endpoint 1)
   QCOMPARE(transfer.wLength(), (uint16_t)8);          // 8 (Expected data of length 8)
   QVERIFY(transfer.usbtmcRequest() == mdtUsbtmcControlTransfer::USBTMCbRequest::CHECK_ABORT_BULK_OUT_STATUS);
+  QVERIFY(!transfer.isClearEndpointHaltRequest(1));
   /*
    * Setup INITIATE_ABORT_BULK_IN request for endpoint 2, bTag 246
    */
@@ -914,6 +919,7 @@ void mdtUsbPortTest::usbtmcControlTransferTest()
   QCOMPARE(transfer.wIndex(), (uint16_t)(0b10000000+2)); // 1 (Dir=IN, endpoint 2)
   QCOMPARE(transfer.wLength(), (uint16_t)2);            // 2 (Expected data of length 2)
   QVERIFY(transfer.usbtmcRequest() == mdtUsbtmcControlTransfer::USBTMCbRequest::INITIATE_ABORT_BULK_IN);
+  QVERIFY(!transfer.isClearEndpointHaltRequest(1));
   /*
    * Setup CHECK_ABORT_BULK_IN_STATUS request for endpoint 2
    */
@@ -924,6 +930,7 @@ void mdtUsbPortTest::usbtmcControlTransferTest()
   QCOMPARE(transfer.wIndex(), (uint16_t)(0b10000000+2)); // 1 (Dir=IN, endpoint 2)
   QCOMPARE(transfer.wLength(), (uint16_t)8);          // 8 (Expected data of length 8)
   QVERIFY(transfer.usbtmcRequest() == mdtUsbtmcControlTransfer::USBTMCbRequest::CHECK_ABORT_BULK_IN_STATUS);
+  QVERIFY(!transfer.isClearEndpointHaltRequest(1));
   /*
    * Setup INITIATE_CLEAR request for interface 1
    */
@@ -934,6 +941,7 @@ void mdtUsbPortTest::usbtmcControlTransferTest()
   QCOMPARE(transfer.wIndex(), (uint16_t)1);           // 1 (interface 1)
   QCOMPARE(transfer.wLength(), (uint16_t)1);          // 1 (Expected data of length 1)
   QVERIFY(transfer.usbtmcRequest() == mdtUsbtmcControlTransfer::USBTMCbRequest::INITIATE_CLEAR);
+  QVERIFY(!transfer.isClearEndpointHaltRequest(1));
   /*
    * Setup CHECK_CLEAR_STATUS request for interface 1
    */
@@ -944,6 +952,7 @@ void mdtUsbPortTest::usbtmcControlTransferTest()
   QCOMPARE(transfer.wIndex(), (uint16_t)1);           // 1 (interface 1)
   QCOMPARE(transfer.wLength(), (uint16_t)2);          // 2 (Expected data of length 2)
   QVERIFY(transfer.usbtmcRequest() == mdtUsbtmcControlTransfer::USBTMCbRequest::CHECK_CLEAR_STATUS);
+  QVERIFY(!transfer.isClearEndpointHaltRequest(1));
   /*
    * Setup GET_CAPABILITIES request for interface 1
    */
@@ -954,6 +963,7 @@ void mdtUsbPortTest::usbtmcControlTransferTest()
   QCOMPARE(transfer.wIndex(), (uint16_t)1);           // 1 (interface 1)
   QCOMPARE(transfer.wLength(), (uint16_t)0x18);       // 0x18 (Expected data of length 24)
   QVERIFY(transfer.usbtmcRequest() == mdtUsbtmcControlTransfer::USBTMCbRequest::GET_CAPABILITIES);
+  QVERIFY(!transfer.isClearEndpointHaltRequest(1));
   /*
    * Setup INDICATOR_PULSE request for interface 1
    */
@@ -964,6 +974,7 @@ void mdtUsbPortTest::usbtmcControlTransferTest()
   QCOMPARE(transfer.wIndex(), (uint16_t)1);           // 1 (interface 1)
   QCOMPARE(transfer.wLength(), (uint16_t)1);          // 1 (Expected data of length 1)
   QVERIFY(transfer.usbtmcRequest() == mdtUsbtmcControlTransfer::USBTMCbRequest::INDICATOR_PULSE);
+  QVERIFY(!transfer.isClearEndpointHaltRequest(1));
   /*
    * Check USBTMC_status response value
    * Note: data part is written starting at offset 8 by libusb.
@@ -1183,42 +1194,129 @@ void mdtUsbPortTest::usbtmcPortThreadTest()
   QVERIFY(thd.start(deviceDescriptor, 0));
   devList.clear();
 
+  /**
+   * \todo Take first *IDN? response as reference,
+   *  then check that it still is the same after a bulk-IN abort/requery
+   */
   // Submit a normal query
+  /**
   ba = "*IDN?\n";
   message.reset();
   qDebug() << "TEST: submit bulk message ...";
   th.submitCommand(message, true, 30000);
-  QTest::qWait(100);
+  QTest::qWait(5000);
   /// \todo Check that data was returned
   
-  // Produce error: submit a command that expects no response, but tell we want one back
+  */
+
+  // Submit a normal query
+  ba = "SYSTEM:ERROR?\n";
+  message.reset();
+  qDebug() << "TEST: submit bulk message " << ba;
+  th.submitCommand(message, true, 30000);
+  QTest::qWait(1000);
+
+  // Submit a query and clear bulk transfers (CLEAR SPLIT)
+  ba = "*IDN?\n";
+  message.reset();
+  qDebug() << "TEST: submit bulk message *IDN? + clear bulk transfers";
+  th.submitCommand(message, true, 30000);
+  th.submitBulkTransfersCancellation();
+  QTest::qWait(1000);
+  /// \todo check that no message is available
+
+  // Submit a normal query
+  ba = "SYSTEM:ERROR?\n";
+  message.reset();
+  qDebug() << "TEST: submit bulk message " << ba;
+  th.submitCommand(message, true, 1000);
+  QTest::qWait(5000);
+
+
+  // Submit a normal query
+  /**
+  ba = "*SYSTEM:ERROR?\n";
+  message.reset();
+  qDebug() << "TEST: submit bulk message SYSTEM:ERROR?";
+  th.submitCommand(message, true, 30000);
+  QTest::qWait(1000);
+  /// \todo Check that data was returned
+  
+
+  // Submit a commande and abort it (ABORT BULK OUT SPLIT)
   ba = "*CLS\n";
   message.reset();
-  qDebug() << "TEST: submit bulk message *CLS ...";
+  qDebug() << "TEST: submit bulk message *CLS + abort bulk-OUT";
   th.submitCommand(message, true, 30000);
-  QTest::qWait(100);
+  th.dbgSubmitAbortOnePendingBulkOutTransfer();
+  QTest::qWait(5000);
   // Submit a normal query
   ba = "*IDN?\n";
   message.reset();
-  qDebug() << "TEST: submit bulk message ...";
+  qDebug() << "TEST: submit bulk message *IDN?";
   th.submitCommand(message, true, 30000);
   QTest::qWait(100);
   /// \todo Check that data was returned
   
-  // Produce error: submit a query + command without waiting
+  
+  // Submit a query and abort it (ABORT BULK IN SPLIT)
   ba = "*IDN?\n";
   message.reset();
-  qDebug() << "TEST: submit *IDN? + *ClS bulk message ...";
+  qDebug() << "TEST: submit bulk message *IDN? + abort bulk-IN";
   th.submitCommand(message, true, 30000);
-  ba = "*CLS\n";
-  // Cancel bulk-OUT transfers
-  ///th.dbgSubmitAbortOnePendingBulkOutTransfer();
   th.dbgSubmitAbortOnePendingBulkInTransfer();
+  QTest::qWait(5000);
+  */
   
-  ///th.submitAbortBulkOutTransfer();
-  ///th.submitBulkOutTransfersCancellation();
-  // Cancel bulk-IN transfers
-  ///th.submitBulkInTransfersCancellation();
+  // Submit a normal query
+  /**
+  ba = "*IDN?\n";
+  message.reset();
+  qDebug() << "TEST: submit bulk message *IDN?";
+  th.submitCommand(message, true, 30000);
+  QTest::qWait(1000);
+  */
+  /// \todo Check that data was returned
+  
+  // Submit a normal query
+  /**
+  ba = "*SYSTEM:ERROR?\n";
+  message.reset();
+  qDebug() << "TEST: submit bulk message SYSTEM:ERROR?";
+  th.submitCommand(message, true, 30000);
+  QTest::qWait(1000);
+  /// \todo Check that data was returned
+  
+  */
+
+  // Produce error: submit a command that expects no response, but tell we want one back
+//   ba = "*CLS\n";
+//   message.reset();
+//   qDebug() << "TEST: submit bulk message *CLS ...";
+//   th.submitCommand(message, true, 30000);
+//   QTest::qWait(100);
+//   // Submit a normal query
+//   ba = "*IDN?\n";
+//   message.reset();
+//   qDebug() << "TEST: submit bulk message ...";
+//   th.submitCommand(message, true, 30000);
+//   QTest::qWait(100);
+//   /// \todo Check that data was returned
+//   
+//   // Produce error: submit a query + command without waiting
+//   ba = "*IDN?\n";
+//   message.reset();
+//   qDebug() << "TEST: submit *IDN? + *ClS bulk message ...";
+//   th.submitCommand(message, true, 30000);
+//   ba = "*CLS\n";
+//   // Cancel bulk-OUT transfers
+//   ///th.dbgSubmitAbortOnePendingBulkOutTransfer();
+//   th.dbgSubmitAbortOnePendingBulkInTransfer();
+//   
+//   ///th.submitAbortBulkOutTransfer();
+//   ///th.submitBulkOutTransfersCancellation();
+//   // Cancel bulk-IN transfers
+//   ///th.submitBulkInTransfersCancellation();
 
   
   /*
@@ -1234,13 +1332,13 @@ void mdtUsbPortTest::usbtmcPortThreadTest()
   ///QTest::qWait(100);
 
   // Submit a normal query
-  ba = "*IDN?\n";
-  message.reset();
-  qDebug() << "TEST: submit bulk message ...";
-  th.submitCommand(message, true, 30000);
-  /// \todo Check that data was returned
-  
-  QTest::qWait(1000);
+//   ba = "*IDN?\n";
+//   message.reset();
+//   qDebug() << "TEST: submit bulk message ...";
+//   th.submitCommand(message, true, 30000);
+//   /// \todo Check that data was returned
+//   
+//   QTest::qWait(1000);
 
   // Send some control requests
   ///qDebug() << "TEST: submit a control transfer ...";

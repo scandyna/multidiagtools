@@ -101,6 +101,14 @@ class mdtUsbTransfer
     return pvTransfer->actual_length;
   }
 
+  /*! \brief Get timeout that was given to transfer
+   */
+  unsigned int timeout() const
+  {
+    Q_ASSERT(pvTransfer != 0);
+    return pvTransfer->timeout;
+  }
+
   /*! \brief Get last error
    */
   mdtError lastError() const
