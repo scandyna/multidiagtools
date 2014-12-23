@@ -165,6 +165,163 @@ class mdtUsbtmcControlTransfer : public mdtUsbControlTransfer
    */
   void setupGetCapabilities(uint8_t interfaceNumber, unsigned int timeout);
 
+  /*! \brief Get bcdUSBTMC
+   *
+   * Valid only for GET_CAPABILITIES response.
+   *
+   * BCD version number of the relevant USBTMC specification for this USBTMC interface.
+   *  Format is Binary-Coded-Decimal. For example, 0x0210 represents version 2.10.
+   *
+   * See USBTMC specifications, section 4.2.1.8
+   */
+  uint16_t bcdUSBTMC() const
+  {
+    return wordValue(2);
+  }
+
+  /*! \brief Check if interface accepts INDICATOR_PULSE
+   *
+   * Valid only for GET_CAPABILITIES response.
+   *
+   * See USBTMC specifications, section 4.2.1.8
+   */
+  bool interfaceAcceptsIndicatorPulse() const
+  {
+    return (byteValue(4) & 0b00000100);
+  }
+
+  /*! \brief Check if interface is talk-only
+   *
+   * Valid only for GET_CAPABILITIES response.
+   *
+   * See USBTMC specifications, section 4.2.1.8
+   */
+  bool interfaceIsTalkOnly() const
+  {
+    return (byteValue(4) & 0b00000010);
+  }
+
+  /*! \brief Check if interface is listen-only
+   *
+   * Valid only for GET_CAPABILITIES response.
+   *
+   * See USBTMC specifications, section 4.2.1.8
+   */
+  bool interfaceIsListenOnly() const
+  {
+    return (byteValue(4) & 0b00000001);
+  }
+
+  /*! \brief Check if device supports TermChar
+   *
+   * Valid only for GET_CAPABILITIES response.
+   *
+   * See USBTMC specifications, section 4.2.1.8
+   */
+  bool deviceSupportsTermChar() const
+  {
+    return (byteValue(5) & 0b00000001);
+  }
+
+  /*! \brief Get bcdUSB488
+   *
+   * Valid only for GET_CAPABILITIES response.
+   *
+   * BCD version number of the relevant USB488 specification for this USB488 interface.
+   *  Format is Binary-Coded-Decimal. For example, 0x0210 represents version 2.10.
+   *
+   * See USBTMC specifications, section 4.2.1.8
+   *  and USBTMC-USB488 specification, section 4.2.2
+   */
+  uint16_t bcdUSB488() const
+  {
+    return wordValue(12);
+  }
+
+  /*! \brief Check if interface is a 488.2 USB488 one
+   *
+   * Valid only for GET_CAPABILITIES response.
+   *
+   * See USBTMC specifications, section 4.2.1.8
+   *  and USBTMC-USB488 specification, section 4.2.2
+   */
+  bool interfaceIsUSB488() const
+  {
+    return (byteValue(14) & 0b00000100);
+  }
+
+  /*! \brief Check if interface accepts REN_CONTROL
+   *
+   * Valid only for GET_CAPABILITIES response.
+   *
+   * See USBTMC specifications, section 4.2.1.8
+   *  and USBTMC-USB488 specification, section 4.2.2
+   */
+  bool interfaceAcceptsRenControl() const
+  {
+    return (byteValue(14) & 0b00000010);
+  }
+
+  /*! \brief Check if interface accepts MsgID = TRIGGER
+   *
+   * Valid only for GET_CAPABILITIES response.
+   *
+   * See USBTMC specifications, section 4.2.1.8
+   *  and USBTMC-USB488 specification, section 4.2.2
+   */
+  bool interfaceAcceptsTrigger() const
+  {
+    return (byteValue(14) & 0b00000010);
+  }
+
+  /*! \brief Check if device supports all mandatory SCPI commands
+   *
+   * Valid only for GET_CAPABILITIES response.
+   *
+   * See USBTMC specifications, section 4.2.1.8
+   *  and USBTMC-USB488 specification, section 4.2.2
+   */
+  bool deviceSupportsAllMandatoryScpiCommands() const
+  {
+    return (byteValue(15) & 0b00001000);
+  }
+
+  /*! \brief Check if device is SR1 capable
+   *
+   * Valid only for GET_CAPABILITIES response.
+   *
+   * See USBTMC specifications, section 4.2.1.8
+   *  and USBTMC-USB488 specification, section 4.2.2
+   */
+  bool deviceIsSR1Capable() const
+  {
+    return (byteValue(15) & 0b00000100);
+  }
+
+  /*! \brief Check if device is RL1 capable
+   *
+   * Valid only for GET_CAPABILITIES response.
+   *
+   * See USBTMC specifications, section 4.2.1.8
+   *  and USBTMC-USB488 specification, section 4.2.2
+   */
+  bool deviceIsRL1Capable() const
+  {
+    return (byteValue(15) & 0b00000010);
+  }
+
+  /*! \brief Check if device is DT1 capable
+   *
+   * Valid only for GET_CAPABILITIES response.
+   *
+   * See USBTMC specifications, section 4.2.1.8
+   *  and USBTMC-USB488 specification, section 4.2.2
+   */
+  bool deviceIsDT1Capable() const
+  {
+    return (byteValue(15) & 0b00000001);
+  }
+
   /*! \brief Setup a INDICATOR_PULSE transfer
    *
    * See USBTMC specifications, section 4.2.1.9

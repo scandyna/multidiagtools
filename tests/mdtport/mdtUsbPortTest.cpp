@@ -965,6 +965,38 @@ void mdtUsbPortTest::usbtmcControlTransferTest()
   QVERIFY(transfer.usbtmcRequest() == mdtUsbtmcControlTransfer::USBTMCbRequest::GET_CAPABILITIES);
   QVERIFY(!transfer.isClearEndpointHaltRequest(1));
   /*
+   * Check GET_CAPABILITIES decoding
+   */
+  transfer.setByteValue(0, 0);          // USBTMC_status
+  transfer.setByteValue(1, 0);          // Reserved, must be 0x00
+  transfer.setWordValue(2, 0x0210);     // bcdUSBTMC
+  transfer.setByteValue(4, 0b00000110); // USBTMC interface capabilities: D2(accepts INDICATOR_PULSE):1 , D1(talk-only):1 , D0(listen-only):0
+  transfer.setByteValue(5, 0b00000001); // USBTMC device capabilities: D0(can end bulk-IN when a byte matched TermChar): 1
+  transfer.setByteValue(6, 0);          // Reserved, must be 0x00
+  transfer.setByteValue(7, 0);          // Reserved, must be 0x00
+  transfer.setByteValue(8, 0);          // Reserved, must be 0x00
+  transfer.setByteValue(9, 0);          // Reserved, must be 0x00
+  transfer.setByteValue(10, 0);         // Reserved, must be 0x00
+  transfer.setByteValue(11, 0);         // Reserved, must be 0x00
+  transfer.setWordValue(12, 0x0123);    // bscUSB488
+  transfer.setByteValue(14, 0b00000111);// USB488 interface capabilities: D2(is 488.2):1 , D1(accepts REN_CONTROL):1 , D0(accepts TRIGGER):1
+  transfer.setByteValue(15, 0b00001010);// USB488 device capabilities: D3(understands all mandatory SCPI commands):1 , D2(SR1 capable):0 , D1(RL1 capable):1 , D0(DT1 capable):0
+  // Check USBTMC part
+  QCOMPARE(transfer.bcdUSBTMC(), (uint16_t)0x0210);
+  QVERIFY(transfer.interfaceAcceptsIndicatorPulse());
+  QVERIFY(transfer.interfaceIsTalkOnly());
+  QVERIFY(!transfer.interfaceIsListenOnly());
+  QVERIFY(transfer.deviceSupportsTermChar());
+  // Check USB488 part
+  QCOMPARE(transfer.bcdUSB488(), (uint16_t)0x0123);
+  QVERIFY(transfer.interfaceIsUSB488());
+  QVERIFY(transfer.interfaceAcceptsRenControl());
+  QVERIFY(transfer.interfaceAcceptsTrigger());
+  QVERIFY(transfer.deviceSupportsAllMandatoryScpiCommands());
+  QVERIFY(!transfer.deviceIsSR1Capable());
+  QVERIFY(transfer.deviceIsRL1Capable());
+  QVERIFY(!transfer.deviceIsDT1Capable());
+  /*
    * Setup INDICATOR_PULSE request for interface 1
    */
   transfer.setupIndicatorPulse(1, 30000);
@@ -1209,28 +1241,74 @@ void mdtUsbPortTest::usbtmcPortThreadTest()
   
   */
 
-  // Submit a normal query
-  ba = "SYSTEM:ERROR?\n";
-  message.reset();
-  qDebug() << "TEST: submit bulk message " << ba;
-  th.submitCommand(message, true, 30000);
-  QTest::qWait(1000);
-
-  // Submit a query and clear bulk transfers (CLEAR SPLIT)
-  ba = "*IDN?\n";
-  message.reset();
-  qDebug() << "TEST: submit bulk message *IDN? + clear bulk transfers";
-  th.submitCommand(message, true, 30000);
+  // Clear device's bulk I/O buffers
   th.submitBulkTransfersCancellation();
   QTest::qWait(1000);
-  /// \todo check that no message is available
 
-  // Submit a normal query
+  // Submit a command and abort (Abort Bulk-OUT)
+  ba = "*CLS\n";
+  message.reset();
+  qDebug() << "TEST: submit bulk message *CLS + Abort Bulk-OUT";
+  th.submitCommand(message, false, 4900);
+  th.dbgSubmitAbortOnePendingBulkOutTransfer();
+  QTest::qWait(5000);
+
+  // Submit a query
   ba = "SYSTEM:ERROR?\n";
   message.reset();
-  qDebug() << "TEST: submit bulk message " << ba;
-  th.submitCommand(message, true, 1000);
+  qDebug() << "TEST: submit bulk message SYSTEM:ERROR?";
+  th.submitCommand(message, true, 900);
+  QTest::qWait(1000);
+  // Check returned data
+  ba.clear();
+  message.reset();
+  th.getReceivedData(message);
+  qDebug() << "RX: " << ba << " " << ba.split(',');
+  /// \todo Check that data was returned
+
+  // Submit a query and abort (Abort Bulk-IN)
+  ba = "SYSTEM:ERROR?\n";
+  message.reset();
+  qDebug() << "TEST: submit bulk message SYSTEM:ERROR? + Abort Bulk-IN";
+  th.submitCommand(message, true, 4900);
+  th.dbgSubmitAbortOnePendingBulkInTransfer();
   QTest::qWait(5000);
+  // Check returned data
+  ba.clear();
+  message.reset();
+  th.getReceivedData(message);
+  qDebug() << "RX: " << ba;
+  /// \todo Check that data was returned
+
+  // Submit a query
+  ba = "SYSTEM:ERROR?\n";
+  message.reset();
+  qDebug() << "TEST: submit bulk message SYSTEM:ERROR?";
+  th.submitCommand(message, true, 900);
+  QTest::qWait(1000);
+  // Check returned data
+  ba.clear();
+  message.reset();
+  th.getReceivedData(message);
+  qDebug() << "RX: " << ba;
+  /// \todo Check that data was returned
+
+
+
+  // Submit a query and clear bulk transfers (CLEAR SPLIT)
+//   ba = "*IDN?\n";
+//   message.reset();
+//   qDebug() << "TEST: submit bulk message " << ba;
+//   th.submitCommand(message, true, 30000);
+//   QTest::qWait(1000);
+//   /// \todo check that no message is available
+// 
+//   // Submit a normal query
+//   ba = "SYSTEM:ERROR?\n";
+//   message.reset();
+//   qDebug() << "TEST: submit bulk message " << ba;
+//   th.submitCommand(message, true, 1000);
+//   QTest::qWait(1000);
 
 
   // Submit a normal query
@@ -1349,6 +1427,8 @@ void mdtUsbPortTest::usbtmcPortThreadTest()
   ///usleep(100000);
 
   // Stop..
+  th.submitStopRequest();
+  QTest::qWait(100);
   thd.stop();
   // Free libusb
   libusb_exit(usbCtx);

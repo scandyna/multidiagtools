@@ -98,6 +98,9 @@ QString mdtUsbtmcControlTransfer::usbtmcRequestText() const
   QString str;
 
   switch(usbtmcRequest()){
+    case USBTMCbRequest::None:
+      str = "None";
+      break;
     case USBTMCbRequest::INITIATE_ABORT_BULK_OUT:
       str = "INITIATE_ABORT_BULK_OUT";
       break;
@@ -118,6 +121,9 @@ QString mdtUsbtmcControlTransfer::usbtmcRequestText() const
       break;
     case USBTMCbRequest::GET_CAPABILITIES:
       str = "GET_CAPABILITIES";
+      break;
+    case USBTMCbRequest::INDICATOR_PULSE:
+      str = "INDICATOR_PULSE";
       break;
     // No default section, so compiler can tell us if we forgot to implement a status
   }

@@ -28,6 +28,7 @@
 #include "mdtUsbEndpointDescriptor.h"
 #include "mdtUsbTransfer.h"
 #include "mdtUsbtmcBulkTransfer.h"
+#include "mdtUsbtmcInterruptTransfer.h"
 #include "mdtUsbtmcMessage.h"
 #include "mdtBasicStateMachine.h"
 #include <QObject>
@@ -37,7 +38,6 @@
 #include <mutex>
 
 class mdtUsbtmcControlTransfer;
-///class mdtUsbtmcBulkTransfer;
 
 /*! \brief USBTMC transfer handler
  */
@@ -52,9 +52,7 @@ class mdtUsbtmcTransferHandler
     Stopped = 0,      /*!< USB port thread is stopped */
     Setup,            /*!< USB port thread is starting and has called setup() */
     Running,          /*!< USB port thread is running (ready for I/O) */
-    ///AbortingBulkOut,  /*!< Currently aborting a Bulk-OUT transfer - No bulk transfer possible */
-    ///AbortingBulkIn,   /*!< Currently aborting a Bulk-IN transfer - No bulk transfer possible */
-    AbortingBulkIo,      /*!< Currently aborting a Bulk-OU/Bulk-OUT transfer - No bulk transfer possible */
+    AbortingBulkIo,   /*!< Currently aborting a Bulk-OU/Bulk-OUT transfer - No bulk transfer possible */
     Stopping,         /*!< USB port thread is stopping (No I/O, submit no more transfer) */
     Disconnected,     /*!< Device is no more present */
     Error             /*!< USB port thread is stopped due to a error (No I/O) */
@@ -69,10 +67,23 @@ class mdtUsbtmcTransferHandler
   bool setup(libusb_device_handle *handle, const mdtUsbDeviceDescriptor & descriptor, uint8_t bInterfaceNumber);
 
   /*! \brief Submit a command
-   * 
+   *
+   * \param message USBTMC message that contains data to send.
+   *                 If all data are readen from message, EOM flag will be set in USBTMC transfer.
    * \param responseExpected If message is a query that expects a response, like *IDN?, set this flag.
+   * \param timeout Timeout [ms]
    */
   void submitCommand(mdtUsbtmcMessage & message, bool responseExpected, unsigned int timeout);
+
+  /*! \brief Get received data
+   *
+   * \param message USBTMC message in witch data will be appended.
+   */
+  void getReceivedData(mdtUsbtmcMessage & message);
+
+  /*! \brief Will cancel active transfers and change state to Stopping
+   */
+  void submitStopRequest();
 
   /*! \brief Will cancel all pending bulk-OUT and bulk-IN transfers
    *
@@ -80,22 +91,6 @@ class mdtUsbtmcTransferHandler
    *  CHECK_CLEAR_STATUS is sent to device.
    */
   void submitBulkTransfersCancellation();
-
-  /*! \brief Abort a Bulk-OUT transfer
-   */
-  ///void submitAbortBulkOutTransfer();
-
-  /*! \brief Abort a Bulk-IN transfer
-   */
-  ///void submitAbortBulkInTransfer();
-
-  /*! \brief Submit cancellation of all bulk-OUT transfers
-   */
-  ///void submitBulkOutTransfersCancellation();
-
-  /*! \brief Submit cancellation of all bulk-IN transfers
-   */
-  ///void submitBulkInTransfersCancellation();
 
   /*! \brief Submit a custom transfer
    *
@@ -137,13 +132,6 @@ class mdtUsbtmcTransferHandler
     submitClearEndpointHalt(pvBulkInDescriptor.number(), timeout);
   }
 
-  /*! \brief Begin clear bulk I/O
-   *
-   * Will begin bulk I/O clear and submit INITIATE_CLEAR request and return.
-   *  When completed, continueClearBulkIo() will be called.
-   */
-  void beginClearBulkIo();
-
   /*! \brief Submit control transfers cancellation
    */
   void submitControlTransfersCancel();
@@ -159,20 +147,6 @@ class mdtUsbtmcTransferHandler
   /*! \brief Bulk-IN transfer callback
    */
   static void bulkInTransferCallback(libusb_transfer *transfer);
-
-  /*! \brief Start synchornous events
-   *
-   * It's not possible to start a synchronous transfer from a callback
-   *  (or a function called from a callback).
-   *  If done so, a deadlock will be produced in op_handle_events(),
-   *  and it seems to be the libusb_context::open_devs_lock (true for linux_usbfs.c).
-   *  The callback must return before any call of libusb_handle_events()
-   *  (or variants, all are calling libusb_handle_events_timeout_completed()).
-   *
-   * As workaround, the USBTMC port thread will call current function once
-   *  libusb_handle_events() returns.
-   */
-  ///void handleSyncEvents();
 
   /*! \brief Check if there are pending transfers
    */
@@ -207,8 +181,6 @@ class mdtUsbtmcTransferHandler
     switch(currentState()){
       case State_t::Running:
       case State_t::AbortingBulkIo:
-      ///case State_t::AbortingBulkOut:
-      ///case State_t::AbortingBulkIn:
         return false;
       default:
         return true;
@@ -250,14 +222,6 @@ class mdtUsbtmcTransferHandler
    * 
    */
   void handleCheckAbortBulkOutStatusResponse(mdtUsbtmcControlTransfer *transfer);
-
-  /*! \brief Continue to abort a bulk-OUT transfer
-   *
-   * This function does synchronous transfer, be care about.
-   *
-   * \sa See handleSyncEvents()
-   */
-  ///void continueAbortBulkOutTransfer(mdtUsbtmcControlTransfer *transfer);
 
   /*! \brief Submit a REQUEST_DEV_DEP_MSG_IN
    */
@@ -391,15 +355,6 @@ class mdtUsbtmcTransferHandler
    */
   bool getCapabilities(uint8_t interfaceNumber, unsigned int timeout);
 
-  /*! \brief Continue clear bulk I/O
-   *
-   * Note: will restore transfer back to pool once done.
-   * This function does synchronous transfer, be care about.
-   *
-   * \sa See handleSyncEvents()
-   */
-  ///void continueClearBulkIo(mdtUsbtmcControlTransfer * transfer);
-
   /*! \brief Process synchronous control transfer
    *
    * Note: must be called only from port thread, but not from a callback.
@@ -464,8 +419,10 @@ class mdtUsbtmcTransferHandler
   std::mutex pvBulkOutTransferMutex;
   // Bulk-IN transfer members
   mdtUsbTransferPool<mdtUsbtmcBulkTransfer> pvBulkInTransferPool;
-  ///uint8_t pvBulkInbTag;
   std::mutex pvBulkInTransferMutex;
+  // Interrupt-IN transfer members
+  mdtUsbTransferPool<mdtUsbtmcInterruptTransfer> pvInterruptInTransferPool;
+  std::mutex pvInterruptInTransferMutex;
   // Control transfer members
   mdtUsbTransferPool<mdtUsbtmcControlTransfer> pvControlTransferPool;
   std::mutex pvControlTransferMutex;

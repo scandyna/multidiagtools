@@ -85,12 +85,13 @@ set (SOURCES_FILES
           mdtUsbDeviceList.cpp
           mdtUsbTransfer.cpp
           mdtUsbControlTransfer.cpp
-          mdtUsbtmcBulkTransfer.cpp
           mdtUsbPortThreadNew.cpp
           #mdtUsbTransferPool.cpp
           # New USBTMC API
           mdtUsbtmcFrame.cpp
           mdtUsbtmcControlTransfer.cpp
+          mdtUsbtmcBulkTransfer.cpp
+          mdtUsbtmcInterruptTransfer.cpp
           mdtUsbtmcTransferHandler.cpp
           mdtUsbtmcPortThreadNew.cpp
           mdtUsbtmcPort.cpp

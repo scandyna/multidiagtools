@@ -163,7 +163,6 @@ class mdtUsbControlTransfer : public mdtUsbTransfer
   inline uint16_t wValue() const
   {
     return wordValue(2);
-    ///return (pvBuffer[3] << 8) + pvBuffer[2];
   }
 
   /*! \brief Get wIndex
@@ -171,7 +170,6 @@ class mdtUsbControlTransfer : public mdtUsbTransfer
   inline uint16_t wIndex() const
   {
     return wordValue(4);
-    ///return (pvBuffer[5] << 8) + pvBuffer[4];
   }
 
   /*! \brief Get wLength
@@ -179,7 +177,6 @@ class mdtUsbControlTransfer : public mdtUsbTransfer
   inline uint16_t wLength() const
   {
     return wordValue(6);
-    ///return (pvBuffer[7] << 8) + pvBuffer[6];
   }
 
   /*! \brief Setup a Clear feature transfer
