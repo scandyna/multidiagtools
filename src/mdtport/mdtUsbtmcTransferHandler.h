@@ -27,6 +27,7 @@
 #include "mdtUsbInterfaceDescriptor.h"
 #include "mdtUsbEndpointDescriptor.h"
 #include "mdtUsbTransfer.h"
+#include "mdtUsbtmcControlTransfer.h"
 #include "mdtUsbtmcBulkTransfer.h"
 #include "mdtUsbtmcInterruptTransfer.h"
 #include "mdtUsbtmcMessage.h"
@@ -37,7 +38,7 @@
 #include <cstdint>
 #include <mutex>
 
-class mdtUsbtmcControlTransfer;
+///class mdtUsbtmcControlTransfer;
 
 /*! \brief USBTMC transfer handler
  */
@@ -148,9 +149,9 @@ class mdtUsbtmcTransferHandler
    */
   static void bulkInTransferCallback(libusb_transfer *transfer);
 
-  /*! \brief Check if there are pending transfers
+  /*! \brief Interrupt-IN transfer callback
    */
-  bool hasPendingTransfers() const;
+  static void interruptInTransferCallback(libusb_transfer *transfer);
 
   /*! \brief Get last error
    */
@@ -181,6 +182,7 @@ class mdtUsbtmcTransferHandler
     switch(currentState()){
       case State_t::Running:
       case State_t::AbortingBulkIo:
+      case State_t::Stopping:
         return false;
       default:
         return true;
@@ -188,6 +190,10 @@ class mdtUsbtmcTransferHandler
   }
 
  private:
+
+  /*! \brief Check if there are pending transfers
+   */
+  bool hasPendingTransfers();
 
   /*! \brief Handle Bulk-OUT transfer complete
    */
@@ -343,6 +349,18 @@ class mdtUsbtmcTransferHandler
    */
   void handleCheckClearStatusResponse(mdtUsbtmcControlTransfer *transfer);
 
+  /*! \brief Submit a Interrupt-IN transfer
+   */
+  void submitInterruptInTransfer(unsigned int timeout, mdtUsbtmcInterruptTransfer *transfer = 0);
+
+  /*! \brief Submit cancel for all Interrupt-IN transfers
+   */
+  void submitCancelAllInterruptInTransfers(bool lockMutex);
+
+  /*! \brief Handle Interrupt-IN transfer complete
+   */
+  void handleInterruptInTransferComplete(mdtUsbtmcInterruptTransfer *transfer);
+
   /*! \brief Handle control transfer complete
    */
   void handleControlTransferComplete(mdtUsbtmcControlTransfer *transfer);
@@ -373,6 +391,10 @@ class mdtUsbtmcTransferHandler
    */
   void restoreBulkInTransferToPool(mdtUsbtmcBulkTransfer *transfer, bool lockMutex);
 
+  /*! \brief Restore interrupt-IN transfer to pool
+   */
+  void restoreInterruptInTransferToPool(mdtUsbtmcInterruptTransfer *transfer, bool lockMutex);
+
   /*! \brief Restore control transfer to pool
    */
   void restoreControlTransferToPool(mdtUsbtmcControlTransfer *transfer, bool lockMutex);
@@ -391,6 +413,10 @@ class mdtUsbtmcTransferHandler
   /*! \brief Set last error regarding bulk-IN transfer status code
    */
   void setLastErrorFromBulkInTransferStatus(mdtUsbtmcBulkTransfer *transfer, mdtError::level_t level, bool lockMutex);
+
+  /*! \brief Set last error regarding interrupt-IN transfer status code
+   */
+  void setLastErrorFromInterruptInTransferStatus(mdtUsbtmcInterruptTransfer *transfer, mdtError::level_t level, bool lockMutex);
 
   /*! \brief Set last error regarding transfer status code
    *

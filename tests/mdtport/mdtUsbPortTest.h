@@ -53,13 +53,13 @@ class mdtUsbPortTest : public mdtTest
   void usbtmcMessageTest();
   void usbtmcMessageBenchmark();
   void usbtmcBulkTransferTest();
-  
+  void usbtmcInterruptTransferTest();
   void usbtmcControlTransferTest();
-  
   void usbtmcTransferPoolTest();
   void usbtmcTransferPoolBenchmark();
-  
   void usbtmcPortThreadTest();
+  void usbtmcPortTest();
+  void usbtmcPortSetupDialogTest();
 
   // Make some tests with Velleman k8055 board
   void vellemanK8055Test();

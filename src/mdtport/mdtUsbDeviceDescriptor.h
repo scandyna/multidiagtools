@@ -249,6 +249,9 @@ class mdtUsbDeviceDescriptor
    */
   mdtUsbInterfaceDescriptor interface(uint8_t bInterfaceNumber) const;
 
+  /*! \brief Get all interfaces
+   */
+  QList<mdtUsbInterfaceDescriptor> allInterfaces() const;
   
   
   

@@ -20,12 +20,18 @@
  ****************************************************************************/
 #include "mdtUsbtmcPort.h"
 #include "mdtUsbEndpointDescriptor.h"
+#include "mdtUsbtmcPortThreadNew.h"
+#include "mdtUsbtmcTransferHandler.h"
+#include "mdtUsbDeviceList.h"
 #include <QString>
 
 mdtUsbtmcPort::mdtUsbtmcPort ( QObject* parent )
  : QObject(parent),
    pvUsbContext(0),
-   pvDeviceHandle(0)
+   /**pvDeviceHandle(0),*/
+   pvTransferHandler(0),
+   pvThread(0),
+   pvDeviceList(0)
 {
 }
 
@@ -33,80 +39,164 @@ mdtUsbtmcPort::~mdtUsbtmcPort()
 {
   close();
   if(pvUsbContext != 0){
+    Q_ASSERT(pvDeviceList != 0);
+    delete pvDeviceList;
     libusb_exit(pvUsbContext);
+  }
+  if(pvThread != 0){
+    Q_ASSERT(pvTransferHandler != 0);
+    delete pvThread;
+    delete pvTransferHandler;
   }
 }
 
-bool mdtUsbtmcPort::openDevice(mdtUsbDeviceDescriptor& deviceDescriptor, uint8_t bInterfaceNumber)
+QList<mdtUsbDeviceDescriptor> mdtUsbtmcPort::scan()
 {
-  Q_ASSERT(!deviceDescriptor.isEmpty());
+  QList<mdtUsbDeviceDescriptor> usbtmcDevices;
 
-  int err;
+  // Init USB context if needed
+  if(pvUsbContext == 0){
+    if(!initLibusbConext()){
+      return usbtmcDevices;
+    }
+  }
+  // Enumerate UDBTMC devices
+  pvDeviceList->clear();
+  if(!pvDeviceList->scan()){
+    pvLastError = pvDeviceList->lastError();
+    return usbtmcDevices;
+  }
+  usbtmcDevices = pvDeviceList->usbtmcDeviceList();
+  if(usbtmcDevices.isEmpty()){
+    pvLastError.setError(tr("No USBTMC device is attached on system."), mdtError::Warning);
+    // We not commit error (prevent having logs full of wrong errors)
+  }
 
-  // Get descriptor of requested interface
-  pvInterfaceDescriptor = deviceDescriptor.interface(bInterfaceNumber);
-  if(pvInterfaceDescriptor.isEmpty()){
-    pvLastError.setError(tr("Requested bInterfaceNumber ") + QString::number(bInterfaceNumber) + tr(" was not found in given device descriptor."), mdtError::Error);
+  return usbtmcDevices;
+}
+
+bool mdtUsbtmcPort::openDevice(const mdtUsbDeviceDescriptor& deviceDescriptor, uint8_t bInterfaceNumber, bool clearDeviceList)
+{
+  // Check given devoce descriptor
+  if(deviceDescriptor.isEmpty()){
+    pvLastError.setError(tr("Given device descriptor is empty (did you use scna() to obtain it ?)"), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtUsbtmcPort");
     pvLastError.commit();
     return false;
   }
-  // Init libusb context if not allready done
-  if(pvUsbContext == 0){
-    if(!initLibusbConext()){
+  // Init thread if required
+  if(pvThread == 0){
+    if(!initThread()){
       return false;
     }
   }
-  // Open device
-  close();
-  pvDeviceHandle = deviceDescriptor.open();
-  if(pvDeviceHandle == 0){
-    pvLastError = deviceDescriptor.lastError();
+  // Start thread
+  if(!pvThread->start(deviceDescriptor, bInterfaceNumber)){
+    pvLastError = pvTransferHandler->lastError();
     return false;
   }
-  Q_ASSERT(pvDeviceHandle != 0);
-  // Tell libusb that we let him detach possibly loaded kernel driver itself
-  err = libusb_set_auto_detach_kernel_driver(pvDeviceHandle, 1);
-  if(err != 0){
-    pvLastError.setError(tr("Your platform does not support kernel driver detach."), mdtError::Warning);
-    pvLastError.setSystemError(err, libusb_strerror((libusb_error)err));
-    MDT_ERROR_SET_SRC(pvLastError, "mdtUsbtmcPort");
-    pvLastError.commit();
-  }
-  // Claim interface
-  err = libusb_claim_interface(pvDeviceHandle, pvInterfaceDescriptor.bInterfaceNumber());
-  if(err != 0){
-    pvLastError.setError(tr("Could not claim interface."), mdtError::Error);
-    pvLastError.setSystemError(err, libusb_strerror((libusb_error)err));
-    MDT_ERROR_SET_SRC(pvLastError, "mdtUsbtmcPort");
-    pvLastError.commit();
-    libusb_close(pvDeviceHandle);
-    return false;
+  // Free internal scan result
+  if(clearDeviceList){
+    pvDeviceList->clear();
   }
 
   return true;
 }
 
+// bool mdtUsbtmcPort::openDevice(mdtUsbDeviceDescriptor& deviceDescriptor, uint8_t bInterfaceNumber)
+// {
+//   Q_ASSERT(!deviceDescriptor.isEmpty());
+// 
+//   int err;
+// 
+//   // Get descriptor of requested interface
+//   pvInterfaceDescriptor = deviceDescriptor.interface(bInterfaceNumber);
+//   if(pvInterfaceDescriptor.isEmpty()){
+//     pvLastError.setError(tr("Requested bInterfaceNumber ") + QString::number(bInterfaceNumber) + tr(" was not found in given device descriptor."), mdtError::Error);
+//     MDT_ERROR_SET_SRC(pvLastError, "mdtUsbtmcPort");
+//     pvLastError.commit();
+//     return false;
+//   }
+//   // Init libusb context if not allready done
+//   if(pvUsbContext == 0){
+//     if(!initLibusbConext()){
+//       return false;
+//     }
+//   }
+//   // Open device
+//   close();
+//   pvDeviceHandle = deviceDescriptor.open();
+//   if(pvDeviceHandle == 0){
+//     pvLastError = deviceDescriptor.lastError();
+//     return false;
+//   }
+//   Q_ASSERT(pvDeviceHandle != 0);
+//   // Tell libusb that we let him detach possibly loaded kernel driver itself
+//   err = libusb_set_auto_detach_kernel_driver(pvDeviceHandle, 1);
+//   if(err != 0){
+//     pvLastError.setError(tr("Your platform does not support kernel driver detach."), mdtError::Warning);
+//     pvLastError.setSystemError(err, libusb_strerror((libusb_error)err));
+//     MDT_ERROR_SET_SRC(pvLastError, "mdtUsbtmcPort");
+//     pvLastError.commit();
+//   }
+//   // Claim interface
+//   err = libusb_claim_interface(pvDeviceHandle, pvInterfaceDescriptor.bInterfaceNumber());
+//   if(err != 0){
+//     pvLastError.setError(tr("Could not claim interface."), mdtError::Error);
+//     pvLastError.setSystemError(err, libusb_strerror((libusb_error)err));
+//     MDT_ERROR_SET_SRC(pvLastError, "mdtUsbtmcPort");
+//     pvLastError.commit();
+//     libusb_close(pvDeviceHandle);
+//     return false;
+//   }
+// 
+//   return true;
+// }
+
 void mdtUsbtmcPort::close()
 {
-  if(pvDeviceHandle != 0){
-    // Release interface
-    if(!pvInterfaceDescriptor.isEmpty()){
-      int err = libusb_release_interface(pvDeviceHandle, pvInterfaceDescriptor.bInterfaceNumber());
-      if(err != 0){
-        pvLastError.setError(tr("Could not release interface."), mdtError::Warning);
-        pvLastError.setSystemError(err, libusb_strerror((libusb_error)err));
-        MDT_ERROR_SET_SRC(pvLastError, "mdtUsbtmcPort");
-        pvLastError.commit();
-      }
-    }
-    // Close device
-    libusb_close(pvDeviceHandle);
-    pvDeviceHandle = 0;
+  if(pvThread != 0){
+    pvThread->stop();
   }
-  pvInterfaceDescriptor.clear();
 }
 
+// void mdtUsbtmcPort::close()
+// {
+//   if(pvDeviceHandle != 0){
+//     // Release interface
+//     if(!pvInterfaceDescriptor.isEmpty()){
+//       int err = libusb_release_interface(pvDeviceHandle, pvInterfaceDescriptor.bInterfaceNumber());
+//       if(err != 0){
+//         pvLastError.setError(tr("Could not release interface."), mdtError::Warning);
+//         pvLastError.setSystemError(err, libusb_strerror((libusb_error)err));
+//         MDT_ERROR_SET_SRC(pvLastError, "mdtUsbtmcPort");
+//         pvLastError.commit();
+//       }
+//     }
+//     // Close device
+//     libusb_close(pvDeviceHandle);
+//     pvDeviceHandle = 0;
+//   }
+//   pvInterfaceDescriptor.clear();
+// }
+
+bool mdtUsbtmcPort::initThread()
+{
+  Q_ASSERT(pvThread == 0);
+  Q_ASSERT(pvTransferHandler == 0);
+
+  // Init libusb context if needed
+  if(pvUsbContext == 0){
+    if(!initLibusbConext()){
+      return false;
+    }
+  }
+  // Build transfer handler and thread
+  pvTransferHandler = new mdtUsbtmcTransferHandler(pvUsbContext);
+  pvThread = new mdtUsbtmcPortThreadNew(*pvTransferHandler, pvUsbContext, 0);
+
+  return true;
+}
 
 bool mdtUsbtmcPort::initLibusbConext()
 {
@@ -122,6 +212,7 @@ bool mdtUsbtmcPort::initLibusbConext()
     pvLastError.commit();
     return false;
   }
+  pvDeviceList = new mdtUsbDeviceList(pvUsbContext);
 
   return true;
 }

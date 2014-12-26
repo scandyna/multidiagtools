@@ -38,8 +38,10 @@
 #include "mdtUsbtmcFrame.h"
 #include "mdtUsbtmcMessage.h"
 #include "mdtUsbtmcPort.h"
+#include "mdtUsbtmcPortSetupDialog.h"
 #include "mdtUsbPortThreadNew.h"
 #include "mdtUsbtmcBulkTransfer.h"
+#include "mdtUsbtmcInterruptTransfer.h"
 #include "mdtUsbtmcControlTransfer.h"
 #include "mdtUsbtmcTransferHandler.h"
 #include "mdtUsbtmcPortThreadNew.h"
@@ -786,6 +788,65 @@ void mdtUsbPortTest::usbtmcBulkTransferTest()
   libusb_exit(usbCtx);
 }
 
+void mdtUsbPortTest::usbtmcInterruptTransferTest()
+{
+  libusb_context *usbCtx = 0;
+  libusb_device_handle *handle;
+  mdtUsbDeviceDescriptor deviceDescriptor;
+  mdtUsbInterfaceDescriptor interface;
+  mdtUsbEndpointDescriptor interruptEpd;
+  int ret;
+
+  // Init libusb
+  ret = libusb_init(&usbCtx);
+  QVERIFY(ret == 0);
+
+  // Search USBTMC device
+  mdtUsbDeviceList devList(usbCtx);
+  QVERIFY(devList.scan());
+  deviceDescriptor = devList.findFirstUsbtmcDevice();
+  if(deviceDescriptor.isEmpty()){
+    QSKIP("Found no USBTMC device attached", SkipAll);
+  }
+  // Get interface
+  interface = deviceDescriptor.interface(0);
+  QVERIFY(!interface.isEmpty());
+  // Get interrupt-IN endpoint
+  if(interface.interruptInEndpoints().isEmpty()){
+    QSKIP("Found USBTMC device has no interrupt-IN endpoint", SkipAll);
+  }
+  interruptEpd = interface.interruptInEndpoints().at(0);
+  // Open device
+  handle = deviceDescriptor.open();
+  QVERIFY(handle != 0);
+  devList.clear();
+
+  /*
+   * In this phase, we not send data to device,
+   *  but a device handle is required by USBTMC transfer class.
+   */
+  mdtUsbtmcTransferHandler th(usbCtx);
+  mdtUsbtmcInterruptTransfer transfer(th, interruptEpd, handle);
+  QVERIFY(transfer.allocOk());
+  /*
+   * Check bNotify1 format
+   */
+  transfer.setByteValue(0, 0b10000000);
+  QVERIFY(transfer.bNotify1Format() == mdtUsbtmcInterruptTransfer::bNotify1Format_t::Subclass);
+  transfer.setByteValue(0, 0b01000000);
+  QVERIFY(transfer.bNotify1Format() == mdtUsbtmcInterruptTransfer::bNotify1Format_t::VendorSpecific);
+  transfer.setByteValue(0, 0b00000000);
+  QVERIFY(transfer.bNotify1Format() == mdtUsbtmcInterruptTransfer::bNotify1Format_t::Usbtmc);
+
+  // Free ressources
+  th.submitStopRequest();
+  QTest::qWait(100);
+  if(handle != 0){
+    libusb_close(handle);
+  }
+  libusb_exit(usbCtx);
+}
+
 void mdtUsbPortTest::usbtmcControlTransferTest()
 {
   libusb_context *usbCtx = 0;
@@ -1294,6 +1355,12 @@ void mdtUsbPortTest::usbtmcPortThreadTest()
   /// \todo Check that data was returned
 
 
+  // Submit a query
+  ba = "SYSTEM:ERROR?\n";
+  message.reset();
+  qDebug() << "TEST: submit bulk message SYSTEM:ERROR? just before stop";
+  th.submitCommand(message, true, 900);
+
 
   // Submit a query and clear bulk transfers (CLEAR SPLIT)
 //   ba = "*IDN?\n";
@@ -1427,11 +1494,35 @@ void mdtUsbPortTest::usbtmcPortThreadTest()
   ///usleep(100000);
 
   // Stop..
-  th.submitStopRequest();
-  QTest::qWait(100);
+  ///th.submitStopRequest();
+  ///QTest::qWait(100);
   thd.stop();
   // Free libusb
   libusb_exit(usbCtx);
+}
+
+void mdtUsbPortTest::usbtmcPortTest()
+{
+  mdtUsbtmcPort port;
+  QList<mdtUsbDeviceDescriptor> deviceDescriptorsList;
+
+  // Find a USBTMC device
+  deviceDescriptorsList = port.scan();
+  if(deviceDescriptorsList.isEmpty()){
+    QSKIP("Found no USBTMC device attached", SkipAll);
+  }
+  // Open a USBTMC device
+  QVERIFY(port.openDevice(deviceDescriptorsList.at(0), 0, true));
+
+  
+}
+
+void mdtUsbPortTest::usbtmcPortSetupDialogTest()
+{
+  mdtUsbtmcPortSetupDialog dialog;
+
+  dialog.scan();
+  dialog.exec();
 }
 
 void mdtUsbPortTest::vellemanK8055Test()

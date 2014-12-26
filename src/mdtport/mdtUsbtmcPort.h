@@ -25,8 +25,13 @@
 #include "mdtUsbInterfaceDescriptor.h"
 #include "mdtError.h"
 #include <QObject>
+#include <QList>
 #include <libusb-1.0/libusb.h>
 #include <cstdint>
+
+class mdtUsbtmcPortThreadNew;
+class mdtUsbtmcTransferHandler;
+class mdtUsbDeviceList;
 
 /*! \brief Port to communicate with a USBTMC device
  */
@@ -44,11 +49,17 @@ class mdtUsbtmcPort : public QObject
    */
   ~mdtUsbtmcPort();
 
+  /*! \brief Enumerate attached USBTMC devices
+   */
+  QList<mdtUsbDeviceDescriptor> scan();
+
   /*! \brief Open device represented by given descriptor
    *
-   * \pre deviceDescriptor must not be empty.
+   * \param deviceDescriptor USB device descriptor to open. Must be a item returned by scan().
+   * \param bInterfaceNumber Interface number to use.
+   * \param clearDeviceList If true, internal device descriptors list will be cleared once device was open.
    */
-  bool openDevice(mdtUsbDeviceDescriptor & deviceDescriptor, uint8_t bInterfaceNumber = 0);
+  bool openDevice(const mdtUsbDeviceDescriptor & deviceDescriptor, uint8_t bInterfaceNumber = 0, bool clearDeviceList = true);
 
   /*! \brief Close
    */
@@ -63,6 +74,12 @@ class mdtUsbtmcPort : public QObject
 
  private:
 
+  /*! \brief Build port thread
+   *
+   * \pre must be called only once
+   */
+  bool initThread();
+
   /*! \brief Init libusb context
    *
    * \pre must be called only once
@@ -72,9 +89,12 @@ class mdtUsbtmcPort : public QObject
   Q_DISABLE_COPY(mdtUsbtmcPort);
 
   libusb_context *pvUsbContext;
-  libusb_device_handle *pvDeviceHandle;
+  ///libusb_device_handle *pvDeviceHandle;
+  mdtUsbtmcTransferHandler *pvTransferHandler;
+  mdtUsbtmcPortThreadNew *pvThread;
+  mdtUsbDeviceList *pvDeviceList;
   mdtError pvLastError;
-  mdtUsbInterfaceDescriptor pvInterfaceDescriptor;
+  ///mdtUsbInterfaceDescriptor pvInterfaceDescriptor;
 };
 
 #endif // #ifndef MDT_USBTMC_PORT_H

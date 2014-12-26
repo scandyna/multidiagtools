@@ -38,7 +38,23 @@ class mdtUsbtmcInterruptTransfer : public mdtUsbTransfer
 {
  public:
 
+  /*! \brief Format
+   *
+   * Represents bits D7 and D6 in bNotify1 field.
+   *
+   * See USBTMC 1.0 specifications, section 3.4, table 13
+   *  and USBTMC-USB488 1.0 specifications, section 3.4
+   */
+  enum class bNotify1Format_t : uint8_t
+  {
+    Subclass = 2,       /*!< Defined in applicable subclass */
+    VendorSpecific = 1, /*!< Vendor specific format */
+    Usbtmc = 0          /*!< Reserved for USBTMC use */
+  };
+
   /*! \brief Constructor
+   *
+   * \todo Check for a realistic bufferSize
    *
    * \param th Transfer handler
    * \param endpointDescriptor Endpoint descriptor
@@ -51,6 +67,49 @@ class mdtUsbtmcInterruptTransfer : public mdtUsbTransfer
   // Disable copy
   mdtUsbtmcInterruptTransfer(const mdtUsbtmcInterruptTransfer & rhs) = delete;
   mdtUsbtmcInterruptTransfer & operator=(const mdtUsbtmcInterruptTransfer & rhs) = delete;
+
+  /*! \brief Setup transfer
+   */
+  void setup(unsigned int timeout);
+
+  /*! \brief Get bNotify1 format
+   */
+  bNotify1Format_t bNotify1Format() const
+  {
+    Q_ASSERT(pvBuffer.capacity() > 0);
+    uint8_t bNotify1 = pvBuffer[0];
+    if(bNotify1 & 0b10000000){
+      return bNotify1Format_t::Subclass;
+    }
+    return static_cast<bNotify1Format_t>((bNotify1 & 0b11000000) >> 6);
+  }
+
+  /*! \brief Set value at offset
+   *
+   * \pre offset must be < internal buffer's capacity
+   */
+  void setByteValue(unsigned int offset, uint8_t value)
+  {
+    Q_ASSERT(offset < pvBuffer.capacity());
+    pvBuffer[offset] = value;
+  }
+
+  /*! \brief Get value at offset
+   *
+   * \pre offset must be < internal buffer's capacity
+   */
+  uint8_t byteValue(unsigned int offset) const
+  {
+    Q_ASSERT(offset < pvBuffer.capacity());
+    return pvBuffer[offset];
+  }
+
+  /*! \brief Get transfer handler
+   */
+  mdtUsbtmcTransferHandler & transferHandler()
+  {
+    return pvTransferHandler;
+  }
 
  private:
 

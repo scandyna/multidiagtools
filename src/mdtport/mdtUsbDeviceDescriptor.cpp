@@ -278,6 +278,19 @@ mdtUsbInterfaceDescriptor mdtUsbDeviceDescriptor::interface(uint8_t bInterfaceNu
   return mdtUsbInterfaceDescriptor();
 }
 
+QList<mdtUsbInterfaceDescriptor> mdtUsbDeviceDescriptor::allInterfaces() const
+{
+  QList<mdtUsbInterfaceDescriptor> ifaces;
+
+  for(auto & cfg : pvConfigs){
+    for(mdtUsbInterfaceDescriptor & iface : cfg.interfaces()){
+      ifaces.append(iface);
+    }
+  }
+
+  return ifaces;
+}
+
 
 
 mdtUsbInterfaceDescriptor mdtUsbDeviceDescriptor::interface(int configIndex, int ifaceIndex)

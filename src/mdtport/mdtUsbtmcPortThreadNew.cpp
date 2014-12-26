@@ -39,11 +39,16 @@ void mdtUsbtmcPortThreadNew::aboutToClose()
    * Other problem is to cancel transfers in a not to ugly way.
    * Try to submit transfers cancellation, and give thread a chance to do it in a short time.
    */
+  pvTransferHandler.submitStopRequest();
+  waitOnState(State_t::Stopped, 1000);
+  setCurrentState(State_t::Stopped);  // Will force thread to exit if not allready done
+  /**
   pvTransferHandler.setCurrentState(mdtUsbtmcTransferHandler::State_t::Stopping);
   pvTransferHandler.submitControlTransfersCancel();
   if(pvTransferHandler.hasPendingTransfers()){
     waitOnState(State_t::Stopped, 1000);
   }
+  */
   qDebug() << "USBTMC: about to close DONE";
 }
 
@@ -72,8 +77,18 @@ void mdtUsbtmcPortThreadNew::run()
   // Tell main thread that we are now running and run..
   setCurrentState(State_t::Running);
   qDebug() << "USBTMC THD: running ...";
-  while(currentState() == State_t::Running){
+  ///while(currentState() == State_t::Running){
+  while(1){
+    if(currentState() == State_t::Stopped){
+      std::lock_guard<std::mutex> lg(pvLastErrorMutex);
+      pvLastError.setError(QObject::tr("Forced to stop in abnormal way (probably a bug!)"), mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtUsbtmcPortThreadNew");
+      pvLastError.commit();
+      return;
+    }
+    qDebug() << "USBTMC THD: handle USB events ...";
     err = libusb_handle_events(usbContext());
+    qDebug() << "USBTMC THD: handle USB events DONE" << " TH state: " << (int)pvTransferHandler.currentState();
     if(err != 0){
       std::lock_guard<std::mutex> lg(pvLastErrorMutex);
       pvLastError.setError(QObject::tr("USB event handling failed (libusb_handle_events())"), mdtError::Error);
@@ -84,28 +99,26 @@ void mdtUsbtmcPortThreadNew::run()
       return;
     }
     // Some event woke us up - Check that it was not a stop request
+    /**
     if(currentState() != State_t::Running){
       qDebug() << "USBTMC THD: stopping ...";
       break;
     }
-    // Check transfer handler state - If not Running, some error happend
-    if(pvTransferHandler.mustBeStopped()){
-      /// \todo Error handling !
-      qDebug() << "Transfer handler in error ?";
-      break;
-    }
-    // Let transfer handler do his synchronous tasks (if any)
-    /**
-    qDebug() << "USBTMC THD: handle sync events ...";
-    pvTransferHandler.handleSyncEvents();
-    qDebug() << "USBTMC THD: handle sync events DONE";
-    // Check transfer handler state - If not Running, some error happend
-    if(pvTransferHandler.mustBeStopped()){
-      /// \todo Error handling !
-      qDebug() << "Transfer handler in error ?";
-      break;
-    }
     */
+    /*
+     * Check if transfer handler must be stopped.
+     * Can be due to 2 main reasons:
+     *  - Stop request was submitted by aboutToClose() and all pending transfers where cancelled
+     *  - A unhandler error occured
+     */
+    if(pvTransferHandler.mustBeStopped()){
+      qDebug() << "USBTMC THD: TH must be stopped";
+      if(pvTransferHandler.currentState() == mdtUsbtmcTransferHandler::State_t::Error){
+        /// \todo Error handling !
+        qDebug() << "Transfer handler in error !";
+      }
+      break;
+    }
   }
   pvTransferHandler.setCurrentState(mdtUsbtmcTransferHandler::State_t::Stopped);
   qDebug() << "USBTMC THD: END ...";

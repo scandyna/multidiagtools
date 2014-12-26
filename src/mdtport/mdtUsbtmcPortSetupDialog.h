@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,95 +21,178 @@
 #ifndef MDT_USBTMC_PORT_SETUP_DIALOG_H
 #define MDT_USBTMC_PORT_SETUP_DIALOG_H
 
-#include "mdtAbstractPortSetupDialog.h"
-#include "mdtPortConfigWidget.h"
-#include "mdtPortInfoCbHandler.h"
-#include "mdtPortInfo.h"
+///#include "mdtAbstractPortSetupDialog.h"
+///#include "mdtPortConfigWidget.h"
+///#include "mdtPortInfoCbHandler.h"
+///#include "mdtPortInfo.h"
+#include "ui_mdtUsbtmcPortSetupDialog.h"
+#include "mdtUsbDeviceDescriptor.h"
+#include "mdtUsbInterfaceDescriptor.h"
+#include "mdtUsbtmcPort.h"
+#include "mdtError.h"
 #include <QDialog>
 #include <QComboBox>
 #include <QLabel>
 #include <QPushButton>
+#include <QString>
+#include <QList>
 
-class mdtUsbtmcPortManager;
+///class mdtUsbtmcPortManager;
 class QWidget;
 class QAbstractButton;
 
-class mdtUsbtmcPortSetupDialog : public mdtAbstractPortSetupDialog
+///class mdtUsbtmcPortSetupDialog : public mdtAbstractPortSetupDialog
+
+/*! \brief Dialog for USBTMC devices enumeration and selection
+ */
+class mdtUsbtmcPortSetupDialog : public QDialog, Ui::mdtUsbtmcPortSetupDialog
 {
  Q_OBJECT
 
  public:
 
+  /*! \brief Constructor
+   */
   mdtUsbtmcPortSetupDialog(QWidget *parent = 0);
+
+  /*! \brief Desctructor
+   */
   ~mdtUsbtmcPortSetupDialog();
+
+  /*! \brief Enumerate attached USBTMC devices
+   */
+  void scan()
+  {
+    rescan();
+  }
+
+  /*! \brief Get selected device
+   *
+   * Returns a empty device descriptor if no device was selected or found.
+   */
+  mdtUsbDeviceDescriptor selectedDevice() const
+  {
+    return pvSelectedDevice;
+  }
+
+  /*! \brief Get selected bInterfaceNumber
+   */
+  uint8_t selectedbInterfaceNumber() const
+  {
+    return pvSelectedbInterfaceNumber;
+  }
 
  private slots:
 
-  // Read the configuration and update GUI
-  void displayConfig();
-
-  // Read options from GUI and update configuration
-  void updateConfig();
-
-  // Close port
-  void closePort();
-
-  // Rescan
+  /*! \brief Enumerate attached USBTMC devices
+   */
   void rescan();
 
+  /*! \brief Build interfaces list
+   */
+  void buildInterfacesList(int deviceCbIndex);
+
+  /*! \brief Update selected device and interface
+   */
+  void updateSelectedDevice(int ifaceCbIndex);
+
+  // Read the configuration and update GUI
+  ///void displayConfig();
+
+  // Read options from GUI and update configuration
+  ///void updateConfig();
+
+  // Close port
+  ///void closePort();
+
+  // Rescan
+  ///void rescan();
+
   // Open port
-  void openPort();
+  ///void openPort();
 
  private:
 
+  /*! \brief Set scanning state
+   */
+  void setStateScanning();
+
+  /*! \brief Set no device found state
+   */
+  void setStateNoDeviceFound();
+
+  /*! \brief Set device selected state
+   */
+  void setStateDeviceSelected();
+
+  /*! \brief Get text to display in list devices from descriptor
+   */
+  QString deviceDisplayText(const mdtUsbDeviceDescriptor & descriptor) const;
+
+  /*! \brief Get text to display in interfaces list from descriptor
+   */
+  QString interfaceDisplayText(const mdtUsbInterfaceDescriptor & descriptor) const;
+
+  /*! \brief Display last error to the user
+   */
+  void displayLastError();
+
+  Q_DISABLE_COPY(mdtUsbtmcPortSetupDialog);
+
+  mdtUsbtmcPort pvPort;
+  QList<mdtUsbDeviceDescriptor> pvDeviceDescriptorsList;
+  mdtUsbDeviceDescriptor pvSelectedDevice;
+  uint8_t pvSelectedbInterfaceNumber;
+  mdtError pvLastError;
+
   /*! \brief Called by setPortManager()
    */
-  void portManagerSet();
+  ///void portManagerSet();
 
   /*! \brief Set the PortClosed state
    */
-  void setStatePortClosed();
+  ///void setStatePortClosed();
 
   /*! \brief Set the Disconnected state
    */
-  void setStateDisconnected();
+  ///void setStateDisconnected();
 
   /*! \brief Set the Connecting state
    */
-  void setStateConnecting();
+  ///void setStateConnecting();
 
   /*! \brief Set the PortReady state
    */
-  void setStatePortReady();
+  ///void setStatePortReady();
 
   /*! \brief Set the Ready state
    */
-  void setStateReady();
+  ///void setStateReady();
 
   /*! \brief Set the Busy state
    */
-  void setStateBusy();
+  ///void setStateBusy();
 
   /*! \brief Set the Error state
    */
-  void setStateError();
+  ///void setStateError();
 
   /*! \brief Apply setup
    */
-  bool applySetup();
+  ///bool applySetup();
 
-  mdtPortInfoCbHandler pvPortInfoCbHandler;
-  mdtPortInfo pvCurrentPortInfo;
-  QPushButton *pbOpen;
-  QPushButton *pbClose;
-  QPushButton *pbRescan;
-  QComboBox *cbPort;
-  QComboBox *cbInterface;
-  QWidget *pvDeviceInfoWidget;
-  QLabel *lbManufacturer;
-  QLabel *lbModel;
-  QLabel *lbSerial;
-  QLabel *lbFirmware;
+//   mdtPortInfoCbHandler pvPortInfoCbHandler;
+//   mdtPortInfo pvCurrentPortInfo;
+//   QPushButton *pbOpen;
+//   QPushButton *pbClose;
+//   QPushButton *pbRescan;
+//   QComboBox *cbPort;
+//   QComboBox *cbInterface;
+//   QWidget *pvDeviceInfoWidget;
+//   QLabel *lbManufacturer;
+//   QLabel *lbModel;
+//   QLabel *lbSerial;
+//   QLabel *lbFirmware;
 };
 
 #endif  // #ifndef MDT_USBTMC_PORT_SETUP_DIALOG_H

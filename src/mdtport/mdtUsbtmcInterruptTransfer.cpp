@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtUsbtmcInterruptTransfer.h"
+#include "mdtUsbtmcTransferHandler.h"
 
 mdtUsbtmcInterruptTransfer::mdtUsbtmcInterruptTransfer ( mdtUsbtmcTransferHandler& th, mdtUsbEndpointDescriptor endpointDescriptor, libusb_device_handle* dev_handle, int bufferSize)
  : mdtUsbTransfer(dev_handle, bufferSize),
@@ -28,4 +29,12 @@ mdtUsbtmcInterruptTransfer::mdtUsbtmcInterruptTransfer ( mdtUsbtmcTransferHandle
   Q_ASSERT(!pvEndpointDescriptor.isEmpty());
 
   pvBuffer.assign(bufferSize, 0);
+}
+
+void mdtUsbtmcInterruptTransfer::setup(unsigned int timeout)
+{
+  libusb_fill_interrupt_transfer(transfer(), deviceHandle(),
+                                 pvEndpointDescriptor.address(), pvBuffer.data(), pvBuffer.capacity(),
+                                 pvTransferHandler.interruptInTransferCallback, static_cast<void*>(this),
+                                 timeout);
 }

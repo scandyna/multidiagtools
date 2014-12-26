@@ -222,7 +222,7 @@ void mdtPortTerm::portSetup()
   }else if(pvUsbtmcPortManager != 0){
     disconnect(pvUsbtmcPortManager, SIGNAL(newTransactionDone(mdtPortTransaction*)), this, SLOT(appendReadenData(mdtPortTransaction*)));
     mdtUsbtmcPortSetupDialog d(this);
-    d.setPortManager(pvUsbtmcPortManager);
+    ///d.setPortManager(pvUsbtmcPortManager);
     d.exec();
     connect(pvUsbtmcPortManager, SIGNAL(newTransactionDone(mdtPortTransaction*)), this, SLOT(appendReadenData(mdtPortTransaction*)));
     if(pvUsbtmcPortManager->isReady()){
