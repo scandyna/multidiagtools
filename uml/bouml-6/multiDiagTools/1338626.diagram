@@ -2,7 +2,7 @@ format 208
 
 classcanvas 128002 class_ref 1423362 // mdtUsbtmcPort
   classdiagramsettings member_max_width 0 end
-  xyz 369 319 2000
+  xyz 322 429 2000
 end
 classcanvas 128130 class_ref 1423618 // mdtUsbtmcFrame
   classdiagramsettings member_max_width 0 end
@@ -45,11 +45,11 @@ classcanvas 130562 class_ref 1512066 // mdtUsbControlTransfer
   xyz 711 159 2018
 end
 relationcanvas 128386 relation_ref 1878274 // <directional composition>
-  decenter_begin 395
+  decenter_begin 920
   decenter_end 395
   from ref 128002 z 2007 to ref 128258
-  role_a_pos 431 313 3000 no_role_b
-  multiplicity_a_pos 480 343 3000 no_multiplicity_b
+  role_a_pos 484 334 3000 no_role_b
+  multiplicity_a_pos 533 364 3000 no_multiplicity_b
 end
 relationcanvas 128898 relation_ref 1824002 // <directional composition>
   decenter_begin 395
@@ -60,12 +60,12 @@ relationcanvas 128898 relation_ref 1824002 // <directional composition>
 end
 relationcanvas 129282 relation_ref 1823234 // <composition>
   geometry VH unfixed
-  decenter_begin 448
-  decenter_end 395
-  from ref 128002 z 3006 to point 417 253
+  decenter_begin 637
+  decenter_end 790
+  from ref 128002 z 3006 to point 391 270
   line 129794 z 3006 to ref 129154
-  role_a_pos 345 233 3000 no_role_b
-  multiplicity_a_pos 448 263 3000 no_multiplicity_b
+  role_a_pos 345 250 3000 no_role_b
+  multiplicity_a_pos 448 280 3000 multiplicity_b_pos 376 406 3000
 end
 relationcanvas 129410 relation_ref 1864578 // <unidirectional association>
   decenter_begin 395
@@ -111,6 +111,12 @@ end
 relationcanvas 130818 relation_ref 1857922 // <generalisation>
   decenter_begin 518
   from ref 128642 z 2019 to ref 130562
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131458 relation_ref 1898370 // <unidirectional association>
+  decenter_end 209
+  from ref 128770 z 3006 to ref 129154
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

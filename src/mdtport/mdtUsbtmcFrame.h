@@ -266,13 +266,13 @@ class mdtUsbtmcFrame
    *
    * \pre message must have at least 1 byte of data to read from
    */
-  void setData(mdtUsbtmcMessage & message);
+  void setData(mdtUsbtmcTxMessage & message);
 
   /*! \brief Get data
    *
    * Will write (by copy) data part to given message.
    */
-  void getData(mdtUsbtmcMessage & message)
+  void getData(mdtUsbtmcRxMessage & message)
   {
     /// \todo Should transferSize be checked before writing ?
     message.write(pvBuffer.data()+12, transferSize());

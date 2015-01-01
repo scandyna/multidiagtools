@@ -1,6 +1,6 @@
 format 208
 "newPortApiSandbox" // mdtport::newPortApiSandbox
-  revision 33
+  revision 40
   modified_by 2 "philippe"
   // class settings
   
@@ -2098,6 +2098,15 @@ ${inlines}
 	
 	
       end
+
+      classrelation 1914498 // <unidirectional association>
+	relation 1898370 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1914498 // <unidirectional association>
+	  b parent class_ref 1478914 // mdtUsbtmcTransferHandler
+      end
     end
 
     class 1492098 "UsbtmcInterruptTransfer"
@@ -2169,6 +2178,23 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+      operation 2438914 "mdtUsbtmcTransferHandler"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "usbContext" explicit_type "libusb_context"
+	  param in name "port" type class_ref 1423362 // mdtUsbtmcPort
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 2402178 "setup"
 	public explicit_return_type "bool"
 	nparams 3
@@ -2459,7 +2485,7 @@ ${inlines}
       pseudostate 187778 initial 
       end
 
-      state 219394 "Starting"
+      state 219394 "Setup"
       end
 
       state 219522 "Idle"
@@ -2517,7 +2543,7 @@ ${inlines}
       state 220418 "Waiting"
       end
 
-      state 220546 "DeviceDisconnected"
+      state 220546 "Disconnected"
       end
 
       state 220674 "InitiateAbortBulkIn"
@@ -2648,6 +2674,114 @@ ${inlines}
 "
 	    classrelation_ref 1901058 // <unidirectional association>
 	  b parent class_ref 236162 // QByteArray
+      end
+    end
+
+    state 241538 "mdtUsbtmcTransferHandlerStateMachine"
+      stereotype "machine"
+      statediagram 1345282 "StateMachine"
+	statediagramsettings show_trans_definition yes
+	 end
+	size A4
+      end
+
+      state 241666 "Stopped"
+	  uml_on_entry "notifyStopped"
+	transition 272386 "<transition>"
+	  on state_ref 243202 // Running
+	  external 
+	end
+      end
+
+      state 241794 "Setup"
+      end
+
+      state 242306 "Stopping"
+	  uml_on_entry "submitCancelAllTransfers"
+	transition 262914 "<transition>"
+	  on state_ref 241666 // Stopped
+	    uml_trigger "transferComplete"
+	    uml_guard "!hasPendingTransfers"
+	  external 
+	end
+
+	transition 279298 "<transition>"
+	  on state_ref 242562 // Error
+	    uml_trigger "ErrorOccured"
+	    uml_guard "isUnhandledError"
+	    uml_expr "restoreAllTransfers"
+	  external 
+	end
+
+	transition 285826 "<transition>"
+	  on state_ref 242434 // Disconnected
+	    uml_trigger "errorOccured"
+	    uml_guard "isDeviceDisconnectedError"
+	    uml_expr "restoreAllTransfers"
+	  external 
+	end
+      end
+
+      state 242434 "Disconnected"
+	  uml_on_entry "notifyDeviceDisconnected"
+      end
+
+      state 243202 "Running"
+	stereotype "submachine"
+	  uml_on_entry "submitInterruptInTransfer"
+	statediagram 1345538 "Running"
+	  statediagramsettings show_trans_definition yes
+	   end
+	  size A4
+	end
+
+	transition 265346 "<transition>"
+	  on state_ref 242434 // Disconnected
+	    uml_trigger "ErrorOccured"
+	    uml_guard "isDeviceDisconnectedError"
+	    uml_expr "restoreAllTransfers"
+	  external 
+	end
+
+	transition 265474 "<transition>"
+	  on state_ref 242306 // Stopping
+	    uml_trigger "StopRequested"
+	  external 
+	end
+
+	state 243330 "Idle"
+	  transition 265602 "<transition>"
+	    on state_ref 243458 // SendingMessage
+	      uml_trigger "submitCommand"
+	    external 
+	  end
+	end
+
+	state 243458 "SendingMessage"
+	end
+
+	transition 279170 "<transition>"
+	  on state_ref 242562 // Error
+	    uml_trigger "ErrorOccured"
+	    uml_guard "isUnhandledError"
+	    uml_expr "restoreAllTransfers"
+	  external 
+	end
+
+	state 249986 "AbortingBulkIo"
+	    uml_on_exit "notifyAbortedOuQqchDuGenre"
+	end
+      end
+
+      state 242562 "Error"
+	  uml_on_entry "notifyError"
+      end
+
+      pseudostate 201090 initial 
+	transition 279042 "<transition>"
+	  on state_ref 243202 // Running
+	  external 
+	end
       end
     end
   end

@@ -51,7 +51,7 @@ void mdtUsbtmcFrame::setTransferSize ( uint32_t size )
   pvBuffer[7] = (size >> 24) & 0xFF;
 }
 
-void mdtUsbtmcFrame::setData(mdtUsbtmcMessage & message)
+void mdtUsbtmcFrame::setData(mdtUsbtmcTxMessage & message)
 {
   Q_ASSERT(message.bytesToRead() > 0);
 

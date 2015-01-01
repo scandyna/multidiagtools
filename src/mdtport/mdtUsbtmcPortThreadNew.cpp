@@ -62,6 +62,7 @@ void mdtUsbtmcPortThreadNew::run()
   // Open USB device
   if(!openDevice()){
     setCurrentState(State_t::Error);
+    emit errorOccured(pvLastError);
     return;
   }
   handle = deviceHandle();
@@ -71,6 +72,7 @@ void mdtUsbtmcPortThreadNew::run()
     std::lock_guard<std::mutex> lg(pvLastErrorMutex);
     pvLastError = pvTransferHandler.lastError();
     setCurrentState(State_t::Error);
+    emit errorOccured(pvLastError);
     return;
   }
   pvTransferHandler.setCurrentState(mdtUsbtmcTransferHandler::State_t::Running);
@@ -84,6 +86,7 @@ void mdtUsbtmcPortThreadNew::run()
       pvLastError.setError(QObject::tr("Forced to stop in abnormal way (probably a bug!)"), mdtError::Error);
       MDT_ERROR_SET_SRC(pvLastError, "mdtUsbtmcPortThreadNew");
       pvLastError.commit();
+      emit errorOccured(pvLastError);
       return;
     }
     qDebug() << "USBTMC THD: handle USB events ...";
@@ -96,6 +99,7 @@ void mdtUsbtmcPortThreadNew::run()
       MDT_ERROR_SET_SRC(pvLastError, "mdtUsbtmcPortThreadNew");
       pvLastError.commit();
       setCurrentState(State_t::Error);
+      emit errorOccured(pvLastError);
       return;
     }
     // Some event woke us up - Check that it was not a stop request

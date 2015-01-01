@@ -79,7 +79,7 @@ class mdtUsbtmcBulkTransfer : public mdtUsbTransfer
    * 
    * \pre bTag must be in range [1;255]
    */
-  void setupDevDepMsgOut(uint8_t bTag, mdtUsbtmcMessage & message, bool responseExpected, unsigned int timeout);
+  void setupDevDepMsgOut(uint8_t bTag, mdtUsbtmcTxMessage & message, bool responseExpected, unsigned int timeout);
 
   /*! \brief Setup REQUEST_DEV_DEP_MSG_IN transfer
    *
@@ -136,11 +136,18 @@ class mdtUsbtmcBulkTransfer : public mdtUsbTransfer
     return pvFrame.isComplete(rxLength);
   }
 
+  /*! \brief Check if this transfer is the last in message
+   */
+  bool isEOM() const
+  {
+    return pvFrame.EOMset();
+  }
+
   /*! \brief Get data
    *
    * Will write (by copy) data part to given message.
    */
-  void getData(mdtUsbtmcMessage & message)
+  void getData(mdtUsbtmcRxMessage & message)
   {
     pvFrame.getData(message);
   }

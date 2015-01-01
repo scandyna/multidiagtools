@@ -39,6 +39,7 @@ class mdtUsbPortTest : public mdtTest
 
   void basicAllocFreeBenchMarks();
   void basicLockUnlockBenchmark();
+  void basicLockUnlockRecursiveBenchmark();
   void standardCallBenchmark();
   void virtualCallBenchmark();
 
@@ -57,6 +58,9 @@ class mdtUsbPortTest : public mdtTest
   void usbtmcControlTransferTest();
   void usbtmcTransferPoolTest();
   void usbtmcTransferPoolBenchmark();
+  
+  void usbtmcTransferHandlerStateMachineTest();
+  
   void usbtmcPortThreadTest();
   void usbtmcPortTest();
   void usbtmcPortSetupDialogTest();

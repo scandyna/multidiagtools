@@ -31,14 +31,53 @@
 #include "mdtUsbtmcBulkTransfer.h"
 #include "mdtUsbtmcInterruptTransfer.h"
 #include "mdtUsbtmcMessage.h"
+
 #include "mdtBasicStateMachine.h"
+
+///#include "mdtUsbtmcTransferHandlerStateMachine.h"
+
+// #include <vector>
+ #include <boost/msm/back/state_machine.hpp>
+ #include <boost/msm/front/state_machine_def.hpp>
+// #include <boost/msm/front/functor_row.hpp>
+// #include <boost/msm/front/euml/common.hpp>
+// #include <boost/msm/front/euml/operator.hpp>
+#include <boost/shared_ptr.hpp> 
+
 #include <QObject>
 #include <QString>
 #include <libusb-1.0/libusb.h>
 #include <cstdint>
 #include <mutex>
 
+#include <memory>
+
+#include <QDebug>
+
 ///class mdtUsbtmcControlTransfer;
+
+class mdtUsbtmcPort;
+
+namespace mdtUsbtmcTransferHandlerStateMachine
+{
+  struct StateMachine;
+};
+
+//   class smWrapper
+//   {
+//   public:
+//     smWrapper();
+//     struct fsm;
+//     ///std::shared_ptr<fsm> pvFsm;
+//     ///std::unique_ptr<fsm> pvFsm;
+//     boost::shared_ptr<fsm> pvFsm;
+//   };
+
+
+
+// namespace msm = boost::msm;
+// namespace mpl = boost::mpl;
+
 
 /*! \brief USBTMC transfer handler
  */
@@ -61,7 +100,15 @@ class mdtUsbtmcTransferHandler
 
   /*! \brief Constructor
    */
-  mdtUsbtmcTransferHandler(libusb_context *usbContext);
+  mdtUsbtmcTransferHandler(libusb_context *usbContext, mdtUsbtmcPort & port);
+
+  /*! \brief Fake event
+   */
+  ///struct fakeEvent {};
+
+  ///void fakeAction(fakeEvent const &);
+
+  void someThFakeAction();
 
   /*! \brief Setup handler
    */
@@ -74,24 +121,24 @@ class mdtUsbtmcTransferHandler
    * \param responseExpected If message is a query that expects a response, like *IDN?, set this flag.
    * \param timeout Timeout [ms]
    */
-  void submitCommand(mdtUsbtmcMessage & message, bool responseExpected, unsigned int timeout);
+  void submitCommand(mdtUsbtmcTxMessage & message, bool responseExpected, unsigned int timeout);
 
   /*! \brief Get received data
    *
    * \param message USBTMC message in witch data will be appended.
    */
-  void getReceivedData(mdtUsbtmcMessage & message);
+  void getReceivedData(mdtUsbtmcRxMessage & message);
 
   /*! \brief Will cancel active transfers and change state to Stopping
    */
   void submitStopRequest();
 
-  /*! \brief Will cancel all pending bulk-OUT and bulk-IN transfers
+  /*! \brief Will cancel all pending bulk-OUT and bulk-IN transfers and request I/O buffer clear
    *
    * Once all transfers are cancelled, INITIATE_CLEAR and, if needed,
    *  CHECK_CLEAR_STATUS is sent to device.
    */
-  void submitBulkTransfersCancellation();
+  void submitBulkIoClear();
 
   /*! \brief Submit a custom transfer
    *
@@ -188,6 +235,12 @@ class mdtUsbtmcTransferHandler
         return true;
     }
   }
+
+  /*! \brief Notify error
+   *
+   * Must be called only by statme machine
+   */
+  void notifyError(const mdtError & error);
 
  private:
 
@@ -430,9 +483,74 @@ class mdtUsbtmcTransferHandler
 
   Q_DISABLE_COPY(mdtUsbtmcTransferHandler);
 
+//   /*! \brief Fake event
+//    */
+//   struct fakeRequest {};
+// 
+//   void fakeFunction(fakeRequest const &);
+// 
+//   /*! \brief Stopped state
+//     */
+//   struct Stopped : public boost::msm::front::state<>
+//   {
+//     /*! \brief Stopped entry/
+//       */
+//     template<typename Event, typename FSM>
+//     void on_entry(Event const &, FSM &)
+//     {
+//       qDebug() << "Entering Stopped ...";
+//     }
+//     /*! \brief Stopped exit/
+//       */
+//     template<typename Event, typename FSM>
+//     void on_exit(Event const &, FSM &)
+//     {
+//       qDebug() << "Leaving Stopped ...";
+//     }
+//   };
+//   /*! \brief Error state
+//     */
+//   struct Error : public boost::msm::front::state<>
+//   {
+//     /*! \brief Error entry/
+//       */
+//     template<typename Event, typename FSM>
+//     void on_entry(Event const &, FSM &)
+//     {
+//       qDebug() << "Entering Error ...";
+//     }
+//     /*! \brief Error exit/
+//       */
+//     template<typename Event, typename FSM>
+//     void on_exit(Event const &, FSM &)
+//     {
+//       qDebug() << "Leaving Error ...";
+//     }
+//   };
+// 
+//   /*! \brief Initial state
+//     */
+//   typedef Stopped initial_state;
+// 
+//   /*! \brief Transition table
+//     */
+//   struct transition_table : boost::mpl::vector<
+//     //     Start state       Event            Next state        Action           Guard
+//     // +--------------------+----------------+----------------+----------------+---------------------+
+//     a_row < Stopped             , fakeRequest   , Error     , &mdtUsbtmcTransferHandler::fakeFunction      >
+//     // +--------------------+----------------+----------------+----------------+---------------------+
+//   >{};
+
   libusb_context *pvUsbContext;
   libusb_device_handle *pvDeviceHandle;
   mdtBasicStateMachine<State_t> pvStateMachine;
+  
+  ///std::unique_ptr<mdtUsbtmcTransferHandlerStateMachine::StateMachine> pvStateMachineNew;
+  ///std::shared_ptr<StateMachine> pvStateMachineNew;
+  boost::shared_ptr<mdtUsbtmcTransferHandlerStateMachine::StateMachine> pvStateMachineNew;
+  ///smWrapper pvStateMachineNew;
+  
+  mdtUsbtmcPort & pvPort;
   // Descriptors
   mdtUsbDeviceDescriptor pvDeviceDescriptor;
   mdtUsbInterfaceDescriptor pvInterfaceDescriptor;

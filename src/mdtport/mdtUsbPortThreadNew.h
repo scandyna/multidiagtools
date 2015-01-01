@@ -96,6 +96,10 @@ class mdtUsbPortThreadNew : public QObject
    */
   void threadStateChanged();
 
+  /*! \brief Emitted when a error occured (see specific subclass for details)
+   */
+  void errorOccured(const mdtError & error);
+
  protected:
 
   /*! \brief Set current state

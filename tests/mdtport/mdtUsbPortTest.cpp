@@ -44,6 +44,7 @@
 #include "mdtUsbtmcInterruptTransfer.h"
 #include "mdtUsbtmcControlTransfer.h"
 #include "mdtUsbtmcTransferHandler.h"
+#include "mdtUsbtmcTransferHandlerStateMachine.h"
 #include "mdtUsbtmcPortThreadNew.h"
 
 #include <QByteArray>
@@ -131,6 +132,24 @@ void mdtUsbPortTest::basicLockUnlockBenchmark()
   QBENCHMARK{
     for(i = 0; i < N; ++i){
       std::lock_guard<std::mutex> lock(mutex);
+      fillBuffer(buffer, bSize);
+    }
+  }
+  delete[] buffer;
+}
+
+void mdtUsbPortTest::basicLockUnlockRecursiveBenchmark()
+{
+  unsigned char *buffer;
+  std::recursive_mutex mutex;
+  int N = 10;
+  int bSize = 128;
+  int i;
+
+  buffer = new unsigned char[bSize];
+  QBENCHMARK{
+    for(i = 0; i < N; ++i){
+      std::lock_guard<std::recursive_mutex> lock(mutex);
       fillBuffer(buffer, bSize);
     }
   }
@@ -258,7 +277,8 @@ void mdtUsbPortTest::usbtmcFrameTest()
 {
   mdtUsbtmcFrame f(4096);
   QByteArray ba;
-  mdtUsbtmcMessage message(ba);
+  mdtUsbtmcTxMessage txMessage(ba);
+  mdtUsbtmcRxMessage rxMessage(ba);
 
   // Check initial values
   QCOMPARE(f.capacity(), 4096);
@@ -292,12 +312,12 @@ void mdtUsbPortTest::usbtmcFrameTest()
   QCOMPARE((int)f.transferSize(), 0);
   // Check correct encoding for DEV_DEP_MSG_OUT - case 2 (with data)
   ba = "*IDN?\n";
-  message.reset();
+  txMessage.reset();
   f.clear();
   f.setMsgID(mdtUsbtmcFrame::msgId_t::DEV_DEP_MSG_OUT);
   f.setbTag(0x01);
   ///f.setData("*IDN?\n");
-  f.setData(message);
+  f.setData(txMessage);
   QCOMPARE(f.bufferLength(), 20);           // 12 (header) + 6 (data) + 2 (alignment bytes)
   QCOMPARE(f.buffer()[0], (uint8_t)1);      // MsgID
   QCOMPARE(f.buffer()[1], (uint8_t)0x01);   // bTag
@@ -323,14 +343,14 @@ void mdtUsbPortTest::usbtmcFrameTest()
   QCOMPARE(f.bTag(), (uint8_t)0x01);
   QCOMPARE(f.bTagInverse(), (uint8_t)0xFE);
   QCOMPARE((int)f.transferSize(), 6);
-  message.reset();
-  f.getData(message);
+  rxMessage.reset();
+  f.getData(rxMessage);
   QCOMPARE(ba, QByteArray("*IDN?\n"));
   ///QCOMPARE(f.data(), QByteArray("*IDN?\n"));
   // Check Alignment bytes
   ba = "A";
-  message.reset();
-  f.setData(message);
+  txMessage.reset();
+  f.setData(txMessage);
   ///f.setData("A");
   QCOMPARE((int)f.transferSize(), 1);
   QCOMPARE(f.bufferLength(), 16);
@@ -339,8 +359,8 @@ void mdtUsbPortTest::usbtmcFrameTest()
   QCOMPARE((int)f.buffer()[14], 0);     // Alignment byte
   QCOMPARE((int)f.buffer()[15], 0);     // Alignment byte
   ba = "12";
-  message.reset();
-  f.setData(message);
+  txMessage.reset();
+  f.setData(txMessage);
   ///f.setData("12");
   QCOMPARE((int)f.transferSize(), 2);
   QCOMPARE(f.bufferLength(), 16);
@@ -349,8 +369,8 @@ void mdtUsbPortTest::usbtmcFrameTest()
   QCOMPARE((int)f.buffer()[14], 0);     // Alignment byte
   QCOMPARE((int)f.buffer()[15], 0);     // Alignment byte
   ba = "ABC";
-  message.reset();
-  f.setData(message);
+  txMessage.reset();
+  f.setData(txMessage);
   ///f.setData("ABC");
   QCOMPARE((int)f.transferSize(), 3);
   QCOMPARE(f.bufferLength(), 16);
@@ -359,8 +379,8 @@ void mdtUsbPortTest::usbtmcFrameTest()
   QCOMPARE((char)f.buffer()[14], 'C');  // Data
   QCOMPARE((int)f.buffer()[15], 0);     // Alignment byte
   ba = "1234";
-  message.reset();
-  f.setData(message);
+  txMessage.reset();
+  f.setData(txMessage);
   ///f.setData("1234");
   QCOMPARE((int)f.transferSize(), 4);
   QCOMPARE(f.bufferLength(), 16);
@@ -369,8 +389,8 @@ void mdtUsbPortTest::usbtmcFrameTest()
   QCOMPARE((char)f.buffer()[14], '3');  // Data
   QCOMPARE((char)f.buffer()[15], '4');  // Data
   ba = "A";
-  message.reset();
-  f.setData(message);
+  txMessage.reset();
+  f.setData(txMessage);
   ///f.setData("A");
   QCOMPARE((int)f.transferSize(), 1);
   QCOMPARE(f.bufferLength(), 16);
@@ -527,8 +547,8 @@ void mdtUsbPortTest::usbtmcFrameTest()
   QVERIFY(f.isComplete(10 + 12));
   QVERIFY(f.isComplete(11 + 12));
   ///QCOMPARE(f.data(), QByteArray("ABCD,1234\n"));
-  message.reset();
-  f.getData(message);
+  rxMessage.reset();
+  f.getData(rxMessage);
   QCOMPARE(ba, QByteArray("ABCD,1234\n"));
 
   /*
@@ -540,9 +560,9 @@ void mdtUsbPortTest::usbtmcFrameBenchmark()
 {
   mdtUsbtmcFrame f(4096);
   QByteArray query = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  mdtUsbtmcMessage queryMessage(query);
+  mdtUsbtmcTxMessage queryMessage(query);
   QByteArray result;
-  mdtUsbtmcMessage resultMessage(result);
+  mdtUsbtmcRxMessage resultMessage(result);
   mdtUsbtmcFrame::msgId_t msgID;
   uint8_t bTag;
   uint8_t bTagInverse;
@@ -579,73 +599,74 @@ void mdtUsbPortTest::usbtmcMessageTest()
   // Init
   buffer.reserve(4);
   ba = "123456789";
-  mdtUsbtmcMessage message(ba);
+  mdtUsbtmcTxMessage txMessage(ba);
+  mdtUsbtmcRxMessage rxMessage(ba);
   QCOMPARE(ba, QByteArray("123456789"));
-  QCOMPARE(message.bytesToRead(), 9);
-  QVERIFY(message.hasBytesToRead());
+  QCOMPARE(txMessage.bytesToRead(), 9);
+  QVERIFY(txMessage.hasBytesToRead());
   // Read 1
-  n = message.read(buffer.data(), buffer.capacity());
+  n = txMessage.read(buffer.data(), buffer.capacity());
   QCOMPARE(n, 4);
   QCOMPARE((char)buffer[0], '1');
   QCOMPARE((char)buffer[1], '2');
   QCOMPARE((char)buffer[2], '3');
   QCOMPARE((char)buffer[3], '4');
-  QCOMPARE(message.bytesToRead(), 5);
-  QVERIFY(message.hasBytesToRead());
+  QCOMPARE(txMessage.bytesToRead(), 5);
+  QVERIFY(txMessage.hasBytesToRead());
   QCOMPARE(ba, QByteArray("123456789"));
   // Read 2
-  n = message.read(buffer.data(), buffer.capacity());
+  n = txMessage.read(buffer.data(), buffer.capacity());
   QCOMPARE(n, 4);
   QCOMPARE((char)buffer[0], '5');
   QCOMPARE((char)buffer[1], '6');
   QCOMPARE((char)buffer[2], '7');
   QCOMPARE((char)buffer[3], '8');
-  QCOMPARE(message.bytesToRead(), 1);
-  QVERIFY(message.hasBytesToRead());
+  QCOMPARE(txMessage.bytesToRead(), 1);
+  QVERIFY(txMessage.hasBytesToRead());
   QCOMPARE(ba, QByteArray("123456789"));
   // Read 3
-  n = message.read(buffer.data(), buffer.capacity());
+  n = txMessage.read(buffer.data(), buffer.capacity());
   QCOMPARE(n, 1);
   QCOMPARE((char)buffer[0], '9');
-  QCOMPARE(message.bytesToRead(), 0);
-  QVERIFY(!message.hasBytesToRead());
+  QCOMPARE(txMessage.bytesToRead(), 0);
+  QVERIFY(!txMessage.hasBytesToRead());
   QCOMPARE(ba, QByteArray("123456789"));
   // Read 4 - Must copy nothing and not fail
-  n = message.read(buffer.data(), buffer.capacity());
-  QCOMPARE(message.bytesToRead(), 0);
-  QVERIFY(!message.hasBytesToRead());
+  n = txMessage.read(buffer.data(), buffer.capacity());
+  QCOMPARE(txMessage.bytesToRead(), 0);
+  QVERIFY(!txMessage.hasBytesToRead());
   QCOMPARE(ba, QByteArray("123456789"));
   // Clear byte array and check that nothing fails
   ba.clear();
   QVERIFY(ba.isEmpty());
-  n = message.read(buffer.data(), buffer.capacity());
-  QCOMPARE(message.bytesToRead(), 0);
-  QVERIFY(!message.hasBytesToRead());
+  n = txMessage.read(buffer.data(), buffer.capacity());
+  QCOMPARE(txMessage.bytesToRead(), 0);
+  QVERIFY(!txMessage.hasBytesToRead());
   // Write 1
   buffer[0] = 'A';
   buffer[1] = 'B';
   buffer[2] = 'C';
   buffer[3] = 'D';
-  message.write(buffer.data(), buffer.capacity());
+  rxMessage.write(buffer.data(), buffer.capacity());
   QCOMPARE(ba, QByteArray("ABCD"));
   // Write 2
   buffer[0] = 'E';
   buffer[1] = 'F';
   buffer[2] = 'G';
   buffer[3] = 'H';
-  message.write(buffer.data(), buffer.capacity());
+  rxMessage.write(buffer.data(), buffer.capacity());
   QCOMPARE(ba, QByteArray("ABCDEFGH"));
   // Write 3
   buffer[0] = 'I';
-  message.write(buffer.data(), 1);
+  rxMessage.write(buffer.data(), 1);
   QCOMPARE(ba, QByteArray("ABCDEFGHI"));
   // Write 4
-  message.write(buffer.data(), 0);
+  rxMessage.write(buffer.data(), 0);
   QCOMPARE(ba, QByteArray("ABCDEFGHI"));
   // Reset and write
-  message.reset();
+  rxMessage.reset();
   buffer[0] = '1';
-  message.write(buffer.data(), 1);
+  rxMessage.write(buffer.data(), 1);
   QCOMPARE(ba, QByteArray("1"));
 }
 
@@ -656,13 +677,14 @@ void mdtUsbPortTest::usbtmcMessageBenchmark()
   // Init
   buffer.reserve(4096);
   QByteArray ba(10000, 'A');
-  mdtUsbtmcMessage message(ba);
+  mdtUsbtmcTxMessage txMessage(ba);
+  mdtUsbtmcRxMessage rxMessage(ba);
 
   QBENCHMARK{
-    message.read(buffer.data(), buffer.capacity());
-    message.reset();
-    message.write(buffer.data(), buffer.capacity());
-    message.reset();
+    txMessage.reset();
+    txMessage.read(buffer.data(), buffer.capacity());
+    rxMessage.reset();
+    rxMessage.write(buffer.data(), buffer.capacity());
   }
 }
 
@@ -675,7 +697,7 @@ void mdtUsbPortTest::usbtmcBulkTransferTest()
   mdtUsbEndpointDescriptor bulkOutEpd;
   mdtUsbEndpointDescriptor bulkInEpd;
   QByteArray ba;
-  mdtUsbtmcMessage message(ba);
+  mdtUsbtmcTxMessage message(ba);
   int ret;
 
   // Init libusb
@@ -709,7 +731,8 @@ void mdtUsbPortTest::usbtmcBulkTransferTest()
    * In this phase, we not send data to device,
    *  but a device handle is required by USBTMC transfer class.
    */
-  mdtUsbtmcTransferHandler th(usbCtx);
+  mdtUsbtmcPort port;
+  mdtUsbtmcTransferHandler th(usbCtx, port);
   mdtUsbtmcBulkTransfer transfer(th, bulkOutEpd, handle);
   QVERIFY(transfer.allocOk());
   /*
@@ -825,7 +848,8 @@ void mdtUsbPortTest::usbtmcInterruptTransferTest()
    * In this phase, we not send data to device,
    *  but a device handle is required by USBTMC transfer class.
    */
-  mdtUsbtmcTransferHandler th(usbCtx);
+  mdtUsbtmcPort port;
+  mdtUsbtmcTransferHandler th(usbCtx, port);
   mdtUsbtmcInterruptTransfer transfer(th, interruptEpd, handle);
   QVERIFY(transfer.allocOk());
   /*
@@ -908,7 +932,8 @@ void mdtUsbPortTest::usbtmcControlTransferTest()
    * In this phase, we not send data to device,
    *  but a device handle is required by USBTMC transfer class.
    */
-  mdtUsbtmcTransferHandler th(usbCtx);
+  mdtUsbtmcPort port;
+  mdtUsbtmcTransferHandler th(usbCtx, port);
   mdtUsbtmcControlTransfer transfer(th, handle);
   QVERIFY(transfer.allocOk());
   QCOMPARE(transfer.actualLength(), 0);
@@ -1133,7 +1158,8 @@ void mdtUsbPortTest::usbtmcTransferPoolTest()
    *  - Guard size: 3
    *  - Alloc 2
    */
-  mdtUsbtmcTransferHandler th(usbCtx);
+  mdtUsbtmcPort port;
+  mdtUsbtmcTransferHandler th(usbCtx, port);
   mdtUsbTransferPool<mdtUsbtmcControlTransfer> controlTransferPool(3);
   QVERIFY(controlTransferPool.allocTransfers(2, th, handle));
   QCOMPARE(controlTransferPool.pendingTransferCount(), 0);
@@ -1231,7 +1257,8 @@ void mdtUsbPortTest::usbtmcTransferPoolBenchmark()
   /*
    * Build a USBTMC control transfer pool.
    */
-  mdtUsbtmcTransferHandler th(usbCtx);
+  mdtUsbtmcPort port;
+  mdtUsbtmcTransferHandler th(usbCtx, port);
   mdtUsbTransferPool<mdtUsbtmcControlTransfer> controlTransferPool(30);
   QVERIFY(controlTransferPool.allocTransfers(10, th, handle));
   // Bench get/restore
@@ -1255,12 +1282,34 @@ void mdtUsbPortTest::usbtmcTransferPoolBenchmark()
   libusb_exit(usbCtx);
 }
 
+void mdtUsbPortTest::usbtmcTransferHandlerStateMachineTest()
+{
+//   using namespace mdtUsbtmcTransferHandlerStateMachine;
+
+//   mdtUsbtmcTransferHandlerStateMachine::StateMachine sm;
+// 
+//   qDebug() << "start ..";
+//   sm.start();
+//   
+//   qDebug() << "fakeRequest ..";
+//   sm.process_event(fakeRequest());
+//   qDebug() << "fakeRequest ..";
+//   sm.process_event(fakeRequest());
+//   
+//   qDebug() << "errorOccured ..";
+//   sm.process_event(errorOccured());
+// 
+//   qDebug() << "stop ..";
+//   sm.stop();
+}
+
 void mdtUsbPortTest::usbtmcPortThreadTest()
 {
   libusb_context *usbCtx = 0;
   mdtUsbDeviceDescriptor deviceDescriptor;
   QByteArray ba;
-  mdtUsbtmcMessage message(ba);
+  mdtUsbtmcTxMessage txMessage(ba);
+  mdtUsbtmcRxMessage rxMessage(ba);
   int ret;
 
   // Init libusb
@@ -1278,7 +1327,8 @@ void mdtUsbPortTest::usbtmcPortThreadTest()
   QVERIFY(!deviceDescriptor.interface(0).isEmpty());
 
   // Build thread
-  mdtUsbtmcTransferHandler th(usbCtx);
+  mdtUsbtmcPort port;
+  mdtUsbtmcTransferHandler th(usbCtx, port);
   mdtUsbtmcPortThreadNew thd(th, usbCtx);
   // Check start/stop
   QVERIFY(thd.start(deviceDescriptor, 0));
@@ -1303,63 +1353,63 @@ void mdtUsbPortTest::usbtmcPortThreadTest()
   */
 
   // Clear device's bulk I/O buffers
-  th.submitBulkTransfersCancellation();
+  th.submitBulkIoClear();
   QTest::qWait(1000);
 
   // Submit a command and abort (Abort Bulk-OUT)
   ba = "*CLS\n";
-  message.reset();
+  txMessage.reset();
   qDebug() << "TEST: submit bulk message *CLS + Abort Bulk-OUT";
-  th.submitCommand(message, false, 4900);
+  th.submitCommand(txMessage, false, 4900);
   th.dbgSubmitAbortOnePendingBulkOutTransfer();
   QTest::qWait(5000);
 
   // Submit a query
   ba = "SYSTEM:ERROR?\n";
-  message.reset();
+  txMessage.reset();
   qDebug() << "TEST: submit bulk message SYSTEM:ERROR?";
-  th.submitCommand(message, true, 900);
+  th.submitCommand(txMessage, true, 900);
   QTest::qWait(1000);
   // Check returned data
   ba.clear();
-  message.reset();
-  th.getReceivedData(message);
+  rxMessage.reset();
+  th.getReceivedData(rxMessage);
   qDebug() << "RX: " << ba << " " << ba.split(',');
   /// \todo Check that data was returned
 
   // Submit a query and abort (Abort Bulk-IN)
   ba = "SYSTEM:ERROR?\n";
-  message.reset();
+  txMessage.reset();
   qDebug() << "TEST: submit bulk message SYSTEM:ERROR? + Abort Bulk-IN";
-  th.submitCommand(message, true, 4900);
+  th.submitCommand(txMessage, true, 4900);
   th.dbgSubmitAbortOnePendingBulkInTransfer();
   QTest::qWait(5000);
   // Check returned data
   ba.clear();
-  message.reset();
-  th.getReceivedData(message);
+  rxMessage.reset();
+  th.getReceivedData(rxMessage);
   qDebug() << "RX: " << ba;
   /// \todo Check that data was returned
 
   // Submit a query
   ba = "SYSTEM:ERROR?\n";
-  message.reset();
+  txMessage.reset();
   qDebug() << "TEST: submit bulk message SYSTEM:ERROR?";
-  th.submitCommand(message, true, 900);
+  th.submitCommand(txMessage, true, 900);
   QTest::qWait(1000);
   // Check returned data
   ba.clear();
-  message.reset();
-  th.getReceivedData(message);
+  rxMessage.reset();
+  th.getReceivedData(rxMessage);
   qDebug() << "RX: " << ba;
   /// \todo Check that data was returned
 
 
   // Submit a query
   ba = "SYSTEM:ERROR?\n";
-  message.reset();
+  txMessage.reset();
   qDebug() << "TEST: submit bulk message SYSTEM:ERROR? just before stop";
-  th.submitCommand(message, true, 900);
+  th.submitCommand(txMessage, true, 900);
 
 
   // Submit a query and clear bulk transfers (CLEAR SPLIT)
@@ -1514,7 +1564,22 @@ void mdtUsbPortTest::usbtmcPortTest()
   // Open a USBTMC device
   QVERIFY(port.openDevice(deviceDescriptorsList.at(0), 0, true));
 
+  port.wait(1);
+
+  for(int i = 0; i < 1; ++i){
+    qDebug() << "SYSTEM:ERR? : " << port.sendQuery("SYSTEM:ERR?\n");
+    port.wait(1);
+    qDebug() << "*IDN? : " << port.sendQuery("*IDN?\n");
+    port.wait(1);
+  }
   
+  port.wait(1);
+  ///QVERIFY(port.sendCommand("*RST"));
+  port.wait(1);
+  ///QVERIFY(port.sendCommand("*CLS"));
+  port.wait(1);
+  ///qDebug() << "SYSTEM:ERR? : " << port.sendQuery("SYSTEM:ERR?\n");
+
 }
 
 void mdtUsbPortTest::usbtmcPortSetupDialogTest()

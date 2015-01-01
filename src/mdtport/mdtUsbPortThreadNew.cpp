@@ -63,7 +63,7 @@ bool mdtUsbPortThreadNew::start(const mdtUsbDeviceDescriptor & deviceDescriptor,
 void mdtUsbPortThreadNew::stop()
 {
   setCurrentState(State_t::Stopping);
-  // Close device is one was open
+  // Close device if one was open
   if(pvDeviceHandle != 0){
     aboutToClose();
     int err = libusb_release_interface(pvDeviceHandle, pvbInterfaceNumber);

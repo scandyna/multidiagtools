@@ -36,15 +36,15 @@ relationcanvas 129666 relation_ref 1891586 // <directional composition>
   decenter_end 111
   from ref 128002 z 2006 to point 64 267
   line 130306 z 2006 to ref 129538
-  role_a_pos 77 445 3000 no_role_b
-  multiplicity_a_pos 48 445 3000 no_multiplicity_b
+  role_a_pos 76 446 3000 no_role_b
+  multiplicity_a_pos 49 446 3000 no_multiplicity_b
 end
 relationcanvas 129794 relation_ref 1891842 // <directional composition>
   geometry HV
   decenter_end 664
   from ref 128002 z 2001 to point 757 264
   line 129922 z 2001 to ref 129410
-  role_a_pos 769 444 3000 no_role_b
-  multiplicity_a_pos 739 444 3000 no_multiplicity_b
+  role_a_pos 769 437 3000 no_role_b
+  multiplicity_a_pos 742 437 3000 no_multiplicity_b
 end
 end

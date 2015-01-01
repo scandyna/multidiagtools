@@ -22,6 +22,7 @@
 #define MDT_USBTMC_CONTROL_TRANSFER_H
 
 #include "mdtUsbControlTransfer.h"
+///#include "mdtUsbtmcTransferHandler.h"
 #include <QString>
 #include <vector>
 #include <cstdint>

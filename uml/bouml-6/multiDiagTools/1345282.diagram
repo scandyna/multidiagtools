@@ -1,0 +1,80 @@
+format 208
+
+statecanvas 128002 state_ref 241666 // Stopped
+  
+  xyzwh 32.9328 102.349 2006 203 93
+end
+statecanvas 128130 state_ref 241794 // Setup
+  
+  xyzwh 470.472 57.825 2011 57 43
+end
+statecanvas 128642 state_ref 242306 // Stopping
+  
+  xyzwh 10.3243 697.396 2023 245 90
+end
+statecanvas 128770 state_ref 242434 // Disconnected
+  
+  xyzwh 497.783 538.515 2029 247 81
+end
+statecanvas 128898 state_ref 242562 // Error
+  
+  xyzwh 306.301 336.22 2005 202 97
+end
+statecanvas 132354 state_ref 243202 // Running
+  
+  xyzwh 580.62 149.12 2005 245 110
+end
+pseudostatecanvas 133506 pseudostate_ref 201090 // initial
+   xyz 238.1 55.2 2000
+end
+transitioncanvas 129026 transition_ref 262914 // <transition>
+  
+  from ref 128642 z 2024 label "transferComplete [!hasPendingTransfers]" xyz 10 435 2024 to ref 128002
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 132610 transition_ref 265346 // <transition>
+  
+  from ref 132354 z 2030 label "ErrorOccured [isDeviceDisconnectedError] / restoreAllTransfers" xyz 397 499 2030 to ref 128770
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 132738 transition_ref 265474 // <transition>
+  geometry HVr
+  decenter_begin 867
+  decenter_end 902
+  
+  from ref 132354 z 2024 label "StopRequested" xyz 742 434.5 2024 to point 790 776
+  line 132866 z 2024 to ref 128642
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 133250 transition_ref 272386 // <transition>
+  decenter_end 474
+  
+  from ref 128002 z 2007 to ref 132354
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 133634 transition_ref 279042 // <transition>
+  
+  from ref 133506 z 2006 to ref 132354
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 133762 transition_ref 279170 // <transition>
+  geometry VHr
+  decenter_begin 919
+  
+  from ref 132354 z 2006 label "ErrorOccured [isUnhandledError] / restoreAllTransfers" xyz 317 266.5 2006 to point 404 248
+  line 134146 z 2006 to ref 128898
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 133890 transition_ref 279298 // <transition>
+  
+  from ref 128642 z 2024 label "ErrorOccured [isUnhandledError] / restoreAllTransfers" xyz 165 639 2024 to ref 128898
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 134530 transition_ref 285826 // <transition>
+  geometry HV
+  
+  from ref 128642 z 2030 label "errorOccured [isDeviceDisconnectedError] / restoreAllTransfers" xyz 282 725 3000 to point 618 739.9
+  line 134658 z 2030 to ref 128770
+  write_horizontally default show_definition default drawing_language default
+end
+end

@@ -19,21 +19,51 @@
  **
  ****************************************************************************/
 #include "mdtUsbtmcTransferHandler.h"
-///#include "mdtUsbtmcControlTransfer.h"
+#include "mdtUsbtmcPort.h"
 #include <thread>         // std::this_thread::sleep_for
 #include <chrono>         // std::chrono
+#include "mdtUsbtmcTransferHandlerStateMachine.h"
 
 #include <QDebug>
 
-mdtUsbtmcTransferHandler::mdtUsbtmcTransferHandler(libusb_context *usbContext)
+
+//   struct smWrapper::fsm : public boost::msm::back::state_machine<mdtUsbtmcTransferHandlerStateMachine::StateMachine_>
+//   {
+//     using boost::msm::back::state_machine<mdtUsbtmcTransferHandlerStateMachine::StateMachine_>::state_machine;
+//   };
+// 
+//   smWrapper::smWrapper()
+//   : pvFsm(new fsm)
+//   {
+// 
+//   }
+
+
+using namespace mdtUsbtmcTransferHandlerStateMachine;
+
+mdtUsbtmcTransferHandler::mdtUsbtmcTransferHandler(libusb_context *usbContext, mdtUsbtmcPort & port)
  : pvUsbContext(usbContext),
    pvDeviceHandle(0),
-   pvStateMachine(State_t::Stopped)
+   pvStateMachine(State_t::Stopped),
+   ///pvStateMachineNew(new mdtUsbtmcTransferHandlerStateMachine::StateMachine(boost::ref(*this))),
+   pvStateMachineNew(new /**mdtUsbtmcTransferHandlerStateMachine::*/StateMachine),
+   pvPort(port)
 {
   Q_ASSERT(pvUsbContext != 0);
+  
+  
+  ///mdtUsbtmcTransferHandlerStateMachine::StateMachine sm(boost::ref(*this));
 }
 
-bool mdtUsbtmcTransferHandler::setup ( libusb_device_handle* handle, const mdtUsbDeviceDescriptor & descriptor, uint8_t bInterfaceNumber )
+
+// void mdtUsbtmcTransferHandler::fakeAction(const mdtUsbtmcTransferHandler::fakeEvent &)
+// {
+//   qDebug() << "** Fake action called !";
+// }
+
+
+
+bool mdtUsbtmcTransferHandler::setup(libusb_device_handle* handle, const mdtUsbDeviceDescriptor & descriptor, uint8_t bInterfaceNumber)
 {
   Q_ASSERT(!descriptor.isEmpty());
 
@@ -130,10 +160,29 @@ bool mdtUsbtmcTransferHandler::setup ( libusb_device_handle* handle, const mdtUs
     submitInterruptInTransfer(50000);
   }
 
+  
+  /// \todo Provisoire
+  pvStateMachineNew->setTh(this);
+  pvStateMachineNew->start();
+  ///pvStateMachineNew->process_event(StopRequestedEvent());
+  pvStateMachineNew->process_event(ErrorOccuredEvent(pvLastError));
+  ///start();
+  ///pvStateMachineNew.pvFsm->setTh(this);
+  ///pvStateMachineNew.pvFsm->start();
+  
   return true;
 }
 
-void mdtUsbtmcTransferHandler::submitCommand(mdtUsbtmcMessage & message, bool responseExpected, unsigned int timeout)
+
+void mdtUsbtmcTransferHandler::someThFakeAction()
+{
+  qDebug() << "*** TH fake action called !!!";
+  pvStateMachineNew->process_event(ErrorOccuredEvent(pvLastError));
+}
+
+
+
+void mdtUsbtmcTransferHandler::submitCommand(mdtUsbtmcTxMessage & message, bool responseExpected, unsigned int timeout)
 {
   State_t state = currentState();
   if(state != State_t::Running){
@@ -163,6 +212,7 @@ void mdtUsbtmcTransferHandler::submitCommand(mdtUsbtmcMessage & message, bool re
     pvLastError.setError(msg, mdtError::Warning);
     MDT_ERROR_SET_SRC(pvLastError, "mdtUsbtmcTransferHandler");
     pvLastError.commit();
+    pvPort.thSetError(pvLastError);
     return;
   }
   /*
@@ -181,7 +231,7 @@ void mdtUsbtmcTransferHandler::submitCommand(mdtUsbtmcMessage & message, bool re
   }
 }
 
-void mdtUsbtmcTransferHandler::getReceivedData(mdtUsbtmcMessage & message)
+void mdtUsbtmcTransferHandler::getReceivedData(mdtUsbtmcRxMessage & message)
 {
   std::lock_guard<std::mutex> bilg(pvBulkInTransferMutex);
   auto transfers = pvBulkInTransferPool.getAllPendingTransfers();
@@ -201,7 +251,7 @@ void mdtUsbtmcTransferHandler::submitStopRequest()
   submitCancelAllInterruptInTransfers(true);
 }
 
-void mdtUsbtmcTransferHandler::submitBulkTransfersCancellation()
+void mdtUsbtmcTransferHandler::submitBulkIoClear()
 {
   unsigned int pendingBulkOutTransfersCount = 0;
   unsigned int pendingBulkInTransfersCount = 0;
@@ -377,6 +427,16 @@ void mdtUsbtmcTransferHandler::interruptInTransferCallback(libusb_transfer* tran
   uit->transferHandler().handleInterruptInTransferComplete(uit);
 }
 
+void mdtUsbtmcTransferHandler::notifyError(const mdtError & error)
+{
+  /*
+   * Because this function is called by state machine,
+   * and that process_event() calls are serialized by a mutex,
+   * we should not have races here
+   */
+  pvPort.thSetError(error);
+}
+
 bool mdtUsbtmcTransferHandler::hasPendingTransfers()
 {
   // Lock all transfer pools
@@ -461,6 +521,7 @@ void mdtUsbtmcTransferHandler::handleBulkOutTransferComplete(mdtUsbtmcBulkTransf
     pvLastError.setError(msg, mdtError::Warning);
     MDT_ERROR_SET_SRC(pvLastError, "mdtUsbtmcTransferHandler");
     pvLastError.commit();
+    pvPort.thSetError(pvLastError);
     return;
   }
   /*
@@ -477,7 +538,9 @@ void mdtUsbtmcTransferHandler::handleBulkOutTransferComplete(mdtUsbtmcBulkTransf
       break;
     case LIBUSB_TRANSFER_TIMED_OUT: /// \todo handle !
       qDebug() << "Bulk-OUT error status: LIBUSB_TRANSFER_TIMED_OUT";
-      break;
+      restoreBulkOutTransferToPool(transfer, true);
+      pvPort.thSetTimeoutOccured();
+      return;
     case LIBUSB_TRANSFER_CANCELLED: /// \todo handle !
       qDebug() << "Bulk-OUT error status: LIBUSB_TRANSFER_CANCELLED";
       return;
@@ -486,18 +549,21 @@ void mdtUsbtmcTransferHandler::handleBulkOutTransferComplete(mdtUsbtmcBulkTransf
       restoreBulkOutTransferToPool(transfer, true);
       setLastErrorFromBulkOutTransferStatus(transfer, mdtError::Warning, true);
       setCurrentState(State_t::Disconnected);
+      pvPort.thSetError(pvLastError);
       return;
     case LIBUSB_TRANSFER_OVERFLOW: /// \todo handle !
       qDebug() << "Bulk-OUT error status: LIBUSB_TRANSFER_OVERFLOW";
       restoreBulkOutTransferToPool(transfer, true);
       setLastErrorFromBulkOutTransferStatus(transfer, mdtError::Error, true);
       setCurrentState(State_t::Error);
+      pvPort.thSetError(pvLastError);
       return;
     case LIBUSB_TRANSFER_ERROR: /// \todo handle !
       qDebug() << "Bulk-OUT error status: LIBUSB_TRANSFER_ERROR";
       restoreBulkOutTransferToPool(transfer, true);
       setLastErrorFromBulkOutTransferStatus(transfer, mdtError::Error, true);
       setCurrentState(State_t::Error);
+      pvPort.thSetError(pvLastError);
       return;
   }
   // ...
@@ -510,10 +576,9 @@ void mdtUsbtmcTransferHandler::handleBulkOutTransferComplete(mdtUsbtmcBulkTransf
     restoreBulkOutTransferToPool(transfer, true);
     return;
   }
-  // Restore transfer to pool
-  pvBulkOutTransferMutex.lock();
-  pvBulkOutTransferPool.restoreTransfer(transfer);
-  pvBulkOutTransferMutex.unlock();
+  // Here, transfer is done and no response is expected
+  restoreBulkOutTransferToPool(transfer, true);
+  pvPort.thSetBulkTransactionDone();
 }
 
 void mdtUsbtmcTransferHandler::beginAbortBulkOutTransfer(uint8_t bTag)
@@ -557,6 +622,7 @@ void mdtUsbtmcTransferHandler::handleInitiateAbortBulkOutResponse(mdtUsbtmcContr
     pvLastError.commit();
     pvLastErrorMutex.unlock();
     setCurrentState(State_t::Error);
+    pvPort.thSetError(pvLastError);
     return;
   }
 
@@ -568,6 +634,7 @@ void mdtUsbtmcTransferHandler::handleInitiateAbortBulkOutResponse(mdtUsbtmcContr
   if((status != mdtUsbtmcControlTransfer::USBTMCstatus::STATUS_SUCCESS) && (status != mdtUsbtmcControlTransfer::USBTMCstatus::STATUS_TRANSFER_NOT_IN_PROGRESS)){
     restoreControlTransferToPool(transfer, true);
     setCurrentState(State_t::Running);
+    pvPort.thSetTimeoutOccured(); /// \todo FIX !!
     return;
   }
   // By STATUS_TRANSFER_NOT_IN_PROGRESS, let device some time and resubmit INITIATE_ABORT_BULK_OUT
@@ -614,6 +681,7 @@ void mdtUsbtmcTransferHandler::handleCheckAbortBulkOutStatusResponse(mdtUsbtmcCo
     pvLastErrorMutex.unlock();
     restoreControlTransferToPool(transfer, true);
     setCurrentState(State_t::Error);
+    pvPort.thSetError(pvLastError);
     return;
   }
 
@@ -762,7 +830,7 @@ void mdtUsbtmcTransferHandler::handleBulkInTransferComplete(mdtUsbtmcBulkTransfe
 
   auto state = currentState();
   /*
-   * If we are stoppoing, restore transfer to pool
+   * If we are stopping, restore transfer to pool
    *  and set state to Stopped if possible now
    */
   if(state == State_t::Stopping){
@@ -797,9 +865,10 @@ void mdtUsbtmcTransferHandler::handleBulkInTransferComplete(mdtUsbtmcBulkTransfe
     restoreBulkInTransferToPool(transfer, true);
     std::lock_guard<std::mutex> lelg(pvLastErrorMutex);
     QString msg = deviceIdString() + QObject::tr("Bulk-IN transfer completed in a unhandled state. Will be lost.");
-    pvLastError.setError(msg, mdtError::Warning);
+    pvLastError.setError(msg, mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtUsbtmcTransferHandler");
     pvLastError.commit();
+    pvPort.thSetError(pvLastError);
     return;
   }
   /*
@@ -807,15 +876,18 @@ void mdtUsbtmcTransferHandler::handleBulkInTransferComplete(mdtUsbtmcBulkTransfe
    */
   Q_ASSERT(state == State_t::Running);
   // Check transfer status
+  auto bTag = transfer->bTag();
   switch(transfer->status()){
     case LIBUSB_TRANSFER_COMPLETED: // OK, not a error
       break;
-    case LIBUSB_TRANSFER_STALL: /// \todo handle !
+    case LIBUSB_TRANSFER_STALL: /// \todo handle ! NOTE: happens also when device was disconnected !
       qDebug() << "Bulk-IN error status: LIBUSB_TRANSFER_STALL";
       break;
     case LIBUSB_TRANSFER_TIMED_OUT: /// \todo handle !
       qDebug() << "Bulk-IN error status: LIBUSB_TRANSFER_TIMED_OUT";
-      break;
+      restoreBulkInTransferToPool(transfer, true);
+      pvPort.thSetTimeoutOccured();
+      return;
     case LIBUSB_TRANSFER_CANCELLED: /// \todo handle !
       qDebug() << "Bulk-IN error status: LIBUSB_TRANSFER_CANCELLED";
       ///bTag = transfer->bTag();
@@ -826,18 +898,21 @@ void mdtUsbtmcTransferHandler::handleBulkInTransferComplete(mdtUsbtmcBulkTransfe
       qDebug() << "Bulk-IN error status: LIBUSB_TRANSFER_NO_DEVICE";
       restoreBulkInTransferToPool(transfer, true);
       setLastErrorFromBulkInTransferStatus(transfer, mdtError::Warning, true);
+      pvPort.thSetError(pvLastError);
       setCurrentState(State_t::Disconnected);
       return;
     case LIBUSB_TRANSFER_OVERFLOW: /// \todo handle !
       qDebug() << "Bulk-IN error status: LIBUSB_TRANSFER_OVERFLOW";
       restoreBulkInTransferToPool(transfer, true);
       setLastErrorFromBulkInTransferStatus(transfer, mdtError::Error, true);
+      pvPort.thSetError(pvLastError);
       setCurrentState(State_t::Error);
       return;
     case LIBUSB_TRANSFER_ERROR: /// \todo handle !
       qDebug() << "Bulk-IN error status: LIBUSB_TRANSFER_ERROR";
       restoreBulkInTransferToPool(transfer, true);
       setLastErrorFromBulkInTransferStatus(transfer, mdtError::Error, true);
+      pvPort.thSetError(pvLastError);
       setCurrentState(State_t::Error);
       return;
   }
@@ -852,12 +927,14 @@ void mdtUsbtmcTransferHandler::handleBulkInTransferComplete(mdtUsbtmcBulkTransfe
   if(!transfer->bTagIsOk()){  /// \todo handle error !
     qDebug() << "-> bTag error !!";
     restoreBulkInTransferToPool(transfer, true);
+    beginAbortBulkInTransfer(bTag);
     return;
   }
   // Check that we received all data
   if(!transfer->receivedAllData(transfer->actualLength())){  /// \todo handle error !
     qDebug() << "-> RX not all data !!";
     restoreBulkInTransferToPool(transfer, true);
+    beginAbortBulkInTransfer(bTag);
     return;
   }
   /*
@@ -867,14 +944,18 @@ void mdtUsbtmcTransferHandler::handleBulkInTransferComplete(mdtUsbtmcBulkTransfe
    */
   std::lock_guard<std::mutex> bilg(pvBulkInTransferMutex);
   // Generat a warning if we have too much pending transfers
-  if(pvBulkInTransferPool.pendingTransferCount() > 10){
+  if(pvBulkInTransferPool.pendingTransferCount() > 40){
     std::lock_guard<std::mutex> lelg(pvLastErrorMutex);
-    QString msg = deviceIdString() + QObject::tr("Have more than 10 completed non readed Bulk-IN transfers, will restore them. These data are loss !");
+    QString msg = deviceIdString() + QObject::tr("Have more than 40 completed non readed Bulk-IN transfers, will restore them. These data are loss !");
     pvLastError.setError(msg, mdtError::Warning);
     MDT_ERROR_SET_SRC(pvLastError, "mdtUsbtmcTransferHandler");
     pvLastError.commit();
     pvBulkInTransferPool.restorePendingTransfers();
+    pvPort.thSetError(pvLastError);
     return;
+  }
+  if(transfer->isEOM()){
+    pvPort.thSetBulkTransactionDone();
   }
 }
 
@@ -933,6 +1014,7 @@ void mdtUsbtmcTransferHandler::handleInitiateAbortBulkInResponse(mdtUsbtmcContro
     pvLastErrorMutex.unlock();
     restoreControlTransferToPool(transfer, true);
     setCurrentState(State_t::Error);
+    pvPort.thSetError(pvLastError);
     return;
   }
 
@@ -1036,6 +1118,7 @@ void mdtUsbtmcTransferHandler::handleCheckAbortBulkInStatusResponse(mdtUsbtmcCon
     pvLastErrorMutex.unlock();
     restoreControlTransferToPool(transfer, true);
     setCurrentState(State_t::Error);
+    pvPort.thSetError(pvLastError);
     return;
   }
 
@@ -1066,6 +1149,7 @@ void mdtUsbtmcTransferHandler::handleCheckAbortBulkInStatusResponse(mdtUsbtmcCon
   Q_ASSERT(status != mdtUsbtmcControlTransfer::USBTMCstatus::STATUS_PENDING);
   restoreControlTransferToPool(transfer, true);
   setCurrentState(State_t::Running);
+  pvPort.thSetTimeoutOccured(); /// \todo FIX !!!!!!!!
 }
 
 void mdtUsbtmcTransferHandler::submitInitiateClearRequest()
@@ -1127,6 +1211,7 @@ void mdtUsbtmcTransferHandler::handleInitiateClearResponse(mdtUsbtmcControlTrans
     pvLastErrorMutex.unlock();
     restoreControlTransferToPool(transfer, true);
     setCurrentState(State_t::Error);
+    pvPort.thSetError(pvLastError);
     return;
   }
 
@@ -1185,6 +1270,7 @@ void mdtUsbtmcTransferHandler::handleCheckClearStatusResponse(mdtUsbtmcControlTr
     pvLastErrorMutex.unlock();
     restoreControlTransferToPool(transfer, true);
     setCurrentState(State_t::Error);
+    pvPort.thSetError(pvLastError);
     return;
   }
 
@@ -1306,8 +1392,11 @@ void mdtUsbtmcTransferHandler::handleInterruptInTransferComplete(mdtUsbtmcInterr
   switch(transfer->status()){
     case LIBUSB_TRANSFER_COMPLETED: // OK, not a error
       break;
+    case LIBUSB_TRANSFER_TIMED_OUT: // OK, we are still running, resubmit transfer
+      submitInterruptInTransfer(50000, transfer);
+      return;
     case LIBUSB_TRANSFER_STALL:     /// \todo handle !
-    case LIBUSB_TRANSFER_TIMED_OUT: /// \todo handle !
+    
     case LIBUSB_TRANSFER_CANCELLED: /// \todo handle !
     case LIBUSB_TRANSFER_NO_DEVICE: /// \todo handle !
     case LIBUSB_TRANSFER_OVERFLOW:  /// \todo handle !
@@ -1316,6 +1405,7 @@ void mdtUsbtmcTransferHandler::handleInterruptInTransferComplete(mdtUsbtmcInterr
       // Restore frame to pool
       restoreInterruptInTransferToPool(transfer, true);
       setLastErrorFromInterruptInTransferStatus(transfer, mdtError::Error, true);
+      pvPort.thSetError(pvLastError);
       setCurrentState(State_t::Error);
       return;
   }
@@ -1373,6 +1463,7 @@ void mdtUsbtmcTransferHandler::handleControlTransferComplete(mdtUsbtmcControlTra
       pvLastErrorMutex.unlock();
       // Restore frame to pool
       restoreControlTransferToPool(transfer, true);
+      pvPort.thSetError(pvLastError);
       return;
     case LIBUSB_TRANSFER_TIMED_OUT: /// \todo handle !
     case LIBUSB_TRANSFER_CANCELLED: /// \todo handle !
@@ -1383,6 +1474,7 @@ void mdtUsbtmcTransferHandler::handleControlTransferComplete(mdtUsbtmcControlTra
       // Restore frame to pool
       restoreControlTransferToPool(transfer, true);
       setCurrentState(State_t::Error);
+      pvPort.thSetError(pvLastError);
       return;
   }
   // See if transfer contains a response that must be handled
@@ -1418,6 +1510,7 @@ void mdtUsbtmcTransferHandler::handleControlTransferComplete(mdtUsbtmcControlTra
         pvLastErrorMutex.unlock();
         // Restore frame to pool
         restoreControlTransferToPool(transfer, true);
+        pvPort.thSetError(pvLastError);
         return;
     }
   }
@@ -1425,6 +1518,7 @@ void mdtUsbtmcTransferHandler::handleControlTransferComplete(mdtUsbtmcControlTra
   if( (state == State_t::AbortingBulkIo) && (transfer->isClearEndpointHaltRequest(pvBulkOutDescriptor.number())) ){
     qDebug() << "CLEAR ENDPOINT HALT (for bulk_OUT) done - returning to Running state";
     setCurrentState(State_t::Running);
+    pvPort.thSetControlTransactionDone();
   }
   // Nothing more - Restore transfer to pool
   restoreControlTransferToPool(transfer, true);
@@ -1503,6 +1597,7 @@ bool mdtUsbtmcTransferHandler::processSyncControlTransfer(mdtUsbtmcControlTransf
       if(!transfer->cancel(true)){
         std::lock_guard<std::mutex> lelg(pvLastErrorMutex);
         pvLastError = transfer->lastError();
+        pvPort.thSetError(pvLastError);
         return false;
       }
       // Wait on cancel completion
@@ -1734,5 +1829,6 @@ void mdtUsbtmcTransferHandler::setCurrentStateFromLibusbError ( libusb_error err
     case LIBUSB_ERROR_NOT_SUPPORTED:
     case LIBUSB_ERROR_OTHER:
       setCurrentState(State_t::Error);
+      pvPort.thSetError(pvLastError);
   }
 }

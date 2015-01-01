@@ -33,7 +33,7 @@ mdtUsbtmcBulkTransfer::mdtUsbtmcBulkTransfer(mdtUsbtmcTransferHandler& th, mdtUs
   clearSplitAction();
 }
 
-void mdtUsbtmcBulkTransfer::setupDevDepMsgOut(uint8_t bTag, mdtUsbtmcMessage & message, bool responseExpected, unsigned int timeout)
+void mdtUsbtmcBulkTransfer::setupDevDepMsgOut(uint8_t bTag, mdtUsbtmcTxMessage & message, bool responseExpected, unsigned int timeout)
 {
   Q_ASSERT(bTag != 0);
 
