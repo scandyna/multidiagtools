@@ -2,19 +2,29 @@ format 208
 
 statecanvas 128002 state_ref 243330 // Idle
   
-  xyzwh 255 120 2000 43 43
+  xyzwh 255 237 2000 43 43
 end
-statecanvas 128130 state_ref 243458 // SendingMessage
+statecanvas 128130 state_ref 243458 // ProcessingBulkIo
   
-  xyzwh 388 211 2000 129 43
+  xyzwh 456 225 2000 331 97
 end
 statecanvas 128386 state_ref 249986 // AbortingBulkIo
   
-  xyzwh 253 373 2000 267 81
+  xyzwh 308 401 2000 267 81
+end
+pseudostatecanvas 128642 pseudostate_ref 207618 // initial
+   xyz 120 250 2000
 end
 transitioncanvas 128258 transition_ref 265602 // <transition>
+  decenter_begin 209
+  decenter_end 209
   
-  from ref 128002 z 2001 label "submitCommand" xyz 304 172 2001 to ref 128130
+  from ref 128002 z 2001 label "submitCommand" xyz 325.5 236.5 2001 to ref 128130
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 128770 transition_ref 292738 // <transition>
+  
+  from ref 128642 z 2001 to ref 128002
   write_horizontally default show_definition default drawing_language default
 end
 end

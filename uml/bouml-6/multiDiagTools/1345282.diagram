@@ -2,39 +2,41 @@ format 208
 
 statecanvas 128002 state_ref 241666 // Stopped
   
-  xyzwh 32.9328 102.349 2006 203 93
+  xyzwh 32.0328 102.949 2006 203 93
 end
 statecanvas 128130 state_ref 241794 // Setup
   
-  xyzwh 470.472 57.825 2011 57 43
+  xyzwh 470.072 57.425 2011 57 43
 end
 statecanvas 128642 state_ref 242306 // Stopping
   
-  xyzwh 10.3243 697.396 2023 245 90
+  xyzwh 10.5243 662.396 2023 446 165
 end
 statecanvas 128770 state_ref 242434 // Disconnected
   
-  xyzwh 497.783 538.515 2029 247 81
+  xyzwh 650.683 526.515 2029 247 81
 end
 statecanvas 128898 state_ref 242562 // Error
   
-  xyzwh 306.301 336.22 2005 202 97
+  xyzwh 412.501 341.02 2005 202 97
 end
 statecanvas 132354 state_ref 243202 // Running
   
-  xyzwh 580.62 149.12 2005 245 110
+  xyzwh 599.52 90.12 2005 455 185
 end
 pseudostatecanvas 133506 pseudostate_ref 201090 // initial
-   xyz 238.1 55.2 2000
+   xyz 238 55 2000
 end
 transitioncanvas 129026 transition_ref 262914 // <transition>
+  decenter_begin 100
+  decenter_end 93
   
-  from ref 128642 z 2024 label "transferComplete [!hasPendingTransfers]" xyz 10 435 2024 to ref 128002
+  from ref 128642 z 2024 label "NoMoreControlTransferPending [!hasPendingTransfers]" xyz 12 246 2024 to ref 128002
   write_horizontally default show_definition default drawing_language default
 end
 transitioncanvas 132610 transition_ref 265346 // <transition>
   
-  from ref 132354 z 2030 label "ErrorOccured [isDeviceDisconnectedError] / restoreAllTransfers" xyz 397 499 2030 to ref 128770
+  from ref 132354 z 2030 label "ErrorOccured [isDeviceDisconnectedError] / restoreAllTransfers" xyz 535.5 500 2030 to ref 128770
   write_horizontally default show_definition default drawing_language default
 end
 transitioncanvas 132738 transition_ref 265474 // <transition>
@@ -42,14 +44,8 @@ transitioncanvas 132738 transition_ref 265474 // <transition>
   decenter_begin 867
   decenter_end 902
   
-  from ref 132354 z 2024 label "StopRequested" xyz 742 434.5 2024 to point 790 776
+  from ref 132354 z 2024 label "StopRequested" xyz 943 456 2024 to point 991 808
   line 132866 z 2024 to ref 128642
-  write_horizontally default show_definition default drawing_language default
-end
-transitioncanvas 133250 transition_ref 272386 // <transition>
-  decenter_end 474
-  
-  from ref 128002 z 2007 to ref 132354
   write_horizontally default show_definition default drawing_language default
 end
 transitioncanvas 133634 transition_ref 279042 // <transition>
@@ -60,21 +56,50 @@ end
 transitioncanvas 133762 transition_ref 279170 // <transition>
   geometry VHr
   decenter_begin 919
+  decenter_end 707
   
-  from ref 132354 z 2006 label "ErrorOccured [isUnhandledError] / restoreAllTransfers" xyz 317 266.5 2006 to point 404 248
+  from ref 132354 z 2006 label "ErrorOccured [isUnhandledError] / restoreAllTransfers" xyz 378 276 2006 to point 552 258
   line 134146 z 2006 to ref 128898
   write_horizontally default show_definition default drawing_language default
 end
 transitioncanvas 133890 transition_ref 279298 // <transition>
+  decenter_begin 963
   
-  from ref 128642 z 2024 label "ErrorOccured [isUnhandledError] / restoreAllTransfers" xyz 165 639 2024 to ref 128898
+  from ref 128642 z 2024 label "ErrorOccured [isUnhandledError] / restoreAllTransfers" xyz 371 625 2024 to ref 128898
   write_horizontally default show_definition default drawing_language default
 end
 transitioncanvas 134530 transition_ref 285826 // <transition>
   geometry HV
   
-  from ref 128642 z 2030 label "errorOccured [isDeviceDisconnectedError] / restoreAllTransfers" xyz 282 725 3000 to point 618 739.9
+  from ref 128642 z 2030 label "errorOccured [isDeviceDisconnectedError] / restoreAllTransfers" xyz 467 722 2030 to point 769.9 741.7
   line 134658 z 2030 to ref 128770
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 134786 transition_ref 292354 // <transition>
+  decenter_begin 301
+  decenter_end 357
+  
+  from ref 128642 z 2024 label "NoMoreBulkOutTransferPending [!hasPendingTransfers]" xyz -23 214 3000 to ref 128002
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 134914 transition_ref 292482 // <transition>
+  decenter_end 626
+  
+  from ref 128642 z 2024 label "NoMoreBulkInTransferPending [!hasPendingTransfers]" xyz 29 316 3000 to ref 128002
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 135042 transition_ref 292610 // <transition>
+  decenter_begin 588
+  decenter_end 829
+  
+  from ref 128642 z 2024 label "NoMoreInterruptInTransferPending [!hasPendingTransfers]" xyz 38.5 361 3000 to ref 128002
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 135170 transition_ref 292866 // <transition>
+  decenter_begin 718
+  decenter_end 950
+  
+  from ref 128642 z 2024 label "NoMoreTransferPending" xyz 254 452 3000 to ref 128002
   write_horizontally default show_definition default drawing_language default
 end
 end

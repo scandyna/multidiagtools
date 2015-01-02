@@ -51,6 +51,14 @@ void mdtErrorTest::simpleTest()
   //QVERIFY(e.fileName() == __FILE__);
   QVERIFY(e.functionName() == "mdtErrorTest::simpleTest()");
   /*
+   * Reset error
+   */
+  e.setError("Second error", mdtError::Warning);
+  QCOMPARE(e.text(), QString("Second error"));
+  QVERIFY(e.level() == mdtError::Warning);
+  QCOMPARE(e.systemNumber(), 0);
+  QVERIFY(e.systemText().isEmpty());
+  /*
    * Check type storage
    */
   e.setType<errorType>(A);

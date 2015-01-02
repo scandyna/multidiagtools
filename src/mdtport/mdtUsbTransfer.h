@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -62,6 +62,8 @@ class mdtUsbTransfer
   /*! \brief Submit transfer
    *
    * Will use libusb_submit_transfer().
+   *  On error, this function returns false,
+   *  and lastError's systemError will contain libusb_error error.
    *
    * \pre Internall transfer must be valid ( see allocOk() ).
    */
@@ -72,6 +74,8 @@ class mdtUsbTransfer
    * Will use libusb_cancel_transfer().
    *  Note: this function returns directly after cancel was submitted
    *        (exactly as libusb_cancel_transfer() does).
+   *  On error, this function returns false,
+   *  and lastError's systemError will contain libusb_error error.
    *
    * \pre Internall transfer must be valid ( see allocOk() ).
    */

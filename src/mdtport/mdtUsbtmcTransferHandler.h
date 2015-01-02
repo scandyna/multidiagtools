@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -63,22 +63,6 @@ namespace mdtUsbtmcTransferHandlerStateMachine
   struct StateMachine;
 };
 
-//   class smWrapper
-//   {
-//   public:
-//     smWrapper();
-//     struct fsm;
-//     ///std::shared_ptr<fsm> pvFsm;
-//     ///std::unique_ptr<fsm> pvFsm;
-//     boost::shared_ptr<fsm> pvFsm;
-//   };
-
-
-
-// namespace msm = boost::msm;
-// namespace mpl = boost::mpl;
-
-
 /*! \brief USBTMC transfer handler
  */
 class mdtUsbtmcTransferHandler
@@ -101,14 +85,6 @@ class mdtUsbtmcTransferHandler
   /*! \brief Constructor
    */
   mdtUsbtmcTransferHandler(libusb_context *usbContext, mdtUsbtmcPort & port);
-
-  /*! \brief Fake event
-   */
-  ///struct fakeEvent {};
-
-  ///void fakeAction(fakeEvent const &);
-
-  void someThFakeAction();
 
   /*! \brief Setup handler
    */
@@ -224,33 +200,93 @@ class mdtUsbtmcTransferHandler
    *
    * Is called by port thread to know if it must exit.
    */
-  bool mustBeStopped() const
-  {
-    switch(currentState()){
-      case State_t::Running:
-      case State_t::AbortingBulkIo:
-      case State_t::Stopping:
-        return false;
-      default:
-        return true;
-    }
-  }
+  bool mustBeStopped() const;
+//   {
+//     switch(currentState()){
+//       case State_t::Running:
+//       case State_t::AbortingBulkIo:
+//       case State_t::Stopping:
+//         return false;
+//       default:
+//         return true;
+//     }
+//   }
 
   /*! \brief Notify error
    *
-   * Must be called only by statme machine
+   * Must be called only by state machine
    */
   void notifyError(const mdtError & error);
 
- private:
-
   /*! \brief Check if there are pending transfers
+   *
+   * Is called by state machine
    */
   bool hasPendingTransfers();
 
+  /*! \brief Submit cancellation of all pending transfers
+   *
+   * Is called by state machine
+   */
+  void submitCancelAllTransfers();
+
+  /*! \brief Restore all pending transfers to their pool
+   *
+   * Is called by state machine
+   */
+  void restoreAllTransfers();
+
+  /*! \brief Handle control transfer complete
+   *
+   * Is called by state machine
+   */
+  void handleControlTransferComplete(mdtUsbtmcControlTransfer *transfer);
+
+  /*! \brief Restore control transfer to pool
+   *
+   * Is called by state machine
+   */
+  void restoreControlTransferToPool(mdtUsbtmcControlTransfer *transfer, bool lockMutex);
+
   /*! \brief Handle Bulk-OUT transfer complete
+   *
+   * Is called by state machine
    */
   void handleBulkOutTransferComplete(mdtUsbtmcBulkTransfer *transfer);
+
+  /*! \brief Restore bulk-OUT transfer to pool
+   *
+   * Is called by state machine
+   */
+  void restoreBulkOutTransferToPool(mdtUsbtmcBulkTransfer *transfer, bool lockMutex);
+
+  /*! \brief Handle Bulk-IN transfer complete
+   *
+   * Is called by state machine
+   */
+  void handleBulkInTransferComplete(mdtUsbtmcBulkTransfer *transfer);
+
+  /*! \brief Restore bulk-IN transfer to pool
+   */
+  void restoreBulkInTransferToPool(mdtUsbtmcBulkTransfer *transfer, bool lockMutex);
+
+  /*! \brief Submit a Interrupt-IN transfer
+   */
+  void submitInterruptInTransfer(unsigned int timeout, mdtUsbtmcInterruptTransfer *transfer = 0);
+
+  /*! \brief Handle Interrupt-IN transfer complete
+   *
+   * Is called by state machine
+   */
+  void handleInterruptInTransferComplete(mdtUsbtmcInterruptTransfer *transfer);
+
+  /*! \brief Restore interrupt-IN transfer to pool
+   *
+   * Is called by state machine
+   */
+  void restoreInterruptInTransferToPool(mdtUsbtmcInterruptTransfer *transfer, bool lockMutex);
+
+ private:
 
   /*! \brief Begin to abort a bulk-OUT transfer
    *
@@ -316,10 +352,6 @@ class mdtUsbtmcTransferHandler
   /*! \brief Submit a Bulk-IN transfer
    */
   void submitBulkInTransfer(unsigned int timeout, mdtUsbtmcBulkTransfer::SplitAction_t action = mdtUsbtmcBulkTransfer::SplitAction_t::NoAction);
-
-  /*! \brief Handle Bulk-IN transfer complete
-   */
-  void handleBulkInTransferComplete(mdtUsbtmcBulkTransfer *transfer);
 
   /*! \brief Begin to abort a bulk-IN transfer
    *
@@ -402,21 +434,9 @@ class mdtUsbtmcTransferHandler
    */
   void handleCheckClearStatusResponse(mdtUsbtmcControlTransfer *transfer);
 
-  /*! \brief Submit a Interrupt-IN transfer
-   */
-  void submitInterruptInTransfer(unsigned int timeout, mdtUsbtmcInterruptTransfer *transfer = 0);
-
   /*! \brief Submit cancel for all Interrupt-IN transfers
    */
   void submitCancelAllInterruptInTransfers(bool lockMutex);
-
-  /*! \brief Handle Interrupt-IN transfer complete
-   */
-  void handleInterruptInTransferComplete(mdtUsbtmcInterruptTransfer *transfer);
-
-  /*! \brief Handle control transfer complete
-   */
-  void handleControlTransferComplete(mdtUsbtmcControlTransfer *transfer);
 
   /*! \brief Submit a GET_CAPABILITIES request and \todo Comment..
    *
@@ -435,22 +455,6 @@ class mdtUsbtmcTransferHandler
    *  caller is responsible of this.
    */
   bool processSyncControlTransfer(mdtUsbtmcControlTransfer *transfer);
-
-  /*! \brief Restore bulk-OUT transfer to pool
-   */
-  void restoreBulkOutTransferToPool(mdtUsbtmcBulkTransfer *transfer, bool lockMutex);
-
-  /*! \brief Restore bulk-IN transfer to pool
-   */
-  void restoreBulkInTransferToPool(mdtUsbtmcBulkTransfer *transfer, bool lockMutex);
-
-  /*! \brief Restore interrupt-IN transfer to pool
-   */
-  void restoreInterruptInTransferToPool(mdtUsbtmcInterruptTransfer *transfer, bool lockMutex);
-
-  /*! \brief Restore control transfer to pool
-   */
-  void restoreControlTransferToPool(mdtUsbtmcControlTransfer *transfer, bool lockMutex);
 
   /*! \brief Get device identification string
    *
@@ -482,64 +486,6 @@ class mdtUsbtmcTransferHandler
   void setCurrentStateFromLibusbError(libusb_error err);
 
   Q_DISABLE_COPY(mdtUsbtmcTransferHandler);
-
-//   /*! \brief Fake event
-//    */
-//   struct fakeRequest {};
-// 
-//   void fakeFunction(fakeRequest const &);
-// 
-//   /*! \brief Stopped state
-//     */
-//   struct Stopped : public boost::msm::front::state<>
-//   {
-//     /*! \brief Stopped entry/
-//       */
-//     template<typename Event, typename FSM>
-//     void on_entry(Event const &, FSM &)
-//     {
-//       qDebug() << "Entering Stopped ...";
-//     }
-//     /*! \brief Stopped exit/
-//       */
-//     template<typename Event, typename FSM>
-//     void on_exit(Event const &, FSM &)
-//     {
-//       qDebug() << "Leaving Stopped ...";
-//     }
-//   };
-//   /*! \brief Error state
-//     */
-//   struct Error : public boost::msm::front::state<>
-//   {
-//     /*! \brief Error entry/
-//       */
-//     template<typename Event, typename FSM>
-//     void on_entry(Event const &, FSM &)
-//     {
-//       qDebug() << "Entering Error ...";
-//     }
-//     /*! \brief Error exit/
-//       */
-//     template<typename Event, typename FSM>
-//     void on_exit(Event const &, FSM &)
-//     {
-//       qDebug() << "Leaving Error ...";
-//     }
-//   };
-// 
-//   /*! \brief Initial state
-//     */
-//   typedef Stopped initial_state;
-// 
-//   /*! \brief Transition table
-//     */
-//   struct transition_table : boost::mpl::vector<
-//     //     Start state       Event            Next state        Action           Guard
-//     // +--------------------+----------------+----------------+----------------+---------------------+
-//     a_row < Stopped             , fakeRequest   , Error     , &mdtUsbtmcTransferHandler::fakeFunction      >
-//     // +--------------------+----------------+----------------+----------------+---------------------+
-//   >{};
 
   libusb_context *pvUsbContext;
   libusb_device_handle *pvDeviceHandle;

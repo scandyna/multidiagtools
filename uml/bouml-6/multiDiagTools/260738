@@ -1,6 +1,6 @@
 format 208
 "newPortApiSandbox" // mdtport::newPortApiSandbox
-  revision 40
+  revision 41
   modified_by 2 "philippe"
   // class settings
   
@@ -2682,25 +2682,26 @@ ${inlines}
       statediagram 1345282 "StateMachine"
 	statediagramsettings show_trans_definition yes
 	 end
-	size A4
+	size A4-Landscape
       end
 
       state 241666 "Stopped"
 	  uml_on_entry "notifyStopped"
-	transition 272386 "<transition>"
-	  on state_ref 243202 // Running
-	  external 
-	end
       end
 
       state 241794 "Setup"
       end
 
       state 242306 "Stopping"
-	  uml_on_entry "submitCancelAllTransfers"
+	  uml_on_entry "[hasPendingTransfers] submitCancelAllTransfers"
+	  uml_do_activity "
+ControlTransferCompleted / restoreControlTransfer
+BulkOutTransferCompleted / restoreBulkOutTransfer
+BulkInTransferCompleted / restoreBulkInTransfer
+InterruptInTransferCompleted / restoreInterruptInTransfer"
 	transition 262914 "<transition>"
 	  on state_ref 241666 // Stopped
-	    uml_trigger "transferComplete"
+	    uml_trigger "NoMoreControlTransferPending"
 	    uml_guard "!hasPendingTransfers"
 	  external 
 	end
@@ -2720,6 +2721,33 @@ ${inlines}
 	    uml_expr "restoreAllTransfers"
 	  external 
 	end
+
+	transition 292354 "<transition>"
+	  on state_ref 241666 // Stopped
+	    uml_trigger "NoMoreBulkOutTransferPending"
+	    uml_guard "!hasPendingTransfers"
+	  external 
+	end
+
+	transition 292482 "<transition>"
+	  on state_ref 241666 // Stopped
+	    uml_trigger "NoMoreBulkInTransferPending"
+	    uml_guard "!hasPendingTransfers"
+	  external 
+	end
+
+	transition 292610 "<transition>"
+	  on state_ref 241666 // Stopped
+	    uml_trigger "NoMoreInterruptInTransferPending"
+	    uml_guard "!hasPendingTransfers"
+	  external 
+	end
+
+	transition 292866 "<transition>"
+	  on state_ref 241666 // Stopped
+	    uml_trigger "NoMoreTransferPending"
+	  external 
+	end
       end
 
       state 242434 "Disconnected"
@@ -2729,6 +2757,11 @@ ${inlines}
       state 243202 "Running"
 	stereotype "submachine"
 	  uml_on_entry "submitInterruptInTransfer"
+	  uml_do_activity "
+ControlTransferCompleted / handleControlTransferCompleted
+BulkOutTransferCompleted / handleBulkOutTransferCompleted
+BulkInTransferCompleted / handleBulkInTransferCompleted
+InteruptInTransferCompleted / handleInterruptInTransferComplete"
 	statediagram 1345538 "Running"
 	  statediagramsettings show_trans_definition yes
 	   end
@@ -2751,13 +2784,15 @@ ${inlines}
 
 	state 243330 "Idle"
 	  transition 265602 "<transition>"
-	    on state_ref 243458 // SendingMessage
+	    on state_ref 243458 // ProcessingBulkIo
 	      uml_trigger "submitCommand"
 	    external 
 	  end
 	end
 
-	state 243458 "SendingMessage"
+	state 243458 "ProcessingBulkIo"
+	    uml_do_activity "
+BulkOutTransferCompleted[transferStatusOk]/"
 	end
 
 	transition 279170 "<transition>"
@@ -2770,6 +2805,13 @@ ${inlines}
 
 	state 249986 "AbortingBulkIo"
 	    uml_on_exit "notifyAbortedOuQqchDuGenre"
+	end
+
+	pseudostate 207618 initial 
+	  transition 292738 "<transition>"
+	    on state_ref 243330 // Idle
+	    external 
+	  end
 	end
       end
 
