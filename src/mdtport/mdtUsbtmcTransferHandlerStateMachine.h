@@ -53,6 +53,10 @@ namespace mdtUsbtmcTransferHandlerStateMachine
 {
   using namespace boost::msm::front;
 
+  /*
+   * Events
+   */
+
   /*! \brief Error occured event
    */
   struct ErrorOccuredEvent
@@ -142,26 +146,63 @@ namespace mdtUsbtmcTransferHandlerStateMachine
    */
   struct NoMoreTransferPendingEvent {};
 
-  
+  /*! \brief Clear Bulk I/O requested event
+   */
+  struct ClearBulkIoRequestedEvent {};
+
+  /*! \brief Split action done event
+   */
+  struct SplitActionDoneEvent {};
+
+  /*
+   * Flags
+   */
+
   /*! \brief Tell usb port thread that it must not handle events anymore
    */
   struct MustBeStoppedFlag {};
-  
+
+  /*! \brief Tell USBTMC port that we can accept requests
+   */
+  struct IdleFlag {};
+
   /// \todo Remove !
   struct fakeRequest {};
+
+  /*
+   * Running_ submachine
+   */
 
   /*! \brief Running submachine
    */
   struct Running_ : public state_machine_def<Running_>
   {
+    /*! \brief Default constructor
+     */
+    Running_()
+     : transferHandler(0)
+    {
+      qDebug() << "Running_() - transferHandler: 0x" << hex << transferHandler;
+    }
+    /*! \brief Concrete constructor
+     */
+    Running_(mdtUsbtmcTransferHandler *th)
+     : transferHandler(th)
+    {
+      qDebug() << "Running_() - transferHandler: 0x" << hex << transferHandler;
+      Q_ASSERT(transferHandler != 0);
+    }
     /*! \brief Running submachine entry/
      */
     template<typename Event, typename FSM>
     void on_entry(Event const &, FSM & fsm)
     {
-      qDebug() << "Entering Running ...";
+      qDebug() << "Entering Running ... - transferHandler: 0x" << hex << transferHandler;
       Q_ASSERT(fsm.transferHandler != 0);
-      fsm.transferHandler->submitInterruptInTransfer(50000);
+      // Submit first Interrupt-IN transfer (if interface has Interrupt-IN endpoint)
+      if(fsm.transferHandler->hasInterruptInEndpoint()){
+        fsm.transferHandler->submitInterruptInTransfer(50000);
+      }
     }
 
     /*! \brief Running submachine exit/
@@ -172,10 +213,23 @@ namespace mdtUsbtmcTransferHandlerStateMachine
       qDebug() << "Leaving Running ...";
     }
 
+    /*
+     * Running_ submachine - actions
+     */
+
+    /*
+     * Running_ submachine - guards
+     */
+
+    /*
+     * Running_ submachine - states
+     */
+
     /*! \brief Idle state
      */
     struct Idle : public boost::msm::front::state<>
     {
+      typedef boost::mpl::vector1<IdleFlag> flag_list;
       /*! \brief Idle entry/
        */
       template<typename Event, typename FSM>
@@ -212,23 +266,55 @@ namespace mdtUsbtmcTransferHandlerStateMachine
       }
     };
 
+    /*! \brief ClearingBulkIo state
+     */
+    struct ClearingBulkIo : public boost::msm::front::state<>
+    {
+      /*! \brief ClearingBulkIo entry/
+       */
+      template<typename Event, typename FSM>
+      void on_entry(Event const &, FSM & fsm)
+      {
+        qDebug() << "Entering ClearingBulkIo ...";
+        Q_ASSERT(fsm.transferHandler != 0);
+        fsm.transferHandler->beginBulkIoClear();
+      }
+      /*! \brief ClearingBulkIo exit/
+       */
+      template<typename Event, typename FSM>
+      void on_exit(Event const &, FSM &)
+      {
+        qDebug() << "Leaving ClearingBulkIo ...";
+      }
+    };
+
     /*! \brief Initial state of Running submachine
      */
     typedef Idle initial_state;
 
-    /*! \brief Transition table
+    // Make transition table a bit more readable
+    typedef Running_ rsm;
+
+    /*! \brief Running_ submachine transition table
      */
     struct transition_table : boost::mpl::vector<
-      //     Start state       Event            Next state        Action           Guard
-      // +--------------------+----------------+----------------+----------------+---------------------+
-      Row < Idle             , fakeRequest   , Processing          , none           , none               >
-      // +--------------------+----------------+----------------+----------------+---------------------+
+      //      Start state     Event                                   Next state       Action                                   Guard
+      // +----------------+-----------------------------------------+-----------------+----------------------------------------+-------------------------------+----
+      _row <   Idle       , ClearBulkIoRequestedEvent               , ClearingBulkIo                                                                             >
+      // +----------------+-----------------------------------------+-----------------+----------------------------------------+-------------------------------+----
     >{};
+
+    // Running_ members
+    mdtUsbtmcTransferHandler *transferHandler;
   };
 
   /*! \brief Running submachine
     */
   typedef boost::msm::back::state_machine<Running_> Running;
+
+  /*
+   * StateMachine_ definition
+   */
 
   /*! \brief Main state machine definition class
    */
@@ -250,6 +336,10 @@ namespace mdtUsbtmcTransferHandlerStateMachine
       transferHandler = th;
     }
 
+    /*
+     * StateMachine_ actions
+     */
+
     /*! \brief Restore all transfers to pools action
      */
     template<typename EventType>
@@ -269,11 +359,17 @@ namespace mdtUsbtmcTransferHandlerStateMachine
     }
 
     /*! \brief Restore Control transfer to pool action
+     *
+     * This version will send NoMoreTransferPendingEvent if transfer handler has no more pending transfers.
+     * (NNMTP: Notify NoMoreTransferPending)
      */
-    void restoreControlTransfer(ControlTransferCompletedEvent const & event)
+    void restoreControlTransferNNMTP(ControlTransferCompletedEvent const & event)
     {
       Q_ASSERT(transferHandler != 0);
       transferHandler->restoreControlTransferToPool(event.transfer, true);
+      if(!transferHandler->hasPendingTransfers()){
+        transferHandler->sendEvent(NoMoreTransferPendingEvent());
+      }
     }
 
     /*! \brief Handle Bulk-OUT transfer completed action
@@ -285,11 +381,17 @@ namespace mdtUsbtmcTransferHandlerStateMachine
     }
 
     /*! \brief Restore Bulk-OUT transfer to pool action
+     *
+     * This version will send NoMoreTransferPendingEvent if transfer handler has no more pending transfers.
+     * (NNMTP: Notify NoMoreTransferPending)
      */
-    void restoreBulkOutTransfer(BulkOutTransferCompletedEvent const & event)
+    void restoreBulkOutTransferNNMTP(BulkOutTransferCompletedEvent const & event)
     {
       Q_ASSERT(transferHandler != 0);
       transferHandler->restoreBulkOutTransferToPool(event.transfer, true);
+      if(!transferHandler->hasPendingTransfers()){
+        transferHandler->sendEvent(NoMoreTransferPendingEvent());
+      }
     }
 
     /*! \brief Handle Bulk-IN transfer completed action
@@ -297,15 +399,21 @@ namespace mdtUsbtmcTransferHandlerStateMachine
     void handleBulkInTransferCompleted(BulkInTransferCompletedEvent const & event)
     {
       Q_ASSERT(transferHandler != 0);
-      transferHandler->handleBulkOutTransferComplete(event.transfer);
+      transferHandler->handleBulkInTransferComplete(event.transfer);
     }
 
     /*! \brief Restore Bulk-IN transfer to pool action
+     *
+     * This version will send NoMoreTransferPendingEvent if transfer handler has no more pending transfers.
+     * (NNMTP: Notify NoMoreTransferPending)
      */
-    void restoreBulkInTransfer(BulkInTransferCompletedEvent const & event)
+    void restoreBulkInTransferNNMTP(BulkInTransferCompletedEvent const & event)
     {
       Q_ASSERT(transferHandler != 0);
-      transferHandler->restoreBulkOutTransferToPool(event.transfer, true);
+      transferHandler->restoreBulkInTransferToPool(event.transfer, true);
+      if(!transferHandler->hasPendingTransfers()){
+        transferHandler->sendEvent(NoMoreTransferPendingEvent());
+      }
     }
 
     /*! \brief Handle Interrupt-IN transfer completed action
@@ -317,12 +425,31 @@ namespace mdtUsbtmcTransferHandlerStateMachine
     }
 
     /*! \brief Restore Interrupt-IN transfer to pool action
+     *
+     * This version will send NoMoreTransferPendingEvent if transfer handler has no more pending transfers.
+     * (NNMTP: Notify NoMoreTransferPending)
      */
-    void restoreInterruptInTransfer(InterruptInTransferCompletedEvent const & event)
+    void restoreInterruptInTransferNNMTP(InterruptInTransferCompletedEvent const & event)
     {
       Q_ASSERT(transferHandler != 0);
       transferHandler->restoreInterruptInTransferToPool(event.transfer, true);
+      if(!transferHandler->hasPendingTransfers()){
+        transferHandler->sendEvent(NoMoreTransferPendingEvent());
+      }
     }
+
+    /*! \brief Notify that Bulk I/O was aborted
+     */
+    template<typename EventType>
+    void notifyBulkIoAborted(EventType const &)
+    {
+      Q_ASSERT(transferHandler != 0);
+      qDebug() << "** notifyBulkIoAborted ..";
+    }
+
+    /*
+     * StateMachine_ guards
+     */
 
     /*! \brief Check if ErrorOccuredEvent contains a unhandled error
      */
@@ -402,6 +529,10 @@ namespace mdtUsbtmcTransferHandlerStateMachine
       qDebug() << "Leaving StateMachine_ ...";
     }
 
+    /*
+     * StateMachine_ states
+     */
+
     /*! \brief Error state
      */
     struct Error : public boost::msm::front::state<>
@@ -457,7 +588,12 @@ namespace mdtUsbtmcTransferHandlerStateMachine
       {
         qDebug() << "Entering Stopping ...";
         Q_ASSERT(fsm.transferHandler != 0);
-        fsm.transferHandler->submitCancelAllTransfers();
+        if(fsm.transferHandler->hasPendingTransfers()){
+          fsm.transferHandler->submitCancelAllTransfers();
+        }else{
+          fsm.transferHandler->sendEvent(NoMoreTransferPendingEvent());
+        }
+        qDebug() << "Entering Stopping done";
         ///fsm.process_event(ErrorOccuredEvent());
         ///fsm.transferHandler->someThFakeAction();
       }
@@ -522,21 +658,13 @@ namespace mdtUsbtmcTransferHandlerStateMachine
       // +----------------+-----------------------------------------+---------------+----------------------------------------+-------------------------------+----
       row <    Stopping   , ErrorOccuredEvent                       , Disconnected  , &sm::restoreAllTransfers               , &sm::isDeviceDisconnectedError > ,
       // +----------------+-----------------------------------------+---------------+----------------------------------------+-------------------------------+----
-      a_irow < Stopping   , ControlTransferCompletedEvent                           , &sm::restoreControlTransfer                                             > ,
+      a_irow < Stopping   , ControlTransferCompletedEvent                           , &sm::restoreControlTransferNNMTP                                        > ,
       // +----------------+-----------------------------------------+---------------+----------------------------------------+-------------------------------+----
-      a_irow < Stopping   , BulkOutTransferCompletedEvent                           , &sm::restoreBulkOutTransfer                                             > ,
+      a_irow < Stopping   , BulkOutTransferCompletedEvent                           , &sm::restoreBulkOutTransferNNMTP                                             > ,
       // +----------------+-----------------------------------------+---------------+----------------------------------------+-------------------------------+----
-      a_irow < Stopping   , BulkInTransferCompletedEvent                            , &sm::restoreBulkInTransfer                                              > ,
+      a_irow < Stopping   , BulkInTransferCompletedEvent                            , &sm::restoreBulkInTransferNNMTP                                              > ,
       // +----------------+-----------------------------------------+---------------+----------------------------------------+-------------------------------+----
-      a_irow < Stopping   , InterruptInTransferCompletedEvent                       , &sm::restoreInterruptInTransfer                                         > ,
-      // +----------------+-----------------------------------------+---------------+----------------------------------------+-------------------------------+----
-      g_row <  Stopping   , BulkOutTransferCompletedEvent           , Stopped                                                , &sm::hasNoPendingTransfers     > ,
-      // +----------------+-----------------------------------------+---------------+----------------------------------------+-------------------------------+----
-      g_row <  Stopping   , BulkInTransferCompletedEvent            , Stopped                                                , &sm::hasNoPendingTransfers     > ,
-      // +----------------+-----------------------------------------+---------------+----------------------------------------+-------------------------------+----
-      g_row <  Stopping   , NoMoreInterruptInTransferPendingEvent   , Stopped                                                , &sm::hasNoPendingTransfers     > ,
-      // +----------------+-----------------------------------------+---------------+----------------------------------------+-------------------------------+----
-      g_row <  Stopping   , ControlTransferCompletedEvent           , Stopped                                                ,  &sm::hasNoPendingTransfers    > ,
+      a_irow < Stopping   , InterruptInTransferCompletedEvent                       , &sm::restoreInterruptInTransferNNMTP                                         > ,
       // +----------------+-----------------------------------------+---------------+----------------------------------------+-------------------------------+----
       _row <   Stopping   , NoMoreTransferPendingEvent              , Stopped                                                                                 >
       // +----------------+-----------------------------------------+---------------+----------------------------------------+-------------------------------+----
@@ -550,7 +678,7 @@ namespace mdtUsbtmcTransferHandlerStateMachine
         qDebug() << "No transition from state " << state << " on event " << typeid(e).name();
     }
 
-    // StateMachine members
+    // StateMachine_ members
     mdtUsbtmcTransferHandler *transferHandler;
   };
 
@@ -558,6 +686,18 @@ namespace mdtUsbtmcTransferHandlerStateMachine
    */
   struct StateMachine : public boost::msm::back::state_machine<StateMachine_>
   {
+    /*! \brief Constructor
+     */
+    StateMachine(mdtUsbtmcTransferHandler *th)
+     : boost::msm::back::state_machine<StateMachine_>(boost::msm::back::states_ << Running(th))
+    {
+      setTh(th);
+      /*
+       * We must create a Running submachine object
+       *  and pass it to current state machine
+       */
+      ///set_states(boost::msm::back::states_ << Running(th));
+    }
     /*! \brief Process event
      */
     template<class Event>

@@ -90,6 +90,13 @@ class mdtUsbtmcTransferHandler
    */
   bool setup(libusb_device_handle *handle, const mdtUsbDeviceDescriptor & descriptor, uint8_t bInterfaceNumber);
 
+  /*! \brief Check if current interface has a Interrupt-IN endpoint
+   */
+  bool hasInterruptInEndpoint() const
+  {
+    return !pvInterruptInDescriptor.isEmpty();
+  }
+
   /*! \brief Submit a command
    *
    * \param message USBTMC message that contains data to send.
@@ -97,7 +104,7 @@ class mdtUsbtmcTransferHandler
    * \param responseExpected If message is a query that expects a response, like *IDN?, set this flag.
    * \param timeout Timeout [ms]
    */
-  void submitCommand(mdtUsbtmcTxMessage & message, bool responseExpected, unsigned int timeout);
+  bool submitCommand(mdtUsbtmcTxMessage & message, bool responseExpected, unsigned int timeout);
 
   /*! \brief Get received data
    *
@@ -115,6 +122,12 @@ class mdtUsbtmcTransferHandler
    *  CHECK_CLEAR_STATUS is sent to device.
    */
   void submitBulkIoClear();
+
+  /*! \brief Will cancel all pending bulk-OUT and bulk-IN transfers and request I/O buffer clear
+   *
+   * Is called by state machine
+   */
+  void beginBulkIoClear();
 
   /*! \brief Submit a custom transfer
    *
@@ -217,6 +230,17 @@ class mdtUsbtmcTransferHandler
    * Must be called only by state machine
    */
   void notifyError(const mdtError & error);
+
+  /*! \brief Send a event to state machine
+   *
+   * Used by internal state machine to send events.
+   *
+   * This is needed, because only mdtUsbtmcTransferHandler instance
+   *  contains a StateMachine object, witch locks the event mutex
+   *  when calling process_event().
+   */
+  template<typename EventType>
+  void sendEvent(EventType const & event);
 
   /*! \brief Check if there are pending transfers
    *
@@ -462,6 +486,10 @@ class mdtUsbtmcTransferHandler
    *  Will simply get pvDeviceDescriptor::idString() with some "decoration text", will not query device.
    */
   QString deviceIdString() const;
+
+  /*! \brief Get libubs_transfer_status text
+   */
+  QString libusbTransferStatusText(libusb_transfer_status status) const;
 
   /*! \brief Set last error regarding bulk-OUT transfer status code
    */

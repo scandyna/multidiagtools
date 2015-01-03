@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -87,7 +87,7 @@ bool mdtUsbtmcPort::openDevice(const mdtUsbDeviceDescriptor& deviceDescriptor, u
 {
   // Check given devoce descriptor
   if(deviceDescriptor.isEmpty()){
-    pvLastError.setError(tr("Given device descriptor is empty (did you use scna() to obtain it ?)"), mdtError::Error);
+    pvLastError.setError(tr("Given device descriptor is empty (did you use scan() to obtain it ?)"), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtUsbtmcPort");
     pvLastError.commit();
     return false;
@@ -180,7 +180,11 @@ bool mdtUsbtmcPort::sendCommand(const QByteArray & command, int timeout)
 
   while(message.hasBytesToRead()){
     pvBulkTransactionState = TransactionState_t::Pending;
-    pvTransferHandler->submitCommand(message, false, timeout);
+    if(!pvTransferHandler->submitCommand(message, false, timeout)){
+      setError(pvTransferHandler->lastError());
+      /// \todo We should abort message here (CLEAR, not Bulk I/O, because bulk transfer it was not submited now)
+      return false;
+    }
     if(!waitBulkTransactionFinished()){
       return false;
     }
@@ -206,7 +210,11 @@ QByteArray mdtUsbtmcPort::sendQuery(const QByteArray& query, int timeout)
    *       they can be transmitted to device in one shot.
    */
   pvBulkTransactionState = TransactionState_t::Pending;
-  pvTransferHandler->submitCommand(txMessage, true, timeout);
+  if(!pvTransferHandler->submitCommand(txMessage, true, timeout)){
+    setError(pvTransferHandler->lastError());
+    /// \todo We should abort message here (CLEAR, not Bulk I/O, because bulk transfer it was not submited now)
+    return false;
+  }
   if(!waitBulkTransactionFinished()){
     return rxBa;
   }
