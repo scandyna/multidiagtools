@@ -231,6 +231,18 @@ class mdtUsbtmcTransferHandler
    */
   void notifyError(const mdtError & error);
 
+  /*! \brief Notify Bulk I/O done
+   *
+   * Must be called only by state machine
+   */
+  void notifyBulkIoDone();
+
+  /*! \brief Notify Bulk I/O aborted
+   *
+   * Must be called only by state machine
+   */
+  void notifyBulkIoAborted();
+
   /*! \brief Send a event to state machine
    *
    * Used by internal state machine to send events.
@@ -278,11 +290,38 @@ class mdtUsbtmcTransferHandler
    */
   void handleBulkOutTransferComplete(mdtUsbtmcBulkTransfer *transfer);
 
+  /*! \brief Check if there are pending Bulk-OUT transfers
+   *
+   * Is called by state machine
+   */
+  bool hasPendingBulkOutTransfers()
+  {
+    std::lock_guard<std::mutex> bolg(pvBulkOutTransferMutex);
+    return (pvBulkOutTransferPool.pendingTransferCount() > 0);
+  }
+
   /*! \brief Restore bulk-OUT transfer to pool
    *
    * Is called by state machine
    */
   void restoreBulkOutTransferToPool(mdtUsbtmcBulkTransfer *transfer, bool lockMutex);
+
+  /*! \brief Restore bulk-OUT transfer to pool
+   *
+   * If, after transfer was restored, no more Bulk-OUT transfer is pending,
+   *  and given transfer contains a SplitAction, this action will be executed.
+   *
+   * Is called by state machine
+   */
+  void restoreBulkOutTransferSA(mdtUsbtmcBulkTransfer *transfer);
+
+  /*! \brief Submit cancel for all Bulk-OUT transfers
+   *
+   * If a action is given as argument, it will be set to last transfer cancel request.
+   *
+   * Is called by state machine
+   */
+  void submitCancelAllBulkOutTransfers(bool lockMutex, mdtUsbtmcBulkTransfer::SplitAction_t action = mdtUsbtmcBulkTransfer::SplitAction_t::NoAction);
 
   /*! \brief Handle Bulk-IN transfer complete
    *
@@ -290,9 +329,36 @@ class mdtUsbtmcTransferHandler
    */
   void handleBulkInTransferComplete(mdtUsbtmcBulkTransfer *transfer);
 
+  /*! \brief Check if there are pending Bulk-IN transfers
+   *
+   * Is called by state machine
+   */
+  bool hasPendingBulkInTransfers()
+  {
+    std::lock_guard<std::mutex> bolg(pvBulkInTransferMutex);
+    return (pvBulkInTransferPool.pendingTransferCount() > 0);
+  }
+
   /*! \brief Restore bulk-IN transfer to pool
    */
   void restoreBulkInTransferToPool(mdtUsbtmcBulkTransfer *transfer, bool lockMutex);
+
+  /*! \brief Restore bulk-IN transfer to pool
+   *
+   * If, after transfer was restored, no more Bulk-IN transfer is pending,
+   *  and given transfer contains a SplitAction, this action will be executed.
+   *
+   * Is called by state machine
+   */
+  void restoreBulkInTransferSA(mdtUsbtmcBulkTransfer *transfer);
+
+  /*! \brief Submit cancel for all Bulk-IN transfers
+   *
+   * If a action is given as argument, it will be set to last transfer cancel request.
+   *
+   * Is called by state machine
+   */
+  void submitCancelAllBulkInTransfers(bool lockMutex, mdtUsbtmcBulkTransfer::SplitAction_t action = mdtUsbtmcBulkTransfer::SplitAction_t::NoAction);
 
   /*! \brief Submit a Interrupt-IN transfer
    */
@@ -310,15 +376,33 @@ class mdtUsbtmcTransferHandler
    */
   void restoreInterruptInTransferToPool(mdtUsbtmcInterruptTransfer *transfer, bool lockMutex);
 
+  /*! \brief Begin to abort bulk-OUT transfer
+   *
+   * As mentionned in USBTMC 1.0 , section 3.2, rule 3,
+   *  we cannot send a new USBTMC bulk-OUT transfer if one is pending.
+   *
+   * Knowing this, we can also only have 0 or 1 Bulk-OUT transfer pending.
+   *  This function will also get a pending Bulk-OUT transfer
+   *  and abort it if found, or submit a error if not found.
+   *
+   * Aborting will start, as mentionned in USBTMC 1.0, section 4.2.1.2,
+   *  by cancelling the pending Bulk-OUT transfer, and passing 
+   *  INITIATE_ABORT_BULK_OUT split action, so that restoreBulkOutTransferSA
+   *  knows that it must call submitInitiateAbortBulkOutRequest()
+   *
+   * This function is called by state machine.
+   */
+  void beginAbortBulkOutTransfer();
+
  private:
 
-  /*! \brief Begin to abort a bulk-OUT transfer
+  /*! \brief Submit INITIATE_ABORT_BULK_OUT request
    *
    * Will submit the first INITIATE_ABORT_BULK_OUT request and return.
    *  Later on, handleControlTransferComplete() will receive a response,
    *  then calls handleInitiateAbortBulkOutResponse().
    */
-  void beginAbortBulkOutTransfer(uint8_t bTag);
+  void submitInitiateAbortBulkOutRequest(uint8_t bTag);
 
   /*! \brief Handle INITIATE_ABORT_BULK_OUT response
    *
@@ -360,18 +444,6 @@ class mdtUsbtmcTransferHandler
   /*! \brief Retire IRPs for given transfer
    */
   void submitRetireBulkIRPs(mdtUsbtmcBulkTransfer *transfer);
-
-  /*! \brief Submit cancel for all Bulk-OUT transfers
-   *
-   * If a action is given as argument, it will be set to last transfer cancel request.
-   */
-  void submitCancelAllBulkOutTransfers(bool lockMutex, mdtUsbtmcBulkTransfer::SplitAction_t action = mdtUsbtmcBulkTransfer::SplitAction_t::NoAction);
-
-  /*! \brief Submit cancel for all Bulk-IN transfers
-   *
-   * If a action is given as argument, it will be set to last transfer cancel request.
-   */
-  void submitCancelAllBulkInTransfers(bool lockMutex, mdtUsbtmcBulkTransfer::SplitAction_t action = mdtUsbtmcBulkTransfer::SplitAction_t::NoAction);
 
   /*! \brief Submit a Bulk-IN transfer
    */

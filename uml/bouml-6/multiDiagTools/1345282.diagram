@@ -2,33 +2,36 @@ format 208
 
 statecanvas 128002 state_ref 241666 // Stopped
   
-  xyzwh 32.5328 102.949 2006 203 93
+  xyzwh 32.7328 102.149 2006 203 93
 end
 statecanvas 128130 state_ref 241794 // Setup
   
-  xyzwh 470.072 57.425 2011 57 43
+  xyzwh 470.272 57.625 2011 57 43
 end
 statecanvas 128642 state_ref 242306 // Stopping
   
-  xyzwh 64.9243 583.396 2023 449 233
+  xyzwh 64.1243 583.996 2023 449 233
 end
 statecanvas 128770 state_ref 242434 // Disconnected
   
-  xyzwh 746.183 509.515 2029 247 81
+  xyzwh 746.783 509.115 2029 247 81
 end
 statecanvas 128898 state_ref 242562 // Error
   
-  xyzwh 413.001 341.52 2005 202 97
+  xyzwh 413.201 341.12 2005 202 97
 end
 statecanvas 132354 state_ref 243202 // Running
   
-  xyzwh 723.62 68.02 2005 455 186
+  xyzwh 723.62 68.02 2005 455 185
 end
 pseudostatecanvas 133506 pseudostate_ref 201090 // initial
-   xyz 238.5 55 2000
+   xyz 238.3 55.6 2000
 end
 note 135298 "NNMTP: Notify NoMoreTransferPending"
-  xyzwh 533 784 2000 314 39
+  xyzwh 532.6 784.2 2000 314 39
+note 135554 "TODO:
+See about all locked mutexes !!"
+  xyzwh 654.8 343 2000 224 76
 transitioncanvas 132610 transition_ref 265346 // <transition>
   
   from ref 132354 z 2030 label "ErrorOccured [isDeviceDisconnectedError] / restoreAllTransfers" xyz 639 480 2030 to ref 128770
@@ -58,9 +61,9 @@ transitioncanvas 133762 transition_ref 279170 // <transition>
   write_horizontally default show_definition default drawing_language default
 end
 transitioncanvas 133890 transition_ref 279298 // <transition>
-  decenter_begin 963
+  decenter_begin 874
   
-  from ref 128642 z 2024 label "ErrorOccured [isUnhandledError] / restoreAllTransfers" xyz 400 545 2024 to ref 128898
+  from ref 128642 z 2024 label "ErrorOccured [isUnhandledError] / restoreAllTransfers" xyz 375 545 2024 to ref 128898
   write_horizontally default show_definition default drawing_language default
 end
 transitioncanvas 134530 transition_ref 285826 // <transition>
@@ -79,4 +82,8 @@ transitioncanvas 135170 transition_ref 292866 // <transition>
 end
 line 135426 -_-_ decenter_begin 867
   from ref 128642 z 2024 to ref 135298
+line 135682 -_-_
+  from ref 135554 z 2006 to ref 128898
+line 135810 -_-_
+  from ref 135554 z 2030 to ref 128770
 end

@@ -40,7 +40,7 @@ mdtUsbtmcPort::mdtUsbtmcPort(QObject* parent)
 {
   qRegisterMetaType<TransactionState_t>("TransactionState_t");
   connect(this, SIGNAL(bulkTransactionFinished(TransactionState_t)), this, SLOT(setBulkTransactionState(TransactionState_t)));
-  connect(this, SIGNAL(controlTransactionFinished(TransactionState_t)), this, SLOT(setControlTransactionState(TransactionState_t)));
+  ///connect(this, SIGNAL(controlTransactionFinished(TransactionState_t)), this, SLOT(setControlTransactionState(TransactionState_t)));
 }
 
 mdtUsbtmcPort::~mdtUsbtmcPort()
@@ -185,7 +185,8 @@ bool mdtUsbtmcPort::sendCommand(const QByteArray & command, int timeout)
       /// \todo We should abort message here (CLEAR, not Bulk I/O, because bulk transfer it was not submited now)
       return false;
     }
-    if(!waitBulkTransactionFinished()){
+    waitBulkTransactionFinished();
+    if(pvBulkTransactionState != TransactionState_t::Done){
       return false;
     }
   }
@@ -215,7 +216,8 @@ QByteArray mdtUsbtmcPort::sendQuery(const QByteArray& query, int timeout)
     /// \todo We should abort message here (CLEAR, not Bulk I/O, because bulk transfer it was not submited now)
     return false;
   }
-  if(!waitBulkTransactionFinished()){
+  waitBulkTransactionFinished();
+  if(pvBulkTransactionState != TransactionState_t::Done){
     return rxBa;
   }
   pvTransferHandler->getReceivedData(rxMessage);
@@ -236,9 +238,10 @@ bool mdtUsbtmcPort::clearBulkIo()
 {
   Q_ASSERT(pvTransferHandler != 0);
 
-  pvControlTransactionState = TransactionState_t::Pending;
+  pvBulkTransactionState = TransactionState_t::Pending;
   pvTransferHandler->submitBulkIoClear();
-  if(!waitControlTransactionFinished()){
+  waitBulkTransactionFinished();
+  if(pvBulkTransactionState != TransactionState_t::Aborted){
     return false;
   }
 
@@ -271,11 +274,13 @@ void mdtUsbtmcPort::setBulkTransactionState(mdtUsbtmcPort::TransactionState_t s)
   qDebug() << "Bulk transaction state: " << (int)pvBulkTransactionState;
 }
 
+/**
 void mdtUsbtmcPort::setControlTransactionState(mdtUsbtmcPort::TransactionState_t s)
 {
   pvControlTransactionState = s;
   qDebug() << "Control transaction state: " << (int)pvControlTransactionState;
 }
+*/
 
 void mdtUsbtmcPort::setError ( const mdtError& error )
 {
@@ -283,7 +288,7 @@ void mdtUsbtmcPort::setError ( const mdtError& error )
   pvLastError = error;
   pvLastErrorMutex.unlock();
   emit bulkTransactionFinished(TransactionState_t::Error);
-  emit controlTransactionFinished(TransactionState_t::Error);
+  ///emit controlTransactionFinished(TransactionState_t::Error);
 }
 
 void mdtUsbtmcPort::setWaitTimeReached()
@@ -291,20 +296,23 @@ void mdtUsbtmcPort::setWaitTimeReached()
   pvWaitTimeReached = true;
 }
 
-bool mdtUsbtmcPort::waitBulkTransactionFinished()
+void mdtUsbtmcPort::waitBulkTransactionFinished()
 {
   while(pvBulkTransactionState == TransactionState_t::Pending){
     qDebug() << "mdtUsbtmcPort::waitBulkTransactionFinished() - waiting ...";
     QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
     qDebug() << "mdtUsbtmcPort::waitBulkTransactionFinished() - event !";
   }
+  /**
   if(pvBulkTransactionState != TransactionState_t::Done){
     qDebug() << "mdtUsbtmcPort::waitBulkTransactionFinished() - finished in error";
     return false;
   }
   return true;
+  */
 }
 
+/**
 bool mdtUsbtmcPort::waitControlTransactionFinished()
 {
   while(pvControlTransactionState == TransactionState_t::Pending){
@@ -318,6 +326,7 @@ bool mdtUsbtmcPort::waitControlTransactionFinished()
   }
   return true;
 }
+*/
 
 bool mdtUsbtmcPort::initThread()
 {

@@ -90,6 +90,10 @@ namespace mdtUsbtmcTransferHandlerStateMachine
     mdtUsbtmcControlTransfer *transfer;
   };
 
+  /*! \brief Control transfer successfully completed event
+   */
+  struct ControlTransferSuccessfulEvent {};
+
   /*! \brief Bulk-OUT transfer completed event
    */
   struct BulkOutTransferCompletedEvent
@@ -146,6 +150,10 @@ namespace mdtUsbtmcTransferHandlerStateMachine
    */
   struct NoMoreTransferPendingEvent {};
 
+  /*! \brief Abort Bulk-OUT requested event
+   */
+  struct AbortBulkOutRequestedEvent {};
+
   /*! \brief Clear Bulk I/O requested event
    */
   struct ClearBulkIoRequestedEvent {};
@@ -153,6 +161,10 @@ namespace mdtUsbtmcTransferHandlerStateMachine
   /*! \brief Split action done event
    */
   struct SplitActionDoneEvent {};
+
+  /*! \brief Clear Bulk-OUT endpoint halt requested event
+   */
+  struct ClearBulkOutEndpointHaltRequestedEvent {};
 
   /*
    * Flags
@@ -164,7 +176,8 @@ namespace mdtUsbtmcTransferHandlerStateMachine
 
   /*! \brief Tell USBTMC port that we can accept requests
    */
-  struct IdleFlag {};
+  ///struct IdleFlag {};
+  struct ProcessingFlag {};
 
   /// \todo Remove !
   struct fakeRequest {};
@@ -217,6 +230,50 @@ namespace mdtUsbtmcTransferHandlerStateMachine
      * Running_ submachine - actions
      */
 
+    /*! \brief Handle Bulk-OUT transfer completed action
+     */
+    void handleBulkOutTransferCompleted(BulkOutTransferCompletedEvent const & event)
+    {
+      Q_ASSERT(transferHandler != 0);
+      transferHandler->handleBulkOutTransferComplete(event.transfer);
+    }
+
+    /*! \brief Restore Bulk-OUT transfer back to pool
+     */
+    void restoreBulkOutTransferSA(BulkOutTransferCompletedEvent const & event)
+    {
+      Q_ASSERT(transferHandler != 0);
+      qDebug() << "** restoreBulkOutTransferSA ..";
+      transferHandler->restoreBulkOutTransferSA(event.transfer);
+    }
+
+    /*! \brief Handle Bulk-IN transfer completed action
+     */
+    void handleBulkInTransferCompleted(BulkInTransferCompletedEvent const & event)
+    {
+      Q_ASSERT(transferHandler != 0);
+      transferHandler->handleBulkInTransferComplete(event.transfer);
+    }
+
+    /*! \brief Restore Bulk-IN transfer back to pool
+     */
+    void restoreBulkInTransferSA(BulkInTransferCompletedEvent const & event)
+    {
+      Q_ASSERT(transferHandler != 0);
+      qDebug() << "** restoreBulkInTransferSA ..";
+      transferHandler->restoreBulkInTransferSA(event.transfer);
+    }
+
+    /*! \brief Notify that Bulk I/O was aborted
+     */
+    template<typename EventType>
+    void notifyBulkIoAborted(EventType const &)
+    {
+      Q_ASSERT(transferHandler != 0);
+      qDebug() << "** notifyBulkIoAborted ..";
+      transferHandler->notifyBulkIoAborted();
+    }
+
     /*
      * Running_ submachine - guards
      */
@@ -227,29 +284,30 @@ namespace mdtUsbtmcTransferHandlerStateMachine
 
     /*! \brief Idle state
      */
-    struct Idle : public boost::msm::front::state<>
-    {
-      typedef boost::mpl::vector1<IdleFlag> flag_list;
-      /*! \brief Idle entry/
-       */
-      template<typename Event, typename FSM>
-      void on_entry(Event const &, FSM & fsm)
-      {
-        qDebug() << "Entering Idle ...";
-      }
-      /*! \brief Idle exit/
-       */
-      template<typename Event, typename FSM>
-      void on_exit(Event const &, FSM &)
-      {
-        qDebug() << "Leaving Idle ...";
-      }
-    };
+//     struct Idle : public boost::msm::front::state<>
+//     {
+//       typedef boost::mpl::vector1<IdleFlag> flag_list;
+//       /*! \brief Idle entry/
+//        */
+//       template<typename Event, typename FSM>
+//       void on_entry(Event const &, FSM & fsm)
+//       {
+//         qDebug() << "Entering Idle ...";
+//       }
+//       /*! \brief Idle exit/
+//        */
+//       template<typename Event, typename FSM>
+//       void on_exit(Event const &, FSM &)
+//       {
+//         qDebug() << "Leaving Idle ...";
+//       }
+//     };
 
     /*! \brief Processing state
      */
     struct Processing : public boost::msm::front::state<>
     {
+      typedef boost::mpl::vector1<ProcessingFlag> flag_list;
       /*! \brief Processing entry/
        */
       template<typename Event, typename FSM>
@@ -288,9 +346,83 @@ namespace mdtUsbtmcTransferHandlerStateMachine
       }
     };
 
+    /*! \brief ClearingBulkOutEndpointHalt state
+     */
+    struct ClearingBulkOutEndpointHalt : public boost::msm::front::state<>
+    {
+      /*! \brief ClearingBulkOutEndpointHalt entry/
+       */
+      template<typename Event, typename FSM>
+      void on_entry(Event const &, FSM & fsm)
+      {
+        qDebug() << "Entering ClearingBulkOutEndpointHalt ...";
+        Q_ASSERT(fsm.transferHandler != 0);
+        if(fsm.transferHandler->hasPendingBulkOutTransfers()){
+          fsm.transferHandler->submitCancelAllBulkOutTransfers(true, mdtUsbtmcBulkTransfer::SplitAction_t::CLEAR_ENDPOINT_HALT);
+        }else{
+          fsm.transferHandler->submitClearBulkOutEndpointHalt(10000);
+        }
+      }
+      /*! \brief ClearingBulkOutEndpointHalt exit/
+       */
+      template<typename Event, typename FSM>
+      void on_exit(Event const &, FSM &)
+      {
+        qDebug() << "Leaving ClearingBulkOutEndpointHalt ...";
+      }
+    };
+
+    /*! \brief ClearingBulkInEndpointHalt state
+     */
+    struct ClearingBulkInEndpointHalt : public boost::msm::front::state<>
+    {
+      /*! \brief ClearingBulkInEndpointHalt entry/
+       */
+      template<typename Event, typename FSM>
+      void on_entry(Event const &, FSM & fsm)
+      {
+        qDebug() << "Entering ClearingBulkInEndpointHalt ...";
+        Q_ASSERT(fsm.transferHandler != 0);
+        if(fsm.transferHandler->hasPendingBulkInTransfers()){
+          fsm.transferHandler->submitCancelAllBulkInTransfers(true, mdtUsbtmcBulkTransfer::SplitAction_t::CLEAR_ENDPOINT_HALT);
+        }else{
+          fsm.transferHandler->submitClearBulkInEndpointHalt(10000);
+        }
+      }
+      /*! \brief ClearingBulkInEndpointHalt exit/
+       */
+      template<typename Event, typename FSM>
+      void on_exit(Event const &, FSM &)
+      {
+        qDebug() << "Leaving ClearingBulkInEndpointHalt ...";
+      }
+    };
+
+    /*! \brief AbortingBulkOut state
+     */
+    struct AbortingBulkOut : public boost::msm::front::state<>
+    {
+      /*! \brief AbortingBulkOut entry/
+       */
+      template<typename EventType, typename FSM>
+      void on_entry(EventType const &, FSM & fsm)
+      {
+        qDebug() << "Entering AbortingBulkOut ...";
+        Q_ASSERT(fsm.transferHandler != 0);
+        fsm.transferHandler->beginAbortBulkOutTransfer();
+      }
+      /*! \brief AbortingBulkOut exit/
+       */
+      template<typename Event, typename FSM>
+      void on_exit(Event const &, FSM &)
+      {
+        qDebug() << "Leaving AbortingBulkOut ...";
+      }
+    };
+
     /*! \brief Initial state of Running submachine
      */
-    typedef Idle initial_state;
+    typedef Processing initial_state;
 
     // Make transition table a bit more readable
     typedef Running_ rsm;
@@ -298,10 +430,31 @@ namespace mdtUsbtmcTransferHandlerStateMachine
     /*! \brief Running_ submachine transition table
      */
     struct transition_table : boost::mpl::vector<
-      //      Start state     Event                                   Next state       Action                                   Guard
-      // +----------------+-----------------------------------------+-----------------+----------------------------------------+-------------------------------+----
-      _row <   Idle       , ClearBulkIoRequestedEvent               , ClearingBulkIo                                                                             >
-      // +----------------+-----------------------------------------+-----------------+----------------------------------------+-------------------------------+----
+      //      Start state                    Event                                     Next state                   Action                                   Guard
+      // +---------------------------------+-----------------------------------------+-----------------------------+----------------------------------------+-------------------------------+----
+      _row <   Processing                  , ClearBulkIoRequestedEvent               , ClearingBulkIo                                                                                         > ,
+      a_irow < Processing                  , BulkOutTransferCompletedEvent                                         , &rsm::handleBulkOutTransferCompleted                                     > ,
+      a_irow < Processing                  , BulkInTransferCompletedEvent                                          , &rsm::handleBulkInTransferCompleted                                      > ,
+      _row <   Processing                  , AbortBulkOutRequestedEvent              , AbortingBulkOut                                                                                        > ,
+      // +---------------------------------+-----------------------------------------+-----------------------------+----------------------------------------+-------------------------------+----
+      a_irow < AbortingBulkOut             , BulkOutTransferCompletedEvent                                         , &rsm::restoreBulkOutTransferSA                                           > ,
+      a_irow < AbortingBulkOut             , BulkInTransferCompletedEvent                                          , &rsm::handleBulkInTransferCompleted                                      > ,
+      a_row <  AbortingBulkOut             , SplitActionDoneEvent                    , Processing                  , &rsm::notifyBulkIoAborted                                                > ,
+      _row <   AbortingBulkOut             , ClearBulkOutEndpointHaltRequestedEvent  , ClearingBulkOutEndpointHalt                                                                            > ,
+      // +---------------------------------+-----------------------------------------+-----------------------------+----------------------------------------+-------------------------------+----
+      a_irow < ClearingBulkIo              , BulkOutTransferCompletedEvent                                         , &rsm::restoreBulkOutTransferSA                                           > ,
+      a_irow < ClearingBulkIo              , BulkInTransferCompletedEvent                                          , &rsm::restoreBulkInTransferSA                                            > ,
+      a_row <  ClearingBulkIo              , SplitActionDoneEvent                    , Processing                  , &rsm::notifyBulkIoAborted                                                > ,
+      _row <   ClearingBulkIo              , ClearBulkOutEndpointHaltRequestedEvent  , ClearingBulkOutEndpointHalt                                                                            > ,
+      // +---------------------------------+-----------------------------------------+-----------------------------+----------------------------------------+-------------------------------+----
+      a_irow < ClearingBulkOutEndpointHalt , BulkOutTransferCompletedEvent                                         , &rsm::restoreBulkOutTransferSA                                           > ,
+      a_irow < ClearingBulkOutEndpointHalt , BulkInTransferCompletedEvent                                          , &rsm::handleBulkInTransferCompleted                                      > ,
+      a_row <  ClearingBulkOutEndpointHalt , ControlTransferSuccessfulEvent          , Processing                  , &rsm::notifyBulkIoAborted                                                > ,
+      // +---------------------------------+-----------------------------------------+-----------------------------+----------------------------------------+-------------------------------+----
+      a_irow < ClearingBulkInEndpointHalt  , BulkOutTransferCompletedEvent                                         , &rsm::handleBulkOutTransferCompleted                                     > ,
+      a_irow < ClearingBulkInEndpointHalt  , BulkInTransferCompletedEvent                                          , &rsm::restoreBulkInTransferSA                                            > ,
+      a_row <  ClearingBulkInEndpointHalt  , ControlTransferSuccessfulEvent          , Processing                  , &rsm::notifyBulkIoAborted                                                > 
+      // +---------------------------------+-----------------------------------------+-----------------------------+----------------------------------------+-------------------------------+----
     >{};
 
     // Running_ members
@@ -372,13 +525,13 @@ namespace mdtUsbtmcTransferHandlerStateMachine
       }
     }
 
-    /*! \brief Handle Bulk-OUT transfer completed action
-     */
-    void handleBulkOutTransferCompleted(BulkOutTransferCompletedEvent const & event)
-    {
-      Q_ASSERT(transferHandler != 0);
-      transferHandler->handleBulkOutTransferComplete(event.transfer);
-    }
+//     /*! \brief Handle Bulk-OUT transfer completed action
+//      */
+//     void handleBulkOutTransferCompleted(BulkOutTransferCompletedEvent const & event)
+//     {
+//       Q_ASSERT(transferHandler != 0);
+//       transferHandler->handleBulkOutTransferComplete(event.transfer);
+//     }
 
     /*! \brief Restore Bulk-OUT transfer to pool action
      *
@@ -394,13 +547,13 @@ namespace mdtUsbtmcTransferHandlerStateMachine
       }
     }
 
-    /*! \brief Handle Bulk-IN transfer completed action
-     */
-    void handleBulkInTransferCompleted(BulkInTransferCompletedEvent const & event)
-    {
-      Q_ASSERT(transferHandler != 0);
-      transferHandler->handleBulkInTransferComplete(event.transfer);
-    }
+//     /*! \brief Handle Bulk-IN transfer completed action
+//      */
+//     void handleBulkInTransferCompleted(BulkInTransferCompletedEvent const & event)
+//     {
+//       Q_ASSERT(transferHandler != 0);
+//       transferHandler->handleBulkInTransferComplete(event.transfer);
+//     }
 
     /*! \brief Restore Bulk-IN transfer to pool action
      *
@@ -641,31 +794,19 @@ namespace mdtUsbtmcTransferHandlerStateMachine
       //      Start state     Event                                   Next state     Action                                   Guard
       // +----------------+-----------------------------------------+---------------+----------------------------------------+-------------------------------+----
       row <    Running    , ErrorOccuredEvent                       , Error         , &sm::restoreAllTransfers               , &sm::isUnhandledError          > ,
-      // +----------------+-----------------------------------------+---------------+----------------------------------------+-------------------------------+----
       row <    Running    , ErrorOccuredEvent                       , Disconnected  , &sm::restoreAllTransfers               , &sm::isDeviceDisconnectedError > ,
-      // +----------------+-----------------------------------------+---------------+----------------------------------------+-------------------------------+----
       _row <   Running    , StopRequestedEvent                      , Stopping                                                                                > ,
-      // +----------------+-----------------------------------------+---------------+----------------------------------------+-------------------------------+----
       a_irow < Running    , ControlTransferCompletedEvent                           , &sm::handleControlTransferCompleted                                     > ,
-      // +----------------+-----------------------------------------+---------------+----------------------------------------+-------------------------------+----
-      a_irow < Running    , BulkOutTransferCompletedEvent                           , &sm::handleBulkOutTransferCompleted                                     > ,
-      // +----------------+-----------------------------------------+---------------+----------------------------------------+-------------------------------+----
-      a_irow < Running    , BulkInTransferCompletedEvent                            , &sm::handleBulkInTransferCompleted                                      > ,
-      // +----------------+-----------------------------------------+---------------+----------------------------------------+-------------------------------+----
+     /// a_irow < Running    , BulkOutTransferCompletedEvent                           , &sm::handleBulkOutTransferCompleted                                     > ,
+     /// a_irow < Running    , BulkInTransferCompletedEvent                            , &sm::handleBulkInTransferCompleted                                      > ,
       a_irow < Running    , InterruptInTransferCompletedEvent                       , &sm::handleInterruptInTransferCompleted                                 > ,
       // +----------------+-----------------------------------------+---------------+----------------------------------------+-------------------------------+----
       row <    Stopping   , ErrorOccuredEvent                       , Error         , &sm::restoreAllTransfers               , &sm::isUnhandledError          > ,
-      // +----------------+-----------------------------------------+---------------+----------------------------------------+-------------------------------+----
       row <    Stopping   , ErrorOccuredEvent                       , Disconnected  , &sm::restoreAllTransfers               , &sm::isDeviceDisconnectedError > ,
-      // +----------------+-----------------------------------------+---------------+----------------------------------------+-------------------------------+----
       a_irow < Stopping   , ControlTransferCompletedEvent                           , &sm::restoreControlTransferNNMTP                                        > ,
-      // +----------------+-----------------------------------------+---------------+----------------------------------------+-------------------------------+----
       a_irow < Stopping   , BulkOutTransferCompletedEvent                           , &sm::restoreBulkOutTransferNNMTP                                             > ,
-      // +----------------+-----------------------------------------+---------------+----------------------------------------+-------------------------------+----
       a_irow < Stopping   , BulkInTransferCompletedEvent                            , &sm::restoreBulkInTransferNNMTP                                              > ,
-      // +----------------+-----------------------------------------+---------------+----------------------------------------+-------------------------------+----
       a_irow < Stopping   , InterruptInTransferCompletedEvent                       , &sm::restoreInterruptInTransferNNMTP                                         > ,
-      // +----------------+-----------------------------------------+---------------+----------------------------------------+-------------------------------+----
       _row <   Stopping   , NoMoreTransferPendingEvent              , Stopped                                                                                 >
       // +----------------+-----------------------------------------+---------------+----------------------------------------+-------------------------------+----
     >{};

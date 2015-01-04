@@ -49,6 +49,7 @@ class mdtUsbtmcPort : public QObject
   {
     Pending = 0,  /*!< Transaction is in progress */
     Done,         /*!< Transaction done without error */
+    Aborted,      /*!< Transaction aborted */
     Error,        /*!< Transaction finished because a error occured */
     Timeout       /*!< Transaction timed out */
   };
@@ -120,14 +121,23 @@ class mdtUsbtmcPort : public QObject
     emit bulkTransactionFinished(TransactionState_t::Done);
   }
 
+  /*! \brief Signal bulk transaction aborted
+   *
+   * Note: used by mdtUsbtmcTransferHandler
+   */
+  void thSetBulkTransactionAborted()
+  {
+    emit bulkTransactionFinished(TransactionState_t::Aborted);
+  }
+
   /*! \brief Signal control transaction done
    *
    * Note: used by mdtUsbtmcTransferHandler
    */
-  void thSetControlTransactionDone()
-  {
-    emit controlTransactionFinished(TransactionState_t::Done);
-  }
+//   void thSetControlTransactionDone()
+//   {
+//     emit controlTransactionFinished(TransactionState_t::Done);
+//   }
 
   /*! \brief Signal transaction timed out
    *
@@ -136,7 +146,7 @@ class mdtUsbtmcPort : public QObject
   void thSetTimeoutOccured()
   {
     emit bulkTransactionFinished(TransactionState_t::Timeout);
-    emit controlTransactionFinished(TransactionState_t::Timeout);
+    ///emit controlTransactionFinished(TransactionState_t::Timeout);
   }
 
   /*! \brief Signal error
@@ -149,7 +159,7 @@ class mdtUsbtmcPort : public QObject
     pvLastError = error;
     pvLastErrorMutex.unlock();
     emit bulkTransactionFinished(TransactionState_t::Error);
-    emit controlTransactionFinished(TransactionState_t::Error);
+    ///emit controlTransactionFinished(TransactionState_t::Error);
   }
 
  signals:
@@ -162,7 +172,7 @@ class mdtUsbtmcPort : public QObject
   /*! \brief Signal that control transaction is finished
    * \sa setControlTransactionState().
    */
-  void controlTransactionFinished(TransactionState_t s);
+  ///void controlTransactionFinished(TransactionState_t s);
 
  private slots:
 
@@ -176,7 +186,7 @@ class mdtUsbtmcPort : public QObject
    *
    * Will also generate a event in main thread and wake up QCoreApplication::processEvents()
    */
-  void setControlTransactionState(TransactionState_t s);
+  ///void setControlTransactionState(TransactionState_t s);
 
   /*! \brief Set error
    *
@@ -194,17 +204,17 @@ class mdtUsbtmcPort : public QObject
 
   /*! \brief Wait until bulk transaction is finished
    *
-   * Return false if transaction is no more pending,
-   *  and not done
+   * After this function returns,
+   *  caller must check pvBulkTransactionState
    */
-  bool waitBulkTransactionFinished();
+  void waitBulkTransactionFinished();
 
   /*! \brief Wait until control transaction is finished
    *
    * Return false if transaction is no more pending,
    *  and not done
    */
-  bool waitControlTransactionFinished();
+  ///bool waitControlTransactionFinished();
 
   /*! \brief Build port thread
    *
@@ -229,7 +239,7 @@ class mdtUsbtmcPort : public QObject
   std::mutex pvLastErrorMutex;
   ///mdtUsbInterfaceDescriptor pvInterfaceDescriptor;
   TransactionState_t pvBulkTransactionState;
-  TransactionState_t pvControlTransactionState;
+  ///TransactionState_t pvControlTransactionState;
   bool pvWaitTimeReached; // Used by wait()
 };
 

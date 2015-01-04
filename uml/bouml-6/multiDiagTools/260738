@@ -1,6 +1,6 @@
 format 208
 "newPortApiSandbox" // mdtport::newPortApiSandbox
-  revision 44
+  revision 45
   modified_by 2 "philippe"
   // class settings
   
@@ -2735,8 +2735,6 @@ InterruptInTransferCompleted / restoreInterruptInTransferNNMTP"
 	  uml_on_entry "submitInterruptInTransfer"
 	  uml_do_activity "
 ControlTransferCompleted / handleControlTransferCompleted
-BulkOutTransferCompleted / handleBulkOutTransferCompleted
-BulkInTransferCompleted / handleBulkInTransferCompleted
 InteruptInTransferCompleted / handleInterruptInTransferComplete"
 	statediagram 1345538 "Running"
 	  statediagramsettings show_trans_definition yes
@@ -2758,16 +2756,13 @@ InteruptInTransferCompleted / handleInterruptInTransferComplete"
 	  external 
 	end
 
-	state 243330 "Idle"
-	  transition 265602 "<transition>"
-	    on state_ref 243458 // ProcessingBulkIo
-	      uml_trigger "submitCommand"
-	    external 
-	  end
-
+	state 243330 "Processing"
+	    uml_do_activity "
+BulkOutTransferCompleted / handleBulkOutTransferCompleted
+BulkInTransferCompleted / handleBulkInTransferCompleted"
 	  transition 299394 "<transition>"
-	    on state_ref 249986 // AbortingBulkIo
-	      uml_trigger "AbortBulkIoRequested"
+	    on state_ref 249986 // AbortingBulkOut
+	      uml_trigger "AbortBulkBulkOutRequested"
 	    external 
 	  end
 
@@ -2776,32 +2771,10 @@ InteruptInTransferCompleted / handleInterruptInTransferComplete"
 	      uml_trigger "ClearBulkIoRequested"
 	    external 
 	  end
-	end
 
-	state 243458 "ProcessingBulkIo"
-	    uml_do_activity "
-BulkOutTransferCompleted[transferStatusOk]/"
-	  transition 299522 "<transition>"
-	    on state_ref 249986 // AbortingBulkIo
-	    external 
-	  end
-
-	  transition 299650 "<transition>"
+	  transition 313858 "<transition>"
 	    on state_ref 256514 // ClearingBulkOutEndpointHalt
 	      uml_trigger "ClearBulkOutEndpointHaltRequested"
-	    external 
-	  end
-
-	  transition 299906 "<transition>"
-	    on state_ref 256642 // ClearingBulkInEndpointHalt
-	      uml_trigger "BulkInStall"
-	      uml_expr "submitCancelAllBulkInTransfers"
-	    external 
-	  end
-
-	  transition 307074 "<transition>"
-	    on state_ref 263170 // ClearingBulkIo
-	      uml_trigger "ClearBulkIoRequested"
 	    external 
 	  end
 	end
@@ -2814,29 +2787,22 @@ BulkOutTransferCompleted[transferStatusOk]/"
 	  external 
 	end
 
-	state 249986 "AbortingBulkIo"
+	state 249986 "AbortingBulkOut"
+	    uml_on_entry "beginAbortBulkOutTransfer (will cancel all pending Bulk-OUT itself)"
 	    uml_do_activity "
-BolkOutTransferCompleted / restoreBulkOutTransferSa
+BolkOutTransferCompleted / restoreBulkOutTransferSA
  {
  }
-BulkInTransferCompleted / restoreBulkInTransferSa
- {
- }"
+BulkInTransferCompleted / handleBulkInTransferCompleted"
 	  transition 299778 "<transition>"
 	    on state_ref 256514 // ClearingBulkOutEndpointHalt
 	      uml_trigger "ClearBulkOutEndpointHaltRequested"
 	    external 
 	  end
 
-	  transition 300034 "<transition>"
-	    on state_ref 256642 // ClearingBulkInEndpointHalt
-	      uml_trigger "ClearBulkInEndpointHaltRequested"
-	    external 
-	  end
-
 	  transition 300418 "<transition>"
-	    on state_ref 243330 // Idle
-	      uml_trigger "AbortingBulkIoDone"
+	    on state_ref 243330 // Processing
+	      uml_trigger "SplitActionDone"
 	      uml_expr "notifyBulkIoAborted"
 	    external 
 	  end
@@ -2844,14 +2810,14 @@ BulkInTransferCompleted / restoreBulkInTransferSa
 
 	pseudostate 207618 initial 
 	  transition 292738 "<transition>"
-	    on state_ref 243330 // Idle
+	    on state_ref 243330 // Processing
 	    external 
 	  end
 	end
 
 	state 256514 "ClearingBulkOutEndpointHalt"
 	    uml_on_entry "if(hasBulkOutTransfersPending){
-  submitCancelBulkOutTransfers(SA=CLEAR_ENDPOINT_HALT)
+  submitCancelAllBulkOutTransfers(SA=CLEAR_ENDPOINT_HALT)
  }else{
   submitClearBulkOutEndpointHalt
  }"
@@ -2862,9 +2828,10 @@ BulkOutTransferCompleted / restoreBulkOutTransferSA
   if(noMoreBulkOutTransferPending && SA==CLEAR_ENDPOINT_HALT){
    submitClearBulkOutEndpointHalt
   }
- }"
+ }
+BulkInTransferCompleted / handleBulkInTransferCompleted"
 	  transition 300162 "<transition>"
-	    on state_ref 243330 // Idle
+	    on state_ref 243330 // Processing
 	      uml_trigger "ControlTransferSuccessful"
 	      uml_expr "notifyBulkIoAborted"
 	    external 
@@ -2872,12 +2839,16 @@ BulkOutTransferCompleted / restoreBulkOutTransferSA
 	end
 
 	state 256642 "ClearingBulkInEndpointHalt"
-	    uml_on_entry "submitClearBulkInEndpointHalt (only if no Bulk-IN transfers are pending)"
+	    uml_on_entry "if(hasBulkInTransfersPending){
+  submitCancelAllBulkInTransfers(SA=CLEAR_ENDPOINT_HALT)
+ }else{
+  submitClearBulkInEndpointHalt
+ }"
 	    uml_do_activity "
-BulkInTransferCompleted / restoreBulkInTransfer
-BulkInTransferCompleted [noMoreBulkInTransferPending] / submitClearBulkInEndpointHalt"
+BulkOutTransferCompleted / handleBulkOutTransferCompleted
+BulkInTransferCompleted / restoreBulkInTransferSA"
 	  transition 300290 "<transition>"
-	    on state_ref 243330 // Idle
+	    on state_ref 243330 // Processing
 	      uml_trigger "ControlTransferSuccessful"
 	      uml_expr "notifyBulkIoAborted"
 	    external 
@@ -2908,11 +2879,14 @@ BulkInTransferCompleted / restoreBulkInTransferSA
 	  end
 
 	  transition 307330 "<transition>"
-	    on state_ref 243330 // Idle
+	    on state_ref 243330 // Processing
 	      uml_trigger "SplitActionDone"
 	      uml_expr "notifyBulkIoAborted"
 	    external 
 	  end
+	end
+
+	state 269698 "AbortingBulkIn"
 	end
       end
 

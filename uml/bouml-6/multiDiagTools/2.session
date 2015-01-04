@@ -4,7 +4,7 @@ diagrams
   statediagram_ref 1345282 // StateMachine
     989 863 80 18 0 0
   active  statediagram_ref 1345538 // Running
-    1073 863 88 2 12 22
+    1073 863 78 2 228 0
 end
 show_stereotypes
 selected statediagram_ref 1345538 // Running
