@@ -21,6 +21,17 @@
 #ifndef MDT_USBTMC_TRANSFER_HANDLER_STATE_MACHINE_H
 #define MDT_USBTMC_TRANSFER_HANDLER_STATE_MACHINE_H
 
+/*
+ * Boost MPL configuration:
+ * We need more than 20 entries in some transaition table,
+ * so we redifine the limit here.
+ * This must be keeped before any boost::mpl include.
+ * Note: it seems that sizes can not be any number, f.ex. 25 give problems.
+ */
+#define BOOST_MPL_CFG_NO_PREPROCESSED_HEADERS
+#define BOOST_MPL_LIMIT_VECTOR_SIZE 30
+#define BOOST_MPL_LIMIT_MAP_SIZE 30
+
 #include "mdtUsbtmcTransferHandler.h"
 #include "mdtUsbtmcControlTransfer.h"
 #include "mdtUsbtmcBulkTransfer.h"
@@ -152,7 +163,27 @@ namespace mdtUsbtmcTransferHandlerStateMachine
 
   /*! \brief Abort Bulk-OUT requested event
    */
-  struct AbortBulkOutRequestedEvent {};
+  struct AbortBulkOutRequestedEvent
+  {
+    AbortBulkOutRequestedEvent(mdtUsbtmcBulkTransfer *t)
+     : transfer(t)
+     {
+       Q_ASSERT(transfer != 0);
+     }
+    mdtUsbtmcBulkTransfer *transfer;
+  };
+
+  /*! \brief Abort Bulk-IN requested event
+   */
+  struct AbortBulkInRequestedEvent
+  {
+    AbortBulkInRequestedEvent(mdtUsbtmcBulkTransfer *t)
+     : transfer(t)
+     {
+       Q_ASSERT(transfer != 0);
+     }
+    mdtUsbtmcBulkTransfer *transfer;
+  };
 
   /*! \brief Clear Bulk I/O requested event
    */
@@ -247,6 +278,31 @@ namespace mdtUsbtmcTransferHandlerStateMachine
       transferHandler->restoreBulkOutTransferSA(event.transfer);
     }
 
+   /*! \brief Restor Bulk-OUT transfer to pool if cancelled
+    *
+    * If given transfer is cancelled, it is simply restored back to pool,
+    *  else handleBulkOutTransferComplete() is called.
+    */
+    void restoreCancelledBulkOutTransfer(BulkOutTransferCompletedEvent const & event)
+    {
+      Q_ASSERT(transferHandler != 0);
+      qDebug() << "** restoreCancelledBulkOutTransfer ..";
+      if(event.transfer->status() == LIBUSB_TRANSFER_CANCELLED){
+        transferHandler->restoreBulkOutTransferToPool(event.transfer, true);
+      }else{
+        transferHandler->handleBulkOutTransferComplete(event.transfer);
+      }
+    }
+
+    /*! \brief Begin abort a Bulk-OUT transfer
+     */
+    void beginAbortBulkOut(AbortBulkOutRequestedEvent const & event)
+    {
+      Q_ASSERT(transferHandler != 0);
+      qDebug() << "** beginAbortBulkOut ..";
+      transferHandler->beginAbortBulkOut(event.transfer);
+    }
+
     /*! \brief Handle Bulk-IN transfer completed action
      */
     void handleBulkInTransferCompleted(BulkInTransferCompletedEvent const & event)
@@ -262,6 +318,15 @@ namespace mdtUsbtmcTransferHandlerStateMachine
       Q_ASSERT(transferHandler != 0);
       qDebug() << "** restoreBulkInTransferSA ..";
       transferHandler->restoreBulkInTransferSA(event.transfer);
+    }
+
+    /*! \brief Begin abort a Bulk-IN transfer
+     */
+    void beginAbortBulkIn(AbortBulkInRequestedEvent const & event)
+    {
+      Q_ASSERT(transferHandler != 0);
+      qDebug() << "** beginAbortBulkIn ..";
+      transferHandler->beginAbortBulkIn(event.transfer);
     }
 
     /*! \brief Notify that Bulk I/O was aborted
@@ -408,8 +473,6 @@ namespace mdtUsbtmcTransferHandlerStateMachine
       void on_entry(EventType const &, FSM & fsm)
       {
         qDebug() << "Entering AbortingBulkOut ...";
-        Q_ASSERT(fsm.transferHandler != 0);
-        fsm.transferHandler->beginAbortBulkOutTransfer();
       }
       /*! \brief AbortingBulkOut exit/
        */
@@ -417,6 +480,26 @@ namespace mdtUsbtmcTransferHandlerStateMachine
       void on_exit(Event const &, FSM &)
       {
         qDebug() << "Leaving AbortingBulkOut ...";
+      }
+    };
+
+    /*! \brief AbortingBulkIn state
+     */
+    struct AbortingBulkIn : public boost::msm::front::state<>
+    {
+      /*! \brief AbortingBulkIn entry/
+       */
+      template<typename EventType, typename FSM>
+      void on_entry(EventType const &, FSM & fsm)
+      {
+        qDebug() << "Entering AbortingBulkIn ...";
+      }
+      /*! \brief AbortingBulkIn exit/
+       */
+      template<typename Event, typename FSM>
+      void on_exit(Event const &, FSM &)
+      {
+        qDebug() << "Leaving AbortingBulkIn ...";
       }
     };
 
@@ -435,12 +518,17 @@ namespace mdtUsbtmcTransferHandlerStateMachine
       _row <   Processing                  , ClearBulkIoRequestedEvent               , ClearingBulkIo                                                                                         > ,
       a_irow < Processing                  , BulkOutTransferCompletedEvent                                         , &rsm::handleBulkOutTransferCompleted                                     > ,
       a_irow < Processing                  , BulkInTransferCompletedEvent                                          , &rsm::handleBulkInTransferCompleted                                      > ,
-      _row <   Processing                  , AbortBulkOutRequestedEvent              , AbortingBulkOut                                                                                        > ,
+      a_row <  Processing                  , AbortBulkOutRequestedEvent              , AbortingBulkOut             , &rsm::beginAbortBulkOut                                                  > ,
+      a_row <  Processing                  , AbortBulkInRequestedEvent               , AbortingBulkIn              , &rsm::beginAbortBulkIn                                                   > ,
       // +---------------------------------+-----------------------------------------+-----------------------------+----------------------------------------+-------------------------------+----
       a_irow < AbortingBulkOut             , BulkOutTransferCompletedEvent                                         , &rsm::restoreBulkOutTransferSA                                           > ,
       a_irow < AbortingBulkOut             , BulkInTransferCompletedEvent                                          , &rsm::handleBulkInTransferCompleted                                      > ,
       a_row <  AbortingBulkOut             , SplitActionDoneEvent                    , Processing                  , &rsm::notifyBulkIoAborted                                                > ,
       _row <   AbortingBulkOut             , ClearBulkOutEndpointHaltRequestedEvent  , ClearingBulkOutEndpointHalt                                                                            > ,
+      // +---------------------------------+-----------------------------------------+-----------------------------+----------------------------------------+-------------------------------+----
+      a_irow < AbortingBulkIn              , BulkOutTransferCompletedEvent                                         , &rsm::restoreCancelledBulkOutTransfer                                    > ,
+      a_irow < AbortingBulkIn              , BulkInTransferCompletedEvent                                          , &rsm::restoreBulkInTransferSA                                            > ,
+      a_row <  AbortingBulkIn              , SplitActionDoneEvent                    , Processing                  , &rsm::notifyBulkIoAborted                                                > ,
       // +---------------------------------+-----------------------------------------+-----------------------------+----------------------------------------+-------------------------------+----
       a_irow < ClearingBulkIo              , BulkOutTransferCompletedEvent                                         , &rsm::restoreBulkOutTransferSA                                           > ,
       a_irow < ClearingBulkIo              , BulkInTransferCompletedEvent                                          , &rsm::restoreBulkInTransferSA                                            > ,

@@ -75,10 +75,11 @@ void mdtUsbtmcPortThreadNew::run()
     emit errorOccured(pvLastError);
     return;
   }
-  pvTransferHandler.setCurrentState(mdtUsbtmcTransferHandler::State_t::Running);
+  ///pvTransferHandler.setCurrentState(mdtUsbtmcTransferHandler::State_t::Running);
   // Tell main thread that we are now running and run..
   setCurrentState(State_t::Running);
   qDebug() << "USBTMC THD: running ...";
+  pvTransferHandler.start();
   ///while(currentState() == State_t::Running){
   while(1){
     if(currentState() == State_t::Stopped){
@@ -91,7 +92,7 @@ void mdtUsbtmcPortThreadNew::run()
     }
     qDebug() << "USBTMC THD: handle USB events ...";
     err = libusb_handle_events(usbContext());
-    qDebug() << "USBTMC THD: handle USB events DONE" << " TH state: " << (int)pvTransferHandler.currentState();
+    qDebug() << "USBTMC THD: handle USB events DONE";/// << " TH state: " << (int)pvTransferHandler.currentState();
     if(err != 0){
       std::lock_guard<std::mutex> lg(pvLastErrorMutex);
       pvLastError.setError(QObject::tr("USB event handling failed (libusb_handle_events())"), mdtError::Error);
@@ -117,14 +118,17 @@ void mdtUsbtmcPortThreadNew::run()
      */
     if(pvTransferHandler.mustBeStopped()){
       qDebug() << "USBTMC THD: TH must be stopped";
+      /**
       if(pvTransferHandler.currentState() == mdtUsbtmcTransferHandler::State_t::Error){
         /// \todo Error handling !
         qDebug() << "Transfer handler in error !";
       }
+      */
       break;
     }
   }
-  pvTransferHandler.setCurrentState(mdtUsbtmcTransferHandler::State_t::Stopped);
+  pvTransferHandler.stop();
+  ///pvTransferHandler.setCurrentState(mdtUsbtmcTransferHandler::State_t::Stopped);
   qDebug() << "USBTMC THD: END ...";
   // Tell main thread that we are now stopped
   setCurrentState(State_t::Stopped);

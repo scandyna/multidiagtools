@@ -34,14 +34,6 @@
 
 #include "mdtBasicStateMachine.h"
 
-///#include "mdtUsbtmcTransferHandlerStateMachine.h"
-
-// #include <vector>
- #include <boost/msm/back/state_machine.hpp>
- #include <boost/msm/front/state_machine_def.hpp>
-// #include <boost/msm/front/functor_row.hpp>
-// #include <boost/msm/front/euml/common.hpp>
-// #include <boost/msm/front/euml/operator.hpp>
 #include <boost/shared_ptr.hpp> 
 
 #include <QObject>
@@ -89,6 +81,14 @@ class mdtUsbtmcTransferHandler
   /*! \brief Setup handler
    */
   bool setup(libusb_device_handle *handle, const mdtUsbDeviceDescriptor & descriptor, uint8_t bInterfaceNumber);
+
+  /*! \brief Start transfer handler
+   */
+  void start();
+
+  /*! \brief Stop transfer handler
+   */
+  void stop();
 
   /*! \brief Check if current interface has a Interrupt-IN endpoint
    */
@@ -198,16 +198,16 @@ class mdtUsbtmcTransferHandler
 
   /*! \brief Set current state
    */
-  void setCurrentState(State_t s){
-    pvStateMachine.setCurrentState(s);
-  }
+//   void setCurrentState(State_t s){
+//     pvStateMachine.setCurrentState(s);
+//   }
 
   /*! \brief Get current state
    */
-  inline State_t currentState() const
-  {
-    return pvStateMachine.currentState();
-  }
+//   inline State_t currentState() const
+//   {
+//     return pvStateMachine.currentState();
+//   }
 
   /*! \brief Check if handler must be stopped
    *
@@ -378,13 +378,6 @@ class mdtUsbtmcTransferHandler
 
   /*! \brief Begin to abort bulk-OUT transfer
    *
-   * As mentionned in USBTMC 1.0 , section 3.2, rule 3,
-   *  we cannot send a new USBTMC bulk-OUT transfer if one is pending.
-   *
-   * Knowing this, we can also only have 0 or 1 Bulk-OUT transfer pending.
-   *  This function will also get a pending Bulk-OUT transfer
-   *  and abort it if found, or submit a error if not found.
-   *
    * Aborting will start, as mentionned in USBTMC 1.0, section 4.2.1.2,
    *  by cancelling the pending Bulk-OUT transfer, and passing 
    *  INITIATE_ABORT_BULK_OUT split action, so that restoreBulkOutTransferSA
@@ -392,7 +385,16 @@ class mdtUsbtmcTransferHandler
    *
    * This function is called by state machine.
    */
-  void beginAbortBulkOutTransfer();
+  void beginAbortBulkOut(mdtUsbtmcBulkTransfer *transfer);
+
+  /*! \brief Begin to abort bulk-IN transfer
+   *
+   * At first, any pending Bulk-OUT transfers that expect a restonse will be cancelled (should be 0 or 1).
+   *  Then, submitInitiateAbortBulkInRequest() is called.
+   *
+   * See USBTMC 1.0 specifications, section 4.2.1.4 for details.
+   */
+  void beginAbortBulkIn(mdtUsbtmcBulkTransfer *transfer);
 
  private:
 
@@ -449,18 +451,13 @@ class mdtUsbtmcTransferHandler
    */
   void submitBulkInTransfer(unsigned int timeout, mdtUsbtmcBulkTransfer::SplitAction_t action = mdtUsbtmcBulkTransfer::SplitAction_t::NoAction);
 
-  /*! \brief Begin to abort a bulk-IN transfer
+  /*! \brief Submit INITIATE_ABORT_BULK_IN request
    *
-   * At first, current state is set to AbortingBulkIo,
-   *  preventing new bulk request to be accepted.
-   *
-   * Will retire IRPs for all pending bulk-OUT transfers
-   *  that expect a response and submit the first INITIATE_ABORT_BULK_IN request.
-   *
+   * Will submit the first INITIATE_ABORT_BULK_IN request and return.
    *  Later on, handleControlTransferComplete() will receive a response,
    *  then calls handleInitiateAbortBulkInResponse().
    */
-  void beginAbortBulkInTransfer(uint8_t bTag);
+  void submitInitiateAbortBulkInRequest(uint8_t bTag);
 
   /*! \brief Handle INITIATE_ABORT_BULK_IN response
    *
@@ -589,7 +586,7 @@ class mdtUsbtmcTransferHandler
 
   libusb_context *pvUsbContext;
   libusb_device_handle *pvDeviceHandle;
-  mdtBasicStateMachine<State_t> pvStateMachine;
+  ///mdtBasicStateMachine<State_t> pvStateMachine;
   
   ///std::unique_ptr<mdtUsbtmcTransferHandlerStateMachine::StateMachine> pvStateMachineNew;
   ///std::shared_ptr<StateMachine> pvStateMachineNew;
