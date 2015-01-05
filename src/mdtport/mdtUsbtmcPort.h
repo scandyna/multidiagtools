@@ -162,6 +162,16 @@ class mdtUsbtmcPort : public QObject
     ///emit controlTransactionFinished(TransactionState_t::Error);
   }
 
+  /*! \brief Signal device disconnected
+   *
+   * Note: used by mdtUsbtmcTransferHandler
+   */
+  void thSetDeviceDisconnected()
+  {
+    /// \todo We should add a DeviceDisconnected state ..
+    emit bulkTransactionFinished(TransactionState_t::Error);
+  }
+
  signals:
 
   /*! \brief Signal that bulk transaction is finished

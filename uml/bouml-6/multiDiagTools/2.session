@@ -2,7 +2,7 @@ window_sizes 1280 916 201 1073 863 0
 cleanlooks_style
 diagrams
   statediagram_ref 1345282 // StateMachine
-    989 863 80 18 0 0
+    1073 863 80 18 0 0
   active  statediagram_ref 1345538 // Running
     1073 863 68 2 0 46
 end

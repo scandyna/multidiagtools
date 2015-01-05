@@ -31,22 +31,12 @@
 #include "mdtUsbtmcBulkTransfer.h"
 #include "mdtUsbtmcInterruptTransfer.h"
 #include "mdtUsbtmcMessage.h"
-
-#include "mdtBasicStateMachine.h"
-
 #include <boost/shared_ptr.hpp> 
-
 #include <QObject>
 #include <QString>
 #include <libusb-1.0/libusb.h>
 #include <cstdint>
 #include <mutex>
-
-#include <memory>
-
-#include <QDebug>
-
-///class mdtUsbtmcControlTransfer;
 
 class mdtUsbtmcPort;
 
@@ -60,19 +50,6 @@ namespace mdtUsbtmcTransferHandlerStateMachine
 class mdtUsbtmcTransferHandler
 {
  public:
-
-  /*! \brief USBTMC transfer handler state
-   */
-  enum class State_t
-  {
-    Stopped = 0,      /*!< USB port thread is stopped */
-    Setup,            /*!< USB port thread is starting and has called setup() */
-    Running,          /*!< USB port thread is running (ready for I/O) */
-    AbortingBulkIo,   /*!< Currently aborting a Bulk-OU/Bulk-OUT transfer - No bulk transfer possible */
-    Stopping,         /*!< USB port thread is stopping (No I/O, submit no more transfer) */
-    Disconnected,     /*!< Device is no more present */
-    Error             /*!< USB port thread is stopped due to a error (No I/O) */
-  };
 
   /*! \brief Constructor
    */
@@ -196,40 +173,23 @@ class mdtUsbtmcTransferHandler
     return pvLastError;
   }
 
-  /*! \brief Set current state
-   */
-//   void setCurrentState(State_t s){
-//     pvStateMachine.setCurrentState(s);
-//   }
-
-  /*! \brief Get current state
-   */
-//   inline State_t currentState() const
-//   {
-//     return pvStateMachine.currentState();
-//   }
-
   /*! \brief Check if handler must be stopped
    *
    * Is called by port thread to know if it must exit.
    */
   bool mustBeStopped() const;
-//   {
-//     switch(currentState()){
-//       case State_t::Running:
-//       case State_t::AbortingBulkIo:
-//       case State_t::Stopping:
-//         return false;
-//       default:
-//         return true;
-//     }
-//   }
 
   /*! \brief Notify error
    *
    * Must be called only by state machine
    */
   void notifyError(const mdtError & error);
+
+  /*! \brief Notify device disconnected
+   *
+   * Must be called only by state machine
+   */
+  void notifyDeviceDisconnected();
 
   /*! \brief Notify Bulk I/O done
    *
@@ -560,39 +520,11 @@ class mdtUsbtmcTransferHandler
    */
   QString libusbTransferStatusText(libusb_transfer_status status) const;
 
-  /*! \brief Set last error regarding bulk-OUT transfer status code
-   */
-  void setLastErrorFromBulkOutTransferStatus(mdtUsbtmcBulkTransfer *transfer, mdtError::level_t level, bool lockMutex);
-
-  /*! \brief Set last error regarding bulk-IN transfer status code
-   */
-  void setLastErrorFromBulkInTransferStatus(mdtUsbtmcBulkTransfer *transfer, mdtError::level_t level, bool lockMutex);
-
-  /*! \brief Set last error regarding interrupt-IN transfer status code
-   */
-  void setLastErrorFromInterruptInTransferStatus(mdtUsbtmcInterruptTransfer *transfer, mdtError::level_t level, bool lockMutex);
-
-  /*! \brief Set last error regarding transfer status code
-   *
-   * Note: will only set the systemError part
-   */
-  void setLastErrorFromTransferStatus(libusb_transfer_status status, bool lockMutex);
-
-  /*! \brief Set state regarding libusb_error
-   */
-  void setCurrentStateFromLibusbError(libusb_error err);
-
   Q_DISABLE_COPY(mdtUsbtmcTransferHandler);
 
   libusb_context *pvUsbContext;
   libusb_device_handle *pvDeviceHandle;
-  ///mdtBasicStateMachine<State_t> pvStateMachine;
-  
-  ///std::unique_ptr<mdtUsbtmcTransferHandlerStateMachine::StateMachine> pvStateMachineNew;
-  ///std::shared_ptr<StateMachine> pvStateMachineNew;
   boost::shared_ptr<mdtUsbtmcTransferHandlerStateMachine::StateMachine> pvStateMachineNew;
-  ///smWrapper pvStateMachineNew;
-  
   mdtUsbtmcPort & pvPort;
   // Descriptors
   mdtUsbDeviceDescriptor pvDeviceDescriptor;

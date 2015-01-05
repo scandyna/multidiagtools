@@ -1566,11 +1566,22 @@ void mdtUsbPortTest::usbtmcPortTest()
 
   port.wait(1);
 
+  QByteArray ba;
   for(int i = 0; i < 1; ++i){
-    qDebug() << "SYSTEM:ERR? : " << port.sendQuery("SYSTEM:ERR?\n");
-    port.wait(1);
-    qDebug() << "*IDN? : " << port.sendQuery("*IDN?\n");
-    port.wait(1);
+    ba = port.sendQuery("SYSTEM:ERR?\n");
+    if(ba.isEmpty()){
+      qDebug() << "SYSTEM:ERR? query failed, error: " << port.lastError().text();
+      break;
+    }
+    qDebug() << "SYSTEM:ERR? : " << ba;
+    ///port.wait(1);
+    ba = port.sendQuery("*IDN?\n");
+    if(ba.isEmpty()){
+      qDebug() << "*IDN? query failed, error: " << port.lastError().text();
+      break;
+    }
+    qDebug() << "*IDN? : " << ba;
+    ///port.wait(1);
   }
   
   port.wait(1);
