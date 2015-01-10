@@ -18,23 +18,26 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtUsbtmcInterruptTransfer.h"
-#include "mdtUsbtmcTransferHandler.h"
+#ifndef MDT_VALUE_TEST_H
+#define MDT_VALUE_TEST_H
 
-mdtUsbtmcInterruptTransfer::mdtUsbtmcInterruptTransfer ( mdtUsbtmcTransferHandler& th, mdtUsbEndpointDescriptor endpointDescriptor, libusb_device_handle* dev_handle, int bufferSize)
- : mdtUsbTransfer(dev_handle, bufferSize),
-   pvTransferHandler(th),
-   pvEndpointDescriptor(endpointDescriptor)
+#include "mdtTest.h"
+
+class mdtValueTest : public mdtTest
 {
-  Q_ASSERT(!pvEndpointDescriptor.isEmpty());
+ Q_OBJECT
 
-  pvBuffer.assign(bufferSize, 0);
-}
+ private slots:
 
-void mdtUsbtmcInterruptTransfer::setup(unsigned int timeout)
-{
-  libusb_fill_interrupt_transfer(transfer(), deviceHandle(),
-                                 pvEndpointDescriptor.address(), pvBuffer.data(), pvBuffer.capacity(),
-                                 pvTransferHandler.interruptInTransferCallback, static_cast<void*>(this),
-                                 timeout);
-}
+  void valueDoubleTest();
+  void valueDoubleBenchmark();
+  void valueIntTest();
+  void valueIntBenchmark();
+  void valueBoolTest();
+  void valueBoolBenchmark();
+
+  
+  void valueTest();
+};
+
+#endif // #ifndef MDT_VALUE_TEST_H

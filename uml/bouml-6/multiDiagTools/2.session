@@ -1,14 +1,21 @@
-window_sizes 1280 916 201 1073 863 0
+window_sizes 1280 916 383 891 863 0
 cleanlooks_style
 diagrams
   statediagram_ref 1345282 // StateMachine
     1073 863 80 18 0 0
-  active  statediagram_ref 1345538 // Running
+  statediagram_ref 1345538 // Running
     1073 863 68 2 0 46
+  classdiagram_ref 281602 // mdtFrameCodec
+    120 106 100 4 120 0
+  classdiagram_ref 561538 // mdtFrameCodecScpi
+    120 106 100 4 0 0
+  active  classdiagram_ref 1352066 // CodecSCPI
+    891 863 100 4 0 0
 end
 show_stereotypes
-selected statediagram_ref 1345538 // Running
+selected classdiagram_ref 1352066 // CodecSCPI
 open
+  operation_ref 2453250 // decodeValueBool
   operation_ref 2410754 // UsbtmcPortThread
   operation_ref 2438914 // mdtUsbtmcTransferHandler
   state_ref 241666 // Stopped

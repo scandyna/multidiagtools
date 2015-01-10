@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -42,7 +42,7 @@ void mdtUsbtmcBulkTransfer::setupDevDepMsgOut(uint8_t bTag, mdtUsbtmcTxMessage &
   pvFrame.setMsgID(mdtUsbtmcFrame::msgId_t::DEV_DEP_MSG_OUT);
   pvFrame.setbTag(bTag);
   pvFrame.setData(message);
-  pvFrame.setEOM(message.hasBytesToRead());
+  pvFrame.setEOM(!message.hasBytesToRead());
   pvResponseExpected = responseExpected;
   libusb_fill_bulk_transfer(transfer(), deviceHandle(),
                             pvEndpointDescriptor.address(), pvFrame.buffer(), pvFrame.bufferLength(),

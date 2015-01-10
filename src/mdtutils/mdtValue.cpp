@@ -20,7 +20,128 @@
  ****************************************************************************/
 #include "mdtValue.h"
 #include <cfloat>
+#include <cmath>
+#include <limits>
 #include <QtGlobal>
+#include <QDebug>
+
+/*
+ * mdtValueDouble
+ */
+
+mdtValueDouble::mdtValueDouble()
+ : pvValue(std::numeric_limits<double>::quiet_NaN()),
+   pvIsNull(true)
+{
+}
+
+mdtValueDouble::mdtValueDouble(double value, bool isOl)
+{
+  setValue(value, isOl);
+}
+
+void mdtValueDouble::clear()
+{
+  pvValue = std::numeric_limits<double>::quiet_NaN();
+  pvIsNull = true;
+}
+
+void mdtValueDouble::setValue(double value, bool isOl)
+{
+  pvIsNull = false;
+  if(isOl){
+    if( (value > 0.0) || ( (value > -std::numeric_limits<double>::epsilon()) && (value < std::numeric_limits<double>::epsilon()) ) ){
+      pvValue = std::numeric_limits<double>::infinity();
+    }else{
+      pvValue = -std::numeric_limits<double>::infinity();
+    }
+  }else{
+    pvValue = value;
+  }
+}
+
+bool mdtValueDouble::isMinusOl() const
+{
+  if(pvValue > 0.0){
+    return false;
+  }
+  return std::isinf(pvValue);
+}
+
+bool mdtValueDouble::isPlusOl() const
+{
+  if(pvValue < 0.0){
+    return false;
+  }
+  return std::isinf(pvValue);
+}
+
+bool mdtValueDouble::isNaN() const
+{
+  return std::isnan(pvValue);
+}
+
+bool mdtValueDouble::operator==(const mdtValueDouble & other) const
+{
+  if(pvIsNull || other.pvIsNull){
+    return false;
+  }
+  if(isMinusOl() && other.isMinusOl()){
+    return true;
+  }
+  if(isPlusOl() && other.isPlusOl()){
+    return true;
+  }
+  return (::fabs(pvValue - other.pvValue) < std::numeric_limits<double>::epsilon());
+}
+
+QDebug operator<<(QDebug dbg, const mdtValueDouble & value)
+{
+  if(value.isNull()){
+    return dbg.nospace() << "mdtValueDouble(Null)";
+  }
+  if(value.isMinusOl()){
+    return dbg.nospace() << "mdtValueDouble(-OL)";
+  }
+  if(value.isPlusOl()){
+    return dbg.nospace() << "mdtValueDouble(+OL)";
+  }
+  if(value.isNaN()){
+    return dbg.nospace() << "mdtValueDouble(NaN)";
+  }
+  return dbg.nospace() << "mdtValueDouble(" << value.value() << ")";
+}
+
+/*
+ * mdtValueInt
+ */
+
+QDebug operator<<(QDebug dbg, const mdtValueInt & value)
+{
+  if(value.isNull()){
+    return dbg.nospace() << "mdtValueInt(Null)";
+  }
+  return dbg.nospace() << "mdtValueInt(" << value.value() << ")";
+}
+
+/*
+ * mdtValueBool
+ */
+
+QDebug operator<<(QDebug dbg, const mdtValueBool & value)
+{
+  if(value.isNull()){
+    return dbg.nospace() << "mdtValueBool(Null)";
+  }
+  if(value.value()){
+    return dbg.nospace() << "mdtValueBool(true)";
+  }
+  return dbg.nospace() << "mdtValueBool(false)";
+}
+
+/*
+ * mdtValue
+ */
 
 mdtValue::mdtValue()
 {

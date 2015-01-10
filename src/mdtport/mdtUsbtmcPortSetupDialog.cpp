@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtUsbtmcPortSetupDialog.h"
+#include "mdtCodecScpi.h"
 ///#include "mdtUsbtmcPortManager.h"
 #include <QWidget>
 ///#include <QStringList>
@@ -28,8 +29,12 @@
 #include <QComboBox>
 #include <QMessageBox>
 #include <QVariant>
+
+#include <QByteArray>
 ///#include <QGridLayout>
 ///#include <QFormLayout>
+
+#include <QDebug>
 
 // mdtUsbtmcPortSetupDialog::mdtUsbtmcPortSetupDialog(QWidget *parent)
 //  : mdtAbstractPortSetupDialog(parent)
@@ -81,6 +86,8 @@ mdtUsbtmcPortSetupDialog::mdtUsbtmcPortSetupDialog(QWidget* parent)
   cbInterfaces->setSizeAdjustPolicy(QComboBox::AdjustToContents);
   connect(pbRescan, SIGNAL(clicked()), this, SLOT(rescan()));
   connect(cbDevices, SIGNAL(currentIndexChanged(int)), this, SLOT(buildInterfacesList(int)));
+  connect(cbInterfaces, SIGNAL(currentIndexChanged(int)), this, SLOT(updateSelectedDevice(int)));
+  setStateNoDeviceFound();
 }
 
 mdtUsbtmcPortSetupDialog::~mdtUsbtmcPortSetupDialog()
@@ -111,10 +118,10 @@ void mdtUsbtmcPortSetupDialog::rescan()
   // Update device info
   if(pvSelectedDevice.isEmpty()){
     setStateNoDeviceFound();
+    return;
   }
   // We have at least 1 device here
-  /// \todo Display device infos
-  
+  displayDeviceInformations();
   setStateDeviceSelected();
 }
 
@@ -153,21 +160,89 @@ void mdtUsbtmcPortSetupDialog::updateSelectedDevice(int ifaceCbIndex)
   pvSelectedDevice = pvDeviceDescriptorsList.at(devDescIdx);
   // Get bInterfaceNumber
   pvSelectedbInterfaceNumber = cbInterfaces->itemData(ifaceCbIndex).toInt();
+  // Display device informations
+  if(!pvScanning){
+    displayDeviceInformations();
+  }
+}
+
+void mdtUsbtmcPortSetupDialog::displayDeviceInformations()
+{
+  mdtCodecScpi codec;
+  mdtScpiIdnResponse idnResponse;
+  QByteArray data;
+  // Clear previous resulsts
+  lbManufacturer->clear();
+  lbModel->clear();
+  lbSerial->clear();
+  lbFirmware->clear();
+  setStateScanning();
+  // Open device
+  if(pvSelectedDevice.isEmpty()){
+    setStateNoDeviceFound();
+    return;
+  }
+  if(!pvPort.openDevice(pvSelectedDevice, pvSelectedbInterfaceNumber, false)){
+    pvLastError = pvPort.lastError();
+    displayLastError();
+    setStateNoDeviceFound();
+    return;
+  }
+  // Get device iformation and display them
+  data = pvPort.sendQuery("*IDN?\n");
+  if(data.isEmpty()){
+    pvLastError = pvPort.lastError();
+    pvPort.close();
+    displayLastError();
+    setStateNoDeviceFound();
+    return;
+  }
+  idnResponse = codec.decodeIdn(data);
+  pvPort.close();
+  lbManufacturer->setText(idnResponse.manufacturer);
+  lbModel->setText(idnResponse.model);
+  lbSerial->setText(idnResponse.serial);
+  lbFirmware->setText(idnResponse.firmwareLevel);
+  setStateDeviceSelected();
 }
 
 void mdtUsbtmcPortSetupDialog::setStateScanning()
 {
+  QPushButton *pbOk = buttonBox->button(QDialogButtonBox::Ok);
+  QPushButton *pbCancel = buttonBox->button(QDialogButtonBox::Cancel);
+  Q_ASSERT(pbOk != 0);
+  Q_ASSERT(pbCancel != 0);
+
   pbRescan->setEnabled(false);
+  pvScanning = true;
+  pbOk->setEnabled(false);
+  pbCancel->setEnabled(false);
 }
 
 void mdtUsbtmcPortSetupDialog::setStateNoDeviceFound()
 {
+  QPushButton *pbOk = buttonBox->button(QDialogButtonBox::Ok);
+  QPushButton *pbCancel = buttonBox->button(QDialogButtonBox::Cancel);
+  Q_ASSERT(pbOk != 0);
+  Q_ASSERT(pbCancel != 0);
+
   pbRescan->setEnabled(true);
+  pvScanning = false;
+  pbOk->setEnabled(false);
+  pbCancel->setEnabled(true);
 }
 
 void mdtUsbtmcPortSetupDialog::setStateDeviceSelected()
 {
+  QPushButton *pbOk = buttonBox->button(QDialogButtonBox::Ok);
+  QPushButton *pbCancel = buttonBox->button(QDialogButtonBox::Cancel);
+  Q_ASSERT(pbOk != 0);
+  Q_ASSERT(pbCancel != 0);
+
   pbRescan->setEnabled(true);
+  pvScanning = false;
+  pbOk->setEnabled(true);
+  pbCancel->setEnabled(true);
 }
 
 QString mdtUsbtmcPortSetupDialog::deviceDisplayText(const mdtUsbDeviceDescriptor & descriptor) const

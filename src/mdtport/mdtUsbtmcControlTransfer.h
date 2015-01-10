@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,7 +22,6 @@
 #define MDT_USBTMC_CONTROL_TRANSFER_H
 
 #include "mdtUsbControlTransfer.h"
-///#include "mdtUsbtmcTransferHandler.h"
 #include <QString>
 #include <vector>
 #include <cstdint>

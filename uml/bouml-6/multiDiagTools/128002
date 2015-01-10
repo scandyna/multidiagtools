@@ -1,6 +1,6 @@
-format 207
+format 208
 "mdtutils" // mdtutils
-  revision 137
+  revision 140
   modified_by 2 "philippe"
   // class settings
   
@@ -2821,6 +2821,89 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+    end
+
+    classdiagram 1352066 "CodecSCPI"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 1525122 "mdtCodecScpi"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 2446466 "mdtCodecScpi"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${inline}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2453250 "decodeValueBool"
+	public explicit_return_type "mdtValueBool"
+	nparams 1
+	  param in name "data" type class_ref 236162 // QByteArray
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2446594 "decodeValueInt"
+	public explicit_return_type "mdtValueInt"
+	nparams 1
+	  param in name "data" type class_ref 236162 // QByteArray
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2446722 "decodeValueDouble"
+	public explicit_return_type "mdtValueDouble"
+	nparams 1
+	  param in name "data" type class_ref 236162 // QByteArray
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
   end
 

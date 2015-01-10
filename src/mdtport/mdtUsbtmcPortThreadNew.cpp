@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -31,7 +31,6 @@ mdtUsbtmcPortThreadNew::mdtUsbtmcPortThreadNew ( mdtUsbtmcTransferHandler& th, l
 
 void mdtUsbtmcPortThreadNew::aboutToClose()
 {
-  qDebug() << "USBTMC: about to close ...";
   /*
    * Don't know how to handle this properly.
    * One problem is to wake-up USB thread, i.e. sending a event so that libusb_handle_events() returns.
@@ -42,22 +41,12 @@ void mdtUsbtmcPortThreadNew::aboutToClose()
   pvTransferHandler.submitStopRequest();
   waitOnState(State_t::Stopped, 1000);
   setCurrentState(State_t::Stopped);  // Will force thread to exit if not allready done
-  /**
-  pvTransferHandler.setCurrentState(mdtUsbtmcTransferHandler::State_t::Stopping);
-  pvTransferHandler.submitControlTransfersCancel();
-  if(pvTransferHandler.hasPendingTransfers()){
-    waitOnState(State_t::Stopped, 1000);
-  }
-  */
-  qDebug() << "USBTMC: about to close DONE";
 }
 
 void mdtUsbtmcPortThreadNew::run()
 {
   int err;
   libusb_device_handle *handle;
-
-  qDebug() << "USBTMC THD: starting ...";
 
   // Open USB device
   if(!openDevice()){
@@ -75,12 +64,9 @@ void mdtUsbtmcPortThreadNew::run()
     emit errorOccured(pvLastError);
     return;
   }
-  ///pvTransferHandler.setCurrentState(mdtUsbtmcTransferHandler::State_t::Running);
   // Tell main thread that we are now running and run..
   setCurrentState(State_t::Running);
-  qDebug() << "USBTMC THD: running ...";
   pvTransferHandler.start();
-  ///while(currentState() == State_t::Running){
   while(1){
     if(currentState() == State_t::Stopped){
       std::lock_guard<std::mutex> lg(pvLastErrorMutex);
@@ -90,9 +76,7 @@ void mdtUsbtmcPortThreadNew::run()
       emit errorOccured(pvLastError);
       return;
     }
-    qDebug() << "USBTMC THD: handle USB events ...";
     err = libusb_handle_events(usbContext());
-    qDebug() << "USBTMC THD: handle USB events DONE";/// << " TH state: " << (int)pvTransferHandler.currentState();
     if(err != 0){
       std::lock_guard<std::mutex> lg(pvLastErrorMutex);
       pvLastError.setError(QObject::tr("USB event handling failed (libusb_handle_events())"), mdtError::Error);
@@ -103,33 +87,17 @@ void mdtUsbtmcPortThreadNew::run()
       emit errorOccured(pvLastError);
       return;
     }
-    // Some event woke us up - Check that it was not a stop request
-    /**
-    if(currentState() != State_t::Running){
-      qDebug() << "USBTMC THD: stopping ...";
-      break;
-    }
-    */
     /*
      * Check if transfer handler must be stopped.
      * Can be due to 2 main reasons:
      *  - Stop request was submitted by aboutToClose() and all pending transfers where cancelled
-     *  - A unhandler error occured
+     *  - A unhandler error occured (transfer handler will also signal error itself)
      */
     if(pvTransferHandler.mustBeStopped()){
-      qDebug() << "USBTMC THD: TH must be stopped";
-      /**
-      if(pvTransferHandler.currentState() == mdtUsbtmcTransferHandler::State_t::Error){
-        /// \todo Error handling !
-        qDebug() << "Transfer handler in error !";
-      }
-      */
       break;
     }
   }
   pvTransferHandler.stop();
-  ///pvTransferHandler.setCurrentState(mdtUsbtmcTransferHandler::State_t::Stopped);
-  qDebug() << "USBTMC THD: END ...";
   // Tell main thread that we are now stopped
   setCurrentState(State_t::Stopped);
 }

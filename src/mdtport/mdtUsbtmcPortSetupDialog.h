@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -113,6 +113,10 @@ class mdtUsbtmcPortSetupDialog : public QDialog, Ui::mdtUsbtmcPortSetupDialog
 
  private:
 
+  /*! \brief Display device informations
+   */
+  void displayDeviceInformations();
+
   /*! \brief Set scanning state
    */
   void setStateScanning();
@@ -144,6 +148,7 @@ class mdtUsbtmcPortSetupDialog : public QDialog, Ui::mdtUsbtmcPortSetupDialog
   mdtUsbDeviceDescriptor pvSelectedDevice;
   uint8_t pvSelectedbInterfaceNumber;
   mdtError pvLastError;
+  bool pvScanning;
 
   /*! \brief Called by setPortManager()
    */

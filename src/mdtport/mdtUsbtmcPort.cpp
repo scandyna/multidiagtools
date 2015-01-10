@@ -33,14 +33,12 @@
 mdtUsbtmcPort::mdtUsbtmcPort(QObject* parent)
  : QObject(parent),
    pvUsbContext(0),
-   /**pvDeviceHandle(0),*/
    pvTransferHandler(0),
    pvThread(0),
    pvDeviceList(0)
 {
   qRegisterMetaType<TransactionState_t>("TransactionState_t");
-  connect(this, SIGNAL(bulkTransactionFinished(TransactionState_t)), this, SLOT(setBulkTransactionState(TransactionState_t)));
-  ///connect(this, SIGNAL(controlTransactionFinished(TransactionState_t)), this, SLOT(setControlTransactionState(TransactionState_t)));
+  connect(this, SIGNAL(transactionFinished(TransactionState_t)), this, SLOT(setTransactionState(TransactionState_t)));
 }
 
 mdtUsbtmcPort::~mdtUsbtmcPort()
@@ -115,56 +113,6 @@ bool mdtUsbtmcPort::openDevice(const mdtUsbDeviceDescriptor& deviceDescriptor, u
   return true;
 }
 
-// bool mdtUsbtmcPort::openDevice(mdtUsbDeviceDescriptor& deviceDescriptor, uint8_t bInterfaceNumber)
-// {
-//   Q_ASSERT(!deviceDescriptor.isEmpty());
-// 
-//   int err;
-// 
-//   // Get descriptor of requested interface
-//   pvInterfaceDescriptor = deviceDescriptor.interface(bInterfaceNumber);
-//   if(pvInterfaceDescriptor.isEmpty()){
-//     pvLastError.setError(tr("Requested bInterfaceNumber ") + QString::number(bInterfaceNumber) + tr(" was not found in given device descriptor."), mdtError::Error);
-//     MDT_ERROR_SET_SRC(pvLastError, "mdtUsbtmcPort");
-//     pvLastError.commit();
-//     return false;
-//   }
-//   // Init libusb context if not allready done
-//   if(pvUsbContext == 0){
-//     if(!initLibusbConext()){
-//       return false;
-//     }
-//   }
-//   // Open device
-//   close();
-//   pvDeviceHandle = deviceDescriptor.open();
-//   if(pvDeviceHandle == 0){
-//     pvLastError = deviceDescriptor.lastError();
-//     return false;
-//   }
-//   Q_ASSERT(pvDeviceHandle != 0);
-//   // Tell libusb that we let him detach possibly loaded kernel driver itself
-//   err = libusb_set_auto_detach_kernel_driver(pvDeviceHandle, 1);
-//   if(err != 0){
-//     pvLastError.setError(tr("Your platform does not support kernel driver detach."), mdtError::Warning);
-//     pvLastError.setSystemError(err, libusb_strerror((libusb_error)err));
-//     MDT_ERROR_SET_SRC(pvLastError, "mdtUsbtmcPort");
-//     pvLastError.commit();
-//   }
-//   // Claim interface
-//   err = libusb_claim_interface(pvDeviceHandle, pvInterfaceDescriptor.bInterfaceNumber());
-//   if(err != 0){
-//     pvLastError.setError(tr("Could not claim interface."), mdtError::Error);
-//     pvLastError.setSystemError(err, libusb_strerror((libusb_error)err));
-//     MDT_ERROR_SET_SRC(pvLastError, "mdtUsbtmcPort");
-//     pvLastError.commit();
-//     libusb_close(pvDeviceHandle);
-//     return false;
-//   }
-// 
-//   return true;
-// }
-
 void mdtUsbtmcPort::close()
 {
   if(pvThread != 0){
@@ -179,14 +127,14 @@ bool mdtUsbtmcPort::sendCommand(const QByteArray & command, int timeout)
   mdtUsbtmcTxMessage message(command);
 
   while(message.hasBytesToRead()){
-    pvBulkTransactionState = TransactionState_t::Pending;
+    pvTransactionState = TransactionState_t::Pending;
     if(!pvTransferHandler->submitCommand(message, false, timeout)){
       setError(pvTransferHandler->lastError());
       /// \todo We should abort message here (CLEAR, not Bulk I/O, because bulk transfer it was not submited now)
       return false;
     }
-    waitBulkTransactionFinished();
-    if(pvBulkTransactionState != TransactionState_t::Done){
+    waitTransactionFinished();
+    if(pvTransactionState != TransactionState_t::Done){
       return false;
     }
   }
@@ -210,14 +158,14 @@ QByteArray mdtUsbtmcPort::sendQuery(const QByteArray& query, int timeout)
    *       For most common cases, query are very short, and we assume that
    *       they can be transmitted to device in one shot.
    */
-  pvBulkTransactionState = TransactionState_t::Pending;
+  pvTransactionState = TransactionState_t::Pending;
   if(!pvTransferHandler->submitCommand(txMessage, true, timeout)){
     setError(pvTransferHandler->lastError());
     /// \todo We should abort message here (CLEAR, not Bulk I/O, because bulk transfer it was not submited now)
     return false;
   }
-  waitBulkTransactionFinished();
-  if(pvBulkTransactionState != TransactionState_t::Done){
+  waitTransactionFinished();
+  if(pvTransactionState != TransactionState_t::Done){
     return rxBa;
   }
   pvTransferHandler->getReceivedData(rxMessage);
@@ -238,57 +186,27 @@ bool mdtUsbtmcPort::clearBulkIo()
 {
   Q_ASSERT(pvTransferHandler != 0);
 
-  pvBulkTransactionState = TransactionState_t::Pending;
+  pvTransactionState = TransactionState_t::Pending;
   pvTransferHandler->submitBulkIoClear();
-  waitBulkTransactionFinished();
-  if(pvBulkTransactionState != TransactionState_t::Aborted){
+  waitTransactionFinished();
+  if(pvTransactionState != TransactionState_t::Aborted){
     return false;
   }
 
   return true;
 }
 
-// void mdtUsbtmcPort::close()
-// {
-//   if(pvDeviceHandle != 0){
-//     // Release interface
-//     if(!pvInterfaceDescriptor.isEmpty()){
-//       int err = libusb_release_interface(pvDeviceHandle, pvInterfaceDescriptor.bInterfaceNumber());
-//       if(err != 0){
-//         pvLastError.setError(tr("Could not release interface."), mdtError::Warning);
-//         pvLastError.setSystemError(err, libusb_strerror((libusb_error)err));
-//         MDT_ERROR_SET_SRC(pvLastError, "mdtUsbtmcPort");
-//         pvLastError.commit();
-//       }
-//     }
-//     // Close device
-//     libusb_close(pvDeviceHandle);
-//     pvDeviceHandle = 0;
-//   }
-//   pvInterfaceDescriptor.clear();
-// }
-
-void mdtUsbtmcPort::setBulkTransactionState(mdtUsbtmcPort::TransactionState_t s)
-{
-  pvBulkTransactionState = s;
-  qDebug() << "Bulk transaction state: " << (int)pvBulkTransactionState;
-}
-
-/**
-void mdtUsbtmcPort::setControlTransactionState(mdtUsbtmcPort::TransactionState_t s)
-{
-  pvControlTransactionState = s;
-  qDebug() << "Control transaction state: " << (int)pvControlTransactionState;
-}
-*/
-
-void mdtUsbtmcPort::setError ( const mdtError& error )
+void mdtUsbtmcPort::setError(const mdtError & error)
 {
   pvLastErrorMutex.lock();
   pvLastError = error;
   pvLastErrorMutex.unlock();
-  emit bulkTransactionFinished(TransactionState_t::Error);
-  ///emit controlTransactionFinished(TransactionState_t::Error);
+  emit transactionFinished(TransactionState_t::Error);
+}
+
+void mdtUsbtmcPort::setTransactionState(mdtUsbtmcPort::TransactionState_t s)
+{
+  pvTransactionState = s;
 }
 
 void mdtUsbtmcPort::setWaitTimeReached()
@@ -296,37 +214,12 @@ void mdtUsbtmcPort::setWaitTimeReached()
   pvWaitTimeReached = true;
 }
 
-void mdtUsbtmcPort::waitBulkTransactionFinished()
+void mdtUsbtmcPort::waitTransactionFinished()
 {
-  while(pvBulkTransactionState == TransactionState_t::Pending){
-    qDebug() << "mdtUsbtmcPort::waitBulkTransactionFinished() - waiting ...";
+  while(pvTransactionState == TransactionState_t::Pending){
     QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
-    qDebug() << "mdtUsbtmcPort::waitBulkTransactionFinished() - event !";
   }
-  /**
-  if(pvBulkTransactionState != TransactionState_t::Done){
-    qDebug() << "mdtUsbtmcPort::waitBulkTransactionFinished() - finished in error";
-    return false;
-  }
-  return true;
-  */
 }
-
-/**
-bool mdtUsbtmcPort::waitControlTransactionFinished()
-{
-  while(pvControlTransactionState == TransactionState_t::Pending){
-    qDebug() << "mdtUsbtmcPort::waitControlTransactionFinished() - waiting ...";
-    QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
-    qDebug() << "mdtUsbtmcPort::waitControlTransactionFinished() - event !";
-  }
-  if(pvControlTransactionState != TransactionState_t::Done){
-    qDebug() << "mdtUsbtmcPort::waitControlTransactionFinished() - finished in error";
-    return false;
-  }
-  return true;
-}
-*/
 
 bool mdtUsbtmcPort::initThread()
 {
@@ -362,9 +255,7 @@ bool mdtUsbtmcPort::initLibusbConext()
     return false;
   }
   pvDeviceList = new mdtUsbDeviceList(pvUsbContext);
-  
-  /// \todo Provisoire
-  ///libusb_set_debug(pvUsbContext, 0b00000111);
+  //libusb_set_debug(pvUsbContext, 0b00000111);
 
   return true;
 }

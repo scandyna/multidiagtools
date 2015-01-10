@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -28,9 +28,6 @@ class mdtIoTest : public mdtTest
  Q_OBJECT
 
  private slots:
-
-  // mdtValue container test
-  void mdtValueTest();
 
   // Binary <-> double
   void binaryDoubleConverterTest();

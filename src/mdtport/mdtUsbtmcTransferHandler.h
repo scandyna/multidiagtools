@@ -524,7 +524,7 @@ class mdtUsbtmcTransferHandler
 
   libusb_context *pvUsbContext;
   libusb_device_handle *pvDeviceHandle;
-  boost::shared_ptr<mdtUsbtmcTransferHandlerStateMachine::StateMachine> pvStateMachineNew;
+  boost::shared_ptr<mdtUsbtmcTransferHandlerStateMachine::StateMachine> pvStateMachine;
   mdtUsbtmcPort & pvPort;
   // Descriptors
   mdtUsbDeviceDescriptor pvDeviceDescriptor;

@@ -42,6 +42,8 @@ set (SOURCES_FILES
           mdtFrameCodecScpiU3606A.cpp
           mdtFrameCodecModbus.cpp
           mdtFrameCodecK8055.cpp
+          # Codec
+          mdtCodecScpi.cpp
           # mdtError
           mdtError.cpp
           mdtErrorOut.cpp

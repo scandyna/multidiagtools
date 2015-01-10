@@ -47,6 +47,8 @@
 #include "mdtUsbtmcTransferHandlerStateMachine.h"
 #include "mdtUsbtmcPortThreadNew.h"
 
+#include "mdtCodecScpi.h"
+
 #include <QByteArray>
 #include <mutex>
 #include <cstring>
@@ -774,16 +776,22 @@ void mdtUsbPortTest::usbtmcBulkTransferTest()
   transfer.setupDevDepMsgOut(1, message, true, 30000);
   QVERIFY(transfer.responseExpected());
   QCOMPARE(transfer.bTag(), (uint8_t)1);
+  QVERIFY(transfer.bTagIsOk());
+  QVERIFY(transfer.isEOM());
   ba = "*CLS\n";
   message.reset();
   transfer.setupDevDepMsgOut(2, message, false, 30000);
   QVERIFY(!transfer.responseExpected());
   QCOMPARE(transfer.bTag(), (uint8_t)2);
+  QVERIFY(transfer.bTagIsOk());
+  QVERIFY(transfer.isEOM());
   ba = "*IDN?\n";
   message.reset();
   transfer.setupDevDepMsgOut(3, message, true, 30000);
   QVERIFY(transfer.responseExpected());
   QCOMPARE(transfer.bTag(), (uint8_t)3);
+  QVERIFY(transfer.bTagIsOk());
+  QVERIFY(transfer.isEOM());
   // Check Split action reset
   ba = "*CLS\n";
   message.reset();
@@ -1555,6 +1563,10 @@ void mdtUsbPortTest::usbtmcPortTest()
 {
   mdtUsbtmcPort port;
   QList<mdtUsbDeviceDescriptor> deviceDescriptorsList;
+  QByteArray data;
+  mdtCodecScpi codec;
+  mdtScpiIdnResponse idnResponse;
+  mdtError deviceError;
 
   // Find a USBTMC device
   deviceDescriptorsList = port.scan();
@@ -1563,34 +1575,27 @@ void mdtUsbPortTest::usbtmcPortTest()
   }
   // Open a USBTMC device
   QVERIFY(port.openDevice(deviceDescriptorsList.at(0), 0, true));
+  port.wait(1);
+  QVERIFY(port.sendCommand("*RST\n"));
+  port.wait(1);
+  QVERIFY(port.sendCommand("*CLS\n"));
+  port.wait(1);
+  // Get device error
+  data = port.sendQuery("SYSTem:ERRor?\n");
+  deviceError = codec.decodeDeviceError(data);
+  QCOMPARE(deviceError.systemNumber(), 0);
+  port.wait(1);
+  // Get IDN
+  data = port.sendQuery("*IDN?\n");
+  idnResponse = codec.decodeIdn(data);
+  QVERIFY(!idnResponse.manufacturer.isEmpty());
+  QVERIFY(!idnResponse.model.isEmpty());
+  QVERIFY(!idnResponse.firmwareLevel.isEmpty());
+  port.wait(1);
+  qDebug() << "Device: " << idnResponse.manufacturer << ", model: " << idnResponse.model << " , SN: " << idnResponse.serial << " , FW: " << idnResponse.firmwareLevel;
 
-  port.wait(1);
-
-  QByteArray ba;
-  for(int i = 0; i < 1; ++i){
-    ba = port.sendQuery("SYSTEM:ERR?\n");
-    if(ba.isEmpty()){
-      qDebug() << "SYSTEM:ERR? query failed, error: " << port.lastError().text();
-      break;
-    }
-    qDebug() << "SYSTEM:ERR? : " << ba;
-    ///port.wait(1);
-    ba = port.sendQuery("*IDN?\n");
-    if(ba.isEmpty()){
-      qDebug() << "*IDN? query failed, error: " << port.lastError().text();
-      break;
-    }
-    qDebug() << "*IDN? : " << ba;
-    ///port.wait(1);
-  }
-  
-  port.wait(1);
-  ///QVERIFY(port.sendCommand("*RST"));
-  port.wait(1);
-  ///QVERIFY(port.sendCommand("*CLS"));
-  port.wait(1);
-  ///qDebug() << "SYSTEM:ERR? : " << port.sendQuery("SYSTEM:ERR?\n");
-
+  // Close
+  port.close();
 }
 
 void mdtUsbPortTest::usbtmcPortSetupDialogTest()

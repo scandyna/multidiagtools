@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,7 +22,449 @@
 #define MDT_VALUE_H
 
 #include <QMetaType>
-#include <QDebug>
+
+/*! \brief Contains a floating (double) value with some attributes
+ *
+ * Most of cases, using standard C++ types are sufficent.
+ *
+ * When dealing with instruments, some additionnal flags are needed:
+ *  - +OL, -OL: to tell, for example, that a measure is out of instrument's range.
+ *  - Null: for example, if a error occured, a Null value could be returned (from a function).
+ *
+ * Note: Null and NaN is not the same.
+ *       A Null mdtValueDouble contains a NaN value, but a non Null mdtValue can also contain a NaN value.
+ *       For example, if a communication error occured, a function should return a Null value.
+ */
+class mdtValueDouble
+{
+ public:
+
+  /*! \brief Construct a null value
+   */
+  mdtValueDouble();
+
+  /*! \brief Construct a value
+   *
+   * \param value Value to store
+   * \param isOl Force OL flag to be set. If value is >= 0.0 , +OL is set, else -OL will be set
+   */
+  mdtValueDouble(double value, bool isOl = false);
+
+  /*! \brief Clear value
+   *
+   * After this call, value will be null
+   */
+  void clear();
+
+  /*! \brief Set value
+   *
+   * \param value Value to store
+   * \param isOl Force OL flag to be set. If value is >= 0.0 , +OL is set, else -OL will be set
+   */
+  void setValue(double value, bool isOl = false);
+
+  /*! \brief Check if value is null
+   */
+  inline bool isNull() const
+  {
+    return pvIsNull;
+  }
+
+  /*! \brief Get value
+   */
+  inline double value() const
+  {
+    return pvValue;
+  }
+
+  /*! \brief Check if value is -OL
+   */
+  bool isMinusOl() const;
+
+  /*! \brief Check if value is +OL
+   */
+  bool isPlusOl() const;
+
+  /*! \brief Check if value is NaN
+   */
+  bool isNaN() const;
+
+  /*! \brief Comparaison operator
+   *
+   * Notes:
+   *  - Both values are equal if value and flags are equal.
+   *  - if one (or both) value is null, they are not considered equal (Same rule as IEEE 754 NaN)
+   */
+  bool operator==(const mdtValueDouble & other) const;
+
+  /*! \brief Comparaison operator
+   */
+  inline bool operator!=(const mdtValueDouble & other) const
+  {
+    return !(*this == other);
+  }
+
+  /*! \brief Comparison operator
+   *
+   * Note: if one (or both) value is null, comparison will allways be false
+   *       (Same rule as IEEE 754 NaN)
+   */
+  bool operator<(const mdtValueDouble & other) const
+  {
+    if((pvIsNull)||(other.pvIsNull)){
+      return false;
+    }
+    return (pvValue < other.pvValue);
+  }
+
+  /*! \brief Comparison operator
+   *
+   * Note: if one (or both) value is null, comparison will allways be false
+   *       (Same rule as IEEE 754 NaN)
+   */
+  bool operator<=(const mdtValueDouble & other) const
+  {
+    if((pvIsNull)||(other.pvIsNull)){
+      return false;
+    }
+    if(*this == other){
+      return true;
+    }
+    return (pvValue <= other.pvValue);
+  }
+
+  /*! \brief Comparison operator
+   *
+   * Note: if one (or both) value is null, comparison will allways be false
+   *       (Same rule as IEEE 754 NaN)
+   */
+  bool operator>(const mdtValueDouble & other) const
+  {
+    if((pvIsNull)||(other.pvIsNull)){
+      return false;
+    }
+    return (pvValue > other.pvValue);
+  }
+
+  /*! \brief Comparison operator
+   *
+   * Note: if one (or both) value is null, comparison will allways be false
+   *       (Same rule as IEEE 754 NaN)
+   */
+  bool operator>=(const mdtValueDouble & other) const
+  {
+    if((pvIsNull)||(other.pvIsNull)){
+      return false;
+    }
+    if(*this == other){
+      return true;
+    }
+    return (pvValue >= other.pvValue);
+  }
+
+  /*! \brief Addition operator
+   *
+   * Note:
+   *  - If one (or both) value is null, a null value will be returned (Same rule as IEEE 754 NaN)
+   *  - For all other cases, including OL flags (wich are stored as infinity values), follows standard floating point arithmetic rules
+   */
+  mdtValueDouble operator+(const mdtValueDouble & other) const
+  {
+    if((pvIsNull)||(other.pvIsNull)){
+      return mdtValueDouble();
+    }
+    return mdtValueDouble(pvValue + other.pvValue);
+  }
+
+  /*! \brief Subtraction operator
+   *
+   * Note:
+   *  - If one (or both) value is null, a null value will be returned (Same rule as IEEE 754 NaN)
+   *  - For all other cases, including OL flags (wich are stored as infinity values), follows standard floating point arithmetic rules
+   */
+  mdtValueDouble operator-(const mdtValueDouble & other) const
+  {
+    if((pvIsNull)||(other.pvIsNull)){
+      return mdtValueDouble();
+    }
+    return mdtValueDouble(pvValue - other.pvValue);
+  }
+
+  /*! \brief Multiplication operator
+   *
+   * Note:
+   *  - If one (or both) value is null, a null value will be returned (Same rule as IEEE 754 NaN)
+   *  - For all other cases, including OL flags (wich are stored as infinity values), follows standard floating point arithmetic rules
+   */
+  mdtValueDouble operator*(const mdtValueDouble & other) const
+  {
+    if((pvIsNull)||(other.pvIsNull)){
+      return mdtValueDouble();
+    }
+    return mdtValueDouble(pvValue * other.pvValue);
+  }
+
+  /*! \brief Division operator
+   *
+   * Note:
+   *  - If one (or both) value is null, a null value will be returned (Same rule as IEEE 754 NaN)
+   *  - For all other cases, including OL flags (wich are stored as infinity values), follows standard floating point arithmetic rules
+   */
+  mdtValueDouble operator/(const mdtValueDouble & other) const
+  {
+    if((pvIsNull)||(other.pvIsNull)){
+      return mdtValueDouble();
+    }
+    return mdtValueDouble(pvValue / other.pvValue);
+  }
+
+private:
+
+  double pvValue;
+  bool pvIsNull;
+};
+
+/*! \brief Integral type with Null attribute
+ *
+ * Most of cases, using standard C++ types are sufficent.
+ *  But, in some cases, its needed to test if a function
+ *  returned a valid value or not.
+ *  Here, the Null flag is used for that.
+ */
+template<typename T>
+class mdtValueIntegral
+{
+ public:
+
+  /*! \brief Construct a null value
+   */
+  mdtValueIntegral()
+   : pvValue(0),
+     pvIsNull(true)
+   {
+   }
+
+  /*! \brief Construct value
+   */
+  mdtValueIntegral(T value)
+   : pvValue(value),
+     pvIsNull(false)
+   {
+   }
+
+  /*! \brief Clear value
+   */
+  void clear()
+  {
+    pvValue = 0;
+    pvIsNull = true;
+  }
+
+  /*! \brief Check if value is null
+   */
+  bool isNull() const
+  {
+    return pvIsNull;
+  }
+
+  /*! \brief Set value
+   */
+  void setValue(T value)
+  {
+    pvIsNull = false;
+    pvValue = value;
+  }
+
+  /*! \brief Get value
+   */
+  T value() const
+  {
+    return pvValue;
+  }
+
+  /*! \brief Comparaison operator
+   *
+   * Note: if one (or both) value is null, they are not considered equal
+   *       (Same rule as IEEE 754 NaN)
+   */
+  bool operator==(const mdtValueIntegral & other) const
+  {
+    if((pvIsNull)||(other.pvIsNull)){
+      return false;
+    }
+    return (pvValue == other.pvValue);
+  }
+
+  /*! \brief Comparaison operator
+   */
+  inline bool operator!=(const mdtValueIntegral & other) const
+  {
+    return !(*this == other);
+  }
+
+  /*! \brief Comparison operator
+   *
+   * Note: if one (or both) value is null, comparison will allways be false
+   *       (Same rule as IEEE 754 NaN)
+   */
+  bool operator<(const mdtValueIntegral & other) const
+  {
+    if((pvIsNull)||(other.pvIsNull)){
+      return false;
+    }
+    return (pvValue < other.pvValue);
+  }
+
+  /*! \brief Comparison operator
+   *
+   * Note: if one (or both) value is null, comparison will allways be false
+   *       (Same rule as IEEE 754 NaN)
+   */
+  bool operator<=(const mdtValueIntegral & other) const
+  {
+    if((pvIsNull)||(other.pvIsNull)){
+      return false;
+    }
+    return (pvValue <= other.pvValue);
+  }
+
+  /*! \brief Comparison operator
+   *
+   * Note: if one (or both) value is null, comparison will allways be false
+   *       (Same rule as IEEE 754 NaN)
+   */
+  bool operator>(const mdtValueIntegral & other) const
+  {
+    if((pvIsNull)||(other.pvIsNull)){
+      return false;
+    }
+    return (pvValue > other.pvValue);
+  }
+
+  /*! \brief Comparison operator
+   *
+   * Note: if one (or both) value is null, comparison will allways be false
+   *       (Same rule as IEEE 754 NaN)
+   */
+  bool operator>=(const mdtValueIntegral & other) const
+  {
+    if((pvIsNull)||(other.pvIsNull)){
+      return false;
+    }
+    return (pvValue >= other.pvValue);
+  }
+
+  /*! \brief Addition operator
+   *
+   * Note: if one (or both) value is null, a null value will be returned
+   *       (Same rule as IEEE 754 NaN)
+   */
+  mdtValueIntegral operator+(const mdtValueIntegral & other) const
+  {
+    if((pvIsNull)||(other.pvIsNull)){
+      return mdtValueIntegral();
+    }
+    return mdtValueIntegral(pvValue + other.pvValue);
+  }
+
+  /*! \brief Soustraction operator
+   *
+   * Note: if one (or both) value is null, a null value will be returned
+   *       (Same rule as IEEE 754 NaN)
+   */
+  mdtValueIntegral operator-(const mdtValueIntegral & other) const
+  {
+    if((pvIsNull)||(other.pvIsNull)){
+      return mdtValueIntegral();
+    }
+    return mdtValueIntegral(pvValue - other.pvValue);
+  }
+
+  /*! \brief Multiplication operator
+   *
+   * Note: if one (or both) value is null, a null value will be returned
+   *       (Same rule as IEEE 754 NaN)
+   */
+  mdtValueIntegral operator*(const mdtValueIntegral & other) const
+  {
+    if((pvIsNull)||(other.pvIsNull)){
+      return mdtValueIntegral();
+    }
+    return mdtValueIntegral(pvValue * other.pvValue);
+  }
+
+ private:
+
+  T pvValue;
+  bool pvIsNull;
+};
+
+/*! \brief mdtValueIntegral with int type value
+ */
+typedef mdtValueIntegral<int> mdtValueInt;
+
+/*! \brief Boolean type with Null attribute
+ *
+ * Most of cases, using standard C++ types are sufficent.
+ *  But, in some cases, its needed to test if a function
+ *  returned a valid value or not.
+ *  Here, the Null flag is used for that.
+ */
+class mdtValueBool
+{
+ public:
+
+  /*! \brief Construct a null boolean
+   */
+  mdtValueBool()
+   : pvValue(false),
+     pvIsNull(true)
+   {
+   }
+
+  /*! \brief Construct boolean
+   */
+  mdtValueBool(bool value)
+   : pvValue(value),
+     pvIsNull(false)
+   {
+   }
+
+  /*! \brief Clear boolean
+   */
+  void clear()
+  {
+    pvValue = false;
+    pvIsNull = true;
+  }
+
+  /*! \brief Check if boolean is null
+   */
+  bool isNull() const
+  {
+    return pvIsNull;
+  }
+
+  /*! \brief Set value
+   */
+  void setValue(bool value)
+  {
+    pvIsNull = false;
+    pvValue = value;
+  }
+
+  /*! \brief Get boolean's value
+   */
+  bool value() const
+  {
+    return pvValue;
+  }
+
+ private:
+
+  bool pvValue;
+  bool pvIsNull;
+};
 
 /*! \brief Conatins a value with some attributes
  *
@@ -188,8 +630,12 @@ class mdtValue
   bool pvHasValueBool;
 };
 
+Q_DECLARE_METATYPE(mdtValueDouble)
 Q_DECLARE_METATYPE(mdtValue)
 
-QDebug operator<<(QDebug dbg, const mdtValue &value);
+QDebug operator<<(QDebug dbg, const mdtValueBool & value);
+QDebug operator<<(QDebug dbg, const mdtValueInt & value);
+QDebug operator<<(QDebug dbg, const mdtValueDouble & value);
+QDebug operator<<(QDebug dbg, const mdtValue & value);
 
 #endif  // #ifndef MDT_VALUE_H

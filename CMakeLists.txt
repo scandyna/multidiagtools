@@ -209,10 +209,14 @@ add_test (mdtBufferTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtbuffertest
 add_test (mdtFrameTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtframetest)
 # mdtFrameCodecTest
 add_test (mdtFrameCodecTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtframecodectest)
+# mdtCodecTest
+add_test (mdtCodecTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtcodectest)
 # mdtUicNumberTest
 add_test (mdtUicNumberTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtuicnumbertest)
 # mdtFileTest
 add_test (mdtFileTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtfiletest)
+# mdtValueTest
+add_test (mdtValueTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtvaluetest)
 # mdtIoTest
 add_test (mdtIoTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtiotest)
 # mdtGraphTest

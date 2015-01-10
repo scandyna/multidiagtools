@@ -31,7 +31,7 @@ using namespace mdtUsbtmcTransferHandlerStateMachine;
 mdtUsbtmcTransferHandler::mdtUsbtmcTransferHandler(libusb_context *usbContext, mdtUsbtmcPort & port)
  : pvUsbContext(usbContext),
    pvDeviceHandle(0),
-   pvStateMachineNew(new StateMachine(this)),
+   pvStateMachine(new StateMachine(this)),
    pvPort(port)
 {
   Q_ASSERT(pvUsbContext != 0);
@@ -125,7 +125,7 @@ bool mdtUsbtmcTransferHandler::setup(libusb_device_handle* handle, const mdtUsbD
     }
   }
   // Get USBTMC capabilities
-  if(!getCapabilities(pvInterfaceDescriptor.bInterfaceNumber(), 10000)){
+  if(!getCapabilities(pvInterfaceDescriptor.bInterfaceNumber(), 5000)){
     return false;
   }
 
@@ -134,18 +134,18 @@ bool mdtUsbtmcTransferHandler::setup(libusb_device_handle* handle, const mdtUsbD
 
 void mdtUsbtmcTransferHandler::start()
 {
-  pvStateMachineNew->start();
+  pvStateMachine->start();
 }
 
 void mdtUsbtmcTransferHandler::stop()
 {
-  pvStateMachineNew->stop();
+  pvStateMachine->stop();
 }
 
 bool mdtUsbtmcTransferHandler::submitCommand(mdtUsbtmcTxMessage & message, bool responseExpected, unsigned int timeout)
 {
   // Check if we can accept command now
-  if(!pvStateMachineNew->is_flag_active<ProcessingFlag>()){
+  if(!pvStateMachine->is_flag_active<ProcessingFlag>()){
     std::lock_guard<std::mutex> lelg(pvLastErrorMutex);
     QString msg = deviceIdString() + QObject::tr("Cannot send a command in a non Processing state.");
     pvLastError.setError(msg, mdtError::Warning);
@@ -192,7 +192,7 @@ bool mdtUsbtmcTransferHandler::submitCommand(mdtUsbtmcTxMessage & message, bool 
   transfer->setupDevDepMsgOut(nextBulkOutbTag(), message, responseExpected, timeout);
   if(!transfer->submit()){
     ErrorOccuredEvent errorEvent(transfer->lastError());
-    pvStateMachineNew->process_event(errorEvent);
+    pvStateMachine->process_event(errorEvent);
     return false;
   }
 
@@ -213,12 +213,12 @@ void mdtUsbtmcTransferHandler::getReceivedData(mdtUsbtmcRxMessage & message)
 void mdtUsbtmcTransferHandler::submitStopRequest()
 {
   qDebug() << "submitStopRequest() - Queues: control: " << pvControlTransferPool.pendingTransferCount() << " , bulk-OUT: " << pvBulkOutTransferPool.pendingTransferCount() << " , bulk-IN: " << pvBulkInTransferPool.pendingTransferCount() << " , interrupt-IN: " << pvInterruptInTransferPool.pendingTransferCount();
-  pvStateMachineNew->process_event(StopRequestedEvent());
+  pvStateMachine->process_event(StopRequestedEvent());
 }
 
 void mdtUsbtmcTransferHandler::submitBulkIoClear()
 {
-  pvStateMachineNew->process_event(ClearBulkIoRequestedEvent());
+  pvStateMachine->process_event(ClearBulkIoRequestedEvent());
 }
 
 void mdtUsbtmcTransferHandler::beginBulkIoClear()
@@ -260,7 +260,7 @@ void mdtUsbtmcTransferHandler::dbgSubmitCustomBulkOutTransfer(uint8_t msgID, uin
   transfer->dbgSetupCustom(msgID, bTag, bTagInverse, transferSize, bmTransferAttributes, termChar, responseExpected, transferBufferLength, timeout);
   if(!transfer->submit()){
     ErrorOccuredEvent errorEvent(transfer->lastError());
-    pvStateMachineNew->process_event(errorEvent);
+    pvStateMachine->process_event(errorEvent);
     return;
   }
 }
@@ -272,7 +272,7 @@ void mdtUsbtmcTransferHandler::dbgSubmitAbortOnePendingBulkOutTransfer()
   if(transfer == 0){
     return;
   }
-  pvStateMachineNew->process_event(AbortBulkOutRequestedEvent(transfer));
+  pvStateMachine->process_event(AbortBulkOutRequestedEvent(transfer));
 }
 
 void mdtUsbtmcTransferHandler::dbgSubmitAbortOnePendingBulkInTransfer()
@@ -282,7 +282,7 @@ void mdtUsbtmcTransferHandler::dbgSubmitAbortOnePendingBulkInTransfer()
   if(transfer == 0){
     return;
   }
-  pvStateMachineNew->process_event(AbortBulkInRequestedEvent(transfer));
+  pvStateMachine->process_event(AbortBulkInRequestedEvent(transfer));
 }
 
 void mdtUsbtmcTransferHandler::submitClearEndpointHalt(uint8_t endpointNumber, unsigned int timeout)
@@ -295,7 +295,7 @@ void mdtUsbtmcTransferHandler::submitClearEndpointHalt(uint8_t endpointNumber, u
   transfer->setupClearEndpointHalt(endpointNumber, timeout);
   if(!transfer->submit()){
     ErrorOccuredEvent errorEvent(transfer->lastError());
-    pvStateMachineNew->process_event(errorEvent);
+    pvStateMachine->process_event(errorEvent);
     return;
   }
 }
@@ -322,7 +322,7 @@ void mdtUsbtmcTransferHandler::submitControlTransfersCancel()
   qDebug() << "Submitting a control transfer cancel ...";
   if(!transfer->cancel()){
     ErrorOccuredEvent errorEvent(transfer->lastError());
-    pvStateMachineNew->process_event(errorEvent);
+    pvStateMachine->process_event(errorEvent);
     return;
   }
 }
@@ -337,7 +337,7 @@ void mdtUsbtmcTransferHandler::controlTransferCallback(libusb_transfer* transfer
     uct->setCompleted();
     return;
   }
-  uct->transferHandler().pvStateMachineNew->process_event(ControlTransferCompletedEvent(uct));
+  uct->transferHandler().pvStateMachine->process_event(ControlTransferCompletedEvent(uct));
 }
 
 
@@ -347,7 +347,7 @@ void mdtUsbtmcTransferHandler::bulkOutTransferCallback(libusb_transfer* transfer
 
   mdtUsbtmcBulkTransfer *ubt = static_cast<mdtUsbtmcBulkTransfer*>(transfer->user_data);
   qDebug() << "bulkOutTransferCallback - sending BulkOutTransferCompletedEvent ..";
-  ubt->transferHandler().pvStateMachineNew->process_event(BulkOutTransferCompletedEvent(ubt));
+  ubt->transferHandler().pvStateMachine->process_event(BulkOutTransferCompletedEvent(ubt));
 }
 
 void mdtUsbtmcTransferHandler::bulkInTransferCallback(libusb_transfer* transfer)
@@ -355,7 +355,7 @@ void mdtUsbtmcTransferHandler::bulkInTransferCallback(libusb_transfer* transfer)
   Q_ASSERT(transfer != 0);
 
   mdtUsbtmcBulkTransfer *ubt = static_cast<mdtUsbtmcBulkTransfer*>(transfer->user_data);
-  ubt->transferHandler().pvStateMachineNew->process_event(BulkInTransferCompletedEvent(ubt));
+  ubt->transferHandler().pvStateMachine->process_event(BulkInTransferCompletedEvent(ubt));
 }
 
 void mdtUsbtmcTransferHandler::interruptInTransferCallback(libusb_transfer* transfer)
@@ -363,12 +363,12 @@ void mdtUsbtmcTransferHandler::interruptInTransferCallback(libusb_transfer* tran
   Q_ASSERT(transfer != 0);
 
   mdtUsbtmcInterruptTransfer *uit = static_cast<mdtUsbtmcInterruptTransfer*>(transfer->user_data);
-  uit->transferHandler().pvStateMachineNew->process_event(InterruptInTransferCompletedEvent(uit));
+  uit->transferHandler().pvStateMachine->process_event(InterruptInTransferCompletedEvent(uit));
 }
 
 bool mdtUsbtmcTransferHandler::mustBeStopped() const
 {
-  return pvStateMachineNew->is_flag_active<MustBeStoppedFlag>();
+  return pvStateMachine->is_flag_active<MustBeStoppedFlag>();
 }
 
 void mdtUsbtmcTransferHandler::notifyError(const mdtError & error)
@@ -378,7 +378,7 @@ void mdtUsbtmcTransferHandler::notifyError(const mdtError & error)
    * and that process_event() calls are serialized by a mutex,
    * we should not have races here
    */
-  pvPort.thSetError(error);
+  pvPort.setError(error);
 }
 
 void mdtUsbtmcTransferHandler::notifyDeviceDisconnected()
@@ -388,18 +388,18 @@ void mdtUsbtmcTransferHandler::notifyDeviceDisconnected()
 
 void mdtUsbtmcTransferHandler::notifyBulkIoDone()
 {
-  pvPort.thSetBulkTransactionDone();
+  pvPort.thSetTransactionDone();
 }
 
 void mdtUsbtmcTransferHandler::notifyBulkIoAborted()
 {
-  pvPort.thSetBulkTransactionAborted();
+  pvPort.thSetTransactionAborted();
 }
 
 template<typename EventType>
 void mdtUsbtmcTransferHandler::sendEvent(const EventType & event)
 {
-  pvStateMachineNew->process_event(event);
+  pvStateMachine->process_event(event);
 }
 
 bool mdtUsbtmcTransferHandler::hasPendingTransfers()
@@ -472,11 +472,11 @@ void mdtUsbtmcTransferHandler::handleControlTransferComplete(mdtUsbtmcControlTra
         mdtError error(msg, mdtError::Error);
         MDT_ERROR_SET_SRC(error, "mdtUsbtmcTransferHandler");
         ErrorOccuredEvent errorEvent(error);
-        pvStateMachineNew->process_event(errorEvent);
+        pvStateMachine->process_event(errorEvent);
       }
       return;
     case LIBUSB_TRANSFER_NO_DEVICE:
-      pvStateMachineNew->process_event(DeviceDisconnectedEvent());
+      pvStateMachine->process_event(DeviceDisconnectedEvent());
       return;
     case LIBUSB_TRANSFER_TIMED_OUT: /// \todo handle !
     case LIBUSB_TRANSFER_OVERFLOW:
@@ -487,7 +487,7 @@ void mdtUsbtmcTransferHandler::handleControlTransferComplete(mdtUsbtmcControlTra
       error.setSystemError(transfer->status(), libusbTransferStatusText(transfer->status()));
       MDT_ERROR_SET_SRC(error, "mdtUsbtmcTransferHandler");
       ErrorOccuredEvent errorEvent(error);
-      pvStateMachineNew->process_event(errorEvent);
+      pvStateMachine->process_event(errorEvent);
       return;
     }
   }
@@ -520,13 +520,13 @@ void mdtUsbtmcTransferHandler::handleControlTransferComplete(mdtUsbtmcControlTra
         mdtError error(msg, mdtError::Error);
         MDT_ERROR_SET_SRC(error, "mdtUsbtmcTransferHandler");
         ErrorOccuredEvent errorEvent(error);
-        pvStateMachineNew->process_event(errorEvent);
+        pvStateMachine->process_event(errorEvent);
         return;
     }
   }
   // Nothing more - Restore transfer to pool and signal
   restoreControlTransferToPool(transfer, true);
-  pvStateMachineNew->process_event(ControlTransferSuccessfulEvent());
+  pvStateMachine->process_event(ControlTransferSuccessfulEvent());
 }
 
 void mdtUsbtmcTransferHandler::restoreControlTransferToPool(mdtUsbtmcControlTransfer* transfer, bool lockMutex)
@@ -559,7 +559,7 @@ void mdtUsbtmcTransferHandler::handleBulkOutTransferComplete(mdtUsbtmcBulkTransf
       return;
     case LIBUSB_TRANSFER_NO_DEVICE:
       qDebug() << "Bulk-OUT error status: LIBUSB_TRANSFER_NO_DEVICE";
-      pvStateMachineNew->process_event(DeviceDisconnectedEvent());
+      pvStateMachine->process_event(DeviceDisconnectedEvent());
       return;
     case LIBUSB_TRANSFER_TIMED_OUT: /// \todo handle !
     case LIBUSB_TRANSFER_CANCELLED: /// \todo handle !
@@ -571,7 +571,7 @@ void mdtUsbtmcTransferHandler::handleBulkOutTransferComplete(mdtUsbtmcBulkTransf
       error.setSystemError(transfer->status(), libusbTransferStatusText(transfer->status()));
       MDT_ERROR_SET_SRC(error, "mdtUsbtmcTransferHandler");
       ErrorOccuredEvent errorEvent(error);
-      pvStateMachineNew->process_event(errorEvent);
+      pvStateMachine->process_event(errorEvent);
       return;
     }
   }
@@ -587,7 +587,7 @@ void mdtUsbtmcTransferHandler::handleBulkOutTransferComplete(mdtUsbtmcBulkTransf
   }
   // Here, transfer is done and no response is expected
   restoreBulkOutTransferToPool(transfer, true);
-  pvPort.thSetBulkTransactionDone();
+  pvPort.thSetTransactionDone();
 }
 
 void mdtUsbtmcTransferHandler::restoreBulkOutTransferToPool(mdtUsbtmcBulkTransfer* transfer, bool lockMutex)
@@ -618,7 +618,7 @@ void mdtUsbtmcTransferHandler::restoreBulkOutTransferSA(mdtUsbtmcBulkTransfer* t
       break;
     case LIBUSB_TRANSFER_NO_DEVICE:
       qDebug() << "Bulk-OUT error status: LIBUSB_TRANSFER_NO_DEVICE";
-      pvStateMachineNew->process_event(DeviceDisconnectedEvent());
+      pvStateMachine->process_event(DeviceDisconnectedEvent());
       return;
     case LIBUSB_TRANSFER_STALL:
     case LIBUSB_TRANSFER_TIMED_OUT:
@@ -630,7 +630,7 @@ void mdtUsbtmcTransferHandler::restoreBulkOutTransferSA(mdtUsbtmcBulkTransfer* t
       error.setSystemError(transfer->status(), libusbTransferStatusText(transfer->status()));
       MDT_ERROR_SET_SRC(error, "mdtUsbtmcTransferHandler");
       ErrorOccuredEvent errorEvent(error);
-      pvStateMachineNew->process_event(errorEvent);
+      pvStateMachine->process_event(errorEvent);
       return;
     }
   }
@@ -655,7 +655,7 @@ void mdtUsbtmcTransferHandler::restoreBulkOutTransferSA(mdtUsbtmcBulkTransfer* t
       case mdtUsbtmcBulkTransfer::SplitAction_t::CHECK_CLEAR_STATUS:
         qDebug() << "-> restoreBulkOutTransferSA: Cannot handle CHECK_CLEAR_STATUS split action !";
       case mdtUsbtmcBulkTransfer::SplitAction_t::CLEAR_ENDPOINT_HALT:
-        pvStateMachineNew->process_event(ClearBulkOutEndpointHaltRequestedEvent());
+        pvStateMachine->process_event(ClearBulkOutEndpointHaltRequestedEvent());
         return;
     }
   }
@@ -705,7 +705,7 @@ void mdtUsbtmcTransferHandler::handleBulkInTransferComplete(mdtUsbtmcBulkTransfe
       return;
     case LIBUSB_TRANSFER_NO_DEVICE:
       qDebug() << "Bulk-IN error status: LIBUSB_TRANSFER_NO_DEVICE";
-      pvStateMachineNew->process_event(DeviceDisconnectedEvent());
+      pvStateMachine->process_event(DeviceDisconnectedEvent());
       return;
     case LIBUSB_TRANSFER_TIMED_OUT: /// \todo handle !
     case LIBUSB_TRANSFER_CANCELLED: /// \todo handle !
@@ -717,7 +717,7 @@ void mdtUsbtmcTransferHandler::handleBulkInTransferComplete(mdtUsbtmcBulkTransfe
       error.setSystemError(transfer->status(), libusbTransferStatusText(transfer->status()));
       MDT_ERROR_SET_SRC(error, "mdtUsbtmcTransferHandler");
       ErrorOccuredEvent errorEvent(error);
-      pvStateMachineNew->process_event(errorEvent);
+      pvStateMachine->process_event(errorEvent);
       return;
     }
   }
@@ -731,14 +731,14 @@ void mdtUsbtmcTransferHandler::handleBulkInTransferComplete(mdtUsbtmcBulkTransfe
   // Check bTag
   if(!transfer->bTagIsOk()){
     qDebug() << "-> bTag error !!";
-    pvStateMachineNew->process_event(AbortBulkInRequestedEvent(transfer));
+    pvStateMachine->process_event(AbortBulkInRequestedEvent(transfer));
     /// \todo Should we log a error (as information) ?
     return;
   }
   // Check that we received all data
   if(!transfer->receivedAllData(transfer->actualLength())){  /// \todo handle error !
     qDebug() << "-> RX not all data !!";
-    pvStateMachineNew->process_event(AbortBulkInRequestedEvent(transfer));
+    pvStateMachine->process_event(AbortBulkInRequestedEvent(transfer));
     /// \todo Should we log a error (as information) ?
     return;
   }
@@ -756,11 +756,11 @@ void mdtUsbtmcTransferHandler::handleBulkInTransferComplete(mdtUsbtmcBulkTransfe
     MDT_ERROR_SET_SRC(pvLastError, "mdtUsbtmcTransferHandler");
     pvLastError.commit();
     pvBulkInTransferPool.restorePendingTransfers();
-    pvPort.thSetError(pvLastError);
+    pvPort.setError(pvLastError);
     return;
   }
   if(transfer->isEOM()){
-    pvPort.thSetBulkTransactionDone();
+    pvPort.thSetTransactionDone();
   }
 }
 
@@ -791,7 +791,7 @@ void mdtUsbtmcTransferHandler::restoreBulkInTransferSA(mdtUsbtmcBulkTransfer* tr
       break;
     case LIBUSB_TRANSFER_NO_DEVICE:
       qDebug() << "Bulk-IN error status: LIBUSB_TRANSFER_NO_DEVICE";
-      pvStateMachineNew->process_event(DeviceDisconnectedEvent());
+      pvStateMachine->process_event(DeviceDisconnectedEvent());
       return;
     case LIBUSB_TRANSFER_STALL:
     case LIBUSB_TRANSFER_TIMED_OUT:
@@ -803,7 +803,7 @@ void mdtUsbtmcTransferHandler::restoreBulkInTransferSA(mdtUsbtmcBulkTransfer* tr
       error.setSystemError(transfer->status(), libusbTransferStatusText(transfer->status()));
       MDT_ERROR_SET_SRC(error, "mdtUsbtmcTransferHandler");
       ErrorOccuredEvent errorEvent(error);
-      pvStateMachineNew->process_event(errorEvent);
+      pvStateMachine->process_event(errorEvent);
       return;
     }
   }
@@ -828,7 +828,7 @@ void mdtUsbtmcTransferHandler::restoreBulkInTransferSA(mdtUsbtmcBulkTransfer* tr
       case mdtUsbtmcBulkTransfer::SplitAction_t::CHECK_CLEAR_STATUS:
         qDebug() << "-> Cannot handle CHECK_CLEAR_STATUS split action !";
       case mdtUsbtmcBulkTransfer::SplitAction_t::CLEAR_ENDPOINT_HALT:
-        pvStateMachineNew->process_event(ClearBulkInEndpointHaltRequestedEvent());
+        pvStateMachine->process_event(ClearBulkInEndpointHaltRequestedEvent());
         return;
     }
   }
@@ -878,7 +878,7 @@ void mdtUsbtmcTransferHandler::submitInterruptInTransfer(unsigned int timeout, m
   transfer->setup(timeout);
   if(!transfer->submit()){
     ErrorOccuredEvent errorEvent(transfer->lastError());
-    pvStateMachineNew->process_event(errorEvent);
+    pvStateMachine->process_event(errorEvent);
     return;
   }
 }
@@ -907,7 +907,7 @@ void mdtUsbtmcTransferHandler::handleInterruptInTransferComplete(mdtUsbtmcInterr
       error.setSystemError(transfer->status(), libusbTransferStatusText(transfer->status()));
       MDT_ERROR_SET_SRC(error, "mdtUsbtmcTransferHandler");
       ErrorOccuredEvent errorEvent(error);
-      pvStateMachineNew->process_event(errorEvent);
+      pvStateMachine->process_event(errorEvent);
       return;
     }
   }
@@ -968,10 +968,10 @@ void mdtUsbtmcTransferHandler::submitInitiateAbortBulkOutRequest(uint8_t bTag)
   Q_ASSERT(transfer != 0);
   // Setup transfer and submit it
   qDebug() << "Submitting INITIATE_ABORT_BULK_OUT for bTag " << bTag << " ...";
-  transfer->setupInitiateAbortBulkOut(bTag, pvBulkOutDescriptor.number(), 30000);
+  transfer->setupInitiateAbortBulkOut(bTag, pvBulkOutDescriptor.number(), 5000);
   if(!transfer->submit()){
     ErrorOccuredEvent errorEvent(transfer->lastError());
-    pvStateMachineNew->process_event(errorEvent);
+    pvStateMachine->process_event(errorEvent);
     return;
   }
 }
@@ -989,7 +989,7 @@ void mdtUsbtmcTransferHandler::handleInitiateAbortBulkOutResponse(mdtUsbtmcContr
     mdtError error(msg, mdtError::Error);
     MDT_ERROR_SET_SRC(error, "mdtUsbtmcTransferHandler");
     ErrorOccuredEvent errorEvent(error);
-    pvStateMachineNew->process_event(errorEvent);
+    pvStateMachine->process_event(errorEvent);
     return;
   }
 
@@ -1000,7 +1000,7 @@ void mdtUsbtmcTransferHandler::handleInitiateAbortBulkOutResponse(mdtUsbtmcContr
   // On any failed status, bulk-OUT fifo is empty and we are done
   if((status != mdtUsbtmcControlTransfer::USBTMCstatus::STATUS_SUCCESS) && (status != mdtUsbtmcControlTransfer::USBTMCstatus::STATUS_TRANSFER_NOT_IN_PROGRESS)){
     restoreControlTransferToPool(transfer, true);
-    pvStateMachineNew->process_event(SplitActionDoneEvent());
+    pvStateMachine->process_event(SplitActionDoneEvent());
     return;
   }
   // By STATUS_TRANSFER_NOT_IN_PROGRESS, let device some time and resubmit INITIATE_ABORT_BULK_OUT
@@ -1008,17 +1008,17 @@ void mdtUsbtmcTransferHandler::handleInitiateAbortBulkOutResponse(mdtUsbtmcContr
     std::this_thread::sleep_for(std::chrono::milliseconds(50));
     if(!transfer->submit()){
       ErrorOccuredEvent errorEvent(transfer->lastError());
-      pvStateMachineNew->process_event(errorEvent);
+      pvStateMachine->process_event(errorEvent);
       return;
     }
     return;
   }
   // Here we are in STATUS_SUCCESS - Lets begin check abort status
   Q_ASSERT(status == mdtUsbtmcControlTransfer::USBTMCstatus::STATUS_SUCCESS);
-  transfer->setupCheckAbortBulkOutStatus(pvBulkOutDescriptor.number(), 30000);
+  transfer->setupCheckAbortBulkOutStatus(pvBulkOutDescriptor.number(), 5000);
   if(!transfer->submit()){
     ErrorOccuredEvent errorEvent(transfer->lastError());
-    pvStateMachineNew->process_event(errorEvent);
+    pvStateMachine->process_event(errorEvent);
     return;
   }
 }
@@ -1035,7 +1035,7 @@ void mdtUsbtmcTransferHandler::handleCheckAbortBulkOutStatusResponse(mdtUsbtmcCo
     mdtError error(msg, mdtError::Error);
     MDT_ERROR_SET_SRC(error, "mdtUsbtmcTransferHandler");
     ErrorOccuredEvent errorEvent(error);
-    pvStateMachineNew->process_event(errorEvent);
+    pvStateMachine->process_event(errorEvent);
     return;
   }
 
@@ -1048,7 +1048,7 @@ void mdtUsbtmcTransferHandler::handleCheckAbortBulkOutStatusResponse(mdtUsbtmcCo
     std::this_thread::sleep_for(std::chrono::milliseconds(50));
     if(!transfer->submit()){
       ErrorOccuredEvent errorEvent(transfer->lastError());
-      pvStateMachineNew->process_event(errorEvent);
+      pvStateMachine->process_event(errorEvent);
       return;
     }
     return;
@@ -1056,7 +1056,7 @@ void mdtUsbtmcTransferHandler::handleCheckAbortBulkOutStatusResponse(mdtUsbtmcCo
   // Here we are done - Submit a CLEAR_HALT request for Bulk-OUT
   Q_ASSERT(status != mdtUsbtmcControlTransfer::USBTMCstatus::STATUS_PENDING);
   restoreControlTransferToPool(transfer, true);
-  pvStateMachineNew->process_event(ClearBulkOutEndpointHaltRequestedEvent());
+  pvStateMachine->process_event(ClearBulkOutEndpointHaltRequestedEvent());
 }
 
 void mdtUsbtmcTransferHandler::submitRetireBulkIRPs(mdtUsbtmcBulkTransfer* transfer)
@@ -1066,7 +1066,7 @@ void mdtUsbtmcTransferHandler::submitRetireBulkIRPs(mdtUsbtmcBulkTransfer* trans
   qDebug() << "Retire IRPs for transfer bTag " << transfer->bTag();
   if(!transfer->cancel()){
     ErrorOccuredEvent errorEvent(transfer->lastError());
-    pvStateMachineNew->process_event(errorEvent);
+    pvStateMachine->process_event(errorEvent);
     return;
   }
 }
@@ -1082,7 +1082,7 @@ void mdtUsbtmcTransferHandler::submitRequestDevDepMsgIn(mdtUsbtmcBulkTransfer *t
   transfer->setupRequestDevDepMsgIn(nextBulkOutbTag(), false, '\0', timeout);
   if(!transfer->submit()){
     ErrorOccuredEvent errorEvent(transfer->lastError());
-    pvStateMachineNew->process_event(errorEvent);
+    pvStateMachine->process_event(errorEvent);
     return;
   }
 }
@@ -1102,7 +1102,7 @@ void mdtUsbtmcTransferHandler::submitBulkInTransfer(unsigned int timeout, mdtUsb
   transfer->setSplitAction(action);
   if(!transfer->submit()){
     ErrorOccuredEvent errorEvent(transfer->lastError());
-    pvStateMachineNew->process_event(errorEvent);
+    pvStateMachine->process_event(errorEvent);
     return;
   }
   qDebug() << "Submit bulk-IN transfer - submit done";
@@ -1117,10 +1117,10 @@ void mdtUsbtmcTransferHandler::submitInitiateAbortBulkInRequest(uint8_t bTag)
   Q_ASSERT(controlTransfer != 0);
   // Setup transfer and submit it
   qDebug() << "Submitting INITIATE_ABORT_BULK_IN for bTag " << bTag << " ...";
-  controlTransfer->setupInitiateAbortBulkIn(bTag, pvBulkInDescriptor.number(), 30000);
+  controlTransfer->setupInitiateAbortBulkIn(bTag, pvBulkInDescriptor.number(), 5000);
   if(!controlTransfer->submit()){
     ErrorOccuredEvent errorEvent(controlTransfer->lastError());
-    pvStateMachineNew->process_event(errorEvent);
+    pvStateMachine->process_event(errorEvent);
     return;
   }
 }
@@ -1138,7 +1138,7 @@ void mdtUsbtmcTransferHandler::handleInitiateAbortBulkInResponse(mdtUsbtmcContro
     mdtError error(msg, mdtError::Error);
     MDT_ERROR_SET_SRC(error, "mdtUsbtmcTransferHandler");
     ErrorOccuredEvent errorEvent(error);
-    pvStateMachineNew->process_event(errorEvent);
+    pvStateMachine->process_event(errorEvent);
     return;
   }
 
@@ -1151,7 +1151,7 @@ void mdtUsbtmcTransferHandler::handleInitiateAbortBulkInResponse(mdtUsbtmcContro
     std::this_thread::sleep_for(std::chrono::milliseconds(50));
     if(!transfer->submit()){
       ErrorOccuredEvent errorEvent(transfer->lastError());
-      pvStateMachineNew->process_event(errorEvent);
+      pvStateMachine->process_event(errorEvent);
       return;
     }
     return;
@@ -1187,7 +1187,7 @@ void mdtUsbtmcTransferHandler::handleInitiateAbortBulkInResponse(mdtUsbtmcContro
   }
   pvBulkInTransferMutex.unlock();
   restoreControlTransferToPool(transfer, true);
-  pvStateMachineNew->process_event(SplitActionDoneEvent());
+  pvStateMachine->process_event(SplitActionDoneEvent());
 }
 
 void mdtUsbtmcTransferHandler::submitCheckAbortBulkInStatusRequest(mdtUsbtmcControlTransfer *controlTransfer)
@@ -1204,7 +1204,7 @@ void mdtUsbtmcTransferHandler::submitCheckAbortBulkInStatusRequest(mdtUsbtmcCont
   controlTransfer->setupCheckAbortBulkInStatus(pvBulkInDescriptor.number(), 30000);
   if(!controlTransfer->submit()){
     ErrorOccuredEvent errorEvent(controlTransfer->lastError());
-    pvStateMachineNew->process_event(errorEvent);
+    pvStateMachine->process_event(errorEvent);
     return;
   }
 }
@@ -1222,7 +1222,7 @@ void mdtUsbtmcTransferHandler::handleCheckAbortBulkInStatusResponse(mdtUsbtmcCon
     mdtError error(msg, mdtError::Error);
     MDT_ERROR_SET_SRC(error, "mdtUsbtmcTransferHandler");
     ErrorOccuredEvent errorEvent(error);
-    pvStateMachineNew->process_event(errorEvent);
+    pvStateMachine->process_event(errorEvent);
     return;
   }
 
@@ -1240,7 +1240,7 @@ void mdtUsbtmcTransferHandler::handleCheckAbortBulkInStatusResponse(mdtUsbtmcCon
       std::this_thread::sleep_for(std::chrono::milliseconds(50));
       if(!transfer->submit()){
         ErrorOccuredEvent errorEvent(transfer->lastError());
-        pvStateMachineNew->process_event(errorEvent);
+        pvStateMachine->process_event(errorEvent);
         return;
       }
     }
@@ -1249,7 +1249,7 @@ void mdtUsbtmcTransferHandler::handleCheckAbortBulkInStatusResponse(mdtUsbtmcCon
   // Here, we are done
   Q_ASSERT(status != mdtUsbtmcControlTransfer::USBTMCstatus::STATUS_PENDING);
   restoreControlTransferToPool(transfer, true);
-  pvStateMachineNew->process_event(SplitActionDoneEvent());
+  pvStateMachine->process_event(SplitActionDoneEvent());
 }
 
 void mdtUsbtmcTransferHandler::submitInitiateClearRequest()
@@ -1261,10 +1261,10 @@ void mdtUsbtmcTransferHandler::submitInitiateClearRequest()
   // Send a INITIATE_ABORT_BULK_IN control request
   Q_ASSERT(controlTransfer != 0);
   // Setup transfer and submit it
-  controlTransfer->setupInitiateClear(pvInterfaceDescriptor.bInterfaceNumber(), 30000);
+  controlTransfer->setupInitiateClear(pvInterfaceDescriptor.bInterfaceNumber(), 5000);
   if(!controlTransfer->submit()){
     ErrorOccuredEvent errorEvent(controlTransfer->lastError());
-    pvStateMachineNew->process_event(errorEvent);
+    pvStateMachine->process_event(errorEvent);
     return;
   }
 }
@@ -1282,7 +1282,7 @@ void mdtUsbtmcTransferHandler::handleInitiateClearResponse(mdtUsbtmcControlTrans
     mdtError error(msg, mdtError::Error);
     MDT_ERROR_SET_SRC(error, "mdtUsbtmcTransferHandler");
     ErrorOccuredEvent errorEvent(error);
-    pvStateMachineNew->process_event(errorEvent);
+    pvStateMachine->process_event(errorEvent);
     return;
   }
 
@@ -1291,7 +1291,7 @@ void mdtUsbtmcTransferHandler::handleInitiateClearResponse(mdtUsbtmcControlTrans
   // If status is different than STATUS_SUCCESS, we are done
   if(transfer->usbtmcStatus() != mdtUsbtmcControlTransfer::USBTMCstatus::STATUS_SUCCESS){
     restoreControlTransferToPool(transfer, true);
-    pvStateMachineNew->process_event(SplitActionDoneEvent());
+    pvStateMachine->process_event(SplitActionDoneEvent());
     return;
   }
   // Submit CHECK_CLEAR_STATUS request
@@ -1309,10 +1309,10 @@ void mdtUsbtmcTransferHandler::submitCheckClearStatusRequest(mdtUsbtmcControlTra
   Q_ASSERT(controlTransfer != 0);
   // Setup transfer and submit it
   qDebug() << "Submitting CHECK_CLEAR_STATUS ...";
-  controlTransfer->setupCheckClearStatus(pvInterfaceDescriptor.bInterfaceNumber(), 30000);
+  controlTransfer->setupCheckClearStatus(pvInterfaceDescriptor.bInterfaceNumber(), 5000);
   if(!controlTransfer->submit()){
     ErrorOccuredEvent errorEvent(controlTransfer->lastError());
-    pvStateMachineNew->process_event(errorEvent);
+    pvStateMachine->process_event(errorEvent);
     return;
   }
 }
@@ -1330,7 +1330,7 @@ void mdtUsbtmcTransferHandler::handleCheckClearStatusResponse(mdtUsbtmcControlTr
     mdtError error(msg, mdtError::Error);
     MDT_ERROR_SET_SRC(error, "mdtUsbtmcTransferHandler");
     ErrorOccuredEvent errorEvent(error);
-    pvStateMachineNew->process_event(errorEvent);
+    pvStateMachine->process_event(errorEvent);
     return;
   }
 
@@ -1358,7 +1358,7 @@ void mdtUsbtmcTransferHandler::handleCheckClearStatusResponse(mdtUsbtmcControlTr
   Q_ASSERT(transfer->usbtmcStatus() != mdtUsbtmcControlTransfer::USBTMCstatus::STATUS_PENDING);
   restoreControlTransferToPool(transfer, true);
   // handleControlTransferComplete() will return to Running state
-  pvStateMachineNew->process_event(ClearBulkOutEndpointHaltRequestedEvent());
+  pvStateMachine->process_event(ClearBulkOutEndpointHaltRequestedEvent());
 }
 
 void mdtUsbtmcTransferHandler::submitCancelAllInterruptInTransfers(bool lockMutex)
@@ -1374,13 +1374,11 @@ void mdtUsbtmcTransferHandler::submitCancelAllInterruptInTransfers(bool lockMute
     Q_ASSERT(transfer != 0);
     if(!transfer->cancel()){
       ErrorOccuredEvent errorEvent(transfer->lastError());
-      pvStateMachineNew->process_event(errorEvent);
+      pvStateMachine->process_event(errorEvent);
       return;
     }
   }
 }
-
-
 
 bool mdtUsbtmcTransferHandler::getCapabilities(uint8_t interfaceNumber, unsigned int timeout)
 {
@@ -1452,7 +1450,7 @@ bool mdtUsbtmcTransferHandler::processSyncControlTransfer(mdtUsbtmcControlTransf
       if(!transfer->cancel(true)){
         std::lock_guard<std::mutex> lelg(pvLastErrorMutex);
         pvLastError = transfer->lastError();
-        pvPort.thSetError(pvLastError);
+        pvPort.setError(pvLastError);
         return false;
       }
       // Wait on cancel completion

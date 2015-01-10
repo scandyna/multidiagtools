@@ -47,11 +47,11 @@ class mdtUsbtmcPort : public QObject
    */
   enum class TransactionState_t
   {
-    Pending = 0,  /*!< Transaction is in progress */
-    Done,         /*!< Transaction done without error */
-    Aborted,      /*!< Transaction aborted */
-    Error,        /*!< Transaction finished because a error occured */
-    Timeout       /*!< Transaction timed out */
+    Pending = 0,        /*!< Transaction is in progress */
+    Done,               /*!< Transaction done without error */
+    Aborted,            /*!< Transaction aborted */
+    Error,              /*!< Transaction finished because a error occured */
+    DeviceDisconnected  /*!< Device has been disconnected (note: currently not properly reported) */
   };
 
   /*! \brief Constructor
@@ -116,50 +116,18 @@ class mdtUsbtmcPort : public QObject
    *
    * Note: used by mdtUsbtmcTransferHandler
    */
-  void thSetBulkTransactionDone()
+  void thSetTransactionDone()
   {
-    emit bulkTransactionFinished(TransactionState_t::Done);
+    emit transactionFinished(TransactionState_t::Done);
   }
 
   /*! \brief Signal bulk transaction aborted
    *
    * Note: used by mdtUsbtmcTransferHandler
    */
-  void thSetBulkTransactionAborted()
+  void thSetTransactionAborted()
   {
-    emit bulkTransactionFinished(TransactionState_t::Aborted);
-  }
-
-  /*! \brief Signal control transaction done
-   *
-   * Note: used by mdtUsbtmcTransferHandler
-   */
-//   void thSetControlTransactionDone()
-//   {
-//     emit controlTransactionFinished(TransactionState_t::Done);
-//   }
-
-  /*! \brief Signal transaction timed out
-   *
-   * Note: used by mdtUsbtmcTransferHandler
-   */
-  void thSetTimeoutOccured()
-  {
-    emit bulkTransactionFinished(TransactionState_t::Timeout);
-    ///emit controlTransactionFinished(TransactionState_t::Timeout);
-  }
-
-  /*! \brief Signal error
-   *
-   * Note: used by mdtUsbtmcTransferHandler
-   */
-  void thSetError(const mdtError & error)
-  {
-    pvLastErrorMutex.lock();
-    pvLastError = error;
-    pvLastErrorMutex.unlock();
-    emit bulkTransactionFinished(TransactionState_t::Error);
-    ///emit controlTransactionFinished(TransactionState_t::Error);
+    emit transactionFinished(TransactionState_t::Aborted);
   }
 
   /*! \brief Signal device disconnected
@@ -168,41 +136,45 @@ class mdtUsbtmcPort : public QObject
    */
   void thSetDeviceDisconnected()
   {
-    /// \todo We should add a DeviceDisconnected state ..
-    emit bulkTransactionFinished(TransactionState_t::Error);
+    emit transactionFinished(TransactionState_t::DeviceDisconnected);
   }
+
+  /*! \brief Signal error
+   *
+   * Note: used by mdtUsbtmcTransferHandler
+   */
+//   void thSetError(const mdtError & error)
+//   {
+//     pvLastErrorMutex.lock();
+//     pvLastError = error;
+//     pvLastErrorMutex.unlock();
+//     emit transactionFinished(TransactionState_t::Error);
+//   }
 
  signals:
 
-  /*! \brief Signal that bulk transaction is finished
-   * \sa setBulkTransactionState().
+  /*! \brief Signal that transaction is finished
+   * \sa setTransactionState().
    */
-  void bulkTransactionFinished(TransactionState_t s);
+  void transactionFinished(TransactionState_t s);
 
-  /*! \brief Signal that control transaction is finished
-   * \sa setControlTransactionState().
-   */
-  ///void controlTransactionFinished(TransactionState_t s);
-
- private slots:
-
-  /*! \brief Set Bulk I/O transaction state
-   *
-   * Will also generate a event in main thread and wake up QCoreApplication::processEvents()
-   */
-  void setBulkTransactionState(TransactionState_t s);
-
-  /*! \brief Set control transaction state
-   *
-   * Will also generate a event in main thread and wake up QCoreApplication::processEvents()
-   */
-  ///void setControlTransactionState(TransactionState_t s);
+ public slots:
 
   /*! \brief Set error
    *
    * Will also generate a event in main thread and wake up QCoreApplication::processEvents()
+   *
+   * Note: used by mdtUsbtmcTransferHandler and mdtUsbtmcPortThread
    */
   void setError(const mdtError & error);
+
+ private slots:
+
+  /*! \brief Set transaction state
+   *
+   * Will also generate a event in main thread and wake up QCoreApplication::processEvents()
+   */
+  void setTransactionState(TransactionState_t s);
 
   /*! \brief Set pvWaitTimeReached flag
    *
@@ -212,19 +184,12 @@ class mdtUsbtmcPort : public QObject
 
  private:
 
-  /*! \brief Wait until bulk transaction is finished
+  /*! \brief Wait until transaction is finished
    *
    * After this function returns,
-   *  caller must check pvBulkTransactionState
+   *  caller must check pvTransactionState
    */
-  void waitBulkTransactionFinished();
-
-  /*! \brief Wait until control transaction is finished
-   *
-   * Return false if transaction is no more pending,
-   *  and not done
-   */
-  ///bool waitControlTransactionFinished();
+  void waitTransactionFinished();
 
   /*! \brief Build port thread
    *
@@ -241,15 +206,12 @@ class mdtUsbtmcPort : public QObject
   Q_DISABLE_COPY(mdtUsbtmcPort);
 
   libusb_context *pvUsbContext;
-  ///libusb_device_handle *pvDeviceHandle;
   mdtUsbtmcTransferHandler *pvTransferHandler;
   mdtUsbtmcPortThreadNew *pvThread;
   mdtUsbDeviceList *pvDeviceList;
   mdtError pvLastError;
   std::mutex pvLastErrorMutex;
-  ///mdtUsbInterfaceDescriptor pvInterfaceDescriptor;
-  TransactionState_t pvBulkTransactionState;
-  ///TransactionState_t pvControlTransactionState;
+  TransactionState_t pvTransactionState;
   bool pvWaitTimeReached; // Used by wait()
 };
 

@@ -35,6 +35,12 @@ add_executable(mdtframecodectest "mdtFrameCodecTest.cpp" ${MDT_FRAME_CODEC_TEST_
 target_link_libraries(mdtframecodectest "mdtutils${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtframecodectest "mdttest")
 
+# * mdtCodecTest executable *
+QT4_WRAP_CPP(MDT_CODEC_TEST_MOC "mdtCodecTest.h")
+add_executable(mdtcodectest "mdtCodecTest.cpp" ${MDT_CODEC_TEST_MOC})
+target_link_libraries(mdtcodectest "mdtutils${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtcodectest "mdttest")
+
 # * mdtUicNumberTest executable *
 QT4_WRAP_CPP(MDT_UIC_NUMBER_TEST_MOC "mdtUicNumberTest.h")
 add_executable(mdtuicnumbertest "mdtUicNumberTest.cpp" ${MDT_UIC_NUMBER_TEST_MOC})
@@ -46,6 +52,12 @@ QT4_WRAP_CPP(MDT_FILE_TEST_MOC "mdtFileTest.h")
 add_executable(mdtfiletest "mdtFileTest.cpp" ${MDT_FILE_TEST_MOC})
 target_link_libraries(mdtfiletest "mdtutils${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtfiletest "mdttest")
+
+# * mdtValueTest executable *
+QT4_WRAP_CPP(MDT_VALUE_TEST_MOC "mdtValueTest.h")
+add_executable(mdtvaluetest "mdtValueTest.cpp" ${MDT_VALUE_TEST_MOC})
+target_link_libraries(mdtvaluetest "mdtutils${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtvaluetest "mdttest")
 
 # * mdtIoTest executable *
 QT4_WRAP_CPP(MDT_IO_TEST_MOC "mdtIoTest.h")

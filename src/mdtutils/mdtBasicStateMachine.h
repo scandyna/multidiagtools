@@ -31,6 +31,8 @@
  *
  * For complex state machines, see mdtStateMachine,
  *  wich is based on QStateMachine.
+ *
+ * \todo Seems obselete !
  */
 template<typename S>
 class mdtBasicStateMachine
