@@ -116,7 +116,7 @@ Definition at line 28 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
 
 
 
-References mdt\-Sql\-Record\-::contains().
+References mdt\-Cl\-Article\-Connector\-Data\-::clear\-Values(), mdt\-Sql\-Record\-::clear\-Values(), and mdt\-Sql\-Record\-::contains().
 
 
 
@@ -151,7 +151,7 @@ data must contains following fields\-:
 \end{DoxyPrecond}
 
 
-Definition at line 87 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
+Definition at line 90 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
 
 
 
@@ -174,7 +174,7 @@ Get article connector data.
 
 
 
-Definition at line 163 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
+Definition at line 166 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
 
 \hypertarget{classmdt_cl_unit_connector_data_a55918c459b5d4c67bbe12cffe9d006df}{\index{mdt\-Cl\-Unit\-Connector\-Data@{mdt\-Cl\-Unit\-Connector\-Data}!clear@{clear}}
 \index{clear@{clear}!mdtClUnitConnectorData@{mdt\-Cl\-Unit\-Connector\-Data}}
@@ -193,7 +193,7 @@ Reimplemented from \hyperlink{classmdt_sql_record_ad1058337837b2891d2e282001ad88
 
 
 
-Definition at line 63 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
+Definition at line 66 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
 
 
 
@@ -216,7 +216,7 @@ Reimplemented from \hyperlink{classmdt_sql_record_a0bfc0fc265c6b0048698e2f5d4f84
 
 
 
-Definition at line 55 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
+Definition at line 58 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
 
 
 
@@ -236,7 +236,7 @@ Get connection data for given connection I\-D.
 
 Return the connection data for witch Id\-\_\-\-P\-K matches given connection\-Id. ok will be set to false if connection\-Id was not found. 
 
-Definition at line 123 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
+Definition at line 126 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
 
 \hypertarget{classmdt_cl_unit_connector_data_a10ea3c0102f56aa77d6a1b7ffa30151b}{\index{mdt\-Cl\-Unit\-Connector\-Data@{mdt\-Cl\-Unit\-Connector\-Data}!connection\-Data\-List@{connection\-Data\-List}}
 \index{connection\-Data\-List@{connection\-Data\-List}!mdtClUnitConnectorData@{mdt\-Cl\-Unit\-Connector\-Data}}
@@ -251,7 +251,7 @@ Get list of connection data.
 
 
 
-Definition at line 77 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
+Definition at line 80 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
 
 
 
@@ -270,7 +270,7 @@ Get list of connection data.
 
 
 
-Definition at line 82 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
+Definition at line 85 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
 
 \hypertarget{classmdt_cl_unit_connector_data_a2b454946f0f09287ddd34b692ccc1c1b}{\index{mdt\-Cl\-Unit\-Connector\-Data@{mdt\-Cl\-Unit\-Connector\-Data}!connector\-Data@{connector\-Data}}
 \index{connector\-Data@{connector\-Data}!mdtClUnitConnectorData@{mdt\-Cl\-Unit\-Connector\-Data}}
@@ -285,7 +285,11 @@ Get connector data (from Connector\-\_\-tbl)
 
 
 
-Definition at line 150 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
+Definition at line 153 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
+
+
+
+Referenced by mdt\-Cl\-Link\-::can\-Connect\-Connectors().
 
 \hypertarget{classmdt_cl_unit_connector_data_a2b805d341aaffbf1bb5235ef753e58b6}{\index{mdt\-Cl\-Unit\-Connector\-Data@{mdt\-Cl\-Unit\-Connector\-Data}!is\-Based\-On\-Article\-Connector@{is\-Based\-On\-Article\-Connector}}
 \index{is\-Based\-On\-Article\-Connector@{is\-Based\-On\-Article\-Connector}!mdtClUnitConnectorData@{mdt\-Cl\-Unit\-Connector\-Data}}
@@ -300,7 +304,7 @@ Check if unit connector is based on a article connector.
 
 
 
-Definition at line 168 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
+Definition at line 171 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
 
 
 
@@ -319,7 +323,7 @@ Check if unit connector is based on a connector (from Connector\-\_\-tbl)
 
 
 
-Definition at line 173 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
+Definition at line 176 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
 
 
 
@@ -338,7 +342,7 @@ Set article connector data.
 
 Will also update Connector\-\_\-\-Id\-\_\-\-F\-K and Article\-Connector\-\_\-\-Id\-\_\-\-F\-K 
 
-Definition at line 155 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
+Definition at line 158 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
 
 
 
@@ -367,7 +371,7 @@ False if connection\-Id was not found.
 \end{DoxyReturn}
 
 
-Definition at line 105 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
+Definition at line 108 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
 
 
 
@@ -391,7 +395,7 @@ By using this method, the caller is responsible to give valid records, that cont
 \end{DoxySeeAlso}
 
 
-Definition at line 72 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
+Definition at line 75 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
 
 \hypertarget{classmdt_cl_unit_connector_data_af7530002a396d3e200fa0e3ab7cb1185}{\index{mdt\-Cl\-Unit\-Connector\-Data@{mdt\-Cl\-Unit\-Connector\-Data}!set\-Connector\-Data@{set\-Connector\-Data}}
 \index{set\-Connector\-Data@{set\-Connector\-Data}!mdtClUnitConnectorData@{mdt\-Cl\-Unit\-Connector\-Data}}
@@ -406,7 +410,7 @@ Set connector data.
 
 Will also update Connector\-\_\-\-Id\-\_\-\-F\-K and set Article\-Connector\-\_\-\-Id\-\_\-\-F\-K to Null. 
 
-Definition at line 142 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
+Definition at line 145 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
 
 
 
@@ -434,7 +438,7 @@ Setup fields from Unit\-Connector\-\_\-tbl.
 \end{DoxyParams}
 
 
-Definition at line 39 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
+Definition at line 42 of file mdt\-Cl\-Unit\-Connector\-Data.\-cpp.
 
 
 

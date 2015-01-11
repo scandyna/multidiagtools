@@ -1,0 +1,15 @@
+<map id="src/mdtport/mdtUsbtmcTransferHandler.h" name="src/mdtport/mdtUsbtmcTransferHandler.h">
+<area shape="rect" id="node2" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="148,320,229,347"/>
+<area shape="rect" id="node7" href="$mdt_usb_transfer_pool_8h.html" title="mdtUsbTransferPool.h" alt="" coords="1173,171,1325,197"/>
+<area shape="rect" id="node8" href="$mdt_usb_endpoint_descriptor_8h.html" title="mdtUsbEndpointDescriptor.h" alt="" coords="1103,245,1293,272"/>
+<area shape="rect" id="node14" href="$mdt_usb_device_descriptor_8h.html" title="mdtUsbDeviceDescriptor.h" alt="" coords="651,96,831,123"/>
+<area shape="rect" id="node17" href="$mdt_usb_interface_descriptor_8h.html" title="mdtUsbInterfaceDescriptor.h" alt="" coords="805,171,995,197"/>
+<area shape="rect" id="node18" href="$mdt_usb_transfer_8h.html" title="mdtUsbTransfer.h" alt="" coords="1573,245,1699,272"/>
+<area shape="rect" id="node19" href="$mdt_usbtmc_control_transfer_8h.html" title="mdtUsbtmcControlTransfer.h" alt="" coords="1866,96,2056,123"/>
+<area shape="rect" id="node22" href="$mdt_usbtmc_bulk_transfer_8h.html" title="mdtUsbtmcBulkTransfer.h" alt="" coords="1594,96,1768,123"/>
+<area shape="rect" id="node24" href="$mdt_usbtmc_message_8h.html" title="mdtUsbtmcMessage.h" alt="" coords="2180,245,2333,272"/>
+<area shape="rect" id="node26" href="$mdt_usbtmc_interrupt_transfer_8h.html" title="mdtUsbtmcInterruptTransfer.h" alt="" coords="1401,171,1599,197"/>
+<area shape="rect" id="node16" href="$mdt_usb_config_descriptor_8h.html" title="mdtUsbConfigDescriptor.h" alt="" coords="501,171,677,197"/>
+<area shape="rect" id="node20" href="$mdt_usb_control_transfer_8h.html" title="mdtUsbControlTransfer.h" alt="" coords="1877,171,2045,197"/>
+<area shape="rect" id="node23" href="$mdt_usbtmc_frame_8h.html" title="mdtUsbtmcFrame.h" alt="" coords="2071,171,2209,197"/>
+</map>

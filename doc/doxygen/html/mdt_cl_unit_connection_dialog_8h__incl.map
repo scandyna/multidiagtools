@@ -1,6 +1,6 @@
 <map id="src/mdttools/mdttesttool/mdtcablelist/mdtClUnitConnectionDialog.h" name="src/mdttools/mdttesttool/mdtcablelist/mdtClUnitConnectionDialog.h">
-<area shape="rect" id="node3" href="$mdt_cl_unit_connection_data_8h.html" title="mdtClUnitConnectionData.h" alt="" coords="335,117,521,147"/>
-<area shape="rect" id="node5" href="$mdt_sql_record_8h.html" title="mdtSqlRecord.h" alt="" coords="339,272,453,301"/>
-<area shape="rect" id="node28" href="$mdt_cl_article_connection_data_8h.html" title="mdtClArticleConnectionData.h" alt="" coords="329,195,527,224"/>
-<area shape="rect" id="node7" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="136,349,219,379"/>
+<area shape="rect" id="node2" href="$mdt_cl_unit_connection_data_8h.html" title="mdtClUnitConnectionData.h" alt="" coords="340,109,527,136"/>
+<area shape="rect" id="node3" href="$mdt_sql_record_8h.html" title="mdtSqlRecord.h" alt="" coords="343,259,459,285"/>
+<area shape="rect" id="node15" href="$mdt_cl_article_connection_data_8h.html" title="mdtClArticleConnectionData.h" alt="" coords="334,184,532,211"/>
+<area shape="rect" id="node4" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="136,333,217,360"/>
 </map>

@@ -1,0 +1,347 @@
+\hypertarget{structmdt_usbtmc_transfer_handler_state_machine_1_1_running__}{\section{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-:\-:Running\-\_\- Struct Reference}
+\label{structmdt_usbtmc_transfer_handler_state_machine_1_1_running__}\index{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-}}
+}
+
+
+Running submachine.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-:\-:Running\-\_\-\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=216pt]{structmdt_usbtmc_transfer_handler_state_machine_1_1_running____inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-:\-:Running\-\_\-\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=339pt]{structmdt_usbtmc_transfer_handler_state_machine_1_1_running____coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___1_1_aborting_bulk_in}{Aborting\-Bulk\-In}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___1_1_aborting_bulk_in}{Aborting\-Bulk\-In} state. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___1_1_aborting_bulk_out}{Aborting\-Bulk\-Out}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___1_1_aborting_bulk_out}{Aborting\-Bulk\-Out} state. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___1_1_clearing_bulk_in_endpoint_halt}{Clearing\-Bulk\-In\-Endpoint\-Halt}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___1_1_clearing_bulk_in_endpoint_halt}{Clearing\-Bulk\-In\-Endpoint\-Halt} state. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___1_1_clearing_bulk_io}{Clearing\-Bulk\-Io}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___1_1_clearing_bulk_io}{Clearing\-Bulk\-Io} state. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___1_1_clearing_bulk_out_endpoint_halt}{Clearing\-Bulk\-Out\-Endpoint\-Halt}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___1_1_clearing_bulk_out_endpoint_halt}{Clearing\-Bulk\-Out\-Endpoint\-Halt} state. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___1_1_processing}{Processing}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___1_1_processing}{Processing} state. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___1_1transition__table}{transition\-\_\-table}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running__}{Running\-\_\-} submachine transition table. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___1_1_processing}{Processing} \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___a518a24b7247d03bb8790c6df63c3cd0e}{initial\-\_\-state}
+\begin{DoxyCompactList}\small\item\em Initial state of Running submachine. \end{DoxyCompactList}\item 
+typedef \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running__}{Running\-\_\-} \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___a1166c4cb073ea7aceda7c9e98be4f7db}{rsm}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___a2ea73aebf54ff32bf31fae260ddf94d8}{Running\-\_\-} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___abb3e68093807b1279c11519ef302f0ab}{Running\-\_\-} (\hyperlink{classmdt_usbtmc_transfer_handler}{mdt\-Usbtmc\-Transfer\-Handler} $\ast$th)
+\begin{DoxyCompactList}\small\item\em Concrete constructor. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename Event , typename F\-S\-M $>$ }\\void \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___aa6ddcb0cc2777ae64973ce544752b2db}{on\-\_\-entry} (Event const \&, F\-S\-M \&fsm)
+\begin{DoxyCompactList}\small\item\em Running submachine entry/. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename Event , typename F\-S\-M $>$ }\\void \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___a2594fbe72361fb9c3850e576b0631a9d}{on\-\_\-exit} (Event const \&, F\-S\-M \&)
+\begin{DoxyCompactList}\small\item\em Running submachine exit/. \end{DoxyCompactList}\item 
+void \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___af6ee8aeff0026b5d6eccd931f76340db}{handle\-Bulk\-Out\-Transfer\-Completed} (\hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_bulk_out_transfer_completed_event}{Bulk\-Out\-Transfer\-Completed\-Event} const \&event)
+\begin{DoxyCompactList}\small\item\em Handle Bulk-\/\-O\-U\-T transfer completed action. \end{DoxyCompactList}\item 
+void \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___a299e3d26a8ac80e49e14dac52f2fb45f}{restore\-Bulk\-Out\-Transfer\-S\-A} (\hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_bulk_out_transfer_completed_event}{Bulk\-Out\-Transfer\-Completed\-Event} const \&event)
+\begin{DoxyCompactList}\small\item\em Restore Bulk-\/\-O\-U\-T transfer back to pool. \end{DoxyCompactList}\item 
+void \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___a993fc53403ba9f2ab3202d6d17e021ae}{restore\-Cancelled\-Bulk\-Out\-Transfer} (\hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_bulk_out_transfer_completed_event}{Bulk\-Out\-Transfer\-Completed\-Event} const \&event)
+\begin{DoxyCompactList}\small\item\em Restor Bulk-\/\-O\-U\-T transfer to pool if cancelled. \end{DoxyCompactList}\item 
+void \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___af4be1bad5cb9614f16f5b65a9111942f}{begin\-Abort\-Bulk\-Out} (\hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_abort_bulk_out_requested_event}{Abort\-Bulk\-Out\-Requested\-Event} const \&event)
+\begin{DoxyCompactList}\small\item\em Begin abort a Bulk-\/\-O\-U\-T transfer. \end{DoxyCompactList}\item 
+void \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___a069cf28e48832118c8c056718d7766ef}{handle\-Bulk\-In\-Transfer\-Completed} (\hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_bulk_in_transfer_completed_event}{Bulk\-In\-Transfer\-Completed\-Event} const \&event)
+\begin{DoxyCompactList}\small\item\em Handle Bulk-\/\-I\-N transfer completed action. \end{DoxyCompactList}\item 
+void \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___a44c7d636530d17a17293faac228629d5}{restore\-Bulk\-In\-Transfer\-S\-A} (\hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_bulk_in_transfer_completed_event}{Bulk\-In\-Transfer\-Completed\-Event} const \&event)
+\begin{DoxyCompactList}\small\item\em Restore Bulk-\/\-I\-N transfer back to pool. \end{DoxyCompactList}\item 
+void \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___a3b6531247a7ba3c21c05af6087f53d9a}{begin\-Abort\-Bulk\-In} (\hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_abort_bulk_in_requested_event}{Abort\-Bulk\-In\-Requested\-Event} const \&event)
+\begin{DoxyCompactList}\small\item\em Begin abort a Bulk-\/\-I\-N transfer. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename Event\-Type $>$ }\\void \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___ac06767040104b67f2d27cd35be8b962d}{notify\-Bulk\-Io\-Aborted} (Event\-Type const \&)
+\begin{DoxyCompactList}\small\item\em Notify that Bulk I/\-O was aborted. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_usbtmc_transfer_handler}{mdt\-Usbtmc\-Transfer\-Handler} $\ast$ \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___ad40e581cd472f8b343d6ab3ba790bd89}{transfer\-Handler}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Running submachine. 
+
+Definition at line 220 of file mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine.\-h.
+
+
+
+\subsection{Member Typedef Documentation}
+\hypertarget{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___a518a24b7247d03bb8790c6df63c3cd0e}{\index{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-}!initial\-\_\-state@{initial\-\_\-state}}
+\index{initial\-\_\-state@{initial\-\_\-state}!mdtUsbtmcTransferHandlerStateMachine::Running_@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-}}
+\subsubsection[{initial\-\_\-state}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Processing} {\bf mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-\-::initial\-\_\-state}}}\label{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___a518a24b7247d03bb8790c6df63c3cd0e}
+
+
+Initial state of Running submachine. 
+
+
+
+Definition at line 485 of file mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine.\-h.
+
+\hypertarget{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___a1166c4cb073ea7aceda7c9e98be4f7db}{\index{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-}!rsm@{rsm}}
+\index{rsm@{rsm}!mdtUsbtmcTransferHandlerStateMachine::Running_@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-}}
+\subsubsection[{rsm}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Running\-\_\-} {\bf mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-\-::rsm}}}\label{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___a1166c4cb073ea7aceda7c9e98be4f7db}
+
+
+Definition at line 488 of file mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___a2ea73aebf54ff32bf31fae260ddf94d8}{\index{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-}!Running\-\_\-@{Running\-\_\-}}
+\index{Running\-\_\-@{Running\-\_\-}!mdtUsbtmcTransferHandlerStateMachine::Running_@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-}}
+\subsubsection[{Running\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-\-::\-Running\-\_\- (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___a2ea73aebf54ff32bf31fae260ddf94d8}
+
+
+Default constructor. 
+
+
+
+Definition at line 224 of file mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine.\-h.
+
+\hypertarget{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___abb3e68093807b1279c11519ef302f0ab}{\index{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-}!Running\-\_\-@{Running\-\_\-}}
+\index{Running\-\_\-@{Running\-\_\-}!mdtUsbtmcTransferHandlerStateMachine::Running_@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-}}
+\subsubsection[{Running\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-\-::\-Running\-\_\- (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Usbtmc\-Transfer\-Handler} $\ast$}]{th}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___abb3e68093807b1279c11519ef302f0ab}
+
+
+Concrete constructor. 
+
+
+
+Definition at line 231 of file mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___a3b6531247a7ba3c21c05af6087f53d9a}{\index{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-}!begin\-Abort\-Bulk\-In@{begin\-Abort\-Bulk\-In}}
+\index{begin\-Abort\-Bulk\-In@{begin\-Abort\-Bulk\-In}!mdtUsbtmcTransferHandlerStateMachine::Running_@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-}}
+\subsubsection[{begin\-Abort\-Bulk\-In}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-\-::begin\-Abort\-Bulk\-In (
+\begin{DoxyParamCaption}
+\item[{{\bf Abort\-Bulk\-In\-Requested\-Event} const \&}]{event}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___a3b6531247a7ba3c21c05af6087f53d9a}
+
+
+Begin abort a Bulk-\/\-I\-N transfer. 
+
+
+
+Definition at line 323 of file mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine.\-h.
+
+
+
+References mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Abort\-Bulk\-In\-Requested\-Event\-::transfer.
+
+\hypertarget{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___af4be1bad5cb9614f16f5b65a9111942f}{\index{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-}!begin\-Abort\-Bulk\-Out@{begin\-Abort\-Bulk\-Out}}
+\index{begin\-Abort\-Bulk\-Out@{begin\-Abort\-Bulk\-Out}!mdtUsbtmcTransferHandlerStateMachine::Running_@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-}}
+\subsubsection[{begin\-Abort\-Bulk\-Out}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-\-::begin\-Abort\-Bulk\-Out (
+\begin{DoxyParamCaption}
+\item[{{\bf Abort\-Bulk\-Out\-Requested\-Event} const \&}]{event}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___af4be1bad5cb9614f16f5b65a9111942f}
+
+
+Begin abort a Bulk-\/\-O\-U\-T transfer. 
+
+
+
+Definition at line 297 of file mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine.\-h.
+
+
+
+References mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Abort\-Bulk\-Out\-Requested\-Event\-::transfer.
+
+\hypertarget{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___a069cf28e48832118c8c056718d7766ef}{\index{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-}!handle\-Bulk\-In\-Transfer\-Completed@{handle\-Bulk\-In\-Transfer\-Completed}}
+\index{handle\-Bulk\-In\-Transfer\-Completed@{handle\-Bulk\-In\-Transfer\-Completed}!mdtUsbtmcTransferHandlerStateMachine::Running_@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-}}
+\subsubsection[{handle\-Bulk\-In\-Transfer\-Completed}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-\-::handle\-Bulk\-In\-Transfer\-Completed (
+\begin{DoxyParamCaption}
+\item[{{\bf Bulk\-In\-Transfer\-Completed\-Event} const \&}]{event}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___a069cf28e48832118c8c056718d7766ef}
+
+
+Handle Bulk-\/\-I\-N transfer completed action. 
+
+
+
+Definition at line 306 of file mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine.\-h.
+
+
+
+References mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Bulk\-In\-Transfer\-Completed\-Event\-::transfer.
+
+\hypertarget{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___af6ee8aeff0026b5d6eccd931f76340db}{\index{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-}!handle\-Bulk\-Out\-Transfer\-Completed@{handle\-Bulk\-Out\-Transfer\-Completed}}
+\index{handle\-Bulk\-Out\-Transfer\-Completed@{handle\-Bulk\-Out\-Transfer\-Completed}!mdtUsbtmcTransferHandlerStateMachine::Running_@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-}}
+\subsubsection[{handle\-Bulk\-Out\-Transfer\-Completed}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-\-::handle\-Bulk\-Out\-Transfer\-Completed (
+\begin{DoxyParamCaption}
+\item[{{\bf Bulk\-Out\-Transfer\-Completed\-Event} const \&}]{event}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___af6ee8aeff0026b5d6eccd931f76340db}
+
+
+Handle Bulk-\/\-O\-U\-T transfer completed action. 
+
+
+
+Definition at line 264 of file mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine.\-h.
+
+
+
+References mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Bulk\-Out\-Transfer\-Completed\-Event\-::transfer.
+
+\hypertarget{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___ac06767040104b67f2d27cd35be8b962d}{\index{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-}!notify\-Bulk\-Io\-Aborted@{notify\-Bulk\-Io\-Aborted}}
+\index{notify\-Bulk\-Io\-Aborted@{notify\-Bulk\-Io\-Aborted}!mdtUsbtmcTransferHandlerStateMachine::Running_@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-}}
+\subsubsection[{notify\-Bulk\-Io\-Aborted}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Event\-Type $>$ void mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-\-::notify\-Bulk\-Io\-Aborted (
+\begin{DoxyParamCaption}
+\item[{Event\-Type const \&}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___ac06767040104b67f2d27cd35be8b962d}
+
+
+Notify that Bulk I/\-O was aborted. 
+
+
+
+Definition at line 333 of file mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine.\-h.
+
+\hypertarget{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___aa6ddcb0cc2777ae64973ce544752b2db}{\index{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-}!on\-\_\-entry@{on\-\_\-entry}}
+\index{on\-\_\-entry@{on\-\_\-entry}!mdtUsbtmcTransferHandlerStateMachine::Running_@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-}}
+\subsubsection[{on\-\_\-entry}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Event , typename F\-S\-M $>$ void mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-\-::on\-\_\-entry (
+\begin{DoxyParamCaption}
+\item[{Event const \&}]{, }
+\item[{F\-S\-M \&}]{fsm}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___aa6ddcb0cc2777ae64973ce544752b2db}
+
+
+Running submachine entry/. 
+
+
+
+Definition at line 240 of file mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine.\-h.
+
+\hypertarget{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___a2594fbe72361fb9c3850e576b0631a9d}{\index{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-}!on\-\_\-exit@{on\-\_\-exit}}
+\index{on\-\_\-exit@{on\-\_\-exit}!mdtUsbtmcTransferHandlerStateMachine::Running_@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-}}
+\subsubsection[{on\-\_\-exit}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Event , typename F\-S\-M $>$ void mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-\-::on\-\_\-exit (
+\begin{DoxyParamCaption}
+\item[{Event const \&}]{, }
+\item[{F\-S\-M \&}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___a2594fbe72361fb9c3850e576b0631a9d}
+
+
+Running submachine exit/. 
+
+
+
+Definition at line 253 of file mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine.\-h.
+
+\hypertarget{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___a44c7d636530d17a17293faac228629d5}{\index{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-}!restore\-Bulk\-In\-Transfer\-S\-A@{restore\-Bulk\-In\-Transfer\-S\-A}}
+\index{restore\-Bulk\-In\-Transfer\-S\-A@{restore\-Bulk\-In\-Transfer\-S\-A}!mdtUsbtmcTransferHandlerStateMachine::Running_@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-}}
+\subsubsection[{restore\-Bulk\-In\-Transfer\-S\-A}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-\-::restore\-Bulk\-In\-Transfer\-S\-A (
+\begin{DoxyParamCaption}
+\item[{{\bf Bulk\-In\-Transfer\-Completed\-Event} const \&}]{event}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___a44c7d636530d17a17293faac228629d5}
+
+
+Restore Bulk-\/\-I\-N transfer back to pool. 
+
+
+
+Definition at line 314 of file mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine.\-h.
+
+
+
+References mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Bulk\-In\-Transfer\-Completed\-Event\-::transfer.
+
+\hypertarget{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___a299e3d26a8ac80e49e14dac52f2fb45f}{\index{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-}!restore\-Bulk\-Out\-Transfer\-S\-A@{restore\-Bulk\-Out\-Transfer\-S\-A}}
+\index{restore\-Bulk\-Out\-Transfer\-S\-A@{restore\-Bulk\-Out\-Transfer\-S\-A}!mdtUsbtmcTransferHandlerStateMachine::Running_@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-}}
+\subsubsection[{restore\-Bulk\-Out\-Transfer\-S\-A}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-\-::restore\-Bulk\-Out\-Transfer\-S\-A (
+\begin{DoxyParamCaption}
+\item[{{\bf Bulk\-Out\-Transfer\-Completed\-Event} const \&}]{event}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___a299e3d26a8ac80e49e14dac52f2fb45f}
+
+
+Restore Bulk-\/\-O\-U\-T transfer back to pool. 
+
+
+
+Definition at line 272 of file mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine.\-h.
+
+
+
+References mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Bulk\-Out\-Transfer\-Completed\-Event\-::transfer.
+
+\hypertarget{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___a993fc53403ba9f2ab3202d6d17e021ae}{\index{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-}!restore\-Cancelled\-Bulk\-Out\-Transfer@{restore\-Cancelled\-Bulk\-Out\-Transfer}}
+\index{restore\-Cancelled\-Bulk\-Out\-Transfer@{restore\-Cancelled\-Bulk\-Out\-Transfer}!mdtUsbtmcTransferHandlerStateMachine::Running_@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-}}
+\subsubsection[{restore\-Cancelled\-Bulk\-Out\-Transfer}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-\-::restore\-Cancelled\-Bulk\-Out\-Transfer (
+\begin{DoxyParamCaption}
+\item[{{\bf Bulk\-Out\-Transfer\-Completed\-Event} const \&}]{event}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___a993fc53403ba9f2ab3202d6d17e021ae}
+
+
+Restor Bulk-\/\-O\-U\-T transfer to pool if cancelled. 
+
+If given transfer is cancelled, it is simply restored back to pool, else handle\-Bulk\-Out\-Transfer\-Complete() is called. 
+
+Definition at line 284 of file mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine.\-h.
+
+
+
+References mdt\-Usb\-Transfer\-::status(), and mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Bulk\-Out\-Transfer\-Completed\-Event\-::transfer.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___ad40e581cd472f8b343d6ab3ba790bd89}{\index{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-}!transfer\-Handler@{transfer\-Handler}}
+\index{transfer\-Handler@{transfer\-Handler}!mdtUsbtmcTransferHandlerStateMachine::Running_@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-}}
+\subsubsection[{transfer\-Handler}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Usbtmc\-Transfer\-Handler}$\ast$ mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-\-::transfer\-Handler}}\label{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___ad40e581cd472f8b343d6ab3ba790bd89}
+
+
+Definition at line 528 of file mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine.\-h.
+
+
+
+The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+src/mdtport/\hyperlink{mdt_usbtmc_transfer_handler_state_machine_8h}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine.\-h}\end{DoxyCompactItemize}

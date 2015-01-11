@@ -35,23 +35,30 @@ enum \hyperlink{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dc}{range
 \hyperlink{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dcaad020d13863dbfcb395ce08330d5724e}{Range\-Auto} = -\/10, 
 \hyperlink{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dca7a11a8189a61ead1b631c06488bb8a06}{Range\-Min}, 
 \hyperlink{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dcaea44e09b32e699856e6dd58c0a222344}{Range\-Max}, 
-\hyperlink{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dca4739252c609e06deb38be4e6fb6d33e9}{Range100m} = 1, 
+\hyperlink{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dcaf64411db8c720e45dd88617505e75f0f}{Range20m} = 1, 
 \\*
+\hyperlink{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dca4739252c609e06deb38be4e6fb6d33e9}{Range100m}, 
 \hyperlink{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dcad4cb6a1f93329a4dae7420069516e201}{Range1}, 
+\hyperlink{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dca9c9bc9e3a66a6a8b99d45aee7a9fc03a}{Range10}, 
 \hyperlink{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dca724e28864e513d31ac8a9c3525a0a5aa}{Range100}, 
+\\*
 \hyperlink{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dca7c08dab5ef9ed34a00304f8aa0b8f17f}{Range1k}, 
 \hyperlink{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dca50d29071b501dc633b5a12fac4f23a53}{Range10k}, 
-\\*
 \hyperlink{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dca4baa02141d972c77f493a53691bae435}{Range100k}, 
 \hyperlink{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dcacd7e52976fffc3eb6def4efb5303d082}{Range1\-M}, 
+\\*
 \hyperlink{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dcadf4218b4809f09c734ee289fbfc06108}{Range10\-M}, 
 \hyperlink{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dca20e91ee2eeb1a64e2353586c8c8b3cea}{Range100\-M}
  \}
-\begin{DoxyCompactList}\small\item\em Range. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Range for measure. \end{DoxyCompactList}\item 
 enum \hyperlink{classmdt_device_u3606_a_a1899206163f2a0163d09cbc482daf806}{resolution\-\_\-t} \{ \hyperlink{classmdt_device_u3606_a_a1899206163f2a0163d09cbc482daf806a49419daba75cbb553401b066a3c2e6da}{Resolution\-Min}, 
 \hyperlink{classmdt_device_u3606_a_a1899206163f2a0163d09cbc482daf806a82c71d88404eb70e505cbce753aaf06f}{Resolution\-Max}
  \}
-\begin{DoxyCompactList}\small\item\em Resolution. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Resolution. \end{DoxyCompactList}\item 
+enum \hyperlink{classmdt_device_u3606_a_af53b326fef5d9e32a0149839b4319b1e}{source\-Range\-\_\-t} \{ \hyperlink{classmdt_device_u3606_a_af53b326fef5d9e32a0149839b4319b1ea8334e412fd9c1d2140c59bf9404cb426}{S1\-\_\-30\-V1\-A}, 
+\hyperlink{classmdt_device_u3606_a_af53b326fef5d9e32a0149839b4319b1ea0b765326b086f0d41b18e58f358e14ad}{S2\-\_\-8\-V3\-A}
+ \}
+\begin{DoxyCompactList}\small\item\em Range of source subsystem. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Slots}
 \begin{DoxyCompactItemize}
 \item 
@@ -66,6 +73,8 @@ void \hyperlink{classmdt_device_u3606_a_a94a6f8b3f64cd35b33204c66816f3f6a}{on\-S
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdt\-Abstract\-Port\-::error\-\_\-t} \hyperlink{classmdt_device_u3606_a_acf3b48b13bc179ad4f94b3011b7d607a}{connect\-To\-Device} (const \hyperlink{classmdt_device_info}{mdt\-Device\-Info} \&dev\-Info)
 \begin{DoxyCompactList}\small\item\em Search and connect to physical device. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_device_u3606_a_a8337592105ceb3969ebba90e5e0a528d}{setup\-Voltage\-Dc\-Measure} (\hyperlink{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dc}{range\-\_\-t} range, \hyperlink{classmdt_device_u3606_a_a1899206163f2a0163d09cbc482daf806}{resolution\-\_\-t} resolution)
+\begin{DoxyCompactList}\small\item\em Setup D\-C voltage measure. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_device_u3606_a_a3ccd18368d0c1a2641e209a471e5753e}{setup\-Resistance\-Measure} (\hyperlink{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dc}{range\-\_\-t} range, \hyperlink{classmdt_device_u3606_a_a1899206163f2a0163d09cbc482daf806}{resolution\-\_\-t} resolution)
 \begin{DoxyCompactList}\small\item\em Setup resistance measure. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_device_u3606_a_a3b5e1eaaae86bebdcc81ddbb95909628}{setup\-Low\-Resistance\-Measure} (\hyperlink{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dc}{range\-\_\-t} range, \hyperlink{classmdt_device_u3606_a_a1899206163f2a0163d09cbc482daf806}{resolution\-\_\-t} resolution)
@@ -73,7 +82,15 @@ int \hyperlink{classmdt_device_u3606_a_a3b5e1eaaae86bebdcc81ddbb95909628}{setup\
 \hyperlink{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004}{mdt\-Frame\-Codec\-Scpi\-U3606\-A\-::measure\-\_\-type\-\_\-t} \hyperlink{classmdt_device_u3606_a_a8732ec3f4a04a191585191e1ba4f190d}{get\-Measure\-Configuration} ()
 \begin{DoxyCompactList}\small\item\em Get the measure configuration. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_value}{mdt\-Value} \hyperlink{classmdt_device_u3606_a_ae75a1a896f905487d080761a2b8cf5a5}{get\-Measure\-Value} ()
-\begin{DoxyCompactList}\small\item\em Get measure value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Get measure value. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_device_u3606_a_abdecce2f61926be3acffbd96aa83c497}{set\-Output\-State} (bool state)
+\begin{DoxyCompactList}\small\item\em Set source output state (On/\-Off) \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_device_u3606_a_abf5a2f29f4dad383ad03f33c9bc295bd}{set\-Source\-Range} (\hyperlink{classmdt_device_u3606_a_af53b326fef5d9e32a0149839b4319b1e}{source\-Range\-\_\-t} range)
+\begin{DoxyCompactList}\small\item\em Set source range. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_device_u3606_a_a333740f79b57dd1d9135d0fa590d2680}{set\-Source\-Voltage\-Limit} (double v)
+\begin{DoxyCompactList}\small\item\em Set source voltage limit. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_device_u3606_a_acee48f6f2fff3ba8b727b790b1ab65bf}{set\-Source\-Current} (double x)
+\begin{DoxyCompactList}\small\item\em Set source current. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Additional Inherited Members}
 
 
@@ -102,7 +119,7 @@ Definition at line 42 of file mdt\-Device\-U3606\-A.\-h.
 \subsubsection[{range\-\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdt\-Device\-U3606\-A\-::range\-\_\-t}}}\label{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dc}
 
 
-Range. 
+Range for measure. 
 
 \begin{Desc}
 \item[Enumerator]\par
@@ -113,11 +130,15 @@ Range.
 \hypertarget{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dca7a11a8189a61ead1b631c06488bb8a06}{Range\-Min}\label{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dca7a11a8189a61ead1b631c06488bb8a06}
 }]M\-I\-N range \index{Range\-Max@{Range\-Max}!mdt\-Device\-U3606\-A@{mdt\-Device\-U3606\-A}}\index{mdt\-Device\-U3606\-A@{mdt\-Device\-U3606\-A}!Range\-Max@{Range\-Max}}\item[{\em 
 \hypertarget{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dcaea44e09b32e699856e6dd58c0a222344}{Range\-Max}\label{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dcaea44e09b32e699856e6dd58c0a222344}
-}]M\-A\-X range \index{Range100m@{Range100m}!mdt\-Device\-U3606\-A@{mdt\-Device\-U3606\-A}}\index{mdt\-Device\-U3606\-A@{mdt\-Device\-U3606\-A}!Range100m@{Range100m}}\item[{\em 
+}]M\-A\-X range \index{Range20m@{Range20m}!mdt\-Device\-U3606\-A@{mdt\-Device\-U3606\-A}}\index{mdt\-Device\-U3606\-A@{mdt\-Device\-U3606\-A}!Range20m@{Range20m}}\item[{\em 
+\hypertarget{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dcaf64411db8c720e45dd88617505e75f0f}{Range20m}\label{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dcaf64411db8c720e45dd88617505e75f0f}
+}]20 milli range \index{Range100m@{Range100m}!mdt\-Device\-U3606\-A@{mdt\-Device\-U3606\-A}}\index{mdt\-Device\-U3606\-A@{mdt\-Device\-U3606\-A}!Range100m@{Range100m}}\item[{\em 
 \hypertarget{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dca4739252c609e06deb38be4e6fb6d33e9}{Range100m}\label{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dca4739252c609e06deb38be4e6fb6d33e9}
-}]100m (milli) range \index{Range1@{Range1}!mdt\-Device\-U3606\-A@{mdt\-Device\-U3606\-A}}\index{mdt\-Device\-U3606\-A@{mdt\-Device\-U3606\-A}!Range1@{Range1}}\item[{\em 
+}]100 milli range \index{Range1@{Range1}!mdt\-Device\-U3606\-A@{mdt\-Device\-U3606\-A}}\index{mdt\-Device\-U3606\-A@{mdt\-Device\-U3606\-A}!Range1@{Range1}}\item[{\em 
 \hypertarget{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dcad4cb6a1f93329a4dae7420069516e201}{Range1}\label{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dcad4cb6a1f93329a4dae7420069516e201}
-}]1 range \index{Range100@{Range100}!mdt\-Device\-U3606\-A@{mdt\-Device\-U3606\-A}}\index{mdt\-Device\-U3606\-A@{mdt\-Device\-U3606\-A}!Range100@{Range100}}\item[{\em 
+}]1 range \index{Range10@{Range10}!mdt\-Device\-U3606\-A@{mdt\-Device\-U3606\-A}}\index{mdt\-Device\-U3606\-A@{mdt\-Device\-U3606\-A}!Range10@{Range10}}\item[{\em 
+\hypertarget{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dca9c9bc9e3a66a6a8b99d45aee7a9fc03a}{Range10}\label{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dca9c9bc9e3a66a6a8b99d45aee7a9fc03a}
+}]10 range \index{Range100@{Range100}!mdt\-Device\-U3606\-A@{mdt\-Device\-U3606\-A}}\index{mdt\-Device\-U3606\-A@{mdt\-Device\-U3606\-A}!Range100@{Range100}}\item[{\em 
 \hypertarget{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dca724e28864e513d31ac8a9c3525a0a5aa}{Range100}\label{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dca724e28864e513d31ac8a9c3525a0a5aa}
 }]100 range \index{Range1k@{Range1k}!mdt\-Device\-U3606\-A@{mdt\-Device\-U3606\-A}}\index{mdt\-Device\-U3606\-A@{mdt\-Device\-U3606\-A}!Range1k@{Range1k}}\item[{\em 
 \hypertarget{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dca7c08dab5ef9ed34a00304f8aa0b8f17f}{Range1k}\label{classmdt_device_u3606_a_ae05c254d19a66c1728d30100f7c600dca7c08dab5ef9ed34a00304f8aa0b8f17f}
@@ -155,7 +176,27 @@ Resolution.
 \end{Desc}
 
 
-Definition at line 67 of file mdt\-Device\-U3606\-A.\-h.
+Definition at line 69 of file mdt\-Device\-U3606\-A.\-h.
+
+\hypertarget{classmdt_device_u3606_a_af53b326fef5d9e32a0149839b4319b1e}{\index{mdt\-Device\-U3606\-A@{mdt\-Device\-U3606\-A}!source\-Range\-\_\-t@{source\-Range\-\_\-t}}
+\index{source\-Range\-\_\-t@{source\-Range\-\_\-t}!mdtDeviceU3606A@{mdt\-Device\-U3606\-A}}
+\subsubsection[{source\-Range\-\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdt\-Device\-U3606\-A\-::source\-Range\-\_\-t}}}\label{classmdt_device_u3606_a_af53b326fef5d9e32a0149839b4319b1e}
+
+
+Range of source subsystem. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{S1\-\_\-30\-V1\-A@{S1\-\_\-30\-V1\-A}!mdt\-Device\-U3606\-A@{mdt\-Device\-U3606\-A}}\index{mdt\-Device\-U3606\-A@{mdt\-Device\-U3606\-A}!S1\-\_\-30\-V1\-A@{S1\-\_\-30\-V1\-A}}\item[{\em 
+\hypertarget{classmdt_device_u3606_a_af53b326fef5d9e32a0149839b4319b1ea8334e412fd9c1d2140c59bf9404cb426}{S1\-\_\-30\-V1\-A}\label{classmdt_device_u3606_a_af53b326fef5d9e32a0149839b4319b1ea8334e412fd9c1d2140c59bf9404cb426}
+}]Range S1\-: 30\-V / 1\-A \index{S2\-\_\-8\-V3\-A@{S2\-\_\-8\-V3\-A}!mdt\-Device\-U3606\-A@{mdt\-Device\-U3606\-A}}\index{mdt\-Device\-U3606\-A@{mdt\-Device\-U3606\-A}!S2\-\_\-8\-V3\-A@{S2\-\_\-8\-V3\-A}}\item[{\em 
+\hypertarget{classmdt_device_u3606_a_af53b326fef5d9e32a0149839b4319b1ea0b765326b086f0d41b18e58f358e14ad}{S2\-\_\-8\-V3\-A}\label{classmdt_device_u3606_a_af53b326fef5d9e32a0149839b4319b1ea0b765326b086f0d41b18e58f358e14ad}
+}]Range S2\-: 8\-V / 3\-A \end{description}
+\end{Desc}
+
+
+Definition at line 76 of file mdt\-Device\-U3606\-A.\-h.
 
 
 
@@ -247,7 +288,7 @@ Internal analog measure input is also updated with device's range and unit .
 
 By error, unknown measure type is returned . 
 
-Definition at line 197 of file mdt\-Device\-U3606\-A.\-cpp.
+Definition at line 260 of file mdt\-Device\-U3606\-A.\-cpp.
 
 
 
@@ -266,7 +307,7 @@ Get measure value.
 
 This is similar to call get\-Analog\-Input\-Value(\char`\"{}\-M\-E\-A\-S\-U\-R\-E\char`\"{}, true, true) . 
 
-Definition at line 228 of file mdt\-Device\-U3606\-A.\-cpp.
+Definition at line 291 of file mdt\-Device\-U3606\-A.\-cpp.
 
 
 
@@ -285,7 +326,90 @@ Update (G)U\-I when device's state has changed.
 
 
 
-Definition at line 233 of file mdt\-Device\-U3606\-A.\-cpp.
+Definition at line 355 of file mdt\-Device\-U3606\-A.\-cpp.
+
+\hypertarget{classmdt_device_u3606_a_abdecce2f61926be3acffbd96aa83c497}{\index{mdt\-Device\-U3606\-A@{mdt\-Device\-U3606\-A}!set\-Output\-State@{set\-Output\-State}}
+\index{set\-Output\-State@{set\-Output\-State}!mdtDeviceU3606A@{mdt\-Device\-U3606\-A}}
+\subsubsection[{set\-Output\-State}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Device\-U3606\-A\-::set\-Output\-State (
+\begin{DoxyParamCaption}
+\item[{bool}]{state}
+\end{DoxyParamCaption}
+)}}\label{classmdt_device_u3606_a_abdecce2f61926be3acffbd96aa83c497}
+
+
+Set source output state (On/\-Off) 
+
+
+
+Definition at line 296 of file mdt\-Device\-U3606\-A.\-cpp.
+
+
+
+References mdt\-Device\-Scpi\-::send\-Command().
+
+\hypertarget{classmdt_device_u3606_a_acee48f6f2fff3ba8b727b790b1ab65bf}{\index{mdt\-Device\-U3606\-A@{mdt\-Device\-U3606\-A}!set\-Source\-Current@{set\-Source\-Current}}
+\index{set\-Source\-Current@{set\-Source\-Current}!mdtDeviceU3606A@{mdt\-Device\-U3606\-A}}
+\subsubsection[{set\-Source\-Current}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Device\-U3606\-A\-::set\-Source\-Current (
+\begin{DoxyParamCaption}
+\item[{double}]{x}
+\end{DoxyParamCaption}
+)}}\label{classmdt_device_u3606_a_acee48f6f2fff3ba8b727b790b1ab65bf}
+
+
+Set source current. 
+
+Will setup source for constant current mode, with given current.
+
+Refers to \mbox{[}S\-O\-U\-Rce\-:\mbox{]}C\-U\-R\-Rent\mbox{[}\-:L\-E\-Vel\mbox{]}\mbox{[}\-:I\-M\-Mediate\mbox{]}\mbox{[}\-:A\-M\-P\-Litude\mbox{]} in programmers reference guide. 
+
+Definition at line 343 of file mdt\-Device\-U3606\-A.\-cpp.
+
+
+
+References mdt\-Device\-Scpi\-::send\-Command().
+
+\hypertarget{classmdt_device_u3606_a_abf5a2f29f4dad383ad03f33c9bc295bd}{\index{mdt\-Device\-U3606\-A@{mdt\-Device\-U3606\-A}!set\-Source\-Range@{set\-Source\-Range}}
+\index{set\-Source\-Range@{set\-Source\-Range}!mdtDeviceU3606A@{mdt\-Device\-U3606\-A}}
+\subsubsection[{set\-Source\-Range}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Device\-U3606\-A\-::set\-Source\-Range (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Device\-U3606\-A\-::source\-Range\-\_\-t}}]{range}
+\end{DoxyParamCaption}
+)}}\label{classmdt_device_u3606_a_abf5a2f29f4dad383ad03f33c9bc295bd}
+
+
+Set source range. 
+
+Note\-: source range can ba changed only whenn output is O\-F\-F.
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_device_u3606_a_abdecce2f61926be3acffbd96aa83c497}{set\-Output\-State()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 312 of file mdt\-Device\-U3606\-A.\-cpp.
+
+
+
+References S1\-\_\-30\-V1\-A, S2\-\_\-8\-V3\-A, and mdt\-Device\-Scpi\-::send\-Command().
+
+\hypertarget{classmdt_device_u3606_a_a333740f79b57dd1d9135d0fa590d2680}{\index{mdt\-Device\-U3606\-A@{mdt\-Device\-U3606\-A}!set\-Source\-Voltage\-Limit@{set\-Source\-Voltage\-Limit}}
+\index{set\-Source\-Voltage\-Limit@{set\-Source\-Voltage\-Limit}!mdtDeviceU3606A@{mdt\-Device\-U3606\-A}}
+\subsubsection[{set\-Source\-Voltage\-Limit}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Device\-U3606\-A\-::set\-Source\-Voltage\-Limit (
+\begin{DoxyParamCaption}
+\item[{double}]{v}
+\end{DoxyParamCaption}
+)}}\label{classmdt_device_u3606_a_a333740f79b57dd1d9135d0fa590d2680}
+
+
+Set source voltage limit. 
+
+This voltage limit is used for constant current source mode. Refers to \mbox{[}S\-O\-U\-Rce\-:\mbox{]}V\-O\-L\-Tage\-:L\-I\-Mit in programmers reference guide. 
+
+Definition at line 331 of file mdt\-Device\-U3606\-A.\-cpp.
+
+
+
+References mdt\-Device\-Scpi\-::send\-Command().
 
 \hypertarget{classmdt_device_u3606_a_a3b5e1eaaae86bebdcc81ddbb95909628}{\index{mdt\-Device\-U3606\-A@{mdt\-Device\-U3606\-A}!setup\-Low\-Resistance\-Measure@{setup\-Low\-Resistance\-Measure}}
 \index{setup\-Low\-Resistance\-Measure@{setup\-Low\-Resistance\-Measure}!mdtDeviceU3606A@{mdt\-Device\-U3606\-A}}
@@ -311,7 +435,7 @@ Value $<$ 0 on error, $>$= 0 on success
 \end{DoxyReturn}
 
 
-Definition at line 146 of file mdt\-Device\-U3606\-A.\-cpp.
+Definition at line 209 of file mdt\-Device\-U3606\-A.\-cpp.
 
 
 
@@ -341,11 +465,41 @@ Value $<$ 0 on error, $>$= 0 on success
 \end{DoxyReturn}
 
 
-Definition at line 80 of file mdt\-Device\-U3606\-A.\-cpp.
+Definition at line 143 of file mdt\-Device\-U3606\-A.\-cpp.
 
 
 
 References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Device\-::name(), mdt\-Device\-::pv\-Last\-Error, Range100, Range100k, Range100\-M, Range10k, Range10\-M, Range1k, Range1\-M, Range\-Auto, Range\-Max, Range\-Min, Resolution\-Max, Resolution\-Min, mdt\-Device\-Scpi\-::send\-Command(), mdt\-Error\-::set\-Error(), and mdt\-Error\-::\-Warning.
+
+\hypertarget{classmdt_device_u3606_a_a8337592105ceb3969ebba90e5e0a528d}{\index{mdt\-Device\-U3606\-A@{mdt\-Device\-U3606\-A}!setup\-Voltage\-Dc\-Measure@{setup\-Voltage\-Dc\-Measure}}
+\index{setup\-Voltage\-Dc\-Measure@{setup\-Voltage\-Dc\-Measure}!mdtDeviceU3606A@{mdt\-Device\-U3606\-A}}
+\subsubsection[{setup\-Voltage\-Dc\-Measure}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Device\-U3606\-A\-::setup\-Voltage\-Dc\-Measure (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Device\-U3606\-A\-::range\-\_\-t}}]{range, }
+\item[{{\bf mdt\-Device\-U3606\-A\-::resolution\-\_\-t}}]{resolution}
+\end{DoxyParamCaption}
+)}}\label{classmdt_device_u3606_a_a8337592105ceb3969ebba90e5e0a528d}
+
+
+Setup D\-C voltage measure. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em range} & If range is supported by instrument, it will be set, else A\-U\-T\-O range is used. \\
+\hline
+{\em resolution} & Resolution to use \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Value $<$ 0 on error, $>$= 0 on success 
+\end{DoxyReturn}
+
+
+Definition at line 80 of file mdt\-Device\-U3606\-A.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Device\-::name(), mdt\-Device\-::pv\-Last\-Error, Range1, Range10, Range100, Range100m, Range1k, Range20m, Range\-Auto, Range\-Max, Range\-Min, Resolution\-Max, Resolution\-Min, mdt\-Device\-Scpi\-::send\-Command(), mdt\-Error\-::set\-Error(), and mdt\-Error\-::\-Warning.
 
 
 

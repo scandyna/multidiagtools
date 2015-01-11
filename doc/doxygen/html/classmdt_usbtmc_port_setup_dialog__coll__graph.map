@@ -1,4 +1,3 @@
 <map id="mdtUsbtmcPortSetupDialog" name="mdtUsbtmcPortSetupDialog">
-<area shape="rect" id="node2" href="$classmdt_abstract_port_setup_dialog.html" title="Base class to build a port setup dialog. " alt="" coords="19,101,205,131"/>
-<area shape="rect" id="node4" href="$class_q_dialog.html" title="QDialog" alt="" coords="5,15,75,44"/>
+<area shape="rect" id="node2" href="$class_q_dialog.html" title="QDialog" alt="" coords="5,5,75,32"/>
 </map>

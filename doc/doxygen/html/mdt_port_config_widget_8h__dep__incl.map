@@ -1,10 +1,8 @@
 <map id="src/mdtport/mdtPortConfigWidget.h" name="src/mdtport/mdtPortConfigWidget.h">
-<area shape="rect" id="node3" href="$mdt_port_config_widget_8cpp.html" title="src/mdtport/mdtPortConfig\lWidget.cpp" alt="" coords="5,102,181,149"/>
-<area shape="rect" id="node5" href="$mdt_usbtmc_port_setup_dialog_8h.html" title="src/mdtport/mdtUsbtmcPort\lSetupDialog.h" alt="" coords="205,102,389,149"/>
-<area shape="rect" id="node11" href="$mdt_serial_port_setup_dialog_8h.html" title="src/mdtserialport/mdtSerial\lPortSetupDialog.h" alt="" coords="480,102,659,149"/>
-<area shape="rect" id="node7" href="$mdt_usbtmc_port_setup_dialog_8cpp.html" title="src/mdtport/mdtUsbtmcPort\lSetupDialog.cpp" alt="" coords="205,198,389,245"/>
-<area shape="rect" id="node9" href="$mdt_port_term_8cpp.html" title="src/mdttools/mdtPortTerm.cpp" alt="" coords="217,293,415,323"/>
-<area shape="rect" id="node13" href="$main_8cpp.html" title="src/main.cpp" alt="" coords="521,293,617,323"/>
-<area shape="rect" id="node15" href="$mdt_serial_port_setup_dialog_8cpp.html" title="src/mdtserialport/mdtSerial\lPortSetupDialog.cpp" alt="" coords="672,198,851,245"/>
-<area shape="rect" id="node17" href="$mdt_port_term_8h.html" title="src/mdttools/mdtPortTerm.h" alt="" coords="413,207,597,236"/>
+<area shape="rect" id="node2" href="$mdt_port_config_widget_8cpp.html" title="src/mdtport/mdtPortConfig\lWidget.cpp" alt="" coords="5,97,181,138"/>
+<area shape="rect" id="node3" href="$mdt_serial_port_setup_dialog_8h.html" title="src/mdtserialport/mdtSerial\lPortSetupDialog.h" alt="" coords="205,97,384,138"/>
+<area shape="rect" id="node4" href="$main_8cpp.html" title="src/main.cpp" alt="" coords="199,277,296,304"/>
+<area shape="rect" id="node5" href="$mdt_serial_port_setup_dialog_8cpp.html" title="src/mdtserialport/mdtSerial\lPortSetupDialog.cpp" alt="" coords="205,187,384,229"/>
+<area shape="rect" id="node6" href="$mdt_port_term_8h.html" title="src/mdttools/mdtPortTerm.h" alt="" coords="409,195,593,221"/>
+<area shape="rect" id="node7" href="$mdt_port_term_8cpp.html" title="src/mdttools/mdtPortTerm.cpp" alt="" coords="402,277,600,304"/>
 </map>

@@ -183,7 +183,7 @@ Check validity regarding S\-C\-P\-I-\/99, sections 7.\-2.\-1.\-4 (-\/infinity, +
 \begin{DoxyReturn}{Returns}
 A \hyperlink{classmdt_value}{mdt\-Value} that contains data of type Double. If x is Na\-N, a invalid \hyperlink{classmdt_value}{mdt\-Value} is returned.\-Q\-Variant \hyperlink{classmdt_frame_codec_scpi_a90d550cfe0ed5605c63a064359fc762d}{check\-Floating\-Value\-Validity(double x) const};
 \end{DoxyReturn}
-Q\-Variant \hyperlink{classmdt_frame_codec_scpi_a90d550cfe0ed5605c63a064359fc762d}{mdt\-Frame\-Codec\-Scpi\-::check\-Floating\-Value\-Validity(double x) const} \{ Check about Na\-N if(q\-Abs(x -\/ pv\-Nan) $<$= F\-L\-T\-\_\-\-E\-P\-S\-I\-L\-O\-N)\{ return Q\-Variant(); \} Check about -\/\-O\-L and O\-L if((x $<$= (pv\-Ninfinity+\-F\-L\-T\-\_\-\-E\-P\-S\-I\-L\-O\-N))$|$$|$(x $>$= (pv\-Infinity-\/\-F\-L\-T\-\_\-\-E\-P\-S\-I\-L\-O\-N)))\{ return Q\-Variant(); \}
+Q\-Variant \hyperlink{classmdt_frame_codec_scpi_a90d550cfe0ed5605c63a064359fc762d}{mdt\-Frame\-Codec\-Scpi\-::check\-Floating\-Value\-Validity(double x) const} \{ Check about Na\-N if(q\-Abs(x -\/ pv\-Nan) $<$= F\-L\-T\-\_\-\-E\-P\-S\-I\-L\-O\-N)\{ return Q\-Variant(); \} Check about -\/\-O\-L and O\-L if((x $<$= (pv\-Ninfinity+\-F\-L\-T\-\_\-\-E\-P\-S\-I\-L\-O\-N))$\vert$$\vert$(x $>$= (pv\-Infinity-\/\-F\-L\-T\-\_\-\-E\-P\-S\-I\-L\-O\-N)))\{ return Q\-Variant(); \}
 
 return x; \} 
 
@@ -301,7 +301,7 @@ References A\-S\-C\-I\-I, B\-Y\-T\-E, mdt\-Error\-::commit(), decode\-I\-E\-E\-E
 Decode a array of A\-S\-C\-I\-I values. 
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000088}{Todo}]Not implemented yet \end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000103}{Todo}]Not implemented yet \end{DoxyRefDesc}
 
 
 Definition at line 467 of file mdt\-Frame\-Codec\-Scpi.\-cpp.
@@ -326,7 +326,7 @@ Referenced by decode\-I\-E\-E\-Eblock().
 Decode a array of B\-Y\-T\-E values. 
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000089}{Todo}]Not implemented yet \end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000104}{Todo}]Not implemented yet \end{DoxyRefDesc}
 
 
 Definition at line 489 of file mdt\-Frame\-Codec\-Scpi.\-cpp.

@@ -12,8 +12,7 @@ Helper class for test connection cable edition.
 
 
 
-Inheritance diagram for mdt\-Tt\-Logical\-Test\-Cable\-:
-\nopagebreak
+Inheritance diagram for mdt\-Tt\-Logical\-Test\-Cable\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -22,8 +21,7 @@ Inheritance diagram for mdt\-Tt\-Logical\-Test\-Cable\-:
 \end{figure}
 
 
-Collaboration diagram for mdt\-Tt\-Logical\-Test\-Cable\-:
-\nopagebreak
+Collaboration diagram for mdt\-Tt\-Logical\-Test\-Cable\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -69,8 +67,10 @@ Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_tt_logical_test_cable_a121c20a2286
 \begin{DoxyCompactList}\small\item\em Get a list of unit connections that are linked to given start unit connection, and that are part of given unit connector list. \end{DoxyCompactList}\item 
 Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_tt_logical_test_cable_a650842c7b4daf810e0387b4119e714a1}{get\-To\-Unit\-Connection\-Id\-List\-Linked\-Unit\-Connection\-Id\-List\-Part\-Of\-Unit\-Connector\-List} (Q\-List$<$ Q\-Variant $>$ \&from\-Unit\-Connection\-Id\-List, const Q\-List$<$ Q\-Variant $>$ \&unit\-Connector\-Id\-List)
 \begin{DoxyCompactList}\small\item\em Get a list of unit connections that are linked to given start unit connection list, and that are part of given unit connector list. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_tt_logical_test_cable_a2ce5a1cc0b806878629cb07fe23c6731}{create\-Test\-Cable} (const Q\-Variant \&node\-Id, const Q\-List$<$ Q\-Variant $>$ \&bus\-Atest\-Connection\-Id\-List, const Q\-List$<$ Q\-Variant $>$ \&bus\-Adut\-Connection\-Id\-List, const Q\-List$<$ Q\-Variant $>$ \&bus\-Btest\-Connection\-Id\-List, const Q\-List$<$ Q\-Variant $>$ \&bus\-Bdut\-Connection\-Id\-List)
+bool \hyperlink{classmdt_tt_logical_test_cable_afff0da72bf307a9465728f260117134c}{cable\-Exists\-By\-Key} (const Q\-String \&key, bool \&ok)
 \begin{DoxyCompactList}\small\item\em Create a test cable. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_logical_test_cable_a94f09069ddc6f00fb80bc26ef3c501d6}{create\-Cable} (const \hyperlink{classmdt_sql_record}{mdt\-Sql\-Record} \&cable\-Data, Q\-List$<$ \hyperlink{classmdt_tt_test_link_data}{mdt\-Tt\-Test\-Link\-Data} $>$ \&link\-Data\-List)
+\begin{DoxyCompactList}\small\item\em Create a logical test cable. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_tt_test_link_data}{mdt\-Tt\-Test\-Link\-Data} \hyperlink{classmdt_tt_logical_test_cable_a76c9af0e54d11f38ce1665b679a9ffd7}{get\-Link\-Data} (const Q\-Variant \&test\-Connection\-Id, const Q\-Variant \&dut\-Connection\-Id, bool $\ast$ok)
 \begin{DoxyCompactList}\small\item\em Get test link data. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_tt_logical_test_cable_ab632b572837378da92a73350e95cc0ec}{add\-Link} (const \hyperlink{classmdt_tt_test_link_data}{mdt\-Tt\-Test\-Link\-Data} \&data)
@@ -147,15 +147,11 @@ Add a cable into test cable table.
 
 
 
-Definition at line 496 of file mdt\-Tt\-Logical\-Test\-Cable.\-cpp.
+Definition at line 524 of file mdt\-Tt\-Logical\-Test\-Cable.\-cpp.
 
 
 
 References mdt\-Error\-::commit(), mdt\-Tt\-Base\-::database(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Error\-::set\-Error(), and mdt\-Error\-::set\-System\-Error().
-
-
-
-Referenced by create\-Test\-Cable().
 
 \hypertarget{classmdt_tt_logical_test_cable_a80a8aea9231b2114d7d134340196cc86}{\index{mdt\-Tt\-Logical\-Test\-Cable@{mdt\-Tt\-Logical\-Test\-Cable}!add\-Dut\-Unit@{add\-Dut\-Unit}}
 \index{add\-Dut\-Unit@{add\-Dut\-Unit}!mdtTtLogicalTestCable@{mdt\-Tt\-Logical\-Test\-Cable}}
@@ -190,7 +186,7 @@ Add a link into test link table.
 
 
 
-Definition at line 447 of file mdt\-Tt\-Logical\-Test\-Cable.\-cpp.
+Definition at line 475 of file mdt\-Tt\-Logical\-Test\-Cable.\-cpp.
 
 
 
@@ -216,10 +212,10 @@ Referenced by add\-Links(), and edit\-Link().
 Add a link into test link table. 
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000076}{Todo}]Obselete this version \end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000087}{Todo}]Obselete this version \end{DoxyRefDesc}
 
 
-Definition at line 527 of file mdt\-Tt\-Logical\-Test\-Cable.\-cpp.
+Definition at line 555 of file mdt\-Tt\-Logical\-Test\-Cable.\-cpp.
 
 
 
@@ -244,15 +240,11 @@ dut\-Connection\-Id\-List size must be $<$= test\-Connection\-Id\-List
 \end{DoxyPrecond}
 
 
-Definition at line 452 of file mdt\-Tt\-Logical\-Test\-Cable.\-cpp.
+Definition at line 480 of file mdt\-Tt\-Logical\-Test\-Cable.\-cpp.
 
 
 
 References add\-Link().
-
-
-
-Referenced by create\-Test\-Cable().
 
 \hypertarget{classmdt_tt_logical_test_cable_ad0864808c772c8e5331745d389a7188b}{\index{mdt\-Tt\-Logical\-Test\-Cable@{mdt\-Tt\-Logical\-Test\-Cable}!add\-Test\-Node\-Unit@{add\-Test\-Node\-Unit}}
 \index{add\-Test\-Node\-Unit@{add\-Test\-Node\-Unit}!mdtTtLogicalTestCable@{mdt\-Tt\-Logical\-Test\-Cable}}
@@ -274,6 +266,24 @@ Definition at line 91 of file mdt\-Tt\-Logical\-Test\-Cable.\-cpp.
 
 References mdt\-Sql\-Record\-::add\-All\-Fields(), mdt\-Tt\-Base\-::add\-Record(), mdt\-Tt\-Base\-::database(), mdt\-Sql\-Record\-::last\-Error(), mdt\-Tt\-Base\-::pv\-Last\-Error, and mdt\-Sql\-Record\-::set\-Value().
 
+\hypertarget{classmdt_tt_logical_test_cable_afff0da72bf307a9465728f260117134c}{\index{mdt\-Tt\-Logical\-Test\-Cable@{mdt\-Tt\-Logical\-Test\-Cable}!cable\-Exists\-By\-Key@{cable\-Exists\-By\-Key}}
+\index{cable\-Exists\-By\-Key@{cable\-Exists\-By\-Key}!mdtTtLogicalTestCable@{mdt\-Tt\-Logical\-Test\-Cable}}
+\subsubsection[{cable\-Exists\-By\-Key}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Logical\-Test\-Cable\-::cable\-Exists\-By\-Key (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{key, }
+\item[{bool \&}]{ok}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_logical_test_cable_afff0da72bf307a9465728f260117134c}
+
+
+Create a test cable. 
+
+bool create\-Test\-Cable(const Q\-Variant \& node\-Id, const Q\-List$<$\-Q\-Variant$>$ \& bus\-Atest\-Connection\-Id\-List, const Q\-List$<$\-Q\-Variant$>$ \& bus\-Adut\-Connection\-Id\-List, const Q\-List$<$\-Q\-Variant$>$ \& bus\-Btest\-Connection\-Id\-List, const Q\-List$<$\-Q\-Variant$>$ \& bus\-Bdut\-Connection\-Id\-List);
+
+Check if a logical test cable with key allready exists 
+
+Definition at line 359 of file mdt\-Tt\-Logical\-Test\-Cable.\-cpp.
+
 \hypertarget{classmdt_tt_logical_test_cable_a87091b9c88f65fde6029b53c14afd92c}{\index{mdt\-Tt\-Logical\-Test\-Cable@{mdt\-Tt\-Logical\-Test\-Cable}!connect\-Test\-Cable@{connect\-Test\-Cable}}
 \index{connect\-Test\-Cable@{connect\-Test\-Cable}!mdtTtLogicalTestCable@{mdt\-Tt\-Logical\-Test\-Cable}}
 \subsubsection[{connect\-Test\-Cable}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Logical\-Test\-Cable\-::connect\-Test\-Cable (
@@ -287,46 +297,43 @@ References mdt\-Sql\-Record\-::add\-All\-Fields(), mdt\-Tt\-Base\-::add\-Record(
 
 Connect a test cable. 
 
-\hyperlink{classmdt_cl_link_data}{mdt\-Cl\-Link\-Data} mdt\-Tt\-Logical\-Test\-Cable\-::get\-Test\-Link\-Data(const Q\-Variant \& test\-Link\-Id) \{ Q\-String sql; Q\-Sql\-Error sql\-Error; Q\-Sql\-Query query(\hyperlink{classmdt_tt_base_a82c3f795b6cb8101b12e0e0ef340c1be}{database()}); \hyperlink{classmdt_cl_link_data}{mdt\-Cl\-Link\-Data} data;
+\hyperlink{classmdt_cl_link_data}{mdt\-Cl\-Link\-Data} mdt\-Tt\-Logical\-Test\-Cable\-::get\-Test\-Link\-Data(const Q\-Variant \& test\-Link\-Id) \{ Q\-String sql; Q\-Sql\-Error sql\-Error; Q\-Sql\-Query query(database()); \hyperlink{classmdt_cl_link_data}{mdt\-Cl\-Link\-Data} data;
 
 Setup and run query to get data in test link table sql = \char`\"{}\-S\-E\-L\-E\-C\-T \char`\"{}\textbackslash{} \char`\"{}\-Test\-Connection\-\_\-\-Id\-\_\-\-F\-K , Dut\-Connection\-\_\-\-Id\-\_\-\-F\-K, Test\-Cable\-\_\-\-Id\-\_\-\-F\-K, Identification, Value \char`\"{}; sql += \char`\"{} F\-R\-O\-M Test\-Link\-\_\-tbl \char`\"{}; sql += \char`\"{} W\-H\-E\-R\-E Id\-\_\-\-P\-K = \char`\"{} + test\-Link\-Id.\-to\-String(); if(!query.exec(sql))\{ sql\-Error = query.\-last\-Error(); pv\-Last\-Error.\-set\-Error(\char`\"{}\-Cannot get test link data\char`\"{}, \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260}{mdt\-Error\-::\-Error}); pv\-Last\-Error.\-set\-System\-Error(sql\-Error.\-number(), sql\-Error.\-text()); M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C(pv\-Last\-Error, \char`\"{}mdt\-Tt\-Logical\-Test\-Cable\char`\"{}); pv\-Last\-Error.\-commit(); return data; \} if(!query.next())\{ return data; \} data.\-set\-Unit\-Connection\-Start\-Id(query.\-value(0)); data.\-set\-Unit\-Connection\-End\-Id(query.\-value(1)); data.\-set\-Identification(query.\-value(3)); data.\-set\-Value(query.\-value(4)); data.\-set\-Link\-Type\-Code(\char`\"{}\-T\-E\-S\-T\-L\-I\-N\-K\char`\"{}); data.\-set\-Link\-Direction\-Code(\char`\"{}\-B\-I\-D\char`\"{});
 
 return data; \} bool mdt\-Tt\-Logical\-Test\-Cable\-::add\-Links(const Q\-Variant \& node\-Id, const Q\-List$<$\-Q\-Variant$>$ \& test\-Connection\-Id\-List, const Q\-Variant \& dut\-Vehicle\-Id, const Q\-List$<$\-Q\-Variant$>$ \& dut\-Connection\-Id\-List) \{ Q\-\_\-\-A\-S\-S\-E\-R\-T(dut\-Connection\-Id\-List.\-size() $<$= test\-Connection\-Id\-List.\-size());
 
-\hyperlink{classmdt_cl_unit}{mdt\-Cl\-Unit} unit(this, \hyperlink{classmdt_tt_base_a82c3f795b6cb8101b12e0e0ef340c1be}{database()}); int i;
+\hyperlink{classmdt_cl_unit}{mdt\-Cl\-Unit} unit(this, database()); int i;
 
 for(i = 0; i $<$ dut\-Connection\-Id\-List.\-size(); ++i)\{ \hyperlink{classmdt_cl_link_data}{mdt\-Cl\-Link\-Data} data; q\-Debug() $<$$<$ \char`\"{}\-Adding link from test connection \char`\"{} $<$$<$ test\-Connection\-Id\-List.\-at(i) $<$$<$ \char`\"{} -\/$>$ dut connection \char`\"{} $<$$<$ dut\-Connection\-Id\-List.\-at(i); data.\-set\-Unit\-Connection\-Start\-Id(test\-Connection\-Id\-List.\-at(i)); data.\-set\-Unit\-Connection\-End\-Id(dut\-Connection\-Id\-List.\-at(i)); data.\-set\-Identification(\char`\"{}...\char`\"{}); data.\-set\-Link\-Direction\-Code(\char`\"{}\-B\-I\-D\char`\"{}); data.\-set\-Link\-Type\-Code(\char`\"{}\-T\-E\-S\-T\-L\-I\-N\-K\char`\"{}); data.\-set\-Value(0.\-1); data.\-add\-Vehicle\-Type\-Start\-Id(node\-Id); data.\-add\-Vehicle\-Type\-End\-Id(dut\-Vehicle\-Id); if(!data.build\-Vehicle\-Type\-Start\-End\-Id\-List())\{ q\-Debug() $<$$<$ \char`\"{}\-Cannot build vehicle list\char`\"{}; return false; \} q\-Debug() $<$$<$ \char`\"{}\-V\-H\-C lst\-: \char`\"{} $<$$<$ data.\-vehicle\-Type\-Start\-End\-Id\-List(); if(!unit.add\-Link(data))\{ pv\-Last\-Error = unit.\-last\-Error(); return false; \} q\-Debug() $<$$<$ \char`\"{}-\/$>$\-Link added\char`\"{}; \}
 
-return true; \} Q\-List$<$mdt\-Cl\-Link\-Data$>$ mdt\-Tt\-Logical\-Test\-Cable\-::get\-Test\-Link\-Data\-By\-Test\-Cable\-Id(const Q\-Variant \& test\-Cable\-Id) \{ Q\-String sql; Q\-Sql\-Error sql\-Error; Q\-Sql\-Query query(\hyperlink{classmdt_tt_base_a82c3f795b6cb8101b12e0e0ef340c1be}{database()}); Q\-List$<$mdt\-Cl\-Link\-Data$>$ data\-List;
+return true; \} Q\-List$<$mdt\-Cl\-Link\-Data$>$ mdt\-Tt\-Logical\-Test\-Cable\-::get\-Test\-Link\-Data\-By\-Test\-Cable\-Id(const Q\-Variant \& test\-Cable\-Id) \{ Q\-String sql; Q\-Sql\-Error sql\-Error; Q\-Sql\-Query query(database()); Q\-List$<$mdt\-Cl\-Link\-Data$>$ data\-List;
 
 Setup and run query to get data in test link table sql = \char`\"{}\-S\-E\-L\-E\-C\-T \char`\"{}\textbackslash{} \char`\"{}\-Test\-Connection\-\_\-\-Id\-\_\-\-F\-K , Dut\-Connection\-\_\-\-Id\-\_\-\-F\-K, Test\-Cable\-\_\-\-Id\-\_\-\-F\-K, Identification, Value \char`\"{}; sql += \char`\"{} F\-R\-O\-M Test\-Link\-\_\-tbl \char`\"{}; sql += \char`\"{} W\-H\-E\-R\-E Test\-Cable\-\_\-\-Id\-\_\-\-F\-K = \char`\"{} + test\-Cable\-Id.\-to\-String(); if(!query.exec(sql))\{ sql\-Error = query.\-last\-Error(); pv\-Last\-Error.\-set\-Error(\char`\"{}\-Cannot get test link data\char`\"{}, \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260}{mdt\-Error\-::\-Error}); pv\-Last\-Error.\-set\-System\-Error(sql\-Error.\-number(), sql\-Error.\-text()); M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C(pv\-Last\-Error, \char`\"{}mdt\-Tt\-Logical\-Test\-Cable\char`\"{}); pv\-Last\-Error.\-commit(); return data\-List; \} while(query.\-next())\{ \hyperlink{classmdt_cl_link_data}{mdt\-Cl\-Link\-Data} data; data.\-set\-Unit\-Connection\-Start\-Id(query.\-value(0)); data.\-set\-Unit\-Connection\-End\-Id(query.\-value(1)); data.\-set\-Identification(query.\-value(3)); data.\-set\-Value(query.\-value(4)); data.\-set\-Link\-Type\-Code(\char`\"{}\-T\-E\-S\-T\-L\-I\-N\-K\char`\"{}); data.\-set\-Link\-Direction\-Code(\char`\"{}\-B\-I\-D\char`\"{}); data\-List.\-append(data); \}
 
 return data\-List; \} 
 
-Definition at line 669 of file mdt\-Tt\-Logical\-Test\-Cable.\-cpp.
+Definition at line 697 of file mdt\-Tt\-Logical\-Test\-Cable.\-cpp.
 
-\hypertarget{classmdt_tt_logical_test_cable_a2ce5a1cc0b806878629cb07fe23c6731}{\index{mdt\-Tt\-Logical\-Test\-Cable@{mdt\-Tt\-Logical\-Test\-Cable}!create\-Test\-Cable@{create\-Test\-Cable}}
-\index{create\-Test\-Cable@{create\-Test\-Cable}!mdtTtLogicalTestCable@{mdt\-Tt\-Logical\-Test\-Cable}}
-\subsubsection[{create\-Test\-Cable}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Logical\-Test\-Cable\-::create\-Test\-Cable (
+\hypertarget{classmdt_tt_logical_test_cable_a94f09069ddc6f00fb80bc26ef3c501d6}{\index{mdt\-Tt\-Logical\-Test\-Cable@{mdt\-Tt\-Logical\-Test\-Cable}!create\-Cable@{create\-Cable}}
+\index{create\-Cable@{create\-Cable}!mdtTtLogicalTestCable@{mdt\-Tt\-Logical\-Test\-Cable}}
+\subsubsection[{create\-Cable}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Logical\-Test\-Cable\-::create\-Cable (
 \begin{DoxyParamCaption}
-\item[{const Q\-Variant \&}]{node\-Id, }
-\item[{const Q\-List$<$ Q\-Variant $>$ \&}]{bus\-Atest\-Connection\-Id\-List, }
-\item[{const Q\-List$<$ Q\-Variant $>$ \&}]{bus\-Adut\-Connection\-Id\-List, }
-\item[{const Q\-List$<$ Q\-Variant $>$ \&}]{bus\-Btest\-Connection\-Id\-List, }
-\item[{const Q\-List$<$ Q\-Variant $>$ \&}]{bus\-Bdut\-Connection\-Id\-List}
+\item[{const {\bf mdt\-Sql\-Record} \&}]{cable\-Data, }
+\item[{Q\-List$<$ {\bf mdt\-Tt\-Test\-Link\-Data} $>$ \&}]{link\-Data\-List}
 \end{DoxyParamCaption}
-)}}\label{classmdt_tt_logical_test_cable_a2ce5a1cc0b806878629cb07fe23c6731}
+)}}\label{classmdt_tt_logical_test_cable_a94f09069ddc6f00fb80bc26ef3c501d6}
 
 
-Create a test cable. 
+Create a logical test cable. 
+
+For each item in link\-Data\-List, field Logical\-Test\-Cable\-\_\-\-Id\-\_\-\-F\-K will be updated with freashly created logical test cable. 
+
+Definition at line 377 of file mdt\-Tt\-Logical\-Test\-Cable.\-cpp.
 
 
 
-Definition at line 359 of file mdt\-Tt\-Logical\-Test\-Cable.\-cpp.
-
-
-
-References add\-Cable(), add\-Links(), mdt\-Tt\-Base\-::begin\-Transaction(), mdt\-Error\-::commit(), mdt\-Tt\-Base\-::commit\-Transaction(), mdt\-Tt\-Base\-::database(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Tt\-Base\-::rollback\-Transaction(), mdt\-Error\-::set\-Error(), and mdt\-Error\-::set\-System\-Error().
+References mdt\-Sql\-Record\-::add\-All\-Fields(), mdt\-Tt\-Base\-::add\-Record(), mdt\-Tt\-Base\-::begin\-Transaction(), mdt\-Sql\-Record\-::clear\-Values(), mdt\-Tt\-Base\-::commit\-Transaction(), mdt\-Tt\-Base\-::database(), mdt\-Sql\-Record\-::last\-Error(), mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Tt\-Base\-::rollback\-Transaction(), and mdt\-Sql\-Record\-::set\-Value().
 
 \hypertarget{classmdt_tt_logical_test_cable_a6f26ebeb60eea2f0b0773d7b65ea90dc}{\index{mdt\-Tt\-Logical\-Test\-Cable@{mdt\-Tt\-Logical\-Test\-Cable}!disconnect\-Test\-Cable@{disconnect\-Test\-Cable}}
 \index{disconnect\-Test\-Cable@{disconnect\-Test\-Cable}!mdtTtLogicalTestCable@{mdt\-Tt\-Logical\-Test\-Cable}}
@@ -345,7 +352,7 @@ Get test link data for given test cable I\-D\-Q\-List$<$mdt\-Cl\-Link\-Data$>$ g
 
 Disconnect a test cable 
 
-Definition at line 705 of file mdt\-Tt\-Logical\-Test\-Cable.\-cpp.
+Definition at line 733 of file mdt\-Tt\-Logical\-Test\-Cable.\-cpp.
 
 \hypertarget{classmdt_tt_logical_test_cable_ad786c86aa5b62a7f9537f0b4e4cab05c}{\index{mdt\-Tt\-Logical\-Test\-Cable@{mdt\-Tt\-Logical\-Test\-Cable}!edit\-Link@{edit\-Link}}
 \index{edit\-Link@{edit\-Link}!mdtTtLogicalTestCable@{mdt\-Tt\-Logical\-Test\-Cable}}
@@ -362,7 +369,7 @@ Edit a test link.
 
 
 
-Definition at line 471 of file mdt\-Tt\-Logical\-Test\-Cable.\-cpp.
+Definition at line 499 of file mdt\-Tt\-Logical\-Test\-Cable.\-cpp.
 
 
 
@@ -383,7 +390,7 @@ Get test link data.
 
 
 
-Definition at line 413 of file mdt\-Tt\-Logical\-Test\-Cable.\-cpp.
+Definition at line 441 of file mdt\-Tt\-Logical\-Test\-Cable.\-cpp.
 
 
 
@@ -565,7 +572,7 @@ Remove a test link.
 
 
 
-Definition at line 491 of file mdt\-Tt\-Logical\-Test\-Cable.\-cpp.
+Definition at line 519 of file mdt\-Tt\-Logical\-Test\-Cable.\-cpp.
 
 
 

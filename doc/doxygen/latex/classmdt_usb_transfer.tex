@@ -1,0 +1,406 @@
+\hypertarget{classmdt_usb_transfer}{\section{mdt\-Usb\-Transfer Class Reference}
+\label{classmdt_usb_transfer}\index{mdt\-Usb\-Transfer@{mdt\-Usb\-Transfer}}
+}
+
+
+U\-S\-B transfer.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Usb\-Transfer.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Usb\-Transfer\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmdt_usb_transfer__inherit__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_usb_transfer_aeb33fa86faaab99b0b5f276845817bdf}{mdt\-Usb\-Transfer} (libusb\-\_\-device\-\_\-handle $\ast$dev\-\_\-handle, int iso\-Packets\-Count=0)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_usb_transfer_acc8f5954658622fbdee4693ff31f530e}{$\sim$mdt\-Usb\-Transfer} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_usb_transfer_a2c58e8fc7d6186d2b64a8e3d5460da6e}{mdt\-Usb\-Transfer} (const \hyperlink{classmdt_usb_transfer}{mdt\-Usb\-Transfer} \&rhs)=delete
+\item 
+\hyperlink{classmdt_usb_transfer}{mdt\-Usb\-Transfer} \& \hyperlink{classmdt_usb_transfer_a9fbfd9b44ae5317c2a6a7569f7c15aa5}{operator=} (const \hyperlink{classmdt_usb_transfer}{mdt\-Usb\-Transfer} \&rhs)=delete
+\item 
+bool \hyperlink{classmdt_usb_transfer_ad112791d6733fea376a9842444787912}{alloc\-Ok} () const 
+\begin{DoxyCompactList}\small\item\em Check that allocation not failed. \end{DoxyCompactList}\item 
+uint8\-\_\-t \hyperlink{classmdt_usb_transfer_ae49c0346db4f0fbd62bb0131e259330e}{flags} () const 
+\begin{DoxyCompactList}\small\item\em Get transfer flags. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usb_transfer_a8f8999f1c419f31c26b352cf6782a0d2}{submit} (bool sync=false)
+\begin{DoxyCompactList}\small\item\em Submit transfer. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usb_transfer_a06901e7438433d7b10b244bf853b2ab3}{cancel} (bool sync=false)
+\begin{DoxyCompactList}\small\item\em Cancel transfer. \end{DoxyCompactList}\item 
+libusb\-\_\-transfer\-\_\-status \hyperlink{classmdt_usb_transfer_ab9ebc5c89217ec016975b45c8255fefe}{status} () const 
+\begin{DoxyCompactList}\small\item\em Get transfer status. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_usb_transfer_a75fe23ffc102c80494a14614f99e6188}{actual\-Length} () const 
+\begin{DoxyCompactList}\small\item\em Get actual length. \end{DoxyCompactList}\item 
+unsigned int \hyperlink{classmdt_usb_transfer_a3262511f6062348132e7ee689c24226c}{timeout} () const 
+\begin{DoxyCompactList}\small\item\em Get timeout that was given to transfer. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_error}{mdt\-Error} \hyperlink{classmdt_usb_transfer_a0ec677bc1ccdaeb0ab581aaba82beb36}{last\-Error} () const 
+\begin{DoxyCompactList}\small\item\em Get last error. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usb_transfer_af13a31511f4eee9a6004e1979e5d7dea}{is\-Sync} () const 
+\begin{DoxyCompactList}\small\item\em Check if transfer is a synchronous transfer. \end{DoxyCompactList}\item 
+int $\ast$ \hyperlink{classmdt_usb_transfer_af62c1241b0eeba1d4bdf5b7f31387c57}{completed\-Pointer} ()
+\begin{DoxyCompactList}\small\item\em Access completed flag. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usb_transfer_ac728b178ae4ce4845ae14269e72a7df9}{set\-Completed} ()
+\begin{DoxyCompactList}\small\item\em Set completed flag. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usb_transfer_a08051117e08a232e042467b3ca0b8649}{is\-Completed} () const 
+\begin{DoxyCompactList}\small\item\em Check completed flag. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+libusb\-\_\-device\-\_\-handle $\ast$ \hyperlink{classmdt_usb_transfer_aa9f3964f141bdeb959eb154b02a121df}{device\-Handle} ()
+\begin{DoxyCompactList}\small\item\em Get device handle. \end{DoxyCompactList}\item 
+libusb\-\_\-transfer $\ast$ \hyperlink{classmdt_usb_transfer_a5c66c2693240845c57049237f2ca2685}{transfer} ()
+\begin{DoxyCompactList}\small\item\em Access libusb transfer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+U\-S\-B transfer. 
+
+libusb\-\_\-transfer wrapper class. 
+
+Definition at line 32 of file mdt\-Usb\-Transfer.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_usb_transfer_aeb33fa86faaab99b0b5f276845817bdf}{\index{mdt\-Usb\-Transfer@{mdt\-Usb\-Transfer}!mdt\-Usb\-Transfer@{mdt\-Usb\-Transfer}}
+\index{mdt\-Usb\-Transfer@{mdt\-Usb\-Transfer}!mdtUsbTransfer@{mdt\-Usb\-Transfer}}
+\subsubsection[{mdt\-Usb\-Transfer}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Usb\-Transfer\-::mdt\-Usb\-Transfer (
+\begin{DoxyParamCaption}
+\item[{libusb\-\_\-device\-\_\-handle $\ast$}]{dev\-\_\-handle, }
+\item[{int}]{iso\-Packets\-Count = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usb_transfer_aeb33fa86faaab99b0b5f276845817bdf}
+
+
+Constructor. 
+
+
+
+Definition at line 24 of file mdt\-Usb\-Transfer.\-cpp.
+
+\hypertarget{classmdt_usb_transfer_acc8f5954658622fbdee4693ff31f530e}{\index{mdt\-Usb\-Transfer@{mdt\-Usb\-Transfer}!$\sim$mdt\-Usb\-Transfer@{$\sim$mdt\-Usb\-Transfer}}
+\index{$\sim$mdt\-Usb\-Transfer@{$\sim$mdt\-Usb\-Transfer}!mdtUsbTransfer@{mdt\-Usb\-Transfer}}
+\subsubsection[{$\sim$mdt\-Usb\-Transfer}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Usb\-Transfer\-::$\sim$mdt\-Usb\-Transfer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usb_transfer_acc8f5954658622fbdee4693ff31f530e}
+
+
+Destructor. 
+
+
+
+Definition at line 38 of file mdt\-Usb\-Transfer.\-cpp.
+
+\hypertarget{classmdt_usb_transfer_a2c58e8fc7d6186d2b64a8e3d5460da6e}{\index{mdt\-Usb\-Transfer@{mdt\-Usb\-Transfer}!mdt\-Usb\-Transfer@{mdt\-Usb\-Transfer}}
+\index{mdt\-Usb\-Transfer@{mdt\-Usb\-Transfer}!mdtUsbTransfer@{mdt\-Usb\-Transfer}}
+\subsubsection[{mdt\-Usb\-Transfer}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Usb\-Transfer\-::mdt\-Usb\-Transfer (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Usb\-Transfer} \&}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [delete]}}}\label{classmdt_usb_transfer_a2c58e8fc7d6186d2b64a8e3d5460da6e}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_usb_transfer_a75fe23ffc102c80494a14614f99e6188}{\index{mdt\-Usb\-Transfer@{mdt\-Usb\-Transfer}!actual\-Length@{actual\-Length}}
+\index{actual\-Length@{actual\-Length}!mdtUsbTransfer@{mdt\-Usb\-Transfer}}
+\subsubsection[{actual\-Length}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Usb\-Transfer\-::actual\-Length (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_transfer_a75fe23ffc102c80494a14614f99e6188}
+
+
+Get actual length. 
+
+Actual length of data that was transferred. Read-\/only, and only for use within transfer callback function. Not valid for isochronous endpoint transfers. See libusb documentation for details.
+
+\begin{DoxyPrecond}{Precondition}
+Internall transfer must be valid ( see \hyperlink{classmdt_usb_transfer_ad112791d6733fea376a9842444787912}{alloc\-Ok()} ). 
+\end{DoxyPrecond}
+
+
+Definition at line 102 of file mdt\-Usb\-Transfer.\-h.
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::handle\-Bulk\-In\-Transfer\-Complete(), and mdt\-Usbtmc\-Transfer\-Handler\-::handle\-Control\-Transfer\-Complete().
+
+\hypertarget{classmdt_usb_transfer_ad112791d6733fea376a9842444787912}{\index{mdt\-Usb\-Transfer@{mdt\-Usb\-Transfer}!alloc\-Ok@{alloc\-Ok}}
+\index{alloc\-Ok@{alloc\-Ok}!mdtUsbTransfer@{mdt\-Usb\-Transfer}}
+\subsubsection[{alloc\-Ok}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usb\-Transfer\-::alloc\-Ok (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_transfer_ad112791d6733fea376a9842444787912}
+
+
+Check that allocation not failed. 
+
+
+
+Definition at line 50 of file mdt\-Usb\-Transfer.\-h.
+
+\hypertarget{classmdt_usb_transfer_a06901e7438433d7b10b244bf853b2ab3}{\index{mdt\-Usb\-Transfer@{mdt\-Usb\-Transfer}!cancel@{cancel}}
+\index{cancel@{cancel}!mdtUsbTransfer@{mdt\-Usb\-Transfer}}
+\subsubsection[{cancel}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usb\-Transfer\-::cancel (
+\begin{DoxyParamCaption}
+\item[{bool}]{sync = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usb_transfer_a06901e7438433d7b10b244bf853b2ab3}
+
+
+Cancel transfer. 
+
+Will use libusb\-\_\-cancel\-\_\-transfer(). Note\-: this function returns directly after cancel was submitted (exactly as libusb\-\_\-cancel\-\_\-transfer() does). On error, this function returns false, and last\-Error's system\-Error will contain libusb\-\_\-error error.
+
+\begin{DoxyPrecond}{Precondition}
+Internall transfer must be valid ( see \hyperlink{classmdt_usb_transfer_ad112791d6733fea376a9842444787912}{alloc\-Ok()} ). 
+\end{DoxyPrecond}
+
+
+Definition at line 65 of file mdt\-Usb\-Transfer.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Error\-::set\-Error(), and mdt\-Error\-::set\-System\-Error().
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::submit\-Control\-Transfers\-Cancel().
+
+\hypertarget{classmdt_usb_transfer_af62c1241b0eeba1d4bdf5b7f31387c57}{\index{mdt\-Usb\-Transfer@{mdt\-Usb\-Transfer}!completed\-Pointer@{completed\-Pointer}}
+\index{completed\-Pointer@{completed\-Pointer}!mdtUsbTransfer@{mdt\-Usb\-Transfer}}
+\subsubsection[{completed\-Pointer}]{\setlength{\rightskip}{0pt plus 5cm}int$\ast$ mdt\-Usb\-Transfer\-::completed\-Pointer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_transfer_af62c1241b0eeba1d4bdf5b7f31387c57}
+
+
+Access completed flag. 
+
+Can be used with libusb\-\_\-handle\-\_\-events\-\_\-completed(). 
+
+Definition at line 138 of file mdt\-Usb\-Transfer.\-h.
+
+\hypertarget{classmdt_usb_transfer_aa9f3964f141bdeb959eb154b02a121df}{\index{mdt\-Usb\-Transfer@{mdt\-Usb\-Transfer}!device\-Handle@{device\-Handle}}
+\index{device\-Handle@{device\-Handle}!mdtUsbTransfer@{mdt\-Usb\-Transfer}}
+\subsubsection[{device\-Handle}]{\setlength{\rightskip}{0pt plus 5cm}libusb\-\_\-device\-\_\-handle$\ast$ mdt\-Usb\-Transfer\-::device\-Handle (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}}\label{classmdt_usb_transfer_aa9f3964f141bdeb959eb154b02a121df}
+
+
+Get device handle. 
+
+
+
+Definition at line 162 of file mdt\-Usb\-Transfer.\-h.
+
+
+
+Referenced by mdt\-Usbtmc\-Bulk\-Transfer\-::dbg\-Setup\-Custom(), mdt\-Usb\-Control\-Transfer\-::fill\-Transfer(), mdt\-Usbtmc\-Interrupt\-Transfer\-::setup(), mdt\-Usbtmc\-Bulk\-Transfer\-::setup\-Bulk\-In\-Request(), mdt\-Usbtmc\-Bulk\-Transfer\-::setup\-Dev\-Dep\-Msg\-Out(), and mdt\-Usbtmc\-Bulk\-Transfer\-::setup\-Request\-Dev\-Dep\-Msg\-In().
+
+\hypertarget{classmdt_usb_transfer_ae49c0346db4f0fbd62bb0131e259330e}{\index{mdt\-Usb\-Transfer@{mdt\-Usb\-Transfer}!flags@{flags}}
+\index{flags@{flags}!mdtUsbTransfer@{mdt\-Usb\-Transfer}}
+\subsubsection[{flags}]{\setlength{\rightskip}{0pt plus 5cm}uint8\-\_\-t mdt\-Usb\-Transfer\-::flags (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_transfer_ae49c0346db4f0fbd62bb0131e259330e}
+
+
+Get transfer flags. 
+
+
+
+Definition at line 57 of file mdt\-Usb\-Transfer.\-h.
+
+\hypertarget{classmdt_usb_transfer_a08051117e08a232e042467b3ca0b8649}{\index{mdt\-Usb\-Transfer@{mdt\-Usb\-Transfer}!is\-Completed@{is\-Completed}}
+\index{is\-Completed@{is\-Completed}!mdtUsbTransfer@{mdt\-Usb\-Transfer}}
+\subsubsection[{is\-Completed}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usb\-Transfer\-::is\-Completed (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_transfer_a08051117e08a232e042467b3ca0b8649}
+
+
+Check completed flag. 
+
+
+
+Definition at line 153 of file mdt\-Usb\-Transfer.\-h.
+
+\hypertarget{classmdt_usb_transfer_af13a31511f4eee9a6004e1979e5d7dea}{\index{mdt\-Usb\-Transfer@{mdt\-Usb\-Transfer}!is\-Sync@{is\-Sync}}
+\index{is\-Sync@{is\-Sync}!mdtUsbTransfer@{mdt\-Usb\-Transfer}}
+\subsubsection[{is\-Sync}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usb\-Transfer\-::is\-Sync (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_transfer_af13a31511f4eee9a6004e1979e5d7dea}
+
+
+Check if transfer is a synchronous transfer. 
+
+This can help transfer callback. If this flag is set, all it should have to do is call \hyperlink{classmdt_usb_transfer_ac728b178ae4ce4845ae14269e72a7df9}{set\-Completed()}, else. process regarding application. 
+
+Definition at line 129 of file mdt\-Usb\-Transfer.\-h.
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::control\-Transfer\-Callback().
+
+\hypertarget{classmdt_usb_transfer_a0ec677bc1ccdaeb0ab581aaba82beb36}{\index{mdt\-Usb\-Transfer@{mdt\-Usb\-Transfer}!last\-Error@{last\-Error}}
+\index{last\-Error@{last\-Error}!mdtUsbTransfer@{mdt\-Usb\-Transfer}}
+\subsubsection[{last\-Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Error} mdt\-Usb\-Transfer\-::last\-Error (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_transfer_a0ec677bc1ccdaeb0ab581aaba82beb36}
+
+
+Get last error. 
+
+
+
+Definition at line 118 of file mdt\-Usb\-Transfer.\-h.
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::dbg\-Submit\-Custom\-Bulk\-Out\-Transfer(), mdt\-Usbtmc\-Transfer\-Handler\-::submit\-Clear\-Endpoint\-Halt(), mdt\-Usbtmc\-Transfer\-Handler\-::submit\-Command(), mdt\-Usbtmc\-Transfer\-Handler\-::submit\-Control\-Transfers\-Cancel(), and mdt\-Usbtmc\-Transfer\-Handler\-::submit\-Interrupt\-In\-Transfer().
+
+\hypertarget{classmdt_usb_transfer_a9fbfd9b44ae5317c2a6a7569f7c15aa5}{\index{mdt\-Usb\-Transfer@{mdt\-Usb\-Transfer}!operator=@{operator=}}
+\index{operator=@{operator=}!mdtUsbTransfer@{mdt\-Usb\-Transfer}}
+\subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Usb\-Transfer}\& mdt\-Usb\-Transfer\-::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Usb\-Transfer} \&}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [delete]}}}\label{classmdt_usb_transfer_a9fbfd9b44ae5317c2a6a7569f7c15aa5}
+\hypertarget{classmdt_usb_transfer_ac728b178ae4ce4845ae14269e72a7df9}{\index{mdt\-Usb\-Transfer@{mdt\-Usb\-Transfer}!set\-Completed@{set\-Completed}}
+\index{set\-Completed@{set\-Completed}!mdtUsbTransfer@{mdt\-Usb\-Transfer}}
+\subsubsection[{set\-Completed}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usb\-Transfer\-::set\-Completed (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_transfer_ac728b178ae4ce4845ae14269e72a7df9}
+
+
+Set completed flag. 
+
+
+
+Definition at line 145 of file mdt\-Usb\-Transfer.\-h.
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::control\-Transfer\-Callback().
+
+\hypertarget{classmdt_usb_transfer_ab9ebc5c89217ec016975b45c8255fefe}{\index{mdt\-Usb\-Transfer@{mdt\-Usb\-Transfer}!status@{status}}
+\index{status@{status}!mdtUsbTransfer@{mdt\-Usb\-Transfer}}
+\subsubsection[{status}]{\setlength{\rightskip}{0pt plus 5cm}libusb\-\_\-transfer\-\_\-status mdt\-Usb\-Transfer\-::status (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_transfer_ab9ebc5c89217ec016975b45c8255fefe}
+
+
+Get transfer status. 
+
+\begin{DoxyPrecond}{Precondition}
+Internall transfer must be valid ( see \hyperlink{classmdt_usb_transfer_ad112791d6733fea376a9842444787912}{alloc\-Ok()} ). 
+\end{DoxyPrecond}
+
+
+Definition at line 88 of file mdt\-Usb\-Transfer.\-h.
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::handle\-Bulk\-In\-Transfer\-Complete(), mdt\-Usbtmc\-Transfer\-Handler\-::handle\-Bulk\-Out\-Transfer\-Complete(), mdt\-Usbtmc\-Transfer\-Handler\-::handle\-Control\-Transfer\-Complete(), mdt\-Usbtmc\-Transfer\-Handler\-::handle\-Interrupt\-In\-Transfer\-Complete(), mdt\-Usbtmc\-Transfer\-Handler\-::restore\-Bulk\-In\-Transfer\-S\-A(), mdt\-Usbtmc\-Transfer\-Handler\-::restore\-Bulk\-Out\-Transfer\-S\-A(), and mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-\-::restore\-Cancelled\-Bulk\-Out\-Transfer().
+
+\hypertarget{classmdt_usb_transfer_a8f8999f1c419f31c26b352cf6782a0d2}{\index{mdt\-Usb\-Transfer@{mdt\-Usb\-Transfer}!submit@{submit}}
+\index{submit@{submit}!mdtUsbTransfer@{mdt\-Usb\-Transfer}}
+\subsubsection[{submit}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usb\-Transfer\-::submit (
+\begin{DoxyParamCaption}
+\item[{bool}]{sync = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usb_transfer_a8f8999f1c419f31c26b352cf6782a0d2}
+
+
+Submit transfer. 
+
+Will use libusb\-\_\-submit\-\_\-transfer(). On error, this function returns false, and last\-Error's system\-Error will contain libusb\-\_\-error error.
+
+\begin{DoxyPrecond}{Precondition}
+Internall transfer must be valid ( see \hyperlink{classmdt_usb_transfer_ad112791d6733fea376a9842444787912}{alloc\-Ok()} ). 
+\end{DoxyPrecond}
+
+
+Definition at line 45 of file mdt\-Usb\-Transfer.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Error\-::set\-Error(), and mdt\-Error\-::set\-System\-Error().
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::dbg\-Submit\-Custom\-Bulk\-Out\-Transfer(), mdt\-Usbtmc\-Transfer\-Handler\-::submit\-Clear\-Endpoint\-Halt(), mdt\-Usbtmc\-Transfer\-Handler\-::submit\-Command(), and mdt\-Usbtmc\-Transfer\-Handler\-::submit\-Interrupt\-In\-Transfer().
+
+\hypertarget{classmdt_usb_transfer_a3262511f6062348132e7ee689c24226c}{\index{mdt\-Usb\-Transfer@{mdt\-Usb\-Transfer}!timeout@{timeout}}
+\index{timeout@{timeout}!mdtUsbTransfer@{mdt\-Usb\-Transfer}}
+\subsubsection[{timeout}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int mdt\-Usb\-Transfer\-::timeout (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_transfer_a3262511f6062348132e7ee689c24226c}
+
+
+Get timeout that was given to transfer. 
+
+
+
+Definition at line 110 of file mdt\-Usb\-Transfer.\-h.
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::handle\-Bulk\-Out\-Transfer\-Complete(), and mdt\-Usbtmc\-Transfer\-Handler\-::handle\-Interrupt\-In\-Transfer\-Complete().
+
+\hypertarget{classmdt_usb_transfer_a5c66c2693240845c57049237f2ca2685}{\index{mdt\-Usb\-Transfer@{mdt\-Usb\-Transfer}!transfer@{transfer}}
+\index{transfer@{transfer}!mdtUsbTransfer@{mdt\-Usb\-Transfer}}
+\subsubsection[{transfer}]{\setlength{\rightskip}{0pt plus 5cm}libusb\-\_\-transfer$\ast$ mdt\-Usb\-Transfer\-::transfer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}}\label{classmdt_usb_transfer_a5c66c2693240845c57049237f2ca2685}
+
+
+Access libusb transfer. 
+
+
+
+Definition at line 169 of file mdt\-Usb\-Transfer.\-h.
+
+
+
+Referenced by mdt\-Usbtmc\-Bulk\-Transfer\-::dbg\-Setup\-Custom(), mdt\-Usb\-Control\-Transfer\-::fill\-Transfer(), mdt\-Usbtmc\-Interrupt\-Transfer\-::setup(), mdt\-Usbtmc\-Bulk\-Transfer\-::setup\-Bulk\-In\-Request(), mdt\-Usbtmc\-Bulk\-Transfer\-::setup\-Dev\-Dep\-Msg\-Out(), and mdt\-Usbtmc\-Bulk\-Transfer\-::setup\-Request\-Dev\-Dep\-Msg\-In().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdtport/\hyperlink{mdt_usb_transfer_8h}{mdt\-Usb\-Transfer.\-h}\item 
+src/mdtport/\hyperlink{mdt_usb_transfer_8cpp}{mdt\-Usb\-Transfer.\-cpp}\end{DoxyCompactItemize}

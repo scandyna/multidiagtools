@@ -17,6 +17,8 @@ Store setup data related to a test item.
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_tt_test_item_node_setup_data_a2c58ca8c543b503e7d96d3f13112078f}{add\-Node\-Setup\-Data} (const \hyperlink{classmdt_tt_test_node_setup_data}{mdt\-Tt\-Test\-Node\-Setup\-Data} \&data)
 \begin{DoxyCompactList}\small\item\em Add test node setup data. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_tt_test_item_node_setup_data_a078eca82d6f55028676bae956e75ea1e}{add\-Node\-Setup\-Data} (int step\-Number, const Q\-List$<$ \hyperlink{classmdt_tt_test_node_setup_data}{mdt\-Tt\-Test\-Node\-Setup\-Data} $>$ \&node\-Setup\-Data\-List)
+\begin{DoxyCompactList}\small\item\em Add a list of node setup data for given step. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_tt_test_item_node_setup_data_a1e3ed3490ff43e90a4fea2256af8e4d2}{clear} ()
 \begin{DoxyCompactList}\small\item\em Add test node unit setup data. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_tt_test_item_node_setup_data_ac3b94d30bf38bdb189d888a62b09b34d}{has\-More\-Step} () const 
@@ -93,9 +95,17 @@ Definition at line 26 of file mdt\-Tt\-Test\-Item\-Node\-Setup\-Data.\-cpp.
 
 Add test node setup data. 
 
-Will add node setup data, regarding device\-Identification and step\-Number of each unit setup stored inside. 
+Will add node setup data, regarding device\-Identification and step\-Number of each unit setup stored inside.
 
-Definition at line 32 of file mdt\-Tt\-Test\-Item\-Node\-Setup\-Data.\-cpp.
+\begin{DoxyRefDesc}{Deprecated}
+\item[\hyperlink{deprecated__deprecated000009}{Deprecated}]\end{DoxyRefDesc}
+
+
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000092}{Todo}]Obselete ! \end{DoxyRefDesc}
+
+
+Definition at line 33 of file mdt\-Tt\-Test\-Item\-Node\-Setup\-Data.\-cpp.
 
 
 
@@ -104,6 +114,22 @@ References mdt\-Tt\-Test\-Node\-Setup\-Data\-::add\-Unit\-Setup(), mdt\-Tt\-Test
 
 
 Referenced by mdt\-Tt\-Test\-::get\-Setup\-Data().
+
+\hypertarget{classmdt_tt_test_item_node_setup_data_a078eca82d6f55028676bae956e75ea1e}{\index{mdt\-Tt\-Test\-Item\-Node\-Setup\-Data@{mdt\-Tt\-Test\-Item\-Node\-Setup\-Data}!add\-Node\-Setup\-Data@{add\-Node\-Setup\-Data}}
+\index{add\-Node\-Setup\-Data@{add\-Node\-Setup\-Data}!mdtTtTestItemNodeSetupData@{mdt\-Tt\-Test\-Item\-Node\-Setup\-Data}}
+\subsubsection[{add\-Node\-Setup\-Data}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Tt\-Test\-Item\-Node\-Setup\-Data\-::add\-Node\-Setup\-Data (
+\begin{DoxyParamCaption}
+\item[{int}]{step\-Number, }
+\item[{const Q\-List$<$ {\bf mdt\-Tt\-Test\-Node\-Setup\-Data} $>$ \&}]{node\-Setup\-Data\-List}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_item_node_setup_data_a078eca82d6f55028676bae956e75ea1e}
+
+
+Add a list of node setup data for given step. 
+
+
+
+Definition at line 70 of file mdt\-Tt\-Test\-Item\-Node\-Setup\-Data.\-cpp.
 
 \hypertarget{classmdt_tt_test_item_node_setup_data_a1e3ed3490ff43e90a4fea2256af8e4d2}{\index{mdt\-Tt\-Test\-Item\-Node\-Setup\-Data@{mdt\-Tt\-Test\-Item\-Node\-Setup\-Data}!clear@{clear}}
 \index{clear@{clear}!mdtTtTestItemNodeSetupData@{mdt\-Tt\-Test\-Item\-Node\-Setup\-Data}}
@@ -122,7 +148,7 @@ Clear data
 
 void mdt\-Tt\-Test\-Item\-Node\-Setup\-Data\-::add\-Node\-Unit\-Setup\-Data(const mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data \& data) \{ \} 
 
-Definition at line 71 of file mdt\-Tt\-Test\-Item\-Node\-Setup\-Data.\-cpp.
+Definition at line 87 of file mdt\-Tt\-Test\-Item\-Node\-Setup\-Data.\-cpp.
 
 
 
@@ -141,7 +167,7 @@ Get device identification for current step.
 
 
 
-Definition at line 89 of file mdt\-Tt\-Test\-Item\-Node\-Setup\-Data.\-cpp.
+Definition at line 105 of file mdt\-Tt\-Test\-Item\-Node\-Setup\-Data.\-cpp.
 
 
 
@@ -160,7 +186,7 @@ Get next step.
 
 
 
-Definition at line 79 of file mdt\-Tt\-Test\-Item\-Node\-Setup\-Data.\-cpp.
+Definition at line 95 of file mdt\-Tt\-Test\-Item\-Node\-Setup\-Data.\-cpp.
 
 \hypertarget{classmdt_tt_test_item_node_setup_data_ac3b94d30bf38bdb189d888a62b09b34d}{\index{mdt\-Tt\-Test\-Item\-Node\-Setup\-Data@{mdt\-Tt\-Test\-Item\-Node\-Setup\-Data}!has\-More\-Step@{has\-More\-Step}}
 \index{has\-More\-Step@{has\-More\-Step}!mdtTtTestItemNodeSetupData@{mdt\-Tt\-Test\-Item\-Node\-Setup\-Data}}
@@ -175,7 +201,7 @@ Check if more step is available.
 
 
 
-Definition at line 90 of file mdt\-Tt\-Test\-Item\-Node\-Setup\-Data.\-h.
+Definition at line 96 of file mdt\-Tt\-Test\-Item\-Node\-Setup\-Data.\-h.
 
 
 

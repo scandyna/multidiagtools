@@ -1,0 +1,588 @@
+\hypertarget{classmdt_usbtmc_bulk_transfer}{\section{mdt\-Usbtmc\-Bulk\-Transfer Class Reference}
+\label{classmdt_usbtmc_bulk_transfer}\index{mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}}
+}
+
+
+U\-S\-B\-T\-M\-C bulk transfer.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Usbtmc\-Bulk\-Transfer.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Usbtmc\-Bulk\-Transfer\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=202pt]{classmdt_usbtmc_bulk_transfer__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Usbtmc\-Bulk\-Transfer\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=202pt]{classmdt_usbtmc_bulk_transfer__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{classmdt_usbtmc_bulk_transfer_a81f2309d821053cd7c8f6e32aff93b7c}{Split\-Action\-\_\-t} \{ \\*
+\hyperlink{classmdt_usbtmc_bulk_transfer_a81f2309d821053cd7c8f6e32aff93b7ca1e601ea653db1c729c9ee5746730fabe}{Split\-Action\-\_\-t\-::\-No\-Action} = 0, 
+\hyperlink{classmdt_usbtmc_bulk_transfer_a81f2309d821053cd7c8f6e32aff93b7caea5c13bf8058f283040da9153953c4e7}{Split\-Action\-\_\-t\-::\-I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-A\-B\-O\-R\-T}, 
+\hyperlink{classmdt_usbtmc_bulk_transfer_a81f2309d821053cd7c8f6e32aff93b7ca651cbdca4ac8b302c18ac9884791194e}{Split\-Action\-\_\-t\-::\-C\-H\-E\-C\-K\-\_\-\-A\-B\-O\-R\-T\-\_\-\-S\-T\-A\-T\-U\-S}, 
+\hyperlink{classmdt_usbtmc_bulk_transfer_a81f2309d821053cd7c8f6e32aff93b7cad6f130330eaada1770d26d6906b1977b}{Split\-Action\-\_\-t\-::\-I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-C\-L\-E\-A\-R}, 
+\\*
+\hyperlink{classmdt_usbtmc_bulk_transfer_a81f2309d821053cd7c8f6e32aff93b7ca34c6b8e885527e8b41b195d3fc18677a}{Split\-Action\-\_\-t\-::\-C\-H\-E\-C\-K\-\_\-\-C\-L\-E\-A\-R\-\_\-\-S\-T\-A\-T\-U\-S}, 
+\hyperlink{classmdt_usbtmc_bulk_transfer_a81f2309d821053cd7c8f6e32aff93b7cae37274c52bff64e53e5dd2ce355a5219}{Split\-Action\-\_\-t\-::\-C\-L\-E\-A\-R\-\_\-\-E\-N\-D\-P\-O\-I\-N\-T\-\_\-\-H\-A\-L\-T}
+ \}
+\begin{DoxyCompactList}\small\item\em U\-S\-B\-T\-M\-C split action. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_usbtmc_bulk_transfer_ae4164471ca85026006352e0e836146ea}{mdt\-Usbtmc\-Bulk\-Transfer} (\hyperlink{classmdt_usbtmc_transfer_handler}{mdt\-Usbtmc\-Transfer\-Handler} \&th, \hyperlink{classmdt_usb_endpoint_descriptor}{mdt\-Usb\-Endpoint\-Descriptor} endpoint\-Descriptor, libusb\-\_\-device\-\_\-handle $\ast$dev\-\_\-handle, int buffer\-Size=4096)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_usbtmc_bulk_transfer_aedb3f658126c79f4b749cc655d192c43}{mdt\-Usbtmc\-Bulk\-Transfer} (const \hyperlink{classmdt_usbtmc_bulk_transfer}{mdt\-Usbtmc\-Bulk\-Transfer} \&rhs)=delete
+\item 
+\hyperlink{classmdt_usbtmc_bulk_transfer}{mdt\-Usbtmc\-Bulk\-Transfer} \& \hyperlink{classmdt_usbtmc_bulk_transfer_ad23ec92f7262ac2e6f89cf7bfa518756}{operator=} (const \hyperlink{classmdt_usbtmc_bulk_transfer}{mdt\-Usbtmc\-Bulk\-Transfer} \&rhs)=delete
+\item 
+void \hyperlink{classmdt_usbtmc_bulk_transfer_a36922717023b588ecf02cd771a5a3a4b}{setup\-Dev\-Dep\-Msg\-Out} (uint8\-\_\-t \hyperlink{classmdt_usbtmc_bulk_transfer_a7975795ea5299a1a82c1ec303be24e2e}{b\-Tag}, \hyperlink{classmdt_usbtmc_tx_message}{mdt\-Usbtmc\-Tx\-Message} \&message, bool \hyperlink{classmdt_usbtmc_bulk_transfer_afda5d4a8eef1381cc7ebc121b95a112e}{response\-Expected}, unsigned int \hyperlink{classmdt_usb_transfer_a3262511f6062348132e7ee689c24226c}{timeout})
+\begin{DoxyCompactList}\small\item\em Setup D\-E\-V\-\_\-\-D\-E\-P\-\_\-\-M\-S\-G\-\_\-\-O\-U\-T transfer. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_bulk_transfer_a374cc50b3dafce30492ab7c793efd73e}{setup\-Request\-Dev\-Dep\-Msg\-In} (uint8\-\_\-t \hyperlink{classmdt_usbtmc_bulk_transfer_a7975795ea5299a1a82c1ec303be24e2e}{b\-Tag}, bool term\-Char\-Enabled, char term\-Char, unsigned int \hyperlink{classmdt_usb_transfer_a3262511f6062348132e7ee689c24226c}{timeout})
+\begin{DoxyCompactList}\small\item\em Setup R\-E\-Q\-U\-E\-S\-T\-\_\-\-D\-E\-V\-\_\-\-D\-E\-P\-\_\-\-M\-S\-G\-\_\-\-I\-N transfer. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_bulk_transfer_aa46a28a062659f75808313a0f3b4d109}{setup\-Bulk\-In\-Request} (unsigned int \hyperlink{classmdt_usb_transfer_a3262511f6062348132e7ee689c24226c}{timeout})
+\begin{DoxyCompactList}\small\item\em Setup bulk-\/\-I\-N transfer. \end{DoxyCompactList}\item 
+uint8\-\_\-t \hyperlink{classmdt_usbtmc_bulk_transfer_a7975795ea5299a1a82c1ec303be24e2e}{b\-Tag} () const 
+\begin{DoxyCompactList}\small\item\em Get b\-Tag. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usbtmc_bulk_transfer_a57a8fd2f99866998e4b76d0318c0cfb4}{b\-Tag\-Is\-Ok} () const 
+\begin{DoxyCompactList}\small\item\em Check if b\-Tag\-Inverse is the innverse of b\-Tag. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_usbtmc_frame_abf1e449c264011341c477d45eb700c42}{mdt\-Usbtmc\-Frame\-::msg\-Id\-\_\-t} \hyperlink{classmdt_usbtmc_bulk_transfer_a1ee96cb0af0b5e1322ceb6ed65082345}{msg\-I\-D} () const 
+\begin{DoxyCompactList}\small\item\em Get Msg\-I\-D. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usbtmc_bulk_transfer_ab1507e543f8922866df22c9041baf16d}{received\-All\-Data} (int rx\-Length)
+\begin{DoxyCompactList}\small\item\em Check if all data anounced in Transfer\-Size by device are available. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usbtmc_bulk_transfer_ae30384384de8bb085c9e55cf637795e2}{is\-E\-O\-M} () const 
+\begin{DoxyCompactList}\small\item\em Check if this transfer is the last in message. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_bulk_transfer_abbab24a2899ef22e28d503708699bc4e}{get\-Data} (\hyperlink{classmdt_usbtmc_rx_message}{mdt\-Usbtmc\-Rx\-Message} \&message)
+\begin{DoxyCompactList}\small\item\em Get data. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_usbtmc_transfer_handler}{mdt\-Usbtmc\-Transfer\-Handler} \& \hyperlink{classmdt_usbtmc_bulk_transfer_a10dbec33fd2e7844e35841e4d0a1d7a9}{transfer\-Handler} ()
+\begin{DoxyCompactList}\small\item\em Get transfer handler. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usbtmc_bulk_transfer_afda5d4a8eef1381cc7ebc121b95a112e}{response\-Expected} () const 
+\begin{DoxyCompactList}\small\item\em Check if a response is expected. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_bulk_transfer_a313d55e028ff3f6c90d511294a90fab6}{set\-Split\-Action} (\hyperlink{classmdt_usbtmc_bulk_transfer_a81f2309d821053cd7c8f6e32aff93b7c}{Split\-Action\-\_\-t} action)
+\begin{DoxyCompactList}\small\item\em Set split action. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_bulk_transfer_a574fbd5ed5c2850e86ad36e8964c7e7d}{clear\-Split\-Action} ()
+\begin{DoxyCompactList}\small\item\em Clear split action. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usbtmc_bulk_transfer_ac11193559ba081b99018dae36915ac00}{split\-Action\-Required} () const 
+\begin{DoxyCompactList}\small\item\em Check if a split action is to be performed. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_usbtmc_bulk_transfer_a81f2309d821053cd7c8f6e32aff93b7c}{Split\-Action\-\_\-t} \hyperlink{classmdt_usbtmc_bulk_transfer_a62a98f509c9b267cfe6ceb163d285379}{split\-Action} () const 
+\begin{DoxyCompactList}\small\item\em Get split action to perform. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_bulk_transfer_ab3d5c309fd992fc8c2690d6faa9b42f4}{dbg\-Setup\-Custom} (uint8\-\_\-t \hyperlink{classmdt_usbtmc_bulk_transfer_a1ee96cb0af0b5e1322ceb6ed65082345}{msg\-I\-D}, uint8\-\_\-t \hyperlink{classmdt_usbtmc_bulk_transfer_a7975795ea5299a1a82c1ec303be24e2e}{b\-Tag}, uint8\-\_\-t b\-Tag\-Inverse, uint32\-\_\-t transfer\-Size, uint8\-\_\-t bm\-Transfer\-Attributes, uint8\-\_\-t term\-Char, bool \hyperlink{classmdt_usbtmc_bulk_transfer_afda5d4a8eef1381cc7ebc121b95a112e}{response\-Expected}, int transfer\-Buffer\-Length, unsigned int \hyperlink{classmdt_usb_transfer_a3262511f6062348132e7ee689c24226c}{timeout})
+\begin{DoxyCompactList}\small\item\em Setup a custom transfer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+U\-S\-B\-T\-M\-C bulk transfer. 
+
+Definition at line 34 of file mdt\-Usbtmc\-Bulk\-Transfer.\-h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{classmdt_usbtmc_bulk_transfer_a81f2309d821053cd7c8f6e32aff93b7c}{\index{mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}!Split\-Action\-\_\-t@{Split\-Action\-\_\-t}}
+\index{Split\-Action\-\_\-t@{Split\-Action\-\_\-t}!mdtUsbtmcBulkTransfer@{mdt\-Usbtmc\-Bulk\-Transfer}}
+\subsubsection[{Split\-Action\-\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdt\-Usbtmc\-Bulk\-Transfer\-::\-Split\-Action\-\_\-t}\hspace{0.3cm}{\ttfamily [strong]}}}\label{classmdt_usbtmc_bulk_transfer_a81f2309d821053cd7c8f6e32aff93b7c}
+
+
+U\-S\-B\-T\-M\-C split action. 
+
+Helps to deal with U\-S\-B\-T\-M\-C split transaction defined in U\-S\-B\-T\-M\-C 1.\-0 specification, section 4.\-2.\-1.\-1
+
+This is used by bulk transfer callbacks to know if they have something to do (submit a I\-N\-I\-T\-I\-A\-T\-E or a C\-H\-E\-C\-K control query). \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{No\-Action@{No\-Action}!mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}}\index{mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}!No\-Action@{No\-Action}}\item[{\em 
+\hypertarget{classmdt_usbtmc_bulk_transfer_a81f2309d821053cd7c8f6e32aff93b7ca1e601ea653db1c729c9ee5746730fabe}{No\-Action}\label{classmdt_usbtmc_bulk_transfer_a81f2309d821053cd7c8f6e32aff93b7ca1e601ea653db1c729c9ee5746730fabe}
+}]No action to perform \index{I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-A\-B\-O\-R\-T@{I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-A\-B\-O\-R\-T}!mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}}\index{mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}!I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-A\-B\-O\-R\-T@{I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-A\-B\-O\-R\-T}}\item[{\em 
+\hypertarget{classmdt_usbtmc_bulk_transfer_a81f2309d821053cd7c8f6e32aff93b7caea5c13bf8058f283040da9153953c4e7}{I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-A\-B\-O\-R\-T}\label{classmdt_usbtmc_bulk_transfer_a81f2309d821053cd7c8f6e32aff93b7caea5c13bf8058f283040da9153953c4e7}
+}]Begin aborting transfer with I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\mbox{[}O\-U\-T/\-I\-N\mbox{]} \index{C\-H\-E\-C\-K\-\_\-\-A\-B\-O\-R\-T\-\_\-\-S\-T\-A\-T\-U\-S@{C\-H\-E\-C\-K\-\_\-\-A\-B\-O\-R\-T\-\_\-\-S\-T\-A\-T\-U\-S}!mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}}\index{mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}!C\-H\-E\-C\-K\-\_\-\-A\-B\-O\-R\-T\-\_\-\-S\-T\-A\-T\-U\-S@{C\-H\-E\-C\-K\-\_\-\-A\-B\-O\-R\-T\-\_\-\-S\-T\-A\-T\-U\-S}}\item[{\em 
+\hypertarget{classmdt_usbtmc_bulk_transfer_a81f2309d821053cd7c8f6e32aff93b7ca651cbdca4ac8b302c18ac9884791194e}{C\-H\-E\-C\-K\-\_\-\-A\-B\-O\-R\-T\-\_\-\-S\-T\-A\-T\-U\-S}\label{classmdt_usbtmc_bulk_transfer_a81f2309d821053cd7c8f6e32aff93b7ca651cbdca4ac8b302c18ac9884791194e}
+}]Check status with C\-H\-E\-C\-K\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\mbox{[}O\-U\-T/\-I\-N\mbox{]}\-\_\-\-S\-T\-A\-T\-U\-S \index{I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-C\-L\-E\-A\-R@{I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-C\-L\-E\-A\-R}!mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}}\index{mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}!I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-C\-L\-E\-A\-R@{I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-C\-L\-E\-A\-R}}\item[{\em 
+\hypertarget{classmdt_usbtmc_bulk_transfer_a81f2309d821053cd7c8f6e32aff93b7cad6f130330eaada1770d26d6906b1977b}{I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-C\-L\-E\-A\-R}\label{classmdt_usbtmc_bulk_transfer_a81f2309d821053cd7c8f6e32aff93b7cad6f130330eaada1770d26d6906b1977b}
+}]Begin I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-C\-L\-E\-A\-R \index{C\-H\-E\-C\-K\-\_\-\-C\-L\-E\-A\-R\-\_\-\-S\-T\-A\-T\-U\-S@{C\-H\-E\-C\-K\-\_\-\-C\-L\-E\-A\-R\-\_\-\-S\-T\-A\-T\-U\-S}!mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}}\index{mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}!C\-H\-E\-C\-K\-\_\-\-C\-L\-E\-A\-R\-\_\-\-S\-T\-A\-T\-U\-S@{C\-H\-E\-C\-K\-\_\-\-C\-L\-E\-A\-R\-\_\-\-S\-T\-A\-T\-U\-S}}\item[{\em 
+\hypertarget{classmdt_usbtmc_bulk_transfer_a81f2309d821053cd7c8f6e32aff93b7ca34c6b8e885527e8b41b195d3fc18677a}{C\-H\-E\-C\-K\-\_\-\-C\-L\-E\-A\-R\-\_\-\-S\-T\-A\-T\-U\-S}\label{classmdt_usbtmc_bulk_transfer_a81f2309d821053cd7c8f6e32aff93b7ca34c6b8e885527e8b41b195d3fc18677a}
+}]Send a C\-H\-E\-C\-K\-\_\-\-C\-L\-E\-A\-R\-\_\-\-S\-T\-A\-T\-U\-S request \index{C\-L\-E\-A\-R\-\_\-\-E\-N\-D\-P\-O\-I\-N\-T\-\_\-\-H\-A\-L\-T@{C\-L\-E\-A\-R\-\_\-\-E\-N\-D\-P\-O\-I\-N\-T\-\_\-\-H\-A\-L\-T}!mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}}\index{mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}!C\-L\-E\-A\-R\-\_\-\-E\-N\-D\-P\-O\-I\-N\-T\-\_\-\-H\-A\-L\-T@{C\-L\-E\-A\-R\-\_\-\-E\-N\-D\-P\-O\-I\-N\-T\-\_\-\-H\-A\-L\-T}}\item[{\em 
+\hypertarget{classmdt_usbtmc_bulk_transfer_a81f2309d821053cd7c8f6e32aff93b7cae37274c52bff64e53e5dd2ce355a5219}{C\-L\-E\-A\-R\-\_\-\-E\-N\-D\-P\-O\-I\-N\-T\-\_\-\-H\-A\-L\-T}\label{classmdt_usbtmc_bulk_transfer_a81f2309d821053cd7c8f6e32aff93b7cae37274c52bff64e53e5dd2ce355a5219}
+}]Send a C\-L\-E\-A\-R\-\_\-\-F\-E\-A\-T\-U\-R\-E request with w\-Value = E\-N\-D\-P\-O\-I\-N\-T\-\_\-\-H\-A\-L\-T \end{description}
+\end{Desc}
+
+
+Definition at line 46 of file mdt\-Usbtmc\-Bulk\-Transfer.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_usbtmc_bulk_transfer_ae4164471ca85026006352e0e836146ea}{\index{mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}!mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}}
+\index{mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}!mdtUsbtmcBulkTransfer@{mdt\-Usbtmc\-Bulk\-Transfer}}
+\subsubsection[{mdt\-Usbtmc\-Bulk\-Transfer}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Usbtmc\-Bulk\-Transfer\-::mdt\-Usbtmc\-Bulk\-Transfer (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Usbtmc\-Transfer\-Handler} \&}]{th, }
+\item[{{\bf mdt\-Usb\-Endpoint\-Descriptor}}]{endpoint\-Descriptor, }
+\item[{libusb\-\_\-device\-\_\-handle $\ast$}]{dev\-\_\-handle, }
+\item[{int}]{buffer\-Size = {\ttfamily 4096}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usbtmc_bulk_transfer_ae4164471ca85026006352e0e836146ea}
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em th} & Transfer handler \\
+\hline
+{\em endpoint\-Descriptor} & Endpoint descriptor \\
+\hline
+{\em dev\-\_\-handle} & A handle to a open device \\
+\hline
+{\em buffer\-Size} & Internal U\-S\-B\-T\-M\-C frame's buffer size. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+endpoint\-Descriptor must not be empty 
+
+buffer\-Size must be at least 512 and a multiple of 4 
+\end{DoxyPrecond}
+
+
+Definition at line 25 of file mdt\-Usbtmc\-Bulk\-Transfer.\-cpp.
+
+
+
+References clear\-Split\-Action(), and mdt\-Usb\-Endpoint\-Descriptor\-::is\-Empty().
+
+\hypertarget{classmdt_usbtmc_bulk_transfer_aedb3f658126c79f4b749cc655d192c43}{\index{mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}!mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}}
+\index{mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}!mdtUsbtmcBulkTransfer@{mdt\-Usbtmc\-Bulk\-Transfer}}
+\subsubsection[{mdt\-Usbtmc\-Bulk\-Transfer}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Usbtmc\-Bulk\-Transfer\-::mdt\-Usbtmc\-Bulk\-Transfer (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Usbtmc\-Bulk\-Transfer} \&}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [delete]}}}\label{classmdt_usbtmc_bulk_transfer_aedb3f658126c79f4b749cc655d192c43}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_usbtmc_bulk_transfer_a7975795ea5299a1a82c1ec303be24e2e}{\index{mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}!b\-Tag@{b\-Tag}}
+\index{b\-Tag@{b\-Tag}!mdtUsbtmcBulkTransfer@{mdt\-Usbtmc\-Bulk\-Transfer}}
+\subsubsection[{b\-Tag}]{\setlength{\rightskip}{0pt plus 5cm}uint8\-\_\-t mdt\-Usbtmc\-Bulk\-Transfer\-::b\-Tag (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_bulk_transfer_a7975795ea5299a1a82c1ec303be24e2e}
+
+
+Get b\-Tag. 
+
+
+
+Definition at line 107 of file mdt\-Usbtmc\-Bulk\-Transfer.\-h.
+
+
+
+References mdt\-Usbtmc\-Frame\-::b\-Tag().
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::begin\-Abort\-Bulk\-In(), mdt\-Usbtmc\-Transfer\-Handler\-::handle\-Bulk\-In\-Transfer\-Complete(), mdt\-Usbtmc\-Transfer\-Handler\-::handle\-Bulk\-Out\-Transfer\-Complete(), and mdt\-Usbtmc\-Transfer\-Handler\-::restore\-Bulk\-Out\-Transfer\-S\-A().
+
+\hypertarget{classmdt_usbtmc_bulk_transfer_a57a8fd2f99866998e4b76d0318c0cfb4}{\index{mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}!b\-Tag\-Is\-Ok@{b\-Tag\-Is\-Ok}}
+\index{b\-Tag\-Is\-Ok@{b\-Tag\-Is\-Ok}!mdtUsbtmcBulkTransfer@{mdt\-Usbtmc\-Bulk\-Transfer}}
+\subsubsection[{b\-Tag\-Is\-Ok}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usbtmc\-Bulk\-Transfer\-::b\-Tag\-Is\-Ok (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_bulk_transfer_a57a8fd2f99866998e4b76d0318c0cfb4}
+
+
+Check if b\-Tag\-Inverse is the innverse of b\-Tag. 
+
+Uuseful to check bulk-\/\-I\-N transfers. 
+
+Definition at line 116 of file mdt\-Usbtmc\-Bulk\-Transfer.\-h.
+
+
+
+References mdt\-Usbtmc\-Frame\-::b\-Tag(), and mdt\-Usbtmc\-Frame\-::b\-Tag\-Inverse().
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::handle\-Bulk\-In\-Transfer\-Complete().
+
+\hypertarget{classmdt_usbtmc_bulk_transfer_a574fbd5ed5c2850e86ad36e8964c7e7d}{\index{mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}!clear\-Split\-Action@{clear\-Split\-Action}}
+\index{clear\-Split\-Action@{clear\-Split\-Action}!mdtUsbtmcBulkTransfer@{mdt\-Usbtmc\-Bulk\-Transfer}}
+\subsubsection[{clear\-Split\-Action}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Bulk\-Transfer\-::clear\-Split\-Action (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_bulk_transfer_a574fbd5ed5c2850e86ad36e8964c7e7d}
+
+
+Clear split action. 
+
+
+
+Definition at line 177 of file mdt\-Usbtmc\-Bulk\-Transfer.\-h.
+
+
+
+References No\-Action.
+
+
+
+Referenced by dbg\-Setup\-Custom(), mdt\-Usbtmc\-Bulk\-Transfer(), setup\-Bulk\-In\-Request(), setup\-Dev\-Dep\-Msg\-Out(), and setup\-Request\-Dev\-Dep\-Msg\-In().
+
+\hypertarget{classmdt_usbtmc_bulk_transfer_ab3d5c309fd992fc8c2690d6faa9b42f4}{\index{mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}!dbg\-Setup\-Custom@{dbg\-Setup\-Custom}}
+\index{dbg\-Setup\-Custom@{dbg\-Setup\-Custom}!mdtUsbtmcBulkTransfer@{mdt\-Usbtmc\-Bulk\-Transfer}}
+\subsubsection[{dbg\-Setup\-Custom}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Bulk\-Transfer\-::dbg\-Setup\-Custom (
+\begin{DoxyParamCaption}
+\item[{uint8\-\_\-t}]{msg\-I\-D, }
+\item[{uint8\-\_\-t}]{b\-Tag, }
+\item[{uint8\-\_\-t}]{b\-Tag\-Inverse, }
+\item[{uint32\-\_\-t}]{transfer\-Size, }
+\item[{uint8\-\_\-t}]{bm\-Transfer\-Attributes, }
+\item[{uint8\-\_\-t}]{term\-Char, }
+\item[{bool}]{response\-Expected, }
+\item[{int}]{transfer\-Buffer\-Length, }
+\item[{unsigned int}]{timeout}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usbtmc_bulk_transfer_ab3d5c309fd992fc8c2690d6faa9b42f4}
+
+
+Setup a custom transfer. 
+
+Used for debug and testing. \begin{DoxyPrecond}{Precondition}
+transfer\-Buffer\-Length must be $<$= Internal frame capacity 
+\end{DoxyPrecond}
+
+
+Definition at line 83 of file mdt\-Usbtmc\-Bulk\-Transfer.\-cpp.
+
+
+
+References mdt\-Usb\-Endpoint\-Descriptor\-::address(), mdt\-Usbtmc\-Frame\-::buffer(), mdt\-Usbtmc\-Transfer\-Handler\-::bulk\-Out\-Transfer\-Callback(), mdt\-Usbtmc\-Frame\-::capacity(), mdt\-Usbtmc\-Frame\-::clear(), clear\-Split\-Action(), mdt\-Usbtmc\-Frame\-::dbg\-Set\-Custom\-Value(), mdt\-Usb\-Transfer\-::device\-Handle(), response\-Expected(), mdt\-Usbtmc\-Frame\-::setb\-Tag(), mdt\-Usbtmc\-Frame\-::set\-Msg\-I\-D(), mdt\-Usbtmc\-Frame\-::set\-Transfer\-Size(), and mdt\-Usb\-Transfer\-::transfer().
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::dbg\-Submit\-Custom\-Bulk\-Out\-Transfer().
+
+\hypertarget{classmdt_usbtmc_bulk_transfer_abbab24a2899ef22e28d503708699bc4e}{\index{mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}!get\-Data@{get\-Data}}
+\index{get\-Data@{get\-Data}!mdtUsbtmcBulkTransfer@{mdt\-Usbtmc\-Bulk\-Transfer}}
+\subsubsection[{get\-Data}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Bulk\-Transfer\-::get\-Data (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Usbtmc\-Rx\-Message} \&}]{message}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_bulk_transfer_abbab24a2899ef22e28d503708699bc4e}
+
+
+Get data. 
+
+Will write (by copy) data part to given message. 
+
+Definition at line 150 of file mdt\-Usbtmc\-Bulk\-Transfer.\-h.
+
+
+
+References mdt\-Usbtmc\-Frame\-::get\-Data().
+
+\hypertarget{classmdt_usbtmc_bulk_transfer_ae30384384de8bb085c9e55cf637795e2}{\index{mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}!is\-E\-O\-M@{is\-E\-O\-M}}
+\index{is\-E\-O\-M@{is\-E\-O\-M}!mdtUsbtmcBulkTransfer@{mdt\-Usbtmc\-Bulk\-Transfer}}
+\subsubsection[{is\-E\-O\-M}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usbtmc\-Bulk\-Transfer\-::is\-E\-O\-M (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_bulk_transfer_ae30384384de8bb085c9e55cf637795e2}
+
+
+Check if this transfer is the last in message. 
+
+
+
+Definition at line 141 of file mdt\-Usbtmc\-Bulk\-Transfer.\-h.
+
+
+
+References mdt\-Usbtmc\-Frame\-::\-E\-O\-Mset().
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::handle\-Bulk\-In\-Transfer\-Complete().
+
+\hypertarget{classmdt_usbtmc_bulk_transfer_a1ee96cb0af0b5e1322ceb6ed65082345}{\index{mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}!msg\-I\-D@{msg\-I\-D}}
+\index{msg\-I\-D@{msg\-I\-D}!mdtUsbtmcBulkTransfer@{mdt\-Usbtmc\-Bulk\-Transfer}}
+\subsubsection[{msg\-I\-D}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Usbtmc\-Frame\-::msg\-Id\-\_\-t} mdt\-Usbtmc\-Bulk\-Transfer\-::msg\-I\-D (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_bulk_transfer_a1ee96cb0af0b5e1322ceb6ed65082345}
+
+
+Get Msg\-I\-D. 
+
+See Table 2 in U\-S\-B\-T\-M\-C 1.\-0 specifications for details. 
+
+Definition at line 125 of file mdt\-Usbtmc\-Bulk\-Transfer.\-h.
+
+
+
+References mdt\-Usbtmc\-Frame\-::msg\-I\-D().
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::handle\-Bulk\-Out\-Transfer\-Complete().
+
+\hypertarget{classmdt_usbtmc_bulk_transfer_ad23ec92f7262ac2e6f89cf7bfa518756}{\index{mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}!operator=@{operator=}}
+\index{operator=@{operator=}!mdtUsbtmcBulkTransfer@{mdt\-Usbtmc\-Bulk\-Transfer}}
+\subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Usbtmc\-Bulk\-Transfer}\& mdt\-Usbtmc\-Bulk\-Transfer\-::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Usbtmc\-Bulk\-Transfer} \&}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [delete]}}}\label{classmdt_usbtmc_bulk_transfer_ad23ec92f7262ac2e6f89cf7bfa518756}
+\hypertarget{classmdt_usbtmc_bulk_transfer_ab1507e543f8922866df22c9041baf16d}{\index{mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}!received\-All\-Data@{received\-All\-Data}}
+\index{received\-All\-Data@{received\-All\-Data}!mdtUsbtmcBulkTransfer@{mdt\-Usbtmc\-Bulk\-Transfer}}
+\subsubsection[{received\-All\-Data}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usbtmc\-Bulk\-Transfer\-::received\-All\-Data (
+\begin{DoxyParamCaption}
+\item[{int}]{rx\-Length}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_bulk_transfer_ab1507e543f8922866df22c9041baf16d}
+
+
+Check if all data anounced in Transfer\-Size by device are available. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rx\-Length} & The actual length that libusb set in transfer struct \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 134 of file mdt\-Usbtmc\-Bulk\-Transfer.\-h.
+
+
+
+References mdt\-Usbtmc\-Frame\-::is\-Complete().
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::handle\-Bulk\-In\-Transfer\-Complete().
+
+\hypertarget{classmdt_usbtmc_bulk_transfer_afda5d4a8eef1381cc7ebc121b95a112e}{\index{mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}!response\-Expected@{response\-Expected}}
+\index{response\-Expected@{response\-Expected}!mdtUsbtmcBulkTransfer@{mdt\-Usbtmc\-Bulk\-Transfer}}
+\subsubsection[{response\-Expected}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usbtmc\-Bulk\-Transfer\-::response\-Expected (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_bulk_transfer_afda5d4a8eef1381cc7ebc121b95a112e}
+
+
+Check if a response is expected. 
+
+
+
+Definition at line 164 of file mdt\-Usbtmc\-Bulk\-Transfer.\-h.
+
+
+
+Referenced by dbg\-Setup\-Custom(), mdt\-Usbtmc\-Transfer\-Handler\-::handle\-Bulk\-Out\-Transfer\-Complete(), and setup\-Dev\-Dep\-Msg\-Out().
+
+\hypertarget{classmdt_usbtmc_bulk_transfer_a313d55e028ff3f6c90d511294a90fab6}{\index{mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}!set\-Split\-Action@{set\-Split\-Action}}
+\index{set\-Split\-Action@{set\-Split\-Action}!mdtUsbtmcBulkTransfer@{mdt\-Usbtmc\-Bulk\-Transfer}}
+\subsubsection[{set\-Split\-Action}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Bulk\-Transfer\-::set\-Split\-Action (
+\begin{DoxyParamCaption}
+\item[{{\bf Split\-Action\-\_\-t}}]{action}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_bulk_transfer_a313d55e028ff3f6c90d511294a90fab6}
+
+
+Set split action. 
+
+
+
+Definition at line 171 of file mdt\-Usbtmc\-Bulk\-Transfer.\-h.
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::begin\-Abort\-Bulk\-Out(), mdt\-Usbtmc\-Transfer\-Handler\-::submit\-Cancel\-All\-Bulk\-In\-Transfers(), and mdt\-Usbtmc\-Transfer\-Handler\-::submit\-Cancel\-All\-Bulk\-Out\-Transfers().
+
+\hypertarget{classmdt_usbtmc_bulk_transfer_aa46a28a062659f75808313a0f3b4d109}{\index{mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}!setup\-Bulk\-In\-Request@{setup\-Bulk\-In\-Request}}
+\index{setup\-Bulk\-In\-Request@{setup\-Bulk\-In\-Request}!mdtUsbtmcBulkTransfer@{mdt\-Usbtmc\-Bulk\-Transfer}}
+\subsubsection[{setup\-Bulk\-In\-Request}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Bulk\-Transfer\-::setup\-Bulk\-In\-Request (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{timeout}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usbtmc_bulk_transfer_aa46a28a062659f75808313a0f3b4d109}
+
+
+Setup bulk-\/\-I\-N transfer. 
+
+See U\-S\-B\-T\-M\-C 1.\-0 specifications, section 3.\-3
+
+
+\begin{DoxyParams}{Parameters}
+{\em timeout} & Timeout \mbox{[}ms\mbox{]} \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 72 of file mdt\-Usbtmc\-Bulk\-Transfer.\-cpp.
+
+
+
+References mdt\-Usb\-Endpoint\-Descriptor\-::address(), mdt\-Usbtmc\-Frame\-::buffer(), mdt\-Usbtmc\-Transfer\-Handler\-::bulk\-In\-Transfer\-Callback(), mdt\-Usbtmc\-Frame\-::capacity(), mdt\-Usbtmc\-Frame\-::clear(), clear\-Split\-Action(), mdt\-Usb\-Transfer\-::device\-Handle(), and mdt\-Usb\-Transfer\-::transfer().
+
+\hypertarget{classmdt_usbtmc_bulk_transfer_a36922717023b588ecf02cd771a5a3a4b}{\index{mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}!setup\-Dev\-Dep\-Msg\-Out@{setup\-Dev\-Dep\-Msg\-Out}}
+\index{setup\-Dev\-Dep\-Msg\-Out@{setup\-Dev\-Dep\-Msg\-Out}!mdtUsbtmcBulkTransfer@{mdt\-Usbtmc\-Bulk\-Transfer}}
+\subsubsection[{setup\-Dev\-Dep\-Msg\-Out}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Bulk\-Transfer\-::setup\-Dev\-Dep\-Msg\-Out (
+\begin{DoxyParamCaption}
+\item[{uint8\-\_\-t}]{b\-Tag, }
+\item[{{\bf mdt\-Usbtmc\-Tx\-Message} \&}]{message, }
+\item[{bool}]{response\-Expected, }
+\item[{unsigned int}]{timeout}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usbtmc_bulk_transfer_a36922717023b588ecf02cd771a5a3a4b}
+
+
+Setup D\-E\-V\-\_\-\-D\-E\-P\-\_\-\-M\-S\-G\-\_\-\-O\-U\-T transfer. 
+
+See U\-S\-B\-T\-M\-C 1.\-0 specifications, section 3.\-2.\-1.\-1
+
+
+\begin{DoxyParams}{Parameters}
+{\em b\-Tag} & See U\-S\-B\-T\-M\-C 1.\-0 specifications, Table 1 for details \\
+\hline
+{\em message} & Message in witch data must be transferred. \\
+\hline
+{\em response\-Expected} & If message is a query that expects a response, like $\ast$\-I\-D\-N?, set this flag. \\
+\hline
+{\em timeout} & Timeout \mbox{[}ms\mbox{]}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+b\-Tag must be in range \mbox{[}1;255\mbox{]} 
+\end{DoxyPrecond}
+
+
+Definition at line 36 of file mdt\-Usbtmc\-Bulk\-Transfer.\-cpp.
+
+
+
+References mdt\-Usb\-Endpoint\-Descriptor\-::address(), mdt\-Usbtmc\-Frame\-::buffer(), mdt\-Usbtmc\-Frame\-::buffer\-Length(), mdt\-Usbtmc\-Transfer\-Handler\-::bulk\-Out\-Transfer\-Callback(), mdt\-Usbtmc\-Frame\-::clear(), clear\-Split\-Action(), mdt\-Usbtmc\-Frame\-::\-D\-E\-V\-\_\-\-D\-E\-P\-\_\-\-M\-S\-G\-\_\-\-O\-U\-T, mdt\-Usb\-Transfer\-::device\-Handle(), mdt\-Usbtmc\-Tx\-Message\-::has\-Bytes\-To\-Read(), response\-Expected(), mdt\-Usbtmc\-Frame\-::setb\-Tag(), mdt\-Usbtmc\-Frame\-::set\-Data(), mdt\-Usbtmc\-Frame\-::set\-E\-O\-M(), mdt\-Usbtmc\-Frame\-::set\-Msg\-I\-D(), and mdt\-Usb\-Transfer\-::transfer().
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::submit\-Command().
+
+\hypertarget{classmdt_usbtmc_bulk_transfer_a374cc50b3dafce30492ab7c793efd73e}{\index{mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}!setup\-Request\-Dev\-Dep\-Msg\-In@{setup\-Request\-Dev\-Dep\-Msg\-In}}
+\index{setup\-Request\-Dev\-Dep\-Msg\-In@{setup\-Request\-Dev\-Dep\-Msg\-In}!mdtUsbtmcBulkTransfer@{mdt\-Usbtmc\-Bulk\-Transfer}}
+\subsubsection[{setup\-Request\-Dev\-Dep\-Msg\-In}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Bulk\-Transfer\-::setup\-Request\-Dev\-Dep\-Msg\-In (
+\begin{DoxyParamCaption}
+\item[{uint8\-\_\-t}]{b\-Tag, }
+\item[{bool}]{term\-Char\-Enabled, }
+\item[{char}]{term\-Char, }
+\item[{unsigned int}]{timeout}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usbtmc_bulk_transfer_a374cc50b3dafce30492ab7c793efd73e}
+
+
+Setup R\-E\-Q\-U\-E\-S\-T\-\_\-\-D\-E\-V\-\_\-\-D\-E\-P\-\_\-\-M\-S\-G\-\_\-\-I\-N transfer. 
+
+See U\-S\-B\-T\-M\-C 1.\-0 specifications, section 3.\-2.\-1.\-2
+
+
+\begin{DoxyParams}{Parameters}
+{\em b\-Tag} & See U\-S\-B\-T\-M\-C 1.\-0 specifications, Table 1 for details \\
+\hline
+{\em term\-Char\-Enabled} & Set true if required and device support it. \\
+\hline
+{\em term\-Char} & Term char. Is ignored if term\-Char\-Enabled is false. \\
+\hline
+{\em timeout} & Timeout \mbox{[}ms\mbox{]}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+b\-Tag must be in range \mbox{[}1;255\mbox{]} 
+\end{DoxyPrecond}
+
+
+Definition at line 53 of file mdt\-Usbtmc\-Bulk\-Transfer.\-cpp.
+
+
+
+References mdt\-Usb\-Endpoint\-Descriptor\-::address(), mdt\-Usbtmc\-Frame\-::buffer(), mdt\-Usbtmc\-Transfer\-Handler\-::bulk\-Out\-Transfer\-Callback(), mdt\-Usbtmc\-Frame\-::clear(), clear\-Split\-Action(), mdt\-Usbtmc\-Frame\-::\-D\-E\-V\-\_\-\-D\-E\-P\-\_\-\-M\-S\-G\-\_\-\-I\-N, mdt\-Usb\-Transfer\-::device\-Handle(), mdt\-Usbtmc\-Frame\-::setb\-Tag(), mdt\-Usbtmc\-Frame\-::set\-Msg\-I\-D(), mdt\-Usbtmc\-Frame\-::set\-Term\-Char(), mdt\-Usbtmc\-Frame\-::set\-Transfer\-Size\-To\-Max(), and mdt\-Usb\-Transfer\-::transfer().
+
+\hypertarget{classmdt_usbtmc_bulk_transfer_a62a98f509c9b267cfe6ceb163d285379}{\index{mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}!split\-Action@{split\-Action}}
+\index{split\-Action@{split\-Action}!mdtUsbtmcBulkTransfer@{mdt\-Usbtmc\-Bulk\-Transfer}}
+\subsubsection[{split\-Action}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Split\-Action\-\_\-t} mdt\-Usbtmc\-Bulk\-Transfer\-::split\-Action (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_bulk_transfer_a62a98f509c9b267cfe6ceb163d285379}
+
+
+Get split action to perform. 
+
+
+
+Definition at line 191 of file mdt\-Usbtmc\-Bulk\-Transfer.\-h.
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::restore\-Bulk\-In\-Transfer\-S\-A(), and mdt\-Usbtmc\-Transfer\-Handler\-::restore\-Bulk\-Out\-Transfer\-S\-A().
+
+\hypertarget{classmdt_usbtmc_bulk_transfer_ac11193559ba081b99018dae36915ac00}{\index{mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}!split\-Action\-Required@{split\-Action\-Required}}
+\index{split\-Action\-Required@{split\-Action\-Required}!mdtUsbtmcBulkTransfer@{mdt\-Usbtmc\-Bulk\-Transfer}}
+\subsubsection[{split\-Action\-Required}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usbtmc\-Bulk\-Transfer\-::split\-Action\-Required (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_bulk_transfer_ac11193559ba081b99018dae36915ac00}
+
+
+Check if a split action is to be performed. 
+
+
+
+Definition at line 184 of file mdt\-Usbtmc\-Bulk\-Transfer.\-h.
+
+
+
+References No\-Action.
+
+\hypertarget{classmdt_usbtmc_bulk_transfer_a10dbec33fd2e7844e35841e4d0a1d7a9}{\index{mdt\-Usbtmc\-Bulk\-Transfer@{mdt\-Usbtmc\-Bulk\-Transfer}!transfer\-Handler@{transfer\-Handler}}
+\index{transfer\-Handler@{transfer\-Handler}!mdtUsbtmcBulkTransfer@{mdt\-Usbtmc\-Bulk\-Transfer}}
+\subsubsection[{transfer\-Handler}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Usbtmc\-Transfer\-Handler}\& mdt\-Usbtmc\-Bulk\-Transfer\-::transfer\-Handler (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_bulk_transfer_a10dbec33fd2e7844e35841e4d0a1d7a9}
+
+
+Get transfer handler. 
+
+
+
+Definition at line 157 of file mdt\-Usbtmc\-Bulk\-Transfer.\-h.
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::bulk\-In\-Transfer\-Callback(), and mdt\-Usbtmc\-Transfer\-Handler\-::bulk\-Out\-Transfer\-Callback().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdtport/\hyperlink{mdt_usbtmc_bulk_transfer_8h}{mdt\-Usbtmc\-Bulk\-Transfer.\-h}\item 
+src/mdtport/\hyperlink{mdt_usbtmc_bulk_transfer_8cpp}{mdt\-Usbtmc\-Bulk\-Transfer.\-cpp}\end{DoxyCompactItemize}

@@ -1,0 +1,930 @@
+\hypertarget{classmdt_usbtmc_control_transfer}{\section{mdt\-Usbtmc\-Control\-Transfer Class Reference}
+\label{classmdt_usbtmc_control_transfer}\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}}
+}
+
+
+U\-S\-B\-T\-M\-C control transfer.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Usbtmc\-Control\-Transfer.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Usbtmc\-Control\-Transfer\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=214pt]{classmdt_usbtmc_control_transfer__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Usbtmc\-Control\-Transfer\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=214pt]{classmdt_usbtmc_control_transfer__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{classmdt_usbtmc_control_transfer_a9f40cbd57464978b74624c66fa083251}{U\-S\-B\-T\-M\-Cb\-Request} \-: uint8\-\_\-t \{ \\*
+\hyperlink{classmdt_usbtmc_control_transfer_a9f40cbd57464978b74624c66fa083251a6adf97f83acf6453d4a6a4b1070f3754}{U\-S\-B\-T\-M\-Cb\-Request\-::\-None} = 0, 
+\hyperlink{classmdt_usbtmc_control_transfer_a9f40cbd57464978b74624c66fa083251a4b910f3c6efa4c00ab50c021d1bae17f}{U\-S\-B\-T\-M\-Cb\-Request\-::\-I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-O\-U\-T} = 1, 
+\hyperlink{classmdt_usbtmc_control_transfer_a9f40cbd57464978b74624c66fa083251a8e725abe772f1ec8511ad20cd18d29dd}{U\-S\-B\-T\-M\-Cb\-Request\-::\-C\-H\-E\-C\-K\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-O\-U\-T\-\_\-\-S\-T\-A\-T\-U\-S} = 2, 
+\hyperlink{classmdt_usbtmc_control_transfer_a9f40cbd57464978b74624c66fa083251a57834c39b68a91a648145b695e48d583}{U\-S\-B\-T\-M\-Cb\-Request\-::\-I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-I\-N} = 3, 
+\\*
+\hyperlink{classmdt_usbtmc_control_transfer_a9f40cbd57464978b74624c66fa083251ace3ca35d7227c086e77a76aab3c76d92}{U\-S\-B\-T\-M\-Cb\-Request\-::\-C\-H\-E\-C\-K\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-I\-N\-\_\-\-S\-T\-A\-T\-U\-S} = 4, 
+\hyperlink{classmdt_usbtmc_control_transfer_a9f40cbd57464978b74624c66fa083251ad6f130330eaada1770d26d6906b1977b}{U\-S\-B\-T\-M\-Cb\-Request\-::\-I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-C\-L\-E\-A\-R} = 5, 
+\hyperlink{classmdt_usbtmc_control_transfer_a9f40cbd57464978b74624c66fa083251a34c6b8e885527e8b41b195d3fc18677a}{U\-S\-B\-T\-M\-Cb\-Request\-::\-C\-H\-E\-C\-K\-\_\-\-C\-L\-E\-A\-R\-\_\-\-S\-T\-A\-T\-U\-S} = 6, 
+\hyperlink{classmdt_usbtmc_control_transfer_a9f40cbd57464978b74624c66fa083251ac5fdfd8898fb5bd8d1b9913c55be662a}{U\-S\-B\-T\-M\-Cb\-Request\-::\-G\-E\-T\-\_\-\-C\-A\-P\-A\-B\-I\-L\-I\-T\-I\-E\-S} = 7, 
+\\*
+\hyperlink{classmdt_usbtmc_control_transfer_a9f40cbd57464978b74624c66fa083251a6cc9be4b934a31774eba74dc9c234a1b}{U\-S\-B\-T\-M\-Cb\-Request\-::\-I\-N\-D\-I\-C\-A\-T\-O\-R\-\_\-\-P\-U\-L\-S\-E} = 64
+ \}
+\begin{DoxyCompactList}\small\item\em U\-S\-B\-T\-M\-C b\-Request. \end{DoxyCompactList}\item 
+enum \hyperlink{classmdt_usbtmc_control_transfer_a9deb98223593f6919b4ecbd87f7e375c}{U\-S\-B\-T\-M\-Cstatus} \-: uint8\-\_\-t \{ \\*
+\hyperlink{classmdt_usbtmc_control_transfer_a9deb98223593f6919b4ecbd87f7e375ca47768f6d3d56f8455845fb093ab0cf0e}{U\-S\-B\-T\-M\-Cstatus\-::\-S\-T\-A\-T\-U\-S\-\_\-\-S\-U\-C\-C\-E\-S\-S} = 0x01, 
+\hyperlink{classmdt_usbtmc_control_transfer_a9deb98223593f6919b4ecbd87f7e375ca767dde9d10dac1b1eaabbf0f6c51814c}{U\-S\-B\-T\-M\-Cstatus\-::\-S\-T\-A\-T\-U\-S\-\_\-\-P\-E\-N\-D\-I\-N\-G} = 0x02, 
+\hyperlink{classmdt_usbtmc_control_transfer_a9deb98223593f6919b4ecbd87f7e375ca073697b2a5bf9563bc184f10e3db1511}{U\-S\-B\-T\-M\-Cstatus\-::\-S\-T\-A\-T\-U\-S\-\_\-\-F\-A\-I\-L\-E\-D} = 0x80, 
+\hyperlink{classmdt_usbtmc_control_transfer_a9deb98223593f6919b4ecbd87f7e375cab566a1dbbf2f50dc50a8480fbd3f910c}{U\-S\-B\-T\-M\-Cstatus\-::\-S\-T\-A\-T\-U\-S\-\_\-\-T\-R\-A\-N\-S\-F\-E\-R\-\_\-\-N\-O\-T\-\_\-\-I\-N\-\_\-\-P\-R\-O\-G\-R\-E\-S\-S} = 0x81, 
+\\*
+\hyperlink{classmdt_usbtmc_control_transfer_a9deb98223593f6919b4ecbd87f7e375ca996fcc8912c879c4d09092d31980c972}{U\-S\-B\-T\-M\-Cstatus\-::\-S\-T\-A\-T\-U\-S\-\_\-\-S\-P\-L\-I\-T\-\_\-\-N\-O\-T\-\_\-\-I\-N\-\_\-\-P\-R\-O\-G\-R\-E\-S\-S} = 0x82, 
+\hyperlink{classmdt_usbtmc_control_transfer_a9deb98223593f6919b4ecbd87f7e375cac1781e0d5317190cd79ca6d94295fad1}{U\-S\-B\-T\-M\-Cstatus\-::\-S\-T\-A\-T\-U\-S\-\_\-\-S\-P\-L\-I\-T\-\_\-\-I\-N\-\_\-\-P\-R\-O\-G\-R\-E\-S\-S} = 0x83, 
+\hyperlink{classmdt_usbtmc_control_transfer_a9deb98223593f6919b4ecbd87f7e375ca01550706ae7ac85aaed4a54585736b16}{U\-S\-B\-T\-M\-Cstatus\-::\-S\-T\-A\-T\-U\-S\-\_\-\-I\-N\-T\-E\-R\-R\-U\-P\-T\-\_\-\-I\-N\-\_\-\-B\-U\-S\-Y} = 0x20
+ \}
+\begin{DoxyCompactList}\small\item\em U\-S\-B\-T\-M\-C\-\_\-status values. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_usbtmc_control_transfer_a2d17061cfab461e3a103a9b97a813bfd}{mdt\-Usbtmc\-Control\-Transfer} (\hyperlink{classmdt_usbtmc_transfer_handler}{mdt\-Usbtmc\-Transfer\-Handler} \&th, libusb\-\_\-device\-\_\-handle $\ast$dev\-\_\-handle, int buffer\-Size=1024)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_usbtmc_control_transfer_a500d4462ebf54558c384c120a16f1059}{mdt\-Usbtmc\-Control\-Transfer} (const \hyperlink{classmdt_usbtmc_control_transfer}{mdt\-Usbtmc\-Control\-Transfer} \&rhs)=delete
+\item 
+\hyperlink{classmdt_usbtmc_control_transfer}{mdt\-Usbtmc\-Control\-Transfer} \& \hyperlink{classmdt_usbtmc_control_transfer_af3f3cef9aee3400b67fd6c404322087d}{operator=} (const \hyperlink{classmdt_usbtmc_control_transfer}{mdt\-Usbtmc\-Control\-Transfer} \&rhs)=delete
+\item 
+void \hyperlink{classmdt_usbtmc_control_transfer_a643310e1bcb2c76faca498720a20e938}{setup\-Clear\-Endpoint\-Halt} (uint8\-\_\-t endpoint\-Number, unsigned int \hyperlink{classmdt_usb_transfer_a3262511f6062348132e7ee689c24226c}{timeout})
+\begin{DoxyCompactList}\small\item\em Setup a clear endpoint halt transfer. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usbtmc_control_transfer_a0dbcbeb3f867150af3458dcdb83ef6ea}{is\-Clear\-Endpoint\-Halt\-Request} (uint8\-\_\-t endpoint\-Number) const 
+\begin{DoxyCompactList}\small\item\em Check if this is a C\-L\-E\-A\-R\-\_\-\-F\-E\-A\-T\-U\-R\-E request with w\-Value = E\-N\-D\-P\-O\-I\-N\-T\-\_\-\-H\-A\-L\-T for given endpoint. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_control_transfer_a08efe6be130e0ea84c99c4225f5c62d1}{setup\-Initiate\-Abort\-Bulk\-Out} (uint8\-\_\-t b\-Tag, uint8\-\_\-t endpoint\-Number, unsigned int \hyperlink{classmdt_usb_transfer_a3262511f6062348132e7ee689c24226c}{timeout})
+\begin{DoxyCompactList}\small\item\em Setup a I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-O\-U\-T transfer. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_control_transfer_abc9b101aa6d0399a080f2d0eaf797f17}{setup\-Check\-Abort\-Bulk\-Out\-Status} (uint8\-\_\-t endpoint\-Number, unsigned int \hyperlink{classmdt_usb_transfer_a3262511f6062348132e7ee689c24226c}{timeout})
+\begin{DoxyCompactList}\small\item\em Setup a C\-H\-E\-C\-K\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-O\-U\-T\-\_\-\-S\-T\-A\-T\-U\-S transfer. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_control_transfer_a773bc4ac1644db83c771a3ede559821b}{setup\-Initiate\-Abort\-Bulk\-In} (uint8\-\_\-t b\-Tag, uint8\-\_\-t endpoint\-Number, unsigned int \hyperlink{classmdt_usb_transfer_a3262511f6062348132e7ee689c24226c}{timeout})
+\begin{DoxyCompactList}\small\item\em Setup a I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-I\-N transfer. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_control_transfer_a92cdb77ae78f7450304860d8c75bd140}{setup\-Check\-Abort\-Bulk\-In\-Status} (uint8\-\_\-t endpoint\-Number, unsigned int \hyperlink{classmdt_usb_transfer_a3262511f6062348132e7ee689c24226c}{timeout})
+\begin{DoxyCompactList}\small\item\em Setup a C\-H\-E\-C\-K\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-I\-N\-\_\-\-S\-T\-A\-T\-U\-S transfer. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_control_transfer_a557b7e2f922e942c8a029f70058fd509}{setup\-Initiate\-Clear} (uint8\-\_\-t interface\-Number, unsigned int \hyperlink{classmdt_usb_transfer_a3262511f6062348132e7ee689c24226c}{timeout})
+\begin{DoxyCompactList}\small\item\em Setup a I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-C\-L\-E\-A\-R transfer. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_control_transfer_a7150005140f8efa6136ba81e4cb1c41a}{setup\-Check\-Clear\-Status} (uint8\-\_\-t interface\-Number, unsigned int \hyperlink{classmdt_usb_transfer_a3262511f6062348132e7ee689c24226c}{timeout})
+\begin{DoxyCompactList}\small\item\em Setup a C\-H\-E\-C\-K\-\_\-\-C\-L\-E\-A\-R\-\_\-\-S\-T\-A\-T\-U\-S transfer. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_control_transfer_a1c2dd98480cfd0a7568997baef0dd9f5}{setup\-Get\-Capabilities} (uint8\-\_\-t interface\-Number, unsigned int \hyperlink{classmdt_usb_transfer_a3262511f6062348132e7ee689c24226c}{timeout})
+\begin{DoxyCompactList}\small\item\em Setup a G\-E\-T\-\_\-\-C\-A\-P\-A\-B\-I\-L\-I\-T\-I\-E\-S transfer. \end{DoxyCompactList}\item 
+uint16\-\_\-t \hyperlink{classmdt_usbtmc_control_transfer_a9d15b801836965c0cf6c2e1f4129ee39}{bcd\-U\-S\-B\-T\-M\-C} () const 
+\begin{DoxyCompactList}\small\item\em Get bcd\-U\-S\-B\-T\-M\-C. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usbtmc_control_transfer_a5b10459793ddbfeaa8ce73485f1bd4a1}{interface\-Accepts\-Indicator\-Pulse} () const 
+\begin{DoxyCompactList}\small\item\em Check if interface accepts I\-N\-D\-I\-C\-A\-T\-O\-R\-\_\-\-P\-U\-L\-S\-E. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usbtmc_control_transfer_a3d36514cb8af036905dde235d998fe65}{interface\-Is\-Talk\-Only} () const 
+\begin{DoxyCompactList}\small\item\em Check if interface is talk-\/only. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usbtmc_control_transfer_a05c81d3b4276d0d960286a9a3c02f0fb}{interface\-Is\-Listen\-Only} () const 
+\begin{DoxyCompactList}\small\item\em Check if interface is listen-\/only. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usbtmc_control_transfer_a2c3231d6314f7ed4e6d16505ff579e3b}{device\-Supports\-Term\-Char} () const 
+\begin{DoxyCompactList}\small\item\em Check if device supports Term\-Char. \end{DoxyCompactList}\item 
+uint16\-\_\-t \hyperlink{classmdt_usbtmc_control_transfer_a38c6f71d406c56049130d23847b9badf}{bcd\-U\-S\-B488} () const 
+\begin{DoxyCompactList}\small\item\em Get bcd\-U\-S\-B488. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usbtmc_control_transfer_a68d6a2b8f2cd4aa84b6d718094879459}{interface\-Is\-U\-S\-B488} () const 
+\begin{DoxyCompactList}\small\item\em Check if interface is a 488.\-2 U\-S\-B488 one. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usbtmc_control_transfer_affa393eda32d107679a1648cc4e9eb3f}{interface\-Accepts\-Ren\-Control} () const 
+\begin{DoxyCompactList}\small\item\em Check if interface accepts R\-E\-N\-\_\-\-C\-O\-N\-T\-R\-O\-L. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usbtmc_control_transfer_ab9d9126ac41e8bc336d923c526f9eba5}{interface\-Accepts\-Trigger} () const 
+\begin{DoxyCompactList}\small\item\em Check if interface accepts Msg\-I\-D = T\-R\-I\-G\-G\-E\-R. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usbtmc_control_transfer_a8a882499daf970c5f1755abe496edf06}{device\-Supports\-All\-Mandatory\-Scpi\-Commands} () const 
+\begin{DoxyCompactList}\small\item\em Check if device supports all mandatory S\-C\-P\-I commands. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usbtmc_control_transfer_a95a492d4c4ddd1034e0c4862a3a37d70}{device\-Is\-S\-R1\-Capable} () const 
+\begin{DoxyCompactList}\small\item\em Check if device is S\-R1 capable. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usbtmc_control_transfer_a6dcc03f0b46222830550dae9fba91eeb}{device\-Is\-R\-L1\-Capable} () const 
+\begin{DoxyCompactList}\small\item\em Check if device is R\-L1 capable. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usbtmc_control_transfer_a3eda1ab8d93a06ff5e75c83aaf809ca4}{device\-Is\-D\-T1\-Capable} () const 
+\begin{DoxyCompactList}\small\item\em Check if device is D\-T1 capable. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_control_transfer_af142d729a00688258471d7ef60849cf4}{setup\-Indicator\-Pulse} (uint8\-\_\-t interface\-Number, unsigned int \hyperlink{classmdt_usb_transfer_a3262511f6062348132e7ee689c24226c}{timeout})
+\begin{DoxyCompactList}\small\item\em Setup a I\-N\-D\-I\-C\-A\-T\-O\-R\-\_\-\-P\-U\-L\-S\-E transfer. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_usbtmc_control_transfer_a9f40cbd57464978b74624c66fa083251}{U\-S\-B\-T\-M\-Cb\-Request} \hyperlink{classmdt_usbtmc_control_transfer_a6fe677f56b8154cf3ee3814a3f818c5d}{usbtmc\-Request} () const 
+\begin{DoxyCompactList}\small\item\em Get U\-S\-B\-T\-M\-C b\-Request. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{classmdt_usbtmc_control_transfer_ae686c342204cd9880e0dc73af663fd8d}{usbtmc\-Request\-Text} () const 
+\begin{DoxyCompactList}\small\item\em Get U\-S\-B\-T\-M\-C b\-Request text. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_usbtmc_control_transfer_a9deb98223593f6919b4ecbd87f7e375c}{U\-S\-B\-T\-M\-Cstatus} \hyperlink{classmdt_usbtmc_control_transfer_a44f97e524faa410863d8c5574bf8b076}{usbtmc\-Status} () const 
+\begin{DoxyCompactList}\small\item\em Get U\-S\-B\-T\-M\-C\-\_\-status. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{classmdt_usbtmc_control_transfer_a47aadf17c8b6e88c1fcebc83c64ff6f3}{usbtmc\-Status\-Text} () const 
+\begin{DoxyCompactList}\small\item\em Get U\-S\-B\-T\-M\-C\-\_\-status text. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_usbtmc_transfer_handler}{mdt\-Usbtmc\-Transfer\-Handler} \& \hyperlink{classmdt_usbtmc_control_transfer_a1f76ab4314ad2fd174f70af06ee8ce41}{transfer\-Handler} ()
+\begin{DoxyCompactList}\small\item\em Get transfer handler. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+U\-S\-B\-T\-M\-C control transfer. 
+
+Definition at line 33 of file mdt\-Usbtmc\-Control\-Transfer.\-h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{classmdt_usbtmc_control_transfer_a9f40cbd57464978b74624c66fa083251}{\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!U\-S\-B\-T\-M\-Cb\-Request@{U\-S\-B\-T\-M\-Cb\-Request}}
+\index{U\-S\-B\-T\-M\-Cb\-Request@{U\-S\-B\-T\-M\-Cb\-Request}!mdtUsbtmcControlTransfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\subsubsection[{U\-S\-B\-T\-M\-Cb\-Request}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdt\-Usbtmc\-Control\-Transfer\-::\-U\-S\-B\-T\-M\-Cb\-Request} \-: uint8\-\_\-t\hspace{0.3cm}{\ttfamily [strong]}}}\label{classmdt_usbtmc_control_transfer_a9f40cbd57464978b74624c66fa083251}
+
+
+U\-S\-B\-T\-M\-C b\-Request. 
+
+See Table 15 in U\-S\-B\-T\-M\-C 1.\-0 specifications, section 4.\-2.\-1. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{None@{None}!mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}}\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!None@{None}}\item[{\em 
+\hypertarget{classmdt_usbtmc_control_transfer_a9f40cbd57464978b74624c66fa083251a6adf97f83acf6453d4a6a4b1070f3754}{None}\label{classmdt_usbtmc_control_transfer_a9f40cbd57464978b74624c66fa083251a6adf97f83acf6453d4a6a4b1070f3754}
+}]Marked as reserved in specification, but... \index{I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-O\-U\-T@{I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-O\-U\-T}!mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}}\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-O\-U\-T@{I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-O\-U\-T}}\item[{\em 
+\hypertarget{classmdt_usbtmc_control_transfer_a9f40cbd57464978b74624c66fa083251a4b910f3c6efa4c00ab50c021d1bae17f}{I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-O\-U\-T}\label{classmdt_usbtmc_control_transfer_a9f40cbd57464978b74624c66fa083251a4b910f3c6efa4c00ab50c021d1bae17f}
+}]Abort a Bulk-\/\-O\-U\-T transfer. \index{C\-H\-E\-C\-K\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-O\-U\-T\-\_\-\-S\-T\-A\-T\-U\-S@{C\-H\-E\-C\-K\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-O\-U\-T\-\_\-\-S\-T\-A\-T\-U\-S}!mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}}\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!C\-H\-E\-C\-K\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-O\-U\-T\-\_\-\-S\-T\-A\-T\-U\-S@{C\-H\-E\-C\-K\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-O\-U\-T\-\_\-\-S\-T\-A\-T\-U\-S}}\item[{\em 
+\hypertarget{classmdt_usbtmc_control_transfer_a9f40cbd57464978b74624c66fa083251a8e725abe772f1ec8511ad20cd18d29dd}{C\-H\-E\-C\-K\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-O\-U\-T\-\_\-\-S\-T\-A\-T\-U\-S}\label{classmdt_usbtmc_control_transfer_a9f40cbd57464978b74624c66fa083251a8e725abe772f1ec8511ad20cd18d29dd}
+}]Returns the status of the previously sent I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-O\-U\-T request. \index{I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-I\-N@{I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-I\-N}!mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}}\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-I\-N@{I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-I\-N}}\item[{\em 
+\hypertarget{classmdt_usbtmc_control_transfer_a9f40cbd57464978b74624c66fa083251a57834c39b68a91a648145b695e48d583}{I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-I\-N}\label{classmdt_usbtmc_control_transfer_a9f40cbd57464978b74624c66fa083251a57834c39b68a91a648145b695e48d583}
+}]Abort a Bulk-\/\-I\-N transfer. \index{C\-H\-E\-C\-K\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-I\-N\-\_\-\-S\-T\-A\-T\-U\-S@{C\-H\-E\-C\-K\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-I\-N\-\_\-\-S\-T\-A\-T\-U\-S}!mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}}\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!C\-H\-E\-C\-K\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-I\-N\-\_\-\-S\-T\-A\-T\-U\-S@{C\-H\-E\-C\-K\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-I\-N\-\_\-\-S\-T\-A\-T\-U\-S}}\item[{\em 
+\hypertarget{classmdt_usbtmc_control_transfer_a9f40cbd57464978b74624c66fa083251ace3ca35d7227c086e77a76aab3c76d92}{C\-H\-E\-C\-K\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-I\-N\-\_\-\-S\-T\-A\-T\-U\-S}\label{classmdt_usbtmc_control_transfer_a9f40cbd57464978b74624c66fa083251ace3ca35d7227c086e77a76aab3c76d92}
+}]Returns the status of the previously sent I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-I\-N request. \index{I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-C\-L\-E\-A\-R@{I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-C\-L\-E\-A\-R}!mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}}\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-C\-L\-E\-A\-R@{I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-C\-L\-E\-A\-R}}\item[{\em 
+\hypertarget{classmdt_usbtmc_control_transfer_a9f40cbd57464978b74624c66fa083251ad6f130330eaada1770d26d6906b1977b}{I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-C\-L\-E\-A\-R}\label{classmdt_usbtmc_control_transfer_a9f40cbd57464978b74624c66fa083251ad6f130330eaada1770d26d6906b1977b}
+}]Clear bulk-\/\-O\-U\-T and bulk-\/\-I\-N transfers. \index{C\-H\-E\-C\-K\-\_\-\-C\-L\-E\-A\-R\-\_\-\-S\-T\-A\-T\-U\-S@{C\-H\-E\-C\-K\-\_\-\-C\-L\-E\-A\-R\-\_\-\-S\-T\-A\-T\-U\-S}!mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}}\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!C\-H\-E\-C\-K\-\_\-\-C\-L\-E\-A\-R\-\_\-\-S\-T\-A\-T\-U\-S@{C\-H\-E\-C\-K\-\_\-\-C\-L\-E\-A\-R\-\_\-\-S\-T\-A\-T\-U\-S}}\item[{\em 
+\hypertarget{classmdt_usbtmc_control_transfer_a9f40cbd57464978b74624c66fa083251a34c6b8e885527e8b41b195d3fc18677a}{C\-H\-E\-C\-K\-\_\-\-C\-L\-E\-A\-R\-\_\-\-S\-T\-A\-T\-U\-S}\label{classmdt_usbtmc_control_transfer_a9f40cbd57464978b74624c66fa083251a34c6b8e885527e8b41b195d3fc18677a}
+}]Returns the status of previously sent I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-C\-L\-E\-A\-R request. \index{G\-E\-T\-\_\-\-C\-A\-P\-A\-B\-I\-L\-I\-T\-I\-E\-S@{G\-E\-T\-\_\-\-C\-A\-P\-A\-B\-I\-L\-I\-T\-I\-E\-S}!mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}}\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!G\-E\-T\-\_\-\-C\-A\-P\-A\-B\-I\-L\-I\-T\-I\-E\-S@{G\-E\-T\-\_\-\-C\-A\-P\-A\-B\-I\-L\-I\-T\-I\-E\-S}}\item[{\em 
+\hypertarget{classmdt_usbtmc_control_transfer_a9f40cbd57464978b74624c66fa083251ac5fdfd8898fb5bd8d1b9913c55be662a}{G\-E\-T\-\_\-\-C\-A\-P\-A\-B\-I\-L\-I\-T\-I\-E\-S}\label{classmdt_usbtmc_control_transfer_a9f40cbd57464978b74624c66fa083251ac5fdfd8898fb5bd8d1b9913c55be662a}
+}]Returns attributes and capabilities of the U\-S\-B\-T\-M\-C interface. \index{I\-N\-D\-I\-C\-A\-T\-O\-R\-\_\-\-P\-U\-L\-S\-E@{I\-N\-D\-I\-C\-A\-T\-O\-R\-\_\-\-P\-U\-L\-S\-E}!mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}}\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!I\-N\-D\-I\-C\-A\-T\-O\-R\-\_\-\-P\-U\-L\-S\-E@{I\-N\-D\-I\-C\-A\-T\-O\-R\-\_\-\-P\-U\-L\-S\-E}}\item[{\em 
+\hypertarget{classmdt_usbtmc_control_transfer_a9f40cbd57464978b74624c66fa083251a6cc9be4b934a31774eba74dc9c234a1b}{I\-N\-D\-I\-C\-A\-T\-O\-R\-\_\-\-P\-U\-L\-S\-E}\label{classmdt_usbtmc_control_transfer_a9f40cbd57464978b74624c66fa083251a6cc9be4b934a31774eba74dc9c234a1b}
+}]A mechanism to turn on an activity indicator for identification purposes. \end{description}
+\end{Desc}
+
+
+Definition at line 41 of file mdt\-Usbtmc\-Control\-Transfer.\-h.
+
+\hypertarget{classmdt_usbtmc_control_transfer_a9deb98223593f6919b4ecbd87f7e375c}{\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!U\-S\-B\-T\-M\-Cstatus@{U\-S\-B\-T\-M\-Cstatus}}
+\index{U\-S\-B\-T\-M\-Cstatus@{U\-S\-B\-T\-M\-Cstatus}!mdtUsbtmcControlTransfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\subsubsection[{U\-S\-B\-T\-M\-Cstatus}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdt\-Usbtmc\-Control\-Transfer\-::\-U\-S\-B\-T\-M\-Cstatus} \-: uint8\-\_\-t\hspace{0.3cm}{\ttfamily [strong]}}}\label{classmdt_usbtmc_control_transfer_a9deb98223593f6919b4ecbd87f7e375c}
+
+
+U\-S\-B\-T\-M\-C\-\_\-status values. 
+
+See Table 16 in U\-S\-B\-T\-M\-C 1.\-0 specifications, section 4.\-2.\-1. For U\-S\-B488 specific status, see U\-S\-B\-T\-M\-C-\/\-U\-S\-B488 1.\-0 specification, section 4.\-3 \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{S\-T\-A\-T\-U\-S\-\_\-\-S\-U\-C\-C\-E\-S\-S@{S\-T\-A\-T\-U\-S\-\_\-\-S\-U\-C\-C\-E\-S\-S}!mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}}\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!S\-T\-A\-T\-U\-S\-\_\-\-S\-U\-C\-C\-E\-S\-S@{S\-T\-A\-T\-U\-S\-\_\-\-S\-U\-C\-C\-E\-S\-S}}\item[{\em 
+\hypertarget{classmdt_usbtmc_control_transfer_a9deb98223593f6919b4ecbd87f7e375ca47768f6d3d56f8455845fb093ab0cf0e}{S\-T\-A\-T\-U\-S\-\_\-\-S\-U\-C\-C\-E\-S\-S}\label{classmdt_usbtmc_control_transfer_a9deb98223593f6919b4ecbd87f7e375ca47768f6d3d56f8455845fb093ab0cf0e}
+}]Success \index{S\-T\-A\-T\-U\-S\-\_\-\-P\-E\-N\-D\-I\-N\-G@{S\-T\-A\-T\-U\-S\-\_\-\-P\-E\-N\-D\-I\-N\-G}!mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}}\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!S\-T\-A\-T\-U\-S\-\_\-\-P\-E\-N\-D\-I\-N\-G@{S\-T\-A\-T\-U\-S\-\_\-\-P\-E\-N\-D\-I\-N\-G}}\item[{\em 
+\hypertarget{classmdt_usbtmc_control_transfer_a9deb98223593f6919b4ecbd87f7e375ca767dde9d10dac1b1eaabbf0f6c51814c}{S\-T\-A\-T\-U\-S\-\_\-\-P\-E\-N\-D\-I\-N\-G}\label{classmdt_usbtmc_control_transfer_a9deb98223593f6919b4ecbd87f7e375ca767dde9d10dac1b1eaabbf0f6c51814c}
+}]Valid after a U\-S\-B\-T\-M\-C C\-H\-E\-C\-K\-\_\-\-S\-T\-A\-T\-U\-S. See U\-S\-B\-T\-M\-C 1.\-0, section 4.\-2.\-1.\-1 \index{S\-T\-A\-T\-U\-S\-\_\-\-F\-A\-I\-L\-E\-D@{S\-T\-A\-T\-U\-S\-\_\-\-F\-A\-I\-L\-E\-D}!mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}}\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!S\-T\-A\-T\-U\-S\-\_\-\-F\-A\-I\-L\-E\-D@{S\-T\-A\-T\-U\-S\-\_\-\-F\-A\-I\-L\-E\-D}}\item[{\em 
+\hypertarget{classmdt_usbtmc_control_transfer_a9deb98223593f6919b4ecbd87f7e375ca073697b2a5bf9563bc184f10e3db1511}{S\-T\-A\-T\-U\-S\-\_\-\-F\-A\-I\-L\-E\-D}\label{classmdt_usbtmc_control_transfer_a9deb98223593f6919b4ecbd87f7e375ca073697b2a5bf9563bc184f10e3db1511}
+}]Failure, unspecified reason \index{S\-T\-A\-T\-U\-S\-\_\-\-T\-R\-A\-N\-S\-F\-E\-R\-\_\-\-N\-O\-T\-\_\-\-I\-N\-\_\-\-P\-R\-O\-G\-R\-E\-S\-S@{S\-T\-A\-T\-U\-S\-\_\-\-T\-R\-A\-N\-S\-F\-E\-R\-\_\-\-N\-O\-T\-\_\-\-I\-N\-\_\-\-P\-R\-O\-G\-R\-E\-S\-S}!mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}}\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!S\-T\-A\-T\-U\-S\-\_\-\-T\-R\-A\-N\-S\-F\-E\-R\-\_\-\-N\-O\-T\-\_\-\-I\-N\-\_\-\-P\-R\-O\-G\-R\-E\-S\-S@{S\-T\-A\-T\-U\-S\-\_\-\-T\-R\-A\-N\-S\-F\-E\-R\-\_\-\-N\-O\-T\-\_\-\-I\-N\-\_\-\-P\-R\-O\-G\-R\-E\-S\-S}}\item[{\em 
+\hypertarget{classmdt_usbtmc_control_transfer_a9deb98223593f6919b4ecbd87f7e375cab566a1dbbf2f50dc50a8480fbd3f910c}{S\-T\-A\-T\-U\-S\-\_\-\-T\-R\-A\-N\-S\-F\-E\-R\-\_\-\-N\-O\-T\-\_\-\-I\-N\-\_\-\-P\-R\-O\-G\-R\-E\-S\-S}\label{classmdt_usbtmc_control_transfer_a9deb98223593f6919b4ecbd87f7e375cab566a1dbbf2f50dc50a8480fbd3f910c}
+}]Valid after a I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-O\-U\-T or I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-I\-N request and specified transfer abort is not in progress \index{S\-T\-A\-T\-U\-S\-\_\-\-S\-P\-L\-I\-T\-\_\-\-N\-O\-T\-\_\-\-I\-N\-\_\-\-P\-R\-O\-G\-R\-E\-S\-S@{S\-T\-A\-T\-U\-S\-\_\-\-S\-P\-L\-I\-T\-\_\-\-N\-O\-T\-\_\-\-I\-N\-\_\-\-P\-R\-O\-G\-R\-E\-S\-S}!mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}}\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!S\-T\-A\-T\-U\-S\-\_\-\-S\-P\-L\-I\-T\-\_\-\-N\-O\-T\-\_\-\-I\-N\-\_\-\-P\-R\-O\-G\-R\-E\-S\-S@{S\-T\-A\-T\-U\-S\-\_\-\-S\-P\-L\-I\-T\-\_\-\-N\-O\-T\-\_\-\-I\-N\-\_\-\-P\-R\-O\-G\-R\-E\-S\-S}}\item[{\em 
+\hypertarget{classmdt_usbtmc_control_transfer_a9deb98223593f6919b4ecbd87f7e375ca996fcc8912c879c4d09092d31980c972}{S\-T\-A\-T\-U\-S\-\_\-\-S\-P\-L\-I\-T\-\_\-\-N\-O\-T\-\_\-\-I\-N\-\_\-\-P\-R\-O\-G\-R\-E\-S\-S}\label{classmdt_usbtmc_control_transfer_a9deb98223593f6919b4ecbd87f7e375ca996fcc8912c879c4d09092d31980c972}
+}]Valid if device received a C\-H\-E\-C\-K\-\_\-\-S\-T\-A\-T\-U\-S request and device is not processing I\-N\-I\-T\-I\-A\-T\-E request \index{S\-T\-A\-T\-U\-S\-\_\-\-S\-P\-L\-I\-T\-\_\-\-I\-N\-\_\-\-P\-R\-O\-G\-R\-E\-S\-S@{S\-T\-A\-T\-U\-S\-\_\-\-S\-P\-L\-I\-T\-\_\-\-I\-N\-\_\-\-P\-R\-O\-G\-R\-E\-S\-S}!mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}}\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!S\-T\-A\-T\-U\-S\-\_\-\-S\-P\-L\-I\-T\-\_\-\-I\-N\-\_\-\-P\-R\-O\-G\-R\-E\-S\-S@{S\-T\-A\-T\-U\-S\-\_\-\-S\-P\-L\-I\-T\-\_\-\-I\-N\-\_\-\-P\-R\-O\-G\-R\-E\-S\-S}}\item[{\em 
+\hypertarget{classmdt_usbtmc_control_transfer_a9deb98223593f6919b4ecbd87f7e375cac1781e0d5317190cd79ca6d94295fad1}{S\-T\-A\-T\-U\-S\-\_\-\-S\-P\-L\-I\-T\-\_\-\-I\-N\-\_\-\-P\-R\-O\-G\-R\-E\-S\-S}\label{classmdt_usbtmc_control_transfer_a9deb98223593f6919b4ecbd87f7e375cac1781e0d5317190cd79ca6d94295fad1}
+}]Valid if device received a new Class specific request and device is still processing I\-N\-I\-T\-I\-A\-T\-E \index{S\-T\-A\-T\-U\-S\-\_\-\-I\-N\-T\-E\-R\-R\-U\-P\-T\-\_\-\-I\-N\-\_\-\-B\-U\-S\-Y@{S\-T\-A\-T\-U\-S\-\_\-\-I\-N\-T\-E\-R\-R\-U\-P\-T\-\_\-\-I\-N\-\_\-\-B\-U\-S\-Y}!mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}}\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!S\-T\-A\-T\-U\-S\-\_\-\-I\-N\-T\-E\-R\-R\-U\-P\-T\-\_\-\-I\-N\-\_\-\-B\-U\-S\-Y@{S\-T\-A\-T\-U\-S\-\_\-\-I\-N\-T\-E\-R\-R\-U\-P\-T\-\_\-\-I\-N\-\_\-\-B\-U\-S\-Y}}\item[{\em 
+\hypertarget{classmdt_usbtmc_control_transfer_a9deb98223593f6919b4ecbd87f7e375ca01550706ae7ac85aaed4a54585736b16}{S\-T\-A\-T\-U\-S\-\_\-\-I\-N\-T\-E\-R\-R\-U\-P\-T\-\_\-\-I\-N\-\_\-\-B\-U\-S\-Y}\label{classmdt_usbtmc_control_transfer_a9deb98223593f6919b4ecbd87f7e375ca01550706ae7ac85aaed4a54585736b16}
+}]U\-S\-B488\-: Valid if device received R\-E\-A\-D\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-B\-Y\-T\-E request. \end{description}
+\end{Desc}
+
+
+Definition at line 59 of file mdt\-Usbtmc\-Control\-Transfer.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_usbtmc_control_transfer_a2d17061cfab461e3a103a9b97a813bfd}{\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!mdtUsbtmcControlTransfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\subsubsection[{mdt\-Usbtmc\-Control\-Transfer}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Usbtmc\-Control\-Transfer\-::mdt\-Usbtmc\-Control\-Transfer (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Usbtmc\-Transfer\-Handler} \&}]{th, }
+\item[{libusb\-\_\-device\-\_\-handle $\ast$}]{dev\-\_\-handle, }
+\item[{int}]{buffer\-Size = {\ttfamily 1024}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usbtmc_control_transfer_a2d17061cfab461e3a103a9b97a813bfd}
+
+
+Constructor. 
+
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000046}{Todo}]Fix a realistic buffer\-Size\end{DoxyRefDesc}
+
+
+\begin{DoxyPrecond}{Precondition}
+buffer\-Size must be $>$= 8. 
+\end{DoxyPrecond}
+
+
+Definition at line 26 of file mdt\-Usbtmc\-Control\-Transfer.\-cpp.
+
+\hypertarget{classmdt_usbtmc_control_transfer_a500d4462ebf54558c384c120a16f1059}{\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!mdtUsbtmcControlTransfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\subsubsection[{mdt\-Usbtmc\-Control\-Transfer}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Usbtmc\-Control\-Transfer\-::mdt\-Usbtmc\-Control\-Transfer (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Usbtmc\-Control\-Transfer} \&}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [delete]}}}\label{classmdt_usbtmc_control_transfer_a500d4462ebf54558c384c120a16f1059}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_usbtmc_control_transfer_a38c6f71d406c56049130d23847b9badf}{\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!bcd\-U\-S\-B488@{bcd\-U\-S\-B488}}
+\index{bcd\-U\-S\-B488@{bcd\-U\-S\-B488}!mdtUsbtmcControlTransfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\subsubsection[{bcd\-U\-S\-B488}]{\setlength{\rightskip}{0pt plus 5cm}uint16\-\_\-t mdt\-Usbtmc\-Control\-Transfer\-::bcd\-U\-S\-B488 (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_control_transfer_a38c6f71d406c56049130d23847b9badf}
+
+
+Get bcd\-U\-S\-B488. 
+
+Valid only for G\-E\-T\-\_\-\-C\-A\-P\-A\-B\-I\-L\-I\-T\-I\-E\-S response.
+
+B\-C\-D version number of the relevant U\-S\-B488 specification for this U\-S\-B488 interface. Format is Binary-\/\-Coded-\/\-Decimal. For example, 0x0210 represents version 2.\-10.
+
+See U\-S\-B\-T\-M\-C specifications, section 4.\-2.\-1.\-8 and U\-S\-B\-T\-M\-C-\/\-U\-S\-B488 specification, section 4.\-2.\-2 
+
+Definition at line 236 of file mdt\-Usbtmc\-Control\-Transfer.\-h.
+
+
+
+References mdt\-Usb\-Control\-Transfer\-::word\-Value().
+
+\hypertarget{classmdt_usbtmc_control_transfer_a9d15b801836965c0cf6c2e1f4129ee39}{\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!bcd\-U\-S\-B\-T\-M\-C@{bcd\-U\-S\-B\-T\-M\-C}}
+\index{bcd\-U\-S\-B\-T\-M\-C@{bcd\-U\-S\-B\-T\-M\-C}!mdtUsbtmcControlTransfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\subsubsection[{bcd\-U\-S\-B\-T\-M\-C}]{\setlength{\rightskip}{0pt plus 5cm}uint16\-\_\-t mdt\-Usbtmc\-Control\-Transfer\-::bcd\-U\-S\-B\-T\-M\-C (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_control_transfer_a9d15b801836965c0cf6c2e1f4129ee39}
+
+
+Get bcd\-U\-S\-B\-T\-M\-C. 
+
+Valid only for G\-E\-T\-\_\-\-C\-A\-P\-A\-B\-I\-L\-I\-T\-I\-E\-S response.
+
+B\-C\-D version number of the relevant U\-S\-B\-T\-M\-C specification for this U\-S\-B\-T\-M\-C interface. Format is Binary-\/\-Coded-\/\-Decimal. For example, 0x0210 represents version 2.\-10.
+
+See U\-S\-B\-T\-M\-C specifications, section 4.\-2.\-1.\-8 
+
+Definition at line 177 of file mdt\-Usbtmc\-Control\-Transfer.\-h.
+
+
+
+References mdt\-Usb\-Control\-Transfer\-::word\-Value().
+
+\hypertarget{classmdt_usbtmc_control_transfer_a3eda1ab8d93a06ff5e75c83aaf809ca4}{\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!device\-Is\-D\-T1\-Capable@{device\-Is\-D\-T1\-Capable}}
+\index{device\-Is\-D\-T1\-Capable@{device\-Is\-D\-T1\-Capable}!mdtUsbtmcControlTransfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\subsubsection[{device\-Is\-D\-T1\-Capable}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usbtmc\-Control\-Transfer\-::device\-Is\-D\-T1\-Capable (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_control_transfer_a3eda1ab8d93a06ff5e75c83aaf809ca4}
+
+
+Check if device is D\-T1 capable. 
+
+Valid only for G\-E\-T\-\_\-\-C\-A\-P\-A\-B\-I\-L\-I\-T\-I\-E\-S response.
+
+See U\-S\-B\-T\-M\-C specifications, section 4.\-2.\-1.\-8 and U\-S\-B\-T\-M\-C-\/\-U\-S\-B488 specification, section 4.\-2.\-2 
+
+Definition at line 320 of file mdt\-Usbtmc\-Control\-Transfer.\-h.
+
+
+
+References mdt\-Usb\-Control\-Transfer\-::byte\-Value().
+
+\hypertarget{classmdt_usbtmc_control_transfer_a6dcc03f0b46222830550dae9fba91eeb}{\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!device\-Is\-R\-L1\-Capable@{device\-Is\-R\-L1\-Capable}}
+\index{device\-Is\-R\-L1\-Capable@{device\-Is\-R\-L1\-Capable}!mdtUsbtmcControlTransfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\subsubsection[{device\-Is\-R\-L1\-Capable}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usbtmc\-Control\-Transfer\-::device\-Is\-R\-L1\-Capable (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_control_transfer_a6dcc03f0b46222830550dae9fba91eeb}
+
+
+Check if device is R\-L1 capable. 
+
+Valid only for G\-E\-T\-\_\-\-C\-A\-P\-A\-B\-I\-L\-I\-T\-I\-E\-S response.
+
+See U\-S\-B\-T\-M\-C specifications, section 4.\-2.\-1.\-8 and U\-S\-B\-T\-M\-C-\/\-U\-S\-B488 specification, section 4.\-2.\-2 
+
+Definition at line 308 of file mdt\-Usbtmc\-Control\-Transfer.\-h.
+
+
+
+References mdt\-Usb\-Control\-Transfer\-::byte\-Value().
+
+\hypertarget{classmdt_usbtmc_control_transfer_a95a492d4c4ddd1034e0c4862a3a37d70}{\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!device\-Is\-S\-R1\-Capable@{device\-Is\-S\-R1\-Capable}}
+\index{device\-Is\-S\-R1\-Capable@{device\-Is\-S\-R1\-Capable}!mdtUsbtmcControlTransfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\subsubsection[{device\-Is\-S\-R1\-Capable}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usbtmc\-Control\-Transfer\-::device\-Is\-S\-R1\-Capable (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_control_transfer_a95a492d4c4ddd1034e0c4862a3a37d70}
+
+
+Check if device is S\-R1 capable. 
+
+Valid only for G\-E\-T\-\_\-\-C\-A\-P\-A\-B\-I\-L\-I\-T\-I\-E\-S response.
+
+See U\-S\-B\-T\-M\-C specifications, section 4.\-2.\-1.\-8 and U\-S\-B\-T\-M\-C-\/\-U\-S\-B488 specification, section 4.\-2.\-2 
+
+Definition at line 296 of file mdt\-Usbtmc\-Control\-Transfer.\-h.
+
+
+
+References mdt\-Usb\-Control\-Transfer\-::byte\-Value().
+
+\hypertarget{classmdt_usbtmc_control_transfer_a8a882499daf970c5f1755abe496edf06}{\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!device\-Supports\-All\-Mandatory\-Scpi\-Commands@{device\-Supports\-All\-Mandatory\-Scpi\-Commands}}
+\index{device\-Supports\-All\-Mandatory\-Scpi\-Commands@{device\-Supports\-All\-Mandatory\-Scpi\-Commands}!mdtUsbtmcControlTransfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\subsubsection[{device\-Supports\-All\-Mandatory\-Scpi\-Commands}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usbtmc\-Control\-Transfer\-::device\-Supports\-All\-Mandatory\-Scpi\-Commands (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_control_transfer_a8a882499daf970c5f1755abe496edf06}
+
+
+Check if device supports all mandatory S\-C\-P\-I commands. 
+
+Valid only for G\-E\-T\-\_\-\-C\-A\-P\-A\-B\-I\-L\-I\-T\-I\-E\-S response.
+
+See U\-S\-B\-T\-M\-C specifications, section 4.\-2.\-1.\-8 and U\-S\-B\-T\-M\-C-\/\-U\-S\-B488 specification, section 4.\-2.\-2 
+
+Definition at line 284 of file mdt\-Usbtmc\-Control\-Transfer.\-h.
+
+
+
+References mdt\-Usb\-Control\-Transfer\-::byte\-Value().
+
+\hypertarget{classmdt_usbtmc_control_transfer_a2c3231d6314f7ed4e6d16505ff579e3b}{\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!device\-Supports\-Term\-Char@{device\-Supports\-Term\-Char}}
+\index{device\-Supports\-Term\-Char@{device\-Supports\-Term\-Char}!mdtUsbtmcControlTransfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\subsubsection[{device\-Supports\-Term\-Char}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usbtmc\-Control\-Transfer\-::device\-Supports\-Term\-Char (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_control_transfer_a2c3231d6314f7ed4e6d16505ff579e3b}
+
+
+Check if device supports Term\-Char. 
+
+Valid only for G\-E\-T\-\_\-\-C\-A\-P\-A\-B\-I\-L\-I\-T\-I\-E\-S response.
+
+See U\-S\-B\-T\-M\-C specifications, section 4.\-2.\-1.\-8 
+
+Definition at line 221 of file mdt\-Usbtmc\-Control\-Transfer.\-h.
+
+
+
+References mdt\-Usb\-Control\-Transfer\-::byte\-Value().
+
+\hypertarget{classmdt_usbtmc_control_transfer_a5b10459793ddbfeaa8ce73485f1bd4a1}{\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!interface\-Accepts\-Indicator\-Pulse@{interface\-Accepts\-Indicator\-Pulse}}
+\index{interface\-Accepts\-Indicator\-Pulse@{interface\-Accepts\-Indicator\-Pulse}!mdtUsbtmcControlTransfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\subsubsection[{interface\-Accepts\-Indicator\-Pulse}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usbtmc\-Control\-Transfer\-::interface\-Accepts\-Indicator\-Pulse (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_control_transfer_a5b10459793ddbfeaa8ce73485f1bd4a1}
+
+
+Check if interface accepts I\-N\-D\-I\-C\-A\-T\-O\-R\-\_\-\-P\-U\-L\-S\-E. 
+
+Valid only for G\-E\-T\-\_\-\-C\-A\-P\-A\-B\-I\-L\-I\-T\-I\-E\-S response.
+
+See U\-S\-B\-T\-M\-C specifications, section 4.\-2.\-1.\-8 
+
+Definition at line 188 of file mdt\-Usbtmc\-Control\-Transfer.\-h.
+
+
+
+References mdt\-Usb\-Control\-Transfer\-::byte\-Value().
+
+\hypertarget{classmdt_usbtmc_control_transfer_affa393eda32d107679a1648cc4e9eb3f}{\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!interface\-Accepts\-Ren\-Control@{interface\-Accepts\-Ren\-Control}}
+\index{interface\-Accepts\-Ren\-Control@{interface\-Accepts\-Ren\-Control}!mdtUsbtmcControlTransfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\subsubsection[{interface\-Accepts\-Ren\-Control}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usbtmc\-Control\-Transfer\-::interface\-Accepts\-Ren\-Control (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_control_transfer_affa393eda32d107679a1648cc4e9eb3f}
+
+
+Check if interface accepts R\-E\-N\-\_\-\-C\-O\-N\-T\-R\-O\-L. 
+
+Valid only for G\-E\-T\-\_\-\-C\-A\-P\-A\-B\-I\-L\-I\-T\-I\-E\-S response.
+
+See U\-S\-B\-T\-M\-C specifications, section 4.\-2.\-1.\-8 and U\-S\-B\-T\-M\-C-\/\-U\-S\-B488 specification, section 4.\-2.\-2 
+
+Definition at line 260 of file mdt\-Usbtmc\-Control\-Transfer.\-h.
+
+
+
+References mdt\-Usb\-Control\-Transfer\-::byte\-Value().
+
+\hypertarget{classmdt_usbtmc_control_transfer_ab9d9126ac41e8bc336d923c526f9eba5}{\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!interface\-Accepts\-Trigger@{interface\-Accepts\-Trigger}}
+\index{interface\-Accepts\-Trigger@{interface\-Accepts\-Trigger}!mdtUsbtmcControlTransfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\subsubsection[{interface\-Accepts\-Trigger}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usbtmc\-Control\-Transfer\-::interface\-Accepts\-Trigger (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_control_transfer_ab9d9126ac41e8bc336d923c526f9eba5}
+
+
+Check if interface accepts Msg\-I\-D = T\-R\-I\-G\-G\-E\-R. 
+
+Valid only for G\-E\-T\-\_\-\-C\-A\-P\-A\-B\-I\-L\-I\-T\-I\-E\-S response.
+
+See U\-S\-B\-T\-M\-C specifications, section 4.\-2.\-1.\-8 and U\-S\-B\-T\-M\-C-\/\-U\-S\-B488 specification, section 4.\-2.\-2 
+
+Definition at line 272 of file mdt\-Usbtmc\-Control\-Transfer.\-h.
+
+
+
+References mdt\-Usb\-Control\-Transfer\-::byte\-Value().
+
+\hypertarget{classmdt_usbtmc_control_transfer_a05c81d3b4276d0d960286a9a3c02f0fb}{\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!interface\-Is\-Listen\-Only@{interface\-Is\-Listen\-Only}}
+\index{interface\-Is\-Listen\-Only@{interface\-Is\-Listen\-Only}!mdtUsbtmcControlTransfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\subsubsection[{interface\-Is\-Listen\-Only}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usbtmc\-Control\-Transfer\-::interface\-Is\-Listen\-Only (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_control_transfer_a05c81d3b4276d0d960286a9a3c02f0fb}
+
+
+Check if interface is listen-\/only. 
+
+Valid only for G\-E\-T\-\_\-\-C\-A\-P\-A\-B\-I\-L\-I\-T\-I\-E\-S response.
+
+See U\-S\-B\-T\-M\-C specifications, section 4.\-2.\-1.\-8 
+
+Definition at line 210 of file mdt\-Usbtmc\-Control\-Transfer.\-h.
+
+
+
+References mdt\-Usb\-Control\-Transfer\-::byte\-Value().
+
+\hypertarget{classmdt_usbtmc_control_transfer_a3d36514cb8af036905dde235d998fe65}{\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!interface\-Is\-Talk\-Only@{interface\-Is\-Talk\-Only}}
+\index{interface\-Is\-Talk\-Only@{interface\-Is\-Talk\-Only}!mdtUsbtmcControlTransfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\subsubsection[{interface\-Is\-Talk\-Only}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usbtmc\-Control\-Transfer\-::interface\-Is\-Talk\-Only (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_control_transfer_a3d36514cb8af036905dde235d998fe65}
+
+
+Check if interface is talk-\/only. 
+
+Valid only for G\-E\-T\-\_\-\-C\-A\-P\-A\-B\-I\-L\-I\-T\-I\-E\-S response.
+
+See U\-S\-B\-T\-M\-C specifications, section 4.\-2.\-1.\-8 
+
+Definition at line 199 of file mdt\-Usbtmc\-Control\-Transfer.\-h.
+
+
+
+References mdt\-Usb\-Control\-Transfer\-::byte\-Value().
+
+\hypertarget{classmdt_usbtmc_control_transfer_a68d6a2b8f2cd4aa84b6d718094879459}{\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!interface\-Is\-U\-S\-B488@{interface\-Is\-U\-S\-B488}}
+\index{interface\-Is\-U\-S\-B488@{interface\-Is\-U\-S\-B488}!mdtUsbtmcControlTransfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\subsubsection[{interface\-Is\-U\-S\-B488}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usbtmc\-Control\-Transfer\-::interface\-Is\-U\-S\-B488 (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_control_transfer_a68d6a2b8f2cd4aa84b6d718094879459}
+
+
+Check if interface is a 488.\-2 U\-S\-B488 one. 
+
+Valid only for G\-E\-T\-\_\-\-C\-A\-P\-A\-B\-I\-L\-I\-T\-I\-E\-S response.
+
+See U\-S\-B\-T\-M\-C specifications, section 4.\-2.\-1.\-8 and U\-S\-B\-T\-M\-C-\/\-U\-S\-B488 specification, section 4.\-2.\-2 
+
+Definition at line 248 of file mdt\-Usbtmc\-Control\-Transfer.\-h.
+
+
+
+References mdt\-Usb\-Control\-Transfer\-::byte\-Value().
+
+\hypertarget{classmdt_usbtmc_control_transfer_a0dbcbeb3f867150af3458dcdb83ef6ea}{\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!is\-Clear\-Endpoint\-Halt\-Request@{is\-Clear\-Endpoint\-Halt\-Request}}
+\index{is\-Clear\-Endpoint\-Halt\-Request@{is\-Clear\-Endpoint\-Halt\-Request}!mdtUsbtmcControlTransfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\subsubsection[{is\-Clear\-Endpoint\-Halt\-Request}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usbtmc\-Control\-Transfer\-::is\-Clear\-Endpoint\-Halt\-Request (
+\begin{DoxyParamCaption}
+\item[{uint8\-\_\-t}]{endpoint\-Number}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_control_transfer_a0dbcbeb3f867150af3458dcdb83ef6ea}
+
+
+Check if this is a C\-L\-E\-A\-R\-\_\-\-F\-E\-A\-T\-U\-R\-E request with w\-Value = E\-N\-D\-P\-O\-I\-N\-T\-\_\-\-H\-A\-L\-T for given endpoint. 
+
+
+
+Definition at line 94 of file mdt\-Usbtmc\-Control\-Transfer.\-h.
+
+
+
+References mdt\-Usb\-Control\-Transfer\-::bm\-Request\-Type(), mdt\-Usb\-Control\-Transfer\-::b\-Request(), mdt\-Usb\-Control\-Transfer\-::\-C\-L\-E\-A\-R\-\_\-\-F\-E\-A\-T\-U\-R\-E, mdt\-Usb\-Control\-Transfer\-::\-Endpoint, mdt\-Usb\-Control\-Transfer\-::\-E\-N\-D\-P\-O\-I\-N\-T\-\_\-\-H\-A\-L\-T, mdt\-Usb\-Control\-Transfer\-::w\-Index(), and mdt\-Usb\-Control\-Transfer\-::w\-Value().
+
+\hypertarget{classmdt_usbtmc_control_transfer_af3f3cef9aee3400b67fd6c404322087d}{\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!operator=@{operator=}}
+\index{operator=@{operator=}!mdtUsbtmcControlTransfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Usbtmc\-Control\-Transfer}\& mdt\-Usbtmc\-Control\-Transfer\-::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Usbtmc\-Control\-Transfer} \&}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [delete]}}}\label{classmdt_usbtmc_control_transfer_af3f3cef9aee3400b67fd6c404322087d}
+\hypertarget{classmdt_usbtmc_control_transfer_a92cdb77ae78f7450304860d8c75bd140}{\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!setup\-Check\-Abort\-Bulk\-In\-Status@{setup\-Check\-Abort\-Bulk\-In\-Status}}
+\index{setup\-Check\-Abort\-Bulk\-In\-Status@{setup\-Check\-Abort\-Bulk\-In\-Status}!mdtUsbtmcControlTransfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\subsubsection[{setup\-Check\-Abort\-Bulk\-In\-Status}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Control\-Transfer\-::setup\-Check\-Abort\-Bulk\-In\-Status (
+\begin{DoxyParamCaption}
+\item[{uint8\-\_\-t}]{endpoint\-Number, }
+\item[{unsigned int}]{timeout}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usbtmc_control_transfer_a92cdb77ae78f7450304860d8c75bd140}
+
+
+Setup a C\-H\-E\-C\-K\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-I\-N\-\_\-\-S\-T\-A\-T\-U\-S transfer. 
+
+See U\-S\-B\-T\-M\-C specifications, section 4.\-2.\-1.\-5
+
+
+\begin{DoxyParams}{Parameters}
+{\em endpoint\-Number} & Endpoint number. \\
+\hline
+{\em timeout} & timeout for the transfer in milliseconds. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 61 of file mdt\-Usbtmc\-Control\-Transfer.\-cpp.
+
+
+
+References C\-H\-E\-C\-K\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-I\-N\-\_\-\-S\-T\-A\-T\-U\-S, mdt\-Usbtmc\-Transfer\-Handler\-::control\-Transfer\-Callback(), and mdt\-Usb\-Control\-Transfer\-::fill\-Transfer().
+
+\hypertarget{classmdt_usbtmc_control_transfer_abc9b101aa6d0399a080f2d0eaf797f17}{\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!setup\-Check\-Abort\-Bulk\-Out\-Status@{setup\-Check\-Abort\-Bulk\-Out\-Status}}
+\index{setup\-Check\-Abort\-Bulk\-Out\-Status@{setup\-Check\-Abort\-Bulk\-Out\-Status}!mdtUsbtmcControlTransfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\subsubsection[{setup\-Check\-Abort\-Bulk\-Out\-Status}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Control\-Transfer\-::setup\-Check\-Abort\-Bulk\-Out\-Status (
+\begin{DoxyParamCaption}
+\item[{uint8\-\_\-t}]{endpoint\-Number, }
+\item[{unsigned int}]{timeout}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usbtmc_control_transfer_abc9b101aa6d0399a080f2d0eaf797f17}
+
+
+Setup a C\-H\-E\-C\-K\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-O\-U\-T\-\_\-\-S\-T\-A\-T\-U\-S transfer. 
+
+See U\-S\-B\-T\-M\-C specifications, section 4.\-2.\-1.\-3
+
+
+\begin{DoxyParams}{Parameters}
+{\em endpoint\-Number} & Endpoint number. \\
+\hline
+{\em timeout} & timeout for the transfer in milliseconds. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 46 of file mdt\-Usbtmc\-Control\-Transfer.\-cpp.
+
+
+
+References C\-H\-E\-C\-K\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-O\-U\-T\-\_\-\-S\-T\-A\-T\-U\-S, mdt\-Usbtmc\-Transfer\-Handler\-::control\-Transfer\-Callback(), and mdt\-Usb\-Control\-Transfer\-::fill\-Transfer().
+
+\hypertarget{classmdt_usbtmc_control_transfer_a7150005140f8efa6136ba81e4cb1c41a}{\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!setup\-Check\-Clear\-Status@{setup\-Check\-Clear\-Status}}
+\index{setup\-Check\-Clear\-Status@{setup\-Check\-Clear\-Status}!mdtUsbtmcControlTransfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\subsubsection[{setup\-Check\-Clear\-Status}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Control\-Transfer\-::setup\-Check\-Clear\-Status (
+\begin{DoxyParamCaption}
+\item[{uint8\-\_\-t}]{interface\-Number, }
+\item[{unsigned int}]{timeout}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usbtmc_control_transfer_a7150005140f8efa6136ba81e4cb1c41a}
+
+
+Setup a C\-H\-E\-C\-K\-\_\-\-C\-L\-E\-A\-R\-\_\-\-S\-T\-A\-T\-U\-S transfer. 
+
+See U\-S\-B\-T\-M\-C specifications, section 4.\-2.\-1.\-7
+
+
+\begin{DoxyParams}{Parameters}
+{\em interface\-Number} & Interface number. \\
+\hline
+{\em timeout} & timeout for the transfer in milliseconds. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 75 of file mdt\-Usbtmc\-Control\-Transfer.\-cpp.
+
+
+
+References C\-H\-E\-C\-K\-\_\-\-C\-L\-E\-A\-R\-\_\-\-S\-T\-A\-T\-U\-S, mdt\-Usbtmc\-Transfer\-Handler\-::control\-Transfer\-Callback(), and mdt\-Usb\-Control\-Transfer\-::fill\-Transfer().
+
+\hypertarget{classmdt_usbtmc_control_transfer_a643310e1bcb2c76faca498720a20e938}{\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!setup\-Clear\-Endpoint\-Halt@{setup\-Clear\-Endpoint\-Halt}}
+\index{setup\-Clear\-Endpoint\-Halt@{setup\-Clear\-Endpoint\-Halt}!mdtUsbtmcControlTransfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\subsubsection[{setup\-Clear\-Endpoint\-Halt}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Control\-Transfer\-::setup\-Clear\-Endpoint\-Halt (
+\begin{DoxyParamCaption}
+\item[{uint8\-\_\-t}]{endpoint\-Number, }
+\item[{unsigned int}]{timeout}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usbtmc_control_transfer_a643310e1bcb2c76faca498720a20e938}
+
+
+Setup a clear endpoint halt transfer. 
+
+See U\-S\-B\-T\-M\-C specifications, section 4.\-1.\-1 (C\-L\-E\-A\-R\-\_\-\-F\-E\-A\-T\-U\-R\-E request w\-Value = E\-N\-D\-P\-O\-I\-N\-T\-\_\-\-H\-A\-L\-T)
+
+
+\begin{DoxyParams}{Parameters}
+{\em transfer\-Handler} & This transfer\-Handler will be passed to user\-\_\-data in libusb\-\_\-transfer. \\
+\hline
+{\em endpoint\-Number} & Endpoint number. \\
+\hline
+{\em timeout} & timeout for the transfer in milliseconds. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 32 of file mdt\-Usbtmc\-Control\-Transfer.\-cpp.
+
+
+
+References mdt\-Usbtmc\-Transfer\-Handler\-::control\-Transfer\-Callback(), mdt\-Usb\-Control\-Transfer\-::\-Endpoint, mdt\-Usb\-Control\-Transfer\-::\-E\-N\-D\-P\-O\-I\-N\-T\-\_\-\-H\-A\-L\-T, and mdt\-Usb\-Control\-Transfer\-::setup\-Clear\-Feature().
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::submit\-Clear\-Endpoint\-Halt().
+
+\hypertarget{classmdt_usbtmc_control_transfer_a1c2dd98480cfd0a7568997baef0dd9f5}{\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!setup\-Get\-Capabilities@{setup\-Get\-Capabilities}}
+\index{setup\-Get\-Capabilities@{setup\-Get\-Capabilities}!mdtUsbtmcControlTransfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\subsubsection[{setup\-Get\-Capabilities}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Control\-Transfer\-::setup\-Get\-Capabilities (
+\begin{DoxyParamCaption}
+\item[{uint8\-\_\-t}]{interface\-Number, }
+\item[{unsigned int}]{timeout}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usbtmc_control_transfer_a1c2dd98480cfd0a7568997baef0dd9f5}
+
+
+Setup a G\-E\-T\-\_\-\-C\-A\-P\-A\-B\-I\-L\-I\-T\-I\-E\-S transfer. 
+
+See U\-S\-B\-T\-M\-C specifications, section 4.\-2.\-1.\-8
+
+
+\begin{DoxyParams}{Parameters}
+{\em interface\-Number} & Interface number. \\
+\hline
+{\em timeout} & timeout for the transfer in milliseconds. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 82 of file mdt\-Usbtmc\-Control\-Transfer.\-cpp.
+
+
+
+References mdt\-Usbtmc\-Transfer\-Handler\-::control\-Transfer\-Callback(), mdt\-Usb\-Control\-Transfer\-::fill\-Transfer(), and G\-E\-T\-\_\-\-C\-A\-P\-A\-B\-I\-L\-I\-T\-I\-E\-S.
+
+\hypertarget{classmdt_usbtmc_control_transfer_af142d729a00688258471d7ef60849cf4}{\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!setup\-Indicator\-Pulse@{setup\-Indicator\-Pulse}}
+\index{setup\-Indicator\-Pulse@{setup\-Indicator\-Pulse}!mdtUsbtmcControlTransfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\subsubsection[{setup\-Indicator\-Pulse}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Control\-Transfer\-::setup\-Indicator\-Pulse (
+\begin{DoxyParamCaption}
+\item[{uint8\-\_\-t}]{interface\-Number, }
+\item[{unsigned int}]{timeout}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usbtmc_control_transfer_af142d729a00688258471d7ef60849cf4}
+
+
+Setup a I\-N\-D\-I\-C\-A\-T\-O\-R\-\_\-\-P\-U\-L\-S\-E transfer. 
+
+See U\-S\-B\-T\-M\-C specifications, section 4.\-2.\-1.\-9
+
+
+\begin{DoxyParams}{Parameters}
+{\em interface\-Number} & Interface number. \\
+\hline
+{\em timeout} & timeout for the transfer in milliseconds. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 89 of file mdt\-Usbtmc\-Control\-Transfer.\-cpp.
+
+
+
+References mdt\-Usbtmc\-Transfer\-Handler\-::control\-Transfer\-Callback(), mdt\-Usb\-Control\-Transfer\-::fill\-Transfer(), and I\-N\-D\-I\-C\-A\-T\-O\-R\-\_\-\-P\-U\-L\-S\-E.
+
+\hypertarget{classmdt_usbtmc_control_transfer_a773bc4ac1644db83c771a3ede559821b}{\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!setup\-Initiate\-Abort\-Bulk\-In@{setup\-Initiate\-Abort\-Bulk\-In}}
+\index{setup\-Initiate\-Abort\-Bulk\-In@{setup\-Initiate\-Abort\-Bulk\-In}!mdtUsbtmcControlTransfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\subsubsection[{setup\-Initiate\-Abort\-Bulk\-In}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Control\-Transfer\-::setup\-Initiate\-Abort\-Bulk\-In (
+\begin{DoxyParamCaption}
+\item[{uint8\-\_\-t}]{b\-Tag, }
+\item[{uint8\-\_\-t}]{endpoint\-Number, }
+\item[{unsigned int}]{timeout}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usbtmc_control_transfer_a773bc4ac1644db83c771a3ede559821b}
+
+
+Setup a I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-I\-N transfer. 
+
+See U\-S\-B\-T\-M\-C specifications, section 4.\-2.\-1.\-4
+
+
+\begin{DoxyParams}{Parameters}
+{\em b\-Tag} & b\-Tag of the bulk out transfer to abort. \\
+\hline
+{\em endpoint\-Number} & Endpoint number. \\
+\hline
+{\em timeout} & timeout for the transfer in milliseconds. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 53 of file mdt\-Usbtmc\-Control\-Transfer.\-cpp.
+
+
+
+References mdt\-Usbtmc\-Transfer\-Handler\-::control\-Transfer\-Callback(), mdt\-Usb\-Control\-Transfer\-::fill\-Transfer(), and I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-I\-N.
+
+\hypertarget{classmdt_usbtmc_control_transfer_a08efe6be130e0ea84c99c4225f5c62d1}{\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!setup\-Initiate\-Abort\-Bulk\-Out@{setup\-Initiate\-Abort\-Bulk\-Out}}
+\index{setup\-Initiate\-Abort\-Bulk\-Out@{setup\-Initiate\-Abort\-Bulk\-Out}!mdtUsbtmcControlTransfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\subsubsection[{setup\-Initiate\-Abort\-Bulk\-Out}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Control\-Transfer\-::setup\-Initiate\-Abort\-Bulk\-Out (
+\begin{DoxyParamCaption}
+\item[{uint8\-\_\-t}]{b\-Tag, }
+\item[{uint8\-\_\-t}]{endpoint\-Number, }
+\item[{unsigned int}]{timeout}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usbtmc_control_transfer_a08efe6be130e0ea84c99c4225f5c62d1}
+
+
+Setup a I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-O\-U\-T transfer. 
+
+See U\-S\-B\-T\-M\-C specifications, section 4.\-2.\-1.\-2
+
+
+\begin{DoxyParams}{Parameters}
+{\em b\-Tag} & b\-Tag of the bulk out transfer to abort. \\
+\hline
+{\em endpoint\-Number} & Endpoint number. \\
+\hline
+{\em timeout} & timeout for the transfer in milliseconds. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 39 of file mdt\-Usbtmc\-Control\-Transfer.\-cpp.
+
+
+
+References mdt\-Usbtmc\-Transfer\-Handler\-::control\-Transfer\-Callback(), mdt\-Usb\-Control\-Transfer\-::fill\-Transfer(), and I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-O\-U\-T.
+
+\hypertarget{classmdt_usbtmc_control_transfer_a557b7e2f922e942c8a029f70058fd509}{\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!setup\-Initiate\-Clear@{setup\-Initiate\-Clear}}
+\index{setup\-Initiate\-Clear@{setup\-Initiate\-Clear}!mdtUsbtmcControlTransfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\subsubsection[{setup\-Initiate\-Clear}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Control\-Transfer\-::setup\-Initiate\-Clear (
+\begin{DoxyParamCaption}
+\item[{uint8\-\_\-t}]{interface\-Number, }
+\item[{unsigned int}]{timeout}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usbtmc_control_transfer_a557b7e2f922e942c8a029f70058fd509}
+
+
+Setup a I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-C\-L\-E\-A\-R transfer. 
+
+See U\-S\-B\-T\-M\-C specifications, section 4.\-2.\-1.\-6
+
+
+\begin{DoxyParams}{Parameters}
+{\em interface\-Number} & Interface number. \\
+\hline
+{\em timeout} & timeout for the transfer in milliseconds. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 68 of file mdt\-Usbtmc\-Control\-Transfer.\-cpp.
+
+
+
+References mdt\-Usbtmc\-Transfer\-Handler\-::control\-Transfer\-Callback(), mdt\-Usb\-Control\-Transfer\-::fill\-Transfer(), and I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-C\-L\-E\-A\-R.
+
+\hypertarget{classmdt_usbtmc_control_transfer_a1f76ab4314ad2fd174f70af06ee8ce41}{\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!transfer\-Handler@{transfer\-Handler}}
+\index{transfer\-Handler@{transfer\-Handler}!mdtUsbtmcControlTransfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\subsubsection[{transfer\-Handler}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Usbtmc\-Transfer\-Handler}\& mdt\-Usbtmc\-Control\-Transfer\-::transfer\-Handler (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_control_transfer_a1f76ab4314ad2fd174f70af06ee8ce41}
+
+
+Get transfer handler. 
+
+
+
+Definition at line 365 of file mdt\-Usbtmc\-Control\-Transfer.\-h.
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::control\-Transfer\-Callback().
+
+\hypertarget{classmdt_usbtmc_control_transfer_a6fe677f56b8154cf3ee3814a3f818c5d}{\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!usbtmc\-Request@{usbtmc\-Request}}
+\index{usbtmc\-Request@{usbtmc\-Request}!mdtUsbtmcControlTransfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\subsubsection[{usbtmc\-Request}]{\setlength{\rightskip}{0pt plus 5cm}{\bf U\-S\-B\-T\-M\-Cb\-Request} mdt\-Usbtmc\-Control\-Transfer\-::usbtmc\-Request (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_control_transfer_a6fe677f56b8154cf3ee3814a3f818c5d}
+
+
+Get U\-S\-B\-T\-M\-C b\-Request. 
+
+Is valid just after setup\-X\-Y() was called, and after transfer is done, thanks to libusb wich does not overwrite it. 
+
+Definition at line 339 of file mdt\-Usbtmc\-Control\-Transfer.\-h.
+
+
+
+References mdt\-Usb\-Control\-Transfer\-::byte\-Value().
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::handle\-Control\-Transfer\-Complete(), and usbtmc\-Request\-Text().
+
+\hypertarget{classmdt_usbtmc_control_transfer_ae686c342204cd9880e0dc73af663fd8d}{\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!usbtmc\-Request\-Text@{usbtmc\-Request\-Text}}
+\index{usbtmc\-Request\-Text@{usbtmc\-Request\-Text}!mdtUsbtmcControlTransfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\subsubsection[{usbtmc\-Request\-Text}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Usbtmc\-Control\-Transfer\-::usbtmc\-Request\-Text (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_usbtmc_control_transfer_ae686c342204cd9880e0dc73af663fd8d}
+
+
+Get U\-S\-B\-T\-M\-C b\-Request text. 
+
+
+
+Definition at line 96 of file mdt\-Usbtmc\-Control\-Transfer.\-cpp.
+
+
+
+References C\-H\-E\-C\-K\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-I\-N\-\_\-\-S\-T\-A\-T\-U\-S, C\-H\-E\-C\-K\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-O\-U\-T\-\_\-\-S\-T\-A\-T\-U\-S, C\-H\-E\-C\-K\-\_\-\-C\-L\-E\-A\-R\-\_\-\-S\-T\-A\-T\-U\-S, G\-E\-T\-\_\-\-C\-A\-P\-A\-B\-I\-L\-I\-T\-I\-E\-S, I\-N\-D\-I\-C\-A\-T\-O\-R\-\_\-\-P\-U\-L\-S\-E, I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-I\-N, I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-A\-B\-O\-R\-T\-\_\-\-B\-U\-L\-K\-\_\-\-O\-U\-T, I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-C\-L\-E\-A\-R, None, and usbtmc\-Request().
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::handle\-Control\-Transfer\-Complete().
+
+\hypertarget{classmdt_usbtmc_control_transfer_a44f97e524faa410863d8c5574bf8b076}{\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!usbtmc\-Status@{usbtmc\-Status}}
+\index{usbtmc\-Status@{usbtmc\-Status}!mdtUsbtmcControlTransfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\subsubsection[{usbtmc\-Status}]{\setlength{\rightskip}{0pt plus 5cm}{\bf U\-S\-B\-T\-M\-Cstatus} mdt\-Usbtmc\-Control\-Transfer\-::usbtmc\-Status (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_control_transfer_a44f97e524faa410863d8c5574bf8b076}
+
+
+Get U\-S\-B\-T\-M\-C\-\_\-status. 
+
+Notes\-:
+\begin{DoxyItemize}
+\item No check is made about \hyperlink{classmdt_usb_transfer_a75fe23ffc102c80494a14614f99e6188}{actual\-Length()}. It is the caller responsability to be shure that response contains expected data length.
+\item Returned status is simply a cast from value that device returned. Don't forget a default section in your switch() 
+\end{DoxyItemize}
+
+Definition at line 354 of file mdt\-Usbtmc\-Control\-Transfer.\-h.
+
+
+
+References mdt\-Usb\-Control\-Transfer\-::byte\-Value().
+
+
+
+Referenced by usbtmc\-Status\-Text().
+
+\hypertarget{classmdt_usbtmc_control_transfer_a47aadf17c8b6e88c1fcebc83c64ff6f3}{\index{mdt\-Usbtmc\-Control\-Transfer@{mdt\-Usbtmc\-Control\-Transfer}!usbtmc\-Status\-Text@{usbtmc\-Status\-Text}}
+\index{usbtmc\-Status\-Text@{usbtmc\-Status\-Text}!mdtUsbtmcControlTransfer@{mdt\-Usbtmc\-Control\-Transfer}}
+\subsubsection[{usbtmc\-Status\-Text}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Usbtmc\-Control\-Transfer\-::usbtmc\-Status\-Text (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_usbtmc_control_transfer_a47aadf17c8b6e88c1fcebc83c64ff6f3}
+
+
+Get U\-S\-B\-T\-M\-C\-\_\-status text. 
+
+
+
+Definition at line 139 of file mdt\-Usbtmc\-Control\-Transfer.\-cpp.
+
+
+
+References S\-T\-A\-T\-U\-S\-\_\-\-F\-A\-I\-L\-E\-D, S\-T\-A\-T\-U\-S\-\_\-\-I\-N\-T\-E\-R\-R\-U\-P\-T\-\_\-\-I\-N\-\_\-\-B\-U\-S\-Y, S\-T\-A\-T\-U\-S\-\_\-\-P\-E\-N\-D\-I\-N\-G, S\-T\-A\-T\-U\-S\-\_\-\-S\-P\-L\-I\-T\-\_\-\-I\-N\-\_\-\-P\-R\-O\-G\-R\-E\-S\-S, S\-T\-A\-T\-U\-S\-\_\-\-S\-P\-L\-I\-T\-\_\-\-N\-O\-T\-\_\-\-I\-N\-\_\-\-P\-R\-O\-G\-R\-E\-S\-S, S\-T\-A\-T\-U\-S\-\_\-\-S\-U\-C\-C\-E\-S\-S, S\-T\-A\-T\-U\-S\-\_\-\-T\-R\-A\-N\-S\-F\-E\-R\-\_\-\-N\-O\-T\-\_\-\-I\-N\-\_\-\-P\-R\-O\-G\-R\-E\-S\-S, and usbtmc\-Status().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdtport/\hyperlink{mdt_usbtmc_control_transfer_8h}{mdt\-Usbtmc\-Control\-Transfer.\-h}\item 
+src/mdtport/\hyperlink{mdt_usbtmc_control_transfer_8cpp}{mdt\-Usbtmc\-Control\-Transfer.\-cpp}\end{DoxyCompactItemize}

@@ -1,0 +1,6 @@
+<map id="mdtUsbTransfer" name="mdtUsbTransfer">
+<area shape="rect" id="node2" href="$classmdt_usb_control_transfer.html" title="USB control transfer. " alt="" coords="15,80,173,107"/>
+<area shape="rect" id="node4" href="$classmdt_usbtmc_bulk_transfer.html" title="USBTMC bulk transfer. " alt="" coords="198,80,361,107"/>
+<area shape="rect" id="node5" href="$classmdt_usbtmc_interrupt_transfer.html" title="USBTMC interrupt transfer. " alt="" coords="387,80,573,107"/>
+<area shape="rect" id="node3" href="$classmdt_usbtmc_control_transfer.html" title="USBTMC control transfer. " alt="" coords="5,155,184,181"/>
+</map>

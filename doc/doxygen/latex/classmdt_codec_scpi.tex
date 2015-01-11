@@ -1,0 +1,246 @@
+\hypertarget{classmdt_codec_scpi}{\section{mdt\-Codec\-Scpi Class Reference}
+\label{classmdt_codec_scpi}\index{mdt\-Codec\-Scpi@{mdt\-Codec\-Scpi}}
+}
+
+
+S\-C\-P\-I codec.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Codec\-Scpi.\-h$>$}
+
+
+
+Collaboration diagram for mdt\-Codec\-Scpi\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=174pt]{classmdt_codec_scpi__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_codec_scpi_a47fdbdd5aad517fa72d2350b000b3af2}{mdt\-Codec\-Scpi} ()
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hyperlink{structmdt_scpi_idn_response}{mdt\-Scpi\-Idn\-Response} \hyperlink{classmdt_codec_scpi_aac894b4a3f64a219c6afa4d178abb49a}{decode\-Idn} (const Q\-Byte\-Array \&data)
+\begin{DoxyCompactList}\small\item\em Decode $\ast$\-I\-D\-N? response. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_value_bool}{mdt\-Value\-Bool} \hyperlink{classmdt_codec_scpi_aa3a1e848575b3bda9e5356cfab71d3bd}{decode\-Value\-Bool} (const Q\-Byte\-Array \&data)
+\begin{DoxyCompactList}\small\item\em Decode a boolean value. \end{DoxyCompactList}\item 
+\hyperlink{mdt_value_8h_a0c42952c09d70fdb4d64e2becd58ee3d}{mdt\-Value\-Int} \hyperlink{classmdt_codec_scpi_ae7fe6489561779c8bc1c7a253e1ad194}{decode\-Value\-Int} (const Q\-Byte\-Array \&data)
+\begin{DoxyCompactList}\small\item\em Decode a integer value. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_value_double}{mdt\-Value\-Double} \hyperlink{classmdt_codec_scpi_a7923c43ae7cd670b2334da396bc00dfe}{decode\-Value\-Double} (const Q\-Byte\-Array \&data)
+\begin{DoxyCompactList}\small\item\em Decode a decimal value. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_error}{mdt\-Error} \hyperlink{classmdt_codec_scpi_a1372d34a6eea1f83eed7af95a964d7d2}{decode\-Device\-Error} (const Q\-Byte\-Array \&data, const Q\-String \&error\-Text=Q\-String())
+\begin{DoxyCompactList}\small\item\em Decode device error. \end{DoxyCompactList}\item 
+\hyperlink{structmdt_scpi_function_farameter}{mdt\-Scpi\-Function\-Farameter} \hyperlink{classmdt_codec_scpi_a9a50e5d755599f88d6b74d233a167426}{decode\-Function\-Parameters} (const Q\-Byte\-Array \&data)
+\begin{DoxyCompactList}\small\item\em Decode $<$function$>$ $<$parameters$>$ response. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_error}{mdt\-Error} \hyperlink{classmdt_codec_scpi_a93d0ff6a48ce95a9d95cd24906443579}{last\-Error} () const 
+\begin{DoxyCompactList}\small\item\em Get last error. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_error}{mdt\-Error} \hyperlink{classmdt_codec_scpi_ac08e83ff5a33b4b61fe4b173fc6753c8}{pv\-Last\-Error}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+S\-C\-P\-I codec. 
+
+Definition at line 113 of file mdt\-Codec\-Scpi.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_codec_scpi_a47fdbdd5aad517fa72d2350b000b3af2}{\index{mdt\-Codec\-Scpi@{mdt\-Codec\-Scpi}!mdt\-Codec\-Scpi@{mdt\-Codec\-Scpi}}
+\index{mdt\-Codec\-Scpi@{mdt\-Codec\-Scpi}!mdtCodecScpi@{mdt\-Codec\-Scpi}}
+\subsubsection[{mdt\-Codec\-Scpi}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Codec\-Scpi\-::mdt\-Codec\-Scpi (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_codec_scpi_a47fdbdd5aad517fa72d2350b000b3af2}
+
+
+Constructor. 
+
+
+
+Definition at line 119 of file mdt\-Codec\-Scpi.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_codec_scpi_a1372d34a6eea1f83eed7af95a964d7d2}{\index{mdt\-Codec\-Scpi@{mdt\-Codec\-Scpi}!decode\-Device\-Error@{decode\-Device\-Error}}
+\index{decode\-Device\-Error@{decode\-Device\-Error}!mdtCodecScpi@{mdt\-Codec\-Scpi}}
+\subsubsection[{decode\-Device\-Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Error} mdt\-Codec\-Scpi\-::decode\-Device\-Error (
+\begin{DoxyParamCaption}
+\item[{const Q\-Byte\-Array \&}]{data, }
+\item[{const Q\-String \&}]{error\-Text = {\ttfamily QString()}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_codec_scpi_a1372d34a6eea1f83eed7af95a964d7d2}
+
+
+Decode device error. 
+
+See S\-C\-P\-I 1999.\-0 , volume 2, section 21.\-8 Note\-: this function supports only 1 error
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & data returned from device \\
+\hline
+{\em error\-Text} & Text to set in error. If empty, a default text will be set. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Error that contains device error as system error. If parsing failed, a empty error is returned (error level will be No\-Error) 
+\end{DoxyReturn}
+
+
+Definition at line 203 of file mdt\-Codec\-Scpi.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, pv\-Last\-Error, mdt\-Error\-::set\-Error(), mdt\-Error\-::set\-System\-Error(), and mdt\-Algorithms\-::split\-String().
+
+\hypertarget{classmdt_codec_scpi_a9a50e5d755599f88d6b74d233a167426}{\index{mdt\-Codec\-Scpi@{mdt\-Codec\-Scpi}!decode\-Function\-Parameters@{decode\-Function\-Parameters}}
+\index{decode\-Function\-Parameters@{decode\-Function\-Parameters}!mdtCodecScpi@{mdt\-Codec\-Scpi}}
+\subsubsection[{decode\-Function\-Parameters}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Scpi\-Function\-Farameter} mdt\-Codec\-Scpi\-::decode\-Function\-Parameters (
+\begin{DoxyParamCaption}
+\item[{const Q\-Byte\-Array \&}]{data}
+\end{DoxyParamCaption}
+)}}\label{classmdt_codec_scpi_a9a50e5d755599f88d6b74d233a167426}
+
+
+Decode $<$function$>$ $<$parameters$>$ response. 
+
+See S\-C\-P\-I 1999.\-0 , volume 2, section 3 
+
+Definition at line 237 of file mdt\-Codec\-Scpi.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), decode\-Value\-Double(), mdt\-Error\-::\-Error, mdt\-Scpi\-Function\-Farameter\-::function\-Raw, mdt\-Value\-Double\-::is\-Null(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Scpi\-Function\-Farameter\-::parameters\-Double, mdt\-Scpi\-Function\-Farameter\-::parameters\-Raw, pv\-Last\-Error, mdt\-Error\-::set\-Error(), and mdt\-Value\-Double\-::value().
+
+\hypertarget{classmdt_codec_scpi_aac894b4a3f64a219c6afa4d178abb49a}{\index{mdt\-Codec\-Scpi@{mdt\-Codec\-Scpi}!decode\-Idn@{decode\-Idn}}
+\index{decode\-Idn@{decode\-Idn}!mdtCodecScpi@{mdt\-Codec\-Scpi}}
+\subsubsection[{decode\-Idn}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Scpi\-Idn\-Response} mdt\-Codec\-Scpi\-::decode\-Idn (
+\begin{DoxyParamCaption}
+\item[{const Q\-Byte\-Array \&}]{data}
+\end{DoxyParamCaption}
+)}}\label{classmdt_codec_scpi_aac894b4a3f64a219c6afa4d178abb49a}
+
+
+Decode $\ast$\-I\-D\-N? response. 
+
+
+
+Definition at line 104 of file mdt\-Codec\-Scpi.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, mdt\-Scpi\-Idn\-Response\-::firmware\-Level, mdt\-Scpi\-Idn\-Response\-::manufacturer, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Scpi\-Idn\-Response\-::model, pv\-Last\-Error, mdt\-Scpi\-Idn\-Response\-::serial, and mdt\-Error\-::set\-Error().
+
+\hypertarget{classmdt_codec_scpi_aa3a1e848575b3bda9e5356cfab71d3bd}{\index{mdt\-Codec\-Scpi@{mdt\-Codec\-Scpi}!decode\-Value\-Bool@{decode\-Value\-Bool}}
+\index{decode\-Value\-Bool@{decode\-Value\-Bool}!mdtCodecScpi@{mdt\-Codec\-Scpi}}
+\subsubsection[{decode\-Value\-Bool}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Value\-Bool} mdt\-Codec\-Scpi\-::decode\-Value\-Bool (
+\begin{DoxyParamCaption}
+\item[{const Q\-Byte\-Array \&}]{data}
+\end{DoxyParamCaption}
+)}}\label{classmdt_codec_scpi_aa3a1e848575b3bda9e5356cfab71d3bd}
+
+
+Decode a boolean value. 
+
+Will interpret 1 as true, 0 as false 
+
+Definition at line 124 of file mdt\-Codec\-Scpi.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, pv\-Last\-Error, and mdt\-Error\-::set\-Error().
+
+\hypertarget{classmdt_codec_scpi_a7923c43ae7cd670b2334da396bc00dfe}{\index{mdt\-Codec\-Scpi@{mdt\-Codec\-Scpi}!decode\-Value\-Double@{decode\-Value\-Double}}
+\index{decode\-Value\-Double@{decode\-Value\-Double}!mdtCodecScpi@{mdt\-Codec\-Scpi}}
+\subsubsection[{decode\-Value\-Double}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Value\-Double} mdt\-Codec\-Scpi\-::decode\-Value\-Double (
+\begin{DoxyParamCaption}
+\item[{const Q\-Byte\-Array \&}]{data}
+\end{DoxyParamCaption}
+)}}\label{classmdt_codec_scpi_a7923c43ae7cd670b2334da396bc00dfe}
+
+
+Decode a decimal value. 
+
+See S\-C\-P\-I 1999.\-0 , volume 3, section 3.\-4.\-1, 3.\-4.\-2 3.\-4.\-4, 3.\-4.\-5 and 3.\-4.\-6 Note\-: this function assumes decimal format, not octal and not hexadecimal.
+
+If data contains a value $<$= -\/9.\-9e37 or $>$= 9.\-9e37, returned value will have O\-L flag set, and also contains a infinity value. If data contains a value == 9.\-91e37, returned value will be Na\-N See S\-C\-P\-I 1999.\-0 , volume 1, section 7.\-2.\-1.\-4 and 7.\-2.\-1.\-5 for details. 
+
+Definition at line 162 of file mdt\-Codec\-Scpi.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, pv\-Last\-Error, mdt\-Error\-::set\-Error(), and mdt\-Value\-Double\-::set\-Value().
+
+
+
+Referenced by decode\-Function\-Parameters().
+
+\hypertarget{classmdt_codec_scpi_ae7fe6489561779c8bc1c7a253e1ad194}{\index{mdt\-Codec\-Scpi@{mdt\-Codec\-Scpi}!decode\-Value\-Int@{decode\-Value\-Int}}
+\index{decode\-Value\-Int@{decode\-Value\-Int}!mdtCodecScpi@{mdt\-Codec\-Scpi}}
+\subsubsection[{decode\-Value\-Int}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Value\-Int} mdt\-Codec\-Scpi\-::decode\-Value\-Int (
+\begin{DoxyParamCaption}
+\item[{const Q\-Byte\-Array \&}]{data}
+\end{DoxyParamCaption}
+)}}\label{classmdt_codec_scpi_ae7fe6489561779c8bc1c7a253e1ad194}
+
+
+Decode a integer value. 
+
+See S\-C\-P\-I 1999.\-0 , volume 3, section 3.\-4.\-4, 3.\-4.\-5 and 3.\-4.\-6 
+
+Definition at line 140 of file mdt\-Codec\-Scpi.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, pv\-Last\-Error, and mdt\-Error\-::set\-Error().
+
+\hypertarget{classmdt_codec_scpi_a93d0ff6a48ce95a9d95cd24906443579}{\index{mdt\-Codec\-Scpi@{mdt\-Codec\-Scpi}!last\-Error@{last\-Error}}
+\index{last\-Error@{last\-Error}!mdtCodecScpi@{mdt\-Codec\-Scpi}}
+\subsubsection[{last\-Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Error} mdt\-Codec\-Scpi\-::last\-Error (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_codec_scpi_a93d0ff6a48ce95a9d95cd24906443579}
+
+
+Get last error. 
+
+
+
+Definition at line 168 of file mdt\-Codec\-Scpi.\-h.
+
+
+
+References pv\-Last\-Error.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classmdt_codec_scpi_ac08e83ff5a33b4b61fe4b173fc6753c8}{\index{mdt\-Codec\-Scpi@{mdt\-Codec\-Scpi}!pv\-Last\-Error@{pv\-Last\-Error}}
+\index{pv\-Last\-Error@{pv\-Last\-Error}!mdtCodecScpi@{mdt\-Codec\-Scpi}}
+\subsubsection[{pv\-Last\-Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Error} mdt\-Codec\-Scpi\-::pv\-Last\-Error\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_codec_scpi_ac08e83ff5a33b4b61fe4b173fc6753c8}
+
+
+Definition at line 175 of file mdt\-Codec\-Scpi.\-h.
+
+
+
+Referenced by decode\-Device\-Error(), decode\-Function\-Parameters(), decode\-Idn(), decode\-Value\-Bool(), decode\-Value\-Double(), decode\-Value\-Int(), and last\-Error().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdtutils/\hyperlink{mdt_codec_scpi_8h}{mdt\-Codec\-Scpi.\-h}\item 
+src/mdtutils/\hyperlink{mdt_codec_scpi_8cpp}{mdt\-Codec\-Scpi.\-cpp}\end{DoxyCompactItemize}

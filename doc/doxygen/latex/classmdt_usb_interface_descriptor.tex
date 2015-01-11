@@ -14,24 +14,35 @@ U\-S\-B interface descriptor.
 \begin{DoxyCompactItemize}
 \item 
 \hyperlink{classmdt_usb_interface_descriptor_a2f566ab157bd2fe7a0ab5133dc094ed6}{mdt\-Usb\-Interface\-Descriptor} ()
-\item 
-\hyperlink{classmdt_usb_interface_descriptor_a8b16d95d11a0f29ec35aa8a2fa128edd}{$\sim$mdt\-Usb\-Interface\-Descriptor} ()
-\item 
-void \hyperlink{classmdt_usb_interface_descriptor_a1050edfdbea744abe0bb4948b16f03fb}{fetch\-Attributes} (libusb\-\_\-interface\-\_\-descriptor $\ast$descriptor)
+\begin{DoxyCompactList}\small\item\em Construct a empty interface descriptor. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_usb_interface_descriptor_ae8fdc326f89252fd4309f5ef6f5d4c74}{mdt\-Usb\-Interface\-Descriptor} (libusb\-\_\-interface\-\_\-descriptor descriptor)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usb_interface_descriptor_ab4538d89db1cc877ab24202337203ea9}{is\-Empty} () const 
+\begin{DoxyCompactList}\small\item\em $\sim$mdt\-Usb\-Interface\-Descriptor(); \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usb_interface_descriptor_a058ff56115c963be3f45fa288fd01551}{clear} ()
+\begin{DoxyCompactList}\small\item\em Clear descriptor. \end{DoxyCompactList}\item 
+uint8\-\_\-t \hyperlink{classmdt_usb_interface_descriptor_a3abfad5244d01736c071b9fe6649407b}{b\-Interface\-Number} () const 
 \begin{DoxyCompactList}\small\item\em Ftech the interface descriptor's attributes. \end{DoxyCompactList}\item 
-quint8 \hyperlink{classmdt_usb_interface_descriptor_a32e43e99126954ee6b716d1f0a24b60c}{b\-Descriptor\-Type} () const 
+uint8\-\_\-t \hyperlink{classmdt_usb_interface_descriptor_a8610aa75199d6e2d8b12cf5bc7f6582d}{b\-Descriptor\-Type} () const 
 \begin{DoxyCompactList}\small\item\em I\-N\-T\-E\-R\-F\-A\-C\-E Descriptor Type. \end{DoxyCompactList}\item 
-quint8 \hyperlink{classmdt_usb_interface_descriptor_a345952007f1822d7decc6b115883a250}{b\-Interface\-Class} () const 
+uint8\-\_\-t \hyperlink{classmdt_usb_interface_descriptor_a067ebfa8ed9941d8db481e106bb67bb9}{b\-Interface\-Class} () const 
 \begin{DoxyCompactList}\small\item\em Class code (assigned by the U\-S\-B-\/\-I\-F) \end{DoxyCompactList}\item 
-quint8 \hyperlink{classmdt_usb_interface_descriptor_aad3fbaacba0b0c32daaffb14d52fd05a}{b\-Interface\-Sub\-Class} () const 
+uint8\-\_\-t \hyperlink{classmdt_usb_interface_descriptor_afca641ae0c4ec5707f6db30276298ad4}{b\-Interface\-Sub\-Class} () const 
 \begin{DoxyCompactList}\small\item\em Subclass code (assigned by the U\-S\-B-\/\-I\-F) \end{DoxyCompactList}\item 
-quint8 \hyperlink{classmdt_usb_interface_descriptor_a9be6f58db4a2fdf1e3a1a0acf1b838f7}{b\-Interface\-Protocol} () const 
+uint8\-\_\-t \hyperlink{classmdt_usb_interface_descriptor_a3fe6a90f6274c05cdfcdcaead002538b}{b\-Interface\-Protocol} () const 
 \begin{DoxyCompactList}\small\item\em Protocol code (assigned by the U\-S\-B) \end{DoxyCompactList}\item 
-quint8 \hyperlink{classmdt_usb_interface_descriptor_aa975e2dc2a326efe391649c5096286eb}{i\-Interface} () const 
+uint8\-\_\-t \hyperlink{classmdt_usb_interface_descriptor_a408510bf9c12aa929a8809a86a4c5bf9}{i\-Interface} () const 
 \begin{DoxyCompactList}\small\item\em Index of string descriptor describing this interface. \end{DoxyCompactList}\item 
-Q\-List\\*
-$<$ \hyperlink{classmdt_usb_endpoint_descriptor}{mdt\-Usb\-Endpoint\-Descriptor} $\ast$ $>$ \& \hyperlink{classmdt_usb_interface_descriptor_a584bd81b092884295f1ebe1e0db55487}{endpoints} ()
-\begin{DoxyCompactList}\small\item\em List of avaliable enpoints. \end{DoxyCompactList}\end{DoxyCompactItemize}
+Q\-List$<$ \hyperlink{classmdt_usb_endpoint_descriptor}{mdt\-Usb\-Endpoint\-Descriptor} $>$ \hyperlink{classmdt_usb_interface_descriptor_ad95199161cdf269c3a75f35421ede44e}{endpoints} () const 
+\begin{DoxyCompactList}\small\item\em List of avaliable enpoints. \end{DoxyCompactList}\item 
+Q\-List$<$ \hyperlink{classmdt_usb_endpoint_descriptor}{mdt\-Usb\-Endpoint\-Descriptor} $>$ \hyperlink{classmdt_usb_interface_descriptor_a40ee049a37cee4e8911ab779900f6145}{bulk\-In\-Endpoints} () const 
+\begin{DoxyCompactList}\small\item\em Get a list of bulk I\-N endpoints. \end{DoxyCompactList}\item 
+Q\-List$<$ \hyperlink{classmdt_usb_endpoint_descriptor}{mdt\-Usb\-Endpoint\-Descriptor} $>$ \hyperlink{classmdt_usb_interface_descriptor_a7cc209fd81bd0bc2142a22344568f629}{bulk\-Out\-Endpoints} () const 
+\begin{DoxyCompactList}\small\item\em Get a list of bulk O\-U\-T endpoints. \end{DoxyCompactList}\item 
+Q\-List$<$ \hyperlink{classmdt_usb_endpoint_descriptor}{mdt\-Usb\-Endpoint\-Descriptor} $>$ \hyperlink{classmdt_usb_interface_descriptor_abc42959d7b4431bd37557edf6b8af70a}{interrupt\-In\-Endpoints} () const 
+\begin{DoxyCompactList}\small\item\em Get a list of interrupt I\-N endpoints. \end{DoxyCompactList}\item 
+Q\-List$<$ \hyperlink{classmdt_usb_endpoint_descriptor}{mdt\-Usb\-Endpoint\-Descriptor} $>$ \hyperlink{classmdt_usb_interface_descriptor_ae0ea581ece8a6556a612d8344c697292}{interrupt\-Out\-Endpoints} () const 
+\begin{DoxyCompactList}\small\item\em Get a list of interrupt O\-U\-T endpoints. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -51,153 +62,271 @@ Definition at line 32 of file mdt\-Usb\-Interface\-Descriptor.\-h.
 )}}\label{classmdt_usb_interface_descriptor_a2f566ab157bd2fe7a0ab5133dc094ed6}
 
 
+Construct a empty interface descriptor. 
+
+
+
 Definition at line 24 of file mdt\-Usb\-Interface\-Descriptor.\-cpp.
 
-\hypertarget{classmdt_usb_interface_descriptor_a8b16d95d11a0f29ec35aa8a2fa128edd}{\index{mdt\-Usb\-Interface\-Descriptor@{mdt\-Usb\-Interface\-Descriptor}!$\sim$mdt\-Usb\-Interface\-Descriptor@{$\sim$mdt\-Usb\-Interface\-Descriptor}}
-\index{$\sim$mdt\-Usb\-Interface\-Descriptor@{$\sim$mdt\-Usb\-Interface\-Descriptor}!mdtUsbInterfaceDescriptor@{mdt\-Usb\-Interface\-Descriptor}}
-\subsubsection[{$\sim$mdt\-Usb\-Interface\-Descriptor}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Usb\-Interface\-Descriptor\-::$\sim$mdt\-Usb\-Interface\-Descriptor (
+\hypertarget{classmdt_usb_interface_descriptor_ae8fdc326f89252fd4309f5ef6f5d4c74}{\index{mdt\-Usb\-Interface\-Descriptor@{mdt\-Usb\-Interface\-Descriptor}!mdt\-Usb\-Interface\-Descriptor@{mdt\-Usb\-Interface\-Descriptor}}
+\index{mdt\-Usb\-Interface\-Descriptor@{mdt\-Usb\-Interface\-Descriptor}!mdtUsbInterfaceDescriptor@{mdt\-Usb\-Interface\-Descriptor}}
+\subsubsection[{mdt\-Usb\-Interface\-Descriptor}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Usb\-Interface\-Descriptor\-::mdt\-Usb\-Interface\-Descriptor (
 \begin{DoxyParamCaption}
-{}
+\item[{libusb\-\_\-interface\-\_\-descriptor}]{descriptor}
 \end{DoxyParamCaption}
-)}}\label{classmdt_usb_interface_descriptor_a8b16d95d11a0f29ec35aa8a2fa128edd}
+)}}\label{classmdt_usb_interface_descriptor_ae8fdc326f89252fd4309f5ef6f5d4c74}
 
 
-Definition at line 33 of file mdt\-Usb\-Interface\-Descriptor.\-cpp.
+Constructor. 
+
+Will copy all members of passed descriptor. This given descriptor can be freed after construction was done. 
+
+Definition at line 37 of file mdt\-Usb\-Interface\-Descriptor.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_usb_interface_descriptor_a32e43e99126954ee6b716d1f0a24b60c}{\index{mdt\-Usb\-Interface\-Descriptor@{mdt\-Usb\-Interface\-Descriptor}!b\-Descriptor\-Type@{b\-Descriptor\-Type}}
+\hypertarget{classmdt_usb_interface_descriptor_a8610aa75199d6e2d8b12cf5bc7f6582d}{\index{mdt\-Usb\-Interface\-Descriptor@{mdt\-Usb\-Interface\-Descriptor}!b\-Descriptor\-Type@{b\-Descriptor\-Type}}
 \index{b\-Descriptor\-Type@{b\-Descriptor\-Type}!mdtUsbInterfaceDescriptor@{mdt\-Usb\-Interface\-Descriptor}}
-\subsubsection[{b\-Descriptor\-Type}]{\setlength{\rightskip}{0pt plus 5cm}quint8 mdt\-Usb\-Interface\-Descriptor\-::b\-Descriptor\-Type (
+\subsubsection[{b\-Descriptor\-Type}]{\setlength{\rightskip}{0pt plus 5cm}uint8\-\_\-t mdt\-Usb\-Interface\-Descriptor\-::b\-Descriptor\-Type (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}\label{classmdt_usb_interface_descriptor_a32e43e99126954ee6b716d1f0a24b60c}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_interface_descriptor_a8610aa75199d6e2d8b12cf5bc7f6582d}
 
 
 I\-N\-T\-E\-R\-F\-A\-C\-E Descriptor Type. 
 
 
 
-Definition at line 63 of file mdt\-Usb\-Interface\-Descriptor.\-cpp.
+Definition at line 74 of file mdt\-Usb\-Interface\-Descriptor.\-h.
 
-\hypertarget{classmdt_usb_interface_descriptor_a345952007f1822d7decc6b115883a250}{\index{mdt\-Usb\-Interface\-Descriptor@{mdt\-Usb\-Interface\-Descriptor}!b\-Interface\-Class@{b\-Interface\-Class}}
+\hypertarget{classmdt_usb_interface_descriptor_a067ebfa8ed9941d8db481e106bb67bb9}{\index{mdt\-Usb\-Interface\-Descriptor@{mdt\-Usb\-Interface\-Descriptor}!b\-Interface\-Class@{b\-Interface\-Class}}
 \index{b\-Interface\-Class@{b\-Interface\-Class}!mdtUsbInterfaceDescriptor@{mdt\-Usb\-Interface\-Descriptor}}
-\subsubsection[{b\-Interface\-Class}]{\setlength{\rightskip}{0pt plus 5cm}quint8 mdt\-Usb\-Interface\-Descriptor\-::b\-Interface\-Class (
+\subsubsection[{b\-Interface\-Class}]{\setlength{\rightskip}{0pt plus 5cm}uint8\-\_\-t mdt\-Usb\-Interface\-Descriptor\-::b\-Interface\-Class (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}\label{classmdt_usb_interface_descriptor_a345952007f1822d7decc6b115883a250}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_interface_descriptor_a067ebfa8ed9941d8db481e106bb67bb9}
 
 
 Class code (assigned by the U\-S\-B-\/\-I\-F) 
 
 
 
-Definition at line 68 of file mdt\-Usb\-Interface\-Descriptor.\-cpp.
+Definition at line 81 of file mdt\-Usb\-Interface\-Descriptor.\-h.
 
 
 
 Referenced by mdt\-Usb\-Port\-Manager\-::scan().
 
-\hypertarget{classmdt_usb_interface_descriptor_a9be6f58db4a2fdf1e3a1a0acf1b838f7}{\index{mdt\-Usb\-Interface\-Descriptor@{mdt\-Usb\-Interface\-Descriptor}!b\-Interface\-Protocol@{b\-Interface\-Protocol}}
-\index{b\-Interface\-Protocol@{b\-Interface\-Protocol}!mdtUsbInterfaceDescriptor@{mdt\-Usb\-Interface\-Descriptor}}
-\subsubsection[{b\-Interface\-Protocol}]{\setlength{\rightskip}{0pt plus 5cm}quint8 mdt\-Usb\-Interface\-Descriptor\-::b\-Interface\-Protocol (
+\hypertarget{classmdt_usb_interface_descriptor_a3abfad5244d01736c071b9fe6649407b}{\index{mdt\-Usb\-Interface\-Descriptor@{mdt\-Usb\-Interface\-Descriptor}!b\-Interface\-Number@{b\-Interface\-Number}}
+\index{b\-Interface\-Number@{b\-Interface\-Number}!mdtUsbInterfaceDescriptor@{mdt\-Usb\-Interface\-Descriptor}}
+\subsubsection[{b\-Interface\-Number}]{\setlength{\rightskip}{0pt plus 5cm}uint8\-\_\-t mdt\-Usb\-Interface\-Descriptor\-::b\-Interface\-Number (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}\label{classmdt_usb_interface_descriptor_a9be6f58db4a2fdf1e3a1a0acf1b838f7}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_interface_descriptor_a3abfad5244d01736c071b9fe6649407b}
+
+
+Ftech the interface descriptor's attributes. 
+
+\begin{DoxyPrecond}{Precondition}
+descriptor must be a valid pointer
+\end{DoxyPrecond}
+Get b\-Interface\-Number 
+
+Definition at line 67 of file mdt\-Usb\-Interface\-Descriptor.\-h.
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::setup().
+
+\hypertarget{classmdt_usb_interface_descriptor_a3fe6a90f6274c05cdfcdcaead002538b}{\index{mdt\-Usb\-Interface\-Descriptor@{mdt\-Usb\-Interface\-Descriptor}!b\-Interface\-Protocol@{b\-Interface\-Protocol}}
+\index{b\-Interface\-Protocol@{b\-Interface\-Protocol}!mdtUsbInterfaceDescriptor@{mdt\-Usb\-Interface\-Descriptor}}
+\subsubsection[{b\-Interface\-Protocol}]{\setlength{\rightskip}{0pt plus 5cm}uint8\-\_\-t mdt\-Usb\-Interface\-Descriptor\-::b\-Interface\-Protocol (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_interface_descriptor_a3fe6a90f6274c05cdfcdcaead002538b}
 
 
 Protocol code (assigned by the U\-S\-B) 
 
 
 
-Definition at line 78 of file mdt\-Usb\-Interface\-Descriptor.\-cpp.
+Definition at line 95 of file mdt\-Usb\-Interface\-Descriptor.\-h.
 
 
 
 Referenced by mdt\-Usb\-Port\-Manager\-::scan().
 
-\hypertarget{classmdt_usb_interface_descriptor_aad3fbaacba0b0c32daaffb14d52fd05a}{\index{mdt\-Usb\-Interface\-Descriptor@{mdt\-Usb\-Interface\-Descriptor}!b\-Interface\-Sub\-Class@{b\-Interface\-Sub\-Class}}
+\hypertarget{classmdt_usb_interface_descriptor_afca641ae0c4ec5707f6db30276298ad4}{\index{mdt\-Usb\-Interface\-Descriptor@{mdt\-Usb\-Interface\-Descriptor}!b\-Interface\-Sub\-Class@{b\-Interface\-Sub\-Class}}
 \index{b\-Interface\-Sub\-Class@{b\-Interface\-Sub\-Class}!mdtUsbInterfaceDescriptor@{mdt\-Usb\-Interface\-Descriptor}}
-\subsubsection[{b\-Interface\-Sub\-Class}]{\setlength{\rightskip}{0pt plus 5cm}quint8 mdt\-Usb\-Interface\-Descriptor\-::b\-Interface\-Sub\-Class (
+\subsubsection[{b\-Interface\-Sub\-Class}]{\setlength{\rightskip}{0pt plus 5cm}uint8\-\_\-t mdt\-Usb\-Interface\-Descriptor\-::b\-Interface\-Sub\-Class (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}\label{classmdt_usb_interface_descriptor_aad3fbaacba0b0c32daaffb14d52fd05a}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_interface_descriptor_afca641ae0c4ec5707f6db30276298ad4}
 
 
 Subclass code (assigned by the U\-S\-B-\/\-I\-F) 
 
 
 
-Definition at line 73 of file mdt\-Usb\-Interface\-Descriptor.\-cpp.
+Definition at line 88 of file mdt\-Usb\-Interface\-Descriptor.\-h.
 
 
 
 Referenced by mdt\-Usb\-Port\-Manager\-::scan().
 
-\hypertarget{classmdt_usb_interface_descriptor_a584bd81b092884295f1ebe1e0db55487}{\index{mdt\-Usb\-Interface\-Descriptor@{mdt\-Usb\-Interface\-Descriptor}!endpoints@{endpoints}}
-\index{endpoints@{endpoints}!mdtUsbInterfaceDescriptor@{mdt\-Usb\-Interface\-Descriptor}}
-\subsubsection[{endpoints}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ {\bf mdt\-Usb\-Endpoint\-Descriptor} $\ast$ $>$ \& mdt\-Usb\-Interface\-Descriptor\-::endpoints (
+\hypertarget{classmdt_usb_interface_descriptor_a40ee049a37cee4e8911ab779900f6145}{\index{mdt\-Usb\-Interface\-Descriptor@{mdt\-Usb\-Interface\-Descriptor}!bulk\-In\-Endpoints@{bulk\-In\-Endpoints}}
+\index{bulk\-In\-Endpoints@{bulk\-In\-Endpoints}!mdtUsbInterfaceDescriptor@{mdt\-Usb\-Interface\-Descriptor}}
+\subsubsection[{bulk\-In\-Endpoints}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ {\bf mdt\-Usb\-Endpoint\-Descriptor} $>$ mdt\-Usb\-Interface\-Descriptor\-::bulk\-In\-Endpoints (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}\label{classmdt_usb_interface_descriptor_a584bd81b092884295f1ebe1e0db55487}
+) const}}\label{classmdt_usb_interface_descriptor_a40ee049a37cee4e8911ab779900f6145}
+
+
+Get a list of bulk I\-N endpoints. 
+
+mdt\-Usb\-Interface\-Descriptor\-::$\sim$mdt\-Usb\-Interface\-Descriptor() \{ q\-Delete\-All(pv\-Endpoints); \} quint8 \hyperlink{classmdt_usb_interface_descriptor_a8610aa75199d6e2d8b12cf5bc7f6582d}{mdt\-Usb\-Interface\-Descriptor\-::b\-Descriptor\-Type() const} \{ return pvb\-Descriptor\-Type; \}
+
+quint8 \hyperlink{classmdt_usb_interface_descriptor_a067ebfa8ed9941d8db481e106bb67bb9}{mdt\-Usb\-Interface\-Descriptor\-::b\-Interface\-Class() const} \{ return pvb\-Interface\-Class; \}
+
+quint8 \hyperlink{classmdt_usb_interface_descriptor_afca641ae0c4ec5707f6db30276298ad4}{mdt\-Usb\-Interface\-Descriptor\-::b\-Interface\-Sub\-Class() const} \{ return pvb\-Interface\-Sub\-Class; \}
+
+quint8 \hyperlink{classmdt_usb_interface_descriptor_a3fe6a90f6274c05cdfcdcaead002538b}{mdt\-Usb\-Interface\-Descriptor\-::b\-Interface\-Protocol() const} \{ return pvb\-Interface\-Protocol; \}
+
+quint8 \hyperlink{classmdt_usb_interface_descriptor_a408510bf9c12aa929a8809a86a4c5bf9}{mdt\-Usb\-Interface\-Descriptor\-::i\-Interface() const} \{ return pvi\-Interface; \} Q\-List$<$mdt\-Usb\-Endpoint\-Descriptor$\ast$$>$ \&\hyperlink{classmdt_usb_interface_descriptor_ad95199161cdf269c3a75f35421ede44e}{mdt\-Usb\-Interface\-Descriptor\-::endpoints()} \{ return pv\-Endpoints; \} 
+
+Definition at line 123 of file mdt\-Usb\-Interface\-Descriptor.\-cpp.
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::setup().
+
+\hypertarget{classmdt_usb_interface_descriptor_a7cc209fd81bd0bc2142a22344568f629}{\index{mdt\-Usb\-Interface\-Descriptor@{mdt\-Usb\-Interface\-Descriptor}!bulk\-Out\-Endpoints@{bulk\-Out\-Endpoints}}
+\index{bulk\-Out\-Endpoints@{bulk\-Out\-Endpoints}!mdtUsbInterfaceDescriptor@{mdt\-Usb\-Interface\-Descriptor}}
+\subsubsection[{bulk\-Out\-Endpoints}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ {\bf mdt\-Usb\-Endpoint\-Descriptor} $>$ mdt\-Usb\-Interface\-Descriptor\-::bulk\-Out\-Endpoints (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_usb_interface_descriptor_a7cc209fd81bd0bc2142a22344568f629}
+
+
+Get a list of bulk O\-U\-T endpoints. 
+
+
+
+Definition at line 136 of file mdt\-Usb\-Interface\-Descriptor.\-cpp.
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::setup().
+
+\hypertarget{classmdt_usb_interface_descriptor_a058ff56115c963be3f45fa288fd01551}{\index{mdt\-Usb\-Interface\-Descriptor@{mdt\-Usb\-Interface\-Descriptor}!clear@{clear}}
+\index{clear@{clear}!mdtUsbInterfaceDescriptor@{mdt\-Usb\-Interface\-Descriptor}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usb\-Interface\-Descriptor\-::clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usb_interface_descriptor_a058ff56115c963be3f45fa288fd01551}
+
+
+Clear descriptor. 
+
+
+
+Definition at line 48 of file mdt\-Usb\-Interface\-Descriptor.\-cpp.
+
+\hypertarget{classmdt_usb_interface_descriptor_ad95199161cdf269c3a75f35421ede44e}{\index{mdt\-Usb\-Interface\-Descriptor@{mdt\-Usb\-Interface\-Descriptor}!endpoints@{endpoints}}
+\index{endpoints@{endpoints}!mdtUsbInterfaceDescriptor@{mdt\-Usb\-Interface\-Descriptor}}
+\subsubsection[{endpoints}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<${\bf mdt\-Usb\-Endpoint\-Descriptor}$>$ mdt\-Usb\-Interface\-Descriptor\-::endpoints (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_interface_descriptor_ad95199161cdf269c3a75f35421ede44e}
 
 
 List of avaliable enpoints. 
 
+Q\-List$<$mdt\-Usb\-Endpoint\-Descriptor$\ast$$>$ \&\hyperlink{classmdt_usb_interface_descriptor_ad95199161cdf269c3a75f35421ede44e}{endpoints()}; 
 
-
-Definition at line 88 of file mdt\-Usb\-Interface\-Descriptor.\-cpp.
+Definition at line 110 of file mdt\-Usb\-Interface\-Descriptor.\-h.
 
 
 
 Referenced by mdt\-Usb\-Device\-Descriptor\-::endpoint(), mdt\-Usb\-Device\-Descriptor\-::first\-Bulk\-In\-Endpoint(), mdt\-Usb\-Device\-Descriptor\-::first\-Bulk\-Out\-Endpoint(), mdt\-Usb\-Device\-Descriptor\-::first\-Interrupt\-In\-Endpoint(), and mdt\-Usb\-Device\-Descriptor\-::first\-Interrupt\-Out\-Endpoint().
 
-\hypertarget{classmdt_usb_interface_descriptor_a1050edfdbea744abe0bb4948b16f03fb}{\index{mdt\-Usb\-Interface\-Descriptor@{mdt\-Usb\-Interface\-Descriptor}!fetch\-Attributes@{fetch\-Attributes}}
-\index{fetch\-Attributes@{fetch\-Attributes}!mdtUsbInterfaceDescriptor@{mdt\-Usb\-Interface\-Descriptor}}
-\subsubsection[{fetch\-Attributes}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usb\-Interface\-Descriptor\-::fetch\-Attributes (
-\begin{DoxyParamCaption}
-\item[{libusb\-\_\-interface\-\_\-descriptor $\ast$}]{descriptor}
-\end{DoxyParamCaption}
-)}}\label{classmdt_usb_interface_descriptor_a1050edfdbea744abe0bb4948b16f03fb}
-
-
-Ftech the interface descriptor's attributes. 
-
-\begin{DoxyPrecond}{Precondition}
-descriptor must be a valid pointer 
-\end{DoxyPrecond}
-
-
-Definition at line 38 of file mdt\-Usb\-Interface\-Descriptor.\-cpp.
-
-
-
-References mdt\-Usb\-Endpoint\-Descriptor\-::fetch\-Attributes().
-
-
-
-Referenced by mdt\-Usb\-Config\-Descriptor\-::fetch\-Attributes().
-
-\hypertarget{classmdt_usb_interface_descriptor_aa975e2dc2a326efe391649c5096286eb}{\index{mdt\-Usb\-Interface\-Descriptor@{mdt\-Usb\-Interface\-Descriptor}!i\-Interface@{i\-Interface}}
+\hypertarget{classmdt_usb_interface_descriptor_a408510bf9c12aa929a8809a86a4c5bf9}{\index{mdt\-Usb\-Interface\-Descriptor@{mdt\-Usb\-Interface\-Descriptor}!i\-Interface@{i\-Interface}}
 \index{i\-Interface@{i\-Interface}!mdtUsbInterfaceDescriptor@{mdt\-Usb\-Interface\-Descriptor}}
-\subsubsection[{i\-Interface}]{\setlength{\rightskip}{0pt plus 5cm}quint8 mdt\-Usb\-Interface\-Descriptor\-::i\-Interface (
+\subsubsection[{i\-Interface}]{\setlength{\rightskip}{0pt plus 5cm}uint8\-\_\-t mdt\-Usb\-Interface\-Descriptor\-::i\-Interface (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}\label{classmdt_usb_interface_descriptor_aa975e2dc2a326efe391649c5096286eb}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_interface_descriptor_a408510bf9c12aa929a8809a86a4c5bf9}
 
 
 Index of string descriptor describing this interface. 
 
 
 
-Definition at line 83 of file mdt\-Usb\-Interface\-Descriptor.\-cpp.
+Definition at line 102 of file mdt\-Usb\-Interface\-Descriptor.\-h.
+
+\hypertarget{classmdt_usb_interface_descriptor_abc42959d7b4431bd37557edf6b8af70a}{\index{mdt\-Usb\-Interface\-Descriptor@{mdt\-Usb\-Interface\-Descriptor}!interrupt\-In\-Endpoints@{interrupt\-In\-Endpoints}}
+\index{interrupt\-In\-Endpoints@{interrupt\-In\-Endpoints}!mdtUsbInterfaceDescriptor@{mdt\-Usb\-Interface\-Descriptor}}
+\subsubsection[{interrupt\-In\-Endpoints}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ {\bf mdt\-Usb\-Endpoint\-Descriptor} $>$ mdt\-Usb\-Interface\-Descriptor\-::interrupt\-In\-Endpoints (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_usb_interface_descriptor_abc42959d7b4431bd37557edf6b8af70a}
+
+
+Get a list of interrupt I\-N endpoints. 
+
+
+
+Definition at line 149 of file mdt\-Usb\-Interface\-Descriptor.\-cpp.
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::setup().
+
+\hypertarget{classmdt_usb_interface_descriptor_ae0ea581ece8a6556a612d8344c697292}{\index{mdt\-Usb\-Interface\-Descriptor@{mdt\-Usb\-Interface\-Descriptor}!interrupt\-Out\-Endpoints@{interrupt\-Out\-Endpoints}}
+\index{interrupt\-Out\-Endpoints@{interrupt\-Out\-Endpoints}!mdtUsbInterfaceDescriptor@{mdt\-Usb\-Interface\-Descriptor}}
+\subsubsection[{interrupt\-Out\-Endpoints}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ {\bf mdt\-Usb\-Endpoint\-Descriptor} $>$ mdt\-Usb\-Interface\-Descriptor\-::interrupt\-Out\-Endpoints (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_usb_interface_descriptor_ae0ea581ece8a6556a612d8344c697292}
+
+
+Get a list of interrupt O\-U\-T endpoints. 
+
+
+
+Definition at line 162 of file mdt\-Usb\-Interface\-Descriptor.\-cpp.
+
+\hypertarget{classmdt_usb_interface_descriptor_ab4538d89db1cc877ab24202337203ea9}{\index{mdt\-Usb\-Interface\-Descriptor@{mdt\-Usb\-Interface\-Descriptor}!is\-Empty@{is\-Empty}}
+\index{is\-Empty@{is\-Empty}!mdtUsbInterfaceDescriptor@{mdt\-Usb\-Interface\-Descriptor}}
+\subsubsection[{is\-Empty}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usb\-Interface\-Descriptor\-::is\-Empty (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_interface_descriptor_ab4538d89db1cc877ab24202337203ea9}
+
+
+$\sim$mdt\-Usb\-Interface\-Descriptor(); 
+
+Check if descriptor is empty 
+
+Definition at line 51 of file mdt\-Usb\-Interface\-Descriptor.\-h.
+
+
+
+Referenced by mdt\-Usb\-Device\-Descriptor\-::endpoint(), mdt\-Usb\-Device\-Descriptor\-::first\-Bulk\-In\-Endpoint(), mdt\-Usb\-Device\-Descriptor\-::first\-Bulk\-Out\-Endpoint(), mdt\-Usb\-Device\-Descriptor\-::first\-Interrupt\-In\-Endpoint(), mdt\-Usb\-Device\-Descriptor\-::first\-Interrupt\-Out\-Endpoint(), and mdt\-Usbtmc\-Transfer\-Handler\-::setup().
 
 
 

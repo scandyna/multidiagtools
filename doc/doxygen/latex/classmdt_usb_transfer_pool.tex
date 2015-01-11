@@ -1,0 +1,350 @@
+\hypertarget{classmdt_usb_transfer_pool}{\section{mdt\-Usb\-Transfer\-Pool$<$ T $>$ Class Template Reference}
+\label{classmdt_usb_transfer_pool}\index{mdt\-Usb\-Transfer\-Pool$<$ T $>$@{mdt\-Usb\-Transfer\-Pool$<$ T $>$}}
+}
+
+
+Storage of U\-S\-B transfers.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Usb\-Transfer\-Pool.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Usb\-Transfer\-Pool$<$ T $>$\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmdt_usb_transfer_pool__inherit__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_usb_transfer_pool_ae2585ccc5070312b3c058c3b6bc0e8a8}{mdt\-Usb\-Transfer\-Pool} (unsigned int max\-Transfers=50)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_usb_transfer_pool_ac7e18c464fa80970b75b995f99febb25}{$\sim$mdt\-Usb\-Transfer\-Pool} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usb_transfer_pool_a6b45f8033b32683aef4f026e31160082}{clear} ()
+\begin{DoxyCompactList}\small\item\em Clear pool. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename Transfer\-Handler\-Type $>$ }\\bool \hyperlink{classmdt_usb_transfer_pool_a0da3432347b16aa2dee9ab7fb5fd6ddc}{alloc\-Transfers} (unsigned int n, Transfer\-Handler\-Type \&th, libusb\-\_\-device\-\_\-handle $\ast$dev\-Handle)
+\begin{DoxyCompactList}\small\item\em Alloc transfers. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename Transfer\-Handler\-Type $>$ }\\bool \hyperlink{classmdt_usb_transfer_pool_a1f37ff1c8ebe2a62acc11232f7f19166}{alloc\-Transfers} (unsigned int n, Transfer\-Handler\-Type \&th, \hyperlink{classmdt_usb_endpoint_descriptor}{mdt\-Usb\-Endpoint\-Descriptor} endpoint\-Descriptor, libusb\-\_\-device\-\_\-handle $\ast$dev\-Handle)
+\begin{DoxyCompactList}\small\item\em Alloc transfers. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename Transfer\-Handler\-Type $>$ }\\T $\ast$ \hyperlink{classmdt_usb_transfer_pool_a941436df0356fce84f8706169e3f3c81}{get\-Transfer} (Transfer\-Handler\-Type \&th)
+\begin{DoxyCompactList}\small\item\em Get a transfer from pool. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename Transfer\-Handler\-Type $>$ }\\T $\ast$ \hyperlink{classmdt_usb_transfer_pool_ab9355c98dc6bb300bddf4a9efc2b2828}{get\-Transfer} (Transfer\-Handler\-Type \&th, \hyperlink{classmdt_usb_endpoint_descriptor}{mdt\-Usb\-Endpoint\-Descriptor} endpoint\-Descriptor)
+\begin{DoxyCompactList}\small\item\em Get a transfer from pool. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usb_transfer_pool_afc3e25bd7fee70de2aaf819e0dc8e2d1}{restore\-Transfer} (T $\ast$transfer)
+\begin{DoxyCompactList}\small\item\em Restore a transfer. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_usb_transfer_pool_ac1291ff9db5a6a49e8e32e792e7df6c5}{pending\-Transfer\-Count} () const 
+\begin{DoxyCompactList}\small\item\em Get number of pending transfers. \end{DoxyCompactList}\item 
+T $\ast$ \hyperlink{classmdt_usb_transfer_pool_a5cdb802491240b96ce3211f7c202df47}{get\-Pending\-Transfer} ()
+\begin{DoxyCompactList}\small\item\em Get a pending transfer. \end{DoxyCompactList}\item 
+std\-::vector$<$ T $\ast$ $>$ \hyperlink{classmdt_usb_transfer_pool_a282361af51e1fcaebfe8de1107a44ccb}{get\-All\-Pending\-Transfers} ()
+\begin{DoxyCompactList}\small\item\em Get all pending transfers. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usb_transfer_pool_a51f345ee3b9fcbc65f4638d12e001c39}{restore\-Pending\-Transfers} ()
+\begin{DoxyCompactList}\small\item\em Restore pending transfers to pool. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$class mdt\-Usb\-Transfer\-Pool$<$ T $>$}
+
+Storage of U\-S\-B transfers. 
+
+This class handles 2 transfer queues\-:
+\begin{DoxyItemize}
+\item Pool\-: available transfers to initiate I/\-O requests
+\item Pending\-: transfers that where submitted but not yet completed
+\end{DoxyItemize}
+
+To get a transfer, use \hyperlink{classmdt_usb_transfer_pool_a941436df0356fce84f8706169e3f3c81}{get\-Transfer()}. This will directly put returned transfer to pending (but not yet completed) queue.
+
+Because submitting a transfer, and cancelling the same transfer, can be done in concurrent way, a lock should be used to prevent this.
+
+For example, submitting could be something like\-: 1) Lock mutex 2) transfer = \hyperlink{classmdt_usb_transfer_pool_a941436df0356fce84f8706169e3f3c81}{get\-Transfer()}; // Transfer will immediatly be available in pending queue. 3) Fill transfer 4) Submit transfer 5) Unlock mutex
+
+Cancel function could be like\-: 1) Lock mutex 2) transfer = \hyperlink{classmdt_usb_transfer_pool_a5cdb802491240b96ce3211f7c202df47}{get\-Pending\-Transfer()}; 3) Cancel transfer (submition only, libusb\-\_\-cancel\-\_\-transfer() will return before completion) 4) Unlock mutex
+
+Finally, the transfer callback could be like\-: 1) Lock mutex 2) \hyperlink{classmdt_usb_transfer_pool_afc3e25bd7fee70de2aaf819e0dc8e2d1}{restore\-Transfer()} 3) Unlock mutex 4) If required, submit a new transfer (whenn the mutex is unlocked!)
+
+Because several tasks must be done in a atomic way, it was chosen to not put any lock in this class. 
+
+Definition at line 64 of file mdt\-Usb\-Transfer\-Pool.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_usb_transfer_pool_ae2585ccc5070312b3c058c3b6bc0e8a8}{\index{mdt\-Usb\-Transfer\-Pool@{mdt\-Usb\-Transfer\-Pool}!mdt\-Usb\-Transfer\-Pool@{mdt\-Usb\-Transfer\-Pool}}
+\index{mdt\-Usb\-Transfer\-Pool@{mdt\-Usb\-Transfer\-Pool}!mdtUsbTransferPool@{mdt\-Usb\-Transfer\-Pool}}
+\subsubsection[{mdt\-Usb\-Transfer\-Pool}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T$>$ {\bf mdt\-Usb\-Transfer\-Pool}$<$ T $>$\-::{\bf mdt\-Usb\-Transfer\-Pool} (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{max\-Transfers = {\ttfamily 50}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_transfer_pool_ae2585ccc5070312b3c058c3b6bc0e8a8}
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em max\-Transfers} & Maximum allowed number of transfers. This limit can be usefull for bug detection. If exceeded, \hyperlink{classmdt_usb_transfer_pool_a941436df0356fce84f8706169e3f3c81}{get\-Transfer()} will return a null pointer. In debug build, a assertion will also fail in this case. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 75 of file mdt\-Usb\-Transfer\-Pool.\-h.
+
+\hypertarget{classmdt_usb_transfer_pool_ac7e18c464fa80970b75b995f99febb25}{\index{mdt\-Usb\-Transfer\-Pool@{mdt\-Usb\-Transfer\-Pool}!$\sim$mdt\-Usb\-Transfer\-Pool@{$\sim$mdt\-Usb\-Transfer\-Pool}}
+\index{$\sim$mdt\-Usb\-Transfer\-Pool@{$\sim$mdt\-Usb\-Transfer\-Pool}!mdtUsbTransferPool@{mdt\-Usb\-Transfer\-Pool}}
+\subsubsection[{$\sim$mdt\-Usb\-Transfer\-Pool}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T$>$ {\bf mdt\-Usb\-Transfer\-Pool}$<$ T $>$\-::$\sim${\bf mdt\-Usb\-Transfer\-Pool} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_transfer_pool_ac7e18c464fa80970b75b995f99febb25}
+
+
+Destructor. 
+
+
+
+Definition at line 84 of file mdt\-Usb\-Transfer\-Pool.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_usb_transfer_pool_a0da3432347b16aa2dee9ab7fb5fd6ddc}{\index{mdt\-Usb\-Transfer\-Pool@{mdt\-Usb\-Transfer\-Pool}!alloc\-Transfers@{alloc\-Transfers}}
+\index{alloc\-Transfers@{alloc\-Transfers}!mdtUsbTransferPool@{mdt\-Usb\-Transfer\-Pool}}
+\subsubsection[{alloc\-Transfers}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T$>$ template$<$typename Transfer\-Handler\-Type $>$ bool {\bf mdt\-Usb\-Transfer\-Pool}$<$ T $>$\-::alloc\-Transfers (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{n, }
+\item[{Transfer\-Handler\-Type \&}]{th, }
+\item[{libusb\-\_\-device\-\_\-handle $\ast$}]{dev\-Handle}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_transfer_pool_a0da3432347b16aa2dee9ab7fb5fd6ddc}
+
+
+Alloc transfers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & Number of transfers \\
+\hline
+{\em th} & Application specific transfer handler \\
+\hline
+{\em dev\-Handle} & Must be a valid pointer to currently open device. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+n must be $<$= max\-Transfers (given in constructor) 
+\end{DoxyPrecond}
+
+
+Definition at line 113 of file mdt\-Usb\-Transfer\-Pool.\-h.
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::setup().
+
+\hypertarget{classmdt_usb_transfer_pool_a1f37ff1c8ebe2a62acc11232f7f19166}{\index{mdt\-Usb\-Transfer\-Pool@{mdt\-Usb\-Transfer\-Pool}!alloc\-Transfers@{alloc\-Transfers}}
+\index{alloc\-Transfers@{alloc\-Transfers}!mdtUsbTransferPool@{mdt\-Usb\-Transfer\-Pool}}
+\subsubsection[{alloc\-Transfers}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T$>$ template$<$typename Transfer\-Handler\-Type $>$ bool {\bf mdt\-Usb\-Transfer\-Pool}$<$ T $>$\-::alloc\-Transfers (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{n, }
+\item[{Transfer\-Handler\-Type \&}]{th, }
+\item[{{\bf mdt\-Usb\-Endpoint\-Descriptor}}]{endpoint\-Descriptor, }
+\item[{libusb\-\_\-device\-\_\-handle $\ast$}]{dev\-Handle}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_transfer_pool_a1f37ff1c8ebe2a62acc11232f7f19166}
+
+
+Alloc transfers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & Number of transfers \\
+\hline
+{\em th} & Application specific transfer handler \\
+\hline
+{\em dev\-Handle} & Must be a valid pointer to currently open device. \\
+\hline
+{\em endpoint\-Descriptor} & U\-S\-B endpoint descriptor. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+n must be $<$= max\-Transfers (given in constructor) 
+\end{DoxyPrecond}
+
+
+Definition at line 132 of file mdt\-Usb\-Transfer\-Pool.\-h.
+
+\hypertarget{classmdt_usb_transfer_pool_a6b45f8033b32683aef4f026e31160082}{\index{mdt\-Usb\-Transfer\-Pool@{mdt\-Usb\-Transfer\-Pool}!clear@{clear}}
+\index{clear@{clear}!mdtUsbTransferPool@{mdt\-Usb\-Transfer\-Pool}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T$>$ void {\bf mdt\-Usb\-Transfer\-Pool}$<$ T $>$\-::clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_transfer_pool_a6b45f8033b32683aef4f026e31160082}
+
+
+Clear pool. 
+
+Will also destroy each transfer. 
+
+Definition at line 93 of file mdt\-Usb\-Transfer\-Pool.\-h.
+
+
+
+Referenced by mdt\-Usb\-Transfer\-Pool$<$ mdt\-Usbtmc\-Bulk\-Transfer $>$\-::$\sim$mdt\-Usb\-Transfer\-Pool().
+
+\hypertarget{classmdt_usb_transfer_pool_a282361af51e1fcaebfe8de1107a44ccb}{\index{mdt\-Usb\-Transfer\-Pool@{mdt\-Usb\-Transfer\-Pool}!get\-All\-Pending\-Transfers@{get\-All\-Pending\-Transfers}}
+\index{get\-All\-Pending\-Transfers@{get\-All\-Pending\-Transfers}!mdtUsbTransferPool@{mdt\-Usb\-Transfer\-Pool}}
+\subsubsection[{get\-All\-Pending\-Transfers}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T$>$ std\-::vector$<$T$\ast$$>$ {\bf mdt\-Usb\-Transfer\-Pool}$<$ T $>$\-::get\-All\-Pending\-Transfers (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_transfer_pool_a282361af51e1fcaebfe8de1107a44ccb}
+
+
+Get all pending transfers. 
+
+Note that returned transfers are not removed from pending queue. Be aware that another thread, or a callback, could restore a transfer at the same time, and that will invalidate returned queue. 
+
+Definition at line 220 of file mdt\-Usb\-Transfer\-Pool.\-h.
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::begin\-Abort\-Bulk\-In(), mdt\-Usbtmc\-Transfer\-Handler\-::get\-Received\-Data(), mdt\-Usbtmc\-Transfer\-Handler\-::submit\-Cancel\-All\-Bulk\-In\-Transfers(), and mdt\-Usbtmc\-Transfer\-Handler\-::submit\-Cancel\-All\-Bulk\-Out\-Transfers().
+
+\hypertarget{classmdt_usb_transfer_pool_a5cdb802491240b96ce3211f7c202df47}{\index{mdt\-Usb\-Transfer\-Pool@{mdt\-Usb\-Transfer\-Pool}!get\-Pending\-Transfer@{get\-Pending\-Transfer}}
+\index{get\-Pending\-Transfer@{get\-Pending\-Transfer}!mdtUsbTransferPool@{mdt\-Usb\-Transfer\-Pool}}
+\subsubsection[{get\-Pending\-Transfer}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T$>$ T$\ast$ {\bf mdt\-Usb\-Transfer\-Pool}$<$ T $>$\-::get\-Pending\-Transfer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_transfer_pool_a5cdb802491240b96ce3211f7c202df47}
+
+
+Get a pending transfer. 
+
+Will return 0 if no transfer is pending. This function will simply return the last transfer in pending queue, and not remove it. Removal from pending queue is done by \hyperlink{classmdt_usb_transfer_pool_afc3e25bd7fee70de2aaf819e0dc8e2d1}{restore\-Transfer()} or \hyperlink{classmdt_usb_transfer_pool_a51f345ee3b9fcbc65f4638d12e001c39}{restore\-Pending\-Transfers()}. 
+
+Definition at line 206 of file mdt\-Usb\-Transfer\-Pool.\-h.
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::dbg\-Submit\-Abort\-One\-Pending\-Bulk\-In\-Transfer(), mdt\-Usbtmc\-Transfer\-Handler\-::dbg\-Submit\-Abort\-One\-Pending\-Bulk\-Out\-Transfer(), and mdt\-Usbtmc\-Transfer\-Handler\-::submit\-Control\-Transfers\-Cancel().
+
+\hypertarget{classmdt_usb_transfer_pool_a941436df0356fce84f8706169e3f3c81}{\index{mdt\-Usb\-Transfer\-Pool@{mdt\-Usb\-Transfer\-Pool}!get\-Transfer@{get\-Transfer}}
+\index{get\-Transfer@{get\-Transfer}!mdtUsbTransferPool@{mdt\-Usb\-Transfer\-Pool}}
+\subsubsection[{get\-Transfer}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T$>$ template$<$typename Transfer\-Handler\-Type $>$ T$\ast$ {\bf mdt\-Usb\-Transfer\-Pool}$<$ T $>$\-::get\-Transfer (
+\begin{DoxyParamCaption}
+\item[{Transfer\-Handler\-Type \&}]{th}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_transfer_pool_a941436df0356fce84f8706169e3f3c81}
+
+
+Get a transfer from pool. 
+
+Will create a new transfer if pool is empty.
+
+The transfer is also filed into pending queue.
+
+\begin{DoxyReturn}{Returns}
+A valid pointer to transfer (or 0 on memory allocation failure) 
+\end{DoxyReturn}
+
+
+Definition at line 151 of file mdt\-Usb\-Transfer\-Pool.\-h.
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::dbg\-Submit\-Custom\-Bulk\-Out\-Transfer(), mdt\-Usbtmc\-Transfer\-Handler\-::submit\-Clear\-Endpoint\-Halt(), mdt\-Usbtmc\-Transfer\-Handler\-::submit\-Command(), and mdt\-Usbtmc\-Transfer\-Handler\-::submit\-Interrupt\-In\-Transfer().
+
+\hypertarget{classmdt_usb_transfer_pool_ab9355c98dc6bb300bddf4a9efc2b2828}{\index{mdt\-Usb\-Transfer\-Pool@{mdt\-Usb\-Transfer\-Pool}!get\-Transfer@{get\-Transfer}}
+\index{get\-Transfer@{get\-Transfer}!mdtUsbTransferPool@{mdt\-Usb\-Transfer\-Pool}}
+\subsubsection[{get\-Transfer}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T$>$ template$<$typename Transfer\-Handler\-Type $>$ T$\ast$ {\bf mdt\-Usb\-Transfer\-Pool}$<$ T $>$\-::get\-Transfer (
+\begin{DoxyParamCaption}
+\item[{Transfer\-Handler\-Type \&}]{th, }
+\item[{{\bf mdt\-Usb\-Endpoint\-Descriptor}}]{endpoint\-Descriptor}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_transfer_pool_ab9355c98dc6bb300bddf4a9efc2b2828}
+
+
+Get a transfer from pool. 
+
+Will create a new transfer if pool is empty.
+
+The transfer is also filed into pending queue.
+
+\begin{DoxyReturn}{Returns}
+A valid pointer to transfer (or 0 on memory allocation failure) 
+\end{DoxyReturn}
+
+
+Definition at line 169 of file mdt\-Usb\-Transfer\-Pool.\-h.
+
+\hypertarget{classmdt_usb_transfer_pool_ac1291ff9db5a6a49e8e32e792e7df6c5}{\index{mdt\-Usb\-Transfer\-Pool@{mdt\-Usb\-Transfer\-Pool}!pending\-Transfer\-Count@{pending\-Transfer\-Count}}
+\index{pending\-Transfer\-Count@{pending\-Transfer\-Count}!mdtUsbTransferPool@{mdt\-Usb\-Transfer\-Pool}}
+\subsubsection[{pending\-Transfer\-Count}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T$>$ int {\bf mdt\-Usb\-Transfer\-Pool}$<$ T $>$\-::pending\-Transfer\-Count (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_transfer_pool_ac1291ff9db5a6a49e8e32e792e7df6c5}
+
+
+Get number of pending transfers. 
+
+
+
+Definition at line 194 of file mdt\-Usb\-Transfer\-Pool.\-h.
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::begin\-Bulk\-Io\-Clear(), mdt\-Usbtmc\-Transfer\-Handler\-::handle\-Bulk\-In\-Transfer\-Complete(), mdt\-Usbtmc\-Transfer\-Handler\-::handle\-Control\-Transfer\-Complete(), mdt\-Usbtmc\-Transfer\-Handler\-::has\-Pending\-Bulk\-In\-Transfers(), mdt\-Usbtmc\-Transfer\-Handler\-::has\-Pending\-Bulk\-Out\-Transfers(), mdt\-Usbtmc\-Transfer\-Handler\-::has\-Pending\-Transfers(), mdt\-Usbtmc\-Transfer\-Handler\-::restore\-All\-Transfers(), mdt\-Usbtmc\-Transfer\-Handler\-::restore\-Bulk\-In\-Transfer\-S\-A(), mdt\-Usbtmc\-Transfer\-Handler\-::restore\-Bulk\-Out\-Transfer\-S\-A(), mdt\-Usbtmc\-Transfer\-Handler\-::submit\-Command(), and mdt\-Usbtmc\-Transfer\-Handler\-::submit\-Stop\-Request().
+
+\hypertarget{classmdt_usb_transfer_pool_a51f345ee3b9fcbc65f4638d12e001c39}{\index{mdt\-Usb\-Transfer\-Pool@{mdt\-Usb\-Transfer\-Pool}!restore\-Pending\-Transfers@{restore\-Pending\-Transfers}}
+\index{restore\-Pending\-Transfers@{restore\-Pending\-Transfers}!mdtUsbTransferPool@{mdt\-Usb\-Transfer\-Pool}}
+\subsubsection[{restore\-Pending\-Transfers}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T$>$ void {\bf mdt\-Usb\-Transfer\-Pool}$<$ T $>$\-::restore\-Pending\-Transfers (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_transfer_pool_a51f345ee3b9fcbc65f4638d12e001c39}
+
+
+Restore pending transfers to pool. 
+
+
+
+Definition at line 227 of file mdt\-Usb\-Transfer\-Pool.\-h.
+
+
+
+Referenced by mdt\-Usb\-Transfer\-Pool$<$ mdt\-Usbtmc\-Bulk\-Transfer $>$\-::clear(), mdt\-Usbtmc\-Transfer\-Handler\-::get\-Received\-Data(), mdt\-Usbtmc\-Transfer\-Handler\-::handle\-Bulk\-In\-Transfer\-Complete(), and mdt\-Usbtmc\-Transfer\-Handler\-::restore\-All\-Transfers().
+
+\hypertarget{classmdt_usb_transfer_pool_afc3e25bd7fee70de2aaf819e0dc8e2d1}{\index{mdt\-Usb\-Transfer\-Pool@{mdt\-Usb\-Transfer\-Pool}!restore\-Transfer@{restore\-Transfer}}
+\index{restore\-Transfer@{restore\-Transfer}!mdtUsbTransferPool@{mdt\-Usb\-Transfer\-Pool}}
+\subsubsection[{restore\-Transfer}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T$>$ void {\bf mdt\-Usb\-Transfer\-Pool}$<$ T $>$\-::restore\-Transfer (
+\begin{DoxyParamCaption}
+\item[{T $\ast$}]{transfer}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_transfer_pool_afc3e25bd7fee70de2aaf819e0dc8e2d1}
+
+
+Restore a transfer. 
+
+
+
+Definition at line 180 of file mdt\-Usb\-Transfer\-Pool.\-h.
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::restore\-Bulk\-In\-Transfer\-S\-A(), mdt\-Usbtmc\-Transfer\-Handler\-::restore\-Bulk\-In\-Transfer\-To\-Pool(), mdt\-Usbtmc\-Transfer\-Handler\-::restore\-Bulk\-Out\-Transfer\-S\-A(), mdt\-Usbtmc\-Transfer\-Handler\-::restore\-Bulk\-Out\-Transfer\-To\-Pool(), mdt\-Usbtmc\-Transfer\-Handler\-::restore\-Control\-Transfer\-To\-Pool(), and mdt\-Usbtmc\-Transfer\-Handler\-::restore\-Interrupt\-In\-Transfer\-To\-Pool().
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+src/mdtport/\hyperlink{mdt_usb_transfer_pool_8h}{mdt\-Usb\-Transfer\-Pool.\-h}\end{DoxyCompactItemize}

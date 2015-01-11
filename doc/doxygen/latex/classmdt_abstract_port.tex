@@ -234,7 +234,7 @@ Note for thread implementation\-:\par
 \hypertarget{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea823db75227ad56b6aa74ea2f160c0693}{Write\-Pool\-Empty}\label{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea823db75227ad56b6aa74ea2f160c0693}
 }]Write queue is empty. Says that no data can be sent for the moment \index{Error\-Handled@{Error\-Handled}!mdt\-Abstract\-Port@{mdt\-Abstract\-Port}}\index{mdt\-Abstract\-Port@{mdt\-Abstract\-Port}!Error\-Handled@{Error\-Handled}}\item[{\em 
 \hypertarget{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eab0a372501b8916e3953897dc82fd3b3d}{Error\-Handled}\label{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eab0a372501b8916e3953897dc82fd3b3d}
-}]Used by \hyperlink{classmdt_port_thread}{mdt\-Port\-Thread}'s helper methods (handle\mbox{[}Read$|$\-Write\mbox{]}Error) to tell the thread that error could be handled \index{Read\-Write\-Busy@{Read\-Write\-Busy}!mdt\-Abstract\-Port@{mdt\-Abstract\-Port}}\index{mdt\-Abstract\-Port@{mdt\-Abstract\-Port}!Read\-Write\-Busy@{Read\-Write\-Busy}}\item[{\em 
+}]Used by \hyperlink{classmdt_port_thread}{mdt\-Port\-Thread}'s helper methods (handle\mbox{[}Read$\vert$\-Write\mbox{]}Error) to tell the thread that error could be handled \index{Read\-Write\-Busy@{Read\-Write\-Busy}!mdt\-Abstract\-Port@{mdt\-Abstract\-Port}}\index{mdt\-Abstract\-Port@{mdt\-Abstract\-Port}!Read\-Write\-Busy@{Read\-Write\-Busy}}\item[{\em 
 \hypertarget{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea2d198672405289a1a7e662492ff073f8}{Read\-Write\-Busy}\label{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea2d198672405289a1a7e662492ff073f8}
 }]It's currently not possible to read from or write to port/device. This is typically used by U\-S\-B\-T\-M\-C when some control (f.\-ex. abort bilk I\-N/\-O\-U\-T) is in progress \index{Usb\-Write\-Stall@{Usb\-Write\-Stall}!mdt\-Abstract\-Port@{mdt\-Abstract\-Port}}\index{mdt\-Abstract\-Port@{mdt\-Abstract\-Port}!Usb\-Write\-Stall@{Usb\-Write\-Stall}}\item[{\em 
 \hypertarget{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eaf89af56394b281f71247cd2eb4eaac62}{Usb\-Write\-Stall}\label{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eaf89af56394b281f71247cd2eb4eaac62}
@@ -929,7 +929,7 @@ If one of the method returns a Disconnected error, the thread will call this met
 \begin{DoxyReturn}{Returns}
 No\-Error if connection could be done. Disconnected if connection could not be done, in wich case the thread will retry (until max retry). A Unhandled\-Error can be returned.
 \end{DoxyReturn}
-If subclass supports device (de$|$re)-\/connection, this method must be implemented.
+If subclass supports device (de$\vert$re)-\/connection, this method must be implemented.
 
 Default implementation returns a Unhandled\-Error.
 

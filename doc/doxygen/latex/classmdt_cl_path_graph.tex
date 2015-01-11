@@ -111,10 +111,6 @@ add\-Link\-Pv(start\-Connection\-Id, end\-Connection\-Id, is\-Bidirectional, wei
 
 Definition at line 160 of file mdt\-Cl\-Path\-Graph.\-cpp.
 
-
-
-Referenced by mdt\-Tt\-Test\-Node\-::add\-Relays\-To\-Graph(), and mdt\-Tt\-Test\-Node\-::ensure\-Absence\-Of\-Short\-Circuit().
-
 \hypertarget{classmdt_cl_path_graph_a6c239942dd7f31fc2197af4febec489c}{\index{mdt\-Cl\-Path\-Graph@{mdt\-Cl\-Path\-Graph}!attach\-View@{attach\-View}}
 \index{attach\-View@{attach\-View}!mdtClPathGraph@{mdt\-Cl\-Path\-Graph}}
 \subsubsection[{attach\-View}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Cl\-Path\-Graph\-::attach\-View (
@@ -249,6 +245,10 @@ Definition at line 297 of file mdt\-Cl\-Path\-Graph.\-cpp.
 
 References mdt\-Cl\-Path\-Graph\-Private\-::mdt\-Cl\-Path\-Graph\-Edge\-Data\-::end\-Connection\-Id, mdt\-Error\-::\-Error, mdt\-Cl\-Path\-Graph\-Private\-::mdt\-Cl\-Path\-Graph\-Edge\-Data\-::is\-Complement, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, and mdt\-Cl\-Path\-Graph\-Private\-::mdt\-Cl\-Path\-Graph\-Edge\-Data\-::start\-Connection\-Id.
 
+
+
+Referenced by mdt\-Tt\-Test\-Node\-::get\-Link\-Data\-List\-For\-Path().
+
 \hypertarget{classmdt_cl_path_graph_a82df1588f1b4a9df7b25760ebd9e5aa1}{\index{mdt\-Cl\-Path\-Graph@{mdt\-Cl\-Path\-Graph}!get\-User\-Data@{get\-User\-Data}}
 \index{get\-User\-Data@{get\-User\-Data}!mdtClPathGraph@{mdt\-Cl\-Path\-Graph}}
 \subsubsection[{get\-User\-Data}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant mdt\-Cl\-Path\-Graph\-::get\-User\-Data (
@@ -290,7 +290,7 @@ Definition at line 460 of file mdt\-Cl\-Path\-Graph.\-cpp.
 
 
 
-Referenced by mdt\-Tt\-Test\-Model\-::generate\-Test\-Model(), mdt\-Tt\-Test\-Node\-Unit\-::get\-Connection\-Id\-List\-Linked\-To\-Connection\-Id\-List(), and mdt\-Tt\-Logical\-Test\-Cable\-::load\-Link\-List().
+Referenced by mdt\-Tt\-Test\-Model\-::generate\-Test\-Model(), mdt\-Tt\-Test\-Node\-Unit\-::get\-Connection\-Id\-List\-Linked\-To\-Connection\-Id\-List(), mdt\-Tt\-Test\-Node\-::get\-Link\-Data\-List\-For\-Path(), mdt\-Tt\-Logical\-Test\-Cable\-::load\-Link\-List(), and mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool\-::run\-Calibration().
 
 \hypertarget{classmdt_cl_path_graph_a63ddfb9e8d64041ad17c992eac172a8a}{\index{mdt\-Cl\-Path\-Graph@{mdt\-Cl\-Path\-Graph}!last\-Error\-Message@{last\-Error\-Message}}
 \index{last\-Error\-Message@{last\-Error\-Message}!mdtClPathGraph@{mdt\-Cl\-Path\-Graph}}
@@ -309,7 +309,7 @@ The returned list is ready to be used with a Q\-Message\-Box . The first string 
 Returned list has allways a size of 3 (detailed\-Text can simply contain a empty string)
 \end{DoxyPostcond}
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000054}{Todo}]Should become Obselete . \end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000064}{Todo}]Should become Obselete . \end{DoxyRefDesc}
 
 
 Definition at line 451 of file mdt\-Cl\-Path\-Graph.\-cpp.
@@ -339,7 +339,7 @@ References mdt\-Error\-::\-Error, and M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-
 
 
 
-Referenced by mdt\-Tt\-Test\-Model\-::generate\-Test\-Model(), mdt\-Tt\-Test\-Node\-Unit\-::get\-Connection\-Id\-List\-Linked\-To\-Connection\-Id\-List(), mdt\-Cl\-Path\-Graph\-Dialog\-::load\-Link\-List(), mdt\-Tt\-Logical\-Test\-Cable\-::load\-Link\-List(), and mdt\-Tt\-Relay\-Path\-Dialog\-::set\-Data().
+Referenced by mdt\-Tt\-Test\-Model\-::generate\-Test\-Model(), mdt\-Tt\-Test\-Node\-Unit\-::get\-Connection\-Id\-List\-Linked\-To\-Connection\-Id\-List(), mdt\-Cl\-Path\-Graph\-Dialog\-::load\-Link\-List(), mdt\-Tt\-Logical\-Test\-Cable\-::load\-Link\-List(), mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool\-::run\-Calibration(), and mdt\-Tt\-Relay\-Path\-Dialog\-::set\-Data().
 
 \hypertarget{classmdt_cl_path_graph_a5bee589e7c93681bf9325fd9bc999eb9}{\index{mdt\-Cl\-Path\-Graph@{mdt\-Cl\-Path\-Graph}!remove\-Added\-Links@{remove\-Added\-Links}}
 \index{remove\-Added\-Links@{remove\-Added\-Links}!mdtClPathGraph@{mdt\-Cl\-Path\-Graph}}
@@ -358,7 +358,7 @@ Definition at line 204 of file mdt\-Cl\-Path\-Graph.\-cpp.
 
 
 
-Referenced by mdt\-Tt\-Test\-Node\-::add\-Relays\-To\-Graph(), and mdt\-Tt\-Test\-Node\-::ensure\-Absence\-Of\-Short\-Circuit().
+Referenced by mdt\-Tt\-Test\-Node\-::add\-Relays\-To\-Graph(), mdt\-Tt\-Test\-Node\-::ensure\-Absence\-Of\-Short\-Circuit(), and mdt\-Tt\-Test\-Node\-::get\-Link\-Data\-List\-For\-Path().
 
 
 

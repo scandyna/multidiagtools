@@ -1,0 +1,582 @@
+\hypertarget{classmdt_usb_port_thread_new}{\section{mdt\-Usb\-Port\-Thread\-New Class Reference}
+\label{classmdt_usb_port_thread_new}\index{mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}}
+}
+
+
+Thread for U\-S\-B.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Usb\-Port\-Thread\-New.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Usb\-Port\-Thread\-New\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=216pt]{classmdt_usb_port_thread_new__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Usb\-Port\-Thread\-New\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=324pt]{classmdt_usb_port_thread_new__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{classmdt_usb_port_thread_new_acff06a201f3949a442ee854e45176de9}{State\-\_\-t} \{ \\*
+\hyperlink{classmdt_usb_port_thread_new_acff06a201f3949a442ee854e45176de9ac23e2b09ebe6bf4cb5e2a9abe85c0be2}{State\-\_\-t\-::\-Stopped} = 0, 
+\hyperlink{classmdt_usb_port_thread_new_acff06a201f3949a442ee854e45176de9ac2efe4bbd13e6cb0db293e72884273c0}{State\-\_\-t\-::\-Starting}, 
+\hyperlink{classmdt_usb_port_thread_new_acff06a201f3949a442ee854e45176de9a5bda814c4aedb126839228f1a3d92f09}{State\-\_\-t\-::\-Running}, 
+\hyperlink{classmdt_usb_port_thread_new_acff06a201f3949a442ee854e45176de9a7b7ecb39b9e110c2a31409a1672bad23}{State\-\_\-t\-::\-Stopping}, 
+\\*
+\hyperlink{classmdt_usb_port_thread_new_acff06a201f3949a442ee854e45176de9a902b0d55fddef6f8d651fe1035b7d4bd}{State\-\_\-t\-::\-Error}
+ \}
+\begin{DoxyCompactList}\small\item\em U\-S\-B port thread state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmdt_usb_port_thread_new_a9d27594ed9f0fef2fae997db5939f136}{thread\-State\-Changed} ()
+\begin{DoxyCompactList}\small\item\em Emitted by port thread when state has changed. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usb_port_thread_new_a9b6b49b50bb4d7eb0fc80f6c7379f720}{error\-Occured} (const \hyperlink{classmdt_error}{mdt\-Error} \&error)
+\begin{DoxyCompactList}\small\item\em Emitted when a error occured (see specific subclass for details) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_usb_port_thread_new_a42db5d14d8102d5a05b484692b28f353}{mdt\-Usb\-Port\-Thread\-New} (libusb\-\_\-context $\ast$ctx, \hyperlink{class_q_object}{Q\-Object} $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+virtual \hyperlink{classmdt_usb_port_thread_new_a1f08c280502406418093be95e85415bc}{$\sim$mdt\-Usb\-Port\-Thread\-New} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_usb_port_thread_new_a28beaed16b04754a158e3ed4b921ff03}{mdt\-Usb\-Port\-Thread\-New} (const \hyperlink{classmdt_usb_port_thread_new}{mdt\-Usb\-Port\-Thread\-New} \&rhs)=delete
+\item 
+\hyperlink{classmdt_usb_port_thread_new}{mdt\-Usb\-Port\-Thread\-New} \& \hyperlink{classmdt_usb_port_thread_new_a61525f464e0dc79c69afce302ef711b0}{operator=} (const \hyperlink{classmdt_usb_port_thread_new}{mdt\-Usb\-Port\-Thread\-New} \&rhs)=delete
+\item 
+bool \hyperlink{classmdt_usb_port_thread_new_ac0b2946c973dddcbb19dd26941df2ca5}{start} (const \hyperlink{classmdt_usb_device_descriptor}{mdt\-Usb\-Device\-Descriptor} \&\hyperlink{classmdt_usb_port_thread_new_a26e376f505b24f796e485361b4f36740}{device\-Descriptor}, uint8\-\_\-t \hyperlink{classmdt_usb_port_thread_new_a473cc8ad9fa93d9c5a94b2f700a5311d}{b\-Interface\-Number})
+\begin{DoxyCompactList}\small\item\em Start thread. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usb_port_thread_new_a10437cf919cc678a8aae348763ee682d}{stop} ()
+\begin{DoxyCompactList}\small\item\em Stop thread. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_error}{mdt\-Error} \hyperlink{classmdt_usb_port_thread_new_aec47aab80aaaea81cd1b8eb4dfc1bda3}{last\-Error} ()
+\begin{DoxyCompactList}\small\item\em Get last error. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmdt_usb_port_thread_new_af22a52225631aa41b234dfd86463a041}{set\-Current\-State} (\hyperlink{classmdt_usb_port_thread_new_acff06a201f3949a442ee854e45176de9}{State\-\_\-t} s)
+\begin{DoxyCompactList}\small\item\em Set current state. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_usb_port_thread_new_acff06a201f3949a442ee854e45176de9}{State\-\_\-t} \hyperlink{classmdt_usb_port_thread_new_a125c41214479178928c74359c12ecac7}{current\-State} () const 
+\begin{DoxyCompactList}\small\item\em Get current state. \end{DoxyCompactList}\item 
+libusb\-\_\-context $\ast$ \hyperlink{classmdt_usb_port_thread_new_a236b21eb4da1bfb1918c2d30afc85ef5}{usb\-Context} ()
+\begin{DoxyCompactList}\small\item\em Access libusb context. \end{DoxyCompactList}\item 
+libusb\-\_\-device\-\_\-handle $\ast$ \hyperlink{classmdt_usb_port_thread_new_aff9e3c87c9693fc191ac323bc8acd670}{device\-Handle} ()
+\begin{DoxyCompactList}\small\item\em Access libusb device handle. \end{DoxyCompactList}\item 
+const \hyperlink{classmdt_usb_device_descriptor}{mdt\-Usb\-Device\-Descriptor} \& \hyperlink{classmdt_usb_port_thread_new_a26e376f505b24f796e485361b4f36740}{device\-Descriptor} () const 
+\begin{DoxyCompactList}\small\item\em Access device descriptor. \end{DoxyCompactList}\item 
+uint8\-\_\-t \hyperlink{classmdt_usb_port_thread_new_a473cc8ad9fa93d9c5a94b2f700a5311d}{b\-Interface\-Number} () const 
+\begin{DoxyCompactList}\small\item\em Get requested b\-Interface\-Number. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usb_port_thread_new_a36e64cfa92754a8cc8e46f604efdb56c}{wait\-On\-State} (\hyperlink{classmdt_usb_port_thread_new_acff06a201f3949a442ee854e45176de9}{State\-\_\-t} s, int timeout=0)
+\begin{DoxyCompactList}\small\item\em Wait until a state is reached or timeout without breacking main event loop. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usb_port_thread_new_aa5c05a10493c2cb4e16db704bca7b048}{wait\-On\-State\-Else\-Than} (\hyperlink{classmdt_usb_port_thread_new_acff06a201f3949a442ee854e45176de9}{State\-\_\-t} s, int timeout=0)
+\begin{DoxyCompactList}\small\item\em Wait until state is exited or timeout without breacking main event loop. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usb_port_thread_new_a6486e21a70e3c065591d62269ecbc23c}{open\-Device} ()
+\begin{DoxyCompactList}\small\item\em Open device. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classmdt_usb_port_thread_new_ae60c6844e195a2ba1ea0f4c2dc267d05}{about\-To\-Close} ()
+\begin{DoxyCompactList}\small\item\em Actions to perform before device closes. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classmdt_usb_port_thread_new_af7b64a3ca3baac8a487484b9a9e6bac5}{run} ()
+\begin{DoxyCompactList}\small\item\em Called from port thread. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_error}{mdt\-Error} \hyperlink{classmdt_usb_port_thread_new_a11cf4aaa691dfad9ae4af28cd1bda893}{pv\-Last\-Error}
+\begin{DoxyCompactList}\small\item\em Last error object. \end{DoxyCompactList}\item 
+std\-::mutex \hyperlink{classmdt_usb_port_thread_new_ab4cc1187ff45331bf873309b26bc9745}{pv\-Last\-Error\-Mutex}
+\begin{DoxyCompactList}\small\item\em Mutext to serialize pv\-Last\-Error access. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Thread for U\-S\-B. 
+
+Handle U\-S\-B event in a other thread than G\-U\-I one. 
+
+Definition at line 38 of file mdt\-Usb\-Port\-Thread\-New.\-h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{classmdt_usb_port_thread_new_acff06a201f3949a442ee854e45176de9}{\index{mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}!State\-\_\-t@{State\-\_\-t}}
+\index{State\-\_\-t@{State\-\_\-t}!mdtUsbPortThreadNew@{mdt\-Usb\-Port\-Thread\-New}}
+\subsubsection[{State\-\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdt\-Usb\-Port\-Thread\-New\-::\-State\-\_\-t}\hspace{0.3cm}{\ttfamily [strong]}}}\label{classmdt_usb_port_thread_new_acff06a201f3949a442ee854e45176de9}
+
+
+U\-S\-B port thread state. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Stopped@{Stopped}!mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}}\index{mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}!Stopped@{Stopped}}\item[{\em 
+\hypertarget{classmdt_usb_port_thread_new_acff06a201f3949a442ee854e45176de9ac23e2b09ebe6bf4cb5e2a9abe85c0be2}{Stopped}\label{classmdt_usb_port_thread_new_acff06a201f3949a442ee854e45176de9ac23e2b09ebe6bf4cb5e2a9abe85c0be2}
+}]Thread is stopped \index{Starting@{Starting}!mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}}\index{mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}!Starting@{Starting}}\item[{\em 
+\hypertarget{classmdt_usb_port_thread_new_acff06a201f3949a442ee854e45176de9ac2efe4bbd13e6cb0db293e72884273c0}{Starting}\label{classmdt_usb_port_thread_new_acff06a201f3949a442ee854e45176de9ac2efe4bbd13e6cb0db293e72884273c0}
+}]Thread is staring \index{Running@{Running}!mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}}\index{mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}!Running@{Running}}\item[{\em 
+\hypertarget{classmdt_usb_port_thread_new_acff06a201f3949a442ee854e45176de9a5bda814c4aedb126839228f1a3d92f09}{Running}\label{classmdt_usb_port_thread_new_acff06a201f3949a442ee854e45176de9a5bda814c4aedb126839228f1a3d92f09}
+}]Thread is running (ready for I/\-O) \index{Stopping@{Stopping}!mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}}\index{mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}!Stopping@{Stopping}}\item[{\em 
+\hypertarget{classmdt_usb_port_thread_new_acff06a201f3949a442ee854e45176de9a7b7ecb39b9e110c2a31409a1672bad23}{Stopping}\label{classmdt_usb_port_thread_new_acff06a201f3949a442ee854e45176de9a7b7ecb39b9e110c2a31409a1672bad23}
+}]Thread is stopping \index{Error@{Error}!mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}}\index{mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}!Error@{Error}}\item[{\em 
+\hypertarget{classmdt_usb_port_thread_new_acff06a201f3949a442ee854e45176de9a902b0d55fddef6f8d651fe1035b7d4bd}{Error}\label{classmdt_usb_port_thread_new_acff06a201f3949a442ee854e45176de9a902b0d55fddef6f8d651fe1035b7d4bd}
+}]Thread is stopped due to a error \end{description}
+\end{Desc}
+
+
+Definition at line 46 of file mdt\-Usb\-Port\-Thread\-New.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_usb_port_thread_new_a42db5d14d8102d5a05b484692b28f353}{\index{mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}!mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}}
+\index{mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}!mdtUsbPortThreadNew@{mdt\-Usb\-Port\-Thread\-New}}
+\subsubsection[{mdt\-Usb\-Port\-Thread\-New}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Usb\-Port\-Thread\-New\-::mdt\-Usb\-Port\-Thread\-New (
+\begin{DoxyParamCaption}
+\item[{libusb\-\_\-context $\ast$}]{ctx, }
+\item[{{\bf Q\-Object} $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usb_port_thread_new_a42db5d14d8102d5a05b484692b28f353}
+
+
+Constructor. 
+
+Callable from G\-U\-I thread.
+
+\begin{DoxyPrecond}{Precondition}
+ctx must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Definition at line 29 of file mdt\-Usb\-Port\-Thread\-New.\-cpp.
+
+
+
+References thread\-State\-Changed().
+
+\hypertarget{classmdt_usb_port_thread_new_a1f08c280502406418093be95e85415bc}{\index{mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}!$\sim$mdt\-Usb\-Port\-Thread\-New@{$\sim$mdt\-Usb\-Port\-Thread\-New}}
+\index{$\sim$mdt\-Usb\-Port\-Thread\-New@{$\sim$mdt\-Usb\-Port\-Thread\-New}!mdtUsbPortThreadNew@{mdt\-Usb\-Port\-Thread\-New}}
+\subsubsection[{$\sim$mdt\-Usb\-Port\-Thread\-New}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Usb\-Port\-Thread\-New\-::$\sim$mdt\-Usb\-Port\-Thread\-New (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_usb_port_thread_new_a1f08c280502406418093be95e85415bc}
+
+
+Destructor. 
+
+Callable from G\-U\-I thread. 
+
+Definition at line 40 of file mdt\-Usb\-Port\-Thread\-New.\-cpp.
+
+
+
+References stop().
+
+\hypertarget{classmdt_usb_port_thread_new_a28beaed16b04754a158e3ed4b921ff03}{\index{mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}!mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}}
+\index{mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}!mdtUsbPortThreadNew@{mdt\-Usb\-Port\-Thread\-New}}
+\subsubsection[{mdt\-Usb\-Port\-Thread\-New}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Usb\-Port\-Thread\-New\-::mdt\-Usb\-Port\-Thread\-New (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Usb\-Port\-Thread\-New} \&}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [delete]}}}\label{classmdt_usb_port_thread_new_a28beaed16b04754a158e3ed4b921ff03}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_usb_port_thread_new_ae60c6844e195a2ba1ea0f4c2dc267d05}{\index{mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}!about\-To\-Close@{about\-To\-Close}}
+\index{about\-To\-Close@{about\-To\-Close}!mdtUsbPortThreadNew@{mdt\-Usb\-Port\-Thread\-New}}
+\subsubsection[{about\-To\-Close}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usb\-Port\-Thread\-New\-::about\-To\-Close (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classmdt_usb_port_thread_new_ae60c6844e195a2ba1ea0f4c2dc267d05}
+
+
+Actions to perform before device closes. 
+
+This function is called from \hyperlink{classmdt_usb_port_thread_new_a10437cf919cc678a8aae348763ee682d}{stop()}, and is executed in G\-U\-I thread. Should be non blocking.
+
+This default implementation does nothing. 
+
+Definition at line 156 of file mdt\-Usb\-Port\-Thread\-New.\-cpp.
+
+
+
+Referenced by stop().
+
+\hypertarget{classmdt_usb_port_thread_new_a473cc8ad9fa93d9c5a94b2f700a5311d}{\index{mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}!b\-Interface\-Number@{b\-Interface\-Number}}
+\index{b\-Interface\-Number@{b\-Interface\-Number}!mdtUsbPortThreadNew@{mdt\-Usb\-Port\-Thread\-New}}
+\subsubsection[{b\-Interface\-Number}]{\setlength{\rightskip}{0pt plus 5cm}uint8\-\_\-t mdt\-Usb\-Port\-Thread\-New\-::b\-Interface\-Number (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}}\label{classmdt_usb_port_thread_new_a473cc8ad9fa93d9c5a94b2f700a5311d}
+
+
+Get requested b\-Interface\-Number. 
+
+
+
+Definition at line 146 of file mdt\-Usb\-Port\-Thread\-New.\-h.
+
+
+
+Referenced by start().
+
+\hypertarget{classmdt_usb_port_thread_new_a125c41214479178928c74359c12ecac7}{\index{mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}!current\-State@{current\-State}}
+\index{current\-State@{current\-State}!mdtUsbPortThreadNew@{mdt\-Usb\-Port\-Thread\-New}}
+\subsubsection[{current\-State}]{\setlength{\rightskip}{0pt plus 5cm}{\bf State\-\_\-t} mdt\-Usb\-Port\-Thread\-New\-::current\-State (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}}\label{classmdt_usb_port_thread_new_a125c41214479178928c74359c12ecac7}
+
+
+Get current state. 
+
+
+
+Definition at line 116 of file mdt\-Usb\-Port\-Thread\-New.\-h.
+
+
+
+References mdt\-Basic\-State\-Machine$<$ S $>$\-::current\-State().
+
+
+
+Referenced by run(), wait\-On\-State(), and wait\-On\-State\-Else\-Than().
+
+\hypertarget{classmdt_usb_port_thread_new_a26e376f505b24f796e485361b4f36740}{\index{mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}!device\-Descriptor@{device\-Descriptor}}
+\index{device\-Descriptor@{device\-Descriptor}!mdtUsbPortThreadNew@{mdt\-Usb\-Port\-Thread\-New}}
+\subsubsection[{device\-Descriptor}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf mdt\-Usb\-Device\-Descriptor}\& mdt\-Usb\-Port\-Thread\-New\-::device\-Descriptor (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}}\label{classmdt_usb_port_thread_new_a26e376f505b24f796e485361b4f36740}
+
+
+Access device descriptor. 
+
+
+
+Definition at line 139 of file mdt\-Usb\-Port\-Thread\-New.\-h.
+
+
+
+Referenced by start().
+
+\hypertarget{classmdt_usb_port_thread_new_aff9e3c87c9693fc191ac323bc8acd670}{\index{mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}!device\-Handle@{device\-Handle}}
+\index{device\-Handle@{device\-Handle}!mdtUsbPortThreadNew@{mdt\-Usb\-Port\-Thread\-New}}
+\subsubsection[{device\-Handle}]{\setlength{\rightskip}{0pt plus 5cm}libusb\-\_\-device\-\_\-handle$\ast$ mdt\-Usb\-Port\-Thread\-New\-::device\-Handle (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}}\label{classmdt_usb_port_thread_new_aff9e3c87c9693fc191ac323bc8acd670}
+
+
+Access libusb device handle. 
+
+Note\-: will be valid after successfull \hyperlink{classmdt_usb_port_thread_new_ac0b2946c973dddcbb19dd26941df2ca5}{start()}, and null after \hyperlink{classmdt_usb_port_thread_new_a10437cf919cc678a8aae348763ee682d}{stop()}. 
+
+Definition at line 132 of file mdt\-Usb\-Port\-Thread\-New.\-h.
+
+\hypertarget{classmdt_usb_port_thread_new_a9b6b49b50bb4d7eb0fc80f6c7379f720}{\index{mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}!error\-Occured@{error\-Occured}}
+\index{error\-Occured@{error\-Occured}!mdtUsbPortThreadNew@{mdt\-Usb\-Port\-Thread\-New}}
+\subsubsection[{error\-Occured}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usb\-Port\-Thread\-New\-::error\-Occured (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Error} \&}]{error}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_usb_port_thread_new_a9b6b49b50bb4d7eb0fc80f6c7379f720}
+
+
+Emitted when a error occured (see specific subclass for details) 
+
+\hypertarget{classmdt_usb_port_thread_new_aec47aab80aaaea81cd1b8eb4dfc1bda3}{\index{mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}!last\-Error@{last\-Error}}
+\index{last\-Error@{last\-Error}!mdtUsbPortThreadNew@{mdt\-Usb\-Port\-Thread\-New}}
+\subsubsection[{last\-Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Error} mdt\-Usb\-Port\-Thread\-New\-::last\-Error (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_port_thread_new_aec47aab80aaaea81cd1b8eb4dfc1bda3}
+
+
+Get last error. 
+
+
+
+Definition at line 87 of file mdt\-Usb\-Port\-Thread\-New.\-h.
+
+
+
+References pv\-Last\-Error, and pv\-Last\-Error\-Mutex.
+
+\hypertarget{classmdt_usb_port_thread_new_a6486e21a70e3c065591d62269ecbc23c}{\index{mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}!open\-Device@{open\-Device}}
+\index{open\-Device@{open\-Device}!mdtUsbPortThreadNew@{mdt\-Usb\-Port\-Thread\-New}}
+\subsubsection[{open\-Device}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usb\-Port\-Thread\-New\-::open\-Device (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_usb_port_thread_new_a6486e21a70e3c065591d62269ecbc23c}
+
+
+Open device. 
+
+Will open device that was passed to \hyperlink{classmdt_usb_port_thread_new_ac0b2946c973dddcbb19dd26941df2ca5}{start()}. Subclass can use this helper function.
+
+Should be called from port thread ( in \hyperlink{classmdt_usb_port_thread_new_af7b64a3ca3baac8a487484b9a9e6bac5}{run()} ). 
+
+Definition at line 116 of file mdt\-Usb\-Port\-Thread\-New.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, mdt\-Usb\-Device\-Descriptor\-::is\-Empty(), mdt\-Usb\-Device\-Descriptor\-::last\-Error(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Usb\-Device\-Descriptor\-::open(), pv\-Last\-Error, pv\-Last\-Error\-Mutex, mdt\-Error\-::set\-Error(), mdt\-Error\-::set\-System\-Error(), and mdt\-Error\-::\-Warning.
+
+
+
+Referenced by run().
+
+\hypertarget{classmdt_usb_port_thread_new_a61525f464e0dc79c69afce302ef711b0}{\index{mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}!operator=@{operator=}}
+\index{operator=@{operator=}!mdtUsbPortThreadNew@{mdt\-Usb\-Port\-Thread\-New}}
+\subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Usb\-Port\-Thread\-New}\& mdt\-Usb\-Port\-Thread\-New\-::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Usb\-Port\-Thread\-New} \&}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [delete]}}}\label{classmdt_usb_port_thread_new_a61525f464e0dc79c69afce302ef711b0}
+\hypertarget{classmdt_usb_port_thread_new_af7b64a3ca3baac8a487484b9a9e6bac5}{\index{mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}!run@{run}}
+\index{run@{run}!mdtUsbPortThreadNew@{mdt\-Usb\-Port\-Thread\-New}}
+\subsubsection[{run}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usb\-Port\-Thread\-New\-::run (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classmdt_usb_port_thread_new_af7b64a3ca3baac8a487484b9a9e6bac5}
+
+
+Called from port thread. 
+
+Specific sub-\/class must implement this function.
+
+Default implementation is minimal and does nothing really interresting (just used for unit testing). 
+
+Definition at line 160 of file mdt\-Usb\-Port\-Thread\-New.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), current\-State(), Error, mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, open\-Device(), pv\-Last\-Error, pv\-Last\-Error\-Mutex, Running, set\-Current\-State(), mdt\-Error\-::set\-Error(), mdt\-Error\-::set\-System\-Error(), and Stopped.
+
+
+
+Referenced by start().
+
+\hypertarget{classmdt_usb_port_thread_new_af22a52225631aa41b234dfd86463a041}{\index{mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}!set\-Current\-State@{set\-Current\-State}}
+\index{set\-Current\-State@{set\-Current\-State}!mdtUsbPortThreadNew@{mdt\-Usb\-Port\-Thread\-New}}
+\subsubsection[{set\-Current\-State}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usb\-Port\-Thread\-New\-::set\-Current\-State (
+\begin{DoxyParamCaption}
+\item[{{\bf State\-\_\-t}}]{s}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}}\label{classmdt_usb_port_thread_new_af22a52225631aa41b234dfd86463a041}
+
+
+Set current state. 
+
+Will also emit \hyperlink{classmdt_usb_port_thread_new_a9d27594ed9f0fef2fae997db5939f136}{thread\-State\-Changed()} signal. 
+
+Definition at line 109 of file mdt\-Usb\-Port\-Thread\-New.\-h.
+
+
+
+References mdt\-Basic\-State\-Machine$<$ S $>$\-::set\-Current\-State(), and thread\-State\-Changed().
+
+
+
+Referenced by run(), and stop().
+
+\hypertarget{classmdt_usb_port_thread_new_ac0b2946c973dddcbb19dd26941df2ca5}{\index{mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}!start@{start}}
+\index{start@{start}!mdtUsbPortThreadNew@{mdt\-Usb\-Port\-Thread\-New}}
+\subsubsection[{start}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usb\-Port\-Thread\-New\-::start (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Usb\-Device\-Descriptor} \&}]{device\-Descriptor, }
+\item[{uint8\-\_\-t}]{b\-Interface\-Number}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usb_port_thread_new_ac0b2946c973dddcbb19dd26941df2ca5}
+
+
+Start thread. 
+
+Callable from G\-U\-I thread. 
+
+Definition at line 45 of file mdt\-Usb\-Port\-Thread\-New.\-cpp.
+
+
+
+References b\-Interface\-Number(), mdt\-Basic\-State\-Machine$<$ S $>$\-::current\-State(), device\-Descriptor(), run(), Running, mdt\-Basic\-State\-Machine$<$ S $>$\-::set\-Current\-State(), Starting, stop(), and wait\-On\-State\-Else\-Than().
+
+
+
+Referenced by mdt\-Usbtmc\-Port\-::open\-Device().
+
+\hypertarget{classmdt_usb_port_thread_new_a10437cf919cc678a8aae348763ee682d}{\index{mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}!stop@{stop}}
+\index{stop@{stop}!mdtUsbPortThreadNew@{mdt\-Usb\-Port\-Thread\-New}}
+\subsubsection[{stop}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usb\-Port\-Thread\-New\-::stop (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usb_port_thread_new_a10437cf919cc678a8aae348763ee682d}
+
+
+Stop thread. 
+
+Callable from G\-U\-I thread. 
+
+Definition at line 63 of file mdt\-Usb\-Port\-Thread\-New.\-cpp.
+
+
+
+References about\-To\-Close(), mdt\-Error\-::commit(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, pv\-Last\-Error, pv\-Last\-Error\-Mutex, set\-Current\-State(), mdt\-Error\-::set\-Error(), mdt\-Error\-::set\-System\-Error(), Stopping, and mdt\-Error\-::\-Warning.
+
+
+
+Referenced by mdt\-Usbtmc\-Port\-::close(), start(), and $\sim$mdt\-Usb\-Port\-Thread\-New().
+
+\hypertarget{classmdt_usb_port_thread_new_a9d27594ed9f0fef2fae997db5939f136}{\index{mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}!thread\-State\-Changed@{thread\-State\-Changed}}
+\index{thread\-State\-Changed@{thread\-State\-Changed}!mdtUsbPortThreadNew@{mdt\-Usb\-Port\-Thread\-New}}
+\subsubsection[{thread\-State\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usb\-Port\-Thread\-New\-::thread\-State\-Changed (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_usb_port_thread_new_a9d27594ed9f0fef2fae997db5939f136}
+
+
+Emitted by port thread when state has changed. 
+
+
+
+Referenced by mdt\-Usb\-Port\-Thread\-New(), and set\-Current\-State().
+
+\hypertarget{classmdt_usb_port_thread_new_a236b21eb4da1bfb1918c2d30afc85ef5}{\index{mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}!usb\-Context@{usb\-Context}}
+\index{usb\-Context@{usb\-Context}!mdtUsbPortThreadNew@{mdt\-Usb\-Port\-Thread\-New}}
+\subsubsection[{usb\-Context}]{\setlength{\rightskip}{0pt plus 5cm}libusb\-\_\-context$\ast$ mdt\-Usb\-Port\-Thread\-New\-::usb\-Context (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}}\label{classmdt_usb_port_thread_new_a236b21eb4da1bfb1918c2d30afc85ef5}
+
+
+Access libusb context. 
+
+
+
+Definition at line 123 of file mdt\-Usb\-Port\-Thread\-New.\-h.
+
+\hypertarget{classmdt_usb_port_thread_new_a36e64cfa92754a8cc8e46f604efdb56c}{\index{mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}!wait\-On\-State@{wait\-On\-State}}
+\index{wait\-On\-State@{wait\-On\-State}!mdtUsbPortThreadNew@{mdt\-Usb\-Port\-Thread\-New}}
+\subsubsection[{wait\-On\-State}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usb\-Port\-Thread\-New\-::wait\-On\-State (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Usb\-Port\-Thread\-New\-::\-State\-\_\-t}}]{s, }
+\item[{int}]{timeout = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_usb_port_thread_new_a36e64cfa92754a8cc8e46f604efdb56c}
+
+
+Wait until a state is reached or timeout without breacking main event loop. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s} & state to wait on \\
+\hline
+{\em timeout} & Timeout \mbox{[}ms\mbox{]}. 0 means infinite timeout. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if state was reached, false on timeout 
+\end{DoxyReturn}
+
+
+Definition at line 86 of file mdt\-Usb\-Port\-Thread\-New.\-cpp.
+
+
+
+References current\-State().
+
+\hypertarget{classmdt_usb_port_thread_new_aa5c05a10493c2cb4e16db704bca7b048}{\index{mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}!wait\-On\-State\-Else\-Than@{wait\-On\-State\-Else\-Than}}
+\index{wait\-On\-State\-Else\-Than@{wait\-On\-State\-Else\-Than}!mdtUsbPortThreadNew@{mdt\-Usb\-Port\-Thread\-New}}
+\subsubsection[{wait\-On\-State\-Else\-Than}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usb\-Port\-Thread\-New\-::wait\-On\-State\-Else\-Than (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Usb\-Port\-Thread\-New\-::\-State\-\_\-t}}]{s, }
+\item[{int}]{timeout = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_usb_port_thread_new_aa5c05a10493c2cb4e16db704bca7b048}
+
+
+Wait until state is exited or timeout without breacking main event loop. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s} & state to wait on \\
+\hline
+{\em timeout} & Timeout \mbox{[}ms\mbox{]}. 0 means infinite timeout. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if state was reached, false on timeout 
+\end{DoxyReturn}
+
+
+Definition at line 101 of file mdt\-Usb\-Port\-Thread\-New.\-cpp.
+
+
+
+References current\-State().
+
+
+
+Referenced by start().
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classmdt_usb_port_thread_new_a11cf4aaa691dfad9ae4af28cd1bda893}{\index{mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}!pv\-Last\-Error@{pv\-Last\-Error}}
+\index{pv\-Last\-Error@{pv\-Last\-Error}!mdtUsbPortThreadNew@{mdt\-Usb\-Port\-Thread\-New}}
+\subsubsection[{pv\-Last\-Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Error} mdt\-Usb\-Port\-Thread\-New\-::pv\-Last\-Error\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_usb_port_thread_new_a11cf4aaa691dfad9ae4af28cd1bda893}
+
+
+Last error object. 
+
+See \hyperlink{classmdt_error}{mdt\-Error} documentation for details. A lock\-\_\-guard that acts on pv\-Last\-Error\-Mutex should be used before modifying the error. 
+
+Definition at line 200 of file mdt\-Usb\-Port\-Thread\-New.\-h.
+
+
+
+Referenced by last\-Error(), open\-Device(), run(), and stop().
+
+\hypertarget{classmdt_usb_port_thread_new_ab4cc1187ff45331bf873309b26bc9745}{\index{mdt\-Usb\-Port\-Thread\-New@{mdt\-Usb\-Port\-Thread\-New}!pv\-Last\-Error\-Mutex@{pv\-Last\-Error\-Mutex}}
+\index{pv\-Last\-Error\-Mutex@{pv\-Last\-Error\-Mutex}!mdtUsbPortThreadNew@{mdt\-Usb\-Port\-Thread\-New}}
+\subsubsection[{pv\-Last\-Error\-Mutex}]{\setlength{\rightskip}{0pt plus 5cm}std\-::mutex mdt\-Usb\-Port\-Thread\-New\-::pv\-Last\-Error\-Mutex\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_usb_port_thread_new_ab4cc1187ff45331bf873309b26bc9745}
+
+
+Mutext to serialize pv\-Last\-Error access. 
+
+
+
+Definition at line 204 of file mdt\-Usb\-Port\-Thread\-New.\-h.
+
+
+
+Referenced by last\-Error(), open\-Device(), run(), and stop().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdtport/\hyperlink{mdt_usb_port_thread_new_8h}{mdt\-Usb\-Port\-Thread\-New.\-h}\item 
+src/mdtport/\hyperlink{mdt_usb_port_thread_new_8cpp}{mdt\-Usb\-Port\-Thread\-New.\-cpp}\end{DoxyCompactItemize}

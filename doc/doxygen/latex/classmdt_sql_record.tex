@@ -61,6 +61,12 @@ bool \hyperlink{classmdt_sql_record_aa0ccfa8ae2bd37d33dbecf8d2bb2cd01}{has\-Valu
 \begin{DoxyCompactList}\small\item\em Check if a value was set. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_sql_record_a581595f4425f824c794994eb564873cd}{has\-Value} (const Q\-String \&field\-Name) const 
 \begin{DoxyCompactList}\small\item\em Check if a value was set. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_record_a747fbd01a47da46208001670df6b9690}{set\-Has\-Value} (int field\-Index, bool hv)
+\begin{DoxyCompactList}\small\item\em Set the has\-Value flag manually. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_record_a91c4a584bb748f5376305d27299527dd}{set\-Has\-Value} (const Q\-String \&field\-Name, bool hv)
+\begin{DoxyCompactList}\small\item\em Set the has\-Value flag manually. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_record_a634eb120a48b6c507b2bf57481e9f590}{clear\-Has\-Value\-Flags} ()
+\begin{DoxyCompactList}\small\item\em Clear the has\-Value flags. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_sql_record_a330291ff82fb8c7803c47d30f8939ed5}{set\-Value} (int field\-Index, const Q\-Variant \&val)
 \begin{DoxyCompactList}\small\item\em Set value. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_sql_record_a8bcaf65b449b6c82548735cdccb8cff1}{set\-Value} (const Q\-String \&field\-Name, const Q\-Variant \&val)
@@ -200,7 +206,7 @@ References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R
 
 
 
-Referenced by mdt\-Cl\-Article\-::add\-Cable\-Link(), mdt\-Tt\-Test\-Node\-Unit\-::add\-Connection(), mdt\-Tt\-Logical\-Test\-Cable\-::add\-Dut\-Unit(), mdt\-Cl\-Link\-Beam\-::add\-End\-Unit(), mdt\-Cl\-Link\-Beam\-::add\-Start\-Unit(), mdt\-Tt\-Test\-Model\-Item\-::add\-Test\-Link(), mdt\-Tt\-Test\-Model\-::add\-Test\-Node(), mdt\-Tt\-Logical\-Test\-Cable\-::add\-Test\-Node\-Unit(), mdt\-Tt\-Test\-::create\-Test(), mdt\-Cl\-Article\-Link\-Dialog\-::mdt\-Cl\-Article\-Link\-Dialog(), mdt\-Tt\-Test\-Node\-::set\-Test\-Node\-Unit\-Io\-Range(), mdt\-Tt\-Test\-Model\-Item\-Data\-::setup(), mdt\-Tt\-Test\-Link\-Data\-::setup(), mdt\-Tt\-Test\-Model\-Data\-::setup(), mdt\-Tt\-Test\-Data\-::setup(), mdt\-Tt\-Test\-Node\-Unit\-Data\-::setup(), mdt\-Cl\-Connector\-Data\-::setup(), mdt\-Cl\-Article\-Connector\-Data\-::setup(), mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data\-::setup(), mdt\-Cl\-Article\-Connection\-Data\-::setup(), mdt\-Cl\-Unit\-Connector\-Data\-::setup(), mdt\-Cl\-Link\-Data\-::setup(), and mdt\-Cl\-Unit\-Connection\-Data\-::setup().
+Referenced by mdt\-Cl\-Article\-::add\-Cable\-Link(), mdt\-Tt\-Test\-Node\-Unit\-::add\-Connection(), mdt\-Tt\-Logical\-Test\-Cable\-::add\-Dut\-Unit(), mdt\-Cl\-Link\-Beam\-::add\-End\-Unit(), mdt\-Cl\-Link\-Beam\-::add\-Start\-Unit(), mdt\-Tt\-Test\-Model\-Item\-::add\-Test\-Link(), mdt\-Tt\-Test\-Model\-::add\-Test\-Node(), mdt\-Tt\-Logical\-Test\-Cable\-::add\-Test\-Node\-Unit(), mdt\-Tt\-Logical\-Test\-Cable\-::create\-Cable(), mdt\-Tt\-Test\-::create\-Test(), mdt\-Cl\-Article\-Link\-Dialog\-::mdt\-Cl\-Article\-Link\-Dialog(), mdt\-Tt\-Test\-Node\-::set\-Test\-Node\-Unit\-Io\-Range(), mdt\-Tt\-Test\-Model\-Item\-Data\-::setup(), mdt\-Tt\-Test\-Link\-Data\-::setup(), mdt\-Tt\-Test\-Model\-Data\-::setup(), mdt\-Tt\-Test\-Data\-::setup(), mdt\-Tt\-Test\-Node\-Unit\-Data\-::setup(), mdt\-Cl\-Connector\-Data\-::setup(), mdt\-Cl\-Article\-Connector\-Data\-::setup(), mdt\-Cl\-Article\-Connection\-Data\-::setup(), mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data\-::setup(), mdt\-Cl\-Unit\-Connector\-Data\-::setup(), mdt\-Cl\-Link\-Data\-::setup(), and mdt\-Cl\-Unit\-Connection\-Data\-::setup().
 
 \hypertarget{classmdt_sql_record_a7b144e9c00e46748e1729251aabd5f51}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!add\-Field@{add\-Field}}
 \index{add\-Field@{add\-Field}!mdtSqlRecord@{mdt\-Sql\-Record}}
@@ -239,7 +245,7 @@ References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R
 
 
 
-Referenced by mdt\-Cl\-Link\-Beam\-::add\-Link(), mdt\-Cl\-Article\-::edit\-Link(), mdt\-Abstract\-Sql\-Table\-Controller\-::record(), mdt\-Cl\-Link\-Beam\-::remove\-Link(), mdt\-Tt\-Base\-::update\-Record(), and mdt\-Tt\-Test\-Model\-Item\-::update\-Test\-Node\-Unit\-Data().
+Referenced by mdt\-Cl\-Link\-Beam\-::add\-Link(), mdt\-Cl\-Article\-::edit\-Link(), mdt\-Abstract\-Sql\-Table\-Controller\-::record(), mdt\-Cl\-Link\-Beam\-::remove\-Link(), mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool\-::save\-Test\-Node\-Unit\-Calibration\-Offsets(), mdt\-Tt\-Base\-::update\-Record(), mdt\-Tt\-Test\-Model\-Item\-::update\-Test\-Node\-Unit\-Data(), and mdt\-Cl\-Article\-::update\-Unit\-Connections().
 
 \hypertarget{classmdt_sql_record_ad1058337837b2891d2e282001ad889d9}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!clear@{clear}}
 \index{clear@{clear}!mdtSqlRecord@{mdt\-Sql\-Record}}
@@ -258,7 +264,7 @@ Reimplemented in \hyperlink{classmdt_cl_unit_connector_data_a55918c459b5d4c67bbe
 
 
 
-Definition at line 134 of file mdt\-Sql\-Record.\-cpp.
+Definition at line 143 of file mdt\-Sql\-Record.\-cpp.
 
 
 
@@ -267,6 +273,32 @@ References mdt\-Error\-::clear(), and pv\-Last\-Error.
 
 
 Referenced by mdt\-Tt\-Test\-Model\-Item\-Data\-::clear(), mdt\-Cl\-Article\-Connector\-Data\-::clear(), mdt\-Cl\-Unit\-Connector\-Data\-::clear(), mdt\-Tt\-Test\-Link\-Data\-::setup(), and mdt\-Cl\-Link\-Data\-::setup().
+
+\hypertarget{classmdt_sql_record_a634eb120a48b6c507b2bf57481e9f590}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!clear\-Has\-Value\-Flags@{clear\-Has\-Value\-Flags}}
+\index{clear\-Has\-Value\-Flags@{clear\-Has\-Value\-Flags}!mdtSqlRecord@{mdt\-Sql\-Record}}
+\subsubsection[{clear\-Has\-Value\-Flags}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Record\-::clear\-Has\-Value\-Flags (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_sql_record_a634eb120a48b6c507b2bf57481e9f590}
+
+
+Clear the has\-Value flags. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_sql_record_aa0ccfa8ae2bd37d33dbecf8d2bb2cd01}{has\-Value()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 123 of file mdt\-Sql\-Record.\-cpp.
+
+
+
+References count().
+
+
+
+Referenced by clear\-Values().
 
 \hypertarget{classmdt_sql_record_a0bfc0fc265c6b0048698e2f5d4f840a8}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!clear\-Values@{clear\-Values}}
 \index{clear\-Values@{clear\-Values}!mdtSqlRecord@{mdt\-Sql\-Record}}
@@ -285,15 +317,15 @@ Reimplemented in \hyperlink{classmdt_cl_unit_connector_data_a77be8b03d9cc6711aa3
 
 
 
-Definition at line 140 of file mdt\-Sql\-Record.\-cpp.
+Definition at line 149 of file mdt\-Sql\-Record.\-cpp.
 
 
 
-References count().
+References clear\-Has\-Value\-Flags().
 
 
 
-Referenced by mdt\-Cl\-Article\-::add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List(), mdt\-Cl\-Unit\-::add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List(), mdt\-Tt\-Test\-Model\-::build\-Route\-Data(), mdt\-Tt\-Test\-Data\-::clear\-Values(), mdt\-Tt\-Test\-Node\-Unit\-Data\-::clear\-Values(), mdt\-Tt\-Test\-Model\-Item\-Data\-::clear\-Values(), mdt\-Cl\-Article\-Connector\-Data\-::clear\-Values(), mdt\-Cl\-Link\-Data\-::clear\-Values(), mdt\-Cl\-Unit\-Connector\-Data\-::clear\-Values(), mdt\-Tt\-Test\-Node\-::get\-Relay\-Path\-Setup\-Data\-List(), and mdt\-Cl\-Unit\-::get\-Unit\-Connection\-Data\-List\-From\-Article\-Connection\-Id\-List().
+Referenced by mdt\-Cl\-Article\-::add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List(), mdt\-Cl\-Unit\-::add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List(), mdt\-Tt\-Test\-Model\-::build\-Route\-Data(), mdt\-Tt\-Test\-Data\-::clear\-Values(), mdt\-Tt\-Test\-Node\-Unit\-Data\-::clear\-Values(), mdt\-Tt\-Test\-Model\-Item\-Data\-::clear\-Values(), mdt\-Cl\-Article\-Connector\-Data\-::clear\-Values(), mdt\-Cl\-Link\-Data\-::clear\-Values(), mdt\-Cl\-Unit\-Connector\-Data\-::clear\-Values(), mdt\-Tt\-Logical\-Test\-Cable\-::create\-Cable(), mdt\-Tt\-Test\-Node\-::get\-Relay\-Path\-Setup\-Data\-List(), mdt\-Cl\-Unit\-::get\-Unit\-Connection\-Data\-List\-From\-Article\-Connection\-Id\-List(), mdt\-Cl\-Unit\-Connector\-Data\-::mdt\-Cl\-Unit\-Connector\-Data(), and mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool\-::save\-Test\-Node\-Unit\-Calibration\-Offsets().
 
 \hypertarget{classmdt_sql_record_ab7f694f62b8db947deb9713762ab4f27}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!contains@{contains}}
 \index{contains@{contains}!mdtSqlRecord@{mdt\-Sql\-Record}}
@@ -331,7 +363,7 @@ Definition at line 93 of file mdt\-Sql\-Record.\-h.
 
 
 
-Referenced by clear\-Values(), field\-Indexes\-With\-Value(), field\-Names(), and mdt\-Tt\-Abstract\-Tester\-::test\-Is\-Empty().
+Referenced by clear\-Has\-Value\-Flags(), field\-Indexes\-With\-Value(), field\-Names(), and mdt\-Tt\-Abstract\-Tester\-::test\-Is\-Empty().
 
 \hypertarget{classmdt_sql_record_a00c49b329d7170a8f840d7921f9b0f07}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!data\-To\-Update\-Info@{data\-To\-Update\-Info}}
 \index{data\-To\-Update\-Info@{data\-To\-Update\-Info}!mdtSqlRecord@{mdt\-Sql\-Record}}
@@ -346,7 +378,7 @@ Get information about data that has a value to update (for debug)
 
 
 
-Definition at line 239 of file mdt\-Sql\-Record.\-cpp.
+Definition at line 244 of file mdt\-Sql\-Record.\-cpp.
 
 
 
@@ -408,7 +440,7 @@ Note\-: each time this method is called, the list will be generated.
 \end{DoxySeeAlso}
 
 
-Definition at line 155 of file mdt\-Sql\-Record.\-cpp.
+Definition at line 160 of file mdt\-Sql\-Record.\-cpp.
 
 
 
@@ -458,7 +490,7 @@ Definition at line 134 of file mdt\-Sql\-Record.\-h.
 
 
 
-Referenced by field\-Indexes\-With\-Value().
+Referenced by mdt\-Cl\-Link\-::edit\-Link(), and field\-Indexes\-With\-Value().
 
 \hypertarget{classmdt_sql_record_a581595f4425f824c794994eb564873cd}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!has\-Value@{has\-Value}}
 \index{has\-Value@{has\-Value}!mdtSqlRecord@{mdt\-Sql\-Record}}
@@ -529,7 +561,7 @@ Get last error.
 
 
 
-Definition at line 150 of file mdt\-Sql\-Record.\-cpp.
+Definition at line 155 of file mdt\-Sql\-Record.\-cpp.
 
 
 
@@ -537,7 +569,7 @@ References pv\-Last\-Error.
 
 
 
-Referenced by mdt\-Cl\-Article\-::add\-Cable\-Link(), mdt\-Tt\-Test\-Node\-Unit\-::add\-Connection(), mdt\-Cl\-Article\-::add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List(), mdt\-Cl\-Unit\-::add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List(), mdt\-Tt\-Logical\-Test\-Cable\-::add\-Dut\-Unit(), mdt\-Cl\-Link\-Beam\-::add\-End\-Unit(), mdt\-Cl\-Link\-Beam\-::add\-Link(), mdt\-Cl\-Link\-Beam\-::add\-Start\-Unit(), mdt\-Tt\-Test\-Model\-Item\-::add\-Test\-Link(), mdt\-Tt\-Test\-Model\-::add\-Test\-Node(), mdt\-Tt\-Logical\-Test\-Cable\-::add\-Test\-Node\-Unit(), mdt\-Tt\-Test\-Model\-::build\-Route\-Data(), mdt\-Tt\-Test\-::create\-Test(), mdt\-Cl\-Article\-::edit\-Link(), mdt\-Tt\-Test\-Model\-::generate\-Test\-Model(), mdt\-Cl\-Unit\-::get\-Unit\-Connection\-Data\-List\-From\-Article\-Connection\-Id\-List(), mdt\-Cl\-Article\-Link\-Dialog\-::mdt\-Cl\-Article\-Link\-Dialog(), mdt\-Tt\-Test\-Link\-Dialog\-::mdt\-Tt\-Test\-Link\-Dialog(), mdt\-Abstract\-Sql\-Table\-Controller\-::record(), mdt\-Cl\-Link\-Beam\-::remove\-Link(), mdt\-Tt\-Test\-Node\-::set\-Test\-Node\-Unit\-Io\-Range(), mdt\-Tt\-Test\-Node\-Unit\-Data\-::setup(), mdt\-Tt\-Base\-::update\-Record(), and mdt\-Tt\-Test\-Model\-Item\-::update\-Test\-Node\-Unit\-Data().
+Referenced by mdt\-Cl\-Article\-::add\-Cable\-Link(), mdt\-Tt\-Test\-Node\-Unit\-::add\-Connection(), mdt\-Cl\-Article\-::add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List(), mdt\-Cl\-Unit\-::add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List(), mdt\-Tt\-Logical\-Test\-Cable\-::add\-Dut\-Unit(), mdt\-Cl\-Link\-Beam\-::add\-End\-Unit(), mdt\-Cl\-Link\-Beam\-::add\-Link(), mdt\-Cl\-Link\-Beam\-::add\-Start\-Unit(), mdt\-Tt\-Test\-Model\-Item\-::add\-Test\-Link(), mdt\-Tt\-Test\-Model\-::add\-Test\-Node(), mdt\-Tt\-Logical\-Test\-Cable\-::add\-Test\-Node\-Unit(), mdt\-Tt\-Test\-Model\-::build\-Route\-Data(), mdt\-Tt\-Logical\-Test\-Cable\-::create\-Cable(), mdt\-Tt\-Test\-::create\-Test(), mdt\-Cl\-Article\-::edit\-Link(), mdt\-Tt\-Test\-Model\-::generate\-Test\-Model(), mdt\-Cl\-Unit\-::get\-Unit\-Connection\-Data\-List\-From\-Article\-Connection\-Id\-List(), mdt\-Cl\-Article\-Link\-Dialog\-::mdt\-Cl\-Article\-Link\-Dialog(), mdt\-Tt\-Test\-Link\-Dialog\-::mdt\-Tt\-Test\-Link\-Dialog(), mdt\-Abstract\-Sql\-Table\-Controller\-::record(), mdt\-Cl\-Link\-Beam\-::remove\-Link(), mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool\-::save\-Test\-Node\-Unit\-Calibration\-Offsets(), mdt\-Tt\-Test\-Node\-::set\-Test\-Node\-Unit\-Io\-Range(), mdt\-Tt\-Test\-Node\-Unit\-Data\-::setup(), mdt\-Tt\-Base\-::update\-Record(), mdt\-Tt\-Test\-Model\-Item\-::update\-Test\-Node\-Unit\-Data(), and mdt\-Cl\-Article\-::update\-Unit\-Connections().
 
 \hypertarget{classmdt_sql_record_a2bd403322d7ec1af284c2117a71d5e71}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!operator Q\-Sql\-Record@{operator Q\-Sql\-Record}}
 \index{operator Q\-Sql\-Record@{operator Q\-Sql\-Record}!mdtSqlRecord@{mdt\-Sql\-Record}}
@@ -554,6 +586,38 @@ Get Q\-Sql\-Record version.
 
 Definition at line 40 of file mdt\-Sql\-Record.\-cpp.
 
+\hypertarget{classmdt_sql_record_a747fbd01a47da46208001670df6b9690}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!set\-Has\-Value@{set\-Has\-Value}}
+\index{set\-Has\-Value@{set\-Has\-Value}!mdtSqlRecord@{mdt\-Sql\-Record}}
+\subsubsection[{set\-Has\-Value}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Record\-::set\-Has\-Value (
+\begin{DoxyParamCaption}
+\item[{int}]{field\-Index, }
+\item[{bool}]{hv}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_record_a747fbd01a47da46208001670df6b9690}
+
+
+Set the has\-Value flag manually. 
+
+See \hyperlink{classmdt_sql_record_aa0ccfa8ae2bd37d33dbecf8d2bb2cd01}{has\-Value()} to know more about this flag. For normal use, this flag must not be set manually, \hyperlink{classmdt_sql_record_a330291ff82fb8c7803c47d30f8939ed5}{set\-Value()} handles it. 
+
+Definition at line 148 of file mdt\-Sql\-Record.\-h.
+
+\hypertarget{classmdt_sql_record_a91c4a584bb748f5376305d27299527dd}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!set\-Has\-Value@{set\-Has\-Value}}
+\index{set\-Has\-Value@{set\-Has\-Value}!mdtSqlRecord@{mdt\-Sql\-Record}}
+\subsubsection[{set\-Has\-Value}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Record\-::set\-Has\-Value (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{field\-Name, }
+\item[{bool}]{hv}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_sql_record_a91c4a584bb748f5376305d27299527dd}
+
+
+Set the has\-Value flag manually. 
+
+See \hyperlink{classmdt_sql_record_aa0ccfa8ae2bd37d33dbecf8d2bb2cd01}{has\-Value()} to know more about this flag. For normal use, this flag must not be set manually, \hyperlink{classmdt_sql_record_a330291ff82fb8c7803c47d30f8939ed5}{set\-Value()} handles it. 
+
+Definition at line 156 of file mdt\-Sql\-Record.\-h.
+
 \hypertarget{classmdt_sql_record_a330291ff82fb8c7803c47d30f8939ed5}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!set\-Value@{set\-Value}}
 \index{set\-Value@{set\-Value}!mdtSqlRecord@{mdt\-Sql\-Record}}
 \subsubsection[{set\-Value}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Record\-::set\-Value (
@@ -568,11 +632,11 @@ Set value.
 
 Set the has\-Value flag and set value. 
 
-Definition at line 123 of file mdt\-Sql\-Record.\-cpp.
+Definition at line 132 of file mdt\-Sql\-Record.\-cpp.
 
 
 
-Referenced by mdt\-Cl\-Unit\-::add\-Article\-Connector\-Data(), mdt\-Cl\-Article\-::add\-Cable\-Link(), mdt\-Tt\-Test\-Node\-Unit\-::add\-Connection(), mdt\-Cl\-Unit\-::add\-Connection(), mdt\-Cl\-Article\-Connector\-Data\-::add\-Connection\-Data(), mdt\-Cl\-Article\-::add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List(), mdt\-Cl\-Unit\-::add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List(), mdt\-Cl\-Article\-::add\-Connector(), mdt\-Cl\-Unit\-::add\-Connector(), mdt\-Cl\-Connector\-Data\-::add\-Contact\-Data(), mdt\-Tt\-Logical\-Test\-Cable\-::add\-Dut\-Unit(), mdt\-Cl\-Link\-Beam\-::add\-End\-Unit(), mdt\-Cl\-Link\-Beam\-::add\-Link(), mdt\-Tt\-Test\-Model\-Item\-Route\-Data\-::add\-Setup\-Data(), mdt\-Cl\-Link\-Beam\-::add\-Start\-Unit(), mdt\-Tt\-Test\-Model\-Item\-::add\-Test\-Link(), mdt\-Tt\-Test\-Model\-::add\-Test\-Node(), mdt\-Tt\-Logical\-Test\-Cable\-::add\-Test\-Node\-Unit(), mdt\-Tt\-Test\-Model\-::build\-Route\-Data(), mdt\-Tt\-Test\-::create\-Test(), mdt\-Cl\-Article\-::edit\-Connector\-Name(), mdt\-Cl\-Unit\-::edit\-Connector\-Name(), mdt\-Cl\-Article\-::edit\-Link(), mdt\-Cl\-Link\-::get\-Connection\-Link\-List\-By\-Name(), mdt\-Tt\-Test\-Node\-::get\-Relay\-Path\-Setup\-Data\-List(), mdt\-Cl\-Unit\-::get\-Unit\-Connection\-Data\-List\-From\-Article\-Connection\-Id\-List(), mdt\-Abstract\-Sql\-Table\-Controller\-::record(), mdt\-Cl\-Link\-Beam\-::remove\-Link(), mdt\-Cl\-Unit\-Connection\-Data\-::set\-Article\-Connection\-Data(), mdt\-Cl\-Unit\-Connector\-Data\-::set\-Article\-Connector\-Data(), mdt\-Tt\-Test\-Node\-Unit\-::set\-Bus\-Id\-To\-Connection(), mdt\-Cl\-Article\-Connector\-Data\-::set\-Connector\-Data(), mdt\-Cl\-Unit\-Connector\-Data\-::set\-Connector\-Data(), mdt\-Tt\-Test\-Link\-Dialog\-::set\-Dut\-Connection(), mdt\-Cl\-Link\-Data\-::set\-End\-Connection\-Data(), mdt\-Cl\-Article\-Link\-Dialog\-::set\-End\-Connection\-Id(), mdt\-Tt\-Test\-Model\-Item\-Data\-::set\-Id(), mdt\-Cl\-Article\-Link\-Dialog\-::set\-Link\-Direction\-Code(), mdt\-Cl\-Article\-Link\-Dialog\-::set\-Link\-Type\-Code(), mdt\-Tt\-Test\-Data\-::set\-Model\-Data(), mdt\-Cl\-Link\-Data\-::set\-Start\-Connection\-Data(), mdt\-Cl\-Article\-Link\-Dialog\-::set\-Start\-Connection\-Id(), mdt\-Tt\-Test\-Link\-Dialog\-::set\-Test\-Connection(), mdt\-Tt\-Test\-Node\-::set\-Test\-Node\-Unit\-Io\-Range(), mdt\-Tt\-Test\-Node\-Unit\-Data\-::set\-Unit\-Data(), mdt\-Cl\-Article\-Link\-Dialog\-::set\-Value(), set\-Value(), mdt\-Tt\-Base\-::update\-Record(), and mdt\-Tt\-Test\-Model\-Item\-::update\-Test\-Node\-Unit\-Data().
+Referenced by mdt\-Cl\-Unit\-::add\-Article\-Connector\-Data(), mdt\-Cl\-Article\-::add\-Cable\-Link(), mdt\-Tt\-Test\-Node\-Unit\-::add\-Connection(), mdt\-Cl\-Unit\-::add\-Connection(), mdt\-Cl\-Article\-Connector\-Data\-::add\-Connection\-Data(), mdt\-Cl\-Article\-::add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List(), mdt\-Cl\-Unit\-::add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List(), mdt\-Cl\-Article\-::add\-Connector(), mdt\-Cl\-Unit\-::add\-Connector(), mdt\-Cl\-Connector\-Data\-::add\-Contact\-Data(), mdt\-Tt\-Logical\-Test\-Cable\-::add\-Dut\-Unit(), mdt\-Cl\-Link\-Beam\-::add\-End\-Unit(), mdt\-Cl\-Link\-Beam\-::add\-Link(), mdt\-Tt\-Test\-Model\-Item\-Route\-Data\-::add\-Setup\-Data(), mdt\-Cl\-Link\-Beam\-::add\-Start\-Unit(), mdt\-Tt\-Test\-Model\-Item\-::add\-Test\-Link(), mdt\-Tt\-Test\-Model\-::add\-Test\-Node(), mdt\-Tt\-Logical\-Test\-Cable\-::add\-Test\-Node\-Unit(), mdt\-Tt\-Test\-Model\-::build\-Route\-Data(), mdt\-Tt\-Logical\-Test\-Cable\-::create\-Cable(), mdt\-Tt\-Test\-::create\-Test(), mdt\-Cl\-Article\-::edit\-Connector\-Name(), mdt\-Cl\-Unit\-::edit\-Connector\-Name(), mdt\-Cl\-Article\-::edit\-Link(), mdt\-Tt\-Test\-Node\-::get\-Relay\-Path\-Setup\-Data\-List(), mdt\-Cl\-Unit\-::get\-Unit\-Connection\-Data\-List\-From\-Article\-Connection\-Id\-List(), mdt\-Abstract\-Sql\-Table\-Controller\-::record(), mdt\-Cl\-Link\-Beam\-::remove\-Link(), mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool\-::save\-Test\-Node\-Unit\-Calibration\-Offsets(), mdt\-Cl\-Unit\-Connection\-Data\-::set\-Article\-Connection\-Data(), mdt\-Cl\-Unit\-Connector\-Data\-::set\-Article\-Connector\-Data(), mdt\-Tt\-Test\-Node\-Unit\-::set\-Bus\-Id\-To\-Connection(), mdt\-Cl\-Article\-Connector\-Data\-::set\-Connector\-Data(), mdt\-Cl\-Unit\-Connector\-Data\-::set\-Connector\-Data(), mdt\-Tt\-Test\-Link\-Dialog\-::set\-Dut\-Connection(), mdt\-Cl\-Link\-Data\-::set\-End\-Connection\-Data(), mdt\-Cl\-Article\-Link\-Dialog\-::set\-End\-Connection\-Id(), mdt\-Tt\-Test\-Model\-Item\-Data\-::set\-Id(), mdt\-Cl\-Article\-Link\-Dialog\-::set\-Link\-Direction\-Code(), mdt\-Cl\-Article\-Link\-Dialog\-::set\-Link\-Type\-Code(), mdt\-Tt\-Test\-Data\-::set\-Model\-Data(), mdt\-Cl\-Link\-Data\-::set\-Start\-Connection\-Data(), mdt\-Cl\-Article\-Link\-Dialog\-::set\-Start\-Connection\-Id(), mdt\-Tt\-Test\-Link\-Dialog\-::set\-Test\-Cable\-Link(), mdt\-Tt\-Test\-Link\-Dialog\-::set\-Test\-Connection(), mdt\-Tt\-Test\-Node\-::set\-Test\-Node\-Unit\-Io\-Range(), mdt\-Tt\-Test\-Node\-Unit\-Data\-::set\-Unit\-Data(), mdt\-Cl\-Article\-Link\-Dialog\-::set\-Value(), set\-Value(), mdt\-Tt\-Base\-::update\-Record(), mdt\-Tt\-Test\-Model\-Item\-::update\-Test\-Node\-Unit\-Data(), and mdt\-Cl\-Article\-::update\-Unit\-Connections().
 
 \hypertarget{classmdt_sql_record_a8bcaf65b449b6c82548735cdccb8cff1}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!set\-Value@{set\-Value}}
 \index{set\-Value@{set\-Value}!mdtSqlRecord@{mdt\-Sql\-Record}}
@@ -591,7 +655,7 @@ set\-Value(int)
 \end{DoxySeeAlso}
 
 
-Definition at line 129 of file mdt\-Sql\-Record.\-cpp.
+Definition at line 138 of file mdt\-Sql\-Record.\-cpp.
 
 
 
@@ -610,7 +674,7 @@ Get S\-Q\-L data delimiter for given data type.
 
 
 
-Definition at line 229 of file mdt\-Sql\-Record.\-cpp.
+Definition at line 234 of file mdt\-Sql\-Record.\-cpp.
 
 
 
@@ -631,7 +695,7 @@ Will generate S\-Q\-L statement for insertion in given table name. The statement
 
 Only fields that have a value are added in S\-Q\-L statement. 
 
-Definition at line 169 of file mdt\-Sql\-Record.\-cpp.
+Definition at line 174 of file mdt\-Sql\-Record.\-cpp.
 
 
 
@@ -666,7 +730,7 @@ Only fields that have a value are added in S\-Q\-L statement.
 \end{DoxyParams}
 
 
-Definition at line 195 of file mdt\-Sql\-Record.\-cpp.
+Definition at line 200 of file mdt\-Sql\-Record.\-cpp.
 
 
 
@@ -689,11 +753,11 @@ Returns the value of the field located at position index in the record.
 
 If index is out of bounds, an invalid Q\-Variant is returned. 
 
-Definition at line 158 of file mdt\-Sql\-Record.\-h.
+Definition at line 180 of file mdt\-Sql\-Record.\-h.
 
 
 
-Referenced by mdt\-Cl\-Unit\-::add\-Article\-Connector\-Data(), mdt\-Cl\-Unit\-::add\-Connection(), mdt\-Cl\-Article\-Connector\-Data\-::add\-Connection\-Data(), mdt\-Cl\-Unit\-::add\-Connection\-Data\-List\-From\-Article\-Connection\-Id\-List(), mdt\-Cl\-Article\-::add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List(), mdt\-Cl\-Unit\-::add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List(), mdt\-Cl\-Article\-::add\-Connector(), mdt\-Cl\-Unit\-::add\-Connector(), mdt\-Cl\-Connector\-Data\-::add\-Contact\-Data(), mdt\-Tt\-Test\-Node\-Unit\-::add\-Node\-Unit(), mdt\-Tt\-Test\-Model\-Item\-::add\-Or\-Update\-Test\-Node\-Unit\-Setup(), mdt\-Tt\-Base\-::add\-Record(), mdt\-Tt\-Test\-Model\-Item\-Data\-::add\-Route\-Data(), mdt\-Cl\-Link\-Data\-::add\-Vehicle\-Type\-Link\-Data(), mdt\-Cl\-Link\-::connect\-By\-Contact\-Name(), mdt\-Cl\-Unit\-::edit\-Connection(), mdt\-Tt\-Test\-Node\-Unit\-::edit\-Node\-Unit(), mdt\-Cl\-Link\-::get\-Connection\-Link\-List\-By\-Name(), mdt\-Tt\-Test\-::get\-Setup\-Data(), mdt\-Cl\-Unit\-::get\-Unit\-Connection\-Data\-List\-From\-Article\-Connection\-Id\-List(), mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data\-::io\-Position(), mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data\-::io\-Type(), mdt\-Cl\-Unit\-Connection\-Data\-::is\-Based\-On\-Article\-Connection(), mdt\-Cl\-Unit\-Connector\-Data\-::is\-Based\-On\-Article\-Connector(), mdt\-Cl\-Article\-Connector\-Data\-::is\-Based\-On\-Connector(), mdt\-Cl\-Unit\-Connector\-Data\-::is\-Based\-On\-Connector(), mdt\-Cl\-Unit\-::remove\-Connection(), mdt\-Tt\-Test\-::save\-Test(), mdt\-Tt\-Abstract\-Tester\-::save\-Test(), mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data\-::schema\-Position(), mdt\-Cl\-Unit\-Connection\-Data\-::set\-Article\-Connection\-Data(), mdt\-Cl\-Unit\-Connector\-Data\-::set\-Article\-Connector\-Data(), mdt\-Cl\-Article\-Connector\-Data\-::set\-Connector\-Data(), mdt\-Cl\-Unit\-Connector\-Data\-::set\-Connector\-Data(), mdt\-Cl\-Unit\-Connection\-Dialog\-::set\-Data(), mdt\-Cl\-Link\-Data\-::set\-End\-Connection\-Data(), mdt\-Tt\-Test\-Link\-Dialog\-::set\-Link\-Data(), mdt\-Cl\-Unit\-Link\-Dialog\-::set\-Link\-Data(), mdt\-Tt\-Test\-Data\-::set\-Model\-Data(), mdt\-Cl\-Link\-Data\-::set\-Start\-Connection\-Data(), mdt\-Tt\-Test\-Node\-Unit\-Data\-::set\-Unit\-Data(), mdt\-Tt\-Abstract\-Tester\-::test\-Is\-Empty(), and mdt\-Tt\-Base\-::update\-Record().
+Referenced by mdt\-Cl\-Unit\-::add\-Article\-Connector\-Data(), mdt\-Cl\-Unit\-::add\-Connection(), mdt\-Cl\-Article\-Connector\-Data\-::add\-Connection\-Data(), mdt\-Cl\-Unit\-::add\-Connection\-Data\-List\-From\-Article\-Connection\-Id\-List(), mdt\-Cl\-Article\-::add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List(), mdt\-Cl\-Unit\-::add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List(), mdt\-Cl\-Article\-::add\-Connector(), mdt\-Cl\-Unit\-::add\-Connector(), mdt\-Cl\-Connector\-Data\-::add\-Contact\-Data(), mdt\-Tt\-Test\-Node\-Unit\-::add\-Node\-Unit(), mdt\-Tt\-Test\-Model\-Item\-::add\-Or\-Update\-Test\-Node\-Unit\-Setup(), mdt\-Tt\-Base\-::add\-Record(), mdt\-Tt\-Test\-Model\-Item\-Data\-::add\-Route\-Data(), mdt\-Cl\-Link\-Data\-::add\-Vehicle\-Type\-Link\-Data(), mdt\-Cl\-Link\-::can\-Connect\-Connections(), mdt\-Cl\-Link\-::can\-Connect\-Connectors(), mdt\-Cl\-Link\-::connect\-By\-Contact\-Name(), mdt\-Cl\-Unit\-::edit\-Connection(), mdt\-Tt\-Test\-Node\-Unit\-::edit\-Node\-Unit(), mdt\-Cl\-Unit\-::get\-Unit\-Connection\-Data\-List\-From\-Article\-Connection\-Id\-List(), mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data\-::io\-Position(), mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data\-::io\-Type(), mdt\-Cl\-Unit\-Connection\-Data\-::is\-Based\-On\-Article\-Connection(), mdt\-Cl\-Unit\-Connector\-Data\-::is\-Based\-On\-Article\-Connector(), mdt\-Cl\-Article\-Connector\-Data\-::is\-Based\-On\-Connector(), mdt\-Cl\-Unit\-Connector\-Data\-::is\-Based\-On\-Connector(), mdt\-Tt\-Test\-::link\-Path\-Resistance(), mdt\-Cl\-Unit\-::remove\-Connection(), mdt\-Tt\-Test\-::save\-Test(), mdt\-Tt\-Abstract\-Tester\-::save\-Test(), mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data\-::schema\-Position(), mdt\-Cl\-Unit\-Connection\-Data\-::set\-Article\-Connection\-Data(), mdt\-Cl\-Unit\-Connector\-Data\-::set\-Article\-Connector\-Data(), mdt\-Cl\-Article\-Connector\-Data\-::set\-Connector\-Data(), mdt\-Cl\-Unit\-Connector\-Data\-::set\-Connector\-Data(), mdt\-Cl\-Unit\-Connection\-Dialog\-::set\-Data(), mdt\-Cl\-Link\-Data\-::set\-End\-Connection\-Data(), mdt\-Cl\-Unit\-Link\-Dialog\-::set\-Link\-Data(), mdt\-Tt\-Test\-Data\-::set\-Model\-Data(), mdt\-Cl\-Link\-Data\-::set\-Start\-Connection\-Data(), mdt\-Tt\-Test\-Node\-Unit\-Data\-::set\-Unit\-Data(), mdt\-Tt\-Abstract\-Tester\-::test\-Is\-Empty(), and mdt\-Tt\-Base\-::update\-Record().
 
 \hypertarget{classmdt_sql_record_abfa14a89fa5e525c57d28f7f93dbcac8}{\index{mdt\-Sql\-Record@{mdt\-Sql\-Record}!value@{value}}
 \index{value@{value}!mdtSqlRecord@{mdt\-Sql\-Record}}
@@ -708,7 +772,7 @@ Returns the value of the field called name in the record.
 
 If field name does not exist an invalid variant is returned. 
 
-Definition at line 164 of file mdt\-Sql\-Record.\-h.
+Definition at line 186 of file mdt\-Sql\-Record.\-h.
 
 
 
@@ -718,7 +782,7 @@ Definition at line 164 of file mdt\-Sql\-Record.\-h.
 \subsubsection[{pv\-Last\-Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Error} mdt\-Sql\-Record\-::pv\-Last\-Error\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_sql_record_ae320a7933f4d5a002efc509c4c9c5a12}
 
 
-Definition at line 227 of file mdt\-Sql\-Record.\-h.
+Definition at line 249 of file mdt\-Sql\-Record.\-h.
 
 
 

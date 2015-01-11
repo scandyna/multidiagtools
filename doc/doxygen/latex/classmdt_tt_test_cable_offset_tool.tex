@@ -7,8 +7,7 @@
 
 
 
-Inheritance diagram for mdt\-Tt\-Test\-Cable\-Offset\-Tool\-:
-\nopagebreak
+Inheritance diagram for mdt\-Tt\-Test\-Cable\-Offset\-Tool\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -17,32 +16,28 @@ Inheritance diagram for mdt\-Tt\-Test\-Cable\-Offset\-Tool\-:
 \end{figure}
 
 
-Collaboration diagram for mdt\-Tt\-Test\-Cable\-Offset\-Tool\-:
-\nopagebreak
+Collaboration diagram for mdt\-Tt\-Test\-Cable\-Offset\-Tool\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=212pt]{classmdt_tt_test_cable_offset_tool__coll__graph}
 \end{center}
 \end{figure}
-\subsection*{Public Slots}
-\begin{DoxyCompactItemize}
-\item 
-void \hyperlink{classmdt_tt_test_cable_offset_tool_a350be590a6ef9009150bff7f190f44f3}{run\-Offset\-Reset} ()
-\begin{DoxyCompactList}\small\item\em Run offset reset. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 \hyperlink{classmdt_tt_test_cable_offset_tool_ab09f443d0d7720c54625228e7e70088b}{mdt\-Tt\-Test\-Cable\-Offset\-Tool} (Q\-Sql\-Database db, \hyperlink{class_q_object}{Q\-Object} $\ast$parent=0)
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_tt_test_cable_offset_tool_a2ebde2cd3e205b4da7fc1d73766d3e9c}{set\-Test\-Link\-Table\-Controller} (std\-::shared\-\_\-ptr$<$ \hyperlink{classmdt_sql_table_view_controller}{mdt\-Sql\-Table\-View\-Controller} $>$ controller)
-\begin{DoxyCompactList}\small\item\em Set intance of controller that acts on Test\-Link\-\_\-view. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Set intance of controller that acts on Test\-Link\-\_\-view. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_test_cable_offset_tool_adc55a81199c41f03fb98cfa4899985db}{run\-Offset\-Reset} (const Q\-Variant \&test\-Model\-Id)
+\begin{DoxyCompactList}\small\item\em public slots\-: \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 Tool to reset offset of test connection cables 
 
-Definition at line 45 of file mdt\-Tt\-Test\-Cable\-Offset\-Tool.\-h.
+Definition at line 49 of file mdt\-Tt\-Test\-Cable\-Offset\-Tool.\-h.
 
 
 
@@ -61,25 +56,29 @@ Constructor.
 
 
 
-Definition at line 30 of file mdt\-Tt\-Test\-Cable\-Offset\-Tool.\-cpp.
+Definition at line 38 of file mdt\-Tt\-Test\-Cable\-Offset\-Tool.\-cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_tt_test_cable_offset_tool_a350be590a6ef9009150bff7f190f44f3}{\index{mdt\-Tt\-Test\-Cable\-Offset\-Tool@{mdt\-Tt\-Test\-Cable\-Offset\-Tool}!run\-Offset\-Reset@{run\-Offset\-Reset}}
+\hypertarget{classmdt_tt_test_cable_offset_tool_adc55a81199c41f03fb98cfa4899985db}{\index{mdt\-Tt\-Test\-Cable\-Offset\-Tool@{mdt\-Tt\-Test\-Cable\-Offset\-Tool}!run\-Offset\-Reset@{run\-Offset\-Reset}}
 \index{run\-Offset\-Reset@{run\-Offset\-Reset}!mdtTtTestCableOffsetTool@{mdt\-Tt\-Test\-Cable\-Offset\-Tool}}
-\subsubsection[{run\-Offset\-Reset}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Tt\-Test\-Cable\-Offset\-Tool\-::run\-Offset\-Reset (
+\subsubsection[{run\-Offset\-Reset}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Test\-Cable\-Offset\-Tool\-::run\-Offset\-Reset (
 \begin{DoxyParamCaption}
-{}
+\item[{const Q\-Variant \&}]{test\-Model\-Id}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [slot]}}}\label{classmdt_tt_test_cable_offset_tool_a350be590a6ef9009150bff7f190f44f3}
+)}}\label{classmdt_tt_test_cable_offset_tool_adc55a81199c41f03fb98cfa4899985db}
 
 
-Run offset reset. 
+public slots\-: 
+
+Run offset reset 
+
+Definition at line 61 of file mdt\-Tt\-Test\-Cable\-Offset\-Tool.\-cpp.
 
 
 
-Definition at line 53 of file mdt\-Tt\-Test\-Cable\-Offset\-Tool.\-cpp.
+References mdt\-Error\-::\-Error, mdt\-Value\-::is\-Valid(), mdt\-Device\-U3606\-A\-::\-Range\-Min, mdt\-Device\-U3606\-A\-::\-Resolution\-Min, mdt\-Error\-::set\-Error(), and mdt\-Value\-::value\-Double().
 
 \hypertarget{classmdt_tt_test_cable_offset_tool_a2ebde2cd3e205b4da7fc1d73766d3e9c}{\index{mdt\-Tt\-Test\-Cable\-Offset\-Tool@{mdt\-Tt\-Test\-Cable\-Offset\-Tool}!set\-Test\-Link\-Table\-Controller@{set\-Test\-Link\-Table\-Controller}}
 \index{set\-Test\-Link\-Table\-Controller@{set\-Test\-Link\-Table\-Controller}!mdtTtTestCableOffsetTool@{mdt\-Tt\-Test\-Cable\-Offset\-Tool}}
@@ -94,7 +93,7 @@ Set intance of controller that acts on Test\-Link\-\_\-view.
 
 
 
-Definition at line 46 of file mdt\-Tt\-Test\-Cable\-Offset\-Tool.\-cpp.
+Definition at line 54 of file mdt\-Tt\-Test\-Cable\-Offset\-Tool.\-cpp.
 
 
 

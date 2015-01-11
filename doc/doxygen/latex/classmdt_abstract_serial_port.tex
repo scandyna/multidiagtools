@@ -151,7 +151,7 @@ Q\-List$<$ int $>$ \hyperlink{classmdt_abstract_serial_port_aa7ac0cd1058d0b6b322
 N\-O\-T\-E\-: 
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000047}{Todo}]Comment this class \end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000058}{Todo}]Comment this class \end{DoxyRefDesc}
 
 
 Interface class for serial port
@@ -300,7 +300,7 @@ Implemented in \hyperlink{classmdt_serial_port_ab7d9433433f4ec5d5e584721e5bb1195
 
 Build the list of available baud rates. 
 
-The subclass must search about available baud rates for current port, and should check if it can be really be used. For.\-ex. , on P\-O\-S\-I\-X, termios defines some baud rates, but all are not necessarily supported by port. To be shure, a solution is to try each baudrate (with cfsetispeed()/cfsetospeed() on P\-O\-S\-I\-X) before storing it in container. Note that the precondition must be checked with Q\-\_\-\-A\-S\-S\-E\-R\-T(\hyperlink{classmdt_abstract_port_a2122ae3141342ff38c8388e62b244e3b}{is\-Open()})
+The subclass must search about available baud rates for current port, and should check if it can be really be used. For.\-ex. , on P\-O\-S\-I\-X, termios defines some baud rates, but all are not necessarily supported by port. To be shure, a solution is to try each baudrate (with cfsetispeed()/cfsetospeed() on P\-O\-S\-I\-X) before storing it in container. Note that the precondition must be checked with Q\-\_\-\-A\-S\-S\-E\-R\-T(is\-Open())
 
 \begin{DoxyPrecond}{Precondition}
 Port must be open before this call. 
@@ -553,7 +553,7 @@ Implemented in \hyperlink{classmdt_serial_port_a8d3e3eb1d2272129b8b97377dff1d5d4
 N\-O\-T\-E\-: 
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000048}{Todo}]Update name to \-: update\-Ctl\-States ? \end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000059}{Todo}]Update name to \-: update\-Ctl\-States ? \end{DoxyRefDesc}
 
 
 Get the control (modem line) signal states and update member flags
@@ -576,7 +576,7 @@ Implemented in \hyperlink{classmdt_serial_port_a7893e1817fe5fc59c77ee6f3b9f13ae7
 
 Map the system defined U\-A\-R\-T type to internal one. 
 
-In this class, the U\-A\-R\-T type is defined in sp\-\_\-uart\-\_\-type\-\_\-t enum. The subclass must map the system's internal type to sp\-\_\-uart\-\_\-type\-\_\-t. On error (f.\-ex. by system calls), the method should use the \hyperlink{classmdt_error}{mdt\-Error} system, and set the U\-A\-R\-T type to U\-T\-\_\-\-U\-N\-K\-N\-O\-W. Note that the precondition must be checked with Q\-\_\-\-A\-S\-S\-E\-R\-T(\hyperlink{classmdt_abstract_port_a2122ae3141342ff38c8388e62b244e3b}{is\-Open()})
+In this class, the U\-A\-R\-T type is defined in sp\-\_\-uart\-\_\-type\-\_\-t enum. The subclass must map the system's internal type to sp\-\_\-uart\-\_\-type\-\_\-t. On error (f.\-ex. by system calls), the method should use the \hyperlink{classmdt_error}{mdt\-Error} system, and set the U\-A\-R\-T type to U\-T\-\_\-\-U\-N\-K\-N\-O\-W. Note that the precondition must be checked with Q\-\_\-\-A\-S\-S\-E\-R\-T(is\-Open())
 
 \begin{DoxyPrecond}{Precondition}
 Port must be open before this call. 

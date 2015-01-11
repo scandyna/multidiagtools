@@ -1,14 +1,14 @@
 <map id="src/mdttools/mdttesttool/mdtcablelist/mdtClArticleComponentDialog.cpp" name="src/mdttools/mdttesttool/mdtcablelist/mdtClArticleComponentDialog.cpp">
-<area shape="rect" id="node3" href="$mdt_cl_article_component_dialog_8h.html" title="mdtClArticleComponentDialog.h" alt="" coords="1013,195,1221,224"/>
-<area shape="rect" id="node13" href="$mdt_sql_selection_dialog_8h.html" title="mdtSqlSelectionDialog.h" alt="" coords="479,195,644,224"/>
-<area shape="rect" id="node48" href="$mdt_cl_article_8h.html" title="mdtClArticle.h" alt="" coords="1655,117,1759,147"/>
-<area shape="rect" id="node52" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="2781,445,2864,475"/>
-<area shape="rect" id="node17" href="$mdt_sql_table_selection_8h.html" title="mdtSqlTableSelection.h" alt="" coords="707,281,867,311"/>
-<area shape="rect" id="node19" href="$mdt_sql_table_selection_row_8h.html" title="mdtSqlTableSelectionRow.h" alt="" coords="889,368,1076,397"/>
-<area shape="rect" id="node21" href="$mdt_sql_table_selection_item_8h.html" title="mdtSqlTableSelectionItem.h" alt="" coords="904,445,1091,475"/>
-<area shape="rect" id="node50" href="$mdt_tt_base_8h.html" title="mdtTtBase.h" alt="" coords="1701,195,1797,224"/>
-<area shape="rect" id="node59" href="$mdt_sql_record_8h.html" title="mdtSqlRecord.h" alt="" coords="2563,368,2677,397"/>
-<area shape="rect" id="node84" href="$mdt_cl_article_connection_data_8h.html" title="mdtClArticleConnectionData.h" alt="" coords="2437,281,2635,311"/>
-<area shape="rect" id="node90" href="$mdt_cl_article_connector_data_8h.html" title="mdtClArticleConnectorData.h" alt="" coords="2139,195,2331,224"/>
-<area shape="rect" id="node93" href="$mdt_cl_connector_data_8h.html" title="mdtClConnectorData.h" alt="" coords="2157,281,2312,311"/>
+<area shape="rect" id="node2" href="$mdt_cl_article_component_dialog_8h.html" title="mdtClArticleComponentDialog.h" alt="" coords="1018,184,1227,211"/>
+<area shape="rect" id="node7" href="$mdt_sql_selection_dialog_8h.html" title="mdtSqlSelectionDialog.h" alt="" coords="483,184,647,211"/>
+<area shape="rect" id="node19" href="$mdt_cl_article_8h.html" title="mdtClArticle.h" alt="" coords="1661,109,1765,136"/>
+<area shape="rect" id="node21" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="2792,424,2873,451"/>
+<area shape="rect" id="node9" href="$mdt_sql_table_selection_8h.html" title="mdtSqlTableSelection.h" alt="" coords="711,267,869,293"/>
+<area shape="rect" id="node10" href="$mdt_sql_table_selection_row_8h.html" title="mdtSqlTableSelectionRow.h" alt="" coords="895,349,1081,376"/>
+<area shape="rect" id="node11" href="$mdt_sql_table_selection_item_8h.html" title="mdtSqlTableSelectionItem.h" alt="" coords="911,424,1097,451"/>
+<area shape="rect" id="node20" href="$mdt_tt_base_8h.html" title="mdtTtBase.h" alt="" coords="1709,184,1805,211"/>
+<area shape="rect" id="node25" href="$mdt_sql_record_8h.html" title="mdtSqlRecord.h" alt="" coords="2570,349,2685,376"/>
+<area shape="rect" id="node30" href="$mdt_cl_article_connection_data_8h.html" title="mdtClArticleConnectionData.h" alt="" coords="2450,267,2648,293"/>
+<area shape="rect" id="node31" href="$mdt_cl_article_connector_data_8h.html" title="mdtClArticleConnectorData.h" alt="" coords="2150,184,2343,211"/>
+<area shape="rect" id="node32" href="$mdt_cl_connector_data_8h.html" title="mdtClConnectorData.h" alt="" coords="2169,267,2324,293"/>
 </map>

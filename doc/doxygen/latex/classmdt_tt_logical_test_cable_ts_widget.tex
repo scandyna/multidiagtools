@@ -1,0 +1,239 @@
+\hypertarget{classmdt_tt_logical_test_cable_ts_widget}{\section{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget Class Reference}
+\label{classmdt_tt_logical_test_cable_ts_widget}\index{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget@{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget}}
+}
+
+
+Helper class for logical test cable generation.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=300pt]{classmdt_tt_logical_test_cable_ts_widget__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=300pt]{classmdt_tt_logical_test_cable_ts_widget__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_tt_logical_test_cable_ts_widget_ac5addba1598560e467ea342a430c9a1a}{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget} (\hyperlink{class_q_widget}{Q\-Widget} $\ast$parent, Q\-Sql\-Database db)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_tt_logical_test_cable_ts_widget_afd9166108bc905d461d70e74eac1b92e}{set\-Test\-Cable\-Connector} (const Q\-Variant \&connector\-Id, const Q\-String \&name)
+\begin{DoxyCompactList}\small\item\em Set test cable connector. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_tt_logical_test_cable_ts_widget_ab6fa7e861040ac4b81305e8d4967537d}{set\-Test\-Cable\-Connection} (const Q\-Variant \&connection\-Id, const Q\-String \&name)
+\begin{DoxyCompactList}\small\item\em Set test cable connection. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_tt_logical_test_cable_ts_widget_ae6e863361f1aa944aed38024c55054b6}{set\-Test\-System} (const Q\-Variant \&ts\-Vt\-Id)
+\begin{DoxyCompactList}\small\item\em Set test system. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_tt_logical_test_cable_dialog_a3ca0cca0e179adbc5d6a024eb8ec00f8}{mdt\-Tt\-Logical\-Test\-Cable\-Dialog\-::cn\-Type\-\_\-t} \hyperlink{classmdt_tt_logical_test_cable_ts_widget_ae03ff6218dee2d66e2a9ab252f36410d}{cn\-Type} () const 
+\begin{DoxyCompactList}\small\item\em Get cn type. \end{DoxyCompactList}\item 
+Q\-Variant \hyperlink{classmdt_tt_logical_test_cable_ts_widget_ad3e0b90a8624392daf8581704f9fe3a4}{cn\-Id} () const 
+\begin{DoxyCompactList}\small\item\em Get cn I\-D. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{classmdt_tt_logical_test_cable_ts_widget_a932ede3519c782d451a96a52a08e7e62}{test\-Cable\-Cn\-Name} () const 
+\begin{DoxyCompactList}\small\item\em Get test cable cn name. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_logical_test_cable_ts_widget_a3b657997aa7b77f1eee6a4ba0512b4f3}{contains\-Test\-Cable\-Connection} (const Q\-Variant \&test\-Cable\-Connection\-Id, bool \&ok)
+\begin{DoxyCompactList}\small\item\em Check if this affectation contains given (physical) test cable connection. \end{DoxyCompactList}\item 
+Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_tt_logical_test_cable_ts_widget_a0e82731b771703308a399766da02b57a}{get\-Affected\-Ts\-Connections} (bool \&ok)
+\begin{DoxyCompactList}\small\item\em Get list of unit connections. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Helper class for logical test cable generation. 
+
+Definition at line 35 of file mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_tt_logical_test_cable_ts_widget_ac5addba1598560e467ea342a430c9a1a}{\index{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget@{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget}!mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget@{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget}}
+\index{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget@{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget}!mdtTtLogicalTestCableTsWidget@{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget}}
+\subsubsection[{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget\-::mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget (
+\begin{DoxyParamCaption}
+\item[{{\bf Q\-Widget} $\ast$}]{parent, }
+\item[{Q\-Sql\-Database}]{db}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_logical_test_cable_ts_widget_ac5addba1598560e467ea342a430c9a1a}
+
+
+Constructor. 
+
+
+
+Definition at line 34 of file mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_tt_logical_test_cable_ts_widget_ad3e0b90a8624392daf8581704f9fe3a4}{\index{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget@{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget}!cn\-Id@{cn\-Id}}
+\index{cn\-Id@{cn\-Id}!mdtTtLogicalTestCableTsWidget@{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget}}
+\subsubsection[{cn\-Id}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget\-::cn\-Id (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_tt_logical_test_cable_ts_widget_ad3e0b90a8624392daf8581704f9fe3a4}
+
+
+Get cn I\-D. 
+
+
+
+Definition at line 66 of file mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget.\-h.
+
+\hypertarget{classmdt_tt_logical_test_cable_ts_widget_ae03ff6218dee2d66e2a9ab252f36410d}{\index{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget@{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget}!cn\-Type@{cn\-Type}}
+\index{cn\-Type@{cn\-Type}!mdtTtLogicalTestCableTsWidget@{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget}}
+\subsubsection[{cn\-Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Tt\-Logical\-Test\-Cable\-Dialog\-::cn\-Type\-\_\-t} mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget\-::cn\-Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_tt_logical_test_cable_ts_widget_ae03ff6218dee2d66e2a9ab252f36410d}
+
+
+Get cn type. 
+
+
+
+Definition at line 59 of file mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget.\-h.
+
+\hypertarget{classmdt_tt_logical_test_cable_ts_widget_a3b657997aa7b77f1eee6a4ba0512b4f3}{\index{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget@{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget}!contains\-Test\-Cable\-Connection@{contains\-Test\-Cable\-Connection}}
+\index{contains\-Test\-Cable\-Connection@{contains\-Test\-Cable\-Connection}!mdtTtLogicalTestCableTsWidget@{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget}}
+\subsubsection[{contains\-Test\-Cable\-Connection}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget\-::contains\-Test\-Cable\-Connection (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{test\-Cable\-Connection\-Id, }
+\item[{bool \&}]{ok}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_logical_test_cable_ts_widget_a3b657997aa7b77f1eee6a4ba0512b4f3}
+
+
+Check if this affectation contains given (physical) test cable connection. 
+
+
+
+Definition at line 114 of file mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget.\-cpp.
+
+
+
+References mdt\-Tt\-Logical\-Test\-Cable\-Dialog\-::\-Connection, mdt\-Tt\-Logical\-Test\-Cable\-Dialog\-::\-Connector, mdt\-Tt\-Base\-::get\-Data\-List(), and mdt\-Tt\-Base\-::last\-Error().
+
+\hypertarget{classmdt_tt_logical_test_cable_ts_widget_a0e82731b771703308a399766da02b57a}{\index{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget@{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget}!get\-Affected\-Ts\-Connections@{get\-Affected\-Ts\-Connections}}
+\index{get\-Affected\-Ts\-Connections@{get\-Affected\-Ts\-Connections}!mdtTtLogicalTestCableTsWidget@{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget}}
+\subsubsection[{get\-Affected\-Ts\-Connections}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ Q\-Variant $>$ mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget\-::get\-Affected\-Ts\-Connections (
+\begin{DoxyParamCaption}
+\item[{bool \&}]{ok}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_logical_test_cable_ts_widget_a0e82731b771703308a399766da02b57a}
+
+
+Get list of unit connections. 
+
+If affectation's type is a connector, all connections that are part of affected test system connector will be returned. If affectation's type is a connection, test system affected connection will be returned. 
+
+Definition at line 92 of file mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget.\-cpp.
+
+
+
+References mdt\-Tt\-Logical\-Test\-Cable\-Dialog\-::\-Connection, mdt\-Tt\-Logical\-Test\-Cable\-Dialog\-::\-Connector, mdt\-Tt\-Base\-::get\-Data\-List(), and mdt\-Tt\-Base\-::last\-Error().
+
+\hypertarget{classmdt_tt_logical_test_cable_ts_widget_ab6fa7e861040ac4b81305e8d4967537d}{\index{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget@{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget}!set\-Test\-Cable\-Connection@{set\-Test\-Cable\-Connection}}
+\index{set\-Test\-Cable\-Connection@{set\-Test\-Cable\-Connection}!mdtTtLogicalTestCableTsWidget@{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget}}
+\subsubsection[{set\-Test\-Cable\-Connection}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget\-::set\-Test\-Cable\-Connection (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{connection\-Id, }
+\item[{const Q\-String \&}]{name}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_logical_test_cable_ts_widget_ab6fa7e861040ac4b81305e8d4967537d}
+
+
+Set test cable connection. 
+
+
+
+Definition at line 55 of file mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget.\-cpp.
+
+
+
+References mdt\-Tt\-Logical\-Test\-Cable\-Dialog\-::\-Connection.
+
+
+
+Referenced by mdt\-Tt\-Logical\-Test\-Cable\-Dialog\-::set\-Test\-Cable().
+
+\hypertarget{classmdt_tt_logical_test_cable_ts_widget_afd9166108bc905d461d70e74eac1b92e}{\index{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget@{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget}!set\-Test\-Cable\-Connector@{set\-Test\-Cable\-Connector}}
+\index{set\-Test\-Cable\-Connector@{set\-Test\-Cable\-Connector}!mdtTtLogicalTestCableTsWidget@{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget}}
+\subsubsection[{set\-Test\-Cable\-Connector}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget\-::set\-Test\-Cable\-Connector (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{connector\-Id, }
+\item[{const Q\-String \&}]{name}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_logical_test_cable_ts_widget_afd9166108bc905d461d70e74eac1b92e}
+
+
+Set test cable connector. 
+
+
+
+Definition at line 46 of file mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget.\-cpp.
+
+
+
+References mdt\-Tt\-Logical\-Test\-Cable\-Dialog\-::\-Connector.
+
+
+
+Referenced by mdt\-Tt\-Logical\-Test\-Cable\-Dialog\-::set\-Test\-Cable().
+
+\hypertarget{classmdt_tt_logical_test_cable_ts_widget_ae6e863361f1aa944aed38024c55054b6}{\index{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget@{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget}!set\-Test\-System@{set\-Test\-System}}
+\index{set\-Test\-System@{set\-Test\-System}!mdtTtLogicalTestCableTsWidget@{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget}}
+\subsubsection[{set\-Test\-System}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget\-::set\-Test\-System (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{ts\-Vt\-Id}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_logical_test_cable_ts_widget_ae6e863361f1aa944aed38024c55054b6}
+
+
+Set test system. 
+
+
+
+Definition at line 64 of file mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget.\-cpp.
+
+
+
+References mdt\-Tt\-Base\-::get\-Data\-List().
+
+\hypertarget{classmdt_tt_logical_test_cable_ts_widget_a932ede3519c782d451a96a52a08e7e62}{\index{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget@{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget}!test\-Cable\-Cn\-Name@{test\-Cable\-Cn\-Name}}
+\index{test\-Cable\-Cn\-Name@{test\-Cable\-Cn\-Name}!mdtTtLogicalTestCableTsWidget@{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget}}
+\subsubsection[{test\-Cable\-Cn\-Name}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget\-::test\-Cable\-Cn\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_tt_logical_test_cable_ts_widget_a932ede3519c782d451a96a52a08e7e62}
+
+
+Get test cable cn name. 
+
+
+
+Definition at line 72 of file mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdttools/mdttesttool/\hyperlink{mdt_tt_logical_test_cable_ts_widget_8h}{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget.\-h}\item 
+src/mdttools/mdttesttool/\hyperlink{mdt_tt_logical_test_cable_ts_widget_8cpp}{mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget.\-cpp}\end{DoxyCompactItemize}

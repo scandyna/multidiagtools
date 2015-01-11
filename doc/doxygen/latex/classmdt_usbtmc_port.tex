@@ -1,0 +1,467 @@
+\hypertarget{classmdt_usbtmc_port}{\section{mdt\-Usbtmc\-Port Class Reference}
+\label{classmdt_usbtmc_port}\index{mdt\-Usbtmc\-Port@{mdt\-Usbtmc\-Port}}
+}
+
+
+Port to communicate with a U\-S\-B\-T\-M\-C device.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Usbtmc\-Port.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Usbtmc\-Port\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=166pt]{classmdt_usbtmc_port__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Usbtmc\-Port\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=166pt]{classmdt_usbtmc_port__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{classmdt_usbtmc_port_a95543679f3981f4a061bb46731731868}{Transaction\-State\-\_\-t} \{ \\*
+\hyperlink{classmdt_usbtmc_port_a95543679f3981f4a061bb46731731868a2d13df6f8b5e4c5af9f87e0dc39df69d}{Transaction\-State\-\_\-t\-::\-Pending} = 0, 
+\hyperlink{classmdt_usbtmc_port_a95543679f3981f4a061bb46731731868af92965e2c8a7afb3c1b9a5c09a263636}{Transaction\-State\-\_\-t\-::\-Done}, 
+\hyperlink{classmdt_usbtmc_port_a95543679f3981f4a061bb46731731868a721c28f4c74928cc9e0bb3fef345e408}{Transaction\-State\-\_\-t\-::\-Aborted}, 
+\hyperlink{classmdt_usbtmc_port_a95543679f3981f4a061bb46731731868a902b0d55fddef6f8d651fe1035b7d4bd}{Transaction\-State\-\_\-t\-::\-Error}, 
+\\*
+\hyperlink{classmdt_usbtmc_port_a95543679f3981f4a061bb46731731868a97a08776c0f8ffd1c0b692f8f0e328b0}{Transaction\-State\-\_\-t\-::\-Device\-Disconnected}
+ \}
+\begin{DoxyCompactList}\small\item\em U\-S\-B\-T\-M\-C transaction state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmdt_usbtmc_port_a4f727be1d99c3ea46c68f781261a0f24}{set\-Error} (const \hyperlink{classmdt_error}{mdt\-Error} \&error)
+\begin{DoxyCompactList}\small\item\em Set error. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmdt_usbtmc_port_ac2d4dc739be5c42c664e40ff7bb74132}{transaction\-Finished} (\hyperlink{classmdt_usbtmc_port_a95543679f3981f4a061bb46731731868}{Transaction\-State\-\_\-t} s)
+\begin{DoxyCompactList}\small\item\em Signal error. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_usbtmc_port_a102a2d5ebad4968621812e682d9d1b71}{mdt\-Usbtmc\-Port} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_usbtmc_port_a3f9d3f1f40f61e17fa2997f3ad181d30}{$\sim$mdt\-Usbtmc\-Port} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+Q\-List$<$ \hyperlink{classmdt_usb_device_descriptor}{mdt\-Usb\-Device\-Descriptor} $>$ \hyperlink{classmdt_usbtmc_port_a8f555cd150a82b74322e2f109bb094f4}{scan} ()
+\begin{DoxyCompactList}\small\item\em Enumerate attached U\-S\-B\-T\-M\-C devices. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usbtmc_port_abe30ec243e9dbf3de49cb1d9be5e1a16}{open\-Device} (const \hyperlink{classmdt_usb_device_descriptor}{mdt\-Usb\-Device\-Descriptor} \&device\-Descriptor, uint8\-\_\-t b\-Interface\-Number=0, bool clear\-Device\-List=true)
+\begin{DoxyCompactList}\small\item\em Open device represented by given descriptor. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_port_a6fec5e49a42e6c2e6202a8b2f7f0dc37}{close} ()
+\begin{DoxyCompactList}\small\item\em Close. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usbtmc_port_ad03633a2c6289974d79f361c6dbba5af}{send\-Command} (const Q\-Byte\-Array \&command, int timeout=30000)
+\begin{DoxyCompactList}\small\item\em Send a command to device. \end{DoxyCompactList}\item 
+Q\-Byte\-Array \hyperlink{classmdt_usbtmc_port_a0c250cc416a01d2dd704b629b163d3a6}{send\-Query} (const Q\-Byte\-Array \&query, int timeout=30000)
+\begin{DoxyCompactList}\small\item\em Send a query to device. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_port_ae30c4eb212e9859a834c53df052e1da9}{wait} (int t)
+\begin{DoxyCompactList}\small\item\em Wait some time without breaking main event loop. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usbtmc_port_afbf76bc83c54937dfb0e88ad6f517dc5}{clear\-Bulk\-Io} ()
+\begin{DoxyCompactList}\small\item\em Clear bulk I/\-O. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_error}{mdt\-Error} \hyperlink{classmdt_usbtmc_port_ad08e3ff4682797e8604400026418bdc8}{last\-Error} ()
+\begin{DoxyCompactList}\small\item\em Get last error. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_port_ab72af815af2f766e4062e2db43998f7c}{th\-Set\-Transaction\-Done} ()
+\begin{DoxyCompactList}\small\item\em Signal bulk transaction done. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_port_a1f864b8480f5953c0166478dd0f0c2c2}{th\-Set\-Transaction\-Aborted} ()
+\begin{DoxyCompactList}\small\item\em Signal bulk transaction aborted. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_port_a476cae8e5b124980ea2925e98fa70c68}{th\-Set\-Device\-Disconnected} ()
+\begin{DoxyCompactList}\small\item\em Signal device disconnected. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Port to communicate with a U\-S\-B\-T\-M\-C device. 
+
+Definition at line 40 of file mdt\-Usbtmc\-Port.\-h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{classmdt_usbtmc_port_a95543679f3981f4a061bb46731731868}{\index{mdt\-Usbtmc\-Port@{mdt\-Usbtmc\-Port}!Transaction\-State\-\_\-t@{Transaction\-State\-\_\-t}}
+\index{Transaction\-State\-\_\-t@{Transaction\-State\-\_\-t}!mdtUsbtmcPort@{mdt\-Usbtmc\-Port}}
+\subsubsection[{Transaction\-State\-\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdt\-Usbtmc\-Port\-::\-Transaction\-State\-\_\-t}\hspace{0.3cm}{\ttfamily [strong]}}}\label{classmdt_usbtmc_port_a95543679f3981f4a061bb46731731868}
+
+
+U\-S\-B\-T\-M\-C transaction state. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Pending@{Pending}!mdt\-Usbtmc\-Port@{mdt\-Usbtmc\-Port}}\index{mdt\-Usbtmc\-Port@{mdt\-Usbtmc\-Port}!Pending@{Pending}}\item[{\em 
+\hypertarget{classmdt_usbtmc_port_a95543679f3981f4a061bb46731731868a2d13df6f8b5e4c5af9f87e0dc39df69d}{Pending}\label{classmdt_usbtmc_port_a95543679f3981f4a061bb46731731868a2d13df6f8b5e4c5af9f87e0dc39df69d}
+}]Transaction is in progress \index{Done@{Done}!mdt\-Usbtmc\-Port@{mdt\-Usbtmc\-Port}}\index{mdt\-Usbtmc\-Port@{mdt\-Usbtmc\-Port}!Done@{Done}}\item[{\em 
+\hypertarget{classmdt_usbtmc_port_a95543679f3981f4a061bb46731731868af92965e2c8a7afb3c1b9a5c09a263636}{Done}\label{classmdt_usbtmc_port_a95543679f3981f4a061bb46731731868af92965e2c8a7afb3c1b9a5c09a263636}
+}]Transaction done without error \index{Aborted@{Aborted}!mdt\-Usbtmc\-Port@{mdt\-Usbtmc\-Port}}\index{mdt\-Usbtmc\-Port@{mdt\-Usbtmc\-Port}!Aborted@{Aborted}}\item[{\em 
+\hypertarget{classmdt_usbtmc_port_a95543679f3981f4a061bb46731731868a721c28f4c74928cc9e0bb3fef345e408}{Aborted}\label{classmdt_usbtmc_port_a95543679f3981f4a061bb46731731868a721c28f4c74928cc9e0bb3fef345e408}
+}]Transaction aborted \index{Error@{Error}!mdt\-Usbtmc\-Port@{mdt\-Usbtmc\-Port}}\index{mdt\-Usbtmc\-Port@{mdt\-Usbtmc\-Port}!Error@{Error}}\item[{\em 
+\hypertarget{classmdt_usbtmc_port_a95543679f3981f4a061bb46731731868a902b0d55fddef6f8d651fe1035b7d4bd}{Error}\label{classmdt_usbtmc_port_a95543679f3981f4a061bb46731731868a902b0d55fddef6f8d651fe1035b7d4bd}
+}]Transaction finished because a error occured \index{Device\-Disconnected@{Device\-Disconnected}!mdt\-Usbtmc\-Port@{mdt\-Usbtmc\-Port}}\index{mdt\-Usbtmc\-Port@{mdt\-Usbtmc\-Port}!Device\-Disconnected@{Device\-Disconnected}}\item[{\em 
+\hypertarget{classmdt_usbtmc_port_a95543679f3981f4a061bb46731731868a97a08776c0f8ffd1c0b692f8f0e328b0}{Device\-Disconnected}\label{classmdt_usbtmc_port_a95543679f3981f4a061bb46731731868a97a08776c0f8ffd1c0b692f8f0e328b0}
+}]Device has been disconnected (note\-: currently not properly reported) \end{description}
+\end{Desc}
+
+
+Definition at line 48 of file mdt\-Usbtmc\-Port.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_usbtmc_port_a102a2d5ebad4968621812e682d9d1b71}{\index{mdt\-Usbtmc\-Port@{mdt\-Usbtmc\-Port}!mdt\-Usbtmc\-Port@{mdt\-Usbtmc\-Port}}
+\index{mdt\-Usbtmc\-Port@{mdt\-Usbtmc\-Port}!mdtUsbtmcPort@{mdt\-Usbtmc\-Port}}
+\subsubsection[{mdt\-Usbtmc\-Port}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Usbtmc\-Port\-::mdt\-Usbtmc\-Port (
+\begin{DoxyParamCaption}
+\item[{{\bf Q\-Object} $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usbtmc_port_a102a2d5ebad4968621812e682d9d1b71}
+
+
+Constructor. 
+
+
+
+Definition at line 33 of file mdt\-Usbtmc\-Port.\-cpp.
+
+
+
+References transaction\-Finished().
+
+\hypertarget{classmdt_usbtmc_port_a3f9d3f1f40f61e17fa2997f3ad181d30}{\index{mdt\-Usbtmc\-Port@{mdt\-Usbtmc\-Port}!$\sim$mdt\-Usbtmc\-Port@{$\sim$mdt\-Usbtmc\-Port}}
+\index{$\sim$mdt\-Usbtmc\-Port@{$\sim$mdt\-Usbtmc\-Port}!mdtUsbtmcPort@{mdt\-Usbtmc\-Port}}
+\subsubsection[{$\sim$mdt\-Usbtmc\-Port}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Usbtmc\-Port\-::$\sim$mdt\-Usbtmc\-Port (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usbtmc_port_a3f9d3f1f40f61e17fa2997f3ad181d30}
+
+
+Destructor. 
+
+
+
+Definition at line 44 of file mdt\-Usbtmc\-Port.\-cpp.
+
+
+
+References close().
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_usbtmc_port_afbf76bc83c54937dfb0e88ad6f517dc5}{\index{mdt\-Usbtmc\-Port@{mdt\-Usbtmc\-Port}!clear\-Bulk\-Io@{clear\-Bulk\-Io}}
+\index{clear\-Bulk\-Io@{clear\-Bulk\-Io}!mdtUsbtmcPort@{mdt\-Usbtmc\-Port}}
+\subsubsection[{clear\-Bulk\-Io}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usbtmc\-Port\-::clear\-Bulk\-Io (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usbtmc_port_afbf76bc83c54937dfb0e88ad6f517dc5}
+
+
+Clear bulk I/\-O. 
+
+Note\-: is allready called by \hyperlink{classmdt_usbtmc_port_abe30ec243e9dbf3de49cb1d9be5e1a16}{open\-Device()}. 
+
+Definition at line 185 of file mdt\-Usbtmc\-Port.\-cpp.
+
+
+
+References Aborted, Pending, and mdt\-Usbtmc\-Transfer\-Handler\-::submit\-Bulk\-Io\-Clear().
+
+
+
+Referenced by open\-Device().
+
+\hypertarget{classmdt_usbtmc_port_a6fec5e49a42e6c2e6202a8b2f7f0dc37}{\index{mdt\-Usbtmc\-Port@{mdt\-Usbtmc\-Port}!close@{close}}
+\index{close@{close}!mdtUsbtmcPort@{mdt\-Usbtmc\-Port}}
+\subsubsection[{close}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Port\-::close (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usbtmc_port_a6fec5e49a42e6c2e6202a8b2f7f0dc37}
+
+
+Close. 
+
+
+
+Definition at line 116 of file mdt\-Usbtmc\-Port.\-cpp.
+
+
+
+References mdt\-Usb\-Port\-Thread\-New\-::stop().
+
+
+
+Referenced by $\sim$mdt\-Usbtmc\-Port().
+
+\hypertarget{classmdt_usbtmc_port_ad08e3ff4682797e8604400026418bdc8}{\index{mdt\-Usbtmc\-Port@{mdt\-Usbtmc\-Port}!last\-Error@{last\-Error}}
+\index{last\-Error@{last\-Error}!mdtUsbtmcPort@{mdt\-Usbtmc\-Port}}
+\subsubsection[{last\-Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Error} mdt\-Usbtmc\-Port\-::last\-Error (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_port_ad08e3ff4682797e8604400026418bdc8}
+
+
+Get last error. 
+
+
+
+Definition at line 109 of file mdt\-Usbtmc\-Port.\-h.
+
+\hypertarget{classmdt_usbtmc_port_abe30ec243e9dbf3de49cb1d9be5e1a16}{\index{mdt\-Usbtmc\-Port@{mdt\-Usbtmc\-Port}!open\-Device@{open\-Device}}
+\index{open\-Device@{open\-Device}!mdtUsbtmcPort@{mdt\-Usbtmc\-Port}}
+\subsubsection[{open\-Device}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usbtmc\-Port\-::open\-Device (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Usb\-Device\-Descriptor} \&}]{device\-Descriptor, }
+\item[{uint8\-\_\-t}]{b\-Interface\-Number = {\ttfamily 0}, }
+\item[{bool}]{clear\-Device\-List = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usbtmc_port_abe30ec243e9dbf3de49cb1d9be5e1a16}
+
+
+Open device represented by given descriptor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em device\-Descriptor} & U\-S\-B device descriptor to open. Must be a item returned by \hyperlink{classmdt_usbtmc_port_a8f555cd150a82b74322e2f109bb094f4}{scan()}. \\
+\hline
+{\em b\-Interface\-Number} & Interface number to use. \\
+\hline
+{\em clear\-Device\-List} & If true, internal device descriptors list will be cleared once device was open. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 84 of file mdt\-Usbtmc\-Port.\-cpp.
+
+
+
+References mdt\-Usb\-Device\-List\-::clear(), clear\-Bulk\-Io(), mdt\-Error\-::commit(), mdt\-Error\-::\-Error, mdt\-Usb\-Device\-Descriptor\-::is\-Empty(), mdt\-Usbtmc\-Transfer\-Handler\-::last\-Error(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Error\-::set\-Error(), and mdt\-Usb\-Port\-Thread\-New\-::start().
+
+\hypertarget{classmdt_usbtmc_port_a8f555cd150a82b74322e2f109bb094f4}{\index{mdt\-Usbtmc\-Port@{mdt\-Usbtmc\-Port}!scan@{scan}}
+\index{scan@{scan}!mdtUsbtmcPort@{mdt\-Usbtmc\-Port}}
+\subsubsection[{scan}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ {\bf mdt\-Usb\-Device\-Descriptor} $>$ mdt\-Usbtmc\-Port\-::scan (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usbtmc_port_a8f555cd150a82b74322e2f109bb094f4}
+
+
+Enumerate attached U\-S\-B\-T\-M\-C devices. 
+
+
+
+Definition at line 59 of file mdt\-Usbtmc\-Port.\-cpp.
+
+
+
+References mdt\-Usb\-Device\-List\-::clear(), mdt\-Usb\-Device\-List\-::last\-Error(), mdt\-Usb\-Device\-List\-::scan(), mdt\-Error\-::set\-Error(), mdt\-Usb\-Device\-List\-::usbtmc\-Device\-List(), and mdt\-Error\-::\-Warning.
+
+\hypertarget{classmdt_usbtmc_port_ad03633a2c6289974d79f361c6dbba5af}{\index{mdt\-Usbtmc\-Port@{mdt\-Usbtmc\-Port}!send\-Command@{send\-Command}}
+\index{send\-Command@{send\-Command}!mdtUsbtmcPort@{mdt\-Usbtmc\-Port}}
+\subsubsection[{send\-Command}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usbtmc\-Port\-::send\-Command (
+\begin{DoxyParamCaption}
+\item[{const Q\-Byte\-Array \&}]{command, }
+\item[{int}]{timeout = {\ttfamily 30000}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usbtmc_port_ad03633a2c6289974d79f361c6dbba5af}
+
+
+Send a command to device. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em command} & Command to send \\
+\hline
+{\em timeout} & Timeout \mbox{[}ms\mbox{]} \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 123 of file mdt\-Usbtmc\-Port.\-cpp.
+
+
+
+References Done, mdt\-Usbtmc\-Tx\-Message\-::has\-Bytes\-To\-Read(), mdt\-Usbtmc\-Transfer\-Handler\-::last\-Error(), Pending, set\-Error(), and mdt\-Usbtmc\-Transfer\-Handler\-::submit\-Command().
+
+\hypertarget{classmdt_usbtmc_port_a0c250cc416a01d2dd704b629b163d3a6}{\index{mdt\-Usbtmc\-Port@{mdt\-Usbtmc\-Port}!send\-Query@{send\-Query}}
+\index{send\-Query@{send\-Query}!mdtUsbtmcPort@{mdt\-Usbtmc\-Port}}
+\subsubsection[{send\-Query}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Byte\-Array mdt\-Usbtmc\-Port\-::send\-Query (
+\begin{DoxyParamCaption}
+\item[{const Q\-Byte\-Array \&}]{query, }
+\item[{int}]{timeout = {\ttfamily 30000}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usbtmc_port_a0c250cc416a01d2dd704b629b163d3a6}
+
+
+Send a query to device. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em query} & Query to send \\
+\hline
+{\em timeout} & Timeout \mbox{[}ms\mbox{]} \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 144 of file mdt\-Usbtmc\-Port.\-cpp.
+
+
+
+References Done, mdt\-Usbtmc\-Transfer\-Handler\-::get\-Received\-Data(), mdt\-Usbtmc\-Transfer\-Handler\-::last\-Error(), Pending, set\-Error(), and mdt\-Usbtmc\-Transfer\-Handler\-::submit\-Command().
+
+\hypertarget{classmdt_usbtmc_port_a4f727be1d99c3ea46c68f781261a0f24}{\index{mdt\-Usbtmc\-Port@{mdt\-Usbtmc\-Port}!set\-Error@{set\-Error}}
+\index{set\-Error@{set\-Error}!mdtUsbtmcPort@{mdt\-Usbtmc\-Port}}
+\subsubsection[{set\-Error}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Port\-::set\-Error (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Error} \&}]{error}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{classmdt_usbtmc_port_a4f727be1d99c3ea46c68f781261a0f24}
+
+
+Set error. 
+
+Will also generate a event in main thread and wake up Q\-Core\-Application\-::process\-Events()
+
+Note\-: used by \hyperlink{classmdt_usbtmc_transfer_handler}{mdt\-Usbtmc\-Transfer\-Handler} and \hyperlink{classmdt_usbtmc_port_thread}{mdt\-Usbtmc\-Port\-Thread} 
+
+Definition at line 199 of file mdt\-Usbtmc\-Port.\-cpp.
+
+
+
+References Error, and transaction\-Finished().
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::handle\-Bulk\-In\-Transfer\-Complete(), mdt\-Usbtmc\-Transfer\-Handler\-::notify\-Error(), send\-Command(), and send\-Query().
+
+\hypertarget{classmdt_usbtmc_port_a476cae8e5b124980ea2925e98fa70c68}{\index{mdt\-Usbtmc\-Port@{mdt\-Usbtmc\-Port}!th\-Set\-Device\-Disconnected@{th\-Set\-Device\-Disconnected}}
+\index{th\-Set\-Device\-Disconnected@{th\-Set\-Device\-Disconnected}!mdtUsbtmcPort@{mdt\-Usbtmc\-Port}}
+\subsubsection[{th\-Set\-Device\-Disconnected}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Port\-::th\-Set\-Device\-Disconnected (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_port_a476cae8e5b124980ea2925e98fa70c68}
+
+
+Signal device disconnected. 
+
+Note\-: used by \hyperlink{classmdt_usbtmc_transfer_handler}{mdt\-Usbtmc\-Transfer\-Handler} 
+
+Definition at line 137 of file mdt\-Usbtmc\-Port.\-h.
+
+
+
+References Device\-Disconnected, and transaction\-Finished().
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::notify\-Device\-Disconnected().
+
+\hypertarget{classmdt_usbtmc_port_a1f864b8480f5953c0166478dd0f0c2c2}{\index{mdt\-Usbtmc\-Port@{mdt\-Usbtmc\-Port}!th\-Set\-Transaction\-Aborted@{th\-Set\-Transaction\-Aborted}}
+\index{th\-Set\-Transaction\-Aborted@{th\-Set\-Transaction\-Aborted}!mdtUsbtmcPort@{mdt\-Usbtmc\-Port}}
+\subsubsection[{th\-Set\-Transaction\-Aborted}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Port\-::th\-Set\-Transaction\-Aborted (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_port_a1f864b8480f5953c0166478dd0f0c2c2}
+
+
+Signal bulk transaction aborted. 
+
+Note\-: used by \hyperlink{classmdt_usbtmc_transfer_handler}{mdt\-Usbtmc\-Transfer\-Handler} 
+
+Definition at line 128 of file mdt\-Usbtmc\-Port.\-h.
+
+
+
+References Aborted, and transaction\-Finished().
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::notify\-Bulk\-Io\-Aborted().
+
+\hypertarget{classmdt_usbtmc_port_ab72af815af2f766e4062e2db43998f7c}{\index{mdt\-Usbtmc\-Port@{mdt\-Usbtmc\-Port}!th\-Set\-Transaction\-Done@{th\-Set\-Transaction\-Done}}
+\index{th\-Set\-Transaction\-Done@{th\-Set\-Transaction\-Done}!mdtUsbtmcPort@{mdt\-Usbtmc\-Port}}
+\subsubsection[{th\-Set\-Transaction\-Done}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Port\-::th\-Set\-Transaction\-Done (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_port_ab72af815af2f766e4062e2db43998f7c}
+
+
+Signal bulk transaction done. 
+
+Note\-: used by \hyperlink{classmdt_usbtmc_transfer_handler}{mdt\-Usbtmc\-Transfer\-Handler} 
+
+Definition at line 119 of file mdt\-Usbtmc\-Port.\-h.
+
+
+
+References Done, and transaction\-Finished().
+
+
+
+Referenced by mdt\-Usbtmc\-Transfer\-Handler\-::handle\-Bulk\-In\-Transfer\-Complete(), mdt\-Usbtmc\-Transfer\-Handler\-::handle\-Bulk\-Out\-Transfer\-Complete(), and mdt\-Usbtmc\-Transfer\-Handler\-::notify\-Bulk\-Io\-Done().
+
+\hypertarget{classmdt_usbtmc_port_ac2d4dc739be5c42c664e40ff7bb74132}{\index{mdt\-Usbtmc\-Port@{mdt\-Usbtmc\-Port}!transaction\-Finished@{transaction\-Finished}}
+\index{transaction\-Finished@{transaction\-Finished}!mdtUsbtmcPort@{mdt\-Usbtmc\-Port}}
+\subsubsection[{transaction\-Finished}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Port\-::transaction\-Finished (
+\begin{DoxyParamCaption}
+\item[{{\bf Transaction\-State\-\_\-t}}]{s}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classmdt_usbtmc_port_ac2d4dc739be5c42c664e40ff7bb74132}
+
+
+Signal error. 
+
+Note\-: used by \hyperlink{classmdt_usbtmc_transfer_handler}{mdt\-Usbtmc\-Transfer\-Handler}
+
+Signal that transaction is finished \begin{DoxySeeAlso}{See Also}
+set\-Transaction\-State(). 
+\end{DoxySeeAlso}
+
+
+Referenced by mdt\-Usbtmc\-Port(), set\-Error(), th\-Set\-Device\-Disconnected(), th\-Set\-Transaction\-Aborted(), and th\-Set\-Transaction\-Done().
+
+\hypertarget{classmdt_usbtmc_port_ae30c4eb212e9859a834c53df052e1da9}{\index{mdt\-Usbtmc\-Port@{mdt\-Usbtmc\-Port}!wait@{wait}}
+\index{wait@{wait}!mdtUsbtmcPort@{mdt\-Usbtmc\-Port}}
+\subsubsection[{wait}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Port\-::wait (
+\begin{DoxyParamCaption}
+\item[{int}]{t}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usbtmc_port_ae30c4eb212e9859a834c53df052e1da9}
+
+
+Wait some time without breaking main event loop. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em t} & time \mbox{[}ms\mbox{]} \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 176 of file mdt\-Usbtmc\-Port.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdtport/\hyperlink{mdt_usbtmc_port_8h}{mdt\-Usbtmc\-Port.\-h}\item 
+src/mdtport/\hyperlink{mdt_usbtmc_port_8cpp}{mdt\-Usbtmc\-Port.\-cpp}\end{DoxyCompactItemize}

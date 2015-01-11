@@ -49,7 +49,9 @@ const \hyperlink{classmdt_cl_unit_connection_data}{mdt\-Cl\-Unit\-Connection\-Da
 \begin{DoxyCompactList}\small\item\em Get start connection data (R\-D) \end{DoxyCompactList}\item 
 const \hyperlink{classmdt_cl_unit_connection_data}{mdt\-Cl\-Unit\-Connection\-Data} \& \hyperlink{classmdt_cl_link_data_ae61b648f3a8b1461e06815b8ca6017f4}{end\-Connection\-Data} () const 
 \begin{DoxyCompactList}\small\item\em Get end connection data (R\-D) \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_cl_link_data_a1346ac135fa261c7aeda0c6af073dd37}{add\-Vehicle\-Type\-Link\-Data} (const \hyperlink{classmdt_cl_vehicle_type_link_data}{mdt\-Cl\-Vehicle\-Type\-Link\-Data} \&data)
+bool \hyperlink{classmdt_cl_link_data_a6ba85d372cd9d1478b1a3cfe1e76b6c6}{vehicle\-Type\-Links\-Edited} () const 
+\begin{DoxyCompactList}\small\item\em Check if a vehicle type link was edited. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_cl_link_data_a39127d05ef1bec680c446a5b19242a11}{add\-Vehicle\-Type\-Link\-Data} (const \hyperlink{classmdt_cl_vehicle_type_link_data}{mdt\-Cl\-Vehicle\-Type\-Link\-Data} \&data, bool update\-Vehicle\-Links\-Edited\-Flags=true)
 \begin{DoxyCompactList}\small\item\em Add vehicle type link data. \end{DoxyCompactList}\item 
 const Q\-List\\*
 $<$ \hyperlink{classmdt_cl_vehicle_type_link_data}{mdt\-Cl\-Vehicle\-Type\-Link\-Data} $>$ \& \hyperlink{classmdt_cl_link_data_a95fb259075bacba89d4519ac7678b70e}{vehicle\-Type\-Link\-Data\-List} () const 
@@ -62,7 +64,7 @@ void \hyperlink{classmdt_cl_link_data_a04872523d8d231ddc38da34fd488ad26}{clear\-
 \subsection{Detailed Description}
 Data container class for link data. 
 
-Permit to echange data with Link\-\_\-tbl.
+Permit to exchange data with Link\-\_\-tbl.
 
 This class was made for data edition. It is also mandatory that fields matches Link\-\_\-tbl. To get data from a view, witch also can miss fields, or have different field name, considere Q\-Sql\-Record. 
 
@@ -104,29 +106,30 @@ All fields from Link\-\_\-tbl must exist in record
 \end{DoxyPrecond}
 
 
-Definition at line 28 of file mdt\-Cl\-Link\-Data.\-cpp.
+Definition at line 29 of file mdt\-Cl\-Link\-Data.\-cpp.
 
 
 
-References mdt\-Sql\-Record\-::index\-Of().
+References clear\-Vehicle\-Type\-Link\-Data\-List(), and mdt\-Sql\-Record\-::index\-Of().
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_cl_link_data_a1346ac135fa261c7aeda0c6af073dd37}{\index{mdt\-Cl\-Link\-Data@{mdt\-Cl\-Link\-Data}!add\-Vehicle\-Type\-Link\-Data@{add\-Vehicle\-Type\-Link\-Data}}
+\hypertarget{classmdt_cl_link_data_a39127d05ef1bec680c446a5b19242a11}{\index{mdt\-Cl\-Link\-Data@{mdt\-Cl\-Link\-Data}!add\-Vehicle\-Type\-Link\-Data@{add\-Vehicle\-Type\-Link\-Data}}
 \index{add\-Vehicle\-Type\-Link\-Data@{add\-Vehicle\-Type\-Link\-Data}!mdtClLinkData@{mdt\-Cl\-Link\-Data}}
 \subsubsection[{add\-Vehicle\-Type\-Link\-Data}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Cl\-Link\-Data\-::add\-Vehicle\-Type\-Link\-Data (
 \begin{DoxyParamCaption}
-\item[{const {\bf mdt\-Cl\-Vehicle\-Type\-Link\-Data} \&}]{data}
+\item[{const {\bf mdt\-Cl\-Vehicle\-Type\-Link\-Data} \&}]{data, }
+\item[{bool}]{update\-Vehicle\-Links\-Edited\-Flags = {\ttfamily true}}
 \end{DoxyParamCaption}
-)}}\label{classmdt_cl_link_data_a1346ac135fa261c7aeda0c6af073dd37}
+)}}\label{classmdt_cl_link_data_a39127d05ef1bec680c446a5b19242a11}
 
 
 Add vehicle type link data. 
 
 Note\-: in given data, unit\-Connection\-Start\-Id and unit\-Connection\-End\-Id are not relevant, because they are set internally. 
 
-Definition at line 104 of file mdt\-Cl\-Link\-Data.\-cpp.
+Definition at line 107 of file mdt\-Cl\-Link\-Data.\-cpp.
 
 
 
@@ -153,15 +156,11 @@ Reimplemented from \hyperlink{classmdt_sql_record_a0bfc0fc265c6b0048698e2f5d4f84
 
 
 
-Definition at line 66 of file mdt\-Cl\-Link\-Data.\-cpp.
+Definition at line 68 of file mdt\-Cl\-Link\-Data.\-cpp.
 
 
 
-References mdt\-Sql\-Record\-::clear\-Values().
-
-
-
-Referenced by mdt\-Cl\-Link\-::get\-Connection\-Link\-List\-By\-Name().
+References mdt\-Sql\-Record\-::clear\-Values(), and clear\-Vehicle\-Type\-Link\-Data\-List().
 
 \hypertarget{classmdt_cl_link_data_a04872523d8d231ddc38da34fd488ad26}{\index{mdt\-Cl\-Link\-Data@{mdt\-Cl\-Link\-Data}!clear\-Vehicle\-Type\-Link\-Data\-List@{clear\-Vehicle\-Type\-Link\-Data\-List}}
 \index{clear\-Vehicle\-Type\-Link\-Data\-List@{clear\-Vehicle\-Type\-Link\-Data\-List}!mdtClLinkData@{mdt\-Cl\-Link\-Data}}
@@ -176,11 +175,11 @@ Clear only vehicle type link data list.
 
 
 
-Definition at line 113 of file mdt\-Cl\-Link\-Data.\-cpp.
+Definition at line 119 of file mdt\-Cl\-Link\-Data.\-cpp.
 
 
 
-Referenced by mdt\-Cl\-Link\-::build\-Vehicle\-Type\-Link\-Data\-List().
+Referenced by mdt\-Cl\-Link\-::build\-Vehicle\-Type\-Link\-Data\-List(), clear\-Values(), and mdt\-Cl\-Link\-Data().
 
 \hypertarget{classmdt_cl_link_data_ae61b648f3a8b1461e06815b8ca6017f4}{\index{mdt\-Cl\-Link\-Data@{mdt\-Cl\-Link\-Data}!end\-Connection\-Data@{end\-Connection\-Data}}
 \index{end\-Connection\-Data@{end\-Connection\-Data}!mdtClLinkData@{mdt\-Cl\-Link\-Data}}
@@ -199,7 +198,7 @@ Definition at line 103 of file mdt\-Cl\-Link\-Data.\-h.
 
 
 
-Referenced by mdt\-Cl\-Unit\-Link\-Dialog\-::set\-Link\-Data().
+Referenced by mdt\-Tt\-Test\-::link\-Path\-Resistance(), and mdt\-Cl\-Unit\-Link\-Dialog\-::set\-Link\-Data().
 
 \hypertarget{classmdt_cl_link_data_af973898eb4ffe8c97f3267c99e97721b}{\index{mdt\-Cl\-Link\-Data@{mdt\-Cl\-Link\-Data}!set\-Connection\-Data@{set\-Connection\-Data}}
 \index{set\-Connection\-Data@{set\-Connection\-Data}!mdtClLinkData@{mdt\-Cl\-Link\-Data}}
@@ -223,7 +222,7 @@ Will also update following data\-:
 
 Internal vehicle type link data list is also updated with new start and end unit connection I\-Ds 
 
-Definition at line 98 of file mdt\-Cl\-Link\-Data.\-cpp.
+Definition at line 101 of file mdt\-Cl\-Link\-Data.\-cpp.
 
 
 
@@ -248,7 +247,7 @@ Will also update following data\-:
 
 Internal vehicle type link data list is also updated with new end unit connection I\-Ds 
 
-Definition at line 86 of file mdt\-Cl\-Link\-Data.\-cpp.
+Definition at line 89 of file mdt\-Cl\-Link\-Data.\-cpp.
 
 
 
@@ -256,7 +255,7 @@ References mdt\-Sql\-Record\-::set\-Value(), and mdt\-Sql\-Record\-::value().
 
 
 
-Referenced by mdt\-Cl\-Link\-::get\-Connection\-Link\-List\-By\-Name(), set\-Connection\-Data(), and mdt\-Cl\-Unit\-Link\-Dialog\-::set\-End\-Unit().
+Referenced by set\-Connection\-Data(), and mdt\-Cl\-Unit\-Link\-Dialog\-::set\-End\-Unit().
 
 \hypertarget{classmdt_cl_link_data_a3f7d2e28043cf19aaa2d8cd3e15d4fe3}{\index{mdt\-Cl\-Link\-Data@{mdt\-Cl\-Link\-Data}!set\-Start\-Connection\-Data@{set\-Start\-Connection\-Data}}
 \index{set\-Start\-Connection\-Data@{set\-Start\-Connection\-Data}!mdtClLinkData@{mdt\-Cl\-Link\-Data}}
@@ -277,7 +276,7 @@ Will also update following data\-:
 
 Internal vehicle type link data list is also updated with new start unit connection I\-Ds 
 
-Definition at line 74 of file mdt\-Cl\-Link\-Data.\-cpp.
+Definition at line 77 of file mdt\-Cl\-Link\-Data.\-cpp.
 
 
 
@@ -285,7 +284,7 @@ References mdt\-Sql\-Record\-::set\-Value(), and mdt\-Sql\-Record\-::value().
 
 
 
-Referenced by mdt\-Cl\-Link\-::get\-Connection\-Link\-List\-By\-Name(), set\-Connection\-Data(), and mdt\-Cl\-Unit\-Link\-Dialog\-::set\-Start\-Unit().
+Referenced by set\-Connection\-Data(), and mdt\-Cl\-Unit\-Link\-Dialog\-::set\-Start\-Unit().
 
 \hypertarget{classmdt_cl_link_data_aea3186af58d6718f510e1fe509c6ffe4}{\index{mdt\-Cl\-Link\-Data@{mdt\-Cl\-Link\-Data}!setup@{setup}}
 \index{setup@{setup}!mdtClLinkData@{mdt\-Cl\-Link\-Data}}
@@ -300,7 +299,7 @@ Setup fields from Link\-\_\-tbl.
 
 
 
-Definition at line 49 of file mdt\-Cl\-Link\-Data.\-cpp.
+Definition at line 51 of file mdt\-Cl\-Link\-Data.\-cpp.
 
 
 
@@ -308,7 +307,7 @@ References mdt\-Sql\-Record\-::add\-All\-Fields(), mdt\-Sql\-Record\-::clear(), 
 
 
 
-Referenced by mdt\-Cl\-Link\-::get\-Connection\-Link\-List\-By\-Name(), and mdt\-Cl\-Unit\-Link\-Dialog\-::mdt\-Cl\-Unit\-Link\-Dialog().
+Referenced by mdt\-Cl\-Unit\-Link\-Dialog\-::mdt\-Cl\-Unit\-Link\-Dialog().
 
 \hypertarget{classmdt_cl_link_data_a571eacbdeb58564b340a1adce8b5541f}{\index{mdt\-Cl\-Link\-Data@{mdt\-Cl\-Link\-Data}!start\-Connection\-Data@{start\-Connection\-Data}}
 \index{start\-Connection\-Data@{start\-Connection\-Data}!mdtClLinkData@{mdt\-Cl\-Link\-Data}}
@@ -327,7 +326,7 @@ Definition at line 99 of file mdt\-Cl\-Link\-Data.\-h.
 
 
 
-Referenced by mdt\-Cl\-Unit\-Link\-Dialog\-::set\-Link\-Data().
+Referenced by mdt\-Tt\-Test\-::link\-Path\-Resistance(), and mdt\-Cl\-Unit\-Link\-Dialog\-::set\-Link\-Data().
 
 \hypertarget{classmdt_cl_link_data_a95fb259075bacba89d4519ac7678b70e}{\index{mdt\-Cl\-Link\-Data@{mdt\-Cl\-Link\-Data}!vehicle\-Type\-Link\-Data\-List@{vehicle\-Type\-Link\-Data\-List}}
 \index{vehicle\-Type\-Link\-Data\-List@{vehicle\-Type\-Link\-Data\-List}!mdtClLinkData@{mdt\-Cl\-Link\-Data}}
@@ -342,11 +341,30 @@ Get list of vehicle type link data.
 
 
 
-Definition at line 114 of file mdt\-Cl\-Link\-Data.\-h.
+Definition at line 118 of file mdt\-Cl\-Link\-Data.\-h.
 
 
 
 Referenced by mdt\-Cl\-Link\-::add\-Link(), and mdt\-Cl\-Unit\-Link\-Dialog\-::set\-Link\-Data().
+
+\hypertarget{classmdt_cl_link_data_a6ba85d372cd9d1478b1a3cfe1e76b6c6}{\index{mdt\-Cl\-Link\-Data@{mdt\-Cl\-Link\-Data}!vehicle\-Type\-Links\-Edited@{vehicle\-Type\-Links\-Edited}}
+\index{vehicle\-Type\-Links\-Edited@{vehicle\-Type\-Links\-Edited}!mdtClLinkData@{mdt\-Cl\-Link\-Data}}
+\subsubsection[{vehicle\-Type\-Links\-Edited}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Link\-Data\-::vehicle\-Type\-Links\-Edited (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_cl_link_data_a6ba85d372cd9d1478b1a3cfe1e76b6c6}
+
+
+Check if a vehicle type link was edited. 
+
+
+
+Definition at line 107 of file mdt\-Cl\-Link\-Data.\-h.
+
+
+
+Referenced by mdt\-Cl\-Link\-::edit\-Link().
 
 
 

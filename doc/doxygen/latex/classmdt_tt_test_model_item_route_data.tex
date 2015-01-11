@@ -13,6 +13,10 @@ Container for test model item route data.
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
+\hyperlink{classmdt_tt_test_model_item_route_data_a59a0b076edb84891df37a6db40962f44}{mdt\-Tt\-Test\-Model\-Item\-Route\-Data} ()
+\begin{DoxyCompactList}\small\item\em Construct a empty route data. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_tt_test_model_item_route_data_a048bc0a97bbcd91a23e5fd9aad63c36c}{mdt\-Tt\-Test\-Model\-Item\-Route\-Data} (const Q\-Sql\-Record \&record)
+\begin{DoxyCompactList}\small\item\em Construct data from a sql record. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_tt_test_model_item_route_data_a2d247da5bc9d377d5dafbb1080d65be6}{clear\-Data} ()
 \begin{DoxyCompactList}\small\item\em Clear. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_tt_test_model_item_route_data_a40e5fe46e70a9a7ffc2e5f3d8171b679}{set\-Id} (const Q\-Variant \&\hyperlink{classmdt_tt_test_model_item_route_data_ad34638a6361e64a867f30821b73ff385}{id})
@@ -43,13 +47,69 @@ void \hyperlink{classmdt_tt_test_model_item_route_data_a873670487c1ac332593754ee
 \begin{DoxyCompactList}\small\item\em Add a test node unit setup data. \end{DoxyCompactList}\item 
 const Q\-List\\*
 $<$ \hyperlink{classmdt_tt_test_node_unit_setup_data}{mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data} $>$ \& \hyperlink{classmdt_tt_test_model_item_route_data_aa12fbb1f86b06f2e5cef94e44765f970}{setup\-Data\-List} () const 
-\begin{DoxyCompactList}\small\item\em Get test node unit setup data list. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Get test node unit setup data list. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_value}{mdt\-Value} \hyperlink{classmdt_tt_test_model_item_route_data_a6407d3d1bbac9abc3c36a0b43c51c47d}{route\-Resistance} () const 
+\begin{DoxyCompactList}\small\item\em Get route resistance. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_value}{mdt\-Value} \hyperlink{classmdt_tt_test_model_item_route_data_ae11206cb9efa48fde9f29bc7e4d0872c}{bus\-Coupling\-Relays\-Resistance} () const 
+\begin{DoxyCompactList}\small\item\em Get route resistance for bus coupling relays part. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_value}{mdt\-Value} \hyperlink{classmdt_tt_test_model_item_route_data_ad7b3a61c543a5b94152cdee7f927c613}{channel\-Relays\-Resistance} () const 
+\begin{DoxyCompactList}\small\item\em Get route resistance for channel relays part. \end{DoxyCompactList}\item 
+Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_tt_test_model_item_route_data_a46253ee7126757e7043c20ee1c806145}{bus\-Coupling\-Relays\-Id\-List} () const 
+\begin{DoxyCompactList}\small\item\em Get I\-D list of bus coupling relays that are part of route. \end{DoxyCompactList}\item 
+Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_tt_test_model_item_route_data_a154505a1d81896cd1611d1010a606181}{channel\-Relays\-Id\-List} () const 
+\begin{DoxyCompactList}\small\item\em Get I\-D list of channel relays that are part of route. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 Container for test model item route data. 
 
-Definition at line 30 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-h.
+Contains data from Test\-Model\-Item\-Route\-\_\-tbl.
+
+A route is way that links a measure connection to a test connection in a coupler (a test node). 
+
+Definition at line 37 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_tt_test_model_item_route_data_a59a0b076edb84891df37a6db40962f44}{\index{mdt\-Tt\-Test\-Model\-Item\-Route\-Data@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}!mdt\-Tt\-Test\-Model\-Item\-Route\-Data@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}}
+\index{mdt\-Tt\-Test\-Model\-Item\-Route\-Data@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}!mdtTtTestModelItemRouteData@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}}
+\subsubsection[{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Tt\-Test\-Model\-Item\-Route\-Data\-::mdt\-Tt\-Test\-Model\-Item\-Route\-Data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_model_item_route_data_a59a0b076edb84891df37a6db40962f44}
+
+
+Construct a empty route data. 
+
+
+
+Definition at line 23 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-cpp.
+
+\hypertarget{classmdt_tt_test_model_item_route_data_a048bc0a97bbcd91a23e5fd9aad63c36c}{\index{mdt\-Tt\-Test\-Model\-Item\-Route\-Data@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}!mdt\-Tt\-Test\-Model\-Item\-Route\-Data@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}}
+\index{mdt\-Tt\-Test\-Model\-Item\-Route\-Data@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}!mdtTtTestModelItemRouteData@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}}
+\subsubsection[{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Tt\-Test\-Model\-Item\-Route\-Data\-::mdt\-Tt\-Test\-Model\-Item\-Route\-Data (
+\begin{DoxyParamCaption}
+\item[{const Q\-Sql\-Record \&}]{record}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_model_item_route_data_a048bc0a97bbcd91a23e5fd9aad63c36c}
+
+
+Construct data from a sql record. 
+
+Given record must contain all fields from Test\-Model\-Item\-Route\-\_\-tbl. If record includes Test\-Connection\-\_\-\-Id\-\_\-\-F\-K, test\-Connection\-Id will also be set. If record includes Dut\-Connection\-\_\-\-Id\-\_\-\-F\-K, dut\-Connection\-Id will also be set.
+
+\begin{DoxyPrecond}{Precondition}
+record must contain following fields\-: Id\-\_\-\-P\-K, Test\-Model\-Item\-\_\-\-Id\-\_\-\-F\-K, Test\-Link\-\_\-\-Id\-\_\-\-F\-K and Measure\-Test\-Node\-Unit\-Connection\-\_\-\-Id\-\_\-\-F\-K. 
+\end{DoxyPrecond}
+
+
+Definition at line 27 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-cpp.
+
+
+
+References set\-Dut\-Connection\-Id(), set\-Id(), set\-Measure\-Connection\-Id(), set\-Test\-Connection\-Id(), set\-Test\-Link\-Id(), and set\-Test\-Model\-Item\-Id().
 
 
 
@@ -72,7 +132,7 @@ Fields Test\-Model\-Item\-\_\-\-Id\-\_\-\-F\-K and Test\-Model\-Item\-Route\-\_\
 \end{DoxyPrecond}
 
 
-Definition at line 74 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-cpp.
+Definition at line 99 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-cpp.
 
 
 
@@ -81,6 +141,66 @@ References mdt\-Sql\-Record\-::contains(), and mdt\-Sql\-Record\-::set\-Value().
 
 
 Referenced by mdt\-Tt\-Test\-Model\-Item\-::add\-Route().
+
+\hypertarget{classmdt_tt_test_model_item_route_data_a46253ee7126757e7043c20ee1c806145}{\index{mdt\-Tt\-Test\-Model\-Item\-Route\-Data@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}!bus\-Coupling\-Relays\-Id\-List@{bus\-Coupling\-Relays\-Id\-List}}
+\index{bus\-Coupling\-Relays\-Id\-List@{bus\-Coupling\-Relays\-Id\-List}!mdtTtTestModelItemRouteData@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}}
+\subsubsection[{bus\-Coupling\-Relays\-Id\-List}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ Q\-Variant $>$ mdt\-Tt\-Test\-Model\-Item\-Route\-Data\-::bus\-Coupling\-Relays\-Id\-List (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_tt_test_model_item_route_data_a46253ee7126757e7043c20ee1c806145}
+
+
+Get I\-D list of bus coupling relays that are part of route. 
+
+
+
+Definition at line 149 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-cpp.
+
+\hypertarget{classmdt_tt_test_model_item_route_data_ae11206cb9efa48fde9f29bc7e4d0872c}{\index{mdt\-Tt\-Test\-Model\-Item\-Route\-Data@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}!bus\-Coupling\-Relays\-Resistance@{bus\-Coupling\-Relays\-Resistance}}
+\index{bus\-Coupling\-Relays\-Resistance@{bus\-Coupling\-Relays\-Resistance}!mdtTtTestModelItemRouteData@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}}
+\subsubsection[{bus\-Coupling\-Relays\-Resistance}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Value} mdt\-Tt\-Test\-Model\-Item\-Route\-Data\-::bus\-Coupling\-Relays\-Resistance (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_tt_test_model_item_route_data_ae11206cb9efa48fde9f29bc7e4d0872c}
+
+
+Get route resistance for bus coupling relays part. 
+
+This function is similar to \hyperlink{classmdt_tt_test_model_item_route_data_a6407d3d1bbac9abc3c36a0b43c51c47d}{route\-Resistance()}, but returns only sum for bus coupling relays. 
+
+Definition at line 121 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-cpp.
+
+\hypertarget{classmdt_tt_test_model_item_route_data_a154505a1d81896cd1611d1010a606181}{\index{mdt\-Tt\-Test\-Model\-Item\-Route\-Data@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}!channel\-Relays\-Id\-List@{channel\-Relays\-Id\-List}}
+\index{channel\-Relays\-Id\-List@{channel\-Relays\-Id\-List}!mdtTtTestModelItemRouteData@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}}
+\subsubsection[{channel\-Relays\-Id\-List}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ Q\-Variant $>$ mdt\-Tt\-Test\-Model\-Item\-Route\-Data\-::channel\-Relays\-Id\-List (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_tt_test_model_item_route_data_a154505a1d81896cd1611d1010a606181}
+
+
+Get I\-D list of channel relays that are part of route. 
+
+
+
+Definition at line 164 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-cpp.
+
+\hypertarget{classmdt_tt_test_model_item_route_data_ad7b3a61c543a5b94152cdee7f927c613}{\index{mdt\-Tt\-Test\-Model\-Item\-Route\-Data@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}!channel\-Relays\-Resistance@{channel\-Relays\-Resistance}}
+\index{channel\-Relays\-Resistance@{channel\-Relays\-Resistance}!mdtTtTestModelItemRouteData@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}}
+\subsubsection[{channel\-Relays\-Resistance}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Value} mdt\-Tt\-Test\-Model\-Item\-Route\-Data\-::channel\-Relays\-Resistance (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_tt_test_model_item_route_data_ad7b3a61c543a5b94152cdee7f927c613}
+
+
+Get route resistance for channel relays part. 
+
+This function is similar to \hyperlink{classmdt_tt_test_model_item_route_data_a6407d3d1bbac9abc3c36a0b43c51c47d}{route\-Resistance()}, but returns only sum for channel relays. 
+
+Definition at line 135 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-cpp.
 
 \hypertarget{classmdt_tt_test_model_item_route_data_a2d247da5bc9d377d5dafbb1080d65be6}{\index{mdt\-Tt\-Test\-Model\-Item\-Route\-Data@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}!clear\-Data@{clear\-Data}}
 \index{clear\-Data@{clear\-Data}!mdtTtTestModelItemRouteData@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}}
@@ -95,7 +215,7 @@ Clear.
 
 
 
-Definition at line 23 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-cpp.
+Definition at line 48 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-cpp.
 
 \hypertarget{classmdt_tt_test_model_item_route_data_afd8421d44dd279d2276cdf0aacfe8f6f}{\index{mdt\-Tt\-Test\-Model\-Item\-Route\-Data@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}!dut\-Connection\-Id@{dut\-Connection\-Id}}
 \index{dut\-Connection\-Id@{dut\-Connection\-Id}!mdtTtTestModelItemRouteData@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}}
@@ -110,7 +230,7 @@ Get D\-U\-T connection I\-D.
 
 
 
-Definition at line 72 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-h.
+Definition at line 93 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-h.
 
 \hypertarget{classmdt_tt_test_model_item_route_data_ad34638a6361e64a867f30821b73ff385}{\index{mdt\-Tt\-Test\-Model\-Item\-Route\-Data@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}!id@{id}}
 \index{id@{id}!mdtTtTestModelItemRouteData@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}}
@@ -125,7 +245,7 @@ Get I\-D.
 
 
 
-Definition at line 46 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-h.
+Definition at line 67 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-h.
 
 
 
@@ -144,11 +264,28 @@ Get measure connection I\-D.
 
 
 
-Definition at line 88 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-h.
+Definition at line 109 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-h.
 
 
 
-Referenced by mdt\-Tt\-Test\-Model\-Item\-::add\-Route(), and mdt\-Tt\-Test\-Model\-::add\-Routes\-To\-Item\-Data().
+Referenced by mdt\-Tt\-Test\-Model\-Item\-::add\-Route(), mdt\-Tt\-Test\-Model\-::add\-Routes\-To\-Item\-Data(), and mdt\-Tt\-Test\-::get\-Link\-Data\-List\-For\-Route().
+
+\hypertarget{classmdt_tt_test_model_item_route_data_a6407d3d1bbac9abc3c36a0b43c51c47d}{\index{mdt\-Tt\-Test\-Model\-Item\-Route\-Data@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}!route\-Resistance@{route\-Resistance}}
+\index{route\-Resistance@{route\-Resistance}!mdtTtTestModelItemRouteData@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}}
+\subsubsection[{route\-Resistance}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Value} mdt\-Tt\-Test\-Model\-Item\-Route\-Data\-::route\-Resistance (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_tt_test_model_item_route_data_a6407d3d1bbac9abc3c36a0b43c51c47d}
+
+
+Get route resistance. 
+
+Route resistance is due to coupler (test node) relays. This values are set during a test node calibration.
+
+Note\-: this value is only available if added setup data were constructed from Test\-Node\-Unit\-Setup\-\_\-view. 
+
+Definition at line 109 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-cpp.
 
 \hypertarget{classmdt_tt_test_model_item_route_data_a39994d10e123601443fed05a5968bf02}{\index{mdt\-Tt\-Test\-Model\-Item\-Route\-Data@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}!set\-Dut\-Connection\-Id@{set\-Dut\-Connection\-Id}}
 \index{set\-Dut\-Connection\-Id@{set\-Dut\-Connection\-Id}!mdtTtTestModelItemRouteData@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}}
@@ -163,7 +300,7 @@ Set D\-U\-T connection I\-D.
 
 
 
-Definition at line 59 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-cpp.
+Definition at line 84 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-cpp.
 
 
 
@@ -171,7 +308,7 @@ References id().
 
 
 
-Referenced by mdt\-Tt\-Test\-Model\-::add\-Routes\-To\-Item\-Data().
+Referenced by mdt\-Tt\-Test\-Model\-::add\-Routes\-To\-Item\-Data(), and mdt\-Tt\-Test\-Model\-Item\-Route\-Data().
 
 \hypertarget{classmdt_tt_test_model_item_route_data_a40e5fe46e70a9a7ffc2e5f3d8171b679}{\index{mdt\-Tt\-Test\-Model\-Item\-Route\-Data@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}!set\-Id@{set\-Id}}
 \index{set\-Id@{set\-Id}!mdtTtTestModelItemRouteData@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}}
@@ -186,7 +323,7 @@ Set I\-D.
 
 Will also update field Test\-Model\-Item\-Route\-\_\-\-Id\-\_\-\-F\-K in each test node unit setup 
 
-Definition at line 34 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-cpp.
+Definition at line 59 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-cpp.
 
 
 
@@ -194,7 +331,7 @@ References id().
 
 
 
-Referenced by mdt\-Tt\-Test\-Model\-Item\-::add\-Route().
+Referenced by mdt\-Tt\-Test\-Model\-Item\-::add\-Route(), and mdt\-Tt\-Test\-Model\-Item\-Route\-Data().
 
 \hypertarget{classmdt_tt_test_model_item_route_data_ad7de5db4f37be0695a4bb02c49f827e3}{\index{mdt\-Tt\-Test\-Model\-Item\-Route\-Data@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}!set\-Measure\-Connection\-Id@{set\-Measure\-Connection\-Id}}
 \index{set\-Measure\-Connection\-Id@{set\-Measure\-Connection\-Id}!mdtTtTestModelItemRouteData@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}}
@@ -209,7 +346,7 @@ Set measure connection I\-D.
 
 
 
-Definition at line 69 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-cpp.
+Definition at line 94 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-cpp.
 
 
 
@@ -217,7 +354,7 @@ References id().
 
 
 
-Referenced by mdt\-Tt\-Test\-Model\-Item\-::add\-Route(), and mdt\-Tt\-Test\-Model\-::add\-Routes\-To\-Item\-Data().
+Referenced by mdt\-Tt\-Test\-Model\-Item\-::add\-Route(), mdt\-Tt\-Test\-Model\-::add\-Routes\-To\-Item\-Data(), and mdt\-Tt\-Test\-Model\-Item\-Route\-Data().
 
 \hypertarget{classmdt_tt_test_model_item_route_data_afdaa11c1608e78d7dc888e369b4d88cd}{\index{mdt\-Tt\-Test\-Model\-Item\-Route\-Data@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}!set\-Test\-Connection\-Id@{set\-Test\-Connection\-Id}}
 \index{set\-Test\-Connection\-Id@{set\-Test\-Connection\-Id}!mdtTtTestModelItemRouteData@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}}
@@ -232,7 +369,7 @@ Set test connection I\-D.
 
 
 
-Definition at line 64 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-cpp.
+Definition at line 89 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-cpp.
 
 
 
@@ -240,7 +377,7 @@ References id().
 
 
 
-Referenced by mdt\-Tt\-Test\-Model\-::add\-Routes\-To\-Item\-Data().
+Referenced by mdt\-Tt\-Test\-Model\-::add\-Routes\-To\-Item\-Data(), and mdt\-Tt\-Test\-Model\-Item\-Route\-Data().
 
 \hypertarget{classmdt_tt_test_model_item_route_data_a6255e53365aceedba51858172b3622ca}{\index{mdt\-Tt\-Test\-Model\-Item\-Route\-Data@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}!set\-Test\-Link\-Id@{set\-Test\-Link\-Id}}
 \index{set\-Test\-Link\-Id@{set\-Test\-Link\-Id}!mdtTtTestModelItemRouteData@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}}
@@ -255,7 +392,7 @@ Set test link I\-D.
 
 
 
-Definition at line 54 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-cpp.
+Definition at line 79 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-cpp.
 
 
 
@@ -263,7 +400,7 @@ References id().
 
 
 
-Referenced by mdt\-Tt\-Test\-Model\-Item\-::add\-Route(), and mdt\-Tt\-Test\-Model\-::add\-Routes\-To\-Item\-Data().
+Referenced by mdt\-Tt\-Test\-Model\-Item\-::add\-Route(), mdt\-Tt\-Test\-Model\-::add\-Routes\-To\-Item\-Data(), and mdt\-Tt\-Test\-Model\-Item\-Route\-Data().
 
 \hypertarget{classmdt_tt_test_model_item_route_data_a2180aaa63197ce3540638e256ae2acb6}{\index{mdt\-Tt\-Test\-Model\-Item\-Route\-Data@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}!set\-Test\-Model\-Item\-Id@{set\-Test\-Model\-Item\-Id}}
 \index{set\-Test\-Model\-Item\-Id@{set\-Test\-Model\-Item\-Id}!mdtTtTestModelItemRouteData@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}}
@@ -278,7 +415,7 @@ Set test model item I\-D.
 
 Will also update field Test\-Model\-Item\-\_\-\-Id\-\_\-\-F\-K in each test node unit setup 
 
-Definition at line 44 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-cpp.
+Definition at line 69 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-cpp.
 
 
 
@@ -286,7 +423,7 @@ References id().
 
 
 
-Referenced by mdt\-Tt\-Test\-Model\-Item\-::add\-Route(), and mdt\-Tt\-Test\-Model\-Item\-Data\-::add\-Route\-Data().
+Referenced by mdt\-Tt\-Test\-Model\-Item\-::add\-Route(), mdt\-Tt\-Test\-Model\-Item\-Data\-::add\-Route\-Data(), and mdt\-Tt\-Test\-Model\-Item\-Route\-Data().
 
 \hypertarget{classmdt_tt_test_model_item_route_data_aa12fbb1f86b06f2e5cef94e44765f970}{\index{mdt\-Tt\-Test\-Model\-Item\-Route\-Data@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}!setup\-Data\-List@{setup\-Data\-List}}
 \index{setup\-Data\-List@{setup\-Data\-List}!mdtTtTestModelItemRouteData@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}}
@@ -301,11 +438,11 @@ Get test node unit setup data list.
 
 
 
-Definition at line 102 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-h.
+Definition at line 123 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-h.
 
 
 
-Referenced by mdt\-Tt\-Test\-Model\-Item\-::add\-Route(), and mdt\-Tt\-Test\-Model\-::add\-Routes\-To\-Item\-Data().
+Referenced by mdt\-Tt\-Test\-Model\-Item\-::add\-Route(), mdt\-Tt\-Test\-Node\-Setup\-Data\-::add\-Route\-Data(), mdt\-Tt\-Test\-Model\-::add\-Routes\-To\-Item\-Data(), and mdt\-Tt\-Test\-::get\-Link\-Data\-List\-For\-Route().
 
 \hypertarget{classmdt_tt_test_model_item_route_data_af19d1c8c5050a14ab7e55700544877d5}{\index{mdt\-Tt\-Test\-Model\-Item\-Route\-Data@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}!test\-Connection\-Id@{test\-Connection\-Id}}
 \index{test\-Connection\-Id@{test\-Connection\-Id}!mdtTtTestModelItemRouteData@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}}
@@ -320,7 +457,11 @@ Get test connection I\-D.
 
 
 
-Definition at line 80 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-h.
+Definition at line 101 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-h.
+
+
+
+Referenced by mdt\-Tt\-Test\-::get\-Link\-Data\-List\-For\-Route().
 
 \hypertarget{classmdt_tt_test_model_item_route_data_a7c58642d4e7ef24dac1d27f7e4be41ee}{\index{mdt\-Tt\-Test\-Model\-Item\-Route\-Data@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}!test\-Link\-Id@{test\-Link\-Id}}
 \index{test\-Link\-Id@{test\-Link\-Id}!mdtTtTestModelItemRouteData@{mdt\-Tt\-Test\-Model\-Item\-Route\-Data}}
@@ -335,7 +476,7 @@ Get test link I\-D.
 
 
 
-Definition at line 64 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-h.
+Definition at line 85 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-h.
 
 
 
@@ -354,7 +495,7 @@ Get test model item I\-D.
 
 
 
-Definition at line 56 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-h.
+Definition at line 77 of file mdt\-Tt\-Test\-Model\-Item\-Route\-Data.\-h.
 
 
 

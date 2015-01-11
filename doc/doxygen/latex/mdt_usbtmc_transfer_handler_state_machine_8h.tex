@@ -1,0 +1,153 @@
+\hypertarget{mdt_usbtmc_transfer_handler_state_machine_8h}{\section{src/mdtport/mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine.h File Reference}
+\label{mdt_usbtmc_transfer_handler_state_machine_8h}\index{src/mdtport/mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine.\-h@{src/mdtport/mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine.\-h}}
+}
+{\ttfamily \#include \char`\"{}mdt\-Usbtmc\-Transfer\-Handler.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}mdt\-Usbtmc\-Control\-Transfer.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}mdt\-Usbtmc\-Bulk\-Transfer.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}mdt\-Usbtmc\-Interrupt\-Transfer.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}mdt\-Error.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include $<$boost/msm/back/state\-\_\-machine.\-hpp$>$}\\*
+{\ttfamily \#include $<$boost/msm/front/state\-\_\-machine\-\_\-def.\-hpp$>$}\\*
+{\ttfamily \#include $<$boost/msm/front/functor\-\_\-row.\-hpp$>$}\\*
+{\ttfamily \#include $<$boost/msm/front/euml/common.\-hpp$>$}\\*
+{\ttfamily \#include $<$boost/msm/front/euml/operator.\-hpp$>$}\\*
+{\ttfamily \#include $<$mutex$>$}\\*
+{\ttfamily \#include $<$Qt\-Global$>$}\\*
+{\ttfamily \#include $<$Q\-Debug$>$}\\*
+Include dependency graph for mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine.\-h\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{mdt_usbtmc_transfer_handler_state_machine_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=236pt]{mdt_usbtmc_transfer_handler_state_machine_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_error_occured_event}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Error\-Occured\-Event}
+\begin{DoxyCompactList}\small\item\em Error occured event. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_device_disconnected_event}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Device\-Disconnected\-Event}
+\begin{DoxyCompactList}\small\item\em Device disconnected event. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_stop_requested_event}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Stop\-Requested\-Event}
+\begin{DoxyCompactList}\small\item\em Stop requested event. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_control_transfer_completed_event}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Control\-Transfer\-Completed\-Event}
+\begin{DoxyCompactList}\small\item\em Control transfer completed event. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_control_transfer_successful_event}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Control\-Transfer\-Successful\-Event}
+\begin{DoxyCompactList}\small\item\em Control transfer successfully completed event. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_bulk_out_transfer_completed_event}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Bulk\-Out\-Transfer\-Completed\-Event}
+\begin{DoxyCompactList}\small\item\em Bulk-\/\-O\-U\-T transfer completed event. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_bulk_in_transfer_completed_event}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Bulk\-In\-Transfer\-Completed\-Event}
+\begin{DoxyCompactList}\small\item\em Bulk-\/\-I\-N transfer completed event. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_interrupt_in_transfer_completed_event}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Interrupt\-In\-Transfer\-Completed\-Event}
+\begin{DoxyCompactList}\small\item\em Interrupt-\/\-I\-N transfer completed event. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_no_more_control_transfer_pending_event}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-No\-More\-Control\-Transfer\-Pending\-Event}
+\begin{DoxyCompactList}\small\item\em No more Control transfer pending event. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_no_more_bulk_out_transfer_pending_event}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-No\-More\-Bulk\-Out\-Transfer\-Pending\-Event}
+\begin{DoxyCompactList}\small\item\em No more Bulk-\/\-O\-U\-Ttransfer pending event. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_no_more_bulk_in_transfer_pending_event}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-No\-More\-Bulk\-In\-Transfer\-Pending\-Event}
+\begin{DoxyCompactList}\small\item\em No more Bulk-\/\-I\-Ntransfer pending event. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_no_more_interrupt_in_transfer_pending_event}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-No\-More\-Interrupt\-In\-Transfer\-Pending\-Event}
+\begin{DoxyCompactList}\small\item\em No more Interrupt-\/\-I\-N transfer pending event. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_no_more_transfer_pending_event}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-No\-More\-Transfer\-Pending\-Event}
+\begin{DoxyCompactList}\small\item\em No more transfer pending event. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_abort_bulk_out_requested_event}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Abort\-Bulk\-Out\-Requested\-Event}
+\begin{DoxyCompactList}\small\item\em Abort Bulk-\/\-O\-U\-T requested event. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_abort_bulk_in_requested_event}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Abort\-Bulk\-In\-Requested\-Event}
+\begin{DoxyCompactList}\small\item\em Abort Bulk-\/\-I\-N requested event. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_clear_bulk_io_requested_event}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Clear\-Bulk\-Io\-Requested\-Event}
+\begin{DoxyCompactList}\small\item\em Clear Bulk I/\-O requested event. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_split_action_done_event}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Split\-Action\-Done\-Event}
+\begin{DoxyCompactList}\small\item\em Split action done event. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_clear_bulk_out_endpoint_halt_requested_event}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Clear\-Bulk\-Out\-Endpoint\-Halt\-Requested\-Event}
+\begin{DoxyCompactList}\small\item\em Clear Bulk-\/\-O\-U\-T endpoint halt requested event. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_clear_bulk_in_endpoint_halt_requested_event}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Clear\-Bulk\-In\-Endpoint\-Halt\-Requested\-Event}
+\begin{DoxyCompactList}\small\item\em Clear Bulk-\/\-I\-N endpoint halt requested event. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_must_be_stopped_flag}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Must\-Be\-Stopped\-Flag}
+\begin{DoxyCompactList}\small\item\em Tell usb port thread that it must not handle events anymore. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_processing_flag}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Processing\-Flag}
+\begin{DoxyCompactList}\small\item\em Tell U\-S\-B\-T\-M\-C port that we can accept requests. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running__}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-}
+\begin{DoxyCompactList}\small\item\em Running submachine. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___1_1_processing}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-\-::\-Processing}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___1_1_processing}{Processing} state. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___1_1_clearing_bulk_io}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-\-::\-Clearing\-Bulk\-Io}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___1_1_clearing_bulk_io}{Clearing\-Bulk\-Io} state. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___1_1_clearing_bulk_out_endpoint_halt}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-\-::\-Clearing\-Bulk\-Out\-Endpoint\-Halt}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___1_1_clearing_bulk_out_endpoint_halt}{Clearing\-Bulk\-Out\-Endpoint\-Halt} state. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___1_1_clearing_bulk_in_endpoint_halt}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-\-::\-Clearing\-Bulk\-In\-Endpoint\-Halt}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___1_1_clearing_bulk_in_endpoint_halt}{Clearing\-Bulk\-In\-Endpoint\-Halt} state. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___1_1_aborting_bulk_out}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-\-::\-Aborting\-Bulk\-Out}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___1_1_aborting_bulk_out}{Aborting\-Bulk\-Out} state. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___1_1_aborting_bulk_in}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-\-::\-Aborting\-Bulk\-In}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___1_1_aborting_bulk_in}{Aborting\-Bulk\-In} state. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running___1_1transition__table}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running\-\_\-\-::transition\-\_\-table}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_running__}{Running\-\_\-} submachine transition table. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_state_machine__}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-State\-Machine\-\_\-}
+\begin{DoxyCompactList}\small\item\em Main state machine definition class. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_state_machine___1_1_error}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-State\-Machine\-\_\-\-::\-Error}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_state_machine___1_1_error}{Error} state. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_state_machine___1_1_disconnected}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-State\-Machine\-\_\-\-::\-Disconnected}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_state_machine___1_1_disconnected}{Disconnected} state. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_state_machine___1_1_stopping}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-State\-Machine\-\_\-\-::\-Stopping}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_state_machine___1_1_stopping}{Stopping} state. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_state_machine___1_1_stopped}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-State\-Machine\-\_\-\-::\-Stopped}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_state_machine___1_1_stopped}{Stopped} state. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_state_machine___1_1transition__table}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-State\-Machine\-\_\-\-::transition\-\_\-table}
+\begin{DoxyCompactList}\small\item\em Main state machine transition table. \end{DoxyCompactList}\item 
+struct \hyperlink{structmdt_usbtmc_transfer_handler_state_machine_1_1_state_machine}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-State\-Machine}
+\begin{DoxyCompactList}\small\item\em State machine class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespacemdt_usbtmc_transfer_handler_state_machine}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine}
+\begin{DoxyCompactList}\small\item\em U\-S\-B\-T\-M\-C transfer handler state machine namespace. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{mdt_usbtmc_transfer_handler_state_machine_8h_a5cfc0a80bcb9c742a4dd13252e8e70b2}{B\-O\-O\-S\-T\-\_\-\-M\-P\-L\-\_\-\-C\-F\-G\-\_\-\-N\-O\-\_\-\-P\-R\-E\-P\-R\-O\-C\-E\-S\-S\-E\-D\-\_\-\-H\-E\-A\-D\-E\-R\-S}
+\item 
+\#define \hyperlink{mdt_usbtmc_transfer_handler_state_machine_8h_a186e9b0d4ca49c145b094b9f9837c5d8}{B\-O\-O\-S\-T\-\_\-\-M\-P\-L\-\_\-\-L\-I\-M\-I\-T\-\_\-\-V\-E\-C\-T\-O\-R\-\_\-\-S\-I\-Z\-E}~30
+\item 
+\#define \hyperlink{mdt_usbtmc_transfer_handler_state_machine_8h_a823f3b3492f924051a8b1616b17bba62}{B\-O\-O\-S\-T\-\_\-\-M\-P\-L\-\_\-\-L\-I\-M\-I\-T\-\_\-\-M\-A\-P\-\_\-\-S\-I\-Z\-E}~30
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef \\*
+boost\-::msm\-::back\-::state\-\_\-machine\\*
+$<$ Running\-\_\- $>$ \hyperlink{namespacemdt_usbtmc_transfer_handler_state_machine_abc32bfe633094c8a0764568f294ef3e5}{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine\-::\-Running}
+\begin{DoxyCompactList}\small\item\em Running submachine. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{mdt_usbtmc_transfer_handler_state_machine_8h_a5cfc0a80bcb9c742a4dd13252e8e70b2}{\index{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine.\-h@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine.\-h}!B\-O\-O\-S\-T\-\_\-\-M\-P\-L\-\_\-\-C\-F\-G\-\_\-\-N\-O\-\_\-\-P\-R\-E\-P\-R\-O\-C\-E\-S\-S\-E\-D\-\_\-\-H\-E\-A\-D\-E\-R\-S@{B\-O\-O\-S\-T\-\_\-\-M\-P\-L\-\_\-\-C\-F\-G\-\_\-\-N\-O\-\_\-\-P\-R\-E\-P\-R\-O\-C\-E\-S\-S\-E\-D\-\_\-\-H\-E\-A\-D\-E\-R\-S}}
+\index{B\-O\-O\-S\-T\-\_\-\-M\-P\-L\-\_\-\-C\-F\-G\-\_\-\-N\-O\-\_\-\-P\-R\-E\-P\-R\-O\-C\-E\-S\-S\-E\-D\-\_\-\-H\-E\-A\-D\-E\-R\-S@{B\-O\-O\-S\-T\-\_\-\-M\-P\-L\-\_\-\-C\-F\-G\-\_\-\-N\-O\-\_\-\-P\-R\-E\-P\-R\-O\-C\-E\-S\-S\-E\-D\-\_\-\-H\-E\-A\-D\-E\-R\-S}!mdtUsbtmcTransferHandlerStateMachine.h@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine.\-h}}
+\subsubsection[{B\-O\-O\-S\-T\-\_\-\-M\-P\-L\-\_\-\-C\-F\-G\-\_\-\-N\-O\-\_\-\-P\-R\-E\-P\-R\-O\-C\-E\-S\-S\-E\-D\-\_\-\-H\-E\-A\-D\-E\-R\-S}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\-O\-O\-S\-T\-\_\-\-M\-P\-L\-\_\-\-C\-F\-G\-\_\-\-N\-O\-\_\-\-P\-R\-E\-P\-R\-O\-C\-E\-S\-S\-E\-D\-\_\-\-H\-E\-A\-D\-E\-R\-S}}\label{mdt_usbtmc_transfer_handler_state_machine_8h_a5cfc0a80bcb9c742a4dd13252e8e70b2}
+
+
+Definition at line 31 of file mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine.\-h.
+
+\hypertarget{mdt_usbtmc_transfer_handler_state_machine_8h_a823f3b3492f924051a8b1616b17bba62}{\index{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine.\-h@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine.\-h}!B\-O\-O\-S\-T\-\_\-\-M\-P\-L\-\_\-\-L\-I\-M\-I\-T\-\_\-\-M\-A\-P\-\_\-\-S\-I\-Z\-E@{B\-O\-O\-S\-T\-\_\-\-M\-P\-L\-\_\-\-L\-I\-M\-I\-T\-\_\-\-M\-A\-P\-\_\-\-S\-I\-Z\-E}}
+\index{B\-O\-O\-S\-T\-\_\-\-M\-P\-L\-\_\-\-L\-I\-M\-I\-T\-\_\-\-M\-A\-P\-\_\-\-S\-I\-Z\-E@{B\-O\-O\-S\-T\-\_\-\-M\-P\-L\-\_\-\-L\-I\-M\-I\-T\-\_\-\-M\-A\-P\-\_\-\-S\-I\-Z\-E}!mdtUsbtmcTransferHandlerStateMachine.h@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine.\-h}}
+\subsubsection[{B\-O\-O\-S\-T\-\_\-\-M\-P\-L\-\_\-\-L\-I\-M\-I\-T\-\_\-\-M\-A\-P\-\_\-\-S\-I\-Z\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\-O\-O\-S\-T\-\_\-\-M\-P\-L\-\_\-\-L\-I\-M\-I\-T\-\_\-\-M\-A\-P\-\_\-\-S\-I\-Z\-E~30}}\label{mdt_usbtmc_transfer_handler_state_machine_8h_a823f3b3492f924051a8b1616b17bba62}
+
+
+Definition at line 33 of file mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine.\-h.
+
+\hypertarget{mdt_usbtmc_transfer_handler_state_machine_8h_a186e9b0d4ca49c145b094b9f9837c5d8}{\index{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine.\-h@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine.\-h}!B\-O\-O\-S\-T\-\_\-\-M\-P\-L\-\_\-\-L\-I\-M\-I\-T\-\_\-\-V\-E\-C\-T\-O\-R\-\_\-\-S\-I\-Z\-E@{B\-O\-O\-S\-T\-\_\-\-M\-P\-L\-\_\-\-L\-I\-M\-I\-T\-\_\-\-V\-E\-C\-T\-O\-R\-\_\-\-S\-I\-Z\-E}}
+\index{B\-O\-O\-S\-T\-\_\-\-M\-P\-L\-\_\-\-L\-I\-M\-I\-T\-\_\-\-V\-E\-C\-T\-O\-R\-\_\-\-S\-I\-Z\-E@{B\-O\-O\-S\-T\-\_\-\-M\-P\-L\-\_\-\-L\-I\-M\-I\-T\-\_\-\-V\-E\-C\-T\-O\-R\-\_\-\-S\-I\-Z\-E}!mdtUsbtmcTransferHandlerStateMachine.h@{mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine.\-h}}
+\subsubsection[{B\-O\-O\-S\-T\-\_\-\-M\-P\-L\-\_\-\-L\-I\-M\-I\-T\-\_\-\-V\-E\-C\-T\-O\-R\-\_\-\-S\-I\-Z\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\-O\-O\-S\-T\-\_\-\-M\-P\-L\-\_\-\-L\-I\-M\-I\-T\-\_\-\-V\-E\-C\-T\-O\-R\-\_\-\-S\-I\-Z\-E~30}}\label{mdt_usbtmc_transfer_handler_state_machine_8h_a186e9b0d4ca49c145b094b9f9837c5d8}
+
+
+Definition at line 32 of file mdt\-Usbtmc\-Transfer\-Handler\-State\-Machine.\-h.
+

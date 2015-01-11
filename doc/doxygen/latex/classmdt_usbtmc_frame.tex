@@ -1,0 +1,615 @@
+\hypertarget{classmdt_usbtmc_frame}{\section{mdt\-Usbtmc\-Frame Class Reference}
+\label{classmdt_usbtmc_frame}\index{mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}}
+}
+
+
+\#include $<$\-Q\-Byte\-Array$>$  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Usbtmc\-Frame.\-h$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{classmdt_usbtmc_frame_abf1e449c264011341c477d45eb700c42}{msg\-Id\-\_\-t} \-: uint8\-\_\-t \{ \\*
+\hyperlink{classmdt_usbtmc_frame_abf1e449c264011341c477d45eb700c42adfdbe73c3e263c80155e377250eceebd}{msg\-Id\-\_\-t\-::\-M\-S\-G\-\_\-\-Z\-E\-R\-O} = 0, 
+\hyperlink{classmdt_usbtmc_frame_abf1e449c264011341c477d45eb700c42a1886876c21b4748a4d4fb1756e6cb8fa}{msg\-Id\-\_\-t\-::\-D\-E\-V\-\_\-\-D\-E\-P\-\_\-\-M\-S\-G\-\_\-\-O\-U\-T} = 1, 
+\hyperlink{classmdt_usbtmc_frame_abf1e449c264011341c477d45eb700c42a1238d82a486a9d6324ace1d5c60a92bd}{msg\-Id\-\_\-t\-::\-D\-E\-V\-\_\-\-D\-E\-P\-\_\-\-M\-S\-G\-\_\-\-I\-N} = 2, 
+\hyperlink{classmdt_usbtmc_frame_abf1e449c264011341c477d45eb700c42ab2a33799ba113bf457f1112d3f685662}{msg\-Id\-\_\-t\-::\-V\-E\-N\-D\-O\-R\-\_\-\-S\-P\-E\-C\-I\-F\-I\-C\-\_\-\-O\-U\-T} = 126, 
+\\*
+\hyperlink{classmdt_usbtmc_frame_abf1e449c264011341c477d45eb700c42ad9f728364c29a2fef0432b273f9d03a4}{msg\-Id\-\_\-t\-::\-V\-E\-N\-D\-O\-R\-\_\-\-S\-P\-E\-C\-I\-F\-I\-C\-\_\-\-I\-N} = 127
+ \}
+\begin{DoxyCompactList}\small\item\em U\-S\-B\-T\-M\-C Msg\-I\-D. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_usbtmc_frame_a13c13f990d680f6f6469b6497a99ba9b}{mdt\-Usbtmc\-Frame} (int buffer\-Size)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_frame_a7319ff2fffb9f1c65b4c43343b82b473}{clear} ()
+\begin{DoxyCompactList}\small\item\em Clear frame. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_usbtmc_frame_a5dd70d38f6ac1dde01cd239683059484}{capacity} () const 
+\begin{DoxyCompactList}\small\item\em Get internal buffer capacity. \end{DoxyCompactList}\item 
+uint8\-\_\-t $\ast$ \hyperlink{classmdt_usbtmc_frame_a687e2e2cac399ce6d51359d7ad10a304}{buffer} ()
+\begin{DoxyCompactList}\small\item\em Access internal buffer. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_usbtmc_frame_ae6e3bf44c22c868d476c30177cfa4ec7}{buffer\-Length} () const 
+\begin{DoxyCompactList}\small\item\em Get buffer length. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usbtmc_frame_a9f62664b9dcf56a7666b3ea23a715075}{is\-Complete} (int written) const 
+\begin{DoxyCompactList}\small\item\em Check if tranfer is complete (valid for bulk I\-N transfer) \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_frame_addeba40f6ea48d960a7cf1e80f409c77}{set\-Msg\-I\-D} (\hyperlink{classmdt_usbtmc_frame_abf1e449c264011341c477d45eb700c42}{msg\-Id\-\_\-t} id)
+\begin{DoxyCompactList}\small\item\em Set Msg\-I\-D. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_usbtmc_frame_abf1e449c264011341c477d45eb700c42}{msg\-Id\-\_\-t} \hyperlink{classmdt_usbtmc_frame_aacd5285efda4efa0b7884418cb689b2e}{msg\-I\-D} () const 
+\begin{DoxyCompactList}\small\item\em Get Msg\-I\-D. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_frame_ad7d6081b22098dc74ff688f250faf3da}{setb\-Tag} (uint8\-\_\-t \hyperlink{classmdt_usbtmc_frame_a46d0574cdf95da840e4c6f5de314c15d}{b\-Tag})
+\begin{DoxyCompactList}\small\item\em Set b\-Tag. \end{DoxyCompactList}\item 
+uint8\-\_\-t \hyperlink{classmdt_usbtmc_frame_a46d0574cdf95da840e4c6f5de314c15d}{b\-Tag} () const 
+\begin{DoxyCompactList}\small\item\em Get b\-Tag. \end{DoxyCompactList}\item 
+uint8\-\_\-t \hyperlink{classmdt_usbtmc_frame_a99e7fe2dc11815b7d84ff0e7306cfe6b}{b\-Tag\-Inverse} () const 
+\begin{DoxyCompactList}\small\item\em Get b\-Tag\-Inverse. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_frame_aacf216cd3759dd0a3d533077d9573bef}{set\-Transfer\-Size} (uint32\-\_\-t size)
+\begin{DoxyCompactList}\small\item\em Set Transfer\-Size. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_frame_aca8334fa539afd3e331937e707c8f0a8}{set\-Transfer\-Size\-To\-Max} ()
+\begin{DoxyCompactList}\small\item\em Set Transfer\-Size to maximum possible size. \end{DoxyCompactList}\item 
+uint32\-\_\-t \hyperlink{classmdt_usbtmc_frame_a90b3b355c714309a82dfd6dbf493cf5d}{transfer\-Size} () const 
+\begin{DoxyCompactList}\small\item\em Get Transfer\-Size. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_frame_a04907e1149ebf7ab82ec884d555eb0b3}{set\-E\-O\-M} (bool set)
+\begin{DoxyCompactList}\small\item\em Set E\-O\-M. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usbtmc_frame_a00d2e0c560bf7c57d14d072d7df3544f}{E\-O\-Mset} () const 
+\begin{DoxyCompactList}\small\item\em Check if E\-O\-M is set. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_frame_ab52a02fbc3c84155fd15446ea2380137}{set\-Term\-Char} (char c)
+\begin{DoxyCompactList}\small\item\em Set Term\-Char. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usbtmc_frame_a50a256efd2ac5ec685ee73d6f49aa8d9}{Term\-Charset} () const 
+\begin{DoxyCompactList}\small\item\em Check if Term\-Char is set. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_frame_a55bdbccc6dafccb18cef4b7a5329787f}{reset\-Term\-Char} ()
+\begin{DoxyCompactList}\small\item\em Reset Term\-Char. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_frame_a9711fa58a840a62e8fe22e5d31b259f4}{set\-Data} (\hyperlink{classmdt_usbtmc_tx_message}{mdt\-Usbtmc\-Tx\-Message} \&message)
+\begin{DoxyCompactList}\small\item\em Set data. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_frame_a7ba6f7fea904266d0c9533ac84bdf917}{get\-Data} (\hyperlink{classmdt_usbtmc_rx_message}{mdt\-Usbtmc\-Rx\-Message} \&message)
+\begin{DoxyCompactList}\small\item\em Get data. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_frame_a9784bc3383a2cecbe79bfa5afc8d1d8b}{dbg\-Set\-Custom\-Value} (int offset, uint8\-\_\-t value)
+\begin{DoxyCompactList}\small\item\em Set custom value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\#include $<$\-Q\-Byte\-Array$>$ 
+
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000047}{Todo}]Check header whenn receiving data. \end{DoxyRefDesc}
+
+
+U\-S\-B\-T\-M\-C frame (i.\-e. U\-S\-B\-T\-M\-C bulk transfer)
+
+Used by U\-S\-B\-T\-M\-C A\-P\-I to send en receive frames in U\-S\-B\-T\-M\-C standard over bulk pipes. The name frame was choosen because transfer is close to libusb\-\_\-transfer, and that part is handled by \hyperlink{classmdt_usbtmc_bulk_transfer}{mdt\-Usbtmc\-Bulk\-Transfer}.
+
+References\-:
+\begin{DoxyItemize}
+\item U\-S\-B\-T\-M\-C Revision 1.\-0 (2003)
+\item \href{http://www.usb.org/developers/devclass_docs#approved}{\tt http\-://www.\-usb.\-org/developers/devclass\-\_\-docs\#approved}
+\item \href{http://www.usb.org/developers/devclass_docs/USBTMC_1_006a.zip}{\tt http\-://www.\-usb.\-org/developers/devclass\-\_\-docs/\-U\-S\-B\-T\-M\-C\-\_\-1\-\_\-006a.\-zip}
+\end{DoxyItemize}
+
+To avoid continious alloc/free, the frame has internal fixed capacity. Different capacity and sizes are available. To clarify them, see a U\-S\-B\-T\-M\-C frame (bulk transfer) format\-: 
+
+ $\vert$ U\-S\-B\-T\-M\-C $\vert$ Data bytes $\vert$ Alignment $\vert$ \subsubsection*{$\vert$ header $\vert$ (U\-S\-B\-T\-M\-C Transfer\-Size) $\vert$ bytes $\vert$ }
+
+Capacity of the frame is defined as below\-:
+\begin{DoxyItemize}
+\item capacity\-: U\-S\-B\-T\-M\-C header + Data bytes + alignemnt bytes (is simply the capacity of internal buffer)
+\end{DoxyItemize}
+
+Size of the frame is defined as below\-:
+\begin{DoxyItemize}
+\item transfer\-Size\-: data bytes only (without header and without alignment bytes)
+\item buffer\-Length\-: U\-S\-B\-T\-M\-C header + data bytes + alignment bytes (useful for Bulk-\/\-O\-U\-T transfer)
+\end{DoxyItemize}
+
+Note\-:
+\begin{DoxyItemize}
+\item For Bulk-\/\-O\-U\-T transfer, use buffer\-Length to tell libusb how many bytes must be sent to device.
+\item For Bulk-\/\-I\-N transfer, use capacity to tell libusb how many bytes it can put into buffer. 
+\end{DoxyItemize}
+
+Definition at line 64 of file mdt\-Usbtmc\-Frame.\-h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{classmdt_usbtmc_frame_abf1e449c264011341c477d45eb700c42}{\index{mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}!msg\-Id\-\_\-t@{msg\-Id\-\_\-t}}
+\index{msg\-Id\-\_\-t@{msg\-Id\-\_\-t}!mdtUsbtmcFrame@{mdt\-Usbtmc\-Frame}}
+\subsubsection[{msg\-Id\-\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdt\-Usbtmc\-Frame\-::msg\-Id\-\_\-t} \-: uint8\-\_\-t\hspace{0.3cm}{\ttfamily [strong]}}}\label{classmdt_usbtmc_frame_abf1e449c264011341c477d45eb700c42}
+
+
+U\-S\-B\-T\-M\-C Msg\-I\-D. 
+
+See Table 2 in U\-S\-B\-T\-M\-C specifications for details. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{M\-S\-G\-\_\-\-Z\-E\-R\-O@{M\-S\-G\-\_\-\-Z\-E\-R\-O}!mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}}\index{mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}!M\-S\-G\-\_\-\-Z\-E\-R\-O@{M\-S\-G\-\_\-\-Z\-E\-R\-O}}\item[{\em 
+\hypertarget{classmdt_usbtmc_frame_abf1e449c264011341c477d45eb700c42adfdbe73c3e263c80155e377250eceebd}{M\-S\-G\-\_\-\-Z\-E\-R\-O}\label{classmdt_usbtmc_frame_abf1e449c264011341c477d45eb700c42adfdbe73c3e263c80155e377250eceebd}
+}]Reserved. \index{D\-E\-V\-\_\-\-D\-E\-P\-\_\-\-M\-S\-G\-\_\-\-O\-U\-T@{D\-E\-V\-\_\-\-D\-E\-P\-\_\-\-M\-S\-G\-\_\-\-O\-U\-T}!mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}}\index{mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}!D\-E\-V\-\_\-\-D\-E\-P\-\_\-\-M\-S\-G\-\_\-\-O\-U\-T@{D\-E\-V\-\_\-\-D\-E\-P\-\_\-\-M\-S\-G\-\_\-\-O\-U\-T}}\item[{\em 
+\hypertarget{classmdt_usbtmc_frame_abf1e449c264011341c477d45eb700c42a1886876c21b4748a4d4fb1756e6cb8fa}{D\-E\-V\-\_\-\-D\-E\-P\-\_\-\-M\-S\-G\-\_\-\-O\-U\-T}\label{classmdt_usbtmc_frame_abf1e449c264011341c477d45eb700c42a1886876c21b4748a4d4fb1756e6cb8fa}
+}]U\-S\-B\-T\-M\-C device dependent command message \index{D\-E\-V\-\_\-\-D\-E\-P\-\_\-\-M\-S\-G\-\_\-\-I\-N@{D\-E\-V\-\_\-\-D\-E\-P\-\_\-\-M\-S\-G\-\_\-\-I\-N}!mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}}\index{mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}!D\-E\-V\-\_\-\-D\-E\-P\-\_\-\-M\-S\-G\-\_\-\-I\-N@{D\-E\-V\-\_\-\-D\-E\-P\-\_\-\-M\-S\-G\-\_\-\-I\-N}}\item[{\em 
+\hypertarget{classmdt_usbtmc_frame_abf1e449c264011341c477d45eb700c42a1238d82a486a9d6324ace1d5c60a92bd}{D\-E\-V\-\_\-\-D\-E\-P\-\_\-\-M\-S\-G\-\_\-\-I\-N}\label{classmdt_usbtmc_frame_abf1e449c264011341c477d45eb700c42a1238d82a486a9d6324ace1d5c60a92bd}
+}]U\-S\-B\-T\-M\-C response message. Represent the R\-E\-Q\-U\-E\-S\-T\-\_\-\-D\-E\-V\-\_\-\-D\-E\-P\-\_\-\-M\-S\-G\-\_\-\-I\-N if frame is sent from host (O\-U\-T) \index{V\-E\-N\-D\-O\-R\-\_\-\-S\-P\-E\-C\-I\-F\-I\-C\-\_\-\-O\-U\-T@{V\-E\-N\-D\-O\-R\-\_\-\-S\-P\-E\-C\-I\-F\-I\-C\-\_\-\-O\-U\-T}!mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}}\index{mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}!V\-E\-N\-D\-O\-R\-\_\-\-S\-P\-E\-C\-I\-F\-I\-C\-\_\-\-O\-U\-T@{V\-E\-N\-D\-O\-R\-\_\-\-S\-P\-E\-C\-I\-F\-I\-C\-\_\-\-O\-U\-T}}\item[{\em 
+\hypertarget{classmdt_usbtmc_frame_abf1e449c264011341c477d45eb700c42ab2a33799ba113bf457f1112d3f685662}{V\-E\-N\-D\-O\-R\-\_\-\-S\-P\-E\-C\-I\-F\-I\-C\-\_\-\-O\-U\-T}\label{classmdt_usbtmc_frame_abf1e449c264011341c477d45eb700c42ab2a33799ba113bf457f1112d3f685662}
+}]U\-S\-B\-T\-M\-C vendor specific command message \index{V\-E\-N\-D\-O\-R\-\_\-\-S\-P\-E\-C\-I\-F\-I\-C\-\_\-\-I\-N@{V\-E\-N\-D\-O\-R\-\_\-\-S\-P\-E\-C\-I\-F\-I\-C\-\_\-\-I\-N}!mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}}\index{mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}!V\-E\-N\-D\-O\-R\-\_\-\-S\-P\-E\-C\-I\-F\-I\-C\-\_\-\-I\-N@{V\-E\-N\-D\-O\-R\-\_\-\-S\-P\-E\-C\-I\-F\-I\-C\-\_\-\-I\-N}}\item[{\em 
+\hypertarget{classmdt_usbtmc_frame_abf1e449c264011341c477d45eb700c42ad9f728364c29a2fef0432b273f9d03a4}{V\-E\-N\-D\-O\-R\-\_\-\-S\-P\-E\-C\-I\-F\-I\-C\-\_\-\-I\-N}\label{classmdt_usbtmc_frame_abf1e449c264011341c477d45eb700c42ad9f728364c29a2fef0432b273f9d03a4}
+}]U\-S\-B\-T\-M\-C vendor specific response message on the Bulk-\/\-I\-N endpoint. Represent the R\-E\-Q\-U\-E\-S\-T\-\_\-\-V\-E\-N\-D\-O\-R\-\_\-\-S\-P\-E\-C\-I\-F\-I\-C\-\_\-\-I\-N if frame is sent from host (O\-U\-T) \end{description}
+\end{Desc}
+
+
+Definition at line 72 of file mdt\-Usbtmc\-Frame.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_usbtmc_frame_a13c13f990d680f6f6469b6497a99ba9b}{\index{mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}!mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}}
+\index{mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}!mdtUsbtmcFrame@{mdt\-Usbtmc\-Frame}}
+\subsubsection[{mdt\-Usbtmc\-Frame}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Usbtmc\-Frame\-::mdt\-Usbtmc\-Frame (
+\begin{DoxyParamCaption}
+\item[{int}]{buffer\-Size}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usbtmc_frame_a13c13f990d680f6f6469b6497a99ba9b}
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em buffer\-Size} & Internal buffer size. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+buffer\-Size must be at least 512 and a multiple of 4 
+\end{DoxyPrecond}
+
+
+Definition at line 27 of file mdt\-Usbtmc\-Frame.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_usbtmc_frame_a46d0574cdf95da840e4c6f5de314c15d}{\index{mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}!b\-Tag@{b\-Tag}}
+\index{b\-Tag@{b\-Tag}!mdtUsbtmcFrame@{mdt\-Usbtmc\-Frame}}
+\subsubsection[{b\-Tag}]{\setlength{\rightskip}{0pt plus 5cm}uint8\-\_\-t mdt\-Usbtmc\-Frame\-::b\-Tag (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_frame_a46d0574cdf95da840e4c6f5de314c15d}
+
+
+Get b\-Tag. 
+
+See Table 1 in U\-S\-B\-T\-M\-C specifications for details. 
+
+Definition at line 165 of file mdt\-Usbtmc\-Frame.\-h.
+
+
+
+Referenced by mdt\-Usbtmc\-Bulk\-Transfer\-::b\-Tag(), mdt\-Usbtmc\-Bulk\-Transfer\-::b\-Tag\-Is\-Ok(), and setb\-Tag().
+
+\hypertarget{classmdt_usbtmc_frame_a99e7fe2dc11815b7d84ff0e7306cfe6b}{\index{mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}!b\-Tag\-Inverse@{b\-Tag\-Inverse}}
+\index{b\-Tag\-Inverse@{b\-Tag\-Inverse}!mdtUsbtmcFrame@{mdt\-Usbtmc\-Frame}}
+\subsubsection[{b\-Tag\-Inverse}]{\setlength{\rightskip}{0pt plus 5cm}uint8\-\_\-t mdt\-Usbtmc\-Frame\-::b\-Tag\-Inverse (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_frame_a99e7fe2dc11815b7d84ff0e7306cfe6b}
+
+
+Get b\-Tag\-Inverse. 
+
+See Table 1 in U\-S\-B\-T\-M\-C specifications for details. 
+
+Definition at line 173 of file mdt\-Usbtmc\-Frame.\-h.
+
+
+
+Referenced by mdt\-Usbtmc\-Bulk\-Transfer\-::b\-Tag\-Is\-Ok().
+
+\hypertarget{classmdt_usbtmc_frame_a687e2e2cac399ce6d51359d7ad10a304}{\index{mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}!buffer@{buffer}}
+\index{buffer@{buffer}!mdtUsbtmcFrame@{mdt\-Usbtmc\-Frame}}
+\subsubsection[{buffer}]{\setlength{\rightskip}{0pt plus 5cm}uint8\-\_\-t$\ast$ mdt\-Usbtmc\-Frame\-::buffer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_frame_a687e2e2cac399ce6d51359d7ad10a304}
+
+
+Access internal buffer. 
+
+
+
+Definition at line 104 of file mdt\-Usbtmc\-Frame.\-h.
+
+
+
+Referenced by mdt\-Usbtmc\-Bulk\-Transfer\-::dbg\-Setup\-Custom(), mdt\-Usbtmc\-Bulk\-Transfer\-::setup\-Bulk\-In\-Request(), mdt\-Usbtmc\-Bulk\-Transfer\-::setup\-Dev\-Dep\-Msg\-Out(), and mdt\-Usbtmc\-Bulk\-Transfer\-::setup\-Request\-Dev\-Dep\-Msg\-In().
+
+\hypertarget{classmdt_usbtmc_frame_ae6e3bf44c22c868d476c30177cfa4ec7}{\index{mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}!buffer\-Length@{buffer\-Length}}
+\index{buffer\-Length@{buffer\-Length}!mdtUsbtmcFrame@{mdt\-Usbtmc\-Frame}}
+\subsubsection[{buffer\-Length}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Usbtmc\-Frame\-::buffer\-Length (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_frame_ae6e3bf44c22c868d476c30177cfa4ec7}
+
+
+Get buffer length. 
+
+Returns length of U\-S\-B\-T\-M\-C header + data + alignment bytes. 
+
+Definition at line 112 of file mdt\-Usbtmc\-Frame.\-h.
+
+
+
+Referenced by mdt\-Usbtmc\-Bulk\-Transfer\-::setup\-Dev\-Dep\-Msg\-Out().
+
+\hypertarget{classmdt_usbtmc_frame_a5dd70d38f6ac1dde01cd239683059484}{\index{mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}!capacity@{capacity}}
+\index{capacity@{capacity}!mdtUsbtmcFrame@{mdt\-Usbtmc\-Frame}}
+\subsubsection[{capacity}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Usbtmc\-Frame\-::capacity (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_frame_a5dd70d38f6ac1dde01cd239683059484}
+
+
+Get internal buffer capacity. 
+
+
+
+Definition at line 97 of file mdt\-Usbtmc\-Frame.\-h.
+
+
+
+Referenced by dbg\-Set\-Custom\-Value(), mdt\-Usbtmc\-Bulk\-Transfer\-::dbg\-Setup\-Custom(), set\-Data(), set\-Transfer\-Size\-To\-Max(), and mdt\-Usbtmc\-Bulk\-Transfer\-::setup\-Bulk\-In\-Request().
+
+\hypertarget{classmdt_usbtmc_frame_a7319ff2fffb9f1c65b4c43343b82b473}{\index{mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}!clear@{clear}}
+\index{clear@{clear}!mdtUsbtmcFrame@{mdt\-Usbtmc\-Frame}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Frame\-::clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usbtmc_frame_a7319ff2fffb9f1c65b4c43343b82b473}
+
+
+Clear frame. 
+
+Will clear header and reset data size 
+
+Definition at line 37 of file mdt\-Usbtmc\-Frame.\-cpp.
+
+
+
+Referenced by mdt\-Usbtmc\-Bulk\-Transfer\-::dbg\-Setup\-Custom(), mdt\-Usbtmc\-Bulk\-Transfer\-::setup\-Bulk\-In\-Request(), mdt\-Usbtmc\-Bulk\-Transfer\-::setup\-Dev\-Dep\-Msg\-Out(), and mdt\-Usbtmc\-Bulk\-Transfer\-::setup\-Request\-Dev\-Dep\-Msg\-In().
+
+\hypertarget{classmdt_usbtmc_frame_a9784bc3383a2cecbe79bfa5afc8d1d8b}{\index{mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}!dbg\-Set\-Custom\-Value@{dbg\-Set\-Custom\-Value}}
+\index{dbg\-Set\-Custom\-Value@{dbg\-Set\-Custom\-Value}!mdtUsbtmcFrame@{mdt\-Usbtmc\-Frame}}
+\subsubsection[{dbg\-Set\-Custom\-Value}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Frame\-::dbg\-Set\-Custom\-Value (
+\begin{DoxyParamCaption}
+\item[{int}]{offset, }
+\item[{uint8\-\_\-t}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_frame_a9784bc3383a2cecbe79bfa5afc8d1d8b}
+
+
+Set custom value. 
+
+Used for debug and testing \begin{DoxyPrecond}{Precondition}
+offset must be $<$ capacity 
+\end{DoxyPrecond}
+
+
+Definition at line 286 of file mdt\-Usbtmc\-Frame.\-h.
+
+
+
+References capacity().
+
+
+
+Referenced by mdt\-Usbtmc\-Bulk\-Transfer\-::dbg\-Setup\-Custom().
+
+\hypertarget{classmdt_usbtmc_frame_a00d2e0c560bf7c57d14d072d7df3544f}{\index{mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}!E\-O\-Mset@{E\-O\-Mset}}
+\index{E\-O\-Mset@{E\-O\-Mset}!mdtUsbtmcFrame@{mdt\-Usbtmc\-Frame}}
+\subsubsection[{E\-O\-Mset}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usbtmc\-Frame\-::\-E\-O\-Mset (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_frame_a00d2e0c560bf7c57d14d072d7df3544f}
+
+
+Check if E\-O\-M is set. 
+
+This has sense when response of D\-E\-V\-\_\-\-D\-E\-P\-\_\-\-M\-S\-G\-\_\-\-I\-N was received from device. See Table 9 in U\-S\-B\-T\-M\-C specifications for details. 
+
+Definition at line 227 of file mdt\-Usbtmc\-Frame.\-h.
+
+
+
+Referenced by mdt\-Usbtmc\-Bulk\-Transfer\-::is\-E\-O\-M().
+
+\hypertarget{classmdt_usbtmc_frame_a7ba6f7fea904266d0c9533ac84bdf917}{\index{mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}!get\-Data@{get\-Data}}
+\index{get\-Data@{get\-Data}!mdtUsbtmcFrame@{mdt\-Usbtmc\-Frame}}
+\subsubsection[{get\-Data}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Frame\-::get\-Data (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Usbtmc\-Rx\-Message} \&}]{message}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_frame_a7ba6f7fea904266d0c9533ac84bdf917}
+
+
+Get data. 
+
+Will write (by copy) data part to given message. 
+
+Definition at line 275 of file mdt\-Usbtmc\-Frame.\-h.
+
+
+
+References transfer\-Size(), and mdt\-Usbtmc\-Rx\-Message\-::write().
+
+
+
+Referenced by mdt\-Usbtmc\-Bulk\-Transfer\-::get\-Data().
+
+\hypertarget{classmdt_usbtmc_frame_a9f62664b9dcf56a7666b3ea23a715075}{\index{mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}!is\-Complete@{is\-Complete}}
+\index{is\-Complete@{is\-Complete}!mdtUsbtmcFrame@{mdt\-Usbtmc\-Frame}}
+\subsubsection[{is\-Complete}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usbtmc\-Frame\-::is\-Complete (
+\begin{DoxyParamCaption}
+\item[{int}]{written}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_frame_a9f62664b9dcf56a7666b3ea23a715075}
+
+
+Check if tranfer is complete (valid for bulk I\-N transfer) 
+
+After a bulk I\-N transfer completed, tell how many data was written to buffer. This is typically available from libusb\-\_\-transfer\-::actual\-\_\-length.
+
+Note\-: we assume that libusb handles transfer in one shot, i.\-e. that, when transfer is completed, all data that device has queued are available.
+
+Assuming this note and that \hyperlink{classmdt_usbtmc_frame_a7319ff2fffb9f1c65b4c43343b82b473}{clear()} is called before each transfer, we can assume that frame is complete if (written -\/ 12) $>$= transfer\-Size. 
+
+Definition at line 129 of file mdt\-Usbtmc\-Frame.\-h.
+
+
+
+References transfer\-Size().
+
+
+
+Referenced by mdt\-Usbtmc\-Bulk\-Transfer\-::received\-All\-Data().
+
+\hypertarget{classmdt_usbtmc_frame_aacd5285efda4efa0b7884418cb689b2e}{\index{mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}!msg\-I\-D@{msg\-I\-D}}
+\index{msg\-I\-D@{msg\-I\-D}!mdtUsbtmcFrame@{mdt\-Usbtmc\-Frame}}
+\subsubsection[{msg\-I\-D}]{\setlength{\rightskip}{0pt plus 5cm}{\bf msg\-Id\-\_\-t} mdt\-Usbtmc\-Frame\-::msg\-I\-D (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_frame_aacd5285efda4efa0b7884418cb689b2e}
+
+
+Get Msg\-I\-D. 
+
+See Table 2 in U\-S\-B\-T\-M\-C 1.\-0 specifications for details. 
+
+Definition at line 147 of file mdt\-Usbtmc\-Frame.\-h.
+
+
+
+Referenced by mdt\-Usbtmc\-Bulk\-Transfer\-::msg\-I\-D().
+
+\hypertarget{classmdt_usbtmc_frame_a55bdbccc6dafccb18cef4b7a5329787f}{\index{mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}!reset\-Term\-Char@{reset\-Term\-Char}}
+\index{reset\-Term\-Char@{reset\-Term\-Char}!mdtUsbtmcFrame@{mdt\-Usbtmc\-Frame}}
+\subsubsection[{reset\-Term\-Char}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Frame\-::reset\-Term\-Char (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_frame_a55bdbccc6dafccb18cef4b7a5329787f}
+
+
+Reset Term\-Char. 
+
+See Table 4 in U\-S\-B\-T\-M\-C specifications for details. Note\-: will also clear Term\-Char\-Enabled bit in bm\-Transfer\-Attributes 
+
+Definition at line 255 of file mdt\-Usbtmc\-Frame.\-h.
+
+\hypertarget{classmdt_usbtmc_frame_ad7d6081b22098dc74ff688f250faf3da}{\index{mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}!setb\-Tag@{setb\-Tag}}
+\index{setb\-Tag@{setb\-Tag}!mdtUsbtmcFrame@{mdt\-Usbtmc\-Frame}}
+\subsubsection[{setb\-Tag}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Frame\-::setb\-Tag (
+\begin{DoxyParamCaption}
+\item[{uint8\-\_\-t}]{b\-Tag}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_frame_ad7d6081b22098dc74ff688f250faf3da}
+
+
+Set b\-Tag. 
+
+See Table 1 in U\-S\-B\-T\-M\-C 1.\-0 specifications for details. Note\-: will also set b\-Tag\-Inverse 
+
+Definition at line 156 of file mdt\-Usbtmc\-Frame.\-h.
+
+
+
+References b\-Tag().
+
+
+
+Referenced by mdt\-Usbtmc\-Bulk\-Transfer\-::dbg\-Setup\-Custom(), mdt\-Usbtmc\-Bulk\-Transfer\-::setup\-Dev\-Dep\-Msg\-Out(), and mdt\-Usbtmc\-Bulk\-Transfer\-::setup\-Request\-Dev\-Dep\-Msg\-In().
+
+\hypertarget{classmdt_usbtmc_frame_a9711fa58a840a62e8fe22e5d31b259f4}{\index{mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}!set\-Data@{set\-Data}}
+\index{set\-Data@{set\-Data}!mdtUsbtmcFrame@{mdt\-Usbtmc\-Frame}}
+\subsubsection[{set\-Data}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Frame\-::set\-Data (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Usbtmc\-Tx\-Message} \&}]{message}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usbtmc_frame_a9711fa58a840a62e8fe22e5d31b259f4}
+
+
+Set data. 
+
+Will read data from given message and copy them to internal buffer. If all data of message can be hold in tranfer, E\-O\-M bit will be set, else not.
+
+Transfer\-Size will also be adjusted.
+
+\begin{DoxyPrecond}{Precondition}
+message must have at least 1 byte of data to read from 
+\end{DoxyPrecond}
+
+
+Definition at line 54 of file mdt\-Usbtmc\-Frame.\-cpp.
+
+
+
+References mdt\-Usbtmc\-Tx\-Message\-::bytes\-To\-Read(), capacity(), mdt\-Usbtmc\-Tx\-Message\-::read(), and set\-Transfer\-Size().
+
+
+
+Referenced by mdt\-Usbtmc\-Bulk\-Transfer\-::setup\-Dev\-Dep\-Msg\-Out().
+
+\hypertarget{classmdt_usbtmc_frame_a04907e1149ebf7ab82ec884d555eb0b3}{\index{mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}!set\-E\-O\-M@{set\-E\-O\-M}}
+\index{set\-E\-O\-M@{set\-E\-O\-M}!mdtUsbtmcFrame@{mdt\-Usbtmc\-Frame}}
+\subsubsection[{set\-E\-O\-M}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Frame\-::set\-E\-O\-M (
+\begin{DoxyParamCaption}
+\item[{bool}]{set}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_frame_a04907e1149ebf7ab82ec884d555eb0b3}
+
+
+Set E\-O\-M. 
+
+See Table 3 in U\-S\-B\-T\-M\-C specifications for details. 
+
+Definition at line 214 of file mdt\-Usbtmc\-Frame.\-h.
+
+
+
+Referenced by mdt\-Usbtmc\-Bulk\-Transfer\-::setup\-Dev\-Dep\-Msg\-Out().
+
+\hypertarget{classmdt_usbtmc_frame_addeba40f6ea48d960a7cf1e80f409c77}{\index{mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}!set\-Msg\-I\-D@{set\-Msg\-I\-D}}
+\index{set\-Msg\-I\-D@{set\-Msg\-I\-D}!mdtUsbtmcFrame@{mdt\-Usbtmc\-Frame}}
+\subsubsection[{set\-Msg\-I\-D}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Frame\-::set\-Msg\-I\-D (
+\begin{DoxyParamCaption}
+\item[{{\bf msg\-Id\-\_\-t}}]{id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_frame_addeba40f6ea48d960a7cf1e80f409c77}
+
+
+Set Msg\-I\-D. 
+
+See Table 2 in U\-S\-B\-T\-M\-C specifications for details. 
+
+Definition at line 138 of file mdt\-Usbtmc\-Frame.\-h.
+
+
+
+Referenced by mdt\-Usbtmc\-Bulk\-Transfer\-::dbg\-Setup\-Custom(), mdt\-Usbtmc\-Bulk\-Transfer\-::setup\-Dev\-Dep\-Msg\-Out(), and mdt\-Usbtmc\-Bulk\-Transfer\-::setup\-Request\-Dev\-Dep\-Msg\-In().
+
+\hypertarget{classmdt_usbtmc_frame_ab52a02fbc3c84155fd15446ea2380137}{\index{mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}!set\-Term\-Char@{set\-Term\-Char}}
+\index{set\-Term\-Char@{set\-Term\-Char}!mdtUsbtmcFrame@{mdt\-Usbtmc\-Frame}}
+\subsubsection[{set\-Term\-Char}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Frame\-::set\-Term\-Char (
+\begin{DoxyParamCaption}
+\item[{char}]{c}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_frame_ab52a02fbc3c84155fd15446ea2380137}
+
+
+Set Term\-Char. 
+
+See Table 4 in U\-S\-B\-T\-M\-C specifications for details. Note\-: will also set Term\-Char\-Enabled bit in bm\-Transfer\-Attributes 
+
+Definition at line 236 of file mdt\-Usbtmc\-Frame.\-h.
+
+
+
+Referenced by mdt\-Usbtmc\-Bulk\-Transfer\-::setup\-Request\-Dev\-Dep\-Msg\-In().
+
+\hypertarget{classmdt_usbtmc_frame_aacf216cd3759dd0a3d533077d9573bef}{\index{mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}!set\-Transfer\-Size@{set\-Transfer\-Size}}
+\index{set\-Transfer\-Size@{set\-Transfer\-Size}!mdtUsbtmcFrame@{mdt\-Usbtmc\-Frame}}
+\subsubsection[{set\-Transfer\-Size}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Frame\-::set\-Transfer\-Size (
+\begin{DoxyParamCaption}
+\item[{uint32\-\_\-t}]{size}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usbtmc_frame_aacf216cd3759dd0a3d533077d9573bef}
+
+
+Set Transfer\-Size. 
+
+See Table 3 in U\-S\-B\-T\-M\-C specifications for details. Note that setting Transfer\-Size manually has only sense when setting up a frame for D\-E\-V\-\_\-\-D\-E\-P\-\_\-\-M\-S\-G\-\_\-\-I\-N or V\-E\-N\-D\-O\-R\-\_\-\-S\-P\-E\-C\-I\-F\-I\-C\-\_\-\-I\-N query. When setting up a frame for D\-E\-V\-\_\-\-D\-E\-P\-\_\-\-M\-S\-G\-\_\-\-O\-U\-T or V\-E\-N\-D\-O\-R\-\_\-\-S\-P\-E\-C\-I\-F\-I\-C\-\_\-\-O\-U\-T, use \hyperlink{classmdt_usbtmc_frame_a9711fa58a840a62e8fe22e5d31b259f4}{set\-Data()} witch will also ajust Transfer\-Size.
+
+\begin{DoxyPrecond}{Precondition}
+size must be $>$ 0 and $<$= total\-Capacity-\/12 
+\end{DoxyPrecond}
+
+
+Definition at line 43 of file mdt\-Usbtmc\-Frame.\-cpp.
+
+
+
+Referenced by mdt\-Usbtmc\-Bulk\-Transfer\-::dbg\-Setup\-Custom(), set\-Data(), and set\-Transfer\-Size\-To\-Max().
+
+\hypertarget{classmdt_usbtmc_frame_aca8334fa539afd3e331937e707c8f0a8}{\index{mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}!set\-Transfer\-Size\-To\-Max@{set\-Transfer\-Size\-To\-Max}}
+\index{set\-Transfer\-Size\-To\-Max@{set\-Transfer\-Size\-To\-Max}!mdtUsbtmcFrame@{mdt\-Usbtmc\-Frame}}
+\subsubsection[{set\-Transfer\-Size\-To\-Max}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Frame\-::set\-Transfer\-Size\-To\-Max (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_frame_aca8334fa539afd3e331937e707c8f0a8}
+
+
+Set Transfer\-Size to maximum possible size. 
+
+Useful when setting up frame for D\-E\-V\-\_\-\-D\-E\-P\-\_\-\-M\-S\-G\-\_\-\-I\-N or V\-E\-N\-D\-O\-R\-\_\-\-S\-P\-E\-C\-I\-F\-I\-C\-\_\-\-I\-N query. 
+
+Definition at line 193 of file mdt\-Usbtmc\-Frame.\-h.
+
+
+
+References capacity(), and set\-Transfer\-Size().
+
+
+
+Referenced by mdt\-Usbtmc\-Bulk\-Transfer\-::setup\-Request\-Dev\-Dep\-Msg\-In().
+
+\hypertarget{classmdt_usbtmc_frame_a50a256efd2ac5ec685ee73d6f49aa8d9}{\index{mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}!Term\-Charset@{Term\-Charset}}
+\index{Term\-Charset@{Term\-Charset}!mdtUsbtmcFrame@{mdt\-Usbtmc\-Frame}}
+\subsubsection[{Term\-Charset}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usbtmc\-Frame\-::\-Term\-Charset (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_frame_a50a256efd2ac5ec685ee73d6f49aa8d9}
+
+
+Check if Term\-Char is set. 
+
+This has sense when response of D\-E\-V\-\_\-\-D\-E\-P\-\_\-\-M\-S\-G\-\_\-\-I\-N was received from device. See Table 9 in U\-S\-B\-T\-M\-C specifications for details. 
+
+Definition at line 246 of file mdt\-Usbtmc\-Frame.\-h.
+
+\hypertarget{classmdt_usbtmc_frame_a90b3b355c714309a82dfd6dbf493cf5d}{\index{mdt\-Usbtmc\-Frame@{mdt\-Usbtmc\-Frame}!transfer\-Size@{transfer\-Size}}
+\index{transfer\-Size@{transfer\-Size}!mdtUsbtmcFrame@{mdt\-Usbtmc\-Frame}}
+\subsubsection[{transfer\-Size}]{\setlength{\rightskip}{0pt plus 5cm}uint32\-\_\-t mdt\-Usbtmc\-Frame\-::transfer\-Size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_frame_a90b3b355c714309a82dfd6dbf493cf5d}
+
+
+Get Transfer\-Size. 
+
+Returns number of message bytes, without U\-S\-B\-T\-M\-C header and without extra alignment bytes.
+
+See, for example, Table 3 in U\-S\-B\-T\-M\-C 1.\-0 specifications for details. 
+
+Definition at line 206 of file mdt\-Usbtmc\-Frame.\-h.
+
+
+
+Referenced by get\-Data(), and is\-Complete().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdtport/\hyperlink{mdt_usbtmc_frame_8h}{mdt\-Usbtmc\-Frame.\-h}\item 
+src/mdtport/\hyperlink{mdt_usbtmc_frame_8cpp}{mdt\-Usbtmc\-Frame.\-cpp}\end{DoxyCompactItemize}

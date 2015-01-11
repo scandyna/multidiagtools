@@ -1,0 +1,269 @@
+\hypertarget{classmdt_usb_device_list}{\section{mdt\-Usb\-Device\-List Class Reference}
+\label{classmdt_usb_device_list}\index{mdt\-Usb\-Device\-List@{mdt\-Usb\-Device\-List}}
+}
+
+
+Helper class to enumerate and search U\-S\-B devices that are attached on system.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Usb\-Device\-List.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_usb_device_list_a162373e9159ceb55615fa17049ab958a}{mdt\-Usb\-Device\-List} (libusb\-\_\-context $\ast$ctx)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_usb_device_list_acd0fd4e79b3c9f2eb96105ede458447d}{$\sim$mdt\-Usb\-Device\-List} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usb_device_list_a21b4ab508329779b07bae7859097b955}{scan} ()
+\begin{DoxyCompactList}\small\item\em Enumerate any attached U\-S\-B devices. \end{DoxyCompactList}\item 
+Q\-List$<$ \hyperlink{classmdt_usb_device_descriptor}{mdt\-Usb\-Device\-Descriptor} $>$ \hyperlink{classmdt_usb_device_list_ad18027a6b34790e2b907f37755612fe3}{device\-List} () const 
+\begin{DoxyCompactList}\small\item\em Get devices descriptors list. \end{DoxyCompactList}\item 
+Q\-List$<$ \hyperlink{classmdt_usb_device_descriptor}{mdt\-Usb\-Device\-Descriptor} $>$ \hyperlink{classmdt_usb_device_list_acdec1d6cab615f8cfa8a07eff8b0f9e0}{device\-List} (uint8\-\_\-t b\-Device\-Class, uint8\-\_\-t b\-Device\-Sub\-Class, uint8\-\_\-t b\-Device\-Protocol) const 
+\begin{DoxyCompactList}\small\item\em Get a list of devices of given class, sub class and protocol. \end{DoxyCompactList}\item 
+Q\-List$<$ \hyperlink{classmdt_usb_device_descriptor}{mdt\-Usb\-Device\-Descriptor} $>$ \hyperlink{classmdt_usb_device_list_a08a5882459612c1a95f891c315528b5c}{usbtmc\-Device\-List} () const 
+\begin{DoxyCompactList}\small\item\em Get a list of attached U\-S\-B\-T\-M\-C devices. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_usb_device_descriptor}{mdt\-Usb\-Device\-Descriptor} \hyperlink{classmdt_usb_device_list_aba706f1ab782e5d25f331d2d6946023c}{find\-Device} (uint16\-\_\-t id\-Vendor, uint16\-\_\-t id\-Product, const Q\-String \&serial\-Number=Q\-String())
+\begin{DoxyCompactList}\small\item\em Find a device with given vendor I\-D, product I\-D and serial number if not empty. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_usb_device_descriptor}{mdt\-Usb\-Device\-Descriptor} \hyperlink{classmdt_usb_device_list_abf867860c60d24cd8b62c10771af75d8}{find\-First\-Usbtmc\-Device} () const 
+\begin{DoxyCompactList}\small\item\em Get first device that is a U\-S\-B\-T\-M\-C device. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usb_device_list_afed0b1d9e51beca0bf45e5ca03f81896}{clear} ()
+\begin{DoxyCompactList}\small\item\em Clear. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_error}{mdt\-Error} \hyperlink{classmdt_usb_device_list_af4fa249c48fe4f1c51cd3cd4d82979cb}{last\-Error} () const 
+\begin{DoxyCompactList}\small\item\em Open a device with given vendor I\-D, product I\-D and serial number if not empty. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Helper class to enumerate and search U\-S\-B devices that are attached on system. 
+
+Finding and opening a device can be done in several steps\-:
+\begin{DoxyItemize}
+\item Build a list of attached devices by using \hyperlink{classmdt_usb_device_list_a21b4ab508329779b07bae7859097b955}{scan()}
+\item Find interresting device with \hyperlink{classmdt_usb_device_list_aba706f1ab782e5d25f331d2d6946023c}{find\-Device()}
+\item Setup system based on returned device descriptor (interfaces, endpoints, ...)
+\item Open device with its \hyperlink{classmdt_usb_device_descriptor_a5aafc8734f4640a4c5be3bc884f5a655}{mdt\-Usb\-Device\-Descriptor\-::open()} function
+\item Clear search result with \hyperlink{classmdt_usb_device_list_afed0b1d9e51beca0bf45e5ca03f81896}{clear()} 
+\end{DoxyItemize}
+
+Definition at line 39 of file mdt\-Usb\-Device\-List.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_usb_device_list_a162373e9159ceb55615fa17049ab958a}{\index{mdt\-Usb\-Device\-List@{mdt\-Usb\-Device\-List}!mdt\-Usb\-Device\-List@{mdt\-Usb\-Device\-List}}
+\index{mdt\-Usb\-Device\-List@{mdt\-Usb\-Device\-List}!mdtUsbDeviceList@{mdt\-Usb\-Device\-List}}
+\subsubsection[{mdt\-Usb\-Device\-List}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Usb\-Device\-List\-::mdt\-Usb\-Device\-List (
+\begin{DoxyParamCaption}
+\item[{libusb\-\_\-context $\ast$}]{ctx}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usb_device_list_a162373e9159ceb55615fa17049ab958a}
+
+
+Constructor. 
+
+Given contex must be initialized (see libusb\-\_\-init()). 
+
+Definition at line 27 of file mdt\-Usb\-Device\-List.\-cpp.
+
+\hypertarget{classmdt_usb_device_list_acd0fd4e79b3c9f2eb96105ede458447d}{\index{mdt\-Usb\-Device\-List@{mdt\-Usb\-Device\-List}!$\sim$mdt\-Usb\-Device\-List@{$\sim$mdt\-Usb\-Device\-List}}
+\index{$\sim$mdt\-Usb\-Device\-List@{$\sim$mdt\-Usb\-Device\-List}!mdtUsbDeviceList@{mdt\-Usb\-Device\-List}}
+\subsubsection[{$\sim$mdt\-Usb\-Device\-List}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Usb\-Device\-List\-::$\sim$mdt\-Usb\-Device\-List (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usb_device_list_acd0fd4e79b3c9f2eb96105ede458447d}
+
+
+Destructor. 
+
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000043}{Todo}]Comment about to get device handle before this class dies. \end{DoxyRefDesc}
+
+
+Definition at line 33 of file mdt\-Usb\-Device\-List.\-cpp.
+
+
+
+References clear().
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_usb_device_list_afed0b1d9e51beca0bf45e5ca03f81896}{\index{mdt\-Usb\-Device\-List@{mdt\-Usb\-Device\-List}!clear@{clear}}
+\index{clear@{clear}!mdtUsbDeviceList@{mdt\-Usb\-Device\-List}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usb\-Device\-List\-::clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usb_device_list_afed0b1d9e51beca0bf45e5ca03f81896}
+
+
+Clear. 
+
+Will clear devices list and call free\-Libusb\-Device\-List() 
+
+Definition at line 134 of file mdt\-Usb\-Device\-List.\-cpp.
+
+
+
+Referenced by find\-Device(), mdt\-Usbtmc\-Port\-::open\-Device(), scan(), mdt\-Usbtmc\-Port\-::scan(), and $\sim$mdt\-Usb\-Device\-List().
+
+\hypertarget{classmdt_usb_device_list_ad18027a6b34790e2b907f37755612fe3}{\index{mdt\-Usb\-Device\-List@{mdt\-Usb\-Device\-List}!device\-List@{device\-List}}
+\index{device\-List@{device\-List}!mdtUsbDeviceList@{mdt\-Usb\-Device\-List}}
+\subsubsection[{device\-List}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<${\bf mdt\-Usb\-Device\-Descriptor}$>$ mdt\-Usb\-Device\-List\-::device\-List (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_device_list_ad18027a6b34790e2b907f37755612fe3}
+
+
+Get devices descriptors list. 
+
+Will contain valid result after successfull scan. 
+
+Definition at line 63 of file mdt\-Usb\-Device\-List.\-h.
+
+
+
+Referenced by usbtmc\-Device\-List().
+
+\hypertarget{classmdt_usb_device_list_acdec1d6cab615f8cfa8a07eff8b0f9e0}{\index{mdt\-Usb\-Device\-List@{mdt\-Usb\-Device\-List}!device\-List@{device\-List}}
+\index{device\-List@{device\-List}!mdtUsbDeviceList@{mdt\-Usb\-Device\-List}}
+\subsubsection[{device\-List}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ {\bf mdt\-Usb\-Device\-Descriptor} $>$ mdt\-Usb\-Device\-List\-::device\-List (
+\begin{DoxyParamCaption}
+\item[{uint8\-\_\-t}]{b\-Device\-Class, }
+\item[{uint8\-\_\-t}]{b\-Device\-Sub\-Class, }
+\item[{uint8\-\_\-t}]{b\-Device\-Protocol}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_usb_device_list_acdec1d6cab615f8cfa8a07eff8b0f9e0}
+
+
+Get a list of devices of given class, sub class and protocol. 
+
+
+
+Definition at line 53 of file mdt\-Usb\-Device\-List.\-cpp.
+
+\hypertarget{classmdt_usb_device_list_aba706f1ab782e5d25f331d2d6946023c}{\index{mdt\-Usb\-Device\-List@{mdt\-Usb\-Device\-List}!find\-Device@{find\-Device}}
+\index{find\-Device@{find\-Device}!mdtUsbDeviceList@{mdt\-Usb\-Device\-List}}
+\subsubsection[{find\-Device}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Usb\-Device\-Descriptor} mdt\-Usb\-Device\-List\-::find\-Device (
+\begin{DoxyParamCaption}
+\item[{uint16\-\_\-t}]{id\-Vendor, }
+\item[{uint16\-\_\-t}]{id\-Product, }
+\item[{const Q\-String \&}]{serial\-Number = {\ttfamily QString()}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usb_device_list_aba706f1ab782e5d25f331d2d6946023c}
+
+
+Find a device with given vendor I\-D, product I\-D and serial number if not empty. 
+
+Note\-: serial number is not requeired for all class/subclass. For U\-S\-B\-T\-M\-C, it is required (see U\-S\-B\-T\-M\-C 1.\-0 spec, chap. 5.\-1)
+
+\begin{DoxyReturn}{Returns}
+A valid device descriptor on success, or a empty one on failure (use \hyperlink{classmdt_usb_device_list_af4fa249c48fe4f1c51cd3cd4d82979cb}{last\-Error()} on this case). 
+\end{DoxyReturn}
+
+
+Definition at line 81 of file mdt\-Usb\-Device\-List.\-cpp.
+
+
+
+References clear(), mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, and mdt\-Error\-::set\-Error().
+
+\hypertarget{classmdt_usb_device_list_abf867860c60d24cd8b62c10771af75d8}{\index{mdt\-Usb\-Device\-List@{mdt\-Usb\-Device\-List}!find\-First\-Usbtmc\-Device@{find\-First\-Usbtmc\-Device}}
+\index{find\-First\-Usbtmc\-Device@{find\-First\-Usbtmc\-Device}!mdtUsbDeviceList@{mdt\-Usb\-Device\-List}}
+\subsubsection[{find\-First\-Usbtmc\-Device}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Usb\-Device\-Descriptor} mdt\-Usb\-Device\-List\-::find\-First\-Usbtmc\-Device (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_usb_device_list_abf867860c60d24cd8b62c10771af75d8}
+
+
+Get first device that is a U\-S\-B\-T\-M\-C device. 
+
+This function is mostly used by unit testing. 
+
+Definition at line 122 of file mdt\-Usb\-Device\-List.\-cpp.
+
+
+
+References usbtmc\-Device\-List().
+
+\hypertarget{classmdt_usb_device_list_af4fa249c48fe4f1c51cd3cd4d82979cb}{\index{mdt\-Usb\-Device\-List@{mdt\-Usb\-Device\-List}!last\-Error@{last\-Error}}
+\index{last\-Error@{last\-Error}!mdtUsbDeviceList@{mdt\-Usb\-Device\-List}}
+\subsubsection[{last\-Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Error} mdt\-Usb\-Device\-List\-::last\-Error (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_device_list_af4fa249c48fe4f1c51cd3cd4d82979cb}
+
+
+Open a device with given vendor I\-D, product I\-D and serial number if not empty. 
+
+Note\-: serial number is not requeired for all class/subclass. For U\-S\-B\-T\-M\-C, it is required (see U\-S\-B\-T\-M\-C 1.\-0 spec, chap. 5.\-1)
+
+\begin{DoxyReturn}{Returns}
+A valid handle on success, or a null pointer on error (on failure, use \hyperlink{classmdt_usb_device_list_af4fa249c48fe4f1c51cd3cd4d82979cb}{last\-Error()}). Note\-: caller is responsible to free the handle with libusb\-\_\-close() once not longer used.\-libusb\-\_\-device\-\_\-handle $\ast$open\-Device(uint16\-\_\-t id\-Vendor, uint16\-\_\-t id\-Product, const Q\-String \& serial\-Number = Q\-String());
+\end{DoxyReturn}
+Get last error 
+
+Definition at line 111 of file mdt\-Usb\-Device\-List.\-h.
+
+
+
+Referenced by mdt\-Usbtmc\-Port\-::scan().
+
+\hypertarget{classmdt_usb_device_list_a21b4ab508329779b07bae7859097b955}{\index{mdt\-Usb\-Device\-List@{mdt\-Usb\-Device\-List}!scan@{scan}}
+\index{scan@{scan}!mdtUsbDeviceList@{mdt\-Usb\-Device\-List}}
+\subsubsection[{scan}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usb\-Device\-List\-::scan (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usb_device_list_a21b4ab508329779b07bae7859097b955}
+
+
+Enumerate any attached U\-S\-B devices. 
+
+
+
+Definition at line 38 of file mdt\-Usb\-Device\-List.\-cpp.
+
+
+
+References clear().
+
+
+
+Referenced by mdt\-Usbtmc\-Port\-::scan().
+
+\hypertarget{classmdt_usb_device_list_a08a5882459612c1a95f891c315528b5c}{\index{mdt\-Usb\-Device\-List@{mdt\-Usb\-Device\-List}!usbtmc\-Device\-List@{usbtmc\-Device\-List}}
+\index{usbtmc\-Device\-List@{usbtmc\-Device\-List}!mdtUsbDeviceList@{mdt\-Usb\-Device\-List}}
+\subsubsection[{usbtmc\-Device\-List}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ {\bf mdt\-Usb\-Device\-Descriptor} $>$ mdt\-Usb\-Device\-List\-::usbtmc\-Device\-List (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_usb_device_list_a08a5882459612c1a95f891c315528b5c}
+
+
+Get a list of attached U\-S\-B\-T\-M\-C devices. 
+
+
+
+Definition at line 66 of file mdt\-Usb\-Device\-List.\-cpp.
+
+
+
+References device\-List().
+
+
+
+Referenced by find\-First\-Usbtmc\-Device(), and mdt\-Usbtmc\-Port\-::scan().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdtport/\hyperlink{mdt_usb_device_list_8h}{mdt\-Usb\-Device\-List.\-h}\item 
+src/mdtport/\hyperlink{mdt_usb_device_list_8cpp}{mdt\-Usb\-Device\-List.\-cpp}\end{DoxyCompactItemize}

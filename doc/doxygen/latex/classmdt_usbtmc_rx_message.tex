@@ -1,0 +1,105 @@
+\hypertarget{classmdt_usbtmc_rx_message}{\section{mdt\-Usbtmc\-Rx\-Message Class Reference}
+\label{classmdt_usbtmc_rx_message}\index{mdt\-Usbtmc\-Rx\-Message@{mdt\-Usbtmc\-Rx\-Message}}
+}
+
+
+U\-S\-B\-T\-M\-C message for receiving data from device.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Usbtmc\-Message.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_usbtmc_rx_message_a0f902a26924d200af2479a90f2428843}{mdt\-Usbtmc\-Rx\-Message} (Q\-Byte\-Array \&ba)
+\begin{DoxyCompactList}\small\item\em Construct a message that acts on given byte array. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_rx_message_af4e731a1d8805b2ab559aaf4b71dac2a}{reset} ()
+\begin{DoxyCompactList}\small\item\em Reset internal cursor to the beginning of byte array. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_rx_message_a1aecc64d17026278c5c41a082c6a4903}{write} (const uint8\-\_\-t $\ast$src, int n)
+\begin{DoxyCompactList}\small\item\em Copy data from buffer to byte array. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+U\-S\-B\-T\-M\-C message for receiving data from device. 
+
+For concept of U\-S\-B\-T\-M\-C message, see U\-S\-B\-T\-M\-C 1.\-0 specifications, section 3.\-2.\-1.\-1 and 3.\-3.\-1 
+
+Definition at line 221 of file mdt\-Usbtmc\-Message.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_usbtmc_rx_message_a0f902a26924d200af2479a90f2428843}{\index{mdt\-Usbtmc\-Rx\-Message@{mdt\-Usbtmc\-Rx\-Message}!mdt\-Usbtmc\-Rx\-Message@{mdt\-Usbtmc\-Rx\-Message}}
+\index{mdt\-Usbtmc\-Rx\-Message@{mdt\-Usbtmc\-Rx\-Message}!mdtUsbtmcRxMessage@{mdt\-Usbtmc\-Rx\-Message}}
+\subsubsection[{mdt\-Usbtmc\-Rx\-Message}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Usbtmc\-Rx\-Message\-::mdt\-Usbtmc\-Rx\-Message (
+\begin{DoxyParamCaption}
+\item[{Q\-Byte\-Array \&}]{ba}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_rx_message_a0f902a26924d200af2479a90f2428843}
+
+
+Construct a message that acts on given byte array. 
+
+
+
+Definition at line 227 of file mdt\-Usbtmc\-Message.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_usbtmc_rx_message_af4e731a1d8805b2ab559aaf4b71dac2a}{\index{mdt\-Usbtmc\-Rx\-Message@{mdt\-Usbtmc\-Rx\-Message}!reset@{reset}}
+\index{reset@{reset}!mdtUsbtmcRxMessage@{mdt\-Usbtmc\-Rx\-Message}}
+\subsubsection[{reset}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Rx\-Message\-::reset (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_rx_message_af4e731a1d8805b2ab559aaf4b71dac2a}
+
+
+Reset internal cursor to the beginning of byte array. 
+
+
+
+Definition at line 235 of file mdt\-Usbtmc\-Message.\-h.
+
+\hypertarget{classmdt_usbtmc_rx_message_a1aecc64d17026278c5c41a082c6a4903}{\index{mdt\-Usbtmc\-Rx\-Message@{mdt\-Usbtmc\-Rx\-Message}!write@{write}}
+\index{write@{write}!mdtUsbtmcRxMessage@{mdt\-Usbtmc\-Rx\-Message}}
+\subsubsection[{write}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Rx\-Message\-::write (
+\begin{DoxyParamCaption}
+\item[{const uint8\-\_\-t $\ast$}]{src, }
+\item[{int}]{n}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_rx_message_a1aecc64d17026278c5c41a082c6a4903}
+
+
+Copy data from buffer to byte array. 
+
+Will resize byte array so that all data can be copied.
+
+
+\begin{DoxyParams}{Parameters}
+{\em src} & Pointer to source buffer \\
+\hline
+{\em n} & Number of bytes to copy \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+src must be valid 
+
+n must be $>$= 0 
+\end{DoxyPrecond}
+
+
+Definition at line 249 of file mdt\-Usbtmc\-Message.\-h.
+
+
+
+Referenced by mdt\-Usbtmc\-Frame\-::get\-Data().
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+src/mdtport/\hyperlink{mdt_usbtmc_message_8h}{mdt\-Usbtmc\-Message.\-h}\end{DoxyCompactItemize}

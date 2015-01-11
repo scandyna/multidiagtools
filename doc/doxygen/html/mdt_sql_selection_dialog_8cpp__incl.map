@@ -1,8 +1,8 @@
 <map id="src/mdtdatabase/mdtSqlSelectionDialog.cpp" name="src/mdtdatabase/mdtSqlSelectionDialog.cpp">
-<area shape="rect" id="node3" href="$mdt_sql_selection_dialog_8h.html" title="mdtSqlSelectionDialog.h" alt="" coords="498,101,663,131"/>
-<area shape="rect" id="node41" href="$mdt_sort_filter_proxy_model_8h.html" title="mdtSortFilterProxyModel.h" alt="" coords="1083,256,1259,285"/>
-<area shape="rect" id="node51" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="1278,101,1360,131"/>
-<area shape="rect" id="node7" href="$mdt_sql_table_selection_8h.html" title="mdtSqlTableSelection.h" alt="" coords="682,179,842,208"/>
-<area shape="rect" id="node9" href="$mdt_sql_table_selection_row_8h.html" title="mdtSqlTableSelectionRow.h" alt="" coords="515,256,702,285"/>
-<area shape="rect" id="node11" href="$mdt_sql_table_selection_item_8h.html" title="mdtSqlTableSelectionItem.h" alt="" coords="534,333,720,363"/>
+<area shape="rect" id="node2" href="$mdt_sql_selection_dialog_8h.html" title="mdtSqlSelectionDialog.h" alt="" coords="513,96,677,123"/>
+<area shape="rect" id="node17" href="$mdt_sort_filter_proxy_model_8h.html" title="mdtSortFilterProxyModel.h" alt="" coords="1005,245,1181,272"/>
+<area shape="rect" id="node21" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="1245,96,1327,123"/>
+<area shape="rect" id="node4" href="$mdt_sql_table_selection_8h.html" title="mdtSqlTableSelection.h" alt="" coords="156,171,315,197"/>
+<area shape="rect" id="node5" href="$mdt_sql_table_selection_row_8h.html" title="mdtSqlTableSelectionRow.h" alt="" coords="143,245,329,272"/>
+<area shape="rect" id="node6" href="$mdt_sql_table_selection_item_8h.html" title="mdtSqlTableSelectionItem.h" alt="" coords="204,320,391,347"/>
 </map>

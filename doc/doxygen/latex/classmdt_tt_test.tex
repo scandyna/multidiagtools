@@ -42,7 +42,19 @@ bool \hyperlink{classmdt_tt_test_a8dc26af849b8e928385e5f25697ebb47}{remove\-Test
 void \hyperlink{classmdt_tt_test_ae8cafeb9cebf1c11ca136a94ba75020c}{reset\-Test\-Item\-Cursor} ()
 \begin{DoxyCompactList}\small\item\em Check if more test item is available. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_tt_test_item_node_setup_data}{mdt\-Tt\-Test\-Item\-Node\-Setup\-Data} \hyperlink{classmdt_tt_test_a71e868fa2c182b33982276e52f9c4d23}{get\-Setup\-Data} (const Q\-Variant \&test\-Model\-Item\-Id, bool \&ok)
-\begin{DoxyCompactList}\small\item\em Go to next test item. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Go to next test item. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_tt_test_node_setup_data}{mdt\-Tt\-Test\-Node\-Setup\-Data} \hyperlink{classmdt_tt_test_a2e94f9328bb623b7132ad5cfcf2e0eb2}{get\-Test\-Node\-Setup\-Data} (const Q\-Variant \&test\-Model\-Item\-Id, const Q\-String \&node\-Identification, bool \&ok)
+\begin{DoxyCompactList}\small\item\em Get test node setup data for given test\-Model\-Item\-Id and node\-Identification. \end{DoxyCompactList}\item 
+Q\-List$<$ \hyperlink{classmdt_cl_link_data}{mdt\-Cl\-Link\-Data} $>$ \hyperlink{classmdt_tt_test_a714c75cac12f6ed3f14bd69ffa59b02f}{get\-Link\-Data\-List\-For\-Route} (const Q\-Variant \&connection\-Id\-A, const Q\-Variant \&connection\-Id\-B, const Q\-List$<$ \hyperlink{classmdt_tt_test_node_unit_setup_data}{mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data} $>$ \&test\-Node\-Unit\-Setup\-Data\-List, \hyperlink{classmdt_cl_path_graph}{mdt\-Cl\-Path\-Graph} \&graph, bool \&ok)
+\begin{DoxyCompactList}\small\item\em Get a list of links that are travsersed from connection\-Id\-A to connection\-Id\-B. \end{DoxyCompactList}\item 
+Q\-List$<$ \hyperlink{classmdt_cl_link_data}{mdt\-Cl\-Link\-Data} $>$ \hyperlink{classmdt_tt_test_a0f63e5cea734f6cc8b95fcb23062d1ed}{get\-Link\-Data\-List\-For\-Route} (const \hyperlink{classmdt_tt_test_model_item_route_data}{mdt\-Tt\-Test\-Model\-Item\-Route\-Data} \&route\-Data, \hyperlink{classmdt_cl_path_graph}{mdt\-Cl\-Path\-Graph} \&graph, bool \&ok)
+\begin{DoxyCompactList}\small\item\em Get a list of links that are travsersed for given route. \end{DoxyCompactList}\item 
+Q\-List$<$ \hyperlink{classmdt_cl_link_data}{mdt\-Cl\-Link\-Data} $>$ \hyperlink{classmdt_tt_test_a56f7d773428b273c2f0c11704071e288}{get\-Link\-Data\-List\-For\-Route} (const Q\-Variant \&test\-Node\-Id, const Q\-String \&schema\-Position\-A, const Q\-String \&connector\-A, const Q\-String \&contact\-A, const Q\-String \&schema\-Position\-B, const Q\-String \&connector\-B, const Q\-String \&contact\-B, const Q\-String\-List \&relays\-To\-Enable, \hyperlink{classmdt_cl_path_graph}{mdt\-Cl\-Path\-Graph} \&graph, bool \&ok)
+\begin{DoxyCompactList}\small\item\em Get a list of links that are travsersed for given connections. \end{DoxyCompactList}\item 
+double \hyperlink{classmdt_tt_test_a0a19a6295566c3b7697f3824ec458f6f}{link\-Path\-Resistance} (const Q\-List$<$ \hyperlink{classmdt_cl_link_data}{mdt\-Cl\-Link\-Data} $>$ \&link\-Data\-List) const 
+\begin{DoxyCompactList}\small\item\em Get link part resistance of a path. \end{DoxyCompactList}\item 
+Q\-Variant \hyperlink{classmdt_tt_test_abf39ceb44b891273851a92f84e267900}{get\-Connection\-Id} (const Q\-Variant \&test\-Node\-Id, const Q\-String \&schema\-Position, const Q\-String \&connector, const Q\-String \&contact, bool \&ok)
+\begin{DoxyCompactList}\small\item\em Get unit connection I\-D for given criteria. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -65,7 +77,7 @@ Typical usage\-:
 \item Load data from database and start state machines with start() 
 \end{DoxyItemize}
 
-Definition at line 54 of file mdt\-Tt\-Test.\-h.
+Definition at line 58 of file mdt\-Tt\-Test.\-h.
 
 
 
@@ -84,7 +96,7 @@ Constructor.
 
 
 
-Definition at line 38 of file mdt\-Tt\-Test.\-cpp.
+Definition at line 41 of file mdt\-Tt\-Test.\-cpp.
 
 
 
@@ -131,11 +143,176 @@ new\-Test\-Id = (data.\-value(\char`\"{}\-Id\-\_\-\-P\-K\char`\"{}) != pv\-Test\
 
 if(field\-Name == \char`\"{}\-Id\-\_\-\-P\-K\char`\"{})\{ new\-Test\-Id = (value != pv\-Test\-Data.\-value(\char`\"{}\-Id\-\_\-\-P\-K\char`\"{})); \} pv\-Test\-Data.\-set\-Value(field\-Name, value); pv\-Test\-Data\-Are\-Saved = false; if(new\-Test\-Id)\{ reset\-Test\-Item\-Table\-Models(); \} /emit test\-Data\-Changed(pv\-Test\-Data); \} Q\-Sql\-Record mdt\-Tt\-Test\-::test\-Data() const \{ return pv\-Test\-View\-Table\-Model-\/$>$record(pv\-Current\-Test\-Row); \} 
 
-Definition at line 85 of file mdt\-Tt\-Test.\-cpp.
+Definition at line 88 of file mdt\-Tt\-Test.\-cpp.
 
 
 
 References mdt\-Sql\-Record\-::add\-All\-Fields(), mdt\-Tt\-Base\-::add\-Record(), mdt\-Tt\-Base\-::begin\-Transaction(), mdt\-Tt\-Base\-::commit\-Transaction(), mdt\-Tt\-Base\-::database(), mdt\-Sql\-Record\-::last\-Error(), mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Tt\-Base\-::rollback\-Transaction(), and mdt\-Sql\-Record\-::set\-Value().
+
+\hypertarget{classmdt_tt_test_abf39ceb44b891273851a92f84e267900}{\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!get\-Connection\-Id@{get\-Connection\-Id}}
+\index{get\-Connection\-Id@{get\-Connection\-Id}!mdtTtTest@{mdt\-Tt\-Test}}
+\subsubsection[{get\-Connection\-Id}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant mdt\-Tt\-Test\-::get\-Connection\-Id (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{test\-Node\-Id, }
+\item[{const Q\-String \&}]{schema\-Position, }
+\item[{const Q\-String \&}]{connector, }
+\item[{const Q\-String \&}]{contact, }
+\item[{bool \&}]{ok}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_abf39ceb44b891273851a92f84e267900}
+
+
+Get unit connection I\-D for given criteria. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em test\-Node\-Id} & I\-D of test node (primary key) \\
+\hline
+{\em schema\-Position\-A} & Schema position that contains connection \\
+\hline
+{\em connector\-A} & Name of connector that contains connection \\
+\hline
+{\em contact\-A} & Name of contact that contains connection \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 578 of file mdt\-Tt\-Test.\-cpp.
+
+
+
+References mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Error\-::set\-Error(), and mdt\-Error\-::set\-System\-Error().
+
+
+
+Referenced by get\-Link\-Data\-List\-For\-Route().
+
+\hypertarget{classmdt_tt_test_a714c75cac12f6ed3f14bd69ffa59b02f}{\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!get\-Link\-Data\-List\-For\-Route@{get\-Link\-Data\-List\-For\-Route}}
+\index{get\-Link\-Data\-List\-For\-Route@{get\-Link\-Data\-List\-For\-Route}!mdtTtTest@{mdt\-Tt\-Test}}
+\subsubsection[{get\-Link\-Data\-List\-For\-Route}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ {\bf mdt\-Cl\-Link\-Data} $>$ mdt\-Tt\-Test\-::get\-Link\-Data\-List\-For\-Route (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{connection\-Id\-A, }
+\item[{const Q\-Variant \&}]{connection\-Id\-B, }
+\item[{const Q\-List$<$ {\bf mdt\-Tt\-Test\-Node\-Unit\-Setup\-Data} $>$ \&}]{test\-Node\-Unit\-Setup\-Data\-List, }
+\item[{{\bf mdt\-Cl\-Path\-Graph} \&}]{graph, }
+\item[{bool \&}]{ok}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_a714c75cac12f6ed3f14bd69ffa59b02f}
+
+
+Get a list of links that are travsersed from connection\-Id\-A to connection\-Id\-B. 
+
+Usefull to get all links of a route in a coupler (test node), for example from a test connection to a measure connection.
+
+
+\begin{DoxyParams}{Parameters}
+{\em connection\-Id\-A} & Starting connection (f.\-ex. a measure connection) \\
+\hline
+{\em connection\-Id\-B} & Ending connection (f.\-ex. a test connection) \\
+\hline
+{\em test\-Node\-Unit\-Setup\-Data\-List} & Test node unit setup data list of coupling and channel relays that are turned on \\
+\hline
+{\em graph} & Graph object. Cable list must allready be loaded (see \hyperlink{classmdt_cl_path_graph_a40e80f68b2600ad69a1fe74aa40393f8}{mdt\-Cl\-Path\-Graph\-::load\-Link\-List()}). \\
+\hline
+{\em ok} & Will be set false if a error occured, true else \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 506 of file mdt\-Tt\-Test.\-cpp.
+
+
+
+References mdt\-Tt\-Base\-::database(), mdt\-Tt\-Test\-Node\-::get\-Link\-Data\-List\-For\-Path(), mdt\-Tt\-Base\-::last\-Error(), and mdt\-Tt\-Base\-::pv\-Last\-Error.
+
+
+
+Referenced by get\-Link\-Data\-List\-For\-Route().
+
+\hypertarget{classmdt_tt_test_a0f63e5cea734f6cc8b95fcb23062d1ed}{\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!get\-Link\-Data\-List\-For\-Route@{get\-Link\-Data\-List\-For\-Route}}
+\index{get\-Link\-Data\-List\-For\-Route@{get\-Link\-Data\-List\-For\-Route}!mdtTtTest@{mdt\-Tt\-Test}}
+\subsubsection[{get\-Link\-Data\-List\-For\-Route}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ {\bf mdt\-Cl\-Link\-Data} $>$ mdt\-Tt\-Test\-::get\-Link\-Data\-List\-For\-Route (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Tt\-Test\-Model\-Item\-Route\-Data} \&}]{route\-Data, }
+\item[{{\bf mdt\-Cl\-Path\-Graph} \&}]{graph, }
+\item[{bool \&}]{ok}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_a0f63e5cea734f6cc8b95fcb23062d1ed}
+
+
+Get a list of links that are travsersed for given route. 
+
+Usefull to get all links of a route in a coupler (test node), for example from a test connection to a measure connection.
+
+
+\begin{DoxyParams}{Parameters}
+{\em route\-Data} & Data that contains route from test connection and measure connection. Must also include setup data list of relays to enable. \\
+\hline
+{\em graph} & Graph object. Cable list must allready be loaded (see \hyperlink{classmdt_cl_path_graph_a40e80f68b2600ad69a1fe74aa40393f8}{mdt\-Cl\-Path\-Graph\-::load\-Link\-List()}). \\
+\hline
+{\em ok} & Will be set false if a error occured, true else \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 521 of file mdt\-Tt\-Test.\-cpp.
+
+
+
+References get\-Link\-Data\-List\-For\-Route(), mdt\-Tt\-Test\-Model\-Item\-Route\-Data\-::measure\-Connection\-Id(), mdt\-Tt\-Test\-Model\-Item\-Route\-Data\-::setup\-Data\-List(), and mdt\-Tt\-Test\-Model\-Item\-Route\-Data\-::test\-Connection\-Id().
+
+\hypertarget{classmdt_tt_test_a56f7d773428b273c2f0c11704071e288}{\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!get\-Link\-Data\-List\-For\-Route@{get\-Link\-Data\-List\-For\-Route}}
+\index{get\-Link\-Data\-List\-For\-Route@{get\-Link\-Data\-List\-For\-Route}!mdtTtTest@{mdt\-Tt\-Test}}
+\subsubsection[{get\-Link\-Data\-List\-For\-Route}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ {\bf mdt\-Cl\-Link\-Data} $>$ mdt\-Tt\-Test\-::get\-Link\-Data\-List\-For\-Route (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{test\-Node\-Id, }
+\item[{const Q\-String \&}]{schema\-Position\-A, }
+\item[{const Q\-String \&}]{connector\-A, }
+\item[{const Q\-String \&}]{contact\-A, }
+\item[{const Q\-String \&}]{schema\-Position\-B, }
+\item[{const Q\-String \&}]{connector\-B, }
+\item[{const Q\-String \&}]{contact\-B, }
+\item[{const Q\-String\-List \&}]{relays\-To\-Enable, }
+\item[{{\bf mdt\-Cl\-Path\-Graph} \&}]{graph, }
+\item[{bool \&}]{ok}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_a56f7d773428b273c2f0c11704071e288}
+
+
+Get a list of links that are travsersed for given connections. 
+
+Usefull to get all links of a route in a coupler (test node), for example from a test connection to a measure connection.
+
+
+\begin{DoxyParams}{Parameters}
+{\em test\-Node\-Id} & I\-D of test node (primary key) \\
+\hline
+{\em schema\-Position\-A} & Schema position that contains connection A \\
+\hline
+{\em connector\-A} & Name of connector that contains connection A \\
+\hline
+{\em contact\-A} & Name of contact that contains connection A \\
+\hline
+{\em schema\-Position\-B} & Schema position that contains connection B \\
+\hline
+{\em connector\-B} & Name of connector that contains connection B \\
+\hline
+{\em contact\-B} & Name of contact that contains connection B \\
+\hline
+{\em relays\-To\-Enable} & List of coupling and channel relays that are turned on (give schema position for each) \\
+\hline
+{\em graph} & Graph object. Cable list must allready be loaded (see \hyperlink{classmdt_cl_path_graph_a40e80f68b2600ad69a1fe74aa40393f8}{mdt\-Cl\-Path\-Graph\-::load\-Link\-List()}). \\
+\hline
+{\em ok} & Will be set false if a error occured, true else \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 526 of file mdt\-Tt\-Test.\-cpp.
+
+
+
+References get\-Connection\-Id(), and get\-Link\-Data\-List\-For\-Route().
 
 \hypertarget{classmdt_tt_test_a71e868fa2c182b33982276e52f9c4d23}{\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!get\-Setup\-Data@{get\-Setup\-Data}}
 \index{get\-Setup\-Data@{get\-Setup\-Data}!mdtTtTest@{mdt\-Tt\-Test}}
@@ -154,6 +331,8 @@ The test item I\-D
 \end{DoxyReturn}
 Get setup data for given test model item I\-D
 
+This version is usefull for complex test items with many nodes, and handle step\-Number.
+
 Q\-\_\-\-A\-S\-S\-E\-R\-T(pv\-Test\-Item\-View\-Table\-Model);
 
 Q\-Model\-Index index; int col;
@@ -161,16 +340,39 @@ Q\-Model\-Index index; int col;
 col = pv\-Test\-Item\-View\-Table\-Model-\/$>$field\-Index(\char`\"{}\-Id\-\_\-\-P\-K\char`\"{}); Q\-\_\-\-A\-S\-S\-E\-R\-T(col $>$= 0); index = pv\-Test\-Item\-View\-Table\-Model-\/$>$index(pv\-Current\-Test\-Item\-Row, col);
 
 ///\begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000077}{Todo}]Provisoire ! col = pv\-Test\-Item\-View\-Table\-Model-\/$>$field\-Index(\char`\"{}\-Sequence\-Number\char`\"{}); Q\-Model\-Index index2; index2 = pv\-Test\-Item\-View\-Table\-Model-\/$>$index(pv\-Current\-Test\-Item\-Row, col); q\-Debug() $<$$<$ \char`\"{}mdt\-Tt\-Test -\/ current seq \#\-: \char`\"{} $<$$<$ pv\-Test\-Item\-View\-Table\-Model-\/$>$data(index2);\end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000088}{Todo}]Provisoire ! col = pv\-Test\-Item\-View\-Table\-Model-\/$>$field\-Index(\char`\"{}\-Sequence\-Number\char`\"{}); Q\-Model\-Index index2; index2 = pv\-Test\-Item\-View\-Table\-Model-\/$>$index(pv\-Current\-Test\-Item\-Row, col); q\-Debug() $<$$<$ \char`\"{}mdt\-Tt\-Test -\/ current seq \#\-: \char`\"{} $<$$<$ pv\-Test\-Item\-View\-Table\-Model-\/$>$data(index2);\end{DoxyRefDesc}
 
 
-return pv\-Test\-Item\-View\-Table\-Model-\/$>$data(index); 
+return pv\-Test\-Item\-View\-Table\-Model-\/$>$data(index); if(!add\-Route\-Data\-To\-Test\-Node\-Setup\-Data(tn\-Setup\-Data, test\-Model\-Item\-Id, node\-Id\-List.\-at(i)))\{ ok = false; return ti\-Setup\-Data; \} if(!add\-Node\-Unit\-Setup\-Data\-To\-Test\-Node\-Setup\-Data(tn\-Setup\-Data, test\-Model\-Item\-Id, node\-Id\-List.\-at(i)))\{ ok = false; return ti\-Setup\-Data; \} // Add all unit setup data that are part of current node for(k = 0; k $<$ data\-List.\-size(); ++k)\{ id = data\-List.\-at(k).value(\char`\"{}\-Test\-Node\-\_\-\-Id\-\_\-\-F\-K\char`\"{}).to\-Int(); if(node\-Id\-List.\-at(i) == id)\{ tnu\-Setup\-Data = data\-List.\-at(k); if(tn\-Setup\-Data.\-node\-Identification().is\-Empty())\{ tn\-Setup\-Data.\-set\-Node\-Identification(tnu\-Setup\-Data.\-value(\char`\"{}\-Node\-Identification\char`\"{}).to\-String()); \} tn\-Setup\-Data.\-add\-Unit\-Setup(tnu\-Setup\-Data); \} \} 
 
-Definition at line 372 of file mdt\-Tt\-Test.\-cpp.
+Definition at line 453 of file mdt\-Tt\-Test.\-cpp.
 
 
 
-References mdt\-Tt\-Test\-Item\-Node\-Setup\-Data\-::add\-Node\-Setup\-Data(), mdt\-Tt\-Test\-Node\-Setup\-Data\-::add\-Unit\-Setup(), mdt\-Tt\-Base\-::get\-Data(), mdt\-Tt\-Test\-Node\-Setup\-Data\-::node\-Identification(), mdt\-Tt\-Test\-Node\-Setup\-Data\-::set\-Node\-Identification(), and mdt\-Sql\-Record\-::value().
+References mdt\-Tt\-Test\-Item\-Node\-Setup\-Data\-::add\-Node\-Setup\-Data().
+
+\hypertarget{classmdt_tt_test_a2e94f9328bb623b7132ad5cfcf2e0eb2}{\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!get\-Test\-Node\-Setup\-Data@{get\-Test\-Node\-Setup\-Data}}
+\index{get\-Test\-Node\-Setup\-Data@{get\-Test\-Node\-Setup\-Data}!mdtTtTest@{mdt\-Tt\-Test}}
+\subsubsection[{get\-Test\-Node\-Setup\-Data}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Tt\-Test\-Node\-Setup\-Data} mdt\-Tt\-Test\-::get\-Test\-Node\-Setup\-Data (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{test\-Model\-Item\-Id, }
+\item[{const Q\-String \&}]{node\-Identification, }
+\item[{bool \&}]{ok}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_test_a2e94f9328bb623b7132ad5cfcf2e0eb2}
+
+
+Get test node setup data for given test\-Model\-Item\-Id and node\-Identification. 
+
+This version is usefull for single test items. Step\-Number is not handled here.
+
+Will also include related route data, and other setup data that are not related to any route. 
+
+Definition at line 479 of file mdt\-Tt\-Test.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, and mdt\-Error\-::set\-Error().
 
 \hypertarget{classmdt_tt_test_a0384aea1eb7edde259888e5fecae976c}{\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!is\-In\-Limit\-Range@{is\-In\-Limit\-Range}}
 \index{is\-In\-Limit\-Range@{is\-In\-Limit\-Range}!mdtTtTest@{mdt\-Tt\-Test}}
@@ -189,7 +391,7 @@ Check if x is in limit range.
 
 Return true if x is in \mbox{]}fail\-Min;limit\-Min\mbox{]} or in \mbox{[}limit\-Max;fail\-Max\mbox{[} 
 
-Definition at line 310 of file mdt\-Tt\-Test.\-cpp.
+Definition at line 313 of file mdt\-Tt\-Test.\-cpp.
 
 \hypertarget{classmdt_tt_test_a62a8e5118129566aa897bba3ff079a4e}{\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!is\-In\-Ok\-Range@{is\-In\-Ok\-Range}}
 \index{is\-In\-Ok\-Range@{is\-In\-Ok\-Range}!mdtTtTest@{mdt\-Tt\-Test}}
@@ -206,7 +408,7 @@ Check if x is in O\-K range.
 
 Return true if x is in \mbox{]}limit\-Min;limit\-Max\mbox{[} 
 
-Definition at line 305 of file mdt\-Tt\-Test.\-cpp.
+Definition at line 308 of file mdt\-Tt\-Test.\-cpp.
 
 \hypertarget{classmdt_tt_test_a5920961d0f32d37033a184ed76b2cf3d}{\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!is\-In\-Range@{is\-In\-Range}}
 \index{is\-In\-Range@{is\-In\-Range}!mdtTtTest@{mdt\-Tt\-Test}}
@@ -249,11 +451,30 @@ if(pv\-Test\-Item\-View\-Table\-Model-\/$>$row\-Count() $<$ 1)\{ return Q\-Varia
 
 return pv\-Test\-Item\-View\-Table\-Model-\/$>$data(index); 
 
-Definition at line 299 of file mdt\-Tt\-Test.\-cpp.
+Definition at line 302 of file mdt\-Tt\-Test.\-cpp.
 
 
 
 Referenced by mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool\-::is\-In\-Range().
+
+\hypertarget{classmdt_tt_test_a0a19a6295566c3b7697f3824ec458f6f}{\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!link\-Path\-Resistance@{link\-Path\-Resistance}}
+\index{link\-Path\-Resistance@{link\-Path\-Resistance}!mdtTtTest@{mdt\-Tt\-Test}}
+\subsubsection[{link\-Path\-Resistance}]{\setlength{\rightskip}{0pt plus 5cm}double mdt\-Tt\-Test\-::link\-Path\-Resistance (
+\begin{DoxyParamCaption}
+\item[{const Q\-List$<$ {\bf mdt\-Cl\-Link\-Data} $>$ \&}]{link\-Data\-List}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_tt_test_a0a19a6295566c3b7697f3824ec458f6f}
+
+
+Get link part resistance of a path. 
+
+
+
+Definition at line 558 of file mdt\-Tt\-Test.\-cpp.
+
+
+
+References mdt\-Cl\-Link\-Data\-::end\-Connection\-Data(), mdt\-Cl\-Link\-Data\-::start\-Connection\-Data(), and mdt\-Sql\-Record\-::value().
 
 \hypertarget{classmdt_tt_test_a8dc26af849b8e928385e5f25697ebb47}{\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!remove\-Test@{remove\-Test}}
 \index{remove\-Test@{remove\-Test}!mdtTtTest@{mdt\-Tt\-Test}}
@@ -268,7 +489,7 @@ Remove a test.
 
 Will also remove test items. 
 
-Definition at line 144 of file mdt\-Tt\-Test.\-cpp.
+Definition at line 147 of file mdt\-Tt\-Test.\-cpp.
 
 
 
@@ -289,7 +510,7 @@ Reset the test item cursor
 
 if(pv\-Current\-Test\-Item\-Row $<$ (pv\-Test\-Item\-View\-Table\-Model-\/$>$row\-Count() -\/ 1))\{ return true; \} if(pv\-Test\-Item\-View\-Table\-Model-\/$>$can\-Fetch\-More())\{ pv\-Test\-Item\-View\-Table\-Model-\/$>$fetch\-More(); return true; \} 
 
-Definition at line 336 of file mdt\-Tt\-Test.\-cpp.
+Definition at line 339 of file mdt\-Tt\-Test.\-cpp.
 
 \hypertarget{classmdt_tt_test_a816f7197031e96148996333b9c625702}{\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!save\-Test@{save\-Test}}
 \index{save\-Test@{save\-Test}!mdtTtTest@{mdt\-Tt\-Test}}
@@ -305,7 +526,7 @@ Save a test and related test items.
 
 
 
-Definition at line 118 of file mdt\-Tt\-Test.\-cpp.
+Definition at line 121 of file mdt\-Tt\-Test.\-cpp.
 
 
 

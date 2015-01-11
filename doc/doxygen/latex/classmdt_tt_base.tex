@@ -12,8 +12,7 @@ Base class for helper class.
 
 
 
-Inheritance diagram for mdt\-Tt\-Base\-:
-\nopagebreak
+Inheritance diagram for mdt\-Tt\-Base\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -44,7 +43,7 @@ bool \hyperlink{classmdt_tt_base_a4ca4fb3600aad6a8f279abd37fc1a4d7}{add\-Record}
 \begin{DoxyCompactList}\small\item\em Add a record to given table. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_tt_base_a1dc2f8748c7b1b86569868ac9a092b2d}{add\-Record} (const \hyperlink{classmdt_sql_record}{mdt\-Sql\-Record} \&record, const Q\-String \&table\-Name, Q\-Sql\-Query \&query)
 \begin{DoxyCompactList}\small\item\em Add a record to given table. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_tt_base_a26339dbcc81ba941b94f80a6769bd99d}{add\-Record\-List} (const Q\-List$<$ \hyperlink{classmdt_sql_record}{mdt\-Sql\-Record} $>$ \&record\-List, const Q\-String \&table\-Name, bool single\-Transaction=false)
+{\footnotesize template$<$typename T $>$ }\\bool \hyperlink{classmdt_tt_base_a2834f11dad159644fa47287cf9eb5952}{add\-Record\-List} (const Q\-List$<$ T $>$ \&record\-List, const Q\-String \&table\-Name, bool single\-Transaction=false)
 \begin{DoxyCompactList}\small\item\em Add a list of records to given table. \end{DoxyCompactList}\item 
 Q\-List$<$ Q\-Sql\-Record $>$ \hyperlink{classmdt_tt_base_aac6b0c135d2ff61d23ee9b37525a8ad5}{get\-Data} (const Q\-String \&sql, bool $\ast$ok=0, const Q\-String\-List \&expected\-Fields=Q\-String\-List())
 \begin{DoxyCompactList}\small\item\em Get data for given sql statement. \end{DoxyCompactList}\item 
@@ -53,6 +52,8 @@ Q\-List$<$ Q\-Sql\-Record $>$ \hyperlink{classmdt_tt_base_aac6b0c135d2ff61d23ee9
 bool \hyperlink{classmdt_tt_base_a40a9416a29d96518f39b2225516a2786}{update\-Record} (const Q\-String \&table\-Name, const \hyperlink{classmdt_sql_record}{mdt\-Sql\-Record} \&record, const Q\-Sql\-Record \&match\-Data)
 \begin{DoxyCompactList}\small\item\em Update data for given table. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_tt_base_a884be1a05bf38121afda06758ff6ac41}{update\-Record} (const Q\-String \&table\-Name, const \hyperlink{classmdt_sql_record}{mdt\-Sql\-Record} \&record, const Q\-String \&match\-Field, const Q\-Variant \&match\-Data)
+\begin{DoxyCompactList}\small\item\em Update data for given table. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_base_a07813d5d22efacfcbb044ee6d0023785}{update\-Record} (const Q\-String \&table\-Name, const \hyperlink{classmdt_sql_record}{mdt\-Sql\-Record} \&record, const Q\-String \&match\-Field1, const Q\-Variant \&key1, const Q\-String \&match\-Field2, const Q\-Variant \&key2)
 \begin{DoxyCompactList}\small\item\em Update data for given table. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_tt_base_a7b328098b5813497aedfb764a1ff787f}{remove\-Data} (const Q\-String \&table\-Name, const Q\-String\-List \&fields, const Q\-Model\-Index\-List \&indexes)
 \begin{DoxyCompactList}\small\item\em Remove data from given table. \end{DoxyCompactList}\item 
@@ -90,7 +91,7 @@ To edit entities (links, Article, Unit, ...) , dedicated classes helps for inter
 This class is a base that regroups common methods .
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000062}{Todo}]Should inherit \hyperlink{class_q_object}{Q\-Object}, because\-:
+\item[\hyperlink{todo__todo000072}{Todo}]Should inherit \hyperlink{class_q_object}{Q\-Object}, because\-:
 \begin{DoxyItemize}
 \item Use of tr()
 \item Use Q\-Object\-::destroyed() signal (see \hyperlink{classmdt_tt_test}{mdt\-Tt\-Test} for a typical usecase) 
@@ -115,7 +116,7 @@ Definition at line 48 of file mdt\-Tt\-Base.\-h.
 Constructor. 
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000061}{Todo}]Add tr() in errors \end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000071}{Todo}]Add tr() in errors \end{DoxyRefDesc}
 
 
 Definition at line 30 of file mdt\-Tt\-Base.\-cpp.
@@ -160,7 +161,7 @@ References database().
 
 
 
-Referenced by mdt\-Cl\-Article\-::add\-Cable\-Link(), mdt\-Tt\-Test\-Node\-Unit\-::add\-Connection(), mdt\-Cl\-Article\-::add\-Connection(), mdt\-Cl\-Unit\-::add\-Connection(), mdt\-Cl\-Article\-::add\-Connector(), mdt\-Cl\-Unit\-::add\-Connector(), mdt\-Tt\-Logical\-Test\-Cable\-::add\-Dut\-Unit(), mdt\-Cl\-Link\-Beam\-::add\-End\-Unit(), mdt\-Tt\-Test\-Model\-Item\-::add\-Item(), mdt\-Cl\-Link\-::add\-Link(), mdt\-Cl\-Direct\-Link\-::add\-Link(), mdt\-Tt\-Logical\-Test\-Cable\-::add\-Link(), mdt\-Cl\-Article\-::add\-Link(), mdt\-Tt\-Test\-Node\-Unit\-::add\-Node\-Unit(), mdt\-Tt\-Test\-Model\-Item\-::add\-Or\-Update\-Test\-Node\-Unit\-Setup(), add\-Record\-List(), mdt\-Tt\-Test\-Model\-Item\-::add\-Route(), mdt\-Cl\-Link\-Beam\-::add\-Start\-Unit(), mdt\-Tt\-Test\-Model\-Item\-::add\-Test\-Link(), mdt\-Tt\-Test\-Model\-::add\-Test\-Node(), mdt\-Tt\-Logical\-Test\-Cable\-::add\-Test\-Node\-Unit(), and mdt\-Tt\-Test\-::create\-Test().
+Referenced by mdt\-Cl\-Article\-::add\-Cable\-Link(), mdt\-Tt\-Test\-Node\-Unit\-::add\-Connection(), mdt\-Cl\-Article\-::add\-Connection(), mdt\-Cl\-Unit\-::add\-Connection(), mdt\-Cl\-Article\-::add\-Connector(), mdt\-Cl\-Unit\-::add\-Connector(), mdt\-Tt\-Logical\-Test\-Cable\-::add\-Dut\-Unit(), mdt\-Cl\-Link\-Beam\-::add\-End\-Unit(), mdt\-Tt\-Test\-Model\-Item\-::add\-Item(), mdt\-Cl\-Direct\-Link\-::add\-Link(), mdt\-Cl\-Link\-::add\-Link(), mdt\-Tt\-Logical\-Test\-Cable\-::add\-Link(), mdt\-Cl\-Article\-::add\-Link(), mdt\-Tt\-Test\-Node\-Unit\-::add\-Node\-Unit(), mdt\-Tt\-Test\-Model\-Item\-::add\-Or\-Update\-Test\-Node\-Unit\-Setup(), add\-Record\-List(), mdt\-Tt\-Test\-Model\-Item\-::add\-Route(), mdt\-Cl\-Link\-Beam\-::add\-Start\-Unit(), mdt\-Tt\-Test\-Model\-Item\-::add\-Test\-Link(), mdt\-Tt\-Test\-Model\-::add\-Test\-Node(), mdt\-Tt\-Logical\-Test\-Cable\-::add\-Test\-Node\-Unit(), mdt\-Tt\-Logical\-Test\-Cable\-::create\-Cable(), and mdt\-Tt\-Test\-::create\-Test().
 
 \hypertarget{classmdt_tt_base_a1dc2f8748c7b1b86569868ac9a092b2d}{\index{mdt\-Tt\-Base@{mdt\-Tt\-Base}!add\-Record@{add\-Record}}
 \index{add\-Record@{add\-Record}!mdtTtBase@{mdt\-Tt\-Base}}
@@ -185,22 +186,22 @@ Definition at line 56 of file mdt\-Tt\-Base.\-cpp.
 
 References mdt\-Error\-::commit(), mdt\-Sql\-Record\-::data\-To\-Update\-Info(), mdt\-Error\-::\-Error, mdt\-Sql\-Record\-::field\-Indexes\-With\-Value(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, pv\-Last\-Error, mdt\-Error\-::set\-Error(), mdt\-Error\-::set\-System\-Error(), mdt\-Sql\-Record\-::sql\-For\-Insert(), and mdt\-Sql\-Record\-::value().
 
-\hypertarget{classmdt_tt_base_a26339dbcc81ba941b94f80a6769bd99d}{\index{mdt\-Tt\-Base@{mdt\-Tt\-Base}!add\-Record\-List@{add\-Record\-List}}
+\hypertarget{classmdt_tt_base_a2834f11dad159644fa47287cf9eb5952}{\index{mdt\-Tt\-Base@{mdt\-Tt\-Base}!add\-Record\-List@{add\-Record\-List}}
 \index{add\-Record\-List@{add\-Record\-List}!mdtTtBase@{mdt\-Tt\-Base}}
-\subsubsection[{add\-Record\-List}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Base\-::add\-Record\-List (
+\subsubsection[{add\-Record\-List}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ bool mdt\-Tt\-Base\-::add\-Record\-List (
 \begin{DoxyParamCaption}
-\item[{const Q\-List$<$ {\bf mdt\-Sql\-Record} $>$ \&}]{record\-List, }
+\item[{const Q\-List$<$ T $>$ \&}]{record\-List, }
 \item[{const Q\-String \&}]{table\-Name, }
 \item[{bool}]{single\-Transaction = {\ttfamily false}}
 \end{DoxyParamCaption}
-)}}\label{classmdt_tt_base_a26339dbcc81ba941b94f80a6769bd99d}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_tt_base_a2834f11dad159644fa47287cf9eb5952}
 
 
 Add a list of records to given table. 
 
 If single\-Transaction is true, a transaction will be used for adding all records. If you need to handle a transaction outside, set this parameter to false. 
 
-Definition at line 101 of file mdt\-Tt\-Base.\-cpp.
+Definition at line 92 of file mdt\-Tt\-Base.\-h.
 
 
 
@@ -223,7 +224,7 @@ Beginn manually a new transaction.
 
 On error, false is returned and error is available with \hyperlink{classmdt_tt_base_a92adaae105cef63b18ace2e320776ca9}{last\-Error()} . 
 
-Definition at line 402 of file mdt\-Tt\-Base.\-cpp.
+Definition at line 424 of file mdt\-Tt\-Base.\-cpp.
 
 
 
@@ -231,7 +232,7 @@ References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R
 
 
 
-Referenced by mdt\-Cl\-Unit\-::add\-Connection(), mdt\-Tt\-Test\-Node\-Unit\-::add\-Connections(), mdt\-Cl\-Unit\-::add\-Connections(), mdt\-Cl\-Article\-::add\-Connector(), mdt\-Cl\-Unit\-::add\-Connector(), mdt\-Tt\-Test\-Model\-Item\-::add\-Item(), mdt\-Cl\-Link\-::add\-Link(), mdt\-Cl\-Link\-::add\-Links(), mdt\-Tt\-Test\-Node\-::add\-Missing\-Connections(), mdt\-Tt\-Test\-Node\-Unit\-::add\-Node\-Unit(), mdt\-Tt\-Test\-Model\-Item\-::add\-Or\-Update\-Test\-Node\-Unit\-Setup\-List(), add\-Record\-List(), mdt\-Tt\-Test\-Model\-Item\-::add\-Route(), mdt\-Tt\-Test\-::create\-Test(), mdt\-Tt\-Logical\-Test\-Cable\-::create\-Test\-Cable(), mdt\-Cl\-Link\-::disconnect\-Connectors(), mdt\-Cl\-Link\-::edit\-Link(), mdt\-Tt\-Logical\-Test\-Cable\-::edit\-Link(), mdt\-Tt\-Test\-Model\-::generate\-Test\-Model(), mdt\-Cl\-Unit\-::remove\-Connection(), mdt\-Tt\-Test\-Node\-Unit\-::remove\-Connections(), mdt\-Cl\-Unit\-::remove\-Connections(), mdt\-Cl\-Article\-::remove\-Connector(), mdt\-Cl\-Unit\-::remove\-Connector(), mdt\-Cl\-Article\-::remove\-Connectors(), remove\-Data(), mdt\-Cl\-Link\-::remove\-Link(), mdt\-Cl\-Link\-Beam\-::remove\-Links(), mdt\-Cl\-Link\-::remove\-Links(), mdt\-Cl\-Article\-::remove\-Links(), mdt\-Tt\-Test\-Node\-Unit\-::remove\-Node\-Unit(), mdt\-Tt\-Test\-Node\-Unit\-::remove\-Node\-Units(), mdt\-Tt\-Test\-::remove\-Test(), mdt\-Tt\-Test\-Model\-::remove\-Test\-Model\-Item(), mdt\-Tt\-Test\-Model\-::remove\-Test\-Model\-Items(), mdt\-Cl\-Unit\-Vehicle\-Type\-::remove\-Unit\-Vehicle\-Assignments(), mdt\-Cl\-Link\-::remove\-Vehicle\-Type\-Links(), mdt\-Tt\-Test\-::save\-Test(), mdt\-Tt\-Test\-Node\-Unit\-::set\-Bus\-Id\-To\-Connections(), and mdt\-Tt\-Test\-Node\-::set\-Test\-Node\-Unit\-Io\-Range().
+Referenced by mdt\-Cl\-Unit\-::add\-Connection(), mdt\-Tt\-Test\-Node\-Unit\-::add\-Connections(), mdt\-Cl\-Unit\-::add\-Connections(), mdt\-Cl\-Article\-::add\-Connector(), mdt\-Cl\-Unit\-::add\-Connector(), mdt\-Tt\-Test\-Model\-Item\-::add\-Item(), mdt\-Cl\-Link\-::add\-Link(), mdt\-Cl\-Link\-::add\-Links(), mdt\-Tt\-Test\-Node\-::add\-Missing\-Connections(), mdt\-Tt\-Test\-Node\-Unit\-::add\-Node\-Unit(), mdt\-Tt\-Test\-Model\-Item\-::add\-Or\-Update\-Test\-Node\-Unit\-Setup\-List(), add\-Record\-List(), mdt\-Tt\-Test\-Model\-Item\-::add\-Route(), mdt\-Tt\-Logical\-Test\-Cable\-::create\-Cable(), mdt\-Tt\-Test\-::create\-Test(), mdt\-Cl\-Link\-::disconnect\-Connectors(), mdt\-Cl\-Link\-::edit\-Link(), mdt\-Tt\-Logical\-Test\-Cable\-::edit\-Link(), mdt\-Tt\-Test\-Model\-::generate\-Test\-Model(), mdt\-Cl\-Unit\-::remove\-Connection(), mdt\-Tt\-Test\-Node\-Unit\-::remove\-Connections(), mdt\-Cl\-Unit\-::remove\-Connections(), mdt\-Cl\-Article\-::remove\-Connector(), mdt\-Cl\-Unit\-::remove\-Connector(), mdt\-Cl\-Article\-::remove\-Connectors(), remove\-Data(), mdt\-Cl\-Link\-::remove\-Link(), mdt\-Cl\-Link\-Beam\-::remove\-Links(), mdt\-Cl\-Link\-::remove\-Links(), mdt\-Cl\-Article\-::remove\-Links(), mdt\-Tt\-Test\-Node\-Unit\-::remove\-Node\-Unit(), mdt\-Tt\-Test\-Node\-Unit\-::remove\-Node\-Units(), mdt\-Tt\-Test\-::remove\-Test(), mdt\-Tt\-Test\-Model\-::remove\-Test\-Model\-Item(), mdt\-Tt\-Test\-Model\-::remove\-Test\-Model\-Items(), mdt\-Cl\-Unit\-Vehicle\-Type\-::remove\-Unit\-Vehicle\-Assignments(), mdt\-Cl\-Link\-::remove\-Vehicle\-Type\-Links(), mdt\-Tt\-Test\-::save\-Test(), mdt\-Tt\-Test\-Node\-Unit\-::set\-Bus\-Id\-To\-Connections(), mdt\-Tt\-Test\-Node\-::set\-Test\-Node\-Unit\-Io\-Range(), and mdt\-Cl\-Article\-::update\-Unit\-Connections().
 
 \hypertarget{classmdt_tt_base_a32b6cbd2d6c9a055cbc97136e9958d81}{\index{mdt\-Tt\-Base@{mdt\-Tt\-Base}!commit\-Transaction@{commit\-Transaction}}
 \index{commit\-Transaction@{commit\-Transaction}!mdtTtBase@{mdt\-Tt\-Base}}
@@ -246,7 +247,7 @@ Commit manually a new transaction.
 
 On error, false is returned and error is available with \hyperlink{classmdt_tt_base_a92adaae105cef63b18ace2e320776ca9}{last\-Error()} . 
 
-Definition at line 428 of file mdt\-Tt\-Base.\-cpp.
+Definition at line 450 of file mdt\-Tt\-Base.\-cpp.
 
 
 
@@ -254,7 +255,7 @@ References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R
 
 
 
-Referenced by mdt\-Cl\-Unit\-::add\-Connection(), mdt\-Tt\-Test\-Node\-Unit\-::add\-Connections(), mdt\-Cl\-Unit\-::add\-Connections(), mdt\-Cl\-Article\-::add\-Connector(), mdt\-Cl\-Unit\-::add\-Connector(), mdt\-Tt\-Test\-Model\-Item\-::add\-Item(), mdt\-Cl\-Link\-::add\-Link(), mdt\-Cl\-Link\-::add\-Links(), mdt\-Tt\-Test\-Node\-::add\-Missing\-Connections(), mdt\-Tt\-Test\-Node\-Unit\-::add\-Node\-Unit(), mdt\-Tt\-Test\-Model\-Item\-::add\-Or\-Update\-Test\-Node\-Unit\-Setup\-List(), add\-Record\-List(), mdt\-Tt\-Test\-Model\-Item\-::add\-Route(), mdt\-Tt\-Test\-::create\-Test(), mdt\-Tt\-Logical\-Test\-Cable\-::create\-Test\-Cable(), mdt\-Cl\-Link\-::disconnect\-Connectors(), mdt\-Cl\-Link\-::edit\-Link(), mdt\-Tt\-Logical\-Test\-Cable\-::edit\-Link(), mdt\-Tt\-Test\-Model\-::generate\-Test\-Model(), mdt\-Cl\-Unit\-::remove\-Connection(), mdt\-Tt\-Test\-Node\-Unit\-::remove\-Connections(), mdt\-Cl\-Unit\-::remove\-Connections(), mdt\-Cl\-Article\-::remove\-Connector(), mdt\-Cl\-Unit\-::remove\-Connector(), mdt\-Cl\-Article\-::remove\-Connectors(), remove\-Data(), mdt\-Cl\-Link\-::remove\-Link(), mdt\-Cl\-Link\-Beam\-::remove\-Links(), mdt\-Cl\-Link\-::remove\-Links(), mdt\-Cl\-Article\-::remove\-Links(), mdt\-Tt\-Test\-Node\-Unit\-::remove\-Node\-Unit(), mdt\-Tt\-Test\-Node\-Unit\-::remove\-Node\-Units(), mdt\-Tt\-Test\-::remove\-Test(), mdt\-Tt\-Test\-Model\-::remove\-Test\-Model\-Item(), mdt\-Tt\-Test\-Model\-::remove\-Test\-Model\-Items(), mdt\-Cl\-Unit\-Vehicle\-Type\-::remove\-Unit\-Vehicle\-Assignments(), mdt\-Cl\-Link\-::remove\-Vehicle\-Type\-Links(), mdt\-Tt\-Test\-::save\-Test(), mdt\-Tt\-Test\-Node\-Unit\-::set\-Bus\-Id\-To\-Connections(), and mdt\-Tt\-Test\-Node\-::set\-Test\-Node\-Unit\-Io\-Range().
+Referenced by mdt\-Cl\-Unit\-::add\-Connection(), mdt\-Tt\-Test\-Node\-Unit\-::add\-Connections(), mdt\-Cl\-Unit\-::add\-Connections(), mdt\-Cl\-Article\-::add\-Connector(), mdt\-Cl\-Unit\-::add\-Connector(), mdt\-Tt\-Test\-Model\-Item\-::add\-Item(), mdt\-Cl\-Link\-::add\-Link(), mdt\-Cl\-Link\-::add\-Links(), mdt\-Tt\-Test\-Node\-::add\-Missing\-Connections(), mdt\-Tt\-Test\-Node\-Unit\-::add\-Node\-Unit(), mdt\-Tt\-Test\-Model\-Item\-::add\-Or\-Update\-Test\-Node\-Unit\-Setup\-List(), add\-Record\-List(), mdt\-Tt\-Test\-Model\-Item\-::add\-Route(), mdt\-Tt\-Logical\-Test\-Cable\-::create\-Cable(), mdt\-Tt\-Test\-::create\-Test(), mdt\-Cl\-Link\-::disconnect\-Connectors(), mdt\-Cl\-Link\-::edit\-Link(), mdt\-Tt\-Logical\-Test\-Cable\-::edit\-Link(), mdt\-Tt\-Test\-Model\-::generate\-Test\-Model(), mdt\-Cl\-Unit\-::remove\-Connection(), mdt\-Tt\-Test\-Node\-Unit\-::remove\-Connections(), mdt\-Cl\-Unit\-::remove\-Connections(), mdt\-Cl\-Article\-::remove\-Connector(), mdt\-Cl\-Unit\-::remove\-Connector(), mdt\-Cl\-Article\-::remove\-Connectors(), remove\-Data(), mdt\-Cl\-Link\-::remove\-Link(), mdt\-Cl\-Link\-Beam\-::remove\-Links(), mdt\-Cl\-Link\-::remove\-Links(), mdt\-Cl\-Article\-::remove\-Links(), mdt\-Tt\-Test\-Node\-Unit\-::remove\-Node\-Unit(), mdt\-Tt\-Test\-Node\-Unit\-::remove\-Node\-Units(), mdt\-Tt\-Test\-::remove\-Test(), mdt\-Tt\-Test\-Model\-::remove\-Test\-Model\-Item(), mdt\-Tt\-Test\-Model\-::remove\-Test\-Model\-Items(), mdt\-Cl\-Unit\-Vehicle\-Type\-::remove\-Unit\-Vehicle\-Assignments(), mdt\-Cl\-Link\-::remove\-Vehicle\-Type\-Links(), mdt\-Tt\-Test\-::save\-Test(), mdt\-Tt\-Test\-Node\-Unit\-::set\-Bus\-Id\-To\-Connections(), mdt\-Tt\-Test\-Node\-::set\-Test\-Node\-Unit\-Io\-Range(), and mdt\-Cl\-Article\-::update\-Unit\-Connections().
 
 \hypertarget{classmdt_tt_base_a82c3f795b6cb8101b12e0e0ef340c1be}{\index{mdt\-Tt\-Base@{mdt\-Tt\-Base}!database@{database}}
 \index{database@{database}!mdtTtBase@{mdt\-Tt\-Base}}
@@ -273,7 +274,7 @@ Definition at line 40 of file mdt\-Tt\-Base.\-cpp.
 
 
 
-Referenced by mdt\-Cl\-Unit\-::add\-Article\-Connector\-Data(), mdt\-Tt\-Logical\-Test\-Cable\-::add\-Cable(), mdt\-Cl\-Article\-::add\-Cable\-Link(), mdt\-Cl\-Article\-::add\-Component(), mdt\-Cl\-Unit\-::add\-Component(), mdt\-Tt\-Test\-Node\-Unit\-::add\-Connection(), mdt\-Cl\-Unit\-::add\-Connection(), mdt\-Cl\-Article\-::add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List(), mdt\-Cl\-Unit\-::add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List(), mdt\-Cl\-Article\-::add\-Connector(), mdt\-Cl\-Unit\-::add\-Connector(), mdt\-Tt\-Logical\-Test\-Cable\-::add\-Dut\-Unit(), mdt\-Cl\-Link\-Beam\-::add\-End\-Unit(), mdt\-Tt\-Test\-Model\-Item\-::add\-Item(), mdt\-Cl\-Link\-Beam\-::add\-Link(), mdt\-Tt\-Logical\-Test\-Cable\-::add\-Link(), mdt\-Cl\-Direct\-Link\-::add\-Links\-By\-Unit\-Connector(), mdt\-Tt\-Test\-Node\-::add\-Missing\-Connections(), add\-Record(), mdt\-Tt\-Test\-Model\-Item\-::add\-Route(), mdt\-Tt\-Test\-Model\-::add\-Routes\-To\-Item\-Data(), mdt\-Cl\-Link\-Beam\-::add\-Start\-Unit(), mdt\-Tt\-Test\-Model\-Item\-::add\-Test\-Link(), mdt\-Tt\-Test\-Model\-::add\-Test\-Node(), mdt\-Tt\-Logical\-Test\-Cable\-::add\-Test\-Node\-Unit(), mdt\-Tt\-Test\-Model\-Item\-::add\-Test\-Node\-Unit\-Setup(), mdt\-Cl\-Unit\-Vehicle\-Type\-::add\-Unit\-Vehicle\-Type\-Assignments(), mdt\-Tt\-Test\-Model\-::build\-Route\-Data(), mdt\-Cl\-Link\-::can\-Connect\-Connectors(), mdt\-Cl\-Link\-::connect\-By\-Contact\-Name(), mdt\-Tt\-Test\-::create\-Test(), mdt\-Tt\-Logical\-Test\-Cable\-::create\-Test\-Cable(), mdt\-Cl\-Article\-::edit\-Component(), mdt\-Cl\-Article\-::edit\-Link(), mdt\-Tt\-Test\-Model\-::generate\-Test\-Model(), mdt\-Tt\-Test\-Node\-::get\-Channel\-Test\-Connection\-Id\-List(), mdt\-Cl\-Article\-::get\-Connection\-Data\-List\-From\-Connection\-Id\-List(), mdt\-Tt\-Test\-Node\-Unit\-::get\-Connection\-Id\-List\-Linked\-To\-Connection\-Id\-List(), mdt\-Cl\-Link\-::get\-Connection\-Link\-List\-By\-Name(), mdt\-Tt\-Test\-Node\-Unit\-::get\-Data(), get\-Data(), get\-Data\-List(), mdt\-Tt\-Test\-Node\-::get\-Id\-List\-Of\-Unit\-Connections\-Linked\-To\-Unit\-Connection\-Id(), mdt\-Tt\-Test\-Node\-::get\-Id\-List\-Of\-Unit\-Connections\-Part\-Of\-Unit(), mdt\-Tt\-Test\-Node\-::get\-Id\-List\-Of\-Unit\-Id\-For\-Unit\-Connection\-Id\-List(), mdt\-Tt\-Test\-Model\-::get\-List\-Of\-Test\-Item\-Id\-List\-By\-Test\-Id(), mdt\-Tt\-Test\-Model\-::get\-List\-Of\-Unused\-Node\-Unit\-Id\-List\-By\-Test\-Id(), mdt\-Tt\-Test\-Model\-::get\-List\-Of\-Used\-Node\-Id\-List\-By\-Test\-Id(), mdt\-Tt\-Test\-Model\-::get\-Next\-Sequence\-Number(), mdt\-Tt\-Test\-Node\-::get\-Relay\-Path\-Setup\-Data\-List(), mdt\-Tt\-Test\-Model\-Item\-::get\-Test\-Node\-Unit\-Setup\-Id\-List(), mdt\-Tt\-Test\-Model\-::get\-Test\-Node\-Unit\-Setup\-Id\-List(), mdt\-Tt\-Logical\-Test\-Cable\-::get\-To\-Unit\-Connection\-Id\-Linked\-Unit\-Connection\-Id\-List\-Part\-Of\-Unit\-Connector(), mdt\-Tt\-Logical\-Test\-Cable\-::get\-To\-Unit\-Connection\-Linked\-Unit\-Connector\-Id\-List(), mdt\-Tt\-Logical\-Test\-Cable\-::get\-To\-Unit\-Connector\-Related\-Unit\-Connection\-Id\-List(), mdt\-Cl\-Unit\-::get\-Unit\-Connection\-Data\-List\-From\-Article\-Connection\-Id\-List(), mdt\-Tt\-Test\-Model\-Item\-::get\-Used\-Node\-Unit\-Id\-List(), mdt\-Cl\-Link\-::get\-Vehicle\-Type\-Link\-Data\-By\-Unit\-Id(), mdt\-Cl\-Article\-::remove\-Components(), mdt\-Cl\-Unit\-::remove\-Components(), mdt\-Cl\-Article\-::remove\-Connections(), mdt\-Cl\-Article\-::remove\-Connectors\-Connections(), remove\-Data(), mdt\-Cl\-Link\-Beam\-::remove\-Link(), mdt\-Tt\-Test\-Model\-Item\-::remove\-Test\-Node\-Unit\-Setup(), mdt\-Tt\-Test\-Model\-Item\-::remove\-Test\-Node\-Unit\-Setups\-For\-Test\-Item\-Id(), mdt\-Cl\-Unit\-Vehicle\-Type\-::remove\-Unit\-Vehicle\-Assignments(), mdt\-Cl\-Link\-::remove\-Vehicle\-Type\-Links(), mdt\-Tt\-Test\-Node\-::set\-Test\-Node\-Unit\-Io\-Range(), mdt\-Cl\-Unit\-::to\-Unit\-Related\-Article\-Connection\-Count(), update\-Record(), and mdt\-Tt\-Test\-Model\-Item\-::update\-Test\-Node\-Unit\-Data().
+Referenced by mdt\-Cl\-Unit\-::add\-Article\-Connector\-Data(), mdt\-Tt\-Logical\-Test\-Cable\-::add\-Cable(), mdt\-Cl\-Article\-::add\-Cable\-Link(), mdt\-Cl\-Article\-::add\-Component(), mdt\-Cl\-Unit\-::add\-Component(), mdt\-Tt\-Test\-Node\-Unit\-::add\-Connection(), mdt\-Cl\-Unit\-::add\-Connection(), mdt\-Cl\-Article\-::add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List(), mdt\-Cl\-Unit\-::add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List(), mdt\-Cl\-Article\-::add\-Connector(), mdt\-Cl\-Unit\-::add\-Connector(), mdt\-Tt\-Logical\-Test\-Cable\-::add\-Dut\-Unit(), mdt\-Cl\-Link\-Beam\-::add\-End\-Unit(), mdt\-Tt\-Test\-Model\-Item\-::add\-Item(), mdt\-Cl\-Link\-Beam\-::add\-Link(), mdt\-Tt\-Logical\-Test\-Cable\-::add\-Link(), mdt\-Cl\-Direct\-Link\-::add\-Links\-By\-Unit\-Connector(), mdt\-Tt\-Test\-Node\-::add\-Missing\-Connections(), add\-Record(), mdt\-Tt\-Test\-Model\-Item\-::add\-Route(), mdt\-Tt\-Test\-Model\-::add\-Routes\-To\-Item\-Data(), mdt\-Cl\-Link\-Beam\-::add\-Start\-Unit(), mdt\-Tt\-Test\-Model\-Item\-::add\-Test\-Link(), mdt\-Tt\-Test\-Model\-::add\-Test\-Node(), mdt\-Tt\-Logical\-Test\-Cable\-::add\-Test\-Node\-Unit(), mdt\-Tt\-Test\-Model\-Item\-::add\-Test\-Node\-Unit\-Setup(), mdt\-Cl\-Unit\-Vehicle\-Type\-::add\-Unit\-Vehicle\-Type\-Assignments(), mdt\-Tt\-Test\-Model\-::build\-Route\-Data(), mdt\-Cl\-Link\-::can\-Connect\-Connections(), mdt\-Cl\-Link\-::can\-Connect\-Connectors(), mdt\-Cl\-Link\-::connect\-By\-Contact\-Name(), mdt\-Tt\-Logical\-Test\-Cable\-::create\-Cable(), mdt\-Tt\-Test\-::create\-Test(), mdt\-Cl\-Article\-::edit\-Component(), mdt\-Cl\-Article\-::edit\-Link(), mdt\-Tt\-Test\-Model\-::generate\-Test\-Model(), mdt\-Tt\-Test\-Node\-::get\-Channel\-Test\-Connection\-Id\-List(), mdt\-Cl\-Article\-::get\-Connection\-Data\-List\-From\-Connection\-Id\-List(), mdt\-Tt\-Test\-Node\-Unit\-::get\-Connection\-Id\-List\-Linked\-To\-Connection\-Id\-List(), mdt\-Tt\-Test\-Node\-Unit\-::get\-Data(), get\-Data(), get\-Data\-List(), mdt\-Tt\-Test\-Node\-::get\-Id\-List\-Of\-Unit\-Connections\-Linked\-To\-Unit\-Connection\-Id(), mdt\-Tt\-Test\-Node\-::get\-Id\-List\-Of\-Unit\-Connections\-Part\-Of\-Unit(), mdt\-Tt\-Test\-Node\-::get\-Id\-List\-Of\-Unit\-Id\-For\-Unit\-Connection\-Id\-List(), mdt\-Tt\-Test\-Node\-::get\-Link\-Data\-List\-For\-Path(), mdt\-Tt\-Test\-::get\-Link\-Data\-List\-For\-Route(), mdt\-Tt\-Test\-Model\-::get\-List\-Of\-Test\-Item\-Id\-List\-By\-Test\-Id(), mdt\-Tt\-Test\-Model\-::get\-List\-Of\-Unused\-Node\-Unit\-Id\-List\-By\-Test\-Id(), mdt\-Tt\-Test\-Model\-::get\-List\-Of\-Used\-Node\-Id\-List\-By\-Test\-Id(), mdt\-Tt\-Test\-Model\-::get\-Next\-Sequence\-Number(), mdt\-Tt\-Test\-Node\-::get\-Relay\-Path\-Setup\-Data\-List(), mdt\-Tt\-Test\-Model\-Item\-::get\-Test\-Node\-Unit\-Setup\-Id\-List(), mdt\-Tt\-Test\-Model\-::get\-Test\-Node\-Unit\-Setup\-Id\-List(), mdt\-Tt\-Logical\-Test\-Cable\-::get\-To\-Unit\-Connection\-Id\-Linked\-Unit\-Connection\-Id\-List\-Part\-Of\-Unit\-Connector(), mdt\-Tt\-Logical\-Test\-Cable\-::get\-To\-Unit\-Connection\-Linked\-Unit\-Connector\-Id\-List(), mdt\-Tt\-Logical\-Test\-Cable\-::get\-To\-Unit\-Connector\-Related\-Unit\-Connection\-Id\-List(), mdt\-Cl\-Unit\-::get\-Unit\-Connection\-Data\-List\-From\-Article\-Connection\-Id\-List(), mdt\-Tt\-Test\-Model\-Item\-::get\-Used\-Node\-Unit\-Id\-List(), mdt\-Cl\-Link\-::get\-Vehicle\-Type\-Link\-Data\-By\-Unit\-Id(), mdt\-Cl\-Article\-::remove\-Components(), mdt\-Cl\-Unit\-::remove\-Components(), mdt\-Cl\-Article\-::remove\-Connections(), mdt\-Cl\-Article\-::remove\-Connectors\-Connections(), remove\-Data(), mdt\-Cl\-Link\-Beam\-::remove\-Link(), mdt\-Tt\-Test\-Model\-Item\-::remove\-Test\-Node\-Unit\-Setup(), mdt\-Tt\-Test\-Model\-Item\-::remove\-Test\-Node\-Unit\-Setups\-For\-Test\-Item\-Id(), mdt\-Cl\-Unit\-Vehicle\-Type\-::remove\-Unit\-Vehicle\-Assignments(), mdt\-Cl\-Link\-::remove\-Vehicle\-Type\-Links(), mdt\-Tt\-Test\-Node\-::set\-Test\-Node\-Unit\-Io\-Range(), mdt\-Cl\-Unit\-::to\-Unit\-Related\-Article\-Connection\-Count(), update\-Record(), mdt\-Tt\-Test\-Model\-Item\-::update\-Test\-Node\-Unit\-Data(), and mdt\-Cl\-Article\-::update\-Unit\-Connections().
 
 \hypertarget{classmdt_tt_base_aac6b0c135d2ff61d23ee9b37525a8ad5}{\index{mdt\-Tt\-Base@{mdt\-Tt\-Base}!get\-Data@{get\-Data}}
 \index{get\-Data@{get\-Data}!mdtTtBase@{mdt\-Tt\-Base}}
@@ -296,12 +297,16 @@ Note that this method will not check if given S\-Q\-L statement makes a S\-E\-L\
 \hline
 {\em ok} & If not null, this pointer will contain true on success, false else (in that case, \hyperlink{classmdt_tt_base_a92adaae105cef63b18ace2e320776ca9}{last\-Error()} will contain error ). \\
 \hline
-{\em expected\-Fields} & If not empty, it will be checked that query result contains all listed fields, and fail if some fields are missing. \\
+{\em expected\-Fields} & If not empty, it will be checked that query result contains all listed fields, and fail if some fields are missing.\\
 \hline
 \end{DoxyParams}
+bool mdt\-Tt\-Base\-::add\-Record\-List(const Q\-List$<$mdt\-Sql\-Record$>$ \& record\-List, const Q\-String \& table\-Name, bool single\-Transaction ) \{ int i;
 
+if(single\-Transaction)\{ if(!begin\-Transaction())\{ return false; \} \} for(i = 0; i $<$ record\-List.\-size(); ++i)\{ if(!add\-Record(record\-List.\-at(i), table\-Name))\{ if(single\-Transaction)\{ \hyperlink{classmdt_tt_base_a7c736836397a8d65a28992e1a39c1be5}{rollback\-Transaction()}; \} return false; \} \} if(single\-Transaction)\{ if(!commit\-Transaction())\{ return false; \} \}
 
-Definition at line 127 of file mdt\-Tt\-Base.\-cpp.
+return true; \} 
+
+Definition at line 129 of file mdt\-Tt\-Base.\-cpp.
 
 
 
@@ -309,7 +314,7 @@ References database().
 
 
 
-Referenced by mdt\-Tt\-Test\-Node\-::add\-Missing\-Connections(), mdt\-Cl\-Link\-::disconnect\-Connectors(), mdt\-Cl\-Unit\-::get\-Connection\-Id\-List\-Part\-Of\-Connector\-Id(), mdt\-Cl\-Article\-::get\-Connector\-Contact\-Data\-List(), mdt\-Cl\-Unit\-::get\-Connector\-Id\-Of\-Connection\-Id(), mdt\-Tt\-Test\-Node\-Unit\-::get\-Data(), mdt\-Cl\-Link\-::get\-Link\-Data(), mdt\-Tt\-Logical\-Test\-Cable\-::get\-Link\-Data(), mdt\-Tt\-Test\-::get\-Setup\-Data(), mdt\-Tt\-Test\-Node\-::get\-Test\-Node\-Data(), mdt\-Tt\-Test\-Model\-Item\-::get\-Test\-Node\-Unit\-Setup\-Data(), mdt\-Cl\-Direct\-Link\-::get\-Unit\-Connection\-Id\-List\-Part\-Of\-Unit(), mdt\-Cl\-Direct\-Link\-::get\-Unit\-Connection\-Id\-List\-Part\-Of\-Unit\-Connector(), mdt\-Cl\-Unit\-::get\-Unit\-Connector\-Id\-Based\-On\-Article\-Connector\-Id(), mdt\-Tt\-Test\-Node\-Unit\-::get\-Unit\-Data(), mdt\-Cl\-Link\-::get\-Vehicle\-Type\-Link\-Data\-By\-Unit\-Id(), mdt\-Cl\-Link\-::link\-Exists(), mdt\-Cl\-Unit\-::remove\-Connector(), mdt\-Tt\-Test\-Node\-Unit\-::set\-Bus\-Id\-To\-Connection(), mdt\-Cl\-Link\-::sql\-For\-Connectable\-Unit\-Connectors\-Selection(), mdt\-Tt\-Test\-Model\-Item\-::test\-Node\-Unit\-Setup\-Exists(), and mdt\-Cl\-Unit\-::to\-Unit\-Related\-Links\-List().
+Referenced by mdt\-Tt\-Test\-Node\-::add\-Missing\-Connections(), mdt\-Cl\-Link\-::disconnect\-Connectors(), mdt\-Cl\-Unit\-::get\-Connection\-Id\-List\-Part\-Of\-Connector\-Id(), mdt\-Cl\-Article\-::get\-Connector\-Contact\-Data\-List(), mdt\-Cl\-Unit\-::get\-Connector\-Id\-Of\-Connection\-Id(), mdt\-Tt\-Test\-Node\-Unit\-::get\-Data(), mdt\-Tt\-Logical\-Test\-Cable\-::get\-Link\-Data(), mdt\-Tt\-Test\-Node\-::get\-Test\-Node\-Data(), mdt\-Tt\-Test\-Model\-Item\-::get\-Test\-Node\-Unit\-Setup\-Data(), mdt\-Cl\-Direct\-Link\-::get\-Unit\-Connection\-Id\-List\-Part\-Of\-Unit(), mdt\-Cl\-Direct\-Link\-::get\-Unit\-Connection\-Id\-List\-Part\-Of\-Unit\-Connector(), mdt\-Cl\-Unit\-::get\-Unit\-Connector\-Id\-Based\-On\-Article\-Connector\-Id(), mdt\-Tt\-Test\-Node\-Unit\-::get\-Unit\-Data(), mdt\-Cl\-Link\-::get\-Vehicle\-Type\-Link\-Data\-By\-Unit\-Id(), mdt\-Cl\-Unit\-::remove\-Connector(), mdt\-Tt\-Test\-Node\-Unit\-::set\-Bus\-Id\-To\-Connection(), mdt\-Tt\-Test\-Model\-Item\-::test\-Node\-Unit\-Setup\-Exists(), and mdt\-Cl\-Unit\-::to\-Unit\-Related\-Links\-List().
 
 \hypertarget{classmdt_tt_base_a6c0834b21432a734c6ebfb645f290716}{\index{mdt\-Tt\-Base@{mdt\-Tt\-Base}!get\-Data\-List@{get\-Data\-List}}
 \index{get\-Data\-List@{get\-Data\-List}!mdtTtBase@{mdt\-Tt\-Base}}
@@ -342,11 +347,15 @@ If T is another type than Q\-Sql\-Record, sql must select exactly on field.
 \end{DoxyPrecond}
 
 
-Definition at line 122 of file mdt\-Tt\-Base.\-h.
+Definition at line 147 of file mdt\-Tt\-Base.\-h.
 
 
 
 References database().
+
+
+
+Referenced by mdt\-Tt\-Logical\-Test\-Cable\-Dut\-Widget\-::contains\-Test\-Cable\-Connection(), mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget\-::contains\-Test\-Cable\-Connection(), mdt\-Tt\-Logical\-Test\-Cable\-Dut\-Widget\-::get\-Affected\-Dut\-Connections(), mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget\-::get\-Affected\-Ts\-Connections(), mdt\-Tt\-Logical\-Test\-Cable\-Dut\-Widget\-::set\-Dut\-Unit(), mdt\-Tt\-Logical\-Test\-Cable\-Dialog\-::set\-Test\-Cable(), and mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget\-::set\-Test\-System().
 
 \hypertarget{classmdt_tt_base_a92adaae105cef63b18ace2e320776ca9}{\index{mdt\-Tt\-Base@{mdt\-Tt\-Base}!last\-Error@{last\-Error}}
 \index{last\-Error@{last\-Error}!mdtTtBase@{mdt\-Tt\-Base}}
@@ -369,7 +378,7 @@ References pv\-Last\-Error.
 
 
 
-Referenced by mdt\-Cl\-Unit\-::add\-Article\-Connector\-Data(), mdt\-Cl\-Direct\-Link\-::add\-Links\-By\-Unit\-Connector(), mdt\-Tt\-Test\-Node\-::add\-Missing\-Connections(), mdt\-Cl\-Link\-::can\-Connect\-Connectors(), mdt\-Cl\-Link\-::connect\-By\-Contact\-Name(), mdt\-Tt\-Test\-Model\-::generate\-Test\-Model(), mdt\-Cl\-Path\-Graph\-::get\-Linked\-Connector\-Id\-List(), and mdt\-Cl\-Unit\-::get\-Unit\-Connection\-Data\-List\-From\-Article\-Connection\-Id\-List().
+Referenced by mdt\-Cl\-Unit\-::add\-Article\-Connector\-Data(), mdt\-Cl\-Direct\-Link\-::add\-Links\-By\-Unit\-Connector(), mdt\-Tt\-Test\-Node\-::add\-Missing\-Connections(), mdt\-Cl\-Link\-::can\-Connect\-Connections(), mdt\-Cl\-Link\-::can\-Connect\-Connectors(), mdt\-Cl\-Link\-::connect\-By\-Contact\-Name(), mdt\-Tt\-Logical\-Test\-Cable\-Dut\-Widget\-::contains\-Test\-Cable\-Connection(), mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget\-::contains\-Test\-Cable\-Connection(), mdt\-Tt\-Test\-Model\-::generate\-Test\-Model(), mdt\-Tt\-Logical\-Test\-Cable\-Dut\-Widget\-::get\-Affected\-Dut\-Connections(), mdt\-Tt\-Logical\-Test\-Cable\-Ts\-Widget\-::get\-Affected\-Ts\-Connections(), mdt\-Tt\-Test\-::get\-Link\-Data\-List\-For\-Route(), mdt\-Cl\-Path\-Graph\-::get\-Linked\-Connector\-Id\-List(), mdt\-Cl\-Unit\-::get\-Unit\-Connection\-Data\-List\-From\-Article\-Connection\-Id\-List(), and mdt\-Tt\-Logical\-Test\-Cable\-Dialog\-::set\-Test\-Cable().
 
 \hypertarget{classmdt_tt_base_a7b328098b5813497aedfb764a1ff787f}{\index{mdt\-Tt\-Base@{mdt\-Tt\-Base}!remove\-Data@{remove\-Data}}
 \index{remove\-Data@{remove\-Data}!mdtTtBase@{mdt\-Tt\-Base}}
@@ -397,7 +406,7 @@ This method can be used with result of mdt\-Sql\-Table\-Widget\-::index\-List\-O
 \end{DoxyParams}
 
 
-Definition at line 196 of file mdt\-Tt\-Base.\-cpp.
+Definition at line 218 of file mdt\-Tt\-Base.\-cpp.
 
 
 
@@ -427,7 +436,7 @@ This method works for a single field .
 \end{DoxySeeAlso}
 
 
-Definition at line 257 of file mdt\-Tt\-Base.\-cpp.
+Definition at line 279 of file mdt\-Tt\-Base.\-cpp.
 
 
 
@@ -457,7 +466,7 @@ Remove data from given table.
 \end{DoxyParams}
 
 
-Definition at line 262 of file mdt\-Tt\-Base.\-cpp.
+Definition at line 284 of file mdt\-Tt\-Base.\-cpp.
 
 
 
@@ -495,7 +504,7 @@ This variant is typically usefull for tables containing 2 primary keys. Will onl
 \end{DoxyParams}
 
 
-Definition at line 288 of file mdt\-Tt\-Base.\-cpp.
+Definition at line 310 of file mdt\-Tt\-Base.\-cpp.
 
 
 
@@ -541,7 +550,7 @@ the query will be\-: D\-E\-L\-E\-T\-E F\-R\-O\-M A\-B\-\_\-tbl W\-H\-E\-R\-E (A\
 \end{DoxyParams}
 
 
-Definition at line 313 of file mdt\-Tt\-Base.\-cpp.
+Definition at line 335 of file mdt\-Tt\-Base.\-cpp.
 
 
 
@@ -560,7 +569,7 @@ Rollback manually a new transaction.
 
 On error, false is returned and error is available with \hyperlink{classmdt_tt_base_a92adaae105cef63b18ace2e320776ca9}{last\-Error()} . 
 
-Definition at line 415 of file mdt\-Tt\-Base.\-cpp.
+Definition at line 437 of file mdt\-Tt\-Base.\-cpp.
 
 
 
@@ -568,7 +577,7 @@ References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R
 
 
 
-Referenced by mdt\-Cl\-Unit\-::add\-Connection(), mdt\-Tt\-Test\-Node\-Unit\-::add\-Connections(), mdt\-Cl\-Unit\-::add\-Connections(), mdt\-Cl\-Article\-::add\-Connector(), mdt\-Cl\-Unit\-::add\-Connector(), mdt\-Tt\-Test\-Model\-Item\-::add\-Item(), mdt\-Cl\-Link\-::add\-Link(), mdt\-Cl\-Link\-::add\-Links(), mdt\-Tt\-Test\-Node\-::add\-Missing\-Connections(), mdt\-Tt\-Test\-Node\-Unit\-::add\-Node\-Unit(), mdt\-Tt\-Test\-Model\-Item\-::add\-Or\-Update\-Test\-Node\-Unit\-Setup\-List(), add\-Record\-List(), mdt\-Tt\-Test\-Model\-Item\-::add\-Route(), mdt\-Tt\-Test\-::create\-Test(), mdt\-Tt\-Logical\-Test\-Cable\-::create\-Test\-Cable(), mdt\-Cl\-Link\-::disconnect\-Connectors(), mdt\-Cl\-Link\-::edit\-Link(), mdt\-Tt\-Logical\-Test\-Cable\-::edit\-Link(), mdt\-Tt\-Test\-Model\-::generate\-Test\-Model(), mdt\-Cl\-Unit\-::remove\-Connection(), mdt\-Tt\-Test\-Node\-Unit\-::remove\-Connections(), mdt\-Cl\-Unit\-::remove\-Connections(), mdt\-Cl\-Article\-::remove\-Connector(), mdt\-Cl\-Unit\-::remove\-Connector(), mdt\-Cl\-Article\-::remove\-Connectors(), remove\-Data(), mdt\-Cl\-Link\-::remove\-Link(), mdt\-Cl\-Link\-Beam\-::remove\-Links(), mdt\-Cl\-Link\-::remove\-Links(), mdt\-Cl\-Article\-::remove\-Links(), mdt\-Tt\-Test\-Node\-Unit\-::remove\-Node\-Unit(), mdt\-Tt\-Test\-Node\-Unit\-::remove\-Node\-Units(), mdt\-Tt\-Test\-::remove\-Test(), mdt\-Tt\-Test\-Model\-::remove\-Test\-Model\-Item(), mdt\-Tt\-Test\-Model\-::remove\-Test\-Model\-Items(), mdt\-Cl\-Unit\-Vehicle\-Type\-::remove\-Unit\-Vehicle\-Assignments(), mdt\-Cl\-Link\-::remove\-Vehicle\-Type\-Links(), mdt\-Tt\-Test\-::save\-Test(), mdt\-Tt\-Test\-Node\-Unit\-::set\-Bus\-Id\-To\-Connections(), and mdt\-Tt\-Test\-Node\-::set\-Test\-Node\-Unit\-Io\-Range().
+Referenced by mdt\-Cl\-Unit\-::add\-Connection(), mdt\-Tt\-Test\-Node\-Unit\-::add\-Connections(), mdt\-Cl\-Unit\-::add\-Connections(), mdt\-Cl\-Article\-::add\-Connector(), mdt\-Cl\-Unit\-::add\-Connector(), mdt\-Tt\-Test\-Model\-Item\-::add\-Item(), mdt\-Cl\-Link\-::add\-Link(), mdt\-Cl\-Link\-::add\-Links(), mdt\-Tt\-Test\-Node\-::add\-Missing\-Connections(), mdt\-Tt\-Test\-Node\-Unit\-::add\-Node\-Unit(), mdt\-Tt\-Test\-Model\-Item\-::add\-Or\-Update\-Test\-Node\-Unit\-Setup\-List(), add\-Record\-List(), mdt\-Tt\-Test\-Model\-Item\-::add\-Route(), mdt\-Tt\-Logical\-Test\-Cable\-::create\-Cable(), mdt\-Tt\-Test\-::create\-Test(), mdt\-Cl\-Link\-::disconnect\-Connectors(), mdt\-Cl\-Link\-::edit\-Link(), mdt\-Tt\-Logical\-Test\-Cable\-::edit\-Link(), mdt\-Tt\-Test\-Model\-::generate\-Test\-Model(), mdt\-Cl\-Unit\-::remove\-Connection(), mdt\-Tt\-Test\-Node\-Unit\-::remove\-Connections(), mdt\-Cl\-Unit\-::remove\-Connections(), mdt\-Cl\-Article\-::remove\-Connector(), mdt\-Cl\-Unit\-::remove\-Connector(), mdt\-Cl\-Article\-::remove\-Connectors(), remove\-Data(), mdt\-Cl\-Link\-::remove\-Link(), mdt\-Cl\-Link\-Beam\-::remove\-Links(), mdt\-Cl\-Link\-::remove\-Links(), mdt\-Cl\-Article\-::remove\-Links(), mdt\-Tt\-Test\-Node\-Unit\-::remove\-Node\-Unit(), mdt\-Tt\-Test\-Node\-Unit\-::remove\-Node\-Units(), mdt\-Tt\-Test\-::remove\-Test(), mdt\-Tt\-Test\-Model\-::remove\-Test\-Model\-Item(), mdt\-Tt\-Test\-Model\-::remove\-Test\-Model\-Items(), mdt\-Cl\-Unit\-Vehicle\-Type\-::remove\-Unit\-Vehicle\-Assignments(), mdt\-Cl\-Link\-::remove\-Vehicle\-Type\-Links(), mdt\-Tt\-Test\-::save\-Test(), mdt\-Tt\-Test\-Node\-Unit\-::set\-Bus\-Id\-To\-Connections(), mdt\-Tt\-Test\-Node\-::set\-Test\-Node\-Unit\-Io\-Range(), and mdt\-Cl\-Article\-::update\-Unit\-Connections().
 
 \hypertarget{classmdt_tt_base_ad6eed5cb4ab7403ce257a4bd6e0428c8}{\index{mdt\-Tt\-Base@{mdt\-Tt\-Base}!sql\-Data\-Delimiter@{sql\-Data\-Delimiter}}
 \index{sql\-Data\-Delimiter@{sql\-Data\-Delimiter}!mdtTtBase@{mdt\-Tt\-Base}}
@@ -583,7 +592,7 @@ Get S\-Q\-L data delimiter for given data type.
 
 
 
-Definition at line 441 of file mdt\-Tt\-Base.\-cpp.
+Definition at line 463 of file mdt\-Tt\-Base.\-cpp.
 
 
 
@@ -617,7 +626,7 @@ Update data for given table.
 \end{DoxyParams}
 
 
-Definition at line 149 of file mdt\-Tt\-Base.\-cpp.
+Definition at line 151 of file mdt\-Tt\-Base.\-cpp.
 
 
 
@@ -625,7 +634,7 @@ References mdt\-Error\-::commit(), database(), mdt\-Error\-::\-Error, mdt\-Sql\-
 
 
 
-Referenced by mdt\-Cl\-Link\-Beam\-::add\-Link(), mdt\-Cl\-Article\-::edit\-Connection(), mdt\-Cl\-Unit\-::edit\-Connection(), mdt\-Cl\-Article\-::edit\-Connector\-Name(), mdt\-Cl\-Unit\-::edit\-Connector\-Name(), mdt\-Cl\-Article\-::edit\-Link(), mdt\-Tt\-Test\-Node\-Unit\-::edit\-Node\-Unit(), mdt\-Cl\-Link\-Beam\-::remove\-Link(), mdt\-Tt\-Test\-::save\-Test(), mdt\-Tt\-Test\-Node\-Unit\-::set\-Bus\-Id\-To\-Connection(), mdt\-Tt\-Test\-Node\-::set\-Test\-Node\-Unit\-Io\-Range(), update\-Record(), and mdt\-Tt\-Test\-Model\-Item\-::update\-Test\-Node\-Unit\-Data().
+Referenced by mdt\-Cl\-Link\-Beam\-::add\-Link(), mdt\-Cl\-Article\-::edit\-Connection(), mdt\-Cl\-Unit\-::edit\-Connection(), mdt\-Cl\-Article\-::edit\-Connector\-Name(), mdt\-Cl\-Unit\-::edit\-Connector\-Name(), mdt\-Cl\-Link\-::edit\-Link(), mdt\-Cl\-Article\-::edit\-Link(), mdt\-Tt\-Test\-Node\-Unit\-::edit\-Node\-Unit(), mdt\-Cl\-Link\-Beam\-::remove\-Link(), mdt\-Tt\-Test\-::save\-Test(), mdt\-Tt\-Test\-Node\-Unit\-::set\-Bus\-Id\-To\-Connection(), mdt\-Tt\-Test\-Node\-::set\-Test\-Node\-Unit\-Io\-Range(), update\-Record(), mdt\-Tt\-Test\-Model\-Item\-::update\-Test\-Node\-Unit\-Data(), and mdt\-Cl\-Article\-::update\-Unit\-Connections().
 
 \hypertarget{classmdt_tt_base_a884be1a05bf38121afda06758ff6ac41}{\index{mdt\-Tt\-Base@{mdt\-Tt\-Base}!update\-Record@{update\-Record}}
 \index{update\-Record@{update\-Record}!mdtTtBase@{mdt\-Tt\-Base}}
@@ -654,7 +663,46 @@ Update data for given table.
 \end{DoxyParams}
 
 
-Definition at line 183 of file mdt\-Tt\-Base.\-cpp.
+Definition at line 185 of file mdt\-Tt\-Base.\-cpp.
+
+
+
+References mdt\-Sql\-Record\-::add\-Field(), database(), mdt\-Sql\-Record\-::last\-Error(), pv\-Last\-Error, mdt\-Sql\-Record\-::set\-Value(), and update\-Record().
+
+\hypertarget{classmdt_tt_base_a07813d5d22efacfcbb044ee6d0023785}{\index{mdt\-Tt\-Base@{mdt\-Tt\-Base}!update\-Record@{update\-Record}}
+\index{update\-Record@{update\-Record}!mdtTtBase@{mdt\-Tt\-Base}}
+\subsubsection[{update\-Record}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Base\-::update\-Record (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{table\-Name, }
+\item[{const {\bf mdt\-Sql\-Record} \&}]{record, }
+\item[{const Q\-String \&}]{match\-Field1, }
+\item[{const Q\-Variant \&}]{key1, }
+\item[{const Q\-String \&}]{match\-Field2, }
+\item[{const Q\-Variant \&}]{key2}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_base_a07813d5d22efacfcbb044ee6d0023785}
+
+
+Update data for given table. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em table\-Name} & Name of table in witch data must be updated. \\
+\hline
+{\em record} & Record containing data to update. \\
+\hline
+{\em match\-Field1} & Field for witch key1 must match. \\
+\hline
+{\em key1} & Key that matches match\-Field1. \\
+\hline
+{\em match\-Field2} & Field for witch key2 must match. \\
+\hline
+{\em key2} & Key that matches match\-Field2. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 198 of file mdt\-Tt\-Base.\-cpp.
 
 
 
@@ -668,11 +716,11 @@ References mdt\-Sql\-Record\-::add\-Field(), database(), mdt\-Sql\-Record\-::las
 \subsubsection[{pv\-Last\-Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Error} mdt\-Tt\-Base\-::pv\-Last\-Error\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_tt_base_aaa2bcddcfcecd1642ac24a218bccfbc7}
 
 
-Definition at line 246 of file mdt\-Tt\-Base.\-h.
+Definition at line 283 of file mdt\-Tt\-Base.\-h.
 
 
 
-Referenced by mdt\-Cl\-Unit\-::add\-Article\-Connector\-Data(), mdt\-Tt\-Logical\-Test\-Cable\-::add\-Cable(), mdt\-Cl\-Article\-::add\-Cable\-Link(), mdt\-Cl\-Article\-::add\-Component(), mdt\-Cl\-Unit\-::add\-Component(), mdt\-Tt\-Test\-Node\-Unit\-::add\-Connection(), mdt\-Cl\-Article\-::add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List(), mdt\-Cl\-Unit\-::add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List(), mdt\-Cl\-Article\-::add\-Connector(), mdt\-Cl\-Unit\-::add\-Connector(), mdt\-Tt\-Logical\-Test\-Cable\-::add\-Dut\-Unit(), mdt\-Cl\-Link\-Beam\-::add\-End\-Unit(), mdt\-Cl\-Direct\-Link\-::add\-Link(), mdt\-Cl\-Link\-Beam\-::add\-Link(), mdt\-Tt\-Logical\-Test\-Cable\-::add\-Link(), mdt\-Cl\-Direct\-Link\-::add\-Links\-By\-Unit\-Connector(), mdt\-Tt\-Test\-Node\-::add\-Missing\-Connections(), add\-Record(), mdt\-Tt\-Test\-Model\-Item\-::add\-Route(), mdt\-Tt\-Test\-Model\-::add\-Routes\-To\-Item\-Data(), mdt\-Cl\-Link\-Beam\-::add\-Start\-Unit(), mdt\-Tt\-Test\-Model\-Item\-::add\-Test\-Link(), mdt\-Tt\-Test\-Model\-::add\-Test\-Node(), mdt\-Tt\-Logical\-Test\-Cable\-::add\-Test\-Node\-Unit(), mdt\-Tt\-Test\-Model\-Item\-::add\-Test\-Node\-Unit\-Setup(), mdt\-Cl\-Unit\-Vehicle\-Type\-::add\-Unit\-Vehicle\-Type\-Assignments(), begin\-Transaction(), mdt\-Tt\-Test\-Model\-::build\-Route\-Data(), mdt\-Cl\-Link\-::can\-Connect\-Connectors(), commit\-Transaction(), mdt\-Cl\-Link\-::connect\-By\-Contact\-Name(), mdt\-Tt\-Test\-::create\-Test(), mdt\-Tt\-Logical\-Test\-Cable\-::create\-Test\-Cable(), mdt\-Cl\-Article\-::edit\-Component(), mdt\-Cl\-Article\-::edit\-Link(), mdt\-Tt\-Test\-Node\-Unit\-::edit\-Node\-Unit(), mdt\-Tt\-Test\-Node\-::ensure\-Absence\-Of\-Short\-Circuit(), mdt\-Tt\-Test\-Model\-::generate\-Test\-Model(), mdt\-Tt\-Test\-Node\-::get\-Channel\-Test\-Connection\-Id\-List(), mdt\-Cl\-Unit\-::get\-Connection\-Data(), mdt\-Cl\-Article\-::get\-Connection\-Data(), mdt\-Cl\-Article\-::get\-Connection\-Data\-List\-From\-Connection\-Id\-List(), mdt\-Tt\-Test\-Node\-Unit\-::get\-Connection\-Id\-List\-Linked\-To\-Connection\-Id\-List(), mdt\-Cl\-Article\-::get\-Connector\-Data(), mdt\-Cl\-Unit\-::get\-Connector\-Data(), mdt\-Tt\-Test\-Node\-Unit\-::get\-Data(), mdt\-Tt\-Test\-Node\-::get\-Id\-List\-Of\-Unit\-Connections\-Linked\-To\-Unit\-Connection\-Id(), mdt\-Tt\-Test\-Node\-::get\-Id\-List\-Of\-Unit\-Connections\-Part\-Of\-Unit(), mdt\-Tt\-Test\-Node\-::get\-Id\-List\-Of\-Unit\-Id\-For\-Unit\-Connection\-Id\-List(), mdt\-Cl\-Link\-::get\-Link\-Data(), mdt\-Tt\-Logical\-Test\-Cable\-::get\-Link\-Data(), mdt\-Tt\-Test\-Model\-::get\-List\-Of\-Test\-Item\-Id\-List\-By\-Test\-Id(), mdt\-Tt\-Test\-Model\-::get\-List\-Of\-Unused\-Node\-Unit\-Id\-List\-By\-Test\-Id(), mdt\-Tt\-Test\-Model\-::get\-List\-Of\-Used\-Node\-Id\-List\-By\-Test\-Id(), mdt\-Tt\-Test\-Model\-::get\-Next\-Sequence\-Number(), mdt\-Tt\-Test\-Node\-::get\-Relay\-Path\-Setup\-Data\-List(), mdt\-Tt\-Test\-Model\-::get\-Test\-Link\-Id\-List\-For\-Dut\-Connection\-Id(), mdt\-Tt\-Test\-Model\-::get\-Test\-Model\-Data(), mdt\-Tt\-Test\-Model\-Item\-::get\-Test\-Node\-Unit\-Setup\-Id\-List(), mdt\-Tt\-Test\-Model\-::get\-Test\-Node\-Unit\-Setup\-Id\-List(), mdt\-Tt\-Logical\-Test\-Cable\-::get\-To\-Unit\-Connection\-Id\-Linked\-Unit\-Connection\-Id\-List\-Part\-Of\-Unit\-Connector(), mdt\-Tt\-Logical\-Test\-Cable\-::get\-To\-Unit\-Connection\-Linked\-Unit\-Connector\-Id\-List(), mdt\-Tt\-Logical\-Test\-Cable\-::get\-To\-Unit\-Connector\-Related\-Unit\-Connection\-Id\-List(), mdt\-Cl\-Unit\-::get\-Unit\-Connection\-Data\-List\-From\-Article\-Connection\-Id\-List(), mdt\-Cl\-Unit\-::get\-Unit\-Connector\-Id\-Based\-On\-Article\-Connector\-Id(), mdt\-Tt\-Test\-Node\-Unit\-::get\-Unit\-Data(), mdt\-Tt\-Test\-Model\-Item\-::get\-Used\-Node\-Unit\-Id\-List(), last\-Error(), mdt\-Tt\-Logical\-Test\-Cable\-::load\-Link\-List(), mdt\-Cl\-Article\-::remove\-Components(), mdt\-Cl\-Unit\-::remove\-Components(), mdt\-Cl\-Article\-::remove\-Connections(), mdt\-Cl\-Article\-::remove\-Connectors\-Connections(), remove\-Data(), mdt\-Cl\-Link\-Beam\-::remove\-Link(), mdt\-Tt\-Test\-Model\-Item\-::remove\-Test\-Node\-Unit\-Setup(), mdt\-Tt\-Test\-Model\-Item\-::remove\-Test\-Node\-Unit\-Setups\-For\-Test\-Item\-Id(), mdt\-Cl\-Unit\-Vehicle\-Type\-::remove\-Unit\-Vehicle\-Assignments(), mdt\-Cl\-Link\-::remove\-Vehicle\-Type\-Links(), rollback\-Transaction(), mdt\-Tt\-Test\-Node\-::set\-Test\-Node\-Unit\-Io\-Range(), mdt\-Cl\-Link\-::sql\-For\-Connectable\-Unit\-Connectors\-Selection(), mdt\-Cl\-Unit\-::to\-Unit\-Related\-Article\-Connection\-Count(), update\-Record(), and mdt\-Tt\-Test\-Model\-Item\-::update\-Test\-Node\-Unit\-Data().
+Referenced by mdt\-Cl\-Unit\-::add\-Article\-Connector\-Data(), mdt\-Tt\-Logical\-Test\-Cable\-::add\-Cable(), mdt\-Cl\-Article\-::add\-Cable\-Link(), mdt\-Cl\-Article\-::add\-Component(), mdt\-Cl\-Unit\-::add\-Component(), mdt\-Tt\-Test\-Node\-Unit\-::add\-Connection(), mdt\-Cl\-Article\-::add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List(), mdt\-Cl\-Unit\-::add\-Connection\-Data\-List\-From\-Connector\-Contact\-Id\-List(), mdt\-Cl\-Article\-::add\-Connector(), mdt\-Cl\-Unit\-::add\-Connector(), mdt\-Tt\-Logical\-Test\-Cable\-::add\-Dut\-Unit(), mdt\-Cl\-Link\-Beam\-::add\-End\-Unit(), mdt\-Cl\-Direct\-Link\-::add\-Link(), mdt\-Cl\-Link\-Beam\-::add\-Link(), mdt\-Tt\-Logical\-Test\-Cable\-::add\-Link(), mdt\-Cl\-Direct\-Link\-::add\-Links\-By\-Unit\-Connector(), mdt\-Tt\-Test\-Node\-::add\-Missing\-Connections(), add\-Record(), mdt\-Tt\-Test\-Model\-Item\-::add\-Route(), mdt\-Tt\-Test\-Model\-::add\-Routes\-To\-Item\-Data(), mdt\-Cl\-Link\-Beam\-::add\-Start\-Unit(), mdt\-Tt\-Test\-Model\-Item\-::add\-Test\-Link(), mdt\-Tt\-Test\-Model\-::add\-Test\-Node(), mdt\-Tt\-Logical\-Test\-Cable\-::add\-Test\-Node\-Unit(), mdt\-Tt\-Test\-Model\-Item\-::add\-Test\-Node\-Unit\-Setup(), mdt\-Cl\-Unit\-Vehicle\-Type\-::add\-Unit\-Vehicle\-Type\-Assignments(), begin\-Transaction(), mdt\-Tt\-Test\-Model\-::build\-Route\-Data(), mdt\-Cl\-Link\-::can\-Connect\-Connections(), mdt\-Cl\-Link\-::can\-Connect\-Connectors(), commit\-Transaction(), mdt\-Cl\-Link\-::connect\-By\-Contact\-Name(), mdt\-Tt\-Logical\-Test\-Cable\-::create\-Cable(), mdt\-Tt\-Test\-::create\-Test(), mdt\-Cl\-Article\-::edit\-Component(), mdt\-Cl\-Article\-::edit\-Link(), mdt\-Tt\-Test\-Node\-Unit\-::edit\-Node\-Unit(), mdt\-Tt\-Test\-Node\-::ensure\-Absence\-Of\-Short\-Circuit(), mdt\-Tt\-Test\-Model\-::generate\-Test\-Model(), mdt\-Tt\-Test\-Node\-::get\-Channel\-Test\-Connection\-Id\-List(), mdt\-Cl\-Unit\-::get\-Connection\-Data(), mdt\-Cl\-Article\-::get\-Connection\-Data(), mdt\-Cl\-Article\-::get\-Connection\-Data\-List\-From\-Connection\-Id\-List(), mdt\-Tt\-Test\-::get\-Connection\-Id(), mdt\-Tt\-Test\-Node\-Unit\-::get\-Connection\-Id\-List\-Linked\-To\-Connection\-Id\-List(), mdt\-Cl\-Article\-::get\-Connector\-Data(), mdt\-Cl\-Unit\-::get\-Connector\-Data(), mdt\-Tt\-Test\-Node\-Unit\-::get\-Data(), mdt\-Tt\-Test\-Node\-::get\-Id\-List\-Of\-Unit\-Connections\-Linked\-To\-Unit\-Connection\-Id(), mdt\-Tt\-Test\-Node\-::get\-Id\-List\-Of\-Unit\-Connections\-Part\-Of\-Unit(), mdt\-Tt\-Test\-Node\-::get\-Id\-List\-Of\-Unit\-Id\-For\-Unit\-Connection\-Id\-List(), mdt\-Cl\-Link\-::get\-Link\-Data(), mdt\-Tt\-Logical\-Test\-Cable\-::get\-Link\-Data(), mdt\-Tt\-Test\-Node\-::get\-Link\-Data\-List\-For\-Path(), mdt\-Tt\-Test\-::get\-Link\-Data\-List\-For\-Route(), mdt\-Tt\-Test\-Model\-::get\-List\-Of\-Test\-Item\-Id\-List\-By\-Test\-Id(), mdt\-Tt\-Test\-Model\-::get\-List\-Of\-Unused\-Node\-Unit\-Id\-List\-By\-Test\-Id(), mdt\-Tt\-Test\-Model\-::get\-List\-Of\-Used\-Node\-Id\-List\-By\-Test\-Id(), mdt\-Tt\-Test\-Model\-::get\-Next\-Sequence\-Number(), mdt\-Tt\-Test\-Node\-::get\-Relay\-Path\-Setup\-Data\-List(), mdt\-Tt\-Test\-Model\-::get\-Test\-Link\-Id\-List\-For\-Dut\-Connection\-Id(), mdt\-Tt\-Test\-Model\-::get\-Test\-Model\-Data(), mdt\-Tt\-Test\-::get\-Test\-Node\-Setup\-Data(), mdt\-Tt\-Test\-Model\-Item\-::get\-Test\-Node\-Unit\-Setup\-Id\-List(), mdt\-Tt\-Test\-Model\-::get\-Test\-Node\-Unit\-Setup\-Id\-List(), mdt\-Tt\-Logical\-Test\-Cable\-::get\-To\-Unit\-Connection\-Id\-Linked\-Unit\-Connection\-Id\-List\-Part\-Of\-Unit\-Connector(), mdt\-Tt\-Logical\-Test\-Cable\-::get\-To\-Unit\-Connection\-Linked\-Unit\-Connector\-Id\-List(), mdt\-Tt\-Logical\-Test\-Cable\-::get\-To\-Unit\-Connector\-Related\-Unit\-Connection\-Id\-List(), mdt\-Cl\-Unit\-::get\-Unit\-Connection\-Data\-List\-From\-Article\-Connection\-Id\-List(), mdt\-Cl\-Unit\-::get\-Unit\-Connector\-Id\-Based\-On\-Article\-Connector\-Id(), mdt\-Tt\-Test\-Node\-Unit\-::get\-Unit\-Data(), mdt\-Tt\-Test\-Model\-Item\-::get\-Used\-Node\-Unit\-Id\-List(), last\-Error(), mdt\-Tt\-Logical\-Test\-Cable\-::load\-Link\-List(), mdt\-Cl\-Article\-::remove\-Components(), mdt\-Cl\-Unit\-::remove\-Components(), mdt\-Cl\-Article\-::remove\-Connections(), mdt\-Cl\-Article\-::remove\-Connectors\-Connections(), remove\-Data(), mdt\-Cl\-Link\-Beam\-::remove\-Link(), mdt\-Tt\-Test\-Model\-Item\-::remove\-Test\-Node\-Unit\-Setup(), mdt\-Tt\-Test\-Model\-Item\-::remove\-Test\-Node\-Unit\-Setups\-For\-Test\-Item\-Id(), mdt\-Cl\-Unit\-Vehicle\-Type\-::remove\-Unit\-Vehicle\-Assignments(), mdt\-Cl\-Link\-::remove\-Vehicle\-Type\-Links(), rollback\-Transaction(), mdt\-Tt\-Test\-Node\-::set\-Test\-Node\-Unit\-Io\-Range(), mdt\-Cl\-Link\-::sql\-For\-Connectable\-Unit\-Connections\-Selection(), mdt\-Cl\-Link\-::sql\-For\-Connectable\-Unit\-Connectors\-Selection(), mdt\-Cl\-Unit\-::to\-Unit\-Related\-Article\-Connection\-Count(), update\-Record(), mdt\-Tt\-Test\-Model\-Item\-::update\-Test\-Node\-Unit\-Data(), and mdt\-Cl\-Article\-::update\-Unit\-Connections().
 
 
 

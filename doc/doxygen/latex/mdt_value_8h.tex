@@ -2,12 +2,12 @@
 \label{mdt_value_8h}\index{src/mdtutils/mdt\-Value.\-h@{src/mdtutils/mdt\-Value.\-h}}
 }
 {\ttfamily \#include $<$Q\-Meta\-Type$>$}\\*
-{\ttfamily \#include $<$Q\-Debug$>$}\\*
-Include dependency graph for mdt\-Value.\-h\-:\nopagebreak
+Include dependency graph for mdt\-Value.\-h\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=218pt]{mdt_value_8h__incl}
+\includegraphics[width=198pt]{mdt_value_8h__incl}
 \end{center}
 \end{figure}
 This graph shows which files directly or indirectly include this file\-:
@@ -21,16 +21,95 @@ This graph shows which files directly or indirectly include this file\-:
 \subsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
+class \hyperlink{classmdt_value_double}{mdt\-Value\-Double}
+\begin{DoxyCompactList}\small\item\em Contains a floating (double) value with some attributes. \end{DoxyCompactList}\item 
+class \hyperlink{classmdt_value_integral}{mdt\-Value\-Integral$<$ T $>$}
+\begin{DoxyCompactList}\small\item\em Integral type with Null attribute. \end{DoxyCompactList}\item 
+class \hyperlink{classmdt_value_bool}{mdt\-Value\-Bool}
+\begin{DoxyCompactList}\small\item\em Boolean type with Null attribute. \end{DoxyCompactList}\item 
 class \hyperlink{classmdt_value}{mdt\-Value}
 \begin{DoxyCompactList}\small\item\em Conatins a value with some attributes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{classmdt_value_integral}{mdt\-Value\-Integral}$<$ int $>$ \hyperlink{mdt_value_8h_a0c42952c09d70fdb4d64e2becd58ee3d}{mdt\-Value\-Int}
+\begin{DoxyCompactList}\small\item\em \hyperlink{classmdt_value_integral}{mdt\-Value\-Integral} with int type value \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
+\item 
+Q\-Debug \hyperlink{mdt_value_8h_ad1d1aa4d0008ebe1f209771525803f4e}{operator$<$$<$} (Q\-Debug dbg, const \hyperlink{classmdt_value_bool}{mdt\-Value\-Bool} \&value)
+\item 
+Q\-Debug \hyperlink{mdt_value_8h_ab34c4694c3e5510a36a8863d87e241e5}{operator$<$$<$} (Q\-Debug dbg, const \hyperlink{mdt_value_8h_a0c42952c09d70fdb4d64e2becd58ee3d}{mdt\-Value\-Int} \&value)
+\item 
+Q\-Debug \hyperlink{mdt_value_8h_afadfd28846155ed682a2d3312f37bc60}{operator$<$$<$} (Q\-Debug dbg, const \hyperlink{classmdt_value_double}{mdt\-Value\-Double} \&value)
 \item 
 Q\-Debug \hyperlink{mdt_value_8h_ac2e0f42551c4221afa15837f4a265eb2}{operator$<$$<$} (Q\-Debug dbg, const \hyperlink{classmdt_value}{mdt\-Value} \&value)
 \end{DoxyCompactItemize}
 
 
+\subsection{Typedef Documentation}
+\hypertarget{mdt_value_8h_a0c42952c09d70fdb4d64e2becd58ee3d}{\index{mdt\-Value.\-h@{mdt\-Value.\-h}!mdt\-Value\-Int@{mdt\-Value\-Int}}
+\index{mdt\-Value\-Int@{mdt\-Value\-Int}!mdtValue.h@{mdt\-Value.\-h}}
+\subsubsection[{mdt\-Value\-Int}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf mdt\-Value\-Integral}$<$int$>$ {\bf mdt\-Value\-Int}}}\label{mdt_value_8h_a0c42952c09d70fdb4d64e2becd58ee3d}
+
+
+\hyperlink{classmdt_value_integral}{mdt\-Value\-Integral} with int type value 
+
+
+
+Definition at line 404 of file mdt\-Value.\-h.
+
+
+
 \subsection{Function Documentation}
+\hypertarget{mdt_value_8h_ad1d1aa4d0008ebe1f209771525803f4e}{\index{mdt\-Value.\-h@{mdt\-Value.\-h}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!mdtValue.h@{mdt\-Value.\-h}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Debug operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{Q\-Debug}]{dbg, }
+\item[{const {\bf mdt\-Value\-Bool} \&}]{value}
+\end{DoxyParamCaption}
+)}}\label{mdt_value_8h_ad1d1aa4d0008ebe1f209771525803f4e}
+
+
+Definition at line 131 of file mdt\-Value.\-cpp.
+
+
+
+References mdt\-Value\-Bool\-::is\-Null(), and mdt\-Value\-Bool\-::value().
+
+\hypertarget{mdt_value_8h_ab34c4694c3e5510a36a8863d87e241e5}{\index{mdt\-Value.\-h@{mdt\-Value.\-h}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!mdtValue.h@{mdt\-Value.\-h}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Debug operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{Q\-Debug}]{dbg, }
+\item[{const {\bf mdt\-Value\-Int} \&}]{value}
+\end{DoxyParamCaption}
+)}}\label{mdt_value_8h_ab34c4694c3e5510a36a8863d87e241e5}
+
+
+Definition at line 119 of file mdt\-Value.\-cpp.
+
+
+
+References mdt\-Value\-Integral$<$ T $>$\-::is\-Null(), and mdt\-Value\-Integral$<$ T $>$\-::value().
+
+\hypertarget{mdt_value_8h_afadfd28846155ed682a2d3312f37bc60}{\index{mdt\-Value.\-h@{mdt\-Value.\-h}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!mdtValue.h@{mdt\-Value.\-h}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Debug operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{Q\-Debug}]{dbg, }
+\item[{const {\bf mdt\-Value\-Double} \&}]{value}
+\end{DoxyParamCaption}
+)}}\label{mdt_value_8h_afadfd28846155ed682a2d3312f37bc60}
+
+
+Definition at line 98 of file mdt\-Value.\-cpp.
+
+
+
+References mdt\-Value\-Double\-::is\-Minus\-Ol(), mdt\-Value\-Double\-::is\-Na\-N(), mdt\-Value\-Double\-::is\-Null(), mdt\-Value\-Double\-::is\-Plus\-Ol(), and mdt\-Value\-Double\-::value().
+
 \hypertarget{mdt_value_8h_ac2e0f42551c4221afa15837f4a265eb2}{\index{mdt\-Value.\-h@{mdt\-Value.\-h}!operator$<$$<$@{operator$<$$<$}}
 \index{operator$<$$<$@{operator$<$$<$}!mdtValue.h@{mdt\-Value.\-h}}
 \subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Debug operator$<$$<$ (
@@ -41,7 +120,7 @@ Q\-Debug \hyperlink{mdt_value_8h_ac2e0f42551c4221afa15837f4a265eb2}{operator$<$$
 )}}\label{mdt_value_8h_ac2e0f42551c4221afa15837f4a265eb2}
 
 
-Definition at line 195 of file mdt\-Value.\-cpp.
+Definition at line 316 of file mdt\-Value.\-cpp.
 
 
 

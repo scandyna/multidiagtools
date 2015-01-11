@@ -55,7 +55,9 @@ bool \hyperlink{classmdt_tt_abstract_test_node_calibration_tool_a07f66a524812911
 bool \hyperlink{classmdt_tt_abstract_test_node_calibration_tool_a8b99adc8b660a48f8b86f82939cbe918}{set\-Test\-Node\-Unit\-Calibration\-Offset} (int test\-Node\-Unit\-Id, double offset)
 \begin{DoxyCompactList}\small\item\em Set calibration offset for given test\-Node\-Unit\-Id. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_tt_abstract_test_node_calibration_tool_a3182718cb99cb4b7bac06c34688a7344}{set\-Test\-Node\-Unit\-Calibration\-Offset} (const Q\-String \&schema\-Position, double offset)
-\begin{DoxyCompactList}\small\item\em Set calibration offset for given test node unit schema\-Position. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Set calibration offset for given test node unit schema\-Position. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_abstract_test_node_calibration_tool_a7c56f6b2ba4adf42fd51b520db5bb85b}{save\-Test\-Node\-Unit\-Calibration\-Offsets} ()
+\begin{DoxyCompactList}\small\item\em Save calibration results to Test\-Node\-Unit\-\_\-tbl. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -63,12 +65,18 @@ void \hyperlink{classmdt_tt_abstract_test_node_calibration_tool_a4b1c2b5340a0352
 \begin{DoxyCompactList}\small\item\em Display last error to the user. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_tt_abstract_test_node_calibration_tool_ad5c0a41531d0dbd9c774f59a72664687}{display\-Message} (const Q\-String \&text, const Q\-String \&informative\-Text=Q\-String(), Q\-Message\-Box\-::\-Icon icon=Q\-Message\-Box\-::\-Information)
 \begin{DoxyCompactList}\small\item\em Display a message to the user. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_tt_abstract_test_node_calibration_tool_aaff76264fab90c51317d5491c448ba92}{prompt\-User} (const Q\-String \&text, const Q\-String \&informative\-Text=Q\-String(), Q\-Message\-Box\-::\-Icon icon=Q\-Message\-Box\-::\-Information, Q\-Message\-Box\-::\-Standard\-Buttons buttons=(Q\-Message\-Box\-::\-Ok$|$Q\-Message\-Box\-::\-Cancel))
+bool \hyperlink{classmdt_tt_abstract_test_node_calibration_tool_aaff76264fab90c51317d5491c448ba92}{prompt\-User} (const Q\-String \&text, const Q\-String \&informative\-Text=Q\-String(), Q\-Message\-Box\-::\-Icon icon=Q\-Message\-Box\-::\-Information, Q\-Message\-Box\-::\-Standard\-Buttons buttons=(Q\-Message\-Box\-::\-Ok$\vert$Q\-Message\-Box\-::\-Cancel))
 \begin{DoxyCompactList}\small\item\em Prompt the user to do a action. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_tt_abstract_test_node_calibration_tool_a464c96ebdb95c0a43fc6684b2b3900f7}{ask\-User} (const Q\-String \&text, const Q\-String \&informative\-Text=Q\-String(), Q\-Message\-Box\-::\-Icon icon=Q\-Message\-Box\-::\-Question, Q\-Message\-Box\-::\-Standard\-Buttons buttons=(Q\-Message\-Box\-::\-Ok$|$Q\-Message\-Box\-::\-No$|$Q\-Message\-Box\-::\-Cancel))
+bool \hyperlink{classmdt_tt_abstract_test_node_calibration_tool_a464c96ebdb95c0a43fc6684b2b3900f7}{ask\-User} (const Q\-String \&text, const Q\-String \&informative\-Text=Q\-String(), Q\-Message\-Box\-::\-Icon icon=Q\-Message\-Box\-::\-Question, Q\-Message\-Box\-::\-Standard\-Buttons buttons=(Q\-Message\-Box\-::\-Ok$\vert$Q\-Message\-Box\-::\-No$\vert$Q\-Message\-Box\-::\-Cancel))
 \begin{DoxyCompactList}\small\item\em Ask a question to the user. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_tt_abstract_test_node_calibration_tool_a056ac13971e84d14bd5bc5106e181baa}{is\-In\-Range} (const \hyperlink{classmdt_value}{mdt\-Value} \&value, double min, double max=std\-::numeric\-\_\-limits$<$ double $>$\-::max())
-\begin{DoxyCompactList}\small\item\em Check if x is in range. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Check if x is in range. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_abstract_test_node_calibration_tool_a71da4e6772ec99d9dc42e7b04ceee881}{begin\-Transaction} ()
+\begin{DoxyCompactList}\small\item\em Beginn manually a new transaction. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_abstract_test_node_calibration_tool_a484892fd3c79e1ba974b496caf3864e2}{rollback\-Transaction} ()
+\begin{DoxyCompactList}\small\item\em Rollback manually a new transaction. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tt_abstract_test_node_calibration_tool_a607673bbd59751c2ee70c3c187f70852}{commit\-Transaction} ()
+\begin{DoxyCompactList}\small\item\em Commit manually a new transaction. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -98,7 +106,7 @@ Constructor.
 
 
 
-Definition at line 30 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
+Definition at line 39 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
 
 
 
@@ -110,7 +118,7 @@ Definition at line 30 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\
 \item[{const Q\-String \&}]{text, }
 \item[{const Q\-String \&}]{informative\-Text = {\ttfamily QString()}, }
 \item[{Q\-Message\-Box\-::\-Icon}]{icon = {\ttfamily QMessageBox\-:\-:Question}, }
-\item[{Q\-Message\-Box\-::\-Standard\-Buttons}]{buttons = {\ttfamily (QMessageBox\-:\-:Ok~$|$~QMessageBox\-:\-:No~$|$~QMessageBox\-:\-:Cancel)}}
+\item[{Q\-Message\-Box\-::\-Standard\-Buttons}]{buttons = {\ttfamily (QMessageBox\-:\-:Ok~$\vert$~QMessageBox\-:\-:No~$\vert$~QMessageBox\-:\-:Cancel)}}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_tt_abstract_test_node_calibration_tool_a464c96ebdb95c0a43fc6684b2b3900f7}
 
@@ -122,11 +130,57 @@ True if user accepted the message box (typically if he clicked Ok, Yes, ..), fal
 \end{DoxyReturn}
 
 
-Definition at line 159 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
+Definition at line 236 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
 
 
 
 Referenced by prompt\-User().
+
+\hypertarget{classmdt_tt_abstract_test_node_calibration_tool_a71da4e6772ec99d9dc42e7b04ceee881}{\index{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}!begin\-Transaction@{begin\-Transaction}}
+\index{begin\-Transaction@{begin\-Transaction}!mdtTtAbstractTestNodeCalibrationTool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}}
+\subsubsection[{begin\-Transaction}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool\-::begin\-Transaction (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_tt_abstract_test_node_calibration_tool_a71da4e6772ec99d9dc42e7b04ceee881}
+
+
+Beginn manually a new transaction. 
+
+On error, false is returned and error is available with last\-Error() . 
+
+Definition at line 286 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, pv\-Last\-Error, mdt\-Error\-::set\-Error(), and mdt\-Error\-::set\-System\-Error().
+
+
+
+Referenced by save\-Test\-Node\-Unit\-Calibration\-Offsets().
+
+\hypertarget{classmdt_tt_abstract_test_node_calibration_tool_a607673bbd59751c2ee70c3c187f70852}{\index{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}!commit\-Transaction@{commit\-Transaction}}
+\index{commit\-Transaction@{commit\-Transaction}!mdtTtAbstractTestNodeCalibrationTool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}}
+\subsubsection[{commit\-Transaction}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool\-::commit\-Transaction (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_tt_abstract_test_node_calibration_tool_a607673bbd59751c2ee70c3c187f70852}
+
+
+Commit manually a new transaction. 
+
+On error, false is returned and error is available with last\-Error() . 
+
+Definition at line 312 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, pv\-Last\-Error, mdt\-Error\-::set\-Error(), and mdt\-Error\-::set\-System\-Error().
+
+
+
+Referenced by save\-Test\-Node\-Unit\-Calibration\-Offsets().
 
 \hypertarget{classmdt_tt_abstract_test_node_calibration_tool_a42d8aaef4d70f5afe2eca46f3d1ed32b}{\index{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}!current\-Test\-Node\-Data@{current\-Test\-Node\-Data}}
 \index{current\-Test\-Node\-Data@{current\-Test\-Node\-Data}!mdtTtAbstractTestNodeCalibrationTool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}}
@@ -171,7 +225,7 @@ Display last error to the user.
 
 
 
-Definition at line 132 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
+Definition at line 207 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
 
 
 
@@ -179,7 +233,7 @@ References mdt\-Error\-::informative\-Text(), mdt\-Error\-::level\-Icon(), pv\-L
 
 
 
-Referenced by mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool\-::run\-Calibration(), and set\-Test\-Node().
+Referenced by mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool\-::run\-Calibration(), mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool\-::save\-Calibration(), and set\-Test\-Node().
 
 \hypertarget{classmdt_tt_abstract_test_node_calibration_tool_ad5c0a41531d0dbd9c774f59a72664687}{\index{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}!display\-Message@{display\-Message}}
 \index{display\-Message@{display\-Message}!mdtTtAbstractTestNodeCalibrationTool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}}
@@ -196,7 +250,7 @@ Display a message to the user.
 
 
 
-Definition at line 143 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
+Definition at line 219 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
 
 \hypertarget{classmdt_tt_abstract_test_node_calibration_tool_a056ac13971e84d14bd5bc5106e181baa}{\index{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}!is\-In\-Range@{is\-In\-Range}}
 \index{is\-In\-Range@{is\-In\-Range}!mdtTtAbstractTestNodeCalibrationTool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}}
@@ -215,7 +269,7 @@ Return true if value is in \mbox{[}min;max\mbox{]} If value is out of range, a d
 
 Note\-: if value has -\/\-O\-L or +\-O\-L flag set, -\/infinity, respecively +infinity value is considered. 
 
-Definition at line 181 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
+Definition at line 259 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
 
 
 
@@ -228,7 +282,7 @@ References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, mdt\-Tt\-Test\-::is\-I
 \item[{const Q\-String \&}]{text, }
 \item[{const Q\-String \&}]{informative\-Text = {\ttfamily QString()}, }
 \item[{Q\-Message\-Box\-::\-Icon}]{icon = {\ttfamily QMessageBox\-:\-:Information}, }
-\item[{Q\-Message\-Box\-::\-Standard\-Buttons}]{buttons = {\ttfamily (QMessageBox\-:\-:Ok~$|$~QMessageBox\-:\-:Cancel)}}
+\item[{Q\-Message\-Box\-::\-Standard\-Buttons}]{buttons = {\ttfamily (QMessageBox\-:\-:Ok~$\vert$~QMessageBox\-:\-:Cancel)}}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_tt_abstract_test_node_calibration_tool_aaff76264fab90c51317d5491c448ba92}
 
@@ -240,7 +294,7 @@ True if user accepted the message box (typically if he clicked Ok, Yes, ..), fal
 \end{DoxyReturn}
 
 
-Definition at line 154 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
+Definition at line 231 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
 
 
 
@@ -249,6 +303,55 @@ References ask\-User().
 
 
 Referenced by mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool\-::run\-Calibration().
+
+\hypertarget{classmdt_tt_abstract_test_node_calibration_tool_a484892fd3c79e1ba974b496caf3864e2}{\index{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}!rollback\-Transaction@{rollback\-Transaction}}
+\index{rollback\-Transaction@{rollback\-Transaction}!mdtTtAbstractTestNodeCalibrationTool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}}
+\subsubsection[{rollback\-Transaction}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool\-::rollback\-Transaction (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_tt_abstract_test_node_calibration_tool_a484892fd3c79e1ba974b496caf3864e2}
+
+
+Rollback manually a new transaction. 
+
+On error, false is returned and error is available with last\-Error() . 
+
+Definition at line 299 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, pv\-Last\-Error, mdt\-Error\-::set\-Error(), and mdt\-Error\-::set\-System\-Error().
+
+
+
+Referenced by save\-Test\-Node\-Unit\-Calibration\-Offsets().
+
+\hypertarget{classmdt_tt_abstract_test_node_calibration_tool_a7c56f6b2ba4adf42fd51b520db5bb85b}{\index{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}!save\-Test\-Node\-Unit\-Calibration\-Offsets@{save\-Test\-Node\-Unit\-Calibration\-Offsets}}
+\index{save\-Test\-Node\-Unit\-Calibration\-Offsets@{save\-Test\-Node\-Unit\-Calibration\-Offsets}!mdtTtAbstractTestNodeCalibrationTool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}}
+\subsubsection[{save\-Test\-Node\-Unit\-Calibration\-Offsets}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool\-::save\-Test\-Node\-Unit\-Calibration\-Offsets (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_tt_abstract_test_node_calibration_tool_a7c56f6b2ba4adf42fd51b520db5bb85b}
+
+
+Save calibration results to Test\-Node\-Unit\-\_\-tbl. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{classmdt_tt_abstract_test_node_calibration_tool_a89e27cd930547aef0ba143519408ce1b}{setup()} must be called first. 
+\end{DoxyPrecond}
+
+
+Definition at line 141 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
+
+
+
+References mdt\-Sql\-Record\-::add\-Field(), begin\-Transaction(), mdt\-Sql\-Record\-::clear\-Values(), commit\-Transaction(), mdt\-Sql\-Record\-::last\-Error(), pv\-Last\-Error, rollback\-Transaction(), and mdt\-Sql\-Record\-::set\-Value().
+
+
+
+Referenced by mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool\-::save\-Calibration().
 
 \hypertarget{classmdt_tt_abstract_test_node_calibration_tool_a85c47fe2b501769f5966a27aeb3f051a}{\index{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}!set\-Test\-Node@{set\-Test\-Node}}
 \index{set\-Test\-Node@{set\-Test\-Node}!mdtTtAbstractTestNodeCalibrationTool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}}
@@ -262,10 +365,10 @@ Referenced by mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool\-::run\-Calibration(
 Set test node to calibrate. 
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000060}{Todo}]Add a Key field or something similar. \end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000070}{Todo}]Add a Key field or something similar. \end{DoxyRefDesc}
 
 
-Definition at line 85 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
+Definition at line 94 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
 
 
 
@@ -289,7 +392,7 @@ Set calibration offset for given test\-Node\-Unit\-Id.
 
 Note\-: calibration offset and date are cached in models only, not sent to database. 
 
-Definition at line 96 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
+Definition at line 105 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
 
 
 
@@ -313,7 +416,7 @@ Notes\-:
 \item The first test node unit that matches schema\-Position in current test node is considered. 
 \end{DoxyItemize}
 
-Definition at line 114 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
+Definition at line 123 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
 
 
 
@@ -390,7 +493,7 @@ Reimplemented in \hyperlink{classmdt_tt_basic_test_node_calibration_tool_a471178
 
 
 
-Definition at line 40 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
+Definition at line 49 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
 
 
 
@@ -501,11 +604,11 @@ Contains last error that occured.
 
 
 
-Definition at line 165 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-h.
+Definition at line 171 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-h.
 
 
 
-Referenced by display\-Last\-Error(), is\-In\-Range(), set\-Test\-Node(), and setup().
+Referenced by begin\-Transaction(), commit\-Transaction(), display\-Last\-Error(), is\-In\-Range(), rollback\-Transaction(), mdt\-Tt\-Basic\-Test\-Node\-Calibration\-Tool\-::run\-Calibration(), save\-Test\-Node\-Unit\-Calibration\-Offsets(), set\-Test\-Node(), and setup().
 
 
 

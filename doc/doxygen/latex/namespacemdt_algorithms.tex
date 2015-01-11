@@ -24,7 +24,9 @@ Q\-String \hyperlink{namespacemdt_algorithms_a29977b36180db7518a7ee2317265d26b}{
 Q\-String \hyperlink{namespacemdt_algorithms_a4f1b12dbe1f3c93dc5138f144d84de93}{unprotected\-String} (const Q\-String \&str, const Q\-String \&data\-Protection, const Q\-Char \&escape\-Char, int $\ast$str\-End\-Offset=0, int str\-Start\-Offset=-\/1)
 \begin{DoxyCompactList}\small\item\em Get unprotected string. \end{DoxyCompactList}\item 
 Q\-String\-List \hyperlink{namespacemdt_algorithms_a28d7d5eb9578936c950039fa2f86a1bf}{split\-String} (const Q\-String \&str, const Q\-String \&separator, const Q\-String \&data\-Protection, const Q\-Char \&escape\-Char=Q\-Char())
-\begin{DoxyCompactList}\small\item\em Split a string reagrding a separator and data protection. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Split a string reagrding a separator and data protection. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{namespacemdt_algorithms_a677bc997e04f77c1be0f5ce0fdb56e67}{longest\-Line\-In\-String} (const Q\-String \&str, const Q\-String \&sep=\char`\"{}\textbackslash{}n\char`\"{})
+\begin{DoxyCompactList}\small\item\em Get the string of longest line in given string. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -68,6 +70,22 @@ hex\-Str must contain valid chars (0-\/9 , a-\/f, A-\/\-F). F.\-ex\-: 2\-Z is no
 
 Definition at line 199 of file mdt\-Algorithms.\-cpp.
 
+\hypertarget{namespacemdt_algorithms_a677bc997e04f77c1be0f5ce0fdb56e67}{\index{mdt\-Algorithms@{mdt\-Algorithms}!longest\-Line\-In\-String@{longest\-Line\-In\-String}}
+\index{longest\-Line\-In\-String@{longest\-Line\-In\-String}!mdtAlgorithms@{mdt\-Algorithms}}
+\subsubsection[{longest\-Line\-In\-String}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Algorithms\-::longest\-Line\-In\-String (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{str, }
+\item[{const Q\-String \&}]{sep = {\ttfamily \char`\"{}\textbackslash{}n\char`\"{}}}
+\end{DoxyParamCaption}
+)}}\label{namespacemdt_algorithms_a677bc997e04f77c1be0f5ce0fdb56e67}
+
+
+Get the string of longest line in given string. 
+
+
+
+Definition at line 391 of file mdt\-Algorithms.\-cpp.
+
 \hypertarget{namespacemdt_algorithms_af22a54e83499afe31d22fac9bc521c54}{\index{mdt\-Algorithms@{mdt\-Algorithms}!natural\-Compare\-Less\-Than@{natural\-Compare\-Less\-Than}}
 \index{natural\-Compare\-Less\-Than@{natural\-Compare\-Less\-Than}!mdtAlgorithms@{mdt\-Algorithms}}
 \subsubsection[{natural\-Compare\-Less\-Than}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Algorithms\-::natural\-Compare\-Less\-Than (
@@ -81,7 +99,7 @@ Definition at line 199 of file mdt\-Algorithms.\-cpp.
 
 Compare 2 strings using natural sort. 
 
-This method chops the input str1 and str2 into pieces of digits and non-\/digits (a1.\-05 becomes $|$a$|$1$|$.$|$05) and compare these pieces of str1 and str2 to each other (first with first, second with second, ...).
+This method chops the input str1 and str2 into pieces of digits and non-\/digits (a1.\-05 becomes $\vert$a$\vert$1$\vert$.$\vert$05) and compare these pieces of str1 and str2 to each other (first with first, second with second, ...).
 
 This function is based on K\-D\-E K\-String\-Handler\-::natural\-Compare()\-: \href{http://api.kde.org/4.10-api/kdelibs-apidocs/kdecore/html/kstringhandler_8cpp_source.html}{\tt http\-://api.\-kde.\-org/4.\-10-\/api/kdelibs-\/apidocs/kdecore/html/kstringhandler\-\_\-8cpp\-\_\-source.\-html}
 
@@ -228,7 +246,7 @@ References unprotected\-String().
 
 
 
-Referenced by mdt\-Frame\-Codec\-Scpi\-::decode\-Error(), mdt\-Csv\-File\-::read\-Line(), and mdt\-Csv\-File\-::read\-Lines().
+Referenced by mdt\-Codec\-Scpi\-::decode\-Device\-Error(), mdt\-Frame\-Codec\-Scpi\-::decode\-Error(), mdt\-Csv\-File\-::read\-Line(), and mdt\-Csv\-File\-::read\-Lines().
 
 \hypertarget{namespacemdt_algorithms_a4f1b12dbe1f3c93dc5138f144d84de93}{\index{mdt\-Algorithms@{mdt\-Algorithms}!unprotected\-String@{unprotected\-String}}
 \index{unprotected\-String@{unprotected\-String}!mdtAlgorithms@{mdt\-Algorithms}}

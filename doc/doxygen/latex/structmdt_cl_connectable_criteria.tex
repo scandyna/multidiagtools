@@ -1,0 +1,197 @@
+\hypertarget{structmdt_cl_connectable_criteria}{\section{mdt\-Cl\-Connectable\-Criteria Struct Reference}
+\label{structmdt_cl_connectable_criteria}\index{mdt\-Cl\-Connectable\-Criteria@{mdt\-Cl\-Connectable\-Criteria}}
+}
+
+
+Criteria that defines if 2 connectors are connectable.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Cl\-Link.\-h$>$}
+
+
+
+Collaboration diagram for mdt\-Cl\-Connectable\-Criteria\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=256pt]{structmdt_cl_connectable_criteria__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structmdt_cl_connectable_criteria_a4b1714ec82d4ff747c685b223f94e870}{mdt\-Cl\-Connectable\-Criteria} ()
+\begin{DoxyCompactList}\small\item\em Contruct a default criteria struct. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{structmdt_cl_connectable_criteria_a540f153bd5b6c9d05ab9587438365c8d}{check\-Gender\-Are\-Opposite}
+\begin{DoxyCompactList}\small\item\em Gender must be opposite. \end{DoxyCompactList}\item 
+bool \hyperlink{structmdt_cl_connectable_criteria_a96b240355fc97c31a72eba946614e261}{check\-Contact\-Count}
+\begin{DoxyCompactList}\small\item\em Contact quantity must be the same. \end{DoxyCompactList}\item 
+bool \hyperlink{structmdt_cl_connectable_criteria_ad37109313f47acdc63331bd744df38a4}{check\-Contact\-Type}
+\begin{DoxyCompactList}\small\item\em Contact gender must be compatible. \end{DoxyCompactList}\item 
+bool \hyperlink{structmdt_cl_connectable_criteria_a216681c69f5674cf5011bc00cd0170dd}{check\-Contact\-Name}
+\begin{DoxyCompactList}\small\item\em Contact name must match (be the same) \end{DoxyCompactList}\item 
+bool \hyperlink{structmdt_cl_connectable_criteria_ad4487b3b17f90f28023afefbfde78842}{check\-Form}
+\begin{DoxyCompactList}\small\item\em Form must match for both connectors. \end{DoxyCompactList}\item 
+bool \hyperlink{structmdt_cl_connectable_criteria_a563935ae7679899d23ba67e0f49c0f5e}{check\-Insert}
+\begin{DoxyCompactList}\small\item\em Insert must match for both connector. \end{DoxyCompactList}\item 
+bool \hyperlink{structmdt_cl_connectable_criteria_a78661312682c0421bbc2b50255bb0229}{check\-Insert\-Rotation}
+\begin{DoxyCompactList}\small\item\em Insert rotation code must match for both connector. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Criteria that defines if 2 connectors are connectable. 
+
+
+
+Definition at line 40 of file mdt\-Cl\-Link.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{structmdt_cl_connectable_criteria_a4b1714ec82d4ff747c685b223f94e870}{\index{mdt\-Cl\-Connectable\-Criteria@{mdt\-Cl\-Connectable\-Criteria}!mdt\-Cl\-Connectable\-Criteria@{mdt\-Cl\-Connectable\-Criteria}}
+\index{mdt\-Cl\-Connectable\-Criteria@{mdt\-Cl\-Connectable\-Criteria}!mdtClConnectableCriteria@{mdt\-Cl\-Connectable\-Criteria}}
+\subsubsection[{mdt\-Cl\-Connectable\-Criteria}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Cl\-Connectable\-Criteria\-::mdt\-Cl\-Connectable\-Criteria (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structmdt_cl_connectable_criteria_a4b1714ec82d4ff747c685b223f94e870}
+
+
+Contruct a default criteria struct. 
+
+Will set parameters as follow\-:
+\begin{DoxyItemize}
+\item check\-Gender\-Are\-Opposite\-: true
+\item check\-Contact\-Count\-: true
+\item check\-Contact\-Type\-: true
+\item check\-Contact\-Name\-: true
+\item check\-Form\-: true
+\item check\-Insert\-: true
+\item check\-Insert\-Rotation\-: true 
+\end{DoxyItemize}
+
+Definition at line 53 of file mdt\-Cl\-Link.\-h.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{structmdt_cl_connectable_criteria_a96b240355fc97c31a72eba946614e261}{\index{mdt\-Cl\-Connectable\-Criteria@{mdt\-Cl\-Connectable\-Criteria}!check\-Contact\-Count@{check\-Contact\-Count}}
+\index{check\-Contact\-Count@{check\-Contact\-Count}!mdtClConnectableCriteria@{mdt\-Cl\-Connectable\-Criteria}}
+\subsubsection[{check\-Contact\-Count}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Connectable\-Criteria\-::check\-Contact\-Count}}\label{structmdt_cl_connectable_criteria_a96b240355fc97c31a72eba946614e261}
+
+
+Contact quantity must be the same. 
+
+If true, it will be checked that both connectors have the same quantity of contacts. 
+
+Definition at line 76 of file mdt\-Cl\-Link.\-h.
+
+
+
+Referenced by mdt\-Cl\-Link\-::can\-Connect\-Connectors(), mdt\-Cl\-Connectable\-Connector\-Dialog\-::get\-Connectable\-Criteria(), and mdt\-Cl\-Connectable\-Connector\-Dialog\-::set\-Connectable\-Criteria().
+
+\hypertarget{structmdt_cl_connectable_criteria_a216681c69f5674cf5011bc00cd0170dd}{\index{mdt\-Cl\-Connectable\-Criteria@{mdt\-Cl\-Connectable\-Criteria}!check\-Contact\-Name@{check\-Contact\-Name}}
+\index{check\-Contact\-Name@{check\-Contact\-Name}!mdtClConnectableCriteria@{mdt\-Cl\-Connectable\-Criteria}}
+\subsubsection[{check\-Contact\-Name}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Connectable\-Criteria\-::check\-Contact\-Name}}\label{structmdt_cl_connectable_criteria_a216681c69f5674cf5011bc00cd0170dd}
+
+
+Contact name must match (be the same) 
+
+
+
+Definition at line 88 of file mdt\-Cl\-Link.\-h.
+
+
+
+Referenced by mdt\-Cl\-Link\-::can\-Connect\-Connections(), mdt\-Cl\-Connectable\-Connector\-Dialog\-::get\-Connectable\-Criteria(), mdt\-Tt\-Logical\-Test\-Cable\-Dialog\-::get\-Dut\-Connection\-Id(), mdt\-Tt\-Logical\-Test\-Cable\-Dialog\-::get\-Ts\-Connection\-Id(), and mdt\-Cl\-Connectable\-Connector\-Dialog\-::set\-Connectable\-Criteria().
+
+\hypertarget{structmdt_cl_connectable_criteria_ad37109313f47acdc63331bd744df38a4}{\index{mdt\-Cl\-Connectable\-Criteria@{mdt\-Cl\-Connectable\-Criteria}!check\-Contact\-Type@{check\-Contact\-Type}}
+\index{check\-Contact\-Type@{check\-Contact\-Type}!mdtClConnectableCriteria@{mdt\-Cl\-Connectable\-Criteria}}
+\subsubsection[{check\-Contact\-Type}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Connectable\-Criteria\-::check\-Contact\-Type}}\label{structmdt_cl_connectable_criteria_ad37109313f47acdc63331bd744df38a4}
+
+
+Contact gender must be compatible. 
+
+If true, each contact gender are checked\-:
+\begin{DoxyItemize}
+\item A socket (S) can be connected to a pin (P) , and reverse (P to T)
+\item Terminal (T) can be connected to a terminal (T) 
+\end{DoxyItemize}
+
+Definition at line 84 of file mdt\-Cl\-Link.\-h.
+
+
+
+Referenced by mdt\-Cl\-Link\-::can\-Connect\-Connections(), mdt\-Cl\-Connectable\-Connector\-Dialog\-::get\-Connectable\-Criteria(), mdt\-Tt\-Logical\-Test\-Cable\-Dialog\-::get\-Dut\-Connection\-Id(), mdt\-Tt\-Logical\-Test\-Cable\-Dialog\-::get\-Ts\-Connection\-Id(), and mdt\-Cl\-Connectable\-Connector\-Dialog\-::set\-Connectable\-Criteria().
+
+\hypertarget{structmdt_cl_connectable_criteria_ad4487b3b17f90f28023afefbfde78842}{\index{mdt\-Cl\-Connectable\-Criteria@{mdt\-Cl\-Connectable\-Criteria}!check\-Form@{check\-Form}}
+\index{check\-Form@{check\-Form}!mdtClConnectableCriteria@{mdt\-Cl\-Connectable\-Criteria}}
+\subsubsection[{check\-Form}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Connectable\-Criteria\-::check\-Form}}\label{structmdt_cl_connectable_criteria_ad4487b3b17f90f28023afefbfde78842}
+
+
+Form must match for both connectors. 
+
+If true, it will be check that both connectors have the same form 
+
+Definition at line 94 of file mdt\-Cl\-Link.\-h.
+
+
+
+Referenced by mdt\-Cl\-Link\-::can\-Connect\-Connectors(), mdt\-Cl\-Connectable\-Connector\-Dialog\-::get\-Connectable\-Criteria(), and mdt\-Cl\-Connectable\-Connector\-Dialog\-::set\-Connectable\-Criteria().
+
+\hypertarget{structmdt_cl_connectable_criteria_a540f153bd5b6c9d05ab9587438365c8d}{\index{mdt\-Cl\-Connectable\-Criteria@{mdt\-Cl\-Connectable\-Criteria}!check\-Gender\-Are\-Opposite@{check\-Gender\-Are\-Opposite}}
+\index{check\-Gender\-Are\-Opposite@{check\-Gender\-Are\-Opposite}!mdtClConnectableCriteria@{mdt\-Cl\-Connectable\-Criteria}}
+\subsubsection[{check\-Gender\-Are\-Opposite}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Connectable\-Criteria\-::check\-Gender\-Are\-Opposite}}\label{structmdt_cl_connectable_criteria_a540f153bd5b6c9d05ab9587438365c8d}
+
+
+Gender must be opposite. 
+
+If true, gender of both connectors must be opposite (male and female) Note\-: this concerns the connector gender, not necessarely the gender contacts. See check\-Contact\-Type for contact gender checking. 
+
+Definition at line 70 of file mdt\-Cl\-Link.\-h.
+
+
+
+Referenced by mdt\-Cl\-Link\-::can\-Connect\-Connectors(), mdt\-Cl\-Connectable\-Connector\-Dialog\-::get\-Connectable\-Criteria(), and mdt\-Cl\-Connectable\-Connector\-Dialog\-::set\-Connectable\-Criteria().
+
+\hypertarget{structmdt_cl_connectable_criteria_a563935ae7679899d23ba67e0f49c0f5e}{\index{mdt\-Cl\-Connectable\-Criteria@{mdt\-Cl\-Connectable\-Criteria}!check\-Insert@{check\-Insert}}
+\index{check\-Insert@{check\-Insert}!mdtClConnectableCriteria@{mdt\-Cl\-Connectable\-Criteria}}
+\subsubsection[{check\-Insert}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Connectable\-Criteria\-::check\-Insert}}\label{structmdt_cl_connectable_criteria_a563935ae7679899d23ba67e0f49c0f5e}
+
+
+Insert must match for both connector. 
+
+If true, it will be checked that both connectors have the same insert (f.\-ex. 24-\/5) 
+
+Definition at line 100 of file mdt\-Cl\-Link.\-h.
+
+
+
+Referenced by mdt\-Cl\-Link\-::can\-Connect\-Connectors(), mdt\-Cl\-Connectable\-Connector\-Dialog\-::get\-Connectable\-Criteria(), and mdt\-Cl\-Connectable\-Connector\-Dialog\-::set\-Connectable\-Criteria().
+
+\hypertarget{structmdt_cl_connectable_criteria_a78661312682c0421bbc2b50255bb0229}{\index{mdt\-Cl\-Connectable\-Criteria@{mdt\-Cl\-Connectable\-Criteria}!check\-Insert\-Rotation@{check\-Insert\-Rotation}}
+\index{check\-Insert\-Rotation@{check\-Insert\-Rotation}!mdtClConnectableCriteria@{mdt\-Cl\-Connectable\-Criteria}}
+\subsubsection[{check\-Insert\-Rotation}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Connectable\-Criteria\-::check\-Insert\-Rotation}}\label{structmdt_cl_connectable_criteria_a78661312682c0421bbc2b50255bb0229}
+
+
+Insert rotation code must match for both connector. 
+
+If true, it will be checked that both connectors have the same insert rotation code (Q, X, W, ...) 
+
+Definition at line 106 of file mdt\-Cl\-Link.\-h.
+
+
+
+Referenced by mdt\-Cl\-Link\-::can\-Connect\-Connectors(), mdt\-Cl\-Connectable\-Connector\-Dialog\-::get\-Connectable\-Criteria(), and mdt\-Cl\-Connectable\-Connector\-Dialog\-::set\-Connectable\-Criteria().
+
+
+
+The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+src/mdttools/mdttesttool/mdtcablelist/\hyperlink{mdt_cl_link_8h}{mdt\-Cl\-Link.\-h}\end{DoxyCompactItemize}

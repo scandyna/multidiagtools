@@ -1,0 +1,5 @@
+<map id="mdtUsbTransferPool&lt; T &gt;" name="mdtUsbTransferPool&lt; T &gt;">
+<area shape="rect" id="node2" href="$classmdt_usb_transfer_pool.html" title="mdtUsbTransferPool\l\&lt; mdtUsbtmcInterruptTransfer \&gt;" alt="" coords="424,5,635,46"/>
+<area shape="rect" id="node3" href="$classmdt_usb_transfer_pool.html" title="mdtUsbTransferPool\l\&lt; mdtUsbtmcControlTransfer \&gt;" alt="" coords="427,70,631,111"/>
+<area shape="rect" id="node4" href="$classmdt_usb_transfer_pool.html" title="mdtUsbTransferPool\l\&lt; mdtUsbtmcBulkTransfer \&gt;" alt="" coords="435,135,623,177"/>
+</map>

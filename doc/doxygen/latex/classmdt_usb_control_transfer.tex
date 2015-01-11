@@ -1,0 +1,593 @@
+\hypertarget{classmdt_usb_control_transfer}{\section{mdt\-Usb\-Control\-Transfer Class Reference}
+\label{classmdt_usb_control_transfer}\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}}
+}
+
+
+U\-S\-B control transfer.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Usb\-Control\-Transfer.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Usb\-Control\-Transfer\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=214pt]{classmdt_usb_control_transfer__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Usb\-Control\-Transfer\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=198pt]{classmdt_usb_control_transfer__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{classmdt_usb_control_transfer_a372afc0db22a4ec839bab18cfbed35c5}{Request\-Recipient\-\_\-t} \-: uint8\-\_\-t \{ \hyperlink{classmdt_usb_control_transfer_a372afc0db22a4ec839bab18cfbed35c5ae0ac20adce6ffee48c7151b070aa5737}{Request\-Recipient\-\_\-t\-::\-Device} = 0, 
+\hyperlink{classmdt_usb_control_transfer_a372afc0db22a4ec839bab18cfbed35c5a3c1aac82863ed9e5a9aca8ce687f711d}{Request\-Recipient\-\_\-t\-::\-Interface} = 1, 
+\hyperlink{classmdt_usb_control_transfer_a372afc0db22a4ec839bab18cfbed35c5a2a6ba72e93aa7fa676d07973ed2716bb}{Request\-Recipient\-\_\-t\-::\-Endpoint} = 2, 
+\hyperlink{classmdt_usb_control_transfer_a372afc0db22a4ec839bab18cfbed35c5a6311ae17c1ee52b36e68aaf4ad066387}{Request\-Recipient\-\_\-t\-::\-Other} = 3
+ \}
+\begin{DoxyCompactList}\small\item\em Request recipient. \end{DoxyCompactList}\item 
+enum \hyperlink{classmdt_usb_control_transfer_a9a13f68d5d4998dd8564c4e4c6278c77}{Standard\-Request\-Code\-\_\-t} \-: uint8\-\_\-t \{ \hyperlink{classmdt_usb_control_transfer_a9a13f68d5d4998dd8564c4e4c6278c77a055987b2a1850b3a8f19befda5ea79ab}{Standard\-Request\-Code\-\_\-t\-::\-G\-E\-T\-\_\-\-S\-T\-A\-T\-U\-S} = 0, 
+\hyperlink{classmdt_usb_control_transfer_a9a13f68d5d4998dd8564c4e4c6278c77aba7daed095c1e4f1dc05e56562a04c81}{Standard\-Request\-Code\-\_\-t\-::\-C\-L\-E\-A\-R\-\_\-\-F\-E\-A\-T\-U\-R\-E} = 1
+ \}
+\begin{DoxyCompactList}\small\item\em Standard Request Codes. \end{DoxyCompactList}\item 
+enum \hyperlink{classmdt_usb_control_transfer_a80b0f5ac6d8ae7b7e7471b012c34937d}{Descriptor\-Type\-\_\-t} \-: uint8\-\_\-t \{ \\*
+\hyperlink{classmdt_usb_control_transfer_a80b0f5ac6d8ae7b7e7471b012c34937dae10b6ab6a278644ce40631f62f360b6d}{Descriptor\-Type\-\_\-t\-::\-D\-E\-V\-I\-C\-E} = 1, 
+\hyperlink{classmdt_usb_control_transfer_a80b0f5ac6d8ae7b7e7471b012c34937dad08e68ea80bc3bf47a03757579c11900}{Descriptor\-Type\-\_\-t\-::\-C\-O\-N\-F\-I\-G\-U\-R\-A\-T\-I\-O\-N} = 2, 
+\hyperlink{classmdt_usb_control_transfer_a80b0f5ac6d8ae7b7e7471b012c34937da63b588d5559f64f89a416e656880b949}{Descriptor\-Type\-\_\-t\-::\-S\-T\-R\-I\-N\-G} = 3, 
+\hyperlink{classmdt_usb_control_transfer_a80b0f5ac6d8ae7b7e7471b012c34937da596acbde60b98295256f8e4073a8e341}{Descriptor\-Type\-\_\-t\-::\-I\-N\-T\-E\-R\-F\-A\-C\-E} = 4, 
+\\*
+\hyperlink{classmdt_usb_control_transfer_a80b0f5ac6d8ae7b7e7471b012c34937da2af25cfa853e622209966f152df85618}{Descriptor\-Type\-\_\-t\-::\-E\-N\-D\-P\-O\-I\-N\-T} = 5
+ \}
+\begin{DoxyCompactList}\small\item\em Descriptor Types. \end{DoxyCompactList}\item 
+enum \hyperlink{classmdt_usb_control_transfer_acae7a9c10825dd7fa7695a16986a2f36}{Standard\-Feature\-Selector\-\_\-t} \-: uint16\-\_\-t \{ \hyperlink{classmdt_usb_control_transfer_acae7a9c10825dd7fa7695a16986a2f36aca848daa4edec831a1104579c4090324}{Standard\-Feature\-Selector\-\_\-t\-::\-D\-E\-V\-I\-C\-E\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-W\-A\-K\-E\-U\-P} = 1, 
+\hyperlink{classmdt_usb_control_transfer_acae7a9c10825dd7fa7695a16986a2f36a87146aadc04de87777e6158e4488f5aa}{Standard\-Feature\-Selector\-\_\-t\-::\-E\-N\-D\-P\-O\-I\-N\-T\-\_\-\-H\-A\-L\-T} = 0, 
+\hyperlink{classmdt_usb_control_transfer_acae7a9c10825dd7fa7695a16986a2f36a149a70859728a79c49046a6f40087a4f}{Standard\-Feature\-Selector\-\_\-t\-::\-T\-E\-S\-T\-\_\-\-M\-O\-D\-E} = 2
+ \}
+\begin{DoxyCompactList}\small\item\em Standard Feature Selectors. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_usb_control_transfer_a66bfbc135c55bf10377d68cf23d91d0d}{mdt\-Usb\-Control\-Transfer} (libusb\-\_\-device\-\_\-handle $\ast$dev\-\_\-handle, int buffer\-Size=1024)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_usb_control_transfer_a557dca733fad6dc008b1b42b06031a4c}{mdt\-Usb\-Control\-Transfer} (const \hyperlink{classmdt_usb_control_transfer}{mdt\-Usb\-Control\-Transfer} \&rhs)=delete
+\item 
+\hyperlink{classmdt_usb_control_transfer}{mdt\-Usb\-Control\-Transfer} \& \hyperlink{classmdt_usb_control_transfer_aae6fd3ed40416911e82f84ea4b457610}{operator=} (const \hyperlink{classmdt_usb_control_transfer}{mdt\-Usb\-Control\-Transfer} \&rhs)=delete
+\item 
+void \hyperlink{classmdt_usb_control_transfer_a7a146f65c34a21b6c0d2c5221317de2e}{set\-Byte\-Value} (unsigned int offset, uint8\-\_\-t value)
+\begin{DoxyCompactList}\small\item\em Set value at offset. \end{DoxyCompactList}\item 
+uint8\-\_\-t \hyperlink{classmdt_usb_control_transfer_a628488c2a38647b81fc215ccc2f6dcf2}{byte\-Value} (unsigned int offset) const 
+\begin{DoxyCompactList}\small\item\em Get value at offset. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usb_control_transfer_a721de2015fb87a32a555c4c4eb2d11f2}{set\-Word\-Value} (unsigned int offset, uint16\-\_\-t value)
+\begin{DoxyCompactList}\small\item\em Set value at offset. \end{DoxyCompactList}\item 
+uint16\-\_\-t \hyperlink{classmdt_usb_control_transfer_a39aec348c12e466f7774bd5223b745fc}{word\-Value} (unsigned int offset) const 
+\begin{DoxyCompactList}\small\item\em Get value at offset. \end{DoxyCompactList}\item 
+uint8\-\_\-t \hyperlink{classmdt_usb_control_transfer_adedb82c8d1719e1c618e682f14759a56}{bm\-Request\-Type} () const 
+\begin{DoxyCompactList}\small\item\em Get bm\-Request\-Type part. \end{DoxyCompactList}\item 
+uint8\-\_\-t \hyperlink{classmdt_usb_control_transfer_acad163ec6dd2f3172b844115fb0bbfb9}{b\-Request} () const 
+\begin{DoxyCompactList}\small\item\em Get b\-Request part. \end{DoxyCompactList}\item 
+uint16\-\_\-t \hyperlink{classmdt_usb_control_transfer_aba33b977514458a3413a2fe12fe3b5c8}{w\-Value} () const 
+\begin{DoxyCompactList}\small\item\em Get w\-Value. \end{DoxyCompactList}\item 
+uint16\-\_\-t \hyperlink{classmdt_usb_control_transfer_af27548b7789b53a6bac3051ffca018a9}{w\-Index} () const 
+\begin{DoxyCompactList}\small\item\em Get w\-Index. \end{DoxyCompactList}\item 
+uint16\-\_\-t \hyperlink{classmdt_usb_control_transfer_a673c61f2bead515c3f11f588bb203e03}{w\-Length} () const 
+\begin{DoxyCompactList}\small\item\em Get w\-Length. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usb_control_transfer_a86dfa7a329f14672611ee62e23987fdd}{setup\-Clear\-Feature} (libusb\-\_\-transfer\-\_\-cb\-\_\-fn callback, \hyperlink{classmdt_usb_control_transfer_a372afc0db22a4ec839bab18cfbed35c5}{Request\-Recipient\-\_\-t} recipient, \hyperlink{classmdt_usb_control_transfer_acae7a9c10825dd7fa7695a16986a2f36}{Standard\-Feature\-Selector\-\_\-t} feature, uint16\-\_\-t recipient\-Number, unsigned int \hyperlink{classmdt_usb_transfer_a3262511f6062348132e7ee689c24226c}{timeout})
+\begin{DoxyCompactList}\small\item\em Setup a Clear feature transfer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmdt_usb_control_transfer_abe100958d6d455c89b24b68e4e94a9b1}{fill\-Transfer} (libusb\-\_\-transfer\-\_\-cb\-\_\-fn callback, uint8\-\_\-t \hyperlink{classmdt_usb_control_transfer_adedb82c8d1719e1c618e682f14759a56}{bm\-Request\-Type}, uint8\-\_\-t \hyperlink{classmdt_usb_control_transfer_acad163ec6dd2f3172b844115fb0bbfb9}{b\-Request}, uint16\-\_\-t \hyperlink{classmdt_usb_control_transfer_aba33b977514458a3413a2fe12fe3b5c8}{w\-Value}, uint16\-\_\-t \hyperlink{classmdt_usb_control_transfer_af27548b7789b53a6bac3051ffca018a9}{w\-Index}, uint16\-\_\-t \hyperlink{classmdt_usb_control_transfer_a673c61f2bead515c3f11f588bb203e03}{w\-Length}, unsigned int \hyperlink{classmdt_usb_transfer_a3262511f6062348132e7ee689c24226c}{timeout})
+\begin{DoxyCompactList}\small\item\em Fill transfer. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usb_control_transfer_a57d308b969f1b542085b64788d48a9fa}{fill\-Transfer} (libusb\-\_\-transfer\-\_\-cb\-\_\-fn callback, uint8\-\_\-t \hyperlink{classmdt_usb_control_transfer_adedb82c8d1719e1c618e682f14759a56}{bm\-Request\-Type}, uint8\-\_\-t \hyperlink{classmdt_usb_control_transfer_acad163ec6dd2f3172b844115fb0bbfb9}{b\-Request}, uint16\-\_\-t \hyperlink{classmdt_usb_control_transfer_aba33b977514458a3413a2fe12fe3b5c8}{w\-Value}, uint16\-\_\-t \hyperlink{classmdt_usb_control_transfer_af27548b7789b53a6bac3051ffca018a9}{w\-Index}, const std\-::vector$<$ unsigned char $>$ \&data, unsigned int \hyperlink{classmdt_usb_transfer_a3262511f6062348132e7ee689c24226c}{timeout})
+\begin{DoxyCompactList}\small\item\em Fill transfer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+U\-S\-B control transfer. 
+
+Definition at line 32 of file mdt\-Usb\-Control\-Transfer.\-h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{classmdt_usb_control_transfer_a80b0f5ac6d8ae7b7e7471b012c34937d}{\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!Descriptor\-Type\-\_\-t@{Descriptor\-Type\-\_\-t}}
+\index{Descriptor\-Type\-\_\-t@{Descriptor\-Type\-\_\-t}!mdtUsbControlTransfer@{mdt\-Usb\-Control\-Transfer}}
+\subsubsection[{Descriptor\-Type\-\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdt\-Usb\-Control\-Transfer\-::\-Descriptor\-Type\-\_\-t} \-: uint8\-\_\-t\hspace{0.3cm}{\ttfamily [strong]}}}\label{classmdt_usb_control_transfer_a80b0f5ac6d8ae7b7e7471b012c34937d}
+
+
+Descriptor Types. 
+
+See Table 9-\/5 in U\-S\-B 2.\-0 specifications, section 9.\-4, or Table 9-\/6 in U\-S\-B 3.\-1 specifications,section 9.\-4 for details.
+
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000038}{Todo}]Complete this enum. \end{DoxyRefDesc}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{D\-E\-V\-I\-C\-E@{D\-E\-V\-I\-C\-E}!mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}}\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!D\-E\-V\-I\-C\-E@{D\-E\-V\-I\-C\-E}}\item[{\em 
+\hypertarget{classmdt_usb_control_transfer_a80b0f5ac6d8ae7b7e7471b012c34937dae10b6ab6a278644ce40631f62f360b6d}{D\-E\-V\-I\-C\-E}\label{classmdt_usb_control_transfer_a80b0f5ac6d8ae7b7e7471b012c34937dae10b6ab6a278644ce40631f62f360b6d}
+}]\index{C\-O\-N\-F\-I\-G\-U\-R\-A\-T\-I\-O\-N@{C\-O\-N\-F\-I\-G\-U\-R\-A\-T\-I\-O\-N}!mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}}\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!C\-O\-N\-F\-I\-G\-U\-R\-A\-T\-I\-O\-N@{C\-O\-N\-F\-I\-G\-U\-R\-A\-T\-I\-O\-N}}\item[{\em 
+\hypertarget{classmdt_usb_control_transfer_a80b0f5ac6d8ae7b7e7471b012c34937dad08e68ea80bc3bf47a03757579c11900}{C\-O\-N\-F\-I\-G\-U\-R\-A\-T\-I\-O\-N}\label{classmdt_usb_control_transfer_a80b0f5ac6d8ae7b7e7471b012c34937dad08e68ea80bc3bf47a03757579c11900}
+}]\index{S\-T\-R\-I\-N\-G@{S\-T\-R\-I\-N\-G}!mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}}\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!S\-T\-R\-I\-N\-G@{S\-T\-R\-I\-N\-G}}\item[{\em 
+\hypertarget{classmdt_usb_control_transfer_a80b0f5ac6d8ae7b7e7471b012c34937da63b588d5559f64f89a416e656880b949}{S\-T\-R\-I\-N\-G}\label{classmdt_usb_control_transfer_a80b0f5ac6d8ae7b7e7471b012c34937da63b588d5559f64f89a416e656880b949}
+}]\index{I\-N\-T\-E\-R\-F\-A\-C\-E@{I\-N\-T\-E\-R\-F\-A\-C\-E}!mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}}\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!I\-N\-T\-E\-R\-F\-A\-C\-E@{I\-N\-T\-E\-R\-F\-A\-C\-E}}\item[{\em 
+\hypertarget{classmdt_usb_control_transfer_a80b0f5ac6d8ae7b7e7471b012c34937da596acbde60b98295256f8e4073a8e341}{I\-N\-T\-E\-R\-F\-A\-C\-E}\label{classmdt_usb_control_transfer_a80b0f5ac6d8ae7b7e7471b012c34937da596acbde60b98295256f8e4073a8e341}
+}]\index{E\-N\-D\-P\-O\-I\-N\-T@{E\-N\-D\-P\-O\-I\-N\-T}!mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}}\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!E\-N\-D\-P\-O\-I\-N\-T@{E\-N\-D\-P\-O\-I\-N\-T}}\item[{\em 
+\hypertarget{classmdt_usb_control_transfer_a80b0f5ac6d8ae7b7e7471b012c34937da2af25cfa853e622209966f152df85618}{E\-N\-D\-P\-O\-I\-N\-T}\label{classmdt_usb_control_transfer_a80b0f5ac6d8ae7b7e7471b012c34937da2af25cfa853e622209966f152df85618}
+}]\end{description}
+\end{Desc}
+
+
+Definition at line 71 of file mdt\-Usb\-Control\-Transfer.\-h.
+
+\hypertarget{classmdt_usb_control_transfer_a372afc0db22a4ec839bab18cfbed35c5}{\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!Request\-Recipient\-\_\-t@{Request\-Recipient\-\_\-t}}
+\index{Request\-Recipient\-\_\-t@{Request\-Recipient\-\_\-t}!mdtUsbControlTransfer@{mdt\-Usb\-Control\-Transfer}}
+\subsubsection[{Request\-Recipient\-\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdt\-Usb\-Control\-Transfer\-::\-Request\-Recipient\-\_\-t} \-: uint8\-\_\-t\hspace{0.3cm}{\ttfamily [strong]}}}\label{classmdt_usb_control_transfer_a372afc0db22a4ec839bab18cfbed35c5}
+
+
+Request recipient. 
+
+Represents bits D4...0 in bm\-Request\-Type field.
+
+See Table 9-\/2 in U\-S\-B 2.\-0 specifications, section 9.\-3, or Table 9-\/3 in U\-S\-B 3.\-1 specifications,section 9.\-3 for details. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Device@{Device}!mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}}\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!Device@{Device}}\item[{\em 
+\hypertarget{classmdt_usb_control_transfer_a372afc0db22a4ec839bab18cfbed35c5ae0ac20adce6ffee48c7151b070aa5737}{Device}\label{classmdt_usb_control_transfer_a372afc0db22a4ec839bab18cfbed35c5ae0ac20adce6ffee48c7151b070aa5737}
+}]Recipient is device \index{Interface@{Interface}!mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}}\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!Interface@{Interface}}\item[{\em 
+\hypertarget{classmdt_usb_control_transfer_a372afc0db22a4ec839bab18cfbed35c5a3c1aac82863ed9e5a9aca8ce687f711d}{Interface}\label{classmdt_usb_control_transfer_a372afc0db22a4ec839bab18cfbed35c5a3c1aac82863ed9e5a9aca8ce687f711d}
+}]Recipient is a interface \index{Endpoint@{Endpoint}!mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}}\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!Endpoint@{Endpoint}}\item[{\em 
+\hypertarget{classmdt_usb_control_transfer_a372afc0db22a4ec839bab18cfbed35c5a2a6ba72e93aa7fa676d07973ed2716bb}{Endpoint}\label{classmdt_usb_control_transfer_a372afc0db22a4ec839bab18cfbed35c5a2a6ba72e93aa7fa676d07973ed2716bb}
+}]Recipient is a endpoint \index{Other@{Other}!mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}}\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!Other@{Other}}\item[{\em 
+\hypertarget{classmdt_usb_control_transfer_a372afc0db22a4ec839bab18cfbed35c5a6311ae17c1ee52b36e68aaf4ad066387}{Other}\label{classmdt_usb_control_transfer_a372afc0db22a4ec839bab18cfbed35c5a6311ae17c1ee52b36e68aaf4ad066387}
+}]Other recipient \end{description}
+\end{Desc}
+
+
+Definition at line 43 of file mdt\-Usb\-Control\-Transfer.\-h.
+
+\hypertarget{classmdt_usb_control_transfer_acae7a9c10825dd7fa7695a16986a2f36}{\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!Standard\-Feature\-Selector\-\_\-t@{Standard\-Feature\-Selector\-\_\-t}}
+\index{Standard\-Feature\-Selector\-\_\-t@{Standard\-Feature\-Selector\-\_\-t}!mdtUsbControlTransfer@{mdt\-Usb\-Control\-Transfer}}
+\subsubsection[{Standard\-Feature\-Selector\-\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdt\-Usb\-Control\-Transfer\-::\-Standard\-Feature\-Selector\-\_\-t} \-: uint16\-\_\-t\hspace{0.3cm}{\ttfamily [strong]}}}\label{classmdt_usb_control_transfer_acae7a9c10825dd7fa7695a16986a2f36}
+
+
+Standard Feature Selectors. 
+
+See Table 9-\/6 in U\-S\-B 2.\-0 specifications, section 9.\-4, or Table 9-\/7 in U\-S\-B 3.\-1 specifications,section 9.\-4 for details.
+
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000039}{Todo}]Complete this enum (U\-S\-B 3.\-1 missing) \end{DoxyRefDesc}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{D\-E\-V\-I\-C\-E\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-W\-A\-K\-E\-U\-P@{D\-E\-V\-I\-C\-E\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-W\-A\-K\-E\-U\-P}!mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}}\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!D\-E\-V\-I\-C\-E\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-W\-A\-K\-E\-U\-P@{D\-E\-V\-I\-C\-E\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-W\-A\-K\-E\-U\-P}}\item[{\em 
+\hypertarget{classmdt_usb_control_transfer_acae7a9c10825dd7fa7695a16986a2f36aca848daa4edec831a1104579c4090324}{D\-E\-V\-I\-C\-E\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-W\-A\-K\-E\-U\-P}\label{classmdt_usb_control_transfer_acae7a9c10825dd7fa7695a16986a2f36aca848daa4edec831a1104579c4090324}
+}]Recipient\-: Device \index{E\-N\-D\-P\-O\-I\-N\-T\-\_\-\-H\-A\-L\-T@{E\-N\-D\-P\-O\-I\-N\-T\-\_\-\-H\-A\-L\-T}!mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}}\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!E\-N\-D\-P\-O\-I\-N\-T\-\_\-\-H\-A\-L\-T@{E\-N\-D\-P\-O\-I\-N\-T\-\_\-\-H\-A\-L\-T}}\item[{\em 
+\hypertarget{classmdt_usb_control_transfer_acae7a9c10825dd7fa7695a16986a2f36a87146aadc04de87777e6158e4488f5aa}{E\-N\-D\-P\-O\-I\-N\-T\-\_\-\-H\-A\-L\-T}\label{classmdt_usb_control_transfer_acae7a9c10825dd7fa7695a16986a2f36a87146aadc04de87777e6158e4488f5aa}
+}]Recipient\-: Endpoint \index{T\-E\-S\-T\-\_\-\-M\-O\-D\-E@{T\-E\-S\-T\-\_\-\-M\-O\-D\-E}!mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}}\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!T\-E\-S\-T\-\_\-\-M\-O\-D\-E@{T\-E\-S\-T\-\_\-\-M\-O\-D\-E}}\item[{\em 
+\hypertarget{classmdt_usb_control_transfer_acae7a9c10825dd7fa7695a16986a2f36a149a70859728a79c49046a6f40087a4f}{T\-E\-S\-T\-\_\-\-M\-O\-D\-E}\label{classmdt_usb_control_transfer_acae7a9c10825dd7fa7695a16986a2f36a149a70859728a79c49046a6f40087a4f}
+}]Recipient\-: Device \end{description}
+\end{Desc}
+
+
+Definition at line 87 of file mdt\-Usb\-Control\-Transfer.\-h.
+
+\hypertarget{classmdt_usb_control_transfer_a9a13f68d5d4998dd8564c4e4c6278c77}{\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!Standard\-Request\-Code\-\_\-t@{Standard\-Request\-Code\-\_\-t}}
+\index{Standard\-Request\-Code\-\_\-t@{Standard\-Request\-Code\-\_\-t}!mdtUsbControlTransfer@{mdt\-Usb\-Control\-Transfer}}
+\subsubsection[{Standard\-Request\-Code\-\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdt\-Usb\-Control\-Transfer\-::\-Standard\-Request\-Code\-\_\-t} \-: uint8\-\_\-t\hspace{0.3cm}{\ttfamily [strong]}}}\label{classmdt_usb_control_transfer_a9a13f68d5d4998dd8564c4e4c6278c77}
+
+
+Standard Request Codes. 
+
+See Table 9-\/4 in U\-S\-B 2.\-0 specifications, section 9.\-4, or Table 9-\/5 in U\-S\-B 3.\-1 specifications,section 9.\-4 for details.
+
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000037}{Todo}]Complete this enum. \end{DoxyRefDesc}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{G\-E\-T\-\_\-\-S\-T\-A\-T\-U\-S@{G\-E\-T\-\_\-\-S\-T\-A\-T\-U\-S}!mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}}\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!G\-E\-T\-\_\-\-S\-T\-A\-T\-U\-S@{G\-E\-T\-\_\-\-S\-T\-A\-T\-U\-S}}\item[{\em 
+\hypertarget{classmdt_usb_control_transfer_a9a13f68d5d4998dd8564c4e4c6278c77a055987b2a1850b3a8f19befda5ea79ab}{G\-E\-T\-\_\-\-S\-T\-A\-T\-U\-S}\label{classmdt_usb_control_transfer_a9a13f68d5d4998dd8564c4e4c6278c77a055987b2a1850b3a8f19befda5ea79ab}
+}]\index{C\-L\-E\-A\-R\-\_\-\-F\-E\-A\-T\-U\-R\-E@{C\-L\-E\-A\-R\-\_\-\-F\-E\-A\-T\-U\-R\-E}!mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}}\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!C\-L\-E\-A\-R\-\_\-\-F\-E\-A\-T\-U\-R\-E@{C\-L\-E\-A\-R\-\_\-\-F\-E\-A\-T\-U\-R\-E}}\item[{\em 
+\hypertarget{classmdt_usb_control_transfer_a9a13f68d5d4998dd8564c4e4c6278c77aba7daed095c1e4f1dc05e56562a04c81}{C\-L\-E\-A\-R\-\_\-\-F\-E\-A\-T\-U\-R\-E}\label{classmdt_usb_control_transfer_a9a13f68d5d4998dd8564c4e4c6278c77aba7daed095c1e4f1dc05e56562a04c81}
+}]Clear feature. U\-S\-B 2.\-0/3.1 spec. section 9.\-4.\-1 \end{description}
+\end{Desc}
+
+
+Definition at line 58 of file mdt\-Usb\-Control\-Transfer.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_usb_control_transfer_a66bfbc135c55bf10377d68cf23d91d0d}{\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}}
+\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!mdtUsbControlTransfer@{mdt\-Usb\-Control\-Transfer}}
+\subsubsection[{mdt\-Usb\-Control\-Transfer}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Usb\-Control\-Transfer\-::mdt\-Usb\-Control\-Transfer (
+\begin{DoxyParamCaption}
+\item[{libusb\-\_\-device\-\_\-handle $\ast$}]{dev\-\_\-handle, }
+\item[{int}]{buffer\-Size = {\ttfamily 1024}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usb_control_transfer_a66bfbc135c55bf10377d68cf23d91d0d}
+
+
+Constructor. 
+
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000040}{Todo}]Fix a realistic buffer\-Size\end{DoxyRefDesc}
+
+
+\begin{DoxyPrecond}{Precondition}
+buffer\-Size must be $>$= 8. 
+\end{DoxyPrecond}
+
+
+Definition at line 23 of file mdt\-Usb\-Control\-Transfer.\-cpp.
+
+\hypertarget{classmdt_usb_control_transfer_a557dca733fad6dc008b1b42b06031a4c}{\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}}
+\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!mdtUsbControlTransfer@{mdt\-Usb\-Control\-Transfer}}
+\subsubsection[{mdt\-Usb\-Control\-Transfer}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Usb\-Control\-Transfer\-::mdt\-Usb\-Control\-Transfer (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Usb\-Control\-Transfer} \&}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [delete]}}}\label{classmdt_usb_control_transfer_a557dca733fad6dc008b1b42b06031a4c}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_usb_control_transfer_adedb82c8d1719e1c618e682f14759a56}{\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!bm\-Request\-Type@{bm\-Request\-Type}}
+\index{bm\-Request\-Type@{bm\-Request\-Type}!mdtUsbControlTransfer@{mdt\-Usb\-Control\-Transfer}}
+\subsubsection[{bm\-Request\-Type}]{\setlength{\rightskip}{0pt plus 5cm}uint8\-\_\-t mdt\-Usb\-Control\-Transfer\-::bm\-Request\-Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_control_transfer_adedb82c8d1719e1c618e682f14759a56}
+
+
+Get bm\-Request\-Type part. 
+
+
+
+Definition at line 149 of file mdt\-Usb\-Control\-Transfer.\-h.
+
+
+
+Referenced by fill\-Transfer(), and mdt\-Usbtmc\-Control\-Transfer\-::is\-Clear\-Endpoint\-Halt\-Request().
+
+\hypertarget{classmdt_usb_control_transfer_acad163ec6dd2f3172b844115fb0bbfb9}{\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!b\-Request@{b\-Request}}
+\index{b\-Request@{b\-Request}!mdtUsbControlTransfer@{mdt\-Usb\-Control\-Transfer}}
+\subsubsection[{b\-Request}]{\setlength{\rightskip}{0pt plus 5cm}uint8\-\_\-t mdt\-Usb\-Control\-Transfer\-::b\-Request (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_control_transfer_acad163ec6dd2f3172b844115fb0bbfb9}
+
+
+Get b\-Request part. 
+
+
+
+Definition at line 156 of file mdt\-Usb\-Control\-Transfer.\-h.
+
+
+
+Referenced by fill\-Transfer(), mdt\-Usbtmc\-Transfer\-Handler\-::handle\-Control\-Transfer\-Complete(), and mdt\-Usbtmc\-Control\-Transfer\-::is\-Clear\-Endpoint\-Halt\-Request().
+
+\hypertarget{classmdt_usb_control_transfer_a628488c2a38647b81fc215ccc2f6dcf2}{\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!byte\-Value@{byte\-Value}}
+\index{byte\-Value@{byte\-Value}!mdtUsbControlTransfer@{mdt\-Usb\-Control\-Transfer}}
+\subsubsection[{byte\-Value}]{\setlength{\rightskip}{0pt plus 5cm}uint8\-\_\-t mdt\-Usb\-Control\-Transfer\-::byte\-Value (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{offset}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_control_transfer_a628488c2a38647b81fc215ccc2f6dcf2}
+
+
+Get value at offset. 
+
+\begin{DoxyPrecond}{Precondition}
+offset must be $<$ internal buffer's capacity 
+\end{DoxyPrecond}
+
+
+Definition at line 120 of file mdt\-Usb\-Control\-Transfer.\-h.
+
+
+
+Referenced by mdt\-Usbtmc\-Control\-Transfer\-::device\-Is\-D\-T1\-Capable(), mdt\-Usbtmc\-Control\-Transfer\-::device\-Is\-R\-L1\-Capable(), mdt\-Usbtmc\-Control\-Transfer\-::device\-Is\-S\-R1\-Capable(), mdt\-Usbtmc\-Control\-Transfer\-::device\-Supports\-All\-Mandatory\-Scpi\-Commands(), mdt\-Usbtmc\-Control\-Transfer\-::device\-Supports\-Term\-Char(), mdt\-Usbtmc\-Control\-Transfer\-::interface\-Accepts\-Indicator\-Pulse(), mdt\-Usbtmc\-Control\-Transfer\-::interface\-Accepts\-Ren\-Control(), mdt\-Usbtmc\-Control\-Transfer\-::interface\-Accepts\-Trigger(), mdt\-Usbtmc\-Control\-Transfer\-::interface\-Is\-Listen\-Only(), mdt\-Usbtmc\-Control\-Transfer\-::interface\-Is\-Talk\-Only(), mdt\-Usbtmc\-Control\-Transfer\-::interface\-Is\-U\-S\-B488(), mdt\-Usbtmc\-Control\-Transfer\-::usbtmc\-Request(), and mdt\-Usbtmc\-Control\-Transfer\-::usbtmc\-Status().
+
+\hypertarget{classmdt_usb_control_transfer_abe100958d6d455c89b24b68e4e94a9b1}{\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!fill\-Transfer@{fill\-Transfer}}
+\index{fill\-Transfer@{fill\-Transfer}!mdtUsbControlTransfer@{mdt\-Usb\-Control\-Transfer}}
+\subsubsection[{fill\-Transfer}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usb\-Control\-Transfer\-::fill\-Transfer (
+\begin{DoxyParamCaption}
+\item[{libusb\-\_\-transfer\-\_\-cb\-\_\-fn}]{callback, }
+\item[{uint8\-\_\-t}]{bm\-Request\-Type, }
+\item[{uint8\-\_\-t}]{b\-Request, }
+\item[{uint16\-\_\-t}]{w\-Value, }
+\item[{uint16\-\_\-t}]{w\-Index, }
+\item[{uint16\-\_\-t}]{w\-Length, }
+\item[{unsigned int}]{timeout}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_usb_control_transfer_abe100958d6d455c89b24b68e4e94a9b1}
+
+
+Fill transfer. 
+
+This version is mostly usefull for queries without data, or with data sended from device to host.
+
+For details about U\-S\-B specific arguments, see U\-S\-B 3.\-1 spec, chap. 9.\-3 .
+
+
+\begin{DoxyParams}{Parameters}
+{\em transfer\-Handler} & Application specific transfer handler. Must provide a static function called control\-Transfer\-Callback(), with the libusb\-\_\-transfer\-\_\-cb\-\_\-fn signature. This transfer\-Handler will be passed to user\-\_\-data in libusb\-\_\-transfer.\\
+\hline
+{\em callback} & A static function that will be called (by libusb) when transfer fihishes. As documented in libusb A\-P\-I, this callback will receive a instance of libusb\-\_\-transfer struct. The user\-\_\-data part of this struct will also contain current transfer class pointer (this pointer). \\
+\hline
+{\em bm\-Request\-Type} & Request characteristics (direction, type, recipient). Must be set correctly by caller. \\
+\hline
+{\em b\-Request} & Specific request (see U\-S\-B spec.) \\
+\hline
+{\em w\-Value} & See U\-S\-B spec. \\
+\hline
+{\em w\-Index} & See U\-S\-B spec. \\
+\hline
+{\em w\-Length} & Number of bytes to transfer. Has only sense for direction device-\/to-\/host (should be 0 else). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+Internal buffer size (witch was given to constructor) must be $>$= 8 + w\-Length. 
+\end{DoxyPrecond}
+
+
+Definition at line 31 of file mdt\-Usb\-Control\-Transfer.\-cpp.
+
+
+
+References bm\-Request\-Type(), b\-Request(), mdt\-Usb\-Transfer\-::device\-Handle(), mdt\-Usb\-Transfer\-::transfer(), w\-Index(), w\-Length(), and w\-Value().
+
+
+
+Referenced by mdt\-Usbtmc\-Control\-Transfer\-::setup\-Check\-Abort\-Bulk\-In\-Status(), mdt\-Usbtmc\-Control\-Transfer\-::setup\-Check\-Abort\-Bulk\-Out\-Status(), mdt\-Usbtmc\-Control\-Transfer\-::setup\-Check\-Clear\-Status(), setup\-Clear\-Feature(), mdt\-Usbtmc\-Control\-Transfer\-::setup\-Get\-Capabilities(), mdt\-Usbtmc\-Control\-Transfer\-::setup\-Indicator\-Pulse(), mdt\-Usbtmc\-Control\-Transfer\-::setup\-Initiate\-Abort\-Bulk\-In(), mdt\-Usbtmc\-Control\-Transfer\-::setup\-Initiate\-Abort\-Bulk\-Out(), and mdt\-Usbtmc\-Control\-Transfer\-::setup\-Initiate\-Clear().
+
+\hypertarget{classmdt_usb_control_transfer_a57d308b969f1b542085b64788d48a9fa}{\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!fill\-Transfer@{fill\-Transfer}}
+\index{fill\-Transfer@{fill\-Transfer}!mdtUsbControlTransfer@{mdt\-Usb\-Control\-Transfer}}
+\subsubsection[{fill\-Transfer}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usb\-Control\-Transfer\-::fill\-Transfer (
+\begin{DoxyParamCaption}
+\item[{libusb\-\_\-transfer\-\_\-cb\-\_\-fn}]{callback, }
+\item[{uint8\-\_\-t}]{bm\-Request\-Type, }
+\item[{uint8\-\_\-t}]{b\-Request, }
+\item[{uint16\-\_\-t}]{w\-Value, }
+\item[{uint16\-\_\-t}]{w\-Index, }
+\item[{const std\-::vector$<$ unsigned char $>$ \&}]{data, }
+\item[{unsigned int}]{timeout}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_usb_control_transfer_a57d308b969f1b542085b64788d48a9fa}
+
+
+Fill transfer. 
+
+This version is mostly usefull for queries with data sended from host to device.
+
+For details about U\-S\-B specific arguments, see U\-S\-B 3.\-1 spec, chap. 9.\-3 .
+
+
+\begin{DoxyParams}{Parameters}
+{\em transfer\-Handler} & Application specific transfer handler. Must provide a static function called control\-Transfer\-Callback(), with the libusb\-\_\-transfer\-\_\-cb\-\_\-fn signature. This transfer\-Handler will be passed to user\-\_\-data in libusb\-\_\-transfer.\\
+\hline
+{\em callback} & A static function that will be called (by libusb) when transfer fihishes. As documented in libusb A\-P\-I, this callback will receive a instance of libusb\-\_\-transfer struct. The user\-\_\-data part of this struct will also contain current transfer class pointer (this pointer). \\
+\hline
+{\em bm\-Request\-Type} & Request characteristics (direction, type, recipient). Must be set correctly by caller. \\
+\hline
+{\em b\-Request} & Specific request (see U\-S\-B spec.) \\
+\hline
+{\em w\-Value} & See U\-S\-B spec. \\
+\hline
+{\em w\-Index} & See U\-S\-B spec. \\
+\hline
+{\em data} & Data that will be transferred to the device. Note\-: will also set w\-Length regarding data length. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+Internal buffer size (witch was given to constructor) must be $>$= 8 + data length. 
+\end{DoxyPrecond}
+
+
+Definition at line 41 of file mdt\-Usb\-Control\-Transfer.\-cpp.
+
+
+
+References bm\-Request\-Type(), b\-Request(), mdt\-Usb\-Transfer\-::device\-Handle(), mdt\-Usb\-Transfer\-::transfer(), w\-Index(), w\-Length(), and w\-Value().
+
+\hypertarget{classmdt_usb_control_transfer_aae6fd3ed40416911e82f84ea4b457610}{\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!operator=@{operator=}}
+\index{operator=@{operator=}!mdtUsbControlTransfer@{mdt\-Usb\-Control\-Transfer}}
+\subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Usb\-Control\-Transfer}\& mdt\-Usb\-Control\-Transfer\-::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Usb\-Control\-Transfer} \&}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [delete]}}}\label{classmdt_usb_control_transfer_aae6fd3ed40416911e82f84ea4b457610}
+\hypertarget{classmdt_usb_control_transfer_a7a146f65c34a21b6c0d2c5221317de2e}{\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!set\-Byte\-Value@{set\-Byte\-Value}}
+\index{set\-Byte\-Value@{set\-Byte\-Value}!mdtUsbControlTransfer@{mdt\-Usb\-Control\-Transfer}}
+\subsubsection[{set\-Byte\-Value}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usb\-Control\-Transfer\-::set\-Byte\-Value (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{offset, }
+\item[{uint8\-\_\-t}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_control_transfer_a7a146f65c34a21b6c0d2c5221317de2e}
+
+
+Set value at offset. 
+
+\begin{DoxyPrecond}{Precondition}
+offset must be $<$ internal buffer's capacity 
+\end{DoxyPrecond}
+
+
+Definition at line 110 of file mdt\-Usb\-Control\-Transfer.\-h.
+
+\hypertarget{classmdt_usb_control_transfer_a86dfa7a329f14672611ee62e23987fdd}{\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!setup\-Clear\-Feature@{setup\-Clear\-Feature}}
+\index{setup\-Clear\-Feature@{setup\-Clear\-Feature}!mdtUsbControlTransfer@{mdt\-Usb\-Control\-Transfer}}
+\subsubsection[{setup\-Clear\-Feature}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usb\-Control\-Transfer\-::setup\-Clear\-Feature (
+\begin{DoxyParamCaption}
+\item[{libusb\-\_\-transfer\-\_\-cb\-\_\-fn}]{callback, }
+\item[{{\bf Request\-Recipient\-\_\-t}}]{recipient, }
+\item[{{\bf Standard\-Feature\-Selector\-\_\-t}}]{feature, }
+\item[{uint16\-\_\-t}]{recipient\-Number, }
+\item[{unsigned int}]{timeout}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_control_transfer_a86dfa7a329f14672611ee62e23987fdd}
+
+
+Setup a Clear feature transfer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em transfer\-Handler} & Application specific transfer handler. Must provide a static function called control\-Transfer\-Callback(), with the libusb\-\_\-transfer\-\_\-cb\-\_\-fn signature. This transfer\-Handler will be passed to user\-\_\-data in libusb\-\_\-transfer.\\
+\hline
+{\em callback} & A static function that will be called (by libusb) when transfer fihishes. As documented in libusb A\-P\-I, this callback will receive a instance of libusb\-\_\-transfer struct. The user\-\_\-data part of this struct will also contain current transfer class pointer (this pointer). \\
+\hline
+{\em recipient} & Recipient, can be Device, Interface or Endpoint. \\
+\hline
+{\em feature} & Supported feature depends on recipient (see U\-S\-B 2.\-0 standards, section 9.\-4.\-1). \\
+\hline
+{\em recipient\-Number} & Index/number of recipient (f.\-ex. endpoint number if recipient is a endpoint). \\
+\hline
+{\em timeout} & timeout for the transfer in milliseconds. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 197 of file mdt\-Usb\-Control\-Transfer.\-h.
+
+
+
+References C\-L\-E\-A\-R\-\_\-\-F\-E\-A\-T\-U\-R\-E, and fill\-Transfer().
+
+
+
+Referenced by mdt\-Usbtmc\-Control\-Transfer\-::setup\-Clear\-Endpoint\-Halt().
+
+\hypertarget{classmdt_usb_control_transfer_a721de2015fb87a32a555c4c4eb2d11f2}{\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!set\-Word\-Value@{set\-Word\-Value}}
+\index{set\-Word\-Value@{set\-Word\-Value}!mdtUsbControlTransfer@{mdt\-Usb\-Control\-Transfer}}
+\subsubsection[{set\-Word\-Value}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usb\-Control\-Transfer\-::set\-Word\-Value (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{offset, }
+\item[{uint16\-\_\-t}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_control_transfer_a721de2015fb87a32a555c4c4eb2d11f2}
+
+
+Set value at offset. 
+
+\begin{DoxyPrecond}{Precondition}
+offset+1 must be $<$ internal buffer's capacity 
+\end{DoxyPrecond}
+
+
+Definition at line 130 of file mdt\-Usb\-Control\-Transfer.\-h.
+
+\hypertarget{classmdt_usb_control_transfer_af27548b7789b53a6bac3051ffca018a9}{\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!w\-Index@{w\-Index}}
+\index{w\-Index@{w\-Index}!mdtUsbControlTransfer@{mdt\-Usb\-Control\-Transfer}}
+\subsubsection[{w\-Index}]{\setlength{\rightskip}{0pt plus 5cm}uint16\-\_\-t mdt\-Usb\-Control\-Transfer\-::w\-Index (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_control_transfer_af27548b7789b53a6bac3051ffca018a9}
+
+
+Get w\-Index. 
+
+
+
+Definition at line 170 of file mdt\-Usb\-Control\-Transfer.\-h.
+
+
+
+References word\-Value().
+
+
+
+Referenced by fill\-Transfer(), and mdt\-Usbtmc\-Control\-Transfer\-::is\-Clear\-Endpoint\-Halt\-Request().
+
+\hypertarget{classmdt_usb_control_transfer_a673c61f2bead515c3f11f588bb203e03}{\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!w\-Length@{w\-Length}}
+\index{w\-Length@{w\-Length}!mdtUsbControlTransfer@{mdt\-Usb\-Control\-Transfer}}
+\subsubsection[{w\-Length}]{\setlength{\rightskip}{0pt plus 5cm}uint16\-\_\-t mdt\-Usb\-Control\-Transfer\-::w\-Length (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_control_transfer_a673c61f2bead515c3f11f588bb203e03}
+
+
+Get w\-Length. 
+
+
+
+Definition at line 177 of file mdt\-Usb\-Control\-Transfer.\-h.
+
+
+
+References word\-Value().
+
+
+
+Referenced by fill\-Transfer().
+
+\hypertarget{classmdt_usb_control_transfer_a39aec348c12e466f7774bd5223b745fc}{\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!word\-Value@{word\-Value}}
+\index{word\-Value@{word\-Value}!mdtUsbControlTransfer@{mdt\-Usb\-Control\-Transfer}}
+\subsubsection[{word\-Value}]{\setlength{\rightskip}{0pt plus 5cm}uint16\-\_\-t mdt\-Usb\-Control\-Transfer\-::word\-Value (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{offset}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_control_transfer_a39aec348c12e466f7774bd5223b745fc}
+
+
+Get value at offset. 
+
+\begin{DoxyPrecond}{Precondition}
+offset+1 must be $<$ internal buffer's capacity 
+\end{DoxyPrecond}
+
+
+Definition at line 141 of file mdt\-Usb\-Control\-Transfer.\-h.
+
+
+
+Referenced by mdt\-Usbtmc\-Control\-Transfer\-::bcd\-U\-S\-B488(), mdt\-Usbtmc\-Control\-Transfer\-::bcd\-U\-S\-B\-T\-M\-C(), w\-Index(), w\-Length(), and w\-Value().
+
+\hypertarget{classmdt_usb_control_transfer_aba33b977514458a3413a2fe12fe3b5c8}{\index{mdt\-Usb\-Control\-Transfer@{mdt\-Usb\-Control\-Transfer}!w\-Value@{w\-Value}}
+\index{w\-Value@{w\-Value}!mdtUsbControlTransfer@{mdt\-Usb\-Control\-Transfer}}
+\subsubsection[{w\-Value}]{\setlength{\rightskip}{0pt plus 5cm}uint16\-\_\-t mdt\-Usb\-Control\-Transfer\-::w\-Value (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usb_control_transfer_aba33b977514458a3413a2fe12fe3b5c8}
+
+
+Get w\-Value. 
+
+
+
+Definition at line 163 of file mdt\-Usb\-Control\-Transfer.\-h.
+
+
+
+References word\-Value().
+
+
+
+Referenced by fill\-Transfer(), and mdt\-Usbtmc\-Control\-Transfer\-::is\-Clear\-Endpoint\-Halt\-Request().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdtport/\hyperlink{mdt_usb_control_transfer_8h}{mdt\-Usb\-Control\-Transfer.\-h}\item 
+src/mdtport/\hyperlink{mdt_usb_control_transfer_8cpp}{mdt\-Usb\-Control\-Transfer.\-cpp}\end{DoxyCompactItemize}

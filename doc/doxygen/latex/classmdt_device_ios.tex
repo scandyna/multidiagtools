@@ -183,7 +183,7 @@ Note\-: if a address is changed by accessing directly by \hyperlink{classmdt_ana
 \item ios.\-add\-Analog\-Input(analog\-In);
 \end{DoxyItemize}
 
-For some devices it's possible to read/write multiple I/\-O's in one query (f.\-ex. I/\-O systems communicating with M\-O\-D\-B\-U\-S). To use this functionnality, this I/\-O container provide a solution to get values for several I/\-O's. Because addresses of all I/\-O's that will be stored in this container are not necessarily contiguous, the concept of segment is used. For example\-: A\-D\-D\-R\-E\-S\-S$|$0$|$1$|$2$|$5$|$6$|$ . Here, we have 2 segments\-: $|$0$|$1$|$2$|$ and $|$5$|$6$|$ . If we would write all I/\-O's present in this example, we could do it with 2 queries (1 per segment). To set/get data for segments, the folowing methods can be used\-:
+For some devices it's possible to read/write multiple I/\-O's in one query (f.\-ex. I/\-O systems communicating with M\-O\-D\-B\-U\-S). To use this functionnality, this I/\-O container provide a solution to get values for several I/\-O's. Because addresses of all I/\-O's that will be stored in this container are not necessarily contiguous, the concept of segment is used. For example\-: A\-D\-D\-R\-E\-S\-S$\vert$0$\vert$1$\vert$2$\vert$5$\vert$6$\vert$ . Here, we have 2 segments\-: $\vert$0$\vert$1$\vert$2$\vert$ and $\vert$5$\vert$6$\vert$ . If we would write all I/\-O's present in this example, we could do it with 2 queries (1 per segment). To set/get data for segments, the folowing methods can be used\-:
 \begin{DoxyItemize}
 \item \hyperlink{classmdt_device_ios_a71a1b9cdbc524e4d0094ab37575defc1}{analog\-Inputs\-Segments()}
 \item \hyperlink{classmdt_device_ios_afc425a36dd8942a507d993993bc141a9}{analog\-Outputs\-Segments()}

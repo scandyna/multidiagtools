@@ -1,0 +1,207 @@
+\hypertarget{classmdt_usbtmc_tx_message}{\section{mdt\-Usbtmc\-Tx\-Message Class Reference}
+\label{classmdt_usbtmc_tx_message}\index{mdt\-Usbtmc\-Tx\-Message@{mdt\-Usbtmc\-Tx\-Message}}
+}
+
+
+U\-S\-B\-T\-M\-C message.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Usbtmc\-Message.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_usbtmc_tx_message_ae33e2c33772aebd66b0d5bdcdf178302}{mdt\-Usbtmc\-Tx\-Message} (const Q\-Byte\-Array \&ba)
+\begin{DoxyCompactList}\small\item\em Construct a message that acts on given byte array. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_tx_message_a446fbe82886e29e9d9909ffcb4379279}{reset} ()
+\begin{DoxyCompactList}\small\item\em Reset internal cursor to the beginning of byte array. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_usbtmc_tx_message_ac785443932d0e4a028c11cacce615608}{bytes\-To\-Read} () const 
+\begin{DoxyCompactList}\small\item\em Get amount of bytes that are to read. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usbtmc_tx_message_a190a9ba7ccf009e12d55ae227304e255}{has\-Bytes\-To\-Read} () const 
+\begin{DoxyCompactList}\small\item\em Check if there are bytes to read from byte array. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_usbtmc_tx_message_a673b9b28cb2f4e38323bfb0dfbe81d7a}{read} (uint8\-\_\-t $\ast$dest, int max)
+\begin{DoxyCompactList}\small\item\em Copy data from byte array to buffer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+U\-S\-B\-T\-M\-C message. 
+
+For concept of U\-S\-B\-T\-M\-C message, see U\-S\-B\-T\-M\-C 1.\-0 specifications, section 3.\-2.\-1.\-1 and 3.\-3.\-1
+
+Construct a message that acts on given byte array
+
+Reset internal cursor to the beginning of byte array
+
+Get amount of bytes that are to read
+
+Check if there are bytes to read from byte array
+
+Copy data from byte array to buffer
+
+
+\begin{DoxyParams}{Parameters}
+{\em dest} & Pointer to destination buffer \\
+\hline
+{\em max} & Maximum count of bytes to copy \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Number of bytes that was copied 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+dest must be valid 
+\end{DoxyPrecond}
+\begin{DoxyPostcond}{Postcondition}
+Will never copy more than max bytes
+\end{DoxyPostcond}
+Copy data from buffer to byte array
+
+Will resize byte array so that all data can be copied.
+
+
+\begin{DoxyParams}{Parameters}
+{\em src} & Pointer to source buffer \\
+\hline
+{\em n} & Number of bytes to copy \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+src must be valid 
+
+n must be $>$= 0
+\end{DoxyPrecond}
+U\-S\-B\-T\-M\-C message for sending data to device
+
+For concept of U\-S\-B\-T\-M\-C message, see U\-S\-B\-T\-M\-C 1.\-0 specifications, section 3.\-2.\-1.\-1 and 3.\-3.\-1 
+
+Definition at line 138 of file mdt\-Usbtmc\-Message.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_usbtmc_tx_message_ae33e2c33772aebd66b0d5bdcdf178302}{\index{mdt\-Usbtmc\-Tx\-Message@{mdt\-Usbtmc\-Tx\-Message}!mdt\-Usbtmc\-Tx\-Message@{mdt\-Usbtmc\-Tx\-Message}}
+\index{mdt\-Usbtmc\-Tx\-Message@{mdt\-Usbtmc\-Tx\-Message}!mdtUsbtmcTxMessage@{mdt\-Usbtmc\-Tx\-Message}}
+\subsubsection[{mdt\-Usbtmc\-Tx\-Message}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Usbtmc\-Tx\-Message\-::mdt\-Usbtmc\-Tx\-Message (
+\begin{DoxyParamCaption}
+\item[{const Q\-Byte\-Array \&}]{ba}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_tx_message_ae33e2c33772aebd66b0d5bdcdf178302}
+
+
+Construct a message that acts on given byte array. 
+
+
+
+Definition at line 144 of file mdt\-Usbtmc\-Message.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_usbtmc_tx_message_ac785443932d0e4a028c11cacce615608}{\index{mdt\-Usbtmc\-Tx\-Message@{mdt\-Usbtmc\-Tx\-Message}!bytes\-To\-Read@{bytes\-To\-Read}}
+\index{bytes\-To\-Read@{bytes\-To\-Read}!mdtUsbtmcTxMessage@{mdt\-Usbtmc\-Tx\-Message}}
+\subsubsection[{bytes\-To\-Read}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Usbtmc\-Tx\-Message\-::bytes\-To\-Read (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_tx_message_ac785443932d0e4a028c11cacce615608}
+
+
+Get amount of bytes that are to read. 
+
+
+
+Definition at line 159 of file mdt\-Usbtmc\-Message.\-h.
+
+
+
+Referenced by has\-Bytes\-To\-Read(), read(), and mdt\-Usbtmc\-Frame\-::set\-Data().
+
+\hypertarget{classmdt_usbtmc_tx_message_a190a9ba7ccf009e12d55ae227304e255}{\index{mdt\-Usbtmc\-Tx\-Message@{mdt\-Usbtmc\-Tx\-Message}!has\-Bytes\-To\-Read@{has\-Bytes\-To\-Read}}
+\index{has\-Bytes\-To\-Read@{has\-Bytes\-To\-Read}!mdtUsbtmcTxMessage@{mdt\-Usbtmc\-Tx\-Message}}
+\subsubsection[{has\-Bytes\-To\-Read}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Usbtmc\-Tx\-Message\-::has\-Bytes\-To\-Read (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_tx_message_a190a9ba7ccf009e12d55ae227304e255}
+
+
+Check if there are bytes to read from byte array. 
+
+
+
+Definition at line 170 of file mdt\-Usbtmc\-Message.\-h.
+
+
+
+References bytes\-To\-Read().
+
+
+
+Referenced by mdt\-Usbtmc\-Port\-::send\-Command(), and mdt\-Usbtmc\-Bulk\-Transfer\-::setup\-Dev\-Dep\-Msg\-Out().
+
+\hypertarget{classmdt_usbtmc_tx_message_a673b9b28cb2f4e38323bfb0dfbe81d7a}{\index{mdt\-Usbtmc\-Tx\-Message@{mdt\-Usbtmc\-Tx\-Message}!read@{read}}
+\index{read@{read}!mdtUsbtmcTxMessage@{mdt\-Usbtmc\-Tx\-Message}}
+\subsubsection[{read}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Usbtmc\-Tx\-Message\-::read (
+\begin{DoxyParamCaption}
+\item[{uint8\-\_\-t $\ast$}]{dest, }
+\item[{int}]{max}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_tx_message_a673b9b28cb2f4e38323bfb0dfbe81d7a}
+
+
+Copy data from byte array to buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dest} & Pointer to destination buffer \\
+\hline
+{\em max} & Maximum count of bytes to copy \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Number of bytes that was copied 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+dest must be valid 
+\end{DoxyPrecond}
+\begin{DoxyPostcond}{Postcondition}
+Will never copy more than max bytes 
+\end{DoxyPostcond}
+
+
+Definition at line 183 of file mdt\-Usbtmc\-Message.\-h.
+
+
+
+References bytes\-To\-Read(), and reset().
+
+
+
+Referenced by mdt\-Usbtmc\-Frame\-::set\-Data().
+
+\hypertarget{classmdt_usbtmc_tx_message_a446fbe82886e29e9d9909ffcb4379279}{\index{mdt\-Usbtmc\-Tx\-Message@{mdt\-Usbtmc\-Tx\-Message}!reset@{reset}}
+\index{reset@{reset}!mdtUsbtmcTxMessage@{mdt\-Usbtmc\-Tx\-Message}}
+\subsubsection[{reset}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Tx\-Message\-::reset (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_usbtmc_tx_message_a446fbe82886e29e9d9909ffcb4379279}
+
+
+Reset internal cursor to the beginning of byte array. 
+
+
+
+Definition at line 152 of file mdt\-Usbtmc\-Message.\-h.
+
+
+
+Referenced by read().
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+src/mdtport/\hyperlink{mdt_usbtmc_message_8h}{mdt\-Usbtmc\-Message.\-h}\end{DoxyCompactItemize}
