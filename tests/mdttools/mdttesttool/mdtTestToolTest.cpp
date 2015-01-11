@@ -499,54 +499,55 @@ void mdtTestToolTest::mdtTtTestNodeUnitTest()
 
 void mdtTestToolTest::mdtTtTestNodeManagerTest()
 {
-  std::shared_ptr<mdtTtTestNodeManager> m(new mdtTtTestNodeManager(0, pvDatabaseManager.database()));
-  mdtDeviceContainerWidget w;
-  std::shared_ptr<mdtDeviceU3606A> devU3606A;
-  std::shared_ptr<mdtDeviceScpi> devScpi;
-  QList<std::shared_ptr<mdtDevice>> devList;
-
-  // Add a device that is not related to a test node
-  m->addDevice<mdtDeviceU3606A>("U3606A", "SN01", "U3606A Multimeter, SN01");
-  devU3606A = m->device<mdtDeviceU3606A>("U3606A");
-  QVERIFY(devU3606A.get() != 0);
-  devList = m->allDevices();
-  QCOMPARE(devList.size(), 1);
-  QVERIFY(devList.at(0).get() != 0);
-  // Assign manager to widget
-  w.setContainer(m->container());
-  w.show();
-  
-  QTest::qWait(3000);
-  
-  // Add a new SCPI device
-  devScpi = m->addDevice<mdtDeviceScpi>("SCPI", "SN005", "Generic SCPI device");
-  
-  qDebug() << "U3606A count: " << devU3606A.use_count() << " , SCPI count: " << devScpi.use_count();
-  
-  devU3606A->connectToDevice(mdtDeviceInfo());
-  QTest::qWait(5000);
-  devU3606A->disconnectFromDevice();
-  
-  QTest::qWait(2000);
-  
-  m->clear();
-  devScpi = m->addDevice<mdtDeviceScpi>("SCPI6", "SN06", "Generic SCPI device 6");
-  devScpi->connectToDevice(mdtDeviceInfo());
-  devScpi = m->addDevice<mdtDeviceScpi>("SCPI7", "SN07", "Generic SCPI device 7");
-  devScpi->connectToDevice(mdtDeviceInfo());
-  devScpi = m->addDevice<mdtDeviceScpi>("SCPI8", "SN08", "Generic SCPI device 8");
-  devScpi->connectToDevice(mdtDeviceInfo());
-  
-  devU3606A = m->addDevice<mdtDeviceU3606A>("U3606A01", "SN01", "U3606A Multimeter, SN01");
-  devU3606A->connectToDevice(mdtDeviceInfo());
-  devU3606A = m->addDevice<mdtDeviceU3606A>("U3606A02", "SN02", "U3606A Multimeter, SN02");
-  devU3606A->connectToDevice(mdtDeviceInfo());
-
-  qDebug() << "U3606A count: " << devU3606A.use_count() << " , SCPI count: " << devScpi.use_count();
-  
-  while(w.isVisible()){
-    QTest::qWait(1000);
-  }
+  QFAIL("No implemented");
+//   std::shared_ptr<mdtTtTestNodeManager> m(new mdtTtTestNodeManager(0, pvDatabaseManager.database()));
+//   mdtDeviceContainerWidget w;
+//   std::shared_ptr<mdtDeviceU3606A> devU3606A;
+//   std::shared_ptr<mdtDeviceScpi> devScpi;
+//   QList<std::shared_ptr<mdtDevice>> devList;
+// 
+//   // Add a device that is not related to a test node
+//   m->addDevice<mdtDeviceU3606A>("U3606A", "SN01", "U3606A Multimeter, SN01");
+//   devU3606A = m->device<mdtDeviceU3606A>("U3606A");
+//   QVERIFY(devU3606A.get() != 0);
+//   devList = m->allDevices();
+//   QCOMPARE(devList.size(), 1);
+//   QVERIFY(devList.at(0).get() != 0);
+//   // Assign manager to widget
+//   w.setContainer(m->container());
+//   w.show();
+//   
+//   QTest::qWait(3000);
+//   
+//   // Add a new SCPI device
+//   devScpi = m->addDevice<mdtDeviceScpi>("SCPI", "SN005", "Generic SCPI device");
+//   
+//   qDebug() << "U3606A count: " << devU3606A.use_count() << " , SCPI count: " << devScpi.use_count();
+//   
+//   devU3606A->connectToDevice(mdtDeviceInfo());
+//   QTest::qWait(5000);
+//   devU3606A->disconnectFromDevice();
+//   
+//   QTest::qWait(2000);
+//   
+//   m->clear();
+//   devScpi = m->addDevice<mdtDeviceScpi>("SCPI6", "SN06", "Generic SCPI device 6");
+//   devScpi->connectToDevice(mdtDeviceInfo());
+//   devScpi = m->addDevice<mdtDeviceScpi>("SCPI7", "SN07", "Generic SCPI device 7");
+//   devScpi->connectToDevice(mdtDeviceInfo());
+//   devScpi = m->addDevice<mdtDeviceScpi>("SCPI8", "SN08", "Generic SCPI device 8");
+//   devScpi->connectToDevice(mdtDeviceInfo());
+//   
+//   devU3606A = m->addDevice<mdtDeviceU3606A>("U3606A01", "SN01", "U3606A Multimeter, SN01");
+//   devU3606A->connectToDevice(mdtDeviceInfo());
+//   devU3606A = m->addDevice<mdtDeviceU3606A>("U3606A02", "SN02", "U3606A Multimeter, SN02");
+//   devU3606A->connectToDevice(mdtDeviceInfo());
+// 
+//   qDebug() << "U3606A count: " << devU3606A.use_count() << " , SCPI count: " << devScpi.use_count();
+//   
+//   while(w.isVisible()){
+//     QTest::qWait(1000);
+//   }
 }
 
 void mdtTestToolTest::mdtTtTestModelItemRouteDataTest()

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -42,11 +42,6 @@ bool mdtUsbDeviceList::scan()
   if(!buildDevicesList(true)){
     return false;
   }
-  for(int i = 0; i < pvDeviceDescriptors.size(); ++i){
-    ///qDebug() << " -> Vendor: " <<  pvDeviceDescriptors.at(i).vendorName() << ", product: " << pvDeviceDescriptors.at(i).productName() << ", SN: " << pvDeviceDescriptors.at(i).serialNumber();
-    qDebug() << pvDeviceDescriptors.at(i).idString();
-  }
-
   return true;
 }
 

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -25,7 +25,7 @@
 #include "mdtPortConfig.h"
 #include "mdtFrame.h"
 #include "mdtFrameCodecModbus.h"
-#include "mdtFrameUsbControl.h"
+///#include "mdtFrameUsbControl.h"
 #include "mdtPortReadThread.h"
 #include "mdtPortWriteThread.h"
 #include "mdtPortInfo.h"
@@ -39,8 +39,8 @@
 #include <QHash>
 #include <QHashIterator>
 #include "mdtApplication.h"
-#include "mdtUsbPortManager.h"
-#include "mdtUsbtmcPortManager.h"
+///#include "mdtUsbPortManager.h"
+///#include "mdtUsbtmcPortManager.h"
 #include "mdtModbusTcpPortManager.h"
 #include "mdtPortTransaction.h"
 #include <QTimer>
@@ -242,102 +242,102 @@ void mdtPortManagerTest::portTest()
   QVERIFY(m.writeThread() == 0);
 }
 
-void mdtPortManagerTest::usbPortTest()
-{
-  mdtUsbPortManager m;
-  QList<mdtPortInfo*> portInfoList;
+// void mdtPortManagerTest::usbPortTest()
+// {
+//   mdtUsbPortManager m;
+//   QList<mdtPortInfo*> portInfoList;
+// 
+//   qDebug() << "* A USB device must be attached, else test will fail *";
+// 
+//   // Verify that scan() function works ..
+//   portInfoList = m.scan(0xFE, -1, -1);
+//   if(portInfoList.size() < 1){
+//     QSKIP("No USBT device found, or other error", SkipAll);
+//   }
+// 
+//   for(int i=0; i<portInfoList.size(); i++){
+//     qDebug() << "Device: " << portInfoList.at(i)->displayText();
+//     qDebug() << "Port: " << portInfoList.at(i)->portName();
+//   }
+// 
+//   // Init port manager
+//   m.setPortInfo(*portInfoList.at(0));
+//   ///QVERIFY(m.openPort());
+//   // start port manager
+//   QVERIFY(m.start());
+// 
+//   // We not need the scan result anymore, free memory
+//   qDeleteAll(portInfoList);
+//   portInfoList.clear();
+// 
+//   /// \note Sandbox !!!
+//   mdtFrameUsbControl f;
+//   
+//   
+//   f.setDirectionDeviceToHost(true);
+//   f.setRequestType(mdtFrameUsbControl::RT_CLASS);
+//   f.setRequestRecipient(mdtFrameUsbControl::RR_INTERFACE);
+//   ///f->setbRequest(7); // GET_CAPABILITIES
+//   f.setbRequest(128); // READ_STATUS_BYTE
+//   f.setwValue(5);
+//   f.setwIndex(0);  /// \todo interface nunber hardcoded, BAD
+//   f.setwLength(0x3);
+//   f.encode();
+//   m.sendControlRequest(f);
+//   /// End Sandbox !
+// 
+//   QTest::qWait(2000);
+// 
+// }
 
-  qDebug() << "* A USB device must be attached, else test will fail *";
-
-  // Verify that scan() function works ..
-  portInfoList = m.scan(0xFE, -1, -1);
-  if(portInfoList.size() < 1){
-    QSKIP("No USBT device found, or other error", SkipAll);
-  }
-
-  for(int i=0; i<portInfoList.size(); i++){
-    qDebug() << "Device: " << portInfoList.at(i)->displayText();
-    qDebug() << "Port: " << portInfoList.at(i)->portName();
-  }
-
-  // Init port manager
-  m.setPortInfo(*portInfoList.at(0));
-  ///QVERIFY(m.openPort());
-  // start port manager
-  QVERIFY(m.start());
-
-  // We not need the scan result anymore, free memory
-  qDeleteAll(portInfoList);
-  portInfoList.clear();
-
-  /// \note Sandbox !!!
-  mdtFrameUsbControl f;
-  
-  
-  f.setDirectionDeviceToHost(true);
-  f.setRequestType(mdtFrameUsbControl::RT_CLASS);
-  f.setRequestRecipient(mdtFrameUsbControl::RR_INTERFACE);
-  ///f->setbRequest(7); // GET_CAPABILITIES
-  f.setbRequest(128); // READ_STATUS_BYTE
-  f.setwValue(5);
-  f.setwIndex(0);  /// \todo interface nunber hardcoded, BAD
-  f.setwLength(0x3);
-  f.encode();
-  m.sendControlRequest(f);
-  /// End Sandbox !
-
-  QTest::qWait(2000);
-
-}
-
-void mdtPortManagerTest::usbTmcPortTest()
-{
-  mdtUsbtmcPortManager m;
-  QList<mdtPortInfo*> portInfoList;
-  QList<QByteArray> frames;
-  int bTag;
-
-  qDebug() << "* A USBTMC compatible device must be attached, else test will fail *";
-
-  // Verify that scan() function works ..
-  portInfoList = m.scan();
-  if(portInfoList.size() < 1){
-    QSKIP("No USBTMC device found, or other error", SkipAll);
-  }
-
-  // Init port manager
-  m.setPortName(portInfoList.at(0)->portName());
-  m.config().setWriteQueueSize(1);
-  ///QVERIFY(m.openPort());
-
-  // We not need the scan result anymore, free memory
-  qDeleteAll(portInfoList);
-  portInfoList.clear();
-
-  // start port manager
-  QVERIFY(m.start());
-
-  // Control request
-  QVERIFY(m.sendReadStatusByteRequest() >= 0);
-  // Query without answer
-  ///QVERIFY(m.waitOnWriteReady(1000));
-  QVERIFY(m.sendData("*CLS\n"));
-  ///QVERIFY(m.waitOnWriteReady(1000));
-  QVERIFY(m.sendData("*RST\n"));
-  // Query with answer
-  ///QVERIFY(m.waitOnWriteReady(1000));
-  QVERIFY(m.sendData("*IDN?\n") >= 0);
-  ///QVERIFY(m.waitOnWriteReady(1000));
-  bTag = m.sendReadRequest(true);
-  QVERIFY(bTag > 0);
-  QVERIFY(m.waitTransactionDone(bTag));
-  frames = m.readenFrames();
-  QVERIFY(frames.size() > 0);
-
-  // Try to query device
-  QVERIFY(m.sendCommand("*CLS\n") > 0);
-  QVERIFY(!m.sendQuery("*IDN?\n").isEmpty());
-}
+// void mdtPortManagerTest::usbTmcPortTest()
+// {
+//   mdtUsbtmcPortManager m;
+//   QList<mdtPortInfo*> portInfoList;
+//   QList<QByteArray> frames;
+//   int bTag;
+// 
+//   qDebug() << "* A USBTMC compatible device must be attached, else test will fail *";
+// 
+//   // Verify that scan() function works ..
+//   portInfoList = m.scan();
+//   if(portInfoList.size() < 1){
+//     QSKIP("No USBTMC device found, or other error", SkipAll);
+//   }
+// 
+//   // Init port manager
+//   m.setPortName(portInfoList.at(0)->portName());
+//   m.config().setWriteQueueSize(1);
+//   ///QVERIFY(m.openPort());
+// 
+//   // We not need the scan result anymore, free memory
+//   qDeleteAll(portInfoList);
+//   portInfoList.clear();
+// 
+//   // start port manager
+//   QVERIFY(m.start());
+// 
+//   // Control request
+//   QVERIFY(m.sendReadStatusByteRequest() >= 0);
+//   // Query without answer
+//   ///QVERIFY(m.waitOnWriteReady(1000));
+//   QVERIFY(m.sendData("*CLS\n"));
+//   ///QVERIFY(m.waitOnWriteReady(1000));
+//   QVERIFY(m.sendData("*RST\n"));
+//   // Query with answer
+//   ///QVERIFY(m.waitOnWriteReady(1000));
+//   QVERIFY(m.sendData("*IDN?\n") >= 0);
+//   ///QVERIFY(m.waitOnWriteReady(1000));
+//   bTag = m.sendReadRequest(true);
+//   QVERIFY(bTag > 0);
+//   QVERIFY(m.waitTransactionDone(bTag));
+//   frames = m.readenFrames();
+//   QVERIFY(frames.size() > 0);
+// 
+//   // Try to query device
+//   QVERIFY(m.sendCommand("*CLS\n") > 0);
+//   QVERIFY(!m.sendQuery("*IDN?\n").isEmpty());
+// }
 
 void mdtPortManagerTest::modbusTcpPortTest()
 {

@@ -66,6 +66,30 @@ class mdtUsbtmcPort : public QObject
    */
   QList<mdtUsbDeviceDescriptor> scan();
 
+  /*! \brief Set device name
+   *
+   * Set a user friendly name for this device.
+   *  Will also be used to build error messages.
+   */
+  void setDeviceName(const QString & name);
+
+  /*! \brief Get device name
+   *
+   * \sa setDeviceName()
+   */
+  QString deviceName() const
+  {
+    return pvDeviceName;
+  }
+
+  /*! \brief Open device represented by given idVendor, idProduct and serial number
+   *
+   * \param idVendor Vendor ID
+   * \param idProduct Product ID
+   * \param serialNumber Device serial number. Will be ignored if empty
+   */
+  bool openDevice(uint16_t idVendor, uint16_t idProduct, const QString & serialNumber = QString());
+
   /*! \brief Open device represented by given descriptor
    *
    * \param deviceDescriptor USB device descriptor to open. Must be a item returned by scan().
@@ -213,6 +237,7 @@ class mdtUsbtmcPort : public QObject
   std::mutex pvLastErrorMutex;
   TransactionState_t pvTransactionState;
   bool pvWaitTimeReached; // Used by wait()
+  QString pvDeviceName;   // Used to build error messages
 };
 
 #endif // #ifndef MDT_USBTMC_PORT_H

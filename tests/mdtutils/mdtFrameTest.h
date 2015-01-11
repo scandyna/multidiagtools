@@ -60,17 +60,17 @@ class mdtFrameTest : public mdtTest
   void modbusTcpDecodeTest();
 
   // Check mdtFrameUsbTmc encoding
-  void usbTmcEncodeTest();
+  ///void usbTmcEncodeTest();
 
   // Check mdtFrameUsbTmc decoding
-  void usbTmcDecodeTest();
+  ///void usbTmcDecodeTest();
 
   // Some special cases seen in real world
-  void usbTmcDecodeRealCasesTest();
+  ///void usbTmcDecodeRealCasesTest();
 
   /// \todo Add size caluclation test
 
   // USB control frame
-  void usbControlEncodeTest();
+  ///void usbControlEncodeTest();
 };
 #endif // idnfef MDT_FRAME_TEST_H

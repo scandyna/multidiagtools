@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -43,6 +43,8 @@
 class QWidget;
 ///class mdtTtTestItemNodeSetupData;
 class mdtTtTestNodeSetupData;
+
+class mdtDeviceU3606A;
 
 /*! \biref Tool to reset offset of test connection cables
  */
@@ -157,6 +159,8 @@ class mdtTtTestCableOffsetTool : public QObject
   std::shared_ptr<mdtTtTest> pvTest;
   std::shared_ptr<mdtSqlTableViewController> pvTestLinkTableController;
   QWidget *pvParentWidget;        // For dialogs
+  
+  mdtDeviceU3606A *pvMultimeter;
 };
 
 #endif // #ifndef MDT_TT_TEST_CABLE_OFFSET_TOOL_H

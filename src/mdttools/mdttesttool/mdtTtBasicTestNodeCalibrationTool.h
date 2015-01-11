@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -29,6 +29,8 @@
 #include <QStringList>
 
 class mdtTtTestModelItemRouteData;
+
+class mdtDeviceU3606A;
 
 /*! \biref Test node calibration tool example
  */
@@ -137,6 +139,8 @@ class mdtTtBasicTestNodeCalibrationTool : public mdtTtAbstractTestNodeCalibratio
   Q_DISABLE_COPY(mdtTtBasicTestNodeCalibrationTool);
 
   mdtClPathGraph pvGraph;
+
+  mdtDeviceU3606A *pvMultimeter;
 };
 
 #endif // #ifndef MDT_TT_BASIC_TEST_NODE_CALIBRATION_TOOL_H

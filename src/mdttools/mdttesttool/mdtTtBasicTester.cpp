@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -63,11 +63,11 @@ bool mdtTtBasicTester::setup()
 void mdtTtBasicTester::runTest()
 {
   QVariant testItemId;
-  shared_ptr<mdtDeviceU3606A> multimeter;
+  ///shared_ptr<mdtDeviceU3606A> multimeter;
   mdtValue measuredValue;
 
-  multimeter = testNodeManager()->device<mdtDeviceU3606A>("U3606A");
-  Q_ASSERT(multimeter);
+  ///multimeter = testNodeManager()->device<mdtDeviceU3606A>("U3606A");
+  ///Q_ASSERT(multimeter);
 
   if(!connectToInstruments()){
     return;
@@ -75,15 +75,15 @@ void mdtTtBasicTester::runTest()
 
   // Setup multimeter as Ohmmeter
   ///multimeter->sendCommand("CONF:RES 100, 1e-3");
-  multimeter->sendCommand("CONF:RES");
-  if(multimeter->getMeasureConfiguration() != mdtFrameCodecScpiU3606A::MT_RESISTANCE){
-    pvLastError.setError(tr("Setup U3606A as ohmmeter failed"), mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtCableChecker");
-    pvLastError.commit();
-    displayLastError();
-    disconnectFromInstruments();
-    return;
-  }
+//   multimeter->sendCommand("CONF:RES");
+//   if(multimeter->getMeasureConfiguration() != mdtFrameCodecScpiU3606A::MT_RESISTANCE){
+//     pvLastError.setError(tr("Setup U3606A as ohmmeter failed"), mdtError::Error);
+//     MDT_ERROR_SET_SRC(pvLastError, "mdtTtCableChecker");
+//     pvLastError.commit();
+//     displayLastError();
+//     disconnectFromInstruments();
+//     return;
+//   }
 
   
   qDebug() << "Running test ...";
@@ -111,7 +111,7 @@ void mdtTtBasicTester::runTest()
 
 bool mdtTtBasicTester::addInstruments()
 {
-  testNodeManager()->addDevice<mdtDeviceU3606A>("U3606A", "", "U3606A Multimeter");
+  ///testNodeManager()->addDevice<mdtDeviceU3606A>("U3606A", "", "U3606A Multimeter");
   testNodeManager()->addDevice<mdtDeviceModbusWago>("W750", "0", "Wago 750 coupling node");
 
   return true;
@@ -122,19 +122,19 @@ bool mdtTtBasicTester::connectToInstruments()
   shared_ptr<mdtDeviceU3606A> multimeter;
   shared_ptr<mdtDeviceModbusWago> coupler;
 
-  multimeter = testNodeManager()->device<mdtDeviceU3606A>("U3606A");
-  Q_ASSERT(multimeter);
+  ///multimeter = testNodeManager()->device<mdtDeviceU3606A>("U3606A");
+  ///Q_ASSERT(multimeter);
   coupler = testNodeManager()->device<mdtDeviceModbusWago>("W750");
   Q_ASSERT(coupler);
 
   // Connect to multimeter
-  if(multimeter->connectToDevice(mdtDeviceInfo()) != mdtAbstractPort::NoError){
-    pvLastError.setError(tr("Cannot connect to ") + multimeter->name(), mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtBasicTester");
-    pvLastError.commit();
-    displayLastError();
-    return false;
-  }
+//   if(multimeter->connectToDevice(mdtDeviceInfo()) != mdtAbstractPort::NoError){
+//     pvLastError.setError(tr("Cannot connect to ") + multimeter->name(), mdtError::Error);
+//     MDT_ERROR_SET_SRC(pvLastError, "mdtTtBasicTester");
+//     pvLastError.commit();
+//     displayLastError();
+//     return false;
+//   }
   // Connect to coupler
   if(coupler->connectToDevice(mdtDeviceInfo()) != mdtAbstractPort::NoError){
     pvLastError.setError(tr("Cannot connect to ") + coupler->name(), mdtError::Error);

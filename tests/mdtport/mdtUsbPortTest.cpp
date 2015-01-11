@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -20,17 +20,17 @@
  ****************************************************************************/
 #include "mdtUsbPortTest.h"
 #include "mdtApplication.h"
-#include "mdtUsbPort.h"
+///#include "mdtUsbPort.h"
 #include "mdtUsbDeviceDescriptor.h"
 #include "mdtUsbConfigDescriptor.h"
 #include "mdtUsbInterfaceDescriptor.h"
 #include "mdtUsbEndpointDescriptor.h"
 #include "mdtUsbPortThread.h"
-#include "mdtUsbtmcPortThread.h"
+///#include "mdtUsbtmcPortThread.h"
 #include "mdtPortConfig.h"
 #include "mdtFrame.h"
 #include "mdtFrameCodecK8055.h"
-#include "mdtFrameUsbTmc.h"
+///#include "mdtFrameUsbTmc.h"
 
 // New USB/USBTMC API
 #include "mdtUsbDeviceList.h"
@@ -1606,259 +1606,259 @@ void mdtUsbPortTest::usbtmcPortSetupDialogTest()
   dialog.exec();
 }
 
-void mdtUsbPortTest::vellemanK8055Test()
-{
-  mdtFrame *f;
-  QByteArray data;
-  mdtUsbPort port;
-  mdtUsbPortThread thd;
-  mdtPortConfig cfg;
-  mdtFrameCodecK8055 codec;
+// void mdtUsbPortTest::vellemanK8055Test()
+// {
+//   mdtFrame *f;
+//   QByteArray data;
+//   mdtUsbPort port;
+//   mdtUsbPortThread thd;
+//   mdtPortConfig cfg;
+//   mdtFrameCodecK8055 codec;
+// 
+//   // Setup
+//   cfg.setWriteFrameSize(8);
+//   cfg.setWriteQueueSize(3);
+//   cfg.setReadFrameSize(8);
+//   cfg.setReadQueueSize(10);
+//   cfg.setFrameType(mdtFrame::FT_RAW);
+//   port.setConfig(&cfg);
+//   thd.setPort(&port);
+// 
+//   // Try to open
+//   port.setPortName("VID=0x10cf:PID=0x5500");
+//   if(port.open() != mdtAbstractPort::NoError){
+//     port.setPortName("VID=0x10cf:PID=0x5501");
+//     if(port.open() != mdtAbstractPort::NoError){
+//       port.setPortName("VID=0x10cf:PID=0x5502");
+//       if(port.open() != mdtAbstractPort::NoError){
+//         port.setPortName("VID=0x10cf:PID=0x5503");
+//         if(port.open() != mdtAbstractPort::NoError){
+//           QSKIP("No Velleman k8055 attached, or other error", SkipAll);
+//         }
+//       }
+//     }
+//   }
+//   QVERIFY(port.setup() == mdtAbstractPort::NoError);
+// 
+//   // Start thread
+//   thd.start();
+//   thd.waitReady();
+// 
+//   // Open/close test
+//   thd.stop();
+//   thd.waitFinished();
+//   port.close();
+//   randomValueInit();
+//   for(int i=0; i<10; i++){
+//     QVERIFY(port.open() == mdtAbstractPort::NoError);
+//     QVERIFY(port.setup() == mdtAbstractPort::NoError);
+//     QTest::qWait(randomValue(0, 100));
+//     port.close();
+//   }
+//   QVERIFY(port.open() == mdtAbstractPort::NoError);
+//   QVERIFY(port.setup() == mdtAbstractPort::NoError);
+//   thd.start();
+//   thd.waitReady();
+// 
+//   // Write test
+//   codec.setDigitalOut(1, true);
+//   codec.setDigitalOut(2, false);
+//   codec.setDigitalOut(3, true);
+//   codec.setDigitalOut(4, false);
+//   codec.setDigitalOut(5, true);
+//   codec.setDigitalOut(6, false);
+//   codec.setDigitalOut(7, true);
+//   codec.setDigitalOut(8, false);
+//   codec.setAnalogOut(1, 255);
+//   codec.setAnalogOut(2, 0);
+//   data = codec.encodeSetOutputs();
+//   port.lockMutex();
+//   QVERIFY(port.writeFramesPool().size() > 0);
+//   f = port.writeFramesPool().dequeue();
+//   QVERIFY(f != 0);
+//   f->clear();
+//   f->clearSub();
+//   f->append(data);
+//   f->setWaitAnAnswer(true);
+//   QCOMPARE(f->size(), 8);
+//   port.addFrameToWrite(f);
+//   port.unlockMutex();
+//   QTest::qWait(100);
+//   QCOMPARE(port.lastErrors().size(), 0);
+//   // Read
+//   port.lockMutex();
+//   QVERIFY(port.readenFrames().size() > 0);
+//   f = port.readenFrames().dequeue();
+//   data.clear();
+//   data.append(f->data(), f->size());
+//   port.readFramesPool().enqueue(f);
+//   port.unlockMutex();
+//   QCOMPARE(data.size(), 8);
+//   QVERIFY(codec.decode(data));
+//   QCOMPARE(codec.values().size(), 9);
+// 
+//   qDebug() << "Values: " << codec.values();
+//   // End
+//   thd.stop();
+//   thd.waitFinished();
+// }
 
-  // Setup
-  cfg.setWriteFrameSize(8);
-  cfg.setWriteQueueSize(3);
-  cfg.setReadFrameSize(8);
-  cfg.setReadQueueSize(10);
-  cfg.setFrameType(mdtFrame::FT_RAW);
-  port.setConfig(&cfg);
-  thd.setPort(&port);
-
-  // Try to open
-  port.setPortName("VID=0x10cf:PID=0x5500");
-  if(port.open() != mdtAbstractPort::NoError){
-    port.setPortName("VID=0x10cf:PID=0x5501");
-    if(port.open() != mdtAbstractPort::NoError){
-      port.setPortName("VID=0x10cf:PID=0x5502");
-      if(port.open() != mdtAbstractPort::NoError){
-        port.setPortName("VID=0x10cf:PID=0x5503");
-        if(port.open() != mdtAbstractPort::NoError){
-          QSKIP("No Velleman k8055 attached, or other error", SkipAll);
-        }
-      }
-    }
-  }
-  QVERIFY(port.setup() == mdtAbstractPort::NoError);
-
-  // Start thread
-  thd.start();
-  thd.waitReady();
-
-  // Open/close test
-  thd.stop();
-  thd.waitFinished();
-  port.close();
-  randomValueInit();
-  for(int i=0; i<10; i++){
-    QVERIFY(port.open() == mdtAbstractPort::NoError);
-    QVERIFY(port.setup() == mdtAbstractPort::NoError);
-    QTest::qWait(randomValue(0, 100));
-    port.close();
-  }
-  QVERIFY(port.open() == mdtAbstractPort::NoError);
-  QVERIFY(port.setup() == mdtAbstractPort::NoError);
-  thd.start();
-  thd.waitReady();
-
-  // Write test
-  codec.setDigitalOut(1, true);
-  codec.setDigitalOut(2, false);
-  codec.setDigitalOut(3, true);
-  codec.setDigitalOut(4, false);
-  codec.setDigitalOut(5, true);
-  codec.setDigitalOut(6, false);
-  codec.setDigitalOut(7, true);
-  codec.setDigitalOut(8, false);
-  codec.setAnalogOut(1, 255);
-  codec.setAnalogOut(2, 0);
-  data = codec.encodeSetOutputs();
-  port.lockMutex();
-  QVERIFY(port.writeFramesPool().size() > 0);
-  f = port.writeFramesPool().dequeue();
-  QVERIFY(f != 0);
-  f->clear();
-  f->clearSub();
-  f->append(data);
-  f->setWaitAnAnswer(true);
-  QCOMPARE(f->size(), 8);
-  port.addFrameToWrite(f);
-  port.unlockMutex();
-  QTest::qWait(100);
-  QCOMPARE(port.lastErrors().size(), 0);
-  // Read
-  port.lockMutex();
-  QVERIFY(port.readenFrames().size() > 0);
-  f = port.readenFrames().dequeue();
-  data.clear();
-  data.append(f->data(), f->size());
-  port.readFramesPool().enqueue(f);
-  port.unlockMutex();
-  QCOMPARE(data.size(), 8);
-  QVERIFY(codec.decode(data));
-  QCOMPARE(codec.values().size(), 9);
-
-  qDebug() << "Values: " << codec.values();
-  // End
-  thd.stop();
-  thd.waitFinished();
-}
-
-void mdtUsbPortTest::agilentDso1000Test()
-{
-  mdtFrameUsbTmc *uf;
-  mdtUsbPort port;
-  mdtUsbtmcPortThread thd;
-  mdtPortConfig cfg;
-
-  // Setup
-  cfg.setReadQueueSize(500);  /// ???? NOTE: re-enqueue readen frames to pool !!
-  cfg.setFrameType(mdtFrame::FT_USBTMC);
-  port.setConfig(&cfg);
-  thd.setPort(&port);
-
-  // Try to open
-  port.setPortName("VID=0x0957:PID=0x0588");
-  if(port.open() != mdtAbstractPort::NoError){
-    QSKIP("No Agilent DSO1000 attached, or other error", SkipAll);
-  }
-  QVERIFY(port.setup() == mdtAbstractPort::NoError);
-
-  // Start thread
-  thd.start();
-  thd.waitReady();
-
-  // Open/close test
-  thd.stop();
-  thd.waitFinished();
-  port.close();
-  randomValueInit();
-  for(int i=0; i<10; i++){
-    QVERIFY(port.open() == mdtAbstractPort::NoError);
-    QVERIFY(port.setup() == mdtAbstractPort::NoError);
-    QTest::qWait(randomValue(0, 100));
-    port.close();
-  }
-  QVERIFY(port.open() == mdtAbstractPort::NoError);
-  QVERIFY(port.setup() == mdtAbstractPort::NoError);
-  thd.start();
-  thd.waitReady();
-
-  /*
-   * *CLS command
-   */
-  port.lockMutex();
-  uf = dynamic_cast<mdtFrameUsbTmc*> (port.writeFramesPool().dequeue());
-  QVERIFY(uf != 0);
-  uf->setWaitAnAnswer(false);
-  uf->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_OUT);
-  uf->setbTag(1);
-  uf->setMessageData("*CLS\n");
-  uf->encode();
-  port.addFrameToWrite(uf);
-  port.unlockMutex();
-  QTest::qWait(100);
-
-  /*
-   * *RST command
-   */
-
-  // Send command
-  port.lockMutex();
-  uf = dynamic_cast<mdtFrameUsbTmc*> (port.writeFramesPool().dequeue());
-  QVERIFY(uf != 0);
-  uf->setWaitAnAnswer(false);
-  uf->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_OUT);
-  uf->setbTag(2);
-  uf->setMessageData("*RST\n");
-  uf->encode();
-  port.addFrameToWrite(uf);
-  port.unlockMutex();
-  QTest::qWait(100);
-
-  /*
-   * *IDN? query
-   */
-
-  // Send query
-  port.lockMutex();
-  uf = dynamic_cast<mdtFrameUsbTmc*> (port.writeFramesPool().dequeue());
-  QVERIFY(uf != 0);
-  uf->setWaitAnAnswer(false);
-  uf->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_OUT);
-  uf->setbTag(3);
-  uf->setMessageData("*IDN?\n");
-  uf->encode();
-  port.addFrameToWrite(uf);
-  port.unlockMutex();
-  QTest::qWait(100);
-  // Send DEV_DEP_MSG_IN request
-  port.lockMutex();
-  uf = dynamic_cast<mdtFrameUsbTmc*> (port.writeFramesPool().dequeue());
-  QVERIFY(uf != 0);
-  uf->clear();
-  uf->clearSub();
-  uf->setWaitAnAnswer(true);
-  uf->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_IN);
-  uf->setbTag(4);
-  uf->setTransferSize(cfg.readFrameSize()-12-1);
-  uf->encode();
-  port.addFrameToWrite(uf);
-  port.unlockMutex();
-  QTest::qWait(100);
-  // Check readen frame
-  port.lockMutex();
-  QVERIFY(port.readenFrames().size() > 0);
-  uf = dynamic_cast<mdtFrameUsbTmc*> (port.readenFrames().dequeue());
-  QVERIFY(uf != 0);
-  qDebug() << "Message data[Complete]: " << uf->messageData();
-  qDebug() << "Message data[0-25]: " << uf->messageData().left(26);
-  QVERIFY(uf->messageData().left(26) == "Agilent Technologies,DSO10");
-  port.unlockMutex();
-  QTest::qWait(500);
-
-  /*
-   * :AUToscale command
-   */
-
-  // Send command
-  port.lockMutex();
-  uf = dynamic_cast<mdtFrameUsbTmc*> (port.writeFramesPool().dequeue());
-  QVERIFY(uf != 0);
-  uf->setWaitAnAnswer(false);
-  uf->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_OUT);
-  uf->setbTag(5);
-  uf->setMessageData(":AUToscale\n");
-  uf->encode();
-  port.addFrameToWrite(uf);
-  port.unlockMutex();
-  QTest::qWait(2000);
-
-  /*
-   * *RST command with wait before quit
-   * Send a command and tell port that we wait
-   *  a answer. This is false, but must not turn
-   *  the application into a undefined state,
-   *  and the stop must work.
-   */
-
-  // Send command
-  port.lockMutex();
-  uf = dynamic_cast<mdtFrameUsbTmc*> (port.writeFramesPool().dequeue());
-  QVERIFY(uf != 0);
-  uf->setWaitAnAnswer(true);
-  uf->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_OUT);
-  uf->setbTag(6);
-  uf->setMessageData("*RST\n");
-  uf->encode();
-  port.addFrameToWrite(uf);
-  port.unlockMutex();
-  QTest::qWait(100);
-
-
-  // End
-  thd.stop();
-  thd.waitFinished();
-}
+// void mdtUsbPortTest::agilentDso1000Test()
+// {
+//   mdtFrameUsbTmc *uf;
+//   mdtUsbPort port;
+//   mdtUsbtmcPortThread thd;
+//   mdtPortConfig cfg;
+// 
+//   // Setup
+//   cfg.setReadQueueSize(500);  /// ???? NOTE: re-enqueue readen frames to pool !!
+//   cfg.setFrameType(mdtFrame::FT_USBTMC);
+//   port.setConfig(&cfg);
+//   thd.setPort(&port);
+// 
+//   // Try to open
+//   port.setPortName("VID=0x0957:PID=0x0588");
+//   if(port.open() != mdtAbstractPort::NoError){
+//     QSKIP("No Agilent DSO1000 attached, or other error", SkipAll);
+//   }
+//   QVERIFY(port.setup() == mdtAbstractPort::NoError);
+// 
+//   // Start thread
+//   thd.start();
+//   thd.waitReady();
+// 
+//   // Open/close test
+//   thd.stop();
+//   thd.waitFinished();
+//   port.close();
+//   randomValueInit();
+//   for(int i=0; i<10; i++){
+//     QVERIFY(port.open() == mdtAbstractPort::NoError);
+//     QVERIFY(port.setup() == mdtAbstractPort::NoError);
+//     QTest::qWait(randomValue(0, 100));
+//     port.close();
+//   }
+//   QVERIFY(port.open() == mdtAbstractPort::NoError);
+//   QVERIFY(port.setup() == mdtAbstractPort::NoError);
+//   thd.start();
+//   thd.waitReady();
+// 
+//   /*
+//    * *CLS command
+//    */
+//   port.lockMutex();
+//   uf = dynamic_cast<mdtFrameUsbTmc*> (port.writeFramesPool().dequeue());
+//   QVERIFY(uf != 0);
+//   uf->setWaitAnAnswer(false);
+//   uf->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_OUT);
+//   uf->setbTag(1);
+//   uf->setMessageData("*CLS\n");
+//   uf->encode();
+//   port.addFrameToWrite(uf);
+//   port.unlockMutex();
+//   QTest::qWait(100);
+// 
+//   /*
+//    * *RST command
+//    */
+// 
+//   // Send command
+//   port.lockMutex();
+//   uf = dynamic_cast<mdtFrameUsbTmc*> (port.writeFramesPool().dequeue());
+//   QVERIFY(uf != 0);
+//   uf->setWaitAnAnswer(false);
+//   uf->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_OUT);
+//   uf->setbTag(2);
+//   uf->setMessageData("*RST\n");
+//   uf->encode();
+//   port.addFrameToWrite(uf);
+//   port.unlockMutex();
+//   QTest::qWait(100);
+// 
+//   /*
+//    * *IDN? query
+//    */
+// 
+//   // Send query
+//   port.lockMutex();
+//   uf = dynamic_cast<mdtFrameUsbTmc*> (port.writeFramesPool().dequeue());
+//   QVERIFY(uf != 0);
+//   uf->setWaitAnAnswer(false);
+//   uf->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_OUT);
+//   uf->setbTag(3);
+//   uf->setMessageData("*IDN?\n");
+//   uf->encode();
+//   port.addFrameToWrite(uf);
+//   port.unlockMutex();
+//   QTest::qWait(100);
+//   // Send DEV_DEP_MSG_IN request
+//   port.lockMutex();
+//   uf = dynamic_cast<mdtFrameUsbTmc*> (port.writeFramesPool().dequeue());
+//   QVERIFY(uf != 0);
+//   uf->clear();
+//   uf->clearSub();
+//   uf->setWaitAnAnswer(true);
+//   uf->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_IN);
+//   uf->setbTag(4);
+//   uf->setTransferSize(cfg.readFrameSize()-12-1);
+//   uf->encode();
+//   port.addFrameToWrite(uf);
+//   port.unlockMutex();
+//   QTest::qWait(100);
+//   // Check readen frame
+//   port.lockMutex();
+//   QVERIFY(port.readenFrames().size() > 0);
+//   uf = dynamic_cast<mdtFrameUsbTmc*> (port.readenFrames().dequeue());
+//   QVERIFY(uf != 0);
+//   qDebug() << "Message data[Complete]: " << uf->messageData();
+//   qDebug() << "Message data[0-25]: " << uf->messageData().left(26);
+//   QVERIFY(uf->messageData().left(26) == "Agilent Technologies,DSO10");
+//   port.unlockMutex();
+//   QTest::qWait(500);
+// 
+//   /*
+//    * :AUToscale command
+//    */
+// 
+//   // Send command
+//   port.lockMutex();
+//   uf = dynamic_cast<mdtFrameUsbTmc*> (port.writeFramesPool().dequeue());
+//   QVERIFY(uf != 0);
+//   uf->setWaitAnAnswer(false);
+//   uf->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_OUT);
+//   uf->setbTag(5);
+//   uf->setMessageData(":AUToscale\n");
+//   uf->encode();
+//   port.addFrameToWrite(uf);
+//   port.unlockMutex();
+//   QTest::qWait(2000);
+// 
+//   /*
+//    * *RST command with wait before quit
+//    * Send a command and tell port that we wait
+//    *  a answer. This is false, but must not turn
+//    *  the application into a undefined state,
+//    *  and the stop must work.
+//    */
+// 
+//   // Send command
+//   port.lockMutex();
+//   uf = dynamic_cast<mdtFrameUsbTmc*> (port.writeFramesPool().dequeue());
+//   QVERIFY(uf != 0);
+//   uf->setWaitAnAnswer(true);
+//   uf->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_OUT);
+//   uf->setbTag(6);
+//   uf->setMessageData("*RST\n");
+//   uf->encode();
+//   port.addFrameToWrite(uf);
+//   port.unlockMutex();
+//   QTest::qWait(100);
+// 
+// 
+//   // End
+//   thd.stop();
+//   thd.waitFinished();
+// }
 
 int main(int argc, char **argv)
 {

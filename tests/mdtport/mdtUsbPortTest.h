@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -66,10 +66,10 @@ class mdtUsbPortTest : public mdtTest
   void usbtmcPortSetupDialogTest();
 
   // Make some tests with Velleman k8055 board
-  void vellemanK8055Test();
+  ///void vellemanK8055Test();
 
   // Some data exchange test with Agilent DSO1000
-  void agilentDso1000Test();
+  ///void agilentDso1000Test();
 
 };
 

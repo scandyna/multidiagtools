@@ -54,33 +54,33 @@
 
 void mdtDeviceTest::sandbox()
 {
-  std::shared_ptr<mdtDevice> dev1(new mdtDevice);
-  std::shared_ptr<mdtDevice> dev2(new mdtDeviceU3606A);
+  ///std::shared_ptr<mdtDevice> dev1(new mdtDevice);
+  ///std::shared_ptr<mdtDevice> dev2(new mdtDeviceU3606A);
 
-  Q_ASSERT(dev1);
-  Q_ASSERT(dev2);
+ /// Q_ASSERT(dev1);
+  ///Q_ASSERT(dev2);
 
-  std::shared_ptr<mdtDeviceU3606A> devU3606;
+  ///std::shared_ptr<mdtDeviceU3606A> devU3606;
 
-  Q_ASSERT(std::dynamic_pointer_cast<mdtDeviceU3606A>(dev2));
-  devU3606 = std::static_pointer_cast<mdtDeviceU3606A>(dev2);
-  Q_ASSERT(devU3606);
-  devU3606->setName("U3606A");
+  ///Q_ASSERT(std::dynamic_pointer_cast<mdtDeviceU3606A>(dev2));
+  ///devU3606 = std::static_pointer_cast<mdtDeviceU3606A>(dev2);
+  ///Q_ASSERT(devU3606);
+  ///devU3606->setName("U3606A");
   
-  qDebug() << "Name: " << devU3606->name() << " , " << dev2->name();
-  qDebug() << "Value: " << devU3606->getMeasureValue();
-  qDebug() << "dev1 type: " << typeid(dev1).name();
-  qDebug() << "dev2 type: " << typeid(dev2).name();
-  qDebug() << "devU3606 type: " << typeid(devU3606).name();
-  
-  boost::any adev1;
-  boost::any adev3;
-
-  adev1 = dev1;
-  adev3 = devU3606;
-  
-  qDebug() << "dev1 type: " << typeid(dev1).name() << " , adev1 type: " << adev1.type().name();
-  qDebug() << "devU3606 type: " << typeid(devU3606).name() << " , adev3 type: " << adev3.type().name();
+//   qDebug() << "Name: " << devU3606->name() << " , " << dev2->name();
+//   qDebug() << "Value: " << devU3606->getMeasureValue();
+//   qDebug() << "dev1 type: " << typeid(dev1).name();
+//   qDebug() << "dev2 type: " << typeid(dev2).name();
+//   qDebug() << "devU3606 type: " << typeid(devU3606).name();
+//   
+//   boost::any adev1;
+//   boost::any adev3;
+// 
+//   adev1 = dev1;
+//   adev3 = devU3606;
+//   
+//   qDebug() << "dev1 type: " << typeid(dev1).name() << " , adev1 type: " << adev1.type().name();
+//   qDebug() << "devU3606 type: " << typeid(devU3606).name() << " , adev3 type: " << adev3.type().name();
 }
 
 void mdtDeviceTest::deviceBaseTest()
@@ -96,27 +96,28 @@ void mdtDeviceTest::deviceBaseTest()
 
 void mdtDeviceTest::deviceContainerTest()
 {
-  mdtDeviceContainer c;
-  std::shared_ptr<mdtDeviceU3606A> dev;
-
-  // Initial state
-  QCOMPARE(c.deviceCount(), 0);
-  QCOMPARE(c.allDevices().size(), 0);
-  // Add a U3606A device
-  dev = c.addDevice<mdtDeviceU3606A>("U3606A", "U3606A Multimeter");
-  QVERIFY(dev.get() != 0);
-  QVERIFY(c.device<mdtDeviceU3606A>("U3606A").get() != 0);
-  QVERIFY(c.device<mdtDeviceU3606A>("").get() == 0);
-  QVERIFY(c.device<mdtDevice>("U3606A").get() != 0);
-  QVERIFY(c.device<mdtDeviceScpi>("U3606A").get() != 0);
-  QVERIFY(c.device<mdtDeviceModbus>("U3606A").get() == 0);
-  QCOMPARE(c.deviceCount(), 1);
-  QCOMPARE(c.allDevices().size(), 1);
-  QVERIFY(c.allDevices().at(0).get() != 0);
-  // Clear
-  c.clear();
-  QCOMPARE(c.deviceCount(), 0);
-  QCOMPARE(c.allDevices().size(), 0);
+  QFAIL("Not implemented");
+//   mdtDeviceContainer c;
+//   std::shared_ptr<mdtDeviceU3606A> dev;
+// 
+//   // Initial state
+//   QCOMPARE(c.deviceCount(), 0);
+//   QCOMPARE(c.allDevices().size(), 0);
+//   // Add a U3606A device
+//   dev = c.addDevice<mdtDeviceU3606A>("U3606A", "U3606A Multimeter");
+//   QVERIFY(dev.get() != 0);
+//   QVERIFY(c.device<mdtDeviceU3606A>("U3606A").get() != 0);
+//   QVERIFY(c.device<mdtDeviceU3606A>("").get() == 0);
+//   QVERIFY(c.device<mdtDevice>("U3606A").get() != 0);
+//   QVERIFY(c.device<mdtDeviceScpi>("U3606A").get() != 0);
+//   QVERIFY(c.device<mdtDeviceModbus>("U3606A").get() == 0);
+//   QCOMPARE(c.deviceCount(), 1);
+//   QCOMPARE(c.allDevices().size(), 1);
+//   QVERIFY(c.allDevices().at(0).get() != 0);
+//   // Clear
+//   c.clear();
+//   QCOMPARE(c.deviceCount(), 0);
+//   QCOMPARE(c.allDevices().size(), 0);
 }
 
 void mdtDeviceTest::deviceIosSegmentTest()
@@ -2358,18 +2359,18 @@ void mdtDeviceTest::scpiTest()
   QByteArray data;
 
   // Try to find a device and connect if ok
-  portInfoList = d.portManager()->scan();
-  if(portInfoList.size() < 1){
-    QSKIP("No port found with SCPI device found, or other error", SkipAll);
-  }
-  portInfo = portInfoList.at(0);
-  if(portInfo->deviceInfoList().size() < 1){
-    QSKIP("No SCPI device found, or other error", SkipAll);
-  }
-  devInfo = portInfo->deviceInfoList().at(0);
-  if(d.connectToDevice(*devInfo) != mdtAbstractPort::NoError){
-    QSKIP("No SCPI device attached, or other error", SkipAll);
-  }
+  ///portInfoList = d.portManager()->scan();
+//   if(portInfoList.size() < 1){
+//     QSKIP("No port found with SCPI device found, or other error", SkipAll);
+//   }
+//   portInfo = portInfoList.at(0);
+//   if(portInfo->deviceInfoList().size() < 1){
+//     QSKIP("No SCPI device found, or other error", SkipAll);
+//   }
+//   devInfo = portInfo->deviceInfoList().at(0);
+//   if(d.connectToDevice(*devInfo) != mdtAbstractPort::NoError){
+//     QSKIP("No SCPI device attached, or other error", SkipAll);
+//   }
 
   // Check commands
   QVERIFY(d.sendCommand("*RST\n") >= 0);
@@ -2382,62 +2383,48 @@ void mdtDeviceTest::scpiTest()
 void mdtDeviceTest::U3606ATest()
 {
   mdtDeviceU3606A d;
-  mdtDeviceInfo devInfo;
-  mdtDeviceIosWidget *iosw;
-  mdtDeviceWindow dw;
 
   // Try to find a device and connect if ok
-  if(d.connectToDevice(devInfo) != mdtAbstractPort::NoError){
+  if(!d.connectToDevice()){
+    qDebug() << "Connecting to U3606A device failed: " << d.lastError().text();
     QSKIP("No Agilent U3606A attached, or other error", SkipAll);
   }
 
-  /*
-   * Setup devie
-   */
-
-  QVERIFY(d.ios() != 0);
-
-  // Setup I/O's widget
-  iosw = new mdtDeviceIosWidget;
-  iosw->setDeviceIos(d.ios());
-
-  // Setup device window
-  dw.setDevice(&d);
-  dw.setIosWidget(iosw);
-  QVERIFY(d.portManager()->writeThread() != 0);
-  QVERIFY(d.portManager()->readThread() != 0);
-  dw.statusWidget()->enableTxRxLeds(d.portManager()->writeThread(), d.portManager()->readThread());
-  dw.show();
-
   // Check generic command
-  QVERIFY(d.sendCommand("*CLS\n") >= 0);
-  QVERIFY(d.sendCommand("*RST\n") >= 0);
+  QVERIFY(d.sendCommand("*RST\n"));
+  d.wait(1);
+  QVERIFY(d.sendCommand("*CLS\n"));
+  d.wait(1);
+  QCOMPARE(d.getDeviceError().systemNumber(), 0);
+  d.wait(1);
 
   // Set and get device setup
-  QVERIFY(d.sendCommand("CONF:VOLT 10, 0.001\n") >= 0);
-  QVERIFY(d.getMeasureConfiguration() == mdtFrameCodecScpiU3606A::MT_VOLTAGE_DC);
-  QVERIFY(d.ios()->analogInputWithLabelShort("MEASURE") != 0);
-  QCOMPARE(d.ios()->analogInputWithLabelShort("MEASURE")->minimum() , 0.0);
-  QCOMPARE(d.ios()->analogInputWithLabelShort("MEASURE")->maximum() , 10.0);
+  QVERIFY(d.sendCommand("CONF:VOLT 10,0.001\n"));
+  d.wait(1);
+  QVERIFY(d.getMeasureConfiguration() == mdtDeviceU3606A::MeasureType_t::VoltageDc);
+  d.wait(1);
+//   QVERIFY(d.ios()->analogInputWithLabelShort("MEASURE") != 0);
+//   QCOMPARE(d.ios()->analogInputWithLabelShort("MEASURE")->minimum() , 0.0);
+//   QCOMPARE(d.ios()->analogInputWithLabelShort("MEASURE")->maximum() , 10.0);
 
   // Try helper methods
-  QVERIFY(d.getMeasureValue().isValid());
+  ///QVERIFY(d.getMeasureValue().isValid());
   ///qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
 
   
   // Enable bits in Status Byte Register
-  QVERIFY(d.sendCommand("*SRE 255\n") >= 0);
+  QVERIFY(d.sendCommand("*SRE 255\n"));
   ///qDebug() << "*SRE?: " << d.sendQuery("*SRE?\n");
   
   // Enable bits in Standard Events Register
-  QVERIFY(d.sendCommand("*ESE 255\n") >= 0);
+  QVERIFY(d.sendCommand("*ESE 255\n"));
   ///qDebug() << "*ESE?: " << d.sendQuery("*ESE?\n");
   
   // Enable bits in Standard Operation Regsiter
-  QVERIFY(d.sendCommand(":STAT:OPER:ENAB 65535\n") >= 0);
+  QVERIFY(d.sendCommand(":STAT:OPER:ENAB 65535\n"));
   ///qDebug() << "STATus:OPERation:ENABle?: " << d.sendQuery("STATus:OPERation:ENABle?\n");
 
-  qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
+  ///qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
 
   ///qDebug() << "*STB?: " << d.sendQuery("*STB?\n");
   
@@ -2456,17 +2443,17 @@ void mdtDeviceTest::U3606ATest()
 
   // Get value
   ///QVERIFY(d.getAnalogInputValue(0, 32000).isValid());
-  QVERIFY(d.getAnalogInputValue(0, true, true).isValid());
-  QVERIFY(d.getAnalogInputValueAt(0, true, true).isValid());
+//   QVERIFY(d.getAnalogInputValue(0, true, true).isValid());
+//   QVERIFY(d.getAnalogInputValueAt(0, true, true).isValid());
   qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
   qDebug() << "*** OPC: " << d.sendQuery("*OPC?\n");
   qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
   ///QVERIFY(d.getAnalogInputValue(0, 32000).type() == QVariant::Double);
-  QVERIFY(d.getAnalogInputValue(0, true, true).isValid());
+//   QVERIFY(d.getAnalogInputValue(0, true, true).isValid());
   ///qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
-  d.checkDeviceError();
+//   d.checkDeviceError();
   
-  d.start(100);
+//   d.start(100);
   QTest::qWait(1000);
   
   /**
@@ -2480,7 +2467,6 @@ void mdtDeviceTest::U3606ATest()
 void mdtDeviceTest::DSO1000ATest()
 {
   mdtDeviceDSO1000A d;
-  mdtDeviceInfo devInfo;
   ///mdtAnalogIo *ai;
   ///mdtDeviceIos ios;
   ///mdtDeviceIosWidget *iosw;
@@ -2489,29 +2475,32 @@ void mdtDeviceTest::DSO1000ATest()
   QByteArray data;
 
   // Try to find a device and connect if ok
-  if(d.connectToDevice(devInfo) != mdtAbstractPort::NoError){
+  if(!d.connectToDevice()){
+    qDebug() << "Connecting to DSO1000A device failed: " << d.lastError().text();
     QSKIP("No Agilent DSO1000A attached, or other error", SkipAll);
   }
 
   // Check generic command
-  QVERIFY(d.sendCommand("*CLS\n") >= 0);
-  QVERIFY(d.sendCommand("*RST\n") >= 0);
-  QVERIFY(d.sendQuery("*IDN?\n").left(26) == "Agilent Technologies,DSO10");
-  qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
+  QVERIFY(d.sendCommand("*RST\n"));
+  d.wait(1);
+  QVERIFY(d.sendCommand("*CLS\n"));
+  d.wait(1);
+  QCOMPARE(d.getDeviceError().systemNumber(), 0);
+  d.wait(1);
 
-  QVERIFY(d.sendCommand(":CHANnel1:PROBe 20X\n") >= 0);
-  QVERIFY(d.sendCommand(":ACQuire:TYPE PEAKdetect\n") >= 0);
+  QVERIFY(d.sendCommand(":CHANnel1:PROBe 20X\n"));
+  QVERIFY(d.sendCommand(":ACQuire:TYPE PEAKdetect\n"));
   ///QVERIFY(d.sendCommand(":ACQuire:AVERages 8\n") >= 0);
-  QVERIFY(d.sendCommand(":TRIGger:MODE EDGE\n") >= 0);
-  QVERIFY(d.sendCommand(":TRIGger:EDGE:SOURce CHANnel1\n") >= 0);
-  QVERIFY(d.sendCommand(":TRIGger:EDGE:SWEep AUTO\n") >= 0);
-  QVERIFY(d.sendCommand(":TIMebase:MAIN:SCALe 50e-3\n") >= 0);
+  QVERIFY(d.sendCommand(":TRIGger:MODE EDGE\n"));
+  QVERIFY(d.sendCommand(":TRIGger:EDGE:SOURce CHANnel1\n"));
+  QVERIFY(d.sendCommand(":TRIGger:EDGE:SWEep AUTO\n"));
+  QVERIFY(d.sendCommand(":TIMebase:MAIN:SCALe 50e-3\n"));
   QVERIFY(d.sendCommand(":START\n") >= 0);
   ///d.portManager()->wait(10000);
   QTest::qWait(10000);
-  QVERIFY(d.sendCommand(":STOP\n") >= 0);
-  QVERIFY(d.sendCommand(":WAVeform:SOURce CHANnel1\n") >= 0);
-  QVERIFY(d.sendCommand(":WAVeform:FORMat BYTE\n") >= 0);
+  QVERIFY(d.sendCommand(":STOP\n"));
+  QVERIFY(d.sendCommand(":WAVeform:SOURce CHANnel1\n"));
+  QVERIFY(d.sendCommand(":WAVeform:FORMat BYTE\n"));
   
   qDebug() << "TEST: getting data ...";
   

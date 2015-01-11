@@ -55,6 +55,13 @@ class mdtUsbtmcTransferHandler
    */
   mdtUsbtmcTransferHandler(libusb_context *usbContext, mdtUsbtmcPort & port);
 
+  /*! \brief Set device name
+   *
+   * Device name is used to build error messages.
+   *  See deviceIdString()
+   */
+  void setDeviceName(const QString & name);
+
   /*! \brief Setup handler
    */
   bool setup(libusb_device_handle *handle, const mdtUsbDeviceDescriptor & descriptor, uint8_t bInterfaceNumber);
@@ -512,7 +519,7 @@ class mdtUsbtmcTransferHandler
   /*! \brief Get device identification string
    *
    * Helper function for error messages generation.
-   *  Will simply get pvDeviceDescriptor::idString() with some "decoration text", will not query device.
+   *  Will simply get pvDeviceName with some "decoration text", will not query device.
    */
   QString deviceIdString() const;
 
@@ -548,6 +555,7 @@ class mdtUsbtmcTransferHandler
   // Error members
   mdtError pvLastError;
   std::mutex pvLastErrorMutex;
+  QString pvDeviceName; // Used by deviceIdString()
 };
 
 #endif  // #ifndef MDT_USBTMC_TRANSFER_HANDLER_H

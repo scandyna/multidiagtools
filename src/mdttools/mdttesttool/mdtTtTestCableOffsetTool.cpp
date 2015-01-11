@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -39,7 +39,8 @@ mdtTtTestCableOffsetTool::mdtTtTestCableOffsetTool(QSqlDatabase db, QObject* par
  : QObject(parent),
    pvDatabase(db),
    pvTestNodeManager(new mdtTtTestNodeManager(0, db)),
-   pvTest(new mdtTtTest(0, db))
+   pvTest(new mdtTtTest(0, db)),
+   pvMultimeter(new mdtDeviceU3606A(this))
 {
   /*
    * pvParentWidget is used as parent for dialogs.
@@ -408,18 +409,18 @@ bool mdtTtTestCableOffsetTool::isInRange(const mdtValue & value, double min, dou
 
 void mdtTtTestCableOffsetTool::addInstruments()
 {
-  pvTestNodeManager->addDevice<mdtDeviceU3606A>("U3606A", "", "U3606A Multimeter");
+  ///pvTestNodeManager->addDevice<mdtDeviceU3606A>("U3606A", "", "U3606A Multimeter");
   pvTestNodeManager->addDevice<mdtDeviceModbusWago>("W750", "0", "Wago 750 coupling node");
 }
 
 bool mdtTtTestCableOffsetTool::connectToInstruments()
 {
-  shared_ptr<mdtDeviceU3606A> multimeter;
+  ///shared_ptr<mdtDeviceU3606A> multimeter;
   shared_ptr<mdtDeviceModbusWago> coupler;
   QVariant couplerNodeId;
 
-  multimeter = pvTestNodeManager->device<mdtDeviceU3606A>("U3606A");
-  Q_ASSERT(multimeter);
+  ///multimeter = pvTestNodeManager->device<mdtDeviceU3606A>("U3606A");
+  ///Q_ASSERT(multimeter);
   coupler = pvTestNodeManager->device<mdtDeviceModbusWago>("W750");
   Q_ASSERT(coupler);
 
@@ -436,12 +437,14 @@ bool mdtTtTestCableOffsetTool::connectToInstruments()
   }
   */
   // Connect to multimeter
-  if(multimeter->connectToDevice(mdtDeviceInfo()) != mdtAbstractPort::NoError){
-    pvLastError.setError(tr("Cannot connect to ") + multimeter->name(), mdtError::Error);
+  /**
+  if(pvMultimeter->connectToDevice(mdtDeviceInfo()) != mdtAbstractPort::NoError){
+    pvLastError.setError(tr("Cannot connect to ") + pvMultimeter->name(), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestCableOffsetTool");
     pvLastError.commit();
     return false;
   }
+  */
   // Connect to coupler
   if(coupler->connectToDevice(mdtDeviceInfo()) != mdtAbstractPort::NoError){
     pvLastError.setError(tr("Cannot connect to ") + coupler->name(), mdtError::Error);
@@ -460,8 +463,8 @@ bool mdtTtTestCableOffsetTool::connectToInstruments()
     return false;
   }
   // Reset multimeter to factory state
-  if(multimeter->sendCommand("*RST") < 0){
-    pvLastError.setError(tr("*RST failed on device ") + multimeter->name(), mdtError::Error);
+  if(pvMultimeter->sendCommand("*RST") < 0){
+    pvLastError.setError(tr("*RST failed on device ") + pvMultimeter->name(), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestCableOffsetTool");
     pvLastError.commit();
     return false;
@@ -474,11 +477,11 @@ void mdtTtTestCableOffsetTool::disconnectFromInstruments()
 {
   Q_ASSERT(pvTestNodeManager->container());
 
-  shared_ptr<mdtDeviceU3606A> multimeter;
+  ///shared_ptr<mdtDeviceU3606A> multimeter;
   shared_ptr<mdtDeviceModbusWago> coupler;
 
-  multimeter = pvTestNodeManager->device<mdtDeviceU3606A>("U3606A");
-  Q_ASSERT(multimeter);
+  ///multimeter = pvTestNodeManager->device<mdtDeviceU3606A>("U3606A");
+  ///Q_ASSERT(multimeter);
   coupler = pvTestNodeManager->device<mdtDeviceModbusWago>("W750");
   Q_ASSERT(coupler);
 
@@ -487,11 +490,13 @@ void mdtTtTestCableOffsetTool::disconnectFromInstruments()
     pvLastError = coupler->lastError();
   }
   // Reset multimeter to factory state
-  if(multimeter->sendCommand("*RST") < 0){
-    pvLastError.setError(tr("*RST failed on device ") + multimeter->name(), mdtError::Error);
+  /// \todo Why ??
+  if(pvMultimeter->sendCommand("*RST") < 0){
+    pvLastError.setError(tr("*RST failed on device ") + pvMultimeter->name(), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestCableOffsetTool");
     pvLastError.commit();
   }
+  /// \todo Close multimeter !!
 
   // Disconnect
   pvTestNodeManager->container()->disconnectFromDevices();

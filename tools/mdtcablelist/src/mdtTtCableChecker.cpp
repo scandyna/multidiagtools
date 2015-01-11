@@ -200,6 +200,7 @@ void mdtTtCableChecker::runTest()
   
   // Setup multimeter as Ohmmeter
   pvMultimeter->sendCommand("CONF:RES 100, 1e-3");
+  /**
   if(pvMultimeter->getMeasureConfiguration() != mdtFrameCodecScpiU3606A::MT_RESISTANCE){
     pvLastError.setError(tr("Setup U3606A as ohmmeter failed"), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtCableChecker");
@@ -208,6 +209,7 @@ void mdtTtCableChecker::runTest()
     disconnectFromInstruments();
     return;
   }
+  */
   // Run items
   for(i = 0; i < testItemIdList.size(); ++i){
     testItemId = testItemIdList.at(i);
@@ -401,14 +403,14 @@ void mdtTtCableChecker::createMultimeter()
 {
   pvMultimeter = new mdtDeviceU3606A;
   pvMultimeter->setName("U3606A");
-  addDeviceStatusWidget(pvMultimeter, "U3606A");
+  ///addDeviceStatusWidget(pvMultimeter, "U3606A");
 }
 
 void mdtTtCableChecker::removeMultimeter()
 {
   if(pvMultimeter != 0){
-    pvMultimeter->disconnectFromDevice();
-    removeDeviceStatusWidget(pvMultimeter);
+    ///pvMultimeter->disconnectFromDevice();
+    ///removeDeviceStatusWidget(pvMultimeter);
     delete pvMultimeter;
     pvMultimeter = 0;
   }
@@ -477,12 +479,12 @@ bool mdtTtCableChecker::connectToInstruments()
     hwNodeIdList.append(hwNodeIdListVar.at(i).toInt());
   }
   // Connect to multimeter
-  if(pvMultimeter->connectToDevice(mdtDeviceInfo()) != mdtAbstractPort::NoError){
-    pvLastError.setError(tr("Cannot connect to U3606A"), mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtCableChecker");
-    pvLastError.commit();
-    return false;
-  }
+//   if(pvMultimeter->connectToDevice§(mdtDeviceInfo()) != mdtAbstractPort::NoError){
+//     pvLastError.setError(tr("Cannot connect to U3606A"), mdtError::Error);
+//     MDT_ERROR_SET_SRC(pvLastError, "mdtTtCableChecker");
+//     pvLastError.commit();
+//     return false;
+//   }
   // Connect to nodes
   for(i = 0; i < pvModbusIoNodes.size(); ++i){
     ioNode = pvModbusIoNodes.at(i);
@@ -517,7 +519,7 @@ void mdtTtCableChecker::disconnectFromInstruments()
   int i;
 
   // Disconnect from multimeter
-  pvMultimeter->disconnectFromDevice();
+  ///pvMultimeter->disconnectFromDevice();
   // Disconnect from nodes
   for(i = 0; i < pvModbusIoNodes.size(); ++i){
     ioNode = pvModbusIoNodes.at(i);

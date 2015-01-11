@@ -32,8 +32,6 @@ set (SOURCES_FILES
           mdtFrame.cpp
           mdtFrameAscii.cpp
           mdtFrameModbusTcp.cpp
-          mdtFrameUsbTmc.cpp
-          mdtFrameUsbControl.cpp
           mdtTime.cpp
           # Frame codec
           mdtFrameCodec.cpp

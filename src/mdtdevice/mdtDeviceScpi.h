@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,10 +21,15 @@
 #ifndef MDT_DEVICE_SCPI_H
 #define MDT_DEVICE_SCPI_H
 
-#include "mdtDevice.h"
-#include "mdtUsbtmcPortManager.h"
+///#include "mdtDevice.h"
+#include "mdtError.h"
+#include "mdtUsbtmcPort.h"
+#include "mdtCodecScpi.h"
 #include <QList>
 #include <QVariant>
+#include <cstdint>
+
+#include <QObject>
 
 class QTimer;
 
@@ -38,7 +43,7 @@ class QTimer;
  *
  * Currently, only USBTMC port is supported.
  */
-class mdtDeviceScpi : public mdtDevice
+class mdtDeviceScpi : public QObject
 {
  Q_OBJECT
 
@@ -51,21 +56,72 @@ class mdtDeviceScpi : public mdtDevice
    */
   mdtDeviceScpi(QObject *parent = 0);
 
+  /*! \brief Destructor
+   */
   virtual ~mdtDeviceScpi();
 
-  /*! \brief Get internal port manager instance
+  /*! \brief Set device name
+   *
+   * Set a user friendly name for this device.
+   *  Will also be used to build error messages.
    */
-  mdtPortManager *portManager();
+  void setName(const QString & name)
+  {
+    pvPort->setDeviceName(name);
+  }
 
-  /*! \brief Search and connect to physical device.
+  /*! \brief Get device name
    *
-   * Will scan available ports and open the first port that
-   *  has device attached maching request.
-   *
-   * \param devInfo Requested device's informations.
-   * \return A error listed in mdtAbstractPort::error_t (NoError on success)
+   * \sa setName()
    */
-  mdtAbstractPort::error_t connectToDevice(const mdtDeviceInfo &devInfo);
+  QString name() const
+  {
+    return pvPort->deviceName();
+  }
+
+  /*! \brief Connect to a USBTMC device
+   *
+   * \param idVendor Vendor ID
+   * \param idProduct Product ID
+   * \param serialNumber Device serial number. Will be ignored if empty
+   */
+  bool connectToDevice(uint16_t idVendor, uint16_t idProduct, const QString & serialNumber);
+
+  /*! \brief Disconnect from device
+   */
+  void disconnectFromDevice();
+
+  /*! \brief Send a command to device
+   *
+   * \param command Command to send
+   * \param timeout Timeout [ms]
+   */
+  bool sendCommand(const QByteArray & command, int timeout = 30000);
+
+  /*! \brief Send a query to device
+   *
+   * \param query Query to send
+   * \param timeout Timeout [ms]
+   */
+  QByteArray sendQuery(const QByteArray & query, int timeout = 30000);
+
+  /*! \brief Wait some time without breaking main event loop
+   *
+   * \param t time [ms]
+   */
+  void wait(int t)
+  {
+    pvPort->wait(t);;
+  }
+
+  /*! \brief Get device error
+   *
+   * Will send SYSTem:ERRor? query and return error.
+   *  On (communication) problem, error level will be set to NoError.
+   *
+   * \param errorText Text to set in error. If empty, a default text will be set.
+   */
+  mdtError getDeviceError(const QString & errorText = QString());
 
   /*! \brief Send a command to device
    *
@@ -82,7 +138,7 @@ class mdtDeviceScpi : public mdtDevice
    * \return bTag on success, or a error < 0
    *          (see mdtUsbtmcPortManager::writeData() for details).
    */
-  int sendCommand(const QByteArray &command);
+  ///int sendCommand(const QByteArray &command);
 
   /*! \brief Send a query to device
    *
@@ -99,7 +155,7 @@ class mdtDeviceScpi : public mdtDevice
    * \return Result as string (empty string on error)
    *          Note that mdtFrameCodecScpi can be helpful to decode returned result.
    */
-  QByteArray sendQuery(const QByteArray &query);
+  ///QByteArray sendQuery(const QByteArray &query);
 
   /*! \brief Wait until operation is complete (Using *OPC? query)
    *
@@ -111,68 +167,44 @@ class mdtDeviceScpi : public mdtDevice
    */
   bool waitOperationComplete(int timeout, int interval);
 
-  /*! \brief Query device about error
+
+  /*! \brief Set device identification
    *
-   * \todo Buggy, review !
-   *
-   * Will send the SYST:ERR? and return.
-   *
-   * Subclass notes:<br>
-   * The SYST:ERR? query is sent to device.
-   *  A new transaction is initalized, with type
-   *  MDT_FC_SCPI_ERR.
-   *  When subclass receives such transaction type,
-   *  it should call handleDeviceError() without decoding frame.
-   *
-   * \return 0 if query could be sent or a error of type mdtAbstractPort::error_t else.
-   *          Note: returned error is not device's error.
+   * \todo define better, see also deviceIdString()
+   * \todo Candidate for a common mdtDevice class
    */
-  int checkDeviceError();
+  void setIdentification(const QVariant & id)
+  {
+  }
+
+  /*! \brief Get last error
+   *
+   * \todo Candidate for a common mdtDevice class
+   */
+  mdtError lastError() const
+  {
+    return pvLastError;
+  }
 
  protected:
 
-  /*! \brief Handle device error
+  /*! \brief Laset error
    *
-   * \todo Buggy, review !
-   *
-   * This method is called from subclass's
-   *  decodeReadenFrame(mdtPortTransaction) method
-   *  when a frame of type MDT_FC_SCPI_ERR was received.
-   *
-   * Errors <= 0 are handled directly.
-   *  If error is > 0, handleDeviceSpecificError() is called.
-   *
-   * See the SCPI99 standard for more details.
-   *
-   * \param decodedValues See mdtFrameCodecScpi::decodeError().
-   * \post If internal codec has < 2 values, handleDeviceSpecificError() is not called.
+   * \todo Candidate for a common mdtDevice class
    */
-  void handleDeviceError(const QList<QVariant> &decodedValues);
+  mdtError pvLastError;
 
-  /*! \brief Handle device's specific error
+  /*! \brief Get device identification string
    *
-   * \todo Buggy, review !
+   * Can be used for error messages.
+   *  Returns a string with \"Device 'deviceName' : \"
    *
-   * This method is called from handleDeviceError().
-   *
-   * This default implementation simply
-   *  log the error (with mdtError system).
-   *
-   * \param errNum Error number
-   * \param errText Error message
-   * \param deviceSpecificTexts Device's specific informations
-   * \pre Internal codec has at least 2 values.
+   * \todo Candidate for a common mdtDevice class
    */
-  virtual void handleDeviceSpecificError(int errNum, const QString &errText, const QList<QString> &deviceSpecificTexts);
-
-  /*! \brief Log a device error with mdtError system
-   * \param errNum Error number
-   * \param errText Error message
-   * \param deviceSpecificTexts Device's specific informations
-   */
-  void logDeviceError(int errNum, const QString &errText, const QList<QString> &deviceSpecificTexts, mdtError::level_t level);
-
-  mdtUsbtmcPortManager *pvUsbtmcPortManager;
+  QString deviceIdString() const
+  {
+    return tr("Device") + " '" + name() + "' : ";
+  }
 
  private slots:
 
@@ -187,6 +219,8 @@ class mdtDeviceScpi : public mdtDevice
   void queryAboutOperationComplete();
 
  private:
+
+  mdtUsbtmcPort *pvPort;
 
   bool pvOperationComplete;
   int pvOperationCompleteTryLeft;

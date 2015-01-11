@@ -37,6 +37,12 @@ mdtUsbtmcTransferHandler::mdtUsbtmcTransferHandler(libusb_context *usbContext, m
   Q_ASSERT(pvUsbContext != 0);
 }
 
+void mdtUsbtmcTransferHandler::setDeviceName(const QString& name)
+{
+  std::lock_guard<std::mutex> elg(pvLastErrorMutex);
+  pvDeviceName = name;
+}
+
 bool mdtUsbtmcTransferHandler::setup(libusb_device_handle* handle, const mdtUsbDeviceDescriptor & descriptor, uint8_t bInterfaceNumber)
 {
   Q_ASSERT(!descriptor.isEmpty());
@@ -1469,7 +1475,8 @@ bool mdtUsbtmcTransferHandler::processSyncControlTransfer(mdtUsbtmcControlTransf
 
 QString mdtUsbtmcTransferHandler::deviceIdString() const
 {
-  return QObject::tr("Device") + " '" + pvDeviceDescriptor.idString() + "' : ";
+  ///return QObject::tr("Device") + " '" + pvDeviceDescriptor.idString() + "' : ";
+  return QObject::tr("Device") + " '" + pvDeviceName + "' : ";
 }
 
 QString mdtUsbtmcTransferHandler::libusbTransferStatusText(libusb_transfer_status status) const

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,28 +22,34 @@
 #define MDT_DEVICE_U3606A_H
 
 #include "mdtDeviceScpi.h"
-#include "mdtUsbtmcPortManager.h"
-#include "mdtFrameCodecScpiU3606A.h"
 #include "mdtValue.h"
 
 /*! \brief Representation of a Agilent U3606A
- *
- * The U3606A has following I/Os
- *
- *  <table border="1" cellpadding="5">
- *   <tr><th>Type</th><th>Address</th><th>Label short</th><th>Description</th></tr>
- *   <tr><td>Analog input</td><td>0</td><td>MEASURE</td><td>Represent the measurement part</td></tr>
- *   <tr><td>Analog input</td><td>1</td><td>SENSEU</td><td>Represent the voltage sense of the source part</td></tr>
- *   <tr><td>Analog input</td><td>2</td><td>SENSEI</td><td>Represent the current sense of the source part</td></tr>
- *   <tr><td>Analog output</td><td>0</td><td>SOURCE</td><td>Represent the source part</td></tr>
- *  </table>
- *
  */
 class mdtDeviceU3606A : public mdtDeviceScpi
 {
  Q_OBJECT
 
  public:
+
+  /*! \brief Measure type
+   */
+  enum class MeasureType_t
+  {
+    Unknown,        /*!< Unknown measure type */
+    VoltageDc,      /*!< Measure type DC voltage */
+    VoltageAc,      /*!< Measure type AC voltage */
+    CurrentDc,      /*!< Measure type DC current */
+    CurrentAc,      /*!< Measure type AC current */
+    Resistance,     /*!< Measure type resistance */
+    Continuity,     /*!< Measure type continuity */
+    Lresistance,    /*!< Measure type low value reistance */
+    Capacitance,    /*!< Measure type capacitance */
+    Diode,          /*!< Measure type diode */
+    Frequency,      /*!< Measure type frequency */
+    Pwidth,         /*!< Measure type pulse width */
+    Dcycle          /*!< Measure type duty cycle */
+  };
 
   /*! \brief Range for measure
    */
@@ -88,6 +94,15 @@ class mdtDeviceU3606A : public mdtDeviceScpi
    */
   ~mdtDeviceU3606A();
 
+  /*! \brief Connect to device
+   *
+   * \param serialNumber Device serial number. Will be ignored if empty
+   */
+  bool connectToDevice(const QString & serialNumber = QString())
+  {
+    return mdtDeviceScpi::connectToDevice(0x0957, 0x4d18, serialNumber);
+  }
+
   /*! \brief Search and connect to physical device.
    *
    * Will scan available ports and open the first port that
@@ -99,45 +114,42 @@ class mdtDeviceU3606A : public mdtDeviceScpi
    *                       Optionnaly, a serial ID can be set (usefull if many U3606A devices are connected)
    * \return A error listed in mdtAbstractPort::error_t (NoError on success)
    */
-  mdtAbstractPort::error_t connectToDevice(const mdtDeviceInfo &devInfo);
+  ///mdtAbstractPort::error_t connectToDevice(const mdtDeviceInfo &devInfo);
 
   /*! \brief Setup DC voltage measure
    *
    * \param range If range is supported by instrument, it will be set,
    *               else AUTO range is used.
    * \param resolution Resolution to use
-   * \return Value < 0 on error, >= 0 on success
    */
-  int setupVoltageDcMeasure(range_t range, resolution_t resolution);
+  bool setupVoltageDcMeasure(range_t range, resolution_t resolution);
 
   /*! \brief Setup resistance measure
    *
    * \param range If range is supported by instrument, it will be set,
    *               else AUTO range is used.
    * \param resolution Resolution to use
-   * \return Value < 0 on error, >= 0 on success
    */
-  int setupResistanceMeasure(range_t range, resolution_t resolution);
+  bool setupResistanceMeasure(range_t range, resolution_t resolution);
 
   /*! \brief Setup low resistance measure (4 wires)
    *
    * \param range If range is supported by instrument, it will be set,
    *               else AUTO range is used.
    * \param resolution Resolution to use
-   * \return Value < 0 on error, >= 0 on success
    */
-  int setupLowResistanceMeasure(range_t range, resolution_t resolution);
+  bool setupLowResistanceMeasure(range_t range, resolution_t resolution);
 
   /*! \brief Get the measure configuration
    *
    * Will get the device current measure configuration
    *  by sending the CONF? query .
    *
-   * Internal analog measure input is also updated with device's range and unit .
-   *
    * By error, unknown measure type is returned .
    */
-  mdtFrameCodecScpiU3606A::measure_type_t getMeasureConfiguration();
+  MeasureType_t getMeasureConfiguration();
+  
+  ///mdtFrameCodecScpiU3606A::measure_type_t getMeasureConfiguration();
 
   /*! \brief Get measure value
    *
@@ -177,59 +189,13 @@ class mdtDeviceU3606A : public mdtDeviceScpi
 
   /*! \brief Update (G)UI when device's state has changed
    */
-  void onStateChanged(int state);
-
- private slots:
-
-  /*! \brief Decode incoming frames
-   *
-   * \pre I/O's container must be set with setIos()
-   */
-  void decodeReadenFrame(mdtPortTransaction *transaction);
+  ///void onStateChanged(int state);
 
  private:
 
-  /*! \brief Read one analog input on physical device
-   *
-   * This is the device specific implementation to send the query.
-   *  If device handled by subclass has analog inputs, this method should be implemented.
-   *
-   * This method is called from getAnalogInput().
-   *
-   * \param transaction Contains some flags used during query/reply process (address, id, I/O object, ...).
-   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details).
-   * \pre I/O's must be set with setIos().
-   * \pre transaction must be a valid pointer.
-   */
-  int readAnalogInput(mdtPortTransaction *transaction);
-
-  /*! \brief Sequence of queries to send periodically
-   *
-   * This method is called from runQueries().
-   *
-   * \return true if all queries are sent successfully.
-   *
-   * Subclass notes:<br>
-   *  - This default implementation does nothing and allways returns false.
-   *  - This method can be reimplemented periodic queries must be sent to device.
-   */
-  bool queriesSequence();
-
-  /*! \brief Update the measure I/O setup in internal container
-   *
-   * This method is called when a QT_CONF reply was decoded .
-   */
-  void updateMeasureSetup();
-
-  /*! \brief Handle device's specific error
-   *
-   * This method is called from handleDeviceError().
-   */
-  ///void handleDeviceSpecificError();
-
   Q_DISABLE_COPY(mdtDeviceU3606A);
 
-  mdtFrameCodecScpiU3606A *pvCodec;
+  ///mdtFrameCodecScpiU3606A *pvCodec;
 };
 
 #endif  // #ifndef MDT_DEVICE_U3606A_H

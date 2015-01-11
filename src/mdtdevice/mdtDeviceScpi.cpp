@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -30,21 +30,10 @@
 #include <QDebug>
 
 mdtDeviceScpi::mdtDeviceScpi(QObject *parent)
- : mdtDevice(parent)
+/// : mdtDevice(parent)
+ : QObject(parent),
+   pvPort(new mdtUsbtmcPort(this))
 {
-  int timeout;
-
-  pvUsbtmcPortManager = new mdtUsbtmcPortManager;
-  // Setup port manager
-  pvUsbtmcPortManager->config().setReadTimeout(10000);
-  ///connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(decodeReadenFrame(mdtPortTransaction)));
-  ///connect(pvUsbtmcPortManager, SIGNAL(errorStateChanged(int, const QString&, const QString&)), this, SLOT(setStateFromPortError(int, const QString&, const QString&)));
-  connect(pvUsbtmcPortManager, SIGNAL(stateChanged(int)), this, SLOT(setStateFromPortManager(int)));
-  timeout = pvUsbtmcPortManager->config().readTimeout();
-  if(pvUsbtmcPortManager->config().writeTimeout() > timeout){
-    timeout = pvUsbtmcPortManager->config().writeTimeout();
-  }
-  setBackToReadyStateTimeout(2*timeout);
   pvOperationComplete = false;
   pvOperationCompleteTryLeft = 0;
   pvOperationCompleteTimer = new QTimer(this);
@@ -54,101 +43,51 @@ mdtDeviceScpi::mdtDeviceScpi(QObject *parent)
 
 mdtDeviceScpi::~mdtDeviceScpi()
 {
-  stop();
-  delete pvUsbtmcPortManager;
 }
 
-mdtPortManager *mdtDeviceScpi::portManager()
+bool mdtDeviceScpi::connectToDevice(uint16_t idVendor, uint16_t idProduct, const QString & serialNumber)
 {
-  Q_ASSERT(pvUsbtmcPortManager != 0);
-
-  return pvUsbtmcPortManager;
-}
-
-mdtAbstractPort::error_t mdtDeviceScpi::connectToDevice(const mdtDeviceInfo &devInfo)
-{
-  mdtPortInfo *port;
-  QList<mdtPortInfo*> ports;
-  QList<mdtDeviceInfo*> devices;
-  ///mdtDeviceInfo device;
-  int i, j;
-  mdtAbstractPort::error_t retVal;
-
-  // Setup device info
-  ///device = devInfo;
-  ///device.setVendorId(0x0957);
-  ///device.setProductId(0x4d18);
-  // Stop port manager if it is running
-  if(!pvUsbtmcPortManager->isClosed()){
-    pvUsbtmcPortManager->stop();
+  if(!pvPort->openDevice(idVendor, idProduct, serialNumber)){
+    pvLastError = pvPort->lastError();
+    return false;
   }
-  // Scan for ports having a USBTMC device attached
-  port = 0;
-  ports = pvUsbtmcPortManager->scan();
-  for(i=0; i<ports.size(); i++){
-    Q_ASSERT(ports.at(i) != 0);
-    // Search in devices list
-    qDebug() << "port " << ports.at(i)->portName();
-    devices = ports.at(i)->deviceInfoList();
-    for(j=0; j<devices.size(); j++){
-      Q_ASSERT(devices.at(j) != 0);
-      // Check if VID and PID matches
-      if((devices.at(j)->vendorId() == devInfo.vendorId())&&(devices.at(j)->productId() == devInfo.productId())){
-        // If requested, check if serial ID matches
-        if(!devInfo.serialId().isEmpty()){
-          if(devices.at(j)->serialId() == devInfo.serialId()){
-            port = ports.at(i);
-            i = ports.size();
-            break;
-          }
-        }else{
-          // Only PID and VID must match
-          port = ports.at(i);
-          i = ports.size();
-          break;
-        }
-      }
-    }
-  }
-  // Open port if found
-  if(port != 0){
-    portManager()->setPortInfo(*port);
-    if(portManager()->start()){
-      retVal = mdtAbstractPort::NoError;
-    }else{
-      retVal = mdtAbstractPort::UnhandledError;
-    }
-    /**
-    if(portManager()->openPort()){
-      if(portManager()->start()){
-        retVal = mdtAbstractPort::NoError;
-      }else{
-        retVal = mdtAbstractPort::UnhandledError;
-      }
-    }else{
-      retVal = mdtAbstractPort::UnhandledError;
-    }
-    */
-  }else{
-    // Device not found
-    /// \todo Add DeviceNotFound error ?
-    retVal = mdtAbstractPort::PortNotFound;
-  }
-  // Free port info list
-  qDeleteAll(ports);
-  ports.clear();
-
-  return retVal;
+  return true;
 }
 
-int mdtDeviceScpi::sendCommand(const QByteArray &command)
+void mdtDeviceScpi::disconnectFromDevice()
 {
-  return pvUsbtmcPortManager->sendCommand(command);
+  pvPort->close();
 }
 
-QByteArray mdtDeviceScpi::sendQuery(const QByteArray &query)
+bool mdtDeviceScpi::sendCommand(const QByteArray& command, int timeout)
 {
-  return pvUsbtmcPortManager->sendQuery(query);
+  if(!pvPort->sendCommand(command, timeout)){
+    pvLastError = pvPort->lastError();
+    return false;
+  }
+  return true;
+}
+
+QByteArray mdtDeviceScpi::sendQuery(const QByteArray & query, int timeout)
+{
+  QByteArray data = pvPort->sendQuery(query, timeout);
+  if(data.isEmpty()){
+    pvLastError = pvPort->lastError();
+  }
+  return data;
+}
+
+mdtError mdtDeviceScpi::getDeviceError(const QString & errorText)
+{
+  QByteArray data;
+  mdtCodecScpi codec;
+
+  data = sendQuery("SYST:ERR?\n");
+  if(data.isEmpty()){
+    return mdtError();
+  }
+
+  return codec.decodeDeviceError(data, errorText);
 }
 
 bool mdtDeviceScpi::waitOperationComplete(int timeout, int interval)
@@ -175,10 +114,12 @@ bool mdtDeviceScpi::waitOperationComplete(int timeout, int interval)
   pvOperationCompleteTimer->start();
   while(!pvOperationComplete){
     // Check that port manager is not about to close or in error
+    /**
     if(!portManager()->isReady()){
       pvOperationCompleteTimer->stop();
       return false;
     }
+    */
     // Check about operation complete timeout
     if(pvOperationCompleteTryLeft < 1){
       return false;
@@ -188,113 +129,6 @@ bool mdtDeviceScpi::waitOperationComplete(int timeout, int interval)
   }
 
   return true;
-}
-
-int mdtDeviceScpi::checkDeviceError()
-{
-  int bTag;
-  mdtPortTransaction *transaction;
-
-  // Get a new transaction
-  transaction = getNewTransaction();
-  transaction->setQueryReplyMode(false);
-  // Send query
-  bTag = pvUsbtmcPortManager->sendData("SYST:ERR?\n");
-  if(bTag < 0){
-    return bTag;
-  }
-  // Remember query type.
-  ///transaction->setType(MDT_FC_SCPI_ERR);
-  transaction->setType(mdtFrameCodecScpi::QT_ERR);
-  // Send read request
-  bTag = pvUsbtmcPortManager->sendReadRequest(transaction);
-  if(bTag < 0){
-    return bTag;
-  }
-
-  return 0;
-}
-
-void mdtDeviceScpi::handleDeviceError(const QList<QVariant> &decodedValues)
-{
-  int errNum;
-  QString errText;
-  QList<QString> deviceSpecificTexts;
-  int i;
-
-  // Check decoded values
-  if(decodedValues.size() < 2){
-    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": unexpected size of values (excpected min. 2)", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDeviceScpi");
-    e.commit();
-    return;
-  }
-  // Get error number
-  if(decodedValues.at(0).type() != QVariant::Int){
-    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": values contains not a error (First value must be type int)", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDeviceScpi");
-    e.commit();
-    return;
-  }
-  errNum = decodedValues.at(0).toInt();
-  if(errNum == 0){
-    return;
-  }
-  // Get error message
-  if(decodedValues.at(1).type() != QVariant::String){
-    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": values contains not a error (Second value must be type string)", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDeviceScpi");
-    e.commit();
-    return;
-  }
-  errText = decodedValues.at(1).toString();
-  // Get device's specific messages
-  for(i=1; i<decodedValues.size(); i++){
-    deviceSpecificTexts.append(decodedValues.at(i).toString());
-  }
-  // Handling
-  if(errNum > 0){
-    handleDeviceSpecificError(errNum, errText, deviceSpecificTexts);
-  }else{
-    // Standard SCPI errors
-    switch(errNum){
-      default:
-        logDeviceError(errNum, errText, deviceSpecificTexts, mdtError::Error);
-    }
-  }
-
-}
-
-void mdtDeviceScpi::handleDeviceSpecificError(int errNum, const QString &errText, const QList<QString> &deviceSpecificTexts)
-{
-  // In this implementation, we only log error as warning.
-  // The specific subclass should re-implement this method, and handle error.
-  logDeviceError(errNum, errText, deviceSpecificTexts, mdtError::Warning);
-}
-
-void mdtDeviceScpi::logDeviceError(int errNum, const QString &errText, const QList<QString> &deviceSpecificTexts, mdtError::level_t level)
-{
-  QString specificTexts;
-  QString message;
-  int i;
-
-  // Cat specific texts
-  for(i=0; i<deviceSpecificTexts.size(); i++){
-    if(i>0){
-      specificTexts += ";";
-    }
-    specificTexts += deviceSpecificTexts.at(i);
-  }
-  // Build message
-  message = "Device " + name() + " returned error number ";
-  message += QString::number(errNum);
-  message += " , message: " + errText;
-  if(specificTexts.size() > 0){
-    message += " , details: " + specificTexts;
-  }
-  mdtError e(MDT_DEVICE_ERROR, message, level);
-  MDT_ERROR_SET_SRC(e, "mdtDeviceScpi");
-  e.commit();
 }
 
 void mdtDeviceScpi::queryAboutOperationComplete()

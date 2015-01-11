@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -38,10 +38,10 @@ class mdtPortManagerTest : public mdtTest
   void portTest();
 
   // Check USB module (needs a device attached)
-  void usbPortTest();
+  ///void usbPortTest();
 
   // Check USBTMC module (needs a device attached)
-  void usbTmcPortTest();
+  ///void usbTmcPortTest();
 
   // Check MODBUS/TCP module (needs a device attached)
   void modbusTcpPortTest();

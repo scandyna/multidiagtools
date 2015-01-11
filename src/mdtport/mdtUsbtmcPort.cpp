@@ -81,9 +81,42 @@ QList<mdtUsbDeviceDescriptor> mdtUsbtmcPort::scan()
   return usbtmcDevices;
 }
 
+void mdtUsbtmcPort::setDeviceName(const QString & name)
+{
+  pvDeviceName = name;
+  if(pvTransferHandler != 0){
+    pvTransferHandler->setDeviceName(pvDeviceName);
+  }
+}
+
+bool mdtUsbtmcPort::openDevice(uint16_t idVendor, uint16_t idProduct, const QString& serialNumber)
+{
+  // Init USB context if needed
+  if(pvUsbContext == 0){
+    if(!initLibusbConext()){
+      return false;
+    }
+  }
+  // Enumerate UDBTMC devices
+  pvDeviceList->clear();
+  if(!pvDeviceList->scan()){
+    pvLastError = pvDeviceList->lastError();
+    return false;
+  }
+  // Open requested device
+  mdtUsbDeviceDescriptor descriptor = pvDeviceList->findDevice(idVendor, idProduct, serialNumber);
+  if(descriptor.isEmpty()){
+    pvLastError = pvDeviceList->lastError();
+    return false;
+  }
+
+  return openDevice(descriptor, 0, true);
+}
+
 bool mdtUsbtmcPort::openDevice(const mdtUsbDeviceDescriptor& deviceDescriptor, uint8_t bInterfaceNumber, bool clearDeviceList)
 {
-  // Check given devoce descriptor
+  close();
+  // Check given device descriptor
   if(deviceDescriptor.isEmpty()){
     pvLastError.setError(tr("Given device descriptor is empty (did you use scan() to obtain it ?)"), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtUsbtmcPort");
@@ -96,6 +129,12 @@ bool mdtUsbtmcPort::openDevice(const mdtUsbDeviceDescriptor& deviceDescriptor, u
       return false;
     }
   }
+  Q_ASSERT(pvTransferHandler != 0);
+  // Set device name
+  if(pvDeviceName.isEmpty()){
+    pvDeviceName = deviceDescriptor.idString();
+  }
+  pvTransferHandler->setDeviceName(pvDeviceName);
   // Start thread
   if(!pvThread->start(deviceDescriptor, bInterfaceNumber)){
     pvLastError = pvTransferHandler->lastError();

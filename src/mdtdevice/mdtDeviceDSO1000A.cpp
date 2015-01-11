@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -25,37 +25,37 @@
 mdtDeviceDSO1000A::mdtDeviceDSO1000A(QObject *parent)
  : mdtDeviceScpi(parent)
 {
-  pvCodec = new mdtFrameCodecScpi;
+  ///pvCodec = new mdtFrameCodecScpi;  /// \todo use new codec
   // Setup port manager
-  portManager()->config().setReadFrameSize(10000);
-  portManager()->config().setReadQueueSize(5);
-  portManager()->config().setReadTimeout(30000);
-  portManager()->config().setWriteFrameSize(512);
-  portManager()->config().setWriteQueueSize(1);
-  connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(mdtPortTransaction*)), this, SLOT(decodeReadenFrame(mdtPortTransaction*)));
-  ///connect(pvUsbtmcPortManager, SIGNAL(errorStateChanged(int, const QString&, const QString&)), this, SLOT(setStateFromPortError(int, const QString&, const QString&)));
-  connect(pvUsbtmcPortManager, SIGNAL(stateChanged(int)), this, SLOT(setStateFromPortManager(int)));
+//   portManager()->config().setReadFrameSize(10000);
+//   portManager()->config().setReadQueueSize(5);
+//   portManager()->config().setReadTimeout(30000);
+//   portManager()->config().setWriteFrameSize(512);
+//   portManager()->config().setWriteQueueSize(1);
+//   connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(mdtPortTransaction*)), this, SLOT(decodeReadenFrame(mdtPortTransaction*)));
+//   ///connect(pvUsbtmcPortManager, SIGNAL(errorStateChanged(int, const QString&, const QString&)), this, SLOT(setStateFromPortError(int, const QString&, const QString&)));
+//   connect(pvUsbtmcPortManager, SIGNAL(stateChanged(int)), this, SLOT(setStateFromPortManager(int)));
 }
 
 mdtDeviceDSO1000A::~mdtDeviceDSO1000A()
 {
-  delete pvCodec;
+  ///delete pvCodec;
 }
 
-mdtAbstractPort::error_t mdtDeviceDSO1000A::connectToDevice(const mdtDeviceInfo &devInfo)
-{
-  mdtDeviceInfo device;
+// mdtAbstractPort::error_t mdtDeviceDSO1000A::connectToDevice(const mdtDeviceInfo &devInfo)
+// {
+//   mdtDeviceInfo device;
+// 
+//   // Setup device info
+//   device = devInfo;
+//   device.setVendorId(0x0957);
+//   device.setProductId(0x0588);
+// 
+//   ///return mdtDeviceScpi::connectToDevice(device);
+// }
 
-  // Setup device info
-  device = devInfo;
-  device.setVendorId(0x0957);
-  device.setProductId(0x0588);
-
-  return mdtDeviceScpi::connectToDevice(device);
-}
-
-void mdtDeviceDSO1000A::decodeReadenFrame(mdtPortTransaction *transaction)
-{
-  Q_ASSERT(transaction != 0);
-
-}
+// void mdtDeviceDSO1000A::decodeReadenFrame(mdtPortTransaction *transaction)
+// {
+//   Q_ASSERT(transaction != 0);
+// 
+// }

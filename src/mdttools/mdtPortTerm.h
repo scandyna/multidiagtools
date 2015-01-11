@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -37,7 +37,7 @@
 class QLabel;
 class mdtPortStatusWidget;
 class mdtSerialPortManager;
-class mdtUsbtmcPortManager;
+class mdtUsbtmcPort;
 
 /*! \brief Mini port treminal
  */
@@ -62,7 +62,15 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
 
   /*! \brief Send command to current port
    */
-  void sendCmd();
+  ///void sendCmd();
+
+  /*! \brief Send command/query to serial port
+   */
+  void sendCommandToSerialPort();
+
+  /*! \brief Send command/query to USBTMC port
+   */
+  void sendCommandToUsbtmcPort();
 
   /*! \brief Abort command transmission
    */
@@ -84,8 +92,17 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
   // Set/unset port type to serial port
   void attachToSerialPort();
   void detachFromSerialPort();
+
   // Call port setup dialog
-  void portSetup();
+  ///void portSetup();
+
+  /*! \brief Setup serial port
+   */
+  void setupSerialPort();
+
+  /*! \brief Setup USBTMC port
+   */
+  void setupUsbtmcPort();
 
   // Set/unset port type to USBTMC port
   void attachToUsbtmcPort();
@@ -134,14 +151,6 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
    */
   void showStatusMessage(const QString &message, int timeout = 0);
 
-  /*! \brief Send command/query to serial port
-   */
-  bool sendCommandToSerialPort(const QString &command);
-
-  /*! \brief Send command/query to USBTMC port
-   */
-  bool sendCommandToUsbtmcPort(const QString &command);
-
   // Diseable copy
   Q_DISABLE_COPY(mdtPortTerm);
 
@@ -149,9 +158,10 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
   mdtSerialPortManager *pvSerialPortManager;
   mdtSerialPortCtlWidget *pvSerialPortCtlWidget;
   // USBTMC port
-  mdtUsbtmcPortManager *pvUsbtmcPortManager;
+  ///mdtUsbtmcPortManager *pvUsbtmcPortManager;
+  mdtUsbtmcPort *pvUsbtmcPort;
   // Current port manager
-  mdtPortManager *pvCurrentPortManager;
+  ///mdtPortManager *pvCurrentPortManager;
   // Translations menu
   QActionGroup *pvLanguageActionGroup;
   // Port menu

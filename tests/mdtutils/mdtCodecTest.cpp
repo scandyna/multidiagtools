@@ -52,10 +52,10 @@ void mdtCodecTest::scpiDecodeIdnTest()
 
 void mdtCodecTest::scpiDecodeIdnBenchmark()
 {
-  mdtCodecScpi codec;
   mdtScpiIdnResponse r;
 
   QBENCHMARK{
+    mdtCodecScpi codec;
     r = codec.decodeIdn("Agilent Technologies,U3606A,MY00000000,02.00-02.00-02.01\n");
   }
   if(r.manufacturer.isEmpty()){
@@ -98,10 +98,10 @@ void mdtCodecTest::scpiDecodeBoolTest()
 
 void mdtCodecTest::scpiDecodeBoolBenchmark()
 {
-  mdtCodecScpi codec;
   mdtValueBool v;
 
   QBENCHMARK{
+    mdtCodecScpi codec;
     v = codec.decodeValueBool("1");
   }
   if(v.isNull()){
@@ -171,10 +171,10 @@ void mdtCodecTest::scpiDecodeIntTest()
 
 void mdtCodecTest::scpiDecodeIntBenchmark()
 {
-  mdtCodecScpi codec;
   mdtValueInt v;
 
   QBENCHMARK{
+    mdtCodecScpi codec;
     v = codec.decodeValueInt("1");
   }
   if(v.isNull()){
@@ -266,10 +266,10 @@ void mdtCodecTest::scpiDecodeDoubleTest()
 
 void mdtCodecTest::scpiDecodeDoubleBenchmark()
 {
-  mdtCodecScpi codec;
   mdtValueDouble x;
 
   QBENCHMARK{
+    mdtCodecScpi codec;
     x = codec.decodeValueDouble("1");
   }
   if(x.isNull()){
@@ -296,10 +296,10 @@ void mdtCodecTest::scpiDecodeErrorTest()
 
 void mdtCodecTest::scpiDecodeErrorBenchmark()
 {
-  mdtCodecScpi codec;
   mdtError e;
 
   QBENCHMARK{
+    mdtCodecScpi codec;
     e = codec.decodeDeviceError("-133,\"Undefined header\"\n");
   }
   if(e.level() == mdtError::NoError){
@@ -394,10 +394,10 @@ void mdtCodecTest::scpiDecodeFunctionParameterTest()
 
 void mdtCodecTest::scpiDecodeFunctionParameterBenchmark()
 {
-  mdtCodecScpi codec;
   mdtScpiFunctionFarameter fp;
 
   QBENCHMARK{
+    mdtCodecScpi codec;
     fp = codec.decodeFunctionParameters(" VOLT +1.000000E+01,+1.000000E-06\n");
   }
   if(fp.fundamentalMeasurementCommand() == mdtScpiFunctionFarameter::FundamentalMeasurementCommand_t::Unknown){

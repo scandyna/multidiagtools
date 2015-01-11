@@ -12,20 +12,17 @@ set (HEADER_FILES
           mdtPortThread.h
           mdtPortThreadHelper.h
           mdtPortThreadHelperSocket.h
-          #mdtPortThreadHelperPort.h
           mdtPortReadThread.h
           mdtPortWriteThread.h
           mdtTcpSocket.h
           mdtTcpSocketThread.h
-          mdtUsbPortThread.h
-          mdtUsbtmcPortThread.h
           # Port info
           mdtPortInfoCbHandler.h
           # Port manager
           mdtPortManager.h
           mdtPortManagerStateMachine.h
-          mdtUsbPortManager.h
-          mdtUsbtmcPortManager.h
+          #mdtUsbPortManager.h
+          #mdtUsbtmcPortManager.h
           mdtModbusTcpPortManager.h
           # Port config
           mdtPortConfigWidget.h
@@ -45,12 +42,9 @@ set (HEADER_FILES
 set (SOURCES_FILES 
           # Port I/O
           mdtAbstractPort.cpp
-          mdtUsbPort.cpp
-          mdtUsbPortThread.cpp
           mdtPortThreadHelper.cpp
           mdtPortThreadHelperPort.cpp
           mdtPortThreadHelperSocket.cpp
-          mdtUsbtmcPortThread.cpp
           mdtUsbDeviceDescriptor.cpp
           mdtUsbConfigDescriptor.cpp
           mdtUsbInterfaceDescriptor.cpp
@@ -68,8 +62,6 @@ set (SOURCES_FILES
           # Port manager
           mdtPortManager.cpp
           mdtPortManagerStateMachine.cpp
-          mdtUsbPortManager.cpp
-          mdtUsbtmcPortManager.cpp
           mdtModbusTcpPortManager.cpp
           # Statud Widget
           mdtPortStatusWidget.cpp
@@ -86,7 +78,6 @@ set (SOURCES_FILES
           mdtUsbTransfer.cpp
           mdtUsbControlTransfer.cpp
           mdtUsbPortThreadNew.cpp
-          #mdtUsbTransferPool.cpp
           # New USBTMC API
           mdtUsbtmcFrame.cpp
           mdtUsbtmcControlTransfer.cpp

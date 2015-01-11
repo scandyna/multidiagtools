@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtAbstractPort.h"
-#include "mdtFrameUsbTmc.h"
+///#include "mdtFrameUsbTmc.h"
 
 mdtAbstractPort::mdtAbstractPort(QObject *parent)
  : QObject(parent)
@@ -241,9 +241,9 @@ void mdtAbstractPort::initQueues()
         frame = new mdtFrameModbusTcp;
         break;
       // USBTMC frame type
-      case mdtFrame::FT_USBTMC:
-        frame = new mdtFrameUsbTmc;
-        break;
+      ///case mdtFrame::FT_USBTMC:
+      ///  frame = new mdtFrameUsbTmc;
+      ///  break;
       // Base frame type
       default:
         frame = new mdtFrame;
@@ -272,9 +272,9 @@ void mdtAbstractPort::initQueues()
         frame = new mdtFrameModbusTcp;
         break;
       // USBTMC frame type
-      case mdtFrame::FT_USBTMC:
-        frame = new mdtFrameUsbTmc;
-        break;
+      ///case mdtFrame::FT_USBTMC:
+      ///  frame = new mdtFrameUsbTmc;
+      ///  break;
       // Base frame type
       default:
         frame = new mdtFrame;

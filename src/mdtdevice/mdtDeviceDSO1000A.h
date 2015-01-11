@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,8 +22,6 @@
 #define MDT_DEVICE_DSO1000A_H
 
 #include "mdtDeviceScpi.h"
-#include "mdtUsbtmcPortManager.h"
-#include "mdtFrameCodecScpi.h"
 
 class mdtDeviceDSO1000A : public mdtDeviceScpi
 {
@@ -31,9 +29,22 @@ class mdtDeviceDSO1000A : public mdtDeviceScpi
 
  public:
 
-    mdtDeviceDSO1000A(QObject *parent = 0);
+  /*! \brief Construct a DSO1000A device
+   */
+  mdtDeviceDSO1000A(QObject *parent = 0);
 
-    ~mdtDeviceDSO1000A();
+  /*! \brief Destructor
+   */
+  ~mdtDeviceDSO1000A();
+
+  /*! \brief Connect to device
+   *
+   * \param serialNumber Device serial number. Will be ignored if empty
+   */
+  bool connectToDevice(const QString & serialNumber = QString())
+  {
+    return mdtDeviceScpi::connectToDevice(0x0957, 0x0588, serialNumber);
+  }
 
   /*! \brief Search and connect to physical device.
    *
@@ -46,21 +57,21 @@ class mdtDeviceDSO1000A : public mdtDeviceScpi
    *                       Optionnaly, a serial ID can be set (usefull if many U3606A devices are connected)
    * \return A error listed in mdtAbstractPort::error_t (NoError on success)
    */
-  mdtAbstractPort::error_t connectToDevice(const mdtDeviceInfo &devInfo);
+  ///mdtAbstractPort::error_t connectToDevice(const mdtDeviceInfo &devInfo);
 
- private slots:
+ ///private slots:
 
   /*! \brief Decode incoming frames
    *
    * \pre I/O's container must be set with setIos()
    */
-  void decodeReadenFrame(mdtPortTransaction *transaction);
+  ///void decodeReadenFrame(mdtPortTransaction *transaction);
 
 private:
 
   Q_DISABLE_COPY(mdtDeviceDSO1000A);
 
-  mdtFrameCodecScpi *pvCodec;
+ /// mdtFrameCodecScpi *pvCodec;
 
 };
 
