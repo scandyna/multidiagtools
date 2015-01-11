@@ -617,7 +617,7 @@ Additional Inherited Members</h2></td></tr>
 <p>QModelIndex index; int col;</p>
 <p>col = pvTestItemViewTableModel-&gt;fieldIndex("Id_PK"); Q_ASSERT(col &gt;= 0); index = pvTestItemViewTableModel-&gt;index(pvCurrentTestItemRow, col);</p>
 <p>///</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000088">Todo:</a></b></dt><dd>Provisoire ! col = pvTestItemViewTableModel-&gt;fieldIndex("SequenceNumber"); QModelIndex index2; index2 = pvTestItemViewTableModel-&gt;index(pvCurrentTestItemRow, col); qDebug() &lt;&lt; "mdtTtTest - current seq #: " &lt;&lt; pvTestItemViewTableModel-&gt;data(index2);</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000081">Todo:</a></b></dt><dd>Provisoire ! col = pvTestItemViewTableModel-&gt;fieldIndex("SequenceNumber"); QModelIndex index2; index2 = pvTestItemViewTableModel-&gt;index(pvCurrentTestItemRow, col); qDebug() &lt;&lt; "mdtTtTest - current seq #: " &lt;&lt; pvTestItemViewTableModel-&gt;data(index2);</dd></dl>
 <p>return pvTestItemViewTableModel-&gt;data(index); if(!addRouteDataToTestNodeSetupData(tnSetupData, testModelItemId, nodeIdList.at(i))){ ok = false; return tiSetupData; } if(!addNodeUnitSetupDataToTestNodeSetupData(tnSetupData, testModelItemId, nodeIdList.at(i))){ ok = false; return tiSetupData; } // Add all unit setup data that are part of current node for(k = 0; k &lt; dataList.size(); ++k){ id = dataList.at(k).value("TestNode_Id_FK").toInt(); if(nodeIdList.at(i) == id){ tnuSetupData = dataList.at(k); if(tnSetupData.nodeIdentification().isEmpty()){ tnSetupData.setNodeIdentification(tnuSetupData.value("NodeIdentification").toString()); } tnSetupData.addUnitSetup(tnuSetupData); } } </p>
 
 <p>Definition at line <a class="el" href="mdt_tt_test_8cpp_source.html#l00453">453</a> of file <a class="el" href="mdt_tt_test_8cpp_source.html">mdtTtTest.cpp</a>.</p>
@@ -933,7 +933,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 11 2015 04:05:42 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jan 11 2015 16:42:20 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

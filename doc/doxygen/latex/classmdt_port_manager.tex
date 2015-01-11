@@ -12,7 +12,8 @@ Port manager base class.
 
 
 
-Inheritance diagram for mdt\-Port\-Manager\-:\nopagebreak
+Inheritance diagram for mdt\-Port\-Manager\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -230,7 +231,7 @@ Q\-List$<$ \hyperlink{classmdt_port_thread}{mdt\-Port\-Thread} $\ast$ $>$ \hyper
 Port manager base class. 
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000029}{Todo}]Port manager has no raison to inherit \hyperlink{class_q_thread}{Q\-Thread} -\/$>$ make it inherit \hyperlink{class_q_object}{Q\-Object} \end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000030}{Todo}]Port manager has no raison to inherit \hyperlink{class_q_thread}{Q\-Thread} -\/$>$ make it inherit \hyperlink{class_q_object}{Q\-Object} \end{DoxyRefDesc}
 
 
 Manages a port based on \hyperlink{classmdt_abstract_port}{mdt\-Abstract\-Port} an several threads based on \hyperlink{classmdt_port_thread}{mdt\-Port\-Thread}. The goal is to hide the complexity of the port A\-P\-I.
@@ -305,7 +306,7 @@ Some protocols support frame identifier (like M\-O\-D\-B\-U\-S/\-T\-C\-P, U\-S\-
 This base class can be used directly for ports that supports raw transfers. For specific protocol, it can be subclassed.
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000030}{Todo}]Document init, open, close, ...\end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000031}{Todo}]Document init, open, close, ...\end{DoxyRefDesc}
 
 
 Now, we can see the data transfer workflow\-:
@@ -477,10 +478,6 @@ Definition at line 596 of file mdt\-Port\-Manager.\-cpp.
 
 References mdt\-Abstract\-Port\-::flush(), and pv\-Port.
 
-
-
-Referenced by mdt\-Port\-Term\-::on\-\_\-pb\-Send\-Cmd\-Abort\-\_\-clicked().
-
 \hypertarget{classmdt_port_manager_ab62591409d019a4a2576b4310c411b8f}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!add\-Thread@{add\-Thread}}
 \index{add\-Thread@{add\-Thread}!mdtPortManager@{mdt\-Port\-Manager}}
 \subsubsection[{add\-Thread}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Port\-Manager\-::add\-Thread (
@@ -509,7 +506,7 @@ References from\-Thread\-New\-Frame\-Readen(), mdt\-Port\-Thread\-::handles\-Tim
 
 
 
-Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::mdt\-Modbus\-Tcp\-Port\-Manager(), mdt\-Serial\-Port\-Manager\-::mdt\-Serial\-Port\-Manager(), mdt\-Usbtmc\-Port\-Manager\-::mdt\-Usbtmc\-Port\-Manager(), and mdt\-Usb\-Port\-Manager\-::start().
+Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::mdt\-Modbus\-Tcp\-Port\-Manager(), and mdt\-Serial\-Port\-Manager\-::mdt\-Serial\-Port\-Manager().
 
 \hypertarget{classmdt_port_manager_a4b584d9005316be9991e6026e4c5e5a4}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!add\-Transaction\-Done@{add\-Transaction\-Done}}
 \index{add\-Transaction\-Done@{add\-Transaction\-Done}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -535,7 +532,7 @@ References mdt\-Port\-Transaction\-::id(), and transactions\-Done\-Contains().
 
 
 
-Referenced by mdt\-Usbtmc\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), mdt\-Modbus\-Tcp\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), and from\-Thread\-New\-Frame\-Readen().
+Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), and from\-Thread\-New\-Frame\-Readen().
 
 \hypertarget{classmdt_port_manager_ac58ed84e0e9230d1931557bc4bbe8a50}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!add\-Transaction\-Pending@{add\-Transaction\-Pending}}
 \index{add\-Transaction\-Pending@{add\-Transaction\-Pending}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -565,7 +562,7 @@ References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, mdt\-Port\-Transaction
 
 
 
-Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), send\-Data(), and mdt\-Usbtmc\-Port\-Manager\-::send\-Read\-Request().
+Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), and send\-Data().
 
 \hypertarget{classmdt_port_manager_ace8065f1f5083041ee7f65c2892bc77d}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!close\-Port@{close\-Port}}
 \index{close\-Port@{close\-Port}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -613,7 +610,7 @@ References mdt\-Port\-Transaction\-::is\-Query\-Reply\-Mode(), keep\-Transaction
 
 
 
-Referenced by mdt\-Usbtmc\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), mdt\-Modbus\-Tcp\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), and from\-Thread\-New\-Frame\-Readen().
+Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), and from\-Thread\-New\-Frame\-Readen().
 
 \hypertarget{classmdt_port_manager_a9cf3ea2da38f81682695b37448712ffd}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!config@{config}}
 \index{config@{config}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -645,7 +642,7 @@ References mdt\-Abstract\-Port\-::config(), and pv\-Port.
 
 
 
-Referenced by mdt\-Device\-D\-S\-O1000\-A\-::mdt\-Device\-D\-S\-O1000\-A(), mdt\-Device\-Modbus\-::mdt\-Device\-Modbus(), mdt\-Device\-Scpi\-::mdt\-Device\-Scpi(), mdt\-Device\-U3606\-A\-::mdt\-Device\-U3606\-A(), mdt\-Modbus\-Tcp\-Port\-Manager\-::mdt\-Modbus\-Tcp\-Port\-Manager(), mdt\-Usb\-Port\-Manager\-::mdt\-Usb\-Port\-Manager(), open\-Port(), mdt\-Usbtmc\-Port\-Manager\-::send\-Read\-Request(), wait\-One\-Transaction\-Done(), and wait\-Transaction\-Done().
+Referenced by mdt\-Device\-Modbus\-::mdt\-Device\-Modbus(), mdt\-Modbus\-Tcp\-Port\-Manager\-::mdt\-Modbus\-Tcp\-Port\-Manager(), open\-Port(), wait\-One\-Transaction\-Done(), and wait\-Transaction\-Done().
 
 \hypertarget{classmdt_port_manager_a735b7dc766fc2f45fb2cf9772c4201b0}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!config@{config}}
 \index{config@{config}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -692,7 +689,7 @@ References mdt\-State\-Machine\-::current\-State().
 
 
 
-Referenced by mdt\-Device\-::current\-State(), is\-Closed(), mdt\-Usbtmc\-Port\-Manager\-::is\-Ready(), mdt\-Modbus\-Tcp\-Port\-Manager\-::is\-Ready(), is\-Ready(), on\-Threads\-Error\-Occured(), start(), wait\-One\-Transaction\-Done(), and wait\-Transaction\-Done().
+Referenced by mdt\-Device\-::current\-State(), is\-Closed(), mdt\-Modbus\-Tcp\-Port\-Manager\-::is\-Ready(), is\-Ready(), on\-Threads\-Error\-Occured(), start(), wait\-One\-Transaction\-Done(), and wait\-Transaction\-Done().
 
 \hypertarget{classmdt_port_manager_a19abf29c8948cde0337d67c9722c25aa}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!current\-Transaction\-Id@{current\-Transaction\-Id}}
 \index{current\-Transaction\-Id@{current\-Transaction\-Id}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -711,7 +708,7 @@ Definition at line 636 of file mdt\-Port\-Manager.\-cpp.
 
 
 
-Referenced by from\-Thread\-New\-Frame\-Readen(), mdt\-Usbtmc\-Port\-Manager\-::send\-Data(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), send\-Data(), mdt\-Usbtmc\-Port\-Manager\-::send\-Read\-Request(), and mdt\-Usbtmc\-Port\-Manager\-::send\-Read\-Status\-Byte\-Request().
+Referenced by from\-Thread\-New\-Frame\-Readen(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), and send\-Data().
 
 \hypertarget{classmdt_port_manager_a39cb4af4aedc0b6b7c4d4f53002c3fd1}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!detach\-Port@{detach\-Port}}
 \index{detach\-Port@{detach\-Port}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -744,7 +741,7 @@ References is\-Closed(), pv\-Port, remove\-Threads(), and stop().
 
 
 
-Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::$\sim$mdt\-Modbus\-Tcp\-Port\-Manager(), mdt\-Serial\-Port\-Manager\-::$\sim$mdt\-Serial\-Port\-Manager(), and mdt\-Usb\-Port\-Manager\-::$\sim$mdt\-Usb\-Port\-Manager().
+Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::$\sim$mdt\-Modbus\-Tcp\-Port\-Manager(), and mdt\-Serial\-Port\-Manager\-::$\sim$mdt\-Serial\-Port\-Manager().
 
 \hypertarget{classmdt_port_manager_a97b91e7c1641836eb6afb47fd244a18e}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!flush@{flush}}
 \index{flush@{flush}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -818,10 +815,6 @@ Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935ef
 \end{DoxyPrecond}
 
 
-Reimplemented in \hyperlink{classmdt_usb_port_manager_a982256ed17db155e1c95d544683a6dba}{mdt\-Usb\-Port\-Manager}.
-
-
-
 Definition at line 518 of file mdt\-Port\-Manager.\-cpp.
 
 
@@ -847,7 +840,7 @@ Definition at line 535 of file mdt\-Port\-Manager.\-cpp.
 
 
 
-Referenced by flush(), and mdt\-Usb\-Port\-Manager\-::flush\-In().
+Referenced by flush().
 
 \hypertarget{classmdt_port_manager_a3f0c2722a41c49de2bea9013bccd049c}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!flush\-Out@{flush\-Out}}
 \index{flush\-Out@{flush\-Out}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -871,10 +864,6 @@ Flush output buffers.
 \begin{DoxyPrecond}{Precondition}
 Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{set\-Port()} before calling this method. 
 \end{DoxyPrecond}
-
-
-Reimplemented in \hyperlink{classmdt_usb_port_manager_ab723086376175c40635df44adf358985}{mdt\-Usb\-Port\-Manager}.
-
 
 
 Definition at line 540 of file mdt\-Port\-Manager.\-cpp.
@@ -902,7 +891,7 @@ Definition at line 547 of file mdt\-Port\-Manager.\-cpp.
 
 
 
-Referenced by flush(), and mdt\-Usb\-Port\-Manager\-::flush\-Out().
+Referenced by flush().
 
 \hypertarget{classmdt_port_manager_aad801de5f93a3619d98b7ea3cae6b999}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!flush\-Transactions\-Done@{flush\-Transactions\-Done}}
 \index{flush\-Transactions\-Done@{flush\-Transactions\-Done}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -969,7 +958,7 @@ For subclass that handle frames with I\-Ds, this method must be reimplemented. T
 \hyperlink{classmdt_port_thread}{mdt\-Port\-Thread}
 \end{DoxySeeAlso}
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000028}{Todo}]A méditer\-:
+\item[\hyperlink{todo__todo000029}{Todo}]A méditer\-:
 \begin{DoxyItemize}
 \item Lock le mutex
 \item Prendre les frames disponibles (-\/$>$ sdans une liste ...)
@@ -1020,7 +1009,7 @@ References mdt\-Port\-Transaction\-::clear(), mdt\-Error\-::commit(), M\-D\-T\-\
 
 
 
-Referenced by from\-Thread\-New\-Frame\-Readen(), mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Hardware\-Node\-Address(), mdt\-Device\-::get\-New\-Transaction(), mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Register\-Values(), mdt\-Usbtmc\-Port\-Manager\-::send\-Data(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), send\-Data(), mdt\-Usbtmc\-Port\-Manager\-::send\-Query(), mdt\-Usbtmc\-Port\-Manager\-::send\-Read\-Request(), and mdt\-Modbus\-Tcp\-Port\-Manager\-::set\-Register\-Values().
+Referenced by from\-Thread\-New\-Frame\-Readen(), mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Hardware\-Node\-Address(), mdt\-Device\-::get\-New\-Transaction(), mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Register\-Values(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), send\-Data(), and mdt\-Modbus\-Tcp\-Port\-Manager\-::set\-Register\-Values().
 
 \hypertarget{classmdt_port_manager_a4d009936a0a5130f3bfecb69fee4ce42}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!increment\-Current\-Transaction\-Id@{increment\-Current\-Transaction\-Id}}
 \index{increment\-Current\-Transaction\-Id@{increment\-Current\-Transaction\-Id}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -1040,7 +1029,7 @@ Definition at line 641 of file mdt\-Port\-Manager.\-cpp.
 
 
 
-Referenced by from\-Thread\-New\-Frame\-Readen(), mdt\-Usbtmc\-Port\-Manager\-::send\-Data(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), send\-Data(), mdt\-Usbtmc\-Port\-Manager\-::send\-Read\-Request(), and mdt\-Usbtmc\-Port\-Manager\-::send\-Read\-Status\-Byte\-Request().
+Referenced by from\-Thread\-New\-Frame\-Readen(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), and send\-Data().
 
 \hypertarget{classmdt_port_manager_aeecbec49376838ab3547729636166d97}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!is\-Closed@{is\-Closed}}
 \index{is\-Closed@{is\-Closed}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -1063,7 +1052,7 @@ References current\-State(), and Port\-Closed.
 
 
 
-Referenced by add\-Thread(), mdt\-Device\-Modbus\-Wago\-::connect\-To\-Device(), mdt\-Device\-Scpi\-::connect\-To\-Device(), mdt\-Device\-Modbus\-::connect\-To\-Device(), detach\-Port(), mdt\-Usb\-Port\-Manager\-::read\-Until\-Short\-Packet\-Received(), remove\-Threads(), mdt\-Usb\-Port\-Manager\-::scan(), mdt\-Usbtmc\-Port\-Manager\-::scan(), mdt\-Serial\-Port\-Manager\-::scan(), mdt\-Modbus\-Tcp\-Port\-Manager\-::scan(), mdt\-Usb\-Port\-Manager\-::send\-Control\-Request(), mdt\-Usbtmc\-Port\-Manager\-::send\-Data(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), send\-Data(), mdt\-Usbtmc\-Port\-Manager\-::send\-Read\-Request(), set\-Port(), set\-Port\-Info(), set\-Port\-Name(), start(), stop(), mdt\-Modbus\-Tcp\-Port\-Manager\-::try\-To\-Connect(), mdt\-Usb\-Port\-Manager\-::wait\-Readen\-Control\-Response(), and wait\-Transaction\-Possible().
+Referenced by add\-Thread(), mdt\-Device\-Modbus\-Wago\-::connect\-To\-Device(), mdt\-Device\-Modbus\-::connect\-To\-Device(), detach\-Port(), remove\-Threads(), mdt\-Serial\-Port\-Manager\-::scan(), mdt\-Modbus\-Tcp\-Port\-Manager\-::scan(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), send\-Data(), set\-Port(), set\-Port\-Info(), set\-Port\-Name(), start(), stop(), mdt\-Modbus\-Tcp\-Port\-Manager\-::try\-To\-Connect(), and wait\-Transaction\-Possible().
 
 \hypertarget{classmdt_port_manager_a6dc2798324521d177fb8f79d4f6c5f0f}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!is\-Ready@{is\-Ready}}
 \index{is\-Ready@{is\-Ready}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -1080,7 +1069,7 @@ Internally, the current\-State is used to check if port manager is ready. This i
 
 For some port type, it can be mandatory to be connected to device before any data can be transferred. In such case, reimplement this method. 
 
-Reimplemented in \hyperlink{classmdt_modbus_tcp_port_manager_a5477eb7e8d57c5a42004046b426e39b6}{mdt\-Modbus\-Tcp\-Port\-Manager}, and \hyperlink{classmdt_usbtmc_port_manager_a0b90ceb0bbf424222ec878a355d206d7}{mdt\-Usbtmc\-Port\-Manager}.
+Reimplemented in \hyperlink{classmdt_modbus_tcp_port_manager_a5477eb7e8d57c5a42004046b426e39b6}{mdt\-Modbus\-Tcp\-Port\-Manager}.
 
 
 
@@ -1092,7 +1081,7 @@ References current\-State(), Port\-Ready, and Ready.
 
 
 
-Referenced by mdt\-Device\-::is\-Ready(), mdt\-Usb\-Port\-Manager\-::send\-Control\-Request(), send\-Data(), start(), wait\-One\-Transaction\-Done(), wait\-Transaction\-Done(), and wait\-Transaction\-Possible().
+Referenced by mdt\-Device\-::is\-Ready(), send\-Data(), start(), wait\-One\-Transaction\-Done(), wait\-Transaction\-Done(), and wait\-Transaction\-Possible().
 
 \hypertarget{classmdt_port_manager_a798ce0939234870ae3b9995108e54380}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!keep\-Transactions\-Done@{keep\-Transactions\-Done}}
 \index{keep\-Transactions\-Done@{keep\-Transactions\-Done}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -1139,7 +1128,7 @@ References mdt\-Error\-::commit(), mdt\-Abstract\-Port\-::lock\-Mutex(), M\-D\-T
 
 
 
-Referenced by mdt\-Usb\-Port\-Manager\-::from\-Thread\-Control\-Response\-Readen(), mdt\-Usbtmc\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), mdt\-Modbus\-Tcp\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), from\-Thread\-New\-Frame\-Readen(), mdt\-Usb\-Port\-Manager\-::read\-Until\-Short\-Packet\-Received(), mdt\-Usb\-Port\-Manager\-::send\-Control\-Request(), mdt\-Usbtmc\-Port\-Manager\-::send\-Data(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), send\-Data(), and mdt\-Usbtmc\-Port\-Manager\-::send\-Read\-Request().
+Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), from\-Thread\-New\-Frame\-Readen(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), and send\-Data().
 
 \hypertarget{classmdt_port_manager_a416a24db1048e9f66aef27ea810954d2}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!new\-Transaction\-Done@{new\-Transaction\-Done}}
 \index{new\-Transaction\-Done@{new\-Transaction\-Done}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -1221,7 +1210,7 @@ References mdt\-Abstract\-Port\-::\-Connecting, mdt\-Abstract\-Port\-::\-Connect
 
 
 
-Referenced by add\-Thread(), mdt\-Usb\-Port\-Manager\-::on\-Threads\-Error\-Occured(), and remove\-Threads().
+Referenced by add\-Thread(), and remove\-Threads().
 
 \hypertarget{classmdt_port_manager_aab594613e8985590c835194efbc27b5e}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!open\-Port@{open\-Port}}
 \index{open\-Port@{open\-Port}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -1243,7 +1232,7 @@ True on success, false else.
 Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{set\-Port()} before use of this method. 
 \end{DoxyPrecond}
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000031}{Todo}]Should return \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdt\-Abstract\-Port\-::error\-\_\-t} \end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000032}{Todo}]Should return \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdt\-Abstract\-Port\-::error\-\_\-t} \end{DoxyRefDesc}
 
 
 Definition at line 603 of file mdt\-Port\-Manager.\-cpp.
@@ -1452,7 +1441,7 @@ Sent when a unhandled error occured.
 
 Used by state machine 
 
-Referenced by add\-Transaction\-Pending(), mdt\-Usb\-Port\-Manager\-::on\-Threads\-Error\-Occured(), on\-Threads\-Error\-Occured(), and wait\-Transaction\-Done().
+Referenced by add\-Transaction\-Pending(), on\-Threads\-Error\-Occured(), and wait\-Transaction\-Done().
 
 \hypertarget{classmdt_port_manager_a88109b455fc5a5f5adf0636f7450143e}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!port\-Info@{port\-Info}}
 \index{port\-Info@{port\-Info}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -1471,7 +1460,7 @@ Definition at line 254 of file mdt\-Port\-Manager.\-cpp.
 
 
 
-Referenced by mdt\-Serial\-Port\-Manager\-::scan(), mdt\-Usb\-Port\-Manager\-::scan(), and mdt\-Modbus\-Tcp\-Port\-Manager\-::scan().
+Referenced by mdt\-Serial\-Port\-Manager\-::scan(), and mdt\-Modbus\-Tcp\-Port\-Manager\-::scan().
 
 \hypertarget{classmdt_port_manager_af4fcab6aaad98d74aeabfc972da1d406}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!port\-Name@{port\-Name}}
 \index{port\-Name@{port\-Name}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -1491,10 +1480,6 @@ Definition at line 259 of file mdt\-Port\-Manager.\-cpp.
 
 
 References mdt\-Port\-Info\-::port\-Name().
-
-
-
-Referenced by mdt\-Usb\-Port\-Manager\-::scan().
 
 \hypertarget{classmdt_port_manager_a830ae182d06dd6a52c43a7f45b9240ac}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!readen\-Frame@{readen\-Frame}}
 \index{readen\-Frame@{readen\-Frame}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -1521,7 +1506,7 @@ References mdt\-Port\-Transaction\-::data(), restore\-Transaction(), and transac
 
 
 
-Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Hardware\-Node\-Address(), mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Register\-Values(), mdt\-Usbtmc\-Port\-Manager\-::send\-Query(), mdt\-Modbus\-Tcp\-Port\-Manager\-::set\-Register\-Values(), and mdt\-Device\-::wait\-Transaction\-Done().
+Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Hardware\-Node\-Address(), mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Register\-Values(), mdt\-Modbus\-Tcp\-Port\-Manager\-::set\-Register\-Values(), and mdt\-Device\-::wait\-Transaction\-Done().
 
 \hypertarget{classmdt_port_manager_addd5dcae9644cea42a9871205af41796}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!readen\-Frames@{readen\-Frames}}
 \index{readen\-Frames@{readen\-Frames}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -1610,7 +1595,7 @@ Definition at line 310 of file mdt\-Port\-Manager.\-cpp.
 
 
 
-Referenced by commit\-Frames(), flush\-Transactions\-Done(), flush\-Transactions\-Pending(), mdt\-Usbtmc\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), readen\-Frame(), readen\-Frames(), mdt\-Device\-::restore\-Transaction(), mdt\-Usbtmc\-Port\-Manager\-::send\-Data(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), send\-Data(), and mdt\-Usbtmc\-Port\-Manager\-::send\-Read\-Request().
+Referenced by commit\-Frames(), flush\-Transactions\-Done(), flush\-Transactions\-Pending(), readen\-Frame(), readen\-Frames(), mdt\-Device\-::restore\-Transaction(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), and send\-Data().
 
 \hypertarget{classmdt_port_manager_ad56afb411ab5468005fca04767557ece}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!scan@{scan}}
 \index{scan@{scan}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -1627,7 +1612,7 @@ This method is implemented is port's specific subclass. Default implementation r
 
 Note that returned list must be freed by user after usage. (for.\-ex. with q\-Delet\-All() and Q\-List\-::clear() ). 
 
-Reimplemented in \hyperlink{classmdt_serial_port_manager_a791572f869d1d605d0c4658ca4187260}{mdt\-Serial\-Port\-Manager}, \hyperlink{classmdt_usbtmc_port_manager_a992d1227810186d3c7dc166452e2e3b6}{mdt\-Usbtmc\-Port\-Manager}, and \hyperlink{classmdt_usb_port_manager_a3a2370c3a2d0353a880bf9b777728c3b}{mdt\-Usb\-Port\-Manager}.
+Reimplemented in \hyperlink{classmdt_serial_port_manager_a791572f869d1d605d0c4658ca4187260}{mdt\-Serial\-Port\-Manager}.
 
 
 
@@ -1673,7 +1658,7 @@ transaction must be a valid pointer, and not allready exists in transactions pen
 Subclass notes\-:\par
  This method can be reimplemented in subclass if needed. Typically usefull if some encoding is needed before the frame is submitted to port. A frame must be taken from port's write frames pool with \hyperlink{classmdt_abstract_port_abf093b67fddebffa4f3c52277b9a8cf7}{mdt\-Abstract\-Port\-::write\-Frames\-Pool()} dequeue() method (see Qt's Q\-Queue documentation for more details on dequeue() ), then added to port's write queue with \hyperlink{classmdt_abstract_port_a9a69eb2fc07d551ab37c011487fa319d}{mdt\-Abstract\-Port\-::add\-Frame\-To\-Write()} . If protocol supports frame identification (like M\-O\-D\-B\-U\-S's transaction I\-D or U\-S\-B\-T\-M\-C's b\-Tag), it should be returned here and incremented using \hyperlink{classmdt_port_manager_a4d009936a0a5130f3bfecb69fee4ce42}{increment\-Current\-Transaction\-Id()}. 
 
-Reimplemented in \hyperlink{classmdt_modbus_tcp_port_manager_a208a3b2522795974836fd8aef406725a}{mdt\-Modbus\-Tcp\-Port\-Manager}, and \hyperlink{classmdt_usbtmc_port_manager_a205901666c797055bee1902bd1e1e09c}{mdt\-Usbtmc\-Port\-Manager}.
+Reimplemented in \hyperlink{classmdt_modbus_tcp_port_manager_a208a3b2522795974836fd8aef406725a}{mdt\-Modbus\-Tcp\-Port\-Manager}.
 
 
 
@@ -1685,7 +1670,7 @@ References mdt\-Abstract\-Port\-::add\-Frame\-To\-Write(), add\-Transaction\-Pen
 
 
 
-Referenced by send\-Data().
+Referenced by mdt\-Port\-Term\-::send\-Command\-To\-Serial\-Port(), and send\-Data().
 
 \hypertarget{classmdt_port_manager_a445b27f0819158f67f1bd548cdd2fedf}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!send\-Data@{send\-Data}}
 \index{send\-Data@{send\-Data}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -1740,7 +1725,7 @@ Definition at line 631 of file mdt\-Port\-Manager.\-cpp.
 
 
 
-Referenced by mdt\-Usbtmc\-Port\-Manager\-::mdt\-Usbtmc\-Port\-Manager(), and open\-Port().
+Referenced by open\-Port().
 
 \hypertarget{classmdt_port_manager_a9adb5098766c9df588bc9978b00c5eb2}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!set\-Keep\-Transactions\-Done@{set\-Keep\-Transactions\-Done}}
 \index{set\-Keep\-Transactions\-Done@{set\-Keep\-Transactions\-Done}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -1759,7 +1744,7 @@ Definition at line 278 of file mdt\-Port\-Manager.\-cpp.
 
 
 
-Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::mdt\-Modbus\-Tcp\-Port\-Manager(), mdt\-Port\-Manager(), and mdt\-Usbtmc\-Port\-Manager\-::mdt\-Usbtmc\-Port\-Manager().
+Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::mdt\-Modbus\-Tcp\-Port\-Manager(), and mdt\-Port\-Manager().
 
 \hypertarget{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!set\-Port@{set\-Port}}
 \index{set\-Port@{set\-Port}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -1787,7 +1772,7 @@ References is\-Closed(), and pv\-Port.
 
 
 
-Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::mdt\-Modbus\-Tcp\-Port\-Manager(), mdt\-Serial\-Port\-Manager\-::mdt\-Serial\-Port\-Manager(), and mdt\-Usb\-Port\-Manager\-::mdt\-Usb\-Port\-Manager().
+Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::mdt\-Modbus\-Tcp\-Port\-Manager(), and mdt\-Serial\-Port\-Manager\-::mdt\-Serial\-Port\-Manager().
 
 \hypertarget{classmdt_port_manager_a7e2ef93ec2731e66aa2b2d5f7ce9bc1c}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!set\-Port\-Info@{set\-Port\-Info}}
 \index{set\-Port\-Info@{set\-Port\-Info}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -1819,7 +1804,7 @@ References is\-Closed(), mdt\-Port\-Info\-::port\-Name(), pv\-Port, and mdt\-Abs
 
 
 
-Referenced by mdt\-Device\-Modbus\-Wago\-::connect\-To\-Device(), mdt\-Device\-Scpi\-::connect\-To\-Device(), and mdt\-Device\-Modbus\-::connect\-To\-Device().
+Referenced by mdt\-Device\-Modbus\-Wago\-::connect\-To\-Device(), and mdt\-Device\-Modbus\-::connect\-To\-Device().
 
 \hypertarget{classmdt_port_manager_a2b2ed690cbba9f544c6ac1b46684e59a}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!set\-Port\-Name@{set\-Port\-Name}}
 \index{set\-Port\-Name@{set\-Port\-Name}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -1872,10 +1857,6 @@ Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935ef
 \end{DoxyPrecond}
 
 
-Reimplemented in \hyperlink{classmdt_usb_port_manager_ac656805c6de08c9c6a2487291cf3f347}{mdt\-Usb\-Port\-Manager}.
-
-
-
 Definition at line 182 of file mdt\-Port\-Manager.\-cpp.
 
 
@@ -1884,7 +1865,7 @@ References current\-State(), is\-Closed(), mdt\-Abstract\-Port\-::is\-Open(), is
 
 
 
-Referenced by mdt\-Device\-Modbus\-Wago\-::connect\-To\-Device(), mdt\-Device\-Modbus\-::connect\-To\-Device(), mdt\-Modbus\-Tcp\-Port\-Manager\-::scan(), and mdt\-Usb\-Port\-Manager\-::start().
+Referenced by mdt\-Device\-Modbus\-Wago\-::connect\-To\-Device(), mdt\-Device\-Modbus\-::connect\-To\-Device(), and mdt\-Modbus\-Tcp\-Port\-Manager\-::scan().
 
 \hypertarget{classmdt_port_manager_adeeba5a216174fcc1d01446a9537f40e}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!start\-Transaction\-Timer@{start\-Transaction\-Timer}}
 \index{start\-Transaction\-Timer@{start\-Transaction\-Timer}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -1990,7 +1971,7 @@ References close\-Port(), is\-Closed(), mdt\-Abstract\-Port\-::is\-Open(), pm\-P
 
 
 
-Referenced by mdt\-Device\-Modbus\-Wago\-::connect\-To\-Device(), mdt\-Device\-Scpi\-::connect\-To\-Device(), mdt\-Device\-Modbus\-::connect\-To\-Device(), detach\-Port(), mdt\-Device\-::disconnect\-From\-Device(), mdt\-Modbus\-Tcp\-Port\-Manager\-::scan(), start(), mdt\-Device\-Modbus\-::$\sim$mdt\-Device\-Modbus(), $\sim$mdt\-Port\-Manager(), and mdt\-Usb\-Port\-Manager\-::$\sim$mdt\-Usb\-Port\-Manager().
+Referenced by mdt\-Device\-Modbus\-Wago\-::connect\-To\-Device(), mdt\-Device\-Modbus\-::connect\-To\-Device(), detach\-Port(), mdt\-Device\-::disconnect\-From\-Device(), mdt\-Modbus\-Tcp\-Port\-Manager\-::scan(), start(), mdt\-Device\-Modbus\-::$\sim$mdt\-Device\-Modbus(), and $\sim$mdt\-Port\-Manager().
 
 \hypertarget{classmdt_port_manager_a1467c0bd28612ae3116f5daba08c0b84}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!stop\-Transaction\-Timer@{stop\-Transaction\-Timer}}
 \index{stop\-Transaction\-Timer@{stop\-Transaction\-Timer}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -2066,7 +2047,7 @@ Definition at line 700 of file mdt\-Port\-Manager.\-cpp.
 
 
 
-Referenced by mdt\-Usbtmc\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), mdt\-Modbus\-Tcp\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), and from\-Thread\-New\-Frame\-Readen().
+Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), and from\-Thread\-New\-Frame\-Readen().
 
 \hypertarget{classmdt_port_manager_a3293066f4c3ed2e4b116f28dca8c5d64}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!transactions\-Done\-Contains@{transactions\-Done\-Contains}}
 \index{transactions\-Done\-Contains@{transactions\-Done\-Contains}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -2085,7 +2066,7 @@ Definition at line 728 of file mdt\-Port\-Manager.\-cpp.
 
 
 
-Referenced by add\-Transaction\-Done(), mdt\-Usbtmc\-Port\-Manager\-::send\-Data(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), send\-Data(), and wait\-Transaction\-Done().
+Referenced by add\-Transaction\-Done(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), send\-Data(), and wait\-Transaction\-Done().
 
 \hypertarget{classmdt_port_manager_a04fc12f0dc02e981cac8dc56539e63d2}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!transaction\-Timeout\-Occured@{transaction\-Timeout\-Occured}}
 \index{transaction\-Timeout\-Occured@{transaction\-Timeout\-Occured}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -2139,7 +2120,7 @@ References pv\-Port, and mdt\-Abstract\-Port\-::unlock\-Mutex().
 
 
 
-Referenced by mdt\-Usb\-Port\-Manager\-::from\-Thread\-Control\-Response\-Readen(), mdt\-Usbtmc\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), mdt\-Modbus\-Tcp\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), from\-Thread\-New\-Frame\-Readen(), mdt\-Usb\-Port\-Manager\-::read\-Until\-Short\-Packet\-Received(), mdt\-Usb\-Port\-Manager\-::send\-Control\-Request(), mdt\-Usbtmc\-Port\-Manager\-::send\-Data(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), send\-Data(), and mdt\-Usbtmc\-Port\-Manager\-::send\-Read\-Request().
+Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), from\-Thread\-New\-Frame\-Readen(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), and send\-Data().
 
 \hypertarget{classmdt_port_manager_aaa85e0200aba0e0f4392dfe01abae2cf}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!wait@{wait}}
 \index{wait@{wait}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -2229,7 +2210,7 @@ References Busy, mdt\-Error\-::commit(), config(), current\-State(), is\-Ready()
 
 
 
-Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Hardware\-Node\-Address(), mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Register\-Values(), mdt\-Usbtmc\-Port\-Manager\-::send\-Query(), mdt\-Modbus\-Tcp\-Port\-Manager\-::set\-Register\-Values(), and mdt\-Device\-::wait\-Transaction\-Done().
+Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Hardware\-Node\-Address(), mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Register\-Values(), mdt\-Modbus\-Tcp\-Port\-Manager\-::set\-Register\-Values(), and mdt\-Device\-::wait\-Transaction\-Done().
 
 \hypertarget{classmdt_port_manager_ac04a12f8aa20ba04695083afce45a6cc}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!wait\-Transaction\-Possible@{wait\-Transaction\-Possible}}
 \index{wait\-Transaction\-Possible@{wait\-Transaction\-Possible}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -2255,7 +2236,7 @@ References is\-Closed(), is\-Ready(), and pv\-Port.
 
 
 
-Referenced by mdt\-Usbtmc\-Port\-Manager\-::send\-Data(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), send\-Data(), and mdt\-Usbtmc\-Port\-Manager\-::send\-Read\-Request().
+Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), and send\-Data().
 
 \hypertarget{classmdt_port_manager_af44b6e9876e6687b1d4fe7e05ffd5a91}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!write\-Thread@{write\-Thread}}
 \index{write\-Thread@{write\-Thread}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -2284,7 +2265,7 @@ Definition at line 912 of file mdt\-Port\-Manager.\-h.
 
 
 
-Referenced by abort(), add\-Thread(), close\-Port(), mdt\-Serial\-Port\-Manager\-::config(), config(), detach\-Port(), flush(), mdt\-Usb\-Port\-Manager\-::flush\-In(), flush\-In(), mdt\-Usb\-Port\-Manager\-::flush\-Out(), flush\-Out(), mdt\-Usb\-Port\-Manager\-::from\-Thread\-Control\-Response\-Readen(), mdt\-Usbtmc\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), mdt\-Modbus\-Tcp\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), from\-Thread\-New\-Frame\-Readen(), lock\-Port\-Mutex(), mdt\-Port\-Manager(), mdt\-Usbtmc\-Port\-Manager\-::mdt\-Usbtmc\-Port\-Manager(), open\-Port(), mdt\-Serial\-Port\-Manager\-::port(), mdt\-Usb\-Port\-Manager\-::read\-Until\-Short\-Packet\-Received(), mdt\-Usb\-Port\-Manager\-::send\-Control\-Request(), mdt\-Usbtmc\-Port\-Manager\-::send\-Data(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), send\-Data(), mdt\-Usbtmc\-Port\-Manager\-::send\-Read\-Request(), mdt\-Usbtmc\-Port\-Manager\-::send\-Read\-Status\-Byte\-Request(), set\-Port(), set\-Port\-Info(), set\-Port\-Name(), mdt\-Usb\-Port\-Manager\-::start(), start(), stop(), unlock\-Port\-Mutex(), wait\-One\-Transaction\-Done(), mdt\-Usb\-Port\-Manager\-::wait\-Readen\-Control\-Response(), wait\-Transaction\-Done(), wait\-Transaction\-Possible(), mdt\-Modbus\-Tcp\-Port\-Manager\-::$\sim$mdt\-Modbus\-Tcp\-Port\-Manager(), $\sim$mdt\-Port\-Manager(), mdt\-Serial\-Port\-Manager\-::$\sim$mdt\-Serial\-Port\-Manager(), and mdt\-Usb\-Port\-Manager\-::$\sim$mdt\-Usb\-Port\-Manager().
+Referenced by abort(), add\-Thread(), close\-Port(), mdt\-Serial\-Port\-Manager\-::config(), config(), detach\-Port(), flush(), flush\-In(), flush\-Out(), mdt\-Modbus\-Tcp\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), from\-Thread\-New\-Frame\-Readen(), lock\-Port\-Mutex(), mdt\-Port\-Manager(), open\-Port(), mdt\-Serial\-Port\-Manager\-::port(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), send\-Data(), set\-Port(), set\-Port\-Info(), set\-Port\-Name(), start(), stop(), unlock\-Port\-Mutex(), wait\-One\-Transaction\-Done(), wait\-Transaction\-Done(), wait\-Transaction\-Possible(), mdt\-Modbus\-Tcp\-Port\-Manager\-::$\sim$mdt\-Modbus\-Tcp\-Port\-Manager(), $\sim$mdt\-Port\-Manager(), and mdt\-Serial\-Port\-Manager\-::$\sim$mdt\-Serial\-Port\-Manager().
 
 \hypertarget{classmdt_port_manager_a8e0d49b789f8b01d469e84b487799573}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!pv\-Threads@{pv\-Threads}}
 \index{pv\-Threads@{pv\-Threads}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -2295,7 +2276,7 @@ Definition at line 913 of file mdt\-Port\-Manager.\-h.
 
 
 
-Referenced by add\-Thread(), mdt\-Usbtmc\-Port\-Manager\-::mdt\-Usbtmc\-Port\-Manager(), remove\-Threads(), and mdt\-Usb\-Port\-Manager\-::start().
+Referenced by add\-Thread(), and remove\-Threads().
 
 
 

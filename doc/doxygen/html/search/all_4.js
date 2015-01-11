@@ -21,7 +21,7 @@ var searchData=
   ['enablesorting',['enableSorting',['../classmdt_sort_filter_proxy_model.html#ad241f4666aa20dd45e952196d41611d8',1,'mdtSortFilterProxyModel']]],
   ['enabletranslations',['enableTranslations',['../classmdt_device_window.html#a8b884e389fa27f85742642193d18b8f9',1,'mdtDeviceWindow']]],
   ['enabletxrxleds',['enableTxRxLeds',['../classmdt_port_status_widget.html#a8e87596be48b5cfda6703c42655b2f25',1,'mdtPortStatusWidget']]],
-  ['encode',['encode',['../classmdt_frame_modbus_tcp.html#a59488845873981f0e2e8f2ffd544e2f4',1,'mdtFrameModbusTcp::encode()'],['../classmdt_frame_usb_control.html#af60cb9e9fd8cb55fc44d696fce0331c0',1,'mdtFrameUsbControl::encode()'],['../classmdt_frame_usb_tmc.html#a9406dddfdd70f5dac729b2dbd728de77',1,'mdtFrameUsbTmc::encode()']]],
+  ['encode',['encode',['../classmdt_frame_modbus_tcp.html#a59488845873981f0e2e8f2ffd544e2f4',1,'mdtFrameModbusTcp']]],
   ['encodereadcoils',['encodeReadCoils',['../classmdt_frame_codec_modbus.html#adf0a4d583aeff7b818dda94514c594f0',1,'mdtFrameCodecModbus']]],
   ['encodereaddeviceidentification',['encodeReadDeviceIdentification',['../classmdt_frame_codec_modbus.html#a54ac76dc91ee6f885aa1536fb9f8531c',1,'mdtFrameCodecModbus']]],
   ['encodereaddiscreteinputs',['encodeReadDiscreteInputs',['../classmdt_frame_codec_modbus.html#ad14a2d6c124cca157670595978e06150',1,'mdtFrameCodecModbus']]],
@@ -57,11 +57,10 @@ var searchData=
   ['errorevent',['errorEvent',['../classmdt_modbus_io_tool.html#a530eb4396b483076be021689b4fc4a9c',1,'mdtModbusIoTool']]],
   ['errorhandled',['ErrorHandled',['../classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab0a372501b8916e3953897dc82fd3b3d',1,'mdtAbstractPort']]],
   ['erroroccured',['errorOccured',['../classmdt_abstract_sql_table_controller.html#a2cafd348eecc77f2fc0dc05a1a1e69c0',1,'mdtAbstractSqlTableController::errorOccured()'],['../classmdt_port_thread.html#ab31cbe1a85aa830cd368654d1f806326',1,'mdtPortThread::errorOccured()'],['../classmdt_usb_port_thread_new.html#a9b6b49b50bb4d7eb0fc80f6c7379f720',1,'mdtUsbPortThreadNew::errorOccured()']]],
-  ['erroroccuredevent',['ErrorOccuredEvent',['../structmdt_usbtmc_transfer_handler_state_machine_1_1_error_occured_event.html',1,'mdtUsbtmcTransferHandlerStateMachine']]],
   ['erroroccuredevent',['ErrorOccuredEvent',['../structmdt_usbtmc_transfer_handler_state_machine_1_1_error_occured_event.html#aa13abdce6636b41fc2e6b919331316b7',1,'mdtUsbtmcTransferHandlerStateMachine::ErrorOccuredEvent']]],
+  ['erroroccuredevent',['ErrorOccuredEvent',['../structmdt_usbtmc_transfer_handler_state_machine_1_1_error_occured_event.html',1,'mdtUsbtmcTransferHandlerStateMachine']]],
   ['essais',['essais',['../classmdt_device_u3606_a_widget.html#aa232cf25e8ac0dee00cde5089af623b0',1,'mdtDeviceU3606AWidget']]],
   ['examine_5fedge',['examine_edge',['../classmdt_cl_path_graph_private_1_1mdt_cl_path_graph_visitor.html#a6eec2e7ae15855b92cfdf967522ae892',1,'mdtClPathGraphPrivate::mdtClPathGraphVisitor']]],
-  ['expectedbulkinbtags',['expectedBulkInbTags',['../classmdt_usb_port.html#a0ad07939f4709240b0c79c501edc9498',1,'mdtUsbPort']]],
   ['exporttocsvfile',['exportToCsvFile',['../classmdt_data_table_manager.html#abe733f071ca77579522823598e79dd9a',1,'mdtDataTableManager']]],
   ['extra',['extra',['../classmdt_usb_endpoint_descriptor.html#a20e2c22e66be26495142168c390aea34',1,'mdtUsbEndpointDescriptor']]]
 ];

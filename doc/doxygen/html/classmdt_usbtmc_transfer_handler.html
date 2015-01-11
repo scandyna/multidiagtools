@@ -102,6 +102,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af40f6740a823a75628890eb04466e2b8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_transfer_handler.html#af40f6740a823a75628890eb04466e2b8">mdtUsbtmcTransferHandler</a> (libusb_context *usbContext, <a class="el" href="classmdt_usbtmc_port.html">mdtUsbtmcPort</a> &amp;port)</td></tr>
 <tr class="memdesc:af40f6740a823a75628890eb04466e2b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#af40f6740a823a75628890eb04466e2b8">More...</a><br/></td></tr>
 <tr class="separator:af40f6740a823a75628890eb04466e2b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae824f384cc1dd1f860462cf1d6ebf3aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_transfer_handler.html#ae824f384cc1dd1f860462cf1d6ebf3aa">setDeviceName</a> (const QString &amp;name)</td></tr>
+<tr class="memdesc:ae824f384cc1dd1f860462cf1d6ebf3aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set device name.  <a href="#ae824f384cc1dd1f860462cf1d6ebf3aa">More...</a><br/></td></tr>
+<tr class="separator:ae824f384cc1dd1f860462cf1d6ebf3aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6771b010d3d050c7edae058996eb5a8d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_transfer_handler.html#a6771b010d3d050c7edae058996eb5a8d">setup</a> (libusb_device_handle *handle, const <a class="el" href="classmdt_usb_device_descriptor.html">mdtUsbDeviceDescriptor</a> &amp;descriptor, uint8_t bInterfaceNumber)</td></tr>
 <tr class="memdesc:a6771b010d3d050c7edae058996eb5a8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup handler.  <a href="#a6771b010d3d050c7edae058996eb5a8d">More...</a><br/></td></tr>
 <tr class="separator:a6771b010d3d050c7edae058996eb5a8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -302,7 +305,7 @@ Static Public Member Functions</h2></td></tr>
 <p>At first, any pending Bulk-OUT transfers that expect a restonse will be cancelled (should be 0 or 1). Then, submitInitiateAbortBulkInRequest() is called.</p>
 <p>See USBTMC 1.0 specifications, section 4.2.1.4 for details. </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00941">941</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00947">947</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_usbtmc_bulk_transfer_8h_source.html#l00107">mdtUsbtmcBulkTransfer::bTag()</a>, and <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00220">mdtUsbTransferPool&lt; T &gt;::getAllPendingTransfers()</a>.</p>
 
@@ -326,7 +329,7 @@ Static Public Member Functions</h2></td></tr>
 <p>Aborting will start, as mentionned in USBTMC 1.0, section 4.2.1.2, by cancelling the pending Bulk-OUT transfer, and passing INITIATE_ABORT_BULK_OUT split action, so that restoreBulkOutTransferSA knows that it must call submitInitiateAbortBulkOutRequest()</p>
 <p>This function is called by state machine. </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00933">933</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00939">939</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
 <p>References <a class="el" href="classmdt_usbtmc_bulk_transfer.html#a81f2309d821053cd7c8f6e32aff93b7caea5c13bf8058f283040da9153953c4e7">mdtUsbtmcBulkTransfer::INITIATE_ABORT</a>, and <a class="el" href="mdt_usbtmc_bulk_transfer_8h_source.html#l00171">mdtUsbtmcBulkTransfer::setSplitAction()</a>.</p>
 
@@ -348,9 +351,9 @@ Static Public Member Functions</h2></td></tr>
 <p>Will cancel all pending bulk-OUT and bulk-IN transfers and request I/O buffer clear. </p>
 <p>Is called by state machine </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00224">224</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00230">230</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
-<p>References <a class="el" href="classmdt_usbtmc_bulk_transfer.html#a81f2309d821053cd7c8f6e32aff93b7cad6f130330eaada1770d26d6906b1977b">mdtUsbtmcBulkTransfer::INITIATE_CLEAR</a>, <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00194">mdtUsbTransferPool&lt; T &gt;::pendingTransferCount()</a>, <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00837">submitCancelAllBulkInTransfers()</a>, and <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00664">submitCancelAllBulkOutTransfers()</a>.</p>
+<p>References <a class="el" href="classmdt_usbtmc_bulk_transfer.html#a81f2309d821053cd7c8f6e32aff93b7cad6f130330eaada1770d26d6906b1977b">mdtUsbtmcBulkTransfer::INITIATE_CLEAR</a>, <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00194">mdtUsbTransferPool&lt; T &gt;::pendingTransferCount()</a>, <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00843">submitCancelAllBulkInTransfers()</a>, and <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00670">submitCancelAllBulkOutTransfers()</a>.</p>
 
 </div>
 </div>
@@ -378,7 +381,7 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Bulk-IN transfer callback. </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00353">353</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00359">359</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_usbtmc_bulk_transfer_8h_source.html#l00157">mdtUsbtmcBulkTransfer::transferHandler()</a>.</p>
 
@@ -410,7 +413,7 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Bulk-OUT transfer callback. </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00344">344</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00350">350</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_usbtmc_bulk_transfer_8h_source.html#l00157">mdtUsbtmcBulkTransfer::transferHandler()</a>.</p>
 
@@ -442,7 +445,7 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Control transfer callback. </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00330">330</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00336">336</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_usb_transfer_8h_source.html#l00129">mdtUsbTransfer::isSync()</a>, <a class="el" href="mdt_usb_transfer_8h_source.html#l00145">mdtUsbTransfer::setCompleted()</a>, and <a class="el" href="mdt_usbtmc_control_transfer_8h_source.html#l00365">mdtUsbtmcControlTransfer::transferHandler()</a>.</p>
 
@@ -466,7 +469,7 @@ Static Public Member Functions</h2></td></tr>
 <p>Force to abort a pending Bulk-IN transfer. </p>
 <p>Will get a pending Bulk-IN transfer and proceed abort it. Used for debug and testing. </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00278">278</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00284">284</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00206">mdtUsbTransferPool&lt; T &gt;::getPendingTransfer()</a>.</p>
 
@@ -488,7 +491,7 @@ Static Public Member Functions</h2></td></tr>
 <p>Force to abort a pending Bulk-OUT transfer. </p>
 <p>Will get a pending Bulk-OUT transfer and proceed abort it. Used for debug and testing. </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00268">268</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00274">274</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00206">mdtUsbTransferPool&lt; T &gt;::getPendingTransfer()</a>.</p>
 
@@ -564,7 +567,7 @@ Static Public Member Functions</h2></td></tr>
 <p>Used for debug and testing. </p>
 <dl class="section pre"><dt>Precondition</dt><dd>transferBufferLength must be &lt;= Internal frame capacity </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00252">252</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00258">258</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_usbtmc_bulk_transfer_8cpp_source.html#l00083">mdtUsbtmcBulkTransfer::dbgSetupCustom()</a>, <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00151">mdtUsbTransferPool&lt; T &gt;::getTransfer()</a>, <a class="el" href="mdt_usb_transfer_8h_source.html#l00118">mdtUsbTransfer::lastError()</a>, and <a class="el" href="mdt_usb_transfer_8cpp_source.html#l00045">mdtUsbTransfer::submit()</a>.</p>
 
@@ -592,11 +595,11 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00202">202</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00208">208</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00220">mdtUsbTransferPool&lt; T &gt;::getAllPendingTransfers()</a>, and <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00227">mdtUsbTransferPool&lt; T &gt;::restorePendingTransfers()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_usbtmc_port_8cpp_source.html#l00144">mdtUsbtmcPort::sendQuery()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_usbtmc_port_8cpp_source.html#l00183">mdtUsbtmcPort::sendQuery()</a>.</p>
 
 </div>
 </div>
@@ -617,9 +620,9 @@ Static Public Member Functions</h2></td></tr>
 <p>Handle Bulk-IN transfer complete. </p>
 <p>Is called by state machine </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00692">692</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00698">698</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_usb_transfer_8h_source.html#l00102">mdtUsbTransfer::actualLength()</a>, <a class="el" href="mdt_usbtmc_bulk_transfer_8h_source.html#l00107">mdtUsbtmcBulkTransfer::bTag()</a>, <a class="el" href="mdt_usbtmc_bulk_transfer_8h_source.html#l00116">mdtUsbtmcBulkTransfer::bTagIsOk()</a>, <a class="el" href="classmdt_usbtmc_bulk_transfer.html#a81f2309d821053cd7c8f6e32aff93b7cae37274c52bff64e53e5dd2ce355a5219">mdtUsbtmcBulkTransfer::CLEAR_ENDPOINT_HALT</a>, <a class="el" href="mdt_error_8cpp_source.html#l00116">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00097">mdtError::Error</a>, <a class="el" href="mdt_usbtmc_bulk_transfer_8h_source.html#l00141">mdtUsbtmcBulkTransfer::isEOM()</a>, <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00194">mdtUsbTransferPool&lt; T &gt;::pendingTransferCount()</a>, <a class="el" href="mdt_usbtmc_bulk_transfer_8h_source.html#l00134">mdtUsbtmcBulkTransfer::receivedAllData()</a>, <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00227">mdtUsbTransferPool&lt; T &gt;::restorePendingTransfers()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00060">mdtError::setError()</a>, <a class="el" href="mdt_usbtmc_port_8cpp_source.html#l00199">mdtUsbtmcPort::setError()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00085">mdtError::setSystemError()</a>, <a class="el" href="mdt_usb_transfer_8h_source.html#l00088">mdtUsbTransfer::status()</a>, <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00837">submitCancelAllBulkInTransfers()</a>, <a class="el" href="mdt_usbtmc_port_8h_source.html#l00119">mdtUsbtmcPort::thSetTransactionDone()</a>, and <a class="el" href="mdt_error_8h_source.html#l00096">mdtError::Warning</a>.</p>
+<p>References <a class="el" href="mdt_usb_transfer_8h_source.html#l00102">mdtUsbTransfer::actualLength()</a>, <a class="el" href="mdt_usbtmc_bulk_transfer_8h_source.html#l00107">mdtUsbtmcBulkTransfer::bTag()</a>, <a class="el" href="mdt_usbtmc_bulk_transfer_8h_source.html#l00116">mdtUsbtmcBulkTransfer::bTagIsOk()</a>, <a class="el" href="classmdt_usbtmc_bulk_transfer.html#a81f2309d821053cd7c8f6e32aff93b7cae37274c52bff64e53e5dd2ce355a5219">mdtUsbtmcBulkTransfer::CLEAR_ENDPOINT_HALT</a>, <a class="el" href="mdt_error_8cpp_source.html#l00116">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00097">mdtError::Error</a>, <a class="el" href="mdt_usbtmc_bulk_transfer_8h_source.html#l00141">mdtUsbtmcBulkTransfer::isEOM()</a>, <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00194">mdtUsbTransferPool&lt; T &gt;::pendingTransferCount()</a>, <a class="el" href="mdt_usbtmc_bulk_transfer_8h_source.html#l00134">mdtUsbtmcBulkTransfer::receivedAllData()</a>, <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00227">mdtUsbTransferPool&lt; T &gt;::restorePendingTransfers()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00060">mdtError::setError()</a>, <a class="el" href="mdt_usbtmc_port_8cpp_source.html#l00238">mdtUsbtmcPort::setError()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00085">mdtError::setSystemError()</a>, <a class="el" href="mdt_usb_transfer_8h_source.html#l00088">mdtUsbTransfer::status()</a>, <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00843">submitCancelAllBulkInTransfers()</a>, <a class="el" href="mdt_usbtmc_port_8h_source.html#l00143">mdtUsbtmcPort::thSetTransactionDone()</a>, and <a class="el" href="mdt_error_8h_source.html#l00096">mdtError::Warning</a>.</p>
 
 </div>
 </div>
@@ -640,9 +643,9 @@ Static Public Member Functions</h2></td></tr>
 <p>Handle Bulk-OUT transfer complete. </p>
 <p>Is called by state machine </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00545">545</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00551">551</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_usbtmc_bulk_transfer_8h_source.html#l00107">mdtUsbtmcBulkTransfer::bTag()</a>, <a class="el" href="classmdt_usbtmc_bulk_transfer.html#a81f2309d821053cd7c8f6e32aff93b7cae37274c52bff64e53e5dd2ce355a5219">mdtUsbtmcBulkTransfer::CLEAR_ENDPOINT_HALT</a>, <a class="el" href="classmdt_usbtmc_frame.html#abf1e449c264011341c477d45eb700c42a1238d82a486a9d6324ace1d5c60a92bd">mdtUsbtmcFrame::DEV_DEP_MSG_IN</a>, <a class="el" href="classmdt_usbtmc_frame.html#abf1e449c264011341c477d45eb700c42a1886876c21b4748a4d4fb1756e6cb8fa">mdtUsbtmcFrame::DEV_DEP_MSG_OUT</a>, <a class="el" href="mdt_error_8h_source.html#l00097">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_usbtmc_bulk_transfer_8h_source.html#l00125">mdtUsbtmcBulkTransfer::msgID()</a>, <a class="el" href="mdt_usbtmc_bulk_transfer_8h_source.html#l00164">mdtUsbtmcBulkTransfer::responseExpected()</a>, <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00593">restoreBulkOutTransferToPool()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00085">mdtError::setSystemError()</a>, <a class="el" href="mdt_usb_transfer_8h_source.html#l00088">mdtUsbTransfer::status()</a>, <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00664">submitCancelAllBulkOutTransfers()</a>, <a class="el" href="mdt_usbtmc_port_8h_source.html#l00119">mdtUsbtmcPort::thSetTransactionDone()</a>, and <a class="el" href="mdt_usb_transfer_8h_source.html#l00110">mdtUsbTransfer::timeout()</a>.</p>
+<p>References <a class="el" href="mdt_usbtmc_bulk_transfer_8h_source.html#l00107">mdtUsbtmcBulkTransfer::bTag()</a>, <a class="el" href="classmdt_usbtmc_bulk_transfer.html#a81f2309d821053cd7c8f6e32aff93b7cae37274c52bff64e53e5dd2ce355a5219">mdtUsbtmcBulkTransfer::CLEAR_ENDPOINT_HALT</a>, <a class="el" href="classmdt_usbtmc_frame.html#abf1e449c264011341c477d45eb700c42a1238d82a486a9d6324ace1d5c60a92bd">mdtUsbtmcFrame::DEV_DEP_MSG_IN</a>, <a class="el" href="classmdt_usbtmc_frame.html#abf1e449c264011341c477d45eb700c42a1886876c21b4748a4d4fb1756e6cb8fa">mdtUsbtmcFrame::DEV_DEP_MSG_OUT</a>, <a class="el" href="mdt_error_8h_source.html#l00097">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_usbtmc_bulk_transfer_8h_source.html#l00125">mdtUsbtmcBulkTransfer::msgID()</a>, <a class="el" href="mdt_usbtmc_bulk_transfer_8h_source.html#l00164">mdtUsbtmcBulkTransfer::responseExpected()</a>, <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00599">restoreBulkOutTransferToPool()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00085">mdtError::setSystemError()</a>, <a class="el" href="mdt_usb_transfer_8h_source.html#l00088">mdtUsbTransfer::status()</a>, <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00670">submitCancelAllBulkOutTransfers()</a>, <a class="el" href="mdt_usbtmc_port_8h_source.html#l00143">mdtUsbtmcPort::thSetTransactionDone()</a>, and <a class="el" href="mdt_usb_transfer_8h_source.html#l00110">mdtUsbTransfer::timeout()</a>.</p>
 
 </div>
 </div>
@@ -663,9 +666,9 @@ Static Public Member Functions</h2></td></tr>
 <p>Handle control transfer complete. </p>
 <p>Is called by state machine </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00454">454</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00460">460</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_usb_transfer_8h_source.html#l00102">mdtUsbTransfer::actualLength()</a>, <a class="el" href="mdt_usb_control_transfer_8h_source.html#l00156">mdtUsbControlTransfer::bRequest()</a>, <a class="el" href="classmdt_usbtmc_control_transfer.html#a9f40cbd57464978b74624c66fa083251ace3ca35d7227c086e77a76aab3c76d92">mdtUsbtmcControlTransfer::CHECK_ABORT_BULK_IN_STATUS</a>, <a class="el" href="classmdt_usbtmc_control_transfer.html#a9f40cbd57464978b74624c66fa083251a8e725abe772f1ec8511ad20cd18d29dd">mdtUsbtmcControlTransfer::CHECK_ABORT_BULK_OUT_STATUS</a>, <a class="el" href="classmdt_usbtmc_control_transfer.html#a9f40cbd57464978b74624c66fa083251a34c6b8e885527e8b41b195d3fc18677a">mdtUsbtmcControlTransfer::CHECK_CLEAR_STATUS</a>, <a class="el" href="mdt_error_8h_source.html#l00097">mdtError::Error</a>, <a class="el" href="classmdt_usbtmc_control_transfer.html#a9f40cbd57464978b74624c66fa083251a57834c39b68a91a648145b695e48d583">mdtUsbtmcControlTransfer::INITIATE_ABORT_BULK_IN</a>, <a class="el" href="classmdt_usbtmc_control_transfer.html#a9f40cbd57464978b74624c66fa083251a4b910f3c6efa4c00ab50c021d1bae17f">mdtUsbtmcControlTransfer::INITIATE_ABORT_BULK_OUT</a>, <a class="el" href="classmdt_usbtmc_control_transfer.html#a9f40cbd57464978b74624c66fa083251ad6f130330eaada1770d26d6906b1977b">mdtUsbtmcControlTransfer::INITIATE_CLEAR</a>, <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00194">mdtUsbTransferPool&lt; T &gt;::pendingTransferCount()</a>, <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00532">restoreControlTransferToPool()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00085">mdtError::setSystemError()</a>, <a class="el" href="mdt_usb_transfer_8h_source.html#l00088">mdtUsbTransfer::status()</a>, <a class="el" href="mdt_usbtmc_control_transfer_8h_source.html#l00339">mdtUsbtmcControlTransfer::usbtmcRequest()</a>, and <a class="el" href="mdt_usbtmc_control_transfer_8cpp_source.html#l00096">mdtUsbtmcControlTransfer::usbtmcRequestText()</a>.</p>
+<p>References <a class="el" href="mdt_usb_transfer_8h_source.html#l00102">mdtUsbTransfer::actualLength()</a>, <a class="el" href="mdt_usb_control_transfer_8h_source.html#l00156">mdtUsbControlTransfer::bRequest()</a>, <a class="el" href="classmdt_usbtmc_control_transfer.html#a9f40cbd57464978b74624c66fa083251ace3ca35d7227c086e77a76aab3c76d92">mdtUsbtmcControlTransfer::CHECK_ABORT_BULK_IN_STATUS</a>, <a class="el" href="classmdt_usbtmc_control_transfer.html#a9f40cbd57464978b74624c66fa083251a8e725abe772f1ec8511ad20cd18d29dd">mdtUsbtmcControlTransfer::CHECK_ABORT_BULK_OUT_STATUS</a>, <a class="el" href="classmdt_usbtmc_control_transfer.html#a9f40cbd57464978b74624c66fa083251a34c6b8e885527e8b41b195d3fc18677a">mdtUsbtmcControlTransfer::CHECK_CLEAR_STATUS</a>, <a class="el" href="mdt_error_8h_source.html#l00097">mdtError::Error</a>, <a class="el" href="classmdt_usbtmc_control_transfer.html#a9f40cbd57464978b74624c66fa083251a57834c39b68a91a648145b695e48d583">mdtUsbtmcControlTransfer::INITIATE_ABORT_BULK_IN</a>, <a class="el" href="classmdt_usbtmc_control_transfer.html#a9f40cbd57464978b74624c66fa083251a4b910f3c6efa4c00ab50c021d1bae17f">mdtUsbtmcControlTransfer::INITIATE_ABORT_BULK_OUT</a>, <a class="el" href="classmdt_usbtmc_control_transfer.html#a9f40cbd57464978b74624c66fa083251ad6f130330eaada1770d26d6906b1977b">mdtUsbtmcControlTransfer::INITIATE_CLEAR</a>, <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00194">mdtUsbTransferPool&lt; T &gt;::pendingTransferCount()</a>, <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00538">restoreControlTransferToPool()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00085">mdtError::setSystemError()</a>, <a class="el" href="mdt_usb_transfer_8h_source.html#l00088">mdtUsbTransfer::status()</a>, <a class="el" href="mdt_usbtmc_control_transfer_8h_source.html#l00339">mdtUsbtmcControlTransfer::usbtmcRequest()</a>, and <a class="el" href="mdt_usbtmc_control_transfer_8cpp_source.html#l00096">mdtUsbtmcControlTransfer::usbtmcRequestText()</a>.</p>
 
 </div>
 </div>
@@ -686,9 +689,9 @@ Static Public Member Functions</h2></td></tr>
 <p>Handle Interrupt-IN transfer complete. </p>
 <p>Is called by state machine </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00886">886</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00892">892</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_usbtmc_interrupt_transfer_8h_source.html#l00101">mdtUsbtmcInterruptTransfer::byteValue()</a>, <a class="el" href="mdt_error_8h_source.html#l00097">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_error_8cpp_source.html#l00085">mdtError::setSystemError()</a>, <a class="el" href="mdt_usb_transfer_8h_source.html#l00088">mdtUsbTransfer::status()</a>, <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00866">submitInterruptInTransfer()</a>, and <a class="el" href="mdt_usb_transfer_8h_source.html#l00110">mdtUsbTransfer::timeout()</a>.</p>
+<p>References <a class="el" href="mdt_usbtmc_interrupt_transfer_8h_source.html#l00101">mdtUsbtmcInterruptTransfer::byteValue()</a>, <a class="el" href="mdt_error_8h_source.html#l00097">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_error_8cpp_source.html#l00085">mdtError::setSystemError()</a>, <a class="el" href="mdt_usb_transfer_8h_source.html#l00088">mdtUsbTransfer::status()</a>, <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00872">submitInterruptInTransfer()</a>, and <a class="el" href="mdt_usb_transfer_8h_source.html#l00110">mdtUsbTransfer::timeout()</a>.</p>
 
 </div>
 </div>
@@ -715,7 +718,7 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Check if current interface has a Interrupt-IN endpoint. </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8h_source.html#l00072">72</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8h_source.html">mdtUsbtmcTransferHandler.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8h_source.html#l00079">79</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8h_source.html">mdtUsbtmcTransferHandler.h</a>.</p>
 
 <p>References <a class="el" href="mdt_usb_endpoint_descriptor_8h_source.html#l00049">mdtUsbEndpointDescriptor::isEmpty()</a>.</p>
 
@@ -745,7 +748,7 @@ Static Public Member Functions</h2></td></tr>
 <p>Check if there are pending Bulk-IN transfers. </p>
 <p>Is called by state machine </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8h_source.html#l00296">296</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8h_source.html">mdtUsbtmcTransferHandler.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8h_source.html#l00303">303</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8h_source.html">mdtUsbtmcTransferHandler.h</a>.</p>
 
 <p>References <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00194">mdtUsbTransferPool&lt; T &gt;::pendingTransferCount()</a>.</p>
 
@@ -775,7 +778,7 @@ Static Public Member Functions</h2></td></tr>
 <p>Check if there are pending Bulk-OUT transfers. </p>
 <p>Is called by state machine </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8h_source.html#l00257">257</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8h_source.html">mdtUsbtmcTransferHandler.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8h_source.html#l00264">264</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8h_source.html">mdtUsbtmcTransferHandler.h</a>.</p>
 
 <p>References <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00194">mdtUsbTransferPool&lt; T &gt;::pendingTransferCount()</a>.</p>
 
@@ -797,11 +800,11 @@ Static Public Member Functions</h2></td></tr>
 <p>Check if there are pending transfers. </p>
 <p>Is called by state machine </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00405">405</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00411">411</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00194">mdtUsbTransferPool&lt; T &gt;::pendingTransferCount()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00780">restoreBulkInTransferSA()</a>, and <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00606">restoreBulkOutTransferSA()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00786">restoreBulkInTransferSA()</a>, and <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00612">restoreBulkOutTransferSA()</a>.</p>
 
 </div>
 </div>
@@ -829,7 +832,7 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Interrupt-IN transfer callback. </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00361">361</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00367">367</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_usbtmc_interrupt_transfer_8h_source.html#l00109">mdtUsbtmcInterruptTransfer::transferHandler()</a>.</p>
 
@@ -860,9 +863,9 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Get last error. </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8h_source.html#l00171">171</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8h_source.html">mdtUsbtmcTransferHandler.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8h_source.html#l00178">178</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8h_source.html">mdtUsbtmcTransferHandler.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_usbtmc_port_8cpp_source.html#l00084">mdtUsbtmcPort::openDevice()</a>, <a class="el" href="mdt_usbtmc_port_8cpp_source.html#l00123">mdtUsbtmcPort::sendCommand()</a>, and <a class="el" href="mdt_usbtmc_port_8cpp_source.html#l00144">mdtUsbtmcPort::sendQuery()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_usbtmc_port_8cpp_source.html#l00116">mdtUsbtmcPort::openDevice()</a>, <a class="el" href="mdt_usbtmc_port_8cpp_source.html#l00162">mdtUsbtmcPort::sendCommand()</a>, and <a class="el" href="mdt_usbtmc_port_8cpp_source.html#l00183">mdtUsbtmcPort::sendQuery()</a>.</p>
 
 </div>
 </div>
@@ -882,7 +885,7 @@ Static Public Member Functions</h2></td></tr>
 <p>Check if handler must be stopped. </p>
 <p>Is called by port thread to know if it must exit. </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00369">369</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00375">375</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
 </div>
 </div>
@@ -902,9 +905,9 @@ Static Public Member Functions</h2></td></tr>
 <p>Notify Bulk I/O aborted. </p>
 <p>Must be called only by state machine </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00394">394</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00400">400</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_usbtmc_port_8h_source.html#l00128">mdtUsbtmcPort::thSetTransactionAborted()</a>.</p>
+<p>References <a class="el" href="mdt_usbtmc_port_8h_source.html#l00152">mdtUsbtmcPort::thSetTransactionAborted()</a>.</p>
 
 </div>
 </div>
@@ -924,9 +927,9 @@ Static Public Member Functions</h2></td></tr>
 <p>Notify Bulk I/O done. </p>
 <p>Must be called only by state machine </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00389">389</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00395">395</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_usbtmc_port_8h_source.html#l00119">mdtUsbtmcPort::thSetTransactionDone()</a>.</p>
+<p>References <a class="el" href="mdt_usbtmc_port_8h_source.html#l00143">mdtUsbtmcPort::thSetTransactionDone()</a>.</p>
 
 </div>
 </div>
@@ -946,9 +949,9 @@ Static Public Member Functions</h2></td></tr>
 <p>Notify device disconnected. </p>
 <p>Must be called only by state machine </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00384">384</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00390">390</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_usbtmc_port_8h_source.html#l00137">mdtUsbtmcPort::thSetDeviceDisconnected()</a>.</p>
+<p>References <a class="el" href="mdt_usbtmc_port_8h_source.html#l00161">mdtUsbtmcPort::thSetDeviceDisconnected()</a>.</p>
 
 </div>
 </div>
@@ -969,9 +972,9 @@ Static Public Member Functions</h2></td></tr>
 <p>Notify error. </p>
 <p>Must be called only by state machine </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00374">374</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00380">380</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_usbtmc_port_8cpp_source.html#l00199">mdtUsbtmcPort::setError()</a>.</p>
+<p>References <a class="el" href="mdt_usbtmc_port_8cpp_source.html#l00238">mdtUsbtmcPort::setError()</a>.</p>
 
 </div>
 </div>
@@ -991,7 +994,7 @@ Static Public Member Functions</h2></td></tr>
 <p>Restore all pending transfers to their pool. </p>
 <p>Is called by state machine </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00438">438</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00444">444</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00194">mdtUsbTransferPool&lt; T &gt;::pendingTransferCount()</a>, and <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00227">mdtUsbTransferPool&lt; T &gt;::restorePendingTransfers()</a>.</p>
 
@@ -1015,9 +1018,9 @@ Static Public Member Functions</h2></td></tr>
 <p>If, after transfer was restored, no more Bulk-IN transfer is pending, and given transfer contains a SplitAction, this action will be executed.</p>
 <p>Is called by state machine </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00780">780</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00786">786</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
-<p>References <a class="el" href="classmdt_usbtmc_bulk_transfer.html#a81f2309d821053cd7c8f6e32aff93b7ca651cbdca4ac8b302c18ac9884791194e">mdtUsbtmcBulkTransfer::CHECK_ABORT_STATUS</a>, <a class="el" href="classmdt_usbtmc_bulk_transfer.html#a81f2309d821053cd7c8f6e32aff93b7ca34c6b8e885527e8b41b195d3fc18677a">mdtUsbtmcBulkTransfer::CHECK_CLEAR_STATUS</a>, <a class="el" href="classmdt_usbtmc_bulk_transfer.html#a81f2309d821053cd7c8f6e32aff93b7cae37274c52bff64e53e5dd2ce355a5219">mdtUsbtmcBulkTransfer::CLEAR_ENDPOINT_HALT</a>, <a class="el" href="mdt_error_8h_source.html#l00097">mdtError::Error</a>, <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00405">hasPendingTransfers()</a>, <a class="el" href="classmdt_usbtmc_bulk_transfer.html#a81f2309d821053cd7c8f6e32aff93b7caea5c13bf8058f283040da9153953c4e7">mdtUsbtmcBulkTransfer::INITIATE_ABORT</a>, <a class="el" href="classmdt_usbtmc_bulk_transfer.html#a81f2309d821053cd7c8f6e32aff93b7cad6f130330eaada1770d26d6906b1977b">mdtUsbtmcBulkTransfer::INITIATE_CLEAR</a>, <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, <a class="el" href="classmdt_usbtmc_bulk_transfer.html#a81f2309d821053cd7c8f6e32aff93b7ca1e601ea653db1c729c9ee5746730fabe">mdtUsbtmcBulkTransfer::NoAction</a>, <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00194">mdtUsbTransferPool&lt; T &gt;::pendingTransferCount()</a>, <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00180">mdtUsbTransferPool&lt; T &gt;::restoreTransfer()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00085">mdtError::setSystemError()</a>, <a class="el" href="mdt_usbtmc_bulk_transfer_8h_source.html#l00191">mdtUsbtmcBulkTransfer::splitAction()</a>, and <a class="el" href="mdt_usb_transfer_8h_source.html#l00088">mdtUsbTransfer::status()</a>.</p>
+<p>References <a class="el" href="classmdt_usbtmc_bulk_transfer.html#a81f2309d821053cd7c8f6e32aff93b7ca651cbdca4ac8b302c18ac9884791194e">mdtUsbtmcBulkTransfer::CHECK_ABORT_STATUS</a>, <a class="el" href="classmdt_usbtmc_bulk_transfer.html#a81f2309d821053cd7c8f6e32aff93b7ca34c6b8e885527e8b41b195d3fc18677a">mdtUsbtmcBulkTransfer::CHECK_CLEAR_STATUS</a>, <a class="el" href="classmdt_usbtmc_bulk_transfer.html#a81f2309d821053cd7c8f6e32aff93b7cae37274c52bff64e53e5dd2ce355a5219">mdtUsbtmcBulkTransfer::CLEAR_ENDPOINT_HALT</a>, <a class="el" href="mdt_error_8h_source.html#l00097">mdtError::Error</a>, <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00411">hasPendingTransfers()</a>, <a class="el" href="classmdt_usbtmc_bulk_transfer.html#a81f2309d821053cd7c8f6e32aff93b7caea5c13bf8058f283040da9153953c4e7">mdtUsbtmcBulkTransfer::INITIATE_ABORT</a>, <a class="el" href="classmdt_usbtmc_bulk_transfer.html#a81f2309d821053cd7c8f6e32aff93b7cad6f130330eaada1770d26d6906b1977b">mdtUsbtmcBulkTransfer::INITIATE_CLEAR</a>, <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, <a class="el" href="classmdt_usbtmc_bulk_transfer.html#a81f2309d821053cd7c8f6e32aff93b7ca1e601ea653db1c729c9ee5746730fabe">mdtUsbtmcBulkTransfer::NoAction</a>, <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00194">mdtUsbTransferPool&lt; T &gt;::pendingTransferCount()</a>, <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00180">mdtUsbTransferPool&lt; T &gt;::restoreTransfer()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00085">mdtError::setSystemError()</a>, <a class="el" href="mdt_usbtmc_bulk_transfer_8h_source.html#l00191">mdtUsbtmcBulkTransfer::splitAction()</a>, and <a class="el" href="mdt_usb_transfer_8h_source.html#l00088">mdtUsbTransfer::status()</a>.</p>
 
 </div>
 </div>
@@ -1047,7 +1050,7 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Restore bulk-IN transfer to pool. </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00767">767</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00773">773</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00180">mdtUsbTransferPool&lt; T &gt;::restoreTransfer()</a>.</p>
 
@@ -1071,9 +1074,9 @@ Static Public Member Functions</h2></td></tr>
 <p>If, after transfer was restored, no more Bulk-OUT transfer is pending, and given transfer contains a SplitAction, this action will be executed.</p>
 <p>Is called by state machine </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00606">606</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00612">612</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_usbtmc_bulk_transfer_8h_source.html#l00107">mdtUsbtmcBulkTransfer::bTag()</a>, <a class="el" href="classmdt_usbtmc_bulk_transfer.html#a81f2309d821053cd7c8f6e32aff93b7ca651cbdca4ac8b302c18ac9884791194e">mdtUsbtmcBulkTransfer::CHECK_ABORT_STATUS</a>, <a class="el" href="classmdt_usbtmc_bulk_transfer.html#a81f2309d821053cd7c8f6e32aff93b7ca34c6b8e885527e8b41b195d3fc18677a">mdtUsbtmcBulkTransfer::CHECK_CLEAR_STATUS</a>, <a class="el" href="classmdt_usbtmc_bulk_transfer.html#a81f2309d821053cd7c8f6e32aff93b7cae37274c52bff64e53e5dd2ce355a5219">mdtUsbtmcBulkTransfer::CLEAR_ENDPOINT_HALT</a>, <a class="el" href="mdt_error_8h_source.html#l00097">mdtError::Error</a>, <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00405">hasPendingTransfers()</a>, <a class="el" href="classmdt_usbtmc_bulk_transfer.html#a81f2309d821053cd7c8f6e32aff93b7caea5c13bf8058f283040da9153953c4e7">mdtUsbtmcBulkTransfer::INITIATE_ABORT</a>, <a class="el" href="classmdt_usbtmc_bulk_transfer.html#a81f2309d821053cd7c8f6e32aff93b7cad6f130330eaada1770d26d6906b1977b">mdtUsbtmcBulkTransfer::INITIATE_CLEAR</a>, <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, <a class="el" href="classmdt_usbtmc_bulk_transfer.html#a81f2309d821053cd7c8f6e32aff93b7ca1e601ea653db1c729c9ee5746730fabe">mdtUsbtmcBulkTransfer::NoAction</a>, <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00194">mdtUsbTransferPool&lt; T &gt;::pendingTransferCount()</a>, <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00180">mdtUsbTransferPool&lt; T &gt;::restoreTransfer()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00085">mdtError::setSystemError()</a>, <a class="el" href="mdt_usbtmc_bulk_transfer_8h_source.html#l00191">mdtUsbtmcBulkTransfer::splitAction()</a>, and <a class="el" href="mdt_usb_transfer_8h_source.html#l00088">mdtUsbTransfer::status()</a>.</p>
+<p>References <a class="el" href="mdt_usbtmc_bulk_transfer_8h_source.html#l00107">mdtUsbtmcBulkTransfer::bTag()</a>, <a class="el" href="classmdt_usbtmc_bulk_transfer.html#a81f2309d821053cd7c8f6e32aff93b7ca651cbdca4ac8b302c18ac9884791194e">mdtUsbtmcBulkTransfer::CHECK_ABORT_STATUS</a>, <a class="el" href="classmdt_usbtmc_bulk_transfer.html#a81f2309d821053cd7c8f6e32aff93b7ca34c6b8e885527e8b41b195d3fc18677a">mdtUsbtmcBulkTransfer::CHECK_CLEAR_STATUS</a>, <a class="el" href="classmdt_usbtmc_bulk_transfer.html#a81f2309d821053cd7c8f6e32aff93b7cae37274c52bff64e53e5dd2ce355a5219">mdtUsbtmcBulkTransfer::CLEAR_ENDPOINT_HALT</a>, <a class="el" href="mdt_error_8h_source.html#l00097">mdtError::Error</a>, <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00411">hasPendingTransfers()</a>, <a class="el" href="classmdt_usbtmc_bulk_transfer.html#a81f2309d821053cd7c8f6e32aff93b7caea5c13bf8058f283040da9153953c4e7">mdtUsbtmcBulkTransfer::INITIATE_ABORT</a>, <a class="el" href="classmdt_usbtmc_bulk_transfer.html#a81f2309d821053cd7c8f6e32aff93b7cad6f130330eaada1770d26d6906b1977b">mdtUsbtmcBulkTransfer::INITIATE_CLEAR</a>, <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, <a class="el" href="classmdt_usbtmc_bulk_transfer.html#a81f2309d821053cd7c8f6e32aff93b7ca1e601ea653db1c729c9ee5746730fabe">mdtUsbtmcBulkTransfer::NoAction</a>, <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00194">mdtUsbTransferPool&lt; T &gt;::pendingTransferCount()</a>, <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00180">mdtUsbTransferPool&lt; T &gt;::restoreTransfer()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00085">mdtError::setSystemError()</a>, <a class="el" href="mdt_usbtmc_bulk_transfer_8h_source.html#l00191">mdtUsbtmcBulkTransfer::splitAction()</a>, and <a class="el" href="mdt_usb_transfer_8h_source.html#l00088">mdtUsbTransfer::status()</a>.</p>
 
 </div>
 </div>
@@ -1104,11 +1107,11 @@ Static Public Member Functions</h2></td></tr>
 <p>Restore bulk-OUT transfer to pool. </p>
 <p>Is called by state machine </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00593">593</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00599">599</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00180">mdtUsbTransferPool&lt; T &gt;::restoreTransfer()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00545">handleBulkOutTransferComplete()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00551">handleBulkOutTransferComplete()</a>.</p>
 
 </div>
 </div>
@@ -1139,11 +1142,11 @@ Static Public Member Functions</h2></td></tr>
 <p>Restore control transfer to pool. </p>
 <p>Is called by state machine </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00532">532</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00538">538</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00180">mdtUsbTransferPool&lt; T &gt;::restoreTransfer()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00454">handleControlTransferComplete()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00460">handleControlTransferComplete()</a>.</p>
 
 </div>
 </div>
@@ -1174,7 +1177,7 @@ Static Public Member Functions</h2></td></tr>
 <p>Restore interrupt-IN transfer to pool. </p>
 <p>Is called by state machine </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00920">920</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00926">926</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00180">mdtUsbTransferPool&lt; T &gt;::restoreTransfer()</a>.</p>
 
@@ -1200,7 +1203,30 @@ template&lt;typename EventType &gt; </div>
 <p>Used by internal state machine to send events.</p>
 <p>This is needed, because only <a class="el" href="classmdt_usbtmc_transfer_handler.html" title="USBTMC transfer handler. ">mdtUsbtmcTransferHandler</a> instance contains a StateMachine object, witch locks the event mutex when calling process_event(). </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00400">400</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00406">406</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae824f384cc1dd1f860462cf1d6ebf3aa"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtUsbtmcTransferHandler::setDeviceName </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set device name. </p>
+<p>Device name is used to build error messages. See deviceIdString() </p>
+
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00040">40</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_usbtmc_port_8cpp_source.html#l00116">mdtUsbtmcPort::openDevice()</a>, and <a class="el" href="mdt_usbtmc_port_8cpp_source.html#l00084">mdtUsbtmcPort::setDeviceName()</a>.</p>
 
 </div>
 </div>
@@ -1236,7 +1262,7 @@ template&lt;typename EventType &gt; </div>
 
 <p>Setup handler. </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00040">40</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00046">46</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00113">mdtUsbTransferPool&lt; T &gt;::allocTransfers()</a>, <a class="el" href="mdt_usb_interface_descriptor_8h_source.html#l00067">mdtUsbInterfaceDescriptor::bInterfaceNumber()</a>, <a class="el" href="mdt_usb_interface_descriptor_8cpp_source.html#l00123">mdtUsbInterfaceDescriptor::bulkInEndpoints()</a>, <a class="el" href="mdt_usb_interface_descriptor_8cpp_source.html#l00136">mdtUsbInterfaceDescriptor::bulkOutEndpoints()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00116">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00097">mdtError::Error</a>, <a class="el" href="mdt_usb_interface_descriptor_8cpp_source.html#l00149">mdtUsbInterfaceDescriptor::interruptInEndpoints()</a>, <a class="el" href="mdt_usb_interface_descriptor_8h_source.html#l00051">mdtUsbInterfaceDescriptor::isEmpty()</a>, <a class="el" href="mdt_usb_device_descriptor_8h_source.html#l00073">mdtUsbDeviceDescriptor::isEmpty()</a>, <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00060">mdtError::setError()</a>.</p>
 
@@ -1257,7 +1283,7 @@ template&lt;typename EventType &gt; </div>
 
 <p>Start transfer handler. </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00135">135</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00141">141</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
 </div>
 </div>
@@ -1276,7 +1302,7 @@ template&lt;typename EventType &gt; </div>
 
 <p>Stop transfer handler. </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00140">140</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00146">146</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
 </div>
 </div>
@@ -1296,9 +1322,9 @@ template&lt;typename EventType &gt; </div>
 <p>Will cancel all pending bulk-OUT and bulk-IN transfers and request I/O buffer clear. </p>
 <p>Once all transfers are cancelled, INITIATE_CLEAR and, if needed, CHECK_CLEAR_STATUS is sent to device. </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00219">219</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00225">225</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_usbtmc_port_8cpp_source.html#l00185">mdtUsbtmcPort::clearBulkIo()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_usbtmc_port_8cpp_source.html#l00224">mdtUsbtmcPort::clearBulkIo()</a>.</p>
 
 </div>
 </div>
@@ -1330,11 +1356,11 @@ template&lt;typename EventType &gt; </div>
 <p>If a action is given as argument, it will be set to last transfer cancel request.</p>
 <p>Is called by state machine </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00837">837</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00843">843</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00220">mdtUsbTransferPool&lt; T &gt;::getAllPendingTransfers()</a>, and <a class="el" href="mdt_usbtmc_bulk_transfer_8h_source.html#l00171">mdtUsbtmcBulkTransfer::setSplitAction()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00224">beginBulkIoClear()</a>, <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00692">handleBulkInTransferComplete()</a>, and <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00431">submitCancelAllTransfers()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00230">beginBulkIoClear()</a>, <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00698">handleBulkInTransferComplete()</a>, and <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00437">submitCancelAllTransfers()</a>.</p>
 
 </div>
 </div>
@@ -1366,11 +1392,11 @@ template&lt;typename EventType &gt; </div>
 <p>If a action is given as argument, it will be set to last transfer cancel request.</p>
 <p>Is called by state machine </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00664">664</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00670">670</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00220">mdtUsbTransferPool&lt; T &gt;::getAllPendingTransfers()</a>, and <a class="el" href="mdt_usbtmc_bulk_transfer_8h_source.html#l00171">mdtUsbtmcBulkTransfer::setSplitAction()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00224">beginBulkIoClear()</a>, <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00545">handleBulkOutTransferComplete()</a>, and <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00431">submitCancelAllTransfers()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00230">beginBulkIoClear()</a>, <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00551">handleBulkOutTransferComplete()</a>, and <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00437">submitCancelAllTransfers()</a>.</p>
 
 </div>
 </div>
@@ -1390,9 +1416,9 @@ template&lt;typename EventType &gt; </div>
 <p>Submit cancellation of all pending transfers. </p>
 <p>Is called by state machine </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00431">431</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00437">437</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00837">submitCancelAllBulkInTransfers()</a>, and <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00664">submitCancelAllBulkOutTransfers()</a>.</p>
+<p>References <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00843">submitCancelAllBulkInTransfers()</a>, and <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00670">submitCancelAllBulkOutTransfers()</a>.</p>
 
 </div>
 </div>
@@ -1420,9 +1446,9 @@ template&lt;typename EventType &gt; </div>
 
 <p>Submit a CLEAR_FEATURE control request with wValue = ENDPOINT_HALT for Bulk-IN endpoint. </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8h_source.html#l00144">144</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8h_source.html">mdtUsbtmcTransferHandler.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8h_source.html#l00151">151</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8h_source.html">mdtUsbtmcTransferHandler.h</a>.</p>
 
-<p>References <a class="el" href="mdt_usb_endpoint_descriptor_8h_source.html#l00071">mdtUsbEndpointDescriptor::number()</a>, and <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00288">submitClearEndpointHalt()</a>.</p>
+<p>References <a class="el" href="mdt_usb_endpoint_descriptor_8h_source.html#l00071">mdtUsbEndpointDescriptor::number()</a>, and <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00294">submitClearEndpointHalt()</a>.</p>
 
 </div>
 </div>
@@ -1450,9 +1476,9 @@ template&lt;typename EventType &gt; </div>
 
 <p>Submit a CLEAR_FEATURE control request with wValue = ENDPOINT_HALT for Bulk-OUT endpoint. </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8h_source.html#l00137">137</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8h_source.html">mdtUsbtmcTransferHandler.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8h_source.html#l00144">144</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8h_source.html">mdtUsbtmcTransferHandler.h</a>.</p>
 
-<p>References <a class="el" href="mdt_usb_endpoint_descriptor_8h_source.html#l00071">mdtUsbEndpointDescriptor::number()</a>, and <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00288">submitClearEndpointHalt()</a>.</p>
+<p>References <a class="el" href="mdt_usb_endpoint_descriptor_8h_source.html#l00071">mdtUsbEndpointDescriptor::number()</a>, and <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00294">submitClearEndpointHalt()</a>.</p>
 
 </div>
 </div>
@@ -1482,11 +1508,11 @@ template&lt;typename EventType &gt; </div>
 
 <p>Submit a CLEAR_FEATURE control request with wValue = ENDPOINT_HALT for given endpoint. </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00288">288</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00294">294</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00151">mdtUsbTransferPool&lt; T &gt;::getTransfer()</a>, <a class="el" href="mdt_usb_transfer_8h_source.html#l00118">mdtUsbTransfer::lastError()</a>, <a class="el" href="mdt_usbtmc_control_transfer_8cpp_source.html#l00032">mdtUsbtmcControlTransfer::setupClearEndpointHalt()</a>, and <a class="el" href="mdt_usb_transfer_8cpp_source.html#l00045">mdtUsbTransfer::submit()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_usbtmc_transfer_handler_8h_source.html#l00144">submitClearBulkInEndpointHalt()</a>, and <a class="el" href="mdt_usbtmc_transfer_handler_8h_source.html#l00137">submitClearBulkOutEndpointHalt()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_usbtmc_transfer_handler_8h_source.html#l00151">submitClearBulkInEndpointHalt()</a>, and <a class="el" href="mdt_usbtmc_transfer_handler_8h_source.html#l00144">submitClearBulkOutEndpointHalt()</a>.</p>
 
 </div>
 </div>
@@ -1530,11 +1556,11 @@ template&lt;typename EventType &gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00145">145</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00151">151</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_error_8cpp_source.html#l00116">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00097">mdtError::Error</a>, <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00151">mdtUsbTransferPool&lt; T &gt;::getTransfer()</a>, <a class="el" href="mdt_usb_transfer_8h_source.html#l00118">mdtUsbTransfer::lastError()</a>, <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00194">mdtUsbTransferPool&lt; T &gt;::pendingTransferCount()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00060">mdtError::setError()</a>, <a class="el" href="mdt_usbtmc_bulk_transfer_8cpp_source.html#l00036">mdtUsbtmcBulkTransfer::setupDevDepMsgOut()</a>, <a class="el" href="mdt_usb_transfer_8cpp_source.html#l00045">mdtUsbTransfer::submit()</a>, and <a class="el" href="mdt_error_8h_source.html#l00096">mdtError::Warning</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_usbtmc_port_8cpp_source.html#l00123">mdtUsbtmcPort::sendCommand()</a>, and <a class="el" href="mdt_usbtmc_port_8cpp_source.html#l00144">mdtUsbtmcPort::sendQuery()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_usbtmc_port_8cpp_source.html#l00162">mdtUsbtmcPort::sendCommand()</a>, and <a class="el" href="mdt_usbtmc_port_8cpp_source.html#l00183">mdtUsbtmcPort::sendQuery()</a>.</p>
 
 </div>
 </div>
@@ -1553,7 +1579,7 @@ template&lt;typename EventType &gt; </div>
 
 <p>Submit control transfers cancellation. </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00303">303</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00309">309</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_usb_transfer_8cpp_source.html#l00065">mdtUsbTransfer::cancel()</a>, <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00206">mdtUsbTransferPool&lt; T &gt;::getPendingTransfer()</a>, and <a class="el" href="mdt_usb_transfer_8h_source.html#l00118">mdtUsbTransfer::lastError()</a>.</p>
 
@@ -1584,13 +1610,13 @@ template&lt;typename EventType &gt; </div>
 </div><div class="memdoc">
 
 <p>Submit a Interrupt-IN transfer. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000056">Todo:</a></b></dt><dd>Check how to tell libusb that we want infinite timeout and adapt </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000049">Todo:</a></b></dt><dd>Check how to tell libusb that we want infinite timeout and adapt </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00866">866</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00872">872</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00151">mdtUsbTransferPool&lt; T &gt;::getTransfer()</a>, <a class="el" href="mdt_usb_transfer_8h_source.html#l00118">mdtUsbTransfer::lastError()</a>, <a class="el" href="mdt_usbtmc_interrupt_transfer_8cpp_source.html#l00034">mdtUsbtmcInterruptTransfer::setup()</a>, and <a class="el" href="mdt_usb_transfer_8cpp_source.html#l00045">mdtUsbTransfer::submit()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00886">handleInterruptInTransferComplete()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00892">handleInterruptInTransferComplete()</a>.</p>
 
 </div>
 </div>
@@ -1609,7 +1635,7 @@ template&lt;typename EventType &gt; </div>
 
 <p>Will cancel active transfers and change state to Stopping. </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00213">213</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00219">219</a> of file <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html">mdtUsbtmcTransferHandler.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_usb_transfer_pool_8h_source.html#l00194">mdtUsbTransferPool&lt; T &gt;::pendingTransferCount()</a>.</p>
 
@@ -1622,7 +1648,7 @@ template&lt;typename EventType &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 11 2015 04:05:43 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jan 11 2015 16:42:21 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

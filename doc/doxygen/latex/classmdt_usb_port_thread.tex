@@ -7,11 +7,12 @@
 
 
 
-Inheritance diagram for mdt\-Usb\-Port\-Thread\-:\nopagebreak
+Inheritance diagram for mdt\-Usb\-Port\-Thread\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=196pt]{classmdt_usb_port_thread__inherit__graph}
+\includegraphics[width=178pt]{classmdt_usb_port_thread__inherit__graph}
 \end{center}
 \end{figure}
 
@@ -37,9 +38,9 @@ void \hyperlink{classmdt_usb_port_thread_a54e65bed60200cd2150b5a7b063c723e}{read
 \item 
 \hyperlink{classmdt_usb_port_thread_aaf4e5883224f05d80132b31a921ac899}{mdt\-Usb\-Port\-Thread} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent=0)
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_usb_port_thread_a1661f362e2d772c1524f09daa6da3f15}{set\-Port} (\hyperlink{classmdt_usb_port}{mdt\-Usb\-Port} $\ast$\hyperlink{classmdt_port_thread_a97bff8cf6aca37d8858cc4e5c9294cae}{port})
+void \hyperlink{classmdt_usb_port_thread_a1661f362e2d772c1524f09daa6da3f15}{set\-Port} (mdt\-Usb\-Port $\ast$\hyperlink{classmdt_port_thread_a97bff8cf6aca37d8858cc4e5c9294cae}{port})
 \begin{DoxyCompactList}\small\item\em Set the port instance. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_usb_port}{mdt\-Usb\-Port} $\ast$ \hyperlink{classmdt_usb_port_thread_aaa8e1ce181489dbae57c81b42dc6ad62}{usb\-Port} ()
+mdt\-Usb\-Port $\ast$ \hyperlink{classmdt_usb_port_thread_aaa8e1ce181489dbae57c81b42dc6ad62}{usb\-Port} ()
 \begin{DoxyCompactList}\small\item\em Get U\-S\-B port instance. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_usb_port_thread_a99070e7dba4bd7939b054cddbd66979f}{detach\-Port} (bool release\-Memory)
 \begin{DoxyCompactList}\small\item\em Detach the port from thread. \end{DoxyCompactList}\item 
@@ -54,7 +55,7 @@ bool \hyperlink{classmdt_usb_port_thread_aeaa2dabc53e57f6b7cf7077d113c7f40}{hand
 \item 
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdt\-Abstract\-Port\-::error\-\_\-t} \hyperlink{classmdt_usb_port_thread_a2d234f3900b502ecced6897facdcf029}{wait\-On\-Control\-Transfer\-Possible} (bool notify\-On\-Control\-Transfer\-Complete)
 \begin{DoxyCompactList}\small\item\em Wait until a new control transfer is possible (i.\-e. when control frames pool is not empty) \end{DoxyCompactList}\item 
-\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdt\-Abstract\-Port\-::error\-\_\-t} \hyperlink{classmdt_usb_port_thread_ae154415b3f311b02934405cd58eb9aa5}{send\-Control\-Query} (\hyperlink{classmdt_frame_usb_control}{mdt\-Frame\-Usb\-Control} $\ast$ctl\-Frame)
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdt\-Abstract\-Port\-::error\-\_\-t} \hyperlink{classmdt_usb_port_thread_ae154415b3f311b02934405cd58eb9aa5}{send\-Control\-Query} (mdt\-Frame\-Usb\-Control $\ast$ctl\-Frame)
 \begin{DoxyCompactList}\small\item\em Send a control query and wait until response is available. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdt\-Abstract\-Port\-::error\-\_\-t} \hyperlink{classmdt_usb_port_thread_acca2af9704cc6894ec5b2058ca102af1}{read\-Until\-Short\-Packet\-Received} (int max\-Read\-Transfers)
 \begin{DoxyCompactList}\small\item\em Read until a short frame is received. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -169,10 +170,6 @@ Reimplemented from \hyperlink{classmdt_port_thread_acdb3d96287c571cc08ef39860dc3
 
 
 
-Reimplemented in \hyperlink{classmdt_usbtmc_port_thread_a27c115427b49d5ae988c9f9c9a5e402a}{mdt\-Usbtmc\-Port\-Thread}.
-
-
-
 Definition at line 55 of file mdt\-Usb\-Port\-Thread.\-cpp.
 
 \hypertarget{classmdt_usb_port_thread_a74258f300967b5dea1fbfa9a0ccab38a}{\index{mdt\-Usb\-Port\-Thread@{mdt\-Usb\-Port\-Thread}!is\-Writer@{is\-Writer}}
@@ -189,10 +186,6 @@ Returns true.
 
 
 Reimplemented from \hyperlink{classmdt_port_thread_a0122a12262052cf3643241a3eaa31c58}{mdt\-Port\-Thread}.
-
-
-
-Reimplemented in \hyperlink{classmdt_usbtmc_port_thread_a4c58b7140f0483a19723b14487907423}{mdt\-Usbtmc\-Port\-Thread}.
 
 
 
@@ -237,7 +230,7 @@ Definition at line 154 of file mdt\-Usb\-Port\-Thread.\-cpp.
 
 
 
-References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, mdt\-Usb\-Port\-::handle\-Usb\-Events(), mdt\-Usb\-Port\-::init\-Read\-Transfer(), mdt\-Usb\-Port\-::last\-Errors(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-U\-S\-B\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R, mdt\-Abstract\-Port\-::\-No\-Error, mdt\-Usb\-Port\-::read(), mdt\-Usb\-Port\-::read\-Buffer\-Size(), mdt\-Abstract\-Port\-::\-Read\-Timeout, and usb\-Port().
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-U\-S\-B\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R, mdt\-Abstract\-Port\-::\-No\-Error, mdt\-Abstract\-Port\-::\-Read\-Timeout, and usb\-Port().
 
 \hypertarget{classmdt_usb_port_thread_a54e65bed60200cd2150b5a7b063c723e}{\index{mdt\-Usb\-Port\-Thread@{mdt\-Usb\-Port\-Thread}!read\-Until\-Short\-Packet\-Received\-Finished@{read\-Until\-Short\-Packet\-Received\-Finished}}
 \index{read\-Until\-Short\-Packet\-Received\-Finished@{read\-Until\-Short\-Packet\-Received\-Finished}!mdtUsbPortThread@{mdt\-Usb\-Port\-Thread}}
@@ -254,7 +247,7 @@ Emitted when the read until a short packet process is finished.
 \index{send\-Control\-Query@{send\-Control\-Query}!mdtUsbPortThread@{mdt\-Usb\-Port\-Thread}}
 \subsubsection[{send\-Control\-Query}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Abstract\-Port\-::error\-\_\-t} mdt\-Usb\-Port\-Thread\-::send\-Control\-Query (
 \begin{DoxyParamCaption}
-\item[{{\bf mdt\-Frame\-Usb\-Control} $\ast$}]{ctl\-Frame}
+\item[{mdt\-Frame\-Usb\-Control $\ast$}]{ctl\-Frame}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_usb_port_thread_ae154415b3f311b02934405cd58eb9aa5}
 
@@ -267,13 +260,13 @@ Definition at line 119 of file mdt\-Usb\-Port\-Thread.\-cpp.
 
 
 
-References mdt\-Usb\-Port\-::add\-Control\-Request(), mdt\-Usb\-Port\-::handle\-Usb\-Events(), mdt\-Usb\-Port\-::last\-Errors(), mdt\-Abstract\-Port\-::\-No\-Error, mdt\-Port\-Thread\-::pv\-Running, and usb\-Port().
+References mdt\-Abstract\-Port\-::\-No\-Error, mdt\-Port\-Thread\-::pv\-Running, and usb\-Port().
 
 \hypertarget{classmdt_usb_port_thread_a1661f362e2d772c1524f09daa6da3f15}{\index{mdt\-Usb\-Port\-Thread@{mdt\-Usb\-Port\-Thread}!set\-Port@{set\-Port}}
 \index{set\-Port@{set\-Port}!mdtUsbPortThread@{mdt\-Usb\-Port\-Thread}}
 \subsubsection[{set\-Port}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usb\-Port\-Thread\-::set\-Port (
 \begin{DoxyParamCaption}
-\item[{{\bf mdt\-Usb\-Port} $\ast$}]{port}
+\item[{mdt\-Usb\-Port $\ast$}]{port}
 \end{DoxyParamCaption}
 )}}\label{classmdt_usb_port_thread_a1661f362e2d772c1524f09daa6da3f15}
 
@@ -293,13 +286,9 @@ Definition at line 36 of file mdt\-Usb\-Port\-Thread.\-cpp.
 
 References mdt\-Port\-Thread\-::port(), and mdt\-Port\-Thread\-::set\-Port().
 
-
-
-Referenced by mdt\-Usbtmc\-Port\-Manager\-::mdt\-Usbtmc\-Port\-Manager(), and mdt\-Usb\-Port\-Manager\-::start().
-
 \hypertarget{classmdt_usb_port_thread_aaa8e1ce181489dbae57c81b42dc6ad62}{\index{mdt\-Usb\-Port\-Thread@{mdt\-Usb\-Port\-Thread}!usb\-Port@{usb\-Port}}
 \index{usb\-Port@{usb\-Port}!mdtUsbPortThread@{mdt\-Usb\-Port\-Thread}}
-\subsubsection[{usb\-Port}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Usb\-Port} $\ast$ mdt\-Usb\-Port\-Thread\-::usb\-Port (
+\subsubsection[{usb\-Port}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Usb\-Port $\ast$ mdt\-Usb\-Port\-Thread\-::usb\-Port (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
@@ -317,7 +306,7 @@ Definition at line 44 of file mdt\-Usb\-Port\-Thread.\-cpp.
 
 
 
-Referenced by mdt\-Usbtmc\-Port\-Manager\-::mdt\-Usbtmc\-Port\-Manager(), read\-Until\-Short\-Packet\-Received(), send\-Control\-Query(), mdt\-Usb\-Port\-Manager\-::start(), and wait\-On\-Control\-Transfer\-Possible().
+Referenced by read\-Until\-Short\-Packet\-Received(), send\-Control\-Query(), and wait\-On\-Control\-Transfer\-Possible().
 
 \hypertarget{classmdt_usb_port_thread_a2d234f3900b502ecced6897facdcf029}{\index{mdt\-Usb\-Port\-Thread@{mdt\-Usb\-Port\-Thread}!wait\-On\-Control\-Transfer\-Possible@{wait\-On\-Control\-Transfer\-Possible}}
 \index{wait\-On\-Control\-Transfer\-Possible@{wait\-On\-Control\-Transfer\-Possible}!mdtUsbPortThread@{mdt\-Usb\-Port\-Thread}}
@@ -336,7 +325,7 @@ Definition at line 70 of file mdt\-Usb\-Port\-Thread.\-cpp.
 
 
 
-References mdt\-Error\-::commit(), mdt\-Usb\-Port\-::control\-Frames\-Pool(), control\-Response\-Readen(), mdt\-Usb\-Port\-::handle\-Usb\-Events(), mdt\-Usb\-Port\-::last\-Errors(), mdt\-Abstract\-Port\-::lock\-Mutex(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-U\-S\-B\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R, msleep, mdt\-Abstract\-Port\-::\-No\-Error, mdt\-Port\-Thread\-::pv\-Running, mdt\-Abstract\-Port\-::unlock\-Mutex(), usb\-Port(), and mdt\-Error\-::\-Warning.
+References mdt\-Error\-::commit(), control\-Response\-Readen(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-U\-S\-B\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R, msleep, mdt\-Abstract\-Port\-::\-No\-Error, mdt\-Port\-Thread\-::pv\-Running, usb\-Port(), and mdt\-Error\-::\-Warning.
 
 
 

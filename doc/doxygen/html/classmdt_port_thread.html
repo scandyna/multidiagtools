@@ -103,7 +103,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="classmdt_port_thread__inherit__graph.png" border="0" usemap="#mdt_port_thread_inherit__map" alt="Inheritance graph"/></div>
 <map name="mdt_port_thread_inherit__map" id="mdt_port_thread_inherit__map">
-<area shape="rect" id="node5" href="classmdt_port_read_thread.html" title="Reader thread for port I/O. " alt="" coords="293,5,432,35"/><area shape="rect" id="node7" href="classmdt_port_write_thread.html" title="mdtPortWriteThread" alt="" coords="293,59,432,88"/><area shape="rect" id="node9" href="classmdt_serial_port_ctl_thread.html" title="mdtSerialPortCtlThread" alt="" coords="284,112,441,141"/><area shape="rect" id="node11" href="classmdt_tcp_socket_thread.html" title="mdtTcpSocketThread" alt="" coords="289,165,436,195"/><area shape="rect" id="node13" href="classmdt_usb_port_thread.html" title="mdtUsbPortThread" alt="" coords="297,219,428,248"/><area shape="rect" id="node2" href="class_q_thread.html" title="QThread" alt="" coords="5,112,77,141"/><area shape="rect" id="node15" href="classmdt_usbtmc_port_thread.html" title="mdtUsbtmcPortThread" alt="" coords="491,219,645,248"/></map>
+<area shape="rect" id="node3" href="classmdt_port_read_thread.html" title="Reader thread for port I/O. " alt="" coords="293,5,432,32"/><area shape="rect" id="node4" href="classmdt_port_write_thread.html" title="mdtPortWriteThread" alt="" coords="293,56,432,83"/><area shape="rect" id="node5" href="classmdt_serial_port_ctl_thread.html" title="mdtSerialPortCtlThread" alt="" coords="283,107,442,133"/><area shape="rect" id="node6" href="classmdt_tcp_socket_thread.html" title="mdtTcpSocketThread" alt="" coords="289,157,436,184"/><area shape="rect" id="node7" href="classmdt_usb_port_thread.html" title="mdtUsbPortThread" alt="" coords="297,208,429,235"/><area shape="rect" id="node2" href="class_q_thread.html" title="QThread" alt="" coords="5,107,77,133"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Collaboration diagram for mdtPortThread:</div>
@@ -385,7 +385,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Emitted on error. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000034">Todo:</a></b></dt><dd>Adapt threads + port managers</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000035">Todo:</a></b></dt><dd>Adapt threads + port managers</dd></dl>
 <p>When a error occurs, this signal is emited.</p>
 <p>The error is one of the <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error. ">mdtAbstractPort::error_t</a>.</p>
 <p><a class="el" href="classmdt_port_manager.html" title="Port manager base class. ">mdtPortManager</a> uses this signal. </p>
@@ -506,7 +506,7 @@ Protected Attributes</h2></td></tr>
 <p>Default implementation returns allways false.</p>
 <p>This method should be implemented in reader subclass. </p>
 
-<p>Reimplemented in <a class="el" href="classmdt_usb_port_thread.html#aed82b57c84745f1e2391750697db1022">mdtUsbPortThread</a>, <a class="el" href="classmdt_port_read_thread.html#a0138d613b61056c9f8373331de2d9a84">mdtPortReadThread</a>, <a class="el" href="classmdt_usbtmc_port_thread.html#a27c115427b49d5ae988c9f9c9a5e402a">mdtUsbtmcPortThread</a>, <a class="el" href="classmdt_port_write_thread.html#ac37bb988773f624def51e841998a2f1e">mdtPortWriteThread</a>, <a class="el" href="classmdt_tcp_socket_thread.html#a3224f12c8ff8d695975030f3f6215010">mdtTcpSocketThread</a>, and <a class="el" href="classmdt_serial_port_ctl_thread.html#ab87413cedc8d0540eac553e55a3f6407">mdtSerialPortCtlThread</a>.</p>
+<p>Reimplemented in <a class="el" href="classmdt_usb_port_thread.html#aed82b57c84745f1e2391750697db1022">mdtUsbPortThread</a>, <a class="el" href="classmdt_port_read_thread.html#a0138d613b61056c9f8373331de2d9a84">mdtPortReadThread</a>, <a class="el" href="classmdt_port_write_thread.html#ac37bb988773f624def51e841998a2f1e">mdtPortWriteThread</a>, <a class="el" href="classmdt_tcp_socket_thread.html#a3224f12c8ff8d695975030f3f6215010">mdtTcpSocketThread</a>, and <a class="el" href="classmdt_serial_port_ctl_thread.html#ab87413cedc8d0540eac553e55a3f6407">mdtSerialPortCtlThread</a>.</p>
 
 <p>Definition at line <a class="el" href="mdt_port_thread_8cpp_source.html#l00201">201</a> of file <a class="el" href="mdt_port_thread_8cpp_source.html">mdtPortThread.cpp</a>.</p>
 
@@ -563,7 +563,7 @@ Protected Attributes</h2></td></tr>
 <p>Is used by <a class="el" href="classmdt_port_thread.html#a5746ea96689ed80179751ad1353f0b39" title="Stop the running thread. ">mdtPortThread::stop()</a> to know if <a class="el" href="classmdt_abstract_port.html#ae67c815f68317c70e398eaa86622af6b" title="Abort the frame tp write waiting. ">mdtAbstractPort::abortFrameToWriteWait()</a> must be called.</p>
 <p>Default implementation returns false </p>
 
-<p>Reimplemented in <a class="el" href="classmdt_usb_port_thread.html#a74258f300967b5dea1fbfa9a0ccab38a">mdtUsbPortThread</a>, <a class="el" href="classmdt_usbtmc_port_thread.html#a4c58b7140f0483a19723b14487907423">mdtUsbtmcPortThread</a>, <a class="el" href="classmdt_port_write_thread.html#ad2508c3a2433383e2de705e9f3d2e602">mdtPortWriteThread</a>, and <a class="el" href="classmdt_tcp_socket_thread.html#a014ad2b3a5fbe7031eeb1d42d8f0767d">mdtTcpSocketThread</a>.</p>
+<p>Reimplemented in <a class="el" href="classmdt_usb_port_thread.html#a74258f300967b5dea1fbfa9a0ccab38a">mdtUsbPortThread</a>, <a class="el" href="classmdt_port_write_thread.html#ad2508c3a2433383e2de705e9f3d2e602">mdtPortWriteThread</a>, and <a class="el" href="classmdt_tcp_socket_thread.html#a014ad2b3a5fbe7031eeb1d42d8f0767d">mdtTcpSocketThread</a>.</p>
 
 <p>Definition at line <a class="el" href="mdt_port_thread_8cpp_source.html#l00206">206</a> of file <a class="el" href="mdt_port_thread_8cpp_source.html">mdtPortThread.cpp</a>.</p>
 
@@ -1104,7 +1104,7 @@ Port must have a valid configuration. </dd></dl>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 11 2015 04:05:41 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jan 11 2015 16:42:18 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

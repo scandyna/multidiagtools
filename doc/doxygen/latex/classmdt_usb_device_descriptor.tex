@@ -311,10 +311,6 @@ Configurations are available after a call of \hyperlink{classmdt_usb_device_desc
 
 Definition at line 212 of file mdt\-Usb\-Device\-Descriptor.\-h.
 
-
-
-Referenced by mdt\-Usb\-Port\-Manager\-::scan().
-
 \hypertarget{classmdt_usb_device_descriptor_a2b5b593bf4a7d3a7a92a9b2ed1c19109}{\index{mdt\-Usb\-Device\-Descriptor@{mdt\-Usb\-Device\-Descriptor}!endpoint@{endpoint}}
 \index{endpoint@{endpoint}!mdtUsbDeviceDescriptor@{mdt\-Usb\-Device\-Descriptor}}
 \subsubsection[{endpoint}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Usb\-Endpoint\-Descriptor} mdt\-Usb\-Device\-Descriptor\-::endpoint (
@@ -380,10 +376,6 @@ Definition at line 44 of file mdt\-Usb\-Device\-Descriptor.\-cpp.
 
 
 References clear(), mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, serial\-Number(), mdt\-Error\-::set\-Error(), mdt\-Error\-::set\-System\-Error(), and mdt\-Error\-::\-Warning.
-
-
-
-Referenced by mdt\-Usb\-Port\-Manager\-::scan().
 
 \hypertarget{classmdt_usb_device_descriptor_a7ef9a49f04abb2fc6d82550718916373}{\index{mdt\-Usb\-Device\-Descriptor@{mdt\-Usb\-Device\-Descriptor}!first\-Bulk\-In\-Endpoint@{first\-Bulk\-In\-Endpoint}}
 \index{first\-Bulk\-In\-Endpoint@{first\-Bulk\-In\-Endpoint}!mdtUsbDeviceDescriptor@{mdt\-Usb\-Device\-Descriptor}}
@@ -532,10 +524,6 @@ Product I\-D.
 
 Definition at line 177 of file mdt\-Usb\-Device\-Descriptor.\-h.
 
-
-
-Referenced by mdt\-Usb\-Port\-Manager\-::scan().
-
 \hypertarget{classmdt_usb_device_descriptor_ad17a0b6a6bb67754c839f2c73d6df945}{\index{mdt\-Usb\-Device\-Descriptor@{mdt\-Usb\-Device\-Descriptor}!id\-String@{id\-String}}
 \index{id\-String@{id\-String}!mdtUsbDeviceDescriptor@{mdt\-Usb\-Device\-Descriptor}}
 \subsubsection[{id\-String}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Usb\-Device\-Descriptor\-::id\-String (
@@ -557,7 +545,7 @@ References product\-Name(), and vendor\-Name().
 
 
 
-Referenced by open().
+Referenced by open(), and mdt\-Usbtmc\-Port\-::open\-Device().
 
 \hypertarget{classmdt_usb_device_descriptor_a877e648e96b9dabd54220a14f4ad0cc7}{\index{mdt\-Usb\-Device\-Descriptor@{mdt\-Usb\-Device\-Descriptor}!id\-Vendor@{id\-Vendor}}
 \index{id\-Vendor@{id\-Vendor}!mdtUsbDeviceDescriptor@{mdt\-Usb\-Device\-Descriptor}}
@@ -573,10 +561,6 @@ Vendor I\-D (assigned by the U\-S\-B-\/\-I\-F)
 
 
 Definition at line 161 of file mdt\-Usb\-Device\-Descriptor.\-h.
-
-
-
-Referenced by mdt\-Usb\-Port\-Manager\-::scan().
 
 \hypertarget{classmdt_usb_device_descriptor_aeba19e7e0267510f46ae21251527ed1f}{\index{mdt\-Usb\-Device\-Descriptor@{mdt\-Usb\-Device\-Descriptor}!interface@{interface}}
 \index{interface@{interface}!mdtUsbDeviceDescriptor@{mdt\-Usb\-Device\-Descriptor}}
@@ -764,14 +748,14 @@ Product name.
 If vendor\-I\-D\-:product\-I\-D is known the product name is returned, else a string containing P\-I\-D\-:0x\-X\-X\-X\-X is returned
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000042}{Todo}]Parsing the usb.\-ids (see \href{http://www.linux-usb.org}{\tt http\-://www.\-linux-\/usb.\-org}) \end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000043}{Todo}]Parsing the usb.\-ids (see \href{http://www.linux-usb.org}{\tt http\-://www.\-linux-\/usb.\-org}) \end{DoxyRefDesc}
 
 
 Definition at line 160 of file mdt\-Usb\-Device\-Descriptor.\-cpp.
 
 
 
-Referenced by id\-String(), and mdt\-Usb\-Port\-Manager\-::scan().
+Referenced by id\-String().
 
 \hypertarget{classmdt_usb_device_descriptor_a458951fc9443b80e93ad126dc1b56417}{\index{mdt\-Usb\-Device\-Descriptor@{mdt\-Usb\-Device\-Descriptor}!serial\-Number@{serial\-Number}}
 \index{serial\-Number@{serial\-Number}!mdtUsbDeviceDescriptor@{mdt\-Usb\-Device\-Descriptor}}
@@ -790,7 +774,7 @@ Definition at line 181 of file mdt\-Usb\-Device\-Descriptor.\-cpp.
 
 
 
-Referenced by fetch\-Attributes(), and mdt\-Usb\-Port\-Manager\-::scan().
+Referenced by fetch\-Attributes().
 
 \hypertarget{classmdt_usb_device_descriptor_ac2f746ebd5540b65bf00f82c991f5c3b}{\index{mdt\-Usb\-Device\-Descriptor@{mdt\-Usb\-Device\-Descriptor}!vendor\-Name@{vendor\-Name}}
 \index{vendor\-Name@{vendor\-Name}!mdtUsbDeviceDescriptor@{mdt\-Usb\-Device\-Descriptor}}
@@ -806,14 +790,14 @@ Vendor name (assigned by the U\-S\-B-\/\-I\-F)
 If vendor I\-D is known it is returned, else a string containing V\-I\-D\-:0x\-X\-X\-X\-X is returned
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000041}{Todo}]Parsing the usb.\-ids (see \href{http://www.linux-usb.org}{\tt http\-://www.\-linux-\/usb.\-org}) \end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000042}{Todo}]Parsing the usb.\-ids (see \href{http://www.linux-usb.org}{\tt http\-://www.\-linux-\/usb.\-org}) \end{DoxyRefDesc}
 
 
 Definition at line 144 of file mdt\-Usb\-Device\-Descriptor.\-cpp.
 
 
 
-Referenced by id\-String(), and mdt\-Usb\-Port\-Manager\-::scan().
+Referenced by id\-String().
 
 
 

@@ -91,7 +91,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <a href="mdt_device_d_s_o1000_a_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/****************************************************************************</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> **</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> ** Copyright (C) 2011-2013 Philippe Steinmann.</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> ** Copyright (C) 2011-2015 Philippe Steinmann.</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> **</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> ** This file is part of multiDiagTools library.</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"> **</span></div>
@@ -113,51 +113,45 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define MDT_DEVICE_DSO1000A_H</span></div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_device_scpi_8h.html">mdtDeviceScpi.h</a>&quot;</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_usbtmc_port_manager_8h.html">mdtUsbtmcPortManager.h</a>&quot;</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_frame_codec_scpi_8h.html">mdtFrameCodecScpi.h</a>&quot;</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
-<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="classmdt_device_d_s_o1000_a.html">   28</a></span>&#160;<span class="keyword">class </span><a class="code" href="classmdt_device_d_s_o1000_a.html">mdtDeviceDSO1000A</a> : <span class="keyword">public</span> <a class="code" href="classmdt_device_scpi.html">mdtDeviceScpi</a></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;{</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; Q_OBJECT</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="classmdt_device_d_s_o1000_a.html">   26</a></span>&#160;<span class="keyword">class </span><a class="code" href="classmdt_device_d_s_o1000_a.html">mdtDeviceDSO1000A</a> : <span class="keyword">public</span> <a class="code" href="classmdt_device_scpi.html">mdtDeviceScpi</a></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;{</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; Q_OBJECT</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <a class="code" href="classmdt_device_d_s_o1000_a.html#a3c4cd1418250864589284a3540353fdb">mdtDeviceDSO1000A</a>(<a class="code" href="class_q_object.html">QObject</a> *parent = 0);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  <a class="code" href="classmdt_device_d_s_o1000_a.html#a3c4cd1418250864589284a3540353fdb">mdtDeviceDSO1000A</a>(<a class="code" href="class_q_object.html">QObject</a> *parent = 0);</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <a class="code" href="classmdt_device_d_s_o1000_a.html#a43f7e76a08f8b855f04fe4d1cb3010e1">~mdtDeviceDSO1000A</a>();</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a> <a class="code" href="classmdt_device_d_s_o1000_a.html#a84431cf929750a8a25d5218893736c72">connectToDevice</a>(<span class="keyword">const</span> <a class="code" href="classmdt_device_info.html">mdtDeviceInfo</a> &amp;devInfo);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; <span class="keyword">private</span> slots:</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <span class="keywordtype">void</span> decodeReadenFrame(<a class="code" href="classmdt_port_transaction.html">mdtPortTransaction</a> *transaction);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <a class="code" href="classmdt_device_d_s_o1000_a.html#a43f7e76a08f8b855f04fe4d1cb3010e1">~mdtDeviceDSO1000A</a>();</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="classmdt_device_d_s_o1000_a.html#ac6c66d3608c6b4cc0582b1d27fccd567">   44</a></span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classmdt_device_d_s_o1000_a.html#ac6c66d3608c6b4cc0582b1d27fccd567">connectToDevice</a>(<span class="keyword">const</span> QString &amp; serialNumber = QString())</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  {</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="classmdt_device_scpi.html#a94c8fde98a0fa2f933b3c069aa1e4fa0">mdtDeviceScpi::connectToDevice</a>(0x0957, 0x0588, serialNumber);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  }</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  Q_DISABLE_COPY(<a class="code" href="classmdt_device_d_s_o1000_a.html">mdtDeviceDSO1000A</a>);</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  <a class="code" href="classmdt_frame_codec_scpi.html">mdtFrameCodecScpi</a> *pvCodec;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;};</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#endif  // #ifndef MDT_DEVICE_DSO1000A_H</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  Q_DISABLE_COPY(<a class="code" href="classmdt_device_d_s_o1000_a.html">mdtDeviceDSO1000A</a>);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;};</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">#endif  // #ifndef MDT_DEVICE_DSO1000A_H</span></div>
 <div class="ttc" id="mdt_device_scpi_8h_html"><div class="ttname"><a href="mdt_device_scpi_8h.html">mdtDeviceScpi.h</a></div></div>
-<div class="ttc" id="classmdt_device_d_s_o1000_a_html_a3c4cd1418250864589284a3540353fdb"><div class="ttname"><a href="classmdt_device_d_s_o1000_a.html#a3c4cd1418250864589284a3540353fdb">mdtDeviceDSO1000A::mdtDeviceDSO1000A</a></div><div class="ttdeci">mdtDeviceDSO1000A(QObject *parent=0)</div><div class="ttdef"><b>Definition:</b> <a href="mdt_device_d_s_o1000_a_8cpp_source.html#l00025">mdtDeviceDSO1000A.cpp:25</a></div></div>
-<div class="ttc" id="classmdt_abstract_port_html_ad4121bb930c95887e77f8bafa065a85e"><div class="ttname"><a href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a></div><div class="ttdeci">error_t</div><div class="ttdoc">Error. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_abstract_port_8h_source.html#l00060">mdtAbstractPort.h:60</a></div></div>
-<div class="ttc" id="mdt_usbtmc_port_manager_8h_html"><div class="ttname"><a href="mdt_usbtmc_port_manager_8h.html">mdtUsbtmcPortManager.h</a></div></div>
-<div class="ttc" id="mdt_frame_codec_scpi_8h_html"><div class="ttname"><a href="mdt_frame_codec_scpi_8h.html">mdtFrameCodecScpi.h</a></div></div>
-<div class="ttc" id="classmdt_device_d_s_o1000_a_html"><div class="ttname"><a href="classmdt_device_d_s_o1000_a.html">mdtDeviceDSO1000A</a></div><div class="ttdef"><b>Definition:</b> <a href="mdt_device_d_s_o1000_a_8h_source.html#l00028">mdtDeviceDSO1000A.h:28</a></div></div>
-<div class="ttc" id="classmdt_device_d_s_o1000_a_html_a84431cf929750a8a25d5218893736c72"><div class="ttname"><a href="classmdt_device_d_s_o1000_a.html#a84431cf929750a8a25d5218893736c72">mdtDeviceDSO1000A::connectToDevice</a></div><div class="ttdeci">mdtAbstractPort::error_t connectToDevice(const mdtDeviceInfo &amp;devInfo)</div><div class="ttdoc">Search and connect to physical device. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_device_d_s_o1000_a_8cpp_source.html#l00045">mdtDeviceDSO1000A.cpp:45</a></div></div>
-<div class="ttc" id="classmdt_device_info_html"><div class="ttname"><a href="classmdt_device_info.html">mdtDeviceInfo</a></div><div class="ttdoc">Contains informations about a device (attached to a port) </div><div class="ttdef"><b>Definition:</b> <a href="mdt_device_info_8h_source.html#l00031">mdtDeviceInfo.h:31</a></div></div>
-<div class="ttc" id="classmdt_frame_codec_scpi_html"><div class="ttname"><a href="classmdt_frame_codec_scpi.html">mdtFrameCodecScpi</a></div><div class="ttdoc">#include &lt;QVariant&gt; </div><div class="ttdef"><b>Definition:</b> <a href="mdt_frame_codec_scpi_8h_source.html#l00030">mdtFrameCodecScpi.h:30</a></div></div>
-<div class="ttc" id="classmdt_device_scpi_html"><div class="ttname"><a href="classmdt_device_scpi.html">mdtDeviceScpi</a></div><div class="ttdoc">Base class for SCPI based instruments. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_device_scpi_8h_source.html#l00041">mdtDeviceScpi.h:41</a></div></div>
-<div class="ttc" id="classmdt_device_d_s_o1000_a_html_a43f7e76a08f8b855f04fe4d1cb3010e1"><div class="ttname"><a href="classmdt_device_d_s_o1000_a.html#a43f7e76a08f8b855f04fe4d1cb3010e1">mdtDeviceDSO1000A::~mdtDeviceDSO1000A</a></div><div class="ttdeci">~mdtDeviceDSO1000A()</div><div class="ttdef"><b>Definition:</b> <a href="mdt_device_d_s_o1000_a_8cpp_source.html#l00040">mdtDeviceDSO1000A.cpp:40</a></div></div>
-<div class="ttc" id="classmdt_port_transaction_html"><div class="ttname"><a href="classmdt_port_transaction.html">mdtPortTransaction</a></div><div class="ttdoc">Store port transaction identifications data. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_port_transaction_8h_source.html#l00039">mdtPortTransaction.h:39</a></div></div>
+<div class="ttc" id="classmdt_device_d_s_o1000_a_html_a3c4cd1418250864589284a3540353fdb"><div class="ttname"><a href="classmdt_device_d_s_o1000_a.html#a3c4cd1418250864589284a3540353fdb">mdtDeviceDSO1000A::mdtDeviceDSO1000A</a></div><div class="ttdeci">mdtDeviceDSO1000A(QObject *parent=0)</div><div class="ttdoc">Construct a DSO1000A device. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_device_d_s_o1000_a_8cpp_source.html#l00025">mdtDeviceDSO1000A.cpp:25</a></div></div>
+<div class="ttc" id="classmdt_device_d_s_o1000_a_html_ac6c66d3608c6b4cc0582b1d27fccd567"><div class="ttname"><a href="classmdt_device_d_s_o1000_a.html#ac6c66d3608c6b4cc0582b1d27fccd567">mdtDeviceDSO1000A::connectToDevice</a></div><div class="ttdeci">bool connectToDevice(const QString &amp;serialNumber=QString())</div><div class="ttdoc">Connect to device. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_device_d_s_o1000_a_8h_source.html#l00044">mdtDeviceDSO1000A.h:44</a></div></div>
+<div class="ttc" id="classmdt_device_d_s_o1000_a_html"><div class="ttname"><a href="classmdt_device_d_s_o1000_a.html">mdtDeviceDSO1000A</a></div><div class="ttdef"><b>Definition:</b> <a href="mdt_device_d_s_o1000_a_8h_source.html#l00026">mdtDeviceDSO1000A.h:26</a></div></div>
+<div class="ttc" id="classmdt_device_scpi_html"><div class="ttname"><a href="classmdt_device_scpi.html">mdtDeviceScpi</a></div><div class="ttdoc">Base class for SCPI based instruments. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_device_scpi_8h_source.html#l00046">mdtDeviceScpi.h:46</a></div></div>
+<div class="ttc" id="classmdt_device_d_s_o1000_a_html_a43f7e76a08f8b855f04fe4d1cb3010e1"><div class="ttname"><a href="classmdt_device_d_s_o1000_a.html#a43f7e76a08f8b855f04fe4d1cb3010e1">mdtDeviceDSO1000A::~mdtDeviceDSO1000A</a></div><div class="ttdeci">~mdtDeviceDSO1000A()</div><div class="ttdoc">Destructor. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_device_d_s_o1000_a_8cpp_source.html#l00040">mdtDeviceDSO1000A.cpp:40</a></div></div>
 <div class="ttc" id="class_q_object_html"><div class="ttname"><a href="class_q_object.html">QObject</a></div></div>
+<div class="ttc" id="classmdt_device_scpi_html_a94c8fde98a0fa2f933b3c069aa1e4fa0"><div class="ttname"><a href="classmdt_device_scpi.html#a94c8fde98a0fa2f933b3c069aa1e4fa0">mdtDeviceScpi::connectToDevice</a></div><div class="ttdeci">bool connectToDevice(uint16_t idVendor, uint16_t idProduct, const QString &amp;serialNumber)</div><div class="ttdoc">Connect to a USBTMC device. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_device_scpi_8cpp_source.html#l00048">mdtDeviceScpi.cpp:48</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 11 2015 04:05:33 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jan 11 2015 16:42:09 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

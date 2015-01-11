@@ -79,7 +79,7 @@ Definition at line 27 of file mdt\-Usb\-Device\-List.\-cpp.
 Destructor. 
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000043}{Todo}]Comment about to get device handle before this class dies. \end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000044}{Todo}]Comment about to get device handle before this class dies. \end{DoxyRefDesc}
 
 
 Definition at line 33 of file mdt\-Usb\-Device\-List.\-cpp.
@@ -104,7 +104,7 @@ Clear.
 
 Will clear devices list and call free\-Libusb\-Device\-List() 
 
-Definition at line 134 of file mdt\-Usb\-Device\-List.\-cpp.
+Definition at line 129 of file mdt\-Usb\-Device\-List.\-cpp.
 
 
 
@@ -144,7 +144,7 @@ Get a list of devices of given class, sub class and protocol.
 
 
 
-Definition at line 53 of file mdt\-Usb\-Device\-List.\-cpp.
+Definition at line 48 of file mdt\-Usb\-Device\-List.\-cpp.
 
 \hypertarget{classmdt_usb_device_list_aba706f1ab782e5d25f331d2d6946023c}{\index{mdt\-Usb\-Device\-List@{mdt\-Usb\-Device\-List}!find\-Device@{find\-Device}}
 \index{find\-Device@{find\-Device}!mdtUsbDeviceList@{mdt\-Usb\-Device\-List}}
@@ -166,11 +166,15 @@ A valid device descriptor on success, or a empty one on failure (use \hyperlink{
 \end{DoxyReturn}
 
 
-Definition at line 81 of file mdt\-Usb\-Device\-List.\-cpp.
+Definition at line 76 of file mdt\-Usb\-Device\-List.\-cpp.
 
 
 
 References clear(), mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, and mdt\-Error\-::set\-Error().
+
+
+
+Referenced by mdt\-Usbtmc\-Port\-::open\-Device().
 
 \hypertarget{classmdt_usb_device_list_abf867860c60d24cd8b62c10771af75d8}{\index{mdt\-Usb\-Device\-List@{mdt\-Usb\-Device\-List}!find\-First\-Usbtmc\-Device@{find\-First\-Usbtmc\-Device}}
 \index{find\-First\-Usbtmc\-Device@{find\-First\-Usbtmc\-Device}!mdtUsbDeviceList@{mdt\-Usb\-Device\-List}}
@@ -185,7 +189,7 @@ Get first device that is a U\-S\-B\-T\-M\-C device.
 
 This function is mostly used by unit testing. 
 
-Definition at line 122 of file mdt\-Usb\-Device\-List.\-cpp.
+Definition at line 117 of file mdt\-Usb\-Device\-List.\-cpp.
 
 
 
@@ -213,7 +217,7 @@ Definition at line 111 of file mdt\-Usb\-Device\-List.\-h.
 
 
 
-Referenced by mdt\-Usbtmc\-Port\-::scan().
+Referenced by mdt\-Usbtmc\-Port\-::open\-Device(), and mdt\-Usbtmc\-Port\-::scan().
 
 \hypertarget{classmdt_usb_device_list_a21b4ab508329779b07bae7859097b955}{\index{mdt\-Usb\-Device\-List@{mdt\-Usb\-Device\-List}!scan@{scan}}
 \index{scan@{scan}!mdtUsbDeviceList@{mdt\-Usb\-Device\-List}}
@@ -236,7 +240,7 @@ References clear().
 
 
 
-Referenced by mdt\-Usbtmc\-Port\-::scan().
+Referenced by mdt\-Usbtmc\-Port\-::open\-Device(), and mdt\-Usbtmc\-Port\-::scan().
 
 \hypertarget{classmdt_usb_device_list_a08a5882459612c1a95f891c315528b5c}{\index{mdt\-Usb\-Device\-List@{mdt\-Usb\-Device\-List}!usbtmc\-Device\-List@{usbtmc\-Device\-List}}
 \index{usbtmc\-Device\-List@{usbtmc\-Device\-List}!mdtUsbDeviceList@{mdt\-Usb\-Device\-List}}
@@ -251,7 +255,7 @@ Get a list of attached U\-S\-B\-T\-M\-C devices.
 
 
 
-Definition at line 66 of file mdt\-Usb\-Device\-List.\-cpp.
+Definition at line 61 of file mdt\-Usb\-Device\-List.\-cpp.
 
 
 

@@ -1,11 +1,3 @@
 <map id="src/mdtutils/mdtFrameCodecScpiU3606A.h" name="src/mdtutils/mdtFrameCodecScpiU3606A.h">
-<area shape="rect" id="node3" href="$mdt_device_u3606_a_8h.html" title="src/mdtdevice/mdtDeviceU3606A.h" alt="" coords="592,111,821,140"/>
-<area shape="rect" id="node19" href="$mdt_frame_codec_scpi_u3606_a_8cpp.html" title="src/mdtutils/mdtFrameCodec\lScpiU3606A.cpp" alt="" coords="845,102,1035,149"/>
-<area shape="rect" id="node5" href="$mdt_device_u3606_a_widget_8h.html" title="src/mdtdevice/linux\l/mdtDeviceU3606AWidget.h" alt="" coords="13,206,200,253"/>
-<area shape="rect" id="node9" href="$mdt_device_container_8cpp.html" title="src/mdtdevice/mdtDeviceContainer.cpp" alt="" coords="224,215,475,244"/>
-<area shape="rect" id="node11" href="$mdt_device_u3606_a_8cpp.html" title="src/mdtdevice/mdtDeviceU3606\lA.cpp" alt="" coords="499,206,707,253"/>
-<area shape="rect" id="node13" href="$mdt_tt_basic_tester_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtBasicTester.cpp" alt="" coords="731,206,893,253"/>
-<area shape="rect" id="node15" href="$mdt_tt_basic_test_node_calibration_tool_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtBasicTestNodeCalibration\lTool.cpp" alt="" coords="917,197,1128,261"/>
-<area shape="rect" id="node17" href="$mdt_tt_test_cable_offset_tool_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestCableOffsetTool.cpp" alt="" coords="1152,206,1357,253"/>
-<area shape="rect" id="node7" href="$mdt_device_u3606_a_widget_8cpp.html" title="src/mdtdevice/linux\l/mdtDeviceU3606AWidget.cpp" alt="" coords="5,310,208,357"/>
+<area shape="rect" id="node2" href="$mdt_frame_codec_scpi_u3606_a_8cpp.html" title="src/mdtutils/mdtFrameCodec\lScpiU3606A.cpp" alt="" coords="5,97,195,138"/>
 </map>

@@ -107,7 +107,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="classmdt_device__inherit__graph.png" border="0" usemap="#mdt_device_inherit__map" alt="Inheritance graph"/></div>
 <map name="mdt_device_inherit__map" id="mdt_device_inherit__map">
-<area shape="rect" id="node5" href="classmdt_device_modbus.html" title="Represent a MODBUS device. " alt="" coords="41,160,172,189"/><area shape="rect" id="node9" href="classmdt_device_scpi.html" title="Base class for SCPI based instruments. " alt="" coords="215,160,324,189"/><area shape="rect" id="node2" href="class_q_object.html" title="QObject" alt="" coords="163,5,232,35"/><area shape="rect" id="node7" href="classmdt_device_modbus_wago.html" title="mdtDeviceModbusWago" alt="" coords="5,237,171,267"/><area shape="rect" id="node11" href="classmdt_device_d_s_o1000_a.html" title="mdtDeviceDSO1000A" alt="" coords="195,237,344,267"/><area shape="rect" id="node13" href="classmdt_device_u3606_a.html" title="Representation of a Agilent U3606A. " alt="" coords="368,237,499,267"/></map>
+<area shape="rect" id="node3" href="classmdt_device_modbus.html" title="Represent a MODBUS device. " alt="" coords="21,155,151,181"/><area shape="rect" id="node2" href="class_q_object.html" title="QObject" alt="" coords="51,5,121,32"/><area shape="rect" id="node4" href="classmdt_device_modbus_wago.html" title="mdtDeviceModbusWago" alt="" coords="4,229,168,256"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Collaboration diagram for mdtDevice:</div>
@@ -479,8 +479,6 @@ Protected Attributes</h2></td></tr>
 
 <p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00098">mdtDeviceIos::addAnalogInput()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00031">mdtDeviceU3606A::mdtDeviceU3606A()</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="a186861ad3b8857ba045534244fb9f9ef"></a>
@@ -570,8 +568,6 @@ Protected Attributes</h2></td></tr>
 <p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00100">100</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_device_ios_8cpp_source.html#l00193">mdtDeviceIos::addAnalogOutput()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00537">setAnalogOutputValue()</a>.</p>
-
-<p>Referenced by <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00031">mdtDeviceU3606A::mdtDeviceU3606A()</a>.</p>
 
 </div>
 </div>
@@ -676,7 +672,7 @@ Protected Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>A error listed in <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error. ">mdtAbstractPort::error_t</a> (NoError on success)</dd></dl>
 <p>Note: default implementation does nothing and returns allways a UnhandledError. See subclass documentation for more details. </p>
 
-<p>Reimplemented in <a class="el" href="classmdt_device_u3606_a.html#acf3b48b13bc179ad4f94b3011b7d607a">mdtDeviceU3606A</a>, <a class="el" href="classmdt_device_modbus.html#a093c6407ee69c4c7696a0c71d0acd88d">mdtDeviceModbus</a>, <a class="el" href="classmdt_device_scpi.html#ae8e886b362cbf9d1bf7064b48348b8e8">mdtDeviceScpi</a>, <a class="el" href="classmdt_device_modbus_wago.html#a025f0411a708a529054a0e3c0b6461cd">mdtDeviceModbusWago</a>, and <a class="el" href="classmdt_device_d_s_o1000_a.html#a84431cf929750a8a25d5218893736c72">mdtDeviceDSO1000A</a>.</p>
+<p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#a093c6407ee69c4c7696a0c71d0acd88d">mdtDeviceModbus</a>, and <a class="el" href="classmdt_device_modbus_wago.html#a025f0411a708a529054a0e3c0b6461cd">mdtDeviceModbusWago</a>.</p>
 
 <p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00070">70</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
@@ -888,7 +884,7 @@ Protected Attributes</h2></td></tr>
 
 <p>References <a class="el" href="mdt_abstract_io_8cpp_source.html#l00053">mdtAbstractIo::addressRead()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01283">getNewTransaction()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01222">readAnalogInput()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00131">mdtPortTransaction::setAddress()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00066">mdtPortTransaction::setIo()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>, <a class="el" href="mdt_analog_io_8cpp_source.html#l00157">mdtAnalogIo::setValue()</a>, <a class="el" href="mdt_abstract_io_8cpp_source.html#l00112">mdtAbstractIo::value()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01298">waitTransactionDone()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00274">getAnalogInputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00293">getAnalogInputValueAt()</a>, and <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00291">mdtDeviceU3606A::getMeasureValue()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00274">getAnalogInputValue()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00293">getAnalogInputValueAt()</a>.</p>
 
 </div>
 </div>
@@ -1696,7 +1692,7 @@ Protected Attributes</h2></td></tr>
 
 <p>References <a class="el" href="mdt_port_manager_8cpp_source.html#l00288">mdtPortManager::getNewTransaction()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00192">portManager()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_scpi_8cpp_source.html#l00193">mdtDeviceScpi::checkDeviceError()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00339">getAnalogInputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00232">getAnalogInputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00491">getAnalogOutputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00385">getAnalogOutputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00798">getDigitalInputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00692">getDigitalInputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00951">getDigitalOutputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00845">getDigitalOutputValue()</a>, <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00260">mdtDeviceU3606A::getMeasureConfiguration()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00644">setAnalogOutputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00537">setAnalogOutputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01122">setDigitalOutputs()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00998">setDigitalOutputValue()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00339">getAnalogInputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00232">getAnalogInputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00491">getAnalogOutputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00385">getAnalogOutputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00798">getDigitalInputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00692">getDigitalInputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00951">getDigitalOutputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00845">getDigitalOutputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00644">setAnalogOutputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00537">setAnalogOutputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01122">setDigitalOutputs()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00998">setDigitalOutputValue()</a>.</p>
 
 </div>
 </div>
@@ -1779,7 +1775,7 @@ Protected Attributes</h2></td></tr>
 
 <p>References <a class="el" href="mdt_port_manager_8cpp_source.html#l00582">mdtPortManager::isReady()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00192">portManager()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00205">start()</a>, and <a class="el" href="mdt_device_scpi_8cpp_source.html#l00154">mdtDeviceScpi::waitOperationComplete()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00205">start()</a>.</p>
 
 </div>
 </div>
@@ -1854,7 +1850,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00060">60</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00149">mdtDeviceModbusWago::detectIos()</a>, <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html#l00301">mdtDeviceModbusWagoModule::deviceName()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00274">getAnalogInputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00293">getAnalogInputValueAt()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00427">getAnalogOutputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00446">getAnalogOutputValueAt()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00734">getDigitalInputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00753">getDigitalInputValueAt()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00887">getDigitalOutputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00906">getDigitalOutputValueAt()</a>, <a class="el" href="mdt_device_scpi_8cpp_source.html#l00218">mdtDeviceScpi::handleDeviceError()</a>, <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00084">mdtDeviceModbusWago::isWago750()</a>, <a class="el" href="mdt_device_scpi_8cpp_source.html#l00275">mdtDeviceScpi::logDeviceError()</a>, <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html#l00433">mdtDeviceModbusWagoModule::readRegisters()</a>, <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html#l00533">mdtDeviceModbusWagoModule::readStatusBytes()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00580">setAnalogOutputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00599">setAnalogOutputValueAt()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01040">setDigitalOutputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01059">setDigitalOutputValueAt()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00055">setName()</a>, <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00209">mdtDeviceU3606A::setupLowResistanceMeasure()</a>, <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00143">mdtDeviceU3606A::setupResistanceMeasure()</a>, <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00080">mdtDeviceU3606A::setupVoltageDcMeasure()</a>, <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html#l00577">mdtDeviceModbusWagoModule::writeControlBytes()</a>, and <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html#l00493">mdtDeviceModbusWagoModule::writeRegisters()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00149">mdtDeviceModbusWago::detectIos()</a>, <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html#l00301">mdtDeviceModbusWagoModule::deviceName()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00274">getAnalogInputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00293">getAnalogInputValueAt()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00427">getAnalogOutputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00446">getAnalogOutputValueAt()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00734">getDigitalInputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00753">getDigitalInputValueAt()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00887">getDigitalOutputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00906">getDigitalOutputValueAt()</a>, <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00084">mdtDeviceModbusWago::isWago750()</a>, <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html#l00433">mdtDeviceModbusWagoModule::readRegisters()</a>, <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html#l00533">mdtDeviceModbusWagoModule::readStatusBytes()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00580">setAnalogOutputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00599">setAnalogOutputValueAt()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01040">setDigitalOutputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01059">setDigitalOutputValueAt()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00055">setName()</a>, <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html#l00577">mdtDeviceModbusWagoModule::writeControlBytes()</a>, and <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html#l00493">mdtDeviceModbusWagoModule::writeRegisters()</a>.</p>
 
 </div>
 </div>
@@ -1882,7 +1878,7 @@ Protected Attributes</h2></td></tr>
 <p>Get internal port manager instance. </p>
 <p>Note that port manager is set by subclass, and that a Null pointer can be returned. (See subclass documentation for details) </p>
 
-<p>Reimplemented in <a class="el" href="classmdt_device_scpi.html#a7dc5ab8856a766a45bcc7e9cba0f54ca">mdtDeviceScpi</a>, and <a class="el" href="classmdt_device_modbus.html#aed892b501f8cbd372ccfda1a4fafa536">mdtDeviceModbus</a>.</p>
+<p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#aed892b501f8cbd372ccfda1a4fafa536">mdtDeviceModbus</a>.</p>
 
 <p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00192">192</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
@@ -2672,7 +2668,7 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00187">187</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_modbus_8cpp_source.html#l00034">mdtDeviceModbus::mdtDeviceModbus()</a>, and <a class="el" href="mdt_device_scpi_8cpp_source.html#l00032">mdtDeviceScpi::mdtDeviceScpi()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_modbus_8cpp_source.html#l00034">mdtDeviceModbus::mdtDeviceModbus()</a>.</p>
 
 </div>
 </div>
@@ -3068,7 +3064,7 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>References <a class="el" href="mdt_device_8cpp_source.html#l00197">isReady()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_scpi_8cpp_source.html#l00068">mdtDeviceScpi::connectToDevice()</a>, and <a class="el" href="mdt_modbus_io_tool_8cpp_source.html#l00035">mdtModbusIoTool::mdtModbusIoTool()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_modbus_io_tool_8cpp_source.html#l00035">mdtModbusIoTool::mdtModbusIoTool()</a>.</p>
 
 </div>
 </div>
@@ -3100,7 +3096,7 @@ transaction must be a valid pointer. </dd></dl>
 <p>This signal should be used by application developpers, and not directly <a class="el" href="classmdt_port_manager.html#a01da0634bc52a71c0df0d83fc166eeda" title="Emitted each time the state changed. ">mdtPortManager::stateChanged()</a>. This is because some actions are made when entering new state, and <a class="el" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="mdtDeviceIos *pvIos; // I/O&#39;s container ">stateChanged()</a> is sent after.</p>
 <p>But, to display current state in a easier way (f.ex. using <a class="el" href="classmdt_port_status_widget.html" title="Helper class to display port/device state and messages. ">mdtPortStatusWidget</a>), <a class="el" href="classmdt_port_manager.html#ae00d513ed335fbd203852dcb7180005c" title="Emitted only if a state that must be notified is entered. ">mdtPortManager::stateChangedForUi()</a> can be used. </p>
 
-<p>Referenced by <a class="el" href="mdt_device_d_s_o1000_a_8cpp_source.html#l00025">mdtDeviceDSO1000A::mdtDeviceDSO1000A()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00034">mdtDeviceModbus::mdtDeviceModbus()</a>, and <a class="el" href="mdt_device_scpi_8cpp_source.html#l00032">mdtDeviceScpi::mdtDeviceScpi()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_modbus_8cpp_source.html#l00034">mdtDeviceModbus::mdtDeviceModbus()</a>.</p>
 
 </div>
 </div>
@@ -3166,7 +3162,7 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00214">214</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00075">disconnectFromDevice()</a>, and <a class="el" href="mdt_device_scpi_8cpp_source.html#l00055">mdtDeviceScpi::~mdtDeviceScpi()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00075">disconnectFromDevice()</a>.</p>
 
 </div>
 </div>
@@ -3235,7 +3231,7 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>References <a class="el" href="mdt_device_8cpp_source.html#l00192">portManager()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00488">mdtPortManager::readenFrame()</a>, and <a class="el" href="mdt_port_manager_8cpp_source.html#l00381">mdtPortManager::waitTransactionDone()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00339">getAnalogInputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00232">getAnalogInputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00491">getAnalogOutputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00385">getAnalogOutputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00798">getDigitalInputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00692">getDigitalInputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00951">getDigitalOutputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00845">getDigitalOutputValue()</a>, <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00260">mdtDeviceU3606A::getMeasureConfiguration()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00644">setAnalogOutputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00537">setAnalogOutputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01122">setDigitalOutputs()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00998">setDigitalOutputValue()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00339">getAnalogInputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00232">getAnalogInputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00491">getAnalogOutputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00385">getAnalogOutputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00798">getDigitalInputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00692">getDigitalInputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00951">getDigitalOutputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00845">getDigitalOutputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00644">setAnalogOutputs()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00537">setAnalogOutputValue()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01122">setDigitalOutputs()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00998">setDigitalOutputValue()</a>.</p>
 
 </div>
 </div>
@@ -3492,7 +3488,7 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_device_8h_source.html#l00707">707</a> of file <a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00293">getAnalogInputValueAt()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00446">getAnalogOutputValueAt()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00753">getDigitalInputValueAt()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00906">getDigitalOutputValueAt()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00227">lastError()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01217">lastErrorW()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00599">setAnalogOutputValueAt()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01059">setDigitalOutputValueAt()</a>, <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00209">mdtDeviceU3606A::setupLowResistanceMeasure()</a>, <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00143">mdtDeviceU3606A::setupResistanceMeasure()</a>, and <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00080">mdtDeviceU3606A::setupVoltageDcMeasure()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00293">getAnalogInputValueAt()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00446">getAnalogOutputValueAt()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00753">getDigitalInputValueAt()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00906">getDigitalOutputValueAt()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00227">lastError()</a>, <a class="el" href="mdt_device_8cpp_source.html#l01217">lastErrorW()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00599">setAnalogOutputValueAt()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l01059">setDigitalOutputValueAt()</a>.</p>
 
 </div>
 </div>
@@ -3503,7 +3499,7 @@ transaction must be a valid pointer. </dd></dl>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 11 2015 04:05:40 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jan 11 2015 16:42:17 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

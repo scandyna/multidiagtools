@@ -15,6 +15,8 @@ U\-S\-B\-T\-M\-C transfer handler.
 \item 
 \hyperlink{classmdt_usbtmc_transfer_handler_af40f6740a823a75628890eb04466e2b8}{mdt\-Usbtmc\-Transfer\-Handler} (libusb\-\_\-context $\ast$usb\-Context, \hyperlink{classmdt_usbtmc_port}{mdt\-Usbtmc\-Port} \&port)
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_transfer_handler_ae824f384cc1dd1f860462cf1d6ebf3aa}{set\-Device\-Name} (const Q\-String \&name)
+\begin{DoxyCompactList}\small\item\em Set device name. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_usbtmc_transfer_handler_a6771b010d3d050c7edae058996eb5a8d}{setup} (libusb\-\_\-device\-\_\-handle $\ast$handle, const \hyperlink{classmdt_usb_device_descriptor}{mdt\-Usb\-Device\-Descriptor} \&descriptor, uint8\-\_\-t b\-Interface\-Number)
 \begin{DoxyCompactList}\small\item\em Setup handler. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_usbtmc_transfer_handler_aa42e173d97b63438ab7e593909ee7d2b}{start} ()
@@ -156,7 +158,7 @@ At first, any pending Bulk-\/\-O\-U\-T transfers that expect a restonse will be 
 
 See U\-S\-B\-T\-M\-C 1.\-0 specifications, section 4.\-2.\-1.\-4 for details. 
 
-Definition at line 941 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 947 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -177,7 +179,7 @@ Aborting will start, as mentionned in U\-S\-B\-T\-M\-C 1.\-0, section 4.\-2.\-1.
 
 This function is called by state machine. 
 
-Definition at line 933 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 939 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -196,7 +198,7 @@ Will cancel all pending bulk-\/\-O\-U\-T and bulk-\/\-I\-N transfers and request
 
 Is called by state machine 
 
-Definition at line 224 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 230 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -215,7 +217,7 @@ Bulk-\/\-I\-N transfer callback.
 
 
 
-Definition at line 353 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 359 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -238,7 +240,7 @@ Bulk-\/\-O\-U\-T transfer callback.
 
 
 
-Definition at line 344 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 350 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -261,7 +263,7 @@ Control transfer callback.
 
 
 
-Definition at line 330 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 336 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -284,7 +286,7 @@ Force to abort a pending Bulk-\/\-I\-N transfer.
 
 Will get a pending Bulk-\/\-I\-N transfer and proceed abort it. Used for debug and testing. 
 
-Definition at line 278 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 284 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -303,7 +305,7 @@ Force to abort a pending Bulk-\/\-O\-U\-T transfer.
 
 Will get a pending Bulk-\/\-O\-U\-T transfer and proceed abort it. Used for debug and testing. 
 
-Definition at line 268 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 274 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -333,7 +335,7 @@ transfer\-Buffer\-Length must be $<$= Internal frame capacity
 \end{DoxyPrecond}
 
 
-Definition at line 252 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 258 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -357,7 +359,7 @@ Get received data.
 \end{DoxyParams}
 
 
-Definition at line 202 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 208 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -380,7 +382,7 @@ Handle Bulk-\/\-I\-N transfer complete.
 
 Is called by state machine 
 
-Definition at line 692 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 698 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -399,7 +401,7 @@ Handle Bulk-\/\-O\-U\-T transfer complete.
 
 Is called by state machine 
 
-Definition at line 545 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 551 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -418,7 +420,7 @@ Handle control transfer complete.
 
 Is called by state machine 
 
-Definition at line 454 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 460 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -437,7 +439,7 @@ Handle Interrupt-\/\-I\-N transfer complete.
 
 Is called by state machine 
 
-Definition at line 886 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 892 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -456,7 +458,7 @@ Check if current interface has a Interrupt-\/\-I\-N endpoint.
 
 
 
-Definition at line 72 of file mdt\-Usbtmc\-Transfer\-Handler.\-h.
+Definition at line 79 of file mdt\-Usbtmc\-Transfer\-Handler.\-h.
 
 
 
@@ -475,7 +477,7 @@ Check if there are pending Bulk-\/\-I\-N transfers.
 
 Is called by state machine 
 
-Definition at line 296 of file mdt\-Usbtmc\-Transfer\-Handler.\-h.
+Definition at line 303 of file mdt\-Usbtmc\-Transfer\-Handler.\-h.
 
 
 
@@ -494,7 +496,7 @@ Check if there are pending Bulk-\/\-O\-U\-T transfers.
 
 Is called by state machine 
 
-Definition at line 257 of file mdt\-Usbtmc\-Transfer\-Handler.\-h.
+Definition at line 264 of file mdt\-Usbtmc\-Transfer\-Handler.\-h.
 
 
 
@@ -513,7 +515,7 @@ Check if there are pending transfers.
 
 Is called by state machine 
 
-Definition at line 405 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 411 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -536,7 +538,7 @@ Interrupt-\/\-I\-N transfer callback.
 
 
 
-Definition at line 361 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 367 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -559,7 +561,7 @@ Get last error.
 
 
 
-Definition at line 171 of file mdt\-Usbtmc\-Transfer\-Handler.\-h.
+Definition at line 178 of file mdt\-Usbtmc\-Transfer\-Handler.\-h.
 
 
 
@@ -578,7 +580,7 @@ Check if handler must be stopped.
 
 Is called by port thread to know if it must exit. 
 
-Definition at line 369 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 375 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 \hypertarget{classmdt_usbtmc_transfer_handler_a5f5c63210c3f75e7367911cb433b0070}{\index{mdt\-Usbtmc\-Transfer\-Handler@{mdt\-Usbtmc\-Transfer\-Handler}!notify\-Bulk\-Io\-Aborted@{notify\-Bulk\-Io\-Aborted}}
 \index{notify\-Bulk\-Io\-Aborted@{notify\-Bulk\-Io\-Aborted}!mdtUsbtmcTransferHandler@{mdt\-Usbtmc\-Transfer\-Handler}}
@@ -593,7 +595,7 @@ Notify Bulk I/\-O aborted.
 
 Must be called only by state machine 
 
-Definition at line 394 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 400 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -612,7 +614,7 @@ Notify Bulk I/\-O done.
 
 Must be called only by state machine 
 
-Definition at line 389 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 395 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -631,7 +633,7 @@ Notify device disconnected.
 
 Must be called only by state machine 
 
-Definition at line 384 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 390 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -650,7 +652,7 @@ Notify error.
 
 Must be called only by state machine 
 
-Definition at line 374 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 380 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -669,7 +671,7 @@ Restore all pending transfers to their pool.
 
 Is called by state machine 
 
-Definition at line 438 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 444 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -690,7 +692,7 @@ If, after transfer was restored, no more Bulk-\/\-I\-N transfer is pending, and 
 
 Is called by state machine 
 
-Definition at line 780 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 786 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -710,7 +712,7 @@ Restore bulk-\/\-I\-N transfer to pool.
 
 
 
-Definition at line 767 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 773 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -731,7 +733,7 @@ If, after transfer was restored, no more Bulk-\/\-O\-U\-T transfer is pending, a
 
 Is called by state machine 
 
-Definition at line 606 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 612 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -751,7 +753,7 @@ Restore bulk-\/\-O\-U\-T transfer to pool.
 
 Is called by state machine 
 
-Definition at line 593 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 599 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -775,7 +777,7 @@ Restore control transfer to pool.
 
 Is called by state machine 
 
-Definition at line 532 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 538 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -799,7 +801,7 @@ Restore interrupt-\/\-I\-N transfer to pool.
 
 Is called by state machine 
 
-Definition at line 920 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 926 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -820,7 +822,26 @@ Used by internal state machine to send events.
 
 This is needed, because only \hyperlink{classmdt_usbtmc_transfer_handler}{mdt\-Usbtmc\-Transfer\-Handler} instance contains a State\-Machine object, witch locks the event mutex when calling process\-\_\-event(). 
 
-Definition at line 400 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 406 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+
+\hypertarget{classmdt_usbtmc_transfer_handler_ae824f384cc1dd1f860462cf1d6ebf3aa}{\index{mdt\-Usbtmc\-Transfer\-Handler@{mdt\-Usbtmc\-Transfer\-Handler}!set\-Device\-Name@{set\-Device\-Name}}
+\index{set\-Device\-Name@{set\-Device\-Name}!mdtUsbtmcTransferHandler@{mdt\-Usbtmc\-Transfer\-Handler}}
+\subsubsection[{set\-Device\-Name}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Transfer\-Handler\-::set\-Device\-Name (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{name}
+\end{DoxyParamCaption}
+)}}\label{classmdt_usbtmc_transfer_handler_ae824f384cc1dd1f860462cf1d6ebf3aa}
+
+
+Set device name. 
+
+Device name is used to build error messages. See device\-Id\-String() 
+
+Definition at line 40 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+
+
+
+Referenced by mdt\-Usbtmc\-Port\-::open\-Device(), and mdt\-Usbtmc\-Port\-::set\-Device\-Name().
 
 \hypertarget{classmdt_usbtmc_transfer_handler_a6771b010d3d050c7edae058996eb5a8d}{\index{mdt\-Usbtmc\-Transfer\-Handler@{mdt\-Usbtmc\-Transfer\-Handler}!setup@{setup}}
 \index{setup@{setup}!mdtUsbtmcTransferHandler@{mdt\-Usbtmc\-Transfer\-Handler}}
@@ -837,7 +858,7 @@ Setup handler.
 
 
 
-Definition at line 40 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 46 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -856,7 +877,7 @@ Start transfer handler.
 
 
 
-Definition at line 135 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 141 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 \hypertarget{classmdt_usbtmc_transfer_handler_afa26a3493a8c66db38d20a7192b8ff68}{\index{mdt\-Usbtmc\-Transfer\-Handler@{mdt\-Usbtmc\-Transfer\-Handler}!stop@{stop}}
 \index{stop@{stop}!mdtUsbtmcTransferHandler@{mdt\-Usbtmc\-Transfer\-Handler}}
@@ -871,7 +892,7 @@ Stop transfer handler.
 
 
 
-Definition at line 140 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 146 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 \hypertarget{classmdt_usbtmc_transfer_handler_ac39c042193f7705c80c738dbf109a8b2}{\index{mdt\-Usbtmc\-Transfer\-Handler@{mdt\-Usbtmc\-Transfer\-Handler}!submit\-Bulk\-Io\-Clear@{submit\-Bulk\-Io\-Clear}}
 \index{submit\-Bulk\-Io\-Clear@{submit\-Bulk\-Io\-Clear}!mdtUsbtmcTransferHandler@{mdt\-Usbtmc\-Transfer\-Handler}}
@@ -886,7 +907,7 @@ Will cancel all pending bulk-\/\-O\-U\-T and bulk-\/\-I\-N transfers and request
 
 Once all transfers are cancelled, I\-N\-I\-T\-I\-A\-T\-E\-\_\-\-C\-L\-E\-A\-R and, if needed, C\-H\-E\-C\-K\-\_\-\-C\-L\-E\-A\-R\-\_\-\-S\-T\-A\-T\-U\-S is sent to device. 
 
-Definition at line 219 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 225 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -908,7 +929,7 @@ If a action is given as argument, it will be set to last transfer cancel request
 
 Is called by state machine 
 
-Definition at line 837 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 843 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -934,7 +955,7 @@ If a action is given as argument, it will be set to last transfer cancel request
 
 Is called by state machine 
 
-Definition at line 664 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 670 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -957,7 +978,7 @@ Submit cancellation of all pending transfers.
 
 Is called by state machine 
 
-Definition at line 431 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 437 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -976,7 +997,7 @@ Submit a C\-L\-E\-A\-R\-\_\-\-F\-E\-A\-T\-U\-R\-E control request with w\-Value 
 
 
 
-Definition at line 144 of file mdt\-Usbtmc\-Transfer\-Handler.\-h.
+Definition at line 151 of file mdt\-Usbtmc\-Transfer\-Handler.\-h.
 
 
 
@@ -995,7 +1016,7 @@ Submit a C\-L\-E\-A\-R\-\_\-\-F\-E\-A\-T\-U\-R\-E control request with w\-Value 
 
 
 
-Definition at line 137 of file mdt\-Usbtmc\-Transfer\-Handler.\-h.
+Definition at line 144 of file mdt\-Usbtmc\-Transfer\-Handler.\-h.
 
 
 
@@ -1015,7 +1036,7 @@ Submit a C\-L\-E\-A\-R\-\_\-\-F\-E\-A\-T\-U\-R\-E control request with w\-Value 
 
 
 
-Definition at line 288 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 294 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -1049,7 +1070,7 @@ Submit a command.
 \end{DoxyParams}
 
 
-Definition at line 145 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 151 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -1072,7 +1093,7 @@ Submit control transfers cancellation.
 
 
 
-Definition at line 303 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 309 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -1091,10 +1112,10 @@ References mdt\-Usb\-Transfer\-::cancel(), mdt\-Usb\-Transfer\-Pool$<$ T $>$\-::
 Submit a Interrupt-\/\-I\-N transfer. 
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000056}{Todo}]Check how to tell libusb that we want infinite timeout and adapt \end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000049}{Todo}]Check how to tell libusb that we want infinite timeout and adapt \end{DoxyRefDesc}
 
 
-Definition at line 866 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 872 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 
@@ -1117,7 +1138,7 @@ Will cancel active transfers and change state to Stopping.
 
 
 
-Definition at line 213 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
+Definition at line 219 of file mdt\-Usbtmc\-Transfer\-Handler.\-cpp.
 
 
 

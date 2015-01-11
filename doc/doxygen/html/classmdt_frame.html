@@ -104,7 +104,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="classmdt_frame__inherit__graph.png" border="0" usemap="#mdt_frame_inherit__map" alt="Inheritance graph"/></div>
 <map name="mdt_frame_inherit__map" id="mdt_frame_inherit__map">
-<area shape="rect" id="node5" href="classmdt_frame_ascii.html" title="mdtFrameAscii" alt="" coords="5,160,115,189"/><area shape="rect" id="node7" href="classmdt_frame_modbus_tcp.html" title="MODBUS/TCP Frame. " alt="" coords="139,160,288,189"/><area shape="rect" id="node9" href="classmdt_frame_usb_control.html" title="USB Control frame. " alt="" coords="312,160,459,189"/><area shape="rect" id="node11" href="classmdt_frame_usb_tmc.html" title="USBTMC frame. " alt="" coords="483,160,613,189"/></map>
+<area shape="rect" id="node3" href="classmdt_frame_ascii.html" title="mdtFrameAscii" alt="" coords="5,155,115,181"/><area shape="rect" id="node4" href="classmdt_frame_modbus_tcp.html" title="MODBUS/TCP Frame. " alt="" coords="140,155,288,181"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Collaboration diagram for mdtFrame:</div>
@@ -318,7 +318,7 @@ Protected Attributes</h2></td></tr>
 
 <p>References <a class="el" href="mdt_frame_8h_source.html#l00214">pvEOFcondition</a>, and <a class="el" href="mdt_frame_8cpp_source.html#l00145">remainCapacity()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_frame_modbus_tcp_8cpp_source.html#l00045">mdtFrameModbusTcp::putData()</a>, <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00057">mdtFrameUsbTmc::putData()</a>, and <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00244">mdtPortThreadHelper::submitReadenData()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_frame_modbus_tcp_8cpp_source.html#l00045">mdtFrameModbusTcp::putData()</a>, and <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00244">mdtPortThreadHelper::submitReadenData()</a>.</p>
 
 </div>
 </div>
@@ -342,7 +342,7 @@ Protected Attributes</h2></td></tr>
 
 <p>References <a class="el" href="mdt_frame_8h_source.html#l00214">pvEOFcondition</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_usb_port_8cpp_source.html#l00198">mdtUsbPort::controlTransferCallback()</a>, <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00187">mdtFrameUsbTmc::encode()</a>, <a class="el" href="mdt_frame_usb_control_8cpp_source.html#l00128">mdtFrameUsbControl::encode()</a>, <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00070">mdtPortThreadHelper::handleCommonReadErrors()</a>, <a class="el" href="mdt_usb_port_8cpp_source.html#l00609">mdtUsbPort::messageInTransferCallback()</a>, <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00236">mdtUsbPortManager::sendControlRequest()</a>, <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00138">mdtUsbtmcPortManager::sendData()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00517">mdtModbusTcpPortManager::sendData()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00319">mdtPortManager::sendData()</a>, and <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00204">mdtUsbtmcPortManager::sendReadRequest()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00070">mdtPortThreadHelper::handleCommonReadErrors()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00517">mdtModbusTcpPortManager::sendData()</a>, and <a class="el" href="mdt_port_manager_8cpp_source.html#l00319">mdtPortManager::sendData()</a>.</p>
 
 </div>
 </div>
@@ -368,16 +368,16 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p><a class="el" href="classmdt_frame.html" title="Provide an array of bytes. ">mdtFrame</a> subclass specific clear </p>
-<p>This method is usefull to clear some specific flags and data in subclasses (such as <a class="el" href="classmdt_frame_usb_tmc.html" title="USBTMC frame. ">mdtFrameUsbTmc</a>).</p>
+<p>This method is usefull to clear some specific flags and data in subclasses (such as mdtFrameUsbTmc).</p>
 <p>Note that QByteArray's flags and data are not altered.</p>
 <p>This method is called from mdtPortThread::getNewFrameRead() . Default implementation does nothing.</p>
 <p>This class must be implemented is subclass if needed. </p>
 
-<p>Reimplemented in <a class="el" href="classmdt_frame_usb_control.html#a04aab4a1e3efd99d805dffd8171e78de">mdtFrameUsbControl</a>, <a class="el" href="classmdt_frame_usb_tmc.html#afb0b0e071e328b55ce8e2c73359153d6">mdtFrameUsbTmc</a>, and <a class="el" href="classmdt_frame_modbus_tcp.html#ab1545b25b4c8864056d900c8ddce2719">mdtFrameModbusTcp</a>.</p>
+<p>Reimplemented in <a class="el" href="classmdt_frame_modbus_tcp.html#ab1545b25b4c8864056d900c8ddce2719">mdtFrameModbusTcp</a>.</p>
 
 <p>Definition at line <a class="el" href="mdt_frame_8cpp_source.html#l00188">188</a> of file <a class="el" href="mdt_frame_8cpp_source.html">mdtFrame.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00070">mdtPortThreadHelper::handleCommonReadErrors()</a>, <a class="el" href="mdt_usb_port_8cpp_source.html#l00609">mdtUsbPort::messageInTransferCallback()</a>, and <a class="el" href="mdt_port_manager_8cpp_source.html#l00319">mdtPortManager::sendData()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_port_thread_helper_8cpp_source.html#l00070">mdtPortThreadHelper::handleCommonReadErrors()</a>, and <a class="el" href="mdt_port_manager_8cpp_source.html#l00319">mdtPortManager::sendData()</a>.</p>
 
 </div>
 </div>
@@ -432,7 +432,7 @@ Protected Attributes</h2></td></tr>
 
 <p>References <a class="el" href="mdt_frame_8h_source.html#l00214">pvEOFcondition</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00297">mdtUsbtmcPortManager::fromThreadNewFrameReaden()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00593">mdtModbusTcpPortManager::fromThreadNewFrameReaden()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00816">mdtPortManager::fromThreadNewFrameReaden()</a>, and <a class="el" href="mdt_frame_8cpp_source.html#l00041">putUntil()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00593">mdtModbusTcpPortManager::fromThreadNewFrameReaden()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00816">mdtPortManager::fromThreadNewFrameReaden()</a>, and <a class="el" href="mdt_frame_8cpp_source.html#l00041">putUntil()</a>.</p>
 
 </div>
 </div>
@@ -505,7 +505,7 @@ Protected Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Number of bytes that could really be stored </dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd>The data pointer must be valid, and not be the internal pointer returned by data(). </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classmdt_frame_usb_tmc.html#a06d2743a113bd2b4cf2ee44014ecd710">mdtFrameUsbTmc</a>, <a class="el" href="classmdt_frame_modbus_tcp.html#a0f684d77c03e5fb91598c9a10715bedb">mdtFrameModbusTcp</a>, and <a class="el" href="classmdt_frame_ascii.html#a9ef48ef78d9603a9d8c3be7e39b03745">mdtFrameAscii</a>.</p>
+<p>Reimplemented in <a class="el" href="classmdt_frame_modbus_tcp.html#a0f684d77c03e5fb91598c9a10715bedb">mdtFrameModbusTcp</a>, and <a class="el" href="classmdt_frame_ascii.html#a9ef48ef78d9603a9d8c3be7e39b03745">mdtFrameAscii</a>.</p>
 
 <p>Definition at line <a class="el" href="mdt_frame_8cpp_source.html#l00192">192</a> of file <a class="el" href="mdt_frame_8cpp_source.html">mdtFrame.cpp</a>.</p>
 
@@ -625,7 +625,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_frame_8cpp_source.html#l00145">145</a> of file <a class="el" href="mdt_frame_8cpp_source.html">mdtFrame.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_frame_8cpp_source.html#l00156">bytesToStore()</a>, <a class="el" href="mdt_frame_8cpp_source.html#l00140">isFull()</a>, <a class="el" href="mdt_frame_modbus_tcp_8cpp_source.html#l00045">mdtFrameModbusTcp::putData()</a>, <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00057">mdtFrameUsbTmc::putData()</a>, <a class="el" href="mdt_frame_8cpp_source.html#l00192">putData()</a>, and <a class="el" href="mdt_frame_8cpp_source.html#l00041">putUntil()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_frame_8cpp_source.html#l00156">bytesToStore()</a>, <a class="el" href="mdt_frame_8cpp_source.html#l00140">isFull()</a>, <a class="el" href="mdt_frame_modbus_tcp_8cpp_source.html#l00045">mdtFrameModbusTcp::putData()</a>, <a class="el" href="mdt_frame_8cpp_source.html#l00192">putData()</a>, and <a class="el" href="mdt_frame_8cpp_source.html#l00041">putUntil()</a>.</p>
 
 </div>
 </div>
@@ -731,7 +731,7 @@ Protected Attributes</h2></td></tr>
 
 <p>References <a class="el" href="mdt_frame_8h_source.html#l00215">pvWaitAnAnswer</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00138">mdtUsbtmcPortManager::sendData()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00517">mdtModbusTcpPortManager::sendData()</a>, and <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00204">mdtUsbtmcPortManager::sendReadRequest()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00517">mdtModbusTcpPortManager::sendData()</a>.</p>
 
 </div>
 </div>
@@ -847,7 +847,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_frame_8h_source.html#l00214">214</a> of file <a class="el" href="mdt_frame_8h_source.html">mdtFrame.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_frame_8cpp_source.html#l00156">bytesToStore()</a>, <a class="el" href="mdt_frame_8cpp_source.html#l00179">clear()</a>, <a class="el" href="mdt_frame_8cpp_source.html#l00174">isComplete()</a>, <a class="el" href="mdt_frame_8cpp_source.html#l00024">mdtFrame()</a>, <a class="el" href="mdt_frame_modbus_tcp_8cpp_source.html#l00045">mdtFrameModbusTcp::putData()</a>, <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00057">mdtFrameUsbTmc::putData()</a>, <a class="el" href="mdt_frame_8cpp_source.html#l00192">putData()</a>, <a class="el" href="mdt_frame_8cpp_source.html#l00041">putUntil()</a>, and <a class="el" href="mdt_frame_8cpp_source.html#l00169">setComplete()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_frame_8cpp_source.html#l00156">bytesToStore()</a>, <a class="el" href="mdt_frame_8cpp_source.html#l00179">clear()</a>, <a class="el" href="mdt_frame_8cpp_source.html#l00174">isComplete()</a>, <a class="el" href="mdt_frame_8cpp_source.html#l00024">mdtFrame()</a>, <a class="el" href="mdt_frame_modbus_tcp_8cpp_source.html#l00045">mdtFrameModbusTcp::putData()</a>, <a class="el" href="mdt_frame_8cpp_source.html#l00192">putData()</a>, <a class="el" href="mdt_frame_8cpp_source.html#l00041">putUntil()</a>, and <a class="el" href="mdt_frame_8cpp_source.html#l00169">setComplete()</a>.</p>
 
 </div>
 </div>
@@ -906,7 +906,7 @@ Protected Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 11 2015 04:05:41 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jan 11 2015 16:42:18 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

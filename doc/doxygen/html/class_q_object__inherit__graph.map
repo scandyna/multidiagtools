@@ -1,62 +1,59 @@
 <map id="QObject" name="QObject">
 <area shape="rect" id="node2" href="$classmdt_abstract_io.html" title="Base class for I/O handling on (G)UI. " alt="" coords="203,56,307,83"/>
-<area shape="rect" id="node5" href="$classmdt_abstract_port.html" title="Base class for port I/O. " alt="" coords="196,208,313,235"/>
-<area shape="rect" id="node11" href="$classmdt_abstract_sql_table_controller.html" title="Base class for SQL table controllers. " alt="" coords="155,309,355,336"/>
-<area shape="rect" id="node14" href="$classmdt_data_table_manager.html" title="Create/manage data sets. " alt="" coords="177,360,332,387"/>
-<area shape="rect" id="node15" href="$classmdt_device.html" title="Base class for a device connected to a port. " alt="" coords="212,411,297,437"/>
-<area shape="rect" id="node21" href="$classmdt_device_container.html" title="Contains different type of devices. " alt="" coords="184,461,325,488"/>
-<area shape="rect" id="node22" href="$classmdt_device_container_widget_private_1_1mdt_device_container_widget_item.html" title="mdtDeviceContainerWidget\lPrivate::mdtDeviceContainerWidgetItem" alt="" coords="126,513,383,554"/>
-<area shape="rect" id="node23" href="$classmdt_device_ios.html" title="Container for a set of I/O&#39;s. " alt="" coords="203,579,306,605"/>
-<area shape="rect" id="node24" href="$classmdt_error_out.html" title="Error output system Helper for error output. Outputs are the stderr output (console), a GUI messagebox and a logfile. " alt="" coords="208,629,301,656"/>
-<area shape="rect" id="node25" href="$classmdt_port_info_cb_handler.html" title="Handle the port info comboBox and the device info comboBox. " alt="" coords="179,680,331,707"/>
-<area shape="rect" id="node26" href="$classmdt_port_manager.html" title="Port manager base class. " alt="" coords="195,731,314,757"/>
-<area shape="rect" id="node31" href="$classmdt_port_thread_helper.html" title="Helper class for mdtPortThread and subclasses. " alt="" coords="181,781,328,808"/>
-<area shape="rect" id="node34" href="$classmdt_sql_database_manager.html" title="Helper class to create and open (connect to) database. " alt="" coords="170,832,339,859"/>
-<area shape="rect" id="node35" href="$classmdt_sql_data_validator.html" title="Helper class for data validation. " alt="" coords="183,883,326,909"/>
-<area shape="rect" id="node37" href="$classmdt_sql_field_handler_plain_text_edit.html" title="mdtSqlFieldHandlerPlainTextEdit" alt="" coords="147,933,362,960"/>
-<area shape="rect" id="node38" href="$classmdt_sql_relation.html" title="Handle parent/child relations between 2 QSqlTableModels. " alt="" coords="199,984,310,1011"/>
-<area shape="rect" id="node39" href="$classmdt_tt_abstract_tester.html" title="Base to create a tester. " alt="" coords="183,1035,326,1061"/>
-<area shape="rect" id="node41" href="$classmdt_tt_abstract_test_node_calibration_tool.html" title="mdtTtAbstractTestNodeCalibrationTool" alt="" coords="130,1085,379,1112"/>
-<area shape="rect" id="node43" href="$classmdt_tt_base.html" title="Base class for helper class. " alt="" coords="211,1161,298,1188"/>
-<area shape="rect" id="node56" href="$classmdt_tt_test_cable_offset_tool.html" title="mdtTtTestCableOffsetTool" alt="" coords="166,1212,343,1239"/>
-<area shape="rect" id="node57" href="$classmdt_tt_test_node_manager.html" title="Helper class to access test node data and devices. " alt="" coords="173,1263,336,1289"/>
-<area shape="rect" id="node58" href="$classmdt_usb_port_thread_new.html" title="Thread for USB. " alt="" coords="175,1313,334,1340"/>
-<area shape="rect" id="node60" href="$classmdt_usbtmc_port.html" title="Port to communicate with a USBTMC device. " alt="" coords="197,1364,312,1391"/>
-<area shape="rect" id="node61" href="$class_qt_local_peer.html" title="QtLocalPeer" alt="" coords="207,1415,302,1441"/>
+<area shape="rect" id="node5" href="$classmdt_abstract_port.html" title="Base class for port I/O. " alt="" coords="196,183,313,209"/>
+<area shape="rect" id="node10" href="$classmdt_abstract_sql_table_controller.html" title="Base class for SQL table controllers. " alt="" coords="155,259,355,285"/>
+<area shape="rect" id="node13" href="$classmdt_data_table_manager.html" title="Create/manage data sets. " alt="" coords="177,309,332,336"/>
+<area shape="rect" id="node14" href="$classmdt_device.html" title="Base class for a device connected to a port. " alt="" coords="212,360,297,387"/>
+<area shape="rect" id="node17" href="$classmdt_device_container.html" title="Contains different type of devices. " alt="" coords="184,411,325,437"/>
+<area shape="rect" id="node18" href="$classmdt_device_container_widget_private_1_1mdt_device_container_widget_item.html" title="mdtDeviceContainerWidget\lPrivate::mdtDeviceContainerWidgetItem" alt="" coords="126,462,383,503"/>
+<area shape="rect" id="node19" href="$classmdt_device_ios.html" title="Container for a set of I/O&#39;s. " alt="" coords="203,528,306,555"/>
+<area shape="rect" id="node20" href="$classmdt_device_scpi.html" title="Base class for SCPI based instruments. " alt="" coords="199,579,310,605"/>
+<area shape="rect" id="node23" href="$classmdt_error_out.html" title="Error output system Helper for error output. Outputs are the stderr output (console), a GUI messagebox and a logfile. " alt="" coords="208,629,301,656"/>
+<area shape="rect" id="node24" href="$classmdt_port_info_cb_handler.html" title="Handle the port info comboBox and the device info comboBox. " alt="" coords="179,680,331,707"/>
+<area shape="rect" id="node25" href="$classmdt_port_manager.html" title="Port manager base class. " alt="" coords="195,731,314,757"/>
+<area shape="rect" id="node28" href="$classmdt_port_thread_helper.html" title="Helper class for mdtPortThread and subclasses. " alt="" coords="181,781,328,808"/>
+<area shape="rect" id="node31" href="$classmdt_sql_database_manager.html" title="Helper class to create and open (connect to) database. " alt="" coords="170,832,339,859"/>
+<area shape="rect" id="node32" href="$classmdt_sql_data_validator.html" title="Helper class for data validation. " alt="" coords="183,883,326,909"/>
+<area shape="rect" id="node34" href="$classmdt_sql_field_handler_plain_text_edit.html" title="mdtSqlFieldHandlerPlainTextEdit" alt="" coords="147,933,362,960"/>
+<area shape="rect" id="node35" href="$classmdt_sql_relation.html" title="Handle parent/child relations between 2 QSqlTableModels. " alt="" coords="199,984,310,1011"/>
+<area shape="rect" id="node36" href="$classmdt_tt_abstract_tester.html" title="Base to create a tester. " alt="" coords="183,1035,326,1061"/>
+<area shape="rect" id="node38" href="$classmdt_tt_abstract_test_node_calibration_tool.html" title="mdtTtAbstractTestNodeCalibrationTool" alt="" coords="130,1085,379,1112"/>
+<area shape="rect" id="node40" href="$classmdt_tt_base.html" title="Base class for helper class. " alt="" coords="211,1136,298,1163"/>
+<area shape="rect" id="node53" href="$classmdt_tt_test_cable_offset_tool.html" title="mdtTtTestCableOffsetTool" alt="" coords="166,1187,343,1213"/>
+<area shape="rect" id="node54" href="$classmdt_tt_test_node_manager.html" title="Helper class to access test node data and devices. " alt="" coords="173,1237,336,1264"/>
+<area shape="rect" id="node55" href="$classmdt_usb_port_thread_new.html" title="Thread for USB. " alt="" coords="175,1288,334,1315"/>
+<area shape="rect" id="node57" href="$classmdt_usbtmc_port.html" title="Port to communicate with a USBTMC device. " alt="" coords="197,1339,312,1365"/>
+<area shape="rect" id="node58" href="$class_qt_local_peer.html" title="QtLocalPeer" alt="" coords="207,1389,302,1416"/>
 <area shape="rect" id="node3" href="$classmdt_analog_io.html" title="class mdtBinaryDoubleConverter; " alt="" coords="502,5,597,32"/>
 <area shape="rect" id="node4" href="$classmdt_digital_io.html" title="Representation of a digital I/O. " alt="" coords="503,56,595,83"/>
 <area shape="rect" id="node6" href="$classmdt_abstract_serial_port.html" title="NOTE: " alt="" coords="474,107,625,133"/>
 <area shape="rect" id="node8" href="$classmdt_port.html" title="mdtPort" alt="" coords="515,157,583,184"/>
 <area shape="rect" id="node9" href="$classmdt_tcp_socket.html" title="Wrapper class between QTcpSocket and mdtAbstractPort. " alt="" coords="496,208,603,235"/>
-<area shape="rect" id="node10" href="$classmdt_usb_port.html" title="USB port I/O port class. " alt="" coords="503,259,595,285"/>
 <area shape="rect" id="node7" href="$classmdt_serial_port.html" title="mdtSerialPort" alt="" coords="747,107,848,133"/>
-<area shape="rect" id="node12" href="$classmdt_sql_data_widget_controller.html" title="mdtSqlDataWidgetController" alt="" coords="455,309,643,336"/>
-<area shape="rect" id="node13" href="$classmdt_sql_table_view_controller.html" title="Table view controller. " alt="" coords="459,360,639,387"/>
-<area shape="rect" id="node16" href="$classmdt_device_modbus.html" title="Represent a MODBUS device. " alt="" coords="484,411,615,437"/>
-<area shape="rect" id="node18" href="$classmdt_device_scpi.html" title="Base class for SCPI based instruments. " alt="" coords="494,461,605,488"/>
-<area shape="rect" id="node17" href="$classmdt_device_modbus_wago.html" title="mdtDeviceModbusWago" alt="" coords="715,411,880,437"/>
-<area shape="rect" id="node19" href="$classmdt_device_d_s_o1000_a.html" title="mdtDeviceDSO1000A" alt="" coords="722,461,873,488"/>
-<area shape="rect" id="node20" href="$classmdt_device_u3606_a.html" title="Representation of a Agilent U3606A. " alt="" coords="731,512,863,539"/>
-<area shape="rect" id="node27" href="$classmdt_modbus_tcp_port_manager.html" title="MODBUS/TCP port manager. " alt="" coords="456,604,643,631"/>
-<area shape="rect" id="node28" href="$classmdt_serial_port_manager.html" title="Serial port manager class. " alt="" coords="474,655,625,681"/>
-<area shape="rect" id="node29" href="$classmdt_usb_port_manager.html" title="Helper class that simplify access to USB port API. " alt="" coords="478,705,621,732"/>
-<area shape="rect" id="node30" href="$classmdt_usbtmc_port_manager.html" title="USBTMC port manager. " alt="" coords="715,705,879,732"/>
-<area shape="rect" id="node32" href="$classmdt_port_thread_helper_port.html" title="Helper class for mdtPortThread and subclasses. " alt="" coords="464,756,635,783"/>
-<area shape="rect" id="node33" href="$classmdt_port_thread_helper_socket.html" title="Help the usage of QTcpSocket&#39;s asynchrone API. " alt="" coords="456,807,643,833"/>
-<area shape="rect" id="node36" href="$classmdt_sql_form_widget_data_validator.html" title="mdtSqlFormWidgetDataValidator" alt="" coords="443,857,656,884"/>
-<area shape="rect" id="node40" href="$classmdt_tt_basic_tester.html" title="Provide ability to run tests. " alt="" coords="486,908,613,935"/>
-<area shape="rect" id="node42" href="$classmdt_tt_basic_test_node_calibration_tool.html" title="mdtTtBasicTestNodeCalibrationTool" alt="" coords="433,959,666,985"/>
-<area shape="rect" id="node44" href="$classmdt_cl_article.html" title="Helper class for Article and related tables edition. " alt="" coords="502,1009,597,1036"/>
-<area shape="rect" id="node45" href="$classmdt_cl_direct_link.html" title="Create a temporary table with direct links informations. " alt="" coords="491,1060,607,1087"/>
-<area shape="rect" id="node46" href="$classmdt_cl_link.html" title="Helper class for link management. " alt="" coords="509,1111,590,1137"/>
-<area shape="rect" id="node47" href="$classmdt_cl_link_beam.html" title="Helper class for link beam edition. " alt="" coords="492,1161,607,1188"/>
-<area shape="rect" id="node48" href="$classmdt_cl_unit.html" title="Helper class to manage unit and related data. " alt="" coords="509,1212,590,1239"/>
-<area shape="rect" id="node49" href="$classmdt_cl_unit_vehicle_type.html" title="Helper class for Unit &lt;&#45;&gt; VehicleType assignments. " alt="" coords="473,1263,626,1289"/>
-<area shape="rect" id="node50" href="$classmdt_tt_logical_test_cable.html" title="Helper class for test connection cable edition. " alt="" coords="471,1313,628,1340"/>
-<area shape="rect" id="node51" href="$classmdt_tt_test.html" title="Helper class to manipulate test data. " alt="" coords="508,1364,591,1391"/>
-<area shape="rect" id="node52" href="$classmdt_tt_test_model.html" title="Helper class for test model edition. " alt="" coords="491,1415,608,1441"/>
-<area shape="rect" id="node53" href="$classmdt_tt_test_model_item.html" title="Helper class for test item edition. " alt="" coords="478,1465,621,1492"/>
-<area shape="rect" id="node54" href="$classmdt_tt_test_node.html" title="Helper class for test node edition. " alt="" coords="493,1516,606,1543"/>
-<area shape="rect" id="node55" href="$classmdt_tt_test_node_unit.html" title="Helper class for test node unit data manipulation. " alt="" coords="481,1567,618,1593"/>
-<area shape="rect" id="node59" href="$classmdt_usbtmc_port_thread_new.html" title="USBTMC port thread. " alt="" coords="459,1617,640,1644"/>
+<area shape="rect" id="node11" href="$classmdt_sql_data_widget_controller.html" title="mdtSqlDataWidgetController" alt="" coords="455,259,643,285"/>
+<area shape="rect" id="node12" href="$classmdt_sql_table_view_controller.html" title="Table view controller. " alt="" coords="459,309,639,336"/>
+<area shape="rect" id="node15" href="$classmdt_device_modbus.html" title="Represent a MODBUS device. " alt="" coords="484,360,615,387"/>
+<area shape="rect" id="node16" href="$classmdt_device_modbus_wago.html" title="mdtDeviceModbusWago" alt="" coords="715,360,880,387"/>
+<area shape="rect" id="node21" href="$classmdt_device_d_s_o1000_a.html" title="mdtDeviceDSO1000A" alt="" coords="474,528,625,555"/>
+<area shape="rect" id="node22" href="$classmdt_device_u3606_a.html" title="Representation of a Agilent U3606A. " alt="" coords="483,579,615,605"/>
+<area shape="rect" id="node26" href="$classmdt_modbus_tcp_port_manager.html" title="MODBUS/TCP port manager. " alt="" coords="456,629,643,656"/>
+<area shape="rect" id="node27" href="$classmdt_serial_port_manager.html" title="Serial port manager class. " alt="" coords="474,680,625,707"/>
+<area shape="rect" id="node29" href="$classmdt_port_thread_helper_port.html" title="Helper class for mdtPortThread and subclasses. " alt="" coords="464,731,635,757"/>
+<area shape="rect" id="node30" href="$classmdt_port_thread_helper_socket.html" title="Help the usage of QTcpSocket&#39;s asynchrone API. " alt="" coords="456,781,643,808"/>
+<area shape="rect" id="node33" href="$classmdt_sql_form_widget_data_validator.html" title="mdtSqlFormWidgetDataValidator" alt="" coords="443,832,656,859"/>
+<area shape="rect" id="node37" href="$classmdt_tt_basic_tester.html" title="Provide ability to run tests. " alt="" coords="486,883,613,909"/>
+<area shape="rect" id="node39" href="$classmdt_tt_basic_test_node_calibration_tool.html" title="mdtTtBasicTestNodeCalibrationTool" alt="" coords="433,933,666,960"/>
+<area shape="rect" id="node41" href="$classmdt_cl_article.html" title="Helper class for Article and related tables edition. " alt="" coords="502,984,597,1011"/>
+<area shape="rect" id="node42" href="$classmdt_cl_direct_link.html" title="Create a temporary table with direct links informations. " alt="" coords="491,1035,607,1061"/>
+<area shape="rect" id="node43" href="$classmdt_cl_link.html" title="Helper class for link management. " alt="" coords="509,1085,590,1112"/>
+<area shape="rect" id="node44" href="$classmdt_cl_link_beam.html" title="Helper class for link beam edition. " alt="" coords="492,1136,607,1163"/>
+<area shape="rect" id="node45" href="$classmdt_cl_unit.html" title="Helper class to manage unit and related data. " alt="" coords="509,1187,590,1213"/>
+<area shape="rect" id="node46" href="$classmdt_cl_unit_vehicle_type.html" title="Helper class for Unit &lt;&#45;&gt; VehicleType assignments. " alt="" coords="473,1237,626,1264"/>
+<area shape="rect" id="node47" href="$classmdt_tt_logical_test_cable.html" title="Helper class for test connection cable edition. " alt="" coords="471,1288,628,1315"/>
+<area shape="rect" id="node48" href="$classmdt_tt_test.html" title="Helper class to manipulate test data. " alt="" coords="508,1339,591,1365"/>
+<area shape="rect" id="node49" href="$classmdt_tt_test_model.html" title="Helper class for test model edition. " alt="" coords="491,1389,608,1416"/>
+<area shape="rect" id="node50" href="$classmdt_tt_test_model_item.html" title="Helper class for test item edition. " alt="" coords="478,1440,621,1467"/>
+<area shape="rect" id="node51" href="$classmdt_tt_test_node.html" title="Helper class for test node edition. " alt="" coords="493,1491,606,1517"/>
+<area shape="rect" id="node52" href="$classmdt_tt_test_node_unit.html" title="Helper class for test node unit data manipulation. " alt="" coords="481,1541,618,1568"/>
+<area shape="rect" id="node56" href="$classmdt_usbtmc_port_thread_new.html" title="USBTMC port thread. " alt="" coords="459,1592,640,1619"/>
 </map>

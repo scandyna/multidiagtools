@@ -172,220 +172,263 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  <span class="keywordflow">return</span> usbtmcDevices;</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;}</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
-<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="classmdt_usbtmc_port.html#abe30ec243e9dbf3de49cb1d9be5e1a16">   84</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_usbtmc_port.html#abe30ec243e9dbf3de49cb1d9be5e1a16">mdtUsbtmcPort::openDevice</a>(<span class="keyword">const</span> <a class="code" href="classmdt_usb_device_descriptor.html">mdtUsbDeviceDescriptor</a>&amp; deviceDescriptor, uint8_t bInterfaceNumber, <span class="keywordtype">bool</span> clearDeviceList)</div>
+<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="classmdt_usbtmc_port.html#ab01ac087b91a45bfaa252c9acf882106">   84</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_usbtmc_port.html#ab01ac087b91a45bfaa252c9acf882106">mdtUsbtmcPort::setDeviceName</a>(<span class="keyword">const</span> QString &amp; name)</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;{</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  <span class="comment">// Check given devoce descriptor</span></div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  <span class="keywordflow">if</span>(deviceDescriptor.<a class="code" href="classmdt_usb_device_descriptor.html#ade0719c45c7dc6d2a67b24aa7a591e64">isEmpty</a>()){</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855">setError</a>(tr(<span class="stringliteral">&quot;Given device descriptor is empty (did you use scan() to obtain it ?)&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce">MDT_ERROR_SET_SRC</a>(pvLastError, <span class="stringliteral">&quot;mdtUsbtmcPort&quot;</span>);</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb">commit</a>();</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  }</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  <span class="comment">// Init thread if required</span></div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  <span class="keywordflow">if</span>(pvThread == 0){</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordflow">if</span>(!initThread()){</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    }</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  }</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  <span class="comment">// Start thread</span></div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  <span class="keywordflow">if</span>(!pvThread-&gt;<a class="code" href="classmdt_usb_port_thread_new.html#ac0b2946c973dddcbb19dd26941df2ca5">start</a>(deviceDescriptor, bInterfaceNumber)){</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    pvLastError = pvTransferHandler-&gt;<a class="code" href="classmdt_usbtmc_transfer_handler.html#aa89e3f0c2f44611fc82b9dd59dabd266">lastError</a>();</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  }</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  <span class="comment">// Free internal scan result</span></div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  <span class="keywordflow">if</span>(clearDeviceList){</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    pvDeviceList-&gt;<a class="code" href="classmdt_usb_device_list.html#afed0b1d9e51beca0bf45e5ca03f81896">clear</a>();</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  }</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  <span class="comment">// Clear Bulk I/O</span></div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  <span class="keywordflow">if</span>(!<a class="code" href="classmdt_usbtmc_port.html#afbf76bc83c54937dfb0e88ad6f517dc5">clearBulkIo</a>()){</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  pvDeviceName = name;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  <span class="keywordflow">if</span>(pvTransferHandler != 0){</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    pvTransferHandler-&gt;<a class="code" href="classmdt_usbtmc_transfer_handler.html#ae824f384cc1dd1f860462cf1d6ebf3aa">setDeviceName</a>(pvDeviceName);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  }</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;}</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="classmdt_usbtmc_port.html#a0732cfb4ba24feef01dea7c3e2e86ca3">   92</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_usbtmc_port.html#a0732cfb4ba24feef01dea7c3e2e86ca3">mdtUsbtmcPort::openDevice</a>(uint16_t idVendor, uint16_t idProduct, <span class="keyword">const</span> QString&amp; serialNumber)</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;{</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  <span class="comment">// Init USB context if needed</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  <span class="keywordflow">if</span>(pvUsbContext == 0){</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keywordflow">if</span>(!initLibusbConext()){</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    }</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  }</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  <span class="comment">// Enumerate UDBTMC devices</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  pvDeviceList-&gt;<a class="code" href="classmdt_usb_device_list.html#afed0b1d9e51beca0bf45e5ca03f81896">clear</a>();</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  <span class="keywordflow">if</span>(!pvDeviceList-&gt;<a class="code" href="classmdt_usb_device_list.html#a21b4ab508329779b07bae7859097b955">scan</a>()){</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    pvLastError = pvDeviceList-&gt;<a class="code" href="classmdt_usb_device_list.html#af4fa249c48fe4f1c51cd3cd4d82979cb">lastError</a>();</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  }</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  <span class="comment">// Open requested device</span></div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  <a class="code" href="classmdt_usb_device_descriptor.html">mdtUsbDeviceDescriptor</a> descriptor = pvDeviceList-&gt;<a class="code" href="classmdt_usb_device_list.html#aba706f1ab782e5d25f331d2d6946023c">findDevice</a>(idVendor, idProduct, serialNumber);</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  <span class="keywordflow">if</span>(descriptor.<a class="code" href="classmdt_usb_device_descriptor.html#ade0719c45c7dc6d2a67b24aa7a591e64">isEmpty</a>()){</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    pvLastError = pvDeviceList-&gt;<a class="code" href="classmdt_usb_device_list.html#af4fa249c48fe4f1c51cd3cd4d82979cb">lastError</a>();</div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  }</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="classmdt_usbtmc_port.html#a0732cfb4ba24feef01dea7c3e2e86ca3">openDevice</a>(descriptor, 0, <span class="keyword">true</span>);</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;}</div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
-<div class="line"><a name="l00116"></a><span class="lineno"><a class="line" href="classmdt_usbtmc_port.html#a6fec5e49a42e6c2e6202a8b2f7f0dc37">  116</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_usbtmc_port.html#a6fec5e49a42e6c2e6202a8b2f7f0dc37">mdtUsbtmcPort::close</a>()</div>
+<div class="line"><a name="l00116"></a><span class="lineno"><a class="line" href="classmdt_usbtmc_port.html#abe30ec243e9dbf3de49cb1d9be5e1a16">  116</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_usbtmc_port.html#a0732cfb4ba24feef01dea7c3e2e86ca3">mdtUsbtmcPort::openDevice</a>(<span class="keyword">const</span> <a class="code" href="classmdt_usb_device_descriptor.html">mdtUsbDeviceDescriptor</a>&amp; deviceDescriptor, uint8_t bInterfaceNumber, <span class="keywordtype">bool</span> clearDeviceList)</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;{</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  <span class="keywordflow">if</span>(pvThread != 0){</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    pvThread-&gt;<a class="code" href="classmdt_usb_port_thread_new.html#a10437cf919cc678a8aae348763ee682d">stop</a>();</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  }</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;}</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;</div>
-<div class="line"><a name="l00123"></a><span class="lineno"><a class="line" href="classmdt_usbtmc_port.html#ad03633a2c6289974d79f361c6dbba5af">  123</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_usbtmc_port.html#ad03633a2c6289974d79f361c6dbba5af">mdtUsbtmcPort::sendCommand</a>(<span class="keyword">const</span> QByteArray &amp; command, <span class="keywordtype">int</span> timeout)</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;{</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;  Q_ASSERT(pvTransferHandler != 0);</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;  <a class="code" href="classmdt_usbtmc_tx_message.html">mdtUsbtmcTxMessage</a> message(command);</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;  <span class="keywordflow">while</span>(message.<a class="code" href="classmdt_usbtmc_tx_message.html#a190a9ba7ccf009e12d55ae227304e255">hasBytesToRead</a>()){</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    pvTransactionState = <a class="code" href="classmdt_usbtmc_port.html#a95543679f3981f4a061bb46731731868a2d13df6f8b5e4c5af9f87e0dc39df69d">TransactionState_t::Pending</a>;</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="keywordflow">if</span>(!pvTransferHandler-&gt;<a class="code" href="classmdt_usbtmc_transfer_handler.html#a2ba256326fc2b6ca70816eb1cca783c9">submitCommand</a>(message, <span class="keyword">false</span>, timeout)){</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;      <a class="code" href="classmdt_usbtmc_port.html#a4f727be1d99c3ea46c68f781261a0f24">setError</a>(pvTransferHandler-&gt;<a class="code" href="classmdt_usbtmc_transfer_handler.html#aa89e3f0c2f44611fc82b9dd59dabd266">lastError</a>());</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    }</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    waitTransactionFinished();</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    <span class="keywordflow">if</span>(pvTransactionState != <a class="code" href="classmdt_usbtmc_port.html#a95543679f3981f4a061bb46731731868af92965e2c8a7afb3c1b9a5c09a263636">TransactionState_t::Done</a>){</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    }</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;  }</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;}</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;</div>
-<div class="line"><a name="l00144"></a><span class="lineno"><a class="line" href="classmdt_usbtmc_port.html#a0c250cc416a01d2dd704b629b163d3a6">  144</a></span>&#160;QByteArray <a class="code" href="classmdt_usbtmc_port.html#a0c250cc416a01d2dd704b629b163d3a6">mdtUsbtmcPort::sendQuery</a>(<span class="keyword">const</span> QByteArray&amp; query, <span class="keywordtype">int</span> timeout)</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;{</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;  Q_ASSERT(pvTransferHandler != 0);</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;  <a class="code" href="classmdt_usbtmc_tx_message.html">mdtUsbtmcTxMessage</a> txMessage(query);</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;  QByteArray rxBa;</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;  <a class="code" href="classmdt_usbtmc_rx_message.html">mdtUsbtmcRxMessage</a> rxMessage(rxBa);</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  <a class="code" href="classmdt_usbtmc_port.html#a6fec5e49a42e6c2e6202a8b2f7f0dc37">close</a>();</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  <span class="comment">// Check given device descriptor</span></div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  <span class="keywordflow">if</span>(deviceDescriptor.<a class="code" href="classmdt_usb_device_descriptor.html#ade0719c45c7dc6d2a67b24aa7a591e64">isEmpty</a>()){</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855">setError</a>(tr(<span class="stringliteral">&quot;Given device descriptor is empty (did you use scan() to obtain it ?)&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce">MDT_ERROR_SET_SRC</a>(pvLastError, <span class="stringliteral">&quot;mdtUsbtmcPort&quot;</span>);</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb">commit</a>();</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;  }</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  <span class="comment">// Init thread if required</span></div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;  <span class="keywordflow">if</span>(pvThread == 0){</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <span class="keywordflow">if</span>(!initThread()){</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    }</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;  }</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;  Q_ASSERT(pvTransferHandler != 0);</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;  <span class="comment">// Set device name</span></div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;  <span class="keywordflow">if</span>(pvDeviceName.isEmpty()){</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    pvDeviceName = deviceDescriptor.<a class="code" href="classmdt_usb_device_descriptor.html#ad17a0b6a6bb67754c839f2c73d6df945">idString</a>();</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;  }</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;  pvTransferHandler-&gt;<a class="code" href="classmdt_usbtmc_transfer_handler.html#ae824f384cc1dd1f860462cf1d6ebf3aa">setDeviceName</a>(pvDeviceName);</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;  <span class="comment">// Start thread</span></div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;  <span class="keywordflow">if</span>(!pvThread-&gt;<a class="code" href="classmdt_usb_port_thread_new.html#ac0b2946c973dddcbb19dd26941df2ca5">start</a>(deviceDescriptor, bInterfaceNumber)){</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    pvLastError = pvTransferHandler-&gt;<a class="code" href="classmdt_usbtmc_transfer_handler.html#aa89e3f0c2f44611fc82b9dd59dabd266">lastError</a>();</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;  }</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;  <span class="comment">// Free internal scan result</span></div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;  <span class="keywordflow">if</span>(clearDeviceList){</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    pvDeviceList-&gt;<a class="code" href="classmdt_usb_device_list.html#afed0b1d9e51beca0bf45e5ca03f81896">clear</a>();</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;  }</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;  <span class="comment">// Clear Bulk I/O</span></div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;  <span class="keywordflow">if</span>(!<a class="code" href="classmdt_usbtmc_port.html#afbf76bc83c54937dfb0e88ad6f517dc5">clearBulkIo</a>()){</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;  }</div>
 <div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;  <span class="comment">/*</span></div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;<span class="comment">   * Send query to device.</span></div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;<span class="comment">   * TODO: if we want to send a long query (approx 4000 bytes),</span></div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;<span class="comment">   *       mdtUsbtmcTransferHandler and this class must be modified</span></div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;<span class="comment">   *       so that we can distingish when Bulk-OUT transfer is done,</span></div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;<span class="comment">   *       then send DEV_DEP_MSG_IN request and finaly get received data.</span></div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;<span class="comment">   *       For most common cases, query are very short, and we assume that</span></div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;<span class="comment">   *       they can be transmitted to device in one shot.</span></div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;<span class="comment">   */</span></div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;  pvTransactionState = <a class="code" href="classmdt_usbtmc_port.html#a95543679f3981f4a061bb46731731868a2d13df6f8b5e4c5af9f87e0dc39df69d">TransactionState_t::Pending</a>;</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;  <span class="keywordflow">if</span>(!pvTransferHandler-&gt;<a class="code" href="classmdt_usbtmc_transfer_handler.html#a2ba256326fc2b6ca70816eb1cca783c9">submitCommand</a>(txMessage, <span class="keyword">true</span>, timeout)){</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <a class="code" href="classmdt_usbtmc_port.html#a4f727be1d99c3ea46c68f781261a0f24">setError</a>(pvTransferHandler-&gt;<a class="code" href="classmdt_usbtmc_transfer_handler.html#aa89e3f0c2f44611fc82b9dd59dabd266">lastError</a>());</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;  }</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;  waitTransactionFinished();</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;  <span class="keywordflow">if</span>(pvTransactionState != <a class="code" href="classmdt_usbtmc_port.html#a95543679f3981f4a061bb46731731868af92965e2c8a7afb3c1b9a5c09a263636">TransactionState_t::Done</a>){</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    <span class="keywordflow">return</span> rxBa;</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;  }</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;  pvTransferHandler-&gt;<a class="code" href="classmdt_usbtmc_transfer_handler.html#aaa348472836fed8674266a81b0a9e0f4">getReceivedData</a>(rxMessage);</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;  <span class="keywordflow">return</span> rxBa;</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;}</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;</div>
-<div class="line"><a name="l00176"></a><span class="lineno"><a class="line" href="classmdt_usbtmc_port.html#ae30c4eb212e9859a834c53df052e1da9">  176</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_usbtmc_port.html#ae30c4eb212e9859a834c53df052e1da9">mdtUsbtmcPort::wait</a>(<span class="keywordtype">int</span> t)</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;{</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;  pvWaitTimeReached = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;  QTimer::singleShot(t, <span class="keyword">this</span>, SLOT(setWaitTimeReached()));</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;  <span class="keywordflow">while</span>(!pvWaitTimeReached){</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  }</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;}</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;</div>
-<div class="line"><a name="l00185"></a><span class="lineno"><a class="line" href="classmdt_usbtmc_port.html#afbf76bc83c54937dfb0e88ad6f517dc5">  185</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_usbtmc_port.html#afbf76bc83c54937dfb0e88ad6f517dc5">mdtUsbtmcPort::clearBulkIo</a>()</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;{</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;  Q_ASSERT(pvTransferHandler != 0);</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;  pvTransactionState = <a class="code" href="classmdt_usbtmc_port.html#a95543679f3981f4a061bb46731731868a2d13df6f8b5e4c5af9f87e0dc39df69d">TransactionState_t::Pending</a>;</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  pvTransferHandler-&gt;<a class="code" href="classmdt_usbtmc_transfer_handler.html#ac39c042193f7705c80c738dbf109a8b2">submitBulkIoClear</a>();</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  waitTransactionFinished();</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;  <span class="keywordflow">if</span>(pvTransactionState != <a class="code" href="classmdt_usbtmc_port.html#a95543679f3981f4a061bb46731731868a721c28f4c74928cc9e0bb3fef345e408">TransactionState_t::Aborted</a>){</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;  }</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;}</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;</div>
-<div class="line"><a name="l00199"></a><span class="lineno"><a class="line" href="classmdt_usbtmc_port.html#a4f727be1d99c3ea46c68f781261a0f24">  199</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_usbtmc_port.html#a4f727be1d99c3ea46c68f781261a0f24">mdtUsbtmcPort::setError</a>(<span class="keyword">const</span> <a class="code" href="classmdt_error.html">mdtError</a> &amp; error)</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;{</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;  pvLastErrorMutex.lock();</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;  pvLastError = error;</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;  pvLastErrorMutex.unlock();</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;  emit <a class="code" href="classmdt_usbtmc_port.html#ac2d4dc739be5c42c664e40ff7bb74132">transactionFinished</a>(<a class="code" href="classmdt_usbtmc_port.html#a95543679f3981f4a061bb46731731868a902b0d55fddef6f8d651fe1035b7d4bd">TransactionState_t::Error</a>);</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;}</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;<span class="keywordtype">void</span> mdtUsbtmcPort::setTransactionState(<a class="code" href="classmdt_usbtmc_port.html#a95543679f3981f4a061bb46731731868">mdtUsbtmcPort::TransactionState_t</a> s)</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;{</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;  pvTransactionState = s;</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;}</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;}</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;</div>
+<div class="line"><a name="l00155"></a><span class="lineno"><a class="line" href="classmdt_usbtmc_port.html#a6fec5e49a42e6c2e6202a8b2f7f0dc37">  155</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_usbtmc_port.html#a6fec5e49a42e6c2e6202a8b2f7f0dc37">mdtUsbtmcPort::close</a>()</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;{</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;  <span class="keywordflow">if</span>(pvThread != 0){</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    pvThread-&gt;<a class="code" href="classmdt_usb_port_thread_new.html#a10437cf919cc678a8aae348763ee682d">stop</a>();</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;  }</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;}</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;</div>
+<div class="line"><a name="l00162"></a><span class="lineno"><a class="line" href="classmdt_usbtmc_port.html#ad03633a2c6289974d79f361c6dbba5af">  162</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_usbtmc_port.html#ad03633a2c6289974d79f361c6dbba5af">mdtUsbtmcPort::sendCommand</a>(<span class="keyword">const</span> QByteArray &amp; command, <span class="keywordtype">int</span> timeout)</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;{</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;  Q_ASSERT(pvTransferHandler != 0);</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;  <a class="code" href="classmdt_usbtmc_tx_message.html">mdtUsbtmcTxMessage</a> message(command);</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;  <span class="keywordflow">while</span>(message.<a class="code" href="classmdt_usbtmc_tx_message.html#a190a9ba7ccf009e12d55ae227304e255">hasBytesToRead</a>()){</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    pvTransactionState = <a class="code" href="classmdt_usbtmc_port.html#a95543679f3981f4a061bb46731731868a2d13df6f8b5e4c5af9f87e0dc39df69d">TransactionState_t::Pending</a>;</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    <span class="keywordflow">if</span>(!pvTransferHandler-&gt;<a class="code" href="classmdt_usbtmc_transfer_handler.html#a2ba256326fc2b6ca70816eb1cca783c9">submitCommand</a>(message, <span class="keyword">false</span>, timeout)){</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;      <a class="code" href="classmdt_usbtmc_port.html#a4f727be1d99c3ea46c68f781261a0f24">setError</a>(pvTransferHandler-&gt;<a class="code" href="classmdt_usbtmc_transfer_handler.html#aa89e3f0c2f44611fc82b9dd59dabd266">lastError</a>());</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    }</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    waitTransactionFinished();</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    <span class="keywordflow">if</span>(pvTransactionState != <a class="code" href="classmdt_usbtmc_port.html#a95543679f3981f4a061bb46731731868af92965e2c8a7afb3c1b9a5c09a263636">TransactionState_t::Done</a>){</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    }</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;  }</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;}</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;</div>
+<div class="line"><a name="l00183"></a><span class="lineno"><a class="line" href="classmdt_usbtmc_port.html#a0c250cc416a01d2dd704b629b163d3a6">  183</a></span>&#160;QByteArray <a class="code" href="classmdt_usbtmc_port.html#a0c250cc416a01d2dd704b629b163d3a6">mdtUsbtmcPort::sendQuery</a>(<span class="keyword">const</span> QByteArray&amp; query, <span class="keywordtype">int</span> timeout)</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;{</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;  Q_ASSERT(pvTransferHandler != 0);</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;  <a class="code" href="classmdt_usbtmc_tx_message.html">mdtUsbtmcTxMessage</a> txMessage(query);</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;  QByteArray rxBa;</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;  <a class="code" href="classmdt_usbtmc_rx_message.html">mdtUsbtmcRxMessage</a> rxMessage(rxBa);</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  <span class="comment">/*</span></div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;<span class="comment">   * Send query to device.</span></div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;<span class="comment">   * TODO: if we want to send a long query (approx 4000 bytes),</span></div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;<span class="comment">   *       mdtUsbtmcTransferHandler and this class must be modified</span></div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;<span class="comment">   *       so that we can distingish when Bulk-OUT transfer is done,</span></div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;<span class="comment">   *       then send DEV_DEP_MSG_IN request and finaly get received data.</span></div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;<span class="comment">   *       For most common cases, query are very short, and we assume that</span></div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;<span class="comment">   *       they can be transmitted to device in one shot.</span></div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;<span class="comment">   */</span></div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;  pvTransactionState = <a class="code" href="classmdt_usbtmc_port.html#a95543679f3981f4a061bb46731731868a2d13df6f8b5e4c5af9f87e0dc39df69d">TransactionState_t::Pending</a>;</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;  <span class="keywordflow">if</span>(!pvTransferHandler-&gt;<a class="code" href="classmdt_usbtmc_transfer_handler.html#a2ba256326fc2b6ca70816eb1cca783c9">submitCommand</a>(txMessage, <span class="keyword">true</span>, timeout)){</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    <a class="code" href="classmdt_usbtmc_port.html#a4f727be1d99c3ea46c68f781261a0f24">setError</a>(pvTransferHandler-&gt;<a class="code" href="classmdt_usbtmc_transfer_handler.html#aa89e3f0c2f44611fc82b9dd59dabd266">lastError</a>());</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;  }</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;  waitTransactionFinished();</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;  <span class="keywordflow">if</span>(pvTransactionState != <a class="code" href="classmdt_usbtmc_port.html#a95543679f3981f4a061bb46731731868af92965e2c8a7afb3c1b9a5c09a263636">TransactionState_t::Done</a>){</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;    <span class="keywordflow">return</span> rxBa;</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;  }</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;  pvTransferHandler-&gt;<a class="code" href="classmdt_usbtmc_transfer_handler.html#aaa348472836fed8674266a81b0a9e0f4">getReceivedData</a>(rxMessage);</div>
 <div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;<span class="keywordtype">void</span> mdtUsbtmcPort::setWaitTimeReached()</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;{</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;  pvWaitTimeReached = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;}</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;<span class="keywordtype">void</span> mdtUsbtmcPort::waitTransactionFinished()</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;{</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;  <span class="keywordflow">while</span>(pvTransactionState == <a class="code" href="classmdt_usbtmc_port.html#a95543679f3981f4a061bb46731731868a2d13df6f8b5e4c5af9f87e0dc39df69d">TransactionState_t::Pending</a>){</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;  <span class="keywordflow">return</span> rxBa;</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;}</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;</div>
+<div class="line"><a name="l00215"></a><span class="lineno"><a class="line" href="classmdt_usbtmc_port.html#ae30c4eb212e9859a834c53df052e1da9">  215</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_usbtmc_port.html#ae30c4eb212e9859a834c53df052e1da9">mdtUsbtmcPort::wait</a>(<span class="keywordtype">int</span> t)</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;{</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;  pvWaitTimeReached = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;  QTimer::singleShot(t, <span class="keyword">this</span>, SLOT(setWaitTimeReached()));</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;  <span class="keywordflow">while</span>(!pvWaitTimeReached){</div>
 <div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);</div>
 <div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;  }</div>
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;}</div>
 <div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;<span class="keywordtype">bool</span> mdtUsbtmcPort::initThread()</div>
+<div class="line"><a name="l00224"></a><span class="lineno"><a class="line" href="classmdt_usbtmc_port.html#afbf76bc83c54937dfb0e88ad6f517dc5">  224</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_usbtmc_port.html#afbf76bc83c54937dfb0e88ad6f517dc5">mdtUsbtmcPort::clearBulkIo</a>()</div>
 <div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;{</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;  Q_ASSERT(pvThread == 0);</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;  Q_ASSERT(pvTransferHandler == 0);</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;  <span class="comment">// Init libusb context if needed</span></div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;  <span class="keywordflow">if</span>(pvUsbContext == 0){</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    <span class="keywordflow">if</span>(!initLibusbConext()){</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    }</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;  }</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;  <span class="comment">// Build transfer handler and thread</span></div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;  pvTransferHandler = <span class="keyword">new</span> <a class="code" href="classmdt_usbtmc_transfer_handler.html">mdtUsbtmcTransferHandler</a>(pvUsbContext, *<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;  pvThread = <span class="keyword">new</span> <a class="code" href="classmdt_usbtmc_port_thread_new.html">mdtUsbtmcPortThreadNew</a>(*pvTransferHandler, pvUsbContext, 0);</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;  connect(pvThread, SIGNAL(errorOccured(<span class="keyword">const</span> <a class="code" href="classmdt_error.html">mdtError</a> &amp;)), <span class="keyword">this</span>, SLOT(<a class="code" href="classmdt_usbtmc_port.html#a4f727be1d99c3ea46c68f781261a0f24">setError</a>(<span class="keyword">const</span> <a class="code" href="classmdt_error.html">mdtError</a> &amp;)), Qt::UniqueConnection);</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;}</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;<span class="keywordtype">bool</span> mdtUsbtmcPort::initLibusbConext()</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;{</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;  Q_ASSERT(pvUsbContext == 0);</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;  <span class="keywordtype">int</span> err;</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;  err = libusb_init(&amp;pvUsbContext);</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;  <span class="keywordflow">if</span>(err != 0){</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855">setError</a>(tr(<span class="stringliteral">&quot;Failed to init lubusb context.&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc">setSystemError</a>(err, libusb_strerror((libusb_error)err));</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce">MDT_ERROR_SET_SRC</a>(pvLastError, <span class="stringliteral">&quot;mdtUsbtmcPort&quot;</span>);</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb">commit</a>();</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;  }</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;  pvDeviceList = <span class="keyword">new</span> <a class="code" href="classmdt_usb_device_list.html">mdtUsbDeviceList</a>(pvUsbContext);</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;  <span class="comment">//libusb_set_debug(pvUsbContext, 0b00000111);</span></div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;  Q_ASSERT(pvTransferHandler != 0);</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;  pvTransactionState = <a class="code" href="classmdt_usbtmc_port.html#a95543679f3981f4a061bb46731731868a2d13df6f8b5e4c5af9f87e0dc39df69d">TransactionState_t::Pending</a>;</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;  pvTransferHandler-&gt;<a class="code" href="classmdt_usbtmc_transfer_handler.html#ac39c042193f7705c80c738dbf109a8b2">submitBulkIoClear</a>();</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;  waitTransactionFinished();</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;  <span class="keywordflow">if</span>(pvTransactionState != <a class="code" href="classmdt_usbtmc_port.html#a95543679f3981f4a061bb46731731868a721c28f4c74928cc9e0bb3fef345e408">TransactionState_t::Aborted</a>){</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;  }</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;}</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;</div>
+<div class="line"><a name="l00238"></a><span class="lineno"><a class="line" href="classmdt_usbtmc_port.html#a4f727be1d99c3ea46c68f781261a0f24">  238</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_usbtmc_port.html#a4f727be1d99c3ea46c68f781261a0f24">mdtUsbtmcPort::setError</a>(<span class="keyword">const</span> <a class="code" href="classmdt_error.html">mdtError</a> &amp; error)</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;{</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;  pvLastErrorMutex.lock();</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;  pvLastError = error;</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;  pvLastErrorMutex.unlock();</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;  emit <a class="code" href="classmdt_usbtmc_port.html#ac2d4dc739be5c42c664e40ff7bb74132">transactionFinished</a>(<a class="code" href="classmdt_usbtmc_port.html#a95543679f3981f4a061bb46731731868a902b0d55fddef6f8d651fe1035b7d4bd">TransactionState_t::Error</a>);</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;}</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;<span class="keywordtype">void</span> mdtUsbtmcPort::setTransactionState(<a class="code" href="classmdt_usbtmc_port.html#a95543679f3981f4a061bb46731731868">mdtUsbtmcPort::TransactionState_t</a> s)</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;{</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;  pvTransactionState = s;</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;}</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;<span class="keywordtype">void</span> mdtUsbtmcPort::setWaitTimeReached()</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;{</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;  pvWaitTimeReached = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;}</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;<span class="keywordtype">void</span> mdtUsbtmcPort::waitTransactionFinished()</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;{</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;  <span class="keywordflow">while</span>(pvTransactionState == <a class="code" href="classmdt_usbtmc_port.html#a95543679f3981f4a061bb46731731868a2d13df6f8b5e4c5af9f87e0dc39df69d">TransactionState_t::Pending</a>){</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;    QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;  }</div>
 <div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;}</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;<span class="keywordtype">bool</span> mdtUsbtmcPort::initThread()</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;{</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;  Q_ASSERT(pvThread == 0);</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;  Q_ASSERT(pvTransferHandler == 0);</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;  <span class="comment">// Init libusb context if needed</span></div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;  <span class="keywordflow">if</span>(pvUsbContext == 0){</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    <span class="keywordflow">if</span>(!initLibusbConext()){</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    }</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;  }</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;  <span class="comment">// Build transfer handler and thread</span></div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;  pvTransferHandler = <span class="keyword">new</span> <a class="code" href="classmdt_usbtmc_transfer_handler.html">mdtUsbtmcTransferHandler</a>(pvUsbContext, *<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;  pvThread = <span class="keyword">new</span> <a class="code" href="classmdt_usbtmc_port_thread_new.html">mdtUsbtmcPortThreadNew</a>(*pvTransferHandler, pvUsbContext, 0);</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;  connect(pvThread, SIGNAL(errorOccured(<span class="keyword">const</span> <a class="code" href="classmdt_error.html">mdtError</a> &amp;)), <span class="keyword">this</span>, SLOT(<a class="code" href="classmdt_usbtmc_port.html#a4f727be1d99c3ea46c68f781261a0f24">setError</a>(<span class="keyword">const</span> <a class="code" href="classmdt_error.html">mdtError</a> &amp;)), Qt::UniqueConnection);</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;}</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;<span class="keywordtype">bool</span> mdtUsbtmcPort::initLibusbConext()</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;{</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;  Q_ASSERT(pvUsbContext == 0);</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;  <span class="keywordtype">int</span> err;</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;  err = libusb_init(&amp;pvUsbContext);</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;  <span class="keywordflow">if</span>(err != 0){</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855">setError</a>(tr(<span class="stringliteral">&quot;Failed to init lubusb context.&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc">setSystemError</a>(err, libusb_strerror((libusb_error)err));</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;    <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce">MDT_ERROR_SET_SRC</a>(pvLastError, <span class="stringliteral">&quot;mdtUsbtmcPort&quot;</span>);</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb">commit</a>();</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;  }</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;  pvDeviceList = <span class="keyword">new</span> <a class="code" href="classmdt_usb_device_list.html">mdtUsbDeviceList</a>(pvUsbContext);</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;  <span class="comment">//libusb_set_debug(pvUsbContext, 0b00000111);</span></div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;}</div>
 <div class="ttc" id="mdt_usbtmc_port_8h_html"><div class="ttname"><a href="mdt_usbtmc_port_8h.html">mdtUsbtmcPort.h</a></div></div>
 <div class="ttc" id="mdt_usb_device_list_8h_html"><div class="ttname"><a href="mdt_usb_device_list_8h.html">mdtUsbDeviceList.h</a></div></div>
 <div class="ttc" id="classmdt_error_html_ad3cccf7c7f7d4bdabdcb4e60794bb9cb"><div class="ttname"><a href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb">mdtError::commit</a></div><div class="ttdeci">void commit()</div><div class="ttdoc">Send error to output. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_error_8cpp_source.html#l00116">mdtError.cpp:116</a></div></div>
-<div class="ttc" id="classmdt_usbtmc_transfer_handler_html_aaa348472836fed8674266a81b0a9e0f4"><div class="ttname"><a href="classmdt_usbtmc_transfer_handler.html#aaa348472836fed8674266a81b0a9e0f4">mdtUsbtmcTransferHandler::getReceivedData</a></div><div class="ttdeci">void getReceivedData(mdtUsbtmcRxMessage &amp;message)</div><div class="ttdoc">Get received data. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00202">mdtUsbtmcTransferHandler.cpp:202</a></div></div>
-<div class="ttc" id="classmdt_usbtmc_port_html_afbf76bc83c54937dfb0e88ad6f517dc5"><div class="ttname"><a href="classmdt_usbtmc_port.html#afbf76bc83c54937dfb0e88ad6f517dc5">mdtUsbtmcPort::clearBulkIo</a></div><div class="ttdeci">bool clearBulkIo()</div><div class="ttdoc">Clear bulk I/O. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usbtmc_port_8cpp_source.html#l00185">mdtUsbtmcPort.cpp:185</a></div></div>
+<div class="ttc" id="classmdt_usbtmc_transfer_handler_html_aaa348472836fed8674266a81b0a9e0f4"><div class="ttname"><a href="classmdt_usbtmc_transfer_handler.html#aaa348472836fed8674266a81b0a9e0f4">mdtUsbtmcTransferHandler::getReceivedData</a></div><div class="ttdeci">void getReceivedData(mdtUsbtmcRxMessage &amp;message)</div><div class="ttdoc">Get received data. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00208">mdtUsbtmcTransferHandler.cpp:208</a></div></div>
+<div class="ttc" id="classmdt_usbtmc_port_html_afbf76bc83c54937dfb0e88ad6f517dc5"><div class="ttname"><a href="classmdt_usbtmc_port.html#afbf76bc83c54937dfb0e88ad6f517dc5">mdtUsbtmcPort::clearBulkIo</a></div><div class="ttdeci">bool clearBulkIo()</div><div class="ttdoc">Clear bulk I/O. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usbtmc_port_8cpp_source.html#l00224">mdtUsbtmcPort.cpp:224</a></div></div>
+<div class="ttc" id="classmdt_usbtmc_transfer_handler_html_ae824f384cc1dd1f860462cf1d6ebf3aa"><div class="ttname"><a href="classmdt_usbtmc_transfer_handler.html#ae824f384cc1dd1f860462cf1d6ebf3aa">mdtUsbtmcTransferHandler::setDeviceName</a></div><div class="ttdeci">void setDeviceName(const QString &amp;name)</div><div class="ttdoc">Set device name. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00040">mdtUsbtmcTransferHandler.cpp:40</a></div></div>
 <div class="ttc" id="classmdt_error_html_a8e7961a665841c1b052116e4dd2eb855"><div class="ttname"><a href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855">mdtError::setError</a></div><div class="ttdeci">void setError(const QString &amp;text, level_t level)</div><div class="ttdoc">Set error. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_error_8cpp_source.html#l00060">mdtError.cpp:60</a></div></div>
 <div class="ttc" id="classmdt_usbtmc_port_thread_new_html"><div class="ttname"><a href="classmdt_usbtmc_port_thread_new.html">mdtUsbtmcPortThreadNew</a></div><div class="ttdoc">USBTMC port thread. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usbtmc_port_thread_new_8h_source.html#l00030">mdtUsbtmcPortThreadNew.h:30</a></div></div>
 <div class="ttc" id="classmdt_usbtmc_transfer_handler_html"><div class="ttname"><a href="classmdt_usbtmc_transfer_handler.html">mdtUsbtmcTransferHandler</a></div><div class="ttdoc">USBTMC transfer handler. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usbtmc_transfer_handler_8h_source.html#l00050">mdtUsbtmcTransferHandler.h:50</a></div></div>
 <div class="ttc" id="classmdt_usb_device_descriptor_html"><div class="ttname"><a href="classmdt_usb_device_descriptor.html">mdtUsbDeviceDescriptor</a></div><div class="ttdoc">USB device descriptor. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usb_device_descriptor_8h_source.html#l00059">mdtUsbDeviceDescriptor.h:59</a></div></div>
 <div class="ttc" id="mdt_error_8h_html_ab7f3d790e64bb1392fbfc1dd706fc9ce"><div class="ttname"><a href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce">MDT_ERROR_SET_SRC</a></div><div class="ttdeci">#define MDT_ERROR_SET_SRC(e, className)</div><div class="ttdoc">Add source information to error. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_error_8h_source.html#l00060">mdtError.h:60</a></div></div>
-<div class="ttc" id="classmdt_usbtmc_transfer_handler_html_aa89e3f0c2f44611fc82b9dd59dabd266"><div class="ttname"><a href="classmdt_usbtmc_transfer_handler.html#aa89e3f0c2f44611fc82b9dd59dabd266">mdtUsbtmcTransferHandler::lastError</a></div><div class="ttdeci">mdtError lastError() const </div><div class="ttdoc">Get last error. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usbtmc_transfer_handler_8h_source.html#l00171">mdtUsbtmcTransferHandler.h:171</a></div></div>
+<div class="ttc" id="classmdt_usbtmc_transfer_handler_html_aa89e3f0c2f44611fc82b9dd59dabd266"><div class="ttname"><a href="classmdt_usbtmc_transfer_handler.html#aa89e3f0c2f44611fc82b9dd59dabd266">mdtUsbtmcTransferHandler::lastError</a></div><div class="ttdeci">mdtError lastError() const </div><div class="ttdoc">Get last error. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usbtmc_transfer_handler_8h_source.html#l00178">mdtUsbtmcTransferHandler.h:178</a></div></div>
 <div class="ttc" id="classmdt_error_html_a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8"><div class="ttname"><a href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a61d92805e90226faf3d1c5fd350a0ab8">mdtError::Warning</a></div><div class="ttdef"><b>Definition:</b> <a href="mdt_error_8h_source.html#l00096">mdtError.h:96</a></div></div>
 <div class="ttc" id="classmdt_usbtmc_port_html_a3f9d3f1f40f61e17fa2997f3ad181d30"><div class="ttname"><a href="classmdt_usbtmc_port.html#a3f9d3f1f40f61e17fa2997f3ad181d30">mdtUsbtmcPort::~mdtUsbtmcPort</a></div><div class="ttdeci">~mdtUsbtmcPort()</div><div class="ttdoc">Destructor. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usbtmc_port_8cpp_source.html#l00044">mdtUsbtmcPort.cpp:44</a></div></div>
-<div class="ttc" id="classmdt_usbtmc_port_html_ae30c4eb212e9859a834c53df052e1da9"><div class="ttname"><a href="classmdt_usbtmc_port.html#ae30c4eb212e9859a834c53df052e1da9">mdtUsbtmcPort::wait</a></div><div class="ttdeci">void wait(int t)</div><div class="ttdoc">Wait some time without breaking main event loop. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usbtmc_port_8cpp_source.html#l00176">mdtUsbtmcPort.cpp:176</a></div></div>
-<div class="ttc" id="classmdt_usb_device_list_html_afed0b1d9e51beca0bf45e5ca03f81896"><div class="ttname"><a href="classmdt_usb_device_list.html#afed0b1d9e51beca0bf45e5ca03f81896">mdtUsbDeviceList::clear</a></div><div class="ttdeci">void clear()</div><div class="ttdoc">Clear. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usb_device_list_8cpp_source.html#l00134">mdtUsbDeviceList.cpp:134</a></div></div>
+<div class="ttc" id="classmdt_usbtmc_port_html_ae30c4eb212e9859a834c53df052e1da9"><div class="ttname"><a href="classmdt_usbtmc_port.html#ae30c4eb212e9859a834c53df052e1da9">mdtUsbtmcPort::wait</a></div><div class="ttdeci">void wait(int t)</div><div class="ttdoc">Wait some time without breaking main event loop. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usbtmc_port_8cpp_source.html#l00215">mdtUsbtmcPort.cpp:215</a></div></div>
+<div class="ttc" id="classmdt_usb_device_list_html_afed0b1d9e51beca0bf45e5ca03f81896"><div class="ttname"><a href="classmdt_usb_device_list.html#afed0b1d9e51beca0bf45e5ca03f81896">mdtUsbDeviceList::clear</a></div><div class="ttdeci">void clear()</div><div class="ttdoc">Clear. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usb_device_list_8cpp_source.html#l00129">mdtUsbDeviceList.cpp:129</a></div></div>
 <div class="ttc" id="classmdt_usb_device_descriptor_html_ade0719c45c7dc6d2a67b24aa7a591e64"><div class="ttname"><a href="classmdt_usb_device_descriptor.html#ade0719c45c7dc6d2a67b24aa7a591e64">mdtUsbDeviceDescriptor::isEmpty</a></div><div class="ttdeci">bool isEmpty() const </div><div class="ttdoc">Check if descriptor is empty. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usb_device_descriptor_8h_source.html#l00073">mdtUsbDeviceDescriptor.h:73</a></div></div>
 <div class="ttc" id="classmdt_usbtmc_port_html_a95543679f3981f4a061bb46731731868a2d13df6f8b5e4c5af9f87e0dc39df69d"><div class="ttname"><a href="classmdt_usbtmc_port.html#a95543679f3981f4a061bb46731731868a2d13df6f8b5e4c5af9f87e0dc39df69d">mdtUsbtmcPort::TransactionState_t::Pending</a></div></div>
 <div class="ttc" id="mdt_usbtmc_transfer_handler_8h_html"><div class="ttname"><a href="mdt_usbtmc_transfer_handler_8h.html">mdtUsbtmcTransferHandler.h</a></div></div>
 <div class="ttc" id="classmdt_usbtmc_rx_message_html"><div class="ttname"><a href="classmdt_usbtmc_rx_message.html">mdtUsbtmcRxMessage</a></div><div class="ttdoc">USBTMC message for receiving data from device. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usbtmc_message_8h_source.html#l00221">mdtUsbtmcMessage.h:221</a></div></div>
 <div class="ttc" id="classmdt_usbtmc_tx_message_html"><div class="ttname"><a href="classmdt_usbtmc_tx_message.html">mdtUsbtmcTxMessage</a></div><div class="ttdoc">USBTMC message. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usbtmc_message_8h_source.html#l00138">mdtUsbtmcMessage.h:138</a></div></div>
+<div class="ttc" id="classmdt_usb_device_list_html_aba706f1ab782e5d25f331d2d6946023c"><div class="ttname"><a href="classmdt_usb_device_list.html#aba706f1ab782e5d25f331d2d6946023c">mdtUsbDeviceList::findDevice</a></div><div class="ttdeci">mdtUsbDeviceDescriptor findDevice(uint16_t idVendor, uint16_t idProduct, const QString &amp;serialNumber=QString())</div><div class="ttdoc">Find a device with given vendor ID, product ID and serial number if not empty. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usb_device_list_8cpp_source.html#l00076">mdtUsbDeviceList.cpp:76</a></div></div>
+<div class="ttc" id="classmdt_usbtmc_port_html_ab01ac087b91a45bfaa252c9acf882106"><div class="ttname"><a href="classmdt_usbtmc_port.html#ab01ac087b91a45bfaa252c9acf882106">mdtUsbtmcPort::setDeviceName</a></div><div class="ttdeci">void setDeviceName(const QString &amp;name)</div><div class="ttdoc">Set device name. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usbtmc_port_8cpp_source.html#l00084">mdtUsbtmcPort.cpp:84</a></div></div>
 <div class="ttc" id="mdt_usb_endpoint_descriptor_8h_html"><div class="ttname"><a href="mdt_usb_endpoint_descriptor_8h.html">mdtUsbEndpointDescriptor.h</a></div></div>
 <div class="ttc" id="classmdt_error_html_a49254fdb566fee1a4adafe6a3694befc"><div class="ttname"><a href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc">mdtError::setSystemError</a></div><div class="ttdeci">void setSystemError(int number, const QString &amp;text)</div><div class="ttdoc">Add system returned error (for example, errno) </div><div class="ttdef"><b>Definition:</b> <a href="mdt_error_8cpp_source.html#l00085">mdtError.cpp:85</a></div></div>
 <div class="ttc" id="classmdt_usb_device_list_html_a21b4ab508329779b07bae7859097b955"><div class="ttname"><a href="classmdt_usb_device_list.html#a21b4ab508329779b07bae7859097b955">mdtUsbDeviceList::scan</a></div><div class="ttdeci">bool scan()</div><div class="ttdoc">Enumerate any attached USB devices. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usb_device_list_8cpp_source.html#l00038">mdtUsbDeviceList.cpp:38</a></div></div>
+<div class="ttc" id="classmdt_usbtmc_port_html_a0732cfb4ba24feef01dea7c3e2e86ca3"><div class="ttname"><a href="classmdt_usbtmc_port.html#a0732cfb4ba24feef01dea7c3e2e86ca3">mdtUsbtmcPort::openDevice</a></div><div class="ttdeci">bool openDevice(uint16_t idVendor, uint16_t idProduct, const QString &amp;serialNumber=QString())</div><div class="ttdoc">Open device represented by given idVendor, idProduct and serial number. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usbtmc_port_8cpp_source.html#l00092">mdtUsbtmcPort.cpp:92</a></div></div>
 <div class="ttc" id="classmdt_usb_device_list_html_af4fa249c48fe4f1c51cd3cd4d82979cb"><div class="ttname"><a href="classmdt_usb_device_list.html#af4fa249c48fe4f1c51cd3cd4d82979cb">mdtUsbDeviceList::lastError</a></div><div class="ttdeci">mdtError lastError() const </div><div class="ttdoc">Open a device with given vendor ID, product ID and serial number if not empty. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usb_device_list_8h_source.html#l00111">mdtUsbDeviceList.h:111</a></div></div>
 <div class="ttc" id="classmdt_usb_port_thread_new_html_a10437cf919cc678a8aae348763ee682d"><div class="ttname"><a href="classmdt_usb_port_thread_new.html#a10437cf919cc678a8aae348763ee682d">mdtUsbPortThreadNew::stop</a></div><div class="ttdeci">void stop()</div><div class="ttdoc">Stop thread. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usb_port_thread_new_8cpp_source.html#l00063">mdtUsbPortThreadNew.cpp:63</a></div></div>
-<div class="ttc" id="classmdt_usb_device_list_html_a08a5882459612c1a95f891c315528b5c"><div class="ttname"><a href="classmdt_usb_device_list.html#a08a5882459612c1a95f891c315528b5c">mdtUsbDeviceList::usbtmcDeviceList</a></div><div class="ttdeci">QList&lt; mdtUsbDeviceDescriptor &gt; usbtmcDeviceList() const </div><div class="ttdoc">Get a list of attached USBTMC devices. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usb_device_list_8cpp_source.html#l00066">mdtUsbDeviceList.cpp:66</a></div></div>
+<div class="ttc" id="classmdt_usb_device_list_html_a08a5882459612c1a95f891c315528b5c"><div class="ttname"><a href="classmdt_usb_device_list.html#a08a5882459612c1a95f891c315528b5c">mdtUsbDeviceList::usbtmcDeviceList</a></div><div class="ttdeci">QList&lt; mdtUsbDeviceDescriptor &gt; usbtmcDeviceList() const </div><div class="ttdoc">Get a list of attached USBTMC devices. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usb_device_list_8cpp_source.html#l00061">mdtUsbDeviceList.cpp:61</a></div></div>
 <div class="ttc" id="classmdt_usbtmc_port_html_a95543679f3981f4a061bb46731731868"><div class="ttname"><a href="classmdt_usbtmc_port.html#a95543679f3981f4a061bb46731731868">mdtUsbtmcPort::TransactionState_t</a></div><div class="ttdeci">TransactionState_t</div><div class="ttdoc">USBTMC transaction state. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usbtmc_port_8h_source.html#l00048">mdtUsbtmcPort.h:48</a></div></div>
-<div class="ttc" id="classmdt_usbtmc_port_html_a6fec5e49a42e6c2e6202a8b2f7f0dc37"><div class="ttname"><a href="classmdt_usbtmc_port.html#a6fec5e49a42e6c2e6202a8b2f7f0dc37">mdtUsbtmcPort::close</a></div><div class="ttdeci">void close()</div><div class="ttdoc">Close. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usbtmc_port_8cpp_source.html#l00116">mdtUsbtmcPort.cpp:116</a></div></div>
+<div class="ttc" id="classmdt_usbtmc_port_html_a6fec5e49a42e6c2e6202a8b2f7f0dc37"><div class="ttname"><a href="classmdt_usbtmc_port.html#a6fec5e49a42e6c2e6202a8b2f7f0dc37">mdtUsbtmcPort::close</a></div><div class="ttdeci">void close()</div><div class="ttdoc">Close. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usbtmc_port_8cpp_source.html#l00155">mdtUsbtmcPort.cpp:155</a></div></div>
 <div class="ttc" id="classmdt_usbtmc_tx_message_html_a190a9ba7ccf009e12d55ae227304e255"><div class="ttname"><a href="classmdt_usbtmc_tx_message.html#a190a9ba7ccf009e12d55ae227304e255">mdtUsbtmcTxMessage::hasBytesToRead</a></div><div class="ttdeci">bool hasBytesToRead() const </div><div class="ttdoc">Check if there are bytes to read from byte array. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usbtmc_message_8h_source.html#l00170">mdtUsbtmcMessage.h:170</a></div></div>
+<div class="ttc" id="classmdt_usb_device_descriptor_html_ad17a0b6a6bb67754c839f2c73d6df945"><div class="ttname"><a href="classmdt_usb_device_descriptor.html#ad17a0b6a6bb67754c839f2c73d6df945">mdtUsbDeviceDescriptor::idString</a></div><div class="ttdeci">QString idString() const </div><div class="ttdoc">Get a string with vendor ID, product ID and serial number if available. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usb_device_descriptor_8cpp_source.html#l00186">mdtUsbDeviceDescriptor.cpp:186</a></div></div>
 <div class="ttc" id="mdt_usbtmc_port_thread_new_8h_html"><div class="ttname"><a href="mdt_usbtmc_port_thread_new_8h.html">mdtUsbtmcPortThreadNew.h</a></div></div>
-<div class="ttc" id="classmdt_usbtmc_transfer_handler_html_ac39c042193f7705c80c738dbf109a8b2"><div class="ttname"><a href="classmdt_usbtmc_transfer_handler.html#ac39c042193f7705c80c738dbf109a8b2">mdtUsbtmcTransferHandler::submitBulkIoClear</a></div><div class="ttdeci">void submitBulkIoClear()</div><div class="ttdoc">Will cancel all pending bulk-OUT and bulk-IN transfers and request I/O buffer clear. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00219">mdtUsbtmcTransferHandler.cpp:219</a></div></div>
+<div class="ttc" id="classmdt_usbtmc_transfer_handler_html_ac39c042193f7705c80c738dbf109a8b2"><div class="ttname"><a href="classmdt_usbtmc_transfer_handler.html#ac39c042193f7705c80c738dbf109a8b2">mdtUsbtmcTransferHandler::submitBulkIoClear</a></div><div class="ttdeci">void submitBulkIoClear()</div><div class="ttdoc">Will cancel all pending bulk-OUT and bulk-IN transfers and request I/O buffer clear. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00225">mdtUsbtmcTransferHandler.cpp:225</a></div></div>
 <div class="ttc" id="classmdt_error_html"><div class="ttname"><a href="classmdt_error.html">mdtError</a></div><div class="ttdoc">mdtError contains informations about a error that occured </div><div class="ttdef"><b>Definition:</b> <a href="mdt_error_8h_source.html#l00087">mdtError.h:87</a></div></div>
-<div class="ttc" id="classmdt_usbtmc_port_html_a0c250cc416a01d2dd704b629b163d3a6"><div class="ttname"><a href="classmdt_usbtmc_port.html#a0c250cc416a01d2dd704b629b163d3a6">mdtUsbtmcPort::sendQuery</a></div><div class="ttdeci">QByteArray sendQuery(const QByteArray &amp;query, int timeout=30000)</div><div class="ttdoc">Send a query to device. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usbtmc_port_8cpp_source.html#l00144">mdtUsbtmcPort.cpp:144</a></div></div>
-<div class="ttc" id="classmdt_usbtmc_port_html_abe30ec243e9dbf3de49cb1d9be5e1a16"><div class="ttname"><a href="classmdt_usbtmc_port.html#abe30ec243e9dbf3de49cb1d9be5e1a16">mdtUsbtmcPort::openDevice</a></div><div class="ttdeci">bool openDevice(const mdtUsbDeviceDescriptor &amp;deviceDescriptor, uint8_t bInterfaceNumber=0, bool clearDeviceList=true)</div><div class="ttdoc">Open device represented by given descriptor. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usbtmc_port_8cpp_source.html#l00084">mdtUsbtmcPort.cpp:84</a></div></div>
-<div class="ttc" id="classmdt_usbtmc_port_html_ad03633a2c6289974d79f361c6dbba5af"><div class="ttname"><a href="classmdt_usbtmc_port.html#ad03633a2c6289974d79f361c6dbba5af">mdtUsbtmcPort::sendCommand</a></div><div class="ttdeci">bool sendCommand(const QByteArray &amp;command, int timeout=30000)</div><div class="ttdoc">Send a command to device. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usbtmc_port_8cpp_source.html#l00123">mdtUsbtmcPort.cpp:123</a></div></div>
+<div class="ttc" id="classmdt_usbtmc_port_html_a0c250cc416a01d2dd704b629b163d3a6"><div class="ttname"><a href="classmdt_usbtmc_port.html#a0c250cc416a01d2dd704b629b163d3a6">mdtUsbtmcPort::sendQuery</a></div><div class="ttdeci">QByteArray sendQuery(const QByteArray &amp;query, int timeout=30000)</div><div class="ttdoc">Send a query to device. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usbtmc_port_8cpp_source.html#l00183">mdtUsbtmcPort.cpp:183</a></div></div>
+<div class="ttc" id="classmdt_usbtmc_port_html_ad03633a2c6289974d79f361c6dbba5af"><div class="ttname"><a href="classmdt_usbtmc_port.html#ad03633a2c6289974d79f361c6dbba5af">mdtUsbtmcPort::sendCommand</a></div><div class="ttdeci">bool sendCommand(const QByteArray &amp;command, int timeout=30000)</div><div class="ttdoc">Send a command to device. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usbtmc_port_8cpp_source.html#l00162">mdtUsbtmcPort.cpp:162</a></div></div>
 <div class="ttc" id="classmdt_error_html_a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260"><div class="ttname"><a href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a></div><div class="ttdef"><b>Definition:</b> <a href="mdt_error_8h_source.html#l00097">mdtError.h:97</a></div></div>
 <div class="ttc" id="classmdt_usbtmc_port_html_a8f555cd150a82b74322e2f109bb094f4"><div class="ttname"><a href="classmdt_usbtmc_port.html#a8f555cd150a82b74322e2f109bb094f4">mdtUsbtmcPort::scan</a></div><div class="ttdeci">QList&lt; mdtUsbDeviceDescriptor &gt; scan()</div><div class="ttdoc">Enumerate attached USBTMC devices. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usbtmc_port_8cpp_source.html#l00059">mdtUsbtmcPort.cpp:59</a></div></div>
-<div class="ttc" id="classmdt_usbtmc_port_html_a4f727be1d99c3ea46c68f781261a0f24"><div class="ttname"><a href="classmdt_usbtmc_port.html#a4f727be1d99c3ea46c68f781261a0f24">mdtUsbtmcPort::setError</a></div><div class="ttdeci">void setError(const mdtError &amp;error)</div><div class="ttdoc">Set error. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usbtmc_port_8cpp_source.html#l00199">mdtUsbtmcPort.cpp:199</a></div></div>
+<div class="ttc" id="classmdt_usbtmc_port_html_a4f727be1d99c3ea46c68f781261a0f24"><div class="ttname"><a href="classmdt_usbtmc_port.html#a4f727be1d99c3ea46c68f781261a0f24">mdtUsbtmcPort::setError</a></div><div class="ttdeci">void setError(const mdtError &amp;error)</div><div class="ttdoc">Set error. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usbtmc_port_8cpp_source.html#l00238">mdtUsbtmcPort.cpp:238</a></div></div>
 <div class="ttc" id="classmdt_usbtmc_port_html_a102a2d5ebad4968621812e682d9d1b71"><div class="ttname"><a href="classmdt_usbtmc_port.html#a102a2d5ebad4968621812e682d9d1b71">mdtUsbtmcPort::mdtUsbtmcPort</a></div><div class="ttdeci">mdtUsbtmcPort(QObject *parent=0)</div><div class="ttdoc">Constructor. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usbtmc_port_8cpp_source.html#l00033">mdtUsbtmcPort.cpp:33</a></div></div>
 <div class="ttc" id="classmdt_usbtmc_port_html_ac2d4dc739be5c42c664e40ff7bb74132"><div class="ttname"><a href="classmdt_usbtmc_port.html#ac2d4dc739be5c42c664e40ff7bb74132">mdtUsbtmcPort::transactionFinished</a></div><div class="ttdeci">void transactionFinished(TransactionState_t s)</div><div class="ttdoc">Signal error. </div></div>
 <div class="ttc" id="classmdt_usb_device_list_html"><div class="ttname"><a href="classmdt_usb_device_list.html">mdtUsbDeviceList</a></div><div class="ttdoc">Helper class to enumerate and search USB devices that are attached on system. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usb_device_list_8h_source.html#l00039">mdtUsbDeviceList.h:39</a></div></div>
@@ -393,13 +436,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="mdt_usbtmc_message_8h_html"><div class="ttname"><a href="mdt_usbtmc_message_8h.html">mdtUsbtmcMessage.h</a></div></div>
 <div class="ttc" id="class_q_object_html"><div class="ttname"><a href="class_q_object.html">QObject</a></div></div>
 <div class="ttc" id="classmdt_usb_port_thread_new_html_ac0b2946c973dddcbb19dd26941df2ca5"><div class="ttname"><a href="classmdt_usb_port_thread_new.html#ac0b2946c973dddcbb19dd26941df2ca5">mdtUsbPortThreadNew::start</a></div><div class="ttdeci">bool start(const mdtUsbDeviceDescriptor &amp;deviceDescriptor, uint8_t bInterfaceNumber)</div><div class="ttdoc">Start thread. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usb_port_thread_new_8cpp_source.html#l00045">mdtUsbPortThreadNew.cpp:45</a></div></div>
-<div class="ttc" id="classmdt_usbtmc_transfer_handler_html_a2ba256326fc2b6ca70816eb1cca783c9"><div class="ttname"><a href="classmdt_usbtmc_transfer_handler.html#a2ba256326fc2b6ca70816eb1cca783c9">mdtUsbtmcTransferHandler::submitCommand</a></div><div class="ttdeci">bool submitCommand(mdtUsbtmcTxMessage &amp;message, bool responseExpected, unsigned int timeout)</div><div class="ttdoc">Submit a command. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00145">mdtUsbtmcTransferHandler.cpp:145</a></div></div>
+<div class="ttc" id="classmdt_usbtmc_transfer_handler_html_a2ba256326fc2b6ca70816eb1cca783c9"><div class="ttname"><a href="classmdt_usbtmc_transfer_handler.html#a2ba256326fc2b6ca70816eb1cca783c9">mdtUsbtmcTransferHandler::submitCommand</a></div><div class="ttdeci">bool submitCommand(mdtUsbtmcTxMessage &amp;message, bool responseExpected, unsigned int timeout)</div><div class="ttdoc">Submit a command. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00151">mdtUsbtmcTransferHandler.cpp:151</a></div></div>
 <div class="ttc" id="classmdt_usbtmc_port_html_a95543679f3981f4a061bb46731731868a902b0d55fddef6f8d651fe1035b7d4bd"><div class="ttname"><a href="classmdt_usbtmc_port.html#a95543679f3981f4a061bb46731731868a902b0d55fddef6f8d651fe1035b7d4bd">mdtUsbtmcPort::TransactionState_t::Error</a></div></div>
 <div class="ttc" id="classmdt_usbtmc_port_html_a95543679f3981f4a061bb46731731868a721c28f4c74928cc9e0bb3fef345e408"><div class="ttname"><a href="classmdt_usbtmc_port.html#a95543679f3981f4a061bb46731731868a721c28f4c74928cc9e0bb3fef345e408">mdtUsbtmcPort::TransactionState_t::Aborted</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 11 2015 04:05:33 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jan 11 2015 16:42:09 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

@@ -18,13 +18,15 @@ var searchData=
   ['vehicletypelinkdatalist',['vehicleTypeLinkDataList',['../classmdt_cl_link_data.html#a95fb259075bacba89d4519ac7678b70e',1,'mdtClLinkData']]],
   ['vehicletypelinksedited',['vehicleTypeLinksEdited',['../classmdt_cl_link_data.html#a6ba85d372cd9d1478b1a3cfe1e76b6c6',1,'mdtClLinkData']]],
   ['vehicletypestartid',['vehicleTypeStartId',['../classmdt_cl_vehicle_type_link_data.html#afd0e8b34211b5ba7060f9646355272d7',1,'mdtClVehicleTypeLinkData']]],
-  ['vendor_5fspecific_5fin',['VENDOR_SPECIFIC_IN',['../classmdt_frame_usb_tmc.html#a10c2216157b0616b69f6cabc5c8e253baf6fe219e0ce27a6a793db4b4a5c2a686',1,'mdtFrameUsbTmc::VENDOR_SPECIFIC_IN()'],['../classmdt_usbtmc_frame.html#abf1e449c264011341c477d45eb700c42ad9f728364c29a2fef0432b273f9d03a4',1,'mdtUsbtmcFrame::VENDOR_SPECIFIC_IN()']]],
-  ['vendor_5fspecific_5fout',['VENDOR_SPECIFIC_OUT',['../classmdt_frame_usb_tmc.html#a10c2216157b0616b69f6cabc5c8e253bafb1be2ba00b4830e457e933e4497a593',1,'mdtFrameUsbTmc::VENDOR_SPECIFIC_OUT()'],['../classmdt_usbtmc_frame.html#abf1e449c264011341c477d45eb700c42ab2a33799ba113bf457f1112d3f685662',1,'mdtUsbtmcFrame::VENDOR_SPECIFIC_OUT()']]],
+  ['vendor_5fspecific_5fin',['VENDOR_SPECIFIC_IN',['../classmdt_usbtmc_frame.html#abf1e449c264011341c477d45eb700c42ad9f728364c29a2fef0432b273f9d03a4',1,'mdtUsbtmcFrame']]],
+  ['vendor_5fspecific_5fout',['VENDOR_SPECIFIC_OUT',['../classmdt_usbtmc_frame.html#abf1e449c264011341c477d45eb700c42ab2a33799ba113bf457f1112d3f685662',1,'mdtUsbtmcFrame']]],
   ['vendorid',['vendorId',['../classmdt_device_info.html#a45edf71f1fa6a653c1bfa984e90e094e',1,'mdtDeviceInfo']]],
   ['vendorname',['vendorName',['../classmdt_device_info.html#a207d7b6b49fd65726232e95cd9e0568c',1,'mdtDeviceInfo::vendorName()'],['../classmdt_usb_device_descriptor.html#ac2f746ebd5540b65bf00f82c991f5c3b',1,'mdtUsbDeviceDescriptor::vendorName()']]],
   ['vendorspecific',['VendorSpecific',['../classmdt_usbtmc_interrupt_transfer.html#ae547608f6ca182cc8312a8f4cbf8b2f1a4cc449f0ef9a4d1671ae565a323d06c1',1,'mdtUsbtmcInterruptTransfer']]],
   ['vertex_5ft',['vertex_t',['../namespacemdt_cl_path_graph_private.html#a0aaa28f25df9a7fcd4602cc15b3b3795',1,'mdtClPathGraphPrivate']]],
   ['verticallayout',['verticalLayout',['../class_ui__mdt_tt_test_model_item_dialog.html#ab9d49ef493d8a1e57d1d15f2eed4a85f',1,'Ui_mdtTtTestModelItemDialog']]],
   ['visualizing',['Visualizing',['../classmdt_abstract_sql_table_controller.html#a63536182561f551ccb7616e1786793cdae670b852d1d3c41f28d9dba14bd2fe56',1,'mdtAbstractSqlTableController']]],
-  ['voltage',['Voltage',['../structmdt_scpi_function_farameter.html#a6c66a5f0deed788e511aa28e3683cf7ea4a92fbe41f6463598c39850b8335096c',1,'mdtScpiFunctionFarameter']]]
+  ['voltage',['Voltage',['../structmdt_scpi_function_farameter.html#a6c66a5f0deed788e511aa28e3683cf7ea4a92fbe41f6463598c39850b8335096c',1,'mdtScpiFunctionFarameter']]],
+  ['voltageac',['VoltageAc',['../classmdt_device_u3606_a.html#a75dc9c6f4c68da0106a6be067fd658b7a3247ecc0971373fc34a606a396b06491',1,'mdtDeviceU3606A']]],
+  ['voltagedc',['VoltageDc',['../classmdt_device_u3606_a.html#a75dc9c6f4c68da0106a6be067fd658b7ac5cc67a90482cd63ef1b60b1b2c752e0',1,'mdtDeviceU3606A']]]
 ];

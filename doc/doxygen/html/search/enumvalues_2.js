@@ -3,6 +3,7 @@ var searchData=
   ['c2',['C2',['../classmdt_device_modbus_wago_module_rtd.html#a6edcc72b85641ca88d66ca45a7650ca8a46b618df5f4f98c2284b015c76e2d5b6',1,'mdtDeviceModbusWagoModuleRtd']]],
   ['c2s5',['C2S5',['../classmdt_device_modbus_wago_module_rtd.html#a6edcc72b85641ca88d66ca45a7650ca8ae19394d1163ada7da4f546e64468df76',1,'mdtDeviceModbusWagoModuleRtd']]],
   ['cablelink',['CableLink',['../classmdt_cl_path_graphics_link.html#a6ac32ab30f4b6193fcd0cd4d3d51ea2da8b0111c49fc77799f8ac81624a5e6c56',1,'mdtClPathGraphicsLink']]],
+  ['capacitance',['Capacitance',['../classmdt_device_u3606_a.html#a75dc9c6f4c68da0106a6be067fd658b7a22bef5ff8cc5db9cc862164e779f29dc',1,'mdtDeviceU3606A']]],
   ['cascade',['Cascade',['../classmdt_sql_schema_table.html#a1738e443f03dc69b914edb967cb911bea69dd241f7f53962080a7f2ba14a8a203',1,'mdtSqlSchemaTable']]],
   ['check_5fabort_5fbulk_5fin_5fstatus',['CHECK_ABORT_BULK_IN_STATUS',['../classmdt_usbtmc_control_transfer.html#a9f40cbd57464978b74624c66fa083251ace3ca35d7227c086e77a76aab3c76d92',1,'mdtUsbtmcControlTransfer']]],
   ['check_5fabort_5fbulk_5fout_5fstatus',['CHECK_ABORT_BULK_OUT_STATUS',['../classmdt_usbtmc_control_transfer.html#a9f40cbd57464978b74624c66fa083251a8e725abe772f1ec8511ad20cd18d29dd',1,'mdtUsbtmcControlTransfer']]],
@@ -16,8 +17,11 @@ var searchData=
   ['connection',['Connection',['../classmdt_cl_path_graphics_link.html#a6ac32ab30f4b6193fcd0cd4d3d51ea2da8da60a183772ac364b8e845e0f22430d',1,'mdtClPathGraphicsLink::Connection()'],['../classmdt_tt_logical_test_cable_dialog.html#a3ca0cca0e179adbc5d6a024eb8ec00f8af14d6071b76ac17a314bc2bbe5479499',1,'mdtTtLogicalTestCableDialog::Connection()']]],
   ['connectionfailed',['ConnectionFailed',['../classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea79cfce29fadf5a27dbcbc6e0cbc8d118',1,'mdtAbstractPort']]],
   ['connector',['Connector',['../classmdt_tt_logical_test_cable_dialog.html#a3ca0cca0e179adbc5d6a024eb8ec00f8a4d0173c5c88bfdc73d1616016ef7818c',1,'mdtTtLogicalTestCableDialog']]],
+  ['continuity',['Continuity',['../classmdt_device_u3606_a.html#a75dc9c6f4c68da0106a6be067fd658b7af73d2c55dc3628b7071e45104874c485',1,'mdtDeviceU3606A']]],
   ['continuitytest',['ContinuityTest',['../classmdt_tt_test_model_generation_dialog.html#a833486450bf0b6414015ab3b8e8432daa874b49b7c1b3db4880ffb3bbd93dbe67',1,'mdtTtTestModelGenerationDialog']]],
   ['controlcanceled',['ControlCanceled',['../classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea44eaa84d8f888f4f9d5c814291e54079',1,'mdtAbstractPort']]],
   ['controltimeout',['ControlTimeout',['../classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eabdb5a36cd2c7dd2dcf59e996fc4922c9',1,'mdtAbstractPort']]],
-  ['current',['Current',['../structmdt_scpi_function_farameter.html#a6c66a5f0deed788e511aa28e3683cf7ea222a267cc5778206b253be35ee3ddab5',1,'mdtScpiFunctionFarameter']]]
+  ['current',['Current',['../structmdt_scpi_function_farameter.html#a6c66a5f0deed788e511aa28e3683cf7ea222a267cc5778206b253be35ee3ddab5',1,'mdtScpiFunctionFarameter']]],
+  ['currentac',['CurrentAc',['../classmdt_device_u3606_a.html#a75dc9c6f4c68da0106a6be067fd658b7aec7c8df76544d960f38d47b1e6de863d',1,'mdtDeviceU3606A']]],
+  ['currentdc',['CurrentDc',['../classmdt_device_u3606_a.html#a75dc9c6f4c68da0106a6be067fd658b7a093a6e87d5fb3cee87ca5e5b1f8f7c49',1,'mdtDeviceU3606A']]]
 ];

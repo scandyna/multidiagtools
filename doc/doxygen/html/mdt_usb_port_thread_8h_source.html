@@ -120,8 +120,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_port_thread_8h.html">mdtPortThread.h</a>&quot;</span></div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="mdt_frame_8h.html">mdtFrame.h</a>&quot;</span></div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">class </span><a class="code" href="classmdt_usb_port.html">mdtUsbPort</a>;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">class </span><a class="code" href="classmdt_frame_usb_control.html">mdtFrameUsbControl</a>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">class </span>mdtUsbPort;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">class </span>mdtFrameUsbControl;</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
 <div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="classmdt_usb_port_thread.html">   35</a></span>&#160;<span class="keyword">class </span><a class="code" href="classmdt_usb_port_thread.html">mdtUsbPortThread</a> : <span class="keyword">public</span> <a class="code" href="classmdt_port_thread.html">mdtPortThread</a></div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;{</div>
@@ -131,9 +131,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <a class="code" href="classmdt_usb_port_thread.html#aaf4e5883224f05d80132b31a921ac899">mdtUsbPortThread</a>(<a class="code" href="class_q_object.html">QObject</a> *parent = 0);</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_usb_port_thread.html#a1661f362e2d772c1524f09daa6da3f15">setPort</a>(<a class="code" href="classmdt_usb_port.html">mdtUsbPort</a> *<a class="code" href="classmdt_port_thread.html#a97bff8cf6aca37d8858cc4e5c9294cae">port</a>);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_usb_port_thread.html#a1661f362e2d772c1524f09daa6da3f15">setPort</a>(mdtUsbPort *<a class="code" href="classmdt_port_thread.html#a97bff8cf6aca37d8858cc4e5c9294cae">port</a>);</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <a class="code" href="classmdt_usb_port.html">mdtUsbPort</a> *<a class="code" href="classmdt_usb_port_thread.html#aaa8e1ce181489dbae57c81b42dc6ad62">usbPort</a>();</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  mdtUsbPort *<a class="code" href="classmdt_usb_port_thread.html#aaa8e1ce181489dbae57c81b42dc6ad62">usbPort</a>();</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_usb_port_thread.html#a99070e7dba4bd7939b054cddbd66979f">detachPort</a>(<span class="keywordtype">bool</span> releaseMemory);</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
@@ -155,7 +155,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a> <a class="code" href="classmdt_usb_port_thread.html#a2d234f3900b502ecced6897facdcf029">waitOnControlTransferPossible</a>(<span class="keywordtype">bool</span> notifyOnControlTransferComplete);</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a> <a class="code" href="classmdt_usb_port_thread.html#ae154415b3f311b02934405cd58eb9aa5">sendControlQuery</a>(<a class="code" href="classmdt_frame_usb_control.html">mdtFrameUsbControl</a> *ctlFrame);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a> <a class="code" href="classmdt_usb_port_thread.html#ae154415b3f311b02934405cd58eb9aa5">sendControlQuery</a>(mdtFrameUsbControl *ctlFrame);</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a> <a class="code" href="classmdt_usb_port_thread.html#acca2af9704cc6894ec5b2058ca102af1">readUntilShortPacketReceived</a>(<span class="keywordtype">int</span> maxReadTransfers);</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
@@ -165,7 +165,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  Q_DISABLE_COPY(<a class="code" href="classmdt_usb_port_thread.html">mdtUsbPortThread</a>);</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  <a class="code" href="classmdt_usb_port.html">mdtUsbPort</a> *pvUsbPort;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  mdtUsbPort *pvUsbPort;</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;};</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="preprocessor">#endif  // #ifndef MDT_USB_PORT_THREAD_H</span></div>
@@ -180,9 +180,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="mdt_port_thread_8h_html"><div class="ttname"><a href="mdt_port_thread_8h.html">mdtPortThread.h</a></div></div>
 <div class="ttc" id="classmdt_usb_port_thread_html_ae154415b3f311b02934405cd58eb9aa5"><div class="ttname"><a href="classmdt_usb_port_thread.html#ae154415b3f311b02934405cd58eb9aa5">mdtUsbPortThread::sendControlQuery</a></div><div class="ttdeci">mdtAbstractPort::error_t sendControlQuery(mdtFrameUsbControl *ctlFrame)</div><div class="ttdoc">Send a control query and wait until response is available. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usb_port_thread_8cpp_source.html#l00119">mdtUsbPortThread.cpp:119</a></div></div>
 <div class="ttc" id="classmdt_usb_port_thread_html_a74258f300967b5dea1fbfa9a0ccab38a"><div class="ttname"><a href="classmdt_usb_port_thread.html#a74258f300967b5dea1fbfa9a0ccab38a">mdtUsbPortThread::isWriter</a></div><div class="ttdeci">bool isWriter() const </div><div class="ttdoc">Returns true. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usb_port_thread_8cpp_source.html#l00060">mdtUsbPortThread.cpp:60</a></div></div>
-<div class="ttc" id="classmdt_usb_port_html"><div class="ttname"><a href="classmdt_usb_port.html">mdtUsbPort</a></div><div class="ttdoc">USB port I/O port class. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usb_port_8h_source.html#l00064">mdtUsbPort.h:64</a></div></div>
 <div class="ttc" id="classmdt_usb_port_thread_html_ab8ac3a6e1b571215be86f9dfd8c48b2b"><div class="ttname"><a href="classmdt_usb_port_thread.html#ab8ac3a6e1b571215be86f9dfd8c48b2b">mdtUsbPortThread::controlResponseReaden</a></div><div class="ttdeci">void controlResponseReaden()</div><div class="ttdoc">Emited when a new control response was readen. </div></div>
-<div class="ttc" id="classmdt_frame_usb_control_html"><div class="ttname"><a href="classmdt_frame_usb_control.html">mdtFrameUsbControl</a></div><div class="ttdoc">USB Control frame. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_frame_usb_control_8h_source.html#l00039">mdtFrameUsbControl.h:39</a></div></div>
 <div class="ttc" id="classmdt_usb_port_thread_html_a99070e7dba4bd7939b054cddbd66979f"><div class="ttname"><a href="classmdt_usb_port_thread.html#a99070e7dba4bd7939b054cddbd66979f">mdtUsbPortThread::detachPort</a></div><div class="ttdeci">void detachPort(bool releaseMemory)</div><div class="ttdoc">Detach the port from thread. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usb_port_thread_8cpp_source.html#l00049">mdtUsbPortThread.cpp:49</a></div></div>
 <div class="ttc" id="classmdt_usb_port_thread_html_acca2af9704cc6894ec5b2058ca102af1"><div class="ttname"><a href="classmdt_usb_port_thread.html#acca2af9704cc6894ec5b2058ca102af1">mdtUsbPortThread::readUntilShortPacketReceived</a></div><div class="ttdeci">mdtAbstractPort::error_t readUntilShortPacketReceived(int maxReadTransfers)</div><div class="ttdoc">Read until a short frame is received. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usb_port_thread_8cpp_source.html#l00154">mdtUsbPortThread.cpp:154</a></div></div>
 <div class="ttc" id="classmdt_usb_port_thread_html_aed82b57c84745f1e2391750697db1022"><div class="ttname"><a href="classmdt_usb_port_thread.html#aed82b57c84745f1e2391750697db1022">mdtUsbPortThread::isReader</a></div><div class="ttdeci">bool isReader() const </div><div class="ttdoc">Returns true. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_usb_port_thread_8cpp_source.html#l00055">mdtUsbPortThread.cpp:55</a></div></div>
@@ -194,7 +192,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 11 2015 04:05:33 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jan 11 2015 16:42:09 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

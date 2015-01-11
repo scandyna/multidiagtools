@@ -536,8 +536,6 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_usb_device_descriptor_8h_source.html#l00212">212</a> of file <a class="el" href="mdt_usb_device_descriptor_8h_source.html">mdtUsbDeviceDescriptor.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00063">mdtUsbPortManager::scan()</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="a2b5b593bf4a7d3a7a92a9b2ed1c19109"></a>
@@ -625,8 +623,6 @@ Public Member Functions</h2></td></tr>
 <p>Definition at line <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html#l00044">44</a> of file <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html">mdtUsbDeviceDescriptor.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html#l00035">clear()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00116">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00097">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html#l00181">serialNumber()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00060">mdtError::setError()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00085">mdtError::setSystemError()</a>, and <a class="el" href="mdt_error_8h_source.html#l00096">mdtError::Warning</a>.</p>
-
-<p>Referenced by <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00063">mdtUsbPortManager::scan()</a>.</p>
 
 </div>
 </div>
@@ -843,8 +839,6 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_usb_device_descriptor_8h_source.html#l00177">177</a> of file <a class="el" href="mdt_usb_device_descriptor_8h_source.html">mdtUsbDeviceDescriptor.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00063">mdtUsbPortManager::scan()</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="ad17a0b6a6bb67754c839f2c73d6df945"></a>
@@ -866,7 +860,7 @@ Public Member Functions</h2></td></tr>
 
 <p>References <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html#l00160">productName()</a>, and <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html#l00144">vendorName()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html#l00123">open()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html#l00123">open()</a>, and <a class="el" href="mdt_usbtmc_port_8cpp_source.html#l00116">mdtUsbtmcPort::openDevice()</a>.</p>
 
 </div>
 </div>
@@ -894,8 +888,6 @@ Public Member Functions</h2></td></tr>
 <p>Vendor ID (assigned by the USB-IF) </p>
 
 <p>Definition at line <a class="el" href="mdt_usb_device_descriptor_8h_source.html#l00161">161</a> of file <a class="el" href="mdt_usb_device_descriptor_8h_source.html">mdtUsbDeviceDescriptor.h</a>.</p>
-
-<p>Referenced by <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00063">mdtUsbPortManager::scan()</a>.</p>
 
 </div>
 </div>
@@ -1057,7 +1049,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_usb_device_descriptor_8h_source.html#l00073">73</a> of file <a class="el" href="mdt_usb_device_descriptor_8h_source.html">mdtUsbDeviceDescriptor.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_usbtmc_port_8cpp_source.html#l00084">mdtUsbtmcPort::openDevice()</a>, <a class="el" href="mdt_usb_port_thread_new_8cpp_source.html#l00116">mdtUsbPortThreadNew::openDevice()</a>, and <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00040">mdtUsbtmcTransferHandler::setup()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_usbtmc_port_8cpp_source.html#l00092">mdtUsbtmcPort::openDevice()</a>, <a class="el" href="mdt_usb_port_thread_new_8cpp_source.html#l00116">mdtUsbPortThreadNew::openDevice()</a>, and <a class="el" href="mdt_usbtmc_transfer_handler_8cpp_source.html#l00046">mdtUsbtmcTransferHandler::setup()</a>.</p>
 
 </div>
 </div>
@@ -1134,11 +1126,11 @@ Public Member Functions</h2></td></tr>
 
 <p>Product name. </p>
 <p>If vendorID:productID is known the product name is returned, else a string containing PID:0xXXXX is returned</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000042">Todo:</a></b></dt><dd>Parsing the usb.ids (see <a href="http://www.linux-usb.org">http://www.linux-usb.org</a>) </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000043">Todo:</a></b></dt><dd>Parsing the usb.ids (see <a href="http://www.linux-usb.org">http://www.linux-usb.org</a>) </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html#l00160">160</a> of file <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html">mdtUsbDeviceDescriptor.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html#l00186">idString()</a>, and <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00063">mdtUsbPortManager::scan()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html#l00186">idString()</a>.</p>
 
 </div>
 </div>
@@ -1159,7 +1151,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html#l00181">181</a> of file <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html">mdtUsbDeviceDescriptor.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html#l00044">fetchAttributes()</a>, and <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00063">mdtUsbPortManager::scan()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html#l00044">fetchAttributes()</a>.</p>
 
 </div>
 </div>
@@ -1178,11 +1170,11 @@ Public Member Functions</h2></td></tr>
 
 <p>Vendor name (assigned by the USB-IF) </p>
 <p>If vendor ID is known it is returned, else a string containing VID:0xXXXX is returned</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000041">Todo:</a></b></dt><dd>Parsing the usb.ids (see <a href="http://www.linux-usb.org">http://www.linux-usb.org</a>) </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000042">Todo:</a></b></dt><dd>Parsing the usb.ids (see <a href="http://www.linux-usb.org">http://www.linux-usb.org</a>) </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html#l00144">144</a> of file <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html">mdtUsbDeviceDescriptor.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html#l00186">idString()</a>, and <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00063">mdtUsbPortManager::scan()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html#l00186">idString()</a>.</p>
 
 </div>
 </div>
@@ -1193,7 +1185,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 11 2015 04:05:43 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jan 11 2015 16:42:20 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

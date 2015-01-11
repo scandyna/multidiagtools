@@ -33,8 +33,10 @@ Collaboration diagram for mdt\-Port\-Term\-:\nopagebreak
 \item 
 void \hyperlink{classmdt_port_term_a2c8de2e82437fc94420ccb542cc42bf2}{append\-Readen\-Data} (\hyperlink{classmdt_port_transaction}{mdt\-Port\-Transaction} $\ast$transaction)
 \begin{DoxyCompactList}\small\item\em Append incomming data to terminal. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_port_term_a7ec568c44f862fe7aee83f1a271ac6bb}{send\-Cmd} ()
+void \hyperlink{classmdt_port_term_ae83cb3183870f167426d1ede3ebca5b9}{send\-Command\-To\-Serial\-Port} ()
 \begin{DoxyCompactList}\small\item\em Send command to current port. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_term_a52a207c0d9343638828feb4a631eed89}{send\-Command\-To\-Usbtmc\-Port} ()
+\begin{DoxyCompactList}\small\item\em Send command/query to U\-S\-B\-T\-M\-C port. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_port_term_a1b232e686b401d7103eb1c682be330a9}{on\-\_\-pb\-Send\-Cmd\-Abort\-\_\-clicked} ()
 \begin{DoxyCompactList}\small\item\em Abort command transmission. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_port_term_abb3fc55837782dbea240b069a48b18ce}{on\-\_\-pb\-Clear\-Term\-\_\-clicked} ()
@@ -45,7 +47,7 @@ void \hyperlink{classmdt_port_term_a542e20f789bcdc5f2ddf2b6e698ceea2}{retranslat
 \begin{DoxyCompactItemize}
 \item 
 \hyperlink{classmdt_port_term_a5e93890f53b5112be80983779a3ab233}{mdt\-Port\-Term} (\hyperlink{class_q_widget}{Q\-Widget} $\ast$parent=0)
-\item 
+\begin{DoxyCompactList}\small\item\em \#include \char`\"{}mdt\-Usbtmc\-Port\-Manager.\-h\char`\"{} \end{DoxyCompactList}\item 
 \hyperlink{classmdt_port_term_a5576a15a2b6e39c149207ffdb7869ef7}{$\sim$mdt\-Port\-Term} ()
 \item 
 void \hyperlink{classmdt_port_term_af6f97444089eb87ec5db557a2ccb24db}{set\-Available\-Translations} (const Q\-Map$<$ Q\-String, Q\-String $>$ \&avaliable\-Translations, const Q\-String \&current\-Translation\-Key)
@@ -69,11 +71,11 @@ Definition at line 44 of file mdt\-Port\-Term.\-h.
 )}}\label{classmdt_port_term_a5e93890f53b5112be80983779a3ab233}
 
 
-Definition at line 36 of file mdt\-Port\-Term.\-cpp.
+\#include \char`\"{}mdt\-Usbtmc\-Port\-Manager.\-h\char`\"{} 
 
 
 
-References send\-Cmd().
+Definition at line 38 of file mdt\-Port\-Term.\-cpp.
 
 \hypertarget{classmdt_port_term_a5576a15a2b6e39c149207ffdb7869ef7}{\index{mdt\-Port\-Term@{mdt\-Port\-Term}!$\sim$mdt\-Port\-Term@{$\sim$mdt\-Port\-Term}}
 \index{$\sim$mdt\-Port\-Term@{$\sim$mdt\-Port\-Term}!mdtPortTerm@{mdt\-Port\-Term}}
@@ -84,7 +86,7 @@ References send\-Cmd().
 )}}\label{classmdt_port_term_a5576a15a2b6e39c149207ffdb7869ef7}
 
 
-Definition at line 69 of file mdt\-Port\-Term.\-cpp.
+Definition at line 72 of file mdt\-Port\-Term.\-cpp.
 
 
 
@@ -102,7 +104,7 @@ Append incomming data to terminal.
 
 
 
-Definition at line 97 of file mdt\-Port\-Term.\-cpp.
+Definition at line 100 of file mdt\-Port\-Term.\-cpp.
 
 
 
@@ -121,7 +123,7 @@ Clear terminal.
 
 
 
-Definition at line 141 of file mdt\-Port\-Term.\-cpp.
+Definition at line 216 of file mdt\-Port\-Term.\-cpp.
 
 \hypertarget{classmdt_port_term_a1b232e686b401d7103eb1c682be330a9}{\index{mdt\-Port\-Term@{mdt\-Port\-Term}!on\-\_\-pb\-Send\-Cmd\-Abort\-\_\-clicked@{on\-\_\-pb\-Send\-Cmd\-Abort\-\_\-clicked}}
 \index{on\-\_\-pb\-Send\-Cmd\-Abort\-\_\-clicked@{on\-\_\-pb\-Send\-Cmd\-Abort\-\_\-clicked}!mdtPortTerm@{mdt\-Port\-Term}}
@@ -136,11 +138,7 @@ Abort command transmission.
 
 
 
-Definition at line 133 of file mdt\-Port\-Term.\-cpp.
-
-
-
-References mdt\-Port\-Manager\-::abort().
+Definition at line 206 of file mdt\-Port\-Term.\-cpp.
 
 \hypertarget{classmdt_port_term_a542e20f789bcdc5f2ddf2b6e698ceea2}{\index{mdt\-Port\-Term@{mdt\-Port\-Term}!retranslate@{retranslate}}
 \index{retranslate@{retranslate}!mdtPortTerm@{mdt\-Port\-Term}}
@@ -155,26 +153,47 @@ Retranslate.
 
 This slot is called by \hyperlink{classmdt_application}{mdt\-Application} when language has changed 
 
-Definition at line 146 of file mdt\-Port\-Term.\-cpp.
+Definition at line 221 of file mdt\-Port\-Term.\-cpp.
 
-\hypertarget{classmdt_port_term_a7ec568c44f862fe7aee83f1a271ac6bb}{\index{mdt\-Port\-Term@{mdt\-Port\-Term}!send\-Cmd@{send\-Cmd}}
-\index{send\-Cmd@{send\-Cmd}!mdtPortTerm@{mdt\-Port\-Term}}
-\subsubsection[{send\-Cmd}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Port\-Term\-::send\-Cmd (
+\hypertarget{classmdt_port_term_ae83cb3183870f167426d1ede3ebca5b9}{\index{mdt\-Port\-Term@{mdt\-Port\-Term}!send\-Command\-To\-Serial\-Port@{send\-Command\-To\-Serial\-Port}}
+\index{send\-Command\-To\-Serial\-Port@{send\-Command\-To\-Serial\-Port}!mdtPortTerm@{mdt\-Port\-Term}}
+\subsubsection[{send\-Command\-To\-Serial\-Port}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Port\-Term\-::send\-Command\-To\-Serial\-Port (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [slot]}}}\label{classmdt_port_term_a7ec568c44f862fe7aee83f1a271ac6bb}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{classmdt_port_term_ae83cb3183870f167426d1ede3ebca5b9}
 
 
 Send command to current port. 
 
+void send\-Cmd();
+
+Send command/query to serial port 
+
+Definition at line 136 of file mdt\-Port\-Term.\-cpp.
 
 
-Definition at line 104 of file mdt\-Port\-Term.\-cpp.
+
+References mdt\-Port\-Manager\-::send\-Data().
+
+\hypertarget{classmdt_port_term_a52a207c0d9343638828feb4a631eed89}{\index{mdt\-Port\-Term@{mdt\-Port\-Term}!send\-Command\-To\-Usbtmc\-Port@{send\-Command\-To\-Usbtmc\-Port}}
+\index{send\-Command\-To\-Usbtmc\-Port@{send\-Command\-To\-Usbtmc\-Port}!mdtPortTerm@{mdt\-Port\-Term}}
+\subsubsection[{send\-Command\-To\-Usbtmc\-Port}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Port\-Term\-::send\-Command\-To\-Usbtmc\-Port (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{classmdt_port_term_a52a207c0d9343638828feb4a631eed89}
+
+
+Send command/query to U\-S\-B\-T\-M\-C port. 
 
 
 
-Referenced by mdt\-Port\-Term().
+Definition at line 158 of file mdt\-Port\-Term.\-cpp.
+
+
+
+References mdt\-Usbtmc\-Port\-::last\-Error(), mdt\-Usbtmc\-Port\-::send\-Command(), mdt\-Usbtmc\-Port\-::send\-Query(), mdt\-Port\-Status\-Widget\-::set\-Permanent\-Text(), and mdt\-Error\-::text().
 
 \hypertarget{classmdt_port_term_af6f97444089eb87ec5db557a2ccb24db}{\index{mdt\-Port\-Term@{mdt\-Port\-Term}!set\-Available\-Translations@{set\-Available\-Translations}}
 \index{set\-Available\-Translations@{set\-Available\-Translations}!mdtPortTerm@{mdt\-Port\-Term}}
@@ -190,7 +209,7 @@ Build the translations menu.
 
 
 
-Definition at line 74 of file mdt\-Port\-Term.\-cpp.
+Definition at line 77 of file mdt\-Port\-Term.\-cpp.
 
 
 

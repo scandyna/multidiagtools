@@ -12,11 +12,12 @@ Base class for a device connected to a port.
 
 
 
-Inheritance diagram for mdt\-Device\-:\nopagebreak
+Inheritance diagram for mdt\-Device\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=350pt]{classmdt_device__inherit__graph}
+\includegraphics[width=202pt]{classmdt_device__inherit__graph}
 \end{center}
 \end{figure}
 
@@ -314,10 +315,6 @@ Definition at line 85 of file mdt\-Device.\-cpp.
 
 References mdt\-Device\-Ios\-::add\-Analog\-Input().
 
-
-
-Referenced by mdt\-Device\-U3606\-A\-::mdt\-Device\-U3606\-A().
-
 \hypertarget{classmdt_device_a186861ad3b8857ba045534244fb9f9ef}{\index{mdt\-Device@{mdt\-Device}!add\-Input@{add\-Input}}
 \index{add\-Input@{add\-Input}!mdtDevice@{mdt\-Device}}
 \subsubsection[{add\-Input}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Device\-::add\-Input (
@@ -397,10 +394,6 @@ Definition at line 100 of file mdt\-Device.\-cpp.
 
 
 References mdt\-Device\-Ios\-::add\-Analog\-Output(), and set\-Analog\-Output\-Value().
-
-
-
-Referenced by mdt\-Device\-U3606\-A\-::mdt\-Device\-U3606\-A().
 
 \hypertarget{classmdt_device_a319cd0eeec028f3fc8cfcb96def79404}{\index{mdt\-Device@{mdt\-Device}!add\-Output@{add\-Output}}
 \index{add\-Output@{add\-Output}!mdtDevice@{mdt\-Device}}
@@ -486,7 +479,7 @@ A error listed in \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa06
 \end{DoxyReturn}
 Note\-: default implementation does nothing and returns allways a Unhandled\-Error. See subclass documentation for more details. 
 
-Reimplemented in \hyperlink{classmdt_device_u3606_a_acf3b48b13bc179ad4f94b3011b7d607a}{mdt\-Device\-U3606\-A}, \hyperlink{classmdt_device_modbus_a093c6407ee69c4c7696a0c71d0acd88d}{mdt\-Device\-Modbus}, \hyperlink{classmdt_device_scpi_ae8e886b362cbf9d1bf7064b48348b8e8}{mdt\-Device\-Scpi}, \hyperlink{classmdt_device_modbus_wago_a025f0411a708a529054a0e3c0b6461cd}{mdt\-Device\-Modbus\-Wago}, and \hyperlink{classmdt_device_d_s_o1000_a_a84431cf929750a8a25d5218893736c72}{mdt\-Device\-D\-S\-O1000\-A}.
+Reimplemented in \hyperlink{classmdt_device_modbus_a093c6407ee69c4c7696a0c71d0acd88d}{mdt\-Device\-Modbus}, and \hyperlink{classmdt_device_modbus_wago_a025f0411a708a529054a0e3c0b6461cd}{mdt\-Device\-Modbus\-Wago}.
 
 
 
@@ -674,7 +667,7 @@ References mdt\-Abstract\-Io\-::address\-Read(), get\-New\-Transaction(), read\-
 
 
 
-Referenced by get\-Analog\-Input\-Value(), get\-Analog\-Input\-Value\-At(), and mdt\-Device\-U3606\-A\-::get\-Measure\-Value().
+Referenced by get\-Analog\-Input\-Value(), and get\-Analog\-Input\-Value\-At().
 
 \hypertarget{classmdt_device_ad6a9d73cd51ce21f69dc8e4646d4fcfe}{\index{mdt\-Device@{mdt\-Device}!get\-Analog\-Input\-Value@{get\-Analog\-Input\-Value}}
 \index{get\-Analog\-Input\-Value@{get\-Analog\-Input\-Value}!mdtDevice@{mdt\-Device}}
@@ -1251,7 +1244,7 @@ References mdt\-Port\-Manager\-::get\-New\-Transaction(), and port\-Manager().
 
 
 
-Referenced by mdt\-Device\-Scpi\-::check\-Device\-Error(), get\-Analog\-Inputs(), get\-Analog\-Input\-Value(), get\-Analog\-Outputs(), get\-Analog\-Output\-Value(), get\-Digital\-Inputs(), get\-Digital\-Input\-Value(), get\-Digital\-Outputs(), get\-Digital\-Output\-Value(), mdt\-Device\-U3606\-A\-::get\-Measure\-Configuration(), set\-Analog\-Outputs(), set\-Analog\-Output\-Value(), set\-Digital\-Outputs(), and set\-Digital\-Output\-Value().
+Referenced by get\-Analog\-Inputs(), get\-Analog\-Input\-Value(), get\-Analog\-Outputs(), get\-Analog\-Output\-Value(), get\-Digital\-Inputs(), get\-Digital\-Input\-Value(), get\-Digital\-Outputs(), get\-Digital\-Output\-Value(), set\-Analog\-Outputs(), set\-Analog\-Output\-Value(), set\-Digital\-Outputs(), and set\-Digital\-Output\-Value().
 
 \hypertarget{classmdt_device_a54845e1af6f6f98de7de79c3df9ac7b5}{\index{mdt\-Device@{mdt\-Device}!identification@{identification}}
 \index{identification@{identification}!mdtDevice@{mdt\-Device}}
@@ -1315,7 +1308,7 @@ References mdt\-Port\-Manager\-::is\-Ready(), and port\-Manager().
 
 
 
-Referenced by start(), and mdt\-Device\-Scpi\-::wait\-Operation\-Complete().
+Referenced by start().
 
 \hypertarget{classmdt_device_a79ca328ff9e9f413a38c1cc9c9267cee}{\index{mdt\-Device@{mdt\-Device}!last\-Error@{last\-Error}}
 \index{last\-Error@{last\-Error}!mdtDevice@{mdt\-Device}}
@@ -1380,7 +1373,7 @@ Definition at line 60 of file mdt\-Device.\-cpp.
 
 
 
-Referenced by mdt\-Device\-Modbus\-Wago\-::detect\-Ios(), mdt\-Device\-Modbus\-Wago\-Module\-::device\-Name(), get\-Analog\-Input\-Value(), get\-Analog\-Input\-Value\-At(), get\-Analog\-Output\-Value(), get\-Analog\-Output\-Value\-At(), get\-Digital\-Input\-Value(), get\-Digital\-Input\-Value\-At(), get\-Digital\-Output\-Value(), get\-Digital\-Output\-Value\-At(), mdt\-Device\-Scpi\-::handle\-Device\-Error(), mdt\-Device\-Modbus\-Wago\-::is\-Wago750(), mdt\-Device\-Scpi\-::log\-Device\-Error(), mdt\-Device\-Modbus\-Wago\-Module\-::read\-Registers(), mdt\-Device\-Modbus\-Wago\-Module\-::read\-Status\-Bytes(), set\-Analog\-Output\-Value(), set\-Analog\-Output\-Value\-At(), set\-Digital\-Output\-Value(), set\-Digital\-Output\-Value\-At(), set\-Name(), mdt\-Device\-U3606\-A\-::setup\-Low\-Resistance\-Measure(), mdt\-Device\-U3606\-A\-::setup\-Resistance\-Measure(), mdt\-Device\-U3606\-A\-::setup\-Voltage\-Dc\-Measure(), mdt\-Device\-Modbus\-Wago\-Module\-::write\-Control\-Bytes(), and mdt\-Device\-Modbus\-Wago\-Module\-::write\-Registers().
+Referenced by mdt\-Device\-Modbus\-Wago\-::detect\-Ios(), mdt\-Device\-Modbus\-Wago\-Module\-::device\-Name(), get\-Analog\-Input\-Value(), get\-Analog\-Input\-Value\-At(), get\-Analog\-Output\-Value(), get\-Analog\-Output\-Value\-At(), get\-Digital\-Input\-Value(), get\-Digital\-Input\-Value\-At(), get\-Digital\-Output\-Value(), get\-Digital\-Output\-Value\-At(), mdt\-Device\-Modbus\-Wago\-::is\-Wago750(), mdt\-Device\-Modbus\-Wago\-Module\-::read\-Registers(), mdt\-Device\-Modbus\-Wago\-Module\-::read\-Status\-Bytes(), set\-Analog\-Output\-Value(), set\-Analog\-Output\-Value\-At(), set\-Digital\-Output\-Value(), set\-Digital\-Output\-Value\-At(), set\-Name(), mdt\-Device\-Modbus\-Wago\-Module\-::write\-Control\-Bytes(), and mdt\-Device\-Modbus\-Wago\-Module\-::write\-Registers().
 
 \hypertarget{classmdt_device_a06d9178b4133fd7b23084e712af20976}{\index{mdt\-Device@{mdt\-Device}!port\-Manager@{port\-Manager}}
 \index{port\-Manager@{port\-Manager}!mdtDevice@{mdt\-Device}}
@@ -1395,7 +1388,7 @@ Get internal port manager instance.
 
 Note that port manager is set by subclass, and that a Null pointer can be returned. (See subclass documentation for details) 
 
-Reimplemented in \hyperlink{classmdt_device_scpi_a7dc5ab8856a766a45bcc7e9cba0f54ca}{mdt\-Device\-Scpi}, and \hyperlink{classmdt_device_modbus_aed892b501f8cbd372ccfda1a4fafa536}{mdt\-Device\-Modbus}.
+Reimplemented in \hyperlink{classmdt_device_modbus_aed892b501f8cbd372ccfda1a4fafa536}{mdt\-Device\-Modbus}.
 
 
 
@@ -2047,7 +2040,7 @@ Definition at line 187 of file mdt\-Device.\-cpp.
 
 
 
-Referenced by mdt\-Device\-Modbus\-::mdt\-Device\-Modbus(), and mdt\-Device\-Scpi\-::mdt\-Device\-Scpi().
+Referenced by mdt\-Device\-Modbus\-::mdt\-Device\-Modbus().
 
 \hypertarget{classmdt_device_a7b86a816e55a91f0d62426e1741437c6}{\index{mdt\-Device@{mdt\-Device}!set\-Digital\-Outputs@{set\-Digital\-Outputs}}
 \index{set\-Digital\-Outputs@{set\-Digital\-Outputs}!mdtDevice@{mdt\-Device}}
@@ -2343,7 +2336,7 @@ References is\-Ready().
 
 
 
-Referenced by mdt\-Device\-Scpi\-::connect\-To\-Device(), and mdt\-Modbus\-Io\-Tool\-::mdt\-Modbus\-Io\-Tool().
+Referenced by mdt\-Modbus\-Io\-Tool\-::mdt\-Modbus\-Io\-Tool().
 
 \hypertarget{classmdt_device_aecd2d9d2cc3665f2084d0fd20eb3db2d}{\index{mdt\-Device@{mdt\-Device}!state\-Changed@{state\-Changed}}
 \index{state\-Changed@{state\-Changed}!mdtDevice@{mdt\-Device}}
@@ -2364,7 +2357,7 @@ This signal should be used by application developpers, and not directly \hyperli
 
 But, to display current state in a easier way (f.\-ex. using \hyperlink{classmdt_port_status_widget}{mdt\-Port\-Status\-Widget}), \hyperlink{classmdt_port_manager_ae00d513ed335fbd203852dcb7180005c}{mdt\-Port\-Manager\-::state\-Changed\-For\-Ui()} can be used. 
 
-Referenced by mdt\-Device\-D\-S\-O1000\-A\-::mdt\-Device\-D\-S\-O1000\-A(), mdt\-Device\-Modbus\-::mdt\-Device\-Modbus(), and mdt\-Device\-Scpi\-::mdt\-Device\-Scpi().
+Referenced by mdt\-Device\-Modbus\-::mdt\-Device\-Modbus().
 
 \hypertarget{classmdt_device_a3fbc6e71241e2e9daa2d8557f870c03c}{\index{mdt\-Device@{mdt\-Device}!status\-Message\-Changed@{status\-Message\-Changed}}
 \index{status\-Message\-Changed@{status\-Message\-Changed}!mdtDevice@{mdt\-Device}}
@@ -2400,7 +2393,7 @@ Definition at line 214 of file mdt\-Device.\-cpp.
 
 
 
-Referenced by disconnect\-From\-Device(), and mdt\-Device\-Scpi\-::$\sim$mdt\-Device\-Scpi().
+Referenced by disconnect\-From\-Device().
 
 \hypertarget{classmdt_device_a6def09a050cbf3521b615e8300c42f66}{\index{mdt\-Device@{mdt\-Device}!wait@{wait}}
 \index{wait@{wait}!mdtDevice@{mdt\-Device}}
@@ -2471,7 +2464,7 @@ References port\-Manager(), mdt\-Port\-Manager\-::readen\-Frame(), and mdt\-Port
 
 
 
-Referenced by get\-Analog\-Inputs(), get\-Analog\-Input\-Value(), get\-Analog\-Outputs(), get\-Analog\-Output\-Value(), get\-Digital\-Inputs(), get\-Digital\-Input\-Value(), get\-Digital\-Outputs(), get\-Digital\-Output\-Value(), mdt\-Device\-U3606\-A\-::get\-Measure\-Configuration(), set\-Analog\-Outputs(), set\-Analog\-Output\-Value(), set\-Digital\-Outputs(), and set\-Digital\-Output\-Value().
+Referenced by get\-Analog\-Inputs(), get\-Analog\-Input\-Value(), get\-Analog\-Outputs(), get\-Analog\-Output\-Value(), get\-Digital\-Inputs(), get\-Digital\-Input\-Value(), get\-Digital\-Outputs(), get\-Digital\-Output\-Value(), set\-Analog\-Outputs(), set\-Analog\-Output\-Value(), set\-Digital\-Outputs(), and set\-Digital\-Output\-Value().
 
 \hypertarget{classmdt_device_ae764634bba2b321ac2b4731c0353e45f}{\index{mdt\-Device@{mdt\-Device}!write\-Analog\-Output@{write\-Analog\-Output}}
 \index{write\-Analog\-Output@{write\-Analog\-Output}!mdtDevice@{mdt\-Device}}
@@ -2671,7 +2664,7 @@ Definition at line 707 of file mdt\-Device.\-h.
 
 
 
-Referenced by get\-Analog\-Input\-Value\-At(), get\-Analog\-Output\-Value\-At(), get\-Digital\-Input\-Value\-At(), get\-Digital\-Output\-Value\-At(), last\-Error(), last\-Error\-W(), set\-Analog\-Output\-Value\-At(), set\-Digital\-Output\-Value\-At(), mdt\-Device\-U3606\-A\-::setup\-Low\-Resistance\-Measure(), mdt\-Device\-U3606\-A\-::setup\-Resistance\-Measure(), and mdt\-Device\-U3606\-A\-::setup\-Voltage\-Dc\-Measure().
+Referenced by get\-Analog\-Input\-Value\-At(), get\-Analog\-Output\-Value\-At(), get\-Digital\-Input\-Value\-At(), get\-Digital\-Output\-Value\-At(), last\-Error(), last\-Error\-W(), set\-Analog\-Output\-Value\-At(), and set\-Digital\-Output\-Value\-At().
 
 
 

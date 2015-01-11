@@ -12,7 +12,8 @@ Base class for port I/\-O.
 
 
 
-Inheritance diagram for mdt\-Abstract\-Port\-:\nopagebreak
+Inheritance diagram for mdt\-Abstract\-Port\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -66,7 +67,7 @@ enum \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\
 \begin{DoxyCompactItemize}
 \item 
 \hyperlink{classmdt_abstract_port_a35e7bff9413690833c832bf115da102f}{mdt\-Abstract\-Port} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent=0)
-\item 
+\begin{DoxyCompactList}\small\item\em \#include \char`\"{}mdt\-Frame\-Usb\-Tmc.\-h\char`\"{} \end{DoxyCompactList}\item 
 virtual \hyperlink{classmdt_abstract_port_aa40baa0c593fef984f3796acafceee15}{$\sim$mdt\-Abstract\-Port} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_abstract_port_a0ca143d32fc677bac7c1cf0e04144932}{set\-Port\-Name} (const Q\-String \&\hyperlink{classmdt_abstract_port_ac52fbd121f7cbb848a2f3e5d29fae615}{port\-Name})
@@ -173,7 +174,7 @@ Q\-Wait\-Condition \hyperlink{classmdt_abstract_port_a4c81c98680c98ad6802dccd303
 Base class for port I/\-O. 
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000023}{Todo}]Waiting\-Canceled, Write\-Canceled, Read\-Canceled are not clean defined. The only object that knows when it must stop is the thread itself ! To be a little more clean, thread should check it's running flag each time a function returns a error, and stop if requierd ! \end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000024}{Todo}]Waiting\-Canceled, Write\-Canceled, Read\-Canceled are not clean defined. The only object that knows when it must stop is the thread itself ! To be a little more clean, thread should check it's running flag each time a function returns a error, and stop if requierd ! \end{DoxyRefDesc}
 
 
 Definition at line 42 of file mdt\-Abstract\-Port.\-h.
@@ -258,6 +259,10 @@ Definition at line 60 of file mdt\-Abstract\-Port.\-h.
 )}}\label{classmdt_abstract_port_a35e7bff9413690833c832bf115da102f}
 
 
+\#include \char`\"{}mdt\-Frame\-Usb\-Tmc.\-h\char`\"{} 
+
+
+
 Definition at line 24 of file mdt\-Abstract\-Port.\-cpp.
 
 
@@ -328,7 +333,7 @@ frame must be a valid pointer.
 \end{DoxyPrecond}
 
 
-Reimplemented in \hyperlink{classmdt_usb_port_a38200f806037e06988e73af246e8a494}{mdt\-Usb\-Port}, and \hyperlink{classmdt_tcp_socket_ade57b2659836d004a1c5618f9e482b4a}{mdt\-Tcp\-Socket}.
+Reimplemented in \hyperlink{classmdt_tcp_socket_ade57b2659836d004a1c5618f9e482b4a}{mdt\-Tcp\-Socket}.
 
 
 
@@ -340,7 +345,7 @@ References pv\-Write\-Frame\-Available, and pv\-Write\-Frames.
 
 
 
-Referenced by mdt\-Usbtmc\-Port\-Manager\-::send\-Data(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), mdt\-Port\-Manager\-::send\-Data(), and mdt\-Usbtmc\-Port\-Manager\-::send\-Read\-Request().
+Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), and mdt\-Port\-Manager\-::send\-Data().
 
 \hypertarget{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{\index{mdt\-Abstract\-Port@{mdt\-Abstract\-Port}!close@{close}}
 \index{close@{close}!mdtAbstractPort@{mdt\-Abstract\-Port}}
@@ -374,7 +379,7 @@ References is\-Open(), pv\-Close(), pv\-Flush\-In(), pv\-Flush\-Out(), pv\-Reade
 
 
 
-Referenced by mdt\-Abstract\-Serial\-Port\-::close(), mdt\-Port\-Manager\-::close\-Port(), open(), mdt\-Usb\-Port\-::reconnect(), setup(), mdt\-Port\-::$\sim$mdt\-Port(), mdt\-Tcp\-Socket\-::$\sim$mdt\-Tcp\-Socket(), and mdt\-Usb\-Port\-::$\sim$mdt\-Usb\-Port().
+Referenced by mdt\-Abstract\-Serial\-Port\-::close(), mdt\-Port\-Manager\-::close\-Port(), open(), setup(), mdt\-Port\-::$\sim$mdt\-Port(), and mdt\-Tcp\-Socket\-::$\sim$mdt\-Tcp\-Socket().
 
 \hypertarget{classmdt_abstract_port_a3d105c90696f7c40f29c24fe9b6e4481}{\index{mdt\-Abstract\-Port@{mdt\-Abstract\-Port}!config@{config}}
 \index{config@{config}!mdtAbstractPort@{mdt\-Abstract\-Port}}
@@ -400,7 +405,7 @@ References pv\-Config.
 
 
 
-Referenced by mdt\-Port\-Manager\-::config(), init\-Queues(), mdt\-Usbtmc\-Port\-Manager\-::mdt\-Usbtmc\-Port\-Manager(), mdt\-Port\-Thread\-Helper\-Socket\-::set\-Socket(), mdt\-Port\-Thread\-::start(), mdt\-Modbus\-Tcp\-Port\-Manager\-::$\sim$mdt\-Modbus\-Tcp\-Port\-Manager(), mdt\-Serial\-Port\-Manager\-::$\sim$mdt\-Serial\-Port\-Manager(), and mdt\-Usb\-Port\-Manager\-::$\sim$mdt\-Usb\-Port\-Manager().
+Referenced by mdt\-Port\-Manager\-::config(), init\-Queues(), mdt\-Port\-Thread\-Helper\-Socket\-::set\-Socket(), mdt\-Port\-Thread\-::start(), mdt\-Modbus\-Tcp\-Port\-Manager\-::$\sim$mdt\-Modbus\-Tcp\-Port\-Manager(), and mdt\-Serial\-Port\-Manager\-::$\sim$mdt\-Serial\-Port\-Manager().
 
 \hypertarget{classmdt_abstract_port_abde440c49b95833f821e1333c40a7398}{\index{mdt\-Abstract\-Port@{mdt\-Abstract\-Port}!flush@{flush}}
 \index{flush@{flush}!mdtAbstractPort@{mdt\-Abstract\-Port}}
@@ -474,7 +479,7 @@ A call of this method will clear the internall flag. (a second call will then re
 Mutex is not handled by this method.
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000024}{Todo}]Thread are to adapt. \end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000025}{Todo}]Thread are to adapt. \end{DoxyRefDesc}
 
 
 Definition at line 172 of file mdt\-Abstract\-Port.\-cpp.
@@ -526,7 +531,7 @@ A call of this method will clear the internall flag. (a second call will then re
 Mutex is not handled by this method.
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000025}{Todo}]Thread are to adapt. \end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000026}{Todo}]Thread are to adapt. \end{DoxyRefDesc}
 
 
 Definition at line 192 of file mdt\-Abstract\-Port.\-cpp.
@@ -587,7 +592,7 @@ Definition at line 217 of file mdt\-Abstract\-Port.\-cpp.
 
 
 
-References config(), mdt\-Port\-Config\-::end\-Of\-Frame\-Seq(), mdt\-Port\-Config\-::frame\-Type(), mdt\-Frame\-::\-F\-T\-\_\-\-A\-S\-C\-I\-I, mdt\-Frame\-::\-F\-T\-\_\-\-M\-O\-D\-B\-U\-S\-\_\-\-T\-C\-P, mdt\-Frame\-::\-F\-T\-\_\-\-R\-A\-W, mdt\-Frame\-::\-F\-T\-\_\-\-R\-A\-W\-\_\-\-T\-O\-P, mdt\-Frame\-::\-F\-T\-\_\-\-U\-S\-B\-T\-M\-C, pv\-Read\-Frames\-Pool, pv\-Write\-Frames\-Pool, mdt\-Port\-Config\-::read\-Queue\-Size(), mdt\-Frame\-::set\-Directly\-Complete(), and mdt\-Port\-Config\-::write\-Queue\-Size().
+References config(), mdt\-Port\-Config\-::end\-Of\-Frame\-Seq(), mdt\-Port\-Config\-::frame\-Type(), mdt\-Frame\-::\-F\-T\-\_\-\-A\-S\-C\-I\-I, mdt\-Frame\-::\-F\-T\-\_\-\-M\-O\-D\-B\-U\-S\-\_\-\-T\-C\-P, mdt\-Frame\-::\-F\-T\-\_\-\-R\-A\-W, mdt\-Frame\-::\-F\-T\-\_\-\-R\-A\-W\-\_\-\-T\-O\-P, pv\-Read\-Frames\-Pool, pv\-Write\-Frames\-Pool, mdt\-Port\-Config\-::read\-Queue\-Size(), mdt\-Frame\-::set\-Directly\-Complete(), and mdt\-Port\-Config\-::write\-Queue\-Size().
 
 
 
@@ -633,7 +638,7 @@ References pv\-Mutex.
 
 
 
-Referenced by mdt\-Usb\-Port\-::control\-Transfer\-Callback(), flush(), flush\-In(), flush\-Out(), mdt\-Port\-Thread\-Helper\-::get\-New\-Frame\-Read(), mdt\-Usb\-Port\-::handle\-Usb\-Events(), mdt\-Port\-Thread\-::is\-Finished(), mdt\-Port\-Thread\-::is\-Running(), mdt\-Port\-Manager\-::lock\-Port\-Mutex(), mdt\-Usb\-Port\-::reconnect(), mdt\-Port\-Thread\-::stop(), mdt\-Usb\-Port\-Thread\-::wait\-On\-Control\-Transfer\-Possible(), and mdt\-Port\-Thread\-Helper\-Port\-::write\-To\-Port().
+Referenced by flush(), flush\-In(), flush\-Out(), mdt\-Port\-Thread\-Helper\-::get\-New\-Frame\-Read(), mdt\-Port\-Thread\-::is\-Finished(), mdt\-Port\-Thread\-::is\-Running(), mdt\-Port\-Manager\-::lock\-Port\-Mutex(), mdt\-Port\-Thread\-::stop(), and mdt\-Port\-Thread\-Helper\-Port\-::write\-To\-Port().
 
 \hypertarget{classmdt_abstract_port_a4e0f0b7f9e24257677184e4bde10fdde}{\index{mdt\-Abstract\-Port@{mdt\-Abstract\-Port}!open@{open}}
 \index{open@{open}!mdtAbstractPort@{mdt\-Abstract\-Port}}
@@ -666,7 +671,7 @@ References close(), is\-Open(), No\-Error, and pv\-Open().
 
 
 
-Referenced by mdt\-Usb\-Port\-::reconnect(), mdt\-Serial\-Port\-Manager\-::scan(), and setup().
+Referenced by mdt\-Serial\-Port\-Manager\-::scan(), and setup().
 
 \hypertarget{classmdt_abstract_port_ac52fbd121f7cbb848a2f3e5d29fae615}{\index{mdt\-Abstract\-Port@{mdt\-Abstract\-Port}!port\-Name@{port\-Name}}
 \index{port\-Name@{port\-Name}!mdtAbstractPort@{mdt\-Abstract\-Port}}
@@ -852,7 +857,7 @@ Number of bytes readen, or a error $<$ 0 (see error\-\_\-t )
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classmdt_usb_port_abce257345c8af47494215cd7ee75f82d}{mdt\-Usb\-Port}, \hyperlink{classmdt_serial_port_a12274d7956b2af961ccdd36cfc2052cc}{mdt\-Serial\-Port}, \hyperlink{classmdt_tcp_socket_a78842bc5ddcac2d96fb368ee575214cd}{mdt\-Tcp\-Socket}, and \hyperlink{classmdt_port_ad8a196bb21b6ca76dffb068a1692904a}{mdt\-Port}.
+Implemented in \hyperlink{classmdt_serial_port_a12274d7956b2af961ccdd36cfc2052cc}{mdt\-Serial\-Port}, \hyperlink{classmdt_tcp_socket_a78842bc5ddcac2d96fb368ee575214cd}{mdt\-Tcp\-Socket}, and \hyperlink{classmdt_port_ad8a196bb21b6ca76dffb068a1692904a}{mdt\-Port}.
 
 
 
@@ -881,7 +886,7 @@ References pv\-Readen\-Frames.
 
 
 
-Referenced by mdt\-Usbtmc\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), mdt\-Modbus\-Tcp\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), mdt\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), and mdt\-Port\-Thread\-Helper\-::submit\-Current\-Read\-Frame().
+Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), mdt\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), and mdt\-Port\-Thread\-Helper\-::submit\-Current\-Read\-Frame().
 
 \hypertarget{classmdt_abstract_port_a3850ab819a8fc5dad22af14b74c45274}{\index{mdt\-Abstract\-Port@{mdt\-Abstract\-Port}!read\-Frames\-Pool@{read\-Frames\-Pool}}
 \index{read\-Frames\-Pool@{read\-Frames\-Pool}!mdtAbstractPort@{mdt\-Abstract\-Port}}
@@ -906,7 +911,7 @@ References pv\-Read\-Frames\-Pool.
 
 
 
-Referenced by mdt\-Usbtmc\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), mdt\-Modbus\-Tcp\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), mdt\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), mdt\-Port\-Thread\-Helper\-::get\-New\-Frame\-Read(), and mdt\-Port\-Thread\-Helper\-::restore\-Current\-Read\-Frame\-To\-Pool().
+Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), mdt\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), mdt\-Port\-Thread\-Helper\-::get\-New\-Frame\-Read(), and mdt\-Port\-Thread\-Helper\-::restore\-Current\-Read\-Frame\-To\-Pool().
 
 \hypertarget{classmdt_abstract_port_aec74b2db1a629d98a95d8f042ea96653}{\index{mdt\-Abstract\-Port@{mdt\-Abstract\-Port}!reconnect@{reconnect}}
 \index{reconnect@{reconnect}!mdtAbstractPort@{mdt\-Abstract\-Port}}
@@ -937,10 +942,6 @@ Notes about mutex handling\-:
 \begin{DoxyItemize}
 \item The mutex is locked when method is called, and must be locked when returns 
 \end{DoxyItemize}
-
-Reimplemented in \hyperlink{classmdt_usb_port_af2399348faf1abc20130eab20cfc36ee}{mdt\-Usb\-Port}.
-
-
 
 Definition at line 133 of file mdt\-Abstract\-Port.\-cpp.
 
@@ -1005,7 +1006,7 @@ References pv\-Config.
 
 
 
-Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::mdt\-Modbus\-Tcp\-Port\-Manager(), mdt\-Serial\-Port\-Manager\-::mdt\-Serial\-Port\-Manager(), and mdt\-Usb\-Port\-Manager\-::mdt\-Usb\-Port\-Manager().
+Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::mdt\-Modbus\-Tcp\-Port\-Manager(), and mdt\-Serial\-Port\-Manager\-::mdt\-Serial\-Port\-Manager().
 
 \hypertarget{classmdt_abstract_port_a0ca143d32fc677bac7c1cf0e04144932}{\index{mdt\-Abstract\-Port@{mdt\-Abstract\-Port}!set\-Port\-Name@{set\-Port\-Name}}
 \index{set\-Port\-Name@{set\-Port\-Name}!mdtAbstractPort@{mdt\-Abstract\-Port}}
@@ -1053,7 +1054,7 @@ Subclass notes\-:\par
 \end{DoxyParams}
 
 
-Implemented in \hyperlink{classmdt_serial_port_a9105e5a3a640b56097c1156000ace933}{mdt\-Serial\-Port}, \hyperlink{classmdt_usb_port_a44ed5024a81a573b5196b8f64c42cd6a}{mdt\-Usb\-Port}, \hyperlink{classmdt_tcp_socket_aae23057f2e0ee326d0fee78ffe3f00f9}{mdt\-Tcp\-Socket}, and \hyperlink{classmdt_port_aa77b266f23744f1b53ae589f986be101}{mdt\-Port}.
+Implemented in \hyperlink{classmdt_serial_port_a9105e5a3a640b56097c1156000ace933}{mdt\-Serial\-Port}, \hyperlink{classmdt_tcp_socket_aae23057f2e0ee326d0fee78ffe3f00f9}{mdt\-Tcp\-Socket}, and \hyperlink{classmdt_port_aa77b266f23744f1b53ae589f986be101}{mdt\-Port}.
 
 
 
@@ -1090,7 +1091,7 @@ References close(), init\-Queues(), is\-Open(), No\-Error, open(), and pv\-Setup
 
 
 
-Referenced by mdt\-Port\-Manager\-::open\-Port(), and mdt\-Usb\-Port\-::reconnect().
+Referenced by mdt\-Port\-Manager\-::open\-Port().
 
 \hypertarget{classmdt_abstract_port_a12eb422d52ebb09a650f8497b258c2e7}{\index{mdt\-Abstract\-Port@{mdt\-Abstract\-Port}!set\-Write\-Timeout@{set\-Write\-Timeout}}
 \index{set\-Write\-Timeout@{set\-Write\-Timeout}!mdtAbstractPort@{mdt\-Abstract\-Port}}
@@ -1115,7 +1116,7 @@ Subclass notes\-:\par
 \end{DoxyParams}
 
 
-Implemented in \hyperlink{classmdt_serial_port_a036f49d743838013c9a8cbf6a1dd40d1}{mdt\-Serial\-Port}, \hyperlink{classmdt_usb_port_a592af88bd7e7f45dd80df0ecab375ace}{mdt\-Usb\-Port}, \hyperlink{classmdt_tcp_socket_ac59d2dfdf405b5382f0f20d5b9f75fd0}{mdt\-Tcp\-Socket}, and \hyperlink{classmdt_port_a2acb6e7bedacdadf78ee735dc611abfa}{mdt\-Port}.
+Implemented in \hyperlink{classmdt_serial_port_a036f49d743838013c9a8cbf6a1dd40d1}{mdt\-Serial\-Port}, \hyperlink{classmdt_tcp_socket_ac59d2dfdf405b5382f0f20d5b9f75fd0}{mdt\-Tcp\-Socket}, and \hyperlink{classmdt_port_a2acb6e7bedacdadf78ee735dc611abfa}{mdt\-Port}.
 
 \hypertarget{classmdt_abstract_port_aff3d79248baf96e670eba6d2fef700b9}{\index{mdt\-Abstract\-Port@{mdt\-Abstract\-Port}!suspend\-Transmission@{suspend\-Transmission}}
 \index{suspend\-Transmission@{suspend\-Transmission}!mdtAbstractPort@{mdt\-Abstract\-Port}}
@@ -1170,7 +1171,7 @@ References pv\-Mutex.
 
 
 
-Referenced by mdt\-Usb\-Port\-::control\-Transfer\-Callback(), flush(), flush\-In(), flush\-Out(), mdt\-Port\-Thread\-Helper\-::get\-New\-Frame\-Read(), mdt\-Usb\-Port\-::handle\-Usb\-Events(), mdt\-Port\-Thread\-::is\-Finished(), mdt\-Port\-Thread\-::is\-Running(), mdt\-Usb\-Port\-::reconnect(), mdt\-Port\-Thread\-::stop(), mdt\-Port\-Manager\-::unlock\-Port\-Mutex(), mdt\-Usb\-Port\-Thread\-::wait\-On\-Control\-Transfer\-Possible(), and mdt\-Port\-Thread\-Helper\-Port\-::write\-To\-Port().
+Referenced by flush(), flush\-In(), flush\-Out(), mdt\-Port\-Thread\-Helper\-::get\-New\-Frame\-Read(), mdt\-Port\-Thread\-::is\-Finished(), mdt\-Port\-Thread\-::is\-Running(), mdt\-Port\-Thread\-::stop(), mdt\-Port\-Manager\-::unlock\-Port\-Mutex(), and mdt\-Port\-Thread\-Helper\-Port\-::write\-To\-Port().
 
 \hypertarget{classmdt_abstract_port_a35e4686f50e2c53c7e3618cf2c485d92}{\index{mdt\-Abstract\-Port@{mdt\-Abstract\-Port}!wait\-Event\-Write\-Ready@{wait\-Event\-Write\-Ready}}
 \index{wait\-Event\-Write\-Ready@{wait\-Event\-Write\-Ready}!mdtAbstractPort@{mdt\-Abstract\-Port}}
@@ -1197,7 +1198,7 @@ On success, No\-Error is returned. If waiting is canceled, Waiting\-Canceled is 
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classmdt_usb_port_a3be875f6f10ae94fd3a94f925bb935e7}{mdt\-Usb\-Port}, \hyperlink{classmdt_serial_port_a988825b3ff2ef93a1b43e2df316055bd}{mdt\-Serial\-Port}, \hyperlink{classmdt_tcp_socket_a33385bcde41b8065ea7eff65c754b0cb}{mdt\-Tcp\-Socket}, and \hyperlink{classmdt_port_a85e77a391f6f5782428beb2e6aee52f8}{mdt\-Port}.
+Implemented in \hyperlink{classmdt_serial_port_a988825b3ff2ef93a1b43e2df316055bd}{mdt\-Serial\-Port}, \hyperlink{classmdt_tcp_socket_a33385bcde41b8065ea7eff65c754b0cb}{mdt\-Tcp\-Socket}, and \hyperlink{classmdt_port_a85e77a391f6f5782428beb2e6aee52f8}{mdt\-Port}.
 
 
 
@@ -1239,7 +1240,7 @@ On success, No\-Error is returned. If waiting is canceled, Read\-Canceled is ret
 \end{DoxySeeAlso}
 
 
-Implemented in \hyperlink{classmdt_usb_port_ab8ddd4ebee603ac381e8da0383a61e36}{mdt\-Usb\-Port}, \hyperlink{classmdt_serial_port_ad150a45c68d98a501bea2f102aeadb50}{mdt\-Serial\-Port}, \hyperlink{classmdt_tcp_socket_adb09186cdacdac15291523c59f156cd4}{mdt\-Tcp\-Socket}, and \hyperlink{classmdt_port_a84594fdb56cd455a366c69b0a9228020}{mdt\-Port}.
+Implemented in \hyperlink{classmdt_serial_port_ad150a45c68d98a501bea2f102aeadb50}{mdt\-Serial\-Port}, \hyperlink{classmdt_tcp_socket_adb09186cdacdac15291523c59f156cd4}{mdt\-Tcp\-Socket}, and \hyperlink{classmdt_port_a84594fdb56cd455a366c69b0a9228020}{mdt\-Port}.
 
 
 
@@ -1302,7 +1303,7 @@ Number of bytes written, or error $<$ 0 (see error\-\_\-t)
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classmdt_usb_port_ae777e33325ff2adef326dd7f81b00838}{mdt\-Usb\-Port}, \hyperlink{classmdt_serial_port_a282f99035c032fbb6fa86ccd10deb597}{mdt\-Serial\-Port}, \hyperlink{classmdt_tcp_socket_adbf2db44b291127a499d9f8720beb632}{mdt\-Tcp\-Socket}, and \hyperlink{classmdt_port_a62f4a6f2c547d40d3743ce893e0f64d6}{mdt\-Port}.
+Implemented in \hyperlink{classmdt_serial_port_a282f99035c032fbb6fa86ccd10deb597}{mdt\-Serial\-Port}, \hyperlink{classmdt_tcp_socket_adbf2db44b291127a499d9f8720beb632}{mdt\-Tcp\-Socket}, and \hyperlink{classmdt_port_a62f4a6f2c547d40d3743ce893e0f64d6}{mdt\-Port}.
 
 
 
@@ -1352,7 +1353,7 @@ References pv\-Write\-Frames\-Pool.
 
 
 
-Referenced by mdt\-Port\-Thread\-Helper\-::restore\-Current\-Write\-Frame\-To\-Pool(), mdt\-Usbtmc\-Port\-Manager\-::send\-Data(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), mdt\-Port\-Manager\-::send\-Data(), and mdt\-Usbtmc\-Port\-Manager\-::send\-Read\-Request().
+Referenced by mdt\-Port\-Thread\-Helper\-::restore\-Current\-Write\-Frame\-To\-Pool(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), and mdt\-Port\-Manager\-::send\-Data().
 
 
 
@@ -1432,7 +1433,7 @@ Definition at line 586 of file mdt\-Abstract\-Port.\-h.
 
 
 
-Referenced by mdt\-Tcp\-Socket\-::add\-Frame\-To\-Write(), mdt\-Usb\-Port\-::add\-Frame\-To\-Write(), add\-Frame\-To\-Write(), close(), flush(), flush\-Out(), get\-Frame\-To\-Write(), and write\-Frames().
+Referenced by mdt\-Tcp\-Socket\-::add\-Frame\-To\-Write(), add\-Frame\-To\-Write(), close(), flush(), flush\-Out(), get\-Frame\-To\-Write(), and write\-Frames().
 
 \hypertarget{classmdt_abstract_port_a67a8b1965f20a55ad115926aed0234b4}{\index{mdt\-Abstract\-Port@{mdt\-Abstract\-Port}!pv\-Write\-Frames\-Pool@{pv\-Write\-Frames\-Pool}}
 \index{pv\-Write\-Frames\-Pool@{pv\-Write\-Frames\-Pool}!mdtAbstractPort@{mdt\-Abstract\-Port}}

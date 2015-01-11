@@ -12,11 +12,12 @@ Provide an array of bytes.
 
 
 
-Inheritance diagram for mdt\-Frame\-:\nopagebreak
+Inheritance diagram for mdt\-Frame\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=350pt]{classmdt_frame__inherit__graph}
+\includegraphics[width=293pt]{classmdt_frame__inherit__graph}
 \end{center}
 \end{figure}
 
@@ -194,7 +195,7 @@ References pv\-E\-O\-Fcondition, and remain\-Capacity().
 
 
 
-Referenced by mdt\-Frame\-Modbus\-Tcp\-::put\-Data(), mdt\-Frame\-Usb\-Tmc\-::put\-Data(), and mdt\-Port\-Thread\-Helper\-::submit\-Readen\-Data().
+Referenced by mdt\-Frame\-Modbus\-Tcp\-::put\-Data(), and mdt\-Port\-Thread\-Helper\-::submit\-Readen\-Data().
 
 \hypertarget{classmdt_frame_acdf8a921a3f36ca91af88b55b90febdc}{\index{mdt\-Frame@{mdt\-Frame}!clear@{clear}}
 \index{clear@{clear}!mdtFrame@{mdt\-Frame}}
@@ -217,7 +218,7 @@ References pv\-E\-O\-Fcondition.
 
 
 
-Referenced by mdt\-Usb\-Port\-::control\-Transfer\-Callback(), mdt\-Frame\-Usb\-Tmc\-::encode(), mdt\-Frame\-Usb\-Control\-::encode(), mdt\-Port\-Thread\-Helper\-::handle\-Common\-Read\-Errors(), mdt\-Usb\-Port\-::message\-In\-Transfer\-Callback(), mdt\-Usb\-Port\-Manager\-::send\-Control\-Request(), mdt\-Usbtmc\-Port\-Manager\-::send\-Data(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), mdt\-Port\-Manager\-::send\-Data(), and mdt\-Usbtmc\-Port\-Manager\-::send\-Read\-Request().
+Referenced by mdt\-Port\-Thread\-Helper\-::handle\-Common\-Read\-Errors(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), and mdt\-Port\-Manager\-::send\-Data().
 
 \hypertarget{classmdt_frame_aecc64d3846dee0049ee7b10b73a402f4}{\index{mdt\-Frame@{mdt\-Frame}!clear\-Sub@{clear\-Sub}}
 \index{clear\-Sub@{clear\-Sub}!mdtFrame@{mdt\-Frame}}
@@ -230,7 +231,7 @@ Referenced by mdt\-Usb\-Port\-::control\-Transfer\-Callback(), mdt\-Frame\-Usb\-
 
 \hyperlink{classmdt_frame}{mdt\-Frame} subclass specific clear 
 
-This method is usefull to clear some specific flags and data in subclasses (such as \hyperlink{classmdt_frame_usb_tmc}{mdt\-Frame\-Usb\-Tmc}).
+This method is usefull to clear some specific flags and data in subclasses (such as mdt\-Frame\-Usb\-Tmc).
 
 Note that Q\-Byte\-Array's flags and data are not altered.
 
@@ -238,7 +239,7 @@ This method is called from mdt\-Port\-Thread\-::get\-New\-Frame\-Read() . Defaul
 
 This class must be implemented is subclass if needed. 
 
-Reimplemented in \hyperlink{classmdt_frame_usb_control_a04aab4a1e3efd99d805dffd8171e78de}{mdt\-Frame\-Usb\-Control}, \hyperlink{classmdt_frame_usb_tmc_afb0b0e071e328b55ce8e2c73359153d6}{mdt\-Frame\-Usb\-Tmc}, and \hyperlink{classmdt_frame_modbus_tcp_ab1545b25b4c8864056d900c8ddce2719}{mdt\-Frame\-Modbus\-Tcp}.
+Reimplemented in \hyperlink{classmdt_frame_modbus_tcp_ab1545b25b4c8864056d900c8ddce2719}{mdt\-Frame\-Modbus\-Tcp}.
 
 
 
@@ -246,7 +247,7 @@ Definition at line 188 of file mdt\-Frame.\-cpp.
 
 
 
-Referenced by mdt\-Port\-Thread\-Helper\-::handle\-Common\-Read\-Errors(), mdt\-Usb\-Port\-::message\-In\-Transfer\-Callback(), and mdt\-Port\-Manager\-::send\-Data().
+Referenced by mdt\-Port\-Thread\-Helper\-::handle\-Common\-Read\-Errors(), and mdt\-Port\-Manager\-::send\-Data().
 
 \hypertarget{classmdt_frame_a0e0dcfb9d284ac0dae550db33f0fbece}{\index{mdt\-Frame@{mdt\-Frame}!eof\-Seq\-Len@{eof\-Seq\-Len}}
 \index{eof\-Seq\-Len@{eof\-Seq\-Len}!mdtFrame@{mdt\-Frame}}
@@ -292,7 +293,7 @@ References pv\-E\-O\-Fcondition.
 
 
 
-Referenced by mdt\-Usbtmc\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), mdt\-Modbus\-Tcp\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), mdt\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), and put\-Until().
+Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), mdt\-Port\-Manager\-::from\-Thread\-New\-Frame\-Readen(), and put\-Until().
 
 \hypertarget{classmdt_frame_ab4e0fee7198c94c16f2fa6eb4b6b1562}{\index{mdt\-Frame@{mdt\-Frame}!is\-Full@{is\-Full}}
 \index{is\-Full@{is\-Full}!mdtFrame@{mdt\-Frame}}
@@ -350,7 +351,7 @@ The data pointer must be valid, and not be the internal pointer returned by data
 \end{DoxyPrecond}
 
 
-Reimplemented in \hyperlink{classmdt_frame_usb_tmc_a06d2743a113bd2b4cf2ee44014ecd710}{mdt\-Frame\-Usb\-Tmc}, \hyperlink{classmdt_frame_modbus_tcp_a0f684d77c03e5fb91598c9a10715bedb}{mdt\-Frame\-Modbus\-Tcp}, and \hyperlink{classmdt_frame_ascii_a9ef48ef78d9603a9d8c3be7e39b03745}{mdt\-Frame\-Ascii}.
+Reimplemented in \hyperlink{classmdt_frame_modbus_tcp_a0f684d77c03e5fb91598c9a10715bedb}{mdt\-Frame\-Modbus\-Tcp}, and \hyperlink{classmdt_frame_ascii_a9ef48ef78d9603a9d8c3be7e39b03745}{mdt\-Frame\-Ascii}.
 
 
 
@@ -449,7 +450,7 @@ Definition at line 145 of file mdt\-Frame.\-cpp.
 
 
 
-Referenced by bytes\-To\-Store(), is\-Full(), mdt\-Frame\-Modbus\-Tcp\-::put\-Data(), mdt\-Frame\-Usb\-Tmc\-::put\-Data(), put\-Data(), and put\-Until().
+Referenced by bytes\-To\-Store(), is\-Full(), mdt\-Frame\-Modbus\-Tcp\-::put\-Data(), put\-Data(), and put\-Until().
 
 \hypertarget{classmdt_frame_ab8db9882c095091109115afb8e448b37}{\index{mdt\-Frame@{mdt\-Frame}!set\-Complete@{set\-Complete}}
 \index{set\-Complete@{set\-Complete}!mdtFrame@{mdt\-Frame}}
@@ -548,7 +549,7 @@ References pv\-Wait\-An\-Answer.
 
 
 
-Referenced by mdt\-Usbtmc\-Port\-Manager\-::send\-Data(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), and mdt\-Usbtmc\-Port\-Manager\-::send\-Read\-Request().
+Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data().
 
 \hypertarget{classmdt_frame_a36e4b85a3c671902ac3c8cc318ca726c}{\index{mdt\-Frame@{mdt\-Frame}!take@{take}}
 \index{take@{take}!mdtFrame@{mdt\-Frame}}
@@ -639,7 +640,7 @@ Definition at line 214 of file mdt\-Frame.\-h.
 
 
 
-Referenced by bytes\-To\-Store(), clear(), is\-Complete(), mdt\-Frame(), mdt\-Frame\-Modbus\-Tcp\-::put\-Data(), mdt\-Frame\-Usb\-Tmc\-::put\-Data(), put\-Data(), put\-Until(), and set\-Complete().
+Referenced by bytes\-To\-Store(), clear(), is\-Complete(), mdt\-Frame(), mdt\-Frame\-Modbus\-Tcp\-::put\-Data(), put\-Data(), put\-Until(), and set\-Complete().
 
 \hypertarget{classmdt_frame_a883c4de8f2c961310366d5a72b6e6dd8}{\index{mdt\-Frame@{mdt\-Frame}!pv\-Ignore\-Null\-Values@{pv\-Ignore\-Null\-Values}}
 \index{pv\-Ignore\-Null\-Values@{pv\-Ignore\-Null\-Values}!mdtFrame@{mdt\-Frame}}

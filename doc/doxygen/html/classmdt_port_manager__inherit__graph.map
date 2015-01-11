@@ -1,7 +1,5 @@
 <map id="mdtPortManager" name="mdtPortManager">
-<area shape="rect" id="node5" href="$classmdt_modbus_tcp_port_manager.html" title="MODBUS/TCP port manager. " alt="" coords="5,160,192,189"/>
-<area shape="rect" id="node7" href="$classmdt_serial_port_manager.html" title="Serial port manager class. " alt="" coords="216,160,365,189"/>
-<area shape="rect" id="node9" href="$classmdt_usb_port_manager.html" title="Helper class that simplify access to USB port API. " alt="" coords="389,160,531,189"/>
-<area shape="rect" id="node2" href="$class_q_object.html" title="QObject" alt="" coords="256,5,325,35"/>
-<area shape="rect" id="node11" href="$classmdt_usbtmc_port_manager.html" title="USBTMC port manager. " alt="" coords="379,237,541,267"/>
+<area shape="rect" id="node3" href="$classmdt_modbus_tcp_port_manager.html" title="MODBUS/TCP port manager. " alt="" coords="5,155,192,181"/>
+<area shape="rect" id="node4" href="$classmdt_serial_port_manager.html" title="Serial port manager class. " alt="" coords="217,155,367,181"/>
+<area shape="rect" id="node2" href="$class_q_object.html" title="QObject" alt="" coords="159,5,229,32"/>
 </map>
