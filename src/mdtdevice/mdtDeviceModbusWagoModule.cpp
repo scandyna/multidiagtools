@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -634,6 +634,8 @@ QVariant mdtDeviceModbusWagoModule::analogOutputValueMin(int partNumber, int /*c
   switch(partNumber){
     case 550:
       return QVariant(0.0);
+    case 552:
+      return QVariant(0.0);
     default:
       return QVariant();
   }
@@ -658,6 +660,8 @@ QVariant mdtDeviceModbusWagoModule::analogOutputValueMax(int partNumber, int /*c
   switch(partNumber){
     case 550:
       return 10.0;
+    case 552:
+      return 20.0;
     default:
       return QVariant();
   }
@@ -681,6 +685,8 @@ int mdtDeviceModbusWagoModule::analogOutputValueBitsCount(int partNumber, int /*
 {
   switch(partNumber){
     case 550:
+      return 12;
+    case 552:
       return 12;
     default:
       return -1;
@@ -706,6 +712,8 @@ int mdtDeviceModbusWagoModule::analogOutputValueLsbIndex(int partNumber, int /*c
   switch(partNumber){
     case 550:
       return 3;
+    case 552:
+      return 3;
     default:
       return -1;
   }
@@ -729,6 +737,8 @@ QVariant mdtDeviceModbusWagoModule::analogOutputValueSigned(int partNumber, int 
 {
   switch(partNumber){
     case 550:
+      return false;
+    case 552:
       return false;
     default:
       return QVariant();
@@ -754,6 +764,8 @@ QVariant mdtDeviceModbusWagoModule::analogOutputValueScaledFromMinToMax(int part
   switch(partNumber){
     case 550:
       return true;
+    case 552:
+      return true;
     default:
       return QVariant();
   }
@@ -777,6 +789,8 @@ QVariant mdtDeviceModbusWagoModule::analogOutputValueConversionFactor(int partNu
 {
   switch(partNumber){
     case 550:
+      return 1.0;
+    case 552:
       return 1.0;
     default:
       return QVariant();
@@ -810,6 +824,8 @@ int mdtDeviceModbusWagoModule::analogOutputsCount(int partNumber) const
       return 0;
     case 550:
       return 2;
+    case 552:
+      return 2;
     default:
       return -1;
   }
@@ -834,6 +850,8 @@ QString mdtDeviceModbusWagoModule::analogOutputUnit(int partNumber, int /*channe
   switch(partNumber){
     case 550:
       return "V";
+    case 552:
+      return "mA";
     default:
       return "";
   }

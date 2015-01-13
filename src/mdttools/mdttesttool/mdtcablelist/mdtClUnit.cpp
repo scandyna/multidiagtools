@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -1096,7 +1096,7 @@ QList<mdtClLinkData> mdtClUnit::getArticleLinkListUsingConnectionId(const mdtClU
   }
   // Get related article links
   sql = "SELECT UnitConnectionStart_Id_FK, UnitConnectionEnd_Id_FK, ArticleConnectionStart_Id_FK, ArticleConnectionEnd_Id_FK,";
-  sql += " LinkType_Code_FK, LinkDirection_Code_FK, Identification, Value, SinceVersion, Modification ";
+  sql += " LinkType_Code_FK, LinkDirection_Code_FK, Identification, Resistance, SinceVersion, Modification ";
   sql += " FROM ArticleLink_UnitConnection_view ";
   sql += " WHERE ( UnitConnectionStart_Id_FK = " + unitConnectionData.value("Id_PK").toString();
   sql += " OR UnitConnectionEnd_Id_FK = " + unitConnectionData.value("Id_PK").toString();

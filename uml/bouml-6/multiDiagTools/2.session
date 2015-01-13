@@ -1,33 +1,17 @@
-window_sizes 1280 916 383 891 863 0
+window_sizes 1280 916 271 1003 863 0
 cleanlooks_style
 diagrams
-  statediagram_ref 1345282 // StateMachine
-    1073 863 80 18 0 0
-  statediagram_ref 1345538 // Running
-    1073 863 68 2 0 46
-  classdiagram_ref 281602 // mdtFrameCodec
-    120 106 100 4 120 0
-  classdiagram_ref 561538 // mdtFrameCodecScpi
-    120 106 100 4 0 0
-  active  classdiagram_ref 1352066 // CodecSCPI
-    891 863 100 4 0 0
+  active  classdiagram_ref 739586 // CableListAllTables
+    1003 863 70 17 0 0
 end
 show_stereotypes
-selected classdiagram_ref 1352066 // CodecSCPI
+selected attribute_ref 1583874 // Wire_Id_FK
 open
-  operation_ref 2453250 // decodeValueBool
-  operation_ref 2410754 // UsbtmcPortThread
-  operation_ref 2438914 // mdtUsbtmcTransferHandler
-  state_ref 241666 // Stopped
-  state_ref 241794 // Setup
-  state_ref 242306 // Stopping
-  state_ref 242434 // Disconnected
-  state_ref 243202 // Running
-  classview_ref 722306 // ModbusTcp
-  operation_ref 2432386 // ~mdtUsbtmcPort
-  operation_ref 2431874 // open
-  operation_ref 2431362 // close
-  operation_ref 2439938 // thSetTransactionDone
-  operation_ref 2439682 // thSetTimeoutOccured
+  attribute_ref 1583874 // Wire_Id_FK
+  class_ref 945154 // ArticleLink_tbl
+  attribute_ref 1583746 // Id_PK
+  attribute_ref 1583618 // ArticleCode
+  attribute_ref 1576962 // ManufacturerArticleCode
+  attribute_ref 1576834 // ColorEN
 end
 end

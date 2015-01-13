@@ -46,32 +46,9 @@ class mdtDeviceDSO1000A : public mdtDeviceScpi
     return mdtDeviceScpi::connectToDevice(0x0957, 0x0588, serialNumber);
   }
 
-  /*! \brief Search and connect to physical device.
-   *
-   * Will scan available ports and open the first port that
-   *  has device attached maching request.
-   *
-   * \param devInfo Requested device's informations.
-   *                 Note: Vendor ID and/or product ID are automatically set.
-   *                       (in other words, a empty mdtDeviceInfo can be passed).
-   *                       Optionnaly, a serial ID can be set (usefull if many U3606A devices are connected)
-   * \return A error listed in mdtAbstractPort::error_t (NoError on success)
-   */
-  ///mdtAbstractPort::error_t connectToDevice(const mdtDeviceInfo &devInfo);
-
- ///private slots:
-
-  /*! \brief Decode incoming frames
-   *
-   * \pre I/O's container must be set with setIos()
-   */
-  ///void decodeReadenFrame(mdtPortTransaction *transaction);
-
 private:
 
   Q_DISABLE_COPY(mdtDeviceDSO1000A);
-
- /// mdtFrameCodecScpi *pvCodec;
 
 };
 

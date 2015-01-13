@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -138,6 +138,10 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
    */
   void editSelectedUnit();
 
+  /*! \brief View wires
+   */
+  void viewWire();
+
   /*! \brief View link list
    */
   void viewLinkList();
@@ -263,6 +267,10 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   /*! \brief Create unit editor
    */
   mdtClUnitEditor *createUnitEditor();
+
+  /*! \brief Create wire table view
+   */
+  bool createWireTableView();
 
   /*! \brief Create link list table view
    */

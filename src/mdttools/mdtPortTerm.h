@@ -60,10 +60,6 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
    */
   void appendReadenData(mdtPortTransaction *transaction);
 
-  /*! \brief Send command to current port
-   */
-  ///void sendCmd();
-
   /*! \brief Send command/query to serial port
    */
   void sendCommandToSerialPort();
@@ -92,9 +88,6 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
   // Set/unset port type to serial port
   void attachToSerialPort();
   void detachFromSerialPort();
-
-  // Call port setup dialog
-  ///void portSetup();
 
   /*! \brief Setup serial port
    */
@@ -158,10 +151,7 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
   mdtSerialPortManager *pvSerialPortManager;
   mdtSerialPortCtlWidget *pvSerialPortCtlWidget;
   // USBTMC port
-  ///mdtUsbtmcPortManager *pvUsbtmcPortManager;
   mdtUsbtmcPort *pvUsbtmcPort;
-  // Current port manager
-  ///mdtPortManager *pvCurrentPortManager;
   // Translations menu
   QActionGroup *pvLanguageActionGroup;
   // Port menu

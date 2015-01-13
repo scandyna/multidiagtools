@@ -19,43 +19,12 @@
  **
  ****************************************************************************/
 #include "mdtDeviceDSO1000A.h"
-#include "mdtDeviceInfo.h"
-#include "mdtPortTransaction.h"
 
 mdtDeviceDSO1000A::mdtDeviceDSO1000A(QObject *parent)
  : mdtDeviceScpi(parent)
 {
-  ///pvCodec = new mdtFrameCodecScpi;  /// \todo use new codec
-  // Setup port manager
-//   portManager()->config().setReadFrameSize(10000);
-//   portManager()->config().setReadQueueSize(5);
-//   portManager()->config().setReadTimeout(30000);
-//   portManager()->config().setWriteFrameSize(512);
-//   portManager()->config().setWriteQueueSize(1);
-//   connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(mdtPortTransaction*)), this, SLOT(decodeReadenFrame(mdtPortTransaction*)));
-//   ///connect(pvUsbtmcPortManager, SIGNAL(errorStateChanged(int, const QString&, const QString&)), this, SLOT(setStateFromPortError(int, const QString&, const QString&)));
-//   connect(pvUsbtmcPortManager, SIGNAL(stateChanged(int)), this, SLOT(setStateFromPortManager(int)));
 }
 
 mdtDeviceDSO1000A::~mdtDeviceDSO1000A()
 {
-  ///delete pvCodec;
 }
-
-// mdtAbstractPort::error_t mdtDeviceDSO1000A::connectToDevice(const mdtDeviceInfo &devInfo)
-// {
-//   mdtDeviceInfo device;
-// 
-//   // Setup device info
-//   device = devInfo;
-//   device.setVendorId(0x0957);
-//   device.setProductId(0x0588);
-// 
-//   ///return mdtDeviceScpi::connectToDevice(device);
-// }
-
-// void mdtDeviceDSO1000A::decodeReadenFrame(mdtPortTransaction *transaction)
-// {
-//   Q_ASSERT(transaction != 0);
-// 
-// }

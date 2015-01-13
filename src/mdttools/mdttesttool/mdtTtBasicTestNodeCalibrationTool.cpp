@@ -58,7 +58,6 @@ bool mdtTtBasicTestNodeCalibrationTool::setup(QWidget *testNodeFormWidget)
 void mdtTtBasicTestNodeCalibrationTool::runCalibration()
 {
   QString msg;
-  shared_ptr<mdtDeviceU3606A> pvMultimeter;
 
   // Load link list to graph - Will be used to get links resistances
   if(!pvGraph.loadLinkList()){
@@ -172,12 +171,9 @@ void mdtTtBasicTestNodeCalibrationTool::saveCalibration()
 
 double mdtTtBasicTestNodeCalibrationTool::measureBridge()
 {
-  ///shared_ptr<mdtDeviceU3606A> pvMultimeter;
-  mdtValue R;
+  mdtValueDouble R;
 
-  ///pvMultimeter = testNodeManager()->device<mdtDeviceU3606A>("U3606A");
-  ///Q_ASSERT(pvMultimeter);
-  if(pvMultimeter->setupResistanceMeasure(mdtDeviceU3606A::RangeMin, mdtDeviceU3606A::ResolutionMin) < 0){
+  if(!pvMultimeter->setupResistanceMeasure(mdtDeviceU3606A::Range_t::Min, mdtDeviceU3606A::Resolution_t::Min)){
     pvLastError = pvMultimeter->lastError();
     return -1.0;
   }
@@ -188,17 +184,14 @@ double mdtTtBasicTestNodeCalibrationTool::measureBridge()
     return -1.0;
   }
 
-  return R.valueDouble();
+  return R.value();
 }
 
 bool mdtTtBasicTestNodeCalibrationTool::checkSenseRelays()
 {
-  ///shared_ptr<mdtDeviceU3606A> pvMultimeter;
   shared_ptr<mdtDeviceModbusWago> coupler;
-  mdtValue R;
+  mdtValueDouble R;
 
-  ///pvMultimeter = testNodeManager()->device<mdtDeviceU3606A>("U3606A");
-  ///Q_ASSERT(pvMultimeter);
   coupler = testNodeManager()->device<mdtDeviceModbusWago>("W750");
   Q_ASSERT(coupler);
 
@@ -209,7 +202,7 @@ bool mdtTtBasicTestNodeCalibrationTool::checkSenseRelays()
   }
   coupler->wait(50);
   // Check that we have R infinite
-  if(pvMultimeter->setupResistanceMeasure(mdtDeviceU3606A::RangeMax, mdtDeviceU3606A::ResolutionMin) < 0){
+  if(!pvMultimeter->setupResistanceMeasure(mdtDeviceU3606A::Range_t::Max, mdtDeviceU3606A::Resolution_t::Min)){
     pvLastError = pvMultimeter->lastError();
     return false;
   }
@@ -269,7 +262,7 @@ bool mdtTtBasicTestNodeCalibrationTool::checkSenseRelays()
   }
   coupler->wait(50);
   // Check that we have R < 1 Ohm
-  if(pvMultimeter->setupResistanceMeasure(mdtDeviceU3606A::RangeMin, mdtDeviceU3606A::ResolutionMin) < 0){
+  if(!pvMultimeter->setupResistanceMeasure(mdtDeviceU3606A::Range_t::Min, mdtDeviceU3606A::Resolution_t::Min)){
     pvLastError = pvMultimeter->lastError();
     return false;
   }
@@ -306,16 +299,13 @@ bool mdtTtBasicTestNodeCalibrationTool::checkSenseRelays()
 
 bool mdtTtBasicTestNodeCalibrationTool::calibrateSenseRelays()
 {
-  ///shared_ptr<mdtDeviceU3606A> pvMultimeter;
   shared_ptr<mdtDeviceModbusWago> coupler;
   QStringList relays;
-  mdtValue R;
+  mdtValueDouble R;
   double Rlinks;
   double r;
   bool ok;
 
-  ///pvMultimeter = testNodeManager()->device<mdtDeviceU3606A>("U3606A");
-  ///Q_ASSERT(pvMultimeter);
   coupler = testNodeManager()->device<mdtDeviceModbusWago>("W750");
   Q_ASSERT(coupler);
 
@@ -339,7 +329,7 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateSenseRelays()
     return false;
   }
   // Setup pvMultimeter for low resistance measurement
-  if(pvMultimeter->setupLowResistanceMeasure(mdtDeviceU3606A::RangeAuto, mdtDeviceU3606A::ResolutionMin) < 0){
+  if(!pvMultimeter->setupLowResistanceMeasure(mdtDeviceU3606A::Range_t::Auto, mdtDeviceU3606A::Resolution_t::Min)){
     pvLastError = pvMultimeter->lastError();
     return false;
   }
@@ -356,8 +346,8 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateSenseRelays()
     return false;
   }
   // Calibrate K4 and K5: (R-Rlinks)/2
-  r = (R.valueDouble() - Rlinks) / 2.0;
-  qDebug() << "R K4-K5: " << R.valueDouble() << " , Rlinks: " << Rlinks << " , r: " << r;
+  r = (R.value() - Rlinks) / 2.0;
+  qDebug() << "R K4-K5: " << R.value() << " , Rlinks: " << Rlinks << " , r: " << r;
   if(!isInRange(r, 0.0, 1.0)){
     pvLastError.updateText(tr("Calibrating resistance of realys K4 and K5 failed."));
     return false;
@@ -391,8 +381,8 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateSenseRelays()
   if(!ok){
     return false;
   }
-  r = (R.valueDouble() - Rlinks) / 2.0;
-  qDebug() << "R K3-K6: " << R.valueDouble() << " , Rlinks: " << Rlinks << " , r: " << r;
+  r = (R.value() - Rlinks) / 2.0;
+  qDebug() << "R K3-K6: " << R.value() << " , Rlinks: " << Rlinks << " , r: " << r;
   if(!isInRange(r, 0.0, 1.0)){
     pvLastError.updateText(tr("Calibrating resistance of realys K3 and K6 failed."));
     return false;
@@ -406,17 +396,14 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateSenseRelays()
 
 bool mdtTtBasicTestNodeCalibrationTool::checkIsoRelays()
 {
-  ///shared_ptr<mdtDeviceU3606A> pvMultimeter;
   shared_ptr<mdtDeviceModbusWago> coupler;
-  mdtValue R;
+  mdtValueDouble R;
 
-  ///pvMultimeter = testNodeManager()->device<mdtDeviceU3606A>("U3606A");
-  ///Q_ASSERT(pvMultimeter);
   coupler = testNodeManager()->device<mdtDeviceModbusWago>("W750");
   Q_ASSERT(coupler);
 
   // Setup pvMultimeter to its max range
-  if(pvMultimeter->setupResistanceMeasure(mdtDeviceU3606A::RangeMax, mdtDeviceU3606A::ResolutionMin) < 0){
+  if(!pvMultimeter->setupResistanceMeasure(mdtDeviceU3606A::Range_t::Max, mdtDeviceU3606A::Resolution_t::Min)){
     pvLastError = pvMultimeter->lastError();
     return false;
   }
@@ -476,7 +463,7 @@ bool mdtTtBasicTestNodeCalibrationTool::checkIsoRelays()
   }
   coupler->wait(50);
   // Setup pvMultimeter to its min range
-  if(pvMultimeter->setupResistanceMeasure(mdtDeviceU3606A::RangeMin, mdtDeviceU3606A::ResolutionMin) < 0){
+  if(!pvMultimeter->setupResistanceMeasure(mdtDeviceU3606A::Range_t::Min, mdtDeviceU3606A::Resolution_t::Min)){
     pvLastError = pvMultimeter->lastError();
     return false;
   }
@@ -493,19 +480,15 @@ bool mdtTtBasicTestNodeCalibrationTool::checkIsoRelays()
 
 bool mdtTtBasicTestNodeCalibrationTool::calibrateIsoRelays()
 {
-  ///shared_ptr<mdtDeviceU3606A> pvMultimeter;
   shared_ptr<mdtDeviceModbusWago> coupler;
   QStringList relays;
-  mdtValue R;
-  ///mdtValue Rk;
+  mdtValueDouble R;
   QVariant val;
   double r3, r4, r5, r6;
   double Rlinks;
   double r;
   bool ok;
 
-  ///pvMultimeter = testNodeManager()->device<mdtDeviceU3606A>("U3606A");
-  ///Q_ASSERT(pvMultimeter);
   coupler = testNodeManager()->device<mdtDeviceModbusWago>("W750");
   Q_ASSERT(coupler);
 
@@ -560,7 +543,7 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateIsoRelays()
   }
   coupler->wait(50);
   // Setup pvMultimeter to its min range
-  if(pvMultimeter->setupLowResistanceMeasure(mdtDeviceU3606A::RangeAuto, mdtDeviceU3606A::ResolutionMin) < 0){
+  if(!pvMultimeter->setupLowResistanceMeasure(mdtDeviceU3606A::Range_t::Auto, mdtDeviceU3606A::Resolution_t::Min)){
     pvLastError = pvMultimeter->lastError();
     return false;
   }
@@ -579,8 +562,8 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateIsoRelays()
     return false;
   }
   // Calculate resistance of K1 and K2
-  r = (R.valueDouble() - Rlinks - r3- r4 - r5 - r6) / 2.0;
-  qDebug() << "R K1-K2: " << R.valueDouble() << " , Rlinks: " << Rlinks << " , r: " << r;
+  r = (R.value() - Rlinks - r3- r4 - r5 - r6) / 2.0;
+  qDebug() << "R K1-K2: " << R.value() << " , Rlinks: " << Rlinks << " , r: " << r;
   if(!isInRange(r, 0.0, 1.0)){
     pvLastError.updateText(tr("Calibrating resistance of realys K1 and K2 failed."));
     return false;
@@ -605,17 +588,14 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateIsoRelays()
 
 bool mdtTtBasicTestNodeCalibrationTool::checkForceRelays()
 {
-  ///shared_ptr<mdtDeviceU3606A> pvMultimeter;
   shared_ptr<mdtDeviceModbusWago> coupler;
-  mdtValue R;
+  mdtValueDouble R;
 
-  ///pvMultimeter = testNodeManager()->device<mdtDeviceU3606A>("U3606A");
-  ///Q_ASSERT(pvMultimeter);
   coupler = testNodeManager()->device<mdtDeviceModbusWago>("W750");
   Q_ASSERT(coupler);
 
   // Setup pvMultimeter to its max range
-  if(pvMultimeter->setupResistanceMeasure(mdtDeviceU3606A::RangeMax, mdtDeviceU3606A::ResolutionMin) < 0){
+  if(!pvMultimeter->setupResistanceMeasure(mdtDeviceU3606A::Range_t::Max, mdtDeviceU3606A::Resolution_t::Min)){
     pvLastError = pvMultimeter->lastError();
     return false;
   }
@@ -673,7 +653,7 @@ bool mdtTtBasicTestNodeCalibrationTool::checkForceRelays()
   }
   coupler->wait(50);
   // Setup pvMultimeter to its min range
-  if(pvMultimeter->setupResistanceMeasure(mdtDeviceU3606A::RangeMin, mdtDeviceU3606A::ResolutionMin) < 0){
+  if(!pvMultimeter->setupResistanceMeasure(mdtDeviceU3606A::Range_t::Min, mdtDeviceU3606A::Resolution_t::Min)){
     pvLastError = pvMultimeter->lastError();
     return false;
   }
@@ -689,16 +669,13 @@ bool mdtTtBasicTestNodeCalibrationTool::checkForceRelays()
 
 bool mdtTtBasicTestNodeCalibrationTool::calibrateForceRelays()
 {
-  ///shared_ptr<mdtDeviceU3606A> pvMultimeter;
   shared_ptr<mdtDeviceModbusWago> coupler;
-  mdtValue R;
-  mdtValue Rk;
+  mdtValueDouble R;
+  mdtValueDouble Rk;
   QVariant val;
   double r4, r6;
   bool ok;
 
-  ///pvMultimeter = testNodeManager()->device<mdtDeviceU3606A>("U3606A");
-  ///Q_ASSERT(pvMultimeter);
   coupler = testNodeManager()->device<mdtDeviceModbusWago>("W750");
   Q_ASSERT(coupler);
 
@@ -733,7 +710,7 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateForceRelays()
   }
   coupler->wait(50);
   // Setup pvMultimeter to its min range
-  if(pvMultimeter->setupLowResistanceMeasure(mdtDeviceU3606A::RangeAuto, mdtDeviceU3606A::ResolutionMin) < 0){
+  if(!pvMultimeter->setupLowResistanceMeasure(mdtDeviceU3606A::Range_t::Auto, mdtDeviceU3606A::Resolution_t::Min)){
     pvLastError = pvMultimeter->lastError();
     return false;
   }
@@ -744,20 +721,19 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateForceRelays()
     return false;
   }
   // Calibrate K7 and K8 ( (R - r4 - r6)/2 )
-  Rk = (R.valueDouble() - r4 - r6) / 2.0;
+  Rk = (R.value() - r4 - r6) / 2.0;
   if(!isInRange(Rk, 0.0, 1.0)){
     pvLastError.updateText(tr("Calibrating resistance of realys K7 and K8 failed.\nNote: did you plug the bridge between PWR+ and PWR- ?"));
     return false;
   }
-  setTestNodeUnitCalibrationOffset("K7", Rk.valueDouble());
-  setTestNodeUnitCalibrationOffset("K8", Rk.valueDouble());
+  setTestNodeUnitCalibrationOffset("K7", Rk.value());
+  setTestNodeUnitCalibrationOffset("K8", Rk.value());
 
   return true;
 }
 
 bool mdtTtBasicTestNodeCalibrationTool::calibrateChannelRelays()
 {
-  ///shared_ptr<mdtDeviceU3606A> pvMultimeter;
   shared_ptr<mdtDeviceModbusWago> coupler;
   QSqlQuery query(database());
   QString sql;
@@ -766,16 +742,13 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateChannelRelays()
   mdtTtTestNodeUnitSetupData unitSetupData;
   QVariant testModelItemId;
   QSqlRecord itemRecord;
-  mdtValue R;
+  mdtValueDouble R;
   double offset;
   QVariant val;
   bool ok;
   int i, k;
   QVariant relay1Id, relay2Id;
 
-  // Get instruments
-  ///pvMultimeter = testNodeManager()->device<mdtDeviceU3606A>("U3606A");
-  ///Q_ASSERT(pvMultimeter);
   coupler = testNodeManager()->device<mdtDeviceModbusWago>("W750");
   Q_ASSERT(coupler);
 
@@ -794,7 +767,7 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateChannelRelays()
   }
   query.previous();
   // Setup pvMultimeter to its min range
-  if(pvMultimeter->setupResistanceMeasure(mdtDeviceU3606A::RangeMin, mdtDeviceU3606A::ResolutionMin) < 0){
+  if(!pvMultimeter->setupResistanceMeasure(mdtDeviceU3606A::Range_t::Min, mdtDeviceU3606A::Resolution_t::Min)){
     pvLastError = pvMultimeter->lastError();
     return false;
   }
@@ -865,7 +838,8 @@ bool mdtTtBasicTestNodeCalibrationTool::calibrateChannelRelays()
     relay1Id = route1.channelRelaysIdList().at(0);
     relay2Id = route2.channelRelaysIdList().at(0);
     // Calculate offset
-    offset = R.valueDouble() - route1.busCouplingRelaysResistance().valueDouble() - route2.busCouplingRelaysResistance().valueDouble();
+    /// \todo Passer route1.busCouplingRelaysResistance() en mdtValueDouble
+    offset = R.value() - route1.busCouplingRelaysResistance().valueDouble() - route2.busCouplingRelaysResistance().valueDouble();
     /// \todo Check that offset is correct (>= 0, ...)
     // Set result
     setTestNodeUnitCalibrationOffset(relay1Id.toInt(), offset / 2.0);
@@ -912,18 +886,14 @@ bool mdtTtBasicTestNodeCalibrationTool::setupIoCouplerRoutes(const QList< mdtTtT
 
 void mdtTtBasicTestNodeCalibrationTool::addInstruments()
 {
-  ///testNodeManager()->addDevice<mdtDeviceU3606A>("U3606A", "", "U3606A Multimeter");
   testNodeManager()->addDevice<mdtDeviceModbusWago>("W750", "0", "Wago 750 coupling node");
 }
 
 bool mdtTtBasicTestNodeCalibrationTool::connectToInstruments()
 {
-  ///shared_ptr<mdtDeviceU3606A> pvMultimeter;
   shared_ptr<mdtDeviceModbusWago> coupler;
   QVariant couplerNodeId;
 
-  ///pvMultimeter = testNodeManager()->device<mdtDeviceU3606A>("U3606A");
-  ///Q_ASSERT(pvMultimeter);
   coupler = testNodeManager()->device<mdtDeviceModbusWago>("W750");
   Q_ASSERT(coupler);
 
@@ -936,14 +906,12 @@ bool mdtTtBasicTestNodeCalibrationTool::connectToInstruments()
     return false;
   }
   // Connect to pvMultimeter
-  /**
-  if(pvMultimeter->connectToDevice(mdtDeviceInfo()) != mdtAbstractPort::NoError){
+  if(!pvMultimeter->connectToDevice()){
     pvLastError.setError(tr("Cannot connect to ") + pvMultimeter->name(), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtBasicTestNodeCalibrationTool");
     pvLastError.commit();
     return false;
   }
-  */
   // Connect to coupler
   if(coupler->connectToDevice(mdtDeviceInfo()) != mdtAbstractPort::NoError){
     pvLastError.setError(tr("Cannot connect to ") + coupler->name(), mdtError::Error);
@@ -976,11 +944,8 @@ void mdtTtBasicTestNodeCalibrationTool::disconnectFromInstruments()
 {
   Q_ASSERT(testNodeManager()->container());
 
-  ///shared_ptr<mdtDeviceU3606A> pvMultimeter;
   shared_ptr<mdtDeviceModbusWago> coupler;
 
-  ///pvMultimeter = testNodeManager()->device<mdtDeviceU3606A>("U3606A");
-  ///Q_ASSERT(pvMultimeter);
   coupler = testNodeManager()->device<mdtDeviceModbusWago>("W750");
   Q_ASSERT(coupler);
 
@@ -990,12 +955,13 @@ void mdtTtBasicTestNodeCalibrationTool::disconnectFromInstruments()
   }
   // Reset pvMultimeter to factory state
   /// \todo Why ??
-  if(pvMultimeter->sendCommand("*RST") < 0){
-    pvLastError.setError(tr("*RST failed on device ") + pvMultimeter->name(), mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtBasicTestNodeCalibrationTool");
-    pvLastError.commit();
-  }
-  /// \todo Disconnect multimeter
+//   if(pvMultimeter->sendCommand("*RST") < 0){
+//     pvLastError.setError(tr("*RST failed on device ") + pvMultimeter->name(), mdtError::Error);
+//     MDT_ERROR_SET_SRC(pvLastError, "mdtTtBasicTestNodeCalibrationTool");
+//     pvLastError.commit();
+//   }
+  // Disconnect multimeter
+  pvMultimeter->disconnectFromDevice();
 
   // Disconnect
   testNodeManager()->container()->disconnectFromDevices();
@@ -1026,12 +992,7 @@ bool mdtTtBasicTestNodeCalibrationTool::fritLine()
 {
   Q_ASSERT(testNodeManager()->container());
 
-  ///shared_ptr<mdtDeviceU3606A> pvMultimeter;
-
-  ///pvMultimeter = testNodeManager()->device<mdtDeviceU3606A>("U3606A");
-  ///Q_ASSERT(pvMultimeter);
-
-  if(!pvMultimeter->setupVoltageDcMeasure(mdtDeviceU3606A::Range10, mdtDeviceU3606A::ResolutionMin)){
+  if(!pvMultimeter->setupVoltageDcMeasure(mdtDeviceU3606A::Range_t::Range10, mdtDeviceU3606A::Resolution_t::Min)){
     pvLastError = pvMultimeter->lastError();
     return false;
   }
@@ -1039,7 +1000,7 @@ bool mdtTtBasicTestNodeCalibrationTool::fritLine()
     pvLastError = pvMultimeter->lastError();
     return false;
   }
-  if(!pvMultimeter->setSourceRange(mdtDeviceU3606A::S1_30V1A)){
+  if(!pvMultimeter->setSourceRange(mdtDeviceU3606A::SourceRange_t::S1_30V1A)){
     pvLastError = pvMultimeter->lastError();
     return false;
   }

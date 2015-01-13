@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -256,11 +256,12 @@ bool mdtTtAbstractTestNodeCalibrationTool::askUser(const QString& text, const QS
   }
 }
 
-bool mdtTtAbstractTestNodeCalibrationTool::isInRange(const mdtValue & value, double min, double max)
+bool mdtTtAbstractTestNodeCalibrationTool::isInRange(const mdtValueDouble & value, double min, double max)
 {
-  double x;
+  double x = value.value();
 
   // Get double value
+  /**
   if(value.isMinusOl()){
     x = -std::numeric_limits<double>::max();
   }else if(value.isPlusOl()){
@@ -268,6 +269,7 @@ bool mdtTtAbstractTestNodeCalibrationTool::isInRange(const mdtValue & value, dou
   }else{
     x = value.valueDouble();
   }
+  */
   // Check range
   if(!mdtTtTest::isInRange(x, min, max)){
     QString msg;

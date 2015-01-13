@@ -115,7 +115,6 @@ bool mdtUsbtmcPort::openDevice(uint16_t idVendor, uint16_t idProduct, const QStr
 
 bool mdtUsbtmcPort::openDevice(const mdtUsbDeviceDescriptor& deviceDescriptor, uint8_t bInterfaceNumber, bool clearDeviceList)
 {
-  close();
   // Check given device descriptor
   if(deviceDescriptor.isEmpty()){
     pvLastError.setError(tr("Given device descriptor is empty (did you use scan() to obtain it ?)"), mdtError::Error);

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -200,7 +200,7 @@ class mdtTtAbstractTestNodeCalibrationTool : public QObject
    *
    * Note: if value has -OL or +OL flag set, -infinity, respecively +infinity value is considered.
    */
-  bool isInRange(const mdtValue & value, double min, double max = std::numeric_limits<double>::max());
+  bool isInRange(const mdtValueDouble & value, double min, double max = std::numeric_limits<double>::max());
 
   /*! \brief Beginn manually a new transaction
    *

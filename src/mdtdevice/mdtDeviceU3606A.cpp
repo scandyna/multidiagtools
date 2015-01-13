@@ -20,8 +20,6 @@
  ****************************************************************************/
 #include "mdtDeviceU3606A.h"
 #include "mdtError.h"
-#include "mdtAnalogIo.h"
-#include "mdtDeviceIos.h"
 #include <QByteArray>
 #include <QList>
 
@@ -30,15 +28,13 @@
 mdtDeviceU3606A::mdtDeviceU3606A(QObject *parent)
  : mdtDeviceScpi(parent)
 {
-  ///pvCodec = new mdtFrameCodecScpiU3606A;  /// \todo Use new codec
 }
 
 mdtDeviceU3606A::~mdtDeviceU3606A()
 {
-  ///delete pvCodec;
 }
 
-bool mdtDeviceU3606A::setupVoltageDcMeasure(mdtDeviceU3606A::range_t range, mdtDeviceU3606A::resolution_t resolution)
+bool mdtDeviceU3606A::setupVoltageDcMeasure(mdtDeviceU3606A::Range_t range, mdtDeviceU3606A::Resolution_t resolution)
 {
   QByteArray rangeStr;
   QByteArray resolutionStr;
@@ -46,31 +42,31 @@ bool mdtDeviceU3606A::setupVoltageDcMeasure(mdtDeviceU3606A::range_t range, mdtD
 
   // Set range part
   switch(range){
-    case RangeAuto:
+    case Range_t::Auto:
       rangeStr = "AUTO";
       break;
-    case RangeMin:
+    case Range_t::Min:
       rangeStr = "MIN";
       break;
-    case RangeMax:
+    case Range_t::Max:
       rangeStr = "MAX";
       break;
-    case Range20m:
+    case Range_t::Range20m:
       rangeStr = "0.02";
       break;
-    case Range100m:
+    case Range_t::Range100m:
       rangeStr = "0.1";
       break;
-    case Range1:
+    case Range_t::Range1:
       rangeStr = "1";
       break;
-    case Range10:
+    case Range_t::Range10:
       rangeStr = "10";
       break;
-    case Range100:
+    case Range_t::Range100:
       rangeStr = "100";
       break;
-    case Range1k:
+    case Range_t::Range1k:
       rangeStr = "1000";
       break;
     default:
@@ -81,10 +77,10 @@ bool mdtDeviceU3606A::setupVoltageDcMeasure(mdtDeviceU3606A::range_t range, mdtD
   }
   // Set resolution part
   switch(resolution){
-    case ResolutionMin:
+    case Resolution_t::Min:
       resolutionStr = "MIN";
       break;
-    case ResolutionMax:
+    case Resolution_t::Max:
       resolutionStr = "MAX";
       break;
   }
@@ -93,7 +89,7 @@ bool mdtDeviceU3606A::setupVoltageDcMeasure(mdtDeviceU3606A::range_t range, mdtD
   return sendCommand(command);
 }
 
-bool mdtDeviceU3606A::setupResistanceMeasure(mdtDeviceU3606A::range_t range, mdtDeviceU3606A::resolution_t resolution)
+bool mdtDeviceU3606A::setupResistanceMeasure(mdtDeviceU3606A::Range_t range, mdtDeviceU3606A::Resolution_t resolution)
 {
   QByteArray rangeStr;
   QByteArray resolutionStr;
@@ -101,34 +97,34 @@ bool mdtDeviceU3606A::setupResistanceMeasure(mdtDeviceU3606A::range_t range, mdt
 
   // Set range part
   switch(range){
-    case RangeAuto:
+    case Range_t::Auto:
       rangeStr = "AUTO";
       break;
-    case RangeMin:
+    case Range_t::Min:
       rangeStr = "MIN";
       break;
-    case RangeMax:
+    case Range_t::Max:
       rangeStr = "MAX";
       break;
-    case Range100:
+    case Range_t::Range100:
       rangeStr = "100";
       break;
-    case Range1k:
+    case Range_t::Range1k:
       rangeStr = "1000";
       break;
-    case Range10k:
+    case Range_t::Range10k:
       rangeStr = "10000";
       break;
-    case Range100k:
+    case Range_t::Range100k:
       rangeStr = "100000";
       break;
-    case Range1M:
+    case Range_t::Range1M:
       rangeStr = "1000000";
       break;
-    case Range10M:
+    case Range_t::Range10M:
       rangeStr = "10000000";
       break;
-    case Range100M:
+    case Range_t::Range100M:
       rangeStr = "100000000";
       break;
     default:
@@ -139,10 +135,10 @@ bool mdtDeviceU3606A::setupResistanceMeasure(mdtDeviceU3606A::range_t range, mdt
   }
   // Set resolution part
   switch(resolution){
-    case ResolutionMin:
+    case Resolution_t::Min:
       resolutionStr = "MIN";
       break;
-    case ResolutionMax:
+    case Resolution_t::Max:
       resolutionStr = "MAX";
       break;
   }
@@ -151,7 +147,7 @@ bool mdtDeviceU3606A::setupResistanceMeasure(mdtDeviceU3606A::range_t range, mdt
   return sendCommand(command);
 }
 
-bool mdtDeviceU3606A::setupLowResistanceMeasure(mdtDeviceU3606A::range_t range, mdtDeviceU3606A::resolution_t resolution)
+bool mdtDeviceU3606A::setupLowResistanceMeasure(mdtDeviceU3606A::Range_t range, mdtDeviceU3606A::Resolution_t resolution)
 {
   QByteArray rangeStr;
   QByteArray resolutionStr;
@@ -159,19 +155,19 @@ bool mdtDeviceU3606A::setupLowResistanceMeasure(mdtDeviceU3606A::range_t range, 
 
   // Set range part
   switch(range){
-    case RangeAuto:
+    case Range_t::Auto:
       rangeStr = "AUTO";
       break;
-    case RangeMin:
+    case Range_t::Min:
       rangeStr = "MIN";
       break;
-    case RangeMax:
+    case Range_t::Max:
       rangeStr = "MAX";
       break;
-    case Range100m:
+    case Range_t::Range100m:
       rangeStr = "0.1";
       break;
-    case Range1:
+    case Range_t::Range1:
       rangeStr = "1";
       break;
     default:
@@ -182,10 +178,10 @@ bool mdtDeviceU3606A::setupLowResistanceMeasure(mdtDeviceU3606A::range_t range, 
   }
   // Set resolution part
   switch(resolution){
-    case ResolutionMin:
+    case Resolution_t::Min:
       resolutionStr = "MIN";
       break;
-    case ResolutionMax:
+    case Resolution_t::Max:
       resolutionStr = "MAX";
       break;
   }
@@ -237,41 +233,23 @@ mdtDeviceU3606A::MeasureType_t mdtDeviceU3606A::getMeasureConfiguration()
   }
 }
 
-
-// mdtFrameCodecScpiU3606A::measure_type_t mdtDeviceU3606A::getMeasureConfiguration()
-// {
-//   int bTag;
-//   mdtPortTransaction *transaction;
-//   mdtUsbtmcPortManager *upm;
-// 
-//   // We need a specific port manager
-//   upm = dynamic_cast<mdtUsbtmcPortManager*>(portManager());
-//   Q_ASSERT(upm != 0);
-//   // Send query
-//   bTag = upm->sendData("CONF?");
-//   if(bTag < 0){
-//     return mdtFrameCodecScpiU3606A::MT_UNKNOW;
-//   }
-//   // Setup transaction
-//   transaction = getNewTransaction();
-//   transaction->setType(mdtFrameCodecScpi::QT_CONF);
-//   transaction->setQueryReplyMode(true);
-//   // Send read request - transaction is restored by sendReadRequest() on failure
-//   bTag = upm->sendReadRequest(transaction);
-//   if(bTag < 0){
-//     return mdtFrameCodecScpiU3606A::MT_UNKNOW;
-//   }
-//   // Wait on response - transaction are restored automatically during waitTransactionDone() on failure
-//   if(!waitTransactionDone(bTag)){
-//     return mdtFrameCodecScpiU3606A::MT_UNKNOW;
-//   }
-// 
-//   return pvCodec->measureType();
-// }
-
-mdtValue mdtDeviceU3606A::getMeasureValue()
+mdtValueDouble mdtDeviceU3606A::getMeasureValue(int timeout)
 {
-  ///return getAnalogInputValue(0, true, true);
+  QByteArray data;
+  mdtCodecScpi codec;
+  mdtValueDouble x;
+
+  data = sendQuery("READ?\n", timeout);
+  if(data.isEmpty()){
+    return x;
+  }
+  x = codec.decodeValueDouble(data);
+  if(x.isNull()){
+    pvLastError = codec.lastError();
+    return x;
+  }
+
+  return x;
 }
 
 bool mdtDeviceU3606A::setOutputState(bool state)
@@ -287,15 +265,15 @@ bool mdtDeviceU3606A::setOutputState(bool state)
   return sendCommand(cmd);
 }
 
-bool mdtDeviceU3606A::setSourceRange( mdtDeviceU3606A::sourceRange_t range )
+bool mdtDeviceU3606A::setSourceRange(mdtDeviceU3606A::SourceRange_t range)
 {
   QByteArray cmd = "SOUR:VOLT:RANG ";
 
   switch(range){
-    case S1_30V1A:
+    case SourceRange_t::S1_30V1A:
       cmd += "30";
       break;
-    case S2_8V3A:
+    case SourceRange_t::S2_8V3A:
       cmd += "8";
       break;
   }
@@ -320,8 +298,3 @@ bool mdtDeviceU3606A::setSourceCurrent(double x)
 
   return sendCommand(cmd);
 }
-
-// void mdtDeviceU3606A::onStateChanged(int state)
-// {
-//   qDebug() << "mdtDeviceU3606A::onStateChanged() ...";
-// }

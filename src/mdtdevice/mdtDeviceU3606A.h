@@ -53,36 +53,39 @@ class mdtDeviceU3606A : public mdtDeviceScpi
 
   /*! \brief Range for measure
    */
-  enum range_t {
-                  RangeAuto = -10,  /*!< AUTO range */
-                  RangeMin,         /*!< MIN range */
-                  RangeMax,         /*!< MAX range */
-                  Range20m = 1,     /*!< 20 milli range */
-                  Range100m,        /*!< 100 milli range */
-                  Range1,           /*!< 1 range */
-                  Range10,          /*!< 10 range */
-                  Range100,         /*!< 100 range */
-                  Range1k,          /*!< 1k range */
-                  Range10k,         /*!< 10k range */
-                  Range100k,        /*!< 100k range */
-                  Range1M,          /*!< 1M range */
-                  Range10M,         /*!< 10M range */
-                  Range100M         /*!< 100M range */
-               };
+  enum class Range_t
+  {
+    Auto = -10,       /*!< AUTO range */
+    Min,              /*!< MIN range */
+    Max,              /*!< MAX range */
+    Range20m = 1,     /*!< 20 milli range */
+    Range100m,        /*!< 100 milli range */
+    Range1,           /*!< 1 range */
+    Range10,          /*!< 10 range */
+    Range100,         /*!< 100 range */
+    Range1k,          /*!< 1k range */
+    Range10k,         /*!< 10k range */
+    Range100k,        /*!< 100k range */
+    Range1M,          /*!< 1M range */
+    Range10M,         /*!< 10M range */
+    Range100M         /*!< 100M range */
+  };
 
   /*! \brief Resolution
    */
-  enum resolution_t {
-                  ResolutionMin,    /*!< 5 1/2 digit */
-                  ResolutionMax     /*!< 4 1/2 digit */
-                    };
+  enum class Resolution_t
+  {
+    Min,    /*!< 5 1/2 digit */
+    Max     /*!< 4 1/2 digit */
+  };
 
   /*! \brief Range of source subsystem
    */
-  enum sourceRange_t {
-                      S1_30V1A,  /*!< Range S1: 30V / 1A */
-                      S2_8V3A    /*!< Range S2: 8V / 3A */
-                     };
+  enum class SourceRange_t
+  {
+    S1_30V1A,  /*!< Range S1: 30V / 1A */
+    S2_8V3A    /*!< Range S2: 8V / 3A */
+  };
 
   /*! \brief Constructor
    *
@@ -103,26 +106,13 @@ class mdtDeviceU3606A : public mdtDeviceScpi
     return mdtDeviceScpi::connectToDevice(0x0957, 0x4d18, serialNumber);
   }
 
-  /*! \brief Search and connect to physical device.
-   *
-   * Will scan available ports and open the first port that
-   *  has device attached maching request.
-   *
-   * \param devInfo Requested device's informations.
-   *                 Note: Vendor ID and/or product ID are automatically set.
-   *                       (in other words, a empty mdtDeviceInfo can be passed).
-   *                       Optionnaly, a serial ID can be set (usefull if many U3606A devices are connected)
-   * \return A error listed in mdtAbstractPort::error_t (NoError on success)
-   */
-  ///mdtAbstractPort::error_t connectToDevice(const mdtDeviceInfo &devInfo);
-
   /*! \brief Setup DC voltage measure
    *
    * \param range If range is supported by instrument, it will be set,
    *               else AUTO range is used.
    * \param resolution Resolution to use
    */
-  bool setupVoltageDcMeasure(range_t range, resolution_t resolution);
+  bool setupVoltageDcMeasure(Range_t range, Resolution_t resolution);
 
   /*! \brief Setup resistance measure
    *
@@ -130,7 +120,7 @@ class mdtDeviceU3606A : public mdtDeviceScpi
    *               else AUTO range is used.
    * \param resolution Resolution to use
    */
-  bool setupResistanceMeasure(range_t range, resolution_t resolution);
+  bool setupResistanceMeasure(Range_t range, Resolution_t resolution);
 
   /*! \brief Setup low resistance measure (4 wires)
    *
@@ -138,7 +128,7 @@ class mdtDeviceU3606A : public mdtDeviceScpi
    *               else AUTO range is used.
    * \param resolution Resolution to use
    */
-  bool setupLowResistanceMeasure(range_t range, resolution_t resolution);
+  bool setupLowResistanceMeasure(Range_t range, Resolution_t resolution);
 
   /*! \brief Get the measure configuration
    *
@@ -148,14 +138,15 @@ class mdtDeviceU3606A : public mdtDeviceScpi
    * By error, unknown measure type is returned .
    */
   MeasureType_t getMeasureConfiguration();
-  
-  ///mdtFrameCodecScpiU3606A::measure_type_t getMeasureConfiguration();
 
   /*! \brief Get measure value
    *
-   * This is similar to call getAnalogInputValue("MEASURE", true, true) .
+   * Will submit the READ? query to device.
+   *  Don't forget to setup measure before.
+   *
+   * \param timeout Timeout [ms]
    */
-  mdtValue getMeasureValue();
+  mdtValueDouble getMeasureValue(int timeout = 30000);
 
   /*! \brief Set source output state (On/Off)
    */
@@ -167,7 +158,7 @@ class mdtDeviceU3606A : public mdtDeviceScpi
    *
    * \sa setOutputState()
    */
-  bool setSourceRange(sourceRange_t range);
+  bool setSourceRange(SourceRange_t range);
 
   /*! \brief Set source voltage limit
    *
@@ -185,17 +176,9 @@ class mdtDeviceU3606A : public mdtDeviceScpi
    */
   bool setSourceCurrent(double x);
 
- public slots:
-
-  /*! \brief Update (G)UI when device's state has changed
-   */
-  ///void onStateChanged(int state);
-
  private:
 
   Q_DISABLE_COPY(mdtDeviceU3606A);
-
-  ///mdtFrameCodecScpiU3606A *pvCodec;
 };
 
 #endif  // #ifndef MDT_DEVICE_U3606A_H

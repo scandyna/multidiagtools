@@ -68,7 +68,7 @@ bool mdtTtTestCableOffsetTool::runOffsetReset(const QVariant& testModelId)
   shared_ptr<mdtDeviceU3606A> multimeter;
   QSqlRecord itemRecord;
   QVariant testModelItemId;
-  mdtValue R;
+  mdtValueDouble R;
   QList<QSqlRecord> logicalTestLinks;
   bool ok;
   int linkCount;
@@ -94,7 +94,7 @@ bool mdtTtTestCableOffsetTool::runOffsetReset(const QVariant& testModelId)
     return false;
   }
   // Setup multimeter to its min range
-  if(multimeter->setupResistanceMeasure(mdtDeviceU3606A::RangeMin, mdtDeviceU3606A::ResolutionMin) < 0){
+  if(!multimeter->setupResistanceMeasure(mdtDeviceU3606A::Range_t::Min, mdtDeviceU3606A::Resolution_t::Min)){
     pvLastError = multimeter->lastError();
     displayLastError();
     disconnectFromInstruments();
@@ -113,7 +113,7 @@ bool mdtTtTestCableOffsetTool::runOffsetReset(const QVariant& testModelId)
     }
     // Get R
     R = multimeter->getMeasureValue();
-    if(!R.isValid()){
+    if(R.isNull()){
       pvLastError = multimeter->lastError();
       displayLastError();
       disconnectFromInstruments();
@@ -132,7 +132,7 @@ bool mdtTtTestCableOffsetTool::runOffsetReset(const QVariant& testModelId)
       continue;
     }
     Q_ASSERT(linkCount > 0);
-    r = R.valueDouble() / static_cast<double>(linkCount);
+    r = R.value() / static_cast<double>(linkCount);
     for(i = 0; i < linkCount; ++i){
       if(!pvTestLinkTableController->setData("UnitConnectionStart_Id_FK", logicalTestLinks.at(i).value("TestCableUnitConnectionStart_Id_FK"),
                                              "UnitConnectionEnd_Id_FK", logicalTestLinks.at(i).value("TestCableUnitConnectionEnd_Id_FK"),

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -395,6 +395,13 @@ void mdtClMainWindow::editSelectedUnit()
   window->enableNavigation();
   window->raise();
   window->show();
+}
+
+void mdtClMainWindow::viewWire()
+{
+  if(!displayTableView("Wire_tbl")){
+    createWireTableView();
+  }
 }
 
 void mdtClMainWindow::viewLinkList()
@@ -968,6 +975,20 @@ mdtClUnitEditor *mdtClMainWindow::createUnitEditor()
   return editor;
 }
 
+bool mdtClMainWindow::createWireTableView()
+{
+  mdtSqlTableWidget *tableWidget;
+
+  tableWidget = createTableView("Wire_tbl", tr("Wires"));
+  if(tableWidget == 0){
+    return false;
+  }
+  // Resize
+  tableWidget->resizeViewToContents();
+
+  return true;
+}
+
 bool mdtClMainWindow::createLinkListTableView()
 {
   mdtSqlTableWidget *tableWidget;
@@ -1366,6 +1387,8 @@ void mdtClMainWindow::connectActions()
   ///connect(pbEditUnit, SIGNAL(clicked()), this, SLOT(editUnit()));
   // Link list
   connect(actViewLinkList, SIGNAL(triggered()), this, SLOT(viewLinkList()));
+  // Link wires
+  connect(actViewWires, SIGNAL(triggered()), this, SLOT(viewWire()));
   // Link beam
   connect(actViewLinkBeam, SIGNAL(triggered()), this, SLOT(viewLinkBeam()));
   connect(actEditLinkBeam, SIGNAL(triggered()), this, SLOT(editLinkBeam()));

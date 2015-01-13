@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -393,7 +393,7 @@ void mdtCableListTest::articleTest()
   QCOMPARE(data.value("LinkType_Code_FK"), QVariant("CABLELINK"));
   QCOMPARE(data.value("LinkDirection_Code_FK"), QVariant("BID"));
   QCOMPARE(data.value("Identification"), QVariant("1-2"));
-  QCOMPARE(data.value("Value"), QVariant(0.1));
+  QCOMPARE(data.value("Resistance"), QVariant(0.1));
   QCOMPARE(data.value("ValueUnit"), QVariant("Ohm"));
   // Check that we cannot remove CNN ID 1
   QVERIFY(!art.removeConnection(1));

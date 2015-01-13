@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -681,7 +681,7 @@ bool mdtClArticle::addCableLink(const QVariant & articleConnectionStartId, const
   record.setValue("LinkType_Code_FK", "CABLELINK");
   record.setValue("LinkDirection_Code_FK", "BID");
   record.setValue("Identification", identification);
-  record.setValue("Value", R);
+  record.setValue("Resistance", R);
 
   return addRecord(record, "ArticleLink_tbl");
 }

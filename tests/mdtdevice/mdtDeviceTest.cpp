@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -37,14 +37,17 @@
 #include "mdtPortInfo.h"
 #include "mdtPortManager.h"
 #include "mdtPortConfig.h"
+#include "mdtUsbtmcPortSetupDialog.h"
+#include "mdtUsbDeviceDescriptor.h"
 
-#include "mdtFrameCodecScpi.h"
+///#include "mdtFrameCodecScpi.h"
 
 #include <QString>
 #include <QVariant>
 #include <QList>
 
 #include <QTime>
+#include <QTimer>
 #include <QDebug>
 
 #include <memory>
@@ -1878,6 +1881,72 @@ void mdtDeviceTest::modbusWagoModuleTest()
   QCOMPARE(aio->addressWrite(), 17);
 
   /*
+   * Analog OUT module
+   *
+   * Check with 750-552 witch has:
+   *  - 2 analog OUT
+   *  - Range: 0 to +20mA
+   *  - Unit: [mA]
+   *
+   * We use a address range:
+   *  - Read access: 8-9
+   *  - Write access: 18-19
+   */
+  m.clear();
+  QVERIFY(m.setupFromRegisterWord(552));
+  m.updateAddresses(0, 8, 18, 0, 0, 0);
+  QCOMPARE(m.firstAiAddress() , 0);
+  QCOMPARE(m.lastAiAddress() , 0);
+  QCOMPARE(m.nextModuleFirstAiAddress() , 0);
+  QCOMPARE(m.firstAoAddressRead() , 8);
+  QCOMPARE(m.lastAoAddressRead() , 9);
+  QCOMPARE(m.nextModuleFirstAoAddressRead() , 10);
+  QCOMPARE(m.firstAoAddressWrite() , 18);
+  QCOMPARE(m.lastAoAddressWrite() , 19);
+  QCOMPARE(m.nextModuleFirstAoAddressWrite() , 20);
+  QCOMPARE(m.analogInputs().size(), 0);
+  QCOMPARE(m.analogOutputs().size(), 2);
+  QVERIFY(m.digitalInputs().isEmpty());
+  QVERIFY(m.digitalOutputs().isEmpty());
+  QVERIFY(m.type() == mdtDeviceModbusWagoModule::AnalogOutputs);
+  QCOMPARE(m.partNumber() , 552);
+  QCOMPARE(m.partNumberText() , QString("552"));
+  // Check internal I/O setup
+  aio = m.analogOutputs().at(0);
+  QVERIFY(aio != 0);
+  MDT_COMPARE(aio->minimum(), 0.0, 12, 0.0, 20.0);
+  MDT_COMPARE(aio->maximum(), 20.0, 12, 0.0, 20.0);
+  QCOMPARE(aio->unit(), QString("[mA]"));
+  QCOMPARE(aio->addressRead(), 8);
+  QCOMPARE(aio->addressWrite(), 18);
+  aio = m.analogOutputs().at(1);
+  QVERIFY(aio != 0);
+  MDT_COMPARE(aio->minimum(), 0.0, 12, 0.0, 20.0);
+  MDT_COMPARE(aio->maximum(), 20.0, 12, 0.0, 20.0);
+  QCOMPARE(aio->unit(), QString("[mA]"));
+  QCOMPARE(aio->addressRead(), 9);
+  QCOMPARE(aio->addressWrite(), 19);
+  // Check some values
+  aio->setValueInt(0, true, false);
+  MDT_COMPARE(aio->value().valueDouble(), 0.0, 12, 0.0, 20.0);
+  aio->setValueInt(4096, true, false);
+  MDT_COMPARE(aio->value().valueDouble(), 2.5, 12, 0.0, 20.0);
+  aio->setValueInt(8192, true, false);
+  MDT_COMPARE(aio->value().valueDouble(), 5.0, 12, 0.0, 20.0);
+  aio->setValueInt(12288, true, false);
+  MDT_COMPARE(aio->value().valueDouble(), 7.5, 12, 0.0, 20.0);
+  aio->setValueInt(16384, true, false);
+  MDT_COMPARE(aio->value().valueDouble(), 10.0, 12, 0.0, 20.0);
+  aio->setValueInt(20480, true, false);
+  MDT_COMPARE(aio->value().valueDouble(), 12.5, 12, 0.0, 20.0);
+  aio->setValueInt(24576, true, false);
+  MDT_COMPARE(aio->value().valueDouble(), 15.0, 12, 0.0, 20.0);
+  aio->setValueInt(28672, true, false);
+  MDT_COMPARE(aio->value().valueDouble(), 17.5, 12, 0.0, 20.0);
+  aio->setValueInt(32767, true, false);
+  MDT_COMPARE(aio->value().valueDouble(), 20.0, 12, 0.0, 20.0);
+
+  /*
    * Digital IN module
    *
    * Check with a 4 digital input module.
@@ -2352,12 +2421,28 @@ void mdtDeviceTest::modbusBeckhoffTest()
 void mdtDeviceTest::scpiTest()
 {
   mdtDeviceScpi d;
-  QList<mdtPortInfo*> portInfoList;
-  mdtPortInfo *portInfo;
-  mdtDeviceInfo *devInfo;
-  mdtFrameCodecScpi codec;
+  mdtUsbtmcPortSetupDialog dialog;
+  mdtUsbDeviceDescriptor deviceDescriptor;
+  ///int ifaceNumber;
+  
+  ///QList<mdtPortInfo*> portInfoList;
+  ///mdtPortInfo *portInfo;
+  ///mdtDeviceInfo *devInfo;
+  ///mdtFrameCodecScpi codec;
   QByteArray data;
 
+  // Try to find a USBTMC device
+  dialog.scan();
+  QTimer::singleShot(1000, &dialog, SLOT(accept()));
+  dialog.exec();
+  deviceDescriptor = dialog.selectedDevice();
+  if(deviceDescriptor.isEmpty()){
+    QSKIP("No USBTMC device attached to system.", SkipAll);
+  }
+  ///ifaceNumber = dialog.selectedbInterfaceNumber();
+
+  // Open device
+  QVERIFY(d.connectToDevice(deviceDescriptor.idVendor(), deviceDescriptor.idProduct(), ""));
   // Try to find a device and connect if ok
   ///portInfoList = d.portManager()->scan();
 //   if(portInfoList.size() < 1){
@@ -2374,7 +2459,7 @@ void mdtDeviceTest::scpiTest()
 
   // Check commands
   QVERIFY(d.sendCommand("*RST\n") >= 0);
-  QVERIFY(d.waitOperationComplete(5000, 100));
+  ///QVERIFY(d.waitOperationComplete(5000, 100));
   QVERIFY(d.sendCommand("*CLS\n") >= 0);
   // Check query
   QVERIFY(!d.sendQuery("*IDN?\n").isEmpty());
@@ -2383,6 +2468,7 @@ void mdtDeviceTest::scpiTest()
 void mdtDeviceTest::U3606ATest()
 {
   mdtDeviceU3606A d;
+  mdtValueDouble x;
 
   // Try to find a device and connect if ok
   if(!d.connectToDevice()){
@@ -2397,21 +2483,19 @@ void mdtDeviceTest::U3606ATest()
   d.wait(1);
   QCOMPARE(d.getDeviceError().systemNumber(), 0);
   d.wait(1);
+  QVERIFY(d.sendQuery("*IDN?\n").left(27) == "Agilent Technologies,U3606A");
+  d.wait(1);
 
   // Set and get device setup
   QVERIFY(d.sendCommand("CONF:VOLT 10,0.001\n"));
   d.wait(1);
   QVERIFY(d.getMeasureConfiguration() == mdtDeviceU3606A::MeasureType_t::VoltageDc);
-  d.wait(1);
-//   QVERIFY(d.ios()->analogInputWithLabelShort("MEASURE") != 0);
-//   QCOMPARE(d.ios()->analogInputWithLabelShort("MEASURE")->minimum() , 0.0);
-//   QCOMPARE(d.ios()->analogInputWithLabelShort("MEASURE")->maximum() , 10.0);
+  QVERIFY(d.setupVoltageDcMeasure(mdtDeviceU3606A::Range_t::Auto, mdtDeviceU3606A::Resolution_t::Min));
+  QVERIFY(d.getMeasureConfiguration() == mdtDeviceU3606A::MeasureType_t::VoltageDc);
+  x = d.getMeasureValue();
+  qDebug() << "----------> Voltage: " << x;
+  QVERIFY(!x.isNull());
 
-  // Try helper methods
-  ///QVERIFY(d.getMeasureValue().isValid());
-  ///qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
-
-  
   // Enable bits in Status Byte Register
   QVERIFY(d.sendCommand("*SRE 255\n"));
   ///qDebug() << "*SRE?: " << d.sendQuery("*SRE?\n");
@@ -2437,7 +2521,7 @@ void mdtDeviceTest::U3606ATest()
   ///QTest::qWait(2000);
   ///qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
   // Check generic query
-  QVERIFY(d.sendQuery("*IDN?\n").left(27) == "Agilent Technologies,U3606A");
+  
   
   ///qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
 

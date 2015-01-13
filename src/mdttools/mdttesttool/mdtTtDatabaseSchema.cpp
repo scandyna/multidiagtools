@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -151,11 +151,15 @@ bool mdtTtDatabaseSchema::importDatabase(const QFileInfo sourceDbFileInfo)
   }
   for(i = 0; i < sourceTables.size(); ++i){
     tableManager.clearFieldMap();
-    /**
-    if(sourceTables.at(i) == "TestNode_tbl"){
-      tableManager.addFieldMapping("NodeId", "NodeIdentification", "", QVariant::String);
+    /// \todo Provisoire !!
+
+    if(sourceTables.at(i) == "Link_tbl"){
+      tableManager.addFieldMapping("Value", "Resistance", "", QVariant::String);
     }
-    */
+    if(sourceTables.at(i) == "ArticleLink_tbl"){
+      tableManager.addFieldMapping("Value", "Resistance", "", QVariant::String);
+    }
+
     if(!tableManager.copyTable(sourceTables.at(i), sourceTables.at(i), mdtSqlDatabaseManager::KeepExisting, sourceDbManager.database(), pvDatabaseManager->database())){
       pvLastError = tableManager.lastError();
       return false;
@@ -253,6 +257,9 @@ bool mdtTtDatabaseSchema::setupTables()
     return false;
   }
   if(!setupLinkBeamUnitEndTable()){
+    return false;
+  }
+  if(!setupWireTable()){
     return false;
   }
   if(!setupLinkTable()){
@@ -790,7 +797,7 @@ bool mdtTtDatabaseSchema::setupArticleTable()
   field.setType(QVariant::Int);
   field.setAutoValue(true);
   table.addField(field, true);
-  // Coordinate
+  // ArticleCode
   field = QSqlField();
   field.setName("ArticleCode");
   field.setType(QVariant::String);
@@ -1123,9 +1130,9 @@ bool mdtTtDatabaseSchema::setupArticleLinkTable()
   field.setLength(10);
   field.setRequiredStatus(QSqlField::Required);
   table.addField(field, false);
-  // Value
+  // Resistance
   field = QSqlField();
-  field.setName("Value");
+  field.setName("Resistance");
   field.setType(QVariant::Double);
   table.addField(field, false);
   // Indexes
@@ -1461,6 +1468,81 @@ bool mdtTtDatabaseSchema::setupUnitConnectionTable()
   return true;
 }
 
+bool mdtTtDatabaseSchema::setupWireTable()
+{
+  mdtSqlSchemaTable table;
+  QSqlField field;
+
+  table.setTableName("Wire_tbl", "UTF8");
+  // Id_PK
+  field.setName("Id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  table.addField(field, true);
+  // ArticleCode
+  field = QSqlField();
+  field.setName("ArticleCode");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  table.addField(field, false);
+  // Manufacturer
+  field = QSqlField();
+  field.setName("Manufacturer");
+  field.setType(QVariant::String);
+  field.setLength(100);
+  table.addField(field, false);
+  // Model
+  field = QSqlField();
+  field.setName("Model");
+  field.setType(QVariant::String);
+  field.setLength(100);
+  table.addField(field, false);
+  // ManufacturerArticleCode
+  field = QSqlField();
+  field.setName("ManufacturerArticleCode");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  table.addField(field, false);
+  // Section
+  field = QSqlField();
+  field.setName("Section");
+  field.setType(QVariant::Double);
+  table.addField(field, false);
+  // LineicResistance
+  field = QSqlField();
+  field.setName("LineicResistance");
+  field.setType(QVariant::Double);
+  table.addField(field, false);
+  // ColorEN
+  field = QSqlField();
+  field.setName("ColorEN");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  table.addField(field, false);
+  // ColorFR
+  field = QSqlField();
+  field.setName("ColorFR");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  table.addField(field, false);
+  // ColorDE
+  field = QSqlField();
+  field.setName("ColorDE");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  table.addField(field, false);
+  // ColorIT
+  field = QSqlField();
+  field.setName("ColorIT");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  table.addField(field, false);
+
+  pvTables.append(table);
+
+  return true;
+}
+
 bool mdtTtDatabaseSchema::setupLinkTable() 
 {
   mdtSqlSchemaTable table;
@@ -1484,6 +1566,11 @@ bool mdtTtDatabaseSchema::setupLinkTable()
   // ArticleConnectionEnd_Id_FK
   field = QSqlField();
   field.setName("ArticleConnectionEnd_Id_FK");
+  field.setType(QVariant::Int);
+  table.addField(field, false);
+  // Wire_Id_FK
+  field = QSqlField();
+  field.setName("Wire_Id_FK");
   field.setType(QVariant::Int);
   table.addField(field, false);
   // SinceVersion
@@ -1517,9 +1604,9 @@ bool mdtTtDatabaseSchema::setupLinkTable()
   field.setLength(10);
   field.setRequiredStatus(QSqlField::Required);
   table.addField(field, false);
-  // Value
+  // Resistance
   field = QSqlField();
-  field.setName("Value");
+  field.setName("Resistance");
   field.setType(QVariant::Double);
   table.addField(field, false);
   // LinkBeam_Id_FK
@@ -1549,6 +1636,11 @@ bool mdtTtDatabaseSchema::setupLinkTable()
   }
   table.addIndex("LinkBeam_Id_FK_idx", false);
   if(!table.addFieldToIndex("LinkBeam_Id_FK_idx", "LinkBeam_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addIndex("Wire_Id_FK_idx1", false);
+  if(!table.addFieldToIndex("Wire_Id_FK_idx1", "Wire_Id_FK")){
     pvLastError = table.lastError();
     return false;
   }
@@ -1584,6 +1676,11 @@ bool mdtTtDatabaseSchema::setupLinkTable()
   }
   table.addForeignKey("LinkBeam_Id_FK_fk", "LinkBeam_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   if(!table.addFieldToForeignKey("LinkBeam_Id_FK_fk", "LinkBeam_Id_FK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addForeignKey("Wire_Id_FK_fk1", "Wire_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("Wire_Id_FK_fk1", "Wire_Id_FK", "Id_PK")){
     pvLastError = table.lastError();
     return false;
   }
@@ -2993,7 +3090,7 @@ bool mdtTtDatabaseSchema::createArticleLinkView()
         " LinkType_tbl.NameFR AS LinkTypeNameFR ,\n"\
         " LinkType_tbl.NameDE AS LinkTypeNameDE ,\n"\
         " LinkType_tbl.NameIT AS LinkTypeNameIT ,\n"\
-        " ArticleLink_tbl.Value ,\n"\
+        " ArticleLink_tbl.Resistance ,\n"\
         " LinkType_tbl.ValueUnit ,\n"\
         " ACNXS.Article_Id_FK AS StartArticle_Id_FK ,\n"\
         " ACS.Name AS StartArticleConnectorName ,\n"\
@@ -3200,7 +3297,7 @@ bool mdtTtDatabaseSchema::createArticleLinkUnitConnectionView()
         " AL.LinkType_Code_FK,\n"\
         " AL.LinkDirection_Code_FK,\n"\
         " AL.Identification,\n"\
-        " AL.Value,\n"\
+        " AL.Resistance,\n"\
         " AL.SinceVersion,\n"\
         " AL.Modification\n"\
         "FROM ArticleLink_tbl AL\n"\
@@ -3232,7 +3329,7 @@ bool mdtTtDatabaseSchema::createUnitLinkView()
               " LNK.SinceVersion ,\n"\
               " LNK.Modification ,\n"\
               " LinkType_tbl.NameEN AS LinkTypeNameEN ,\n"\
-              " LNK.Value ,\n"\
+              " LNK.Resistance ,\n"\
               " LinkType_tbl.ValueUnit ,\n"\
               " LinkDirection_tbl.PictureAscii AS LinkDirectionPictureAscii ,\n"\
               " UCNXS.SchemaPage AS StartSchemaPage ,\n"\
@@ -3592,7 +3689,7 @@ bool mdtTtDatabaseSchema::createTestLinkView()
         " TCDUCNX.UnitContactName AS TestCableDutSideContactName,\n"\
         " TCDUCNX.Resistance AS TestCableDutSideConnectionResistance,\n"\
         " TCL.Identification AS TestCableLinkIdentification,\n"\
-        " TCL.Value AS TestCableLinkResistance,\n"\
+        " TCL.Resistance AS TestCableLinkResistance,\n"\
         " TCTUCNR.Name AS TestCableTestSideConnectorName,\n"\
         " TCTUCNX.UnitContactName AS TestCableTestSideContactName,\n"\
         " TCTUCNX.Resistance AS TestCableTestSideConnectionResistance,\n"\

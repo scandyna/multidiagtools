@@ -63,7 +63,7 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>763</width>
-     <height>21</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
@@ -149,6 +149,7 @@ p, li { white-space: pre-wrap; }
      <string>&amp;Link list</string>
     </property>
     <addaction name="actViewLinkList"/>
+    <addaction name="actViewWires"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Edition"/>
@@ -356,6 +357,11 @@ p, li { white-space: pre-wrap; }
   <action name="actCalibrateW750_2BusNode">
    <property name="text">
     <string>Calibrate W750 2BUS Node</string>
+   </property>
+  </action>
+  <action name="actViewWires">
+   <property name="text">
+    <string>View wires</string>
    </property>
   </action>
  </widget>

@@ -223,7 +223,7 @@ void mdtTtCableChecker::runTest()
     }
     // Measure value
     qDebug() << "Running measure ...";
-    measuredValue = pvMultimeter->getMeasureValue();
+    ///measuredValue = pvMultimeter->getMeasureValue();
     qDebug() << "-> DONE: " << measuredValue;
     // Store value
     /**

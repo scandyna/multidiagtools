@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -38,7 +38,7 @@ mdtClLinkData::mdtClLinkData(const QSqlRecord & record)
   Q_ASSERT(indexOf("Identification") >= 0);
   Q_ASSERT(indexOf("SinceVersion") >= 0);
   Q_ASSERT(indexOf("Modification") >= 0);
-  Q_ASSERT(indexOf("Value") >= 0);
+  Q_ASSERT(contains("Resistance") >= 0);
   clearVehicleTypeLinkDataList();
   /*
    * Currently, mdtClUnit::getArticleLinkListUsingConnectionId() takes data from

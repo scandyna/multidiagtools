@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -99,7 +99,7 @@ class mdtDeviceModbusWagoModule
    *  This can be usefull for some special modules witch needs to communicate
    *  with fieldbus during setup.
    *
-   * However, the normal way is to stup the module with setupFromRegisterWord() first,
+   * However, the normal way is to setup the module with setupFromRegisterWord() first,
    *  then call this method to address I/Os.
    *
    * This default implementation will address all present I/Os in a linear way.

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -169,7 +169,13 @@ class mdtTtDatabaseSchema
    */
   bool setupUnitConnectionTable();
 
-  /*! \brief
+  /*! \brief Create Wire_tbl
+   *
+   * Wire_tbl is a sort of wires databse
+   */
+  bool setupWireTable();
+
+  /*! \brief Create Link_tbl
    */
   bool setupLinkTable();
 
