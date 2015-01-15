@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -20,14 +20,159 @@
  ****************************************************************************/
 #include "mdtAlgorithmsTest.h"
 #include "mdtAlgorithms.h"
+#include "mdtApplication.h"
 
 #include <QTest>
 #include <QString>
 #include <QByteArray>
 #include <QStringList>
-#include "mdtApplication.h"
+#include <limits>
 
 using namespace mdtAlgorithms;
+
+/*
+ * Little class to check NumericRangeDouble inheritance
+ */
+struct CustomNumericRangeDouble : public NumericRangeDouble
+{
+  CustomNumericRangeDouble()
+   : NumericRangeDouble(),
+     letter('\0')
+   {
+   }
+
+  CustomNumericRangeDouble(double min, double max, bool includeMin = true, bool includeMax = true)
+   : NumericRangeDouble(min, max, includeMin, includeMax),
+     letter('\0')
+   {
+   }
+
+  CustomNumericRangeDouble(double min, double max, char c, bool includeMin = true, bool includeMax = true)
+   : NumericRangeDouble(min, max, includeMin, includeMax),
+     letter(c)
+   {
+   }
+
+   char letter;
+};
+
+void mdtAlgorithmsTest::numericRangeDoubleTest()
+{
+  CustomNumericRangeDouble range;
+  std::vector<CustomNumericRangeDouble> ranges;
+
+  QVERIFY(isInRange(1.0, -std::numeric_limits<double>::infinity(), std::numeric_limits<double>::infinity(), true, true));
+  QVERIFY(isInRange(0.0, -std::numeric_limits<double>::infinity(), std::numeric_limits<double>::infinity(), true, true));
+  QVERIFY(isInRange(-std::numeric_limits<double>::infinity(), -std::numeric_limits<double>::infinity(), std::numeric_limits<double>::infinity(), true, true));
+  QVERIFY(isInRange(std::numeric_limits<double>::infinity(), -std::numeric_limits<double>::infinity(), std::numeric_limits<double>::infinity(), true, true));
+  QVERIFY(!isInRange(-std::numeric_limits<double>::infinity(), -std::numeric_limits<double>::infinity(), std::numeric_limits<double>::infinity(), false, false));
+  QVERIFY(!isInRange(std::numeric_limits<double>::infinity(), -std::numeric_limits<double>::infinity(), std::numeric_limits<double>::infinity(), false, false));
+  QVERIFY(isInRange(0.0, -1.0, 1.0, true, true));
+  QVERIFY(isInRange(0.0, -0.1, 0.1, true, true));
+  QVERIFY(isInRange(0.0, -1.0, 1.0, false, true));
+  QVERIFY(isInRange(0.0, -0.1, 0.1, false, true));
+  QVERIFY(!isInRange(0.0, 0.0, 0.1, false, true));
+  QVERIFY(isInRange(0.0, -1.0, 1.0, true, false));
+  QVERIFY(isInRange(0.0, -0.1, 0.1, true, false));
+  QVERIFY(!isInRange(0.0, -0.1, 0.0, true, false));
+  // Checks with default constructed range
+  QVERIFY(!range.isValid());
+  // Checks with range [1e-3;1e-2]
+  range.bottom = 1e-3;
+  range.top = 1e-2;
+  range.includeBottom = true;
+  range.includeTop = true;
+  QVERIFY(!isInRange(9.9999e-4, range));
+  QVERIFY(isInRange(1e-3, range));
+  QVERIFY(isInRange(5e-3, range));
+  QVERIFY(isInRange(1e-2, range));
+  QVERIFY(!isInRange(1.0001e-2, range));
+  // Checks with range ]1e-3;1e-2]
+  range.bottom = 1e-3;
+  range.top = 1e-2;
+  range.includeBottom = false;
+  range.includeTop = true;
+  QVERIFY(!isInRange(9.9999e-4, range));
+  QVERIFY(!isInRange(1e-3, range));
+  QVERIFY(isInRange(5e-3, range));
+  QVERIFY(isInRange(1e-2, range));
+  QVERIFY(!isInRange(1.0001e-2, range));
+  // Checks with range [1e-3;1e-2[
+  range.bottom = 1e-3;
+  range.top = 1e-2;
+  range.includeBottom = true;
+  range.includeTop = false;
+  QVERIFY(!isInRange(9.9999e-4, range));
+  QVERIFY(isInRange(1e-3, range));
+  QVERIFY(isInRange(5e-3, range));
+  QVERIFY(!isInRange(1e-2, range));
+  QVERIFY(!isInRange(1.0001e-2, range));
+  // Checks with range ]1e-3;1e-2[
+  range.bottom = 1e-3;
+  range.top = 1e-2;
+  range.includeBottom = false;
+  range.includeTop = false;
+  QVERIFY(!isInRange(9.9999e-4, range));
+  QVERIFY(!isInRange(1e-3, range));
+  QVERIFY(isInRange(5e-3, range));
+  QVERIFY(!isInRange(1e-2, range));
+  QVERIFY(!isInRange(1.0001e-2, range));
+  /*
+   * Check range searching
+   *
+   * Ranges are: [1e-9;1e-6[ , [1e-6;1e-3[ , [1e-3;1[ , [1;1e3]
+   */
+  // Build list of ranges
+  ranges.clear();
+  ranges.push_back(CustomNumericRangeDouble(1e-9, 1e-6, 'n', true, false));
+  ranges.push_back(CustomNumericRangeDouble(1e-6, 1e-3, 'u', true, false));
+  ranges.push_back(CustomNumericRangeDouble(1e-3, 1.0, 'm', true, false));
+  ranges.push_back(CustomNumericRangeDouble(1.0, 1e3, true, true));
+  // Check range seraching
+  QVERIFY(!rangeOf(1e-10, ranges).isValid());
+  QVERIFY(rangeOf(1e-6, ranges).isValid());
+  QVERIFY(rangeOf(1e-3, ranges).isValid());
+  QVERIFY(rangeOf(1e-1, ranges).isValid());
+  QVERIFY(rangeOf(1e-2, ranges).isValid());
+  QVERIFY(rangeOf(1.0, ranges).isValid());
+  QVERIFY(rangeOf(1e1, ranges).isValid());
+  QVERIFY(rangeOf(1e2, ranges).isValid());
+  QVERIFY(rangeOf(1e3, ranges).isValid());
+  QVERIFY(!rangeOf(1e4, ranges).isValid());
+}
+
+void mdtAlgorithmsTest::numericRangeDoubleBenchmark()
+{
+  double x = 1.38e7;
+  bool y = false;
+
+  QBENCHMARK{
+    y = isInRange(x, NumericRangeDouble(-1e15,1e15));
+  }
+  if(!y){
+    QFAIL("Numeric range checking failed");
+  }
+}
+
+void mdtAlgorithmsTest::numericRangeDoubleSearchBenchmark()
+{
+  std::vector<CustomNumericRangeDouble> ranges;
+  CustomNumericRangeDouble r;
+  double x = 1e-2;
+
+  // Build list of ranges [1e-9;1e-6[ , [1e-6;1e-3[ , [1e-3;1[ , [1;1e3]
+  ranges.push_back(CustomNumericRangeDouble(1e-9, 1e-6, 'n', true, false));
+  ranges.push_back(CustomNumericRangeDouble(1e-6, 1e-3, 'u', true, false));
+  ranges.push_back(CustomNumericRangeDouble(1e-3, 1.0, 'm', true, false));
+  ranges.push_back(CustomNumericRangeDouble(1.0, 1e3, true, true));
+
+  QBENCHMARK{
+    r = rangeOf(x, ranges);
+  }
+  if( (!r.isValid()) || (r.letter != 'm') ){
+    QFAIL("Numeric range searching failed");
+  }
+}
 
 void mdtAlgorithmsTest::naturalCompareLessThanTest()
 {

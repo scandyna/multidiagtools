@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -28,6 +28,11 @@ class mdtAlgorithmsTest : public mdtTest
  Q_OBJECT
 
  private slots:
+
+  // Numeric range test
+  void numericRangeDoubleTest();
+  void numericRangeDoubleBenchmark();
+  void numericRangeDoubleSearchBenchmark();
 
   // Check natural sort
   void naturalCompareLessThanTest();

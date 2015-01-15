@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -26,11 +26,94 @@
 #include <QString>
 #include <QByteArray>
 #include <QStringList>
+#include <vector>
 
 /*! \brief Some usefull little (unefficient) algoritms
  */
 namespace mdtAlgorithms
 {
+  /*! \brief Numeric range
+   */
+  struct NumericRangeDouble
+  {
+    /*! \brief Construct a invalid range
+     */
+    NumericRangeDouble();
+
+    /*! \brief Construct a range that represents all values from min to max
+     */
+    NumericRangeDouble(double min, double max, bool includeMin = true, bool includeMax = true);
+
+    /*! \brief Check if range is valid
+     *
+     * A range is valid if bottom is < top
+     */
+    inline bool isValid() const
+    {
+      return (bottom < top);
+    }
+
+    /*! \brief Bottom of the range
+     */
+    double bottom;
+
+    /*! \brief Top of the range
+     */
+    double top;
+
+    /*! \brief bottom is part of range (or not)
+     */
+    bool includeBottom;
+
+    /*! \brief top is part of range (or not)
+     */
+    bool includeTop;
+  };
+
+  /*! \brief Check if x is in range min;max
+   *
+   * If both includeBottom and includeTop are true,
+   *  true is returned if x is in [bottom;top].
+   *
+   * If only includeBottom is true,
+   *  true is returned if x is in [bottom;top[.
+   *
+   * If only includeTop is true,
+   *  true is returned if x is in ]bottom;top].
+   *
+   * For the last case,
+   *  true is returned if x is in ]bottom;top[.
+   *
+   * \pre bottom must be < top
+   */
+  bool isInRange(double x, double bottom, double top, bool includeBottom, bool includeTop);
+
+  /*! \brief Check if x is in range
+   *
+   * \pre range must be valid
+   */
+  inline bool isInRange(double x, const NumericRangeDouble & range)
+  {
+    Q_ASSERT(range.isValid());
+    return isInRange(x, range.bottom, range.top, range.includeBottom, range.includeTop);
+  }
+
+  /*! \brief Get the range in witch x is
+   *
+   * If x is in no range in ranges,
+   *  a invalid range is returned.
+   */
+  template<typename RangeType>
+  RangeType rangeOf(double x, const std::vector<RangeType> & ranges)
+  {
+    for(auto & r : ranges){
+      if(isInRange(x, r)){
+        return r;
+      }
+    }
+    return RangeType();
+  }
+
   /*! \brief Sort a string list using natural sort
    *
    * Usefull for directory entry list. By default, QDir sorts the entries

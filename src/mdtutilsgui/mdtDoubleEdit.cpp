@@ -60,6 +60,7 @@ mdtDoubleEdit::mdtDoubleEdit(QWidget* parent)
   pvValue = 0.0;
   pvValueIsValid = false;
   pvUnitExponent = 1;
+  buildDefaultUnitRanges();
 }
 
 void mdtDoubleEdit::setReadOnly(bool ro)
@@ -178,7 +179,7 @@ double mdtDoubleEdit::factor(const QChar & c)
   }
 }
 
-int mdtDoubleEdit::p10exponent(const QChar& c)
+int mdtDoubleEdit::p10exponent(const QChar & c)
 {
   switch(c.toAscii()){
     case 'a':
@@ -308,6 +309,17 @@ void mdtDoubleEdit::setUnit(const QString & u)
   if(!ok){
     pvUnitExponent = 1;
   }
+  if(pvUnitExponent == 2){
+    buildDefaultSquareUnitRanges();
+  }
+}
+
+void mdtDoubleEdit::setWireSectionEditionMode(bool set)
+{
+  if(set){
+    setUnit("m2");
+    buildCableSectionRanges();
+  }
 }
 
 void mdtDoubleEdit::setNull()
@@ -394,7 +406,8 @@ void mdtDoubleEdit::convertAndSetValue(QString str)
 void mdtDoubleEdit::displayValue()
 {
   ///double f;
-  int p10e;
+  ///int p10e;
+  mdtDoubleEditUnitRange r;
   double x;
   QChar fc;
   QString str;
@@ -418,85 +431,92 @@ void mdtDoubleEdit::displayValue()
     return;
   }
   // Select a power of 10 regarding value - Note: we ignore c and d and h
-  x = qAbs<double>(pvValue);
-  if(x <= std::numeric_limits<double>::min()){
-    p10e = 0;
-    ///f = 1.0;
-  ///}else if(x < 1.e-15){
-  }else if(x < std::pow(10, -15.0*pvUnitExponent)){
-    p10e = -18;
-    /// f = 1.e18;
-    fc = 'a';
-  ///}else if(isInRange(x, 1e-15, 1e-12)){
-  }else if(isInRange(x, std::pow(10, -15.0*pvUnitExponent), std::pow(10, -12.0*pvUnitExponent))){
-    p10e = -15;
-    ///f = 1e15;
-    fc = 'f';
-  ///}else if(isInRange(x, 1e-12, 1e-9)){
-  }else if(isInRange(x, std::pow(10, -12.0*pvUnitExponent), std::pow(10, -9.0*pvUnitExponent))){
-    p10e = -12;
-    ///f = 1e12;
-    fc = 'p';
-  ///}else if(isInRange(x, 1e-9, 1e-6)){
-  }else if(isInRange(x, std::pow(10, -9.0*pvUnitExponent), std::pow(10, -6.0*pvUnitExponent))){
-    p10e = -9;
-    ///f = 1e9;
-    fc = 'n';
-  ///}else if(isInRange(x, 1e-6, 1e-3)){
-  }else if(isInRange(x, std::pow(10, -6.0*pvUnitExponent), std::pow(10, -3.0*pvUnitExponent))){
-    p10e = -6;
-    ///f = 1e6;
-    fc = 'u';
-  ///}else if(isInRange(x, 1e-3, 1.0)){
-  }else if(isInRange(x, std::pow(10, -3.0*pvUnitExponent), 1.0)){
-    p10e = -3;
-    ///f = 1e3;
-    fc = 'm';
-  ///}else if(isInRange(x, 1.0, 1e3)){
-  }else if(isInRange(x, 1.0, std::pow(10, 3.0*pvUnitExponent))){
-    p10e = 0;
-    ///f = 1.0;
-  ///}else if(isInRange(x, 1e3, 1e6)){
-  }else if(isInRange(x, std::pow(10, 3.0*pvUnitExponent), std::pow(10, 6.0*pvUnitExponent))){
-    p10e = 3;
-    ///f = 1e-3;
-    fc = 'k';
-  ///}else if(isInRange(x, 1e6, 1e9)){
-  }else if(isInRange(x, std::pow(10, 6.0*pvUnitExponent), std::pow(10, 9.0*pvUnitExponent))){
-    p10e = 6;
-    ///f = 1e-6;
-    fc = 'M';
-  ///}else if(isInRange(x, 1e9, 1e12)){
-  }else if(isInRange(x, std::pow(10, 9.0*pvUnitExponent), std::pow(10, 12.0*pvUnitExponent))){
-    p10e = 9;
-    ///f = 1e-9;
-    fc = 'G';
-  ///}else if(isInRange(x, 1e12, 1e15)){
-  }else if(isInRange(x, std::pow(10, 12.0*pvUnitExponent), std::pow(10, 15.0*pvUnitExponent))){
-    p10e = 12;
-    ///f = 1e-12;
-    fc = 'T';
-  ///}else if(isInRange(x, 1e15, 1e18)){
-  }else if(isInRange(x, std::pow(10, 15.0*pvUnitExponent), std::pow(10, 18.0*pvUnitExponent))){
-    p10e = 15;
-    ///f = 1e-15;
-    fc = 'P';
-  }else if(x >= std::pow(10, 18.0*pvUnitExponent)){
-    p10e = 18;
-    ///f = 1e-18;
-    fc = 'E';
-  }else{
-    p10e = 0;
-  }
-  qDebug() << "displayValue() - p10e: " << p10e << " , pvUnitExponent: " << pvUnitExponent << " , p10e used: " << p10e*pvUnitExponent;
+//   x = qAbs<double>(pvValue);
+//   if(x <= std::numeric_limits<double>::min()){
+//     p10e = 0;
+//     ///f = 1.0;
+//   ///}else if(x < 1.e-15){
+//   }else if(x < std::pow(10, -15.0*pvUnitExponent)){
+//     p10e = -18;
+//     /// f = 1.e18;
+//     fc = 'a';
+//   ///}else if(isInRange(x, 1e-15, 1e-12)){
+//   }else if(isInRange(x, std::pow(10, -15.0*pvUnitExponent), std::pow(10, -12.0*pvUnitExponent))){
+//     p10e = -15;
+//     ///f = 1e15;
+//     fc = 'f';
+//   ///}else if(isInRange(x, 1e-12, 1e-9)){
+//   }else if(isInRange(x, std::pow(10, -12.0*pvUnitExponent), std::pow(10, -9.0*pvUnitExponent))){
+//     p10e = -12;
+//     ///f = 1e12;
+//     fc = 'p';
+//   ///}else if(isInRange(x, 1e-9, 1e-6)){
+//   }else if(isInRange(x, std::pow(10, -9.0*pvUnitExponent), std::pow(10, -6.0*pvUnitExponent))){
+//     p10e = -9;
+//     ///f = 1e9;
+//     fc = 'n';
+//   ///}else if(isInRange(x, 1e-6, 1e-3)){
+//   }else if(isInRange(x, std::pow(10, -6.0*pvUnitExponent), std::pow(10, -3.0*pvUnitExponent))){
+//     p10e = -6;
+//     ///f = 1e6;
+//     fc = 'u';
+//   ///}else if(isInRange(x, 1e-3, 1.0)){
+//   }else if(isInRange(x, std::pow(10, -3.0*pvUnitExponent), 1.0)){
+//     p10e = -3;
+//     ///f = 1e3;
+//     fc = 'm';
+//   ///}else if(isInRange(x, 1.0, 1e3)){
+//   }else if(isInRange(x, 1.0, std::pow(10, 3.0*pvUnitExponent))){
+//     p10e = 0;
+//     ///f = 1.0;
+//   ///}else if(isInRange(x, 1e3, 1e6)){
+//   }else if(isInRange(x, std::pow(10, 3.0*pvUnitExponent), std::pow(10, 6.0*pvUnitExponent))){
+//     p10e = 3;
+//     ///f = 1e-3;
+//     fc = 'k';
+//   ///}else if(isInRange(x, 1e6, 1e9)){
+//   }else if(isInRange(x, std::pow(10, 6.0*pvUnitExponent), std::pow(10, 9.0*pvUnitExponent))){
+//     p10e = 6;
+//     ///f = 1e-6;
+//     fc = 'M';
+//   ///}else if(isInRange(x, 1e9, 1e12)){
+//   }else if(isInRange(x, std::pow(10, 9.0*pvUnitExponent), std::pow(10, 12.0*pvUnitExponent))){
+//     p10e = 9;
+//     ///f = 1e-9;
+//     fc = 'G';
+//   ///}else if(isInRange(x, 1e12, 1e15)){
+//   }else if(isInRange(x, std::pow(10, 12.0*pvUnitExponent), std::pow(10, 15.0*pvUnitExponent))){
+//     p10e = 12;
+//     ///f = 1e-12;
+//     fc = 'T';
+//   ///}else if(isInRange(x, 1e15, 1e18)){
+//   }else if(isInRange(x, std::pow(10, 15.0*pvUnitExponent), std::pow(10, 18.0*pvUnitExponent))){
+//     p10e = 15;
+//     ///f = 1e-15;
+//     fc = 'P';
+//   }else if(x >= std::pow(10, 18.0*pvUnitExponent)){
+//     p10e = 18;
+//     ///f = 1e-18;
+//     fc = 'E';
+//   }else{
+//     p10e = 0;
+//   }
+//   qDebug() << "displayValue() - p10e: " << p10e << " , pvUnitExponent: " << pvUnitExponent << " , p10e used: " << p10e*pvUnitExponent;
   ///f = f * std::pow(10, pvUnitExponent);
+  // Select power of 10 range
+  x = qAbs<double>(pvValue);
+  if(x > std::numeric_limits<double>::min()){
+    r = getRange(x);
+  }
+  
   // Build string to display
-  str.setNum( pvValue / pow(10, (double)(p10e * pvUnitExponent) ) );
-  if((!fc.isNull())||(!pvUnit.isEmpty())){
+  ///str.setNum( pvValue / pow(10, (double)(r.po10exponent * pvUnitExponent) ) );
+  str.setNum( pvValue / pow(10, r.po10exponent) );
+  if((!r.po10prefix.isNull())||(!pvUnit.isEmpty())){
     str += " ";
   }
-  if(!fc.isNull()){
-    str += fc;
+  if(!r.po10prefix.isNull()){
+    str += r.po10prefix;
   }
   str += pvUnit;
   // Display str
@@ -517,4 +537,55 @@ bool mdtDoubleEdit::strIsInfinity(const QString & str) const
     return true;
   }
   return false;
+}
+
+mdtDoubleEditUnitRange mdtDoubleEdit::getRange(double x)
+{
+  return mdtAlgorithms::rangeOf(x, pvUnitRanges);
+}
+
+void mdtDoubleEdit::buildDefaultUnitRanges()
+{
+  pvUnitRanges.clear();
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(0.0, 1e-15, 'a', -18));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e-15, 1e-12, 'f', -15));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e-12, 1e-9, 'p', -12));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e-9, 1e-6, 'n', -9));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e-6, 1e-3, 'u', -6));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e-3, 1e-1, 'm', -3));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e-1, 1.0, 'd', -1));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1.0, 1e2, '\0', 0));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e2, 1e3, 'h', 2));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e3, 1e6, 'k', 3));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e6, 1e9, 'M', 6));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e9, 1e12, 'G', 9));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e12, 1e15, 'T', 12));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e15, 1e18, 'P', 15));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e18, std::numeric_limits<double>::infinity(), 'E', 18));
+}
+
+void mdtDoubleEdit::buildDefaultSquareUnitRanges()
+{
+  pvUnitRanges.clear();
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(0.0, 1e-30, 'a', -36));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e-30, 1e-24, 'f', -30));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e-24, 1e-18, 'p', -24));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e-18, 1e-12, 'n', -18));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e-12, 1e-6, 'u', -12));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e-6, 1e-2, 'm', -6));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e-2, 1.0, 'd', -2));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1.0, 1e4, '\0', 0));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e4, 1e6, 'h', 4));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e6, 1e12, 'k', 6));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e12, 1e18, 'M', 12));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e18, 1e24, 'G', 18));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e24, 1e30, 'T', 24));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e30, 1e36, 'P', 30));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e36, std::numeric_limits<double>::infinity(), 'E', 36));
+}
+
+void mdtDoubleEdit::buildCableSectionRanges()
+{
+  pvUnitRanges.clear();
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(0.0, std::numeric_limits<double>::infinity(), 'm', -6));
 }

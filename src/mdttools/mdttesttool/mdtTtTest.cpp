@@ -299,6 +299,7 @@ bool mdtTtTest::removeTest(const QVariant& testId)
 //   setCurrentTestItemData("Result", result);
 // }
 
+/// \todo Use mdtAlgorithme !
 bool mdtTtTest::isInRange(double x, double min, double max)
 {
   return ( ( (x > min)||(qAbs(x - min) < std::numeric_limits<double>::min()) ) &&

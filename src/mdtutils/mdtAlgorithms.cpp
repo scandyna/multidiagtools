@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,8 +21,42 @@
 #include "mdtAlgorithms.h"
 #include <QChar>
 #include <QStringRef>
+#include <limits>
+#include <cmath>
 
 //#include <QDebug>
+
+mdtAlgorithms::NumericRangeDouble::NumericRangeDouble()
+ : bottom(0.0),
+   top(0.0),
+   includeBottom(false),
+   includeTop(false)
+{
+}
+
+mdtAlgorithms::NumericRangeDouble::NumericRangeDouble(double min, double max, bool includeMin, bool includeMax)
+ : bottom(min),
+   top(max),
+   includeBottom(includeMin),
+   includeTop(includeMax)
+{
+}
+
+bool mdtAlgorithms::isInRange(double x, double bottom, double top, bool includeBottom, bool includeTop)
+{
+  Q_ASSERT(std::isless(bottom, top));
+  if(includeBottom && includeTop){
+    return (std::isgreaterequal(x, bottom) && std::islessequal(x, top));
+  }
+  if(includeBottom && (!includeTop)){
+    return (std::isgreaterequal(x, bottom) && std::isless(x, top));
+  }
+  if((!includeBottom) && includeTop){
+    return (std::isgreater(x, bottom) && std::islessequal(x, top));
+  }
+  Q_ASSERT((!includeBottom)&&(!includeTop));
+  return (std::isgreater(x, bottom) && std::isless(x, top));
+}
 
 QStringList mdtAlgorithms::naturalSort(QStringList &list, Qt::CaseSensitivity caseSensitivity)
 {

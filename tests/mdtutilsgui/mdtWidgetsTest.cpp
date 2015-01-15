@@ -299,9 +299,6 @@ void mdtWidgetsTest::mdtDoubleEditTest()
   e.setValue(1e-6);
   QCOMPARE(e.value(), QVariant(1e-6));
   QCOMPARE(e.text().trimmed(), QString("1 mm2"));
-
-  
-  
   // Set string values - will be close to user input
   e.setValue("1 m2");
   QCOMPARE(e.value(), QVariant(1.0));
@@ -322,6 +319,30 @@ void mdtWidgetsTest::mdtDoubleEditTest()
   QCOMPARE(e.value(), QVariant(1e6));
   QCOMPARE(e.text().trimmed(), QString("1 km2"));
 
+  /*
+   * Check wire section edition
+   */
+  e.setWireSectionEditionMode();
+  // Set numeric values
+  e.setValue(1.0);
+  QCOMPARE(e.value(), QVariant(1.0));
+  QCOMPARE(e.text().trimmed(), QString("1e+06 mm2"));
+  e.setValue(1e-6);
+  QCOMPARE(e.value(), QVariant(1e-6));
+  QCOMPARE(e.text().trimmed(), QString("1 mm2"));
+  e.setValue(0.5e-6);
+  QCOMPARE(e.value(), QVariant(0.5e-6));
+  QCOMPARE(e.text().trimmed(), QString("0.5 mm2"));
+  // Set string values - will be close to user input
+  e.setValue("1 m2");
+  QCOMPARE(e.value(), QVariant(1.0));
+  QCOMPARE(e.text().trimmed(), QString("1e+06 mm2"));
+  e.setValue("1 mm2");
+  QCOMPARE(e.value(), QVariant(1e-6));
+  QCOMPARE(e.text().trimmed(), QString("1 mm2"));
+  e.setValue("0.5 mm2");
+  QCOMPARE(e.value(), QVariant(0.5e-6));
+  QCOMPARE(e.text().trimmed(), QString("0.5 mm2"));
   
   ///e.setUnit(mdtDoubleEdit::OmegaCapital);
 

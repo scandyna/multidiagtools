@@ -21,13 +21,46 @@
 #ifndef MDT_DOUBLE_EDIT_H
 #define MDT_DOUBLE_EDIT_H
 
+#include "mdtAlgorithms.h"
 #include <QWidget>
 #include <QString>
 #include <QVariant>
+#include <vector>
 
 class QLineEdit;
 class QPushButton;
 class mdtDoubleValidator;
+
+/*! \brief Store informations about a range of a unit
+ */
+struct mdtDoubleEditUnitRange : public mdtAlgorithms::NumericRangeDouble
+{
+  /*! \brief Construct a invalid range
+   */
+  mdtDoubleEditUnitRange()
+   : NumericRangeDouble(),
+     po10prefix('\0'),
+     po10exponent(0)
+   {
+   }
+
+  /*! \brief Construct a unit range that represents all values from min to max
+   */
+  mdtDoubleEditUnitRange(double min, double max, const QChar & po10c, int po10e, bool includeMin = true, bool includeMax = false)
+   : NumericRangeDouble(min, max, includeMin, includeMax),
+     po10prefix(po10c),
+     po10exponent(po10e)
+  {
+  }
+
+  /*! \brief Power of 10 prefix (n, u, m, k, ...)
+   */
+  QChar po10prefix;
+
+  /*! \brief Power of 10 exponent
+   */
+  int po10exponent;
+};
 
 /*! \brief Input box for double values
  *
@@ -42,6 +75,7 @@ class mdtDoubleEdit : public QWidget
  Q_OBJECT
 
  Q_PROPERTY(QString unit READ unit WRITE setUnit)
+ Q_PROPERTY(bool wireSectionEditionMode READ isInWireSectionEditionMode WRITE setWireSectionEditionMode)
  Q_PROPERTY(double minimum READ minimum WRITE setMinimum RESET setMinimumToMinusInfinity)
  Q_PROPERTY(double maximum READ maximum WRITE setMaximum RESET setMaximumToInfinity)
 
@@ -53,6 +87,14 @@ class mdtDoubleEdit : public QWidget
                       omega,          /*!< Omega (small letter) , &omega; */
                       OmegaCapital    /*!< Capital omega , &Omega; */
                     };
+
+  /*! \brief Unit prefix ranges
+   */
+//   enum class UnitPrefixRange_t
+//   {
+//     Default,        /*!< Contains all supported ranges */
+//     CableSection    /*!< Contains range of mm2 [-inf;+inf] */
+//   };
 
   /*! \brief Constructor
    */
@@ -193,6 +235,13 @@ class mdtDoubleEdit : public QWidget
    */
   static QString infinityString();
 
+  /*! \brief Check if we are in cableSectionEditionMode (used by Qt Designer)
+   */
+  bool isInWireSectionEditionMode() const
+  {
+    return ( (pvUnit == "mm2") && (pvUnitRanges.size() == 1) );
+  }
+
  public slots:
 
   /*! \brief Set unit
@@ -202,6 +251,10 @@ class mdtDoubleEdit : public QWidget
    *  For example, passing m2 will be unit m (meter) with a unit exponent of 2.
    */
   void setUnit(const QString & u);
+
+  /*! \brief Set cable section edition mode
+   */
+  void setWireSectionEditionMode(bool set = true);
 
  signals:
 
@@ -240,6 +293,22 @@ class mdtDoubleEdit : public QWidget
    */
   bool strIsInfinity(const QString & str) const;
 
+  /*! \brief Returns the range of witch x is from pvUnitRanges
+   */
+  mdtDoubleEditUnitRange getRange(double x);
+
+  /*! \brief Build default unit ranges
+   */
+  void buildDefaultUnitRanges();
+
+  /*! \brief Build default unit ranges for square unit (f.ex. [m2])
+   */
+  void buildDefaultSquareUnitRanges();
+
+  /*! \brief Build ranges for cable section
+   */
+  void buildCableSectionRanges();
+
   Q_DISABLE_COPY(mdtDoubleEdit);
 
   QLineEdit *pvLineEdit;
@@ -249,6 +318,7 @@ class mdtDoubleEdit : public QWidget
   mdtDoubleValidator *pvValidator;
   QString pvUnit;
   double pvValue;
+  std::vector<mdtDoubleEditUnitRange> pvUnitRanges;   // Used to form number when displayed
   int pvUnitExponent;  // F.ex. m2 : unit=m, unitExponent=2
   bool pvValueIsValid;
 };
