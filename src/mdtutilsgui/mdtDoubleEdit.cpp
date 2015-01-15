@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -24,9 +24,12 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QChar>
+#include <QRegExp>
+#include <QMetaType>
 #include <limits>
+#include <cmath>
 
-//#include <QDebug>
+#include <QDebug>
 
 mdtDoubleEdit::mdtDoubleEdit(QWidget* parent)
  : QWidget(parent)
@@ -56,6 +59,7 @@ mdtDoubleEdit::mdtDoubleEdit(QWidget* parent)
   // Set initial value
   pvValue = 0.0;
   pvValueIsValid = false;
+  pvUnitExponent = 1;
 }
 
 void mdtDoubleEdit::setReadOnly(bool ro)
@@ -174,10 +178,48 @@ double mdtDoubleEdit::factor(const QChar & c)
   }
 }
 
+int mdtDoubleEdit::p10exponent(const QChar& c)
+{
+  switch(c.toAscii()){
+    case 'a':
+      return -18;
+    case 'f':
+      return -15;
+    case 'p':
+      return -12;
+    case 'n':
+      return -9;
+    case 'u':
+      return -6;
+    case 'm':
+      return -3;
+    case 'c':
+      return -2;
+    case 'd':
+      return -1;
+    case 'h':
+      return 2;
+    case 'k':
+      return 3;
+    case 'M':
+      return 6;
+    case 'G':
+      return 9;
+    case 'T':
+      return 12;
+    case 'P':
+      return 15;
+    case 'E':
+      return 18;
+    default:
+      return 0;
+  }
+}
+
 void mdtDoubleEdit::setValueString(const QString & s, bool emitValueChanged)
 {
   int pos = 0;
-  QString str = s;
+  QString str = s.trimmed();
 
   pvValue = 0.0;
   pvValueIsValid = false;
@@ -208,6 +250,7 @@ void mdtDoubleEdit::setValueDouble(double v, bool emitValueChanged)
 
 void mdtDoubleEdit::setValue(const QVariant& v, bool emitValueChanged)
 {
+  qDebug() << "setValue() - v: " << v << " , type: " << v.type();
   if((v.type() == QVariant::Double)||(v.type() == QVariant::Int)||(v.type() == QVariant::LongLong)){
     setValueDouble(v.toDouble(), emitValueChanged);
     return;
@@ -247,6 +290,7 @@ QString mdtDoubleEdit::infinityString()
 
 void mdtDoubleEdit::setUnit(const QString & u)
 {
+  pvUnitExponent = 1;
   if(u == "w"){
     setUnit(omega);
     return;
@@ -257,6 +301,13 @@ void mdtDoubleEdit::setUnit(const QString & u)
   }
   pvUnit = u;
   pvValidator->setSuffix(pvUnit);
+  // Extract unit exponent if one is passed
+  bool ok;
+  QString s = pvUnit.right(1);
+  pvUnitExponent = s.toInt(&ok);
+  if(!ok){
+    pvUnitExponent = 1;
+  }
 }
 
 void mdtDoubleEdit::setNull()
@@ -283,40 +334,67 @@ void mdtDoubleEdit::setValueFromLineEdit()
 
 void mdtDoubleEdit::convertAndSetValue(QString str)
 {
-  double f = 1.0;
+  ///double f = 1.0;
+  int p10e;
   QChar fc;
+  int unitIdex;
 
   str = str.trimmed();
-  // Remove unit part
-  str.remove(pvUnit);
+  
+  qDebug() << "convertAndSetValue() - str: " << str;
+  
+  /*
+   * Remove unit part.
+   * It happens that a power of 10 factor is the same as unit.
+   * Typical case is for [m] unit (meter), that is expressed in mm (milimeter).
+   * Here we must only remove 'm' once, so we keep the m (mili) factor.
+   */
+  unitIdex = str.indexOf(pvUnit, Qt::CaseSensitive);
+  if(unitIdex >= 0){
+    str.remove(unitIdex, pvUnit.size());
+  }
+  ///str.remove(pvUnit);
+  ///str.remove(QRegExp("^" + pvUnit + "$"));
+  qDebug() << "convertAndSetValue() - str (2): " << str;
+  
   str = str.trimmed();
   if(str.isEmpty()){
     pvValueIsValid = false;
     displayValue();
     return;
   }
-  // If str is not a infinity, get power of 10 factor and remove it from str
+  // If str is not a infinity, get power of 10 exponent and remove it from str
   if(!strIsInfinity(str)){
     fc = str.at(str.size() - 1);
+    p10e = p10exponent(fc);
+    if(p10e == 0){
+      fc = '\0';
+    }
+    /**
     f = factor(fc);
     if(qAbs<double>(f - 1.0) <=  std::numeric_limits<double>::min()){
       fc = '\0';
     }
+    */
     if(!fc.isNull()){
       str.remove(fc);
     }
     str = str.trimmed();
   }
   // Do conversion
+  qDebug() << "convertAndSetValue() - str(3): " << str << " , p10e: " << p10e << " , ue: " << pvUnitExponent;
   pvValue = str.toDouble(&pvValueIsValid);
+  qDebug() << "convertAndSetValue() - v (1): " << pvValue << " - valid: " << pvValueIsValid;
   if(pvValueIsValid){
-    pvValue = pvValue * f;
+    pvValue = pvValue * std::pow(10, (double)(p10e * pvUnitExponent) );
   }
+  qDebug() << "convertAndSetValue() - v (2): " << pvValue;
 }
 
 void mdtDoubleEdit::displayValue()
 {
-  double f;
+  ///double f;
+  int p10e;
   double x;
   QChar fc;
   QString str;
@@ -325,60 +403,95 @@ void mdtDoubleEdit::displayValue()
     pvLineEdit->clear();
     return;
   }
+  
+  qDebug() << "displayValue() - v: " << pvValue;
+  
   // Check if we are - or + infinity
-  if(pvValue == -std::numeric_limits<double>::infinity()){
+  if( (pvValue < 0.0) && (std::isinf(pvValue)) ){
+  ///if(pvValue == -std::numeric_limits<double>::infinity()){
     pvLineEdit->setText("-" + infinityString());
     return;
   }
-  if(pvValue == std::numeric_limits<double>::infinity()){
+  if( (pvValue > 0.0) && (std::isinf(pvValue)) ){
+  ///if(pvValue == std::numeric_limits<double>::infinity()){
     pvLineEdit->setText(infinityString());
     return;
   }
   // Select a power of 10 regarding value - Note: we ignore c and d and h
   x = qAbs<double>(pvValue);
   if(x <= std::numeric_limits<double>::min()){
-    f = 1.0;
-  }else if(x < 1.e-15){
-    f = 1.e18;
+    p10e = 0;
+    ///f = 1.0;
+  ///}else if(x < 1.e-15){
+  }else if(x < std::pow(10, -15.0*pvUnitExponent)){
+    p10e = -18;
+    /// f = 1.e18;
     fc = 'a';
-  }else if(isInRange(x, 1e-15, 1e-12)){
-    f = 1e15;
+  ///}else if(isInRange(x, 1e-15, 1e-12)){
+  }else if(isInRange(x, std::pow(10, -15.0*pvUnitExponent), std::pow(10, -12.0*pvUnitExponent))){
+    p10e = -15;
+    ///f = 1e15;
     fc = 'f';
-  }else if(isInRange(x, 1e-12, 1e-9)){
-    f = 1e12;
+  ///}else if(isInRange(x, 1e-12, 1e-9)){
+  }else if(isInRange(x, std::pow(10, -12.0*pvUnitExponent), std::pow(10, -9.0*pvUnitExponent))){
+    p10e = -12;
+    ///f = 1e12;
     fc = 'p';
-  }else if(isInRange(x, 1e-9, 1e-6)){
-    f = 1e9;
+  ///}else if(isInRange(x, 1e-9, 1e-6)){
+  }else if(isInRange(x, std::pow(10, -9.0*pvUnitExponent), std::pow(10, -6.0*pvUnitExponent))){
+    p10e = -9;
+    ///f = 1e9;
     fc = 'n';
-  }else if(isInRange(x, 1e-6, 1e-3)){
-    f = 1e6;
+  ///}else if(isInRange(x, 1e-6, 1e-3)){
+  }else if(isInRange(x, std::pow(10, -6.0*pvUnitExponent), std::pow(10, -3.0*pvUnitExponent))){
+    p10e = -6;
+    ///f = 1e6;
     fc = 'u';
-  }else if(isInRange(x, 1e-3, 1.0)){
-    f = 1e3;
+  ///}else if(isInRange(x, 1e-3, 1.0)){
+  }else if(isInRange(x, std::pow(10, -3.0*pvUnitExponent), 1.0)){
+    p10e = -3;
+    ///f = 1e3;
     fc = 'm';
-  }else if(isInRange(x, 1.0, 1e3)){
-    f = 1.0;
-  }else if(isInRange(x, 1e3, 1e6)){
-    f = 1e-3;
+  ///}else if(isInRange(x, 1.0, 1e3)){
+  }else if(isInRange(x, 1.0, std::pow(10, 3.0*pvUnitExponent))){
+    p10e = 0;
+    ///f = 1.0;
+  ///}else if(isInRange(x, 1e3, 1e6)){
+  }else if(isInRange(x, std::pow(10, 3.0*pvUnitExponent), std::pow(10, 6.0*pvUnitExponent))){
+    p10e = 3;
+    ///f = 1e-3;
     fc = 'k';
-  }else if(isInRange(x, 1e6, 1e9)){
-    f = 1e-6;
+  ///}else if(isInRange(x, 1e6, 1e9)){
+  }else if(isInRange(x, std::pow(10, 6.0*pvUnitExponent), std::pow(10, 9.0*pvUnitExponent))){
+    p10e = 6;
+    ///f = 1e-6;
     fc = 'M';
-  }else if(isInRange(x, 1e9, 1e12)){
-    f = 1e-9;
+  ///}else if(isInRange(x, 1e9, 1e12)){
+  }else if(isInRange(x, std::pow(10, 9.0*pvUnitExponent), std::pow(10, 12.0*pvUnitExponent))){
+    p10e = 9;
+    ///f = 1e-9;
     fc = 'G';
-  }else if(isInRange(x, 1e12, 1e15)){
-    f = 1e-12;
+  ///}else if(isInRange(x, 1e12, 1e15)){
+  }else if(isInRange(x, std::pow(10, 12.0*pvUnitExponent), std::pow(10, 15.0*pvUnitExponent))){
+    p10e = 12;
+    ///f = 1e-12;
     fc = 'T';
-  }else if(isInRange(x, 1e15, 1e18)){
-    f = 1e-15;
+  ///}else if(isInRange(x, 1e15, 1e18)){
+  }else if(isInRange(x, std::pow(10, 15.0*pvUnitExponent), std::pow(10, 18.0*pvUnitExponent))){
+    p10e = 15;
+    ///f = 1e-15;
     fc = 'P';
-  }else{
-    f = 1e-18;
+  }else if(x >= std::pow(10, 18.0*pvUnitExponent)){
+    p10e = 18;
+    ///f = 1e-18;
     fc = 'E';
+  }else{
+    p10e = 0;
   }
+  qDebug() << "displayValue() - p10e: " << p10e << " , pvUnitExponent: " << pvUnitExponent << " , p10e used: " << p10e*pvUnitExponent;
+  ///f = f * std::pow(10, pvUnitExponent);
   // Build string to display
-  str.setNum(pvValue * f);
+  str.setNum( pvValue / pow(10, (double)(p10e * pvUnitExponent) ) );
   if((!fc.isNull())||(!pvUnit.isEmpty())){
     str += " ";
   }

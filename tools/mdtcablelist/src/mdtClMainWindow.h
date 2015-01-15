@@ -34,6 +34,7 @@ class mdtSqlTableWidget;
 class mdtSqlDatabaseManager;
 class mdtClVehicleTypeEditor;
 class mdtClUnitEditor;
+class mdtClWireEditor;
 class mdtClConnectorEditor;
 class mdtClArticleEditor;
 class mdtTtTestNodeEditor;
@@ -141,6 +142,10 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   /*! \brief View wires
    */
   void viewWire();
+
+  /*! \brief Edit wires
+   */
+  void editWire();
 
   /*! \brief View link list
    */
@@ -271,6 +276,14 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   /*! \brief Create wire table view
    */
   bool createWireTableView();
+
+  /*! \brief Get wire editor
+   */
+  mdtClWireEditor *getWirEditor();
+
+  /*! \brief Create wire editor
+   */
+  mdtClWireEditor *createWireEditor();
 
   /*! \brief Create link list table view
    */

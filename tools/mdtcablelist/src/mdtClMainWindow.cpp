@@ -26,6 +26,7 @@
 #include "mdtClVehicleTypeEditor.h"
 #include "mdtClConnectorEditor.h"
 #include "mdtClUnitEditor.h"
+#include "mdtClWireEditor.h"
 #include "mdtClLinkBeamEditor.h"
 #include "mdtClArticleEditor.h"
 #include "mdtTtTestCableEditor.h"
@@ -402,6 +403,30 @@ void mdtClMainWindow::viewWire()
   if(!displayTableView("Wire_tbl")){
     createWireTableView();
   }
+}
+
+void mdtClMainWindow::editWire()
+{
+  mdtClWireEditor *editor;
+  mdtSqlWindow *window;
+
+  // Get or create editor
+  editor = getWirEditor();
+  if(editor == 0){
+    return;
+  }
+  // Get window
+  window = getEditorWindow(editor);
+  Q_ASSERT(window != 0);
+  // Select and show
+  Q_ASSERT(editor != 0);
+  if(!editor->select()){
+    displayError(editor->lastError());
+    return;
+  }
+  window->enableNavigation();
+  window->raise();
+  window->show();
 }
 
 void mdtClMainWindow::viewLinkList()
@@ -975,6 +1000,34 @@ mdtClUnitEditor *mdtClMainWindow::createUnitEditor()
   return editor;
 }
 
+mdtClWireEditor* mdtClMainWindow::getWirEditor()
+{
+  mdtClWireEditor *editor;
+
+  editor = getEditor<mdtClWireEditor>();
+  if(editor != 0){
+    return editor;
+  }else{
+    return createWireEditor();
+  }
+}
+
+mdtClWireEditor* mdtClMainWindow::createWireEditor()
+{
+  mdtClWireEditor *editor;
+  mdtSqlWindow *window;
+
+  editor = new mdtClWireEditor(0, pvDatabaseManager->database());
+  window = setupEditor(editor);
+  if(window == 0){
+    return 0;
+  }
+  window->setWindowTitle(tr("Wire edition"));
+  window->resize(800, 600);
+
+  return editor;
+}
+
 bool mdtClMainWindow::createWireTableView()
 {
   mdtSqlTableWidget *tableWidget;
@@ -1389,6 +1442,7 @@ void mdtClMainWindow::connectActions()
   connect(actViewLinkList, SIGNAL(triggered()), this, SLOT(viewLinkList()));
   // Link wires
   connect(actViewWires, SIGNAL(triggered()), this, SLOT(viewWire()));
+  connect(actEditWire, SIGNAL(triggered()), this, SLOT(editWire()));
   // Link beam
   connect(actViewLinkBeam, SIGNAL(triggered()), this, SLOT(viewLinkBeam()));
   connect(actEditLinkBeam, SIGNAL(triggered()), this, SLOT(editLinkBeam()));

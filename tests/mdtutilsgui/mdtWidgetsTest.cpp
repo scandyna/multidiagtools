@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -102,7 +102,7 @@ void mdtWidgetsTest::mdtDoubleValidatorTest()
   QCOMPARE(v.validate(str, pos), QValidator::Invalid);
   str = "R1";
   QCOMPARE(v.validate(str, pos), QValidator::Invalid);
-  // Check with suffix
+  // Check with V suffix
   v.setSuffix("V");
   str = "1.5e3 mV";
   QCOMPARE(v.validate(str, pos), QValidator::Acceptable);
@@ -117,6 +117,15 @@ void mdtWidgetsTest::mdtDoubleValidatorTest()
   QCOMPARE(v.validate(str, pos), QValidator::Acceptable);
   str = "1400 ohm";
   QCOMPARE(v.validate(str, pos), QValidator::Acceptable);
+  // Check with m (as meter) suffix
+  v.setSuffix("m");
+  str = "1.5";
+  QCOMPARE(v.validate(str, pos), QValidator::Acceptable);
+  str = "1.5 m";
+  QCOMPARE(v.validate(str, pos), QValidator::Acceptable);
+  str = "1.5 mm";
+  QCOMPARE(v.validate(str, pos), QValidator::Acceptable);
+
 
 
 }
@@ -139,11 +148,13 @@ void mdtWidgetsTest::mdtDoubleEditTest()
   QVERIFY(e.value().isValid());
   QCOMPARE(e.value(), QVariant(-std::numeric_limits<double>::infinity()));
   QCOMPARE(QVariant(e.valueDouble()), QVariant(-std::numeric_limits<double>::infinity()));  // Direct double compare fails here
+  QCOMPARE(e.text().trimmed(), QString("-" + e.infinityString()));
   e.setValue("inf");
   QVERIFY(e.valueIsValid());
   QVERIFY(e.value().isValid());
   QCOMPARE(e.value(), QVariant(std::numeric_limits<double>::infinity()));
   QCOMPARE(QVariant(e.valueDouble()), QVariant(std::numeric_limits<double>::infinity()));  // Direct double compare fails here
+  QCOMPARE(e.text().trimmed(), e.infinityString());
   // Check invalid value setting
   e.setValue("x");
   QVERIFY(!e.valueIsValid());
@@ -233,8 +244,84 @@ void mdtWidgetsTest::mdtDoubleEditTest()
   QCOMPARE(e.value(), QVariant(1e6));
   QCOMPARE(e.text().trimmed(), QString("1 M"));
 
+  /*
+   * Check with meter unit [m]
+   */
+  // Setup
+  e.setUnit("m");
+  e.setRange(0.0, 1e6);
+  // Set numeric values
+  e.setValue(0.0);
+  QCOMPARE(e.value(), QVariant(0.0));
+  QCOMPARE(e.text().trimmed(), QString("0 m"));
+  e.setValue(1.0);
+  QCOMPARE(e.value(), QVariant(1.0));
+  QCOMPARE(e.text().trimmed(), QString("1 m"));
+  e.setValue(1e-3);
+  QCOMPARE(e.value(), QVariant(1e-3));
+  QCOMPARE(e.text().trimmed(), QString("1 mm"));
+  // Set string values - will be close to user input
+  e.setValue("1");
+  QCOMPARE(e.value(), QVariant(1.0));
+  QCOMPARE(e.text().trimmed(), QString("1 m"));
+  e.setValue("1 m");
+  QCOMPARE(e.value(), QVariant(1.0));
+  QCOMPARE(e.text().trimmed(), QString("1 m"));
+  e.setValue("1m");
+  QCOMPARE(e.value(), QVariant(1.0));
+  QCOMPARE(e.text().trimmed(), QString("1 m"));
+  e.setValue("1 mm");
+  QCOMPARE(e.value(), QVariant(1e-3));
+  QCOMPARE(e.text().trimmed(), QString("1 mm"));
+  e.setValue("1 Mm");
+  QCOMPARE(e.value(), QVariant(1e6));
+  QCOMPARE(e.text().trimmed(), QString("1 Mm"));
+  e.setValue("1 um");
+  QCOMPARE(e.value(), QVariant(1e-6));
+  QCOMPARE(e.text().trimmed(), QString("1 um"));
+
+  /*
+   * Check surface unit [m2]
+   */
+  // Setup
+  e.setUnit("m2");
+  e.setRange(0.0, 1e6);
+  // Set numeric values
+  e.setValue(0.0);
+  QCOMPARE(e.value(), QVariant(0.0));
+  QCOMPARE(e.text().trimmed(), QString("0 m2"));
+  e.setValue(1.0);
+  QCOMPARE(e.value(), QVariant(1.0));
+  QCOMPARE(e.text().trimmed(), QString("1 m2"));
+  e.setValue(1e-3);
+  QCOMPARE(e.value(), QVariant(1e-3));
+  QCOMPARE(e.text().trimmed(), QString("1000 mm2"));
+  e.setValue(1e-6);
+  QCOMPARE(e.value(), QVariant(1e-6));
+  QCOMPARE(e.text().trimmed(), QString("1 mm2"));
 
   
+  
+  // Set string values - will be close to user input
+  e.setValue("1 m2");
+  QCOMPARE(e.value(), QVariant(1.0));
+  QCOMPARE(e.text().trimmed(), QString("1 m2"));
+  e.setValue("1m2");
+  QCOMPARE(e.value(), QVariant(1.0));
+  QCOMPARE(e.text().trimmed(), QString("1 m2"));
+  e.setValue("1m2 ");
+  QCOMPARE(e.value(), QVariant(1.0));
+  QCOMPARE(e.text().trimmed(), QString("1 m2"));
+  e.setValue(" 1m2");
+  QCOMPARE(e.value(), QVariant(1.0));
+  QCOMPARE(e.text().trimmed(), QString("1 m2"));
+  e.setValue("1 mm2");
+  QCOMPARE(e.value(), QVariant(1e-6));
+  QCOMPARE(e.text().trimmed(), QString("1 mm2"));
+  e.setValue("1 km2");
+  QCOMPARE(e.value(), QVariant(1e6));
+  QCOMPARE(e.text().trimmed(), QString("1 km2"));
+
   
   ///e.setUnit(mdtDoubleEdit::OmegaCapital);
 

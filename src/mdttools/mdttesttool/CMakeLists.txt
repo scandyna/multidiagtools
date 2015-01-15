@@ -108,6 +108,7 @@ set (CL_HEADER_FILES
           mdtcablelist/mdtClPathGraphDialog.h
           mdtcablelist/mdtClUnitConnectionDialog.h
           mdtcablelist/mdtClUnitEditor.h
+          mdtcablelist/mdtClWireEditor.h
           mdtcablelist/mdtClUnitLinkDialog.h
           mdtcablelist/mdtClLinkedUnitConnectionInfoDialog.h
           mdtcablelist/mdtClLinkedUnitConnectorInfoDialog.h
@@ -136,6 +137,7 @@ set (CL_SOURCES_FILES
           mdtcablelist/mdtClUnitConnectionData.cpp
           mdtcablelist/mdtClUnitConnectionDialog.cpp
           mdtcablelist/mdtClUnitEditor.cpp
+          mdtcablelist/mdtClWireEditor.cpp
           mdtcablelist/mdtClLinkData.cpp
           mdtcablelist/mdtClVehicleTypeLinkData.cpp
           mdtcablelist/mdtClLink.cpp
@@ -160,6 +162,7 @@ set (CL_FORM_FILES
           mdtcablelist/mdtClPathGraphDialog.ui
           mdtcablelist/mdtClUnitConnectionDialog.ui
           mdtcablelist/mdtClUnitEditor.ui
+          mdtcablelist/mdtClWireEditor.ui
           mdtcablelist/mdtClUnitLinkDialog.ui
           mdtcablelist/mdtClLinkedUnitConnectionInfoDialog.ui
           mdtcablelist/mdtClLinkedUnitConnectorInfoDialog.ui

@@ -146,10 +146,11 @@ p, li { white-space: pre-wrap; }
    </widget>
    <widget class="QMenu" name="menu_Link_list">
     <property name="title">
-     <string>&amp;Link list</string>
+     <string>&amp;Links</string>
     </property>
     <addaction name="actViewLinkList"/>
     <addaction name="actViewWires"/>
+    <addaction name="actEditWire"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Edition"/>
@@ -331,7 +332,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actViewLinkList">
    <property name="text">
-    <string>&amp;View</string>
+    <string>&amp;View link list</string>
    </property>
   </action>
   <action name="actBasicTester">
@@ -362,6 +363,11 @@ p, li { white-space: pre-wrap; }
   <action name="actViewWires">
    <property name="text">
     <string>View wires</string>
+   </property>
+  </action>
+  <action name="actEditWire">
+   <property name="text">
+    <string>Edit wires</string>
    </property>
   </action>
  </widget>
