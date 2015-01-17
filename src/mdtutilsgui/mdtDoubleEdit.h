@@ -75,7 +75,8 @@ class mdtDoubleEdit : public QWidget
  Q_OBJECT
 
  Q_PROPERTY(QString unit READ unit WRITE setUnit)
- Q_PROPERTY(bool wireSectionEditionMode READ isInWireSectionEditionMode WRITE setWireSectionEditionMode)
+ Q_PROPERTY(EditionMode_t editionMode READ editionMode WRITE setEditionMode)
+ Q_ENUMS(EditionMode_t)
  Q_PROPERTY(double minimum READ minimum WRITE setMinimum RESET setMinimumToMinusInfinity)
  Q_PROPERTY(double maximum READ maximum WRITE setMaximum RESET setMaximumToInfinity)
 
@@ -87,6 +88,14 @@ class mdtDoubleEdit : public QWidget
   {
     omega,          /*!< Omega (small letter) , &omega; */
     OmegaCapital    /*!< Capital omega , &Omega; */
+  };
+
+  /*! \brief Edition mode
+   */
+  enum EditionMode_t
+  {
+    DefaultEditionMode,   /*!< Default edition mode */
+    WireEditionMode       /*!< Wire edition mode */
   };
 
   /*! \brief Unit prefix ranges
@@ -136,10 +145,6 @@ class mdtDoubleEdit : public QWidget
   /*! \brief Set range
    */
   void setRange(double min, double max);
-
-  /*! \brief Set the full range
-   */
-  ///void setFullRange();
 
   /*! \brief Get power of 10 exponent for given char
    *
@@ -231,18 +236,18 @@ class mdtDoubleEdit : public QWidget
    */
   static QString infinityString();
 
-  /*! \brief Check if we are in wireSectionEditionMode (used by Qt Designer)
-   */
-  bool isInWireSectionEditionMode() const
-  {
-    return ( (pvUnit == "m2") && (pvUnitRanges.size() == 1) );
-  }
-
   /*! \internal Access internal line edit (used for unit tests)
    */
   QLineEdit *lineEdit()
   {
     return pvLineEdit;
+  }
+
+  /*! \brief Get edition mode
+   */
+  EditionMode_t editionMode() const
+  {
+    return pvEditionMode;
   }
 
  public slots:
@@ -255,9 +260,9 @@ class mdtDoubleEdit : public QWidget
    */
   void setUnit(const QString & u);
 
-  /*! \brief Set wire section edition mode
+  /*! \brief Set edition mode
    */
-  void setWireSectionEditionMode(bool set = true);
+  void setEditionMode(EditionMode_t mode);
 
  signals:
 
@@ -283,6 +288,10 @@ class mdtDoubleEdit : public QWidget
   void setValueFromLineEdit();
 
  private:
+
+  /*! \brief Set wire section edition mode
+   */
+  void setWireSectionEditionMode();
 
   /*! \brief Clear value
    *
@@ -338,6 +347,9 @@ class mdtDoubleEdit : public QWidget
   QPushButton *pbSetInfinity;
   QPushButton *pbSetMinusInfinity;
   mdtDoubleValidator *pvValidator;
+  
+  EditionMode_t pvEditionMode;
+  
   QString pvUnit;
   double pvValue;
   std::vector<mdtDoubleEditUnitRange> pvUnitRanges;   // Used to form number when displayed

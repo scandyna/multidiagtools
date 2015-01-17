@@ -51,14 +51,17 @@
        <property name="unit">
         <string>m2</string>
        </property>
-       <property name="wireSectionEditionMode">
-        <bool>true</bool>
+       <property name="editionMode">
+        <enum>mdtDoubleEdit::WireEditionMode</enum>
        </property>
        <property name="minimum">
         <double>0.000000000000000</double>
        </property>
        <property name="maximum">
         <double>1000.000000000000000</double>
+       </property>
+       <property name="wireSectionEditionMode" stdset="0">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -74,14 +77,14 @@
        <property name="unit">
         <string>Ω/m</string>
        </property>
-       <property name="wireSectionEditionMode">
-        <bool>false</bool>
-       </property>
        <property name="minimum">
         <double>0.000000000000000</double>
        </property>
        <property name="maximum">
         <double>100.000000000000000</double>
+       </property>
+       <property name="wireSectionEditionMode" stdset="0">
+        <bool>false</bool>
        </property>
       </widget>
      </item>

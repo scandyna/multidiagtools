@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -92,7 +92,7 @@ mdtClUnitLinkDialog::mdtClUnitLinkDialog(QWidget *parent, QSqlDatabase db)
   lbEndCabinet->clear();
   lbEndConnectorName->clear();
   lbEndContactName->clear();
-  lbUnit->clear();
+  ///lbUnit->clear();
 
 }
 
@@ -282,7 +282,8 @@ void mdtClUnitLinkDialog::setLinkData(mdtClLinkData &data)
   updateSinceVersionCombobox(data.value("SinceVersion"));
   setLinkTypeCode(data.value("LinkType_Code_FK"));
   setLinkDirectionCode(data.value("LinkDirection_Code_FK"));
-  sbValue->setValue(data.value("Value").toDouble());
+  deResistance->setValue(data.value("Resistance"));
+  deLength->setValue(data.value("Length"));
   // Update start/end units
   pvStartUnitId = pvLinkData.startConnectionData().value("Unit_Id_FK");
   updateStartUnit();
@@ -316,25 +317,26 @@ void mdtClUnitLinkDialog::onCbLinkTypeCurrentIndexChanged(int row)
   QVariant data;
 
   if(row < 0){
-    lbUnit->setText("");
+    ///lbUnit->setText("");
     return;
   }
   // We must update available directions regarding link type
   index = pvLinkTypeModel->index(row, 0);
   data = pvLinkTypeModel->data(index);
+  /// \todo Update whenn Voltage field is added
   if(data == QVariant("DIODE")){
     pvLinkDirectionModel->setQuery("SELECT Code_PK, NameEN, PictureAscii FROM LinkDirection_tbl WHERE Code_PK <> 'BID'", pvDatabase);
     cbLinkDirection->setEnabled(true);
-    sbValue->setValue(0.7);
+    ///sbValue->setValue(0.7);
   }else{
     pvLinkDirectionModel->setQuery("SELECT Code_PK, NameEN, PictureAscii FROM LinkDirection_tbl WHERE Code_PK = 'BID'", pvDatabase);
     cbLinkDirection->setEnabled(false);
-    sbValue->setValue(0.0);
+    ///sbValue->setValue(0.0);
   }
   // Update displayed unit (V, Ohm, ...)
   index = pvLinkTypeModel->index(row, 2);
   data = pvLinkTypeModel->data(index);
-  lbUnit->setText("[" + data.toString() + "]");
+  ///lbUnit->setText("[" + data.toString() + "]");
   // Update link data
   pvLinkData.setValue("LinkType_Code_FK", linkTypeCode());
 }
@@ -716,7 +718,8 @@ void mdtClUnitLinkDialog::accept()
   pvLinkData.setValue("Identification", leIdentification->text());
   pvLinkData.setValue("Modification", cbModification->currentText());
   pvLinkData.setValue("SinceVersion", cbSinceVersion->currentText());
-  pvLinkData.setValue("Value", sbValue->value());
+  pvLinkData.setValue("Resistance", deResistance->value());
+  pvLinkData.setValue("Length", deLength->value());
   /*
    * If a unit connection was changed,
    *  we must regenerate vehicle types

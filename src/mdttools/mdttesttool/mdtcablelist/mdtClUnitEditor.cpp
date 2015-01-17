@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -1733,7 +1733,8 @@ bool mdtClUnitEditor::setupUnitLinkTable()
   widget->setHeaderData("EndUnitConnectionResistance", tr("End\nconnection\nresistance"));
   widget->setHeaderData("SinceVersion", tr("Since\nversion"));
   widget->setHeaderData("LinkTypeNameEN", tr("Link type"));
-  widget->setHeaderData("ValueUnit", tr("Unit"));
+  widget->setHeaderData("Length", tr("Link\nlength"));
+  widget->setHeaderData("Resistance", tr("Link\nresistance"));
   widget->setHeaderData("LinkDirectionPictureAscii", tr("Direction"));
   widget->setHeaderData("StartSchemaPage", tr("Start\nschema\npage"));
   widget->setHeaderData("EndSchemaPage", tr("End\nschema\npage"));

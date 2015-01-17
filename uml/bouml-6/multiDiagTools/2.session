@@ -1,12 +1,13 @@
-window_sizes 1280 916 271 1003 863 0
+window_sizes 1280 996 271 1003 943 0
 cleanlooks_style
 diagrams
   active  classdiagram_ref 739586 // CableListAllTables
-    1003 863 70 17 19 0
+    1003 943 60 17 0 0
 end
 show_stereotypes
-selected statediagram_ref 686594 // mdtAbstractSqlWidgetStateMachine
+selected attribute_ref 1590402 // Length
 open
   state_ref 149634 // mdtAbstractSqlWidgetStateMachine
+  attribute_ref 1590402 // Length
 end
 end

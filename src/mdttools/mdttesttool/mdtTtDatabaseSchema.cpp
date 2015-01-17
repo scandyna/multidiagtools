@@ -1609,6 +1609,11 @@ bool mdtTtDatabaseSchema::setupLinkTable()
   field.setName("Resistance");
   field.setType(QVariant::Double);
   table.addField(field, false);
+  // Length
+  field = QSqlField();
+  field.setName("Length");
+  field.setType(QVariant::Double);
+  table.addField(field, false);
   // LinkBeam_Id_FK
   field = QSqlField();
   field.setName("LinkBeam_Id_FK");
@@ -3329,7 +3334,12 @@ bool mdtTtDatabaseSchema::createUnitLinkView()
               " LNK.SinceVersion ,\n"\
               " LNK.Modification ,\n"\
               " LinkType_tbl.NameEN AS LinkTypeNameEN ,\n"\
+              " LNK.Length ,\n"\
               " LNK.Resistance ,\n"\
+              " W.Model AS WireModel,\n"\
+              " W.Section,\n"\
+              " W.ColorEN,\n"\
+              " W.ArticleCode AS WireArticleCode,\n"\
               " LinkType_tbl.ValueUnit ,\n"\
               " LinkDirection_tbl.PictureAscii AS LinkDirectionPictureAscii ,\n"\
               " UCNXS.SchemaPage AS StartSchemaPage ,\n"\
@@ -3353,6 +3363,8 @@ bool mdtTtDatabaseSchema::createUnitLinkView()
   sql = "CREATE VIEW UnitLink_view AS\n";
   sql += selectSql;
   sql += "FROM Link_tbl LNK\n"\
+         " LEFT JOIN Wire_tbl W\n"\
+         "  ON W.Id_PK = LNK.Wire_Id_FK\n"\
          " JOIN UnitConnection_tbl UCNXS\n"\
          "  ON UCNXS.Id_PK = LNK.UnitConnectionStart_Id_FK\n"\
          " JOIN UnitConnection_tbl UCNXE\n"\

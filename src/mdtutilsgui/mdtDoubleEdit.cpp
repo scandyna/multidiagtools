@@ -68,7 +68,11 @@ mdtDoubleEdit::mdtDoubleEdit(QWidget* parent)
   pvIsNull = true;
   pvValueIsValid = false;
   pvUnitExponent = 1;
+  pvEditionMode = DefaultEditionMode;
   buildDefaultUnitRanges();
+  // Setup focus (help also Qt Designer to know we accept StrongFocus, else we never appear in tab order editor)
+  setFocusPolicy(Qt::StrongFocus);
+  setFocusProxy(pvLineEdit);
 }
 
 void mdtDoubleEdit::setReadOnly(bool ro)
@@ -259,8 +263,18 @@ QString mdtDoubleEdit::infinityString()
   return QChar(0x221E);
 }
 
+/*
+ * setUnit() and setEditionMode() are called by Qt Designer.
+ * The call order of this functions depends on order in witch user set these properties.
+ * To prevent incoherent behaviours, rules are:
+ *  - When a edition mode else than default, unit setup must be done without calling setUnit()
+ *  - setUnit() has effect only in default edition mode
+ */
 void mdtDoubleEdit::setUnit(const QString & u)
 {
+  if(pvEditionMode != DefaultEditionMode){
+    return;
+  }
   pvUnit = formatedUnit(u);
   pvValidator->setSuffix(pvUnit);
   // Extract unit exponent if one is passed
@@ -280,13 +294,15 @@ void mdtDoubleEdit::setUnit(const QString & u)
   clear();
 }
 
-void mdtDoubleEdit::setWireSectionEditionMode(bool set)
+void mdtDoubleEdit::setEditionMode(mdtDoubleEdit::EditionMode_t mode)
 {
-  if(set){
-    pvUnit = "m2";
-    pvUnitExponent = 2;
-    pvValidator->setSuffix(pvUnit);
-    buildWireSectionRanges();
+  pvEditionMode = mode;
+  switch(pvEditionMode){
+    case DefaultEditionMode:
+      return;
+    case WireEditionMode:
+      setWireSectionEditionMode();
+      return;
   }
 }
 
@@ -313,6 +329,14 @@ void mdtDoubleEdit::setValueFromLineEdit()
   convertAndSetValue(pvLineEdit->text());
   displayValue();
   emit valueChanged(pvValue, pvValueIsValid);
+}
+
+void mdtDoubleEdit::setWireSectionEditionMode()
+{
+  pvUnit = "m2";
+  pvUnitExponent = 2;
+  pvValidator->setSuffix(pvUnit);
+  buildWireSectionRanges();
 }
 
 void mdtDoubleEdit::clear()

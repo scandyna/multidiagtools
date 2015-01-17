@@ -138,10 +138,28 @@ void mdtWidgetsTest::mdtDoubleEditTest()
   e.show();
 
   // Initial state
+  QVERIFY(e.editionMode() == mdtDoubleEdit::DefaultEditionMode);
+  QVERIFY(e.focusPolicy() == Qt::StrongFocus);
   QVERIFY(e.isNull());
   QVERIFY(!e.valueIsValid());
   QVERIFY(e.value().isNull());
 
+  // Check edition mode / setUnit
+  QVERIFY(e.editionMode() == mdtDoubleEdit::DefaultEditionMode);
+  e.setUnit("m");
+  QCOMPARE(e.unit(), QString("m"));
+  e.setEditionMode(mdtDoubleEdit::WireEditionMode);
+  QVERIFY(e.editionMode() == mdtDoubleEdit::WireEditionMode);
+  QCOMPARE(e.unit(), QString("m2"));
+  e.setUnit("m");
+  QVERIFY(e.editionMode() == mdtDoubleEdit::WireEditionMode);
+  QCOMPARE(e.unit(), QString("m2"));
+  e.setEditionMode(mdtDoubleEdit::DefaultEditionMode);
+  QVERIFY(e.editionMode() == mdtDoubleEdit::DefaultEditionMode);
+  e.setUnit("m");
+  QCOMPARE(e.unit(), QString("m"));
+  e.setUnit("");
+  QCOMPARE(e.unit(), QString(""));
 
   // Check some basic conversions
   e.setValue("1.0");
@@ -341,9 +359,8 @@ void mdtWidgetsTest::mdtDoubleEditTest()
   /*
    * Check wire section edition
    */
-  QVERIFY(!e.isInWireSectionEditionMode());
-  e.setWireSectionEditionMode();
-  QVERIFY(e.isInWireSectionEditionMode());
+  e.setEditionMode(mdtDoubleEdit::WireEditionMode);
+  QVERIFY(e.editionMode() == mdtDoubleEdit::WireEditionMode);
   // Set numeric values
   e.setValue(1.0);
   QCOMPARE(e.value(), QVariant(1.0));
@@ -369,6 +386,8 @@ void mdtWidgetsTest::mdtDoubleEditTest()
    * Check user edition
    */
   // Setup
+  e.setEditionMode(mdtDoubleEdit::DefaultEditionMode);
+  QVERIFY(e.editionMode() == mdtDoubleEdit::DefaultEditionMode);
   e.setUnit("m");
   e.setRange(0.0, 1e6);
   QVERIFY(e.isNull());
