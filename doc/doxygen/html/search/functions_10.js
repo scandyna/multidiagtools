@@ -1,6 +1,7 @@
 var searchData=
 [
   ['rangechangedforui',['rangeChangedForUi',['../classmdt_analog_io.html#a40735cbbf852790067a6f9b57aac4aa3',1,'mdtAnalogIo']]],
+  ['rangeof',['rangeOf',['../namespacemdt_algorithms.html#a8d3b78c6e483ab34e49e646909618655',1,'mdtAlgorithms']]],
   ['read',['read',['../classmdt_port.html#ad8a196bb21b6ca76dffb068a1692904a',1,'mdtPort::read()'],['../classmdt_abstract_port.html#a9d9c45220d5328c9856a2445557fe970',1,'mdtAbstractPort::read()'],['../classmdt_tcp_socket.html#a78842bc5ddcac2d96fb368ee575214cd',1,'mdtTcpSocket::read()'],['../classmdt_usbtmc_tx_message.html#a673b9b28cb2f4e38323bfb0dfbe81d7a',1,'mdtUsbtmcTxMessage::read()'],['../classmdt_serial_port.html#a12274d7956b2af961ccdd36cfc2052cc',1,'mdtSerialPort::read()']]],
   ['readanaloginput',['readAnalogInput',['../classmdt_device.html#acecf7934ce29b3a957accb0f4c98c746',1,'mdtDevice::readAnalogInput()'],['../classmdt_device_modbus.html#aa2a024793ae2a5e81c7e92260a70cd9e',1,'mdtDeviceModbus::readAnalogInput()']]],
   ['readanaloginputs',['readAnalogInputs',['../classmdt_device.html#a40674e7bf0c367bb3edb407d73a5bd8e',1,'mdtDevice::readAnalogInputs()'],['../classmdt_device_modbus.html#a846af6dbf80bbf747f3f966420ef6f92',1,'mdtDeviceModbus::readAnalogInputs()']]],

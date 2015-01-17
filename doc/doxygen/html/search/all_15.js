@@ -22,6 +22,7 @@ var searchData=
   ['widget',['widget',['../classmdt_sql_field_handler_label.html#a53007a4daf4e52a4f4ecd2e59318e0e7',1,'mdtSqlFieldHandlerLabel::widget()'],['../classmdt_sql_field_handler_line_edit.html#a475426ca27aea03d01f31c7d9c8bb5ba',1,'mdtSqlFieldHandlerLineEdit::widget()'],['../classmdt_sql_field_handler_combo_box.html#aeebc412d63ebdf9607576304bce5ea82',1,'mdtSqlFieldHandlerComboBox::widget()'],['../classmdt_sql_field_handler_mdt_double_edit.html#a92b09a4317834218f60170317c08aa49',1,'mdtSqlFieldHandlerMdtDoubleEdit::widget()'],['../classmdt_sql_field_handler_date_time_edit.html#a7a88cc728d8b3ccae1f90d78b617de88',1,'mdtSqlFieldHandlerDateTimeEdit::widget()'],['../classmdt_sql_field_handler_abstract_data_widget.html#a460c76d650eba635ffb42951c7adbb50',1,'mdtSqlFieldHandlerAbstractDataWidget::widget()'],['../classmdt_sql_field_handler_plain_text_edit.html#a6faa79f2e738582474493151aa0af886',1,'mdtSqlFieldHandlerPlainTextEdit::widget()']]],
   ['windex',['wIndex',['../classmdt_usb_control_transfer.html#af27548b7789b53a6bac3051ffca018a9',1,'mdtUsbControlTransfer']]],
   ['wirebreakshortcircuitindicationisenabled',['wireBreakShortCircuitIndicationIsEnabled',['../classmdt_device_modbus_wago_module_rtd.html#a01ed3710a2f7a22a686fa06fd747219a',1,'mdtDeviceModbusWagoModuleRtd']]],
+  ['wireeditionmode',['WireEditionMode',['../classmdt_double_edit.html#a52cc3f5b9d6acd6838c52d478b3ea4dda26278c3ed551b8412c6f52d97604e2fe',1,'mdtDoubleEdit']]],
   ['wlength',['wLength',['../classmdt_usb_control_transfer.html#a673c61f2bead515c3f11f588bb203e03',1,'mdtUsbControlTransfer']]],
   ['word',['WORD',['../classmdt_frame_codec_scpi.html#a0562eccf33d8cf62e7a73a748a70c475a7f4b47afe74504dea43bb04c8c6fbe58',1,'mdtFrameCodecScpi']]],
   ['wordvalue',['wordValue',['../classmdt_usb_control_transfer.html#a39aec348c12e466f7774bd5223b745fc',1,'mdtUsbControlTransfer']]],
@@ -45,7 +46,7 @@ var searchData=
   ['writequeuesize',['writeQueueSize',['../classmdt_port_config.html#a93d72b1ea53f188d7a35bc044394b959',1,'mdtPortConfig']]],
   ['writeregisters',['writeRegisters',['../classmdt_device_modbus_wago_module.html#a8fe809c91ccbf05f77c189fbaba12b91',1,'mdtDeviceModbusWagoModule']]],
   ['writethread',['writeThread',['../classmdt_port_manager.html#af44b6e9876e6687b1d4fe7e05ffd5a91',1,'mdtPortManager']]],
-  ['writetimeout',['WriteTimeout',['../classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eac3a5cee51d4fb0b3bfb7c49604059c6a',1,'mdtAbstractPort::WriteTimeout()'],['../classmdt_port_config.html#a3009e07cd66f4c4bfc1c7fdabbc9f93c',1,'mdtPortConfig::writeTimeout()']]],
+  ['writetimeout',['writeTimeout',['../classmdt_port_config.html#a3009e07cd66f4c4bfc1c7fdabbc9f93c',1,'mdtPortConfig::writeTimeout()'],['../classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eac3a5cee51d4fb0b3bfb7c49604059c6a',1,'mdtAbstractPort::WriteTimeout()']]],
   ['writetoport',['writeToPort',['../classmdt_port_thread_helper_port.html#a25c35855dc9e8edc489a9efad8d293f7',1,'mdtPortThreadHelperPort']]],
   ['wvalue',['wValue',['../classmdt_usb_control_transfer.html#aba33b977514458a3413a2fe12fe3b5c8',1,'mdtUsbControlTransfer']]]
 ];

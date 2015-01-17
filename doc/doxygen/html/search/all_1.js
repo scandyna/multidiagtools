@@ -29,7 +29,7 @@ var searchData=
   ['boost_5fmpl_5fcfg_5fno_5fpreprocessed_5fheaders',['BOOST_MPL_CFG_NO_PREPROCESSED_HEADERS',['../mdt_usbtmc_transfer_handler_state_machine_8h.html#a5cfc0a80bcb9c742a4dd13252e8e70b2',1,'mdtUsbtmcTransferHandlerStateMachine.h']]],
   ['boost_5fmpl_5flimit_5fmap_5fsize',['BOOST_MPL_LIMIT_MAP_SIZE',['../mdt_usbtmc_transfer_handler_state_machine_8h.html#a823f3b3492f924051a8b1616b17bba62',1,'mdtUsbtmcTransferHandlerStateMachine.h']]],
   ['boost_5fmpl_5flimit_5fvector_5fsize',['BOOST_MPL_LIMIT_VECTOR_SIZE',['../mdt_usbtmc_transfer_handler_state_machine_8h.html#a186e9b0d4ca49c145b094b9f9837c5d8',1,'mdtUsbtmcTransferHandlerStateMachine.h']]],
-  ['bottom',['bottom',['../classmdt_double_validator.html#a4dd214c184264cbe0a7507982d843ca5',1,'mdtDoubleValidator']]],
+  ['bottom',['bottom',['../structmdt_algorithms_1_1_numeric_range_double.html#ad4a4a826ebf86f43af5f9543eb404255',1,'mdtAlgorithms::NumericRangeDouble::bottom()'],['../classmdt_double_validator.html#a4dd214c184264cbe0a7507982d843ca5',1,'mdtDoubleValidator::bottom()']]],
   ['boundingrect',['boundingRect',['../classmdt_cl_path_graphics_connection.html#ad8f37d152c86b5e003e4db98a708af68',1,'mdtClPathGraphicsConnection::boundingRect()'],['../classmdt_cl_path_graphics_link.html#a282899cce5aff82c7f1ff057dfd2a7e5',1,'mdtClPathGraphicsLink::boundingRect()']]],
   ['brequest',['bRequest',['../classmdt_usb_control_transfer.html#acad163ec6dd2f3172b844115fb0bbfb9',1,'mdtUsbControlTransfer']]],
   ['btag',['bTag',['../classmdt_usbtmc_bulk_transfer.html#a7975795ea5299a1a82c1ec303be24e2e',1,'mdtUsbtmcBulkTransfer::bTag()'],['../classmdt_usbtmc_frame.html#a46d0574cdf95da840e4c6f5de314c15d',1,'mdtUsbtmcFrame::bTag()']]],

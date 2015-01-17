@@ -33,5 +33,6 @@ var searchData=
   ['notmappeddestinationfields',['notMappedDestinationFields',['../classmdt_field_map.html#a3b618d50c5c7cb8c1086dba5db18d7a7',1,'mdtFieldMap']]],
   ['notmappedsourcefields',['notMappedSourceFields',['../classmdt_field_map.html#a32c026ccb54a4b783b77963bcbfd9212',1,'mdtFieldMap']]],
   ['notselecteditems',['notSelectedItems',['../classmdt_items_selector_dialog.html#af944e51b66c6e492ec74ec6030b281d4',1,'mdtItemsSelectorDialog']]],
-  ['number',['number',['../classmdt_usb_endpoint_descriptor.html#ac27a176118a68e93d9a71e89b304c614',1,'mdtUsbEndpointDescriptor::number()'],['../classmdt_error.html#ad233adb8efe4180b85f584c5afdd49fc',1,'mdtError::number()'],['../classmdt_uic_number_item.html#a23c0a0e1c9f20bc3e092a51a1eabbffc',1,'mdtUicNumberItem::number()']]]
+  ['number',['number',['../classmdt_usb_endpoint_descriptor.html#ac27a176118a68e93d9a71e89b304c614',1,'mdtUsbEndpointDescriptor::number()'],['../classmdt_error.html#ad233adb8efe4180b85f584c5afdd49fc',1,'mdtError::number()'],['../classmdt_uic_number_item.html#a23c0a0e1c9f20bc3e092a51a1eabbffc',1,'mdtUicNumberItem::number()']]],
+  ['numericrangedouble',['NumericRangeDouble',['../structmdt_algorithms_1_1_numeric_range_double.html#add368d5a7de1c2ac042e90b7c1429ced',1,'mdtAlgorithms::NumericRangeDouble::NumericRangeDouble()'],['../structmdt_algorithms_1_1_numeric_range_double.html#afcfeef78bbba9f4dc29727b037a6a9c5',1,'mdtAlgorithms::NumericRangeDouble::NumericRangeDouble(double min, double max, bool includeMin=true, bool includeMax=true)']]]
 ];

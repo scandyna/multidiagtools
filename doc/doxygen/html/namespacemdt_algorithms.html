@@ -82,6 +82,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">mdtAlgorithms Namespace Reference</div>  </div>
@@ -91,8 +92,24 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>Some usefull little (unefficient) algoritms.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmdt_algorithms_1_1_numeric_range_double.html">NumericRangeDouble</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Numeric range.  <a href="structmdt_algorithms_1_1_numeric_range_double.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:ab992c2e3ca601b25322e817d4cb6f8c0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemdt_algorithms.html#ab992c2e3ca601b25322e817d4cb6f8c0">isInRange</a> (double x, double bottom, double top, bool includeBottom, bool includeTop)</td></tr>
+<tr class="memdesc:ab992c2e3ca601b25322e817d4cb6f8c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if x is in range min;max.  <a href="#ab992c2e3ca601b25322e817d4cb6f8c0">More...</a><br/></td></tr>
+<tr class="separator:ab992c2e3ca601b25322e817d4cb6f8c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeef08bc2e48a3a24a65e30d2685fbc9a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemdt_algorithms.html#aeef08bc2e48a3a24a65e30d2685fbc9a">isInRange</a> (double x, const <a class="el" href="structmdt_algorithms_1_1_numeric_range_double.html">NumericRangeDouble</a> &amp;range)</td></tr>
+<tr class="memdesc:aeef08bc2e48a3a24a65e30d2685fbc9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if x is in range.  <a href="#aeef08bc2e48a3a24a65e30d2685fbc9a">More...</a><br/></td></tr>
+<tr class="separator:aeef08bc2e48a3a24a65e30d2685fbc9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d3b78c6e483ab34e49e646909618655"><td class="memTemplParams" colspan="2">template&lt;typename RangeType &gt; </td></tr>
+<tr class="memitem:a8d3b78c6e483ab34e49e646909618655"><td class="memTemplItemLeft" align="right" valign="top">RangeType&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemdt_algorithms.html#a8d3b78c6e483ab34e49e646909618655">rangeOf</a> (double x, const std::vector&lt; RangeType &gt; &amp;ranges)</td></tr>
+<tr class="memdesc:a8d3b78c6e483ab34e49e646909618655"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the range in witch x is.  <a href="#a8d3b78c6e483ab34e49e646909618655">More...</a><br/></td></tr>
+<tr class="separator:a8d3b78c6e483ab34e49e646909618655"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a32a09ec3855b605b6e455ea418502aeb"><td class="memItemLeft" align="right" valign="top">QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemdt_algorithms.html#a32a09ec3855b605b6e455ea418502aeb">naturalSort</a> (QStringList &amp;list, Qt::CaseSensitivity caseSensitivity)</td></tr>
 <tr class="memdesc:a32a09ec3855b605b6e455ea418502aeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sort a string list using natural sort.  <a href="#a32a09ec3855b605b6e455ea418502aeb">More...</a><br/></td></tr>
 <tr class="separator:a32a09ec3855b605b6e455ea418502aeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -141,7 +158,7 @@ Functions</h2></td></tr>
 <p>Convert a byte array to a hexadecimal string. </p>
 <p>For example, byte array with 44,18,95 numerical values will generate a string with "2C 12 5F". </p>
 
-<p>Definition at line <a class="el" href="mdt_algorithms_8cpp_source.html#l00224">224</a> of file <a class="el" href="mdt_algorithms_8cpp_source.html">mdtAlgorithms.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_algorithms_8cpp_source.html#l00258">258</a> of file <a class="el" href="mdt_algorithms_8cpp_source.html">mdtAlgorithms.cpp</a>.</p>
 
 </div>
 </div>
@@ -165,7 +182,103 @@ Functions</h2></td></tr>
 <dd>
 hexStr must contain valid chars (0-9 , a-f, A-F). F.ex: 2Z is not valid. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_algorithms_8cpp_source.html#l00199">199</a> of file <a class="el" href="mdt_algorithms_8cpp_source.html">mdtAlgorithms.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_algorithms_8cpp_source.html#l00233">233</a> of file <a class="el" href="mdt_algorithms_8cpp_source.html">mdtAlgorithms.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab992c2e3ca601b25322e817d4cb6f8c0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtAlgorithms::isInRange </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>bottom</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>top</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>includeBottom</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>includeTop</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check if x is in range min;max. </p>
+<p>If both includeBottom and includeTop are true, true is returned if x is in [bottom;top].</p>
+<p>If only includeBottom is true, true is returned if x is in [bottom;top[.</p>
+<p>If only includeTop is true, true is returned if x is in ]bottom;top].</p>
+<p>For the last case, true is returned if x is in ]bottom;top[.</p>
+<dl class="section pre"><dt>Precondition</dt><dd>bottom must be &lt; top </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_algorithms_8cpp_source.html#l00045">45</a> of file <a class="el" href="mdt_algorithms_8cpp_source.html">mdtAlgorithms.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_algorithms_8h_source.html#l00095">isInRange()</a>, and <a class="el" href="mdt_algorithms_8h_source.html#l00107">rangeOf()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aeef08bc2e48a3a24a65e30d2685fbc9a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtAlgorithms::isInRange </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const NumericRangeDouble &amp;&#160;</td>
+          <td class="paramname"><em>range</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Check if x is in range. </p>
+<dl class="section pre"><dt>Precondition</dt><dd>range must be valid </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_algorithms_8h_source.html#l00095">95</a> of file <a class="el" href="mdt_algorithms_8h_source.html">mdtAlgorithms.h</a>.</p>
+
+<p>References <a class="el" href="mdt_algorithms_8h_source.html#l00058">mdtAlgorithms::NumericRangeDouble::bottom</a>, <a class="el" href="mdt_algorithms_8h_source.html#l00066">mdtAlgorithms::NumericRangeDouble::includeBottom</a>, <a class="el" href="mdt_algorithms_8h_source.html#l00070">mdtAlgorithms::NumericRangeDouble::includeTop</a>, <a class="el" href="mdt_algorithms_8cpp_source.html#l00045">isInRange()</a>, <a class="el" href="mdt_algorithms_8h_source.html#l00051">mdtAlgorithms::NumericRangeDouble::isValid()</a>, and <a class="el" href="mdt_algorithms_8h_source.html#l00062">mdtAlgorithms::NumericRangeDouble::top</a>.</p>
 
 </div>
 </div>
@@ -195,7 +308,7 @@ hexStr must contain valid chars (0-9 , a-f, A-F). F.ex: 2Z is not valid. </dd></
 
 <p>Get the string of longest line in given string. </p>
 
-<p>Definition at line <a class="el" href="mdt_algorithms_8cpp_source.html#l00391">391</a> of file <a class="el" href="mdt_algorithms_8cpp_source.html">mdtAlgorithms.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_algorithms_8cpp_source.html#l00425">425</a> of file <a class="el" href="mdt_algorithms_8cpp_source.html">mdtAlgorithms.cpp</a>.</p>
 
 </div>
 </div>
@@ -236,9 +349,9 @@ hexStr must contain valid chars (0-9 , a-f, A-F). F.ex: 2Z is not valid. </dd></
 <p>Please note that this version is not the original one. Unexpected behaviours cannot be due to KDE or Martin Pool.</p>
 <dl class="section return"><dt>Returns</dt><dd>True if str1 &lt; str2. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_algorithms_8cpp_source.html#l00038">38</a> of file <a class="el" href="mdt_algorithms_8cpp_source.html">mdtAlgorithms.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_algorithms_8cpp_source.html#l00072">72</a> of file <a class="el" href="mdt_algorithms_8cpp_source.html">mdtAlgorithms.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_algorithms_8cpp_source.html#l00194">naturalCompareLessThanCaseInsensitive()</a>, and <a class="el" href="mdt_algorithms_8cpp_source.html#l00189">naturalCompareLessThanCaseSensitive()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_algorithms_8cpp_source.html#l00228">naturalCompareLessThanCaseInsensitive()</a>, and <a class="el" href="mdt_algorithms_8cpp_source.html#l00223">naturalCompareLessThanCaseSensitive()</a>.</p>
 
 </div>
 </div>
@@ -268,11 +381,11 @@ hexStr must contain valid chars (0-9 , a-f, A-F). F.ex: 2Z is not valid. </dd></
 
 <p>Compare 2 strings using natural sort - case insensitive version. </p>
 
-<p>Definition at line <a class="el" href="mdt_algorithms_8cpp_source.html#l00194">194</a> of file <a class="el" href="mdt_algorithms_8cpp_source.html">mdtAlgorithms.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_algorithms_8cpp_source.html#l00228">228</a> of file <a class="el" href="mdt_algorithms_8cpp_source.html">mdtAlgorithms.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_algorithms_8cpp_source.html#l00038">naturalCompareLessThan()</a>.</p>
+<p>References <a class="el" href="mdt_algorithms_8cpp_source.html#l00072">naturalCompareLessThan()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_algorithms_8cpp_source.html#l00027">naturalSort()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_algorithms_8cpp_source.html#l00061">naturalSort()</a>.</p>
 
 </div>
 </div>
@@ -302,11 +415,11 @@ hexStr must contain valid chars (0-9 , a-f, A-F). F.ex: 2Z is not valid. </dd></
 
 <p>Compare 2 strings using natural sort - case sensitive version. </p>
 
-<p>Definition at line <a class="el" href="mdt_algorithms_8cpp_source.html#l00189">189</a> of file <a class="el" href="mdt_algorithms_8cpp_source.html">mdtAlgorithms.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_algorithms_8cpp_source.html#l00223">223</a> of file <a class="el" href="mdt_algorithms_8cpp_source.html">mdtAlgorithms.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_algorithms_8cpp_source.html#l00038">naturalCompareLessThan()</a>.</p>
+<p>References <a class="el" href="mdt_algorithms_8cpp_source.html#l00072">naturalCompareLessThan()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_algorithms_8cpp_source.html#l00027">naturalSort()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_algorithms_8cpp_source.html#l00061">naturalSort()</a>.</p>
 
 </div>
 </div>
@@ -344,11 +457,46 @@ hexStr must contain valid chars (0-9 , a-f, A-F). F.ex: 2Z is not valid. </dd></
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The sorted list </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_algorithms_8cpp_source.html#l00027">27</a> of file <a class="el" href="mdt_algorithms_8cpp_source.html">mdtAlgorithms.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_algorithms_8cpp_source.html#l00061">61</a> of file <a class="el" href="mdt_algorithms_8cpp_source.html">mdtAlgorithms.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_algorithms_8cpp_source.html#l00194">naturalCompareLessThanCaseInsensitive()</a>, and <a class="el" href="mdt_algorithms_8cpp_source.html#l00189">naturalCompareLessThanCaseSensitive()</a>.</p>
+<p>References <a class="el" href="mdt_algorithms_8cpp_source.html#l00228">naturalCompareLessThanCaseInsensitive()</a>, and <a class="el" href="mdt_algorithms_8cpp_source.html#l00223">naturalCompareLessThanCaseSensitive()</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_serial_port_manager_8cpp_source.html#l00056">mdtSerialPortManager::scan()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8d3b78c6e483ab34e49e646909618655"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename RangeType &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">RangeType mdtAlgorithms::rangeOf </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; RangeType &gt; &amp;&#160;</td>
+          <td class="paramname"><em>ranges</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the range in witch x is. </p>
+<p>If x is in no range in ranges, a invalid range is returned. </p>
+
+<p>Definition at line <a class="el" href="mdt_algorithms_8h_source.html#l00107">107</a> of file <a class="el" href="mdt_algorithms_8h_source.html">mdtAlgorithms.h</a>.</p>
+
+<p>References <a class="el" href="mdt_algorithms_8cpp_source.html#l00045">isInRange()</a>.</p>
 
 </div>
 </div>
@@ -406,9 +554,9 @@ hexStr must contain valid chars (0-9 , a-f, A-F). F.ex: 2Z is not valid. </dd></
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The list of found fields </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_algorithms_8cpp_source.html#l00325">325</a> of file <a class="el" href="mdt_algorithms_8cpp_source.html">mdtAlgorithms.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_algorithms_8cpp_source.html#l00359">359</a> of file <a class="el" href="mdt_algorithms_8cpp_source.html">mdtAlgorithms.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_algorithms_8cpp_source.html#l00246">unprotectedString()</a>.</p>
+<p>References <a class="el" href="mdt_algorithms_8cpp_source.html#l00280">unprotectedString()</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_codec_scpi_8cpp_source.html#l00203">mdtCodecScpi::decodeDeviceError()</a>, <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00348">mdtFrameCodecScpi::decodeError()</a>, <a class="el" href="mdt_csv_file_8cpp_source.html#l00105">mdtCsvFile::readLine()</a>, and <a class="el" href="mdt_csv_file_8cpp_source.html#l00180">mdtCsvFile::readLines()</a>.</p>
 
@@ -475,16 +623,16 @@ hexStr must contain valid chars (0-9 , a-f, A-F). F.ex: 2Z is not valid. </dd></
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_algorithms_8cpp_source.html#l00246">246</a> of file <a class="el" href="mdt_algorithms_8cpp_source.html">mdtAlgorithms.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_algorithms_8cpp_source.html#l00280">280</a> of file <a class="el" href="mdt_algorithms_8cpp_source.html">mdtAlgorithms.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_algorithms_8cpp_source.html#l00325">splitString()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_algorithms_8cpp_source.html#l00359">splitString()</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 11 2015 16:42:21 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jan 17 2015 16:32:17 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

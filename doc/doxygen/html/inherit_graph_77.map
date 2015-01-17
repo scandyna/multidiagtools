@@ -1,12 +1,3 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node2" href="$structmdt_usbtmc_transfer_handler_state_machine_1_1_running___1_1_aborting_bulk_in.html" title="AbortingBulkIn state. " alt="" coords="117,5,299,61"/>
-<area shape="rect" id="node3" href="$structmdt_usbtmc_transfer_handler_state_machine_1_1_running___1_1_aborting_bulk_out.html" title="AbortingBulkOut state. " alt="" coords="117,85,299,141"/>
-<area shape="rect" id="node4" href="$structmdt_usbtmc_transfer_handler_state_machine_1_1_running___1_1_clearing_bulk_in_endpoint_halt.html" title="ClearingBulkInEndpointHalt state. " alt="" coords="109,165,307,221"/>
-<area shape="rect" id="node5" href="$structmdt_usbtmc_transfer_handler_state_machine_1_1_running___1_1_clearing_bulk_io.html" title="ClearingBulkIo state. " alt="" coords="117,245,299,301"/>
-<area shape="rect" id="node6" href="$structmdt_usbtmc_transfer_handler_state_machine_1_1_running___1_1_clearing_bulk_out_endpoint_halt.html" title="ClearingBulkOutEndpointHalt state. " alt="" coords="105,325,311,381"/>
-<area shape="rect" id="node7" href="$structmdt_usbtmc_transfer_handler_state_machine_1_1_running___1_1_processing.html" title="Processing state. " alt="" coords="117,405,299,461"/>
-<area shape="rect" id="node8" href="$structmdt_usbtmc_transfer_handler_state_machine_1_1_state_machine___1_1_disconnected.html" title="Disconnected state. " alt="" coords="113,485,303,541"/>
-<area shape="rect" id="node9" href="$structmdt_usbtmc_transfer_handler_state_machine_1_1_state_machine___1_1_error.html" title="Error state. " alt="" coords="113,565,303,621"/>
-<area shape="rect" id="node10" href="$structmdt_usbtmc_transfer_handler_state_machine_1_1_state_machine___1_1_stopped.html" title="Stopped state. " alt="" coords="113,645,303,701"/>
-<area shape="rect" id="node11" href="$structmdt_usbtmc_transfer_handler_state_machine_1_1_state_machine___1_1_stopping.html" title="Stopping state. " alt="" coords="113,725,303,781"/>
+<area shape="rect" id="node1" href="$structmdt_usbtmc_transfer_handler_state_machine_1_1_processing_flag.html" title="Tell USBTMC port that we can accept requests. " alt="" coords="5,5,205,46"/>
 </map>

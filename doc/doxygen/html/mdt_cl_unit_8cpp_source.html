@@ -91,7 +91,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <a href="mdt_cl_unit_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/****************************************************************************</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> **</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> ** Copyright (C) 2011-2014 Philippe Steinmann.</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> ** Copyright (C) 2011-2015 Philippe Steinmann.</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> **</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> ** This file is part of multiDiagTools library.</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"> **</span></div>
@@ -1157,7 +1157,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l01096"></a><span class="lineno"> 1096</span>&#160;  }</div>
 <div class="line"><a name="l01097"></a><span class="lineno"> 1097</span>&#160;  <span class="comment">// Get related article links</span></div>
 <div class="line"><a name="l01098"></a><span class="lineno"> 1098</span>&#160;  sql = <span class="stringliteral">&quot;SELECT UnitConnectionStart_Id_FK, UnitConnectionEnd_Id_FK, ArticleConnectionStart_Id_FK, ArticleConnectionEnd_Id_FK,&quot;</span>;</div>
-<div class="line"><a name="l01099"></a><span class="lineno"> 1099</span>&#160;  sql += <span class="stringliteral">&quot; LinkType_Code_FK, LinkDirection_Code_FK, Identification, Value, SinceVersion, Modification &quot;</span>;</div>
+<div class="line"><a name="l01099"></a><span class="lineno"> 1099</span>&#160;  sql += <span class="stringliteral">&quot; LinkType_Code_FK, LinkDirection_Code_FK, Identification, Resistance, SinceVersion, Modification &quot;</span>;</div>
 <div class="line"><a name="l01100"></a><span class="lineno"> 1100</span>&#160;  sql += <span class="stringliteral">&quot; FROM ArticleLink_UnitConnection_view &quot;</span>;</div>
 <div class="line"><a name="l01101"></a><span class="lineno"> 1101</span>&#160;  sql += <span class="stringliteral">&quot; WHERE ( UnitConnectionStart_Id_FK = &quot;</span> + unitConnectionData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609">value</a>(<span class="stringliteral">&quot;Id_PK&quot;</span>).toString();</div>
 <div class="line"><a name="l01102"></a><span class="lineno"> 1102</span>&#160;  sql += <span class="stringliteral">&quot; OR UnitConnectionEnd_Id_FK = &quot;</span> + unitConnectionData.<a class="code" href="classmdt_sql_record.html#a373eef777b0e51d2e8dc0904f992d609">value</a>(<span class="stringliteral">&quot;Id_PK&quot;</span>).toString();</div>
@@ -1310,7 +1310,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 11 2015 16:42:10 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jan 17 2015 16:32:05 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

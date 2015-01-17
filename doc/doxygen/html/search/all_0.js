@@ -164,6 +164,7 @@ var searchData=
   ['askuser',['askUser',['../classmdt_tt_abstract_test_node_calibration_tool.html#a464c96ebdb95c0a43fc6684b2b3900f7',1,'mdtTtAbstractTestNodeCalibrationTool::askUser()'],['../classmdt_ui_message_handler.html#acbafb01528f77353fe2ecce79aa489d6',1,'mdtUiMessageHandler::askUser()']]],
   ['askuserifexists',['AskUserIfExists',['../classmdt_sql_database_manager.html#a2f5b46d67a88095053a5edfc415c7418a07472a134a2612efd3b088ab8af78ad6',1,'mdtSqlDatabaseManager']]],
   ['attachview',['attachView',['../classmdt_cl_path_graph.html#a6c239942dd7f31fc2197af4febec489c',1,'mdtClPathGraph']]],
+  ['auto',['Auto',['../classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a06b9281e396db002010bde1de57262eb',1,'mdtDeviceU3606A']]],
   ['available',['available',['../classmdt_buffer.html#a24ca1a2d00ba1623416ec747ba440adf',1,'mdtBuffer']]],
   ['availablebaudrates',['availableBaudRates',['../classmdt_abstract_serial_port.html#aecd76bff0f93cb86c3bbfd73e3776032',1,'mdtAbstractSerialPort']]],
   ['availablepartitions',['availablePartitions',['../classmdt_partition_attributes.html#a878661022c3f21be023e03f8b28f34b4',1,'mdtPartitionAttributes']]],

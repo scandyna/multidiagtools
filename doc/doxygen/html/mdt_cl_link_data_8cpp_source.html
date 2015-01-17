@@ -91,7 +91,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <a href="mdt_cl_link_data_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/****************************************************************************</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> **</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> ** Copyright (C) 2011-2014 Philippe Steinmann.</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> ** Copyright (C) 2011-2015 Philippe Steinmann.</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> **</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> ** This file is part of multiDiagTools library.</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"> **</span></div>
@@ -129,7 +129,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  Q_ASSERT(<a class="code" href="classmdt_sql_record.html#a72e73a47c93453253dde5c2d2938c052">indexOf</a>(<span class="stringliteral">&quot;Identification&quot;</span>) &gt;= 0);</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  Q_ASSERT(<a class="code" href="classmdt_sql_record.html#a72e73a47c93453253dde5c2d2938c052">indexOf</a>(<span class="stringliteral">&quot;SinceVersion&quot;</span>) &gt;= 0);</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  Q_ASSERT(<a class="code" href="classmdt_sql_record.html#a72e73a47c93453253dde5c2d2938c052">indexOf</a>(<span class="stringliteral">&quot;Modification&quot;</span>) &gt;= 0);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  Q_ASSERT(<a class="code" href="classmdt_sql_record.html#a72e73a47c93453253dde5c2d2938c052">indexOf</a>(<span class="stringliteral">&quot;Value&quot;</span>) &gt;= 0);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  Q_ASSERT(<a class="code" href="classmdt_sql_record.html#ab7f694f62b8db947deb9713762ab4f27">contains</a>(<span class="stringliteral">&quot;Resistance&quot;</span>) &gt;= 0);</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <a class="code" href="classmdt_cl_link_data.html#a04872523d8d231ddc38da34fd488ad26">clearVehicleTypeLinkDataList</a>();</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="comment">/*</span></div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment">   * Currently, mdtClUnit::getArticleLinkListUsingConnectionId() takes data from</span></div>
@@ -231,11 +231,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="classmdt_cl_link_data_html_af973898eb4ffe8c97f3267c99e97721b"><div class="ttname"><a href="classmdt_cl_link_data.html#af973898eb4ffe8c97f3267c99e97721b">mdtClLinkData::setConnectionData</a></div><div class="ttdeci">void setConnectionData(const mdtClUnitConnectionData &amp;startCnnData, const mdtClUnitConnectionData &amp;endCnnData)</div><div class="ttdoc">Set start and end connection data. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_cl_link_data_8cpp_source.html#l00101">mdtClLinkData.cpp:101</a></div></div>
 <div class="ttc" id="classmdt_cl_unit_connection_data_html_a776b3eb79ef6397b12b5cabe37c89b13"><div class="ttname"><a href="classmdt_cl_unit_connection_data.html#a776b3eb79ef6397b12b5cabe37c89b13">mdtClUnitConnectionData::setup</a></div><div class="ttdeci">bool setup(const QSqlDatabase &amp;db, bool setupAcd)</div><div class="ttdoc">Setup fields from UnitConnection_tbl. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_cl_unit_connection_data_8cpp_source.html#l00048">mdtClUnitConnectionData.cpp:48</a></div></div>
 <div class="ttc" id="classmdt_cl_vehicle_type_link_data_html_ad5538a51c2f02778ad01936fd7e5ca4a"><div class="ttname"><a href="classmdt_cl_vehicle_type_link_data.html#ad5538a51c2f02778ad01936fd7e5ca4a">mdtClVehicleTypeLinkData::setUnitConnectionEndId</a></div><div class="ttdeci">void setUnitConnectionEndId(const QVariant &amp;value)</div><div class="ttdoc">Set unit connection end ID. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_cl_vehicle_type_link_data_8cpp_source.html#l00038">mdtClVehicleTypeLinkData.cpp:38</a></div></div>
+<div class="ttc" id="classmdt_sql_record_html_ab7f694f62b8db947deb9713762ab4f27"><div class="ttname"><a href="classmdt_sql_record.html#ab7f694f62b8db947deb9713762ab4f27">mdtSqlRecord::contains</a></div><div class="ttdeci">bool contains(const QString &amp;name) const </div><div class="ttdoc">Returns true if there is a field in the record called name; otherwise returns false. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_sql_record_8h_source.html#l00117">mdtSqlRecord.h:117</a></div></div>
 <div class="ttc" id="classmdt_cl_vehicle_type_link_data_html_a9e48be4f6bd5f153f8256481241bef37"><div class="ttname"><a href="classmdt_cl_vehicle_type_link_data.html#a9e48be4f6bd5f153f8256481241bef37">mdtClVehicleTypeLinkData::setUnitConnectionStartId</a></div><div class="ttdeci">void setUnitConnectionStartId(const QVariant &amp;value)</div><div class="ttdoc">Set unit connection start ID. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_cl_vehicle_type_link_data_8cpp_source.html#l00033">mdtClVehicleTypeLinkData.cpp:33</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 11 2015 16:42:10 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jan 17 2015 16:32:05 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

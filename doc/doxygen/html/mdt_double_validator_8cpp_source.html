@@ -91,7 +91,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <a href="mdt_double_validator_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/****************************************************************************</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> **</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> ** Copyright (C) 2011-2014 Philippe Steinmann.</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> ** Copyright (C) 2011-2015 Philippe Steinmann.</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> **</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> ** This file is part of multiDiagTools library.</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"> **</span></div>
@@ -261,7 +261,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;</div>
 <div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;<span class="keywordtype">bool</span> mdtDoubleValidator::charIsPowerOf10Suffix(<span class="keyword">const</span> QChar &amp; c)<span class="keyword"> const</span></div>
 <div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;  <span class="keywordflow">return</span> (qAbs&lt;double&gt;(<a class="code" href="classmdt_double_edit.html#a8156deaebbd3256e9e7d94ca84e6a03a">mdtDoubleEdit::factor</a>(c) - 1.0) &gt;  std::numeric_limits&lt;double&gt;::min());</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;  <span class="keywordflow">return</span> (<a class="code" href="classmdt_double_edit.html#a95b27d762b1ea5635a30d68c97c77343">mdtDoubleEdit::p10exponent</a>(c) != 0);</div>
 <div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;}</div>
 <div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;</div>
 <div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;<span class="keywordtype">bool</span> mdtDoubleValidator::strEndsCorrectly(<span class="keyword">const</span> QString &amp; str)<span class="keyword"> const</span></div>
@@ -296,10 +296,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;  <span class="keywordflow">return</span> charIsPowerOf10Suffix(str.at(str.size() - 1));</div>
 <div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;}</div>
 <div class="ttc" id="classmdt_double_validator_html_a4b1ee52feff69d9809caa47dfdda43f6"><div class="ttname"><a href="classmdt_double_validator.html#a4b1ee52feff69d9809caa47dfdda43f6">mdtDoubleValidator::mdtDoubleValidator</a></div><div class="ttdeci">mdtDoubleValidator(QObject *parent=0)</div><div class="ttdoc">Constructor. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_double_validator_8cpp_source.html#l00028">mdtDoubleValidator.cpp:28</a></div></div>
+<div class="ttc" id="classmdt_double_edit_html_a95b27d762b1ea5635a30d68c97c77343"><div class="ttname"><a href="classmdt_double_edit.html#a95b27d762b1ea5635a30d68c97c77343">mdtDoubleEdit::p10exponent</a></div><div class="ttdeci">static int p10exponent(const QChar &amp;c)</div><div class="ttdoc">Get power of 10 exponent for given char. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_double_edit_8cpp_source.html#l00143">mdtDoubleEdit.cpp:143</a></div></div>
 <div class="ttc" id="mdt_double_validator_8h_html"><div class="ttname"><a href="mdt_double_validator_8h.html">mdtDoubleValidator.h</a></div></div>
-<div class="ttc" id="classmdt_double_edit_html_a09e6276d61dd02feea43e795417d8ea9"><div class="ttname"><a href="classmdt_double_edit.html#a09e6276d61dd02feea43e795417d8ea9">mdtDoubleEdit::infinityString</a></div><div class="ttdeci">static QString infinityString()</div><div class="ttdoc">Get infinity string. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_double_edit_8cpp_source.html#l00243">mdtDoubleEdit.cpp:243</a></div></div>
+<div class="ttc" id="classmdt_double_edit_html_a09e6276d61dd02feea43e795417d8ea9"><div class="ttname"><a href="classmdt_double_edit.html#a09e6276d61dd02feea43e795417d8ea9">mdtDoubleEdit::infinityString</a></div><div class="ttdeci">static QString infinityString()</div><div class="ttdoc">Get infinity string. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_double_edit_8cpp_source.html#l00261">mdtDoubleEdit.cpp:261</a></div></div>
 <div class="ttc" id="classmdt_double_validator_html_a9741c74656a66eb9376e230c67d1e39a"><div class="ttname"><a href="classmdt_double_validator.html#a9741c74656a66eb9376e230c67d1e39a">mdtDoubleValidator::setSuffix</a></div><div class="ttdeci">void setSuffix(const QString &amp;s)</div><div class="ttdoc">Set a custom suffix. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_double_validator_8cpp_source.html#l00033">mdtDoubleValidator.cpp:33</a></div></div>
-<div class="ttc" id="classmdt_double_edit_html_a8156deaebbd3256e9e7d94ca84e6a03a"><div class="ttname"><a href="classmdt_double_edit.html#a8156deaebbd3256e9e7d94ca84e6a03a">mdtDoubleEdit::factor</a></div><div class="ttdeci">static double factor(const QChar &amp;c)</div><div class="ttdoc">Set the full range. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_double_edit_8cpp_source.html#l00139">mdtDoubleEdit.cpp:139</a></div></div>
 <div class="ttc" id="mdt_double_edit_8h_html"><div class="ttname"><a href="mdt_double_edit_8h.html">mdtDoubleEdit.h</a></div></div>
 <div class="ttc" id="class_q_validator_html"><div class="ttname"><a href="class_q_validator.html">QValidator</a></div></div>
 <div class="ttc" id="classmdt_double_validator_html_a9cd93164abc582ef7ffe7a856e52cd9f"><div class="ttname"><a href="classmdt_double_validator.html#a9cd93164abc582ef7ffe7a856e52cd9f">mdtDoubleValidator::setBottom</a></div><div class="ttdeci">void setBottom(double min)</div><div class="ttdoc">Set bottom value. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_double_validator_8cpp_source.html#l00038">mdtDoubleValidator.cpp:38</a></div></div>
@@ -310,7 +310,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 11 2015 16:42:11 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jan 17 2015 16:32:06 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

@@ -34,6 +34,8 @@ virtual void \hyperlink{classmdt_sql_field_handler_abstract_data_widget_a5d358ea
 virtual void \hyperlink{classmdt_sql_field_handler_abstract_data_widget_a7167463d910f13cff681668b4bc0e139}{set\-Max\-Length} (int max\-Length)
 \item 
 virtual void \hyperlink{classmdt_sql_field_handler_abstract_data_widget_a1c391f7af13f1a451354273352934801}{set\-Range} (qreal min, qreal max)
+\item 
+virtual bool \hyperlink{classmdt_sql_field_handler_abstract_data_widget_a24bd1c151df4e137b2b73322a6da0673}{validate} ()
 \end{DoxyCompactItemize}
 
 
@@ -152,6 +154,25 @@ Definition at line 60 of file mdt\-Sql\-Field\-Handler.\-h.
 
 
 Implemented in \hyperlink{classmdt_sql_field_handler_date_time_edit_a8b67482f1d4ae5c0807becb05f602c6c}{mdt\-Sql\-Field\-Handler\-Date\-Time\-Edit}, \hyperlink{classmdt_sql_field_handler_mdt_double_edit_ade3026eb59952fe664b86b703d1a606c}{mdt\-Sql\-Field\-Handler\-Mdt\-Double\-Edit}, \hyperlink{classmdt_sql_field_handler_combo_box_adf80f25028bb38a8ffe988d79da8087d}{mdt\-Sql\-Field\-Handler\-Combo\-Box}, \hyperlink{classmdt_sql_field_handler_line_edit_ab282e2ce51a42e55286111089526b6bb}{mdt\-Sql\-Field\-Handler\-Line\-Edit}, \hyperlink{classmdt_sql_field_handler_plain_text_edit_a415de00cefa204ec7015a33e35e147e2}{mdt\-Sql\-Field\-Handler\-Plain\-Text\-Edit}, and \hyperlink{classmdt_sql_field_handler_label_a20bb295db1a447183fcf9831c3210593}{mdt\-Sql\-Field\-Handler\-Label}.
+
+\hypertarget{classmdt_sql_field_handler_abstract_data_widget_a24bd1c151df4e137b2b73322a6da0673}{\index{mdt\-Sql\-Field\-Handler\-Abstract\-Data\-Widget@{mdt\-Sql\-Field\-Handler\-Abstract\-Data\-Widget}!validate@{validate}}
+\index{validate@{validate}!mdtSqlFieldHandlerAbstractDataWidget@{mdt\-Sql\-Field\-Handler\-Abstract\-Data\-Widget}}
+\subsubsection[{validate}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdt\-Sql\-Field\-Handler\-Abstract\-Data\-Widget\-::validate (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{classmdt_sql_field_handler_abstract_data_widget_a24bd1c151df4e137b2b73322a6da0673}
+
+
+Reimplemented in \hyperlink{classmdt_sql_field_handler_mdt_double_edit_aaba033287d76b333baeafd64920ac7da}{mdt\-Sql\-Field\-Handler\-Mdt\-Double\-Edit}.
+
+
+
+Definition at line 61 of file mdt\-Sql\-Field\-Handler.\-h.
+
+
+
+Referenced by mdt\-Sql\-Field\-Handler\-::check\-Before\-Submit().
 
 \hypertarget{classmdt_sql_field_handler_abstract_data_widget_a460c76d650eba635ffb42951c7adbb50}{\index{mdt\-Sql\-Field\-Handler\-Abstract\-Data\-Widget@{mdt\-Sql\-Field\-Handler\-Abstract\-Data\-Widget}!widget@{widget}}
 \index{widget@{widget}!mdtSqlFieldHandlerAbstractDataWidget@{mdt\-Sql\-Field\-Handler\-Abstract\-Data\-Widget}}

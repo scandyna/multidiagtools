@@ -148,7 +148,7 @@ Check if value is -\/\-O\-L.
 
 
 
-Definition at line 63 of file mdt\-Value.\-cpp.
+Definition at line 64 of file mdt\-Value.\-cpp.
 
 
 
@@ -167,7 +167,7 @@ Check if value is Na\-N.
 
 
 
-Definition at line 79 of file mdt\-Value.\-cpp.
+Definition at line 80 of file mdt\-Value.\-cpp.
 
 
 
@@ -190,7 +190,7 @@ Definition at line 68 of file mdt\-Value.\-h.
 
 
 
-Referenced by mdt\-Codec\-Scpi\-::decode\-Function\-Parameters(), and operator$<$$<$().
+Referenced by mdt\-Codec\-Scpi\-::decode\-Function\-Parameters(), mdt\-Device\-U3606\-A\-::get\-Measure\-Value(), operator$<$$<$(), and mdt\-Tt\-Test\-Cable\-Offset\-Tool\-::run\-Offset\-Reset().
 
 \hypertarget{classmdt_value_double_a2dc24c548d44f9a6a81513f061f5fa70}{\index{mdt\-Value\-Double@{mdt\-Value\-Double}!is\-Plus\-Ol@{is\-Plus\-Ol}}
 \index{is\-Plus\-Ol@{is\-Plus\-Ol}!mdtValueDouble@{mdt\-Value\-Double}}
@@ -205,7 +205,7 @@ Check if value is +\-O\-L.
 
 
 
-Definition at line 71 of file mdt\-Value.\-cpp.
+Definition at line 72 of file mdt\-Value.\-cpp.
 
 
 
@@ -243,7 +243,7 @@ Note\-:
 \item For all other cases, including O\-L flags (wich are stored as infinity values), follows standard floating point arithmetic rules 
 \end{DoxyItemize}
 
-Definition at line 199 of file mdt\-Value.\-h.
+Definition at line 203 of file mdt\-Value.\-h.
 
 
 
@@ -266,7 +266,7 @@ Note\-:
 \item For all other cases, including O\-L flags (wich are stored as infinity values), follows standard floating point arithmetic rules 
 \end{DoxyItemize}
 
-Definition at line 171 of file mdt\-Value.\-h.
+Definition at line 175 of file mdt\-Value.\-h.
 
 
 
@@ -289,7 +289,7 @@ Note\-:
 \item For all other cases, including O\-L flags (wich are stored as infinity values), follows standard floating point arithmetic rules 
 \end{DoxyItemize}
 
-Definition at line 185 of file mdt\-Value.\-h.
+Definition at line 189 of file mdt\-Value.\-h.
 
 
 
@@ -312,7 +312,7 @@ Note\-:
 \item For all other cases, including O\-L flags (wich are stored as infinity values), follows standard floating point arithmetic rules 
 \end{DoxyItemize}
 
-Definition at line 213 of file mdt\-Value.\-h.
+Definition at line 217 of file mdt\-Value.\-h.
 
 
 
@@ -329,9 +329,11 @@ References mdt\-Value\-Double().
 
 Comparison operator. 
 
-Note\-: if one (or both) value is null, comparison will allways be false (Same rule as I\-E\-E\-E 754 Na\-N) 
+Note\-: if one (or both) value is null, comparison will allways be false (Same rule as I\-E\-E\-E 754 Na\-N)\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000101}{Todo}]Use functions from cmath ! \end{DoxyRefDesc}
 
-Definition at line 112 of file mdt\-Value.\-h.
+
+Definition at line 113 of file mdt\-Value.\-h.
 
 \hypertarget{classmdt_value_double_a03686549cccc04814c4995186e967cce}{\index{mdt\-Value\-Double@{mdt\-Value\-Double}!operator$<$=@{operator$<$=}}
 \index{operator$<$=@{operator$<$=}!mdtValueDouble@{mdt\-Value\-Double}}
@@ -344,9 +346,11 @@ Definition at line 112 of file mdt\-Value.\-h.
 
 Comparison operator. 
 
-Note\-: if one (or both) value is null, comparison will allways be false (Same rule as I\-E\-E\-E 754 Na\-N) 
+Note\-: if one (or both) value is null, comparison will allways be false (Same rule as I\-E\-E\-E 754 Na\-N)\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000102}{Todo}]Use functions from cmath ! \end{DoxyRefDesc}
 
-Definition at line 125 of file mdt\-Value.\-h.
+
+Definition at line 127 of file mdt\-Value.\-h.
 
 \hypertarget{classmdt_value_double_a1ea11b964da46b14d557f65387146f27}{\index{mdt\-Value\-Double@{mdt\-Value\-Double}!operator==@{operator==}}
 \index{operator==@{operator==}!mdtValueDouble@{mdt\-Value\-Double}}
@@ -362,10 +366,14 @@ Comparaison operator.
 Notes\-:
 \begin{DoxyItemize}
 \item Both values are equal if value and flags are equal.
-\item if one (or both) value is null, they are not considered equal (Same rule as I\-E\-E\-E 754 Na\-N) 
+\item if one (or both) value is null, they are not considered equal (Same rule as I\-E\-E\-E 754 Na\-N)
 \end{DoxyItemize}
 
-Definition at line 84 of file mdt\-Value.\-cpp.
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000100}{Todo}]Use functions from cmath ! \end{DoxyRefDesc}
+
+
+Definition at line 86 of file mdt\-Value.\-cpp.
 
 
 
@@ -382,9 +390,11 @@ References is\-Minus\-Ol(), and is\-Plus\-Ol().
 
 Comparison operator. 
 
-Note\-: if one (or both) value is null, comparison will allways be false (Same rule as I\-E\-E\-E 754 Na\-N) 
+Note\-: if one (or both) value is null, comparison will allways be false (Same rule as I\-E\-E\-E 754 Na\-N)\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000103}{Todo}]Use functions from cmath ! \end{DoxyRefDesc}
 
-Definition at line 141 of file mdt\-Value.\-h.
+
+Definition at line 144 of file mdt\-Value.\-h.
 
 \hypertarget{classmdt_value_double_aefb0eeafda2c1b60e41252f070f44168}{\index{mdt\-Value\-Double@{mdt\-Value\-Double}!operator$>$=@{operator$>$=}}
 \index{operator$>$=@{operator$>$=}!mdtValueDouble@{mdt\-Value\-Double}}
@@ -397,9 +407,11 @@ Definition at line 141 of file mdt\-Value.\-h.
 
 Comparison operator. 
 
-Note\-: if one (or both) value is null, comparison will allways be false (Same rule as I\-E\-E\-E 754 Na\-N) 
+Note\-: if one (or both) value is null, comparison will allways be false (Same rule as I\-E\-E\-E 754 Na\-N)\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000104}{Todo}]Use functions from cmath ! \end{DoxyRefDesc}
 
-Definition at line 154 of file mdt\-Value.\-h.
+
+Definition at line 158 of file mdt\-Value.\-h.
 
 \hypertarget{classmdt_value_double_a53697c6d57ad134ed7fde4ac9130e1db}{\index{mdt\-Value\-Double@{mdt\-Value\-Double}!set\-Value@{set\-Value}}
 \index{set\-Value@{set\-Value}!mdtValueDouble@{mdt\-Value\-Double}}
@@ -417,12 +429,14 @@ Set value.
 \begin{DoxyParams}{Parameters}
 {\em value} & Value to store \\
 \hline
-{\em is\-Ol} & Force O\-L flag to be set. If value is $>$= 0.\-0 , +\-O\-L is set, else -\/\-O\-L will be set \\
+{\em is\-Ol} & Force O\-L flag to be set. If value is $>$= 0.\-0 , +\-O\-L is set, else -\/\-O\-L will be set\\
 \hline
 \end{DoxyParams}
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000099}{Todo}]Use functions from cmath ! \end{DoxyRefDesc}
 
 
-Definition at line 49 of file mdt\-Value.\-cpp.
+Definition at line 50 of file mdt\-Value.\-cpp.
 
 
 
@@ -449,7 +463,7 @@ Definition at line 75 of file mdt\-Value.\-h.
 
 
 
-Referenced by mdt\-Codec\-Scpi\-::decode\-Function\-Parameters(), operator$<$$<$(), and set\-Value().
+Referenced by mdt\-Codec\-Scpi\-::decode\-Function\-Parameters(), mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool\-::is\-In\-Range(), operator$<$$<$(), mdt\-Tt\-Test\-Cable\-Offset\-Tool\-::run\-Offset\-Reset(), and set\-Value().
 
 
 

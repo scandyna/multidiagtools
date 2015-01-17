@@ -6,20 +6,28 @@
 {\ttfamily \#include $<$Q\-String$>$}\\*
 {\ttfamily \#include $<$Q\-Byte\-Array$>$}\\*
 {\ttfamily \#include $<$Q\-String\-List$>$}\\*
-Include dependency graph for mdt\-Algorithms.\-h\-:\nopagebreak
+{\ttfamily \#include $<$vector$>$}\\*
+Include dependency graph for mdt\-Algorithms.\-h\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=350pt]{mdt_algorithms_8h__incl}
 \end{center}
 \end{figure}
-This graph shows which files directly or indirectly include this file\-:\nopagebreak
+This graph shows which files directly or indirectly include this file\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=350pt]{mdt_algorithms_8h__dep__incl}
 \end{center}
 \end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structmdt_algorithms_1_1_numeric_range_double}{mdt\-Algorithms\-::\-Numeric\-Range\-Double}
+\begin{DoxyCompactList}\small\item\em Numeric range. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Namespaces}
 \begin{DoxyCompactItemize}
 \item 
@@ -28,6 +36,12 @@ This graph shows which files directly or indirectly include this file\-:\nopageb
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
+bool \hyperlink{namespacemdt_algorithms_ab992c2e3ca601b25322e817d4cb6f8c0}{mdt\-Algorithms\-::is\-In\-Range} (double x, double bottom, double top, bool include\-Bottom, bool include\-Top)
+\begin{DoxyCompactList}\small\item\em Check if x is in range min;max. \end{DoxyCompactList}\item 
+bool \hyperlink{namespacemdt_algorithms_aeef08bc2e48a3a24a65e30d2685fbc9a}{mdt\-Algorithms\-::is\-In\-Range} (double x, const Numeric\-Range\-Double \&range)
+\begin{DoxyCompactList}\small\item\em Check if x is in range. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename Range\-Type $>$ }\\Range\-Type \hyperlink{namespacemdt_algorithms_a8d3b78c6e483ab34e49e646909618655}{mdt\-Algorithms\-::range\-Of} (double x, const std\-::vector$<$ Range\-Type $>$ \&ranges)
+\begin{DoxyCompactList}\small\item\em Get the range in witch x is. \end{DoxyCompactList}\item 
 Q\-String\-List \hyperlink{namespacemdt_algorithms_a32a09ec3855b605b6e455ea418502aeb}{mdt\-Algorithms\-::natural\-Sort} (Q\-String\-List \&list, Qt\-::\-Case\-Sensitivity case\-Sensitivity)
 \begin{DoxyCompactList}\small\item\em Sort a string list using natural sort. \end{DoxyCompactList}\item 
 bool \hyperlink{namespacemdt_algorithms_af22a54e83499afe31d22fac9bc521c54}{mdt\-Algorithms\-::natural\-Compare\-Less\-Than} (const Q\-String \&str1, const Q\-String \&str2, Qt\-::\-Case\-Sensitivity case\-Sensitivity)

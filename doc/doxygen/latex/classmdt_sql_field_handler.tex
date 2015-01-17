@@ -105,7 +105,7 @@ To use this class, first set the field with \hyperlink{classmdt_sql_field_handle
 
 If field must be read only (independent of field access set in Q\-Sql\-Field), use set\-Rea\-Only(). 
 
-Definition at line 104 of file mdt\-Sql\-Field\-Handler.\-h.
+Definition at line 105 of file mdt\-Sql\-Field\-Handler.\-h.
 
 
 
@@ -123,7 +123,7 @@ Construct a null field handler.
 
 See \hyperlink{classmdt_sql_field_handler_a10467d49304f7bc0c75e280098e3e0bc}{clear()} for default flags. 
 
-Definition at line 507 of file mdt\-Sql\-Field\-Handler.\-cpp.
+Definition at line 514 of file mdt\-Sql\-Field\-Handler.\-cpp.
 
 
 
@@ -142,7 +142,7 @@ Destructor.
 
 
 
-Definition at line 515 of file mdt\-Sql\-Field\-Handler.\-cpp.
+Definition at line 522 of file mdt\-Sql\-Field\-Handler.\-cpp.
 
 
 
@@ -160,11 +160,11 @@ Make some checks before submit data.
 
 
 
-Definition at line 717 of file mdt\-Sql\-Field\-Handler.\-cpp.
+Definition at line 725 of file mdt\-Sql\-Field\-Handler.\-cpp.
 
 
 
-References is\-Null().
+References is\-Null(), and mdt\-Sql\-Field\-Handler\-Abstract\-Data\-Widget\-::validate().
 
 \hypertarget{classmdt_sql_field_handler_a10467d49304f7bc0c75e280098e3e0bc}{\index{mdt\-Sql\-Field\-Handler@{mdt\-Sql\-Field\-Handler}!clear@{clear}}
 \index{clear@{clear}!mdtSqlFieldHandler@{mdt\-Sql\-Field\-Handler}}
@@ -186,7 +186,7 @@ Default flags are\-:
 \item data\-Was\-Edited\-: false 
 \end{DoxyItemize}
 
-Definition at line 686 of file mdt\-Sql\-Field\-Handler.\-cpp.
+Definition at line 694 of file mdt\-Sql\-Field\-Handler.\-cpp.
 
 
 
@@ -205,7 +205,7 @@ Clear widget's data.
 
 Will only clear the widget's content. 
 
-Definition at line 695 of file mdt\-Sql\-Field\-Handler.\-cpp.
+Definition at line 703 of file mdt\-Sql\-Field\-Handler.\-cpp.
 
 
 
@@ -250,7 +250,7 @@ Get the data\-Was\-Edited flag.
 
 
 
-Definition at line 712 of file mdt\-Sql\-Field\-Handler.\-cpp.
+Definition at line 720 of file mdt\-Sql\-Field\-Handler.\-cpp.
 
 \hypertarget{classmdt_sql_field_handler_a91ab8160d5015b6030e7169ab7108d33}{\index{mdt\-Sql\-Field\-Handler@{mdt\-Sql\-Field\-Handler}!data\-Widget@{data\-Widget}}
 \index{data\-Widget@{data\-Widget}!mdtSqlFieldHandler@{mdt\-Sql\-Field\-Handler}}
@@ -268,7 +268,7 @@ A \hyperlink{class_q_widget}{Q\-Widget} of current edit/view, or 0 if none was s
 \end{DoxyReturn}
 
 
-Definition at line 678 of file mdt\-Sql\-Field\-Handler.\-cpp.
+Definition at line 686 of file mdt\-Sql\-Field\-Handler.\-cpp.
 
 
 
@@ -287,7 +287,7 @@ Get the null flag.
 
 
 
-Definition at line 704 of file mdt\-Sql\-Field\-Handler.\-cpp.
+Definition at line 712 of file mdt\-Sql\-Field\-Handler.\-cpp.
 
 
 
@@ -310,7 +310,7 @@ Get the read\-Only flag.
 
 
 
-Definition at line 532 of file mdt\-Sql\-Field\-Handler.\-cpp.
+Definition at line 539 of file mdt\-Sql\-Field\-Handler.\-cpp.
 
 \hypertarget{classmdt_sql_field_handler_a14478a0cd018cf2803dd41061c901aad}{\index{mdt\-Sql\-Field\-Handler@{mdt\-Sql\-Field\-Handler}!set\-Data@{set\-Data}}
 \index{set\-Data@{set\-Data}!mdtSqlFieldHandler@{mdt\-Sql\-Field\-Handler}}
@@ -325,7 +325,7 @@ Set data widget's data.
 
 
 
-Definition at line 732 of file mdt\-Sql\-Field\-Handler.\-cpp.
+Definition at line 747 of file mdt\-Sql\-Field\-Handler.\-cpp.
 
 
 
@@ -349,7 +349,7 @@ widget must be a valid pointer.
 \end{DoxyPrecond}
 
 
-Definition at line 537 of file mdt\-Sql\-Field\-Handler.\-cpp.
+Definition at line 544 of file mdt\-Sql\-Field\-Handler.\-cpp.
 
 
 
@@ -375,7 +375,7 @@ widget must be a valid pointer.
 \end{DoxyPrecond}
 
 
-Definition at line 585 of file mdt\-Sql\-Field\-Handler.\-cpp.
+Definition at line 592 of file mdt\-Sql\-Field\-Handler.\-cpp.
 
 
 
@@ -397,7 +397,7 @@ widget must be a valid pointer.
 \end{DoxyPrecond}
 
 
-Definition at line 597 of file mdt\-Sql\-Field\-Handler.\-cpp.
+Definition at line 604 of file mdt\-Sql\-Field\-Handler.\-cpp.
 
 
 
@@ -419,7 +419,7 @@ widget must be a valid pointer.
 \end{DoxyPrecond}
 
 
-Definition at line 610 of file mdt\-Sql\-Field\-Handler.\-cpp.
+Definition at line 617 of file mdt\-Sql\-Field\-Handler.\-cpp.
 
 
 
@@ -441,7 +441,7 @@ widget must be a valid pointer.
 \end{DoxyPrecond}
 
 
-Definition at line 623 of file mdt\-Sql\-Field\-Handler.\-cpp.
+Definition at line 630 of file mdt\-Sql\-Field\-Handler.\-cpp.
 
 
 
@@ -463,7 +463,7 @@ widget must be a valid pointer.
 \end{DoxyPrecond}
 
 
-Definition at line 637 of file mdt\-Sql\-Field\-Handler.\-cpp.
+Definition at line 644 of file mdt\-Sql\-Field\-Handler.\-cpp.
 
 
 
@@ -485,7 +485,7 @@ widget must be a valid pointer.
 \end{DoxyPrecond}
 
 
-Definition at line 650 of file mdt\-Sql\-Field\-Handler.\-cpp.
+Definition at line 658 of file mdt\-Sql\-Field\-Handler.\-cpp.
 
 \hypertarget{classmdt_sql_field_handler_abb528a4e0245d12308870556eefc934a}{\index{mdt\-Sql\-Field\-Handler@{mdt\-Sql\-Field\-Handler}!set\-Data\-Widget@{set\-Data\-Widget}}
 \index{set\-Data\-Widget@{set\-Data\-Widget}!mdtSqlFieldHandler@{mdt\-Sql\-Field\-Handler}}
@@ -503,7 +503,7 @@ widget must be a valid pointer.
 \end{DoxyPrecond}
 
 
-Definition at line 655 of file mdt\-Sql\-Field\-Handler.\-cpp.
+Definition at line 663 of file mdt\-Sql\-Field\-Handler.\-cpp.
 
 
 
@@ -525,7 +525,7 @@ widget must be a valid pointer.
 \end{DoxyPrecond}
 
 
-Definition at line 668 of file mdt\-Sql\-Field\-Handler.\-cpp.
+Definition at line 676 of file mdt\-Sql\-Field\-Handler.\-cpp.
 
 \hypertarget{classmdt_sql_field_handler_a13a1e634bdb0d5c85ab1198aa09a64e2}{\index{mdt\-Sql\-Field\-Handler@{mdt\-Sql\-Field\-Handler}!set\-Data\-Widget@{set\-Data\-Widget}}
 \index{set\-Data\-Widget@{set\-Data\-Widget}!mdtSqlFieldHandler@{mdt\-Sql\-Field\-Handler}}
@@ -543,7 +543,7 @@ widget must be a valid pointer.
 \end{DoxyPrecond}
 
 
-Definition at line 673 of file mdt\-Sql\-Field\-Handler.\-cpp.
+Definition at line 681 of file mdt\-Sql\-Field\-Handler.\-cpp.
 
 \hypertarget{classmdt_sql_field_handler_a5c0b3077cf5f2622dd107b892ddde76c}{\index{mdt\-Sql\-Field\-Handler@{mdt\-Sql\-Field\-Handler}!set\-Field@{set\-Field}}
 \index{set\-Field@{set\-Field}!mdtSqlFieldHandler@{mdt\-Sql\-Field\-Handler}}
@@ -558,7 +558,7 @@ Set S\-Q\-L field.
 
 Store the sql field. Some field's attributes will be used to handle edit/view widget. 
 
-Definition at line 520 of file mdt\-Sql\-Field\-Handler.\-cpp.
+Definition at line 527 of file mdt\-Sql\-Field\-Handler.\-cpp.
 
 
 
@@ -577,7 +577,7 @@ Set the read\-Only flag.
 
 If set, read\-Only flag will force the edit/view widget to be not editable. 
 
-Definition at line 526 of file mdt\-Sql\-Field\-Handler.\-cpp.
+Definition at line 533 of file mdt\-Sql\-Field\-Handler.\-cpp.
 
 \hypertarget{classmdt_sql_field_handler_a7bb4e75ab209bdd2609cf458b5ce8868}{\index{mdt\-Sql\-Field\-Handler@{mdt\-Sql\-Field\-Handler}!update\-Flags@{update\-Flags}}
 \index{update\-Flags@{update\-Flags}!mdtSqlFieldHandler@{mdt\-Sql\-Field\-Handler}}
@@ -594,7 +594,7 @@ Some flags, like Null flag, or data edited flag are updated here.
 
 Q\-Data\-Widget\-Mapper\-::current\-Index\-Changed() signal should be connected to this slot. 
 
-Definition at line 782 of file mdt\-Sql\-Field\-Handler.\-cpp.
+Definition at line 797 of file mdt\-Sql\-Field\-Handler.\-cpp.
 
 
 
@@ -608,7 +608,7 @@ Referenced by set\-Data().
 \subsubsection[{data}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant mdt\-Sql\-Field\-Handler\-::data\hspace{0.3cm}{\ttfamily [read]}, {\ttfamily [write]}}}\label{classmdt_sql_field_handler_a87e0184853f31ac3236a6b05179192c8}
 
 
-Definition at line 107 of file mdt\-Sql\-Field\-Handler.\-h.
+Definition at line 108 of file mdt\-Sql\-Field\-Handler.\-h.
 
 
 

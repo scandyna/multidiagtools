@@ -213,7 +213,7 @@ Properties</h2></td></tr>
 <p>To use this class, first set the field with <a class="el" href="classmdt_sql_field_handler.html#a5c0b3077cf5f2622dd107b892ddde76c" title="Set SQL field. ">setField()</a>, then add your edition/view widget with <a class="el" href="classmdt_sql_field_handler.html#ad337249c9e123d31c53ed199384825d0" title="Set the edit/view widget. ">setDataWidget()</a>.</p>
 <p>If field must be read only (independent of field access set in QSqlField), use setReaOnly(). </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_field_handler_8h_source.html#l00104">104</a> of file <a class="el" href="mdt_sql_field_handler_8h_source.html">mdtSqlFieldHandler.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_field_handler_8h_source.html#l00105">105</a> of file <a class="el" href="mdt_sql_field_handler_8h_source.html">mdtSqlFieldHandler.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a5318b5d67a26163f85ec584fdb1a00bb"></a>
 <div class="memitem">
@@ -232,9 +232,9 @@ Properties</h2></td></tr>
 <p>Construct a null field handler. </p>
 <p>See <a class="el" href="classmdt_sql_field_handler.html#a10467d49304f7bc0c75e280098e3e0bc" title="Clear. ">clear()</a> for default flags. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00507">507</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00514">514</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00686">clear()</a>.</p>
+<p>References <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00694">clear()</a>.</p>
 
 </div>
 </div>
@@ -253,7 +253,7 @@ Properties</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00515">515</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00522">522</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
 
 </div>
 </div>
@@ -273,9 +273,9 @@ Properties</h2></td></tr>
 
 <p>Make some checks before submit data. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00717">717</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00725">725</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00704">isNull()</a>.</p>
+<p>References <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00712">isNull()</a>, and <a class="el" href="mdt_sql_field_handler_8h_source.html#l00061">mdtSqlFieldHandlerAbstractDataWidget::validate()</a>.</p>
 
 </div>
 </div>
@@ -301,9 +301,9 @@ Properties</h2></td></tr>
 <li>dataWasEdited: false </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00686">686</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00694">694</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00507">mdtSqlFieldHandler()</a>, and <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00585">setDataWidget()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00514">mdtSqlFieldHandler()</a>, and <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00592">setDataWidget()</a>.</p>
 
 </div>
 </div>
@@ -323,7 +323,7 @@ Properties</h2></td></tr>
 <p>Clear widget's data. </p>
 <p>Will only clear the widget's content. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00695">695</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00703">703</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
 
 <p>References <a class="el" href="classmdt_sql_field_handler_abstract_data_widget.html#a54c1bc177f2a5f06d29ce24a801b6b3e">mdtSqlFieldHandlerAbstractDataWidget::clear()</a>.</p>
 
@@ -369,7 +369,7 @@ Properties</h2></td></tr>
 
 <p>Emitted the first time the user has edited data. </p>
 
-<p>Referenced by <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00610">setDataWidget()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00617">setDataWidget()</a>.</p>
 
 </div>
 </div>
@@ -388,7 +388,7 @@ Properties</h2></td></tr>
 
 <p>Get the dataWasEdited flag. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00712">712</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00720">720</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
 
 </div>
 </div>
@@ -408,7 +408,7 @@ Properties</h2></td></tr>
 <p>Get data widget Get current edit/view widget. </p>
 <dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="class_q_widget.html">QWidget</a> of current edit/view, or 0 if none was set. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00678">678</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00686">686</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
 
 <p>References <a class="el" href="classmdt_sql_field_handler_abstract_data_widget.html#a460c76d650eba635ffb42951c7adbb50">mdtSqlFieldHandlerAbstractDataWidget::widget()</a>.</p>
 
@@ -429,11 +429,11 @@ Properties</h2></td></tr>
 
 <p>Get the null flag. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00704">704</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00712">712</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
 
 <p>References <a class="el" href="classmdt_sql_field_handler_abstract_data_widget.html#a077d5b1b9a0cb592be9def99cdc6ad3a">mdtSqlFieldHandlerAbstractDataWidget::isNull()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00717">checkBeforeSubmit()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00725">checkBeforeSubmit()</a>.</p>
 
 </div>
 </div>
@@ -452,7 +452,7 @@ Properties</h2></td></tr>
 
 <p>Get the readOnly flag. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00532">532</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00539">539</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
 
 </div>
 </div>
@@ -472,9 +472,9 @@ Properties</h2></td></tr>
 
 <p>Set data widget's data. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00732">732</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00747">747</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
 
-<p>References <a class="el" href="classmdt_sql_field_handler_abstract_data_widget.html#a5d9e6c6bfa923f07598179c71c88ba4b">mdtSqlFieldHandlerAbstractDataWidget::setData()</a>, and <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00782">updateFlags()</a>.</p>
+<p>References <a class="el" href="classmdt_sql_field_handler_abstract_data_widget.html#a5d9e6c6bfa923f07598179c71c88ba4b">mdtSqlFieldHandlerAbstractDataWidget::setData()</a>, and <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00797">updateFlags()</a>.</p>
 
 </div>
 </div>
@@ -496,7 +496,7 @@ Properties</h2></td></tr>
 <p>Will search what type given widget is, cast it and store if found.</p>
 <dl class="section pre"><dt>Precondition</dt><dd>widget must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00537">537</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00544">544</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_error_8h_source.html#l00096">mdtError::Warning</a>.</p>
 
@@ -521,9 +521,9 @@ Properties</h2></td></tr>
 <p>Set the edit/view widget. </p>
 <dl class="section pre"><dt>Precondition</dt><dd>widget must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00585">585</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00592">592</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00686">clear()</a>, and <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00067">mdtSqlFieldHandlerLabel::setLabel()</a>.</p>
+<p>References <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00694">clear()</a>, and <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00067">mdtSqlFieldHandlerLabel::setLabel()</a>.</p>
 
 </div>
 </div>
@@ -544,9 +544,9 @@ Properties</h2></td></tr>
 <p>Set the edit/view widget. </p>
 <dl class="section pre"><dt>Precondition</dt><dd>widget must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00597">597</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00604">604</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00686">clear()</a>, and <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00153">mdtSqlFieldHandlerLineEdit::setLineEdit()</a>.</p>
+<p>References <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00694">clear()</a>, and <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00153">mdtSqlFieldHandlerLineEdit::setLineEdit()</a>.</p>
 
 </div>
 </div>
@@ -567,9 +567,9 @@ Properties</h2></td></tr>
 <p>Set the edit/view widget. </p>
 <dl class="section pre"><dt>Precondition</dt><dd>widget must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00610">610</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00617">617</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00686">clear()</a>, <a class="el" href="classmdt_sql_field_handler.html#a111eebc8905151a5938950e23e61ff90">dataEdited()</a>, and <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00219">mdtSqlFieldHandlerPlainTextEdit::setPlainTextEdit()</a>.</p>
+<p>References <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00694">clear()</a>, <a class="el" href="classmdt_sql_field_handler.html#a111eebc8905151a5938950e23e61ff90">dataEdited()</a>, and <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00219">mdtSqlFieldHandlerPlainTextEdit::setPlainTextEdit()</a>.</p>
 
 </div>
 </div>
@@ -590,9 +590,9 @@ Properties</h2></td></tr>
 <p>Set the edit/view widget. </p>
 <dl class="section pre"><dt>Precondition</dt><dd>widget must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00623">623</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00630">630</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00686">clear()</a>, and <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00308">mdtSqlFieldHandlerComboBox::setComboBox()</a>.</p>
+<p>References <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00694">clear()</a>, and <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00308">mdtSqlFieldHandlerComboBox::setComboBox()</a>.</p>
 
 </div>
 </div>
@@ -613,9 +613,9 @@ Properties</h2></td></tr>
 <p>Set the edit/view widget. </p>
 <dl class="section pre"><dt>Precondition</dt><dd>widget must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00637">637</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00644">644</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00686">clear()</a>, and <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00392">mdtSqlFieldHandlerMdtDoubleEdit::setDoubleEdit()</a>.</p>
+<p>References <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00694">clear()</a>, and <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00393">mdtSqlFieldHandlerMdtDoubleEdit::setDoubleEdit()</a>.</p>
 
 </div>
 </div>
@@ -636,7 +636,7 @@ Properties</h2></td></tr>
 <p>Set the edit/view widget. </p>
 <dl class="section pre"><dt>Precondition</dt><dd>widget must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00650">650</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00658">658</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
 
 </div>
 </div>
@@ -657,9 +657,9 @@ Properties</h2></td></tr>
 <p>Set the edit/view widget. </p>
 <dl class="section pre"><dt>Precondition</dt><dd>widget must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00655">655</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00663">663</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00686">clear()</a>, and <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00460">mdtSqlFieldHandlerDateTimeEdit::setDateTimeEdit()</a>.</p>
+<p>References <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00694">clear()</a>, and <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00467">mdtSqlFieldHandlerDateTimeEdit::setDateTimeEdit()</a>.</p>
 
 </div>
 </div>
@@ -680,7 +680,7 @@ Properties</h2></td></tr>
 <p>Set the edit/view widget. </p>
 <dl class="section pre"><dt>Precondition</dt><dd>widget must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00668">668</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00676">676</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
 
 </div>
 </div>
@@ -701,7 +701,7 @@ Properties</h2></td></tr>
 <p>Set the edit/view widget. </p>
 <dl class="section pre"><dt>Precondition</dt><dd>widget must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00673">673</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00681">681</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
 
 </div>
 </div>
@@ -722,7 +722,7 @@ Properties</h2></td></tr>
 <p>Set SQL field. </p>
 <p>Store the sql field. Some field's attributes will be used to handle edit/view widget. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00520">520</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00527">527</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_sql_data_widget_controller_8cpp_source.html#l00118">mdtSqlDataWidgetController::addMapping()</a>.</p>
 
@@ -745,7 +745,7 @@ Properties</h2></td></tr>
 <p>Set the readOnly flag. </p>
 <p>If set, readOnly flag will force the edit/view widget to be not editable. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00526">526</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00533">533</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
 
 </div>
 </div>
@@ -774,9 +774,9 @@ Properties</h2></td></tr>
 <p>Some flags, like Null flag, or data edited flag are updated here.</p>
 <p>QDataWidgetMapper::currentIndexChanged() signal should be connected to this slot. </p>
 
-<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00782">782</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00797">797</a> of file <a class="el" href="mdt_sql_field_handler_8cpp_source.html">mdtSqlFieldHandler.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00732">setData()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00747">setData()</a>.</p>
 
 </div>
 </div>
@@ -799,7 +799,7 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="mdt_sql_field_handler_8h_source.html#l00107">107</a> of file <a class="el" href="mdt_sql_field_handler_8h_source.html">mdtSqlFieldHandler.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_sql_field_handler_8h_source.html#l00108">108</a> of file <a class="el" href="mdt_sql_field_handler_8h_source.html">mdtSqlFieldHandler.h</a>.</p>
 
 </div>
 </div>
@@ -810,7 +810,7 @@ Properties</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 11 2015 16:42:19 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jan 17 2015 16:32:14 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

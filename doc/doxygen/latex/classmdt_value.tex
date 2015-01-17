@@ -75,7 +75,7 @@ Note that this class does no convertion, but is a simple container.
 
 Note about -\/\-O\-L/+\-O\-L flags\-: the last setter ( \hyperlink{classmdt_value_aa4573c55ea1cc6c55547b09db8c9d521}{set\-Value(double, bool, bool)} or \hyperlink{classmdt_value_ae4a84a502223cfd47538474dee897ad0}{set\-Value(int, bool, bool)} ) will overwrite this flags. The \hyperlink{classmdt_value_ab526b9b9d04b641394b1679336b59c32}{set\-Value(bool)} does not affect this flags. 
 
-Definition at line 486 of file mdt\-Value.\-h.
+Definition at line 490 of file mdt\-Value.\-h.
 
 
 
@@ -93,7 +93,7 @@ Construct a invalid value.
 
 
 
-Definition at line 146 of file mdt\-Value.\-cpp.
+Definition at line 148 of file mdt\-Value.\-cpp.
 
 
 
@@ -123,7 +123,7 @@ Construct a valid value with double format.
 \end{DoxyParams}
 
 
-Definition at line 154 of file mdt\-Value.\-cpp.
+Definition at line 156 of file mdt\-Value.\-cpp.
 
 
 
@@ -153,7 +153,7 @@ Construct a valid value with int format.
 \end{DoxyParams}
 
 
-Definition at line 163 of file mdt\-Value.\-cpp.
+Definition at line 165 of file mdt\-Value.\-cpp.
 
 
 
@@ -177,7 +177,7 @@ Construct a valid value with bool format.
 \end{DoxyParams}
 
 
-Definition at line 172 of file mdt\-Value.\-cpp.
+Definition at line 174 of file mdt\-Value.\-cpp.
 
 
 
@@ -199,7 +199,7 @@ Clear values (set default values) and unset validity flag.
 
 
 
-Definition at line 181 of file mdt\-Value.\-cpp.
+Definition at line 183 of file mdt\-Value.\-cpp.
 
 
 
@@ -218,7 +218,7 @@ Check if value as bool format is available.
 
 
 
-Definition at line 264 of file mdt\-Value.\-cpp.
+Definition at line 266 of file mdt\-Value.\-cpp.
 
 \hypertarget{classmdt_value_a83d56329f2fd051f3cc32fd32f758e24}{\index{mdt\-Value@{mdt\-Value}!has\-Value\-Double@{has\-Value\-Double}}
 \index{has\-Value\-Double@{has\-Value\-Double}!mdtValue@{mdt\-Value}}
@@ -233,7 +233,7 @@ Check if value as double format is available.
 
 
 
-Definition at line 218 of file mdt\-Value.\-cpp.
+Definition at line 220 of file mdt\-Value.\-cpp.
 
 
 
@@ -252,7 +252,7 @@ Check if value as int format is available.
 
 
 
-Definition at line 237 of file mdt\-Value.\-cpp.
+Definition at line 239 of file mdt\-Value.\-cpp.
 
 \hypertarget{classmdt_value_a4de0d0c8a02cdd4c02adace4108db326}{\index{mdt\-Value@{mdt\-Value}!is\-Minus\-Ol@{is\-Minus\-Ol}}
 \index{is\-Minus\-Ol@{is\-Minus\-Ol}!mdtValue@{mdt\-Value}}
@@ -267,11 +267,11 @@ Check if value is -\/\-O\-L.
 
 
 
-Definition at line 247 of file mdt\-Value.\-cpp.
+Definition at line 249 of file mdt\-Value.\-cpp.
 
 
 
-Referenced by mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool\-::is\-In\-Range(), operator$<$$<$(), and set\-Value().
+Referenced by operator$<$$<$(), and set\-Value().
 
 \hypertarget{classmdt_value_a033ad1d20812dddf38530a5f190033da}{\index{mdt\-Value@{mdt\-Value}!is\-Plus\-Ol@{is\-Plus\-Ol}}
 \index{is\-Plus\-Ol@{is\-Plus\-Ol}!mdtValue@{mdt\-Value}}
@@ -286,11 +286,11 @@ Check if value is +\-O\-L.
 
 
 
-Definition at line 252 of file mdt\-Value.\-cpp.
+Definition at line 254 of file mdt\-Value.\-cpp.
 
 
 
-Referenced by mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool\-::is\-In\-Range(), operator$<$$<$(), and set\-Value().
+Referenced by operator$<$$<$(), and set\-Value().
 
 \hypertarget{classmdt_value_a472996d8c32ce70e9332509151d6aed1}{\index{mdt\-Value@{mdt\-Value}!is\-Valid@{is\-Valid}}
 \index{is\-Valid@{is\-Valid}!mdtValue@{mdt\-Value}}
@@ -307,11 +307,11 @@ A \hyperlink{classmdt_value}{mdt\-Value} is considered valid if one value was se
 
 Note\-: if -\/\-O\-L or +\-O\-L flag is set, the value is considered as valid. 
 
-Definition at line 274 of file mdt\-Value.\-cpp.
+Definition at line 276 of file mdt\-Value.\-cpp.
 
 
 
-Referenced by mdt\-Abstract\-Io\-::has\-Valid\-Data(), operator$<$$<$(), mdt\-Tt\-Test\-Cable\-Offset\-Tool\-::run\-Offset\-Reset(), and mdt\-Digital\-Io\-::set\-Value().
+Referenced by mdt\-Abstract\-Io\-::has\-Valid\-Data(), operator$<$$<$(), and mdt\-Digital\-Io\-::set\-Value().
 
 \hypertarget{classmdt_value_a9d01fff18ab97a5f25d5f82655d42810}{\index{mdt\-Value@{mdt\-Value}!operator!=@{operator!=}}
 \index{operator!=@{operator!=}!mdtValue@{mdt\-Value}}
@@ -326,7 +326,7 @@ Comparaison operator.
 
 
 
-Definition at line 311 of file mdt\-Value.\-cpp.
+Definition at line 313 of file mdt\-Value.\-cpp.
 
 
 
@@ -345,7 +345,7 @@ Comparaison operator.
 
 If all members are equal (values and flags), true is returned. 
 
-Definition at line 279 of file mdt\-Value.\-cpp.
+Definition at line 281 of file mdt\-Value.\-cpp.
 
 
 
@@ -369,7 +369,7 @@ Set default value for double format.
 \end{DoxyParams}
 
 
-Definition at line 194 of file mdt\-Value.\-cpp.
+Definition at line 196 of file mdt\-Value.\-cpp.
 
 
 
@@ -393,7 +393,7 @@ Set default value for int format.
 \end{DoxyParams}
 
 
-Definition at line 199 of file mdt\-Value.\-cpp.
+Definition at line 201 of file mdt\-Value.\-cpp.
 
 \hypertarget{classmdt_value_a82ecd7744702a5e152404c1b05b1a69d}{\index{mdt\-Value@{mdt\-Value}!set\-Default\-Value@{set\-Default\-Value}}
 \index{set\-Default\-Value@{set\-Default\-Value}!mdtValue@{mdt\-Value}}
@@ -413,7 +413,7 @@ Set default value for bool format.
 \end{DoxyParams}
 
 
-Definition at line 204 of file mdt\-Value.\-cpp.
+Definition at line 206 of file mdt\-Value.\-cpp.
 
 \hypertarget{classmdt_value_aa4573c55ea1cc6c55547b09db8c9d521}{\index{mdt\-Value@{mdt\-Value}!set\-Value@{set\-Value}}
 \index{set\-Value@{set\-Value}!mdtValue@{mdt\-Value}}
@@ -439,7 +439,7 @@ Set value with double format.
 \end{DoxyParams}
 
 
-Definition at line 209 of file mdt\-Value.\-cpp.
+Definition at line 211 of file mdt\-Value.\-cpp.
 
 
 
@@ -473,7 +473,7 @@ Set value with int format.
 \end{DoxyParams}
 
 
-Definition at line 228 of file mdt\-Value.\-cpp.
+Definition at line 230 of file mdt\-Value.\-cpp.
 
 
 
@@ -497,7 +497,7 @@ Set value with bool format.
 \end{DoxyParams}
 
 
-Definition at line 257 of file mdt\-Value.\-cpp.
+Definition at line 259 of file mdt\-Value.\-cpp.
 
 \hypertarget{classmdt_value_acd0d628fdee31ce640f1bc76f3833173}{\index{mdt\-Value@{mdt\-Value}!value\-Bool@{value\-Bool}}
 \index{value\-Bool@{value\-Bool}!mdtValue@{mdt\-Value}}
@@ -512,7 +512,7 @@ Get the value stored in bool format.
 
 
 
-Definition at line 269 of file mdt\-Value.\-cpp.
+Definition at line 271 of file mdt\-Value.\-cpp.
 
 
 
@@ -531,11 +531,11 @@ Get the value stored in double format.
 
 
 
-Definition at line 223 of file mdt\-Value.\-cpp.
+Definition at line 225 of file mdt\-Value.\-cpp.
 
 
 
-Referenced by mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool\-::is\-In\-Range(), operator$<$$<$(), mdt\-Tt\-Test\-Cable\-Offset\-Tool\-::run\-Offset\-Reset(), and mdt\-Analog\-Io\-::set\-Range().
+Referenced by operator$<$$<$(), and mdt\-Analog\-Io\-::set\-Range().
 
 \hypertarget{classmdt_value_a421b294b1540ce7c47aada2ea66201a1}{\index{mdt\-Value@{mdt\-Value}!value\-Int@{value\-Int}}
 \index{value\-Int@{value\-Int}!mdtValue@{mdt\-Value}}
@@ -550,7 +550,7 @@ Get the value stored in int format.
 
 
 
-Definition at line 242 of file mdt\-Value.\-cpp.
+Definition at line 244 of file mdt\-Value.\-cpp.
 
 
 

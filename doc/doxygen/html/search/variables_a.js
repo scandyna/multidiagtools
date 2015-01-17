@@ -6,6 +6,8 @@ var searchData=
   ['pbdetails',['pbDetails',['../classmdt_abstract_io_widget.html#a9dc1ad3754eb3e00c50bfba014e887f3',1,'mdtAbstractIoWidget']]],
   ['pbessais',['pbEssais',['../class_ui__mdt_device_u3606_a_widget.html#a1e9e1ea2fdd310f5053c7e8833eb57ee',1,'Ui_mdtDeviceU3606AWidget']]],
   ['pbscan',['pbScan',['../class_ui__mdt_device_u3606_a_widget.html#ab0c0a93358a9d07107fbbce8c82bb9f1',1,'Ui_mdtDeviceU3606AWidget']]],
+  ['po10exponent',['po10exponent',['../structmdt_double_edit_unit_range.html#abfada8b44a3969939cc2ecda49fbe688',1,'mdtDoubleEditUnitRange']]],
+  ['po10prefix',['po10prefix',['../structmdt_double_edit_unit_range.html#a81d58c1c153dcb56b203d293622ea82e',1,'mdtDoubleEditUnitRange']]],
   ['pvasciidata',['pvAsciiData',['../classmdt_frame_codec_ascii.html#a1f912b05801a0db32c9fca0f2450bdb1',1,'mdtFrameCodecAscii']]],
   ['pvavailablebaudrates',['pvAvailableBaudRates',['../classmdt_abstract_serial_port.html#aa7ac0cd1058d0b6b322c41479b8ee631',1,'mdtAbstractSerialPort']]],
   ['pvbyteperbytewrite',['pvBytePerByteWrite',['../classmdt_port_config.html#a56fb67591803bc972772073a6f2b996d',1,'mdtPortConfig']]],

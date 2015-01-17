@@ -42,6 +42,7 @@ var searchData=
   ['decodevaluedouble',['decodeValueDouble',['../classmdt_codec_scpi.html#a7923c43ae7cd670b2334da396bc00dfe',1,'mdtCodecScpi']]],
   ['decodevalueint',['decodeValueInt',['../classmdt_codec_scpi.html#ae7fe6489561779c8bc1c7a253e1ad194',1,'mdtCodecScpi']]],
   ['decodevalues',['decodeValues',['../classmdt_frame_codec_scpi.html#a37a1703b6daee6f6bf91c6afb46191b3',1,'mdtFrameCodecScpi']]],
+  ['defaulteditionmode',['DefaultEditionMode',['../classmdt_double_edit.html#a52cc3f5b9d6acd6838c52d478b3ea4dda4910df3bf542ccbaadc53e42150a0e00',1,'mdtDoubleEdit']]],
   ['deleteios',['deleteIos',['../classmdt_device.html#a61032f15e601eb1bd74da80014bae593',1,'mdtDevice::deleteIos()'],['../classmdt_device_ios.html#a272fc1fa86e1b66e6af0e58b130939e0',1,'mdtDeviceIos::deleteIos()']]],
   ['deprecated_20list',['Deprecated List',['../deprecated.html',1,'']]],
   ['descriptortype_5ft',['DescriptorType_t',['../classmdt_usb_control_transfer.html#a80b0f5ac6d8ae7b7e7471b012c34937d',1,'mdtUsbControlTransfer']]],

@@ -137,317 +137,317 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  pvIsNull = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;}</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="classmdt_value_double.html#a53697c6d57ad134ed7fde4ac9130e1db">   49</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_value_double.html#a53697c6d57ad134ed7fde4ac9130e1db">mdtValueDouble::setValue</a>(<span class="keywordtype">double</span> value, <span class="keywordtype">bool</span> isOl)</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;{</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  pvIsNull = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <span class="keywordflow">if</span>(isOl){</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordflow">if</span>( (value &gt; 0.0) || ( (value &gt; -std::numeric_limits&lt;double&gt;::epsilon()) &amp;&amp; (value &lt; std::numeric_limits&lt;double&gt;::epsilon()) ) ){</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;      pvValue = std::numeric_limits&lt;double&gt;::infinity();</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    }<span class="keywordflow">else</span>{</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;      pvValue = -std::numeric_limits&lt;double&gt;::infinity();</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    }</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  }<span class="keywordflow">else</span>{</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    pvValue = <a class="code" href="classmdt_value_double.html#a41bf83b13cfe7d3779542652f62b8ad6">value</a>;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  }</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;}</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
-<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="classmdt_value_double.html#abfaf7fb87637880670e20f5581e69759">   63</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_value_double.html#abfaf7fb87637880670e20f5581e69759">mdtValueDouble::isMinusOl</a>()<span class="keyword"> const</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  <span class="keywordflow">if</span>(pvValue &gt; 0.0){</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  }</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  <span class="keywordflow">return</span> std::isinf(pvValue);</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;}</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
-<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="classmdt_value_double.html#a2dc24c548d44f9a6a81513f061f5fa70">   71</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_value_double.html#a2dc24c548d44f9a6a81513f061f5fa70">mdtValueDouble::isPlusOl</a>()<span class="keyword"> const</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  <span class="keywordflow">if</span>(pvValue &lt; 0.0){</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  }</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <span class="keywordflow">return</span> std::isinf(pvValue);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;}</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
-<div class="line"><a name="l00079"></a><span class="lineno"><a class="line" href="classmdt_value_double.html#a07dec2c84cb5539793a79f847110b50f">   79</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_value_double.html#a07dec2c84cb5539793a79f847110b50f">mdtValueDouble::isNaN</a>()<span class="keyword"> const</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  <span class="keywordflow">return</span> std::isnan(pvValue);</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;}</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
-<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="classmdt_value_double.html#a1ea11b964da46b14d557f65387146f27">   84</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_value_double.html#a1ea11b964da46b14d557f65387146f27">mdtValueDouble::operator==</a>(<span class="keyword">const</span> <a class="code" href="classmdt_value_double.html">mdtValueDouble</a> &amp; other)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  <span class="keywordflow">if</span>(pvIsNull || other.pvIsNull){</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  }</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  <span class="keywordflow">if</span>(<a class="code" href="classmdt_value_double.html#abfaf7fb87637880670e20f5581e69759">isMinusOl</a>() &amp;&amp; other.<a class="code" href="classmdt_value_double.html#abfaf7fb87637880670e20f5581e69759">isMinusOl</a>()){</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  }</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  <span class="keywordflow">if</span>(<a class="code" href="classmdt_value_double.html#a2dc24c548d44f9a6a81513f061f5fa70">isPlusOl</a>() &amp;&amp; other.<a class="code" href="classmdt_value_double.html#a2dc24c548d44f9a6a81513f061f5fa70">isPlusOl</a>()){</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  }</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  <span class="keywordflow">return</span> (::fabs(pvValue - other.pvValue) &lt; std::numeric_limits&lt;double&gt;::epsilon());</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;}</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
-<div class="line"><a name="l00098"></a><span class="lineno"><a class="line" href="mdt_value_8h.html#afadfd28846155ed682a2d3312f37bc60">   98</a></span>&#160;QDebug <a class="code" href="mdt_value_8cpp.html#afadfd28846155ed682a2d3312f37bc60">operator&lt;&lt;</a>(QDebug dbg, <span class="keyword">const</span> <a class="code" href="classmdt_value_double.html">mdtValueDouble</a> &amp; value)</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;{</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  <span class="keywordflow">if</span>(value.<a class="code" href="classmdt_value_double.html#a92794bd0d4f70e612c97afb3aac2c530">isNull</a>()){</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keywordflow">return</span> dbg.nospace() &lt;&lt; <span class="stringliteral">&quot;mdtValueDouble(Null)&quot;</span>;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  }</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  <span class="keywordflow">if</span>(value.<a class="code" href="classmdt_value_double.html#abfaf7fb87637880670e20f5581e69759">isMinusOl</a>()){</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keywordflow">return</span> dbg.nospace() &lt;&lt; <span class="stringliteral">&quot;mdtValueDouble(-OL)&quot;</span>;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  }</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  <span class="keywordflow">if</span>(value.<a class="code" href="classmdt_value_double.html#a2dc24c548d44f9a6a81513f061f5fa70">isPlusOl</a>()){</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <span class="keywordflow">return</span> dbg.nospace() &lt;&lt; <span class="stringliteral">&quot;mdtValueDouble(+OL)&quot;</span>;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  }</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  <span class="keywordflow">if</span>(value.<a class="code" href="classmdt_value_double.html#a07dec2c84cb5539793a79f847110b50f">isNaN</a>()){</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <span class="keywordflow">return</span> dbg.nospace() &lt;&lt; <span class="stringliteral">&quot;mdtValueDouble(NaN)&quot;</span>;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  }</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  <span class="keywordflow">return</span> dbg.nospace() &lt;&lt; <span class="stringliteral">&quot;mdtValueDouble(&quot;</span> &lt;&lt; value.<a class="code" href="classmdt_value_double.html#a41bf83b13cfe7d3779542652f62b8ad6">value</a>() &lt;&lt; <span class="stringliteral">&quot;)&quot;</span>;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;}</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="comment"> * mdtValueInt</span></div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;</div>
-<div class="line"><a name="l00119"></a><span class="lineno"><a class="line" href="mdt_value_8h.html#ab34c4694c3e5510a36a8863d87e241e5">  119</a></span>&#160;QDebug <a class="code" href="mdt_value_8cpp.html#afadfd28846155ed682a2d3312f37bc60">operator&lt;&lt;</a>(QDebug dbg, <span class="keyword">const</span> <a class="code" href="classmdt_value_integral.html">mdtValueInt</a> &amp; value)</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;{</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;  <span class="keywordflow">if</span>(value.<a class="code" href="classmdt_value_integral.html#a7206a19a6d3ef12330a327d0ccfb5188">isNull</a>()){</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    <span class="keywordflow">return</span> dbg.nospace() &lt;&lt; <span class="stringliteral">&quot;mdtValueInt(Null)&quot;</span>;</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;  }</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;  <span class="keywordflow">return</span> dbg.nospace() &lt;&lt; <span class="stringliteral">&quot;mdtValueInt(&quot;</span> &lt;&lt; value.<a class="code" href="classmdt_value_integral.html#aae3159993261e0ba5d1a4a3e53bb207d">value</a>() &lt;&lt; <span class="stringliteral">&quot;)&quot;</span>;</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;}</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="comment"> * mdtValueBool</span></div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;</div>
-<div class="line"><a name="l00131"></a><span class="lineno"><a class="line" href="mdt_value_8h.html#ad1d1aa4d0008ebe1f209771525803f4e">  131</a></span>&#160;QDebug <a class="code" href="mdt_value_8cpp.html#afadfd28846155ed682a2d3312f37bc60">operator&lt;&lt;</a>(QDebug dbg, <span class="keyword">const</span> <a class="code" href="classmdt_value_bool.html">mdtValueBool</a> &amp; value)</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;{</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;  <span class="keywordflow">if</span>(value.<a class="code" href="classmdt_value_bool.html#afd1b8e5d51bcfd765d69f0d5f1aaddd0">isNull</a>()){</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <span class="keywordflow">return</span> dbg.nospace() &lt;&lt; <span class="stringliteral">&quot;mdtValueBool(Null)&quot;</span>;</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;  }</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;  <span class="keywordflow">if</span>(value.<a class="code" href="classmdt_value_bool.html#ad34dac053165c5505aac8dff5843625f">value</a>()){</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    <span class="keywordflow">return</span> dbg.nospace() &lt;&lt; <span class="stringliteral">&quot;mdtValueBool(true)&quot;</span>;</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;  }</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;  <span class="keywordflow">return</span> dbg.nospace() &lt;&lt; <span class="stringliteral">&quot;mdtValueBool(false)&quot;</span>;</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;}</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;<span class="comment"> * mdtValue</span></div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;</div>
-<div class="line"><a name="l00146"></a><span class="lineno"><a class="line" href="classmdt_value.html#a5eaad5ce886d11b6b3484525a8fa7f41">  146</a></span>&#160;<a class="code" href="classmdt_value.html#a5eaad5ce886d11b6b3484525a8fa7f41">mdtValue::mdtValue</a>()</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;{</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;  <a class="code" href="classmdt_value.html#a51d075b0cc64ff5481533bcfc8d3a7f4">setDefaultValue</a>(0.0);</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;  <a class="code" href="classmdt_value.html#a51d075b0cc64ff5481533bcfc8d3a7f4">setDefaultValue</a>(0);</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;  <a class="code" href="classmdt_value.html#a51d075b0cc64ff5481533bcfc8d3a7f4">setDefaultValue</a>(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;  <a class="code" href="classmdt_value.html#a8c4461857e4715e49b2050479d63bfb8">clear</a>();</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;}</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;</div>
-<div class="line"><a name="l00154"></a><span class="lineno"><a class="line" href="classmdt_value.html#a3aafb3f186d3132a6bd3bf5f9238b04b">  154</a></span>&#160;<a class="code" href="classmdt_value.html#a5eaad5ce886d11b6b3484525a8fa7f41">mdtValue::mdtValue</a>(<span class="keywordtype">double</span> value, <span class="keywordtype">bool</span> isMinusOl, <span class="keywordtype">bool</span> isPlusOl)</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;{</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;  <a class="code" href="classmdt_value.html#a51d075b0cc64ff5481533bcfc8d3a7f4">setDefaultValue</a>(0.0);</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;  <a class="code" href="classmdt_value.html#a51d075b0cc64ff5481533bcfc8d3a7f4">setDefaultValue</a>(0);</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;  <a class="code" href="classmdt_value.html#a51d075b0cc64ff5481533bcfc8d3a7f4">setDefaultValue</a>(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;  <a class="code" href="classmdt_value.html#a8c4461857e4715e49b2050479d63bfb8">clear</a>();</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;  <a class="code" href="classmdt_value.html#aa4573c55ea1cc6c55547b09db8c9d521">setValue</a>(value, isMinusOl, isPlusOl);</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;}</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;</div>
-<div class="line"><a name="l00163"></a><span class="lineno"><a class="line" href="classmdt_value.html#a023f1f91105ae7ea1040618c5a600b36">  163</a></span>&#160;<a class="code" href="classmdt_value.html#a5eaad5ce886d11b6b3484525a8fa7f41">mdtValue::mdtValue</a>(<span class="keywordtype">int</span> value, <span class="keywordtype">bool</span> isMinusOl, <span class="keywordtype">bool</span> isPlusOl)</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;{</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;  <a class="code" href="classmdt_value.html#a51d075b0cc64ff5481533bcfc8d3a7f4">setDefaultValue</a>(0.0);</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;  <a class="code" href="classmdt_value.html#a51d075b0cc64ff5481533bcfc8d3a7f4">setDefaultValue</a>(0);</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;  <a class="code" href="classmdt_value.html#a51d075b0cc64ff5481533bcfc8d3a7f4">setDefaultValue</a>(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;  <a class="code" href="classmdt_value.html#a8c4461857e4715e49b2050479d63bfb8">clear</a>();</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;  <a class="code" href="classmdt_value.html#aa4573c55ea1cc6c55547b09db8c9d521">setValue</a>(value, isMinusOl, isPlusOl);</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;}</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;</div>
-<div class="line"><a name="l00172"></a><span class="lineno"><a class="line" href="classmdt_value.html#a0d6a8c5abbb4192f6dbcecc698c53b65">  172</a></span>&#160;<a class="code" href="classmdt_value.html#a5eaad5ce886d11b6b3484525a8fa7f41">mdtValue::mdtValue</a>(<span class="keywordtype">bool</span> value)</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;{</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;  <a class="code" href="classmdt_value.html#a51d075b0cc64ff5481533bcfc8d3a7f4">setDefaultValue</a>(0.0);</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;  <a class="code" href="classmdt_value.html#a51d075b0cc64ff5481533bcfc8d3a7f4">setDefaultValue</a>(0);</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;  <a class="code" href="classmdt_value.html#a51d075b0cc64ff5481533bcfc8d3a7f4">setDefaultValue</a>(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;  <a class="code" href="classmdt_value.html#a8c4461857e4715e49b2050479d63bfb8">clear</a>();</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;  <a class="code" href="classmdt_value.html#aa4573c55ea1cc6c55547b09db8c9d521">setValue</a>(value);</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;}</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;</div>
-<div class="line"><a name="l00181"></a><span class="lineno"><a class="line" href="classmdt_value.html#a8c4461857e4715e49b2050479d63bfb8">  181</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_value.html#a8c4461857e4715e49b2050479d63bfb8">mdtValue::clear</a>()</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;{</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;  pvValueDouble = pvDefaultValueDouble;</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;  pvValueInt = pvDefaultValueInt;</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;  pvValueBool = pvDefaultValueBool;</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;  pvIsValid = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;  pvHasValueDouble = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;  pvIsMinusOl = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;  pvIsPlusOl = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  pvHasValueInt = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  pvHasValueBool = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;}</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;</div>
-<div class="line"><a name="l00194"></a><span class="lineno"><a class="line" href="classmdt_value.html#a51d075b0cc64ff5481533bcfc8d3a7f4">  194</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_value.html#a51d075b0cc64ff5481533bcfc8d3a7f4">mdtValue::setDefaultValue</a>(<span class="keywordtype">double</span> value)</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;{</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;  pvDefaultValueDouble = value;</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;}</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;</div>
-<div class="line"><a name="l00199"></a><span class="lineno"><a class="line" href="classmdt_value.html#aad4a2fb80d76fc2924ea1a72ce529167">  199</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_value.html#a51d075b0cc64ff5481533bcfc8d3a7f4">mdtValue::setDefaultValue</a>(<span class="keywordtype">int</span> value)</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;{</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;  pvDefaultValueInt = value;</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;}</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;</div>
-<div class="line"><a name="l00204"></a><span class="lineno"><a class="line" href="classmdt_value.html#a82ecd7744702a5e152404c1b05b1a69d">  204</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_value.html#a51d075b0cc64ff5481533bcfc8d3a7f4">mdtValue::setDefaultValue</a>(<span class="keywordtype">bool</span> value)</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;{</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;  pvDefaultValueBool = value;</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;}</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;</div>
-<div class="line"><a name="l00209"></a><span class="lineno"><a class="line" href="classmdt_value.html#aa4573c55ea1cc6c55547b09db8c9d521">  209</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_value.html#aa4573c55ea1cc6c55547b09db8c9d521">mdtValue::setValue</a>(<span class="keywordtype">double</span> value, <span class="keywordtype">bool</span> isMinusOl, <span class="keywordtype">bool</span> isPlusOl)</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;{</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;  pvIsValid = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;  pvHasValueDouble = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;  pvValueDouble = value;</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;  pvIsMinusOl = <a class="code" href="classmdt_value.html#a4de0d0c8a02cdd4c02adace4108db326">isMinusOl</a>;</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;  pvIsPlusOl = <a class="code" href="classmdt_value.html#a033ad1d20812dddf38530a5f190033da">isPlusOl</a>;</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;}</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;</div>
-<div class="line"><a name="l00218"></a><span class="lineno"><a class="line" href="classmdt_value.html#a83d56329f2fd051f3cc32fd32f758e24">  218</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_value.html#a83d56329f2fd051f3cc32fd32f758e24">mdtValue::hasValueDouble</a>()<span class="keyword"> const</span></div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;  <span class="keywordflow">return</span> pvHasValueDouble;</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;}</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;</div>
-<div class="line"><a name="l00223"></a><span class="lineno"><a class="line" href="classmdt_value.html#aceae9e2ab20910c47272d523735b16e0">  223</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="classmdt_value.html#aceae9e2ab20910c47272d523735b16e0">mdtValue::valueDouble</a>()<span class="keyword"> const</span></div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;  <span class="keywordflow">return</span> pvValueDouble;</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;}</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;</div>
-<div class="line"><a name="l00228"></a><span class="lineno"><a class="line" href="classmdt_value.html#ae4a84a502223cfd47538474dee897ad0">  228</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_value.html#aa4573c55ea1cc6c55547b09db8c9d521">mdtValue::setValue</a>(<span class="keywordtype">int</span> value, <span class="keywordtype">bool</span> isMinusOl, <span class="keywordtype">bool</span> isPlusOl)</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;{</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;  pvIsValid = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;  pvHasValueInt = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;  pvValueInt = value;</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;  pvIsMinusOl = <a class="code" href="classmdt_value.html#a4de0d0c8a02cdd4c02adace4108db326">isMinusOl</a>;</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;  pvIsPlusOl = <a class="code" href="classmdt_value.html#a033ad1d20812dddf38530a5f190033da">isPlusOl</a>;</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;}</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;</div>
-<div class="line"><a name="l00237"></a><span class="lineno"><a class="line" href="classmdt_value.html#a4aeeb92ec5b1f0a625cbd2d944ae761b">  237</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_value.html#a4aeeb92ec5b1f0a625cbd2d944ae761b">mdtValue::hasValueInt</a>()<span class="keyword"> const</span></div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;  <span class="keywordflow">return</span> pvHasValueInt;</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;}</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;</div>
-<div class="line"><a name="l00242"></a><span class="lineno"><a class="line" href="classmdt_value.html#a421b294b1540ce7c47aada2ea66201a1">  242</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classmdt_value.html#a421b294b1540ce7c47aada2ea66201a1">mdtValue::valueInt</a>()<span class="keyword"> const</span></div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;  <span class="keywordflow">return</span> pvValueInt;</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;}</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;</div>
-<div class="line"><a name="l00247"></a><span class="lineno"><a class="line" href="classmdt_value.html#a4de0d0c8a02cdd4c02adace4108db326">  247</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_value.html#a4de0d0c8a02cdd4c02adace4108db326">mdtValue::isMinusOl</a>()<span class="keyword"> const</span></div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;  <span class="keywordflow">return</span> pvIsMinusOl;</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;}</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;</div>
-<div class="line"><a name="l00252"></a><span class="lineno"><a class="line" href="classmdt_value.html#a033ad1d20812dddf38530a5f190033da">  252</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_value.html#a033ad1d20812dddf38530a5f190033da">mdtValue::isPlusOl</a>()<span class="keyword"> const</span></div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;  <span class="keywordflow">return</span> pvIsPlusOl;</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;}</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;</div>
-<div class="line"><a name="l00257"></a><span class="lineno"><a class="line" href="classmdt_value.html#ab526b9b9d04b641394b1679336b59c32">  257</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_value.html#aa4573c55ea1cc6c55547b09db8c9d521">mdtValue::setValue</a>(<span class="keywordtype">bool</span> value)</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;{</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;  pvIsValid = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;  pvHasValueBool = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;  pvValueBool = value;</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;}</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;</div>
-<div class="line"><a name="l00264"></a><span class="lineno"><a class="line" href="classmdt_value.html#a8ec9abcaa40b5ec891ff740913f1aca8">  264</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_value.html#a8ec9abcaa40b5ec891ff740913f1aca8">mdtValue::hasValueBool</a>()<span class="keyword"> const</span></div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;  <span class="keywordflow">return</span> pvHasValueBool;</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;}</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;</div>
-<div class="line"><a name="l00269"></a><span class="lineno"><a class="line" href="classmdt_value.html#acd0d628fdee31ce640f1bc76f3833173">  269</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_value.html#acd0d628fdee31ce640f1bc76f3833173">mdtValue::valueBool</a>()<span class="keyword"> const</span></div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;  <span class="keywordflow">return</span> pvValueBool;</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;}</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;</div>
-<div class="line"><a name="l00274"></a><span class="lineno"><a class="line" href="classmdt_value.html#a472996d8c32ce70e9332509151d6aed1">  274</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_value.html#a472996d8c32ce70e9332509151d6aed1">mdtValue::isValid</a>()<span class="keyword"> const</span></div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;  <span class="keywordflow">return</span> pvIsValid;</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;}</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;</div>
-<div class="line"><a name="l00279"></a><span class="lineno"><a class="line" href="classmdt_value.html#acbb1e7472e9b6e105ba5ffe03476f4d4">  279</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_value.html#acbb1e7472e9b6e105ba5ffe03476f4d4">mdtValue::operator==</a>(<span class="keyword">const</span> <a class="code" href="classmdt_value.html">mdtValue</a> &amp;other)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;  <span class="keywordflow">if</span>(qAbs(pvValueDouble - other.pvValueDouble) &gt; DBL_EPSILON){</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;  }</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;  <span class="keywordflow">if</span>(pvValueInt != other.pvValueInt){</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;  }</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;  <span class="keywordflow">if</span>(pvValueBool != other.pvValueBool){</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;  }</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;  <span class="keywordflow">if</span>(pvIsValid != other.pvIsValid){</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;  }</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;  <span class="keywordflow">if</span>(pvHasValueDouble != other.pvHasValueDouble){</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;  }</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;  <span class="keywordflow">if</span>(pvIsMinusOl != other.pvIsMinusOl){</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;  }</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;  <span class="keywordflow">if</span>(pvIsPlusOl != other.pvIsPlusOl){</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;  }</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;  <span class="keywordflow">if</span>(pvHasValueInt != other.pvHasValueInt){</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;  }</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;  <span class="keywordflow">if</span>(pvHasValueBool != other.pvHasValueBool){</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;  }</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;}</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;</div>
-<div class="line"><a name="l00311"></a><span class="lineno"><a class="line" href="classmdt_value.html#a9d01fff18ab97a5f25d5f82655d42810">  311</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_value.html#a9d01fff18ab97a5f25d5f82655d42810">mdtValue::operator!=</a>(<span class="keyword">const</span> <a class="code" href="classmdt_value.html">mdtValue</a> &amp;other)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;  <span class="keywordflow">return</span> !(<a class="code" href="classmdt_value.html#acbb1e7472e9b6e105ba5ffe03476f4d4">operator==</a>(other));</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;}</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;</div>
-<div class="line"><a name="l00316"></a><span class="lineno"><a class="line" href="mdt_value_8h.html#ac2e0f42551c4221afa15837f4a265eb2">  316</a></span>&#160;QDebug <a class="code" href="mdt_value_8cpp.html#afadfd28846155ed682a2d3312f37bc60">operator&lt;&lt;</a>(QDebug dbg, <span class="keyword">const</span> <a class="code" href="classmdt_value.html">mdtValue</a> &amp;value)</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;{</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;  <span class="keywordflow">return</span> dbg.nospace() &lt;&lt; <span class="stringliteral">&quot;mdtValue(isValid: &quot;</span> &lt;&lt; value.<a class="code" href="classmdt_value.html#a472996d8c32ce70e9332509151d6aed1">isValid</a>() \</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;                        &lt;&lt; <span class="stringliteral">&quot;, Double: &quot;</span> &lt;&lt; value.<a class="code" href="classmdt_value.html#aceae9e2ab20910c47272d523735b16e0">valueDouble</a>() &lt;&lt; <span class="stringliteral">&quot;, Int: &quot;</span> &lt;&lt; value.<a class="code" href="classmdt_value.html#a421b294b1540ce7c47aada2ea66201a1">valueInt</a>() &lt;&lt; <span class="stringliteral">&quot;, Bool: &quot;</span> &lt;&lt; value.<a class="code" href="classmdt_value.html#acd0d628fdee31ce640f1bc76f3833173">valueBool</a>() \</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;                        &lt;&lt; <span class="stringliteral">&quot;, -OL: &quot;</span> &lt;&lt; value.<a class="code" href="classmdt_value.html#a4de0d0c8a02cdd4c02adace4108db326">isMinusOl</a>() &lt;&lt; <span class="stringliteral">&quot;, +OL: &quot;</span> &lt;&lt; value.<a class="code" href="classmdt_value.html#a033ad1d20812dddf38530a5f190033da">isPlusOl</a>() &lt;&lt; <span class="stringliteral">&quot;)&quot;</span>;</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;}</div>
-<div class="ttc" id="classmdt_value_integral_html_aae3159993261e0ba5d1a4a3e53bb207d"><div class="ttname"><a href="classmdt_value_integral.html#aae3159993261e0ba5d1a4a3e53bb207d">mdtValueIntegral::value</a></div><div class="ttdeci">T value() const </div><div class="ttdoc">Get value. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8h_source.html#l00280">mdtValue.h:280</a></div></div>
-<div class="ttc" id="classmdt_value_html_a83d56329f2fd051f3cc32fd32f758e24"><div class="ttname"><a href="classmdt_value.html#a83d56329f2fd051f3cc32fd32f758e24">mdtValue::hasValueDouble</a></div><div class="ttdeci">bool hasValueDouble() const </div><div class="ttdoc">Check if value as double format is available. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00218">mdtValue.cpp:218</a></div></div>
-<div class="ttc" id="classmdt_value_integral_html"><div class="ttname"><a href="classmdt_value_integral.html">mdtValueIntegral</a></div><div class="ttdoc">Integral type with Null attribute. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8h_source.html#l00235">mdtValue.h:235</a></div></div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="classmdt_value_double.html#a53697c6d57ad134ed7fde4ac9130e1db">   50</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_value_double.html#a53697c6d57ad134ed7fde4ac9130e1db">mdtValueDouble::setValue</a>(<span class="keywordtype">double</span> value, <span class="keywordtype">bool</span> isOl)</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;{</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  pvIsNull = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <span class="keywordflow">if</span>(isOl){</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordflow">if</span>( (value &gt; 0.0) || ( (value &gt; -std::numeric_limits&lt;double&gt;::epsilon()) &amp;&amp; (value &lt; std::numeric_limits&lt;double&gt;::epsilon()) ) ){</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;      pvValue = std::numeric_limits&lt;double&gt;::infinity();</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    }<span class="keywordflow">else</span>{</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;      pvValue = -std::numeric_limits&lt;double&gt;::infinity();</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    }</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  }<span class="keywordflow">else</span>{</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    pvValue = <a class="code" href="classmdt_value_double.html#a41bf83b13cfe7d3779542652f62b8ad6">value</a>;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  }</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;}</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="classmdt_value_double.html#abfaf7fb87637880670e20f5581e69759">   64</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_value_double.html#abfaf7fb87637880670e20f5581e69759">mdtValueDouble::isMinusOl</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  <span class="keywordflow">if</span>(pvValue &gt; 0.0){</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  }</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <span class="keywordflow">return</span> std::isinf(pvValue);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;}</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="classmdt_value_double.html#a2dc24c548d44f9a6a81513f061f5fa70">   72</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_value_double.html#a2dc24c548d44f9a6a81513f061f5fa70">mdtValueDouble::isPlusOl</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <span class="keywordflow">if</span>(pvValue &lt; 0.0){</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  }</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <span class="keywordflow">return</span> std::isinf(pvValue);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;}</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
+<div class="line"><a name="l00080"></a><span class="lineno"><a class="line" href="classmdt_value_double.html#a07dec2c84cb5539793a79f847110b50f">   80</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_value_double.html#a07dec2c84cb5539793a79f847110b50f">mdtValueDouble::isNaN</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  <span class="keywordflow">return</span> std::isnan(pvValue);</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;}</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
+<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="classmdt_value_double.html#a1ea11b964da46b14d557f65387146f27">   86</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_value_double.html#a1ea11b964da46b14d557f65387146f27">mdtValueDouble::operator==</a>(<span class="keyword">const</span> <a class="code" href="classmdt_value_double.html">mdtValueDouble</a> &amp; other)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  <span class="keywordflow">if</span>(pvIsNull || other.pvIsNull){</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  }</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  <span class="keywordflow">if</span>(<a class="code" href="classmdt_value_double.html#abfaf7fb87637880670e20f5581e69759">isMinusOl</a>() &amp;&amp; other.<a class="code" href="classmdt_value_double.html#abfaf7fb87637880670e20f5581e69759">isMinusOl</a>()){</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  }</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  <span class="keywordflow">if</span>(<a class="code" href="classmdt_value_double.html#a2dc24c548d44f9a6a81513f061f5fa70">isPlusOl</a>() &amp;&amp; other.<a class="code" href="classmdt_value_double.html#a2dc24c548d44f9a6a81513f061f5fa70">isPlusOl</a>()){</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  }</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <span class="keywordflow">return</span> (::fabs(pvValue - other.pvValue) &lt; std::numeric_limits&lt;double&gt;::epsilon());</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;}</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
+<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="mdt_value_8h.html#afadfd28846155ed682a2d3312f37bc60">  100</a></span>&#160;QDebug <a class="code" href="mdt_value_8cpp.html#afadfd28846155ed682a2d3312f37bc60">operator&lt;&lt;</a>(QDebug dbg, <span class="keyword">const</span> <a class="code" href="classmdt_value_double.html">mdtValueDouble</a> &amp; value)</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;{</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  <span class="keywordflow">if</span>(value.<a class="code" href="classmdt_value_double.html#a92794bd0d4f70e612c97afb3aac2c530">isNull</a>()){</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keywordflow">return</span> dbg.nospace() &lt;&lt; <span class="stringliteral">&quot;mdtValueDouble(Null)&quot;</span>;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  }</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  <span class="keywordflow">if</span>(value.<a class="code" href="classmdt_value_double.html#abfaf7fb87637880670e20f5581e69759">isMinusOl</a>()){</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keywordflow">return</span> dbg.nospace() &lt;&lt; <span class="stringliteral">&quot;mdtValueDouble(-OL)&quot;</span>;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  }</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  <span class="keywordflow">if</span>(value.<a class="code" href="classmdt_value_double.html#a2dc24c548d44f9a6a81513f061f5fa70">isPlusOl</a>()){</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="keywordflow">return</span> dbg.nospace() &lt;&lt; <span class="stringliteral">&quot;mdtValueDouble(+OL)&quot;</span>;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  }</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  <span class="keywordflow">if</span>(value.<a class="code" href="classmdt_value_double.html#a07dec2c84cb5539793a79f847110b50f">isNaN</a>()){</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <span class="keywordflow">return</span> dbg.nospace() &lt;&lt; <span class="stringliteral">&quot;mdtValueDouble(NaN)&quot;</span>;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  }</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  <span class="keywordflow">return</span> dbg.nospace() &lt;&lt; <span class="stringliteral">&quot;mdtValueDouble(&quot;</span> &lt;&lt; value.<a class="code" href="classmdt_value_double.html#a41bf83b13cfe7d3779542652f62b8ad6">value</a>() &lt;&lt; <span class="stringliteral">&quot;)&quot;</span>;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;}</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="comment"> * mdtValueInt</span></div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;</div>
+<div class="line"><a name="l00121"></a><span class="lineno"><a class="line" href="mdt_value_8h.html#ab34c4694c3e5510a36a8863d87e241e5">  121</a></span>&#160;QDebug <a class="code" href="mdt_value_8cpp.html#afadfd28846155ed682a2d3312f37bc60">operator&lt;&lt;</a>(QDebug dbg, <span class="keyword">const</span> <a class="code" href="classmdt_value_integral.html">mdtValueInt</a> &amp; value)</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;{</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;  <span class="keywordflow">if</span>(value.<a class="code" href="classmdt_value_integral.html#a7206a19a6d3ef12330a327d0ccfb5188">isNull</a>()){</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    <span class="keywordflow">return</span> dbg.nospace() &lt;&lt; <span class="stringliteral">&quot;mdtValueInt(Null)&quot;</span>;</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;  }</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  <span class="keywordflow">return</span> dbg.nospace() &lt;&lt; <span class="stringliteral">&quot;mdtValueInt(&quot;</span> &lt;&lt; value.<a class="code" href="classmdt_value_integral.html#aae3159993261e0ba5d1a4a3e53bb207d">value</a>() &lt;&lt; <span class="stringliteral">&quot;)&quot;</span>;</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;}</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="comment"> * mdtValueBool</span></div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;</div>
+<div class="line"><a name="l00133"></a><span class="lineno"><a class="line" href="mdt_value_8h.html#ad1d1aa4d0008ebe1f209771525803f4e">  133</a></span>&#160;QDebug <a class="code" href="mdt_value_8cpp.html#afadfd28846155ed682a2d3312f37bc60">operator&lt;&lt;</a>(QDebug dbg, <span class="keyword">const</span> <a class="code" href="classmdt_value_bool.html">mdtValueBool</a> &amp; value)</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;{</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;  <span class="keywordflow">if</span>(value.<a class="code" href="classmdt_value_bool.html#afd1b8e5d51bcfd765d69f0d5f1aaddd0">isNull</a>()){</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    <span class="keywordflow">return</span> dbg.nospace() &lt;&lt; <span class="stringliteral">&quot;mdtValueBool(Null)&quot;</span>;</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;  }</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;  <span class="keywordflow">if</span>(value.<a class="code" href="classmdt_value_bool.html#ad34dac053165c5505aac8dff5843625f">value</a>()){</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    <span class="keywordflow">return</span> dbg.nospace() &lt;&lt; <span class="stringliteral">&quot;mdtValueBool(true)&quot;</span>;</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;  }</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;  <span class="keywordflow">return</span> dbg.nospace() &lt;&lt; <span class="stringliteral">&quot;mdtValueBool(false)&quot;</span>;</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;}</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;<span class="comment"> * mdtValue</span></div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;</div>
+<div class="line"><a name="l00148"></a><span class="lineno"><a class="line" href="classmdt_value.html#a5eaad5ce886d11b6b3484525a8fa7f41">  148</a></span>&#160;<a class="code" href="classmdt_value.html#a5eaad5ce886d11b6b3484525a8fa7f41">mdtValue::mdtValue</a>()</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;{</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;  <a class="code" href="classmdt_value.html#a51d075b0cc64ff5481533bcfc8d3a7f4">setDefaultValue</a>(0.0);</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;  <a class="code" href="classmdt_value.html#a51d075b0cc64ff5481533bcfc8d3a7f4">setDefaultValue</a>(0);</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;  <a class="code" href="classmdt_value.html#a51d075b0cc64ff5481533bcfc8d3a7f4">setDefaultValue</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;  <a class="code" href="classmdt_value.html#a8c4461857e4715e49b2050479d63bfb8">clear</a>();</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;}</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;</div>
+<div class="line"><a name="l00156"></a><span class="lineno"><a class="line" href="classmdt_value.html#a3aafb3f186d3132a6bd3bf5f9238b04b">  156</a></span>&#160;<a class="code" href="classmdt_value.html#a5eaad5ce886d11b6b3484525a8fa7f41">mdtValue::mdtValue</a>(<span class="keywordtype">double</span> value, <span class="keywordtype">bool</span> isMinusOl, <span class="keywordtype">bool</span> isPlusOl)</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;{</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;  <a class="code" href="classmdt_value.html#a51d075b0cc64ff5481533bcfc8d3a7f4">setDefaultValue</a>(0.0);</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;  <a class="code" href="classmdt_value.html#a51d075b0cc64ff5481533bcfc8d3a7f4">setDefaultValue</a>(0);</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;  <a class="code" href="classmdt_value.html#a51d075b0cc64ff5481533bcfc8d3a7f4">setDefaultValue</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;  <a class="code" href="classmdt_value.html#a8c4461857e4715e49b2050479d63bfb8">clear</a>();</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;  <a class="code" href="classmdt_value.html#aa4573c55ea1cc6c55547b09db8c9d521">setValue</a>(value, isMinusOl, isPlusOl);</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;}</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;</div>
+<div class="line"><a name="l00165"></a><span class="lineno"><a class="line" href="classmdt_value.html#a023f1f91105ae7ea1040618c5a600b36">  165</a></span>&#160;<a class="code" href="classmdt_value.html#a5eaad5ce886d11b6b3484525a8fa7f41">mdtValue::mdtValue</a>(<span class="keywordtype">int</span> value, <span class="keywordtype">bool</span> isMinusOl, <span class="keywordtype">bool</span> isPlusOl)</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;{</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;  <a class="code" href="classmdt_value.html#a51d075b0cc64ff5481533bcfc8d3a7f4">setDefaultValue</a>(0.0);</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;  <a class="code" href="classmdt_value.html#a51d075b0cc64ff5481533bcfc8d3a7f4">setDefaultValue</a>(0);</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;  <a class="code" href="classmdt_value.html#a51d075b0cc64ff5481533bcfc8d3a7f4">setDefaultValue</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;  <a class="code" href="classmdt_value.html#a8c4461857e4715e49b2050479d63bfb8">clear</a>();</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;  <a class="code" href="classmdt_value.html#aa4573c55ea1cc6c55547b09db8c9d521">setValue</a>(value, isMinusOl, isPlusOl);</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;}</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;</div>
+<div class="line"><a name="l00174"></a><span class="lineno"><a class="line" href="classmdt_value.html#a0d6a8c5abbb4192f6dbcecc698c53b65">  174</a></span>&#160;<a class="code" href="classmdt_value.html#a5eaad5ce886d11b6b3484525a8fa7f41">mdtValue::mdtValue</a>(<span class="keywordtype">bool</span> value)</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;{</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;  <a class="code" href="classmdt_value.html#a51d075b0cc64ff5481533bcfc8d3a7f4">setDefaultValue</a>(0.0);</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;  <a class="code" href="classmdt_value.html#a51d075b0cc64ff5481533bcfc8d3a7f4">setDefaultValue</a>(0);</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;  <a class="code" href="classmdt_value.html#a51d075b0cc64ff5481533bcfc8d3a7f4">setDefaultValue</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;  <a class="code" href="classmdt_value.html#a8c4461857e4715e49b2050479d63bfb8">clear</a>();</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;  <a class="code" href="classmdt_value.html#aa4573c55ea1cc6c55547b09db8c9d521">setValue</a>(value);</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;}</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;</div>
+<div class="line"><a name="l00183"></a><span class="lineno"><a class="line" href="classmdt_value.html#a8c4461857e4715e49b2050479d63bfb8">  183</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_value.html#a8c4461857e4715e49b2050479d63bfb8">mdtValue::clear</a>()</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;{</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;  pvValueDouble = pvDefaultValueDouble;</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;  pvValueInt = pvDefaultValueInt;</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;  pvValueBool = pvDefaultValueBool;</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;  pvIsValid = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;  pvHasValueDouble = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  pvIsMinusOl = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  pvIsPlusOl = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;  pvHasValueInt = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;  pvHasValueBool = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;}</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;</div>
+<div class="line"><a name="l00196"></a><span class="lineno"><a class="line" href="classmdt_value.html#a51d075b0cc64ff5481533bcfc8d3a7f4">  196</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_value.html#a51d075b0cc64ff5481533bcfc8d3a7f4">mdtValue::setDefaultValue</a>(<span class="keywordtype">double</span> value)</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;{</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;  pvDefaultValueDouble = value;</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;}</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;</div>
+<div class="line"><a name="l00201"></a><span class="lineno"><a class="line" href="classmdt_value.html#aad4a2fb80d76fc2924ea1a72ce529167">  201</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_value.html#a51d075b0cc64ff5481533bcfc8d3a7f4">mdtValue::setDefaultValue</a>(<span class="keywordtype">int</span> value)</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;{</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;  pvDefaultValueInt = value;</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;}</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;</div>
+<div class="line"><a name="l00206"></a><span class="lineno"><a class="line" href="classmdt_value.html#a82ecd7744702a5e152404c1b05b1a69d">  206</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_value.html#a51d075b0cc64ff5481533bcfc8d3a7f4">mdtValue::setDefaultValue</a>(<span class="keywordtype">bool</span> value)</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;{</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;  pvDefaultValueBool = value;</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;}</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;</div>
+<div class="line"><a name="l00211"></a><span class="lineno"><a class="line" href="classmdt_value.html#aa4573c55ea1cc6c55547b09db8c9d521">  211</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_value.html#aa4573c55ea1cc6c55547b09db8c9d521">mdtValue::setValue</a>(<span class="keywordtype">double</span> value, <span class="keywordtype">bool</span> isMinusOl, <span class="keywordtype">bool</span> isPlusOl)</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;{</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;  pvIsValid = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;  pvHasValueDouble = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;  pvValueDouble = value;</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;  pvIsMinusOl = <a class="code" href="classmdt_value.html#a4de0d0c8a02cdd4c02adace4108db326">isMinusOl</a>;</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;  pvIsPlusOl = <a class="code" href="classmdt_value.html#a033ad1d20812dddf38530a5f190033da">isPlusOl</a>;</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;}</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;</div>
+<div class="line"><a name="l00220"></a><span class="lineno"><a class="line" href="classmdt_value.html#a83d56329f2fd051f3cc32fd32f758e24">  220</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_value.html#a83d56329f2fd051f3cc32fd32f758e24">mdtValue::hasValueDouble</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;  <span class="keywordflow">return</span> pvHasValueDouble;</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;}</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;</div>
+<div class="line"><a name="l00225"></a><span class="lineno"><a class="line" href="classmdt_value.html#aceae9e2ab20910c47272d523735b16e0">  225</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="classmdt_value.html#aceae9e2ab20910c47272d523735b16e0">mdtValue::valueDouble</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;  <span class="keywordflow">return</span> pvValueDouble;</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;}</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;</div>
+<div class="line"><a name="l00230"></a><span class="lineno"><a class="line" href="classmdt_value.html#ae4a84a502223cfd47538474dee897ad0">  230</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_value.html#aa4573c55ea1cc6c55547b09db8c9d521">mdtValue::setValue</a>(<span class="keywordtype">int</span> value, <span class="keywordtype">bool</span> isMinusOl, <span class="keywordtype">bool</span> isPlusOl)</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;{</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;  pvIsValid = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;  pvHasValueInt = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;  pvValueInt = value;</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;  pvIsMinusOl = <a class="code" href="classmdt_value.html#a4de0d0c8a02cdd4c02adace4108db326">isMinusOl</a>;</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;  pvIsPlusOl = <a class="code" href="classmdt_value.html#a033ad1d20812dddf38530a5f190033da">isPlusOl</a>;</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;}</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;</div>
+<div class="line"><a name="l00239"></a><span class="lineno"><a class="line" href="classmdt_value.html#a4aeeb92ec5b1f0a625cbd2d944ae761b">  239</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_value.html#a4aeeb92ec5b1f0a625cbd2d944ae761b">mdtValue::hasValueInt</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;  <span class="keywordflow">return</span> pvHasValueInt;</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;}</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;</div>
+<div class="line"><a name="l00244"></a><span class="lineno"><a class="line" href="classmdt_value.html#a421b294b1540ce7c47aada2ea66201a1">  244</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="classmdt_value.html#a421b294b1540ce7c47aada2ea66201a1">mdtValue::valueInt</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;  <span class="keywordflow">return</span> pvValueInt;</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;}</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;</div>
+<div class="line"><a name="l00249"></a><span class="lineno"><a class="line" href="classmdt_value.html#a4de0d0c8a02cdd4c02adace4108db326">  249</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_value.html#a4de0d0c8a02cdd4c02adace4108db326">mdtValue::isMinusOl</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;  <span class="keywordflow">return</span> pvIsMinusOl;</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;}</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;</div>
+<div class="line"><a name="l00254"></a><span class="lineno"><a class="line" href="classmdt_value.html#a033ad1d20812dddf38530a5f190033da">  254</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_value.html#a033ad1d20812dddf38530a5f190033da">mdtValue::isPlusOl</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;  <span class="keywordflow">return</span> pvIsPlusOl;</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;}</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;</div>
+<div class="line"><a name="l00259"></a><span class="lineno"><a class="line" href="classmdt_value.html#ab526b9b9d04b641394b1679336b59c32">  259</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_value.html#aa4573c55ea1cc6c55547b09db8c9d521">mdtValue::setValue</a>(<span class="keywordtype">bool</span> value)</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;{</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;  pvIsValid = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;  pvHasValueBool = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;  pvValueBool = value;</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;}</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;</div>
+<div class="line"><a name="l00266"></a><span class="lineno"><a class="line" href="classmdt_value.html#a8ec9abcaa40b5ec891ff740913f1aca8">  266</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_value.html#a8ec9abcaa40b5ec891ff740913f1aca8">mdtValue::hasValueBool</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;  <span class="keywordflow">return</span> pvHasValueBool;</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;}</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;</div>
+<div class="line"><a name="l00271"></a><span class="lineno"><a class="line" href="classmdt_value.html#acd0d628fdee31ce640f1bc76f3833173">  271</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_value.html#acd0d628fdee31ce640f1bc76f3833173">mdtValue::valueBool</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;  <span class="keywordflow">return</span> pvValueBool;</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;}</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;</div>
+<div class="line"><a name="l00276"></a><span class="lineno"><a class="line" href="classmdt_value.html#a472996d8c32ce70e9332509151d6aed1">  276</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_value.html#a472996d8c32ce70e9332509151d6aed1">mdtValue::isValid</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;  <span class="keywordflow">return</span> pvIsValid;</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;}</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;</div>
+<div class="line"><a name="l00281"></a><span class="lineno"><a class="line" href="classmdt_value.html#acbb1e7472e9b6e105ba5ffe03476f4d4">  281</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_value.html#acbb1e7472e9b6e105ba5ffe03476f4d4">mdtValue::operator==</a>(<span class="keyword">const</span> <a class="code" href="classmdt_value.html">mdtValue</a> &amp;other)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;  <span class="keywordflow">if</span>(qAbs(pvValueDouble - other.pvValueDouble) &gt; DBL_EPSILON){</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;  }</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;  <span class="keywordflow">if</span>(pvValueInt != other.pvValueInt){</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;  }</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;  <span class="keywordflow">if</span>(pvValueBool != other.pvValueBool){</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;  }</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;  <span class="keywordflow">if</span>(pvIsValid != other.pvIsValid){</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;  }</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;  <span class="keywordflow">if</span>(pvHasValueDouble != other.pvHasValueDouble){</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;  }</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;  <span class="keywordflow">if</span>(pvIsMinusOl != other.pvIsMinusOl){</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;  }</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;  <span class="keywordflow">if</span>(pvIsPlusOl != other.pvIsPlusOl){</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;  }</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;  <span class="keywordflow">if</span>(pvHasValueInt != other.pvHasValueInt){</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;  }</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;  <span class="keywordflow">if</span>(pvHasValueBool != other.pvHasValueBool){</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;  }</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;}</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;</div>
+<div class="line"><a name="l00313"></a><span class="lineno"><a class="line" href="classmdt_value.html#a9d01fff18ab97a5f25d5f82655d42810">  313</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_value.html#a9d01fff18ab97a5f25d5f82655d42810">mdtValue::operator!=</a>(<span class="keyword">const</span> <a class="code" href="classmdt_value.html">mdtValue</a> &amp;other)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;  <span class="keywordflow">return</span> !(<a class="code" href="classmdt_value.html#acbb1e7472e9b6e105ba5ffe03476f4d4">operator==</a>(other));</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;}</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;</div>
+<div class="line"><a name="l00318"></a><span class="lineno"><a class="line" href="mdt_value_8h.html#ac2e0f42551c4221afa15837f4a265eb2">  318</a></span>&#160;QDebug <a class="code" href="mdt_value_8cpp.html#afadfd28846155ed682a2d3312f37bc60">operator&lt;&lt;</a>(QDebug dbg, <span class="keyword">const</span> <a class="code" href="classmdt_value.html">mdtValue</a> &amp;value)</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;{</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;  <span class="keywordflow">return</span> dbg.nospace() &lt;&lt; <span class="stringliteral">&quot;mdtValue(isValid: &quot;</span> &lt;&lt; value.<a class="code" href="classmdt_value.html#a472996d8c32ce70e9332509151d6aed1">isValid</a>() \</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;                        &lt;&lt; <span class="stringliteral">&quot;, Double: &quot;</span> &lt;&lt; value.<a class="code" href="classmdt_value.html#aceae9e2ab20910c47272d523735b16e0">valueDouble</a>() &lt;&lt; <span class="stringliteral">&quot;, Int: &quot;</span> &lt;&lt; value.<a class="code" href="classmdt_value.html#a421b294b1540ce7c47aada2ea66201a1">valueInt</a>() &lt;&lt; <span class="stringliteral">&quot;, Bool: &quot;</span> &lt;&lt; value.<a class="code" href="classmdt_value.html#acd0d628fdee31ce640f1bc76f3833173">valueBool</a>() \</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;                        &lt;&lt; <span class="stringliteral">&quot;, -OL: &quot;</span> &lt;&lt; value.<a class="code" href="classmdt_value.html#a4de0d0c8a02cdd4c02adace4108db326">isMinusOl</a>() &lt;&lt; <span class="stringliteral">&quot;, +OL: &quot;</span> &lt;&lt; value.<a class="code" href="classmdt_value.html#a033ad1d20812dddf38530a5f190033da">isPlusOl</a>() &lt;&lt; <span class="stringliteral">&quot;)&quot;</span>;</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;}</div>
+<div class="ttc" id="classmdt_value_integral_html_aae3159993261e0ba5d1a4a3e53bb207d"><div class="ttname"><a href="classmdt_value_integral.html#aae3159993261e0ba5d1a4a3e53bb207d">mdtValueIntegral::value</a></div><div class="ttdeci">T value() const </div><div class="ttdoc">Get value. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8h_source.html#l00284">mdtValue.h:284</a></div></div>
+<div class="ttc" id="classmdt_value_html_a83d56329f2fd051f3cc32fd32f758e24"><div class="ttname"><a href="classmdt_value.html#a83d56329f2fd051f3cc32fd32f758e24">mdtValue::hasValueDouble</a></div><div class="ttdeci">bool hasValueDouble() const </div><div class="ttdoc">Check if value as double format is available. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00220">mdtValue.cpp:220</a></div></div>
+<div class="ttc" id="classmdt_value_integral_html"><div class="ttname"><a href="classmdt_value_integral.html">mdtValueIntegral</a></div><div class="ttdoc">Integral type with Null attribute. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8h_source.html#l00239">mdtValue.h:239</a></div></div>
 <div class="ttc" id="classmdt_value_double_html_a92794bd0d4f70e612c97afb3aac2c530"><div class="ttname"><a href="classmdt_value_double.html#a92794bd0d4f70e612c97afb3aac2c530">mdtValueDouble::isNull</a></div><div class="ttdeci">bool isNull() const </div><div class="ttdoc">Check if value is null. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8h_source.html#l00068">mdtValue.h:68</a></div></div>
-<div class="ttc" id="classmdt_value_html_a51d075b0cc64ff5481533bcfc8d3a7f4"><div class="ttname"><a href="classmdt_value.html#a51d075b0cc64ff5481533bcfc8d3a7f4">mdtValue::setDefaultValue</a></div><div class="ttdeci">void setDefaultValue(double value)</div><div class="ttdoc">Set default value for double format. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00194">mdtValue.cpp:194</a></div></div>
-<div class="ttc" id="classmdt_value_html_a5eaad5ce886d11b6b3484525a8fa7f41"><div class="ttname"><a href="classmdt_value.html#a5eaad5ce886d11b6b3484525a8fa7f41">mdtValue::mdtValue</a></div><div class="ttdeci">mdtValue()</div><div class="ttdoc">Construct a invalid value. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00146">mdtValue.cpp:146</a></div></div>
-<div class="ttc" id="classmdt_value_html_acd0d628fdee31ce640f1bc76f3833173"><div class="ttname"><a href="classmdt_value.html#acd0d628fdee31ce640f1bc76f3833173">mdtValue::valueBool</a></div><div class="ttdeci">bool valueBool() const </div><div class="ttdoc">Get the value stored in bool format. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00269">mdtValue.cpp:269</a></div></div>
-<div class="ttc" id="classmdt_value_html_a4de0d0c8a02cdd4c02adace4108db326"><div class="ttname"><a href="classmdt_value.html#a4de0d0c8a02cdd4c02adace4108db326">mdtValue::isMinusOl</a></div><div class="ttdeci">bool isMinusOl() const </div><div class="ttdoc">Check if value is -OL. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00247">mdtValue.cpp:247</a></div></div>
+<div class="ttc" id="classmdt_value_html_a51d075b0cc64ff5481533bcfc8d3a7f4"><div class="ttname"><a href="classmdt_value.html#a51d075b0cc64ff5481533bcfc8d3a7f4">mdtValue::setDefaultValue</a></div><div class="ttdeci">void setDefaultValue(double value)</div><div class="ttdoc">Set default value for double format. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00196">mdtValue.cpp:196</a></div></div>
+<div class="ttc" id="classmdt_value_html_a5eaad5ce886d11b6b3484525a8fa7f41"><div class="ttname"><a href="classmdt_value.html#a5eaad5ce886d11b6b3484525a8fa7f41">mdtValue::mdtValue</a></div><div class="ttdeci">mdtValue()</div><div class="ttdoc">Construct a invalid value. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00148">mdtValue.cpp:148</a></div></div>
+<div class="ttc" id="classmdt_value_html_acd0d628fdee31ce640f1bc76f3833173"><div class="ttname"><a href="classmdt_value.html#acd0d628fdee31ce640f1bc76f3833173">mdtValue::valueBool</a></div><div class="ttdeci">bool valueBool() const </div><div class="ttdoc">Get the value stored in bool format. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00271">mdtValue.cpp:271</a></div></div>
+<div class="ttc" id="classmdt_value_html_a4de0d0c8a02cdd4c02adace4108db326"><div class="ttname"><a href="classmdt_value.html#a4de0d0c8a02cdd4c02adace4108db326">mdtValue::isMinusOl</a></div><div class="ttdeci">bool isMinusOl() const </div><div class="ttdoc">Check if value is -OL. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00249">mdtValue.cpp:249</a></div></div>
 <div class="ttc" id="classmdt_value_double_html_a57473b7e157768debe85d5befb98318f"><div class="ttname"><a href="classmdt_value_double.html#a57473b7e157768debe85d5befb98318f">mdtValueDouble::mdtValueDouble</a></div><div class="ttdeci">mdtValueDouble()</div><div class="ttdoc">Construct a null value. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00032">mdtValue.cpp:32</a></div></div>
-<div class="ttc" id="classmdt_value_bool_html_afd1b8e5d51bcfd765d69f0d5f1aaddd0"><div class="ttname"><a href="classmdt_value_bool.html#afd1b8e5d51bcfd765d69f0d5f1aaddd0">mdtValueBool::isNull</a></div><div class="ttdeci">bool isNull() const </div><div class="ttdoc">Check if boolean is null. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8h_source.html#l00443">mdtValue.h:443</a></div></div>
-<div class="ttc" id="classmdt_value_bool_html_ad34dac053165c5505aac8dff5843625f"><div class="ttname"><a href="classmdt_value_bool.html#ad34dac053165c5505aac8dff5843625f">mdtValueBool::value</a></div><div class="ttdeci">bool value() const </div><div class="ttdoc">Get boolean&#39;s value. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8h_source.html#l00458">mdtValue.h:458</a></div></div>
-<div class="ttc" id="classmdt_value_html_a472996d8c32ce70e9332509151d6aed1"><div class="ttname"><a href="classmdt_value.html#a472996d8c32ce70e9332509151d6aed1">mdtValue::isValid</a></div><div class="ttdeci">bool isValid() const </div><div class="ttdoc">Get the validity flag. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00274">mdtValue.cpp:274</a></div></div>
-<div class="ttc" id="classmdt_value_double_html_a53697c6d57ad134ed7fde4ac9130e1db"><div class="ttname"><a href="classmdt_value_double.html#a53697c6d57ad134ed7fde4ac9130e1db">mdtValueDouble::setValue</a></div><div class="ttdeci">void setValue(double value, bool isOl=false)</div><div class="ttdoc">Set value. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00049">mdtValue.cpp:49</a></div></div>
-<div class="ttc" id="classmdt_value_double_html_a1ea11b964da46b14d557f65387146f27"><div class="ttname"><a href="classmdt_value_double.html#a1ea11b964da46b14d557f65387146f27">mdtValueDouble::operator==</a></div><div class="ttdeci">bool operator==(const mdtValueDouble &amp;other) const </div><div class="ttdoc">Comparaison operator. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00084">mdtValue.cpp:84</a></div></div>
-<div class="ttc" id="classmdt_value_integral_html_a7206a19a6d3ef12330a327d0ccfb5188"><div class="ttname"><a href="classmdt_value_integral.html#a7206a19a6d3ef12330a327d0ccfb5188">mdtValueIntegral::isNull</a></div><div class="ttdeci">bool isNull() const </div><div class="ttdoc">Check if value is null. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8h_source.html#l00265">mdtValue.h:265</a></div></div>
+<div class="ttc" id="classmdt_value_bool_html_afd1b8e5d51bcfd765d69f0d5f1aaddd0"><div class="ttname"><a href="classmdt_value_bool.html#afd1b8e5d51bcfd765d69f0d5f1aaddd0">mdtValueBool::isNull</a></div><div class="ttdeci">bool isNull() const </div><div class="ttdoc">Check if boolean is null. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8h_source.html#l00447">mdtValue.h:447</a></div></div>
+<div class="ttc" id="classmdt_value_bool_html_ad34dac053165c5505aac8dff5843625f"><div class="ttname"><a href="classmdt_value_bool.html#ad34dac053165c5505aac8dff5843625f">mdtValueBool::value</a></div><div class="ttdeci">bool value() const </div><div class="ttdoc">Get boolean&#39;s value. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8h_source.html#l00462">mdtValue.h:462</a></div></div>
+<div class="ttc" id="classmdt_value_html_a472996d8c32ce70e9332509151d6aed1"><div class="ttname"><a href="classmdt_value.html#a472996d8c32ce70e9332509151d6aed1">mdtValue::isValid</a></div><div class="ttdeci">bool isValid() const </div><div class="ttdoc">Get the validity flag. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00276">mdtValue.cpp:276</a></div></div>
+<div class="ttc" id="classmdt_value_double_html_a53697c6d57ad134ed7fde4ac9130e1db"><div class="ttname"><a href="classmdt_value_double.html#a53697c6d57ad134ed7fde4ac9130e1db">mdtValueDouble::setValue</a></div><div class="ttdeci">void setValue(double value, bool isOl=false)</div><div class="ttdoc">Set value. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00050">mdtValue.cpp:50</a></div></div>
+<div class="ttc" id="classmdt_value_double_html_a1ea11b964da46b14d557f65387146f27"><div class="ttname"><a href="classmdt_value_double.html#a1ea11b964da46b14d557f65387146f27">mdtValueDouble::operator==</a></div><div class="ttdeci">bool operator==(const mdtValueDouble &amp;other) const </div><div class="ttdoc">Comparaison operator. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00086">mdtValue.cpp:86</a></div></div>
+<div class="ttc" id="classmdt_value_integral_html_a7206a19a6d3ef12330a327d0ccfb5188"><div class="ttname"><a href="classmdt_value_integral.html#a7206a19a6d3ef12330a327d0ccfb5188">mdtValueIntegral::isNull</a></div><div class="ttdeci">bool isNull() const </div><div class="ttdoc">Check if value is null. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8h_source.html#l00269">mdtValue.h:269</a></div></div>
 <div class="ttc" id="mdt_value_8h_html"><div class="ttname"><a href="mdt_value_8h.html">mdtValue.h</a></div></div>
-<div class="ttc" id="classmdt_value_double_html_a2dc24c548d44f9a6a81513f061f5fa70"><div class="ttname"><a href="classmdt_value_double.html#a2dc24c548d44f9a6a81513f061f5fa70">mdtValueDouble::isPlusOl</a></div><div class="ttdeci">bool isPlusOl() const </div><div class="ttdoc">Check if value is +OL. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00071">mdtValue.cpp:71</a></div></div>
-<div class="ttc" id="classmdt_value_bool_html"><div class="ttname"><a href="classmdt_value_bool.html">mdtValueBool</a></div><div class="ttdoc">Boolean type with Null attribute. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8h_source.html#l00413">mdtValue.h:413</a></div></div>
-<div class="ttc" id="classmdt_value_html_a421b294b1540ce7c47aada2ea66201a1"><div class="ttname"><a href="classmdt_value.html#a421b294b1540ce7c47aada2ea66201a1">mdtValue::valueInt</a></div><div class="ttdeci">int valueInt() const </div><div class="ttdoc">Get the value stored in int format. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00242">mdtValue.cpp:242</a></div></div>
-<div class="ttc" id="classmdt_value_html_a8ec9abcaa40b5ec891ff740913f1aca8"><div class="ttname"><a href="classmdt_value.html#a8ec9abcaa40b5ec891ff740913f1aca8">mdtValue::hasValueBool</a></div><div class="ttdeci">bool hasValueBool() const </div><div class="ttdoc">Check if value as bool format is available. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00264">mdtValue.cpp:264</a></div></div>
+<div class="ttc" id="classmdt_value_double_html_a2dc24c548d44f9a6a81513f061f5fa70"><div class="ttname"><a href="classmdt_value_double.html#a2dc24c548d44f9a6a81513f061f5fa70">mdtValueDouble::isPlusOl</a></div><div class="ttdeci">bool isPlusOl() const </div><div class="ttdoc">Check if value is +OL. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00072">mdtValue.cpp:72</a></div></div>
+<div class="ttc" id="classmdt_value_bool_html"><div class="ttname"><a href="classmdt_value_bool.html">mdtValueBool</a></div><div class="ttdoc">Boolean type with Null attribute. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8h_source.html#l00417">mdtValue.h:417</a></div></div>
+<div class="ttc" id="classmdt_value_html_a421b294b1540ce7c47aada2ea66201a1"><div class="ttname"><a href="classmdt_value.html#a421b294b1540ce7c47aada2ea66201a1">mdtValue::valueInt</a></div><div class="ttdeci">int valueInt() const </div><div class="ttdoc">Get the value stored in int format. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00244">mdtValue.cpp:244</a></div></div>
+<div class="ttc" id="classmdt_value_html_a8ec9abcaa40b5ec891ff740913f1aca8"><div class="ttname"><a href="classmdt_value.html#a8ec9abcaa40b5ec891ff740913f1aca8">mdtValue::hasValueBool</a></div><div class="ttdeci">bool hasValueBool() const </div><div class="ttdoc">Check if value as bool format is available. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00266">mdtValue.cpp:266</a></div></div>
 <div class="ttc" id="classmdt_value_double_html_a41bf83b13cfe7d3779542652f62b8ad6"><div class="ttname"><a href="classmdt_value_double.html#a41bf83b13cfe7d3779542652f62b8ad6">mdtValueDouble::value</a></div><div class="ttdeci">double value() const </div><div class="ttdoc">Get value. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8h_source.html#l00075">mdtValue.h:75</a></div></div>
-<div class="ttc" id="classmdt_value_html_a033ad1d20812dddf38530a5f190033da"><div class="ttname"><a href="classmdt_value.html#a033ad1d20812dddf38530a5f190033da">mdtValue::isPlusOl</a></div><div class="ttdeci">bool isPlusOl() const </div><div class="ttdoc">Check if value is +OL. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00252">mdtValue.cpp:252</a></div></div>
-<div class="ttc" id="classmdt_value_html_aa4573c55ea1cc6c55547b09db8c9d521"><div class="ttname"><a href="classmdt_value.html#aa4573c55ea1cc6c55547b09db8c9d521">mdtValue::setValue</a></div><div class="ttdeci">void setValue(double value, bool isMinusOl=false, bool isPlusOl=false)</div><div class="ttdoc">Set value with double format. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00209">mdtValue.cpp:209</a></div></div>
+<div class="ttc" id="classmdt_value_html_a033ad1d20812dddf38530a5f190033da"><div class="ttname"><a href="classmdt_value.html#a033ad1d20812dddf38530a5f190033da">mdtValue::isPlusOl</a></div><div class="ttdeci">bool isPlusOl() const </div><div class="ttdoc">Check if value is +OL. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00254">mdtValue.cpp:254</a></div></div>
+<div class="ttc" id="classmdt_value_html_aa4573c55ea1cc6c55547b09db8c9d521"><div class="ttname"><a href="classmdt_value.html#aa4573c55ea1cc6c55547b09db8c9d521">mdtValue::setValue</a></div><div class="ttdeci">void setValue(double value, bool isMinusOl=false, bool isPlusOl=false)</div><div class="ttdoc">Set value with double format. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00211">mdtValue.cpp:211</a></div></div>
 <div class="ttc" id="classmdt_value_double_html"><div class="ttname"><a href="classmdt_value_double.html">mdtValueDouble</a></div><div class="ttdoc">Contains a floating (double) value with some attributes. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8h_source.html#l00038">mdtValue.h:38</a></div></div>
-<div class="ttc" id="classmdt_value_html_a8c4461857e4715e49b2050479d63bfb8"><div class="ttname"><a href="classmdt_value.html#a8c4461857e4715e49b2050479d63bfb8">mdtValue::clear</a></div><div class="ttdeci">void clear()</div><div class="ttdoc">Clear values (set default values) and unset validity flag. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00181">mdtValue.cpp:181</a></div></div>
-<div class="ttc" id="classmdt_value_html_aceae9e2ab20910c47272d523735b16e0"><div class="ttname"><a href="classmdt_value.html#aceae9e2ab20910c47272d523735b16e0">mdtValue::valueDouble</a></div><div class="ttdeci">double valueDouble() const </div><div class="ttdoc">Get the value stored in double format. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00223">mdtValue.cpp:223</a></div></div>
-<div class="ttc" id="classmdt_value_double_html_a07dec2c84cb5539793a79f847110b50f"><div class="ttname"><a href="classmdt_value_double.html#a07dec2c84cb5539793a79f847110b50f">mdtValueDouble::isNaN</a></div><div class="ttdeci">bool isNaN() const </div><div class="ttdoc">Check if value is NaN. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00079">mdtValue.cpp:79</a></div></div>
-<div class="ttc" id="classmdt_value_double_html_abfaf7fb87637880670e20f5581e69759"><div class="ttname"><a href="classmdt_value_double.html#abfaf7fb87637880670e20f5581e69759">mdtValueDouble::isMinusOl</a></div><div class="ttdeci">bool isMinusOl() const </div><div class="ttdoc">Check if value is -OL. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00063">mdtValue.cpp:63</a></div></div>
-<div class="ttc" id="classmdt_value_html"><div class="ttname"><a href="classmdt_value.html">mdtValue</a></div><div class="ttdoc">Conatins a value with some attributes. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8h_source.html#l00486">mdtValue.h:486</a></div></div>
-<div class="ttc" id="classmdt_value_html_a9d01fff18ab97a5f25d5f82655d42810"><div class="ttname"><a href="classmdt_value.html#a9d01fff18ab97a5f25d5f82655d42810">mdtValue::operator!=</a></div><div class="ttdeci">bool operator!=(const mdtValue &amp;other) const </div><div class="ttdoc">Comparaison operator. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00311">mdtValue.cpp:311</a></div></div>
-<div class="ttc" id="classmdt_value_html_acbb1e7472e9b6e105ba5ffe03476f4d4"><div class="ttname"><a href="classmdt_value.html#acbb1e7472e9b6e105ba5ffe03476f4d4">mdtValue::operator==</a></div><div class="ttdeci">bool operator==(const mdtValue &amp;other) const </div><div class="ttdoc">Comparaison operator. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00279">mdtValue.cpp:279</a></div></div>
+<div class="ttc" id="classmdt_value_html_a8c4461857e4715e49b2050479d63bfb8"><div class="ttname"><a href="classmdt_value.html#a8c4461857e4715e49b2050479d63bfb8">mdtValue::clear</a></div><div class="ttdeci">void clear()</div><div class="ttdoc">Clear values (set default values) and unset validity flag. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00183">mdtValue.cpp:183</a></div></div>
+<div class="ttc" id="classmdt_value_html_aceae9e2ab20910c47272d523735b16e0"><div class="ttname"><a href="classmdt_value.html#aceae9e2ab20910c47272d523735b16e0">mdtValue::valueDouble</a></div><div class="ttdeci">double valueDouble() const </div><div class="ttdoc">Get the value stored in double format. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00225">mdtValue.cpp:225</a></div></div>
+<div class="ttc" id="classmdt_value_double_html_a07dec2c84cb5539793a79f847110b50f"><div class="ttname"><a href="classmdt_value_double.html#a07dec2c84cb5539793a79f847110b50f">mdtValueDouble::isNaN</a></div><div class="ttdeci">bool isNaN() const </div><div class="ttdoc">Check if value is NaN. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00080">mdtValue.cpp:80</a></div></div>
+<div class="ttc" id="classmdt_value_double_html_abfaf7fb87637880670e20f5581e69759"><div class="ttname"><a href="classmdt_value_double.html#abfaf7fb87637880670e20f5581e69759">mdtValueDouble::isMinusOl</a></div><div class="ttdeci">bool isMinusOl() const </div><div class="ttdoc">Check if value is -OL. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00064">mdtValue.cpp:64</a></div></div>
+<div class="ttc" id="classmdt_value_html"><div class="ttname"><a href="classmdt_value.html">mdtValue</a></div><div class="ttdoc">Conatins a value with some attributes. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8h_source.html#l00490">mdtValue.h:490</a></div></div>
+<div class="ttc" id="classmdt_value_html_a9d01fff18ab97a5f25d5f82655d42810"><div class="ttname"><a href="classmdt_value.html#a9d01fff18ab97a5f25d5f82655d42810">mdtValue::operator!=</a></div><div class="ttdeci">bool operator!=(const mdtValue &amp;other) const </div><div class="ttdoc">Comparaison operator. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00313">mdtValue.cpp:313</a></div></div>
+<div class="ttc" id="classmdt_value_html_acbb1e7472e9b6e105ba5ffe03476f4d4"><div class="ttname"><a href="classmdt_value.html#acbb1e7472e9b6e105ba5ffe03476f4d4">mdtValue::operator==</a></div><div class="ttdeci">bool operator==(const mdtValue &amp;other) const </div><div class="ttdoc">Comparaison operator. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00281">mdtValue.cpp:281</a></div></div>
 <div class="ttc" id="classmdt_value_double_html_a9f50bab9223b57ab98ade5c507df0aba"><div class="ttname"><a href="classmdt_value_double.html#a9f50bab9223b57ab98ade5c507df0aba">mdtValueDouble::clear</a></div><div class="ttdeci">void clear()</div><div class="ttdoc">Clear value. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00043">mdtValue.cpp:43</a></div></div>
-<div class="ttc" id="mdt_value_8cpp_html_afadfd28846155ed682a2d3312f37bc60"><div class="ttname"><a href="mdt_value_8cpp.html#afadfd28846155ed682a2d3312f37bc60">operator&lt;&lt;</a></div><div class="ttdeci">QDebug operator&lt;&lt;(QDebug dbg, const mdtValueDouble &amp;value)</div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00098">mdtValue.cpp:98</a></div></div>
-<div class="ttc" id="classmdt_value_html_a4aeeb92ec5b1f0a625cbd2d944ae761b"><div class="ttname"><a href="classmdt_value.html#a4aeeb92ec5b1f0a625cbd2d944ae761b">mdtValue::hasValueInt</a></div><div class="ttdeci">bool hasValueInt() const </div><div class="ttdoc">Check if value as int format is available. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00237">mdtValue.cpp:237</a></div></div>
+<div class="ttc" id="mdt_value_8cpp_html_afadfd28846155ed682a2d3312f37bc60"><div class="ttname"><a href="mdt_value_8cpp.html#afadfd28846155ed682a2d3312f37bc60">operator&lt;&lt;</a></div><div class="ttdeci">QDebug operator&lt;&lt;(QDebug dbg, const mdtValueDouble &amp;value)</div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00100">mdtValue.cpp:100</a></div></div>
+<div class="ttc" id="classmdt_value_html_a4aeeb92ec5b1f0a625cbd2d944ae761b"><div class="ttname"><a href="classmdt_value.html#a4aeeb92ec5b1f0a625cbd2d944ae761b">mdtValue::hasValueInt</a></div><div class="ttdeci">bool hasValueInt() const </div><div class="ttdoc">Check if value as int format is available. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_value_8cpp_source.html#l00239">mdtValue.cpp:239</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 11 2015 16:42:10 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jan 17 2015 16:32:06 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

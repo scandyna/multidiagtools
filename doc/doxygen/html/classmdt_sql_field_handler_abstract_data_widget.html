@@ -122,6 +122,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a7167463d910f13cff681668b4bc0e139"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c391f7af13f1a451354273352934801"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_field_handler_abstract_data_widget.html#a1c391f7af13f1a451354273352934801">setRange</a> (qreal min, qreal max)</td></tr>
 <tr class="separator:a1c391f7af13f1a451354273352934801"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24bd1c151df4e137b2b73322a6da0673"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_field_handler_abstract_data_widget.html#a24bd1c151df4e137b2b73322a6da0673">validate</a> ()</td></tr>
+<tr class="separator:a24bd1c151df4e137b2b73322a6da0673"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
@@ -176,7 +178,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implemented in <a class="el" href="classmdt_sql_field_handler_date_time_edit.html#ad571aec159f1c1bd0def6346a60b866e">mdtSqlFieldHandlerDateTimeEdit</a>, <a class="el" href="classmdt_sql_field_handler_mdt_double_edit.html#a42e5788c6807f673e4f0600a89499bc3">mdtSqlFieldHandlerMdtDoubleEdit</a>, <a class="el" href="classmdt_sql_field_handler_combo_box.html#a7dec59b2557ac5a6fbd1d4076fe051aa">mdtSqlFieldHandlerComboBox</a>, <a class="el" href="classmdt_sql_field_handler_line_edit.html#ad41a3af3230333d74ac688a5e91354b4">mdtSqlFieldHandlerLineEdit</a>, <a class="el" href="classmdt_sql_field_handler_plain_text_edit.html#ac6b23b2e59967ab56dc6299dc76f6230">mdtSqlFieldHandlerPlainTextEdit</a>, and <a class="el" href="classmdt_sql_field_handler_label.html#a403109863b7ad3828a7e38bfc8414e34">mdtSqlFieldHandlerLabel</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00695">mdtSqlFieldHandler::clearWidgetData()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00703">mdtSqlFieldHandler::clearWidgetData()</a>.</p>
 
 </div>
 </div>
@@ -228,7 +230,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implemented in <a class="el" href="classmdt_sql_field_handler_date_time_edit.html#a69007cfe2aa93a1cdff190c4f968608f">mdtSqlFieldHandlerDateTimeEdit</a>, <a class="el" href="classmdt_sql_field_handler_mdt_double_edit.html#a17e263b0ba471553e79f0974dda5e296">mdtSqlFieldHandlerMdtDoubleEdit</a>, <a class="el" href="classmdt_sql_field_handler_combo_box.html#a1f6da0e68f7a6c64fffcea5d543feb04">mdtSqlFieldHandlerComboBox</a>, <a class="el" href="classmdt_sql_field_handler_line_edit.html#ad492eab28cb88bfe623ec3af04aeeb1f">mdtSqlFieldHandlerLineEdit</a>, <a class="el" href="classmdt_sql_field_handler_plain_text_edit.html#acee5d7ee57d9ea520bf70bdfe6a211f4">mdtSqlFieldHandlerPlainTextEdit</a>, and <a class="el" href="classmdt_sql_field_handler_label.html#a84ab11e4fb30612f7bf1fb04939f007c">mdtSqlFieldHandlerLabel</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00704">mdtSqlFieldHandler::isNull()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00712">mdtSqlFieldHandler::isNull()</a>.</p>
 
 </div>
 </div>
@@ -256,7 +258,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implemented in <a class="el" href="classmdt_sql_field_handler_date_time_edit.html#aa835f3e71815263ce8ffeaed54c02c94">mdtSqlFieldHandlerDateTimeEdit</a>, <a class="el" href="classmdt_sql_field_handler_mdt_double_edit.html#a4b9c206734fd669e81b71ae05bd5e090">mdtSqlFieldHandlerMdtDoubleEdit</a>, <a class="el" href="classmdt_sql_field_handler_combo_box.html#ab7d68d2bc349375258a74bef3ce03865">mdtSqlFieldHandlerComboBox</a>, <a class="el" href="classmdt_sql_field_handler_line_edit.html#aabd6a72556f2389b9ea8cac1d26c0479">mdtSqlFieldHandlerLineEdit</a>, <a class="el" href="classmdt_sql_field_handler_plain_text_edit.html#a4294af57a366f4798e897607174729ed">mdtSqlFieldHandlerPlainTextEdit</a>, and <a class="el" href="classmdt_sql_field_handler_label.html#aec2da7423e83744cb0e7e9bbd64a2c8c">mdtSqlFieldHandlerLabel</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00732">mdtSqlFieldHandler::setData()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00747">mdtSqlFieldHandler::setData()</a>.</p>
 
 </div>
 </div>
@@ -350,6 +352,35 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a24bd1c151df4e137b2b73322a6da0673"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool mdtSqlFieldHandlerAbstractDataWidget::validate </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented in <a class="el" href="classmdt_sql_field_handler_mdt_double_edit.html#aaba033287d76b333baeafd64920ac7da">mdtSqlFieldHandlerMdtDoubleEdit</a>.</p>
+
+<p>Definition at line <a class="el" href="mdt_sql_field_handler_8h_source.html#l00061">61</a> of file <a class="el" href="mdt_sql_field_handler_8h_source.html">mdtSqlFieldHandler.h</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00725">mdtSqlFieldHandler::checkBeforeSubmit()</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a460c76d650eba635ffb42951c7adbb50"></a>
 <div class="memitem">
 <div class="memproto">
@@ -373,7 +404,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implemented in <a class="el" href="classmdt_sql_field_handler_date_time_edit.html#a7a88cc728d8b3ccae1f90d78b617de88">mdtSqlFieldHandlerDateTimeEdit</a>, <a class="el" href="classmdt_sql_field_handler_mdt_double_edit.html#a92b09a4317834218f60170317c08aa49">mdtSqlFieldHandlerMdtDoubleEdit</a>, <a class="el" href="classmdt_sql_field_handler_combo_box.html#aeebc412d63ebdf9607576304bce5ea82">mdtSqlFieldHandlerComboBox</a>, <a class="el" href="classmdt_sql_field_handler_line_edit.html#a475426ca27aea03d01f31c7d9c8bb5ba">mdtSqlFieldHandlerLineEdit</a>, <a class="el" href="classmdt_sql_field_handler_plain_text_edit.html#a6faa79f2e738582474493151aa0af886">mdtSqlFieldHandlerPlainTextEdit</a>, and <a class="el" href="classmdt_sql_field_handler_label.html#a53007a4daf4e52a4f4ecd2e59318e0e7">mdtSqlFieldHandlerLabel</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00678">mdtSqlFieldHandler::dataWidget()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_sql_field_handler_8cpp_source.html#l00686">mdtSqlFieldHandler::dataWidget()</a>.</p>
 
 </div>
 </div>
@@ -383,7 +414,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 11 2015 16:42:19 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jan 17 2015 16:32:14 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

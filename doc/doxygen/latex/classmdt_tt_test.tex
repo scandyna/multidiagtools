@@ -177,7 +177,7 @@ Get unit connection I\-D for given criteria.
 \end{DoxyParams}
 
 
-Definition at line 578 of file mdt\-Tt\-Test.\-cpp.
+Definition at line 579 of file mdt\-Tt\-Test.\-cpp.
 
 
 
@@ -219,7 +219,7 @@ Usefull to get all links of a route in a coupler (test node), for example from a
 \end{DoxyParams}
 
 
-Definition at line 506 of file mdt\-Tt\-Test.\-cpp.
+Definition at line 507 of file mdt\-Tt\-Test.\-cpp.
 
 
 
@@ -255,7 +255,7 @@ Usefull to get all links of a route in a coupler (test node), for example from a
 \end{DoxyParams}
 
 
-Definition at line 521 of file mdt\-Tt\-Test.\-cpp.
+Definition at line 522 of file mdt\-Tt\-Test.\-cpp.
 
 
 
@@ -308,7 +308,7 @@ Usefull to get all links of a route in a coupler (test node), for example from a
 \end{DoxyParams}
 
 
-Definition at line 526 of file mdt\-Tt\-Test.\-cpp.
+Definition at line 527 of file mdt\-Tt\-Test.\-cpp.
 
 
 
@@ -340,12 +340,12 @@ Q\-Model\-Index index; int col;
 col = pv\-Test\-Item\-View\-Table\-Model-\/$>$field\-Index(\char`\"{}\-Id\-\_\-\-P\-K\char`\"{}); Q\-\_\-\-A\-S\-S\-E\-R\-T(col $>$= 0); index = pv\-Test\-Item\-View\-Table\-Model-\/$>$index(pv\-Current\-Test\-Item\-Row, col);
 
 ///\begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000081}{Todo}]Provisoire ! col = pv\-Test\-Item\-View\-Table\-Model-\/$>$field\-Index(\char`\"{}\-Sequence\-Number\char`\"{}); Q\-Model\-Index index2; index2 = pv\-Test\-Item\-View\-Table\-Model-\/$>$index(pv\-Current\-Test\-Item\-Row, col); q\-Debug() $<$$<$ \char`\"{}mdt\-Tt\-Test -\/ current seq \#\-: \char`\"{} $<$$<$ pv\-Test\-Item\-View\-Table\-Model-\/$>$data(index2);\end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000082}{Todo}]Provisoire ! col = pv\-Test\-Item\-View\-Table\-Model-\/$>$field\-Index(\char`\"{}\-Sequence\-Number\char`\"{}); Q\-Model\-Index index2; index2 = pv\-Test\-Item\-View\-Table\-Model-\/$>$index(pv\-Current\-Test\-Item\-Row, col); q\-Debug() $<$$<$ \char`\"{}mdt\-Tt\-Test -\/ current seq \#\-: \char`\"{} $<$$<$ pv\-Test\-Item\-View\-Table\-Model-\/$>$data(index2);\end{DoxyRefDesc}
 
 
 return pv\-Test\-Item\-View\-Table\-Model-\/$>$data(index); if(!add\-Route\-Data\-To\-Test\-Node\-Setup\-Data(tn\-Setup\-Data, test\-Model\-Item\-Id, node\-Id\-List.\-at(i)))\{ ok = false; return ti\-Setup\-Data; \} if(!add\-Node\-Unit\-Setup\-Data\-To\-Test\-Node\-Setup\-Data(tn\-Setup\-Data, test\-Model\-Item\-Id, node\-Id\-List.\-at(i)))\{ ok = false; return ti\-Setup\-Data; \} // Add all unit setup data that are part of current node for(k = 0; k $<$ data\-List.\-size(); ++k)\{ id = data\-List.\-at(k).value(\char`\"{}\-Test\-Node\-\_\-\-Id\-\_\-\-F\-K\char`\"{}).to\-Int(); if(node\-Id\-List.\-at(i) == id)\{ tnu\-Setup\-Data = data\-List.\-at(k); if(tn\-Setup\-Data.\-node\-Identification().is\-Empty())\{ tn\-Setup\-Data.\-set\-Node\-Identification(tnu\-Setup\-Data.\-value(\char`\"{}\-Node\-Identification\char`\"{}).to\-String()); \} tn\-Setup\-Data.\-add\-Unit\-Setup(tnu\-Setup\-Data); \} \} 
 
-Definition at line 453 of file mdt\-Tt\-Test.\-cpp.
+Definition at line 454 of file mdt\-Tt\-Test.\-cpp.
 
 
 
@@ -368,7 +368,7 @@ This version is usefull for single test items. Step\-Number is not handled here.
 
 Will also include related route data, and other setup data that are not related to any route. 
 
-Definition at line 479 of file mdt\-Tt\-Test.\-cpp.
+Definition at line 480 of file mdt\-Tt\-Test.\-cpp.
 
 
 
@@ -391,7 +391,7 @@ Check if x is in limit range.
 
 Return true if x is in \mbox{]}fail\-Min;limit\-Min\mbox{]} or in \mbox{[}limit\-Max;fail\-Max\mbox{[} 
 
-Definition at line 313 of file mdt\-Tt\-Test.\-cpp.
+Definition at line 314 of file mdt\-Tt\-Test.\-cpp.
 
 \hypertarget{classmdt_tt_test_a62a8e5118129566aa897bba3ff079a4e}{\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!is\-In\-Ok\-Range@{is\-In\-Ok\-Range}}
 \index{is\-In\-Ok\-Range@{is\-In\-Ok\-Range}!mdtTtTest@{mdt\-Tt\-Test}}
@@ -408,7 +408,7 @@ Check if x is in O\-K range.
 
 Return true if x is in \mbox{]}limit\-Min;limit\-Max\mbox{[} 
 
-Definition at line 308 of file mdt\-Tt\-Test.\-cpp.
+Definition at line 309 of file mdt\-Tt\-Test.\-cpp.
 
 \hypertarget{classmdt_tt_test_a5920961d0f32d37033a184ed76b2cf3d}{\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!is\-In\-Range@{is\-In\-Range}}
 \index{is\-In\-Range@{is\-In\-Range}!mdtTtTest@{mdt\-Tt\-Test}}
@@ -449,9 +449,11 @@ Q\-Variant test\-Item\-Id; int test\-Item\-View\-Col; int test\-Item\-Table\-Row
 
 if(pv\-Test\-Item\-View\-Table\-Model-\/$>$row\-Count() $<$ 1)\{ return Q\-Variant(); \} test\-Item\-View\-Col = pv\-Test\-Item\-View\-Table\-Model-\/$>$field\-Index(field\-Name); Q\-\_\-\-A\-S\-S\-E\-R\-T(test\-Item\-View\-Col $>$= 0); index = pv\-Test\-Item\-View\-Table\-Model-\/$>$index(pv\-Current\-Test\-Item\-Row, test\-Item\-View\-Col);
 
-return pv\-Test\-Item\-View\-Table\-Model-\/$>$data(index); 
+return pv\-Test\-Item\-View\-Table\-Model-\/$>$data(index);\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000081}{Todo}]Use mdt\-Algorithme ! \end{DoxyRefDesc}
 
-Definition at line 302 of file mdt\-Tt\-Test.\-cpp.
+
+Definition at line 303 of file mdt\-Tt\-Test.\-cpp.
 
 
 
@@ -470,7 +472,7 @@ Get link part resistance of a path.
 
 
 
-Definition at line 558 of file mdt\-Tt\-Test.\-cpp.
+Definition at line 559 of file mdt\-Tt\-Test.\-cpp.
 
 
 
@@ -510,7 +512,7 @@ Reset the test item cursor
 
 if(pv\-Current\-Test\-Item\-Row $<$ (pv\-Test\-Item\-View\-Table\-Model-\/$>$row\-Count() -\/ 1))\{ return true; \} if(pv\-Test\-Item\-View\-Table\-Model-\/$>$can\-Fetch\-More())\{ pv\-Test\-Item\-View\-Table\-Model-\/$>$fetch\-More(); return true; \} 
 
-Definition at line 339 of file mdt\-Tt\-Test.\-cpp.
+Definition at line 340 of file mdt\-Tt\-Test.\-cpp.
 
 \hypertarget{classmdt_tt_test_a816f7197031e96148996333b9c625702}{\index{mdt\-Tt\-Test@{mdt\-Tt\-Test}!save\-Test@{save\-Test}}
 \index{save\-Test@{save\-Test}!mdtTtTest@{mdt\-Tt\-Test}}

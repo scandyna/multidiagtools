@@ -1,4 +1,36 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$class_ui__mdt_tt_test_model_item_dialog.html" title="Ui_mdtTtTestModelItemDialog" alt="" coords="5,5,205,32"/>
-<area shape="rect" id="node2" href="$class_ui_1_1mdt_tt_test_model_item_dialog.html" title="Ui::mdtTtTestModelItemDialog" alt="" coords="254,5,455,32"/>
+<area shape="rect" id="node2" href="$classmdt_port_config_widget.html" title="mdtPortConfigWidget" alt="" coords="509,31,656,57"/>
+<area shape="rect" id="node4" href="$classmdt_serial_port_config_widget.html" title="mdtSerialPortConfigWidget" alt="" coords="493,81,673,108"/>
+<area shape="rect" id="node6" href="$classmdt_sql_query_widget.html" title="Widget for data queriyng. " alt="" coords="513,132,652,159"/>
+<area shape="rect" id="node8" href="$classmdt_uic_number_widget.html" title="UIC Number Widget. " alt="" coords="507,183,658,209"/>
+<area shape="rect" id="node9" href="$class_q_widget.html" title="QWidget" alt="" coords="309,385,382,412"/>
+<area shape="rect" id="node10" href="$classmdt_abstract_io_widget.html" title="Base class for I/O widgets. " alt="" coords="510,487,655,513"/>
+<area shape="rect" id="node15" href="$classmdt_device_container_widget.html" title="Manage device status widget items. " alt="" coords="491,537,674,564"/>
+<area shape="rect" id="node16" href="$classmdt_device_ios_widget.html" title="Display a set of I/O&#39;s. " alt="" coords="511,588,655,615"/>
+<area shape="rect" id="node17" href="$classmdt_device_u3606_a_widget.html" title="mdtDeviceU3606AWidget" alt="" coords="496,740,669,767"/>
+<area shape="rect" id="node18" href="$classmdt_double_edit.html" title="Input box for double values. " alt="" coords="529,639,637,665"/>
+<area shape="rect" id="node19" href="$classmdt_led.html" title="mdtLED is a widget witch displays a LED " alt="" coords="550,689,615,716"/>
+<area shape="rect" id="node21" href="$classmdt_port_status_widget.html" title="Helper class to display port/device state and messages. " alt="" coords="509,233,656,260"/>
+<area shape="rect" id="node22" href="$classmdt_serial_port_ctl_widget.html" title="mdtSerialPortCtlWidget" alt="" coords="503,284,662,311"/>
+<area shape="rect" id="node23" href="$classmdt_sql_field_handler.html" title="Handle events between a SQL field and a edition widget. " alt="" coords="515,335,651,361"/>
+<area shape="rect" id="node24" href="$classmdt_sql_form.html" title="Base class for high level SQL widgets API. " alt="" coords="536,385,629,412"/>
+<area shape="rect" id="node36" href="$classmdt_sql_table_widget.html" title="Table view based SQL widget. " alt="" coords="515,436,651,463"/>
+<area shape="rect" id="node11" href="$classmdt_analog_in_widget.html" title="Representation of a analog input. " alt="" coords="751,664,887,691"/>
+<area shape="rect" id="node12" href="$classmdt_analog_out_widget.html" title="Representation of a analog output. " alt="" coords="745,715,892,741"/>
+<area shape="rect" id="node13" href="$classmdt_digital_in_widget.html" title="Representation of a digital input. " alt="" coords="752,563,885,589"/>
+<area shape="rect" id="node14" href="$classmdt_digital_out_widget.html" title="mdtDigitalOutWidget" alt="" coords="747,613,890,640"/>
+<area shape="rect" id="node20" href="$classmdt_blink_led.html" title="Blinking LED. " alt="" coords="771,765,866,792"/>
+<area shape="rect" id="node25" href="$classmdt_cl_article_editor.html" title="Cable list&#39;s article editor. " alt="" coords="755,512,883,539"/>
+<area shape="rect" id="node26" href="$classmdt_cl_connector_editor.html" title="Class for connector edition. " alt="" coords="743,5,894,32"/>
+<area shape="rect" id="node27" href="$classmdt_cl_link_beam_editor.html" title="Provides link beam edition to the user. " alt="" coords="744,56,893,83"/>
+<area shape="rect" id="node28" href="$classmdt_cl_unit_editor.html" title="Cable list&#39;s device editor. " alt="" coords="761,107,876,133"/>
+<area shape="rect" id="node29" href="$classmdt_cl_vehicle_type_editor.html" title="Vehicle type editor. " alt="" coords="737,157,900,184"/>
+<area shape="rect" id="node30" href="$classmdt_cl_wire_editor.html" title="Wire database editor. " alt="" coords="759,208,878,235"/>
+<area shape="rect" id="node31" href="$classmdt_tt_logical_test_cable_editor.html" title="Class for logical test connection cable edition. " alt="" coords="723,259,914,285"/>
+<area shape="rect" id="node32" href="$classmdt_tt_test_cable_editor.html" title="Class for physical test connection cable edition. " alt="" coords="743,309,894,336"/>
+<area shape="rect" id="node33" href="$classmdt_tt_test_model_editor.html" title="#include &quot;mdtClEditor.h&quot; " alt="" coords="743,360,894,387"/>
+<area shape="rect" id="node34" href="$classmdt_tt_test_model_item_editor.html" title="Test item editor. " alt="" coords="730,411,907,437"/>
+<area shape="rect" id="node35" href="$classmdt_tt_test_node_editor.html" title="This class provides a test node editor. " alt="" coords="745,461,892,488"/>
+<area shape="rect" id="node37" href="$class_ui__mdt_device_u3606_a_widget.html" title="Ui_mdtDeviceU3606AWidget" alt="" coords="6,740,199,767"/>
+<area shape="rect" id="node38" href="$class_ui_1_1mdt_device_u3606_a_widget.html" title="Ui::mdtDeviceU3606AWidget" alt="" coords="248,740,443,767"/>
 </map>

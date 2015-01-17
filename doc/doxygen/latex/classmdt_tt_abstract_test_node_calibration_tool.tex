@@ -69,7 +69,7 @@ bool \hyperlink{classmdt_tt_abstract_test_node_calibration_tool_aaff76264fab90c5
 \begin{DoxyCompactList}\small\item\em Prompt the user to do a action. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_tt_abstract_test_node_calibration_tool_a464c96ebdb95c0a43fc6684b2b3900f7}{ask\-User} (const Q\-String \&text, const Q\-String \&informative\-Text=Q\-String(), Q\-Message\-Box\-::\-Icon icon=Q\-Message\-Box\-::\-Question, Q\-Message\-Box\-::\-Standard\-Buttons buttons=(Q\-Message\-Box\-::\-Ok$\vert$Q\-Message\-Box\-::\-No$\vert$Q\-Message\-Box\-::\-Cancel))
 \begin{DoxyCompactList}\small\item\em Ask a question to the user. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_tt_abstract_test_node_calibration_tool_a056ac13971e84d14bd5bc5106e181baa}{is\-In\-Range} (const \hyperlink{classmdt_value}{mdt\-Value} \&value, double min, double max=std\-::numeric\-\_\-limits$<$ double $>$\-::max())
+bool \hyperlink{classmdt_tt_abstract_test_node_calibration_tool_ad49c3e8d02a45dd488292612bc492ec6}{is\-In\-Range} (const \hyperlink{classmdt_value_double}{mdt\-Value\-Double} \&value, double min, double max=std\-::numeric\-\_\-limits$<$ double $>$\-::max())
 \begin{DoxyCompactList}\small\item\em Check if x is in range. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_tt_abstract_test_node_calibration_tool_a71da4e6772ec99d9dc42e7b04ceee881}{begin\-Transaction} ()
 \begin{DoxyCompactList}\small\item\em Beginn manually a new transaction. \end{DoxyCompactList}\item 
@@ -149,7 +149,7 @@ Beginn manually a new transaction.
 
 On error, false is returned and error is available with last\-Error() . 
 
-Definition at line 286 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
+Definition at line 288 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
 
 
 
@@ -172,7 +172,7 @@ Commit manually a new transaction.
 
 On error, false is returned and error is available with last\-Error() . 
 
-Definition at line 312 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
+Definition at line 314 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
 
 
 
@@ -252,15 +252,15 @@ Display a message to the user.
 
 Definition at line 219 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
 
-\hypertarget{classmdt_tt_abstract_test_node_calibration_tool_a056ac13971e84d14bd5bc5106e181baa}{\index{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}!is\-In\-Range@{is\-In\-Range}}
+\hypertarget{classmdt_tt_abstract_test_node_calibration_tool_ad49c3e8d02a45dd488292612bc492ec6}{\index{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}!is\-In\-Range@{is\-In\-Range}}
 \index{is\-In\-Range@{is\-In\-Range}!mdtTtAbstractTestNodeCalibrationTool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}}
 \subsubsection[{is\-In\-Range}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool\-::is\-In\-Range (
 \begin{DoxyParamCaption}
-\item[{const {\bf mdt\-Value} \&}]{value, }
+\item[{const {\bf mdt\-Value\-Double} \&}]{value, }
 \item[{double}]{min, }
 \item[{double}]{max = {\ttfamily std\-:\-:numeric\-\_\-limits$<$double$>$\-:\-:max()}}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_tt_abstract_test_node_calibration_tool_a056ac13971e84d14bd5bc5106e181baa}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_tt_abstract_test_node_calibration_tool_ad49c3e8d02a45dd488292612bc492ec6}
 
 
 Check if x is in range. 
@@ -273,7 +273,7 @@ Definition at line 259 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.
 
 
 
-References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, mdt\-Tt\-Test\-::is\-In\-Range(), mdt\-Value\-::is\-Minus\-Ol(), mdt\-Value\-::is\-Plus\-Ol(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, pv\-Last\-Error, mdt\-Error\-::set\-Error(), mdt\-Error\-::set\-Informative\-Text(), and mdt\-Value\-::value\-Double().
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, mdt\-Tt\-Test\-::is\-In\-Range(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, pv\-Last\-Error, mdt\-Error\-::set\-Error(), mdt\-Error\-::set\-Informative\-Text(), and mdt\-Value\-Double\-::value().
 
 \hypertarget{classmdt_tt_abstract_test_node_calibration_tool_aaff76264fab90c51317d5491c448ba92}{\index{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}!prompt\-User@{prompt\-User}}
 \index{prompt\-User@{prompt\-User}!mdtTtAbstractTestNodeCalibrationTool@{mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool}}
@@ -317,7 +317,7 @@ Rollback manually a new transaction.
 
 On error, false is returned and error is available with last\-Error() . 
 
-Definition at line 299 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
+Definition at line 301 of file mdt\-Tt\-Abstract\-Test\-Node\-Calibration\-Tool.\-cpp.
 
 
 

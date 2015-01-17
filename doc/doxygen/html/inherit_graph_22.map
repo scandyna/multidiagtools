@@ -1,3 +1,8 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classmdt_items_selector_dialog_item.html" title="Data container for mdtItemsSelectorDialog. " alt="" coords="6,5,194,32"/>
+<area shape="rect" id="node1" href="$classmdt_frame_codec.html" title="mdtFrameCodec" alt="" coords="6,56,125,83"/>
+<area shape="rect" id="node2" href="$classmdt_frame_codec_ascii.html" title="mdtFrameCodecAscii" alt="" coords="182,5,330,32"/>
+<area shape="rect" id="node5" href="$classmdt_frame_codec_k8055.html" title="Frame codec for Velleman k8055 board. " alt="" coords="178,56,334,83"/>
+<area shape="rect" id="node6" href="$classmdt_frame_codec_modbus.html" title="Encode and decode MODBUS PDU NOTE: stockage des adresses durant Q/R ? " alt="" coords="173,107,339,133"/>
+<area shape="rect" id="node3" href="$classmdt_frame_codec_scpi.html" title="#include &lt;QVariant&gt; " alt="" coords="387,5,533,32"/>
+<area shape="rect" id="node4" href="$classmdt_frame_codec_scpi_u3606_a.html" title="Decode Agilent U3606A SCPI data. " alt="" coords="581,5,773,32"/>
 </map>
