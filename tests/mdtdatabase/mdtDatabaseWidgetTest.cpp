@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -34,6 +34,7 @@
 #include "mdtUiMessageHandler.h"
 #include "mdtSqlForm.h"
 #include "mdtSqlFieldSelectionDialog.h"
+#include "mdtDoubleEdit.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -65,10 +66,9 @@
 #include <QVBoxLayout>
 
 #include <QDebug>
-#include <boost/graph/graph_concepts.hpp>
 
 /*
- * sqlDataWidgetControllerTest implementation
+ * sqlDataWidgetControllerTestWidget implementation
  */
 
 sqlDataWidgetControllerTestWidget::sqlDataWidgetControllerTestWidget(QWidget *parent)
@@ -81,9 +81,12 @@ sqlDataWidgetControllerTestWidget::sqlDataWidgetControllerTestWidget(QWidget *pa
   fld_Remarks->setObjectName("fld_Remarks");
   fld_Detail = new QLineEdit;
   fld_Detail->setObjectName("fld_Detail");
+  fld_SomeValueDouble = new mdtDoubleEdit;
+  fld_SomeValueDouble->setObjectName("fld_SomeValueDouble");
   l->addWidget(fld_FirstName);
   l->addWidget(fld_Remarks);
   l->addWidget(fld_Detail);
+  l->addWidget(fld_SomeValueDouble);
   setLayout(l);
 }
 
@@ -656,12 +659,48 @@ void mdtDatabaseWidgetTest::sqlFieldHandlerTest()
   QVERIFY(pte.isEnabled());
   QVERIFY(pte.isReadOnly());
 
-  
+  /*
+   * Check with mdtDoubleEdit
+   */
+  mdtDoubleEdit de;
+  // Setup field
+  field = QSqlField();
+  field.setType(QVariant::Double);
+  field.setRequired(true);
+  field.setReadOnly(false);
+  // Setup field handler
+  fh.setField(field);
+  fh.setDataWidget(&de);
+  de.show();
+  // Check field handler flags
+  QVERIFY(fh.isNull());
+  QVERIFY(!fh.dataWasEdited());
+  QVERIFY(!fh.isReadOnly());
+  // Check widget flags
+  QVERIFY(de.isEnabled());
+  QVERIFY(de.value().isNull());
+  QVERIFY(!de.lineEdit()->isReadOnly());
+  // User edit ...
+  QTest::keyClicks(de.lineEdit(), "2.5");
+  // Check field handler flags
+  QVERIFY(fh.checkBeforeSubmit());
+  QVERIFY(!fh.isNull());
+  QVERIFY(fh.dataWasEdited());
+  // Check not required field when user not enter anything
+  field.setRequired(false);
+  fh.setField(field);
+  fh.setData(QVariant());
+  QVERIFY(fh.isNull());
+  QVERIFY(!fh.dataWasEdited());
+  QVERIFY(fh.checkBeforeSubmit());
+  QVERIFY(fh.isNull());
+  QVERIFY(!fh.dataWasEdited());
+
   /*
    * Play
    */
   /*
-  while(cb.isVisible()){
+  while(de.isVisible()){
     QTest::qWait(1000);
   }
   */
@@ -762,8 +801,10 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   // Check fields - Because state machine is not running, all widgets must be diseabled
   QVERIFY(!w.fld_FirstName->isEnabled());
   QVERIFY(!w.fld_Remarks->isEnabled());
+  QVERIFY(!w.fld_SomeValueDouble->isEnabled());
   QVERIFY(w.fld_FirstName->text().isEmpty());
   QVERIFY(w.fld_Remarks->text().isEmpty());
+  QVERIFY(w.fld_SomeValueDouble->isNull());
   // Check control buttons states
   /**
   QVERIFY(!w.toFirstEnabled);
@@ -788,8 +829,10 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   // Check fields - Must be all OFF, because model was never selected
   QVERIFY(!w.fld_FirstName->isEnabled());
   QVERIFY(!w.fld_Remarks->isEnabled());
+  QVERIFY(!w.fld_SomeValueDouble->isEnabled());
   QVERIFY(w.fld_FirstName->text().isEmpty());
   QVERIFY(w.fld_Remarks->text().isEmpty());
+  QVERIFY(w.fld_SomeValueDouble->isNull());
   // Check control buttons states - Must be all OFF, because model was never selected
   /**
   QVERIFY(!w.toFirstEnabled);
@@ -809,8 +852,10 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QCOMPARE(wc.currentRow(), 0);
   QVERIFY(w.fld_FirstName->isEnabled());
   QVERIFY(w.fld_Remarks->isEnabled());
+  QVERIFY(w.fld_SomeValueDouble->isEnabled());
   QCOMPARE(w.fld_FirstName->text(), QString("Andy"));
   QVERIFY(w.fld_Remarks->text().isEmpty());
+  QVERIFY(w.fld_SomeValueDouble->isNull());
   QVERIFY(wc.allDataAreSaved());
   // Check control buttons states
   QVERIFY(!w.toFirstEnabled);
@@ -827,8 +872,10 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QCOMPARE(wc.currentRow(), 1);
   QVERIFY(w.fld_FirstName->isEnabled());
   QVERIFY(w.fld_Remarks->isEnabled());
+  QVERIFY(w.fld_SomeValueDouble->isEnabled());
   QCOMPARE(w.fld_FirstName->text(), QString("Bety"));
   QCOMPARE(w.fld_Remarks->text(), QString("Remark on Bety"));
+  QCOMPARE(w.fld_SomeValueDouble->value(), QVariant(2.0));
   // Check control buttons states
   QVERIFY(w.toFirstEnabled);
   QVERIFY(w.toLastEnabled);
@@ -845,8 +892,10 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QCOMPARE(wc.currentRow(), 0);
   QVERIFY(w.fld_FirstName->isEnabled());
   QVERIFY(w.fld_Remarks->isEnabled());
+  QVERIFY(w.fld_SomeValueDouble->isEnabled());
   QCOMPARE(w.fld_FirstName->text(), QString("Andy"));
   QVERIFY(w.fld_Remarks->text().isEmpty());
+  QVERIFY(w.fld_SomeValueDouble->isNull());
   QVERIFY(!w.toFirstEnabled);
   QVERIFY(w.toLastEnabled);
   QVERIFY(w.toNextEnabled);
@@ -855,8 +904,10 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QCOMPARE(wc.currentRow(), 1);
   QVERIFY(w.fld_FirstName->isEnabled());
   QVERIFY(w.fld_Remarks->isEnabled());
+  QVERIFY(w.fld_SomeValueDouble->isEnabled());
   QCOMPARE(w.fld_FirstName->text(), QString("Bety"));
   QCOMPARE(w.fld_Remarks->text(), QString("Remark on Bety"));
+  QCOMPARE(w.fld_SomeValueDouble->value(), QVariant(2.0));
   QVERIFY(w.toFirstEnabled);
   QVERIFY(w.toLastEnabled);
   QVERIFY(w.toNextEnabled);
@@ -865,8 +916,10 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QCOMPARE(wc.currentRow(), 0);
   QVERIFY(w.fld_FirstName->isEnabled());
   QVERIFY(w.fld_Remarks->isEnabled());
+  QVERIFY(w.fld_SomeValueDouble->isEnabled());
   QCOMPARE(w.fld_FirstName->text(), QString("Andy"));
   QVERIFY(w.fld_Remarks->text().isEmpty());
+  QVERIFY(w.fld_SomeValueDouble->isNull());
   QVERIFY(!w.toFirstEnabled);
   QVERIFY(w.toLastEnabled);
   QVERIFY(w.toNextEnabled);
@@ -875,8 +928,10 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QCOMPARE(wc.currentRow(), 3);
   QVERIFY(w.fld_FirstName->isEnabled());
   QVERIFY(w.fld_Remarks->isEnabled());
+  QVERIFY(w.fld_SomeValueDouble->isEnabled());
   QCOMPARE(w.fld_FirstName->text(), QString("Charly"));
   QCOMPARE(w.fld_Remarks->text(), QString("Remark on Charly"));
+  QVERIFY(w.fld_SomeValueDouble->isNull());
   QVERIFY(w.toFirstEnabled);
   QVERIFY(!w.toLastEnabled);
   QVERIFY(!w.toNextEnabled);
@@ -885,8 +940,10 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QCOMPARE(wc.currentRow(), 0);
   QVERIFY(w.fld_FirstName->isEnabled());
   QVERIFY(w.fld_Remarks->isEnabled());
+  QVERIFY(w.fld_SomeValueDouble->isEnabled());
   QCOMPARE(w.fld_FirstName->text(), QString("Andy"));
   QVERIFY(w.fld_Remarks->text().isEmpty());
+  QVERIFY(w.fld_SomeValueDouble->isNull());
   QVERIFY(!w.toFirstEnabled);
   QVERIFY(w.toLastEnabled);
   QVERIFY(w.toNextEnabled);
@@ -910,10 +967,13 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QCOMPARE(wc.currentRow(), 4);
   QVERIFY(w.fld_FirstName->isEnabled());
   QVERIFY(w.fld_Remarks->isEnabled());
+  QVERIFY(w.fld_SomeValueDouble->isEnabled());
   QVERIFY(w.fld_FirstName->text().isEmpty());
   QVERIFY(w.fld_Remarks->text().isEmpty());
+  QVERIFY(w.fld_SomeValueDouble->isNull());
   QTest::keyClicks(w.fld_FirstName, "New name 1");
   QTest::keyClicks(w.fld_Remarks, "New remark 1");
+  QTest::keyClicks(w.fld_SomeValueDouble->lineEdit(), "5");
   QVERIFY(!wc.allDataAreSaved());
   // Submit with asynch version
   wc.submit();
@@ -926,12 +986,15 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QCOMPARE(data.toString(), QString("New name 1"));
   data = model->data(model->index(4, model->fieldIndex("Remarks")));
   QCOMPARE(data.toString(), QString("New remark 1"));
+  data = model->data(model->index(4, model->fieldIndex("SomeValueDouble")));
+  QCOMPARE(data, QVariant(5.0));
   // Check that data() works
   QCOMPARE(wc.data(4, "FirstName", ok), QVariant("New name 1"));
   QVERIFY(ok);
   QVERIFY(wc.data(200, "FirstName", ok).isNull());
   QVERIFY(!ok);
   QCOMPARE(wc.data(4, "FirstName"), QVariant("New name 1"));
+  QCOMPARE(wc.data(4, "SomeValueDouble"), QVariant(5.0));
   // Check that currentData() works
   QCOMPARE(wc.currentData("FirstName", ok), QVariant("New name 1"));
   QVERIFY(ok);
@@ -939,11 +1002,13 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QVERIFY(ok);
   QCOMPARE(wc.currentData("FirstName"), QVariant("New name 1"));
   QCOMPARE(wc.currentData("Remarks"), QVariant("New remark 1"));
+  QCOMPARE(wc.currentData("SomeValueDouble"), QVariant(5.0));
   qDebug() << "Formated FirstName: " << wc.currentFormatedValue("FirstName");
   qDebug() << "Formated FirstName: " << wc.currentFormatedValue("Remarks");
   // Check that widget displays the correct row
   QCOMPARE(w.fld_FirstName->text(), QString("New name 1"));
   QCOMPARE(w.fld_Remarks->text(), QString("New remark 1"));
+  QCOMPARE(w.fld_SomeValueDouble->value(), QVariant(5.0));
   // Insert a record
   wc.insert();
   QTest::qWait(50);
@@ -951,10 +1016,13 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QCOMPARE(wc.currentRow(), 5);
   QVERIFY(w.fld_FirstName->isEnabled());
   QVERIFY(w.fld_Remarks->isEnabled());
+  QVERIFY(w.fld_SomeValueDouble->isEnabled());
   QVERIFY(w.fld_FirstName->text().isEmpty());
   QVERIFY(w.fld_Remarks->text().isEmpty());
+  QVERIFY(w.fld_SomeValueDouble->isNull());
   QTest::keyClicks(w.fld_FirstName, "New name 2");
   QTest::keyClicks(w.fld_Remarks, "New remark 2");
+  QTest::keyClicks(w.fld_SomeValueDouble->lineEdit(), "6");
   QVERIFY(!wc.allDataAreSaved());
   // Submit with synch version
   QVERIFY(wc.submitAndWait());
@@ -967,9 +1035,12 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QCOMPARE(data.toString(), QString("New name 2"));
   data = model->data(model->index(5, model->fieldIndex("Remarks")));
   QCOMPARE(data.toString(), QString("New remark 2"));
+  data = model->data(model->index(5, model->fieldIndex("SomeValueDouble")));
+  QCOMPARE(data, QVariant(6.0));
   // Check that widget displays the correct row
   QCOMPARE(w.fld_FirstName->text(), QString("New name 2"));
   QCOMPARE(w.fld_Remarks->text(), QString("New remark 2"));
+  QCOMPARE(w.fld_SomeValueDouble->value(), QVariant(6.0));
   // Try to insert a record with no name - must fail
   wc.insert();
   QTest::qWait(50);
@@ -3513,7 +3584,15 @@ void mdtDatabaseWidgetTest::createDatabaseSchema()
   field.setLength(100);
   st.addField(field, false);
   QVERIFY(pvDatabaseManager.createTable(st, mdtSqlDatabaseManager::OverwriteExisting));
-  // ClientDetail_tbl - Linked 1-1 to Client_tbl (Real cases would be SomeTable_tbl based on Client_tbl)
+  // SomeValueDouble
+  field = QSqlField();
+  field.setName("SomeValueDouble");
+  field.setType(QVariant::Double);
+  st.addField(field, false);
+  QVERIFY(pvDatabaseManager.createTable(st, mdtSqlDatabaseManager::OverwriteExisting));
+  /*
+   * ClientDetail_tbl - Linked 1-1 to Client_tbl (Real cases would be SomeTable_tbl based on Client_tbl)
+   */
   st.clear();
   st.setTableName("ClientDetail_tbl", "UTF8");
   // Client_Id_FK_PK
@@ -3571,7 +3650,7 @@ void mdtDatabaseWidgetTest::populateTestDatabase()
 
   // Inert some data in Client_tbl
   QVERIFY(query.exec("INSERT INTO 'Client_tbl' (Id_PK, FirstName) VALUES(1, 'Andy')"));
-  QVERIFY(query.exec("INSERT INTO 'Client_tbl' (Id_PK, 'FirstName', 'Remarks') VALUES(2, 'Bety', 'Remark on Bety')"));
+  QVERIFY(query.exec("INSERT INTO 'Client_tbl' (Id_PK, 'FirstName', 'Remarks', 'SomeValueDouble') VALUES(2, 'Bety', 'Remark on Bety', 2)"));
   QVERIFY(query.exec("INSERT INTO 'Client_tbl' (Id_PK, 'FirstName', 'Remarks') VALUES(3, 'Zeta', 'Remark on Zeta')"));
   QVERIFY(query.exec("INSERT INTO 'Client_tbl' (Id_PK, 'FirstName', 'Remarks') VALUES(4, 'Charly', 'Remark on Charly')"));
   QVERIFY(query.exec("SELECT * FROM 'Client_tbl'"));

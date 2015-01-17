@@ -152,14 +152,14 @@ bool mdtTtDatabaseSchema::importDatabase(const QFileInfo sourceDbFileInfo)
   for(i = 0; i < sourceTables.size(); ++i){
     tableManager.clearFieldMap();
     /// \todo Provisoire !!
-
+    /**
     if(sourceTables.at(i) == "Link_tbl"){
       tableManager.addFieldMapping("Value", "Resistance", "", QVariant::String);
     }
     if(sourceTables.at(i) == "ArticleLink_tbl"){
       tableManager.addFieldMapping("Value", "Resistance", "", QVariant::String);
     }
-
+    */
     if(!tableManager.copyTable(sourceTables.at(i), sourceTables.at(i), mdtSqlDatabaseManager::KeepExisting, sourceDbManager.database(), pvDatabaseManager->database())){
       pvLastError = tableManager.lastError();
       return false;

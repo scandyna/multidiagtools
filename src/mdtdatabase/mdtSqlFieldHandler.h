@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -58,6 +58,7 @@ class mdtSqlFieldHandlerAbstractDataWidget
   virtual void setReadOnly(bool readOnly) = 0;
   virtual void setMaxLength(int maxLength) {};
   virtual void setRange(qreal min, qreal max) {};
+  virtual bool validate() { return true; }
 };
 
 /*

@@ -25,6 +25,7 @@
 #include <QString>
 #include <QVariant>
 #include <QValidator>
+#include <QLineEdit>
 
 #include <QDebug>
 
@@ -136,27 +137,44 @@ void mdtWidgetsTest::mdtDoubleEditTest()
 
   e.show();
 
+  // Initial state
+  QVERIFY(e.isNull());
+  QVERIFY(!e.valueIsValid());
+  QVERIFY(e.value().isNull());
+
+
   // Check some basic conversions
   e.setValue("1.0");
+  QVERIFY(!e.isNull());
   QVERIFY(e.valueIsValid());
   QVERIFY(e.value().isValid());
   QCOMPARE(e.value(), QVariant(1.0));
   QCOMPARE(e.valueDouble(), 1.0);
   QCOMPARE(e.text().trimmed(), QString("1"));
   e.setValue("-inf");
+  QVERIFY(!e.isNull());
   QVERIFY(e.valueIsValid());
   QVERIFY(e.value().isValid());
   QCOMPARE(e.value(), QVariant(-std::numeric_limits<double>::infinity()));
   QCOMPARE(QVariant(e.valueDouble()), QVariant(-std::numeric_limits<double>::infinity()));  // Direct double compare fails here
   QCOMPARE(e.text().trimmed(), QString("-" + e.infinityString()));
   e.setValue("inf");
+  QVERIFY(!e.isNull());
   QVERIFY(e.valueIsValid());
   QVERIFY(e.value().isValid());
   QCOMPARE(e.value(), QVariant(std::numeric_limits<double>::infinity()));
   QCOMPARE(QVariant(e.valueDouble()), QVariant(std::numeric_limits<double>::infinity()));  // Direct double compare fails here
   QCOMPARE(e.text().trimmed(), e.infinityString());
+  // Set null value
+  e.setValue(QVariant());
+  QVERIFY(e.isNull());
+  QVERIFY(e.valueIsValid());
+  QVERIFY(e.value().isNull());
+  QVERIFY(e.text().isEmpty());
+  QVERIFY(e.lineEdit()->text().isEmpty());
   // Check invalid value setting
   e.setValue("x");
+  QVERIFY(e.isNull());
   QVERIFY(!e.valueIsValid());
   QVERIFY(!e.value().isValid());
   QCOMPARE(e.value(), QVariant());
@@ -164,6 +182,7 @@ void mdtWidgetsTest::mdtDoubleEditTest()
   QCOMPARE(e.text().trimmed(), QString(""));
   // Check scientific suffixes - simple part
   e.setValue("1 a");
+  QVERIFY(!e.isNull());
   QCOMPARE(e.value(), QVariant(1e-18));
   QCOMPARE(e.text().trimmed(), QString("1 a"));
   e.setValue("1 f");
@@ -322,7 +341,9 @@ void mdtWidgetsTest::mdtDoubleEditTest()
   /*
    * Check wire section edition
    */
+  QVERIFY(!e.isInWireSectionEditionMode());
   e.setWireSectionEditionMode();
+  QVERIFY(e.isInWireSectionEditionMode());
   // Set numeric values
   e.setValue(1.0);
   QCOMPARE(e.value(), QVariant(1.0));
@@ -343,14 +364,61 @@ void mdtWidgetsTest::mdtDoubleEditTest()
   e.setValue("0.5 mm2");
   QCOMPARE(e.value(), QVariant(0.5e-6));
   QCOMPARE(e.text().trimmed(), QString("0.5 mm2"));
-  
-  ///e.setUnit(mdtDoubleEdit::OmegaCapital);
 
-  
+  /*
+   * Check user edition
+   */
+  // Setup
+  e.setUnit("m");
+  e.setRange(0.0, 1e6);
+  QVERIFY(e.isNull());
+  QVERIFY(!e.valueIsValid());
+  QVERIFY(e.lineEdit()->text().isEmpty());
+  // Edit and check
+  QTest::keyClicks(e.lineEdit(), "2.5");
+  QVERIFY(e.validate());
+  QVERIFY(!e.isNull());
+  QVERIFY(e.valueIsValid());
+  QCOMPARE(e.value(), QVariant(2.5));
+  // Clear and check
+  e.setValue(QVariant());
+  QVERIFY(e.validate());
+  QVERIFY(e.isNull());
+  QVERIFY(e.valueIsValid());
+
+  /*
+   * Simulate a row change from database widget controller
+   */
+  e.setValue(QVariant());
+  QVERIFY(e.isNull());
+  QVERIFY(e.valueIsValid());
+  QVERIFY(e.lineEdit()->text().isEmpty());
+  // Row change
+  e.setValue(2.0);
+  QVERIFY(!e.isNull());
+  QVERIFY(e.valueIsValid());
+  QCOMPARE(e.value(), QVariant(2.0));
+  QVERIFY(!e.lineEdit()->text().isEmpty());
+  // Row change
+  e.setValue(QVariant());
+  QVERIFY(e.isNull());
+  QVERIFY(e.valueIsValid());
+  QVERIFY(e.lineEdit()->text().isEmpty());
+  /*
+   * When using Sqlite, a field that contains null value can also return a empty string
+   */
+  // Row change
+  e.setValue("");
+  QVERIFY(e.isNull());
+  QVERIFY(e.valueIsValid());
+  QVERIFY(e.lineEdit()->text().isEmpty());
+
+  /*
   while(e.isVisible()){
     QTest::qWait(1000);
   }
-  
+  */
+
 }
 
 

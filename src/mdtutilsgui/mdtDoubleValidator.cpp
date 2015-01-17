@@ -170,7 +170,7 @@ bool mdtDoubleValidator::charIsAccepted(const QChar & c) const
 
 bool mdtDoubleValidator::charIsPowerOf10Suffix(const QChar & c) const
 {
-  return (qAbs<double>(mdtDoubleEdit::factor(c) - 1.0) >  std::numeric_limits<double>::min());
+  return (mdtDoubleEdit::p10exponent(c) != 0);
 }
 
 bool mdtDoubleValidator::strEndsCorrectly(const QString & str) const

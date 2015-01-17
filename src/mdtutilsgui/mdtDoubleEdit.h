@@ -83,10 +83,11 @@ class mdtDoubleEdit : public QWidget
 
   /*! \brief Special symbols for units
    */
-  enum unitSymbol_t {
-                      omega,          /*!< Omega (small letter) , &omega; */
-                      OmegaCapital    /*!< Capital omega , &Omega; */
-                    };
+  enum class UnitSymbol_t
+  {
+    omega,          /*!< Omega (small letter) , &omega; */
+    OmegaCapital    /*!< Capital omega , &Omega; */
+  };
 
   /*! \brief Unit prefix ranges
    */
@@ -103,10 +104,6 @@ class mdtDoubleEdit : public QWidget
   /*! \brief Set read only
    */
   void setReadOnly(bool ro);
-
-  /*! \brief Set unit that is represented by a special symbol
-   */
-  void setUnit(unitSymbol_t u);
 
   /*! \brief Get unit
    */
@@ -143,34 +140,6 @@ class mdtDoubleEdit : public QWidget
   /*! \brief Set the full range
    */
   ///void setFullRange();
-
-  /*! \brief Get the factor for a given char
-   *
-   * Will return factor of given char,
-   *  or a 1.0 char is unknown.
-   *
-   * Supported chars are:
-   *
-   *  <table border="1" cellpadding="5">
-   *   <tr><th>Char</th><th>Designation</th><th>Factor</th></tr>
-   *   <tr><td>a</td><td>atto</td><td>1e-18</td></tr>
-   *   <tr><td>f</td><td>femto</td><td>1e-15</td></tr>
-   *   <tr><td>p</td><td>pico</td><td>1e-12</td></tr>
-   *   <tr><td>n</td><td>nano</td><td>1e-9</td></tr>
-   *   <tr><td>u</td><td>micro</td><td>1e-6</td></tr>
-   *   <tr><td>m</td><td>milli</td><td>1e-3</td></tr>
-   *   <tr><td>c</td><td>centi</td><td>1e-2</td></tr>
-   *   <tr><td>d</td><td>deci</td><td>1e-1</td></tr>
-   *   <tr><td>h</td><td>hecto</td><td>1e2</td></tr>
-   *   <tr><td>k</td><td>kilo</td><td>1e3</td></tr>
-   *   <tr><td>M</td><td>mega</td><td>1e6</td></tr>
-   *   <tr><td>G</td><td>giga</td><td>1e9</td></tr>
-   *   <tr><td>T</td><td>tera</td><td>1e12</td></tr>
-   *   <tr><td>P</td><td>peta</td><td>1e15</td></tr>
-   *   <tr><td>E</td><td>exa</td><td>1e18</td></tr>
-   *  </table>
-   */
-  static double factor(const QChar & c);
 
   /*! \brief Get power of 10 exponent for given char
    *
@@ -223,9 +192,36 @@ class mdtDoubleEdit : public QWidget
    */
   QVariant value() const;
 
+  /*! \brief Check if value is null
+   *
+   * \sa isValid()
+   */
+  inline bool isNull() const { return pvIsNull; }
+
   /*! \brief Check if value is valid
+   *
+   * Value is valid only if it represents a number or is null.
+   *  For example, if setValue() was called with a pure string,
+   *  like 'abcd', the function will return false.
+   *
+   * Note that a value can also be null and valid.
    */
   inline bool valueIsValid() const { return pvValueIsValid; }
+
+  /*! \brief Validate edited data
+   *
+   * After user has finished editing value,
+   *  it is converted, checked and displayed in recognised way.
+   *  The valueChanged() signal will also be emitted.
+   *  Editing is finished when user hits \<Enter\> key,
+   *  or internal line edit losses focus.
+   *  To proceed to conversion and validation sooner than that,
+   *  call this function.
+   *
+   * \return If currently edited data represents a valid value,
+   *          true is returned, false else.
+   */
+  bool validate();
 
   /*! \brief Get text in line edit
    */
@@ -235,11 +231,18 @@ class mdtDoubleEdit : public QWidget
    */
   static QString infinityString();
 
-  /*! \brief Check if we are in cableSectionEditionMode (used by Qt Designer)
+  /*! \brief Check if we are in wireSectionEditionMode (used by Qt Designer)
    */
   bool isInWireSectionEditionMode() const
   {
-    return ( (pvUnit == "mm2") && (pvUnitRanges.size() == 1) );
+    return ( (pvUnit == "m2") && (pvUnitRanges.size() == 1) );
+  }
+
+  /*! \internal Access internal line edit (used for unit tests)
+   */
+  QLineEdit *lineEdit()
+  {
+    return pvLineEdit;
   }
 
  public slots:
@@ -252,7 +255,7 @@ class mdtDoubleEdit : public QWidget
    */
   void setUnit(const QString & u);
 
-  /*! \brief Set cable section edition mode
+  /*! \brief Set wire section edition mode
    */
   void setWireSectionEditionMode(bool set = true);
 
@@ -261,10 +264,16 @@ class mdtDoubleEdit : public QWidget
   /*! \brief Emitted when a new value was set
    *
    * Happens when user has finished editting,
-   *  or when a set functions was called with
+   *  or when a set function was called with
    *  emitValueChanged flag set.
    */
   void valueChanged(double value, bool isValid);
+
+  /*! \brief Emitted when user has edited value
+   *
+   * Is a simple relay of internal line edit's textEdited() signal.
+   */
+  void valueEdited();
 
  private slots:
 
@@ -275,6 +284,25 @@ class mdtDoubleEdit : public QWidget
 
  private:
 
+  /*! \brief Clear value
+   *
+   * Will set a invalid value and clear line edit.
+   */
+  void clear();
+
+  /*! \brief Get special symbol char
+   */
+  QString specialSymbolChar(UnitSymbol_t symbol) const;
+
+  /*! \brief Get string for unit
+   *
+   * If a special unit is recognized, it will be converted to
+   *  its unicode string.
+   *
+   * \sa specialSymbolChar()
+   */
+  QString formatedUnit(const QString & u) const;
+
   /*! \brief Convert and set value from string
    */
   void convertAndSetValue(QString str);
@@ -282,12 +310,6 @@ class mdtDoubleEdit : public QWidget
   /*! \brief Display stored value
    */
   void displayValue();
-
-  /*! \brief Check if x is in given range from min to max
-   *
-   * Returns true if x is [min, max[
-   */
-  bool isInRange(double x, double min, double max);
 
   /*! \brief Check if str is a infinity (or -infinity)
    */
@@ -305,9 +327,9 @@ class mdtDoubleEdit : public QWidget
    */
   void buildDefaultSquareUnitRanges();
 
-  /*! \brief Build ranges for cable section
+  /*! \brief Build ranges for wire section
    */
-  void buildCableSectionRanges();
+  void buildWireSectionRanges();
 
   Q_DISABLE_COPY(mdtDoubleEdit);
 
@@ -319,7 +341,8 @@ class mdtDoubleEdit : public QWidget
   QString pvUnit;
   double pvValue;
   std::vector<mdtDoubleEditUnitRange> pvUnitRanges;   // Used to form number when displayed
-  int pvUnitExponent;  // F.ex. m2 : unit=m, unitExponent=2
+  int pvUnitExponent;  // F.ex. m2 : unit=m, unitExponent=2 , used to do line edit text -> numeric conversion
+  bool pvIsNull;
   bool pvValueIsValid;
 };
 

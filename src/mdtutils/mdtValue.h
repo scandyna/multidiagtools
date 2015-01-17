@@ -109,6 +109,7 @@ class mdtValueDouble
    * Note: if one (or both) value is null, comparison will allways be false
    *       (Same rule as IEEE 754 NaN)
    */
+  /// \todo Use functions from cmath !
   bool operator<(const mdtValueDouble & other) const
   {
     if((pvIsNull)||(other.pvIsNull)){
@@ -122,6 +123,7 @@ class mdtValueDouble
    * Note: if one (or both) value is null, comparison will allways be false
    *       (Same rule as IEEE 754 NaN)
    */
+  /// \todo Use functions from cmath !
   bool operator<=(const mdtValueDouble & other) const
   {
     if((pvIsNull)||(other.pvIsNull)){
@@ -138,6 +140,7 @@ class mdtValueDouble
    * Note: if one (or both) value is null, comparison will allways be false
    *       (Same rule as IEEE 754 NaN)
    */
+  /// \todo Use functions from cmath !
   bool operator>(const mdtValueDouble & other) const
   {
     if((pvIsNull)||(other.pvIsNull)){
@@ -151,6 +154,7 @@ class mdtValueDouble
    * Note: if one (or both) value is null, comparison will allways be false
    *       (Same rule as IEEE 754 NaN)
    */
+  /// \todo Use functions from cmath !
   bool operator>=(const mdtValueDouble & other) const
   {
     if((pvIsNull)||(other.pvIsNull)){

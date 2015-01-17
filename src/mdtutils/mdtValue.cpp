@@ -46,6 +46,7 @@ void mdtValueDouble::clear()
   pvIsNull = true;
 }
 
+/// \todo Use functions from cmath !
 void mdtValueDouble::setValue(double value, bool isOl)
 {
   pvIsNull = false;
@@ -81,6 +82,7 @@ bool mdtValueDouble::isNaN() const
   return std::isnan(pvValue);
 }
 
+/// \todo Use functions from cmath !
 bool mdtValueDouble::operator==(const mdtValueDouble & other) const
 {
   if(pvIsNull || other.pvIsNull){

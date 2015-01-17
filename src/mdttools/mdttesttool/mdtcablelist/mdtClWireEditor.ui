@@ -6,16 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>634</width>
+    <width>775</width>
     <height>265</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
+  <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,1,0">
    <item>
     <layout class="QFormLayout" name="formLayout_2">
+     <property name="fieldGrowthPolicy">
+      <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+     </property>
      <item row="0" column="0">
       <widget class="QLabel" name="lbArticleCode">
        <property name="text">
@@ -26,16 +29,50 @@
      <item row="0" column="1">
       <widget class="QLineEdit" name="fld_ArticleCode"/>
      </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="lbModel">
+       <property name="text">
+        <string>Model:</string>
+       </property>
+      </widget>
+     </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="lineEdit"/>
+      <widget class="QLineEdit" name="fld_Model"/>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="lbSection">
+       <property name="text">
+        <string>Section:</string>
+       </property>
+      </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="lineEdit_2"/>
-     </item>
-     <item row="3" column="1">
-      <widget class="mdtDoubleEdit" name="mdtdoubleedit">
+      <widget class="mdtDoubleEdit" name="fld_Section">
        <property name="unit">
         <string>m2</string>
+       </property>
+       <property name="wireSectionEditionMode">
+        <bool>true</bool>
+       </property>
+       <property name="minimum">
+        <double>0.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>1000.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="lbLineicResistance">
+       <property name="text">
+        <string>Lineic resistance:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="mdtDoubleEdit" name="fld_LineicResistance">
+       <property name="unit">
+        <string>Ω/m</string>
        </property>
        <property name="wireSectionEditionMode">
         <bool>false</bool>
@@ -44,7 +81,17 @@
         <double>0.000000000000000</double>
        </property>
        <property name="maximum">
-        <double>10.000000000000000</double>
+        <double>100.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QLineEdit" name="fld_ColorEN"/>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="lbColorEN">
+       <property name="text">
+        <string>Color:</string>
        </property>
       </widget>
      </item>
@@ -52,6 +99,9 @@
    </item>
    <item>
     <layout class="QFormLayout" name="formLayout">
+     <property name="fieldGrowthPolicy">
+      <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+     </property>
      <item row="0" column="0">
       <widget class="QLabel" name="lbManufacturer">
        <property name="text">
@@ -62,8 +112,15 @@
      <item row="0" column="1">
       <widget class="QLineEdit" name="fld_Manufacturer"/>
      </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="lbManufacturerArticleCode">
+       <property name="text">
+        <string>Manufacturer article code:</string>
+       </property>
+      </widget>
+     </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="lineEdit_3"/>
+      <widget class="QLineEdit" name="fld_ManufacturerArticleCode"/>
      </item>
     </layout>
    </item>

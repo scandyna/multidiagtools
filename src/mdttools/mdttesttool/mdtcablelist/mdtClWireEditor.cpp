@@ -50,7 +50,7 @@ bool mdtClWireEditor::setupWireTable()
   // Setup main form widget
   setMainTableUi<Ui::mdtClWireEditor>();
   // Setup form
-  if(!setMainTable("Wire_tbl", "Units", database())){
+  if(!setMainTable("Wire_tbl", "Wires", database())){
     return false;
   }
   return true;

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -380,6 +380,7 @@ class mdtSqlFieldHandlerMdtDoubleEdit : public mdtSqlFieldHandlerAbstractDataWid
   QWidget *widget();
   void setReadOnly(bool readOnly);
   void setMaxLength(int maxLength);
+  bool validate();
  private:
   mdtDoubleEdit *pvDoubleEdit;
 };
@@ -395,7 +396,7 @@ void mdtSqlFieldHandlerMdtDoubleEdit::setDoubleEdit(mdtDoubleEdit* e)
   pvDoubleEdit = e;
 }
 
-void mdtSqlFieldHandlerMdtDoubleEdit::setData(const QVariant& data)
+void mdtSqlFieldHandlerMdtDoubleEdit::setData(const QVariant & data)
 {
   Q_ASSERT(pvDoubleEdit != 0);
   pvDoubleEdit->setValue(data, false);
@@ -431,6 +432,12 @@ void mdtSqlFieldHandlerMdtDoubleEdit::setReadOnly(bool readOnly)
 
 void mdtSqlFieldHandlerMdtDoubleEdit::setMaxLength(int maxLength)
 {
+}
+
+bool mdtSqlFieldHandlerMdtDoubleEdit::validate()
+{
+  Q_ASSERT(pvDoubleEdit != 0);
+  return pvDoubleEdit->validate();
 }
 
 /*
@@ -644,7 +651,8 @@ void mdtSqlFieldHandler::setDataWidget(mdtDoubleEdit* widget)
   w->setDoubleEdit(widget);
   pvDataWidget = w;
   setDataWidgetAttributes();
-  connect(widget, SIGNAL(valueChanged(double,bool)), this, SLOT(onDataEdited(double,bool)));
+  ///connect(widget, SIGNAL(valueChanged(double,bool)), this, SLOT(onDataEdited(double,bool)));
+  connect(widget, SIGNAL(valueEdited()), this, SLOT(onDataEdited()));
 }
 
 void mdtSqlFieldHandler::setDataWidget(QAbstractButton *widget)
@@ -716,6 +724,13 @@ bool mdtSqlFieldHandler::dataWasEdited() const
 
 bool mdtSqlFieldHandler::checkBeforeSubmit()
 {
+  Q_ASSERT(pvDataWidget != 0);
+
+  // Call validate (some widgets need that)
+  if(!pvDataWidget->validate()){
+    setDataWidgetNotOk(tr("This field contains not valid data"));
+    return false;
+  }
   // If Null flag is set, we clear widget
   if(isNull()){
     clearDataWidget();
@@ -759,7 +774,7 @@ QVariant mdtSqlFieldHandler::data() const
   Q_ASSERT(pvDataWidget != 0);
 
   QVariant data = pvDataWidget->data();
-  if((data.isValid())&&(!data.isNull())){
+  if((data.isValid())&&(!data.isNull())){   /// \todo ???
     return data;
   }
   // If data is null, we must return a empty string for fields that are strings,
@@ -776,7 +791,7 @@ QVariant mdtSqlFieldHandler::data() const
   }
   */
 
-  return data;
+  return data;  /// \todo ???
 }
 
 void mdtSqlFieldHandler::updateFlags()
@@ -809,7 +824,7 @@ void mdtSqlFieldHandler::onDataEdited()
 void mdtSqlFieldHandler::onDataEdited(double x, bool isValid)
 {
   // Set the data edited flag
-  ///qDebug() << "mdtSqlFieldHandler::onDataEdited() - x: " << x << ", valid: " << isValid << ", pvDataEdited: " << pvDataEdited;
+  qDebug() << "mdtSqlFieldHandler::onDataEdited() - x: " << x << ", valid: " << isValid << ", pvDataEdited: " << pvDataEdited;
   if(!pvDataEdited){
     pvDataEdited = true;
     ///qDebug() << "mdtSqlFieldHandler::onDataEdited() - emit dataEdited() ...";

@@ -2,16 +2,11 @@ window_sizes 1280 916 271 1003 863 0
 cleanlooks_style
 diagrams
   active  classdiagram_ref 739586 // CableListAllTables
-    1003 863 70 17 0 0
+    1003 863 70 17 19 0
 end
 show_stereotypes
-selected attribute_ref 1583874 // Wire_Id_FK
+selected statediagram_ref 686594 // mdtAbstractSqlWidgetStateMachine
 open
-  attribute_ref 1583874 // Wire_Id_FK
-  class_ref 945154 // ArticleLink_tbl
-  attribute_ref 1583746 // Id_PK
-  attribute_ref 1583618 // ArticleCode
-  attribute_ref 1576962 // ManufacturerArticleCode
-  attribute_ref 1576834 // ColorEN
+  state_ref 149634 // mdtAbstractSqlWidgetStateMachine
 end
 end

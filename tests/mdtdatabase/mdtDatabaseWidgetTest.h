@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -28,6 +28,7 @@
 #include <QSqlDatabase>
 
 class QLineEdit;
+class mdtDoubleEdit;
 
 /*
  * For sqlDataWidgetControllerTest we need a test widget
@@ -44,6 +45,7 @@ class sqlDataWidgetControllerTestWidget : public QWidget
   // Widgets acting on Client_tbl
   QLineEdit *fld_FirstName;
   QLineEdit *fld_Remarks;
+  mdtDoubleEdit *fld_SomeValueDouble;
   // Widgets acting on ClientDetail_tbl
   QLineEdit *fld_Detail;
   // Simulate buttons states
