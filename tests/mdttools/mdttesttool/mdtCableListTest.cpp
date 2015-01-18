@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtCableListTest.h"
 #include "mdtApplication.h"
+#include "mdtClApplicationWidgets.h"
 #include "mdtTtDatabaseSchema.h"
 #include "mdtSqlRecord.h"
 #include "mdtTtBase.h"
@@ -78,6 +79,14 @@ void mdtCableListTest::initTestCase()
 void mdtCableListTest::cleanupTestCase()
 {
   delete pvScenario;
+}
+
+void mdtCableListTest::applicationWidgetsTest()
+{
+  mdtClApplicationWidgets::setDatabase(pvDatabaseManager.database());
+  QCOMPARE(mdtClApplicationWidgets::database().connectionName(), pvDatabaseManager.database().connectionName());
+  QCOMPARE(mdtClApplicationWidgets::database().connectionName(), pvDatabaseManager.database().connectionName());
+  qDebug() << "Cnn: " << mdtClApplicationWidgets::database().connectionName();
 }
 
 void mdtCableListTest::articleConnectionDataTest()

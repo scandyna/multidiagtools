@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -20,10 +20,11 @@
  ****************************************************************************/
 #include "mdtClVehicleTypeEditor.h"
 #include "ui_mdtClVehicleTypeEditor.h"
-///#include "mdtSqlFormWidget.h"
+#include "mdtClApplicationWidgets.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlRelation.h"
 #include "mdtSqlSelectionDialog.h"
+#include "mdtSqlTableSelection.h"
 #include "mdtError.h"
 #include <QSqlTableModel>
 #include <QSqlQueryModel>
@@ -36,6 +37,7 @@
 #include <QModelIndex>
 #include <QItemSelectionModel>
 #include <QMessageBox>
+#include <QPushButton>
 
 #include <QDebug>
 
@@ -60,6 +62,21 @@ bool mdtClVehicleTypeEditor::setupTables()
   return true;
 }
 
+void mdtClVehicleTypeEditor::editSelectedUnit()
+{
+  mdtSqlTableSelection s;
+  mdtSqlTableWidget *widget;
+
+  widget = sqlTableWidget("VehicleType_Unit_view");
+  Q_ASSERT(widget != 0);
+  s = widget->currentSelection("Unit_Id_FK");
+  if(s.isEmpty()){
+    return;
+  }
+  Q_ASSERT(s.rowCount() == 1);
+  mdtClApplicationWidgets::editUnit(s.data(0, "Unit_Id_FK"));
+}
+
 QVariant mdtClVehicleTypeEditor::currentVehicleTypeId()
 {
   return currentData("VehicleType_tbl", "Id_PK");
@@ -67,13 +84,7 @@ QVariant mdtClVehicleTypeEditor::currentVehicleTypeId()
 
 bool mdtClVehicleTypeEditor::setupVehicleTypeTable()
 {
-  ///Ui::mdtClVehicleTypeEditor vte;
-
-  // Setup main form widget
-  ///vte.setupUi(mainSqlWidget());
   setMainTableUi<Ui::mdtClVehicleTypeEditor>();
-  ///connect(this, SIGNAL(vehicleTypeEdited()), mainSqlWidget(), SIGNAL(dataEdited()));
-  // Setup form
   if(!setMainTable("VehicleType_tbl", "Vehicle types", database())){
     return false;
   }
@@ -86,22 +97,13 @@ bool mdtClVehicleTypeEditor::setupUnitTable()
 {
   mdtSqlTableWidget *widget;
   mdtSqlRelationInfo relationInfo;
+  QPushButton *pb;
 
   relationInfo.setChildTableName("VehicleType_Unit_view");
   relationInfo.addRelation("Id_PK", "VehicleType_Id_FK", false);
   if(!addChildTable(relationInfo, tr("Units"))){
     return false;
   }
-  /**
-  // Add unit table
-  if(!addChildTable("VehicleType_Unit_view", tr("Units"), database())){
-    return false;
-  }
-  // Setup Unit <-> VehicleType relation
-  if(!addRelation("Id_PK", "VehicleType_Unit_view", "VehicleType_Id_FK")){
-    return false;
-  }
-  */
   // Get widget to continue setup
   widget = sqlTableWidget("VehicleType_Unit_view");
   Q_ASSERT(widget != 0);
@@ -117,8 +119,14 @@ bool mdtClVehicleTypeEditor::setupUnitTable()
   // Enable sorting
   widget->addColumnToSortOrder("SchemaPosition", Qt::AscendingOrder);
   widget->sort();
+  // Setup unit edition button
+  pb = new QPushButton(tr("Edit ..."));
+  connect(pb, SIGNAL(clicked()), this, SLOT(editSelectedUnit()));
+  widget->addWidgetToLocalBar(pb);
+  connect(widget->tableView(), SIGNAL(doubleClicked(const QModelIndex&)),this, SLOT(editSelectedUnit()));
   // Set some attributes on table view
-  widget->tableView()->resizeColumnsToContents();
+  widget->addStretchToLocalBar();
+  widget->resizeViewToContents();
 
   return true;
 }

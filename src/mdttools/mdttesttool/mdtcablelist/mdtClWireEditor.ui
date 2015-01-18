@@ -52,7 +52,7 @@
         <string>m2</string>
        </property>
        <property name="editionMode">
-        <enum>mdtDoubleEdit::WireEditionMode</enum>
+        <enum>mdtDoubleEdit::WireSectionEditionMode</enum>
        </property>
        <property name="minimum">
         <double>0.000000000000000</double>
@@ -76,6 +76,9 @@
       <widget class="mdtDoubleEdit" name="fld_LineicResistance">
        <property name="unit">
         <string>Ω/m</string>
+       </property>
+       <property name="editionMode">
+        <enum>mdtDoubleEdit::EngineeringNotationMode</enum>
        </property>
        <property name="minimum">
         <double>0.000000000000000</double>

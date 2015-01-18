@@ -133,7 +133,7 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
 
   /*! \brief Edit units
    */
-  void editUnit();
+  ///void editUnit();
 
   /*! \brief Edit selected unit
    */
@@ -267,11 +267,11 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
 
   /*! \brief Get unit editor
    */
-  mdtClUnitEditor *getUnitEditor();
+  ///mdtClUnitEditor *getUnitEditor();
 
   /*! \brief Create unit editor
    */
-  mdtClUnitEditor *createUnitEditor();
+  ///mdtClUnitEditor *createUnitEditor();
 
   /*! \brief Create wire table view
    */

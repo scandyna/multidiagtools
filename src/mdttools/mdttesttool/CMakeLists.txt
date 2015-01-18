@@ -99,6 +99,7 @@ set (TT_FORM_FILES
 
 # Header files for mdtCableList
 set (CL_HEADER_FILES 
+          mdtcablelist/mdtClApplicationWidgets.h
           mdtcablelist/mdtClVehicleTypeEditor.h
           mdtcablelist/mdtClConnectorEditor.h
           mdtcablelist/mdtClArticleEditor.h
@@ -118,6 +119,7 @@ set (CL_HEADER_FILES
 
 # Source files for mdtCableList
 set (CL_SOURCES_FILES 
+          mdtcablelist/mdtClApplicationWidgets.cpp
           mdtcablelist/mdtClVehicleTypeEditor.cpp
           mdtcablelist/mdtClConnectorData.cpp
           mdtcablelist/mdtClConnectorEditor.cpp

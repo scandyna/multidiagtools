@@ -267,12 +267,12 @@ QString mdtDoubleEdit::infinityString()
  * setUnit() and setEditionMode() are called by Qt Designer.
  * The call order of this functions depends on order in witch user set these properties.
  * To prevent incoherent behaviours, rules are:
- *  - When a edition mode else than default, unit setup must be done without calling setUnit()
+ *  - When a edition mode else than default or a engineering notation, unit setup must be done without calling setUnit()
  *  - setUnit() has effect only in default edition mode
  */
 void mdtDoubleEdit::setUnit(const QString & u)
 {
-  if(pvEditionMode != DefaultEditionMode){
+  if((pvEditionMode != DefaultEditionMode) && (pvEditionMode != EngineeringNotationMode)){
     return;
   }
   pvUnit = formatedUnit(u);
@@ -281,16 +281,21 @@ void mdtDoubleEdit::setUnit(const QString & u)
   bool ok;
   QString s = pvUnit.right(1);
   pvUnitExponent = s.toInt(&ok);
-  if(ok){
-    // unit ends with a exponent, see witch
-    if(pvUnitExponent == 2){
-      buildDefaultSquareUnitRanges();
-    }
-  }else{
+  if(!ok){
     // No exponent in unit
     pvUnitExponent = 1;
-    buildDefaultUnitRanges();
   }
+  buildUnitRanges();
+//   if(ok){
+//     // unit ends with a exponent, see witch
+//     if(pvUnitExponent == 2){
+//       buildDefaultSquareUnitRanges();
+//     }
+//   }else{
+//     // No exponent in unit
+//     pvUnitExponent = 1;
+//     buildDefaultUnitRanges();
+//   }
   clear();
 }
 
@@ -298,10 +303,12 @@ void mdtDoubleEdit::setEditionMode(mdtDoubleEdit::EditionMode_t mode)
 {
   pvEditionMode = mode;
   switch(pvEditionMode){
-    case DefaultEditionMode:
-      return;
-    case WireEditionMode:
+    case WireSectionEditionMode:
       setWireSectionEditionMode();
+      return;
+    case DefaultEditionMode:
+    case EngineeringNotationMode:
+      buildUnitRanges();
       return;
   }
 }
@@ -478,6 +485,33 @@ mdtDoubleEditUnitRange mdtDoubleEdit::getRange(double x)
   return mdtAlgorithms::rangeOf(x, pvUnitRanges);
 }
 
+void mdtDoubleEdit::buildUnitRanges()
+{
+  switch(pvEditionMode){
+    case DefaultEditionMode:
+      if(pvUnitExponent == 1){
+        buildDefaultUnitRanges();
+      }else if(pvUnitExponent == 2){
+        buildDefaultSquareUnitRanges();
+      }else{
+        buildDefaultUnitRanges();
+      }
+      return;
+    case WireSectionEditionMode:
+      buildWireSectionRanges();
+      return;
+    case EngineeringNotationMode:
+      if(pvUnitExponent == 1){
+        buildEngineeringNotationUnitRanges();
+      }else if(pvUnitExponent == 2){
+        buildEngineeringNotationSquareUnitRanges();
+      }else{
+        buildDefaultUnitRanges();
+      }
+      return;
+  }
+}
+
 void mdtDoubleEdit::buildDefaultUnitRanges()
 {
   pvUnitRanges.clear();
@@ -510,6 +544,42 @@ void mdtDoubleEdit::buildDefaultSquareUnitRanges()
   pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e-2, 1.0, 'd', -2));
   pvUnitRanges.push_back(mdtDoubleEditUnitRange(1.0, 1e4, '\0', 0));
   pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e4, 1e6, 'h', 4));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e6, 1e12, 'k', 6));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e12, 1e18, 'M', 12));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e18, 1e24, 'G', 18));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e24, 1e30, 'T', 24));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e30, 1e36, 'P', 30));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e36, std::numeric_limits<double>::infinity(), 'E', 36));
+}
+
+void mdtDoubleEdit::buildEngineeringNotationUnitRanges()
+{
+  pvUnitRanges.clear();
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(0.0, 1e-15, 'a', -18));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e-15, 1e-12, 'f', -15));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e-12, 1e-9, 'p', -12));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e-9, 1e-6, 'n', -9));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e-6, 1e-3, 'u', -6));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e-3, 1.0, 'm', -3));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1.0, 1e3, '\0', 0));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e3, 1e6, 'k', 3));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e6, 1e9, 'M', 6));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e9, 1e12, 'G', 9));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e12, 1e15, 'T', 12));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e15, 1e18, 'P', 15));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e18, std::numeric_limits<double>::infinity(), 'E', 18));
+}
+
+void mdtDoubleEdit::buildEngineeringNotationSquareUnitRanges()
+{
+  pvUnitRanges.clear();
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(0.0, 1e-30, 'a', -36));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e-30, 1e-24, 'f', -30));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e-24, 1e-18, 'p', -24));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e-18, 1e-12, 'n', -18));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e-12, 1e-6, 'u', -12));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e-6, 1.0, 'm', -6));
+  pvUnitRanges.push_back(mdtDoubleEditUnitRange(1.0, 1e6, '\0', 0));
   pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e6, 1e12, 'k', 6));
   pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e12, 1e18, 'M', 12));
   pvUnitRanges.push_back(mdtDoubleEditUnitRange(1e18, 1e24, 'G', 18));

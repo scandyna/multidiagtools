@@ -43,7 +43,7 @@
 #include "mdtTtBasicTesterWindow.h"
 #include "mdtTtBasicTestNodeCalibrationWindow.h"
 
-//#include <boost/concept_check.hpp>
+#include "mdtClApplicationWidgets.h"
 
 #include <QAction>
 #include <QMessageBox>
@@ -91,6 +91,7 @@ mdtClMainWindow::mdtClMainWindow()
 
 mdtClMainWindow::~mdtClMainWindow()
 {
+  mdtClApplicationWidgets::clear();
 }
 
 void mdtClMainWindow::openDatabase()
@@ -129,7 +130,7 @@ void mdtClMainWindow::updateWorkingOnVehicleTypes()
 {
   QMapIterator<QAction*, int> it(pvVehicleTypeActions);
   QAction *action;
-  mdtClUnitEditor *editor;
+  ///mdtClUnitEditor *editor;
 
   pvWorkingOnVehicleTypeList.clear();
   while(it.hasNext()){
@@ -142,10 +143,12 @@ void mdtClMainWindow::updateWorkingOnVehicleTypes()
   }
   qDebug() << "Working on vehicle type: " << pvWorkingOnVehicleTypeList;
   // Update unit editor
+  /**
   editor = getUnitEditor();
   if(editor == 0){
     return;
   }
+  */
   /**
   if(!editor->setWorkingOnVehicleTypeIdList(pvWorkingOnVehicleTypeList)){
     displayError(editor->lastError());
@@ -333,6 +336,7 @@ void mdtClMainWindow::viewUnit()
   }
 }
 
+/**
 void mdtClMainWindow::editUnit()
 {
   mdtClUnitEditor *editor;
@@ -356,46 +360,48 @@ void mdtClMainWindow::editUnit()
   window->raise();
   window->show();
 }
+*/
 
 void mdtClMainWindow::editSelectedUnit()
 {
-  mdtSqlTableSelection s;
-  mdtClUnitEditor *editor;
-  mdtSqlWindow *window;
-  mdtSqlTableWidget *view;
-
-  // Get unit view
-  view = getTableView("Unit_view");
-  if(view == 0){
-    return;
-  }
+   mdtSqlTableSelection s;
+//   mdtClUnitEditor *editor;
+//   mdtSqlWindow *window;
+   mdtSqlTableWidget *view;
+// 
+   // Get unit view
+   view = getTableView("Unit_view");
+   if(view == 0){
+     return;
+   }
   // Get ID of selected unit
   s = view->currentSelection("Unit_Id_PK");
   if(s.isEmpty()){
     return;
   }
-  // Get or create editor
-  editor = getUnitEditor();
-  if(editor == 0){
-    return;
-  }
-  // Get window
-  window = getEditorWindow(editor);
-  Q_ASSERT(window != 0);
-  // Select and show
-  Q_ASSERT(editor != 0);
-  if(!editor->select()){
-    displayError(editor->lastError());
-    return;
-  }
+//   // Get or create editor
+//   editor = getUnitEditor();
+//   if(editor == 0){
+//     return;
+//   }
+//   // Get window
+//   window = getEditorWindow(editor);
+//   Q_ASSERT(window != 0);
+//   // Select and show
+//   Q_ASSERT(editor != 0);
+//   if(!editor->select()){
+//     displayError(editor->lastError());
+//     return;
+//   }
   Q_ASSERT(s.rowCount() == 1);
-  if(!editor->setCurrentRow("Id_PK", s.data(0, "Unit_Id_PK"))){
-    displayError(editor->lastError());
-    return;
-  }
-  window->enableNavigation();
-  window->raise();
-  window->show();
+  mdtClApplicationWidgets::editUnit(s.data(0, "Unit_Id_PK"));
+//   if(!editor->setCurrentRow("Id_PK", s.data(0, "Unit_Id_PK"))){
+//     displayError(editor->lastError());
+//     return;
+//   }
+//   window->enableNavigation();
+//   window->raise();
+//   window->show();
 }
 
 void mdtClMainWindow::viewWire()
@@ -972,6 +978,7 @@ bool mdtClMainWindow::createUnitTableView()
   return true;
 }
 
+/**
 mdtClUnitEditor *mdtClMainWindow::getUnitEditor()
 {
   mdtClUnitEditor *editor;
@@ -983,7 +990,9 @@ mdtClUnitEditor *mdtClMainWindow::getUnitEditor()
     return createUnitEditor();
   }
 }
+*/
 
+/**
 mdtClUnitEditor *mdtClMainWindow::createUnitEditor()
 {
   mdtClUnitEditor *editor;
@@ -999,6 +1008,7 @@ mdtClUnitEditor *mdtClMainWindow::createUnitEditor()
 
   return editor;
 }
+*/
 
 mdtClWireEditor* mdtClMainWindow::getWirEditor()
 {
@@ -1401,6 +1411,10 @@ void mdtClMainWindow::closeEvent(QCloseEvent* event)
 {
   Q_ASSERT(event != 0);
 
+  if(!mdtClApplicationWidgets::closeOpenWidgets()){
+    event->ignore();
+    return;
+  }
   if(!deleteEditors()){
     event->ignore();
   }else{
@@ -1433,11 +1447,13 @@ void mdtClMainWindow::connectActions()
   connect(actEditArticle, SIGNAL(triggered()), this, SLOT(editArticle()));
   connect(actEditSelectedArticle, SIGNAL(triggered()), this, SLOT(editSelectedArticle()));
   ///connect(pbEditArticle, SIGNAL(clicked()), this, SLOT(editArticle()));
+
   // Unit edition
   connect(actViewUnit, SIGNAL(triggered()), this, SLOT(viewUnit()));
-  connect(actEditUnit, SIGNAL(triggered()), this, SLOT(editUnit()));
-  connect(actEditSelectedUnit, SIGNAL(triggered()), this, SLOT(editSelectedUnit()));
-  ///connect(pbEditUnit, SIGNAL(clicked()), this, SLOT(editUnit()));
+  ///connect(actEditUnit, SIGNAL(triggered()), this, SLOT(editUnit()));
+  connect(actEditUnit, SIGNAL(triggered()), mdtClApplicationWidgets::instancePtr(), SLOT(slotEditUnits()));
+  ///connect(actEditSelectedUnit, SIGNAL(triggered()), this, SLOT(editSelectedUnit()));
+
   // Link list
   connect(actViewLinkList, SIGNAL(triggered()), this, SLOT(viewLinkList()));
   // Link wires
@@ -1544,6 +1560,8 @@ bool mdtClMainWindow::openDatabaseSqlite()
     closeDatabase();
     return false;
   }
+  // Set also open database to Widgets container
+  mdtClApplicationWidgets::setDatabase(pvDatabaseManager->database());
 
   return true;
 }

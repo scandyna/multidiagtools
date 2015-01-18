@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -51,6 +51,12 @@ class mdtClVehicleTypeEditor : public mdtSqlForm
   /*! \brief Used to tell vehicle type widget that we have edited some data
    */
   ///void vehicleTypeEdited();
+
+ private slots:
+
+  /*! \brief Edit selected unit
+   */
+  void editSelectedUnit();
 
  private:
 

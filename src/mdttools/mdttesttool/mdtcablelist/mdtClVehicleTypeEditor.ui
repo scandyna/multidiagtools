@@ -6,70 +6,67 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>257</width>
-    <height>91</height>
+    <width>590</width>
+    <height>107</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QFormLayout" name="formLayout">
-   <item row="0" column="0">
-    <widget class="QLabel" name="lb_Type">
-     <property name="text">
-      <string>Type</string>
-     </property>
-    </widget>
+  <layout class="QHBoxLayout" name="horizontalLayout" stretch="5,2">
+   <item>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="lb_Type">
+       <property name="text">
+        <string>Type:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="fld_Type"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="lb_SubType">
+       <property name="text">
+        <string>Variant:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="fld_SubType">
+       <property name="minimumSize">
+        <size>
+         <width>200</width>
+         <height>0</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="lb_SeriesNumber">
+       <property name="text">
+        <string>Serie:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="fld_SeriesNumber"/>
+     </item>
+    </layout>
    </item>
-   <item row="0" column="1">
-    <widget class="QLineEdit" name="fld_Type">
-     <property name="maximumSize">
+   <item>
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
       <size>
-       <width>200</width>
-       <height>16777215</height>
+       <width>159</width>
+       <height>20</height>
       </size>
      </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="lb_SubType">
-     <property name="text">
-      <string>Variant</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="QLineEdit" name="fld_SubType">
-     <property name="minimumSize">
-      <size>
-       <width>200</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>200</width>
-       <height>16777215</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="lb_SeriesNumber">
-     <property name="text">
-      <string>Serie</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="QLineEdit" name="fld_SeriesNumber">
-     <property name="maximumSize">
-      <size>
-       <width>200</width>
-       <height>16777215</height>
-      </size>
-     </property>
-    </widget>
+    </spacer>
    </item>
   </layout>
  </widget>

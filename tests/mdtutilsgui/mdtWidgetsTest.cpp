@@ -144,20 +144,33 @@ void mdtWidgetsTest::mdtDoubleEditTest()
   QVERIFY(!e.valueIsValid());
   QVERIFY(e.value().isNull());
 
-  // Check edition mode / setUnit
+  /*
+   * Check edition mode / setUnit
+   */
+  // Default mode
   QVERIFY(e.editionMode() == mdtDoubleEdit::DefaultEditionMode);
   e.setUnit("m");
   QCOMPARE(e.unit(), QString("m"));
-  e.setEditionMode(mdtDoubleEdit::WireEditionMode);
-  QVERIFY(e.editionMode() == mdtDoubleEdit::WireEditionMode);
+  // Switch to wire section edition mode
+  e.setEditionMode(mdtDoubleEdit::WireSectionEditionMode);
+  QVERIFY(e.editionMode() == mdtDoubleEdit::WireSectionEditionMode);
   QCOMPARE(e.unit(), QString("m2"));
   e.setUnit("m");
-  QVERIFY(e.editionMode() == mdtDoubleEdit::WireEditionMode);
+  QVERIFY(e.editionMode() == mdtDoubleEdit::WireSectionEditionMode);
   QCOMPARE(e.unit(), QString("m2"));
+  // Switch to default mode
   e.setEditionMode(mdtDoubleEdit::DefaultEditionMode);
   QVERIFY(e.editionMode() == mdtDoubleEdit::DefaultEditionMode);
   e.setUnit("m");
   QCOMPARE(e.unit(), QString("m"));
+  // Switch to engineering notation mode
+  e.setEditionMode(mdtDoubleEdit::EngineeringNotationMode);
+  QVERIFY(e.editionMode() == mdtDoubleEdit::EngineeringNotationMode);
+  e.setUnit("V");
+  QCOMPARE(e.unit(), QString("V"));
+  // Switch to default mode and set no unit
+  e.setEditionMode(mdtDoubleEdit::DefaultEditionMode);
+  QVERIFY(e.editionMode() == mdtDoubleEdit::DefaultEditionMode);
   e.setUnit("");
   QCOMPARE(e.unit(), QString(""));
 
@@ -359,8 +372,8 @@ void mdtWidgetsTest::mdtDoubleEditTest()
   /*
    * Check wire section edition
    */
-  e.setEditionMode(mdtDoubleEdit::WireEditionMode);
-  QVERIFY(e.editionMode() == mdtDoubleEdit::WireEditionMode);
+  e.setEditionMode(mdtDoubleEdit::WireSectionEditionMode);
+  QVERIFY(e.editionMode() == mdtDoubleEdit::WireSectionEditionMode);
   // Set numeric values
   e.setValue(1.0);
   QCOMPARE(e.value(), QVariant(1.0));

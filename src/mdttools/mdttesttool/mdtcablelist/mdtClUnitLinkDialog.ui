@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>936</width>
+    <width>1050</width>
     <height>492</height>
    </rect>
   </property>
@@ -105,6 +105,9 @@
          <property name="unit">
           <string>m</string>
          </property>
+         <property name="editionMode">
+          <enum>mdtDoubleEdit::EngineeringNotationMode</enum>
+         </property>
          <property name="minimum">
           <double>0.000000000000000</double>
          </property>
@@ -124,6 +127,9 @@
         <widget class="mdtDoubleEdit" name="deResistance">
          <property name="unit">
           <string>Ω</string>
+         </property>
+         <property name="editionMode">
+          <enum>mdtDoubleEdit::EngineeringNotationMode</enum>
          </property>
          <property name="minimum">
           <double>0.000000000000000</double>
@@ -207,6 +213,20 @@
         <widget class="QLabel" name="lbWireColorEn">
          <property name="text">
           <string>color EN</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLabel" name="lbWireArticleCode">
+         <property name="text">
+          <string>article code</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="lbWireArticleCodeLabel">
+         <property name="text">
+          <string>Article code:</string>
          </property>
         </widget>
        </item>

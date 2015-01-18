@@ -45,7 +45,7 @@ class mdtClUnitEditor : public mdtSqlForm
 
   /*! \brief Destructor
    */
-  ~mdtClUnitEditor();
+  ///~mdtClUnitEditor();
 
   /*! \brief Setup tables
    */
@@ -53,7 +53,7 @@ class mdtClUnitEditor : public mdtSqlForm
 
   /*! \brief Set working on vehicle type ID list
    */
-  bool setWorkingOnVehicleTypeIdList(const QList<QVariant> & vtIdList);
+  ///bool setWorkingOnVehicleTypeIdList(const QList<QVariant> & vtIdList);
 
  private slots:
 

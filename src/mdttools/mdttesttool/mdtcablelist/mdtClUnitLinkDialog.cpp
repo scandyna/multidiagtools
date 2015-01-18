@@ -59,6 +59,8 @@ mdtClUnitLinkDialog::mdtClUnitLinkDialog(QWidget *parent, QSqlDatabase db)
   cbLinkDirection->setModelColumn(1);
   connect(cbLinkDirection, SIGNAL(currentIndexChanged(int)), this, SLOT(onCbLinkDirectionCurrentIndexChanged(int)));
   cbLinkDirection->setCurrentIndex(-1);
+  connect(pbSelectWire, SIGNAL(clicked()), this, SLOT(selectWire()));
+  connect(deLength, SIGNAL(valueChanged(double, bool)), this, SLOT(setLinkResistance(double, bool)));
   // Setup modification combobox
   cbModification->addItem("new", QVariant("new"));
   // Setup since version combobox
@@ -284,6 +286,7 @@ void mdtClUnitLinkDialog::setLinkData(mdtClLinkData &data)
   setLinkDirectionCode(data.value("LinkDirection_Code_FK"));
   deResistance->setValue(data.value("Resistance"));
   deLength->setValue(data.value("Length"));
+  updateWire(data.value("Wire_Id_FK"));
   // Update start/end units
   pvStartUnitId = pvLinkData.startConnectionData().value("Unit_Id_FK");
   updateStartUnit();
@@ -356,6 +359,51 @@ void mdtClUnitLinkDialog::onCbLinkDirectionCurrentIndexChanged(int row)
   lbLinkDirectionAsciiPicture->setText(data.toString());
   // Update link data
   pvLinkData.setValue("LinkDirection_Code_FK", linkDirectionCode());
+}
+
+void mdtClUnitLinkDialog::selectWire()
+{
+  mdtSqlSelectionDialog selectionDialog(this);
+  mdtSqlTableSelection s;
+  QString sql;
+
+  sql = "SELECT * FROM Wire_tbl";
+  selectionDialog.setMessage(tr("Please select wire:"));
+  selectionDialog.setQuery(sql, pvDatabase, false);
+  ///selectionDialog.setColumnHidden("Unit_Id_PK", true);
+  ///selectionDialog.setHeaderData("Vehicle", tr("Type"));
+  selectionDialog.addColumnToSortOrder("SchemaPosition", Qt::AscendingOrder);
+  selectionDialog.sort();
+  selectionDialog.resize(800, 300);
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return;
+  }
+  s = selectionDialog.selection("Id_PK");
+  Q_ASSERT(s.rowCount() == 1);
+  updateWire(s.data(0, "Id_PK"));
+}
+
+void mdtClUnitLinkDialog::setLinkResistance(double linkLength, bool linkLengthIsValid)
+{
+  mdtClLink lnk(0, pvDatabase);
+  QString sql;
+  QList<QVariant> dataList;
+  QVariant lineicResistance;
+  bool ok;
+
+  if((!linkLengthIsValid)||(deLength->isNull())){
+    deResistance->setValue(QVariant());
+    return;
+  }
+  sql = "SELECT LineicResistance FROM Wire_tbl WHERE Id_PK = " + pvLinkData.value("Wire_Id_FK").toString();
+  dataList = lnk.getDataList<QVariant>(sql, ok);
+  if(!ok){
+    deResistance->setValue(QVariant());
+    return;
+  }
+  Q_ASSERT(dataList.size() == 1);
+  lineicResistance = dataList.at(0);
+  updateLinkResistance(linkLength, lineicResistance);
 }
 
 void mdtClUnitLinkDialog::selectStartUnit()
@@ -768,6 +816,53 @@ void mdtClUnitLinkDialog::updateSinceVersionCombobox(const QVariant &data)
   }
   // Data not found
   cbSinceVersion->setCurrentIndex(-1);
+}
+
+void mdtClUnitLinkDialog::updateWire(const QVariant& wireId)
+{
+  mdtClLink lnk(0, pvDatabase);
+  QString sql;
+  QList<QSqlRecord> dataList;
+  QSqlRecord data;
+  bool ok;
+
+  pvLinkData.setValue("Wire_Id_FK", wireId);
+  if(wireId.isNull()){
+    lbWireModel->clear();
+    lbWireSection->clear();
+    lbWireColorEn->clear();
+    lbWireArticleCode->clear();
+    return;
+  }
+  sql = "SELECT ArticleCode, Model, Section, ColorEN, LineicResistance FROM Wire_tbl WHERE Id_PK = " + wireId.toString();
+  dataList = lnk.getDataList<QSqlRecord>(sql, ok);
+  if(!ok){
+    lbWireModel->setText("<Error!>");
+    lbWireSection->setText("<Error!>");
+    lbWireColorEn->setText("<Error!>");
+    lbWireArticleCode->setText("<Error!>");
+    return;
+  }
+  Q_ASSERT(dataList.size() == 1);
+  data = dataList.at(0);
+  lbWireModel->setText(data.value("Model").toString());
+  lbWireSection->setText(data.value("Section").toString());
+  lbWireColorEn->setText(data.value("ColorEN").toString());
+  lbWireArticleCode->setText(data.value("ArticleCode").toString());
+
+  updateLinkResistance(deLength->value(), data.value("LineicResistance"));
+}
+
+void mdtClUnitLinkDialog::updateLinkResistance(const QVariant& linkLength, const QVariant& lineicResistance)
+{
+  double r;
+
+  if((linkLength.isNull())||(lineicResistance.isNull())){
+    deResistance->setValue(QVariant());
+    return;
+  }
+  r = linkLength.toDouble() * lineicResistance.toDouble();
+  deResistance->setValue(r);
 }
 
 void mdtClUnitLinkDialog::updateStartUnit()

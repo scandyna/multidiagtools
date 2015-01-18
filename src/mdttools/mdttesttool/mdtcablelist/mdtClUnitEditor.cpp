@@ -61,9 +61,11 @@ mdtClUnitEditor::mdtClUnitEditor(QWidget *parent, QSqlDatabase db)
 {
 }
 
+/**
 mdtClUnitEditor::~mdtClUnitEditor()
 {
 }
+*/
 
 bool mdtClUnitEditor::setupTables()
 {
@@ -95,39 +97,39 @@ bool mdtClUnitEditor::setupTables()
   return true;
 }
 
-bool mdtClUnitEditor::setWorkingOnVehicleTypeIdList(const QList<QVariant> & vtIdList)
-{
-  QSqlTableModel *m;
-  QString sql;
-  int i;
-
-  pvWorkingOnVehicleTypeIdList = vtIdList;
-  // Get main table model
-  ///m = model("Unit_tbl");
-  m = 0;
-  if(m == 0){
-    pvLastError.setError(tr("Cannot set vehicle type filter because model was not set on 'Unit_tbl'."), mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClUnitEditor");
-    pvLastError.commit();
-    return false;
-  }
-  // Build the WHERE clause for the filter
-  if(pvWorkingOnVehicleTypeIdList.isEmpty()){
-    m->setFilter("");
-    return true;
-  }
-  Q_ASSERT(pvWorkingOnVehicleTypeIdList.size() > 0);
-  sql = "Id_PK IN (";
-  sql += "SELECT Unit_Id_FK FROM VehicleType_Unit_tbl WHERE VehicleType_Id_FK = " + pvWorkingOnVehicleTypeIdList.at(0).toString();
-  for(i = 1; i < pvWorkingOnVehicleTypeIdList.size(); ++i){
-    sql += " OR VehicleType_Id_FK = " + pvWorkingOnVehicleTypeIdList.at(i).toString();
-  }
-  sql += ")";
-
-  m->setFilter(sql);
-
-  return true;
-}
+// bool mdtClUnitEditor::setWorkingOnVehicleTypeIdList(const QList<QVariant> & vtIdList)
+// {
+//   QSqlTableModel *m;
+//   QString sql;
+//   int i;
+// 
+//   pvWorkingOnVehicleTypeIdList = vtIdList;
+//   // Get main table model
+//   ///m = model("Unit_tbl");
+//   m = 0;
+//   if(m == 0){
+//     pvLastError.setError(tr("Cannot set vehicle type filter because model was not set on 'Unit_tbl'."), mdtError::Error);
+//     MDT_ERROR_SET_SRC(pvLastError, "mdtClUnitEditor");
+//     pvLastError.commit();
+//     return false;
+//   }
+//   // Build the WHERE clause for the filter
+//   if(pvWorkingOnVehicleTypeIdList.isEmpty()){
+//     m->setFilter("");
+//     return true;
+//   }
+//   Q_ASSERT(pvWorkingOnVehicleTypeIdList.size() > 0);
+//   sql = "Id_PK IN (";
+//   sql += "SELECT Unit_Id_FK FROM VehicleType_Unit_tbl WHERE VehicleType_Id_FK = " + pvWorkingOnVehicleTypeIdList.at(0).toString();
+//   for(i = 1; i < pvWorkingOnVehicleTypeIdList.size(); ++i){
+//     sql += " OR VehicleType_Id_FK = " + pvWorkingOnVehicleTypeIdList.at(i).toString();
+//   }
+//   sql += ")";
+// 
+//   m->setFilter(sql);
+// 
+//   return true;
+// }
 
 void mdtClUnitEditor::assignVehicle()
 {

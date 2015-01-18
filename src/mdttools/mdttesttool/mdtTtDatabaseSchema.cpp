@@ -2982,20 +2982,29 @@ bool mdtTtDatabaseSchema::createVehicleTypeUnitView()
 
   sql = "CREATE VIEW VehicleType_Unit_view AS\n"\
         "SELECT\n"\
-        "VehicleType_tbl.Type ,\n"\
-        "VehicleType_tbl.SubType ,\n"\
-        "VehicleType_tbl.SeriesNumber ,\n"\
-        "Unit_tbl.Coordinate ,\n"\
-        "Unit_tbl.Cabinet ,\n"\
-        "Unit_tbl.SchemaPosition ,\n"\
-        "Unit_tbl.Alias ,\n"\
-        "VehicleType_Unit_tbl.VehicleType_Id_FK ,\n"\
-        "VehicleType_Unit_tbl.Unit_Id_FK\n"\
-        "FROM VehicleType_Unit_tbl\n"\
-        "JOIN VehicleType_tbl\n"\
-        "  ON VehicleType_Unit_tbl.VehicleType_Id_FK = VehicleType_tbl.Id_PK\n"\
-        "JOIN Unit_tbl\n"\
-        "  ON VehicleType_Unit_tbl.Unit_Id_FK = Unit_tbl.Id_PK";
+        " VT.Type ,\n"\
+        " VT.SubType ,\n"\
+        " VT.SeriesNumber ,\n"\
+        " U.Coordinate ,\n"\
+        " U.Cabinet ,\n"\
+        " U.SchemaPosition ,\n"\
+        " U.Alias ,\n"\
+        " A.ArticleCode ,\n"\
+        " A.Manufacturer,\n"\
+        " A.ManufacturerCode,\n"\
+        " A.DesignationEN,\n"\
+        " A.DesignationFR,\n"\
+        " A.DesignationDE,\n"\
+        " A.DesignationIT,\n"\
+        " VTU.VehicleType_Id_FK ,\n"\
+        " VTU.Unit_Id_FK\n"\
+        "FROM VehicleType_Unit_tbl VTU\n"\
+        " JOIN VehicleType_tbl VT\n"\
+        "  ON VT.Id_PK = VTU.VehicleType_Id_FK\n"\
+        " JOIN Unit_tbl U\n"\
+        "  ON U.Id_PK = VTU.Unit_Id_FK\n"\
+        " LEFT JOIN Article_tbl A\n"\
+        "  ON A.Id_PK = U.Article_Id_FK";
 
   return createView("VehicleType_Unit_view", sql);
 }

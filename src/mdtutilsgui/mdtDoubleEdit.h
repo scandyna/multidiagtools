@@ -94,8 +94,9 @@ class mdtDoubleEdit : public QWidget
    */
   enum EditionMode_t
   {
-    DefaultEditionMode,   /*!< Default edition mode */
-    WireEditionMode       /*!< Wire edition mode */
+    DefaultEditionMode,     /*!< Default edition mode */
+    WireSectionEditionMode, /*!< Wire section edition mode */
+    EngineeringNotationMode /*!< Wire edition mode */
   };
 
   /*! \brief Unit prefix ranges
@@ -328,6 +329,12 @@ class mdtDoubleEdit : public QWidget
    */
   mdtDoubleEditUnitRange getRange(double x);
 
+  /*! \brief Build unit ranges
+   *
+   * Will build unit ranges regarding pvEditionMode and pvUnitExponent
+   */
+  void buildUnitRanges();
+
   /*! \brief Build default unit ranges
    */
   void buildDefaultUnitRanges();
@@ -335,6 +342,14 @@ class mdtDoubleEdit : public QWidget
   /*! \brief Build default unit ranges for square unit (f.ex. [m2])
    */
   void buildDefaultSquareUnitRanges();
+
+  /*! \brief Build unit ranges for enineering notation
+   */
+  void buildEngineeringNotationUnitRanges();
+
+  /*! \brief Build unit ranges for enineering notation for square units (f.ex. [m2])
+   */
+  void buildEngineeringNotationSquareUnitRanges();
 
   /*! \brief Build ranges for wire section
    */

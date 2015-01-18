@@ -155,6 +155,14 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
    */
   void onCbLinkDirectionCurrentIndexChanged(int row);
 
+  /*! \brief Select wire
+   */
+  void selectWire();
+
+  /*! \brief Update link resistance (called when link length changed)
+   */
+  void setLinkResistance(double linkLength, bool linkLengthIsValid);
+
   /*! \brief Select the start unit
    */
   void selectStartUnit();
@@ -192,6 +200,14 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
   /*! \brief Update since version combobox
    */
   void updateSinceVersionCombobox(const QVariant &data);
+
+  /*! \brief Update wire data
+   */
+  void updateWire(const QVariant & wireId);
+
+  /*! \brief Calculate and update link reistance
+   */
+  void updateLinkResistance(const QVariant & linkLength, const QVariant & lineicResistance);
 
   /*! \brief Update start unit
    */

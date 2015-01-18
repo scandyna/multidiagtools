@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -29,7 +29,6 @@
 class QAction;
 class QCloseEvent;
 class mdtSqlForm;
-///class mdtSqlDataWidgetController;
 
 /*! \brief Main window for a database table view/editor
  *
@@ -56,10 +55,6 @@ class mdtSqlWindow : public QMainWindow, public Ui::mdtSqlWindow
   /*! \brief Destructor
    */
   ~mdtSqlWindow();
-
-  /*! \brief Set SQL table controller
-   */
-  ///void setTableController(std::shared_ptr<mdtSqlDataWidgetController> controller);
 
   /*! \brief Set the SQL form
    *
@@ -89,6 +84,17 @@ class mdtSqlWindow : public QMainWindow, public Ui::mdtSqlWindow
    */
   void disableNavigation();
 
+  /*! \brief Set navigation enabled or disabled
+   */
+  void setNavigationEnabled(bool enable)
+  {
+    if(enable){
+      enableNavigation();
+    }else{
+      disableNavigation();
+    }
+  }
+
   /*! \brief Enable edition
    *
    * Will add insert/revert/save/delete buttons.
@@ -102,6 +108,17 @@ class mdtSqlWindow : public QMainWindow, public Ui::mdtSqlWindow
    * \sa enableEdition()
    */
   void disableEdition();
+
+  /*! \brief Set edition enabled or disabled
+   */
+  void setEditionEnabled(bool enable)
+  {
+    if(enable){
+      enableEdition();
+    }else{
+      disableEdition();
+    }
+  }
 
  private:
 
