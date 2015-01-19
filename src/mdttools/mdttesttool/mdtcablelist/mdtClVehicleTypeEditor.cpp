@@ -58,6 +58,12 @@ bool mdtClVehicleTypeEditor::setupTables()
   if(!setupUnitTable()){
     return false;
   }
+  if(!setupLinkListTable()){
+    return false;
+  }
+  if(!setupLinkMarkingTable()){
+    return false;
+  }
 
   return true;
 }
@@ -126,6 +132,204 @@ bool mdtClVehicleTypeEditor::setupUnitTable()
   connect(widget->tableView(), SIGNAL(doubleClicked(const QModelIndex&)),this, SLOT(editSelectedUnit()));
   // Set some attributes on table view
   widget->addStretchToLocalBar();
+  widget->resizeViewToContents();
+
+  return true;
+}
+
+bool mdtClVehicleTypeEditor::setupLinkListTable()
+{
+  mdtSqlTableWidget *widget;
+  mdtSqlRelationInfo relationInfo;
+
+  relationInfo.setChildTableName("LinkList_view");
+  relationInfo.addRelation("Id_PK", "StartVehicleType_Id_PK", false);
+  relationInfo.addRelation("Id_PK", "EndVehicleType_Id_PK", false, "OR");
+  if(!addChildTable(relationInfo, tr("Link list"))){
+    return false;
+  }
+  // Get widget to continue setup
+  widget = sqlTableWidget("LinkList_view");
+  Q_ASSERT(widget != 0);
+  // Hide technical fields
+  widget->setColumnHidden("UnitConnectionStart_Id_FK", true);
+  widget->setColumnHidden("UnitConnectionEnd_Id_FK", true);
+  widget->setColumnHidden("LinkBeam_Id_FK", true);
+  widget->setColumnHidden("StartVehicleType_Id_PK", true);
+  widget->setColumnHidden("StartVehicleType", true);
+  widget->setColumnHidden("StartVehicleSubType", true);
+  widget->setColumnHidden("StartVehicleSerie", true);
+  widget->setColumnHidden("SinceVersion", true);
+  widget->setColumnHidden("Modification", true);
+  widget->setColumnHidden("LinkDirection_Code_FK", true);
+  widget->setColumnHidden("LinkType_Code_FK", true);
+  widget->setColumnHidden("StartUnit_Id_PK", true);
+  widget->setColumnHidden("UnitConnectorStart_Id_FK", true);
+  widget->setColumnHidden("StartConnectionType_Code_FK", true);
+  widget->setColumnHidden("EndVehicleType_Id_PK", true);
+  widget->setColumnHidden("EndUnit_Id_PK", true);
+  widget->setColumnHidden("UnitConnectorEnd_Id_FK", true);
+  widget->setColumnHidden("EndVehicleType", true);
+  widget->setColumnHidden("EndVehicleSubType", true);
+  widget->setColumnHidden("EndVehicleSerie", true);
+  widget->setColumnHidden("StartCabinet", true);
+  widget->setColumnHidden("StartCoordinate", true);
+  widget->setColumnHidden("StartFunctionFR", true);
+  widget->setColumnHidden("StartFunctionEN", true);
+  widget->setColumnHidden("StartFunctionDE", true);
+  widget->setColumnHidden("StartFunctionIT", true);
+  widget->setColumnHidden("EndCabinet", true);
+  widget->setColumnHidden("EndCoordinate", true);
+  // Give fields a user friendly name
+  widget->setHeaderData("StartSchemaPosition", tr("Start\nschema pos."));
+  widget->setHeaderData("StartAlias", tr("Start\nalias"));
+  widget->setHeaderData("StartUnitConnectorName", tr("Start\nconnector"));
+  widget->setHeaderData("StartUnitContactName", tr("Start\ncontact"));
+  ///widget->setHeaderData("StartUnitConnectionResistance", tr("Start\nconnection\nresistance"));
+  widget->setHeaderData("EndSchemaPosition", tr("End\nschema pos."));
+  widget->setHeaderData("EndAlias", tr("End\nalias"));
+  widget->setHeaderData("EndUnitConnectorName", tr("End\nconnector"));
+  widget->setHeaderData("EndUnitContactName", tr("End\ncontact"));
+  ///widget->setHeaderData("EndUnitConnectionResistance", tr("End\nconnection\nresistance"));
+  widget->setHeaderData("SinceVersion", tr("Since\nversion"));
+  ///widget->setHeaderData("LinkTypeNameEN", tr("Link type"));
+  ///widget->setHeaderData("Length", tr("Link\nlength"));
+  ///widget->setHeaderData("Resistance", tr("Link\nresistance"));
+  ///widget->setHeaderData("LinkDirectionPictureAscii", tr("Direction"));
+  ///widget->setHeaderData("StartSchemaPage", tr("Start\nschema\npage"));
+  ///widget->setHeaderData("EndSchemaPage", tr("End\nschema\npage"));
+  widget->setHeaderData("StartFunctionEN", tr("Start\nfunction (ENG)"));
+  widget->setHeaderData("EndFunctionEN", tr("End\nfunction (ENG)"));
+  ///widget->setHeaderData("StartSignalName", tr("Start\nsignal"));
+  ///widget->setHeaderData("EndSignalName", tr("End\nsignal"));
+  ///widget->setHeaderData("StartSwAddress", tr("Start\nSW address"));
+  ///widget->setHeaderData("EndSwAddress", tr("End\nSW address"));
+  // Setup sorting
+  widget->addColumnToSortOrder("StartSchemaPosition", Qt::AscendingOrder);
+  widget->addColumnToSortOrder("StartUnitConnectorName", Qt::AscendingOrder);
+  widget->addColumnToSortOrder("StartUnitContactName", Qt::AscendingOrder);
+  widget->addColumnToSortOrder("EndSchemaPosition", Qt::AscendingOrder);
+  widget->addColumnToSortOrder("EndUnitConnectorName", Qt::AscendingOrder);
+  widget->addColumnToSortOrder("EndUnitContactName", Qt::AscendingOrder);
+  widget->sort();
+
+  widget->resizeViewToContents();
+
+  return true;
+}
+
+bool mdtClVehicleTypeEditor::setupLinkMarkingTable()
+{
+  mdtSqlTableWidget *widget;
+  mdtSqlRelationInfo relationInfo;
+  QString sql;
+  QSqlQuery query(database());
+
+  /*
+   * Query to generate LinkMarking_view
+   * Should be generated by a dialog in some later time..
+   */
+  // Drop views
+  sql = "DROP VIEW IF EXISTS 'LinkMarking_view'\n";
+  if(!query.exec(sql)){
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError(tr("Cannot drop old 'LinkMarking_view'"), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClVehicleTypeEditor");
+    pvLastError.commit();
+    return false;
+  }
+  sql = "DROP VIEW IF EXISTS 'LinkMarkingFormatBase_view'\n";
+  if(!query.exec(sql)){
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError(tr("Cannot drop old 'LinkMarking_view'"), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClVehicleTypeEditor");
+    pvLastError.commit();
+    return false;
+  }
+  // Create view that provides formated basis
+  sql = "CREATE TEMP VIEW LinkMarkingFormatBase_view AS\n"\
+         "SELECT\n"\
+         " StartVehicleType_Id_PK,\n"\
+         " EndVehicleType_Id_PK,\n"\
+         // Format identification part
+         " CASE\n"\
+         "  WHEN Identification <> ''\n"\
+         "   THEN Identification\n"\
+         "  ELSE ' '\n"\
+         " END AS IdentificationPart ,\n"\
+         // Format start connection part
+         " CASE\n"\
+         "  WHEN (StartSchemaPosition <> '' AND StartUnitConnectorName <> '' AND StartUnitContactName <> '')\n"\
+         "   THEN StartSchemaPosition || '-' || StartUnitConnectorName || ';' || StartUnitContactName\n"\
+         "  WHEN (StartSchemaPosition <> '' AND StartUnitConnectorName <> '')\n"\
+         "   THEN StartSchemaPosition || '-' || StartUnitConnectorName\n"\
+         "  WHEN (StartSchemaPosition <> '' AND StartUnitContactName <> '')\n"\
+         "   THEN StartSchemaPosition || ';' || StartUnitContactName\n"\
+         "  WHEN (StartSchemaPosition <> '')\n"\
+         "   THEN StartSchemaPosition\n"\
+         "  ELSE '<Unknown StartConnectionPart>'\n"\
+         " END AS StartConnectionPart ,\n"\
+         // Format end connection part
+         " CASE\n"\
+         "  WHEN (EndSchemaPosition <> '' AND EndUnitConnectorName <> '' AND EndUnitContactName <> '')\n"\
+         "   THEN EndSchemaPosition || '-' || EndUnitConnectorName || ';' || EndUnitContactName\n"\
+         "  WHEN (EndSchemaPosition <> '' AND EndUnitConnectorName <> '')\n"\
+         "   THEN EndSchemaPosition || '-' || EndUnitConnectorName\n"\
+         "  WHEN (EndSchemaPosition <> '' AND EndUnitContactName <> '')\n"\
+         "   THEN EndSchemaPosition || ';' || EndUnitContactName\n"\
+         "  WHEN (EndSchemaPosition <> '')\n"\
+         "   THEN EndSchemaPosition\n"\
+         "  ELSE '<Unknown EndConnectionPart>'\n"\
+         " END AS EndConnectionPart \n"\
+         "FROM LinkList_view";
+  if(!query.exec(sql)){
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError(tr("Cannot generate 'LinkMarkingFormatBase_view'"), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClVehicleTypeEditor");
+    pvLastError.commit();
+    return false;
+  }
+  // Create link marking table itself
+  sql = "CREATE TEMP VIEW LinkMarking_view AS\n"\
+         "SELECT\n"\
+         " StartVehicleType_Id_PK,\n"\
+         " EndVehicleType_Id_PK,\n"\
+         " IdentificationPart || ' (' || StartConnectionPart || ')-(' || EndConnectionPart || ')' AS StartMarking ,\n"\
+         " IdentificationPart || ' (' || EndConnectionPart || ')-(' || StartConnectionPart || ')' AS EndMarking \n"\
+         "FROM LinkMarkingFormatBase_view";
+  if(!query.exec(sql)){
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError(tr("Cannot generate 'LinkMarking_view'"), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClVehicleTypeEditor");
+    pvLastError.commit();
+    return false;
+  }
+
+  // Setup relation and table view
+  relationInfo.setChildTableName("LinkMarking_view");
+  relationInfo.addRelation("Id_PK", "StartVehicleType_Id_PK", false);
+  relationInfo.addRelation("Id_PK", "EndVehicleType_Id_PK", false, "OR");
+  if(!addChildTable(relationInfo, tr("Link marking list"))){
+    return false;
+  }
+  // Get widget to continue setup
+  widget = sqlTableWidget("LinkMarking_view");
+  Q_ASSERT(widget != 0);
+  // Hide technical fields
+  widget->setColumnHidden("StartVehicleType_Id_PK", true);
+  widget->setColumnHidden("EndVehicleType_Id_PK", true);
+  // Give fields a user friendly name
+  widget->setHeaderData("StartMarking", tr("Start\nmarking"));
+  widget->setHeaderData("EndMarking", tr("End\nmarking"));
+  // Setup sorting
+  widget->addColumnToSortOrder("StartMarking", Qt::AscendingOrder);
+  widget->addColumnToSortOrder("EndMarking", Qt::AscendingOrder);
+  widget->sort();
+
   widget->resizeViewToContents();
 
   return true;

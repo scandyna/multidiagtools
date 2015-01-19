@@ -41,53 +41,53 @@ class mdtValueDouble
 
   /*! \brief Construct a null value
    */
-  mdtValueDouble();
+  mdtValueDouble() noexcept;
 
   /*! \brief Construct a value
    *
    * \param value Value to store
    * \param isOl Force OL flag to be set. If value is >= 0.0 , +OL is set, else -OL will be set
    */
-  mdtValueDouble(double value, bool isOl = false);
+  mdtValueDouble(double value, bool isOl = false) noexcept;
 
   /*! \brief Clear value
    *
    * After this call, value will be null
    */
-  void clear();
+  void clear() noexcept;
 
   /*! \brief Set value
    *
    * \param value Value to store
    * \param isOl Force OL flag to be set. If value is >= 0.0 , +OL is set, else -OL will be set
    */
-  void setValue(double value, bool isOl = false);
+  void setValue(double value, bool isOl = false) noexcept;
 
   /*! \brief Check if value is null
    */
-  inline bool isNull() const
+  inline bool isNull() const noexcept
   {
     return pvIsNull;
   }
 
   /*! \brief Get value
    */
-  inline double value() const
+  inline double value() const noexcept
   {
     return pvValue;
   }
 
   /*! \brief Check if value is -OL
    */
-  bool isMinusOl() const;
+  bool isMinusOl() const noexcept;
 
   /*! \brief Check if value is +OL
    */
-  bool isPlusOl() const;
+  bool isPlusOl() const noexcept;
 
   /*! \brief Check if value is NaN
    */
-  bool isNaN() const;
+  bool isNaN() const noexcept;
 
   /*! \brief Comparaison operator
    *
@@ -95,11 +95,11 @@ class mdtValueDouble
    *  - Both values are equal if value and flags are equal.
    *  - if one (or both) value is null, they are not considered equal (Same rule as IEEE 754 NaN)
    */
-  bool operator==(const mdtValueDouble & other) const;
+  bool operator==(const mdtValueDouble & other) const noexcept;
 
   /*! \brief Comparaison operator
    */
-  inline bool operator!=(const mdtValueDouble & other) const
+  inline bool operator!=(const mdtValueDouble & other) const noexcept
   {
     return !(*this == other);
   }
@@ -110,7 +110,7 @@ class mdtValueDouble
    *       (Same rule as IEEE 754 NaN)
    */
   /// \todo Use functions from cmath !
-  bool operator<(const mdtValueDouble & other) const
+  bool operator<(const mdtValueDouble & other) const noexcept
   {
     if((pvIsNull)||(other.pvIsNull)){
       return false;
@@ -124,7 +124,7 @@ class mdtValueDouble
    *       (Same rule as IEEE 754 NaN)
    */
   /// \todo Use functions from cmath !
-  bool operator<=(const mdtValueDouble & other) const
+  bool operator<=(const mdtValueDouble & other) const noexcept
   {
     if((pvIsNull)||(other.pvIsNull)){
       return false;
@@ -141,7 +141,7 @@ class mdtValueDouble
    *       (Same rule as IEEE 754 NaN)
    */
   /// \todo Use functions from cmath !
-  bool operator>(const mdtValueDouble & other) const
+  bool operator>(const mdtValueDouble & other) const noexcept
   {
     if((pvIsNull)||(other.pvIsNull)){
       return false;
@@ -155,7 +155,7 @@ class mdtValueDouble
    *       (Same rule as IEEE 754 NaN)
    */
   /// \todo Use functions from cmath !
-  bool operator>=(const mdtValueDouble & other) const
+  bool operator>=(const mdtValueDouble & other) const noexcept
   {
     if((pvIsNull)||(other.pvIsNull)){
       return false;
@@ -172,7 +172,7 @@ class mdtValueDouble
    *  - If one (or both) value is null, a null value will be returned (Same rule as IEEE 754 NaN)
    *  - For all other cases, including OL flags (wich are stored as infinity values), follows standard floating point arithmetic rules
    */
-  mdtValueDouble operator+(const mdtValueDouble & other) const
+  mdtValueDouble operator+(const mdtValueDouble & other) const noexcept
   {
     if((pvIsNull)||(other.pvIsNull)){
       return mdtValueDouble();
@@ -186,7 +186,7 @@ class mdtValueDouble
    *  - If one (or both) value is null, a null value will be returned (Same rule as IEEE 754 NaN)
    *  - For all other cases, including OL flags (wich are stored as infinity values), follows standard floating point arithmetic rules
    */
-  mdtValueDouble operator-(const mdtValueDouble & other) const
+  mdtValueDouble operator-(const mdtValueDouble & other) const noexcept
   {
     if((pvIsNull)||(other.pvIsNull)){
       return mdtValueDouble();
@@ -200,7 +200,7 @@ class mdtValueDouble
    *  - If one (or both) value is null, a null value will be returned (Same rule as IEEE 754 NaN)
    *  - For all other cases, including OL flags (wich are stored as infinity values), follows standard floating point arithmetic rules
    */
-  mdtValueDouble operator*(const mdtValueDouble & other) const
+  mdtValueDouble operator*(const mdtValueDouble & other) const noexcept
   {
     if((pvIsNull)||(other.pvIsNull)){
       return mdtValueDouble();
@@ -214,7 +214,7 @@ class mdtValueDouble
    *  - If one (or both) value is null, a null value will be returned (Same rule as IEEE 754 NaN)
    *  - For all other cases, including OL flags (wich are stored as infinity values), follows standard floating point arithmetic rules
    */
-  mdtValueDouble operator/(const mdtValueDouble & other) const
+  mdtValueDouble operator/(const mdtValueDouble & other) const noexcept
   {
     if((pvIsNull)||(other.pvIsNull)){
       return mdtValueDouble();

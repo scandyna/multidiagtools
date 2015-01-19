@@ -72,6 +72,14 @@ class mdtClVehicleTypeEditor : public mdtSqlForm
    */
   bool setupUnitTable();
 
+  /*! \brief Setup LinkList_view table
+   */
+  bool setupLinkListTable();
+
+  /*! \brief Setup link marking table
+   */
+  bool setupLinkMarkingTable();
+
   Q_DISABLE_COPY(mdtClVehicleTypeEditor);
 };
 

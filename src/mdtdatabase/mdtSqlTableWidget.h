@@ -127,7 +127,7 @@ class mdtSqlTableWidget :  public QWidget
    *               Note: parent table name is ignored.
    * \param userFriendlyChildTableName User friendly table name for child controller.
    *
-   * \pre Table model must be set with setTableName() begore calling this method.
+   * \pre Table controller must be set with setTableName() or setTableController() before calling this function.
    */
   bool addChildTable(const mdtSqlRelationInfo & relationInfo, const QString & userFriendlyChildTableName = QString());
 
@@ -139,19 +139,19 @@ class mdtSqlTableWidget :  public QWidget
 
   /*! \brief Start internal state machine
    *
-   * \pre Table model must be set with setTableName() begore calling this method.
+   * \pre Table controller must be set with setTableName() or setTableController() before calling this function.
    */
   void start() { pvController->start(); }
 
   /*! \brief Stop internal state machine
    *
-   * \pre Table model must be set with setTableName() begore calling this method.
+   * \pre Table controller must be set with setTableName() or setTableController() before calling this function.
    */
   void stop() { pvController->stop(); }
 
   /*! \brief Select data in main table
    *
-   * \pre Table model must be set with setTableName() begore calling this method.
+   * \pre Table controller must be set with setTableName() or setTableController() before calling this function.
    * \pre Internal state machine must run (see start() ).
    */
   bool select() { return pvController->select(); }
@@ -160,7 +160,7 @@ class mdtSqlTableWidget :  public QWidget
    *
    * Set filter based on SQL query WHERE part, without the WHERE keyword (f.ex. Id_PK = 15)
    *
-   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   * \pre Table controller must be set with setTableName() or setTableController() before calling this function.
    * \pre Internal state machine must run (see start() ).
    */
   bool setFilter(const QString & filter)
@@ -175,7 +175,7 @@ class mdtSqlTableWidget :  public QWidget
    *
    * Internally, a SQL statement is generated linke: fieldName = matchData
    *
-   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   * \pre Table controller must be set with setTableName() or setTableController() before calling this function.
    * \pre Internal state machine must run (see start() ).
    */
   bool setFilter(const QString & fieldName, const QVariant & matchData)
@@ -190,7 +190,7 @@ class mdtSqlTableWidget :  public QWidget
    *
    * Internally, a SQL statement is generated linke: fieldName IN (matchData[0], matchData[1], ...)
    *
-   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   * \pre Table controller must be set with setTableName() or setTableController() before calling this function.
    * \pre Internal state machine must run (see start() ).
    */
   bool setFilter(const QString & fieldName, const QList<QVariant> & matchDataList)
@@ -211,7 +211,7 @@ class mdtSqlTableWidget :  public QWidget
 
   /*! \brief Get current data for given field name
    *
-   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   * \pre Table controller must be set with setTableName() or setTableController() before calling this function.
    */
   inline QVariant currentData(const QString &fieldName)
   {
@@ -220,7 +220,7 @@ class mdtSqlTableWidget :  public QWidget
 
   /*! \brief Get current data for given field name
    *
-   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   * \pre Table controller must be set with setTableName() or setTableController() before calling this function.
    */
   inline QVariant currentData(const QString &fieldName, bool & ok)
   {

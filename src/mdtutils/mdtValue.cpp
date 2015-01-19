@@ -29,25 +29,25 @@
  * mdtValueDouble
  */
 
-mdtValueDouble::mdtValueDouble()
+mdtValueDouble::mdtValueDouble() noexcept
  : pvValue(std::numeric_limits<double>::quiet_NaN()),
    pvIsNull(true)
 {
 }
 
-mdtValueDouble::mdtValueDouble(double value, bool isOl)
+mdtValueDouble::mdtValueDouble(double value, bool isOl) noexcept
 {
   setValue(value, isOl);
 }
 
-void mdtValueDouble::clear()
+void mdtValueDouble::clear() noexcept
 {
   pvValue = std::numeric_limits<double>::quiet_NaN();
   pvIsNull = true;
 }
 
 /// \todo Use functions from cmath !
-void mdtValueDouble::setValue(double value, bool isOl)
+void mdtValueDouble::setValue(double value, bool isOl) noexcept
 {
   pvIsNull = false;
   if(isOl){
@@ -61,7 +61,7 @@ void mdtValueDouble::setValue(double value, bool isOl)
   }
 }
 
-bool mdtValueDouble::isMinusOl() const
+bool mdtValueDouble::isMinusOl() const noexcept
 {
   if(pvValue > 0.0){
     return false;
@@ -69,7 +69,7 @@ bool mdtValueDouble::isMinusOl() const
   return std::isinf(pvValue);
 }
 
-bool mdtValueDouble::isPlusOl() const
+bool mdtValueDouble::isPlusOl() const noexcept
 {
   if(pvValue < 0.0){
     return false;
@@ -77,13 +77,13 @@ bool mdtValueDouble::isPlusOl() const
   return std::isinf(pvValue);
 }
 
-bool mdtValueDouble::isNaN() const
+bool mdtValueDouble::isNaN() const noexcept
 {
   return std::isnan(pvValue);
 }
 
 /// \todo Use functions from cmath !
-bool mdtValueDouble::operator==(const mdtValueDouble & other) const
+bool mdtValueDouble::operator==(const mdtValueDouble & other) const noexcept
 {
   if(pvIsNull || other.pvIsNull){
     return false;
