@@ -3462,6 +3462,11 @@ bool mdtTtDatabaseSchema::createLinkListView()
               " UCE.Name AS EndUnitConnectorName ,\n"\
               " UCNXE.UnitContactName AS EndUnitContactName,\n"\
               " UCNXE.ConnectionType_Code_FK AS EndConnectionType_Code_FK,\n"\
+              " W.Model AS WireModel,\n"\
+              " LNK.Length,\n"\
+              " W.Section,\n"\
+              " LNK.Resistance,\n"\
+              " W.ColorEN AS WireColorEN,\n"\
               " UCNXE.FunctionEN AS EndFunctionEN,\n"\
               " UCNXE.FunctionFR AS EndFunctionFR,\n"\
               " UCNXE.FunctionDE AS EndFunctionDE,\n"\
@@ -3491,7 +3496,9 @@ bool mdtTtDatabaseSchema::createLinkListView()
           " JOIN LinkType_tbl\n"\
           "  ON LinkType_tbl.Code_PK = LNK.LinkType_Code_FK\n"\
           " JOIN LinkDirection_tbl\n"\
-          "  ON LinkDirection_tbl.Code_PK = LNK.LinkDirection_Code_FK\n";
+          "  ON LinkDirection_tbl.Code_PK = LNK.LinkDirection_Code_FK\n"\
+          " LEFT JOIN Wire_tbl W\n"\
+          "  ON W.Id_PK = LNK.Wire_Id_FK";
 
   return createView("LinkList_view", sql);
 }

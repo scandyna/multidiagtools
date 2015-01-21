@@ -58,6 +58,14 @@ class mdtClVehicleTypeEditor : public mdtSqlForm
    */
   void editSelectedUnit();
 
+  /*! \brief Edit selected link
+   */
+  void editLink();
+
+  /*! \brief View a path of links
+   */
+  void viewLinkPath();
+
  private:
 
   /*! \brief Get current vehicle type ID

@@ -25,6 +25,10 @@
 #include "mdtSqlRelation.h"
 #include "mdtSqlSelectionDialog.h"
 #include "mdtSqlTableSelection.h"
+#include "mdtClLink.h"
+#include "mdtClLinkData.h"
+#include "mdtClUnitLinkDialog.h"
+#include "mdtClPathGraphDialog.h"
 #include "mdtError.h"
 #include <QSqlTableModel>
 #include <QSqlQueryModel>
@@ -81,6 +85,83 @@ void mdtClVehicleTypeEditor::editSelectedUnit()
   }
   Q_ASSERT(s.rowCount() == 1);
   mdtClApplicationWidgets::editUnit(s.data(0, "Unit_Id_FK"));
+}
+
+void mdtClVehicleTypeEditor::editLink()
+{
+  mdtSqlTableWidget *linkWidget;
+  mdtClUnitLinkDialog dialog(0, database());
+  QVariant vehicleTypeId, startConnectionId, endConnectionId;
+  mdtClLinkData linkData;
+  mdtClLink lnk(0, database());
+  bool ok;
+
+  linkWidget = sqlTableWidget("LinkList_view");
+  Q_ASSERT(linkWidget != 0);
+  // Get vehicle type ID
+  vehicleTypeId = currentVehicleTypeId();
+  if(vehicleTypeId.isNull()){
+    return;
+  }
+  // Get connection IDs
+  startConnectionId = linkWidget->currentData("UnitConnectionStart_Id_FK");
+  endConnectionId = linkWidget->currentData("UnitConnectionEnd_Id_FK");
+  if(startConnectionId.isNull() || endConnectionId.isNull()){
+    QMessageBox msgBox;
+    msgBox.setText(tr("Please select a link."));
+    msgBox.setIcon(QMessageBox::Information);
+    msgBox.exec();
+    return;
+  }
+  // Get current link data
+  linkData = lnk.getLinkData(startConnectionId, endConnectionId,true, true, ok);
+  if(!ok){
+    pvLastError = lnk.lastError();
+    displayLastError();
+    return;
+  }
+  // Setup and show dialog
+  dialog.setWorkingOnVehicleTypeId(vehicleTypeId);
+  dialog.setLinkData(linkData);
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
+  // Edit link
+  if(!lnk.editLink(startConnectionId, endConnectionId, dialog.linkData())){
+    pvLastError = lnk.lastError();
+    displayLastError();
+    return;
+  }
+  // Update links view
+  select("LinkList_view");
+}
+
+void mdtClVehicleTypeEditor::viewLinkPath()
+{
+  mdtClPathGraphDialog dialog(0, database());
+  mdtSqlTableWidget *widget;
+  QVariant startConnectionId;
+
+  widget = sqlTableWidget("LinkList_view");
+  Q_ASSERT(widget != 0);
+  // Get selected row
+  startConnectionId = widget->currentData("UnitConnectionStart_Id_FK");
+  if(startConnectionId.isNull()){
+    QMessageBox msgBox;
+    msgBox.setText(tr("Please select a link."));
+    msgBox.setIcon(QMessageBox::Information);
+    msgBox.exec();
+    return;
+  }
+  // Setup and show dialog
+  if(!dialog.loadLinkList()){
+    return;
+  }
+  if(!dialog.drawPath(startConnectionId)){
+    return;
+  }
+
+  dialog.exec();
 }
 
 QVariant mdtClVehicleTypeEditor::currentVehicleTypeId()
@@ -141,6 +222,7 @@ bool mdtClVehicleTypeEditor::setupLinkListTable()
 {
   mdtSqlTableWidget *widget;
   mdtSqlRelationInfo relationInfo;
+  QPushButton *pb;
 
   relationInfo.setChildTableName("LinkList_view");
   relationInfo.addRelation("Id_PK", "StartVehicleType_Id_PK", false);
@@ -166,6 +248,7 @@ bool mdtClVehicleTypeEditor::setupLinkListTable()
   widget->setColumnHidden("StartUnit_Id_PK", true);
   widget->setColumnHidden("UnitConnectorStart_Id_FK", true);
   widget->setColumnHidden("StartConnectionType_Code_FK", true);
+  widget->setColumnHidden("EndConnectionType_Code_FK", true);
   widget->setColumnHidden("EndVehicleType_Id_PK", true);
   widget->setColumnHidden("EndUnit_Id_PK", true);
   widget->setColumnHidden("UnitConnectorEnd_Id_FK", true);
@@ -205,6 +288,7 @@ bool mdtClVehicleTypeEditor::setupLinkListTable()
   ///widget->setHeaderData("StartSwAddress", tr("Start\nSW address"));
   ///widget->setHeaderData("EndSwAddress", tr("End\nSW address"));
   // Setup sorting
+  widget->addColumnToSortOrder("Identification", Qt::AscendingOrder);
   widget->addColumnToSortOrder("StartSchemaPosition", Qt::AscendingOrder);
   widget->addColumnToSortOrder("StartUnitConnectorName", Qt::AscendingOrder);
   widget->addColumnToSortOrder("StartUnitContactName", Qt::AscendingOrder);
@@ -212,7 +296,17 @@ bool mdtClVehicleTypeEditor::setupLinkListTable()
   widget->addColumnToSortOrder("EndUnitConnectorName", Qt::AscendingOrder);
   widget->addColumnToSortOrder("EndUnitContactName", Qt::AscendingOrder);
   widget->sort();
+  // Setup link edition button
+  pb = new QPushButton(tr("Edit ..."));
+  connect(pb, SIGNAL(clicked()), this, SLOT(editLink()));
+  widget->addWidgetToLocalBar(pb);
+  connect(widget->tableView(), SIGNAL(doubleClicked(const QModelIndex&)),this, SLOT(editLink()));
+  // Setup link path view button
+  pb = new QPushButton(tr("View path"));
+  connect(pb, SIGNAL(clicked()), this, SLOT(viewLinkPath()));
+  widget->addWidgetToLocalBar(pb);
 
+  widget->addStretchToLocalBar();
   widget->resizeViewToContents();
 
   return true;

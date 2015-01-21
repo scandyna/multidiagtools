@@ -1787,17 +1787,16 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerRoTest()
   QVERIFY(ok);
   QVERIFY(wc.currentData("Remarks", ok).isNull());
   QVERIFY(ok);
-  /**
-   * \todo Corriger ! Read Only ici
-   */
-  /*
-   * Check edition
-   *  - Edit current row
-   *  - Check in model
-   *  - Check in widgets
-   *  - Check that database was not updated
-   */
-  // Check control buttons states - before edition
+
+//   /*
+//    * Check edition
+//    *  - Edit current row
+//    *  - Check in model
+//    *  - Check in widgets
+//    *  - Check that database was not updated
+//    */
+
+  // Check control buttons states
   QVERIFY(!w.toFirstEnabled);
   QVERIFY(w.toLastEnabled);
   QVERIFY(w.toNextEnabled);
@@ -1806,20 +1805,91 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerRoTest()
   QVERIFY(!w.revertEnabled);
   QVERIFY(w.insertEnabled);
   QVERIFY(w.removeEnabled);
-  // Edit in widgets and submit
+  // Try to edit in widgets
   QTest::keyClicks(w.fld_Remarks, "Edited remark on Andy");
-  QVERIFY(!wc.allDataAreSaved());
-  // Check control buttons states - after edition
+  // Data saved flag must be untouched
+  QVERIFY(wc.allDataAreSaved());
+  // Check control buttons states - must be keeped unchanged (RO)
   QVERIFY(!w.toFirstEnabled);
-  QVERIFY(!w.toLastEnabled);
-  QVERIFY(!w.toNextEnabled);
+  QVERIFY(w.toLastEnabled);
+  QVERIFY(w.toNextEnabled);
   QVERIFY(!w.toPreviousEnabled);
-  QVERIFY(w.submitEnabled);
-  QVERIFY(w.revertEnabled);
-  QVERIFY(!w.insertEnabled);
-  QVERIFY(!w.removeEnabled);
-  // Submit
-  QVERIFY(wc.submitAndWait());
+  QVERIFY(!w.submitEnabled);
+  QVERIFY(!w.revertEnabled);
+  QVERIFY(w.insertEnabled);
+  QVERIFY(w.removeEnabled);
+//   QVERIFY(!w.toFirstEnabled);
+//   QVERIFY(!w.toLastEnabled);
+//   QVERIFY(!w.toNextEnabled);
+//   QVERIFY(!w.toPreviousEnabled);
+//   QVERIFY(w.submitEnabled);
+//   QVERIFY(w.revertEnabled);
+//   QVERIFY(!w.insertEnabled);
+//   QVERIFY(!w.removeEnabled);
+
+  // Submit - Must not work
+  QVERIFY(!wc.submitAndWait());
+  // All data are saved flag must allways be true
+  QVERIFY(wc.allDataAreSaved());
+  // Check that model is keeped unchanged
+  QVERIFY(wc.select());
+  QCOMPARE(wc.rowCount(), 4);
+  QCOMPARE(wc.currentRow(), 0);
+  QCOMPARE(wc.currentData("FirstName", ok), QVariant("Andy"));
+  QVERIFY(ok);
+  QVERIFY(wc.currentData("Remarks", ok).isNull());
+  QVERIFY(ok);
+  // Check widget coherence
+  QVERIFY(w.fld_FirstName->isEnabled());
+  QVERIFY(w.fld_Remarks->isEnabled());
+  QCOMPARE(w.fld_FirstName->text(), QString("Andy"));
+  QVERIFY(w.fld_Remarks->text().isEmpty());
+  /*
+   * Check navigation and current data
+   */
+  // Current buttons states
+  QVERIFY(!w.toFirstEnabled);
+  QVERIFY(w.toLastEnabled);
+  QVERIFY(w.toNextEnabled);
+  QVERIFY(!w.toPreviousEnabled);
+  // Movto next
+  wc.toNext();
+  // Check navigation buttons states
+  QVERIFY(w.toFirstEnabled);
+  QVERIFY(w.toLastEnabled);
+  QVERIFY(w.toNextEnabled);
+  QVERIFY(w.toPreviousEnabled);
+  // Check data
+  QCOMPARE(wc.currentRow(), 1);
+  QCOMPARE(wc.currentData("FirstName", ok), QVariant("Bety"));
+  QVERIFY(ok);
+  QCOMPARE(wc.currentData("Remarks", ok), QVariant("Remark on Bety"));
+  QVERIFY(ok);
+  /*
+   * Enable sort and check current data
+   */
+  wc.addColumnToSortOrder("FirstName", Qt::AscendingOrder);
+  wc.sort();
+  wc.toFirst();
+  QCOMPARE(wc.currentData("FirstName", ok), QVariant("Andy"));
+  QVERIFY(ok);
+  wc.toNext();
+  QCOMPARE(wc.currentData("FirstName", ok), QVariant("Bety"));
+  QVERIFY(ok);
+  wc.toNext();
+  QCOMPARE(wc.currentData("FirstName", ok), QVariant("Charly"));
+  QVERIFY(ok);
+  wc.toNext();
+  QCOMPARE(wc.currentData("FirstName", ok), QVariant("Zeta"));
+  QVERIFY(ok);
+
+
+  /**
+   * \todo Corriger classe + terminer test !
+   */
+
+
+  
   // Check that model was updated
   QVERIFY(wc.allDataAreSaved());
   QCOMPARE(wc.currentRow(), 0);

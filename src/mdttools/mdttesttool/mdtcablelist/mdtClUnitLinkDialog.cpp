@@ -60,6 +60,7 @@ mdtClUnitLinkDialog::mdtClUnitLinkDialog(QWidget *parent, QSqlDatabase db)
   connect(cbLinkDirection, SIGNAL(currentIndexChanged(int)), this, SLOT(onCbLinkDirectionCurrentIndexChanged(int)));
   cbLinkDirection->setCurrentIndex(-1);
   connect(pbSelectWire, SIGNAL(clicked()), this, SLOT(selectWire()));
+  connect(pbClearWire, SIGNAL(clicked()), this, SLOT(clearWire()));
   connect(deLength, SIGNAL(valueChanged(double, bool)), this, SLOT(setLinkResistance(double, bool)));
   // Setup modification combobox
   cbModification->addItem("new", QVariant("new"));
@@ -383,6 +384,11 @@ void mdtClUnitLinkDialog::selectWire()
   updateWire(s.data(0, "Id_PK"));
 }
 
+void mdtClUnitLinkDialog::clearWire()
+{
+  updateWire(QVariant());
+}
+
 void mdtClUnitLinkDialog::setLinkResistance(double linkLength, bool linkLengthIsValid)
 {
   mdtClLink lnk(0, pvDatabase);
@@ -451,12 +457,15 @@ void mdtClUnitLinkDialog::selectStartUnit()
   selectionDialog.setColumnHidden("Unit_Id_PK", true);
   selectionDialog.setColumnHidden("VehicleType_Id_PK", true);
   selectionDialog.setColumnHidden("Article_Id_PK", true);
-  selectionDialog.setHeaderData("Vehicle", tr("Type"));
+  ///selectionDialog.setHeaderData("Vehicle", tr("Type"));
   selectionDialog.setHeaderData("SubType", tr("Sub type"));
   selectionDialog.setHeaderData("SeriesNumber", tr("Serie"));
   selectionDialog.setHeaderData("SchemaPosition", tr("Schema position"));
   selectionDialog.setHeaderData("ArticleCode", tr("Article code"));
   selectionDialog.setHeaderData("DesignationEN", tr("Designation (ENG)"));
+  selectionDialog.addColumnToSortOrder("Type", Qt::AscendingOrder);
+  selectionDialog.addColumnToSortOrder("SubType", Qt::AscendingOrder);
+  selectionDialog.addColumnToSortOrder("SeriesNumber", Qt::AscendingOrder);
   selectionDialog.addColumnToSortOrder("SchemaPosition", Qt::AscendingOrder);
   selectionDialog.sort();
   ///selectionDialog.addSelectionResultColumn("Unit_Id_PK");
@@ -527,6 +536,9 @@ void mdtClUnitLinkDialog::selectEndUnit()
   selectionDialog.setHeaderData("SchemaPosition", tr("Schema position"));
   selectionDialog.setHeaderData("ArticleCode", tr("Article code"));
   selectionDialog.setHeaderData("DesignationEN", tr("Designation (ENG)"));
+  selectionDialog.addColumnToSortOrder("Type", Qt::AscendingOrder);
+  selectionDialog.addColumnToSortOrder("SubType", Qt::AscendingOrder);
+  selectionDialog.addColumnToSortOrder("SeriesNumber", Qt::AscendingOrder);
   selectionDialog.addColumnToSortOrder("SchemaPosition", Qt::AscendingOrder);
   selectionDialog.sort();
   ///selectionDialog.addSelectionResultColumn("Unit_Id_PK");
@@ -832,6 +844,7 @@ void mdtClUnitLinkDialog::updateWire(const QVariant& wireId)
     lbWireSection->clear();
     lbWireColorEn->clear();
     lbWireArticleCode->clear();
+    updateLinkResistance(QVariant(), QVariant());
     return;
   }
   sql = "SELECT ArticleCode, Model, Section, ColorEN, LineicResistance FROM Wire_tbl WHERE Id_PK = " + wireId.toString();

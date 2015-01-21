@@ -336,7 +336,11 @@ class mdtSqlForm : public QWidget
    */
   inline bool setCurrentRow(const QString & fieldName, const QVariant & matchData)
   {
-    return pvController->setCurrentRow(fieldName, matchData);
+    if(!pvController->setCurrentRow(fieldName, matchData)){
+      pvLastError = pvController->lastError();
+      return false;
+    }
+    return true;
   }
 
   /*! \brief Set the first row that matches given criteria as current row.

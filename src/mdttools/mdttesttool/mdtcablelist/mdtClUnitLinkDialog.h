@@ -107,6 +107,17 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
    */
   void setWorkingOnVehicleTypeIdList(const QList<QVariant> & vtIdList);
 
+  /*! \brief Set the vehicle type ID on witch we are working on
+   *
+   * This will limit the unit selections to those that exists for given vehicle type.
+   */
+  void setWorkingOnVehicleTypeId(const QVariant & vtId)
+  {
+    QList<QVariant> lst;
+    lst.append(vtId);
+    setWorkingOnVehicleTypeIdList(lst);
+  }
+
   /*! \brief Clear the working on vehicle type list
    *
    * \sa setWorkingOnVehicleTypeIdList()
@@ -158,6 +169,10 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
   /*! \brief Select wire
    */
   void selectWire();
+
+  /*! \brief Set wire to Null
+   */
+  void clearWire();
 
   /*! \brief Update link resistance (called when link length changed)
    */
