@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -236,9 +236,11 @@ QList<QVariant> mdtTtLogicalTestCable::getToUnitConnectionLinkedUnitConnectorIdL
   QSqlError sqlError;
   QVariant id;
   int i;
+  bool ok;
 
-  unitConnectionIdList = pvPathGraph->getLinkedConnectionIdList(fromUnitConnectionId);
-  if(unitConnectionIdList.isEmpty()){
+  unitConnectionIdList = pvPathGraph->getLinkedConnectionIdList(fromUnitConnectionId, ok);
+  if(!ok){
+    pvLastError = pvPathGraph->lastError();
     return unitConnectorIdList;
   }
   // Get list of connector ID for each connection
@@ -276,9 +278,11 @@ QList<QVariant> mdtTtLogicalTestCable::getToUnitConnectionIdLinkedUnitConnection
   QSqlError sqlError;
   QVariant id;
   int i;
+  bool ok;
 
-  allUnitConnectionIdList = pvPathGraph->getLinkedConnectionIdList(fromUnitConnectionId);
-  if(allUnitConnectionIdList.isEmpty()){
+  allUnitConnectionIdList = pvPathGraph->getLinkedConnectionIdList(fromUnitConnectionId, ok);
+  if(!ok){
+    pvLastError = pvPathGraph->lastError();
     return unitConnectionIdList;
   }
   // Get list of unit connections that are part of unit connector

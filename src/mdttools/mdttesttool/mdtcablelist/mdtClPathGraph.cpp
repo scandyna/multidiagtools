@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -210,7 +210,7 @@ void mdtClPathGraph::removeAddedLinks()
   }
 }
 
-QList<QVariant> mdtClPathGraph::getLinkedConnectionIdList(const QVariant & fromConnectionId)
+QList<QVariant> mdtClPathGraph::getLinkedConnectionIdList(const QVariant & fromConnectionId, bool & ok)
 {
   QList<QVariant> connectionIdList;
   mdtClPathGraphEdgeData edgeData;
@@ -221,6 +221,7 @@ QList<QVariant> mdtClPathGraph::getLinkedConnectionIdList(const QVariant & fromC
 
   // Check if we have requested connection ID in the graph
   if(!pvGraphVertices.contains(fromConnectionId.toInt())){
+    ok = false;
     pvLastError.setError(QObject::tr("Cannot get list of linked connections."), mdtError::Error);
     pvLastError.setInformativeText(QObject::tr("Plese see details for more informations."));
     pvLastError.setSystemError(-1, QObject::tr("Start connection ID not found") + " (ID: " + fromConnectionId.toString() + ").");
@@ -245,6 +246,7 @@ QList<QVariant> mdtClPathGraph::getLinkedConnectionIdList(const QVariant & fromC
       }
     }
   }
+  ok = true;
 
   return connectionIdList;
 }
@@ -259,7 +261,7 @@ QList<QVariant> mdtClPathGraph::getLinkedConnectorIdList(const QVariant & fromCo
   QList<QVariant> fromConnectionIdList;
   QList<QVariant> linkedConnectionIdList;
   int i;
-  int k;
+  ///int k;
 
   // Get fromConnector's list of connections
   fromConnectionIdList = unit.getConnectionIdListPartOfConnectorId(fromConnectorId, ok);
@@ -274,22 +276,52 @@ QList<QVariant> mdtClPathGraph::getLinkedConnectorIdList(const QVariant & fromCo
     }
   }
   // Add linked connectors for each connection
-  for(i = 0; i < fromConnectionIdList.size(); ++i){
+  for(auto & fromConnectionId : fromConnectionIdList){
     // Get linked connections
-    linkedConnectionIdList = getLinkedConnectionIdList(fromConnectionIdList.at(i));
-    for(k = 0; k < linkedConnectionIdList.size(); ++k){
-      // Get connector ID
-      connectorId = unit.getConnectorIdOfConnectionId(linkedConnectionIdList.at(k), ok);
+    if(connectionExists(fromConnectionId)){
+      linkedConnectionIdList = getLinkedConnectionIdList(fromConnectionId, *ok);
       if(!*ok){
-        pvLastError = unit.lastError();
+        connectorIdList.clear();
         return connectorIdList;
       }
-      // Add connector ID to result
-      if((!connectorId.isNull())&&(!connectorIdList.contains(connectorId))){
-        connectorIdList.append(connectorId);
+      // Buil connectors list that contains linked connections
+      for(auto & linkedConnectionId : linkedConnectionIdList){
+        if(connectionExists(linkedConnectionId)){
+          // Get connector ID
+          connectorId = unit.getConnectorIdOfConnectionId(linkedConnectionId, ok);
+          if(!*ok){
+            pvLastError = unit.lastError();
+            return connectorIdList;
+          }
+          // Add connector ID to result
+          if((!connectorId.isNull())&&(!connectorIdList.contains(connectorId))){
+            connectorIdList.append(connectorId);
+          }
+        }
       }
     }
   }
+//   for(i = 0; i < fromConnectionIdList.size(); ++i){
+//     // Get linked connections
+//     linkedConnectionIdList = getLinkedConnectionIdList(fromConnectionIdList.at(i), *ok);
+// //     if(!*ok){
+// //       connectorIdList.clear();
+// //       return connectorIdList;
+// //     }
+//     for(k = 0; k < linkedConnectionIdList.size(); ++k){
+//       // Get connector ID
+//       connectorId = unit.getConnectorIdOfConnectionId(linkedConnectionIdList.at(k), ok);
+//       if(!*ok){
+//         pvLastError = unit.lastError();
+//         return connectorIdList;
+//       }
+//       // Add connector ID to result
+//       if((!connectorId.isNull())&&(!connectorIdList.contains(connectorId))){
+//         connectorIdList.append(connectorId);
+//       }
+//     }
+//   }
+  *ok = true;
 
   return connectorIdList;
 }
@@ -448,6 +480,7 @@ void mdtClPathGraph::attachView(QGraphicsView *view)
   view->setScene(pvGraphicsScene);
 }
 
+/**
 QStringList mdtClPathGraph::lastErrorMessage() const
 {
   QStringList errorList;
@@ -456,6 +489,7 @@ QStringList mdtClPathGraph::lastErrorMessage() const
   Q_ASSERT(errorList.size() == 3);
   return errorList;
 }
+*/
 
 mdtError mdtClPathGraph::lastError() const
 {
@@ -621,6 +655,8 @@ bool mdtClPathGraph::setGraphicsItemsData(mdtClPathGraphicsConnection *startConn
   str = record.value("LinkType_Code_FK").toString();
   if(str == "CONNECTION"){
     link->setLinkType(mdtClPathGraphicsLink::Connection);
+  }else if(str == "INTERNLINK"){
+    link->setLinkType(mdtClPathGraphicsLink::InternalLink);
   }else{
     link->setLinkType(mdtClPathGraphicsLink::CableLink);
   }

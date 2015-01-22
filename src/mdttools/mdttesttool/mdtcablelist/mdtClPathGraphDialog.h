@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,6 +22,7 @@
 #define MDT_CL_PATH_GRAPH_DIALOG_H
 
 #include "ui_mdtClPathGraphDialog.h"
+#include "mdtError.h"
 #include <QDialog>
 #include <QWidget>
 #include <QSqlDatabase>
@@ -53,6 +54,10 @@ class mdtClPathGraphDialog : public QDialog, Ui::mdtClPathGraphDialog
   bool drawPath(const QVariant & fromConnectionId);
 
  private:
+
+  /*! \brief Display given error
+   */
+  void displayError(const mdtError & error);
 
   Q_DISABLE_COPY(mdtClPathGraphDialog);
 

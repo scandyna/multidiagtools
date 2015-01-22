@@ -4530,7 +4530,13 @@ bool mdtTtDatabaseSchema::populateLinkTypeTable()
   if(!insertDataIntoTable("LinkType_tbl", fields, data)){
     return false;
   }
-  // Cable link type
+  // Internal link
+  data.clear();
+  data << "INTERNLINK" << "Internal link" << "Interne Verbindung" << "Liaison interne" << "Collegamento interno" << "Ohm";
+  if(!insertDataIntoTable("LinkType_tbl", fields, data)){
+    return false;
+  }
+  // Connection type
   data.clear();
   data << "CONNECTION" << "Connection" << "Anschluss" << "Raccordement" << "Collegamento" << "Ohm";
   if(!insertDataIntoTable("LinkType_tbl", fields, data)){

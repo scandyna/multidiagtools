@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -224,6 +224,10 @@ class mdtClArticle : public mdtTtBase
   /*! \brief Add a cable link
    */
   bool addCableLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, const QVariant & identification, const QVariant & R);
+
+  /*! \brief Add a internal link
+   */
+  bool addInternalLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, const QVariant & identification, const QVariant & R);
 
   /*! \brief Add a link of type resistor
    *

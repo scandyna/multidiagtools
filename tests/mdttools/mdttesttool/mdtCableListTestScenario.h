@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -77,9 +77,10 @@ class mdtCableListTestScenario
 
   /*
    * Create some article connections for tests:
-   *  - Id_PK : 10 , Article_Id_FK : 1 , ConnectionType_Code_FK : T , ArticleContactName : 10 , Resistance : 0.1
-   *  - Id_PK : 20 , Article_Id_FK : 2 , ConnectionType_Code_FK : T , ArticleContactName : 20 , Resistance : 0.2
-   *  - Id_PK : 21 , Article_Id_FK : 2 , ConnectionType_Code_FK : T , ArticleContactName : 21 , Resistance : 0.21
+   *  - Id_PK : 10 , Article_Id_FK : 1 , ConnectionType_Code_FK : T , ArticleContactName : 10 , Resistance : 0.0
+   *  - Id_PK : 20 , Article_Id_FK : 2 , ConnectionType_Code_FK : T , ArticleContactName : 20 , Resistance : 0.0
+   *  - Id_PK : 21 , Article_Id_FK : 2 , ConnectionType_Code_FK : T , ArticleContactName : 21 , Resistance : 0.0
+   *  - Id_PK : 22 , Article_Id_FK : 2 , ConnectionType_Code_FK : S , ArticleContactName : 22 , Resistance : 0.0
    */
   void createTestArticleConnections();
   /*
@@ -106,6 +107,7 @@ class mdtCableListTestScenario
    * Create some article links for tests:
    *  - ArticleConnectionStart_Id_FK : 10 , ArticleConnectionEnd_Id_FK : 20 , LinkType_Code_FK : CABLELINK , LinkDirection_Code_FK : BID
    *  - ArticleConnectionStart_Id_FK : 21 , ArticleConnectionEnd_Id_FK : 20 , LinkType_Code_FK : CABLELINK , LinkDirection_Code_FK : BID
+   *  - ArticleConnectionStart_Id_FK : 21 , ArticleConnectionEnd_Id_FK : 22 , LinkType_Code_FK : INTERNLINK , LinkDirection_Code_FK : BID
    */
   void createTestArticleLinks();
   /*
@@ -145,8 +147,9 @@ class mdtCableListTestScenario
    *  - Id_PK : 20001 , Unit_Id_FK : 2000 , ArticleConnection_Id_FK : 21 , UnitContactName : Unit contact 20001
    *  - Id_PK : 20002 , Unit_Id_FK : 2001 , ArticleConnection_Id_FK : 20 , UnitContactName : Unit contact 20002
    *  - Id_PK : 20003 , Unit_Id_FK : 2001 , ArticleConnection_Id_FK : 21 , UnitContactName : Unit contact 20003
+   *  - Id_PK : 20004 , Unit_Id_FK : 2001 , ArticleConnection_Id_FK : 22 , UnitContactName : Unit contact 20004
    *
-   * Will also add a link from unit connection 20001 to 20000 and 20003 to 20002
+   * Will also add a link from unit connection 20001 to 20000 , 20003 to 20002 , 20003 to 20004
    */
   void createTestUnitConnections();
   /*

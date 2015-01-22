@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -119,7 +119,7 @@ void mdtClArticleLinkDialog::setLinkDirectionCode(const QVariant & code)
 
 void mdtClArticleLinkDialog::setValue(const QVariant & value)
 {
-  pvLinkData.setValue("Value", value);
+  pvLinkData.setValue("Resistance", value);
   sbValue->setValue(value.toDouble());
 }
 
@@ -262,7 +262,7 @@ void mdtClArticleLinkDialog::accept()
     errorList << tr("Direction is not set");
   }
   // Store value
-  pvLinkData.setValue("Value", sbValue->value());
+  pvLinkData.setValue("Resistance", sbValue->value());
   // Start and end connections are allready set afetr selection by user
   if(pvLinkData.value("ArticleConnectionStart_Id_FK").isNull()){
     errorList << tr("Start connection is not set");

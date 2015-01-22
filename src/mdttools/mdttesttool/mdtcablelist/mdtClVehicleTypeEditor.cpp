@@ -377,7 +377,7 @@ bool mdtClVehicleTypeEditor::setupLinkMarkingTable()
          "   THEN EndSchemaPosition\n"\
          "  ELSE '<Unknown EndConnectionPart>'\n"\
          " END AS EndConnectionPart \n"\
-         "FROM LinkList_view";
+         "FROM LinkList_view WHERE LinkType_Code_FK = 'CABLELINK'";
   if(!query.exec(sql)){
     QSqlError sqlError = query.lastError();
     pvLastError.setError(tr("Cannot generate 'LinkMarkingFormatBase_view'"), mdtError::Error);

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -47,8 +47,9 @@ class mdtClPathGraphicsLink : public QGraphicsItem
   /*! \brief
    */
   enum linkType_t {
-                    CableLink,  /*! \brief Cable link */
-                    Connection  /*! \brief Connection */
+                    CableLink,    /*! \brief Cable link */
+                    Connection,   /*! \brief Connection */
+                    InternalLink  /*! \brief Internal link */
                   };
 
   /*! \brief Constructor

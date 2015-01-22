@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -409,6 +409,7 @@ void mdtTtTestLinkDialog::viewDutLinkedConnections()
   mdtClPathGraph graph(pvDatabase);
   QVariant connectionId;
   QList<QVariant> linkedConnectionsIdList;
+  bool ok;
 
   // Get current unit connection ID
   connectionId = pvTestLinkData.value("DutConnection_Id_FK");
@@ -423,7 +424,14 @@ void mdtTtTestLinkDialog::viewDutLinkedConnections()
     */
     return;
   }
-  linkedConnectionsIdList = graph.getLinkedConnectionIdList(connectionId);
+  linkedConnectionsIdList = graph.getLinkedConnectionIdList(connectionId, ok);
+  if(!ok){
+    /** \todo Error message
+    pvLastError = graph.lastError();
+    displayLastError();
+    */
+    return;
+  }
   // Setup and show dialog
   dialog.setConnections(connectionId, linkedConnectionsIdList);
   dialog.exec();

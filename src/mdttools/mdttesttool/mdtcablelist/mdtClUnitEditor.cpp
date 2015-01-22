@@ -778,7 +778,12 @@ void mdtClUnitEditor::setFunctionsFromOtherConnection()
     displayLastError();
     return;
   }
-  linkedConnectionsIdList = graph.getLinkedConnectionIdList(connectionId);
+  linkedConnectionsIdList = graph.getLinkedConnectionIdList(connectionId, ok);
+  if(!ok){
+    pvLastError = graph.lastError();
+    displayLastError();
+    return;
+  }
   // Get current connection data
   connectionData = unit.getConnectionData(connectionId, true, &ok);
   if(!ok){
@@ -871,6 +876,7 @@ void mdtClUnitEditor::viewLinkedConnections()
   mdtClPathGraph graph(database());
   QVariant connectionId;
   QList<QVariant> linkedConnectionsIdList;
+  bool ok;
 
   // Get current unit connection ID
   connectionId = currentData("UnitConnection_view", "UnitConnection_Id_PK");
@@ -883,7 +889,12 @@ void mdtClUnitEditor::viewLinkedConnections()
     displayLastError();
     return;
   }
-  linkedConnectionsIdList = graph.getLinkedConnectionIdList(connectionId);
+  linkedConnectionsIdList = graph.getLinkedConnectionIdList(connectionId, ok);
+  if(!ok){
+    pvLastError = graph.lastError();
+    displayLastError();
+    return;
+  }
   // Setup and show dialog
   dialog.setConnections(connectionId, linkedConnectionsIdList);
   dialog.exec();

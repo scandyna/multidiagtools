@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -41,12 +41,7 @@ mdtClPathGraphDialog::~mdtClPathGraphDialog()
 bool mdtClPathGraphDialog::loadLinkList()
 {
   if(!pvPathGraph->loadLinkList()){
-    QMessageBox msgBox;
-    msgBox.setText(pvPathGraph->lastErrorMessage().at(0));
-    msgBox.setInformativeText(pvPathGraph->lastErrorMessage().at(1));
-    msgBox.setDetailedText(pvPathGraph->lastErrorMessage().at(2));
-    msgBox.setIcon(QMessageBox::Critical);
-    msgBox.exec();
+    displayError(pvPathGraph->lastError());
     return false;
   }
 
@@ -56,14 +51,19 @@ bool mdtClPathGraphDialog::loadLinkList()
 bool mdtClPathGraphDialog::drawPath(const QVariant & fromConnectionId)
 {
   if(!pvPathGraph->drawPath(fromConnectionId)){
-    QMessageBox msgBox;
-    msgBox.setText(pvPathGraph->lastErrorMessage().at(0));
-    msgBox.setInformativeText(pvPathGraph->lastErrorMessage().at(1));
-    msgBox.setDetailedText(pvPathGraph->lastErrorMessage().at(2));
-    msgBox.setIcon(QMessageBox::Critical);
-    msgBox.exec();
+    displayError(pvPathGraph->lastError());
     return false;
   }
 
   return true;
+}
+
+void mdtClPathGraphDialog::displayError(const mdtError& error)
+{
+  QMessageBox msgBox(this);
+  msgBox.setText(error.text());
+  msgBox.setInformativeText(error.informativeText());
+  msgBox.setDetailedText(error.systemErrorString());
+  msgBox.setIcon(QMessageBox::Critical);
+  msgBox.exec();
 }

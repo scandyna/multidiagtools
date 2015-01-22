@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -381,6 +381,7 @@ void mdtTtTestNodeEditor::setBusToUnitConnection()
   QList<QVariant> connectionIdList;
   QVariant busId;
   QString msg;
+  bool ok;
 
   // Get test node ID
   testNodeId = currentData("TestNode_tbl", "VehicleType_Id_FK_PK");
@@ -412,7 +413,12 @@ void mdtTtTestNodeEditor::setBusToUnitConnection()
     displayLastError();
     return;
   }
-  connectionIdList = graph.getLinkedConnectionIdList(connectionId);
+  connectionIdList = graph.getLinkedConnectionIdList(connectionId, ok);
+  if(!ok){
+    pvLastError = graph.lastError();
+    displayLastError();
+    return;
+  }
   connectionIdList.append(connectionId);
   qDebug() << "CNN IDs: " << connectionIdList;
   // Update connections

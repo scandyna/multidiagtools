@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -73,6 +73,9 @@ void mdtClPathGraphicsLink::setLinkType(linkType_t type)
       break;
     case Connection:
       pvLinkColor = Qt::red;
+      break;
+    case InternalLink:
+      pvLinkColor = Qt::blue;
       break;
   };
 }

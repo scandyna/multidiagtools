@@ -491,46 +491,50 @@ void mdtCableListTest::unitConnectionUpdateTest()
   // Check initial Resistance of unit connections
   dataList = art.getDataList<QSqlRecord>("SELECT * FROM UnitConnection_tbl", ok);
   QVERIFY(ok);
-  QCOMPARE(dataList.size(), 6);
+  QCOMPARE(dataList.size(), 7);
   QCOMPARE(dataList.at(0).value("Resistance"), QVariant(0.0));
   QCOMPARE(dataList.at(1).value("Resistance"), QVariant(0.0));
   QCOMPARE(dataList.at(2).value("Resistance"), QVariant(0.0));
   QCOMPARE(dataList.at(3).value("Resistance"), QVariant(0.0));
   QCOMPARE(dataList.at(4).value("Resistance"), QVariant(0.0));
   QCOMPARE(dataList.at(5).value("Resistance"), QVariant(0.0));
+  QCOMPARE(dataList.at(6).value("Resistance"), QVariant(0.0));
   // Check update - Article connection ID: Null - Must update nothing
   QVERIFY(!art.updateUnitConnections(QStringList("Resistance"), QVariant()));
   dataList = art.getDataList<QSqlRecord>("SELECT * FROM UnitConnection_tbl", ok);
   QVERIFY(ok);
-  QCOMPARE(dataList.size(), 6);
+  QCOMPARE(dataList.size(), 7);
   QCOMPARE(dataList.at(0).value("Resistance"), QVariant(0.0));
   QCOMPARE(dataList.at(1).value("Resistance"), QVariant(0.0));
   QCOMPARE(dataList.at(2).value("Resistance"), QVariant(0.0));
   QCOMPARE(dataList.at(3).value("Resistance"), QVariant(0.0));
   QCOMPARE(dataList.at(4).value("Resistance"), QVariant(0.0));
   QCOMPARE(dataList.at(5).value("Resistance"), QVariant(0.0));
+  QCOMPARE(dataList.at(6).value("Resistance"), QVariant(0.0));
   // Check update - Article connection ID: 20
   QVERIFY(art.updateUnitConnections(QStringList("Resistance"), 20));
   dataList = art.getDataList<QSqlRecord>("SELECT * FROM UnitConnection_tbl", ok);
   QVERIFY(ok);
-  QCOMPARE(dataList.size(), 6);
+  QCOMPARE(dataList.size(), 7);
   QCOMPARE(dataList.at(0).value("Resistance"), QVariant(0.0));
   QCOMPARE(dataList.at(1).value("Resistance"), QVariant(0.0));
   QCOMPARE(dataList.at(2).value("Resistance"), QVariant(0.2));
   QCOMPARE(dataList.at(3).value("Resistance"), QVariant(0.0));
   QCOMPARE(dataList.at(4).value("Resistance"), QVariant(0.2));
   QCOMPARE(dataList.at(5).value("Resistance"), QVariant(0.0));
+  QCOMPARE(dataList.at(6).value("Resistance"), QVariant(0.0));
   // Check update - Article connection ID: 21
   QVERIFY(art.updateUnitConnections(QStringList("Resistance"), 21));
   dataList = art.getDataList<QSqlRecord>("SELECT * FROM UnitConnection_tbl", ok);
   QVERIFY(ok);
-  QCOMPARE(dataList.size(), 6);
+  QCOMPARE(dataList.size(), 7);
   QCOMPARE(dataList.at(0).value("Resistance"), QVariant(0.0));
   QCOMPARE(dataList.at(1).value("Resistance"), QVariant(0.0));
   QCOMPARE(dataList.at(2).value("Resistance"), QVariant(0.2));
   QCOMPARE(dataList.at(3).value("Resistance"), QVariant(0.21));
   QCOMPARE(dataList.at(4).value("Resistance"), QVariant(0.2));
   QCOMPARE(dataList.at(5).value("Resistance"), QVariant(0.21));
+  QCOMPARE(dataList.at(6).value("Resistance"), QVariant(0.0));
 
 
   // Remove test scenario
@@ -733,16 +737,18 @@ void mdtCableListTest::unitTest()
    * Try to add a unit connector that is based on a article connector
    *  and a base connector that not matches artice connector's base connector - Must fail
    */
+  /**
   connectorData.clearValues();
   connectorData.setValue("Unit_Id_FK", 2000);
   connectorData.setValue("Connector_Id_FK", 2);
   connectorData.setValue("ArticleConnector_Id_FK", 200);
   QVERIFY(!unit.addConnector(connectorData));
+  */
   createTestUnitConnectors();
 
   // Remove base structure
-  removeTestUnitConnections();
   removeTestUnitConnectors();
+  removeTestUnitConnections();
   removeTestVehicleTypeUnitAssignations();
   removeTestUnits();
   removeTestArticleLinks();
@@ -1135,6 +1141,92 @@ void mdtCableListTest::linkTest()
   /// \todo Links with U CNN based on ART CNN
 
 
+  // Cleanup
+  pvScenario->removeScenario();
+}
+
+void mdtCableListTest::linkUpdateFromArticleLinkTest()
+{
+  mdtClLink lnk(0, pvDatabaseManager.database());
+  mdtClArticle art(0, pvDatabaseManager.database());
+  QList<QSqlRecord> dataList;
+  QSqlRecord data;
+  ///mdtClUnit unit(0, pvDatabaseManager.database());
+  ///mdtClUnitVehicleType uvt(0, pvDatabaseManager.database());
+  ///QList<QVariant> vtStartIdList, vtEndIdList;
+  mdtClLinkData linkData;
+  ///mdtClUnitConnectionData connectionData;
+  ///QList<mdtClVehicleTypeLinkData> vtLinkDataList;
+  QString sql;
+  bool ok;
+
+  QVERIFY(linkData.setup(pvDatabaseManager.database()));
+
+  // Create base structure
+  pvScenario->createSenario();
+
+  /*
+   * Check that we have initial expected link data
+   *
+   * Scenario will create several links.
+   * createTestUnitConnections() creates:
+   *  - 20001-20000 , CABLELINK
+   *  - 20003-20002 , CABLELINK
+   *  - 20003-20004 , INTERNLINK
+   * createTestLinks() creates:
+   *  - 10000-10001 , CABLELINK
+   *  - 10001-20000 , CABLELINK
+   *  - 30005-40005 , CABLELINK
+   *  - 40005-50005 , CABLELINK
+   */
+  QVERIFY(lnk.linkExists(20001, 20000, ok));
+  QVERIFY(ok);
+  QVERIFY(lnk.linkExists(20003, 20002, ok));
+  QVERIFY(ok);
+  QVERIFY(lnk.linkExists(20003, 20004, ok));
+  QVERIFY(ok);
+  QVERIFY(lnk.linkExists(10000, 10001, ok));
+  QVERIFY(ok);
+  QVERIFY(lnk.linkExists(10001, 20000, ok));
+  QVERIFY(ok);
+  QVERIFY(lnk.linkExists(30005, 40005, ok));
+  QVERIFY(ok);
+  QVERIFY(lnk.linkExists(40005, 50005, ok));
+  QVERIFY(ok);
+  /*
+   * We are interested about links created by createTestUnitConnections()
+   * because they are based on article links.
+   * Check there initial data:
+   *  - Unit connection 20000 is based on article connection 20 , witch is part of article 2
+   *  - Unit connection 20001 is based on article connection 21 , witch is part of article 2
+   *  - Unit connection 20002 is based on article connection 20 , witch is part of article 2
+   *  - Unit connection 20003 is based on article connection 21 , witch is part of article 2
+   *  - Unit connection 20004 is based on article connection 22 , witch is part of article 2
+   */
+  linkData = lnk.getLinkData(20001, 20000, false, false, ok);
+  QVERIFY(ok);
+  QCOMPARE(linkData.value("LinkType_Code_FK"), QVariant("CABLELINK"));
+  linkData = lnk.getLinkData(20003, 20002, false, false, ok);
+  QVERIFY(ok);
+  QCOMPARE(linkData.value("LinkType_Code_FK"), QVariant("CABLELINK"));
+  linkData = lnk.getLinkData(20003, 20004, false, false, ok);
+  QVERIFY(ok);
+  QCOMPARE(linkData.value("LinkType_Code_FK"), QVariant("INTERNLINK"));
+  /*
+   * Edit article link 21-20 and check that links 20001-20000 are updated
+   */
+  sql = "SELECT * FROM ArticleLink_tbl WHERE ArticleConnectionStart_Id_FK = 21 AND ArticleConnectionEnd_Id_FK = 20";
+  dataList = art.getDataList<QSqlRecord>(sql, ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 1);
+  data = dataList.at(0);
+  data.setValue("LinkType_Code_FK", "INTERNLINK");
+  QVERIFY(art.editLink(21, 20, data));
+  linkData = lnk.getLinkData(20001, 20000, false, false, ok);
+  QVERIFY(ok);
+  QCOMPARE(linkData.value("LinkType_Code_FK"), QVariant("INTERNLINK"));
+
+  
   // Cleanup
   pvScenario->removeScenario();
 }
@@ -1549,15 +1641,13 @@ void mdtCableListTest::linkAutoConnectionTest()
 
 void mdtCableListTest::pathGraphTest()
 {
-  ///QFAIL("Test not implemented yet");
-  
   mdtClPathGraph graph(pvDatabaseManager.database());
   QList<QVariant> idList;
-  ///QVariant data;
   bool ok;
 
   // Initial
-  idList = graph.getLinkedConnectionIdList(0);
+  idList = graph.getLinkedConnectionIdList(0, ok);
+  QVERIFY(!ok);
   QVERIFY(idList.isEmpty());
   idList = graph.getShortestPath(0, 1, ok);
   QVERIFY(!ok);
@@ -1566,11 +1656,12 @@ void mdtCableListTest::pathGraphTest()
   QVERIFY(!graph.connectionsAreLinked(0, 1));
 
   /*
-   * Testst with free data
+   * Tests with free data
    */
   // (1)-(2)
   graph.addLink(1, 2);
-  idList = graph.getLinkedConnectionIdList(1);
+  idList = graph.getLinkedConnectionIdList(1, ok);
+  QVERIFY(ok);
   QCOMPARE(idList.size(), 1);
   QCOMPARE(idList.at(0), QVariant(2));
   idList = graph.getShortestPath(1, 2, ok);
@@ -1583,7 +1674,8 @@ void mdtCableListTest::pathGraphTest()
   QVERIFY(graph.connectionsAreLinked(2, 1));
   // (1)-(2)-(3)
   graph.addLink(2, 3, "2-3");
-  idList = graph.getLinkedConnectionIdList(1);
+  idList = graph.getLinkedConnectionIdList(1, ok);
+  QVERIFY(ok);
   QCOMPARE(idList.size(), 2);
   QCOMPARE(idList.at(0), QVariant(2));
   QCOMPARE(idList.at(1), QVariant(3));
@@ -1602,7 +1694,8 @@ void mdtCableListTest::pathGraphTest()
   QVERIFY(graph.connectionsAreLinked(3, 1));
   // (1)-(2)-(3)-(4)
   graph.addLink(3, 4);
-  idList = graph.getLinkedConnectionIdList(1);
+  idList = graph.getLinkedConnectionIdList(1, ok);
+  QVERIFY(ok);
   QCOMPARE(idList.size(), 3);
   QCOMPARE(idList.at(0), QVariant(2));
   QCOMPARE(idList.at(1), QVariant(3));
@@ -1617,12 +1710,14 @@ void mdtCableListTest::pathGraphTest()
   QVERIFY(graph.connectionsAreLinked(1, 4));
   // (1)-(2)-(3)-(4)     (10)-(11)
   graph.addLink(10, 11);
-  idList = graph.getLinkedConnectionIdList(1);
+  idList = graph.getLinkedConnectionIdList(1, ok);
+  QVERIFY(ok);
   QCOMPARE(idList.size(), 3);
   QCOMPARE(idList.at(0), QVariant(2));
   QCOMPARE(idList.at(1), QVariant(3));
   QCOMPARE(idList.at(2), QVariant(4));
-  idList = graph.getLinkedConnectionIdList(10);
+  idList = graph.getLinkedConnectionIdList(10, ok);
+  QVERIFY(ok);
   QCOMPARE(idList.size(), 1);
   QCOMPARE(idList.at(0), QVariant(11));
   idList = graph.getShortestPath(1, 4, ok);
@@ -1644,7 +1739,8 @@ void mdtCableListTest::pathGraphTest()
   //   \---(5)---/
   graph.addLink(1, 5, 15);
   graph.addLink(5, 4);
-  idList = graph.getLinkedConnectionIdList(1);
+  idList = graph.getLinkedConnectionIdList(1, ok);
+  QVERIFY(ok);
   QCOMPARE(idList.size(), 4);
   QVERIFY(idList.contains(2));
   QVERIFY(idList.contains(3));
@@ -1663,7 +1759,8 @@ void mdtCableListTest::pathGraphTest()
   QVERIFY(graph.connectionsAreLinked(5, 4));
   // Clear data that we added and check
   graph.removeAddedLinks();
-  idList = graph.getLinkedConnectionIdList(1);
+  idList = graph.getLinkedConnectionIdList(1, ok);
+  QVERIFY(ok);
   QCOMPARE(idList.size(), 0);
 
   /*
@@ -1674,10 +1771,12 @@ void mdtCableListTest::pathGraphTest()
   // Load link list
   QVERIFY(graph.loadLinkList());
   // Check that manually added links was cleared
-  idList = graph.getLinkedConnectionIdList(1);
+  idList = graph.getLinkedConnectionIdList(1, ok);
+  QVERIFY(!ok);
   QCOMPARE(idList.size(), 0);
   // Check linked connections
-  idList = graph.getLinkedConnectionIdList(10000);
+  idList = graph.getLinkedConnectionIdList(10000, ok);
+  QVERIFY(ok);
   QCOMPARE(idList.size(), 3);
   QVERIFY(idList.contains(10001));
   QVERIFY(idList.contains(20000));
@@ -1697,10 +1796,52 @@ void mdtCableListTest::pathGraphTest()
   QCOMPARE(idList.at(2), QVariant(20000));
   QCOMPARE(idList.at(3), QVariant(20001));
   /*
+   * Check that links of type CABLELINK and INTERNLINK are taken in acount
+   *
+   * Scenario will create several links.
+   * createTestUnitConnections() creates:
+   *  - 20001-20000 , CABLELINK
+   *  - 20003-20002 , CABLELINK
+   *  - 20003-20004 , INTERNLINK
+   * createTestLinks() creates:
+   *  - 10000-10001 , CABLELINK
+   *  - 10001-20000 , CABLELINK
+   *  - 30005-40005 , CABLELINK
+   *  - 40005-50005 , CABLELINK
+   * At the end, we have 3 paths:
+   *  - 20001,20000,10001,10000
+   *  - 20003,20002,20004
+   *  - 30005,40005,50005
+   */
+  // Check path: 20001,20000,10001,10000
+  idList = graph.getLinkedConnectionIdList(20001, ok);
+  QVERIFY(ok);
+  QCOMPARE(idList.size(), 3);
+  ///QVERIFY(idList.contains(20001));
+  QVERIFY(idList.contains(20000));
+  QVERIFY(idList.contains(10001));
+  QVERIFY(idList.contains(10000));
+  // Check path: 20003,20002,20004
+  idList = graph.getLinkedConnectionIdList(20003, ok);
+  QVERIFY(ok);
+  QCOMPARE(idList.size(), 2);
+  ///QVERIFY(idList.contains(20003));
+  QVERIFY(idList.contains(20002));
+  QVERIFY(idList.contains(20004));
+  // Check path: 30005,40005,50005
+  idList = graph.getLinkedConnectionIdList(30005, ok);
+  QVERIFY(ok);
+  QCOMPARE(idList.size(), 2);
+  ///QVERIFY(idList.contains(30005));
+  QVERIFY(idList.contains(40005));
+  QVERIFY(idList.contains(50005));
+
+  /*
    * Call method to remove manually added links - Must change nothing
    */
   // Check linked connections
-  idList = graph.getLinkedConnectionIdList(10000);
+  idList = graph.getLinkedConnectionIdList(10000, ok);
+  QVERIFY(ok);
   QCOMPARE(idList.size(), 3);
   QVERIFY(idList.contains(10001));
   QVERIFY(idList.contains(20000));

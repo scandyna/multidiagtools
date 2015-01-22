@@ -402,6 +402,12 @@ bool mdtClArticle::updateUnitConnections(const QStringList & fields, const QVari
   int i;
 
   // Get data from ArticleConnection_tbl
+  if(connectionId.isNull()){
+    pvLastError.setError("Trying to update unit connection by giving a Null article connection ID", mdtError::Warning);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClArticle");
+    pvLastError.commit();
+    return false;
+  }
   sql = "SELECT * FROM ArticleConnection_tbl WHERE Id_PK = " + connectionId.toString();
   articleConnectionDataList = getDataList<QSqlRecord>(sql, ok);
   if(!ok){
@@ -679,6 +685,24 @@ bool mdtClArticle::addCableLink(const QVariant & articleConnectionStartId, const
   record.setValue("ArticleConnectionStart_Id_FK", articleConnectionStartId);
   record.setValue("ArticleConnectionEnd_Id_FK", articleConnectionEndId);
   record.setValue("LinkType_Code_FK", "CABLELINK");
+  record.setValue("LinkDirection_Code_FK", "BID");
+  record.setValue("Identification", identification);
+  record.setValue("Resistance", R);
+
+  return addRecord(record, "ArticleLink_tbl");
+}
+
+bool mdtClArticle::addInternalLink(const QVariant& articleConnectionStartId, const QVariant& articleConnectionEndId, const QVariant& identification, const QVariant& R )
+{
+  mdtSqlRecord record;
+
+  if(!record.addAllFields("ArticleLink_tbl", database())){
+    pvLastError = record.lastError();
+    return false;
+  }
+  record.setValue("ArticleConnectionStart_Id_FK", articleConnectionStartId);
+  record.setValue("ArticleConnectionEnd_Id_FK", articleConnectionEndId);
+  record.setValue("LinkType_Code_FK", "INTERNLINK");
   record.setValue("LinkDirection_Code_FK", "BID");
   record.setValue("Identification", identification);
   record.setValue("Resistance", R);

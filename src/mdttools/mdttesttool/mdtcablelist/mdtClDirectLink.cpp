@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -166,8 +166,8 @@ bool mdtClDirectLink::addLinksByUnitConnector(const QVariant unitConnectorIdS, c
   QList<QVariant> linkedConnectionIdList;
   QVariant connectorId;
   bool ok;
-  int i;
-  int k;
+//   int i;
+//   int k;
 
   // Get list of connections from connector S
   leftConnectionIdList = unit.getConnectionIdListPartOfConnectorId(unitConnectorIdS, &ok);
@@ -180,8 +180,36 @@ bool mdtClDirectLink::addLinksByUnitConnector(const QVariant unitConnectorIdS, c
   //  - for each linked connection:
   //    * get connector ID
   //    * If connector ID is same as E, add a link
+  for(auto & leftConnectionId : leftConnectionIdList){
+    // Get linked connection
+    if(graph->connectionExists(leftConnectionId)){
+      linkedConnectionIdList = graph->getLinkedConnectionIdList(leftConnectionId, ok);
+      if(!ok){
+        pvLastError = graph->lastError();
+        return false;
+      }
+      for(auto & linkedConnectionId : linkedConnectionIdList){
+        // Get connector ID
+        connectorId = unit.getConnectorIdOfConnectionId(linkedConnectionId, &ok);
+        if(!ok){
+          return false;
+        }
+        // Add link if connector ID is the same as E
+        if(connectorId == unitConnectorIdE){
+          if(!addLink(leftConnectionId, linkedConnectionId)){
+            return false;
+          }
+        }
+      }
+    }
+  }
+/*
   for(i = 0; i < leftConnectionIdList.size(); ++i){
-    linkedConnectionIdList = graph->getLinkedConnectionIdList(leftConnectionIdList.at(i));
+    linkedConnectionIdList = graph->getLinkedConnectionIdList(leftConnectionIdList.at(i), ok);
+    if(!ok){
+      pvLastError = graph->lastError();
+      return false;
+    }
     for(k = 0; k < linkedConnectionIdList.size(); ++k){
       connectorId = unit.getConnectorIdOfConnectionId(linkedConnectionIdList.at(k), &ok);
       if(!ok){
@@ -193,7 +221,7 @@ bool mdtClDirectLink::addLinksByUnitConnector(const QVariant unitConnectorIdS, c
         }
       }
     }
-  }
+  }*/
 
   return true;
 }

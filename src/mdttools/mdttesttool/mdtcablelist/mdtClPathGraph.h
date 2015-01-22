@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -140,11 +140,21 @@ class mdtClPathGraph
    */
   void removeAddedLinks();
 
+  /*! \brief Check if given connection exists in graph
+   */
+  bool connectionExists(const QVariant & connectionId) const
+  {
+    if(connectionId.isNull()){
+      return false;
+    }
+    return pvGraphVertices.contains(connectionId.toInt());
+  }
+
   /*! \brief Get a list of unit connections IDs that are linked to a given connection
    *
    * Note: fromConnectionId is not included in result.
    */
-  QList<QVariant> getLinkedConnectionIdList(const QVariant & fromConnectionId);
+  QList<QVariant> getLinkedConnectionIdList(const QVariant & fromConnectionId, bool & ok);
 
   /*! \brief Get a list of unit connector ID that are linked to given one
    *
@@ -187,7 +197,7 @@ class mdtClPathGraph
    * 
    * \todo Should become Obselete .
    */
-  QStringList lastErrorMessage() const;
+  ///QStringList lastErrorMessage() const;
 
   /*! \brief Get last error
    */

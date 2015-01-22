@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -98,7 +98,12 @@ QList<QVariant> mdtTtTestNodeUnit::getConnectionIdListLinkedToConnectionIdList(c
   // Add linked connection IDs for each given connection ID
   for(i = 0; i < connectionIdList.size(); ++i){
     Q_ASSERT(!connectionIdList.at(i).isNull());
-    linkedConnectionIdList = graph.getLinkedConnectionIdList(connectionIdList.at(i)); /// \todo Have no error checking..
+    linkedConnectionIdList = graph.getLinkedConnectionIdList(connectionIdList.at(i), *ok);
+    if(!*ok){
+      pvLastError = graph.lastError();
+      idList.clear();
+      return idList;
+    }
     idList.append(linkedConnectionIdList);
   }
   *ok = true;

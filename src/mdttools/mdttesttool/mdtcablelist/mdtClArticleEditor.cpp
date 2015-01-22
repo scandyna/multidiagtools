@@ -579,7 +579,7 @@ void mdtClArticleEditor::editLink()
   */
   dialog.setLinkTypeCode(s.data(0, "LinkType_Code_FK"));
   dialog.setLinkDirectionCode(s.data(0, "LinkDirection_Code_FK"));
-  dialog.setValue(s.data(0, "Value"));
+  dialog.setValue(s.data(0, "Resistance"));
   dialog.setStartConnectionId(articleConnectionStartId);
   dialog.setEndConnectionId(articleConnectionEndId);
   if(dialog.exec() != QDialog::Accepted){

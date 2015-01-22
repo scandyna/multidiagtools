@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -118,14 +118,15 @@ QList<QVariant> mdtTtTestNode::getIdListOfUnitConnectionsLinkedToUnitConnectionI
 
   mdtClPathGraph graph(database());
   QList<QVariant> unitConnectionIdList;
+  bool ok;
 
   // Load link list and find linked connections
   if(!graph.loadLinkList()){
     pvLastError = graph.lastError();
     return unitConnectionIdList;
   }
-  unitConnectionIdList = graph.getLinkedConnectionIdList(unitConnectionId);
-  if(unitConnectionIdList.isEmpty()){
+  unitConnectionIdList = graph.getLinkedConnectionIdList(unitConnectionId, ok);
+  if(!ok){
     pvLastError = graph.lastError();
     return unitConnectionIdList;
   }

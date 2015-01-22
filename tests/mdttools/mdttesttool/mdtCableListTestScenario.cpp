@@ -316,6 +316,14 @@ void mdtCableListTestScenario::createTestArticleConnections()
   connectionData.setValue("ArticleContactName", "21");
   connectionData.setValue("Resistance", 0.21);
   QVERIFY(art.addConnection(connectionData));
+  // Add contact ID 22 to article ID 2
+  connectionData.clearValues();
+  connectionData.setValue("Id_PK", 22);
+  connectionData.setValue("Article_Id_FK", 2);
+  connectionData.setValue("ConnectionType_Code_FK", "S");
+  connectionData.setValue("ArticleContactName", "22");
+  connectionData.setValue("Resistance", 0.22);
+  QVERIFY(art.addConnection(connectionData));
   // Check back data
   connectionData = art.getConnectionData(10, &ok);
   QVERIFY(ok);
@@ -365,11 +373,16 @@ void mdtCableListTestScenario::removeTestArticleConnections()
   QList<QSqlRecord> dataList;
   bool ok;
 
+  qDebug() << "Removing article connections ...";
+  
   QVERIFY(art.removeConnection(10));
   QVERIFY(art.removeConnection(20));
   QVERIFY(art.removeConnection(21));
+  QVERIFY(art.removeConnection(22));
   dataList = art.getData("SELECT * FROM ArticleConnection_view", &ok);
   QVERIFY(ok);
+  
+  qDebug() << "All (?) article connections removed";
 }
 
 void mdtCableListTestScenario::createTestArticleConnectors()
@@ -432,11 +445,15 @@ void mdtCableListTestScenario::removeTestArticleConnectors()
   QList<QSqlRecord> dataList;
   bool ok;
 
+  qDebug() << "Removing article connectors ...";
+  
   QVERIFY(art.removeConnector(100));
   QVERIFY(art.removeConnector(200));
   dataList = art.getData("SELECT * FROM ArticleConnector_tbl", &ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 0);
+  
+  qDebug() << "All article connectors removed";
 }
 
 void mdtCableListTestScenario::createTestArticleLinks()
@@ -447,13 +464,16 @@ void mdtCableListTestScenario::createTestArticleLinks()
 
   QVERIFY(art.addCableLink(10, 20, "", 0.0));  
   QVERIFY(art.addCableLink(21, 20, "", 0.0));
+  QVERIFY(art.addInternalLink(21, 22, "", 0.0));
   dataList = art.getData("SELECT * FROM ArticleLink_view", &ok);
   QVERIFY(ok);
-  QCOMPARE(dataList.size(), 2);
+  QCOMPARE(dataList.size(), 3);
   QCOMPARE(dataList.at(0).value("ArticleConnectionStart_Id_FK"), QVariant(10));
   QCOMPARE(dataList.at(0).value("ArticleConnectionEnd_Id_FK"), QVariant(20));
   QCOMPARE(dataList.at(1).value("ArticleConnectionStart_Id_FK"), QVariant(21));
   QCOMPARE(dataList.at(1).value("ArticleConnectionEnd_Id_FK"), QVariant(20));
+  QCOMPARE(dataList.at(2).value("ArticleConnectionStart_Id_FK"), QVariant(21));
+  QCOMPARE(dataList.at(2).value("ArticleConnectionEnd_Id_FK"), QVariant(22));
 }
 
 void mdtCableListTestScenario::removeTestArticleLinks()
@@ -462,11 +482,16 @@ void mdtCableListTestScenario::removeTestArticleLinks()
   QList<QSqlRecord> dataList;
   bool ok;
 
+  qDebug() << "Removing article links ...";
+  
   QVERIFY(art.removeLink(10, 20));
   QVERIFY(art.removeLink(21, 20));
+  QVERIFY(art.removeLink(21, 22));
   dataList = art.getData("SELECT * FROM ArticleLink_tbl", &ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 0);
+  
+  qDebug() << "All article links removed";
 }
 
 void mdtCableListTestScenario::createTestUnits()
@@ -516,6 +541,23 @@ void mdtCableListTestScenario::removeTestUnits()
   QList<QSqlRecord> dataList;
   bool ok;
 
+  // Check that linked tables are empty
+  dataList = unit.getDataList<QSqlRecord>("SELECT * FROM VehicleType_Unit_tbl", ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 0);
+  dataList = unit.getDataList<QSqlRecord>("SELECT * FROM LinkBeam_UnitStart_tbl", ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 0);
+  dataList = unit.getDataList<QSqlRecord>("SELECT * FROM LinkBeam_UnitEnd_tbl", ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 0);
+  dataList = unit.getDataList<QSqlRecord>("SELECT * FROM UnitConnector_tbl", ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 0);
+  dataList = unit.getDataList<QSqlRecord>("SELECT * FROM UnitConnection_tbl", ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 0);
+  // Remove units
   QVERIFY(unit.removeData("Unit_tbl", "Id_PK", 1000));
   QVERIFY(unit.removeData("Unit_tbl", "Id_PK", 2000));
   QVERIFY(unit.removeData("Unit_tbl", "Id_PK", 2001));
@@ -559,12 +601,16 @@ void mdtCableListTestScenario::removeTestVehicleTypeUnitAssignations()
   QList<QSqlRecord> dataList;
   bool ok;
 
+  qDebug() << "Removing UVTA ...";
+  
   QVERIFY(uvt.removeUnitVehicleAssignment(1000, 1));
   QVERIFY(uvt.removeUnitVehicleAssignment(2000, 2));
   QVERIFY(uvt.removeUnitVehicleAssignment(2001, 2));
   dataList = uvt.getData("SELECT * FROM VehicleType_Unit_tbl", &ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 0);
+  
+  qDebug() << "All UVTA removed";
 }
 
 void mdtCableListTestScenario::createTestUnitConnections()
@@ -623,7 +669,9 @@ void mdtCableListTestScenario::createTestUnitConnections()
   dataList = unit.getData("SELECT * FROM UnitLink_view", &ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 0);
-  // Add and chek unit connection 20001
+  /*
+   * Add and chek unit connection 20001
+   */
   connectionData.clearValues();
   connectionData.setValue("Id_PK", 20001);
   connectionData.setValue("Unit_Id_FK", 2000);
@@ -659,7 +707,9 @@ void mdtCableListTestScenario::createTestUnitConnections()
   QCOMPARE(dataList.at(0).value("VehicleTypeEnd_Id_FK"), QVariant(2));
   QCOMPARE(dataList.at(0).value("UnitConnectionStart_Id_FK"), QVariant(20001));
   QCOMPARE(dataList.at(0).value("UnitConnectionEnd_Id_FK"), QVariant(20000));
-  // Add and chek unit connection 20002
+  /*
+   * Add and chek unit connection 20002
+   */
   connectionData.clearValues();
   connectionData.setValue("Id_PK", 20002);
   connectionData.setValue("Unit_Id_FK", 2001);
@@ -681,7 +731,9 @@ void mdtCableListTestScenario::createTestUnitConnections()
   dataList = unit.getData("SELECT * FROM UnitLink_view", &ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 1);
-  // Add and chek unit connection 20003
+  /*
+   * Add and chek unit connection 20003
+   */
   connectionData.clearValues();
   connectionData.setValue("Id_PK", 20003);
   connectionData.setValue("Unit_Id_FK", 2001);
@@ -717,6 +769,44 @@ void mdtCableListTestScenario::createTestUnitConnections()
   QCOMPARE(dataList.at(1).value("VehicleTypeEnd_Id_FK"), QVariant(2));
   QCOMPARE(dataList.at(1).value("UnitConnectionStart_Id_FK"), QVariant(20003));
   QCOMPARE(dataList.at(1).value("UnitConnectionEnd_Id_FK"), QVariant(20002));
+  /*
+   * Add and chek unit connection 20004
+   */
+  connectionData.clearValues();
+  connectionData.setValue("Id_PK", 20004);
+  connectionData.setValue("Unit_Id_FK", 2001);
+  connectionData.setValue("ArticleConnection_Id_FK", 22);
+  connectionData.setValue("UnitContactName", "Unit contact 20004");
+  QVERIFY(unit.addConnection(connectionData));
+  connectionData = unit.getConnectionData(20004, true, &ok);
+  QVERIFY(ok);
+  QCOMPARE(connectionData.value("Id_PK"), QVariant(20004));
+  QCOMPARE(connectionData.value("Unit_Id_FK"), QVariant(2001));
+  QCOMPARE(connectionData.value("ArticleConnection_Id_FK"), QVariant(22));
+  QCOMPARE(connectionData.value("UnitContactName"), QVariant("Unit contact 20004"));
+  QCOMPARE(connectionData.articleConnectionData().value("Id_PK"), QVariant(22));
+  /*
+   * Check links
+   *  We have a article link from artice connection 21 to 22
+   *  Check that link was added
+   */
+  dataList = unit.getData("SELECT * FROM UnitLink_view", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 3);
+  QCOMPARE(dataList.at(2).value("UnitConnectionStart_Id_FK"), QVariant(20003));
+  QCOMPARE(dataList.at(2).value("UnitConnectionEnd_Id_FK"), QVariant(20004));
+  QCOMPARE(dataList.at(2).value("ArticleConnectionStart_Id_FK"), QVariant(21));
+  QCOMPARE(dataList.at(2).value("ArticleConnectionEnd_Id_FK"), QVariant(22));
+  QCOMPARE(dataList.at(2).value("StartUnit_Id_FK"), QVariant(2001));
+  QCOMPARE(dataList.at(2).value("EndUnit_Id_FK"), QVariant(2001));
+  // Check that vehicle type links are also added
+  dataList = unit.getData("SELECT * FROM VehicleType_Link_tbl", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 3);
+  QCOMPARE(dataList.at(2).value("VehicleTypeStart_Id_FK"), QVariant(2));
+  QCOMPARE(dataList.at(2).value("VehicleTypeEnd_Id_FK"), QVariant(2));
+  QCOMPARE(dataList.at(2).value("UnitConnectionStart_Id_FK"), QVariant(20003));
+  QCOMPARE(dataList.at(2).value("UnitConnectionEnd_Id_FK"), QVariant(20004));
 }
 
 void mdtCableListTestScenario::removeTestUnitConnections()
@@ -726,24 +816,30 @@ void mdtCableListTestScenario::removeTestUnitConnections()
   QList<QSqlRecord> dataList;
   bool ok;
 
+  qDebug() << "Removing UCNX 10000 ...";
+  
   QVERIFY(unit.removeConnection(10000));
   QVERIFY(unit.removeConnection(10001));
-  // Remove links that was added during connection creation
+  // Check that unit connections where removed
+  dataList = unit.getDataList<QSqlRecord>("SELECT * FROM UnitConnection_tbl", ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 5);
+  // Get links that was added during connection creation
   dataList = unit.getData("SELECT * FROM UnitLink_view", &ok);
   QVERIFY(ok);
-  QCOMPARE(dataList.size(), 2);
+  QCOMPARE(dataList.size(), 3);
   // Remove unit connection 20000
   QVERIFY(unit.removeConnection(20000));
   // Check that link 20001 to 20000 was removed from Link_tbl
   dataList = unit.getData("SELECT * FROM UnitLink_view", &ok);
   QVERIFY(ok);
-  QCOMPARE(dataList.size(), 1);
+  QCOMPARE(dataList.size(), 2);
   QCOMPARE(dataList.at(0).value("UnitConnectionStart_Id_FK"), QVariant(20003));
   QCOMPARE(dataList.at(0).value("UnitConnectionEnd_Id_FK"), QVariant(20002));
   // Check that link 20001 to 20000 was removed from VehicleType_Link_tbl
   dataList = unit.getData("SELECT * FROM VehicleType_Link_tbl", &ok);
   QVERIFY(ok);
-  QCOMPARE(dataList.size(), 1);
+  QCOMPARE(dataList.size(), 2);
   QCOMPARE(dataList.at(0).value("UnitConnectionStart_Id_FK"), QVariant(20003));
   QCOMPARE(dataList.at(0).value("UnitConnectionEnd_Id_FK"), QVariant(20002));
   // Remove unit connection 20001
@@ -751,21 +847,37 @@ void mdtCableListTestScenario::removeTestUnitConnections()
   // Check that no more link was removed
   dataList = unit.getData("SELECT * FROM UnitLink_view", &ok);
   QVERIFY(ok);
-  QCOMPARE(dataList.size(), 1);
+  QCOMPARE(dataList.size(), 2);
   // Remove unit connection 20002
   QVERIFY(unit.removeConnection(20002));
   // Check that link 20003 to 20002 was removed from Link_tbl
   dataList = unit.getData("SELECT * FROM UnitLink_view", &ok);
   QVERIFY(ok);
-  QCOMPARE(dataList.size(), 0);
+  QCOMPARE(dataList.size(), 1);
   // Check that link 20003 to 20002 was removed from VehicleType_Link_tbl
   dataList = unit.getData("SELECT * FROM VehicleType_Link_tbl", &ok);
   QVERIFY(ok);
-  QCOMPARE(dataList.size(), 0);
+  QCOMPARE(dataList.size(), 1);
   // Remove unit connection 20003
   QVERIFY(unit.removeConnection(20003));
   dataList = unit.getData("SELECT * FROM UnitConnection_tbl", &ok);
   QVERIFY(ok);
+  // Check that link 20003 to 20004 was removed from Link_tbl
+  dataList = unit.getData("SELECT * FROM UnitLink_view", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 0);
+  // Check that link 20003 to 20004 was removed from VehicleType_Link_tbl
+  dataList = unit.getData("SELECT * FROM VehicleType_Link_tbl", &ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 0);
+  // Remove unit connection 20004
+  QVERIFY(unit.removeConnection(20004));
+  // Check that unit connections where removed
+  dataList = unit.getDataList<QSqlRecord>("SELECT * FROM UnitConnection_tbl", ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 0);
+
+  qDebug() << "ALL UNIT connections removed";
 }
 
 void mdtCableListTestScenario::createTestUnitConnectors()
@@ -1098,6 +1210,8 @@ void mdtCableListTestScenario::removeTestUnitConnectors()
   QList<QSqlRecord> dataList;
   bool ok;
 
+  qDebug() << "Removing unit connectors ...";
+  
   QVERIFY(unit.removeConnector(100000));
   QVERIFY(unit.removeConnector(200000));
   QVERIFY(unit.removeConnector(300000));
@@ -1106,6 +1220,8 @@ void mdtCableListTestScenario::removeTestUnitConnectors()
   dataList = unit.getData("SELECT * FROM UnitConnector_tbl", &ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 0);
+  
+  qDebug() << "All unit connectors removed";
 }
 
 void mdtCableListTestScenario::createTestLinks()
@@ -1300,8 +1416,8 @@ void mdtCableListTestScenario::removeTestLinks()
   QVERIFY(lnk.removeLink(40005, 50005));
   dataList = lnk.getData("SELECT * FROM VehicleType_Link_tbl", &ok);
   QVERIFY(ok);
-  QCOMPARE(dataList.size(), 2); // 2 links added during unit connection creation
+  QCOMPARE(dataList.size(), 3); // 3 links added during unit connection creation, must be tested by removeTestUnitConnections()
   dataList = lnk.getData("SELECT * FROM Link_tbl", &ok);
   QVERIFY(ok);
-  QCOMPARE(dataList.size(), 2); // 2 links added during unit connection creation
+  QCOMPARE(dataList.size(), 3); // 3 links added during unit connection creation, must be tested by removeTestUnitConnections()
 }
