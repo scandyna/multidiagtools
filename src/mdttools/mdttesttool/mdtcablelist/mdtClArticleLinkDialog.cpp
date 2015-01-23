@@ -83,6 +83,12 @@ mdtClArticleLinkDialog::~mdtClArticleLinkDialog()
 {
 }
 
+void mdtClArticleLinkDialog::setConnectionEditionLocked(bool lock)
+{
+  pbStartConnection->setEnabled(!lock);
+  pbEndConnection->setEnabled(!lock);
+}
+
 void mdtClArticleLinkDialog::setLinkTypeCode(const QVariant & code)
 {
   QModelIndex index;

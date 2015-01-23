@@ -151,7 +151,6 @@ class mdtClArticle : public mdtTtBase
    * \return True on success, false else.
    *          To get reason of failure, use lastError() .
    */
-  ///bool removeConnections(const QModelIndexList & indexListOfSelectedRows);
   bool removeConnections(const mdtSqlTableSelection & s);
 
   /*! \brief Update unit connections with data from given article connection
@@ -163,7 +162,6 @@ class mdtClArticle : public mdtTtBase
    *               Supported fields are: ArticleContactName, FunctionEN,
    *               FunctionFR, FunctionDE, FunctionIT and Resistance.
    * \param connectionId Article connection ID.
-   * \param handleTransaction If true, a transaction will be used internally.
    */
   bool updateUnitConnections(const QStringList & fields, const QVariant & connectionId);
 
@@ -211,7 +209,6 @@ class mdtClArticle : public mdtTtBase
    * \return True on success, false else.
    *          To get reason of failure, use lastError() .
    */
-  ///bool removeConnectors(const QModelIndexList & indexListOfSelectedRows);
   bool removeConnectors(const mdtSqlTableSelection & s);
 
   /*! \brief Add a record in Link table
@@ -247,23 +244,70 @@ class mdtClArticle : public mdtTtBase
    */
   //bool addBridge(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId);
 
-  /*! \brief Edit a record in Link table
+  /*! \brief Edit a record in ArticleLink_tbl
    *
    * \return True on success, false else.
    *          To get reason of failure, use lastError() .
    */
   bool editLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, const mdtSqlRecord &data);
 
-  /*! \brief Remove a signle link
+  /*! \brief Get number of links in Link_tbl that are based on given article link
+   *
+   * \return Number of related links in Link_tbl or value < 0 on error
+   */
+  int relatedLinksCount(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId);
+
+  /*! \brief Check if given article link has related links in Link_tbl
+   */
+  bool hasRelatedLinks(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, bool & ok)
+  {
+    int n = relatedLinksCount(articleConnectionStartId, articleConnectionEndId);
+    if(n < 0){
+      ok = false;
+      return false;
+    }
+    ok = true;
+    return (n > 0);
+  }
+
+  /*! \brief Update links in Link_tbl that are based in given article link
+   *
+   * \param articleConnectionStartId Article link start connection ID
+   * \param articleConnectionEndId Article link end connection ID
+   * \param articleLinkFields Article link fields for witch update must be done in Link_tbl
+   *                    ArticleConnectionStart_Id_FK and ArticleConnectionEnd_Id_FK are not supported.
+   *                    For other fields, mapping is done internally between ArticleLink_tbl to Link_tbl.
+   * \pre articleConnectionStartId and articleConnectionEndId must not be null
+   * \pre articleLinkFields must not contain ArticleConnectionStart_Id_FK or ArticleConnectionEnd_Id_FK
+   */
+  bool updateRelatedLinks(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, const QStringList & articleLinkFields);
+
+  /*! \brief Update links in Link_tbl that are based in given article link
+   *
+   * \param articleConnectionStartId Article link start connection ID
+   * \param articleConnectionEndId Article link end connection ID
+   * \param articleLinkField Article link field for witch update must be done in Link_tbl
+   *                    ArticleConnectionStart_Id_FK and ArticleConnectionEnd_Id_FK are not supported.
+   *                    For other field name, mapping is done internally between ArticleLink_tbl to Link_tbl.
+   * \pre articleConnectionStartId and articleConnectionEndId must not be null
+   * \pre articleLinkField must not be ArticleConnectionStart_Id_FK or ArticleConnectionEnd_Id_FK
+   */
+  bool updateRelatedLinks(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, const QString & articleLinkField)
+  {
+    QStringList fields;
+    fields.append(articleLinkField);
+    return updateRelatedLinks(articleConnectionStartId, articleConnectionEndId, fields);
+  }
+
+  /*! \brief Remove a signle link from ArticleLink_tbl
    *
    * \return True on success, false else.
    *          To get reason of failure, use lastError() .
    */
   bool removeLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId);
 
-  /*! \brief Remove each unit link that is contained in selection
+  /*! \brief Remove each link that is contained in selection from ArticleLink_tbl
    */
-  ///bool removeLinks(const QList<QModelIndexList> &indexListOfSelectedRowsByRows);
   bool removeLinks(const mdtSqlTableSelection & s);
 
  private:

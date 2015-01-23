@@ -46,6 +46,10 @@ class mdtClArticleLinkDialog : public QDialog, public Ui::mdtClArticleLinkDialog
    */
   ~mdtClArticleLinkDialog();
 
+  /*! \brief Lock or unlock connections edition
+   */
+  void setConnectionEditionLocked(bool lock);
+
   /*! \brief Display link type in combobox
    */
   void setLinkTypeCode(const QVariant & code);

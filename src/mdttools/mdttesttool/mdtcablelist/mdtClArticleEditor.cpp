@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -533,50 +533,38 @@ void mdtClArticleEditor::addLink()
 void mdtClArticleEditor::editLink()
 {
   mdtClArticleLinkDialog dialog(0, database(), currentArticleId());
-  ///int row;
-  ///mdtAbstractSqlWidget *widget;
   mdtSqlTableWidget *widget;
   mdtClArticle art(this, database());
   QVariant articleConnectionStartId, articleConnectionEndId;
   mdtSqlTableSelection s;
   QStringList fields;
+  bool hasRelatedLinks;
+  bool ok;
 
   if(currentArticleId().isNull()){
     return;
   }
-  ///widget = sqlWidget("ArticleLink_view");
   widget = sqlTableWidget("ArticleLink_view");
   Q_ASSERT(widget != 0);
   // Get selected links
-  fields << "ArticleConnectionStart_Id_FK" << "ArticleConnectionEnd_Id_FK" << "LinkType_Code_FK" << "LinkDirection_Code_FK" << "Value";
+  fields << "ArticleConnectionStart_Id_FK" << "ArticleConnectionEnd_Id_FK" << "LinkType_Code_FK" << "LinkDirection_Code_FK" << "Resistance";
   s = widget->currentSelection(fields);
   if(s.isEmpty()){
     return;
   }
-  // Check that a link is selected
-  /**
-  row = widget->rowCount();
-  if(row < 0){
-    return;
-  }
-  */
   Q_ASSERT(s.rowCount() > 0);
   // Get start and end connection ID
   /// \todo OK if Null ??
-  /**
-  articleConnectionStartId = widget->currentData("ArticleConnectionStart_Id_FK");
-  articleConnectionEndId = widget->currentData("ArticleConnectionEnd_Id_FK");
-  */
   articleConnectionStartId = s.data(0, "ArticleConnectionStart_Id_FK");
   articleConnectionEndId = s.data(0, "ArticleConnectionEnd_Id_FK");
   // Setup and show dialog
-  /**
-  dialog.setLinkTypeCode(widget->currentData("LinkType_Code_FK"));
-  dialog.setLinkDirectionCode(widget->currentData("LinkDirection_Code_FK"));
-  dialog.setValue(widget->currentData("Value"));
-  dialog.setStartConnectionId(articleConnectionStartId);
-  dialog.setEndConnectionId(articleConnectionEndId);
-  */
+  hasRelatedLinks = art.hasRelatedLinks(articleConnectionStartId, articleConnectionEndId, ok);
+  if(!ok){
+    pvLastError = art.lastError();
+    displayLastError();
+    return;
+  }
+  dialog.setConnectionEditionLocked(hasRelatedLinks);
   dialog.setLinkTypeCode(s.data(0, "LinkType_Code_FK"));
   dialog.setLinkDirectionCode(s.data(0, "LinkDirection_Code_FK"));
   dialog.setValue(s.data(0, "Resistance"));
@@ -590,6 +578,16 @@ void mdtClArticleEditor::editLink()
     pvLastError = art.lastError();
     displayLastError();
     return;
+  }
+  // Update related links if they exists
+  if(hasRelatedLinks){
+    fields.clear();
+    fields << "LinkType_Code_FK" << "LinkDirection_Code_FK" << "Resistance";
+    if(!art.updateRelatedLinks(articleConnectionStartId, articleConnectionEndId, fields)){
+      pvLastError = art.lastError();
+      displayLastError();
+      return;
+    }
   }
   // Update link table
   select("ArticleLink_view");

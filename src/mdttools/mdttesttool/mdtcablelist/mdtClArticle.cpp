@@ -623,30 +623,6 @@ bool mdtClArticle::removeConnector(const QVariant & articleConnectorId)
   return true;
 }
 
-/**
-bool mdtClArticle::removeConnectors(const QModelIndexList & indexListOfSelectedRows)
-{
-  if(!beginTransaction()){
-    return false;
-  }
-  // Remove connections
-  if(!removeData("ArticleConnection_tbl", "ArticleConnector_Id_FK", indexListOfSelectedRows)){
-    rollbackTransaction();
-    return false;
-  }
-  // Remove connectors
-  if(!removeData("ArticleConnector_tbl", "Id_PK", indexListOfSelectedRows)){
-    rollbackTransaction();
-    return false;
-  }
-  if(!commitTransaction()){
-    return false;
-  }
-
-  return true;
-}
-*/
-
 bool mdtClArticle::removeConnectors(const mdtSqlTableSelection & s)
 {
   if(!beginTransaction()){
@@ -729,49 +705,117 @@ bool mdtClArticle::addBridge(const QVariant & articleConnectionStartId, const QV
 
 bool mdtClArticle::editLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, const mdtSqlRecord & data)
 {
-  mdtSqlRecord matchData;
+  return updateRecord("ArticleLink_tbl", data, "ArticleConnectionStart_Id_FK", articleConnectionStartId , "ArticleConnectionEnd_Id_FK", articleConnectionEndId);
+//   mdtSqlRecord matchData;
+// 
+//   // Setup row condition
+//   if(!matchData.addField("ArticleConnectionStart_Id_FK", "ArticleLink_tbl", database())){
+//     pvLastError = matchData.lastError();
+//     return false;
+//   }
+//   if(!matchData.addField("ArticleConnectionEnd_Id_FK", "ArticleLink_tbl", database())){
+//     pvLastError = matchData.lastError();
+//     return false;
+//   }
+//   matchData.setValue("ArticleConnectionStart_Id_FK", articleConnectionStartId);
+//   matchData.setValue("ArticleConnectionEnd_Id_FK", articleConnectionEndId);
+// 
+//   return updateRecord("ArticleLink_tbl", data, matchData);
+}
 
-  // Setup row condition
-  if(!matchData.addField("ArticleConnectionStart_Id_FK", "ArticleLink_tbl", database())){
-    pvLastError = matchData.lastError();
+int mdtClArticle::relatedLinksCount(const QVariant& articleConnectionStartId, const QVariant& articleConnectionEndId)
+{
+  QString sql;
+  QList<QVariant> dataList;
+  bool ok;
+
+  sql = "SELECT COUNT(*) FROM Link_tbl WHERE ArticleConnectionStart_Id_FK = " + articleConnectionStartId.toString() + " AND ArticleConnectionEnd_Id_FK = " + articleConnectionEndId.toString();
+  dataList = getDataList<QVariant>(sql, ok);
+  if(!ok){
+    return -1;
+  }
+  Q_ASSERT(dataList.size() == 1);
+
+  return dataList.at(0).toInt();
+}
+
+bool mdtClArticle::updateRelatedLinks(const QVariant& articleConnectionStartId, const QVariant& articleConnectionEndId, const QStringList& articleLinkFields)
+{
+  Q_ASSERT(!articleConnectionStartId.isNull());
+  Q_ASSERT(!articleConnectionEndId.isNull());
+  /*
+   * We not handle changing link primary key,
+   *  better fail than do wrong things
+   */
+  Q_ASSERT(!articleLinkFields.contains("ArticleConnectionStart_Id_FK"));
+  Q_ASSERT(!articleLinkFields.contains("ArticleConnectionEnd_Id_FK"));
+
+  QString sql;
+  QList<QSqlRecord> articleLinkDataList;
+  QSqlRecord articleLinkData;
+  mdtSqlRecord linkData;
+  QSqlDatabase db = database();
+  bool ok;
+
+  // Get article link data
+  sql = "SELECT * FROM ArticleLink_tbl WHERE ArticleConnectionStart_Id_FK = " + articleConnectionStartId.toString() + " AND ArticleConnectionEnd_Id_FK = " + articleConnectionEndId.toString();
+  articleLinkDataList = getDataList<QSqlRecord>(sql, ok);
+  if(!ok){
     return false;
   }
-  if(!matchData.addField("ArticleConnectionEnd_Id_FK", "ArticleLink_tbl", database())){
-    pvLastError = matchData.lastError();
+  Q_ASSERT(articleLinkDataList.size() == 1);
+  articleLinkData = articleLinkDataList.at(0);
+  // Map and copy article link data for each given field
+  for(auto & alFieldName : articleLinkFields){
+    // LinkType_Code_FK
+    if(alFieldName == "LinkType_Code_FK"){
+      if(!linkData.addField("LinkType_Code_FK", "Link_tbl", db)){
+        pvLastError = linkData.lastError();
+        return false;
+      }
+      linkData.setValue("LinkType_Code_FK", articleLinkData.value("LinkType_Code_FK"));
+    }else if(alFieldName == "LinkDirection_Code_FK"){
+      // LinkDirection_Code_FK
+      if(!linkData.addField("LinkDirection_Code_FK", "Link_tbl", db)){
+        pvLastError = linkData.lastError();
+        return false;
+      }
+      linkData.setValue("LinkDirection_Code_FK", articleLinkData.value("LinkDirection_Code_FK"));
+    }else if(alFieldName == "LinkDirection_Code_FK"){
+      // Identification
+      if(!linkData.addField("Identification", "Link_tbl", db)){
+        pvLastError = linkData.lastError();
+        return false;
+      }
+      linkData.setValue("Identification", articleLinkData.value("Identification"));
+    }else if(alFieldName == "LinkDirection_Code_FK"){
+      // Resistance
+      if(!linkData.addField("Resistance", "Link_tbl", db)){
+        pvLastError = linkData.lastError();
+        return false;
+      }
+      linkData.setValue("Resistance", articleLinkData.value("Resistance"));
+    }
+  }
+  // Update in Link_tbl
+  if(!beginTransaction()){
     return false;
   }
-  matchData.setValue("ArticleConnectionStart_Id_FK", articleConnectionStartId);
-  matchData.setValue("ArticleConnectionEnd_Id_FK", articleConnectionEndId);
+  if(!updateRecord("Link_tbl", linkData, "ArticleConnectionStart_Id_FK", articleConnectionStartId , "ArticleConnectionEnd_Id_FK", articleConnectionEndId)){
+    rollbackTransaction();
+    return false;
+  }
+  if(!commitTransaction()){
+    return false;
+  }
 
-  return updateRecord("ArticleLink_tbl", data, matchData);
+  return true;
 }
 
 bool mdtClArticle::removeLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId)
 {
   return removeData("ArticleLink_tbl", "ArticleConnectionStart_Id_FK", articleConnectionStartId, "ArticleConnectionEnd_Id_FK", articleConnectionEndId);
 }
-
-/**
-bool mdtClArticle::removeLinks(const QList<QModelIndexList> &indexListOfSelectedRowsByRows)
-{
-  int row;
-  QModelIndexList indexes;
-
-  if(!beginTransaction()){
-    return false;
-  }
-  for(row = 0; row < indexListOfSelectedRowsByRows.size(); ++row){
-    indexes = indexListOfSelectedRowsByRows.at(row);
-    Q_ASSERT(indexes.size() == 2);
-    if(!removeLink(indexes.at(0).data(), indexes.at(1).data())){
-      rollbackTransaction();
-      return false;
-    }
-  }
-
-  return commitTransaction();
-}
-*/
 
 bool mdtClArticle::removeLinks(const mdtSqlTableSelection & s)
 {

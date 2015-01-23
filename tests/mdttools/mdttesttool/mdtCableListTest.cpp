@@ -1213,8 +1213,13 @@ void mdtCableListTest::linkUpdateFromArticleLinkTest()
   QVERIFY(ok);
   QCOMPARE(linkData.value("LinkType_Code_FK"), QVariant("INTERNLINK"));
   /*
-   * Edit article link 21-20 and check that links 20001-20000 are updated
+   * Edit article link 21-20 and check that links 20001-20000 , update raleted links and check
    */
+  // Check number of related links
+  QCOMPARE(art.relatedLinksCount(21, 20), 2);
+  QVERIFY(art.hasRelatedLinks(21, 20, ok));
+  QVERIFY(ok);
+  // Edit article link
   sql = "SELECT * FROM ArticleLink_tbl WHERE ArticleConnectionStart_Id_FK = 21 AND ArticleConnectionEnd_Id_FK = 20";
   dataList = art.getDataList<QSqlRecord>(sql, ok);
   QVERIFY(ok);
@@ -1222,11 +1227,13 @@ void mdtCableListTest::linkUpdateFromArticleLinkTest()
   data = dataList.at(0);
   data.setValue("LinkType_Code_FK", "INTERNLINK");
   QVERIFY(art.editLink(21, 20, data));
+  // Update related links in Link_tbl
+  QVERIFY(art.updateRelatedLinks(21, 20, "LinkType_Code_FK"));
+  // Check that LinkType_Code_FK was updated
   linkData = lnk.getLinkData(20001, 20000, false, false, ok);
   QVERIFY(ok);
   QCOMPARE(linkData.value("LinkType_Code_FK"), QVariant("INTERNLINK"));
 
-  
   // Cleanup
   pvScenario->removeScenario();
 }
