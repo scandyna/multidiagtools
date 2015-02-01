@@ -580,6 +580,7 @@ void mdtClArticleEditor::editLink()
     return;
   }
   // Update related links if they exists
+  /**
   if(hasRelatedLinks){
     fields.clear();
     fields << "LinkType_Code_FK" << "LinkDirection_Code_FK" << "Resistance";
@@ -589,6 +590,7 @@ void mdtClArticleEditor::editLink()
       return;
     }
   }
+  */
   // Update link table
   select("ArticleLink_view");
 }

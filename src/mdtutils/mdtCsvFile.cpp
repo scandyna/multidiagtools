@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -25,6 +25,30 @@
 
 //#include <QDebug>
 
+/*
+ * mdtCsvFileSettings implementation
+ */
+
+mdtCsvFileSettings::mdtCsvFileSettings()
+ : separator(","),
+   eol("\r\n")
+{
+}
+
+void mdtCsvFileSettings::clear()
+{
+  separator = ",";
+  eol = "\r\n";
+  dataProtection.clear();
+  dataProtectionEscapeChar = '\0';
+  comment.clear();
+}
+
+
+/*
+ * mdtCsvFile implementation
+ */
+
 mdtCsvFile::mdtCsvFile(QObject *parent, const QByteArray &fileEncoding)
  : QFile(parent)
 {
@@ -44,6 +68,7 @@ void mdtCsvFile::close()
   QFile::close();
 }
 
+/**
 bool mdtCsvFile::writeLine(const QStringList &line, const QString &separator, const QString &dataProtection, const QChar &escapeChar, QString eol)
 {
   QString str, item;
@@ -66,6 +91,49 @@ bool mdtCsvFile::writeLine(const QStringList &line, const QString &separator, co
     if(!escapeChar.isNull()){
       item = line.at(i);
       item.replace(dataProtection, escapeChar + dataProtection);
+      str += item;
+    }else{
+      str += line.at(i);
+    }
+    str += dataProtection;
+    if(i < (line.size()-1)){
+      str += separator;
+    }
+  }
+  str += eol;
+  if(write(pvCodec->fromUnicode(str)) < 0){
+    mdtError e(MDT_FILE_IO_ERROR, "Write error occured on file " + fileName(), mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtCsvFile");
+    e.commit();
+    return false;
+  }
+
+  return true;
+}
+*/
+
+bool mdtCsvFile::writeLine(const QStringList & line, const mdtCsvFileSettings & settings)
+{
+  Q_ASSERT(isOpen());
+
+  QString separator = settings.separator;
+  QString dataProtection = settings.dataProtection;
+  QChar dataProtectionEscapeChar = settings.dataProtectionEscapeChar;
+  QString eol = settings.eol;
+  QString str;
+  QString item;
+  int i;
+
+  // If file was open with Text flag, EOL is allways converted
+  if(isTextModeEnabled()){
+    eol = "\n";
+  }
+  // Get items, escape and write
+  for(i=0; i<line.size(); i++){
+    str += dataProtection;
+    if(!dataProtectionEscapeChar.isNull()){
+      item = line.at(i);
+      item.replace(dataProtection, dataProtectionEscapeChar + dataProtection);
       str += item;
     }else{
       str += line.at(i);

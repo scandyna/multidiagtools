@@ -99,6 +99,7 @@ class mdtDatabaseWidgetTest : public mdtTest
   void sqlSelectionDialogTest();
 
   void sqlTableWidgetTest();
+  void sqlTableWidgetCsvExportTest();
 
   void sqlFormTest();
 

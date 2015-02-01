@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -29,6 +29,7 @@ class mdtFileTest : public mdtTest
 
  private slots:
 
+  void csvFileSettingsTest();
   // CSV file read/write tests
   void csvFileWriteTest();
   void csvFileReadLineTest();

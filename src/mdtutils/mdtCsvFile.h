@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -34,6 +34,56 @@
 #else
  #define MDT_NATIVE_EOL "\n"
 #endif
+
+/*! \brief Hold settings for CSV file reading and writing
+ */
+struct mdtCsvFileSettings
+{
+  /*! \brief Construct default CSV file settings
+   *
+   * \sa clear()
+   */
+  mdtCsvFileSettings();
+
+  /*! \brief Restore defualt settings
+   *
+   * Default setting are:
+   *  - separator : comma ( , ) as defined in RFC 4180
+   *  - eol : CRLF (\\r\\n) as defined in RFC 4180
+   *  - dataProtection : none
+   *  - dataProtectionEscapeChar : none
+   *  - comment : none
+   */
+  void clear();
+
+  /*! \brief Field separator
+   */
+  QString separator;
+
+  /*! \brief End of line sequence
+   *
+   * Usefull if given file is not supposed to be readen from running platform.
+   */
+  QString eol;
+
+  /*! \brief Data protection (typical: " ).
+   */
+  QString dataProtection;
+
+  /*! \brief Escape char (typical: \ )
+   *
+   * Note: has only effect to escape dataProtection.
+   */
+  QChar dataProtectionEscapeChar;
+
+  /*! \brief Comment (typical: # ).
+   *
+   * Each line that beginns with comment is ignored.
+   *  Only used for reading.
+   */
+  QString comment;
+};
+
 
 /*! \brief Read and write CSV file
  * 
@@ -74,7 +124,17 @@ class mdtCsvFile : public QFile
    *             Note that file must not be open with Text flag if this parameter is needed (se QFile::open() for details).
    * \return True on success
    */
-  bool writeLine(const QStringList &line, const QString &separator = ";", const QString &dataProtection = "", const QChar &escapeChar = QChar(), QString eol = MDT_NATIVE_EOL);
+  ///bool writeLine(const QStringList &line, const QString &separator = ";", const QString &dataProtection = "", const QChar &escapeChar = QChar(), QString eol = MDT_NATIVE_EOL);
+
+  /*! \brief Write a line of data
+   *
+   * \param line List of strings containing line data.
+   * \param settings CSV file settings to use.
+   *            Note: eol will be ignored if file was open with Text flag. See QFile::open() and QIODevice::OpenMode for details.
+   * \return True on success
+   * \pre File must be open when calling this function
+   */
+  bool writeLine(const QStringList & line, const mdtCsvFileSettings & settings);
 
   /*! \brief Get CSV file's header
    *

@@ -66,6 +66,10 @@ class mdtClVehicleTypeEditor : public mdtSqlForm
    */
   void viewLinkPath();
 
+  /*! \brief Export markins to CSV file
+   */
+  void exportMarkingsToCsvFile();
+
  private:
 
   /*! \brief Get current vehicle type ID

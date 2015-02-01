@@ -2726,6 +2726,51 @@ void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
   QVERIFY(q.exec("PRAGMA foreign_keys = ON"));
 }
 
+// void mdtDatabaseWidgetTest::sqlTableViewControllerDataExportTest()
+// {
+//   mdtSqlTableViewController tvc;
+//   QTableView tv;
+//   QSqlQuery q(pvDatabaseManager.database());
+//   ///QModelIndex index;
+//   ///QLineEdit *lineEdit;
+//   ///mdtSqlTableSelection s;
+// 
+//   // For this test, we wont foreign_keys support
+//   QVERIFY(q.exec("PRAGMA foreign_keys = OFF"));
+//   // Create test data
+//   populateTestDatabase();
+//   /*
+//    * Setup
+//    */
+//   tvc.setTableView(&tv);
+//   tvc.setTableName("Client_tbl", pvDatabaseManager.database(), "Clients");
+//   QCOMPARE(tvc.tableName(), QString("Client_tbl"));
+//   tv.setEditTriggers(QAbstractItemView::EditKeyPressed);
+//   tv.resize(400, 300);
+//   tv.show();
+//   tvc.start();
+// 
+//   /*
+//    * Setup sorting and select
+//    */
+//   tvc.addColumnToSortOrder("FirstName", Qt::AscendingOrder);
+//   tvc.sort();
+//   QVERIFY(tvc.select());
+// 
+//   
+//   /*
+//    * Play
+//    */
+//   while(tv.isVisible()){
+//     QTest::qWait(500);
+//   }
+// 
+//   // Clear test data
+//   clearTestDatabaseData();
+//   // Re-enable foreign_keys support
+//   QVERIFY(q.exec("PRAGMA foreign_keys = ON"));
+// }
+
 void mdtDatabaseWidgetTest::sqlControllerParentChildTest()
 {
   sqlDataWidgetControllerTestWidget clientWidget;
@@ -3496,12 +3541,83 @@ void mdtDatabaseWidgetTest::sqlTableWidgetTest()
   delete sqlTableWidget;
 }
 
+void mdtDatabaseWidgetTest::sqlTableWidgetCsvExportTest()
+{
+  mdtSqlTableWidget *sqlTableWidget;
+  std::shared_ptr<mdtSqlTableViewController> addressController;
+  ///mdtSqlTableWidget *addressWidget;
+  ///mdtSqlRelationInfo relationInfo;
+  QTableView *view;
+  ///mdtSqlTableSelection s;
+  ///QStringList fields;
+  ///QModelIndex index;
+  ///QTemporaryFile tmpFile;
+  QTemporaryFile csvFile;
+  ///QFile csvFile;
+  mdtCsvFileSettings csvSettings;
+  QByteArray expecetedCsvData;
+
+  // Populate database
+  populateTestDatabase();
+  // Setup client widget
+  sqlTableWidget = new mdtSqlTableWidget;
+  sqlTableWidget->setTableName("Client_tbl", pvDatabaseManager.database());
+  sqlTableWidget->resize(500, 300);
+  sqlTableWidget->show();
+  view = sqlTableWidget->tableView();
+  QVERIFY(view != 0);
+  view->setSelectionMode(QAbstractItemView::MultiSelection);
+  sqlTableWidget->start();
+  QVERIFY(sqlTableWidget->select());
+  // Setup sorting
+  sqlTableWidget->addColumnToSortOrder("FirstName", Qt::AscendingOrder);
+  sqlTableWidget->sort();
+
+  /*
+   * Create CSV file
+   */
+  QVERIFY(csvFile.open());
+  qDebug() << "CSV file: " << csvFile.fileName();
+  csvFile.close();
+
+  /*
+   * Export to CSV file and check
+   */
+  QVERIFY(sqlTableWidget->exportToCsvFile(csvFile, csvSettings, true));
+  // Build expected result
+  expecetedCsvData  = "Id_PK,FirstName,Remarks,SomeValueDouble\r\n";
+  expecetedCsvData += "1,Andy,,\r\n";
+  expecetedCsvData += "2,Bety,Remark on Bety,2\r\n";
+  expecetedCsvData += "4,Charly,Remark on Charly,\r\n";
+  expecetedCsvData += "3,Zeta,Remark on Zeta,\r\n";
+  // Read CSV file and check
+  QVERIFY(csvFile.open());
+  
+  ///qDebug() << "CSV file: " << csvFile.readAll();
+  
+  QCOMPARE(csvFile.readAll(), expecetedCsvData);
+
+  /// \todo Check also that comma are removed if no data protection is used
+  
+  /*
+   * Play
+   */
+
+  while(sqlTableWidget->isVisible()){
+    QTest::qWait(1000);
+  }
+
+  // Cleanup
+  clearTestDatabaseData();
+  delete sqlTableWidget;
+}
+
 void mdtDatabaseWidgetTest::sqlFormTest()
 {
   mdtSqlForm form(0, pvDatabaseManager.database());
   sqlDataWidgetControllerTestWidget clientWidget;
   mdtSqlRelationInfo relationInfo;
-  mdtSqlTableWidget *tableWidget;
+  ///mdtSqlTableWidget *tableWidget;
 
   // Create test data
   populateTestDatabase();

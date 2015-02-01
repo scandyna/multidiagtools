@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -827,6 +827,17 @@ class mdtAbstractSqlTableController : public QObject
    * Internally, removeTriggered() signal will be emitted.
    */
   void remove();
+
+  /*! \brief Set last error
+   *
+   * Most of time, subclass uses directly pvLastError to set last error.
+   *  In some (rare) cases, if needed, use this function to store a error.
+   *  (This is f.ex. the case of mdtSqlTableWidget)
+   */
+  void setLastError(const mdtError & error)
+  {
+    pvLastError = error;
+  }
 
  protected:
 

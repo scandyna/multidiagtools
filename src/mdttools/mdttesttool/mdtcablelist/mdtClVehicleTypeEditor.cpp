@@ -42,6 +42,7 @@
 #include <QItemSelectionModel>
 #include <QMessageBox>
 #include <QPushButton>
+#include <QFileDialog>
 
 #include <QDebug>
 
@@ -162,6 +163,64 @@ void mdtClVehicleTypeEditor::viewLinkPath()
   }
 
   dialog.exec();
+}
+
+void mdtClVehicleTypeEditor::exportMarkingsToCsvFile()
+{
+  QFileDialog fileDialog(this);
+  QMessageBox msgBox(this);
+  QFileInfo csvFileInfo;
+  QString selectedFile;
+  mdtCsvFileSettings csvSettings;
+  mdtSqlTableWidget *widget;
+
+  // Get SQL widget
+  widget = sqlTableWidget("LinkMarking_view");
+  Q_ASSERT(widget != 0);
+  // Setup file dialog
+  fileDialog.setFileMode(QFileDialog::AnyFile);
+  fileDialog.setNameFilter(tr("CSV files (*.csv)"));
+  fileDialog.setAcceptMode(QFileDialog::AcceptSave);
+  fileDialog.setDefaultSuffix("csv");
+  fileDialog.setDirectory(QDir::home());
+  if(fileDialog.exec() != QDialog::Accepted){
+    return;
+  }
+  Q_ASSERT(fileDialog.selectedFiles().size() == 1);
+  selectedFile = fileDialog.selectedFiles().at(0);
+  // Complete path with extension if missing
+  csvFileInfo.setFile(selectedFile);
+  if( (csvFileInfo.suffix() != "csv") && (csvFileInfo.suffix() != "CSV") ){
+    selectedFile += ".csv";
+    csvFileInfo.setFile(selectedFile);
+  }
+  qDebug() << "File: " << csvFileInfo.fileName();
+  qDebug() << "Path: " << csvFileInfo.absoluteFilePath();
+  qDebug() << "Ext: " << csvFileInfo.suffix();
+  // If file allready exists, ask user vefore continue
+  /**
+  if(csvFileInfo.exists()){
+    msgBox.setText(tr("File ") + " '" + csvFileInfo.fileName() + "' " + tr("allready exists"));
+    msgBox.setInformativeText(tr("Do you want to overwrite it ?"));
+    msgBox.setIcon(QMessageBox::QMessageBox::Information);
+    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::No);
+    if(msgBox.exec() != QMessageBox::Yes){
+      return;
+    }
+  }
+  */
+  // Export
+  if(!widget->exportToCsvFile(csvFileInfo, csvSettings, false)){
+    pvLastError = widget->lastError();
+    displayLastError();
+    return;
+  }
+  // Tell user that CSV was successfully exported
+  msgBox.setText(tr("CSV export done."));
+  msgBox.setInformativeText(tr("File was written to") + "'" + csvFileInfo.absoluteFilePath() + "'");
+  msgBox.setIcon(QMessageBox::QMessageBox::Information);
+  msgBox.exec();
 }
 
 QVariant mdtClVehicleTypeEditor::currentVehicleTypeId()
@@ -318,6 +377,7 @@ bool mdtClVehicleTypeEditor::setupLinkMarkingTable()
   mdtSqlRelationInfo relationInfo;
   QString sql;
   QSqlQuery query(database());
+  QPushButton *pb;
 
   /*
    * Query to generate LinkMarking_view
@@ -423,7 +483,12 @@ bool mdtClVehicleTypeEditor::setupLinkMarkingTable()
   widget->addColumnToSortOrder("StartMarking", Qt::AscendingOrder);
   widget->addColumnToSortOrder("EndMarking", Qt::AscendingOrder);
   widget->sort();
+  // Setup export to CSV button
+  pb = new QPushButton(tr("Export to CSV ..."));
+  connect(pb, SIGNAL(clicked()), this, SLOT(exportMarkingsToCsvFile()));
+  widget->addWidgetToLocalBar(pb);
 
+  widget->addStretchToLocalBar();
   widget->resizeViewToContents();
 
   return true;

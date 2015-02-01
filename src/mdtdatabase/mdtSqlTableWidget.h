@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -24,12 +24,14 @@
 #include "mdtError.h"
 #include "mdtSqlTableViewController.h"
 #include "mdtSqlTableSelection.h"
+#include "mdtCsvFile.h"
 #include <QModelIndex>
 #include <QStyledItemDelegate>
 #include <QString>
 #include <QStringList>
 #include <QWidget>
 #include <QSqlDatabase>
+#include <QFileInfo>
 #include <memory>
 
 class QTableView;
@@ -357,6 +359,13 @@ class mdtSqlTableWidget :  public QWidget
   /*! \brief Get last error
    */
   inline mdtError lastError() const { return pvController->lastError(); }
+
+  /*! \brief Export table to CSV file
+   *
+   * Will export visible fields to given CSV file,
+   *  regarding sorting.
+   */
+  bool exportToCsvFile(const QFileInfo & csvFile, const mdtCsvFileSettings & csvSettings, bool includeHeader);
 
  public slots:
 

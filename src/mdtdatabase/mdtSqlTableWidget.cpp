@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -37,6 +37,7 @@
 #include <QObject>
 #include <QWidget>
 #include <QIcon>
+#include <QStringList>
 
 #include <QItemSelection>
 
@@ -243,6 +244,77 @@ void mdtSqlTableWidget::setDefaultColumnToSelect(int column)
 void mdtSqlTableWidget::setDefaultColumnToSelect(const QString &fieldName)
 {
   pvController->setDefaultColumnToSelect(fieldName);
+}
+
+bool mdtSqlTableWidget::exportToCsvFile(const QFileInfo & csvFile, const mdtCsvFileSettings& csvSettings, bool includeHeader)
+{
+  mdtCsvFile file;
+  QStringList lineData;
+  int row, col;
+
+  // Do some checks on existing csvFile
+  if(csvFile.exists()){
+    if(!csvFile.isFile()){
+      mdtError e(tr("Cannot export data as CSV to path") + "'" + csvFile.absolutePath() + "'" , mdtError::Error);
+      e.setInformativeText(tr("Given path is not a file."));
+      MDT_ERROR_SET_SRC(e, "mdtSqlTableWidget");
+      e.commit();
+      pvController->setLastError(e);
+      return false;
+    }
+    if(!csvFile.isWritable()){
+      mdtError e(tr("Cannot export data to CSV file") + "'" + csvFile.absoluteFilePath() + "'" , mdtError::Error);
+      e.setInformativeText(tr("No write access to given file."));
+      MDT_ERROR_SET_SRC(e, "mdtSqlTableWidget");
+      e.commit();
+      pvController->setLastError(e);
+      return false;
+    }
+  }
+  // Open CSV file
+  file.setFileName(csvFile.absoluteFilePath());
+  if(!file.open(QIODevice::WriteOnly)){
+    mdtError e(tr("Cannot export data to CSV file") + "'" + csvFile.absoluteFilePath() + "'" , mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtSqlTableWidget");
+    e.commit();
+    pvController->setLastError(e);
+    return false;
+  }
+  // We call sort, so all data will be fetched (and sorted)
+  sort();
+  // Write header if requested
+  if(includeHeader){
+    for(col = 0; col < pvController->columnCount(); ++col){
+      if(!pvTableView->isColumnHidden(col)){
+        lineData << pvController->headerData(col).toString();
+      }
+    }
+    if(!file.writeLine(lineData, csvSettings)){
+      mdtError e(tr("Error occured while exporting data to CSV file") + "'" + csvFile.absoluteFilePath() + "'" , mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtSqlTableWidget");
+      e.commit();
+      pvController->setLastError(e);
+      return false;
+    }
+  }
+  // Write data part
+  for(row = 0; row < pvController->rowCount(false); ++row){
+    lineData.clear();
+    for(col = 0; col < pvController->columnCount(); ++col){
+      if(!pvTableView->isColumnHidden(col)){
+        lineData << pvController->data(row, col).toString();
+      }
+    }
+    if(!file.writeLine(lineData, csvSettings)){
+      mdtError e(tr("Error occured while exporting data to CSV file") + "'" + csvFile.absoluteFilePath() + "'" , mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtSqlTableWidget");
+      e.commit();
+      pvController->setLastError(e);
+      return false;
+    }
+  }
+
+  return true;
 }
 
 void mdtSqlTableWidget::resizeViewToContents()
