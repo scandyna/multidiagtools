@@ -7,6 +7,7 @@ project (multidiagtools)
 
 # Header files for mdtTestTool
 set (TT_HEADER_FILES 
+          mdtTtApplicationWidgets.h
           mdtTtTestCableEditor.h
           mdtTtLogicalTestCableEditor.h
           mdtTtLogicalTestCableDialog.h
@@ -35,6 +36,7 @@ set (TT_HEADER_FILES
 
 # Sources files for mdtTestTool
 set (TT_SOURCES_FILES 
+          mdtTtApplicationWidgets.cpp
           mdtTtBase.cpp
           mdtTtDatabaseSchema.cpp
           mdtTtTestLinkData.cpp

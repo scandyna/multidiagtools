@@ -3725,6 +3725,20 @@ void mdtDatabaseWidgetTest::sqlFieldSelectionDialogTest()
 
 }
 
+void mdtDatabaseWidgetTest::sqlApplicationWidgetsTest()
+{
+  // Following line must not compile
+  //mdtSqlApplicationWidgetsTest wt;
+
+  mdtSqlApplicationWidgetsTest::setDatabase(pvDatabaseManager.database());
+  QVERIFY(mdtSqlApplicationWidgetsTest::database().tables() == pvDatabaseManager.database().tables());
+  
+  mdtError e("Test", mdtError::Warning);
+  mdtSqlApplicationWidgetsTest::doSomeThing();
+  
+  // Cleanup
+  mdtSqlApplicationWidgetsTest::clear();
+}
 
 /*
  * Helper methods

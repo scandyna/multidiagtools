@@ -29,7 +29,7 @@
 #include "mdtClWireEditor.h"
 #include "mdtClLinkBeamEditor.h"
 #include "mdtClArticleEditor.h"
-#include "mdtTtTestCableEditor.h"
+///#include "mdtTtTestCableEditor.h"
 #include "mdtTtLogicalTestCableEditor.h"
 #include "mdtTtTestNodeEditor.h"
 #include "mdtTtTestModelEditor.h"
@@ -44,6 +44,7 @@
 #include "mdtTtBasicTestNodeCalibrationWindow.h"
 
 #include "mdtClApplicationWidgets.h"
+#include "mdtTtApplicationWidgets.h"
 
 #include <QAction>
 #include <QMessageBox>
@@ -92,6 +93,7 @@ mdtClMainWindow::mdtClMainWindow()
 mdtClMainWindow::~mdtClMainWindow()
 {
   mdtClApplicationWidgets::clear();
+  mdtTtApplicationWidgets::clear();
 }
 
 void mdtClMainWindow::openDatabase()
@@ -365,10 +367,8 @@ void mdtClMainWindow::editUnit()
 void mdtClMainWindow::editSelectedUnit()
 {
    mdtSqlTableSelection s;
-//   mdtClUnitEditor *editor;
-//   mdtSqlWindow *window;
    mdtSqlTableWidget *view;
-// 
+
    // Get unit view
    view = getTableView("Unit_view");
    if(view == 0){
@@ -379,29 +379,8 @@ void mdtClMainWindow::editSelectedUnit()
   if(s.isEmpty()){
     return;
   }
-//   // Get or create editor
-//   editor = getUnitEditor();
-//   if(editor == 0){
-//     return;
-//   }
-//   // Get window
-//   window = getEditorWindow(editor);
-//   Q_ASSERT(window != 0);
-//   // Select and show
-//   Q_ASSERT(editor != 0);
-//   if(!editor->select()){
-//     displayError(editor->lastError());
-//     return;
-//   }
   Q_ASSERT(s.rowCount() == 1);
   mdtClApplicationWidgets::editUnit(s.data(0, "Unit_Id_PK"));
-//   if(!editor->setCurrentRow("Id_PK", s.data(0, "Unit_Id_PK"))){
-//     displayError(editor->lastError());
-//     return;
-//   }
-//   window->enableNavigation();
-//   window->raise();
-//   window->show();
 }
 
 void mdtClMainWindow::viewWire()
@@ -480,35 +459,35 @@ void mdtClMainWindow::viewTestConnectionCable()
   }
 }
 
-void mdtClMainWindow::editTestConnectionCable()
-{
-  mdtTtTestCableEditor *editor;
-  mdtSqlWindow *window;
-
-  // Get or create editor
-  editor = getTestCableEditor();
-  if(editor == 0){
-    return;
-  }
-  // Get window
-  window = getEditorWindow(editor);
-  Q_ASSERT(window != 0);
-  // Select and show
-  Q_ASSERT(editor != 0);
-  if(!editor->select()){
-    displayError(editor->lastError());
-    return;
-  }
-  window->enableNavigation();
-  window->raise();
-  window->show();
-}
+// void mdtClMainWindow::editTestConnectionCable()
+// {
+//   mdtTtTestCableEditor *editor;
+//   mdtSqlWindow *window;
+// 
+//   // Get or create editor
+//   editor = getTestCableEditor();
+//   if(editor == 0){
+//     return;
+//   }
+//   // Get window
+//   window = getEditorWindow(editor);
+//   Q_ASSERT(window != 0);
+//   // Select and show
+//   Q_ASSERT(editor != 0);
+//   if(!editor->select()){
+//     displayError(editor->lastError());
+//     return;
+//   }
+//   window->enableNavigation();
+//   window->raise();
+//   window->show();
+// }
 
 void mdtClMainWindow::editSelectedTestConnectionCable()
 {
   mdtSqlTableSelection s;
-  mdtTtTestCableEditor *editor;
-  mdtSqlWindow *window;
+  ///mdtTtTestCableEditor *editor;
+  ///mdtSqlWindow *window;
   mdtSqlTableWidget *view;
 
   // Get test connection cable view
@@ -522,27 +501,28 @@ void mdtClMainWindow::editSelectedTestConnectionCable()
     return;
   }
   // Get or create editor
-  editor = getTestCableEditor();
-  if(editor == 0){
-    return;
-  }
+//   editor = getTestCableEditor();
+//   if(editor == 0){
+//     return;
+//   }
   // Get window
-  window = getEditorWindow(editor);
-  Q_ASSERT(window != 0);
+//   window = getEditorWindow(editor);
+//   Q_ASSERT(window != 0);
   // Select and show
-  Q_ASSERT(editor != 0);
-  if(!editor->select()){
-    displayError(editor->lastError());
-    return;
-  }
+//   Q_ASSERT(editor != 0);
+//   if(!editor->select()){
+//     displayError(editor->lastError());
+//     return;
+//   }
   Q_ASSERT(s.rowCount() == 1);
+  mdtTtApplicationWidgets::editTestCable(s.data(0, "Unit_Id_FK_PK"));
   /// \todo Corriger !! + filtre ??
-  if(!editor->setCurrentRow("Id_PK", s.data(0, "Unit_Id_FK_PK"))){
-    displayError(editor->lastError());
-  }
-  window->enableNavigation();
-  window->raise();
-  window->show();
+//   if(!editor->setCurrentRow("Id_PK", s.data(0, "Unit_Id_FK_PK"))){
+//     displayError(editor->lastError());
+//   }
+//   window->enableNavigation();
+//   window->raise();
+//   window->show();
 }
 
 void mdtClMainWindow::editTestNode()
@@ -1179,33 +1159,33 @@ bool mdtClMainWindow::createTestConnectionCableTableView()
   return true;
 }
 
-mdtTtTestCableEditor *mdtClMainWindow::getTestCableEditor()
-{
-  mdtTtTestCableEditor *editor;
-
-  editor = getEditor<mdtTtTestCableEditor>();
-  if(editor != 0){
-    return editor;
-  }else{
-    return createTestCableEditor();
-  }
-}
-
-mdtTtTestCableEditor *mdtClMainWindow::createTestCableEditor()
-{
-  mdtTtTestCableEditor *editor;
-  mdtSqlWindow *window;
-
-  editor = new mdtTtTestCableEditor(0, pvDatabaseManager->database());
-  window = setupEditor(editor);
-  if(window == 0){
-    return 0;
-  }
-  window->setWindowTitle(tr("Test cable edition"));
-  window->resize(800, 600);
-
-  return editor;
-}
+// mdtTtTestCableEditor *mdtClMainWindow::getTestCableEditor()
+// {
+//   mdtTtTestCableEditor *editor;
+// 
+//   editor = getEditor<mdtTtTestCableEditor>();
+//   if(editor != 0){
+//     return editor;
+//   }else{
+//     return createTestCableEditor();
+//   }
+// }
+// 
+// mdtTtTestCableEditor *mdtClMainWindow::createTestCableEditor()
+// {
+//   mdtTtTestCableEditor *editor;
+//   mdtSqlWindow *window;
+// 
+//   editor = new mdtTtTestCableEditor(0, pvDatabaseManager->database());
+//   window = setupEditor(editor);
+//   if(window == 0){
+//     return 0;
+//   }
+//   window->setWindowTitle(tr("Test cable edition"));
+//   window->resize(800, 600);
+// 
+//   return editor;
+// }
 
 mdtTtTestModelEditor *mdtClMainWindow::getTestModelEditor()
 {
@@ -1415,6 +1395,10 @@ void mdtClMainWindow::closeEvent(QCloseEvent* event)
     event->ignore();
     return;
   }
+  if(!mdtTtApplicationWidgets::closeOpenWidgets()){
+    event->ignore();
+    return;
+  }
   if(!deleteEditors()){
     event->ignore();
   }else{
@@ -1465,7 +1449,8 @@ void mdtClMainWindow::connectActions()
 
   // Test connection cable
   connect(actViewTestConnectionCable, SIGNAL(triggered()), this, SLOT(viewTestConnectionCable()));
-  connect(actEditTestConnectionCable, SIGNAL(triggered()), this, SLOT(editTestConnectionCable()));
+  connect(actEditTestConnectionCable, SIGNAL(triggered()), mdtTtApplicationWidgets::instancePtr(), SLOT(slotEditTestCables()));
+  ///connect(actEditTestConnectionCable, SIGNAL(triggered()), this, SLOT(editTestConnectionCable()));
   /**
   connect(actCreateTestConnectionCable, SIGNAL(triggered()), this, SLOT(createTestConnectionCable()));
   connect(actConnectTestCable, SIGNAL(triggered()), this, SLOT(connectTestCable()));
@@ -1560,8 +1545,9 @@ bool mdtClMainWindow::openDatabaseSqlite()
     closeDatabase();
     return false;
   }
-  // Set also open database to Widgets container
+  // Set also open database to Widgets containers
   mdtClApplicationWidgets::setDatabase(pvDatabaseManager->database());
+  mdtTtApplicationWidgets::setDatabase(pvDatabaseManager->database());
 
   return true;
 }

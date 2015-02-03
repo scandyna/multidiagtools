@@ -41,7 +41,7 @@ class mdtTtTestNodeEditor;
 class mdtTtTestModelEditor;
 ///class mdtTtTestModelItemEditor;
 class mdtSqlWindow;
-class mdtTtTestCableEditor;
+///class mdtTtTestCableEditor;
 class mdtTtLogicalTestCableEditor;
 ///class mdtTtBasicTester;
 class mdtTtBasicTesterWindow;
@@ -173,7 +173,7 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
 
   /*! \brief Edit test connection cable
    */
-  void editTestConnectionCable();
+  ///void editTestConnectionCable();
 
   /*! \brief Edit selected test connection cable
    */
@@ -315,11 +315,11 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
 
   /*! \brief Get test connection cable editor
    */
-  mdtTtTestCableEditor *getTestCableEditor();
+  ///mdtTtTestCableEditor *getTestCableEditor();
 
   /*! \brief Create test connection cable editor
    */
-  mdtTtTestCableEditor *createTestCableEditor();
+  ///mdtTtTestCableEditor *createTestCableEditor();
 
   /*! \brief Get test model editor
    */

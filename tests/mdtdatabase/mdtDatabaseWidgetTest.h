@@ -23,6 +23,7 @@
 
 #include "mdtTest.h"
 #include "mdtSqlDatabaseManager.h"
+#include "mdtSqlApplicationWidgets.h"
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QSqlDatabase>
@@ -71,6 +72,31 @@ class sqlDataWidgetControllerTestWidget : public QWidget
 };
 
 /*
+ * Concrete application widgets test class
+ */
+class mdtSqlApplicationWidgetsTest : public mdtSqlApplicationWidgets<mdtSqlApplicationWidgetsTest>
+{
+ Q_OBJECT
+
+  friend class mdtSqlApplicationWidgets<mdtSqlApplicationWidgetsTest>;
+
+ public:
+
+  void clearAllWidgets()
+  {
+    qDebug() << "Clear all widgets ...";
+  }
+  static void doSomeThing(){
+    instance().displayError(mdtError("Test", mdtError::Warning));
+  }
+
+ private:
+
+  mdtSqlApplicationWidgetsTest(){}
+  Q_DISABLE_COPY(mdtSqlApplicationWidgetsTest);
+};
+
+/*
  * Test itself
  */
 
@@ -104,6 +130,8 @@ class mdtDatabaseWidgetTest : public mdtTest
   void sqlFormTest();
 
   void sqlFieldSelectionDialogTest();
+
+  void sqlApplicationWidgetsTest();
 
  private:
 

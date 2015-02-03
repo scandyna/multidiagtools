@@ -184,4 +184,3 @@ void mdtClApplicationWidgets::displayError(const mdtError & error)
   msgBox.setIcon(error.levelIcon());
   msgBox.exec();
 }
-

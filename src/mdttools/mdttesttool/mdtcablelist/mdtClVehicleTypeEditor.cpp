@@ -194,9 +194,11 @@ void mdtClVehicleTypeEditor::exportMarkingsToCsvFile()
     selectedFile += ".csv";
     csvFileInfo.setFile(selectedFile);
   }
+  /**
   qDebug() << "File: " << csvFileInfo.fileName();
   qDebug() << "Path: " << csvFileInfo.absoluteFilePath();
   qDebug() << "Ext: " << csvFileInfo.suffix();
+  */
   // If file allready exists, ask user vefore continue
   /**
   if(csvFileInfo.exists()){

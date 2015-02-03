@@ -80,7 +80,7 @@ bool mdtTtAbstractTestNodeCalibrationTool::setup(QWidget *testNodeFormWidget)
   }
   pvTestNodeUnitTableController->sort();
 
-  /** \toso Idée:
+  /** \todo Idée:
    *  - Travailler tous sur un controlleur pointant sur TestNodeUnit_view (y compris affichage des résultats en live)
    *  - Créer une méthode de sauvegarde reprenant les données depuis ce contrôleur, mais correspondant aux champs
    *     à sauvegarder dans TestNodeUnit_tbl, créer une liste de mdtSqlRecord et sauvegarder d'une transaction.
