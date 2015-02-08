@@ -49,6 +49,7 @@ mdtTtAbstractTestNodeCalibrationTool::mdtTtAbstractTestNodeCalibrationTool(QSqlD
 bool mdtTtAbstractTestNodeCalibrationTool::setup(QWidget *testNodeFormWidget)
 {
   Q_ASSERT(testNodeFormWidget != 0);
+  Q_ASSERT(database().isOpen());
 
   QSqlError sqlError;
   mdtSqlRelationInfo relationInfo;
@@ -93,6 +94,8 @@ bool mdtTtAbstractTestNodeCalibrationTool::setup(QWidget *testNodeFormWidget)
 
 bool mdtTtAbstractTestNodeCalibrationTool::setTestNode(const QVariant& testNodeId)
 {
+  Q_ASSERT(database().isOpen());
+
   if(!pvTestNodeTableController->setFilter("VehicleType_Id_FK_PK", testNodeId)){
     pvLastError = pvTestNodeTableController->lastError();
     displayLastError();

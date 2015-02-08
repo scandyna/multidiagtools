@@ -24,6 +24,7 @@
 #include "mdtDeviceIos.h"
 #include "mdtDeviceIosSegment.h"
 #include "mdtDeviceIosWidget.h"
+#include "mdtMultiIoDevice.h"
 #include "mdtDeviceModbus.h"
 #include "mdtModbusTcpPortManager.h"
 #include "mdtDeviceModbusWago.h"
@@ -1551,7 +1552,7 @@ void mdtDeviceTest::deviceIosSegmentStorageTest()
 void mdtDeviceTest::deviceIosWidgetTest()
 {
   mdtDeviceIosWidget w;
-  mdtDeviceIos ios;
+  std::shared_ptr<mdtDeviceIos> ios(new mdtDeviceIos);
   mdtAnalogIo *ai;
   mdtAnalogIo *ao;
   mdtDigitalIo *di;
@@ -1574,7 +1575,7 @@ void mdtDeviceTest::deviceIosWidgetTest()
   ai->setDetails("Batteriespannung\nSchema: 06E");
   ///QVERIFY(ai->setRange(0.0, 50.0, 16));
   ai->setRange(0.0, 50.0, 16);
-  ios.addAnalogInput(ai);
+  ios->addAnalogInput(ai);
 
   // Add analog outputs
   ao = new mdtAnalogIo;
@@ -1584,7 +1585,7 @@ void mdtDeviceTest::deviceIosWidgetTest()
   ao->setDetails("Output voltage for AG speed setpoint\nSee schema 16F");
   ///QVERIFY(ao->setRange(0.0, 10.0, 16));
   ao->setRange(0.0, 10.0, 16);
-  ios.addAnalogOutput(ao);
+  ios->addAnalogOutput(ao);
 
   // Add digital inputs
   di = new mdtDigitalIo;
@@ -1592,21 +1593,21 @@ void mdtDeviceTest::deviceIosWidgetTest()
   di->setLabelShort("Test");
   di->setLabel("Test mode");
   di->setDetails("Test mode enabled.\nIf ON, it's possible to set some outputs from tool\nSee schema 25G");
-  ios.addDigitalInput(di);
+  ios->addDigitalInput(di);
 
   di = new mdtDigitalIo;
   di->setAddress(18);
   di->setLabelShort("xM_HSEin");
   di->setLabel(tr("xHochspannung"));
   di->setDetails("Hoschspannung vorhanden\nSchema: 06E");
-  ios.addDigitalInput(di);
+  ios->addDigitalInput(di);
 
   di = new mdtDigitalIo;
   di->setAddress(19);
   di->setLabelShort("xM_MgBr");
   di->setLabel(tr("xMgBremse"));
   di->setDetails("Magnetische Bremse\nSchema: 06E");
-  ios.addDigitalInput(di);
+  ios->addDigitalInput(di);
 
   // Add digital outputs
   dout = new mdtDigitalIo;
@@ -1614,18 +1615,18 @@ void mdtDeviceTest::deviceIosWidgetTest()
   dout->setLabelShort("xB_BelEin");
   dout->setLabel(tr("xBeleuchtungEin"));
   dout->setDetails(tr("Drehschalter Beleuchtung Ein") + "\n" + tr("Schema: 10A"));
-  ios.addDigitalOutput(dout);
+  ios->addDigitalOutput(dout);
 
   dout = new mdtDigitalIo;
   dout->setAddress(21);
   dout->setLabelShort("xB_BatMinU");
   dout->setLabel(tr("xBatMinSpg"));
   dout->setDetails(tr("Batterie Minimalspannung") + "\n" + tr("Schema: 06C"));
-  ios.addDigitalOutput(dout);
+  ios->addDigitalOutput(dout);
 
   // Setup widget
   ///w.setMaxColumns(3);
-  w.setDeviceIos(&ios);
+  w.setDeviceIos(ios);
   w.show();
 
   /**
@@ -1634,13 +1635,22 @@ void mdtDeviceTest::deviceIosWidgetTest()
   }
   */
   // Second setup (must clear existing widget and redo layout)
-  w.setDeviceIos(&ios);
+  w.setDeviceIos(ios);
   w.show();
   /**
   while(w.isVisible()){
     QTest::qWait(1000);
   }
   */
+}
+
+void mdtDeviceTest::multiIoDeviceTest()
+{
+  mdtMultiIoDevice device;
+
+  // Initial state
+  QVERIFY(device.ios().get() != nullptr);
+  
 }
 
 void mdtDeviceTest::modbusTest()

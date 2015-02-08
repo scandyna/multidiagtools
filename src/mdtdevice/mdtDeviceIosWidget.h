@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -23,6 +23,7 @@
 
 #include <QWidget>
 #include <QList>
+#include <memory>
 
 class mdtDeviceIos;
 class mdtAnalogInWidget;
@@ -58,7 +59,7 @@ class mdtDeviceIosWidget : public QWidget
    *
    * \pre ios must be a valid pointer
    */
-  void setDeviceIos(mdtDeviceIos *ios);
+  void setDeviceIos(std::shared_ptr<mdtDeviceIos> ios);
 
   /*! \brief Remove I/O's widgets
    */
@@ -74,7 +75,7 @@ class mdtDeviceIosWidget : public QWidget
   QList<mdtDigitalOutWidget*> pvDigitalOutputs;
   int pvMaxColumns;
   QGridLayout *pvLayout;
-  mdtDeviceIos *pvIos;
+  std::shared_ptr<mdtDeviceIos> pvIos;
 };
 
 #endif  // #ifndef MDT_DEVICE_IOS_WIDGET_H

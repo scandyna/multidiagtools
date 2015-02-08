@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -30,7 +30,6 @@ mdtDeviceIosWidget::mdtDeviceIosWidget(QWidget *parent)
  : QWidget(parent)
 {
   pvMaxColumns = 10;
-  pvIos = 0;
   pvLayout = new QGridLayout;
 
   setLayout(pvLayout);
@@ -47,9 +46,9 @@ void mdtDeviceIosWidget::setMaxColumns(int n)
   pvMaxColumns = n;
 }
 
-void mdtDeviceIosWidget::setDeviceIos(mdtDeviceIos *ios)
+void mdtDeviceIosWidget::setDeviceIos(std::shared_ptr<mdtDeviceIos> ios)
 {
-  Q_ASSERT(ios != 0);
+  Q_ASSERT(ios);
 
   int i;
   int row, col;

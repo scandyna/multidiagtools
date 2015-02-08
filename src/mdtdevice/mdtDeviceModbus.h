@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,7 +21,8 @@
 #ifndef MDT_DEVICE_MODBUS_H
 #define MDT_DEVICE_MODBUS_H
 
-#include "mdtDevice.h"
+///#include "mdtDevice.h"
+#include "mdtMultiIoDevice.h"
 #include "mdtPortInfo.h"
 #include <QMap>
 #include <QVariant>
@@ -39,7 +40,7 @@ class mdtDeviceIosSegment;
  *  - MODBUS Application Protocol Specification V1.1b
  *  - http://www.Modbus-IDA.org
  */
-class mdtDeviceModbus : public mdtDevice
+class mdtDeviceModbus : public mdtMultiIoDevice
 {
  Q_OBJECT
 

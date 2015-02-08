@@ -33,6 +33,8 @@
 #include <QMutableListIterator>
 #include <memory>
 
+#include <QDebug>
+
 /*! \brief Container for SQL editors and views
  *
  * Using this class helps to create editors and views.
@@ -108,9 +110,34 @@ class mdtSqlApplicationWidgets : public QObject
    */
   std::shared_ptr<mdtSqlWindow> getOpenSqlWindow(const std::shared_ptr<mdtSqlForm> & form);
 
-  /*! \brief Close all open widgets
+  /*! \brief Close all open SQL windows
+   *
+   * All SQL windows (mdtSqlWindow objects) that was created with setupEditorInSqlWindow()
+   *  are stored in a container. When calling this function, it is checked if internal
+   *  form (a mdtSqlForm object) has all data saved.
+   *
+   * If one window contains a form that has pending data, this function retunrs false.
    */
-  bool closeAllOpenWidgets();
+  bool closeOpenSqlWindows();
+
+  /*! \brief Close custom widgets
+   *
+   * For windows created with a mdtSqlForm in a mdtSqlWindow,
+   *  closeOpenSqlWindows() can be used.
+   *  For real application, many other widgets can be created.
+   *
+   * Subclass can reimplement this function to close such widgets,
+   *  and use their specific way to check if it is OK to really close it now.
+   *
+   * If one widget cannot be closed now, this function returns false.
+   *
+   * Default implementation does nothing and allways return true.
+   */
+  virtual bool closeCustomWidgets()
+  {
+    qDebug() << "mdtSqlApplicationWidgets::closeCustomWidgets() ...";
+    return true;
+  }
 
   /*! \brief Destroy all created widgets
    *
@@ -141,7 +168,10 @@ class mdtSqlApplicationWidgets : public QObject
 template <typename T>
 bool mdtSqlApplicationWidgets<T>::closeOpenWidgets()
 {
-  return instance().closeAllOpenWidgets();
+  if(!instance().closeOpenSqlWindows()){
+    return false;
+  }
+  return instance().closeCustomWidgets();
 }
 
 template <typename T>
@@ -194,7 +224,7 @@ std::shared_ptr<mdtSqlWindow> mdtSqlApplicationWidgets<T>::getOpenSqlWindow(cons
 }
 
 template <typename T>
-bool mdtSqlApplicationWidgets<T>::closeAllOpenWidgets()
+bool mdtSqlApplicationWidgets<T>::closeOpenSqlWindows()
 {
   mdtSqlForm *form;
 

@@ -265,14 +265,6 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
    */
   bool createUnitTableView();
 
-  /*! \brief Get unit editor
-   */
-  ///mdtClUnitEditor *getUnitEditor();
-
-  /*! \brief Create unit editor
-   */
-  ///mdtClUnitEditor *createUnitEditor();
-
   /*! \brief Create wire table view
    */
   bool createWireTableView();

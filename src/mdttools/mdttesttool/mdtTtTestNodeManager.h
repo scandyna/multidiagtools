@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -104,7 +104,7 @@ class mdtTtTestNodeManager : public QObject
 
   /*! \brief Set short labels to digital outputs
    */
-  bool setDigitalOutputsLabelShort(mdtDeviceIos *ios, const QVariant & testNodeId, const QString & deviceIdentification);
+  bool setDigitalOutputsLabelShort(std::shared_ptr<mdtDeviceIos> ios, const QVariant & testNodeId, const QString & deviceIdentification);
 
   Q_DISABLE_COPY(mdtTtTestNodeManager);
 

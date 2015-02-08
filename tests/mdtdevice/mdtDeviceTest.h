@@ -44,6 +44,9 @@ class mdtDeviceTest : public mdtTest
   // I/O's widget container test
   void deviceIosWidgetTest();
 
+  // Multi I/O device test
+  void multiIoDeviceTest();
+
   // Some simple coherence tests (no real test possible without MODBUS server)
   void modbusTest();
   void modbusWagoModuleTest();

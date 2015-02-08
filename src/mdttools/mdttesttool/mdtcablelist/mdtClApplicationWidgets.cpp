@@ -19,33 +19,10 @@
  **
  ****************************************************************************/
 #include "mdtClApplicationWidgets.h"
-// Common classes
-#include "mdtSqlWindow.h"
-#include "mdtSqlForm.h"
 // Editor classes
 #include "mdtClUnitEditor.h"
 
-// Qt classes
-#include <QMessageBox>
-#include <QMutableListIterator>
-
 #include <QDebug>
-
-mdtClApplicationWidgets & mdtClApplicationWidgets::instance()
-{
-  static mdtClApplicationWidgets aw;
-  return aw;
-}
-
-bool mdtClApplicationWidgets::closeOpenWidgets()
-{
-  return instance().closeAllOpenWidgets();
-}
-
-void mdtClApplicationWidgets::clear()
-{
-  instance().clearAllWidgets();
-}
 
 void mdtClApplicationWidgets::editUnit(const QVariant & unitId)
 {
@@ -108,79 +85,8 @@ bool mdtClApplicationWidgets::createUnitEditor()
   return true;
 }
 
-
-std::shared_ptr<mdtSqlWindow> mdtClApplicationWidgets::setupEditorInSqlWindow(const std::shared_ptr<mdtSqlForm> & editor)
-{
-  Q_ASSERT(editor);
-
-  std::shared_ptr<mdtSqlWindow> window(new mdtSqlWindow);
-
-  window->setSqlForm(editor.get());
-  window->enableEdition();
-  pvOpenEditorWidows.append(window);
-
-  return window;
-}
-
-void mdtClApplicationWidgets::showSqlWindow(const std::shared_ptr<mdtSqlForm> & form, bool enableNavigation, bool enableEdition)
-{
-  Q_ASSERT(form);
-
-  auto window = getOpenSqlWindow(form);
-  Q_ASSERT(window);
-  window->setNavigationEnabled(enableNavigation);
-  window->setEditionEnabled(enableEdition);
-  window->raise();
-  window->show();
-}
-
-std::shared_ptr<mdtSqlWindow> mdtClApplicationWidgets::getOpenSqlWindow(const std::shared_ptr<mdtSqlForm> & form)
-{
-  Q_ASSERT(form);
-
-  for(auto & window : pvOpenEditorWidows){
-    Q_ASSERT(window);
-    if(window->sqlForm() == form.get()){
-      return window;
-    }
-  }
-
-  return std::shared_ptr<mdtSqlWindow>();
-}
-
-bool mdtClApplicationWidgets::closeAllOpenWidgets()
-{
-  mdtSqlForm *form;
-
-  // Close all editors handled by a generic SQL window
-  for(auto & window : pvOpenEditorWidows){
-    Q_ASSERT(window);
-    form = window->sqlForm();
-    if(form != 0){
-      if(!form->allDataAreSaved()){
-        return false;
-      }
-    }
-    window->close();
-  }
-
-  return true;
-}
-
 void mdtClApplicationWidgets::clearAllWidgets()
 {
   // Delete all editors
   pvUnitEditor.reset();
-  // Delete all windows - Must be done after having deleted editors
-  pvOpenEditorWidows.clear();
-}
-
-void mdtClApplicationWidgets::displayError(const mdtError & error)
-{
-  QMessageBox msgBox;
-
-  msgBox.setText(error.text());
-  msgBox.setDetailedText(error.systemText());
-  msgBox.setIcon(error.levelIcon());
-  msgBox.exec();
 }

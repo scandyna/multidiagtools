@@ -87,7 +87,7 @@ class mdtSqlApplicationWidgetsTest : public mdtSqlApplicationWidgets<mdtSqlAppli
     qDebug() << "Clear all widgets ...";
   }
   static void doSomeThing(){
-    instance().displayError(mdtError("Test", mdtError::Warning));
+    //instance().displayError(mdtError("Test", mdtError::Warning));
   }
 
  private:

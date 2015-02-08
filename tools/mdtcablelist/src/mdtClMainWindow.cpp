@@ -958,38 +958,6 @@ bool mdtClMainWindow::createUnitTableView()
   return true;
 }
 
-/**
-mdtClUnitEditor *mdtClMainWindow::getUnitEditor()
-{
-  mdtClUnitEditor *editor;
-
-  editor = getEditor<mdtClUnitEditor>();
-  if(editor != 0){
-    return editor;
-  }else{
-    return createUnitEditor();
-  }
-}
-*/
-
-/**
-mdtClUnitEditor *mdtClMainWindow::createUnitEditor()
-{
-  mdtClUnitEditor *editor;
-  mdtSqlWindow *window;
-
-  editor = new mdtClUnitEditor(0, pvDatabaseManager->database());
-  window = setupEditor(editor);
-  if(window == 0){
-    return 0;
-  }
-  window->setWindowTitle(tr("Unit edition"));
-  window->resize(800, 600);
-
-  return editor;
-}
-*/
-
 mdtClWireEditor* mdtClMainWindow::getWirEditor()
 {
   mdtClWireEditor *editor;

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -32,7 +32,7 @@
 #include "mdtAlgorithms.h"
 
 mdtDeviceModbus::mdtDeviceModbus(QObject *parent)
- : mdtDevice(parent)
+ : mdtMultiIoDevice(parent)
 {
   int timeout;
 

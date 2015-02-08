@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -23,6 +23,7 @@
 #include "mdtTtTestNode.h"
 #include "mdtDeviceIos.h"
 #include "mdtAbstractIo.h"
+#include "mdtMultiIoDevice.h"
 
 #include <QDebug>
 
@@ -51,17 +52,17 @@ void mdtTtTestNodeManager::clear()
 
 bool mdtTtTestNodeManager::setDeviceIosLabelShort(const QVariant& testNodeId, const QVariant& deviceIdentification)
 {
-  shared_ptr<mdtDevice> dev;
+  shared_ptr<mdtMultiIoDevice> dev;
 
   // Get device
-  dev = device<mdtDevice>(deviceIdentification);
+  dev = device<mdtMultiIoDevice>(deviceIdentification);
   if(!dev){
-    pvLastError.setError(tr("No device found with identification") + " '" + deviceIdentification.toString() + "'", mdtError::Error);
+    pvLastError.setError(tr("No multi I/O device found with identification") + " '" + deviceIdentification.toString() + "'", mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNodeManager");
     pvLastError.commit();
     return false;
   }
-  Q_ASSERT(dev->ios() != 0);
+  Q_ASSERT(dev->ios());
   // Set analog inputs labels
   
   // Set analog outputs labels
@@ -76,9 +77,9 @@ bool mdtTtTestNodeManager::setDeviceIosLabelShort(const QVariant& testNodeId, co
   return true;
 }
 
-bool mdtTtTestNodeManager::setDigitalOutputsLabelShort(mdtDeviceIos* ios, const QVariant& testNodeId, const QString& deviceIdentification)
+bool mdtTtTestNodeManager::setDigitalOutputsLabelShort(std::shared_ptr<mdtDeviceIos> ios, const QVariant& testNodeId, const QString& deviceIdentification)
 {
-  Q_ASSERT(ios != 0);
+  Q_ASSERT(ios);
 
   mdtTtTestNode tn(0, pvDatabase);
   QString sql;
@@ -98,7 +99,7 @@ bool mdtTtTestNodeManager::setDigitalOutputsLabelShort(mdtDeviceIos* ios, const 
   }
   // Check count of digital outputs in ios and count of found test node units
   if(ios->digitalOutputsCount() < ioLabelList.size()){
-    pvLastError.setError(tr("Device ") + deviceIdentification + tr(" has less than expected dogital outputs."), mdtError::Error);
+    pvLastError.setError(tr("Device ") + deviceIdentification + tr(" has less than expected digital outputs."), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNodeManager");
     pvLastError.commit();
     return false;

@@ -19,33 +19,10 @@
  **
  ****************************************************************************/
 #include "mdtTtApplicationWidgets.h"
-// Common classes
-// #include "mdtSqlWindow.h"
-// #include "mdtSqlForm.h"
 // Editor classes
 #include "mdtTtTestCableEditor.h"
 
-// Qt classes
-// #include <QMessageBox>
-// #include <QMutableListIterator>
-
 #include <QDebug>
-
-// mdtTtApplicationWidgets & mdtTtApplicationWidgets::instance()
-// {
-//   static mdtTtApplicationWidgets aw;
-//   return aw;
-// }
-// 
-// bool mdtTtApplicationWidgets::closeOpenWidgets()
-// {
-//   return instance().closeAllOpenWidgets();
-// }
-
-// void mdtTtApplicationWidgets::clear()
-// {
-//   instance().clearAllWidgets();
-// }
 
 void mdtTtApplicationWidgets::editTestCable(const QVariant & testCableId)
 {
@@ -108,79 +85,8 @@ bool mdtTtApplicationWidgets::createTestCableEditor()
   return true;
 }
 
-// std::shared_ptr<mdtSqlWindow> mdtTtApplicationWidgets::setupEditorInSqlWindow(const std::shared_ptr<mdtSqlForm> & editor)
-// {
-//   Q_ASSERT(editor);
-// 
-//   std::shared_ptr<mdtSqlWindow> window(new mdtSqlWindow);
-// 
-//   window->setSqlForm(editor.get());
-//   window->enableEdition();
-//   pvOpenEditorWidows.append(window);
-// 
-//   return window;
-// }
-
-// void mdtTtApplicationWidgets::showSqlWindow(const std::shared_ptr<mdtSqlForm> & form, bool enableNavigation, bool enableEdition)
-// {
-//   Q_ASSERT(form);
-// 
-//   auto window = getOpenSqlWindow(form);
-//   Q_ASSERT(window);
-//   window->setNavigationEnabled(enableNavigation);
-//   window->setEditionEnabled(enableEdition);
-//   window->raise();
-//   window->show();
-// }
-
-// std::shared_ptr<mdtSqlWindow> mdtTtApplicationWidgets::getOpenSqlWindow(const std::shared_ptr<mdtSqlForm> & form)
-// {
-//   Q_ASSERT(form);
-// 
-//   for(auto & window : pvOpenEditorWidows){
-//     Q_ASSERT(window);
-//     if(window->sqlForm() == form.get()){
-//       return window;
-//     }
-//   }
-// 
-//   return std::shared_ptr<mdtSqlWindow>();
-// }
-
-// bool mdtTtApplicationWidgets::closeAllOpenWidgets()
-// {
-//   mdtSqlForm *form;
-// 
-//   // Close all editors handled by a generic SQL window
-//   for(auto & window : pvOpenEditorWidows){
-//     Q_ASSERT(window);
-//     form = window->sqlForm();
-//     if(form != 0){
-//       if(!form->allDataAreSaved()){
-//         return false;
-//       }
-//     }
-//     window->close();
-//   }
-// 
-//   return true;
-// }
-
-
-// void mdtTtApplicationWidgets::displayError(const mdtError & error)
-// {
-//   QMessageBox msgBox;
-// 
-//   msgBox.setText(error.text());
-//   msgBox.setDetailedText(error.systemText());
-//   msgBox.setIcon(error.levelIcon());
-//   msgBox.exec();
-// }
-
 void mdtTtApplicationWidgets::clearAllWidgets()
 {
   // Delete all editors
   pvTestCableEditor.reset();
-  // Delete all windows - Must be done after having deleted editors
-//   pvOpenEditorWidows.clear();
 }
