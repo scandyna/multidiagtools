@@ -20,6 +20,8 @@
  ****************************************************************************/
 #include "mdtMultiIoDevice.h"
 #include "mdtDeviceIosSegment.h"
+#include "mdtPortTransaction.h"
+#include "mdtPortManager.h"
 
 mdtMultiIoDevice::mdtMultiIoDevice(QObject* parent)
  : mdtDevice(parent),
@@ -1068,7 +1070,7 @@ void mdtMultiIoDevice::setAnalogOutputValue(mdtAnalogIo* analogOutput)
 {
   Q_ASSERT(analogOutput != 0);
 
-  if(currentState() != mdtPortManager::Ready){
+  if(currentState() != State_t::Ready){
     // Device busy, cannot threat query , try later
     return;
   }
@@ -1079,11 +1081,46 @@ void mdtMultiIoDevice::setDigitalOutputValue(mdtDigitalIo* digitalOutput)
 {
   Q_ASSERT(digitalOutput != 0);
 
-  if(currentState() != mdtPortManager::Ready){
+  if(currentState() != State_t::Ready){
     // Device busy, cannot threat query , try later
     return;
   }
   setDigitalOutputValue(digitalOutput, digitalOutput->value(), true, false);
+}
+
+mdtPortTransaction *mdtMultiIoDevice::getNewTransaction()
+{
+  Q_ASSERT(portManager() != 0);
+
+  return portManager()->getNewTransaction();
+}
+
+void mdtMultiIoDevice::restoreTransaction(mdtPortTransaction *transaction)
+{
+  Q_ASSERT(portManager() != 0);
+  Q_ASSERT(transaction != 0);
+
+  portManager()->restoreTransaction(transaction);
+}
+
+bool mdtMultiIoDevice::waitTransactionDone(int id)
+{
+  Q_ASSERT(portManager() != 0);
+
+  bool ok;
+
+  ok = portManager()->waitTransactionDone(id);
+  /*
+   * Request was send, response arrived,
+   * subclass has decoded response and updated I/O.
+   * So, we have to remove transaction from done queue and restore it to pool
+   * In mdtPortManager it was choosen to not let access
+   * to transaction queues management, so we call readenFrame()
+   * witch does all the needed job.
+   */
+  portManager()->readenFrame(id);
+
+  return ok;
 }
 
 int mdtMultiIoDevice::readAnalogInput(mdtPortTransaction *transaction)

@@ -216,9 +216,9 @@ mdtAbstractPort::error_t mdtDeviceModbus::connectToDevice(const QList<int> & exi
 
   // Check that a hardware node id was set
   if(!pvHardwareNodeId.isValid()){
-    lastErrorW().setError(tr("Hardware node ID was not set."), mdtError::Error);
-    MDT_ERROR_SET_SRC(lastErrorW(), "mdtDeviceModbus");
-    lastErrorW().commit();
+    pvLastError.setError(tr("Hardware node ID was not set."), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbus");
+    pvLastError.commit();
     return mdtAbstractPort::SetupError;
   }
   // Setup _existingHwNodeIdList
@@ -453,9 +453,47 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction *transaction)
       break;
     default:
       /// \todo Handle errors !
-      mdtError e(MDT_DEVICE_ERROR, "Received frame with unhandled function code (0x" + QString::number(fc, 16) + ")", mdtError::Warning);
-      MDT_ERROR_SET_SRC(e, "mdtDeviceModbus");
-      e.commit();
+      pvLastError.setError("Received frame with unhandled function code (0x" + QString::number(fc, 16) + ")", mdtError::Warning);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbus");
+      pvLastError.commit();
+  }
+}
+
+void mdtDeviceModbus::setStateFromPortManager ( int portManagerState )
+{
+  switch((mdtPortManager::state_t)portManagerState){
+    case mdtPortManager::PortClosed:
+      ///setStatePortClosed();
+      setCurrentState(State_t::Disconnected);
+      break;
+    case mdtPortManager::Disconnected:
+      ///setStateDisconnected();
+      setCurrentState(State_t::Disconnected);
+      break;
+    case mdtPortManager::Connecting:
+      ///setStateConnecting();
+      setCurrentState(State_t::Connecting);
+      break;
+    case mdtPortManager::Ready:
+      ///setStateReady();
+      setCurrentState(State_t::Ready);
+      break;
+    case mdtPortManager::Busy:
+      //setStateBusy();
+      //break;
+    case mdtPortManager::PortError:
+      ///setStateError();
+      setCurrentState(State_t::Error);
+      break;
+    case mdtPortManager::Stopped:
+    case mdtPortManager::Starting:
+    case mdtPortManager::Stopping:
+    case mdtPortManager::Running:
+    case mdtPortManager::PortReady:
+    case mdtPortManager::Connected:
+      ///emit stateChanged(portManagerState);
+      setCurrentState(State_t::Error);
+      break;
   }
 }
 
@@ -678,4 +716,9 @@ int mdtDeviceModbus::writeDigitalOutputs(mdtPortTransaction *transaction, mdtDev
   // Send request
   transaction->setData(pdu);
   return pvTcpPortManager->sendData(transaction);
+}
+
+void mdtDeviceModbus::disconnectFromDeviceEvent()
+{
+  pvTcpPortManager->stop();
 }

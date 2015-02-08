@@ -106,7 +106,7 @@ void mdtModbusIoTool::retranslate()
 
 void mdtModbusIoTool::setState(int state)
 {
-  qDebug() << "mdtModbusIoTool - new state: " << pvDeviceModbusWago->currentState() << " ...";
+  ///qDebug() << "mdtModbusIoTool - new state: " << pvDeviceModbusWago->currentState() << " ...";
   switch((mdtPortManager::state_t)state){
     case mdtPortManager::PortClosed:
       setStatePortClosed();
@@ -127,7 +127,7 @@ void mdtModbusIoTool::setState(int state)
       setStateError();
       break;
   }
-  qDebug() << "mdtModbusIoTool - new state: " << pvDeviceModbusWago->currentState();
+  ///qDebug() << "mdtModbusIoTool - new state: " << pvDeviceModbusWago->currentState();
 }
 
 void mdtModbusIoTool::setup()

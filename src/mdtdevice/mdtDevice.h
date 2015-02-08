@@ -22,7 +22,7 @@
 #define MDT_DEVICE_H
 
 #include "mdtAbstractPort.h"
-#include "mdtPortManager.h"
+///#include "mdtPortManager.h"
 #include "mdtDeviceInfo.h"
 #include "mdtValue.h"
 #include "mdtError.h"
@@ -35,7 +35,7 @@
 #include <QList>
 
 class QTimer;
-class mdtDeviceIosSegment;
+///class mdtDeviceIosSegment;
 
 /*! \brief Base class for a device connected to a port
  *
@@ -162,64 +162,11 @@ class mdtDevice : public QObject
 
   /*! \brief Disconnect from device
    *
-   * Will stop periodic querying ( see stop() ),
-   *  and stop internal port manager (if set).
+   * Will stop periodic querying ( see stop() ).
    *
-   * If specific work must be done,
-   *  subclass can re-implement this method.
-   *
-   * Note: in the implementation, ios are keeped as they are.
+   * Will also call disconnectFromDeviceEvent().
    */
-  virtual void disconnectFromDevice();
-
-  /*! \brief Add a analog input
-   */
-  //void addInput(mdtAnalogIo *analogInput);
-
-  /*! \brief Add a list of analog inputs
-   */
-  //void addInputs(const QList<mdtAnalogIo*> & analogInputs);
-
-  /*! \brief Add a analog output
-   */
-  //void addOutput(mdtAnalogIo *analogOutput);
-
-  /*! \brief Add a list of analog outputs
-   */
-  //void addOutputs(const QList<mdtAnalogIo*> & analogOutputs);
-
-  /*! \brief Add a digital input
-   */
-  //void addInput(mdtDigitalIo *digitalInput);
-
-  /*! \brief Add a list of digital inputs
-   */
-  //void addInputs(const QList<mdtDigitalIo*> & digitalInputs);
-
-  /*! \brief Add a digital output
-   */
-  //void addOutput(mdtDigitalIo *digitalOutput);
-
-  /*! \brief Add a list of digital outputs
-   */
-  //void addOutputs(const QList<mdtDigitalIo*> & digitalOutputs);
-
-  /*! \brief Delete all I/O in container
-   *
-   * All I/O's will be deleted,
-   *  but I/O container itself will remain valid.
-   */
-  //void deleteIos();
-
-  /*! \brief Get the I/Os container
-   *
-   * Note: once this mdtDevice object was destroyed,
-   *  the I/O container is deleted.
-   *
-   * \post During the lifetime of this mdtDevice object,
-   *        a valid pointer will be returned.
-   */
-  ///mdtDeviceIos *ios();
+  void disconnectFromDevice();
 
   /*! \brief Set back to ready state timeout
    *
@@ -245,16 +192,18 @@ class mdtDevice : public QObject
    *  and that a Null pointer can be returned.
    *  (See subclass documentation for details)
    */
-  virtual mdtPortManager *portManager();
+  //virtual mdtPortManager *portManager();
 
   /*! \brief Check if device is ready
    *
-   * This default implementation calls mdtPortManager::isReady() ,
-   *  or returns false if portManager was not set.
+   * This default implementation returns allways false.
    *
    * Note: isReady() should return true only if device it ready for querying.
    */
-  virtual bool isReady();
+  virtual bool isReady()
+  {
+    return false;
+  }
 
   /*! \brief Start periodic device querying
    *
@@ -285,11 +234,12 @@ class mdtDevice : public QObject
    */
   mdtError lastError() const;
 
-  /*! \brief Get device state
-   *
-   * \deprecated Change to State_t
+  /*! \brief Get current state
    */
-  mdtPortManager::state_t currentState();
+  State_t currentState() const
+  {
+    return pvCurrentState;
+  }
 
   public slots:
 
@@ -299,7 +249,7 @@ class mdtDevice : public QObject
    */
   void runQueries();
 
- protected slots:
+ ///protected slots:
 
   /*! \brief Decode incoming frames
    *
@@ -311,212 +261,13 @@ class mdtDevice : public QObject
    *     or set to invalid value on error (see mdtValue class).
    *     Doing so will keep (G)UI consistency.
    */
-  virtual void decodeReadenFrame(mdtPortTransaction *transaction);
+  ///virtual void decodeReadenFrame(mdtPortTransaction *transaction);
 
  protected:
-
-  /*! \brief Get last error for write access
-   *
-   * \deprecated Use pvLastError directly.
-   */
-  mdtError & lastErrorW();
 
   /*! \brief Last error object
    */
   mdtError pvLastError;
-
-//   /*! \brief Read one analog input on physical device
-//    *
-//    * This is the device specific implementation to send the query.
-//    *  If device handled by subclass has analog inputs, this method should be implemented.
-//    *
-//    * This method is called from getAnalogInputValue() .
-//    *
-//    * \param transaction Contains some flags used during query/reply process (address, id, I/O object, ...).
-//    * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details).
-//    * \pre I/O's must be set with setIos().
-//    * \pre transaction must be a valid pointer.
-//    */
-//   virtual int readAnalogInput(mdtPortTransaction *transaction);
-// 
-//   /*! \brief Read all analog inputs on physical device
-//    *
-//    * This is the device specific implementation to send the query.
-//    *  If device handled by subclass has analog inputs, this method should be implemented.
-//    *
-//    * This method is called from getAnalogInputs() .
-//    *
-//    * \param transaction Contains:
-//    *                      - ioCount : number of I/Os to get
-//    *                      - address : first I/O address to considere
-//    *                      - QueryReplyMode flag
-//    * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
-//    * \pre I/O's must be set with setIos().
-//    * \pre transaction must be a valid pointer.
-//    */
-//   virtual int readAnalogInputs(mdtPortTransaction *transaction);
-// 
-//   /*! \brief Read one analog output on physical device
-//    *
-//    * This is the device specific implementation to send the query.
-//    *  If device handled by subclass has analog inputs, this method should be implemented.
-//    *
-//    * This method is called from getAnalogOutputValue().
-//    *
-//    * \param transaction Contains some flags used during query/reply process (address, id, I/O object, ...).
-//    * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
-//    * \pre I/O's must be set with setIos().
-//    * \pre transaction must be a valid pointer.
-//    */
-//   virtual int readAnalogOutput(mdtPortTransaction *transaction);
-// 
-//   /*! \brief Read all analog outputs on physical device
-//    *
-//    * This is the device specific implementation to send the query.
-//    *  If device handled by subclass has analog inputs, this method should be implemented.
-//    *
-//    * This method is called from getAnalogOutputs().
-//    *
-//    * \param transaction Contains:
-//    *                      - ioCount : number of I/Os to get
-//    *                      - address : first I/O address (for read access) to considere
-//    *                      - QueryReplyMode flag
-//    * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
-//    * \pre I/O's must be set with setIos().
-//    * \pre transaction must be a valid pointer.
-//    */
-//   virtual int readAnalogOutputs(mdtPortTransaction *transaction);
-// 
-//   /*! \brief Write value on a analog output to physical device
-//    *
-//    * This is the device specific implementation to send the query.
-//    *  If device handled by subclass has analog outputs, this method should be implemented.
-//    *
-//    * This method is called from setAnalogOutputValue().
-//    *
-//    * \param value Value encoded regarding device format.
-//    * \param transaction Contains some flags used during query/reply process (address, id, I/O object, ...).
-//    * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
-//    * \pre I/O's must be set with setIos().
-//    * \pre transaction must be a valid pointer.
-//    */
-//   virtual int writeAnalogOutput(int value, mdtPortTransaction *transaction);
-// 
-//   /*! \brief Write all analog outputs to physical device
-//    *
-//    * This is the device specific implementation to send the query.
-//    *  If device handled by subclass has analog outputs, this method should be implemented.
-//    *
-//    * This method is called from setAnalogOutputs().
-//    *
-//    * \param transaction Contains:
-//    *                      - ioCount : number of I/Os to set
-//    *                      - address : first I/O address (for write access) to considere
-//    *                      - QueryReplyMode flag
-//    * \param segment Contains contiguous outputs to write.
-//    * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
-//    * \pre I/O's must be set with setIos().
-//    * \pre transaction must be a valid pointer.
-//    */
-//   virtual int writeAnalogOutputs(mdtPortTransaction *transaction, mdtDeviceIosSegment *segment);
-// 
-//   /*! \brief Read one digital input on physical device
-//    *
-//    * This is the device specific implementation to send the query.
-//    *  If device handled by subclass has digital inputs, this method should be implemented.
-//    *
-//    * This method is called from getDigitalInputValue().
-//    *
-//    * \param transaction Contains:
-//    *                      - digitalIo object
-//    *                      - QueryReplyMode flag
-//    *                      - address
-//    * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
-//    * \pre I/O's must be set with setIos().
-//    * \pre transaction must be a valid pointer.
-//    */
-//   virtual int readDigitalInput(mdtPortTransaction *transaction);
-// 
-//   /*! \brief Read all digital inputs on physical device
-//    *
-//    * This is the device specific implementation to send the query.
-//    *  If device handled by subclass has digital inputs, this method should be implemented.
-//    *
-//    * This method is called from getDigitalInputs().
-//    *
-//    * \param transaction Contains:
-//    *                      - ioCount : number of I/Os to get
-//    *                      - address : first I/O address to considere
-//    *                      - QueryReplyMode flag
-//    * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
-//    * \pre I/O's must be set with setIos().
-//    * \pre transaction must be a valid pointer.
-//    */
-//   virtual int readDigitalInputs(mdtPortTransaction *transaction);
-// 
-//   /*! \brief Read one digital output on physical device
-//    *
-//    * This is the device specific implementation to send the query.
-//    *  If device handled by subclass has digital outputs, this method should be implemented.
-//    *
-//    * This method is called from getDigitalOutputValue().
-//    *
-//    * \param transaction Contains some flags used during query/reply process (address, id, I/O object, ...).
-//    * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
-//    * \pre I/O's must be set with setIos().
-//    * \pre transaction must be a valid pointer.
-//    */
-//   virtual int readDigitalOutput(mdtPortTransaction *transaction);
-// 
-//   /*! \brief Read all digital outputs on physical device
-//    *
-//    * This is the device specific implementation to send the query.
-//    *  If device handled by subclass has digital outputs, this method should be implemented.
-//    *
-//    * This method is called from getDigitalOutputs().
-//    *
-//    * \param transaction Contains:
-//    *                      - ioCount : number of I/Os to get
-//    *                      - address : first I/O address (for read access) to considere
-//    *                      - QueryReplyMode flag
-//    * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
-//    * \pre I/O's must be set with setIos().
-//    * \pre transaction must be a valid pointer.
-//    */
-//   virtual int readDigitalOutputs(mdtPortTransaction *transaction);
-// 
-//   /*! \brief Write state on a digital output to physical device
-//    *
-//    * This is the device specific implementation to send the query.
-//    *  If device handled by subclass has digital outputs, this method should be implemented.
-//    *
-//    * This method is called from setDigitalOutputState().
-//    *
-//    * \param state State (ON/OFF).
-//    * \param transaction Contains some flags used during query/reply process (address, id, I/O object, ...).
-//    * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
-//    * \pre I/O's must be set with setIos().
-//    * \pre transaction must be a valid pointer.
-//    */
-//   virtual int writeDigitalOutput(bool state, mdtPortTransaction *transaction);
-// 
-//   /*! \brief Write all digital outputs to physical device
-//    *
-//    * This is the device specific implementation to send the query.
-//    *  If device handled by subclass has digital outputs, this method should be implemented.
-//    *
-//    * This method is called from setDigitalOutputs().
-//    *
-//    * \param transaction Contains:
-//    *                      - ioCount : number of I/Os to set
-//    *                      - address : first I/O address (for write access) to considere
-//    *                      - QueryReplyMode flag
-//    * \param segment Contains contiguous outputs to write.
-//    * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
-//    * \pre I/O's must be set with setIos().
-//    * \pre transaction must be a valid pointer.
-//    */
-//   virtual int writeDigitalOutputs(mdtPortTransaction *transaction, mdtDeviceIosSegment *segment);
 
   /*! \brief Sequence of queries to send periodically
    *
@@ -530,38 +281,46 @@ class mdtDevice : public QObject
    */
   virtual bool queriesSequence();
 
-  /*! \brief Get a new transaction
-   *
-   * \sa mdtPortManager::getNewTransaction()
-   *
-   * \pre portManager must be set before calling this method
-   */
-  mdtPortTransaction *getNewTransaction();
+//   /*! \brief Get a new transaction
+//    *
+//    * \sa mdtPortManager::getNewTransaction()
+//    *
+//    * \pre portManager must be set before calling this method
+//    */
+//   mdtPortTransaction *getNewTransaction();
+// 
+//   /*! \brief Restore a transaction into pool
+//    *
+//    * \sa mdtPortManager::restoreTransaction()
+//    *
+//    * \pre portManager must be set before calling this method
+//    */
+//   void restoreTransaction(mdtPortTransaction *transaction);
+// 
+//   /*! \brief Wait until a transaction is done without break the GUI's event loop
+//    *
+//    * \todo Adapt, comment
+//    *
+//    * This is a helper method that provide a blocking wait.
+//    *  Internally, a couple of sleep and event processing
+//    *  is done, avoiding freezing the GUI.
+//    *
+//    * Internally, mdtPortManager::waitTransactionDone() is called.
+//    *
+//    * \param id Id returned by query method
+//    * \return True on success, false on timeout. If id was not found in transactions list,
+//    *           a warning will be generated in mdtError system, and false will be returned.
+//    * \pre granularity must be > 0.
+//    */
+//   bool waitTransactionDone(int id);
 
-  /*! \brief Restore a transaction into pool
+  /*! \brief Set current state
    *
-   * \sa mdtPortManager::restoreTransaction()
+   * Will call stateChangedEvent() and emit stateChanged() signal.
    *
-   * \pre portManager must be set before calling this method
+   * Subclass must call tis function to update current state.
    */
-  void restoreTransaction(mdtPortTransaction *transaction);
-
-  /*! \brief Wait until a transaction is done without break the GUI's event loop
-   *
-   * \todo Adapt, comment
-   *
-   * This is a helper method that provide a blocking wait.
-   *  Internally, a couple of sleep and event processing
-   *  is done, avoiding freezing the GUI.
-   *
-   * Internally, mdtPortManager::waitTransactionDone() is called.
-   *
-   * \param id Id returned by query method
-   * \return True on success, false on timeout. If id was not found in transactions list,
-   *           a warning will be generated in mdtError system, and false will be returned.
-   * \pre granularity must be > 0.
-   */
-  bool waitTransactionDone(int id);
+  void setCurrentState(State_t state);
 
   /*! \brief Called when current state has changed
    *
@@ -575,7 +334,23 @@ class mdtDevice : public QObject
   {
   }
 
+  /*! \brief Called by disconnectFromDevice()
+   *
+   * Must be reimplemented in subclass to disconnect from device,
+   *  stop threads, close port, ...
+   *
+   * This default implementation does nothing,
+   *  it's also not necessery to call this base function from subclass.
+   */
+  virtual void disconnectFromDeviceEvent()
+  {
+  }
+
  signals:
+
+  /*! \brief Emitted when state has changed
+   */
+  void stateChanged(State_t state);
 
   /*! \brief Emitted when state has changed
    *
@@ -589,7 +364,7 @@ class mdtDevice : public QObject
    * But, to display current state in a easier way (f.ex. using mdtPortStatusWidget),
    *  mdtPortManager::stateChangedForUi() can be used.
    */
-  void stateChanged(int state);
+  ///void stateChanged(int state);
 
   /*! \brief Emitted when a new status message is to display
    *
@@ -597,45 +372,47 @@ class mdtDevice : public QObject
    */
   void statusMessageChanged(const QString &message, const QString &details, int timeout);
 
- private slots:
-
-  /*! \brief Set the device state from port manager state
-   *
-   * Internal port manager handles a state machine.
-   *  When a event occurs, it will emit mdtPortManager::stateChanged().
-   *  If port manager's signal is connected to this slot,
-   *  some things are made in mdtDevice, and
-   *  stateChanged() will be emitted.
-   *
-   * Note for subclass developpers:
-   *  The connection between port manager and mdtDevice
-   *  must be done in subclass.
-   */
-  void setStateFromPortManager(int portManagerState);
+//  private slots:
+// 
+//   /*! \brief Set the device state from port manager state
+//    *
+//    * Internal port manager handles a state machine.
+//    *  When a event occurs, it will emit mdtPortManager::stateChanged().
+//    *  If port manager's signal is connected to this slot,
+//    *  some things are made in mdtDevice, and
+//    *  stateChanged() will be emitted.
+//    *
+//    * Note for subclass developpers:
+//    *  The connection between port manager and mdtDevice
+//    *  must be done in subclass.
+//    *
+//    * \deprecated Use setCurrentState()
+//    */
+//   void setStateFromPortManager(int portManagerState);
 
   /*! \brief Set the PortClosed state
    *
    * Emit stateChanged()
    */
-  void setStatePortClosed();
+  //void setStatePortClosed();
 
   /*! \brief Set the disconnected state
    *
    * Emit stateChanged()
    */
-  void setStateDisconnected();
+  //void setStateDisconnected();
 
   /*! \brief Set the connecting state
    *
    * Emit stateChanged()
    */
-  void setStateConnecting();
+  //void setStateConnecting();
 
   /*! \brief Set the ready state
    *
    * Emit stateChanged()
    */
-  void setStateReady();
+  //void setStateReady();
 
   /*! \brief Set the busy state
    *
@@ -648,18 +425,27 @@ class mdtDevice : public QObject
    *
    * Emit stateChanged() if current state was not Error.
    */
-  void setStateError();
+  //void setStateError();
 
  private:
+
+  /*! \brief Allow query timer to run
+   */
+  void allowQueryTimer();
+
+  /*! \brief Block query timer
+   */
+  void blockQueryTimer();
 
   Q_DISABLE_COPY(mdtDevice);
 
   QString pvName;
   QVariant pvIdentification;
+  State_t pvCurrentState;
   QTimer *pvQueryTimer;
   bool pvAutoQueryEnabled;  // Flag used for state handling
   int pvBackToReadyStateTimeout;
-  QTimer *pvBackToReadyStateTimer;
+  ///QTimer *pvBackToReadyStateTimer;
 };
 
 #endif  // #ifndef MDT_DEVICE_H

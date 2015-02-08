@@ -26,6 +26,10 @@
 #include "mdtValue.h"
 #include <memory>
 
+class mdtDeviceIosSegment;
+class mdtPortTransaction;
+class mdtPortManager;
+
 /*! \brief Base class for a device that contains multiple I/Os
  *
  * 
@@ -43,6 +47,17 @@ class mdtMultiIoDevice : public mdtDevice
   /*! \brief Destructor
    */
   virtual ~mdtMultiIoDevice();
+
+  /*! \brief Get internal port manager instance
+   *
+   * Note that port manager is set by subclass,
+   *  and that a Null pointer can be returned.
+   *  (See subclass documentation for details)
+   */
+  virtual mdtPortManager *portManager()
+  {
+    return 0;
+  }
 
   /*! \brief Add a analog input
    */
@@ -485,6 +500,39 @@ class mdtMultiIoDevice : public mdtDevice
   void setDigitalOutputValue(mdtDigitalIo* digitalOutput);
 
  protected:
+
+  /*! \brief Get a new transaction
+   *
+   * \sa mdtPortManager::getNewTransaction()
+   *
+   * \pre portManager must be set before calling this method
+   */
+  mdtPortTransaction *getNewTransaction();
+
+  /*! \brief Restore a transaction into pool
+   *
+   * \sa mdtPortManager::restoreTransaction()
+   *
+   * \pre portManager must be set before calling this method
+   */
+  void restoreTransaction(mdtPortTransaction *transaction);
+
+  /*! \brief Wait until a transaction is done without break the GUI's event loop
+   *
+   * \todo Adapt, comment
+   *
+   * This is a helper method that provide a blocking wait.
+   *  Internally, a couple of sleep and event processing
+   *  is done, avoiding freezing the GUI.
+   *
+   * Internally, mdtPortManager::waitTransactionDone() is called.
+   *
+   * \param id Id returned by query method
+   * \return True on success, false on timeout. If id was not found in transactions list,
+   *           a warning will be generated in mdtError system, and false will be returned.
+   * \pre granularity must be > 0.
+   */
+  bool waitTransactionDone(int id);
 
   /*! \brief Read one analog input on physical device
    *

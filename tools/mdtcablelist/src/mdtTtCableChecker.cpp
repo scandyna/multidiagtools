@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -617,9 +617,11 @@ void mdtTtCableChecker::addDeviceStatusWidget(mdtDevice *device, const QString &
   pvDeviceStatusWidgetsLayout->addWidget(dsw->statusWidget, row, 1, Qt::AlignVCenter);
   // make connections
   connect(device, SIGNAL(statusMessageChanged(const QString&, const QString&, int)), dsw->statusWidget, SLOT(showMessage(const QString&, const QString&, int)));
+  /**
   Q_ASSERT(device->portManager() != 0);
   connect(device->portManager(), SIGNAL(stateChangedForUi(int, const QString&, int, bool)), dsw->statusWidget, SLOT(setState(int, const QString&, int, bool)));
   device->portManager()->notifyCurrentState();
+  */
 }
 
 void mdtTtCableChecker::removeDeviceStatusWidget(mdtDevice *device)

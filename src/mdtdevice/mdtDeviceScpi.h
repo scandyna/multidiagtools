@@ -111,7 +111,7 @@ class mdtDeviceScpi : public QObject
    */
   void wait(int t)
   {
-    pvPort->wait(t);;
+    pvPort->wait(t);
   }
 
   /*! \brief Get device error

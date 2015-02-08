@@ -32,7 +32,6 @@
 
 class mdtFrameCodecModbus;
 class mdtModbusTcpPortManager;
-class mdtDeviceIosSegment;
 
 /*! \brief Represent a MODBUS device
  *
@@ -186,6 +185,16 @@ class mdtDeviceModbus : public mdtMultiIoDevice
   /*! \brief Update (G)UI when device's state has changed
    */
   ///void onStateChanged(int state);
+
+  /*! \brief Set the device state from port manager state
+   *
+   * Internal port manager handles a state machine.
+   *  When a event occurs, it will emit mdtPortManager::stateChanged().
+   *  If port manager's signal is connected to this slot,
+   *  some things are made in mdtDevice, and
+   *  stateChanged() will be emitted.
+   */
+  void setStateFromPortManager(int portManagerState);
 
  protected:
 
@@ -364,6 +373,10 @@ class mdtDeviceModbus : public mdtMultiIoDevice
   mdtFrameCodecModbus *pvCodec;
 
  private:
+
+  /*! \brief Called by disconnectFromDevice()
+   */
+  void disconnectFromDeviceEvent();
 
   Q_DISABLE_COPY(mdtDeviceModbus);
 

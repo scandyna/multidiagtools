@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -44,10 +44,12 @@ void mdtDeviceWindow::setDevice(mdtDevice *device)
 
   pvDevice = device;
   // Status widget
+  /**
   if(device->portManager() != 0){
     connect(device->portManager(), SIGNAL(stateChangedForUi(int, const QString&, int, bool)), pvStatusWidget, SLOT(setState(int, const QString&, int, bool)));
     connect(device->portManager(), SIGNAL(statusMessageChanged(const QString&, const QString&, int)), pvStatusWidget, SLOT(showMessage(const QString&, const QString&, int)));
   }
+  */
 }
 
 void mdtDeviceWindow::setIosWidget(QWidget *widget)

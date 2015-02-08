@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -27,7 +27,7 @@
 #include <QGridLayout>
 #include <QMutableListIterator>
 
-//#include <QDebug>
+#include <QDebug>
 
 class mdtPortManager;
 
@@ -46,18 +46,25 @@ namespace mdtDeviceContainerWidgetPrivate
     device = _device;
     lbDeviceName->setText(device->name());
     ldState->setFixedSize(15, 15);
+    qDebug() << "mdtDeviceContainerWidgetItem::mdtDeviceContainerWidgetItem() - Functionnality not implemented yet ...";
+    /**
+     * \todo Adapt !
     Q_ASSERT(device->portManager() != 0);
     connect(device->portManager(), SIGNAL(stateChangedForUi(int,const QString&,int,bool)), this, SLOT(setState(int,const QString&,int,bool)));
     connect(device->portManager(), SIGNAL(statusMessageChanged(const QString&, const QString&,int)), this, SLOT(setMessage(const QString&, const QString&)));
     device->portManager()->notifyCurrentState();
+    */
   }
 
   mdtDeviceContainerWidgetItem::~mdtDeviceContainerWidgetItem()
   {
+    /**
+     * \todo Adapt!
     if((device)&&(device->portManager() != 0)){
       disconnect(device->portManager(), SIGNAL(stateChangedForUi(int,const QString&,int,bool)), this, SLOT(setState(int,const QString&,int,bool)));
       disconnect(device->portManager(), SIGNAL(statusMessageChanged(const QString&, const QString&,int)), this, SLOT(setMessage(const QString&, const QString&)));
     }
+    */
   }
 
   void mdtDeviceContainerWidgetItem::setState(int stateId, const QString & stateText, int ledColorId, bool ledIsOn)
@@ -131,7 +138,7 @@ void mdtDeviceContainerWidget::clear()
 void mdtDeviceContainerWidget::addDevice(shared_ptr<mdtDevice> device)
 {
   Q_ASSERT(device);
-  Q_ASSERT(device->portManager() != 0);
+  ///Q_ASSERT(device->portManager() != 0);
 
   shared_ptr<mdtDeviceContainerWidgetItem> item(new mdtDeviceContainerWidgetItem(this, device));
 
