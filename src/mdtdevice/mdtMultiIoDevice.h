@@ -484,11 +484,206 @@ class mdtMultiIoDevice : public mdtDevice
    */
   void setDigitalOutputValue(mdtDigitalIo* digitalOutput);
 
- private:
+ protected:
+
+  /*! \brief Read one analog input on physical device
+   *
+   * This is the device specific implementation to send the query.
+   *  If device handled by subclass has analog inputs, this method should be implemented.
+   *
+   * This method is called from getAnalogInputValue() .
+   *
+   * \param transaction Contains some flags used during query/reply process (address, id, I/O object, ...).
+   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details).
+   * \pre I/O's must be set with setIos().
+   * \pre transaction must be a valid pointer.
+   */
+  virtual int readAnalogInput(mdtPortTransaction *transaction);
+
+  /*! \brief Read all analog inputs on physical device
+   *
+   * This is the device specific implementation to send the query.
+   *  If device handled by subclass has analog inputs, this method should be implemented.
+   *
+   * This method is called from getAnalogInputs() .
+   *
+   * \param transaction Contains:
+   *                      - ioCount : number of I/Os to get
+   *                      - address : first I/O address to considere
+   *                      - QueryReplyMode flag
+   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
+   * \pre I/O's must be set with setIos().
+   * \pre transaction must be a valid pointer.
+   */
+  virtual int readAnalogInputs(mdtPortTransaction *transaction);
+
+  /*! \brief Read one analog output on physical device
+   *
+   * This is the device specific implementation to send the query.
+   *  If device handled by subclass has analog inputs, this method should be implemented.
+   *
+   * This method is called from getAnalogOutputValue().
+   *
+   * \param transaction Contains some flags used during query/reply process (address, id, I/O object, ...).
+   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
+   * \pre I/O's must be set with setIos().
+   * \pre transaction must be a valid pointer.
+   */
+  virtual int readAnalogOutput(mdtPortTransaction *transaction);
+
+  /*! \brief Read all analog outputs on physical device
+   *
+   * This is the device specific implementation to send the query.
+   *  If device handled by subclass has analog inputs, this method should be implemented.
+   *
+   * This method is called from getAnalogOutputs().
+   *
+   * \param transaction Contains:
+   *                      - ioCount : number of I/Os to get
+   *                      - address : first I/O address (for read access) to considere
+   *                      - QueryReplyMode flag
+   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
+   * \pre I/O's must be set with setIos().
+   * \pre transaction must be a valid pointer.
+   */
+  virtual int readAnalogOutputs(mdtPortTransaction *transaction);
+
+  /*! \brief Write value on a analog output to physical device
+   *
+   * This is the device specific implementation to send the query.
+   *  If device handled by subclass has analog outputs, this method should be implemented.
+   *
+   * This method is called from setAnalogOutputValue().
+   *
+   * \param value Value encoded regarding device format.
+   * \param transaction Contains some flags used during query/reply process (address, id, I/O object, ...).
+   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
+   * \pre I/O's must be set with setIos().
+   * \pre transaction must be a valid pointer.
+   */
+  virtual int writeAnalogOutput(int value, mdtPortTransaction *transaction);
+
+  /*! \brief Write all analog outputs to physical device
+   *
+   * This is the device specific implementation to send the query.
+   *  If device handled by subclass has analog outputs, this method should be implemented.
+   *
+   * This method is called from setAnalogOutputs().
+   *
+   * \param transaction Contains:
+   *                      - ioCount : number of I/Os to set
+   *                      - address : first I/O address (for write access) to considere
+   *                      - QueryReplyMode flag
+   * \param segment Contains contiguous outputs to write.
+   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
+   * \pre I/O's must be set with setIos().
+   * \pre transaction must be a valid pointer.
+   */
+  virtual int writeAnalogOutputs(mdtPortTransaction *transaction, mdtDeviceIosSegment *segment);
+
+  /*! \brief Read one digital input on physical device
+   *
+   * This is the device specific implementation to send the query.
+   *  If device handled by subclass has digital inputs, this method should be implemented.
+   *
+   * This method is called from getDigitalInputValue().
+   *
+   * \param transaction Contains:
+   *                      - digitalIo object
+   *                      - QueryReplyMode flag
+   *                      - address
+   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
+   * \pre I/O's must be set with setIos().
+   * \pre transaction must be a valid pointer.
+   */
+  virtual int readDigitalInput(mdtPortTransaction *transaction);
+
+  /*! \brief Read all digital inputs on physical device
+   *
+   * This is the device specific implementation to send the query.
+   *  If device handled by subclass has digital inputs, this method should be implemented.
+   *
+   * This method is called from getDigitalInputs().
+   *
+   * \param transaction Contains:
+   *                      - ioCount : number of I/Os to get
+   *                      - address : first I/O address to considere
+   *                      - QueryReplyMode flag
+   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
+   * \pre I/O's must be set with setIos().
+   * \pre transaction must be a valid pointer.
+   */
+  virtual int readDigitalInputs(mdtPortTransaction *transaction);
+
+  /*! \brief Read one digital output on physical device
+   *
+   * This is the device specific implementation to send the query.
+   *  If device handled by subclass has digital outputs, this method should be implemented.
+   *
+   * This method is called from getDigitalOutputValue().
+   *
+   * \param transaction Contains some flags used during query/reply process (address, id, I/O object, ...).
+   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
+   * \pre I/O's must be set with setIos().
+   * \pre transaction must be a valid pointer.
+   */
+  virtual int readDigitalOutput(mdtPortTransaction *transaction);
+
+  /*! \brief Read all digital outputs on physical device
+   *
+   * This is the device specific implementation to send the query.
+   *  If device handled by subclass has digital outputs, this method should be implemented.
+   *
+   * This method is called from getDigitalOutputs().
+   *
+   * \param transaction Contains:
+   *                      - ioCount : number of I/Os to get
+   *                      - address : first I/O address (for read access) to considere
+   *                      - QueryReplyMode flag
+   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
+   * \pre I/O's must be set with setIos().
+   * \pre transaction must be a valid pointer.
+   */
+  virtual int readDigitalOutputs(mdtPortTransaction *transaction);
+
+  /*! \brief Write state on a digital output to physical device
+   *
+   * This is the device specific implementation to send the query.
+   *  If device handled by subclass has digital outputs, this method should be implemented.
+   *
+   * This method is called from setDigitalOutputState().
+   *
+   * \param state State (ON/OFF).
+   * \param transaction Contains some flags used during query/reply process (address, id, I/O object, ...).
+   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
+   * \pre I/O's must be set with setIos().
+   * \pre transaction must be a valid pointer.
+   */
+  virtual int writeDigitalOutput(bool state, mdtPortTransaction *transaction);
+
+  /*! \brief Write all digital outputs to physical device
+   *
+   * This is the device specific implementation to send the query.
+   *  If device handled by subclass has digital outputs, this method should be implemented.
+   *
+   * This method is called from setDigitalOutputs().
+   *
+   * \param transaction Contains:
+   *                      - ioCount : number of I/Os to set
+   *                      - address : first I/O address (for write access) to considere
+   *                      - QueryReplyMode flag
+   * \param segment Contains contiguous outputs to write.
+   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
+   * \pre I/O's must be set with setIos().
+   * \pre transaction must be a valid pointer.
+   */
+  virtual int writeDigitalOutputs(mdtPortTransaction *transaction, mdtDeviceIosSegment *segment);
 
   /*! \brief Called when current state has changed
    */
   void stateChangedEvent(State_t newState);
+
+ private:
 
   /*! \brief Enable I/Os
    */

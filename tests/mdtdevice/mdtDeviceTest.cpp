@@ -1651,6 +1651,7 @@ void mdtDeviceTest::multiIoDeviceTest()
   // Initial state
   QVERIFY(device.ios().get() != nullptr);
   
+  QFAIL("Not implemented yet");
 }
 
 void mdtDeviceTest::modbusTest()

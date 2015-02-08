@@ -1086,6 +1086,66 @@ void mdtMultiIoDevice::setDigitalOutputValue(mdtDigitalIo* digitalOutput)
   setDigitalOutputValue(digitalOutput, digitalOutput->value(), true, false);
 }
 
+int mdtMultiIoDevice::readAnalogInput(mdtPortTransaction *transaction)
+{
+  return -1;
+}
+
+int mdtMultiIoDevice::readAnalogInputs(mdtPortTransaction *transaction)
+{
+  return -1;
+}
+
+int mdtMultiIoDevice::readAnalogOutput(mdtPortTransaction *transaction)
+{
+  return -1;
+}
+
+int mdtMultiIoDevice::readAnalogOutputs(mdtPortTransaction *transaction)
+{
+  return -1;
+}
+
+int mdtMultiIoDevice::writeAnalogOutput(int value, mdtPortTransaction *transaction)
+{
+  return -1;
+}
+
+int mdtMultiIoDevice::writeAnalogOutputs(mdtPortTransaction *transaction, mdtDeviceIosSegment *segment)
+{
+  return -1;
+}
+
+int mdtMultiIoDevice::readDigitalInput(mdtPortTransaction *transaction)
+{
+  return -1;
+}
+
+int mdtMultiIoDevice::readDigitalInputs(mdtPortTransaction *transaction)
+{
+  return -1;
+}
+
+int mdtMultiIoDevice::readDigitalOutput(mdtPortTransaction *transaction)
+{
+  return -1;
+}
+
+int mdtMultiIoDevice::readDigitalOutputs(mdtPortTransaction *transaction)
+{
+  return -1;
+}
+
+int mdtMultiIoDevice::writeDigitalOutput(bool state, mdtPortTransaction *transaction)
+{
+  return -1;
+}
+
+int mdtMultiIoDevice::writeDigitalOutputs(mdtPortTransaction *transaction, mdtDeviceIosSegment *segment)
+{
+  return -1;
+}
+
 void mdtMultiIoDevice::stateChangedEvent(mdtDevice::State_t newState)
 {
   if(newState == State_t::Ready){
