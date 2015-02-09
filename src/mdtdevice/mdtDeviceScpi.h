@@ -21,7 +21,7 @@
 #ifndef MDT_DEVICE_SCPI_H
 #define MDT_DEVICE_SCPI_H
 
-///#include "mdtDevice.h"
+#include "mdtDevice.h"
 #include "mdtError.h"
 #include "mdtUsbtmcPort.h"
 #include "mdtCodecScpi.h"
@@ -43,7 +43,7 @@ class QTimer;
  *
  * Currently, only USBTMC port is supported.
  */
-class mdtDeviceScpi : public QObject
+class mdtDeviceScpi : public mdtDevice
 {
  Q_OBJECT
 
@@ -65,19 +65,19 @@ class mdtDeviceScpi : public QObject
    * Set a user friendly name for this device.
    *  Will also be used to build error messages.
    */
-  void setName(const QString & name)
-  {
-    pvPort->setDeviceName(name);
-  }
+//   void setName(const QString & name)
+//   {
+//     pvPort->setDeviceName(name);
+//   }
 
   /*! \brief Get device name
    *
    * \sa setName()
    */
-  QString name() const
-  {
-    return pvPort->deviceName();
-  }
+//   QString name() const
+//   {
+//     return pvPort->deviceName();
+//   }
 
   /*! \brief Connect to a USBTMC device
    *
@@ -89,7 +89,7 @@ class mdtDeviceScpi : public QObject
 
   /*! \brief Disconnect from device
    */
-  void disconnectFromDevice();
+  //void disconnectFromDevice();
 
   /*! \brief Send a command to device
    *
@@ -109,10 +109,10 @@ class mdtDeviceScpi : public QObject
    *
    * \param t time [ms]
    */
-  void wait(int t)
-  {
-    pvPort->wait(t);
-  }
+//   void wait(int t)
+//   {
+//     pvPort->wait(t);
+//   }
 
   /*! \brief Get device error
    *
@@ -167,24 +167,23 @@ class mdtDeviceScpi : public QObject
    */
   bool waitOperationComplete(int timeout, int interval);
 
-
   /*! \brief Set device identification
    *
    * \todo define better, see also deviceIdString()
    * \todo Candidate for a common mdtDevice class
    */
-  void setIdentification(const QVariant & id)
-  {
-  }
+//   void setIdentification(const QVariant & id)
+//   {
+//   }
 
   /*! \brief Get last error
    *
    * \todo Candidate for a common mdtDevice class
    */
-  mdtError lastError() const
-  {
-    return pvLastError;
-  }
+//   mdtError lastError() const
+//   {
+//     return pvLastError;
+//   }
 
  protected:
 
@@ -192,19 +191,27 @@ class mdtDeviceScpi : public QObject
    *
    * \todo Candidate for a common mdtDevice class
    */
-  mdtError pvLastError;
+//   mdtError pvLastError;
 
-  /*! \brief Get device identification string
-   *
-   * Can be used for error messages.
-   *  Returns a string with \"Device 'deviceName' : \"
-   *
-   * \todo Candidate for a common mdtDevice class
+  /*! \brief Close port
    */
-  QString deviceIdString() const
-  {
-    return tr("Device") + " '" + name() + "' : ";
-  }
+  void disconnectFromDeviceEvent();
+
+  /*! \brief Update name in port
+   */
+  void nameChangedEvent(const QString & newName);
+
+//   /*! \brief Get device identification string
+//    *
+//    * Can be used for error messages.
+//    *  Returns a string with \"Device 'deviceName' : \"
+//    *
+//    * \todo Candidate for a common mdtDevice class
+//    */
+//   QString deviceIdString() const
+//   {
+//     return tr("Device") + " '" + name() + "' : ";
+//   }
 
  private slots:
 

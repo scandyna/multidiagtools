@@ -19,9 +19,8 @@
  **
  ****************************************************************************/
 #include "mdtDevice.h"
-#include "mdtAnalogIo.h"
-///#include "mdtPortManager.h"
 #include <QTimer>
+#include <QCoreApplication>
 
 #include <QDebug>
 
@@ -54,6 +53,7 @@ mdtDevice::~mdtDevice()
 void mdtDevice::setName(const QString &name)
 {
   pvName = name;
+  nameChangedEvent(name);
 }
 
 QString mdtDevice::name() const
@@ -75,32 +75,12 @@ void mdtDevice::disconnectFromDevice()
 {
   stop();
   disconnectFromDeviceEvent();
-  /**
-  if(portManager() != 0){
-    if(!portManager()->isClosed()){
-      portManager()->stop();
-    }
-  }
-  */
 }
 
 void mdtDevice::setBackToReadyStateTimeout(int timeout)
 {
   pvBackToReadyStateTimeout = timeout;
 }
-
-// mdtPortManager *mdtDevice::portManager()
-// {
-//   return 0;
-// }
-
-// bool mdtDevice::isReady()
-// {
-//   if(portManager() == 0){
-//     return false;
-//   }
-//   return portManager()->isReady();
-// }
 
 void mdtDevice::start(int queryInterval)
 {
@@ -117,12 +97,13 @@ void mdtDevice::stop()
   pvQueryTimer->stop();
 }
 
-/// \todo Implement !
-void mdtDevice::wait(int ms)
+void mdtDevice::wait(int t)
 {
-  ///Q_ASSERT(portManager() != 0);
-
-  ///portManager()->wait(ms);
+  pvWaitTimeReached = false;
+  QTimer::singleShot(t, this, SLOT(setWaitTimeReached()));
+  while(!pvWaitTimeReached){
+    QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
+  }
 }
 
 mdtError mdtDevice::lastError() const
@@ -143,45 +124,6 @@ bool mdtDevice::queriesSequence()
   return false;
 }
 
-// void mdtDevice::decodeReadenFrame(mdtPortTransaction *transaction)
-// {
-// }
-
-// mdtPortTransaction *mdtDevice::getNewTransaction()
-// {
-//   Q_ASSERT(portManager() != 0);
-// 
-//   return portManager()->getNewTransaction();
-// }
-// 
-// void mdtDevice::restoreTransaction(mdtPortTransaction *transaction)
-// {
-//   Q_ASSERT(portManager() != 0);
-//   Q_ASSERT(transaction != 0);
-// 
-//   portManager()->restoreTransaction(transaction);
-// }
-// 
-// bool mdtDevice::waitTransactionDone(int id)
-// {
-//   Q_ASSERT(portManager() != 0);
-// 
-//   bool ok;
-// 
-//   ok = portManager()->waitTransactionDone(id);
-//   /*
-//    * Request was send, response arrived,
-//    * subclass has decoded response and updated I/O.
-//    * So, we have to remove transaction from done queue and restore it to pool
-//    * In mdtPortManager it was choosen to not let access
-//    * to transaction queues management, so we call readenFrame()
-//    * witch does all the needed job.
-//    */
-//   portManager()->readenFrame(id);
-// 
-//   return ok;
-// }
-
 void mdtDevice::setCurrentState(mdtDevice::State_t state)
 {
   // Update state and signal it
@@ -196,128 +138,10 @@ void mdtDevice::setCurrentState(mdtDevice::State_t state)
   }
 }
 
-// void mdtDevice::setStateFromPortManager(int portManagerState)
-// {
-//   switch((mdtPortManager::state_t)portManagerState){
-//     case mdtPortManager::PortClosed:
-//       ///setStatePortClosed();
-//       setCurrentState(State_t::Disconnected);
-//       break;
-//     case mdtPortManager::Disconnected:
-//       ///setStateDisconnected();
-//       setCurrentState(State_t::Disconnected);
-//       break;
-//     case mdtPortManager::Connecting:
-//       ///setStateConnecting();
-//       setCurrentState(State_t::Connecting);
-//       break;
-//     case mdtPortManager::Ready:
-//       ///setStateReady();
-//       setCurrentState(State_t::Ready);
-//       break;
-//     case mdtPortManager::Busy:
-//       //setStateBusy();
-//       //break;
-//     case mdtPortManager::PortError:
-//       ///setStateError();
-//       setCurrentState(State_t::Error);
-//       break;
-//     case mdtPortManager::Stopped:
-//     case mdtPortManager::Starting:
-//     case mdtPortManager::Stopping:
-//     case mdtPortManager::Running:
-//     case mdtPortManager::PortReady:
-//     case mdtPortManager::Connected:
-//       ///emit stateChanged(portManagerState);
-//       setCurrentState(State_t::Error);
-//       break;
-//   }
-// }
-
-// void mdtDevice::setStatePortClosed()
-// {
-//   // Stop auto queries if running
-//   if(pvAutoQueryEnabled){
-//     pvQueryTimer->stop();
-//   }
-//   stateChangedEvent(State_t::Disconnected);
-//   ///emit(stateChanged(currentState()));
-// }
-// 
-// void mdtDevice::setStateDisconnected()
-// {
-//   // Stop auto queries if running
-//   if(pvAutoQueryEnabled){
-//     pvQueryTimer->stop();
-//   }
-//   stateChangedEvent(State_t::Disconnected);
-//   qDebug() << "mdtDevice: new state is Disconnected";
-//   ///emit(stateChanged(currentState()));
-// }
-// 
-// void mdtDevice::setStateConnecting(/*const QString &message*/)
-// {
-//   // Stop auto queries if running
-//   if(pvAutoQueryEnabled){
-//     pvQueryTimer->stop();
-//   }
-//   stateChangedEvent(State_t::Connecting);
-//   // Thread will notify the ready (or disconnected) state, cancel retry timer
-//   ///pvBackToReadyStateTimer->stop();
-//   qDebug() << "mdtDevice: new state is Connecting";
-//   ///emit(stateChanged(currentState()));
-// }
-// 
-// void mdtDevice::setStateReady()
-// {
-//   qDebug() << "mdtDevice: new state is Ready";
-//   // Check if we have to restart query timer
-//   if((pvAutoQueryEnabled)&&(isReady())){
-//     qDebug() << "mdtDevice: starting query timer ...";
-//     pvQueryTimer->start();
-//   }
-//   stateChangedEvent(State_t::Ready);
-//   ///emit(stateChanged(currentState()));
-// }
-
-// void mdtDevice::setStateBusy()
-// {
-//   // Stop auto queries if running
-//   if(pvAutoQueryEnabled){
-//     pvQueryTimer->stop();
-//   }
-//   // Update I/Os
-//   if(pvIos != 0){
-//     pvIos->setAnalogInputsValue(mdtValue());
-//     pvIos->setAnalogOutputsValue(mdtValue());
-//     pvIos->setAnalogOutputsEnabled(false);
-//     pvIos->setDigitalInputsValue(mdtValue());
-//     pvIos->setDigitalOutputsValue(mdtValue());
-//     pvIos->setDigitalOutputsEnabled(false);
-//   }
-//   qDebug() << "**** mdtDevice: new state is Busy";
-//   emit(stateChanged(currentState()));
-//   // Set state ready if requested
-//   if(pvBackToReadyStateTimeout >= 0){
-//     pvBackToReadyStateTimer->start(pvBackToReadyStateTimeout);
-//     ///QTimer::singleShot(retryTimeout, this, SLOT(setStateReady()));
-//   }
-// }
-
-// void mdtDevice::setStateError()
-// {
-//   // Stop auto queries if running
-//   if(pvAutoQueryEnabled){
-//     pvQueryTimer->stop();
-//   }
-//   stateChangedEvent(State_t::Error);
-//   // Add a error
-//   mdtError e(MDT_DEVICE_ERROR, "Device " + name() + " goes to error state", mdtError::Error);
-//   MDT_ERROR_SET_SRC(e, "mdtDevice");
-//   e.commit();
-//   qDebug() << "mdtDevice: new state is Error";
-//   ///emit(stateChanged(currentState()));
-// }
+void mdtDevice::setWaitTimeReached()
+{
+  pvWaitTimeReached = true;
+}
 
 void mdtDevice::allowQueryTimer()
 {

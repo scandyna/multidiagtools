@@ -30,8 +30,8 @@
 #include <QDebug>
 
 mdtDeviceScpi::mdtDeviceScpi(QObject *parent)
-/// : mdtDevice(parent)
- : QObject(parent),
+ : mdtDevice(parent),
+/// : QObject(parent),
    pvPort(new mdtUsbtmcPort(this))
 {
   pvOperationComplete = false;
@@ -54,10 +54,10 @@ bool mdtDeviceScpi::connectToDevice(uint16_t idVendor, uint16_t idProduct, const
   return true;
 }
 
-void mdtDeviceScpi::disconnectFromDevice()
-{
-  pvPort->close();
-}
+// void mdtDeviceScpi::disconnectFromDevice()
+// {
+//   pvPort->close();
+// }
 
 bool mdtDeviceScpi::sendCommand(const QByteArray& command, int timeout)
 {
@@ -129,6 +129,18 @@ bool mdtDeviceScpi::waitOperationComplete(int timeout, int interval)
   }
 
   return true;
+}
+
+void mdtDeviceScpi::disconnectFromDeviceEvent()
+{
+  qDebug() << "mdtDeviceScpi::disconnectFromDeviceEvent() ...";
+  pvPort->close();
+}
+
+void mdtDeviceScpi::nameChangedEvent(const QString & newName)
+{
+  qDebug() << "Setting name: " << newName;
+  pvPort->setDeviceName(newName);
 }
 
 void mdtDeviceScpi::queryAboutOperationComplete()

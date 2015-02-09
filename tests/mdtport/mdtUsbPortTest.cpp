@@ -1575,23 +1575,23 @@ void mdtUsbPortTest::usbtmcPortTest()
   }
   // Open a USBTMC device
   QVERIFY(port.openDevice(deviceDescriptorsList.at(0), 0, true));
-  port.wait(1);
+  QTest::qWait(1);
   QVERIFY(port.sendCommand("*RST\n"));
-  port.wait(1);
+  QTest::qWait(1);
   QVERIFY(port.sendCommand("*CLS\n"));
-  port.wait(1);
+  QTest::qWait(1);
   // Get device error
   data = port.sendQuery("SYSTem:ERRor?\n");
   deviceError = codec.decodeDeviceError(data);
   QCOMPARE(deviceError.systemNumber(), 0);
-  port.wait(1);
+  QTest::qWait(1);
   // Get IDN
   data = port.sendQuery("*IDN?\n");
   idnResponse = codec.decodeIdn(data);
   QVERIFY(!idnResponse.manufacturer.isEmpty());
   QVERIFY(!idnResponse.model.isEmpty());
   QVERIFY(!idnResponse.firmwareLevel.isEmpty());
-  port.wait(1);
+  QTest::qWait(1);
   qDebug() << "Device: " << idnResponse.manufacturer << ", model: " << idnResponse.model << " , SN: " << idnResponse.serial << " , FW: " << idnResponse.firmwareLevel;
 
   // Close

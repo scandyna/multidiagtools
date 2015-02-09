@@ -120,7 +120,7 @@ class mdtUsbtmcPort : public QObject
    *
    * \param t time [ms]
    */
-  void wait(int t);
+  //void wait(int t);
 
   /*! \brief Clear bulk I/O
    *
@@ -200,11 +200,11 @@ class mdtUsbtmcPort : public QObject
    */
   void setTransactionState(TransactionState_t s);
 
-  /*! \brief Set pvWaitTimeReached flag
-   *
-   * See wait()
-   */
-  void setWaitTimeReached();
+//   /*! \brief Set pvWaitTimeReached flag
+//    *
+//    * See wait()
+//    */
+//   void setWaitTimeReached();
 
  private:
 
@@ -236,7 +236,7 @@ class mdtUsbtmcPort : public QObject
   mdtError pvLastError;
   std::mutex pvLastErrorMutex;
   TransactionState_t pvTransactionState;
-  bool pvWaitTimeReached; // Used by wait()
+  //bool pvWaitTimeReached; // Used by wait()
   QString pvDeviceName;   // Used to build error messages
 };
 

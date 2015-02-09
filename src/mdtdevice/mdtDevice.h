@@ -22,7 +22,7 @@
 #define MDT_DEVICE_H
 
 #include "mdtAbstractPort.h"
-///#include "mdtPortManager.h"
+
 #include "mdtDeviceInfo.h"
 #include "mdtValue.h"
 #include "mdtError.h"
@@ -132,8 +132,10 @@ class mdtDevice : public QObject
   virtual ~mdtDevice();
 
   /*! \brief Set the device name
+   *
+   * Will also call nameChangedEvent()
    */
-  void setName(const QString &name);
+  void setName(const QString & name);
 
   /*! \brief Get device name
    */
@@ -186,14 +188,6 @@ class mdtDevice : public QObject
    */
   void setBackToReadyStateTimeout(int timeout);
 
-  /*! \brief Get internal port manager instance
-   *
-   * Note that port manager is set by subclass,
-   *  and that a Null pointer can be returned.
-   *  (See subclass documentation for details)
-   */
-  //virtual mdtPortManager *portManager();
-
   /*! \brief Check if device is ready
    *
    * This default implementation returns allways false.
@@ -221,12 +215,18 @@ class mdtDevice : public QObject
    */
   void stop();
 
+  /*! \brief Wait some time without breaking main event loop
+   *
+   * \param t time [ms]
+   */
+  void wait(int t);
+
   /*! \brief Wait some time
    *
    * \sa mdtPortManager::wait()
    * \pre Port manager must be set before using this method
    */
-  void wait(int ms);
+  //void wait(int ms);
 
   /*! \brief Get last error
    *
@@ -241,7 +241,7 @@ class mdtDevice : public QObject
     return pvCurrentState;
   }
 
-  public slots:
+ public slots:
 
   /*! \brief Queries to send periodically
    *
@@ -249,21 +249,17 @@ class mdtDevice : public QObject
    */
   void runQueries();
 
- ///protected slots:
-
-  /*! \brief Decode incoming frames
-   *
-   * Subclass notes:
-   *  - This default implementation does nothing.
-   *  - This slot should be connected with mdtPortManager::newTransactionDone(mdtPortTransaction*) signal.
-   *  - In this class, this connection is not made, it is the sublcass responsability to do this.
-   *  - Once decoding was done, the concerned I/O(s) sould be updated with new value,
-   *     or set to invalid value on error (see mdtValue class).
-   *     Doing so will keep (G)UI consistency.
-   */
-  ///virtual void decodeReadenFrame(mdtPortTransaction *transaction);
-
  protected:
+
+  /*! \brief Get device identification string
+   *
+   * Can be used for error messages.
+   *  Returns a string with \"Device 'deviceName' : \"
+   */
+  QString deviceIdString() const
+  {
+    return tr("Device") + " '" + name() + "' : ";
+  }
 
   /*! \brief Last error object
    */
@@ -280,39 +276,6 @@ class mdtDevice : public QObject
    *  - This method can be reimplemented periodic queries must be sent to device.
    */
   virtual bool queriesSequence();
-
-//   /*! \brief Get a new transaction
-//    *
-//    * \sa mdtPortManager::getNewTransaction()
-//    *
-//    * \pre portManager must be set before calling this method
-//    */
-//   mdtPortTransaction *getNewTransaction();
-// 
-//   /*! \brief Restore a transaction into pool
-//    *
-//    * \sa mdtPortManager::restoreTransaction()
-//    *
-//    * \pre portManager must be set before calling this method
-//    */
-//   void restoreTransaction(mdtPortTransaction *transaction);
-// 
-//   /*! \brief Wait until a transaction is done without break the GUI's event loop
-//    *
-//    * \todo Adapt, comment
-//    *
-//    * This is a helper method that provide a blocking wait.
-//    *  Internally, a couple of sleep and event processing
-//    *  is done, avoiding freezing the GUI.
-//    *
-//    * Internally, mdtPortManager::waitTransactionDone() is called.
-//    *
-//    * \param id Id returned by query method
-//    * \return True on success, false on timeout. If id was not found in transactions list,
-//    *           a warning will be generated in mdtError system, and false will be returned.
-//    * \pre granularity must be > 0.
-//    */
-//   bool waitTransactionDone(int id);
 
   /*! \brief Set current state
    *
@@ -346,25 +309,23 @@ class mdtDevice : public QObject
   {
   }
 
+  /*! \brief Called by setName()
+   *
+   * Can be reimplemented in subclass if some actions
+   *  are needed when name has changed.
+   *
+   * This default implementation does nothing,
+   *  it's also not necessery to call this base function from subclass.
+   */
+  virtual void nameChangedEvent(const QString & newName)
+  {
+  }
+
  signals:
 
   /*! \brief Emitted when state has changed
    */
   void stateChanged(State_t state);
-
-  /*! \brief Emitted when state has changed
-   *
-   * See setStateFromPortManager() for some details.
-   *
-   * This signal should be used by application developpers,
-   *  and not directly mdtPortManager::stateChanged().
-   *  This is because some actions are made when
-   *  entering new state, and stateChanged() is sent after.
-   *
-   * But, to display current state in a easier way (f.ex. using mdtPortStatusWidget),
-   *  mdtPortManager::stateChangedForUi() can be used.
-   */
-  ///void stateChanged(int state);
 
   /*! \brief Emitted when a new status message is to display
    *
@@ -372,60 +333,13 @@ class mdtDevice : public QObject
    */
   void statusMessageChanged(const QString &message, const QString &details, int timeout);
 
-//  private slots:
-// 
-//   /*! \brief Set the device state from port manager state
-//    *
-//    * Internal port manager handles a state machine.
-//    *  When a event occurs, it will emit mdtPortManager::stateChanged().
-//    *  If port manager's signal is connected to this slot,
-//    *  some things are made in mdtDevice, and
-//    *  stateChanged() will be emitted.
-//    *
-//    * Note for subclass developpers:
-//    *  The connection between port manager and mdtDevice
-//    *  must be done in subclass.
-//    *
-//    * \deprecated Use setCurrentState()
-//    */
-//   void setStateFromPortManager(int portManagerState);
+ private slots:
 
-  /*! \brief Set the PortClosed state
+  /*! \brief Set pvWaitTimeReached flag
    *
-   * Emit stateChanged()
+   * See wait()
    */
-  //void setStatePortClosed();
-
-  /*! \brief Set the disconnected state
-   *
-   * Emit stateChanged()
-   */
-  //void setStateDisconnected();
-
-  /*! \brief Set the connecting state
-   *
-   * Emit stateChanged()
-   */
-  //void setStateConnecting();
-
-  /*! \brief Set the ready state
-   *
-   * Emit stateChanged()
-   */
-  //void setStateReady();
-
-  /*! \brief Set the busy state
-   *
-   * Busy state can be used when physical device or computer (this software) cannot process more requests.
-   * Emit stateChanged()
-   */
-  //void setStateBusy();
-
-  /*! \brief Set the error state
-   *
-   * Emit stateChanged() if current state was not Error.
-   */
-  //void setStateError();
+  void setWaitTimeReached();
 
  private:
 
@@ -444,8 +358,8 @@ class mdtDevice : public QObject
   State_t pvCurrentState;
   QTimer *pvQueryTimer;
   bool pvAutoQueryEnabled;  // Flag used for state handling
+  bool pvWaitTimeReached;   // Used by wait()
   int pvBackToReadyStateTimeout;
-  ///QTimer *pvBackToReadyStateTimer;
 };
 
 #endif  // #ifndef MDT_DEVICE_H
