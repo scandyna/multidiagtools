@@ -115,11 +115,37 @@ void mdtAbstractSqlTableController::setHeaderData(const QString& fieldName, cons
   model()->setHeaderData(column, Qt::Horizontal, data);
 }
 
-QVariant mdtAbstractSqlTableController::headerData(const QString& fieldName, int role) const
+QVariant mdtAbstractSqlTableController::headerData(const QString & fieldName, int role) const
 {
   Q_ASSERT(pvModel);
 
   return headerData(fieldIndex(fieldName), role);
+}
+
+QList<QVariant> mdtAbstractSqlTableController::headerRowData(const std::vector<int> & columns, int role) const
+{
+  Q_ASSERT(pvModel);
+
+  QList<QVariant> lst;
+
+  for(auto & col : columns){
+    lst.append(headerData(col, role));
+  }
+
+  return lst;
+}
+
+QStringList mdtAbstractSqlTableController::headerRowDataStr(const std::vector<int> & columns, int role) const
+{
+  Q_ASSERT(pvModel);
+
+  QStringList lst;
+
+  for(auto & col : columns){
+    lst.append(headerData(col, role).toString());
+  }
+
+  return lst;
 }
 
 bool mdtAbstractSqlTableController::select()
@@ -569,6 +595,38 @@ QVariant mdtAbstractSqlTableController::data(const QString& matchFieldName1, con
   }
 
   return data(row, dataColumn, ok);
+}
+
+QList<QVariant> mdtAbstractSqlTableController::rowData(int row, const std::vector<int> & columns, int role) const
+{
+  Q_ASSERT(pvModel);
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < pvProxyModel->rowCount());
+
+  QList<QVariant> lst;
+
+  for(auto & col : columns){
+    Q_ASSERT(pvProxyModel->index(row, col).isValid());
+    lst.append(pvProxyModel->data(pvProxyModel->index(row, col)));
+  }
+
+  return lst;
+}
+
+QStringList mdtAbstractSqlTableController::rowDataStr(int row, const std::vector<int> & columns, int role) const
+{
+  Q_ASSERT(pvModel);
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < pvProxyModel->rowCount());
+
+  QStringList lst;
+
+  for(auto & col : columns){
+    Q_ASSERT(pvProxyModel->index(row, col).isValid());
+    lst.append(pvProxyModel->data(pvProxyModel->index(row, col)).toString());
+  }
+
+  return lst;
 }
 
 mdtSqlRecord mdtAbstractSqlTableController::record(int row, const QStringList & fieldNames, bool & ok)
@@ -1267,6 +1325,20 @@ void mdtAbstractSqlTableController::onStateRemovingEntered()
     updateChildControllersAfterCurrentRowChanged();
   }
   emit operationSucceed();
+}
+
+std::vector<int> mdtAbstractSqlTableController::columnList(const QStringList & fieldNames) const
+{
+  Q_ASSERT(pvModel);
+
+  std::vector<int> lst;
+
+  for(auto & fldName : fieldNames){
+    Q_ASSERT(fieldIndex(fldName) > -1);
+    lst.emplace_back(fieldIndex(fldName));
+  }
+
+  return lst;
 }
 
 int mdtAbstractSqlTableController::firstMatchingRow(int column, const QVariant& matchData)

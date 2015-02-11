@@ -31,7 +31,6 @@
 
 mdtDeviceScpi::mdtDeviceScpi(QObject *parent)
  : mdtDevice(parent),
-/// : QObject(parent),
    pvPort(new mdtUsbtmcPort(this))
 {
   pvOperationComplete = false;
@@ -53,11 +52,6 @@ bool mdtDeviceScpi::connectToDevice(uint16_t idVendor, uint16_t idProduct, const
   }
   return true;
 }
-
-// void mdtDeviceScpi::disconnectFromDevice()
-// {
-//   pvPort->close();
-// }
 
 bool mdtDeviceScpi::sendCommand(const QByteArray& command, int timeout)
 {

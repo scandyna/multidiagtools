@@ -36,6 +36,7 @@
 #include <QVariant>
 #include <QList>
 #include <memory>
+#include <vector>
 
 class mdtState;
 class mdtAbstractSqlTableController;
@@ -184,6 +185,36 @@ class mdtAbstractSqlTableController : public QObject
    * \pre Table model must be set with setModel() or setTableName() begore calling this method.
    */
   QVariant headerData(const QString & fieldName, int role = Qt::DisplayRole) const;
+
+  /*! \brief Get header row data of given columns
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   */
+  QList<QVariant> headerRowData(const std::vector<int> & columns, int role = Qt::DisplayRole) const;
+
+  /*! \brief Get header row data of given field names
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   */
+  QList<QVariant> headerRowData(const QStringList & fieldNames, int role = Qt::DisplayRole) const
+  {
+    return headerRowData(columnList(fieldNames), role);
+  }
+
+  /*! \brief Get header row data of given columns
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   */
+  QStringList headerRowDataStr(const std::vector<int> & columns, int role = Qt::DisplayRole) const;
+
+  /*! \brief Get header row data of given field names
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   */
+  QStringList headerRowDataStr(const QStringList & fieldNames, int role = Qt::DisplayRole) const
+  {
+    return headerRowDataStr(columnList(fieldNames), role);
+  }
 
   /*! \brief Add a child controller
    *
@@ -598,6 +629,40 @@ class mdtAbstractSqlTableController : public QObject
     Q_ASSERT(pvModel);
     bool ok;
     return data(matchFieldName1, key1, matchFieldName2, key2, dataFieldName, ok);
+  }
+
+  /*! \brief Get row data of given row and columns list
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   * \pre Given row and columns must exist in table.
+   */
+  QList<QVariant> rowData(int row, const std::vector<int> & columns, int role = Qt::DisplayRole) const;
+
+  /*! \brief Get row data of given row and field names
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   * \pre Given row and field names must exist in table.
+   */
+  QList<QVariant> rowData(int row, const QStringList & fieldNames, int role = Qt::DisplayRole) const
+  {
+    return rowData(row, columnList(fieldNames), role);
+  }
+
+  /*! \brief Get row data of given row and field names
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   * \pre Given row and field names must exist in table.
+   */
+  QStringList rowDataStr(int row, const std::vector<int> & columns, int role = Qt::DisplayRole) const;
+
+  /*! \brief Get row data of given row and field names
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   * \pre Given row and field names must exist in table.
+   */
+  QStringList rowDataStr(int row, const QStringList & fieldNames, int role = Qt::DisplayRole) const
+  {
+    return rowDataStr(row, columnList(fieldNames), role);
   }
 
   /*! \brief Get a record that contains given field names for given row
@@ -1153,6 +1218,13 @@ class mdtAbstractSqlTableController : public QObject
   void onStateRemovingEntered();
 
  private:
+
+  /*! \brief Get a list of column indexes for given field names
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   * \pre Each given field name must exist in table
+   */
+  std::vector<int> columnList(const QStringList & fieldNames) const;
 
   /*! \brief Get the fisrt row for witch data in column matches matchData
    *

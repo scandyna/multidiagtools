@@ -116,12 +116,6 @@ class mdtUsbtmcPort : public QObject
    */
   QByteArray sendQuery(const QByteArray & query, int timeout = 30000);
 
-  /*! \brief Wait some time without breaking main event loop
-   *
-   * \param t time [ms]
-   */
-  //void wait(int t);
-
   /*! \brief Clear bulk I/O
    *
    * Note: is allready called by openDevice().
@@ -200,12 +194,6 @@ class mdtUsbtmcPort : public QObject
    */
   void setTransactionState(TransactionState_t s);
 
-//   /*! \brief Set pvWaitTimeReached flag
-//    *
-//    * See wait()
-//    */
-//   void setWaitTimeReached();
-
  private:
 
   /*! \brief Wait until transaction is finished
@@ -236,7 +224,6 @@ class mdtUsbtmcPort : public QObject
   mdtError pvLastError;
   std::mutex pvLastErrorMutex;
   TransactionState_t pvTransactionState;
-  //bool pvWaitTimeReached; // Used by wait()
   QString pvDeviceName;   // Used to build error messages
 };
 

@@ -21,7 +21,6 @@
 #ifndef MDT_DEVICE_MODBUS_H
 #define MDT_DEVICE_MODBUS_H
 
-///#include "mdtDevice.h"
 #include "mdtMultiIoDevice.h"
 #include "mdtPortInfo.h"
 #include <QMap>

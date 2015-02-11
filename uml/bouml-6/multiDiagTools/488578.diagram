@@ -1,7 +1,47 @@
-format 76
+format 208
 
 classcanvas 128002 class_ref 498562 // mdtDeviceInfo
-  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 178 317 2000
+  classdiagramsettings member_max_width 0 end
+  xyz 25 21 2000
+end
+classcanvas 128130 class_ref 1538178 // mdtDeviceAddress
+  classdiagramsettings member_max_width 0 end
+  xyz 348 334 2000
+end
+classcanvas 128258 class_ref 1538306 // mdtDeviceAddressList
+  classdiagramsettings member_max_width 0 end
+  xyz 18 468 2000
+end
+classcanvas 128514 class_ref 1538434 // mdtUsbDeviceAddress
+  classdiagramsettings member_max_width 0 end
+  xyz 623 210 2000
+end
+classcanvas 128642 class_ref 1538562 // mdtAsrlDeviceAddress
+  classdiagramsettings member_max_width 0 end
+  xyz 617 322 2000
+end
+classcanvas 128770 class_ref 1538690 // mdtTcpipDeviceAddress
+  classdiagramsettings member_max_width 0 end
+  xyz 630 471 2000
+end
+relationcanvas 128386 relation_ref 1911426 // <directional composition>
+  from ref 128258 z 2001 to ref 128130
+  role_a_pos 219 414 3000 no_role_b
+  multiplicity_a_pos 332 444 3000 no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 1911554 // <directional composition>
+  from ref 128130 z 2001 stereotype "<<union>>" xyz 546 465.5 3000 to ref 128770
+  role_a_pos 524 463 3000 no_role_b
+  multiplicity_a_pos 612 493 3000 no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 1911682 // <directional composition>
+  from ref 128130 z 2001 stereotype "<<union>>" xyz 541 379 3000 to ref 128642
+  role_a_pos 523 339 3000 no_role_b
+  multiplicity_a_pos 602 369 3000 no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 1911810 // <directional composition>
+  from ref 128130 z 2001 stereotype "<<union>>" xyz 542.5 343 3000 to ref 128514
+  role_a_pos 525 290 3000 no_role_b
+  multiplicity_a_pos 605 320 3000 no_multiplicity_b
 end
 end

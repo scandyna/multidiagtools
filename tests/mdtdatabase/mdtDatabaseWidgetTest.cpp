@@ -2282,6 +2282,9 @@ void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
   QModelIndex index;
   QLineEdit *lineEdit;
   mdtSqlTableSelection s;
+  QStringList fields;
+  QList<QVariant> dataList, expectedDataList;
+  QStringList strList;
 
   // For this test, we wont foreign_keys support
   QVERIFY(q.exec("PRAGMA foreign_keys = OFF"));
@@ -2710,6 +2713,72 @@ void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
   QCOMPARE(s.data(0, "Id_PK"), QVariant(1));
   QCOMPARE(s.data(1, "Id_PK"), QVariant(2));
   QCOMPARE(s.data(2, "Id_PK"), QVariant(4));
+  /*
+   * Check row data getters
+   */
+  fields.clear();
+  fields << "FirstName" << "Remarks" << "SomeValueDouble";
+  // Check header getter
+  expectedDataList.clear();
+  expectedDataList << "FirstName" << "Remarks" << "SomeValueDouble";
+  dataList = tvc.headerRowData(fields);
+  QCOMPARE(dataList, expectedDataList);
+  strList = tvc.headerRowDataStr(fields);
+  QCOMPARE(strList.size(), 3);
+  QCOMPARE(strList.at(0), QString("FirstName"));
+  QCOMPARE(strList.at(1), QString("Remarks"));
+  QCOMPARE(strList.at(2), QString("SomeValueDouble"));
+  /* Check QVariant row data getter */
+  // Row 0
+  dataList = tvc.rowData(0, fields);
+  QCOMPARE(dataList.size(), 3);
+  QCOMPARE(dataList.at(0), QVariant("Andy"));
+  QCOMPARE(dataList.at(1), QVariant("Edited remark 2 on Andy"));
+  QVERIFY(dataList.at(2).isNull());
+  // Row 1
+  dataList = tvc.rowData(1, fields);
+  QCOMPARE(dataList.size(), 3);
+  QCOMPARE(dataList.at(0), QVariant("Bety"));
+  QCOMPARE(dataList.at(1), QVariant("Edited remark on Bety"));
+  QCOMPARE(dataList.at(2), QVariant(2.0));
+  // Row 2
+  dataList = tvc.rowData(2, fields);
+  QCOMPARE(dataList.size(), 3);
+  QCOMPARE(dataList.at(0), QVariant("Charly"));
+  QCOMPARE(dataList.at(1), QVariant("Edited remark on Charly"));
+  QVERIFY(dataList.at(2).isNull());
+  // Row 3
+  dataList = tvc.rowData(3, fields);
+  QCOMPARE(dataList.size(), 3);
+  QCOMPARE(dataList.at(0), QVariant("Zeta"));
+  QCOMPARE(dataList.at(1), QVariant("Edited remark on Zeta"));
+  QVERIFY(dataList.at(2).isNull());
+  /* Check QString row data getter */
+  // Row 0
+  strList = tvc.rowDataStr(0, fields);
+  QCOMPARE(strList.size(), 3);
+  QCOMPARE(strList.at(0), QString("Andy"));
+  QCOMPARE(strList.at(1), QString("Edited remark 2 on Andy"));
+  QCOMPARE(strList.at(2), QString(""));
+  // Row 1
+  strList = tvc.rowDataStr(1, fields);
+  QCOMPARE(strList.size(), 3);
+  QCOMPARE(strList.at(0), QString("Bety"));
+  QCOMPARE(strList.at(1), QString("Edited remark on Bety"));
+  QCOMPARE(strList.at(2), QString("2"));
+  // Row 2
+  strList = tvc.rowDataStr(2, fields);
+  QCOMPARE(strList.size(), 3);
+  QCOMPARE(strList.at(0), QString("Charly"));
+  QCOMPARE(strList.at(1), QString("Edited remark on Charly"));
+  QCOMPARE(strList.at(2), QString(""));
+  // Row 3
+  strList = tvc.rowDataStr(3, fields);
+  QCOMPARE(strList.size(), 3);
+  QCOMPARE(strList.at(0), QString("Zeta"));
+  QCOMPARE(strList.at(1), QString("Edited remark on Zeta"));
+  QCOMPARE(strList.at(2), QString(""));
+
 
   /*
    * Play

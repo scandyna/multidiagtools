@@ -173,6 +173,7 @@ void mdtClVehicleTypeEditor::exportMarkingsToCsvFile()
   QString selectedFile;
   mdtCsvFileSettings csvSettings;
   mdtSqlTableWidget *widget;
+  QStringList fields;
 
   // Get SQL widget
   widget = sqlTableWidget("LinkMarking_view");
@@ -213,7 +214,8 @@ void mdtClVehicleTypeEditor::exportMarkingsToCsvFile()
   }
   */
   // Export
-  if(!widget->exportToCsvFile(csvFileInfo, csvSettings, false)){
+  fields << "StartMarking" << "EndMarking";
+  if(!widget->exportToCsvFile(csvFileInfo, csvSettings, false, fields)){
     pvLastError = widget->lastError();
     displayLastError();
     return;
@@ -448,14 +450,32 @@ bool mdtClVehicleTypeEditor::setupLinkMarkingTable()
     pvLastError.commit();
     return false;
   }
+  // Create second base for link marking table
+  sql = "CREATE TEMP VIEW LinkMarkingBase2_view AS\n"\
+         "SELECT\n"\
+         " StartVehicleType_Id_PK,\n"\
+         " EndVehicleType_Id_PK,\n"\
+         " IdentificationPart || ' (' || StartConnectionPart || ')-(' || EndConnectionPart || ')' AS StartMarking ,\n"\
+         " IdentificationPart || ' (' || EndConnectionPart || ')-(' || StartConnectionPart || ')' AS EndMarking\n"\
+         "FROM LinkMarkingFormatBase_view";
+  if(!query.exec(sql)){
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError(tr("Cannot generate 'LinkMarkingBase2_view'"), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClVehicleTypeEditor");
+    pvLastError.commit();
+    return false;
+  }
   // Create link marking table itself
   sql = "CREATE TEMP VIEW LinkMarking_view AS\n"\
          "SELECT\n"\
          " StartVehicleType_Id_PK,\n"\
          " EndVehicleType_Id_PK,\n"\
-         " IdentificationPart || ' (' || StartConnectionPart || ')-(' || EndConnectionPart || ')' AS StartMarking ,\n"\
-         " IdentificationPart || ' (' || EndConnectionPart || ')-(' || StartConnectionPart || ')' AS EndMarking \n"\
-         "FROM LinkMarkingFormatBase_view";
+         " StartMarking ,\n"\
+         " EndMarking ,\n"\
+         " length(StartMarking) AS StartMarkinLength ,\n"\
+         " length(EndMarking) AS EndMarkinLength\n"\
+         "FROM LinkMarkingBase2_view";
   if(!query.exec(sql)){
     QSqlError sqlError = query.lastError();
     pvLastError.setError(tr("Cannot generate 'LinkMarking_view'"), mdtError::Error);

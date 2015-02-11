@@ -33,6 +33,7 @@
 #include <QSqlDatabase>
 #include <QFileInfo>
 #include <memory>
+#include <vector>
 
 class QTableView;
 class QHBoxLayout;
@@ -365,7 +366,20 @@ class mdtSqlTableWidget :  public QWidget
    * Will export visible fields to given CSV file,
    *  regarding sorting.
    */
-  bool exportToCsvFile(const QFileInfo & csvFile, const mdtCsvFileSettings & csvSettings, bool includeHeader);
+  bool exportToCsvFile(const QFileInfo & csvFile, const mdtCsvFileSettings & csvSettings, bool includeHeader)
+  {
+    return exportToCsvFile(csvFile, csvSettings, includeHeader, visibleColumns());
+  }
+
+  /*! \brief Export table to CSV file
+   *
+   * Will export given fields to given CSV file,
+   *  regarding sorting.
+   */
+  bool exportToCsvFile(const QFileInfo & csvFile, const mdtCsvFileSettings & csvSettings, bool includeHeader, const QStringList & fieldNames)
+  {
+    return exportToCsvFile(csvFile, csvSettings, includeHeader, columnsOfFieldNames(fieldNames));
+  }
 
  public slots:
 
@@ -393,6 +407,21 @@ class mdtSqlTableWidget :  public QWidget
   void copyTableToClipBoard();
 
  private:
+
+  /*! \brief Export table to CSV file
+   *
+   * Will export given columns to given CSV file,
+   *  regarding sorting.
+   */
+  bool exportToCsvFile(const QFileInfo & csvFile, const mdtCsvFileSettings & csvSettings, bool includeHeader, const std::vector<int> & columns);
+
+  /*! \brief Get a list of visible columns
+   */
+  std::vector<int> visibleColumns() const;
+
+  /*! \brief Get a list of columns for given field names
+   */
+  std::vector<int> columnsOfFieldNames(const QStringList & fieldNames) const;
 
   /*! \brief Catch the copy key sequence event
    *

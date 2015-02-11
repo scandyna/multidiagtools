@@ -245,11 +245,13 @@ add_test (mdtDatabaseWidgetTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdatabase/md
 # mdtIoWidgetTest
 add_test (mdtIoWidgetTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutilsgui/mdtiowidgettest)
 
+# * mdtport *
+
+# mdtDeviceAddressTest
+add_test (mdtDeviceAddressTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtport/mdtdeviceaddresstest)
+
 # NOTE: Support Windows pas terminé
 if(UNIX)
-
-  # * mdtport *
-
   # mdtPortLockTest
   add_test (mdtPortLockTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtport/mdtportlocktest)
   # mdtPortTest

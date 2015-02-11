@@ -15,6 +15,14 @@ if(UNIX)
   target_link_libraries(mdtportlocktest ${QT_LIBRARIES})
 endif(UNIX)
 
+# Target mdtDeviceAddressTest
+QT4_WRAP_CPP (MOC_MDT_DEVICE_ADDRESS_TEST mdtDeviceAddressTest.h)
+add_executable (mdtdeviceaddresstest mdtDeviceAddressTest.cpp ${MOC_MDT_DEVICE_ADDRESS_TEST})
+target_link_libraries(mdtdeviceaddresstest "mdtutils${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtdeviceaddresstest "mdtport${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtdeviceaddresstest "mdttest")
+target_link_libraries(mdtdeviceaddresstest ${QT_LIBRARIES})
+
 # Target mdtPortTest
 QT4_WRAP_CPP (MOC_MDT_PORT_TEST mdtPortTest.h)
 add_executable (mdtporttest mdtPortTest.cpp ${MOC_MDT_PORT_TEST})

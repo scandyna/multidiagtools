@@ -211,15 +211,6 @@ QByteArray mdtUsbtmcPort::sendQuery(const QByteArray& query, int timeout)
   return rxBa;
 }
 
-// void mdtUsbtmcPort::wait(int t)
-// {
-//   pvWaitTimeReached = false;
-//   QTimer::singleShot(t, this, SLOT(setWaitTimeReached()));
-//   while(!pvWaitTimeReached){
-//     QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
-//   }
-// }
-
 bool mdtUsbtmcPort::clearBulkIo()
 {
   Q_ASSERT(pvTransferHandler != 0);
@@ -246,11 +237,6 @@ void mdtUsbtmcPort::setTransactionState(mdtUsbtmcPort::TransactionState_t s)
 {
   pvTransactionState = s;
 }
-
-// void mdtUsbtmcPort::setWaitTimeReached()
-// {
-//   pvWaitTimeReached = true;
-// }
 
 void mdtUsbtmcPort::waitTransactionFinished()
 {

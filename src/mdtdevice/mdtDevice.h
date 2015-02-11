@@ -221,18 +221,14 @@ class mdtDevice : public QObject
    */
   void wait(int t);
 
-  /*! \brief Wait some time
-   *
-   * \sa mdtPortManager::wait()
-   * \pre Port manager must be set before using this method
-   */
-  //void wait(int ms);
-
   /*! \brief Get last error
    *
    * \todo Not completly used currently, must be implemented in this class + subclasses .
    */
-  mdtError lastError() const;
+  mdtError lastError() const
+  {
+    return pvLastError;
+  }
 
   /*! \brief Get current state
    */

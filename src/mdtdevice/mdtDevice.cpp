@@ -106,11 +106,6 @@ void mdtDevice::wait(int t)
   }
 }
 
-mdtError mdtDevice::lastError() const
-{
-  return pvLastError;
-}
-
 void mdtDevice::runQueries()
 {
   if(currentState() != State_t::Ready){

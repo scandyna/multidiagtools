@@ -60,25 +60,6 @@ class mdtDeviceScpi : public mdtDevice
    */
   virtual ~mdtDeviceScpi();
 
-  /*! \brief Set device name
-   *
-   * Set a user friendly name for this device.
-   *  Will also be used to build error messages.
-   */
-//   void setName(const QString & name)
-//   {
-//     pvPort->setDeviceName(name);
-//   }
-
-  /*! \brief Get device name
-   *
-   * \sa setName()
-   */
-//   QString name() const
-//   {
-//     return pvPort->deviceName();
-//   }
-
   /*! \brief Connect to a USBTMC device
    *
    * \param idVendor Vendor ID
@@ -86,10 +67,6 @@ class mdtDeviceScpi : public mdtDevice
    * \param serialNumber Device serial number. Will be ignored if empty
    */
   bool connectToDevice(uint16_t idVendor, uint16_t idProduct, const QString & serialNumber);
-
-  /*! \brief Disconnect from device
-   */
-  //void disconnectFromDevice();
 
   /*! \brief Send a command to device
    *
@@ -104,15 +81,6 @@ class mdtDeviceScpi : public mdtDevice
    * \param timeout Timeout [ms]
    */
   QByteArray sendQuery(const QByteArray & query, int timeout = 30000);
-
-  /*! \brief Wait some time without breaking main event loop
-   *
-   * \param t time [ms]
-   */
-//   void wait(int t)
-//   {
-//     pvPort->wait(t);
-//   }
 
   /*! \brief Get device error
    *
@@ -167,31 +135,7 @@ class mdtDeviceScpi : public mdtDevice
    */
   bool waitOperationComplete(int timeout, int interval);
 
-  /*! \brief Set device identification
-   *
-   * \todo define better, see also deviceIdString()
-   * \todo Candidate for a common mdtDevice class
-   */
-//   void setIdentification(const QVariant & id)
-//   {
-//   }
-
-  /*! \brief Get last error
-   *
-   * \todo Candidate for a common mdtDevice class
-   */
-//   mdtError lastError() const
-//   {
-//     return pvLastError;
-//   }
-
  protected:
-
-  /*! \brief Laset error
-   *
-   * \todo Candidate for a common mdtDevice class
-   */
-//   mdtError pvLastError;
 
   /*! \brief Close port
    */
@@ -200,18 +144,6 @@ class mdtDeviceScpi : public mdtDevice
   /*! \brief Update name in port
    */
   void nameChangedEvent(const QString & newName);
-
-//   /*! \brief Get device identification string
-//    *
-//    * Can be used for error messages.
-//    *  Returns a string with \"Device 'deviceName' : \"
-//    *
-//    * \todo Candidate for a common mdtDevice class
-//    */
-//   QString deviceIdString() const
-//   {
-//     return tr("Device") + " '" + name() + "' : ";
-//   }
 
  private slots:
 

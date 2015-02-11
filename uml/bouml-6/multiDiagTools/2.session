@@ -1,15 +1,25 @@
 window_sizes 1280 916 271 1003 863 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 739586 // CableListAllTables
-    1003 863 60 17 0 0
+  classdiagram_ref 488578 // mdtDeviceInfo
+    1003 863 100 4 0 0
+  active  classdiagram_ref 1358594 // mdtDeviceAddress
+    1003 863 90 18 0 0
 end
 show_stereotypes
-selected 
-package_ref 227842 // DatabaseLogical
+selected classrelation_ref 1927682 // pvTcpipAddress (<directional composition>)
 open
-  state_ref 149634 // mdtAbstractSqlWidgetStateMachine
+  classview_ref 201218 // mdtPort
+  attribute_ref 1597826 // pvHostName
+  attribute_ref 1597954 // pvPort
+  class_ref 1538562 // mdtAsrlDeviceAddress
+  attribute_ref 1597314 // pvProductId
+  attribute_ref 1597442 // pvSerialNumber
+  attribute_ref 1597570 // pvInterfaceNumber
+  attribute_ref 1596930 // pvAddressString
+  attribute_ref 1598082 // pvPortNumber
+  operation_ref 2459906 // clear
   
-package_ref 247554 // mdtcablelist
+  package_ref 161538 // mdtdevice
 end
 end
