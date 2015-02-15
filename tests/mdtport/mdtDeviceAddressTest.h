@@ -29,7 +29,14 @@ class mdtDeviceAddressTest : public mdtTest
 
  private slots:
 
+  void modbusHwNodeIdTest();
+  void modbusHwNodeIdBenchmark();
+
   void simpleTest();
+
+  void decodeAddressStringTest();
+  void decodeAddressStringBenchmark();
+
 };
 
 
