@@ -31,12 +31,16 @@ class mdtDeviceAddressTest : public mdtTest
 
   void modbusHwNodeIdTest();
   void modbusHwNodeIdBenchmark();
+  void modbusHwNodeIdListTest();
+  void modbusHwNodeIdListBenchmark();
 
   void simpleTest();
 
   void decodeAddressStringTest();
   void decodeAddressStringBenchmark();
 
+  void deviceAddressListTest();
+  void deviceAddressListBenchmark();
 };
 
 

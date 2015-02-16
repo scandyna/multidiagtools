@@ -22,6 +22,7 @@
 #include "mdtDeviceAddress.h"
 #include "mdtModbusHwNodeId.h"
 #include "mdtApplication.h"
+#include <QTemporaryFile>
 #include <vector>
 
 #include <QDebug>
@@ -94,7 +95,6 @@ void mdtDeviceAddressTest::modbusHwNodeIdTest()
   QCOMPARE(nid.id(), 0b10010110);
   QCOMPARE(nid.bitsCount(), 8);
   QCOMPARE(nid.firstBit(), 1);
-
 }
 
 void mdtDeviceAddressTest::modbusHwNodeIdBenchmark()
@@ -117,6 +117,83 @@ void mdtDeviceAddressTest::modbusHwNodeIdBenchmark()
   QCOMPARE(nid.id(), 0b10010110);
   QCOMPARE(nid.bitsCount(), 8);
   QCOMPARE(nid.firstBit(), 0);
+}
+
+void mdtDeviceAddressTest::modbusHwNodeIdListTest()
+{
+  mdtModbusHwNodeIdList nIdList(8, 1);
+
+  /*
+   * Initial state
+   */
+  QVERIFY(nIdList.isEmpty());
+  QCOMPARE(nIdList.size(), 0);
+  QCOMPARE(nIdList.bitsCount(), 8);
+  QCOMPARE(nIdList.firstBit(), 1);
+  /*
+   * Add IDs
+   */
+  // Add ID 2
+  nIdList.append(2);
+  QVERIFY(!nIdList.isEmpty());
+  QCOMPARE(nIdList.size(), 1);
+  QCOMPARE(nIdList.bitsCount(), 8);
+  QCOMPARE(nIdList.firstBit(), 1);
+  QVERIFY(!nIdList.contains(1));
+  QVERIFY(nIdList.contains(2));
+  QVERIFY(!nIdList.contains(3));
+  // Add ID 1
+  nIdList.append(1);
+  QVERIFY(!nIdList.isEmpty());
+  QCOMPARE(nIdList.size(), 2);
+  QVERIFY(nIdList.contains(1));
+  QVERIFY(nIdList.contains(2));
+  QVERIFY(!nIdList.contains(3));
+  // Add ID 0
+  nIdList.append(0);
+  QVERIFY(!nIdList.isEmpty());
+  QCOMPARE(nIdList.size(), 3);
+  QVERIFY(nIdList.contains(0));
+  QVERIFY(nIdList.contains(1));
+  QVERIFY(nIdList.contains(2));
+  QVERIFY(!nIdList.contains(3));
+  // Check contains with mdtModbusHwNodeId overload
+  QVERIFY(!nIdList.contains(mdtModbusHwNodeId()));
+  QVERIFY(nIdList.contains(mdtModbusHwNodeId(0, 8, 1)));
+  QVERIFY(nIdList.contains(mdtModbusHwNodeId(1, 8, 1)));
+  QVERIFY(nIdList.contains(mdtModbusHwNodeId(2, 8, 1)));
+  QVERIFY(!nIdList.contains(mdtModbusHwNodeId(3, 8, 1)));
+  /*
+   * Clear
+   */
+  nIdList.clear();
+  QVERIFY(nIdList.isEmpty());
+  QCOMPARE(nIdList.size(), 0);
+  QCOMPARE(nIdList.bitsCount(), 0);
+  QCOMPARE(nIdList.firstBit(), 0);
+  /*
+   * New setup
+   */
+  nIdList.setBitsAttributes(8, 2);
+  QVERIFY(nIdList.isEmpty());
+  QCOMPARE(nIdList.size(), 0);
+  QCOMPARE(nIdList.bitsCount(), 8);
+  QCOMPARE(nIdList.firstBit(), 2);
+
+}
+
+void mdtDeviceAddressTest::modbusHwNodeIdListBenchmark()
+{
+  mdtModbusHwNodeIdList nIdList(8, 1);
+  bool found;
+
+  QBENCHMARK{
+    nIdList.append(2);
+    nIdList.append(24);
+    nIdList.append(27);
+    found = nIdList.contains(mdtModbusHwNodeId(24, 8, 1));
+  }
+  QVERIFY(found);
 }
 
 void mdtDeviceAddressTest::simpleTest()
@@ -403,6 +480,71 @@ void mdtDeviceAddressTest::decodeAddressStringBenchmark()
   QCOMPARE(da.modbusHwNodeId().bitsCount(), 8);
   QCOMPARE(da.modbusHwNodeId().firstBit(), 1);
   QCOMPARE(da.addressString(), QString("TCPIP::1.5.9.8::502::MODBUS::2,8,1"));
+}
+
+void mdtDeviceAddressTest::deviceAddressListTest()
+{
+  mdtDeviceAddress da;
+  mdtDeviceAddressList daList;
+  QTemporaryFile file;
+
+  /*
+   * Create temp file
+   */
+  QVERIFY(file.open());
+  file.close();
+  /*
+   * Initial state
+   */
+  QVERIFY(daList.isEmpty());
+  QCOMPARE(daList.size(), 0);
+  
+  /*
+   * Add some device addresses
+   */
+  // Add a USB device address
+  da.clear();
+  da.setUsbIdentification(0x1234, 0x5678, "SN001", 1);
+  daList.append(da);
+  QVERIFY(!daList.isEmpty());
+  QCOMPARE(daList.size(), 1);
+  // Add a MODBUS/TCP device address
+  da.clear();
+  da.setModbusTcpIdentification("1.2.3.4", 502, mdtModbusHwNodeId(3, 8, 1));
+  daList.append(da);
+  QVERIFY(!daList.isEmpty());
+  QCOMPARE(daList.size(), 2);
+  /*
+   * Iteration
+   */
+  for(const auto & address : daList.internalVector()){
+    qDebug() << "Address: " << address.addressString();
+  }
+  /*
+   * Save to file
+   */
+  QVERIFY(daList.saveToFile(file.fileName()));
+  /*
+   * Clear
+   */
+  daList.clear();
+  QVERIFY(daList.isEmpty());
+  QCOMPARE(daList.size(), 0);
+  /*
+   * Read from file
+   */
+  QVERIFY(daList.readFromFile(file.fileName()));
+  QVERIFY(!daList.isEmpty());
+  QCOMPARE(daList.size(), 2);
+
+  for(const auto & address : daList.internalVector()){
+    qDebug() << "Address: " << address.addressString();
+  }
+}
+
+void mdtDeviceAddressTest::deviceAddressListBenchmark()
+{
+
 }
 
 

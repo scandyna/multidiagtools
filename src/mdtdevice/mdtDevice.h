@@ -24,6 +24,8 @@
 #include "mdtAbstractPort.h"
 
 #include "mdtDeviceInfo.h"
+
+#include "mdtDeviceAddress.h"
 #include "mdtValue.h"
 #include "mdtError.h"
 #include <QVariant>
@@ -160,7 +162,14 @@ class mdtDevice : public QObject
    * Note: default implementation does nothing and returns allways a UnhandledError.
    *        See subclass documentation for more details.
    */
-  virtual mdtAbstractPort::error_t connectToDevice(const mdtDeviceInfo &devInfo);
+  ///virtual mdtAbstractPort::error_t connectToDevice(const mdtDeviceInfo &devInfo);
+
+  /*! \brief Connect to physical device
+   *
+   * Note: default implementation does nothing and returns allways false.
+   *        See subclass documentation for more details.
+   */
+  virtual bool connectToDevice(const mdtDeviceAddress & address);
 
   /*! \brief Disconnect from device
    *

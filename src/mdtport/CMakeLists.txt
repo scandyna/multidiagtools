@@ -59,6 +59,8 @@ set (SOURCES_FILES
           mdtPortInfo.cpp
           mdtDeviceInfo.cpp
           mdtPortInfoCbHandler.cpp
+          # Device address
+          mdtDeviceAddress.cpp
           # Port manager
           mdtPortManager.cpp
           mdtPortManagerStateMachine.cpp

@@ -22,6 +22,7 @@
 #define MDT_MODBUS_HW_NODE_ID_H
 
 #include <vector>
+#include <algorithm>
 
 /** \todo Introduire struct de setup avec bistCount et startFrom ??
  * NOTE: semble spécific au MODBUS port(manager ?)
@@ -181,17 +182,105 @@ class mdtModbusHwNodeId
   int pvFirstBit;   // First digital input that represents the hardware node ID (is the LSB).
 };
 
+/*! \brief List of mdtModbusHwNodeId
+ */
 class mdtModbusHwNodeIdList
 {
  public:
 
-  
+  /*! \brief Construct a empty ID list
+   */
+  mdtModbusHwNodeIdList(int bitsCount, int firstBit)
+   : pvBitsCount(bitsCount),
+     pvFirstBit(firstBit)
+  {
+    Q_ASSERT(bitsCount >= 0);
+    Q_ASSERT(firstBit >= 0);
+  }
+
+  /*! \brief Check if ID list is empty
+   */
+  bool isEmpty() const
+  {
+    return pvIdList.empty();
+  }
+
+  /*! \brief Get ID list size
+   */
+  int size() const
+  {
+    return pvIdList.size();
+  }
+
+  /*! \brief Clear
+   */
+  void clear()
+  {
+    pvIdList.clear();
+    pvBitsCount = 0;
+    pvFirstBit = 0;
+  }
+
+  /*! \brief Set bitsCount and firstBit
+   *
+   * \param bitsCount Number of bits that represent the ID
+   * \param firstBit First bit, i.e. first digital input, that represent the node ID, starting from offset 0 (is the LSB)
+   */
+  void setBitsAttributes(int bitsCount, int firstBit)
+  {
+    Q_ASSERT(bitsCount >= 0);
+    Q_ASSERT(firstBit >= 0);
+
+    pvBitsCount = bitsCount;
+    pvFirstBit = firstBit;
+  }
+
+  /*! \brief Get bits count
+   */
+  int bitsCount() const
+  {
+    return pvBitsCount;
+  }
+
+  /*! \brief Get first bit position
+   */
+  int firstBit() const
+  {
+    return pvFirstBit;
+  }
+
+  /*! \brief Append a ID at the end of the list
+   */
+  void append(int id)
+  {
+    Q_ASSERT(id >= 0);
+    /// \todo Make a assertion that garanties bitsCount and firstBit are coherent to given ID
+
+    pvIdList.emplace_back(id);
+  }
+
+  /*! \brief Check if given ID exists in list
+   */
+  bool contains(int id)
+  {
+    return ( std::find(pvIdList.cbegin(), pvIdList.cend(), id) != pvIdList.cend() );
+  }
+
+  /*! \brief Check if given ID exists in list
+   */
+  inline bool contains(const mdtModbusHwNodeId & mid)
+  {
+    if(mid.isNull()){
+      return false;
+    }
+    return contains(mid.id());
+  }
 
  private:
 
-  ///int pvId;
-  ///int pvBitsCount;  // Number of digital inputs that represents the hardware node ID.
-  ///int pvFirstBit;   // First digital input that represents the hardware node ID (is the LSB).
+  std::vector<int> pvIdList;
+  int pvBitsCount;  // Number of digital inputs that represents the hardware node ID.
+  int pvFirstBit;   // First digital input that represents the hardware node ID (is the LSB).
 };
 
 #endif // #ifndef MDT_MODBUS_HW_NODE_ID_H

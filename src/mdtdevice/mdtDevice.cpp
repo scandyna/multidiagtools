@@ -66,10 +66,16 @@ void mdtDevice::setIdentification(const QVariant & id)
   pvIdentification = id;
 }
 
-mdtAbstractPort::error_t mdtDevice::connectToDevice(const mdtDeviceInfo &devInfo)
+// mdtAbstractPort::error_t mdtDevice::connectToDevice(const mdtDeviceInfo &devInfo)
+// {
+//   return mdtAbstractPort::UnhandledError;
+// }
+
+bool mdtDevice::connectToDevice(const mdtDeviceAddress& address)
 {
-  return mdtAbstractPort::UnhandledError;
+  return false;
 }
+
 
 void mdtDevice::disconnectFromDevice()
 {
