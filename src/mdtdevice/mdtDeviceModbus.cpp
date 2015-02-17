@@ -113,7 +113,7 @@ mdtAbstractPort::error_t mdtDeviceModbus::connectToDevice(const mdtDeviceInfo &d
     pvTcpPortManager->stop();
   }
   // Scan looking in chache file first
-  portInfoList = pvTcpPortManager->scan(pvTcpPortManager->readScanResult());
+  ///portInfoList = pvTcpPortManager->scan(pvTcpPortManager->readScanResult());
   for(i = 0; i < portInfoList.size(); ++i){
     Q_ASSERT(portInfoList.at(i) != 0);
     // Try to connect
@@ -122,25 +122,12 @@ mdtAbstractPort::error_t mdtDeviceModbus::connectToDevice(const mdtDeviceInfo &d
       return mdtAbstractPort::NoError;
     }
     pvTcpPortManager->stop();
-    /**
-    pvTcpPortManager->setPortInfo(*portInfoList.at(i));
-    if(!pvTcpPortManager->start()){
-      continue;
-    }
-    // Connected, check if device is a Wago 750
-    if(isWago750()){
-      qDeleteAll(portInfoList);
-      qDebug() << "mdtDeviceModbusWago::connectToDevice() : Is a Wago 750";
-      return mdtAbstractPort::NoError;
-    }
-    pvTcpPortManager->stop();
-    */
   }
   qDeleteAll(portInfoList);
   portInfoList.clear();
   pvTcpPortManager->stop();
   // Scan network
-  portInfoList = pvTcpPortManager->scan(QNetworkInterface::allInterfaces(), 502, 100);
+  ///portInfoList = pvTcpPortManager->scan(QNetworkInterface::allInterfaces(), 502, 100);
   for(i=0; i<portInfoList.size(); i++){
     Q_ASSERT(portInfoList.at(i) != 0);
     // Try to connect
@@ -150,22 +137,6 @@ mdtAbstractPort::error_t mdtDeviceModbus::connectToDevice(const mdtDeviceInfo &d
       return mdtAbstractPort::NoError;
     }
     pvTcpPortManager->stop();
-    /**
-    qDebug() << "mdtDeviceModbusWago::connectToDevice() : Trying " << portInfoList.at(i)->portName() << " ...";
-    pvTcpPortManager->setPortInfo(*portInfoList.at(i));
-    if(!pvTcpPortManager->start()){
-      continue;
-    }
-    qDebug() << "mdtDeviceModbusWago::connectToDevice() : Running ...";
-    // Connected, check if device is a Wago 750
-    if(isWago750()){
-      pvTcpPortManager->saveScanResult(portInfoList);
-      qDeleteAll(portInfoList);
-      qDebug() << "mdtDeviceModbusWago::connectToDevice() : Is a Wago 750";
-      return mdtAbstractPort::NoError;
-    }
-    pvTcpPortManager->stop();
-    */
   }
   qDeleteAll(portInfoList);
   pvTcpPortManager->stop();
@@ -231,7 +202,7 @@ mdtAbstractPort::error_t mdtDeviceModbus::connectToDevice(const QList<int> & exi
     pvTcpPortManager->stop();
   }
   // Scan looking in chache file first
-  portInfoList = pvTcpPortManager->scan(pvTcpPortManager->readScanResult(), 100, _existingHwNodeIdList, pvHardwareNodeIdBitsCount, pvHardwareNodeIdBitsStartFrom);
+  ///portInfoList = pvTcpPortManager->scan(pvTcpPortManager->readScanResult(), 100, _existingHwNodeIdList, pvHardwareNodeIdBitsCount, pvHardwareNodeIdBitsStartFrom);
   // Try to connect
   portError = connectToDevice(portInfoList, pvHardwareNodeId.toInt(), pvHardwareNodeIdBitsCount, pvHardwareNodeIdBitsStartFrom);
   qDeleteAll(portInfoList);
@@ -240,7 +211,7 @@ mdtAbstractPort::error_t mdtDeviceModbus::connectToDevice(const QList<int> & exi
     return mdtAbstractPort::NoError;
   }
   // Expected device not found, scan the network
-  portInfoList = pvTcpPortManager->scan(QNetworkInterface::allInterfaces(), 502, 100, true, _existingHwNodeIdList, pvHardwareNodeIdBitsCount, pvHardwareNodeIdBitsStartFrom);
+  ///portInfoList = pvTcpPortManager->scan(QNetworkInterface::allInterfaces(), 502, 100, true, _existingHwNodeIdList, pvHardwareNodeIdBitsCount, pvHardwareNodeIdBitsStartFrom);
   // Try to connect
   portError = connectToDevice(portInfoList, pvHardwareNodeId.toInt(), pvHardwareNodeIdBitsCount, pvHardwareNodeIdBitsStartFrom);
   if(portError == mdtAbstractPort::NoError){

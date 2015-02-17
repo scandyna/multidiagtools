@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,12 +22,37 @@
 #define MDT_MODBUS_TCP_PORTMANAGER_H
 
 #include "mdtPortManager.h"
+
 #include "mdtPortInfo.h"
+
+#include "mdtDeviceAddress.h"
+#include "mdtModbusHwNodeId.h"
+
 #include "mdtTcpSocket.h"
 #include <QStringList>
 #include <QList>
 #include <QHash>
 #include <QNetworkInterface>
+
+/*! \brief Little container for network host address and port
+ */
+struct mdtNetworkHost
+{
+  /*! \brief Construct a empty host
+   */
+  mdtNetworkHost()
+   : port(0)
+  {
+  }
+
+  /*! \brief Hosta name
+   */
+  QString hostName;
+
+  /*! \brief Port
+   */
+  uint16_t port;
+};
 
 /*! \brief MODBUS/TCP port manager
  *
@@ -65,6 +90,18 @@ class mdtModbusTcpPortManager : public mdtPortManager
 
   /*! \brief Scan for available hosts with a MODBUS/TCP compatible device attached
    *
+   * \param hosts A list of hosts to scan.
+   * \param expectedHwNodeAddresses If this list contains HW node addresses, scan will break when each one was found.
+   * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
+   * \return A list of device addresses that contains found hosts.
+   *          A empty list means that no device was found, or other error happened,
+   *          lastError() will also provide some informations in the case.
+   * \pre Port manager must be stopped before scanning.
+   */
+  mdtDeviceAddressList scan(const QList<mdtNetworkHost> & hosts, const mdtModbusHwNodeIdList & expectedHwNodeAddresses, int timeout = 500);
+
+  /*! \brief Scan for available hosts with a MODBUS/TCP compatible device attached
+   *
    * \param hosts A list of hosts to scan. Each host must be set with format hostname:port, or ip:port.
    *               Note that MODBUS/TCP default port is 502.
    * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
@@ -78,7 +115,7 @@ class mdtModbusTcpPortManager : public mdtPortManager
    *
    * \pre Port manager must be stopped
    */
-  QList<mdtPortInfo*> scan(const QStringList &hosts, int timeout = 500, const QList<int> &expectedHwNodeAddresses = QList<int>(), int bitsCount = 8, int bitsCountStartFrom = 0);
+  ///QList<mdtPortInfo*> scan(const QStringList &hosts, int timeout = 500, const QList<int> &expectedHwNodeAddresses = QList<int>(), int bitsCount = 8, int bitsCountStartFrom = 0);
 
   /*! \brief Scan for available hosts with a MODBUS/TCP compatible device attached
    *
@@ -96,7 +133,7 @@ class mdtModbusTcpPortManager : public mdtPortManager
    *
    * \pre Port manager must be stopped
    */
-  QList<mdtPortInfo*> scan(const QNetworkInterface &iface, quint16 port = 502, int timeout = 500, const QList<int> &expectedHwNodeAddresses = QList<int>(), int bitsCount = 8, int bitsCountStartFrom = 0);
+  ///QList<mdtPortInfo*> scan(const QNetworkInterface &iface, quint16 port = 502, int timeout = 500, const QList<int> &expectedHwNodeAddresses = QList<int>(), int bitsCount = 8, int bitsCountStartFrom = 0);
 
   /*! \brief Scan for available hosts with a MODBUS/TCP compatible device attached
    *
@@ -115,7 +152,7 @@ class mdtModbusTcpPortManager : public mdtPortManager
    *
    * \pre Port manager must be stopped
    */
-  QList<mdtPortInfo*> scan(const QList<QNetworkInterface> &ifaces, quint16 port = 502, int timeout = 500, bool ignoreLoopback = true, const QList<int> &expectedHwNodeAddresses = QList<int>(), int bitsCount = 8, int bitsCountStartFrom = 0);
+  ///QList<mdtPortInfo*> scan(const QList<QNetworkInterface> &ifaces, quint16 port = 502, int timeout = 500, bool ignoreLoopback = true, const QList<int> &expectedHwNodeAddresses = QList<int>(), int bitsCount = 8, int bitsCountStartFrom = 0);
 
   /*! \brief Try to connect to a host
    *
@@ -183,7 +220,19 @@ class mdtModbusTcpPortManager : public mdtPortManager
    * \pre bitsCount must be > 0
    * \pre startFrom must be >= 0
    */
-  int getHardwareNodeAddress(int bitsCount, int startFrom = 0);
+  mdtModbusHwNodeId getHardwareNodeAddress(int bitsCount, int startFrom = 0);
+
+  /*! \brief Get MODBUS hardware node ID that matches in given list
+   *
+   * Will get MODBUS harware node ID, regarding bitsCount and firstBit
+   *  for each item in given list, and return the first item that matches.
+   *  If no matching item was found, a null ID is returned.
+   *
+   * \pre Port manager must be connected and thread running before calling this method.
+   *
+   * \todo Should be protected.
+   */
+  mdtModbusHwNodeId findMatchingToHostModebusHwNodeId(const mdtModbusHwNodeIdList & hwNodeIdList);
 
   /*! \brief Helper method for register service
    *

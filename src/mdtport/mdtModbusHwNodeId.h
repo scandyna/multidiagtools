@@ -175,6 +175,30 @@ class mdtModbusHwNodeId
     return pvFirstBit;
   }
 
+  /*! \brief ID comparison operator
+   *
+   * Note: will only compare id,
+   *       other attributes like bistCount and firstBit are ignored.
+   *
+   * If current node ID is null, this function returns allways false.
+   */
+  bool operator==(int id) const
+  {
+    if(isNull()){
+      return false;
+    }
+    return (id == pvId);
+  }
+
+  /*! \brief ID comparison operator
+   *
+   * \sa operator==()
+   */
+  inline bool operator!=(int id) const
+  {
+    return !operator==(id);
+  }
+
  private:
 
   int pvId;
@@ -183,6 +207,10 @@ class mdtModbusHwNodeId
 };
 
 /*! \brief List of mdtModbusHwNodeId
+ * 
+ * \todo Vu que l'on peut avoir plusieurs noeuds different,
+ *        bitsCount et firstBit peuvent être différents.
+ *        -> Adapter
  */
 class mdtModbusHwNodeIdList
 {
@@ -190,13 +218,17 @@ class mdtModbusHwNodeIdList
 
   /*! \brief Construct a empty ID list
    */
-  mdtModbusHwNodeIdList(int bitsCount, int firstBit)
-   : pvBitsCount(bitsCount),
-     pvFirstBit(firstBit)
-  {
-    Q_ASSERT(bitsCount >= 0);
-    Q_ASSERT(firstBit >= 0);
-  }
+  mdtModbusHwNodeIdList() {}
+
+  /*! \brief Construct a empty ID list
+   */
+//   mdtModbusHwNodeIdList(int bitsCount, int firstBit)
+//    : pvBitsCount(bitsCount),
+//      pvFirstBit(firstBit)
+//   {
+//     Q_ASSERT(bitsCount >= 0);
+//     Q_ASSERT(firstBit >= 0);
+//   }
 
   /*! \brief Check if ID list is empty
    */
@@ -217,8 +249,8 @@ class mdtModbusHwNodeIdList
   void clear()
   {
     pvIdList.clear();
-    pvBitsCount = 0;
-    pvFirstBit = 0;
+//     pvBitsCount = 0;
+//     pvFirstBit = 0;
   }
 
   /*! \brief Set bitsCount and firstBit
@@ -226,37 +258,54 @@ class mdtModbusHwNodeIdList
    * \param bitsCount Number of bits that represent the ID
    * \param firstBit First bit, i.e. first digital input, that represent the node ID, starting from offset 0 (is the LSB)
    */
-  void setBitsAttributes(int bitsCount, int firstBit)
-  {
-    Q_ASSERT(bitsCount >= 0);
-    Q_ASSERT(firstBit >= 0);
-
-    pvBitsCount = bitsCount;
-    pvFirstBit = firstBit;
-  }
+//   void setBitsAttributes(int bitsCount, int firstBit)
+//   {
+//     Q_ASSERT(bitsCount >= 0);
+//     Q_ASSERT(firstBit >= 0);
+// 
+//     pvBitsCount = bitsCount;
+//     pvFirstBit = firstBit;
+//   }
 
   /*! \brief Get bits count
    */
-  int bitsCount() const
-  {
-    return pvBitsCount;
-  }
-
-  /*! \brief Get first bit position
-   */
-  int firstBit() const
-  {
-    return pvFirstBit;
-  }
+//   int bitsCount() const
+//   {
+//     return pvBitsCount;
+//   }
+// 
+//   /*! \brief Get first bit position
+//    */
+//   int firstBit() const
+//   {
+//     return pvFirstBit;
+//   }
 
   /*! \brief Append a ID at the end of the list
    */
-  void append(int id)
+  void append(const mdtModbusHwNodeId & nid)
   {
-    Q_ASSERT(id >= 0);
+    Q_ASSERT(!nid.isNull());
     /// \todo Make a assertion that garanties bitsCount and firstBit are coherent to given ID
 
-    pvIdList.emplace_back(id);
+    pvIdList.emplace_back(nid);
+  }
+
+  /*! \brief Access internal vector
+   *
+   * Can be used, for example, to iterate all IDs:
+   * \code
+   *  for(const auto & nid : list.internalVector() ){
+   *    if(nid.id() == 24){
+   *      doSomeStuff(nid);
+   *    }
+   *  }
+   * \endcode
+   * Please take in accound that returned reference become invalid as soon as this mdtModbusHwNodeIdList object is destroyed.
+   */
+  const std::vector<mdtModbusHwNodeId> & internalVector() const
+  {
+    return pvIdList;
   }
 
   /*! \brief Check if given ID exists in list
@@ -278,9 +327,9 @@ class mdtModbusHwNodeIdList
 
  private:
 
-  std::vector<int> pvIdList;
-  int pvBitsCount;  // Number of digital inputs that represents the hardware node ID.
-  int pvFirstBit;   // First digital input that represents the hardware node ID (is the LSB).
+  std::vector<mdtModbusHwNodeId> pvIdList;
+//   int pvBitsCount;  // Number of digital inputs that represents the hardware node ID.
+//   int pvFirstBit;   // First digital input that represents the hardware node ID (is the LSB).
 };
 
 #endif // #ifndef MDT_MODBUS_HW_NODE_ID_H

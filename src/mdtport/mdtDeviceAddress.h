@@ -208,6 +208,34 @@ class mdtDeviceAddress
     return pvAddressString;
   }
 
+  /*! \brief Set alias
+   *
+   * Alias is a technical name that can be used, f.ex.
+   *  in a programm that handle many devices.
+   *  This gives a way to find device, say in a device container,
+   *  in less cumbersome ways than having to type the full address string.
+   *
+   * \pre alias must not contain \\t
+   */
+  void setAlias(const QString & alias)
+  {
+    Q_ASSERT(!alias.contains('\t'));
+    pvAlias = alias;
+  }
+
+  /*! \brief Get alias
+   *
+   * If no alias was set, addressString is returned.
+   * \sa setAlias()
+   */
+  QString alias() const
+  {
+    if(pvAlias.isEmpty()){
+      return pvAddressString;
+    }
+    return pvAlias;
+  }
+
   /*! \brief Set USB identification
    */
   void setUsbIdentification(uint16_t idVendor, uint16_t idProduct, const QString & deviceSerialNumber,
@@ -348,6 +376,7 @@ class mdtDeviceAddress
   QString pvAddressString;  // Address string as described in VPP-4.3: revision 5.4 , chapiter 4.3.1
   PortType_t pvPortType;
   DeviceType_t pvDeviceType;
+  QString pvAlias;
   mdtError pvLastError;
   // Port specific members
   union
@@ -427,6 +456,17 @@ class mdtDeviceAddressList
   const std::vector<mdtDeviceAddress> & internalVector() const
   {
     return pvDeviceAddresses;
+  }
+
+  /*! \brief Get device address at index
+   *
+   * \pre index must be in valid range ( [0,size-1] )
+   */
+  mdtDeviceAddress at(int index) const
+  {
+    Q_ASSERT(index >= 0);
+    Q_ASSERT(index < size());
+    return pvDeviceAddresses[index];
   }
 
   /*! \brief Save device address list to a file

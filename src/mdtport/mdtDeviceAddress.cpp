@@ -28,6 +28,7 @@
 void mdtDeviceAddress::clear()
 {
   pvAddressString.clear();
+  pvAlias.clear();
   pvPortType = PortType_t::NONE;
   pvDeviceType = DeviceType_t::NONE;
   pvUsbDeviceAddress.idVendor = 0;
@@ -257,7 +258,7 @@ bool mdtDeviceAddressList::saveToFile(const QString & filePath)
   // Save items
   for(const auto & da : pvDeviceAddresses){
     line = da.addressString().toAscii();
-    /// \todo line += "\t" + alias
+    line += "\t" + da.alias();
     line += "\n";
     if(file.write(line) < 0){
       pvLastError.setError(tr("Cannot save device addresses to file '") + file.fileName() + tr("' (write error occured)"), mdtError::Error);
@@ -297,7 +298,7 @@ bool mdtDeviceAddressList::readFromFile(const QString& filePath)
       }
       // Extract alias
       if(lineData.size() > 1){
-        /// \todo Implement !
+        da.setAlias(lineData.at(1));
       }
     }
     // Add device address

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -243,7 +243,7 @@ class mdtPortManager : public QObject
    * Note that returned list must be freed by user
    *  after usage. (for.ex. with qDeletAll() and QList::clear() ).
    */
-  virtual QList<mdtPortInfo*> scan();
+  ///virtual QList<mdtPortInfo*> scan();
 
   /*! \brief Set port object
    *
@@ -624,6 +624,15 @@ class mdtPortManager : public QObject
    */
   bool isClosed() const;
 
+  /*! \brief Get last error
+   *
+   * \todo Not completly used currently, must be implemented in this class + subclasses .
+   */
+  mdtError lastError() const
+  {
+    return pvLastError;
+  }
+
  public slots:
 
   /*! \brief Cancel read and write operations
@@ -745,6 +754,10 @@ class mdtPortManager : public QObject
   void pmTransactionTimeoutEvent();
 
  protected:
+
+  /*! \brief Last error object
+   */
+  mdtError pvLastError;
 
   /*! \brief Open the port
    *

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -64,10 +64,12 @@ mdtPortManager::~mdtPortManager()
   qDeleteAll(pvTransactionsPool);
 }
 
+/**
 QList<mdtPortInfo*> mdtPortManager::scan()
 {
   return QList<mdtPortInfo*>();
 }
+*/
 
 void mdtPortManager::setPort(mdtAbstractPort *port)
 {

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -174,7 +174,7 @@ void mdtModbusTcpPortSetupDialog::rescan()
   cbDevices->setEnabled(false);
   leHost->setEnabled(false);
   sbPort->setEnabled(false);
-  pvPortInfoCbHandler.fillComboBoxes(pvModbusTcpPortManager->scan(QNetworkInterface::allInterfaces(), 502, 100));
+  ///pvPortInfoCbHandler.fillComboBoxes(pvModbusTcpPortManager->scan(QNetworkInterface::allInterfaces(), 502, 100));
   // Display selected host and port (if one exists)
   displayHostPort(cbDevices->currentIndex());
   pbAbort->setEnabled(false);
@@ -548,17 +548,32 @@ bool mdtModbusTcpPortSetupDialog::getBeckhoffBcInformations()
   return true;
 }
 
+// void mdtModbusTcpPortSetupDialog::getHardwareNodeAddress()
+// {
+//   Q_ASSERT(pvModbusTcpPortManager != 0);
+//   Q_ASSERT(pvModbusTcpPortManager->isReady());
+// 
+//   int nodeId;
+// 
+//   nodeId = pvModbusTcpPortManager->getHardwareNodeAddress(8);
+//   if(nodeId < 0){
+//     lbHwNodeAddress->setText("N/A");
+//     return;
+//   }
+//   lbHwNodeAddress->setText(QString::number(nodeId));
+// }
+
 void mdtModbusTcpPortSetupDialog::getHardwareNodeAddress()
 {
   Q_ASSERT(pvModbusTcpPortManager != 0);
   Q_ASSERT(pvModbusTcpPortManager->isReady());
 
-  int nodeId;
+  mdtModbusHwNodeId nodeId;
 
   nodeId = pvModbusTcpPortManager->getHardwareNodeAddress(8);
-  if(nodeId < 0){
+  if(nodeId.isNull()){
     lbHwNodeAddress->setText("N/A");
     return;
   }
-  lbHwNodeAddress->setText(QString::number(nodeId));
+  lbHwNodeAddress->setText(QString::number(nodeId.id()));
 }

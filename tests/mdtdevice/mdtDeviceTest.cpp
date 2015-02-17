@@ -1688,14 +1688,14 @@ void mdtDeviceTest::modbusTest()
   dw.show();
 
   // Scan looking in chache file first
-  portInfoList = m->scan(m->readScanResult());
+  ///portInfoList = m->scan(m->readScanResult());
   // Try to connect ...
   if(d.connectToDevice(portInfoList, hwNodeId, 4) != mdtAbstractPort::NoError){
     // scan network an try again
     qDeleteAll(portInfoList);
     portInfoList.clear();
     qDebug() << "Scanning network ...";
-    portInfoList = m->scan(QNetworkInterface::allInterfaces(), 502, 100);
+    ///portInfoList = m->scan(QNetworkInterface::allInterfaces(), 502, 100);
     if(d.connectToDevice(portInfoList, hwNodeId, 4) != mdtAbstractPort::NoError){
       QSKIP("Modbus device with requested harware node ID not found", SkipAll);
     }
