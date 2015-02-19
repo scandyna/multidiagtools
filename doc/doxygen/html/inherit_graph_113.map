@@ -1,4 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$class_ui__mdt_tt_test_model_item_dialog.html" title="Ui_mdtTtTestModelItemDialog" alt="" coords="5,5,205,32"/>
-<area shape="rect" id="node2" href="$class_ui_1_1mdt_tt_test_model_item_dialog.html" title="Ui::mdtTtTestModelItemDialog" alt="" coords="254,5,455,32"/>
+<area shape="rect" id="node1" href="$class_q_sort_filter_proxy_model.html" title="QSortFilterProxyModel" alt="" coords="5,5,160,32"/>
+<area shape="rect" id="node2" href="$classmdt_sort_filter_proxy_model.html" title="Provide natural sort for Qt model/view. " alt="" coords="209,5,375,32"/>
 </map>

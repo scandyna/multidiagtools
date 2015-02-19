@@ -1,0 +1,329 @@
+\hypertarget{classmdt_modbus_hw_node_id}{\section{mdt\-Modbus\-Hw\-Node\-Id Class Reference}
+\label{classmdt_modbus_hw_node_id}\index{mdt\-Modbus\-Hw\-Node\-Id@{mdt\-Modbus\-Hw\-Node\-Id}}
+}
+
+
+M\-O\-D\-B\-U\-S hardware node I\-D.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Modbus\-Hw\-Node\-Id.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_modbus_hw_node_id_acfc9339b173c702fb347070032ae59cd}{mdt\-Modbus\-Hw\-Node\-Id} ()
+\begin{DoxyCompactList}\small\item\em Construct a null I\-D. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_modbus_hw_node_id_a01160c5106f36dbbbc61640f032e05dd}{mdt\-Modbus\-Hw\-Node\-Id} (int \hyperlink{classmdt_modbus_hw_node_id_a3daa8c9f772b3e97858d0d82eca31115}{id}, int \hyperlink{classmdt_modbus_hw_node_id_a501337cd2626d50ce214ec52ef07c3ac}{bits\-Count}, int \hyperlink{classmdt_modbus_hw_node_id_aec9a6b9536d1584888f160b118986412}{first\-Bit})
+\begin{DoxyCompactList}\small\item\em Construct a I\-D. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_modbus_hw_node_id_ae34111c2beeb48829c7eee30f5fe845f}{is\-Null} () const 
+\begin{DoxyCompactList}\small\item\em Check if I\-D is null. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_modbus_hw_node_id_a84939120100872ee17b34feec09a61f3}{clear} ()
+\begin{DoxyCompactList}\small\item\em Clear. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_modbus_hw_node_id_ac2ea2c0eb0ee4b0540d61b80511e711f}{set\-Id} (int \hyperlink{classmdt_modbus_hw_node_id_a3daa8c9f772b3e97858d0d82eca31115}{id}, int \hyperlink{classmdt_modbus_hw_node_id_a501337cd2626d50ce214ec52ef07c3ac}{bits\-Count}, int \hyperlink{classmdt_modbus_hw_node_id_aec9a6b9536d1584888f160b118986412}{first\-Bit})
+\begin{DoxyCompactList}\small\item\em Set I\-D. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_modbus_hw_node_id_a3d72171b29dfa90c63012b04f79fa22e}{set\-Id} (const std\-::vector$<$ bool $>$ \&bits, int \hyperlink{classmdt_modbus_hw_node_id_a501337cd2626d50ce214ec52ef07c3ac}{bits\-Count})
+\begin{DoxyCompactList}\small\item\em Set I\-D. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_modbus_hw_node_id_a0960e1459aafaaafcaa2240386874d9d}{set\-Id} (const std\-::vector$<$ bool $>$ \&bits)
+\begin{DoxyCompactList}\small\item\em Set I\-D. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_modbus_hw_node_id_a3daa8c9f772b3e97858d0d82eca31115}{id} () const 
+\begin{DoxyCompactList}\small\item\em Get I\-D. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_modbus_hw_node_id_a501337cd2626d50ce214ec52ef07c3ac}{bits\-Count} () const 
+\begin{DoxyCompactList}\small\item\em Get bits count. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_modbus_hw_node_id_aec9a6b9536d1584888f160b118986412}{first\-Bit} () const 
+\begin{DoxyCompactList}\small\item\em Get first bit position. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_modbus_hw_node_id_a1a9562ed155869af218971d999a99a03}{operator==} (int \hyperlink{classmdt_modbus_hw_node_id_a3daa8c9f772b3e97858d0d82eca31115}{id}) const 
+\begin{DoxyCompactList}\small\item\em I\-D comparison operator. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_modbus_hw_node_id_a2d37e737409bafa3a0eac89f3fbc6139}{operator!=} (int \hyperlink{classmdt_modbus_hw_node_id_a3daa8c9f772b3e97858d0d82eca31115}{id}) const 
+\begin{DoxyCompactList}\small\item\em I\-D comparison operator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+M\-O\-D\-B\-U\-S hardware node I\-D. 
+
+The concept of node I\-D is specific to Multi\-Diag\-Tools. It was introduced to solve the problem of network I\-P configurations.
+
+Take a example\-: We have a application that needs several M\-O\-D\-B\-U\-S/\-T\-C\-P nodes. Each node has several I/\-O's. Say that digital output 1 of node 1 is used to activate a lamp and output 1 of node 2 must activate heating register. We could choose to have static I\-P addresses in the network and configure the application to activate the correct output of correct node. But, this can be a problem when a node must be replaced. More cumbersome case is a modular application that could manage several nodes, and change his I/\-Os layout in a dynamic way regarding a context.
+
+A easy way to solve such problems is to have a D\-H\-C\-P server in the network and all nodes configured as D\-H\-C\-P clients (static addressing can still be a solution, but we not depend on it). Then, for a given application, we can fix a number of digital inputs to play the role of node I\-D. Then, instead of using I\-P address as identification (as in the example), we use node I\-D. 
+
+Definition at line 49 of file mdt\-Modbus\-Hw\-Node\-Id.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_modbus_hw_node_id_acfc9339b173c702fb347070032ae59cd}{\index{mdt\-Modbus\-Hw\-Node\-Id@{mdt\-Modbus\-Hw\-Node\-Id}!mdt\-Modbus\-Hw\-Node\-Id@{mdt\-Modbus\-Hw\-Node\-Id}}
+\index{mdt\-Modbus\-Hw\-Node\-Id@{mdt\-Modbus\-Hw\-Node\-Id}!mdtModbusHwNodeId@{mdt\-Modbus\-Hw\-Node\-Id}}
+\subsubsection[{mdt\-Modbus\-Hw\-Node\-Id}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Modbus\-Hw\-Node\-Id\-::mdt\-Modbus\-Hw\-Node\-Id (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_modbus_hw_node_id_acfc9339b173c702fb347070032ae59cd}
+
+
+Construct a null I\-D. 
+
+
+
+Definition at line 55 of file mdt\-Modbus\-Hw\-Node\-Id.\-h.
+
+\hypertarget{classmdt_modbus_hw_node_id_a01160c5106f36dbbbc61640f032e05dd}{\index{mdt\-Modbus\-Hw\-Node\-Id@{mdt\-Modbus\-Hw\-Node\-Id}!mdt\-Modbus\-Hw\-Node\-Id@{mdt\-Modbus\-Hw\-Node\-Id}}
+\index{mdt\-Modbus\-Hw\-Node\-Id@{mdt\-Modbus\-Hw\-Node\-Id}!mdtModbusHwNodeId@{mdt\-Modbus\-Hw\-Node\-Id}}
+\subsubsection[{mdt\-Modbus\-Hw\-Node\-Id}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Modbus\-Hw\-Node\-Id\-::mdt\-Modbus\-Hw\-Node\-Id (
+\begin{DoxyParamCaption}
+\item[{int}]{id, }
+\item[{int}]{bits\-Count, }
+\item[{int}]{first\-Bit}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_modbus_hw_node_id_a01160c5106f36dbbbc61640f032e05dd}
+
+
+Construct a I\-D. 
+
+
+
+Definition at line 64 of file mdt\-Modbus\-Hw\-Node\-Id.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_modbus_hw_node_id_a501337cd2626d50ce214ec52ef07c3ac}{\index{mdt\-Modbus\-Hw\-Node\-Id@{mdt\-Modbus\-Hw\-Node\-Id}!bits\-Count@{bits\-Count}}
+\index{bits\-Count@{bits\-Count}!mdtModbusHwNodeId@{mdt\-Modbus\-Hw\-Node\-Id}}
+\subsubsection[{bits\-Count}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Modbus\-Hw\-Node\-Id\-::bits\-Count (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_modbus_hw_node_id_a501337cd2626d50ce214ec52ef07c3ac}
+
+
+Get bits count. 
+
+
+
+Definition at line 162 of file mdt\-Modbus\-Hw\-Node\-Id.\-h.
+
+
+
+Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::scan(), set\-Id(), and mdt\-Device\-Address\-::set\-Modbus\-Tcp\-Identification().
+
+\hypertarget{classmdt_modbus_hw_node_id_a84939120100872ee17b34feec09a61f3}{\index{mdt\-Modbus\-Hw\-Node\-Id@{mdt\-Modbus\-Hw\-Node\-Id}!clear@{clear}}
+\index{clear@{clear}!mdtModbusHwNodeId@{mdt\-Modbus\-Hw\-Node\-Id}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Modbus\-Hw\-Node\-Id\-::clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_modbus_hw_node_id_a84939120100872ee17b34feec09a61f3}
+
+
+Clear. 
+
+
+
+Definition at line 84 of file mdt\-Modbus\-Hw\-Node\-Id.\-h.
+
+
+
+Referenced by mdt\-Device\-Address\-::clear().
+
+\hypertarget{classmdt_modbus_hw_node_id_aec9a6b9536d1584888f160b118986412}{\index{mdt\-Modbus\-Hw\-Node\-Id@{mdt\-Modbus\-Hw\-Node\-Id}!first\-Bit@{first\-Bit}}
+\index{first\-Bit@{first\-Bit}!mdtModbusHwNodeId@{mdt\-Modbus\-Hw\-Node\-Id}}
+\subsubsection[{first\-Bit}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Modbus\-Hw\-Node\-Id\-::first\-Bit (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_modbus_hw_node_id_aec9a6b9536d1584888f160b118986412}
+
+
+Get first bit position. 
+
+
+
+Definition at line 169 of file mdt\-Modbus\-Hw\-Node\-Id.\-h.
+
+
+
+Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::scan(), set\-Id(), and mdt\-Device\-Address\-::set\-Modbus\-Tcp\-Identification().
+
+\hypertarget{classmdt_modbus_hw_node_id_a3daa8c9f772b3e97858d0d82eca31115}{\index{mdt\-Modbus\-Hw\-Node\-Id@{mdt\-Modbus\-Hw\-Node\-Id}!id@{id}}
+\index{id@{id}!mdtModbusHwNodeId@{mdt\-Modbus\-Hw\-Node\-Id}}
+\subsubsection[{id}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Modbus\-Hw\-Node\-Id\-::id (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_modbus_hw_node_id_a3daa8c9f772b3e97858d0d82eca31115}
+
+
+Get I\-D. 
+
+
+
+Definition at line 155 of file mdt\-Modbus\-Hw\-Node\-Id.\-h.
+
+
+
+Referenced by mdt\-Modbus\-Hw\-Node\-Id\-List\-::contains(), mdt\-Modbus\-Tcp\-Port\-Manager\-::find\-Matching\-To\-Host\-Modebus\-Hw\-Node\-Id(), mdt\-Modbus\-Tcp\-Port\-Manager\-::scan(), set\-Id(), and mdt\-Device\-Address\-::set\-Modbus\-Tcp\-Identification().
+
+\hypertarget{classmdt_modbus_hw_node_id_ae34111c2beeb48829c7eee30f5fe845f}{\index{mdt\-Modbus\-Hw\-Node\-Id@{mdt\-Modbus\-Hw\-Node\-Id}!is\-Null@{is\-Null}}
+\index{is\-Null@{is\-Null}!mdtModbusHwNodeId@{mdt\-Modbus\-Hw\-Node\-Id}}
+\subsubsection[{is\-Null}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Modbus\-Hw\-Node\-Id\-::is\-Null (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_modbus_hw_node_id_ae34111c2beeb48829c7eee30f5fe845f}
+
+
+Check if I\-D is null. 
+
+
+
+Definition at line 77 of file mdt\-Modbus\-Hw\-Node\-Id.\-h.
+
+
+
+Referenced by mdt\-Modbus\-Hw\-Node\-Id\-List\-::append(), mdt\-Modbus\-Hw\-Node\-Id\-List\-::contains(), mdt\-Modbus\-Tcp\-Port\-Manager\-::find\-Matching\-To\-Host\-Modebus\-Hw\-Node\-Id(), operator==(), and mdt\-Modbus\-Tcp\-Port\-Manager\-::scan().
+
+\hypertarget{classmdt_modbus_hw_node_id_a2d37e737409bafa3a0eac89f3fbc6139}{\index{mdt\-Modbus\-Hw\-Node\-Id@{mdt\-Modbus\-Hw\-Node\-Id}!operator!=@{operator!=}}
+\index{operator!=@{operator!=}!mdtModbusHwNodeId@{mdt\-Modbus\-Hw\-Node\-Id}}
+\subsubsection[{operator!=}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Modbus\-Hw\-Node\-Id\-::operator!= (
+\begin{DoxyParamCaption}
+\item[{int}]{id}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_modbus_hw_node_id_a2d37e737409bafa3a0eac89f3fbc6139}
+
+
+I\-D comparison operator. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_modbus_hw_node_id_a1a9562ed155869af218971d999a99a03}{operator==()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 193 of file mdt\-Modbus\-Hw\-Node\-Id.\-h.
+
+
+
+References operator==().
+
+\hypertarget{classmdt_modbus_hw_node_id_a1a9562ed155869af218971d999a99a03}{\index{mdt\-Modbus\-Hw\-Node\-Id@{mdt\-Modbus\-Hw\-Node\-Id}!operator==@{operator==}}
+\index{operator==@{operator==}!mdtModbusHwNodeId@{mdt\-Modbus\-Hw\-Node\-Id}}
+\subsubsection[{operator==}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Modbus\-Hw\-Node\-Id\-::operator== (
+\begin{DoxyParamCaption}
+\item[{int}]{id}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_modbus_hw_node_id_a1a9562ed155869af218971d999a99a03}
+
+
+I\-D comparison operator. 
+
+Note\-: will only compare id, other attributes like bist\-Count and first\-Bit are ignored.
+
+If current node I\-D is null, this function returns allways false. 
+
+Definition at line 181 of file mdt\-Modbus\-Hw\-Node\-Id.\-h.
+
+
+
+References is\-Null().
+
+
+
+Referenced by operator!=().
+
+\hypertarget{classmdt_modbus_hw_node_id_ac2ea2c0eb0ee4b0540d61b80511e711f}{\index{mdt\-Modbus\-Hw\-Node\-Id@{mdt\-Modbus\-Hw\-Node\-Id}!set\-Id@{set\-Id}}
+\index{set\-Id@{set\-Id}!mdtModbusHwNodeId@{mdt\-Modbus\-Hw\-Node\-Id}}
+\subsubsection[{set\-Id}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Modbus\-Hw\-Node\-Id\-::set\-Id (
+\begin{DoxyParamCaption}
+\item[{int}]{id, }
+\item[{int}]{bits\-Count, }
+\item[{int}]{first\-Bit}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_modbus_hw_node_id_ac2ea2c0eb0ee4b0540d61b80511e711f}
+
+
+Set I\-D. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The hardware node I\-D \\
+\hline
+{\em bits\-Count} & Number of bits that represent the I\-D \\
+\hline
+{\em first\-Bit} & First bit, i.\-e. first digital input, that represent the node I\-D, starting from offset 0 (is the L\-S\-B) \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 97 of file mdt\-Modbus\-Hw\-Node\-Id.\-h.
+
+
+
+References bits\-Count(), first\-Bit(), and id().
+
+
+
+Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Hardware\-Node\-Address(), and set\-Id().
+
+\hypertarget{classmdt_modbus_hw_node_id_a3d72171b29dfa90c63012b04f79fa22e}{\index{mdt\-Modbus\-Hw\-Node\-Id@{mdt\-Modbus\-Hw\-Node\-Id}!set\-Id@{set\-Id}}
+\index{set\-Id@{set\-Id}!mdtModbusHwNodeId@{mdt\-Modbus\-Hw\-Node\-Id}}
+\subsubsection[{set\-Id}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Modbus\-Hw\-Node\-Id\-::set\-Id (
+\begin{DoxyParamCaption}
+\item[{const std\-::vector$<$ bool $>$ \&}]{bits, }
+\item[{int}]{bits\-Count}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_modbus_hw_node_id_a3d72171b29dfa90c63012b04f79fa22e}
+
+
+Set I\-D. 
+
+Set node I\-D from binary representation given in bits. Will also update bits\-Count attribute, but first\-Bit is keeped unchanged.
+
+
+\begin{DoxyParams}{Parameters}
+{\em bits} & Binary representation of node I\-D The first element in the vector (index 0) is the L\-S\-B \\
+\hline
+{\em bits\-Count} & Limit of element to consider in bits \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+bist\-Count must be $>$= 0 and $<$= bits size. 
+\end{DoxyPrecond}
+
+
+Definition at line 120 of file mdt\-Modbus\-Hw\-Node\-Id.\-h.
+
+
+
+References bits\-Count(), and id().
+
+\hypertarget{classmdt_modbus_hw_node_id_a0960e1459aafaaafcaa2240386874d9d}{\index{mdt\-Modbus\-Hw\-Node\-Id@{mdt\-Modbus\-Hw\-Node\-Id}!set\-Id@{set\-Id}}
+\index{set\-Id@{set\-Id}!mdtModbusHwNodeId@{mdt\-Modbus\-Hw\-Node\-Id}}
+\subsubsection[{set\-Id}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Modbus\-Hw\-Node\-Id\-::set\-Id (
+\begin{DoxyParamCaption}
+\item[{const std\-::vector$<$ bool $>$ \&}]{bits}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_modbus_hw_node_id_a0960e1459aafaaafcaa2240386874d9d}
+
+
+Set I\-D. 
+
+Set node I\-D from binary representation given in bits. Will also update bits\-Count attribute, but first\-Bit is keeped unchanged.
+
+
+\begin{DoxyParams}{Parameters}
+{\em bits} & Binary representation of node I\-D The first element in the vector (index 0) is the L\-S\-B \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 148 of file mdt\-Modbus\-Hw\-Node\-Id.\-h.
+
+
+
+References set\-Id().
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+src/mdtport/\hyperlink{mdt_modbus_hw_node_id_8h}{mdt\-Modbus\-Hw\-Node\-Id.\-h}\end{DoxyCompactItemize}

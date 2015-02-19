@@ -1,0 +1,139 @@
+\hypertarget{classmdt_cl_application_widgets}{\section{mdt\-Cl\-Application\-Widgets Class Reference}
+\label{classmdt_cl_application_widgets}\index{mdt\-Cl\-Application\-Widgets@{mdt\-Cl\-Application\-Widgets}}
+}
+
+
+Container for cable list editors and views.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Cl\-Application\-Widgets.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Cl\-Application\-Widgets\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=339pt]{classmdt_cl_application_widgets__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Cl\-Application\-Widgets\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmdt_cl_application_widgets__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmdt_cl_application_widgets_a2ae755a028947afe4ebf89a19029baf8}{slot\-Edit\-Units} ()
+\begin{DoxyCompactList}\small\item\em Edit units. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{classmdt_cl_application_widgets_a7abdfc14123af0dab942ee26a58f444d}{edit\-Unit} (const Q\-Variant \&unit\-Id)
+\begin{DoxyCompactList}\small\item\em Edit a specific unit. \end{DoxyCompactList}\item 
+static void \hyperlink{classmdt_cl_application_widgets_ac2aba225fcd32d36520a3d525368be34}{edit\-Units} ()
+\begin{DoxyCompactList}\small\item\em Edit units. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classmdt_cl_application_widgets_a2d812571762985375915ab7af33a4ff5}{mdt\-Sql\-Application\-Widgets$<$ mdt\-Cl\-Application\-Widgets $>$}
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Container for cable list editors and views. 
+
+Using this class helps to create editors and views. Most of time, only one instance of each editore or view is needed, but must be accessible from multiple places in application. 
+
+Definition at line 35 of file mdt\-Cl\-Application\-Widgets.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_cl_application_widgets_a7abdfc14123af0dab942ee26a58f444d}{\index{mdt\-Cl\-Application\-Widgets@{mdt\-Cl\-Application\-Widgets}!edit\-Unit@{edit\-Unit}}
+\index{edit\-Unit@{edit\-Unit}!mdtClApplicationWidgets@{mdt\-Cl\-Application\-Widgets}}
+\subsubsection[{edit\-Unit}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Cl\-Application\-Widgets\-::edit\-Unit (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{unit\-Id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{classmdt_cl_application_widgets_a7abdfc14123af0dab942ee26a58f444d}
+
+
+Edit a specific unit. 
+
+
+
+Definition at line 27 of file mdt\-Cl\-Application\-Widgets.\-cpp.
+
+
+
+References mdt\-Sql\-Application\-Widgets$<$ mdt\-Cl\-Application\-Widgets $>$\-::instance().
+
+\hypertarget{classmdt_cl_application_widgets_ac2aba225fcd32d36520a3d525368be34}{\index{mdt\-Cl\-Application\-Widgets@{mdt\-Cl\-Application\-Widgets}!edit\-Units@{edit\-Units}}
+\index{edit\-Units@{edit\-Units}!mdtClApplicationWidgets@{mdt\-Cl\-Application\-Widgets}}
+\subsubsection[{edit\-Units}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Cl\-Application\-Widgets\-::edit\-Units (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{classmdt_cl_application_widgets_ac2aba225fcd32d36520a3d525368be34}
+
+
+Edit units. 
+
+
+
+Definition at line 48 of file mdt\-Cl\-Application\-Widgets.\-cpp.
+
+
+
+References mdt\-Sql\-Application\-Widgets$<$ mdt\-Cl\-Application\-Widgets $>$\-::instance(), and slot\-Edit\-Units().
+
+\hypertarget{classmdt_cl_application_widgets_a2ae755a028947afe4ebf89a19029baf8}{\index{mdt\-Cl\-Application\-Widgets@{mdt\-Cl\-Application\-Widgets}!slot\-Edit\-Units@{slot\-Edit\-Units}}
+\index{slot\-Edit\-Units@{slot\-Edit\-Units}!mdtClApplicationWidgets@{mdt\-Cl\-Application\-Widgets}}
+\subsubsection[{slot\-Edit\-Units}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Cl\-Application\-Widgets\-::slot\-Edit\-Units (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{classmdt_cl_application_widgets_a2ae755a028947afe4ebf89a19029baf8}
+
+
+Edit units. 
+
+
+
+Definition at line 53 of file mdt\-Cl\-Application\-Widgets.\-cpp.
+
+
+
+References mdt\-Sql\-Application\-Widgets$<$ mdt\-Cl\-Application\-Widgets $>$\-::display\-Error(), and mdt\-Sql\-Application\-Widgets$<$ mdt\-Cl\-Application\-Widgets $>$\-::show\-Sql\-Window().
+
+
+
+Referenced by edit\-Units().
+
+
+
+\subsection{Friends And Related Function Documentation}
+\hypertarget{classmdt_cl_application_widgets_a2d812571762985375915ab7af33a4ff5}{\index{mdt\-Cl\-Application\-Widgets@{mdt\-Cl\-Application\-Widgets}!mdt\-Sql\-Application\-Widgets$<$ mdt\-Cl\-Application\-Widgets $>$@{mdt\-Sql\-Application\-Widgets$<$ mdt\-Cl\-Application\-Widgets $>$}}
+\index{mdt\-Sql\-Application\-Widgets$<$ mdt\-Cl\-Application\-Widgets $>$@{mdt\-Sql\-Application\-Widgets$<$ mdt\-Cl\-Application\-Widgets $>$}!mdtClApplicationWidgets@{mdt\-Cl\-Application\-Widgets}}
+\subsubsection[{mdt\-Sql\-Application\-Widgets$<$ mdt\-Cl\-Application\-Widgets $>$}]{\setlength{\rightskip}{0pt plus 5cm}friend class {\bf mdt\-Sql\-Application\-Widgets}$<$ {\bf mdt\-Cl\-Application\-Widgets} $>$\hspace{0.3cm}{\ttfamily [friend]}}}\label{classmdt_cl_application_widgets_a2d812571762985375915ab7af33a4ff5}
+
+
+Definition at line 40 of file mdt\-Cl\-Application\-Widgets.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdttools/mdttesttool/mdtcablelist/\hyperlink{mdt_cl_application_widgets_8h}{mdt\-Cl\-Application\-Widgets.\-h}\item 
+src/mdttools/mdttesttool/mdtcablelist/\hyperlink{mdt_cl_application_widgets_8cpp}{mdt\-Cl\-Application\-Widgets.\-cpp}\end{DoxyCompactItemize}

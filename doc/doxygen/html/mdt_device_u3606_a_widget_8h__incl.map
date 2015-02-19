@@ -1,13 +1,22 @@
 <map id="src/mdtdevice/linux/mdtDeviceU3606AWidget.h" name="src/mdtdevice/linux/mdtDeviceU3606AWidget.h">
-<area shape="rect" id="node5" href="$ui__mdt_device_u3606_a_widget_8h.html" title="ui_mdtDeviceU3606AWidget.h" alt="" coords="753,96,953,123"/>
-<area shape="rect" id="node16" href="$mdt_device_u3606_a_8h.html" title="mdtDeviceU3606A.h" alt="" coords="1602,96,1744,123"/>
-<area shape="rect" id="node17" href="$mdt_device_scpi_8h.html" title="mdtDeviceScpi.h" alt="" coords="2000,171,2123,197"/>
-<area shape="rect" id="node36" href="$mdt_value_8h.html" title="mdtValue.h" alt="" coords="1548,320,1636,347"/>
-<area shape="rect" id="node18" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="1843,395,1924,421"/>
-<area shape="rect" id="node22" href="$mdt_usbtmc_port_8h.html" title="mdtUsbtmcPort.h" alt="" coords="2223,245,2348,272"/>
-<area shape="rect" id="node35" href="$mdt_codec_scpi_8h.html" title="mdtCodecScpi.h" alt="" coords="1775,245,1893,272"/>
-<area shape="rect" id="node23" href="$mdt_usb_device_descriptor_8h.html" title="mdtUsbDeviceDescriptor.h" alt="" coords="2405,320,2584,347"/>
-<area shape="rect" id="node29" href="$mdt_usb_interface_descriptor_8h.html" title="mdtUsbInterfaceDescriptor.h" alt="" coords="2474,395,2664,421"/>
-<area shape="rect" id="node27" href="$mdt_usb_config_descriptor_8h.html" title="mdtUsbConfigDescriptor.h" alt="" coords="2791,395,2968,421"/>
-<area shape="rect" id="node30" href="$mdt_usb_endpoint_descriptor_8h.html" title="mdtUsbEndpointDescriptor.h" alt="" coords="2435,469,2625,496"/>
+<area shape="rect" id="node5" href="$ui__mdt_device_u3606_a_widget_8h.html" title="ui_mdtDeviceU3606AWidget.h" alt="" coords="2810,96,3011,123"/>
+<area shape="rect" id="node16" href="$mdt_device_u3606_a_8h.html" title="mdtDeviceU3606A.h" alt="" coords="1626,96,1768,123"/>
+<area shape="rect" id="node17" href="$mdt_device_scpi_8h.html" title="mdtDeviceScpi.h" alt="" coords="1259,171,1381,197"/>
+<area shape="rect" id="node40" href="$mdt_value_8h.html" title="mdtValue.h" alt="" coords="1085,395,1173,421"/>
+<area shape="rect" id="node18" href="$mdt_device_8h.html" title="mdtDevice.h" alt="" coords="1652,245,1748,272"/>
+<area shape="rect" id="node33" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="979,395,1060,421"/>
+<area shape="rect" id="node43" href="$mdt_usbtmc_port_8h.html" title="mdtUsbtmcPort.h" alt="" coords="688,245,813,272"/>
+<area shape="rect" id="node51" href="$mdt_codec_scpi_8h.html" title="mdtCodecScpi.h" alt="" coords="1261,320,1379,347"/>
+<area shape="rect" id="node19" href="$mdt_abstract_port_8h.html" title="mdtAbstractPort.h" alt="" coords="2448,320,2576,347"/>
+<area shape="rect" id="node30" href="$mdt_device_info_8h.html" title="mdtDeviceInfo.h" alt="" coords="1345,395,1463,421"/>
+<area shape="rect" id="node32" href="$mdt_device_address_8h.html" title="mdtDeviceAddress.h" alt="" coords="1548,320,1692,347"/>
+<area shape="rect" id="node20" href="$mdt_frame_8h.html" title="mdtFrame.h" alt="" coords="2770,469,2861,496"/>
+<area shape="rect" id="node22" href="$mdt_frame_modbus_tcp_8h.html" title="mdtFrameModbusTcp.h" alt="" coords="3045,395,3204,421"/>
+<area shape="rect" id="node23" href="$mdt_frame_ascii_8h.html" title="mdtFrameAscii.h" alt="" coords="2899,395,3020,421"/>
+<area shape="rect" id="node24" href="$mdt_port_config_8h.html" title="mdtPortConfig.h" alt="" coords="2757,395,2873,421"/>
+<area shape="rect" id="node36" href="$mdt_modbus_hw_node_id_8h.html" title="mdtModbusHwNodeId.h" alt="" coords="1539,395,1701,421"/>
+<area shape="rect" id="node44" href="$mdt_usb_device_descriptor_8h.html" title="mdtUsbDeviceDescriptor.h" alt="" coords="457,320,636,347"/>
+<area shape="rect" id="node48" href="$mdt_usb_interface_descriptor_8h.html" title="mdtUsbInterfaceDescriptor.h" alt="" coords="106,395,296,421"/>
+<area shape="rect" id="node47" href="$mdt_usb_config_descriptor_8h.html" title="mdtUsbConfigDescriptor.h" alt="" coords="321,395,497,421"/>
+<area shape="rect" id="node49" href="$mdt_usb_endpoint_descriptor_8h.html" title="mdtUsbEndpointDescriptor.h" alt="" coords="410,469,600,496"/>
 </map>

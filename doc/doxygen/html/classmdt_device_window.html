@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Properties</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Properties</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(12)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -201,9 +201,9 @@ Protected Slots</h2></td></tr>
 <p>Will use <a class="el" href="classmdt_application.html" title="Main application. ">mdtApplication</a> to get the list of available translations and connect to retranslate slot.</p>
 <dl class="section pre"><dt>Precondition</dt><dd>The loop must be started with a <a class="el" href="classmdt_application.html" title="Main application. ">mdtApplication</a> instance (mdtApp must be valid). </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_window_8cpp_source.html#l00066">66</a> of file <a class="el" href="mdt_device_window_8cpp_source.html">mdtDeviceWindow.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_window_8cpp_source.html#l00068">68</a> of file <a class="el" href="mdt_device_window_8cpp_source.html">mdtDeviceWindow.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_application_8h_source.html#l00036">mdtApp</a>, <a class="el" href="mdt_device_window_8cpp_source.html#l00097">retranslate()</a>, and <a class="el" href="mdt_device_window_8cpp_source.html#l00074">setAvailableTranslations()</a>.</p>
+<p>References <a class="el" href="mdt_application_8h_source.html#l00036">mdtApp</a>, <a class="el" href="mdt_device_window_8cpp_source.html#l00099">retranslate()</a>, and <a class="el" href="mdt_device_window_8cpp_source.html#l00076">setAvailableTranslations()</a>.</p>
 
 </div>
 </div>
@@ -231,9 +231,9 @@ Protected Slots</h2></td></tr>
 <p>Retranslate. </p>
 <p>This slot is called by <a class="el" href="classmdt_application.html" title="Main application. ">mdtApplication</a> when language has changed </p>
 
-<p>Definition at line <a class="el" href="mdt_device_window_8cpp_source.html#l00097">97</a> of file <a class="el" href="mdt_device_window_8cpp_source.html">mdtDeviceWindow.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_window_8cpp_source.html#l00099">99</a> of file <a class="el" href="mdt_device_window_8cpp_source.html">mdtDeviceWindow.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_window_8cpp_source.html#l00066">enableTranslations()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_window_8cpp_source.html#l00068">enableTranslations()</a>.</p>
 
 </div>
 </div>
@@ -263,11 +263,11 @@ Protected Slots</h2></td></tr>
 
 <p>Build the translations menu. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_window_8cpp_source.html#l00074">74</a> of file <a class="el" href="mdt_device_window_8cpp_source.html">mdtDeviceWindow.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_window_8cpp_source.html#l00076">76</a> of file <a class="el" href="mdt_device_window_8cpp_source.html">mdtDeviceWindow.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_application_8h_source.html#l00036">mdtApp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_window_8cpp_source.html#l00066">enableTranslations()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_window_8cpp_source.html#l00068">enableTranslations()</a>.</p>
 
 </div>
 </div>
@@ -291,8 +291,6 @@ Protected Slots</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_device_window_8cpp_source.html#l00041">41</a> of file <a class="el" href="mdt_device_window_8cpp_source.html">mdtDeviceWindow.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_8cpp_source.html#l00192">mdtDevice::portManager()</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="a63df49a9f0cafc2f72e097aa0cf26baa"></a>
@@ -311,7 +309,7 @@ Protected Slots</h2></td></tr>
 
 <p>Set the I/O's widget. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_window_8cpp_source.html#l00053">53</a> of file <a class="el" href="mdt_device_window_8cpp_source.html">mdtDeviceWindow.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_window_8cpp_source.html#l00055">55</a> of file <a class="el" href="mdt_device_window_8cpp_source.html">mdtDeviceWindow.cpp</a>.</p>
 
 </div>
 </div>
@@ -331,7 +329,7 @@ Protected Slots</h2></td></tr>
 <p>Get status widget. </p>
 <p>Usefull for setup </p>
 
-<p>Definition at line <a class="el" href="mdt_device_window_8cpp_source.html#l00059">59</a> of file <a class="el" href="mdt_device_window_8cpp_source.html">mdtDeviceWindow.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_window_8cpp_source.html#l00061">61</a> of file <a class="el" href="mdt_device_window_8cpp_source.html">mdtDeviceWindow.cpp</a>.</p>
 
 </div>
 </div>
@@ -342,7 +340,7 @@ Protected Slots</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jan 17 2015 16:32:13 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Feb 19 2015 17:07:54 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

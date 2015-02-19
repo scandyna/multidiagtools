@@ -1,5 +1,4 @@
 <map id="mdtTtTestModelItem" name="mdtTtTestModelItem">
-<area shape="rect" id="node2" href="$classmdt_tt_base.html" title="Base class for helper class. " alt="" coords="44,101,129,131"/>
-<area shape="rect" id="node4" href="$class_q_object.html" title="QObject" alt="" coords="5,5,75,35"/>
-<area shape="rect" id="node6" href="$classmdt_error.html" title="mdtError contains informations about a error that occured " alt="" coords="99,5,171,35"/>
+<area shape="rect" id="node2" href="$classmdt_tt_base.html" title="Base class for helper class. " alt="" coords="45,96,131,123"/>
+<area shape="rect" id="node4" href="$classmdt_error.html" title="mdtError contains informations about a error that occured " alt="" coords="100,5,172,32"/>
 </map>

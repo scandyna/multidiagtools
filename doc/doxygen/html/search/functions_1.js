@@ -20,6 +20,7 @@ var searchData=
   ['binterfaceprotocol',['bInterfaceProtocol',['../classmdt_usb_interface_descriptor.html#a3fe6a90f6274c05cdfcdcaead002538b',1,'mdtUsbInterfaceDescriptor']]],
   ['binterfacesubclass',['bInterfaceSubClass',['../classmdt_usb_interface_descriptor.html#afca641ae0c4ec5707f6db30276298ad4',1,'mdtUsbInterfaceDescriptor']]],
   ['binterval',['bInterval',['../classmdt_usb_endpoint_descriptor.html#a75824361730584c2c248b74354b6af52',1,'mdtUsbEndpointDescriptor']]],
+  ['bitscount',['bitsCount',['../classmdt_modbus_hw_node_id.html#a501337cd2626d50ce214ec52ef07c3ac',1,'mdtModbusHwNodeId']]],
   ['bmattributes',['bmAttributes',['../classmdt_usb_config_descriptor.html#adad58801f5079560263ef8536c897c81',1,'mdtUsbConfigDescriptor']]],
   ['bmaxpacketsize0',['bMaxPacketSize0',['../classmdt_usb_device_descriptor.html#a7f17126a202ab728e642ba1c4d65e004',1,'mdtUsbDeviceDescriptor']]],
   ['bmaxpower',['bMaxPower',['../classmdt_usb_config_descriptor.html#a278d10c521bcb37c6c08400e05618955',1,'mdtUsbConfigDescriptor']]],

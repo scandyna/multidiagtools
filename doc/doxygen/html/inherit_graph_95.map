@@ -1,5 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$class_q_application.html" title="QApplication" alt="" coords="5,5,101,32"/>
-<area shape="rect" id="node2" href="$class_qt_single_application.html" title="The QtSingleApplication class provides an API to detect and communicate with running instances of an ..." alt="" coords="149,5,285,32"/>
-<area shape="rect" id="node3" href="$classmdt_application.html" title="Main application. " alt="" coords="334,5,442,32"/>
+<area shape="rect" id="node1" href="$classmdt_usb_transfer.html" title="USB transfer. " alt="" coords="6,56,122,83"/>
+<area shape="rect" id="node2" href="$classmdt_usb_control_transfer.html" title="USB control transfer. " alt="" coords="185,5,343,32"/>
+<area shape="rect" id="node4" href="$classmdt_usbtmc_bulk_transfer.html" title="USBTMC bulk transfer. " alt="" coords="182,56,346,83"/>
+<area shape="rect" id="node5" href="$classmdt_usbtmc_interrupt_transfer.html" title="USBTMC interrupt transfer. " alt="" coords="171,107,357,133"/>
+<area shape="rect" id="node3" href="$classmdt_usbtmc_control_transfer.html" title="USBTMC control transfer. " alt="" coords="406,5,586,32"/>
 </map>

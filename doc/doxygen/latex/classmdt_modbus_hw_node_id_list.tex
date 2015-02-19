@@ -1,0 +1,202 @@
+\hypertarget{classmdt_modbus_hw_node_id_list}{\section{mdt\-Modbus\-Hw\-Node\-Id\-List Class Reference}
+\label{classmdt_modbus_hw_node_id_list}\index{mdt\-Modbus\-Hw\-Node\-Id\-List@{mdt\-Modbus\-Hw\-Node\-Id\-List}}
+}
+
+
+List of \hyperlink{classmdt_modbus_hw_node_id}{mdt\-Modbus\-Hw\-Node\-Id}.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Modbus\-Hw\-Node\-Id.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_modbus_hw_node_id_list_a43e592ef13ae3287ba487ee5542e9d05}{mdt\-Modbus\-Hw\-Node\-Id\-List} ()
+\begin{DoxyCompactList}\small\item\em Construct a empty I\-D list. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_modbus_hw_node_id_list_aa5d2009d92665981914c13d3f6e2a83b}{is\-Empty} () const 
+\begin{DoxyCompactList}\small\item\em Check if I\-D list is empty. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_modbus_hw_node_id_list_a60cee91733c468d12d155b8ad7801123}{size} () const 
+\begin{DoxyCompactList}\small\item\em Get I\-D list size. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_modbus_hw_node_id_list_a10b2de57c349693d6c4a26d816d46e5d}{clear} ()
+\begin{DoxyCompactList}\small\item\em Clear. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_modbus_hw_node_id_list_ac12f3a0dea39df102ef7733083723904}{append} (const \hyperlink{classmdt_modbus_hw_node_id}{mdt\-Modbus\-Hw\-Node\-Id} \&nid)
+\begin{DoxyCompactList}\small\item\em Append a I\-D at the end of the list. \end{DoxyCompactList}\item 
+const std\-::vector\\*
+$<$ \hyperlink{classmdt_modbus_hw_node_id}{mdt\-Modbus\-Hw\-Node\-Id} $>$ \& \hyperlink{classmdt_modbus_hw_node_id_list_a701d52dd057ee2bbc8d90e3273be622c}{internal\-Vector} () const 
+\begin{DoxyCompactList}\small\item\em Access internal vector. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_modbus_hw_node_id_list_a66cd715b758e4b84e3d3c788a90cdf31}{contains} (int id)
+\begin{DoxyCompactList}\small\item\em Check if given I\-D exists in list. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_modbus_hw_node_id_list_a7766ea718f4f716a38cd5853906ecb78}{contains} (const \hyperlink{classmdt_modbus_hw_node_id}{mdt\-Modbus\-Hw\-Node\-Id} \&mid)
+\begin{DoxyCompactList}\small\item\em Check if given I\-D exists in list. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+List of \hyperlink{classmdt_modbus_hw_node_id}{mdt\-Modbus\-Hw\-Node\-Id}. 
+
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000026}{Todo}]Vu que l'on peut avoir plusieurs noeuds different, bits\-Count et first\-Bit peuvent être différents. -\/$>$ Adapter \end{DoxyRefDesc}
+
+
+Definition at line 211 of file mdt\-Modbus\-Hw\-Node\-Id.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_modbus_hw_node_id_list_a43e592ef13ae3287ba487ee5542e9d05}{\index{mdt\-Modbus\-Hw\-Node\-Id\-List@{mdt\-Modbus\-Hw\-Node\-Id\-List}!mdt\-Modbus\-Hw\-Node\-Id\-List@{mdt\-Modbus\-Hw\-Node\-Id\-List}}
+\index{mdt\-Modbus\-Hw\-Node\-Id\-List@{mdt\-Modbus\-Hw\-Node\-Id\-List}!mdtModbusHwNodeIdList@{mdt\-Modbus\-Hw\-Node\-Id\-List}}
+\subsubsection[{mdt\-Modbus\-Hw\-Node\-Id\-List}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Modbus\-Hw\-Node\-Id\-List\-::mdt\-Modbus\-Hw\-Node\-Id\-List (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_modbus_hw_node_id_list_a43e592ef13ae3287ba487ee5542e9d05}
+
+
+Construct a empty I\-D list. 
+
+
+
+Definition at line 217 of file mdt\-Modbus\-Hw\-Node\-Id.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_modbus_hw_node_id_list_ac12f3a0dea39df102ef7733083723904}{\index{mdt\-Modbus\-Hw\-Node\-Id\-List@{mdt\-Modbus\-Hw\-Node\-Id\-List}!append@{append}}
+\index{append@{append}!mdtModbusHwNodeIdList@{mdt\-Modbus\-Hw\-Node\-Id\-List}}
+\subsubsection[{append}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Modbus\-Hw\-Node\-Id\-List\-::append (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Modbus\-Hw\-Node\-Id} \&}]{nid}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_modbus_hw_node_id_list_ac12f3a0dea39df102ef7733083723904}
+
+
+Append a I\-D at the end of the list. 
+
+
+
+Definition at line 242 of file mdt\-Modbus\-Hw\-Node\-Id.\-h.
+
+
+
+References mdt\-Modbus\-Hw\-Node\-Id\-::is\-Null().
+
+\hypertarget{classmdt_modbus_hw_node_id_list_a10b2de57c349693d6c4a26d816d46e5d}{\index{mdt\-Modbus\-Hw\-Node\-Id\-List@{mdt\-Modbus\-Hw\-Node\-Id\-List}!clear@{clear}}
+\index{clear@{clear}!mdtModbusHwNodeIdList@{mdt\-Modbus\-Hw\-Node\-Id\-List}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Modbus\-Hw\-Node\-Id\-List\-::clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_modbus_hw_node_id_list_a10b2de57c349693d6c4a26d816d46e5d}
+
+
+Clear. 
+
+
+
+Definition at line 235 of file mdt\-Modbus\-Hw\-Node\-Id.\-h.
+
+\hypertarget{classmdt_modbus_hw_node_id_list_a66cd715b758e4b84e3d3c788a90cdf31}{\index{mdt\-Modbus\-Hw\-Node\-Id\-List@{mdt\-Modbus\-Hw\-Node\-Id\-List}!contains@{contains}}
+\index{contains@{contains}!mdtModbusHwNodeIdList@{mdt\-Modbus\-Hw\-Node\-Id\-List}}
+\subsubsection[{contains}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Modbus\-Hw\-Node\-Id\-List\-::contains (
+\begin{DoxyParamCaption}
+\item[{int}]{id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_modbus_hw_node_id_list_a66cd715b758e4b84e3d3c788a90cdf31}
+
+
+Check if given I\-D exists in list. 
+
+
+
+Definition at line 269 of file mdt\-Modbus\-Hw\-Node\-Id.\-h.
+
+
+
+Referenced by contains().
+
+\hypertarget{classmdt_modbus_hw_node_id_list_a7766ea718f4f716a38cd5853906ecb78}{\index{mdt\-Modbus\-Hw\-Node\-Id\-List@{mdt\-Modbus\-Hw\-Node\-Id\-List}!contains@{contains}}
+\index{contains@{contains}!mdtModbusHwNodeIdList@{mdt\-Modbus\-Hw\-Node\-Id\-List}}
+\subsubsection[{contains}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Modbus\-Hw\-Node\-Id\-List\-::contains (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Modbus\-Hw\-Node\-Id} \&}]{mid}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_modbus_hw_node_id_list_a7766ea718f4f716a38cd5853906ecb78}
+
+
+Check if given I\-D exists in list. 
+
+
+
+Definition at line 276 of file mdt\-Modbus\-Hw\-Node\-Id.\-h.
+
+
+
+References contains(), mdt\-Modbus\-Hw\-Node\-Id\-::id(), and mdt\-Modbus\-Hw\-Node\-Id\-::is\-Null().
+
+\hypertarget{classmdt_modbus_hw_node_id_list_a701d52dd057ee2bbc8d90e3273be622c}{\index{mdt\-Modbus\-Hw\-Node\-Id\-List@{mdt\-Modbus\-Hw\-Node\-Id\-List}!internal\-Vector@{internal\-Vector}}
+\index{internal\-Vector@{internal\-Vector}!mdtModbusHwNodeIdList@{mdt\-Modbus\-Hw\-Node\-Id\-List}}
+\subsubsection[{internal\-Vector}]{\setlength{\rightskip}{0pt plus 5cm}const std\-::vector$<${\bf mdt\-Modbus\-Hw\-Node\-Id}$>$\& mdt\-Modbus\-Hw\-Node\-Id\-List\-::internal\-Vector (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_modbus_hw_node_id_list_a701d52dd057ee2bbc8d90e3273be622c}
+
+
+Access internal vector. 
+
+Can be used, for example, to iterate all I\-Ds\-: 
+\begin{DoxyCode}
+\textcolor{keywordflow}{for}(\textcolor{keyword}{const} \textcolor{keyword}{auto} & nid : list.internalVector() )\{
+  \textcolor{keywordflow}{if}(nid.id() == 24)\{
+    doSomeStuff(nid);
+  \}
+\}
+\end{DoxyCode}
+ Please take in accound that returned reference become invalid as soon as this \hyperlink{classmdt_modbus_hw_node_id_list}{mdt\-Modbus\-Hw\-Node\-Id\-List} object is destroyed. 
+
+Definition at line 262 of file mdt\-Modbus\-Hw\-Node\-Id.\-h.
+
+
+
+Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::find\-Matching\-To\-Host\-Modebus\-Hw\-Node\-Id().
+
+\hypertarget{classmdt_modbus_hw_node_id_list_aa5d2009d92665981914c13d3f6e2a83b}{\index{mdt\-Modbus\-Hw\-Node\-Id\-List@{mdt\-Modbus\-Hw\-Node\-Id\-List}!is\-Empty@{is\-Empty}}
+\index{is\-Empty@{is\-Empty}!mdtModbusHwNodeIdList@{mdt\-Modbus\-Hw\-Node\-Id\-List}}
+\subsubsection[{is\-Empty}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Modbus\-Hw\-Node\-Id\-List\-::is\-Empty (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_modbus_hw_node_id_list_aa5d2009d92665981914c13d3f6e2a83b}
+
+
+Check if I\-D list is empty. 
+
+
+
+Definition at line 221 of file mdt\-Modbus\-Hw\-Node\-Id.\-h.
+
+
+
+Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::scan().
+
+\hypertarget{classmdt_modbus_hw_node_id_list_a60cee91733c468d12d155b8ad7801123}{\index{mdt\-Modbus\-Hw\-Node\-Id\-List@{mdt\-Modbus\-Hw\-Node\-Id\-List}!size@{size}}
+\index{size@{size}!mdtModbusHwNodeIdList@{mdt\-Modbus\-Hw\-Node\-Id\-List}}
+\subsubsection[{size}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Modbus\-Hw\-Node\-Id\-List\-::size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_modbus_hw_node_id_list_a60cee91733c468d12d155b8ad7801123}
+
+
+Get I\-D list size. 
+
+
+
+Definition at line 228 of file mdt\-Modbus\-Hw\-Node\-Id.\-h.
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+src/mdtport/\hyperlink{mdt_modbus_hw_node_id_8h}{mdt\-Modbus\-Hw\-Node\-Id.\-h}\end{DoxyCompactItemize}

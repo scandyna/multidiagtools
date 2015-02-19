@@ -1,5 +1,8 @@
 <map id="mdtDevice" name="mdtDevice">
-<area shape="rect" id="node3" href="$classmdt_device_modbus.html" title="Represent a MODBUS device. " alt="" coords="21,155,151,181"/>
-<area shape="rect" id="node2" href="$class_q_object.html" title="QObject" alt="" coords="51,5,121,32"/>
-<area shape="rect" id="node4" href="$classmdt_device_modbus_wago.html" title="mdtDeviceModbusWago" alt="" coords="4,229,168,256"/>
+<area shape="rect" id="node3" href="$classmdt_device_scpi.html" title="Base class for SCPI based instruments. " alt="" coords="190,155,300,181"/>
+<area shape="rect" id="node6" href="$classmdt_multi_io_device.html" title="Base class for a device that contains multiple I/Os. " alt="" coords="331,155,455,181"/>
+<area shape="rect" id="node4" href="$classmdt_device_d_s_o1000_a.html" title="mdtDeviceDSO1000A" alt="" coords="5,229,155,256"/>
+<area shape="rect" id="node5" href="$classmdt_device_u3606_a.html" title="Representation of a Agilent U3606A. " alt="" coords="179,229,311,256"/>
+<area shape="rect" id="node7" href="$classmdt_device_modbus.html" title="Represent a MODBUS device. " alt="" coords="336,229,465,256"/>
+<area shape="rect" id="node8" href="$classmdt_device_modbus_wago.html" title="mdtDeviceModbusWago" alt="" coords="319,304,483,331"/>
 </map>

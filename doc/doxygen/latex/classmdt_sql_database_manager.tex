@@ -12,7 +12,8 @@ Helper class to create and open (connect to) database.
 
 
 
-Inheritance diagram for mdt\-Sql\-Database\-Manager\-:\nopagebreak
+Inheritance diagram for mdt\-Sql\-Database\-Manager\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -21,7 +22,8 @@ Inheritance diagram for mdt\-Sql\-Database\-Manager\-:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdt\-Sql\-Database\-Manager\-:\nopagebreak
+Collaboration diagram for mdt\-Sql\-Database\-Manager\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -40,13 +42,13 @@ enum \hyperlink{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classmdt_sql_database_manager_a8a9b487981f99ddc5d476776e5e0bb06}{mdt\-Sql\-Database\-Manager} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent=0)
+\hyperlink{classmdt_sql_database_manager_a8a9b487981f99ddc5d476776e5e0bb06}{mdt\-Sql\-Database\-Manager} (Q\-Object $\ast$parent=0)
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_sql_database_manager_affd97fb8d28d07617e860d748ff57c5f}{$\sim$mdt\-Sql\-Database\-Manager} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_sql_database_manager_a6c6f2b1a7754193e3a9b80069c8df747}{set\-Database} (Q\-Sql\-Database db)
+void \hyperlink{classmdt_sql_database_manager_a6c6f2b1a7754193e3a9b80069c8df747}{set\-Database} (\hyperlink{class_q_sql_database}{Q\-Sql\-Database} db)
 \begin{DoxyCompactList}\small\item\em Set a allready existing database. \end{DoxyCompactList}\item 
-Q\-Sql\-Database \hyperlink{classmdt_sql_database_manager_a54755f29b7cd87746e34a107e60241c5}{database} ()
+\hyperlink{class_q_sql_database}{Q\-Sql\-Database} \hyperlink{classmdt_sql_database_manager_a54755f29b7cd87746e34a107e60241c5}{database} ()
 \begin{DoxyCompactList}\small\item\em Get current database object. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_sql_database_manager_a40638df04f9e6eb3c5cee399a5543ffd}{set\-Foreign\-Keys\-Enabled} (bool enable)
 \begin{DoxyCompactList}\small\item\em Enable/disable foreing keys constraint. \end{DoxyCompactList}\item 
@@ -109,7 +111,7 @@ Definition at line 49 of file mdt\-Sql\-Database\-Manager.\-h.
 \index{mdt\-Sql\-Database\-Manager@{mdt\-Sql\-Database\-Manager}!mdtSqlDatabaseManager@{mdt\-Sql\-Database\-Manager}}
 \subsubsection[{mdt\-Sql\-Database\-Manager}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Sql\-Database\-Manager\-::mdt\-Sql\-Database\-Manager (
 \begin{DoxyParamCaption}
-\item[{{\bf Q\-Object} $\ast$}]{parent = {\ttfamily 0}}
+\item[{Q\-Object $\ast$}]{parent = {\ttfamily 0}}
 \end{DoxyParamCaption}
 )}}\label{classmdt_sql_database_manager_a8a9b487981f99ddc5d476776e5e0bb06}
 
@@ -228,7 +230,7 @@ Referenced by mdt\-Data\-Table\-Manager\-::copy\-Table(), and mdt\-Data\-Table\-
 
 \hypertarget{classmdt_sql_database_manager_a54755f29b7cd87746e34a107e60241c5}{\index{mdt\-Sql\-Database\-Manager@{mdt\-Sql\-Database\-Manager}!database@{database}}
 \index{database@{database}!mdtSqlDatabaseManager@{mdt\-Sql\-Database\-Manager}}
-\subsubsection[{database}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Sql\-Database mdt\-Sql\-Database\-Manager\-::database (
+\subsubsection[{database}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Q\-Sql\-Database} mdt\-Sql\-Database\-Manager\-::database (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
@@ -312,7 +314,7 @@ References choose\-Database\-Sqlite(), mdt\-Error\-::clear(), and open\-Database
 \index{set\-Database@{set\-Database}!mdtSqlDatabaseManager@{mdt\-Sql\-Database\-Manager}}
 \subsubsection[{set\-Database}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Sql\-Database\-Manager\-::set\-Database (
 \begin{DoxyParamCaption}
-\item[{Q\-Sql\-Database}]{db}
+\item[{{\bf Q\-Sql\-Database}}]{db}
 \end{DoxyParamCaption}
 )}}\label{classmdt_sql_database_manager_a6c6f2b1a7754193e3a9b80069c8df747}
 

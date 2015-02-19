@@ -1,11 +1,20 @@
 <map id="src/mdtdevice/mdtDeviceU3606A.h" name="src/mdtdevice/mdtDeviceU3606A.h">
-<area shape="rect" id="node2" href="$mdt_device_scpi_8h.html" title="mdtDeviceScpi.h" alt="" coords="1013,80,1136,107"/>
-<area shape="rect" id="node22" href="$mdt_value_8h.html" title="mdtValue.h" alt="" coords="1456,229,1544,256"/>
-<area shape="rect" id="node3" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="1093,304,1175,331"/>
-<area shape="rect" id="node8" href="$mdt_usbtmc_port_8h.html" title="mdtUsbtmcPort.h" alt="" coords="756,155,881,181"/>
-<area shape="rect" id="node21" href="$mdt_codec_scpi_8h.html" title="mdtCodecScpi.h" alt="" coords="1263,155,1381,181"/>
-<area shape="rect" id="node9" href="$mdt_usb_device_descriptor_8h.html" title="mdtUsbDeviceDescriptor.h" alt="" coords="662,229,841,256"/>
-<area shape="rect" id="node15" href="$mdt_usb_interface_descriptor_8h.html" title="mdtUsbInterfaceDescriptor.h" alt="" coords="297,304,487,331"/>
-<area shape="rect" id="node13" href="$mdt_usb_config_descriptor_8h.html" title="mdtUsbConfigDescriptor.h" alt="" coords="511,304,688,331"/>
-<area shape="rect" id="node16" href="$mdt_usb_endpoint_descriptor_8h.html" title="mdtUsbEndpointDescriptor.h" alt="" coords="531,379,721,405"/>
+<area shape="rect" id="node2" href="$mdt_device_scpi_8h.html" title="mdtDeviceScpi.h" alt="" coords="1925,80,2047,107"/>
+<area shape="rect" id="node27" href="$mdt_value_8h.html" title="mdtValue.h" alt="" coords="1222,304,1310,331"/>
+<area shape="rect" id="node3" href="$mdt_device_8h.html" title="mdtDevice.h" alt="" coords="1646,155,1742,181"/>
+<area shape="rect" id="node19" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="2025,304,2106,331"/>
+<area shape="rect" id="node30" href="$mdt_usbtmc_port_8h.html" title="mdtUsbtmcPort.h" alt="" coords="2149,155,2274,181"/>
+<area shape="rect" id="node38" href="$mdt_codec_scpi_8h.html" title="mdtCodecScpi.h" alt="" coords="1125,229,1243,256"/>
+<area shape="rect" id="node4" href="$mdt_abstract_port_8h.html" title="mdtAbstractPort.h" alt="" coords="587,229,715,256"/>
+<area shape="rect" id="node16" href="$mdt_device_info_8h.html" title="mdtDeviceInfo.h" alt="" coords="1481,304,1599,331"/>
+<area shape="rect" id="node18" href="$mdt_device_address_8h.html" title="mdtDeviceAddress.h" alt="" coords="1679,229,1823,256"/>
+<area shape="rect" id="node5" href="$mdt_frame_8h.html" title="mdtFrame.h" alt="" coords="211,379,302,405"/>
+<area shape="rect" id="node7" href="$mdt_frame_modbus_tcp_8h.html" title="mdtFrameModbusTcp.h" alt="" coords="177,304,335,331"/>
+<area shape="rect" id="node8" href="$mdt_frame_ascii_8h.html" title="mdtFrameAscii.h" alt="" coords="31,304,151,331"/>
+<area shape="rect" id="node9" href="$mdt_port_config_8h.html" title="mdtPortConfig.h" alt="" coords="361,304,477,331"/>
+<area shape="rect" id="node22" href="$mdt_modbus_hw_node_id_8h.html" title="mdtModbusHwNodeId.h" alt="" coords="1726,304,1889,331"/>
+<area shape="rect" id="node31" href="$mdt_usb_device_descriptor_8h.html" title="mdtUsbDeviceDescriptor.h" alt="" coords="2377,229,2557,256"/>
+<area shape="rect" id="node35" href="$mdt_usb_interface_descriptor_8h.html" title="mdtUsbInterfaceDescriptor.h" alt="" coords="2923,304,3113,331"/>
+<area shape="rect" id="node34" href="$mdt_usb_config_descriptor_8h.html" title="mdtUsbConfigDescriptor.h" alt="" coords="2517,304,2694,331"/>
+<area shape="rect" id="node36" href="$mdt_usb_endpoint_descriptor_8h.html" title="mdtUsbEndpointDescriptor.h" alt="" coords="2416,379,2606,405"/>
 </map>

@@ -12,7 +12,8 @@ Helper class for Article and related tables edition.
 
 
 
-Inheritance diagram for mdt\-Cl\-Article\-:\nopagebreak
+Inheritance diagram for mdt\-Cl\-Article\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -21,17 +22,18 @@ Inheritance diagram for mdt\-Cl\-Article\-:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdt\-Cl\-Article\-:\nopagebreak
+Collaboration diagram for mdt\-Cl\-Article\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=216pt]{classmdt_cl_article__coll__graph}
+\includegraphics[width=218pt]{classmdt_cl_article__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classmdt_cl_article_a73d0867f06c579293bbfcbfc3f305616}{mdt\-Cl\-Article} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent, Q\-Sql\-Database db)
+\hyperlink{classmdt_cl_article_a73d0867f06c579293bbfcbfc3f305616}{mdt\-Cl\-Article} (Q\-Object $\ast$parent, \hyperlink{class_q_sql_database}{Q\-Sql\-Database} db)
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_cl_article_ac51272d232283ed61551e965abf3e112}{$\sim$mdt\-Cl\-Article} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
@@ -87,12 +89,22 @@ bool \hyperlink{classmdt_cl_article_aa438fa2c759a091341eea76ffda6eef3}{add\-Link
 \begin{DoxyCompactList}\small\item\em Add a record in Link table. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_cl_article_a0ed8ad64cafb5b69c1f83875818136e5}{add\-Cable\-Link} (const Q\-Variant \&article\-Connection\-Start\-Id, const Q\-Variant \&article\-Connection\-End\-Id, const Q\-Variant \&identification, const Q\-Variant \&R)
 \begin{DoxyCompactList}\small\item\em Add a cable link. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_cl_article_af432e7fd5ef37b47ae3915a84f154ceb}{add\-Internal\-Link} (const Q\-Variant \&article\-Connection\-Start\-Id, const Q\-Variant \&article\-Connection\-End\-Id, const Q\-Variant \&identification, const Q\-Variant \&R)
+\begin{DoxyCompactList}\small\item\em Add a internal link. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_cl_article_a3c627720a87e6003bb78c0727ec2ba64}{edit\-Link} (const Q\-Variant \&article\-Connection\-Start\-Id, const Q\-Variant \&article\-Connection\-End\-Id, const \hyperlink{classmdt_sql_record}{mdt\-Sql\-Record} \&data)
 \begin{DoxyCompactList}\small\item\em Add a link of type resistor. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_cl_article_af83dc77889605f6d7b94685ead4aa0f4}{related\-Links\-Count} (const Q\-Variant \&article\-Connection\-Start\-Id, const Q\-Variant \&article\-Connection\-End\-Id)
+\begin{DoxyCompactList}\small\item\em Get number of links in Link\-\_\-tbl that are based on given article link. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_cl_article_a4e3200a4d584fde5754a4c23921f0d57}{has\-Related\-Links} (const Q\-Variant \&article\-Connection\-Start\-Id, const Q\-Variant \&article\-Connection\-End\-Id, bool \&ok)
+\begin{DoxyCompactList}\small\item\em Check if given article link has related links in Link\-\_\-tbl. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_cl_article_a036a1369622d950f41451324123c5537}{update\-Related\-Links} (const Q\-Variant \&article\-Connection\-Start\-Id, const Q\-Variant \&article\-Connection\-End\-Id, const Q\-String\-List \&article\-Link\-Fields)
+\begin{DoxyCompactList}\small\item\em Update links in Link\-\_\-tbl that are based in given article link. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_cl_article_a3fcb1469dd2761656dde65d54de4540e}{update\-Related\-Links} (const Q\-Variant \&article\-Connection\-Start\-Id, const Q\-Variant \&article\-Connection\-End\-Id, const Q\-String \&article\-Link\-Field)
+\begin{DoxyCompactList}\small\item\em Update links in Link\-\_\-tbl that are based in given article link. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_cl_article_a4e26282c7605f756519050fee3858134}{remove\-Link} (const Q\-Variant \&article\-Connection\-Start\-Id, const Q\-Variant \&article\-Connection\-End\-Id)
-\begin{DoxyCompactList}\small\item\em Remove a signle link. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Remove a signle link from Article\-Link\-\_\-tbl. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_cl_article_a137a8b82910fd8aa31973653535d4b1d}{remove\-Links} (const \hyperlink{classmdt_sql_table_selection}{mdt\-Sql\-Table\-Selection} \&s)
-\begin{DoxyCompactList}\small\item\em Remove each unit link that is contained in selection. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Remove each link that is contained in selection from Article\-Link\-\_\-tbl. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Additional Inherited Members}
 
 
@@ -108,8 +120,8 @@ Definition at line 40 of file mdt\-Cl\-Article.\-h.
 \index{mdt\-Cl\-Article@{mdt\-Cl\-Article}!mdtClArticle@{mdt\-Cl\-Article}}
 \subsubsection[{mdt\-Cl\-Article}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Cl\-Article\-::mdt\-Cl\-Article (
 \begin{DoxyParamCaption}
-\item[{{\bf Q\-Object} $\ast$}]{parent, }
-\item[{Q\-Sql\-Database}]{db}
+\item[{Q\-Object $\ast$}]{parent, }
+\item[{{\bf Q\-Sql\-Database}}]{db}
 \end{DoxyParamCaption}
 )}}\label{classmdt_cl_article_a73d0867f06c579293bbfcbfc3f305616}
 
@@ -154,7 +166,7 @@ Add a cable link.
 
 
 
-Definition at line 671 of file mdt\-Cl\-Article.\-cpp.
+Definition at line 653 of file mdt\-Cl\-Article.\-cpp.
 
 
 
@@ -249,11 +261,33 @@ If given article connector contains connections, they will be added.
 
 Note\-: in connection data (contained in data), Article\-\_\-\-Id\-\_\-\-F\-K and Article\-Connector\-\_\-\-Id\-\_\-\-F\-K are not relevant, because they are token from data directly. 
 
-Definition at line 527 of file mdt\-Cl\-Article.\-cpp.
+Definition at line 533 of file mdt\-Cl\-Article.\-cpp.
 
 
 
 References mdt\-Tt\-Base\-::add\-Record(), mdt\-Tt\-Base\-::add\-Record\-List(), mdt\-Tt\-Base\-::begin\-Transaction(), mdt\-Error\-::commit(), mdt\-Tt\-Base\-::commit\-Transaction(), mdt\-Cl\-Article\-Connector\-Data\-::connection\-Data\-List(), mdt\-Tt\-Base\-::database(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Tt\-Base\-::rollback\-Transaction(), mdt\-Error\-::set\-Error(), mdt\-Error\-::set\-System\-Error(), mdt\-Sql\-Record\-::set\-Value(), and mdt\-Sql\-Record\-::value().
+
+\hypertarget{classmdt_cl_article_af432e7fd5ef37b47ae3915a84f154ceb}{\index{mdt\-Cl\-Article@{mdt\-Cl\-Article}!add\-Internal\-Link@{add\-Internal\-Link}}
+\index{add\-Internal\-Link@{add\-Internal\-Link}!mdtClArticle@{mdt\-Cl\-Article}}
+\subsubsection[{add\-Internal\-Link}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Article\-::add\-Internal\-Link (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{article\-Connection\-Start\-Id, }
+\item[{const Q\-Variant \&}]{article\-Connection\-End\-Id, }
+\item[{const Q\-Variant \&}]{identification, }
+\item[{const Q\-Variant \&}]{R}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_article_af432e7fd5ef37b47ae3915a84f154ceb}
+
+
+Add a internal link. 
+
+
+
+Definition at line 671 of file mdt\-Cl\-Article.\-cpp.
+
+
+
+References mdt\-Sql\-Record\-::add\-All\-Fields(), mdt\-Tt\-Base\-::add\-Record(), mdt\-Tt\-Base\-::database(), mdt\-Sql\-Record\-::last\-Error(), mdt\-Tt\-Base\-::pv\-Last\-Error, and mdt\-Sql\-Record\-::set\-Value().
 
 \hypertarget{classmdt_cl_article_aa438fa2c759a091341eea76ffda6eef3}{\index{mdt\-Cl\-Article@{mdt\-Cl\-Article}!add\-Link@{add\-Link}}
 \index{add\-Link@{add\-Link}!mdtClArticle@{mdt\-Cl\-Article}}
@@ -271,7 +305,7 @@ True on success, false else. To get reason of failure, use \hyperlink{classmdt_t
 \end{DoxyReturn}
 
 
-Definition at line 666 of file mdt\-Cl\-Article.\-cpp.
+Definition at line 648 of file mdt\-Cl\-Article.\-cpp.
 
 
 
@@ -337,7 +371,7 @@ Edit connector name.
 
 
 
-Definition at line 584 of file mdt\-Cl\-Article.\-cpp.
+Definition at line 590 of file mdt\-Cl\-Article.\-cpp.
 
 
 
@@ -366,7 +400,7 @@ Add a link of type bridge
 \begin{DoxyReturn}{Returns}
 True on success, false else. To get reason of failure, use \hyperlink{classmdt_tt_base_a92adaae105cef63b18ace2e320776ca9}{last\-Error()} .
 \end{DoxyReturn}
-Edit a record in Link table
+Edit a record in Article\-Link\-\_\-tbl
 
 \begin{DoxyReturn}{Returns}
 True on success, false else. To get reason of failure, use \hyperlink{classmdt_tt_base_a92adaae105cef63b18ace2e320776ca9}{last\-Error()} . 
@@ -377,7 +411,7 @@ Definition at line 706 of file mdt\-Cl\-Article.\-cpp.
 
 
 
-References mdt\-Sql\-Record\-::add\-Field(), mdt\-Tt\-Base\-::database(), mdt\-Sql\-Record\-::last\-Error(), mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Sql\-Record\-::set\-Value(), and mdt\-Tt\-Base\-::update\-Record().
+References mdt\-Tt\-Base\-::update\-Record().
 
 \hypertarget{classmdt_cl_article_a2c591965b47436ddf946c94bb7017dee}{\index{mdt\-Cl\-Article@{mdt\-Cl\-Article}!get\-Connection\-Data@{get\-Connection\-Data}}
 \index{get\-Connection\-Data@{get\-Connection\-Data}!mdtClArticle@{mdt\-Cl\-Article}}
@@ -485,6 +519,50 @@ References mdt\-Error\-::commit(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-
 
 
 Referenced by mdt\-Cl\-Unit\-::add\-Article\-Connector\-Data(), and edit\-Connector\-Name().
+
+\hypertarget{classmdt_cl_article_a4e3200a4d584fde5754a4c23921f0d57}{\index{mdt\-Cl\-Article@{mdt\-Cl\-Article}!has\-Related\-Links@{has\-Related\-Links}}
+\index{has\-Related\-Links@{has\-Related\-Links}!mdtClArticle@{mdt\-Cl\-Article}}
+\subsubsection[{has\-Related\-Links}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Article\-::has\-Related\-Links (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{article\-Connection\-Start\-Id, }
+\item[{const Q\-Variant \&}]{article\-Connection\-End\-Id, }
+\item[{bool \&}]{ok}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_cl_article_a4e3200a4d584fde5754a4c23921f0d57}
+
+
+Check if given article link has related links in Link\-\_\-tbl. 
+
+
+
+Definition at line 262 of file mdt\-Cl\-Article.\-h.
+
+
+
+References related\-Links\-Count().
+
+\hypertarget{classmdt_cl_article_af83dc77889605f6d7b94685ead4aa0f4}{\index{mdt\-Cl\-Article@{mdt\-Cl\-Article}!related\-Links\-Count@{related\-Links\-Count}}
+\index{related\-Links\-Count@{related\-Links\-Count}!mdtClArticle@{mdt\-Cl\-Article}}
+\subsubsection[{related\-Links\-Count}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Cl\-Article\-::related\-Links\-Count (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{article\-Connection\-Start\-Id, }
+\item[{const Q\-Variant \&}]{article\-Connection\-End\-Id}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_article_af83dc77889605f6d7b94685ead4aa0f4}
+
+
+Get number of links in Link\-\_\-tbl that are based on given article link. 
+
+\begin{DoxyReturn}{Returns}
+Number of related links in Link\-\_\-tbl or value $<$ 0 on error 
+\end{DoxyReturn}
+
+
+Definition at line 726 of file mdt\-Cl\-Article.\-cpp.
+
+
+
+Referenced by has\-Related\-Links().
 
 \hypertarget{classmdt_cl_article_a05d365a0488e479a15ff158353a41aab}{\index{mdt\-Cl\-Article@{mdt\-Cl\-Article}!remove\-Component@{remove\-Component}}
 \index{remove\-Component@{remove\-Component}!mdtClArticle@{mdt\-Cl\-Article}}
@@ -615,7 +693,7 @@ Remove each connection that is contained in selection.
 This is usefull used together with \hyperlink{classmdt_sql_table_widget}{mdt\-Sql\-Table\-Widget} .
 
 \begin{DoxyReturn}{Returns}
-True on success, false else. To get reason of failure, use \hyperlink{classmdt_tt_base_a92adaae105cef63b18ace2e320776ca9}{last\-Error()} .bool remove\-Connections(const Q\-Model\-Index\-List \& index\-List\-Of\-Selected\-Rows);
+True on success, false else. To get reason of failure, use \hyperlink{classmdt_tt_base_a92adaae105cef63b18ace2e320776ca9}{last\-Error()} .
 \end{DoxyReturn}
 bool mdt\-Cl\-Article\-::remove\-Connections(const Q\-Model\-Index\-List \& index\-List\-Of\-Selected\-Rows) \{ int i; Q\-List$<$\-Q\-Variant$>$ id\-List;
 
@@ -642,7 +720,7 @@ Remove a connector and all its contacts.
 
 
 
-Definition at line 598 of file mdt\-Cl\-Article.\-cpp.
+Definition at line 604 of file mdt\-Cl\-Article.\-cpp.
 
 
 
@@ -661,7 +739,7 @@ Remove connections for a given article connector.
 
 If single transaction is set, a transaction is used . 
 
-Definition at line 485 of file mdt\-Cl\-Article.\-cpp.
+Definition at line 491 of file mdt\-Cl\-Article.\-cpp.
 
 
 
@@ -683,13 +761,11 @@ Will also remove related connections.
 This is usefull used together with \hyperlink{classmdt_sql_table_widget}{mdt\-Sql\-Table\-Widget} .
 
 \begin{DoxyReturn}{Returns}
-True on success, false else. To get reason of failure, use \hyperlink{classmdt_tt_base_a92adaae105cef63b18ace2e320776ca9}{last\-Error()} .bool remove\-Connectors(const Q\-Model\-Index\-List \& index\-List\-Of\-Selected\-Rows);
+True on success, false else. To get reason of failure, use \hyperlink{classmdt_tt_base_a92adaae105cef63b18ace2e320776ca9}{last\-Error()} . 
 \end{DoxyReturn}
-bool mdt\-Cl\-Article\-::remove\-Connectors(const Q\-Model\-Index\-List \& index\-List\-Of\-Selected\-Rows) \{ if(!begin\-Transaction())\{ return false; \} Remove connections if(!remove\-Data(\char`\"{}\-Article\-Connection\-\_\-tbl\char`\"{}, \char`\"{}\-Article\-Connector\-\_\-\-Id\-\_\-\-F\-K\char`\"{}, index\-List\-Of\-Selected\-Rows))\{ \hyperlink{classmdt_tt_base_a7c736836397a8d65a28992e1a39c1be5}{rollback\-Transaction()}; return false; \} Remove connectors if(!remove\-Data(\char`\"{}\-Article\-Connector\-\_\-tbl\char`\"{}, \char`\"{}\-Id\-\_\-\-P\-K\char`\"{}, index\-List\-Of\-Selected\-Rows))\{ \hyperlink{classmdt_tt_base_a7c736836397a8d65a28992e1a39c1be5}{rollback\-Transaction()}; return false; \} if(!commit\-Transaction())\{ return false; \}
 
-return true; \} 
 
-Definition at line 644 of file mdt\-Cl\-Article.\-cpp.
+Definition at line 626 of file mdt\-Cl\-Article.\-cpp.
 
 
 
@@ -708,7 +784,7 @@ Remove connections for a given list article connectors.
 
 
 
-Definition at line 494 of file mdt\-Cl\-Article.\-cpp.
+Definition at line 500 of file mdt\-Cl\-Article.\-cpp.
 
 
 
@@ -728,14 +804,14 @@ Referenced by remove\-Connector\-Connections().
 )}}\label{classmdt_cl_article_a4e26282c7605f756519050fee3858134}
 
 
-Remove a signle link. 
+Remove a signle link from Article\-Link\-\_\-tbl. 
 
 \begin{DoxyReturn}{Returns}
 True on success, false else. To get reason of failure, use \hyperlink{classmdt_tt_base_a92adaae105cef63b18ace2e320776ca9}{last\-Error()} . 
 \end{DoxyReturn}
 
 
-Definition at line 725 of file mdt\-Cl\-Article.\-cpp.
+Definition at line 815 of file mdt\-Cl\-Article.\-cpp.
 
 
 
@@ -754,17 +830,11 @@ Referenced by remove\-Links().
 )}}\label{classmdt_cl_article_a137a8b82910fd8aa31973653535d4b1d}
 
 
-Remove each unit link that is contained in selection. 
+Remove each link that is contained in selection from Article\-Link\-\_\-tbl. 
 
-bool remove\-Links(const Q\-List$<$\-Q\-Model\-Index\-List$>$ \&index\-List\-Of\-Selected\-Rows\-By\-Rows);
 
-bool mdt\-Cl\-Article\-::remove\-Links(const Q\-List$<$\-Q\-Model\-Index\-List$>$ \&index\-List\-Of\-Selected\-Rows\-By\-Rows) \{ int row; Q\-Model\-Index\-List indexes;
 
-if(!begin\-Transaction())\{ return false; \} for(row = 0; row $<$ index\-List\-Of\-Selected\-Rows\-By\-Rows.\-size(); ++row)\{ indexes = index\-List\-Of\-Selected\-Rows\-By\-Rows.\-at(row); Q\-\_\-\-A\-S\-S\-E\-R\-T(indexes.\-size() == 2); if(!remove\-Link(indexes.\-at(0).data(), indexes.\-at(1).data()))\{ \hyperlink{classmdt_tt_base_a7c736836397a8d65a28992e1a39c1be5}{rollback\-Transaction()}; return false; \} \}
-
-return \hyperlink{classmdt_tt_base_a32b6cbd2d6c9a055cbc97136e9958d81}{commit\-Transaction()}; \} 
-
-Definition at line 752 of file mdt\-Cl\-Article.\-cpp.
+Definition at line 820 of file mdt\-Cl\-Article.\-cpp.
 
 
 
@@ -784,6 +854,80 @@ Get S\-Q\-L statement for article component selection.
 
 
 Definition at line 39 of file mdt\-Cl\-Article.\-cpp.
+
+\hypertarget{classmdt_cl_article_a036a1369622d950f41451324123c5537}{\index{mdt\-Cl\-Article@{mdt\-Cl\-Article}!update\-Related\-Links@{update\-Related\-Links}}
+\index{update\-Related\-Links@{update\-Related\-Links}!mdtClArticle@{mdt\-Cl\-Article}}
+\subsubsection[{update\-Related\-Links}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Article\-::update\-Related\-Links (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{article\-Connection\-Start\-Id, }
+\item[{const Q\-Variant \&}]{article\-Connection\-End\-Id, }
+\item[{const Q\-String\-List \&}]{article\-Link\-Fields}
+\end{DoxyParamCaption}
+)}}\label{classmdt_cl_article_a036a1369622d950f41451324123c5537}
+
+
+Update links in Link\-\_\-tbl that are based in given article link. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em article\-Connection\-Start\-Id} & Article link start connection I\-D \\
+\hline
+{\em article\-Connection\-End\-Id} & Article link end connection I\-D \\
+\hline
+{\em article\-Link\-Fields} & Article link fields for witch update must be done in Link\-\_\-tbl Article\-Connection\-Start\-\_\-\-Id\-\_\-\-F\-K and Article\-Connection\-End\-\_\-\-Id\-\_\-\-F\-K are not supported. For other fields, mapping is done internally between Article\-Link\-\_\-tbl to Link\-\_\-tbl. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+article\-Connection\-Start\-Id and article\-Connection\-End\-Id must not be null 
+
+article\-Link\-Fields must not contain Article\-Connection\-Start\-\_\-\-Id\-\_\-\-F\-K or Article\-Connection\-End\-\_\-\-Id\-\_\-\-F\-K 
+\end{DoxyPrecond}
+
+
+Definition at line 742 of file mdt\-Cl\-Article.\-cpp.
+
+
+
+References mdt\-Sql\-Record\-::add\-Field(), mdt\-Tt\-Base\-::begin\-Transaction(), mdt\-Tt\-Base\-::commit\-Transaction(), mdt\-Tt\-Base\-::database(), mdt\-Sql\-Record\-::last\-Error(), mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Tt\-Base\-::rollback\-Transaction(), mdt\-Sql\-Record\-::set\-Value(), and mdt\-Tt\-Base\-::update\-Record().
+
+
+
+Referenced by update\-Related\-Links().
+
+\hypertarget{classmdt_cl_article_a3fcb1469dd2761656dde65d54de4540e}{\index{mdt\-Cl\-Article@{mdt\-Cl\-Article}!update\-Related\-Links@{update\-Related\-Links}}
+\index{update\-Related\-Links@{update\-Related\-Links}!mdtClArticle@{mdt\-Cl\-Article}}
+\subsubsection[{update\-Related\-Links}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Article\-::update\-Related\-Links (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{article\-Connection\-Start\-Id, }
+\item[{const Q\-Variant \&}]{article\-Connection\-End\-Id, }
+\item[{const Q\-String \&}]{article\-Link\-Field}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_cl_article_a3fcb1469dd2761656dde65d54de4540e}
+
+
+Update links in Link\-\_\-tbl that are based in given article link. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em article\-Connection\-Start\-Id} & Article link start connection I\-D \\
+\hline
+{\em article\-Connection\-End\-Id} & Article link end connection I\-D \\
+\hline
+{\em article\-Link\-Field} & Article link field for witch update must be done in Link\-\_\-tbl Article\-Connection\-Start\-\_\-\-Id\-\_\-\-F\-K and Article\-Connection\-End\-\_\-\-Id\-\_\-\-F\-K are not supported. For other field name, mapping is done internally between Article\-Link\-\_\-tbl to Link\-\_\-tbl. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+article\-Connection\-Start\-Id and article\-Connection\-End\-Id must not be null 
+
+article\-Link\-Field must not be Article\-Connection\-Start\-\_\-\-Id\-\_\-\-F\-K or Article\-Connection\-End\-\_\-\-Id\-\_\-\-F\-K 
+\end{DoxyPrecond}
+
+
+Definition at line 295 of file mdt\-Cl\-Article.\-h.
+
+
+
+References update\-Related\-Links().
 
 \hypertarget{classmdt_cl_article_a3e4e0928978f3b3c0b2b39ba00eb80d1}{\index{mdt\-Cl\-Article@{mdt\-Cl\-Article}!update\-Unit\-Connections@{update\-Unit\-Connections}}
 \index{update\-Unit\-Connections@{update\-Unit\-Connections}!mdtClArticle@{mdt\-Cl\-Article}}
@@ -805,8 +949,6 @@ For each unit connection that is based on given article connection, data will be
 \hline
 {\em connection\-Id} & Article connection I\-D. \\
 \hline
-{\em handle\-Transaction} & If true, a transaction will be used internally. \\
-\hline
 \end{DoxyParams}
 
 
@@ -814,7 +956,7 @@ Definition at line 393 of file mdt\-Cl\-Article.\-cpp.
 
 
 
-References mdt\-Sql\-Record\-::add\-Field(), mdt\-Error\-::commit(), mdt\-Tt\-Base\-::database(), mdt\-Error\-::\-Error, mdt\-Sql\-Record\-::last\-Error(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Error\-::set\-Error(), mdt\-Sql\-Record\-::set\-Value(), and mdt\-Tt\-Base\-::update\-Record().
+References mdt\-Sql\-Record\-::add\-Field(), mdt\-Error\-::commit(), mdt\-Tt\-Base\-::database(), mdt\-Error\-::\-Error, mdt\-Sql\-Record\-::last\-Error(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Tt\-Base\-::pv\-Last\-Error, mdt\-Error\-::set\-Error(), mdt\-Sql\-Record\-::set\-Value(), mdt\-Tt\-Base\-::update\-Record(), and mdt\-Error\-::\-Warning.
 
 
 
@@ -834,7 +976,7 @@ Update unit connections with data from given article connection.
 
 See bool \hyperlink{classmdt_cl_article_a3e4e0928978f3b3c0b2b39ba00eb80d1}{update\-Unit\-Connections(const Q\-String\-List \&, const Q\-Variant \&)}; 
 
-Definition at line 468 of file mdt\-Cl\-Article.\-cpp.
+Definition at line 474 of file mdt\-Cl\-Article.\-cpp.
 
 
 

@@ -5,6 +5,8 @@ var searchData=
   ['tableview',['tableView',['../classmdt_sql_table_widget.html#af40eeb001ec262830daba6b311927ede',1,'mdtSqlTableWidget']]],
   ['take',['take',['../classmdt_buffer.html#a58e0f5bce9faea0f7c7195ff5377458c',1,'mdtBuffer::take()'],['../classmdt_frame.html#a36e4b85a3c671902ac3c8cc318ca726c',1,'mdtFrame::take(char *data, int len)'],['../classmdt_frame.html#ad8b184e6eb07a26fe84deaf233c1aa9b',1,'mdtFrame::take(int len)']]],
   ['takeone',['takeOne',['../classmdt_buffer.html#a690e3f41a62175de48bc73c19f69208d',1,'mdtBuffer']]],
+  ['tcpiphostname',['tcpIpHostName',['../classmdt_device_address.html#ae4a8981a6d6c9a84e0b8db84bf823fd1',1,'mdtDeviceAddress']]],
+  ['tcpipport',['tcpIpPort',['../classmdt_device_address.html#a84932f54a32ff54ca61c698a8e0cf0fc',1,'mdtDeviceAddress']]],
   ['termcharset',['TermCharset',['../classmdt_usbtmc_frame.html#a50a256efd2ac5ec685ee73d6f49aa8d9',1,'mdtUsbtmcFrame']]],
   ['test',['test',['../classmdt_tt_abstract_tester.html#a096db7bd6418195ba2a372ba1bec923f',1,'mdtTtAbstractTester::test()'],['../classmdt_tt_abstract_test_node_calibration_tool.html#ab3db9df8cd757adca0dabf085a31374e',1,'mdtTtAbstractTestNodeCalibrationTool::test()']]],
   ['testcablecnname',['testCableCnName',['../classmdt_tt_logical_test_cable_dut_widget.html#ab50cf8a8d12a1f5c6c64718e0f0dfa01',1,'mdtTtLogicalTestCableDutWidget::testCableCnName()'],['../classmdt_tt_logical_test_cable_ts_widget.html#a932ede3519c782d451a96a52a08e7e62',1,'mdtTtLogicalTestCableTsWidget::testCableCnName()']]],

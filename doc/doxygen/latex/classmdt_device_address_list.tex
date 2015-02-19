@@ -1,0 +1,282 @@
+\hypertarget{classmdt_device_address_list}{\section{mdt\-Device\-Address\-List Class Reference}
+\label{classmdt_device_address_list}\index{mdt\-Device\-Address\-List@{mdt\-Device\-Address\-List}}
+}
+
+
+Device address list.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Device\-Address.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_device_address_list_a6007c5d6c9f0cb69f88bb9c331b2758e}{mdt\-Device\-Address\-List} ()
+\begin{DoxyCompactList}\small\item\em Construct a empty device address list. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_device_address_list_ae9173d74a97c82dc7459de35db7a0e98}{is\-Empty} () const 
+\begin{DoxyCompactList}\small\item\em Check if device addresses list is empty. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_device_address_list_a605e80070800e896a42eb0e12178060e}{size} () const 
+\begin{DoxyCompactList}\small\item\em Get device addresses list size. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_error}{mdt\-Error} \hyperlink{classmdt_device_address_list_ad4a3b71021684a3388a4610dbd71dbe6}{last\-Error} () const 
+\begin{DoxyCompactList}\small\item\em Get last error. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_address_list_a6154d2459206808eababac338b445133}{clear} ()
+\begin{DoxyCompactList}\small\item\em Clear. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_address_list_a1e1dda17f9b235f62921dcf4a90084fe}{append} (const \hyperlink{classmdt_device_address}{mdt\-Device\-Address} \&address)
+\begin{DoxyCompactList}\small\item\em Append a device address at the end of the list. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_address_list_a204ed0d2fbb8812159bfd1cb708f514a}{append} (const \hyperlink{classmdt_device_address_list}{mdt\-Device\-Address\-List} \&address\-List)
+\begin{DoxyCompactList}\small\item\em Append a list of device addresses at the end of the list. \end{DoxyCompactList}\item 
+const std\-::vector\\*
+$<$ \hyperlink{classmdt_device_address}{mdt\-Device\-Address} $>$ \& \hyperlink{classmdt_device_address_list_a70c66586e0595b4ba56b232a5b3d677b}{internal\-Vector} () const 
+\begin{DoxyCompactList}\small\item\em Access internal vector. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_device_address}{mdt\-Device\-Address} \hyperlink{classmdt_device_address_list_a748daf1e8b11a455908389c5788d90b0}{at} (int index) const 
+\begin{DoxyCompactList}\small\item\em Get device address at index. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_device_address_list_a2681c4b394c69da322876ba5ed480309}{save\-To\-File} (const Q\-String \&file\-Path)
+\begin{DoxyCompactList}\small\item\em Save device address list to a file. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_device_address_list_aa074440bf05de9590809581d6500b257}{read\-From\-File} (const Q\-String \&file\-Path)
+\begin{DoxyCompactList}\small\item\em Get device address list from a file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Device address list. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_device_address}{mdt\-Device\-Address} 
+\end{DoxySeeAlso}
+
+
+Definition at line 400 of file mdt\-Device\-Address.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_device_address_list_a6007c5d6c9f0cb69f88bb9c331b2758e}{\index{mdt\-Device\-Address\-List@{mdt\-Device\-Address\-List}!mdt\-Device\-Address\-List@{mdt\-Device\-Address\-List}}
+\index{mdt\-Device\-Address\-List@{mdt\-Device\-Address\-List}!mdtDeviceAddressList@{mdt\-Device\-Address\-List}}
+\subsubsection[{mdt\-Device\-Address\-List}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Device\-Address\-List\-::mdt\-Device\-Address\-List (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_address_list_a6007c5d6c9f0cb69f88bb9c331b2758e}
+
+
+Construct a empty device address list. 
+
+
+
+Definition at line 406 of file mdt\-Device\-Address.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_device_address_list_a1e1dda17f9b235f62921dcf4a90084fe}{\index{mdt\-Device\-Address\-List@{mdt\-Device\-Address\-List}!append@{append}}
+\index{append@{append}!mdtDeviceAddressList@{mdt\-Device\-Address\-List}}
+\subsubsection[{append}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Device\-Address\-List\-::append (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Device\-Address} \&}]{address}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_address_list_a1e1dda17f9b235f62921dcf4a90084fe}
+
+
+Append a device address at the end of the list. 
+
+
+
+Definition at line 440 of file mdt\-Device\-Address.\-h.
+
+
+
+Referenced by read\-From\-File(), and mdt\-Modbus\-Tcp\-Port\-Manager\-::scan().
+
+\hypertarget{classmdt_device_address_list_a204ed0d2fbb8812159bfd1cb708f514a}{\index{mdt\-Device\-Address\-List@{mdt\-Device\-Address\-List}!append@{append}}
+\index{append@{append}!mdtDeviceAddressList@{mdt\-Device\-Address\-List}}
+\subsubsection[{append}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Device\-Address\-List\-::append (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Device\-Address\-List} \&}]{address\-List}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_address_list_a204ed0d2fbb8812159bfd1cb708f514a}
+
+
+Append a list of device addresses at the end of the list. 
+
+
+
+Definition at line 446 of file mdt\-Device\-Address.\-h.
+
+
+
+References internal\-Vector().
+
+\hypertarget{classmdt_device_address_list_a748daf1e8b11a455908389c5788d90b0}{\index{mdt\-Device\-Address\-List@{mdt\-Device\-Address\-List}!at@{at}}
+\index{at@{at}!mdtDeviceAddressList@{mdt\-Device\-Address\-List}}
+\subsubsection[{at}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Device\-Address} mdt\-Device\-Address\-List\-::at (
+\begin{DoxyParamCaption}
+\item[{int}]{index}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_address_list_a748daf1e8b11a455908389c5788d90b0}
+
+
+Get device address at index. 
+
+\begin{DoxyPrecond}{Precondition}
+index must be in valid range ( \mbox{[}0,size-\/1\mbox{]} ) 
+\end{DoxyPrecond}
+
+
+Definition at line 473 of file mdt\-Device\-Address.\-h.
+
+
+
+References size().
+
+\hypertarget{classmdt_device_address_list_a6154d2459206808eababac338b445133}{\index{mdt\-Device\-Address\-List@{mdt\-Device\-Address\-List}!clear@{clear}}
+\index{clear@{clear}!mdtDeviceAddressList@{mdt\-Device\-Address\-List}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Device\-Address\-List\-::clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_address_list_a6154d2459206808eababac338b445133}
+
+
+Clear. 
+
+
+
+Definition at line 433 of file mdt\-Device\-Address.\-h.
+
+\hypertarget{classmdt_device_address_list_a70c66586e0595b4ba56b232a5b3d677b}{\index{mdt\-Device\-Address\-List@{mdt\-Device\-Address\-List}!internal\-Vector@{internal\-Vector}}
+\index{internal\-Vector@{internal\-Vector}!mdtDeviceAddressList@{mdt\-Device\-Address\-List}}
+\subsubsection[{internal\-Vector}]{\setlength{\rightskip}{0pt plus 5cm}const std\-::vector$<${\bf mdt\-Device\-Address}$>$\& mdt\-Device\-Address\-List\-::internal\-Vector (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_address_list_a70c66586e0595b4ba56b232a5b3d677b}
+
+
+Access internal vector. 
+
+Can be used, for example, to iterate all addresses\-: 
+\begin{DoxyCode}
+\textcolor{keywordflow}{for}(\textcolor{keyword}{const} \textcolor{keyword}{auto} & address : list.internalVector() )\{
+  \textcolor{keywordflow}{if}(address.addressString() == \textcolor{stringliteral}{"A::B::C"})\{
+    doSomeStuff(address);
+  \}
+\}
+\end{DoxyCode}
+ Please take in accound that returned reference become invalid as soon as this \hyperlink{classmdt_device_address_list}{mdt\-Device\-Address\-List} object is destroyed. 
+
+Definition at line 464 of file mdt\-Device\-Address.\-h.
+
+
+
+Referenced by append(), and mdt\-Modbus\-Tcp\-Port\-Manager\-::scan().
+
+\hypertarget{classmdt_device_address_list_ae9173d74a97c82dc7459de35db7a0e98}{\index{mdt\-Device\-Address\-List@{mdt\-Device\-Address\-List}!is\-Empty@{is\-Empty}}
+\index{is\-Empty@{is\-Empty}!mdtDeviceAddressList@{mdt\-Device\-Address\-List}}
+\subsubsection[{is\-Empty}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Device\-Address\-List\-::is\-Empty (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_address_list_ae9173d74a97c82dc7459de35db7a0e98}
+
+
+Check if device addresses list is empty. 
+
+
+
+Definition at line 412 of file mdt\-Device\-Address.\-h.
+
+
+
+Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::scan\-From\-Known\-Hosts\-File().
+
+\hypertarget{classmdt_device_address_list_ad4a3b71021684a3388a4610dbd71dbe6}{\index{mdt\-Device\-Address\-List@{mdt\-Device\-Address\-List}!last\-Error@{last\-Error}}
+\index{last\-Error@{last\-Error}!mdtDeviceAddressList@{mdt\-Device\-Address\-List}}
+\subsubsection[{last\-Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Error} mdt\-Device\-Address\-List\-::last\-Error (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_address_list_ad4a3b71021684a3388a4610dbd71dbe6}
+
+
+Get last error. 
+
+
+
+Definition at line 426 of file mdt\-Device\-Address.\-h.
+
+
+
+Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::read\-Device\-Address\-List(), and mdt\-Modbus\-Tcp\-Port\-Manager\-::save\-Device\-Address\-List().
+
+\hypertarget{classmdt_device_address_list_aa074440bf05de9590809581d6500b257}{\index{mdt\-Device\-Address\-List@{mdt\-Device\-Address\-List}!read\-From\-File@{read\-From\-File}}
+\index{read\-From\-File@{read\-From\-File}!mdtDeviceAddressList@{mdt\-Device\-Address\-List}}
+\subsubsection[{read\-From\-File}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Device\-Address\-List\-::read\-From\-File (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{file\-Path}
+\end{DoxyParamCaption}
+)}}\label{classmdt_device_address_list_aa074440bf05de9590809581d6500b257}
+
+
+Get device address list from a file. 
+
+
+
+Definition at line 276 of file mdt\-Device\-Address.\-cpp.
+
+
+
+References append(), mdt\-Error\-::commit(), mdt\-Error\-::\-Error, mdt\-Device\-Address\-::last\-Error(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Device\-Address\-::set\-Address\-String(), mdt\-Device\-Address\-::set\-Alias(), and mdt\-Error\-::set\-Error().
+
+
+
+Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::read\-Device\-Address\-List().
+
+\hypertarget{classmdt_device_address_list_a2681c4b394c69da322876ba5ed480309}{\index{mdt\-Device\-Address\-List@{mdt\-Device\-Address\-List}!save\-To\-File@{save\-To\-File}}
+\index{save\-To\-File@{save\-To\-File}!mdtDeviceAddressList@{mdt\-Device\-Address\-List}}
+\subsubsection[{save\-To\-File}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Device\-Address\-List\-::save\-To\-File (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{file\-Path}
+\end{DoxyParamCaption}
+)}}\label{classmdt_device_address_list_a2681c4b394c69da322876ba5ed480309}
+
+
+Save device address list to a file. 
+
+Note\-: if file given by file\-Path allready exits, it will be overwritten. 
+
+Definition at line 246 of file mdt\-Device\-Address.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, and mdt\-Error\-::set\-Error().
+
+
+
+Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::save\-Device\-Address\-List().
+
+\hypertarget{classmdt_device_address_list_a605e80070800e896a42eb0e12178060e}{\index{mdt\-Device\-Address\-List@{mdt\-Device\-Address\-List}!size@{size}}
+\index{size@{size}!mdtDeviceAddressList@{mdt\-Device\-Address\-List}}
+\subsubsection[{size}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Device\-Address\-List\-::size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_address_list_a605e80070800e896a42eb0e12178060e}
+
+
+Get device addresses list size. 
+
+
+
+Definition at line 419 of file mdt\-Device\-Address.\-h.
+
+
+
+Referenced by at().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdtport/\hyperlink{mdt_device_address_8h}{mdt\-Device\-Address.\-h}\item 
+src/mdtport/\hyperlink{mdt_device_address_8cpp}{mdt\-Device\-Address.\-cpp}\end{DoxyCompactItemize}

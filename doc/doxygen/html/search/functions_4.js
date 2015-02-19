@@ -6,6 +6,10 @@ var searchData=
   ['editionmode',['editionMode',['../classmdt_double_edit.html#a87b7f4d0a2ed14ba6e2d1b28cfbe9090',1,'mdtDoubleEdit']]],
   ['editlink',['editLink',['../classmdt_cl_article.html#a3c627720a87e6003bb78c0727ec2ba64',1,'mdtClArticle::editLink()'],['../classmdt_cl_link.html#a20d0c8888a1674a6977940fcde654f60',1,'mdtClLink::editLink()'],['../classmdt_tt_logical_test_cable.html#ad786c86aa5b62a7f9537f0b4e4cab05c',1,'mdtTtLogicalTestCable::editLink()']]],
   ['editnodeunit',['editNodeUnit',['../classmdt_tt_test_node_unit.html#ab7b6cbf0c8d4fb6d9495216e946571d3',1,'mdtTtTestNodeUnit']]],
+  ['edittestcable',['editTestCable',['../classmdt_tt_application_widgets.html#ada31681ad53cfb7f93bfd9aa53ef30e6',1,'mdtTtApplicationWidgets']]],
+  ['edittestcables',['editTestCables',['../classmdt_tt_application_widgets.html#ab8951db00142173b5124dcfd81804b56',1,'mdtTtApplicationWidgets']]],
+  ['editunit',['editUnit',['../classmdt_cl_application_widgets.html#a7abdfc14123af0dab942ee26a58f444d',1,'mdtClApplicationWidgets']]],
+  ['editunits',['editUnits',['../classmdt_cl_application_widgets.html#ac2aba225fcd32d36520a3d525368be34',1,'mdtClApplicationWidgets']]],
   ['elapsed',['elapsed',['../classmdt_time.html#abbd22fa3b8a33b8c82e0544c20c41af1',1,'mdtTime']]],
   ['elapsedsec',['elapsedSec',['../classmdt_time.html#aabd78c0447eea8a95a9fd88adc4cb6a0',1,'mdtTime']]],
   ['enabledstatechangedforui',['enabledStateChangedForUi',['../classmdt_abstract_io.html#a4406bc16e8decdb506b34d9ca679203e',1,'mdtAbstractIo']]],
@@ -51,6 +55,6 @@ var searchData=
   ['erroroccuredevent',['ErrorOccuredEvent',['../structmdt_usbtmc_transfer_handler_state_machine_1_1_error_occured_event.html#aa13abdce6636b41fc2e6b919331316b7',1,'mdtUsbtmcTransferHandlerStateMachine::ErrorOccuredEvent']]],
   ['essais',['essais',['../classmdt_device_u3606_a_widget.html#aa232cf25e8ac0dee00cde5089af623b0',1,'mdtDeviceU3606AWidget']]],
   ['examine_5fedge',['examine_edge',['../classmdt_cl_path_graph_private_1_1mdt_cl_path_graph_visitor.html#a6eec2e7ae15855b92cfdf967522ae892',1,'mdtClPathGraphPrivate::mdtClPathGraphVisitor']]],
-  ['exporttocsvfile',['exportToCsvFile',['../classmdt_data_table_manager.html#abe733f071ca77579522823598e79dd9a',1,'mdtDataTableManager']]],
+  ['exporttocsvfile',['exportToCsvFile',['../classmdt_data_table_manager.html#abe733f071ca77579522823598e79dd9a',1,'mdtDataTableManager::exportToCsvFile()'],['../classmdt_sql_table_widget.html#af61c395fce028f13f646a1e727b2c46b',1,'mdtSqlTableWidget::exportToCsvFile(const QFileInfo &amp;csvFile, const mdtCsvFileSettings &amp;csvSettings, bool includeHeader)'],['../classmdt_sql_table_widget.html#a6a0b50ff37b2e02bd2c37dd5f070135e',1,'mdtSqlTableWidget::exportToCsvFile(const QFileInfo &amp;csvFile, const mdtCsvFileSettings &amp;csvSettings, bool includeHeader, const QStringList &amp;fieldNames)']]],
   ['extra',['extra',['../classmdt_usb_endpoint_descriptor.html#a20e2c22e66be26495142168c390aea34',1,'mdtUsbEndpointDescriptor']]]
 ];

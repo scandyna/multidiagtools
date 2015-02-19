@@ -70,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Properties</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Properties</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(12)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -91,7 +91,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <a href="mdt_device_ios_widget_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/****************************************************************************</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> **</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> ** Copyright (C) 2011-2012 Philippe Steinmann.</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> ** Copyright (C) 2011-2015 Philippe Steinmann.</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> **</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> ** This file is part of multiDiagTools library.</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"> **</span></div>
@@ -121,174 +121,168 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; : <a class="code" href="class_q_widget.html">QWidget</a>(parent)</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;{</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  pvMaxColumns = 10;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  pvIos = 0;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  pvLayout = <span class="keyword">new</span> QGridLayout;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  setLayout(pvLayout);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;}</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="classmdt_device_ios_widget.html#a7071f70c3aba15dbfe0eabec5093a4d5">   39</a></span>&#160;<a class="code" href="classmdt_device_ios_widget.html#a7071f70c3aba15dbfe0eabec5093a4d5">mdtDeviceIosWidget::~mdtDeviceIosWidget</a>()</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;{</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;}</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
-<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="classmdt_device_ios_widget.html#ad388c95b2bdb48bae976c3fbc2512c30">   43</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios_widget.html#ad388c95b2bdb48bae976c3fbc2512c30">mdtDeviceIosWidget::setMaxColumns</a>(<span class="keywordtype">int</span> n)</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;{</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  Q_ASSERT(n &gt; 0);</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  pvMaxColumns = n;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;}</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="classmdt_device_ios_widget.html#a8fc261333ffc1c3b705ae8609f687159">   50</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios_widget.html#a8fc261333ffc1c3b705ae8609f687159">mdtDeviceIosWidget::setDeviceIos</a>(<a class="code" href="classmdt_device_ios.html">mdtDeviceIos</a> *ios)</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;{</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  Q_ASSERT(ios != 0);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  <span class="keywordtype">int</span> row, col;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <a class="code" href="classmdt_analog_in_widget.html">mdtAnalogInWidget</a> *aiw;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <a class="code" href="classmdt_analog_out_widget.html">mdtAnalogOutWidget</a> *aow;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  <a class="code" href="classmdt_digital_in_widget.html">mdtDigitalInWidget</a> *diw;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  <a class="code" href="classmdt_digital_out_widget.html">mdtDigitalOutWidget</a> *dow;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  QList&lt;mdtAnalogIo*&gt; analogInputs;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  QList&lt;mdtAnalogIo*&gt; analogOutputs;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  QList&lt;mdtDigitalIo*&gt; digitalInputs;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  QList&lt;mdtDigitalIo*&gt; digitalOutputs;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  <span class="comment">// Remove existing widgets</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  <a class="code" href="classmdt_device_ios_widget.html#af5183009a724c9e8f17cb428fc98b85f">clearIoWidgets</a>();</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  pvIos = ios;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  row = 0;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  col = 0;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  <span class="comment">// Add analog inputs</span></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  analogInputs = pvIos-&gt;<a class="code" href="classmdt_device_ios.html#aab70f76d2107f0a9324a9b9d4db21532">analogInputs</a>();</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <span class="keywordflow">for</span>(i=0; i&lt;analogInputs.size(); i++){</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keywordflow">if</span>(col &gt;= pvMaxColumns){</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;      row++;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;      col = 0;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    }</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    aiw = <span class="keyword">new</span> <a class="code" href="classmdt_analog_in_widget.html">mdtAnalogInWidget</a>;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    aiw-&gt;<a class="code" href="classmdt_analog_in_widget.html#a20a1943b4e2087f861e319d5bdb7180a">setIo</a>(analogInputs.at(i));</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    pvAnalogInputs.append(aiw);</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    pvLayout-&gt;addWidget(aiw, row, col, 2, 1);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    col++;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  }</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  <span class="comment">// Add analog outputs</span></div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  analogOutputs = pvIos-&gt;<a class="code" href="classmdt_device_ios.html#aa4ddc48f9e3258adc7222ef3481a518e">analogOutputs</a>();</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  <span class="keywordflow">for</span>(i=0; i&lt;analogOutputs.size(); i++){</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordflow">if</span>(col &gt;= pvMaxColumns){</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;      row++;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;      col = 0;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    }</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    aow = <span class="keyword">new</span> <a class="code" href="classmdt_analog_out_widget.html">mdtAnalogOutWidget</a>;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    aow-&gt;<a class="code" href="classmdt_analog_out_widget.html#add6cdaca3fe72fbcd19f02d4818c52cc">setIo</a>(analogOutputs.at(i));</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    pvAnalogOutputs.append(aow);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    pvLayout-&gt;addWidget(aow, row, col, 2, 1);</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    col++;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  }</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  <span class="comment">// Add digital inputs</span></div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  digitalInputs = pvIos-&gt;<a class="code" href="classmdt_device_ios.html#adb2cbcd4adcee1e9434634694ee1ae24">digitalInputs</a>();</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  <span class="keywordflow">for</span>(i=0; i&lt;digitalInputs.size(); i++){</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keywordflow">if</span>(col &gt;= pvMaxColumns){</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;      row++;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;      col = 0;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    }</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    diw = <span class="keyword">new</span> <a class="code" href="classmdt_digital_in_widget.html">mdtDigitalInWidget</a>;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    diw-&gt;<a class="code" href="classmdt_digital_in_widget.html#a74bdc3a0b6443f9b6a601c5b763fe1c2">setIo</a>(digitalInputs.at(i));</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    pvDigitalInputs.append(diw);</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="comment">// If we have minimum a analog I/O, we place 2 digital I/O&#39;s verticaly</span></div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="keywordflow">if</span>((pvAnalogInputs.size()&gt;0)||(pvAnalogOutputs.size()&gt;0)){</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;      <span class="keywordflow">if</span>((pvLayout-&gt;itemAtPosition(row, col))==0){</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        pvLayout-&gt;addWidget(diw, row, col);</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;      }<span class="keywordflow">else</span>{</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        pvLayout-&gt;addWidget(diw, row+1, col);</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        col++;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;      }</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    }<span class="keywordflow">else</span>{</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;      pvLayout-&gt;addWidget(diw, row, col);</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;      col++;</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    }</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  }</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;  <span class="comment">// Add digital outputs</span></div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  digitalOutputs = pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a74418e6be28a2017140f102484f0df31">digitalOutputs</a>();</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;  <span class="keywordflow">for</span>(i=0; i&lt;digitalOutputs.size(); i++){</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    <span class="keywordflow">if</span>(col &gt;= pvMaxColumns){</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;      row++;</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;      col = 0;</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    }</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    dow = <span class="keyword">new</span> <a class="code" href="classmdt_digital_out_widget.html">mdtDigitalOutWidget</a>;</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    dow-&gt;<a class="code" href="classmdt_digital_out_widget.html#a3c6f8df089e3a2527d43d1f0a1fad61c">setIo</a>(digitalOutputs.at(i));</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    pvDigitalOutputs.append(dow);</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="comment">// If we have minimum a analog I/O, we place 2 digital I/O&#39;s verticaly</span></div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <span class="keywordflow">if</span>((pvAnalogInputs.size()&gt;0)||(pvAnalogOutputs.size()&gt;0)){</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;      <span class="keywordflow">if</span>((pvLayout-&gt;itemAtPosition(row, col))==0){</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        pvLayout-&gt;addWidget(dow, row, col);</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;      }<span class="keywordflow">else</span>{</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;        pvLayout-&gt;addWidget(dow, row+1, col);</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;        col++;</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;      }</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    }<span class="keywordflow">else</span>{</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;      pvLayout-&gt;addWidget(dow, row, col);</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;      col++;</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    }</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;  }</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;}</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;</div>
-<div class="line"><a name="l00147"></a><span class="lineno"><a class="line" href="classmdt_device_ios_widget.html#af5183009a724c9e8f17cb428fc98b85f">  147</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios_widget.html#af5183009a724c9e8f17cb428fc98b85f">mdtDeviceIosWidget::clearIoWidgets</a>()</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;{</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;  <span class="keywordtype">int</span> i;</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;  <span class="keywordflow">for</span>(i=0; i&lt;pvAnalogInputs.size(); i++){</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    pvLayout-&gt;removeWidget(pvAnalogInputs.at(i));</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    <span class="keyword">delete</span> pvAnalogInputs.at(i);</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;  }</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;  pvAnalogInputs.clear();</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;  <span class="keywordflow">for</span>(i=0; i&lt;pvAnalogOutputs.size(); i++){</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    pvLayout-&gt;removeWidget(pvAnalogOutputs.at(i));</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    <span class="keyword">delete</span> pvAnalogOutputs.at(i);</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;  }</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;  pvAnalogOutputs.clear();</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;  <span class="keywordflow">for</span>(i=0; i&lt;pvDigitalInputs.size(); i++){</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    pvLayout-&gt;removeWidget(pvDigitalInputs.at(i));</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <span class="keyword">delete</span> pvDigitalInputs.at(i);</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;  }</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;  pvDigitalInputs.clear();</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;  <span class="keywordflow">for</span>(i=0; i&lt;pvDigitalOutputs.size(); i++){</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    pvLayout-&gt;removeWidget(pvDigitalOutputs.at(i));</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    <span class="keyword">delete</span> pvDigitalOutputs.at(i);</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;  }</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;  pvDigitalOutputs.clear();</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;}</div>
-<div class="ttc" id="classmdt_device_ios_html"><div class="ttname"><a href="classmdt_device_ios.html">mdtDeviceIos</a></div><div class="ttdoc">Container for a set of I/O&#39;s. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_device_ios_8h_source.html#l00094">mdtDeviceIos.h:94</a></div></div>
-<div class="ttc" id="classmdt_device_ios_widget_html_af5183009a724c9e8f17cb428fc98b85f"><div class="ttname"><a href="classmdt_device_ios_widget.html#af5183009a724c9e8f17cb428fc98b85f">mdtDeviceIosWidget::clearIoWidgets</a></div><div class="ttdeci">void clearIoWidgets()</div><div class="ttdoc">Remove I/O&#39;s widgets. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_device_ios_widget_8cpp_source.html#l00147">mdtDeviceIosWidget.cpp:147</a></div></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  pvLayout = <span class="keyword">new</span> QGridLayout;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  setLayout(pvLayout);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;}</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="classmdt_device_ios_widget.html#a7071f70c3aba15dbfe0eabec5093a4d5">   38</a></span>&#160;<a class="code" href="classmdt_device_ios_widget.html#a7071f70c3aba15dbfe0eabec5093a4d5">mdtDeviceIosWidget::~mdtDeviceIosWidget</a>()</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;{</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;}</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="classmdt_device_ios_widget.html#ad388c95b2bdb48bae976c3fbc2512c30">   42</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios_widget.html#ad388c95b2bdb48bae976c3fbc2512c30">mdtDeviceIosWidget::setMaxColumns</a>(<span class="keywordtype">int</span> n)</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;{</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  Q_ASSERT(n &gt; 0);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  pvMaxColumns = n;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;}</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="classmdt_device_ios_widget.html#ae3fb7261ae27b0b2c9f2d96d16a818bd">   49</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios_widget.html#ae3fb7261ae27b0b2c9f2d96d16a818bd">mdtDeviceIosWidget::setDeviceIos</a>(std::shared_ptr&lt;mdtDeviceIos&gt; ios)</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;{</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  Q_ASSERT(ios);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="keywordtype">int</span> row, col;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  <a class="code" href="classmdt_analog_in_widget.html">mdtAnalogInWidget</a> *aiw;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <a class="code" href="classmdt_analog_out_widget.html">mdtAnalogOutWidget</a> *aow;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <a class="code" href="classmdt_digital_in_widget.html">mdtDigitalInWidget</a> *diw;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  <a class="code" href="classmdt_digital_out_widget.html">mdtDigitalOutWidget</a> *dow;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  QList&lt;mdtAnalogIo*&gt; analogInputs;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  QList&lt;mdtAnalogIo*&gt; analogOutputs;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  QList&lt;mdtDigitalIo*&gt; digitalInputs;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  QList&lt;mdtDigitalIo*&gt; digitalOutputs;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  <span class="comment">// Remove existing widgets</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  <a class="code" href="classmdt_device_ios_widget.html#af5183009a724c9e8f17cb428fc98b85f">clearIoWidgets</a>();</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  pvIos = ios;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  row = 0;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  col = 0;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  <span class="comment">// Add analog inputs</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  analogInputs = pvIos-&gt;analogInputs();</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  <span class="keywordflow">for</span>(i=0; i&lt;analogInputs.size(); i++){</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordflow">if</span>(col &gt;= pvMaxColumns){</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;      row++;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;      col = 0;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    }</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    aiw = <span class="keyword">new</span> <a class="code" href="classmdt_analog_in_widget.html">mdtAnalogInWidget</a>;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    aiw-&gt;<a class="code" href="classmdt_analog_in_widget.html#a20a1943b4e2087f861e319d5bdb7180a">setIo</a>(analogInputs.at(i));</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    pvAnalogInputs.append(aiw);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    pvLayout-&gt;addWidget(aiw, row, col, 2, 1);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    col++;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  }</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <span class="comment">// Add analog outputs</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  analogOutputs = pvIos-&gt;analogOutputs();</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  <span class="keywordflow">for</span>(i=0; i&lt;analogOutputs.size(); i++){</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keywordflow">if</span>(col &gt;= pvMaxColumns){</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;      row++;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;      col = 0;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    }</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    aow = <span class="keyword">new</span> <a class="code" href="classmdt_analog_out_widget.html">mdtAnalogOutWidget</a>;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    aow-&gt;<a class="code" href="classmdt_analog_out_widget.html#add6cdaca3fe72fbcd19f02d4818c52cc">setIo</a>(analogOutputs.at(i));</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    pvAnalogOutputs.append(aow);</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    pvLayout-&gt;addWidget(aow, row, col, 2, 1);</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    col++;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  }</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <span class="comment">// Add digital inputs</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  digitalInputs = pvIos-&gt;digitalInputs();</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  <span class="keywordflow">for</span>(i=0; i&lt;digitalInputs.size(); i++){</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keywordflow">if</span>(col &gt;= pvMaxColumns){</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;      row++;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;      col = 0;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    }</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    diw = <span class="keyword">new</span> <a class="code" href="classmdt_digital_in_widget.html">mdtDigitalInWidget</a>;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    diw-&gt;<a class="code" href="classmdt_digital_in_widget.html#a74bdc3a0b6443f9b6a601c5b763fe1c2">setIo</a>(digitalInputs.at(i));</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    pvDigitalInputs.append(diw);</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <span class="comment">// If we have minimum a analog I/O, we place 2 digital I/O&#39;s verticaly</span></div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keywordflow">if</span>((pvAnalogInputs.size()&gt;0)||(pvAnalogOutputs.size()&gt;0)){</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;      <span class="keywordflow">if</span>((pvLayout-&gt;itemAtPosition(row, col))==0){</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        pvLayout-&gt;addWidget(diw, row, col);</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;      }<span class="keywordflow">else</span>{</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        pvLayout-&gt;addWidget(diw, row+1, col);</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        col++;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;      }</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    }<span class="keywordflow">else</span>{</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;      pvLayout-&gt;addWidget(diw, row, col);</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;      col++;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    }</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  }</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  <span class="comment">// Add digital outputs</span></div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;  digitalOutputs = pvIos-&gt;digitalOutputs();</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  <span class="keywordflow">for</span>(i=0; i&lt;digitalOutputs.size(); i++){</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    <span class="keywordflow">if</span>(col &gt;= pvMaxColumns){</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;      row++;</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;      col = 0;</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    }</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    dow = <span class="keyword">new</span> <a class="code" href="classmdt_digital_out_widget.html">mdtDigitalOutWidget</a>;</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    dow-&gt;<a class="code" href="classmdt_digital_out_widget.html#a3c6f8df089e3a2527d43d1f0a1fad61c">setIo</a>(digitalOutputs.at(i));</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    pvDigitalOutputs.append(dow);</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    <span class="comment">// If we have minimum a analog I/O, we place 2 digital I/O&#39;s verticaly</span></div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="keywordflow">if</span>((pvAnalogInputs.size()&gt;0)||(pvAnalogOutputs.size()&gt;0)){</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;      <span class="keywordflow">if</span>((pvLayout-&gt;itemAtPosition(row, col))==0){</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        pvLayout-&gt;addWidget(dow, row, col);</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;      }<span class="keywordflow">else</span>{</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        pvLayout-&gt;addWidget(dow, row+1, col);</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;        col++;</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;      }</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    }<span class="keywordflow">else</span>{</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;      pvLayout-&gt;addWidget(dow, row, col);</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;      col++;</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    }</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;  }</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;}</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;</div>
+<div class="line"><a name="l00146"></a><span class="lineno"><a class="line" href="classmdt_device_ios_widget.html#af5183009a724c9e8f17cb428fc98b85f">  146</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classmdt_device_ios_widget.html#af5183009a724c9e8f17cb428fc98b85f">mdtDeviceIosWidget::clearIoWidgets</a>()</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;{</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;  <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;  <span class="keywordflow">for</span>(i=0; i&lt;pvAnalogInputs.size(); i++){</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    pvLayout-&gt;removeWidget(pvAnalogInputs.at(i));</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    <span class="keyword">delete</span> pvAnalogInputs.at(i);</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;  }</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;  pvAnalogInputs.clear();</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;  <span class="keywordflow">for</span>(i=0; i&lt;pvAnalogOutputs.size(); i++){</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    pvLayout-&gt;removeWidget(pvAnalogOutputs.at(i));</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    <span class="keyword">delete</span> pvAnalogOutputs.at(i);</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;  }</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;  pvAnalogOutputs.clear();</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;  <span class="keywordflow">for</span>(i=0; i&lt;pvDigitalInputs.size(); i++){</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    pvLayout-&gt;removeWidget(pvDigitalInputs.at(i));</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    <span class="keyword">delete</span> pvDigitalInputs.at(i);</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;  }</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;  pvDigitalInputs.clear();</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;  <span class="keywordflow">for</span>(i=0; i&lt;pvDigitalOutputs.size(); i++){</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    pvLayout-&gt;removeWidget(pvDigitalOutputs.at(i));</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    <span class="keyword">delete</span> pvDigitalOutputs.at(i);</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;  }</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;  pvDigitalOutputs.clear();</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;}</div>
+<div class="ttc" id="classmdt_device_ios_widget_html_af5183009a724c9e8f17cb428fc98b85f"><div class="ttname"><a href="classmdt_device_ios_widget.html#af5183009a724c9e8f17cb428fc98b85f">mdtDeviceIosWidget::clearIoWidgets</a></div><div class="ttdeci">void clearIoWidgets()</div><div class="ttdoc">Remove I/O&#39;s widgets. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_device_ios_widget_8cpp_source.html#l00146">mdtDeviceIosWidget.cpp:146</a></div></div>
 <div class="ttc" id="classmdt_device_ios_widget_html_affd43c16896f0191038911231b52a1fd"><div class="ttname"><a href="classmdt_device_ios_widget.html#affd43c16896f0191038911231b52a1fd">mdtDeviceIosWidget::mdtDeviceIosWidget</a></div><div class="ttdeci">mdtDeviceIosWidget(QWidget *parent=0)</div><div class="ttdef"><b>Definition:</b> <a href="mdt_device_ios_widget_8cpp_source.html#l00029">mdtDeviceIosWidget.cpp:29</a></div></div>
 <div class="ttc" id="mdt_digital_out_widget_8h_html"><div class="ttname"><a href="mdt_digital_out_widget_8h.html">mdtDigitalOutWidget.h</a></div></div>
-<div class="ttc" id="classmdt_device_ios_html_adb2cbcd4adcee1e9434634694ee1ae24"><div class="ttname"><a href="classmdt_device_ios.html#adb2cbcd4adcee1e9434634694ee1ae24">mdtDeviceIos::digitalInputs</a></div><div class="ttdeci">const QList&lt; mdtDigitalIo * &gt; digitalInputs() const </div><div class="ttdoc">Get a list containing all digital inputs. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_device_ios_8cpp_source.html#l00397">mdtDeviceIos.cpp:397</a></div></div>
 <div class="ttc" id="classmdt_analog_out_widget_html"><div class="ttname"><a href="classmdt_analog_out_widget.html">mdtAnalogOutWidget</a></div><div class="ttdoc">Representation of a analog output. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_analog_out_widget_8h_source.html#l00042">mdtAnalogOutWidget.h:42</a></div></div>
 <div class="ttc" id="classmdt_analog_in_widget_html"><div class="ttname"><a href="classmdt_analog_in_widget.html">mdtAnalogInWidget</a></div><div class="ttdoc">Representation of a analog input. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_analog_in_widget_8h_source.html#l00042">mdtAnalogInWidget.h:42</a></div></div>
 <div class="ttc" id="mdt_analog_out_widget_8h_html"><div class="ttname"><a href="mdt_analog_out_widget_8h.html">mdtAnalogOutWidget.h</a></div></div>
 <div class="ttc" id="mdt_analog_in_widget_8h_html"><div class="ttname"><a href="mdt_analog_in_widget_8h.html">mdtAnalogInWidget.h</a></div></div>
 <div class="ttc" id="classmdt_analog_out_widget_html_add6cdaca3fe72fbcd19f02d4818c52cc"><div class="ttname"><a href="classmdt_analog_out_widget.html#add6cdaca3fe72fbcd19f02d4818c52cc">mdtAnalogOutWidget::setIo</a></div><div class="ttdeci">void setIo(mdtAnalogIo *io)</div><div class="ttdoc">Set the I/O object. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_analog_out_widget_8cpp_source.html#l00053">mdtAnalogOutWidget.cpp:53</a></div></div>
-<div class="ttc" id="classmdt_device_ios_widget_html_a7071f70c3aba15dbfe0eabec5093a4d5"><div class="ttname"><a href="classmdt_device_ios_widget.html#a7071f70c3aba15dbfe0eabec5093a4d5">mdtDeviceIosWidget::~mdtDeviceIosWidget</a></div><div class="ttdeci">~mdtDeviceIosWidget()</div><div class="ttdef"><b>Definition:</b> <a href="mdt_device_ios_widget_8cpp_source.html#l00039">mdtDeviceIosWidget.cpp:39</a></div></div>
+<div class="ttc" id="classmdt_device_ios_widget_html_a7071f70c3aba15dbfe0eabec5093a4d5"><div class="ttname"><a href="classmdt_device_ios_widget.html#a7071f70c3aba15dbfe0eabec5093a4d5">mdtDeviceIosWidget::~mdtDeviceIosWidget</a></div><div class="ttdeci">~mdtDeviceIosWidget()</div><div class="ttdef"><b>Definition:</b> <a href="mdt_device_ios_widget_8cpp_source.html#l00038">mdtDeviceIosWidget.cpp:38</a></div></div>
 <div class="ttc" id="mdt_device_ios_widget_8h_html"><div class="ttname"><a href="mdt_device_ios_widget_8h.html">mdtDeviceIosWidget.h</a></div></div>
 <div class="ttc" id="classmdt_digital_in_widget_html"><div class="ttname"><a href="classmdt_digital_in_widget.html">mdtDigitalInWidget</a></div><div class="ttdoc">Representation of a digital input. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_digital_in_widget_8h_source.html#l00036">mdtDigitalInWidget.h:36</a></div></div>
-<div class="ttc" id="classmdt_device_ios_widget_html_a8fc261333ffc1c3b705ae8609f687159"><div class="ttname"><a href="classmdt_device_ios_widget.html#a8fc261333ffc1c3b705ae8609f687159">mdtDeviceIosWidget::setDeviceIos</a></div><div class="ttdeci">void setDeviceIos(mdtDeviceIos *ios)</div><div class="ttdoc">Add all I/O&#39;s as corresponding GUI representation. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_device_ios_widget_8cpp_source.html#l00050">mdtDeviceIosWidget.cpp:50</a></div></div>
-<div class="ttc" id="classmdt_device_ios_widget_html_ad388c95b2bdb48bae976c3fbc2512c30"><div class="ttname"><a href="classmdt_device_ios_widget.html#ad388c95b2bdb48bae976c3fbc2512c30">mdtDeviceIosWidget::setMaxColumns</a></div><div class="ttdeci">void setMaxColumns(int n)</div><div class="ttdoc">Set the maximum columns on the layout. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_device_ios_widget_8cpp_source.html#l00043">mdtDeviceIosWidget.cpp:43</a></div></div>
+<div class="ttc" id="classmdt_device_ios_widget_html_ad388c95b2bdb48bae976c3fbc2512c30"><div class="ttname"><a href="classmdt_device_ios_widget.html#ad388c95b2bdb48bae976c3fbc2512c30">mdtDeviceIosWidget::setMaxColumns</a></div><div class="ttdeci">void setMaxColumns(int n)</div><div class="ttdoc">Set the maximum columns on the layout. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_device_ios_widget_8cpp_source.html#l00042">mdtDeviceIosWidget.cpp:42</a></div></div>
 <div class="ttc" id="mdt_digital_in_widget_8h_html"><div class="ttname"><a href="mdt_digital_in_widget_8h.html">mdtDigitalInWidget.h</a></div></div>
 <div class="ttc" id="mdt_device_ios_8h_html"><div class="ttname"><a href="mdt_device_ios_8h.html">mdtDeviceIos.h</a></div></div>
 <div class="ttc" id="classmdt_analog_in_widget_html_a20a1943b4e2087f861e319d5bdb7180a"><div class="ttname"><a href="classmdt_analog_in_widget.html#a20a1943b4e2087f861e319d5bdb7180a">mdtAnalogInWidget::setIo</a></div><div class="ttdeci">void setIo(mdtAnalogIo *io)</div><div class="ttdoc">Set the I/O object. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_analog_in_widget_8cpp_source.html#l00052">mdtAnalogInWidget.cpp:52</a></div></div>
 <div class="ttc" id="classmdt_digital_out_widget_html"><div class="ttname"><a href="classmdt_digital_out_widget.html">mdtDigitalOutWidget</a></div><div class="ttdef"><b>Definition:</b> <a href="mdt_digital_out_widget_8h_source.html#l00030">mdtDigitalOutWidget.h:30</a></div></div>
 <div class="ttc" id="classmdt_digital_in_widget_html_a74bdc3a0b6443f9b6a601c5b763fe1c2"><div class="ttname"><a href="classmdt_digital_in_widget.html#a74bdc3a0b6443f9b6a601c5b763fe1c2">mdtDigitalInWidget::setIo</a></div><div class="ttdeci">void setIo(mdtDigitalIo *io)</div><div class="ttdoc">Set the I/O object. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_digital_in_widget_8cpp_source.html#l00049">mdtDigitalInWidget.cpp:49</a></div></div>
-<div class="ttc" id="classmdt_device_ios_html_a74418e6be28a2017140f102484f0df31"><div class="ttname"><a href="classmdt_device_ios.html#a74418e6be28a2017140f102484f0df31">mdtDeviceIos::digitalOutputs</a></div><div class="ttdeci">const QList&lt; mdtDigitalIo * &gt; digitalOutputs() const </div><div class="ttdoc">Get a list containing all digital outputs. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_device_ios_8cpp_source.html#l00513">mdtDeviceIos.cpp:513</a></div></div>
 <div class="ttc" id="class_q_widget_html"><div class="ttname"><a href="class_q_widget.html">QWidget</a></div></div>
 <div class="ttc" id="classmdt_digital_out_widget_html_a3c6f8df089e3a2527d43d1f0a1fad61c"><div class="ttname"><a href="classmdt_digital_out_widget.html#a3c6f8df089e3a2527d43d1f0a1fad61c">mdtDigitalOutWidget::setIo</a></div><div class="ttdeci">void setIo(mdtDigitalIo *io)</div><div class="ttdoc">Set the I/O object. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_digital_out_widget_8cpp_source.html#l00050">mdtDigitalOutWidget.cpp:50</a></div></div>
-<div class="ttc" id="classmdt_device_ios_html_aa4ddc48f9e3258adc7222ef3481a518e"><div class="ttname"><a href="classmdt_device_ios.html#aa4ddc48f9e3258adc7222ef3481a518e">mdtDeviceIos::analogOutputs</a></div><div class="ttdeci">const QList&lt; mdtAnalogIo * &gt; analogOutputs() const </div><div class="ttdoc">Get a list containing all analog outputs. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_device_ios_8cpp_source.html#l00285">mdtDeviceIos.cpp:285</a></div></div>
-<div class="ttc" id="classmdt_device_ios_html_aab70f76d2107f0a9324a9b9d4db21532"><div class="ttname"><a href="classmdt_device_ios.html#aab70f76d2107f0a9324a9b9d4db21532">mdtDeviceIos::analogInputs</a></div><div class="ttdeci">const QList&lt; mdtAnalogIo * &gt; analogInputs() const </div><div class="ttdoc">Get a list containing all analog inputs. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_device_ios_8cpp_source.html#l00168">mdtDeviceIos.cpp:168</a></div></div>
+<div class="ttc" id="classmdt_device_ios_widget_html_ae3fb7261ae27b0b2c9f2d96d16a818bd"><div class="ttname"><a href="classmdt_device_ios_widget.html#ae3fb7261ae27b0b2c9f2d96d16a818bd">mdtDeviceIosWidget::setDeviceIos</a></div><div class="ttdeci">void setDeviceIos(std::shared_ptr&lt; mdtDeviceIos &gt; ios)</div><div class="ttdoc">Add all I/O&#39;s as corresponding GUI representation. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_device_ios_widget_8cpp_source.html#l00049">mdtDeviceIosWidget.cpp:49</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jan 17 2015 16:32:04 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Feb 19 2015 17:07:46 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

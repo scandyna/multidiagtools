@@ -1,5 +1,3 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$class_q_graphics_item.html" title="QGraphicsItem" alt="" coords="6,31,117,57"/>
-<area shape="rect" id="node2" href="$classmdt_cl_path_graphics_connection.html" title="Item that represent a connection (circle and text) in a graphics scene. " alt="" coords="165,5,368,32"/>
-<area shape="rect" id="node3" href="$classmdt_cl_path_graphics_link.html" title="Item that represent a link in a graphics scene. " alt="" coords="187,56,347,83"/>
+<area shape="rect" id="node1" href="$classmdt_usb_transfer_pool.html" title="mdtUsbTransferPool\l\&lt; mdtUsbtmcInterruptTransfer \&gt;" alt="" coords="5,5,216,46"/>
 </map>

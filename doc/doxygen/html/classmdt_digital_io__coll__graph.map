@@ -1,5 +1,4 @@
 <map id="mdtDigitalIo" name="mdtDigitalIo">
-<area shape="rect" id="node2" href="$classmdt_abstract_io.html" title="Base class for I/O handling on (G)UI. " alt="" coords="85,101,189,131"/>
-<area shape="rect" id="node4" href="$class_q_object.html" title="QObject" alt="" coords="5,5,75,35"/>
-<area shape="rect" id="node6" href="$classmdt_value.html" title="Conatins a value with some attributes. " alt="" coords="99,5,176,35"/>
+<area shape="rect" id="node2" href="$classmdt_abstract_io.html" title="Base class for I/O handling on (G)UI. " alt="" coords="87,96,191,123"/>
+<area shape="rect" id="node4" href="$classmdt_value.html" title="Conatins a value with some attributes. " alt="" coords="100,5,176,32"/>
 </map>

@@ -1,5 +1,4 @@
 <map id="mdtPortManager" name="mdtPortManager">
 <area shape="rect" id="node3" href="$classmdt_modbus_tcp_port_manager.html" title="MODBUS/TCP port manager. " alt="" coords="5,155,192,181"/>
 <area shape="rect" id="node4" href="$classmdt_serial_port_manager.html" title="Serial port manager class. " alt="" coords="217,155,367,181"/>
-<area shape="rect" id="node2" href="$class_q_object.html" title="QObject" alt="" coords="159,5,229,32"/>
 </map>

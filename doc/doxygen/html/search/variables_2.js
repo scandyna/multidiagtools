@@ -10,6 +10,7 @@ var searchData=
   ['checkinsert',['checkInsert',['../structmdt_cl_connectable_criteria.html#a563935ae7679899d23ba67e0f49c0f5e',1,'mdtClConnectableCriteria']]],
   ['checkinsertrotation',['checkInsertRotation',['../structmdt_cl_connectable_criteria.html#a78661312682c0421bbc2b50255bb0229',1,'mdtClConnectableCriteria']]],
   ['childfieldname',['childFieldName',['../structmdt_sql_relation_info_item.html#a472e45de5f24377bb92740ece7f34a07',1,'mdtSqlRelationInfoItem']]],
+  ['comment',['comment',['../structmdt_csv_file_settings.html#af9230b534ca8275a51a30a06f7c17fde',1,'mdtCsvFileSettings']]],
   ['continuityexpectedvalue',['continuityExpectedValue',['../structmdt_tt_test_model_generation_parameter.html#a2ef746fefd93196b2b0adcbbcd57406c',1,'mdtTtTestModelGenerationParameter']]],
   ['controller',['controller',['../structmdt_abstract_sql_table_controller_container.html#a78aed5460ebf7f78d18ac80bb855fa39',1,'mdtAbstractSqlTableControllerContainer']]],
   ['copyparenttochildoninsertion',['copyParentToChildOnInsertion',['../structmdt_sql_relation_info_item.html#ad0c6a47d4463fd80f1696bbfc6c3b402',1,'mdtSqlRelationInfoItem']]]

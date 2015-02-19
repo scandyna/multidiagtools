@@ -1,32 +1,3 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node2" href="$classmdt_abstract_port_setup_dialog.html" title="Base class to build a port setup dialog. " alt="" coords="271,31,459,57"/>
-<area shape="rect" id="node3" href="$classmdt_modbus_tcp_port_setup_dialog.html" title="mdtModbusTcpPortSetupDialog" alt="" coords="518,5,725,32"/>
-<area shape="rect" id="node4" href="$classmdt_serial_port_setup_dialog.html" title="Setup dialog for serial port. " alt="" coords="535,56,707,83"/>
-<area shape="rect" id="node6" href="$classmdt_cl_article_component_dialog.html" title="mdtClArticleComponentDialog" alt="" coords="266,81,465,108"/>
-<area shape="rect" id="node8" href="$classmdt_cl_article_connection_dialog.html" title="Dialog for article connection edition. " alt="" coords="267,132,464,159"/>
-<area shape="rect" id="node10" href="$classmdt_cl_article_link_dialog.html" title="Dialog that let the user edit a article link. " alt="" coords="288,183,443,209"/>
-<area shape="rect" id="node12" href="$classmdt_cl_connectable_connector_dialog.html" title="Dialog that let the user choose a connector that is connectable to start connector. " alt="" coords="270,234,461,275"/>
-<area shape="rect" id="node14" href="$classmdt_cl_linked_unit_connection_info_dialog.html" title="Display informations about unit connections linked to a given unit connection. " alt="" coords="273,299,458,341"/>
-<area shape="rect" id="node16" href="$classmdt_cl_linked_unit_connector_info_dialog.html" title="Dialog that displays linked connectors to a given unit connector. " alt="" coords="276,365,455,406"/>
-<area shape="rect" id="node18" href="$classmdt_cl_path_graph_dialog.html" title="Display a path from link list starting at a specified connection. " alt="" coords="287,431,443,457"/>
-<area shape="rect" id="node20" href="$classmdt_cl_unit_connection_dialog.html" title="Dialog for edition of a unit connection. " alt="" coords="273,481,457,508"/>
-<area shape="rect" id="node22" href="$classmdt_cl_unit_link_dialog.html" title="Dialog that let the user edit a unit link. " alt="" coords="294,532,437,559"/>
-<area shape="rect" id="node24" href="$classmdt_field_list_edition_dialog.html" title="Dialog that provides field list edition. " alt="" coords="280,583,451,609"/>
-<area shape="rect" id="node26" href="$classmdt_field_map_dialog.html" title="Dialog to manage field mapping. " alt="" coords="298,633,433,660"/>
-<area shape="rect" id="node28" href="$classmdt_field_map_item_dialog.html" title="A dialog to setup a field map item. " alt="" coords="285,735,445,761"/>
-<area shape="rect" id="node30" href="$classmdt_items_selector_dialog.html" title="Provide the user a dialog in witch he can choose items. " alt="" coords="284,785,447,812"/>
-<area shape="rect" id="node31" href="$classmdt_mv_column_selection_dialog.html" title="Let the user manage fields to display in table view. " alt="" coords="522,760,721,787"/>
-<area shape="rect" id="node32" href="$classmdt_mv_sorting_setup_dialog.html" title="Let the user manage columns sorting. " alt="" coords="534,811,709,837"/>
-<area shape="rect" id="node34" href="$classmdt_sql_field_selection_dialog.html" title="Dialog that let the user select fields from a database table. " alt="" coords="274,836,457,863"/>
-<area shape="rect" id="node36" href="$classmdt_sql_selection_dialog.html" title="Provide a way for the user to select row in a set of data. " alt="" coords="288,887,443,913"/>
-<area shape="rect" id="node38" href="$classmdt_tt_logical_test_cable_dialog.html" title="Helper class for logical test cable generation. " alt="" coords="268,937,463,964"/>
-<area shape="rect" id="node40" href="$classmdt_tt_relay_path_dialog.html" title="Edit path from a starting connection to a end connection in a test node. " alt="" coords="288,988,443,1015"/>
-<area shape="rect" id="node42" href="$classmdt_tt_test_link_dialog.html" title="Dialog that provide test link edition. " alt="" coords="294,1039,437,1065"/>
-<area shape="rect" id="node44" href="$classmdt_tt_test_model_generation_dialog.html" title="mdtTtTestModelGeneration\lDialog" alt="" coords="275,1090,455,1131"/>
-<area shape="rect" id="node46" href="$classmdt_tt_test_node_unit_dialog.html" title="Dialog for test node unit edition. " alt="" coords="278,1156,453,1183"/>
-<area shape="rect" id="node48" href="$classmdt_tt_test_node_unit_setup_dialog.html" title="mdtTtTestNodeUnitSetupDialog" alt="" coords="261,1207,469,1233"/>
-<area shape="rect" id="node50" href="$classmdt_tt_value_edition_dialog.html" title="Dialog to edit a value, limit and fail. " alt="" coords="282,1257,449,1284"/>
-<area shape="rect" id="node52" href="$classmdt_usbtmc_port_setup_dialog.html" title="Dialog for USBTMC devices enumeration and selection. " alt="" coords="273,1308,458,1335"/>
-<area shape="rect" id="node53" href="$class_q_dialog.html" title="QDialog" alt="" coords="75,684,144,711"/>
-<area shape="rect" id="node54" href="$classmdt_sql_dialog.html" title="Dialog for a database table view/editor. " alt="" coords="315,684,415,711"/>
+<area shape="rect" id="node1" href="$classmdt_usb_transfer_pool.html" title="mdtUsbTransferPool\l\&lt; mdtUsbtmcBulkTransfer \&gt;" alt="" coords="6,5,194,46"/>
 </map>

@@ -1,0 +1,183 @@
+\hypertarget{structmdt_csv_file_settings}{\section{mdt\-Csv\-File\-Settings Struct Reference}
+\label{structmdt_csv_file_settings}\index{mdt\-Csv\-File\-Settings@{mdt\-Csv\-File\-Settings}}
+}
+
+
+Hold settings for C\-S\-V file reading and writing.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Csv\-File.\-h$>$}
+
+
+
+Collaboration diagram for mdt\-Csv\-File\-Settings\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=307pt]{structmdt_csv_file_settings__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structmdt_csv_file_settings_a560b5e5349fabaebf2cd9fa33fa8b710}{mdt\-Csv\-File\-Settings} ()
+\begin{DoxyCompactList}\small\item\em Construct default C\-S\-V file settings. \end{DoxyCompactList}\item 
+void \hyperlink{structmdt_csv_file_settings_ad303ac43045c830d10638361240ffd03}{clear} ()
+\begin{DoxyCompactList}\small\item\em Restore defualt settings. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Q\-String \hyperlink{structmdt_csv_file_settings_a61eb8e3d43d37e9a21a8ff5aec619cf9}{separator}
+\begin{DoxyCompactList}\small\item\em Field separator. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{structmdt_csv_file_settings_a559c7042e3eaf2880cb131f627298f81}{eol}
+\begin{DoxyCompactList}\small\item\em End of line sequence. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{structmdt_csv_file_settings_af966d17d76133bdc26500f95e48898db}{data\-Protection}
+\begin{DoxyCompactList}\small\item\em Data protection (typical\-: " ). \end{DoxyCompactList}\item 
+Q\-Char \hyperlink{structmdt_csv_file_settings_a8465fa39570d48091a38a1efc8e0c3a2}{data\-Protection\-Escape\-Char}
+\begin{DoxyCompactList}\small\item\em Escape char (typical\-: \textbackslash{} ) \end{DoxyCompactList}\item 
+Q\-String \hyperlink{structmdt_csv_file_settings_af9230b534ca8275a51a30a06f7c17fde}{comment}
+\begin{DoxyCompactList}\small\item\em Comment (typical\-: \# ). \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Hold settings for C\-S\-V file reading and writing. 
+
+Definition at line 40 of file mdt\-Csv\-File.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{structmdt_csv_file_settings_a560b5e5349fabaebf2cd9fa33fa8b710}{\index{mdt\-Csv\-File\-Settings@{mdt\-Csv\-File\-Settings}!mdt\-Csv\-File\-Settings@{mdt\-Csv\-File\-Settings}}
+\index{mdt\-Csv\-File\-Settings@{mdt\-Csv\-File\-Settings}!mdtCsvFileSettings@{mdt\-Csv\-File\-Settings}}
+\subsubsection[{mdt\-Csv\-File\-Settings}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Csv\-File\-Settings\-::mdt\-Csv\-File\-Settings (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{structmdt_csv_file_settings_a560b5e5349fabaebf2cd9fa33fa8b710}
+
+
+Construct default C\-S\-V file settings. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{structmdt_csv_file_settings_ad303ac43045c830d10638361240ffd03}{clear()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 32 of file mdt\-Csv\-File.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{structmdt_csv_file_settings_ad303ac43045c830d10638361240ffd03}{\index{mdt\-Csv\-File\-Settings@{mdt\-Csv\-File\-Settings}!clear@{clear}}
+\index{clear@{clear}!mdtCsvFileSettings@{mdt\-Csv\-File\-Settings}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Csv\-File\-Settings\-::clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{structmdt_csv_file_settings_ad303ac43045c830d10638361240ffd03}
+
+
+Restore defualt settings. 
+
+Default setting are\-:
+\begin{DoxyItemize}
+\item separator \-: comma ( , ) as defined in R\-F\-C 4180
+\item eol \-: C\-R\-L\-F (\textbackslash{}r\textbackslash{}n) as defined in R\-F\-C 4180
+\item data\-Protection \-: none
+\item data\-Protection\-Escape\-Char \-: none
+\item comment \-: none 
+\end{DoxyItemize}
+
+Definition at line 38 of file mdt\-Csv\-File.\-cpp.
+
+
+
+References comment, data\-Protection, data\-Protection\-Escape\-Char, eol, and separator.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{structmdt_csv_file_settings_af9230b534ca8275a51a30a06f7c17fde}{\index{mdt\-Csv\-File\-Settings@{mdt\-Csv\-File\-Settings}!comment@{comment}}
+\index{comment@{comment}!mdtCsvFileSettings@{mdt\-Csv\-File\-Settings}}
+\subsubsection[{comment}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Csv\-File\-Settings\-::comment}}\label{structmdt_csv_file_settings_af9230b534ca8275a51a30a06f7c17fde}
+
+
+Comment (typical\-: \# ). 
+
+Each line that beginns with comment is ignored. Only used for reading. 
+
+Definition at line 84 of file mdt\-Csv\-File.\-h.
+
+
+
+Referenced by clear().
+
+\hypertarget{structmdt_csv_file_settings_af966d17d76133bdc26500f95e48898db}{\index{mdt\-Csv\-File\-Settings@{mdt\-Csv\-File\-Settings}!data\-Protection@{data\-Protection}}
+\index{data\-Protection@{data\-Protection}!mdtCsvFileSettings@{mdt\-Csv\-File\-Settings}}
+\subsubsection[{data\-Protection}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Csv\-File\-Settings\-::data\-Protection}}\label{structmdt_csv_file_settings_af966d17d76133bdc26500f95e48898db}
+
+
+Data protection (typical\-: " ). 
+
+
+
+Definition at line 71 of file mdt\-Csv\-File.\-h.
+
+
+
+Referenced by clear(), and mdt\-Csv\-File\-::write\-Line().
+
+\hypertarget{structmdt_csv_file_settings_a8465fa39570d48091a38a1efc8e0c3a2}{\index{mdt\-Csv\-File\-Settings@{mdt\-Csv\-File\-Settings}!data\-Protection\-Escape\-Char@{data\-Protection\-Escape\-Char}}
+\index{data\-Protection\-Escape\-Char@{data\-Protection\-Escape\-Char}!mdtCsvFileSettings@{mdt\-Csv\-File\-Settings}}
+\subsubsection[{data\-Protection\-Escape\-Char}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Char mdt\-Csv\-File\-Settings\-::data\-Protection\-Escape\-Char}}\label{structmdt_csv_file_settings_a8465fa39570d48091a38a1efc8e0c3a2}
+
+
+Escape char (typical\-: \textbackslash{} ) 
+
+Note\-: has only effect to escape data\-Protection. 
+
+Definition at line 77 of file mdt\-Csv\-File.\-h.
+
+
+
+Referenced by clear(), and mdt\-Csv\-File\-::write\-Line().
+
+\hypertarget{structmdt_csv_file_settings_a559c7042e3eaf2880cb131f627298f81}{\index{mdt\-Csv\-File\-Settings@{mdt\-Csv\-File\-Settings}!eol@{eol}}
+\index{eol@{eol}!mdtCsvFileSettings@{mdt\-Csv\-File\-Settings}}
+\subsubsection[{eol}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Csv\-File\-Settings\-::eol}}\label{structmdt_csv_file_settings_a559c7042e3eaf2880cb131f627298f81}
+
+
+End of line sequence. 
+
+Usefull if given file is not supposed to be readen from running platform. 
+
+Definition at line 67 of file mdt\-Csv\-File.\-h.
+
+
+
+Referenced by clear(), and mdt\-Csv\-File\-::write\-Line().
+
+\hypertarget{structmdt_csv_file_settings_a61eb8e3d43d37e9a21a8ff5aec619cf9}{\index{mdt\-Csv\-File\-Settings@{mdt\-Csv\-File\-Settings}!separator@{separator}}
+\index{separator@{separator}!mdtCsvFileSettings@{mdt\-Csv\-File\-Settings}}
+\subsubsection[{separator}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Csv\-File\-Settings\-::separator}}\label{structmdt_csv_file_settings_a61eb8e3d43d37e9a21a8ff5aec619cf9}
+
+
+Field separator. 
+
+
+
+Definition at line 61 of file mdt\-Csv\-File.\-h.
+
+
+
+Referenced by clear(), and mdt\-Csv\-File\-::write\-Line().
+
+
+
+The documentation for this struct was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdtutils/\hyperlink{mdt_csv_file_8h}{mdt\-Csv\-File.\-h}\item 
+src/mdtutils/\hyperlink{mdt_csv_file_8cpp}{mdt\-Csv\-File.\-cpp}\end{DoxyCompactItemize}

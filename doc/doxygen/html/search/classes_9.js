@@ -7,7 +7,6 @@ var searchData=
   ['qgraphicsitem',['QGraphicsItem',['../class_q_graphics_item.html',1,'']]],
   ['qgroupbox',['QGroupBox',['../class_q_group_box.html',1,'']]],
   ['qmainwindow',['QMainWindow',['../class_q_main_window.html',1,'']]],
-  ['qobject',['QObject',['../class_q_object.html',1,'']]],
   ['qshareddata',['QSharedData',['../class_q_shared_data.html',1,'']]],
   ['qsortfilterproxymodel',['QSortFilterProxyModel',['../class_q_sort_filter_proxy_model.html',1,'']]],
   ['qsqltablemodel',['QSqlTableModel',['../class_q_sql_table_model.html',1,'']]],

@@ -1,0 +1,345 @@
+\hypertarget{classmdt_sql_application_widgets}{\section{mdt\-Sql\-Application\-Widgets$<$ T $>$ Class Template Reference}
+\label{classmdt_sql_application_widgets}\index{mdt\-Sql\-Application\-Widgets$<$ T $>$@{mdt\-Sql\-Application\-Widgets$<$ T $>$}}
+}
+
+
+Container for S\-Q\-L editors and views.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Sql\-Application\-Widgets.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Sql\-Application\-Widgets$<$ T $>$\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmdt_sql_application_widgets__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Sql\-Application\-Widgets$<$ T $>$\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=240pt]{classmdt_sql_application_widgets__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{classmdt_sql_application_widgets_affa03f524f089c58627adaf009b34333}{set\-Database} (\hyperlink{class_q_sql_database}{Q\-Sql\-Database} db)
+\begin{DoxyCompactList}\small\item\em Set database to use. \end{DoxyCompactList}\item 
+static \hyperlink{class_q_sql_database}{Q\-Sql\-Database} \hyperlink{classmdt_sql_application_widgets_a0eadaf7f2fdc32ef0b5e8a2cb0954126}{database} ()
+\begin{DoxyCompactList}\small\item\em Get used database. \end{DoxyCompactList}\item 
+static bool \hyperlink{classmdt_sql_application_widgets_a8084af5be11b7660a007e1d784252877}{close\-Open\-Widgets} ()
+\begin{DoxyCompactList}\small\item\em Close all open widgets. \end{DoxyCompactList}\item 
+static void \hyperlink{classmdt_sql_application_widgets_a14b5eb0dbed81a229ac49d1aa4e4db91}{clear} ()
+\begin{DoxyCompactList}\small\item\em Clear. \end{DoxyCompactList}\item 
+static T $\ast$ \hyperlink{classmdt_sql_application_widgets_acfa7123fb0d8ca57e75807ab20eed02e}{instance\-Ptr} ()
+\begin{DoxyCompactList}\small\item\em Get pointer to instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+std\-::shared\-\_\-ptr$<$ \hyperlink{classmdt_sql_window}{mdt\-Sql\-Window} $>$ \hyperlink{classmdt_sql_application_widgets_a2842fabf25ecd8ecb40d52825fcca630}{setup\-Editor\-In\-Sql\-Window} (const std\-::shared\-\_\-ptr$<$ \hyperlink{classmdt_sql_form}{mdt\-Sql\-Form} $>$ \&editor)
+\begin{DoxyCompactList}\small\item\em Setup given editor in \hyperlink{classmdt_sql_window}{mdt\-Sql\-Window}. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_application_widgets_a57b205891e1658af5c078d5415f04631}{show\-Sql\-Window} (const std\-::shared\-\_\-ptr$<$ \hyperlink{classmdt_sql_form}{mdt\-Sql\-Form} $>$ \&form, bool enable\-Navigation, bool enable\-Edition)
+\begin{DoxyCompactList}\small\item\em Show open window that contains given sql form. \end{DoxyCompactList}\item 
+std\-::shared\-\_\-ptr$<$ \hyperlink{classmdt_sql_window}{mdt\-Sql\-Window} $>$ \hyperlink{classmdt_sql_application_widgets_aa9a25fc1cd8f7e6ab520f1eebbc4cba9}{get\-Open\-Sql\-Window} (const std\-::shared\-\_\-ptr$<$ \hyperlink{classmdt_sql_form}{mdt\-Sql\-Form} $>$ \&form)
+\begin{DoxyCompactList}\small\item\em Get open window for given sql form. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_sql_application_widgets_aa7083c0c32880cb9f8919136fc5900cf}{close\-Open\-Sql\-Windows} ()
+\begin{DoxyCompactList}\small\item\em Close all open S\-Q\-L windows. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classmdt_sql_application_widgets_a811fccddb41cb47b6c49243e1b83f270}{close\-Custom\-Widgets} ()
+\begin{DoxyCompactList}\small\item\em Close custom widgets. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classmdt_sql_application_widgets_a3f321120a9845744f4baf0be027c4119}{clear\-All\-Widgets} ()=0
+\begin{DoxyCompactList}\small\item\em Destroy all created widgets. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_application_widgets_a5b4b99fc3894e445e08a21b7c660485a}{display\-Error} (const \hyperlink{classmdt_error}{mdt\-Error} \&error)
+\begin{DoxyCompactList}\small\item\em Display a error to the user. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_sql_application_widgets_a4716d909fb5a06bab56487624f00d733}{mdt\-Sql\-Application\-Widgets} ()
+\begin{DoxyCompactList}\small\item\em Prevent multiple object instances. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static T \& \hyperlink{classmdt_sql_application_widgets_adcee3d0c9bfedcc22c4bf6af556dc402}{instance} ()
+\begin{DoxyCompactList}\small\item\em Get the (unique) instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_q_sql_database}{Q\-Sql\-Database} \hyperlink{classmdt_sql_application_widgets_ab837a76829e31f7d93d7cafce6d7d989}{pv\-Database}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$class mdt\-Sql\-Application\-Widgets$<$ T $>$}
+
+Container for S\-Q\-L editors and views. 
+
+Using this class helps to create editors and views. Most of time, only one instance of each editore or view is needed, but must be accessible from multiple places in application. 
+
+Definition at line 45 of file mdt\-Sql\-Application\-Widgets.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_sql_application_widgets_a4716d909fb5a06bab56487624f00d733}{\index{mdt\-Sql\-Application\-Widgets@{mdt\-Sql\-Application\-Widgets}!mdt\-Sql\-Application\-Widgets@{mdt\-Sql\-Application\-Widgets}}
+\index{mdt\-Sql\-Application\-Widgets@{mdt\-Sql\-Application\-Widgets}!mdtSqlApplicationWidgets@{mdt\-Sql\-Application\-Widgets}}
+\subsubsection[{mdt\-Sql\-Application\-Widgets}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T$>$ {\bf mdt\-Sql\-Application\-Widgets}$<$ T $>$\-::{\bf mdt\-Sql\-Application\-Widgets} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}}\label{classmdt_sql_application_widgets_a4716d909fb5a06bab56487624f00d733}
+
+
+Prevent multiple object instances. 
+
+
+
+Definition at line 154 of file mdt\-Sql\-Application\-Widgets.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_sql_application_widgets_a14b5eb0dbed81a229ac49d1aa4e4db91}{\index{mdt\-Sql\-Application\-Widgets@{mdt\-Sql\-Application\-Widgets}!clear@{clear}}
+\index{clear@{clear}!mdtSqlApplicationWidgets@{mdt\-Sql\-Application\-Widgets}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void {\bf mdt\-Sql\-Application\-Widgets}$<$ T $>$\-::clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{classmdt_sql_application_widgets_a14b5eb0dbed81a229ac49d1aa4e4db91}
+
+
+Clear. 
+
+Will destroy all created widgets 
+
+Definition at line 178 of file mdt\-Sql\-Application\-Widgets.\-h.
+
+\hypertarget{classmdt_sql_application_widgets_a3f321120a9845744f4baf0be027c4119}{\index{mdt\-Sql\-Application\-Widgets@{mdt\-Sql\-Application\-Widgets}!clear\-All\-Widgets@{clear\-All\-Widgets}}
+\index{clear\-All\-Widgets@{clear\-All\-Widgets}!mdtSqlApplicationWidgets@{mdt\-Sql\-Application\-Widgets}}
+\subsubsection[{clear\-All\-Widgets}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T$>$ virtual void {\bf mdt\-Sql\-Application\-Widgets}$<$ T $>$\-::clear\-All\-Widgets (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}}\label{classmdt_sql_application_widgets_a3f321120a9845744f4baf0be027c4119}
+
+
+Destroy all created widgets. 
+
+Must be impplemented in subclass. \hypertarget{classmdt_sql_application_widgets_a811fccddb41cb47b6c49243e1b83f270}{\index{mdt\-Sql\-Application\-Widgets@{mdt\-Sql\-Application\-Widgets}!close\-Custom\-Widgets@{close\-Custom\-Widgets}}
+\index{close\-Custom\-Widgets@{close\-Custom\-Widgets}!mdtSqlApplicationWidgets@{mdt\-Sql\-Application\-Widgets}}
+\subsubsection[{close\-Custom\-Widgets}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T$>$ virtual bool {\bf mdt\-Sql\-Application\-Widgets}$<$ T $>$\-::close\-Custom\-Widgets (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classmdt_sql_application_widgets_a811fccddb41cb47b6c49243e1b83f270}
+
+
+Close custom widgets. 
+
+For windows created with a \hyperlink{classmdt_sql_form}{mdt\-Sql\-Form} in a \hyperlink{classmdt_sql_window}{mdt\-Sql\-Window}, \hyperlink{classmdt_sql_application_widgets_aa7083c0c32880cb9f8919136fc5900cf}{close\-Open\-Sql\-Windows()} can be used. For real application, many other widgets can be created.
+
+Subclass can reimplement this function to close such widgets, and use their specific way to check if it is O\-K to really close it now.
+
+If one widget cannot be closed now, this function returns false.
+
+Default implementation does nothing and allways return true. 
+
+Definition at line 136 of file mdt\-Sql\-Application\-Widgets.\-h.
+
+\hypertarget{classmdt_sql_application_widgets_aa7083c0c32880cb9f8919136fc5900cf}{\index{mdt\-Sql\-Application\-Widgets@{mdt\-Sql\-Application\-Widgets}!close\-Open\-Sql\-Windows@{close\-Open\-Sql\-Windows}}
+\index{close\-Open\-Sql\-Windows@{close\-Open\-Sql\-Windows}!mdtSqlApplicationWidgets@{mdt\-Sql\-Application\-Widgets}}
+\subsubsection[{close\-Open\-Sql\-Windows}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ bool {\bf mdt\-Sql\-Application\-Widgets}$<$ T $>$\-::close\-Open\-Sql\-Windows (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_sql_application_widgets_aa7083c0c32880cb9f8919136fc5900cf}
+
+
+Close all open S\-Q\-L windows. 
+
+All S\-Q\-L windows (\hyperlink{classmdt_sql_window}{mdt\-Sql\-Window} objects) that was created with \hyperlink{classmdt_sql_application_widgets_a2842fabf25ecd8ecb40d52825fcca630}{setup\-Editor\-In\-Sql\-Window()} are stored in a container. When calling this function, it is checked if internal form (a \hyperlink{classmdt_sql_form}{mdt\-Sql\-Form} object) has all data saved.
+
+If one window contains a form that has pending data, this function retunrs false. 
+
+Definition at line 227 of file mdt\-Sql\-Application\-Widgets.\-h.
+
+
+
+References mdt\-Sql\-Form\-::all\-Data\-Are\-Saved().
+
+\hypertarget{classmdt_sql_application_widgets_a8084af5be11b7660a007e1d784252877}{\index{mdt\-Sql\-Application\-Widgets@{mdt\-Sql\-Application\-Widgets}!close\-Open\-Widgets@{close\-Open\-Widgets}}
+\index{close\-Open\-Widgets@{close\-Open\-Widgets}!mdtSqlApplicationWidgets@{mdt\-Sql\-Application\-Widgets}}
+\subsubsection[{close\-Open\-Widgets}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ bool {\bf mdt\-Sql\-Application\-Widgets}$<$ T $>$\-::close\-Open\-Widgets (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{classmdt_sql_application_widgets_a8084af5be11b7660a007e1d784252877}
+
+
+Close all open widgets. 
+
+If one widget have unsaved data, it will not be closed and this function returns false. 
+
+Definition at line 169 of file mdt\-Sql\-Application\-Widgets.\-h.
+
+\hypertarget{classmdt_sql_application_widgets_a0eadaf7f2fdc32ef0b5e8a2cb0954126}{\index{mdt\-Sql\-Application\-Widgets@{mdt\-Sql\-Application\-Widgets}!database@{database}}
+\index{database@{database}!mdtSqlApplicationWidgets@{mdt\-Sql\-Application\-Widgets}}
+\subsubsection[{database}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T$>$ static {\bf Q\-Sql\-Database} {\bf mdt\-Sql\-Application\-Widgets}$<$ T $>$\-::database (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{classmdt_sql_application_widgets_a0eadaf7f2fdc32ef0b5e8a2cb0954126}
+
+
+Get used database. 
+
+
+
+Definition at line 58 of file mdt\-Sql\-Application\-Widgets.\-h.
+
+\hypertarget{classmdt_sql_application_widgets_a5b4b99fc3894e445e08a21b7c660485a}{\index{mdt\-Sql\-Application\-Widgets@{mdt\-Sql\-Application\-Widgets}!display\-Error@{display\-Error}}
+\index{display\-Error@{display\-Error}!mdtSqlApplicationWidgets@{mdt\-Sql\-Application\-Widgets}}
+\subsubsection[{display\-Error}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void {\bf mdt\-Sql\-Application\-Widgets}$<$ T $>$\-::display\-Error (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Error} \&}]{error}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_sql_application_widgets_a5b4b99fc3894e445e08a21b7c660485a}
+
+
+Display a error to the user. 
+
+
+
+Definition at line 247 of file mdt\-Sql\-Application\-Widgets.\-h.
+
+
+
+References mdt\-Error\-::level\-Icon(), mdt\-Error\-::system\-Text(), and mdt\-Error\-::text().
+
+\hypertarget{classmdt_sql_application_widgets_aa9a25fc1cd8f7e6ab520f1eebbc4cba9}{\index{mdt\-Sql\-Application\-Widgets@{mdt\-Sql\-Application\-Widgets}!get\-Open\-Sql\-Window@{get\-Open\-Sql\-Window}}
+\index{get\-Open\-Sql\-Window@{get\-Open\-Sql\-Window}!mdtSqlApplicationWidgets@{mdt\-Sql\-Application\-Widgets}}
+\subsubsection[{get\-Open\-Sql\-Window}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ std\-::shared\-\_\-ptr$<$ {\bf mdt\-Sql\-Window} $>$ {\bf mdt\-Sql\-Application\-Widgets}$<$ T $>$\-::get\-Open\-Sql\-Window (
+\begin{DoxyParamCaption}
+\item[{const std\-::shared\-\_\-ptr$<$ {\bf mdt\-Sql\-Form} $>$ \&}]{form}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_sql_application_widgets_aa9a25fc1cd8f7e6ab520f1eebbc4cba9}
+
+
+Get open window for given sql form. 
+
+
+
+Definition at line 212 of file mdt\-Sql\-Application\-Widgets.\-h.
+
+\hypertarget{classmdt_sql_application_widgets_adcee3d0c9bfedcc22c4bf6af556dc402}{\index{mdt\-Sql\-Application\-Widgets@{mdt\-Sql\-Application\-Widgets}!instance@{instance}}
+\index{instance@{instance}!mdtSqlApplicationWidgets@{mdt\-Sql\-Application\-Widgets}}
+\subsubsection[{instance}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T$>$ static T\& {\bf mdt\-Sql\-Application\-Widgets}$<$ T $>$\-::instance (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [protected]}}}\label{classmdt_sql_application_widgets_adcee3d0c9bfedcc22c4bf6af556dc402}
+
+
+Get the (unique) instance. 
+
+
+
+Definition at line 89 of file mdt\-Sql\-Application\-Widgets.\-h.
+
+
+
+Referenced by mdt\-Sql\-Application\-Widgets$<$ mdt\-Cl\-Application\-Widgets $>$\-::database(), mdt\-Sql\-Application\-Widgets$<$ mdt\-Cl\-Application\-Widgets $>$\-::instance\-Ptr(), and mdt\-Sql\-Application\-Widgets$<$ mdt\-Cl\-Application\-Widgets $>$\-::set\-Database().
+
+\hypertarget{classmdt_sql_application_widgets_acfa7123fb0d8ca57e75807ab20eed02e}{\index{mdt\-Sql\-Application\-Widgets@{mdt\-Sql\-Application\-Widgets}!instance\-Ptr@{instance\-Ptr}}
+\index{instance\-Ptr@{instance\-Ptr}!mdtSqlApplicationWidgets@{mdt\-Sql\-Application\-Widgets}}
+\subsubsection[{instance\-Ptr}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T$>$ static T$\ast$ {\bf mdt\-Sql\-Application\-Widgets}$<$ T $>$\-::instance\-Ptr (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{classmdt_sql_application_widgets_acfa7123fb0d8ca57e75807ab20eed02e}
+
+
+Get pointer to instance. 
+
+Useful for signal/slot connections 
+
+Definition at line 80 of file mdt\-Sql\-Application\-Widgets.\-h.
+
+\hypertarget{classmdt_sql_application_widgets_affa03f524f089c58627adaf009b34333}{\index{mdt\-Sql\-Application\-Widgets@{mdt\-Sql\-Application\-Widgets}!set\-Database@{set\-Database}}
+\index{set\-Database@{set\-Database}!mdtSqlApplicationWidgets@{mdt\-Sql\-Application\-Widgets}}
+\subsubsection[{set\-Database}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T$>$ static void {\bf mdt\-Sql\-Application\-Widgets}$<$ T $>$\-::set\-Database (
+\begin{DoxyParamCaption}
+\item[{{\bf Q\-Sql\-Database}}]{db}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{classmdt_sql_application_widgets_affa03f524f089c58627adaf009b34333}
+
+
+Set database to use. 
+
+
+
+Definition at line 51 of file mdt\-Sql\-Application\-Widgets.\-h.
+
+\hypertarget{classmdt_sql_application_widgets_a2842fabf25ecd8ecb40d52825fcca630}{\index{mdt\-Sql\-Application\-Widgets@{mdt\-Sql\-Application\-Widgets}!setup\-Editor\-In\-Sql\-Window@{setup\-Editor\-In\-Sql\-Window}}
+\index{setup\-Editor\-In\-Sql\-Window@{setup\-Editor\-In\-Sql\-Window}!mdtSqlApplicationWidgets@{mdt\-Sql\-Application\-Widgets}}
+\subsubsection[{setup\-Editor\-In\-Sql\-Window}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ std\-::shared\-\_\-ptr$<$ {\bf mdt\-Sql\-Window} $>$ {\bf mdt\-Sql\-Application\-Widgets}$<$ T $>$\-::setup\-Editor\-In\-Sql\-Window (
+\begin{DoxyParamCaption}
+\item[{const std\-::shared\-\_\-ptr$<$ {\bf mdt\-Sql\-Form} $>$ \&}]{editor}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_sql_application_widgets_a2842fabf25ecd8ecb40d52825fcca630}
+
+
+Setup given editor in \hyperlink{classmdt_sql_window}{mdt\-Sql\-Window}. 
+
+Returned pointer can be used, for example, to resize the editor.
+
+Freshliy created window will be added to open editors list.
+
+\begin{DoxyPrecond}{Precondition}
+editor must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Definition at line 185 of file mdt\-Sql\-Application\-Widgets.\-h.
+
+\hypertarget{classmdt_sql_application_widgets_a57b205891e1658af5c078d5415f04631}{\index{mdt\-Sql\-Application\-Widgets@{mdt\-Sql\-Application\-Widgets}!show\-Sql\-Window@{show\-Sql\-Window}}
+\index{show\-Sql\-Window@{show\-Sql\-Window}!mdtSqlApplicationWidgets@{mdt\-Sql\-Application\-Widgets}}
+\subsubsection[{show\-Sql\-Window}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void {\bf mdt\-Sql\-Application\-Widgets}$<$ T $>$\-::show\-Sql\-Window (
+\begin{DoxyParamCaption}
+\item[{const std\-::shared\-\_\-ptr$<$ {\bf mdt\-Sql\-Form} $>$ \&}]{form, }
+\item[{bool}]{enable\-Navigation, }
+\item[{bool}]{enable\-Edition}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_sql_application_widgets_a57b205891e1658af5c078d5415f04631}
+
+
+Show open window that contains given sql form. 
+
+
+
+Definition at line 199 of file mdt\-Sql\-Application\-Widgets.\-h.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classmdt_sql_application_widgets_ab837a76829e31f7d93d7cafce6d7d989}{\index{mdt\-Sql\-Application\-Widgets@{mdt\-Sql\-Application\-Widgets}!pv\-Database@{pv\-Database}}
+\index{pv\-Database@{pv\-Database}!mdtSqlApplicationWidgets@{mdt\-Sql\-Application\-Widgets}}
+\subsubsection[{pv\-Database}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T$>$ {\bf Q\-Sql\-Database} {\bf mdt\-Sql\-Application\-Widgets}$<$ T $>$\-::pv\-Database\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_sql_application_widgets_ab837a76829e31f7d93d7cafce6d7d989}
+
+
+Definition at line 156 of file mdt\-Sql\-Application\-Widgets.\-h.
+
+
+
+Referenced by mdt\-Tt\-Base\-::begin\-Transaction(), mdt\-Tt\-Base\-::commit\-Transaction(), mdt\-Tt\-Base\-::database(), mdt\-Tt\-Base\-::mdt\-Tt\-Base(), and mdt\-Tt\-Base\-::rollback\-Transaction().
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+src/mdtdatabase/\hyperlink{mdt_sql_application_widgets_8h}{mdt\-Sql\-Application\-Widgets.\-h}\end{DoxyCompactItemize}

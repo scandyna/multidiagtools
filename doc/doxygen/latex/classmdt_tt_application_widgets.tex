@@ -1,0 +1,139 @@
+\hypertarget{classmdt_tt_application_widgets}{\section{mdt\-Tt\-Application\-Widgets Class Reference}
+\label{classmdt_tt_application_widgets}\index{mdt\-Tt\-Application\-Widgets@{mdt\-Tt\-Application\-Widgets}}
+}
+
+
+Container for test tool editors and views.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Tt\-Application\-Widgets.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Tt\-Application\-Widgets\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=338pt]{classmdt_tt_application_widgets__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Tt\-Application\-Widgets\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmdt_tt_application_widgets__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmdt_tt_application_widgets_ade43e8c686f77f2c8ffb5027a5afbe2d}{slot\-Edit\-Test\-Cables} ()
+\begin{DoxyCompactList}\small\item\em Edit test cables. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{classmdt_tt_application_widgets_ada31681ad53cfb7f93bfd9aa53ef30e6}{edit\-Test\-Cable} (const Q\-Variant \&test\-Cable\-Id)
+\begin{DoxyCompactList}\small\item\em Edit a specific test cable. \end{DoxyCompactList}\item 
+static void \hyperlink{classmdt_tt_application_widgets_ab8951db00142173b5124dcfd81804b56}{edit\-Test\-Cables} ()
+\begin{DoxyCompactList}\small\item\em Edit test cables. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classmdt_tt_application_widgets_a772e66e9543a39645b5f5b3d37b8a461}{mdt\-Sql\-Application\-Widgets$<$ mdt\-Tt\-Application\-Widgets $>$}
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Container for test tool editors and views. 
+
+Using this class helps to create editors and views. Most of time, only one instance of each editore or view is needed, but must be accessible from multiple places in application. 
+
+Definition at line 35 of file mdt\-Tt\-Application\-Widgets.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_tt_application_widgets_ada31681ad53cfb7f93bfd9aa53ef30e6}{\index{mdt\-Tt\-Application\-Widgets@{mdt\-Tt\-Application\-Widgets}!edit\-Test\-Cable@{edit\-Test\-Cable}}
+\index{edit\-Test\-Cable@{edit\-Test\-Cable}!mdtTtApplicationWidgets@{mdt\-Tt\-Application\-Widgets}}
+\subsubsection[{edit\-Test\-Cable}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Tt\-Application\-Widgets\-::edit\-Test\-Cable (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{test\-Cable\-Id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{classmdt_tt_application_widgets_ada31681ad53cfb7f93bfd9aa53ef30e6}
+
+
+Edit a specific test cable. 
+
+
+
+Definition at line 27 of file mdt\-Tt\-Application\-Widgets.\-cpp.
+
+
+
+References mdt\-Sql\-Application\-Widgets$<$ mdt\-Tt\-Application\-Widgets $>$\-::instance().
+
+\hypertarget{classmdt_tt_application_widgets_ab8951db00142173b5124dcfd81804b56}{\index{mdt\-Tt\-Application\-Widgets@{mdt\-Tt\-Application\-Widgets}!edit\-Test\-Cables@{edit\-Test\-Cables}}
+\index{edit\-Test\-Cables@{edit\-Test\-Cables}!mdtTtApplicationWidgets@{mdt\-Tt\-Application\-Widgets}}
+\subsubsection[{edit\-Test\-Cables}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Tt\-Application\-Widgets\-::edit\-Test\-Cables (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{classmdt_tt_application_widgets_ab8951db00142173b5124dcfd81804b56}
+
+
+Edit test cables. 
+
+
+
+Definition at line 48 of file mdt\-Tt\-Application\-Widgets.\-cpp.
+
+
+
+References mdt\-Sql\-Application\-Widgets$<$ mdt\-Tt\-Application\-Widgets $>$\-::instance(), and slot\-Edit\-Test\-Cables().
+
+\hypertarget{classmdt_tt_application_widgets_ade43e8c686f77f2c8ffb5027a5afbe2d}{\index{mdt\-Tt\-Application\-Widgets@{mdt\-Tt\-Application\-Widgets}!slot\-Edit\-Test\-Cables@{slot\-Edit\-Test\-Cables}}
+\index{slot\-Edit\-Test\-Cables@{slot\-Edit\-Test\-Cables}!mdtTtApplicationWidgets@{mdt\-Tt\-Application\-Widgets}}
+\subsubsection[{slot\-Edit\-Test\-Cables}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Tt\-Application\-Widgets\-::slot\-Edit\-Test\-Cables (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{classmdt_tt_application_widgets_ade43e8c686f77f2c8ffb5027a5afbe2d}
+
+
+Edit test cables. 
+
+
+
+Definition at line 53 of file mdt\-Tt\-Application\-Widgets.\-cpp.
+
+
+
+References mdt\-Sql\-Application\-Widgets$<$ mdt\-Tt\-Application\-Widgets $>$\-::display\-Error(), and mdt\-Sql\-Application\-Widgets$<$ mdt\-Tt\-Application\-Widgets $>$\-::show\-Sql\-Window().
+
+
+
+Referenced by edit\-Test\-Cables().
+
+
+
+\subsection{Friends And Related Function Documentation}
+\hypertarget{classmdt_tt_application_widgets_a772e66e9543a39645b5f5b3d37b8a461}{\index{mdt\-Tt\-Application\-Widgets@{mdt\-Tt\-Application\-Widgets}!mdt\-Sql\-Application\-Widgets$<$ mdt\-Tt\-Application\-Widgets $>$@{mdt\-Sql\-Application\-Widgets$<$ mdt\-Tt\-Application\-Widgets $>$}}
+\index{mdt\-Sql\-Application\-Widgets$<$ mdt\-Tt\-Application\-Widgets $>$@{mdt\-Sql\-Application\-Widgets$<$ mdt\-Tt\-Application\-Widgets $>$}!mdtTtApplicationWidgets@{mdt\-Tt\-Application\-Widgets}}
+\subsubsection[{mdt\-Sql\-Application\-Widgets$<$ mdt\-Tt\-Application\-Widgets $>$}]{\setlength{\rightskip}{0pt plus 5cm}friend class {\bf mdt\-Sql\-Application\-Widgets}$<$ {\bf mdt\-Tt\-Application\-Widgets} $>$\hspace{0.3cm}{\ttfamily [friend]}}}\label{classmdt_tt_application_widgets_a772e66e9543a39645b5f5b3d37b8a461}
+
+
+Definition at line 40 of file mdt\-Tt\-Application\-Widgets.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdttools/mdttesttool/\hyperlink{mdt_tt_application_widgets_8h}{mdt\-Tt\-Application\-Widgets.\-h}\item 
+src/mdttools/mdttesttool/\hyperlink{mdt_tt_application_widgets_8cpp}{mdt\-Tt\-Application\-Widgets.\-cpp}\end{DoxyCompactItemize}

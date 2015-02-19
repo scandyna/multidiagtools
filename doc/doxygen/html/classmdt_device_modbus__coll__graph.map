@@ -1,11 +1,11 @@
 <map id="mdtDeviceModbus" name="mdtDeviceModbus">
-<area shape="rect" id="node2" href="$classmdt_device.html" title="Base class for a device connected to a port. " alt="" coords="5,421,91,451"/>
-<area shape="rect" id="node4" href="$class_q_object.html" title="QObject" alt="" coords="225,275,295,304"/>
-<area shape="rect" id="node16" href="$classmdt_port_manager.html" title="Port manager base class. " alt="" coords="264,517,381,547"/>
-<area shape="rect" id="node21" href="$classmdt_abstract_port.html" title="Base class for port I/O. " alt="" coords="425,421,543,451"/>
-<area shape="rect" id="node6" href="$classmdt_error.html" title="mdtError contains informations about a error that occured " alt="" coords="12,275,84,304"/>
-<area shape="rect" id="node8" href="$classmdt_frame_codec_modbus.html" title="Encode and decode MODBUS PDU NOTE: stockage des adresses durant Q/R ? " alt="" coords="445,597,611,627"/>
-<area shape="rect" id="node10" href="$classmdt_frame_codec.html" title="mdtFrameCodec" alt="" coords="501,517,619,547"/>
-<area shape="rect" id="node14" href="$classmdt_modbus_tcp_port_manager.html" title="MODBUS/TCP port manager. " alt="" coords="229,597,416,627"/>
-<area shape="rect" id="node24" href="$classmdt_port_config.html" title="mdtPortConfig" alt="" coords="707,275,813,304"/>
+<area shape="rect" id="node2" href="$classmdt_multi_io_device.html" title="Base class for a device that contains multiple I/Os. " alt="" coords="39,544,163,571"/>
+<area shape="rect" id="node3" href="$classmdt_device.html" title="class mdtDeviceIosSegment; " alt="" coords="5,467,91,493"/>
+<area shape="rect" id="node10" href="$classmdt_port_manager.html" title="Port manager base class. " alt="" coords="239,467,357,493"/>
+<area shape="rect" id="node12" href="$classmdt_abstract_port.html" title="Base class for port I/O. " alt="" coords="519,376,635,403"/>
+<area shape="rect" id="node5" href="$classmdt_error.html" title="mdtError contains informations about a error that occured " alt="" coords="37,376,109,403"/>
+<area shape="rect" id="node6" href="$classmdt_frame_codec_modbus.html" title="Encode and decode MODBUS PDU NOTE: stockage des adresses durant Q/R ? " alt="" coords="445,544,609,571"/>
+<area shape="rect" id="node7" href="$classmdt_frame_codec.html" title="mdtFrameCodec" alt="" coords="649,467,767,493"/>
+<area shape="rect" id="node9" href="$classmdt_modbus_tcp_port_manager.html" title="MODBUS/TCP port manager. " alt="" coords="205,544,392,571"/>
+<area shape="rect" id="node13" href="$classmdt_port_config.html" title="mdtPortConfig" alt="" coords="909,243,1016,269"/>
 </map>

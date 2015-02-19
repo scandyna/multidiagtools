@@ -1,5 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$class_q_sql_table_model.html" title="QSqlTableModel" alt="" coords="6,31,125,57"/>
-<area shape="rect" id="node2" href="$classmdt_data_table_model.html" title="mdtDataTableModel" alt="" coords="173,5,312,32"/>
-<area shape="rect" id="node3" href="$classmdt_sql_table_model.html" title="Sql table model. " alt="" coords="177,56,308,83"/>
+<area shape="rect" id="node1" href="$class_q_abstract_item_model.html" title="QAbstractItemModel" alt="" coords="6,5,149,32"/>
+<area shape="rect" id="node2" href="$classmdt_parent_child_table_model.html" title="mdtParentChildTableModel" alt="" coords="197,5,376,32"/>
 </map>

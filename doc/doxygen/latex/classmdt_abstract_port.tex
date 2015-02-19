@@ -12,7 +12,8 @@ Base class for port I/\-O.
 
 
 
-Inheritance diagram for mdt\-Abstract\-Port\-:\nopagebreak
+Inheritance diagram for mdt\-Abstract\-Port\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -21,7 +22,8 @@ Inheritance diagram for mdt\-Abstract\-Port\-:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdt\-Abstract\-Port\-:\nopagebreak
+Collaboration diagram for mdt\-Abstract\-Port\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -65,7 +67,7 @@ enum \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classmdt_abstract_port_a35e7bff9413690833c832bf115da102f}{mdt\-Abstract\-Port} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent=0)
+\hyperlink{classmdt_abstract_port_a35e7bff9413690833c832bf115da102f}{mdt\-Abstract\-Port} (Q\-Object $\ast$parent=0)
 \begin{DoxyCompactList}\small\item\em \#include \char`\"{}mdt\-Frame\-Usb\-Tmc.\-h\char`\"{} \end{DoxyCompactList}\item 
 virtual \hyperlink{classmdt_abstract_port_aa40baa0c593fef984f3796acafceee15}{$\sim$mdt\-Abstract\-Port} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
@@ -173,7 +175,7 @@ Q\-Wait\-Condition \hyperlink{classmdt_abstract_port_a4c81c98680c98ad6802dccd303
 Base class for port I/\-O. 
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000024}{Todo}]Waiting\-Canceled, Write\-Canceled, Read\-Canceled are not clean defined. The only object that knows when it must stop is the thread itself ! To be a little more clean, thread should check it's running flag each time a function returns a error, and stop if requierd ! \end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000020}{Todo}]Waiting\-Canceled, Write\-Canceled, Read\-Canceled are not clean defined. The only object that knows when it must stop is the thread itself ! To be a little more clean, thread should check it's running flag each time a function returns a error, and stop if requierd ! \end{DoxyRefDesc}
 
 
 Definition at line 42 of file mdt\-Abstract\-Port.\-h.
@@ -253,7 +255,7 @@ Definition at line 60 of file mdt\-Abstract\-Port.\-h.
 \index{mdt\-Abstract\-Port@{mdt\-Abstract\-Port}!mdtAbstractPort@{mdt\-Abstract\-Port}}
 \subsubsection[{mdt\-Abstract\-Port}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Abstract\-Port\-::mdt\-Abstract\-Port (
 \begin{DoxyParamCaption}
-\item[{{\bf Q\-Object} $\ast$}]{parent = {\ttfamily 0}}
+\item[{Q\-Object $\ast$}]{parent = {\ttfamily 0}}
 \end{DoxyParamCaption}
 )}}\label{classmdt_abstract_port_a35e7bff9413690833c832bf115da102f}
 
@@ -478,7 +480,7 @@ A call of this method will clear the internall flag. (a second call will then re
 Mutex is not handled by this method.
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000025}{Todo}]Thread are to adapt. \end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000021}{Todo}]Thread are to adapt. \end{DoxyRefDesc}
 
 
 Definition at line 172 of file mdt\-Abstract\-Port.\-cpp.
@@ -530,7 +532,7 @@ A call of this method will clear the internall flag. (a second call will then re
 Mutex is not handled by this method.
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000026}{Todo}]Thread are to adapt. \end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000022}{Todo}]Thread are to adapt. \end{DoxyRefDesc}
 
 
 Definition at line 192 of file mdt\-Abstract\-Port.\-cpp.

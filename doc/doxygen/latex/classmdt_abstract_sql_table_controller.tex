@@ -12,7 +12,8 @@ Base class for S\-Q\-L table controllers.
 
 
 
-Inheritance diagram for mdt\-Abstract\-Sql\-Table\-Controller\-:\nopagebreak
+Inheritance diagram for mdt\-Abstract\-Sql\-Table\-Controller\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -21,7 +22,8 @@ Inheritance diagram for mdt\-Abstract\-Sql\-Table\-Controller\-:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdt\-Abstract\-Sql\-Table\-Controller\-:\nopagebreak
+Collaboration diagram for mdt\-Abstract\-Sql\-Table\-Controller\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -57,7 +59,9 @@ void \hyperlink{classmdt_abstract_sql_table_controller_a36af2665b6d742aba3bc7f6e
 void \hyperlink{classmdt_abstract_sql_table_controller_a82e88e4ff610f73b629bb6d2f229d1aa}{insert} ()
 \begin{DoxyCompactList}\small\item\em Insert a new row to model. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_abstract_sql_table_controller_a7bbe0f951403acbcc01c99f5916b9204}{remove} ()
-\begin{DoxyCompactList}\small\item\em Remove a row from model. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Remove a row from model. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_abstract_sql_table_controller_a3412eef70d436bffd15f8edafce977ba}{set\-Last\-Error} (const \hyperlink{classmdt_error}{mdt\-Error} \&error)
+\begin{DoxyCompactList}\small\item\em Set last error. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Signals}
 \begin{DoxyCompactItemize}
 \item 
@@ -96,7 +100,7 @@ void \hyperlink{classmdt_abstract_sql_table_controller_a4fd23a5a2aa859671adc1956
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classmdt_abstract_sql_table_controller_aa0a7c138fe64931faad0f94bcb34f9a8}{mdt\-Abstract\-Sql\-Table\-Controller} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent=0)
+\hyperlink{classmdt_abstract_sql_table_controller_aa0a7c138fe64931faad0f94bcb34f9a8}{mdt\-Abstract\-Sql\-Table\-Controller} (Q\-Object $\ast$parent=0)
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
 virtual \hyperlink{classmdt_abstract_sql_table_controller_a5fc7cf40c3dde3b5bbabca5a28c2c221}{$\sim$mdt\-Abstract\-Sql\-Table\-Controller} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
@@ -104,7 +108,7 @@ void \hyperlink{classmdt_abstract_sql_table_controller_ab3939b6f1d191283709efdf0
 \begin{DoxyCompactList}\small\item\em Set message handler. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_abstract_sql_table_controller_ab0a83cfc65c3b6569396f60a25cf7323}{has\-Message\-Handler} () const 
 \begin{DoxyCompactList}\small\item\em Check if a message handler was allready set. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_abstract_sql_table_controller_a5a94417dc46a7dc6de8b5ba0593494a7}{set\-Table\-Name} (const Q\-String \&\hyperlink{classmdt_abstract_sql_table_controller_aaf864d069aeb74068b6daa747b740944}{table\-Name}, Q\-Sql\-Database db, const Q\-String \&\hyperlink{classmdt_abstract_sql_table_controller_a1a9b3d3e4009acd32fc4a083f738fc62}{user\-Friendly\-Table\-Name}=Q\-String())
+void \hyperlink{classmdt_abstract_sql_table_controller_a5a94417dc46a7dc6de8b5ba0593494a7}{set\-Table\-Name} (const Q\-String \&\hyperlink{classmdt_abstract_sql_table_controller_aaf864d069aeb74068b6daa747b740944}{table\-Name}, \hyperlink{class_q_sql_database}{Q\-Sql\-Database} db, const Q\-String \&\hyperlink{classmdt_abstract_sql_table_controller_a1a9b3d3e4009acd32fc4a083f738fc62}{user\-Friendly\-Table\-Name}=Q\-String())
 \begin{DoxyCompactList}\small\item\em Set table name. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_abstract_sql_table_controller_ac9e64cf30e552ec65ed5fdd861320676}{set\-Model} (std\-::shared\-\_\-ptr$<$ \hyperlink{class_q_sql_table_model}{Q\-Sql\-Table\-Model} $>$ m, const Q\-String \&\hyperlink{classmdt_abstract_sql_table_controller_a1a9b3d3e4009acd32fc4a083f738fc62}{user\-Friendly\-Table\-Name}=Q\-String())
 \begin{DoxyCompactList}\small\item\em Set table model. \end{DoxyCompactList}\item 
@@ -122,7 +126,15 @@ Q\-Variant \hyperlink{classmdt_abstract_sql_table_controller_aae2c2912d99d33e6e0
 \begin{DoxyCompactList}\small\item\em Get header data of given column. \end{DoxyCompactList}\item 
 Q\-Variant \hyperlink{classmdt_abstract_sql_table_controller_a9b022656604a245f4517ed3a8df1ac37}{header\-Data} (const Q\-String \&field\-Name, int role=Qt\-::\-Display\-Role) const 
 \begin{DoxyCompactList}\small\item\em Get header data of given field name. \end{DoxyCompactList}\item 
-{\footnotesize template$<$typename T $>$ }\\bool \hyperlink{classmdt_abstract_sql_table_controller_a448966fc2696cc2cef31f4663ccde662}{add\-Child\-Controller} (const \hyperlink{classmdt_sql_relation_info}{mdt\-Sql\-Relation\-Info} \&relation\-Info, Q\-Sql\-Database db, const Q\-String \&user\-Friendly\-Child\-Table\-Name=Q\-String())
+Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_abstract_sql_table_controller_a99d93f6aa6b187dbe71056c768f687ed}{header\-Row\-Data} (const std\-::vector$<$ int $>$ \&columns, int role=Qt\-::\-Display\-Role) const 
+\begin{DoxyCompactList}\small\item\em Get header row data of given columns. \end{DoxyCompactList}\item 
+Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_abstract_sql_table_controller_a7949939293b681a5c1abe28b3be7b42b}{header\-Row\-Data} (const Q\-String\-List \&field\-Names, int role=Qt\-::\-Display\-Role) const 
+\begin{DoxyCompactList}\small\item\em Get header row data of given field names. \end{DoxyCompactList}\item 
+Q\-String\-List \hyperlink{classmdt_abstract_sql_table_controller_a5eddd16842159a785a97f57c72a01eaf}{header\-Row\-Data\-Str} (const std\-::vector$<$ int $>$ \&columns, int role=Qt\-::\-Display\-Role) const 
+\begin{DoxyCompactList}\small\item\em Get header row data of given columns. \end{DoxyCompactList}\item 
+Q\-String\-List \hyperlink{classmdt_abstract_sql_table_controller_a1487fbe6b3fb519c03fc2701ee68d116}{header\-Row\-Data\-Str} (const Q\-String\-List \&field\-Names, int role=Qt\-::\-Display\-Role) const 
+\begin{DoxyCompactList}\small\item\em Get header row data of given field names. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\bool \hyperlink{classmdt_abstract_sql_table_controller_a448966fc2696cc2cef31f4663ccde662}{add\-Child\-Controller} (const \hyperlink{classmdt_sql_relation_info}{mdt\-Sql\-Relation\-Info} \&relation\-Info, \hyperlink{class_q_sql_database}{Q\-Sql\-Database} db, const Q\-String \&user\-Friendly\-Child\-Table\-Name=Q\-String())
 \begin{DoxyCompactList}\small\item\em Add a child controller. \end{DoxyCompactList}\item 
 {\footnotesize template$<$typename T $>$ }\\bool \hyperlink{classmdt_abstract_sql_table_controller_a9ca5ec3bd1c98e7b5576de86712f220b}{add\-Child\-Controller} (const \hyperlink{classmdt_sql_relation_info}{mdt\-Sql\-Relation\-Info} \&relation\-Info, const Q\-String \&user\-Friendly\-Child\-Table\-Name=Q\-String())
 \begin{DoxyCompactList}\small\item\em Add a child controller. \end{DoxyCompactList}\item 
@@ -199,6 +211,14 @@ Q\-Variant \hyperlink{classmdt_abstract_sql_table_controller_aa79313d4ac1fbdd86b
 \begin{DoxyCompactList}\small\item\em Get data for given match and field name. \end{DoxyCompactList}\item 
 Q\-Variant \hyperlink{classmdt_abstract_sql_table_controller_a3b6e51c1d21ac2d0c045c5e798370046}{data} (const Q\-String \&match\-Field\-Name1, const Q\-Variant \&key1, const Q\-String \&match\-Field\-Name2, const Q\-Variant \&key2, const Q\-String \&data\-Field\-Name)
 \begin{DoxyCompactList}\small\item\em Get data for given match and field name. \end{DoxyCompactList}\item 
+Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_abstract_sql_table_controller_a5484649a8a0ad44c78b5f17471de2a49}{row\-Data} (int row, const std\-::vector$<$ int $>$ \&columns, int role=Qt\-::\-Display\-Role) const 
+\begin{DoxyCompactList}\small\item\em Get row data of given row and columns list. \end{DoxyCompactList}\item 
+Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_abstract_sql_table_controller_a237cb7894646edd1e790e3066ebf7319}{row\-Data} (int row, const Q\-String\-List \&field\-Names, int role=Qt\-::\-Display\-Role) const 
+\begin{DoxyCompactList}\small\item\em Get row data of given row and field names. \end{DoxyCompactList}\item 
+Q\-String\-List \hyperlink{classmdt_abstract_sql_table_controller_a327acbde1979ba113a621dc3d8be7f78}{row\-Data\-Str} (int row, const std\-::vector$<$ int $>$ \&columns, int role=Qt\-::\-Display\-Role) const 
+\begin{DoxyCompactList}\small\item\em Get row data of given row and field names. \end{DoxyCompactList}\item 
+Q\-String\-List \hyperlink{classmdt_abstract_sql_table_controller_a7704d947a45401c1805a37eeee90b439}{row\-Data\-Str} (int row, const Q\-String\-List \&field\-Names, int role=Qt\-::\-Display\-Role) const 
+\begin{DoxyCompactList}\small\item\em Get row data of given row and field names. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_sql_record}{mdt\-Sql\-Record} \hyperlink{classmdt_abstract_sql_table_controller_a1bf49f87908a1468bea5b9f3fc833a7c}{record} (int row, const Q\-String\-List \&field\-Names)
 \begin{DoxyCompactList}\small\item\em Get a record that contains given field names for given row. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_sql_record}{mdt\-Sql\-Record} \hyperlink{classmdt_abstract_sql_table_controller_ae1f088f168d52b6253628a9a337a3adf}{record} (int row, const Q\-String\-List \&field\-Names, bool \&ok)
@@ -338,7 +358,7 @@ Typicall usage\-:
 \item Load data with \hyperlink{classmdt_abstract_sql_table_controller_ae26ede862ac54ece9243b264ea22cefb}{select()} 
 \end{DoxyItemize}
 
-Definition at line 80 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 81 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 
 
@@ -379,7 +399,7 @@ This state is set by internal state machine. \begin{Desc}
 \end{Desc}
 
 
-Definition at line 90 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 91 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 
 
@@ -388,7 +408,7 @@ Definition at line 90 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 \index{mdt\-Abstract\-Sql\-Table\-Controller@{mdt\-Abstract\-Sql\-Table\-Controller}!mdtAbstractSqlTableController@{mdt\-Abstract\-Sql\-Table\-Controller}}
 \subsubsection[{mdt\-Abstract\-Sql\-Table\-Controller}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Abstract\-Sql\-Table\-Controller\-::mdt\-Abstract\-Sql\-Table\-Controller (
 \begin{DoxyParamCaption}
-\item[{{\bf Q\-Object} $\ast$}]{parent = {\ttfamily 0}}
+\item[{Q\-Object $\ast$}]{parent = {\ttfamily 0}}
 \end{DoxyParamCaption}
 )}}\label{classmdt_abstract_sql_table_controller_aa0a7c138fe64931faad0f94bcb34f9a8}
 
@@ -422,7 +442,7 @@ Definition at line 45 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 \subsubsection[{add\-Child\-Controller}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ bool mdt\-Abstract\-Sql\-Table\-Controller\-::add\-Child\-Controller (
 \begin{DoxyParamCaption}
 \item[{const {\bf mdt\-Sql\-Relation\-Info} \&}]{relation\-Info, }
-\item[{Q\-Sql\-Database}]{db, }
+\item[{{\bf Q\-Sql\-Database}}]{db, }
 \item[{const Q\-String \&}]{user\-Friendly\-Child\-Table\-Name = {\ttfamily QString()}}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_abstract_sql_table_controller_a448966fc2696cc2cef31f4663ccde662}
@@ -446,7 +466,7 @@ Table model must be set with \hyperlink{classmdt_abstract_sql_table_controller_a
 \end{DoxyPrecond}
 
 
-Definition at line 201 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 232 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 \hypertarget{classmdt_abstract_sql_table_controller_a9ca5ec3bd1c98e7b5576de86712f220b}{\index{mdt\-Abstract\-Sql\-Table\-Controller@{mdt\-Abstract\-Sql\-Table\-Controller}!add\-Child\-Controller@{add\-Child\-Controller}}
 \index{add\-Child\-Controller@{add\-Child\-Controller}!mdtAbstractSqlTableController@{mdt\-Abstract\-Sql\-Table\-Controller}}
@@ -474,7 +494,7 @@ Table model must be set with \hyperlink{classmdt_abstract_sql_table_controller_a
 \end{DoxyPrecond}
 
 
-Definition at line 220 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 251 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 \hypertarget{classmdt_abstract_sql_table_controller_aa56e548973ffed3e01bd319bd7695101}{\index{mdt\-Abstract\-Sql\-Table\-Controller@{mdt\-Abstract\-Sql\-Table\-Controller}!add\-Column\-To\-Sort\-Order@{add\-Column\-To\-Sort\-Order}}
 \index{add\-Column\-To\-Sort\-Order@{add\-Column\-To\-Sort\-Order}!mdtAbstractSqlTableController@{mdt\-Abstract\-Sql\-Table\-Controller}}
@@ -509,7 +529,7 @@ Model must be set with \hyperlink{classmdt_abstract_sql_table_controller_ac9e64c
 \end{DoxyPrecond}
 
 
-Definition at line 330 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 356 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 \hypertarget{classmdt_abstract_sql_table_controller_a243b633de692a4b51003726ebb292666}{\index{mdt\-Abstract\-Sql\-Table\-Controller@{mdt\-Abstract\-Sql\-Table\-Controller}!add\-Data\-Validator@{add\-Data\-Validator}}
 \index{add\-Data\-Validator@{add\-Data\-Validator}!mdtAbstractSqlTableController@{mdt\-Abstract\-Sql\-Table\-Controller}}
@@ -538,7 +558,7 @@ validator must be a valid pointer.
 \end{DoxyPrecond}
 
 
-Definition at line 316 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 342 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -564,7 +584,7 @@ true if all data are saved, false if there are pending data.
 \end{DoxyReturn}
 
 
-Definition at line 812 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 870 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -587,7 +607,7 @@ Beginn manually a new transaction.
 
 On error, false is returned and error is available with \hyperlink{classmdt_abstract_sql_table_controller_a085ff6b261917b19b130e30123a166ad}{last\-Error()} . 
 
-Definition at line 920 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 978 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -609,7 +629,7 @@ Set the can\-Write\-To\-Database flag.
 \end{DoxySeeAlso}
 
 
-Definition at line 151 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 152 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 \hypertarget{classmdt_abstract_sql_table_controller_a4096d1eca87219a9abe4ab3e90943d81}{\index{mdt\-Abstract\-Sql\-Table\-Controller@{mdt\-Abstract\-Sql\-Table\-Controller}!child\-Controller@{child\-Controller}}
 \index{child\-Controller@{child\-Controller}!mdtAbstractSqlTableController@{mdt\-Abstract\-Sql\-Table\-Controller}}
@@ -624,7 +644,7 @@ Get a child controller.
 
 Can return a Null pointer if no controller is assigned to requested table, or it exists, but is not requested type T. 
 
-Definition at line 233 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 264 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 
 
@@ -661,7 +681,7 @@ Clear columns sort order.
 \end{DoxySeeAlso}
 
 
-Definition at line 335 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 361 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 \hypertarget{classmdt_abstract_sql_table_controller_a22a263d8c0bb0f85fc9803f65491c436}{\index{mdt\-Abstract\-Sql\-Table\-Controller@{mdt\-Abstract\-Sql\-Table\-Controller}!clear\-Filter@{clear\-Filter}}
 \index{clear\-Filter@{clear\-Filter}!mdtAbstractSqlTableController@{mdt\-Abstract\-Sql\-Table\-Controller}}
@@ -676,7 +696,7 @@ Clear filter.
 
 
 
-Definition at line 250 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 276 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -695,7 +715,7 @@ Get column count.
 
 
 
-Definition at line 722 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 787 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 
 
@@ -714,7 +734,7 @@ Commit manually a new transaction.
 
 On error, false is returned and error is available with \hyperlink{classmdt_abstract_sql_table_controller_a085ff6b261917b19b130e30123a166ad}{last\-Error()} . 
 
-Definition at line 950 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 1008 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -736,7 +756,7 @@ Table model must be set with \hyperlink{classmdt_abstract_sql_table_controller_a
 \end{DoxyPrecond}
 
 
-Definition at line 445 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 476 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 
 
@@ -759,7 +779,7 @@ Table model must be set with \hyperlink{classmdt_abstract_sql_table_controller_a
 \end{DoxyPrecond}
 
 
-Definition at line 458 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 489 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 
 
@@ -778,7 +798,7 @@ Get formated current value for S\-Q\-L query.
 
 
 
-Definition at line 469 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 500 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 \hypertarget{classmdt_abstract_sql_table_controller_a43311c27eab3a892fd079164abf3501f}{\index{mdt\-Abstract\-Sql\-Table\-Controller@{mdt\-Abstract\-Sql\-Table\-Controller}!current\-Formated\-Value@{current\-Formated\-Value}}
 \index{current\-Formated\-Value@{current\-Formated\-Value}!mdtAbstractSqlTableController@{mdt\-Abstract\-Sql\-Table\-Controller}}
@@ -794,7 +814,7 @@ Get formated current value for S\-Q\-L query.
 
 
 
-Definition at line 478 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 509 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 
 
@@ -814,7 +834,7 @@ Get a record that contains given field names for current row.
 
 
 
-Definition at line 639 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 704 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 
 
@@ -833,7 +853,7 @@ Get a record that contains given field names for current row.
 
 
 
-Definition at line 647 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 712 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 
 
@@ -852,7 +872,7 @@ Get current row.
 
 
 
-Definition at line 755 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 820 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 
 
@@ -873,7 +893,7 @@ Subclass can re-\/implement this method if some tasks should be done after curre
 
 Note\-: don't wory about child controllers or other things, they are handled in this base class. 
 
-Definition at line 880 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 956 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 
 
@@ -892,7 +912,7 @@ Get current state.
 
 
 
-Definition at line 347 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 378 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 
 
@@ -920,7 +940,7 @@ Table model must be set with \hyperlink{classmdt_abstract_sql_table_controller_a
 \end{DoxyPrecond}
 
 
-Definition at line 491 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 522 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 
 
@@ -945,7 +965,7 @@ Table model must be set with \hyperlink{classmdt_abstract_sql_table_controller_a
 \end{DoxyPrecond}
 
 
-Definition at line 459 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 485 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -970,7 +990,7 @@ Table model must be set with \hyperlink{classmdt_abstract_sql_table_controller_a
 \end{DoxyPrecond}
 
 
-Definition at line 514 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 545 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 
 
@@ -996,7 +1016,7 @@ Table model must be set with \hyperlink{classmdt_abstract_sql_table_controller_a
 \end{DoxyPrecond}
 
 
-Definition at line 528 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 559 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 
 
@@ -1021,7 +1041,7 @@ Table model must be set with \hyperlink{classmdt_abstract_sql_table_controller_a
 \end{DoxyPrecond}
 
 
-Definition at line 541 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 572 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 
 
@@ -1047,7 +1067,7 @@ Table model must be set with \hyperlink{classmdt_abstract_sql_table_controller_a
 \end{DoxyPrecond}
 
 
-Definition at line 476 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 502 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -1078,7 +1098,7 @@ Get data for given match and field name.
 \end{DoxyParams}
 
 
-Definition at line 494 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 520 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -1108,7 +1128,7 @@ Get data for given match and field name.
 \end{DoxyParams}
 
 
-Definition at line 571 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 602 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 
 
@@ -1145,7 +1165,7 @@ Get data for given match and field name.
 \end{DoxyParams}
 
 
-Definition at line 530 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 556 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -1181,7 +1201,7 @@ Get data for given match and field name.
 \end{DoxyParams}
 
 
-Definition at line 596 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 627 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 
 
@@ -1221,7 +1241,7 @@ Table model must be set with \hyperlink{classmdt_abstract_sql_table_controller_a
 \end{DoxyPrecond}
 
 
-Definition at line 661 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 726 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 \hypertarget{classmdt_abstract_sql_table_controller_a712e896a677fc0f6660305c35947ef9f}{\index{mdt\-Abstract\-Sql\-Table\-Controller@{mdt\-Abstract\-Sql\-Table\-Controller}!data\-List@{data\-List}}
 \index{data\-List@{data\-List}!mdtAbstractSqlTableController@{mdt\-Abstract\-Sql\-Table\-Controller}}
@@ -1243,7 +1263,7 @@ Table model must be set with \hyperlink{classmdt_abstract_sql_table_controller_a
 \end{DoxyPrecond}
 
 
-Definition at line 623 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 681 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -1341,7 +1361,7 @@ Get formated value for S\-Q\-L query.
 
 
 
-Definition at line 680 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 745 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 
 
@@ -1362,7 +1382,7 @@ Get formated value for S\-Q\-L query.
 
 Will add delimiter to value, regarding field type. 
 
-Definition at line 660 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 718 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -1382,7 +1402,7 @@ Get formated value for S\-Q\-L query.
 
 Will add delimiter to value, regarding field type. 
 
-Definition at line 699 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 764 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 
 
@@ -1403,7 +1423,7 @@ Get formated value for S\-Q\-L query.
 
 Will add delimiter to value, regarding field type. 
 
-Definition at line 687 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 745 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -1422,7 +1442,7 @@ Get formated value for S\-Q\-L query.
 
 Will add delimiter to value, regarding field type. 
 
-Definition at line 708 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 766 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 \hypertarget{classmdt_abstract_sql_table_controller_ab0a83cfc65c3b6569396f60a25cf7323}{\index{mdt\-Abstract\-Sql\-Table\-Controller@{mdt\-Abstract\-Sql\-Table\-Controller}!has\-Message\-Handler@{has\-Message\-Handler}}
 \index{has\-Message\-Handler@{has\-Message\-Handler}!mdtAbstractSqlTableController@{mdt\-Abstract\-Sql\-Table\-Controller}}
@@ -1454,11 +1474,11 @@ Get header data of given section.
 
 
 
-Definition at line 170 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 171 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 
 
-Referenced by header\-Data().
+Referenced by header\-Data(), header\-Row\-Data(), and header\-Row\-Data\-Str().
 
 \hypertarget{classmdt_abstract_sql_table_controller_aae2c2912d99d33e6e0e3b010d218007f}{\index{mdt\-Abstract\-Sql\-Table\-Controller@{mdt\-Abstract\-Sql\-Table\-Controller}!header\-Data@{header\-Data}}
 \index{header\-Data@{header\-Data}!mdtAbstractSqlTableController@{mdt\-Abstract\-Sql\-Table\-Controller}}
@@ -1474,7 +1494,7 @@ Get header data of given column.
 
 
 
-Definition at line 177 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 178 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 \hypertarget{classmdt_abstract_sql_table_controller_a9b022656604a245f4517ed3a8df1ac37}{\index{mdt\-Abstract\-Sql\-Table\-Controller@{mdt\-Abstract\-Sql\-Table\-Controller}!header\-Data@{header\-Data}}
 \index{header\-Data@{header\-Data}!mdtAbstractSqlTableController@{mdt\-Abstract\-Sql\-Table\-Controller}}
@@ -1499,6 +1519,106 @@ Definition at line 118 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 References field\-Index(), and header\-Data().
 
+\hypertarget{classmdt_abstract_sql_table_controller_a99d93f6aa6b187dbe71056c768f687ed}{\index{mdt\-Abstract\-Sql\-Table\-Controller@{mdt\-Abstract\-Sql\-Table\-Controller}!header\-Row\-Data@{header\-Row\-Data}}
+\index{header\-Row\-Data@{header\-Row\-Data}!mdtAbstractSqlTableController@{mdt\-Abstract\-Sql\-Table\-Controller}}
+\subsubsection[{header\-Row\-Data}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ Q\-Variant $>$ mdt\-Abstract\-Sql\-Table\-Controller\-::header\-Row\-Data (
+\begin{DoxyParamCaption}
+\item[{const std\-::vector$<$ int $>$ \&}]{columns, }
+\item[{int}]{role = {\ttfamily Qt\-:\-:DisplayRole}}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_abstract_sql_table_controller_a99d93f6aa6b187dbe71056c768f687ed}
+
+
+Get header row data of given columns. 
+
+\begin{DoxyPrecond}{Precondition}
+Table model must be set with \hyperlink{classmdt_abstract_sql_table_controller_ac9e64cf30e552ec65ed5fdd861320676}{set\-Model()} or \hyperlink{classmdt_abstract_sql_table_controller_a5a94417dc46a7dc6de8b5ba0593494a7}{set\-Table\-Name()} begore calling this method. 
+\end{DoxyPrecond}
+
+
+Definition at line 125 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+
+
+
+References header\-Data().
+
+
+
+Referenced by header\-Row\-Data().
+
+\hypertarget{classmdt_abstract_sql_table_controller_a7949939293b681a5c1abe28b3be7b42b}{\index{mdt\-Abstract\-Sql\-Table\-Controller@{mdt\-Abstract\-Sql\-Table\-Controller}!header\-Row\-Data@{header\-Row\-Data}}
+\index{header\-Row\-Data@{header\-Row\-Data}!mdtAbstractSqlTableController@{mdt\-Abstract\-Sql\-Table\-Controller}}
+\subsubsection[{header\-Row\-Data}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$Q\-Variant$>$ mdt\-Abstract\-Sql\-Table\-Controller\-::header\-Row\-Data (
+\begin{DoxyParamCaption}
+\item[{const Q\-String\-List \&}]{field\-Names, }
+\item[{int}]{role = {\ttfamily Qt\-:\-:DisplayRole}}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_abstract_sql_table_controller_a7949939293b681a5c1abe28b3be7b42b}
+
+
+Get header row data of given field names. 
+
+\begin{DoxyPrecond}{Precondition}
+Table model must be set with \hyperlink{classmdt_abstract_sql_table_controller_ac9e64cf30e552ec65ed5fdd861320676}{set\-Model()} or \hyperlink{classmdt_abstract_sql_table_controller_a5a94417dc46a7dc6de8b5ba0593494a7}{set\-Table\-Name()} begore calling this method. 
+\end{DoxyPrecond}
+
+
+Definition at line 199 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+
+
+
+References header\-Row\-Data().
+
+\hypertarget{classmdt_abstract_sql_table_controller_a5eddd16842159a785a97f57c72a01eaf}{\index{mdt\-Abstract\-Sql\-Table\-Controller@{mdt\-Abstract\-Sql\-Table\-Controller}!header\-Row\-Data\-Str@{header\-Row\-Data\-Str}}
+\index{header\-Row\-Data\-Str@{header\-Row\-Data\-Str}!mdtAbstractSqlTableController@{mdt\-Abstract\-Sql\-Table\-Controller}}
+\subsubsection[{header\-Row\-Data\-Str}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String\-List mdt\-Abstract\-Sql\-Table\-Controller\-::header\-Row\-Data\-Str (
+\begin{DoxyParamCaption}
+\item[{const std\-::vector$<$ int $>$ \&}]{columns, }
+\item[{int}]{role = {\ttfamily Qt\-:\-:DisplayRole}}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_abstract_sql_table_controller_a5eddd16842159a785a97f57c72a01eaf}
+
+
+Get header row data of given columns. 
+
+\begin{DoxyPrecond}{Precondition}
+Table model must be set with \hyperlink{classmdt_abstract_sql_table_controller_ac9e64cf30e552ec65ed5fdd861320676}{set\-Model()} or \hyperlink{classmdt_abstract_sql_table_controller_a5a94417dc46a7dc6de8b5ba0593494a7}{set\-Table\-Name()} begore calling this method. 
+\end{DoxyPrecond}
+
+
+Definition at line 138 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+
+
+
+References header\-Data().
+
+
+
+Referenced by header\-Row\-Data\-Str().
+
+\hypertarget{classmdt_abstract_sql_table_controller_a1487fbe6b3fb519c03fc2701ee68d116}{\index{mdt\-Abstract\-Sql\-Table\-Controller@{mdt\-Abstract\-Sql\-Table\-Controller}!header\-Row\-Data\-Str@{header\-Row\-Data\-Str}}
+\index{header\-Row\-Data\-Str@{header\-Row\-Data\-Str}!mdtAbstractSqlTableController@{mdt\-Abstract\-Sql\-Table\-Controller}}
+\subsubsection[{header\-Row\-Data\-Str}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String\-List mdt\-Abstract\-Sql\-Table\-Controller\-::header\-Row\-Data\-Str (
+\begin{DoxyParamCaption}
+\item[{const Q\-String\-List \&}]{field\-Names, }
+\item[{int}]{role = {\ttfamily Qt\-:\-:DisplayRole}}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_abstract_sql_table_controller_a1487fbe6b3fb519c03fc2701ee68d116}
+
+
+Get header row data of given field names. 
+
+\begin{DoxyPrecond}{Precondition}
+Table model must be set with \hyperlink{classmdt_abstract_sql_table_controller_ac9e64cf30e552ec65ed5fdd861320676}{set\-Model()} or \hyperlink{classmdt_abstract_sql_table_controller_a5a94417dc46a7dc6de8b5ba0593494a7}{set\-Table\-Name()} begore calling this method. 
+\end{DoxyPrecond}
+
+
+Definition at line 214 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+
+
+
+References header\-Row\-Data\-Str().
+
 \hypertarget{classmdt_abstract_sql_table_controller_a82e88e4ff610f73b629bb6d2f229d1aa}{\index{mdt\-Abstract\-Sql\-Table\-Controller@{mdt\-Abstract\-Sql\-Table\-Controller}!insert@{insert}}
 \index{insert@{insert}!mdtAbstractSqlTableController@{mdt\-Abstract\-Sql\-Table\-Controller}}
 \subsubsection[{insert}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Table\-Controller\-::insert (
@@ -1512,7 +1632,7 @@ Insert a new row to model.
 
 Internally, \hyperlink{classmdt_abstract_sql_table_controller_a277d087a34874bc6ac42f2e02e9f57d3}{insert\-Triggered()} signal will be emitted. 
 
-Definition at line 907 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 965 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -1540,7 +1660,7 @@ Note\-: don't wory about child controllers or other things, they are handled in 
 \end{DoxyParams}
 
 
-Definition at line 892 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 968 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 
 
@@ -1589,7 +1709,7 @@ Get last error.
 
 
 
-Definition at line 780 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 845 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 
 
@@ -1623,7 +1743,7 @@ Get message handler.
 
 Can return a Null pointer if no message handler was set (witch is acceptable case). 
 
-Definition at line 841 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 917 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 
 
@@ -1642,7 +1762,7 @@ Get model (read only access)
 
 
 
-Definition at line 313 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 344 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 
 
@@ -1663,7 +1783,7 @@ Get model (write access)
 \item[\hyperlink{todo__todo000002}{Todo}]If not needed, make it protected and adapt tests \end{DoxyRefDesc}
 
 
-Definition at line 319 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 350 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 \hypertarget{classmdt_abstract_sql_table_controller_aeb331584e8cdba27e4950fc27857e52b}{\index{mdt\-Abstract\-Sql\-Table\-Controller@{mdt\-Abstract\-Sql\-Table\-Controller}!model\-Set\-Event@{model\-Set\-Event}}
 \index{model\-Set\-Event@{model\-Set\-Event}!mdtAbstractSqlTableController@{mdt\-Abstract\-Sql\-Table\-Controller}}
@@ -1678,7 +1798,7 @@ Table model set event.
 
 Cann be re-\/implemented in subclass if some things must be done once a table model was set. 
 
-Definition at line 870 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 946 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 
 
@@ -1697,7 +1817,7 @@ Activity after Editing state entered.
 
 This slot is called from internal state machine and should not be used directly. 
 
-Definition at line 1039 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 1097 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -1716,7 +1836,7 @@ Activity after Editing state exited.
 
 This slot is called from internal state machine and should not be used directly. 
 
-Definition at line 1045 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 1103 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -1735,7 +1855,7 @@ Activity after Editing\-New\-Row state entered.
 
 This slot is called from internal state machine and should not be used directly. 
 
-Definition at line 1138 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 1196 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -1754,7 +1874,7 @@ Activity after Editing state exited.
 
 This slot is called from internal state machine and should not be used directly. 
 
-Definition at line 1144 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 1202 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -1773,7 +1893,7 @@ Activity after Inserting state entered.
 
 This slot is called from internal state machine and should not be used directly. 
 
-Definition at line 1116 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 1174 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -1794,7 +1914,7 @@ Will call \hyperlink{classmdt_abstract_sql_table_controller_a4e44b446a5d24486cfc
 
 This slot is called from internal state machine and should not be used directly. 
 
-Definition at line 1230 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 1288 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -1815,7 +1935,7 @@ Will call \hyperlink{classmdt_abstract_sql_table_controller_a7c7eba056561498b761
 
 This slot is called from internal state machine and should not be used directly. 
 
-Definition at line 1090 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 1148 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -1836,7 +1956,7 @@ Will call do\-Revert\-New\-Row().
 
 This slot is called from internal state machine and should not be used directly. 
 
-Definition at line 1192 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 1250 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -1855,7 +1975,7 @@ Activity after Selecting state entered.
 
 This slot is called from internal state machine and should not be used directly. 
 
-Definition at line 1014 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 1072 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 \hypertarget{classmdt_abstract_sql_table_controller_a22c94c035f833168bf5dee9964f6830d}{\index{mdt\-Abstract\-Sql\-Table\-Controller@{mdt\-Abstract\-Sql\-Table\-Controller}!on\-State\-Submitting\-Entered@{on\-State\-Submitting\-Entered}}
 \index{on\-State\-Submitting\-Entered@{on\-State\-Submitting\-Entered}!mdtAbstractSqlTableController@{mdt\-Abstract\-Sql\-Table\-Controller}}
@@ -1872,7 +1992,7 @@ Will call check\-Before\-Submit() and, on success, do\-Submit().
 
 This slot is called from internal state machine and should not be used directly. 
 
-Definition at line 1052 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 1110 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -1893,7 +2013,7 @@ Will call check\-Before\-Submit() and, on success, do\-Submit\-New\-Row().
 
 This slot is called from internal state machine and should not be used directly. 
 
-Definition at line 1151 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 1209 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -1912,7 +2032,7 @@ Activity after Visualizing state entered.
 
 This slot is called from internal state machine and should not be used directly. 
 
-Definition at line 1018 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 1076 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -1931,7 +2051,7 @@ Activity after Visualizing state entered.
 
 This slot is called from internal state machine and should not be used directly. 
 
-Definition at line 1032 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 1090 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -1965,7 +2085,7 @@ Get internal proxy model.
 
 
 
-Definition at line 845 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 921 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 
 
@@ -1985,7 +2105,7 @@ Get a record that contains given field names for given row.
 
 
 
-Definition at line 605 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 670 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 
 
@@ -2006,7 +2126,7 @@ Get a record that contains given field names for given row.
 
 
 
-Definition at line 574 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 632 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -2037,7 +2157,7 @@ Get a record for given match and that contains given field names.
 \end{DoxyParams}
 
 
-Definition at line 597 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 655 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -2067,7 +2187,7 @@ Get a record for given match and that contains given field names.
 \end{DoxyParams}
 
 
-Definition at line 630 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 695 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 
 
@@ -2086,7 +2206,7 @@ Remove a row from model.
 
 Internally, \hyperlink{classmdt_abstract_sql_table_controller_ae76bdc25407f8ed1411919edf5f77b18}{remove\-Triggered()} signal will be emitted. 
 
-Definition at line 915 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 973 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -2110,7 +2230,7 @@ Table model must be set with \hyperlink{classmdt_abstract_sql_table_controller_a
 \end{DoxyPrecond}
 
 
-Definition at line 882 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 940 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -2161,7 +2281,7 @@ Depending on subclass choosen Edit\-Strategy, this method has potentially no eff
 
 Internally, \hyperlink{classmdt_abstract_sql_table_controller_a34238105f2b767e684f309c8af961572}{revert\-Triggered()} signal will be emitted. 
 
-Definition at line 902 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 960 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -2210,7 +2330,7 @@ Rollback manually a new transaction.
 
 On error, false is returned and error is available with \hyperlink{classmdt_abstract_sql_table_controller_a085ff6b261917b19b130e30123a166ad}{last\-Error()} . 
 
-Definition at line 935 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 993 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -2234,11 +2354,123 @@ Get row count.
 \end{DoxyParams}
 
 
-Definition at line 739 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 797 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
-Referenced by on\-State\-Inserting\-Entered(), on\-State\-Removing\-Entered(), sort(), and mdt\-Sql\-Data\-Widget\-Controller\-::to\-Last().
+Referenced by on\-State\-Inserting\-Entered(), on\-State\-Removing\-Entered(), row\-Data(), row\-Data\-Str(), sort(), and mdt\-Sql\-Data\-Widget\-Controller\-::to\-Last().
+
+\hypertarget{classmdt_abstract_sql_table_controller_a5484649a8a0ad44c78b5f17471de2a49}{\index{mdt\-Abstract\-Sql\-Table\-Controller@{mdt\-Abstract\-Sql\-Table\-Controller}!row\-Data@{row\-Data}}
+\index{row\-Data@{row\-Data}!mdtAbstractSqlTableController@{mdt\-Abstract\-Sql\-Table\-Controller}}
+\subsubsection[{row\-Data}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ Q\-Variant $>$ mdt\-Abstract\-Sql\-Table\-Controller\-::row\-Data (
+\begin{DoxyParamCaption}
+\item[{int}]{row, }
+\item[{const std\-::vector$<$ int $>$ \&}]{columns, }
+\item[{int}]{role = {\ttfamily Qt\-:\-:DisplayRole}}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_abstract_sql_table_controller_a5484649a8a0ad44c78b5f17471de2a49}
+
+
+Get row data of given row and columns list. 
+
+\begin{DoxyPrecond}{Precondition}
+Table model must be set with \hyperlink{classmdt_abstract_sql_table_controller_ac9e64cf30e552ec65ed5fdd861320676}{set\-Model()} or \hyperlink{classmdt_abstract_sql_table_controller_a5a94417dc46a7dc6de8b5ba0593494a7}{set\-Table\-Name()} begore calling this method. 
+
+Given row and columns must exist in table. 
+\end{DoxyPrecond}
+
+
+Definition at line 600 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+
+
+
+References row\-Count().
+
+
+
+Referenced by row\-Data().
+
+\hypertarget{classmdt_abstract_sql_table_controller_a237cb7894646edd1e790e3066ebf7319}{\index{mdt\-Abstract\-Sql\-Table\-Controller@{mdt\-Abstract\-Sql\-Table\-Controller}!row\-Data@{row\-Data}}
+\index{row\-Data@{row\-Data}!mdtAbstractSqlTableController@{mdt\-Abstract\-Sql\-Table\-Controller}}
+\subsubsection[{row\-Data}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$Q\-Variant$>$ mdt\-Abstract\-Sql\-Table\-Controller\-::row\-Data (
+\begin{DoxyParamCaption}
+\item[{int}]{row, }
+\item[{const Q\-String\-List \&}]{field\-Names, }
+\item[{int}]{role = {\ttfamily Qt\-:\-:DisplayRole}}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_abstract_sql_table_controller_a237cb7894646edd1e790e3066ebf7319}
+
+
+Get row data of given row and field names. 
+
+\begin{DoxyPrecond}{Precondition}
+Table model must be set with \hyperlink{classmdt_abstract_sql_table_controller_ac9e64cf30e552ec65ed5fdd861320676}{set\-Model()} or \hyperlink{classmdt_abstract_sql_table_controller_a5a94417dc46a7dc6de8b5ba0593494a7}{set\-Table\-Name()} begore calling this method. 
+
+Given row and field names must exist in table. 
+\end{DoxyPrecond}
+
+
+Definition at line 646 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+
+
+
+References row\-Data().
+
+\hypertarget{classmdt_abstract_sql_table_controller_a327acbde1979ba113a621dc3d8be7f78}{\index{mdt\-Abstract\-Sql\-Table\-Controller@{mdt\-Abstract\-Sql\-Table\-Controller}!row\-Data\-Str@{row\-Data\-Str}}
+\index{row\-Data\-Str@{row\-Data\-Str}!mdtAbstractSqlTableController@{mdt\-Abstract\-Sql\-Table\-Controller}}
+\subsubsection[{row\-Data\-Str}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String\-List mdt\-Abstract\-Sql\-Table\-Controller\-::row\-Data\-Str (
+\begin{DoxyParamCaption}
+\item[{int}]{row, }
+\item[{const std\-::vector$<$ int $>$ \&}]{columns, }
+\item[{int}]{role = {\ttfamily Qt\-:\-:DisplayRole}}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_abstract_sql_table_controller_a327acbde1979ba113a621dc3d8be7f78}
+
+
+Get row data of given row and field names. 
+
+\begin{DoxyPrecond}{Precondition}
+Table model must be set with \hyperlink{classmdt_abstract_sql_table_controller_ac9e64cf30e552ec65ed5fdd861320676}{set\-Model()} or \hyperlink{classmdt_abstract_sql_table_controller_a5a94417dc46a7dc6de8b5ba0593494a7}{set\-Table\-Name()} begore calling this method. 
+
+Given row and field names must exist in table. 
+\end{DoxyPrecond}
+
+
+Definition at line 616 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+
+
+
+References row\-Count().
+
+
+
+Referenced by row\-Data\-Str().
+
+\hypertarget{classmdt_abstract_sql_table_controller_a7704d947a45401c1805a37eeee90b439}{\index{mdt\-Abstract\-Sql\-Table\-Controller@{mdt\-Abstract\-Sql\-Table\-Controller}!row\-Data\-Str@{row\-Data\-Str}}
+\index{row\-Data\-Str@{row\-Data\-Str}!mdtAbstractSqlTableController@{mdt\-Abstract\-Sql\-Table\-Controller}}
+\subsubsection[{row\-Data\-Str}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String\-List mdt\-Abstract\-Sql\-Table\-Controller\-::row\-Data\-Str (
+\begin{DoxyParamCaption}
+\item[{int}]{row, }
+\item[{const Q\-String\-List \&}]{field\-Names, }
+\item[{int}]{role = {\ttfamily Qt\-:\-:DisplayRole}}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_abstract_sql_table_controller_a7704d947a45401c1805a37eeee90b439}
+
+
+Get row data of given row and field names. 
+
+\begin{DoxyPrecond}{Precondition}
+Table model must be set with \hyperlink{classmdt_abstract_sql_table_controller_ac9e64cf30e552ec65ed5fdd861320676}{set\-Model()} or \hyperlink{classmdt_abstract_sql_table_controller_a5a94417dc46a7dc6de8b5ba0593494a7}{set\-Table\-Name()} begore calling this method. 
+
+Given row and field names must exist in table. 
+\end{DoxyPrecond}
+
+
+Definition at line 663 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+
+
+
+References row\-Data\-Str().
 
 \hypertarget{classmdt_abstract_sql_table_controller_ae26ede862ac54ece9243b264ea22cefb}{\index{mdt\-Abstract\-Sql\-Table\-Controller@{mdt\-Abstract\-Sql\-Table\-Controller}!select@{select}}
 \index{select@{select}!mdtAbstractSqlTableController@{mdt\-Abstract\-Sql\-Table\-Controller}}
@@ -2258,7 +2490,7 @@ Internal state machine must run (see \hyperlink{classmdt_abstract_sql_table_cont
 \end{DoxyPrecond}
 
 
-Definition at line 125 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 151 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -2312,7 +2544,7 @@ Table model must be set with \hyperlink{classmdt_abstract_sql_table_controller_a
 \end{DoxyPrecond}
 
 
-Definition at line 360 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 386 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -2341,7 +2573,7 @@ Table model must be set with \hyperlink{classmdt_abstract_sql_table_controller_a
 \end{DoxyPrecond}
 
 
-Definition at line 755 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 813 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -2370,7 +2602,7 @@ Will search the first record that contains match data for given field name.
 \end{DoxySeeAlso}
 
 
-Definition at line 779 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 837 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -2401,7 +2633,7 @@ Table model must be set with \hyperlink{classmdt_abstract_sql_table_controller_a
 \end{DoxyPrecond}
 
 
-Definition at line 965 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 1023 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -2434,7 +2666,7 @@ Table model must be set with \hyperlink{classmdt_abstract_sql_table_controller_a
 \end{DoxyPrecond}
 
 
-Definition at line 367 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 393 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -2477,7 +2709,7 @@ Table model must be set with \hyperlink{classmdt_abstract_sql_table_controller_a
 \end{DoxyPrecond}
 
 
-Definition at line 402 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 428 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -2522,7 +2754,7 @@ Table model must be set with \hyperlink{classmdt_abstract_sql_table_controller_a
 \end{DoxyPrecond}
 
 
-Definition at line 426 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 452 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -2550,7 +2782,7 @@ Internal state machine must run (see \hyperlink{classmdt_abstract_sql_table_cont
 \end{DoxyPrecond}
 
 
-Definition at line 170 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 196 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -2590,7 +2822,7 @@ Internal state machine must run (see \hyperlink{classmdt_abstract_sql_table_cont
 \end{DoxyPrecond}
 
 
-Definition at line 203 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 229 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -2626,7 +2858,7 @@ Internal state machine must run (see \hyperlink{classmdt_abstract_sql_table_cont
 \end{DoxyPrecond}
 
 
-Definition at line 219 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 245 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -2654,6 +2886,25 @@ Definition at line 105 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 References field\-Index(), and model().
+
+\hypertarget{classmdt_abstract_sql_table_controller_a3412eef70d436bffd15f8edafce977ba}{\index{mdt\-Abstract\-Sql\-Table\-Controller@{mdt\-Abstract\-Sql\-Table\-Controller}!set\-Last\-Error@{set\-Last\-Error}}
+\index{set\-Last\-Error@{set\-Last\-Error}!mdtAbstractSqlTableController@{mdt\-Abstract\-Sql\-Table\-Controller}}
+\subsubsection[{set\-Last\-Error}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Table\-Controller\-::set\-Last\-Error (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Error} \&}]{error}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [slot]}}}\label{classmdt_abstract_sql_table_controller_a3412eef70d436bffd15f8edafce977ba}
+
+
+Set last error. 
+
+Most of time, subclass uses directly pv\-Last\-Error to set last error. In some (rare) cases, if needed, use this function to store a error. (This is f.\-ex. the case of \hyperlink{classmdt_sql_table_widget}{mdt\-Sql\-Table\-Widget}) 
+
+Definition at line 902 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+
+
+
+References pv\-Last\-Error.
 
 \hypertarget{classmdt_abstract_sql_table_controller_ab3939b6f1d191283709efdf0f64c524a}{\index{mdt\-Abstract\-Sql\-Table\-Controller@{mdt\-Abstract\-Sql\-Table\-Controller}!set\-Message\-Handler@{set\-Message\-Handler}}
 \index{set\-Message\-Handler@{set\-Message\-Handler}!mdtAbstractSqlTableController@{mdt\-Abstract\-Sql\-Table\-Controller}}
@@ -2699,7 +2950,7 @@ Referenced by set\-Table\-Name().
 \subsubsection[{set\-Table\-Name}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Abstract\-Sql\-Table\-Controller\-::set\-Table\-Name (
 \begin{DoxyParamCaption}
 \item[{const Q\-String \&}]{table\-Name, }
-\item[{Q\-Sql\-Database}]{db, }
+\item[{{\bf Q\-Sql\-Database}}]{db, }
 \item[{const Q\-String \&}]{user\-Friendly\-Table\-Name = {\ttfamily QString()}}
 \end{DoxyParamCaption}
 )}}\label{classmdt_abstract_sql_table_controller_a5a94417dc46a7dc6de8b5ba0593494a7}
@@ -2728,7 +2979,7 @@ Set user friendly table name.
 
 
 
-Definition at line 327 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 358 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 \hypertarget{classmdt_abstract_sql_table_controller_a47b1eedbfc74c5d80649350f801ad46d}{\index{mdt\-Abstract\-Sql\-Table\-Controller@{mdt\-Abstract\-Sql\-Table\-Controller}!sort@{sort}}
 \index{sort@{sort}!mdtAbstractSqlTableController@{mdt\-Abstract\-Sql\-Table\-Controller}}
@@ -2746,7 +2997,7 @@ Sort data.
 \end{DoxySeeAlso}
 
 
-Definition at line 340 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 366 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -2772,7 +3023,7 @@ Table model must be set with \hyperlink{classmdt_abstract_sql_table_controller_a
 \end{DoxyPrecond}
 
 
-Definition at line 266 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 292 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -2824,7 +3075,7 @@ Table model must be set with \hyperlink{classmdt_abstract_sql_table_controller_a
 \end{DoxyPrecond}
 
 
-Definition at line 297 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 323 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -2849,7 +3100,7 @@ If can\-Write\-To\-Database flag is true, data will be stored to database, else 
 
 Internally, \hyperlink{classmdt_abstract_sql_table_controller_a07bebc4d4fec28edf3468920fa0cf285}{submit\-Triggered()} signal will be emitted. 
 
-Definition at line 897 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 955 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -2873,7 +3124,7 @@ Table model must be set with \hyperlink{classmdt_abstract_sql_table_controller_a
 \end{DoxyPrecond}
 
 
-Definition at line 867 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 925 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -2907,7 +3158,7 @@ Submit data from model to database.
 
 
 
-Definition at line 992 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 1050 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -2962,7 +3213,7 @@ Get (technical) table name.
 
 
 
-Definition at line 258 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 284 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -2984,7 +3235,7 @@ Table model must be set with \hyperlink{classmdt_abstract_sql_table_controller_a
 \end{DoxyPrecond}
 
 
-Definition at line 804 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
+Definition at line 862 of file mdt\-Abstract\-Sql\-Table\-Controller.\-cpp.
 
 
 
@@ -3003,7 +3254,7 @@ Get user friendly table name.
 
 
 
-Definition at line 331 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 362 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 
 
@@ -3021,11 +3272,11 @@ Last error (for write access)
 
 
 
-Definition at line 835 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
+Definition at line 911 of file mdt\-Abstract\-Sql\-Table\-Controller.\-h.
 
 
 
-Referenced by mdt\-Sql\-Data\-Widget\-Controller\-::add\-Mapping(), begin\-Transaction(), commit\-Transaction(), data(), data\-List(), formated\-Value(), format\-Value(), last\-Error(), mdt\-Sql\-Data\-Widget\-Controller\-::map\-Form\-Widgets(), on\-State\-Inserting\-Entered(), on\-State\-Reverting\-New\-Row\-Entered(), record(), remove\-And\-Wait(), rollback\-Transaction(), select(), set\-Current\-Row(), set\-Data(), set\-Filter(), start(), submit\-And\-Wait(), and submit\-To\-Database().
+Referenced by mdt\-Sql\-Data\-Widget\-Controller\-::add\-Mapping(), begin\-Transaction(), commit\-Transaction(), data(), data\-List(), formated\-Value(), format\-Value(), last\-Error(), mdt\-Sql\-Data\-Widget\-Controller\-::map\-Form\-Widgets(), on\-State\-Inserting\-Entered(), on\-State\-Reverting\-New\-Row\-Entered(), record(), remove\-And\-Wait(), rollback\-Transaction(), select(), set\-Current\-Row(), set\-Data(), set\-Filter(), set\-Last\-Error(), start(), submit\-And\-Wait(), and submit\-To\-Database().
 
 
 

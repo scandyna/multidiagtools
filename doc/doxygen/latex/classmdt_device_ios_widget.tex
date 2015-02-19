@@ -37,7 +37,7 @@ Collaboration diagram for mdt\-Device\-Ios\-Widget\-:\nopagebreak
 \item 
 void \hyperlink{classmdt_device_ios_widget_ad388c95b2bdb48bae976c3fbc2512c30}{set\-Max\-Columns} (int n)
 \begin{DoxyCompactList}\small\item\em Set the maximum columns on the layout. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_device_ios_widget_a8fc261333ffc1c3b705ae8609f687159}{set\-Device\-Ios} (\hyperlink{classmdt_device_ios}{mdt\-Device\-Ios} $\ast$ios)
+void \hyperlink{classmdt_device_ios_widget_ae3fb7261ae27b0b2c9f2d96d16a818bd}{set\-Device\-Ios} (std\-::shared\-\_\-ptr$<$ \hyperlink{classmdt_device_ios}{mdt\-Device\-Ios} $>$ ios)
 \begin{DoxyCompactList}\small\item\em Add all I/\-O's as corresponding G\-U\-I representation. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_device_ios_widget_af5183009a724c9e8f17cb428fc98b85f}{clear\-Io\-Widgets} ()
 \begin{DoxyCompactList}\small\item\em Remove I/\-O's widgets. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -46,7 +46,7 @@ void \hyperlink{classmdt_device_ios_widget_af5183009a724c9e8f17cb428fc98b85f}{cl
 \subsection{Detailed Description}
 Display a set of I/\-O's. 
 
-Definition at line 36 of file mdt\-Device\-Ios\-Widget.\-h.
+Definition at line 37 of file mdt\-Device\-Ios\-Widget.\-h.
 
 
 
@@ -71,7 +71,7 @@ Definition at line 29 of file mdt\-Device\-Ios\-Widget.\-cpp.
 )}}\label{classmdt_device_ios_widget_a7071f70c3aba15dbfe0eabec5093a4d5}
 
 
-Definition at line 39 of file mdt\-Device\-Ios\-Widget.\-cpp.
+Definition at line 38 of file mdt\-Device\-Ios\-Widget.\-cpp.
 
 
 
@@ -89,19 +89,19 @@ Remove I/\-O's widgets.
 
 
 
-Definition at line 147 of file mdt\-Device\-Ios\-Widget.\-cpp.
+Definition at line 146 of file mdt\-Device\-Ios\-Widget.\-cpp.
 
 
 
 Referenced by set\-Device\-Ios().
 
-\hypertarget{classmdt_device_ios_widget_a8fc261333ffc1c3b705ae8609f687159}{\index{mdt\-Device\-Ios\-Widget@{mdt\-Device\-Ios\-Widget}!set\-Device\-Ios@{set\-Device\-Ios}}
+\hypertarget{classmdt_device_ios_widget_ae3fb7261ae27b0b2c9f2d96d16a818bd}{\index{mdt\-Device\-Ios\-Widget@{mdt\-Device\-Ios\-Widget}!set\-Device\-Ios@{set\-Device\-Ios}}
 \index{set\-Device\-Ios@{set\-Device\-Ios}!mdtDeviceIosWidget@{mdt\-Device\-Ios\-Widget}}
 \subsubsection[{set\-Device\-Ios}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Device\-Ios\-Widget\-::set\-Device\-Ios (
 \begin{DoxyParamCaption}
-\item[{{\bf mdt\-Device\-Ios} $\ast$}]{ios}
+\item[{std\-::shared\-\_\-ptr$<$ {\bf mdt\-Device\-Ios} $>$}]{ios}
 \end{DoxyParamCaption}
-)}}\label{classmdt_device_ios_widget_a8fc261333ffc1c3b705ae8609f687159}
+)}}\label{classmdt_device_ios_widget_ae3fb7261ae27b0b2c9f2d96d16a818bd}
 
 
 Add all I/\-O's as corresponding G\-U\-I representation. 
@@ -113,11 +113,11 @@ ios must be a valid pointer
 \end{DoxyPrecond}
 
 
-Definition at line 50 of file mdt\-Device\-Ios\-Widget.\-cpp.
+Definition at line 49 of file mdt\-Device\-Ios\-Widget.\-cpp.
 
 
 
-References mdt\-Device\-Ios\-::analog\-Inputs(), mdt\-Device\-Ios\-::analog\-Outputs(), clear\-Io\-Widgets(), mdt\-Device\-Ios\-::digital\-Inputs(), mdt\-Device\-Ios\-::digital\-Outputs(), mdt\-Digital\-Out\-Widget\-::set\-Io(), mdt\-Digital\-In\-Widget\-::set\-Io(), mdt\-Analog\-In\-Widget\-::set\-Io(), and mdt\-Analog\-Out\-Widget\-::set\-Io().
+References clear\-Io\-Widgets(), mdt\-Digital\-Out\-Widget\-::set\-Io(), mdt\-Digital\-In\-Widget\-::set\-Io(), mdt\-Analog\-Out\-Widget\-::set\-Io(), and mdt\-Analog\-In\-Widget\-::set\-Io().
 
 \hypertarget{classmdt_device_ios_widget_ad388c95b2bdb48bae976c3fbc2512c30}{\index{mdt\-Device\-Ios\-Widget@{mdt\-Device\-Ios\-Widget}!set\-Max\-Columns@{set\-Max\-Columns}}
 \index{set\-Max\-Columns@{set\-Max\-Columns}!mdtDeviceIosWidget@{mdt\-Device\-Ios\-Widget}}
@@ -135,7 +135,7 @@ n must be $>$ 0
 \end{DoxyPrecond}
 
 
-Definition at line 43 of file mdt\-Device\-Ios\-Widget.\-cpp.
+Definition at line 42 of file mdt\-Device\-Ios\-Widget.\-cpp.
 
 
 

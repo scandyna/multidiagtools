@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Properties</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Properties</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(12)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -160,7 +160,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a652c5afd4af2965e8d5ead724dda3230"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_schema_table.html#a652c5afd4af2965e8d5ead724dda3230">updateForeignKeyReferingTable</a> (const QString &amp;name, const QString &amp;referingTableName)</td></tr>
 <tr class="memdesc:a652c5afd4af2965e8d5ead724dda3230"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update a foreign key refering table name.  <a href="#a652c5afd4af2965e8d5ead724dda3230">More...</a><br/></td></tr>
 <tr class="separator:a652c5afd4af2965e8d5ead724dda3230"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2cea444ccb26b0802fb230db5460e167"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_schema_table.html#a2cea444ccb26b0802fb230db5460e167">setupFromTable</a> (const QString &amp;name, QSqlDatabase db)</td></tr>
+<tr class="memitem:a2cea444ccb26b0802fb230db5460e167"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_schema_table.html#a2cea444ccb26b0802fb230db5460e167">setupFromTable</a> (const QString &amp;name, <a class="el" href="class_q_sql_database.html">QSqlDatabase</a> db)</td></tr>
 <tr class="memdesc:a2cea444ccb26b0802fb230db5460e167"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup structure from a existing table.  <a href="#a2cea444ccb26b0802fb230db5460e167">More...</a><br/></td></tr>
 <tr class="separator:a2cea444ccb26b0802fb230db5460e167"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af6c605b7e7860ced2512792efda76357"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_sql_schema_table.html#af6c605b7e7860ced2512792efda76357">sqlForCreateTable</a> ()</td></tr>
@@ -647,7 +647,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">QSqlDatabase&#160;</td>
+          <td class="paramtype"><a class="el" href="class_q_sql_database.html">QSqlDatabase</a>&#160;</td>
           <td class="paramname"><em>db</em>&#160;</td>
         </tr>
         <tr>
@@ -775,7 +775,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jan 17 2015 16:32:14 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Feb 19 2015 17:07:55 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

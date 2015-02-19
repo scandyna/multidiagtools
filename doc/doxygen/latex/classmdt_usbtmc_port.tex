@@ -12,7 +12,8 @@ Port to communicate with a U\-S\-B\-T\-M\-C device.
 
 
 
-Inheritance diagram for mdt\-Usbtmc\-Port\-:\nopagebreak
+Inheritance diagram for mdt\-Usbtmc\-Port\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -21,7 +22,8 @@ Inheritance diagram for mdt\-Usbtmc\-Port\-:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdt\-Usbtmc\-Port\-:\nopagebreak
+Collaboration diagram for mdt\-Usbtmc\-Port\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -53,7 +55,7 @@ void \hyperlink{classmdt_usbtmc_port_ac2d4dc739be5c42c664e40ff7bb74132}{transact
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classmdt_usbtmc_port_a102a2d5ebad4968621812e682d9d1b71}{mdt\-Usbtmc\-Port} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent=0)
+\hyperlink{classmdt_usbtmc_port_a102a2d5ebad4968621812e682d9d1b71}{mdt\-Usbtmc\-Port} (Q\-Object $\ast$parent=0)
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_usbtmc_port_a3f9d3f1f40f61e17fa2997f3ad181d30}{$\sim$mdt\-Usbtmc\-Port} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
@@ -73,8 +75,6 @@ bool \hyperlink{classmdt_usbtmc_port_ad03633a2c6289974d79f361c6dbba5af}{send\-Co
 \begin{DoxyCompactList}\small\item\em Send a command to device. \end{DoxyCompactList}\item 
 Q\-Byte\-Array \hyperlink{classmdt_usbtmc_port_a0c250cc416a01d2dd704b629b163d3a6}{send\-Query} (const Q\-Byte\-Array \&query, int timeout=30000)
 \begin{DoxyCompactList}\small\item\em Send a query to device. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_usbtmc_port_ae30c4eb212e9859a834c53df052e1da9}{wait} (int t)
-\begin{DoxyCompactList}\small\item\em Wait some time without breaking main event loop. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_usbtmc_port_afbf76bc83c54937dfb0e88ad6f517dc5}{clear\-Bulk\-Io} ()
 \begin{DoxyCompactList}\small\item\em Clear bulk I/\-O. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_error}{mdt\-Error} \hyperlink{classmdt_usbtmc_port_ad08e3ff4682797e8604400026418bdc8}{last\-Error} ()
@@ -128,7 +128,7 @@ Definition at line 48 of file mdt\-Usbtmc\-Port.\-h.
 \index{mdt\-Usbtmc\-Port@{mdt\-Usbtmc\-Port}!mdtUsbtmcPort@{mdt\-Usbtmc\-Port}}
 \subsubsection[{mdt\-Usbtmc\-Port}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Usbtmc\-Port\-::mdt\-Usbtmc\-Port (
 \begin{DoxyParamCaption}
-\item[{{\bf Q\-Object} $\ast$}]{parent = {\ttfamily 0}}
+\item[{Q\-Object $\ast$}]{parent = {\ttfamily 0}}
 \end{DoxyParamCaption}
 )}}\label{classmdt_usbtmc_port_a102a2d5ebad4968621812e682d9d1b71}
 
@@ -178,7 +178,7 @@ Clear bulk I/\-O.
 
 Note\-: is allready called by \hyperlink{classmdt_usbtmc_port_a0732cfb4ba24feef01dea7c3e2e86ca3}{open\-Device()}. 
 
-Definition at line 223 of file mdt\-Usbtmc\-Port.\-cpp.
+Definition at line 214 of file mdt\-Usbtmc\-Port.\-cpp.
 
 
 
@@ -209,7 +209,7 @@ References mdt\-Usb\-Port\-Thread\-New\-::stop().
 
 
 
-Referenced by mdt\-Device\-Scpi\-::disconnect\-From\-Device(), and $\sim$mdt\-Usbtmc\-Port().
+Referenced by mdt\-Device\-Scpi\-::disconnect\-From\-Device\-Event(), and $\sim$mdt\-Usbtmc\-Port().
 
 \hypertarget{classmdt_usbtmc_port_a998ebe6f4dced400afcdbff1c4b83b77}{\index{mdt\-Usbtmc\-Port@{mdt\-Usbtmc\-Port}!device\-Name@{device\-Name}}
 \index{device\-Name@{device\-Name}!mdtUsbtmcPort@{mdt\-Usbtmc\-Port}}
@@ -229,10 +229,6 @@ Get device name.
 
 Definition at line 80 of file mdt\-Usbtmc\-Port.\-h.
 
-
-
-Referenced by mdt\-Device\-Scpi\-::name().
-
 \hypertarget{classmdt_usbtmc_port_ad08e3ff4682797e8604400026418bdc8}{\index{mdt\-Usbtmc\-Port@{mdt\-Usbtmc\-Port}!last\-Error@{last\-Error}}
 \index{last\-Error@{last\-Error}!mdtUsbtmcPort@{mdt\-Usbtmc\-Port}}
 \subsubsection[{last\-Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Error} mdt\-Usbtmc\-Port\-::last\-Error (
@@ -246,7 +242,7 @@ Get last error.
 
 
 
-Definition at line 133 of file mdt\-Usbtmc\-Port.\-h.
+Definition at line 127 of file mdt\-Usbtmc\-Port.\-h.
 
 
 
@@ -418,7 +414,7 @@ References mdt\-Usbtmc\-Transfer\-Handler\-::set\-Device\-Name().
 
 
 
-Referenced by mdt\-Device\-Scpi\-::set\-Name().
+Referenced by mdt\-Device\-Scpi\-::name\-Changed\-Event().
 
 \hypertarget{classmdt_usbtmc_port_a4f727be1d99c3ea46c68f781261a0f24}{\index{mdt\-Usbtmc\-Port@{mdt\-Usbtmc\-Port}!set\-Error@{set\-Error}}
 \index{set\-Error@{set\-Error}!mdtUsbtmcPort@{mdt\-Usbtmc\-Port}}
@@ -435,7 +431,7 @@ Will also generate a event in main thread and wake up Q\-Core\-Application\-::pr
 
 Note\-: used by \hyperlink{classmdt_usbtmc_transfer_handler}{mdt\-Usbtmc\-Transfer\-Handler} and mdt\-Usbtmc\-Port\-Thread 
 
-Definition at line 237 of file mdt\-Usbtmc\-Port.\-cpp.
+Definition at line 228 of file mdt\-Usbtmc\-Port.\-cpp.
 
 
 
@@ -458,7 +454,7 @@ Signal device disconnected.
 
 Note\-: used by \hyperlink{classmdt_usbtmc_transfer_handler}{mdt\-Usbtmc\-Transfer\-Handler} 
 
-Definition at line 161 of file mdt\-Usbtmc\-Port.\-h.
+Definition at line 155 of file mdt\-Usbtmc\-Port.\-h.
 
 
 
@@ -481,7 +477,7 @@ Signal bulk transaction aborted.
 
 Note\-: used by \hyperlink{classmdt_usbtmc_transfer_handler}{mdt\-Usbtmc\-Transfer\-Handler} 
 
-Definition at line 152 of file mdt\-Usbtmc\-Port.\-h.
+Definition at line 146 of file mdt\-Usbtmc\-Port.\-h.
 
 
 
@@ -504,7 +500,7 @@ Signal bulk transaction done.
 
 Note\-: used by \hyperlink{classmdt_usbtmc_transfer_handler}{mdt\-Usbtmc\-Transfer\-Handler} 
 
-Definition at line 143 of file mdt\-Usbtmc\-Port.\-h.
+Definition at line 137 of file mdt\-Usbtmc\-Port.\-h.
 
 
 
@@ -533,30 +529,6 @@ set\-Transaction\-State().
 
 
 Referenced by mdt\-Usbtmc\-Port(), set\-Error(), th\-Set\-Device\-Disconnected(), th\-Set\-Transaction\-Aborted(), and th\-Set\-Transaction\-Done().
-
-\hypertarget{classmdt_usbtmc_port_ae30c4eb212e9859a834c53df052e1da9}{\index{mdt\-Usbtmc\-Port@{mdt\-Usbtmc\-Port}!wait@{wait}}
-\index{wait@{wait}!mdtUsbtmcPort@{mdt\-Usbtmc\-Port}}
-\subsubsection[{wait}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Usbtmc\-Port\-::wait (
-\begin{DoxyParamCaption}
-\item[{int}]{t}
-\end{DoxyParamCaption}
-)}}\label{classmdt_usbtmc_port_ae30c4eb212e9859a834c53df052e1da9}
-
-
-Wait some time without breaking main event loop. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em t} & time \mbox{[}ms\mbox{]} \\
-\hline
-\end{DoxyParams}
-
-
-Definition at line 214 of file mdt\-Usbtmc\-Port.\-cpp.
-
-
-
-Referenced by mdt\-Device\-Scpi\-::wait().
 
 
 

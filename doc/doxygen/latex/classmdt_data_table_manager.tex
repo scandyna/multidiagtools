@@ -12,26 +12,28 @@ Create/manage data sets.
 
 
 
-Inheritance diagram for mdt\-Data\-Table\-Manager\-:\nopagebreak
+Inheritance diagram for mdt\-Data\-Table\-Manager\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=196pt]{classmdt_data_table_manager__inherit__graph}
+\includegraphics[width=194pt]{classmdt_data_table_manager__inherit__graph}
 \end{center}
 \end{figure}
 
 
-Collaboration diagram for mdt\-Data\-Table\-Manager\-:\nopagebreak
+Collaboration diagram for mdt\-Data\-Table\-Manager\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=196pt]{classmdt_data_table_manager__coll__graph}
+\includegraphics[width=194pt]{classmdt_data_table_manager__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classmdt_data_table_manager_ae63e559f597ae48a36e149afde3a8396}{mdt\-Data\-Table\-Manager} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent=0, Q\-Sql\-Database db=Q\-Sql\-Database())
+\hyperlink{classmdt_data_table_manager_ae63e559f597ae48a36e149afde3a8396}{mdt\-Data\-Table\-Manager} (Q\-Object $\ast$parent=0, \hyperlink{class_q_sql_database}{Q\-Sql\-Database} db=\hyperlink{class_q_sql_database}{Q\-Sql\-Database}())
 \item 
 \hyperlink{classmdt_data_table_manager_a3a1c225b1aeedad8fc89b126147971ca}{$\sim$mdt\-Data\-Table\-Manager} ()
 \begin{DoxyCompactList}\small\item\em Note\-: this will delete internal model. Be avare when referencing pointer returned by model(). \end{DoxyCompactList}\item 
@@ -47,7 +49,7 @@ const Q\-String \hyperlink{classmdt_data_table_manager_affcbb25ab7308527885c4f3f
 \begin{DoxyCompactList}\small\item\em Get dataset table name. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_data_table_manager_ae813c6c4323a1949d489a24c07e914fa}{create\-Data\-Set} (const Q\-Dir \&dir, const Q\-String \&name, \hyperlink{classmdt_sql_schema_table}{mdt\-Sql\-Schema\-Table} \&table, \hyperlink{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418}{mdt\-Sql\-Database\-Manager\-::create\-Mode\-\_\-t} mode)
 \begin{DoxyCompactList}\small\item\em Create database and table. \end{DoxyCompactList}\item 
-Q\-Sql\-Database \hyperlink{classmdt_data_table_manager_a9026c9d3d102246af243b68c815fba04}{database} () const 
+\hyperlink{class_q_sql_database}{Q\-Sql\-Database} \hyperlink{classmdt_data_table_manager_a9026c9d3d102246af243b68c815fba04}{database} () const 
 \begin{DoxyCompactList}\small\item\em Get internal database instance. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_data_table_manager_a139611cc21836438053226b1d7576201}{enable\-Progress\-Dialog} (bool enable)
 \begin{DoxyCompactList}\small\item\em Enable/disable progress dialog. \end{DoxyCompactList}\item 
@@ -57,7 +59,7 @@ bool \hyperlink{classmdt_data_table_manager_abe733f071ca77579522823598e79dd9a}{e
 \begin{DoxyCompactList}\small\item\em Export data to a C\-S\-V file. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_data_table_manager_a668cc3d94e6aa5dab406a0fd319351af}{import\-From\-Csv\-File} (const Q\-String \&csv\-File\-Path, \hyperlink{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418}{mdt\-Sql\-Database\-Manager\-::create\-Mode\-\_\-t} mode, const Q\-String \&dir=Q\-String(), const Q\-String\-List \&pk\-Fields=Q\-String\-List())
 \begin{DoxyCompactList}\small\item\em Import a C\-S\-V file. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_data_table_manager_a5c8aaf4f42a50bd0c216ef29adc9d79f}{copy\-Table} (const Q\-String \&source\-Table\-Name, const Q\-String \&destination\-Table\-Name, \hyperlink{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418}{mdt\-Sql\-Database\-Manager\-::create\-Mode\-\_\-t} mode, Q\-Sql\-Database source\-Database=Q\-Sql\-Database(), Q\-Sql\-Database destination\-Database=Q\-Sql\-Database())
+bool \hyperlink{classmdt_data_table_manager_a5c8aaf4f42a50bd0c216ef29adc9d79f}{copy\-Table} (const Q\-String \&source\-Table\-Name, const Q\-String \&destination\-Table\-Name, \hyperlink{classmdt_sql_database_manager_a2f5b46d67a88095053a5edfc415c7418}{mdt\-Sql\-Database\-Manager\-::create\-Mode\-\_\-t} mode, \hyperlink{class_q_sql_database}{Q\-Sql\-Database} source\-Database=\hyperlink{class_q_sql_database}{Q\-Sql\-Database}(), \hyperlink{class_q_sql_database}{Q\-Sql\-Database} destination\-Database=\hyperlink{class_q_sql_database}{Q\-Sql\-Database}())
 \begin{DoxyCompactList}\small\item\em Copy a source table to a destination table. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_data_table_manager_a2b38e6a8157183fcbce0770d12e9aa9d}{add\-Field\-Mapping} (const Q\-String \&csv\-Header\-Item, const Q\-String \&field\-Name, const Q\-String \&display\-Text, Q\-Variant\-::\-Type data\-Type, int csv\-Data\-Item\-Start\-Offset=-\/1, int csv\-Data\-Item\-End\-Offset=-\/1)
 \begin{DoxyCompactList}\small\item\em Add a mapping between C\-S\-V header part (item) and model field. \end{DoxyCompactList}\item 
@@ -90,8 +92,8 @@ Definition at line 47 of file mdt\-Data\-Table\-Manager.\-h.
 \index{mdt\-Data\-Table\-Manager@{mdt\-Data\-Table\-Manager}!mdtDataTableManager@{mdt\-Data\-Table\-Manager}}
 \subsubsection[{mdt\-Data\-Table\-Manager}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Data\-Table\-Manager\-::mdt\-Data\-Table\-Manager (
 \begin{DoxyParamCaption}
-\item[{{\bf Q\-Object} $\ast$}]{parent = {\ttfamily 0}, }
-\item[{Q\-Sql\-Database}]{db = {\ttfamily QSqlDatabase()}}
+\item[{Q\-Object $\ast$}]{parent = {\ttfamily 0}, }
+\item[{{\bf Q\-Sql\-Database}}]{db = {\ttfamily {\bf Q\-Sql\-Database}()}}
 \end{DoxyParamCaption}
 )}}\label{classmdt_data_table_manager_ae63e559f597ae48a36e149afde3a8396}
 
@@ -234,8 +236,8 @@ Referenced by copy\-Table(), and import\-From\-Csv\-File().
 \item[{const Q\-String \&}]{source\-Table\-Name, }
 \item[{const Q\-String \&}]{destination\-Table\-Name, }
 \item[{{\bf mdt\-Sql\-Database\-Manager\-::create\-Mode\-\_\-t}}]{mode, }
-\item[{Q\-Sql\-Database}]{source\-Database = {\ttfamily QSqlDatabase()}, }
-\item[{Q\-Sql\-Database}]{destination\-Database = {\ttfamily QSqlDatabase()}}
+\item[{{\bf Q\-Sql\-Database}}]{source\-Database = {\ttfamily {\bf Q\-Sql\-Database}()}, }
+\item[{{\bf Q\-Sql\-Database}}]{destination\-Database = {\ttfamily {\bf Q\-Sql\-Database}()}}
 \end{DoxyParamCaption}
 )}}\label{classmdt_data_table_manager_a5c8aaf4f42a50bd0c216ef29adc9d79f}
 
@@ -316,7 +318,7 @@ Referenced by import\-From\-Csv\-File().
 
 \hypertarget{classmdt_data_table_manager_a9026c9d3d102246af243b68c815fba04}{\index{mdt\-Data\-Table\-Manager@{mdt\-Data\-Table\-Manager}!database@{database}}
 \index{database@{database}!mdtDataTableManager@{mdt\-Data\-Table\-Manager}}
-\subsubsection[{database}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Sql\-Database mdt\-Data\-Table\-Manager\-::database (
+\subsubsection[{database}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Q\-Sql\-Database} mdt\-Data\-Table\-Manager\-::database (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
@@ -506,7 +508,7 @@ Definition at line 189 of file mdt\-Data\-Table\-Manager.\-cpp.
 
 
 
-References mdt\-Sql\-Schema\-Table\-::add\-Field(), mdt\-Field\-Map\-::add\-Item(), mdt\-Csv\-File\-::close(), close(), mdt\-Error\-::commit(), create\-Data\-Set(), mdt\-Field\-Map\-::destination\-Data\-Row(), mdt\-Field\-Map\-::destination\-Header(), mdt\-Error\-::\-Error, mdt\-Sql\-Schema\-Table\-::field\-Count(), mdt\-Field\-Map\-Field\-::get\-Field\-Name(), mdt\-Csv\-File\-::has\-More\-Lines(), mdt\-Field\-Map\-::items\-At\-Source\-Field\-Name(), mdt\-Field\-Map\-::mapped\-Destination\-Fields(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Csv\-File\-::read\-Header(), mdt\-Csv\-File\-::read\-Line(), mdt\-Field\-Map\-Item\-::set\-Data\-Type(), mdt\-Field\-Map\-Item\-::set\-Destination\-Field\-Display\-Text(), mdt\-Field\-Map\-Item\-::set\-Destination\-Field\-Index(), mdt\-Field\-Map\-Item\-::set\-Destination\-Field\-Name(), mdt\-Error\-::set\-Error(), mdt\-Field\-Map\-Item\-::set\-Source\-Field\-Index(), mdt\-Field\-Map\-Item\-::set\-Source\-Field\-Name(), and mdt\-Error\-::\-Warning.
+References mdt\-Sql\-Schema\-Table\-::add\-Field(), mdt\-Field\-Map\-::add\-Item(), close(), mdt\-Csv\-File\-::close(), mdt\-Error\-::commit(), create\-Data\-Set(), mdt\-Field\-Map\-::destination\-Data\-Row(), mdt\-Field\-Map\-::destination\-Header(), mdt\-Error\-::\-Error, mdt\-Sql\-Schema\-Table\-::field\-Count(), mdt\-Field\-Map\-Field\-::get\-Field\-Name(), mdt\-Csv\-File\-::has\-More\-Lines(), mdt\-Field\-Map\-::items\-At\-Source\-Field\-Name(), mdt\-Field\-Map\-::mapped\-Destination\-Fields(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Csv\-File\-::read\-Header(), mdt\-Csv\-File\-::read\-Line(), mdt\-Field\-Map\-Item\-::set\-Data\-Type(), mdt\-Field\-Map\-Item\-::set\-Destination\-Field\-Display\-Text(), mdt\-Field\-Map\-Item\-::set\-Destination\-Field\-Index(), mdt\-Field\-Map\-Item\-::set\-Destination\-Field\-Name(), mdt\-Error\-::set\-Error(), mdt\-Field\-Map\-Item\-::set\-Source\-Field\-Index(), mdt\-Field\-Map\-Item\-::set\-Source\-Field\-Name(), and mdt\-Error\-::\-Warning.
 
 \hypertarget{classmdt_data_table_manager_aaeff001bf9a44f890078f5c6f434ec05}{\index{mdt\-Data\-Table\-Manager@{mdt\-Data\-Table\-Manager}!last\-Error@{last\-Error}}
 \index{last\-Error@{last\-Error}!mdtDataTableManager@{mdt\-Data\-Table\-Manager}}

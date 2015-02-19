@@ -31,7 +31,7 @@ Collaboration diagram for mdt\-Cl\-Unit\-Link\-Dialog\-:\nopagebreak
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classmdt_cl_unit_link_dialog_aecb541b458e86006bb5ba8b6d5b6fafb}{mdt\-Cl\-Unit\-Link\-Dialog} (\hyperlink{class_q_widget}{Q\-Widget} $\ast$parent, Q\-Sql\-Database db)
+\hyperlink{classmdt_cl_unit_link_dialog_aecb541b458e86006bb5ba8b6d5b6fafb}{mdt\-Cl\-Unit\-Link\-Dialog} (\hyperlink{class_q_widget}{Q\-Widget} $\ast$parent, \hyperlink{class_q_sql_database}{Q\-Sql\-Database} db)
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_cl_unit_link_dialog_a0a77f250456330ba367cab406d0312d8}{$\sim$mdt\-Cl\-Unit\-Link\-Dialog} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
@@ -61,6 +61,8 @@ void \hyperlink{classmdt_cl_unit_link_dialog_a1a2c3bcd9cdc90b57363a2b34b180f4c}{
 \begin{DoxyCompactList}\small\item\em Set show only unused end connections. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_cl_unit_link_dialog_a9a3bc3f1de4e3d7dc6bc090965ab7bbc}{set\-Working\-On\-Vehicle\-Type\-Id\-List} (const Q\-List$<$ Q\-Variant $>$ \&vt\-Id\-List)
 \begin{DoxyCompactList}\small\item\em Set the vehicle type I\-D list on witch we are working on. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_cl_unit_link_dialog_ae7c40a4ebc1dacfa4adc69b6986aaed6}{set\-Working\-On\-Vehicle\-Type\-Id} (const Q\-Variant \&vt\-Id)
+\begin{DoxyCompactList}\small\item\em Set the vehicle type I\-D on witch we are working on. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_cl_unit_link_dialog_a35865311a515cd14f4d6b5d4830238a2}{clear\-Working\-On\-Vehicle\-Type\-List} ()
 \begin{DoxyCompactList}\small\item\em Clear the working on vehicle type list. \end{DoxyCompactList}\item 
 const Q\-List$<$ Q\-Variant $>$ \hyperlink{classmdt_cl_unit_link_dialog_a38fb21e39ed2f2e1d65a68a424895ac4}{start\-Vehicle\-Type\-Id\-List} () const 
@@ -94,7 +96,7 @@ Definition at line 38 of file mdt\-Cl\-Unit\-Link\-Dialog.\-h.
 \subsubsection[{mdt\-Cl\-Unit\-Link\-Dialog}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Cl\-Unit\-Link\-Dialog\-::mdt\-Cl\-Unit\-Link\-Dialog (
 \begin{DoxyParamCaption}
 \item[{{\bf Q\-Widget} $\ast$}]{parent, }
-\item[{Q\-Sql\-Database}]{db}
+\item[{{\bf Q\-Sql\-Database}}]{db}
 \end{DoxyParamCaption}
 )}}\label{classmdt_cl_unit_link_dialog_aecb541b458e86006bb5ba8b6d5b6fafb}
 
@@ -122,7 +124,7 @@ Destructor.
 
 
 
-Definition at line 99 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
+Definition at line 102 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
 
 
 
@@ -140,7 +142,7 @@ Clear end unit selection list.
 
 
 
-Definition at line 146 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
+Definition at line 149 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
 
 \hypertarget{classmdt_cl_unit_link_dialog_ae0225a00bae8b719bee96cfaf0b5d6ce}{\index{mdt\-Cl\-Unit\-Link\-Dialog@{mdt\-Cl\-Unit\-Link\-Dialog}!clear\-Start\-Unit\-Selection\-List@{clear\-Start\-Unit\-Selection\-List}}
 \index{clear\-Start\-Unit\-Selection\-List@{clear\-Start\-Unit\-Selection\-List}!mdtClUnitLinkDialog@{mdt\-Cl\-Unit\-Link\-Dialog}}
@@ -155,7 +157,7 @@ Clear start unit selection list.
 
 
 
-Definition at line 117 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
+Definition at line 120 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
 
 \hypertarget{classmdt_cl_unit_link_dialog_a35865311a515cd14f4d6b5d4830238a2}{\index{mdt\-Cl\-Unit\-Link\-Dialog@{mdt\-Cl\-Unit\-Link\-Dialog}!clear\-Working\-On\-Vehicle\-Type\-List@{clear\-Working\-On\-Vehicle\-Type\-List}}
 \index{clear\-Working\-On\-Vehicle\-Type\-List@{clear\-Working\-On\-Vehicle\-Type\-List}!mdtClUnitLinkDialog@{mdt\-Cl\-Unit\-Link\-Dialog}}
@@ -173,7 +175,7 @@ Clear the working on vehicle type list.
 \end{DoxySeeAlso}
 
 
-Definition at line 176 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
+Definition at line 179 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
 
 \hypertarget{classmdt_cl_unit_link_dialog_abe96eb187294372b022b2a8ba9c645b6}{\index{mdt\-Cl\-Unit\-Link\-Dialog@{mdt\-Cl\-Unit\-Link\-Dialog}!end\-Vehicle\-Type\-Id\-List@{end\-Vehicle\-Type\-Id\-List}}
 \index{end\-Vehicle\-Type\-Id\-List@{end\-Vehicle\-Type\-Id\-List}!mdtClUnitLinkDialog@{mdt\-Cl\-Unit\-Link\-Dialog}}
@@ -188,7 +190,7 @@ Get selected end vehicle types.
 
 
 
-Definition at line 195 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
+Definition at line 198 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
 
 \hypertarget{classmdt_cl_unit_link_dialog_a9553b27b636bec6af4139afa11a5a2db}{\index{mdt\-Cl\-Unit\-Link\-Dialog@{mdt\-Cl\-Unit\-Link\-Dialog}!link\-Data@{link\-Data}}
 \index{link\-Data@{link\-Data}!mdtClUnitLinkDialog@{mdt\-Cl\-Unit\-Link\-Dialog}}
@@ -203,7 +205,7 @@ Get link data.
 
 
 
-Definition at line 309 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
+Definition at line 313 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
 
 \hypertarget{classmdt_cl_unit_link_dialog_a4ed022bb559da23be2d192b9e83c40e2}{\index{mdt\-Cl\-Unit\-Link\-Dialog@{mdt\-Cl\-Unit\-Link\-Dialog}!link\-Direction\-Code@{link\-Direction\-Code}}
 \index{link\-Direction\-Code@{link\-Direction\-Code}!mdtClUnitLinkDialog@{mdt\-Cl\-Unit\-Link\-Dialog}}
@@ -218,7 +220,7 @@ Get selected link direction code.
 
 
 
-Definition at line 257 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
+Definition at line 260 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
 
 \hypertarget{classmdt_cl_unit_link_dialog_aa7d8b93582d68113b6d00922e4979e78}{\index{mdt\-Cl\-Unit\-Link\-Dialog@{mdt\-Cl\-Unit\-Link\-Dialog}!link\-Type\-Code@{link\-Type\-Code}}
 \index{link\-Type\-Code@{link\-Type\-Code}!mdtClUnitLinkDialog@{mdt\-Cl\-Unit\-Link\-Dialog}}
@@ -233,7 +235,7 @@ Get selected link type code.
 
 
 
-Definition at line 225 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
+Definition at line 228 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
 
 \hypertarget{classmdt_cl_unit_link_dialog_a7900da45f938cb4889d561e95928c8aa}{\index{mdt\-Cl\-Unit\-Link\-Dialog@{mdt\-Cl\-Unit\-Link\-Dialog}!set\-End\-Connection\-Label@{set\-End\-Connection\-Label}}
 \index{set\-End\-Connection\-Label@{set\-End\-Connection\-Label}!mdtClUnitLinkDialog@{mdt\-Cl\-Unit\-Link\-Dialog}}
@@ -248,7 +250,7 @@ Change end connection label.
 
 
 
-Definition at line 156 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
+Definition at line 159 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
 
 \hypertarget{classmdt_cl_unit_link_dialog_a8b49ddb18fdbd2fc98dbea32ef45f131}{\index{mdt\-Cl\-Unit\-Link\-Dialog@{mdt\-Cl\-Unit\-Link\-Dialog}!set\-End\-Connector\-Limit\-Id\-List@{set\-End\-Connector\-Limit\-Id\-List}}
 \index{set\-End\-Connector\-Limit\-Id\-List@{set\-End\-Connector\-Limit\-Id\-List}!mdtClUnitLinkDialog@{mdt\-Cl\-Unit\-Link\-Dialog}}
@@ -263,7 +265,7 @@ Limit end connection selection to given connectors.
 
 
 
-Definition at line 151 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
+Definition at line 154 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
 
 \hypertarget{classmdt_cl_unit_link_dialog_a53c0fc3dd8a4134acd185d91e92f0f83}{\index{mdt\-Cl\-Unit\-Link\-Dialog@{mdt\-Cl\-Unit\-Link\-Dialog}!set\-End\-Unit@{set\-End\-Unit}}
 \index{set\-End\-Unit@{set\-End\-Unit}!mdtClUnitLinkDialog@{mdt\-Cl\-Unit\-Link\-Dialog}}
@@ -278,7 +280,7 @@ Set end unit.
 
 This will also clear end connection and set end vehicle types. 
 
-Definition at line 132 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
+Definition at line 135 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
 
 
 
@@ -297,7 +299,7 @@ Limit end unit selection to given list.
 
 
 
-Definition at line 141 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
+Definition at line 144 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
 
 \hypertarget{classmdt_cl_unit_link_dialog_a43ee4d2a395f42dcaa2667170e5ad0bc}{\index{mdt\-Cl\-Unit\-Link\-Dialog@{mdt\-Cl\-Unit\-Link\-Dialog}!set\-Link\-Data@{set\-Link\-Data}}
 \index{set\-Link\-Data@{set\-Link\-Data}!mdtClUnitLinkDialog@{mdt\-Cl\-Unit\-Link\-Dialog}}
@@ -312,7 +314,7 @@ Set link data.
 
 
 
-Definition at line 273 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
+Definition at line 276 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
 
 
 
@@ -331,7 +333,7 @@ Display link direction in combobox.
 
 
 
-Definition at line 241 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
+Definition at line 244 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
 
 
 
@@ -350,7 +352,7 @@ Display link type in combobox.
 
 
 
-Definition at line 209 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
+Definition at line 212 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
 
 
 
@@ -369,7 +371,7 @@ Set show only unused end connections.
 
 
 
-Definition at line 166 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
+Definition at line 169 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
 
 \hypertarget{classmdt_cl_unit_link_dialog_a14665de1075d3a309584ceff17c26f0c}{\index{mdt\-Cl\-Unit\-Link\-Dialog@{mdt\-Cl\-Unit\-Link\-Dialog}!set\-Show\-Only\-Unused\-Start\-Connection@{set\-Show\-Only\-Unused\-Start\-Connection}}
 \index{set\-Show\-Only\-Unused\-Start\-Connection@{set\-Show\-Only\-Unused\-Start\-Connection}!mdtClUnitLinkDialog@{mdt\-Cl\-Unit\-Link\-Dialog}}
@@ -384,7 +386,7 @@ Set show only unused start connections.
 
 
 
-Definition at line 161 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
+Definition at line 164 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
 
 \hypertarget{classmdt_cl_unit_link_dialog_af3247e29241f9d3f752adaf5ae6b4ac7}{\index{mdt\-Cl\-Unit\-Link\-Dialog@{mdt\-Cl\-Unit\-Link\-Dialog}!set\-Start\-Connection\-Label@{set\-Start\-Connection\-Label}}
 \index{set\-Start\-Connection\-Label@{set\-Start\-Connection\-Label}!mdtClUnitLinkDialog@{mdt\-Cl\-Unit\-Link\-Dialog}}
@@ -399,7 +401,7 @@ Change start connection label.
 
 
 
-Definition at line 127 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
+Definition at line 130 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
 
 \hypertarget{classmdt_cl_unit_link_dialog_abb795a510d75a3214618100174a3c395}{\index{mdt\-Cl\-Unit\-Link\-Dialog@{mdt\-Cl\-Unit\-Link\-Dialog}!set\-Start\-Connector\-Limit\-Id\-List@{set\-Start\-Connector\-Limit\-Id\-List}}
 \index{set\-Start\-Connector\-Limit\-Id\-List@{set\-Start\-Connector\-Limit\-Id\-List}!mdtClUnitLinkDialog@{mdt\-Cl\-Unit\-Link\-Dialog}}
@@ -414,7 +416,7 @@ Limit start connection selection to given connectors.
 
 
 
-Definition at line 122 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
+Definition at line 125 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
 
 \hypertarget{classmdt_cl_unit_link_dialog_afca17028440970a898b9dcd3c1ad6923}{\index{mdt\-Cl\-Unit\-Link\-Dialog@{mdt\-Cl\-Unit\-Link\-Dialog}!set\-Start\-Unit@{set\-Start\-Unit}}
 \index{set\-Start\-Unit@{set\-Start\-Unit}!mdtClUnitLinkDialog@{mdt\-Cl\-Unit\-Link\-Dialog}}
@@ -429,7 +431,7 @@ Set start unit.
 
 This will also clear start connection and set start vehicle types. 
 
-Definition at line 103 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
+Definition at line 106 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
 
 
 
@@ -448,7 +450,26 @@ Limit start unit selection to given list.
 
 
 
-Definition at line 112 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
+Definition at line 115 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
+
+\hypertarget{classmdt_cl_unit_link_dialog_ae7c40a4ebc1dacfa4adc69b6986aaed6}{\index{mdt\-Cl\-Unit\-Link\-Dialog@{mdt\-Cl\-Unit\-Link\-Dialog}!set\-Working\-On\-Vehicle\-Type\-Id@{set\-Working\-On\-Vehicle\-Type\-Id}}
+\index{set\-Working\-On\-Vehicle\-Type\-Id@{set\-Working\-On\-Vehicle\-Type\-Id}!mdtClUnitLinkDialog@{mdt\-Cl\-Unit\-Link\-Dialog}}
+\subsubsection[{set\-Working\-On\-Vehicle\-Type\-Id}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Cl\-Unit\-Link\-Dialog\-::set\-Working\-On\-Vehicle\-Type\-Id (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{vt\-Id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_cl_unit_link_dialog_ae7c40a4ebc1dacfa4adc69b6986aaed6}
+
+
+Set the vehicle type I\-D on witch we are working on. 
+
+This will limit the unit selections to those that exists for given vehicle type. 
+
+Definition at line 114 of file mdt\-Cl\-Unit\-Link\-Dialog.\-h.
+
+
+
+References set\-Working\-On\-Vehicle\-Type\-Id\-List().
 
 \hypertarget{classmdt_cl_unit_link_dialog_a9a3bc3f1de4e3d7dc6bc090965ab7bbc}{\index{mdt\-Cl\-Unit\-Link\-Dialog@{mdt\-Cl\-Unit\-Link\-Dialog}!set\-Working\-On\-Vehicle\-Type\-Id\-List@{set\-Working\-On\-Vehicle\-Type\-Id\-List}}
 \index{set\-Working\-On\-Vehicle\-Type\-Id\-List@{set\-Working\-On\-Vehicle\-Type\-Id\-List}!mdtClUnitLinkDialog@{mdt\-Cl\-Unit\-Link\-Dialog}}
@@ -463,7 +484,11 @@ Set the vehicle type I\-D list on witch we are working on.
 
 This will limit the unit selections to those that exists for given vehicle types. 
 
-Definition at line 171 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
+Definition at line 174 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
+
+
+
+Referenced by set\-Working\-On\-Vehicle\-Type\-Id().
 
 \hypertarget{classmdt_cl_unit_link_dialog_a38fb21e39ed2f2e1d65a68a424895ac4}{\index{mdt\-Cl\-Unit\-Link\-Dialog@{mdt\-Cl\-Unit\-Link\-Dialog}!start\-Vehicle\-Type\-Id\-List@{start\-Vehicle\-Type\-Id\-List}}
 \index{start\-Vehicle\-Type\-Id\-List@{start\-Vehicle\-Type\-Id\-List}!mdtClUnitLinkDialog@{mdt\-Cl\-Unit\-Link\-Dialog}}
@@ -478,7 +503,7 @@ Get selected start vehicle types.
 
 
 
-Definition at line 181 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
+Definition at line 184 of file mdt\-Cl\-Unit\-Link\-Dialog.\-cpp.
 
 
 

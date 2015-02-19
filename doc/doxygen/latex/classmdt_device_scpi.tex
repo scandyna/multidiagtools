@@ -12,7 +12,8 @@ Base class for S\-C\-P\-I based instruments.
 
 
 
-Inheritance diagram for mdt\-Device\-Scpi\-:\nopagebreak
+Inheritance diagram for mdt\-Device\-Scpi\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -21,7 +22,8 @@ Inheritance diagram for mdt\-Device\-Scpi\-:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdt\-Device\-Scpi\-:\nopagebreak
+Collaboration diagram for mdt\-Device\-Scpi\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -31,42 +33,28 @@ Collaboration diagram for mdt\-Device\-Scpi\-:\nopagebreak
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classmdt_device_scpi_a44c03151a6796e5c1efd64ef55f2d14d}{mdt\-Device\-Scpi} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent=0)
+\hyperlink{classmdt_device_scpi_a44c03151a6796e5c1efd64ef55f2d14d}{mdt\-Device\-Scpi} (Q\-Object $\ast$parent=0)
 \begin{DoxyCompactList}\small\item\em Construct a S\-C\-P\-I device. \end{DoxyCompactList}\item 
 virtual \hyperlink{classmdt_device_scpi_ae173b9ad3d528005e124624ca9bb7b64}{$\sim$mdt\-Device\-Scpi} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_device_scpi_aae5462f105c7c35551f8e9b789a65ea5}{set\-Name} (const Q\-String \&\hyperlink{classmdt_device_scpi_a64e12cc38a7b0b2505af9ff8d4cdf85d}{name})
-\begin{DoxyCompactList}\small\item\em Set device name. \end{DoxyCompactList}\item 
-Q\-String \hyperlink{classmdt_device_scpi_a64e12cc38a7b0b2505af9ff8d4cdf85d}{name} () const 
-\begin{DoxyCompactList}\small\item\em Get device name. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_device_scpi_a94c8fde98a0fa2f933b3c069aa1e4fa0}{connect\-To\-Device} (uint16\-\_\-t id\-Vendor, uint16\-\_\-t id\-Product, const Q\-String \&serial\-Number)
 \begin{DoxyCompactList}\small\item\em Connect to a U\-S\-B\-T\-M\-C device. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_device_scpi_a6b89ee9ab64d04011ec058c8726a2e61}{disconnect\-From\-Device} ()
-\begin{DoxyCompactList}\small\item\em Disconnect from device. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_device_scpi_a59759a6138c3ecbcb5cb98a042f8bcb5}{send\-Command} (const Q\-Byte\-Array \&command, int timeout=30000)
 \begin{DoxyCompactList}\small\item\em Send a command to device. \end{DoxyCompactList}\item 
 Q\-Byte\-Array \hyperlink{classmdt_device_scpi_a6dd5bd26c3178c5ba150d813a91e67c9}{send\-Query} (const Q\-Byte\-Array \&query, int timeout=30000)
 \begin{DoxyCompactList}\small\item\em Send a query to device. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_device_scpi_ab0b25fabd466f4e147f5723f2214286b}{wait} (int t)
-\begin{DoxyCompactList}\small\item\em Wait some time without breaking main event loop. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_error}{mdt\-Error} \hyperlink{classmdt_device_scpi_a45093d4dac06457ee088f45cbec79f3d}{get\-Device\-Error} (const Q\-String \&error\-Text=Q\-String())
 \begin{DoxyCompactList}\small\item\em Get device error. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_device_scpi_aefd45e58d01aed9a165bb2c2dd98198c}{wait\-Operation\-Complete} (int timeout, int interval)
-\begin{DoxyCompactList}\small\item\em Send a command to device. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_device_scpi_a88ceddfbca079cb08e9add45296f1475}{set\-Identification} (const Q\-Variant \&id)
-\begin{DoxyCompactList}\small\item\em Set device identification. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_error}{mdt\-Error} \hyperlink{classmdt_device_scpi_a293c80fcad7f9c38349884717d38027d}{last\-Error} () const 
-\begin{DoxyCompactList}\small\item\em Get last error. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Send a command to device. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-Q\-String \hyperlink{classmdt_device_scpi_a9be39d57f6febfe59afd1a2a1befbdbd}{device\-Id\-String} () const 
-\begin{DoxyCompactList}\small\item\em Get device identification string. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\subsection*{Protected Attributes}
-\begin{DoxyCompactItemize}
-\item 
-\hyperlink{classmdt_error}{mdt\-Error} \hyperlink{classmdt_device_scpi_a3dd77a6f3aeae13cea5b419185147864}{pv\-Last\-Error}
-\begin{DoxyCompactList}\small\item\em Laset error. \end{DoxyCompactList}\end{DoxyCompactItemize}
+void \hyperlink{classmdt_device_scpi_a32498c40ac609ac157cb332bc4e7ac51}{disconnect\-From\-Device\-Event} ()
+\begin{DoxyCompactList}\small\item\em Close port. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_scpi_a750ebbf843bad40b442a9d965c6f0e44}{name\-Changed\-Event} (const Q\-String \&new\-Name)
+\begin{DoxyCompactList}\small\item\em Update name in port. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
 
 
 \subsection{Detailed Description}
@@ -87,14 +75,12 @@ Definition at line 46 of file mdt\-Device\-Scpi.\-h.
 \index{mdt\-Device\-Scpi@{mdt\-Device\-Scpi}!mdtDeviceScpi@{mdt\-Device\-Scpi}}
 \subsubsection[{mdt\-Device\-Scpi}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Device\-Scpi\-::mdt\-Device\-Scpi (
 \begin{DoxyParamCaption}
-\item[{{\bf Q\-Object} $\ast$}]{parent = {\ttfamily 0}}
+\item[{Q\-Object $\ast$}]{parent = {\ttfamily 0}}
 \end{DoxyParamCaption}
 )}}\label{classmdt_device_scpi_a44c03151a6796e5c1efd64ef55f2d14d}
 
 
 Construct a S\-C\-P\-I device. 
-
-\-: \hyperlink{classmdt_device}{mdt\-Device(parent)}
 
 Will create and configure a U\-S\-B\-T\-M\-C port manager. 
 
@@ -113,7 +99,7 @@ Destructor.
 
 
 
-Definition at line 44 of file mdt\-Device\-Scpi.\-cpp.
+Definition at line 43 of file mdt\-Device\-Scpi.\-cpp.
 
 
 
@@ -142,57 +128,34 @@ Connect to a U\-S\-B\-T\-M\-C device.
 \end{DoxyParams}
 
 
-Definition at line 48 of file mdt\-Device\-Scpi.\-cpp.
+Definition at line 47 of file mdt\-Device\-Scpi.\-cpp.
 
 
 
-References mdt\-Usbtmc\-Port\-::last\-Error(), mdt\-Usbtmc\-Port\-::open\-Device(), and pv\-Last\-Error.
+References mdt\-Usbtmc\-Port\-::last\-Error(), mdt\-Usbtmc\-Port\-::open\-Device(), and mdt\-Device\-::pv\-Last\-Error.
 
 
 
 Referenced by mdt\-Device\-D\-S\-O1000\-A\-::connect\-To\-Device(), and mdt\-Device\-U3606\-A\-::connect\-To\-Device().
 
-\hypertarget{classmdt_device_scpi_a9be39d57f6febfe59afd1a2a1befbdbd}{\index{mdt\-Device\-Scpi@{mdt\-Device\-Scpi}!device\-Id\-String@{device\-Id\-String}}
-\index{device\-Id\-String@{device\-Id\-String}!mdtDeviceScpi@{mdt\-Device\-Scpi}}
-\subsubsection[{device\-Id\-String}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Device\-Scpi\-::device\-Id\-String (
+\hypertarget{classmdt_device_scpi_a32498c40ac609ac157cb332bc4e7ac51}{\index{mdt\-Device\-Scpi@{mdt\-Device\-Scpi}!disconnect\-From\-Device\-Event@{disconnect\-From\-Device\-Event}}
+\index{disconnect\-From\-Device\-Event@{disconnect\-From\-Device\-Event}!mdtDeviceScpi@{mdt\-Device\-Scpi}}
+\subsubsection[{disconnect\-From\-Device\-Event}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Device\-Scpi\-::disconnect\-From\-Device\-Event (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}}\label{classmdt_device_scpi_a9be39d57f6febfe59afd1a2a1befbdbd}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classmdt_device_scpi_a32498c40ac609ac157cb332bc4e7ac51}
 
 
-Get device identification string. 
-
-Can be used for error messages. Returns a string with "Device 'device\-Name' \-: "
-
-\begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000022}{Todo}]Candidate for a common \hyperlink{classmdt_device}{mdt\-Device} class \end{DoxyRefDesc}
-
-
-Definition at line 204 of file mdt\-Device\-Scpi.\-h.
+Close port. 
 
 
 
-References name().
+Reimplemented from \hyperlink{classmdt_device_afe3dec5b38bb5db7f5f6f250caa5f577}{mdt\-Device}.
 
 
 
-Referenced by mdt\-Device\-U3606\-A\-::setup\-Low\-Resistance\-Measure(), mdt\-Device\-U3606\-A\-::setup\-Resistance\-Measure(), and mdt\-Device\-U3606\-A\-::setup\-Voltage\-Dc\-Measure().
-
-\hypertarget{classmdt_device_scpi_a6b89ee9ab64d04011ec058c8726a2e61}{\index{mdt\-Device\-Scpi@{mdt\-Device\-Scpi}!disconnect\-From\-Device@{disconnect\-From\-Device}}
-\index{disconnect\-From\-Device@{disconnect\-From\-Device}!mdtDeviceScpi@{mdt\-Device\-Scpi}}
-\subsubsection[{disconnect\-From\-Device}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Device\-Scpi\-::disconnect\-From\-Device (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}}\label{classmdt_device_scpi_a6b89ee9ab64d04011ec058c8726a2e61}
-
-
-Disconnect from device. 
-
-
-
-Definition at line 57 of file mdt\-Device\-Scpi.\-cpp.
+Definition at line 128 of file mdt\-Device\-Scpi.\-cpp.
 
 
 
@@ -218,58 +181,34 @@ Will send S\-Y\-S\-Tem\-:E\-R\-Ror? query and return error. On (communication) p
 \end{DoxyParams}
 
 
-Definition at line 80 of file mdt\-Device\-Scpi.\-cpp.
+Definition at line 74 of file mdt\-Device\-Scpi.\-cpp.
 
 
 
 References mdt\-Codec\-Scpi\-::decode\-Device\-Error(), and send\-Query().
 
-\hypertarget{classmdt_device_scpi_a293c80fcad7f9c38349884717d38027d}{\index{mdt\-Device\-Scpi@{mdt\-Device\-Scpi}!last\-Error@{last\-Error}}
-\index{last\-Error@{last\-Error}!mdtDeviceScpi@{mdt\-Device\-Scpi}}
-\subsubsection[{last\-Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Error} mdt\-Device\-Scpi\-::last\-Error (
+\hypertarget{classmdt_device_scpi_a750ebbf843bad40b442a9d965c6f0e44}{\index{mdt\-Device\-Scpi@{mdt\-Device\-Scpi}!name\-Changed\-Event@{name\-Changed\-Event}}
+\index{name\-Changed\-Event@{name\-Changed\-Event}!mdtDeviceScpi@{mdt\-Device\-Scpi}}
+\subsubsection[{name\-Changed\-Event}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Device\-Scpi\-::name\-Changed\-Event (
 \begin{DoxyParamCaption}
-{}
+\item[{const Q\-String \&}]{new\-Name}
 \end{DoxyParamCaption}
-) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_scpi_a293c80fcad7f9c38349884717d38027d}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classmdt_device_scpi_a750ebbf843bad40b442a9d965c6f0e44}
 
 
-Get last error. 
-
-\begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000020}{Todo}]Candidate for a common \hyperlink{classmdt_device}{mdt\-Device} class \end{DoxyRefDesc}
-
-
-Definition at line 184 of file mdt\-Device\-Scpi.\-h.
+Update name in port. 
 
 
 
-References pv\-Last\-Error.
-
-\hypertarget{classmdt_device_scpi_a64e12cc38a7b0b2505af9ff8d4cdf85d}{\index{mdt\-Device\-Scpi@{mdt\-Device\-Scpi}!name@{name}}
-\index{name@{name}!mdtDeviceScpi@{mdt\-Device\-Scpi}}
-\subsubsection[{name}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Device\-Scpi\-::name (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_scpi_a64e12cc38a7b0b2505af9ff8d4cdf85d}
-
-
-Get device name. 
-
-\begin{DoxySeeAlso}{See Also}
-\hyperlink{classmdt_device_scpi_aae5462f105c7c35551f8e9b789a65ea5}{set\-Name()} 
-\end{DoxySeeAlso}
-
-
-Definition at line 77 of file mdt\-Device\-Scpi.\-h.
+Reimplemented from \hyperlink{classmdt_device_a30b8db129316183a10d38a569d431c92}{mdt\-Device}.
 
 
 
-References mdt\-Usbtmc\-Port\-::device\-Name().
+Definition at line 134 of file mdt\-Device\-Scpi.\-cpp.
 
 
 
-Referenced by device\-Id\-String().
+References mdt\-Usbtmc\-Port\-::set\-Device\-Name().
 
 \hypertarget{classmdt_device_scpi_a59759a6138c3ecbcb5cb98a042f8bcb5}{\index{mdt\-Device\-Scpi@{mdt\-Device\-Scpi}!send\-Command@{send\-Command}}
 \index{send\-Command@{send\-Command}!mdtDeviceScpi@{mdt\-Device\-Scpi}}
@@ -292,11 +231,11 @@ Send a command to device.
 \end{DoxyParams}
 
 
-Definition at line 62 of file mdt\-Device\-Scpi.\-cpp.
+Definition at line 56 of file mdt\-Device\-Scpi.\-cpp.
 
 
 
-References mdt\-Usbtmc\-Port\-::last\-Error(), pv\-Last\-Error, and mdt\-Usbtmc\-Port\-::send\-Command().
+References mdt\-Usbtmc\-Port\-::last\-Error(), mdt\-Device\-::pv\-Last\-Error, and mdt\-Usbtmc\-Port\-::send\-Command().
 
 
 
@@ -323,77 +262,15 @@ Send a query to device.
 \end{DoxyParams}
 
 
-Definition at line 71 of file mdt\-Device\-Scpi.\-cpp.
+Definition at line 65 of file mdt\-Device\-Scpi.\-cpp.
 
 
 
-References mdt\-Usbtmc\-Port\-::last\-Error(), pv\-Last\-Error, and mdt\-Usbtmc\-Port\-::send\-Query().
+References mdt\-Usbtmc\-Port\-::last\-Error(), mdt\-Device\-::pv\-Last\-Error, and mdt\-Usbtmc\-Port\-::send\-Query().
 
 
 
 Referenced by get\-Device\-Error(), mdt\-Device\-U3606\-A\-::get\-Measure\-Configuration(), mdt\-Device\-U3606\-A\-::get\-Measure\-Value(), and wait\-Operation\-Complete().
-
-\hypertarget{classmdt_device_scpi_a88ceddfbca079cb08e9add45296f1475}{\index{mdt\-Device\-Scpi@{mdt\-Device\-Scpi}!set\-Identification@{set\-Identification}}
-\index{set\-Identification@{set\-Identification}!mdtDeviceScpi@{mdt\-Device\-Scpi}}
-\subsubsection[{set\-Identification}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Device\-Scpi\-::set\-Identification (
-\begin{DoxyParamCaption}
-\item[{const Q\-Variant \&}]{id}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_scpi_a88ceddfbca079cb08e9add45296f1475}
-
-
-Set device identification. 
-
-\begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000019}{Todo}]define better, see also \hyperlink{classmdt_device_scpi_a9be39d57f6febfe59afd1a2a1befbdbd}{device\-Id\-String()} 
-
-Candidate for a common \hyperlink{classmdt_device}{mdt\-Device} class \end{DoxyRefDesc}
-
-
-Definition at line 176 of file mdt\-Device\-Scpi.\-h.
-
-\hypertarget{classmdt_device_scpi_aae5462f105c7c35551f8e9b789a65ea5}{\index{mdt\-Device\-Scpi@{mdt\-Device\-Scpi}!set\-Name@{set\-Name}}
-\index{set\-Name@{set\-Name}!mdtDeviceScpi@{mdt\-Device\-Scpi}}
-\subsubsection[{set\-Name}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Device\-Scpi\-::set\-Name (
-\begin{DoxyParamCaption}
-\item[{const Q\-String \&}]{name}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_scpi_aae5462f105c7c35551f8e9b789a65ea5}
-
-
-Set device name. 
-
-Set a user friendly name for this device. Will also be used to build error messages. 
-
-Definition at line 68 of file mdt\-Device\-Scpi.\-h.
-
-
-
-References mdt\-Usbtmc\-Port\-::set\-Device\-Name().
-
-\hypertarget{classmdt_device_scpi_ab0b25fabd466f4e147f5723f2214286b}{\index{mdt\-Device\-Scpi@{mdt\-Device\-Scpi}!wait@{wait}}
-\index{wait@{wait}!mdtDeviceScpi@{mdt\-Device\-Scpi}}
-\subsubsection[{wait}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Device\-Scpi\-::wait (
-\begin{DoxyParamCaption}
-\item[{int}]{t}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_scpi_ab0b25fabd466f4e147f5723f2214286b}
-
-
-Wait some time without breaking main event loop. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em t} & time \mbox{[}ms\mbox{]} \\
-\hline
-\end{DoxyParams}
-
-
-Definition at line 112 of file mdt\-Device\-Scpi.\-h.
-
-
-
-References mdt\-Usbtmc\-Port\-::wait().
 
 \hypertarget{classmdt_device_scpi_aefd45e58d01aed9a165bb2c2dd98198c}{\index{mdt\-Device\-Scpi@{mdt\-Device\-Scpi}!wait\-Operation\-Complete@{wait\-Operation\-Complete}}
 \index{wait\-Operation\-Complete@{wait\-Operation\-Complete}!mdtDeviceScpi@{mdt\-Device\-Scpi}}
@@ -453,31 +330,11 @@ interval $>$ 0
 \end{DoxyPrecond}
 
 
-Definition at line 93 of file mdt\-Device\-Scpi.\-cpp.
+Definition at line 87 of file mdt\-Device\-Scpi.\-cpp.
 
 
 
 References send\-Query().
-
-
-
-\subsection{Member Data Documentation}
-\hypertarget{classmdt_device_scpi_a3dd77a6f3aeae13cea5b419185147864}{\index{mdt\-Device\-Scpi@{mdt\-Device\-Scpi}!pv\-Last\-Error@{pv\-Last\-Error}}
-\index{pv\-Last\-Error@{pv\-Last\-Error}!mdtDeviceScpi@{mdt\-Device\-Scpi}}
-\subsubsection[{pv\-Last\-Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Error} mdt\-Device\-Scpi\-::pv\-Last\-Error\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_device_scpi_a3dd77a6f3aeae13cea5b419185147864}
-
-
-Laset error. 
-
-\begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000021}{Todo}]Candidate for a common \hyperlink{classmdt_device}{mdt\-Device} class \end{DoxyRefDesc}
-
-
-Definition at line 195 of file mdt\-Device\-Scpi.\-h.
-
-
-
-Referenced by connect\-To\-Device(), mdt\-Device\-U3606\-A\-::get\-Measure\-Value(), last\-Error(), send\-Command(), send\-Query(), mdt\-Device\-U3606\-A\-::setup\-Low\-Resistance\-Measure(), mdt\-Device\-U3606\-A\-::setup\-Resistance\-Measure(), and mdt\-Device\-U3606\-A\-::setup\-Voltage\-Dc\-Measure().
 
 
 

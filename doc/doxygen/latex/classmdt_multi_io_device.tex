@@ -1,0 +1,2117 @@
+\hypertarget{classmdt_multi_io_device}{\section{mdt\-Multi\-Io\-Device Class Reference}
+\label{classmdt_multi_io_device}\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}}
+}
+
+
+Base class for a device that contains multiple I/\-Os.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Multi\-Io\-Device.\-h$>$}
+
+
+
+Inheritance diagram for mdt\-Multi\-Io\-Device\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=202pt]{classmdt_multi_io_device__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdt\-Multi\-Io\-Device\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=218pt]{classmdt_multi_io_device__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmdt_multi_io_device_ae32a7d5dc984e502420983bcbc0e919d}{set\-Analog\-Output\-Value} (\hyperlink{classmdt_analog_io}{mdt\-Analog\-Io} $\ast$analog\-Output)
+\begin{DoxyCompactList}\small\item\em Set value on a analog output on physical device. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_multi_io_device_a6b4537b09f396b4016772b128fdff277}{set\-Digital\-Output\-Value} (\hyperlink{classmdt_digital_io}{mdt\-Digital\-Io} $\ast$digital\-Output)
+\begin{DoxyCompactList}\small\item\em Set value on a digital output on physical device. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_multi_io_device_ab6e4ede8f29e182e63f6b190c8ac4cae}{mdt\-Multi\-Io\-Device} (Q\-Object $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em Construct a multi I/\-O device object. \end{DoxyCompactList}\item 
+virtual \hyperlink{classmdt_multi_io_device_ae130f371614b06b44fa391732c63c71e}{$\sim$mdt\-Multi\-Io\-Device} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+virtual \hyperlink{classmdt_port_manager}{mdt\-Port\-Manager} $\ast$ \hyperlink{classmdt_multi_io_device_a71765ab3a9f8aa9ba4024e3cba10c80e}{port\-Manager} ()
+\begin{DoxyCompactList}\small\item\em Get internal port manager instance. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_multi_io_device_a7eac1455f50951f25a860ef22eb53cd6}{add\-Input} (\hyperlink{classmdt_analog_io}{mdt\-Analog\-Io} $\ast$analog\-Input)
+\begin{DoxyCompactList}\small\item\em Add a analog input. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_multi_io_device_a6c56cd0f8379e6090520a8ae07e1dec5}{add\-Inputs} (const Q\-List$<$ \hyperlink{classmdt_analog_io}{mdt\-Analog\-Io} $\ast$ $>$ \&analog\-Inputs)
+\begin{DoxyCompactList}\small\item\em Add a list of analog inputs. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_multi_io_device_afef971431b2db32e31994d18aa3a6522}{add\-Output} (\hyperlink{classmdt_analog_io}{mdt\-Analog\-Io} $\ast$analog\-Output)
+\begin{DoxyCompactList}\small\item\em Add a analog output. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_multi_io_device_a313df6923c8fe4df9405f5222c46986e}{add\-Outputs} (const Q\-List$<$ \hyperlink{classmdt_analog_io}{mdt\-Analog\-Io} $\ast$ $>$ \&analog\-Outputs)
+\begin{DoxyCompactList}\small\item\em Add a list of analog outputs. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_multi_io_device_ada49d6af77fc3b6e435d14b6254d5862}{add\-Input} (\hyperlink{classmdt_digital_io}{mdt\-Digital\-Io} $\ast$digital\-Input)
+\begin{DoxyCompactList}\small\item\em Add a digital input. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_multi_io_device_aa1911b274aba6b0bd3b4ae6de7653e06}{add\-Inputs} (const Q\-List$<$ \hyperlink{classmdt_digital_io}{mdt\-Digital\-Io} $\ast$ $>$ \&digital\-Inputs)
+\begin{DoxyCompactList}\small\item\em Add a list of digital inputs. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_multi_io_device_aaeda5a4dba892677f7c63e621dade8b0}{add\-Output} (\hyperlink{classmdt_digital_io}{mdt\-Digital\-Io} $\ast$digital\-Output)
+\begin{DoxyCompactList}\small\item\em Add a digital output. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_multi_io_device_a2229d9620e3f93d7387408526c4c5524}{add\-Outputs} (const Q\-List$<$ \hyperlink{classmdt_digital_io}{mdt\-Digital\-Io} $\ast$ $>$ \&digital\-Outputs)
+\begin{DoxyCompactList}\small\item\em Add a list of digital outputs. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_multi_io_device_ae712551100e5c45eaaf197dd9e409716}{delete\-Ios} ()
+\begin{DoxyCompactList}\small\item\em Delete all I/\-O in container. \end{DoxyCompactList}\item 
+std\-::shared\-\_\-ptr$<$ \hyperlink{classmdt_device_ios}{mdt\-Device\-Ios} $>$ \hyperlink{classmdt_multi_io_device_a1acf6876006ca28b93a6ad0be0b39eff}{ios} ()
+\begin{DoxyCompactList}\small\item\em Access internal I/\-Os container. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_value}{mdt\-Value} \hyperlink{classmdt_multi_io_device_ac39f01b071d5b7c16e18db298160134d}{get\-Analog\-Input\-Value} (\hyperlink{classmdt_analog_io}{mdt\-Analog\-Io} $\ast$analog\-Input, bool query\-Device, bool wait\-On\-Reply)
+\begin{DoxyCompactList}\small\item\em Get analog input value. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_value}{mdt\-Value} \hyperlink{classmdt_multi_io_device_a000b911a7fa7fa1d56c8413625f700ff}{get\-Analog\-Input\-Value} (int address, bool query\-Device, bool wait\-On\-Reply)
+\begin{DoxyCompactList}\small\item\em Get analog input value. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_value}{mdt\-Value} \hyperlink{classmdt_multi_io_device_a41c8a0d52c94cb30b394e3da41ebfff5}{get\-Analog\-Input\-Value\-At} (int position, bool query\-Device, bool wait\-On\-Reply)
+\begin{DoxyCompactList}\small\item\em Get analog input value. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_value}{mdt\-Value} \hyperlink{classmdt_multi_io_device_a7851ab0b09ee2d30846fc76b7bce165a}{get\-Analog\-Input\-Value} (const Q\-String \&label\-Short, bool query\-Device, bool wait\-On\-Reply)
+\item 
+int \hyperlink{classmdt_multi_io_device_a73bbcd721b309930174d5e91266d0298}{get\-Analog\-Inputs} (bool wait\-On\-Reply)
+\begin{DoxyCompactList}\small\item\em Read all analog inputs on physical device and update (G)U\-I representation. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_value}{mdt\-Value} \hyperlink{classmdt_multi_io_device_ae4d5260c3fcf9c6cd10114cc411dafe0}{get\-Analog\-Output\-Value} (\hyperlink{classmdt_analog_io}{mdt\-Analog\-Io} $\ast$analog\-Output, bool query\-Device, bool wait\-On\-Reply)
+\begin{DoxyCompactList}\small\item\em Get analog output value. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_value}{mdt\-Value} \hyperlink{classmdt_multi_io_device_ad8b754bf6a4a093eb235f2aeb116cd13}{get\-Analog\-Output\-Value} (int address\-Read, bool query\-Device, bool wait\-On\-Reply)
+\begin{DoxyCompactList}\small\item\em Get analog output value. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_value}{mdt\-Value} \hyperlink{classmdt_multi_io_device_a3891a61d77b9e5a3b202f84a683c4402}{get\-Analog\-Output\-Value\-At} (int position, bool query\-Device, bool wait\-On\-Reply)
+\begin{DoxyCompactList}\small\item\em Get analog output value. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_value}{mdt\-Value} \hyperlink{classmdt_multi_io_device_aae44caddee3b138fa1f7b36172c1829c}{get\-Analog\-Output\-Value} (const Q\-String \&label\-Short, bool query\-Device, bool wait\-On\-Reply)
+\item 
+int \hyperlink{classmdt_multi_io_device_a79b27b1420313f2fee0c5f4d2a8f1735}{get\-Analog\-Outputs} (bool wait\-On\-Reply)
+\begin{DoxyCompactList}\small\item\em Read all analog outputs on physical device and update (G)U\-I representation. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_multi_io_device_af58f284bf4310abefa59975664e640d6}{set\-Analog\-Output\-Value} (\hyperlink{classmdt_analog_io}{mdt\-Analog\-Io} $\ast$analog\-Output, const \hyperlink{classmdt_value}{mdt\-Value} \&value, bool send\-To\-Device, bool wait\-On\-Reply)
+\begin{DoxyCompactList}\small\item\em Set analog output value. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_multi_io_device_a668fef1da7e91d6889e1fc478c7c6560}{set\-Analog\-Output\-Value} (int address\-Write, const \hyperlink{classmdt_value}{mdt\-Value} \&value, bool send\-To\-Device, bool wait\-On\-Reply)
+\begin{DoxyCompactList}\small\item\em Set analog output value. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_multi_io_device_ace3f9d707628ceb6ad7e4bc46c202e32}{set\-Analog\-Output\-Value\-At} (int position, const \hyperlink{classmdt_value}{mdt\-Value} \&value, bool send\-To\-Device, bool wait\-On\-Reply)
+\begin{DoxyCompactList}\small\item\em Set analog output value. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_multi_io_device_a35f8cf69f977e3ae8fade0ca9dba09d2}{set\-Analog\-Output\-Value} (const Q\-String \&label\-Short, const \hyperlink{classmdt_value}{mdt\-Value} \&value, bool send\-To\-Device, bool wait\-On\-Reply)
+\item 
+int \hyperlink{classmdt_multi_io_device_ae8b2ae1657c4072854846893705f427a}{set\-Analog\-Outputs} (bool wait\-On\-Reply)
+\begin{DoxyCompactList}\small\item\em Write all analog outputs on physical device and update (G)U\-I representation. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_value}{mdt\-Value} \hyperlink{classmdt_multi_io_device_ab149a75e3886518b03059df0c41e1086}{get\-Digital\-Input\-Value} (\hyperlink{classmdt_digital_io}{mdt\-Digital\-Io} $\ast$digital\-Input, bool query\-Device, bool wait\-On\-Reply)
+\begin{DoxyCompactList}\small\item\em Get digital input value. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_value}{mdt\-Value} \hyperlink{classmdt_multi_io_device_aae5727443591c8008d6d6db6ab521ed7}{get\-Digital\-Input\-Value} (int address, bool query\-Device, bool wait\-On\-Reply)
+\begin{DoxyCompactList}\small\item\em Get digital input value. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_value}{mdt\-Value} \hyperlink{classmdt_multi_io_device_a4dc1d2e97ec5d835394629203f16ae1a}{get\-Digital\-Input\-Value\-At} (int position, bool query\-Device, bool wait\-On\-Reply)
+\begin{DoxyCompactList}\small\item\em Get digital input value. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_value}{mdt\-Value} \hyperlink{classmdt_multi_io_device_ae0ab9303a0ca81b6200fc5c7dde66ba2}{get\-Digital\-Input\-Value} (const Q\-String \&label\-Short, bool query\-Device, bool wait\-On\-Reply)
+\item 
+int \hyperlink{classmdt_multi_io_device_ab3c1095ed6a0f35b43433d61104fc080}{get\-Digital\-Inputs} (bool wait\-On\-Reply)
+\begin{DoxyCompactList}\small\item\em Read all digital inputs on physical device and update (G)U\-I representation. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_value}{mdt\-Value} \hyperlink{classmdt_multi_io_device_a6c91a85357863564192b932d22c1c0ce}{get\-Digital\-Output\-Value} (\hyperlink{classmdt_digital_io}{mdt\-Digital\-Io} $\ast$digital\-Output, bool query\-Device, bool wait\-On\-Reply)
+\begin{DoxyCompactList}\small\item\em Get digital output value. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_value}{mdt\-Value} \hyperlink{classmdt_multi_io_device_a0d3e3a27698823915fca74e778633455}{get\-Digital\-Output\-Value} (int address\-Read, bool query\-Device, bool wait\-On\-Reply)
+\begin{DoxyCompactList}\small\item\em Get digital output value. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_value}{mdt\-Value} \hyperlink{classmdt_multi_io_device_a3b95337d6046c2592fc3a0286219cabc}{get\-Digital\-Output\-Value\-At} (int position, bool query\-Device, bool wait\-On\-Reply)
+\begin{DoxyCompactList}\small\item\em Get digital output value. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_value}{mdt\-Value} \hyperlink{classmdt_multi_io_device_a159f1af1b6e11e38751ffeaf936331d0}{get\-Digital\-Output\-Value} (const Q\-String \&label\-Short, bool query\-Device, bool wait\-On\-Reply)
+\item 
+int \hyperlink{classmdt_multi_io_device_a15b6ae641d9d6f7a7c90cbc033950652}{get\-Digital\-Outputs} (bool wait\-On\-Reply)
+\begin{DoxyCompactList}\small\item\em Read all digital outputs on physical device and update (G)U\-I representation. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_multi_io_device_a0677d7dfba08a059fb81fa83ffbba11a}{set\-Digital\-Output\-Value} (\hyperlink{classmdt_digital_io}{mdt\-Digital\-Io} $\ast$digital\-Output, const \hyperlink{classmdt_value}{mdt\-Value} \&value, bool send\-To\-Device, bool wait\-On\-Reply)
+\begin{DoxyCompactList}\small\item\em Set a digital output value. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_multi_io_device_a82aea9d2c012c3c03819fe5795c65086}{set\-Digital\-Output\-Value} (int address\-Write, const \hyperlink{classmdt_value}{mdt\-Value} \&value, bool send\-To\-Device, bool wait\-On\-Reply)
+\begin{DoxyCompactList}\small\item\em Set digital output value. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_multi_io_device_a5916d5faef10b1f290ae8aa10319baad}{set\-Digital\-Output\-Value\-At} (int position, const \hyperlink{classmdt_value}{mdt\-Value} \&value, bool send\-To\-Device, bool wait\-On\-Reply)
+\begin{DoxyCompactList}\small\item\em Set digital output value. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_multi_io_device_a8c3aae522f8a991f8073d161d05fbe7b}{set\-Digital\-Output\-Value} (const Q\-String \&label\-Short, const \hyperlink{classmdt_value}{mdt\-Value} \&value, bool send\-To\-Device, bool wait\-On\-Reply)
+\begin{DoxyCompactList}\small\item\em Set digital output value. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_multi_io_device_aae673bac285929dc4ff005fbc576b787}{set\-Digital\-Outputs\-Value} (const \hyperlink{classmdt_value}{mdt\-Value} \&value, bool send\-To\-Device, bool wait\-On\-Reply)
+\begin{DoxyCompactList}\small\item\em Set a value and validity for all digital outputs. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_multi_io_device_a2149cfc42f04c8afb6f2d20dbd3bd391}{set\-Digital\-Outputs} (bool wait\-On\-Reply)
+\begin{DoxyCompactList}\small\item\em Write all digital outputs to physical device and update (G)U\-I representation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_port_transaction}{mdt\-Port\-Transaction} $\ast$ \hyperlink{classmdt_multi_io_device_aabc890d0758a6e3e629c589a07d1c7fb}{get\-New\-Transaction} ()
+\begin{DoxyCompactList}\small\item\em Get a new transaction. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_multi_io_device_a3c5f8852d25fa9435e77257347e639da}{restore\-Transaction} (\hyperlink{classmdt_port_transaction}{mdt\-Port\-Transaction} $\ast$transaction)
+\begin{DoxyCompactList}\small\item\em Restore a transaction into pool. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_multi_io_device_a37a3f39a36b3bbd383f4f704193e3955}{wait\-Transaction\-Done} (int id)
+\begin{DoxyCompactList}\small\item\em Wait until a transaction is done without break the G\-U\-I's event loop. \end{DoxyCompactList}\item 
+virtual int \hyperlink{classmdt_multi_io_device_ad49b5054981b91bab6e10de7d049c709}{read\-Analog\-Input} (\hyperlink{classmdt_port_transaction}{mdt\-Port\-Transaction} $\ast$transaction)
+\begin{DoxyCompactList}\small\item\em Read one analog input on physical device. \end{DoxyCompactList}\item 
+virtual int \hyperlink{classmdt_multi_io_device_ad54b0b3a533f3e739f4add183932a5cd}{read\-Analog\-Inputs} (\hyperlink{classmdt_port_transaction}{mdt\-Port\-Transaction} $\ast$transaction)
+\begin{DoxyCompactList}\small\item\em Read all analog inputs on physical device. \end{DoxyCompactList}\item 
+virtual int \hyperlink{classmdt_multi_io_device_a5bfebd15d85c5b0f0d92cd49e49e862d}{read\-Analog\-Output} (\hyperlink{classmdt_port_transaction}{mdt\-Port\-Transaction} $\ast$transaction)
+\begin{DoxyCompactList}\small\item\em Read one analog output on physical device. \end{DoxyCompactList}\item 
+virtual int \hyperlink{classmdt_multi_io_device_ac5629e6ccdeb3bd2a763dad2cfc724fe}{read\-Analog\-Outputs} (\hyperlink{classmdt_port_transaction}{mdt\-Port\-Transaction} $\ast$transaction)
+\begin{DoxyCompactList}\small\item\em Read all analog outputs on physical device. \end{DoxyCompactList}\item 
+virtual int \hyperlink{classmdt_multi_io_device_a683b5aa97f175cb2979472e1b256c706}{write\-Analog\-Output} (int value, \hyperlink{classmdt_port_transaction}{mdt\-Port\-Transaction} $\ast$transaction)
+\begin{DoxyCompactList}\small\item\em Write value on a analog output to physical device. \end{DoxyCompactList}\item 
+virtual int \hyperlink{classmdt_multi_io_device_ac6b1b24b8c3eb0722df4079df11e6b71}{write\-Analog\-Outputs} (\hyperlink{classmdt_port_transaction}{mdt\-Port\-Transaction} $\ast$transaction, \hyperlink{classmdt_device_ios_segment}{mdt\-Device\-Ios\-Segment} $\ast$segment)
+\begin{DoxyCompactList}\small\item\em Write all analog outputs to physical device. \end{DoxyCompactList}\item 
+virtual int \hyperlink{classmdt_multi_io_device_ab8861287c8328873cce6f07ea1ec867a}{read\-Digital\-Input} (\hyperlink{classmdt_port_transaction}{mdt\-Port\-Transaction} $\ast$transaction)
+\begin{DoxyCompactList}\small\item\em Read one digital input on physical device. \end{DoxyCompactList}\item 
+virtual int \hyperlink{classmdt_multi_io_device_ac9250b0b4d5ea16ee130bfd625960922}{read\-Digital\-Inputs} (\hyperlink{classmdt_port_transaction}{mdt\-Port\-Transaction} $\ast$transaction)
+\begin{DoxyCompactList}\small\item\em Read all digital inputs on physical device. \end{DoxyCompactList}\item 
+virtual int \hyperlink{classmdt_multi_io_device_a74c7327f8540104d694a614b0af8929a}{read\-Digital\-Output} (\hyperlink{classmdt_port_transaction}{mdt\-Port\-Transaction} $\ast$transaction)
+\begin{DoxyCompactList}\small\item\em Read one digital output on physical device. \end{DoxyCompactList}\item 
+virtual int \hyperlink{classmdt_multi_io_device_ac372088c21c7077f1b71e473048eb6c8}{read\-Digital\-Outputs} (\hyperlink{classmdt_port_transaction}{mdt\-Port\-Transaction} $\ast$transaction)
+\begin{DoxyCompactList}\small\item\em Read all digital outputs on physical device. \end{DoxyCompactList}\item 
+virtual int \hyperlink{classmdt_multi_io_device_a80b4c2864d3e2844fe12444de243365a}{write\-Digital\-Output} (bool state, \hyperlink{classmdt_port_transaction}{mdt\-Port\-Transaction} $\ast$transaction)
+\begin{DoxyCompactList}\small\item\em Write state on a digital output to physical device. \end{DoxyCompactList}\item 
+virtual int \hyperlink{classmdt_multi_io_device_a03aedb552abcc344b1545d95f261e387}{write\-Digital\-Outputs} (\hyperlink{classmdt_port_transaction}{mdt\-Port\-Transaction} $\ast$transaction, \hyperlink{classmdt_device_ios_segment}{mdt\-Device\-Ios\-Segment} $\ast$segment)
+\begin{DoxyCompactList}\small\item\em Write all digital outputs to physical device. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_multi_io_device_ae2cc456c53e1b5f792b9073ad15bb1b3}{state\-Changed\-Event} (\hyperlink{classmdt_device_a8bcf508fbd38a8f0b235e8a9b00319f6}{State\-\_\-t} new\-State)
+\begin{DoxyCompactList}\small\item\em Called when current state has changed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Base class for a device that contains multiple I/\-Os. 
+
+
+
+Definition at line 37 of file mdt\-Multi\-Io\-Device.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_multi_io_device_ab6e4ede8f29e182e63f6b190c8ac4cae}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}}
+\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{mdt\-Multi\-Io\-Device}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Multi\-Io\-Device\-::mdt\-Multi\-Io\-Device (
+\begin{DoxyParamCaption}
+\item[{Q\-Object $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_ab6e4ede8f29e182e63f6b190c8ac4cae}
+
+
+Construct a multi I/\-O device object. 
+
+
+
+Definition at line 26 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+\hypertarget{classmdt_multi_io_device_ae130f371614b06b44fa391732c63c71e}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!$\sim$mdt\-Multi\-Io\-Device@{$\sim$mdt\-Multi\-Io\-Device}}
+\index{$\sim$mdt\-Multi\-Io\-Device@{$\sim$mdt\-Multi\-Io\-Device}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{$\sim$mdt\-Multi\-Io\-Device}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Multi\-Io\-Device\-::$\sim$mdt\-Multi\-Io\-Device (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_multi_io_device_ae130f371614b06b44fa391732c63c71e}
+
+
+Destructor. 
+
+
+
+Definition at line 33 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_multi_io_device_a7eac1455f50951f25a860ef22eb53cd6}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!add\-Input@{add\-Input}}
+\index{add\-Input@{add\-Input}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{add\-Input}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Multi\-Io\-Device\-::add\-Input (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Analog\-Io} $\ast$}]{analog\-Input}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_a7eac1455f50951f25a860ef22eb53cd6}
+
+
+Add a analog input. 
+
+
+
+Definition at line 37 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+\hypertarget{classmdt_multi_io_device_ada49d6af77fc3b6e435d14b6254d5862}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!add\-Input@{add\-Input}}
+\index{add\-Input@{add\-Input}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{add\-Input}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Multi\-Io\-Device\-::add\-Input (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Digital\-Io} $\ast$}]{digital\-Input}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_ada49d6af77fc3b6e435d14b6254d5862}
+
+
+Add a digital input. 
+
+
+
+Definition at line 74 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+\hypertarget{classmdt_multi_io_device_a6c56cd0f8379e6090520a8ae07e1dec5}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!add\-Inputs@{add\-Inputs}}
+\index{add\-Inputs@{add\-Inputs}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{add\-Inputs}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Multi\-Io\-Device\-::add\-Inputs (
+\begin{DoxyParamCaption}
+\item[{const Q\-List$<$ {\bf mdt\-Analog\-Io} $\ast$ $>$ \&}]{analog\-Inputs}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_a6c56cd0f8379e6090520a8ae07e1dec5}
+
+
+Add a list of analog inputs. 
+
+
+
+Definition at line 45 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+Referenced by mdt\-Device\-Modbus\-Wago\-::detect\-Ios().
+
+\hypertarget{classmdt_multi_io_device_aa1911b274aba6b0bd3b4ae6de7653e06}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!add\-Inputs@{add\-Inputs}}
+\index{add\-Inputs@{add\-Inputs}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{add\-Inputs}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Multi\-Io\-Device\-::add\-Inputs (
+\begin{DoxyParamCaption}
+\item[{const Q\-List$<$ {\bf mdt\-Digital\-Io} $\ast$ $>$ \&}]{digital\-Inputs}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_aa1911b274aba6b0bd3b4ae6de7653e06}
+
+
+Add a list of digital inputs. 
+
+
+
+Definition at line 82 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+\hypertarget{classmdt_multi_io_device_afef971431b2db32e31994d18aa3a6522}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!add\-Output@{add\-Output}}
+\index{add\-Output@{add\-Output}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{add\-Output}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Multi\-Io\-Device\-::add\-Output (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Analog\-Io} $\ast$}]{analog\-Output}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_afef971431b2db32e31994d18aa3a6522}
+
+
+Add a analog output. 
+
+
+
+Definition at line 52 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References set\-Analog\-Output\-Value().
+
+\hypertarget{classmdt_multi_io_device_aaeda5a4dba892677f7c63e621dade8b0}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!add\-Output@{add\-Output}}
+\index{add\-Output@{add\-Output}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{add\-Output}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Multi\-Io\-Device\-::add\-Output (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Digital\-Io} $\ast$}]{digital\-Output}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_aaeda5a4dba892677f7c63e621dade8b0}
+
+
+Add a digital output. 
+
+
+
+Definition at line 89 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References set\-Digital\-Output\-Value().
+
+\hypertarget{classmdt_multi_io_device_a313df6923c8fe4df9405f5222c46986e}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!add\-Outputs@{add\-Outputs}}
+\index{add\-Outputs@{add\-Outputs}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{add\-Outputs}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Multi\-Io\-Device\-::add\-Outputs (
+\begin{DoxyParamCaption}
+\item[{const Q\-List$<$ {\bf mdt\-Analog\-Io} $\ast$ $>$ \&}]{analog\-Outputs}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_a313df6923c8fe4df9405f5222c46986e}
+
+
+Add a list of analog outputs. 
+
+
+
+Definition at line 61 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References set\-Analog\-Output\-Value().
+
+
+
+Referenced by mdt\-Device\-Modbus\-Wago\-::detect\-Ios().
+
+\hypertarget{classmdt_multi_io_device_a2229d9620e3f93d7387408526c4c5524}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!add\-Outputs@{add\-Outputs}}
+\index{add\-Outputs@{add\-Outputs}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{add\-Outputs}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Multi\-Io\-Device\-::add\-Outputs (
+\begin{DoxyParamCaption}
+\item[{const Q\-List$<$ {\bf mdt\-Digital\-Io} $\ast$ $>$ \&}]{digital\-Outputs}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_a2229d9620e3f93d7387408526c4c5524}
+
+
+Add a list of digital outputs. 
+
+
+
+Definition at line 98 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References set\-Digital\-Output\-Value().
+
+\hypertarget{classmdt_multi_io_device_ae712551100e5c45eaaf197dd9e409716}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!delete\-Ios@{delete\-Ios}}
+\index{delete\-Ios@{delete\-Ios}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{delete\-Ios}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Multi\-Io\-Device\-::delete\-Ios (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_ae712551100e5c45eaaf197dd9e409716}
+
+
+Delete all I/\-O in container. 
+
+All I/\-O's will be deleted, but I/\-O container itself will remain valid. 
+
+Definition at line 111 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References set\-Analog\-Output\-Value(), and set\-Digital\-Output\-Value().
+
+
+
+Referenced by mdt\-Device\-Modbus\-Wago\-::detect\-Ios().
+
+\hypertarget{classmdt_multi_io_device_a73bbcd721b309930174d5e91266d0298}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!get\-Analog\-Inputs@{get\-Analog\-Inputs}}
+\index{get\-Analog\-Inputs@{get\-Analog\-Inputs}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{get\-Analog\-Inputs}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Multi\-Io\-Device\-::get\-Analog\-Inputs (
+\begin{DoxyParamCaption}
+\item[{bool}]{wait\-On\-Reply}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_a73bbcd721b309930174d5e91266d0298}
+
+
+Read all analog inputs on physical device and update (G)U\-I representation. 
+
+Will call \hyperlink{classmdt_multi_io_device_ad54b0b3a533f3e739f4add183932a5cd}{read\-Analog\-Inputs()}, witch also sends the request to device. Depending on result, device's state can be updated.
+
+Behaviour of this method can vary, depending on device specific subclass. (See sublcass \hyperlink{classmdt_multi_io_device_ad54b0b3a533f3e739f4add183932a5cd}{read\-Analog\-Inputs()} for details).
+
+Once results are available or error occured, the internal analog inputs are updated. (See \hyperlink{classmdt_device_ios}{mdt\-Device\-Ios} for details).
+
+
+\begin{DoxyParams}{Parameters}
+{\em wait\-On\-Reply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_multi_io_device_a37a3f39a36b3bbd383f4f704193e3955}{wait\-Transaction\-Done()} ), else it will return immediately after the query was sent. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or a I\-D on success. If no I/\-O's are set, on timeout or other error, a value $<$ 0 is returned. 
+\end{DoxyReturn}
+
+
+Definition at line 238 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References get\-New\-Transaction(), mdt\-Device\-Ios\-Segment\-::io\-Count(), read\-Analog\-Inputs(), mdt\-Port\-Transaction\-::set\-Address(), mdt\-Port\-Transaction\-::set\-Io\-Count(), mdt\-Port\-Transaction\-::set\-Query\-Reply\-Mode(), mdt\-Device\-Ios\-Segment\-::start\-Address\-Read(), and wait\-Transaction\-Done().
+
+
+
+Referenced by mdt\-Device\-Modbus\-::queries\-Sequence().
+
+\hypertarget{classmdt_multi_io_device_ac39f01b071d5b7c16e18db298160134d}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!get\-Analog\-Input\-Value@{get\-Analog\-Input\-Value}}
+\index{get\-Analog\-Input\-Value@{get\-Analog\-Input\-Value}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{get\-Analog\-Input\-Value}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Multi\-Io\-Device\-::get\-Analog\-Input\-Value (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Analog\-Io} $\ast$}]{analog\-Input, }
+\item[{bool}]{query\-Device, }
+\item[{bool}]{wait\-On\-Reply}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_ac39f01b071d5b7c16e18db298160134d}
+
+
+Get analog input value. 
+
+Get device or internal analog value. Internal value is updated if query\-Device is set.
+
+
+\begin{DoxyParams}{Parameters}
+{\em analog\-Input} & Pointer to a analog input object. \\
+\hline
+{\em query\-Device} & If true, value is readen from device by calling \hyperlink{classmdt_multi_io_device_ad49b5054981b91bab6e10de7d049c709}{read\-Analog\-Input()}, else cached value is returned. Behaviour of this method can vary, depending on device specific subclass. (See sublcass \hyperlink{classmdt_multi_io_device_ad49b5054981b91bab6e10de7d049c709}{read\-Analog\-Input()} for details). \\
+\hline
+{\em wait\-On\-Reply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_multi_io_device_a37a3f39a36b3bbd383f4f704193e3955}{wait\-Transaction\-Done()} ), else it will return immediately after the query was sent. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A \hyperlink{classmdt_value}{mdt\-Value} with value\-Double as real value and value\-Int as device specific encoded fromat (if available). See \hyperlink{classmdt_value}{mdt\-Value} documentation for details about validity and other flags. 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+analog\-Input must be valid.
+\end{DoxyPrecond}
+This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+
+
+\begin{DoxyParams}{Parameters}
+{\em label\-Short} & Short label set in I/\-O (see \hyperlink{classmdt_analog_io}{mdt\-Analog\-Io} for details). \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 132 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References mdt\-Abstract\-Io\-::address\-Read(), get\-New\-Transaction(), read\-Analog\-Input(), mdt\-Port\-Transaction\-::set\-Address(), mdt\-Port\-Transaction\-::set\-Io(), mdt\-Port\-Transaction\-::set\-Query\-Reply\-Mode(), mdt\-Analog\-Io\-::set\-Value(), mdt\-Abstract\-Io\-::value(), and wait\-Transaction\-Done().
+
+
+
+Referenced by get\-Analog\-Input\-Value(), and get\-Analog\-Input\-Value\-At().
+
+\hypertarget{classmdt_multi_io_device_a000b911a7fa7fa1d56c8413625f700ff}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!get\-Analog\-Input\-Value@{get\-Analog\-Input\-Value}}
+\index{get\-Analog\-Input\-Value@{get\-Analog\-Input\-Value}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{get\-Analog\-Input\-Value}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Value} mdt\-Multi\-Io\-Device\-::get\-Analog\-Input\-Value (
+\begin{DoxyParamCaption}
+\item[{int}]{address, }
+\item[{bool}]{query\-Device, }
+\item[{bool}]{wait\-On\-Reply}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_a000b911a7fa7fa1d56c8413625f700ff}
+
+
+Get analog input value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & Depending on device organisation and protocol, this can be a relative or absolute address (f.\-ex. M\-O\-D\-B\-U\-S queries), a input number, etc...\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_multi_io_device_ac39f01b071d5b7c16e18db298160134d}{get\-Analog\-Input\-Value(mdt\-Analog\-Io$\ast$, bool, bool)} 
+\end{DoxySeeAlso}
+
+
+Definition at line 174 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, get\-Analog\-Input\-Value(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Device\-::name(), mdt\-Device\-::pv\-Last\-Error, and mdt\-Error\-::set\-Error().
+
+\hypertarget{classmdt_multi_io_device_a7851ab0b09ee2d30846fc76b7bce165a}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!get\-Analog\-Input\-Value@{get\-Analog\-Input\-Value}}
+\index{get\-Analog\-Input\-Value@{get\-Analog\-Input\-Value}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{get\-Analog\-Input\-Value}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Value} mdt\-Multi\-Io\-Device\-::get\-Analog\-Input\-Value (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{label\-Short, }
+\item[{bool}]{query\-Device, }
+\item[{bool}]{wait\-On\-Reply}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_a7851ab0b09ee2d30846fc76b7bce165a}
+
+
+Definition at line 219 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, get\-Analog\-Input\-Value(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Device\-::name(), mdt\-Device\-::pv\-Last\-Error, and mdt\-Error\-::set\-Error().
+
+\hypertarget{classmdt_multi_io_device_a41c8a0d52c94cb30b394e3da41ebfff5}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!get\-Analog\-Input\-Value\-At@{get\-Analog\-Input\-Value\-At}}
+\index{get\-Analog\-Input\-Value\-At@{get\-Analog\-Input\-Value\-At}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{get\-Analog\-Input\-Value\-At}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Value} mdt\-Multi\-Io\-Device\-::get\-Analog\-Input\-Value\-At (
+\begin{DoxyParamCaption}
+\item[{int}]{position, }
+\item[{bool}]{query\-Device, }
+\item[{bool}]{wait\-On\-Reply}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_a41c8a0d52c94cb30b394e3da41ebfff5}
+
+
+Get analog input value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & See the concept of position in \hyperlink{classmdt_device_ios}{mdt\-Device\-Ios} class detailed description .\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_multi_io_device_ac39f01b071d5b7c16e18db298160134d}{get\-Analog\-Input\-Value(mdt\-Analog\-Io$\ast$, bool, bool)} 
+\end{DoxySeeAlso}
+
+
+Definition at line 193 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, get\-Analog\-Input\-Value(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Device\-::name(), mdt\-Device\-::pv\-Last\-Error, and mdt\-Error\-::set\-Error().
+
+\hypertarget{classmdt_multi_io_device_a79b27b1420313f2fee0c5f4d2a8f1735}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!get\-Analog\-Outputs@{get\-Analog\-Outputs}}
+\index{get\-Analog\-Outputs@{get\-Analog\-Outputs}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{get\-Analog\-Outputs}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Multi\-Io\-Device\-::get\-Analog\-Outputs (
+\begin{DoxyParamCaption}
+\item[{bool}]{wait\-On\-Reply}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_a79b27b1420313f2fee0c5f4d2a8f1735}
+
+
+Read all analog outputs on physical device and update (G)U\-I representation. 
+
+Will call \hyperlink{classmdt_multi_io_device_ac5629e6ccdeb3bd2a763dad2cfc724fe}{read\-Analog\-Outputs()}, witch also sends the request to device. Depending on result, device's state can be updated.
+
+Behaviour of this method can vary, depending on device specific subclass. (See sublcass \hyperlink{classmdt_multi_io_device_ac5629e6ccdeb3bd2a763dad2cfc724fe}{read\-Analog\-Outputs()} for details).
+
+Once results are available or error occured, the internal analog outputs are updated. (See \hyperlink{classmdt_device_ios}{mdt\-Device\-Ios} for details).
+
+
+\begin{DoxyParams}{Parameters}
+{\em wait\-On\-Reply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_multi_io_device_a37a3f39a36b3bbd383f4f704193e3955}{wait\-Transaction\-Done()} ), else it will return immediately after the query was sent. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or a I\-D on success. If no I/\-O's are set, on timeout or other error, a value $<$ 0 is returned. 
+\end{DoxyReturn}
+
+
+Definition at line 390 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References get\-New\-Transaction(), mdt\-Device\-Ios\-Segment\-::io\-Count(), read\-Analog\-Outputs(), mdt\-Port\-Transaction\-::set\-Address(), mdt\-Port\-Transaction\-::set\-Io\-Count(), mdt\-Port\-Transaction\-::set\-Query\-Reply\-Mode(), mdt\-Device\-Ios\-Segment\-::start\-Address\-Read(), and wait\-Transaction\-Done().
+
+\hypertarget{classmdt_multi_io_device_ae4d5260c3fcf9c6cd10114cc411dafe0}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!get\-Analog\-Output\-Value@{get\-Analog\-Output\-Value}}
+\index{get\-Analog\-Output\-Value@{get\-Analog\-Output\-Value}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{get\-Analog\-Output\-Value}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Multi\-Io\-Device\-::get\-Analog\-Output\-Value (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Analog\-Io} $\ast$}]{analog\-Output, }
+\item[{bool}]{query\-Device, }
+\item[{bool}]{wait\-On\-Reply}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_ae4d5260c3fcf9c6cd10114cc411dafe0}
+
+
+Get analog output value. 
+
+Get device or internal analog value. Internal value is updated if query\-Device is set.
+
+
+\begin{DoxyParams}{Parameters}
+{\em analog\-Output} & Pointer to a analog output object. \\
+\hline
+{\em query\-Device} & If true, value is readen from device by calling \hyperlink{classmdt_multi_io_device_a5bfebd15d85c5b0f0d92cd49e49e862d}{read\-Analog\-Output()}, else cached value is returned. Behaviour of this method can vary, depending on device specific subclass. (See sublcass \hyperlink{classmdt_multi_io_device_a5bfebd15d85c5b0f0d92cd49e49e862d}{read\-Analog\-Output()} for details). \\
+\hline
+{\em wait\-On\-Reply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_multi_io_device_a37a3f39a36b3bbd383f4f704193e3955}{wait\-Transaction\-Done()} ), else it will return immediately after the query was sent. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A \hyperlink{classmdt_value}{mdt\-Value} with value\-Double as real value and value\-Int as device specific encoded fromat (if available). See \hyperlink{classmdt_value}{mdt\-Value} documentation for details about validity and other flags. 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+analog\-Output must be valid.
+\end{DoxyPrecond}
+This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+
+
+\begin{DoxyParams}{Parameters}
+{\em label\-Short} & Short label set in I/\-O (see \hyperlink{classmdt_analog_io}{mdt\-Analog\-Io} for details). \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 284 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References mdt\-Abstract\-Io\-::address\-Read(), get\-New\-Transaction(), read\-Analog\-Output(), mdt\-Port\-Transaction\-::set\-Address(), mdt\-Port\-Transaction\-::set\-Io(), mdt\-Port\-Transaction\-::set\-Query\-Reply\-Mode(), mdt\-Analog\-Io\-::set\-Value(), mdt\-Abstract\-Io\-::value(), and wait\-Transaction\-Done().
+
+
+
+Referenced by get\-Analog\-Output\-Value(), and get\-Analog\-Output\-Value\-At().
+
+\hypertarget{classmdt_multi_io_device_ad8b754bf6a4a093eb235f2aeb116cd13}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!get\-Analog\-Output\-Value@{get\-Analog\-Output\-Value}}
+\index{get\-Analog\-Output\-Value@{get\-Analog\-Output\-Value}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{get\-Analog\-Output\-Value}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Value} mdt\-Multi\-Io\-Device\-::get\-Analog\-Output\-Value (
+\begin{DoxyParamCaption}
+\item[{int}]{address\-Read, }
+\item[{bool}]{query\-Device, }
+\item[{bool}]{wait\-On\-Reply}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_ad8b754bf6a4a093eb235f2aeb116cd13}
+
+
+Get analog output value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em address\-Read} & Depending on device organisation and protocol, this can be a relative or absolute address (f.\-ex. M\-O\-D\-B\-U\-S queries), a output number, etc...\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_multi_io_device_ae4d5260c3fcf9c6cd10114cc411dafe0}{get\-Analog\-Output\-Value(mdt\-Analog\-Io$\ast$, bool, bool)} 
+\end{DoxySeeAlso}
+
+
+Definition at line 326 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, get\-Analog\-Output\-Value(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Device\-::name(), mdt\-Device\-::pv\-Last\-Error, and mdt\-Error\-::set\-Error().
+
+\hypertarget{classmdt_multi_io_device_aae44caddee3b138fa1f7b36172c1829c}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!get\-Analog\-Output\-Value@{get\-Analog\-Output\-Value}}
+\index{get\-Analog\-Output\-Value@{get\-Analog\-Output\-Value}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{get\-Analog\-Output\-Value}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Value} mdt\-Multi\-Io\-Device\-::get\-Analog\-Output\-Value (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{label\-Short, }
+\item[{bool}]{query\-Device, }
+\item[{bool}]{wait\-On\-Reply}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_aae44caddee3b138fa1f7b36172c1829c}
+
+
+Definition at line 371 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, get\-Analog\-Output\-Value(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Device\-::name(), mdt\-Device\-::pv\-Last\-Error, and mdt\-Error\-::set\-Error().
+
+\hypertarget{classmdt_multi_io_device_a3891a61d77b9e5a3b202f84a683c4402}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!get\-Analog\-Output\-Value\-At@{get\-Analog\-Output\-Value\-At}}
+\index{get\-Analog\-Output\-Value\-At@{get\-Analog\-Output\-Value\-At}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{get\-Analog\-Output\-Value\-At}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Value} mdt\-Multi\-Io\-Device\-::get\-Analog\-Output\-Value\-At (
+\begin{DoxyParamCaption}
+\item[{int}]{position, }
+\item[{bool}]{query\-Device, }
+\item[{bool}]{wait\-On\-Reply}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_a3891a61d77b9e5a3b202f84a683c4402}
+
+
+Get analog output value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & See the concept of position in \hyperlink{classmdt_device_ios}{mdt\-Device\-Ios} class detailed description .\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_multi_io_device_ae4d5260c3fcf9c6cd10114cc411dafe0}{get\-Analog\-Output\-Value(mdt\-Analog\-Io$\ast$, bool, bool)} 
+\end{DoxySeeAlso}
+
+
+Definition at line 345 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, get\-Analog\-Output\-Value(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Device\-::name(), mdt\-Device\-::pv\-Last\-Error, and mdt\-Error\-::set\-Error().
+
+\hypertarget{classmdt_multi_io_device_ab3c1095ed6a0f35b43433d61104fc080}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!get\-Digital\-Inputs@{get\-Digital\-Inputs}}
+\index{get\-Digital\-Inputs@{get\-Digital\-Inputs}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{get\-Digital\-Inputs}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Multi\-Io\-Device\-::get\-Digital\-Inputs (
+\begin{DoxyParamCaption}
+\item[{bool}]{wait\-On\-Reply}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_ab3c1095ed6a0f35b43433d61104fc080}
+
+
+Read all digital inputs on physical device and update (G)U\-I representation. 
+
+Will call \hyperlink{classmdt_multi_io_device_ac9250b0b4d5ea16ee130bfd625960922}{read\-Digital\-Inputs()}, witch also sends the request to device. Depending on result, device's state can be updated.
+
+Behaviour of this method can vary, depending on device specific subclass. (See sublcass \hyperlink{classmdt_multi_io_device_ac9250b0b4d5ea16ee130bfd625960922}{read\-Digital\-Inputs()} for details).
+
+Once results are available, the internal digital inputs are updated. (See \hyperlink{classmdt_device_ios}{mdt\-Device\-Ios} for details).
+
+
+\begin{DoxyParams}{Parameters}
+{\em wait\-On\-Reply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_multi_io_device_a37a3f39a36b3bbd383f4f704193e3955}{wait\-Transaction\-Done()} ), else it will return immediately after the query was sent. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or a I\-D on success. If no I/\-O's are set, on timeout ar other error, a value $<$ 0 is returned. 
+\end{DoxyReturn}
+
+
+Definition at line 697 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References get\-New\-Transaction(), mdt\-Device\-Ios\-Segment\-::io\-Count(), read\-Digital\-Inputs(), mdt\-Port\-Transaction\-::set\-Address(), mdt\-Port\-Transaction\-::set\-Io\-Count(), mdt\-Port\-Transaction\-::set\-Query\-Reply\-Mode(), mdt\-Device\-Ios\-Segment\-::start\-Address\-Read(), and wait\-Transaction\-Done().
+
+
+
+Referenced by mdt\-Device\-Modbus\-::queries\-Sequence().
+
+\hypertarget{classmdt_multi_io_device_ab149a75e3886518b03059df0c41e1086}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!get\-Digital\-Input\-Value@{get\-Digital\-Input\-Value}}
+\index{get\-Digital\-Input\-Value@{get\-Digital\-Input\-Value}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{get\-Digital\-Input\-Value}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Multi\-Io\-Device\-::get\-Digital\-Input\-Value (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Digital\-Io} $\ast$}]{digital\-Input, }
+\item[{bool}]{query\-Device, }
+\item[{bool}]{wait\-On\-Reply}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_ab149a75e3886518b03059df0c41e1086}
+
+
+Get digital input value. 
+
+Get device or internal digital value. Internal value is updated if query\-Device is set.
+
+
+\begin{DoxyParams}{Parameters}
+{\em digital\-Input} & Pointer to a digital input. \\
+\hline
+{\em query\-Device} & If true, value is readen from device by calling \hyperlink{classmdt_multi_io_device_ab8861287c8328873cce6f07ea1ec867a}{read\-Digital\-Input()}, else cached value is returned. Behaviour of this method can vary, depending on device specific subclass. (See sublcass \hyperlink{classmdt_multi_io_device_ab8861287c8328873cce6f07ea1ec867a}{read\-Digital\-Input()} for details). \\
+\hline
+{\em wait\-On\-Reply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_multi_io_device_a37a3f39a36b3bbd383f4f704193e3955}{wait\-Transaction\-Done()} ), else it will return immediately after the query was sent. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A \hyperlink{classmdt_value}{mdt\-Value} with value\-Bool. See \hyperlink{classmdt_value}{mdt\-Value} documentation for details about validity and other flags. 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+digital\-Input must be valid.
+\end{DoxyPrecond}
+This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+
+
+\begin{DoxyParams}{Parameters}
+{\em label\-Short} & Short label set in I/\-O (see \hyperlink{classmdt_digital_io}{mdt\-Digital\-Io} for details). \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 591 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References mdt\-Abstract\-Io\-::address\-Read(), get\-New\-Transaction(), read\-Digital\-Input(), mdt\-Port\-Transaction\-::set\-Address(), mdt\-Port\-Transaction\-::set\-Io(), mdt\-Port\-Transaction\-::set\-Query\-Reply\-Mode(), mdt\-Digital\-Io\-::set\-Value(), mdt\-Abstract\-Io\-::value(), and wait\-Transaction\-Done().
+
+
+
+Referenced by get\-Digital\-Input\-Value(), and get\-Digital\-Input\-Value\-At().
+
+\hypertarget{classmdt_multi_io_device_aae5727443591c8008d6d6db6ab521ed7}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!get\-Digital\-Input\-Value@{get\-Digital\-Input\-Value}}
+\index{get\-Digital\-Input\-Value@{get\-Digital\-Input\-Value}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{get\-Digital\-Input\-Value}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Value} mdt\-Multi\-Io\-Device\-::get\-Digital\-Input\-Value (
+\begin{DoxyParamCaption}
+\item[{int}]{address, }
+\item[{bool}]{query\-Device, }
+\item[{bool}]{wait\-On\-Reply}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_aae5727443591c8008d6d6db6ab521ed7}
+
+
+Get digital input value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & Depending on device organisation and protocol, this can be a relative or absolute address (f.\-ex. M\-O\-D\-B\-U\-S queries), a input number, etc...\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_multi_io_device_ab149a75e3886518b03059df0c41e1086}{get\-Digital\-Input\-Value(mdt\-Digital\-Io$\ast$, bool, bool)} 
+\end{DoxySeeAlso}
+
+
+Definition at line 633 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, get\-Digital\-Input\-Value(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Device\-::name(), mdt\-Device\-::pv\-Last\-Error, and mdt\-Error\-::set\-Error().
+
+\hypertarget{classmdt_multi_io_device_ae0ab9303a0ca81b6200fc5c7dde66ba2}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!get\-Digital\-Input\-Value@{get\-Digital\-Input\-Value}}
+\index{get\-Digital\-Input\-Value@{get\-Digital\-Input\-Value}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{get\-Digital\-Input\-Value}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Value} mdt\-Multi\-Io\-Device\-::get\-Digital\-Input\-Value (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{label\-Short, }
+\item[{bool}]{query\-Device, }
+\item[{bool}]{wait\-On\-Reply}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_ae0ab9303a0ca81b6200fc5c7dde66ba2}
+
+
+Definition at line 678 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, get\-Digital\-Input\-Value(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Device\-::name(), mdt\-Device\-::pv\-Last\-Error, and mdt\-Error\-::set\-Error().
+
+\hypertarget{classmdt_multi_io_device_a4dc1d2e97ec5d835394629203f16ae1a}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!get\-Digital\-Input\-Value\-At@{get\-Digital\-Input\-Value\-At}}
+\index{get\-Digital\-Input\-Value\-At@{get\-Digital\-Input\-Value\-At}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{get\-Digital\-Input\-Value\-At}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Value} mdt\-Multi\-Io\-Device\-::get\-Digital\-Input\-Value\-At (
+\begin{DoxyParamCaption}
+\item[{int}]{position, }
+\item[{bool}]{query\-Device, }
+\item[{bool}]{wait\-On\-Reply}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_a4dc1d2e97ec5d835394629203f16ae1a}
+
+
+Get digital input value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & See the concept of position in \hyperlink{classmdt_device_ios}{mdt\-Device\-Ios} class detailed description .\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_multi_io_device_ab149a75e3886518b03059df0c41e1086}{get\-Digital\-Input\-Value(mdt\-Digital\-Io$\ast$, bool, bool)} 
+\end{DoxySeeAlso}
+
+
+Definition at line 652 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, get\-Digital\-Input\-Value(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Device\-::name(), mdt\-Device\-::pv\-Last\-Error, and mdt\-Error\-::set\-Error().
+
+\hypertarget{classmdt_multi_io_device_a15b6ae641d9d6f7a7c90cbc033950652}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!get\-Digital\-Outputs@{get\-Digital\-Outputs}}
+\index{get\-Digital\-Outputs@{get\-Digital\-Outputs}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{get\-Digital\-Outputs}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Multi\-Io\-Device\-::get\-Digital\-Outputs (
+\begin{DoxyParamCaption}
+\item[{bool}]{wait\-On\-Reply}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_a15b6ae641d9d6f7a7c90cbc033950652}
+
+
+Read all digital outputs on physical device and update (G)U\-I representation. 
+
+Will call \hyperlink{classmdt_multi_io_device_ac372088c21c7077f1b71e473048eb6c8}{read\-Digital\-Outputs()}, witch also sends the request to device. Depending on result, device's state can be updated.
+
+Behaviour of this method can vary, depending on device specific subclass. (See sublcass \hyperlink{classmdt_multi_io_device_ac372088c21c7077f1b71e473048eb6c8}{read\-Digital\-Outputs()} for details).
+
+Once results are available, the internal digital outputs are updated. (See \hyperlink{classmdt_device_ios}{mdt\-Device\-Ios} for details).
+
+
+\begin{DoxyParams}{Parameters}
+{\em wait\-On\-Reply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_multi_io_device_a37a3f39a36b3bbd383f4f704193e3955}{wait\-Transaction\-Done()} ), else it will return immediately after the query was sent. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or a I\-D on success. If no I/\-O's are set, on timeout ar other error, a value $<$ 0 is returned. 
+\end{DoxyReturn}
+
+
+Definition at line 850 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References get\-New\-Transaction(), mdt\-Device\-Ios\-Segment\-::io\-Count(), read\-Digital\-Outputs(), mdt\-Port\-Transaction\-::set\-Address(), mdt\-Port\-Transaction\-::set\-Io\-Count(), mdt\-Port\-Transaction\-::set\-Query\-Reply\-Mode(), mdt\-Device\-Ios\-Segment\-::start\-Address\-Read(), and wait\-Transaction\-Done().
+
+\hypertarget{classmdt_multi_io_device_a6c91a85357863564192b932d22c1c0ce}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!get\-Digital\-Output\-Value@{get\-Digital\-Output\-Value}}
+\index{get\-Digital\-Output\-Value@{get\-Digital\-Output\-Value}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{get\-Digital\-Output\-Value}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Multi\-Io\-Device\-::get\-Digital\-Output\-Value (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Digital\-Io} $\ast$}]{digital\-Output, }
+\item[{bool}]{query\-Device, }
+\item[{bool}]{wait\-On\-Reply}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_a6c91a85357863564192b932d22c1c0ce}
+
+
+Get digital output value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em digital\-Output} & Pointer to a digital output. \\
+\hline
+{\em query\-Device} & If true, value is readen from device by calling \hyperlink{classmdt_multi_io_device_a74c7327f8540104d694a614b0af8929a}{read\-Digital\-Output()}, else cached value is returned. Behaviour of this method can vary, depending on device specific subclass. (See sublcass \hyperlink{classmdt_multi_io_device_a74c7327f8540104d694a614b0af8929a}{read\-Digital\-Output()} for details). \\
+\hline
+{\em wait\-On\-Reply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_multi_io_device_a37a3f39a36b3bbd383f4f704193e3955}{wait\-Transaction\-Done()} ), else it will return immediately after the query was sent. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A \hyperlink{classmdt_value}{mdt\-Value} with value\-Bool. See \hyperlink{classmdt_value}{mdt\-Value} documentation for details about validity and other flags. 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+digital\-Output must be valid.
+\end{DoxyPrecond}
+This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+
+
+\begin{DoxyParams}{Parameters}
+{\em label\-Short} & Short label set in I/\-O (see \hyperlink{classmdt_digital_io}{mdt\-Digital\-Io} for details). \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 744 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References mdt\-Abstract\-Io\-::address\-Read(), get\-New\-Transaction(), read\-Digital\-Output(), mdt\-Port\-Transaction\-::set\-Address(), mdt\-Port\-Transaction\-::set\-Io(), mdt\-Port\-Transaction\-::set\-Query\-Reply\-Mode(), mdt\-Digital\-Io\-::set\-Value(), mdt\-Abstract\-Io\-::value(), and wait\-Transaction\-Done().
+
+
+
+Referenced by get\-Digital\-Output\-Value(), and get\-Digital\-Output\-Value\-At().
+
+\hypertarget{classmdt_multi_io_device_a0d3e3a27698823915fca74e778633455}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!get\-Digital\-Output\-Value@{get\-Digital\-Output\-Value}}
+\index{get\-Digital\-Output\-Value@{get\-Digital\-Output\-Value}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{get\-Digital\-Output\-Value}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Value} mdt\-Multi\-Io\-Device\-::get\-Digital\-Output\-Value (
+\begin{DoxyParamCaption}
+\item[{int}]{address\-Read, }
+\item[{bool}]{query\-Device, }
+\item[{bool}]{wait\-On\-Reply}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_a0d3e3a27698823915fca74e778633455}
+
+
+Get digital output value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em address\-Read} & Depending on device organisation and protocol, this can be a relative or absolute address (f.\-ex. M\-O\-D\-B\-U\-S queries), a output number, etc...\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_multi_io_device_a6c91a85357863564192b932d22c1c0ce}{get\-Digital\-Output\-Value(mdt\-Digital\-Io$\ast$, bool, bool)} 
+\end{DoxySeeAlso}
+
+
+Definition at line 786 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, get\-Digital\-Output\-Value(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Device\-::name(), mdt\-Device\-::pv\-Last\-Error, and mdt\-Error\-::set\-Error().
+
+\hypertarget{classmdt_multi_io_device_a159f1af1b6e11e38751ffeaf936331d0}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!get\-Digital\-Output\-Value@{get\-Digital\-Output\-Value}}
+\index{get\-Digital\-Output\-Value@{get\-Digital\-Output\-Value}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{get\-Digital\-Output\-Value}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Value} mdt\-Multi\-Io\-Device\-::get\-Digital\-Output\-Value (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{label\-Short, }
+\item[{bool}]{query\-Device, }
+\item[{bool}]{wait\-On\-Reply}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_a159f1af1b6e11e38751ffeaf936331d0}
+
+
+Definition at line 831 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, get\-Digital\-Output\-Value(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Device\-::name(), mdt\-Device\-::pv\-Last\-Error, and mdt\-Error\-::set\-Error().
+
+\hypertarget{classmdt_multi_io_device_a3b95337d6046c2592fc3a0286219cabc}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!get\-Digital\-Output\-Value\-At@{get\-Digital\-Output\-Value\-At}}
+\index{get\-Digital\-Output\-Value\-At@{get\-Digital\-Output\-Value\-At}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{get\-Digital\-Output\-Value\-At}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Value} mdt\-Multi\-Io\-Device\-::get\-Digital\-Output\-Value\-At (
+\begin{DoxyParamCaption}
+\item[{int}]{position, }
+\item[{bool}]{query\-Device, }
+\item[{bool}]{wait\-On\-Reply}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_a3b95337d6046c2592fc3a0286219cabc}
+
+
+Get digital output value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & See the concept of position in \hyperlink{classmdt_device_ios}{mdt\-Device\-Ios} class detailed description .\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_multi_io_device_a6c91a85357863564192b932d22c1c0ce}{get\-Digital\-Output\-Value(mdt\-Digital\-Io$\ast$, bool, bool)} 
+\end{DoxySeeAlso}
+
+
+Definition at line 805 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, get\-Digital\-Output\-Value(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Device\-::name(), mdt\-Device\-::pv\-Last\-Error, and mdt\-Error\-::set\-Error().
+
+\hypertarget{classmdt_multi_io_device_aabc890d0758a6e3e629c589a07d1c7fb}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!get\-New\-Transaction@{get\-New\-Transaction}}
+\index{get\-New\-Transaction@{get\-New\-Transaction}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{get\-New\-Transaction}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Port\-Transaction} $\ast$ mdt\-Multi\-Io\-Device\-::get\-New\-Transaction (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_multi_io_device_aabc890d0758a6e3e629c589a07d1c7fb}
+
+
+Get a new transaction. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_port_manager_a75ebd3d1859e3ed38b9558981e53aac4}{mdt\-Port\-Manager\-::get\-New\-Transaction()}
+\end{DoxySeeAlso}
+\begin{DoxyPrecond}{Precondition}
+port\-Manager must be set before calling this method 
+\end{DoxyPrecond}
+
+
+Definition at line 1091 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References mdt\-Port\-Manager\-::get\-New\-Transaction(), and port\-Manager().
+
+
+
+Referenced by get\-Analog\-Inputs(), get\-Analog\-Input\-Value(), get\-Analog\-Outputs(), get\-Analog\-Output\-Value(), get\-Digital\-Inputs(), get\-Digital\-Input\-Value(), get\-Digital\-Outputs(), get\-Digital\-Output\-Value(), set\-Analog\-Outputs(), set\-Analog\-Output\-Value(), set\-Digital\-Outputs(), and set\-Digital\-Output\-Value().
+
+\hypertarget{classmdt_multi_io_device_a1acf6876006ca28b93a6ad0be0b39eff}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!ios@{ios}}
+\index{ios@{ios}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{ios}]{\setlength{\rightskip}{0pt plus 5cm}std\-::shared\-\_\-ptr$<${\bf mdt\-Device\-Ios}$>$ mdt\-Multi\-Io\-Device\-::ios (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_multi_io_device_a1acf6876006ca28b93a6ad0be0b39eff}
+
+
+Access internal I/\-Os container. 
+
+
+
+Definition at line 103 of file mdt\-Multi\-Io\-Device.\-h.
+
+
+
+Referenced by mdt\-Device\-Modbus\-Wago\-::detect\-Ios(), mdt\-Device\-Modbus\-::read\-Analog\-Input(), mdt\-Device\-Modbus\-::read\-Analog\-Inputs(), mdt\-Device\-Modbus\-::read\-Analog\-Output(), mdt\-Device\-Modbus\-::read\-Analog\-Outputs(), mdt\-Device\-Modbus\-::read\-Digital\-Input(), mdt\-Device\-Modbus\-::read\-Digital\-Inputs(), mdt\-Device\-Modbus\-::read\-Digital\-Output(), mdt\-Device\-Modbus\-::read\-Digital\-Outputs(), mdt\-Device\-Modbus\-::write\-Analog\-Output(), mdt\-Device\-Modbus\-::write\-Analog\-Outputs(), mdt\-Device\-Modbus\-::write\-Digital\-Output(), and mdt\-Device\-Modbus\-::write\-Digital\-Outputs().
+
+\hypertarget{classmdt_multi_io_device_a71765ab3a9f8aa9ba4024e3cba10c80e}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!port\-Manager@{port\-Manager}}
+\index{port\-Manager@{port\-Manager}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{port\-Manager}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf mdt\-Port\-Manager}$\ast$ mdt\-Multi\-Io\-Device\-::port\-Manager (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{classmdt_multi_io_device_a71765ab3a9f8aa9ba4024e3cba10c80e}
+
+
+Get internal port manager instance. 
+
+Note that port manager is set by subclass, and that a Null pointer can be returned. (See subclass documentation for details) 
+
+Reimplemented in \hyperlink{classmdt_device_modbus_aed892b501f8cbd372ccfda1a4fafa536}{mdt\-Device\-Modbus}.
+
+
+
+Definition at line 57 of file mdt\-Multi\-Io\-Device.\-h.
+
+
+
+Referenced by get\-New\-Transaction(), restore\-Transaction(), and wait\-Transaction\-Done().
+
+\hypertarget{classmdt_multi_io_device_ad49b5054981b91bab6e10de7d049c709}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!read\-Analog\-Input@{read\-Analog\-Input}}
+\index{read\-Analog\-Input@{read\-Analog\-Input}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{read\-Analog\-Input}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Multi\-Io\-Device\-::read\-Analog\-Input (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Port\-Transaction} $\ast$}]{transaction}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classmdt_multi_io_device_ad49b5054981b91bab6e10de7d049c709}
+
+
+Read one analog input on physical device. 
+
+This is the device specific implementation to send the query. If device handled by subclass has analog inputs, this method should be implemented.
+
+This method is called from \hyperlink{classmdt_multi_io_device_ac39f01b071d5b7c16e18db298160134d}{get\-Analog\-Input\-Value()} .
+
+
+\begin{DoxyParams}{Parameters}
+{\em transaction} & Contains some flags used during query/reply process (address, id, I/\-O object, ...). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or a I\-D on success, value $<$ 0 on error (see mdt\-Port\-Manager\-::write\-Data() for details). 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+I/\-O's must be set with set\-Ios(). 
+
+transaction must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Reimplemented in \hyperlink{classmdt_device_modbus_aa2a024793ae2a5e81c7e92260a70cd9e}{mdt\-Device\-Modbus}.
+
+
+
+Definition at line 1126 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+Referenced by get\-Analog\-Input\-Value().
+
+\hypertarget{classmdt_multi_io_device_ad54b0b3a533f3e739f4add183932a5cd}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!read\-Analog\-Inputs@{read\-Analog\-Inputs}}
+\index{read\-Analog\-Inputs@{read\-Analog\-Inputs}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{read\-Analog\-Inputs}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Multi\-Io\-Device\-::read\-Analog\-Inputs (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Port\-Transaction} $\ast$}]{transaction}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classmdt_multi_io_device_ad54b0b3a533f3e739f4add183932a5cd}
+
+
+Read all analog inputs on physical device. 
+
+This is the device specific implementation to send the query. If device handled by subclass has analog inputs, this method should be implemented.
+
+This method is called from \hyperlink{classmdt_multi_io_device_a73bbcd721b309930174d5e91266d0298}{get\-Analog\-Inputs()} .
+
+
+\begin{DoxyParams}{Parameters}
+{\em transaction} & Contains\-:
+\begin{DoxyItemize}
+\item io\-Count \-: number of I/\-Os to get
+\item address \-: first I/\-O address to considere
+\item Query\-Reply\-Mode flag 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or a I\-D on success, value $<$ 0 on error (see mdt\-Port\-Manager\-::write\-Data() for details) 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+I/\-O's must be set with set\-Ios(). 
+
+transaction must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Reimplemented in \hyperlink{classmdt_device_modbus_a846af6dbf80bbf747f3f966420ef6f92}{mdt\-Device\-Modbus}.
+
+
+
+Definition at line 1131 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+Referenced by get\-Analog\-Inputs().
+
+\hypertarget{classmdt_multi_io_device_a5bfebd15d85c5b0f0d92cd49e49e862d}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!read\-Analog\-Output@{read\-Analog\-Output}}
+\index{read\-Analog\-Output@{read\-Analog\-Output}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{read\-Analog\-Output}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Multi\-Io\-Device\-::read\-Analog\-Output (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Port\-Transaction} $\ast$}]{transaction}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classmdt_multi_io_device_a5bfebd15d85c5b0f0d92cd49e49e862d}
+
+
+Read one analog output on physical device. 
+
+This is the device specific implementation to send the query. If device handled by subclass has analog inputs, this method should be implemented.
+
+This method is called from \hyperlink{classmdt_multi_io_device_ae4d5260c3fcf9c6cd10114cc411dafe0}{get\-Analog\-Output\-Value()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em transaction} & Contains some flags used during query/reply process (address, id, I/\-O object, ...). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or a I\-D on success, value $<$ 0 on error (see mdt\-Port\-Manager\-::write\-Data() for details) 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+I/\-O's must be set with set\-Ios(). 
+
+transaction must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Reimplemented in \hyperlink{classmdt_device_modbus_a30c815cbe5e603e8114dcbc09849e322}{mdt\-Device\-Modbus}.
+
+
+
+Definition at line 1136 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+Referenced by get\-Analog\-Output\-Value().
+
+\hypertarget{classmdt_multi_io_device_ac5629e6ccdeb3bd2a763dad2cfc724fe}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!read\-Analog\-Outputs@{read\-Analog\-Outputs}}
+\index{read\-Analog\-Outputs@{read\-Analog\-Outputs}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{read\-Analog\-Outputs}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Multi\-Io\-Device\-::read\-Analog\-Outputs (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Port\-Transaction} $\ast$}]{transaction}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classmdt_multi_io_device_ac5629e6ccdeb3bd2a763dad2cfc724fe}
+
+
+Read all analog outputs on physical device. 
+
+This is the device specific implementation to send the query. If device handled by subclass has analog inputs, this method should be implemented.
+
+This method is called from \hyperlink{classmdt_multi_io_device_a79b27b1420313f2fee0c5f4d2a8f1735}{get\-Analog\-Outputs()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em transaction} & Contains\-:
+\begin{DoxyItemize}
+\item io\-Count \-: number of I/\-Os to get
+\item address \-: first I/\-O address (for read access) to considere
+\item Query\-Reply\-Mode flag 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or a I\-D on success, value $<$ 0 on error (see mdt\-Port\-Manager\-::write\-Data() for details) 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+I/\-O's must be set with set\-Ios(). 
+
+transaction must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Reimplemented in \hyperlink{classmdt_device_modbus_ae02dd44f1d873fcc15ff75d781b62b0b}{mdt\-Device\-Modbus}.
+
+
+
+Definition at line 1141 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+Referenced by get\-Analog\-Outputs().
+
+\hypertarget{classmdt_multi_io_device_ab8861287c8328873cce6f07ea1ec867a}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!read\-Digital\-Input@{read\-Digital\-Input}}
+\index{read\-Digital\-Input@{read\-Digital\-Input}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{read\-Digital\-Input}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Multi\-Io\-Device\-::read\-Digital\-Input (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Port\-Transaction} $\ast$}]{transaction}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classmdt_multi_io_device_ab8861287c8328873cce6f07ea1ec867a}
+
+
+Read one digital input on physical device. 
+
+This is the device specific implementation to send the query. If device handled by subclass has digital inputs, this method should be implemented.
+
+This method is called from \hyperlink{classmdt_multi_io_device_ab149a75e3886518b03059df0c41e1086}{get\-Digital\-Input\-Value()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em transaction} & Contains\-:
+\begin{DoxyItemize}
+\item digital\-Io object
+\item Query\-Reply\-Mode flag
+\item address 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or a I\-D on success, value $<$ 0 on error (see mdt\-Port\-Manager\-::write\-Data() for details) 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+I/\-O's must be set with set\-Ios(). 
+
+transaction must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Reimplemented in \hyperlink{classmdt_device_modbus_a9dd05e51223ee5bb79970fbe84c501f9}{mdt\-Device\-Modbus}.
+
+
+
+Definition at line 1156 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+Referenced by get\-Digital\-Input\-Value().
+
+\hypertarget{classmdt_multi_io_device_ac9250b0b4d5ea16ee130bfd625960922}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!read\-Digital\-Inputs@{read\-Digital\-Inputs}}
+\index{read\-Digital\-Inputs@{read\-Digital\-Inputs}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{read\-Digital\-Inputs}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Multi\-Io\-Device\-::read\-Digital\-Inputs (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Port\-Transaction} $\ast$}]{transaction}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classmdt_multi_io_device_ac9250b0b4d5ea16ee130bfd625960922}
+
+
+Read all digital inputs on physical device. 
+
+This is the device specific implementation to send the query. If device handled by subclass has digital inputs, this method should be implemented.
+
+This method is called from \hyperlink{classmdt_multi_io_device_ab3c1095ed6a0f35b43433d61104fc080}{get\-Digital\-Inputs()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em transaction} & Contains\-:
+\begin{DoxyItemize}
+\item io\-Count \-: number of I/\-Os to get
+\item address \-: first I/\-O address to considere
+\item Query\-Reply\-Mode flag 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or a I\-D on success, value $<$ 0 on error (see mdt\-Port\-Manager\-::write\-Data() for details) 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+I/\-O's must be set with set\-Ios(). 
+
+transaction must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Reimplemented in \hyperlink{classmdt_device_modbus_a3fba9e113092f9da187cf684fb62b132}{mdt\-Device\-Modbus}.
+
+
+
+Definition at line 1161 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+Referenced by get\-Digital\-Inputs().
+
+\hypertarget{classmdt_multi_io_device_a74c7327f8540104d694a614b0af8929a}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!read\-Digital\-Output@{read\-Digital\-Output}}
+\index{read\-Digital\-Output@{read\-Digital\-Output}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{read\-Digital\-Output}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Multi\-Io\-Device\-::read\-Digital\-Output (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Port\-Transaction} $\ast$}]{transaction}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classmdt_multi_io_device_a74c7327f8540104d694a614b0af8929a}
+
+
+Read one digital output on physical device. 
+
+This is the device specific implementation to send the query. If device handled by subclass has digital outputs, this method should be implemented.
+
+This method is called from \hyperlink{classmdt_multi_io_device_a6c91a85357863564192b932d22c1c0ce}{get\-Digital\-Output\-Value()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em transaction} & Contains some flags used during query/reply process (address, id, I/\-O object, ...). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or a I\-D on success, value $<$ 0 on error (see mdt\-Port\-Manager\-::write\-Data() for details) 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+I/\-O's must be set with set\-Ios(). 
+
+transaction must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Reimplemented in \hyperlink{classmdt_device_modbus_a13a334ac86135751893f37064d8f548d}{mdt\-Device\-Modbus}.
+
+
+
+Definition at line 1166 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+Referenced by get\-Digital\-Output\-Value().
+
+\hypertarget{classmdt_multi_io_device_ac372088c21c7077f1b71e473048eb6c8}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!read\-Digital\-Outputs@{read\-Digital\-Outputs}}
+\index{read\-Digital\-Outputs@{read\-Digital\-Outputs}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{read\-Digital\-Outputs}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Multi\-Io\-Device\-::read\-Digital\-Outputs (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Port\-Transaction} $\ast$}]{transaction}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classmdt_multi_io_device_ac372088c21c7077f1b71e473048eb6c8}
+
+
+Read all digital outputs on physical device. 
+
+This is the device specific implementation to send the query. If device handled by subclass has digital outputs, this method should be implemented.
+
+This method is called from \hyperlink{classmdt_multi_io_device_a15b6ae641d9d6f7a7c90cbc033950652}{get\-Digital\-Outputs()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em transaction} & Contains\-:
+\begin{DoxyItemize}
+\item io\-Count \-: number of I/\-Os to get
+\item address \-: first I/\-O address (for read access) to considere
+\item Query\-Reply\-Mode flag 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or a I\-D on success, value $<$ 0 on error (see mdt\-Port\-Manager\-::write\-Data() for details) 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+I/\-O's must be set with set\-Ios(). 
+
+transaction must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Reimplemented in \hyperlink{classmdt_device_modbus_a8915a036472bff0f356756992c1eae51}{mdt\-Device\-Modbus}.
+
+
+
+Definition at line 1171 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+Referenced by get\-Digital\-Outputs().
+
+\hypertarget{classmdt_multi_io_device_a3c5f8852d25fa9435e77257347e639da}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!restore\-Transaction@{restore\-Transaction}}
+\index{restore\-Transaction@{restore\-Transaction}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{restore\-Transaction}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Multi\-Io\-Device\-::restore\-Transaction (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Port\-Transaction} $\ast$}]{transaction}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_multi_io_device_a3c5f8852d25fa9435e77257347e639da}
+
+
+Restore a transaction into pool. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_port_manager_a5fea4a9b8e94d38e8ec699dba05c7ca8}{mdt\-Port\-Manager\-::restore\-Transaction()}
+\end{DoxySeeAlso}
+\begin{DoxyPrecond}{Precondition}
+port\-Manager must be set before calling this method 
+\end{DoxyPrecond}
+
+
+Definition at line 1098 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References port\-Manager(), and mdt\-Port\-Manager\-::restore\-Transaction().
+
+\hypertarget{classmdt_multi_io_device_ae8b2ae1657c4072854846893705f427a}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!set\-Analog\-Outputs@{set\-Analog\-Outputs}}
+\index{set\-Analog\-Outputs@{set\-Analog\-Outputs}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{set\-Analog\-Outputs}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Multi\-Io\-Device\-::set\-Analog\-Outputs (
+\begin{DoxyParamCaption}
+\item[{bool}]{wait\-On\-Reply}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_ae8b2ae1657c4072854846893705f427a}
+
+
+Write all analog outputs on physical device and update (G)U\-I representation. 
+
+To send the analog outputs values once, it's possible to set them without sending query. See \hyperlink{classmdt_device_ios}{mdt\-Device\-Ios} and \hyperlink{classmdt_analog_io}{mdt\-Analog\-Io} for details. Then, call this method to sent all analog outputs values to device.
+
+\hyperlink{classmdt_multi_io_device_ac6b1b24b8c3eb0722df4079df11e6b71}{write\-Analog\-Outputs()} will be called, witch also sends the request to device. Depending on result, device's state can be updated.
+
+Behaviour of this method can vary, depending on device specific subclass. (See sublcass \hyperlink{classmdt_multi_io_device_ac6b1b24b8c3eb0722df4079df11e6b71}{write\-Analog\-Outputs()} for details).
+
+Once results are available or on error, the internal analog outputs are updated. (See \hyperlink{classmdt_device_ios}{mdt\-Device\-Ios} for details).
+
+
+\begin{DoxyParams}{Parameters}
+{\em wait\-On\-Reply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_multi_io_device_a37a3f39a36b3bbd383f4f704193e3955}{wait\-Transaction\-Done()} ), else it will return immediately after the query was sent. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or a I\-D on success. If no I/\-O's are set, on timeout ar other error, a value $<$ 0 is returned. 
+\end{DoxyReturn}
+
+
+Definition at line 543 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References get\-New\-Transaction(), mdt\-Device\-Ios\-Segment\-::io\-Count(), mdt\-Port\-Transaction\-::set\-Address(), mdt\-Port\-Transaction\-::set\-Io\-Count(), mdt\-Port\-Transaction\-::set\-Query\-Reply\-Mode(), mdt\-Device\-Ios\-Segment\-::start\-Address\-Write(), wait\-Transaction\-Done(), and write\-Analog\-Outputs().
+
+\hypertarget{classmdt_multi_io_device_af58f284bf4310abefa59975664e640d6}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!set\-Analog\-Output\-Value@{set\-Analog\-Output\-Value}}
+\index{set\-Analog\-Output\-Value@{set\-Analog\-Output\-Value}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{set\-Analog\-Output\-Value}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Multi\-Io\-Device\-::set\-Analog\-Output\-Value (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Analog\-Io} $\ast$}]{analog\-Output, }
+\item[{const {\bf mdt\-Value} \&}]{value, }
+\item[{bool}]{send\-To\-Device, }
+\item[{bool}]{wait\-On\-Reply}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_af58f284bf4310abefa59975664e640d6}
+
+
+Set analog output value. 
+
+Set device or internal analog value. Internal value is updated if query\-Device is set.
+
+
+\begin{DoxyParams}{Parameters}
+{\em analog\-Output} & Pointer to a analog output object. \\
+\hline
+{\em value} & Value to send/store. \\
+\hline
+{\em send\-To\-Device} & If true, value is sent device by calling \hyperlink{classmdt_multi_io_device_a683b5aa97f175cb2979472e1b256c706}{write\-Analog\-Output()}, else value is only cached. Behaviour of this method can vary, depending on device specific subclass. (See sublcass \hyperlink{classmdt_multi_io_device_a683b5aa97f175cb2979472e1b256c706}{write\-Analog\-Output()} for details). \\
+\hline
+{\em wait\-On\-Reply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_multi_io_device_a37a3f39a36b3bbd383f4f704193e3955}{wait\-Transaction\-Done()} ), else it will return immediately after the query was sent. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or a I\-D on success. If no I/\-O's are set, on timeout, on invalid value or other error, a value $<$ 0 is returned. 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+analog\-Output must be valid.
+\end{DoxyPrecond}
+This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+
+
+\begin{DoxyParams}{Parameters}
+{\em label\-Short} & Short label set in I/\-O (see \hyperlink{classmdt_analog_io}{mdt\-Analog\-Io} for details). \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 436 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References mdt\-Abstract\-Io\-::address\-Write(), get\-New\-Transaction(), mdt\-Port\-Transaction\-::set\-Address(), mdt\-Abstract\-Io\-::set\-Enabled(), mdt\-Port\-Transaction\-::set\-Io(), mdt\-Port\-Transaction\-::set\-Query\-Reply\-Mode(), mdt\-Analog\-Io\-::set\-Value(), mdt\-Abstract\-Io\-::value(), mdt\-Value\-::value\-Int(), wait\-Transaction\-Done(), and write\-Analog\-Output().
+
+
+
+Referenced by add\-Output(), add\-Outputs(), delete\-Ios(), set\-Analog\-Output\-Value(), and set\-Analog\-Output\-Value\-At().
+
+\hypertarget{classmdt_multi_io_device_a668fef1da7e91d6889e1fc478c7c6560}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!set\-Analog\-Output\-Value@{set\-Analog\-Output\-Value}}
+\index{set\-Analog\-Output\-Value@{set\-Analog\-Output\-Value}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{set\-Analog\-Output\-Value}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Multi\-Io\-Device\-::set\-Analog\-Output\-Value (
+\begin{DoxyParamCaption}
+\item[{int}]{address\-Write, }
+\item[{const {\bf mdt\-Value} \&}]{value, }
+\item[{bool}]{send\-To\-Device, }
+\item[{bool}]{wait\-On\-Reply}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_a668fef1da7e91d6889e1fc478c7c6560}
+
+
+Set analog output value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em address\-Write} & Depending on device organisation and protocol, this can be a relative or absolute address (f.\-ex. M\-O\-D\-B\-U\-S queries), a output number, etc...\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_multi_io_device_af58f284bf4310abefa59975664e640d6}{set\-Analog\-Output\-Value(mdt\-Analog\-Io$\ast$, const mdt\-Value\&, bool, bool)} 
+\end{DoxySeeAlso}
+
+
+Definition at line 479 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Device\-::name(), mdt\-Device\-::pv\-Last\-Error, set\-Analog\-Output\-Value(), and mdt\-Error\-::set\-Error().
+
+\hypertarget{classmdt_multi_io_device_a35f8cf69f977e3ae8fade0ca9dba09d2}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!set\-Analog\-Output\-Value@{set\-Analog\-Output\-Value}}
+\index{set\-Analog\-Output\-Value@{set\-Analog\-Output\-Value}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{set\-Analog\-Output\-Value}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Multi\-Io\-Device\-::set\-Analog\-Output\-Value (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{label\-Short, }
+\item[{const {\bf mdt\-Value} \&}]{value, }
+\item[{bool}]{send\-To\-Device, }
+\item[{bool}]{wait\-On\-Reply}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_a35f8cf69f977e3ae8fade0ca9dba09d2}
+
+
+Definition at line 524 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Device\-::name(), mdt\-Device\-::pv\-Last\-Error, set\-Analog\-Output\-Value(), and mdt\-Error\-::set\-Error().
+
+\hypertarget{classmdt_multi_io_device_ae32a7d5dc984e502420983bcbc0e919d}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!set\-Analog\-Output\-Value@{set\-Analog\-Output\-Value}}
+\index{set\-Analog\-Output\-Value@{set\-Analog\-Output\-Value}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{set\-Analog\-Output\-Value}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Multi\-Io\-Device\-::set\-Analog\-Output\-Value (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Analog\-Io} $\ast$}]{analog\-Output}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{classmdt_multi_io_device_ae32a7d5dc984e502420983bcbc0e919d}
+
+
+Set value on a analog output on physical device. 
+
+Checks device's state and send request if Ready.
+
+This slot is used by \hyperlink{classmdt_device_ios}{mdt\-Device\-Ios} to notify that a value has changed.
+
+See \hyperlink{classmdt_multi_io_device_af58f284bf4310abefa59975664e640d6}{set\-Analog\-Output\-Value(mdt\-Analog\-Io$\ast$, const mdt\-Value\&, bool, bool)} for details. 
+
+Definition at line 1069 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References mdt\-Device\-::current\-State(), mdt\-Device\-::\-Ready, set\-Analog\-Output\-Value(), and mdt\-Abstract\-Io\-::value().
+
+\hypertarget{classmdt_multi_io_device_ace3f9d707628ceb6ad7e4bc46c202e32}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!set\-Analog\-Output\-Value\-At@{set\-Analog\-Output\-Value\-At}}
+\index{set\-Analog\-Output\-Value\-At@{set\-Analog\-Output\-Value\-At}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{set\-Analog\-Output\-Value\-At}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Multi\-Io\-Device\-::set\-Analog\-Output\-Value\-At (
+\begin{DoxyParamCaption}
+\item[{int}]{position, }
+\item[{const {\bf mdt\-Value} \&}]{value, }
+\item[{bool}]{send\-To\-Device, }
+\item[{bool}]{wait\-On\-Reply}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_ace3f9d707628ceb6ad7e4bc46c202e32}
+
+
+Set analog output value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & See the concept of position in \hyperlink{classmdt_device_ios}{mdt\-Device\-Ios} class detailed description .\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_multi_io_device_af58f284bf4310abefa59975664e640d6}{set\-Analog\-Output\-Value(mdt\-Analog\-Io$\ast$, const mdt\-Value\&, bool, bool)} 
+\end{DoxySeeAlso}
+
+
+Definition at line 498 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Device\-::name(), mdt\-Device\-::pv\-Last\-Error, set\-Analog\-Output\-Value(), and mdt\-Error\-::set\-Error().
+
+\hypertarget{classmdt_multi_io_device_a2149cfc42f04c8afb6f2d20dbd3bd391}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!set\-Digital\-Outputs@{set\-Digital\-Outputs}}
+\index{set\-Digital\-Outputs@{set\-Digital\-Outputs}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{set\-Digital\-Outputs}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Multi\-Io\-Device\-::set\-Digital\-Outputs (
+\begin{DoxyParamCaption}
+\item[{bool}]{wait\-On\-Reply}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_a2149cfc42f04c8afb6f2d20dbd3bd391}
+
+
+Write all digital outputs to physical device and update (G)U\-I representation. 
+
+To send the digital outputs values once. It's possible to use \hyperlink{classmdt_multi_io_device_a0677d7dfba08a059fb81fa83ffbba11a}{set\-Digital\-Output\-Value()} without sending the query to device, then using this method to commit all values once.
+
+See \hyperlink{classmdt_device_ios}{mdt\-Device\-Ios} and \hyperlink{classmdt_digital_io}{mdt\-Digital\-Io} for details.
+
+\hyperlink{classmdt_multi_io_device_a03aedb552abcc344b1545d95f261e387}{write\-Digital\-Outputs()} will be called, witch also sends the request to device. Depending on result, device's state can be updated.
+
+Behaviour of this method can vary, depending on device specific subclass. (See sublcass \hyperlink{classmdt_multi_io_device_a03aedb552abcc344b1545d95f261e387}{write\-Digital\-Outputs()} for details).
+
+Once results are available, the internal digital outputs are updated. (See \hyperlink{classmdt_device_ios}{mdt\-Device\-Ios} for details).
+
+
+\begin{DoxyParams}{Parameters}
+{\em wait\-On\-Reply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_multi_io_device_a37a3f39a36b3bbd383f4f704193e3955}{wait\-Transaction\-Done()} ), else it will return immediately after the query was sent. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or a I\-D on success. If no I/\-O's are set, on timeout ar other error, a value $<$ 0 is returned. 
+\end{DoxyReturn}
+
+
+Definition at line 1021 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References get\-New\-Transaction(), mdt\-Device\-Ios\-Segment\-::io\-Count(), mdt\-Port\-Transaction\-::set\-Address(), mdt\-Port\-Transaction\-::set\-Io\-Count(), mdt\-Port\-Transaction\-::set\-Query\-Reply\-Mode(), mdt\-Device\-Ios\-Segment\-::start\-Address\-Write(), wait\-Transaction\-Done(), and write\-Digital\-Outputs().
+
+
+
+Referenced by set\-Digital\-Outputs\-Value().
+
+\hypertarget{classmdt_multi_io_device_aae673bac285929dc4ff005fbc576b787}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!set\-Digital\-Outputs\-Value@{set\-Digital\-Outputs\-Value}}
+\index{set\-Digital\-Outputs\-Value@{set\-Digital\-Outputs\-Value}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{set\-Digital\-Outputs\-Value}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Multi\-Io\-Device\-::set\-Digital\-Outputs\-Value (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Value} \&}]{value, }
+\item[{bool}]{send\-To\-Device, }
+\item[{bool}]{wait\-On\-Reply}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_aae673bac285929dc4ff005fbc576b787}
+
+
+Set a value and validity for all digital outputs. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_multi_io_device_a0677d7dfba08a059fb81fa83ffbba11a}{set\-Digital\-Output\-Value(mdt\-Digital\-Io$\ast$, const mdt\-Value\&, bool, bool)} 
+\end{DoxySeeAlso}
+
+
+Definition at line 1003 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References set\-Digital\-Outputs().
+
+\hypertarget{classmdt_multi_io_device_a0677d7dfba08a059fb81fa83ffbba11a}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!set\-Digital\-Output\-Value@{set\-Digital\-Output\-Value}}
+\index{set\-Digital\-Output\-Value@{set\-Digital\-Output\-Value}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{set\-Digital\-Output\-Value}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Multi\-Io\-Device\-::set\-Digital\-Output\-Value (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Digital\-Io} $\ast$}]{digital\-Output, }
+\item[{const {\bf mdt\-Value} \&}]{value, }
+\item[{bool}]{send\-To\-Device, }
+\item[{bool}]{wait\-On\-Reply}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_a0677d7dfba08a059fb81fa83ffbba11a}
+
+
+Set a digital output value. 
+
+Set device or internal digital value. Depending on subclass implementation, if query\-Device is set, output can be updated regarding device response.
+
+
+\begin{DoxyParams}{Parameters}
+{\em digital\-Output} & Pointer to a digital output object. \\
+\hline
+{\em value} & Value to send/store. \\
+\hline
+{\em send\-To\-Device} & If true, value is sent to device by calling \hyperlink{classmdt_multi_io_device_a80b4c2864d3e2844fe12444de243365a}{write\-Digital\-Output()}, else value is only cached. Behaviour of this method can vary, depending on device specific subclass. (See sublcass \hyperlink{classmdt_multi_io_device_a80b4c2864d3e2844fe12444de243365a}{write\-Digital\-Output()} for details). \\
+\hline
+{\em wait\-On\-Reply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_multi_io_device_a37a3f39a36b3bbd383f4f704193e3955}{wait\-Transaction\-Done()} ), else it will return immediately after the query was sent. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or a I\-D on success. If no I/\-O's are set, on timeout, on invalid value or other error, a value $<$ 0 is returned. 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+digital\-Output must be valid. 
+\end{DoxyPrecond}
+
+
+Definition at line 897 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References mdt\-Abstract\-Io\-::address\-Write(), get\-New\-Transaction(), mdt\-Port\-Transaction\-::set\-Address(), mdt\-Abstract\-Io\-::set\-Enabled(), mdt\-Port\-Transaction\-::set\-Io(), mdt\-Port\-Transaction\-::set\-Query\-Reply\-Mode(), mdt\-Digital\-Io\-::set\-Value(), mdt\-Value\-::value\-Bool(), wait\-Transaction\-Done(), and write\-Digital\-Output().
+
+
+
+Referenced by add\-Output(), add\-Outputs(), delete\-Ios(), set\-Digital\-Output\-Value(), and set\-Digital\-Output\-Value\-At().
+
+\hypertarget{classmdt_multi_io_device_a82aea9d2c012c3c03819fe5795c65086}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!set\-Digital\-Output\-Value@{set\-Digital\-Output\-Value}}
+\index{set\-Digital\-Output\-Value@{set\-Digital\-Output\-Value}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{set\-Digital\-Output\-Value}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Multi\-Io\-Device\-::set\-Digital\-Output\-Value (
+\begin{DoxyParamCaption}
+\item[{int}]{address\-Write, }
+\item[{const {\bf mdt\-Value} \&}]{value, }
+\item[{bool}]{send\-To\-Device, }
+\item[{bool}]{wait\-On\-Reply}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_a82aea9d2c012c3c03819fe5795c65086}
+
+
+Set digital output value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em address\-Write} & Depending on device organisation and protocol, this can be a relative or absolute address (f.\-ex. M\-O\-D\-B\-U\-S queries), a output number, etc...\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_multi_io_device_a0677d7dfba08a059fb81fa83ffbba11a}{set\-Digital\-Output\-Value(mdt\-Digital\-Io$\ast$, const mdt\-Value\&, bool, bool)} 
+\end{DoxySeeAlso}
+
+
+Definition at line 939 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Device\-::name(), mdt\-Device\-::pv\-Last\-Error, set\-Digital\-Output\-Value(), and mdt\-Error\-::set\-Error().
+
+\hypertarget{classmdt_multi_io_device_a8c3aae522f8a991f8073d161d05fbe7b}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!set\-Digital\-Output\-Value@{set\-Digital\-Output\-Value}}
+\index{set\-Digital\-Output\-Value@{set\-Digital\-Output\-Value}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{set\-Digital\-Output\-Value}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Multi\-Io\-Device\-::set\-Digital\-Output\-Value (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{label\-Short, }
+\item[{const {\bf mdt\-Value} \&}]{value, }
+\item[{bool}]{send\-To\-Device, }
+\item[{bool}]{wait\-On\-Reply}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_a8c3aae522f8a991f8073d161d05fbe7b}
+
+
+Set digital output value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em label\-Short} & Short label set in I/\-O (see \hyperlink{classmdt_digital_io}{mdt\-Digital\-Io} for details).\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_multi_io_device_a0677d7dfba08a059fb81fa83ffbba11a}{set\-Digital\-Output\-Value(mdt\-Digital\-Io$\ast$, const mdt\-Value\&, bool, bool)} 
+\end{DoxySeeAlso}
+
+
+Definition at line 984 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Device\-::name(), mdt\-Device\-::pv\-Last\-Error, set\-Digital\-Output\-Value(), and mdt\-Error\-::set\-Error().
+
+\hypertarget{classmdt_multi_io_device_a6b4537b09f396b4016772b128fdff277}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!set\-Digital\-Output\-Value@{set\-Digital\-Output\-Value}}
+\index{set\-Digital\-Output\-Value@{set\-Digital\-Output\-Value}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{set\-Digital\-Output\-Value}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Multi\-Io\-Device\-::set\-Digital\-Output\-Value (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Digital\-Io} $\ast$}]{digital\-Output}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{classmdt_multi_io_device_a6b4537b09f396b4016772b128fdff277}
+
+
+Set value on a digital output on physical device. 
+
+Checks device's state and send request if Ready.
+
+This slot is used by \hyperlink{classmdt_device_ios}{mdt\-Device\-Ios} to notify that a value has changed.
+
+See \hyperlink{classmdt_multi_io_device_a0677d7dfba08a059fb81fa83ffbba11a}{set\-Digital\-Output\-Value(mdt\-Digital\-Io$\ast$, const mdt\-Value\&, bool, bool)} for details. 
+
+Definition at line 1080 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References mdt\-Device\-::current\-State(), mdt\-Device\-::\-Ready, set\-Digital\-Output\-Value(), and mdt\-Abstract\-Io\-::value().
+
+\hypertarget{classmdt_multi_io_device_a5916d5faef10b1f290ae8aa10319baad}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!set\-Digital\-Output\-Value\-At@{set\-Digital\-Output\-Value\-At}}
+\index{set\-Digital\-Output\-Value\-At@{set\-Digital\-Output\-Value\-At}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{set\-Digital\-Output\-Value\-At}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Multi\-Io\-Device\-::set\-Digital\-Output\-Value\-At (
+\begin{DoxyParamCaption}
+\item[{int}]{position, }
+\item[{const {\bf mdt\-Value} \&}]{value, }
+\item[{bool}]{send\-To\-Device, }
+\item[{bool}]{wait\-On\-Reply}
+\end{DoxyParamCaption}
+)}}\label{classmdt_multi_io_device_a5916d5faef10b1f290ae8aa10319baad}
+
+
+Set digital output value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & See the concept of position in \hyperlink{classmdt_device_ios}{mdt\-Device\-Ios} class detailed description .\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_multi_io_device_a0677d7dfba08a059fb81fa83ffbba11a}{set\-Digital\-Output\-Value(mdt\-Digital\-Io$\ast$, const mdt\-Value\&, bool, bool)} 
+\end{DoxySeeAlso}
+
+
+Definition at line 958 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Device\-::name(), mdt\-Device\-::pv\-Last\-Error, set\-Digital\-Output\-Value(), and mdt\-Error\-::set\-Error().
+
+\hypertarget{classmdt_multi_io_device_ae2cc456c53e1b5f792b9073ad15bb1b3}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!state\-Changed\-Event@{state\-Changed\-Event}}
+\index{state\-Changed\-Event@{state\-Changed\-Event}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{state\-Changed\-Event}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Multi\-Io\-Device\-::state\-Changed\-Event (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Device\-::\-State\-\_\-t}}]{new\-State}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classmdt_multi_io_device_ae2cc456c53e1b5f792b9073ad15bb1b3}
+
+
+Called when current state has changed. 
+
+
+
+Reimplemented from \hyperlink{classmdt_device_ad2646ad2fb99b40c9f303b24a7ee971e}{mdt\-Device}.
+
+
+
+Definition at line 1186 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References mdt\-Device\-::\-Ready.
+
+\hypertarget{classmdt_multi_io_device_a37a3f39a36b3bbd383f4f704193e3955}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!wait\-Transaction\-Done@{wait\-Transaction\-Done}}
+\index{wait\-Transaction\-Done@{wait\-Transaction\-Done}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{wait\-Transaction\-Done}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Multi\-Io\-Device\-::wait\-Transaction\-Done (
+\begin{DoxyParamCaption}
+\item[{int}]{id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_multi_io_device_a37a3f39a36b3bbd383f4f704193e3955}
+
+
+Wait until a transaction is done without break the G\-U\-I's event loop. 
+
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000018}{Todo}]Adapt, comment\end{DoxyRefDesc}
+
+
+This is a helper method that provide a blocking wait. Internally, a couple of sleep and event processing is done, avoiding freezing the G\-U\-I.
+
+Internally, \hyperlink{classmdt_port_manager_a5551802de2c08632078f2cc0e2607913}{mdt\-Port\-Manager\-::wait\-Transaction\-Done()} is called.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & Id returned by query method \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True on success, false on timeout. If id was not found in transactions list, a warning will be generated in \hyperlink{classmdt_error}{mdt\-Error} system, and false will be returned. 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+granularity must be $>$ 0. 
+\end{DoxyPrecond}
+
+
+Definition at line 1106 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+References port\-Manager(), mdt\-Port\-Manager\-::readen\-Frame(), and mdt\-Port\-Manager\-::wait\-Transaction\-Done().
+
+
+
+Referenced by get\-Analog\-Inputs(), get\-Analog\-Input\-Value(), get\-Analog\-Outputs(), get\-Analog\-Output\-Value(), get\-Digital\-Inputs(), get\-Digital\-Input\-Value(), get\-Digital\-Outputs(), get\-Digital\-Output\-Value(), set\-Analog\-Outputs(), set\-Analog\-Output\-Value(), set\-Digital\-Outputs(), and set\-Digital\-Output\-Value().
+
+\hypertarget{classmdt_multi_io_device_a683b5aa97f175cb2979472e1b256c706}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!write\-Analog\-Output@{write\-Analog\-Output}}
+\index{write\-Analog\-Output@{write\-Analog\-Output}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{write\-Analog\-Output}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Multi\-Io\-Device\-::write\-Analog\-Output (
+\begin{DoxyParamCaption}
+\item[{int}]{value, }
+\item[{{\bf mdt\-Port\-Transaction} $\ast$}]{transaction}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classmdt_multi_io_device_a683b5aa97f175cb2979472e1b256c706}
+
+
+Write value on a analog output to physical device. 
+
+This is the device specific implementation to send the query. If device handled by subclass has analog outputs, this method should be implemented.
+
+This method is called from \hyperlink{classmdt_multi_io_device_af58f284bf4310abefa59975664e640d6}{set\-Analog\-Output\-Value()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Value encoded regarding device format. \\
+\hline
+{\em transaction} & Contains some flags used during query/reply process (address, id, I/\-O object, ...). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or a I\-D on success, value $<$ 0 on error (see mdt\-Port\-Manager\-::write\-Data() for details) 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+I/\-O's must be set with set\-Ios(). 
+
+transaction must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Reimplemented in \hyperlink{classmdt_device_modbus_ac63297a31205759622f341525c34251f}{mdt\-Device\-Modbus}.
+
+
+
+Definition at line 1146 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+Referenced by set\-Analog\-Output\-Value().
+
+\hypertarget{classmdt_multi_io_device_ac6b1b24b8c3eb0722df4079df11e6b71}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!write\-Analog\-Outputs@{write\-Analog\-Outputs}}
+\index{write\-Analog\-Outputs@{write\-Analog\-Outputs}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{write\-Analog\-Outputs}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Multi\-Io\-Device\-::write\-Analog\-Outputs (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Port\-Transaction} $\ast$}]{transaction, }
+\item[{{\bf mdt\-Device\-Ios\-Segment} $\ast$}]{segment}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classmdt_multi_io_device_ac6b1b24b8c3eb0722df4079df11e6b71}
+
+
+Write all analog outputs to physical device. 
+
+This is the device specific implementation to send the query. If device handled by subclass has analog outputs, this method should be implemented.
+
+This method is called from \hyperlink{classmdt_multi_io_device_ae8b2ae1657c4072854846893705f427a}{set\-Analog\-Outputs()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em transaction} & Contains\-:
+\begin{DoxyItemize}
+\item io\-Count \-: number of I/\-Os to set
+\item address \-: first I/\-O address (for write access) to considere
+\item Query\-Reply\-Mode flag 
+\end{DoxyItemize}\\
+\hline
+{\em segment} & Contains contiguous outputs to write. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or a I\-D on success, value $<$ 0 on error (see mdt\-Port\-Manager\-::write\-Data() for details) 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+I/\-O's must be set with set\-Ios(). 
+
+transaction must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Reimplemented in \hyperlink{classmdt_device_modbus_aa09d1682bef4bbc08b59b20110e613ff}{mdt\-Device\-Modbus}.
+
+
+
+Definition at line 1151 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+Referenced by set\-Analog\-Outputs().
+
+\hypertarget{classmdt_multi_io_device_a80b4c2864d3e2844fe12444de243365a}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!write\-Digital\-Output@{write\-Digital\-Output}}
+\index{write\-Digital\-Output@{write\-Digital\-Output}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{write\-Digital\-Output}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Multi\-Io\-Device\-::write\-Digital\-Output (
+\begin{DoxyParamCaption}
+\item[{bool}]{state, }
+\item[{{\bf mdt\-Port\-Transaction} $\ast$}]{transaction}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classmdt_multi_io_device_a80b4c2864d3e2844fe12444de243365a}
+
+
+Write state on a digital output to physical device. 
+
+This is the device specific implementation to send the query. If device handled by subclass has digital outputs, this method should be implemented.
+
+This method is called from set\-Digital\-Output\-State().
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & State (O\-N/\-O\-F\-F). \\
+\hline
+{\em transaction} & Contains some flags used during query/reply process (address, id, I/\-O object, ...). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or a I\-D on success, value $<$ 0 on error (see mdt\-Port\-Manager\-::write\-Data() for details) 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+I/\-O's must be set with set\-Ios(). 
+
+transaction must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Reimplemented in \hyperlink{classmdt_device_modbus_a6950c10fc521b193fb3c754223879694}{mdt\-Device\-Modbus}.
+
+
+
+Definition at line 1176 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+Referenced by set\-Digital\-Output\-Value().
+
+\hypertarget{classmdt_multi_io_device_a03aedb552abcc344b1545d95f261e387}{\index{mdt\-Multi\-Io\-Device@{mdt\-Multi\-Io\-Device}!write\-Digital\-Outputs@{write\-Digital\-Outputs}}
+\index{write\-Digital\-Outputs@{write\-Digital\-Outputs}!mdtMultiIoDevice@{mdt\-Multi\-Io\-Device}}
+\subsubsection[{write\-Digital\-Outputs}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Multi\-Io\-Device\-::write\-Digital\-Outputs (
+\begin{DoxyParamCaption}
+\item[{{\bf mdt\-Port\-Transaction} $\ast$}]{transaction, }
+\item[{{\bf mdt\-Device\-Ios\-Segment} $\ast$}]{segment}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classmdt_multi_io_device_a03aedb552abcc344b1545d95f261e387}
+
+
+Write all digital outputs to physical device. 
+
+This is the device specific implementation to send the query. If device handled by subclass has digital outputs, this method should be implemented.
+
+This method is called from \hyperlink{classmdt_multi_io_device_a2149cfc42f04c8afb6f2d20dbd3bd391}{set\-Digital\-Outputs()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em transaction} & Contains\-:
+\begin{DoxyItemize}
+\item io\-Count \-: number of I/\-Os to set
+\item address \-: first I/\-O address (for write access) to considere
+\item Query\-Reply\-Mode flag 
+\end{DoxyItemize}\\
+\hline
+{\em segment} & Contains contiguous outputs to write. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or a I\-D on success, value $<$ 0 on error (see mdt\-Port\-Manager\-::write\-Data() for details) 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+I/\-O's must be set with set\-Ios(). 
+
+transaction must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Reimplemented in \hyperlink{classmdt_device_modbus_a6713edaee0bfba48791008124299b753}{mdt\-Device\-Modbus}.
+
+
+
+Definition at line 1181 of file mdt\-Multi\-Io\-Device.\-cpp.
+
+
+
+Referenced by set\-Digital\-Outputs().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdtdevice/\hyperlink{mdt_multi_io_device_8h}{mdt\-Multi\-Io\-Device.\-h}\item 
+src/mdtdevice/\hyperlink{mdt_multi_io_device_8cpp}{mdt\-Multi\-Io\-Device.\-cpp}\end{DoxyCompactItemize}

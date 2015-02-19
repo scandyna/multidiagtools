@@ -31,13 +31,13 @@ Collaboration diagram for mdt\-Csv\-File\-:\nopagebreak
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classmdt_csv_file_aaca142b18a4f436548e17fbef755e2d5}{mdt\-Csv\-File} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent=0, const Q\-Byte\-Array \&file\-Encoding=\char`\"{}U\-T\-F-\/8\char`\"{})
+\hyperlink{classmdt_csv_file_aaca142b18a4f436548e17fbef755e2d5}{mdt\-Csv\-File} (Q\-Object $\ast$parent=0, const Q\-Byte\-Array \&file\-Encoding=\char`\"{}U\-T\-F-\/8\char`\"{})
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_csv_file_aea6a3fe22d2561b2dad65ed856e3d348}{$\sim$mdt\-Csv\-File} ()
 \item 
 void \hyperlink{classmdt_csv_file_abfe09c325401ac9ca39c9d2329d6bc9c}{close} ()
 \begin{DoxyCompactList}\small\item\em Close. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_csv_file_a0e85f46ffdc4e44c8974c485abcc48b8}{write\-Line} (const Q\-String\-List \&line, const Q\-String \&separator=\char`\"{};\char`\"{}, const Q\-String \&data\-Protection=\char`\"{}\char`\"{}, const Q\-Char \&escape\-Char=Q\-Char(), Q\-String eol=\char`\"{}\textbackslash{}n\char`\"{})
+bool \hyperlink{classmdt_csv_file_a052957c4591eca34e19ec6a95c11a1e1}{write\-Line} (const Q\-String\-List \&line, const \hyperlink{structmdt_csv_file_settings}{mdt\-Csv\-File\-Settings} \&settings)
 \begin{DoxyCompactList}\small\item\em Write a line of data. \end{DoxyCompactList}\item 
 Q\-String\-List \hyperlink{classmdt_csv_file_a4010d76497d8f5d2a85171025d31f100}{read\-Header} (const Q\-String \&separator=\char`\"{};\char`\"{}, const Q\-String \&data\-Protection=\char`\"{}\char`\"{}, const Q\-String \&comment=\char`\"{}\#\char`\"{}, const Q\-Char \&escape\-Char=Q\-Char(), Q\-Byte\-Array eol=\char`\"{}\textbackslash{}n\char`\"{})
 \begin{DoxyCompactList}\small\item\em Get C\-S\-V file's header. \end{DoxyCompactList}\item 
@@ -66,7 +66,7 @@ Read and write C\-S\-V file.
 
 The default file encoding format is assumed U\-T\-F-\/8. If another format is to use, give it at constructor. 
 
-Definition at line 43 of file mdt\-Csv\-File.\-h.
+Definition at line 93 of file mdt\-Csv\-File.\-h.
 
 
 
@@ -75,7 +75,7 @@ Definition at line 43 of file mdt\-Csv\-File.\-h.
 \index{mdt\-Csv\-File@{mdt\-Csv\-File}!mdtCsvFile@{mdt\-Csv\-File}}
 \subsubsection[{mdt\-Csv\-File}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Csv\-File\-::mdt\-Csv\-File (
 \begin{DoxyParamCaption}
-\item[{{\bf Q\-Object} $\ast$}]{parent = {\ttfamily 0}, }
+\item[{Q\-Object $\ast$}]{parent = {\ttfamily 0}, }
 \item[{const Q\-Byte\-Array \&}]{file\-Encoding = {\ttfamily \char`\"{}UTF-\/8\char`\"{}}}
 \end{DoxyParamCaption}
 )}}\label{classmdt_csv_file_aaca142b18a4f436548e17fbef755e2d5}
@@ -93,7 +93,7 @@ file\-Encoding must be supported by the system.
 \end{DoxyPrecond}
 
 
-Definition at line 28 of file mdt\-Csv\-File.\-cpp.
+Definition at line 52 of file mdt\-Csv\-File.\-cpp.
 
 \hypertarget{classmdt_csv_file_aea6a3fe22d2561b2dad65ed856e3d348}{\index{mdt\-Csv\-File@{mdt\-Csv\-File}!$\sim$mdt\-Csv\-File@{$\sim$mdt\-Csv\-File}}
 \index{$\sim$mdt\-Csv\-File@{$\sim$mdt\-Csv\-File}!mdtCsvFile@{mdt\-Csv\-File}}
@@ -104,7 +104,7 @@ Definition at line 28 of file mdt\-Csv\-File.\-cpp.
 )}}\label{classmdt_csv_file_aea6a3fe22d2561b2dad65ed856e3d348}
 
 
-Definition at line 36 of file mdt\-Csv\-File.\-cpp.
+Definition at line 60 of file mdt\-Csv\-File.\-cpp.
 
 
 
@@ -140,7 +140,7 @@ Q\-String\-List \&parse\-Line(const Q\-Byte\-Array \&line, const Q\-Byte\-Array 
 
 Clear readen data 
 
-Definition at line 217 of file mdt\-Csv\-File.\-cpp.
+Definition at line 285 of file mdt\-Csv\-File.\-cpp.
 
 
 
@@ -164,7 +164,7 @@ Note\-: readen data are not cleared. Call \hyperlink{classmdt_csv_file_afe815d4f
 \end{DoxySeeAlso}
 
 
-Definition at line 41 of file mdt\-Csv\-File.\-cpp.
+Definition at line 65 of file mdt\-Csv\-File.\-cpp.
 
 
 
@@ -183,7 +183,7 @@ Check if \hyperlink{classmdt_csv_file_aa7d5e7ab9d6d71f7ca1c9fe7bea043a3}{read\-L
 
 
 
-Definition at line 172 of file mdt\-Csv\-File.\-cpp.
+Definition at line 240 of file mdt\-Csv\-File.\-cpp.
 
 
 
@@ -202,7 +202,7 @@ Get content of entire file.
 
 
 
-Definition at line 239 of file mdt\-Csv\-File.\-cpp.
+Definition at line 307 of file mdt\-Csv\-File.\-cpp.
 
 
 
@@ -243,7 +243,7 @@ A list containing the headers.
 \end{DoxyReturn}
 
 
-Definition at line 89 of file mdt\-Csv\-File.\-cpp.
+Definition at line 157 of file mdt\-Csv\-File.\-cpp.
 
 
 
@@ -285,7 +285,11 @@ Line of data.
 \end{DoxyReturn}
 
 
-Definition at line 94 of file mdt\-Csv\-File.\-cpp.
+Definition at line 162 of file mdt\-Csv\-File.\-cpp.
+
+
+
+References read\-Line().
 
 
 
@@ -324,7 +328,7 @@ Line of data.
 \end{DoxyReturn}
 
 
-Definition at line 105 of file mdt\-Csv\-File.\-cpp.
+Definition at line 173 of file mdt\-Csv\-File.\-cpp.
 
 
 
@@ -365,7 +369,7 @@ True on success.
 \end{DoxyReturn}
 
 
-Definition at line 117 of file mdt\-Csv\-File.\-cpp.
+Definition at line 185 of file mdt\-Csv\-File.\-cpp.
 
 
 
@@ -407,7 +411,7 @@ separator, data\-Protection and comment must not be the same
 \end{DoxyPrecond}
 
 
-Definition at line 180 of file mdt\-Csv\-File.\-cpp.
+Definition at line 248 of file mdt\-Csv\-File.\-cpp.
 
 
 
@@ -430,7 +434,7 @@ Set the \hyperlink{classmdt_csv_file_aa7d5e7ab9d6d71f7ca1c9fe7bea043a3}{read\-Li
 
 Used by unit testing. A value $<$ 1 means default value (8192). 
 
-Definition at line 244 of file mdt\-Csv\-File.\-cpp.
+Definition at line 312 of file mdt\-Csv\-File.\-cpp.
 
 \hypertarget{classmdt_csv_file_af2d0917f92dd0d0d8100edccf1d3e4ee}{\index{mdt\-Csv\-File@{mdt\-Csv\-File}!value\-At@{value\-At}}
 \index{value\-At@{value\-At}!mdtCsvFile@{mdt\-Csv\-File}}
@@ -446,19 +450,16 @@ Get a value.
 
 No value is available before \hyperlink{classmdt_csv_file_adeb771789de28feb5c1ec326b179e83b}{read\-Lines()} was called. If requested index (line, column) is empty, or does not exists, a empty string is returned. The index check is done internally. 
 
-Definition at line 222 of file mdt\-Csv\-File.\-cpp.
+Definition at line 290 of file mdt\-Csv\-File.\-cpp.
 
-\hypertarget{classmdt_csv_file_a0e85f46ffdc4e44c8974c485abcc48b8}{\index{mdt\-Csv\-File@{mdt\-Csv\-File}!write\-Line@{write\-Line}}
+\hypertarget{classmdt_csv_file_a052957c4591eca34e19ec6a95c11a1e1}{\index{mdt\-Csv\-File@{mdt\-Csv\-File}!write\-Line@{write\-Line}}
 \index{write\-Line@{write\-Line}!mdtCsvFile@{mdt\-Csv\-File}}
 \subsubsection[{write\-Line}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Csv\-File\-::write\-Line (
 \begin{DoxyParamCaption}
 \item[{const Q\-String\-List \&}]{line, }
-\item[{const Q\-String \&}]{separator = {\ttfamily \char`\"{};\char`\"{}}, }
-\item[{const Q\-String \&}]{data\-Protection = {\ttfamily \char`\"{}\char`\"{}}, }
-\item[{const Q\-Char \&}]{escape\-Char = {\ttfamily QChar()}, }
-\item[{Q\-String}]{eol = {\ttfamily \char`\"{}\textbackslash{}n\char`\"{}}}
+\item[{const {\bf mdt\-Csv\-File\-Settings} \&}]{settings}
 \end{DoxyParamCaption}
-)}}\label{classmdt_csv_file_a0e85f46ffdc4e44c8974c485abcc48b8}
+)}}\label{classmdt_csv_file_a052957c4591eca34e19ec6a95c11a1e1}
 
 
 Write a line of data. 
@@ -477,15 +478,34 @@ Write a line of data.
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
+True on successbool write\-Line(const Q\-String\-List \&line, const Q\-String \&separator = \char`\"{};\char`\"{}, const Q\-String \&data\-Protection = \char`\"{}\char`\"{}, const Q\-Char \&escape\-Char = Q\-Char(), Q\-String eol = M\-D\-T\-\_\-\-N\-A\-T\-I\-V\-E\-\_\-\-E\-O\-L);
+\end{DoxyReturn}
+Write a line of data
+
+
+\begin{DoxyParams}{Parameters}
+{\em line} & List of strings containing line data. \\
+\hline
+{\em settings} & C\-S\-V file settings to use. Note\-: eol will be ignored if file was open with Text flag. See Q\-File\-::open() and Q\-I\-O\-Device\-::\-Open\-Mode for details. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
 True on success 
 \end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+File must be open when calling this function
+\end{DoxyPrecond}
+bool mdt\-Csv\-File\-::write\-Line(const Q\-String\-List \&line, const Q\-String \&separator, const Q\-String \&data\-Protection, const Q\-Char \&escape\-Char, Q\-String eol) \{ Q\-String str, item; int i;
+
+Check if file was open if(!is\-Open())\{ \hyperlink{classmdt_error}{mdt\-Error} e(M\-D\-T\-\_\-\-F\-I\-L\-E\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R, \char`\"{}\-File \char`\"{} + file\-Name() + \char`\"{} is not open\char`\"{}, \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260}{mdt\-Error\-::\-Error}); M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C(e, \char`\"{}mdt\-Csv\-File\char`\"{}); e.\-commit(); return false; \} If file was open with Text flag, E\-O\-L is allways converted if(is\-Text\-Mode\-Enabled())\{ eol = \char`\"{}\textbackslash{}n\char`\"{}; \} Get items, escape and write for(i=0; i$<$line.\-size(); i++)\{ str += data\-Protection; if(!escape\-Char.is\-Null())\{ item = line.\-at(i); item.\-replace(data\-Protection, escape\-Char + data\-Protection); str += item; \}else\{ str += line.\-at(i); \} str += data\-Protection; if(i $<$ (line.\-size()-\/1))\{ str += separator; \} \} str += eol; if(write(pv\-Codec-\/$>$from\-Unicode(str)) $<$ 0)\{ \hyperlink{classmdt_error}{mdt\-Error} e(M\-D\-T\-\_\-\-F\-I\-L\-E\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R, \char`\"{}\-Write error occured on file \char`\"{} + file\-Name(), \hyperlink{classmdt_error_a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260}{mdt\-Error\-::\-Error}); M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C(e, \char`\"{}mdt\-Csv\-File\char`\"{}); e.\-commit(); return false; \}
+
+return true; \} 
+
+Definition at line 115 of file mdt\-Csv\-File.\-cpp.
 
 
-Definition at line 47 of file mdt\-Csv\-File.\-cpp.
 
-
-
-References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, and M\-D\-T\-\_\-\-F\-I\-L\-E\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R.
+References mdt\-Error\-::commit(), mdt\-Csv\-File\-Settings\-::data\-Protection, mdt\-Csv\-File\-Settings\-::data\-Protection\-Escape\-Char, mdt\-Csv\-File\-Settings\-::eol, mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, M\-D\-T\-\_\-\-F\-I\-L\-E\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R, and mdt\-Csv\-File\-Settings\-::separator.
 
 
 

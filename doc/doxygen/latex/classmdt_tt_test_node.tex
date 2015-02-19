@@ -12,7 +12,8 @@ Helper class for test node edition.
 
 
 
-Inheritance diagram for mdt\-Tt\-Test\-Node\-:\nopagebreak
+Inheritance diagram for mdt\-Tt\-Test\-Node\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -21,17 +22,18 @@ Inheritance diagram for mdt\-Tt\-Test\-Node\-:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdt\-Tt\-Test\-Node\-:\nopagebreak
+Collaboration diagram for mdt\-Tt\-Test\-Node\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=216pt]{classmdt_tt_test_node__coll__graph}
+\includegraphics[width=218pt]{classmdt_tt_test_node__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classmdt_tt_test_node_a6a3513f05c9d76f60d7a27bd26c5ecc3}{mdt\-Tt\-Test\-Node} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent, Q\-Sql\-Database db)
+\hyperlink{classmdt_tt_test_node_a6a3513f05c9d76f60d7a27bd26c5ecc3}{mdt\-Tt\-Test\-Node} (Q\-Object $\ast$parent, \hyperlink{class_q_sql_database}{Q\-Sql\-Database} db)
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
 Q\-String \hyperlink{classmdt_tt_test_node_ae1c4ba44984fb21ec36aa4aa15207ad4}{sql\-For\-Unit\-Selection} (const Q\-Variant \&Vehicle\-Type\-Id)
 \begin{DoxyCompactList}\small\item\em Get S\-Q\-L statement for units selection. \end{DoxyCompactList}\item 
@@ -76,8 +78,8 @@ Definition at line 37 of file mdt\-Tt\-Test\-Node.\-h.
 \index{mdt\-Tt\-Test\-Node@{mdt\-Tt\-Test\-Node}!mdtTtTestNode@{mdt\-Tt\-Test\-Node}}
 \subsubsection[{mdt\-Tt\-Test\-Node}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Tt\-Test\-Node\-::mdt\-Tt\-Test\-Node (
 \begin{DoxyParamCaption}
-\item[{{\bf Q\-Object} $\ast$}]{parent, }
-\item[{Q\-Sql\-Database}]{db}
+\item[{Q\-Object $\ast$}]{parent, }
+\item[{{\bf Q\-Sql\-Database}}]{db}
 \end{DoxyParamCaption}
 )}}\label{classmdt_tt_test_node_a6a3513f05c9d76f60d7a27bd26c5ecc3}
 
@@ -104,7 +106,7 @@ Update node unit connections of given test node.
 
 For each unit contained in given test node, the missing connections (those that exist in Unit\-Connection\-\_\-tbl but not in Test\-Node\-Unit\-Connection\-\_\-tbl) will be added in Test\-Node\-Unit\-Connection\-\_\-tbl. 
 
-Definition at line 215 of file mdt\-Tt\-Test\-Node.\-cpp.
+Definition at line 216 of file mdt\-Tt\-Test\-Node.\-cpp.
 
 
 
@@ -125,7 +127,7 @@ Add (coupling and channel) relays to graph.
 
 Will add all coupling and channel relays of given test node to graph as a link with a cost of 2. The user data will also contain unit I\-D of each relay. 
 
-Definition at line 278 of file mdt\-Tt\-Test\-Node.\-cpp.
+Definition at line 279 of file mdt\-Tt\-Test\-Node.\-cpp.
 
 
 
@@ -164,7 +166,7 @@ True if a short circuit was detected, false if O\-K
 \end{DoxyReturn}
 
 
-Definition at line 369 of file mdt\-Tt\-Test\-Node.\-cpp.
+Definition at line 370 of file mdt\-Tt\-Test\-Node.\-cpp.
 
 
 
@@ -184,7 +186,7 @@ Get a list of channel test connections for given bus name and node I\-D.
 
 
 
-Definition at line 192 of file mdt\-Tt\-Test\-Node.\-cpp.
+Definition at line 193 of file mdt\-Tt\-Test\-Node.\-cpp.
 
 
 
@@ -222,7 +224,7 @@ Get a list of unit connection I\-Ds that are part of given unit I\-D.
 
 
 
-Definition at line 169 of file mdt\-Tt\-Test\-Node.\-cpp.
+Definition at line 170 of file mdt\-Tt\-Test\-Node.\-cpp.
 
 
 
@@ -241,7 +243,7 @@ Get a list of unit I\-Ds for given list of unit connection I\-Ds.
 
 
 
-Definition at line 136 of file mdt\-Tt\-Test\-Node.\-cpp.
+Definition at line 137 of file mdt\-Tt\-Test\-Node.\-cpp.
 
 
 
@@ -277,7 +279,7 @@ Get a list of links that are travsersed from connection\-Id\-A to connection\-Id
 \end{DoxyParams}
 
 
-Definition at line 494 of file mdt\-Tt\-Test\-Node.\-cpp.
+Definition at line 495 of file mdt\-Tt\-Test\-Node.\-cpp.
 
 
 
@@ -313,7 +315,7 @@ For each connection in given path, related test node unit id (i.\-e. relay I\-D)
 \end{DoxyParams}
 
 
-Definition at line 333 of file mdt\-Tt\-Test\-Node.\-cpp.
+Definition at line 334 of file mdt\-Tt\-Test\-Node.\-cpp.
 
 
 
@@ -358,7 +360,7 @@ Each item in selection must contain Unit\-\_\-\-Id\-\_\-\-F\-K\-\_\-\-P\-K field
 \end{DoxyPrecond}
 
 
-Definition at line 247 of file mdt\-Tt\-Test\-Node.\-cpp.
+Definition at line 248 of file mdt\-Tt\-Test\-Node.\-cpp.
 
 
 

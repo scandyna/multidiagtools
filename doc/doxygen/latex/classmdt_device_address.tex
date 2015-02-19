@@ -1,0 +1,644 @@
+\hypertarget{classmdt_device_address}{\section{mdt\-Device\-Address Class Reference}
+\label{classmdt_device_address}\index{mdt\-Device\-Address@{mdt\-Device\-Address}}
+}
+
+
+Common device identification.  
+
+
+
+
+{\ttfamily \#include $<$mdt\-Device\-Address.\-h$>$}
+
+
+
+Collaboration diagram for mdt\-Device\-Address\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmdt_device_address__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{classmdt_device_address_a87fedc5c0ede4736bcc939f453bf0ed0}{Port\-Type\-\_\-t} \{ \hyperlink{classmdt_device_address_a87fedc5c0ede4736bcc939f453bf0ed0ab50339a10e1de285ac99d4c3990b8693}{Port\-Type\-\_\-t\-::\-N\-O\-N\-E}, 
+\hyperlink{classmdt_device_address_a87fedc5c0ede4736bcc939f453bf0ed0a487b5042489631a7727321162579c3a5}{Port\-Type\-\_\-t\-::\-T\-C\-P\-I\-P}, 
+\hyperlink{classmdt_device_address_a87fedc5c0ede4736bcc939f453bf0ed0a7aca5ec618f7317328dcd7014cf9bdcf}{Port\-Type\-\_\-t\-::\-U\-S\-B}, 
+\hyperlink{classmdt_device_address_a87fedc5c0ede4736bcc939f453bf0ed0a5100e6dba69c30d5af23e7b0624f12ca}{Port\-Type\-\_\-t\-::\-A\-S\-R\-L}
+ \}
+\begin{DoxyCompactList}\small\item\em Port type. \end{DoxyCompactList}\item 
+enum \hyperlink{classmdt_device_address_a8e776267826886cd846fb2d75b9b7b2b}{Device\-Type\-\_\-t} \{ \hyperlink{classmdt_device_address_a8e776267826886cd846fb2d75b9b7b2bab50339a10e1de285ac99d4c3990b8693}{Device\-Type\-\_\-t\-::\-N\-O\-N\-E}, 
+\hyperlink{classmdt_device_address_a8e776267826886cd846fb2d75b9b7b2bac48b30e1372f2477bb18dc29450acdf4}{Device\-Type\-\_\-t\-::\-I\-N\-S\-T\-R}, 
+\hyperlink{classmdt_device_address_a8e776267826886cd846fb2d75b9b7b2ba75fbea08c09e684e6b3f3961761354fa}{Device\-Type\-\_\-t\-::\-S\-O\-C\-K\-E\-T}, 
+\hyperlink{classmdt_device_address_a8e776267826886cd846fb2d75b9b7b2ba7b25be9aa462c983626e10cc14056101}{Device\-Type\-\_\-t\-::\-M\-O\-D\-B\-U\-S}
+ \}
+\begin{DoxyCompactList}\small\item\em Device type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_device_address_a9ac376c3c78e38b558562b5ed99db198}{mdt\-Device\-Address} ()
+\begin{DoxyCompactList}\small\item\em Construct a invalid device address. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_device_address_a609981a120aa87451079551c655a181e}{is\-Valid} () const 
+\begin{DoxyCompactList}\small\item\em Check if device address is valid. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_error}{mdt\-Error} \hyperlink{classmdt_device_address_a8078b5665a3711c1b4453b38aa428880}{last\-Error} () const 
+\begin{DoxyCompactList}\small\item\em Get last error. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_address_aa12409b1152de08b83362d19ce7bb5fc}{clear} ()
+\begin{DoxyCompactList}\small\item\em Clear device address. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_device_address_a87fedc5c0ede4736bcc939f453bf0ed0}{Port\-Type\-\_\-t} \hyperlink{classmdt_device_address_a0ae6efdb6183d5e333cdf898e05bc18f}{port\-Type} () const 
+\begin{DoxyCompactList}\small\item\em Get port type. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{classmdt_device_address_a4ff25fe7acef148034084fbf0c294bbd}{port\-Type\-Str} () const 
+\begin{DoxyCompactList}\small\item\em Get port type string. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_device_address_a8e776267826886cd846fb2d75b9b7b2b}{Device\-Type\-\_\-t} \hyperlink{classmdt_device_address_a5834b156ce7240dfdc3f3fe7da629c53}{device\-Type} () const 
+\begin{DoxyCompactList}\small\item\em Get device type. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{classmdt_device_address_a16df2a5fdb967035d11a1950f8e900f4}{device\-Type\-Str} () const 
+\begin{DoxyCompactList}\small\item\em Get device type string. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_device_address_a0cc71ea63086e80217536e4d13430f45}{set\-Address\-String} (const Q\-String \&as)
+\begin{DoxyCompactList}\small\item\em Set address string. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{classmdt_device_address_a4c932b32f4b8222fe4ec89f6685dc2f1}{address\-String} () const 
+\begin{DoxyCompactList}\small\item\em Get address string. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_address_a8e17010c5cd0611d427e6c8d24f26831}{set\-Alias} (const Q\-String \&\hyperlink{classmdt_device_address_aa08397e5d6f507b6eeddaafb89c84cc3}{alias})
+\begin{DoxyCompactList}\small\item\em Set alias. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{classmdt_device_address_aa08397e5d6f507b6eeddaafb89c84cc3}{alias} () const 
+\begin{DoxyCompactList}\small\item\em Get alias. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_address_afe2562a54cadea4f79ecf6e4d44ed2ce}{set\-Usb\-Identification} (uint16\-\_\-t id\-Vendor, uint16\-\_\-t id\-Product, const Q\-String \&device\-Serial\-Number, uint8\-\_\-t b\-Interface\-Number, \hyperlink{classmdt_device_address_a8e776267826886cd846fb2d75b9b7b2b}{Device\-Type\-\_\-t} dev\-Type=\hyperlink{classmdt_device_address_a8e776267826886cd846fb2d75b9b7b2bac48b30e1372f2477bb18dc29450acdf4}{Device\-Type\-\_\-t\-::\-I\-N\-S\-T\-R})
+\begin{DoxyCompactList}\small\item\em Set U\-S\-B identification. \end{DoxyCompactList}\item 
+uint16\-\_\-t \hyperlink{classmdt_device_address_ab0178e6097602990d88983ab0641dea4}{usb\-Id\-Vendor} () const 
+\begin{DoxyCompactList}\small\item\em Get U\-S\-B id\-Vendor. \end{DoxyCompactList}\item 
+uint16\-\_\-t \hyperlink{classmdt_device_address_a5a6a8f926ba207d3775f32d9b26f0825}{usb\-Id\-Product} () const 
+\begin{DoxyCompactList}\small\item\em Get U\-S\-B id\-Product. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{classmdt_device_address_a922a6382cc42f9783004fd227527a68e}{usb\-Device\-Serial\-Number} () const 
+\begin{DoxyCompactList}\small\item\em Get U\-S\-B device serial number. \end{DoxyCompactList}\item 
+uint8\-\_\-t \hyperlink{classmdt_device_address_a85d1e0633701a5da36a7901fd46ceaff}{usb\-Interface\-Number} () const 
+\begin{DoxyCompactList}\small\item\em Get U\-S\-B b\-Interface\-Number. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_address_a17ab6e31ce07265b70fac6a6663306cc}{set\-Tcp\-Ip\-Identification} (const Q\-String \&host\-Name, uint16\-\_\-t port, \hyperlink{classmdt_device_address_a8e776267826886cd846fb2d75b9b7b2b}{Device\-Type\-\_\-t} dev\-Type)
+\begin{DoxyCompactList}\small\item\em Set T\-C\-P/\-I\-P identification. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_address_a0c93210a120c74f81c1b54b11129ff17}{set\-Modbus\-Tcp\-Identification} (const Q\-String \&host\-Name, uint16\-\_\-t port, const \hyperlink{classmdt_modbus_hw_node_id}{mdt\-Modbus\-Hw\-Node\-Id} \&nid)
+\begin{DoxyCompactList}\small\item\em Set M\-O\-D\-B\-U\-S/\-T\-C\-P identification. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{classmdt_device_address_ae4a8981a6d6c9a84e0b8db84bf823fd1}{tcp\-Ip\-Host\-Name} () const 
+\begin{DoxyCompactList}\small\item\em Get T\-C\-P/\-I\-P host name. \end{DoxyCompactList}\item 
+uint16\-\_\-t \hyperlink{classmdt_device_address_a84932f54a32ff54ca61c698a8e0cf0fc}{tcp\-Ip\-Port} () const 
+\begin{DoxyCompactList}\small\item\em Get T\-C\-P/\-I\-P port. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_modbus_hw_node_id}{mdt\-Modbus\-Hw\-Node\-Id} \hyperlink{classmdt_device_address_a8afd94a40f2c32011e759c4cff79d813}{modbus\-Hw\-Node\-Id} () const 
+\begin{DoxyCompactList}\small\item\em Get M\-O\-D\-B\-U\-S hardware node id. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Common device identification. 
+
+In multi\-Diag\-Tools library, each port or device class has its own methods to open a ressource.
+
+In some case, it's necessary to identify, f.\-ex. a device, in a common way. Storing this identification in a databse or a file can also be usefull.
+
+To resole above problems, this class is inspired from V\-I\-S\-A (Virtual Instrument Software Architecture) library specifications. The most important part is in V\-P\-P-\/4.\-3\-: The V\-I\-S\-A Library, revision 5.\-4 , chapiter 4.\-3.\-1 Address String. This specification is available by the I\-V\-I Foundation\-: \href{http://www.ivifoundation.org}{\tt http\-://www.\-ivifoundation.\-org}
+
+Note\-: current version has only a partial support (U\-S\-B and part of T\-C\-P\-I\-P) 
+
+Definition at line 70 of file mdt\-Device\-Address.\-h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{classmdt_device_address_a8e776267826886cd846fb2d75b9b7b2b}{\index{mdt\-Device\-Address@{mdt\-Device\-Address}!Device\-Type\-\_\-t@{Device\-Type\-\_\-t}}
+\index{Device\-Type\-\_\-t@{Device\-Type\-\_\-t}!mdtDeviceAddress@{mdt\-Device\-Address}}
+\subsubsection[{Device\-Type\-\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdt\-Device\-Address\-::\-Device\-Type\-\_\-t}\hspace{0.3cm}{\ttfamily [strong]}}}\label{classmdt_device_address_a8e776267826886cd846fb2d75b9b7b2b}
+
+
+Device type. 
+
+Refers to resource class described in V\-P\-P-\/4.\-3 revision 5.\-4 , chapiter 5.
+
+Some devices type are also not from V\-P\-P-\/4.\-3 specifications. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{N\-O\-N\-E@{N\-O\-N\-E}!mdt\-Device\-Address@{mdt\-Device\-Address}}\index{mdt\-Device\-Address@{mdt\-Device\-Address}!N\-O\-N\-E@{N\-O\-N\-E}}\item[{\em 
+\hypertarget{classmdt_device_address_a8e776267826886cd846fb2d75b9b7b2bab50339a10e1de285ac99d4c3990b8693}{N\-O\-N\-E}\label{classmdt_device_address_a8e776267826886cd846fb2d75b9b7b2bab50339a10e1de285ac99d4c3990b8693}
+}]No device type. Set by default for a invalid device address \index{I\-N\-S\-T\-R@{I\-N\-S\-T\-R}!mdt\-Device\-Address@{mdt\-Device\-Address}}\index{mdt\-Device\-Address@{mdt\-Device\-Address}!I\-N\-S\-T\-R@{I\-N\-S\-T\-R}}\item[{\em 
+\hypertarget{classmdt_device_address_a8e776267826886cd846fb2d75b9b7b2bac48b30e1372f2477bb18dc29450acdf4}{I\-N\-S\-T\-R}\label{classmdt_device_address_a8e776267826886cd846fb2d75b9b7b2bac48b30e1372f2477bb18dc29450acdf4}
+}]Device that supports block data exchange, clear and trigger commands, status registers. Example can be a S\-C\-P\-I instrument. See V\-P\-P-\/4.\-3 revision 5.\-4 , chapiter 5.\-1 . \index{S\-O\-C\-K\-E\-T@{S\-O\-C\-K\-E\-T}!mdt\-Device\-Address@{mdt\-Device\-Address}}\index{mdt\-Device\-Address@{mdt\-Device\-Address}!S\-O\-C\-K\-E\-T@{S\-O\-C\-K\-E\-T}}\item[{\em 
+\hypertarget{classmdt_device_address_a8e776267826886cd846fb2d75b9b7b2ba75fbea08c09e684e6b3f3961761354fa}{S\-O\-C\-K\-E\-T}\label{classmdt_device_address_a8e776267826886cd846fb2d75b9b7b2ba75fbea08c09e684e6b3f3961761354fa}
+}]Raw socket connection using T\-C\-P/\-I\-P, See V\-P\-P-\/4.\-3 revision 5.\-4 , chapiter 5.\-6 . \index{M\-O\-D\-B\-U\-S@{M\-O\-D\-B\-U\-S}!mdt\-Device\-Address@{mdt\-Device\-Address}}\index{mdt\-Device\-Address@{mdt\-Device\-Address}!M\-O\-D\-B\-U\-S@{M\-O\-D\-B\-U\-S}}\item[{\em 
+\hypertarget{classmdt_device_address_a8e776267826886cd846fb2d75b9b7b2ba7b25be9aa462c983626e10cc14056101}{M\-O\-D\-B\-U\-S}\label{classmdt_device_address_a8e776267826886cd846fb2d75b9b7b2ba7b25be9aa462c983626e10cc14056101}
+}]Device that support M\-O\-D\-B\-U\-S protocol. Not sepcified in V\-P\-P-\/4.\-3 revision 5.\-4 \end{description}
+\end{Desc}
+
+
+Definition at line 97 of file mdt\-Device\-Address.\-h.
+
+\hypertarget{classmdt_device_address_a87fedc5c0ede4736bcc939f453bf0ed0}{\index{mdt\-Device\-Address@{mdt\-Device\-Address}!Port\-Type\-\_\-t@{Port\-Type\-\_\-t}}
+\index{Port\-Type\-\_\-t@{Port\-Type\-\_\-t}!mdtDeviceAddress@{mdt\-Device\-Address}}
+\subsubsection[{Port\-Type\-\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdt\-Device\-Address\-::\-Port\-Type\-\_\-t}\hspace{0.3cm}{\ttfamily [strong]}}}\label{classmdt_device_address_a87fedc5c0ede4736bcc939f453bf0ed0}
+
+
+Port type. 
+
+In V\-P\-P-\/4.\-3 revision 5.\-4 , chapiter 4.\-3.\-1, the term Interface is used. To avoid confusions, f.\-ex. with U\-S\-B interface, and to match mith multi\-Diag\-Tools library class names, it was choosen to name it port. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{N\-O\-N\-E@{N\-O\-N\-E}!mdt\-Device\-Address@{mdt\-Device\-Address}}\index{mdt\-Device\-Address@{mdt\-Device\-Address}!N\-O\-N\-E@{N\-O\-N\-E}}\item[{\em 
+\hypertarget{classmdt_device_address_a87fedc5c0ede4736bcc939f453bf0ed0ab50339a10e1de285ac99d4c3990b8693}{N\-O\-N\-E}\label{classmdt_device_address_a87fedc5c0ede4736bcc939f453bf0ed0ab50339a10e1de285ac99d4c3990b8693}
+}]No port. Set by default for a invalid device address \index{T\-C\-P\-I\-P@{T\-C\-P\-I\-P}!mdt\-Device\-Address@{mdt\-Device\-Address}}\index{mdt\-Device\-Address@{mdt\-Device\-Address}!T\-C\-P\-I\-P@{T\-C\-P\-I\-P}}\item[{\em 
+\hypertarget{classmdt_device_address_a87fedc5c0ede4736bcc939f453bf0ed0a487b5042489631a7727321162579c3a5}{T\-C\-P\-I\-P}\label{classmdt_device_address_a87fedc5c0ede4736bcc939f453bf0ed0a487b5042489631a7727321162579c3a5}
+}]T\-C\-P\-I\-P port type \index{U\-S\-B@{U\-S\-B}!mdt\-Device\-Address@{mdt\-Device\-Address}}\index{mdt\-Device\-Address@{mdt\-Device\-Address}!U\-S\-B@{U\-S\-B}}\item[{\em 
+\hypertarget{classmdt_device_address_a87fedc5c0ede4736bcc939f453bf0ed0a7aca5ec618f7317328dcd7014cf9bdcf}{U\-S\-B}\label{classmdt_device_address_a87fedc5c0ede4736bcc939f453bf0ed0a7aca5ec618f7317328dcd7014cf9bdcf}
+}]U\-S\-B port type \index{A\-S\-R\-L@{A\-S\-R\-L}!mdt\-Device\-Address@{mdt\-Device\-Address}}\index{mdt\-Device\-Address@{mdt\-Device\-Address}!A\-S\-R\-L@{A\-S\-R\-L}}\item[{\em 
+\hypertarget{classmdt_device_address_a87fedc5c0ede4736bcc939f453bf0ed0a5100e6dba69c30d5af23e7b0624f12ca}{A\-S\-R\-L}\label{classmdt_device_address_a87fedc5c0ede4736bcc939f453bf0ed0a5100e6dba69c30d5af23e7b0624f12ca}
+}]Asynchronous serial line (f.\-ex. R\-S232) \end{description}
+\end{Desc}
+
+
+Definition at line 82 of file mdt\-Device\-Address.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_device_address_a9ac376c3c78e38b558562b5ed99db198}{\index{mdt\-Device\-Address@{mdt\-Device\-Address}!mdt\-Device\-Address@{mdt\-Device\-Address}}
+\index{mdt\-Device\-Address@{mdt\-Device\-Address}!mdtDeviceAddress@{mdt\-Device\-Address}}
+\subsubsection[{mdt\-Device\-Address}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Device\-Address\-::mdt\-Device\-Address (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_address_a9ac376c3c78e38b558562b5ed99db198}
+
+
+Construct a invalid device address. 
+
+
+
+Definition at line 110 of file mdt\-Device\-Address.\-h.
+
+
+
+References mdt\-Usb\-Device\-Address\-::b\-Interface\-Number, mdt\-Usb\-Device\-Address\-::id\-Product, mdt\-Usb\-Device\-Address\-::id\-Vendor, mdt\-Tcpip\-Device\-Address\-::port, pv\-Tcpip\-Device\-Address, and pv\-Usb\-Device\-Address.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_device_address_a4c932b32f4b8222fe4ec89f6685dc2f1}{\index{mdt\-Device\-Address@{mdt\-Device\-Address}!address\-String@{address\-String}}
+\index{address\-String@{address\-String}!mdtDeviceAddress@{mdt\-Device\-Address}}
+\subsubsection[{address\-String}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Device\-Address\-::address\-String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_address_a4c932b32f4b8222fe4ec89f6685dc2f1}
+
+
+Get address string. 
+
+Return the address string as described in V\-P\-P-\/4.\-3 revision 5.\-4 , chapiter 4.\-3.\-1 for supported port type (named interface in specification) and device type (named resource in specification).
+
+M\-O\-D\-B\-U\-S device is not from V\-P\-P-\/4.\-3 specification, and has also a concept of hardware node I\-D that is specific to multi\-Diag\-Tools. A device connected by a T\-C\-P\-I\-P port will be represented as\-: "T\-C\-P\-I\-P\-::host\-Name\-::port\-::\-M\-O\-D\-B\-U\-S\-::\-H\-W\-N\-I\-D,bits\-Count,first\-Bit" . The host\-Name part can be a I\-P address or a host name. The hardware node I\-D is as follow\-:
+\begin{DoxyItemize}
+\item H\-W\-N\-I\-D\-: Hardware I\-D of the M\-O\-D\-B\-U\-S node
+\item bits\-Count\-: number of bits, i.\-e. the number of digital inputs, that represent the node I\-D
+\item first\-Bit\-: the first bit that represent the node I\-D, starting from 0 (f.\-ex. if digital input 1 is the first, first bit will be 0) 
+\end{DoxyItemize}
+
+Definition at line 206 of file mdt\-Device\-Address.\-h.
+
+\hypertarget{classmdt_device_address_aa08397e5d6f507b6eeddaafb89c84cc3}{\index{mdt\-Device\-Address@{mdt\-Device\-Address}!alias@{alias}}
+\index{alias@{alias}!mdtDeviceAddress@{mdt\-Device\-Address}}
+\subsubsection[{alias}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Device\-Address\-::alias (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_address_aa08397e5d6f507b6eeddaafb89c84cc3}
+
+
+Get alias. 
+
+If no alias was set, address\-String is returned. \begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_device_address_a8e17010c5cd0611d427e6c8d24f26831}{set\-Alias()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 231 of file mdt\-Device\-Address.\-h.
+
+
+
+Referenced by set\-Alias().
+
+\hypertarget{classmdt_device_address_aa12409b1152de08b83362d19ce7bb5fc}{\index{mdt\-Device\-Address@{mdt\-Device\-Address}!clear@{clear}}
+\index{clear@{clear}!mdtDeviceAddress@{mdt\-Device\-Address}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Device\-Address\-::clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classmdt_device_address_aa12409b1152de08b83362d19ce7bb5fc}
+
+
+Clear device address. 
+
+
+
+Definition at line 28 of file mdt\-Device\-Address.\-cpp.
+
+
+
+References mdt\-Usb\-Device\-Address\-::b\-Interface\-Number, mdt\-Modbus\-Hw\-Node\-Id\-::clear(), mdt\-Usb\-Device\-Address\-::id\-Product, mdt\-Usb\-Device\-Address\-::id\-Vendor, N\-O\-N\-E, mdt\-Tcpip\-Device\-Address\-::port, pv\-Tcpip\-Device\-Address, and pv\-Usb\-Device\-Address.
+
+
+
+Referenced by set\-Address\-String(), set\-Modbus\-Tcp\-Identification(), set\-Tcp\-Ip\-Identification(), and set\-Usb\-Identification().
+
+\hypertarget{classmdt_device_address_a5834b156ce7240dfdc3f3fe7da629c53}{\index{mdt\-Device\-Address@{mdt\-Device\-Address}!device\-Type@{device\-Type}}
+\index{device\-Type@{device\-Type}!mdtDeviceAddress@{mdt\-Device\-Address}}
+\subsubsection[{device\-Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Device\-Type\-\_\-t} mdt\-Device\-Address\-::device\-Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_address_a5834b156ce7240dfdc3f3fe7da629c53}
+
+
+Get device type. 
+
+
+
+Definition at line 151 of file mdt\-Device\-Address.\-h.
+
+\hypertarget{classmdt_device_address_a16df2a5fdb967035d11a1950f8e900f4}{\index{mdt\-Device\-Address@{mdt\-Device\-Address}!device\-Type\-Str@{device\-Type\-Str}}
+\index{device\-Type\-Str@{device\-Type\-Str}!mdtDeviceAddress@{mdt\-Device\-Address}}
+\subsubsection[{device\-Type\-Str}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Device\-Address\-::device\-Type\-Str (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_device_address_a16df2a5fdb967035d11a1950f8e900f4}
+
+
+Get device type string. 
+
+
+
+Definition at line 60 of file mdt\-Device\-Address.\-cpp.
+
+
+
+References I\-N\-S\-T\-R, M\-O\-D\-B\-U\-S, N\-O\-N\-E, and S\-O\-C\-K\-E\-T.
+
+
+
+Referenced by set\-Tcp\-Ip\-Identification(), and set\-Usb\-Identification().
+
+\hypertarget{classmdt_device_address_a609981a120aa87451079551c655a181e}{\index{mdt\-Device\-Address@{mdt\-Device\-Address}!is\-Valid@{is\-Valid}}
+\index{is\-Valid@{is\-Valid}!mdtDeviceAddress@{mdt\-Device\-Address}}
+\subsubsection[{is\-Valid}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Device\-Address\-::is\-Valid (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_address_a609981a120aa87451079551c655a181e}
+
+
+Check if device address is valid. 
+
+
+
+Definition at line 122 of file mdt\-Device\-Address.\-h.
+
+
+
+References N\-O\-N\-E.
+
+\hypertarget{classmdt_device_address_a8078b5665a3711c1b4453b38aa428880}{\index{mdt\-Device\-Address@{mdt\-Device\-Address}!last\-Error@{last\-Error}}
+\index{last\-Error@{last\-Error}!mdtDeviceAddress@{mdt\-Device\-Address}}
+\subsubsection[{last\-Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Error} mdt\-Device\-Address\-::last\-Error (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_address_a8078b5665a3711c1b4453b38aa428880}
+
+
+Get last error. 
+
+
+
+Definition at line 129 of file mdt\-Device\-Address.\-h.
+
+
+
+Referenced by mdt\-Device\-Address\-List\-::read\-From\-File().
+
+\hypertarget{classmdt_device_address_a8afd94a40f2c32011e759c4cff79d813}{\index{mdt\-Device\-Address@{mdt\-Device\-Address}!modbus\-Hw\-Node\-Id@{modbus\-Hw\-Node\-Id}}
+\index{modbus\-Hw\-Node\-Id@{modbus\-Hw\-Node\-Id}!mdtDeviceAddress@{mdt\-Device\-Address}}
+\subsubsection[{modbus\-Hw\-Node\-Id}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Modbus\-Hw\-Node\-Id} mdt\-Device\-Address\-::modbus\-Hw\-Node\-Id (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_address_a8afd94a40f2c32011e759c4cff79d813}
+
+
+Get M\-O\-D\-B\-U\-S hardware node id. 
+
+
+
+Definition at line 344 of file mdt\-Device\-Address.\-h.
+
+\hypertarget{classmdt_device_address_a0ae6efdb6183d5e333cdf898e05bc18f}{\index{mdt\-Device\-Address@{mdt\-Device\-Address}!port\-Type@{port\-Type}}
+\index{port\-Type@{port\-Type}!mdtDeviceAddress@{mdt\-Device\-Address}}
+\subsubsection[{port\-Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Port\-Type\-\_\-t} mdt\-Device\-Address\-::port\-Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_address_a0ae6efdb6183d5e333cdf898e05bc18f}
+
+
+Get port type. 
+
+
+
+Definition at line 140 of file mdt\-Device\-Address.\-h.
+
+\hypertarget{classmdt_device_address_a4ff25fe7acef148034084fbf0c294bbd}{\index{mdt\-Device\-Address@{mdt\-Device\-Address}!port\-Type\-Str@{port\-Type\-Str}}
+\index{port\-Type\-Str@{port\-Type\-Str}!mdtDeviceAddress@{mdt\-Device\-Address}}
+\subsubsection[{port\-Type\-Str}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Device\-Address\-::port\-Type\-Str (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classmdt_device_address_a4ff25fe7acef148034084fbf0c294bbd}
+
+
+Get port type string. 
+
+
+
+Definition at line 44 of file mdt\-Device\-Address.\-cpp.
+
+
+
+References A\-S\-R\-L, N\-O\-N\-E, T\-C\-P\-I\-P, and U\-S\-B.
+
+\hypertarget{classmdt_device_address_a0cc71ea63086e80217536e4d13430f45}{\index{mdt\-Device\-Address@{mdt\-Device\-Address}!set\-Address\-String@{set\-Address\-String}}
+\index{set\-Address\-String@{set\-Address\-String}!mdtDeviceAddress@{mdt\-Device\-Address}}
+\subsubsection[{set\-Address\-String}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Device\-Address\-::set\-Address\-String (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{as}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_address_a0cc71ea63086e80217536e4d13430f45}
+
+
+Set address string. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_device_address_a4c932b32f4b8222fe4ec89f6685dc2f1}{address\-String()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 164 of file mdt\-Device\-Address.\-h.
+
+
+
+References clear(), mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, and mdt\-Error\-::set\-Error().
+
+
+
+Referenced by mdt\-Device\-Address\-List\-::read\-From\-File().
+
+\hypertarget{classmdt_device_address_a8e17010c5cd0611d427e6c8d24f26831}{\index{mdt\-Device\-Address@{mdt\-Device\-Address}!set\-Alias@{set\-Alias}}
+\index{set\-Alias@{set\-Alias}!mdtDeviceAddress@{mdt\-Device\-Address}}
+\subsubsection[{set\-Alias}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Device\-Address\-::set\-Alias (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{alias}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_address_a8e17010c5cd0611d427e6c8d24f26831}
+
+
+Set alias. 
+
+Alias is a technical name that can be used, f.\-ex. in a programm that handle many devices. This gives a way to find device, say in a device container, in less cumbersome ways than having to type the full address string.
+
+\begin{DoxyPrecond}{Precondition}
+alias must not contain \textbackslash{}t 
+\end{DoxyPrecond}
+
+
+Definition at line 220 of file mdt\-Device\-Address.\-h.
+
+
+
+References alias().
+
+
+
+Referenced by mdt\-Device\-Address\-List\-::read\-From\-File().
+
+\hypertarget{classmdt_device_address_a0c93210a120c74f81c1b54b11129ff17}{\index{mdt\-Device\-Address@{mdt\-Device\-Address}!set\-Modbus\-Tcp\-Identification@{set\-Modbus\-Tcp\-Identification}}
+\index{set\-Modbus\-Tcp\-Identification@{set\-Modbus\-Tcp\-Identification}!mdtDeviceAddress@{mdt\-Device\-Address}}
+\subsubsection[{set\-Modbus\-Tcp\-Identification}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Device\-Address\-::set\-Modbus\-Tcp\-Identification (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{host\-Name, }
+\item[{uint16\-\_\-t}]{port, }
+\item[{const {\bf mdt\-Modbus\-Hw\-Node\-Id} \&}]{nid}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_address_a0c93210a120c74f81c1b54b11129ff17}
+
+
+Set M\-O\-D\-B\-U\-S/\-T\-C\-P identification. 
+
+
+
+Definition at line 310 of file mdt\-Device\-Address.\-h.
+
+
+
+References mdt\-Modbus\-Hw\-Node\-Id\-::bits\-Count(), clear(), mdt\-Modbus\-Hw\-Node\-Id\-::first\-Bit(), mdt\-Modbus\-Hw\-Node\-Id\-::id(), M\-O\-D\-B\-U\-S, mdt\-Tcpip\-Device\-Address\-::port, pv\-Tcpip\-Device\-Address, and T\-C\-P\-I\-P.
+
+
+
+Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::scan().
+
+\hypertarget{classmdt_device_address_a17ab6e31ce07265b70fac6a6663306cc}{\index{mdt\-Device\-Address@{mdt\-Device\-Address}!set\-Tcp\-Ip\-Identification@{set\-Tcp\-Ip\-Identification}}
+\index{set\-Tcp\-Ip\-Identification@{set\-Tcp\-Ip\-Identification}!mdtDeviceAddress@{mdt\-Device\-Address}}
+\subsubsection[{set\-Tcp\-Ip\-Identification}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Device\-Address\-::set\-Tcp\-Ip\-Identification (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{host\-Name, }
+\item[{uint16\-\_\-t}]{port, }
+\item[{{\bf Device\-Type\-\_\-t}}]{dev\-Type}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_address_a17ab6e31ce07265b70fac6a6663306cc}
+
+
+Set T\-C\-P/\-I\-P identification. 
+
+
+
+Definition at line 298 of file mdt\-Device\-Address.\-h.
+
+
+
+References clear(), device\-Type\-Str(), mdt\-Tcpip\-Device\-Address\-::port, pv\-Tcpip\-Device\-Address, and T\-C\-P\-I\-P.
+
+\hypertarget{classmdt_device_address_afe2562a54cadea4f79ecf6e4d44ed2ce}{\index{mdt\-Device\-Address@{mdt\-Device\-Address}!set\-Usb\-Identification@{set\-Usb\-Identification}}
+\index{set\-Usb\-Identification@{set\-Usb\-Identification}!mdtDeviceAddress@{mdt\-Device\-Address}}
+\subsubsection[{set\-Usb\-Identification}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Device\-Address\-::set\-Usb\-Identification (
+\begin{DoxyParamCaption}
+\item[{uint16\-\_\-t}]{id\-Vendor, }
+\item[{uint16\-\_\-t}]{id\-Product, }
+\item[{const Q\-String \&}]{device\-Serial\-Number, }
+\item[{uint8\-\_\-t}]{b\-Interface\-Number, }
+\item[{{\bf Device\-Type\-\_\-t}}]{dev\-Type = {\ttfamily {\bf Device\-Type\-\_\-t\-::\-I\-N\-S\-T\-R}}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_address_afe2562a54cadea4f79ecf6e4d44ed2ce}
+
+
+Set U\-S\-B identification. 
+
+
+
+Definition at line 241 of file mdt\-Device\-Address.\-h.
+
+
+
+References mdt\-Usb\-Device\-Address\-::b\-Interface\-Number, clear(), device\-Type\-Str(), mdt\-Usb\-Device\-Address\-::id\-Product, mdt\-Usb\-Device\-Address\-::id\-Vendor, pv\-Usb\-Device\-Address, and U\-S\-B.
+
+\hypertarget{classmdt_device_address_ae4a8981a6d6c9a84e0b8db84bf823fd1}{\index{mdt\-Device\-Address@{mdt\-Device\-Address}!tcp\-Ip\-Host\-Name@{tcp\-Ip\-Host\-Name}}
+\index{tcp\-Ip\-Host\-Name@{tcp\-Ip\-Host\-Name}!mdtDeviceAddress@{mdt\-Device\-Address}}
+\subsubsection[{tcp\-Ip\-Host\-Name}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Device\-Address\-::tcp\-Ip\-Host\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_address_ae4a8981a6d6c9a84e0b8db84bf823fd1}
+
+
+Get T\-C\-P/\-I\-P host name. 
+
+
+
+Definition at line 324 of file mdt\-Device\-Address.\-h.
+
+
+
+References T\-C\-P\-I\-P.
+
+\hypertarget{classmdt_device_address_a84932f54a32ff54ca61c698a8e0cf0fc}{\index{mdt\-Device\-Address@{mdt\-Device\-Address}!tcp\-Ip\-Port@{tcp\-Ip\-Port}}
+\index{tcp\-Ip\-Port@{tcp\-Ip\-Port}!mdtDeviceAddress@{mdt\-Device\-Address}}
+\subsubsection[{tcp\-Ip\-Port}]{\setlength{\rightskip}{0pt plus 5cm}uint16\-\_\-t mdt\-Device\-Address\-::tcp\-Ip\-Port (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_address_a84932f54a32ff54ca61c698a8e0cf0fc}
+
+
+Get T\-C\-P/\-I\-P port. 
+
+
+
+Definition at line 334 of file mdt\-Device\-Address.\-h.
+
+
+
+References mdt\-Tcpip\-Device\-Address\-::port, pv\-Tcpip\-Device\-Address, and T\-C\-P\-I\-P.
+
+\hypertarget{classmdt_device_address_a922a6382cc42f9783004fd227527a68e}{\index{mdt\-Device\-Address@{mdt\-Device\-Address}!usb\-Device\-Serial\-Number@{usb\-Device\-Serial\-Number}}
+\index{usb\-Device\-Serial\-Number@{usb\-Device\-Serial\-Number}!mdtDeviceAddress@{mdt\-Device\-Address}}
+\subsubsection[{usb\-Device\-Serial\-Number}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Device\-Address\-::usb\-Device\-Serial\-Number (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_address_a922a6382cc42f9783004fd227527a68e}
+
+
+Get U\-S\-B device serial number. 
+
+
+
+Definition at line 278 of file mdt\-Device\-Address.\-h.
+
+
+
+References U\-S\-B.
+
+\hypertarget{classmdt_device_address_a5a6a8f926ba207d3775f32d9b26f0825}{\index{mdt\-Device\-Address@{mdt\-Device\-Address}!usb\-Id\-Product@{usb\-Id\-Product}}
+\index{usb\-Id\-Product@{usb\-Id\-Product}!mdtDeviceAddress@{mdt\-Device\-Address}}
+\subsubsection[{usb\-Id\-Product}]{\setlength{\rightskip}{0pt plus 5cm}uint16\-\_\-t mdt\-Device\-Address\-::usb\-Id\-Product (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_address_a5a6a8f926ba207d3775f32d9b26f0825}
+
+
+Get U\-S\-B id\-Product. 
+
+
+
+Definition at line 268 of file mdt\-Device\-Address.\-h.
+
+
+
+References mdt\-Usb\-Device\-Address\-::id\-Product, pv\-Usb\-Device\-Address, and U\-S\-B.
+
+\hypertarget{classmdt_device_address_ab0178e6097602990d88983ab0641dea4}{\index{mdt\-Device\-Address@{mdt\-Device\-Address}!usb\-Id\-Vendor@{usb\-Id\-Vendor}}
+\index{usb\-Id\-Vendor@{usb\-Id\-Vendor}!mdtDeviceAddress@{mdt\-Device\-Address}}
+\subsubsection[{usb\-Id\-Vendor}]{\setlength{\rightskip}{0pt plus 5cm}uint16\-\_\-t mdt\-Device\-Address\-::usb\-Id\-Vendor (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_address_ab0178e6097602990d88983ab0641dea4}
+
+
+Get U\-S\-B id\-Vendor. 
+
+
+
+Definition at line 258 of file mdt\-Device\-Address.\-h.
+
+
+
+References mdt\-Usb\-Device\-Address\-::id\-Vendor, pv\-Usb\-Device\-Address, and U\-S\-B.
+
+\hypertarget{classmdt_device_address_a85d1e0633701a5da36a7901fd46ceaff}{\index{mdt\-Device\-Address@{mdt\-Device\-Address}!usb\-Interface\-Number@{usb\-Interface\-Number}}
+\index{usb\-Interface\-Number@{usb\-Interface\-Number}!mdtDeviceAddress@{mdt\-Device\-Address}}
+\subsubsection[{usb\-Interface\-Number}]{\setlength{\rightskip}{0pt plus 5cm}uint8\-\_\-t mdt\-Device\-Address\-::usb\-Interface\-Number (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_address_a85d1e0633701a5da36a7901fd46ceaff}
+
+
+Get U\-S\-B b\-Interface\-Number. 
+
+
+
+Definition at line 288 of file mdt\-Device\-Address.\-h.
+
+
+
+References mdt\-Usb\-Device\-Address\-::b\-Interface\-Number, pv\-Usb\-Device\-Address, and U\-S\-B.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classmdt_device_address_a9c88611c608194aaa9a439fd26b5603e}{\index{mdt\-Device\-Address@{mdt\-Device\-Address}!pv\-Asrl\-Device\-Address@{pv\-Asrl\-Device\-Address}}
+\index{pv\-Asrl\-Device\-Address@{pv\-Asrl\-Device\-Address}!mdtDeviceAddress@{mdt\-Device\-Address}}
+\subsubsection[{pv\-Asrl\-Device\-Address}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Asrl\-Device\-Address} mdt\-Device\-Address\-::pv\-Asrl\-Device\-Address}}\label{classmdt_device_address_a9c88611c608194aaa9a439fd26b5603e}
+
+
+Definition at line 386 of file mdt\-Device\-Address.\-h.
+
+\hypertarget{classmdt_device_address_afd6ac6af312038f5c94a635b37a7cf54}{\index{mdt\-Device\-Address@{mdt\-Device\-Address}!pv\-Tcpip\-Device\-Address@{pv\-Tcpip\-Device\-Address}}
+\index{pv\-Tcpip\-Device\-Address@{pv\-Tcpip\-Device\-Address}!mdtDeviceAddress@{mdt\-Device\-Address}}
+\subsubsection[{pv\-Tcpip\-Device\-Address}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Tcpip\-Device\-Address} mdt\-Device\-Address\-::pv\-Tcpip\-Device\-Address}}\label{classmdt_device_address_afd6ac6af312038f5c94a635b37a7cf54}
+
+
+Definition at line 385 of file mdt\-Device\-Address.\-h.
+
+
+
+Referenced by clear(), mdt\-Device\-Address(), set\-Modbus\-Tcp\-Identification(), set\-Tcp\-Ip\-Identification(), and tcp\-Ip\-Port().
+
+\hypertarget{classmdt_device_address_a4a049c594dc631ada14b3697244d4bff}{\index{mdt\-Device\-Address@{mdt\-Device\-Address}!pv\-Usb\-Device\-Address@{pv\-Usb\-Device\-Address}}
+\index{pv\-Usb\-Device\-Address@{pv\-Usb\-Device\-Address}!mdtDeviceAddress@{mdt\-Device\-Address}}
+\subsubsection[{pv\-Usb\-Device\-Address}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Usb\-Device\-Address} mdt\-Device\-Address\-::pv\-Usb\-Device\-Address}}\label{classmdt_device_address_a4a049c594dc631ada14b3697244d4bff}
+
+
+Definition at line 384 of file mdt\-Device\-Address.\-h.
+
+
+
+Referenced by clear(), mdt\-Device\-Address(), set\-Usb\-Identification(), usb\-Id\-Product(), usb\-Id\-Vendor(), and usb\-Interface\-Number().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+src/mdtport/\hyperlink{mdt_device_address_8h}{mdt\-Device\-Address.\-h}\item 
+src/mdtport/\hyperlink{mdt_device_address_8cpp}{mdt\-Device\-Address.\-cpp}\end{DoxyCompactItemize}

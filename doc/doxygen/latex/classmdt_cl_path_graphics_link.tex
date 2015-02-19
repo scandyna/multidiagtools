@@ -31,11 +31,12 @@ Collaboration diagram for mdt\-Cl\-Path\-Graphics\-Link\-:\nopagebreak
 \subsection*{Public Types}
 \begin{DoxyCompactItemize}
 \item 
-enum \{ \hyperlink{classmdt_cl_path_graphics_link_a5813cf269d04fc1ff16163504f2f4149aa723cdfcf53fb7f9035577f8b91e6651}{Type} = User\-Type + 2
+enum \{ \hyperlink{classmdt_cl_path_graphics_link_a46597cdad57cbb1d9d5be6dccb671512aa723cdfcf53fb7f9035577f8b91e6651}{Type} = User\-Type + 2
  \}
 \begin{DoxyCompactList}\small\item\em For Q\-Graphics\-View. \end{DoxyCompactList}\item 
 enum \hyperlink{classmdt_cl_path_graphics_link_a6ac32ab30f4b6193fcd0cd4d3d51ea2d}{link\-Type\-\_\-t} \{ \hyperlink{classmdt_cl_path_graphics_link_a6ac32ab30f4b6193fcd0cd4d3d51ea2da8b0111c49fc77799f8ac81624a5e6c56}{Cable\-Link}, 
-\hyperlink{classmdt_cl_path_graphics_link_a6ac32ab30f4b6193fcd0cd4d3d51ea2da8da60a183772ac364b8e845e0f22430d}{Connection}
+\hyperlink{classmdt_cl_path_graphics_link_a6ac32ab30f4b6193fcd0cd4d3d51ea2da8da60a183772ac364b8e845e0f22430d}{Connection}, 
+\hyperlink{classmdt_cl_path_graphics_link_a6ac32ab30f4b6193fcd0cd4d3d51ea2da6ea3b5c4de98fe83a1f294bf26b13d8e}{Internal\-Link}
  \}
 \end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
@@ -69,7 +70,7 @@ Definition at line 39 of file mdt\-Cl\-Path\-Graphics\-Link.\-h.
 
 
 \subsection{Member Enumeration Documentation}
-\hypertarget{classmdt_cl_path_graphics_link_a5813cf269d04fc1ff16163504f2f4149}{\subsubsection[{anonymous enum}]{\setlength{\rightskip}{0pt plus 5cm}anonymous enum}}\label{classmdt_cl_path_graphics_link_a5813cf269d04fc1ff16163504f2f4149}
+\hypertarget{classmdt_cl_path_graphics_link_a46597cdad57cbb1d9d5be6dccb671512}{\subsubsection[{anonymous enum}]{\setlength{\rightskip}{0pt plus 5cm}anonymous enum}}\label{classmdt_cl_path_graphics_link_a46597cdad57cbb1d9d5be6dccb671512}
 
 
 For Q\-Graphics\-View. 
@@ -78,7 +79,7 @@ For Q\-Graphics\-View.
 \item[Enumerator]\par
 \begin{description}
 \index{Type@{Type}!mdt\-Cl\-Path\-Graphics\-Link@{mdt\-Cl\-Path\-Graphics\-Link}}\index{mdt\-Cl\-Path\-Graphics\-Link@{mdt\-Cl\-Path\-Graphics\-Link}!Type@{Type}}\item[{\em 
-\hypertarget{classmdt_cl_path_graphics_link_a5813cf269d04fc1ff16163504f2f4149aa723cdfcf53fb7f9035577f8b91e6651}{Type}\label{classmdt_cl_path_graphics_link_a5813cf269d04fc1ff16163504f2f4149aa723cdfcf53fb7f9035577f8b91e6651}
+\hypertarget{classmdt_cl_path_graphics_link_a46597cdad57cbb1d9d5be6dccb671512aa723cdfcf53fb7f9035577f8b91e6651}{Type}\label{classmdt_cl_path_graphics_link_a46597cdad57cbb1d9d5be6dccb671512aa723cdfcf53fb7f9035577f8b91e6651}
 }]\end{description}
 \end{Desc}
 
@@ -95,7 +96,9 @@ Definition at line 45 of file mdt\-Cl\-Path\-Graphics\-Link.\-h.
 \hypertarget{classmdt_cl_path_graphics_link_a6ac32ab30f4b6193fcd0cd4d3d51ea2da8b0111c49fc77799f8ac81624a5e6c56}{Cable\-Link}\label{classmdt_cl_path_graphics_link_a6ac32ab30f4b6193fcd0cd4d3d51ea2da8b0111c49fc77799f8ac81624a5e6c56}
 }]\index{Connection@{Connection}!mdt\-Cl\-Path\-Graphics\-Link@{mdt\-Cl\-Path\-Graphics\-Link}}\index{mdt\-Cl\-Path\-Graphics\-Link@{mdt\-Cl\-Path\-Graphics\-Link}!Connection@{Connection}}\item[{\em 
 \hypertarget{classmdt_cl_path_graphics_link_a6ac32ab30f4b6193fcd0cd4d3d51ea2da8da60a183772ac364b8e845e0f22430d}{Connection}\label{classmdt_cl_path_graphics_link_a6ac32ab30f4b6193fcd0cd4d3d51ea2da8da60a183772ac364b8e845e0f22430d}
-}]Cable link. Connection \end{description}
+}]Cable link. \index{Internal\-Link@{Internal\-Link}!mdt\-Cl\-Path\-Graphics\-Link@{mdt\-Cl\-Path\-Graphics\-Link}}\index{mdt\-Cl\-Path\-Graphics\-Link@{mdt\-Cl\-Path\-Graphics\-Link}!Internal\-Link@{Internal\-Link}}\item[{\em 
+\hypertarget{classmdt_cl_path_graphics_link_a6ac32ab30f4b6193fcd0cd4d3d51ea2da6ea3b5c4de98fe83a1f294bf26b13d8e}{Internal\-Link}\label{classmdt_cl_path_graphics_link_a6ac32ab30f4b6193fcd0cd4d3d51ea2da6ea3b5c4de98fe83a1f294bf26b13d8e}
+}]Connection. Internal link \end{description}
 \end{Desc}
 
 
@@ -140,7 +143,7 @@ Adjust the start and end points of the link.
 
 
 
-Definition at line 90 of file mdt\-Cl\-Path\-Graphics\-Link.\-cpp.
+Definition at line 93 of file mdt\-Cl\-Path\-Graphics\-Link.\-cpp.
 
 
 
@@ -159,7 +162,7 @@ Get bounding rect.
 
 
 
-Definition at line 110 of file mdt\-Cl\-Path\-Graphics\-Link.\-cpp.
+Definition at line 113 of file mdt\-Cl\-Path\-Graphics\-Link.\-cpp.
 
 \hypertarget{classmdt_cl_path_graphics_link_ada7934bce202c6b88c4aeacc612964e9}{\index{mdt\-Cl\-Path\-Graphics\-Link@{mdt\-Cl\-Path\-Graphics\-Link}!end\-Connection@{end\-Connection}}
 \index{end\-Connection@{end\-Connection}!mdtClPathGraphicsLink@{mdt\-Cl\-Path\-Graphics\-Link}}
@@ -174,7 +177,7 @@ Get end connection.
 
 
 
-Definition at line 85 of file mdt\-Cl\-Path\-Graphics\-Link.\-cpp.
+Definition at line 88 of file mdt\-Cl\-Path\-Graphics\-Link.\-cpp.
 
 
 
@@ -195,7 +198,7 @@ Paint the link.
 
 
 
-Definition at line 118 of file mdt\-Cl\-Path\-Graphics\-Link.\-cpp.
+Definition at line 121 of file mdt\-Cl\-Path\-Graphics\-Link.\-cpp.
 
 \hypertarget{classmdt_cl_path_graphics_link_a93e79f03e2ee609edf6342a065f21deb}{\index{mdt\-Cl\-Path\-Graphics\-Link@{mdt\-Cl\-Path\-Graphics\-Link}!set\-Link\-Type@{set\-Link\-Type}}
 \index{set\-Link\-Type@{set\-Link\-Type}!mdtClPathGraphicsLink@{mdt\-Cl\-Path\-Graphics\-Link}}
@@ -219,7 +222,7 @@ Definition at line 68 of file mdt\-Cl\-Path\-Graphics\-Link.\-cpp.
 
 
 
-References Cable\-Link, and Connection.
+References Cable\-Link, Connection, and Internal\-Link.
 
 \hypertarget{classmdt_cl_path_graphics_link_ad3cbd811663e4b3b98d906bef622777c}{\index{mdt\-Cl\-Path\-Graphics\-Link@{mdt\-Cl\-Path\-Graphics\-Link}!set\-Text@{set\-Text}}
 \index{set\-Text@{set\-Text}!mdtClPathGraphicsLink@{mdt\-Cl\-Path\-Graphics\-Link}}
@@ -249,7 +252,7 @@ Get start connection.
 
 
 
-Definition at line 80 of file mdt\-Cl\-Path\-Graphics\-Link.\-cpp.
+Definition at line 83 of file mdt\-Cl\-Path\-Graphics\-Link.\-cpp.
 
 
 
@@ -268,7 +271,7 @@ Get type.
 
 
 
-Definition at line 105 of file mdt\-Cl\-Path\-Graphics\-Link.\-cpp.
+Definition at line 108 of file mdt\-Cl\-Path\-Graphics\-Link.\-cpp.
 
 
 

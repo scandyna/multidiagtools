@@ -64,7 +64,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Properties</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Properties</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(12)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -80,12 +80,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><dl class="reflist">
-<dt><a class="anchor" id="_deprecated000008"></a>Member <a class="el" href="classmdt_device.html#a6e7133e8665d9113d9423f4db44b1000">mdtDevice::lastErrorW</a>  ()</dt>
-<dd>Use pvLastError directly.  </dd>
-<dt><a class="anchor" id="_deprecated000010"></a>Member <a class="el" href="classmdt_error.html#a377c175cc8e1aeae543cae2ecc5ca87b">mdtError::mdtError</a>  (int number, const QString &amp;text, level_t level)</dt>
+<dt><a class="anchor" id="_deprecated000011"></a>Member <a class="el" href="classmdt_error.html#a377c175cc8e1aeae543cae2ecc5ca87b">mdtError::mdtError</a>  (int number, const QString &amp;text, level_t level)</dt>
 <dd>If no good idea falls in for the usage of number , this constrctor should become obselete .  </dd>
-<dt><a class="anchor" id="_deprecated000011"></a>Member <a class="el" href="classmdt_error.html#ad233adb8efe4180b85f584c5afdd49fc">mdtError::number</a>  () const </dt>
+<dt><a class="anchor" id="_deprecated000012"></a>Member <a class="el" href="classmdt_error.html#ad233adb8efe4180b85f584c5afdd49fc">mdtError::number</a>  () const </dt>
 <dd>If no good idea falls in for the usage of number , this method should become obselete .  </dd>
+<dt><a class="anchor" id="_deprecated000009"></a>Member <a class="el" href="classmdt_modbus_tcp_port_manager.html#ab4d0a994973af6008faf489ca9ddb03d">mdtModbusTcpPortManager::readScanResult</a>  ()</dt>
+<dd>Use readDeviceAddressList()  </dd>
+<dt><a class="anchor" id="_deprecated000008"></a>Member <a class="el" href="classmdt_modbus_tcp_port_manager.html#a3a1f5a54c93fa90ba83dea8785407da3">mdtModbusTcpPortManager::saveScanResult</a>  (const QList&lt; mdtPortInfo * &gt; scanResult)</dt>
+<dd>Use saveDeviceAddressList()  </dd>
 <dt><a class="anchor" id="_deprecated000003"></a>Member <a class="el" href="classmdt_sql_selection_dialog.html#ae5582bd717078a137dd71d5a1b9cc9f9">mdtSqlSelectionDialog::addSelectionResultColumn</a>  (const QString &amp;field)</dt>
 <dd>Use selection()  </dd>
 <dt><a class="anchor" id="_deprecated000007"></a>Member <a class="el" href="classmdt_sql_selection_dialog.html#aab4943bc01e64f867791c15eea613e23">mdtSqlSelectionDialog::selectedData</a>  (int row, const QString &amp;fieldName)</dt>
@@ -100,13 +102,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <dd>Use selection()  </dd>
 <dt><a class="anchor" id="_deprecated000002"></a>Member <a class="el" href="classmdt_sql_selection_dialog.html#a5c5c36414bf3c432979f53ad27f985cb">mdtSqlSelectionDialog::setSelectionResultColumns</a>  (const QStringList &amp;fields)</dt>
 <dd>Use selection()  </dd>
-<dt><a class="anchor" id="_deprecated000009"></a>Member <a class="el" href="classmdt_tt_test_item_node_setup_data.html#a2c58ca8c543b503e7d96d3f13112078f">mdtTtTestItemNodeSetupData::addNodeSetupData</a>  (const <a class="el" href="classmdt_tt_test_node_setup_data.html" title="Storage class for test node setup data. ">mdtTtTestNodeSetupData</a> &amp;data)</dt>
+<dt><a class="anchor" id="_deprecated000010"></a>Member <a class="el" href="classmdt_tt_test_item_node_setup_data.html#a2c58ca8c543b503e7d96d3f13112078f">mdtTtTestItemNodeSetupData::addNodeSetupData</a>  (const <a class="el" href="classmdt_tt_test_node_setup_data.html" title="Storage class for test node setup data. ">mdtTtTestNodeSetupData</a> &amp;data)</dt>
 <dd></dd>
 </dl>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jan 17 2015 16:32:12 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Feb 19 2015 17:07:52 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

@@ -12,7 +12,8 @@ Port manager base class.
 
 
 
-Inheritance diagram for mdt\-Port\-Manager\-:\nopagebreak
+Inheritance diagram for mdt\-Port\-Manager\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -21,7 +22,8 @@ Inheritance diagram for mdt\-Port\-Manager\-:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdt\-Port\-Manager\-:\nopagebreak
+Collaboration diagram for mdt\-Port\-Manager\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -93,14 +95,12 @@ void \hyperlink{classmdt_port_manager_a0be3429f901fc9bf4adee196035d2cee}{pm\-Tra
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classmdt_port_manager_a5ec36523089b7528d973e29cdbc64d01}{mdt\-Port\-Manager} (\hyperlink{class_q_object}{Q\-Object} $\ast$parent=0)
+\hyperlink{classmdt_port_manager_a5ec36523089b7528d973e29cdbc64d01}{mdt\-Port\-Manager} (Q\-Object $\ast$parent=0)
 \begin{DoxyCompactList}\small\item\em Contruct a port manager. \end{DoxyCompactList}\item 
 virtual \hyperlink{classmdt_port_manager_adf797f8fd7a3ffdc000890a224e4c1b6}{$\sim$mdt\-Port\-Manager} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
-virtual Q\-List$<$ \hyperlink{classmdt_port_info}{mdt\-Port\-Info} $\ast$ $>$ \hyperlink{classmdt_port_manager_ad56afb411ab5468005fca04767557ece}{scan} ()
-\begin{DoxyCompactList}\small\item\em Scan for available ports. \end{DoxyCompactList}\item 
 virtual void \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{set\-Port} (\hyperlink{classmdt_abstract_port}{mdt\-Abstract\-Port} $\ast$port)
-\begin{DoxyCompactList}\small\item\em Set port object. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Scan for available ports. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_port_manager_a3107b7121dfe5b9686d9b3b3a48a0af0}{lock\-Port\-Mutex} ()
 \begin{DoxyCompactList}\small\item\em Lock the port's mutex. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_port_manager_a882e6bf95dac9cd4ab8cc93ecc524874}{unlock\-Port\-Mutex} ()
@@ -172,7 +172,9 @@ void \hyperlink{classmdt_port_manager_a0c460b47b12e38e708321be79f6343d8}{notify\
 virtual bool \hyperlink{classmdt_port_manager_a6dc2798324521d177fb8f79d4f6c5f0f}{is\-Ready} () const 
 \begin{DoxyCompactList}\small\item\em Check if port manager is ready. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_port_manager_aeecbec49376838ab3547729636166d97}{is\-Closed} () const 
-\begin{DoxyCompactList}\small\item\em Check if port is closed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Check if port is closed. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_error}{mdt\-Error} \hyperlink{classmdt_port_manager_a16c7ea5d74a8fc9ed065477574ec03c4}{last\-Error} () const 
+\begin{DoxyCompactList}\small\item\em Get last error. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Slots}
 \begin{DoxyCompactItemize}
 \item 
@@ -220,6 +222,8 @@ void \hyperlink{classmdt_port_manager_a84d37b380080eb26e56c68424dedd958}{commit\
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
+\hyperlink{classmdt_error}{mdt\-Error} \hyperlink{classmdt_port_manager_af03c1270cb19ce92e846cae95dc0769b}{pv\-Last\-Error}
+\begin{DoxyCompactList}\small\item\em Last error object. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_abstract_port}{mdt\-Abstract\-Port} $\ast$ \hyperlink{classmdt_port_manager_af856162aab4f1c5202c1dfb330fae538}{pv\-Port}
 \item 
 Q\-List$<$ \hyperlink{classmdt_port_thread}{mdt\-Port\-Thread} $\ast$ $>$ \hyperlink{classmdt_port_manager_a8e0d49b789f8b01d469e84b487799573}{pv\-Threads}
@@ -230,7 +234,7 @@ Q\-List$<$ \hyperlink{classmdt_port_thread}{mdt\-Port\-Thread} $\ast$ $>$ \hyper
 Port manager base class. 
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000030}{Todo}]Port manager has no raison to inherit \hyperlink{class_q_thread}{Q\-Thread} -\/$>$ make it inherit \hyperlink{class_q_object}{Q\-Object} \end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000029}{Todo}]Port manager has no raison to inherit \hyperlink{class_q_thread}{Q\-Thread} -\/$>$ make it inherit Q\-Object \end{DoxyRefDesc}
 
 
 Manages a port based on \hyperlink{classmdt_abstract_port}{mdt\-Abstract\-Port} an several threads based on \hyperlink{classmdt_port_thread}{mdt\-Port\-Thread}. The goal is to hide the complexity of the port A\-P\-I.
@@ -305,7 +309,7 @@ Some protocols support frame identifier (like M\-O\-D\-B\-U\-S/\-T\-C\-P, U\-S\-
 This base class can be used directly for ports that supports raw transfers. For specific protocol, it can be subclassed.
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000031}{Todo}]Document init, open, close, ...\end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000030}{Todo}]Document init, open, close, ...\end{DoxyRefDesc}
 
 
 Now, we can see the data transfer workflow\-:
@@ -419,7 +423,7 @@ Definition at line 207 of file mdt\-Port\-Manager.\-h.
 \index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!mdtPortManager@{mdt\-Port\-Manager}}
 \subsubsection[{mdt\-Port\-Manager}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Port\-Manager\-::mdt\-Port\-Manager (
 \begin{DoxyParamCaption}
-\item[{{\bf Q\-Object} $\ast$}]{parent = {\ttfamily 0}}
+\item[{Q\-Object $\ast$}]{parent = {\ttfamily 0}}
 \end{DoxyParamCaption}
 )}}\label{classmdt_port_manager_a5ec36523089b7528d973e29cdbc64d01}
 
@@ -471,7 +475,7 @@ Cancel read and write operations.
 
 Default implementation calls \hyperlink{classmdt_abstract_port_abde440c49b95833f821e1333c40a7398}{mdt\-Abstract\-Port\-::flush()}. 
 
-Definition at line 596 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 598 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -497,7 +501,7 @@ Port manager must be closed (see \hyperlink{classmdt_port_manager_aeecbec4937683
 \end{DoxyPrecond}
 
 
-Definition at line 122 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 124 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -523,7 +527,7 @@ transaction must be a valid pointer.
 \end{DoxyPrecond}
 
 
-Definition at line 720 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 722 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -553,7 +557,7 @@ transaction I\-D must not allready exist in queue.
 \end{DoxyPrecond}
 
 
-Definition at line 675 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 677 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -576,7 +580,7 @@ Close the port.
 
 If port was never set (with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{set\-Port()} ), this method does nothing. 
 
-Definition at line 618 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 620 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -601,7 +605,7 @@ Will emit \hyperlink{classmdt_port_manager_a416a24db1048e9f66aef27ea810954d2}{ne
 
 If query\-Reply\-Mode and keep\-Transactions\-Done are not set, the transaction is restored back to pool, else it will be restored only after a call of \hyperlink{classmdt_port_manager_a830ae182d06dd6a52c43a7f45b9240ac}{readen\-Frame()} or \hyperlink{classmdt_port_manager_addd5dcae9644cea42a9871205af41796}{readen\-Frames()}. 
 
-Definition at line 791 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 793 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -633,7 +637,7 @@ Reimplemented in \hyperlink{classmdt_serial_port_manager_a4b8ab7b9d53966a1887d9c
 
 
 
-Definition at line 264 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 266 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -661,7 +665,7 @@ Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935ef
 \end{DoxyPrecond}
 
 
-Definition at line 271 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 273 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -680,7 +684,7 @@ Get current state.
 
 
 
-Definition at line 568 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 570 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -688,7 +692,7 @@ References mdt\-State\-Machine\-::current\-State().
 
 
 
-Referenced by mdt\-Device\-::current\-State(), is\-Closed(), mdt\-Modbus\-Tcp\-Port\-Manager\-::is\-Ready(), is\-Ready(), on\-Threads\-Error\-Occured(), start(), wait\-One\-Transaction\-Done(), and wait\-Transaction\-Done().
+Referenced by is\-Closed(), mdt\-Modbus\-Tcp\-Port\-Manager\-::is\-Ready(), is\-Ready(), on\-Threads\-Error\-Occured(), start(), wait\-One\-Transaction\-Done(), and wait\-Transaction\-Done().
 
 \hypertarget{classmdt_port_manager_a19abf29c8948cde0337d67c9722c25aa}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!current\-Transaction\-Id@{current\-Transaction\-Id}}
 \index{current\-Transaction\-Id@{current\-Transaction\-Id}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -703,7 +707,7 @@ Get the current transaction I\-D.
 
 
 
-Definition at line 636 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 638 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -732,7 +736,7 @@ Will detach port from each thread and from port manager. If port was not set, th
 \end{DoxyParams}
 
 
-Definition at line 102 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 104 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -766,7 +770,7 @@ Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935ef
 \end{DoxyPrecond}
 
 
-Definition at line 552 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 554 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -788,7 +792,7 @@ Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935ef
 \end{DoxyPrecond}
 
 
-Definition at line 563 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 565 of file mdt\-Port\-Manager.\-cpp.
 
 \hypertarget{classmdt_port_manager_ac0844a5cd4043a95a479d458ac7ce590}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!flush\-In@{flush\-In}}
 \index{flush\-In@{flush\-In}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -814,7 +818,7 @@ Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935ef
 \end{DoxyPrecond}
 
 
-Definition at line 518 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 520 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -835,7 +839,7 @@ Will flush portmanger and port's buffers.
 
 Internally, \hyperlink{classmdt_port_manager_ac0844a5cd4043a95a479d458ac7ce590}{flush\-In(bool, bool)} is called. 
 
-Definition at line 535 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 537 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -865,7 +869,7 @@ Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935ef
 \end{DoxyPrecond}
 
 
-Definition at line 540 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 542 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -886,7 +890,7 @@ Will flush portmanger and port's buffers.
 
 Internally, \hyperlink{classmdt_port_manager_a3f0c2722a41c49de2bea9013bccd049c}{flush\-Out(bool, bool)} is called. 
 
-Definition at line 547 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 549 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -905,7 +909,7 @@ Restore all transactions done to pool.
 
 
 
-Definition at line 759 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 761 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -928,7 +932,7 @@ Restore all transactions pending to pool.
 
 
 
-Definition at line 706 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 708 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -957,7 +961,7 @@ For subclass that handle frames with I\-Ds, this method must be reimplemented. T
 \hyperlink{classmdt_port_thread}{mdt\-Port\-Thread}
 \end{DoxySeeAlso}
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000029}{Todo}]A méditer\-:
+\item[\hyperlink{todo__todo000028}{Todo}]A méditer\-:
 \begin{DoxyItemize}
 \item Lock le mutex
 \item Prendre les frames disponibles (-\/$>$ sdans une liste ...)
@@ -969,7 +973,7 @@ For subclass that handle frames with I\-Ds, this method must be reimplemented. T
 \end{DoxyItemize}\end{DoxyRefDesc}
 
 
-Definition at line 816 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 818 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -1000,7 +1004,7 @@ Returned transaction is valid (never Null).
 \end{DoxyPostcond}
 
 
-Definition at line 288 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 290 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -1008,7 +1012,7 @@ References mdt\-Port\-Transaction\-::clear(), mdt\-Error\-::commit(), M\-D\-T\-\
 
 
 
-Referenced by from\-Thread\-New\-Frame\-Readen(), mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Hardware\-Node\-Address(), mdt\-Device\-::get\-New\-Transaction(), mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Register\-Values(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), send\-Data(), and mdt\-Modbus\-Tcp\-Port\-Manager\-::set\-Register\-Values().
+Referenced by from\-Thread\-New\-Frame\-Readen(), mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Hardware\-Node\-Address(), mdt\-Multi\-Io\-Device\-::get\-New\-Transaction(), mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Register\-Values(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), send\-Data(), and mdt\-Modbus\-Tcp\-Port\-Manager\-::set\-Register\-Values().
 
 \hypertarget{classmdt_port_manager_a4d009936a0a5130f3bfecb69fee4ce42}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!increment\-Current\-Transaction\-Id@{increment\-Current\-Transaction\-Id}}
 \index{increment\-Current\-Transaction\-Id@{increment\-Current\-Transaction\-Id}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -1024,7 +1028,7 @@ Increment current transaction I\-D.
 
 
 
-Definition at line 641 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 643 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -1043,7 +1047,7 @@ Check if port is closed.
 
 Returns true if threads are all stopped and port is closed 
 
-Definition at line 591 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 593 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -1072,7 +1076,7 @@ Reimplemented in \hyperlink{classmdt_modbus_tcp_port_manager_a5477eb7e8d57c5a420
 
 
 
-Definition at line 582 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 584 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -1080,7 +1084,7 @@ References current\-State(), Port\-Ready, and Ready.
 
 
 
-Referenced by mdt\-Device\-::is\-Ready(), send\-Data(), start(), wait\-One\-Transaction\-Done(), wait\-Transaction\-Done(), and wait\-Transaction\-Possible().
+Referenced by send\-Data(), start(), wait\-One\-Transaction\-Done(), wait\-Transaction\-Done(), and wait\-Transaction\-Possible().
 
 \hypertarget{classmdt_port_manager_a798ce0939234870ae3b9995108e54380}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!keep\-Transactions\-Done@{keep\-Transactions\-Done}}
 \index{keep\-Transactions\-Done@{keep\-Transactions\-Done}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -1095,11 +1099,32 @@ Get the keep\-Transactions\-Done flag.
 
 
 
-Definition at line 283 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 285 of file mdt\-Port\-Manager.\-cpp.
 
 
 
 Referenced by commit\-Frames().
+
+\hypertarget{classmdt_port_manager_a16c7ea5d74a8fc9ed065477574ec03c4}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!last\-Error@{last\-Error}}
+\index{last\-Error@{last\-Error}!mdtPortManager@{mdt\-Port\-Manager}}
+\subsubsection[{last\-Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Error} mdt\-Port\-Manager\-::last\-Error (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_port_manager_a16c7ea5d74a8fc9ed065477574ec03c4}
+
+
+Get last error. 
+
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000031}{Todo}]Not completly used currently, must be implemented in this class + subclasses . \end{DoxyRefDesc}
+
+
+Definition at line 631 of file mdt\-Port\-Manager.\-h.
+
+
+
+References pv\-Last\-Error.
 
 \hypertarget{classmdt_port_manager_a3107b7121dfe5b9686d9b3b3a48a0af0}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!lock\-Port\-Mutex@{lock\-Port\-Mutex}}
 \index{lock\-Port\-Mutex@{lock\-Port\-Mutex}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -1119,7 +1144,7 @@ Port must be set with set\-Port before using this method
 \end{DoxyPrecond}
 
 
-Definition at line 80 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 82 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -1161,7 +1186,7 @@ Will force to emit \hyperlink{classmdt_port_manager_a01da0634bc52a71c0df0d83fc16
 
 Can be usefull during application setup, because some initial states (like Port\-Closed) are directly notified, probably before signals are connected to application slots. 
 
-Definition at line 575 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 577 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -1201,7 +1226,7 @@ For other errors, including Unhandled\-Error, pending transactions are flushed w
 
 For other cases, the subclass can reimplement this method. Dont forget to emit transistion signals. 
 
-Definition at line 861 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 863 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -1234,7 +1259,7 @@ Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935ef
 \item[\hyperlink{todo__todo000032}{Todo}]Should return \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdt\-Abstract\-Port\-::error\-\_\-t} \end{DoxyRefDesc}
 
 
-Definition at line 603 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 605 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -1455,11 +1480,11 @@ Get current port info.
 
 
 
-Definition at line 254 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 256 of file mdt\-Port\-Manager.\-cpp.
 
 
 
-Referenced by mdt\-Serial\-Port\-Manager\-::scan(), and mdt\-Modbus\-Tcp\-Port\-Manager\-::scan().
+Referenced by mdt\-Serial\-Port\-Manager\-::scan().
 
 \hypertarget{classmdt_port_manager_af4fcab6aaad98d74aeabfc972da1d406}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!port\-Name@{port\-Name}}
 \index{port\-Name@{port\-Name}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -1474,7 +1499,7 @@ Get current port name.
 
 
 
-Definition at line 259 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 261 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -1497,7 +1522,7 @@ If found, the frame is removed from done queue. (A second call with same I\-D wi
 
 If I\-D was not found, a empty Q\-Byte\-Array is returned. 
 
-Definition at line 488 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 490 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -1505,7 +1530,7 @@ References mdt\-Port\-Transaction\-::data(), restore\-Transaction(), and transac
 
 
 
-Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Hardware\-Node\-Address(), mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Register\-Values(), mdt\-Modbus\-Tcp\-Port\-Manager\-::set\-Register\-Values(), and mdt\-Device\-::wait\-Transaction\-Done().
+Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Hardware\-Node\-Address(), mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Register\-Values(), mdt\-Modbus\-Tcp\-Port\-Manager\-::set\-Register\-Values(), and mdt\-Multi\-Io\-Device\-::wait\-Transaction\-Done().
 
 \hypertarget{classmdt_port_manager_addd5dcae9644cea42a9871205af41796}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!readen\-Frames@{readen\-Frames}}
 \index{readen\-Frames@{readen\-Frames}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -1520,7 +1545,7 @@ Get all readen data.
 
 Note that calling this methode will clear the internal queue. (A second call will return a empty list). 
 
-Definition at line 501 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 503 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -1539,7 +1564,7 @@ Returns instance of reader thread.
 
 Note that a Null pointer can be returned 
 
-Definition at line 146 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 148 of file mdt\-Port\-Manager.\-cpp.
 
 \hypertarget{classmdt_port_manager_aaa0a474183bcae0fff4fb9ef43023c25}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!remove\-Threads@{remove\-Threads}}
 \index{remove\-Threads@{remove\-Threads}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -1562,7 +1587,7 @@ Port manager must be closed (see \hyperlink{classmdt_port_manager_aeecbec4937683
 \end{DoxyPrecond}
 
 
-Definition at line 156 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 158 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -1590,36 +1615,11 @@ One transaction must be commited once (avoid corrupted double free)
 \end{DoxyPrecond}
 
 
-Definition at line 310 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 312 of file mdt\-Port\-Manager.\-cpp.
 
 
 
-Referenced by commit\-Frames(), flush\-Transactions\-Done(), flush\-Transactions\-Pending(), readen\-Frame(), readen\-Frames(), mdt\-Device\-::restore\-Transaction(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), and send\-Data().
-
-\hypertarget{classmdt_port_manager_ad56afb411ab5468005fca04767557ece}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!scan@{scan}}
-\index{scan@{scan}!mdtPortManager@{mdt\-Port\-Manager}}
-\subsubsection[{scan}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ {\bf mdt\-Port\-Info} $\ast$ $>$ mdt\-Port\-Manager\-::scan (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_port_manager_ad56afb411ab5468005fca04767557ece}
-
-
-Scan for available ports. 
-
-This method is implemented is port's specific subclass. Default implementation returns a empty list.
-
-Note that returned list must be freed by user after usage. (for.\-ex. with q\-Delet\-All() and Q\-List\-::clear() ). 
-
-Reimplemented in \hyperlink{classmdt_serial_port_manager_a791572f869d1d605d0c4658ca4187260}{mdt\-Serial\-Port\-Manager}.
-
-
-
-Definition at line 67 of file mdt\-Port\-Manager.\-cpp.
-
-
-
-Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::scan().
+Referenced by commit\-Frames(), flush\-Transactions\-Done(), flush\-Transactions\-Pending(), readen\-Frame(), readen\-Frames(), mdt\-Multi\-Io\-Device\-::restore\-Transaction(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), and send\-Data().
 
 \hypertarget{classmdt_port_manager_ad98399edba146af5cf32a9002094385c}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!send\-Data@{send\-Data}}
 \index{send\-Data@{send\-Data}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -1661,7 +1661,7 @@ Reimplemented in \hyperlink{classmdt_modbus_tcp_port_manager_a208a3b252279597483
 
 
 
-Definition at line 319 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 321 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -1701,7 +1701,7 @@ Reimplemented in \hyperlink{classmdt_modbus_tcp_port_manager_ac6ffcccbba23b1bda5
 
 
 
-Definition at line 365 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 367 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -1720,7 +1720,7 @@ Set the current transaction I\-D.
 
 
 
-Definition at line 631 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 633 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -1739,7 +1739,7 @@ Force transactions done to be keeped.
 
 If keep is true, \hyperlink{classmdt_port_manager_a84d37b380080eb26e56c68424dedd958}{commit\-Frames()} will ignore the \hyperlink{classmdt_port_transaction_a9da1cc7a191cd21a2e532d277aa3c628}{mdt\-Port\-Transaction\-::is\-Query\-Reply\-Mode()} and allways keep transactions in done queue until \hyperlink{classmdt_port_manager_a830ae182d06dd6a52c43a7f45b9240ac}{readen\-Frame()} or \hyperlink{classmdt_port_manager_addd5dcae9644cea42a9871205af41796}{readen\-Frames()} is called. 
 
-Definition at line 278 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 280 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -1754,16 +1754,22 @@ Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::mdt\-Modbus\-Tcp\-Port\-Manager
 )\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}
 
 
-Set port object. 
+Scan for available ports. 
+
+This method is implemented is port's specific subclass. Default implementation returns a empty list.
+
+Note that returned list must be freed by user after usage. (for.\-ex. with q\-Delet\-All() and Q\-List\-::clear() ).virtual Q\-List$<$mdt\-Port\-Info$\ast$$>$ scan();
+
+Set port object
 
 \begin{DoxyPrecond}{Precondition}
 port must be a valid pointer to the expected class instance (for ex\-: \hyperlink{classmdt_serial_port}{mdt\-Serial\-Port}). 
 
-Port manager must be closed (see \hyperlink{classmdt_port_manager_aeecbec49376838ab3547729636166d97}{is\-Closed()} ). 
+Port manager must be closed (see \hyperlink{classmdt_port_manager_aeecbec49376838ab3547729636166d97}{is\-Closed()} ).
 \end{DoxyPrecond}
+Q\-List$<$mdt\-Port\-Info$\ast$$>$ mdt\-Port\-Manager\-::scan() \{ return Q\-List$<$mdt\-Port\-Info$\ast$$>$(); \} 
 
-
-Definition at line 72 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 74 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -1795,7 +1801,7 @@ Port manager must be closed (see \hyperlink{classmdt_port_manager_aeecbec4937683
 \end{DoxyPrecond}
 
 
-Definition at line 245 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 247 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -1828,7 +1834,7 @@ Port manager must be closed (see \hyperlink{classmdt_port_manager_aeecbec4937683
 \end{DoxySeeAlso}
 
 
-Definition at line 236 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 238 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -1856,7 +1862,7 @@ Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935ef
 \end{DoxyPrecond}
 
 
-Definition at line 182 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 184 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -1893,7 +1899,7 @@ on\-Transaction\-Timeout\-Occured()
 \end{DoxySeeAlso}
 
 
-Definition at line 770 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 772 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -1962,7 +1968,7 @@ Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935ef
 \end{DoxyPrecond}
 
 
-Definition at line 213 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 215 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -1970,7 +1976,7 @@ References close\-Port(), is\-Closed(), mdt\-Abstract\-Port\-::is\-Open(), pm\-P
 
 
 
-Referenced by mdt\-Device\-Modbus\-Wago\-::connect\-To\-Device(), mdt\-Device\-Modbus\-::connect\-To\-Device(), detach\-Port(), mdt\-Device\-::disconnect\-From\-Device(), mdt\-Modbus\-Tcp\-Port\-Manager\-::scan(), start(), mdt\-Device\-Modbus\-::$\sim$mdt\-Device\-Modbus(), and $\sim$mdt\-Port\-Manager().
+Referenced by mdt\-Device\-Modbus\-Wago\-::connect\-To\-Device(), mdt\-Device\-Modbus\-::connect\-To\-Device(), detach\-Port(), start(), mdt\-Device\-Modbus\-::$\sim$mdt\-Device\-Modbus(), and $\sim$mdt\-Port\-Manager().
 
 \hypertarget{classmdt_port_manager_a1467c0bd28612ae3116f5daba08c0b84}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!stop\-Transaction\-Timer@{stop\-Transaction\-Timer}}
 \index{stop\-Transaction\-Timer@{stop\-Transaction\-Timer}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -1994,7 +2000,7 @@ on\-Transaction\-Timeout\-Occured()
 \end{DoxySeeAlso}
 
 
-Definition at line 778 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 780 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -2016,7 +2022,7 @@ A valid transaction if exists, else a Null pointer.
 \end{DoxyReturn}
 
 
-Definition at line 742 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 744 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -2042,7 +2048,7 @@ A valid transaction if exists, else a Null pointer.
 \end{DoxyReturn}
 
 
-Definition at line 700 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 702 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -2061,7 +2067,7 @@ Check if a transaction with given I\-D exists in done queue.
 
 
 
-Definition at line 728 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 730 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -2089,7 +2095,7 @@ on\-Transaction\-Timeout\-Occured()
 \end{DoxySeeAlso}
 
 
-Definition at line 786 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 788 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -2111,7 +2117,7 @@ Port must be set with set\-Port before using this method
 \end{DoxyPrecond}
 
 
-Definition at line 94 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 96 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -2142,11 +2148,7 @@ Internally, a Q\-Timer is used. Please considere Qt documentation about time pre
 
 For the story, a example with a Wago 750 I/\-O system\-: In multidiagtools test suite we do set/get tests on outputs. We wait confirmation of device for each request (see \hyperlink{classmdt_device}{mdt\-Device} for details). Some times test failed because the get didn't return the value set just before. By mesuring set and get times, we could see that it can take about 2\mbox{[}ms\mbox{]} -\/$>$ 40\mbox{[}ms\mbox{]}. This can be shorter than P\-L\-C needs to update its cache (read all I/\-O on bus, ...), and we had a old value in get reply. 
 
-Definition at line 479 of file mdt\-Port\-Manager.\-cpp.
-
-
-
-Referenced by mdt\-Device\-::wait().
+Definition at line 481 of file mdt\-Port\-Manager.\-cpp.
 
 \hypertarget{classmdt_port_manager_af60f089baded850018cbb90645c8e547}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!wait\-One\-Transaction\-Done@{wait\-One\-Transaction\-Done}}
 \index{wait\-One\-Transaction\-Done@{wait\-One\-Transaction\-Done}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -2168,7 +2170,7 @@ True if Ok, false on timeout or other error.
 \end{DoxyReturn}
 
 
-Definition at line 436 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 438 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -2201,7 +2203,7 @@ True if Ok, false on timeout or other error. If id was not found in transactions
 \end{DoxyReturn}
 
 
-Definition at line 381 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 383 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -2209,7 +2211,7 @@ References Busy, mdt\-Error\-::commit(), config(), current\-State(), is\-Ready()
 
 
 
-Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Hardware\-Node\-Address(), mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Register\-Values(), mdt\-Modbus\-Tcp\-Port\-Manager\-::set\-Register\-Values(), and mdt\-Device\-::wait\-Transaction\-Done().
+Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Hardware\-Node\-Address(), mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Register\-Values(), mdt\-Modbus\-Tcp\-Port\-Manager\-::set\-Register\-Values(), and mdt\-Multi\-Io\-Device\-::wait\-Transaction\-Done().
 
 \hypertarget{classmdt_port_manager_ac04a12f8aa20ba04695083afce45a6cc}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!wait\-Transaction\-Possible@{wait\-Transaction\-Possible}}
 \index{wait\-Transaction\-Possible@{wait\-Transaction\-Possible}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -2227,7 +2229,7 @@ True on success, false if wait was interrupted.
 \end{DoxyReturn}
 
 
-Definition at line 652 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 654 of file mdt\-Port\-Manager.\-cpp.
 
 
 
@@ -2250,17 +2252,32 @@ Returns instance of writer thread.
 
 Note that a Null pointer can be returned 
 
-Definition at line 151 of file mdt\-Port\-Manager.\-cpp.
+Definition at line 153 of file mdt\-Port\-Manager.\-cpp.
 
 
 
 \subsection{Member Data Documentation}
+\hypertarget{classmdt_port_manager_af03c1270cb19ce92e846cae95dc0769b}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!pv\-Last\-Error@{pv\-Last\-Error}}
+\index{pv\-Last\-Error@{pv\-Last\-Error}!mdtPortManager@{mdt\-Port\-Manager}}
+\subsubsection[{pv\-Last\-Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Error} mdt\-Port\-Manager\-::pv\-Last\-Error\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_port_manager_af03c1270cb19ce92e846cae95dc0769b}
+
+
+Last error object. 
+
+
+
+Definition at line 760 of file mdt\-Port\-Manager.\-h.
+
+
+
+Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Hardware\-Node\-Address(), last\-Error(), mdt\-Modbus\-Tcp\-Port\-Manager\-::read\-Device\-Address\-List(), mdt\-Modbus\-Tcp\-Port\-Manager\-::save\-Device\-Address\-List(), and mdt\-Modbus\-Tcp\-Port\-Manager\-::scan().
+
 \hypertarget{classmdt_port_manager_af856162aab4f1c5202c1dfb330fae538}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!pv\-Port@{pv\-Port}}
 \index{pv\-Port@{pv\-Port}!mdtPortManager@{mdt\-Port\-Manager}}
 \subsubsection[{pv\-Port}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Abstract\-Port}$\ast$ mdt\-Port\-Manager\-::pv\-Port\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_port_manager_af856162aab4f1c5202c1dfb330fae538}
 
 
-Definition at line 912 of file mdt\-Port\-Manager.\-h.
+Definition at line 925 of file mdt\-Port\-Manager.\-h.
 
 
 
@@ -2271,7 +2288,7 @@ Referenced by abort(), add\-Thread(), close\-Port(), mdt\-Serial\-Port\-Manager\
 \subsubsection[{pv\-Threads}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<${\bf mdt\-Port\-Thread}$\ast$$>$ mdt\-Port\-Manager\-::pv\-Threads\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_port_manager_a8e0d49b789f8b01d469e84b487799573}
 
 
-Definition at line 913 of file mdt\-Port\-Manager.\-h.
+Definition at line 926 of file mdt\-Port\-Manager.\-h.
 
 
 

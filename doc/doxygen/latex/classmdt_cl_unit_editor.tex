@@ -36,14 +36,10 @@ void \hyperlink{classmdt_cl_unit_editor_a229445497d158436289db1c87b38009b}{unit\
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classmdt_cl_unit_editor_a996844e2987893ac9958c6832127538e}{mdt\-Cl\-Unit\-Editor} (\hyperlink{class_q_widget}{Q\-Widget} $\ast$parent, Q\-Sql\-Database db)
+\hyperlink{classmdt_cl_unit_editor_a996844e2987893ac9958c6832127538e}{mdt\-Cl\-Unit\-Editor} (\hyperlink{class_q_widget}{Q\-Widget} $\ast$parent, \hyperlink{class_q_sql_database}{Q\-Sql\-Database} db)
 \begin{DoxyCompactList}\small\item\em Contruct a cable editor. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_cl_unit_editor_a63fe328168d8d72b4c09edf9123ae1a1}{$\sim$mdt\-Cl\-Unit\-Editor} ()
-\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_cl_unit_editor_a962cfbdda9400a7cf99ba38eec0a4155}{setup\-Tables} ()
-\begin{DoxyCompactList}\small\item\em Setup tables. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_cl_unit_editor_aa685382c6fa749a8c949e13fd28e9f4f}{set\-Working\-On\-Vehicle\-Type\-Id\-List} (const Q\-List$<$ Q\-Variant $>$ \&vt\-Id\-List)
-\begin{DoxyCompactList}\small\item\em Set working on vehicle type I\-D list. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Additional Inherited Members}
 
 
@@ -60,7 +56,7 @@ Definition at line 36 of file mdt\-Cl\-Unit\-Editor.\-h.
 \subsubsection[{mdt\-Cl\-Unit\-Editor}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Cl\-Unit\-Editor\-::mdt\-Cl\-Unit\-Editor (
 \begin{DoxyParamCaption}
 \item[{{\bf Q\-Widget} $\ast$}]{parent, }
-\item[{Q\-Sql\-Database}]{db}
+\item[{{\bf Q\-Sql\-Database}}]{db}
 \end{DoxyParamCaption}
 )}}\label{classmdt_cl_unit_editor_a996844e2987893ac9958c6832127538e}
 
@@ -70,21 +66,6 @@ Contruct a cable editor.
 
 
 Definition at line 59 of file mdt\-Cl\-Unit\-Editor.\-cpp.
-
-\hypertarget{classmdt_cl_unit_editor_a63fe328168d8d72b4c09edf9123ae1a1}{\index{mdt\-Cl\-Unit\-Editor@{mdt\-Cl\-Unit\-Editor}!$\sim$mdt\-Cl\-Unit\-Editor@{$\sim$mdt\-Cl\-Unit\-Editor}}
-\index{$\sim$mdt\-Cl\-Unit\-Editor@{$\sim$mdt\-Cl\-Unit\-Editor}!mdtClUnitEditor@{mdt\-Cl\-Unit\-Editor}}
-\subsubsection[{$\sim$mdt\-Cl\-Unit\-Editor}]{\setlength{\rightskip}{0pt plus 5cm}mdt\-Cl\-Unit\-Editor\-::$\sim$mdt\-Cl\-Unit\-Editor (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}}\label{classmdt_cl_unit_editor_a63fe328168d8d72b4c09edf9123ae1a1}
-
-
-Destructor. 
-
-
-
-Definition at line 64 of file mdt\-Cl\-Unit\-Editor.\-cpp.
 
 
 
@@ -98,34 +79,19 @@ Definition at line 64 of file mdt\-Cl\-Unit\-Editor.\-cpp.
 )\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_cl_unit_editor_a962cfbdda9400a7cf99ba38eec0a4155}
 
 
-Setup tables. 
+Destructor. 
 
+$\sim$mdt\-Cl\-Unit\-Editor();
 
+Setup tables
+
+mdt\-Cl\-Unit\-Editor\-::$\sim$mdt\-Cl\-Unit\-Editor() \{ \} 
 
 Reimplemented from \hyperlink{classmdt_sql_form_a27fe6e45aa5d4d7782aad9833e6de20b}{mdt\-Sql\-Form}.
 
 
 
-Definition at line 68 of file mdt\-Cl\-Unit\-Editor.\-cpp.
-
-\hypertarget{classmdt_cl_unit_editor_aa685382c6fa749a8c949e13fd28e9f4f}{\index{mdt\-Cl\-Unit\-Editor@{mdt\-Cl\-Unit\-Editor}!set\-Working\-On\-Vehicle\-Type\-Id\-List@{set\-Working\-On\-Vehicle\-Type\-Id\-List}}
-\index{set\-Working\-On\-Vehicle\-Type\-Id\-List@{set\-Working\-On\-Vehicle\-Type\-Id\-List}!mdtClUnitEditor@{mdt\-Cl\-Unit\-Editor}}
-\subsubsection[{set\-Working\-On\-Vehicle\-Type\-Id\-List}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Cl\-Unit\-Editor\-::set\-Working\-On\-Vehicle\-Type\-Id\-List (
-\begin{DoxyParamCaption}
-\item[{const Q\-List$<$ Q\-Variant $>$ \&}]{vt\-Id\-List}
-\end{DoxyParamCaption}
-)}}\label{classmdt_cl_unit_editor_aa685382c6fa749a8c949e13fd28e9f4f}
-
-
-Set working on vehicle type I\-D list. 
-
-
-
-Definition at line 98 of file mdt\-Cl\-Unit\-Editor.\-cpp.
-
-
-
-References mdt\-Error\-::commit(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Sql\-Form\-::pv\-Last\-Error, and mdt\-Error\-::set\-Error().
+Definition at line 70 of file mdt\-Cl\-Unit\-Editor.\-cpp.
 
 \hypertarget{classmdt_cl_unit_editor_a229445497d158436289db1c87b38009b}{\index{mdt\-Cl\-Unit\-Editor@{mdt\-Cl\-Unit\-Editor}!unit\-Edited@{unit\-Edited}}
 \index{unit\-Edited@{unit\-Edited}!mdtClUnitEditor@{mdt\-Cl\-Unit\-Editor}}

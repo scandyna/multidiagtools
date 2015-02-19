@@ -76,6 +76,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="functions_enum.html"><span>Enumerations</span></a></li>
       <li><a href="functions_eval.html"><span>Enumerator</span></a></li>
       <li><a href="functions_prop.html"><span>Properties</span></a></li>
+      <li><a href="functions_rela.html"><span>Related&#160;Functions</span></a></li>
     </ul>
   </div>
   <div id="navrow4" class="tabs3">
@@ -112,7 +113,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Properties</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Properties</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(12)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -164,7 +165,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="classmdt_codec_scpi.html#a93d0ff6a48ce95a9d95cd24906443579">mdtCodecScpi</a>
 , <a class="el" href="classmdt_data_table_manager.html#aaeff001bf9a44f890078f5c6f434ec05">mdtDataTableManager</a>
 , <a class="el" href="classmdt_device.html#a79ca328ff9e9f413a38c1cc9c9267cee">mdtDevice</a>
-, <a class="el" href="classmdt_device_scpi.html#a293c80fcad7f9c38349884717d38027d">mdtDeviceScpi</a>
+, <a class="el" href="classmdt_device_address.html#a8078b5665a3711c1b4453b38aa428880">mdtDeviceAddress</a>
+, <a class="el" href="classmdt_device_address_list.html#ad4a3b71021684a3388a4610dbd71dbe6">mdtDeviceAddressList</a>
+, <a class="el" href="classmdt_port_manager.html#a16c7ea5d74a8fc9ed065477574ec03c4">mdtPortManager</a>
 , <a class="el" href="classmdt_sql_database_manager.html#a7fb8458fb9fc10216c8dfbbeb2c3dc50">mdtSqlDatabaseManager</a>
 , <a class="el" href="classmdt_sql_form.html#a04724293298421c404e93c58015cda5e">mdtSqlForm</a>
 , <a class="el" href="classmdt_sql_record.html#aa997bbc32402c3a254404ab74b9662f0">mdtSqlRecord</a>
@@ -182,12 +185,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="classmdt_usbtmc_port.html#ad08e3ff4682797e8604400026418bdc8">mdtUsbtmcPort</a>
 , <a class="el" href="classmdt_usbtmc_transfer_handler.html#aa89e3f0c2f44611fc82b9dd59dabd266">mdtUsbtmcTransferHandler</a>
 , <a class="el" href="classmdt_usb_transfer.html#a0ec677bc1ccdaeb0ab581aaba82beb36">mdtUsbTransfer</a>
-</li>
-<li>lastErrorMessage()
-: <a class="el" href="classmdt_cl_path_graph.html#a63ddfb9e8d64041ad17c992eac172a8a">mdtClPathGraph</a>
-</li>
-<li>lastErrorW()
-: <a class="el" href="classmdt_device.html#a6e7133e8665d9113d9423f4db44b1000">mdtDevice</a>
 </li>
 <li>lastModbusError()
 : <a class="el" href="classmdt_frame_codec_modbus.html#a21f3102e12f1a1d9c4145c1ce1f8e6b6">mdtFrameCodecModbus</a>
@@ -340,11 +337,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>lockFile
 : <a class="el" href="class_qt_local_peer.html#ab72488160eed35c9518ef3de1e6062cf">QtLocalPeer</a>
 </li>
-<li>LockMode
-: <a class="el" href="class_qt_locked_file.html#aef385609a0a280b52334b972b04074cc">QtLockedFile</a>
-</li>
 <li>lockMode()
 : <a class="el" href="class_qt_locked_file.html#aabfd6fb28f249a5fb01f3965de0e41f1">QtLockedFile</a>
+</li>
+<li>LockMode
+: <a class="el" href="class_qt_locked_file.html#aef385609a0a280b52334b972b04074cc">QtLockedFile</a>
 </li>
 <li>lockMutex()
 : <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3">mdtAbstractPort</a>
@@ -371,7 +368,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jan 17 2015 16:32:18 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Feb 19 2015 17:07:58 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

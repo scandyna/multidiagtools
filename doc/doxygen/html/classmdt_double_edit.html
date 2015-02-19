@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Properties</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Properties</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(12)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -127,7 +127,8 @@ Public Types</h2></td></tr>
 <tr class="memdesc:a29d81fa03124e501a6162b5ea018cdb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Special symbols for units.  <a href="classmdt_double_edit.html#a29d81fa03124e501a6162b5ea018cdb8">More...</a><br/></td></tr>
 <tr class="separator:a29d81fa03124e501a6162b5ea018cdb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a52cc3f5b9d6acd6838c52d478b3ea4dd"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_double_edit.html#a52cc3f5b9d6acd6838c52d478b3ea4dd">EditionMode_t</a> { <a class="el" href="classmdt_double_edit.html#a52cc3f5b9d6acd6838c52d478b3ea4dda4910df3bf542ccbaadc53e42150a0e00">DefaultEditionMode</a>, 
-<a class="el" href="classmdt_double_edit.html#a52cc3f5b9d6acd6838c52d478b3ea4dda26278c3ed551b8412c6f52d97604e2fe">WireEditionMode</a>
+<a class="el" href="classmdt_double_edit.html#a52cc3f5b9d6acd6838c52d478b3ea4dda9c90f1e9bef448e3a67b94ef8e3245e7">WireSectionEditionMode</a>, 
+<a class="el" href="classmdt_double_edit.html#a52cc3f5b9d6acd6838c52d478b3ea4dda753af1552a3c99afd1c1c826b4897bb7">EngineeringNotationMode</a>
  }</td></tr>
 <tr class="memdesc:a52cc3f5b9d6acd6838c52d478b3ea4dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Edition mode.  <a href="classmdt_double_edit.html#a52cc3f5b9d6acd6838c52d478b3ea4dd">More...</a><br/></td></tr>
 <tr class="separator:a52cc3f5b9d6acd6838c52d478b3ea4dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -257,7 +258,10 @@ Properties</h2></td></tr>
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="a52cc3f5b9d6acd6838c52d478b3ea4dda4910df3bf542ccbaadc53e42150a0e00"></a>DefaultEditionMode</em>&#160;</td><td class="fielddoc">
 <p>Default edition mode </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="a52cc3f5b9d6acd6838c52d478b3ea4dda26278c3ed551b8412c6f52d97604e2fe"></a>WireEditionMode</em>&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="a52cc3f5b9d6acd6838c52d478b3ea4dda9c90f1e9bef448e3a67b94ef8e3245e7"></a>WireSectionEditionMode</em>&#160;</td><td class="fielddoc">
+<p>Wire section edition mode </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="a52cc3f5b9d6acd6838c52d478b3ea4dda753af1552a3c99afd1c1c826b4897bb7"></a>EngineeringNotationMode</em>&#160;</td><td class="fielddoc">
 <p>Wire edition mode </p>
 </td></tr>
 </table>
@@ -346,7 +350,7 @@ Properties</h2></td></tr>
 
 <p>Get edition mode. </p>
 
-<p>Definition at line <a class="el" href="mdt_double_edit_8h_source.html#l00248">248</a> of file <a class="el" href="mdt_double_edit_8h_source.html">mdtDoubleEdit.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_double_edit_8h_source.html#l00249">249</a> of file <a class="el" href="mdt_double_edit_8h_source.html">mdtDoubleEdit.h</a>.</p>
 
 </div>
 </div>
@@ -403,7 +407,7 @@ Properties</h2></td></tr>
 <p>Check if value is null. </p>
 <dl class="section see"><dt>See Also</dt><dd>isValid() </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_double_edit_8h_source.html#l00204">204</a> of file <a class="el" href="mdt_double_edit_8h_source.html">mdtDoubleEdit.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_double_edit_8h_source.html#l00205">205</a> of file <a class="el" href="mdt_double_edit_8h_source.html">mdtDoubleEdit.h</a>.</p>
 
 </div>
 </div>
@@ -428,7 +432,7 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="mdt_double_edit_8h_source.html#l00241">241</a> of file <a class="el" href="mdt_double_edit_8h_source.html">mdtDoubleEdit.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_double_edit_8h_source.html#l00242">242</a> of file <a class="el" href="mdt_double_edit_8h_source.html">mdtDoubleEdit.h</a>.</p>
 
 </div>
 </div>
@@ -558,9 +562,9 @@ Properties</h2></td></tr>
 
 <p>Set edition mode. </p>
 
-<p>Definition at line <a class="el" href="mdt_double_edit_8cpp_source.html#l00297">297</a> of file <a class="el" href="mdt_double_edit_8cpp_source.html">mdtDoubleEdit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_double_edit_8cpp_source.html#l00302">302</a> of file <a class="el" href="mdt_double_edit_8cpp_source.html">mdtDoubleEdit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_double_edit_8h_source.html#l00097">DefaultEditionMode</a>, and <a class="el" href="mdt_double_edit_8h_source.html#l00098">WireEditionMode</a>.</p>
+<p>References <a class="el" href="mdt_double_edit_8h_source.html#l00097">DefaultEditionMode</a>, <a class="el" href="mdt_double_edit_8h_source.html#l00099">EngineeringNotationMode</a>, and <a class="el" href="mdt_double_edit_8h_source.html#l00098">WireSectionEditionMode</a>.</p>
 
 </div>
 </div>
@@ -735,7 +739,7 @@ Properties</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_double_edit_8cpp_source.html#l00273">273</a> of file <a class="el" href="mdt_double_edit_8cpp_source.html">mdtDoubleEdit.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_double_edit_8h_source.html#l00097">DefaultEditionMode</a>, and <a class="el" href="mdt_double_validator_8cpp_source.html#l00033">mdtDoubleValidator::setSuffix()</a>.</p>
+<p>References <a class="el" href="mdt_double_edit_8h_source.html#l00097">DefaultEditionMode</a>, <a class="el" href="mdt_double_edit_8h_source.html#l00099">EngineeringNotationMode</a>, and <a class="el" href="mdt_double_validator_8cpp_source.html#l00033">mdtDoubleValidator::setSuffix()</a>.</p>
 
 </div>
 </div>
@@ -884,7 +888,7 @@ Properties</h2></td></tr>
 
 <p>Get unit. </p>
 
-<p>Definition at line <a class="el" href="mdt_double_edit_8h_source.html#l00119">119</a> of file <a class="el" href="mdt_double_edit_8h_source.html">mdtDoubleEdit.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_double_edit_8h_source.html#l00120">120</a> of file <a class="el" href="mdt_double_edit_8h_source.html">mdtDoubleEdit.h</a>.</p>
 
 </div>
 </div>
@@ -994,7 +998,7 @@ Properties</h2></td></tr>
 
 <p>Get value. </p>
 
-<p>Definition at line <a class="el" href="mdt_double_edit_8h_source.html#l00194">194</a> of file <a class="el" href="mdt_double_edit_8h_source.html">mdtDoubleEdit.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_double_edit_8h_source.html#l00195">195</a> of file <a class="el" href="mdt_double_edit_8h_source.html">mdtDoubleEdit.h</a>.</p>
 
 </div>
 </div>
@@ -1051,7 +1055,7 @@ Properties</h2></td></tr>
 <p>Value is valid only if it represents a number or is null. For example, if <a class="el" href="classmdt_double_edit.html#a077b00c2e4ae13e66a2d903a42c0be52" title="Set value. ">setValue()</a> was called with a pure string, like 'abcd', the function will return false.</p>
 <p>Note that a value can also be null and valid. </p>
 
-<p>Definition at line <a class="el" href="mdt_double_edit_8h_source.html#l00214">214</a> of file <a class="el" href="mdt_double_edit_8h_source.html">mdtDoubleEdit.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_double_edit_8h_source.html#l00215">215</a> of file <a class="el" href="mdt_double_edit_8h_source.html">mdtDoubleEdit.h</a>.</p>
 
 </div>
 </div>
@@ -1151,7 +1155,7 @@ Properties</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jan 17 2015 16:32:13 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Feb 19 2015 17:07:54 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

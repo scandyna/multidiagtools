@@ -70,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Properties</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Properties</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(12)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -299,7 +299,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;}</div>
 <div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;</div>
-<div class="line"><a name="l00211"></a><span class="lineno"><a class="line" href="classmdt_sql_schema_table.html#a2cea444ccb26b0802fb230db5460e167">  211</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_sql_schema_table.html#a2cea444ccb26b0802fb230db5460e167">mdtSqlSchemaTable::setupFromTable</a>(<span class="keyword">const</span> QString &amp; name, QSqlDatabase db)</div>
+<div class="line"><a name="l00211"></a><span class="lineno"><a class="line" href="classmdt_sql_schema_table.html#a2cea444ccb26b0802fb230db5460e167">  211</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classmdt_sql_schema_table.html#a2cea444ccb26b0802fb230db5460e167">mdtSqlSchemaTable::setupFromTable</a>(<span class="keyword">const</span> QString &amp; name, <a class="code" href="class_q_sql_database.html">QSqlDatabase</a> db)</div>
 <div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;{</div>
 <div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;  Q_ASSERT(db.isOpen());</div>
 <div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;</div>
@@ -844,7 +844,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="classmdt_sql_schema_table.html#a1738e443f03dc69b914edb967cb911bea88f6f3c8088eba177e18cb26f518d61d">NoAction</a>;</div>
 <div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160;}</div>
 <div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160;</div>
-<div class="line"><a name="l00774"></a><span class="lineno">  774</span>&#160;<span class="keywordtype">bool</span> mdtSqlSchemaTable::setupFieldsFromDatabase(<span class="keyword">const</span> QSqlDatabase &amp; db)</div>
+<div class="line"><a name="l00774"></a><span class="lineno">  774</span>&#160;<span class="keywordtype">bool</span> mdtSqlSchemaTable::setupFieldsFromDatabase(<span class="keyword">const</span> <a class="code" href="class_q_sql_database.html">QSqlDatabase</a> &amp; db)</div>
 <div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160;{</div>
 <div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;  <span class="keywordflow">if</span>(pvDriverName == <span class="stringliteral">&quot;QSQLITE&quot;</span>){</div>
 <div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;    <span class="keywordflow">return</span> setupFieldsFromDatabaseSqlite(db);</div>
@@ -858,7 +858,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160;}</div>
 <div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;</div>
-<div class="line"><a name="l00788"></a><span class="lineno">  788</span>&#160;<span class="keywordtype">bool</span> mdtSqlSchemaTable::setupFieldsFromDatabaseSqlite(<span class="keyword">const</span> QSqlDatabase &amp; db)</div>
+<div class="line"><a name="l00788"></a><span class="lineno">  788</span>&#160;<span class="keywordtype">bool</span> mdtSqlSchemaTable::setupFieldsFromDatabaseSqlite(<span class="keyword">const</span> <a class="code" href="class_q_sql_database.html">QSqlDatabase</a> &amp; db)</div>
 <div class="line"><a name="l00789"></a><span class="lineno">  789</span>&#160;{</div>
 <div class="line"><a name="l00790"></a><span class="lineno">  790</span>&#160;  QSqlRecord dbRecord = db.record(pvTableName);</div>
 <div class="line"><a name="l00791"></a><span class="lineno">  791</span>&#160;  QSqlRecord record;</div>
@@ -900,7 +900,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00828"></a><span class="lineno">  828</span>&#160;}</div>
 <div class="line"><a name="l00829"></a><span class="lineno">  829</span>&#160;</div>
-<div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160;<span class="keywordtype">bool</span> mdtSqlSchemaTable::setupIndexesFromDatabase(<span class="keyword">const</span> QSqlDatabase &amp; db)</div>
+<div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160;<span class="keywordtype">bool</span> mdtSqlSchemaTable::setupIndexesFromDatabase(<span class="keyword">const</span> <a class="code" href="class_q_sql_database.html">QSqlDatabase</a> &amp; db)</div>
 <div class="line"><a name="l00831"></a><span class="lineno">  831</span>&#160;{</div>
 <div class="line"><a name="l00832"></a><span class="lineno">  832</span>&#160;  <span class="keywordflow">if</span>(pvDriverName == <span class="stringliteral">&quot;QSQLITE&quot;</span>){</div>
 <div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160;    <span class="keywordflow">return</span> setupIndexesFromDatabaseSqlite(db);</div>
@@ -911,7 +911,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00838"></a><span class="lineno">  838</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00839"></a><span class="lineno">  839</span>&#160;}</div>
 <div class="line"><a name="l00840"></a><span class="lineno">  840</span>&#160;</div>
-<div class="line"><a name="l00841"></a><span class="lineno">  841</span>&#160;<span class="keywordtype">bool</span> mdtSqlSchemaTable::setupIndexesFromDatabaseSqlite(<span class="keyword">const</span> QSqlDatabase &amp; db)</div>
+<div class="line"><a name="l00841"></a><span class="lineno">  841</span>&#160;<span class="keywordtype">bool</span> mdtSqlSchemaTable::setupIndexesFromDatabaseSqlite(<span class="keyword">const</span> <a class="code" href="class_q_sql_database.html">QSqlDatabase</a> &amp; db)</div>
 <div class="line"><a name="l00842"></a><span class="lineno">  842</span>&#160;{</div>
 <div class="line"><a name="l00843"></a><span class="lineno">  843</span>&#160;  QSqlQuery query(db);</div>
 <div class="line"><a name="l00844"></a><span class="lineno">  844</span>&#160;  QString sql;</div>
@@ -960,7 +960,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00887"></a><span class="lineno">  887</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00888"></a><span class="lineno">  888</span>&#160;}</div>
 <div class="line"><a name="l00889"></a><span class="lineno">  889</span>&#160;</div>
-<div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160;<span class="keywordtype">bool</span> mdtSqlSchemaTable::setupForeignKeysFromDatabase(<span class="keyword">const</span> QSqlDatabase &amp; db)</div>
+<div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160;<span class="keywordtype">bool</span> mdtSqlSchemaTable::setupForeignKeysFromDatabase(<span class="keyword">const</span> <a class="code" href="class_q_sql_database.html">QSqlDatabase</a> &amp; db)</div>
 <div class="line"><a name="l00891"></a><span class="lineno">  891</span>&#160;{</div>
 <div class="line"><a name="l00892"></a><span class="lineno">  892</span>&#160;  <span class="keywordflow">if</span>(pvDriverName == <span class="stringliteral">&quot;QSQLITE&quot;</span>){</div>
 <div class="line"><a name="l00893"></a><span class="lineno">  893</span>&#160;    <span class="keywordflow">return</span> setupForeignKeysFromDatabaseSqlite(db);</div>
@@ -971,7 +971,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00898"></a><span class="lineno">  898</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00899"></a><span class="lineno">  899</span>&#160;}</div>
 <div class="line"><a name="l00900"></a><span class="lineno">  900</span>&#160;</div>
-<div class="line"><a name="l00901"></a><span class="lineno">  901</span>&#160;<span class="keywordtype">bool</span> mdtSqlSchemaTable::setupForeignKeysFromDatabaseSqlite(<span class="keyword">const</span> QSqlDatabase &amp; db)</div>
+<div class="line"><a name="l00901"></a><span class="lineno">  901</span>&#160;<span class="keywordtype">bool</span> mdtSqlSchemaTable::setupForeignKeysFromDatabaseSqlite(<span class="keyword">const</span> <a class="code" href="class_q_sql_database.html">QSqlDatabase</a> &amp; db)</div>
 <div class="line"><a name="l00902"></a><span class="lineno">  902</span>&#160;{</div>
 <div class="line"><a name="l00903"></a><span class="lineno">  903</span>&#160;  QSqlQuery query(db);</div>
 <div class="line"><a name="l00904"></a><span class="lineno">  904</span>&#160;  QString sql;</div>
@@ -1004,6 +1004,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="mdt_sql_schema_table_8h_html"><div class="ttname"><a href="mdt_sql_schema_table_8h.html">mdtSqlSchemaTable.h</a></div></div>
 <div class="ttc" id="mdt_error_8h_html_a0f1a2f7579a33e6de2fe8a1cbb5bbbb5a7e794a8babdb710f4442175715121d58"><div class="ttname"><a href="mdt_error_8h.html#a0f1a2f7579a33e6de2fe8a1cbb5bbbb5a7e794a8babdb710f4442175715121d58">MDT_DATABASE_ERROR</a></div><div class="ttdef"><b>Definition:</b> <a href="mdt_error_8h_source.html#l00050">mdtError.h:50</a></div></div>
 <div class="ttc" id="classmdt_error_html_ad3cccf7c7f7d4bdabdcb4e60794bb9cb"><div class="ttname"><a href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb">mdtError::commit</a></div><div class="ttdeci">void commit()</div><div class="ttdoc">Send error to output. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_error_8cpp_source.html#l00116">mdtError.cpp:116</a></div></div>
+<div class="ttc" id="class_q_sql_database_html"><div class="ttname"><a href="class_q_sql_database.html">QSqlDatabase</a></div></div>
 <div class="ttc" id="classmdt_error_html_a8e7961a665841c1b052116e4dd2eb855"><div class="ttname"><a href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855">mdtError::setError</a></div><div class="ttdeci">void setError(const QString &amp;text, level_t level)</div><div class="ttdoc">Set error. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_error_8cpp_source.html#l00060">mdtError.cpp:60</a></div></div>
 <div class="ttc" id="mdt_error_8h_html_ab7f3d790e64bb1392fbfc1dd706fc9ce"><div class="ttname"><a href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce">MDT_ERROR_SET_SRC</a></div><div class="ttdeci">#define MDT_ERROR_SET_SRC(e, className)</div><div class="ttdoc">Add source information to error. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_error_8h_source.html#l00060">mdtError.h:60</a></div></div>
 <div class="ttc" id="structmdt_sql_schema_table_foreign_key_info_html"><div class="ttname"><a href="structmdt_sql_schema_table_foreign_key_info.html">mdtSqlSchemaTableForeignKeyInfo</a></div><div class="ttdef"><b>Definition:</b> <a href="mdt_sql_schema_table_8h_source.html#l00036">mdtSqlSchemaTable.h:36</a></div></div>
@@ -1043,7 +1044,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jan 17 2015 16:32:04 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Feb 19 2015 17:07:45 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
