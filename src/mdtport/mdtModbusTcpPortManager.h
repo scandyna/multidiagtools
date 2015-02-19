@@ -102,6 +102,98 @@ class mdtModbusTcpPortManager : public mdtPortManager
 
   /*! \brief Scan for available hosts with a MODBUS/TCP compatible device attached
    *
+   * \param iface Scan will be done for all IP addresses available for given intarface.
+   *               Note that only IPv4 is implemented.
+   * \param port Port. MODBUS/TCP default port is 502.
+   * \param expectedHwNodeAddresses If this list contains HW node addresses, scan will break when each one was found.
+   * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
+   * \return A list of device addresses that contains found hosts.
+   *          A empty list means that no device was found, or other error happened,
+   *          lastError() will also provide some informations in the case.
+   * \pre Port manager must be stopped before scanning.
+   */
+  mdtDeviceAddressList scan(const QNetworkInterface & iface, const mdtModbusHwNodeIdList & expectedHwNodeAddresses,
+                            quint16 port = 502, int timeout = 500);
+
+  /*! \brief Scan for available hosts with a MODBUS/TCP compatible device attached
+   *
+   * \param iface Scan will be done for all IP addresses available for given intarface.
+   *               Note that only IPv4 is implemented.
+   * \param port Port. MODBUS/TCP default port is 502.
+   * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
+   * \return A list of device addresses that contains found hosts.
+   *          A empty list means that no device was found, or other error happened,
+   *          lastError() will also provide some informations in the case.
+   * \pre Port manager must be stopped before scanning.
+   */
+  mdtDeviceAddressList scan(const QNetworkInterface & iface, quint16 port = 502, int timeout = 500)
+  {
+    return scan(iface, mdtModbusHwNodeIdList(), port, timeout);
+  }
+
+  /*! \brief Scan for available hosts with a MODBUS/TCP compatible device attached
+   *
+   * \param ifaces Scan will be done for all IP addresses available for all given intarfaces.
+   *               Note that only IPv4 is implemented.
+   * \param port Port. MODBUS/TCP default port is 502.
+   * \param ignoreLoopback If true, loopback interface will be ignored.
+   * \param expectedHwNodeAddresses If this list contains HW node addresses, scan will break when each one was found.
+   * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
+   * \return A list of device addresses that contains found hosts.
+   *          A empty list means that no device was found, or other error happened,
+   *          lastError() will also provide some informations in the case.
+   * \pre Port manager must be stopped before scanning.
+   */
+  mdtDeviceAddressList scan(const QList<QNetworkInterface> & ifaces, const mdtModbusHwNodeIdList & expectedHwNodeAddresses,
+                            quint16 port = 502, bool ignoreLoopback = true,
+                            int timeout = 500);
+
+  /*! \brief Scan for available hosts with a MODBUS/TCP compatible device attached
+   *
+   * \param ifaces Scan will be done for all IP addresses available for all given intarfaces.
+   *               Note that only IPv4 is implemented.
+   * \param port Port. MODBUS/TCP default port is 502.
+   * \param ignoreLoopback If true, loopback interface will be ignored.
+   * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
+   * \return A list of device addresses that contains found hosts.
+   *          A empty list means that no device was found, or other error happened,
+   *          lastError() will also provide some informations in the case.
+   * \pre Port manager must be stopped before scanning.
+   */
+  mdtDeviceAddressList scan(const QList<QNetworkInterface> & ifaces, quint16 port = 502, bool ignoreLoopback = true, int timeout = 500)
+  {
+    return scan(ifaces, mdtModbusHwNodeIdList(), port, ignoreLoopback, timeout);
+  }
+
+  /*! \brief Scan for available hosts with a MODBUS/TCP compatible device attached
+   *
+   * Return a list of each device in address list that is a MODBUS/TCP
+   *  device, that can be reached and that has matching hardware node ID.
+   *
+   * \param addressList Address list that contains hosts to try to connect to.
+   * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms].
+   * \return A list of device addresses that contains found hosts.
+   *          A empty list means that no device was found, or other error happened,
+   *          lastError() will also provide some informations in the case.
+   * \pre Port manager must be stopped before scanning.
+   */
+  mdtDeviceAddressList scan(const mdtDeviceAddressList & addressList, int timeout = 500);
+
+  /*! \brief Scan for available hosts with a MODBUS/TCP compatible device attached
+   *
+   * Will read known hosts file and return list of devices that are attached
+   *  at given host name, port and that have hardware node ID matching.
+   *
+   * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms].
+   * \return A list of device addresses that contains found hosts.
+   *          A empty list means that no device was found, or other error happened,
+   *          lastError() will also provide some informations in the case.
+   * \pre Port manager must be stopped before scanning.
+   */
+  mdtDeviceAddressList scanFromKnownHostsFile(int timeout = 500);
+
+  /*! \brief Scan for available hosts with a MODBUS/TCP compatible device attached
+   *
    * \param hosts A list of hosts to scan. Each host must be set with format hostname:port, or ip:port.
    *               Note that MODBUS/TCP default port is 502.
    * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
@@ -164,6 +256,19 @@ class mdtModbusTcpPortManager : public mdtPortManager
    */
   bool tryToConnect(const QString &hostName, quint16 port, int timeout);
 
+  /*! \brief Save device address list into the known hosts file
+   *
+   * The file will be written to the $HOME/.mdt/cache directory.
+   * \pre Manager must no running
+   */
+  bool saveDeviceAddressList(mdtDeviceAddressList & addressList);
+
+  /*! \brief Read device address list from known hosts file
+   *
+   * Will read file written by saveDeviceAddressList().
+   */
+  mdtDeviceAddressList readDeviceAddressList();
+
   /*! \brief Save a scan result into the known hosts file
    *
    * The file will be written to the $HOME/.mdt/cache directory,
@@ -172,6 +277,7 @@ class mdtModbusTcpPortManager : public mdtPortManager
    * \param scanResult List of port informations returned by a scan() method.
    * \return True on successfull write.
    * \pre Manager must no running
+   * \deprecated Use saveDeviceAddressList()
    */
   bool saveScanResult(const QList<mdtPortInfo*> scanResult);
 
@@ -181,6 +287,7 @@ class mdtModbusTcpPortManager : public mdtPortManager
    *  and content returned.
    *
    * \return List of lines or empty list if file not exists or on error.
+   * \deprecated Use readDeviceAddressList()
    */
   QStringList readScanResult();
 

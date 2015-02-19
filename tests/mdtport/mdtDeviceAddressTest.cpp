@@ -142,23 +142,17 @@ void mdtDeviceAddressTest::modbusHwNodeIdListTest()
    */
   QVERIFY(nIdList.isEmpty());
   QCOMPARE(nIdList.size(), 0);
-//   QCOMPARE(nIdList.bitsCount(), 8);
-//   QCOMPARE(nIdList.firstBit(), 1);
   /*
    * Add IDs
    */
   // Add ID 2
-  //nIdList.append(2);
   nIdList.append(mdtModbusHwNodeId(2, 8, 0));
   QVERIFY(!nIdList.isEmpty());
   QCOMPARE(nIdList.size(), 1);
-//   QCOMPARE(nIdList.bitsCount(), 8);
-//   QCOMPARE(nIdList.firstBit(), 1);
   QVERIFY(!nIdList.contains(1));
   QVERIFY(nIdList.contains(2));
   QVERIFY(!nIdList.contains(3));
   // Add ID 1
-  //nIdList.append(1);
   nIdList.append(mdtModbusHwNodeId(1, 8, 0));
   QVERIFY(!nIdList.isEmpty());
   QCOMPARE(nIdList.size(), 2);
@@ -166,7 +160,6 @@ void mdtDeviceAddressTest::modbusHwNodeIdListTest()
   QVERIFY(nIdList.contains(2));
   QVERIFY(!nIdList.contains(3));
   // Add ID 0
-  //nIdList.append(0);
   nIdList.append(mdtModbusHwNodeId(0, 8, 0));
   QVERIFY(!nIdList.isEmpty());
   QCOMPARE(nIdList.size(), 3);
@@ -192,16 +185,6 @@ void mdtDeviceAddressTest::modbusHwNodeIdListTest()
   nIdList.clear();
   QVERIFY(nIdList.isEmpty());
   QCOMPARE(nIdList.size(), 0);
-//   QCOMPARE(nIdList.bitsCount(), 0);
-//   QCOMPARE(nIdList.firstBit(), 0);
-  /*
-   * New setup
-   */
-//   nIdList.setBitsAttributes(8, 2);
-  QVERIFY(nIdList.isEmpty());
-  QCOMPARE(nIdList.size(), 0);
-//   QCOMPARE(nIdList.bitsCount(), 8);
-//   QCOMPARE(nIdList.firstBit(), 2);
 }
 
 void mdtDeviceAddressTest::modbusHwNodeIdListBenchmark()
@@ -213,8 +196,6 @@ void mdtDeviceAddressTest::modbusHwNodeIdListBenchmark()
     nIdList.append(mdtModbusHwNodeId(2, 8, 1));
     nIdList.append(mdtModbusHwNodeId(24, 8, 0));
     nIdList.append(mdtModbusHwNodeId(27, 8, 1));
-//     nIdList.append(24);
-//     nIdList.append(27);
     found = nIdList.contains(mdtModbusHwNodeId(24, 8, 1));
   }
   QVERIFY(found);
@@ -561,6 +542,26 @@ void mdtDeviceAddressTest::deviceAddressListTest()
   QVERIFY(!daList.isEmpty());
   QCOMPARE(daList.size(), 2);
   /*
+   * Setup a second list and add it to daList
+   */
+  mdtDeviceAddressList daList2;
+  // Add a MODBUS/TCP device address
+  da.clear();
+  da.setModbusTcpIdentification("5.6.7.8", 502, mdtModbusHwNodeId(4, 8, 1));
+  da.setAlias("Node04");
+  daList2.append(da);
+  QCOMPARE(daList2.size(), 1);
+  // Add a MODBUS/TCP device address
+  da.clear();
+  da.setModbusTcpIdentification("7.6.5.4", 502, mdtModbusHwNodeId(5, 8, 1));
+  da.setAlias("Node05");
+  daList2.append(da);
+  QCOMPARE(daList2.size(), 2);
+  // Add to daList
+  daList.append(daList2);
+  QVERIFY(!daList.isEmpty());
+  QCOMPARE(daList.size(), 4);
+  /*
    * Iteration
    */
   for(const auto & address : daList.internalVector()){
@@ -581,7 +582,7 @@ void mdtDeviceAddressTest::deviceAddressListTest()
    */
   QVERIFY(daList.readFromFile(file.fileName()));
   QVERIFY(!daList.isEmpty());
-  QCOMPARE(daList.size(), 2);
+  QCOMPARE(daList.size(), 4);
   // Check first device address
   da = daList.at(0);
   QVERIFY(da.isValid());
@@ -607,6 +608,32 @@ void mdtDeviceAddressTest::deviceAddressListTest()
   QCOMPARE(da.modbusHwNodeId().bitsCount(), 8);
   QCOMPARE(da.modbusHwNodeId().firstBit(), 1);
   QCOMPARE(da.alias(), QString("Node03"));
+  // Check third device address
+  da = daList.at(2);
+  QVERIFY(da.isValid());
+  QVERIFY(da.portType() == mdtDeviceAddress::PortType_t::TCPIP);
+  QCOMPARE(da.portTypeStr(), QString("TCPIP"));
+  QVERIFY(da.deviceType() == mdtDeviceAddress::DeviceType_t::MODBUS);
+  QCOMPARE(da.deviceTypeStr(), QString("MODBUS"));
+  QCOMPARE(da.tcpIpHostName(), QString("5.6.7.8"));
+  QCOMPARE((int)da.tcpIpPort(), 502);
+  QCOMPARE(da.modbusHwNodeId().id(), 4);
+  QCOMPARE(da.modbusHwNodeId().bitsCount(), 8);
+  QCOMPARE(da.modbusHwNodeId().firstBit(), 1);
+  QCOMPARE(da.alias(), QString("Node04"));
+  // Check fourth device address
+  da = daList.at(3);
+  QVERIFY(da.isValid());
+  QVERIFY(da.portType() == mdtDeviceAddress::PortType_t::TCPIP);
+  QCOMPARE(da.portTypeStr(), QString("TCPIP"));
+  QVERIFY(da.deviceType() == mdtDeviceAddress::DeviceType_t::MODBUS);
+  QCOMPARE(da.deviceTypeStr(), QString("MODBUS"));
+  QCOMPARE(da.tcpIpHostName(), QString("7.6.5.4"));
+  QCOMPARE((int)da.tcpIpPort(), 502);
+  QCOMPARE(da.modbusHwNodeId().id(), 5);
+  QCOMPARE(da.modbusHwNodeId().bitsCount(), 8);
+  QCOMPARE(da.modbusHwNodeId().firstBit(), 1);
+  QCOMPARE(da.alias(), QString("Node05"));
   // Simply check that iterating not crashes ... (will also help to detect some compile errors..)
   for(const auto & address : daList.internalVector()){
     qDebug() << "Address: " << address.addressString();

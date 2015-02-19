@@ -24,10 +24,6 @@
 #include <vector>
 #include <algorithm>
 
-/** \todo Introduire struct de setup avec bistCount et startFrom ??
- * NOTE: semble spécific au MODBUS port(manager ?)
- * */
-
 /*! \brief MODBUS hardware node ID
    *
    * The concept of node ID is specific to MultiDiagTools.
@@ -220,16 +216,6 @@ class mdtModbusHwNodeIdList
    */
   mdtModbusHwNodeIdList() {}
 
-  /*! \brief Construct a empty ID list
-   */
-//   mdtModbusHwNodeIdList(int bitsCount, int firstBit)
-//    : pvBitsCount(bitsCount),
-//      pvFirstBit(firstBit)
-//   {
-//     Q_ASSERT(bitsCount >= 0);
-//     Q_ASSERT(firstBit >= 0);
-//   }
-
   /*! \brief Check if ID list is empty
    */
   bool isEmpty() const
@@ -249,37 +235,7 @@ class mdtModbusHwNodeIdList
   void clear()
   {
     pvIdList.clear();
-//     pvBitsCount = 0;
-//     pvFirstBit = 0;
   }
-
-  /*! \brief Set bitsCount and firstBit
-   *
-   * \param bitsCount Number of bits that represent the ID
-   * \param firstBit First bit, i.e. first digital input, that represent the node ID, starting from offset 0 (is the LSB)
-   */
-//   void setBitsAttributes(int bitsCount, int firstBit)
-//   {
-//     Q_ASSERT(bitsCount >= 0);
-//     Q_ASSERT(firstBit >= 0);
-// 
-//     pvBitsCount = bitsCount;
-//     pvFirstBit = firstBit;
-//   }
-
-  /*! \brief Get bits count
-   */
-//   int bitsCount() const
-//   {
-//     return pvBitsCount;
-//   }
-// 
-//   /*! \brief Get first bit position
-//    */
-//   int firstBit() const
-//   {
-//     return pvFirstBit;
-//   }
 
   /*! \brief Append a ID at the end of the list
    */
@@ -328,8 +284,6 @@ class mdtModbusHwNodeIdList
  private:
 
   std::vector<mdtModbusHwNodeId> pvIdList;
-//   int pvBitsCount;  // Number of digital inputs that represents the hardware node ID.
-//   int pvFirstBit;   // First digital input that represents the hardware node ID (is the LSB).
 };
 
 #endif // #ifndef MDT_MODBUS_HW_NODE_ID_H

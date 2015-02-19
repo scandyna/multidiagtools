@@ -25,7 +25,6 @@
 #include "mdtPortConfig.h"
 #include "mdtFrame.h"
 #include "mdtFrameCodecModbus.h"
-///#include "mdtFrameUsbControl.h"
 #include "mdtPortReadThread.h"
 #include "mdtPortWriteThread.h"
 #include "mdtPortInfo.h"
@@ -39,8 +38,6 @@
 #include <QHash>
 #include <QHashIterator>
 #include "mdtApplication.h"
-///#include "mdtUsbPortManager.h"
-///#include "mdtUsbtmcPortManager.h"
 #include "mdtModbusTcpPortManager.h"
 #include "mdtPortTransaction.h"
 #include <QTimer>
@@ -342,11 +339,13 @@ void mdtPortManagerTest::portTest()
 void mdtPortManagerTest::modbusTcpPortTest()
 {
   mdtModbusTcpPortManager m;
-  QList<mdtPortInfo*> portInfoList;
-  QList<mdtPortInfo*> portInfoList2;
-  mdtPortInfo validPortInfo;
-  mdtPortInfo invalidPortInfo;
-  QStringList hosts;
+  mdtDeviceAddress da;
+  mdtDeviceAddressList deviceAddresses, deviceAddresses2;
+//   QList<mdtPortInfo*> portInfoList;
+//   QList<mdtPortInfo*> portInfoList2;
+//   mdtPortInfo validPortInfo;
+//   mdtPortInfo invalidPortInfo;
+//  QStringList hosts;
   mdtFrameCodecModbus codec;
   QByteArray pdu;
   QHash<quint16, QByteArray> pdus;
@@ -354,12 +353,12 @@ void mdtPortManagerTest::modbusTcpPortTest()
   QString ipLeftPart;
   QString ipRightPart;
   QStringList ipParts;
-  QString portName;
+//  QString portName;
   bool found;
   mdtPortTransaction *transaction;
 
   // Check scan with some invalid network setup
-  ///QVERIFY(m.scan(QNetworkInterface()).size() < 1);
+  QVERIFY(m.scan(QNetworkInterface()).isEmpty());
 
   qDebug() << "* A MODBUS/TCP compatible device must be attached, else test will fail *";
 
@@ -367,64 +366,76 @@ void mdtPortManagerTest::modbusTcpPortTest()
   QTimer::singleShot(100, &m, SLOT(abortScan()));
   qDebug() << "mdtPortManagerTest::modbusTcpPortTest(): scanning network ...";
   ///portInfoList = m.scan(QNetworkInterface::allInterfaces(), 502, 100);
-  QCOMPARE(portInfoList.size(), 0);
+  ///QCOMPARE(portInfoList.size(), 0);
+  deviceAddresses = m.scan(QNetworkInterface::allInterfaces(), 502, true, 100);
+  QCOMPARE(deviceAddresses.size(), 0);
   // Scan again
   qDebug() << "mdtPortManagerTest::modbusTcpPortTest(): scanning network ...";
-  ///portInfoList = m.scan(QNetworkInterface::allInterfaces(), 502, 100);
-  if(portInfoList.size() < 1){
+  deviceAddresses = m.scan(QNetworkInterface::allInterfaces(), 502, true, 100);
+  if(deviceAddresses.isEmpty()){
     QSKIP("No MODBUS/TCP device found, or other error", SkipAll);
   }
+  ///portInfoList = m.scan(QNetworkInterface::allInterfaces(), 502, 100);
+//   if(portInfoList.size() < 1){
+//     QSKIP("No MODBUS/TCP device found, or other error", SkipAll);
+//   }
 
   // Check that other scan method works
-  for(int i=0; i<portInfoList.size(); i++){
-    QVERIFY(portInfoList.at(i) != 0);
-    hosts << portInfoList.at(i)->portName();
-  }
-  qDebug() << "mdtPortManagerTest::modbusTcpPortTest(): scanning network (hosts: " << hosts << ")";
-  QCOMPARE(hosts.size(), portInfoList.size());
-  ///portInfoList2 = m.scan(hosts);
-  QCOMPARE(portInfoList2.size(), portInfoList.size());
+//   for(int i=0; i<portInfoList.size(); i++){
+//     QVERIFY(portInfoList.at(i) != 0);
+//     hosts << portInfoList.at(i)->portName();
+//   }
+//   qDebug() << "mdtPortManagerTest::modbusTcpPortTest(): scanning network (hosts: " << hosts << ")";
+//   QCOMPARE(hosts.size(), portInfoList.size());
+//   ///portInfoList2 = m.scan(hosts);
+//   QCOMPARE(portInfoList2.size(), portInfoList.size());
 
   // Check tha we can save scan result
-  QVERIFY(m.saveScanResult(portInfoList));
+  QVERIFY(m.saveDeviceAddressList(deviceAddresses));
+  ///QVERIFY(m.saveScanResult(portInfoList));
   // Rescan with cache file
+  deviceAddresses2 = m.readDeviceAddressList();
+  QCOMPARE(deviceAddresses2.size(), deviceAddresses.size());
   ///portInfoList2 = m.scan(m.readScanResult());
-  QCOMPARE(portInfoList2.size(), portInfoList.size());
+  ///QCOMPARE(portInfoList2.size(), portInfoList.size());
 
-  // Set the valid port info
-  validPortInfo = *portInfoList.at(0);
-  // Set the invalid port info - Assume wa have 255.255.255.0 netmask..
-  ipParts = validPortInfo.portName().split(".");
-  QCOMPARE(ipParts.size(), 4);
-  ipLeftPart = ipParts.at(0) + "." + ipParts.at(1) + "." + ipParts.at(2) + ".";
-  for(int i=1; i<255; i++){
-    ipRightPart = QString::number(i);
-    portName = ipLeftPart + ipRightPart + ":502";
-    // See if this IP existe in scan result
-    found = false;
-    for(int j=0; j<portInfoList.size(); j++){
-      if(portInfoList.at(j)->portName() == portName){
-        found = true;
-        break;
-      }
-    }
-    if(!found){
-      invalidPortInfo.setPortName(portName);
-      break;
-    }
-  }
-  qDebug() << "Invalid port name: " << invalidPortInfo.portName();
+  // Set the valid port info NOTE: adapter !!
+//   validPortInfo = *portInfoList.at(0);
+//   // Set the invalid port info - Assume wa have 255.255.255.0 netmask..
+//   ipParts = validPortInfo.portName().split(".");
+//   QCOMPARE(ipParts.size(), 4);
+//   ipLeftPart = ipParts.at(0) + "." + ipParts.at(1) + "." + ipParts.at(2) + ".";
+//   for(int i=1; i<255; i++){
+//     ipRightPart = QString::number(i);
+//     portName = ipLeftPart + ipRightPart + ":502";
+//     // See if this IP existe in scan result
+//     found = false;
+//     for(int j=0; j<portInfoList.size(); j++){
+//       if(portInfoList.at(j)->portName() == portName){
+//         found = true;
+//         break;
+//       }
+//     }
+//     if(!found){
+//       invalidPortInfo.setPortName(portName);
+//       break;
+//     }
+//   }
+//   qDebug() << "Invalid port name: " << invalidPortInfo.portName();
 
   // We not need the scan result anymore, free memory
-  qDeleteAll(portInfoList);
-  portInfoList.clear();
-  qDeleteAll(portInfoList2);
-  portInfoList2.clear();
+//   qDeleteAll(portInfoList);
+//   portInfoList.clear();
+//   qDeleteAll(portInfoList2);
+//   portInfoList2.clear();
 
   /*
    * Open/close test with valid Host
    */
-  m.setPortInfo(validPortInfo);
+  ///m.setPortInfo(validPortInfo);
+  QVERIFY(deviceAddresses.size() > 0);
+  da = deviceAddresses.at(0);
+  m.setPortName(da.tcpIpHostName() + ":" + QString::number(da.tcpIpPort()));
   QVERIFY(m.start());
   QVERIFY(m.isReady());
   m.stop();
@@ -439,7 +450,8 @@ void mdtPortManagerTest::modbusTcpPortTest()
   /*
    * Open/close test with invalid Host
    */
-  m.setPortInfo(invalidPortInfo);
+  ///m.setPortInfo(invalidPortInfo);
+  m.setPortName("0.2.5.8:502");
   QVERIFY(!m.start());
   QVERIFY(!m.isReady());
   QVERIFY(m.isClosed());
@@ -450,11 +462,13 @@ void mdtPortManagerTest::modbusTcpPortTest()
   /*
    * Open/close test with invalid + valid Host
    */
-  m.setPortInfo(invalidPortInfo);
+  ///m.setPortInfo(invalidPortInfo);
+  m.setPortName("0.2.5.8:502");
   QVERIFY(!m.start());
   QVERIFY(!m.isReady());
   QVERIFY(m.isClosed());
-  m.setPortInfo(validPortInfo);
+  ///m.setPortInfo(validPortInfo);
+  m.setPortName(da.tcpIpHostName() + ":" + QString::number(da.tcpIpPort()));
   QVERIFY(m.start());
   QVERIFY(m.isReady());
   m.stop();
@@ -464,7 +478,8 @@ void mdtPortManagerTest::modbusTcpPortTest()
   /*
    * Communication test
    */
-  m.setPortInfo(validPortInfo);
+  ///m.setPortInfo(validPortInfo);
+  m.setPortName(da.tcpIpHostName() + ":" + QString::number(da.tcpIpPort()));
   QVERIFY(m.start());
   QVERIFY(m.isReady());
 

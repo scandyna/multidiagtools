@@ -441,6 +441,14 @@ class mdtDeviceAddressList
     pvDeviceAddresses.emplace_back(address);
   }
 
+  /*! \brief Append a list of device addresses at the end of the list
+   */
+  void append(const mdtDeviceAddressList & addressList){
+    for(const auto & address : addressList.internalVector()){
+      pvDeviceAddresses.emplace_back(address);
+    }
+  }
+
   /*! \brief Access internal vector
    *
    * Can be used, for example, to iterate all addresses:

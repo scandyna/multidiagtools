@@ -80,6 +80,7 @@ mdtDeviceAddressList mdtModbusTcpPortManager::scan(const QList<mdtNetworkHost> &
   // Try each host ...
   for(const auto & host : hosts){
     if(pvAbortScan){
+      pvAbortScan = false;
       return deviceAddressList; /// \todo clear list ?
     }
     // Try to connect
@@ -102,6 +103,137 @@ mdtDeviceAddressList mdtModbusTcpPortManager::scan(const QList<mdtNetworkHost> &
   }
 
   return deviceAddressList;
+}
+
+mdtDeviceAddressList mdtModbusTcpPortManager::scan(const QNetworkInterface & iface, const mdtModbusHwNodeIdList& expectedHwNodeAddresses,
+                                                   quint16 port, int timeout )
+{
+  Q_ASSERT(isClosed());
+
+  quint32 subNet;
+  quint32 bCast;
+  QHostAddress firstIp;
+  quint32 firstIpV4;
+  QHostAddress lastIp;
+  quint32 lastIpV4;
+  QHostAddress currentIp;
+  QList<QNetworkAddressEntry> entries;
+  QList<mdtNetworkHost> hosts;
+  quint32 j;
+
+  // Get address entries of interface
+  entries = iface.addressEntries();
+  if(entries.size() < 1){
+    pvLastError.setError(tr("Interface ") + iface.name() + tr(" has no IP address"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtModbusTcpPortManager");
+    pvLastError.commit();
+    return mdtDeviceAddressList();
+  }
+  // Build the list of IPs
+  for(const auto & entry : entries){
+    // Check protocol
+    if(entry.broadcast().protocol() != QAbstractSocket::IPv4Protocol){
+      continue;
+    }
+    bCast = entry.broadcast().toIPv4Address();
+    subNet = bCast & entry.netmask().toIPv4Address();
+    // We need min. place for 2 machines in subnet
+    if((bCast-subNet-4) < 0){
+      pvLastError.setError(tr("Interface '") + iface.name() + tr("' has a subnet for less than 2 machines"), mdtError::Warning);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtModbusTcpPortManager");
+      pvLastError.commit();
+      continue;
+    }
+    // Extract first and last IPs
+    firstIp.setAddress(subNet+1);
+    lastIp.setAddress(bCast-1);
+    firstIpV4 = firstIp.toIPv4Address();
+    lastIpV4 = lastIp.toIPv4Address();
+    // Check that we have not to many hosts to scan
+    if((lastIpV4-firstIpV4) > 1000){
+      pvLastError.setError(tr("Interface '") + iface.name() + ("' has a subnet for more than 1000 machines (do you try to scan the planet ?)"), mdtError::Warning);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtModbusTcpPortManager");
+      pvLastError.commit();
+      return mdtDeviceAddressList();
+    }
+    // Build list of IP addresses and add to hosts
+    for(j = firstIpV4; j <= lastIpV4; ++j){
+      mdtNetworkHost host;
+      currentIp.setAddress(j);
+      host.hostName = currentIp.toString();
+      host.port = port;
+      hosts.append(host);
+    }
+  }
+
+  return scan(hosts, expectedHwNodeAddresses, timeout);
+}
+
+mdtDeviceAddressList mdtModbusTcpPortManager::scan(const QList<QNetworkInterface> & ifaces, const mdtModbusHwNodeIdList & expectedHwNodeAddresses,
+                                                   quint16 port, bool ignoreLoopback, int timeout)
+{
+  Q_ASSERT(isClosed());
+
+  mdtDeviceAddressList deviceAddressList;
+
+  for(const auto & iface : ifaces){
+    // Check about loopback
+    if(ignoreLoopback){
+      if(iface.flags() & QNetworkInterface::IsLoopBack){
+        continue;
+      }
+    }
+    // Scan interface and add to list
+    deviceAddressList.append(scan(iface, expectedHwNodeAddresses, port, timeout));
+  }
+
+  return deviceAddressList;
+}
+
+mdtDeviceAddressList mdtModbusTcpPortManager::scan(const mdtDeviceAddressList & addressList, int timeout)
+{
+  mdtDeviceAddressList connectedDeviceAddressList;
+  mdtModbusHwNodeId nid, connectedDeviceNid;
+
+  for(const auto & address : addressList.internalVector()){
+    if( (address.portType() == mdtDeviceAddress::PortType_t::TCPIP) && (address.deviceType() == mdtDeviceAddress::DeviceType_t::MODBUS) ){
+      if(pvAbortScan){
+        pvAbortScan = false;
+        return connectedDeviceAddressList; /// \todo clear list ?
+      }
+      // Try to connect
+      if(tryToConnect(address.tcpIpHostName(), address.tcpIpPort(), timeout)){
+        // If given device address contains a hardware node ID, check that device's one matches
+        nid = address.modbusHwNodeId();
+        if(!nid.isNull()){
+          connectedDeviceNid = getHardwareNodeAddress(nid.bitsCount(), nid.firstBit());
+          if(connectedDeviceNid.isNull()){
+            return connectedDeviceAddressList; /// \todo clear list ?
+          }
+          if(connectedDeviceNid.id() == nid.id()){
+            connectedDeviceAddressList.append(address);
+          }
+        }else{
+          // No hardware node ID checking needed, simply add to list
+          connectedDeviceAddressList.append(address);
+        }
+      }
+    }
+  }
+
+  return connectedDeviceAddressList;
+}
+
+mdtDeviceAddressList mdtModbusTcpPortManager::scanFromKnownHostsFile(int timeout)
+{
+  mdtDeviceAddressList addressList;
+
+  addressList = readDeviceAddressList();
+  if(addressList.isEmpty()){
+    return addressList;
+  }
+
+  return scan(addressList, timeout);
 }
 
 // QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QStringList &hosts, int timeout, const QList<int> &expectedHwNodeAddresses, int bitsCount, int bitsCountStartFrom)
@@ -313,6 +445,7 @@ bool mdtModbusTcpPortManager::tryToConnect(const QString &hostName, quint16 port
   timeoutTimer.setSingleShot(true);
   connect(&timeoutTimer, SIGNAL(timeout()), this, SLOT(abortTryToConnect()));
   emit(statusMessageChanged(tr("Trying host ") + hostName + "  , port " + QString::number(port), "", 500));
+  qDebug() << "Trying host " << hostName << ":" << port << " (time: " << timeout << "[ms]) " << " ...";
   socket.connectToHost(hostName, port);
   pvAbortTryToConnect = false;
   timeoutTimer.start(timeout);
@@ -341,6 +474,25 @@ bool mdtModbusTcpPortManager::tryToConnect(const QString &hostName, quint16 port
   }
 
   return ok;
+}
+
+bool mdtModbusTcpPortManager::saveDeviceAddressList(mdtDeviceAddressList& addressList)
+{
+  if(!addressList.saveToFile(mdtApplication::cacheDir().absolutePath() + "/" + pvKnownHostsFileName)){
+    pvLastError = addressList.lastError();
+  }
+  return true;
+}
+
+mdtDeviceAddressList mdtModbusTcpPortManager::readDeviceAddressList()
+{
+  mdtDeviceAddressList addressList;
+
+  if(!addressList.readFromFile(mdtApplication::cacheDir().absolutePath() + "/" + pvKnownHostsFileName)){
+    pvLastError = addressList.lastError();
+  }
+
+  return addressList;
 }
 
 bool mdtModbusTcpPortManager::saveScanResult(const QList<mdtPortInfo*> scanResult)

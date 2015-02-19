@@ -61,19 +61,19 @@ class mdtDeviceModbus : public mdtMultiIoDevice
    * \param bitsCount See mdtModbusTcpPortManager::getHardwareNodeAddress() .
    * \param startFrom See mdtModbusTcpPortManager::getHardwareNodeAddress() .
    */
-  void setHardwareNodeId(int hwNodeId, int bitsCount, int startFrom = 0);
+  ///void setHardwareNodeId(int hwNodeId, int bitsCount, int startFrom = 0);
 
   /*! \brief Clear hardware node id
    *
    * \sa setHardwareNodeId() .
    */
-  void clearHardwareNodeId();
+  ///void clearHardwareNodeId();
 
   /*! \brief Get hardware node id
    *
    * \sa setHardwareNodeId() .
    */
-  QVariant hardwareNodeId() const;
+  ///QVariant hardwareNodeId() const;
 
   /*! \brief Connect to physical device
    *
@@ -379,9 +379,11 @@ class mdtDeviceModbus : public mdtMultiIoDevice
 
   Q_DISABLE_COPY(mdtDeviceModbus);
 
+/**
   QVariant pvHardwareNodeId;
   int pvHardwareNodeIdBitsCount;
   int pvHardwareNodeIdBitsStartFrom;
+*/
 };
 
 #endif  // #ifndef MDT_DEVICE_MODBUS_H

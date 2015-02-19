@@ -437,7 +437,7 @@ void mdtTtCableChecker::createIoNodes()
     ///nodeIos = new mdtDeviceIos(this);
     name = "I/O node ID " + hwNodeIdList.at(i).toString();
     device->setName(name);
-    device->setHardwareNodeId(hwNodeIdList.at(i).toInt(), 8, 0);
+    ///device->setHardwareNodeId(hwNodeIdList.at(i).toInt(), 8, 0);
     ///device->setIos(nodeIos); \todo Corriger !!
     pvModbusIoNodes.append(device);
     addDeviceStatusWidget(device, name);
@@ -553,14 +553,14 @@ bool mdtTtCableChecker::setupNodes(const QVariant & testItemId)
       qDebug() << "CC, rec: " << rec;
       ///setupData = setupDataList.at(k);
       /// \todo Check data validity !
-      if(rec.value("NodeId") == ioNode->hardwareNodeId()){
-        if(ioNode->setDigitalOutputValueAt(rec.value("IoPosition").toInt(), rec.value("State").toBool(), false, false) < 0){
-          pvLastError.setError(tr("Cannot set digital output ") + rec.value("SchemaPosition").toString() + tr(" for ") + ioNode->name(), mdtError::Error);
-          MDT_ERROR_SET_SRC(pvLastError, "mdtTtCableChecker");
-          pvLastError.commit();
-          return false;
-        }
-      }
+//       if(rec.value("NodeId") == ioNode->hardwareNodeId()){
+//         if(ioNode->setDigitalOutputValueAt(rec.value("IoPosition").toInt(), rec.value("State").toBool(), false, false) < 0){
+//           pvLastError.setError(tr("Cannot set digital output ") + rec.value("SchemaPosition").toString() + tr(" for ") + ioNode->name(), mdtError::Error);
+//           MDT_ERROR_SET_SRC(pvLastError, "mdtTtCableChecker");
+//           pvLastError.commit();
+//           return false;
+//         }
+//       }
       /**
       if(setupData.nodeId() == ioNode->hardwareNodeId()){
         if(ioNode->setDigitalOutputValue(setupData.schemaPosition().toString(), false, false, false) < 0){

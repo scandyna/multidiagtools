@@ -178,7 +178,7 @@ void mdtModbusIoTool::connectToNode()
   setStateConnectingToNode();
   
   // Try to find and connect to device
-  pvDeviceModbusWago->setHardwareNodeId(sbHwNodeId->value(), 8, 0);
+  ///pvDeviceModbusWago->setHardwareNodeId(sbHwNodeId->value(), 8, 0);
   if(pvDeviceModbusWago->connectToDevice(expectedHwNodeAddresses) != mdtAbstractPort::NoError){
     pvStatusWidget->setPermanentText(tr("Device with HW node ID ") + QString::number(sbHwNodeId->value()) + tr(" not found"));
     setStateConnectingToNodeFinished();

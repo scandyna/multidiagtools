@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -186,7 +186,9 @@ void mdtPortThreadHelperSocket::onSocketError(QAbstractSocket::SocketError socke
         e.commit();
       }
       // Reconnect
-      onSocketDisconnected();
+      ///onSocketDisconnected();
+      // Notify
+      notifyError(mdtAbstractPort::PortAccess);
       break;
     case QAbstractSocket::RemoteHostClosedError:
       // Will call onSocketDisconnected()
