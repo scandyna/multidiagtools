@@ -136,6 +136,7 @@ bool mdtTtBasicTester::connectToInstruments()
 //     return false;
 //   }
   // Connect to coupler
+  /**
   if(coupler->connectToDevice(mdtDeviceInfo()) != mdtAbstractPort::NoError){
     pvLastError.setError(tr("Cannot connect to ") + coupler->name(), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtBasicTester");
@@ -143,6 +144,7 @@ bool mdtTtBasicTester::connectToInstruments()
     displayLastError();
     return false;
   }
+  */
   if(!coupler->detectIos()){
     pvLastError = coupler->lastError();
     displayLastError();

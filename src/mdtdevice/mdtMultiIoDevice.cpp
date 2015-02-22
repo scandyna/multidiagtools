@@ -181,7 +181,7 @@ mdtValue mdtMultiIoDevice::getAnalogInputValue(int address, bool queryDevice, bo
   // Get internal I/O object
   ai = pvIos->analogInputAtAddress(address);
   if(ai == 0){
-    pvLastError.setError(tr("Device ") + name() + tr(": no analog input assigned to address ") + QString::number(address), mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr(": no analog input assigned to address ") + QString::number(address), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
     return mdtValue();
@@ -199,7 +199,7 @@ mdtValue mdtMultiIoDevice::getAnalogInputValueAt(int position, bool queryDevice,
   }
   // Check indexes
   if((position < 0)||(position >= pvIos->analogInputs().size())){
-    pvLastError.setError(tr("Device ") + name() + tr(": position ") + QString::number(position) + tr(" is out of range"), mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr(": position ") + QString::number(position) + tr(" is out of range"), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
     return mdtValue();
@@ -207,7 +207,7 @@ mdtValue mdtMultiIoDevice::getAnalogInputValueAt(int position, bool queryDevice,
   // Get internal I/O object
   ai = pvIos->analogInputs().at(position);
   if(ai == 0){
-    pvLastError.setError(tr("Device ") + name() + tr(": no analog input assigned at position ") + QString::number(position), mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr(": no analog input assigned at position ") + QString::number(position), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
     return mdtValue();
@@ -226,7 +226,7 @@ mdtValue mdtMultiIoDevice::getAnalogInputValue(const QString &labelShort, bool q
   // Get internal I/O object
   ai = pvIos->analogInputWithLabelShort(labelShort);
   if(ai == 0){
-    pvLastError.setError(tr("Device ") + name() + tr(": no analog input with label short ") + labelShort, mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr(": no analog input with label short ") + labelShort, mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
     return mdtValue();
@@ -333,7 +333,7 @@ mdtValue mdtMultiIoDevice::getAnalogOutputValue(int addressRead, bool queryDevic
   // Get internal I/O object
   ao = pvIos->analogOutputAtAddressRead(addressRead);
   if(ao == 0){
-    pvLastError.setError(tr("Device ") + name() + tr(": no analog output assigned to address ") + QString::number(addressRead), mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr(": no analog output assigned to address ") + QString::number(addressRead), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
     return mdtValue();
@@ -351,7 +351,7 @@ mdtValue mdtMultiIoDevice::getAnalogOutputValueAt(int position, bool queryDevice
   }
   // Check indexes
   if((position < 0)||(position >= pvIos->analogOutputs().size())){
-    pvLastError.setError(tr("Device ") + name() + tr(": position ") + QString::number(position) + tr(" is out of range"), mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr(": position ") + QString::number(position) + tr(" is out of range"), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
     return mdtValue();
@@ -359,7 +359,7 @@ mdtValue mdtMultiIoDevice::getAnalogOutputValueAt(int position, bool queryDevice
   // Get internal I/O object
   ao = pvIos->analogOutputs().at(position);
   if(ao == 0){
-    pvLastError.setError(tr("Device ") + name() + tr(": no analog output assigned at position ") + QString::number(position), mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr(": no analog output assigned at position ") + QString::number(position), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
     return mdtValue();
@@ -378,7 +378,7 @@ mdtValue mdtMultiIoDevice::getAnalogOutputValue(const QString &labelShort, bool 
   // Get internal I/O object
   ao = pvIos->analogOutputWithLabelShort(labelShort);
   if(ao == 0){
-    pvLastError.setError(tr("Device ") + name() + tr(": no analog output assigned with label ") + labelShort, mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr(": no analog output assigned with label ") + labelShort, mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
     return mdtValue();
@@ -486,7 +486,7 @@ int mdtMultiIoDevice::setAnalogOutputValue(int addressWrite, const mdtValue &val
   // Get I/O object
   analogOutput = pvIos->analogOutputAtAddressWrite(addressWrite);
   if(analogOutput == 0){
-    pvLastError.setError(tr("Device ") + name() + tr(": no analog output assigned to address ") + QString::number(addressWrite), mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr(": no analog output assigned to address ") + QString::number(addressWrite), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
     return -1;
@@ -504,7 +504,7 @@ int mdtMultiIoDevice::setAnalogOutputValueAt(int position, const mdtValue &value
   }
   // Check indexes
   if((position < 0)||(position >= pvIos->analogOutputs().size())){
-    pvLastError.setError(tr("Device ") + name() + tr(": position ") + QString::number(position) + tr(" is out of range"), mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr(": position ") + QString::number(position) + tr(" is out of range"), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
     return -1;
@@ -512,7 +512,7 @@ int mdtMultiIoDevice::setAnalogOutputValueAt(int position, const mdtValue &value
   // Get internal I/O object
   analogOutput = pvIos->analogOutputs().at(position);
   if(analogOutput == 0){
-    pvLastError.setError(tr("Device ") + name() + tr(": no analog output assigned at position ") + QString::number(position), mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr(": no analog output assigned at position ") + QString::number(position), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
     return -1;
@@ -531,7 +531,7 @@ int mdtMultiIoDevice::setAnalogOutputValue(const QString &labelShort, const mdtV
   // Get I/O object
   analogOutput = pvIos->analogOutputWithLabelShort(labelShort);
   if(analogOutput == 0){
-    pvLastError.setError(tr("Device ") + name() + tr(": no analog output found with label short ") + labelShort, mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr(": no analog output found with label short ") + labelShort, mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
     return -1;
@@ -640,7 +640,7 @@ mdtValue mdtMultiIoDevice::getDigitalInputValue(int address, bool queryDevice, b
   // Get I/O object
   digitalInput = pvIos->digitalInputAtAddress(address);
   if(digitalInput == 0){
-    pvLastError.setError(tr("Device ") + name() + tr(": no digital input assigned to address ") + QString::number(address), mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr(": no digital input assigned to address ") + QString::number(address), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
     return mdtValue();
@@ -658,7 +658,7 @@ mdtValue mdtMultiIoDevice::getDigitalInputValueAt(int position, bool queryDevice
   }
   // Check indexes
   if((position < 0)||(position >= pvIos->digitalInputs().size())){
-    pvLastError.setError(tr("Device ") + name() + tr(": position ") + QString::number(position) + tr(" is out of range"), mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr(": position ") + QString::number(position) + tr(" is out of range"), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
     return mdtValue();
@@ -666,7 +666,7 @@ mdtValue mdtMultiIoDevice::getDigitalInputValueAt(int position, bool queryDevice
   // Get internal I/O object
   digitalInput = pvIos->digitalInputs().at(position);
   if(digitalInput == 0){
-    pvLastError.setError(tr("Device ") + name() + tr(": no digital input assigned at position ") + QString::number(position), mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr(": no digital input assigned at position ") + QString::number(position), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
     return mdtValue();
@@ -685,7 +685,7 @@ mdtValue mdtMultiIoDevice::getDigitalInputValue(const QString &labelShort, bool 
   // Get I/O object
   digitalInput = pvIos->digitalInputWithLabelShort(labelShort);
   if(digitalInput == 0){
-    pvLastError.setError(tr("Device ") + name() + tr(": no digital input found with label short ") + labelShort, mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr(": no digital input found with label short ") + labelShort, mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
     return mdtValue();
@@ -793,7 +793,7 @@ mdtValue mdtMultiIoDevice::getDigitalOutputValue(int addressRead, bool queryDevi
   // Get I/O object
   digitalOutput = pvIos->digitalOutputAtAddressRead(addressRead);
   if(digitalOutput == 0){
-    pvLastError.setError(tr("Device ") + name() + tr(": no digital output assigned to address ") + QString::number(addressRead), mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr(": no digital output assigned to address ") + QString::number(addressRead), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
     return mdtValue();
@@ -811,7 +811,7 @@ mdtValue mdtMultiIoDevice::getDigitalOutputValueAt(int position, bool queryDevic
   }
   // Check indexes
   if((position < 0)||(position >= pvIos->digitalOutputs().size())){
-    pvLastError.setError(tr("Device ") + name() + tr(": position ") + QString::number(position) + tr(" is out of range"), mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr(": position ") + QString::number(position) + tr(" is out of range"), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
     return mdtValue();
@@ -819,7 +819,7 @@ mdtValue mdtMultiIoDevice::getDigitalOutputValueAt(int position, bool queryDevic
   // Get internal I/O object
   digitalOutput = pvIos->digitalOutputs().at(position);
   if(digitalOutput == 0){
-    pvLastError.setError(tr("Device ") + name() + tr(": no digital output assigned at position ") + QString::number(position), mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr(": no digital output assigned at position ") + QString::number(position), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
     return mdtValue();
@@ -838,7 +838,7 @@ mdtValue mdtMultiIoDevice::getDigitalOutputValue(const QString &labelShort, bool
   // Get I/O object
   digitalOutput = pvIos->digitalOutputWithLabelShort(labelShort);
   if(digitalOutput == 0){
-    pvLastError.setError(tr("Device ") + name() + tr(": no digital output found with label short ") + labelShort, mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr(": no digital output found with label short ") + labelShort, mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
     return mdtValue();
@@ -946,7 +946,7 @@ int mdtMultiIoDevice::setDigitalOutputValue(int addressWrite, const mdtValue &va
   // Get I/O object
   digitalOutput = pvIos->digitalOutputAtAddressWrite(addressWrite);
   if(digitalOutput == 0){
-    pvLastError.setError(tr("Device ") + name() + tr(": no digital output assigned to address ") + QString::number(addressWrite), mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr(": no digital output assigned to address ") + QString::number(addressWrite), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
     return -1;
@@ -964,7 +964,7 @@ int mdtMultiIoDevice::setDigitalOutputValueAt(int position, const mdtValue &valu
   }
   // Check indexes
   if((position < 0)||(position >= pvIos->digitalOutputs().size())){
-    pvLastError.setError(tr("Device ") + name() + tr(": position ") + QString::number(position) + tr(" is out of range"), mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr(": position ") + QString::number(position) + tr(" is out of range"), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
     return -1;
@@ -972,7 +972,7 @@ int mdtMultiIoDevice::setDigitalOutputValueAt(int position, const mdtValue &valu
   // Get internal I/O object
   digitalOutput = pvIos->digitalOutputs().at(position);
   if(digitalOutput == 0){
-    pvLastError.setError(tr("Device ") + name() + tr(": no digital output assigned at position ") + QString::number(position), mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr(": no digital output assigned at position ") + QString::number(position), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
     return -1;
@@ -991,7 +991,7 @@ int mdtMultiIoDevice::setDigitalOutputValue(const QString &labelShort, const mdt
   // Get I/O object
   digitalOutput = pvIos->digitalOutputWithLabelShort(labelShort);
   if(digitalOutput == 0){
-    pvLastError.setError(tr("Device ") + name() + tr(": no digital output found with label short ") + labelShort, mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr(": no digital output found with label short ") + labelShort, mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
     return -1;

@@ -446,12 +446,14 @@ bool mdtTtTestCableOffsetTool::connectToInstruments()
   }
   */
   // Connect to coupler
+  /**
   if(coupler->connectToDevice(mdtDeviceInfo()) != mdtAbstractPort::NoError){
     pvLastError.setError(tr("Cannot connect to ") + coupler->name(), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestCableOffsetTool");
     pvLastError.commit();
     return false;
   }
+  */
   if(!coupler->detectIos()){
     pvLastError = coupler->lastError();
     return false;
@@ -463,12 +465,14 @@ bool mdtTtTestCableOffsetTool::connectToInstruments()
     return false;
   }
   // Reset multimeter to factory state
+  /**
   if(pvMultimeter->sendCommand("*RST") < 0){
     pvLastError.setError(tr("*RST failed on device ") + pvMultimeter->name(), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestCableOffsetTool");
     pvLastError.commit();
     return false;
   }
+  */
 
   return true;
 }
@@ -491,11 +495,13 @@ void mdtTtTestCableOffsetTool::disconnectFromInstruments()
   }
   // Reset multimeter to factory state
   /// \todo Why ??
+  /**
   if(pvMultimeter->sendCommand("*RST") < 0){
     pvLastError.setError(tr("*RST failed on device ") + pvMultimeter->name(), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestCableOffsetTool");
     pvLastError.commit();
   }
+  */
   /// \todo Close multimeter !!
 
   // Disconnect

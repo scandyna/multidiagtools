@@ -92,6 +92,8 @@ void mdtDeviceTest::deviceBaseTest()
   mdtDevice dev;
 
   // Initial states
+  QVERIFY(!dev.isReady());
+  QCOMPARE(dev.alias(), QString(""));
   ///QVERIFY(dev.state() == mdtDevice::Disconnected);
   ///QVERIFY(dev.state() == mdtPortManager::Disconnected);
 
@@ -2201,9 +2203,11 @@ void mdtDeviceTest::modbusWagoTest()
   dw.setIosWidget(iosw);
   dw.show();
 
+  /**
   if(d.connectToDevice(mdtDeviceInfo()) != mdtAbstractPort::NoError){;
     QSKIP("No Wago 750 device found, or other error", SkipAll);
   }
+  */
   QVERIFY(d.portManager()->isReady());
   qDebug() << "Analog outputs: " << d.analogOutputsCount();
   qDebug() << "Analog inputs: " << d.analogInputsCount();

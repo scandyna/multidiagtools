@@ -109,6 +109,7 @@ mdtAbstractPort::error_t mdtDeviceModbus::connectToDevice(const mdtPortInfo & po
   return mdtAbstractPort::NoError;
 }
 
+/**
 mdtAbstractPort::error_t mdtDeviceModbus::connectToDevice(const mdtDeviceInfo &devInfo)
 {
   QList<mdtPortInfo*> portInfoList;
@@ -149,6 +150,7 @@ mdtAbstractPort::error_t mdtDeviceModbus::connectToDevice(const mdtDeviceInfo &d
 
   return mdtAbstractPort::PortNotFound;
 }
+*/
 
 mdtAbstractPort::error_t mdtDeviceModbus::connectToDevice(const QList<mdtPortInfo*> &scanResult, int hardwareNodeId, int bitsCount, int startFrom)
 {
@@ -233,11 +235,13 @@ mdtAbstractPort::error_t mdtDeviceModbus::connectToDevice(const QList<int> & exi
   return portError;
 }
 
+/**
 mdtAbstractPort::error_t mdtDeviceModbus::connectToDevice()
 {
   qDebug() << "mdtDeviceModbus::connectToDevice() (without argument) is not implemented yet, sorry :-/";
   return mdtAbstractPort::UnhandledError;
 }
+*/
 
 bool mdtDeviceModbus::getRegisterValues(int address, int n)
 {

@@ -44,7 +44,7 @@ namespace mdtDeviceContainerWidgetPrivate
     Q_ASSERT(_device);
 
     device = _device;
-    lbDeviceName->setText(device->name());
+    ///lbDeviceName->setText(device->name());
     ldState->setFixedSize(15, 15);
     qDebug() << "mdtDeviceContainerWidgetItem::mdtDeviceContainerWidgetItem() - Functionnality not implemented yet ...";
     /**

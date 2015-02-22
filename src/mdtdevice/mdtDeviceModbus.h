@@ -95,7 +95,7 @@ class mdtDeviceModbus : public mdtMultiIoDevice
    * \param devInfo Requested device's informations (can be empty, no information is used in current version).
    * \return A error listed in mdtAbstractPort::error_t (NoError on success)
    */
-  mdtAbstractPort::error_t connectToDevice(const mdtDeviceInfo &devInfo);
+  ///mdtAbstractPort::error_t connectToDevice(const mdtDeviceInfo &devInfo);
 
   /*! \brief Search and connect to physical device.
    *
@@ -138,7 +138,7 @@ class mdtDeviceModbus : public mdtMultiIoDevice
    *
    * \todo Not implemented yet .
    */
-  mdtAbstractPort::error_t connectToDevice();
+  ///mdtAbstractPort::error_t connectToDevice();
 
   /*! \brief Helper method for register service
    *

@@ -32,7 +32,21 @@ class mdtPortManager;
 
 /*! \brief Base class for a device that contains multiple I/Os
  *
- * 
+ * Notes about I/O container:
+ *  In first version of mdtDevice, I/O container (mdtDeviceIos object) was handled by caller.
+ *  Experience showed that this was a bad solution.
+ *  Now, the container is created, and destroyed, by mdtDevice itself.
+ *  To deal with I/O container, some methods are available:
+ *  - addInput(mdtAnalogIo *) : add a analog input.
+ *  - addInputs(QList<mdtAnalogIo*> &) : add a list of analog inputs.
+ *  - addOutput(mdtAnalogIo *) : add a analog output.
+ *  - addOutputs(QList<mdtAnalogIo*> &) : add a list of analog outputs.
+ *  - addInput(mdtDigitalIo *) : add a digital input.
+ *  - addInputs(QList<mdtDigitalIo*> &) : add a list of digital inputs.
+ *  - addOutput(mdtDigitalIo *) : add a digital output.
+ *  - addOutputs(QList<mdtDigitalIo*> &) : add a list of digital outputs.
+ *  - ios() : access I/O container.
+ *  - deleteIos() : delete all I/O in container.
  */
 class mdtMultiIoDevice : public mdtDevice
 {

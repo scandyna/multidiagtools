@@ -906,19 +906,23 @@ bool mdtTtBasicTestNodeCalibrationTool::connectToInstruments()
     return false;
   }
   // Connect to pvMultimeter
+  /**
   if(!pvMultimeter->connectToDevice()){
     pvLastError.setError(tr("Cannot connect to ") + pvMultimeter->name(), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtBasicTestNodeCalibrationTool");
     pvLastError.commit();
     return false;
   }
+  */
   // Connect to coupler
+  /**
   if(coupler->connectToDevice(mdtDeviceInfo()) != mdtAbstractPort::NoError){
     pvLastError.setError(tr("Cannot connect to ") + coupler->name(), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtBasicTestNodeCalibrationTool");
     pvLastError.commit();
     return false;
   }
+  */
   if(!coupler->detectIos()){
     pvLastError = coupler->lastError();
     return false;
@@ -930,12 +934,14 @@ bool mdtTtBasicTestNodeCalibrationTool::connectToInstruments()
     return false;
   }
   // Reset pvMultimeter to factory state
+  /**
   if(pvMultimeter->sendCommand("*RST") < 0){
     pvLastError.setError(tr("*RST failed on device ") + pvMultimeter->name(), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtBasicTestNodeCalibrationTool");
     pvLastError.commit();
     return false;
   }
+  */
 
   return true;
 }

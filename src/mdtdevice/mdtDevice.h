@@ -37,9 +37,10 @@
 #include <QList>
 
 class QTimer;
-///class mdtDeviceIosSegment;
 
 /*! \brief Base class for a device connected to a port
+ *
+ * \todo This detailed description is obselete !
  *
  * Querying a device can be done several ways.
  *  Some devices sends a confirmation after each query.
@@ -89,22 +90,6 @@ class QTimer;
  * A device can have several states (ready, busy, disconnected, ...). To help the application programmer
  *  to keep consistency, this states are updated in this class using mdtPortManager 's state machine.
  *  This state machine is based on QStateMachine.
- *
- * Notes about I/O container:
- *  In first version of mdtDevice, I/O container (mdtDeviceIos object) was handled by caller.
- *  Experience showed that this was a bad solution.
- *  Now, the container is created, and destroyed, by mdtDevice itself.
- *  To deal with I/O container, some methods are available:
- *  - addInput(mdtAnalogIo *) : add a analog input.
- *  - addInputs(QList<mdtAnalogIo*> &) : add a list of analog inputs.
- *  - addOutput(mdtAnalogIo *) : add a analog output.
- *  - addOutputs(QList<mdtAnalogIo*> &) : add a list of analog outputs.
- *  - addInput(mdtDigitalIo *) : add a digital input.
- *  - addInputs(QList<mdtDigitalIo*> &) : add a list of digital inputs.
- *  - addOutput(mdtDigitalIo *) : add a digital output.
- *  - addOutputs(QList<mdtDigitalIo*> &) : add a list of digital outputs.
- *  - ios() : access I/O container.
- *  - deleteIos() : delete all I/O in container.
  */
 class mdtDevice : public QObject
 {
@@ -137,19 +122,19 @@ class mdtDevice : public QObject
    *
    * Will also call nameChangedEvent()
    */
-  void setName(const QString & name);
+  ///void setName(const QString & name);
 
   /*! \brief Get device name
    */
-  QString name() const;
+  ///QString name() const;
 
   /*! \brief Set device identification
    */
-  void setIdentification(const QVariant & id);
+  ///void setIdentification(const QVariant & id);
 
   /*! \brief Get device identification
    */
-  inline QVariant identification() const { return pvIdentification; }
+  ///inline QVariant identification() const { return pvIdentification; }
 
   /*! \brief Search and connect to physical device.
    *
@@ -166,10 +151,9 @@ class mdtDevice : public QObject
 
   /*! \brief Connect to physical device
    *
-   * Note: default implementation does nothing and returns allways false.
-   *        See subclass documentation for more details.
+   * Will update deviceAddress and call connectToDeviceImpl().
    */
-  virtual bool connectToDevice(const mdtDeviceAddress & address);
+  bool connectToDevice(const mdtDeviceAddress & address);
 
   /*! \brief Disconnect from device
    *
@@ -178,6 +162,20 @@ class mdtDevice : public QObject
    * Will also call disconnectFromDeviceEvent().
    */
   void disconnectFromDevice();
+
+  /*! \brief Get device address
+   */
+  mdtDeviceAddress deviceAddress() const
+  {
+    return pvDeviceAddress;
+  }
+
+  /*! \brief Get device alias
+   */
+  QString alias() const
+  {
+    return pvDeviceAddress.alias();
+  }
 
   /*! \brief Set back to ready state timeout
    *
@@ -259,11 +257,12 @@ class mdtDevice : public QObject
   /*! \brief Get device identification string
    *
    * Can be used for error messages.
-   *  Returns a string with \"Device 'deviceName' : \"
+   *  Returns a string with \"Device 'alias' : \"
    */
   QString deviceIdString() const
   {
-    return tr("Device") + " '" + name() + "' : ";
+    ///return tr("Device") + " '" + name() + "' : ";
+    return tr("Device") + " '" + alias() + "' : ";
   }
 
   /*! \brief Last error object
@@ -300,6 +299,17 @@ class mdtDevice : public QObject
    */
   virtual void stateChangedEvent(State_t newState)
   {
+  }
+
+  /*! \brief Connect to physical device - implementation
+   *
+   * This function is called by connectToDevice() once device address was set.
+   *  Subclass should implement this function.
+   *  This default implementation does nothing and allways returns false.
+   */
+  virtual bool connectToDeviceImpl(const mdtDeviceAddress & address)
+  {
+    return false;
   }
 
   /*! \brief Called by disconnectFromDevice()
@@ -358,8 +368,9 @@ class mdtDevice : public QObject
 
   Q_DISABLE_COPY(mdtDevice);
 
-  QString pvName;
-  QVariant pvIdentification;
+  mdtDeviceAddress pvDeviceAddress;
+  ///QString pvName;
+  ///QVariant pvIdentification;
   State_t pvCurrentState;
   QTimer *pvQueryTimer;
   bool pvAutoQueryEnabled;  // Flag used for state handling

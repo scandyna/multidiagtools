@@ -402,7 +402,7 @@ bool mdtTtCableChecker::setupTestItemTable()
 void mdtTtCableChecker::createMultimeter()
 {
   pvMultimeter = new mdtDeviceU3606A;
-  pvMultimeter->setName("U3606A");
+  ///pvMultimeter->setName("U3606A");
   ///addDeviceStatusWidget(pvMultimeter, "U3606A");
 }
 
@@ -436,7 +436,7 @@ void mdtTtCableChecker::createIoNodes()
     device = new mdtDeviceModbusWago;
     ///nodeIos = new mdtDeviceIos(this);
     name = "I/O node ID " + hwNodeIdList.at(i).toString();
-    device->setName(name);
+    ///device->setName(name);
     ///device->setHardwareNodeId(hwNodeIdList.at(i).toInt(), 8, 0);
     ///device->setIos(nodeIos); \todo Corriger !!
     pvModbusIoNodes.append(device);
@@ -490,6 +490,7 @@ bool mdtTtCableChecker::connectToInstruments()
     ioNode = pvModbusIoNodes.at(i);
     Q_ASSERT(ioNode != 0);
     // Connect
+    /**
     if(ioNode->connectToDevice(hwNodeIdList) != mdtAbstractPort::NoError){
       pvLastError.setError(tr("Cannot connect to ") + ioNode->name(), mdtError::Error);
       MDT_ERROR_SET_SRC(pvLastError, "mdtTtCableChecker");
@@ -497,7 +498,9 @@ bool mdtTtCableChecker::connectToInstruments()
       disconnectFromInstruments();
       return false;
     }
+    */
     // Setup I/Os
+    /**
     if(!ioNode->detectIos()){
       pvLastError.setError(tr("Cannot detect I/Os in ") + ioNode->name(), mdtError::Error);
       MDT_ERROR_SET_SRC(pvLastError, "mdtTtCableChecker");
@@ -505,6 +508,7 @@ bool mdtTtCableChecker::connectToInstruments()
       disconnectFromInstruments();
       return false;
     }
+    */
     ///ioNode->setIos(ioNode->ios(), true); \todo Corriger
   }
 
@@ -573,12 +577,14 @@ bool mdtTtCableChecker::setupNodes(const QVariant & testItemId)
       */
     }
     // Send query to node
+    /**
     if(ioNode->setDigitalOutputs(true) < 0){
       pvLastError.setError(tr("Cannot set digital outputs to ") + ioNode->name(), mdtError::Error);
       MDT_ERROR_SET_SRC(pvLastError, "mdtTtCableChecker");
       pvLastError.commit();
       return false;
     }
+    */
   }
   // We wait some time to be shure that relays are set
   if(ioNode != 0){

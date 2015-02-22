@@ -43,7 +43,7 @@ mdtModbusIoTool::mdtModbusIoTool(QWidget *parent, Qt::WindowFlags flags)
 
   // Setup device
   pvDeviceModbusWago = new mdtDeviceModbusWago(this);
-  pvDeviceModbusWago->setName("Wago I/O 750");
+  ///pvDeviceModbusWago->setName("Wago I/O 750");
   // Setup I/Os widget
   pvDeviceIosWidget = new mdtDeviceIosWidget;
   saIos->setWidget(pvDeviceIosWidget);

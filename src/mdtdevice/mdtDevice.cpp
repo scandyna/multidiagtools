@@ -33,7 +33,7 @@ mdtDevice::mdtDevice(QObject *parent)
   pvBackToReadyStateTimeout = -1;
 //   pvBackToReadyStateTimer = new QTimer(this);
 //   pvBackToReadyStateTimer->setSingleShot(true);
-  setName(tr("Unknown"));
+  ///setName(tr("Unknown"));
   pvAutoQueryEnabled = false;
   pvQueryTimer = new QTimer(this);
   ///currentState() = mdtPortManager::Disconnected;
@@ -50,6 +50,7 @@ mdtDevice::~mdtDevice()
   delete pvQueryTimer;
 }
 
+/**
 void mdtDevice::setName(const QString &name)
 {
   pvName = name;
@@ -60,20 +61,23 @@ QString mdtDevice::name() const
 {
   return pvName;
 }
-
+*/
+/**
 void mdtDevice::setIdentification(const QVariant & id)
 {
   pvIdentification = id;
 }
+*/
 
 // mdtAbstractPort::error_t mdtDevice::connectToDevice(const mdtDeviceInfo &devInfo)
 // {
 //   return mdtAbstractPort::UnhandledError;
 // }
 
-bool mdtDevice::connectToDevice(const mdtDeviceAddress& address)
+bool mdtDevice::connectToDevice(const mdtDeviceAddress & address)
 {
-  return false;
+  pvDeviceAddress = address;
+  return connectToDeviceImpl(pvDeviceAddress);
 }
 
 

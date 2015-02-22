@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -51,8 +51,8 @@ class mdtDeviceContainer : public QObject
   template <typename T> std::shared_ptr<T> addDevice(const QVariant & identification, const QString & name)
   {
     std::shared_ptr<T> dev(new T);
-    dev->setIdentification(identification);
-    dev->setName(name);
+    ///dev->setIdentification(identification);
+    ///dev->setName(name);
     pvDevices.push_back(dev);
     emit deviceAdded(dev);
     return dev;
@@ -65,6 +65,7 @@ class mdtDeviceContainer : public QObject
     std::vector<std::shared_ptr<mdtDevice>>::const_iterator it;
     std::shared_ptr<T> dev;
 
+    /**
     for(it = pvDevices.begin(); it != pvDevices.end(); ++it){
       Q_ASSERT(*it);
       if((*it)->identification() == identification){
@@ -72,6 +73,7 @@ class mdtDeviceContainer : public QObject
         return dev;
       }
     }
+    */
 
     return std::shared_ptr<T>();
   }

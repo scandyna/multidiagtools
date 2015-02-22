@@ -60,7 +60,7 @@ class mdtDeviceModbusWago : public mdtDeviceModbus
    *
    * \sa mdtDeviceModbus::connectToDevice(const mdtDeviceInfo&) .
    */
-  mdtAbstractPort::error_t connectToDevice(const mdtDeviceInfo &devInfo);
+  ///mdtAbstractPort::error_t connectToDevice(const mdtDeviceInfo &devInfo);
 
   /*! \brief Search and connect to physical device.
    *
