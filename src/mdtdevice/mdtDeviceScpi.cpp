@@ -44,13 +44,44 @@ mdtDeviceScpi::~mdtDeviceScpi()
 {
 }
 
-bool mdtDeviceScpi::connectToDevice(uint16_t idVendor, uint16_t idProduct, const QString & serialNumber)
+bool mdtDeviceScpi::connectToDevice()
 {
-  if(!pvPort->openDevice(idVendor, idProduct, serialNumber)){
+  // Check that device address string refers to a USB port
+  if(deviceAddress().portType() != mdtDeviceAddress::PortType_t::USB){
+    pvLastError.setError(tr("Cannot connect to device with address string '") + deviceAddress().addressString() + \
+                         tr("': port type '") + deviceAddress().portTypeStr() + tr("' not supported."), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceScpi");
+    pvLastError.commit();
+    return false;
+  }
+  // Check that device address string refers to instrument
+  if(deviceAddress().deviceType() != mdtDeviceAddress::DeviceType_t::INSTR){
+    pvLastError.setError(tr("Cannot connect to device with address string '") + deviceAddress().addressString() + \
+                         tr("': device type '") + deviceAddress().deviceTypeStr() + tr("' not supported."), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceScpi");
+    pvLastError.commit();
+    return false;
+  }
+  // Connect to device
+  if(!pvPort->openDevice(deviceAddress().usbIdVendor(), deviceAddress().usbIdProduct(), deviceAddress().usbDeviceSerialNumber())){
     pvLastError = pvPort->lastError();
     return false;
   }
+
   return true;
+}
+
+bool mdtDeviceScpi::connectToDevice(uint16_t idVendor, uint16_t idProduct, const QString & serialNumber, const QString & alias)
+{
+  mdtDeviceAddress address;
+
+  address.setUsbIdentification(idVendor, idProduct, serialNumber, 0);
+  if(!alias.isEmpty()){
+    address.setAlias(alias);
+  }
+  setDeviceAddress(address);
+
+  return connectToDevice();
 }
 
 bool mdtDeviceScpi::sendCommand(const QByteArray& command, int timeout)
@@ -131,10 +162,10 @@ void mdtDeviceScpi::disconnectFromDeviceEvent()
   pvPort->close();
 }
 
-void mdtDeviceScpi::nameChangedEvent(const QString & newName)
+void mdtDeviceScpi::deviceAddressChangedEvent(const mdtDeviceAddress & address)
 {
-  qDebug() << "Setting name: " << newName;
-  pvPort->setDeviceName(newName);
+  qDebug() << "Setting alias: " << address.alias();
+  pvPort->setDeviceName(address.alias());
 }
 
 void mdtDeviceScpi::queryAboutOperationComplete()

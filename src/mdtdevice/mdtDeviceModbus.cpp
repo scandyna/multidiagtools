@@ -95,19 +95,19 @@ QVariant mdtDeviceModbus::hardwareNodeId() const
 }
 */
 
-mdtAbstractPort::error_t mdtDeviceModbus::connectToDevice(const mdtPortInfo & portInfo)
-{
-  // Check that port manager is not running
-  if(!pvTcpPortManager->isClosed()){
-    pvTcpPortManager->stop();
-  }
-  // Try to connect
-  pvTcpPortManager->setPortInfo(portInfo);
-  if(!pvTcpPortManager->start()){
-    return mdtAbstractPort::PortNotFound;
-  }
-  return mdtAbstractPort::NoError;
-}
+// mdtAbstractPort::error_t mdtDeviceModbus::connectToDevice(const mdtPortInfo & portInfo)
+// {
+//   // Check that port manager is not running
+//   if(!pvTcpPortManager->isClosed()){
+//     pvTcpPortManager->stop();
+//   }
+//   // Try to connect
+//   pvTcpPortManager->setPortInfo(portInfo);
+//   if(!pvTcpPortManager->start()){
+//     return mdtAbstractPort::PortNotFound;
+//   }
+//   return mdtAbstractPort::NoError;
+// }
 
 /**
 mdtAbstractPort::error_t mdtDeviceModbus::connectToDevice(const mdtDeviceInfo &devInfo)
@@ -152,88 +152,88 @@ mdtAbstractPort::error_t mdtDeviceModbus::connectToDevice(const mdtDeviceInfo &d
 }
 */
 
-mdtAbstractPort::error_t mdtDeviceModbus::connectToDevice(const QList<mdtPortInfo*> &scanResult, int hardwareNodeId, int bitsCount, int startFrom)
-{
-  int i;
-  mdtAbstractPort::error_t portError;
+// mdtAbstractPort::error_t mdtDeviceModbus::connectToDevice(const QList<mdtPortInfo*> &scanResult, int hardwareNodeId, int bitsCount, int startFrom)
+// {
+//   int i;
+//   mdtAbstractPort::error_t portError;
+// 
+//   // Check that port manager is not running
+//   if(!pvTcpPortManager->isClosed()){
+//     pvTcpPortManager->stop();
+//   }
+//   // Search device with requested hardwareNodeId
+//   for(i=0; i<scanResult.size(); i++){
+//     Q_ASSERT(scanResult.at(i) != 0);
+//     // Try to connect
+//     portError = connectToDevice(*scanResult.at(i));
+//     if(portError != mdtAbstractPort::NoError){
+//       continue;
+//     }
+//     /**
+//     pvTcpPortManager->setPortInfo(*scanResult.at(i));
+//     if(!pvTcpPortManager->start()){
+//       continue;
+//     }
+//     */
+//     // We are connected here, get the hardware node ID
+//     if(pvTcpPortManager->getHardwareNodeAddress(bitsCount, startFrom) == hardwareNodeId){
+//       return mdtAbstractPort::NoError;
+//     }else{
+//       pvTcpPortManager->stop();
+//       ///continue;
+//     }
+//   }
+// 
+//   return mdtAbstractPort::PortNotFound;
+// }
 
-  // Check that port manager is not running
-  if(!pvTcpPortManager->isClosed()){
-    pvTcpPortManager->stop();
-  }
-  // Search device with requested hardwareNodeId
-  for(i=0; i<scanResult.size(); i++){
-    Q_ASSERT(scanResult.at(i) != 0);
-    // Try to connect
-    portError = connectToDevice(*scanResult.at(i));
-    if(portError != mdtAbstractPort::NoError){
-      continue;
-    }
-    /**
-    pvTcpPortManager->setPortInfo(*scanResult.at(i));
-    if(!pvTcpPortManager->start()){
-      continue;
-    }
-    */
-    // We are connected here, get the hardware node ID
-    if(pvTcpPortManager->getHardwareNodeAddress(bitsCount, startFrom) == hardwareNodeId){
-      return mdtAbstractPort::NoError;
-    }else{
-      pvTcpPortManager->stop();
-      ///continue;
-    }
-  }
-
-  return mdtAbstractPort::PortNotFound;
-}
-
-mdtAbstractPort::error_t mdtDeviceModbus::connectToDevice(const QList<int> & existingHwNodeIdList)
-{
-  QList<int> _existingHwNodeIdList;
-  QList<mdtPortInfo*> portInfoList;
-  mdtAbstractPort::error_t portError;
-
-  // Check that a hardware node id was set
-  /**
-  if(!pvHardwareNodeId.isValid()){
-    pvLastError.setError(tr("Hardware node ID was not set."), mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbus");
-    pvLastError.commit();
-    return mdtAbstractPort::SetupError;
-  }
-  */
-  // Setup _existingHwNodeIdList
-  /**
-  _existingHwNodeIdList = existingHwNodeIdList;
-  if(!_existingHwNodeIdList.contains(pvHardwareNodeId.toInt())){
-    _existingHwNodeIdList.append(pvHardwareNodeId.toInt());
-  }
-  */
-  // Check that port manager is not running
-  if(!pvTcpPortManager->isClosed()){
-    pvTcpPortManager->stop();
-  }
-  // Scan looking in chache file first
-  ///portInfoList = pvTcpPortManager->scan(pvTcpPortManager->readScanResult(), 100, _existingHwNodeIdList, pvHardwareNodeIdBitsCount, pvHardwareNodeIdBitsStartFrom);
-  // Try to connect
-  ///portError = connectToDevice(portInfoList, pvHardwareNodeId.toInt(), pvHardwareNodeIdBitsCount, pvHardwareNodeIdBitsStartFrom);
-  qDeleteAll(portInfoList);
-  portInfoList.clear();
-  if(portError == mdtAbstractPort::NoError){
-    return mdtAbstractPort::NoError;
-  }
-  // Expected device not found, scan the network
-  ///portInfoList = pvTcpPortManager->scan(QNetworkInterface::allInterfaces(), 502, 100, true, _existingHwNodeIdList, pvHardwareNodeIdBitsCount, pvHardwareNodeIdBitsStartFrom);
-  // Try to connect
-  ///portError = connectToDevice(portInfoList, pvHardwareNodeId.toInt(), pvHardwareNodeIdBitsCount, pvHardwareNodeIdBitsStartFrom);
-  if(portError == mdtAbstractPort::NoError){
-    pvTcpPortManager->saveScanResult(portInfoList);
-  }
-  qDeleteAll(portInfoList);
-  portInfoList.clear();
-
-  return portError;
-}
+// mdtAbstractPort::error_t mdtDeviceModbus::connectToDevice(const QList<int> & existingHwNodeIdList)
+// {
+//   QList<int> _existingHwNodeIdList;
+//   QList<mdtPortInfo*> portInfoList;
+//   mdtAbstractPort::error_t portError;
+// 
+//   // Check that a hardware node id was set
+//   /**
+//   if(!pvHardwareNodeId.isValid()){
+//     pvLastError.setError(tr("Hardware node ID was not set."), mdtError::Error);
+//     MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbus");
+//     pvLastError.commit();
+//     return mdtAbstractPort::SetupError;
+//   }
+//   */
+//   // Setup _existingHwNodeIdList
+//   /**
+//   _existingHwNodeIdList = existingHwNodeIdList;
+//   if(!_existingHwNodeIdList.contains(pvHardwareNodeId.toInt())){
+//     _existingHwNodeIdList.append(pvHardwareNodeId.toInt());
+//   }
+//   */
+//   // Check that port manager is not running
+//   if(!pvTcpPortManager->isClosed()){
+//     pvTcpPortManager->stop();
+//   }
+//   // Scan looking in chache file first
+//   ///portInfoList = pvTcpPortManager->scan(pvTcpPortManager->readScanResult(), 100, _existingHwNodeIdList, pvHardwareNodeIdBitsCount, pvHardwareNodeIdBitsStartFrom);
+//   // Try to connect
+//   ///portError = connectToDevice(portInfoList, pvHardwareNodeId.toInt(), pvHardwareNodeIdBitsCount, pvHardwareNodeIdBitsStartFrom);
+//   qDeleteAll(portInfoList);
+//   portInfoList.clear();
+//   if(portError == mdtAbstractPort::NoError){
+//     return mdtAbstractPort::NoError;
+//   }
+//   // Expected device not found, scan the network
+//   ///portInfoList = pvTcpPortManager->scan(QNetworkInterface::allInterfaces(), 502, 100, true, _existingHwNodeIdList, pvHardwareNodeIdBitsCount, pvHardwareNodeIdBitsStartFrom);
+//   // Try to connect
+//   ///portError = connectToDevice(portInfoList, pvHardwareNodeId.toInt(), pvHardwareNodeIdBitsCount, pvHardwareNodeIdBitsStartFrom);
+//   if(portError == mdtAbstractPort::NoError){
+//     pvTcpPortManager->saveScanResult(portInfoList);
+//   }
+//   qDeleteAll(portInfoList);
+//   portInfoList.clear();
+// 
+//   return portError;
+// }
 
 /**
 mdtAbstractPort::error_t mdtDeviceModbus::connectToDevice()

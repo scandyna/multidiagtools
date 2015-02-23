@@ -90,12 +90,21 @@ void mdtDeviceTest::sandbox()
 void mdtDeviceTest::deviceBaseTest()
 {
   mdtDevice dev;
+  mdtDeviceAddress address;
 
   // Initial states
   QVERIFY(!dev.isReady());
   QCOMPARE(dev.alias(), QString(""));
   ///QVERIFY(dev.state() == mdtDevice::Disconnected);
   ///QVERIFY(dev.state() == mdtPortManager::Disconnected);
+
+  /*
+   * Device address
+   */
+  address.setUsbIdentification(0x1234, 0x5678, "SN004", 0);
+  dev.setDeviceAddress(address, "PowerSupply");
+  QCOMPARE(dev.alias(), QString("PowerSupply"));
+  QVERIFY(!dev.connectToDevice());
 
   dev.start(100);
 }
@@ -1692,21 +1701,21 @@ void mdtDeviceTest::modbusTest()
   // Scan looking in chache file first
   ///portInfoList = m->scan(m->readScanResult());
   // Try to connect ...
-  if(d.connectToDevice(portInfoList, hwNodeId, 4) != mdtAbstractPort::NoError){
-    // scan network an try again
-    qDeleteAll(portInfoList);
-    portInfoList.clear();
-    qDebug() << "Scanning network ...";
-    ///portInfoList = m->scan(QNetworkInterface::allInterfaces(), 502, 100);
-    if(d.connectToDevice(portInfoList, hwNodeId, 4) != mdtAbstractPort::NoError){
-      QSKIP("Modbus device with requested harware node ID not found", SkipAll);
-    }
-    // Ok found, save scan result
-    QVERIFY(m->saveScanResult(portInfoList));
-    // We no lobger need portInfoList
-    qDeleteAll(portInfoList);
-    portInfoList.clear();
-  }
+//   if(d.connectToDevice(portInfoList, hwNodeId, 4) != mdtAbstractPort::NoError){
+//     // scan network an try again
+//     qDeleteAll(portInfoList);
+//     portInfoList.clear();
+//     qDebug() << "Scanning network ...";
+//     ///portInfoList = m->scan(QNetworkInterface::allInterfaces(), 502, 100);
+//     if(d.connectToDevice(portInfoList, hwNodeId, 4) != mdtAbstractPort::NoError){
+//       QSKIP("Modbus device with requested harware node ID not found", SkipAll);
+//     }
+//     // Ok found, save scan result
+//     QVERIFY(m->saveScanResult(portInfoList));
+//     // We no lobger need portInfoList
+//     qDeleteAll(portInfoList);
+//     portInfoList.clear();
+//   }
 
   // Make some queries
   QVERIFY(!d.getDigitalInputValue(0, false, false).isValid());
@@ -2198,7 +2207,9 @@ void mdtDeviceTest::modbusWagoTest()
   iosw = new mdtDeviceIosWidget;
   iosw->setDeviceIos(d.ios());
 
-  // Setup device
+  /*
+   * Setup device window
+   */
   dw.setDevice(&d);
   dw.setIosWidget(iosw);
   dw.show();
@@ -2439,11 +2450,6 @@ void mdtDeviceTest::scpiTest()
   mdtUsbtmcPortSetupDialog dialog;
   mdtUsbDeviceDescriptor deviceDescriptor;
   ///int ifaceNumber;
-  
-  ///QList<mdtPortInfo*> portInfoList;
-  ///mdtPortInfo *portInfo;
-  ///mdtDeviceInfo *devInfo;
-  ///mdtFrameCodecScpi codec;
   QByteArray data;
 
   // Try to find a USBTMC device
@@ -2456,8 +2462,20 @@ void mdtDeviceTest::scpiTest()
   }
   ///ifaceNumber = dialog.selectedbInterfaceNumber();
 
-  // Open device
-  QVERIFY(d.connectToDevice(deviceDescriptor.idVendor(), deviceDescriptor.idProduct(), ""));
+  /*
+   * Connect to device - Version that accepts idVendor, idProduct , SN and alias
+   */
+  QCOMPARE(d.alias(), QString(""));
+  QCOMPARE((int)d.deviceAddress().usbIdVendor(), 0);
+  QCOMPARE((int)d.deviceAddress().usbIdProduct(), 0);
+  // Connect
+  QVERIFY(d.connectToDevice(deviceDescriptor.idVendor(), deviceDescriptor.idProduct(), "", "DMM01"));
+  // Check that attributes where updated
+  QCOMPARE(d.deviceAddress().usbIdVendor(), deviceDescriptor.idVendor());
+  QCOMPARE(d.deviceAddress().usbIdProduct(), deviceDescriptor.idProduct());
+  QCOMPARE(d.alias(), QString("DMM01"));
+  
+  
   // Try to find a device and connect if ok
   ///portInfoList = d.portManager()->scan();
 //   if(portInfoList.size() < 1){
@@ -2486,10 +2504,15 @@ void mdtDeviceTest::U3606ATest()
   mdtValueDouble x;
 
   // Try to find a device and connect if ok
-  if(!d.connectToDevice()){
+  if(!d.connectToDevice("", "U3606A-01")){
     qDebug() << "Connecting to U3606A device failed: " << d.lastError().text();
     QSKIP("No Agilent U3606A attached, or other error", SkipAll);
   }
+  // Check that attributes where set
+  QCOMPARE((int)d.deviceAddress().usbIdVendor(), 0x0957);
+  QCOMPARE((int)d.deviceAddress().usbIdProduct(), 0x4d18);
+  QCOMPARE(d.alias(), QString("U3606A-01"));
+
 
   // Check generic command
   QVERIFY(d.sendCommand("*RST\n"));
@@ -2574,6 +2597,7 @@ void mdtDeviceTest::DSO1000ATest()
   QByteArray data;
 
   // Try to find a device and connect if ok
+  /// \todo Update mdtDeviceDSO1000A like mdtDeviceU3606A for connectToDevice() !
   if(!d.connectToDevice()){
     qDebug() << "Connecting to DSO1000A device failed: " << d.lastError().text();
     QSKIP("No Agilent DSO1000A attached, or other error", SkipAll);

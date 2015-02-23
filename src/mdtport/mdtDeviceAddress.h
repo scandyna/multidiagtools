@@ -248,7 +248,12 @@ class mdtDeviceAddress
     pvUsbDeviceAddress.idProduct = idProduct;
     pvUsbDeviceAddress.bInterfaceNumber = bInterfaceNumber;
     pvSerialNumber = deviceSerialNumber;
+    /**
     pvAddressString = "USB::0x" + QString::number(idVendor, 16) + "::0x" + QString::number(idProduct, 16) + \
+                      "::" + deviceSerialNumber + "::" + QString::number(bInterfaceNumber) + \
+                      "::" + deviceTypeStr();
+                      */
+    pvAddressString = QString("USB::0x%1::0x%2").arg(idVendor, 4, 16, QChar('0')).arg(idProduct, 4, 16, QChar('0')) + \
                       "::" + deviceSerialNumber + "::" + QString::number(bInterfaceNumber) + \
                       "::" + deviceTypeStr();
   }

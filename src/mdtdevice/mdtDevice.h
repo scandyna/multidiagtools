@@ -149,19 +149,13 @@ class mdtDevice : public QObject
    */
   ///virtual mdtAbstractPort::error_t connectToDevice(const mdtDeviceInfo &devInfo);
 
-  /*! \brief Connect to physical device
+  /*! \brief Set device address
    *
-   * Will update deviceAddress and call connectToDeviceImpl().
+   * Will also call deviceAddressChangedEvent().
+   *
+   * \pre This function must only be called when currentState is Disconnected.
    */
-  bool connectToDevice(const mdtDeviceAddress & address);
-
-  /*! \brief Disconnect from device
-   *
-   * Will stop periodic querying ( see stop() ).
-   *
-   * Will also call disconnectFromDeviceEvent().
-   */
-  void disconnectFromDevice();
+  void setDeviceAddress(const mdtDeviceAddress & address, const QString & alias = QString());
 
   /*! \brief Get device address
    */
@@ -176,6 +170,32 @@ class mdtDevice : public QObject
   {
     return pvDeviceAddress.alias();
   }
+
+  /*! \brief Connect to physical device
+   *
+   * Connect to device set with setDeviceAddress().
+   *
+   * Whenn implementing connectToDevice() functions
+   *  in subclass, it is recommended to set device address
+   *  with setDeviceAddress(). This is because some informations
+   *  are also available later, f.ex. with deviceAddress(),
+   *  alias(). deviceIdString(), witch is useful to build error messages,
+   *  also reuse internal device address string object.
+   *
+   * This default implementation does nothing and allways returns false.
+   */
+  virtual bool connectToDevice()
+  {
+    return false;
+  }
+
+  /*! \brief Disconnect from device
+   *
+   * Will stop periodic querying ( see stop() ).
+   *
+   * Will also call disconnectFromDeviceEvent().
+   */
+  void disconnectFromDevice();
 
   /*! \brief Set back to ready state timeout
    *
@@ -307,10 +327,10 @@ class mdtDevice : public QObject
    *  Subclass should implement this function.
    *  This default implementation does nothing and allways returns false.
    */
-  virtual bool connectToDeviceImpl(const mdtDeviceAddress & address)
-  {
-    return false;
-  }
+//   virtual bool connectToDeviceImpl(const mdtDeviceAddress & address)
+//   {
+//     return false;
+//   }
 
   /*! \brief Called by disconnectFromDevice()
    *
@@ -324,15 +344,15 @@ class mdtDevice : public QObject
   {
   }
 
-  /*! \brief Called by setName()
+  /*! \brief Called by setDeviceAddress()
    *
    * Can be reimplemented in subclass if some actions
-   *  are needed when name has changed.
+   *  are needed when device address has changed.
    *
    * This default implementation does nothing,
    *  it's also not necessery to call this base function from subclass.
    */
-  virtual void nameChangedEvent(const QString & newName)
+  virtual void deviceAddressChangedEvent(const mdtDeviceAddress & address)
   {
   }
 

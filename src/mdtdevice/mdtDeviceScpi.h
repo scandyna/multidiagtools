@@ -62,11 +62,20 @@ class mdtDeviceScpi : public mdtDevice
 
   /*! \brief Connect to a USBTMC device
    *
+   * Connect to device that was set with setDeviceAddress()
+   *
+   * \sa mdtDevice::setDeviceAddress().
+   */
+  bool connectToDevice();
+
+  /*! \brief Connect to a USBTMC device
+   *
    * \param idVendor Vendor ID
    * \param idProduct Product ID
    * \param serialNumber Device serial number. Will be ignored if empty
+   * \param alias Alias to give. Will be ignored if empty
    */
-  bool connectToDevice(uint16_t idVendor, uint16_t idProduct, const QString & serialNumber);
+  bool connectToDevice(uint16_t idVendor, uint16_t idProduct, const QString & serialNumber, const QString & alias = QString());
 
   /*! \brief Send a command to device
    *
@@ -143,7 +152,7 @@ class mdtDeviceScpi : public mdtDevice
 
   /*! \brief Update name in port
    */
-  void nameChangedEvent(const QString & newName);
+  void deviceAddressChangedEvent(const mdtDeviceAddress & address);
 
  private slots:
 

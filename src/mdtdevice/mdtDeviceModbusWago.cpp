@@ -47,25 +47,25 @@ mdtDeviceModbusWago::~mdtDeviceModbusWago()
 }
 
 
-mdtAbstractPort::error_t mdtDeviceModbusWago::connectToDevice(const mdtPortInfo & portInfo)
-{
-  // Check that port manager is not running
-  if(!pvTcpPortManager->isClosed()){
-    pvTcpPortManager->stop();
-  }
-  // Try to connect
-  pvTcpPortManager->setPortInfo(portInfo);
-  if(!pvTcpPortManager->start()){
-    return mdtAbstractPort::PortNotFound;
-  }
-  // Connected - check if device is a Wago 750 fieldbus coupler
-  if(!isWago750()){
-    pvTcpPortManager->stop();
-    return mdtAbstractPort::PortNotFound;
-  }
-  qDebug() << "mdtDeviceModbusWago::connectToDevice() - found WAGO device at " << portInfo.portName();
-  return mdtAbstractPort::NoError;
-}
+// mdtAbstractPort::error_t mdtDeviceModbusWago::connectToDevice(const mdtPortInfo & portInfo)
+// {
+//   // Check that port manager is not running
+//   if(!pvTcpPortManager->isClosed()){
+//     pvTcpPortManager->stop();
+//   }
+//   // Try to connect
+//   pvTcpPortManager->setPortInfo(portInfo);
+//   if(!pvTcpPortManager->start()){
+//     return mdtAbstractPort::PortNotFound;
+//   }
+//   // Connected - check if device is a Wago 750 fieldbus coupler
+//   if(!isWago750()){
+//     pvTcpPortManager->stop();
+//     return mdtAbstractPort::PortNotFound;
+//   }
+//   qDebug() << "mdtDeviceModbusWago::connectToDevice() - found WAGO device at " << portInfo.portName();
+//   return mdtAbstractPort::NoError;
+// }
 
 /**
 mdtAbstractPort::error_t mdtDeviceModbusWago::connectToDevice(const mdtDeviceInfo &devInfo)
@@ -74,15 +74,15 @@ mdtAbstractPort::error_t mdtDeviceModbusWago::connectToDevice(const mdtDeviceInf
 }
 */
 
-mdtAbstractPort::error_t mdtDeviceModbusWago::connectToDevice(const QList<mdtPortInfo*> &scanResult, int hardwareNodeId, int bitsCount, int startFrom)
-{
-  return mdtDeviceModbus::connectToDevice(scanResult, hardwareNodeId, bitsCount, startFrom);
-}
+// mdtAbstractPort::error_t mdtDeviceModbusWago::connectToDevice(const QList<mdtPortInfo*> &scanResult, int hardwareNodeId, int bitsCount, int startFrom)
+// {
+//   return mdtDeviceModbus::connectToDevice(scanResult, hardwareNodeId, bitsCount, startFrom);
+// }
 
-mdtAbstractPort::error_t mdtDeviceModbusWago::connectToDevice(const QList<int> & existingHwNodeIdList)
-{
-  return mdtDeviceModbus::connectToDevice(existingHwNodeIdList);
-}
+// mdtAbstractPort::error_t mdtDeviceModbusWago::connectToDevice(const QList<int> & existingHwNodeIdList)
+// {
+//   return mdtDeviceModbus::connectToDevice(existingHwNodeIdList);
+// }
 
 bool mdtDeviceModbusWago::isWago750()
 {

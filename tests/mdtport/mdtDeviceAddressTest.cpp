@@ -249,6 +249,29 @@ void mdtDeviceAddressTest::simpleTest()
   da.setAlias("UsbInstrABCD");
   QCOMPARE(da.alias(), QString("UsbInstrABCD"));
   /*
+   * Check USB identification
+   */
+  da.setUsbIdentification(0x0123, 0x0456, "EFG", 0);
+  QVERIFY(da.isValid());
+  QVERIFY(da.portType() == mdtDeviceAddress::PortType_t::USB);
+  QCOMPARE(da.portTypeStr(), QString("USB"));
+  QVERIFY(da.deviceType() == mdtDeviceAddress::DeviceType_t::INSTR);
+  QCOMPARE(da.deviceTypeStr(), QString("INSTR"));
+  QCOMPARE((int)da.usbIdVendor(), 0x0123);
+  QCOMPARE((int)da.usbIdProduct(), 0x0456);
+  QCOMPARE((int)da.usbInterfaceNumber(), 0);
+  QCOMPARE(da.usbDeviceSerialNumber(), QString("EFG"));
+  QCOMPARE(da.tcpIpHostName(), QString(""));
+  QCOMPARE((int)da.tcpIpPort(), 0);
+  QCOMPARE(da.modbusHwNodeId().id(), 0);
+  QCOMPARE(da.modbusHwNodeId().bitsCount(), 0);
+  QCOMPARE(da.modbusHwNodeId().firstBit(), 0);
+  QCOMPARE(da.addressString(), QString("USB::0x0123::0x0456::EFG::0::INSTR"));
+  QCOMPARE(da.alias(), da.addressString());
+  // Change alias
+  da.setAlias("UsbInstrEFG");
+  QCOMPARE(da.alias(), QString("UsbInstrEFG"));
+  /*
    * Check raw TCP/IP socket identification
    */
   da.setTcpIpIdentification("1.2.3.4", 56789, mdtDeviceAddress::DeviceType_t::SOCKET);
@@ -467,6 +490,28 @@ void mdtDeviceAddressTest::decodeAddressStringTest()
   QCOMPARE(da.modbusHwNodeId().bitsCount(), 0);
   QCOMPARE(da.modbusHwNodeId().firstBit(), 0);
   QCOMPARE(da.addressString(), QString("USB::0x1234::0x5678::SN889::2::INSTR"));
+  /*
+   * Check USB address string parsing
+   *  -> Interface number specified
+   *  -> INSTR specified
+   *  -> Serial number not specified (multi diag tools extension)
+   */
+  QVERIFY(da.setAddressString("USB::0x1234::0x5678::::2::INSTR"));
+  QVERIFY(da.isValid());
+  QVERIFY(da.portType() == mdtDeviceAddress::PortType_t::USB);
+  QCOMPARE(da.portTypeStr(), QString("USB"));
+  QVERIFY(da.deviceType() == mdtDeviceAddress::DeviceType_t::INSTR);
+  QCOMPARE(da.deviceTypeStr(), QString("INSTR"));
+  QCOMPARE((int)da.usbIdVendor(), 0x1234);
+  QCOMPARE((int)da.usbIdProduct(), 0x5678);
+  QCOMPARE((int)da.usbInterfaceNumber(), 2);
+  QCOMPARE(da.usbDeviceSerialNumber(), QString(""));
+  QCOMPARE(da.tcpIpHostName(), QString(""));
+  QCOMPARE((int)da.tcpIpPort(), 0);
+  QCOMPARE(da.modbusHwNodeId().id(), 0);
+  QCOMPARE(da.modbusHwNodeId().bitsCount(), 0);
+  QCOMPARE(da.modbusHwNodeId().firstBit(), 0);
+  QCOMPARE(da.addressString(), QString("USB::0x1234::0x5678::::2::INSTR"));
   /*
    * Currently not supported address strings
    */

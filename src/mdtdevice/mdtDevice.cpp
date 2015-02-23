@@ -69,16 +69,29 @@ void mdtDevice::setIdentification(const QVariant & id)
 }
 */
 
+void mdtDevice::setDeviceAddress(const mdtDeviceAddress & address, const QString & alias)
+{
+  Q_ASSERT(pvCurrentState == State_t::Disconnected);
+
+  pvDeviceAddress = address;
+  if(!alias.isEmpty()){
+    pvDeviceAddress.setAlias(alias);
+  }
+  // Tell subclass that address changed
+  deviceAddressChangedEvent(pvDeviceAddress);
+}
+
+
 // mdtAbstractPort::error_t mdtDevice::connectToDevice(const mdtDeviceInfo &devInfo)
 // {
 //   return mdtAbstractPort::UnhandledError;
 // }
 
-bool mdtDevice::connectToDevice(const mdtDeviceAddress & address)
-{
-  pvDeviceAddress = address;
-  return connectToDeviceImpl(pvDeviceAddress);
-}
+// bool mdtDevice::connectToDevice(const mdtDeviceAddress & address)
+// {
+//   pvDeviceAddress = address;
+//   return connectToDeviceImpl(pvDeviceAddress);
+// }
 
 
 void mdtDevice::disconnectFromDevice()

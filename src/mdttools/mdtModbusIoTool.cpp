@@ -179,11 +179,11 @@ void mdtModbusIoTool::connectToNode()
   
   // Try to find and connect to device
   ///pvDeviceModbusWago->setHardwareNodeId(sbHwNodeId->value(), 8, 0);
-  if(pvDeviceModbusWago->connectToDevice(expectedHwNodeAddresses) != mdtAbstractPort::NoError){
-    pvStatusWidget->setPermanentText(tr("Device with HW node ID ") + QString::number(sbHwNodeId->value()) + tr(" not found"));
-    setStateConnectingToNodeFinished();
-    return;
-  }
+//   if(pvDeviceModbusWago->connectToDevice(expectedHwNodeAddresses) != mdtAbstractPort::NoError){
+//     pvStatusWidget->setPermanentText(tr("Device with HW node ID ") + QString::number(sbHwNodeId->value()) + tr(" not found"));
+//     setStateConnectingToNodeFinished();
+//     return;
+//   }
   showStatusMessage(tr("I/O detection ..."));
   if(!pvDeviceModbusWago->detectIos()){
     QString details = tr("This probably caused by presence of a unsupported module.");

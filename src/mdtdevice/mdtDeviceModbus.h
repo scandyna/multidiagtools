@@ -83,7 +83,7 @@ class mdtDeviceModbus : public mdtMultiIoDevice
    * \param portInfo mdtPortInfo object . The portName attribute of portInfo must contain host:port format (or ip:port) .
    * \return A error listed in mdtAbstractPort::error_t (NoError on success) .
    */
-  virtual mdtAbstractPort::error_t connectToDevice(const mdtPortInfo & portInfo);
+  //virtual mdtAbstractPort::error_t connectToDevice(const mdtPortInfo & portInfo);
 
   /*! \brief Search and connect to physical device.
    *
@@ -109,7 +109,7 @@ class mdtDeviceModbus : public mdtMultiIoDevice
    * \return A error listed in mdtAbstractPort::error_t (NoError on success) .
    * \pre scanResult must contain valid pointers .
    */
-  mdtAbstractPort::error_t connectToDevice(const QList<mdtPortInfo*> &scanResult, int hardwareNodeId, int bitsCount, int startFrom = 0);
+  //mdtAbstractPort::error_t connectToDevice(const QList<mdtPortInfo*> &scanResult, int hardwareNodeId, int bitsCount, int startFrom = 0);
 
   /*! \brief Search and connect to physical device.
    *
@@ -122,7 +122,7 @@ class mdtDeviceModbus : public mdtMultiIoDevice
    *                and device with hardwareNodeId, are found, scan will break .
    * \return A error listed in mdtAbstractPort::error_t (NoError on success) .
    */
-  mdtAbstractPort::error_t connectToDevice(const QList<int> & existingHwNodeIdList);
+  //mdtAbstractPort::error_t connectToDevice(const QList<int> & existingHwNodeIdList);
 
   /*! \brief Search and connect to physical device.
    *
