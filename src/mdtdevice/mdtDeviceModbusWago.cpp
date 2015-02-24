@@ -46,6 +46,35 @@ mdtDeviceModbusWago::~mdtDeviceModbusWago()
   qDeleteAll(pvModules);
 }
 
+bool mdtDeviceModbusWago::connectToDevice()
+{
+  // Connect to device
+  if(!mdtDeviceModbus::connectToDevice()){
+    return false;
+  }
+  // Check that device is a Wago 750 coupler
+  if(!isWago750()){
+    pvLastError.setError(deviceIdString() + tr("device is not a Wago 750 fieldbus coupler."), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbusWago");
+    pvLastError.commit();
+    disconnectFromDevice();
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtDeviceModbusWago::connectToDevice ( const mdtModbusHwNodeId& hwNodeId, const QString& alias, int scanTimeout, int port )
+{
+  /*
+   * Current version of mdtDeviceModbus::connectToDevice(...)
+   * calls connectToDevice() , witch is virtual,
+   * witch also will call mdtDeviceModbusWago::connectToDevice(),
+   * -> isWago750() will also be called.
+   */
+  return mdtDeviceModbus::connectToDevice(hwNodeId, alias, scanTimeout, port);
+}
+
 
 // mdtAbstractPort::error_t mdtDeviceModbusWago::connectToDevice(const mdtPortInfo & portInfo)
 // {

@@ -77,6 +77,28 @@ class mdtDeviceModbus : public mdtMultiIoDevice
 
   /*! \brief Connect to physical device
    *
+   * Connect to device set with setDeviceAddress().
+   *  If device address contains a valid hardware node ID,
+   *  it will also be checked that it matches, else it will be ignored.
+   *
+   * \sa mdtDevice::setDeviceAddress().
+   */
+  virtual bool connectToDevice();
+
+  /*! \brief Connect to physical device with given hardware node ID
+   *
+   * Will search a MODBUS/TCP device on network that has requested hardware node ID,
+   *  starting with cached known hosts.
+   *
+   * \param hwNodeId Hardware node ID
+   * \param alias Alias to give. Will be ignored if empty
+   * \param scanTimeout Time to wait during scan before considering device is not reachable [ms]
+   * \param port Port. MODBUS/TCP default port is 502.
+   */
+  virtual bool connectToDevice(const mdtModbusHwNodeId & hwNodeId, const QString & alias = QString(), int scanTimeout = 500, int port = 502);
+
+  /*! \brief Connect to physical device
+   *
    * This method can be reimplemented in subclass if specific
    *  tasks must be done during connection .
    *

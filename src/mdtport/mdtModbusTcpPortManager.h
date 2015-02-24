@@ -92,7 +92,7 @@ class mdtModbusTcpPortManager : public mdtPortManager
    *
    * \param hosts A list of hosts to scan.
    * \param expectedHwNodeAddresses If this list contains HW node addresses, scan will break when each one was found.
-   * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
+   * \param timeout Maximum wait time [ms].
    * \return A list of device addresses that contains found hosts.
    *          A empty list means that no device was found, or other error happened,
    *          lastError() will also provide some informations in the case.
@@ -106,7 +106,7 @@ class mdtModbusTcpPortManager : public mdtPortManager
    *               Note that only IPv4 is implemented.
    * \param port Port. MODBUS/TCP default port is 502.
    * \param expectedHwNodeAddresses If this list contains HW node addresses, scan will break when each one was found.
-   * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
+   * \param timeout Maximum wait time [ms].
    * \return A list of device addresses that contains found hosts.
    *          A empty list means that no device was found, or other error happened,
    *          lastError() will also provide some informations in the case.
@@ -120,7 +120,7 @@ class mdtModbusTcpPortManager : public mdtPortManager
    * \param iface Scan will be done for all IP addresses available for given intarface.
    *               Note that only IPv4 is implemented.
    * \param port Port. MODBUS/TCP default port is 502.
-   * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
+   * \param timeout Maximum wait time [ms].
    * \return A list of device addresses that contains found hosts.
    *          A empty list means that no device was found, or other error happened,
    *          lastError() will also provide some informations in the case.
@@ -138,7 +138,7 @@ class mdtModbusTcpPortManager : public mdtPortManager
    * \param port Port. MODBUS/TCP default port is 502.
    * \param ignoreLoopback If true, loopback interface will be ignored.
    * \param expectedHwNodeAddresses If this list contains HW node addresses, scan will break when each one was found.
-   * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
+   * \param timeout Maximum wait time [ms].
    * \return A list of device addresses that contains found hosts.
    *          A empty list means that no device was found, or other error happened,
    *          lastError() will also provide some informations in the case.
@@ -154,7 +154,7 @@ class mdtModbusTcpPortManager : public mdtPortManager
    *               Note that only IPv4 is implemented.
    * \param port Port. MODBUS/TCP default port is 502.
    * \param ignoreLoopback If true, loopback interface will be ignored.
-   * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
+   * \param timeout Maximum wait time [ms].
    * \return A list of device addresses that contains found hosts.
    *          A empty list means that no device was found, or other error happened,
    *          lastError() will also provide some informations in the case.
@@ -171,7 +171,7 @@ class mdtModbusTcpPortManager : public mdtPortManager
    *  device, that can be reached and that has matching hardware node ID.
    *
    * \param addressList Address list that contains hosts to try to connect to.
-   * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms].
+   * \param timeout Maximum wait time [ms].
    * \return A list of device addresses that contains found hosts.
    *          A empty list means that no device was found, or other error happened,
    *          lastError() will also provide some informations in the case.
@@ -184,7 +184,7 @@ class mdtModbusTcpPortManager : public mdtPortManager
    * Will read known hosts file and return list of devices that are attached
    *  at given host name, port and that have hardware node ID matching.
    *
-   * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms].
+   * \param timeout Maximum wait time [ms].
    * \return A list of device addresses that contains found hosts.
    *          A empty list means that no device was found, or other error happened,
    *          lastError() will also provide some informations in the case.
@@ -322,7 +322,7 @@ class mdtModbusTcpPortManager : public mdtPortManager
    *
    * \param bitsCount Number of digital inputs that represents the hardware node address.
    * \param startFrom First digital input that represents the hardware node address (is the LSB).
-   * \return Node address or value < 0 corresponding on mdtAbstractPor::error_t .
+   * \return Node address. On error, a null hardware node ID is returned.
    * \pre Port manager must be connected and thread running before calling this method.
    * \pre bitsCount must be > 0
    * \pre startFrom must be >= 0

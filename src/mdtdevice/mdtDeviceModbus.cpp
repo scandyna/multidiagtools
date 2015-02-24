@@ -19,6 +19,8 @@
  **
  ****************************************************************************/
 #include "mdtDeviceModbus.h"
+#include "mdtDeviceAddress.h"
+#include "mdtModbusHwNodeId.h"
 #include "mdtModbusTcpPortManager.h"
 #include "mdtFrameCodecModbus.h"
 #include "mdtDeviceIosSegment.h"
@@ -94,6 +96,98 @@ QVariant mdtDeviceModbus::hardwareNodeId() const
   return pvHardwareNodeId;
 }
 */
+
+bool mdtDeviceModbus::connectToDevice()
+{
+  // Check that port manager is not running
+  if(!pvTcpPortManager->isClosed()){
+    pvTcpPortManager->stop();
+  }
+  // Check that device address string refers to a TCPIP port
+  if(deviceAddress().portType() != mdtDeviceAddress::PortType_t::TCPIP){
+    pvLastError.setError(tr("Cannot connect to device with address string '") + deviceAddress().addressString() + \
+                         tr("': port type '") + deviceAddress().portTypeStr() + tr("' not supported."), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbus");
+    pvLastError.commit();
+    return false;
+  }
+  // Check that device address string refers to a MODBUS device
+  if(deviceAddress().deviceType() != mdtDeviceAddress::DeviceType_t::MODBUS){
+    pvLastError.setError(tr("Cannot connect to device with address string '") + deviceAddress().addressString() + \
+                         tr("': device type '") + deviceAddress().deviceTypeStr() + tr("' not supported."), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbus");
+    pvLastError.commit();
+    return false;
+  }
+  // Connect to device
+  pvTcpPortManager->setPortName(deviceAddress().tcpIpHostName() + ":" + QString::number(deviceAddress().tcpIpPort()) ); /// \todo Update once port management was fixed..
+  if(!pvTcpPortManager->start()){
+    pvLastError = pvTcpPortManager->lastError();
+    return false;
+  }
+  // If hardware node ID is valid, check that it matches
+  mdtDeviceAddress da = deviceAddress();
+  if(!da.modbusHwNodeId().isNull()){
+    mdtModbusHwNodeId hwNodeId = da.modbusHwNodeId();
+    mdtModbusHwNodeId deviceHwNodeId = pvTcpPortManager->getHardwareNodeAddress(hwNodeId.bitsCount(), hwNodeId.firstBit());
+    if(deviceHwNodeId.isNull()){
+      pvLastError = pvTcpPortManager->lastError();
+      disconnectFromDevice();
+      return false;
+    }
+    if(deviceHwNodeId.id() != hwNodeId.id()){
+      pvLastError.setError(deviceIdString() + tr(" device's MODBUS hardware node ID does not match requested one. ") + \
+                           tr("Requested: ") + QString::number(hwNodeId.id()) + \
+                           tr(" , device:")  + QString::number(deviceHwNodeId.id()), mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbus");
+      pvLastError.commit();
+      disconnectFromDevice();
+      return false;
+    }
+  }
+
+  return true;
+}
+
+bool mdtDeviceModbus::connectToDevice(const mdtModbusHwNodeId & hwNodeId, const QString & alias, int scanTimeout, int port)
+{
+  mdtDeviceAddressList daList;
+  mdtModbusHwNodeIdList hwNodeIdList;
+
+  // Check that port manager is not running
+  if(!pvTcpPortManager->isClosed()){
+    pvTcpPortManager->stop();
+  }
+  // Get list of known devices that are reachable and check if node with requested HW ID exists
+  daList = pvTcpPortManager->scanFromKnownHostsFile(scanTimeout);
+  for(const auto & da : daList.internalVector()){
+    if(da.modbusHwNodeId().id() == hwNodeId.id()){
+      setDeviceAddress(da, alias);
+      return connectToDevice();
+    }
+  }
+  // Nothing found in cache, scan the network
+  hwNodeIdList.append(hwNodeId);
+  daList = pvTcpPortManager->scan(QNetworkInterface::allInterfaces(), hwNodeIdList, port, true, scanTimeout);
+  if(daList.isEmpty()){
+    pvLastError.setError(tr("Could not find a MODBUS/TCP device with hardware node ID ") + QString::number(hwNodeId.id()), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbus");
+    pvLastError.commit();
+    return false;
+  }
+  Q_ASSERT(daList.size() > 0);
+  /*
+   * Save device addresses to known hosts cache file
+   * We ignore return value, if file cannot be saved,
+   * it's not a problem for all the rest
+   */
+  pvTcpPortManager->saveDeviceAddressList(daList);
+  // Should be ok , connect
+  setDeviceAddress(daList.at(0), alias);
+
+  return connectToDevice();
+}
+
 
 // mdtAbstractPort::error_t mdtDeviceModbus::connectToDevice(const mdtPortInfo & portInfo)
 // {

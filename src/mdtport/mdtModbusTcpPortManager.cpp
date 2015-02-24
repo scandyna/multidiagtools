@@ -96,9 +96,14 @@ mdtDeviceAddressList mdtModbusTcpPortManager::scan(const QList<mdtNetworkHost> &
         // Check if current host's MODBUS HW node ID matches in a item of expected ones
         nid = findMatchingToHostModebusHwNodeId(expectedHwNodeAddresses);
       }
+      stop();
       // Setup device address and add it to list
       deviceAddress.setModbusTcpIdentification(host.hostName, host.port, nid);
       deviceAddressList.append(deviceAddress);
+      // If we found all expected devices, we can finish scanning here
+      if(deviceAddressList.size() == expectedHwNodeAddresses.size()){
+        return deviceAddressList;
+      }
     }
   }
 
@@ -206,16 +211,26 @@ mdtDeviceAddressList mdtModbusTcpPortManager::scan(const mdtDeviceAddressList & 
         // If given device address contains a hardware node ID, check that device's one matches
         nid = address.modbusHwNodeId();
         if(!nid.isNull()){
+          setPortName(address.tcpIpHostName() + ":" + QString::number(address.tcpIpPort()));
+          if(!start()){
+            continue;
+          }
           connectedDeviceNid = getHardwareNodeAddress(nid.bitsCount(), nid.firstBit());
           if(connectedDeviceNid.isNull()){
+          stop();
             return connectedDeviceAddressList; /// \todo clear list ?
           }
           if(connectedDeviceNid.id() == nid.id()){
             connectedDeviceAddressList.append(address);
           }
+          stop();
         }else{
           // No hardware node ID checking needed, simply add to list
           connectedDeviceAddressList.append(address);
+        }
+        // If we found all expected devices, we can return here
+        if(connectedDeviceAddressList.size() == addressList.size()){
+          return connectedDeviceAddressList;
         }
       }
     }

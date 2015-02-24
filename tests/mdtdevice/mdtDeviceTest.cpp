@@ -1669,15 +1669,19 @@ void mdtDeviceTest::modbusTest()
 {
   mdtDeviceModbus d;
   mdtModbusTcpPortManager *m = d.modbusTcpPortManager();
-  QList<mdtPortInfo*> portInfoList;
-  int hwNodeId = 3;
+  mdtDeviceAddress da;
+  mdtDeviceAddressList daList;
+  ///QList<mdtPortInfo*> portInfoList;
+  ///int hwNodeId = 3;
   mdtDeviceIosWidget *iosw;
   mdtDigitalIo *di;
   mdtDeviceWindow dw;
 
   QVERIFY(m != 0);
 
-  // Setup some digital inputs (they are not device dependent)
+  /*
+   * Setup some digital inputs (they are not device dependent)
+   */
   di = new mdtDigitalIo;
   di->setAddress(0);
   di->setLabelShort("DI1");
@@ -1689,14 +1693,75 @@ void mdtDeviceTest::modbusTest()
   di->setDetails("Some details about digital input 2");
   d.addInput(di);
 
-  // Setup I/O's widget
+  /*
+   * Setup I/O's widget
+   */
   iosw = new mdtDeviceIosWidget;
   iosw->setDeviceIos(d.ios());
 
-  // Setup device
+  /*
+   * Setup device window
+   */
   dw.setDevice(&d);
   dw.setIosWidget(iosw);
   dw.show();
+
+  /*
+   * Check connectToDevice() by giving a known device address.
+   */
+  // Scan network
+  daList = m->scan(QNetworkInterface::allInterfaces(), 502, true, 50);
+  if(daList.isEmpty()){
+    QSKIP("No MODBUS/TCP device found on network (or other error)", SkipAll);
+  }
+  // Connect to first device found
+  QVERIFY(daList.size() > 0);
+  da = daList.at(0);
+  da.setAlias("NodeA");
+  d.setDeviceAddress(da);
+  QVERIFY(d.connectToDevice());
+  QVERIFY(d.currentState() == mdtDevice::State_t::Ready);
+  QCOMPARE(d.alias(), QString("NodeA"));
+  // Disconnect
+  d.disconnectFromDevice();
+  QVERIFY(d.currentState() == mdtDevice::State_t::Disconnected);
+  /*
+   * We assume that we have 2 digital inputs, that are all OFF
+   * Lets try to connect requesting harware node ID 0
+   */
+  // Update device address
+  da.setModbusTcpIdentification(da.tcpIpHostName(), da.tcpIpPort(), mdtModbusHwNodeId(0, 2, 0));
+  da.setAlias("NodeB");
+  d.setDeviceAddress(da);
+  // Connect to device
+  QVERIFY(d.connectToDevice());
+  QVERIFY(d.currentState() == mdtDevice::State_t::Ready);
+  QCOMPARE(d.alias(), QString("NodeB"));
+  // Disconnect
+  d.disconnectFromDevice();
+  QVERIFY(d.currentState() == mdtDevice::State_t::Disconnected);
+  /*
+   * Try to connect to first device that has hardware node ID 0
+   */
+  qDebug() << "** Try connect to HWNID 0 ...";
+  QVERIFY(d.connectToDevice(mdtModbusHwNodeId(0,2,0), "NodeC", 100));
+  QVERIFY(d.currentState() == mdtDevice::State_t::Ready);
+  QCOMPARE(d.alias(), QString("NodeC"));
+  qDebug() << "** Try connect to HWNID 0 - DONE";
+  /*
+   * Do above a second time
+   * (There was a bug when cache file existed)
+   */
+  // Disconnect
+  d.disconnectFromDevice();
+  QVERIFY(d.currentState() == mdtDevice::State_t::Disconnected);
+  // Connect to first device with hardware node ID 0
+  qDebug() << "*** Try connect to HWNID 0 ...";
+  QVERIFY(d.connectToDevice(mdtModbusHwNodeId(0,2,0), "NodeD", 100));
+  QVERIFY(d.currentState() == mdtDevice::State_t::Ready);
+  QCOMPARE(d.alias(), QString("NodeD"));
+  qDebug() << "*** Try connect to HWNID 0 - DONE";
+
 
   // Scan looking in chache file first
   ///portInfoList = m->scan(m->readScanResult());
@@ -1718,7 +1783,7 @@ void mdtDeviceTest::modbusTest()
 //   }
 
   // Make some queries
-  QVERIFY(!d.getDigitalInputValue(0, false, false).isValid());
+  ///QVERIFY(!d.getDigitalInputValue(0, false, false).isValid());
   QVERIFY(d.getDigitalInputValue(0, true, true).isValid());
   QVERIFY(d.getDigitalInputValue(0, false, false).isValid());
   QVERIFY(!d.getDigitalInputValue(0, true, false).isValid());
@@ -2184,9 +2249,6 @@ void mdtDeviceTest::modbusWagoModuleRtdTest()
   MDT_COMPARE(ai->value().valueDouble(), 850.0, 16, -200.0, 850.0);
   /// \todo Check with other sensors
 
-  
-
-
   // Free ...
   delete device;
   delete module;
@@ -2206,13 +2268,21 @@ void mdtDeviceTest::modbusWagoTest()
   // Setup I/O's widget
   iosw = new mdtDeviceIosWidget;
   iosw->setDeviceIos(d.ios());
-
   /*
    * Setup device window
    */
   dw.setDevice(&d);
   dw.setIosWidget(iosw);
   dw.show();
+  /*
+   * We assume that we have 2 digital inputs, that are all OFF
+   * Lets try to connect requesting harware node ID 0
+   */
+  if(!d.connectToDevice(mdtModbusHwNodeId(0,2,0), "Node0", 100)){
+    QSKIP("No Wago 750 device found, or other error", SkipAll);
+  }
+  QVERIFY(d.currentState() == mdtDevice::State_t::Ready);
+  QCOMPARE(d.alias(), QString("Node0"));
 
   /**
   if(d.connectToDevice(mdtDeviceInfo()) != mdtAbstractPort::NoError){;
@@ -2356,7 +2426,7 @@ void mdtDeviceTest::modbusWagoTest()
     qDebug() << "No digital outputs available - Will not be tested";
   }
   d.start(100);
-  /**
+  /*
   while(dw.isVisible()){
     QTest::qWait(1000);
   }
