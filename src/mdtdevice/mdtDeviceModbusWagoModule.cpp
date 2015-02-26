@@ -646,9 +646,11 @@ QVariant mdtDeviceModbusWagoModule::analogOutputValueMin(int partNumber, int /*c
 {
   switch(partNumber){
     case 550:
-      return QVariant(0.0);
+      return 0.0;
     case 552:
-      return QVariant(0.0);
+      return 0.0;
+    case 556:
+      return -10.0;
     default:
       return QVariant();
   }
@@ -675,6 +677,8 @@ QVariant mdtDeviceModbusWagoModule::analogOutputValueMax(int partNumber, int /*c
       return 10.0;
     case 552:
       return 20.0;
+    case 556:
+      return 10.0;
     default:
       return QVariant();
   }
@@ -701,6 +705,8 @@ int mdtDeviceModbusWagoModule::analogOutputValueBitsCount(int partNumber, int /*
       return 12;
     case 552:
       return 12;
+    case 556:
+      return 13;
     default:
       return -1;
   }
@@ -726,6 +732,8 @@ int mdtDeviceModbusWagoModule::analogOutputValueLsbIndex(int partNumber, int /*c
     case 550:
       return 3;
     case 552:
+      return 3;
+    case 556:
       return 3;
     default:
       return -1;
@@ -753,6 +761,8 @@ QVariant mdtDeviceModbusWagoModule::analogOutputValueSigned(int partNumber, int 
       return false;
     case 552:
       return false;
+    case 556:
+      return true;
     default:
       return QVariant();
   }
@@ -779,6 +789,8 @@ QVariant mdtDeviceModbusWagoModule::analogOutputValueScaledFromMinToMax(int part
       return true;
     case 552:
       return true;
+    case 556:
+      return true;
     default:
       return QVariant();
   }
@@ -804,6 +816,8 @@ QVariant mdtDeviceModbusWagoModule::analogOutputValueConversionFactor(int partNu
     case 550:
       return 1.0;
     case 552:
+      return 1.0;
+    case 556:
       return 1.0;
     default:
       return QVariant();
@@ -839,6 +853,8 @@ int mdtDeviceModbusWagoModule::analogOutputsCount(int partNumber) const
       return 2;
     case 552:
       return 2;
+    case 556:
+      return 2;
     default:
       return -1;
   }
@@ -866,6 +882,8 @@ QString mdtDeviceModbusWagoModule::analogOutputUnit(int partNumber, int /*channe
     case 552:
       return "mA";
     default:
+    case 556:
+      return "V";
       return "";
   }
 }
@@ -912,7 +930,7 @@ mdtAnalogIo *mdtDeviceModbusWagoModule::getNewAnalogInput(int partNumber, int ch
 
   // Get I/O module's parameters
   value = analogInputValueMin(partNumber, channel);
-  if(!value.isValid()){
+  if(value.isNull()){
     mdtError e(MDT_DEVICE_ERROR, "Cannot get analog input range minimum value (unknown part number: " + partNumberText() + ")", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
     e.commit();
@@ -980,7 +998,7 @@ mdtAnalogIo *mdtDeviceModbusWagoModule::getNewAnalogInput(int partNumber, int ch
   return aio;
 }
 
-mdtAnalogIo *mdtDeviceModbusWagoModule::getNewAnalogOutput(int partNumber, int channel) const
+mdtAnalogIo *mdtDeviceModbusWagoModule::getNewAnalogOutput(int partNumber, int channel)
 {
   mdtAnalogIo *aio;
   QVariant value;
@@ -993,69 +1011,71 @@ mdtAnalogIo *mdtDeviceModbusWagoModule::getNewAnalogOutput(int partNumber, int c
   // Get I/O module's parameters
   value = analogOutputValueMin(partNumber, channel);
   if(!value.isValid()){
-    mdtError e(MDT_DEVICE_ERROR, "Cannot get analog output range minimum value (unknown part number: " + partNumberText() + ")", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
-    e.commit();
+    pvLastError.setError(tr("Cannot get analog output range minimum value (unknown part number: ") + partNumberText() + tr(")"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbusWagoModule");
+    pvLastError.commit();
     return 0;
   }
   min = value.toDouble();
   value = analogOutputValueMax(partNumber, channel);
   if(!value.isValid()){
-    mdtError e(MDT_DEVICE_ERROR, "Cannot get analog output range maximum value (unknown part number: " + partNumberText() + ")", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
-    e.commit();
+    pvLastError.setError(tr("Cannot get analog output range maximum value (unknown part number: ") + partNumberText() + tr(")"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbusWagoModule");
+    pvLastError.commit();
     return 0;
   }
   max = value.toDouble();
   intValueBitsCount = analogOutputValueBitsCount(partNumber, channel);
   if(intValueBitsCount < 0){
-    mdtError e(MDT_DEVICE_ERROR, "Cannot get analog output value bits count (unknown part number: " + partNumberText() + ")", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
-    e.commit();
+    pvLastError.setError(tr("Cannot get analog output value bits count (unknown part number: ") + partNumberText() + tr(")"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbusWagoModule");
+    pvLastError.commit();
     return 0;
   }
   intValueLsbIndex = analogOutputValueLsbIndex(partNumber, channel);
   if(intValueLsbIndex < 0){
-    mdtError e(MDT_DEVICE_ERROR, "Cannot get analog output value LSB index (unknown part number: " + partNumberText() + ")", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
-    e.commit();
+    pvLastError.setError(tr("Cannot get analog output value LSB index (unknown part number: ") + partNumberText() + tr(")"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbusWagoModule");
+    pvLastError.commit();
     return 0;
   }
   value = analogOutputValueSigned(partNumber, channel);
   if(!value.isValid()){
-    mdtError e(MDT_DEVICE_ERROR, "Cannot check if analog output value is signed (unknown part number: " + partNumberText() + ")", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
-    e.commit();
+    pvLastError.setError(tr("Cannot check if analog output value is signed (unknown part number: ") + partNumberText() + tr(")"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbusWagoModule");
+    pvLastError.commit();
     return 0;
   }
   intValueSigned = value.toBool();
   value = analogOutputValueScaledFromMinToMax(partNumber, channel);
   if(!value.isValid()){
-    mdtError e(MDT_DEVICE_ERROR, "Cannot check if analog output value is scaled from minimum to maximum (unknown part number: " + partNumberText() + ")", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
-    e.commit();
+    pvLastError.setError(tr("Cannot check if analog output value is scaled from minimum to maximum (unknown part number: ") + partNumberText() + tr(")"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbusWagoModule");
+    pvLastError.commit();
     return 0;
   }
   scaleFromMinToMax = value.toBool();
   value = analogOutputValueConversionFactor(partNumber, channel);
   if(!value.isValid()){
-    mdtError e(MDT_DEVICE_ERROR, "Cannot get analog output conversion factor (unknown part number: " + partNumberText() + ")", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
-    e.commit();
+    pvLastError.setError(tr("Cannot get analog output conversion factor (unknown part number: ") + partNumberText() + tr(")"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbusWagoModule");
+    pvLastError.commit();
     return 0;
   }
   conversionFactor = value.toDouble();
   // Have all needed parameters, build I/O
   aio = new mdtAnalogIo;
   if(aio == 0){
-    mdtError e(MDT_DEVICE_ERROR, "Memory allocation failed during analog output creation (unknown part number: " + partNumberText() + ")", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
-    e.commit();
+    pvLastError.setError(tr("Memory allocation failed during analog output creation (unknown part number: ") + partNumberText() + tr(")"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbusWagoModule");
+    pvLastError.commit();
     return 0;
   }
   aio->setRange(min, max, intValueBitsCount, intValueLsbIndex, intValueSigned, scaleFromMinToMax, conversionFactor);
   aio->setUnit("[" + analogOutputUnit(partNumber, channel) + "]");
   aio->setLabel("Module: 750-" + QString::number(partNumber));
+  
+  qDebug() << "Adding analog output " << aio->label();
 
   return aio;
 }
@@ -1071,11 +1091,11 @@ bool mdtDeviceModbusWagoModule::addAnalogIos(int partNumber)
   // Add module's analog inputs
   iosCount = analogInputsCount(partNumber);
   for(i = 0; i < iosCount; ++i){
-    aio = getNewAnalogInput(pvPartNumber, i);
+    aio = getNewAnalogInput(partNumber, i);
     if(aio == 0){
-      mdtError e(MDT_DEVICE_ERROR, "Cannot get I/O module's parameters (part number: " + partNumberText() + ")", mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
-      e.commit();
+      pvLastError.setError(tr("Cannot get I/O module's parameters (part number: ") + partNumberText() + tr(")"), mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbusWagoModule");
+      pvLastError.commit();
       clear(true);
       return false;
     }
@@ -1084,21 +1104,29 @@ bool mdtDeviceModbusWagoModule::addAnalogIos(int partNumber)
   // Add module's analog outputs
   iosCount = analogOutputsCount(partNumber);
   for(i = 0; i < iosCount; ++i){
-    aio = getNewAnalogOutput(pvPartNumber, i);
+    aio = getNewAnalogOutput(partNumber, i);
     if(aio == 0){
-      mdtError e(MDT_DEVICE_ERROR, "Cannot get I/O module's parameters (part number: " + partNumberText() + ")", mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
-      e.commit();
+      pvLastError.setError(tr("Cannot get I/O module's parameters (part number: ") + partNumberText() + tr(")"), mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbusWagoModule");
+      pvLastError.commit();
       clear(true);
       return false;
     }
     pvAnalogOutputs.append(aio);
   }
+  // If both analog inputs count and analog outputs count are 0, module is not recognized
+  if( (pvAnalogInputs.size() == 0) && (pvAnalogOutputs.size() == 0) ){
+    pvLastError.setError(tr("Cannot get analog I/O's count for module with part number: ") + partNumberText(), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbusWagoModule");
+    pvLastError.commit();
+    clear(true);
+    return false;
+  }
   // Set module type
-  if((pvAnalogInputs.size() > 0)&&(pvAnalogOutputs.size() > 0)){
-    mdtError e(MDT_DEVICE_ERROR, "Analog module with inputs and outputs is not supported (part number: " + partNumberText() + ")", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
-    e.commit();
+  if( (pvAnalogInputs.size() > 0) && (pvAnalogOutputs.size() > 0) ){
+    pvLastError.setError(tr("Analog module with inputs and outputs is not supported (part number: ") + partNumberText() + tr(")"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbusWagoModule");
+    pvLastError.commit();
     clear(true);
     return false;
   }else if(pvAnalogInputs.size() > 0){
@@ -1119,17 +1147,17 @@ bool mdtDeviceModbusWagoModule::addDigitalIos(quint16 word)
   // Add digital inputs
   iosCount = digitalInputsCount(word);
   if(iosCount < 0){
-    mdtError e(MDT_DEVICE_ERROR, "Cannot get module's number of digital inputs", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
-    e.commit();
+    pvLastError.setError(tr("Cannot get module's number of digital inputs."), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbusWagoModule");
+    pvLastError.commit();
     return false;
   }
   for(i = 0; i < iosCount; ++i){
     dio = new mdtDigitalIo;
     if(dio == 0){
-      mdtError e(MDT_DEVICE_ERROR, "Unable to build a digital I/O (memory full ?)", mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
-      e.commit();
+      pvLastError.setError(tr("Unable to build a digital I/O (memory full ?)"), mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbusWagoModule");
+      pvLastError.commit();
       return false;
     }
     pvDigitalInputs.append(dio);
@@ -1137,17 +1165,17 @@ bool mdtDeviceModbusWagoModule::addDigitalIos(quint16 word)
   // Add digital outputs
   iosCount = digitalOutputsCount(word);
   if(iosCount < 0){
-    mdtError e(MDT_DEVICE_ERROR, "Cannot get module's number of digital outputs", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
-    e.commit();
+    pvLastError.setError(tr("Cannot get module's number of digital outputs"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbusWagoModule");
+    pvLastError.commit();
     return false;
   }
   for(i = 0; i < iosCount; ++i){
     dio = new mdtDigitalIo;
     if(dio == 0){
-      mdtError e(MDT_DEVICE_ERROR, "Unable to build a digital I/O (memory full ?)", mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
-      e.commit();
+      pvLastError.setError(tr("Unable to build a digital I/O (memory full ?)"), mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbusWagoModule");
+      pvLastError.commit();
       clear(true);
       return false;
     }

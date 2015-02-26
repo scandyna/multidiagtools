@@ -1671,8 +1671,6 @@ void mdtDeviceTest::modbusTest()
   mdtModbusTcpPortManager *m = d.modbusTcpPortManager();
   mdtDeviceAddress da;
   mdtDeviceAddressList daList;
-  ///QList<mdtPortInfo*> portInfoList;
-  ///int hwNodeId = 3;
   mdtDeviceIosWidget *iosw;
   mdtDigitalIo *di;
   mdtDeviceWindow dw;
@@ -1743,11 +1741,9 @@ void mdtDeviceTest::modbusTest()
   /*
    * Try to connect to first device that has hardware node ID 0
    */
-  qDebug() << "** Try connect to HWNID 0 ...";
   QVERIFY(d.connectToDevice(mdtModbusHwNodeId(0,2,0), "NodeC", 100));
   QVERIFY(d.currentState() == mdtDevice::State_t::Ready);
   QCOMPARE(d.alias(), QString("NodeC"));
-  qDebug() << "** Try connect to HWNID 0 - DONE";
   /*
    * Do above a second time
    * (There was a bug when cache file existed)
@@ -1756,33 +1752,13 @@ void mdtDeviceTest::modbusTest()
   d.disconnectFromDevice();
   QVERIFY(d.currentState() == mdtDevice::State_t::Disconnected);
   // Connect to first device with hardware node ID 0
-  qDebug() << "*** Try connect to HWNID 0 ...";
   QVERIFY(d.connectToDevice(mdtModbusHwNodeId(0,2,0), "NodeD", 100));
   QVERIFY(d.currentState() == mdtDevice::State_t::Ready);
   QCOMPARE(d.alias(), QString("NodeD"));
-  qDebug() << "*** Try connect to HWNID 0 - DONE";
-
-
-  // Scan looking in chache file first
-  ///portInfoList = m->scan(m->readScanResult());
-  // Try to connect ...
-//   if(d.connectToDevice(portInfoList, hwNodeId, 4) != mdtAbstractPort::NoError){
-//     // scan network an try again
-//     qDeleteAll(portInfoList);
-//     portInfoList.clear();
-//     qDebug() << "Scanning network ...";
-//     ///portInfoList = m->scan(QNetworkInterface::allInterfaces(), 502, 100);
-//     if(d.connectToDevice(portInfoList, hwNodeId, 4) != mdtAbstractPort::NoError){
-//       QSKIP("Modbus device with requested harware node ID not found", SkipAll);
-//     }
-//     // Ok found, save scan result
-//     QVERIFY(m->saveScanResult(portInfoList));
-//     // We no lobger need portInfoList
-//     qDeleteAll(portInfoList);
-//     portInfoList.clear();
-//   }
-
-  // Make some queries
+  /*
+   * Make some queries
+   * Note: we cannot detect I/O's, so we can just assume we have at least 2 digital inputs
+   */
   ///QVERIFY(!d.getDigitalInputValue(0, false, false).isValid());
   QVERIFY(d.getDigitalInputValue(0, true, true).isValid());
   QVERIFY(d.getDigitalInputValue(0, false, false).isValid());
@@ -1791,7 +1767,7 @@ void mdtDeviceTest::modbusTest()
   QVERIFY(d.getDigitalOutputs(500) >= 0);
   d.start(100);
   QTest::qWait(1000);
-  /**
+  /*
   while(dw.isVisible()){
     QTest::qWait(1000);
   }
@@ -2032,6 +2008,72 @@ void mdtDeviceTest::modbusWagoModuleTest()
   MDT_COMPARE(aio->value().valueDouble(), 17.5, 12, 0.0, 20.0);
   aio->setValueInt(32767, true, false);
   MDT_COMPARE(aio->value().valueDouble(), 20.0, 12, 0.0, 20.0);
+
+  /*
+   * Analog OUT module
+   *
+   * Check with 750-556 witch has:
+   *  - 2 analog OUT
+   *  - Range: -10 to +10V
+   *  - Unit: [V]
+   *
+   * We use a address range:
+   *  - Read access: 8-9
+   *  - Write access: 18-19
+   */
+  m.clear();
+  QVERIFY(m.setupFromRegisterWord(556));
+  m.updateAddresses(0, 8, 18, 0, 0, 0);
+  QCOMPARE(m.firstAiAddress() , 0);
+  QCOMPARE(m.lastAiAddress() , 0);
+  QCOMPARE(m.nextModuleFirstAiAddress() , 0);
+  QCOMPARE(m.firstAoAddressRead() , 8);
+  QCOMPARE(m.lastAoAddressRead() , 9);
+  QCOMPARE(m.nextModuleFirstAoAddressRead() , 10);
+  QCOMPARE(m.firstAoAddressWrite() , 18);
+  QCOMPARE(m.lastAoAddressWrite() , 19);
+  QCOMPARE(m.nextModuleFirstAoAddressWrite() , 20);
+  QCOMPARE(m.analogInputs().size(), 0);
+  QCOMPARE(m.analogOutputs().size(), 2);
+  QVERIFY(m.digitalInputs().isEmpty());
+  QVERIFY(m.digitalOutputs().isEmpty());
+  QVERIFY(m.type() == mdtDeviceModbusWagoModule::AnalogOutputs);
+  QCOMPARE(m.partNumber() , 556);
+  QCOMPARE(m.partNumberText() , QString("556"));
+  // Check internal I/O setup
+  aio = m.analogOutputs().at(0);
+  QVERIFY(aio != 0);
+  MDT_COMPARE(aio->minimum(), -10.0, 12, 0.0, 20.0);
+  MDT_COMPARE(aio->maximum(), 10.0, 12, 0.0, 20.0);
+  QCOMPARE(aio->unit(), QString("[V]"));
+  QCOMPARE(aio->addressRead(), 8);
+  QCOMPARE(aio->addressWrite(), 18);
+  aio = m.analogOutputs().at(1);
+  QVERIFY(aio != 0);
+  MDT_COMPARE(aio->minimum(), -10.0, 12, 0.0, 20.0);
+  MDT_COMPARE(aio->maximum(), 10.0, 12, 0.0, 20.0);
+  QCOMPARE(aio->unit(), QString("[V]"));
+  QCOMPARE(aio->addressRead(), 9);
+  QCOMPARE(aio->addressWrite(), 19);
+  // Check some values
+  aio->setValueInt(0x8001, true, false);
+  MDT_COMPARE(aio->value().valueDouble(), -10.0, 12, -10.0, 10.0);
+  aio->setValueInt(0xA000, true, false);
+  MDT_COMPARE(aio->value().valueDouble(), -7.5, 12, -10.0, 10.0);
+  aio->setValueInt(0xC000, true, false);
+  MDT_COMPARE(aio->value().valueDouble(), -5.0, 12, -10.0, 10.0);
+  aio->setValueInt(0xE000, true, false);
+  MDT_COMPARE(aio->value().valueDouble(), -2.5, 12, -10.0, 10.0);
+  aio->setValueInt(0x000, true, false);
+  MDT_COMPARE(aio->value().valueDouble(), 0.0, 12, -10.0, 10.0);
+  aio->setValueInt(0x2000, true, false);
+  MDT_COMPARE(aio->value().valueDouble(), 2.5, 12, -10.0, 10.0);
+  aio->setValueInt(0x4000, true, false);
+  MDT_COMPARE(aio->value().valueDouble(), 5.0, 12, -10.0, 10.0);
+  aio->setValueInt(0x6000, true, false);
+  MDT_COMPARE(aio->value().valueDouble(), 7.5, 12, -10.0, 10.0);
+  aio->setValueInt(0x7FFF, true, false);
+  MDT_COMPARE(aio->value().valueDouble(), 10.0, 12, -10.0, 10.0);
 
   /*
    * Digital IN module
@@ -2283,12 +2325,6 @@ void mdtDeviceTest::modbusWagoTest()
   }
   QVERIFY(d.currentState() == mdtDevice::State_t::Ready);
   QCOMPARE(d.alias(), QString("Node0"));
-
-  /**
-  if(d.connectToDevice(mdtDeviceInfo()) != mdtAbstractPort::NoError){;
-    QSKIP("No Wago 750 device found, or other error", SkipAll);
-  }
-  */
   QVERIFY(d.portManager()->isReady());
   qDebug() << "Analog outputs: " << d.analogOutputsCount();
   qDebug() << "Analog inputs: " << d.analogInputsCount();
@@ -2306,86 +2342,92 @@ void mdtDeviceTest::modbusWagoTest()
    *  we let the PLC some time to update its cache (else it sometimes returns us a cached value)
    */
 
-  // Analog inputs
-  if(d.ios()->analogInputsCount() > 0){
-    QVERIFY(!d.getAnalogInputValue(0, false, false).isValid());
-    QVERIFY(!d.getAnalogInputValue(0, true, false).isValid());
-    QVERIFY(!d.getAnalogInputValueAt(0, false, false).isValid());
-    QVERIFY(!d.getAnalogInputValueAt(0, true, false).isValid());
-    QVERIFY(d.getAnalogInputValue(0, true, true).isValid());
-    QVERIFY(d.getAnalogInputValue(0, false, false).isValid());
-    QVERIFY(d.getAnalogInputValueAt(0, true, true).isValid());
-    QVERIFY(d.getAnalogInputValueAt(0, false, false).isValid());
-    QVERIFY(!d.getAnalogInputValue(0, true, false).isValid());
-    QVERIFY(d.getAnalogInputValue("AI1", true, true).isValid());
-    QVERIFY(!d.getAnalogInputValue("AI1", true, false).isValid());
-    QVERIFY(d.getAnalogInputValue(1, true, true).isValid());
-    QVERIFY(d.getAnalogInputValue(1, false, false).isValid());
-    QVERIFY(d.getAnalogInputValueAt(1, true, true).isValid());
-    QVERIFY(d.getAnalogInputValueAt(1, false, false).isValid());
-    QVERIFY(d.getAnalogInputValue("AI2", true, true).isValid());
-    QVERIFY(!d.getAnalogInputValue("AI2", true, false).isValid());
-    QVERIFY(d.getAnalogInputs(true) >= 0);
+  /*
+   * Analog inputs
+   */
+  if(d.ios()->analogInputsCount() > 1){
+    // Get cached values - must be invalid because we never get them from device
+    QVERIFY(!d.getAnalogInputValue(0, false).isValid());
+    ///QVERIFY(!d.getAnalogInputValue(0, true, false).isValid());   // waitOnReply should be obseleted
+    QVERIFY(!d.getAnalogInputValueAt(0, false).isValid());
+    ///QVERIFY(!d.getAnalogInputValueAt(0, true, false).isValid()); // waitOnReply should be obseleted
+    // Get values from device (and also check that cached getting returns valid value too)
+    QVERIFY(d.getAnalogInputValue(0, true).isValid());
+    QVERIFY(d.getAnalogInputValue(0, false).isValid());
+    QVERIFY(d.getAnalogInputValueAt(0, true).isValid());
+    QVERIFY(d.getAnalogInputValueAt(0, false).isValid());
+    ///QVERIFY(!d.getAnalogInputValue(0, true, false).isValid());
+    QVERIFY(d.getAnalogInputValue("AI1", true).isValid());
+    ///QVERIFY(!d.getAnalogInputValue("AI1", true, false).isValid());
+    QVERIFY(d.getAnalogInputValue(1, true).isValid());
+    QVERIFY(d.getAnalogInputValue(1, false).isValid());
+    QVERIFY(d.getAnalogInputValueAt(1, true).isValid());
+    QVERIFY(d.getAnalogInputValueAt(1, false).isValid());
+    QVERIFY(d.getAnalogInputValue("AI2", true).isValid());
+    QVERIFY(d.getAnalogInputValue("AI2", false).isValid());
+    // Check that getting all analog inputs works
+    QVERIFY(d.getAnalogInputs());
+    QVERIFY(d.getAnalogInputValue(0, false).isValid());
+    QVERIFY(d.getAnalogInputValue(1, false).isValid());
   }else{
-    qDebug() << "No analog inputs available - Will not be tested";
+    qDebug() << "Not enough analog inputs available (expected 2) - Will not be tested";
   }
 
   // Analog outputs
-  if(d.ios()->analogOutputsCount() > 0){
-    QVERIFY(!d.getAnalogOutputValue(0x200, false, false).isValid());
-    QVERIFY(!d.getAnalogOutputValueAt(0, false, false).isValid());
-    QVERIFY(d.getAnalogOutputValue(0x200, true, true).isValid());
-    QVERIFY(d.getAnalogOutputValue(0x200, false, false).isValid());
-    QVERIFY(d.getAnalogOutputValueAt(0, false, false).isValid());
-    QVERIFY(!d.getAnalogOutputValue(0x200, true, false).isValid());
-    QVERIFY(d.setAnalogOutputValue(0, 2.5, true, true) >= 0);
+  if(d.ios()->analogOutputsCount() > 1){
+    // Get cached values - must be invalid because we never get them from device
+//     QVERIFY(!d.getAnalogOutputValue(0x200, false).isValid());
+//     QVERIFY(!d.getAnalogOutputValueAt(0, false).isValid());
+    // Get values from device (and also check that cached getting returns valid value too)
+    QVERIFY(d.getAnalogOutputValue(0x200, true).isValid());
+    QVERIFY(d.getAnalogOutputValue(0x200, false).isValid());
+    QVERIFY(d.getAnalogOutputValueAt(0, false).isValid());
+    ///QVERIFY(!d.getAnalogOutputValue(0x200, true, false).isValid());
+    
+    QVERIFY(d.setAnalogOutputValue(0, 2.5, true) >= 0);
     d.wait(setGetWaitTime);
-    QVERIFY(d.getAnalogOutputValue(0x200, true, true).isValid());
-    QVERIFY(d.getAnalogOutputs(true) >= 0);
-    QVERIFY(d.getAnalogOutputValue(0x200, false, false).isValid());
-    MDT_COMPARE(d.getAnalogOutputValue(0x200, false, false).valueDouble(), 2.5, 12, -10.0, 10.0);
-    MDT_COMPARE(d.getAnalogOutputValueAt(0, false, false).valueDouble(), 2.5, 12, -10.0, 10.0);
-    QVERIFY(d.setAnalogOutputValue("AO1", 2.5, true, true) >= 0);
+    QVERIFY(d.getAnalogOutputValue(0x200, true).isValid());
+    // Check that getting all analog outputs works
+//    QVERIFY(d.getAnalogOutputs());
+    QVERIFY(d.getAnalogOutputValue(0x200, false).isValid());
+    MDT_COMPARE(d.getAnalogOutputValue(0x200, false).valueDouble(), 2.5, 12, -10.0, 10.0);
+    MDT_COMPARE(d.getAnalogOutputValueAt(0, false).valueDouble(), 2.5, 12, -10.0, 10.0);
+    
+    QVERIFY(d.setAnalogOutputValue("AO1", 2.5, true) >= 0);
     d.wait(setGetWaitTime);
-    QVERIFY(d.getAnalogOutputValue("AO1", true, true).isValid());
-    ///QVERIFY(qAbs(d.getAnalogOutputValue(0x200, 500, true).valueDouble()-2.5) < (10.0/4050.0));
-    MDT_COMPARE(d.getAnalogOutputValue(0x200, true, true).valueDouble(), 2.5, 12, -10.0, 10.0);
-    QVERIFY(d.getAnalogOutputValue(0x200, false, false).isValid());
+    QVERIFY(d.getAnalogOutputValue("AO1", true).isValid());
+    MDT_COMPARE(d.getAnalogOutputValue(0x200, true).valueDouble(), 2.5, 12, -10.0, 10.0);
+    QVERIFY(d.getAnalogOutputValue(0x200, false).isValid());
+    
     QVERIFY(d.setAnalogOutputValueAt(1, 3.5, true, true) >= 0);
     d.wait(setGetWaitTime);
-    QVERIFY(d.getAnalogOutputValue("AO1", true, true).isValid());
-    MDT_COMPARE(d.getAnalogOutputValue(0x201, true, true).valueDouble(), 3.5, 12, -10.0, 10.0);
+    QVERIFY(d.getAnalogOutputValue("AO1", true).isValid());
+    MDT_COMPARE(d.getAnalogOutputValue(0x201, true).valueDouble(), 3.5, 12, -10.0, 10.0);
     // Grouped query
+    
     QVERIFY(d.setAnalogOutputValue(0, 1.5, false, false) == 0);
     QVERIFY(d.setAnalogOutputValue(1, 2.5, false, false) == 0);
     QVERIFY(d.setAnalogOutputs(true) >= 0);
-    ///QVERIFY(qAbs(d.getAnalogOutputValue(0x200, 500, true).toDouble()-1.5) < (10.0/4050.0));
-    ///QVERIFY(qAbs(d.getAnalogOutputValue(0x201, 500, true).toDouble()-2.5) < (10.0/4050.0));
     d.wait(setGetWaitTime);
-    MDT_COMPARE(d.getAnalogOutputValue(0x200, true, true).valueDouble(), 1.5, 12, -10.0, 10.0);
-    MDT_COMPARE(d.getAnalogOutputValue(0x201, true, true).valueDouble(), 2.5, 12, -10.0, 10.0);
-    MDT_COMPARE(d.getAnalogOutputValue("AO1", true, true).valueDouble(), 1.5, 12, -10.0, 10.0);
-    MDT_COMPARE(d.getAnalogOutputValue("AO2", true, true).valueDouble(), 2.5, 12, -10.0, 10.0);
+    MDT_COMPARE(d.getAnalogOutputValue(0x200, true).valueDouble(), 1.5, 12, -10.0, 10.0);
+    MDT_COMPARE(d.getAnalogOutputValue(0x201, true).valueDouble(), 2.5, 12, -10.0, 10.0);
+    MDT_COMPARE(d.getAnalogOutputValue("AO1", true).valueDouble(), 1.5, 12, -10.0, 10.0);
+    MDT_COMPARE(d.getAnalogOutputValue("AO2", true).valueDouble(), 2.5, 12, -10.0, 10.0);
   }else{
-    qDebug() << "No analog outputs available - Will not be tested";
+    qDebug() << "Not enough analog outputs available (expected 2) - Will not be tested";
   }
 
   // Digital inputs
-  if(d.ios()->digitalInputsCount() > 0){
-    QVERIFY(!d.getDigitalInputValue(0, false, false).isValid());
-    QVERIFY(!d.getDigitalInputValueAt(1, false, false).isValid());
-    QVERIFY(d.getDigitalInputValue(0, true, true).isValid());
-    QVERIFY(d.getDigitalInputValue(0, false, false).isValid());
-    QVERIFY(!d.getDigitalInputValue(0, true, false).isValid());
-    QVERIFY(d.getDigitalInputs(true) >= 0);
-    QVERIFY(d.getDigitalInputValue(0, false, false).isValid());
-    
-    ///QVERIFY(!d.getDigitalInputState(0x200, 0).isValid());
-    ///QVERIFY(d.getDigitalInputState(0, 500).isValid());
-    ///QTest::qWait(500);
-  }else{
-    qDebug() << "No digital inputs available - Will not be tested";
-  }
+  QVERIFY(!d.getDigitalInputValue(0, false, false).isValid());
+  QVERIFY(!d.getDigitalInputValueAt(1, false, false).isValid());
+  QVERIFY(d.getDigitalInputValue(0, true, true).isValid());
+  QVERIFY(d.getDigitalInputValue(0, false, false).isValid());
+  QVERIFY(!d.getDigitalInputValue(0, true, false).isValid());
+  QVERIFY(d.getDigitalInputs(true) >= 0);
+  QVERIFY(d.getDigitalInputValue(0, false, false).isValid());
+  ///QVERIFY(!d.getDigitalInputState(0x200, 0).isValid());
+  ///QVERIFY(d.getDigitalInputState(0, 500).isValid());
+  ///QTest::qWait(500);
 
   // Digital outputs
   if(d.ios()->digitalOutputsCount() > 0){
@@ -2426,11 +2468,11 @@ void mdtDeviceTest::modbusWagoTest()
     qDebug() << "No digital outputs available - Will not be tested";
   }
   d.start(100);
-  /*
+  
   while(dw.isVisible()){
     QTest::qWait(1000);
   }
-  */
+  
 }
 
 void mdtDeviceTest::modbusBeckhoffTest()

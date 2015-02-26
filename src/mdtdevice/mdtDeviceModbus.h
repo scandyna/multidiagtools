@@ -22,8 +22,6 @@
 #define MDT_DEVICE_MODBUS_H
 
 #include "mdtMultiIoDevice.h"
-#include "mdtPortInfo.h"
-#include <QMap>
 #include <QVariant>
 #include <QList>
 #include <QByteArray>
@@ -55,26 +53,6 @@ class mdtDeviceModbus : public mdtMultiIoDevice
    */
   mdtModbusTcpPortManager *modbusTcpPortManager();
 
-  /*! \brief Set hardware node id
-   *
-   * \param hardwareNodeId See mdtModbusTcpPortManager::getHardwareNodeAddress() .
-   * \param bitsCount See mdtModbusTcpPortManager::getHardwareNodeAddress() .
-   * \param startFrom See mdtModbusTcpPortManager::getHardwareNodeAddress() .
-   */
-  ///void setHardwareNodeId(int hwNodeId, int bitsCount, int startFrom = 0);
-
-  /*! \brief Clear hardware node id
-   *
-   * \sa setHardwareNodeId() .
-   */
-  ///void clearHardwareNodeId();
-
-  /*! \brief Get hardware node id
-   *
-   * \sa setHardwareNodeId() .
-   */
-  ///QVariant hardwareNodeId() const;
-
   /*! \brief Connect to physical device
    *
    * Connect to device set with setDeviceAddress().
@@ -96,71 +74,6 @@ class mdtDeviceModbus : public mdtMultiIoDevice
    * \param port Port. MODBUS/TCP default port is 502.
    */
   virtual bool connectToDevice(const mdtModbusHwNodeId & hwNodeId, const QString & alias = QString(), int scanTimeout = 500, int port = 502);
-
-  /*! \brief Connect to physical device
-   *
-   * This method can be reimplemented in subclass if specific
-   *  tasks must be done during connection .
-   *
-   * \param portInfo mdtPortInfo object . The portName attribute of portInfo must contain host:port format (or ip:port) .
-   * \return A error listed in mdtAbstractPort::error_t (NoError on success) .
-   */
-  //virtual mdtAbstractPort::error_t connectToDevice(const mdtPortInfo & portInfo);
-
-  /*! \brief Search and connect to physical device.
-   *
-   * Will scan available ports and open the first port that
-   *  has device attached maching request.
-   *
-   * \sa connectToDevice(mdtPortInfo&) .
-   *
-   * \param devInfo Requested device's informations (can be empty, no information is used in current version).
-   * \return A error listed in mdtAbstractPort::error_t (NoError on success)
-   */
-  ///mdtAbstractPort::error_t connectToDevice(const mdtDeviceInfo &devInfo);
-
-  /*! \brief Search and connect to physical device.
-   *
-   * Will try to connect to device listed in scanResult until
-   *  hardwareNodeId is found.
-   *
-   * \param scanResult List of mdtPortInfo containing a port name in format host:port .
-   * \param hardwareNodeId See mdtModbusTcpPortManager::getHardwareNodeAddress() .
-   * \param bitsCount See mdtModbusTcpPortManager::getHardwareNodeAddress() .
-   * \param startFrom See mdtModbusTcpPortManager::getHardwareNodeAddress() .
-   * \return A error listed in mdtAbstractPort::error_t (NoError on success) .
-   * \pre scanResult must contain valid pointers .
-   */
-  //mdtAbstractPort::error_t connectToDevice(const QList<mdtPortInfo*> &scanResult, int hardwareNodeId, int bitsCount, int startFrom = 0);
-
-  /*! \brief Search and connect to physical device.
-   *
-   * Will connect to device with hardwareNodeId set with setHardwareNodeId() .
-   *  This method will beginn to scan hosts in cache file (if exists) .
-   *  If expcted device was not found, the network is also scanned .
-   *
-   * \param existingHwNodeIdList A list of hardwareNodeId to consider during scan .
-   *                Once all devices contained in existingHwNodeIdList,
-   *                and device with hardwareNodeId, are found, scan will break .
-   * \return A error listed in mdtAbstractPort::error_t (NoError on success) .
-   */
-  //mdtAbstractPort::error_t connectToDevice(const QList<int> & existingHwNodeIdList);
-
-  /*! \brief Search and connect to physical device.
-   *
-   * Will connect to device with hardwareNodeId set with setHardwareNodeId() .
-   *  This method will beginn to scan hosts in cache file (if exists) .
-   *  If expcted device was not found, the network is also scanned .
-   *
-   * If all devices that must be scanned have a known hardwareNodeId,
-   *  please consider using connectToDevice(const QList<int>&) ,
-   *  wtch can be faster .
-   *
-   * \return A error listed in mdtAbstractPort::error_t (NoError on success) .
-   *
-   * \todo Not implemented yet .
-   */
-  ///mdtAbstractPort::error_t connectToDevice();
 
   /*! \brief Helper method for register service
    *
@@ -400,12 +313,6 @@ class mdtDeviceModbus : public mdtMultiIoDevice
   void disconnectFromDeviceEvent();
 
   Q_DISABLE_COPY(mdtDeviceModbus);
-
-/**
-  QVariant pvHardwareNodeId;
-  int pvHardwareNodeIdBitsCount;
-  int pvHardwareNodeIdBitsStartFrom;
-*/
 };
 
 #endif  // #ifndef MDT_DEVICE_MODBUS_H

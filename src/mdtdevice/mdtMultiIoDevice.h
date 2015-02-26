@@ -129,7 +129,7 @@ class mdtMultiIoDevice : public mdtDevice
    *                      Behaviour of this method can vary, depending on device specific subclass.
    *                      (See sublcass readAnalogInput() for details).
    * \param waitOnReply If true, this method will wait until reply comes in, or timeout (See waitTransactionDone() ),
-   *                     else it will return immediately after the query was sent.
+   *                     else it will return immediately after the query was sent. \deprecated waitOnReply must not be used anymore
    * \return A mdtValue with valueDouble as real value and valueInt as device specific encoded fromat (if available).
    *          See mdtValue documentation for details about validity and other flags.
    * \pre analogInput must be valid.
@@ -144,7 +144,7 @@ class mdtMultiIoDevice : public mdtDevice
    *
    * \sa getAnalogInputValue(mdtAnalogIo*, bool, bool)
    */
-  mdtValue getAnalogInputValue(int address, bool queryDevice, bool waitOnReply);
+  mdtValue getAnalogInputValue(int address, bool queryDevice, bool waitOnReply = true);
 
   /*! \brief Get analog input value
    *
@@ -152,7 +152,7 @@ class mdtMultiIoDevice : public mdtDevice
    *
    * \sa getAnalogInputValue(mdtAnalogIo*, bool, bool)
    */
-  mdtValue getAnalogInputValueAt(int position, bool queryDevice, bool waitOnReply);
+  mdtValue getAnalogInputValueAt(int position, bool queryDevice, bool waitOnReply = true);
 
   /*! \brief Get analog input value
    *
@@ -160,7 +160,7 @@ class mdtMultiIoDevice : public mdtDevice
    *
    * \param labelShort Short label set in I/O (see mdtAnalogIo for details).
    */
-  mdtValue getAnalogInputValue(const QString &labelShort, bool queryDevice, bool waitOnReply);
+  mdtValue getAnalogInputValue(const QString & labelShort, bool queryDevice, bool waitOnReply = true);
 
   /*! \brief Read all analog inputs on physical device and update (G)UI representation
    *
@@ -174,10 +174,9 @@ class mdtMultiIoDevice : public mdtDevice
    *  (See mdtDeviceIos for details).
    *
    * \param waitOnReply If true, this method will wait until reply comes in, or timeout (See waitTransactionDone() ),
-   *                     else it will return immediately after the query was sent.
-   * \return 0 or a ID on success. If no I/O's are set, on timeout or other error, a value < 0 is returned.
+   *                     else it will return immediately after the query was sent. \deprecated waitOnReply must not be used anymore
    */
-  int getAnalogInputs(bool waitOnReply);
+  bool getAnalogInputs(bool waitOnReply = true);
 
   /*! \brief Get analog output value
    *
@@ -189,12 +188,12 @@ class mdtMultiIoDevice : public mdtDevice
    *                      Behaviour of this method can vary, depending on device specific subclass.
    *                      (See sublcass readAnalogOutput() for details).
    * \param waitOnReply If true, this method will wait until reply comes in, or timeout (See waitTransactionDone() ),
-   *                     else it will return immediately after the query was sent.
+   *                     else it will return immediately after the query was sent. \deprecated waitOnReply must not be used anymore
    * \return A mdtValue with valueDouble as real value and valueInt as device specific encoded fromat (if available).
    *          See mdtValue documentation for details about validity and other flags.
    * \pre analogOutput must be valid.
    */
-  mdtValue getAnalogOutputValue(mdtAnalogIo *analogOutput, bool queryDevice, bool waitOnReply);
+  mdtValue getAnalogOutputValue(mdtAnalogIo *analogOutput, bool queryDevice, bool waitOnReply = true);
 
   /*! \brief Get analog output value
    *
@@ -204,7 +203,7 @@ class mdtMultiIoDevice : public mdtDevice
    *
    * \sa getAnalogOutputValue(mdtAnalogIo*, bool, bool)
    */
-  mdtValue getAnalogOutputValue(int addressRead, bool queryDevice, bool waitOnReply);
+  mdtValue getAnalogOutputValue(int addressRead, bool queryDevice, bool waitOnReply = true);
 
   /*! \brief Get analog output value
    *
@@ -212,7 +211,7 @@ class mdtMultiIoDevice : public mdtDevice
    *
    * \sa getAnalogOutputValue(mdtAnalogIo*, bool, bool)
    */
-  mdtValue getAnalogOutputValueAt(int position, bool queryDevice, bool waitOnReply);
+  mdtValue getAnalogOutputValueAt(int position, bool queryDevice, bool waitOnReply = true);
 
   /*! \brief Get analog output value
    *
@@ -220,7 +219,7 @@ class mdtMultiIoDevice : public mdtDevice
    *
    * \param labelShort Short label set in I/O (see mdtAnalogIo for details).
    */
-  mdtValue getAnalogOutputValue(const QString &labelShort, bool queryDevice, bool waitOnReply);
+  mdtValue getAnalogOutputValue(const QString &labelShort, bool queryDevice, bool waitOnReply = true);
 
   /*! \brief Read all analog outputs on physical device and update (G)UI representation
    *
@@ -234,10 +233,9 @@ class mdtMultiIoDevice : public mdtDevice
    *  (See mdtDeviceIos for details).
    *
    * \param waitOnReply If true, this method will wait until reply comes in, or timeout (See waitTransactionDone() ),
-   *                     else it will return immediately after the query was sent.
-   * \return 0 or a ID on success. If no I/O's are set, on timeout or other error, a value < 0 is returned.
+   *                     else it will return immediately after the query was sent. \deprecated waitOnReply must not be used anymore
    */
-  int getAnalogOutputs(bool waitOnReply);
+  bool getAnalogOutputs(bool waitOnReply = true);
 
   /*! \brief Set analog output value
    *
@@ -250,11 +248,11 @@ class mdtMultiIoDevice : public mdtDevice
    *                      Behaviour of this method can vary, depending on device specific subclass.
    *                      (See sublcass writeAnalogOutput() for details).
    * \param waitOnReply If true, this method will wait until reply comes in, or timeout (See waitTransactionDone() ),
-   *                     else it will return immediately after the query was sent.
+   *                     else it will return immediately after the query was sent. \deprecated waitOnReply must not be used anymore
    * \return 0 or a ID on success. If no I/O's are set, on timeout, on invalid value or other error, a value < 0 is returned.
    * \pre analogOutput must be valid.
    */
-  int setAnalogOutputValue(mdtAnalogIo *analogOutput, const mdtValue &value, bool sendToDevice, bool waitOnReply);
+  int setAnalogOutputValue(mdtAnalogIo *analogOutput, const mdtValue &value, bool sendToDevice, bool waitOnReply = true);
 
   /*! \brief Set analog output value
    *
@@ -264,7 +262,7 @@ class mdtMultiIoDevice : public mdtDevice
    *
    * \sa setAnalogOutputValue(mdtAnalogIo*, const mdtValue&, bool, bool)
    */
-  int setAnalogOutputValue(int addressWrite, const mdtValue &value, bool sendToDevice, bool waitOnReply);
+  int setAnalogOutputValue(int addressWrite, const mdtValue &value, bool sendToDevice, bool waitOnReply = true);
 
   /*! \brief Set analog output value
    *
@@ -272,7 +270,7 @@ class mdtMultiIoDevice : public mdtDevice
    *
    * \sa setAnalogOutputValue(mdtAnalogIo*, const mdtValue&, bool, bool)
    */
-  int setAnalogOutputValueAt(int position, const mdtValue &value, bool sendToDevice, bool waitOnReply);
+  int setAnalogOutputValueAt(int position, const mdtValue &value, bool sendToDevice, bool waitOnReply = true);
 
   /*! \brief Set analog output value
    *
@@ -280,7 +278,7 @@ class mdtMultiIoDevice : public mdtDevice
    *
    * \param labelShort Short label set in I/O (see mdtAnalogIo for details).
    */
-  int setAnalogOutputValue(const QString &labelShort, const mdtValue &value, bool sendToDevice, bool waitOnReply);
+  int setAnalogOutputValue(const QString &labelShort, const mdtValue &value, bool sendToDevice, bool waitOnReply = true);
 
   /*! \brief Write all analog outputs on physical device and update (G)UI representation
    *
@@ -298,10 +296,10 @@ class mdtMultiIoDevice : public mdtDevice
    *  (See mdtDeviceIos for details).
    *
    * \param waitOnReply If true, this method will wait until reply comes in, or timeout (See waitTransactionDone() ),
-   *                     else it will return immediately after the query was sent.
+   *                     else it will return immediately after the query was sent. \deprecated waitOnReply must not be used anymore
    * \return 0 or a ID on success. If no I/O's are set, on timeout ar other error, a value < 0 is returned.
    */
-  int setAnalogOutputs(bool waitOnReply);
+  int setAnalogOutputs(bool waitOnReply = true);
 
   /*! \brief Get digital input value
    *

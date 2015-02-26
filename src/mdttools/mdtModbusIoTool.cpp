@@ -27,6 +27,7 @@
 #include "mdtPortManager.h"
 #include "mdtModbusTcpPortManager.h"
 #include "mdtModbusTcpPortSetupDialog.h"
+#include "mdtModbusHwNodeId.h"
 #include "mdtPortInfo.h"
 #include "mdtErrorOut.h"
 #include <QList>
@@ -164,8 +165,7 @@ void mdtModbusIoTool::setup()
 
 void mdtModbusIoTool::connectToNode()
 {
-  QList<mdtPortInfo*> portInfoList;
-  QList<int> expectedHwNodeAddresses;
+  mdtModbusHwNodeId hwNodeId;
   mdtModbusTcpPortManager *m = pvDeviceModbusWago->modbusTcpPortManager();
   Q_ASSERT(m != 0);
 
@@ -173,17 +173,15 @@ void mdtModbusIoTool::connectToNode()
     showStatusMessage(tr("Please disconnect before reconnect"), 3000);
     return;
   }
-  ///expectedHwNodeAddresses.append(sbHwNodeId->value());
   // Update GUI state
   setStateConnectingToNode();
-  
   // Try to find and connect to device
-  ///pvDeviceModbusWago->setHardwareNodeId(sbHwNodeId->value(), 8, 0);
-//   if(pvDeviceModbusWago->connectToDevice(expectedHwNodeAddresses) != mdtAbstractPort::NoError){
-//     pvStatusWidget->setPermanentText(tr("Device with HW node ID ") + QString::number(sbHwNodeId->value()) + tr(" not found"));
-//     setStateConnectingToNodeFinished();
-//     return;
-//   }
+  hwNodeId.setId(sbHwNodeId->value(), 8, 0);
+  if(!pvDeviceModbusWago->connectToDevice(hwNodeId, "Wago 750 I/O", 100, 502)){
+    pvStatusWidget->setPermanentText(tr("Device with HW node ID ") + QString::number(sbHwNodeId->value()) + tr(" not found"));
+    setStateConnectingToNodeFinished();
+    return;
+  }
   showStatusMessage(tr("I/O detection ..."));
   if(!pvDeviceModbusWago->detectIos()){
     QString details = tr("This probably caused by presence of a unsupported module.");
@@ -191,7 +189,7 @@ void mdtModbusIoTool::connectToNode()
     details += "\n" + tr("Path to log file: ");
     details += mdtErrorOut::logFile();
     showStatusMessage(tr("I/O detection failed"), details);
-    ///pvDeviceModbusWago->portManager()->stop();
+    pvDeviceModbusWago->disconnectFromDevice();
     setStateConnectingToNodeFinished();
     emit errorEvent();
     return;

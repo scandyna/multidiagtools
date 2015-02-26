@@ -75,44 +75,6 @@ bool mdtDeviceModbusWago::connectToDevice ( const mdtModbusHwNodeId& hwNodeId, c
   return mdtDeviceModbus::connectToDevice(hwNodeId, alias, scanTimeout, port);
 }
 
-
-// mdtAbstractPort::error_t mdtDeviceModbusWago::connectToDevice(const mdtPortInfo & portInfo)
-// {
-//   // Check that port manager is not running
-//   if(!pvTcpPortManager->isClosed()){
-//     pvTcpPortManager->stop();
-//   }
-//   // Try to connect
-//   pvTcpPortManager->setPortInfo(portInfo);
-//   if(!pvTcpPortManager->start()){
-//     return mdtAbstractPort::PortNotFound;
-//   }
-//   // Connected - check if device is a Wago 750 fieldbus coupler
-//   if(!isWago750()){
-//     pvTcpPortManager->stop();
-//     return mdtAbstractPort::PortNotFound;
-//   }
-//   qDebug() << "mdtDeviceModbusWago::connectToDevice() - found WAGO device at " << portInfo.portName();
-//   return mdtAbstractPort::NoError;
-// }
-
-/**
-mdtAbstractPort::error_t mdtDeviceModbusWago::connectToDevice(const mdtDeviceInfo &devInfo)
-{
-  return mdtDeviceModbus::connectToDevice(devInfo);
-}
-*/
-
-// mdtAbstractPort::error_t mdtDeviceModbusWago::connectToDevice(const QList<mdtPortInfo*> &scanResult, int hardwareNodeId, int bitsCount, int startFrom)
-// {
-//   return mdtDeviceModbus::connectToDevice(scanResult, hardwareNodeId, bitsCount, startFrom);
-// }
-
-// mdtAbstractPort::error_t mdtDeviceModbusWago::connectToDevice(const QList<int> & existingHwNodeIdList)
-// {
-//   return mdtDeviceModbus::connectToDevice(existingHwNodeIdList);
-// }
-
 bool mdtDeviceModbusWago::isWago750()
 {
   // If device is not from Wago, server can return a error (Something like: invalid address range)
@@ -289,6 +251,7 @@ bool mdtDeviceModbusWago::detectIos(const QMap<int, mdtDeviceModbusWagoModule*> 
         module = new mdtDeviceModbusWagoModule(false, this);
       }
       if(!module->setupFromRegisterWord(word)){
+        pvLastError = module->lastError();
         module->clear(true);
         delete module;
         module = 0;
@@ -307,7 +270,8 @@ bool mdtDeviceModbusWago::detectIos(const QMap<int, mdtDeviceModbusWagoModule*> 
     }
     Q_ASSERT(module != 0);
     Q_ASSERT(module->type() != mdtDeviceModbusWagoModule::Unknown);
-    ///qDebug() << "Module pos. " << i << ": word: " << word << ", firs AI address: " << module->firstAiAddress() << " , IN count: " << module->analogInputs().size();
+    ///qDebug() << "Module pos. " << i << ": word: " << word << ", first AI address: " << module->firstAiAddress() << " , IN count: " << module->analogInputs().size();
+    ///qDebug() << "                                            first AO address: " << module->firstDoAddressRead() << " , OUT count: " << module->analogOutputs().size();
     // Add module's I/Os to container
     addInputs(module->analogInputs());
     addOutputs(module->analogOutputs());
@@ -328,7 +292,7 @@ bool mdtDeviceModbusWago::detectIos(const QMap<int, mdtDeviceModbusWagoModule*> 
     qDeleteAll(pvModules);
     pvModules.clear();
     deleteIos();
-    pvLastError.setError(deviceIdString() + ": analog inputs count not coherent", mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr("analog inputs count not coherent."), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbusWago");
     pvLastError.commit();
     return false;
@@ -337,7 +301,7 @@ bool mdtDeviceModbusWago::detectIos(const QMap<int, mdtDeviceModbusWagoModule*> 
     qDeleteAll(pvModules);
     pvModules.clear();
     deleteIos();
-    pvLastError.setError(deviceIdString() + ": analog outputs count not coherent", mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr("analog outputs count not coherent."), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbusWago");
     pvLastError.commit();
     return false;
@@ -346,7 +310,7 @@ bool mdtDeviceModbusWago::detectIos(const QMap<int, mdtDeviceModbusWagoModule*> 
     qDeleteAll(pvModules);
     pvModules.clear();
     deleteIos();
-    pvLastError.setError(deviceIdString() + ": digital inputs count not coherent", mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr("digital inputs count not coherent."), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbusWago");
     pvLastError.commit();
     return false;
@@ -355,7 +319,7 @@ bool mdtDeviceModbusWago::detectIos(const QMap<int, mdtDeviceModbusWagoModule*> 
     qDeleteAll(pvModules);
     pvModules.clear();
     deleteIos();
-    pvLastError.setError(deviceIdString() + ": digital outputs count not coherent", mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr("digital outputs count not coherent."), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbusWago");
     pvLastError.commit();
     return false;

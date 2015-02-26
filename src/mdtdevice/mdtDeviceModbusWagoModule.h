@@ -21,10 +21,12 @@
 #ifndef MDT_DEVICE_MODBUS_WAGO_MODULE_H
 #define MDT_DEVICE_MODBUS_WAGO_MODULE_H
 
+#include "mdtError.h"
 #include <QString>
 #include <QVariant>
 #include <QPair>
 #include <QList>
+#include <QObject>
 
 class mdtDeviceModbusWago;
 class mdtAnalogIo;
@@ -73,6 +75,13 @@ class mdtDeviceModbusWagoModule
    * \param forceDeleteIos Will delete I/O's undependant of autoDeleteIos flag.
    */
   void clear(bool forceDeleteIos = false);
+
+  /*! \brief Get last error
+   */
+  mdtError lastError() const
+  {
+    return pvLastError;
+  }
 
   /*! \brief Setup module
    *
@@ -601,6 +610,19 @@ class mdtDeviceModbusWagoModule
    */
   virtual int digitalOutputsCount(quint16 word) const;
 
+  /*! \brief Translate function
+   *
+   * Calls QObject::tr()
+   */
+  QString tr(const char *sourceText) const
+  {
+    return QObject::tr(sourceText);
+  }
+
+  /*! \brief last error object
+   */
+  mdtError pvLastError;
+
  private:
 
   /*! \brief Build a new analog input
@@ -625,7 +647,7 @@ class mdtDeviceModbusWagoModule
    * \return A new configured analog I/O, or a null pointer if module part number is unknown or other error.
    *          Note: the returned object must be deleted by user whenn not used anymore.
    */
-  mdtAnalogIo *getNewAnalogOutput(int partNumber, int channel) const;
+  mdtAnalogIo *getNewAnalogOutput(int partNumber, int channel);
 
   /*! \brief Create, configure and add module's analog I/O's
    *

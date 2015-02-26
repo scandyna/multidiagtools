@@ -22,9 +22,6 @@
 #define MDT_MODBUS_TCP_PORTMANAGER_H
 
 #include "mdtPortManager.h"
-
-#include "mdtPortInfo.h"
-
 #include "mdtDeviceAddress.h"
 #include "mdtModbusHwNodeId.h"
 
@@ -191,60 +188,6 @@ class mdtModbusTcpPortManager : public mdtPortManager
    * \pre Port manager must be stopped before scanning.
    */
   mdtDeviceAddressList scanFromKnownHostsFile(int timeout = 500);
-
-  /*! \brief Scan for available hosts with a MODBUS/TCP compatible device attached
-   *
-   * \param hosts A list of hosts to scan. Each host must be set with format hostname:port, or ip:port.
-   *               Note that MODBUS/TCP default port is 502.
-   * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
-   * \param expectedHwNodeAddresses If this list contains HW node addresses, scan will break when each one was found.
-   *                                 See getHardwareNodeAddress() for details about HW node address.
-   * \param bitsCount See getHardwareNodeAddress()
-   * \param bitsCountStartFrom See getHardwareNodeAddress()
-   *
-   * Note that returned list must be freed by user
-   *  after usage. (for.ex. with qDeletAll() and QList::clear() ).
-   *
-   * \pre Port manager must be stopped
-   */
-  ///QList<mdtPortInfo*> scan(const QStringList &hosts, int timeout = 500, const QList<int> &expectedHwNodeAddresses = QList<int>(), int bitsCount = 8, int bitsCountStartFrom = 0);
-
-  /*! \brief Scan for available hosts with a MODBUS/TCP compatible device attached
-   *
-   * \param iface Scan will be done for all IP addresses available for given intarface.
-   *               Note that only IPv4 is implemented.
-   * \param port Port. Note that MODBUS/TCP default port is 502.
-   * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
-   * \param expectedHwNodeAddresses If this list contains HW node addresses, scan will break when each one was found.
-   *                                 See getHardwareNodeAddress() for details about HW node address.
-   * \param bitsCount See getHardwareNodeAddress()
-   * \param bitsCountStartFrom See getHardwareNodeAddress()
-   *
-   * Note that returned list must be freed by user
-   *  after usage. (for.ex. with qDeletAll() and QList::clear() ).
-   *
-   * \pre Port manager must be stopped
-   */
-  ///QList<mdtPortInfo*> scan(const QNetworkInterface &iface, quint16 port = 502, int timeout = 500, const QList<int> &expectedHwNodeAddresses = QList<int>(), int bitsCount = 8, int bitsCountStartFrom = 0);
-
-  /*! \brief Scan for available hosts with a MODBUS/TCP compatible device attached
-   *
-   * \param ifaces Scan will be done for all IP addresses available for all given intarfaces.
-   *               Note that only IPv4 is implemented.
-   * \param port Port. Note that MODBUS/TCP default port is 502.
-   * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
-   * \param ignoreLoopback If true, loopback interface will be ignored.
-   * \param expectedHwNodeAddresses If this list contains HW node addresses, scan will break when each one was found.
-   *                                 See getHardwareNodeAddress() for details about HW node address.
-   * \param bitsCount See getHardwareNodeAddress()
-   * \param bitsCountStartFrom See getHardwareNodeAddress()
-   *
-   * Note that returned list must be freed by user
-   *  after usage. (for.ex. with qDeletAll() and QList::clear() ).
-   *
-   * \pre Port manager must be stopped
-   */
-  ///QList<mdtPortInfo*> scan(const QList<QNetworkInterface> &ifaces, quint16 port = 502, int timeout = 500, bool ignoreLoopback = true, const QList<int> &expectedHwNodeAddresses = QList<int>(), int bitsCount = 8, int bitsCountStartFrom = 0);
 
   /*! \brief Try to connect to a host
    *
