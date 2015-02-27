@@ -87,7 +87,7 @@ enum \hyperlink{classmdt_device_u3606_a_a8fc404c35beec2cdb8c26f8709394a50}{Sourc
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_device_u3606_a_a7d2fb26475e72cce95ca6be384d569b7}{$\sim$mdt\-Device\-U3606\-A} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_device_u3606_a_a8470e8f5f56ab635d2b2718a1bb54034}{connect\-To\-Device} (const Q\-String \&serial\-Number=Q\-String())
+bool \hyperlink{classmdt_device_u3606_a_a293ce0f0ccdbf8e7d77f644b7fc176f3}{connect\-To\-Device} (const Q\-String \&serial\-Number, const Q\-String \&\hyperlink{classmdt_device_a3aa589ecae0fa3deed61431d07db9276}{alias}=Q\-String())
 \begin{DoxyCompactList}\small\item\em Connect to device. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_device_u3606_a_af71cd0206a4f91fc1b250780ceb72919}{setup\-Voltage\-Dc\-Measure} (\hyperlink{classmdt_device_u3606_a_a8171d28878e8609c98d4cea591b7cc37}{Range\-\_\-t} range, \hyperlink{classmdt_device_u3606_a_a136af13281bde380abeabe358c399dc5}{Resolution\-\_\-t} resolution)
 \begin{DoxyCompactList}\small\item\em Setup D\-C voltage measure. \end{DoxyCompactList}\item 
@@ -280,13 +280,14 @@ Definition at line 33 of file mdt\-Device\-U3606\-A.\-cpp.
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_device_u3606_a_a8470e8f5f56ab635d2b2718a1bb54034}{\index{mdt\-Device\-U3606\-A@{mdt\-Device\-U3606\-A}!connect\-To\-Device@{connect\-To\-Device}}
+\hypertarget{classmdt_device_u3606_a_a293ce0f0ccdbf8e7d77f644b7fc176f3}{\index{mdt\-Device\-U3606\-A@{mdt\-Device\-U3606\-A}!connect\-To\-Device@{connect\-To\-Device}}
 \index{connect\-To\-Device@{connect\-To\-Device}!mdtDeviceU3606A@{mdt\-Device\-U3606\-A}}
 \subsubsection[{connect\-To\-Device}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Device\-U3606\-A\-::connect\-To\-Device (
 \begin{DoxyParamCaption}
-\item[{const Q\-String \&}]{serial\-Number = {\ttfamily QString()}}
+\item[{const Q\-String \&}]{serial\-Number, }
+\item[{const Q\-String \&}]{alias = {\ttfamily QString()}}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_u3606_a_a8470e8f5f56ab635d2b2718a1bb54034}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_u3606_a_a293ce0f0ccdbf8e7d77f644b7fc176f3}
 
 
 Connect to device. 
@@ -295,14 +296,16 @@ Connect to device.
 \begin{DoxyParams}{Parameters}
 {\em serial\-Number} & Device serial number. Will be ignored if empty \\
 \hline
+{\em alias} & Alias to give. Will be ignored if empty \\
+\hline
 \end{DoxyParams}
 
 
-Definition at line 104 of file mdt\-Device\-U3606\-A.\-h.
+Definition at line 105 of file mdt\-Device\-U3606\-A.\-h.
 
 
 
-References mdt\-Device\-Scpi\-::connect\-To\-Device().
+References mdt\-Device\-::alias(), and mdt\-Device\-Scpi\-::connect\-To\-Device().
 
 \hypertarget{classmdt_device_u3606_a_ad1261494c005f000b982999f2a5965aa}{\index{mdt\-Device\-U3606\-A@{mdt\-Device\-U3606\-A}!get\-Measure\-Configuration@{get\-Measure\-Configuration}}
 \index{get\-Measure\-Configuration@{get\-Measure\-Configuration}!mdtDeviceU3606A@{mdt\-Device\-U3606\-A}}

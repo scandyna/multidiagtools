@@ -43,6 +43,7 @@ var searchData=
   ['tounitrelatedarticleconnectioncount',['toUnitRelatedArticleConnectionCount',['../classmdt_cl_unit.html#aaa3bba512c75d0358283e25723abf2f9',1,'mdtClUnit']]],
   ['tounitrelatedlinkslist',['toUnitRelatedLinksList',['../classmdt_cl_unit.html#a44ffa59c9588ca5afed64e8b1d94262c',1,'mdtClUnit']]],
   ['tounitrelatedlinksliststr',['toUnitRelatedLinksListStr',['../classmdt_cl_unit.html#af87a65741ba7a6aa9f47a996005a9c3a',1,'mdtClUnit']]],
+  ['tr',['tr',['../classmdt_device_modbus_wago_module.html#a8083087dff0226e6e0f7957f29ab14aa',1,'mdtDeviceModbusWagoModule']]],
   ['transactiondone',['transactionDone',['../classmdt_port_manager.html#a5869bcf6774a86fb9d3b00a0d4211bb5',1,'mdtPortManager']]],
   ['transactionfinished',['transactionFinished',['../classmdt_usbtmc_port.html#ac2d4dc739be5c42c664e40ff7bb74132',1,'mdtUsbtmcPort']]],
   ['transactionid',['transactionId',['../classmdt_frame_modbus_tcp.html#a48a7e24190190da0ae9f5dbdfcd1ee48',1,'mdtFrameModbusTcp']]],

@@ -12,8 +12,7 @@ Common device identification.
 
 
 
-Collaboration diagram for mdt\-Device\-Address\-:
-\nopagebreak
+Collaboration diagram for mdt\-Device\-Address\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -217,7 +216,7 @@ Definition at line 231 of file mdt\-Device\-Address.\-h.
 
 
 
-Referenced by set\-Alias().
+Referenced by mdt\-Device\-::alias(), mdt\-Device\-Scpi\-::device\-Address\-Changed\-Event(), and set\-Alias().
 
 \hypertarget{classmdt_device_address_aa12409b1152de08b83362d19ce7bb5fc}{\index{mdt\-Device\-Address@{mdt\-Device\-Address}!clear@{clear}}
 \index{clear@{clear}!mdtDeviceAddress@{mdt\-Device\-Address}}
@@ -331,7 +330,11 @@ Get M\-O\-D\-B\-U\-S hardware node id.
 
 
 
-Definition at line 344 of file mdt\-Device\-Address.\-h.
+Definition at line 349 of file mdt\-Device\-Address.\-h.
+
+
+
+Referenced by mdt\-Device\-Modbus\-::connect\-To\-Device().
 
 \hypertarget{classmdt_device_address_a0ae6efdb6183d5e333cdf898e05bc18f}{\index{mdt\-Device\-Address@{mdt\-Device\-Address}!port\-Type@{port\-Type}}
 \index{port\-Type@{port\-Type}!mdtDeviceAddress@{mdt\-Device\-Address}}
@@ -419,7 +422,7 @@ References alias().
 
 
 
-Referenced by mdt\-Device\-Address\-List\-::read\-From\-File().
+Referenced by mdt\-Device\-Scpi\-::connect\-To\-Device(), mdt\-Device\-Address\-List\-::read\-From\-File(), and mdt\-Device\-::set\-Device\-Address().
 
 \hypertarget{classmdt_device_address_a0c93210a120c74f81c1b54b11129ff17}{\index{mdt\-Device\-Address@{mdt\-Device\-Address}!set\-Modbus\-Tcp\-Identification@{set\-Modbus\-Tcp\-Identification}}
 \index{set\-Modbus\-Tcp\-Identification@{set\-Modbus\-Tcp\-Identification}!mdtDeviceAddress@{mdt\-Device\-Address}}
@@ -436,7 +439,7 @@ Set M\-O\-D\-B\-U\-S/\-T\-C\-P identification.
 
 
 
-Definition at line 310 of file mdt\-Device\-Address.\-h.
+Definition at line 315 of file mdt\-Device\-Address.\-h.
 
 
 
@@ -461,7 +464,7 @@ Set T\-C\-P/\-I\-P identification.
 
 
 
-Definition at line 298 of file mdt\-Device\-Address.\-h.
+Definition at line 303 of file mdt\-Device\-Address.\-h.
 
 
 
@@ -490,6 +493,10 @@ Definition at line 241 of file mdt\-Device\-Address.\-h.
 
 References mdt\-Usb\-Device\-Address\-::b\-Interface\-Number, clear(), device\-Type\-Str(), mdt\-Usb\-Device\-Address\-::id\-Product, mdt\-Usb\-Device\-Address\-::id\-Vendor, pv\-Usb\-Device\-Address, and U\-S\-B.
 
+
+
+Referenced by mdt\-Device\-Scpi\-::connect\-To\-Device().
+
 \hypertarget{classmdt_device_address_ae4a8981a6d6c9a84e0b8db84bf823fd1}{\index{mdt\-Device\-Address@{mdt\-Device\-Address}!tcp\-Ip\-Host\-Name@{tcp\-Ip\-Host\-Name}}
 \index{tcp\-Ip\-Host\-Name@{tcp\-Ip\-Host\-Name}!mdtDeviceAddress@{mdt\-Device\-Address}}
 \subsubsection[{tcp\-Ip\-Host\-Name}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Device\-Address\-::tcp\-Ip\-Host\-Name (
@@ -503,7 +510,7 @@ Get T\-C\-P/\-I\-P host name.
 
 
 
-Definition at line 324 of file mdt\-Device\-Address.\-h.
+Definition at line 329 of file mdt\-Device\-Address.\-h.
 
 
 
@@ -522,7 +529,7 @@ Get T\-C\-P/\-I\-P port.
 
 
 
-Definition at line 334 of file mdt\-Device\-Address.\-h.
+Definition at line 339 of file mdt\-Device\-Address.\-h.
 
 
 
@@ -541,7 +548,7 @@ Get U\-S\-B device serial number.
 
 
 
-Definition at line 278 of file mdt\-Device\-Address.\-h.
+Definition at line 283 of file mdt\-Device\-Address.\-h.
 
 
 
@@ -560,7 +567,7 @@ Get U\-S\-B id\-Product.
 
 
 
-Definition at line 268 of file mdt\-Device\-Address.\-h.
+Definition at line 273 of file mdt\-Device\-Address.\-h.
 
 
 
@@ -579,7 +586,7 @@ Get U\-S\-B id\-Vendor.
 
 
 
-Definition at line 258 of file mdt\-Device\-Address.\-h.
+Definition at line 263 of file mdt\-Device\-Address.\-h.
 
 
 
@@ -598,7 +605,7 @@ Get U\-S\-B b\-Interface\-Number.
 
 
 
-Definition at line 288 of file mdt\-Device\-Address.\-h.
+Definition at line 293 of file mdt\-Device\-Address.\-h.
 
 
 
@@ -612,14 +619,14 @@ References mdt\-Usb\-Device\-Address\-::b\-Interface\-Number, pv\-Usb\-Device\-A
 \subsubsection[{pv\-Asrl\-Device\-Address}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Asrl\-Device\-Address} mdt\-Device\-Address\-::pv\-Asrl\-Device\-Address}}\label{classmdt_device_address_a9c88611c608194aaa9a439fd26b5603e}
 
 
-Definition at line 386 of file mdt\-Device\-Address.\-h.
+Definition at line 391 of file mdt\-Device\-Address.\-h.
 
 \hypertarget{classmdt_device_address_afd6ac6af312038f5c94a635b37a7cf54}{\index{mdt\-Device\-Address@{mdt\-Device\-Address}!pv\-Tcpip\-Device\-Address@{pv\-Tcpip\-Device\-Address}}
 \index{pv\-Tcpip\-Device\-Address@{pv\-Tcpip\-Device\-Address}!mdtDeviceAddress@{mdt\-Device\-Address}}
 \subsubsection[{pv\-Tcpip\-Device\-Address}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Tcpip\-Device\-Address} mdt\-Device\-Address\-::pv\-Tcpip\-Device\-Address}}\label{classmdt_device_address_afd6ac6af312038f5c94a635b37a7cf54}
 
 
-Definition at line 385 of file mdt\-Device\-Address.\-h.
+Definition at line 390 of file mdt\-Device\-Address.\-h.
 
 
 
@@ -630,7 +637,7 @@ Referenced by clear(), mdt\-Device\-Address(), set\-Modbus\-Tcp\-Identification(
 \subsubsection[{pv\-Usb\-Device\-Address}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Usb\-Device\-Address} mdt\-Device\-Address\-::pv\-Usb\-Device\-Address}}\label{classmdt_device_address_a4a049c594dc631ada14b3697244d4bff}
 
 
-Definition at line 384 of file mdt\-Device\-Address.\-h.
+Definition at line 389 of file mdt\-Device\-Address.\-h.
 
 
 

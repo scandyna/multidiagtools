@@ -19,6 +19,16 @@ Inheritance diagram for mdt\-Device\-Modbus\-Wago\-Module\-:\nopagebreak
 \includegraphics[width=250pt]{classmdt_device_modbus_wago_module__inherit__graph}
 \end{center}
 \end{figure}
+
+
+Collaboration diagram for mdt\-Device\-Modbus\-Wago\-Module\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=234pt]{classmdt_device_modbus_wago_module__coll__graph}
+\end{center}
+\end{figure}
 \subsection*{Public Types}
 \begin{DoxyCompactItemize}
 \item 
@@ -41,6 +51,8 @@ virtual \hyperlink{classmdt_device_modbus_wago_module_af47e8774515e5960ffb87bc6e
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_device_modbus_wago_module_a7f874ff01aa984101b1d867c781eba67}{clear} (bool force\-Delete\-Ios=false)
 \begin{DoxyCompactList}\small\item\em Clear I/\-O module. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_error}{mdt\-Error} \hyperlink{classmdt_device_modbus_wago_module_a43ba3822bf5469205737c39ac89ee171}{last\-Error} () const 
+\begin{DoxyCompactList}\small\item\em Get last error. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_device_modbus_wago_module_adf7431cd4d41d7839b42cc21badeabc5}{setup\-From\-Register\-Word} (quint16 word)
 \begin{DoxyCompactList}\small\item\em Setup module. \end{DoxyCompactList}\item 
 virtual void \hyperlink{classmdt_device_modbus_wago_module_ac7d9da94e7d4c06e288a346ac123c711}{update\-Addresses} (int \hyperlink{classmdt_device_modbus_wago_module_a502dc2388ecf0531786c09964b4f7566}{first\-Ai\-Address}, int \hyperlink{classmdt_device_modbus_wago_module_acd623a8d9956fd79c11c01879afdc73c}{first\-Ao\-Address\-Read}, int \hyperlink{classmdt_device_modbus_wago_module_af8b6d9549c820869b09a77ae01e9bf3f}{first\-Ao\-Address\-Write}, int \hyperlink{classmdt_device_modbus_wago_module_a2229734519a6168e459115a87c7caa5c}{first\-Di\-Address}, int \hyperlink{classmdt_device_modbus_wago_module_ac7279bc692cba522a5e06abfec5012a9}{first\-Do\-Address\-Read}, int \hyperlink{classmdt_device_modbus_wago_module_a31165c5734801029ea530be8774da5de}{first\-Do\-Address\-Write})
@@ -183,13 +195,20 @@ virtual int \hyperlink{classmdt_device_modbus_wago_module_a96ae9148d769fec6905d3
 int \hyperlink{classmdt_device_modbus_wago_module_a40513e96468455295608a788eb1d8cac}{digital\-Outputs\-Process\-Image\-Size} (quint16 word) const 
 \begin{DoxyCompactList}\small\item\em Get size of digital outputs process image. \end{DoxyCompactList}\item 
 virtual int \hyperlink{classmdt_device_modbus_wago_module_ac425538b1ae0be825929d58a9713c788}{digital\-Outputs\-Count} (quint16 word) const 
-\begin{DoxyCompactList}\small\item\em Get the number of digital outputs. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Get the number of digital outputs. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{classmdt_device_modbus_wago_module_a8083087dff0226e6e0f7957f29ab14aa}{tr} (const char $\ast$source\-Text) const 
+\begin{DoxyCompactList}\small\item\em Translate function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_error}{mdt\-Error} \hyperlink{classmdt_device_modbus_wago_module_a1b104f3bb99f1990e59e0fafef01951f}{pv\-Last\-Error}
+\begin{DoxyCompactList}\small\item\em last error object \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 Helper class for Wago modules detection and setup. 
 
-Definition at line 35 of file mdt\-Device\-Modbus\-Wago\-Module.\-h.
+Definition at line 37 of file mdt\-Device\-Modbus\-Wago\-Module.\-h.
 
 
 
@@ -220,7 +239,7 @@ Module type.
 \end{Desc}
 
 
-Definition at line 41 of file mdt\-Device\-Modbus\-Wago\-Module.\-h.
+Definition at line 43 of file mdt\-Device\-Modbus\-Wago\-Module.\-h.
 
 
 
@@ -295,7 +314,7 @@ aio must be a valid pointer
 \end{DoxyPrecond}
 
 
-Definition at line 308 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 309 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 \hypertarget{classmdt_device_modbus_wago_module_a382ba4bf293bce7c63ee861aebb71b4e}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!add\-Analog\-Output@{add\-Analog\-Output}}
 \index{add\-Analog\-Output@{add\-Analog\-Output}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
@@ -313,7 +332,7 @@ aio must be a valid pointer
 \end{DoxyPrecond}
 
 
-Definition at line 315 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 316 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 \hypertarget{classmdt_device_modbus_wago_module_aaca2ca0616e03c49bc84b3277ec79f4a}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!add\-Digital\-Input@{add\-Digital\-Input}}
 \index{add\-Digital\-Input@{add\-Digital\-Input}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
@@ -331,7 +350,7 @@ dio must be a valid pointer
 \end{DoxyPrecond}
 
 
-Definition at line 322 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 323 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 \hypertarget{classmdt_device_modbus_wago_module_a575536bfe7381d7c6ece4552923b0129}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!add\-Digital\-Output@{add\-Digital\-Output}}
 \index{add\-Digital\-Output@{add\-Digital\-Output}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
@@ -349,7 +368,7 @@ dio must be a valid pointer
 \end{DoxyPrecond}
 
 
-Definition at line 329 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 330 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 \hypertarget{classmdt_device_modbus_wago_module_ad803f3aa8d9777feaa5cdb3a4cccd316}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!add\-Registers@{add\-Registers}}
 \index{add\-Registers@{add\-Registers}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
@@ -366,7 +385,7 @@ Add registers.
 
 Will add control byte, status byte and register data for given channel\-Count 
 
-Definition at line 336 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 337 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 \hypertarget{classmdt_device_modbus_wago_module_a755946efd8ea4ee13d8f6fe4fb6ea05f}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!analog\-Inputs@{analog\-Inputs}}
 \index{analog\-Inputs@{analog\-Inputs}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
@@ -408,7 +427,7 @@ Number of I/\-O's or -\/1 for unknown module.
 \end{DoxyReturn}
 
 
-Definition at line 800 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 827 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 \hypertarget{classmdt_device_modbus_wago_module_adbf2b96c5ab43a1693b5d656f84e893d}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!analog\-Input\-Unit@{analog\-Input\-Unit}}
 \index{analog\-Input\-Unit@{analog\-Input\-Unit}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
@@ -434,7 +453,7 @@ Unit of module, or a empty string for unknown module.
 \end{DoxyReturn}
 
 
-Definition at line 834 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 863 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 \hypertarget{classmdt_device_modbus_wago_module_aec715d2707c556ead4690d82ee9c8307}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!analog\-Input\-Value\-Bits\-Count@{analog\-Input\-Value\-Bits\-Count}}
 \index{analog\-Input\-Value\-Bits\-Count@{analog\-Input\-Value\-Bits\-Count}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
@@ -462,7 +481,7 @@ bits count used for value, or -\/1 for a unknown module.
 \end{DoxyReturn}
 
 
-Definition at line 670 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 687 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 \hypertarget{classmdt_device_modbus_wago_module_a3567f225c332d4ce7dcc3cb724b8ad1f}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!analog\-Input\-Value\-Conversion\-Factor@{analog\-Input\-Value\-Conversion\-Factor}}
 \index{analog\-Input\-Value\-Conversion\-Factor@{analog\-Input\-Value\-Conversion\-Factor}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
@@ -490,7 +509,7 @@ Scale factor for given input. For a unknown module, a invalid Q\-Variant is retu
 \end{DoxyReturn}
 
 
-Definition at line 774 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 799 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 \hypertarget{classmdt_device_modbus_wago_module_ab17c99ea4bdaa05fa1c2006d23c936e5}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!analog\-Input\-Value\-Lsb\-Index@{analog\-Input\-Value\-Lsb\-Index}}
 \index{analog\-Input\-Value\-Lsb\-Index@{analog\-Input\-Value\-Lsb\-Index}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
@@ -518,7 +537,7 @@ Index of L\-S\-B of value, or -\/1 for unknown module.
 \end{DoxyReturn}
 
 
-Definition at line 696 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 715 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 \hypertarget{classmdt_device_modbus_wago_module_ae4f0670b0657ace4af5bdc7eb80d7f71}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!analog\-Input\-Value\-Max@{analog\-Input\-Value\-Max}}
 \index{analog\-Input\-Value\-Max@{analog\-Input\-Value\-Max}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
@@ -544,7 +563,7 @@ The max. value in floating format. If part\-Number is unknow, a invalid Q\-Varia
 \end{DoxyReturn}
 
 
-Definition at line 644 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 659 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 \hypertarget{classmdt_device_modbus_wago_module_a6b5af2c05f5428d0866a2f5301c07055}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!analog\-Input\-Value\-Min@{analog\-Input\-Value\-Min}}
 \index{analog\-Input\-Value\-Min@{analog\-Input\-Value\-Min}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
@@ -570,7 +589,7 @@ The min. value in floating format. If part\-Number is unknow, a invalid Q\-Varia
 \end{DoxyReturn}
 
 
-Definition at line 618 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 631 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 \hypertarget{classmdt_device_modbus_wago_module_acabe25371f651f5f224abf89277be5f8}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!analog\-Input\-Value\-Scaled\-From\-Min\-To\-Max@{analog\-Input\-Value\-Scaled\-From\-Min\-To\-Max}}
 \index{analog\-Input\-Value\-Scaled\-From\-Min\-To\-Max@{analog\-Input\-Value\-Scaled\-From\-Min\-To\-Max}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
@@ -596,7 +615,7 @@ True if module's representation is scaled from minimum to maximum, false if not.
 \end{DoxyReturn}
 
 
-Definition at line 748 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 771 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 \hypertarget{classmdt_device_modbus_wago_module_aead7f379126d8fb570a179dff857040f}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!analog\-Input\-Value\-Signed@{analog\-Input\-Value\-Signed}}
 \index{analog\-Input\-Value\-Signed@{analog\-Input\-Value\-Signed}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
@@ -622,7 +641,7 @@ True if module's representation is signed, false if not. For a unknown module, a
 \end{DoxyReturn}
 
 
-Definition at line 722 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 743 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 \hypertarget{classmdt_device_modbus_wago_module_a61ed3d50d5ad17324a6bf9d7c2cd1df5}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!analog\-Outputs@{analog\-Outputs}}
 \index{analog\-Outputs@{analog\-Outputs}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
@@ -664,7 +683,7 @@ Number of I/\-O's or -\/1 for unknown module.
 \end{DoxyReturn}
 
 
-Definition at line 816 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 843 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 \hypertarget{classmdt_device_modbus_wago_module_a239892e92ee3f062e1000301766877aa}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!analog\-Output\-Unit@{analog\-Output\-Unit}}
 \index{analog\-Output\-Unit@{analog\-Output\-Unit}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
@@ -690,7 +709,7 @@ Unit of module, or a empty string for unknown module.
 \end{DoxyReturn}
 
 
-Definition at line 848 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 877 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 \hypertarget{classmdt_device_modbus_wago_module_a4c24b14835ab4f57caf342513bc88a02}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!analog\-Output\-Value\-Bits\-Count@{analog\-Output\-Value\-Bits\-Count}}
 \index{analog\-Output\-Value\-Bits\-Count@{analog\-Output\-Value\-Bits\-Count}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
@@ -718,7 +737,7 @@ bits count used for value, or -\/1 for a unknown module.
 \end{DoxyReturn}
 
 
-Definition at line 684 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 701 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 \hypertarget{classmdt_device_modbus_wago_module_a8ce8e6ddebbf16db6bc2edbb7ef5d786}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!analog\-Output\-Value\-Conversion\-Factor@{analog\-Output\-Value\-Conversion\-Factor}}
 \index{analog\-Output\-Value\-Conversion\-Factor@{analog\-Output\-Value\-Conversion\-Factor}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
@@ -744,7 +763,7 @@ Scale factor for given output. For a unknown module, a invalid Q\-Variant is ret
 \end{DoxyReturn}
 
 
-Definition at line 788 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 813 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 \hypertarget{classmdt_device_modbus_wago_module_a36876268b29010f7dc096c5e092e7240}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!analog\-Output\-Value\-Lsb\-Index@{analog\-Output\-Value\-Lsb\-Index}}
 \index{analog\-Output\-Value\-Lsb\-Index@{analog\-Output\-Value\-Lsb\-Index}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
@@ -772,7 +791,7 @@ Index of L\-S\-B of value, or -\/1 for unknown module.
 \end{DoxyReturn}
 
 
-Definition at line 710 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 729 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 \hypertarget{classmdt_device_modbus_wago_module_a736fe244944e4180d4fd9d35d5ad08d0}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!analog\-Output\-Value\-Max@{analog\-Output\-Value\-Max}}
 \index{analog\-Output\-Value\-Max@{analog\-Output\-Value\-Max}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
@@ -798,7 +817,7 @@ The max. value in floating format. If part\-Number is unknow, a invalid Q\-Varia
 \end{DoxyReturn}
 
 
-Definition at line 658 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 673 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 \hypertarget{classmdt_device_modbus_wago_module_a306b6b993c58f9c02defda97c3300e21}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!analog\-Output\-Value\-Min@{analog\-Output\-Value\-Min}}
 \index{analog\-Output\-Value\-Min@{analog\-Output\-Value\-Min}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
@@ -824,7 +843,7 @@ The min. value in floating format. If part\-Number is unknow, a invalid Q\-Varia
 \end{DoxyReturn}
 
 
-Definition at line 632 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 645 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 \hypertarget{classmdt_device_modbus_wago_module_af2af1897221c28d03424c387f247e139}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!analog\-Output\-Value\-Scaled\-From\-Min\-To\-Max@{analog\-Output\-Value\-Scaled\-From\-Min\-To\-Max}}
 \index{analog\-Output\-Value\-Scaled\-From\-Min\-To\-Max@{analog\-Output\-Value\-Scaled\-From\-Min\-To\-Max}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
@@ -850,7 +869,7 @@ True if module's representation is scaled from minimum to maximum, false if not.
 \end{DoxyReturn}
 
 
-Definition at line 762 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 785 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 \hypertarget{classmdt_device_modbus_wago_module_a9a0e0e145ea269221042c6b5af26850c}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!analog\-Output\-Value\-Signed@{analog\-Output\-Value\-Signed}}
 \index{analog\-Output\-Value\-Signed@{analog\-Output\-Value\-Signed}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
@@ -876,7 +895,7 @@ True if module's representation is signed, false if not. For a unknown module, a
 \end{DoxyReturn}
 
 
-Definition at line 736 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 757 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 \hypertarget{classmdt_device_modbus_wago_module_a335047318b1be765a12002bdbd04988b}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!channel\-Count\-Registers@{channel\-Count\-Registers}}
 \index{channel\-Count\-Registers@{channel\-Count\-Registers}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
@@ -893,7 +912,7 @@ During I/\-O detection or channel count setup, register count can be incoherent 
 
 This method will return channel count only regarding number of control/status/data register sizes. 
 
-Definition at line 361 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 362 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 \hypertarget{classmdt_device_modbus_wago_module_a7f874ff01aa984101b1d867c781eba67}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!clear@{clear}}
 \index{clear@{clear}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
@@ -940,7 +959,7 @@ Clear registers.
 
 Will remove control bytes, status bytes and data registers. 
 
-Definition at line 354 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 355 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 
 
@@ -965,7 +984,7 @@ channel must be in a valid range
 \end{DoxyPrecond}
 
 
-Definition at line 385 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 386 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 \hypertarget{classmdt_device_modbus_wago_module_ac67ae134628f958027965933d14cb30b}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!device\-Name@{device\-Name}}
 \index{device\-Name@{device\-Name}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
@@ -981,10 +1000,6 @@ Get device name.
 
 
 Definition at line 301 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
-
-
-
-References mdt\-Device\-::name().
 
 \hypertarget{classmdt_device_modbus_wago_module_ad9f9289c7f23f00c6d4d25b576a5c440}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!digital\-Inputs@{digital\-Inputs}}
 \index{digital\-Inputs@{digital\-Inputs}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
@@ -1018,7 +1033,7 @@ Get the number of digital inputs.
 
 This implementation returns value from \hyperlink{classmdt_device_modbus_wago_module_aec8434b67b73b60f218e0fe4abe0e553}{digital\-Inputs\-Process\-Image\-Size()} . This method can be re-\/implemented for special modules. 
 
-Definition at line 870 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 901 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 
 
@@ -1047,7 +1062,7 @@ Digital inputs process image size \mbox{[}bits\mbox{]} or -\/1 on unknown descri
 \end{DoxyReturn}
 
 
-Definition at line 860 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 891 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 
 
@@ -1085,7 +1100,7 @@ Get the number of digital outputs.
 
 This implementation returns value from \hyperlink{classmdt_device_modbus_wago_module_a40513e96468455295608a788eb1d8cac}{digital\-Outputs\-Process\-Image\-Size()} . This method can be re-\/implemented for special modules. 
 
-Definition at line 885 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 916 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 
 
@@ -1114,7 +1129,7 @@ Digital outputs process image size \mbox{[}bits\mbox{]} or -\/1 on unknown descr
 \end{DoxyReturn}
 
 
-Definition at line 875 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 906 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 
 
@@ -1324,6 +1339,29 @@ Get last address of module's digital outputs process image for write access.
 
 Definition at line 249 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
+\hypertarget{classmdt_device_modbus_wago_module_a43ba3822bf5469205737c39ac89ee171}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!last\-Error@{last\-Error}}
+\index{last\-Error@{last\-Error}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
+\subsubsection[{last\-Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Error} mdt\-Device\-Modbus\-Wago\-Module\-::last\-Error (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_modbus_wago_module_a43ba3822bf5469205737c39ac89ee171}
+
+
+Get last error. 
+
+
+
+Definition at line 81 of file mdt\-Device\-Modbus\-Wago\-Module.\-h.
+
+
+
+References pv\-Last\-Error.
+
+
+
+Referenced by mdt\-Device\-Modbus\-Wago\-::detect\-Ios().
+
 \hypertarget{classmdt_device_modbus_wago_module_a9a76569563743da0a493766658528bb6}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!next\-Module\-First\-Ai\-Address@{next\-Module\-First\-Ai\-Address}}
 \index{next\-Module\-First\-Ai\-Address@{next\-Module\-First\-Ai\-Address}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
 \subsubsection[{next\-Module\-First\-Ai\-Address}]{\setlength{\rightskip}{0pt plus 5cm}int mdt\-Device\-Modbus\-Wago\-Module\-::next\-Module\-First\-Ai\-Address (
@@ -1497,11 +1535,11 @@ first\-Channel and last\-Channel must be in a valid range
 \item[\hyperlink{todo__todo000013}{Todo}]Implement need\-Device\-Setup\-State \end{DoxyRefDesc}
 
 
-Definition at line 433 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 434 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 
 
-References mdt\-Error\-::\-Error, mdt\-Device\-Modbus\-::get\-Register\-Values(), M\-D\-T\-\_\-\-D\-E\-V\-I\-C\-E\-\_\-\-E\-R\-R\-O\-R, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Device\-::name(), and mdt\-Device\-Modbus\-::register\-Values().
+References mdt\-Device\-Modbus\-::register\-Values().
 
 \hypertarget{classmdt_device_modbus_wago_module_a90bd4625c8b1efcd34cd56b31dc2f72c}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!read\-Status\-Bytes@{read\-Status\-Bytes}}
 \index{read\-Status\-Bytes@{read\-Status\-Bytes}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
@@ -1528,11 +1566,11 @@ first\-Channel and last\-Channel must be in a valid range
 \item[\hyperlink{todo__todo000015}{Todo}]Implement need\-Device\-Setup\-State \end{DoxyRefDesc}
 
 
-Definition at line 533 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 540 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 
 
-References mdt\-Error\-::\-Error, mdt\-Device\-Modbus\-::get\-Register\-Values(), M\-D\-T\-\_\-\-D\-E\-V\-I\-C\-E\-\_\-\-E\-R\-R\-O\-R, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Device\-::name(), and mdt\-Device\-Modbus\-::register\-Values().
+References mdt\-Device\-Modbus\-::register\-Values().
 
 \hypertarget{classmdt_device_modbus_wago_module_add5a97b94ef36520b90501f6325f40cb}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!register\-Data\-Byte\-D0@{register\-Data\-Byte\-D0}}
 \index{register\-Data\-Byte\-D0@{register\-Data\-Byte\-D0}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
@@ -1553,7 +1591,7 @@ channel must be in a valid range
 \end{DoxyPrecond}
 
 
-Definition at line 424 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 425 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 \hypertarget{classmdt_device_modbus_wago_module_ae22ec3a2a0adf8407ff3c1eaeed602e6}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!register\-Data\-Byte\-D1@{register\-Data\-Byte\-D1}}
 \index{register\-Data\-Byte\-D1@{register\-Data\-Byte\-D1}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
@@ -1574,7 +1612,7 @@ channel must be in a valid range
 \end{DoxyPrecond}
 
 
-Definition at line 416 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 417 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 \hypertarget{classmdt_device_modbus_wago_module_a0f0ce9200c967775834b05649f8e499d}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!register\-Data\-Word@{register\-Data\-Word}}
 \index{register\-Data\-Word@{register\-Data\-Word}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
@@ -1592,7 +1630,7 @@ Get register data word for given channel.
 \end{DoxySeeAlso}
 
 
-Definition at line 400 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 401 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 \hypertarget{classmdt_device_modbus_wago_module_aba44d9749bb81fe2659699ae3c50842c}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!set\-Control\-Byte@{set\-Control\-Byte}}
 \index{set\-Control\-Byte@{set\-Control\-Byte}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
@@ -1617,7 +1655,7 @@ channel must be in a valid range
 \end{DoxyPrecond}
 
 
-Definition at line 376 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 377 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 \hypertarget{classmdt_device_modbus_wago_module_ab1b83fbb869c62c46e21cdac54ff9458}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!set\-Register\-Data\-Bytes@{set\-Register\-Data\-Bytes}}
 \index{set\-Register\-Data\-Bytes@{set\-Register\-Data\-Bytes}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
@@ -1643,7 +1681,7 @@ channel must be in a valid range
 \end{DoxyPrecond}
 
 
-Definition at line 408 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 409 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 
 
@@ -1672,7 +1710,7 @@ channel must be in a valid range
 \end{DoxyPrecond}
 
 
-Definition at line 392 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 393 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 
 
@@ -1738,7 +1776,22 @@ channel must be in a valid range
 \end{DoxyPrecond}
 
 
-Definition at line 369 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 370 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+
+\hypertarget{classmdt_device_modbus_wago_module_a8083087dff0226e6e0f7957f29ab14aa}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!tr@{tr}}
+\index{tr@{tr}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
+\subsubsection[{tr}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Device\-Modbus\-Wago\-Module\-::tr (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{source\-Text}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}}\label{classmdt_device_modbus_wago_module_a8083087dff0226e6e0f7957f29ab14aa}
+
+
+Translate function. 
+
+Calls Q\-Object\-::tr() 
+
+Definition at line 617 of file mdt\-Device\-Modbus\-Wago\-Module.\-h.
 
 \hypertarget{classmdt_device_modbus_wago_module_a32a3ee554941240682fb1b166c1217ff}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!type@{type}}
 \index{type@{type}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
@@ -1824,7 +1877,7 @@ Wait some time.
 \end{DoxySeeAlso}
 
 
-Definition at line 611 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 624 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 
 
@@ -1855,11 +1908,7 @@ first\-Channel and last\-Channel must be in a valid range
 \item[\hyperlink{todo__todo000016}{Todo}]Implement need\-Device\-Setup\-State \end{DoxyRefDesc}
 
 
-Definition at line 577 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
-
-
-
-References mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-D\-E\-V\-I\-C\-E\-\_\-\-E\-R\-R\-O\-R, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Device\-::name(), and mdt\-Device\-Modbus\-::set\-Register\-Values().
+Definition at line 588 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 \hypertarget{classmdt_device_modbus_wago_module_a8fe809c91ccbf05f77c189fbaba12b91}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!write\-Registers@{write\-Registers}}
 \index{write\-Registers@{write\-Registers}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
@@ -1883,11 +1932,29 @@ first\-Channel and last\-Channel must be in a valid range
 \item[\hyperlink{todo__todo000014}{Todo}]Implement need\-Device\-Setup\-State \end{DoxyRefDesc}
 
 
-Definition at line 493 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
+Definition at line 498 of file mdt\-Device\-Modbus\-Wago\-Module.\-cpp.
 
 
 
-References mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-D\-E\-V\-I\-C\-E\-\_\-\-E\-R\-R\-O\-R, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Device\-::name(), and mdt\-Device\-Modbus\-::set\-Register\-Values().
+References mdt\-Device\-Modbus\-::set\-Register\-Values().
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classmdt_device_modbus_wago_module_a1b104f3bb99f1990e59e0fafef01951f}{\index{mdt\-Device\-Modbus\-Wago\-Module@{mdt\-Device\-Modbus\-Wago\-Module}!pv\-Last\-Error@{pv\-Last\-Error}}
+\index{pv\-Last\-Error@{pv\-Last\-Error}!mdtDeviceModbusWagoModule@{mdt\-Device\-Modbus\-Wago\-Module}}
+\subsubsection[{pv\-Last\-Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Error} mdt\-Device\-Modbus\-Wago\-Module\-::pv\-Last\-Error\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_device_modbus_wago_module_a1b104f3bb99f1990e59e0fafef01951f}
+
+
+last error object 
+
+
+
+Definition at line 624 of file mdt\-Device\-Modbus\-Wago\-Module.\-h.
+
+
+
+Referenced by last\-Error().
 
 
 

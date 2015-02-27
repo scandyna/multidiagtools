@@ -12,8 +12,7 @@ Port manager base class.
 
 
 
-Inheritance diagram for mdt\-Port\-Manager\-:
-\nopagebreak
+Inheritance diagram for mdt\-Port\-Manager\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -22,8 +21,7 @@ Inheritance diagram for mdt\-Port\-Manager\-:
 \end{figure}
 
 
-Collaboration diagram for mdt\-Port\-Manager\-:
-\nopagebreak
+Collaboration diagram for mdt\-Port\-Manager\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -1055,7 +1053,7 @@ References current\-State(), and Port\-Closed.
 
 
 
-Referenced by add\-Thread(), mdt\-Device\-Modbus\-Wago\-::connect\-To\-Device(), mdt\-Device\-Modbus\-::connect\-To\-Device(), detach\-Port(), remove\-Threads(), mdt\-Serial\-Port\-Manager\-::scan(), mdt\-Modbus\-Tcp\-Port\-Manager\-::scan(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), send\-Data(), set\-Port(), set\-Port\-Info(), set\-Port\-Name(), start(), stop(), mdt\-Modbus\-Tcp\-Port\-Manager\-::try\-To\-Connect(), and wait\-Transaction\-Possible().
+Referenced by add\-Thread(), mdt\-Device\-Modbus\-::connect\-To\-Device(), detach\-Port(), remove\-Threads(), mdt\-Serial\-Port\-Manager\-::scan(), mdt\-Modbus\-Tcp\-Port\-Manager\-::scan(), mdt\-Modbus\-Tcp\-Port\-Manager\-::send\-Data(), send\-Data(), set\-Port(), set\-Port\-Info(), set\-Port\-Name(), start(), stop(), mdt\-Modbus\-Tcp\-Port\-Manager\-::try\-To\-Connect(), and wait\-Transaction\-Possible().
 
 \hypertarget{classmdt_port_manager_a6dc2798324521d177fb8f79d4f6c5f0f}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!is\-Ready@{is\-Ready}}
 \index{is\-Ready@{is\-Ready}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -1125,6 +1123,10 @@ Definition at line 631 of file mdt\-Port\-Manager.\-h.
 
 
 References pv\-Last\-Error.
+
+
+
+Referenced by mdt\-Device\-Modbus\-::connect\-To\-Device().
 
 \hypertarget{classmdt_port_manager_a3107b7121dfe5b9686d9b3b3a48a0af0}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!lock\-Port\-Mutex@{lock\-Port\-Mutex}}
 \index{lock\-Port\-Mutex@{lock\-Port\-Mutex}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -1807,10 +1809,6 @@ Definition at line 247 of file mdt\-Port\-Manager.\-cpp.
 
 References is\-Closed(), mdt\-Port\-Info\-::port\-Name(), pv\-Port, and mdt\-Abstract\-Port\-::set\-Port\-Name().
 
-
-
-Referenced by mdt\-Device\-Modbus\-Wago\-::connect\-To\-Device(), and mdt\-Device\-Modbus\-::connect\-To\-Device().
-
 \hypertarget{classmdt_port_manager_a2b2ed690cbba9f544c6ac1b46684e59a}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!set\-Port\-Name@{set\-Port\-Name}}
 \index{set\-Port\-Name@{set\-Port\-Name}!mdtPortManager@{mdt\-Port\-Manager}}
 \subsubsection[{set\-Port\-Name}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Port\-Manager\-::set\-Port\-Name (
@@ -1842,7 +1840,7 @@ References is\-Closed(), pv\-Port, and mdt\-Abstract\-Port\-::set\-Port\-Name().
 
 
 
-Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::scan().
+Referenced by mdt\-Device\-Modbus\-::connect\-To\-Device(), and mdt\-Modbus\-Tcp\-Port\-Manager\-::scan().
 
 \hypertarget{classmdt_port_manager_af1fb103ffafc227337a59c7e82f44fbc}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!start@{start}}
 \index{start@{start}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -1870,7 +1868,7 @@ References current\-State(), is\-Closed(), mdt\-Abstract\-Port\-::is\-Open(), is
 
 
 
-Referenced by mdt\-Device\-Modbus\-Wago\-::connect\-To\-Device(), mdt\-Device\-Modbus\-::connect\-To\-Device(), and mdt\-Modbus\-Tcp\-Port\-Manager\-::scan().
+Referenced by mdt\-Device\-Modbus\-::connect\-To\-Device(), and mdt\-Modbus\-Tcp\-Port\-Manager\-::scan().
 
 \hypertarget{classmdt_port_manager_adeeba5a216174fcc1d01446a9537f40e}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!start\-Transaction\-Timer@{start\-Transaction\-Timer}}
 \index{start\-Transaction\-Timer@{start\-Transaction\-Timer}!mdtPortManager@{mdt\-Port\-Manager}}
@@ -1976,7 +1974,7 @@ References close\-Port(), is\-Closed(), mdt\-Abstract\-Port\-::is\-Open(), pm\-P
 
 
 
-Referenced by mdt\-Device\-Modbus\-Wago\-::connect\-To\-Device(), mdt\-Device\-Modbus\-::connect\-To\-Device(), detach\-Port(), start(), mdt\-Device\-Modbus\-::$\sim$mdt\-Device\-Modbus(), and $\sim$mdt\-Port\-Manager().
+Referenced by mdt\-Device\-Modbus\-::connect\-To\-Device(), detach\-Port(), mdt\-Modbus\-Tcp\-Port\-Manager\-::scan(), start(), mdt\-Device\-Modbus\-::$\sim$mdt\-Device\-Modbus(), and $\sim$mdt\-Port\-Manager().
 
 \hypertarget{classmdt_port_manager_a1467c0bd28612ae3116f5daba08c0b84}{\index{mdt\-Port\-Manager@{mdt\-Port\-Manager}!stop\-Transaction\-Timer@{stop\-Transaction\-Timer}}
 \index{stop\-Transaction\-Timer@{stop\-Transaction\-Timer}!mdtPortManager@{mdt\-Port\-Manager}}

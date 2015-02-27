@@ -1,4 +1,4 @@
 <map id="mdtDeviceDSO1000A" name="mdtDeviceDSO1000A">
 <area shape="rect" id="node2" href="$classmdt_device_scpi.html" title="Base class for SCPI based instruments. " alt="" coords="25,155,135,181"/>
-<area shape="rect" id="node3" href="$classmdt_device.html" title="class mdtDeviceIosSegment; " alt="" coords="37,80,123,107"/>
+<area shape="rect" id="node3" href="$classmdt_device.html" title="Base class for a device connected to a port. " alt="" coords="37,80,123,107"/>
 </map>

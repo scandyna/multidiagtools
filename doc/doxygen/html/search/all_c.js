@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['name',['name',['../classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0',1,'mdtDevice::name()'],['../classmdt_partition_attributes.html#a365cb772d258e6752728fb66d089b31f',1,'mdtPartitionAttributes::name()'],['../classmdt_uic_number_item.html#a6e2bfad78dc1761b35ed6a642a345bb9',1,'mdtUicNumberItem::name()'],['../classmdt_field_map_field.html#ab9d17f7703f24baad1e3932978fde338',1,'mdtFieldMapField::name()'],['../classmdt_items_selector_dialog_item.html#a9b77955435a5841b65266e6fd93284e1',1,'mdtItemsSelectorDialogItem::name()']]],
-  ['namechangedevent',['nameChangedEvent',['../classmdt_device.html#a30b8db129316183a10d38a569d431c92',1,'mdtDevice::nameChangedEvent()'],['../classmdt_device_scpi.html#a750ebbf843bad40b442a9d965c6f0e44',1,'mdtDeviceScpi::nameChangedEvent()']]],
+  ['name',['name',['../classmdt_partition_attributes.html#a365cb772d258e6752728fb66d089b31f',1,'mdtPartitionAttributes::name()'],['../classmdt_uic_number_item.html#a6e2bfad78dc1761b35ed6a642a345bb9',1,'mdtUicNumberItem::name()'],['../classmdt_field_map_field.html#ab9d17f7703f24baad1e3932978fde338',1,'mdtFieldMapField::name()'],['../classmdt_items_selector_dialog_item.html#a9b77955435a5841b65266e6fd93284e1',1,'mdtItemsSelectorDialogItem::name()']]],
   ['namede',['nameDe',['../classmdt_uic_number_item.html#ae24087c96e5e38138ba984705bece3f2',1,'mdtUicNumberItem']]],
   ['nameen',['nameEn',['../classmdt_uic_number_item.html#a5f87c87141076cf481173d7f75984ef1',1,'mdtUicNumberItem']]],
   ['namefr',['nameFr',['../classmdt_uic_number_item.html#a088b41783b5f1bee0e49be43b993269c',1,'mdtUicNumberItem']]],
@@ -49,6 +48,6 @@ var searchData=
   ['notmappedsourcefields',['notMappedSourceFields',['../classmdt_field_map.html#a32c026ccb54a4b783b77963bcbfd9212',1,'mdtFieldMap']]],
   ['notselecteditems',['notSelectedItems',['../classmdt_items_selector_dialog.html#af944e51b66c6e492ec74ec6030b281d4',1,'mdtItemsSelectorDialog']]],
   ['number',['number',['../classmdt_usb_endpoint_descriptor.html#ac27a176118a68e93d9a71e89b304c614',1,'mdtUsbEndpointDescriptor::number()'],['../classmdt_error.html#ad233adb8efe4180b85f584c5afdd49fc',1,'mdtError::number()'],['../classmdt_uic_number_item.html#a23c0a0e1c9f20bc3e092a51a1eabbffc',1,'mdtUicNumberItem::number()']]],
-  ['numericrangedouble',['NumericRangeDouble',['../structmdt_algorithms_1_1_numeric_range_double.html#add368d5a7de1c2ac042e90b7c1429ced',1,'mdtAlgorithms::NumericRangeDouble::NumericRangeDouble()'],['../structmdt_algorithms_1_1_numeric_range_double.html#afcfeef78bbba9f4dc29727b037a6a9c5',1,'mdtAlgorithms::NumericRangeDouble::NumericRangeDouble(double min, double max, bool includeMin=true, bool includeMax=true)']]],
-  ['numericrangedouble',['NumericRangeDouble',['../structmdt_algorithms_1_1_numeric_range_double.html',1,'mdtAlgorithms']]]
+  ['numericrangedouble',['NumericRangeDouble',['../structmdt_algorithms_1_1_numeric_range_double.html',1,'mdtAlgorithms']]],
+  ['numericrangedouble',['NumericRangeDouble',['../structmdt_algorithms_1_1_numeric_range_double.html#add368d5a7de1c2ac042e90b7c1429ced',1,'mdtAlgorithms::NumericRangeDouble::NumericRangeDouble()'],['../structmdt_algorithms_1_1_numeric_range_double.html#afcfeef78bbba9f4dc29727b037a6a9c5',1,'mdtAlgorithms::NumericRangeDouble::NumericRangeDouble(double min, double max, bool includeMin=true, bool includeMax=true)']]]
 ];

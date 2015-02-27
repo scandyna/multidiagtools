@@ -1,5 +1,5 @@
 <map id="mdtDeviceU3606A" name="mdtDeviceU3606A">
 <area shape="rect" id="node2" href="$classmdt_device_scpi.html" title="Base class for SCPI based instruments. " alt="" coords="33,173,143,200"/>
-<area shape="rect" id="node3" href="$classmdt_device.html" title="class mdtDeviceIosSegment; " alt="" coords="45,96,131,123"/>
+<area shape="rect" id="node3" href="$classmdt_device.html" title="Base class for a device connected to a port. " alt="" coords="45,96,131,123"/>
 <area shape="rect" id="node5" href="$classmdt_error.html" title="mdtError contains informations about a error that occured " alt="" coords="100,5,172,32"/>
 </map>

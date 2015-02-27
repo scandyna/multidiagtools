@@ -80,14 +80,49 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><dl class="reflist">
-<dt><a class="anchor" id="_deprecated000011"></a>Member <a class="el" href="classmdt_error.html#a377c175cc8e1aeae543cae2ecc5ca87b">mdtError::mdtError</a>  (int number, const QString &amp;text, level_t level)</dt>
+<dt><a class="anchor" id="_deprecated000023"></a>Member <a class="el" href="classmdt_error.html#a377c175cc8e1aeae543cae2ecc5ca87b">mdtError::mdtError</a>  (int number, const QString &amp;text, level_t level)</dt>
 <dd>If no good idea falls in for the usage of number , this constrctor should become obselete .  </dd>
-<dt><a class="anchor" id="_deprecated000012"></a>Member <a class="el" href="classmdt_error.html#ad233adb8efe4180b85f584c5afdd49fc">mdtError::number</a>  () const </dt>
+<dt><a class="anchor" id="_deprecated000024"></a>Member <a class="el" href="classmdt_error.html#ad233adb8efe4180b85f584c5afdd49fc">mdtError::number</a>  () const </dt>
 <dd>If no good idea falls in for the usage of number , this method should become obselete .  </dd>
-<dt><a class="anchor" id="_deprecated000009"></a>Member <a class="el" href="classmdt_modbus_tcp_port_manager.html#ab4d0a994973af6008faf489ca9ddb03d">mdtModbusTcpPortManager::readScanResult</a>  ()</dt>
+<dt><a class="anchor" id="_deprecated000021"></a>Member <a class="el" href="classmdt_modbus_tcp_port_manager.html#ab4d0a994973af6008faf489ca9ddb03d">mdtModbusTcpPortManager::readScanResult</a>  ()</dt>
 <dd>Use readDeviceAddressList()  </dd>
-<dt><a class="anchor" id="_deprecated000008"></a>Member <a class="el" href="classmdt_modbus_tcp_port_manager.html#a3a1f5a54c93fa90ba83dea8785407da3">mdtModbusTcpPortManager::saveScanResult</a>  (const QList&lt; mdtPortInfo * &gt; scanResult)</dt>
+<dt><a class="anchor" id="_deprecated000020"></a>Member <a class="el" href="classmdt_modbus_tcp_port_manager.html#a3a1f5a54c93fa90ba83dea8785407da3">mdtModbusTcpPortManager::saveScanResult</a>  (const QList&lt; mdtPortInfo * &gt; scanResult)</dt>
 <dd>Use saveDeviceAddressList()  </dd>
+<dt><a class="anchor" id="_deprecated000009"></a>Member <a class="el" href="classmdt_multi_io_device.html#a6a2f1e6538f09318b8e7d7fe220195e9">mdtMultiIoDevice::getAnalogInputs</a>  (bool waitOnReply=true)</dt>
+<dd>waitOnReply must not be used anymore  </dd>
+<dt><a class="anchor" id="_deprecated000008"></a>Member <a class="el" href="classmdt_multi_io_device.html#ac39f01b071d5b7c16e18db298160134d">mdtMultiIoDevice::getAnalogInputValue</a>  (<a class="el" href="classmdt_analog_io.html" title="class mdtBinaryDoubleConverter; ">mdtAnalogIo</a> *analogInput, bool queryDevice, bool waitOnReply)</dt>
+<dd>waitOnReply must not be used anymore <dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a> with valueDouble as real value and valueInt as device specific encoded fromat (if available). See <a class="el" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a> documentation for details about validity and other flags. </dd></dl>
+<dl class="section pre"><dt>Precondition</dt><dd>analogInput must be valid.  </dd></dl>
+</dd>
+<dt><a class="anchor" id="_deprecated000011"></a>Member <a class="el" href="classmdt_multi_io_device.html#a4adc06753c0d23861e19d6c206b207cb">mdtMultiIoDevice::getAnalogOutputs</a>  (bool waitOnReply=true)</dt>
+<dd>waitOnReply must not be used anymore  </dd>
+<dt><a class="anchor" id="_deprecated000010"></a>Member <a class="el" href="classmdt_multi_io_device.html#a5ec427ff1979b14f7882219f920e0284">mdtMultiIoDevice::getAnalogOutputValue</a>  (<a class="el" href="classmdt_analog_io.html" title="class mdtBinaryDoubleConverter; ">mdtAnalogIo</a> *analogOutput, bool queryDevice, bool waitOnReply=true)</dt>
+<dd>waitOnReply must not be used anymore <dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a> with valueDouble as real value and valueInt as device specific encoded fromat (if available). See <a class="el" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a> documentation for details about validity and other flags. </dd></dl>
+<dl class="section pre"><dt>Precondition</dt><dd>analogOutput must be valid.  </dd></dl>
+</dd>
+<dt><a class="anchor" id="_deprecated000015"></a>Member <a class="el" href="classmdt_multi_io_device.html#a18d95fd68e45f11397f1ebf7fb7a0a0a">mdtMultiIoDevice::getDigitalInputs</a>  (bool waitOnReply=true)</dt>
+<dd>waitOnReply must not be used anymore  </dd>
+<dt><a class="anchor" id="_deprecated000014"></a>Member <a class="el" href="classmdt_multi_io_device.html#a13385548121864e4507e92eda5f396db">mdtMultiIoDevice::getDigitalInputValue</a>  (<a class="el" href="classmdt_digital_io.html" title="Representation of a digital I/O. ">mdtDigitalIo</a> *digitalInput, bool queryDevice, bool waitOnReply=true)</dt>
+<dd>waitOnReply must not be used anymore <dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a> with valueBool. See <a class="el" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a> documentation for details about validity and other flags. </dd></dl>
+<dl class="section pre"><dt>Precondition</dt><dd>digitalInput must be valid.  </dd></dl>
+</dd>
+<dt><a class="anchor" id="_deprecated000017"></a>Member <a class="el" href="classmdt_multi_io_device.html#aeb093a59af6b6cac16e32f4ad37652f4">mdtMultiIoDevice::getDigitalOutputs</a>  (bool waitOnReply=true)</dt>
+<dd>waitOnReply must not be used anymore  </dd>
+<dt><a class="anchor" id="_deprecated000016"></a>Member <a class="el" href="classmdt_multi_io_device.html#a9c32969bf05be92b0196fec82f94c49d">mdtMultiIoDevice::getDigitalOutputValue</a>  (<a class="el" href="classmdt_digital_io.html" title="Representation of a digital I/O. ">mdtDigitalIo</a> *digitalOutput, bool queryDevice, bool waitOnReply=true)</dt>
+<dd>waitOnReply must not be used anymore <dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a> with valueBool. See <a class="el" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a> documentation for details about validity and other flags. </dd></dl>
+<dl class="section pre"><dt>Precondition</dt><dd>digitalOutput must be valid.  </dd></dl>
+</dd>
+<dt><a class="anchor" id="_deprecated000013"></a>Member <a class="el" href="classmdt_multi_io_device.html#ab01987c9487499d144d9d756979e3b42">mdtMultiIoDevice::setAnalogOutputs</a>  (bool waitOnReply=true)</dt>
+<dd>waitOnReply must not be used anymore  </dd>
+<dt><a class="anchor" id="_deprecated000012"></a>Member <a class="el" href="classmdt_multi_io_device.html#a595ac7361c90bc48d8ef13b8a3a33772">mdtMultiIoDevice::setAnalogOutputValue</a>  (<a class="el" href="classmdt_analog_io.html" title="class mdtBinaryDoubleConverter; ">mdtAnalogIo</a> *analogOutput, const <a class="el" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a> &amp;value, bool sendToDevice, bool waitOnReply=true)</dt>
+<dd>waitOnReply must not be used anymore <dl class="section pre"><dt>Precondition</dt><dd>analogOutput must be valid.  </dd></dl>
+</dd>
+<dt><a class="anchor" id="_deprecated000019"></a>Member <a class="el" href="classmdt_multi_io_device.html#a83f6df71dc35ef002ee55b3a51a54fc9">mdtMultiIoDevice::setDigitalOutputs</a>  (bool waitOnReply=true)</dt>
+<dd>waitOnReply must not be used anymore <dl class="section return"><dt>Returns</dt><dd>0 or a ID on success. If no I/O's are set, on timeout ar other error, a value &lt; 0 is returned.  </dd></dl>
+</dd>
+<dt><a class="anchor" id="_deprecated000018"></a>Member <a class="el" href="classmdt_multi_io_device.html#ab23b12d0916cb7e750dbe463d7d7527f">mdtMultiIoDevice::setDigitalOutputValue</a>  (<a class="el" href="classmdt_digital_io.html" title="Representation of a digital I/O. ">mdtDigitalIo</a> *digitalOutput, const <a class="el" href="classmdt_value.html" title="Conatins a value with some attributes. ">mdtValue</a> &amp;value, bool sendToDevice, bool waitOnReply=true)</dt>
+<dd>waitOnReply must not be used anymore <dl class="section pre"><dt>Precondition</dt><dd>digitalOutput must be valid.  </dd></dl>
+</dd>
 <dt><a class="anchor" id="_deprecated000003"></a>Member <a class="el" href="classmdt_sql_selection_dialog.html#ae5582bd717078a137dd71d5a1b9cc9f9">mdtSqlSelectionDialog::addSelectionResultColumn</a>  (const QString &amp;field)</dt>
 <dd>Use selection()  </dd>
 <dt><a class="anchor" id="_deprecated000007"></a>Member <a class="el" href="classmdt_sql_selection_dialog.html#aab4943bc01e64f867791c15eea613e23">mdtSqlSelectionDialog::selectedData</a>  (int row, const QString &amp;fieldName)</dt>
@@ -98,17 +133,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <dd>Use selection()  </dd>
 <dt><a class="anchor" id="_deprecated000006"></a>Member <a class="el" href="classmdt_sql_selection_dialog.html#a85b7c1e3e156c141315d0873fa36d4b3">mdtSqlSelectionDialog::selectionResults</a>  ()</dt>
 <dd>Use selection()  </dd>
-<dt><a class="anchor" id="_deprecated000001"></a>Member <a class="el" href="classmdt_sql_selection_dialog.html#a88311778de191bf78e351ea4370b9a6d">mdtSqlSelectionDialog::setSelectionResultColumns</a>  (const QList&lt; int &gt; &amp;columns)</dt>
-<dd>Use selection()  </dd>
 <dt><a class="anchor" id="_deprecated000002"></a>Member <a class="el" href="classmdt_sql_selection_dialog.html#a5c5c36414bf3c432979f53ad27f985cb">mdtSqlSelectionDialog::setSelectionResultColumns</a>  (const QStringList &amp;fields)</dt>
 <dd>Use selection()  </dd>
-<dt><a class="anchor" id="_deprecated000010"></a>Member <a class="el" href="classmdt_tt_test_item_node_setup_data.html#a2c58ca8c543b503e7d96d3f13112078f">mdtTtTestItemNodeSetupData::addNodeSetupData</a>  (const <a class="el" href="classmdt_tt_test_node_setup_data.html" title="Storage class for test node setup data. ">mdtTtTestNodeSetupData</a> &amp;data)</dt>
+<dt><a class="anchor" id="_deprecated000001"></a>Member <a class="el" href="classmdt_sql_selection_dialog.html#a88311778de191bf78e351ea4370b9a6d">mdtSqlSelectionDialog::setSelectionResultColumns</a>  (const QList&lt; int &gt; &amp;columns)</dt>
+<dd>Use selection()  </dd>
+<dt><a class="anchor" id="_deprecated000022"></a>Member <a class="el" href="classmdt_tt_test_item_node_setup_data.html#a2c58ca8c543b503e7d96d3f13112078f">mdtTtTestItemNodeSetupData::addNodeSetupData</a>  (const <a class="el" href="classmdt_tt_test_node_setup_data.html" title="Storage class for test node setup data. ">mdtTtTestNodeSetupData</a> &amp;data)</dt>
 <dd></dd>
 </dl>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Feb 19 2015 17:07:52 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Feb 27 2015 17:17:43 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

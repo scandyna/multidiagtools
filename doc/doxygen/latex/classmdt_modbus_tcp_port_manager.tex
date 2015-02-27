@@ -12,8 +12,7 @@ M\-O\-D\-B\-U\-S/\-T\-C\-P port manager.
 
 
 
-Inheritance diagram for mdt\-Modbus\-Tcp\-Port\-Manager\-:
-\nopagebreak
+Inheritance diagram for mdt\-Modbus\-Tcp\-Port\-Manager\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -22,8 +21,7 @@ Inheritance diagram for mdt\-Modbus\-Tcp\-Port\-Manager\-:
 \end{figure}
 
 
-Collaboration diagram for mdt\-Modbus\-Tcp\-Port\-Manager\-:
-\nopagebreak
+Collaboration diagram for mdt\-Modbus\-Tcp\-Port\-Manager\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -61,7 +59,7 @@ void \hyperlink{classmdt_modbus_tcp_port_manager_ad941ea607f00db54aa6deb2866a539
 \hyperlink{classmdt_device_address_list}{mdt\-Device\-Address\-List} \hyperlink{classmdt_modbus_tcp_port_manager_ae1ecf5d945dbe530e2bdb234bc65e2e6}{scan\-From\-Known\-Hosts\-File} (int timeout=500)
 \begin{DoxyCompactList}\small\item\em Scan for available hosts with a M\-O\-D\-B\-U\-S/\-T\-C\-P compatible device attached. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_modbus_tcp_port_manager_ab04f69b660487a7c59d309df7a8f5baa}{try\-To\-Connect} (const Q\-String \&host\-Name, quint16 port, int timeout)
-\begin{DoxyCompactList}\small\item\em Scan for available hosts with a M\-O\-D\-B\-U\-S/\-T\-C\-P compatible device attached. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Try to connect to a host. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_modbus_tcp_port_manager_a1f8eb3874561f31e74a3355f4b1a6a8b}{save\-Device\-Address\-List} (\hyperlink{classmdt_device_address_list}{mdt\-Device\-Address\-List} \&address\-List)
 \begin{DoxyCompactList}\small\item\em Save device address list into the known hosts file. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_device_address_list}{mdt\-Device\-Address\-List} \hyperlink{classmdt_modbus_tcp_port_manager_afe4db8318236242c3abd6752de2fcf38}{read\-Device\-Address\-List} ()
@@ -104,7 +102,7 @@ References\-:
 \item \href{http://www.Modbus-IDA.org}{\tt http\-://www.\-Modbus-\/\-I\-D\-A.\-org} 
 \end{DoxyItemize}
 
-Definition at line 71 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-h.
+Definition at line 68 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-h.
 
 
 
@@ -163,7 +161,7 @@ Abort the scan process.
 
 
 
-Definition at line 814 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
+Definition at line 631 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
 
 \hypertarget{classmdt_modbus_tcp_port_manager_a4d16b312f74974d4147d631b425771e4}{\index{mdt\-Modbus\-Tcp\-Port\-Manager@{mdt\-Modbus\-Tcp\-Port\-Manager}!abort\-Try\-To\-Connect@{abort\-Try\-To\-Connect}}
 \index{abort\-Try\-To\-Connect@{abort\-Try\-To\-Connect}!mdtModbusTcpPortManager@{mdt\-Modbus\-Tcp\-Port\-Manager}}
@@ -178,7 +176,7 @@ Called by connect timeout timer.
 
 
 
-Definition at line 819 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
+Definition at line 636 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
 
 
 
@@ -204,7 +202,7 @@ Port manager must be connected and thread running before calling this method.
 \item[\hyperlink{todo__todo000027}{Todo}]Should be protected. \end{DoxyRefDesc}
 
 
-Definition at line 631 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
+Definition at line 448 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
 
 
 
@@ -227,7 +225,7 @@ Called by the thread whenn a complete frame was readen.
 
 
 
-Definition at line 824 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
+Definition at line 641 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
 
 
 
@@ -259,7 +257,7 @@ A easy way to solve such problems is to have a D\-H\-C\-P server in the network 
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-Node address or value $<$ 0 corresponding on mdt\-Abstract\-Por\-::error\-\_\-t . 
+Node address. On error, a null hardware node I\-D is returned. 
 \end{DoxyReturn}
 \begin{DoxyPrecond}{Precondition}
 Port manager must be connected and thread running before calling this method. 
@@ -270,7 +268,7 @@ start\-From must be $>$= 0
 \end{DoxyPrecond}
 
 
-Definition at line 554 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
+Definition at line 371 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
 
 
 
@@ -306,7 +304,7 @@ n must be $>$ 0
 \end{DoxyPrecond}
 
 
-Definition at line 652 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
+Definition at line 469 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
 
 
 
@@ -333,7 +331,7 @@ Reimplemented from \hyperlink{classmdt_port_manager_a6dc2798324521d177fb8f79d4f6
 
 
 
-Definition at line 549 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
+Definition at line 366 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
 
 
 
@@ -356,7 +354,7 @@ Read device address list from known hosts file.
 
 Will read file written by \hyperlink{classmdt_modbus_tcp_port_manager_a1f8eb3874561f31e74a3355f4b1a6a8b}{save\-Device\-Address\-List()}. 
 
-Definition at line 487 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
+Definition at line 304 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
 
 
 
@@ -383,10 +381,10 @@ The file stored by \hyperlink{classmdt_modbus_tcp_port_manager_a3a1f5a54c93fa90b
 List of lines or empty list if file not exists or on error. 
 \end{DoxyReturn}
 \begin{DoxyRefDesc}{Deprecated}
-\item[\hyperlink{deprecated__deprecated000009}{Deprecated}]Use \hyperlink{classmdt_modbus_tcp_port_manager_afe4db8318236242c3abd6752de2fcf38}{read\-Device\-Address\-List()} \end{DoxyRefDesc}
+\item[\hyperlink{deprecated__deprecated000021}{Deprecated}]Use \hyperlink{classmdt_modbus_tcp_port_manager_afe4db8318236242c3abd6752de2fcf38}{read\-Device\-Address\-List()} \end{DoxyRefDesc}
 
 
-Definition at line 530 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
+Definition at line 347 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
 
 
 
@@ -405,7 +403,7 @@ Helper method for register service.
 
 Return result set by \hyperlink{classmdt_modbus_tcp_port_manager_ab5e780409492b5f56326a870bc4262ec}{get\-Register\-Values()}. Note that values are keeped until next call of \hyperlink{classmdt_modbus_tcp_port_manager_ab5e780409492b5f56326a870bc4262ec}{get\-Register\-Values()}. 
 
-Definition at line 704 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
+Definition at line 521 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
 
 
 
@@ -427,11 +425,15 @@ Manager must no running
 \end{DoxyPrecond}
 
 
-Definition at line 479 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
+Definition at line 296 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
 
 
 
 References mdt\-Application\-::cache\-Dir(), mdt\-Device\-Address\-List\-::last\-Error(), mdt\-Port\-Manager\-::pv\-Last\-Error, and mdt\-Device\-Address\-List\-::save\-To\-File().
+
+
+
+Referenced by mdt\-Device\-Modbus\-::connect\-To\-Device().
 
 \hypertarget{classmdt_modbus_tcp_port_manager_a3a1f5a54c93fa90ba83dea8785407da3}{\index{mdt\-Modbus\-Tcp\-Port\-Manager@{mdt\-Modbus\-Tcp\-Port\-Manager}!save\-Scan\-Result@{save\-Scan\-Result}}
 \index{save\-Scan\-Result@{save\-Scan\-Result}!mdtModbusTcpPortManager@{mdt\-Modbus\-Tcp\-Port\-Manager}}
@@ -458,18 +460,14 @@ True on successfull write.
 Manager must no running 
 \end{DoxyPrecond}
 \begin{DoxyRefDesc}{Deprecated}
-\item[\hyperlink{deprecated__deprecated000008}{Deprecated}]Use \hyperlink{classmdt_modbus_tcp_port_manager_a1f8eb3874561f31e74a3355f4b1a6a8b}{save\-Device\-Address\-List()} \end{DoxyRefDesc}
+\item[\hyperlink{deprecated__deprecated000020}{Deprecated}]Use \hyperlink{classmdt_modbus_tcp_port_manager_a1f8eb3874561f31e74a3355f4b1a6a8b}{save\-Device\-Address\-List()} \end{DoxyRefDesc}
 
 
-Definition at line 498 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
+Definition at line 315 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
 
 
 
 References mdt\-Application\-::cache\-Dir(), mdt\-Error\-::\-Error, M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, and M\-D\-T\-\_\-\-F\-I\-L\-E\-\_\-\-I\-O\-\_\-\-E\-R\-R\-O\-R.
-
-
-
-Referenced by mdt\-Device\-Modbus\-::connect\-To\-Device().
 
 \hypertarget{classmdt_modbus_tcp_port_manager_ab41c834385ca861ae7a43a12ba60687d}{\index{mdt\-Modbus\-Tcp\-Port\-Manager@{mdt\-Modbus\-Tcp\-Port\-Manager}!scan@{scan}}
 \index{scan@{scan}!mdtModbusTcpPortManager@{mdt\-Modbus\-Tcp\-Port\-Manager}}
@@ -490,7 +488,7 @@ Scan for available hosts with a M\-O\-D\-B\-U\-S/\-T\-C\-P compatible device att
 \hline
 {\em expected\-Hw\-Node\-Addresses} & If this list contains H\-W node addresses, scan will break when each one was found. \\
 \hline
-{\em timeout} & Maximum wait time \mbox{[}ms\mbox{]}. Must be a multiple of 50 \mbox{[}ms\mbox{]} \\
+{\em timeout} & Maximum wait time \mbox{[}ms\mbox{]}. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -505,11 +503,11 @@ Definition at line 74 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
 
 
 
-References mdt\-Device\-Address\-List\-::append(), find\-Matching\-To\-Host\-Modebus\-Hw\-Node\-Id(), mdt\-Port\-Manager\-::is\-Closed(), mdt\-Modbus\-Hw\-Node\-Id\-List\-::is\-Empty(), mdt\-Device\-Address\-::set\-Modbus\-Tcp\-Identification(), mdt\-Port\-Manager\-::set\-Port\-Name(), mdt\-Port\-Manager\-::start(), and try\-To\-Connect().
+References mdt\-Device\-Address\-List\-::append(), find\-Matching\-To\-Host\-Modebus\-Hw\-Node\-Id(), mdt\-Port\-Manager\-::is\-Closed(), mdt\-Modbus\-Hw\-Node\-Id\-List\-::is\-Empty(), mdt\-Device\-Address\-::set\-Modbus\-Tcp\-Identification(), mdt\-Port\-Manager\-::set\-Port\-Name(), mdt\-Modbus\-Hw\-Node\-Id\-List\-::size(), mdt\-Device\-Address\-List\-::size(), mdt\-Port\-Manager\-::start(), mdt\-Port\-Manager\-::stop(), and try\-To\-Connect().
 
 
 
-Referenced by scan(), and scan\-From\-Known\-Hosts\-File().
+Referenced by mdt\-Device\-Modbus\-::connect\-To\-Device(), scan(), and scan\-From\-Known\-Hosts\-File().
 
 \hypertarget{classmdt_modbus_tcp_port_manager_a25ccd1cb800e8396cb6e45e3a502dbf9}{\index{mdt\-Modbus\-Tcp\-Port\-Manager@{mdt\-Modbus\-Tcp\-Port\-Manager}!scan@{scan}}
 \index{scan@{scan}!mdtModbusTcpPortManager@{mdt\-Modbus\-Tcp\-Port\-Manager}}
@@ -533,7 +531,7 @@ Scan for available hosts with a M\-O\-D\-B\-U\-S/\-T\-C\-P compatible device att
 \hline
 {\em expected\-Hw\-Node\-Addresses} & If this list contains H\-W node addresses, scan will break when each one was found. \\
 \hline
-{\em timeout} & Maximum wait time \mbox{[}ms\mbox{]}. Must be a multiple of 50 \mbox{[}ms\mbox{]} \\
+{\em timeout} & Maximum wait time \mbox{[}ms\mbox{]}. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -544,7 +542,7 @@ Port manager must be stopped before scanning.
 \end{DoxyPrecond}
 
 
-Definition at line 108 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
+Definition at line 113 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
 
 
 
@@ -569,7 +567,7 @@ Scan for available hosts with a M\-O\-D\-B\-U\-S/\-T\-C\-P compatible device att
 \hline
 {\em port} & Port. M\-O\-D\-B\-U\-S/\-T\-C\-P default port is 502. \\
 \hline
-{\em timeout} & Maximum wait time \mbox{[}ms\mbox{]}. Must be a multiple of 50 \mbox{[}ms\mbox{]} \\
+{\em timeout} & Maximum wait time \mbox{[}ms\mbox{]}. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -580,7 +578,7 @@ Port manager must be stopped before scanning.
 \end{DoxyPrecond}
 
 
-Definition at line 129 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-h.
+Definition at line 126 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-h.
 
 
 
@@ -611,7 +609,7 @@ Scan for available hosts with a M\-O\-D\-B\-U\-S/\-T\-C\-P compatible device att
 \hline
 {\em expected\-Hw\-Node\-Addresses} & If this list contains H\-W node addresses, scan will break when each one was found. \\
 \hline
-{\em timeout} & Maximum wait time \mbox{[}ms\mbox{]}. Must be a multiple of 50 \mbox{[}ms\mbox{]} \\
+{\em timeout} & Maximum wait time \mbox{[}ms\mbox{]}. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -622,7 +620,7 @@ Port manager must be stopped before scanning.
 \end{DoxyPrecond}
 
 
-Definition at line 172 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
+Definition at line 177 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
 
 
 
@@ -650,7 +648,7 @@ Scan for available hosts with a M\-O\-D\-B\-U\-S/\-T\-C\-P compatible device att
 \hline
 {\em ignore\-Loopback} & If true, loopback interface will be ignored. \\
 \hline
-{\em timeout} & Maximum wait time \mbox{[}ms\mbox{]}. Must be a multiple of 50 \mbox{[}ms\mbox{]} \\
+{\em timeout} & Maximum wait time \mbox{[}ms\mbox{]}. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -661,7 +659,7 @@ Port manager must be stopped before scanning.
 \end{DoxyPrecond}
 
 
-Definition at line 163 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-h.
+Definition at line 160 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-h.
 
 
 
@@ -685,7 +683,7 @@ Return a list of each device in address list that is a M\-O\-D\-B\-U\-S/\-T\-C\-
 \begin{DoxyParams}{Parameters}
 {\em address\-List} & Address list that contains hosts to try to connect to. \\
 \hline
-{\em timeout} & Maximum wait time \mbox{[}ms\mbox{]}. Must be a multiple of 50 \mbox{[}ms\mbox{]}. \\
+{\em timeout} & Maximum wait time \mbox{[}ms\mbox{]}. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -696,11 +694,11 @@ Port manager must be stopped before scanning.
 \end{DoxyPrecond}
 
 
-Definition at line 193 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
+Definition at line 198 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
 
 
 
-References mdt\-Device\-Address\-List\-::append(), mdt\-Modbus\-Hw\-Node\-Id\-::bits\-Count(), mdt\-Modbus\-Hw\-Node\-Id\-::first\-Bit(), get\-Hardware\-Node\-Address(), mdt\-Modbus\-Hw\-Node\-Id\-::id(), mdt\-Device\-Address\-List\-::internal\-Vector(), mdt\-Modbus\-Hw\-Node\-Id\-::is\-Null(), mdt\-Device\-Address\-::\-M\-O\-D\-B\-U\-S, mdt\-Device\-Address\-::\-T\-C\-P\-I\-P, and try\-To\-Connect().
+References mdt\-Device\-Address\-List\-::append(), mdt\-Modbus\-Hw\-Node\-Id\-::bits\-Count(), mdt\-Modbus\-Hw\-Node\-Id\-::first\-Bit(), get\-Hardware\-Node\-Address(), mdt\-Modbus\-Hw\-Node\-Id\-::id(), mdt\-Device\-Address\-List\-::internal\-Vector(), mdt\-Modbus\-Hw\-Node\-Id\-::is\-Null(), mdt\-Device\-Address\-::\-M\-O\-D\-B\-U\-S, mdt\-Port\-Manager\-::set\-Port\-Name(), mdt\-Device\-Address\-List\-::size(), mdt\-Port\-Manager\-::start(), mdt\-Port\-Manager\-::stop(), mdt\-Device\-Address\-::\-T\-C\-P\-I\-P, and try\-To\-Connect().
 
 \hypertarget{classmdt_modbus_tcp_port_manager_ae1ecf5d945dbe530e2bdb234bc65e2e6}{\index{mdt\-Modbus\-Tcp\-Port\-Manager@{mdt\-Modbus\-Tcp\-Port\-Manager}!scan\-From\-Known\-Hosts\-File@{scan\-From\-Known\-Hosts\-File}}
 \index{scan\-From\-Known\-Hosts\-File@{scan\-From\-Known\-Hosts\-File}!mdtModbusTcpPortManager@{mdt\-Modbus\-Tcp\-Port\-Manager}}
@@ -717,7 +715,7 @@ Will read known hosts file and return list of devices that are attached at given
 
 
 \begin{DoxyParams}{Parameters}
-{\em timeout} & Maximum wait time \mbox{[}ms\mbox{]}. Must be a multiple of 50 \mbox{[}ms\mbox{]}. \\
+{\em timeout} & Maximum wait time \mbox{[}ms\mbox{]}. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -728,11 +726,15 @@ Port manager must be stopped before scanning.
 \end{DoxyPrecond}
 
 
-Definition at line 227 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
+Definition at line 242 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
 
 
 
 References mdt\-Device\-Address\-List\-::is\-Empty(), read\-Device\-Address\-List(), and scan().
+
+
+
+Referenced by mdt\-Device\-Modbus\-::connect\-To\-Device().
 
 \hypertarget{classmdt_modbus_tcp_port_manager_a208a3b2522795974836fd8aef406725a}{\index{mdt\-Modbus\-Tcp\-Port\-Manager@{mdt\-Modbus\-Tcp\-Port\-Manager}!send\-Data@{send\-Data}}
 \index{send\-Data@{send\-Data}!mdtModbusTcpPortManager@{mdt\-Modbus\-Tcp\-Port\-Manager}}
@@ -773,7 +775,7 @@ Reimplemented from \hyperlink{classmdt_port_manager_ad98399edba146af5cf32a900209
 
 
 
-Definition at line 748 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
+Definition at line 565 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
 
 
 
@@ -808,7 +810,7 @@ Reimplemented from \hyperlink{classmdt_port_manager_a445b27f0819158f67f1bd548cdd
 
 
 
-Definition at line 800 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
+Definition at line 617 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
 
 
 
@@ -838,7 +840,7 @@ start\-Address must be $>$= 0
 \end{DoxyPrecond}
 
 
-Definition at line 709 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
+Definition at line 526 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
 
 
 
@@ -859,73 +861,7 @@ Referenced by mdt\-Device\-Modbus\-::set\-Register\-Values().
 )}}\label{classmdt_modbus_tcp_port_manager_ab04f69b660487a7c59d309df7a8f5baa}
 
 
-Scan for available hosts with a M\-O\-D\-B\-U\-S/\-T\-C\-P compatible device attached. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em hosts} & A list of hosts to scan. Each host must be set with format hostname\-:port, or ip\-:port. Note that M\-O\-D\-B\-U\-S/\-T\-C\-P default port is 502. \\
-\hline
-{\em timeout} & Maximum wait time \mbox{[}ms\mbox{]}. Must be a multiple of 50 \mbox{[}ms\mbox{]} \\
-\hline
-{\em expected\-Hw\-Node\-Addresses} & If this list contains H\-W node addresses, scan will break when each one was found. See \hyperlink{classmdt_modbus_tcp_port_manager_a02f498667f432c4430d1983e3dfd6055}{get\-Hardware\-Node\-Address()} for details about H\-W node address. \\
-\hline
-{\em bits\-Count} & See \hyperlink{classmdt_modbus_tcp_port_manager_a02f498667f432c4430d1983e3dfd6055}{get\-Hardware\-Node\-Address()} \\
-\hline
-{\em bits\-Count\-Start\-From} & See \hyperlink{classmdt_modbus_tcp_port_manager_a02f498667f432c4430d1983e3dfd6055}{get\-Hardware\-Node\-Address()}\\
-\hline
-\end{DoxyParams}
-Note that returned list must be freed by user after usage. (for.\-ex. with q\-Delet\-All() and Q\-List\-::clear() ).
-
-\begin{DoxyPrecond}{Precondition}
-Port manager must be stopped\-Q\-List$<$mdt\-Port\-Info$\ast$$>$ scan(const Q\-String\-List \&hosts, int timeout = 500, const Q\-List$<$int$>$ \&expected\-Hw\-Node\-Addresses = Q\-List$<$int$>$(), int bits\-Count = 8, int bits\-Count\-Start\-From = 0);
-\end{DoxyPrecond}
-Scan for available hosts with a M\-O\-D\-B\-U\-S/\-T\-C\-P compatible device attached
-
-
-\begin{DoxyParams}{Parameters}
-{\em iface} & Scan will be done for all I\-P addresses available for given intarface. Note that only I\-Pv4 is implemented. \\
-\hline
-{\em port} & Port. Note that M\-O\-D\-B\-U\-S/\-T\-C\-P default port is 502. \\
-\hline
-{\em timeout} & Maximum wait time \mbox{[}ms\mbox{]}. Must be a multiple of 50 \mbox{[}ms\mbox{]} \\
-\hline
-{\em expected\-Hw\-Node\-Addresses} & If this list contains H\-W node addresses, scan will break when each one was found. See \hyperlink{classmdt_modbus_tcp_port_manager_a02f498667f432c4430d1983e3dfd6055}{get\-Hardware\-Node\-Address()} for details about H\-W node address. \\
-\hline
-{\em bits\-Count} & See \hyperlink{classmdt_modbus_tcp_port_manager_a02f498667f432c4430d1983e3dfd6055}{get\-Hardware\-Node\-Address()} \\
-\hline
-{\em bits\-Count\-Start\-From} & See \hyperlink{classmdt_modbus_tcp_port_manager_a02f498667f432c4430d1983e3dfd6055}{get\-Hardware\-Node\-Address()}\\
-\hline
-\end{DoxyParams}
-Note that returned list must be freed by user after usage. (for.\-ex. with q\-Delet\-All() and Q\-List\-::clear() ).
-
-\begin{DoxyPrecond}{Precondition}
-Port manager must be stopped\-Q\-List$<$mdt\-Port\-Info$\ast$$>$ scan(const Q\-Network\-Interface \&iface, quint16 port = 502, int timeout = 500, const Q\-List$<$int$>$ \&expected\-Hw\-Node\-Addresses = Q\-List$<$int$>$(), int bits\-Count = 8, int bits\-Count\-Start\-From = 0);
-\end{DoxyPrecond}
-Scan for available hosts with a M\-O\-D\-B\-U\-S/\-T\-C\-P compatible device attached
-
-
-\begin{DoxyParams}{Parameters}
-{\em ifaces} & Scan will be done for all I\-P addresses available for all given intarfaces. Note that only I\-Pv4 is implemented. \\
-\hline
-{\em port} & Port. Note that M\-O\-D\-B\-U\-S/\-T\-C\-P default port is 502. \\
-\hline
-{\em timeout} & Maximum wait time \mbox{[}ms\mbox{]}. Must be a multiple of 50 \mbox{[}ms\mbox{]} \\
-\hline
-{\em ignore\-Loopback} & If true, loopback interface will be ignored. \\
-\hline
-{\em expected\-Hw\-Node\-Addresses} & If this list contains H\-W node addresses, scan will break when each one was found. See \hyperlink{classmdt_modbus_tcp_port_manager_a02f498667f432c4430d1983e3dfd6055}{get\-Hardware\-Node\-Address()} for details about H\-W node address. \\
-\hline
-{\em bits\-Count} & See \hyperlink{classmdt_modbus_tcp_port_manager_a02f498667f432c4430d1983e3dfd6055}{get\-Hardware\-Node\-Address()} \\
-\hline
-{\em bits\-Count\-Start\-From} & See \hyperlink{classmdt_modbus_tcp_port_manager_a02f498667f432c4430d1983e3dfd6055}{get\-Hardware\-Node\-Address()}\\
-\hline
-\end{DoxyParams}
-Note that returned list must be freed by user after usage. (for.\-ex. with q\-Delet\-All() and Q\-List\-::clear() ).
-
-\begin{DoxyPrecond}{Precondition}
-Port manager must be stopped\-Q\-List$<$mdt\-Port\-Info$\ast$$>$ scan(const Q\-List$<$\-Q\-Network\-Interface$>$ \&ifaces, quint16 port = 502, int timeout = 500, bool ignore\-Loopback = true, const Q\-List$<$int$>$ \&expected\-Hw\-Node\-Addresses = Q\-List$<$int$>$(), int bits\-Count = 8, int bits\-Count\-Start\-From = 0);
-\end{DoxyPrecond}
-Try to connect to a host
+Try to connect to a host. 
 
 
 \begin{DoxyParams}{Parameters}
@@ -944,7 +880,7 @@ Port manager must be stopped
 \end{DoxyPrecond}
 
 
-Definition at line 437 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
+Definition at line 254 of file mdt\-Modbus\-Tcp\-Port\-Manager.\-cpp.
 
 
 

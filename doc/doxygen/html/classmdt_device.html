@@ -96,7 +96,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
-<p>class <a class="el" href="classmdt_device_ios_segment.html" title="Store a segment of device I/O list. ">mdtDeviceIosSegment</a>;  
+<p>Base class for a device connected to a port.  
  <a href="classmdt_device.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>&gt;</code></p>
@@ -152,21 +152,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ac2a9cfd6042f3f9d8da4e84f044d3f4a"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#ac2a9cfd6042f3f9d8da4e84f044d3f4a">~mdtDevice</a> ()</td></tr>
 <tr class="memdesc:ac2a9cfd6042f3f9d8da4e84f044d3f4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#ac2a9cfd6042f3f9d8da4e84f044d3f4a">More...</a><br/></td></tr>
 <tr class="separator:ac2a9cfd6042f3f9d8da4e84f044d3f4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a80186f1aa6fbdc13f1652de978c35518"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a80186f1aa6fbdc13f1652de978c35518">setName</a> (const QString &amp;<a class="el" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0">name</a>)</td></tr>
-<tr class="memdesc:a80186f1aa6fbdc13f1652de978c35518"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the device name.  <a href="#a80186f1aa6fbdc13f1652de978c35518">More...</a><br/></td></tr>
-<tr class="separator:a80186f1aa6fbdc13f1652de978c35518"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ad893c6885dbaef5a6cb980bfe627e0"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0">name</a> () const </td></tr>
-<tr class="memdesc:a7ad893c6885dbaef5a6cb980bfe627e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get device name.  <a href="#a7ad893c6885dbaef5a6cb980bfe627e0">More...</a><br/></td></tr>
-<tr class="separator:a7ad893c6885dbaef5a6cb980bfe627e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af6fddf7fba1f54e481a4f3445db64d98"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#af6fddf7fba1f54e481a4f3445db64d98">setIdentification</a> (const QVariant &amp;id)</td></tr>
-<tr class="memdesc:af6fddf7fba1f54e481a4f3445db64d98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set device identification.  <a href="#af6fddf7fba1f54e481a4f3445db64d98">More...</a><br/></td></tr>
-<tr class="separator:af6fddf7fba1f54e481a4f3445db64d98"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54845e1af6f6f98de7de79c3df9ac7b5"><td class="memItemLeft" align="right" valign="top">QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a54845e1af6f6f98de7de79c3df9ac7b5">identification</a> () const </td></tr>
-<tr class="memdesc:a54845e1af6f6f98de7de79c3df9ac7b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get device identification.  <a href="#a54845e1af6f6f98de7de79c3df9ac7b5">More...</a><br/></td></tr>
-<tr class="separator:a54845e1af6f6f98de7de79c3df9ac7b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac57bc624391a4035b20bfd29dbbea7da"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#ac57bc624391a4035b20bfd29dbbea7da">connectToDevice</a> (const <a class="el" href="classmdt_device_address.html">mdtDeviceAddress</a> &amp;address)</td></tr>
-<tr class="memdesc:ac57bc624391a4035b20bfd29dbbea7da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Search and connect to physical device.  <a href="#ac57bc624391a4035b20bfd29dbbea7da">More...</a><br/></td></tr>
-<tr class="separator:ac57bc624391a4035b20bfd29dbbea7da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fdad460ae0eac5710b13e400156cb1d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a3fdad460ae0eac5710b13e400156cb1d">setDeviceAddress</a> (const <a class="el" href="classmdt_device_address.html">mdtDeviceAddress</a> &amp;address, const QString &amp;<a class="el" href="classmdt_device.html#a3aa589ecae0fa3deed61431d07db9276">alias</a>=QString())</td></tr>
+<tr class="memdesc:a3fdad460ae0eac5710b13e400156cb1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set device address.  <a href="#a3fdad460ae0eac5710b13e400156cb1d">More...</a><br/></td></tr>
+<tr class="separator:a3fdad460ae0eac5710b13e400156cb1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af04ef3dc643127325597af46494ffb6b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_device_address.html">mdtDeviceAddress</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#af04ef3dc643127325597af46494ffb6b">deviceAddress</a> () const </td></tr>
+<tr class="memdesc:af04ef3dc643127325597af46494ffb6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get device address.  <a href="#af04ef3dc643127325597af46494ffb6b">More...</a><br/></td></tr>
+<tr class="separator:af04ef3dc643127325597af46494ffb6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3aa589ecae0fa3deed61431d07db9276"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a3aa589ecae0fa3deed61431d07db9276">alias</a> () const </td></tr>
+<tr class="memdesc:a3aa589ecae0fa3deed61431d07db9276"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get device alias.  <a href="#a3aa589ecae0fa3deed61431d07db9276">More...</a><br/></td></tr>
+<tr class="separator:a3aa589ecae0fa3deed61431d07db9276"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c265d9078bf50708aa60a73b5125667"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a0c265d9078bf50708aa60a73b5125667">connectToDevice</a> ()</td></tr>
+<tr class="memdesc:a0c265d9078bf50708aa60a73b5125667"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connect to physical device.  <a href="#a0c265d9078bf50708aa60a73b5125667">More...</a><br/></td></tr>
+<tr class="separator:a0c265d9078bf50708aa60a73b5125667"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2b694a37d9464d27214bdeceec220998"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a2b694a37d9464d27214bdeceec220998">disconnectFromDevice</a> ()</td></tr>
 <tr class="memdesc:a2b694a37d9464d27214bdeceec220998"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disconnect from device.  <a href="#a2b694a37d9464d27214bdeceec220998">More...</a><br/></td></tr>
 <tr class="separator:a2b694a37d9464d27214bdeceec220998"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -209,9 +206,9 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:afe3dec5b38bb5db7f5f6f250caa5f577"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#afe3dec5b38bb5db7f5f6f250caa5f577">disconnectFromDeviceEvent</a> ()</td></tr>
 <tr class="memdesc:afe3dec5b38bb5db7f5f6f250caa5f577"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by <a class="el" href="classmdt_device.html#a2b694a37d9464d27214bdeceec220998" title="Disconnect from device. ">disconnectFromDevice()</a>  <a href="#afe3dec5b38bb5db7f5f6f250caa5f577">More...</a><br/></td></tr>
 <tr class="separator:afe3dec5b38bb5db7f5f6f250caa5f577"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a30b8db129316183a10d38a569d431c92"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a30b8db129316183a10d38a569d431c92">nameChangedEvent</a> (const QString &amp;newName)</td></tr>
-<tr class="memdesc:a30b8db129316183a10d38a569d431c92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by <a class="el" href="classmdt_device.html#a80186f1aa6fbdc13f1652de978c35518" title="Set the device name. ">setName()</a>  <a href="#a30b8db129316183a10d38a569d431c92">More...</a><br/></td></tr>
-<tr class="separator:a30b8db129316183a10d38a569d431c92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeda0ed058f42b7513bb697fe7a1e6ab7"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#aeda0ed058f42b7513bb697fe7a1e6ab7">deviceAddressChangedEvent</a> (const <a class="el" href="classmdt_device_address.html">mdtDeviceAddress</a> &amp;address)</td></tr>
+<tr class="memdesc:aeda0ed058f42b7513bb697fe7a1e6ab7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by <a class="el" href="classmdt_device.html#a3fdad460ae0eac5710b13e400156cb1d" title="Set device address. ">setDeviceAddress()</a>  <a href="#aeda0ed058f42b7513bb697fe7a1e6ab7">More...</a><br/></td></tr>
+<tr class="separator:aeda0ed058f42b7513bb697fe7a1e6ab7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -220,8 +217,8 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:ab54221195bbf9363f7e7f10ef38a3909"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>class <a class="el" href="classmdt_device_ios_segment.html" title="Store a segment of device I/O list. ">mdtDeviceIosSegment</a>; </p>
-<p>Base class for a device connected to a port</p>
+<div class="textblock"><p>Base class for a device connected to a port. </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000010">Todo:</a></b></dt><dd>This detailed description is obselete !</dd></dl>
 <p>Querying a device can be done several ways. Some devices sends a confirmation after each query.</p>
 <p>Some queries (f.ex. read a input value or state) give a result after query. In some applications, we need to display the reult priodically. In other application, we need to send the query and wait on result before we can continue. This base class gives a interface for these two cases.</p>
 <p>At basis, all query methods are not blocking by default. The normal way is to connect <a class="el" href="classmdt_port_manager.html#a416a24db1048e9f66aef27ea810954d2" title="Emitted each time a transaction is done. ">mdtPortManager::newTransactionDone()</a> to decodeReadenFrame() slot (must be done in subclass). This way, a query will be sent to device and method returns. When device returns a result, <a class="el" href="classmdt_port_manager.html" title="Port manager base class. ">mdtPortManager</a> will send the newTransactionDone() signal, and decoding will be processed in decodeReadenFrame() and I/O's are updated.</p>
@@ -233,23 +230,10 @@ Protected Attributes</h2></td></tr>
 </ul>
 <p>A other usage is automated sequence. In this case, the sequence will tell when it need to set a output and when a input value is reuqierd.</p>
 <p>A device can accept one or many request before results must be read. This depends most case on used port and protocol.</p>
-<p>It can be useful to find on witch port a device is attached (f.ex. setup of a automated test application). For this, <a class="el" href="classmdt_device.html#ac57bc624391a4035b20bfd29dbbea7da" title="Search and connect to physical device. ">connectToDevice()</a> was introduced.</p>
-<p>A device can have several states (ready, busy, disconnected, ...). To help the application programmer to keep consistency, this states are updated in this class using <a class="el" href="classmdt_port_manager.html" title="Port manager base class. ">mdtPortManager</a> 's state machine. This state machine is based on <a class="el" href="class_q_state_machine.html">QStateMachine</a>.</p>
-<p>Notes about I/O container: In first version of <a class="el" href="classmdt_device.html" title="class mdtDeviceIosSegment; ">mdtDevice</a>, I/O container (<a class="el" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s. ">mdtDeviceIos</a> object) was handled by caller. Experience showed that this was a bad solution. Now, the container is created, and destroyed, by <a class="el" href="classmdt_device.html" title="class mdtDeviceIosSegment; ">mdtDevice</a> itself. To deal with I/O container, some methods are available:</p>
-<ul>
-<li>addInput(mdtAnalogIo *) : add a analog input.</li>
-<li>addInputs(QList&lt;mdtAnalogIo*&gt; &amp;) : add a list of analog inputs.</li>
-<li>addOutput(mdtAnalogIo *) : add a analog output.</li>
-<li>addOutputs(QList&lt;mdtAnalogIo*&gt; &amp;) : add a list of analog outputs.</li>
-<li>addInput(mdtDigitalIo *) : add a digital input.</li>
-<li>addInputs(QList&lt;mdtDigitalIo*&gt; &amp;) : add a list of digital inputs.</li>
-<li>addOutput(mdtDigitalIo *) : add a digital output.</li>
-<li>addOutputs(QList&lt;mdtDigitalIo*&gt; &amp;) : add a list of digital outputs.</li>
-<li>ios() : access I/O container.</li>
-<li>deleteIos() : delete all I/O in container. </li>
-</ul>
+<p>It can be useful to find on witch port a device is attached (f.ex. setup of a automated test application). For this, <a class="el" href="classmdt_device.html#a0c265d9078bf50708aa60a73b5125667" title="Connect to physical device. ">connectToDevice()</a> was introduced.</p>
+<p>A device can have several states (ready, busy, disconnected, ...). To help the application programmer to keep consistency, this states are updated in this class using <a class="el" href="classmdt_port_manager.html" title="Port manager base class. ">mdtPortManager</a> 's state machine. This state machine is based on <a class="el" href="class_q_state_machine.html">QStateMachine</a>. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8h_source.html#l00109">109</a> of file <a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8h_source.html#l00091">91</a> of file <a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>.</p>
 </div><h2 class="groupheader">Member Enumeration Documentation</h2>
 <a class="anchor" id="a8bcf508fbd38a8f0b235e8a9b00319f6"></a>
 <div class="memitem">
@@ -285,7 +269,7 @@ Protected Attributes</h2></td></tr>
 </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="mdt_device_8h_source.html#l00117">117</a> of file <a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8h_source.html#l00099">99</a> of file <a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>.</p>
 
 </div>
 </div>
@@ -308,7 +292,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00027">27</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_8cpp_source.html#l00115">runQueries()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00053">setName()</a>.</p>
+<p>References <a class="el" href="mdt_device_8cpp_source.html#l00099">runQueries()</a>.</p>
 
 </div>
 </div>
@@ -336,14 +320,14 @@ Protected Attributes</h2></td></tr>
 <p>Destructor. </p>
 <p>Will disconnect from device and delete I/O container. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00047">47</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00046">46</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_8cpp_source.html#l00080">disconnectFromDevice()</a>.</p>
+<p>References <a class="el" href="mdt_device_8cpp_source.html#l00064">disconnectFromDevice()</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="ac57bc624391a4035b20bfd29dbbea7da"></a>
+<a class="anchor" id="a3aa589ecae0fa3deed61431d07db9276"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -351,34 +335,58 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool mdtDevice::connectToDevice </td>
+          <td class="memname">QString mdtDevice::alias </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classmdt_device_address.html">mdtDeviceAddress</a> &amp;&#160;</td>
-          <td class="paramname"><em>address</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get device alias. </p>
+
+<p>Definition at line <a class="el" href="mdt_device_8h_source.html#l00135">135</a> of file <a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>.</p>
+
+<p>References <a class="el" href="mdt_device_address_8h_source.html#l00231">mdtDeviceAddress::alias()</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_device_modbus_8cpp_source.html#l00125">mdtDeviceModbus::connectToDevice()</a>, <a class="el" href="mdt_device_u3606_a_8h_source.html#l00105">mdtDeviceU3606A::connectToDevice()</a>, and <a class="el" href="mdt_device_8h_source.html#l00248">deviceIdString()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0c265d9078bf50708aa60a73b5125667"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool mdtDevice::connectToDevice </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Search and connect to physical device. </p>
-<p>Will scan available ports and open the first port that has device attached matching request.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">devInfo</td><td>Requested device's informations. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A error listed in <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error. ">mdtAbstractPort::error_t</a> (NoError on success)</dd></dl>
-<p>Note: default implementation does nothing and returns allways a UnhandledError. See subclass documentation for more details.virtual <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error. ">mdtAbstractPort::error_t</a> connectToDevice(const mdtDeviceInfo &amp;devInfo);</p>
-<p>Connect to physical device</p>
-<p>Note: default implementation does nothing and returns allways false. See subclass documentation for more details. </p>
+<p>Connect to physical device. </p>
+<p>Connect to device set with <a class="el" href="classmdt_device.html#a3fdad460ae0eac5710b13e400156cb1d" title="Set device address. ">setDeviceAddress()</a>.</p>
+<p>Whenn implementing <a class="el" href="classmdt_device.html#a0c265d9078bf50708aa60a73b5125667" title="Connect to physical device. ">connectToDevice()</a> functions in subclass, it is recommended to set device address with <a class="el" href="classmdt_device.html#a3fdad460ae0eac5710b13e400156cb1d" title="Set device address. ">setDeviceAddress()</a>. This is because some informations are also available later, f.ex. with <a class="el" href="classmdt_device.html#af04ef3dc643127325597af46494ffb6b" title="Get device address. ">deviceAddress()</a>, <a class="el" href="classmdt_device.html#a3aa589ecae0fa3deed61431d07db9276" title="Get device alias. ">alias()</a>. <a class="el" href="classmdt_device.html#add9f8ec2f944b5c5f92a97424a194177" title="Get device identification string. ">deviceIdString()</a>, witch is useful to build error messages, also reuse internal device address string object.</p>
+<p>This default implementation does nothing and allways returns false. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00074">74</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Reimplemented in <a class="el" href="classmdt_device_scpi.html#a4d3eca756dea1165f1f5da3e325d1d49">mdtDeviceScpi</a>, <a class="el" href="classmdt_device_modbus.html#ae8634515742f3ed42dc52dfaa8d65313">mdtDeviceModbus</a>, and <a class="el" href="classmdt_device_modbus_wago.html#a5831a91162736cc01f35e7dd2c01852a">mdtDeviceModbusWago</a>.</p>
+
+<p>Definition at line <a class="el" href="mdt_device_8h_source.html#l00153">153</a> of file <a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>.</p>
 
 </div>
 </div>
@@ -405,9 +413,72 @@ Protected Attributes</h2></td></tr>
 
 <p>Get current state. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8h_source.html#l00244">244</a> of file <a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8h_source.html#l00228">228</a> of file <a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00115">runQueries()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l01069">mdtMultiIoDevice::setAnalogOutputValue()</a>, and <a class="el" href="mdt_multi_io_device_8cpp_source.html#l01080">mdtMultiIoDevice::setDigitalOutputValue()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00099">runQueries()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l01075">mdtMultiIoDevice::setAnalogOutputValue()</a>, and <a class="el" href="mdt_multi_io_device_8cpp_source.html#l01086">mdtMultiIoDevice::setDigitalOutputValue()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af04ef3dc643127325597af46494ffb6b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_device_address.html">mdtDeviceAddress</a> mdtDevice::deviceAddress </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get device address. </p>
+
+<p>Definition at line <a class="el" href="mdt_device_8h_source.html#l00128">128</a> of file <a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_device_modbus_8cpp_source.html#l00073">mdtDeviceModbus::connectToDevice()</a>, and <a class="el" href="mdt_device_scpi_8cpp_source.html#l00047">mdtDeviceScpi::connectToDevice()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aeda0ed058f42b7513bb697fe7a1e6ab7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void mdtDevice::deviceAddressChangedEvent </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classmdt_device_address.html">mdtDeviceAddress</a> &amp;&#160;</td>
+          <td class="paramname"><em>address</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called by <a class="el" href="classmdt_device.html#a3fdad460ae0eac5710b13e400156cb1d" title="Set device address. ">setDeviceAddress()</a> </p>
+<p>Can be reimplemented in subclass if some actions are needed when device address has changed.</p>
+<p>This default implementation does nothing, it's also not necessery to call this base function from subclass. </p>
+
+<p>Reimplemented in <a class="el" href="classmdt_device_scpi.html#a311158761051b12489c15e068a9d1db3">mdtDeviceScpi</a>.</p>
+
+<p>Definition at line <a class="el" href="mdt_device_8h_source.html#l00309">309</a> of file <a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00052">setDeviceAddress()</a>.</p>
 
 </div>
 </div>
@@ -433,13 +504,13 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get device identification string. </p>
-<p>Can be used for error messages. Returns a string with "Device 'deviceName' : " </p>
+<p>Can be used for error messages. Returns a string with "Device 'alias' : " </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8h_source.html#l00264">264</a> of file <a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8h_source.html#l00248">248</a> of file <a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>.</p>
 
-<p>References <a class="el" href="mdt_device_8cpp_source.html#l00059">name()</a>.</p>
+<p>References <a class="el" href="mdt_device_8h_source.html#l00135">alias()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00150">mdtDeviceU3606A::setupLowResistanceMeasure()</a>, <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00092">mdtDeviceU3606A::setupResistanceMeasure()</a>, and <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00037">mdtDeviceU3606A::setupVoltageDcMeasure()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00049">mdtDeviceModbusWago::connectToDevice()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00073">mdtDeviceModbus::connectToDevice()</a>, <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00143">mdtDeviceModbusWago::detectIos()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00238">mdtMultiIoDevice::getAnalogInputs()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00174">mdtMultiIoDevice::getAnalogInputValue()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00193">mdtMultiIoDevice::getAnalogInputValueAt()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00392">mdtMultiIoDevice::getAnalogOutputs()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00328">mdtMultiIoDevice::getAnalogOutputValue()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00347">mdtMultiIoDevice::getAnalogOutputValueAt()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00700">mdtMultiIoDevice::getDigitalInputs()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00636">mdtMultiIoDevice::getDigitalInputValue()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00655">mdtMultiIoDevice::getDigitalInputValueAt()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00852">mdtMultiIoDevice::getDigitalOutputs()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00791">mdtMultiIoDevice::getDigitalOutputValue()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00809">mdtMultiIoDevice::getDigitalOutputValueAt()</a>, <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00078">mdtDeviceModbusWago::isWago750()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00544">mdtMultiIoDevice::setAnalogOutputs()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00483">mdtMultiIoDevice::setAnalogOutputValue()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00501">mdtMultiIoDevice::setAnalogOutputValueAt()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l01025">mdtMultiIoDevice::setDigitalOutputs()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l01005">mdtMultiIoDevice::setDigitalOutputsValue()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00944">mdtMultiIoDevice::setDigitalOutputValue()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00962">mdtMultiIoDevice::setDigitalOutputValueAt()</a>, <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00150">mdtDeviceU3606A::setupLowResistanceMeasure()</a>, <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00092">mdtDeviceU3606A::setupResistanceMeasure()</a>, and <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00037">mdtDeviceU3606A::setupVoltageDcMeasure()</a>.</p>
 
 </div>
 </div>
@@ -460,11 +531,11 @@ Protected Attributes</h2></td></tr>
 <p>Will stop periodic querying ( see <a class="el" href="classmdt_device.html#adc7ff8f01d68506283a3d0cc6bc25407" title="Stop periodic device querying. ">stop()</a> ).</p>
 <p>Will also call <a class="el" href="classmdt_device.html#afe3dec5b38bb5db7f5f6f250caa5f577" title="Called by disconnectFromDevice() ">disconnectFromDeviceEvent()</a>. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00080">80</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00064">64</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_8h_source.html#l00313">disconnectFromDeviceEvent()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00100">stop()</a>.</p>
+<p>References <a class="el" href="mdt_device_8h_source.html#l00297">disconnectFromDeviceEvent()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00084">stop()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00047">~mdtDevice()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00049">mdtDeviceModbusWago::connectToDevice()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00073">mdtDeviceModbus::connectToDevice()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00046">~mdtDevice()</a>.</p>
 
 </div>
 </div>
@@ -495,36 +566,9 @@ Protected Attributes</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classmdt_device_scpi.html#a32498c40ac609ac157cb332bc4e7ac51">mdtDeviceScpi</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_8h_source.html#l00313">313</a> of file <a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8h_source.html#l00297">297</a> of file <a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00080">disconnectFromDevice()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a54845e1af6f6f98de7de79c3df9ac7b5"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">QVariant mdtDevice::identification </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Get device identification. </p>
-
-<p>Definition at line <a class="el" href="mdt_device_8h_source.html#l00152">152</a> of file <a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00064">disconnectFromDevice()</a>.</p>
 
 </div>
 </div>
@@ -553,9 +597,9 @@ Protected Attributes</h2></td></tr>
 <p>This default implementation returns allways false.</p>
 <p>Note: <a class="el" href="classmdt_device.html#a326ca430ec756d5e1203f70b7be4b58e" title="Check if device is ready. ">isReady()</a> should return true only if device it ready for querying. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8h_source.html#l00206">206</a> of file <a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8h_source.html#l00190">190</a> of file <a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00091">start()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00075">start()</a>.</p>
 
 </div>
 </div>
@@ -581,66 +625,11 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get last error. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000010">Todo:</a></b></dt><dd>Not completly used currently, must be implemented in this class + subclasses . </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000011">Todo:</a></b></dt><dd>Not completly used currently, must be implemented in this class + subclasses . </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8h_source.html#l00237">237</a> of file <a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8h_source.html#l00221">221</a> of file <a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>.</p>
 
-<p>References <a class="el" href="mdt_device_8h_source.html#l00271">pvLastError</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a7ad893c6885dbaef5a6cb980bfe627e0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">QString mdtDevice::name </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Get device name. </p>
-
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00059">59</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
-
-<p>Referenced by <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00149">mdtDeviceModbusWago::detectIos()</a>, <a class="el" href="mdt_device_8h_source.html#l00264">deviceIdString()</a>, <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html#l00301">mdtDeviceModbusWagoModule::deviceName()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00174">mdtMultiIoDevice::getAnalogInputValue()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00193">mdtMultiIoDevice::getAnalogInputValueAt()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00326">mdtMultiIoDevice::getAnalogOutputValue()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00345">mdtMultiIoDevice::getAnalogOutputValueAt()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00633">mdtMultiIoDevice::getDigitalInputValue()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00652">mdtMultiIoDevice::getDigitalInputValueAt()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00786">mdtMultiIoDevice::getDigitalOutputValue()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00805">mdtMultiIoDevice::getDigitalOutputValueAt()</a>, <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00084">mdtDeviceModbusWago::isWago750()</a>, <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html#l00433">mdtDeviceModbusWagoModule::readRegisters()</a>, <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html#l00533">mdtDeviceModbusWagoModule::readStatusBytes()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00479">mdtMultiIoDevice::setAnalogOutputValue()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00498">mdtMultiIoDevice::setAnalogOutputValueAt()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00939">mdtMultiIoDevice::setDigitalOutputValue()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00958">mdtMultiIoDevice::setDigitalOutputValueAt()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00053">setName()</a>, <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html#l00577">mdtDeviceModbusWagoModule::writeControlBytes()</a>, and <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html#l00493">mdtDeviceModbusWagoModule::writeRegisters()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a30b8db129316183a10d38a569d431c92"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void mdtDevice::nameChangedEvent </td>
-          <td>(</td>
-          <td class="paramtype">const QString &amp;&#160;</td>
-          <td class="paramname"><em>newName</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Called by <a class="el" href="classmdt_device.html#a80186f1aa6fbdc13f1652de978c35518" title="Set the device name. ">setName()</a> </p>
-<p>Can be reimplemented in subclass if some actions are needed when name has changed.</p>
-<p>This default implementation does nothing, it's also not necessery to call this base function from subclass. </p>
-
-<p>Reimplemented in <a class="el" href="classmdt_device_scpi.html#a750ebbf843bad40b442a9d965c6f0e44">mdtDeviceScpi</a>.</p>
-
-<p>Definition at line <a class="el" href="mdt_device_8h_source.html#l00325">325</a> of file <a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>.</p>
-
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00053">setName()</a>.</p>
+<p>References <a class="el" href="mdt_device_8h_source.html#l00255">pvLastError</a>.</p>
 
 </div>
 </div>
@@ -677,9 +666,9 @@ Protected Attributes</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#a3b83b926ed1f9c3bdf7024de2745c285">mdtDeviceModbus</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00123">123</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00107">107</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00115">runQueries()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00099">runQueries()</a>.</p>
 
 </div>
 </div>
@@ -707,9 +696,9 @@ Protected Attributes</h2></td></tr>
 <p>Queries to send periodically. </p>
 <p>This slot is periodically called after a call of <a class="el" href="classmdt_device.html#a721c5bf2cfa0eef5304333f08da182f7" title="Start periodic device querying. ">start()</a>. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00115">115</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00099">99</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_8h_source.html#l00244">currentState()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00123">queriesSequence()</a>, and <a class="el" href="classmdt_device.html#a8bcf508fbd38a8f0b235e8a9b00319f6ae7d31fc0602fb2ede144d18cdffd816b">Ready</a>.</p>
+<p>References <a class="el" href="mdt_device_8h_source.html#l00228">currentState()</a>, <a class="el" href="mdt_device_8cpp_source.html#l00107">queriesSequence()</a>, and <a class="el" href="classmdt_device.html#a8bcf508fbd38a8f0b235e8a9b00319f6ae7d31fc0602fb2ede144d18cdffd816b">Ready</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00027">mdtDevice()</a>.</p>
 
@@ -740,9 +729,9 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00086">86</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00070">70</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_modbus_8cpp_source.html#l00034">mdtDeviceModbus::mdtDeviceModbus()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_modbus_8cpp_source.html#l00036">mdtDeviceModbus::mdtDeviceModbus()</a>.</p>
 
 </div>
 </div>
@@ -772,54 +761,45 @@ Protected Attributes</h2></td></tr>
 <p>Will call <a class="el" href="classmdt_device.html#ad2646ad2fb99b40c9f303b24a7ee971e" title="Called when current state has changed. ">stateChangedEvent()</a> and emit <a class="el" href="classmdt_device.html#aedb66d14aeaba33cdfd6458281ee9862" title="Emitted when state has changed. ">stateChanged()</a> signal.</p>
 <p>Subclass must call tis function to update current state. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00128">128</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00112">112</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="classmdt_device.html#a8bcf508fbd38a8f0b235e8a9b00319f6ae7d31fc0602fb2ede144d18cdffd816b">Ready</a>, <a class="el" href="classmdt_device.html#aedb66d14aeaba33cdfd6458281ee9862">stateChanged()</a>, and <a class="el" href="mdt_device_8h_source.html#l00301">stateChangedEvent()</a>.</p>
+<p>References <a class="el" href="classmdt_device.html#a8bcf508fbd38a8f0b235e8a9b00319f6ae7d31fc0602fb2ede144d18cdffd816b">Ready</a>, <a class="el" href="classmdt_device.html#aedb66d14aeaba33cdfd6458281ee9862">stateChanged()</a>, and <a class="el" href="mdt_device_8h_source.html#l00285">stateChangedEvent()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="af6fddf7fba1f54e481a4f3445db64d98"></a>
+<a class="anchor" id="a3fdad460ae0eac5710b13e400156cb1d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void mdtDevice::setIdentification </td>
+          <td class="memname">void mdtDevice::setDeviceAddress </td>
           <td>(</td>
-          <td class="paramtype">const QVariant &amp;&#160;</td>
-          <td class="paramname"><em>id</em></td><td>)</td>
-          <td></td>
+          <td class="paramtype">const <a class="el" href="classmdt_device_address.html">mdtDeviceAddress</a> &amp;&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Set device identification. </p>
-
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00064">64</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a80186f1aa6fbdc13f1652de978c35518"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname">void mdtDevice::setName </td>
-          <td>(</td>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">const QString &amp;&#160;</td>
-          <td class="paramname"><em>name</em></td><td>)</td>
+          <td class="paramname"><em>alias</em> = <code>QString()</code>&#160;</td>
+        </tr>
+        <tr>
           <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set the device name. </p>
-<p>Will also call <a class="el" href="classmdt_device.html#a30b8db129316183a10d38a569d431c92" title="Called by setName() ">nameChangedEvent()</a> </p>
+<p>Set device address. </p>
+<p>Will also call <a class="el" href="classmdt_device.html#aeda0ed058f42b7513bb697fe7a1e6ab7" title="Called by setDeviceAddress() ">deviceAddressChangedEvent()</a>.</p>
+<dl class="section pre"><dt>Precondition</dt><dd>This function must only be called when currentState is Disconnected. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00053">53</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00052">52</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_8cpp_source.html#l00059">name()</a>, and <a class="el" href="mdt_device_8h_source.html#l00325">nameChangedEvent()</a>.</p>
+<p>References <a class="el" href="mdt_device_8h_source.html#l00309">deviceAddressChangedEvent()</a>, <a class="el" href="classmdt_device.html#a8bcf508fbd38a8f0b235e8a9b00319f6aef70e46fd3bbc21e3e1f0b6815e750c0">Disconnected</a>, and <a class="el" href="mdt_device_address_8h_source.html#l00220">mdtDeviceAddress::setAlias()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00027">mdtDevice()</a>, and <a class="el" href="mdt_modbus_io_tool_8cpp_source.html#l00035">mdtModbusIoTool::mdtModbusIoTool()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_modbus_8cpp_source.html#l00125">mdtDeviceModbus::connectToDevice()</a>, and <a class="el" href="mdt_device_scpi_8cpp_source.html#l00074">mdtDeviceScpi::connectToDevice()</a>.</p>
 
 </div>
 </div>
@@ -848,11 +828,11 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00091">91</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00075">75</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_8h_source.html#l00206">isReady()</a>.</p>
+<p>References <a class="el" href="mdt_device_8h_source.html#l00190">isReady()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_modbus_io_tool_8cpp_source.html#l00035">mdtModbusIoTool::mdtModbusIoTool()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_modbus_io_tool_8cpp_source.html#l00036">mdtModbusIoTool::mdtModbusIoTool()</a>.</p>
 
 </div>
 </div>
@@ -880,7 +860,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Emitted when state has changed. </p>
 
-<p>Referenced by <a class="el" href="mdt_device_modbus_8cpp_source.html#l00034">mdtDeviceModbus::mdtDeviceModbus()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00128">setCurrentState()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_modbus_8cpp_source.html#l00036">mdtDeviceModbus::mdtDeviceModbus()</a>, and <a class="el" href="mdt_device_8cpp_source.html#l00112">setCurrentState()</a>.</p>
 
 </div>
 </div>
@@ -912,9 +892,9 @@ Protected Attributes</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classmdt_multi_io_device.html#ae2cc456c53e1b5f792b9073ad15bb1b3">mdtMultiIoDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_8h_source.html#l00301">301</a> of file <a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8h_source.html#l00285">285</a> of file <a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00128">setCurrentState()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00112">setCurrentState()</a>.</p>
 
 </div>
 </div>
@@ -959,7 +939,7 @@ Protected Attributes</h2></td></tr>
 <p>Emitted when a new status message is to display. </p>
 <p>Typically used with <a class="el" href="classmdt_port_status_widget.html" title="Helper class to display port/device state and messages. ">mdtPortStatusWidget</a> </p>
 
-<p>Referenced by <a class="el" href="mdt_device_modbus_8cpp_source.html#l00034">mdtDeviceModbus::mdtDeviceModbus()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_modbus_8cpp_source.html#l00036">mdtDeviceModbus::mdtDeviceModbus()</a>.</p>
 
 </div>
 </div>
@@ -978,9 +958,9 @@ Protected Attributes</h2></td></tr>
 
 <p>Stop periodic device querying. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00100">100</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00084">84</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00080">disconnectFromDevice()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_8cpp_source.html#l00064">disconnectFromDevice()</a>.</p>
 
 </div>
 </div>
@@ -1006,9 +986,9 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00106">106</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00090">90</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html#l00611">mdtDeviceModbusWagoModule::wait()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_modbus_wago_module_8cpp_source.html#l00624">mdtDeviceModbusWagoModule::wait()</a>.</p>
 
 </div>
 </div>
@@ -1033,9 +1013,9 @@ Protected Attributes</h2></td></tr>
 
 <p>Last error object. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8h_source.html#l00271">271</a> of file <a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8h_source.html#l00255">255</a> of file <a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_scpi_8cpp_source.html#l00047">mdtDeviceScpi::connectToDevice()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00174">mdtMultiIoDevice::getAnalogInputValue()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00193">mdtMultiIoDevice::getAnalogInputValueAt()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00326">mdtMultiIoDevice::getAnalogOutputValue()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00345">mdtMultiIoDevice::getAnalogOutputValueAt()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00633">mdtMultiIoDevice::getDigitalInputValue()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00652">mdtMultiIoDevice::getDigitalInputValueAt()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00786">mdtMultiIoDevice::getDigitalOutputValue()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00805">mdtMultiIoDevice::getDigitalOutputValueAt()</a>, <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00236">mdtDeviceU3606A::getMeasureValue()</a>, <a class="el" href="mdt_device_8h_source.html#l00237">lastError()</a>, <a class="el" href="mdt_device_scpi_8cpp_source.html#l00056">mdtDeviceScpi::sendCommand()</a>, <a class="el" href="mdt_device_scpi_8cpp_source.html#l00065">mdtDeviceScpi::sendQuery()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00479">mdtMultiIoDevice::setAnalogOutputValue()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00498">mdtMultiIoDevice::setAnalogOutputValueAt()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00939">mdtMultiIoDevice::setDigitalOutputValue()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00958">mdtMultiIoDevice::setDigitalOutputValueAt()</a>, <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00150">mdtDeviceU3606A::setupLowResistanceMeasure()</a>, <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00092">mdtDeviceU3606A::setupResistanceMeasure()</a>, and <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00037">mdtDeviceU3606A::setupVoltageDcMeasure()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00049">mdtDeviceModbusWago::connectToDevice()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00073">mdtDeviceModbus::connectToDevice()</a>, <a class="el" href="mdt_device_scpi_8cpp_source.html#l00047">mdtDeviceScpi::connectToDevice()</a>, <a class="el" href="mdt_device_modbus_wago_8cpp_source.html#l00143">mdtDeviceModbusWago::detectIos()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00238">mdtMultiIoDevice::getAnalogInputs()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00174">mdtMultiIoDevice::getAnalogInputValue()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00193">mdtMultiIoDevice::getAnalogInputValueAt()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00392">mdtMultiIoDevice::getAnalogOutputs()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00328">mdtMultiIoDevice::getAnalogOutputValue()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00347">mdtMultiIoDevice::getAnalogOutputValueAt()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00700">mdtMultiIoDevice::getDigitalInputs()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00636">mdtMultiIoDevice::getDigitalInputValue()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00655">mdtMultiIoDevice::getDigitalInputValueAt()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00852">mdtMultiIoDevice::getDigitalOutputs()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00791">mdtMultiIoDevice::getDigitalOutputValue()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00809">mdtMultiIoDevice::getDigitalOutputValueAt()</a>, <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00236">mdtDeviceU3606A::getMeasureValue()</a>, <a class="el" href="mdt_device_8h_source.html#l00221">lastError()</a>, <a class="el" href="mdt_device_scpi_8cpp_source.html#l00087">mdtDeviceScpi::sendCommand()</a>, <a class="el" href="mdt_device_scpi_8cpp_source.html#l00096">mdtDeviceScpi::sendQuery()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00544">mdtMultiIoDevice::setAnalogOutputs()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00483">mdtMultiIoDevice::setAnalogOutputValue()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00501">mdtMultiIoDevice::setAnalogOutputValueAt()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l01025">mdtMultiIoDevice::setDigitalOutputs()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l01005">mdtMultiIoDevice::setDigitalOutputsValue()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00944">mdtMultiIoDevice::setDigitalOutputValue()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00962">mdtMultiIoDevice::setDigitalOutputValueAt()</a>, <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00150">mdtDeviceU3606A::setupLowResistanceMeasure()</a>, <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00092">mdtDeviceU3606A::setupResistanceMeasure()</a>, and <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00037">mdtDeviceU3606A::setupVoltageDcMeasure()</a>.</p>
 
 </div>
 </div>
@@ -1046,7 +1026,7 @@ Protected Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Feb 19 2015 17:07:53 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Feb 27 2015 17:17:45 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

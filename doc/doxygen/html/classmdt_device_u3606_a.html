@@ -103,7 +103,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="classmdt_device_u3606_a__inherit__graph.png" border="0" usemap="#mdt_device_u3606_a_inherit__map" alt="Inheritance graph"/></div>
 <map name="mdt_device_u3606_a_inherit__map" id="mdt_device_u3606_a_inherit__map">
-<area shape="rect" id="node2" href="classmdt_device_scpi.html" title="Base class for SCPI based instruments. " alt="" coords="15,155,125,181"/><area shape="rect" id="node3" href="classmdt_device.html" title="class mdtDeviceIosSegment; " alt="" coords="28,80,113,107"/></map>
+<area shape="rect" id="node2" href="classmdt_device_scpi.html" title="Base class for SCPI based instruments. " alt="" coords="15,155,125,181"/><area shape="rect" id="node3" href="classmdt_device.html" title="Base class for a device connected to a port. " alt="" coords="28,80,113,107"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Collaboration diagram for mdtDeviceU3606A:</div>
@@ -112,7 +112,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="classmdt_device_u3606_a__coll__graph.png" border="0" usemap="#mdt_device_u3606_a_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_device_u3606_a_coll__map" id="mdt_device_u3606_a_coll__map">
-<area shape="rect" id="node2" href="classmdt_device_scpi.html" title="Base class for SCPI based instruments. " alt="" coords="33,173,143,200"/><area shape="rect" id="node3" href="classmdt_device.html" title="class mdtDeviceIosSegment; " alt="" coords="45,96,131,123"/><area shape="rect" id="node5" href="classmdt_error.html" title="mdtError contains informations about a error that occured " alt="" coords="100,5,172,32"/></map>
+<area shape="rect" id="node2" href="classmdt_device_scpi.html" title="Base class for SCPI based instruments. " alt="" coords="33,173,143,200"/><area shape="rect" id="node3" href="classmdt_device.html" title="Base class for a device connected to a port. " alt="" coords="45,96,131,123"/><area shape="rect" id="node5" href="classmdt_error.html" title="mdtError contains informations about a error that occured " alt="" coords="100,5,172,32"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
@@ -187,9 +187,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7d2fb26475e72cce95ca6be384d569b7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_u3606_a.html#a7d2fb26475e72cce95ca6be384d569b7">~mdtDeviceU3606A</a> ()</td></tr>
 <tr class="memdesc:a7d2fb26475e72cce95ca6be384d569b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a7d2fb26475e72cce95ca6be384d569b7">More...</a><br/></td></tr>
 <tr class="separator:a7d2fb26475e72cce95ca6be384d569b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8470e8f5f56ab635d2b2718a1bb54034"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_u3606_a.html#a8470e8f5f56ab635d2b2718a1bb54034">connectToDevice</a> (const QString &amp;serialNumber=QString())</td></tr>
-<tr class="memdesc:a8470e8f5f56ab635d2b2718a1bb54034"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connect to device.  <a href="#a8470e8f5f56ab635d2b2718a1bb54034">More...</a><br/></td></tr>
-<tr class="separator:a8470e8f5f56ab635d2b2718a1bb54034"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a293ce0f0ccdbf8e7d77f644b7fc176f3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_u3606_a.html#a293ce0f0ccdbf8e7d77f644b7fc176f3">connectToDevice</a> (const QString &amp;serialNumber, const QString &amp;<a class="el" href="classmdt_device.html#a3aa589ecae0fa3deed61431d07db9276">alias</a>=QString())</td></tr>
+<tr class="memdesc:a293ce0f0ccdbf8e7d77f644b7fc176f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connect to device.  <a href="#a293ce0f0ccdbf8e7d77f644b7fc176f3">More...</a><br/></td></tr>
+<tr class="separator:a293ce0f0ccdbf8e7d77f644b7fc176f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af71cd0206a4f91fc1b250780ceb72919"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_u3606_a.html#af71cd0206a4f91fc1b250780ceb72919">setupVoltageDcMeasure</a> (<a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37">Range_t</a> range, <a class="el" href="classmdt_device_u3606_a.html#a136af13281bde380abeabe358c399dc5">Resolution_t</a> resolution)</td></tr>
 <tr class="memdesc:af71cd0206a4f91fc1b250780ceb72919"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup DC voltage measure.  <a href="#af71cd0206a4f91fc1b250780ceb72919">More...</a><br/></td></tr>
 <tr class="separator:af71cd0206a4f91fc1b250780ceb72919"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -224,9 +224,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae173b9ad3d528005e124624ca9bb7b64 inherit pub_methods_classmdt_device_scpi"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_scpi.html#ae173b9ad3d528005e124624ca9bb7b64">~mdtDeviceScpi</a> ()</td></tr>
 <tr class="memdesc:ae173b9ad3d528005e124624ca9bb7b64 inherit pub_methods_classmdt_device_scpi"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#ae173b9ad3d528005e124624ca9bb7b64">More...</a><br/></td></tr>
 <tr class="separator:ae173b9ad3d528005e124624ca9bb7b64 inherit pub_methods_classmdt_device_scpi"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94c8fde98a0fa2f933b3c069aa1e4fa0 inherit pub_methods_classmdt_device_scpi"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_scpi.html#a94c8fde98a0fa2f933b3c069aa1e4fa0">connectToDevice</a> (uint16_t idVendor, uint16_t idProduct, const QString &amp;serialNumber)</td></tr>
-<tr class="memdesc:a94c8fde98a0fa2f933b3c069aa1e4fa0 inherit pub_methods_classmdt_device_scpi"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connect to a USBTMC device.  <a href="#a94c8fde98a0fa2f933b3c069aa1e4fa0">More...</a><br/></td></tr>
-<tr class="separator:a94c8fde98a0fa2f933b3c069aa1e4fa0 inherit pub_methods_classmdt_device_scpi"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d3eca756dea1165f1f5da3e325d1d49 inherit pub_methods_classmdt_device_scpi"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_scpi.html#a4d3eca756dea1165f1f5da3e325d1d49">connectToDevice</a> ()</td></tr>
+<tr class="memdesc:a4d3eca756dea1165f1f5da3e325d1d49 inherit pub_methods_classmdt_device_scpi"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connect to a USBTMC device.  <a href="#a4d3eca756dea1165f1f5da3e325d1d49">More...</a><br/></td></tr>
+<tr class="separator:a4d3eca756dea1165f1f5da3e325d1d49 inherit pub_methods_classmdt_device_scpi"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a789b3eabacd10da13ddb4a44ea9b0c35 inherit pub_methods_classmdt_device_scpi"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_scpi.html#a789b3eabacd10da13ddb4a44ea9b0c35">connectToDevice</a> (uint16_t idVendor, uint16_t idProduct, const QString &amp;serialNumber, const QString &amp;<a class="el" href="classmdt_device.html#a3aa589ecae0fa3deed61431d07db9276">alias</a>=QString())</td></tr>
+<tr class="memdesc:a789b3eabacd10da13ddb4a44ea9b0c35 inherit pub_methods_classmdt_device_scpi"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connect to a USBTMC device.  <a href="#a789b3eabacd10da13ddb4a44ea9b0c35">More...</a><br/></td></tr>
+<tr class="separator:a789b3eabacd10da13ddb4a44ea9b0c35 inherit pub_methods_classmdt_device_scpi"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a59759a6138c3ecbcb5cb98a042f8bcb5 inherit pub_methods_classmdt_device_scpi"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_scpi.html#a59759a6138c3ecbcb5cb98a042f8bcb5">sendCommand</a> (const QByteArray &amp;command, int timeout=30000)</td></tr>
 <tr class="memdesc:a59759a6138c3ecbcb5cb98a042f8bcb5 inherit pub_methods_classmdt_device_scpi"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a command to device.  <a href="#a59759a6138c3ecbcb5cb98a042f8bcb5">More...</a><br/></td></tr>
 <tr class="separator:a59759a6138c3ecbcb5cb98a042f8bcb5 inherit pub_methods_classmdt_device_scpi"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -246,21 +249,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ac2a9cfd6042f3f9d8da4e84f044d3f4a inherit pub_methods_classmdt_device"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#ac2a9cfd6042f3f9d8da4e84f044d3f4a">~mdtDevice</a> ()</td></tr>
 <tr class="memdesc:ac2a9cfd6042f3f9d8da4e84f044d3f4a inherit pub_methods_classmdt_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#ac2a9cfd6042f3f9d8da4e84f044d3f4a">More...</a><br/></td></tr>
 <tr class="separator:ac2a9cfd6042f3f9d8da4e84f044d3f4a inherit pub_methods_classmdt_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a80186f1aa6fbdc13f1652de978c35518 inherit pub_methods_classmdt_device"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a80186f1aa6fbdc13f1652de978c35518">setName</a> (const QString &amp;<a class="el" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0">name</a>)</td></tr>
-<tr class="memdesc:a80186f1aa6fbdc13f1652de978c35518 inherit pub_methods_classmdt_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the device name.  <a href="#a80186f1aa6fbdc13f1652de978c35518">More...</a><br/></td></tr>
-<tr class="separator:a80186f1aa6fbdc13f1652de978c35518 inherit pub_methods_classmdt_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ad893c6885dbaef5a6cb980bfe627e0 inherit pub_methods_classmdt_device"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0">name</a> () const </td></tr>
-<tr class="memdesc:a7ad893c6885dbaef5a6cb980bfe627e0 inherit pub_methods_classmdt_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get device name.  <a href="#a7ad893c6885dbaef5a6cb980bfe627e0">More...</a><br/></td></tr>
-<tr class="separator:a7ad893c6885dbaef5a6cb980bfe627e0 inherit pub_methods_classmdt_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af6fddf7fba1f54e481a4f3445db64d98 inherit pub_methods_classmdt_device"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#af6fddf7fba1f54e481a4f3445db64d98">setIdentification</a> (const QVariant &amp;id)</td></tr>
-<tr class="memdesc:af6fddf7fba1f54e481a4f3445db64d98 inherit pub_methods_classmdt_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set device identification.  <a href="#af6fddf7fba1f54e481a4f3445db64d98">More...</a><br/></td></tr>
-<tr class="separator:af6fddf7fba1f54e481a4f3445db64d98 inherit pub_methods_classmdt_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54845e1af6f6f98de7de79c3df9ac7b5 inherit pub_methods_classmdt_device"><td class="memItemLeft" align="right" valign="top">QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a54845e1af6f6f98de7de79c3df9ac7b5">identification</a> () const </td></tr>
-<tr class="memdesc:a54845e1af6f6f98de7de79c3df9ac7b5 inherit pub_methods_classmdt_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get device identification.  <a href="#a54845e1af6f6f98de7de79c3df9ac7b5">More...</a><br/></td></tr>
-<tr class="separator:a54845e1af6f6f98de7de79c3df9ac7b5 inherit pub_methods_classmdt_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac57bc624391a4035b20bfd29dbbea7da inherit pub_methods_classmdt_device"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#ac57bc624391a4035b20bfd29dbbea7da">connectToDevice</a> (const <a class="el" href="classmdt_device_address.html">mdtDeviceAddress</a> &amp;address)</td></tr>
-<tr class="memdesc:ac57bc624391a4035b20bfd29dbbea7da inherit pub_methods_classmdt_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Search and connect to physical device.  <a href="#ac57bc624391a4035b20bfd29dbbea7da">More...</a><br/></td></tr>
-<tr class="separator:ac57bc624391a4035b20bfd29dbbea7da inherit pub_methods_classmdt_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fdad460ae0eac5710b13e400156cb1d inherit pub_methods_classmdt_device"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a3fdad460ae0eac5710b13e400156cb1d">setDeviceAddress</a> (const <a class="el" href="classmdt_device_address.html">mdtDeviceAddress</a> &amp;address, const QString &amp;<a class="el" href="classmdt_device.html#a3aa589ecae0fa3deed61431d07db9276">alias</a>=QString())</td></tr>
+<tr class="memdesc:a3fdad460ae0eac5710b13e400156cb1d inherit pub_methods_classmdt_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set device address.  <a href="#a3fdad460ae0eac5710b13e400156cb1d">More...</a><br/></td></tr>
+<tr class="separator:a3fdad460ae0eac5710b13e400156cb1d inherit pub_methods_classmdt_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af04ef3dc643127325597af46494ffb6b inherit pub_methods_classmdt_device"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_device_address.html">mdtDeviceAddress</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#af04ef3dc643127325597af46494ffb6b">deviceAddress</a> () const </td></tr>
+<tr class="memdesc:af04ef3dc643127325597af46494ffb6b inherit pub_methods_classmdt_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get device address.  <a href="#af04ef3dc643127325597af46494ffb6b">More...</a><br/></td></tr>
+<tr class="separator:af04ef3dc643127325597af46494ffb6b inherit pub_methods_classmdt_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3aa589ecae0fa3deed61431d07db9276 inherit pub_methods_classmdt_device"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a3aa589ecae0fa3deed61431d07db9276">alias</a> () const </td></tr>
+<tr class="memdesc:a3aa589ecae0fa3deed61431d07db9276 inherit pub_methods_classmdt_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get device alias.  <a href="#a3aa589ecae0fa3deed61431d07db9276">More...</a><br/></td></tr>
+<tr class="separator:a3aa589ecae0fa3deed61431d07db9276 inherit pub_methods_classmdt_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2b694a37d9464d27214bdeceec220998 inherit pub_methods_classmdt_device"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a2b694a37d9464d27214bdeceec220998">disconnectFromDevice</a> ()</td></tr>
 <tr class="memdesc:a2b694a37d9464d27214bdeceec220998 inherit pub_methods_classmdt_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disconnect from device.  <a href="#a2b694a37d9464d27214bdeceec220998">More...</a><br/></td></tr>
 <tr class="separator:a2b694a37d9464d27214bdeceec220998 inherit pub_methods_classmdt_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -303,9 +300,9 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:a32498c40ac609ac157cb332bc4e7ac51 inherit pro_methods_classmdt_device_scpi"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_scpi.html#a32498c40ac609ac157cb332bc4e7ac51">disconnectFromDeviceEvent</a> ()</td></tr>
 <tr class="memdesc:a32498c40ac609ac157cb332bc4e7ac51 inherit pro_methods_classmdt_device_scpi"><td class="mdescLeft">&#160;</td><td class="mdescRight">Close port.  <a href="#a32498c40ac609ac157cb332bc4e7ac51">More...</a><br/></td></tr>
 <tr class="separator:a32498c40ac609ac157cb332bc4e7ac51 inherit pro_methods_classmdt_device_scpi"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a750ebbf843bad40b442a9d965c6f0e44 inherit pro_methods_classmdt_device_scpi"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_scpi.html#a750ebbf843bad40b442a9d965c6f0e44">nameChangedEvent</a> (const QString &amp;newName)</td></tr>
-<tr class="memdesc:a750ebbf843bad40b442a9d965c6f0e44 inherit pro_methods_classmdt_device_scpi"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update name in port.  <a href="#a750ebbf843bad40b442a9d965c6f0e44">More...</a><br/></td></tr>
-<tr class="separator:a750ebbf843bad40b442a9d965c6f0e44 inherit pro_methods_classmdt_device_scpi"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a311158761051b12489c15e068a9d1db3 inherit pro_methods_classmdt_device_scpi"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_scpi.html#a311158761051b12489c15e068a9d1db3">deviceAddressChangedEvent</a> (const <a class="el" href="classmdt_device_address.html">mdtDeviceAddress</a> &amp;address)</td></tr>
+<tr class="memdesc:a311158761051b12489c15e068a9d1db3 inherit pro_methods_classmdt_device_scpi"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update name in port.  <a href="#a311158761051b12489c15e068a9d1db3">More...</a><br/></td></tr>
+<tr class="separator:a311158761051b12489c15e068a9d1db3 inherit pro_methods_classmdt_device_scpi"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classmdt_device"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classmdt_device')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classmdt_device.html">mdtDevice</a></td></tr>
 <tr class="memitem:add9f8ec2f944b5c5f92a97424a194177 inherit pro_methods_classmdt_device"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#add9f8ec2f944b5c5f92a97424a194177">deviceIdString</a> () const </td></tr>
 <tr class="memdesc:add9f8ec2f944b5c5f92a97424a194177 inherit pro_methods_classmdt_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get device identification string.  <a href="#add9f8ec2f944b5c5f92a97424a194177">More...</a><br/></td></tr>
@@ -568,7 +565,7 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a8470e8f5f56ab635d2b2718a1bb54034"></a>
+<a class="anchor" id="a293ce0f0ccdbf8e7d77f644b7fc176f3"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -579,8 +576,18 @@ Additional Inherited Members</h2></td></tr>
           <td class="memname">bool mdtDeviceU3606A::connectToDevice </td>
           <td>(</td>
           <td class="paramtype">const QString &amp;&#160;</td>
-          <td class="paramname"><em>serialNumber</em> = <code>QString()</code></td><td>)</td>
+          <td class="paramname"><em>serialNumber</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>alias</em> = <code>QString()</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -594,13 +601,14 @@ Additional Inherited Members</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">serialNumber</td><td>Device serial number. Will be ignored if empty </td></tr>
+    <tr><td class="paramname">alias</td><td>Alias to give. Will be ignored if empty </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_device_u3606_a_8h_source.html#l00104">104</a> of file <a class="el" href="mdt_device_u3606_a_8h_source.html">mdtDeviceU3606A.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_u3606_a_8h_source.html#l00105">105</a> of file <a class="el" href="mdt_device_u3606_a_8h_source.html">mdtDeviceU3606A.h</a>.</p>
 
-<p>References <a class="el" href="mdt_device_scpi_8cpp_source.html#l00047">mdtDeviceScpi::connectToDevice()</a>.</p>
+<p>References <a class="el" href="mdt_device_8h_source.html#l00135">mdtDevice::alias()</a>, and <a class="el" href="mdt_device_scpi_8cpp_source.html#l00047">mdtDeviceScpi::connectToDevice()</a>.</p>
 
 </div>
 </div>
@@ -623,7 +631,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00193">193</a> of file <a class="el" href="mdt_device_u3606_a_8cpp_source.html">mdtDeviceU3606A.cpp</a>.</p>
 
-<p>References <a class="el" href="structmdt_scpi_function_farameter.html#a45845a283cab9adc77c0b9e9b00179bba8819a837186918b90b59cc316f36b1e1">mdtScpiFunctionFarameter::Ac</a>, <a class="el" href="structmdt_scpi_function_farameter.html#a6c66a5f0deed788e511aa28e3683cf7ea222a267cc5778206b253be35ee3ddab5">mdtScpiFunctionFarameter::Current</a>, <a class="el" href="classmdt_device_u3606_a.html#a75dc9c6f4c68da0106a6be067fd658b7aec7c8df76544d960f38d47b1e6de863d">CurrentAc</a>, <a class="el" href="classmdt_device_u3606_a.html#a75dc9c6f4c68da0106a6be067fd658b7a093a6e87d5fb3cee87ca5e5b1f8f7c49">CurrentDc</a>, <a class="el" href="structmdt_scpi_function_farameter.html#a45845a283cab9adc77c0b9e9b00179bba32abe17880f303bea4930ed270e0181e">mdtScpiFunctionFarameter::Dc</a>, <a class="el" href="mdt_codec_scpi_8cpp_source.html#l00237">mdtCodecScpi::decodeFunctionParameters()</a>, <a class="el" href="structmdt_scpi_function_farameter.html#a6c66a5f0deed788e511aa28e3683cf7ea09fa2c6ad3391741f7e0c728c00d04a7">mdtScpiFunctionFarameter::Fresistance</a>, <a class="el" href="mdt_codec_scpi_8cpp_source.html#l00028">mdtScpiFunctionFarameter::fundamentalMeasurementCommand()</a>, <a class="el" href="classmdt_device_u3606_a.html#a75dc9c6f4c68da0106a6be067fd658b7accc0f87065476840b94fa980aae91d71">Lresistance</a>, <a class="el" href="classmdt_device_u3606_a.html#a75dc9c6f4c68da0106a6be067fd658b7a9db444f7a3b8ba8f817647de53b7a6fe">Resistance</a>, <a class="el" href="structmdt_scpi_function_farameter.html#a6c66a5f0deed788e511aa28e3683cf7ea9db444f7a3b8ba8f817647de53b7a6fe">mdtScpiFunctionFarameter::Resistance</a>, <a class="el" href="mdt_device_scpi_8cpp_source.html#l00065">mdtDeviceScpi::sendQuery()</a>, <a class="el" href="mdt_codec_scpi_8cpp_source.html#l00058">mdtScpiFunctionFarameter::simpleMeasurementCommand()</a>, <a class="el" href="classmdt_device_u3606_a.html#a75dc9c6f4c68da0106a6be067fd658b7a88183b946cc5f0e8c96b2e66e1c74a7e">Unknown</a>, <a class="el" href="structmdt_scpi_function_farameter.html#a6c66a5f0deed788e511aa28e3683cf7ea88183b946cc5f0e8c96b2e66e1c74a7e">mdtScpiFunctionFarameter::Unknown</a>, <a class="el" href="structmdt_scpi_function_farameter.html#a6c66a5f0deed788e511aa28e3683cf7ea4a92fbe41f6463598c39850b8335096c">mdtScpiFunctionFarameter::Voltage</a>, <a class="el" href="classmdt_device_u3606_a.html#a75dc9c6f4c68da0106a6be067fd658b7a3247ecc0971373fc34a606a396b06491">VoltageAc</a>, and <a class="el" href="classmdt_device_u3606_a.html#a75dc9c6f4c68da0106a6be067fd658b7ac5cc67a90482cd63ef1b60b1b2c752e0">VoltageDc</a>.</p>
+<p>References <a class="el" href="structmdt_scpi_function_farameter.html#a45845a283cab9adc77c0b9e9b00179bba8819a837186918b90b59cc316f36b1e1">mdtScpiFunctionFarameter::Ac</a>, <a class="el" href="structmdt_scpi_function_farameter.html#a6c66a5f0deed788e511aa28e3683cf7ea222a267cc5778206b253be35ee3ddab5">mdtScpiFunctionFarameter::Current</a>, <a class="el" href="classmdt_device_u3606_a.html#a75dc9c6f4c68da0106a6be067fd658b7aec7c8df76544d960f38d47b1e6de863d">CurrentAc</a>, <a class="el" href="classmdt_device_u3606_a.html#a75dc9c6f4c68da0106a6be067fd658b7a093a6e87d5fb3cee87ca5e5b1f8f7c49">CurrentDc</a>, <a class="el" href="structmdt_scpi_function_farameter.html#a45845a283cab9adc77c0b9e9b00179bba32abe17880f303bea4930ed270e0181e">mdtScpiFunctionFarameter::Dc</a>, <a class="el" href="mdt_codec_scpi_8cpp_source.html#l00237">mdtCodecScpi::decodeFunctionParameters()</a>, <a class="el" href="structmdt_scpi_function_farameter.html#a6c66a5f0deed788e511aa28e3683cf7ea09fa2c6ad3391741f7e0c728c00d04a7">mdtScpiFunctionFarameter::Fresistance</a>, <a class="el" href="mdt_codec_scpi_8cpp_source.html#l00028">mdtScpiFunctionFarameter::fundamentalMeasurementCommand()</a>, <a class="el" href="classmdt_device_u3606_a.html#a75dc9c6f4c68da0106a6be067fd658b7accc0f87065476840b94fa980aae91d71">Lresistance</a>, <a class="el" href="classmdt_device_u3606_a.html#a75dc9c6f4c68da0106a6be067fd658b7a9db444f7a3b8ba8f817647de53b7a6fe">Resistance</a>, <a class="el" href="structmdt_scpi_function_farameter.html#a6c66a5f0deed788e511aa28e3683cf7ea9db444f7a3b8ba8f817647de53b7a6fe">mdtScpiFunctionFarameter::Resistance</a>, <a class="el" href="mdt_device_scpi_8cpp_source.html#l00096">mdtDeviceScpi::sendQuery()</a>, <a class="el" href="mdt_codec_scpi_8cpp_source.html#l00058">mdtScpiFunctionFarameter::simpleMeasurementCommand()</a>, <a class="el" href="classmdt_device_u3606_a.html#a75dc9c6f4c68da0106a6be067fd658b7a88183b946cc5f0e8c96b2e66e1c74a7e">Unknown</a>, <a class="el" href="structmdt_scpi_function_farameter.html#a6c66a5f0deed788e511aa28e3683cf7ea88183b946cc5f0e8c96b2e66e1c74a7e">mdtScpiFunctionFarameter::Unknown</a>, <a class="el" href="structmdt_scpi_function_farameter.html#a6c66a5f0deed788e511aa28e3683cf7ea4a92fbe41f6463598c39850b8335096c">mdtScpiFunctionFarameter::Voltage</a>, <a class="el" href="classmdt_device_u3606_a.html#a75dc9c6f4c68da0106a6be067fd658b7a3247ecc0971373fc34a606a396b06491">VoltageAc</a>, and <a class="el" href="classmdt_device_u3606_a.html#a75dc9c6f4c68da0106a6be067fd658b7ac5cc67a90482cd63ef1b60b1b2c752e0">VoltageDc</a>.</p>
 
 </div>
 </div>
@@ -652,7 +660,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00236">236</a> of file <a class="el" href="mdt_device_u3606_a_8cpp_source.html">mdtDeviceU3606A.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_codec_scpi_8cpp_source.html#l00162">mdtCodecScpi::decodeValueDouble()</a>, <a class="el" href="mdt_value_8h_source.html#l00068">mdtValueDouble::isNull()</a>, <a class="el" href="mdt_codec_scpi_8h_source.html#l00168">mdtCodecScpi::lastError()</a>, <a class="el" href="mdt_device_8h_source.html#l00271">mdtDevice::pvLastError</a>, and <a class="el" href="mdt_device_scpi_8cpp_source.html#l00065">mdtDeviceScpi::sendQuery()</a>.</p>
+<p>References <a class="el" href="mdt_codec_scpi_8cpp_source.html#l00162">mdtCodecScpi::decodeValueDouble()</a>, <a class="el" href="mdt_value_8h_source.html#l00068">mdtValueDouble::isNull()</a>, <a class="el" href="mdt_codec_scpi_8h_source.html#l00168">mdtCodecScpi::lastError()</a>, <a class="el" href="mdt_device_8h_source.html#l00255">mdtDevice::pvLastError</a>, and <a class="el" href="mdt_device_scpi_8cpp_source.html#l00096">mdtDeviceScpi::sendQuery()</a>.</p>
 
 </div>
 </div>
@@ -674,7 +682,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00255">255</a> of file <a class="el" href="mdt_device_u3606_a_8cpp_source.html">mdtDeviceU3606A.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_scpi_8cpp_source.html#l00056">mdtDeviceScpi::sendCommand()</a>.</p>
+<p>References <a class="el" href="mdt_device_scpi_8cpp_source.html#l00087">mdtDeviceScpi::sendCommand()</a>.</p>
 
 </div>
 </div>
@@ -698,7 +706,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00293">293</a> of file <a class="el" href="mdt_device_u3606_a_8cpp_source.html">mdtDeviceU3606A.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_scpi_8cpp_source.html#l00056">mdtDeviceScpi::sendCommand()</a>.</p>
+<p>References <a class="el" href="mdt_device_scpi_8cpp_source.html#l00087">mdtDeviceScpi::sendCommand()</a>.</p>
 
 </div>
 </div>
@@ -722,7 +730,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00268">268</a> of file <a class="el" href="mdt_device_u3606_a_8cpp_source.html">mdtDeviceU3606A.cpp</a>.</p>
 
-<p>References <a class="el" href="classmdt_device_u3606_a.html#a8fc404c35beec2cdb8c26f8709394a50a374ff60a3cebd99cbcfa167d596fa9bf">S1_30V1A</a>, <a class="el" href="classmdt_device_u3606_a.html#a8fc404c35beec2cdb8c26f8709394a50adf004d6cd1d0d95c100c55e252d47d0d">S2_8V3A</a>, and <a class="el" href="mdt_device_scpi_8cpp_source.html#l00056">mdtDeviceScpi::sendCommand()</a>.</p>
+<p>References <a class="el" href="classmdt_device_u3606_a.html#a8fc404c35beec2cdb8c26f8709394a50a374ff60a3cebd99cbcfa167d596fa9bf">S1_30V1A</a>, <a class="el" href="classmdt_device_u3606_a.html#a8fc404c35beec2cdb8c26f8709394a50adf004d6cd1d0d95c100c55e252d47d0d">S2_8V3A</a>, and <a class="el" href="mdt_device_scpi_8cpp_source.html#l00087">mdtDeviceScpi::sendCommand()</a>.</p>
 
 </div>
 </div>
@@ -745,7 +753,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00284">284</a> of file <a class="el" href="mdt_device_u3606_a_8cpp_source.html">mdtDeviceU3606A.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_scpi_8cpp_source.html#l00056">mdtDeviceScpi::sendCommand()</a>.</p>
+<p>References <a class="el" href="mdt_device_scpi_8cpp_source.html#l00087">mdtDeviceScpi::sendCommand()</a>.</p>
 
 </div>
 </div>
@@ -784,7 +792,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00150">150</a> of file <a class="el" href="mdt_device_u3606_a_8cpp_source.html">mdtDeviceU3606A.cpp</a>.</p>
 
-<p>References <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a06b9281e396db002010bde1de57262eb">Auto</a>, <a class="el" href="mdt_error_8cpp_source.html#l00116">mdtError::commit()</a>, <a class="el" href="mdt_device_8h_source.html#l00264">mdtDevice::deviceIdString()</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a6a061313d22e51e0f25b7cd4dc065233">Max</a>, <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a78d811e98514cd165dda532286610fd2">Min</a>, <a class="el" href="mdt_device_8h_source.html#l00271">mdtDevice::pvLastError</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37af599b92a6fcb2bdbbbe89c3b6ce52305">Range1</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a01ba44014395b5720ed62cf62f1f324c">Range100m</a>, <a class="el" href="mdt_device_scpi_8cpp_source.html#l00056">mdtDeviceScpi::sendCommand()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00060">mdtError::setError()</a>, and <a class="el" href="mdt_error_8h_source.html#l00096">mdtError::Warning</a>.</p>
+<p>References <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a06b9281e396db002010bde1de57262eb">Auto</a>, <a class="el" href="mdt_error_8cpp_source.html#l00116">mdtError::commit()</a>, <a class="el" href="mdt_device_8h_source.html#l00248">mdtDevice::deviceIdString()</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a6a061313d22e51e0f25b7cd4dc065233">Max</a>, <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a78d811e98514cd165dda532286610fd2">Min</a>, <a class="el" href="mdt_device_8h_source.html#l00255">mdtDevice::pvLastError</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37af599b92a6fcb2bdbbbe89c3b6ce52305">Range1</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a01ba44014395b5720ed62cf62f1f324c">Range100m</a>, <a class="el" href="mdt_device_scpi_8cpp_source.html#l00087">mdtDeviceScpi::sendCommand()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00060">mdtError::setError()</a>, and <a class="el" href="mdt_error_8h_source.html#l00096">mdtError::Warning</a>.</p>
 
 </div>
 </div>
@@ -823,7 +831,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00092">92</a> of file <a class="el" href="mdt_device_u3606_a_8cpp_source.html">mdtDeviceU3606A.cpp</a>.</p>
 
-<p>References <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a06b9281e396db002010bde1de57262eb">Auto</a>, <a class="el" href="mdt_error_8cpp_source.html#l00116">mdtError::commit()</a>, <a class="el" href="mdt_device_8h_source.html#l00264">mdtDevice::deviceIdString()</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a6a061313d22e51e0f25b7cd4dc065233">Max</a>, <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a78d811e98514cd165dda532286610fd2">Min</a>, <a class="el" href="mdt_device_8h_source.html#l00271">mdtDevice::pvLastError</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37aea14ad97123aa2e2594be0bbcf549eb6">Range100</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37ad82886db27f5d2c9f4bdbdf883479540">Range100k</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37aabcf25f5389de6dd04344bd5bf424912">Range100M</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a37fd153a8950f6ea0d3aa4c8d595890c">Range10k</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a701a0436a0673cc1a786b6315844ef65">Range10M</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a45c30b75a00b588533efa370d8ffd524">Range1k</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a083035b09a8e8ac81a4086ba4ad6c9c5">Range1M</a>, <a class="el" href="mdt_device_scpi_8cpp_source.html#l00056">mdtDeviceScpi::sendCommand()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00060">mdtError::setError()</a>, and <a class="el" href="mdt_error_8h_source.html#l00096">mdtError::Warning</a>.</p>
+<p>References <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a06b9281e396db002010bde1de57262eb">Auto</a>, <a class="el" href="mdt_error_8cpp_source.html#l00116">mdtError::commit()</a>, <a class="el" href="mdt_device_8h_source.html#l00248">mdtDevice::deviceIdString()</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a6a061313d22e51e0f25b7cd4dc065233">Max</a>, <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a78d811e98514cd165dda532286610fd2">Min</a>, <a class="el" href="mdt_device_8h_source.html#l00255">mdtDevice::pvLastError</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37aea14ad97123aa2e2594be0bbcf549eb6">Range100</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37ad82886db27f5d2c9f4bdbdf883479540">Range100k</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37aabcf25f5389de6dd04344bd5bf424912">Range100M</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a37fd153a8950f6ea0d3aa4c8d595890c">Range10k</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a701a0436a0673cc1a786b6315844ef65">Range10M</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a45c30b75a00b588533efa370d8ffd524">Range1k</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a083035b09a8e8ac81a4086ba4ad6c9c5">Range1M</a>, <a class="el" href="mdt_device_scpi_8cpp_source.html#l00087">mdtDeviceScpi::sendCommand()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00060">mdtError::setError()</a>, and <a class="el" href="mdt_error_8h_source.html#l00096">mdtError::Warning</a>.</p>
 
 </div>
 </div>
@@ -862,7 +870,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00037">37</a> of file <a class="el" href="mdt_device_u3606_a_8cpp_source.html">mdtDeviceU3606A.cpp</a>.</p>
 
-<p>References <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a06b9281e396db002010bde1de57262eb">Auto</a>, <a class="el" href="mdt_error_8cpp_source.html#l00116">mdtError::commit()</a>, <a class="el" href="mdt_device_8h_source.html#l00264">mdtDevice::deviceIdString()</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a6a061313d22e51e0f25b7cd4dc065233">Max</a>, <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a78d811e98514cd165dda532286610fd2">Min</a>, <a class="el" href="mdt_device_8h_source.html#l00271">mdtDevice::pvLastError</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37af599b92a6fcb2bdbbbe89c3b6ce52305">Range1</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37af4c458ef5f36f0bcf878d0aa8d88dd00">Range10</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37aea14ad97123aa2e2594be0bbcf549eb6">Range100</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a01ba44014395b5720ed62cf62f1f324c">Range100m</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a45c30b75a00b588533efa370d8ffd524">Range1k</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a43a2e236f6d3199a19079f3c80a29c2f">Range20m</a>, <a class="el" href="mdt_device_scpi_8cpp_source.html#l00056">mdtDeviceScpi::sendCommand()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00060">mdtError::setError()</a>, and <a class="el" href="mdt_error_8h_source.html#l00096">mdtError::Warning</a>.</p>
+<p>References <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a06b9281e396db002010bde1de57262eb">Auto</a>, <a class="el" href="mdt_error_8cpp_source.html#l00116">mdtError::commit()</a>, <a class="el" href="mdt_device_8h_source.html#l00248">mdtDevice::deviceIdString()</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a6a061313d22e51e0f25b7cd4dc065233">Max</a>, <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a78d811e98514cd165dda532286610fd2">Min</a>, <a class="el" href="mdt_device_8h_source.html#l00255">mdtDevice::pvLastError</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37af599b92a6fcb2bdbbbe89c3b6ce52305">Range1</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37af4c458ef5f36f0bcf878d0aa8d88dd00">Range10</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37aea14ad97123aa2e2594be0bbcf549eb6">Range100</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a01ba44014395b5720ed62cf62f1f324c">Range100m</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a45c30b75a00b588533efa370d8ffd524">Range1k</a>, <a class="el" href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a43a2e236f6d3199a19079f3c80a29c2f">Range20m</a>, <a class="el" href="mdt_device_scpi_8cpp_source.html#l00087">mdtDeviceScpi::sendCommand()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00060">mdtError::setError()</a>, and <a class="el" href="mdt_error_8h_source.html#l00096">mdtError::Warning</a>.</p>
 
 </div>
 </div>
@@ -873,7 +881,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Feb 19 2015 17:07:54 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Feb 27 2015 17:17:45 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

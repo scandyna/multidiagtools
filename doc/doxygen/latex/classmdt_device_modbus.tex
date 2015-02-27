@@ -41,16 +41,10 @@ virtual \hyperlink{classmdt_device_modbus_a4696f2e3855917a3e3c02a822f9664e2}{$\s
 \begin{DoxyCompactList}\small\item\em Get internal port manager instance. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_modbus_tcp_port_manager}{mdt\-Modbus\-Tcp\-Port\-Manager} $\ast$ \hyperlink{classmdt_device_modbus_ac547788aa95d46c00ddb1342eb46ef93}{modbus\-Tcp\-Port\-Manager} ()
 \begin{DoxyCompactList}\small\item\em Get internal port manager instance. \end{DoxyCompactList}\item 
-virtual \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdt\-Abstract\-Port\-::error\-\_\-t} \hyperlink{classmdt_device_modbus_a3ca2a84163fed1380cbc8859a6b70db0}{connect\-To\-Device} (const \hyperlink{classmdt_port_info}{mdt\-Port\-Info} \&port\-Info)
-\begin{DoxyCompactList}\small\item\em Set hardware node id. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdt\-Abstract\-Port\-::error\-\_\-t} \hyperlink{classmdt_device_modbus_a093c6407ee69c4c7696a0c71d0acd88d}{connect\-To\-Device} (const \hyperlink{classmdt_device_info}{mdt\-Device\-Info} \&dev\-Info)
-\begin{DoxyCompactList}\small\item\em Search and connect to physical device. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdt\-Abstract\-Port\-::error\-\_\-t} \hyperlink{classmdt_device_modbus_a323b16687f448a4e45eb0b313635b77f}{connect\-To\-Device} (const Q\-List$<$ \hyperlink{classmdt_port_info}{mdt\-Port\-Info} $\ast$ $>$ \&scan\-Result, int hardware\-Node\-Id, int bits\-Count, int start\-From=0)
-\begin{DoxyCompactList}\small\item\em Search and connect to physical device. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdt\-Abstract\-Port\-::error\-\_\-t} \hyperlink{classmdt_device_modbus_a08100215b37c0922ed177d1f99d07e97}{connect\-To\-Device} (const Q\-List$<$ int $>$ \&existing\-Hw\-Node\-Id\-List)
-\begin{DoxyCompactList}\small\item\em Search and connect to physical device. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdt\-Abstract\-Port\-::error\-\_\-t} \hyperlink{classmdt_device_modbus_abfcab17fbf05aab7843ae689316dd01f}{connect\-To\-Device} ()
-\begin{DoxyCompactList}\small\item\em Search and connect to physical device. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classmdt_device_modbus_ae8634515742f3ed42dc52dfaa8d65313}{connect\-To\-Device} ()
+\begin{DoxyCompactList}\small\item\em Connect to physical device. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classmdt_device_modbus_ad6996c61045f2b0247cf19359e3d269d}{connect\-To\-Device} (const \hyperlink{classmdt_modbus_hw_node_id}{mdt\-Modbus\-Hw\-Node\-Id} \&hw\-Node\-Id, const Q\-String \&\hyperlink{classmdt_device_a3aa589ecae0fa3deed61431d07db9276}{alias}=Q\-String(), int scan\-Timeout=500, int port=502)
+\begin{DoxyCompactList}\small\item\em Connect to physical device with given hardware node I\-D. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_device_modbus_a89d41c6b33a3dd2a92a0956d8e6b3b14}{get\-Register\-Values} (int address, int n)
 \begin{DoxyCompactList}\small\item\em Helper method for register service. \end{DoxyCompactList}\item 
 const Q\-List$<$ int $>$ \& \hyperlink{classmdt_device_modbus_a83cb2a28111653fbcbbe748f7a1a2e3d}{register\-Values} () const 
@@ -105,7 +99,7 @@ References\-:
 \item \href{http://www.Modbus-IDA.org}{\tt http\-://www.\-Modbus-\/\-I\-D\-A.\-org} 
 \end{DoxyItemize}
 
-Definition at line 41 of file mdt\-Device\-Modbus.\-h.
+Definition at line 39 of file mdt\-Device\-Modbus.\-h.
 
 
 
@@ -118,10 +112,10 @@ Definition at line 41 of file mdt\-Device\-Modbus.\-h.
 \end{DoxyParamCaption}
 )}}\label{classmdt_device_modbus_ac69cfbe26681342ba05672ab63de2a1f}
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000011}{Todo}]Provisoire ! \end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000012}{Todo}]Provisoire ! include \char`\"{}mdt\-Algorithms.\-h\char`\"{} \end{DoxyRefDesc}
 
 
-Definition at line 34 of file mdt\-Device\-Modbus.\-cpp.
+Definition at line 36 of file mdt\-Device\-Modbus.\-cpp.
 
 
 
@@ -136,7 +130,7 @@ References mdt\-Port\-Manager\-::config(), mdt\-Port\-Manager\-::notify\-Current
 )\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_device_modbus_a4696f2e3855917a3e3c02a822f9664e2}
 
 
-Definition at line 56 of file mdt\-Device\-Modbus.\-cpp.
+Definition at line 54 of file mdt\-Device\-Modbus.\-cpp.
 
 
 
@@ -145,195 +139,80 @@ References pv\-Codec, pv\-Tcp\-Port\-Manager, and mdt\-Port\-Manager\-::stop().
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_device_modbus_a3ca2a84163fed1380cbc8859a6b70db0}{\index{mdt\-Device\-Modbus@{mdt\-Device\-Modbus}!connect\-To\-Device@{connect\-To\-Device}}
+\hypertarget{classmdt_device_modbus_ae8634515742f3ed42dc52dfaa8d65313}{\index{mdt\-Device\-Modbus@{mdt\-Device\-Modbus}!connect\-To\-Device@{connect\-To\-Device}}
 \index{connect\-To\-Device@{connect\-To\-Device}!mdtDeviceModbus@{mdt\-Device\-Modbus}}
-\subsubsection[{connect\-To\-Device}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Abstract\-Port\-::error\-\_\-t} mdt\-Device\-Modbus\-::connect\-To\-Device (
-\begin{DoxyParamCaption}
-\item[{const {\bf mdt\-Port\-Info} \&}]{port\-Info}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_device_modbus_a3ca2a84163fed1380cbc8859a6b70db0}
-
-
-Set hardware node id. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em hardware\-Node\-Id} & See \hyperlink{classmdt_modbus_tcp_port_manager_a02f498667f432c4430d1983e3dfd6055}{mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Hardware\-Node\-Address()} . \\
-\hline
-{\em bits\-Count} & See \hyperlink{classmdt_modbus_tcp_port_manager_a02f498667f432c4430d1983e3dfd6055}{mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Hardware\-Node\-Address()} . \\
-\hline
-{\em start\-From} & See \hyperlink{classmdt_modbus_tcp_port_manager_a02f498667f432c4430d1983e3dfd6055}{mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Hardware\-Node\-Address()} .void set\-Hardware\-Node\-Id(int hw\-Node\-Id, int bits\-Count, int start\-From = 0);\\
-\hline
-\end{DoxyParams}
-Clear hardware node id
-
-\begin{DoxySeeAlso}{See Also}
-set\-Hardware\-Node\-Id() .void clear\-Hardware\-Node\-Id();
-\end{DoxySeeAlso}
-Get hardware node id
-
-\begin{DoxySeeAlso}{See Also}
-set\-Hardware\-Node\-Id() .Q\-Variant hardware\-Node\-Id() const;
-\end{DoxySeeAlso}
-Connect to physical device
-
-This method can be reimplemented in subclass if specific tasks must be done during connection .
-
-
-\begin{DoxyParams}{Parameters}
-{\em port\-Info} & \hyperlink{classmdt_port_info}{mdt\-Port\-Info} object . The port\-Name attribute of port\-Info must contain host\-:port format (or ip\-:port) . \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-A error listed in \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdt\-Abstract\-Port\-::error\-\_\-t} (No\-Error on success) .
-\end{DoxyReturn}
-void mdt\-Device\-Modbus\-::set\-Hardware\-Node\-Id(int hw\-Node\-Id, int bits\-Count, int start\-From) \{ pv\-Hardware\-Node\-Id = hw\-Node\-Id; pv\-Hardware\-Node\-Id\-Bits\-Count = bits\-Count; pv\-Hardware\-Node\-Id\-Bits\-Start\-From = start\-From; \} void mdt\-Device\-Modbus\-::clear\-Hardware\-Node\-Id() \{ pv\-Hardware\-Node\-Id.\-clear(); pv\-Hardware\-Node\-Id\-Bits\-Count = 0; pv\-Hardware\-Node\-Id\-Bits\-Start\-From = 0; \}
-
-Q\-Variant mdt\-Device\-Modbus\-::hardware\-Node\-Id() const \{ return pv\-Hardware\-Node\-Id; \} 
-
-Reimplemented in \hyperlink{classmdt_device_modbus_wago_ac15c95cee8dec98609278d0e0ab2b3ce}{mdt\-Device\-Modbus\-Wago}.
-
-
-
-Definition at line 98 of file mdt\-Device\-Modbus.\-cpp.
-
-
-
-References mdt\-Port\-Manager\-::is\-Closed(), mdt\-Abstract\-Port\-::\-No\-Error, mdt\-Abstract\-Port\-::\-Port\-Not\-Found, pv\-Tcp\-Port\-Manager, mdt\-Port\-Manager\-::set\-Port\-Info(), mdt\-Port\-Manager\-::start(), and mdt\-Port\-Manager\-::stop().
-
-\hypertarget{classmdt_device_modbus_a093c6407ee69c4c7696a0c71d0acd88d}{\index{mdt\-Device\-Modbus@{mdt\-Device\-Modbus}!connect\-To\-Device@{connect\-To\-Device}}
-\index{connect\-To\-Device@{connect\-To\-Device}!mdtDeviceModbus@{mdt\-Device\-Modbus}}
-\subsubsection[{connect\-To\-Device}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Abstract\-Port\-::error\-\_\-t} mdt\-Device\-Modbus\-::connect\-To\-Device (
-\begin{DoxyParamCaption}
-\item[{const {\bf mdt\-Device\-Info} \&}]{dev\-Info}
-\end{DoxyParamCaption}
-)}}\label{classmdt_device_modbus_a093c6407ee69c4c7696a0c71d0acd88d}
-
-
-Search and connect to physical device. 
-
-Will scan available ports and open the first port that has device attached maching request.
-
-\begin{DoxySeeAlso}{See Also}
-connect\-To\-Device(mdt\-Port\-Info\&) .
-\end{DoxySeeAlso}
-
-\begin{DoxyParams}{Parameters}
-{\em dev\-Info} & Requested device's informations (can be empty, no information is used in current version). \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-A error listed in \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdt\-Abstract\-Port\-::error\-\_\-t} (No\-Error on success) 
-\end{DoxyReturn}
-
-
-Definition at line 112 of file mdt\-Device\-Modbus.\-cpp.
-
-
-
-References connect\-To\-Device(), mdt\-Port\-Manager\-::is\-Closed(), mdt\-Abstract\-Port\-::\-No\-Error, mdt\-Abstract\-Port\-::\-Port\-Not\-Found, pv\-Tcp\-Port\-Manager, mdt\-Modbus\-Tcp\-Port\-Manager\-::save\-Scan\-Result(), and mdt\-Port\-Manager\-::stop().
-
-\hypertarget{classmdt_device_modbus_a323b16687f448a4e45eb0b313635b77f}{\index{mdt\-Device\-Modbus@{mdt\-Device\-Modbus}!connect\-To\-Device@{connect\-To\-Device}}
-\index{connect\-To\-Device@{connect\-To\-Device}!mdtDeviceModbus@{mdt\-Device\-Modbus}}
-\subsubsection[{connect\-To\-Device}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Abstract\-Port\-::error\-\_\-t} mdt\-Device\-Modbus\-::connect\-To\-Device (
-\begin{DoxyParamCaption}
-\item[{const Q\-List$<$ {\bf mdt\-Port\-Info} $\ast$ $>$ \&}]{scan\-Result, }
-\item[{int}]{hardware\-Node\-Id, }
-\item[{int}]{bits\-Count, }
-\item[{int}]{start\-From = {\ttfamily 0}}
-\end{DoxyParamCaption}
-)}}\label{classmdt_device_modbus_a323b16687f448a4e45eb0b313635b77f}
-
-
-Search and connect to physical device. 
-
-Will try to connect to device listed in scan\-Result until hardware\-Node\-Id is found.
-
-
-\begin{DoxyParams}{Parameters}
-{\em scan\-Result} & List of \hyperlink{classmdt_port_info}{mdt\-Port\-Info} containing a port name in format host\-:port . \\
-\hline
-{\em hardware\-Node\-Id} & See \hyperlink{classmdt_modbus_tcp_port_manager_a02f498667f432c4430d1983e3dfd6055}{mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Hardware\-Node\-Address()} . \\
-\hline
-{\em bits\-Count} & See \hyperlink{classmdt_modbus_tcp_port_manager_a02f498667f432c4430d1983e3dfd6055}{mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Hardware\-Node\-Address()} . \\
-\hline
-{\em start\-From} & See \hyperlink{classmdt_modbus_tcp_port_manager_a02f498667f432c4430d1983e3dfd6055}{mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Hardware\-Node\-Address()} . \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-A error listed in \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdt\-Abstract\-Port\-::error\-\_\-t} (No\-Error on success) . 
-\end{DoxyReturn}
-\begin{DoxyPrecond}{Precondition}
-scan\-Result must contain valid pointers . 
-\end{DoxyPrecond}
-
-
-Definition at line 153 of file mdt\-Device\-Modbus.\-cpp.
-
-
-
-References connect\-To\-Device(), mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Hardware\-Node\-Address(), mdt\-Port\-Manager\-::is\-Closed(), mdt\-Abstract\-Port\-::\-No\-Error, mdt\-Abstract\-Port\-::\-Port\-Not\-Found, pv\-Tcp\-Port\-Manager, and mdt\-Port\-Manager\-::stop().
-
-\hypertarget{classmdt_device_modbus_a08100215b37c0922ed177d1f99d07e97}{\index{mdt\-Device\-Modbus@{mdt\-Device\-Modbus}!connect\-To\-Device@{connect\-To\-Device}}
-\index{connect\-To\-Device@{connect\-To\-Device}!mdtDeviceModbus@{mdt\-Device\-Modbus}}
-\subsubsection[{connect\-To\-Device}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Abstract\-Port\-::error\-\_\-t} mdt\-Device\-Modbus\-::connect\-To\-Device (
-\begin{DoxyParamCaption}
-\item[{const Q\-List$<$ int $>$ \&}]{existing\-Hw\-Node\-Id\-List}
-\end{DoxyParamCaption}
-)}}\label{classmdt_device_modbus_a08100215b37c0922ed177d1f99d07e97}
-
-
-Search and connect to physical device. 
-
-Will connect to device with hardware\-Node\-Id set with set\-Hardware\-Node\-Id() . This method will beginn to scan hosts in cache file (if exists) . If expcted device was not found, the network is also scanned .
-
-
-\begin{DoxyParams}{Parameters}
-{\em existing\-Hw\-Node\-Id\-List} & A list of hardware\-Node\-Id to consider during scan . Once all devices contained in existing\-Hw\-Node\-Id\-List, and device with hardware\-Node\-Id, are found, scan will break . \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-A error listed in \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdt\-Abstract\-Port\-::error\-\_\-t} (No\-Error on success) . 
-\end{DoxyReturn}
-
-
-Definition at line 188 of file mdt\-Device\-Modbus.\-cpp.
-
-
-
-References mdt\-Port\-Manager\-::is\-Closed(), mdt\-Abstract\-Port\-::\-No\-Error, pv\-Tcp\-Port\-Manager, mdt\-Modbus\-Tcp\-Port\-Manager\-::save\-Scan\-Result(), and mdt\-Port\-Manager\-::stop().
-
-\hypertarget{classmdt_device_modbus_abfcab17fbf05aab7843ae689316dd01f}{\index{mdt\-Device\-Modbus@{mdt\-Device\-Modbus}!connect\-To\-Device@{connect\-To\-Device}}
-\index{connect\-To\-Device@{connect\-To\-Device}!mdtDeviceModbus@{mdt\-Device\-Modbus}}
-\subsubsection[{connect\-To\-Device}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Abstract\-Port\-::error\-\_\-t} mdt\-Device\-Modbus\-::connect\-To\-Device (
+\subsubsection[{connect\-To\-Device}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Device\-Modbus\-::connect\-To\-Device (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}\label{classmdt_device_modbus_abfcab17fbf05aab7843ae689316dd01f}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_device_modbus_ae8634515742f3ed42dc52dfaa8d65313}
 
 
-Search and connect to physical device. 
+Connect to physical device. 
 
-Will connect to device with hardware\-Node\-Id set with set\-Hardware\-Node\-Id() . This method will beginn to scan hosts in cache file (if exists) . If expcted device was not found, the network is also scanned .
+Connect to device set with \hyperlink{classmdt_device_a3fdad460ae0eac5710b13e400156cb1d}{set\-Device\-Address()}. If device address contains a valid hardware node I\-D, it will also be checked that it matches, else it will be ignored.
 
-If all devices that must be scanned have a known hardware\-Node\-Id, please consider using \hyperlink{classmdt_device_modbus_a08100215b37c0922ed177d1f99d07e97}{connect\-To\-Device(const Q\-List$<$int$>$\&)} , wtch can be faster .
-
-\begin{DoxyReturn}{Returns}
-A error listed in \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdt\-Abstract\-Port\-::error\-\_\-t} (No\-Error on success) .
-\end{DoxyReturn}
-\begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000012}{Todo}]Not implemented yet . \end{DoxyRefDesc}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{classmdt_device_a3fdad460ae0eac5710b13e400156cb1d}{mdt\-Device\-::set\-Device\-Address()}. 
+\end{DoxySeeAlso}
 
 
-Definition at line 236 of file mdt\-Device\-Modbus.\-cpp.
+Reimplemented from \hyperlink{classmdt_device_a0c265d9078bf50708aa60a73b5125667}{mdt\-Device}.
 
 
 
-References mdt\-Abstract\-Port\-::\-Unhandled\-Error.
+Reimplemented in \hyperlink{classmdt_device_modbus_wago_a5831a91162736cc01f35e7dd2c01852a}{mdt\-Device\-Modbus\-Wago}.
+
+
+
+Definition at line 73 of file mdt\-Device\-Modbus.\-cpp.
+
+
+
+References mdt\-Modbus\-Hw\-Node\-Id\-::bits\-Count(), mdt\-Error\-::commit(), mdt\-Device\-::device\-Address(), mdt\-Device\-::device\-Id\-String(), mdt\-Device\-::disconnect\-From\-Device(), mdt\-Error\-::\-Error, mdt\-Modbus\-Hw\-Node\-Id\-::first\-Bit(), mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Hardware\-Node\-Address(), mdt\-Modbus\-Hw\-Node\-Id\-::id(), mdt\-Port\-Manager\-::is\-Closed(), mdt\-Modbus\-Hw\-Node\-Id\-::is\-Null(), mdt\-Port\-Manager\-::last\-Error(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Device\-Address\-::\-M\-O\-D\-B\-U\-S, mdt\-Device\-Address\-::modbus\-Hw\-Node\-Id(), mdt\-Device\-::pv\-Last\-Error, pv\-Tcp\-Port\-Manager, mdt\-Error\-::set\-Error(), mdt\-Port\-Manager\-::set\-Port\-Name(), mdt\-Port\-Manager\-::start(), mdt\-Port\-Manager\-::stop(), and mdt\-Device\-Address\-::\-T\-C\-P\-I\-P.
 
 
 
 Referenced by mdt\-Device\-Modbus\-Wago\-::connect\-To\-Device(), and connect\-To\-Device().
+
+\hypertarget{classmdt_device_modbus_ad6996c61045f2b0247cf19359e3d269d}{\index{mdt\-Device\-Modbus@{mdt\-Device\-Modbus}!connect\-To\-Device@{connect\-To\-Device}}
+\index{connect\-To\-Device@{connect\-To\-Device}!mdtDeviceModbus@{mdt\-Device\-Modbus}}
+\subsubsection[{connect\-To\-Device}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Device\-Modbus\-::connect\-To\-Device (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Modbus\-Hw\-Node\-Id} \&}]{hw\-Node\-Id, }
+\item[{const Q\-String \&}]{alias = {\ttfamily QString()}, }
+\item[{int}]{scan\-Timeout = {\ttfamily 500}, }
+\item[{int}]{port = {\ttfamily 502}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_device_modbus_ad6996c61045f2b0247cf19359e3d269d}
+
+
+Connect to physical device with given hardware node I\-D. 
+
+Will search a M\-O\-D\-B\-U\-S/\-T\-C\-P device on network that has requested hardware node I\-D, starting with cached known hosts.
+
+
+\begin{DoxyParams}{Parameters}
+{\em hw\-Node\-Id} & Hardware node I\-D \\
+\hline
+{\em alias} & Alias to give. Will be ignored if empty \\
+\hline
+{\em scan\-Timeout} & Time to wait during scan before considering device is not reachable \mbox{[}ms\mbox{]} \\
+\hline
+{\em port} & Port. M\-O\-D\-B\-U\-S/\-T\-C\-P default port is 502. \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented in \hyperlink{classmdt_device_modbus_wago_a5a0a92aa5334b4926f693344928a9d38}{mdt\-Device\-Modbus\-Wago}.
+
+
+
+Definition at line 125 of file mdt\-Device\-Modbus.\-cpp.
+
+
+
+References mdt\-Device\-::alias(), mdt\-Modbus\-Hw\-Node\-Id\-List\-::append(), mdt\-Device\-Address\-List\-::at(), mdt\-Error\-::commit(), connect\-To\-Device(), mdt\-Error\-::\-Error, mdt\-Modbus\-Hw\-Node\-Id\-::id(), mdt\-Device\-Address\-List\-::internal\-Vector(), mdt\-Port\-Manager\-::is\-Closed(), mdt\-Device\-Address\-List\-::is\-Empty(), M\-D\-T\-\_\-\-E\-R\-R\-O\-R\-\_\-\-S\-E\-T\-\_\-\-S\-R\-C, mdt\-Device\-::pv\-Last\-Error, pv\-Tcp\-Port\-Manager, mdt\-Modbus\-Tcp\-Port\-Manager\-::save\-Device\-Address\-List(), mdt\-Modbus\-Tcp\-Port\-Manager\-::scan(), mdt\-Modbus\-Tcp\-Port\-Manager\-::scan\-From\-Known\-Hosts\-File(), mdt\-Device\-::set\-Device\-Address(), mdt\-Error\-::set\-Error(), mdt\-Device\-Address\-List\-::size(), and mdt\-Port\-Manager\-::stop().
 
 \hypertarget{classmdt_device_modbus_a89d41c6b33a3dd2a92a0956d8e6b3b14}{\index{mdt\-Device\-Modbus@{mdt\-Device\-Modbus}!get\-Register\-Values@{get\-Register\-Values}}
 \index{get\-Register\-Values@{get\-Register\-Values}!mdtDeviceModbus@{mdt\-Device\-Modbus}}
@@ -362,7 +241,7 @@ address and n must be $>$ 0
 \end{DoxySeeAlso}
 
 
-Definition at line 242 of file mdt\-Device\-Modbus.\-cpp.
+Definition at line 164 of file mdt\-Device\-Modbus.\-cpp.
 
 
 
@@ -370,7 +249,7 @@ References mdt\-Modbus\-Tcp\-Port\-Manager\-::get\-Register\-Values(), and pv\-T
 
 
 
-Referenced by mdt\-Device\-Modbus\-Wago\-::analog\-Inputs\-Count(), mdt\-Device\-Modbus\-Wago\-::analog\-Outputs\-Count(), mdt\-Device\-Modbus\-Wago\-::detect\-Ios(), mdt\-Device\-Modbus\-Wago\-::digital\-Inputs\-Count(), mdt\-Device\-Modbus\-Wago\-::digital\-Outputs\-Count(), mdt\-Device\-Modbus\-Wago\-::is\-Wago750(), mdt\-Device\-Modbus\-Wago\-Module\-::read\-Registers(), and mdt\-Device\-Modbus\-Wago\-Module\-::read\-Status\-Bytes().
+Referenced by mdt\-Device\-Modbus\-Wago\-::analog\-Inputs\-Count(), mdt\-Device\-Modbus\-Wago\-::analog\-Outputs\-Count(), mdt\-Device\-Modbus\-Wago\-::detect\-Ios(), mdt\-Device\-Modbus\-Wago\-::digital\-Inputs\-Count(), mdt\-Device\-Modbus\-Wago\-::digital\-Outputs\-Count(), and mdt\-Device\-Modbus\-Wago\-::is\-Wago750().
 
 \hypertarget{classmdt_device_modbus_ac547788aa95d46c00ddb1342eb46ef93}{\index{mdt\-Device\-Modbus@{mdt\-Device\-Modbus}!modbus\-Tcp\-Port\-Manager@{modbus\-Tcp\-Port\-Manager}}
 \index{modbus\-Tcp\-Port\-Manager@{modbus\-Tcp\-Port\-Manager}!mdtDeviceModbus@{mdt\-Device\-Modbus}}
@@ -385,7 +264,7 @@ Get internal port manager instance.
 
 
 
-Definition at line 70 of file mdt\-Device\-Modbus.\-cpp.
+Definition at line 68 of file mdt\-Device\-Modbus.\-cpp.
 
 
 
@@ -412,7 +291,7 @@ Reimplemented from \hyperlink{classmdt_multi_io_device_a71765ab3a9f8aa9ba4024e3c
 
 
 
-Definition at line 65 of file mdt\-Device\-Modbus.\-cpp.
+Definition at line 63 of file mdt\-Device\-Modbus.\-cpp.
 
 
 
@@ -449,7 +328,7 @@ Reimplemented from \hyperlink{classmdt_device_acba50968d201ad95c4eaa2ab2ed48b4f}
 
 
 
-Definition at line 481 of file mdt\-Device\-Modbus.\-cpp.
+Definition at line 403 of file mdt\-Device\-Modbus.\-cpp.
 
 
 
@@ -489,7 +368,7 @@ Reimplemented from \hyperlink{classmdt_multi_io_device_ad49b5054981b91bab6e10de7
 
 
 
-Definition at line 494 of file mdt\-Device\-Modbus.\-cpp.
+Definition at line 416 of file mdt\-Device\-Modbus.\-cpp.
 
 
 
@@ -508,7 +387,7 @@ Read all analog inputs on physical device.
 
 This is the device specific implementation to send the query. If device handled by subclass has analog inputs, this method should be implemented.
 
-This method is called from \hyperlink{classmdt_multi_io_device_a73bbcd721b309930174d5e91266d0298}{get\-Analog\-Inputs()}.
+This method is called from \hyperlink{classmdt_multi_io_device_a6a2f1e6538f09318b8e7d7fe220195e9}{get\-Analog\-Inputs()}.
 
 
 \begin{DoxyParams}{Parameters}
@@ -529,7 +408,7 @@ Reimplemented from \hyperlink{classmdt_multi_io_device_ad54b0b3a533f3e739f4add18
 
 
 
-Definition at line 511 of file mdt\-Device\-Modbus.\-cpp.
+Definition at line 433 of file mdt\-Device\-Modbus.\-cpp.
 
 
 
@@ -548,7 +427,7 @@ Read one analog output on physical device.
 
 This is the device specific implementation to send the query. If device handled by subclass has analog inputs, this method should be implemented.
 
-This method is called from \hyperlink{classmdt_multi_io_device_ae4d5260c3fcf9c6cd10114cc411dafe0}{get\-Analog\-Output\-Value()}.
+This method is called from \hyperlink{classmdt_multi_io_device_a5ec427ff1979b14f7882219f920e0284}{get\-Analog\-Output\-Value()}.
 
 
 \begin{DoxyParams}{Parameters}
@@ -569,7 +448,7 @@ Reimplemented from \hyperlink{classmdt_multi_io_device_a5bfebd15d85c5b0f0d92cd49
 
 
 
-Definition at line 528 of file mdt\-Device\-Modbus.\-cpp.
+Definition at line 450 of file mdt\-Device\-Modbus.\-cpp.
 
 
 
@@ -588,7 +467,7 @@ Read all analog outputs on physical device.
 
 This is the device specific implementation to send the query. If device handled by subclass has analog inputs, this method should be implemented.
 
-This method is called from \hyperlink{classmdt_multi_io_device_ae4d5260c3fcf9c6cd10114cc411dafe0}{get\-Analog\-Output\-Value()}.
+This method is called from \hyperlink{classmdt_multi_io_device_a5ec427ff1979b14f7882219f920e0284}{get\-Analog\-Output\-Value()}.
 
 
 \begin{DoxyParams}{Parameters}
@@ -607,7 +486,7 @@ Reimplemented from \hyperlink{classmdt_multi_io_device_ac5629e6ccdeb3bd2a763dad2
 
 
 
-Definition at line 545 of file mdt\-Device\-Modbus.\-cpp.
+Definition at line 467 of file mdt\-Device\-Modbus.\-cpp.
 
 
 
@@ -647,7 +526,7 @@ Reimplemented from \hyperlink{classmdt_multi_io_device_ab8861287c8328873cce6f07e
 
 
 
-Definition at line 598 of file mdt\-Device\-Modbus.\-cpp.
+Definition at line 520 of file mdt\-Device\-Modbus.\-cpp.
 
 
 
@@ -666,7 +545,7 @@ Read all digital inputs on physical device.
 
 This is the device specific implementation to send the query. If device handled by subclass has digital inputs, this method should be implemented.
 
-This method is called from \hyperlink{classmdt_multi_io_device_ab3c1095ed6a0f35b43433d61104fc080}{get\-Digital\-Inputs()}.
+This method is called from \hyperlink{classmdt_multi_io_device_a18d95fd68e45f11397f1ebf7fb7a0a0a}{get\-Digital\-Inputs()}.
 
 
 \begin{DoxyParams}{Parameters}
@@ -687,7 +566,7 @@ Reimplemented from \hyperlink{classmdt_multi_io_device_ac9250b0b4d5ea16ee130bfd6
 
 
 
-Definition at line 615 of file mdt\-Device\-Modbus.\-cpp.
+Definition at line 537 of file mdt\-Device\-Modbus.\-cpp.
 
 
 
@@ -727,7 +606,7 @@ Reimplemented from \hyperlink{classmdt_multi_io_device_a74c7327f8540104d694a614b
 
 
 
-Definition at line 632 of file mdt\-Device\-Modbus.\-cpp.
+Definition at line 554 of file mdt\-Device\-Modbus.\-cpp.
 
 
 
@@ -746,7 +625,7 @@ Read all digital outputs on physical device.
 
 This is the device specific implementation to send the query. If device handled by subclass has digital outputs, this method should be implemented.
 
-This method is called from \hyperlink{classmdt_multi_io_device_a15b6ae641d9d6f7a7c90cbc033950652}{get\-Digital\-Outputs()}.
+This method is called from \hyperlink{classmdt_multi_io_device_aeb093a59af6b6cac16e32f4ad37652f4}{get\-Digital\-Outputs()}.
 
 
 \begin{DoxyParams}{Parameters}
@@ -767,7 +646,7 @@ Reimplemented from \hyperlink{classmdt_multi_io_device_ac372088c21c7077f1b71e473
 
 
 
-Definition at line 649 of file mdt\-Device\-Modbus.\-cpp.
+Definition at line 571 of file mdt\-Device\-Modbus.\-cpp.
 
 
 
@@ -791,7 +670,7 @@ Return result set by \hyperlink{classmdt_device_modbus_a89d41c6b33a3dd2a92a0956d
 \end{DoxySeeAlso}
 
 
-Definition at line 247 of file mdt\-Device\-Modbus.\-cpp.
+Definition at line 169 of file mdt\-Device\-Modbus.\-cpp.
 
 
 
@@ -828,7 +707,7 @@ start\-Address must be $>$= 0
 \end{DoxySeeAlso}
 
 
-Definition at line 252 of file mdt\-Device\-Modbus.\-cpp.
+Definition at line 174 of file mdt\-Device\-Modbus.\-cpp.
 
 
 
@@ -836,7 +715,7 @@ References pv\-Tcp\-Port\-Manager, and mdt\-Modbus\-Tcp\-Port\-Manager\-::set\-R
 
 
 
-Referenced by mdt\-Device\-Modbus\-Wago\-Module\-::write\-Control\-Bytes(), and mdt\-Device\-Modbus\-Wago\-Module\-::write\-Registers().
+Referenced by mdt\-Device\-Modbus\-Wago\-Module\-::write\-Registers().
 
 \hypertarget{classmdt_device_modbus_ac63297a31205759622f341525c34251f}{\index{mdt\-Device\-Modbus@{mdt\-Device\-Modbus}!write\-Analog\-Output@{write\-Analog\-Output}}
 \index{write\-Analog\-Output@{write\-Analog\-Output}!mdtDeviceModbus@{mdt\-Device\-Modbus}}
@@ -852,7 +731,7 @@ Write value on a analog output to physical device.
 
 This is the device specific implementation to send the query. If device handled by subclass has analog outputs, this method should be implemented.
 
-This method is called from \hyperlink{classmdt_multi_io_device_af58f284bf4310abefa59975664e640d6}{set\-Analog\-Output\-Value()}.
+This method is called from \hyperlink{classmdt_multi_io_device_a595ac7361c90bc48d8ef13b8a3a33772}{set\-Analog\-Output\-Value()}.
 
 
 \begin{DoxyParams}{Parameters}
@@ -873,7 +752,7 @@ Reimplemented from \hyperlink{classmdt_multi_io_device_a683b5aa97f175cb2979472e1
 
 
 
-Definition at line 562 of file mdt\-Device\-Modbus.\-cpp.
+Definition at line 484 of file mdt\-Device\-Modbus.\-cpp.
 
 
 
@@ -893,7 +772,7 @@ Write all analog outputs to physical device.
 
 This is the device specific implementation to send the query. If device handled by subclass has analog outputs, this method should be implemented.
 
-This method is called from \hyperlink{classmdt_multi_io_device_ae8b2ae1657c4072854846893705f427a}{set\-Analog\-Outputs()}.
+This method is called from \hyperlink{classmdt_multi_io_device_ab01987c9487499d144d9d756979e3b42}{set\-Analog\-Outputs()}.
 
 
 \begin{DoxyParams}{Parameters}
@@ -914,7 +793,7 @@ Reimplemented from \hyperlink{classmdt_multi_io_device_ac6b1b24b8c3eb0722df4079d
 
 
 
-Definition at line 579 of file mdt\-Device\-Modbus.\-cpp.
+Definition at line 501 of file mdt\-Device\-Modbus.\-cpp.
 
 
 
@@ -957,7 +836,7 @@ Reimplemented from \hyperlink{classmdt_multi_io_device_a80b4c2864d3e2844fe12444d
 
 
 
-Definition at line 666 of file mdt\-Device\-Modbus.\-cpp.
+Definition at line 588 of file mdt\-Device\-Modbus.\-cpp.
 
 
 
@@ -977,7 +856,7 @@ Write all digital outputs to physical device.
 
 This is the device specific implementation to send the query. If device handled by subclass has digital outputs, this method should be implemented.
 
-This method is called from \hyperlink{classmdt_multi_io_device_a2149cfc42f04c8afb6f2d20dbd3bd391}{set\-Digital\-Outputs()}.
+This method is called from \hyperlink{classmdt_multi_io_device_a83f6df71dc35ef002ee55b3a51a54fc9}{set\-Digital\-Outputs()}.
 
 
 \begin{DoxyParams}{Parameters}
@@ -998,7 +877,7 @@ Reimplemented from \hyperlink{classmdt_multi_io_device_a03aedb552abcc344b1545d95
 
 
 
-Definition at line 683 of file mdt\-Device\-Modbus.\-cpp.
+Definition at line 605 of file mdt\-Device\-Modbus.\-cpp.
 
 
 
@@ -1012,7 +891,7 @@ References mdt\-Frame\-Codec\-Modbus\-::encode\-Write\-Multiple\-Coils(), mdt\-M
 \subsubsection[{pv\-Codec}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Frame\-Codec\-Modbus}$\ast$ mdt\-Device\-Modbus\-::pv\-Codec\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_device_modbus_a2171d37ea720d546934f1c841e3c4d26}
 
 
-Definition at line 372 of file mdt\-Device\-Modbus.\-h.
+Definition at line 307 of file mdt\-Device\-Modbus.\-h.
 
 
 
@@ -1023,11 +902,11 @@ Referenced by mdt\-Device\-Modbus(), read\-Analog\-Input(), read\-Analog\-Inputs
 \subsubsection[{pv\-Tcp\-Port\-Manager}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Modbus\-Tcp\-Port\-Manager}$\ast$ mdt\-Device\-Modbus\-::pv\-Tcp\-Port\-Manager\hspace{0.3cm}{\ttfamily [protected]}}}\label{classmdt_device_modbus_a9ecbac63c29b229ab01f5fdb26008c95}
 
 
-Definition at line 371 of file mdt\-Device\-Modbus.\-h.
+Definition at line 306 of file mdt\-Device\-Modbus.\-h.
 
 
 
-Referenced by mdt\-Device\-Modbus\-Wago\-::connect\-To\-Device(), connect\-To\-Device(), get\-Register\-Values(), mdt\-Device\-Modbus(), modbus\-Tcp\-Port\-Manager(), port\-Manager(), read\-Analog\-Input(), read\-Analog\-Inputs(), read\-Analog\-Output(), read\-Analog\-Outputs(), read\-Digital\-Input(), read\-Digital\-Inputs(), read\-Digital\-Output(), read\-Digital\-Outputs(), register\-Values(), set\-Register\-Values(), write\-Analog\-Output(), write\-Analog\-Outputs(), write\-Digital\-Output(), write\-Digital\-Outputs(), and $\sim$mdt\-Device\-Modbus().
+Referenced by connect\-To\-Device(), get\-Register\-Values(), mdt\-Device\-Modbus(), modbus\-Tcp\-Port\-Manager(), port\-Manager(), read\-Analog\-Input(), read\-Analog\-Inputs(), read\-Analog\-Output(), read\-Analog\-Outputs(), read\-Digital\-Input(), read\-Digital\-Inputs(), read\-Digital\-Output(), read\-Digital\-Outputs(), register\-Values(), set\-Register\-Values(), write\-Analog\-Output(), write\-Analog\-Outputs(), write\-Digital\-Output(), write\-Digital\-Outputs(), and $\sim$mdt\-Device\-Modbus().
 
 
 

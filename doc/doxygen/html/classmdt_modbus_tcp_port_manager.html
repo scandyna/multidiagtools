@@ -161,7 +161,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ae1ecf5d945dbe530e2bdb234bc65e2e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scan for available hosts with a MODBUS/TCP compatible device attached.  <a href="#ae1ecf5d945dbe530e2bdb234bc65e2e6">More...</a><br/></td></tr>
 <tr class="separator:ae1ecf5d945dbe530e2bdb234bc65e2e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab04f69b660487a7c59d309df7a8f5baa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_modbus_tcp_port_manager.html#ab04f69b660487a7c59d309df7a8f5baa">tryToConnect</a> (const QString &amp;hostName, quint16 port, int timeout)</td></tr>
-<tr class="memdesc:ab04f69b660487a7c59d309df7a8f5baa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scan for available hosts with a MODBUS/TCP compatible device attached.  <a href="#ab04f69b660487a7c59d309df7a8f5baa">More...</a><br/></td></tr>
+<tr class="memdesc:ab04f69b660487a7c59d309df7a8f5baa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Try to connect to a host.  <a href="#ab04f69b660487a7c59d309df7a8f5baa">More...</a><br/></td></tr>
 <tr class="separator:ab04f69b660487a7c59d309df7a8f5baa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1f8eb3874561f31e74a3355f4b1a6a8b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_modbus_tcp_port_manager.html#a1f8eb3874561f31e74a3355f4b1a6a8b">saveDeviceAddressList</a> (<a class="el" href="classmdt_device_address_list.html">mdtDeviceAddressList</a> &amp;addressList)</td></tr>
 <tr class="memdesc:a1f8eb3874561f31e74a3355f4b1a6a8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Save device address list into the known hosts file.  <a href="#a1f8eb3874561f31e74a3355f4b1a6a8b">More...</a><br/></td></tr>
@@ -465,7 +465,7 @@ Additional Inherited Members</h2></td></tr>
 <li><a href="http://www.Modbus-IDA.org">http://www.Modbus-IDA.org</a> </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8h_source.html#l00071">71</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8h_source.html">mdtModbusTcpPortManager.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8h_source.html#l00068">68</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8h_source.html">mdtModbusTcpPortManager.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a2f65f779bbad19d9d3f85ef35220ffb8"></a>
 <div class="memitem">
@@ -536,7 +536,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Abort the scan process. </p>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00814">814</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00631">631</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -563,9 +563,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Called by connect timeout timer. </p>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00819">819</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00636">636</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00437">tryToConnect()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00254">tryToConnect()</a>.</p>
 
 </div>
 </div>
@@ -588,9 +588,9 @@ Additional Inherited Members</h2></td></tr>
 <dl class="section pre"><dt>Precondition</dt><dd>Port manager must be connected and thread running before calling this method.</dd></dl>
 <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000027">Todo:</a></b></dt><dd>Should be protected. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00631">631</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00448">448</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00554">getHardwareNodeAddress()</a>, <a class="el" href="mdt_modbus_hw_node_id_8h_source.html#l00155">mdtModbusHwNodeId::id()</a>, <a class="el" href="mdt_modbus_hw_node_id_8h_source.html#l00262">mdtModbusHwNodeIdList::internalVector()</a>, <a class="el" href="mdt_modbus_hw_node_id_8h_source.html#l00077">mdtModbusHwNodeId::isNull()</a>, and <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00549">isReady()</a>.</p>
+<p>References <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00371">getHardwareNodeAddress()</a>, <a class="el" href="mdt_modbus_hw_node_id_8h_source.html#l00155">mdtModbusHwNodeId::id()</a>, <a class="el" href="mdt_modbus_hw_node_id_8h_source.html#l00262">mdtModbusHwNodeIdList::internalVector()</a>, <a class="el" href="mdt_modbus_hw_node_id_8h_source.html#l00077">mdtModbusHwNodeId::isNull()</a>, and <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00366">isReady()</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00074">scan()</a>.</p>
 
@@ -619,7 +619,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Called by the thread whenn a complete frame was readen. </p>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00824">824</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00641">641</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_port_manager_8cpp_source.html#l00722">mdtPortManager::addTransactionDone()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00116">mdtError::commit()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00793">mdtPortManager::commitFrames()</a>, <a class="el" href="mdt_frame_modbus_tcp_8cpp_source.html#l00137">mdtFrameModbusTcp::getPdu()</a>, <a class="el" href="mdt_frame_8cpp_source.html#l00174">mdtFrame::isComplete()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00082">mdtPortManager::lockPortMutex()</a>, <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_error_8h_source.html#l00045">MDT_TCP_IO_ERROR</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00925">mdtPortManager::pvPort</a>, <a class="el" href="mdt_abstract_port_8cpp_source.html#l00288">mdtAbstractPort::readenFrames()</a>, <a class="el" href="mdt_abstract_port_8cpp_source.html#l00293">mdtAbstractPort::readFramesPool()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00110">mdtPortTransaction::setData()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00046">mdtPortTransaction::setId()</a>, <a class="el" href="mdt_frame_modbus_tcp_8cpp_source.html#l00109">mdtFrameModbusTcp::transactionId()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00702">mdtPortManager::transactionPending()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00096">mdtPortManager::unlockPortMutex()</a>, and <a class="el" href="mdt_error_8h_source.html#l00096">mdtError::Warning</a>.</p>
 
@@ -660,18 +660,18 @@ Additional Inherited Members</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Node address or value &lt; 0 corresponding on mdtAbstractPor::error_t . </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Node address. On error, a null hardware node ID is returned. </dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd>Port manager must be connected and thread running before calling this method. </dd>
 <dd>
 bitsCount must be &gt; 0 </dd>
 <dd>
 startFrom must be &gt;= 0 </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00554">554</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00371">371</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00116">mdtError::commit()</a>, <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html#l00283">mdtFrameCodecModbus::decode()</a>, <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html#l00060">mdtFrameCodecModbus::encodeReadDiscreteInputs()</a>, <a class="el" href="mdt_error_8h_source.html#l00097">mdtError::Error</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00290">mdtPortManager::getNewTransaction()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00549">isReady()</a>, <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00760">mdtPortManager::pvLastError</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00490">mdtPortManager::readenFrame()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00748">sendData()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00110">mdtPortTransaction::setData()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00060">mdtError::setError()</a>, <a class="el" href="mdt_modbus_hw_node_id_8h_source.html#l00097">mdtModbusHwNodeId::setId()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>, <a class="el" href="mdt_frame_codec_8cpp_source.html#l00034">mdtFrameCodec::values()</a>, and <a class="el" href="mdt_port_manager_8cpp_source.html#l00383">mdtPortManager::waitTransactionDone()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00116">mdtError::commit()</a>, <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html#l00283">mdtFrameCodecModbus::decode()</a>, <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html#l00060">mdtFrameCodecModbus::encodeReadDiscreteInputs()</a>, <a class="el" href="mdt_error_8h_source.html#l00097">mdtError::Error</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00290">mdtPortManager::getNewTransaction()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00366">isReady()</a>, <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00760">mdtPortManager::pvLastError</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00490">mdtPortManager::readenFrame()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00565">sendData()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00110">mdtPortTransaction::setData()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00060">mdtError::setError()</a>, <a class="el" href="mdt_modbus_hw_node_id_8h_source.html#l00097">mdtModbusHwNodeId::setId()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>, <a class="el" href="mdt_frame_codec_8cpp_source.html#l00034">mdtFrameCodec::values()</a>, and <a class="el" href="mdt_port_manager_8cpp_source.html#l00383">mdtPortManager::waitTransactionDone()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_modbus_8cpp_source.html#l00153">mdtDeviceModbus::connectToDevice()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00631">findMatchingToHostModebusHwNodeId()</a>, and <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00193">scan()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_modbus_8cpp_source.html#l00073">mdtDeviceModbus::connectToDevice()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00448">findMatchingToHostModebusHwNodeId()</a>, and <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00198">scan()</a>.</p>
 
 </div>
 </div>
@@ -701,17 +701,17 @@ startFrom must be &gt;= 0 </dd></dl>
 
 <p>Helper method for register service. </p>
 <p>Usefull to get resgister values (f.ex. configurations regsisters, ...).</p>
-<p>Note: to get analog I/O values, the <a class="el" href="classmdt_device.html" title="class mdtDeviceIosSegment; ">mdtDevice</a> API should be used.</p>
+<p>Note: to get analog I/O values, the <a class="el" href="classmdt_device.html" title="Base class for a device connected to a port. ">mdtDevice</a> API should be used.</p>
 <dl class="section return"><dt>Returns</dt><dd>True on success. Values are the available with <a class="el" href="classmdt_modbus_tcp_port_manager.html#a99a13b5250a8523aa63869991581e56a" title="Helper method for register service. ">registerValues()</a> </dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd>address must be &gt;= 0 </dd>
 <dd>
 n must be &gt; 0 </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00652">652</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00469">469</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00116">mdtError::commit()</a>, <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html#l00283">mdtFrameCodecModbus::decode()</a>, <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html#l00108">mdtFrameCodecModbus::encodeReadInputRegisters()</a>, <a class="el" href="mdt_error_8h_source.html#l00097">mdtError::Error</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00290">mdtPortManager::getNewTransaction()</a>, <a class="el" href="mdt_error_8h_source.html#l00048">MDT_DEVICE_ERROR</a>, <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00490">mdtPortManager::readenFrame()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00748">sendData()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00110">mdtPortTransaction::setData()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>, <a class="el" href="mdt_frame_codec_8cpp_source.html#l00034">mdtFrameCodec::values()</a>, and <a class="el" href="mdt_port_manager_8cpp_source.html#l00383">mdtPortManager::waitTransactionDone()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00116">mdtError::commit()</a>, <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html#l00283">mdtFrameCodecModbus::decode()</a>, <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html#l00108">mdtFrameCodecModbus::encodeReadInputRegisters()</a>, <a class="el" href="mdt_error_8h_source.html#l00097">mdtError::Error</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00290">mdtPortManager::getNewTransaction()</a>, <a class="el" href="mdt_error_8h_source.html#l00048">MDT_DEVICE_ERROR</a>, <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00490">mdtPortManager::readenFrame()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00565">sendData()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00110">mdtPortTransaction::setData()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>, <a class="el" href="mdt_frame_codec_8cpp_source.html#l00034">mdtFrameCodec::values()</a>, and <a class="el" href="mdt_port_manager_8cpp_source.html#l00383">mdtPortManager::waitTransactionDone()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_modbus_8cpp_source.html#l00242">mdtDeviceModbus::getRegisterValues()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_modbus_8cpp_source.html#l00164">mdtDeviceModbus::getRegisterValues()</a>.</p>
 
 </div>
 </div>
@@ -741,11 +741,11 @@ n must be &gt; 0 </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_port_manager.html#a6dc2798324521d177fb8f79d4f6c5f0f">mdtPortManager</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00549">549</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00366">366</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_port_manager_8cpp_source.html#l00570">mdtPortManager::currentState()</a>, and <a class="el" href="mdt_port_manager_8h_source.html#l00219">mdtPortManager::Ready</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00631">findMatchingToHostModebusHwNodeId()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00554">getHardwareNodeAddress()</a>, and <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00748">sendData()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00448">findMatchingToHostModebusHwNodeId()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00371">getHardwareNodeAddress()</a>, and <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00565">sendData()</a>.</p>
 
 </div>
 </div>
@@ -765,11 +765,11 @@ n must be &gt; 0 </dd></dl>
 <p>Read device address list from known hosts file. </p>
 <p>Will read file written by <a class="el" href="classmdt_modbus_tcp_port_manager.html#a1f8eb3874561f31e74a3355f4b1a6a8b" title="Save device address list into the known hosts file. ">saveDeviceAddressList()</a>. </p>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00487">487</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00304">304</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_application_8cpp_source.html#l00139">mdtApplication::cacheDir()</a>, <a class="el" href="mdt_device_address_8h_source.html#l00426">mdtDeviceAddressList::lastError()</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00760">mdtPortManager::pvLastError</a>, and <a class="el" href="mdt_device_address_8cpp_source.html#l00276">mdtDeviceAddressList::readFromFile()</a>.</p>
+<p>References <a class="el" href="mdt_application_8cpp_source.html#l00139">mdtApplication::cacheDir()</a>, <a class="el" href="mdt_device_address_8h_source.html#l00431">mdtDeviceAddressList::lastError()</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00760">mdtPortManager::pvLastError</a>, and <a class="el" href="mdt_device_address_8cpp_source.html#l00276">mdtDeviceAddressList::readFromFile()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00227">scanFromKnownHostsFile()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00242">scanFromKnownHostsFile()</a>.</p>
 
 </div>
 </div>
@@ -789,9 +789,9 @@ n must be &gt; 0 </dd></dl>
 <p>Read scan result stored in cache file. </p>
 <p>The file stored by <a class="el" href="classmdt_modbus_tcp_port_manager.html#a3a1f5a54c93fa90ba83dea8785407da3" title="Save a scan result into the known hosts file. ">saveScanResult()</a> is readen (if exists) and content returned.</p>
 <dl class="section return"><dt>Returns</dt><dd>List of lines or empty list if file not exists or on error. </dd></dl>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000009">Deprecated:</a></b></dt><dd>Use <a class="el" href="classmdt_modbus_tcp_port_manager.html#afe4db8318236242c3abd6752de2fcf38" title="Read device address list from known hosts file. ">readDeviceAddressList()</a> </dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000021">Deprecated:</a></b></dt><dd>Use <a class="el" href="classmdt_modbus_tcp_port_manager.html#afe4db8318236242c3abd6752de2fcf38" title="Read device address list from known hosts file. ">readDeviceAddressList()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00530">530</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00347">347</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_application_8cpp_source.html#l00139">mdtApplication::cacheDir()</a>.</p>
 
@@ -813,9 +813,9 @@ n must be &gt; 0 </dd></dl>
 <p>Helper method for register service. </p>
 <p>Return result set by <a class="el" href="classmdt_modbus_tcp_port_manager.html#ab5e780409492b5f56326a870bc4262ec" title="Helper method for register service. ">getRegisterValues()</a>. Note that values are keeped until next call of <a class="el" href="classmdt_modbus_tcp_port_manager.html#ab5e780409492b5f56326a870bc4262ec" title="Helper method for register service. ">getRegisterValues()</a>. </p>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00704">704</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00521">521</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_modbus_8cpp_source.html#l00247">mdtDeviceModbus::registerValues()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_modbus_8cpp_source.html#l00169">mdtDeviceModbus::registerValues()</a>.</p>
 
 </div>
 </div>
@@ -837,9 +837,11 @@ n must be &gt; 0 </dd></dl>
 <p>The file will be written to the $HOME/.mdt/cache directory. </p>
 <dl class="section pre"><dt>Precondition</dt><dd>Manager must no running </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00479">479</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00296">296</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_application_8cpp_source.html#l00139">mdtApplication::cacheDir()</a>, <a class="el" href="mdt_device_address_8h_source.html#l00426">mdtDeviceAddressList::lastError()</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00760">mdtPortManager::pvLastError</a>, and <a class="el" href="mdt_device_address_8cpp_source.html#l00246">mdtDeviceAddressList::saveToFile()</a>.</p>
+<p>References <a class="el" href="mdt_application_8cpp_source.html#l00139">mdtApplication::cacheDir()</a>, <a class="el" href="mdt_device_address_8h_source.html#l00431">mdtDeviceAddressList::lastError()</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00760">mdtPortManager::pvLastError</a>, and <a class="el" href="mdt_device_address_8cpp_source.html#l00246">mdtDeviceAddressList::saveToFile()</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_device_modbus_8cpp_source.html#l00125">mdtDeviceModbus::connectToDevice()</a>.</p>
 
 </div>
 </div>
@@ -867,13 +869,11 @@ n must be &gt; 0 </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True on successfull write. </dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd>Manager must no running </dd></dl>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000008">Deprecated:</a></b></dt><dd>Use <a class="el" href="classmdt_modbus_tcp_port_manager.html#a1f8eb3874561f31e74a3355f4b1a6a8b" title="Save device address list into the known hosts file. ">saveDeviceAddressList()</a> </dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000020">Deprecated:</a></b></dt><dd>Use <a class="el" href="classmdt_modbus_tcp_port_manager.html#a1f8eb3874561f31e74a3355f4b1a6a8b" title="Save device address list into the known hosts file. ">saveDeviceAddressList()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00498">498</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00315">315</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
 <p>References <a class="el" href="mdt_application_8cpp_source.html#l00139">mdtApplication::cacheDir()</a>, <a class="el" href="mdt_error_8h_source.html#l00097">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_error_8h_source.html#l00040">MDT_FILE_IO_ERROR</a>.</p>
-
-<p>Referenced by <a class="el" href="mdt_device_modbus_8cpp_source.html#l00112">mdtDeviceModbus::connectToDevice()</a>.</p>
 
 </div>
 </div>
@@ -912,7 +912,7 @@ n must be &gt; 0 </dd></dl>
   <table class="params">
     <tr><td class="paramname">hosts</td><td>A list of hosts to scan. </td></tr>
     <tr><td class="paramname">expectedHwNodeAddresses</td><td>If this list contains HW node addresses, scan will break when each one was found. </td></tr>
-    <tr><td class="paramname">timeout</td><td>Maximum wait time [ms]. Must be a multiple of 50 [ms] </td></tr>
+    <tr><td class="paramname">timeout</td><td>Maximum wait time [ms]. </td></tr>
   </table>
   </dd>
 </dl>
@@ -921,9 +921,9 @@ n must be &gt; 0 </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00074">74</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_address_8h_source.html#l00440">mdtDeviceAddressList::append()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00631">findMatchingToHostModebusHwNodeId()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00593">mdtPortManager::isClosed()</a>, <a class="el" href="mdt_modbus_hw_node_id_8h_source.html#l00221">mdtModbusHwNodeIdList::isEmpty()</a>, <a class="el" href="mdt_device_address_8h_source.html#l00310">mdtDeviceAddress::setModbusTcpIdentification()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00238">mdtPortManager::setPortName()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00184">mdtPortManager::start()</a>, and <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00437">tryToConnect()</a>.</p>
+<p>References <a class="el" href="mdt_device_address_8h_source.html#l00445">mdtDeviceAddressList::append()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00448">findMatchingToHostModebusHwNodeId()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00593">mdtPortManager::isClosed()</a>, <a class="el" href="mdt_modbus_hw_node_id_8h_source.html#l00221">mdtModbusHwNodeIdList::isEmpty()</a>, <a class="el" href="mdt_device_address_8h_source.html#l00315">mdtDeviceAddress::setModbusTcpIdentification()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00238">mdtPortManager::setPortName()</a>, <a class="el" href="mdt_modbus_hw_node_id_8h_source.html#l00228">mdtModbusHwNodeIdList::size()</a>, <a class="el" href="mdt_device_address_8h_source.html#l00424">mdtDeviceAddressList::size()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00184">mdtPortManager::start()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00215">mdtPortManager::stop()</a>, and <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00254">tryToConnect()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00108">scan()</a>, and <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00227">scanFromKnownHostsFile()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_modbus_8cpp_source.html#l00125">mdtDeviceModbus::connectToDevice()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00113">scan()</a>, and <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00242">scanFromKnownHostsFile()</a>.</p>
 
 </div>
 </div>
@@ -969,16 +969,16 @@ n must be &gt; 0 </dd></dl>
     <tr><td class="paramname">iface</td><td>Scan will be done for all IP addresses available for given intarface. Note that only IPv4 is implemented. </td></tr>
     <tr><td class="paramname">port</td><td>Port. MODBUS/TCP default port is 502. </td></tr>
     <tr><td class="paramname">expectedHwNodeAddresses</td><td>If this list contains HW node addresses, scan will break when each one was found. </td></tr>
-    <tr><td class="paramname">timeout</td><td>Maximum wait time [ms]. Must be a multiple of 50 [ms] </td></tr>
+    <tr><td class="paramname">timeout</td><td>Maximum wait time [ms]. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A list of device addresses that contains found hosts. A empty list means that no device was found, or other error happened, <a class="el" href="classmdt_port_manager.html#a16c7ea5d74a8fc9ed065477574ec03c4" title="Get last error. ">lastError()</a> will also provide some informations in the case. </dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd>Port manager must be stopped before scanning. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00108">108</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00113">113</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00116">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00097">mdtError::Error</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8h_source.html#l00050">mdtNetworkHost::hostName</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00593">mdtPortManager::isClosed()</a>, <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8h_source.html#l00054">mdtNetworkHost::port</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00760">mdtPortManager::pvLastError</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00074">scan()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00060">mdtError::setError()</a>, and <a class="el" href="mdt_error_8h_source.html#l00096">mdtError::Warning</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00116">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00097">mdtError::Error</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8h_source.html#l00047">mdtNetworkHost::hostName</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00593">mdtPortManager::isClosed()</a>, <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8h_source.html#l00051">mdtNetworkHost::port</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00760">mdtPortManager::pvLastError</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00074">scan()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00060">mdtError::setError()</a>, and <a class="el" href="mdt_error_8h_source.html#l00096">mdtError::Warning</a>.</p>
 
 </div>
 </div>
@@ -1025,14 +1025,14 @@ n must be &gt; 0 </dd></dl>
   <table class="params">
     <tr><td class="paramname">iface</td><td>Scan will be done for all IP addresses available for given intarface. Note that only IPv4 is implemented. </td></tr>
     <tr><td class="paramname">port</td><td>Port. MODBUS/TCP default port is 502. </td></tr>
-    <tr><td class="paramname">timeout</td><td>Maximum wait time [ms]. Must be a multiple of 50 [ms] </td></tr>
+    <tr><td class="paramname">timeout</td><td>Maximum wait time [ms]. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A list of device addresses that contains found hosts. A empty list means that no device was found, or other error happened, <a class="el" href="classmdt_port_manager.html#a16c7ea5d74a8fc9ed065477574ec03c4" title="Get last error. ">lastError()</a> will also provide some informations in the case. </dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd>Port manager must be stopped before scanning. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8h_source.html#l00129">129</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8h_source.html">mdtModbusTcpPortManager.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8h_source.html#l00126">126</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8h_source.html">mdtModbusTcpPortManager.h</a>.</p>
 
 <p>References <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00074">scan()</a>.</p>
 
@@ -1087,16 +1087,16 @@ n must be &gt; 0 </dd></dl>
     <tr><td class="paramname">port</td><td>Port. MODBUS/TCP default port is 502. </td></tr>
     <tr><td class="paramname">ignoreLoopback</td><td>If true, loopback interface will be ignored. </td></tr>
     <tr><td class="paramname">expectedHwNodeAddresses</td><td>If this list contains HW node addresses, scan will break when each one was found. </td></tr>
-    <tr><td class="paramname">timeout</td><td>Maximum wait time [ms]. Must be a multiple of 50 [ms] </td></tr>
+    <tr><td class="paramname">timeout</td><td>Maximum wait time [ms]. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A list of device addresses that contains found hosts. A empty list means that no device was found, or other error happened, <a class="el" href="classmdt_port_manager.html#a16c7ea5d74a8fc9ed065477574ec03c4" title="Get last error. ">lastError()</a> will also provide some informations in the case. </dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd>Port manager must be stopped before scanning. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00172">172</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00177">177</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_address_8h_source.html#l00440">mdtDeviceAddressList::append()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00593">mdtPortManager::isClosed()</a>, and <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00074">scan()</a>.</p>
+<p>References <a class="el" href="mdt_device_address_8h_source.html#l00445">mdtDeviceAddressList::append()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00593">mdtPortManager::isClosed()</a>, and <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00074">scan()</a>.</p>
 
 </div>
 </div>
@@ -1150,14 +1150,14 @@ n must be &gt; 0 </dd></dl>
     <tr><td class="paramname">ifaces</td><td>Scan will be done for all IP addresses available for all given intarfaces. Note that only IPv4 is implemented. </td></tr>
     <tr><td class="paramname">port</td><td>Port. MODBUS/TCP default port is 502. </td></tr>
     <tr><td class="paramname">ignoreLoopback</td><td>If true, loopback interface will be ignored. </td></tr>
-    <tr><td class="paramname">timeout</td><td>Maximum wait time [ms]. Must be a multiple of 50 [ms] </td></tr>
+    <tr><td class="paramname">timeout</td><td>Maximum wait time [ms]. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A list of device addresses that contains found hosts. A empty list means that no device was found, or other error happened, <a class="el" href="classmdt_port_manager.html#a16c7ea5d74a8fc9ed065477574ec03c4" title="Get last error. ">lastError()</a> will also provide some informations in the case. </dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd>Port manager must be stopped before scanning. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8h_source.html#l00163">163</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8h_source.html">mdtModbusTcpPortManager.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8h_source.html#l00160">160</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8h_source.html">mdtModbusTcpPortManager.h</a>.</p>
 
 <p>References <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00074">scan()</a>.</p>
 
@@ -1192,16 +1192,16 @@ n must be &gt; 0 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">addressList</td><td>Address list that contains hosts to try to connect to. </td></tr>
-    <tr><td class="paramname">timeout</td><td>Maximum wait time [ms]. Must be a multiple of 50 [ms]. </td></tr>
+    <tr><td class="paramname">timeout</td><td>Maximum wait time [ms]. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A list of device addresses that contains found hosts. A empty list means that no device was found, or other error happened, <a class="el" href="classmdt_port_manager.html#a16c7ea5d74a8fc9ed065477574ec03c4" title="Get last error. ">lastError()</a> will also provide some informations in the case. </dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd>Port manager must be stopped before scanning. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00193">193</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00198">198</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_address_8h_source.html#l00440">mdtDeviceAddressList::append()</a>, <a class="el" href="mdt_modbus_hw_node_id_8h_source.html#l00162">mdtModbusHwNodeId::bitsCount()</a>, <a class="el" href="mdt_modbus_hw_node_id_8h_source.html#l00169">mdtModbusHwNodeId::firstBit()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00554">getHardwareNodeAddress()</a>, <a class="el" href="mdt_modbus_hw_node_id_8h_source.html#l00155">mdtModbusHwNodeId::id()</a>, <a class="el" href="mdt_device_address_8h_source.html#l00464">mdtDeviceAddressList::internalVector()</a>, <a class="el" href="mdt_modbus_hw_node_id_8h_source.html#l00077">mdtModbusHwNodeId::isNull()</a>, <a class="el" href="classmdt_device_address.html#a8e776267826886cd846fb2d75b9b7b2ba7b25be9aa462c983626e10cc14056101">mdtDeviceAddress::MODBUS</a>, <a class="el" href="classmdt_device_address.html#a87fedc5c0ede4736bcc939f453bf0ed0a487b5042489631a7727321162579c3a5">mdtDeviceAddress::TCPIP</a>, and <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00437">tryToConnect()</a>.</p>
+<p>References <a class="el" href="mdt_device_address_8h_source.html#l00445">mdtDeviceAddressList::append()</a>, <a class="el" href="mdt_modbus_hw_node_id_8h_source.html#l00162">mdtModbusHwNodeId::bitsCount()</a>, <a class="el" href="mdt_modbus_hw_node_id_8h_source.html#l00169">mdtModbusHwNodeId::firstBit()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00371">getHardwareNodeAddress()</a>, <a class="el" href="mdt_modbus_hw_node_id_8h_source.html#l00155">mdtModbusHwNodeId::id()</a>, <a class="el" href="mdt_device_address_8h_source.html#l00469">mdtDeviceAddressList::internalVector()</a>, <a class="el" href="mdt_modbus_hw_node_id_8h_source.html#l00077">mdtModbusHwNodeId::isNull()</a>, <a class="el" href="classmdt_device_address.html#a8e776267826886cd846fb2d75b9b7b2ba7b25be9aa462c983626e10cc14056101">mdtDeviceAddress::MODBUS</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00238">mdtPortManager::setPortName()</a>, <a class="el" href="mdt_device_address_8h_source.html#l00424">mdtDeviceAddressList::size()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00184">mdtPortManager::start()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00215">mdtPortManager::stop()</a>, <a class="el" href="classmdt_device_address.html#a87fedc5c0ede4736bcc939f453bf0ed0a487b5042489631a7727321162579c3a5">mdtDeviceAddress::TCPIP</a>, and <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00254">tryToConnect()</a>.</p>
 
 </div>
 </div>
@@ -1223,16 +1223,18 @@ n must be &gt; 0 </dd></dl>
 <p>Will read known hosts file and return list of devices that are attached at given host name, port and that have hardware node ID matching.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">timeout</td><td>Maximum wait time [ms]. Must be a multiple of 50 [ms]. </td></tr>
+    <tr><td class="paramname">timeout</td><td>Maximum wait time [ms]. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A list of device addresses that contains found hosts. A empty list means that no device was found, or other error happened, <a class="el" href="classmdt_port_manager.html#a16c7ea5d74a8fc9ed065477574ec03c4" title="Get last error. ">lastError()</a> will also provide some informations in the case. </dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd>Port manager must be stopped before scanning. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00227">227</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00242">242</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_address_8h_source.html#l00412">mdtDeviceAddressList::isEmpty()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00487">readDeviceAddressList()</a>, and <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00074">scan()</a>.</p>
+<p>References <a class="el" href="mdt_device_address_8h_source.html#l00417">mdtDeviceAddressList::isEmpty()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00304">readDeviceAddressList()</a>, and <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00074">scan()</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_device_modbus_8cpp_source.html#l00125">mdtDeviceModbus::connectToDevice()</a>.</p>
 
 </div>
 </div>
@@ -1279,11 +1281,11 @@ transaction must be a valid pointer, and not allready exists in transactions pen
 
 <p>Reimplemented from <a class="el" href="classmdt_port_manager.html#ad98399edba146af5cf32a9002094385c">mdtPortManager</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00748">748</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00565">565</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_abstract_port_8cpp_source.html#l00298">mdtAbstractPort::addFrameToWrite()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00677">mdtPortManager::addTransactionPending()</a>, <a class="el" href="mdt_frame_8cpp_source.html#l00179">mdtFrame::clear()</a>, <a class="el" href="mdt_frame_modbus_tcp_8cpp_source.html#l00037">mdtFrameModbusTcp::clearSub()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00638">mdtPortManager::currentTransactionId()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00116">mdtPortTransaction::data()</a>, <a class="el" href="mdt_frame_modbus_tcp_8cpp_source.html#l00142">mdtFrameModbusTcp::encode()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00051">mdtPortTransaction::id()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00643">mdtPortManager::incrementCurrentTransactionId()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00593">mdtPortManager::isClosed()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00549">isReady()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00082">mdtPortManager::lockPortMutex()</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00925">mdtPortManager::pvPort</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00312">mdtPortManager::restoreTransaction()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00046">mdtPortTransaction::setId()</a>, <a class="el" href="mdt_frame_modbus_tcp_8cpp_source.html#l00132">mdtFrameModbusTcp::setPdu()</a>, <a class="el" href="mdt_frame_modbus_tcp_8cpp_source.html#l00104">mdtFrameModbusTcp::setTransactionId()</a>, <a class="el" href="mdt_frame_modbus_tcp_8cpp_source.html#l00122">mdtFrameModbusTcp::setUnitId()</a>, <a class="el" href="mdt_frame_8cpp_source.html#l00246">mdtFrame::setWaitAnAnswer()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00730">mdtPortManager::transactionsDoneContains()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00096">mdtPortManager::unlockPortMutex()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00654">mdtPortManager::waitTransactionPossible()</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00066">mdtAbstractPort::WriteCanceled</a>, and <a class="el" href="mdt_abstract_port_8cpp_source.html#l00339">mdtAbstractPort::writeFramesPool()</a>.</p>
+<p>References <a class="el" href="mdt_abstract_port_8cpp_source.html#l00298">mdtAbstractPort::addFrameToWrite()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00677">mdtPortManager::addTransactionPending()</a>, <a class="el" href="mdt_frame_8cpp_source.html#l00179">mdtFrame::clear()</a>, <a class="el" href="mdt_frame_modbus_tcp_8cpp_source.html#l00037">mdtFrameModbusTcp::clearSub()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00638">mdtPortManager::currentTransactionId()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00116">mdtPortTransaction::data()</a>, <a class="el" href="mdt_frame_modbus_tcp_8cpp_source.html#l00142">mdtFrameModbusTcp::encode()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00051">mdtPortTransaction::id()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00643">mdtPortManager::incrementCurrentTransactionId()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00593">mdtPortManager::isClosed()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00366">isReady()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00082">mdtPortManager::lockPortMutex()</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00925">mdtPortManager::pvPort</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00312">mdtPortManager::restoreTransaction()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00046">mdtPortTransaction::setId()</a>, <a class="el" href="mdt_frame_modbus_tcp_8cpp_source.html#l00132">mdtFrameModbusTcp::setPdu()</a>, <a class="el" href="mdt_frame_modbus_tcp_8cpp_source.html#l00104">mdtFrameModbusTcp::setTransactionId()</a>, <a class="el" href="mdt_frame_modbus_tcp_8cpp_source.html#l00122">mdtFrameModbusTcp::setUnitId()</a>, <a class="el" href="mdt_frame_8cpp_source.html#l00246">mdtFrame::setWaitAnAnswer()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00730">mdtPortManager::transactionsDoneContains()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00096">mdtPortManager::unlockPortMutex()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00654">mdtPortManager::waitTransactionPossible()</a>, <a class="el" href="mdt_abstract_port_8h_source.html#l00066">mdtAbstractPort::WriteCanceled</a>, and <a class="el" href="mdt_abstract_port_8cpp_source.html#l00339">mdtAbstractPort::writeFramesPool()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00554">getHardwareNodeAddress()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00652">getRegisterValues()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00494">mdtDeviceModbus::readAnalogInput()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00511">mdtDeviceModbus::readAnalogInputs()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00528">mdtDeviceModbus::readAnalogOutput()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00545">mdtDeviceModbus::readAnalogOutputs()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00598">mdtDeviceModbus::readDigitalInput()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00615">mdtDeviceModbus::readDigitalInputs()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00632">mdtDeviceModbus::readDigitalOutput()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00649">mdtDeviceModbus::readDigitalOutputs()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00800">sendData()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00709">setRegisterValues()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00562">mdtDeviceModbus::writeAnalogOutput()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00579">mdtDeviceModbus::writeAnalogOutputs()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00666">mdtDeviceModbus::writeDigitalOutput()</a>, and <a class="el" href="mdt_device_modbus_8cpp_source.html#l00683">mdtDeviceModbus::writeDigitalOutputs()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00371">getHardwareNodeAddress()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00469">getRegisterValues()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00416">mdtDeviceModbus::readAnalogInput()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00433">mdtDeviceModbus::readAnalogInputs()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00450">mdtDeviceModbus::readAnalogOutput()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00467">mdtDeviceModbus::readAnalogOutputs()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00520">mdtDeviceModbus::readDigitalInput()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00537">mdtDeviceModbus::readDigitalInputs()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00554">mdtDeviceModbus::readDigitalOutput()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00571">mdtDeviceModbus::readDigitalOutputs()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00617">sendData()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00526">setRegisterValues()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00484">mdtDeviceModbus::writeAnalogOutput()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00501">mdtDeviceModbus::writeAnalogOutputs()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00588">mdtDeviceModbus::writeDigitalOutput()</a>, and <a class="el" href="mdt_device_modbus_8cpp_source.html#l00605">mdtDeviceModbus::writeDigitalOutputs()</a>.</p>
 
 </div>
 </div>
@@ -1330,9 +1332,9 @@ transaction must be a valid pointer, and not allready exists in transactions pen
 
 <p>Reimplemented from <a class="el" href="classmdt_port_manager.html#a445b27f0819158f67f1bd548cdd2fedf">mdtPortManager</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00800">800</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00617">617</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_port_manager_8cpp_source.html#l00290">mdtPortManager::getNewTransaction()</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00925">mdtPortManager::pvPort</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00748">sendData()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00110">mdtPortTransaction::setData()</a>, and <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>.</p>
+<p>References <a class="el" href="mdt_port_manager_8cpp_source.html#l00290">mdtPortManager::getNewTransaction()</a>, <a class="el" href="mdt_port_manager_8h_source.html#l00925">mdtPortManager::pvPort</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00565">sendData()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00110">mdtPortTransaction::setData()</a>, and <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>.</p>
 
 </div>
 </div>
@@ -1362,15 +1364,15 @@ transaction must be a valid pointer, and not allready exists in transactions pen
 
 <p>Helper method for register service. </p>
 <p>Usefull to set register values (f.ex. configurations regsisters, ...).</p>
-<p>Note: to set analog I/O values, the <a class="el" href="classmdt_device.html" title="class mdtDeviceIosSegment; ">mdtDevice</a> API should be used.</p>
+<p>Note: to set analog I/O values, the <a class="el" href="classmdt_device.html" title="Base class for a device connected to a port. ">mdtDevice</a> API should be used.</p>
 <dl class="section return"><dt>Returns</dt><dd>True on success. </dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd>startAddress must be &gt;= 0 </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00709">709</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00526">526</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_error_8cpp_source.html#l00116">mdtError::commit()</a>, <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html#l00283">mdtFrameCodecModbus::decode()</a>, <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html#l00222">mdtFrameCodecModbus::encodeWriteMultipleRegisters()</a>, <a class="el" href="mdt_error_8h_source.html#l00097">mdtError::Error</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00290">mdtPortManager::getNewTransaction()</a>, <a class="el" href="mdt_error_8h_source.html#l00048">MDT_DEVICE_ERROR</a>, <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00490">mdtPortManager::readenFrame()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00748">sendData()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00110">mdtPortTransaction::setData()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>, and <a class="el" href="mdt_port_manager_8cpp_source.html#l00383">mdtPortManager::waitTransactionDone()</a>.</p>
+<p>References <a class="el" href="mdt_error_8cpp_source.html#l00116">mdtError::commit()</a>, <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html#l00283">mdtFrameCodecModbus::decode()</a>, <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html#l00222">mdtFrameCodecModbus::encodeWriteMultipleRegisters()</a>, <a class="el" href="mdt_error_8h_source.html#l00097">mdtError::Error</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00290">mdtPortManager::getNewTransaction()</a>, <a class="el" href="mdt_error_8h_source.html#l00048">MDT_DEVICE_ERROR</a>, <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00490">mdtPortManager::readenFrame()</a>, <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00565">sendData()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00110">mdtPortTransaction::setData()</a>, <a class="el" href="mdt_port_transaction_8cpp_source.html#l00121">mdtPortTransaction::setQueryReplyMode()</a>, and <a class="el" href="mdt_port_manager_8cpp_source.html#l00383">mdtPortManager::waitTransactionDone()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_modbus_8cpp_source.html#l00252">mdtDeviceModbus::setRegisterValues()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_modbus_8cpp_source.html#l00174">mdtDeviceModbus::setRegisterValues()</a>.</p>
 
 </div>
 </div>
@@ -1404,49 +1406,7 @@ transaction must be a valid pointer, and not allready exists in transactions pen
       </table>
 </div><div class="memdoc">
 
-<p>Scan for available hosts with a MODBUS/TCP compatible device attached. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">hosts</td><td>A list of hosts to scan. Each host must be set with format hostname:port, or ip:port. Note that MODBUS/TCP default port is 502. </td></tr>
-    <tr><td class="paramname">timeout</td><td>Maximum wait time [ms]. Must be a multiple of 50 [ms] </td></tr>
-    <tr><td class="paramname">expectedHwNodeAddresses</td><td>If this list contains HW node addresses, scan will break when each one was found. See <a class="el" href="classmdt_modbus_tcp_port_manager.html#a02f498667f432c4430d1983e3dfd6055" title="Get the hardware node ID. ">getHardwareNodeAddress()</a> for details about HW node address. </td></tr>
-    <tr><td class="paramname">bitsCount</td><td>See <a class="el" href="classmdt_modbus_tcp_port_manager.html#a02f498667f432c4430d1983e3dfd6055" title="Get the hardware node ID. ">getHardwareNodeAddress()</a> </td></tr>
-    <tr><td class="paramname">bitsCountStartFrom</td><td>See <a class="el" href="classmdt_modbus_tcp_port_manager.html#a02f498667f432c4430d1983e3dfd6055" title="Get the hardware node ID. ">getHardwareNodeAddress()</a></td></tr>
-  </table>
-  </dd>
-</dl>
-<p>Note that returned list must be freed by user after usage. (for.ex. with qDeletAll() and QList::clear() ).</p>
-<dl class="section pre"><dt>Precondition</dt><dd>Port manager must be stoppedQList&lt;mdtPortInfo*&gt; scan(const QStringList &amp;hosts, int timeout = 500, const QList&lt;int&gt; &amp;expectedHwNodeAddresses = QList&lt;int&gt;(), int bitsCount = 8, int bitsCountStartFrom = 0);</dd></dl>
-<p>Scan for available hosts with a MODBUS/TCP compatible device attached</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">iface</td><td>Scan will be done for all IP addresses available for given intarface. Note that only IPv4 is implemented. </td></tr>
-    <tr><td class="paramname">port</td><td>Port. Note that MODBUS/TCP default port is 502. </td></tr>
-    <tr><td class="paramname">timeout</td><td>Maximum wait time [ms]. Must be a multiple of 50 [ms] </td></tr>
-    <tr><td class="paramname">expectedHwNodeAddresses</td><td>If this list contains HW node addresses, scan will break when each one was found. See <a class="el" href="classmdt_modbus_tcp_port_manager.html#a02f498667f432c4430d1983e3dfd6055" title="Get the hardware node ID. ">getHardwareNodeAddress()</a> for details about HW node address. </td></tr>
-    <tr><td class="paramname">bitsCount</td><td>See <a class="el" href="classmdt_modbus_tcp_port_manager.html#a02f498667f432c4430d1983e3dfd6055" title="Get the hardware node ID. ">getHardwareNodeAddress()</a> </td></tr>
-    <tr><td class="paramname">bitsCountStartFrom</td><td>See <a class="el" href="classmdt_modbus_tcp_port_manager.html#a02f498667f432c4430d1983e3dfd6055" title="Get the hardware node ID. ">getHardwareNodeAddress()</a></td></tr>
-  </table>
-  </dd>
-</dl>
-<p>Note that returned list must be freed by user after usage. (for.ex. with qDeletAll() and QList::clear() ).</p>
-<dl class="section pre"><dt>Precondition</dt><dd>Port manager must be stoppedQList&lt;mdtPortInfo*&gt; scan(const QNetworkInterface &amp;iface, quint16 port = 502, int timeout = 500, const QList&lt;int&gt; &amp;expectedHwNodeAddresses = QList&lt;int&gt;(), int bitsCount = 8, int bitsCountStartFrom = 0);</dd></dl>
-<p>Scan for available hosts with a MODBUS/TCP compatible device attached</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">ifaces</td><td>Scan will be done for all IP addresses available for all given intarfaces. Note that only IPv4 is implemented. </td></tr>
-    <tr><td class="paramname">port</td><td>Port. Note that MODBUS/TCP default port is 502. </td></tr>
-    <tr><td class="paramname">timeout</td><td>Maximum wait time [ms]. Must be a multiple of 50 [ms] </td></tr>
-    <tr><td class="paramname">ignoreLoopback</td><td>If true, loopback interface will be ignored. </td></tr>
-    <tr><td class="paramname">expectedHwNodeAddresses</td><td>If this list contains HW node addresses, scan will break when each one was found. See <a class="el" href="classmdt_modbus_tcp_port_manager.html#a02f498667f432c4430d1983e3dfd6055" title="Get the hardware node ID. ">getHardwareNodeAddress()</a> for details about HW node address. </td></tr>
-    <tr><td class="paramname">bitsCount</td><td>See <a class="el" href="classmdt_modbus_tcp_port_manager.html#a02f498667f432c4430d1983e3dfd6055" title="Get the hardware node ID. ">getHardwareNodeAddress()</a> </td></tr>
-    <tr><td class="paramname">bitsCountStartFrom</td><td>See <a class="el" href="classmdt_modbus_tcp_port_manager.html#a02f498667f432c4430d1983e3dfd6055" title="Get the hardware node ID. ">getHardwareNodeAddress()</a></td></tr>
-  </table>
-  </dd>
-</dl>
-<p>Note that returned list must be freed by user after usage. (for.ex. with qDeletAll() and QList::clear() ).</p>
-<dl class="section pre"><dt>Precondition</dt><dd>Port manager must be stoppedQList&lt;mdtPortInfo*&gt; scan(const QList&lt;QNetworkInterface&gt; &amp;ifaces, quint16 port = 502, int timeout = 500, bool ignoreLoopback = true, const QList&lt;int&gt; &amp;expectedHwNodeAddresses = QList&lt;int&gt;(), int bitsCount = 8, int bitsCountStartFrom = 0);</dd></dl>
-<p>Try to connect to a host</p>
+<p>Try to connect to a host. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">hostName</td><td>Host name or a IP address </td></tr>
@@ -1458,9 +1418,9 @@ transaction must be a valid pointer, and not allready exists in transactions pen
 <dl class="section return"><dt>Returns</dt><dd>True on successfull connection. </dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd>Port manager must be stopped </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00437">437</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00254">254</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00819">abortTryToConnect()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00593">mdtPortManager::isClosed()</a>, and <a class="el" href="classmdt_port_manager.html#a6f6c6f8a8430d8631a08c765565db9ab">mdtPortManager::statusMessageChanged()</a>.</p>
+<p>References <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00636">abortTryToConnect()</a>, <a class="el" href="mdt_port_manager_8cpp_source.html#l00593">mdtPortManager::isClosed()</a>, and <a class="el" href="classmdt_port_manager.html#a6f6c6f8a8430d8631a08c765565db9ab">mdtPortManager::statusMessageChanged()</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00074">scan()</a>.</p>
 
@@ -1473,7 +1433,7 @@ transaction must be a valid pointer, and not allready exists in transactions pen
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Feb 19 2015 17:07:55 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Feb 27 2015 17:17:45 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

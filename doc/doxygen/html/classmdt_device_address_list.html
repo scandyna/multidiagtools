@@ -137,7 +137,7 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p>Device address list. </p>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="classmdt_device_address.html" title="Common device identification. ">mdtDeviceAddress</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_address_8h_source.html#l00400">400</a> of file <a class="el" href="mdt_device_address_8h_source.html">mdtDeviceAddress.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_address_8h_source.html#l00405">405</a> of file <a class="el" href="mdt_device_address_8h_source.html">mdtDeviceAddress.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a6007c5d6c9f0cb69f88bb9c331b2758e"></a>
 <div class="memitem">
@@ -162,7 +162,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Construct a empty device address list. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_address_8h_source.html#l00406">406</a> of file <a class="el" href="mdt_device_address_8h_source.html">mdtDeviceAddress.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_address_8h_source.html#l00411">411</a> of file <a class="el" href="mdt_device_address_8h_source.html">mdtDeviceAddress.h</a>.</p>
 
 </div>
 </div>
@@ -191,7 +191,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Append a device address at the end of the list. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_address_8h_source.html#l00440">440</a> of file <a class="el" href="mdt_device_address_8h_source.html">mdtDeviceAddress.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_address_8h_source.html#l00445">445</a> of file <a class="el" href="mdt_device_address_8h_source.html">mdtDeviceAddress.h</a>.</p>
 
 <p>Referenced by <a class="el" href="mdt_device_address_8cpp_source.html#l00276">readFromFile()</a>, and <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00074">mdtModbusTcpPortManager::scan()</a>.</p>
 
@@ -221,9 +221,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Append a list of device addresses at the end of the list. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_address_8h_source.html#l00446">446</a> of file <a class="el" href="mdt_device_address_8h_source.html">mdtDeviceAddress.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_address_8h_source.html#l00451">451</a> of file <a class="el" href="mdt_device_address_8h_source.html">mdtDeviceAddress.h</a>.</p>
 
-<p>References <a class="el" href="mdt_device_address_8h_source.html#l00464">internalVector()</a>.</p>
+<p>References <a class="el" href="mdt_device_address_8h_source.html#l00469">internalVector()</a>.</p>
 
 </div>
 </div>
@@ -252,9 +252,11 @@ Public Member Functions</h2></td></tr>
 <p>Get device address at index. </p>
 <dl class="section pre"><dt>Precondition</dt><dd>index must be in valid range ( [0,size-1] ) </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_address_8h_source.html#l00473">473</a> of file <a class="el" href="mdt_device_address_8h_source.html">mdtDeviceAddress.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_address_8h_source.html#l00478">478</a> of file <a class="el" href="mdt_device_address_8h_source.html">mdtDeviceAddress.h</a>.</p>
 
-<p>References <a class="el" href="mdt_device_address_8h_source.html#l00419">size()</a>.</p>
+<p>References <a class="el" href="mdt_device_address_8h_source.html#l00424">size()</a>.</p>
+
+<p>Referenced by <a class="el" href="mdt_device_modbus_8cpp_source.html#l00125">mdtDeviceModbus::connectToDevice()</a>.</p>
 
 </div>
 </div>
@@ -281,7 +283,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Clear. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_address_8h_source.html#l00433">433</a> of file <a class="el" href="mdt_device_address_8h_source.html">mdtDeviceAddress.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_address_8h_source.html#l00438">438</a> of file <a class="el" href="mdt_device_address_8h_source.html">mdtDeviceAddress.h</a>.</p>
 
 </div>
 </div>
@@ -315,9 +317,9 @@ Public Member Functions</h2></td></tr>
 <div class="line">}</div>
 </div><!-- fragment --><p> Please take in accound that returned reference become invalid as soon as this <a class="el" href="classmdt_device_address_list.html" title="Device address list. ">mdtDeviceAddressList</a> object is destroyed. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_address_8h_source.html#l00464">464</a> of file <a class="el" href="mdt_device_address_8h_source.html">mdtDeviceAddress.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_address_8h_source.html#l00469">469</a> of file <a class="el" href="mdt_device_address_8h_source.html">mdtDeviceAddress.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_address_8h_source.html#l00446">append()</a>, and <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00193">mdtModbusTcpPortManager::scan()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_address_8h_source.html#l00451">append()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00125">mdtDeviceModbus::connectToDevice()</a>, and <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00198">mdtModbusTcpPortManager::scan()</a>.</p>
 
 </div>
 </div>
@@ -344,9 +346,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Check if device addresses list is empty. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_address_8h_source.html#l00412">412</a> of file <a class="el" href="mdt_device_address_8h_source.html">mdtDeviceAddress.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_address_8h_source.html#l00417">417</a> of file <a class="el" href="mdt_device_address_8h_source.html">mdtDeviceAddress.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00227">mdtModbusTcpPortManager::scanFromKnownHostsFile()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_modbus_8cpp_source.html#l00125">mdtDeviceModbus::connectToDevice()</a>, and <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00242">mdtModbusTcpPortManager::scanFromKnownHostsFile()</a>.</p>
 
 </div>
 </div>
@@ -373,9 +375,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Get last error. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_address_8h_source.html#l00426">426</a> of file <a class="el" href="mdt_device_address_8h_source.html">mdtDeviceAddress.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_address_8h_source.html#l00431">431</a> of file <a class="el" href="mdt_device_address_8h_source.html">mdtDeviceAddress.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00487">mdtModbusTcpPortManager::readDeviceAddressList()</a>, and <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00479">mdtModbusTcpPortManager::saveDeviceAddressList()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00304">mdtModbusTcpPortManager::readDeviceAddressList()</a>, and <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00296">mdtModbusTcpPortManager::saveDeviceAddressList()</a>.</p>
 
 </div>
 </div>
@@ -397,9 +399,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_device_address_8cpp_source.html#l00276">276</a> of file <a class="el" href="mdt_device_address_8cpp_source.html">mdtDeviceAddress.cpp</a>.</p>
 
-<p>References <a class="el" href="mdt_device_address_8h_source.html#l00440">append()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00116">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00097">mdtError::Error</a>, <a class="el" href="mdt_device_address_8h_source.html#l00129">mdtDeviceAddress::lastError()</a>, <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_device_address_8h_source.html#l00164">mdtDeviceAddress::setAddressString()</a>, <a class="el" href="mdt_device_address_8h_source.html#l00220">mdtDeviceAddress::setAlias()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00060">mdtError::setError()</a>.</p>
+<p>References <a class="el" href="mdt_device_address_8h_source.html#l00445">append()</a>, <a class="el" href="mdt_error_8cpp_source.html#l00116">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00097">mdtError::Error</a>, <a class="el" href="mdt_device_address_8h_source.html#l00129">mdtDeviceAddress::lastError()</a>, <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, <a class="el" href="mdt_device_address_8h_source.html#l00164">mdtDeviceAddress::setAddressString()</a>, <a class="el" href="mdt_device_address_8h_source.html#l00220">mdtDeviceAddress::setAlias()</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00060">mdtError::setError()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00487">mdtModbusTcpPortManager::readDeviceAddressList()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00304">mdtModbusTcpPortManager::readDeviceAddressList()</a>.</p>
 
 </div>
 </div>
@@ -424,7 +426,7 @@ Public Member Functions</h2></td></tr>
 
 <p>References <a class="el" href="mdt_error_8cpp_source.html#l00116">mdtError::commit()</a>, <a class="el" href="mdt_error_8h_source.html#l00097">mdtError::Error</a>, <a class="el" href="mdt_error_8h_source.html#l00060">MDT_ERROR_SET_SRC</a>, and <a class="el" href="mdt_error_8cpp_source.html#l00060">mdtError::setError()</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00479">mdtModbusTcpPortManager::saveDeviceAddressList()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00296">mdtModbusTcpPortManager::saveDeviceAddressList()</a>.</p>
 
 </div>
 </div>
@@ -451,9 +453,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Get device addresses list size. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_address_8h_source.html#l00419">419</a> of file <a class="el" href="mdt_device_address_8h_source.html">mdtDeviceAddress.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_address_8h_source.html#l00424">424</a> of file <a class="el" href="mdt_device_address_8h_source.html">mdtDeviceAddress.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_address_8h_source.html#l00473">at()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_address_8h_source.html#l00478">at()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00125">mdtDeviceModbus::connectToDevice()</a>, and <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00074">mdtModbusTcpPortManager::scan()</a>.</p>
 
 </div>
 </div>
@@ -464,7 +466,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Feb 19 2015 17:07:53 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Feb 27 2015 17:17:45 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

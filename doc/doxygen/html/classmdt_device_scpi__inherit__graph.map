@@ -1,5 +1,5 @@
 <map id="mdtDeviceScpi" name="mdtDeviceScpi">
 <area shape="rect" id="node4" href="$classmdt_device_d_s_o1000_a.html" title="mdtDeviceDSO1000A" alt="" coords="5,229,155,256"/>
 <area shape="rect" id="node5" href="$classmdt_device_u3606_a.html" title="Representation of a Agilent U3606A. " alt="" coords="179,229,311,256"/>
-<area shape="rect" id="node2" href="$classmdt_device.html" title="class mdtDeviceIosSegment; " alt="" coords="120,80,205,107"/>
+<area shape="rect" id="node2" href="$classmdt_device.html" title="Base class for a device connected to a port. " alt="" coords="120,80,205,107"/>
 </map>

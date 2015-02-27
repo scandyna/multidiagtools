@@ -167,7 +167,7 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Store a segment of device I/O list. </p>
 <p>A physical device, such as a modular I/O controller (f.ex. Wago 750) can contain severa modules. Some of them can be analog I/O, digital I/O or more complex module.</p>
-<p>This class is a container that helps <a class="el" href="classmdt_device.html" title="class mdtDeviceIosSegment; ">mdtDevice</a> and <a class="el" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s. ">mdtDeviceIos</a> to deal with I/O mapping for multiple I/O read/write. Typically, some I/O can be present in <a class="el" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s. ">mdtDeviceIos</a>, but are not data I/O (but, f.ex. configuration registers). A other problem is that it can happen that I/O are not present in contigous range, but in several segments (f.ex. analog inputs from 0x200 -&gt; 0x500, then 0x3000 -&gt; 0x3500, ...) </p>
+<p>This class is a container that helps <a class="el" href="classmdt_device.html" title="Base class for a device connected to a port. ">mdtDevice</a> and <a class="el" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s. ">mdtDeviceIos</a> to deal with I/O mapping for multiple I/O read/write. Typically, some I/O can be present in <a class="el" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s. ">mdtDeviceIos</a>, but are not data I/O (but, f.ex. configuration registers). A other problem is that it can happen that I/O are not present in contigous range, but in several segments (f.ex. analog inputs from 0x200 -&gt; 0x500, then 0x3000 -&gt; 0x3500, ...) </p>
 
 <p>Definition at line <a class="el" href="mdt_device_ios_segment_8h_source.html#l00045">45</a> of file <a class="el" href="mdt_device_ios_segment_8h_source.html">mdtDeviceIosSegment.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -353,7 +353,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_device_ios_segment_8cpp_source.html#l00104">104</a> of file <a class="el" href="mdt_device_ios_segment_8cpp_source.html">mdtDeviceIosSegment.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00238">mdtMultiIoDevice::getAnalogInputs()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00390">mdtMultiIoDevice::getAnalogOutputs()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00697">mdtMultiIoDevice::getDigitalInputs()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00850">mdtMultiIoDevice::getDigitalOutputs()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00543">mdtMultiIoDevice::setAnalogOutputs()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l01021">mdtMultiIoDevice::setDigitalOutputs()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00585">mdtDeviceIos::updateAnalogInputValues()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00669">mdtDeviceIos::updateAnalogOutputValues()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00786">mdtDeviceIos::updateDigitalInputValues()</a>, and <a class="el" href="mdt_device_ios_8cpp_source.html#l00870">mdtDeviceIos::updateDigitalOutputValues()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00238">mdtMultiIoDevice::getAnalogInputs()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00392">mdtMultiIoDevice::getAnalogOutputs()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00700">mdtMultiIoDevice::getDigitalInputs()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00852">mdtMultiIoDevice::getDigitalOutputs()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00544">mdtMultiIoDevice::setAnalogOutputs()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l01025">mdtMultiIoDevice::setDigitalOutputs()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00585">mdtDeviceIos::updateAnalogInputValues()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00669">mdtDeviceIos::updateAnalogOutputValues()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00786">mdtDeviceIos::updateDigitalInputValues()</a>, and <a class="el" href="mdt_device_ios_8cpp_source.html#l00870">mdtDeviceIos::updateDigitalOutputValues()</a>.</p>
 
 </div>
 </div>
@@ -482,7 +482,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_device_ios_segment_8cpp_source.html#l00068">68</a> of file <a class="el" href="mdt_device_ios_segment_8cpp_source.html">mdtDeviceIosSegment.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00238">mdtMultiIoDevice::getAnalogInputs()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00390">mdtMultiIoDevice::getAnalogOutputs()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00697">mdtMultiIoDevice::getDigitalInputs()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00850">mdtMultiIoDevice::getDigitalOutputs()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00585">mdtDeviceIos::updateAnalogInputValues()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00669">mdtDeviceIos::updateAnalogOutputValues()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00786">mdtDeviceIos::updateDigitalInputValues()</a>, and <a class="el" href="mdt_device_ios_8cpp_source.html#l00870">mdtDeviceIos::updateDigitalOutputValues()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00238">mdtMultiIoDevice::getAnalogInputs()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00392">mdtMultiIoDevice::getAnalogOutputs()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00700">mdtMultiIoDevice::getDigitalInputs()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00852">mdtMultiIoDevice::getDigitalOutputs()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00585">mdtDeviceIos::updateAnalogInputValues()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00669">mdtDeviceIos::updateAnalogOutputValues()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00786">mdtDeviceIos::updateDigitalInputValues()</a>, and <a class="el" href="mdt_device_ios_8cpp_source.html#l00870">mdtDeviceIos::updateDigitalOutputValues()</a>.</p>
 
 </div>
 </div>
@@ -503,7 +503,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_device_ios_segment_8cpp_source.html#l00077">77</a> of file <a class="el" href="mdt_device_ios_segment_8cpp_source.html">mdtDeviceIosSegment.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00543">mdtMultiIoDevice::setAnalogOutputs()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l01021">mdtMultiIoDevice::setDigitalOutputs()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00669">mdtDeviceIos::updateAnalogOutputValues()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00870">mdtDeviceIos::updateDigitalOutputValues()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00579">mdtDeviceModbus::writeAnalogOutputs()</a>, and <a class="el" href="mdt_device_modbus_8cpp_source.html#l00683">mdtDeviceModbus::writeDigitalOutputs()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_multi_io_device_8cpp_source.html#l00544">mdtMultiIoDevice::setAnalogOutputs()</a>, <a class="el" href="mdt_multi_io_device_8cpp_source.html#l01025">mdtMultiIoDevice::setDigitalOutputs()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00669">mdtDeviceIos::updateAnalogOutputValues()</a>, <a class="el" href="mdt_device_ios_8cpp_source.html#l00870">mdtDeviceIos::updateDigitalOutputValues()</a>, <a class="el" href="mdt_device_modbus_8cpp_source.html#l00501">mdtDeviceModbus::writeAnalogOutputs()</a>, and <a class="el" href="mdt_device_modbus_8cpp_source.html#l00605">mdtDeviceModbus::writeDigitalOutputs()</a>.</p>
 
 </div>
 </div>
@@ -699,7 +699,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_device_ios_segment_8cpp_source.html#l00430">430</a> of file <a class="el" href="mdt_device_ios_segment_8cpp_source.html">mdtDeviceIosSegment.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_modbus_8cpp_source.html#l00683">mdtDeviceModbus::writeDigitalOutputs()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_modbus_8cpp_source.html#l00605">mdtDeviceModbus::writeDigitalOutputs()</a>.</p>
 
 </div>
 </div>
@@ -739,7 +739,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mdt_device_ios_segment_8cpp_source.html#l00404">404</a> of file <a class="el" href="mdt_device_ios_segment_8cpp_source.html">mdtDeviceIosSegment.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mdt_device_modbus_8cpp_source.html#l00579">mdtDeviceModbus::writeAnalogOutputs()</a>.</p>
+<p>Referenced by <a class="el" href="mdt_device_modbus_8cpp_source.html#l00501">mdtDeviceModbus::writeAnalogOutputs()</a>.</p>
 
 </div>
 </div>
@@ -750,7 +750,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Feb 19 2015 17:07:54 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Feb 27 2015 17:17:45 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

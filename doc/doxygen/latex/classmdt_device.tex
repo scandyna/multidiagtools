@@ -3,7 +3,7 @@
 }
 
 
-class \hyperlink{classmdt_device_ios_segment}{mdt\-Device\-Ios\-Segment};  
+Base class for a device connected to a port.  
 
 
 
@@ -12,8 +12,7 @@ class \hyperlink{classmdt_device_ios_segment}{mdt\-Device\-Ios\-Segment};
 
 
 
-Inheritance diagram for mdt\-Device\-:
-\nopagebreak
+Inheritance diagram for mdt\-Device\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -22,8 +21,7 @@ Inheritance diagram for mdt\-Device\-:
 \end{figure}
 
 
-Collaboration diagram for mdt\-Device\-:
-\nopagebreak
+Collaboration diagram for mdt\-Device\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -58,16 +56,14 @@ void \hyperlink{classmdt_device_a3fbc6e71241e2e9daa2d8557f870c03c}{status\-Messa
 \begin{DoxyCompactList}\small\item\em Construct a device object. \end{DoxyCompactList}\item 
 virtual \hyperlink{classmdt_device_ac2a9cfd6042f3f9d8da4e84f044d3f4a}{$\sim$mdt\-Device} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_device_a80186f1aa6fbdc13f1652de978c35518}{set\-Name} (const Q\-String \&\hyperlink{classmdt_device_a7ad893c6885dbaef5a6cb980bfe627e0}{name})
-\begin{DoxyCompactList}\small\item\em Set the device name. \end{DoxyCompactList}\item 
-Q\-String \hyperlink{classmdt_device_a7ad893c6885dbaef5a6cb980bfe627e0}{name} () const 
-\begin{DoxyCompactList}\small\item\em Get device name. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_device_af6fddf7fba1f54e481a4f3445db64d98}{set\-Identification} (const Q\-Variant \&id)
-\begin{DoxyCompactList}\small\item\em Set device identification. \end{DoxyCompactList}\item 
-Q\-Variant \hyperlink{classmdt_device_a54845e1af6f6f98de7de79c3df9ac7b5}{identification} () const 
-\begin{DoxyCompactList}\small\item\em Get device identification. \end{DoxyCompactList}\item 
-virtual bool \hyperlink{classmdt_device_ac57bc624391a4035b20bfd29dbbea7da}{connect\-To\-Device} (const \hyperlink{classmdt_device_address}{mdt\-Device\-Address} \&address)
-\begin{DoxyCompactList}\small\item\em Search and connect to physical device. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_a3fdad460ae0eac5710b13e400156cb1d}{set\-Device\-Address} (const \hyperlink{classmdt_device_address}{mdt\-Device\-Address} \&address, const Q\-String \&\hyperlink{classmdt_device_a3aa589ecae0fa3deed61431d07db9276}{alias}=Q\-String())
+\begin{DoxyCompactList}\small\item\em Set device address. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_device_address}{mdt\-Device\-Address} \hyperlink{classmdt_device_af04ef3dc643127325597af46494ffb6b}{device\-Address} () const 
+\begin{DoxyCompactList}\small\item\em Get device address. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{classmdt_device_a3aa589ecae0fa3deed61431d07db9276}{alias} () const 
+\begin{DoxyCompactList}\small\item\em Get device alias. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classmdt_device_a0c265d9078bf50708aa60a73b5125667}{connect\-To\-Device} ()
+\begin{DoxyCompactList}\small\item\em Connect to physical device. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_device_a2b694a37d9464d27214bdeceec220998}{disconnect\-From\-Device} ()
 \begin{DoxyCompactList}\small\item\em Disconnect from device. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_device_aa241c40514683254990e742cf1bbb155}{set\-Back\-To\-Ready\-State\-Timeout} (int timeout)
@@ -97,8 +93,8 @@ virtual void \hyperlink{classmdt_device_ad2646ad2fb99b40c9f303b24a7ee971e}{state
 \begin{DoxyCompactList}\small\item\em Called when current state has changed. \end{DoxyCompactList}\item 
 virtual void \hyperlink{classmdt_device_afe3dec5b38bb5db7f5f6f250caa5f577}{disconnect\-From\-Device\-Event} ()
 \begin{DoxyCompactList}\small\item\em Called by \hyperlink{classmdt_device_a2b694a37d9464d27214bdeceec220998}{disconnect\-From\-Device()} \end{DoxyCompactList}\item 
-virtual void \hyperlink{classmdt_device_a30b8db129316183a10d38a569d431c92}{name\-Changed\-Event} (const Q\-String \&new\-Name)
-\begin{DoxyCompactList}\small\item\em Called by \hyperlink{classmdt_device_a80186f1aa6fbdc13f1652de978c35518}{set\-Name()} \end{DoxyCompactList}\end{DoxyCompactItemize}
+virtual void \hyperlink{classmdt_device_aeda0ed058f42b7513bb697fe7a1e6ab7}{device\-Address\-Changed\-Event} (const \hyperlink{classmdt_device_address}{mdt\-Device\-Address} \&address)
+\begin{DoxyCompactList}\small\item\em Called by \hyperlink{classmdt_device_a3fdad460ae0eac5710b13e400156cb1d}{set\-Device\-Address()} \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -107,9 +103,11 @@ virtual void \hyperlink{classmdt_device_a30b8db129316183a10d38a569d431c92}{name\
 
 
 \subsection{Detailed Description}
-class \hyperlink{classmdt_device_ios_segment}{mdt\-Device\-Ios\-Segment}; 
+Base class for a device connected to a port. 
 
-Base class for a device connected to a port
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000010}{Todo}]This detailed description is obselete !\end{DoxyRefDesc}
+
 
 Querying a device can be done several ways. Some devices sends a confirmation after each query.
 
@@ -129,25 +127,11 @@ A other usage is automated sequence. In this case, the sequence will tell when i
 
 A device can accept one or many request before results must be read. This depends most case on used port and protocol.
 
-It can be useful to find on witch port a device is attached (f.\-ex. setup of a automated test application). For this, \hyperlink{classmdt_device_ac57bc624391a4035b20bfd29dbbea7da}{connect\-To\-Device()} was introduced.
+It can be useful to find on witch port a device is attached (f.\-ex. setup of a automated test application). For this, \hyperlink{classmdt_device_a0c265d9078bf50708aa60a73b5125667}{connect\-To\-Device()} was introduced.
 
-A device can have several states (ready, busy, disconnected, ...). To help the application programmer to keep consistency, this states are updated in this class using \hyperlink{classmdt_port_manager}{mdt\-Port\-Manager} 's state machine. This state machine is based on \hyperlink{class_q_state_machine}{Q\-State\-Machine}.
+A device can have several states (ready, busy, disconnected, ...). To help the application programmer to keep consistency, this states are updated in this class using \hyperlink{classmdt_port_manager}{mdt\-Port\-Manager} 's state machine. This state machine is based on \hyperlink{class_q_state_machine}{Q\-State\-Machine}. 
 
-Notes about I/\-O container\-: In first version of \hyperlink{classmdt_device}{mdt\-Device}, I/\-O container (\hyperlink{classmdt_device_ios}{mdt\-Device\-Ios} object) was handled by caller. Experience showed that this was a bad solution. Now, the container is created, and destroyed, by \hyperlink{classmdt_device}{mdt\-Device} itself. To deal with I/\-O container, some methods are available\-:
-\begin{DoxyItemize}
-\item add\-Input(mdt\-Analog\-Io $\ast$) \-: add a analog input.
-\item add\-Inputs(\-Q\-List$<$mdt\-Analog\-Io$\ast$$>$ \&) \-: add a list of analog inputs.
-\item add\-Output(mdt\-Analog\-Io $\ast$) \-: add a analog output.
-\item add\-Outputs(\-Q\-List$<$mdt\-Analog\-Io$\ast$$>$ \&) \-: add a list of analog outputs.
-\item add\-Input(mdt\-Digital\-Io $\ast$) \-: add a digital input.
-\item add\-Inputs(\-Q\-List$<$mdt\-Digital\-Io$\ast$$>$ \&) \-: add a list of digital inputs.
-\item add\-Output(mdt\-Digital\-Io $\ast$) \-: add a digital output.
-\item add\-Outputs(\-Q\-List$<$mdt\-Digital\-Io$\ast$$>$ \&) \-: add a list of digital outputs.
-\item ios() \-: access I/\-O container.
-\item delete\-Ios() \-: delete all I/\-O in container. 
-\end{DoxyItemize}
-
-Definition at line 109 of file mdt\-Device.\-h.
+Definition at line 91 of file mdt\-Device.\-h.
 
 
 
@@ -174,7 +158,7 @@ State of device.
 \end{Desc}
 
 
-Definition at line 117 of file mdt\-Device.\-h.
+Definition at line 99 of file mdt\-Device.\-h.
 
 
 
@@ -196,7 +180,7 @@ Definition at line 27 of file mdt\-Device.\-cpp.
 
 
 
-References run\-Queries(), and set\-Name().
+References run\-Queries().
 
 \hypertarget{classmdt_device_ac2a9cfd6042f3f9d8da4e84f044d3f4a}{\index{mdt\-Device@{mdt\-Device}!$\sim$mdt\-Device@{$\sim$mdt\-Device}}
 \index{$\sim$mdt\-Device@{$\sim$mdt\-Device}!mdtDevice@{mdt\-Device}}
@@ -211,7 +195,7 @@ Destructor.
 
 Will disconnect from device and delete I/\-O container. 
 
-Definition at line 47 of file mdt\-Device.\-cpp.
+Definition at line 46 of file mdt\-Device.\-cpp.
 
 
 
@@ -220,34 +204,51 @@ References disconnect\-From\-Device().
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_device_ac57bc624391a4035b20bfd29dbbea7da}{\index{mdt\-Device@{mdt\-Device}!connect\-To\-Device@{connect\-To\-Device}}
-\index{connect\-To\-Device@{connect\-To\-Device}!mdtDevice@{mdt\-Device}}
-\subsubsection[{connect\-To\-Device}]{\setlength{\rightskip}{0pt plus 5cm}bool mdt\-Device\-::connect\-To\-Device (
+\hypertarget{classmdt_device_a3aa589ecae0fa3deed61431d07db9276}{\index{mdt\-Device@{mdt\-Device}!alias@{alias}}
+\index{alias@{alias}!mdtDevice@{mdt\-Device}}
+\subsubsection[{alias}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Device\-::alias (
 \begin{DoxyParamCaption}
-\item[{const {\bf mdt\-Device\-Address} \&}]{address}
+{}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classmdt_device_ac57bc624391a4035b20bfd29dbbea7da}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_a3aa589ecae0fa3deed61431d07db9276}
 
 
-Search and connect to physical device. 
-
-Will scan available ports and open the first port that has device attached matching request.
+Get device alias. 
 
 
-\begin{DoxyParams}{Parameters}
-{\em dev\-Info} & Requested device's informations. \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-A error listed in \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdt\-Abstract\-Port\-::error\-\_\-t} (No\-Error on success)
-\end{DoxyReturn}
-Note\-: default implementation does nothing and returns allways a Unhandled\-Error. See subclass documentation for more details.\-virtual \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdt\-Abstract\-Port\-::error\-\_\-t} connect\-To\-Device(const mdt\-Device\-Info \&dev\-Info);
 
-Connect to physical device
+Definition at line 135 of file mdt\-Device.\-h.
 
-Note\-: default implementation does nothing and returns allways false. See subclass documentation for more details. 
 
-Definition at line 74 of file mdt\-Device.\-cpp.
+
+References mdt\-Device\-Address\-::alias().
+
+
+
+Referenced by mdt\-Device\-Modbus\-::connect\-To\-Device(), mdt\-Device\-U3606\-A\-::connect\-To\-Device(), and device\-Id\-String().
+
+\hypertarget{classmdt_device_a0c265d9078bf50708aa60a73b5125667}{\index{mdt\-Device@{mdt\-Device}!connect\-To\-Device@{connect\-To\-Device}}
+\index{connect\-To\-Device@{connect\-To\-Device}!mdtDevice@{mdt\-Device}}
+\subsubsection[{connect\-To\-Device}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdt\-Device\-::connect\-To\-Device (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{classmdt_device_a0c265d9078bf50708aa60a73b5125667}
+
+
+Connect to physical device. 
+
+Connect to device set with \hyperlink{classmdt_device_a3fdad460ae0eac5710b13e400156cb1d}{set\-Device\-Address()}.
+
+Whenn implementing \hyperlink{classmdt_device_a0c265d9078bf50708aa60a73b5125667}{connect\-To\-Device()} functions in subclass, it is recommended to set device address with \hyperlink{classmdt_device_a3fdad460ae0eac5710b13e400156cb1d}{set\-Device\-Address()}. This is because some informations are also available later, f.\-ex. with \hyperlink{classmdt_device_af04ef3dc643127325597af46494ffb6b}{device\-Address()}, \hyperlink{classmdt_device_a3aa589ecae0fa3deed61431d07db9276}{alias()}. \hyperlink{classmdt_device_add9f8ec2f944b5c5f92a97424a194177}{device\-Id\-String()}, witch is useful to build error messages, also reuse internal device address string object.
+
+This default implementation does nothing and allways returns false. 
+
+Reimplemented in \hyperlink{classmdt_device_scpi_a4d3eca756dea1165f1f5da3e325d1d49}{mdt\-Device\-Scpi}, \hyperlink{classmdt_device_modbus_ae8634515742f3ed42dc52dfaa8d65313}{mdt\-Device\-Modbus}, and \hyperlink{classmdt_device_modbus_wago_a5831a91162736cc01f35e7dd2c01852a}{mdt\-Device\-Modbus\-Wago}.
+
+
+
+Definition at line 153 of file mdt\-Device.\-h.
 
 \hypertarget{classmdt_device_ad7fb4c3cafc87cba9eca588ad226f662}{\index{mdt\-Device@{mdt\-Device}!current\-State@{current\-State}}
 \index{current\-State@{current\-State}!mdtDevice@{mdt\-Device}}
@@ -262,11 +263,55 @@ Get current state.
 
 
 
-Definition at line 244 of file mdt\-Device.\-h.
+Definition at line 228 of file mdt\-Device.\-h.
 
 
 
 Referenced by run\-Queries(), mdt\-Multi\-Io\-Device\-::set\-Analog\-Output\-Value(), and mdt\-Multi\-Io\-Device\-::set\-Digital\-Output\-Value().
+
+\hypertarget{classmdt_device_af04ef3dc643127325597af46494ffb6b}{\index{mdt\-Device@{mdt\-Device}!device\-Address@{device\-Address}}
+\index{device\-Address@{device\-Address}!mdtDevice@{mdt\-Device}}
+\subsubsection[{device\-Address}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdt\-Device\-Address} mdt\-Device\-::device\-Address (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_af04ef3dc643127325597af46494ffb6b}
+
+
+Get device address. 
+
+
+
+Definition at line 128 of file mdt\-Device.\-h.
+
+
+
+Referenced by mdt\-Device\-Modbus\-::connect\-To\-Device(), and mdt\-Device\-Scpi\-::connect\-To\-Device().
+
+\hypertarget{classmdt_device_aeda0ed058f42b7513bb697fe7a1e6ab7}{\index{mdt\-Device@{mdt\-Device}!device\-Address\-Changed\-Event@{device\-Address\-Changed\-Event}}
+\index{device\-Address\-Changed\-Event@{device\-Address\-Changed\-Event}!mdtDevice@{mdt\-Device}}
+\subsubsection[{device\-Address\-Changed\-Event}]{\setlength{\rightskip}{0pt plus 5cm}virtual void mdt\-Device\-::device\-Address\-Changed\-Event (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdt\-Device\-Address} \&}]{address}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classmdt_device_aeda0ed058f42b7513bb697fe7a1e6ab7}
+
+
+Called by \hyperlink{classmdt_device_a3fdad460ae0eac5710b13e400156cb1d}{set\-Device\-Address()} 
+
+Can be reimplemented in subclass if some actions are needed when device address has changed.
+
+This default implementation does nothing, it's also not necessery to call this base function from subclass. 
+
+Reimplemented in \hyperlink{classmdt_device_scpi_a311158761051b12489c15e068a9d1db3}{mdt\-Device\-Scpi}.
+
+
+
+Definition at line 309 of file mdt\-Device.\-h.
+
+
+
+Referenced by set\-Device\-Address().
 
 \hypertarget{classmdt_device_add9f8ec2f944b5c5f92a97424a194177}{\index{mdt\-Device@{mdt\-Device}!device\-Id\-String@{device\-Id\-String}}
 \index{device\-Id\-String@{device\-Id\-String}!mdtDevice@{mdt\-Device}}
@@ -279,17 +324,17 @@ Referenced by run\-Queries(), mdt\-Multi\-Io\-Device\-::set\-Analog\-Output\-Val
 
 Get device identification string. 
 
-Can be used for error messages. Returns a string with "Device 'device\-Name' \-: " 
+Can be used for error messages. Returns a string with "Device 'alias' \-: " 
 
-Definition at line 264 of file mdt\-Device.\-h.
-
-
-
-References name().
+Definition at line 248 of file mdt\-Device.\-h.
 
 
 
-Referenced by mdt\-Device\-U3606\-A\-::setup\-Low\-Resistance\-Measure(), mdt\-Device\-U3606\-A\-::setup\-Resistance\-Measure(), and mdt\-Device\-U3606\-A\-::setup\-Voltage\-Dc\-Measure().
+References alias().
+
+
+
+Referenced by mdt\-Device\-Modbus\-Wago\-::connect\-To\-Device(), mdt\-Device\-Modbus\-::connect\-To\-Device(), mdt\-Device\-Modbus\-Wago\-::detect\-Ios(), mdt\-Multi\-Io\-Device\-::get\-Analog\-Inputs(), mdt\-Multi\-Io\-Device\-::get\-Analog\-Input\-Value(), mdt\-Multi\-Io\-Device\-::get\-Analog\-Input\-Value\-At(), mdt\-Multi\-Io\-Device\-::get\-Analog\-Outputs(), mdt\-Multi\-Io\-Device\-::get\-Analog\-Output\-Value(), mdt\-Multi\-Io\-Device\-::get\-Analog\-Output\-Value\-At(), mdt\-Multi\-Io\-Device\-::get\-Digital\-Inputs(), mdt\-Multi\-Io\-Device\-::get\-Digital\-Input\-Value(), mdt\-Multi\-Io\-Device\-::get\-Digital\-Input\-Value\-At(), mdt\-Multi\-Io\-Device\-::get\-Digital\-Outputs(), mdt\-Multi\-Io\-Device\-::get\-Digital\-Output\-Value(), mdt\-Multi\-Io\-Device\-::get\-Digital\-Output\-Value\-At(), mdt\-Device\-Modbus\-Wago\-::is\-Wago750(), mdt\-Multi\-Io\-Device\-::set\-Analog\-Outputs(), mdt\-Multi\-Io\-Device\-::set\-Analog\-Output\-Value(), mdt\-Multi\-Io\-Device\-::set\-Analog\-Output\-Value\-At(), mdt\-Multi\-Io\-Device\-::set\-Digital\-Outputs(), mdt\-Multi\-Io\-Device\-::set\-Digital\-Outputs\-Value(), mdt\-Multi\-Io\-Device\-::set\-Digital\-Output\-Value(), mdt\-Multi\-Io\-Device\-::set\-Digital\-Output\-Value\-At(), mdt\-Device\-U3606\-A\-::setup\-Low\-Resistance\-Measure(), mdt\-Device\-U3606\-A\-::setup\-Resistance\-Measure(), and mdt\-Device\-U3606\-A\-::setup\-Voltage\-Dc\-Measure().
 
 \hypertarget{classmdt_device_a2b694a37d9464d27214bdeceec220998}{\index{mdt\-Device@{mdt\-Device}!disconnect\-From\-Device@{disconnect\-From\-Device}}
 \index{disconnect\-From\-Device@{disconnect\-From\-Device}!mdtDevice@{mdt\-Device}}
@@ -306,7 +351,7 @@ Will stop periodic querying ( see \hyperlink{classmdt_device_adc7ff8f01d68506283
 
 Will also call \hyperlink{classmdt_device_afe3dec5b38bb5db7f5f6f250caa5f577}{disconnect\-From\-Device\-Event()}. 
 
-Definition at line 80 of file mdt\-Device.\-cpp.
+Definition at line 64 of file mdt\-Device.\-cpp.
 
 
 
@@ -314,7 +359,7 @@ References disconnect\-From\-Device\-Event(), and stop().
 
 
 
-Referenced by $\sim$mdt\-Device().
+Referenced by mdt\-Device\-Modbus\-Wago\-::connect\-To\-Device(), mdt\-Device\-Modbus\-::connect\-To\-Device(), and $\sim$mdt\-Device().
 
 \hypertarget{classmdt_device_afe3dec5b38bb5db7f5f6f250caa5f577}{\index{mdt\-Device@{mdt\-Device}!disconnect\-From\-Device\-Event@{disconnect\-From\-Device\-Event}}
 \index{disconnect\-From\-Device\-Event@{disconnect\-From\-Device\-Event}!mdtDevice@{mdt\-Device}}
@@ -335,26 +380,11 @@ Reimplemented in \hyperlink{classmdt_device_scpi_a32498c40ac609ac157cb332bc4e7ac
 
 
 
-Definition at line 313 of file mdt\-Device.\-h.
+Definition at line 297 of file mdt\-Device.\-h.
 
 
 
 Referenced by disconnect\-From\-Device().
-
-\hypertarget{classmdt_device_a54845e1af6f6f98de7de79c3df9ac7b5}{\index{mdt\-Device@{mdt\-Device}!identification@{identification}}
-\index{identification@{identification}!mdtDevice@{mdt\-Device}}
-\subsubsection[{identification}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant mdt\-Device\-::identification (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classmdt_device_a54845e1af6f6f98de7de79c3df9ac7b5}
-
-
-Get device identification. 
-
-
-
-Definition at line 152 of file mdt\-Device.\-h.
 
 \hypertarget{classmdt_device_a326ca430ec756d5e1203f70b7be4b58e}{\index{mdt\-Device@{mdt\-Device}!is\-Ready@{is\-Ready}}
 \index{is\-Ready@{is\-Ready}!mdtDevice@{mdt\-Device}}
@@ -371,7 +401,7 @@ This default implementation returns allways false.
 
 Note\-: \hyperlink{classmdt_device_a326ca430ec756d5e1203f70b7be4b58e}{is\-Ready()} should return true only if device it ready for querying. 
 
-Definition at line 206 of file mdt\-Device.\-h.
+Definition at line 190 of file mdt\-Device.\-h.
 
 
 
@@ -389,58 +419,14 @@ Referenced by start().
 Get last error. 
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000010}{Todo}]Not completly used currently, must be implemented in this class + subclasses . \end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000011}{Todo}]Not completly used currently, must be implemented in this class + subclasses . \end{DoxyRefDesc}
 
 
-Definition at line 237 of file mdt\-Device.\-h.
+Definition at line 221 of file mdt\-Device.\-h.
 
 
 
 References pv\-Last\-Error.
-
-\hypertarget{classmdt_device_a7ad893c6885dbaef5a6cb980bfe627e0}{\index{mdt\-Device@{mdt\-Device}!name@{name}}
-\index{name@{name}!mdtDevice@{mdt\-Device}}
-\subsubsection[{name}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String mdt\-Device\-::name (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-) const}}\label{classmdt_device_a7ad893c6885dbaef5a6cb980bfe627e0}
-
-
-Get device name. 
-
-
-
-Definition at line 59 of file mdt\-Device.\-cpp.
-
-
-
-Referenced by mdt\-Device\-Modbus\-Wago\-::detect\-Ios(), device\-Id\-String(), mdt\-Device\-Modbus\-Wago\-Module\-::device\-Name(), mdt\-Multi\-Io\-Device\-::get\-Analog\-Input\-Value(), mdt\-Multi\-Io\-Device\-::get\-Analog\-Input\-Value\-At(), mdt\-Multi\-Io\-Device\-::get\-Analog\-Output\-Value(), mdt\-Multi\-Io\-Device\-::get\-Analog\-Output\-Value\-At(), mdt\-Multi\-Io\-Device\-::get\-Digital\-Input\-Value(), mdt\-Multi\-Io\-Device\-::get\-Digital\-Input\-Value\-At(), mdt\-Multi\-Io\-Device\-::get\-Digital\-Output\-Value(), mdt\-Multi\-Io\-Device\-::get\-Digital\-Output\-Value\-At(), mdt\-Device\-Modbus\-Wago\-::is\-Wago750(), mdt\-Device\-Modbus\-Wago\-Module\-::read\-Registers(), mdt\-Device\-Modbus\-Wago\-Module\-::read\-Status\-Bytes(), mdt\-Multi\-Io\-Device\-::set\-Analog\-Output\-Value(), mdt\-Multi\-Io\-Device\-::set\-Analog\-Output\-Value\-At(), mdt\-Multi\-Io\-Device\-::set\-Digital\-Output\-Value(), mdt\-Multi\-Io\-Device\-::set\-Digital\-Output\-Value\-At(), set\-Name(), mdt\-Device\-Modbus\-Wago\-Module\-::write\-Control\-Bytes(), and mdt\-Device\-Modbus\-Wago\-Module\-::write\-Registers().
-
-\hypertarget{classmdt_device_a30b8db129316183a10d38a569d431c92}{\index{mdt\-Device@{mdt\-Device}!name\-Changed\-Event@{name\-Changed\-Event}}
-\index{name\-Changed\-Event@{name\-Changed\-Event}!mdtDevice@{mdt\-Device}}
-\subsubsection[{name\-Changed\-Event}]{\setlength{\rightskip}{0pt plus 5cm}virtual void mdt\-Device\-::name\-Changed\-Event (
-\begin{DoxyParamCaption}
-\item[{const Q\-String \&}]{new\-Name}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classmdt_device_a30b8db129316183a10d38a569d431c92}
-
-
-Called by \hyperlink{classmdt_device_a80186f1aa6fbdc13f1652de978c35518}{set\-Name()} 
-
-Can be reimplemented in subclass if some actions are needed when name has changed.
-
-This default implementation does nothing, it's also not necessery to call this base function from subclass. 
-
-Reimplemented in \hyperlink{classmdt_device_scpi_a750ebbf843bad40b442a9d965c6f0e44}{mdt\-Device\-Scpi}.
-
-
-
-Definition at line 325 of file mdt\-Device.\-h.
-
-
-
-Referenced by set\-Name().
 
 \hypertarget{classmdt_device_acba50968d201ad95c4eaa2ab2ed48b4f}{\index{mdt\-Device@{mdt\-Device}!queries\-Sequence@{queries\-Sequence}}
 \index{queries\-Sequence@{queries\-Sequence}!mdtDevice@{mdt\-Device}}
@@ -469,7 +455,7 @@ Reimplemented in \hyperlink{classmdt_device_modbus_a3b83b926ed1f9c3bdf7024de2745
 
 
 
-Definition at line 123 of file mdt\-Device.\-cpp.
+Definition at line 107 of file mdt\-Device.\-cpp.
 
 
 
@@ -488,7 +474,7 @@ Queries to send periodically.
 
 This slot is periodically called after a call of \hyperlink{classmdt_device_a721c5bf2cfa0eef5304333f08da182f7}{start()}. 
 
-Definition at line 115 of file mdt\-Device.\-cpp.
+Definition at line 99 of file mdt\-Device.\-cpp.
 
 
 
@@ -522,7 +508,7 @@ In some application, it can be usefull that state comes back automatically to re
 \end{DoxyParams}
 
 
-Definition at line 86 of file mdt\-Device.\-cpp.
+Definition at line 70 of file mdt\-Device.\-cpp.
 
 
 
@@ -543,49 +529,40 @@ Will call \hyperlink{classmdt_device_ad2646ad2fb99b40c9f303b24a7ee971e}{state\-C
 
 Subclass must call tis function to update current state. 
 
-Definition at line 128 of file mdt\-Device.\-cpp.
+Definition at line 112 of file mdt\-Device.\-cpp.
 
 
 
 References Ready, state\-Changed(), and state\-Changed\-Event().
 
-\hypertarget{classmdt_device_af6fddf7fba1f54e481a4f3445db64d98}{\index{mdt\-Device@{mdt\-Device}!set\-Identification@{set\-Identification}}
-\index{set\-Identification@{set\-Identification}!mdtDevice@{mdt\-Device}}
-\subsubsection[{set\-Identification}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Device\-::set\-Identification (
+\hypertarget{classmdt_device_a3fdad460ae0eac5710b13e400156cb1d}{\index{mdt\-Device@{mdt\-Device}!set\-Device\-Address@{set\-Device\-Address}}
+\index{set\-Device\-Address@{set\-Device\-Address}!mdtDevice@{mdt\-Device}}
+\subsubsection[{set\-Device\-Address}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Device\-::set\-Device\-Address (
 \begin{DoxyParamCaption}
-\item[{const Q\-Variant \&}]{id}
+\item[{const {\bf mdt\-Device\-Address} \&}]{address, }
+\item[{const Q\-String \&}]{alias = {\ttfamily QString()}}
 \end{DoxyParamCaption}
-)}}\label{classmdt_device_af6fddf7fba1f54e481a4f3445db64d98}
+)}}\label{classmdt_device_a3fdad460ae0eac5710b13e400156cb1d}
 
 
-Set device identification. 
+Set device address. 
+
+Will also call \hyperlink{classmdt_device_aeda0ed058f42b7513bb697fe7a1e6ab7}{device\-Address\-Changed\-Event()}.
+
+\begin{DoxyPrecond}{Precondition}
+This function must only be called when current\-State is Disconnected. 
+\end{DoxyPrecond}
 
 
-
-Definition at line 64 of file mdt\-Device.\-cpp.
-
-\hypertarget{classmdt_device_a80186f1aa6fbdc13f1652de978c35518}{\index{mdt\-Device@{mdt\-Device}!set\-Name@{set\-Name}}
-\index{set\-Name@{set\-Name}!mdtDevice@{mdt\-Device}}
-\subsubsection[{set\-Name}]{\setlength{\rightskip}{0pt plus 5cm}void mdt\-Device\-::set\-Name (
-\begin{DoxyParamCaption}
-\item[{const Q\-String \&}]{name}
-\end{DoxyParamCaption}
-)}}\label{classmdt_device_a80186f1aa6fbdc13f1652de978c35518}
-
-
-Set the device name. 
-
-Will also call \hyperlink{classmdt_device_a30b8db129316183a10d38a569d431c92}{name\-Changed\-Event()} 
-
-Definition at line 53 of file mdt\-Device.\-cpp.
+Definition at line 52 of file mdt\-Device.\-cpp.
 
 
 
-References name(), and name\-Changed\-Event().
+References device\-Address\-Changed\-Event(), Disconnected, and mdt\-Device\-Address\-::set\-Alias().
 
 
 
-Referenced by mdt\-Device(), and mdt\-Modbus\-Io\-Tool\-::mdt\-Modbus\-Io\-Tool().
+Referenced by mdt\-Device\-Modbus\-::connect\-To\-Device(), and mdt\-Device\-Scpi\-::connect\-To\-Device().
 
 \hypertarget{classmdt_device_a721c5bf2cfa0eef5304333f08da182f7}{\index{mdt\-Device@{mdt\-Device}!start@{start}}
 \index{start@{start}!mdtDevice@{mdt\-Device}}
@@ -612,7 +589,7 @@ Note\-: if device is ready, querying starts immediatly, else it will start once 
 \end{DoxyParams}
 
 
-Definition at line 91 of file mdt\-Device.\-cpp.
+Definition at line 75 of file mdt\-Device.\-cpp.
 
 
 
@@ -656,7 +633,7 @@ Reimplemented in \hyperlink{classmdt_multi_io_device_ae2cc456c53e1b5f792b9073ad1
 
 
 
-Definition at line 301 of file mdt\-Device.\-h.
+Definition at line 285 of file mdt\-Device.\-h.
 
 
 
@@ -692,7 +669,7 @@ Stop periodic device querying.
 
 
 
-Definition at line 100 of file mdt\-Device.\-cpp.
+Definition at line 84 of file mdt\-Device.\-cpp.
 
 
 
@@ -716,7 +693,7 @@ Wait some time without breaking main event loop.
 \end{DoxyParams}
 
 
-Definition at line 106 of file mdt\-Device.\-cpp.
+Definition at line 90 of file mdt\-Device.\-cpp.
 
 
 
@@ -734,11 +711,11 @@ Last error object.
 
 
 
-Definition at line 271 of file mdt\-Device.\-h.
+Definition at line 255 of file mdt\-Device.\-h.
 
 
 
-Referenced by mdt\-Device\-Scpi\-::connect\-To\-Device(), mdt\-Multi\-Io\-Device\-::get\-Analog\-Input\-Value(), mdt\-Multi\-Io\-Device\-::get\-Analog\-Input\-Value\-At(), mdt\-Multi\-Io\-Device\-::get\-Analog\-Output\-Value(), mdt\-Multi\-Io\-Device\-::get\-Analog\-Output\-Value\-At(), mdt\-Multi\-Io\-Device\-::get\-Digital\-Input\-Value(), mdt\-Multi\-Io\-Device\-::get\-Digital\-Input\-Value\-At(), mdt\-Multi\-Io\-Device\-::get\-Digital\-Output\-Value(), mdt\-Multi\-Io\-Device\-::get\-Digital\-Output\-Value\-At(), mdt\-Device\-U3606\-A\-::get\-Measure\-Value(), last\-Error(), mdt\-Device\-Scpi\-::send\-Command(), mdt\-Device\-Scpi\-::send\-Query(), mdt\-Multi\-Io\-Device\-::set\-Analog\-Output\-Value(), mdt\-Multi\-Io\-Device\-::set\-Analog\-Output\-Value\-At(), mdt\-Multi\-Io\-Device\-::set\-Digital\-Output\-Value(), mdt\-Multi\-Io\-Device\-::set\-Digital\-Output\-Value\-At(), mdt\-Device\-U3606\-A\-::setup\-Low\-Resistance\-Measure(), mdt\-Device\-U3606\-A\-::setup\-Resistance\-Measure(), and mdt\-Device\-U3606\-A\-::setup\-Voltage\-Dc\-Measure().
+Referenced by mdt\-Device\-Modbus\-Wago\-::connect\-To\-Device(), mdt\-Device\-Modbus\-::connect\-To\-Device(), mdt\-Device\-Scpi\-::connect\-To\-Device(), mdt\-Device\-Modbus\-Wago\-::detect\-Ios(), mdt\-Multi\-Io\-Device\-::get\-Analog\-Inputs(), mdt\-Multi\-Io\-Device\-::get\-Analog\-Input\-Value(), mdt\-Multi\-Io\-Device\-::get\-Analog\-Input\-Value\-At(), mdt\-Multi\-Io\-Device\-::get\-Analog\-Outputs(), mdt\-Multi\-Io\-Device\-::get\-Analog\-Output\-Value(), mdt\-Multi\-Io\-Device\-::get\-Analog\-Output\-Value\-At(), mdt\-Multi\-Io\-Device\-::get\-Digital\-Inputs(), mdt\-Multi\-Io\-Device\-::get\-Digital\-Input\-Value(), mdt\-Multi\-Io\-Device\-::get\-Digital\-Input\-Value\-At(), mdt\-Multi\-Io\-Device\-::get\-Digital\-Outputs(), mdt\-Multi\-Io\-Device\-::get\-Digital\-Output\-Value(), mdt\-Multi\-Io\-Device\-::get\-Digital\-Output\-Value\-At(), mdt\-Device\-U3606\-A\-::get\-Measure\-Value(), last\-Error(), mdt\-Device\-Scpi\-::send\-Command(), mdt\-Device\-Scpi\-::send\-Query(), mdt\-Multi\-Io\-Device\-::set\-Analog\-Outputs(), mdt\-Multi\-Io\-Device\-::set\-Analog\-Output\-Value(), mdt\-Multi\-Io\-Device\-::set\-Analog\-Output\-Value\-At(), mdt\-Multi\-Io\-Device\-::set\-Digital\-Outputs(), mdt\-Multi\-Io\-Device\-::set\-Digital\-Outputs\-Value(), mdt\-Multi\-Io\-Device\-::set\-Digital\-Output\-Value(), mdt\-Multi\-Io\-Device\-::set\-Digital\-Output\-Value\-At(), mdt\-Device\-U3606\-A\-::setup\-Low\-Resistance\-Measure(), mdt\-Device\-U3606\-A\-::setup\-Resistance\-Measure(), and mdt\-Device\-U3606\-A\-::setup\-Voltage\-Dc\-Measure().
 
 
 

@@ -106,7 +106,7 @@ var searchData=
   ['addvehicletypelinkdata',['addVehicleTypeLinkData',['../classmdt_cl_link_data.html#a39127d05ef1bec680c446a5b19242a11',1,'mdtClLinkData']]],
   ['addwidgettolocalbar',['addWidgetToLocalBar',['../classmdt_sql_table_widget.html#a9c0ae7b87d1840f2fdcee6de763fe31a',1,'mdtSqlTableWidget']]],
   ['adjust',['adjust',['../classmdt_cl_path_graphics_link.html#aca6ea2d8ae9944b2739865072170c812',1,'mdtClPathGraphicsLink']]],
-  ['alias',['alias',['../classmdt_device_address.html#aa08397e5d6f507b6eeddaafb89c84cc3',1,'mdtDeviceAddress']]],
+  ['alias',['alias',['../classmdt_device.html#a3aa589ecae0fa3deed61431d07db9276',1,'mdtDevice::alias()'],['../classmdt_device_address.html#aa08397e5d6f507b6eeddaafb89c84cc3',1,'mdtDeviceAddress::alias()']]],
   ['alldataaresaved',['allDataAreSaved',['../classmdt_abstract_sql_table_controller.html#aabbf1bff271014d55a8d6e9391c691a6',1,'mdtAbstractSqlTableController::allDataAreSaved()'],['../classmdt_sql_form.html#a1e14cbb5bf04d2eb1c703862a6084031',1,'mdtSqlForm::allDataAreSaved()']]],
   ['alldevices',['allDevices',['../classmdt_device_container.html#a9a04f05d7cce394fd30f8669edb6a181',1,'mdtDeviceContainer::allDevices()'],['../classmdt_tt_test_node_manager.html#ad5996a8b72cf186de386818239243c2a',1,'mdtTtTestNodeManager::allDevices()']]],
   ['allinterfaces',['allInterfaces',['../classmdt_usb_device_descriptor.html#ab196ef127e1c57f9d38960d120b746d2',1,'mdtUsbDeviceDescriptor']]],

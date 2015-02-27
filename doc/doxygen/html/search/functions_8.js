@@ -2,7 +2,6 @@ var searchData=
 [
   ['iconfiguration',['iConfiguration',['../classmdt_usb_config_descriptor.html#a73548421ae378d7597817ba2b9bcd43e',1,'mdtUsbConfigDescriptor']]],
   ['id',['id',['../classmdt_modbus_hw_node_id.html#a3daa8c9f772b3e97858d0d82eca31115',1,'mdtModbusHwNodeId::id()'],['../classmdt_port_transaction.html#ae68abafb0501c98f85147adc176d8d83',1,'mdtPortTransaction::id()'],['../classmdt_tt_test_model_item_route_data.html#ad34638a6361e64a867f30821b73ff385',1,'mdtTtTestModelItemRouteData::id()'],['../classmdt_tt_test_node_setup_data.html#a1e11fe63db0681a9e425da40bf9ec4b9',1,'mdtTtTestNodeSetupData::id()'],['../classmdt_state.html#a034345dce9f3d0c976d5987bd42dc1cf',1,'mdtState::id()'],['../class_qt_single_application.html#affd094410862f30fce83afcba3457b19',1,'QtSingleApplication::id()']]],
-  ['identification',['identification',['../classmdt_device.html#a54845e1af6f6f98de7de79c3df9ac7b5',1,'mdtDevice']]],
   ['idlistofrelaystoenable',['idListOfRelaysToEnable',['../classmdt_tt_relay_path_dialog.html#a540948fa111834c1abadafc71048f07c',1,'mdtTtRelayPathDialog']]],
   ['idproduct',['idProduct',['../classmdt_usb_device_descriptor.html#a951d3cb25a6f00cb19086bd38e9871f2',1,'mdtUsbDeviceDescriptor']]],
   ['idstring',['idString',['../classmdt_usb_device_descriptor.html#ad17a0b6a6bb67754c839f2c73d6df945',1,'mdtUsbDeviceDescriptor']]],

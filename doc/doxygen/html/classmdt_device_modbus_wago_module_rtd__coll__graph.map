@@ -1,3 +1,4 @@
 <map id="mdtDeviceModbusWagoModuleRtd" name="mdtDeviceModbusWagoModuleRtd">
-<area shape="rect" id="node2" href="$classmdt_device_modbus_wago_module.html" title="Helper class for Wago modules detection and setup. " alt="" coords="16,5,221,35"/>
+<area shape="rect" id="node2" href="$classmdt_device_modbus_wago_module.html" title="Helper class for Wago modules detection and setup. " alt="" coords="15,96,221,123"/>
+<area shape="rect" id="node3" href="$classmdt_error.html" title="mdtError contains informations about a error that occured " alt="" coords="83,5,155,32"/>
 </map>

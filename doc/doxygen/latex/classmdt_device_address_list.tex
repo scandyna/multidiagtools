@@ -46,7 +46,7 @@ Device address list.
 \end{DoxySeeAlso}
 
 
-Definition at line 400 of file mdt\-Device\-Address.\-h.
+Definition at line 405 of file mdt\-Device\-Address.\-h.
 
 
 
@@ -64,7 +64,7 @@ Construct a empty device address list.
 
 
 
-Definition at line 406 of file mdt\-Device\-Address.\-h.
+Definition at line 411 of file mdt\-Device\-Address.\-h.
 
 
 
@@ -82,7 +82,7 @@ Append a device address at the end of the list.
 
 
 
-Definition at line 440 of file mdt\-Device\-Address.\-h.
+Definition at line 445 of file mdt\-Device\-Address.\-h.
 
 
 
@@ -101,7 +101,7 @@ Append a list of device addresses at the end of the list.
 
 
 
-Definition at line 446 of file mdt\-Device\-Address.\-h.
+Definition at line 451 of file mdt\-Device\-Address.\-h.
 
 
 
@@ -123,11 +123,15 @@ index must be in valid range ( \mbox{[}0,size-\/1\mbox{]} )
 \end{DoxyPrecond}
 
 
-Definition at line 473 of file mdt\-Device\-Address.\-h.
+Definition at line 478 of file mdt\-Device\-Address.\-h.
 
 
 
 References size().
+
+
+
+Referenced by mdt\-Device\-Modbus\-::connect\-To\-Device().
 
 \hypertarget{classmdt_device_address_list_a6154d2459206808eababac338b445133}{\index{mdt\-Device\-Address\-List@{mdt\-Device\-Address\-List}!clear@{clear}}
 \index{clear@{clear}!mdtDeviceAddressList@{mdt\-Device\-Address\-List}}
@@ -142,7 +146,7 @@ Clear.
 
 
 
-Definition at line 433 of file mdt\-Device\-Address.\-h.
+Definition at line 438 of file mdt\-Device\-Address.\-h.
 
 \hypertarget{classmdt_device_address_list_a70c66586e0595b4ba56b232a5b3d677b}{\index{mdt\-Device\-Address\-List@{mdt\-Device\-Address\-List}!internal\-Vector@{internal\-Vector}}
 \index{internal\-Vector@{internal\-Vector}!mdtDeviceAddressList@{mdt\-Device\-Address\-List}}
@@ -165,11 +169,11 @@ Can be used, for example, to iterate all addresses\-:
 \end{DoxyCode}
  Please take in accound that returned reference become invalid as soon as this \hyperlink{classmdt_device_address_list}{mdt\-Device\-Address\-List} object is destroyed. 
 
-Definition at line 464 of file mdt\-Device\-Address.\-h.
+Definition at line 469 of file mdt\-Device\-Address.\-h.
 
 
 
-Referenced by append(), and mdt\-Modbus\-Tcp\-Port\-Manager\-::scan().
+Referenced by append(), mdt\-Device\-Modbus\-::connect\-To\-Device(), and mdt\-Modbus\-Tcp\-Port\-Manager\-::scan().
 
 \hypertarget{classmdt_device_address_list_ae9173d74a97c82dc7459de35db7a0e98}{\index{mdt\-Device\-Address\-List@{mdt\-Device\-Address\-List}!is\-Empty@{is\-Empty}}
 \index{is\-Empty@{is\-Empty}!mdtDeviceAddressList@{mdt\-Device\-Address\-List}}
@@ -184,11 +188,11 @@ Check if device addresses list is empty.
 
 
 
-Definition at line 412 of file mdt\-Device\-Address.\-h.
+Definition at line 417 of file mdt\-Device\-Address.\-h.
 
 
 
-Referenced by mdt\-Modbus\-Tcp\-Port\-Manager\-::scan\-From\-Known\-Hosts\-File().
+Referenced by mdt\-Device\-Modbus\-::connect\-To\-Device(), and mdt\-Modbus\-Tcp\-Port\-Manager\-::scan\-From\-Known\-Hosts\-File().
 
 \hypertarget{classmdt_device_address_list_ad4a3b71021684a3388a4610dbd71dbe6}{\index{mdt\-Device\-Address\-List@{mdt\-Device\-Address\-List}!last\-Error@{last\-Error}}
 \index{last\-Error@{last\-Error}!mdtDeviceAddressList@{mdt\-Device\-Address\-List}}
@@ -203,7 +207,7 @@ Get last error.
 
 
 
-Definition at line 426 of file mdt\-Device\-Address.\-h.
+Definition at line 431 of file mdt\-Device\-Address.\-h.
 
 
 
@@ -268,11 +272,11 @@ Get device addresses list size.
 
 
 
-Definition at line 419 of file mdt\-Device\-Address.\-h.
+Definition at line 424 of file mdt\-Device\-Address.\-h.
 
 
 
-Referenced by at().
+Referenced by at(), mdt\-Device\-Modbus\-::connect\-To\-Device(), and mdt\-Modbus\-Tcp\-Port\-Manager\-::scan().
 
 
 

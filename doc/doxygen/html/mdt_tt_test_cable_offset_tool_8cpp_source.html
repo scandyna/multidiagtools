@@ -503,101 +503,83 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;<span class="comment"></span>  couplerNodeId = <span class="stringliteral">&quot;0&quot;</span>;</div>
 <div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;  <span class="comment">// Connect to multimeter</span></div>
 <div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;<span class="comment"></span>  <span class="comment">// Connect to coupler</span></div>
-<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;  <span class="keywordflow">if</span>(coupler-&gt;connectToDevice(<a class="code" href="classmdt_device_info.html">mdtDeviceInfo</a>()) != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){</div>
-<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855">setError</a>(tr(<span class="stringliteral">&quot;Cannot connect to &quot;</span>) + coupler-&gt;name(), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);</div>
-<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;    <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce">MDT_ERROR_SET_SRC</a>(pvLastError, <span class="stringliteral">&quot;mdtTtTestCableOffsetTool&quot;</span>);</div>
-<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb">commit</a>();</div>
-<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;  }</div>
-<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;  <span class="keywordflow">if</span>(!coupler-&gt;detectIos()){</div>
-<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;    pvLastError = coupler-&gt;lastError();</div>
-<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;  }</div>
-<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;  <span class="comment">// Set short labels to coupler units</span></div>
-<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;  <span class="keywordflow">if</span>(!pvTestNodeManager-&gt;setDeviceIosLabelShort(couplerNodeId, <span class="stringliteral">&quot;W750&quot;</span>)){</div>
-<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;    pvLastError = pvTestNodeManager-&gt;lastError();</div>
-<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;    disconnectFromInstruments();</div>
-<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;  }</div>
-<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;  <span class="comment">// Reset multimeter to factory state</span></div>
-<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;  <span class="keywordflow">if</span>(pvMultimeter-&gt;<a class="code" href="classmdt_device_scpi.html#a59759a6138c3ecbcb5cb98a042f8bcb5">sendCommand</a>(<span class="stringliteral">&quot;*RST&quot;</span>) &lt; 0){</div>
-<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855">setError</a>(tr(<span class="stringliteral">&quot;*RST failed on device &quot;</span>) + pvMultimeter-&gt;<a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0">name</a>(), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);</div>
-<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;    <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce">MDT_ERROR_SET_SRC</a>(pvLastError, <span class="stringliteral">&quot;mdtTtTestCableOffsetTool&quot;</span>);</div>
-<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb">commit</a>();</div>
-<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;  }</div>
-<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;</div>
-<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;}</div>
-<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;</div>
-<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;<span class="keywordtype">void</span> mdtTtTestCableOffsetTool::disconnectFromInstruments()</div>
-<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;{</div>
-<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;  Q_ASSERT(pvTestNodeManager-&gt;container());</div>
+<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;<span class="comment"></span>  <span class="keywordflow">if</span>(!coupler-&gt;detectIos()){</div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;    pvLastError = coupler-&gt;lastError();</div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;  }</div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;  <span class="comment">// Set short labels to coupler units</span></div>
+<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;  <span class="keywordflow">if</span>(!pvTestNodeManager-&gt;setDeviceIosLabelShort(couplerNodeId, <span class="stringliteral">&quot;W750&quot;</span>)){</div>
+<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;    pvLastError = pvTestNodeManager-&gt;lastError();</div>
+<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;    disconnectFromInstruments();</div>
+<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;  }</div>
+<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;  <span class="comment">// Reset multimeter to factory state</span></div>
+<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;<span class="comment"></span>  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;}</div>
 <div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;</div>
-<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;  shared_ptr&lt;mdtDeviceModbusWago&gt; coupler;</div>
-<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;</div>
-<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;  coupler = pvTestNodeManager-&gt;device&lt;<a class="code" href="classmdt_device_modbus_wago.html">mdtDeviceModbusWago</a>&gt;(<span class="stringliteral">&quot;W750&quot;</span>);</div>
-<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;  Q_ASSERT(coupler);</div>
-<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;</div>
-<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;  <span class="comment">// Set all relays OFF</span></div>
-<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;  <span class="keywordflow">if</span>(coupler-&gt;setDigitalOutputsValue(<span class="keyword">false</span>, <span class="keyword">true</span>, <span class="keyword">true</span>) &lt; 0){</div>
-<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;    pvLastError = coupler-&gt;lastError();</div>
-<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;  }</div>
-<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;  <span class="comment">// Reset multimeter to factory state</span></div>
-<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;<span class="comment"></span>  <span class="keywordflow">if</span>(pvMultimeter-&gt;<a class="code" href="classmdt_device_scpi.html#a59759a6138c3ecbcb5cb98a042f8bcb5">sendCommand</a>(<span class="stringliteral">&quot;*RST&quot;</span>) &lt; 0){</div>
-<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855">setError</a>(tr(<span class="stringliteral">&quot;*RST failed on device &quot;</span>) + pvMultimeter-&gt;<a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0">name</a>(), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);</div>
-<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;    <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce">MDT_ERROR_SET_SRC</a>(pvLastError, <span class="stringliteral">&quot;mdtTtTestCableOffsetTool&quot;</span>);</div>
-<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb">commit</a>();</div>
-<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;  }</div>
-<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;</div>
-<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;  <span class="comment">// Disconnect</span></div>
-<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;  pvTestNodeManager-&gt;container()-&gt;disconnectFromDevices();</div>
-<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;}</div>
-<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;</div>
-<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;<span class="keywordtype">bool</span> mdtTtTestCableOffsetTool::beginTransaction() </div>
-<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;{</div>
-<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;  <span class="keywordflow">if</span>(!pvDatabase.transaction()){</div>
-<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;    QSqlError sqlError = pvDatabase.lastError();</div>
-<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855">setError</a>(tr(<span class="stringliteral">&quot;Cannot beginn transaction (database: &#39;&quot;</span>) + pvDatabase.databaseName() + tr(<span class="stringliteral">&quot;&#39;).&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);</div>
-<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc">setSystemError</a>(sqlError.number(), sqlError.text());</div>
-<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;    <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce">MDT_ERROR_SET_SRC</a>(pvLastError, <span class="stringliteral">&quot;mdtTtTestCableOffsetTool&quot;</span>);</div>
-<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb">commit</a>();</div>
-<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;  }</div>
-<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;}</div>
-<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;</div>
-<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;<span class="keywordtype">bool</span> mdtTtTestCableOffsetTool::rollbackTransaction() </div>
-<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;{</div>
-<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;  <span class="keywordflow">if</span>(!pvDatabase.rollback()){</div>
-<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;    QSqlError sqlError = pvDatabase.lastError();</div>
-<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855">setError</a>(tr(<span class="stringliteral">&quot;Cannot beginn rollback (database: &#39;&quot;</span>) + pvDatabase.databaseName() + tr(<span class="stringliteral">&quot;&#39;).&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);</div>
-<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc">setSystemError</a>(sqlError.number(), sqlError.text());</div>
-<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;    <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce">MDT_ERROR_SET_SRC</a>(pvLastError, <span class="stringliteral">&quot;mdtTtTestCableOffsetTool&quot;</span>);</div>
-<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb">commit</a>();</div>
-<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;  }</div>
-<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;}</div>
-<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;</div>
-<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;<span class="keywordtype">bool</span> mdtTtTestCableOffsetTool::commitTransaction() </div>
-<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;{</div>
-<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;  <span class="keywordflow">if</span>(!pvDatabase.commit()){</div>
-<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;    QSqlError sqlError = pvDatabase.lastError();</div>
-<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855">setError</a>(tr(<span class="stringliteral">&quot;Cannot beginn commit (database: &#39;&quot;</span>) + pvDatabase.databaseName() + tr(<span class="stringliteral">&quot;&#39;).&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);</div>
-<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc">setSystemError</a>(sqlError.number(), sqlError.text());</div>
-<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;    <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce">MDT_ERROR_SET_SRC</a>(pvLastError, <span class="stringliteral">&quot;mdtTtTestCableOffsetTool&quot;</span>);</div>
-<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb">commit</a>();</div>
-<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;  }</div>
-<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;}</div>
+<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;<span class="keywordtype">void</span> mdtTtTestCableOffsetTool::disconnectFromInstruments()</div>
+<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;{</div>
+<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;  Q_ASSERT(pvTestNodeManager-&gt;container());</div>
+<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;</div>
+<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;  shared_ptr&lt;mdtDeviceModbusWago&gt; coupler;</div>
+<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;</div>
+<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;  coupler = pvTestNodeManager-&gt;device&lt;<a class="code" href="classmdt_device_modbus_wago.html">mdtDeviceModbusWago</a>&gt;(<span class="stringliteral">&quot;W750&quot;</span>);</div>
+<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;  Q_ASSERT(coupler);</div>
+<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;</div>
+<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;  <span class="comment">// Set all relays OFF</span></div>
+<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;  <span class="keywordflow">if</span>(coupler-&gt;setDigitalOutputsValue(<span class="keyword">false</span>, <span class="keyword">true</span>, <span class="keyword">true</span>) &lt; 0){</div>
+<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;    pvLastError = coupler-&gt;lastError();</div>
+<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;  }</div>
+<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;  <span class="comment">// Reset multimeter to factory state</span></div>
+<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;</div>
+<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;  <span class="comment">// Disconnect</span></div>
+<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;  pvTestNodeManager-&gt;container()-&gt;disconnectFromDevices();</div>
+<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;}</div>
+<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;</div>
+<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;<span class="keywordtype">bool</span> mdtTtTestCableOffsetTool::beginTransaction() </div>
+<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;{</div>
+<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;  <span class="keywordflow">if</span>(!pvDatabase.transaction()){</div>
+<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;    QSqlError sqlError = pvDatabase.lastError();</div>
+<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855">setError</a>(tr(<span class="stringliteral">&quot;Cannot beginn transaction (database: &#39;&quot;</span>) + pvDatabase.databaseName() + tr(<span class="stringliteral">&quot;&#39;).&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);</div>
+<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc">setSystemError</a>(sqlError.number(), sqlError.text());</div>
+<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;    <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce">MDT_ERROR_SET_SRC</a>(pvLastError, <span class="stringliteral">&quot;mdtTtTestCableOffsetTool&quot;</span>);</div>
+<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb">commit</a>();</div>
+<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;  }</div>
+<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;}</div>
+<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;</div>
+<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;<span class="keywordtype">bool</span> mdtTtTestCableOffsetTool::rollbackTransaction() </div>
+<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;{</div>
+<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;  <span class="keywordflow">if</span>(!pvDatabase.rollback()){</div>
+<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;    QSqlError sqlError = pvDatabase.lastError();</div>
+<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855">setError</a>(tr(<span class="stringliteral">&quot;Cannot beginn rollback (database: &#39;&quot;</span>) + pvDatabase.databaseName() + tr(<span class="stringliteral">&quot;&#39;).&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);</div>
+<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc">setSystemError</a>(sqlError.number(), sqlError.text());</div>
+<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;    <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce">MDT_ERROR_SET_SRC</a>(pvLastError, <span class="stringliteral">&quot;mdtTtTestCableOffsetTool&quot;</span>);</div>
+<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb">commit</a>();</div>
+<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;  }</div>
+<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;}</div>
+<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;</div>
+<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;<span class="keywordtype">bool</span> mdtTtTestCableOffsetTool::commitTransaction() </div>
+<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;{</div>
+<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;  <span class="keywordflow">if</span>(!pvDatabase.commit()){</div>
+<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;    QSqlError sqlError = pvDatabase.lastError();</div>
+<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#a8e7961a665841c1b052116e4dd2eb855">setError</a>(tr(<span class="stringliteral">&quot;Cannot beginn commit (database: &#39;&quot;</span>) + pvDatabase.databaseName() + tr(<span class="stringliteral">&quot;&#39;).&quot;</span>), <a class="code" href="classmdt_error.html#a5c8b1a040e2feaa848f6201d6b6f0cd7a35f5c05a7d15b6433445cdbffa6d5260">mdtError::Error</a>);</div>
+<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc">setSystemError</a>(sqlError.number(), sqlError.text());</div>
+<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;    <a class="code" href="mdt_error_8h.html#ab7f3d790e64bb1392fbfc1dd706fc9ce">MDT_ERROR_SET_SRC</a>(pvLastError, <span class="stringliteral">&quot;mdtTtTestCableOffsetTool&quot;</span>);</div>
+<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;    pvLastError.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb">commit</a>();</div>
+<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;  }</div>
+<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;}</div>
 <div class="ttc" id="classmdt_tt_test_node_setup_data_html_a238c66d099bf18741ed436fadee5b52f"><div class="ttname"><a href="classmdt_tt_test_node_setup_data.html#a238c66d099bf18741ed436fadee5b52f">mdtTtTestNodeSetupData::unitSetupList</a></div><div class="ttdeci">const QList&lt; mdtTtTestNodeUnitSetupData &gt; &amp; unitSetupList() const </div><div class="ttdoc">Get all test node unit setup data list. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_tt_test_node_setup_data_8h_source.html#l00083">mdtTtTestNodeSetupData.h:83</a></div></div>
 <div class="ttc" id="mdt_device_u3606_a_8h_html"><div class="ttname"><a href="mdt_device_u3606_a_8h.html">mdtDeviceU3606A.h</a></div></div>
 <div class="ttc" id="classmdt_sql_record_html_a0bfc0fc265c6b0048698e2f5d4f840a8"><div class="ttname"><a href="classmdt_sql_record.html#a0bfc0fc265c6b0048698e2f5d4f840a8">mdtSqlRecord::clearValues</a></div><div class="ttdeci">virtual void clearValues()</div><div class="ttdoc">Clear values. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_sql_record_8cpp_source.html#l00149">mdtSqlRecord.cpp:149</a></div></div>
 <div class="ttc" id="classmdt_tt_test_node_unit_setup_data_html_a4e69dcc72bebc34d6db64cff91dbfc54a65bbd79cc1fe21c30b6878d859a16a6f"><div class="ttname"><a href="classmdt_tt_test_node_unit_setup_data.html#a4e69dcc72bebc34d6db64cff91dbfc54a65bbd79cc1fe21c30b6878d859a16a6f">mdtTtTestNodeUnitSetupData::DigitalOutput</a></div><div class="ttdef"><b>Definition:</b> <a href="mdt_tt_test_node_unit_setup_data_8h_source.html#l00041">mdtTtTestNodeUnitSetupData.h:41</a></div></div>
 <div class="ttc" id="mdt_tt_test_item_node_setup_data_8h_html"><div class="ttname"><a href="mdt_tt_test_item_node_setup_data_8h.html">mdtTtTestItemNodeSetupData.h</a></div></div>
-<div class="ttc" id="classmdt_device_scpi_html_a59759a6138c3ecbcb5cb98a042f8bcb5"><div class="ttname"><a href="classmdt_device_scpi.html#a59759a6138c3ecbcb5cb98a042f8bcb5">mdtDeviceScpi::sendCommand</a></div><div class="ttdeci">bool sendCommand(const QByteArray &amp;command, int timeout=30000)</div><div class="ttdoc">Send a command to device. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_device_scpi_8cpp_source.html#l00056">mdtDeviceScpi.cpp:56</a></div></div>
 <div class="ttc" id="classmdt_tt_base_html"><div class="ttname"><a href="classmdt_tt_base.html">mdtTtBase</a></div><div class="ttdoc">Base class for helper class. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_tt_base_8h_source.html#l00048">mdtTtBase.h:48</a></div></div>
 <div class="ttc" id="classmdt_error_html_ad3cccf7c7f7d4bdabdcb4e60794bb9cb"><div class="ttname"><a href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb">mdtError::commit</a></div><div class="ttdeci">void commit()</div><div class="ttdoc">Send error to output. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_error_8cpp_source.html#l00116">mdtError.cpp:116</a></div></div>
 <div class="ttc" id="classmdt_error_html_a6cd449e657f321b86d234269b5e92cda"><div class="ttname"><a href="classmdt_error.html#a6cd449e657f321b86d234269b5e92cda">mdtError::systemText</a></div><div class="ttdeci">QString systemText() const </div><div class="ttdoc">Error text returned from system, if available. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_error_8cpp_source.html#l00156">mdtError.cpp:156</a></div></div>
@@ -623,7 +605,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="classmdt_device_u3606_a_html_a8171d28878e8609c98d4cea591b7cc37a78d811e98514cd165dda532286610fd2"><div class="ttname"><a href="classmdt_device_u3606_a.html#a8171d28878e8609c98d4cea591b7cc37a78d811e98514cd165dda532286610fd2">mdtDeviceU3606A::Range_t::Min</a></div></div>
 <div class="ttc" id="classmdt_tt_test_node_unit_setup_data_html_a4e69dcc72bebc34d6db64cff91dbfc54afe3d6b133ce8a6f68baa3325766c6d90"><div class="ttname"><a href="classmdt_tt_test_node_unit_setup_data.html#a4e69dcc72bebc34d6db64cff91dbfc54afe3d6b133ce8a6f68baa3325766c6d90">mdtTtTestNodeUnitSetupData::Unknown</a></div><div class="ttdef"><b>Definition:</b> <a href="mdt_tt_test_node_unit_setup_data_8h_source.html#l00037">mdtTtTestNodeUnitSetupData.h:37</a></div></div>
 <div class="ttc" id="mdt_tt_test_node_setup_data_8h_html"><div class="ttname"><a href="mdt_tt_test_node_setup_data_8h.html">mdtTtTestNodeSetupData.h</a></div></div>
-<div class="ttc" id="classmdt_device_info_html"><div class="ttname"><a href="classmdt_device_info.html">mdtDeviceInfo</a></div><div class="ttdoc">Contains informations about a device (attached to a port) </div><div class="ttdef"><b>Definition:</b> <a href="mdt_device_info_8h_source.html#l00031">mdtDeviceInfo.h:31</a></div></div>
 <div class="ttc" id="mdt_value_8h_html"><div class="ttname"><a href="mdt_value_8h.html">mdtValue.h</a></div></div>
 <div class="ttc" id="classmdt_sql_record_html_a330291ff82fb8c7803c47d30f8939ed5"><div class="ttname"><a href="classmdt_sql_record.html#a330291ff82fb8c7803c47d30f8939ed5">mdtSqlRecord::setValue</a></div><div class="ttdeci">void setValue(int fieldIndex, const QVariant &amp;val)</div><div class="ttdoc">Set value. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_sql_record_8cpp_source.html#l00132">mdtSqlRecord.cpp:132</a></div></div>
 <div class="ttc" id="mdt_device_modbus_wago_8h_html"><div class="ttname"><a href="mdt_device_modbus_wago_8h.html">mdtDeviceModbusWago.h</a></div></div>
@@ -651,16 +632,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="classmdt_tt_test_node_unit_setup_data_html_a4e69dcc72bebc34d6db64cff91dbfc54ab77243295dc5311d18f9d2848d92d3ca"><div class="ttname"><a href="classmdt_tt_test_node_unit_setup_data.html#a4e69dcc72bebc34d6db64cff91dbfc54ab77243295dc5311d18f9d2848d92d3ca">mdtTtTestNodeUnitSetupData::DigitalInput</a></div><div class="ttdef"><b>Definition:</b> <a href="mdt_tt_test_node_unit_setup_data_8h_source.html#l00040">mdtTtTestNodeUnitSetupData.h:40</a></div></div>
 <div class="ttc" id="classmdt_tt_test_node_unit_setup_data_html_a6ef0406acc3ef7b0b2ee8f168d2a3c76"><div class="ttname"><a href="classmdt_tt_test_node_unit_setup_data.html#a6ef0406acc3ef7b0b2ee8f168d2a3c76">mdtTtTestNodeUnitSetupData::schemaPosition</a></div><div class="ttdeci">QString schemaPosition() const </div><div class="ttdoc">Get schema position. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_tt_test_node_unit_setup_data_8cpp_source.html#l00081">mdtTtTestNodeUnitSetupData.cpp:81</a></div></div>
 <div class="ttc" id="class_q_widget_html"><div class="ttname"><a href="class_q_widget.html">QWidget</a></div></div>
-<div class="ttc" id="classmdt_abstract_port_html_ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad"><div class="ttname"><a href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a></div><div class="ttdef"><b>Definition:</b> <a href="mdt_abstract_port_8h_source.html#l00061">mdtAbstractPort.h:61</a></div></div>
 <div class="ttc" id="mdt_tt_test_node_manager_8h_html"><div class="ttname"><a href="mdt_tt_test_node_manager_8h.html">mdtTtTestNodeManager.h</a></div></div>
 <div class="ttc" id="classmdt_tt_test_item_node_setup_data_html_ac3b94d30bf38bdb189d888a62b09b34d"><div class="ttname"><a href="classmdt_tt_test_item_node_setup_data.html#ac3b94d30bf38bdb189d888a62b09b34d">mdtTtTestItemNodeSetupData::hasMoreStep</a></div><div class="ttdeci">bool hasMoreStep() const </div><div class="ttdoc">Check if more step is available. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_tt_test_item_node_setup_data_8h_source.html#l00096">mdtTtTestItemNodeSetupData.h:96</a></div></div>
-<div class="ttc" id="classmdt_device_html_a7ad893c6885dbaef5a6cb980bfe627e0"><div class="ttname"><a href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0">mdtDevice::name</a></div><div class="ttdeci">QString name() const </div><div class="ttdoc">Get device name. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_device_8cpp_source.html#l00059">mdtDevice.cpp:59</a></div></div>
 <div class="ttc" id="classmdt_error_html_aac5a7cec9a5d4364f9331c80e1eafe99"><div class="ttname"><a href="classmdt_error.html#aac5a7cec9a5d4364f9331c80e1eafe99">mdtError::levelIcon</a></div><div class="ttdeci">QMessageBox::Icon levelIcon() const </div><div class="ttdoc">Map the level to a QMessageBox Icon. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_error_8cpp_source.html#l00136">mdtError.cpp:136</a></div></div>
 <div class="ttc" id="classmdt_sql_record_html_a7b144e9c00e46748e1729251aabd5f51"><div class="ttname"><a href="classmdt_sql_record.html#a7b144e9c00e46748e1729251aabd5f51">mdtSqlRecord::addField</a></div><div class="ttdeci">bool addField(const QString &amp;fieldName, const QString &amp;tableName, const QSqlDatabase &amp;db)</div><div class="ttdoc">Add a field to record. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_sql_record_8cpp_source.html#l00046">mdtSqlRecord.cpp:46</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Feb 19 2015 17:07:47 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Feb 27 2015 17:17:35 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

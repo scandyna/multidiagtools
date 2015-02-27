@@ -91,7 +91,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <a href="mdt_device_container_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/****************************************************************************</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> **</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> ** Copyright (C) 2011-2014 Philippe Steinmann.</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> ** Copyright (C) 2011-2015 Philippe Steinmann.</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> **</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> ** This file is part of multiDiagTools library.</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"> **</span></div>
@@ -132,8 +132,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="classmdt_device_container.html#a843e03b57889faac6e062860e95caad1">   51</a></span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; std::shared_ptr&lt;T&gt; <a class="code" href="classmdt_device_container.html#a843e03b57889faac6e062860e95caad1">addDevice</a>(<span class="keyword">const</span> QVariant &amp; identification, <span class="keyword">const</span> QString &amp; name)</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  {</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    std::shared_ptr&lt;T&gt; dev(<span class="keyword">new</span> T);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    dev-&gt;setIdentification(identification);</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    dev-&gt;setName(name);</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    pvDevices.push_back(dev);</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    emit <a class="code" href="classmdt_device_container.html#a41a5239ce685162e9d498aca3dce87cb">deviceAdded</a>(dev);</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordflow">return</span> dev;</div>
@@ -144,41 +142,33 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    std::vector&lt;std::shared_ptr&lt;mdtDevice&gt;&gt;::const_iterator it;</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    std::shared_ptr&lt;T&gt; dev;</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordflow">for</span>(it = pvDevices.begin(); it != pvDevices.end(); ++it){</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;      Q_ASSERT(*it);</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;      <span class="keywordflow">if</span>((*it)-&gt;identification() == identification){</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        dev = std::dynamic_pointer_cast&lt;T&gt;(*it);</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keywordflow">return</span> dev;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;      }</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    }</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keywordflow">return</span> std::shared_ptr&lt;T&gt;();</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  }</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
-<div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="classmdt_device_container.html#a95168e7221db07ea8df6a2c028ebf560">   81</a></span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classmdt_device_container.html#a95168e7221db07ea8df6a2c028ebf560">deviceCount</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> pvDevices.size(); }</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_device_container.html#a18ade1b299dcf87e0097c24cb346f36f">clear</a>();</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  QList&lt;std::shared_ptr&lt;mdtDevice&gt;&gt; <a class="code" href="classmdt_device_container.html#a9a04f05d7cce394fd30f8669edb6a181">allDevices</a>();</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_device_container.html#a45465d82f6ed697366d5d45de2334855">disconnectFromDevices</a>();</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; signals:</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keywordflow">return</span> std::shared_ptr&lt;T&gt;();</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  }</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
+<div class="line"><a name="l00083"></a><span class="lineno"><a class="line" href="classmdt_device_container.html#a95168e7221db07ea8df6a2c028ebf560">   83</a></span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classmdt_device_container.html#a95168e7221db07ea8df6a2c028ebf560">deviceCount</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> pvDevices.size(); }</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_device_container.html#a18ade1b299dcf87e0097c24cb346f36f">clear</a>();</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  QList&lt;std::shared_ptr&lt;mdtDevice&gt;&gt; <a class="code" href="classmdt_device_container.html#a9a04f05d7cce394fd30f8669edb6a181">allDevices</a>();</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_device_container.html#a45465d82f6ed697366d5d45de2334855">disconnectFromDevices</a>();</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_device_container.html#a41a5239ce685162e9d498aca3dce87cb">deviceAdded</a>(std::shared_ptr&lt;mdtDevice&gt; <a class="code" href="classmdt_device_container.html#a6361dffbdc3d47f0cce86f78b5f202eb">device</a>);</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_device_container.html#a2e388a772abad3d9518f2ebebe1199fd">cleared</a>();</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; signals:</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_device_container.html#a41a5239ce685162e9d498aca3dce87cb">deviceAdded</a>(std::shared_ptr&lt;mdtDevice&gt; <a class="code" href="classmdt_device_container.html#a6361dffbdc3d47f0cce86f78b5f202eb">device</a>);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classmdt_device_container.html#a2e388a772abad3d9518f2ebebe1199fd">cleared</a>();</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  Q_DISABLE_COPY(<a class="code" href="classmdt_device_container.html">mdtDeviceContainer</a>);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  std::vector&lt;std::shared_ptr&lt;mdtDevice&gt;&gt; pvDevices;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;};</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="preprocessor">#endif // #ifndef MDT_DEVICE_CONTAINER_H</span></div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  Q_DISABLE_COPY(<a class="code" href="classmdt_device_container.html">mdtDeviceContainer</a>);</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  std::vector&lt;std::shared_ptr&lt;mdtDevice&gt;&gt; pvDevices;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;};</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="preprocessor">#endif // #ifndef MDT_DEVICE_CONTAINER_H</span></div>
 <div class="ttc" id="classmdt_device_container_html_a2e388a772abad3d9518f2ebebe1199fd"><div class="ttname"><a href="classmdt_device_container.html#a2e388a772abad3d9518f2ebebe1199fd">mdtDeviceContainer::cleared</a></div><div class="ttdeci">void cleared()</div><div class="ttdoc">Emited when container was cleared. </div></div>
-<div class="ttc" id="classmdt_device_container_html_a95168e7221db07ea8df6a2c028ebf560"><div class="ttname"><a href="classmdt_device_container.html#a95168e7221db07ea8df6a2c028ebf560">mdtDeviceContainer::deviceCount</a></div><div class="ttdeci">int deviceCount() const </div><div class="ttdoc">Get number of contained devices. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_device_container_8h_source.html#l00081">mdtDeviceContainer.h:81</a></div></div>
+<div class="ttc" id="classmdt_device_container_html_a95168e7221db07ea8df6a2c028ebf560"><div class="ttname"><a href="classmdt_device_container.html#a95168e7221db07ea8df6a2c028ebf560">mdtDeviceContainer::deviceCount</a></div><div class="ttdeci">int deviceCount() const </div><div class="ttdoc">Get number of contained devices. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_device_container_8h_source.html#l00083">mdtDeviceContainer.h:83</a></div></div>
 <div class="ttc" id="classmdt_device_container_html"><div class="ttname"><a href="classmdt_device_container.html">mdtDeviceContainer</a></div><div class="ttdoc">Contains different type of devices. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_device_container_8h_source.html#l00039">mdtDeviceContainer.h:39</a></div></div>
 <div class="ttc" id="classmdt_device_container_html_a843e03b57889faac6e062860e95caad1"><div class="ttname"><a href="classmdt_device_container.html#a843e03b57889faac6e062860e95caad1">mdtDeviceContainer::addDevice</a></div><div class="ttdeci">std::shared_ptr&lt; T &gt; addDevice(const QVariant &amp;identification, const QString &amp;name)</div><div class="ttdoc">Create and add a new device. </div><div class="ttdef"><b>Definition:</b> <a href="mdt_device_container_8h_source.html#l00051">mdtDeviceContainer.h:51</a></div></div>
 <div class="ttc" id="classmdt_device_container_html_a41a5239ce685162e9d498aca3dce87cb"><div class="ttname"><a href="classmdt_device_container.html#a41a5239ce685162e9d498aca3dce87cb">mdtDeviceContainer::deviceAdded</a></div><div class="ttdeci">void deviceAdded(std::shared_ptr&lt; mdtDevice &gt; device)</div><div class="ttdoc">Emited when a new device was added. </div></div>
@@ -191,7 +181,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Feb 19 2015 17:07:46 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Feb 27 2015 17:17:34 for Multi diag tools by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
