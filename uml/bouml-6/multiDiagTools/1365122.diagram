@@ -1,0 +1,11 @@
+format 209
+
+classcanvas 128002 class_ref 1545218 // mdtWait
+  classdiagramsettings member_max_width 0 end
+  xyz 220 216 2000
+end
+classcanvas 128130 class_ref 1545346 // mdtWaitQtEventLoop
+  classdiagramsettings member_max_width 0 end
+  xyz 182 312 2000
+end
+end

@@ -262,7 +262,7 @@ bool mdtModbusTcpPortManager::tryToConnect(const QString &hostName, quint16 port
   timeoutTimer.setSingleShot(true);
   connect(&timeoutTimer, SIGNAL(timeout()), this, SLOT(abortTryToConnect()));
   emit(statusMessageChanged(tr("Trying host ") + hostName + "  , port " + QString::number(port), "", 500));
-  qDebug() << "Trying host " << hostName << ":" << port << " (time: " << timeout << "[ms]) " << " ...";
+  ///qDebug() << "Trying host " << hostName << ":" << port << " (time: " << timeout << "[ms]) " << " ...";
   socket.connectToHost(hostName, port);
   pvAbortTryToConnect = false;
   timeoutTimer.start(timeout);

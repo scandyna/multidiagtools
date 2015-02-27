@@ -437,7 +437,7 @@ bool mdtMultiIoDevice::getAnalogOutputs(bool waitOnReply)
   return false;
 }
 
-int mdtMultiIoDevice::setAnalogOutputValue(mdtAnalogIo *analogOutput, const mdtValue &value, bool sendToDevice, bool waitOnReply)
+bool mdtMultiIoDevice::setAnalogOutputValue(mdtAnalogIo *analogOutput, const mdtValue &value, bool sendToDevice, bool waitOnReply)
 {
   Q_ASSERT(analogOutput != 0);
 
@@ -447,7 +447,7 @@ int mdtMultiIoDevice::setAnalogOutputValue(mdtAnalogIo *analogOutput, const mdtV
   // Store value
   analogOutput->setValue(value, false);
   if(!sendToDevice){
-    return 0;
+    return true;
   }
   // Disable I/O - Must be re-enabled by subclass once data are available or timeout
   analogOutput->setEnabled(false);
@@ -461,101 +461,100 @@ int mdtMultiIoDevice::setAnalogOutputValue(mdtAnalogIo *analogOutput, const mdtV
     transactionId = writeAnalogOutput(analogOutput->value().valueInt(), transaction);
     if(transactionId < 0){
       analogOutput->setValue(mdtValue());
-      return -1;
+      return false;
     }
     // Wait on result (use device's defined timeout)
     if(!waitTransactionDone(transactionId)){
       analogOutput->setValue(mdtValue());
-      return -1;
+      return false;
     }
   }else{
     transaction->setQueryReplyMode(false);
     transactionId = writeAnalogOutput(analogOutput->value().valueInt(), transaction);
     if(transactionId < 0){
       analogOutput->setValue(mdtValue());
-      return -1;
+      return false;
     }
   }
 
-  return transactionId;
+  return true;
 }
 
-int mdtMultiIoDevice::setAnalogOutputValue(int addressWrite, const mdtValue &value, bool sendToDevice, bool waitOnReply)
+bool mdtMultiIoDevice::setAnalogOutputValue(int addressWrite, const mdtValue &value, bool sendToDevice, bool waitOnReply)
 {
+  Q_ASSERT(pvIos);
+
   mdtAnalogIo *analogOutput;
 
-  if(!pvIos){
-    return -1;
-  }
   // Get I/O object
   analogOutput = pvIos->analogOutputAtAddressWrite(addressWrite);
   if(analogOutput == 0){
-    pvLastError.setError(deviceIdString() + tr(": no analog output assigned to address ") + QString::number(addressWrite), mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr("no analog output assigned to address ") + QString::number(addressWrite), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
-    return -1;
+    return false;
   }
 
   return setAnalogOutputValue(analogOutput, value, sendToDevice, waitOnReply);
 }
 
-int mdtMultiIoDevice::setAnalogOutputValueAt(int position, const mdtValue &value, bool sendToDevice, bool waitOnReply)
+bool mdtMultiIoDevice::setAnalogOutputValueAt(int position, const mdtValue &value, bool sendToDevice, bool waitOnReply)
 {
+  Q_ASSERT(pvIos);
+
   mdtAnalogIo *analogOutput;
 
-  if(!pvIos){
-    return -1;
-  }
   // Check indexes
   if((position < 0)||(position >= pvIos->analogOutputs().size())){
-    pvLastError.setError(deviceIdString() + tr(": position ") + QString::number(position) + tr(" is out of range"), mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr("position ") + QString::number(position) + tr(" is out of range"), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
-    return -1;
+    return false;
   }
   // Get internal I/O object
   analogOutput = pvIos->analogOutputs().at(position);
   if(analogOutput == 0){
-    pvLastError.setError(deviceIdString() + tr(": no analog output assigned at position ") + QString::number(position), mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr("no analog output assigned at position ") + QString::number(position), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
-    return -1;
+    return false;
   }
 
   return setAnalogOutputValue(analogOutput, value, sendToDevice, waitOnReply);
 }
 
-int mdtMultiIoDevice::setAnalogOutputValue(const QString &labelShort, const mdtValue &value, bool sendToDevice, bool waitOnReply)
+bool mdtMultiIoDevice::setAnalogOutputValue(const QString & labelShort, const mdtValue &value, bool sendToDevice, bool waitOnReply)
 {
+  Q_ASSERT(pvIos);
+
   mdtAnalogIo *analogOutput;
 
-  if(!pvIos){
-    return -1;
-  }
   // Get I/O object
   analogOutput = pvIos->analogOutputWithLabelShort(labelShort);
   if(analogOutput == 0){
     pvLastError.setError(deviceIdString() + tr(": no analog output found with label short ") + labelShort, mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
-    return -1;
+    return false;
   }
 
   return setAnalogOutputValue(analogOutput, value, sendToDevice, waitOnReply);
 }
 
-int mdtMultiIoDevice::setAnalogOutputs(bool waitOnReply)
+bool mdtMultiIoDevice::setAnalogOutputs(bool waitOnReply)
 {
+  Q_ASSERT(pvIos);
+
   int transactionId = -1;
   int i;
   mdtPortTransaction *transaction;
   mdtDeviceIosSegment *segment;
 
-  if(!pvIos){
-    return -1;
-  }
   if(pvIos->analogOutputsCount() < 1){
-    return 0;
+    pvLastError.setError(deviceIdString() + tr("has no analog outputs."), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
+    pvLastError.commit();
+    return false;
   }
   // Disable I/Os - Must be re-enabled by subclass once data are in
   pvIos->setAnalogOutputsEnabled(false);
@@ -572,24 +571,24 @@ int mdtMultiIoDevice::setAnalogOutputs(bool waitOnReply)
       transactionId = writeAnalogOutputs(transaction, segment);
       if(transactionId < 0){
         pvIos->setAnalogOutputsValue(mdtValue());
-        return transactionId;
+        return false;
       }
       // Wait on result (use device's defined timeout)
       if(!waitTransactionDone(transactionId)){
         pvIos->setAnalogOutputsValue(mdtValue());
-        return -1;
+        return false;
       }
     }else{
       transaction->setQueryReplyMode(false);
       transactionId = writeAnalogOutputs(transaction, segment);
       if(transactionId < 0){
         pvIos->setAnalogOutputsValue(mdtValue());
-        return transactionId;
+        return false;
       }
     }
   }
 
-  return transactionId;
+  return true;
 }
 
 mdtValue mdtMultiIoDevice::getDigitalInputValue(mdtDigitalIo *digitalInput, bool queryDevice, bool waitOnReply)
@@ -644,7 +643,7 @@ mdtValue mdtMultiIoDevice::getDigitalInputValue(int address, bool queryDevice, b
   // Get I/O object
   digitalInput = pvIos->digitalInputAtAddress(address);
   if(digitalInput == 0){
-    pvLastError.setError(deviceIdString() + tr(": no digital input assigned to address ") + QString::number(address), mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr("no digital input assigned to address ") + QString::number(address), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
     return mdtValue();
@@ -662,7 +661,7 @@ mdtValue mdtMultiIoDevice::getDigitalInputValueAt(int position, bool queryDevice
   }
   // Check indexes
   if((position < 0)||(position >= pvIos->digitalInputs().size())){
-    pvLastError.setError(deviceIdString() + tr(": position ") + QString::number(position) + tr(" is out of range"), mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr("position ") + QString::number(position) + tr(" is out of range"), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
     return mdtValue();
@@ -670,7 +669,7 @@ mdtValue mdtMultiIoDevice::getDigitalInputValueAt(int position, bool queryDevice
   // Get internal I/O object
   digitalInput = pvIos->digitalInputs().at(position);
   if(digitalInput == 0){
-    pvLastError.setError(deviceIdString() + tr(": no digital input assigned at position ") + QString::number(position), mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr("no digital input assigned at position ") + QString::number(position), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
     return mdtValue();
@@ -689,7 +688,7 @@ mdtValue mdtMultiIoDevice::getDigitalInputValue(const QString &labelShort, bool 
   // Get I/O object
   digitalInput = pvIos->digitalInputWithLabelShort(labelShort);
   if(digitalInput == 0){
-    pvLastError.setError(deviceIdString() + tr(": no digital input found with label short ") + labelShort, mdtError::Error);
+    pvLastError.setError(deviceIdString() + tr("no digital input found with label short ") + labelShort, mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
     return mdtValue();
@@ -698,19 +697,21 @@ mdtValue mdtMultiIoDevice::getDigitalInputValue(const QString &labelShort, bool 
   return getDigitalInputValue(digitalInput, queryDevice, waitOnReply);
 }
 
-int mdtMultiIoDevice::getDigitalInputs(bool waitOnReply)
+bool mdtMultiIoDevice::getDigitalInputs(bool waitOnReply)
 {
+  Q_ASSERT(pvIos);
+
   int transactionId = -1;
   int i;
   mdtPortTransaction *transaction;
   mdtDeviceIosSegment *segment;
 
 
-  if(!pvIos){
-    return -1;
-  }
   if(pvIos->digitalInputsCount() < 1){
-    return 0;
+    pvLastError.setError(deviceIdString() + tr("has no digital input."), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
+    pvLastError.commit();
+    return false;
   }
   for(i = 0; i < pvIos->digitalInputsSegments().size(); ++i){
     segment = pvIos->digitalInputsSegments().at(i);
@@ -725,24 +726,24 @@ int mdtMultiIoDevice::getDigitalInputs(bool waitOnReply)
       transactionId = readDigitalInputs(transaction);
       if(transactionId < 0){
         pvIos->setDigitalInputsValue(mdtValue());
-        return transactionId;
+        return false;
       }
       // Wait on result (use device's defined timeout)
       if(!waitTransactionDone(transactionId)){
         pvIos->setDigitalInputsValue(mdtValue());
-        return -1;
+        return false;
       }
     }else{
       transaction->setQueryReplyMode(false);
       transactionId = readDigitalInputs(transaction);
       if(transactionId < 0){
         pvIos->setDigitalInputsValue(mdtValue());
-        return transactionId;
+        return false;
       }
     }
   }
 
-  return transactionId;
+  return true;
 }
 
 mdtValue mdtMultiIoDevice::getDigitalOutputValue(mdtDigitalIo *digitalOutput, bool queryDevice, bool waitOnReply)
@@ -789,11 +790,10 @@ mdtValue mdtMultiIoDevice::getDigitalOutputValue(mdtDigitalIo *digitalOutput, bo
 
 mdtValue mdtMultiIoDevice::getDigitalOutputValue(int addressRead, bool queryDevice, bool waitOnReply)
 {
+  Q_ASSERT(pvIos);
+
   mdtDigitalIo *digitalOutput;
 
-  if(!pvIos){
-    return mdtValue();
-  }
   // Get I/O object
   digitalOutput = pvIos->digitalOutputAtAddressRead(addressRead);
   if(digitalOutput == 0){
@@ -808,11 +808,10 @@ mdtValue mdtMultiIoDevice::getDigitalOutputValue(int addressRead, bool queryDevi
 
 mdtValue mdtMultiIoDevice::getDigitalOutputValueAt(int position, bool queryDevice, bool waitOnReply)
 {
+  Q_ASSERT(pvIos);
+
   mdtDigitalIo *digitalOutput;
 
-  if(!pvIos){
-    return mdtValue();
-  }
   // Check indexes
   if((position < 0)||(position >= pvIos->digitalOutputs().size())){
     pvLastError.setError(deviceIdString() + tr(": position ") + QString::number(position) + tr(" is out of range"), mdtError::Error);
@@ -834,11 +833,10 @@ mdtValue mdtMultiIoDevice::getDigitalOutputValueAt(int position, bool queryDevic
 
 mdtValue mdtMultiIoDevice::getDigitalOutputValue(const QString &labelShort, bool queryDevice, bool waitOnReply)
 {
+  Q_ASSERT(pvIos);
+
   mdtDigitalIo *digitalOutput;
 
-  if(!pvIos){
-    return mdtValue();
-  }
   // Get I/O object
   digitalOutput = pvIos->digitalOutputWithLabelShort(labelShort);
   if(digitalOutput == 0){
@@ -851,19 +849,21 @@ mdtValue mdtMultiIoDevice::getDigitalOutputValue(const QString &labelShort, bool
   return getDigitalOutputValue(digitalOutput, queryDevice, waitOnReply);
 }
 
-int mdtMultiIoDevice::getDigitalOutputs(bool waitOnReply)
+bool mdtMultiIoDevice::getDigitalOutputs(bool waitOnReply)
 {
+  Q_ASSERT(pvIos);
+
   int transactionId = -1;
   int i;
   mdtPortTransaction *transaction;
   mdtDeviceIosSegment *segment;
 
 
-  if(!pvIos){
-    return -1;
-  }
   if(pvIos->digitalOutputsCount() < 1){
-    return 0;
+    pvLastError.setError(deviceIdString() + tr("has no digital output."), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
+    pvLastError.commit();
+    return false;
   }
   for(i = 0; i < pvIos->digitalOutputsSegments().size(); ++i){
     segment = pvIos->digitalOutputsSegments().at(i);
@@ -878,28 +878,29 @@ int mdtMultiIoDevice::getDigitalOutputs(bool waitOnReply)
       transactionId = readDigitalOutputs(transaction);
       if(transactionId < 0){
         pvIos->setDigitalOutputsValue(mdtValue());
-        return transactionId;
+        return false;
       }
       // Wait on result (use device's defined timeout)
       if(!waitTransactionDone(transactionId)){
         pvIos->setDigitalOutputsValue(mdtValue());
-        return -1;
+        return false;
       }
     }else{
       transaction->setQueryReplyMode(false);
       transactionId = readDigitalOutputs(transaction);
       if(transactionId < 0){
         pvIos->setDigitalOutputsValue(mdtValue());
-        return transactionId;
+        return false;
       }
     }
   }
 
-  return transactionId;
+  return true;
 }
 
-int mdtMultiIoDevice::setDigitalOutputValue(mdtDigitalIo *digitalOutput, const mdtValue &value, bool sendToDevice, bool waitOnReply)
+bool mdtMultiIoDevice::setDigitalOutputValue(mdtDigitalIo *digitalOutput, const mdtValue &value, bool sendToDevice, bool waitOnReply)
 {
+  Q_ASSERT(pvIos);
   Q_ASSERT(digitalOutput != 0);
 
   int transactionId;
@@ -907,7 +908,7 @@ int mdtMultiIoDevice::setDigitalOutputValue(mdtDigitalIo *digitalOutput, const m
 
   digitalOutput->setValue(value, false);
   if(!sendToDevice){
-    return 0;
+    return true;
   }
   // Disable I/O - Must be re-enabled by subclass once data are available or timeout
   digitalOutput->setEnabled(false);
@@ -921,57 +922,55 @@ int mdtMultiIoDevice::setDigitalOutputValue(mdtDigitalIo *digitalOutput, const m
     transactionId = writeDigitalOutput(value.valueBool(), transaction);
     if(transactionId < 0){
       digitalOutput->setValue(mdtValue());
-      return -1;
+      return false;
     }
     // Wait on result (use device's defined timeout)
     if(!waitTransactionDone(transactionId)){
       digitalOutput->setValue(mdtValue());
-      return -1;
+      return false;
     }
   }else{
     transaction->setQueryReplyMode(false);
     transactionId = writeDigitalOutput(value.valueBool(), transaction);
     if(transactionId < 0){
       digitalOutput->setValue(mdtValue());
-      return -1;
+      return false;
     }
   }
 
-  return transactionId;
+  return true;
 }
 
-int mdtMultiIoDevice::setDigitalOutputValue(int addressWrite, const mdtValue &value, bool sendToDevice, bool waitOnReply)
+bool mdtMultiIoDevice::setDigitalOutputValue(int addressWrite, const mdtValue &value, bool sendToDevice, bool waitOnReply)
 {
+  Q_ASSERT(pvIos);
+
   mdtDigitalIo *digitalOutput;
 
-  if(!pvIos){
-    return -1;
-  }
   // Get I/O object
   digitalOutput = pvIos->digitalOutputAtAddressWrite(addressWrite);
   if(digitalOutput == 0){
     pvLastError.setError(deviceIdString() + tr(": no digital output assigned to address ") + QString::number(addressWrite), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
-    return -1;
+    return false;
   }
 
   return setDigitalOutputValue(digitalOutput, value, sendToDevice, waitOnReply);
 }
 
-int mdtMultiIoDevice::setDigitalOutputValueAt(int position, const mdtValue &value, bool sendToDevice, bool waitOnReply)
+bool mdtMultiIoDevice::setDigitalOutputValueAt(int position, const mdtValue &value, bool sendToDevice, bool waitOnReply)
 {
+  Q_ASSERT(pvIos);
+
   mdtDigitalIo *digitalOutput;
 
-  if(!pvIos){
-    return -1;
-  }
   // Check indexes
   if((position < 0)||(position >= pvIos->digitalOutputs().size())){
     pvLastError.setError(deviceIdString() + tr(": position ") + QString::number(position) + tr(" is out of range"), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
-    return -1;
+    return false;
   }
   // Get internal I/O object
   digitalOutput = pvIos->digitalOutputs().at(position);
@@ -979,38 +978,39 @@ int mdtMultiIoDevice::setDigitalOutputValueAt(int position, const mdtValue &valu
     pvLastError.setError(deviceIdString() + tr(": no digital output assigned at position ") + QString::number(position), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
-    return -1;
+    return false;
   }
 
   return setDigitalOutputValue(digitalOutput, value, sendToDevice, waitOnReply);
 }
 
-int mdtMultiIoDevice::setDigitalOutputValue(const QString &labelShort, const mdtValue &value, bool sendToDevice, bool waitOnReply)
+bool mdtMultiIoDevice::setDigitalOutputValue(const QString & labelShort, const mdtValue &value, bool sendToDevice, bool waitOnReply)
 {
+  Q_ASSERT(pvIos);
+
   mdtDigitalIo *digitalOutput;
 
-  if(!pvIos){
-    return -1;
-  }
   // Get I/O object
   digitalOutput = pvIos->digitalOutputWithLabelShort(labelShort);
   if(digitalOutput == 0){
     pvLastError.setError(deviceIdString() + tr(": no digital output found with label short ") + labelShort, mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();
-    return -1;
+    return false;
   }
 
   return setDigitalOutputValue(digitalOutput, value, sendToDevice, waitOnReply);
 }
 
-int mdtMultiIoDevice::setDigitalOutputsValue(const mdtValue& value, bool sendToDevice, bool waitOnReply)
+bool mdtMultiIoDevice::setDigitalOutputsValue(const mdtValue& value, bool sendToDevice, bool waitOnReply)
 {
-  if(!pvIos){
-    return -1;
-  }
+  Q_ASSERT(pvIos);
+
   if(pvIos->digitalOutputsCount() < 1){
-    return -1;
+    pvLastError.setError(deviceIdString() + tr("has no digital output."), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
+    pvLastError.commit();
+    return false;
   }
   // Cache value to all digital outputs
   pvIos->setDigitalOutputsValue(value);
@@ -1019,21 +1019,23 @@ int mdtMultiIoDevice::setDigitalOutputsValue(const mdtValue& value, bool sendToD
     return setDigitalOutputs(waitOnReply);
   }
 
-  return 0;
+  return true;
 }
 
-int mdtMultiIoDevice::setDigitalOutputs(bool waitOnReply)
+bool mdtMultiIoDevice::setDigitalOutputs(bool waitOnReply)
 {
+  Q_ASSERT(pvIos);
+
   int transactionId = -1;
   int i;
   mdtPortTransaction *transaction;
   mdtDeviceIosSegment *segment;
 
-  if(!pvIos){
-    return -1;
-  }
   if(pvIos->digitalOutputsCount() < 1){
-    return -1;
+    pvLastError.setError(deviceIdString() + tr("has no digital output."), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
+    pvLastError.commit();
+    return false;
   }
   // Disable I/Os - Must be re-enabled by subclass once data are in
   pvIos->setDigitalOutputsEnabled(false);
@@ -1050,24 +1052,24 @@ int mdtMultiIoDevice::setDigitalOutputs(bool waitOnReply)
       transactionId = writeDigitalOutputs(transaction, segment);
       if(transactionId < 0){
         pvIos->setDigitalOutputsValue(mdtValue());
-        return transactionId;
+        return false;
       }
       // Wait on result (use device's defined timeout)
       if(!waitTransactionDone(transactionId)){
         pvIos->setDigitalOutputsValue(mdtValue());
-        return -1;
+        return false;
       }
     }else{
       transaction->setQueryReplyMode(false);
       transactionId = writeDigitalOutputs(transaction, segment);
       if(transactionId < 0){
         pvIos->setDigitalOutputsValue(mdtValue());
-        return transactionId;
+        return false;
       }
     }
   }
 
-  return transactionId;
+  return true;
 }
 
 void mdtMultiIoDevice::setAnalogOutputValue(mdtAnalogIo* analogOutput)

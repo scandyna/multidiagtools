@@ -1,6 +1,6 @@
-format 208
+format 209
 "mdtutils" // mdtutils
-  revision 140
+  revision 141
   modified_by 2 "philippe"
   // class settings
   
@@ -8332,6 +8332,60 @@ ${inlines}
 	
 	
       end
+    end
+  end
+
+  classview 742146 "Wait"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 1365122 "Wait"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 1545218 "mdtWait"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 1545346 "mdtWaitQtEventLoop"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
     end
   end
 end

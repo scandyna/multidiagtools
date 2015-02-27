@@ -249,10 +249,9 @@ class mdtMultiIoDevice : public mdtDevice
    *                      (See sublcass writeAnalogOutput() for details).
    * \param waitOnReply If true, this method will wait until reply comes in, or timeout (See waitTransactionDone() ),
    *                     else it will return immediately after the query was sent. \deprecated waitOnReply must not be used anymore
-   * \return 0 or a ID on success. If no I/O's are set, on timeout, on invalid value or other error, a value < 0 is returned.
    * \pre analogOutput must be valid.
    */
-  int setAnalogOutputValue(mdtAnalogIo *analogOutput, const mdtValue &value, bool sendToDevice, bool waitOnReply = true);
+  bool setAnalogOutputValue(mdtAnalogIo *analogOutput, const mdtValue &value, bool sendToDevice, bool waitOnReply = true);
 
   /*! \brief Set analog output value
    *
@@ -262,7 +261,7 @@ class mdtMultiIoDevice : public mdtDevice
    *
    * \sa setAnalogOutputValue(mdtAnalogIo*, const mdtValue&, bool, bool)
    */
-  int setAnalogOutputValue(int addressWrite, const mdtValue &value, bool sendToDevice, bool waitOnReply = true);
+  bool setAnalogOutputValue(int addressWrite, const mdtValue &value, bool sendToDevice, bool waitOnReply = true);
 
   /*! \brief Set analog output value
    *
@@ -270,7 +269,7 @@ class mdtMultiIoDevice : public mdtDevice
    *
    * \sa setAnalogOutputValue(mdtAnalogIo*, const mdtValue&, bool, bool)
    */
-  int setAnalogOutputValueAt(int position, const mdtValue &value, bool sendToDevice, bool waitOnReply = true);
+  bool setAnalogOutputValueAt(int position, const mdtValue &value, bool sendToDevice, bool waitOnReply = true);
 
   /*! \brief Set analog output value
    *
@@ -278,7 +277,7 @@ class mdtMultiIoDevice : public mdtDevice
    *
    * \param labelShort Short label set in I/O (see mdtAnalogIo for details).
    */
-  int setAnalogOutputValue(const QString &labelShort, const mdtValue &value, bool sendToDevice, bool waitOnReply = true);
+  bool setAnalogOutputValue(const QString &labelShort, const mdtValue &value, bool sendToDevice, bool waitOnReply = true);
 
   /*! \brief Write all analog outputs on physical device and update (G)UI representation
    *
@@ -297,9 +296,8 @@ class mdtMultiIoDevice : public mdtDevice
    *
    * \param waitOnReply If true, this method will wait until reply comes in, or timeout (See waitTransactionDone() ),
    *                     else it will return immediately after the query was sent. \deprecated waitOnReply must not be used anymore
-   * \return 0 or a ID on success. If no I/O's are set, on timeout ar other error, a value < 0 is returned.
    */
-  int setAnalogOutputs(bool waitOnReply = true);
+  bool setAnalogOutputs(bool waitOnReply = true);
 
   /*! \brief Get digital input value
    *
@@ -311,11 +309,11 @@ class mdtMultiIoDevice : public mdtDevice
    *                      Behaviour of this method can vary, depending on device specific subclass.
    *                      (See sublcass readDigitalInput() for details).
    * \param waitOnReply If true, this method will wait until reply comes in, or timeout (See waitTransactionDone() ),
-   *                     else it will return immediately after the query was sent.
+   *                     else it will return immediately after the query was sent. \deprecated waitOnReply must not be used anymore
    * \return A mdtValue with valueBool. See mdtValue documentation for details about validity and other flags.
    * \pre digitalInput must be valid.
    */
-  mdtValue getDigitalInputValue(mdtDigitalIo *digitalInput, bool queryDevice, bool waitOnReply);
+  mdtValue getDigitalInputValue(mdtDigitalIo *digitalInput, bool queryDevice, bool waitOnReply = true);
 
   /*! \brief Get digital input value
    *
@@ -325,7 +323,7 @@ class mdtMultiIoDevice : public mdtDevice
    *
    * \sa getDigitalInputValue(mdtDigitalIo*, bool, bool)
    */
-  mdtValue getDigitalInputValue(int address, bool queryDevice, bool waitOnReply);
+  mdtValue getDigitalInputValue(int address, bool queryDevice, bool waitOnReply = true);
 
   /*! \brief Get digital input value
    *
@@ -333,7 +331,7 @@ class mdtMultiIoDevice : public mdtDevice
    *
    * \sa getDigitalInputValue(mdtDigitalIo*, bool, bool)
    */
-  mdtValue getDigitalInputValueAt(int position, bool queryDevice, bool waitOnReply);
+  mdtValue getDigitalInputValueAt(int position, bool queryDevice, bool waitOnReply = true);
 
   /*! \brief Get digital input value
    *
@@ -341,7 +339,7 @@ class mdtMultiIoDevice : public mdtDevice
    *
    * \param labelShort Short label set in I/O (see mdtDigitalIo for details).
    */
-  mdtValue getDigitalInputValue(const QString &labelShort, bool queryDevice, bool waitOnReply);
+  mdtValue getDigitalInputValue(const QString &labelShort, bool queryDevice, bool waitOnReply = true);
 
   /*! \brief Read all digital inputs on physical device and update (G)UI representation
    *
@@ -355,10 +353,9 @@ class mdtMultiIoDevice : public mdtDevice
    *  (See mdtDeviceIos for details).
    *
    * \param waitOnReply If true, this method will wait until reply comes in, or timeout (See waitTransactionDone() ),
-   *                     else it will return immediately after the query was sent.
-   * \return 0 or a ID on success. If no I/O's are set, on timeout ar other error, a value < 0 is returned.
+   *                     else it will return immediately after the query was sent. \deprecated waitOnReply must not be used anymore
    */
-  int getDigitalInputs(bool waitOnReply);
+  bool getDigitalInputs(bool waitOnReply = true);
 
   /*! \brief Get digital output value
    *
@@ -367,11 +364,11 @@ class mdtMultiIoDevice : public mdtDevice
    *                      Behaviour of this method can vary, depending on device specific subclass.
    *                      (See sublcass readDigitalOutput() for details).
    * \param waitOnReply If true, this method will wait until reply comes in, or timeout (See waitTransactionDone() ),
-   *                     else it will return immediately after the query was sent.
+   *                     else it will return immediately after the query was sent. \deprecated waitOnReply must not be used anymore
    * \return A mdtValue with valueBool. See mdtValue documentation for details about validity and other flags.
    * \pre digitalOutput must be valid.
    */
-  mdtValue getDigitalOutputValue(mdtDigitalIo *digitalOutput, bool queryDevice, bool waitOnReply);
+  mdtValue getDigitalOutputValue(mdtDigitalIo *digitalOutput, bool queryDevice, bool waitOnReply = true);
 
   /*! \brief Get digital output value
    *
@@ -381,7 +378,7 @@ class mdtMultiIoDevice : public mdtDevice
    *
    * \sa getDigitalOutputValue(mdtDigitalIo*, bool, bool)
    */
-  mdtValue getDigitalOutputValue(int addressRead, bool queryDevice, bool waitOnReply);
+  mdtValue getDigitalOutputValue(int addressRead, bool queryDevice, bool waitOnReply = true);
 
   /*! \brief Get digital output value
    *
@@ -389,7 +386,7 @@ class mdtMultiIoDevice : public mdtDevice
    *
    * \sa getDigitalOutputValue(mdtDigitalIo*, bool, bool)
    */
-  mdtValue getDigitalOutputValueAt(int position, bool queryDevice, bool waitOnReply);
+  mdtValue getDigitalOutputValueAt(int position, bool queryDevice, bool waitOnReply = true);
 
   /*! \brief Get digital output value
    *
@@ -397,7 +394,7 @@ class mdtMultiIoDevice : public mdtDevice
    *
    * \param labelShort Short label set in I/O (see mdtDigitalIo for details).
    */
-  mdtValue getDigitalOutputValue(const QString &labelShort, bool queryDevice, bool waitOnReply);
+  mdtValue getDigitalOutputValue(const QString &labelShort, bool queryDevice, bool waitOnReply = true);
 
   /*! \brief Read all digital outputs on physical device and update (G)UI representation
    *
@@ -411,10 +408,9 @@ class mdtMultiIoDevice : public mdtDevice
    *  (See mdtDeviceIos for details).
    *
    * \param waitOnReply If true, this method will wait until reply comes in, or timeout (See waitTransactionDone() ),
-   *                     else it will return immediately after the query was sent.
-   * \return 0 or a ID on success. If no I/O's are set, on timeout ar other error, a value < 0 is returned.
+   *                     else it will return immediately after the query was sent. \deprecated waitOnReply must not be used anymore
    */
-  int getDigitalOutputs(bool waitOnReply);
+  bool getDigitalOutputs(bool waitOnReply = true);
 
   /*! \brief Set a digital output value
    *
@@ -428,11 +424,10 @@ class mdtMultiIoDevice : public mdtDevice
    *                      Behaviour of this method can vary, depending on device specific subclass.
    *                      (See sublcass writeDigitalOutput() for details).
    * \param waitOnReply If true, this method will wait until reply comes in, or timeout (See waitTransactionDone() ),
-   *                     else it will return immediately after the query was sent.
-   * \return 0 or a ID on success. If no I/O's are set, on timeout, on invalid value or other error, a value < 0 is returned.
+   *                     else it will return immediately after the query was sent. \deprecated waitOnReply must not be used anymore
    * \pre digitalOutput must be valid.
    */
-  int setDigitalOutputValue(mdtDigitalIo *digitalOutput, const mdtValue &value, bool sendToDevice, bool waitOnReply);
+  bool setDigitalOutputValue(mdtDigitalIo *digitalOutput, const mdtValue &value, bool sendToDevice, bool waitOnReply = true);
 
   /*! \brief Set digital output value
    *
@@ -442,7 +437,7 @@ class mdtMultiIoDevice : public mdtDevice
    *
    * \sa setDigitalOutputValue(mdtDigitalIo*, const mdtValue&, bool, bool)
    */
-  int setDigitalOutputValue(int addressWrite, const mdtValue &value, bool sendToDevice, bool waitOnReply);
+  bool setDigitalOutputValue(int addressWrite, const mdtValue & value, bool sendToDevice, bool waitOnReply = true);
 
   /*! \brief Set digital output value
    *
@@ -450,7 +445,7 @@ class mdtMultiIoDevice : public mdtDevice
    *
    * \sa setDigitalOutputValue(mdtDigitalIo*, const mdtValue&, bool, bool)
    */
-  int setDigitalOutputValueAt(int position, const mdtValue &value, bool sendToDevice, bool waitOnReply);
+  bool setDigitalOutputValueAt(int position, const mdtValue &value, bool sendToDevice, bool waitOnReply = true);
 
   /*! \brief Set digital output value
    *
@@ -458,13 +453,13 @@ class mdtMultiIoDevice : public mdtDevice
    *
    * \sa setDigitalOutputValue(mdtDigitalIo*, const mdtValue&, bool, bool)
    */
-  int setDigitalOutputValue(const QString &labelShort, const mdtValue &value, bool sendToDevice, bool waitOnReply);
+  bool setDigitalOutputValue(const QString &labelShort, const mdtValue &value, bool sendToDevice, bool waitOnReply = true);
 
   /*! \brief Set a value and validity for all digital outputs
    *
    * \sa setDigitalOutputValue(mdtDigitalIo*, const mdtValue&, bool, bool)
    */
-  int setDigitalOutputsValue(const mdtValue & value, bool sendToDevice, bool waitOnReply);
+  bool setDigitalOutputsValue(const mdtValue & value, bool sendToDevice, bool waitOnReply = true);
 
   /*! \brief Write all digital outputs to physical device and update (G)UI representation
    *
@@ -484,10 +479,10 @@ class mdtMultiIoDevice : public mdtDevice
    *  (See mdtDeviceIos for details).
    *
    * \param waitOnReply If true, this method will wait until reply comes in, or timeout (See waitTransactionDone() ),
-   *                     else it will return immediately after the query was sent.
+   *                     else it will return immediately after the query was sent. \deprecated waitOnReply must not be used anymore
    * \return 0 or a ID on success. If no I/O's are set, on timeout ar other error, a value < 0 is returned.
    */
-  int setDigitalOutputs(bool waitOnReply);
+  bool setDigitalOutputs(bool waitOnReply = true);
 
  public slots:
 
