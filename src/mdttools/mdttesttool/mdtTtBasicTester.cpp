@@ -112,7 +112,8 @@ void mdtTtBasicTester::runTest()
 bool mdtTtBasicTester::addInstruments()
 {
   ///testNodeManager()->addDevice<mdtDeviceU3606A>("U3606A", "", "U3606A Multimeter");
-  testNodeManager()->addDevice<mdtDeviceModbusWago>("W750", "0", "Wago 750 coupling node");
+  ///testNodeManager()->addDevice<mdtDeviceModbusWago>("W750", "0", "Wago 750 coupling node");
+  testNodeManager()->addDevice<mdtDeviceModbusWago>("W750");
 
   return true;
 }

@@ -18,21 +18,34 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_WIDGETS_TEST_H
-#define MDT_WIDGETS_TEST_H
+#include "mdtQActionEnableStateGuard.h"
+#include <QAction>
 
-#include "mdtTest.h"
-
-class mdtWidgetsTest : public mdtTest
+mdtQActionEnableStateGuard::mdtQActionEnableStateGuard(QAction* action, bool initialState)
+ : pvAction(action)
 {
- Q_OBJECT
+  Q_ASSERT(pvAction != nullptr);
+  pvAction->setEnabled(initialState);
+}
 
- private slots:
+mdtQActionEnableStateGuard::~mdtQActionEnableStateGuard()
+{
+  Q_ASSERT(pvAction != nullptr);
+  pvAction->setEnabled(!pvAction->isEnabled());
+}
 
-  void mdtDoubleValidatorTest();
-  void mdtDoubleEditTest();
 
-  void mdtQActionEnableStateGuardTest();
-};
+mdtQActionEnableStateGuardList::~mdtQActionEnableStateGuardList()
+{
+  for(auto & g : pvGuards){
+    Q_ASSERT(g);
+    delete g;
+  }
+  pvGuards.clear();
+}
 
-#endif // #ifndef MDT_WIDGETS_TEST_H
+void mdtQActionEnableStateGuardList::append(QAction* action, bool initialState)
+{
+  mdtQActionEnableStateGuard *guard = new mdtQActionEnableStateGuard(action, initialState);
+  pvGuards.push_back(guard);
+}

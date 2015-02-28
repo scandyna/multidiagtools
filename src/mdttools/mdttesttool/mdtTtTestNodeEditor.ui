@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>442</width>
-    <height>144</height>
+    <width>498</width>
+    <height>172</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -76,22 +76,22 @@
       </widget>
      </item>
      <item row="3" column="0">
-      <widget class="QLabel" name="lb_nodeIdentification">
+      <widget class="QLabel" name="lb_Alias">
        <property name="text">
-        <string>Node identification:</string>
+        <string>Alias:</string>
        </property>
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QLineEdit" name="fld_NodeIdentification"/>
+      <widget class="QLineEdit" name="fldAlias"/>
      </item>
      <item row="4" column="1">
-      <widget class="QLineEdit" name="fld_DeviceIdentification"/>
+      <widget class="QLineEdit" name="fldAddressString"/>
      </item>
      <item row="4" column="0">
-      <widget class="QLabel" name="lbDeviceIdentification">
+      <widget class="QLabel" name="lbAddressString">
        <property name="text">
-        <string>Device identification:</string>
+        <string>Address string:</string>
        </property>
       </widget>
      </item>

@@ -22,10 +22,12 @@
 #include "mdtApplication.h"
 #include "mdtDoubleEdit.h"
 #include "mdtDoubleValidator.h"
+#include "mdtQActionEnableStateGuard.h"
 #include <QString>
 #include <QVariant>
 #include <QValidator>
 #include <QLineEdit>
+#include <QAction>
 
 #include <QDebug>
 
@@ -451,6 +453,40 @@ void mdtWidgetsTest::mdtDoubleEditTest()
   }
   */
 
+}
+
+void mdtWidgetsTest::mdtQActionEnableStateGuardTest()
+{
+  QAction act(0);
+  QAction act1(0);
+  QAction act2(0);
+  QAction act3(0);
+  mdtQActionEnableStateGuard *g;
+  mdtQActionEnableStateGuardList *gl;
+
+  /*
+   * Check single guard
+   */
+  g = new mdtQActionEnableStateGuard(&act, false);
+  QVERIFY(!act.isEnabled());
+  delete g;
+  g = 0;
+  QVERIFY(act.isEnabled());
+  /*
+   * Check guard list
+   */
+  gl = new mdtQActionEnableStateGuardList;
+  gl->append(&act1, false);
+  gl->append(&act2, true);
+  gl->append(&act3, false);
+  QVERIFY(!act1.isEnabled());
+  QVERIFY(act2.isEnabled());
+  QVERIFY(!act3.isEnabled());
+  delete gl;
+  gl = 0;
+  QVERIFY(act1.isEnabled());
+  QVERIFY(!act2.isEnabled());
+  QVERIFY(act3.isEnabled());
 }
 
 

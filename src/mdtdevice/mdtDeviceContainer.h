@@ -22,6 +22,7 @@
 #define MDT_DEVICE_CONTAINER_H
 
 #include "mdtDevice.h"
+#include "mdtDeviceAddress.h"
 #include <vector>
 #include <memory>
 #include <typeinfo>
@@ -46,37 +47,77 @@ class mdtDeviceContainer : public QObject
    */
   mdtDeviceContainer(QObject *parent = 0);
 
-  /*! \brief Create and add a new device
+  /*! \brief Create and add a new device to container
+   *
+   * Use this version if device address is allready known.
    */
-  template <typename T> std::shared_ptr<T> addDevice(const QVariant & identification, const QString & name)
+  template <typename T>
+  std::shared_ptr<T> addDevice(const mdtDeviceAddress & address)
   {
     std::shared_ptr<T> dev(new T);
-    ///dev->setIdentification(identification);
-    ///dev->setName(name);
+
+    dev->setDeviceAddress(address);
     pvDevices.push_back(dev);
     emit deviceAdded(dev);
+
     return dev;
   }
 
-  /*! \brief Get device of type T and that has given identification
+  /*! \brief Create and add a new device to container
+   *
+   * Use this version if device address currently not known.
    */
-  template <typename T> std::shared_ptr<T> device(const QVariant & identification)
+  template <typename T>
+  std::shared_ptr<T> addDevice(const QString & alias)
   {
-    std::vector<std::shared_ptr<mdtDevice>>::const_iterator it;
-    std::shared_ptr<T> dev;
+    mdtDeviceAddress deviceAddress;
 
-    /**
-    for(it = pvDevices.begin(); it != pvDevices.end(); ++it){
-      Q_ASSERT(*it);
-      if((*it)->identification() == identification){
-        dev = std::dynamic_pointer_cast<T>(*it);
-        return dev;
+    deviceAddress.setAlias(alias);
+
+    return addDevice<T>(deviceAddress);
+  }
+
+//   template <typename T> std::shared_ptr<T> addDevice(const QVariant & identification, const QString & name)
+//   {
+//     std::shared_ptr<T> dev(new T);
+//     ///dev->setIdentification(identification);
+//     ///dev->setName(name);
+//     pvDevices.push_back(dev);
+//     emit deviceAdded(dev);
+//     return dev;
+//   }
+
+  /*! \brief Get first device of type T and that has given alias
+   */
+  template <typename T>
+  std::shared_ptr<T> device(const QString & alias)
+  {
+    for(auto & dev : pvDevices){
+      Q_ASSERT(dev);
+      if(dev->alias() == alias){
+        return std::dynamic_pointer_cast<T>(dev);
       }
     }
-    */
-
     return std::shared_ptr<T>();
   }
+  
+//   template <typename T> std::shared_ptr<T> device(const QVariant & identification)
+//   {
+//     std::vector<std::shared_ptr<mdtDevice>>::const_iterator it;
+//     std::shared_ptr<T> dev;
+// 
+//     /**
+//     for(it = pvDevices.begin(); it != pvDevices.end(); ++it){
+//       Q_ASSERT(*it);
+//       if((*it)->identification() == identification){
+//         dev = std::dynamic_pointer_cast<T>(*it);
+//         return dev;
+//       }
+//     }
+//     */
+// 
+//     return std::shared_ptr<T>();
+//   }
 
   /*! \brief Get number of contained devices
    */

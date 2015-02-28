@@ -32,17 +32,21 @@ void mdtCodecTest::scpiDecodeIdnTest()
   mdtCodecScpi codec;
   mdtScpiIdnResponse r;
 
+  QVERIFY(r.isNull());
   r = codec.decodeIdn("Agilent Technologies,U3606A,MY00000000,02.00-02.00-02.01\n");
+  QVERIFY(!r.isNull());
   QCOMPARE(r.manufacturer, QString("Agilent Technologies"));
   QCOMPARE(r.model, QString("U3606A"));
   QCOMPARE(r.serial, QString("MY00000000"));
   QCOMPARE(r.firmwareLevel, QString("02.00-02.00-02.01"));
   r = codec.decodeIdn("jki");
+  QVERIFY(r.isNull());
   QVERIFY(r.manufacturer.isEmpty());
   QVERIFY(r.model.isEmpty());
   QVERIFY(r.serial.isEmpty());
   QVERIFY(r.firmwareLevel.isEmpty());
   r = codec.decodeIdn("");
+  QVERIFY(r.isNull());
   QVERIFY(r.manufacturer.isEmpty());
   QVERIFY(r.model.isEmpty());
   QVERIFY(r.serial.isEmpty());

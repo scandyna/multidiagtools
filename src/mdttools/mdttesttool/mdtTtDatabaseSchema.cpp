@@ -153,6 +153,12 @@ bool mdtTtDatabaseSchema::importDatabase(const QFileInfo sourceDbFileInfo)
     tableManager.clearFieldMap();
     /// \todo Provisoire !!
     /**
+    if(sourceTables.at(i) == "TestNode_tbl"){
+      tableManager.addFieldMapping("NodeIdentification", "Alias", "", QVariant::String);
+      tableManager.addFieldMapping("DeviceIdentification", "Alias", "", QVariant::String);
+    }
+    */
+    /**
     if(sourceTables.at(i) == "Link_tbl"){
       tableManager.addFieldMapping("Value", "Resistance", "", QVariant::String);
     }
@@ -1915,19 +1921,31 @@ bool mdtTtDatabaseSchema::setupTestNodeTable()
   field.setName("VehicleType_Id_FK_PK");
   field.setType(QVariant::Int);
   table.addField(field, true);
-  // NodeIdentification
+  // AddressString
   field = QSqlField();
-  field.setName("NodeIdentification");
+  field.setName("AddressString");
+  field.setType(QVariant::String);
+  field.setLength(200);
+  table.addField(field, false);
+  // Alias
+  field = QSqlField();
+  field.setName("Alias");
   field.setType(QVariant::String);
   field.setLength(50);
-  ///field.setRequired(true);
   table.addField(field, false);
-  // DeviceIdentification
-  field = QSqlField();
-  field.setName("DeviceIdentification");
-  field.setType(QVariant::String);
-  field.setLength(50);
-  table.addField(field, false);
+//   // NodeIdentification
+//   field = QSqlField();
+//   field.setName("NodeIdentification");
+//   field.setType(QVariant::String);
+//   field.setLength(50);
+//   ///field.setRequired(true);
+//   table.addField(field, false);
+//   // DeviceIdentification
+//   field = QSqlField();
+//   field.setName("DeviceIdentification");
+//   field.setType(QVariant::String);
+//   field.setLength(50);
+//   table.addField(field, false);
   // Indexes
   /**
   table.addIndex("VehicleType_Id_FK_PK_idx", false);
@@ -1936,8 +1954,13 @@ bool mdtTtDatabaseSchema::setupTestNodeTable()
     return false;
   }
   */
-  table.addIndex("NodeIdentification_idx", true);
-  if(!table.addFieldToIndex("NodeIdentification_idx", "NodeIdentification")){
+  table.addIndex("AddressString_idx", true);
+  if(!table.addFieldToIndex("AddressString_idx", "AddressString")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addIndex("Alias_idx", true);
+  if(!table.addFieldToIndex("Alias_idx", "Alias")){
     pvLastError = table.lastError();
     return false;
   }
@@ -3925,7 +3948,8 @@ bool mdtTtDatabaseSchema::createTestModelTestNodeView()
   sql = "CREATE VIEW TestModel_TestNode_view AS\n"\
         "SELECT\n"\
         " TMTN.*,\n"\
-        " TN.NodeIdentification,\n"\
+        " TN.AddressString,\n"\
+        " TN.Alias,\n"\
         " VT.Type,\n"\
         " VT.SubType,\n"\
         " VT.SeriesNumber\n"\
@@ -3964,7 +3988,8 @@ bool mdtTtDatabaseSchema::createTestModelItemTestLinkView()
         " VTN.SubType AS TestNodeSubType,\n"\
         " VTN.SeriesNumber AS TestNodeSeriesNumber,\n"\
         " TN.VehicleType_Id_FK_PK,\n"\
-        " TN.NodeIdentification,\n"\
+        " TN.AddressString,\n"\
+        " TN.Alias,\n"\
         " UVT.Type,\n"\
         " UVT.SubType,\n"\
         " UVT.SeriesNumber\n"\
@@ -4347,8 +4372,8 @@ bool mdtTtDatabaseSchema::createTestItemNodeUnitSetupView()
         " TNU.IoPosition,\n"\
         " TNU.CalibrationOffset,\n"\
         " TNU.CalibrationDate,\n"\
-        " TN.NodeIdentification,\n"\
-        " TN.DeviceIdentification\n"\
+        " TN.AddressString,\n"\
+        " TN.Alias AS TestNodeAlias\n"\
         "FROM TestModelItem_tbl TMI\n"\
         " JOIN TestNodeUnitSetup_tbl TNUS\n"\
         "  ON TNUS.TestModelItem_Id_FK = TMI.Id_PK\n"\

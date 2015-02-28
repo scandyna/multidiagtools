@@ -23,6 +23,7 @@
 
 #include "mdtDeviceContainer.h"
 #include "mdtDevice.h"
+#include "mdtDeviceAddress.h"
 #include "mdtTtTestItemNodeSetupData.h"
 #include "mdtError.h"
 #include <QObject>
@@ -55,22 +56,36 @@ class mdtTtTestNodeManager : public QObject
 
   /*! \brief Create and add a device
    */
-  template <typename T> std::shared_ptr<T> addDevice(const QVariant & identification, const QString & nodeIdentification, const QString & deviceName)
+  template <typename T>
+  std::shared_ptr<T> addDevice(const mdtDeviceAddress & address)
   {
-    QString devName;
-
-    devName = deviceName;
-    if(!nodeIdentification.isEmpty()){
-      devName += tr(" (Node ID: ") + nodeIdentification + tr(")");
-    }
-    return pvDevices->addDevice<T>(identification, devName);
+    return pvDevices->addDevice<T>(address);
   }
 
-  /*! \brief Get device of type T and that has given identification
+  /*! \brief Create and add a device
    */
-  template <typename T> std::shared_ptr<T> device(const QVariant & identification)
+  template <typename T>
+  std::shared_ptr<T> addDevice(const QString & alias)
   {
-    return pvDevices->device<T>(identification);
+    return pvDevices->addDevice<T>(alias);
+  }
+
+//   template <typename T> std::shared_ptr<T> addDevice(const QVariant & identification, const QString & nodeIdentification, const QString & deviceName)
+//   {
+//     QString devName;
+// 
+//     devName = deviceName;
+//     if(!nodeIdentification.isEmpty()){
+//       devName += tr(" (Node ID: ") + nodeIdentification + tr(")");
+//     }
+//     ///return pvDevices->addDevice<T>(identification, devName);
+//   }
+
+  /*! \brief Get device of type T and that has given alias
+   */
+  template <typename T> std::shared_ptr<T> device(const QString & alias)
+  {
+    return pvDevices->device<T>(alias);
   }
 
   /*! \brief Get a list of all devices
@@ -94,7 +109,8 @@ class mdtTtTestNodeManager : public QObject
    *  For each I/O, SchemaPosition of test node unit is used,
    *  and labelShort is set to I/O.
    */
-  bool setDeviceIosLabelShort(const QVariant & testNodeId, const QVariant & deviceIdentification);
+  ///bool setDeviceIosLabelShort(const QVariant & testNodeId, const QVariant & deviceIdentification);
+  bool setDeviceIosLabelShort(const QVariant & testNodeId);
 
   /*! \brief Get last error
    */
@@ -104,7 +120,7 @@ class mdtTtTestNodeManager : public QObject
 
   /*! \brief Set short labels to digital outputs
    */
-  bool setDigitalOutputsLabelShort(std::shared_ptr<mdtDeviceIos> ios, const QVariant & testNodeId, const QString & deviceIdentification);
+  bool setDigitalOutputsLabelShort(std::shared_ptr<mdtDeviceIos> ios, const QVariant & testNodeId, const QString & alias);
 
   Q_DISABLE_COPY(mdtTtTestNodeManager);
 

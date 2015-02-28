@@ -54,10 +54,14 @@
 #include <memory>
 #include <vector>
 #include <typeinfo>
+///#include <chrono>
 #include <boost/any.hpp>
 
 void mdtDeviceTest::sandbox()
 {
+  
+  
+  
   ///std::shared_ptr<mdtDevice> dev1(new mdtDevice);
   ///std::shared_ptr<mdtDevice> dev2(new mdtDeviceU3606A);
 
@@ -111,28 +115,53 @@ void mdtDeviceTest::deviceBaseTest()
 
 void mdtDeviceTest::deviceContainerTest()
 {
-  QFAIL("Not implemented");
-//   mdtDeviceContainer c;
-//   std::shared_ptr<mdtDeviceU3606A> dev;
-// 
-//   // Initial state
-//   QCOMPARE(c.deviceCount(), 0);
-//   QCOMPARE(c.allDevices().size(), 0);
-//   // Add a U3606A device
-//   dev = c.addDevice<mdtDeviceU3606A>("U3606A", "U3606A Multimeter");
-//   QVERIFY(dev.get() != 0);
-//   QVERIFY(c.device<mdtDeviceU3606A>("U3606A").get() != 0);
-//   QVERIFY(c.device<mdtDeviceU3606A>("").get() == 0);
-//   QVERIFY(c.device<mdtDevice>("U3606A").get() != 0);
-//   QVERIFY(c.device<mdtDeviceScpi>("U3606A").get() != 0);
-//   QVERIFY(c.device<mdtDeviceModbus>("U3606A").get() == 0);
-//   QCOMPARE(c.deviceCount(), 1);
-//   QCOMPARE(c.allDevices().size(), 1);
-//   QVERIFY(c.allDevices().at(0).get() != 0);
-//   // Clear
-//   c.clear();
-//   QCOMPARE(c.deviceCount(), 0);
-//   QCOMPARE(c.allDevices().size(), 0);
+  mdtDeviceContainer c;
+  mdtDeviceAddress deviceAddress;
+  std::shared_ptr<mdtDeviceU3606A> dev;
+
+  // Initial state
+  QCOMPARE(c.deviceCount(), 0);
+  QCOMPARE(c.allDevices().size(), 0);
+  /*
+   * Add a U3606A device
+   * Version that take a mdtDeviceAddress as argument
+   */
+  deviceAddress.setUsbIdentification(0x0957, 0x4d18, "", 0);
+  deviceAddress.setAlias("U3606A");
+  dev = c.addDevice<mdtDeviceU3606A>(deviceAddress);
+  QVERIFY(dev.get() != 0);
+  QCOMPARE((int)dev->deviceAddress().usbIdVendor(), 0x0957);
+  QCOMPARE((int)dev->deviceAddress().usbIdProduct(), 0x4d18);
+  // Check that we can find added device
+  QVERIFY(c.device<mdtDeviceU3606A>("U3606A").get() != 0);
+  QVERIFY(c.device<mdtDeviceU3606A>("").get() == 0);
+  QVERIFY(c.device<mdtDevice>("U3606A").get() != 0);
+  QVERIFY(c.device<mdtDeviceScpi>("U3606A").get() != 0);
+  QVERIFY(c.device<mdtDeviceModbus>("U3606A").get() == 0);
+  QCOMPARE(c.deviceCount(), 1);
+  QCOMPARE(c.allDevices().size(), 1);
+  QVERIFY(c.allDevices().at(0).get() != 0);
+  // Clear
+  c.clear();
+  QCOMPARE(c.deviceCount(), 0);
+  QCOMPARE(c.allDevices().size(), 0);
+  QVERIFY(c.device<mdtDeviceU3606A>("U3606A").get() == 0);
+  /*
+   * Add a U3606A device
+   * Version that take a alias
+   */
+  dev = c.addDevice<mdtDeviceU3606A>("U3606A");
+  QVERIFY(dev.get() != 0);
+  QCOMPARE((int)dev->deviceAddress().usbIdVendor(), 0);
+  QCOMPARE((int)dev->deviceAddress().usbIdProduct(), 0);
+  // Connect and check that device address was updated
+  if(!dev->connectToDevice("U3606A")){
+    QSKIP("No Agilent U3606A device attached, cannot finish test.", SkipAll);
+  }
+  QCOMPARE((int)dev->deviceAddress().usbIdVendor(), 0x0957);
+  QCOMPARE((int)dev->deviceAddress().usbIdProduct(), 0x4d18);
+  QVERIFY(c.device<mdtDeviceU3606A>("U3606A").get() != 0);
+
 }
 
 void mdtDeviceTest::deviceIosSegmentTest()
@@ -2571,7 +2600,7 @@ void mdtDeviceTest::scpiTest()
   mdtDeviceScpi d;
   mdtUsbtmcPortSetupDialog dialog;
   mdtUsbDeviceDescriptor deviceDescriptor;
-  ///int ifaceNumber;
+  mdtScpiIdnResponse idnResponse;
   QByteArray data;
 
   // Try to find a USBTMC device
@@ -2582,7 +2611,6 @@ void mdtDeviceTest::scpiTest()
   if(deviceDescriptor.isEmpty()){
     QSKIP("No USBTMC device attached to system.", SkipAll);
   }
-  ///ifaceNumber = dialog.selectedbInterfaceNumber();
 
   /*
    * Connect to device - Version that accepts idVendor, idProduct , SN and alias
@@ -2596,37 +2624,35 @@ void mdtDeviceTest::scpiTest()
   QCOMPARE(d.deviceAddress().usbIdVendor(), deviceDescriptor.idVendor());
   QCOMPARE(d.deviceAddress().usbIdProduct(), deviceDescriptor.idProduct());
   QCOMPARE(d.alias(), QString("DMM01"));
-  
-  
-  // Try to find a device and connect if ok
-  ///portInfoList = d.portManager()->scan();
-//   if(portInfoList.size() < 1){
-//     QSKIP("No port found with SCPI device found, or other error", SkipAll);
-//   }
-//   portInfo = portInfoList.at(0);
-//   if(portInfo->deviceInfoList().size() < 1){
-//     QSKIP("No SCPI device found, or other error", SkipAll);
-//   }
-//   devInfo = portInfo->deviceInfoList().at(0);
-//   if(d.connectToDevice(*devInfo) != mdtAbstractPort::NoError){
-//     QSKIP("No SCPI device attached, or other error", SkipAll);
-//   }
+  /*
+   * Get device identification and try to reconnect with devices serial number
+   */
+  // Get device identification
+  idnResponse = d.getDeviceIdentification();
+  QVERIFY(!idnResponse.isNull());
+  // Reconnect
+  d.disconnectFromDevice();
+  QVERIFY(d.connectToDevice(deviceDescriptor.idVendor(), deviceDescriptor.idProduct(), idnResponse.serial, "DMM02"));
+  // Check that attributes where updated
+  QCOMPARE(d.deviceAddress().usbIdVendor(), deviceDescriptor.idVendor());
+  QCOMPARE(d.deviceAddress().usbIdProduct(), deviceDescriptor.idProduct());
+  QCOMPARE(d.deviceAddress().usbDeviceSerialNumber(), idnResponse.serial);
+  QCOMPARE(d.alias(), QString("DMM02"));
 
   // Check commands
-  QVERIFY(d.sendCommand("*RST\n") >= 0);
+  QVERIFY(d.sendCommand("*CLS\n"));
+  QVERIFY(d.sendCommand("*RST\n"));
   ///QVERIFY(d.waitOperationComplete(5000, 100));
-  QVERIFY(d.sendCommand("*CLS\n") >= 0);
-  // Check query
-  QVERIFY(!d.sendQuery("*IDN?\n").isEmpty());
 }
 
 void mdtDeviceTest::U3606ATest()
 {
   mdtDeviceU3606A d;
   mdtValueDouble x;
+  mdtScpiIdnResponse idnResponse;
 
   // Try to find a device and connect if ok
-  if(!d.connectToDevice("", "U3606A-01")){
+  if(!d.connectToDevice("U3606A-01")){
     qDebug() << "Connecting to U3606A device failed: " << d.lastError().text();
     QSKIP("No Agilent U3606A attached, or other error", SkipAll);
   }
@@ -2634,12 +2660,31 @@ void mdtDeviceTest::U3606ATest()
   QCOMPARE((int)d.deviceAddress().usbIdVendor(), 0x0957);
   QCOMPARE((int)d.deviceAddress().usbIdProduct(), 0x4d18);
   QCOMPARE(d.alias(), QString("U3606A-01"));
+  /*
+   * Get device identification and try to reconnect with devices serial number
+   */
+  QVERIFY(d.sendCommand("*CLS\n"));
+  d.wait(1);
+
+  // Get device identification
+  idnResponse = d.getDeviceIdentification();
+  QVERIFY(!idnResponse.isNull());
+  QCOMPARE(idnResponse.manufacturer, QString("Agilent Technologies"));
+  QCOMPARE(idnResponse.model, QString("U3606A"));
+  // Reconnect
+  d.disconnectFromDevice();
+  QVERIFY(d.connectToDevice(idnResponse.serial, "U3606A-02"));
+  // Check that attributes where set
+  QCOMPARE((int)d.deviceAddress().usbIdVendor(), 0x0957);
+  QCOMPARE((int)d.deviceAddress().usbIdProduct(), 0x4d18);
+  QCOMPARE(d.deviceAddress().usbDeviceSerialNumber(), idnResponse.serial);
+  QCOMPARE(d.alias(), QString("U3606A-02"));
 
 
   // Check generic command
-  QVERIFY(d.sendCommand("*RST\n"));
-  d.wait(1);
   QVERIFY(d.sendCommand("*CLS\n"));
+  d.wait(1);
+  QVERIFY(d.sendCommand("*RST\n"));
   d.wait(1);
   QCOMPARE(d.getDeviceError().systemNumber(), 0);
   d.wait(1);
@@ -2699,13 +2744,11 @@ void mdtDeviceTest::U3606ATest()
   
 //   d.start(100);
   QTest::qWait(1000);
-  
   /**
   while(dw.isVisible()){
     QTest::qWait(500);
   }
   */
-  
 }
 
 void mdtDeviceTest::DSO1000ATest()

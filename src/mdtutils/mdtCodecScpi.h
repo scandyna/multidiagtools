@@ -27,6 +27,8 @@
 #include <QString>
 #include <QVector>
 
+/// \todo Add validity (f.ex. is valid if manufacturer, model and serial are not empty..)
+
 /*! \brief *IDN? response
  *
  * See SCPI 1999.0 , volume 1, section 4.1.3.6
@@ -48,6 +50,15 @@ struct mdtScpiIdnResponse
   /*! \brief Firmware level (field 4)
    */
   QString firmwareLevel;
+
+  /*! \brief Check if IDN response is null
+   *
+   * IDN response is considered null if all 4 fields are empty
+   */
+  bool isNull() const
+  {
+    return ( manufacturer.isEmpty() || model.isEmpty() || serial.isEmpty() || firmwareLevel.isEmpty() );
+  }
 };
 
 /*! \brief \<function\> \<parameters\> response data

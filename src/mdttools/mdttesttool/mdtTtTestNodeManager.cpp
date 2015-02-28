@@ -50,14 +50,26 @@ void mdtTtTestNodeManager::clear()
   pvDevices->clear();
 }
 
-bool mdtTtTestNodeManager::setDeviceIosLabelShort(const QVariant& testNodeId, const QVariant& deviceIdentification)
+///bool mdtTtTestNodeManager::setDeviceIosLabelShort(const QVariant& testNodeId, const QVariant& deviceIdentification)
+bool mdtTtTestNodeManager::setDeviceIosLabelShort(const QVariant& testNodeId)
 {
-  shared_ptr<mdtMultiIoDevice> dev;
+  Q_ASSERT(!testNodeId.isNull());
 
+  ///shared_ptr<mdtMultiIoDevice> dev;
+  mdtTtTestNode tn(0, pvDatabase);
+  QString alias;
+  bool ok;
+
+  // Get test node device alias
+  alias = tn.getTestNodeAlias(testNodeId, ok);
+  if(!ok){
+    pvLastError = tn.lastError();
+    return false;
+  }
   // Get device
-  dev = device<mdtMultiIoDevice>(deviceIdentification);
+  auto dev = device<mdtMultiIoDevice>(alias);
   if(!dev){
-    pvLastError.setError(tr("No multi I/O device found with identification") + " '" + deviceIdentification.toString() + "'", mdtError::Error);
+    pvLastError.setError(tr("No multi I/O device found with alias") + " '" + alias + "'", mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNodeManager");
     pvLastError.commit();
     return false;
@@ -70,14 +82,14 @@ bool mdtTtTestNodeManager::setDeviceIosLabelShort(const QVariant& testNodeId, co
   // Set digital inputs labels
   
   // Set digital outputs labels
-  if(!setDigitalOutputsLabelShort(dev->ios(), testNodeId, deviceIdentification.toString())){
+  if(!setDigitalOutputsLabelShort(dev->ios(), testNodeId, alias)){
     return false;
   }
 
   return true;
 }
 
-bool mdtTtTestNodeManager::setDigitalOutputsLabelShort(std::shared_ptr<mdtDeviceIos> ios, const QVariant& testNodeId, const QString& deviceIdentification)
+bool mdtTtTestNodeManager::setDigitalOutputsLabelShort(std::shared_ptr<mdtDeviceIos> ios, const QVariant& testNodeId, const QString & alias)
 {
   Q_ASSERT(ios);
 
@@ -99,7 +111,7 @@ bool mdtTtTestNodeManager::setDigitalOutputsLabelShort(std::shared_ptr<mdtDevice
   }
   // Check count of digital outputs in ios and count of found test node units
   if(ios->digitalOutputsCount() < ioLabelList.size()){
-    pvLastError.setError(tr("Device ") + deviceIdentification + tr(" has less than expected digital outputs."), mdtError::Error);
+    pvLastError.setError(tr("Device '") + alias + tr("' has less than expected digital outputs."), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNodeManager");
     pvLastError.commit();
     return false;

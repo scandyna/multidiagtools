@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -41,22 +41,31 @@ void mdtDeviceContainer::clear()
 QList<shared_ptr<mdtDevice>> mdtDeviceContainer::allDevices()
 {
   QList<shared_ptr<mdtDevice>> lst;
-  std::vector<std::shared_ptr<mdtDevice>>::const_iterator it;
+//   std::vector<std::shared_ptr<mdtDevice>>::const_iterator it;
 
-  for(it = pvDevices.begin(); it != pvDevices.end(); ++it){
-    Q_ASSERT(*it);
-    lst.append(*it);
+  for(auto & dev : pvDevices){
+    Q_ASSERT(dev);
+    lst.append(dev);
   }
+//   for(it = pvDevices.begin(); it != pvDevices.end(); ++it){
+//     Q_ASSERT(*it);
+//     lst.append(*it);
+//   }
 
   return lst;
 }
 
 void mdtDeviceContainer::disconnectFromDevices()
 {
-  std::vector<std::shared_ptr<mdtDevice>>::const_iterator it;
-
-  for(it = pvDevices.begin(); it != pvDevices.end(); ++it){
-    Q_ASSERT(*it);
-    (*it)->disconnectFromDevice();
+  for(auto & dev : pvDevices){
+    Q_ASSERT(dev);
+    dev->disconnectFromDevice();
   }
+
+//   std::vector<std::shared_ptr<mdtDevice>>::const_iterator it;
+// 
+//   for(it = pvDevices.begin(); it != pvDevices.end(); ++it){
+//     Q_ASSERT(*it);
+//     (*it)->disconnectFromDevice();
+//   }
 }

@@ -63,6 +63,10 @@ class mdtTtTestNode : public mdtTtBase
    */
   QSqlRecord getTestNodeData(const QVariant & testNodeId, bool &ok);
 
+  /*! \brief Get alias of given test node
+   */
+  QString getTestNodeAlias(const QVariant & testNodeId, bool & ok);
+
   /*! \brief Get a list of unit connection IDs that are linked (meaning wiered) to given unit connection ID
    */
   QList<QVariant> getIdListOfUnitConnectionsLinkedToUnitConnectionId(const QVariant & unitConnectionId);

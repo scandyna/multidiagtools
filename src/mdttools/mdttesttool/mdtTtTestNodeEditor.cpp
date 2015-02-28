@@ -722,8 +722,8 @@ bool mdtTtTestNodeEditor::setupTestNodeTable()
   // Get test node controller and map widgets to it
   tnController = vtController->childController<mdtSqlDataWidgetController>("TestNode_tbl");
   Q_ASSERT(tnController);
-  tnController->addMapping(tne.fld_DeviceIdentification, "DeviceIdentification");
-  tnController->addMapping(tne.fld_NodeIdentification, "NodeIdentification");
+  tnController->addMapping(tne.fldAlias, "Alias");
+  tnController->addMapping(tne.fldAddressString, "AddressString");
   /**
   if(!setMainTable("TestNode_tbl", "Test node", database())){
     return false;

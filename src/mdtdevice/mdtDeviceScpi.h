@@ -91,6 +91,14 @@ class mdtDeviceScpi : public mdtDevice
    */
   QByteArray sendQuery(const QByteArray & query, int timeout = 30000);
 
+  /*! \brief Get device identification
+   *
+   * Will use *IDN query to get device identification.
+   *  On error, a null IDN response is returned.
+   *
+   */
+  mdtScpiIdnResponse getDeviceIdentification();
+
   /*! \brief Get device error
    *
    * Will send SYSTem:ERRor? query and return error.

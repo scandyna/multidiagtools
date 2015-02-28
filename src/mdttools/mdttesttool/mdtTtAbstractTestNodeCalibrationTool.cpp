@@ -92,11 +92,11 @@ bool mdtTtAbstractTestNodeCalibrationTool::setup(QWidget *testNodeFormWidget)
   return true;
 }
 
-bool mdtTtAbstractTestNodeCalibrationTool::setTestNode(const QVariant& testNodeId)
+bool mdtTtAbstractTestNodeCalibrationTool::setTestNode(const QString & alias)
 {
   Q_ASSERT(database().isOpen());
 
-  if(!pvTestNodeTableController->setFilter("VehicleType_Id_FK_PK", testNodeId)){
+  if(!pvTestNodeTableController->setFilter("Alias", alias)){
     pvLastError = pvTestNodeTableController->lastError();
     displayLastError();
     return false;

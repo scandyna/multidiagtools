@@ -1,6 +1,6 @@
-format 208
+format 209
 "DatabaseLogical" // mdttools::mdttesttool::DatabaseLogical
-  revision 63
+  revision 64
   modified_by 2 "philippe"
   // class settings
   
@@ -2376,7 +2376,7 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 1027202 "NodeIdentification"
+      attribute 1027202 "AddressString"
 	private explicit_type "string"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
@@ -2398,7 +2398,7 @@ ${inlines}
 	  b parent class_ref 944770 // VehicleType_tbl
       end
 
-      attribute 1271426 "DeviceIdentification"
+      attribute 1271426 "Alias"
 	private explicit_type "string"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "

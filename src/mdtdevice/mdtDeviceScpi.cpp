@@ -102,17 +102,38 @@ QByteArray mdtDeviceScpi::sendQuery(const QByteArray & query, int timeout)
   return data;
 }
 
+mdtScpiIdnResponse mdtDeviceScpi::getDeviceIdentification()
+{
+  mdtScpiIdnResponse r;
+  QByteArray data;
+  mdtCodecScpi codec;
+
+  data = sendQuery("*IDN?\n");
+  if(data.isEmpty()){
+    return r;
+  }
+  r = codec.decodeIdn(data);
+  if(r.isNull()){
+    pvLastError = codec.lastError();
+  }
+
+  return r;
+}
+
 mdtError mdtDeviceScpi::getDeviceError(const QString & errorText)
 {
+  mdtError e;
   QByteArray data;
   mdtCodecScpi codec;
 
   data = sendQuery("SYST:ERR?\n");
   if(data.isEmpty()){
-    return mdtError();
+    return e;
   }
+  e = codec.decodeDeviceError(data, errorText);
+  /// \todo Here we should check error's validity and get codec.lastError if needed. (this means also clarify mdtError's validity..)
 
-  return codec.decodeDeviceError(data, errorText);
+  return e;
 }
 
 bool mdtDeviceScpi::waitOperationComplete(int timeout, int interval)

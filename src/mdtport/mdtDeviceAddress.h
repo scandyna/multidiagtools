@@ -59,7 +59,7 @@ struct mdtAsrlDeviceAddress
  *  methods to open a ressource.
  *
  * In some case, it's necessary to identify, f.ex. a device, in a common way.
- *  Storing this identification in a databse or a file can also be usefull.
+ *  Storing this identification in a database or a file can also be usefull.
  *
  * To resole above problems, this class is inspired from VISA (Virtual Instrument Software Architecture) library specifications.
  *  The most important part is in VPP-4.3: The VISA Library, revision 5.4 , chapiter 4.3.1 Address String.

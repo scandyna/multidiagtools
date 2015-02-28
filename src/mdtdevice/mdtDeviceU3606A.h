@@ -102,9 +102,18 @@ class mdtDeviceU3606A : public mdtDeviceScpi
    * \param serialNumber Device serial number. Will be ignored if empty
    * \param alias Alias to give. Will be ignored if empty
    */
-  bool connectToDevice(const QString & serialNumber, const QString & alias = QString())
+  bool connectToDevice(const QString & serialNumber, const QString & alias)
   {
     return mdtDeviceScpi::connectToDevice(0x0957, 0x4d18, serialNumber, alias);
+  }
+
+  /*! \brief Connect to device
+   *
+   * \param alias Alias to give. Will be ignored if empty
+   */
+  bool connectToDevice(const QString & alias)
+  {
+    return mdtDeviceScpi::connectToDevice(0x0957, 0x4d18, QString(), alias);
   }
 
   /*! \brief Setup DC voltage measure

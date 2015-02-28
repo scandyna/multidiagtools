@@ -886,7 +886,8 @@ bool mdtTtBasicTestNodeCalibrationTool::setupIoCouplerRoutes(const QList< mdtTtT
 
 void mdtTtBasicTestNodeCalibrationTool::addInstruments()
 {
-  testNodeManager()->addDevice<mdtDeviceModbusWago>("W750", "0", "Wago 750 coupling node");
+  ///testNodeManager()->addDevice<mdtDeviceModbusWago>("W750", "0", "Wago 750 coupling node");
+  testNodeManager()->addDevice<mdtDeviceModbusWago>("W750");
 }
 
 bool mdtTtBasicTestNodeCalibrationTool::connectToInstruments()
@@ -928,7 +929,7 @@ bool mdtTtBasicTestNodeCalibrationTool::connectToInstruments()
     return false;
   }
   // Set short labels to coupler units
-  if(!testNodeManager()->setDeviceIosLabelShort(couplerNodeId, "W750")){
+  if(!testNodeManager()->setDeviceIosLabelShort(couplerNodeId)){
     pvLastError = testNodeManager()->lastError();
     disconnectFromInstruments();
     return false;

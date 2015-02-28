@@ -65,10 +65,8 @@ class mdtTtAbstractTestNodeCalibrationTool : public QObject
   virtual bool setup(QWidget *testNodeFormWidget);
 
   /*! \brief Set test node to calibrate
-   *
-   * \todo Add a Key field or something similar.
    */
-  bool setTestNode(const QVariant & testNodeId);
+  bool setTestNode(const QString & alias);
 
   /*! \brief Get database instance
    */

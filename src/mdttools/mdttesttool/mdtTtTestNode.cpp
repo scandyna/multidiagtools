@@ -95,7 +95,8 @@ QSqlRecord mdtTtTestNode::getTestNodeData(const QVariant & testNodeId, bool & ok
 
   sql = "SELECT\n"\
         " TN.VehicleType_Id_FK_PK,\n"\
-        " TN.NodeIdentification,\n"\
+        " TN.Alias,\n"\
+        " TN.AddressString,\n"\
         " VT.Type,\n"\
         " VT.SubType,\n"\
         " VT.SeriesNumber\n"\
@@ -110,6 +111,27 @@ QSqlRecord mdtTtTestNode::getTestNodeData(const QVariant & testNodeId, bool & ok
   Q_ASSERT(dataList.size() == 1);
 
   return dataList.at(0);
+}
+
+QString mdtTtTestNode::getTestNodeAlias(const QVariant & testNodeId, bool & ok)
+{
+  Q_ASSERT(!testNodeId.isNull());
+
+  QString sql;
+  QList<QVariant> dataList;
+
+  sql = "SELECT TN.Alias\n"\
+        "FROM TestNode_tbl TN\n"\
+        " JOIN VehicleType_tbl VT\n"\
+        "  ON VT.Id_PK = TN.VehicleType_Id_FK_PK\n";
+  sql += " WHERE TN.VehicleType_Id_FK_PK = " + testNodeId.toString();
+  dataList = getDataList<QVariant>(sql, ok);
+  if(!ok){
+    return QString();
+  }
+  Q_ASSERT(dataList.size() == 1);
+
+  return dataList.at(0).toString();
 }
 
 QList<QVariant> mdtTtTestNode::getIdListOfUnitConnectionsLinkedToUnitConnectionId(const QVariant & unitConnectionId)

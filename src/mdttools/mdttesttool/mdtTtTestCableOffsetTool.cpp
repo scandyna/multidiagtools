@@ -409,8 +409,11 @@ bool mdtTtTestCableOffsetTool::isInRange(const mdtValue & value, double min, dou
 
 void mdtTtTestCableOffsetTool::addInstruments()
 {
+  mdtDeviceAddress deviceAddress;
+
   ///pvTestNodeManager->addDevice<mdtDeviceU3606A>("U3606A", "", "U3606A Multimeter");
-  pvTestNodeManager->addDevice<mdtDeviceModbusWago>("W750", "0", "Wago 750 coupling node");
+  ///pvTestNodeManager->addDevice<mdtDeviceModbusWago>("W750", "0", "Wago 750 coupling node");
+  pvTestNodeManager->addDevice<mdtDeviceModbusWago>("W750");
 }
 
 bool mdtTtTestCableOffsetTool::connectToInstruments()
@@ -459,7 +462,7 @@ bool mdtTtTestCableOffsetTool::connectToInstruments()
     return false;
   }
   // Set short labels to coupler units
-  if(!pvTestNodeManager->setDeviceIosLabelShort(couplerNodeId, "W750")){
+  if(!pvTestNodeManager->setDeviceIosLabelShort(couplerNodeId)){
     pvLastError = pvTestNodeManager->lastError();
     disconnectFromInstruments();
     return false;

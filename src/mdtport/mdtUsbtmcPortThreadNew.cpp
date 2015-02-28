@@ -65,8 +65,9 @@ void mdtUsbtmcPortThreadNew::run()
     return;
   }
   // Tell main thread that we are now running and run..
-  setCurrentState(State_t::Running);
   pvTransferHandler.start();
+  setCurrentState(State_t::Running);
+  ///pvTransferHandler.start();
   while(1){
     if(currentState() == State_t::Stopped){
       std::lock_guard<std::mutex> lg(pvLastErrorMutex);

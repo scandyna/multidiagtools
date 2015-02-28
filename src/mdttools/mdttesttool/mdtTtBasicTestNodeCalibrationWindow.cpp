@@ -53,7 +53,7 @@ bool mdtTtBasicTestNodeCalibrationWindow::init()
   pvTestNodeUnitWidget->setTableController(pvCalibrationTool->testNodeUnitViewTableController());
   // Go to test node
   /// \todo Make a Key field or something similar
-  if(!pvCalibrationTool->setTestNode(2)){
+  if(!pvCalibrationTool->setTestNode("W750")){
     return false;
   }
 

@@ -92,6 +92,7 @@ set (SOURCES_FILES
           mdtParentChildTableModel.cpp
           mdtParentChildTableItem.cpp
           mdtUiMessageHandler.cpp
+          mdtQActionEnableStateGuard.cpp
     )
 
 # Qt ui files

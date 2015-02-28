@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -499,23 +499,23 @@ void mdtTestToolTest::mdtTtTestNodeUnitTest()
 
 void mdtTestToolTest::mdtTtTestNodeManagerTest()
 {
-  QFAIL("No implemented");
-//   std::shared_ptr<mdtTtTestNodeManager> m(new mdtTtTestNodeManager(0, pvDatabaseManager.database()));
-//   mdtDeviceContainerWidget w;
+  ///QFAIL("No implemented");
+  std::shared_ptr<mdtTtTestNodeManager> m(new mdtTtTestNodeManager(0, pvDatabaseManager.database()));
+  mdtDeviceContainerWidget w;
 //   std::shared_ptr<mdtDeviceU3606A> devU3606A;
 //   std::shared_ptr<mdtDeviceScpi> devScpi;
-//   QList<std::shared_ptr<mdtDevice>> devList;
+  QList<std::shared_ptr<mdtDevice>> devList;
 // 
 //   // Add a device that is not related to a test node
-//   m->addDevice<mdtDeviceU3606A>("U3606A", "SN01", "U3606A Multimeter, SN01");
-//   devU3606A = m->device<mdtDeviceU3606A>("U3606A");
-//   QVERIFY(devU3606A.get() != 0);
-//   devList = m->allDevices();
-//   QCOMPARE(devList.size(), 1);
-//   QVERIFY(devList.at(0).get() != 0);
-//   // Assign manager to widget
-//   w.setContainer(m->container());
-//   w.show();
+  m->addDevice<mdtDeviceU3606A>("U3606A");
+  auto devU3606A = m->device<mdtDeviceU3606A>("U3606A");
+  QVERIFY(devU3606A.get() != 0);
+  devList = m->allDevices();
+  QCOMPARE(devList.size(), 1);
+  QVERIFY(devList.at(0).get() != 0);
+  // Assign manager to widget
+  w.setContainer(m->container());
+  w.show();
 //   
 //   QTest::qWait(3000);
 //   
@@ -545,9 +545,9 @@ void mdtTestToolTest::mdtTtTestNodeManagerTest()
 // 
 //   qDebug() << "U3606A count: " << devU3606A.use_count() << " , SCPI count: " << devScpi.use_count();
 //   
-//   while(w.isVisible()){
-//     QTest::qWait(1000);
-//   }
+  while(w.isVisible()){
+    QTest::qWait(1000);
+  }
 }
 
 void mdtTestToolTest::mdtTtTestModelItemRouteDataTest()
