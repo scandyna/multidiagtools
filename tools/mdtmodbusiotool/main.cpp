@@ -20,8 +20,10 @@
  ****************************************************************************/
 #include "mdtApplication.h"
 #include "mdtModbusIoTool.h"
+#include "mdtDeviceModbusWago.h"
 #include <QObject>
 #include <QLocale>
+#include <memory>
 
 int main(int argc, char **argv)
 {
@@ -34,6 +36,7 @@ int main(int argc, char **argv)
 
   // Init port term
   mdtModbusIoTool modbusIoTool;
+  modbusIoTool.setModbusDevice(std::shared_ptr<mdtDeviceModbusWago>(new mdtDeviceModbusWago));
   QObject::connect(&app, SIGNAL(languageChanged()), &modbusIoTool, SLOT(retranslate()));
   modbusIoTool.setAvailableTranslations(app.availableTranslations(), app.currentTranslationKey());
   modbusIoTool.show();

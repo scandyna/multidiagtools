@@ -36,6 +36,8 @@ class QObject;
  * For some applications, many devices of different type must be handled.
  *
  * This class helps for this.
+ *
+ * \sa mdtGlobalDeviceContainer
  */
 class mdtDeviceContainer : public QObject
 {
@@ -77,16 +79,6 @@ class mdtDeviceContainer : public QObject
     return addDevice<T>(deviceAddress);
   }
 
-//   template <typename T> std::shared_ptr<T> addDevice(const QVariant & identification, const QString & name)
-//   {
-//     std::shared_ptr<T> dev(new T);
-//     ///dev->setIdentification(identification);
-//     ///dev->setName(name);
-//     pvDevices.push_back(dev);
-//     emit deviceAdded(dev);
-//     return dev;
-//   }
-
   /*! \brief Get first device of type T and that has given alias
    */
   template <typename T>
@@ -100,28 +92,13 @@ class mdtDeviceContainer : public QObject
     }
     return std::shared_ptr<T>();
   }
-  
-//   template <typename T> std::shared_ptr<T> device(const QVariant & identification)
-//   {
-//     std::vector<std::shared_ptr<mdtDevice>>::const_iterator it;
-//     std::shared_ptr<T> dev;
-// 
-//     /**
-//     for(it = pvDevices.begin(); it != pvDevices.end(); ++it){
-//       Q_ASSERT(*it);
-//       if((*it)->identification() == identification){
-//         dev = std::dynamic_pointer_cast<T>(*it);
-//         return dev;
-//       }
-//     }
-//     */
-// 
-//     return std::shared_ptr<T>();
-//   }
 
   /*! \brief Get number of contained devices
    */
-  inline int deviceCount() const { return pvDevices.size(); }
+  inline int deviceCount() const
+  {
+    return pvDevices.size(); 
+  }
 
   /*! \brief Remove all devices
    */
@@ -151,7 +128,47 @@ class mdtDeviceContainer : public QObject
 
   Q_DISABLE_COPY(mdtDeviceContainer);
 
-  std::vector<std::shared_ptr<mdtDevice>> pvDevices;
+  std::vector<std::shared_ptr<mdtDevice> > pvDevices;
 };
+
+
+/*! \brief Global device container
+ *
+ * Hold a single instance of a mdtDeviceContainer.
+ *
+ * \sa mdtDeviceContainer
+ */
+class mdtGlobalDeviceContainer
+{
+ public:
+
+  /*! \brief Access global container
+   */
+  std::shared_ptr<mdtDeviceContainer> container();
+
+  /*! \brief Use global container
+   *
+   * Permit to use the global container the same way
+   *  as mdtDeviceContainer
+   */
+  mdtDeviceContainer* operator->() const;
+
+  /*! \brief 
+   *
+   * Release all devices shared pointers and the global container itself.
+   *
+   * It is recommanded to call this function
+   *  (from one global container object) before the end of the programm.
+   *  This is because internal container is a static member,
+   *  and it can happen that it is destroyed to late,
+   *  causing troubles when device destructors are called.
+   */
+  void clear();
+
+ private:
+
+  static std::shared_ptr<mdtDeviceContainer> pvContainer;
+};
+
 
 #endif // #ifndef MDT_DEVICE_CONTAINER_H

@@ -45,6 +45,7 @@ mdtDevice::mdtDevice(QObject *parent)
 
 mdtDevice::~mdtDevice()
 {
+  qDebug() << "mdtDevice::~mdtDevice() ...";
   disconnectFromDevice();
   delete pvQueryTimer;
 }

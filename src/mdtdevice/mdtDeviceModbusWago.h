@@ -121,7 +121,14 @@ class mdtDeviceModbusWago : public mdtDeviceModbus
    * \return True on success. A failure is mostly due to a communication error, an unsupported
    *          fieldbus coupler, a unsupported module or a mistmatch with a special module configuration.
    */
-  bool detectIos(const QMap<int, mdtDeviceModbusWagoModule*> specialModules = QMap<int, mdtDeviceModbusWagoModule*>());
+  bool detectIos(const QMap<int, mdtDeviceModbusWagoModule*> specialModules /** = QMap<int, mdtDeviceModbusWagoModule*>()*/);
+
+  /*! \brief Query device about filed bus + I/Os setup
+   */
+  bool detectIos()
+  {
+    return detectIos(QMap<int, mdtDeviceModbusWagoModule*>());
+  }
 
  private:
 

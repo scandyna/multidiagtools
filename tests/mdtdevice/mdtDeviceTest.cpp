@@ -164,6 +164,35 @@ void mdtDeviceTest::deviceContainerTest()
 
 }
 
+void mdtDeviceTest::globalDeviceContainerTest()
+{
+  mdtGlobalDeviceContainer gc1, gc2;
+  std::shared_ptr<mdtDeviceContainer> c;
+  std::shared_ptr<mdtDevice> dev;
+
+  /*
+   * Add a device with one global container
+   *  and check that other contains the same
+   */
+  // Add device and check
+  dev = gc1->addDevice<mdtDeviceU3606A>("DMM1");
+  QVERIFY(dev.get() != 0);
+  QCOMPARE((int)dev->deviceAddress().usbIdVendor(), 0);
+  QCOMPARE((int)dev->deviceAddress().usbIdProduct(), 0);
+  // Check accessing global container from gc1
+  QCOMPARE(gc1->deviceCount(), 1);
+  dev = gc1->device<mdtDeviceU3606A>("DMM1");
+  QVERIFY(dev.get() != 0);
+  QCOMPARE(dev->alias(), QString("DMM1"));
+  // Check accessing global container from gc2
+  QCOMPARE(gc2->deviceCount(), 1);
+  dev = gc2->device<mdtDeviceU3606A>("DMM1");
+  QVERIFY(dev.get() != 0);
+  QCOMPARE(dev->alias(), QString("DMM1"));
+  // Release global container
+  gc1.clear();
+}
+
 void mdtDeviceTest::deviceIosSegmentTest()
 {
   mdtDeviceIosSegment seg;

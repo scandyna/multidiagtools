@@ -38,7 +38,8 @@ class mdtTtTestNodeManagerWidget;
 
 /*! \brief Helper class to access test node data and devices
  *
- * 
+ * Internally, a global device container (instance of mdtGlobalDeviceContainer)
+ *  holds instruments in a uniq way.
  */
 class mdtTtTestNodeManager : public QObject
 {
@@ -70,20 +71,10 @@ class mdtTtTestNodeManager : public QObject
     return pvDevices->addDevice<T>(alias);
   }
 
-//   template <typename T> std::shared_ptr<T> addDevice(const QVariant & identification, const QString & nodeIdentification, const QString & deviceName)
-//   {
-//     QString devName;
-// 
-//     devName = deviceName;
-//     if(!nodeIdentification.isEmpty()){
-//       devName += tr(" (Node ID: ") + nodeIdentification + tr(")");
-//     }
-//     ///return pvDevices->addDevice<T>(identification, devName);
-//   }
-
   /*! \brief Get device of type T and that has given alias
    */
-  template <typename T> std::shared_ptr<T> device(const QString & alias)
+  template <typename T>
+  std::shared_ptr<T> device(const QString & alias)
   {
     return pvDevices->device<T>(alias);
   }
@@ -104,12 +95,11 @@ class mdtTtTestNodeManager : public QObject
 
   /*! \brief Set short label to device I/Os
    *
-   * Will get I/Os contained in device (see mdtDeviceIos for details).
+   * Will get I/Os contained in device (see mdtDeviceIos for details)
    *  and Test node units contained in given Test node.
    *  For each I/O, SchemaPosition of test node unit is used,
    *  and labelShort is set to I/O.
    */
-  ///bool setDeviceIosLabelShort(const QVariant & testNodeId, const QVariant & deviceIdentification);
   bool setDeviceIosLabelShort(const QVariant & testNodeId);
 
   /*! \brief Get last error
@@ -125,7 +115,8 @@ class mdtTtTestNodeManager : public QObject
   Q_DISABLE_COPY(mdtTtTestNodeManager);
 
   QSqlDatabase pvDatabase;
-  std::shared_ptr<mdtDeviceContainer> pvDevices;
+  ///std::shared_ptr<mdtDeviceContainer> pvDevices;
+  mdtGlobalDeviceContainer pvDevices;
   mdtError pvLastError;
 };
 

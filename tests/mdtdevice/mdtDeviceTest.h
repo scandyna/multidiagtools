@@ -35,6 +35,7 @@ class mdtDeviceTest : public mdtTest
   void deviceBaseTest();
   
   void deviceContainerTest();
+  void globalDeviceContainerTest();
 
   // I/O's container test
   void deviceIosSegmentTest();

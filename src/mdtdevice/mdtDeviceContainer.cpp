@@ -27,6 +27,10 @@
 
 using namespace std;
 
+/*
+ * mdtDeviceContainer implementation
+ */
+
 mdtDeviceContainer::mdtDeviceContainer(QObject *parent)
  : QObject(parent)
 {
@@ -41,16 +45,11 @@ void mdtDeviceContainer::clear()
 QList<shared_ptr<mdtDevice>> mdtDeviceContainer::allDevices()
 {
   QList<shared_ptr<mdtDevice>> lst;
-//   std::vector<std::shared_ptr<mdtDevice>>::const_iterator it;
 
   for(auto & dev : pvDevices){
     Q_ASSERT(dev);
     lst.append(dev);
   }
-//   for(it = pvDevices.begin(); it != pvDevices.end(); ++it){
-//     Q_ASSERT(*it);
-//     lst.append(*it);
-//   }
 
   return lst;
 }
@@ -61,11 +60,34 @@ void mdtDeviceContainer::disconnectFromDevices()
     Q_ASSERT(dev);
     dev->disconnectFromDevice();
   }
+}
 
-//   std::vector<std::shared_ptr<mdtDevice>>::const_iterator it;
-// 
-//   for(it = pvDevices.begin(); it != pvDevices.end(); ++it){
-//     Q_ASSERT(*it);
-//     (*it)->disconnectFromDevice();
-//   }
+/*
+ * mdtGlobalDeviceContainer implementation
+ */
+
+std::shared_ptr<mdtDeviceContainer> mdtGlobalDeviceContainer::pvContainer;
+
+shared_ptr<mdtDeviceContainer> mdtGlobalDeviceContainer::container()
+{
+  if(!pvContainer){
+    pvContainer.reset(new mdtDeviceContainer);
+  }
+  return pvContainer;
+}
+
+mdtDeviceContainer* mdtGlobalDeviceContainer::operator->() const
+{
+  if(!pvContainer){
+    pvContainer.reset(new mdtDeviceContainer);
+  }
+  return pvContainer.get();
+}
+
+void mdtGlobalDeviceContainer::clear()
+{
+  if(pvContainer){
+    pvContainer->clear();
+    pvContainer.reset();
+  }
 }

@@ -161,6 +161,14 @@ bool mdtDeviceModbus::connectToDevice(const mdtModbusHwNodeId & hwNodeId, const 
   return connectToDevice();
 }
 
+bool mdtDeviceModbus::detectIos()
+{
+  pvLastError.setError(deviceIdString() + tr("I/O detection not implemented in this base MODBUS class."), mdtError::Error);
+  MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbus");
+  pvLastError.commit();
+  return false;
+}
+
 bool mdtDeviceModbus::getRegisterValues(int address, int n)
 {
   return pvTcpPortManager->getRegisterValues(address, n);

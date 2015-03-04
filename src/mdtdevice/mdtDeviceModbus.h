@@ -75,6 +75,15 @@ class mdtDeviceModbus : public mdtMultiIoDevice
    */
   virtual bool connectToDevice(const mdtModbusHwNodeId & hwNodeId, const QString & alias = QString(), int scanTimeout = 500, int port = 502);
 
+  /*! \brief Query device about filed bus + I/Os setup
+   *
+   * I/O detection is device vendor specific.
+   *  Some subclass reimplement this function.
+   *
+   * This implementation does nothing and allways return false.
+   */
+  virtual bool detectIos();
+
   /*! \brief Helper method for register service
    *
    * Usefull to get resgister values (f.ex. configurations regsisters, ...).

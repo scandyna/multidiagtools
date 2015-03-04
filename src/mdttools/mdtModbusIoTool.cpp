@@ -43,19 +43,26 @@ mdtModbusIoTool::mdtModbusIoTool(QWidget *parent, Qt::WindowFlags flags)
   statusBar()->addWidget(pvStatusWidget);
 
   // Setup device
-  pvDeviceModbusWago = new mdtDeviceModbusWago(this);
+  ///pvDeviceModbusWago = new mdtDeviceModbusWago(this);
+//   pvDeviceModbus.reset(new mdtDeviceModbusWago);
   ///pvDeviceModbusWago->setName("Wago I/O 750");
   // Setup I/Os widget
   pvDeviceIosWidget = new mdtDeviceIosWidget;
   saIos->setWidget(pvDeviceIosWidget);
   // Make connections
+//   connect(pvDeviceModbus.get(), SIGNAL(stateChanged(int)), this, SLOT(setState(int)));
+//   connect(pvDeviceModbus.get(), SIGNAL(statusMessageChanged(const QString&, const QString&, int)), this, SLOT(showStatusMessage(const QString&, const QString&, int)));
+//   Q_ASSERT(pvDeviceModbus->portManager() != 0);
+//   connect(pvDeviceModbus->portManager(), SIGNAL(stateChangedForUi(int, const QString&, int, bool)), pvStatusWidget, SLOT(setState(int, const QString&, int, bool)));
+  /**
   connect(pvDeviceModbusWago, SIGNAL(stateChanged(int)), this, SLOT(setState(int)));
   connect(pvDeviceModbusWago, SIGNAL(statusMessageChanged(const QString&, const QString&, int)), this, SLOT(showStatusMessage(const QString&, const QString&, int)));
   Q_ASSERT(pvDeviceModbusWago->portManager() != 0);
   connect(pvDeviceModbusWago->portManager(), SIGNAL(stateChangedForUi(int, const QString&, int, bool)), pvStatusWidget, SLOT(setState(int, const QString&, int, bool)));
+  */
 
   /// \note Test
-  connect(this, SIGNAL(errorEvent()), pvDeviceModbusWago->portManager(), SIGNAL(pmUnhandledErrorEvent()));
+//   connect(this, SIGNAL(errorEvent()), pvDeviceModbus->portManager(), SIGNAL(pmUnhandledErrorEvent()));
   
   // Set some flags
   pvReady = false;
@@ -66,11 +73,11 @@ mdtModbusIoTool::mdtModbusIoTool(QWidget *parent, Qt::WindowFlags flags)
   // Buttons
   connect(pbConnect, SIGNAL(clicked()), this, SLOT(connectToNode()));
   connect(pbDisconnect, SIGNAL(clicked()), this, SLOT(disconnectFromNode()));
-  connect(pbAbortScan, SIGNAL(clicked()), pvDeviceModbusWago->modbusTcpPortManager(), SLOT(abortScan()));
+//   connect(pbAbortScan, SIGNAL(clicked()), pvDeviceModbus->modbusTcpPortManager(), SLOT(abortScan()));
   setWindowTitle(tr("MODBUS I/O tool for Wago 750"));
-  pvDeviceModbusWago->portManager()->notifyCurrentState();
+//   pvDeviceModbus->portManager()->notifyCurrentState();
   // Start periodic inputs query (will only start once device is ready, see mdtDevice doc for details)
-  pvDeviceModbusWago->start(100);
+//   pvDeviceModbus->start(100);
 }
 
 mdtModbusIoTool::~mdtModbusIoTool()
@@ -131,8 +138,40 @@ void mdtModbusIoTool::setState(int state)
   ///qDebug() << "mdtModbusIoTool - new state: " << pvDeviceModbusWago->currentState();
 }
 
+void mdtModbusIoTool::setModbusDevice(const std::shared_ptr<mdtDeviceModbus> & device)
+{
+  Q_ASSERT(device);
+
+  /*
+   * If we allready have a device,
+   *  disconnect from physical decvice,
+   *  diconnect signals/slots first
+   */
+  if(pvDeviceModbus){
+    pvDeviceModbus->disconnectFromDevice();
+    disconnect(pvDeviceModbus.get(), SIGNAL(stateChanged(int)), this, SLOT(setState(int)));
+    disconnect(pvDeviceModbus.get(), SIGNAL(statusMessageChanged(const QString&, const QString&, int)), this, SLOT(showStatusMessage(const QString&, const QString&, int)));
+    disconnect(pvDeviceModbus->portManager(), SIGNAL(stateChangedForUi(int, const QString&, int, bool)), pvStatusWidget, SLOT(setState(int, const QString&, int, bool)));
+  }
+  // Store given device
+  pvDeviceModbus = device;
+  Q_ASSERT(pvDeviceModbus->portManager() != 0);
+  // Make signal/slots connections
+  connect(pvDeviceModbus.get(), SIGNAL(stateChanged(int)), this, SLOT(setState(int)));
+  connect(pvDeviceModbus.get(), SIGNAL(statusMessageChanged(const QString&, const QString&, int)), this, SLOT(showStatusMessage(const QString&, const QString&, int)));
+  connect(pvDeviceModbus->portManager(), SIGNAL(stateChangedForUi(int, const QString&, int, bool)), pvStatusWidget, SLOT(setState(int, const QString&, int, bool)));
+  /// \todo Abort, etc.. buttons
+  pvDeviceModbus->portManager()->notifyCurrentState();
+  // Start periodic inputs query (will only start once device is ready, see mdtDevice doc for details)
+  /// \todo Clarify and implement
+//   pvDeviceModbus->start(100);
+
+}
+
 void mdtModbusIoTool::setup()
 {
+  Q_ASSERT(pvDeviceModbus);
+
   // If we are connecting to node, we not accept setup (can conflict)
   if(pvConnectingToNode){
     QMessageBox msgBox;
@@ -142,31 +181,35 @@ void mdtModbusIoTool::setup()
     return;
   }
   mdtModbusTcpPortSetupDialog d(this);
-  d.setPortManager(pvDeviceModbusWago->portManager());
+  d.setPortManager(pvDeviceModbus->portManager());
   d.exec();
   // If portManager is running, we can try to detect I/Os
-  if(pvDeviceModbusWago->portManager()->isReady()){
+  if(pvDeviceModbus->portManager()->isReady()){
+    /**
     if(!pvDeviceModbusWago->isWago750()){
       showStatusMessage(tr("Device is not a Wago 750 Fieldbus"), tr("I/O detetcion currently only works with Wago 750 fielbus coupler"));
       pvDeviceModbusWago->portManager()->stop();
       return;
     }
+    */
     showStatusMessage(tr("I/O detection ..."));
-    if(!pvDeviceModbusWago->detectIos()){
+    if(!pvDeviceModbus->detectIos()){
       showStatusMessage(tr("I/O detection failed"));
-      pvDeviceModbusWago->portManager()->stop();
+      pvDeviceModbus->portManager()->stop();
       return;
     }
-    pvDeviceIosWidget->setDeviceIos(pvDeviceModbusWago->ios());
-    pvDeviceModbusWago->getDigitalOutputs(0);
+    pvDeviceIosWidget->setDeviceIos(pvDeviceModbus->ios());
+    pvDeviceModbus->getDigitalOutputs(0);
     showStatusMessage(tr("I/O detection done"), 1000);
   }
 }
 
 void mdtModbusIoTool::connectToNode()
 {
+  Q_ASSERT(pvDeviceModbus);
+
   mdtModbusHwNodeId hwNodeId;
-  mdtModbusTcpPortManager *m = pvDeviceModbusWago->modbusTcpPortManager();
+  mdtModbusTcpPortManager *m = pvDeviceModbus->modbusTcpPortManager();
   Q_ASSERT(m != 0);
 
   if(!m->isClosed()){
@@ -177,25 +220,25 @@ void mdtModbusIoTool::connectToNode()
   setStateConnectingToNode();
   // Try to find and connect to device
   hwNodeId.setId(sbHwNodeId->value(), 8, 0);
-  if(!pvDeviceModbusWago->connectToDevice(hwNodeId, "Wago 750 I/O", 100, 502)){
+  if(!pvDeviceModbus->connectToDevice(hwNodeId, "Wago 750 I/O", 100, 502)){
     pvStatusWidget->setPermanentText(tr("Device with HW node ID ") + QString::number(sbHwNodeId->value()) + tr(" not found"));
     setStateConnectingToNodeFinished();
     return;
   }
   showStatusMessage(tr("I/O detection ..."));
-  if(!pvDeviceModbusWago->detectIos()){
+  if(!pvDeviceModbus->detectIos()){
     QString details = tr("This probably caused by presence of a unsupported module.");
     details += tr("Take a look at log file for more details.");
     details += "\n" + tr("Path to log file: ");
     details += mdtErrorOut::logFile();
     showStatusMessage(tr("I/O detection failed"), details);
-    pvDeviceModbusWago->disconnectFromDevice();
+    pvDeviceModbus->disconnectFromDevice();
     setStateConnectingToNodeFinished();
     emit errorEvent();
     return;
   }
-  pvDeviceIosWidget->setDeviceIos(pvDeviceModbusWago->ios());
-  pvDeviceModbusWago->getDigitalOutputs(0);
+  pvDeviceIosWidget->setDeviceIos(pvDeviceModbus->ios());
+  pvDeviceModbus->getDigitalOutputs(0);
   showStatusMessage(tr("I/O detection done"), 1000);
   ///pbAbortScan->setEnabled(false);
   pvStatusDeviceInformations = tr("Connected to device with HW node ID ") + QString::number(sbHwNodeId->value());
@@ -206,7 +249,9 @@ void mdtModbusIoTool::connectToNode()
 void mdtModbusIoTool::disconnectFromNode()
 {
   pvStatusWidget->clearMessage();
-  pvDeviceModbusWago->disconnectFromDevice();
+  if(pvDeviceModbus){
+    pvDeviceModbus->disconnectFromDevice();
+  }
   pvDeviceIosWidget->clearIoWidgets();
 }
 
@@ -231,8 +276,10 @@ void mdtModbusIoTool::setStateConnectingToNode()
 
 void mdtModbusIoTool::setStateConnectingToNodeFinished()
 {
+  Q_ASSERT(pvDeviceModbus);
+
   pvConnectingToNode = false;
-  pvDeviceModbusWago->portManager()->notifyCurrentState();
+  pvDeviceModbus->portManager()->notifyCurrentState();
 }
 
 void mdtModbusIoTool::setStatePortClosed()

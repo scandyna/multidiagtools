@@ -26,8 +26,10 @@
 #include <QMap>
 #include <QString>
 #include <QActionGroup>
+#include <memory>
 
-class mdtDeviceModbusWago;
+///class mdtDeviceModbusWago;
+class mdtDeviceModbus;
 class mdtDeviceIosWidget;
 class mdtPortStatusWidget;
 
@@ -51,6 +53,12 @@ class mdtModbusIoTool : public QMainWindow, public Ui::mdtModbusIoTool
    */
   void setAvailableTranslations(const QMap<QString, QString> &avaliableTranslations, const QString &currentTranslationKey);
 
+  /*! \brief Set MODBUS device
+   *
+   * \pre device must be a valid pointer
+   */
+  void setModbusDevice(const std::shared_ptr<mdtDeviceModbus> & device);
+
 signals:
   
   void errorEvent();
@@ -71,12 +79,16 @@ signals:
   void setState(int state);
 
   /*! \brief Call setup dialog
+   *
+   * \pre MODBUS device must be set with setModbusDevice() before calling this function
    */
   void setup();
 
   /*! \brief Connect to a device with given hardware node ID
    *
    * Node ID will be readen from sbHwNodeId spin box.
+   *
+   * \pre MODBUS device must be set with setModbusDevice() before calling this function
    */
   void connectToNode();
 
@@ -141,7 +153,9 @@ signals:
 
   bool pvReady; /// \todo Ok ???
   bool pvConnectingToNode;
-  mdtDeviceModbusWago *pvDeviceModbusWago;
+  ///mdtDeviceModbusWago *pvDeviceModbusWago;
+  ///mdtDeviceModbus *pvDeviceModbusWago;
+  std::shared_ptr<mdtDeviceModbus> pvDeviceModbus;
   mdtDeviceIosWidget *pvDeviceIosWidget;
   mdtPortStatusWidget *pvStatusWidget;
   QString pvStatusDeviceInformations;   // Used to display informations about device in permanent area of status widget

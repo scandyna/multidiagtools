@@ -30,7 +30,7 @@
 using namespace std;
 
 mdtTtTestNodeManager::mdtTtTestNodeManager(QObject* parent, QSqlDatabase db)
- : QObject(parent), pvDevices(new mdtDeviceContainer(this))
+ : QObject(parent) /**, pvDevices(new mdtDeviceContainer(this))*/
 {
   pvDatabase = db;
 }
@@ -42,7 +42,7 @@ QList<std::shared_ptr<mdtDevice> > mdtTtTestNodeManager::allDevices()
 
 std::shared_ptr< mdtDeviceContainer > mdtTtTestNodeManager::container()
 {
-  return pvDevices;
+  return pvDevices.container();
 }
 
 void mdtTtTestNodeManager::clear()
@@ -50,12 +50,10 @@ void mdtTtTestNodeManager::clear()
   pvDevices->clear();
 }
 
-///bool mdtTtTestNodeManager::setDeviceIosLabelShort(const QVariant& testNodeId, const QVariant& deviceIdentification)
 bool mdtTtTestNodeManager::setDeviceIosLabelShort(const QVariant& testNodeId)
 {
   Q_ASSERT(!testNodeId.isNull());
 
-  ///shared_ptr<mdtMultiIoDevice> dev;
   mdtTtTestNode tn(0, pvDatabase);
   QString alias;
   bool ok;
