@@ -420,7 +420,7 @@ bool mdtTtTestCableOffsetTool::connectToInstruments()
 {
   ///shared_ptr<mdtDeviceU3606A> multimeter;
   shared_ptr<mdtDeviceModbusWago> coupler;
-  QVariant couplerNodeId;
+  ///QVariant couplerNodeId;
 
   ///multimeter = pvTestNodeManager->device<mdtDeviceU3606A>("U3606A");
   ///Q_ASSERT(multimeter);
@@ -429,7 +429,7 @@ bool mdtTtTestCableOffsetTool::connectToInstruments()
 
   // Get current coupler ID
   /// \todo Provisoire !
-  couplerNodeId = "0";
+  ///couplerNodeId = "0";
   /**
   couplerNodeId = currentTestNodeData("VehicleType_Id_FK_PK");
   if(couplerNodeId.isNull()){
@@ -462,7 +462,7 @@ bool mdtTtTestCableOffsetTool::connectToInstruments()
     return false;
   }
   // Set short labels to coupler units
-  if(!pvTestNodeManager->setDeviceIosLabelShort(couplerNodeId)){
+  if(!pvTestNodeManager->setDeviceIosLabelShort("W750")){
     pvLastError = pvTestNodeManager->lastError();
     disconnectFromInstruments();
     return false;

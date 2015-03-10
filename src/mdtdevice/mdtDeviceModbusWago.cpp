@@ -325,7 +325,7 @@ bool mdtDeviceModbusWago::detectIos(const QMap<int, mdtDeviceModbusWagoModule*> 
     return false;
   }
   // Set a default short label for each I/O
-  ios()->setIosDefaultLabelShort();
+  ///ios()->setIosDefaultLabelShort();
 
   return true;
 }

@@ -39,7 +39,7 @@ class mdtTtTestNodeManagerWidget;
 /*! \brief Helper class to access test node data and devices
  *
  * Internally, a global device container (instance of mdtGlobalDeviceContainer)
- *  holds instruments in a uniq way.
+ *  holds instruments in a unique way.
  */
 class mdtTtTestNodeManager : public QObject
 {
@@ -95,12 +95,14 @@ class mdtTtTestNodeManager : public QObject
 
   /*! \brief Set short label to device I/Os
    *
-   * Will get I/Os contained in device (see mdtDeviceIos for details)
-   *  and Test node units contained in given Test node.
-   *  For each I/O, SchemaPosition of test node unit is used,
-   *  and labelShort is set to I/O.
+   * Will get device from global device container that has given alias,
+   *  and that is a subclass of mdtMultiIoDevice.
+   *  Then, informations are get from database (TestNode_tbl and TestNodeUnit_view)
+   *  for test node that has given alias.
+   *  For all test node units that have a IoPosition, SchemaPosition is set as short label in device's I/O container
+   *  (see mdtDeviceIos for details).
    */
-  bool setDeviceIosLabelShort(const QVariant & testNodeId);
+  bool setDeviceIosLabelShort(const QString & alias);
 
   /*! \brief Get last error
    */

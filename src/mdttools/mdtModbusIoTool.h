@@ -22,6 +22,7 @@
 #define MDT_MODBUS_IO_TOOL_H
 
 #include "ui_mdtModbusIoTool.h"
+#include "mdtDevice.h"
 #include <QMainWindow>
 #include <QMap>
 #include <QString>
@@ -59,6 +60,9 @@ class mdtModbusIoTool : public QMainWindow, public Ui::mdtModbusIoTool
    */
   void setModbusDevice(const std::shared_ptr<mdtDeviceModbus> & device);
 
+  /// \todo Essai...
+  void updateIosWidget();
+
 signals:
   
   void errorEvent();
@@ -76,7 +80,7 @@ signals:
 
   /*! \brief Update current state
    */
-  void setState(int state);
+  void setState(mdtDevice::State_t state);
 
   /*! \brief Call setup dialog
    *

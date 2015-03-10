@@ -134,6 +134,28 @@ QString mdtTtTestNode::getTestNodeAlias(const QVariant & testNodeId, bool & ok)
   return dataList.at(0).toString();
 }
 
+QVariant mdtTtTestNode::getTestNodeIdForAlias(const QString & alias)
+{
+  QString sql;
+  QList<QVariant> dataList;
+  bool ok;
+
+  sql = "SELECT VehicleType_Id_FK_PK FROM TestNode_tbl WHERE Alias = '" + alias + "'";
+  dataList = getDataList<QVariant>(sql, ok);
+  if(!ok){
+    return QVariant();
+  }
+  if(dataList.isEmpty()){
+    pvLastError.setError(tr("Test node with alias '") + alias + tr("' was not found in TestNode_tbl"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNode");
+    pvLastError.commit();
+    return QVariant();
+  }
+  Q_ASSERT(dataList.size() == 1);
+
+  return dataList.at(0);
+}
+
 QList<QVariant> mdtTtTestNode::getIdListOfUnitConnectionsLinkedToUnitConnectionId(const QVariant & unitConnectionId)
 {
   Q_ASSERT(!unitConnectionId.isNull());

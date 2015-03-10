@@ -50,17 +50,26 @@ void mdtTtTestNodeManager::clear()
   pvDevices->clear();
 }
 
-bool mdtTtTestNodeManager::setDeviceIosLabelShort(const QVariant& testNodeId)
+bool mdtTtTestNodeManager::setDeviceIosLabelShort(const QString & alias)
 {
-  Q_ASSERT(!testNodeId.isNull());
+  ///Q_ASSERT(!testNodeId.isNull());
 
   mdtTtTestNode tn(0, pvDatabase);
-  QString alias;
-  bool ok;
+  QVariant testNodeId;
+  ///QString alias;
+  ///bool ok;
 
   // Get test node device alias
+  /**
   alias = tn.getTestNodeAlias(testNodeId, ok);
   if(!ok){
+    pvLastError = tn.lastError();
+    return false;
+  }
+  */
+  // Get test node ID
+  testNodeId = tn.getTestNodeIdForAlias(alias);
+  if(testNodeId.isNull()){
     pvLastError = tn.lastError();
     return false;
   }
@@ -101,6 +110,7 @@ bool mdtTtTestNodeManager::setDigitalOutputsLabelShort(std::shared_ptr<mdtDevice
   // Get test schema position of each node units that are digital outputs - Order by IoPosition Ascending
   sql = "SELECT SchemaPosition FROM TestNodeUnit_view WHERE TestNode_Id_FK = " + testNodeId.toString();
   sql += " AND (Type_Code_FK = 'BUSCPLREL' OR Type_Code_FK = 'CHANELREL')";
+  sql += " AND IoPosition IS NOT NULL";
   sql += " ORDER BY IoPosition ASC";
   ioLabelList = tn.getDataList<QVariant>(sql, ok);
   if(!ok){
@@ -114,6 +124,7 @@ bool mdtTtTestNodeManager::setDigitalOutputsLabelShort(std::shared_ptr<mdtDevice
     pvLastError.commit();
     return false;
   }
+  /// \todo Match DB I/O position and device I/O position
   // Set label for each digital output
   Q_ASSERT(ios->digitalOutputsCount() >= ioLabelList.size());
   for(i = 0; i < ioLabelList.size(); ++i){

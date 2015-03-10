@@ -1,14 +1,12 @@
 window_sizes 1280 996 271 1003 943 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 927874 // TestNode
-    802 754 90 18 0 0
-  active  classdiagram_ref 941058 // Test
-    1003 943 50 3 0 0
+  active  classdiagram_ref 587906 // mdtModbusIoTool
+    1003 943 100 4 0 0
 end
 show_stereotypes
-selected attribute_ref 1271426 // Alias
+selected classdiagram_ref 587906 // mdtModbusIoTool
 open
-  class_ref 992642 // TestNode_tbl
+  classview_ref 405378 // mdtModbusIoTool
 end
 end

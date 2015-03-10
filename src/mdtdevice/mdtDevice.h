@@ -314,7 +314,7 @@ class mdtDevice : public QObject
 
   /*! \brief Emitted when state has changed
    */
-  void stateChanged(State_t state);
+  void stateChanged(mdtDevice::State_t state);
 
   /*! \brief Emitted when a new status message is to display
    *

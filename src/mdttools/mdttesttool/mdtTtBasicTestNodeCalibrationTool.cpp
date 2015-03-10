@@ -893,15 +893,15 @@ void mdtTtBasicTestNodeCalibrationTool::addInstruments()
 bool mdtTtBasicTestNodeCalibrationTool::connectToInstruments()
 {
   shared_ptr<mdtDeviceModbusWago> coupler;
-  QVariant couplerNodeId;
+  QVariant couplerAlias;
 
   coupler = testNodeManager()->device<mdtDeviceModbusWago>("W750");
   Q_ASSERT(coupler);
 
   // Get current coupler ID
-  couplerNodeId = currentTestNodeData("VehicleType_Id_FK_PK");
-  if(couplerNodeId.isNull()){
-    pvLastError.setError(tr("Test node with ID ") + couplerNodeId.toString() + tr(" not found."), mdtError::Error);
+  couplerAlias = currentTestNodeData("Alias");
+  if(couplerAlias.isNull()){
+    pvLastError.setError(tr("Test node with ID ") + couplerAlias.toString() + tr(" not found."), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtBasicTestNodeCalibrationTool");
     pvLastError.commit();
     return false;
@@ -929,7 +929,7 @@ bool mdtTtBasicTestNodeCalibrationTool::connectToInstruments()
     return false;
   }
   // Set short labels to coupler units
-  if(!testNodeManager()->setDeviceIosLabelShort(couplerNodeId)){
+  if(!testNodeManager()->setDeviceIosLabelShort(couplerAlias.toString())){
     pvLastError = testNodeManager()->lastError();
     disconnectFromInstruments();
     return false;
