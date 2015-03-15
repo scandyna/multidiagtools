@@ -29,7 +29,6 @@
 #include <QActionGroup>
 #include <memory>
 
-///class mdtDeviceModbusWago;
 class mdtDeviceModbus;
 class mdtDeviceIosWidget;
 class mdtPortStatusWidget;
@@ -48,7 +47,7 @@ class mdtModbusIoTool : public QMainWindow, public Ui::mdtModbusIoTool
 
   /*! \brief destruct a mdtModbusIoTool object
    */
-  ~mdtModbusIoTool();
+  virtual ~mdtModbusIoTool();
 
   /*! \brief Build the translations menu
    */
@@ -59,6 +58,14 @@ class mdtModbusIoTool : public QMainWindow, public Ui::mdtModbusIoTool
    * \pre device must be a valid pointer
    */
   void setModbusDevice(const std::shared_ptr<mdtDeviceModbus> & device);
+
+  /*! \brief Connect to MODBUS device
+   */
+  virtual bool connectToDevice();
+
+  /*! \brief Disconnect from MODBUS device
+   */
+  virtual void disconnectFromDevice();
 
   /// \todo Essai...
   void updateIosWidget();
@@ -94,11 +101,13 @@ signals:
    *
    * \pre MODBUS device must be set with setModbusDevice() before calling this function
    */
-  void connectToNode();
+  void connectToDeviceSlot();
 
   /*! \brief Disconnect from device
    */
-  void disconnectFromNode();
+  void disconnectFromDeviceSlot();
+
+ protected:
 
   /*! \brief Used to show a message in status bar
    *
@@ -115,7 +124,11 @@ signals:
    */
   void showStatusMessage(const QString &message, const QString &details, int timeout = 0);
 
- private:
+ protected:
+
+  std::shared_ptr<mdtDeviceModbus> pvDeviceModbus;
+
+/// private:
 
   /*! \brief Set connecting to node state
    *
@@ -133,7 +146,7 @@ signals:
 
   /*! \brief Set the disconnected state
    */
-  void setStatePortClosed();
+//  void setStatePortClosed();
 
   /*! \brief Set the disconnected state
    */
@@ -155,17 +168,19 @@ signals:
    */
   void setStateError();
 
+ private:
+
   bool pvReady; /// \todo Ok ???
   bool pvConnectingToNode;
   ///mdtDeviceModbusWago *pvDeviceModbusWago;
   ///mdtDeviceModbus *pvDeviceModbusWago;
-  std::shared_ptr<mdtDeviceModbus> pvDeviceModbus;
+  
   mdtDeviceIosWidget *pvDeviceIosWidget;
   mdtPortStatusWidget *pvStatusWidget;
   QString pvStatusDeviceInformations;   // Used to display informations about device in permanent area of status widget
   // Translations menu
   QActionGroup *pvLanguageActionGroup;
-  // Diseable copy
+  // Disable copy
   Q_DISABLE_COPY(mdtModbusIoTool);
 };
 

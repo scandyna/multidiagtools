@@ -1727,6 +1727,7 @@ void mdtDeviceTest::modbusTest()
 {
   mdtDeviceModbus d;
   mdtModbusTcpPortManager *m = d.modbusTcpPortManager();
+  QString host;
   mdtDeviceAddress da;
   mdtDeviceAddressList daList;
   mdtDeviceIosWidget *iosw;
@@ -1770,10 +1771,19 @@ void mdtDeviceTest::modbusTest()
   if(daList.isEmpty()){
     QSKIP("No MODBUS/TCP device found on network (or other error)", SkipAll);
   }
-  // Connect to first device found
   QVERIFY(daList.size() > 0);
+  /*
+   * Check setDeviceAddress() and connectToDevice()
+   *  -> Case with host and port given
+   */
+  // Get first device found during scan
   da = daList.at(0);
+  host = da.tcpIpHostName();
+  QVERIFY(!host.isEmpty());
+  // Build device address
+  da.setModbusTcpIdentification(host, 502, mdtModbusHwNodeId());
   da.setAlias("NodeA");
+  // Connect to device
   d.setDeviceAddress(da);
   QVERIFY(d.connectToDevice());
   QVERIFY(d.currentState() == mdtDevice::State_t::Ready);
@@ -1783,10 +1793,11 @@ void mdtDeviceTest::modbusTest()
   QVERIFY(d.currentState() == mdtDevice::State_t::Disconnected);
   /*
    * We assume that we have 2 digital inputs, that are all OFF
-   * Lets try to connect requesting harware node ID 0
+   * Check setDeviceAddress() and connectToDevice()
+   *  -> Case with host, port and MODBUS HW node ID 0 given
    */
   // Update device address
-  da.setModbusTcpIdentification(da.tcpIpHostName(), da.tcpIpPort(), mdtModbusHwNodeId(0, 2, 0));
+  da.setModbusTcpIdentification(host, 502, mdtModbusHwNodeId(0, 2, 0));
   da.setAlias("NodeB");
   d.setDeviceAddress(da);
   // Connect to device
@@ -1813,6 +1824,21 @@ void mdtDeviceTest::modbusTest()
   QVERIFY(d.connectToDevice(mdtModbusHwNodeId(0,2,0), "NodeD", 100));
   QVERIFY(d.currentState() == mdtDevice::State_t::Ready);
   QCOMPARE(d.alias(), QString("NodeD"));
+  // Disconnect
+  d.disconnectFromDevice();
+  QVERIFY(d.currentState() == mdtDevice::State_t::Disconnected);
+  /*
+   * Check setDeviceAddress() and connectToDevice()
+   *  -> Case with only MODBUS HW node ID given
+   */
+  // Update device address
+  da.setModbusTcpIdentification("", 0, mdtModbusHwNodeId(0, 2, 0));
+  da.setAlias("NodeE");
+  d.setDeviceAddress(da);
+  // Connect to device
+  QVERIFY(d.connectToDevice());
+  QVERIFY(d.currentState() == mdtDevice::State_t::Ready);
+  QCOMPARE(d.alias(), QString("NodeE"));
   /*
    * Make some queries
    * Note: we cannot detect I/O's, so we can just assume we have at least 2 digital inputs

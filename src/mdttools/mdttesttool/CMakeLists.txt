@@ -21,6 +21,7 @@ set (TT_HEADER_FILES
           mdtTtTestModelItemEditor.h
           mdtTtTestNodeUnitSetupDialog.h
           mdtTtTestNodeManager.h
+          mdtTtTestNodeModbusIoTool.h
           #mdtTtTestNodeManagerWidget.h
           mdtTtBasicTesterWindow.h
           mdtTtTest.h
@@ -64,6 +65,7 @@ set (TT_SOURCES_FILES
           mdtTtTestItemNodeSetupData.cpp
           mdtTtTestNodeSetupData.cpp
           mdtTtTestNodeManager.cpp
+          mdtTtTestNodeModbusIoTool.cpp
           #mdtTtTestNodeManagerWidget.cpp
           mdtTtBasicTesterWindow.cpp
           mdtTtTestModelData.cpp
@@ -205,6 +207,7 @@ add_library (mdttesttool${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES} ${MOC_H
 #target_link_libraries(mdttesttool${MDTLIB_VERSION_SUFFIX} "mdtserialport${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdttesttool${MDTLIB_VERSION_SUFFIX} "mdtdevice${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdttesttool${MDTLIB_VERSION_SUFFIX} "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdttesttool${MDTLIB_VERSION_SUFFIX} "mdttools${MDTLIB_VERSION_SUFFIX}")
 
 # Translations - We generate a .pro file, that simplify the usage of lupdate
 file(WRITE "${PROJECT_SOURCE_DIR}/../../../translations/mdttesttool.pro" "# Translations project file for lupdate/lrelease\n")

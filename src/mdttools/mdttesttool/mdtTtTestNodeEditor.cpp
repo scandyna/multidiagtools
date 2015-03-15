@@ -25,6 +25,7 @@
 #include "mdtSqlRelationInfo.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlSelectionDialog.h"
+#include "mdtTtApplicationWidgets.h"
 #include "mdtTtTestNodeUnit.h"
 #include "mdtTtTestNodeUnitData.h"
 #include "mdtTtTestNodeUnitDialog.h"
@@ -65,6 +66,28 @@ bool mdtTtTestNodeEditor::setupTables()
     return false;
   }
   return true;
+}
+
+void mdtTtTestNodeEditor::showTestNodeModbusIoTool()
+{
+  QString deviceAlias;
+  bool ok;
+
+  // Get alias of current test node
+  deviceAlias = currentData("TestNode_tbl", "Alias", ok).toString();
+  if(!ok){
+    displayLastError();
+    return;
+  }
+  if(deviceAlias.isEmpty()){
+    pvLastError.setError(tr("No alias was defined for current test node."), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNodeEditor");
+    pvLastError.commit();
+    displayLastError();
+    return;
+  }
+  // Display tool
+  mdtTtApplicationWidgets::showTestNodeModbusIoTool(deviceAlias);
 }
 
 void mdtTtTestNodeEditor::setBaseVehicleType()

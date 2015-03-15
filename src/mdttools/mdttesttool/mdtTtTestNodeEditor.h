@@ -44,6 +44,12 @@ class mdtTtTestNodeEditor : public mdtSqlForm
    */
   bool setupTables();
 
+ public slots:
+
+  /*! \brief Show test node MODBUS I/O tool
+   */
+  void showTestNodeModbusIoTool();
+
  private slots:
 
   /*! \brief Set base vehicle type

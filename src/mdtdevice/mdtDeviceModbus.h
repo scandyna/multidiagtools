@@ -56,8 +56,14 @@ class mdtDeviceModbus : public mdtMultiIoDevice
   /*! \brief Connect to physical device
    *
    * Connect to device set with setDeviceAddress().
-   *  If device address contains a valid hardware node ID,
-   *  it will also be checked that it matches, else it will be ignored.
+   *  Depending on device address that was set, we have several cases:
+   *  - For a complete address, including host, port and MODBUS HW node ID,
+   *    a connection will be established to given host and port.
+   *    If connection succeed, it will also be checked that MODBUS HW node ID matches.
+   *  - For a address that contains only host and port,
+   *    a connection is established to given host and port.
+   *  - For a address that contains only MODBUS HW node ID,
+   *    a MODBUS/TCP device that has matching MODBUS HW node ID will be searched on the network.
    *
    * \sa mdtDevice::setDeviceAddress().
    */
@@ -316,6 +322,11 @@ class mdtDeviceModbus : public mdtMultiIoDevice
   mdtFrameCodecModbus *pvCodec;
 
  private:
+
+  /*! \brief Search MODBUS/TCP device that has given MODBUS HW node ID
+   * \todo Set private
+   */
+  mdtDeviceAddress searchDeviceWithModbusHwNodeId(const mdtModbusHwNodeId & hwNodeId, int scanTimeout = 500, int port = 502);
 
   /*! \brief Called by disconnectFromDevice()
    */

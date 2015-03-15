@@ -72,6 +72,9 @@ mdtModbusTcpPortManager *mdtDeviceModbus::modbusTcpPortManager()
 
 bool mdtDeviceModbus::connectToDevice()
 {
+  bool hasCompleteAddress;
+  mdtDeviceAddress da = deviceAddress();
+
   // Check that port manager is not running
   if(!pvTcpPortManager->isClosed()){
     pvTcpPortManager->stop();
@@ -92,15 +95,41 @@ bool mdtDeviceModbus::connectToDevice()
     pvLastError.commit();
     return false;
   }
+  /*
+   * Check if a complete device address was given.
+   * If true, we have to get MODBUS HW node ID from device
+   * and check that it matches expected one.
+   * For other cases:
+   *  - No specific MODBUS HW node ID is expected
+   *  - Only MODBUS HW node ID is given, in witch case the check is done during seraching
+   */
+  hasCompleteAddress = ( (!da.tcpIpHostName().isEmpty()) && (da.tcpIpPort() > 0) && (!da.modbusHwNodeId().isNull()) );
+  // If host and port was not given, search by MODBUS HW node ID
+  if( (da.tcpIpHostName().isEmpty()) || (da.tcpIpPort() == 0) ){
+    // Check that we not have a completely empty address
+    if(da.modbusHwNodeId().isNull()){
+      pvLastError.setError(tr("Cannot connect to device with address string '") + da.addressString() + \
+                           tr("': at least host and port, or MODBUS hardware node ID is required."), mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbus");
+      pvLastError.commit();
+      return false;
+    }
+    // Search device with expected MODBUS HW node ID
+    auto foundDa = searchDeviceWithModbusHwNodeId(da.modbusHwNodeId(), 100, 502); /// \todo Fix scan timeout and port problem
+    if(!foundDa.isValid()){
+      return false;
+    }
+    pvTcpPortManager->setPortName(foundDa.tcpIpHostName() + ":" + QString::number(foundDa.tcpIpPort()) ); /// \todo Update once port management was fixed..
+  }else{
+    pvTcpPortManager->setPortName(da.tcpIpHostName() + ":" + QString::number(da.tcpIpPort()) ); /// \todo Update once port management was fixed..
+  }
   // Connect to device
-  pvTcpPortManager->setPortName(deviceAddress().tcpIpHostName() + ":" + QString::number(deviceAddress().tcpIpPort()) ); /// \todo Update once port management was fixed..
   if(!pvTcpPortManager->start()){
     pvLastError = pvTcpPortManager->lastError();
     return false;
   }
-  // If hardware node ID is valid, check that it matches
-  mdtDeviceAddress da = deviceAddress();
-  if(!da.modbusHwNodeId().isNull()){
+  // Check MODBUS HW node ID if required
+  if(hasCompleteAddress){
     mdtModbusHwNodeId hwNodeId = da.modbusHwNodeId();
     mdtModbusHwNodeId deviceHwNodeId = pvTcpPortManager->getHardwareNodeAddress(hwNodeId.bitsCount(), hwNodeId.firstBit());
     if(deviceHwNodeId.isNull()){
@@ -124,41 +153,53 @@ bool mdtDeviceModbus::connectToDevice()
 
 bool mdtDeviceModbus::connectToDevice(const mdtModbusHwNodeId & hwNodeId, const QString & alias, int scanTimeout, int port)
 {
-  mdtDeviceAddressList daList;
-  mdtModbusHwNodeIdList hwNodeIdList;
+//   mdtDeviceAddressList daList;
+//   mdtModbusHwNodeIdList hwNodeIdList;
 
   // Check that port manager is not running
   if(!pvTcpPortManager->isClosed()){
     pvTcpPortManager->stop();
   }
-  // Get list of known devices that are reachable and check if node with requested HW ID exists
-  daList = pvTcpPortManager->scanFromKnownHostsFile(scanTimeout);
-  for(const auto & da : daList.internalVector()){
-    if(da.modbusHwNodeId().id() == hwNodeId.id()){
-      setDeviceAddress(da, alias);
-      return connectToDevice();
-    }
-  }
-  // Nothing found in cache, scan the network
-  hwNodeIdList.append(hwNodeId);
-  daList = pvTcpPortManager->scan(QNetworkInterface::allInterfaces(), hwNodeIdList, port, true, scanTimeout);
-  if(daList.isEmpty()){
-    pvLastError.setError(tr("Could not find a MODBUS/TCP device with hardware node ID ") + QString::number(hwNodeId.id()), mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbus");
-    pvLastError.commit();
+  // Search device
+  auto da = searchDeviceWithModbusHwNodeId(hwNodeId, scanTimeout, port);
+  if(!da.isValid()){
     return false;
   }
-  Q_ASSERT(daList.size() > 0);
-  /*
-   * Save device addresses to known hosts cache file
-   * We ignore return value, if file cannot be saved,
-   * it's not a problem for all the rest
-   */
-  pvTcpPortManager->saveDeviceAddressList(daList);
-  // Should be ok , connect
-  setDeviceAddress(daList.at(0), alias);
+  // Set device address and connect
+  setDeviceAddress(da, alias);
 
   return connectToDevice();
+
+//   // Get list of known devices that are reachable and check if node with requested HW ID exists
+//   daList = pvTcpPortManager->scanFromKnownHostsFile(scanTimeout);
+//   for(const auto & da : daList.internalVector()){
+//     if(da.modbusHwNodeId().id() == hwNodeId.id()){
+//       Q_ASSERT(!da.tcpIpHostName().isEmpty());  // Prevent recursiv calls
+//       setDeviceAddress(da, alias);
+//       return connectToDevice();
+//     }
+//   }
+//   // Nothing found in cache, scan the network
+//   hwNodeIdList.append(hwNodeId);
+//   daList = pvTcpPortManager->scan(QNetworkInterface::allInterfaces(), hwNodeIdList, port, true, scanTimeout);
+//   if(daList.isEmpty()){
+//     pvLastError.setError(tr("Could not find a MODBUS/TCP device with hardware node ID ") + QString::number(hwNodeId.id()), mdtError::Error);
+//     MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbus");
+//     pvLastError.commit();
+//     return false;
+//   }
+//   Q_ASSERT(daList.size() > 0);
+//   /*
+//    * Save device addresses to known hosts cache file
+//    * We ignore return value, if file cannot be saved,
+//    * it's not a problem for all the rest
+//    */
+//   pvTcpPortManager->saveDeviceAddressList(daList);
+//   // Should be ok , connect
+//   Q_ASSERT(!daList.at(0).tcpIpHostName().isEmpty());  // Prevent recursiv calls
+//   setDeviceAddress(daList.at(0), alias);
+// 
+//   return connectToDevice();
 }
 
 bool mdtDeviceModbus::detectIos()
@@ -627,6 +668,41 @@ int mdtDeviceModbus::writeDigitalOutputs(mdtPortTransaction *transaction, mdtDev
   // Send request
   transaction->setData(pdu);
   return pvTcpPortManager->sendData(transaction);
+}
+
+mdtDeviceAddress mdtDeviceModbus::searchDeviceWithModbusHwNodeId(const mdtModbusHwNodeId& hwNodeId, int scanTimeout, int port)
+{
+  Q_ASSERT(!hwNodeId.isNull());
+  Q_ASSERT(pvTcpPortManager->isClosed());
+
+  mdtDeviceAddressList daList;
+  mdtModbusHwNodeIdList hwNodeIdList;
+
+  // Get list of known devices that are reachable and check if node with requested HW ID exists
+  daList = pvTcpPortManager->scanFromKnownHostsFile(scanTimeout);
+  for(const auto & da : daList.internalVector()){
+    if(da.modbusHwNodeId().id() == hwNodeId.id()){
+      return da;
+    }
+  }
+  // Nothing found in cache, scan the network
+  hwNodeIdList.append(hwNodeId);
+  daList = pvTcpPortManager->scan(QNetworkInterface::allInterfaces(), hwNodeIdList, port, true, scanTimeout);
+  if(daList.isEmpty()){
+    pvLastError.setError(tr("Could not find a MODBUS/TCP device with hardware node ID ") + QString::number(hwNodeId.id()), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbus");
+    pvLastError.commit();
+    return mdtDeviceAddress();
+  }
+  Q_ASSERT(daList.size() > 0);
+  /*
+   * Save device addresses to known hosts cache file
+   * We ignore return value, if file cannot be saved,
+   * it's not a problem for all the rest
+   */
+  pvTcpPortManager->saveDeviceAddressList(daList);
+
+  return daList.at(0);
 }
 
 void mdtDeviceModbus::disconnectFromDeviceEvent()

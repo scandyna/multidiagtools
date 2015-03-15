@@ -73,6 +73,23 @@ QString mdtDeviceAddress::deviceTypeStr() const
   return "";
 }
 
+void mdtDeviceAddress::setModbusTcpIdentification(const QString & hostName, uint16_t port, const mdtModbusHwNodeId & nid)
+{
+  clear();
+  pvPortType = PortType_t::TCPIP;
+  pvDeviceType = DeviceType_t::MODBUS;
+  pvHostName = hostName;
+  pvTcpipDeviceAddress.port = port;
+  pvModbusHwNodeId = nid;
+  QString portStr;
+  if(port > 0){
+    portStr = QString::number(port);
+  }
+  pvAddressString = "TCPIP::" + pvHostName + "::" + portStr + "::MODBUS::" + \
+                    QString::number(nid.id()) + "," + QString::number(nid.bitsCount()) + "," + QString::number(nid.firstBit());
+}
+
+
 bool mdtDeviceAddress::decodeUsbAddressString(const QStringList& lst)
 {
   Q_ASSERT(lst.size() >= 2);
@@ -179,19 +196,21 @@ bool mdtDeviceAddress::decodeModbusTcpAddressString(const QStringList& lst)
 
   // Extract host name and port
   pvHostName = lst.at(1);
-  pvTcpipDeviceAddress.port = lst.at(2).toUInt(&ok);
-  if(!ok){
-    pvLastError.setError(tr("Could not decode port number in address string '") + pvAddressString + tr("'.") , mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceAddress");
-    pvLastError.commit();
-    clear();
-    return false;
+  if(!lst.at(2).isEmpty()){
+    pvTcpipDeviceAddress.port = lst.at(2).toUInt(&ok);
+    if(!ok){
+      pvLastError.setError(tr("Could not decode port number in address string '") + pvAddressString + tr("'.") , mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceAddress");
+      pvLastError.commit();
+      clear();
+      return false;
+    }
   }
   pvDeviceType = DeviceType_t::MODBUS;
   if(lst.size() < 5){
     return true;
   }
-  // Extract MODBUS hardware node address is specified
+  // Extract MODBUS hardware node address if specified
   Q_ASSERT(lst.size() == 5);
   QStringList nid = lst.at(4).split(",");
   if(nid.size() != 3){

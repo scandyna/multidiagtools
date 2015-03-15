@@ -295,7 +295,7 @@ void mdtDeviceAddressTest::simpleTest()
   da.setAlias("RawSocket01");
   QCOMPARE(da.alias(), QString("RawSocket01"));
   /*
-   * Check MODBUS/TCP identification
+   * Check MODBUS/TCP identification with host, port and MODBUS HW node ID
    */
   da.setModbusTcpIdentification("4.3.2.1", 8765, mdtModbusHwNodeId(5, 8, 1));
   QVERIFY(da.isValid());
@@ -317,6 +317,26 @@ void mdtDeviceAddressTest::simpleTest()
   // Change alias
   da.setAlias("Node05");
   QCOMPARE(da.alias(), QString("Node05"));
+  /*
+   * Check MODBUS/TCP identification with only MODBUS HW node ID
+   */
+  da.setModbusTcpIdentification("", 0, mdtModbusHwNodeId(4, 8, 1));
+  QVERIFY(da.isValid());
+  QVERIFY(da.portType() == mdtDeviceAddress::PortType_t::TCPIP);
+  QCOMPARE(da.portTypeStr(), QString("TCPIP"));
+  QVERIFY(da.deviceType() == mdtDeviceAddress::DeviceType_t::MODBUS);
+  QCOMPARE(da.deviceTypeStr(), QString("MODBUS"));
+  QCOMPARE((int)da.usbIdVendor(), 0);
+  QCOMPARE((int)da.usbIdProduct(), 0);
+  QCOMPARE((int)da.usbInterfaceNumber(), 0);
+  QCOMPARE(da.usbDeviceSerialNumber(), QString(""));
+  QCOMPARE(da.tcpIpHostName(), QString(""));
+  QCOMPARE((int)da.tcpIpPort(), 0);
+  QCOMPARE(da.modbusHwNodeId().id(), 4);
+  QCOMPARE(da.modbusHwNodeId().bitsCount(), 8);
+  QCOMPARE(da.modbusHwNodeId().firstBit(), 1);
+  QCOMPARE(da.addressString(), QString("TCPIP::::::MODBUS::4,8,1"));
+  QCOMPARE(da.alias(), da.addressString());
   /*
    * Check clear
    */
@@ -388,7 +408,8 @@ void mdtDeviceAddressTest::decodeAddressStringTest()
   da.setAlias("RawSocket2");
   QCOMPARE(da.alias(), QString("RawSocket2"));
   /*
-   * Check Raw MODBUS/TCP addresse string parsing
+   * Check MODBUS/TCP addresse string parsing
+   *  -> Complete address string with host, port and MODBUS HW node ID
    */
   QVERIFY(da.setAddressString("TCPIP::1.5.9.8::502::MODBUS::2,8,1"));
   QVERIFY(da.isValid());
@@ -406,6 +427,44 @@ void mdtDeviceAddressTest::decodeAddressStringTest()
   QCOMPARE(da.modbusHwNodeId().bitsCount(), 8);
   QCOMPARE(da.modbusHwNodeId().firstBit(), 1);
   QCOMPARE(da.addressString(), QString("TCPIP::1.5.9.8::502::MODBUS::2,8,1"));
+  /*
+   * Check MODBUS/TCP addresse string parsing
+   *  -> Address string with only host and port
+   */
+  QVERIFY(da.setAddressString("TCPIP::1.2.3.4::502::MODBUS"));
+  QVERIFY(da.isValid());
+  QVERIFY(da.portType() == mdtDeviceAddress::PortType_t::TCPIP);
+  QCOMPARE(da.portTypeStr(), QString("TCPIP"));
+  QVERIFY(da.deviceType() == mdtDeviceAddress::DeviceType_t::MODBUS);
+  QCOMPARE(da.deviceTypeStr(), QString("MODBUS"));
+  QCOMPARE((int)da.usbIdVendor(), 0);
+  QCOMPARE((int)da.usbIdProduct(), 0);
+  QCOMPARE((int)da.usbInterfaceNumber(), 0);
+  QCOMPARE(da.usbDeviceSerialNumber(), QString(""));
+  QCOMPARE(da.tcpIpHostName(), QString("1.2.3.4"));
+  QCOMPARE((int)da.tcpIpPort(), 502);
+  QVERIFY(da.modbusHwNodeId().isNull());
+  QCOMPARE(da.addressString(), QString("TCPIP::1.2.3.4::502::MODBUS"));
+  /*
+   * Check MODBUS/TCP addresse string parsing
+   *  -> Address string with only MODBUS HW node ID
+   */
+  QVERIFY(da.setAddressString("TCPIP::::::MODBUS::3,8,1"));
+  QVERIFY(da.isValid());
+  QVERIFY(da.portType() == mdtDeviceAddress::PortType_t::TCPIP);
+  QCOMPARE(da.portTypeStr(), QString("TCPIP"));
+  QVERIFY(da.deviceType() == mdtDeviceAddress::DeviceType_t::MODBUS);
+  QCOMPARE(da.deviceTypeStr(), QString("MODBUS"));
+  QCOMPARE((int)da.usbIdVendor(), 0);
+  QCOMPARE((int)da.usbIdProduct(), 0);
+  QCOMPARE((int)da.usbInterfaceNumber(), 0);
+  QCOMPARE(da.usbDeviceSerialNumber(), QString(""));
+  QCOMPARE(da.tcpIpHostName(), QString(""));
+  QCOMPARE((int)da.tcpIpPort(), 0);
+  QCOMPARE(da.modbusHwNodeId().id(), 3);
+  QCOMPARE(da.modbusHwNodeId().bitsCount(), 8);
+  QCOMPARE(da.modbusHwNodeId().firstBit(), 1);
+  QCOMPARE(da.addressString(), QString("TCPIP::::::MODBUS::3,8,1"));
   /*
    * Check USB address string parsing
    *  -> Interface number not specified

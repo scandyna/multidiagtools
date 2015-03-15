@@ -929,7 +929,7 @@ bool mdtTtBasicTestNodeCalibrationTool::connectToInstruments()
     return false;
   }
   // Set short labels to coupler units
-  if(!testNodeManager()->setDeviceIosLabelShort(couplerAlias.toString())){
+  if(!testNodeManager()->setDeviceIosLabelShort(couplerAlias.toString(), true)){
     pvLastError = testNodeManager()->lastError();
     disconnectFromInstruments();
     return false;

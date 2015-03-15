@@ -312,17 +312,7 @@ class mdtDeviceAddress
 
   /*! \brief Set MODBUS/TCP identification
    */
-  void setModbusTcpIdentification(const QString & hostName, uint16_t port, const mdtModbusHwNodeId & nid)
-  {
-    clear();
-    pvPortType = PortType_t::TCPIP;
-    pvDeviceType = DeviceType_t::MODBUS;
-    pvHostName = hostName;
-    pvTcpipDeviceAddress.port = port;
-    pvModbusHwNodeId = nid;
-    pvAddressString = "TCPIP::" + pvHostName + "::" + QString::number(port) + "::MODBUS::" + \
-                      QString::number(nid.id()) + "," + QString::number(nid.bitsCount()) + "," + QString::number(nid.firstBit());
-  }
+  void setModbusTcpIdentification(const QString & hostName, uint16_t port, const mdtModbusHwNodeId & nid);
 
   /*! \brief Get TCP/IP host name
    */

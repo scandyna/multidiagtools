@@ -1,6 +1,6 @@
-format 207
+format 209
 "mdttesttool" // mdttools::mdttesttool
-  revision 61
+  revision 62
   modified_by 2 "philippe"
   // class settings
   
@@ -1884,6 +1884,91 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+    end
+
+    classdiagram 1371650 "mdtTtTestNodeModbusIoTool"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 1551874 "mdtTtTestNodeModbusIoTool"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 1934594 // <generalisation>
+	relation 1918466 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1934594 // <generalisation>
+	  b parent class_ref 585730 // mdtModbusIoTool
+      end
+
+      classrelation 1934722 // pvTestNodeManager (<directional composition>)
+	relation 1918594 *-->
+	  a role_name "pvTestNodeManager" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 1934722 // pvTestNodeManager (<directional composition>)
+	  b parent class_ref 1302018 // mdtTtTestNodeManager
+      end
+
+      operation 2466562 "mdtTtTestNodeModbusIoTool"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "parent" type class_ref 316162 // QWidget
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2467458 "setModbusDevice"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "alias" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2467330 "connectToDevice"
+	cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
   end
 

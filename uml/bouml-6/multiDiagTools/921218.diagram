@@ -1,4 +1,4 @@
-format 206
+format 209
 
 classcanvas 128002 class_ref 986114 // mdtTbCoupler
   classdiagramsettings member_max_width 0 end
@@ -6,7 +6,7 @@ classcanvas 128002 class_ref 986114 // mdtTbCoupler
 end
 classcanvas 128130 class_ref 952962 // mdtTtBase
   classdiagramsettings member_max_width 0 end
-  xyz 300 108 2005
+  xyz 131 62 2005
 end
 relationcanvas 128258 relation_ref 1226370 // <generalisation>
   from ref 128002 z 2006 to ref 128130

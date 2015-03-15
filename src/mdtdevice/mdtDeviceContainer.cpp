@@ -23,8 +23,6 @@
 #include "mdtDeviceU3606A.h"
 #include <QObject>
 
-//#include <QDebug>
-
 using namespace std;
 
 /*

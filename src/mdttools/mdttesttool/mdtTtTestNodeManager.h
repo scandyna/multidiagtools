@@ -101,8 +101,11 @@ class mdtTtTestNodeManager : public QObject
    *  for test node that has given alias.
    *  For all test node units that have a IoPosition, SchemaPosition is set as short label in device's I/O container
    *  (see mdtDeviceIos for details).
+   *
+   * If failOnIoMismatch is true, this function fails as soon as a I/O set in database (IoPosition in TestNodeUnit_view)
+   *  does not exists in device.
    */
-  bool setDeviceIosLabelShort(const QString & alias);
+  bool setDeviceIosLabelShort(const QString & alias, bool failOnIoMismatch);
 
   /*! \brief Get last error
    */
@@ -110,14 +113,25 @@ class mdtTtTestNodeManager : public QObject
 
  private:
 
+  /*! \brief Set short labels to analog inputs
+   */
+  bool setAnalogInputsLabelShort(std::shared_ptr<mdtDeviceIos> ios, const QVariant & testNodeId, const QString & alias, bool failOnIoMismatch);
+
+  /*! \brief Set short labels to analog outputs
+   */
+  bool setAnalogOutputsLabelShort(std::shared_ptr<mdtDeviceIos> ios, const QVariant & testNodeId, const QString & alias, bool failOnIoMismatch);
+
+  /*! \brief Set short labels to digital inputs
+   */
+  bool setDigitalInputsLabelShort(std::shared_ptr<mdtDeviceIos> ios, const QVariant & testNodeId, const QString & alias, bool failOnIoMismatch);
+
   /*! \brief Set short labels to digital outputs
    */
-  bool setDigitalOutputsLabelShort(std::shared_ptr<mdtDeviceIos> ios, const QVariant & testNodeId, const QString & alias);
+  bool setDigitalOutputsLabelShort(std::shared_ptr<mdtDeviceIos> ios, const QVariant & testNodeId, const QString & alias, bool failOnIoMismatch);
 
   Q_DISABLE_COPY(mdtTtTestNodeManager);
 
   QSqlDatabase pvDatabase;
-  ///std::shared_ptr<mdtDeviceContainer> pvDevices;
   mdtGlobalDeviceContainer pvDevices;
   mdtError pvLastError;
 };

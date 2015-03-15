@@ -25,6 +25,9 @@
 
 // Editors
 class mdtTtTestCableEditor;
+class mdtTtTestNodeEditor;
+// Tools
+class mdtTtTestNodeModbusIoTool;
 
 /*! \brief Container for test tool editors and views
  *
@@ -49,17 +52,37 @@ class mdtTtApplicationWidgets : public mdtSqlApplicationWidgets<mdtTtApplication
    */
   static void editTestCables();
 
+  /*! \brief Show test node MODBUS I/O tool
+   */
+  static void showTestNodeModbusIoTool(const QString & deviceAlias);
+
  public slots:
 
   /*! \brief Edit test cables
    */
   void slotEditTestCables();
 
+  /*! \brief Edit test nodes
+   */
+  void slotEditTestNodes();
+
  private:
 
   /*! \brief Create test cable editor
    */
   bool createTestCableEditor();
+
+  /*! \brief Create test node editor
+   */
+  bool createTestNodeEditor();
+
+  /*! \brief Create test node MODBUS I/O tool
+   */
+  bool createTestNodeModbusIoTool();
+
+  /*! \brief Close custom widgets
+   */
+  bool closeCustomWidgets();
 
   /*! \brief Clear all widgets
    */
@@ -75,6 +98,9 @@ class mdtTtApplicationWidgets : public mdtSqlApplicationWidgets<mdtTtApplication
 
   // Editors
   std::shared_ptr<mdtTtTestCableEditor> pvTestCableEditor;
+  std::shared_ptr<mdtTtTestNodeEditor> pvTestNodeEditor;
+  // Tools
+  std::shared_ptr<mdtTtTestNodeModbusIoTool> pvTestNodeModbusIoTool;
 };
 
 #endif // #ifndef MDT_TT_APPLICATION_WIDGETS_H

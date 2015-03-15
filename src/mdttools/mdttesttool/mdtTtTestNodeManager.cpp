@@ -24,6 +24,7 @@
 #include "mdtDeviceIos.h"
 #include "mdtAbstractIo.h"
 #include "mdtMultiIoDevice.h"
+#include <QSqlRecord>
 
 #include <QDebug>
 
@@ -50,23 +51,11 @@ void mdtTtTestNodeManager::clear()
   pvDevices->clear();
 }
 
-bool mdtTtTestNodeManager::setDeviceIosLabelShort(const QString & alias)
+bool mdtTtTestNodeManager::setDeviceIosLabelShort(const QString & alias, bool failOnIoMismatch)
 {
-  ///Q_ASSERT(!testNodeId.isNull());
-
   mdtTtTestNode tn(0, pvDatabase);
   QVariant testNodeId;
-  ///QString alias;
-  ///bool ok;
 
-  // Get test node device alias
-  /**
-  alias = tn.getTestNodeAlias(testNodeId, ok);
-  if(!ok){
-    pvLastError = tn.lastError();
-    return false;
-  }
-  */
   // Get test node ID
   testNodeId = tn.getTestNodeIdForAlias(alias);
   if(testNodeId.isNull()){
@@ -83,55 +72,216 @@ bool mdtTtTestNodeManager::setDeviceIosLabelShort(const QString & alias)
   }
   Q_ASSERT(dev->ios());
   // Set analog inputs labels
-  
+  if(!setAnalogInputsLabelShort(dev->ios(), testNodeId, alias, failOnIoMismatch)){
+    return false;
+  }
   // Set analog outputs labels
-  
+  if(!setAnalogOutputsLabelShort(dev->ios(), testNodeId, alias, failOnIoMismatch)){
+    return false;
+  }
   // Set digital inputs labels
-  
+  if(!setDigitalInputsLabelShort(dev->ios(), testNodeId, alias, failOnIoMismatch)){
+    return false;
+  }
   // Set digital outputs labels
-  if(!setDigitalOutputsLabelShort(dev->ios(), testNodeId, alias)){
+  if(!setDigitalOutputsLabelShort(dev->ios(), testNodeId, alias, failOnIoMismatch)){
     return false;
   }
 
   return true;
 }
 
-bool mdtTtTestNodeManager::setDigitalOutputsLabelShort(std::shared_ptr<mdtDeviceIos> ios, const QVariant& testNodeId, const QString & alias)
+bool mdtTtTestNodeManager::setAnalogInputsLabelShort(shared_ptr< mdtDeviceIos > ios, const QVariant& testNodeId, const QString & alias, bool failOnIoMismatch)
 {
   Q_ASSERT(ios);
 
   mdtTtTestNode tn(0, pvDatabase);
   QString sql;
-  QList<QVariant> ioLabelList;
+  QList<QSqlRecord> dbIoList;
+  int dbIoPos;
   mdtAbstractIo *io;
   bool ok;
-  int i;
 
   // Get test schema position of each node units that are digital outputs - Order by IoPosition Ascending
-  sql = "SELECT SchemaPosition FROM TestNodeUnit_view WHERE TestNode_Id_FK = " + testNodeId.toString();
-  sql += " AND (Type_Code_FK = 'BUSCPLREL' OR Type_Code_FK = 'CHANELREL')";
+  sql = "SELECT SchemaPosition, IoPosition FROM TestNodeUnit_view WHERE TestNode_Id_FK = " + testNodeId.toString();
+  sql += " AND (Type_Code_FK = 'AI')";
   sql += " AND IoPosition IS NOT NULL";
-  sql += " ORDER BY IoPosition ASC";
-  ioLabelList = tn.getDataList<QVariant>(sql, ok);
+  dbIoList = tn.getDataList<QSqlRecord>(sql, ok);
   if(!ok){
     pvLastError = tn.lastError();
     return false;
   }
-  // Check count of digital outputs in ios and count of found test node units
-  if(ios->digitalOutputsCount() < ioLabelList.size()){
-    pvLastError.setError(tr("Device '") + alias + tr("' has less than expected digital outputs."), mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNodeManager");
-    pvLastError.commit();
+  // Update I/O labels
+  for(const auto & dbIo : dbIoList){
+    // Get database I/O position
+    dbIoPos = dbIo.value(1).toInt(&ok);
+    if(!ok){
+      pvLastError.setError(tr("Device '") + alias + tr("' could not get I/O position for '") + dbIo.value(0).toString(), mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNodeManager");
+      pvLastError.commit();
+      return false;
+    }
+    Q_ASSERT(dbIoPos >= 0);
+    // Update label
+    if(ios->analogInputsCount() > dbIoPos){
+      io = ios->analogInputs().at(dbIoPos);
+      Q_ASSERT(io != nullptr);
+      io->setLabelShort(dbIo.value(0).toString());
+    }else{
+      if(failOnIoMismatch){
+        pvLastError.setError(tr("Device '") + alias + tr("' I/O position of '") + dbIo.value(0).toString() + tr("' not exists on device."), mdtError::Error);
+        MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNodeManager");
+        pvLastError.commit();
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
+bool mdtTtTestNodeManager::setAnalogOutputsLabelShort(shared_ptr< mdtDeviceIos > ios, const QVariant& testNodeId, const QString & alias, bool failOnIoMismatch)
+{
+  Q_ASSERT(ios);
+
+  mdtTtTestNode tn(0, pvDatabase);
+  QString sql;
+  QList<QSqlRecord> dbIoList;
+  int dbIoPos;
+  mdtAbstractIo *io;
+  bool ok;
+
+  // Get test schema position of each node units that are digital outputs - Order by IoPosition Ascending
+  sql = "SELECT SchemaPosition, IoPosition FROM TestNodeUnit_view WHERE TestNode_Id_FK = " + testNodeId.toString();
+  sql += " AND (Type_Code_FK = 'AO')";
+  sql += " AND IoPosition IS NOT NULL";
+  dbIoList = tn.getDataList<QSqlRecord>(sql, ok);
+  if(!ok){
+    pvLastError = tn.lastError();
     return false;
   }
-  /// \todo Match DB I/O position and device I/O position
-  // Set label for each digital output
-  Q_ASSERT(ios->digitalOutputsCount() >= ioLabelList.size());
-  for(i = 0; i < ioLabelList.size(); ++i){
-    Q_ASSERT(i < ios->digitalOutputs().size());
-    io = ios->digitalOutputs().at(i);
-    Q_ASSERT(io != 0);
-    io->setLabelShort(ioLabelList.at(i).toString());
+  // Update I/O labels
+  for(const auto & dbIo : dbIoList){
+    // Get database I/O position
+    dbIoPos = dbIo.value(1).toInt(&ok);
+    if(!ok){
+      pvLastError.setError(tr("Device '") + alias + tr("' could not get I/O position for '") + dbIo.value(0).toString(), mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNodeManager");
+      pvLastError.commit();
+      return false;
+    }
+    Q_ASSERT(dbIoPos >= 0);
+    // Update label
+    if(ios->analogOutputsCount() > dbIoPos){
+      io = ios->analogOutputs().at(dbIoPos);
+      Q_ASSERT(io != nullptr);
+      io->setLabelShort(dbIo.value(0).toString());
+    }else{
+      if(failOnIoMismatch){
+        pvLastError.setError(tr("Device '") + alias + tr("' I/O position of '") + dbIo.value(0).toString() + tr("' not exists on device."), mdtError::Error);
+        MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNodeManager");
+        pvLastError.commit();
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
+bool mdtTtTestNodeManager::setDigitalInputsLabelShort(std::shared_ptr<mdtDeviceIos> ios, const QVariant& testNodeId, const QString & alias, bool failOnIoMismatch)
+{
+  Q_ASSERT(ios);
+
+  mdtTtTestNode tn(0, pvDatabase);
+  QString sql;
+  QList<QSqlRecord> dbIoList;
+  int dbIoPos;
+  mdtAbstractIo *io;
+  bool ok;
+
+  // Get test schema position of each node units that are digital outputs - Order by IoPosition Ascending
+  sql = "SELECT SchemaPosition, IoPosition FROM TestNodeUnit_view WHERE TestNode_Id_FK = " + testNodeId.toString();
+  sql += " AND (Type_Code_FK = 'DI')";
+  sql += " AND IoPosition IS NOT NULL";
+  dbIoList = tn.getDataList<QSqlRecord>(sql, ok);
+  if(!ok){
+    pvLastError = tn.lastError();
+    return false;
+  }
+  // Update I/O labels
+  for(const auto & dbIo : dbIoList){
+    // Get database I/O position
+    dbIoPos = dbIo.value(1).toInt(&ok);
+    if(!ok){
+      pvLastError.setError(tr("Device '") + alias + tr("' could not get I/O position for '") + dbIo.value(0).toString(), mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNodeManager");
+      pvLastError.commit();
+      return false;
+    }
+    Q_ASSERT(dbIoPos >= 0);
+    // Update label
+    if(ios->digitalInputsCount() > dbIoPos){
+      io = ios->digitalInputs().at(dbIoPos);
+      Q_ASSERT(io != nullptr);
+      io->setLabelShort(dbIo.value(0).toString());
+    }else{
+      if(failOnIoMismatch){
+        pvLastError.setError(tr("Device '") + alias + tr("' I/O position of '") + dbIo.value(0).toString() + tr("' not exists on device."), mdtError::Error);
+        MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNodeManager");
+        pvLastError.commit();
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
+bool mdtTtTestNodeManager::setDigitalOutputsLabelShort(std::shared_ptr<mdtDeviceIos> ios, const QVariant& testNodeId, const QString & alias, bool failOnIoMismatch)
+{
+  Q_ASSERT(ios);
+
+  mdtTtTestNode tn(0, pvDatabase);
+  QString sql;
+  QList<QSqlRecord> dbIoList;
+  int dbIoPos;
+  mdtAbstractIo *io;
+  bool ok;
+
+  // Get test schema position of each node units that are digital outputs - Order by IoPosition Ascending
+  sql = "SELECT SchemaPosition, IoPosition FROM TestNodeUnit_view WHERE TestNode_Id_FK = " + testNodeId.toString();
+  sql += " AND (Type_Code_FK = 'BUSCPLREL' OR Type_Code_FK = 'CHANELREL')";
+  sql += " AND IoPosition IS NOT NULL";
+  dbIoList = tn.getDataList<QSqlRecord>(sql, ok);
+  if(!ok){
+    pvLastError = tn.lastError();
+    return false;
+  }
+  // Update I/O labels
+  for(const auto & dbIo : dbIoList){
+    // Get database I/O position
+    dbIoPos = dbIo.value(1).toInt(&ok);
+    if(!ok){
+      pvLastError.setError(tr("Device '") + alias + tr("' could not get I/O position for '") + dbIo.value(0).toString(), mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNodeManager");
+      pvLastError.commit();
+      return false;
+    }
+    Q_ASSERT(dbIoPos >= 0);
+    // Update label
+    if(ios->digitalOutputsCount() > dbIoPos){
+      io = ios->digitalOutputs().at(dbIoPos);
+      Q_ASSERT(io != nullptr);
+      io->setLabelShort(dbIo.value(0).toString());
+    }else{
+      if(failOnIoMismatch){
+        pvLastError.setError(tr("Device '") + alias + tr("' I/O position of '") + dbIo.value(0).toString() + tr("' not exists on device."), mdtError::Error);
+        MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNodeManager");
+        pvLastError.commit();
+        return false;
+      }
+    }
   }
 
   return true;

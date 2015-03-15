@@ -137,6 +137,16 @@ class mdtDevice : public QObject
     return pvDeviceAddress.alias();
   }
 
+  /*! \brief Get device identification string
+   *
+   * Can be used for error messages.
+   *  Returns a string with \"Device 'alias' : \"
+   */
+  QString deviceIdString() const
+  {
+    return tr("Device") + " '" + alias() + "' : ";
+  }
+
   /*! \brief Connect to physical device
    *
    * Connect to device set with setDeviceAddress().
@@ -239,16 +249,6 @@ class mdtDevice : public QObject
   void runQueries();
 
  protected:
-
-  /*! \brief Get device identification string
-   *
-   * Can be used for error messages.
-   *  Returns a string with \"Device 'alias' : \"
-   */
-  QString deviceIdString() const
-  {
-    return tr("Device") + " '" + alias() + "' : ";
-  }
 
   /*! \brief Last error object
    */

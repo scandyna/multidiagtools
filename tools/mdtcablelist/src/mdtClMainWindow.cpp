@@ -31,7 +31,6 @@
 #include "mdtClArticleEditor.h"
 ///#include "mdtTtTestCableEditor.h"
 #include "mdtTtLogicalTestCableEditor.h"
-#include "mdtTtTestNodeEditor.h"
 #include "mdtTtTestModelEditor.h"
 ///#include "mdtTtTestModelItemEditor.h"
 #include "mdtTtCableChecker.h"
@@ -523,30 +522,6 @@ void mdtClMainWindow::editSelectedTestConnectionCable()
 //   window->enableNavigation();
 //   window->raise();
 //   window->show();
-}
-
-void mdtClMainWindow::editTestNode()
-{
-  mdtTtTestNodeEditor *editor;
-  mdtSqlWindow *window;
-
-  // Get or create editor
-  editor = getTestNodeEditor();
-  if(editor == 0){
-    return;
-  }
-  // Get window
-  window = getEditorWindow(editor);
-  Q_ASSERT(window != 0);
-  // Select and show
-  Q_ASSERT(editor != 0);
-  if(!editor->select()){
-    displayError(editor->lastError());
-    return;
-  }
-  window->enableNavigation();
-  window->raise();
-  window->show();
 }
 
 void mdtClMainWindow::calibrateW750TestNode()
@@ -1080,34 +1055,6 @@ mdtClLinkBeamEditor *mdtClMainWindow::createLinkBeamEditor()
   return editor;
 }
 
-mdtTtTestNodeEditor *mdtClMainWindow::getTestNodeEditor()
-{
-  mdtTtTestNodeEditor *editor;
-
-  editor = getEditor<mdtTtTestNodeEditor>();
-  if(editor != 0){
-    return editor;
-  }else{
-    return createTestNodeEditor();
-  }
-}
-
-mdtTtTestNodeEditor *mdtClMainWindow::createTestNodeEditor()
-{
-  mdtTtTestNodeEditor *editor;
-  mdtSqlWindow *window;
-
-  editor = new mdtTtTestNodeEditor(0, pvDatabaseManager->database());
-  window = setupEditor(editor);
-  if(window == 0){
-    return 0;
-  }
-  window->setWindowTitle(tr("Test node edition"));
-  window->resize(800, 600);
-
-  return editor;
-}
-
 bool mdtClMainWindow::createTestConnectionCableTableView()
 {
   mdtSqlTableWidget *tableWidget;
@@ -1425,7 +1372,8 @@ void mdtClMainWindow::connectActions()
   connect(actDisconnectTestCable, SIGNAL(triggered()), this, SLOT(disconnectTestCable()));
   */
   // Test node edition
-  connect(actEditTestNode, SIGNAL(triggered()), this, SLOT(editTestNode()));
+  ///connect(actEditTestNode, SIGNAL(triggered()), this, SLOT(editTestNode()));
+  connect(actEditTestNode, SIGNAL(triggered()), mdtTtApplicationWidgets::instancePtr(), SLOT(slotEditTestNodes()));
   connect(actCalibrateW750_2BusNode, SIGNAL(triggered()), this, SLOT(calibrateW750TestNode()));
   // Test edition
   connect(actEditTest, SIGNAL(triggered()), this, SLOT(editTest()));

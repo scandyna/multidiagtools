@@ -1,6 +1,6 @@
-format 204
+format 209
 "mdttools" // mdttools
-  revision 13
+  revision 14
   modified_by 2 "philippe"
   // class settings
   
@@ -313,11 +313,11 @@ ${namespace_end}"
     associated_deployment_view deploymentview_ref 343810 // mdtModbusIoTool
     classdiagram 587906 "mdtModbusIoTool"
       classdiagramsettings draw_all_relations no member_max_width 0 end
-      size A4
+      size A4-Landscape
     end
 
     class 585730 "mdtModbusIoTool"
-      visibility package 
+      abstract visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
 ${inlines}
@@ -329,15 +329,6 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 744578 // pvDeviceModbusWago (<directional composition>)
-	relation 736130 *-->
-	  a role_name "pvDeviceModbusWago" multiplicity "1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 744578 // pvDeviceModbusWago (<directional composition>)
-	  b parent class_ref 532226 // mdtDeviceModbusWago
-      end
-
       classrelation 744834 // pvDeviceIosWidget (<directional composition>)
 	relation 736386 *-->
 	  a role_name "pvDeviceIosWidget" multiplicity "1" private
@@ -411,6 +402,44 @@ ${inlines}
 	
       end
 
+      operation 2466690 "setModbusDevice"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "device" type class_ref 518274 // mdtDeviceModbus
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2467074 "connectToDevice"
+	abstract cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 2467202 "disconnectFromDevice"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
       operation 1153922 "retranslate"
 	stereotype "slot"
 	public explicit_return_type "void"
@@ -426,14 +455,83 @@ ${inlines}
 	
       end
 
-      operation 1155074 "setStateFromPortManager"
+      operation 1154818 "showStatusMessage"
+	stereotype "slot"
+	protected explicit_return_type "void"
+	nparams 2
+	  param in name "message" type class_ref 161026 // QString
+	  param in name "timeout" explicit_type "int"
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1154946 "showStatusMessage"
+	stereotype "slot"
+	protected explicit_return_type "void"
+	nparams 3
+	  param in name "message" type class_ref 161026 // QString
+	  param in name "details" type class_ref 161026 // QString
+	  param in name "timeout" explicit_type "int"
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2466818 "connectToDeviceSlot"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2466946 "disconnectFromDeviceSlot"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1155074 "setState"
 	stereotype "slot"
 	private explicit_return_type "void"
 	nparams 1
-	  param in name "state" explicit_type "int"
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
+	  param in name "state" explicit_type "mdtDevice::State_t"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
   ${body}}
 "
 	
@@ -526,41 +624,6 @@ ${inlines}
 	
       end
 
-      operation 1154818 "showStatusMessage"
-	private explicit_return_type "void"
-	nparams 2
-	  param in name "message" type class_ref 161026 // QString
-	  param in name "timeout" explicit_type "int"
-	    defaultvalue "0"
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 1154946 "showStatusMessage"
-	private explicit_return_type "void"
-	nparams 3
-	  param in name "message" type class_ref 161026 // QString
-	  param in name "details" type class_ref 161026 // QString
-	  param in name "timeout" explicit_type "int"
-	    defaultvalue "0"
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
       attribute 673282 "pvReady"
 	private explicit_type "bool"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
@@ -571,6 +634,15 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+      end
+
+      classrelation 1934466 // pvDeviceModbus (<unidirectional association>)
+	relation 1918338 --->
+	  a role_name "pvDeviceModbus" multiplicity "0..1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1934466 // pvDeviceModbus (<unidirectional association>)
+	  b parent class_ref 518274 // mdtDeviceModbus
       end
     end
 

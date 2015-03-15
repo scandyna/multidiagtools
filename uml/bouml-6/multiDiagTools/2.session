@@ -1,12 +1,20 @@
-window_sizes 1280 996 271 1003 943 0
+window_sizes 1280 916 271 1003 863 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 587906 // mdtModbusIoTool
-    1003 943 100 4 0 0
+  classdiagram_ref 587906 // mdtModbusIoTool
+    1003 943 80 18 0 0
+  active  classdiagram_ref 1158530 // mdtTtTestNode
+    1003 863 90 4 12 0
 end
 show_stereotypes
-selected classdiagram_ref 587906 // mdtModbusIoTool
+selected operation_ref 2467458 // setModbusDevice
 open
-  classview_ref 405378 // mdtModbusIoTool
+  operation_ref 2467458 // setModbusDevice
+  classview_ref 563074 // mdtTbCoupler
+  operation_ref 2466690 // setModbusDevice
+  operation_ref 2467074 // connectToDevice
+  operation_ref 2467202 // disconnectFromDevice
+  operation_ref 1154818 // showStatusMessage
+  operation_ref 1154946 // showStatusMessage
 end
 end

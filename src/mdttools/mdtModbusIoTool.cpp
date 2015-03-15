@@ -70,16 +70,11 @@ mdtModbusIoTool::mdtModbusIoTool(QWidget *parent, Qt::WindowFlags flags)
     // Actions
   connect(action_Setup, SIGNAL(triggered()), this, SLOT(setup()));
   pvLanguageActionGroup = 0;
-  // Buttons
-  ///connect(pbConnect, SIGNAL(clicked()), this, SLOT(connectToNode()));
-  connect(actConnect, SIGNAL(triggered()), this, SLOT(connectToNode()));
-  ///connect(pbDisconnect, SIGNAL(clicked()), this, SLOT(disconnectFromNode()));
-  connect(actDisconnect, SIGNAL(triggered()), this, SLOT(disconnectFromNode()));
-  
-  ///actConnect->setVisible(false);
-  
+  // Connect/disconnect actions
+  connect(actConnect, SIGNAL(triggered()), this, SLOT(connectToDeviceSlot()));
+  connect(actDisconnect, SIGNAL(triggered()), this, SLOT(disconnectFromDeviceSlot()));
 //   connect(pbAbortScan, SIGNAL(clicked()), pvDeviceModbus->modbusTcpPortManager(), SLOT(abortScan()));
-  setWindowTitle(tr("MODBUS I/O tool for Wago 750"));
+  setWindowTitle(tr("MODBUS I/O tool"));
 //   pvDeviceModbus->portManager()->notifyCurrentState();
   // Start periodic inputs query (will only start once device is ready, see mdtDevice doc for details)
 //   pvDeviceModbus->start(100);
@@ -133,28 +128,6 @@ void mdtModbusIoTool::setState(mdtDevice::State_t state)
       setStateError();
       break;
   }
-  ///qDebug() << "mdtModbusIoTool - new state: " << pvDeviceModbusWago->currentState() << " ...";
-//   switch((mdtPortManager::state_t)state){
-//     case mdtPortManager::PortClosed:
-//       setStatePortClosed();
-//       break;
-//     case mdtPortManager::Disconnected:
-//       setStateDisconnected();
-//       break;
-//     case mdtPortManager::Connecting:
-//       setStateConnecting();
-//       break;
-//     case mdtPortManager::Ready:
-//       setStateReady();
-//       break;
-//     case mdtPortManager::Busy:
-//       setStateBusy();
-//       break;
-//     case mdtPortManager::PortError:
-//       setStateError();
-//       break;
-//   }
-  ///qDebug() << "mdtModbusIoTool - new state: " << pvDeviceModbusWago->currentState();
 }
 
 void mdtModbusIoTool::setModbusDevice(const std::shared_ptr<mdtDeviceModbus> & device)
@@ -164,7 +137,7 @@ void mdtModbusIoTool::setModbusDevice(const std::shared_ptr<mdtDeviceModbus> & d
   /*
    * If we allready have a device,
    *  disconnect from physical decvice,
-   *  diconnect signals/slots first
+   *  and diconnect signals/slots first
    */
   if(pvDeviceModbus){
     pvDeviceModbus->disconnectFromDevice();
@@ -185,6 +158,60 @@ void mdtModbusIoTool::setModbusDevice(const std::shared_ptr<mdtDeviceModbus> & d
   /// \todo Clarify and implement
 //   pvDeviceModbus->start(100);
 
+}
+
+bool mdtModbusIoTool::connectToDevice()
+{
+  Q_ASSERT(pvDeviceModbus);
+
+  mdtModbusHwNodeId hwNodeId;
+  mdtModbusTcpPortManager *m = pvDeviceModbus->modbusTcpPortManager();
+  Q_ASSERT(m != 0);
+
+  if(!m->isClosed()){
+    showStatusMessage(tr("Please disconnect before reconnect"), 3000);
+    return false;
+  }
+  // Update GUI state
+  setStateConnectingToNode();
+  // Try to find and connect to device
+  hwNodeId.setId(sbHwNodeId->value(), 8, 0);
+  if(!pvDeviceModbus->connectToDevice(hwNodeId, "Wago 750 I/O", 100, 502)){
+    pvStatusWidget->setPermanentText(tr("Device with HW node ID ") + QString::number(sbHwNodeId->value()) + tr(" not found"));
+    setStateConnectingToNodeFinished();
+    return false;
+  }
+  showStatusMessage(tr("I/O detection ..."));
+  if(!pvDeviceModbus->detectIos()){
+    QString details = tr("This probably caused by presence of a unsupported module.");
+    details += tr("Take a look at log file for more details.");
+    details += "\n" + tr("Path to log file: ");
+    details += mdtErrorOut::logFile();
+    showStatusMessage(tr("I/O detection failed"), details);
+    pvDeviceModbus->disconnectFromDevice();
+    setStateConnectingToNodeFinished();
+    emit errorEvent();
+    return false;
+  }
+  pvDeviceModbus->ios()->setIosDefaultLabelShort();
+  pvDeviceIosWidget->setDeviceIos(pvDeviceModbus->ios());
+  pvDeviceModbus->getDigitalOutputs(0);
+  showStatusMessage(tr("I/O detection done"), 1000);
+  ///pbAbortScan->setEnabled(false);
+  pvStatusDeviceInformations = tr("Connected to device with HW node ID ") + QString::number(sbHwNodeId->value());
+  setStateConnectingToNodeFinished();
+  ///pvStatusWidget->setPermanentText(tr("Connected to device with HW node ID ") + QString::number(sbHwNodeId->value()));
+
+  return true;
+}
+
+void mdtModbusIoTool::disconnectFromDevice()
+{
+  ///pvStatusWidget->clearMessage();
+  if(pvDeviceModbus){
+    pvDeviceModbus->disconnectFromDevice();
+  }
+  ///pvDeviceIosWidget->clearIoWidgets();
 }
 
 void mdtModbusIoTool::updateIosWidget()
@@ -232,56 +259,14 @@ void mdtModbusIoTool::setup()
   }
 }
 
-void mdtModbusIoTool::connectToNode()
+void mdtModbusIoTool::connectToDeviceSlot()
 {
-  Q_ASSERT(pvDeviceModbus);
-
-  mdtModbusHwNodeId hwNodeId;
-  mdtModbusTcpPortManager *m = pvDeviceModbus->modbusTcpPortManager();
-  Q_ASSERT(m != 0);
-
-  if(!m->isClosed()){
-    showStatusMessage(tr("Please disconnect before reconnect"), 3000);
-    return;
-  }
-  // Update GUI state
-  setStateConnectingToNode();
-  // Try to find and connect to device
-  hwNodeId.setId(sbHwNodeId->value(), 8, 0);
-  if(!pvDeviceModbus->connectToDevice(hwNodeId, "Wago 750 I/O", 100, 502)){
-    pvStatusWidget->setPermanentText(tr("Device with HW node ID ") + QString::number(sbHwNodeId->value()) + tr(" not found"));
-    setStateConnectingToNodeFinished();
-    return;
-  }
-  showStatusMessage(tr("I/O detection ..."));
-  if(!pvDeviceModbus->detectIos()){
-    QString details = tr("This probably caused by presence of a unsupported module.");
-    details += tr("Take a look at log file for more details.");
-    details += "\n" + tr("Path to log file: ");
-    details += mdtErrorOut::logFile();
-    showStatusMessage(tr("I/O detection failed"), details);
-    pvDeviceModbus->disconnectFromDevice();
-    setStateConnectingToNodeFinished();
-    emit errorEvent();
-    return;
-  }
-  pvDeviceModbus->ios()->setIosDefaultLabelShort();
-  pvDeviceIosWidget->setDeviceIos(pvDeviceModbus->ios());
-  pvDeviceModbus->getDigitalOutputs(0);
-  showStatusMessage(tr("I/O detection done"), 1000);
-  ///pbAbortScan->setEnabled(false);
-  pvStatusDeviceInformations = tr("Connected to device with HW node ID ") + QString::number(sbHwNodeId->value());
-  setStateConnectingToNodeFinished();
-  ///pvStatusWidget->setPermanentText(tr("Connected to device with HW node ID ") + QString::number(sbHwNodeId->value()));
+  connectToDevice();
 }
 
-void mdtModbusIoTool::disconnectFromNode()
+void mdtModbusIoTool::disconnectFromDeviceSlot()
 {
-  pvStatusWidget->clearMessage();
-  if(pvDeviceModbus){
-    pvDeviceModbus->disconnectFromDevice();
-  }
-  pvDeviceIosWidget->clearIoWidgets();
+  disconnectFromDevice();
 }
 
 void mdtModbusIoTool::showStatusMessage(const QString & message, int timeout)
@@ -316,20 +301,20 @@ void mdtModbusIoTool::setStateConnectingToNodeFinished()
   pvDeviceModbus->portManager()->notifyCurrentState();
 }
 
-void mdtModbusIoTool::setStatePortClosed()
-{
-  qDebug() << " o Set state port closed ..";
-  
-  if(!pvConnectingToNode){
-    ///pbDisconnect->setEnabled(false);
-    actDisconnect->setEnabled(false);
-    pbAbortScan->setEnabled(false);
-    ///pbConnect->setEnabled(true);
-    actConnect->setEnabled(true);
-    sbHwNodeId->setEnabled(true);
-    pvStatusWidget->setPermanentText("");
-  }
-}
+// void mdtModbusIoTool::setStatePortClosed()
+// {
+//   qDebug() << " o Set state port closed ..";
+//   
+//   if(!pvConnectingToNode){
+//     ///pbDisconnect->setEnabled(false);
+//     actDisconnect->setEnabled(false);
+//     pbAbortScan->setEnabled(false);
+//     ///pbConnect->setEnabled(true);
+//     actConnect->setEnabled(true);
+//     sbHwNodeId->setEnabled(true);
+//     pvStatusWidget->setPermanentText("");
+//   }
+// }
 
 void mdtModbusIoTool::setStateDisconnected()
 {
@@ -343,6 +328,7 @@ void mdtModbusIoTool::setStateDisconnected()
     actConnect->setEnabled(true);
     sbHwNodeId->setEnabled(true);
     pvStatusWidget->setPermanentText("");
+    pvDeviceIosWidget->clearIoWidgets();
   }
 }
 

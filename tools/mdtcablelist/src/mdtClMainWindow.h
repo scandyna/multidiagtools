@@ -37,7 +37,7 @@ class mdtClUnitEditor;
 class mdtClWireEditor;
 class mdtClConnectorEditor;
 class mdtClArticleEditor;
-class mdtTtTestNodeEditor;
+
 class mdtTtTestModelEditor;
 ///class mdtTtTestModelItemEditor;
 class mdtSqlWindow;
@@ -158,10 +158,6 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   /*! \brief Edit link beam
    */
   void editLinkBeam();
-
-  /*! \brief Edit test node
-   */
-  void editTestNode();
 
   /*! \brief Calibrate W750 test node
    */
@@ -292,14 +288,6 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   /*! \brief Create link beam editor
    */
   mdtClLinkBeamEditor *createLinkBeamEditor();
-
-  /*! \brief Get test node editor
-   */
-  mdtTtTestNodeEditor *getTestNodeEditor();
-
-  /*! \brief Create test node editor
-   */
-  mdtTtTestNodeEditor *createTestNodeEditor();
 
   /*! \brief Create test connection cable view
    */

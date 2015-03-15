@@ -1202,12 +1202,20 @@ void mdtMultiIoDevice::enableIos()
 {
   Q_ASSERT(pvIos);
 
-  getAnalogInputs(true);
-  getAnalogOutputs(true);
-  pvIos->setAnalogOutputsEnabled(true);
-  getDigitalInputs(true);
-  getDigitalOutputs(true);
-  pvIos->setDigitalOutputsEnabled(true);
+  if(pvIos->analogInputsCount() > 0){
+    getAnalogInputs(true);
+  }
+  if(pvIos->analogOutputsCount() > 0){
+    getAnalogOutputs(true);
+    pvIos->setAnalogOutputsEnabled(true);
+  }
+  if(pvIos->digitalInputsCount() > 0){
+    getDigitalInputs(true);
+  }
+  if(pvIos->digitalOutputsCount() > 0){
+    getDigitalOutputs(true);
+    pvIos->setDigitalOutputsEnabled(true);
+  }
 }
 
 void mdtMultiIoDevice::disableIos()

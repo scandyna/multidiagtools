@@ -57,7 +57,6 @@ class mdtDeviceContainer : public QObject
   std::shared_ptr<T> addDevice(const mdtDeviceAddress & address)
   {
     std::shared_ptr<T> dev(new T);
-
     dev->setDeviceAddress(address);
     pvDevices.push_back(dev);
     emit deviceAdded(dev);

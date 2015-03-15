@@ -462,7 +462,7 @@ bool mdtTtTestCableOffsetTool::connectToInstruments()
     return false;
   }
   // Set short labels to coupler units
-  if(!pvTestNodeManager->setDeviceIosLabelShort("W750")){
+  if(!pvTestNodeManager->setDeviceIosLabelShort("W750", true)){
     pvLastError = pvTestNodeManager->lastError();
     disconnectFromInstruments();
     return false;
