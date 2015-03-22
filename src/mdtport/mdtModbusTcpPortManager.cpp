@@ -102,7 +102,12 @@ mdtDeviceAddressList mdtModbusTcpPortManager::scan(const QList<mdtNetworkHost> &
       deviceAddressList.append(deviceAddress);
       // If we found all expected devices, we can finish scanning here
       if(deviceAddressList.size() == expectedHwNodeAddresses.size()){
-        return deviceAddressList;
+        for(const auto & da : deviceAddressList.internalVector()){
+          if(expectedHwNodeAddresses.contains(da.modbusHwNodeId())){
+            return deviceAddressList;
+          }
+        }
+        ///return deviceAddressList;
       }
     }
   }

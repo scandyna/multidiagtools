@@ -36,8 +36,9 @@ bool mdtTtTestNodeModbusIoTool::setModbusDevice(const QString & deviceAlias)
   // Get modbus device from global container
   auto device = pvTestNodeManager->device<mdtDeviceModbus>(deviceAlias);
   if(!device){
-    ///showStatusMessage(tr("No device with alias '") + deviceAlias + tr("' is available in global device container."));
-    qDebug() << "mdtTtTestNodeModbusIoTool::setModbusDevice(): device with alias " << deviceAlias << " not found in global device container";
+    pvLastError.setError(tr("Device with alias '") + deviceAlias + tr("' not found in global device container."), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNodeModbusIoTool");
+    pvLastError.commit();
     return false;
   }
   mdtModbusIoTool::setModbusDevice(device);
@@ -55,35 +56,28 @@ bool mdtTtTestNodeModbusIoTool::connectToDevice()
   setStateConnectingToNode();
   // Try to find and connect to device
   if(!pvDeviceModbus->connectToDevice()){
-    ///pvStatusWidget->setPermanentText(tr("Device with HW node ID ") + QString::number(sbHwNodeId->value()) + tr(" not found"));
+    pvLastError = pvDeviceModbus->lastError();
     setStateConnectingToNodeFinished();
     return false;
   }
   showStatusMessage(tr("I/O detection ..."));
   if(!pvDeviceModbus->detectIos()){
-    QString details = tr("This probably caused by presence of a unsupported module.");
-    showStatusMessage(tr("I/O detection failed"), details);
-    pvDeviceModbus->disconnectFromDevice();
+    pvLastError = pvDeviceModbus->lastError();
     setStateConnectingToNodeFinished();
-    emit errorEvent();
     return false;
   }
   // Set I/O short labels
   if(!pvTestNodeManager->setDeviceIosLabelShort(pvDeviceModbus->alias(), false)){
-    /// \todo display error
-    qDebug() << "mdtTtTestNodeModbusIoTool::connectToDevice(): " << pvTestNodeManager->lastError().text();
+    pvLastError = pvTestNodeManager->lastError();
     pvDeviceModbus->disconnectFromDevice();
+    setStateConnectingToNodeFinished();
     return false;
   }
-  ///pvDeviceModbus->ios()->setIosDefaultLabelShort();
-  ///pvDeviceIosWidget->setDeviceIos(pvDeviceModbus->ios());
   updateIosWidget();
-  pvDeviceModbus->getDigitalOutputs(0);
   showStatusMessage(tr("I/O detection done"), 1000);
-  ///pbAbortScan->setEnabled(false);
-  ///pvStatusDeviceInformations = tr("Connected to device with HW node ID ") + QString::number(sbHwNodeId->value());
   setStateConnectingToNodeFinished();
-  ///pvStatusWidget->setPermanentText(tr("Connected to device with HW node ID ") + QString::number(sbHwNodeId->value()));
+  // Start periodic inputs querying
+  pvDeviceModbus->start(100);
 
   return true;
 }

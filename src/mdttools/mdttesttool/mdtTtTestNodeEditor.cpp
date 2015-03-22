@@ -786,41 +786,18 @@ bool mdtTtTestNodeEditor::setupTestNodeUnitTable()
   mdtSqlRelationInfo relationInfo;
 
   relationInfo.setChildTableName("TestNodeUnit_view");
-  ///relationInfo.addRelation("VehicleType_Id_FK_PK", "TestNode_Id_FK", false);
   relationInfo.addRelation("Id_PK", "TestNode_Id_FK", false);
   if(!addChildTable(relationInfo, tr("Units"))){
     return false;
   }
-  /**
-  if(!addChildTable("TestNodeUnit_view", tr("Units"), database())){
-    return false;
-  }
-  if(!addRelation("VehicleType_Id_FK_PK", "TestNodeUnit_view", "TestNode_Id_FK")){
-    return false;
-  }
-  */
   widget = sqlTableWidget("TestNodeUnit_view");
   Q_ASSERT(widget != 0);
   // Hide technical fields
   widget->setColumnHidden("Unit_Id_FK_PK", true);
   widget->setColumnHidden("TestNode_Id_FK", true);
-  ///widget->setColumnHidden("Type_Code_FK", true);
-  ///widget->setColumnHidden("TestConnection_Id_FK", true);
-  ///widget->setColumnHidden("", true);
-  // Set fields a user friendly name
-  widget->setHeaderData("SchemaPosition", tr("Schema\nposition"));
-  widget->setHeaderData("IoPosition", tr("I/O\npos."));
-  widget->setHeaderData("UnitConnectorName", tr("Connector"));
-  widget->setHeaderData("UnitContactName", tr("Contact"));
-  widget->setHeaderData("SignalName", tr("Signal name"));
-  widget->setHeaderData("FunctionEN", tr("Function (ENG)"));
-  widget->setHeaderData("FunctionFR", tr("Function (FRA)"));
-  widget->setHeaderData("FunctionDE", tr("Function (DEU)"));
-  widget->setHeaderData("FunctionIT", tr("Function (ITA)"));
-  widget->setHeaderData("NameEN", tr("Type (ENG)"));
-  widget->setHeaderData("NameFR", tr("Type (FRA)"));
-  widget->setHeaderData("NameDE", tr("Type (DEU)"));
-  widget->setHeaderData("NameIT", tr("Type (ITA)"));
+  widget->setColumnHidden("Type_Code_FK", true);
+  // Set fields some user friendly name
+  updateTestNodeUnitTable(QLocale());
   // Set some attributes on table view
   widget->addColumnToSortOrder("Type_Code_FK", Qt::AscendingOrder);
   widget->addColumnToSortOrder("IoPosition", Qt::AscendingOrder);
@@ -847,6 +824,70 @@ bool mdtTtTestNodeEditor::setupTestNodeUnitTable()
   widget->addStretchToLocalBar();
 
   return true;
+}
+
+void mdtTtTestNodeEditor::updateTestNodeUnitTable(const QLocale & locale)
+{
+  auto widget = sqlTableWidget("TestNodeUnit_view");
+  Q_ASSERT(widget != nullptr);
+  // Set fields a user friendly name (using tr() )
+  widget->setHeaderData("SchemaPosition", tr("Schema\nposition"));
+  widget->setHeaderData("IoPosition", tr("I/O\npos."));
+  widget->setHeaderData("UnitConnectorName", tr("Connector"));
+  widget->setHeaderData("UnitContactName", tr("Contact"));
+  widget->setHeaderData("SignalName", tr("Signal name"));
+  widget->setHeaderData("Manufacturer", tr("Manufacturer"));
+  widget->setHeaderData("ManufacturerCode", tr("Manufacturer\narticle code"));
+  // Select Designation and Name fields regarding language
+  switch(locale.language()){
+    case QLocale::French:
+      // Designation fields
+      widget->setColumnHidden("DesignationEN", true);
+      widget->setColumnHidden("DesignationDE", true);
+      widget->setColumnHidden("DesignationIT", true);
+      widget->setHeaderData("DesignationFR", tr("Designation"));
+      // Name fields
+      widget->setColumnHidden("NameEN", true);
+      widget->setColumnHidden("NameDE", true);
+      widget->setColumnHidden("NameIT", true);
+      widget->setHeaderData("NameFR", tr("Type"));
+      break;
+    case QLocale::German:
+      // Designation fields
+      widget->setColumnHidden("DesignationEN", true);
+      widget->setColumnHidden("DesignationFR", true);
+      widget->setColumnHidden("DesignationIT", true);
+      widget->setHeaderData("DesignationDE", tr("Designation"));
+      // Name fields
+      widget->setColumnHidden("NameEN", true);
+      widget->setColumnHidden("NameFR", true);
+      widget->setColumnHidden("NameIT", true);
+      widget->setHeaderData("NameDE", tr("Type"));
+      break;
+    case QLocale::Italian:
+      // Designation fields
+      widget->setColumnHidden("DesignationFR", true);
+      widget->setColumnHidden("DesignationDE", true);
+      widget->setColumnHidden("DesignationEN", true);
+      widget->setHeaderData("DesignationIT", tr("Designation"));
+      // Name fields
+      widget->setColumnHidden("NameFR", true);
+      widget->setColumnHidden("NameDE", true);
+      widget->setColumnHidden("NameEN", true);
+      widget->setHeaderData("NameIT", tr("Type"));
+      break;
+    default:
+      // Designation fields
+      widget->setColumnHidden("DesignationFR", true);
+      widget->setColumnHidden("DesignationDE", true);
+      widget->setColumnHidden("DesignationIT", true);
+      widget->setHeaderData("DesignationEN", tr("Designation"));
+      // Name fields
+      widget->setColumnHidden("NameFR", true);
+      widget->setColumnHidden("NameDE", true);
+      widget->setColumnHidden("NameIT", true);
+      widget->setHeaderData("NameEN", tr("Type"));
+  }
 }
 
 bool mdtTtTestNodeEditor::setupTestNodeBusTable()
@@ -889,6 +930,7 @@ bool mdtTtTestNodeEditor::setupTestNodeUnitConnectionTable()
   QPushButton *pbSetBus;
   QPushButton *pbUnsetBus;
   mdtSqlRelationInfo relationInfo;
+  QStringList languageFieldsToHide;
 
   relationInfo.setChildTableName("TestNodeUnitConnection_view");
   ///relationInfo.addRelation("VehicleType_Id_FK_PK", "TestNode_Id_FK", false);
@@ -912,6 +954,8 @@ bool mdtTtTestNodeEditor::setupTestNodeUnitConnectionTable()
   widget->setColumnHidden("UnitConnection_Id_FK_PK", true);
   widget->setColumnHidden("TestNodeUnit_Id_FK", true);
   widget->setColumnHidden("TestNodeBus_Id_FK", true);
+  // Hide some filds regarding current language
+  
 
   // Set fields a user friendly name
   widget->setHeaderData("SchemaPosition", tr("Schema\nposition"));

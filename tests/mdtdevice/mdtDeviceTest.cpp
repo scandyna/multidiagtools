@@ -1808,6 +1808,17 @@ void mdtDeviceTest::modbusTest()
   d.disconnectFromDevice();
   QVERIFY(d.currentState() == mdtDevice::State_t::Disconnected);
   /*
+   * Check setDeviceAddress() and connectToDevice()
+   *  -> Case with same host than above,  but giving a wrong MODBUS HW node ID
+   */
+  // Update device address
+  da.setModbusTcpIdentification(host, 502, mdtModbusHwNodeId(1, 2, 0));
+  da.setAlias("NodeB2");
+  d.setDeviceAddress(da);
+  // Connect to device
+  QVERIFY(!d.connectToDevice());
+  QVERIFY(d.currentState() == mdtDevice::State_t::Disconnected);
+  /*
    * Try to connect to first device that has hardware node ID 0
    */
   QVERIFY(d.connectToDevice(mdtModbusHwNodeId(0,2,0), "NodeC", 100));
@@ -1826,6 +1837,11 @@ void mdtDeviceTest::modbusTest()
   QCOMPARE(d.alias(), QString("NodeD"));
   // Disconnect
   d.disconnectFromDevice();
+  QVERIFY(d.currentState() == mdtDevice::State_t::Disconnected);
+  /*
+   * Try to connect to first device that has hardware node ID 3, assuming it not exists on network
+   */
+  QVERIFY(!d.connectToDevice(mdtModbusHwNodeId(3,2,0), "NodeD2", 100));
   QVERIFY(d.currentState() == mdtDevice::State_t::Disconnected);
   /*
    * Check setDeviceAddress() and connectToDevice()

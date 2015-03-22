@@ -341,11 +341,6 @@ void mdtPortManagerTest::modbusTcpPortTest()
   mdtModbusTcpPortManager m;
   mdtDeviceAddress da;
   mdtDeviceAddressList deviceAddresses, deviceAddresses2;
-//   QList<mdtPortInfo*> portInfoList;
-//   QList<mdtPortInfo*> portInfoList2;
-//   mdtPortInfo validPortInfo;
-//   mdtPortInfo invalidPortInfo;
-//  QStringList hosts;
   mdtFrameCodecModbus codec;
   QByteArray pdu;
   QHash<quint16, QByteArray> pdus;
@@ -353,7 +348,6 @@ void mdtPortManagerTest::modbusTcpPortTest()
   QString ipLeftPart;
   QString ipRightPart;
   QStringList ipParts;
-//  QString portName;
   bool found;
   mdtPortTransaction *transaction;
 
@@ -362,11 +356,11 @@ void mdtPortManagerTest::modbusTcpPortTest()
 
   qDebug() << "* A MODBUS/TCP compatible device must be attached, else test will fail *";
 
-  // Try to scan all network interfaces (except the loopback) + check abort
+  /*
+   * Try to scan all network interfaces (except the loopback) + check abort
+   */
   QTimer::singleShot(100, &m, SLOT(abortScan()));
   qDebug() << "mdtPortManagerTest::modbusTcpPortTest(): scanning network ...";
-  ///portInfoList = m.scan(QNetworkInterface::allInterfaces(), 502, 100);
-  ///QCOMPARE(portInfoList.size(), 0);
   deviceAddresses = m.scan(QNetworkInterface::allInterfaces(), 502, true, 100);
   QCOMPARE(deviceAddresses.size(), 0);
   // Scan again

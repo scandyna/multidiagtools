@@ -449,18 +449,18 @@ void mdtDeviceModbus::setStateFromPortManager ( int portManagerState )
   }
 }
 
-bool mdtDeviceModbus::queriesSequence()
-{
-  ///qDebug() << "mdtDeviceModbus::queriesSequence() ...";
-  if(getAnalogInputs(true) < 0){
-    return false;
-  }
-  if(getDigitalInputs(true) < 0){
-    return false;
-  }
-
-  return true;
-}
+// bool mdtDeviceModbus::queriesSequence()
+// {
+//   ///qDebug() << "mdtDeviceModbus::queriesSequence() ...";
+//   if(getAnalogInputs(true) < 0){
+//     return false;
+//   }
+//   if(getDigitalInputs(true) < 0){
+//     return false;
+//   }
+// 
+//   return true;
+// }
 
 int mdtDeviceModbus::readAnalogInput(mdtPortTransaction *transaction)
 {
@@ -701,8 +701,17 @@ mdtDeviceAddress mdtDeviceModbus::searchDeviceWithModbusHwNodeId(const mdtModbus
    * it's not a problem for all the rest
    */
   pvTcpPortManager->saveDeviceAddressList(daList);
+  // Search device with requested MODBUS HW node ID
+  for(const auto & da : daList.internalVector()){
+    if(da.modbusHwNodeId().id() == hwNodeId.id()){
+      return da;
+    }
+  }
+  pvLastError.setError(tr("Could not find a MODBUS/TCP device with hardware node ID ") + QString::number(hwNodeId.id()), mdtError::Error);
+  MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceModbus");
+  pvLastError.commit();
 
-  return daList.at(0);
+  return mdtDeviceAddress();
 }
 
 void mdtDeviceModbus::disconnectFromDeviceEvent()

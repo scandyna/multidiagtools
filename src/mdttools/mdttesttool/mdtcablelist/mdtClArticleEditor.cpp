@@ -508,14 +508,14 @@ void mdtClArticleEditor::addLink()
   mdtClArticle art(this, database());
 
   // Check if some connection exists
-  ///if(rowCount("ArticleConnection_view") < 1){
+  if(rowCount("ArticleConnection_view") < 1){
     QMessageBox msgBox;
     msgBox.setText(tr("There is no connection available for current article"));
     msgBox.setInformativeText(tr("You must add connections to be able to link them"));
     msgBox.setIcon(QMessageBox::Warning);
     msgBox.exec();
     return;
-  ///}
+  }
   // Setup and show dialog
   if(dialog.exec() != QDialog::Accepted){
     return;

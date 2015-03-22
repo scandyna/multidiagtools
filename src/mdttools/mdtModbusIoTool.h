@@ -21,6 +21,7 @@
 #ifndef MDT_MODBUS_IO_TOOL_H
 #define MDT_MODBUS_IO_TOOL_H
 
+#include "mdtError.h"
 #include "ui_mdtModbusIoTool.h"
 #include "mdtDevice.h"
 #include <QMainWindow>
@@ -67,13 +68,17 @@ class mdtModbusIoTool : public QMainWindow, public Ui::mdtModbusIoTool
    */
   virtual void disconnectFromDevice();
 
-  /// \todo Essai...
-  void updateIosWidget();
+  /*! \brief Get last error
+   */
+  mdtError lastError() const
+  {
+    return pvLastError;
+  }
 
-signals:
-  
-  void errorEvent();
-  
+//  signals:
+// 
+//   void errorEvent();
+
  public slots:
 
   /*! \brief Retranslate
@@ -109,12 +114,26 @@ signals:
 
  protected:
 
+  /*! \brief Update I/O widget with those set in pvDeviceModbus
+   */
+  void updateIosWidget();
+
+  /*! \brief Last error object
+   */
+  mdtError pvLastError;
+
+  /*! \brief Display last error in a message box
+   */
+  void displayLastError();
+
   /*! \brief Used to show a message in status bar
    *
    * \param message Message to show
    * \param timeout If > 0, message will be cleared after timeout [ms]
    */
   void showStatusMessage(const QString &message, int timeout = 0);
+
+ protected slots:
 
   /*! \brief Used to show a message in status bar
    *
@@ -123,6 +142,10 @@ signals:
    * \param timeout If > 0, message will be cleared after timeout [ms]
    */
   void showStatusMessage(const QString &message, const QString &details, int timeout = 0);
+
+  /*! \brief Abort network scanning
+   */
+  void abortScan();
 
  protected:
 
@@ -146,10 +169,6 @@ signals:
 
   /*! \brief Set the disconnected state
    */
-//  void setStatePortClosed();
-
-  /*! \brief Set the disconnected state
-   */
   void setStateDisconnected();
 
   /*! \brief Set the connecting state
@@ -170,11 +189,9 @@ signals:
 
  private:
 
-  bool pvReady; /// \todo Ok ???
+  ///bool pvReady; /// \todo Ok ???
   bool pvConnectingToNode;
-  ///mdtDeviceModbusWago *pvDeviceModbusWago;
-  ///mdtDeviceModbus *pvDeviceModbusWago;
-  
+
   mdtDeviceIosWidget *pvDeviceIosWidget;
   mdtPortStatusWidget *pvStatusWidget;
   QString pvStatusDeviceInformations;   // Used to display informations about device in permanent area of status widget

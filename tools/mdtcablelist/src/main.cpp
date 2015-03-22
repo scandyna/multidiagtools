@@ -39,7 +39,7 @@
 int main(int argc, char **argv)
 {
   mdtApplication app(argc, argv);
-  QSqlDatabase db;
+  ///QSqlDatabase db;
   QString password;
   int retVal;
   // Terminal block editor
@@ -66,7 +66,7 @@ int main(int argc, char **argv)
   window.show();
 
   retVal = app.exec();
-  db.close();
+  ///db.close();
   gdc->clear();
 
   return retVal;

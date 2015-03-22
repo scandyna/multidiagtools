@@ -1198,6 +1198,17 @@ void mdtMultiIoDevice::stateChangedEvent(mdtDevice::State_t newState)
   }
 }
 
+bool mdtMultiIoDevice::queriesSequence()
+{
+  if(!getAnalogInputs()){
+    return false;
+  }
+  if(!getDigitalInputs()){
+    return false;
+  }
+  return true;
+}
+
 void mdtMultiIoDevice::enableIos()
 {
   Q_ASSERT(pvIos);

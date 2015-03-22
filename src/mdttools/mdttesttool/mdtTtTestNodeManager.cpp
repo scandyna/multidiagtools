@@ -91,6 +91,7 @@ bool mdtTtTestNodeManager::setDeviceIosLabelShort(const QString & alias, bool fa
   return true;
 }
 
+/// \todo failOnIoMismatch implemented wrong
 bool mdtTtTestNodeManager::setAnalogInputsLabelShort(shared_ptr< mdtDeviceIos > ios, const QVariant& testNodeId, const QString & alias, bool failOnIoMismatch)
 {
   Q_ASSERT(ios);
@@ -140,6 +141,7 @@ bool mdtTtTestNodeManager::setAnalogInputsLabelShort(shared_ptr< mdtDeviceIos > 
   return true;
 }
 
+/// \todo failOnIoMismatch implemented wrong
 bool mdtTtTestNodeManager::setAnalogOutputsLabelShort(shared_ptr< mdtDeviceIos > ios, const QVariant& testNodeId, const QString & alias, bool failOnIoMismatch)
 {
   Q_ASSERT(ios);
@@ -189,6 +191,7 @@ bool mdtTtTestNodeManager::setAnalogOutputsLabelShort(shared_ptr< mdtDeviceIos >
   return true;
 }
 
+/// \todo failOnIoMismatch implemented wrong
 bool mdtTtTestNodeManager::setDigitalInputsLabelShort(std::shared_ptr<mdtDeviceIos> ios, const QVariant& testNodeId, const QString & alias, bool failOnIoMismatch)
 {
   Q_ASSERT(ios);
@@ -238,6 +241,7 @@ bool mdtTtTestNodeManager::setDigitalInputsLabelShort(std::shared_ptr<mdtDeviceI
   return true;
 }
 
+/// \todo failOnIoMismatch implemented wrong
 bool mdtTtTestNodeManager::setDigitalOutputsLabelShort(std::shared_ptr<mdtDeviceIos> ios, const QVariant& testNodeId, const QString & alias, bool failOnIoMismatch)
 {
   Q_ASSERT(ios);

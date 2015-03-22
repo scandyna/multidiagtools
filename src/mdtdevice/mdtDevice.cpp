@@ -77,9 +77,9 @@ void mdtDevice::start(int queryInterval)
 {
   pvQueryTimer->setInterval(queryInterval);
   pvAutoQueryEnabled = true;
-  if(isReady()){
+  ///if(isReady()){
     pvQueryTimer->start();
-  }
+  ///}
 }
 
 void mdtDevice::stop()

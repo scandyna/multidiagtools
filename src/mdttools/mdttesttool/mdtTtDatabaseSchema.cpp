@@ -3614,12 +3614,21 @@ bool mdtTtDatabaseSchema::createTestNodeUnitView()
         "TNUT.NameEN,\n"\
         "TNUT.NameFR,\n"\
         "TNUT.NameDE,\n"\
-        "TNUT.NameIT\n"\
+        "TNUT.NameIT,\n"\
+        "A.Manufacturer,\n"\
+        "A.ManufacturerCode,\n"\
+        "A.ArticleCode,\n"\
+        "A.DesignationEN,\n"\
+        "A.DesignationFR,\n"\
+        "A.DesignationDE,\n"\
+        "A.DesignationIT\n"\
         "FROM TestNodeUnit_tbl TNU\n"\
         " JOIN Unit_tbl U\n"\
         "  ON U.Id_PK = TNU.Unit_Id_FK_PK\n"\
         " JOIN TestNodeUnitType_tbl TNUT\n"\
-        "  ON TNUT.Code_PK = TNU.Type_Code_FK";
+        "  ON TNUT.Code_PK = TNU.Type_Code_FK\n"\
+        " JOIN Article_tbl A\n"\
+        "  ON A.Id_PK = U.Article_Id_FK";
 
   return createView("TestNodeUnit_view", sql);
 }

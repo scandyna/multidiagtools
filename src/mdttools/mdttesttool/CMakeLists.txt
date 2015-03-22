@@ -33,6 +33,8 @@ set (TT_HEADER_FILES
           mdtTtBasicTestNodeCalibrationTool.h
           mdtTtBasicTestNodeCalibrationWindow.h
           mdtTtValueEditionDialog.h
+          mdtTtTestItemWidget.h
+          mdtTtTestItemContainerWidget.h
     )
 
 # Sources files for mdtTestTool
@@ -79,6 +81,8 @@ set (TT_SOURCES_FILES
           mdtTtBasicTestNodeCalibrationTool.cpp
           mdtTtBasicTestNodeCalibrationWindow.cpp
           mdtTtValueEditionDialog.cpp
+          mdtTtTestItemWidget.cpp
+          mdtTtTestItemContainerWidget.cpp
     )
 
 # Form files for mdtTestTool

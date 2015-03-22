@@ -740,6 +740,15 @@ class mdtMultiIoDevice : public mdtDevice
 
  private:
 
+  /*! \brief Sequence of queries to send periodically
+   *
+   * This method is called from mdtDevice::runQueries()
+   *  and will get analog and digital inputs.
+   *
+   * \return true if all queries are sent successfully.
+   */
+  bool queriesSequence();
+
   /*! \brief Enable I/Os
    */
   void enableIos();

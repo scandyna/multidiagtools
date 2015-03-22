@@ -25,6 +25,7 @@
 
 #include <QSqlDatabase>
 #include <QList>
+#include <QLocale>
 
 class QWidget;
 
@@ -136,6 +137,10 @@ class mdtTtTestNodeEditor : public mdtSqlForm
   /*! \brief Setup TestNodeUnit table
    */
   bool setupTestNodeUnitTable();
+
+  /*! \brief Update TestNodeUnit table regarding language
+   */
+  void updateTestNodeUnitTable(const QLocale & locale);
 
   /*! \brief Setup TestNodeBus_tbl
    */

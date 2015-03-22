@@ -266,14 +266,14 @@ class mdtModbusHwNodeIdList
 
   /*! \brief Check if given ID exists in list
    */
-  bool contains(int id)
+  bool contains(int id) const
   {
     return ( std::find(pvIdList.cbegin(), pvIdList.cend(), id) != pvIdList.cend() );
   }
 
   /*! \brief Check if given ID exists in list
    */
-  inline bool contains(const mdtModbusHwNodeId & mid)
+  inline bool contains(const mdtModbusHwNodeId & mid) const
   {
     if(mid.isNull()){
       return false;

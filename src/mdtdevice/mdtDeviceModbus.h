@@ -316,7 +316,7 @@ class mdtDeviceModbus : public mdtMultiIoDevice
   int writeDigitalOutputs(mdtPortTransaction *transaction, mdtDeviceIosSegment *segment);
 
   // Sequence of periodic queries
-  bool queriesSequence();
+  ///bool queriesSequence();
 
   mdtModbusTcpPortManager *pvTcpPortManager;
   mdtFrameCodecModbus *pvCodec;

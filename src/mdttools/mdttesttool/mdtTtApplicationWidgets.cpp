@@ -71,7 +71,7 @@ void mdtTtApplicationWidgets::showTestNodeModbusIoTool(const QString& deviceAlia
   Q_ASSERT(aw.pvTestNodeModbusIoTool);
   // .....
   if(!aw.pvTestNodeModbusIoTool->setModbusDevice(deviceAlias)){
-    /// \todo display error
+    aw.displayError(aw.pvTestNodeModbusIoTool->lastError());
     return;
   }
   aw.pvTestNodeModbusIoTool->raise();

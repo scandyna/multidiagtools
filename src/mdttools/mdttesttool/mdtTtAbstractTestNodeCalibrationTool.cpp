@@ -274,7 +274,8 @@ bool mdtTtAbstractTestNodeCalibrationTool::isInRange(const mdtValueDouble & valu
   }
   */
   // Check range
-  if(!mdtTtTest::isInRange(x, min, max)){
+  ///if(!mdtTtTest::isInRange(x, min, max)){
+  if(!mdtAlgorithms::isInRange(x, min, max, true, true)){
     QString msg;
     pvLastError.setError(tr("Range checking failed for given value."), mdtError::Error);
     msg  = tr("Value") + " " + QString::number(x) + " " + tr("is out of range.") + " ";
