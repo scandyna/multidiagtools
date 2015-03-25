@@ -18,22 +18,22 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_TT_TEST_ITEM_CONTAINER_WIDGET_H
-#define MDT_TT_TEST_ITEM_CONTAINER_WIDGET_H
+#ifndef MDT_TT_TEST_STEP_CONTAINER_WIDGET_H
+#define MDT_TT_TEST_STEP_CONTAINER_WIDGET_H
 
-#include "mdtTtTestItemWidget.h"
+#include "mdtTtTestStepWidget.h"
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QList>
 
-/*! \brief Widget that contains mdtTtTestItemWidget items
+/*! \brief Widget that contains mdtTtTestStepWidget items
  *
  * Note: if this widget is used in a QScrollArea,
  *       set the QScrollArea::widgetResizable property to true,
  *       else some problems will occur when internal widgets
  *       are updated (with new text, style, ...).
  */
-class mdtTtTestItemContainerWidget : public QWidget
+class mdtTtTestStepContainerWidget : public QWidget
 {
  Q_OBJECT
 
@@ -41,11 +41,11 @@ class mdtTtTestItemContainerWidget : public QWidget
 
   /*! \brief Constructor
    */
-  mdtTtTestItemContainerWidget(QWidget *parent = 0);
+  mdtTtTestStepContainerWidget(QWidget *parent = 0);
 
   /*! \brief Add a test item widget
    */
-  void addItem(mdtTtTestItemWidget *w);
+  void addItem(mdtTtTestStepWidget *w);
 
   /*! \brief Add a stretch to internal layout
    */
@@ -59,7 +59,7 @@ class mdtTtTestItemContainerWidget : public QWidget
 
   /*! \brief Disable run/abort function of all item widgets, expect the one that called this slot
    */
-  void disableRunAbortOfOtherWidgets(mdtTtTestItemWidget *callerWidget);
+  void disableRunAbortOfOtherWidgets(mdtTtTestStepWidget *callerWidget);
 
   /*! \brief Enable run/abort function of all item widgets
    */
@@ -67,10 +67,10 @@ class mdtTtTestItemContainerWidget : public QWidget
 
  private:
 
-  Q_DISABLE_COPY(mdtTtTestItemContainerWidget);
+  Q_DISABLE_COPY(mdtTtTestStepContainerWidget);
 
   QVBoxLayout *pvLayout;
-  QList<mdtTtTestItemWidget*> pvItemWidgets;
+  QList<mdtTtTestStepWidget*> pvStepWidgets;
 };
 
-#endif // #ifndef MDT_TT_TEST_ITEM_CONTAINER_WIDGET_H
+#endif // #ifndef MDT_TT_TEST_STEP_CONTAINER_WIDGET_H

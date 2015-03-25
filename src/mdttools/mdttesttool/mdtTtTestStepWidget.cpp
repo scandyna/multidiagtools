@@ -18,108 +18,121 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtTtTestItemWidget.h"
+#include "mdtTtTestStepWidget.h"
 
 #include <QGridLayout>
-#include <QHBoxLayout>
-
 #include <QPushButton>
 #include <QLabel>
 #include <QIcon>
 #include <QFont>
-#include <QFontMetrics>
 
-#include <QDebug>
+//#include <QDebug>
 
-mdtTtTestItemWidget::mdtTtTestItemWidget(QWidget* parent)
+mdtTtTestStepWidget::mdtTtTestStepWidget(QWidget* parent)
  : QWidget(parent),
-   ///pvLayout(new QGridLayout)
-   pvLayout(new QHBoxLayout)
+   pvLayout(new QGridLayout)
 {
+  // Setup run/abort button
   pbRunAbort = new QPushButton;
   connect(pbRunAbort, SIGNAL(clicked()), this, SLOT(runAbort()));
-  ///pvLayout->addWidget(pbRunAbort, 0, 0);
-  pvLayout->addWidget(pbRunAbort);
+  pvLayout->addWidget(pbRunAbort, 0, 0);
+  // Setup title label
   lbTitle = new QLabel;
-  ///pvLayout->addWidget(lbTitle, 0, 1);
   lbTitle->setTextFormat(Qt::PlainText);
-  pvLayout->addWidget(lbTitle);
+  pvLayout->addWidget(lbTitle, 0, 1);
+  // Setup state label
   lbState = new QLabel;
   lbState->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
   QFont f("Sans Serif", 12);
   f.setBold(true);
   lbState->setFont(f);
   lbState->setTextFormat(Qt::PlainText);
-  ///pvLayout->addWidget(lbState, 0, 2);
-  pvLayout->addWidget(lbState);
+  pvLayout->addWidget(lbState, 0, 2);
+  // Setup message label
   lbMessage = new QLabel;
   lbMessage->setTextFormat(Qt::PlainText);
-  ///lbMessage->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
-  ///pvLayout->addWidget(lbMessage, 0, 3);
-  pvLayout->addWidget(lbMessage);
-  pvLayout->addStretch(1);
-
-  ///pvLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
-  ///pvLayout->setSizeConstraint(QLayout::SetMinimumSize);
-  ///pvLayout->setColumnStretch(1, 1);
-  ///pvLayout->setColumnStretch(3, 1);
+  pvLayout->addWidget(lbMessage, 0, 3);
+  // Other setup
+  pvLayout->setColumnStretch(4, 2);
   setLayout(pvLayout);
   setStateInitial();
 }
 
-void mdtTtTestItemWidget::setTitle(const QString & text)
+void mdtTtTestStepWidget::setTitle(const QString & text)
 {
   lbTitle->setText(text);
-//   QFontMetrics fm(lbTitle->font());
-//   lbTitle->setMinimumWidth(fm.width(text));
 }
 
-void mdtTtTestItemWidget::setMessage(const QString & msg)
+void mdtTtTestStepWidget::setMessage(const QString & msg)
 {
   lbMessage->setText(msg);
 }
 
-void mdtTtTestItemWidget::setMessage(const mdtError & error)
+void mdtTtTestStepWidget::setMessage(const mdtError & error)
 {
   lbMessage->setText(error.text() + "\n" + error.informativeText());
 }
 
-void mdtTtTestItemWidget::clearMessage()
+void mdtTtTestStepWidget::clearMessage()
 {
   lbMessage->clear();
 }
 
-void mdtTtTestItemWidget::setRunning()
+void mdtTtTestStepWidget::setRunning()
 {
   setStateRunning();
 }
 
-void mdtTtTestItemWidget::setFinishedSuccess()
+void mdtTtTestStepWidget::setFinishedSuccess()
 {
   setStateSuccess();
 }
 
-void mdtTtTestItemWidget::setFinishedWarn()
+void mdtTtTestStepWidget::setFinishedWarn()
 {
   setStateWarn();
 }
 
-void mdtTtTestItemWidget::setFinishedFail()
+void mdtTtTestStepWidget::setFinishedWarn(const QString & msg)
+{
+  setMessage(msg);
+  setStateWarn();
+}
+
+void mdtTtTestStepWidget::setFinishedWarn(const mdtError& msg)
+{
+  setMessage(msg);
+  setStateWarn();
+}
+
+void mdtTtTestStepWidget::setFinishedFail()
 {
   setStateFail();
 }
 
-void mdtTtTestItemWidget::reset()
+void mdtTtTestStepWidget::setFinishedFail(const QString & msg)
+{
+  setMessage(msg);
+  setStateFail();
+}
+
+void mdtTtTestStepWidget::setFinishedFail(const mdtError& msg)
+{
+  setMessage(msg);
+  setStateFail();
+}
+
+void mdtTtTestStepWidget::reset()
 {
   setStateInitial();
 }
 
-void mdtTtTestItemWidget::setRunAbortEnabled(bool enable)
+void mdtTtTestStepWidget::setRunAbortEnabled(bool enable)
 {
   pbRunAbort->setEnabled(enable);
 }
 
-void mdtTtTestItemWidget::runAbort()
+void mdtTtTestStepWidget::runAbort()
 {
   if(pvState == State_t::Running){
     emit abortCalled();
@@ -130,56 +143,40 @@ void mdtTtTestItemWidget::runAbort()
   }
 }
 
-void mdtTtTestItemWidget::setStateInitial()
+void mdtTtTestStepWidget::setStateInitial()
 {
   pvState = State_t::Initial;
   // Update run/abort button
   pbRunAbort->setText(tr("Run"));
   pbRunAbort->setIcon(QIcon::fromTheme("media-playback-start"));
-  ///pbRunAbort->setEnabled(true);
   // Update state label
   lbState->setStyleSheet("");
-  lbState->setText("Initial ...");
+  lbState->setText("");
   // Signal new state
   
   emit finished(this);
 }
 
-void mdtTtTestItemWidget::setStateRunning()
+void mdtTtTestStepWidget::setStateRunning()
 {
   pvState = State_t::Running;
   // Update run/abort button
   pbRunAbort->setText(tr("Abort"));
   pbRunAbort->setIcon(QIcon::fromTheme("media-playback-stop"));
-  ///pbRunAbort->setEnabled(true);
   // Update state label
-//   qDebug() << "sizeHint(): " << sizeHint();
-//   qDebug() << "lbState->sizeHint(): " << lbState->sizeHint();
-//   qDebug() << "lbState->setText(Running ...)";
   lbState->setStyleSheet("");
   lbState->setText("Running ...");
-//   qDebug() << "lbState->sizeHint(): " << lbState->sizeHint();
-  ///qDebug() << "lbState->updateGeometry()";
-  ///lbState->updateGeometry();
-  ///qDebug() << "lbState->sizeHint(): " << lbState->sizeHint();
-//   qDebug() << "sizeHint(): " << sizeHint();
-//   qDebug() << "isVisible(): " << isVisible();
-//   qDebug() << "lbState->isVisible(): " << lbState->isVisible();
-//   updateGeometry();
-//   parentWidget()->updateGeometry();
-//   pvLayout->update();
   // Signal new state
 
   emit started(this);
 }
 
-void mdtTtTestItemWidget::setStateFail()
+void mdtTtTestStepWidget::setStateFail()
 {
   pvState = State_t::Fail;
   // Update run/abort button
   pbRunAbort->setText(tr("Run"));
   pbRunAbort->setIcon(QIcon::fromTheme("media-playback-start"));
-  ///pbRunAbort->setEnabled(true);
   // Update state label
   lbState->setStyleSheet("background-color: rgb(255,0,0);\ncolor: rgb(255,255,255);");
   lbState->setText("FAIL");
@@ -188,13 +185,12 @@ void mdtTtTestItemWidget::setStateFail()
   emit finished(this);
 }
 
-void mdtTtTestItemWidget::setStateWarn()
+void mdtTtTestStepWidget::setStateWarn()
 {
   pvState = State_t::Warn;
   // Update run/abort button
   pbRunAbort->setText(tr("Run"));
   pbRunAbort->setIcon(QIcon::fromTheme("media-playback-start"));
-  ///pbRunAbort->setEnabled(true);
   // Update state label
   lbState->setStyleSheet("background-color: rgb(255,170,0);\ncolor: rgb(0,0,0);");
   lbState->setText("Warn");
@@ -203,13 +199,12 @@ void mdtTtTestItemWidget::setStateWarn()
   emit finished(this);
 }
 
-void mdtTtTestItemWidget::setStateSuccess()
+void mdtTtTestStepWidget::setStateSuccess()
 {
   pvState = State_t::Success;
   // Update run/abort button
   pbRunAbort->setText(tr("Run"));
   pbRunAbort->setIcon(QIcon::fromTheme("media-playback-start"));
-  ///pbRunAbort->setEnabled(true);
   // Update state label
   lbState->setStyleSheet("background-color: rgb(85,255,0);\ncolor: rgb(0,0,0);");
   lbState->setText("Ok");

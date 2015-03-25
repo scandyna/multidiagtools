@@ -1,4 +1,4 @@
-format 207
+format 209
 
 classcanvas 128002 class_ref 1342466 // mdtTtAbstractTester
   classdiagramsettings member_max_width 0 end
@@ -38,8 +38,8 @@ classcanvas 129666 class_ref 1302018 // mdtTtTestNodeManager
 end
 relationcanvas 128386 relation_ref 1659522 // <directional composition>
   geometry HVH
-  from ref 128002 z 2007 to point 589 219
-  line 131074 z 2007 to point 589 272
+  from ref 128002 z 2007 to point 591 219
+  line 131074 z 2007 to point 591 272
   line 131202 z 2007 to ref 128258
   role_a_pos 613 252 3000 no_role_b
   multiplicity_a_pos 646 282 3000 no_multiplicity_b
@@ -54,7 +54,7 @@ end
 relationcanvas 129026 relation_ref 1666306 // <generalisation>
   geometry VHV unfixed
   decenter_begin 517
-  from ref 128002 z 2007 to point 450 104
+  from ref 128002 z 2007 to point 452 104
   line 130306 z 2007 to point 675 104
   line 130434 z 2007 to ref 128898
   no_role_a no_role_b
@@ -77,10 +77,10 @@ relationcanvas 129794 relation_ref 1597826 // <generalisation>
 end
 relationcanvas 129922 relation_ref 1652994 // <directional composition>
   geometry HVH
-  from ref 128002 z 2013 to point 570 219
-  line 130562 z 2013 to point 570 170
+  from ref 128002 z 2013 to point 572 219
+  line 130562 z 2013 to point 572 170
   line 130690 z 2013 to ref 129666
-  role_a_pos 507 150 3000 no_role_b
+  role_a_pos 504 150 3000 no_role_b
   multiplicity_a_pos 607 180 3000 no_multiplicity_b
 end
 end

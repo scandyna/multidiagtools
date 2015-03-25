@@ -1,6 +1,6 @@
 format 209
 "mdttesttool" // mdttools::mdttesttool
-  revision 64
+  revision 65
   modified_by 2 "philippe"
   // class settings
   
@@ -5514,6 +5514,240 @@ ${inlines}
       end
     end
 
+    class 1558530 "someCustomTestItemWidget"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 1941378 // <generalisation>
+	relation 1925250 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1941378 // <generalisation>
+	  b parent class_ref 1558402 // mdtTtTestStepWidget
+      end
+    end
+
+    classdiagram 1384706 "mdtTtTestItem"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 1565186 "mdtTtTestItem"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 1612290 "TestItemId"
+	private type class_ref 161154 // QVariant
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1611906 "TestModelItemId"
+	private type class_ref 161154 // QVariant
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 2488578 "save"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 1612162 "Database"
+	private type class_ref 405122 // QSqlDatabase
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
+    classdiagram 1384834 "mdtTtTestStep"
+      classdiagramsettings draw_all_relations no member_max_width 0 end
+      size A4
+    end
+
+    class 1565314 "mdtTtTestStep"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 1612546 "State"
+	private explicit_type "State_t"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1612034 "LastError"
+	protected type class_ref 182402 // mdtError
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 2489218 "mdtTtTestStep"
+	public explicit_return_type ""
+	nparams 3
+	  param in name "tnm" type class_ref 1302018 // mdtTtTestNodeManager
+	  param in name "tsw" type class_ref 1558402 // mdtTtTestStepWidget
+	    defaultvalue "null"
+	  param in name "parent" type class_ref 138626 // QObject
+	    defaultvalue "null"
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2488834 "testNodeManager"
+	protected return_type class_ref 1302018 // mdtTtTestNodeManager
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2488962 "device"
+	protected explicit_return_type "T"
+	nparams 1
+	  param in name "alias" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2488706 "isInRange"
+	protected explicit_return_type "bool"
+	nparams 3
+	  param in name "x" explicit_type "mdtValueDouble"
+	  param in name "min" explicit_type "double"
+	  param in name "max" explicit_type "double"
+	    defaultvalue "infinity"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 1948290 // pvWidget (<unidirectional association>)
+	relation 1932162 --->
+	  a role_name "pvWidget" multiplicity "0..1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1948290 // pvWidget (<unidirectional association>)
+	  b parent class_ref 1558402 // mdtTtTestStepWidget
+      end
+
+      classrelation 1948418 // pvTestNodeManager (<unidirectional association>)
+	relation 1932290 --->
+	  a role_name "pvTestNodeManager" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1948418 // pvTestNodeManager (<unidirectional association>)
+	  b parent class_ref 1302018 // mdtTtTestNodeManager
+      end
+
+      classrelation 1948546 // <generalisation>
+	relation 1932418 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1948546 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+    end
+
     classdiagram 1378178 "mdtTestItemWidget"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -5822,29 +6056,6 @@ ${inlines}
       end
     end
 
-    class 1558530 "someCustomTestItemWidget"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 1941378 // <generalisation>
-	relation 1925250 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 1941378 // <generalisation>
-	  b parent class_ref 1558402 // mdtTtTestStepWidget
-      end
-    end
-
     class 1558658 "mdtTtTestStepContainerWidget"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
@@ -5869,6 +6080,33 @@ ${inlines}
 
       attribute 1605250 "pvLayout"
 	private explicit_type "QVBoxLayout"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
+    class 1565442 "mdtTtTestStepContainer"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 1612418 "State"
+	private explicit_type "mdtTtTestStep::State_t"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""

@@ -18,47 +18,45 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtTtTestItemContainerWidget.h"
+#include "mdtTtTestStepContainerWidget.h"
 
 #include <QLabel>
 
-mdtTtTestItemContainerWidget::mdtTtTestItemContainerWidget(QWidget* parent)
+mdtTtTestStepContainerWidget::mdtTtTestStepContainerWidget(QWidget* parent)
  : QWidget(parent),
    pvLayout(new QVBoxLayout)
 {
   setLayout(pvLayout);
-  ///setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
 }
 
-void mdtTtTestItemContainerWidget::addItem(mdtTtTestItemWidget* w)
+void mdtTtTestStepContainerWidget::addItem(mdtTtTestStepWidget* w)
 {
   Q_ASSERT(w != nullptr);
 
-  connect(w, SIGNAL(started(mdtTtTestItemWidget*)), this, SLOT(disableRunAbortOfOtherWidgets(mdtTtTestItemWidget*)));
-  connect(w, SIGNAL(finished(mdtTtTestItemWidget*)), this, SLOT(enableRunAbortOfAllWidgets()));
-  ///w->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
+  connect(w, SIGNAL(started(mdtTtTestStepWidget*)), this, SLOT(disableRunAbortOfOtherWidgets(mdtTtTestStepWidget*)));
+  connect(w, SIGNAL(finished(mdtTtTestStepWidget*)), this, SLOT(enableRunAbortOfAllWidgets()));
   pvLayout->addWidget(w);
-  pvItemWidgets.append(w);
+  pvStepWidgets.append(w);
 }
 
-void mdtTtTestItemContainerWidget::addStretch()
+void mdtTtTestStepContainerWidget::addStretch()
 {
   pvLayout->addStretch(1);
 }
 
-void mdtTtTestItemContainerWidget::setRunAbortEnabled(bool enable)
+void mdtTtTestStepContainerWidget::setRunAbortEnabled(bool enable)
 {
-  for(auto *w : pvItemWidgets){
+  for(auto *w : pvStepWidgets){
     Q_ASSERT(w != nullptr);
     w->setRunAbortEnabled(enable);
   }
 }
 
-void mdtTtTestItemContainerWidget::disableRunAbortOfOtherWidgets(mdtTtTestItemWidget* callerWidget)
+void mdtTtTestStepContainerWidget::disableRunAbortOfOtherWidgets(mdtTtTestStepWidget* callerWidget)
 {
   Q_ASSERT(callerWidget != nullptr);
 
-  for(auto *w : pvItemWidgets){
+  for(auto *w : pvStepWidgets){
     Q_ASSERT(w != nullptr);
     if(w != callerWidget){
       w->setRunAbortEnabled(false);
@@ -66,11 +64,7 @@ void mdtTtTestItemContainerWidget::disableRunAbortOfOtherWidgets(mdtTtTestItemWi
   }
 }
 
-void mdtTtTestItemContainerWidget::enableRunAbortOfAllWidgets()
+void mdtTtTestStepContainerWidget::enableRunAbortOfAllWidgets()
 {
   setRunAbortEnabled(true);
-//   for(auto *w : pvItemWidgets){
-//     Q_ASSERT(w != nullptr);
-//     w->setRunAbortEnabled(true);
-//   }
 }

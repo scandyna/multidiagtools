@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_TT_TEST_ITEM_WIDGET_H
-#define MDT_TT_TEST_ITEM_WIDGET_H
+#ifndef MDT_TT_TEST_STEP_WIDGET_H
+#define MDT_TT_TEST_STEP_WIDGET_H
 
 #include "mdtError.h"
 #include <QWidget>
@@ -29,11 +29,10 @@ class QPushButton;
 class QLabel;
 
 class QGridLayout;
-class QHBoxLayout;
 
 /*! \brief Test item widget
  */
-class mdtTtTestItemWidget : public QWidget
+class mdtTtTestStepWidget : public QWidget
 {
  Q_OBJECT
 
@@ -43,18 +42,18 @@ class mdtTtTestItemWidget : public QWidget
    */
   enum class State_t
   {
-    Initial,  /*!< Initial is the state before test item was executed. */
-    Running,  /*!< Test item is running. */
-    Fail,     /*!< Test item was executed and failed. */
-    Warn,     /*!< Test item was exectued and the result is not so good. */
-    Success   /*!< Test item was exectued and the result good. */
+    Initial,  /*!< Initial is the state before test step was executed. */
+    Running,  /*!< Test step is running. */
+    Fail,     /*!< Test step was executed and failed. */
+    Warn,     /*!< Test step was exectued and the result is not so good. */
+    Success   /*!< Test step was exectued and the result good. */
   };
 
   /*! \brief Constructor
    */
-  mdtTtTestItemWidget(QWidget *parent = 0);
+  mdtTtTestStepWidget(QWidget *parent = 0);
 
-  /*! \brief Set item title
+  /*! \brief Set title
    */
   void setTitle(const QString & text);
 
@@ -81,13 +80,29 @@ class mdtTtTestItemWidget : public QWidget
    */
   void setFinishedSuccess();
 
-  /*! \brief Turn to Success state
+  /*! \brief Turn to Warn state
    */
   void setFinishedWarn();
 
-  /*! \brief Turn to Success state
+  /*! \brief Turn to Warn state and display a message (in message label)
+   */
+  void setFinishedWarn(const QString & msg);
+
+  /*! \brief Turn to Warn state and display a message (in message label)
+   */
+  void setFinishedWarn(const mdtError & msg);
+
+  /*! \brief Turn to Fail state
    */
   void setFinishedFail();
+
+  /*! \brief Turn to Fail state and display a message (in message label)
+   */
+  void setFinishedFail(const QString & msg);
+
+  /*! \brief Turn to Fail state and display a message (in message label)
+   */
+  void setFinishedFail(const mdtError & msg);
 
   /*! \brief Reset to Initial state
    */
@@ -111,13 +126,13 @@ class mdtTtTestItemWidget : public QWidget
    *
    * \param w this pointer
    */
-  void started(mdtTtTestItemWidget *w);
+  void started(mdtTtTestStepWidget *w);
 
   /*! \brief Emitted when test item has finished (or was aborted)
    *
    * \param w this pointer
    */
-  void finished(mdtTtTestItemWidget *w);
+  void finished(mdtTtTestStepWidget *w);
 
  private slots:
 
@@ -147,15 +162,14 @@ class mdtTtTestItemWidget : public QWidget
    */
   void setStateSuccess();
 
-  Q_DISABLE_COPY(mdtTtTestItemWidget);
+  Q_DISABLE_COPY(mdtTtTestStepWidget);
 
   State_t pvState;
-  ///QGridLayout *pvLayout;
-  QHBoxLayout *pvLayout;
+  QGridLayout *pvLayout;
   QPushButton *pbRunAbort;
   QLabel *lbTitle;
   QLabel *lbState;
   QLabel *lbMessage;
 };
 
-#endif // #ifndef MDT_TT_TEST_ITEM_WIDGET_H
+#endif // #ifndef MDT_TT_TEST_STEP_WIDGET_H
