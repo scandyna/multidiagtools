@@ -34,8 +34,10 @@ mdtTtTestStepWidget::mdtTtTestStepWidget(QWidget* parent)
 {
   // Setup run/abort button
   pbRunAbort = new QPushButton;
-  connect(pbRunAbort, SIGNAL(clicked()), this, SLOT(runAbort()));
+//   connect(pbRunAbort, SIGNAL(clicked()), this, SLOT(runAbort()));
   pvLayout->addWidget(pbRunAbort, 0, 0);
+  pvRunAbortButtonEnabled = true;
+  pvAbortSupported = false;
   // Setup title label
   lbTitle = new QLabel;
   lbTitle->setTextFormat(Qt::PlainText);
@@ -68,87 +70,123 @@ void mdtTtTestStepWidget::setMessage(const QString & msg)
   lbMessage->setText(msg);
 }
 
-void mdtTtTestStepWidget::setMessage(const mdtError & error)
-{
-  lbMessage->setText(error.text() + "\n" + error.informativeText());
-}
+// void mdtTtTestStepWidget::setMessage(const mdtError & error)
+// {
+//   lbMessage->setText(error.text() + "\n" + error.informativeText());
+// }
 
 void mdtTtTestStepWidget::clearMessage()
 {
   lbMessage->clear();
 }
 
-void mdtTtTestStepWidget::setRunning()
+void mdtTtTestStepWidget::setAbortSupported(bool support)
 {
-  setStateRunning();
+  pvAbortSupported = support;
+  updateRunAbortButtonEnabledState();
 }
 
-void mdtTtTestStepWidget::setFinishedSuccess()
+void mdtTtTestStepWidget::setRunAbortButtonEnabled(bool enable)
 {
-  setStateSuccess();
+  pvRunAbortButtonEnabled = enable;
+  updateRunAbortButtonEnabledState();
 }
 
-void mdtTtTestStepWidget::setFinishedWarn()
+// void mdtTtTestStepWidget::setRunning()
+// {
+//   setStateRunning();
+// }
+
+// void mdtTtTestStepWidget::setFinishedSuccess()
+// {
+//   setStateSuccess();
+// }
+
+// void mdtTtTestStepWidget::setFinishedWarn()
+// {
+//   setStateWarn();
+// }
+// 
+// void mdtTtTestStepWidget::setFinishedWarn(const QString & msg)
+// {
+//   setMessage(msg);
+//   setStateWarn();
+// }
+// 
+// void mdtTtTestStepWidget::setFinishedWarn(const mdtError& msg)
+// {
+//   setMessage(msg);
+//   setStateWarn();
+// }
+
+// void mdtTtTestStepWidget::setFinishedFail()
+// {
+//   setStateFail();
+// }
+// 
+// void mdtTtTestStepWidget::setFinishedFail(const QString & msg)
+// {
+//   setMessage(msg);
+//   setStateFail();
+// }
+// 
+// void mdtTtTestStepWidget::setFinishedFail(const mdtError& msg)
+// {
+//   setMessage(msg);
+//   setStateFail();
+// }
+
+// void mdtTtTestStepWidget::reset()
+// {
+//   setStateInitial();
+// }
+
+// void mdtTtTestStepWidget::setRunAbortEnabled(bool enable)
+// {
+//   updateRunAbortButtonEnabledState();
+// }
+
+void mdtTtTestStepWidget::setState(mdtTtTestStep::State_t state)
 {
-  setStateWarn();
+  pvState = state;
+  switch(state){
+    case mdtTtTestStep::State_t::Initial:
+      setStateInitial();
+      break;
+    case mdtTtTestStep::State_t::Running:
+      setStateRunning();
+      break;
+    case mdtTtTestStep::State_t::Success:
+      setStateSuccess();
+      break;
+    case mdtTtTestStep::State_t::Warn:
+      setStateWarn();
+      break;
+    case mdtTtTestStep::State_t::Fail:
+      setStateFail();
+      break;
+  };
 }
 
-void mdtTtTestStepWidget::setFinishedWarn(const QString & msg)
-{
-  setMessage(msg);
-  setStateWarn();
-}
-
-void mdtTtTestStepWidget::setFinishedWarn(const mdtError& msg)
-{
-  setMessage(msg);
-  setStateWarn();
-}
-
-void mdtTtTestStepWidget::setFinishedFail()
-{
-  setStateFail();
-}
-
-void mdtTtTestStepWidget::setFinishedFail(const QString & msg)
-{
-  setMessage(msg);
-  setStateFail();
-}
-
-void mdtTtTestStepWidget::setFinishedFail(const mdtError& msg)
-{
-  setMessage(msg);
-  setStateFail();
-}
-
-void mdtTtTestStepWidget::reset()
-{
-  setStateInitial();
-}
-
-void mdtTtTestStepWidget::setRunAbortEnabled(bool enable)
-{
-  pbRunAbort->setEnabled(enable);
-}
-
-void mdtTtTestStepWidget::runAbort()
-{
-  if(pvState == State_t::Running){
-    emit abortCalled();
-    setStateInitial();
-  }else{
-    setStateRunning();
-    emit runCalled();
-  }
-}
+// void mdtTtTestStepWidget::runAbort()
+// {
+//   /// \todo Add flag for abort support
+//   if(pvState == mdtTtTestStep::State_t::Running){
+//     emit abortCalled();
+//     setStateInitial();
+//   }else{
+//     setStateRunning();
+//     emit runCalled();
+//   }
+// }
 
 void mdtTtTestStepWidget::setStateInitial()
 {
-  pvState = State_t::Initial;
+  ///pvState = State_t::Initial;
   // Update run/abort button
   pbRunAbort->setText(tr("Run"));
   pbRunAbort->setIcon(QIcon::fromTheme("media-playback-start"));
+  updateRunAbortButtonEnabledState();
   // Update state label
   lbState->setStyleSheet("");
   lbState->setText("");
@@ -159,10 +197,16 @@ void mdtTtTestStepWidget::setStateInitial()
 
 void mdtTtTestStepWidget::setStateRunning()
 {
-  pvState = State_t::Running;
+  ///pvState = State_t::Running;
   // Update run/abort button
-  pbRunAbort->setText(tr("Abort"));
-  pbRunAbort->setIcon(QIcon::fromTheme("media-playback-stop"));
+  if(pvAbortSupported){
+    pbRunAbort->setText(tr("Abort"));
+    pbRunAbort->setIcon(QIcon::fromTheme("media-playback-stop"));
+  }else{
+    pbRunAbort->setText(tr("Run"));
+    pbRunAbort->setIcon(QIcon::fromTheme("media-playback-start"));
+  }
+  updateRunAbortButtonEnabledState();
   // Update state label
   lbState->setStyleSheet("");
   lbState->setText("Running ...");
@@ -173,10 +217,11 @@ void mdtTtTestStepWidget::setStateRunning()
 
 void mdtTtTestStepWidget::setStateFail()
 {
-  pvState = State_t::Fail;
+  ///pvState = State_t::Fail;
   // Update run/abort button
   pbRunAbort->setText(tr("Run"));
   pbRunAbort->setIcon(QIcon::fromTheme("media-playback-start"));
+  updateRunAbortButtonEnabledState();
   // Update state label
   lbState->setStyleSheet("background-color: rgb(255,0,0);\ncolor: rgb(255,255,255);");
   lbState->setText("FAIL");
@@ -187,10 +232,11 @@ void mdtTtTestStepWidget::setStateFail()
 
 void mdtTtTestStepWidget::setStateWarn()
 {
-  pvState = State_t::Warn;
+  ///pvState = State_t::Warn;
   // Update run/abort button
   pbRunAbort->setText(tr("Run"));
   pbRunAbort->setIcon(QIcon::fromTheme("media-playback-start"));
+  updateRunAbortButtonEnabledState();
   // Update state label
   lbState->setStyleSheet("background-color: rgb(255,170,0);\ncolor: rgb(0,0,0);");
   lbState->setText("Warn");
@@ -201,14 +247,34 @@ void mdtTtTestStepWidget::setStateWarn()
 
 void mdtTtTestStepWidget::setStateSuccess()
 {
-  pvState = State_t::Success;
+  ///pvState = State_t::Success;
   // Update run/abort button
   pbRunAbort->setText(tr("Run"));
   pbRunAbort->setIcon(QIcon::fromTheme("media-playback-start"));
+  updateRunAbortButtonEnabledState();
   // Update state label
   lbState->setStyleSheet("background-color: rgb(85,255,0);\ncolor: rgb(0,0,0);");
   lbState->setText("Ok");
   // Signal new state
 
   emit finished(this);
+}
+
+void mdtTtTestStepWidget::updateRunAbortButtonEnabledState()
+{
+  // If pvRunAbortButtonEnabled is false, button is allways disabled
+  if(!pvRunAbortButtonEnabled){
+    pbRunAbort->setEnabled(false);
+    return;
+  }
+  /*
+   * Check state:
+   *  the only state for witch button can be disable is running,
+   *  when abort is not supported.
+   */
+  if( (pvState == mdtTtTestStep::State_t::Running)&&(!pvAbortSupported) ){
+    pbRunAbort->setEnabled(false);
+  }else{
+    pbRunAbort->setEnabled(true);
+  }
 }

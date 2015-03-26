@@ -39,7 +39,7 @@ class mdtTtTestStepWidget;
  * This class can be used together with mdtTtTestStepWidget,
  *  witch provides the GUI part.
  *
- * Used as is, state of the test staep can be stored,
+ * Used as is, state of the test step can be stored,
  *  and GUI part is updatet.
  *
  * A way to create a test step is to subclass mdtTtTestStep,
@@ -52,9 +52,121 @@ class mdtTtTestStep : public QObject
 
  public:
 
+  /*! \brief State
+   */
+  enum class State_t
+  {
+    Initial,  /*!< Initial is the state before test step was executed. */
+    Running,  /*!< Test step is running. */
+    Fail,     /*!< Test step was executed and failed. */
+    Warn,     /*!< Test step was exectued and the result is not so good. */
+    Success   /*!< Test step was exectued and the result good. */
+  };
+
   /*! \brief Constructor
+   *
+   * \param tnm Test node manager object.
+   * \param tsw Test step widget. Note that tsw is not destroyed when this object is.
+   * \param parent See Qt's QObject documentation.
    */
   mdtTtTestStep(const std::shared_ptr<mdtTtTestNodeManager> & tnm, mdtTtTestStepWidget *tsw = nullptr, QObject *parent = nullptr);
+
+  /*! \brief Set title
+   */
+  void setTitle(const QString & text);
+
+  /*! \brief Set message
+   */
+  void setMessage(const QString & msg);
+
+  /*! \brief Set message
+   */
+  void setMessage(const mdtError & error);
+
+  /*! \brief Clear message
+   */
+  void clearMessage();
+
+  /*! \brief Set abortSupported flag
+   *
+   * Default is false.
+   */
+  void setAbortSupported(bool support);
+
+  /*! \brief Get abortSupported flag
+   */
+  bool abortSupported() const
+  {
+    return pvAbortSupported;
+  }
+
+  /*! \brief Set Run/Abort function enabled
+   *
+   * See mdtTtTestStepWidget::setRunAbortButtonEnabled().
+   */
+  void setRunAbortEnabled(bool enable);
+
+  /*! \brief Turn to Running state
+   *
+   * Note: if user clicked the run/abort button,
+   *  this is done automatically.
+   */
+  void setRunning();
+
+  /*! \brief Turn to Success state
+   */
+  void setFinishedSuccess();
+
+  /*! \brief Turn to Warn state
+   */
+  void setFinishedWarn();
+
+  /*! \brief Turn to Warn state and display a message (in message label)
+   */
+  void setFinishedWarn(const QString & msg)
+  {
+    setMessage(msg);
+    setFinishedWarn();
+  }
+
+  /*! \brief Turn to Warn state and display a message (in message label)
+   */
+  void setFinishedWarn(const mdtError & msg)
+  {
+    setMessage(msg);
+    setFinishedWarn();
+  }
+
+  /*! \brief Turn to Fail state
+   */
+  void setFinishedFail();
+
+  /*! \brief Turn to Fail state and display a message (in message label)
+   */
+  void setFinishedFail(const QString & msg)
+  {
+    setMessage(msg);
+    setFinishedFail();
+  }
+
+  /*! \brief Turn to Fail state and display a message (in message label)
+   */
+  void setFinishedFail(const mdtError & msg)
+  {
+    setMessage(msg);
+    setFinishedFail();
+  }
+
+  /*! \brief Reset to Initial state
+   */
+  void reset();
+
+  /*! \brief Get test step state
+   */
+  State_t state() const
+  {
+    return pvState;
+  }
 
   /*! \brief Get last error
    */
@@ -62,6 +174,39 @@ class mdtTtTestStep : public QObject
   {
     return pvLastError;
   }
+
+ public slots:
+
+  /*! \brief Run or abort test step
+   *
+   * Depending on state and abortSupported flag,
+   *  runCalled() or abortCalled() will be emitted.
+   *
+   * Note: only signal is emitted, state is not updated.
+   */
+  void runAbort();
+
+ signals:
+
+  /*! \brief Emitted when run function was clicked
+   */
+  void runCalled();
+
+  /*! \brief Emitted when abort function was clicked
+   */
+  void abortCalled();
+
+  /*! \brief Emitted when test step has started
+   *
+   * \param ts this test step
+   */
+  void started(mdtTtTestStep* ts);
+
+  /*! \brief Emitted when test step has stopped (normally finished or aborted)
+   *
+   * \param ts this test step
+   */
+  void stopped(mdtTtTestStep* ts);
 
  protected:
 
@@ -96,12 +241,20 @@ class mdtTtTestStep : public QObject
    */
   mdtError pvLastError;
 
+ private slots:
+
+  /*! \brief Set widget pointer null when it is destroyed
+   */
+  void setWidgetNull();
+
  private:
 
   Q_DISABLE_COPY(mdtTtTestStep);
 
+  State_t pvState;
   std::shared_ptr<mdtTtTestNodeManager> pvTestNodeManager;
   mdtTtTestStepWidget *pvWidget;
+  bool pvAbortSupported;
 };
 
 #endif // #ifndef MDT_TT_TEST_STEP_H

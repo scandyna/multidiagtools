@@ -48,7 +48,7 @@ void mdtTtTestStepContainerWidget::setRunAbortEnabled(bool enable)
 {
   for(auto *w : pvStepWidgets){
     Q_ASSERT(w != nullptr);
-    w->setRunAbortEnabled(enable);
+    ///w->setRunAbortEnabled(enable);
   }
 }
 
@@ -59,7 +59,7 @@ void mdtTtTestStepContainerWidget::disableRunAbortOfOtherWidgets(mdtTtTestStepWi
   for(auto *w : pvStepWidgets){
     Q_ASSERT(w != nullptr);
     if(w != callerWidget){
-      w->setRunAbortEnabled(false);
+      ///w->setRunAbortEnabled(false);
     }
   }
 }

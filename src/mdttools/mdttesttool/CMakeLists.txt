@@ -34,6 +34,7 @@ set (TT_HEADER_FILES
           mdtTtBasicTestNodeCalibrationWindow.h
           mdtTtValueEditionDialog.h
           mdtTtTestStep.h
+          mdtTtTestStepContainer.h
           mdtTtTestStepWidget.h
           mdtTtTestStepContainerWidget.h
     )
@@ -83,6 +84,7 @@ set (TT_SOURCES_FILES
           mdtTtBasicTestNodeCalibrationWindow.cpp
           mdtTtValueEditionDialog.cpp
           mdtTtTestStep.cpp
+          mdtTtTestStepContainer.cpp
           mdtTtTestStepWidget.cpp
           mdtTtTestStepContainerWidget.cpp
     )

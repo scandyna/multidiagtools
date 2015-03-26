@@ -19,16 +19,123 @@
  **
  ****************************************************************************/
 #include "mdtTtTestStep.h"
+#include "mdtTtTestStepWidget.h"
 #include "mdtAlgorithms.h"
 
 mdtTtTestStep::mdtTtTestStep(const std::shared_ptr<mdtTtTestNodeManager> & tnm, mdtTtTestStepWidget* tsw, QObject* parent )
  : QObject(parent),
    pvTestNodeManager(tnm),
-   pvWidget(tsw)
+   pvWidget(tsw),
+   pvAbortSupported(false)
 {
   Q_ASSERT(pvTestNodeManager);
+  if(pvWidget != nullptr){
+    connect(pvWidget, SIGNAL(runAbortButtonClicked()), this, SLOT(runAbort()));
+    connect(pvWidget, SIGNAL(destroyed()), this, SLOT(setWidgetNull()));
+  }
+  reset();
 }
 
+void mdtTtTestStep::setTitle(const QString & text)
+{
+  if(pvWidget != nullptr){
+    pvWidget->setTitle(text);
+  }
+}
+
+void mdtTtTestStep::setMessage(const QString & msg)
+{
+  if(pvWidget != nullptr){
+    pvWidget->setMessage(msg);
+  }
+}
+
+void mdtTtTestStep::setMessage(const mdtError & error)
+{
+  QString msg = error.text();
+  if(!error.informativeText().isEmpty()){
+    msg += "\n" + error.informativeText();
+  }
+  setMessage(msg);
+}
+
+void mdtTtTestStep::clearMessage()
+{
+  if(pvWidget != nullptr){
+    pvWidget->clearMessage();
+  }
+}
+
+void mdtTtTestStep::setAbortSupported(bool support)
+{
+  pvAbortSupported = support;
+  if(pvWidget != nullptr){
+    pvWidget->setAbortSupported(support);
+  }
+}
+
+void mdtTtTestStep::setRunAbortEnabled(bool enable)
+{
+  if(pvWidget != nullptr){
+    pvWidget->setRunAbortButtonEnabled(enable);
+  }
+}
+
+void mdtTtTestStep::setRunning()
+{
+  pvState = State_t::Running;
+  if(pvWidget != nullptr){
+    pvWidget->setState(State_t::Running);
+  }
+  emit started(this);
+}
+
+void mdtTtTestStep::setFinishedSuccess()
+{
+  pvState = State_t::Success;
+  if(pvWidget != nullptr){
+    pvWidget->setState(State_t::Success);
+  }
+  emit stopped(this);
+}
+
+void mdtTtTestStep::setFinishedWarn()
+{
+  pvState = State_t::Warn;
+  if(pvWidget != nullptr){
+    pvWidget->setState(State_t::Warn);
+  }
+  emit stopped(this);
+}
+
+void mdtTtTestStep::setFinishedFail()
+{
+  pvState = State_t::Fail;
+  if(pvWidget != nullptr){
+    pvWidget->setState(State_t::Fail);
+  }
+  emit stopped(this);
+}
+
+void mdtTtTestStep::reset()
+{
+  pvState = State_t::Initial;
+  if(pvWidget != nullptr){
+    pvWidget->setState(State_t::Initial);
+  }
+  emit stopped(this);
+}
+
+void mdtTtTestStep::runAbort()
+{
+  if(pvState == State_t::Running){
+    if(pvAbortSupported){
+      emit abortCalled();
+    }
+  }else{
+    emit runCalled();
+  }
+}
 
 bool mdtTtTestStep::isInRange(const mdtValueDouble & x, double min, double max, const QString & valueUnit)
 {
@@ -46,4 +153,9 @@ bool mdtTtTestStep::isInRange(const mdtValueDouble & x, double min, double max, 
   }
 
   return true;
+}
+
+void mdtTtTestStep::setWidgetNull()
+{
+  pvWidget = nullptr;
 }

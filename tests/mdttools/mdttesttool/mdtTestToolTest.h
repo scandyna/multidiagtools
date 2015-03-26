@@ -51,6 +51,10 @@ class mdtTestToolTest : public mdtTest
 
   void mdtTtTestModelItemDataTest();
 
+  void testStepTest();
+  void testStepContainerTest();
+  void testStepContainerBenchmark();
+
   void mdtTtTestTest();
 
  private:

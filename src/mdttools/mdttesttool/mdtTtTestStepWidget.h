@@ -22,6 +22,7 @@
 #define MDT_TT_TEST_STEP_WIDGET_H
 
 #include "mdtError.h"
+#include "mdtTtTestStep.h"
 #include <QWidget>
 #include <QString>
 
@@ -30,24 +31,15 @@ class QLabel;
 
 class QGridLayout;
 
-/*! \brief Test item widget
+/*! \brief Test step widget
+ *
+ * This class should be used with mdtTtTestStep
  */
 class mdtTtTestStepWidget : public QWidget
 {
  Q_OBJECT
 
  public:
-
-  /*! \brief State
-   */
-  enum class State_t
-  {
-    Initial,  /*!< Initial is the state before test step was executed. */
-    Running,  /*!< Test step is running. */
-    Fail,     /*!< Test step was executed and failed. */
-    Warn,     /*!< Test step was exectued and the result is not so good. */
-    Success   /*!< Test step was exectued and the result good. */
-  };
 
   /*! \brief Constructor
    */
@@ -63,64 +55,87 @@ class mdtTtTestStepWidget : public QWidget
 
   /*! \brief Set message
    */
-  void setMessage(const mdtError & error);
+//   void setMessage(const mdtError & error);
 
   /*! \brief Clear message
    */
   void clearMessage();
+
+  /*! \brief Set abortSupported flag
+   *
+   * Default is false.
+   */
+  void setAbortSupported(bool support);
+
+  /*! \brief Set Run/Abort button enabled
+   *
+   * When button is disabled by this function,
+   *  it will still disabled until it is re-enabled.
+   *  When button is enabled by this function,
+   *  it is handled regarding state set with setState().
+   */
+  void setRunAbortButtonEnabled(bool enable);
 
   /*! \brief Turn to Running state
    *
    * Note: if user clicked the run/abort button,
    *  this is done automatically.
    */
-  void setRunning();
+//   void setRunning();
 
   /*! \brief Turn to Success state
    */
-  void setFinishedSuccess();
+//   void setFinishedSuccess();
 
   /*! \brief Turn to Warn state
    */
-  void setFinishedWarn();
+//   void setFinishedWarn();
 
   /*! \brief Turn to Warn state and display a message (in message label)
    */
-  void setFinishedWarn(const QString & msg);
+//   void setFinishedWarn(const QString & msg);
 
   /*! \brief Turn to Warn state and display a message (in message label)
    */
-  void setFinishedWarn(const mdtError & msg);
+//   void setFinishedWarn(const mdtError & msg);
 
   /*! \brief Turn to Fail state
    */
-  void setFinishedFail();
-
-  /*! \brief Turn to Fail state and display a message (in message label)
-   */
-  void setFinishedFail(const QString & msg);
-
-  /*! \brief Turn to Fail state and display a message (in message label)
-   */
-  void setFinishedFail(const mdtError & msg);
+//   void setFinishedFail();
+// 
+//   /*! \brief Turn to Fail state and display a message (in message label)
+//    */
+//   void setFinishedFail(const QString & msg);
+// 
+//   /*! \brief Turn to Fail state and display a message (in message label)
+//    */
+//   void setFinishedFail(const mdtError & msg);
 
   /*! \brief Reset to Initial state
    */
-  void reset();
+//   void reset();
 
   /*! \brief Enable or disable Run/Abort function
    */
-  void setRunAbortEnabled(bool enable);
+  //void setRunAbortEnabled(bool enable);
+
+  /*! \brief Set state
+   */
+  void setState(mdtTtTestStep::State_t state);
 
  signals:
 
-  /*! \brief Emitted when run function was clicked
+  /*! \brief Emitted when Run/Abort button was clicked
    */
-  void runCalled();
+  void runAbortButtonClicked();
 
-  /*! \brief Emitted when abort function was clicked
-   */
-  void abortCalled();
+//   /*! \brief Emitted when run function was clicked
+//    */
+//   void runCalled();
+// 
+//   /*! \brief Emitted when abort function was clicked
+//    */
+//   void abortCalled();
 
   /*! \brief Emitted when test item has started
    *
@@ -134,11 +149,11 @@ class mdtTtTestStepWidget : public QWidget
    */
   void finished(mdtTtTestStepWidget *w);
 
- private slots:
-
-  /*! \brief
-   */
-  void runAbort();
+//  private slots:
+// 
+//   /*! \brief
+//    */
+//   void runAbort();
 
  private:
 
@@ -162,11 +177,19 @@ class mdtTtTestStepWidget : public QWidget
    */
   void setStateSuccess();
 
+  /*! \brief Update Run/Abort button enabled state
+   *
+   * Enabled state is set regarding pvRunAbortButtonEnabled, pvState and pvAbortSupported
+   */
+  void updateRunAbortButtonEnabledState();
+
   Q_DISABLE_COPY(mdtTtTestStepWidget);
 
-  State_t pvState;
+  mdtTtTestStep::State_t pvState;
   QGridLayout *pvLayout;
   QPushButton *pbRunAbort;
+  bool pvRunAbortButtonEnabled;
+  bool pvAbortSupported;
   QLabel *lbTitle;
   QLabel *lbState;
   QLabel *lbMessage;

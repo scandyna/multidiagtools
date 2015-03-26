@@ -39,6 +39,10 @@
 #include "mdtDeviceContainer.h"
 #include "mdtDeviceContainerWidget.h"
 #include "mdtDeviceU3606A.h"
+#include "mdtTtTestStep.h"
+#include "mdtTtTestStepContainer.h"
+#include "mdtTtTestStepWidget.h"
+
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -1079,6 +1083,109 @@ void mdtTestToolTest::mdtTtTestModelItemDataTest()
   QVERIFY(!data.contains("Id_PK"));
   QVERIFY(data.value("Id_PK").isNull());
   QCOMPARE(data.routeDataList().size(), 0);
+}
+
+void mdtTestToolTest::testStepTest()
+{
+  std::shared_ptr<mdtTtTestNodeManager> tnm(new mdtTtTestNodeManager(0, pvDatabaseManager.database()));
+
+  /*
+   * Check test step without widget
+   */
+  mdtTtTestStep ts1(tnm);
+  // Initial state
+  QVERIFY(ts1.state() == mdtTtTestStep::State_t::Initial);
+  QVERIFY(!ts1.abortSupported());
+  /// ...
+  ts1.setRunning();
+  QVERIFY(ts1.state() == mdtTtTestStep::State_t::Running);
+  ts1.reset();
+  QVERIFY(ts1.state() == mdtTtTestStep::State_t::Initial);
+  /*
+   * Check with a test step widget
+   *  -> check when test step is destroyed first
+   */
+  mdtTtTestStepWidget tsw;
+  mdtTtTestStep *ts2 = new mdtTtTestStep(tnm, &tsw);
+  tsw.show();
+  // Initial state
+  QVERIFY(ts2->state() == mdtTtTestStep::State_t::Initial);
+  QVERIFY(!ts2->abortSupported());
+  /// ...
+  ts2->setRunning();
+  QVERIFY(ts2->state() == mdtTtTestStep::State_t::Running);
+  QTest::qWait(2000);
+  ts2->reset();
+  QVERIFY(ts2->state() == mdtTtTestStep::State_t::Initial);
+
+  // Delete ts2
+  delete ts2;
+  ts2 = nullptr;
+  // Here, tsw must be valid anymore
+
+  /*
+   * Check with a test step widget
+   *  -> check when test step widget is destroyed first
+   */
+  mdtTtTestStepWidget *tsw3 = new mdtTtTestStepWidget;
+  mdtTtTestStep ts3(tnm, tsw3);
+  tsw3->show();
+  // Initial state
+  QVERIFY(ts3.state() == mdtTtTestStep::State_t::Initial);
+  QVERIFY(!ts3.abortSupported());
+  /// ...
+  ts3.setRunning();
+  QVERIFY(ts3.state() == mdtTtTestStep::State_t::Running);
+  QTest::qWait(2000);
+  ts3.reset();
+  QVERIFY(ts3.state() == mdtTtTestStep::State_t::Initial);
+
+  // Delete tsw3
+  delete tsw3;
+  tsw3 = nullptr;
+  // Check that running noew does not crash
+  ts3.setRunning();
+  QVERIFY(ts3.state() == mdtTtTestStep::State_t::Running);
+
+  QTest::qWait(2000);
+  
+  // Play
+  /*
+  while(tsw.isVisible()){
+    QTest::qWait(500);
+  }
+  */
+}
+
+void mdtTestToolTest::testStepContainerTest()
+{
+  mdtTtTestStepContainer tsc;
+  std::shared_ptr<mdtTtTestStep> ts;
+  std::shared_ptr<mdtTtTestNodeManager> tnm(new mdtTtTestNodeManager(0, pvDatabaseManager.database()));
+
+  // Initial state
+  QCOMPARE(tsc.count(), 0);
+  // Create a test step
+  ts = tsc.addStep(tnm);
+  QVERIFY(ts.get() != nullptr);
+}
+
+void mdtTestToolTest::testStepContainerBenchmark()
+{
+  mdtTtTestStepContainer tsc;
+  std::shared_ptr<mdtTtTestStep> ts;
+  std::shared_ptr<mdtTtTestNodeManager> tnm(new mdtTtTestNodeManager(0, pvDatabaseManager.database()));
+
+  tsc.addStep(tnm);
+  tsc.addStep(tnm);
+  tsc.addStep(tnm);
+
+  QBENCHMARK{
+    for(int i = 0; i < tsc.count(); ++i){
+      ts = tsc.step(i);
+      ts->reset();
+    }
+  }
 }
 
 void mdtTestToolTest::mdtTtTestTest()
