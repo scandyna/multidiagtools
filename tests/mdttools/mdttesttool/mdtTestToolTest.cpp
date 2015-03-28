@@ -42,13 +42,14 @@
 #include "mdtTtTestStep.h"
 #include "mdtTtTestStepContainer.h"
 #include "mdtTtTestStepWidget.h"
-
+#include "mdtTtTestStepContainerWidget.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QSqlField>
 #include <QSqlError>
 #include <QWidget>
+#include <QScrollArea>
 #include <QDialog>
 #include <QLineEdit>
 #include <QSpinBox>
@@ -1096,6 +1097,7 @@ void mdtTestToolTest::testStepTest()
   // Initial state
   QVERIFY(ts1.state() == mdtTtTestStep::State_t::Initial);
   QVERIFY(!ts1.abortSupported());
+  QVERIFY(ts1.widget() == nullptr);
   /// ...
   ts1.setRunning();
   QVERIFY(ts1.state() == mdtTtTestStep::State_t::Running);
@@ -1111,6 +1113,7 @@ void mdtTestToolTest::testStepTest()
   // Initial state
   QVERIFY(ts2->state() == mdtTtTestStep::State_t::Initial);
   QVERIFY(!ts2->abortSupported());
+  QVERIFY(ts2->widget() == &tsw);
   /// ...
   ts2->setRunning();
   QVERIFY(ts2->state() == mdtTtTestStep::State_t::Running);
@@ -1122,6 +1125,7 @@ void mdtTestToolTest::testStepTest()
   delete ts2;
   ts2 = nullptr;
   // Here, tsw must be valid anymore
+  tsw.setMessage("tsw after delete of test step");
 
   /*
    * Check with a test step widget
@@ -1133,6 +1137,7 @@ void mdtTestToolTest::testStepTest()
   // Initial state
   QVERIFY(ts3.state() == mdtTtTestStep::State_t::Initial);
   QVERIFY(!ts3.abortSupported());
+  QVERIFY(ts3.widget() == tsw3);
   /// ...
   ts3.setRunning();
   QVERIFY(ts3.state() == mdtTtTestStep::State_t::Running);
@@ -1143,6 +1148,7 @@ void mdtTestToolTest::testStepTest()
   // Delete tsw3
   delete tsw3;
   tsw3 = nullptr;
+  QVERIFY(ts3.widget() == nullptr);
   // Check that running noew does not crash
   ts3.setRunning();
   QVERIFY(ts3.state() == mdtTtTestStep::State_t::Running);
@@ -1163,11 +1169,98 @@ void mdtTestToolTest::testStepContainerTest()
   std::shared_ptr<mdtTtTestStep> ts;
   std::shared_ptr<mdtTtTestNodeManager> tnm(new mdtTtTestNodeManager(0, pvDatabaseManager.database()));
 
-  // Initial state
+  /*
+   * Setup test step container widget
+   */
+  QScrollArea *sa = new QScrollArea;
+  sa->setWidgetResizable(true);
+  mdtTtTestStepContainerWidget *tscw = new mdtTtTestStepContainerWidget;
+  tscw->setContainer(&tsc);
+  sa->setWidget(tscw);
+  sa->resize(700, 400);
+  sa->show();
+  /*
+   * Create test steps
+   */
+  // Initial state of container
   QCOMPARE(tsc.count(), 0);
-  // Create a test step
-  ts = tsc.addStep(tnm);
+  QVERIFY(tsc.state() == mdtTtTestStep::State_t::Initial);
+  // Create a test step - use version that accepts index
+  ts = tsc.addStep(0, tnm, new mdtTtTestStepWidget);
+  QCOMPARE(tsc.count(), 1);
   QVERIFY(ts.get() != nullptr);
+  ts->setTitle("Test step 1");
+  // Create a test step - use version that accepts index
+  ts = tsc.addStep(1, tnm, new mdtTtTestStepWidget);
+  QCOMPARE(tsc.count(), 2);
+  QVERIFY(ts.get() != nullptr);
+  ts->setTitle("Test step 2");
+  // Create a test step
+  ts = tsc.addStep(tnm, new mdtTtTestStepWidget);
+  QCOMPARE(tsc.count(), 3);
+  QVERIFY(ts.get() != nullptr);
+  ts->setTitle("Test step 3");
+  // Check global state
+  QVERIFY(tsc.state() == mdtTtTestStep::State_t::Initial);
+  
+  
+  ///QTest::qWait(2000);
+  /*
+   * Run steps
+   *  - step 1 succeed
+   *  - step 2 finishes with warn
+   *  - step 3 fails
+   */
+  // Run step 1
+  tsc.step(0)->setRunning();
+  QVERIFY(tsc.state() == mdtTtTestStep::State_t::Running);
+  ///QTest::qWait(2000);
+  tsc.step(0)->setFinishedSuccess();
+  QVERIFY(tsc.state() == mdtTtTestStep::State_t::Initial);
+  // Run step 2
+  tsc.step(1)->setRunning();
+  QVERIFY(tsc.state() == mdtTtTestStep::State_t::Running);
+  ///QTest::qWait(2000);
+  tsc.step(1)->setFinishedWarn("Just limit");
+  QVERIFY(tsc.state() == mdtTtTestStep::State_t::Warn);
+  // Run step 3
+  tsc.step(2)->setRunning();
+  QVERIFY(tsc.state() == mdtTtTestStep::State_t::Running);
+  ///QTest::qWait(2000);
+  tsc.step(2)->setFinishedFail("Failure");
+  QVERIFY(tsc.state() == mdtTtTestStep::State_t::Fail);
+  /*
+   * Run steps - all steps succeed
+   */
+  ///QTest::qWait(2000);
+  tsc.step(0)->reset();
+  tsc.step(1)->reset();
+  tsc.step(2)->reset();
+  // Run step 1
+  tsc.step(0)->setRunning();
+  QVERIFY(tsc.state() == mdtTtTestStep::State_t::Running);
+  ///QTest::qWait(2000);
+  tsc.step(0)->setFinishedSuccess();
+  QVERIFY(tsc.state() == mdtTtTestStep::State_t::Initial);
+  // Run step 2
+  tsc.step(1)->setRunning();
+  QVERIFY(tsc.state() == mdtTtTestStep::State_t::Running);
+  ///QTest::qWait(2000);
+  tsc.step(1)->setFinishedSuccess();
+  QVERIFY(tsc.state() == mdtTtTestStep::State_t::Initial);
+  // Run step 3
+  tsc.step(2)->setRunning();
+  QVERIFY(tsc.state() == mdtTtTestStep::State_t::Running);
+  ///QTest::qWait(2000);
+  tsc.step(2)->setFinishedSuccess();
+  QVERIFY(tsc.state() == mdtTtTestStep::State_t::Success);
+
+  // Play
+  /*
+  while(sa->isVisible()){
+    QTest::qWait(500);
+  }
+  */
 }
 
 void mdtTestToolTest::testStepContainerBenchmark()
@@ -1175,6 +1268,7 @@ void mdtTestToolTest::testStepContainerBenchmark()
   mdtTtTestStepContainer tsc;
   std::shared_ptr<mdtTtTestStep> ts;
   std::shared_ptr<mdtTtTestNodeManager> tnm(new mdtTtTestNodeManager(0, pvDatabaseManager.database()));
+  mdtTtTestStep::State_t globalState;
 
   tsc.addStep(tnm);
   tsc.addStep(tnm);
@@ -1185,7 +1279,9 @@ void mdtTestToolTest::testStepContainerBenchmark()
       ts = tsc.step(i);
       ts->reset();
     }
+    globalState = tsc.state();
   }
+  QVERIFY(globalState == mdtTtTestStep::State_t::Initial);
 }
 
 void mdtTestToolTest::mdtTtTestTest()

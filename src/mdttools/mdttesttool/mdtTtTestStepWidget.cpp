@@ -35,6 +35,7 @@ mdtTtTestStepWidget::mdtTtTestStepWidget(QWidget* parent)
   // Setup run/abort button
   pbRunAbort = new QPushButton;
 //   connect(pbRunAbort, SIGNAL(clicked()), this, SLOT(runAbort()));
+  connect(pbRunAbort, SIGNAL(clicked()), this, SIGNAL(runAbortButtonClicked()));
   pvLayout->addWidget(pbRunAbort, 0, 0);
   pvRunAbortButtonEnabled = true;
   pvAbortSupported = false;

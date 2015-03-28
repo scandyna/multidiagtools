@@ -21,11 +21,12 @@
 #ifndef MDT_TT_TEST_STEP_CONTAINER_H
 #define MDT_TT_TEST_STEP_CONTAINER_H
 
+#include "mdtTtTestStep.h"
 #include <QObject>
 #include <vector>
 #include <memory>
+#include <algorithm>
 
-class mdtTtTestStep;
 class mdtTtTestStepWidget;
 class mdtTtTestNodeManager;
 
@@ -42,8 +43,57 @@ class mdtTtTestStepContainer : public QObject
   mdtTtTestStepContainer(QObject *parent = 0);
 
   /*! \brief Create and add a test step
+   *
+   * The newly created test step is added at the end of the container.
+   *  Be carefull when using the variant that accepts index argument.
    */
-  std::shared_ptr<mdtTtTestStep> addStep(const std::shared_ptr<mdtTtTestNodeManager> & tnm, mdtTtTestStepWidget *tsw = nullptr);
+  std::shared_ptr<mdtTtTestStep> addStep(const std::shared_ptr<mdtTtTestNodeManager> & tnm, mdtTtTestStepWidget *tsw = nullptr)
+  {
+    return addStep<mdtTtTestStep>(tnm, tsw);
+  }
+
+  /*! \brief Create and add a user defined test step
+   *
+   * The newly created test step is added at the end of the container.
+   *  Be carefull when using the variant that accepts index argument.
+   */
+  template<typename T>
+  std::shared_ptr<T> addStep(const std::shared_ptr<mdtTtTestNodeManager> & tnm, mdtTtTestStepWidget *tsw = nullptr)
+  {
+    auto ts = createStep<T>(tnm, tsw);
+
+    pvSteps.emplace_back(ts);
+
+    return ts;
+  }
+
+  /*! \brief Create and add a test step
+   *
+   * This version is usefull if, f.ex., a enum is used to find test steps.
+   *  When using this function, be carefull to not let some indices with no test step.
+   *  This function does not care about this.
+   */
+  std::shared_ptr<mdtTtTestStep> addStep(int index, const std::shared_ptr<mdtTtTestNodeManager> & tnm, mdtTtTestStepWidget *tsw = nullptr)
+  {
+    return addStep<mdtTtTestStep>(index, tnm, tsw);
+  }
+
+  /*! \brief Create and add a user defined test step
+   *
+   * This version is usefull if, f.ex., a enum is used to find test steps.
+   *  When using this function, be carefull to not let some indices with no test step.
+   *  This function does not care about this.
+   */
+  template<typename T>
+  std::shared_ptr<T> addStep(int index, const std::shared_ptr<mdtTtTestNodeManager> & tnm, mdtTtTestStepWidget *tsw = nullptr)
+  {
+    auto ts = createStep<T>(tnm, tsw);
+    auto it = pvSteps.begin();
+
+    pvSteps.insert(it + index, ts);
+
+    return ts;
+  }
 
   /*! \brief Get test step at given index
    *
@@ -52,7 +102,18 @@ class mdtTtTestStepContainer : public QObject
   std::shared_ptr<mdtTtTestStep> step(int index)
   {
     Q_ASSERT( (index >= 0)&&(index < count()) );
+    Q_ASSERT(pvSteps[index]);
     return pvSteps[index];
+  }
+
+  /*! \brief Get user defined test step at given index
+   *
+   * \pre index must be valid (0 <= index < count)
+   */
+  template<typename T>
+  std::shared_ptr<T> step(int index)
+  {
+    return std::dynamic_pointer_cast<T>(step(index));
   }
 
   /*! \brief Get count of test steps
@@ -66,11 +127,33 @@ class mdtTtTestStepContainer : public QObject
    */
   void clear();
 
+  /*! \brief Check global state reagrding all test steps
+   *
+   * Will check state of all test steps, and return a global state.
+   *  To determine the global state, following rules are applied:
+   *  - 1) If one step has Running state, global state is Running
+   *  - 2) If one step has Fail state, global state is Fail
+   *  - 3) If one step has Warn state, global state is Warn
+   *  - 4) If one step has Initial state, global state is Initial
+   *  - 5) Global state is Success
+   */
+  mdtTtTestStep::State_t state() const;
+
   /*! \brief Set Run/Abort function enabled for all test steps
    *
    * See mdtTtTestStepWidget::setRunAbortButtonEnabled().
    */
   void setRunAbortEnabled(bool enable);
+
+ signals:
+
+  /*! \brief Emitted when a test step with a widget was added to container
+   */
+  void stepWidgetAdded(mdtTtTestStepWidget *tsw);
+
+  /*! \brief Emitted when a test step with a widget was removed from container
+   */
+//   void stepWidgetRemoved(mdtTtTestStepWidget *tsw);
 
  private slots:
 
@@ -83,6 +166,29 @@ class mdtTtTestStepContainer : public QObject
   void enableRunAbortOfAllSteps();
 
  private:
+
+  /*! \brief Create a test step
+   */
+  template<typename T>
+  std::shared_ptr<T> createStep(const std::shared_ptr<mdtTtTestNodeManager> & tnm, mdtTtTestStepWidget *tsw = nullptr)
+  {
+    std::shared_ptr<T> ts(new T(tnm, tsw));
+
+    connect(ts.get(), SIGNAL(started(mdtTtTestStep*)), this, SLOT(disableRunAbortOfOtherSteps(mdtTtTestStep*)));
+    connect(ts.get(), SIGNAL(stopped(mdtTtTestStep*)), this, SLOT(enableRunAbortOfAllSteps()));
+    if(tsw != nullptr){
+      emit stepWidgetAdded(tsw);
+    }
+
+    return ts;
+  }
+
+  /*! \brief Check if state exists in vector
+   */
+  inline bool containsState(const std::vector<mdtTtTestStep::State_t> & v, mdtTtTestStep::State_t s) const
+  {
+    return std::find(v.cbegin(), v.cend(), s) != v.cend();
+  }
 
   Q_DISABLE_COPY(mdtTtTestStepContainer);
 

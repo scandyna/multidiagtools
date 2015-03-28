@@ -71,6 +71,16 @@ class mdtTtTestStep : public QObject
    */
   mdtTtTestStep(const std::shared_ptr<mdtTtTestNodeManager> & tnm, mdtTtTestStepWidget *tsw = nullptr, QObject *parent = nullptr);
 
+  /*! \brief Access test step widget
+   *
+   * Returns the widget that was passed in cionstructor,
+   *  wich can also be a nullptr.
+   */
+  mdtTtTestStepWidget* widget()
+  {
+    return pvWidget;
+  }
+
   /*! \brief Set title
    */
   void setTitle(const QString & text);
@@ -215,7 +225,7 @@ class mdtTtTestStep : public QObject
   std::shared_ptr<mdtTtTestNodeManager> testNodeManager()
   {
     Q_ASSERT(pvTestNodeManager);
-    return testNodeManager();
+    return pvTestNodeManager;
   }
 
   /*! \brief Get a device from test node manager's global device container

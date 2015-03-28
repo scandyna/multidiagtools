@@ -19,26 +19,79 @@
  **
  ****************************************************************************/
 #include "mdtTtTestStepContainer.h"
-#include "mdtTtTestStep.h"
 
 mdtTtTestStepContainer::mdtTtTestStepContainer(QObject* parent)
  : QObject(parent)
 {
 }
 
-std::shared_ptr<mdtTtTestStep> mdtTtTestStepContainer::addStep(const std::shared_ptr<mdtTtTestNodeManager> & tnm, mdtTtTestStepWidget* tsw)
-{
-  std::shared_ptr<mdtTtTestStep> ts(new mdtTtTestStep(tnm, tsw));
-  connect(ts.get(), SIGNAL(started(mdtTtTestStep*)), this, SLOT(disableRunAbortOfOtherSteps(mdtTtTestStep*)));
-  connect(ts.get(), SIGNAL(stopped(mdtTtTestStep*)), this, SLOT(enableRunAbortOfAllSteps()));
-  pvSteps.emplace_back(ts);
+// std::shared_ptr<mdtTtTestStep> mdtTtTestStepContainer::addStep(const std::shared_ptr<mdtTtTestNodeManager> & tnm, mdtTtTestStepWidget* tsw)
+// {
+//   auto ts = createStep<mdtTtTestStep>(tnm, tsw);
+// 
+//   pvSteps.emplace_back(ts);
+// 
+//   return ts;
+// }
 
-  return ts;
-}
+// std::shared_ptr<mdtTtTestStep> mdtTtTestStepContainer::addStep(int index, const std::shared_ptr<mdtTtTestNodeManager> & tnm, mdtTtTestStepWidget* tsw )
+// {
+//   auto ts = createStep<mdtTtTestStep>(tnm, tsw);
+//   auto it = pvSteps.begin();
+// 
+//   pvSteps.insert(it + index, ts);
+// 
+//   return ts;
+// }
+
+// std::shared_ptr< mdtTtTestStep > mdtTtTestStepContainer::createStep(const std::shared_ptr<mdtTtTestNodeManager> & tnm, mdtTtTestStepWidget* tsw)
+// {
+//   std::shared_ptr<mdtTtTestStep> ts(new mdtTtTestStep(tnm, tsw));
+// 
+//   connect(ts.get(), SIGNAL(started(mdtTtTestStep*)), this, SLOT(disableRunAbortOfOtherSteps(mdtTtTestStep*)));
+//   connect(ts.get(), SIGNAL(stopped(mdtTtTestStep*)), this, SLOT(enableRunAbortOfAllSteps()));
+//   if(tsw != nullptr){
+//     emit stepWidgetAdded(tsw);
+//   }
+// 
+//   return ts;
+// }
 
 void mdtTtTestStepContainer::clear()
 {
   pvSteps.clear();
+}
+
+mdtTtTestStep::State_t mdtTtTestStepContainer::state() const
+{
+  if(pvSteps.empty()){
+    return mdtTtTestStep::State_t::Initial;
+  }
+  /*
+   * We make it simple here:
+   *  - Copy all states to a vector
+   *  - Use std::find (using containsState helper function) in the correct order (priority) to determine global state
+   */
+  // Copy states of each stest step
+  std::vector<mdtTtTestStep::State_t> allStates;
+  for(auto & ts : pvSteps){
+    Q_ASSERT(ts);
+    allStates.emplace_back(ts->state());
+  }
+  // Determine global state
+  if(containsState(allStates, mdtTtTestStep::State_t::Running)){
+    return mdtTtTestStep::State_t::Running;
+  }
+  if(containsState(allStates, mdtTtTestStep::State_t::Fail)){
+    return mdtTtTestStep::State_t::Fail;
+  }
+  if(containsState(allStates, mdtTtTestStep::State_t::Warn)){
+    return mdtTtTestStep::State_t::Warn;
+  }
+  if(containsState(allStates, mdtTtTestStep::State_t::Initial)){
+    return mdtTtTestStep::State_t::Initial;
+  }
+  return mdtTtTestStep::State_t::Success;
 }
 
 void mdtTtTestStepContainer::setRunAbortEnabled(bool enable)

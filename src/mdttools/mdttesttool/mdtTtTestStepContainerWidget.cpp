@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtTtTestStepContainerWidget.h"
+#include "mdtTtTestStepContainer.h"
 
 #include <QLabel>
 
@@ -26,8 +27,18 @@ mdtTtTestStepContainerWidget::mdtTtTestStepContainerWidget(QWidget* parent)
  : QWidget(parent),
    pvLayout(new QVBoxLayout)
 {
+  pvLayout->addStretch(1);
   setLayout(pvLayout);
 }
+
+void mdtTtTestStepContainerWidget::setContainer(mdtTtTestStepContainer* c)
+{
+  Q_ASSERT(c != nullptr);
+
+  connect(c, SIGNAL(stepWidgetAdded(mdtTtTestStepWidget*)), this, SLOT(addStepWidget(mdtTtTestStepWidget*)));
+}
+
+
 
 void mdtTtTestStepContainerWidget::addItem(mdtTtTestStepWidget* w)
 {
@@ -39,10 +50,10 @@ void mdtTtTestStepContainerWidget::addItem(mdtTtTestStepWidget* w)
   pvStepWidgets.append(w);
 }
 
-void mdtTtTestStepContainerWidget::addStretch()
-{
-  pvLayout->addStretch(1);
-}
+// void mdtTtTestStepContainerWidget::addStretch()
+// {
+//   pvLayout->addStretch(1);
+// }
 
 void mdtTtTestStepContainerWidget::setRunAbortEnabled(bool enable)
 {
@@ -51,6 +62,16 @@ void mdtTtTestStepContainerWidget::setRunAbortEnabled(bool enable)
     ///w->setRunAbortEnabled(enable);
   }
 }
+
+void mdtTtTestStepContainerWidget::addStepWidget(mdtTtTestStepWidget* tsw)
+{
+  Q_ASSERT(tsw != nullptr);
+  Q_ASSERT(pvLayout->count() > 0);  // A stretch was added in constructor
+
+  ///pvLayout->addWidget(tsw);
+  pvLayout->insertWidget(pvLayout->count()-1, tsw);
+}
+
 
 void mdtTtTestStepContainerWidget::disableRunAbortOfOtherWidgets(mdtTtTestStepWidget* callerWidget)
 {

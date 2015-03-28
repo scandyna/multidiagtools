@@ -1,6 +1,6 @@
 format 209
 "mdttesttool" // mdttools::mdttesttool
-  revision 67
+  revision 68
   modified_by 2 "philippe"
   // class settings
   
@@ -6384,10 +6384,12 @@ ${inlines}
 
       operation 2497666 "addStep"
 	public return_type class_ref 1565314 // mdtTtTestStep
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+	nparams 2
+	  param in name "tnm" type class_ref 1302018 // mdtTtTestNodeManager
+	  param in name "tsw" type class_ref 1558402 // mdtTtTestStepWidget
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -6435,6 +6437,23 @@ ${inlines}
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2505986 "stepWidgetAdded"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "tsw" type class_ref 1558402 // mdtTtTestStepWidget
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -6511,6 +6530,40 @@ ${inlines}
 	mysql_decl ""
 	MysqlColumn
       end
+
+      operation 2506498 "setContainer"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "c" type class_ref 1565442 // mdtTtTestStepContainer
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2506242 "addStepWidget"
+	stereotype "slot"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "tsw" type class_ref 1558402 // mdtTtTestStepWidget
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
     end
   end
 

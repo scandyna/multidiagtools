@@ -26,6 +26,8 @@
 #include <QVBoxLayout>
 #include <QList>
 
+class mdtTtTestStepContainer;
+
 /*! \brief Widget that contains mdtTtTestStepWidget items
  *
  * Note: if this widget is used in a QScrollArea,
@@ -43,17 +45,31 @@ class mdtTtTestStepContainerWidget : public QWidget
    */
   mdtTtTestStepContainerWidget(QWidget *parent = 0);
 
+  /*! \brief Set test step container
+   *
+   * Given container will signal when a widget is added,
+   *  and this widget will also be added to widgets layout.
+   */
+  void setContainer(mdtTtTestStepContainer *c);
+  
+  
   /*! \brief Add a test item widget
    */
   void addItem(mdtTtTestStepWidget *w);
 
   /*! \brief Add a stretch to internal layout
    */
-  void addStretch();
+//   void addStretch();
 
   /*! \brief Enable or disable run/abort function of all widgets
    */
   void setRunAbortEnabled(bool enable);
+
+ public slots:
+
+  /*! \brief Add a test step widget
+   */
+  void addStepWidget(mdtTtTestStepWidget *tsw);
 
  private slots:
 

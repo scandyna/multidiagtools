@@ -22,7 +22,7 @@ relationcanvas 128258 relation_ref 1925122 // <generalisation>
 end
 relationcanvas 128770 relation_ref 1925378 // <generalisation>
   geometry VHV
-  from ref 128642 z 2007 to point 167 135
+  from ref 128642 z 2007 to point 256 135
   line 129410 z 2007 to point 419 135
   line 129538 z 2007 to ref 128130
   no_role_a no_role_b
