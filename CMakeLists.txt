@@ -49,8 +49,10 @@ set(MDTLIB_VERSION_SUFFIX "-${MDTLIB_VERSION_MAJOR}.${MDTLIB_VERSION_MINOR}")
 
 # Config file
 configure_file (
-  "${PROJECT_SOURCE_DIR}/config.h.in"
-  "${PROJECT_SOURCE_DIR}/src/config.h"
+#  "${PROJECT_SOURCE_DIR}/config.h.in"
+#  "${PROJECT_SOURCE_DIR}/src/config.h"
+  "${CMAKE_SOURCE_DIR}/config.h.in"
+  "${CMAKE_BINARY_DIR}/src/config.h"
 )
 
 # Common flags for compiler
@@ -101,21 +103,36 @@ if(Boost_FOUND)
 endif(Boost_FOUND)
 
 # Headers directories
-include_directories("${CMAKE_CURRENT_BINARY_DIR}/src")
-include_directories("${PROJECT_SOURCE_DIR}/src/mdtutils")
-include_directories("${PROJECT_SOURCE_DIR}/src/mdtutilsgui")
+#include_directories("${CMAKE_CURRENT_BINARY_DIR}/src")
+include_directories("${PROJECT_SOURCE_DIR}/src")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtdatabase")
-include_directories("${PROJECT_SOURCE_DIR}/src/qt-solutions/qtsingleapplication")
-# NOTE: Support Windows pas terminé
-if(UNIX)
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtdevice")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtport")
-include_directories("${PROJECT_SOURCE_DIR}/src/mdtport/linux")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtserialport")
-include_directories("${PROJECT_SOURCE_DIR}/src/mdtserialport/linux")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdttools")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdttools/mdttesttool")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdttools/mdttesttool/mdtcablelist")
+include_directories("${PROJECT_SOURCE_DIR}/src/mdtutils")
+include_directories("${PROJECT_SOURCE_DIR}/src/mdtutilsgui")
+include_directories("${PROJECT_SOURCE_DIR}/src/qt-solutions/qtsingleapplication")
+# Because some headers are generated during building (config.h, Qt's UIC), we also add path to those
+include_directories("${CMAKE_BINARY_DIR}/src")
+include_directories("${CMAKE_BINARY_DIR}/src/mdtdatabase")
+include_directories("${CMAKE_BINARY_DIR}/src/mdtdevice")
+include_directories("${CMAKE_BINARY_DIR}/src/mdtport")
+include_directories("${CMAKE_BINARY_DIR}/src/mdtserialport")
+include_directories("${CMAKE_BINARY_DIR}/src/mdttools")
+include_directories("${CMAKE_BINARY_DIR}/src/mdttools/mdttesttool")
+include_directories("${CMAKE_BINARY_DIR}/src/mdttools/mdttesttool/mdtcablelist")
+include_directories("${CMAKE_BINARY_DIR}/src/mdtutils")
+include_directories("${CMAKE_BINARY_DIR}/src/mdtutilsgui")
+include_directories("${CMAKE_BINARY_DIR}/src/qt-solutions/qtsingleapplication")
+include_directories("${CMAKE_BINARY_DIR}/tests/mdtutilsgui")
+
+# NOTE: Support Windows pas terminé
+if(UNIX)
+include_directories("${PROJECT_SOURCE_DIR}/src/mdtport/linux")
+include_directories("${PROJECT_SOURCE_DIR}/src/mdtserialport/linux")
 endif(UNIX)
 
 #################################################################################################################################################

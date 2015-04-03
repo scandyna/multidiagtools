@@ -73,9 +73,19 @@ install(TARGETS "mdttools${MDTLIB_VERSION_SUFFIX}" DESTINATION "${LIB_DEST_DIR}"
 if(UNIX)
   add_custom_command(TARGET "mdttools${MDTLIB_VERSION_SUFFIX}"
                     POST_BUILD
-                    COMMAND objcopy --only-keep-debug "${PROJECT_SOURCE_DIR}/libmdttools${MDTLIB_VERSION_SUFFIX}.so" "${PROJECT_SOURCE_DIR}/libmdttools${MDTLIB_VERSION_SUFFIX}.dbg"
-                    COMMAND strip --strip-debug --strip-unneeded "${PROJECT_SOURCE_DIR}/libmdttools${MDTLIB_VERSION_SUFFIX}.so"
-                    COMMAND objcopy --add-gnu-debuglink="libmdttools${MDTLIB_VERSION_SUFFIX}.dbg" "${PROJECT_SOURCE_DIR}/libmdttools${MDTLIB_VERSION_SUFFIX}.so"
-                    COMMAND chmod -x "${PROJECT_SOURCE_DIR}/libmdttools${MDTLIB_VERSION_SUFFIX}.dbg")
-  install(FILES "${PROJECT_SOURCE_DIR}/libmdttools${MDTLIB_VERSION_SUFFIX}.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
+                    COMMAND objcopy --only-keep-debug "libmdttools${MDTLIB_VERSION_SUFFIX}.so" "libmdttools${MDTLIB_VERSION_SUFFIX}.dbg"
+                    COMMAND strip --strip-debug --strip-unneeded "libmdttools${MDTLIB_VERSION_SUFFIX}.so"
+                    COMMAND objcopy --add-gnu-debuglink="libmdttools${MDTLIB_VERSION_SUFFIX}.dbg" "libmdttools${MDTLIB_VERSION_SUFFIX}.so"
+                    COMMAND chmod -x "libmdttools${MDTLIB_VERSION_SUFFIX}.dbg")
+  install(FILES "libmdttools${MDTLIB_VERSION_SUFFIX}.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
 endif(UNIX)
+
+# if(UNIX)
+#   add_custom_command(TARGET "mdttools${MDTLIB_VERSION_SUFFIX}"
+#                     POST_BUILD
+#                     COMMAND objcopy --only-keep-debug "${PROJECT_SOURCE_DIR}/libmdttools${MDTLIB_VERSION_SUFFIX}.so" "${PROJECT_SOURCE_DIR}/libmdttools${MDTLIB_VERSION_SUFFIX}.dbg"
+#                     COMMAND strip --strip-debug --strip-unneeded "${PROJECT_SOURCE_DIR}/libmdttools${MDTLIB_VERSION_SUFFIX}.so"
+#                     COMMAND objcopy --add-gnu-debuglink="libmdttools${MDTLIB_VERSION_SUFFIX}.dbg" "${PROJECT_SOURCE_DIR}/libmdttools${MDTLIB_VERSION_SUFFIX}.so"
+#                     COMMAND chmod -x "${PROJECT_SOURCE_DIR}/libmdttools${MDTLIB_VERSION_SUFFIX}.dbg")
+#   install(FILES "${PROJECT_SOURCE_DIR}/libmdttools${MDTLIB_VERSION_SUFFIX}.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
+# endif(UNIX)

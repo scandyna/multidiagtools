@@ -129,6 +129,9 @@ add_library (mdtutils${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES} ${MOC_HEAD
 target_link_libraries(mdtutils${MDTLIB_VERSION_SUFFIX} ${QT_LIBRARIES})
 target_link_libraries(mdtutils${MDTLIB_VERSION_SUFFIX} "qtsingleapplication${MDTLIB_VERSION_SUFFIX}")
 
+# We must add current build directory in include list, else generated ui_*.h files will not be available
+#include_directories("${CMAKE_CURRENT_BINARY_DIR}")
+
 # Static version of the library
 #if(MDT_BUILD_STATIC_LIBS)
 #  add_library (mdtutils_static STATIC ${SOURCES_FILES} )
@@ -159,12 +162,31 @@ install(TARGETS "mdtutils${MDTLIB_VERSION_SUFFIX}" DESTINATION "${LIB_DEST_DIR}"
 if(UNIX)
   add_custom_command(TARGET "mdtutils${MDTLIB_VERSION_SUFFIX}"
                     POST_BUILD
-                    COMMAND objcopy --only-keep-debug "${PROJECT_SOURCE_DIR}/libmdtutils${MDTLIB_VERSION_SUFFIX}.so" "${PROJECT_SOURCE_DIR}/libmdtutils${MDTLIB_VERSION_SUFFIX}.dbg"
-                    COMMAND strip --strip-debug --strip-unneeded "${PROJECT_SOURCE_DIR}/libmdtutils${MDTLIB_VERSION_SUFFIX}.so"
-                    COMMAND objcopy --add-gnu-debuglink="libmdtutils${MDTLIB_VERSION_SUFFIX}.dbg" "${PROJECT_SOURCE_DIR}/libmdtutils${MDTLIB_VERSION_SUFFIX}.so"
-                    COMMAND chmod -x "${PROJECT_SOURCE_DIR}/libmdtutils${MDTLIB_VERSION_SUFFIX}.dbg")
-  install(FILES "${PROJECT_SOURCE_DIR}/libmdtutils${MDTLIB_VERSION_SUFFIX}.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
+                    COMMAND objcopy --only-keep-debug "libmdtutils${MDTLIB_VERSION_SUFFIX}.so" "libmdtutils${MDTLIB_VERSION_SUFFIX}.dbg"
+                    COMMAND strip --strip-debug --strip-unneeded "libmdtutils${MDTLIB_VERSION_SUFFIX}.so"
+                    COMMAND objcopy --add-gnu-debuglink="libmdtutils${MDTLIB_VERSION_SUFFIX}.dbg" "libmdtutils${MDTLIB_VERSION_SUFFIX}.so"
+                    COMMAND chmod -x "libmdtutils${MDTLIB_VERSION_SUFFIX}.dbg")
+  install(FILES "libmdtutils${MDTLIB_VERSION_SUFFIX}.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
 endif(UNIX)
+
+# if(UNIX)
+#   add_custom_command(TARGET "mdtutils${MDTLIB_VERSION_SUFFIX}"
+#                     POST_BUILD
+#                     COMMAND objcopy --only-keep-debug "${CMAKE_CURRENT_BINARY_DIR}/libmdtutils${MDTLIB_VERSION_SUFFIX}.so" "${CMAKE_CURRENT_BINARY_DIR}/libmdtutils${MDTLIB_VERSION_SUFFIX}.dbg"
+#                     COMMAND strip --strip-debug --strip-unneeded "${CMAKE_CURRENT_BINARY_DIR}/libmdtutils${MDTLIB_VERSION_SUFFIX}.so"
+#                     COMMAND objcopy --add-gnu-debuglink="libmdtutils${MDTLIB_VERSION_SUFFIX}.dbg" "${CMAKE_CURRENT_BINARY_DIR}/libmdtutils${MDTLIB_VERSION_SUFFIX}.so"
+#                     COMMAND chmod -x "${CMAKE_CURRENT_BINARY_DIR}/libmdtutils${MDTLIB_VERSION_SUFFIX}.dbg")
+#   install(FILES "${CMAKE_CURRENT_BINARY_DIR}/libmdtutils${MDTLIB_VERSION_SUFFIX}.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
+# endif(UNIX)
+# if(UNIX)
+#   add_custom_command(TARGET "mdtutils${MDTLIB_VERSION_SUFFIX}"
+#                     POST_BUILD
+#                     COMMAND objcopy --only-keep-debug "${PROJECT_SOURCE_DIR}/libmdtutils${MDTLIB_VERSION_SUFFIX}.so" "${PROJECT_SOURCE_DIR}/libmdtutils${MDTLIB_VERSION_SUFFIX}.dbg"
+#                     COMMAND strip --strip-debug --strip-unneeded "${PROJECT_SOURCE_DIR}/libmdtutils${MDTLIB_VERSION_SUFFIX}.so"
+#                     COMMAND objcopy --add-gnu-debuglink="libmdtutils${MDTLIB_VERSION_SUFFIX}.dbg" "${PROJECT_SOURCE_DIR}/libmdtutils${MDTLIB_VERSION_SUFFIX}.so"
+#                     COMMAND chmod -x "${PROJECT_SOURCE_DIR}/libmdtutils${MDTLIB_VERSION_SUFFIX}.dbg")
+#   install(FILES "${PROJECT_SOURCE_DIR}/libmdtutils${MDTLIB_VERSION_SUFFIX}.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
+# endif(UNIX)
 
 
 #if(MDT_BUILD_STATIC_LIBS)

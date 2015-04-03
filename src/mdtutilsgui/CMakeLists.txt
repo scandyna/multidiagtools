@@ -143,6 +143,8 @@ else(WIN32)
   target_link_libraries(mdtutilsgui${MDTLIB_VERSION_SUFFIX} "qwt")
 endif(WIN32)
 
+# We must add current build directory in include list, else generated ui_*.h files will not be available
+#include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 # Version statique
 # if(MDT_BUILD_STATIC_LIBS)
@@ -165,9 +167,19 @@ install(TARGETS "mdtutilsgui${MDTLIB_VERSION_SUFFIX}" DESTINATION "${LIB_DEST_DI
 if(UNIX)
   add_custom_command(TARGET "mdtutilsgui${MDTLIB_VERSION_SUFFIX}"
                     POST_BUILD
-                    COMMAND objcopy --only-keep-debug "${PROJECT_SOURCE_DIR}/libmdtutilsgui${MDTLIB_VERSION_SUFFIX}.so" "${PROJECT_SOURCE_DIR}/libmdtutilsgui${MDTLIB_VERSION_SUFFIX}.dbg"
-                    COMMAND strip --strip-debug --strip-unneeded "${PROJECT_SOURCE_DIR}/libmdtutilsgui${MDTLIB_VERSION_SUFFIX}.so"
-                    COMMAND objcopy --add-gnu-debuglink="libmdtutilsgui${MDTLIB_VERSION_SUFFIX}.dbg" "${PROJECT_SOURCE_DIR}/libmdtutilsgui${MDTLIB_VERSION_SUFFIX}.so"
-                    COMMAND chmod -x "${PROJECT_SOURCE_DIR}/libmdtutilsgui${MDTLIB_VERSION_SUFFIX}.dbg")
-  install(FILES "${PROJECT_SOURCE_DIR}/libmdtutilsgui${MDTLIB_VERSION_SUFFIX}.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
+                    COMMAND objcopy --only-keep-debug "libmdtutilsgui${MDTLIB_VERSION_SUFFIX}.so" "libmdtutilsgui${MDTLIB_VERSION_SUFFIX}.dbg"
+                    COMMAND strip --strip-debug --strip-unneeded "libmdtutilsgui${MDTLIB_VERSION_SUFFIX}.so"
+                    COMMAND objcopy --add-gnu-debuglink="libmdtutilsgui${MDTLIB_VERSION_SUFFIX}.dbg" "libmdtutilsgui${MDTLIB_VERSION_SUFFIX}.so"
+                    COMMAND chmod -x "libmdtutilsgui${MDTLIB_VERSION_SUFFIX}.dbg")
+  install(FILES "libmdtutilsgui${MDTLIB_VERSION_SUFFIX}.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
 endif(UNIX)
+
+# if(UNIX)
+#   add_custom_command(TARGET "mdtutilsgui${MDTLIB_VERSION_SUFFIX}"
+#                     POST_BUILD
+#                     COMMAND objcopy --only-keep-debug "${PROJECT_SOURCE_DIR}/libmdtutilsgui${MDTLIB_VERSION_SUFFIX}.so" "${PROJECT_SOURCE_DIR}/libmdtutilsgui${MDTLIB_VERSION_SUFFIX}.dbg"
+#                     COMMAND strip --strip-debug --strip-unneeded "${PROJECT_SOURCE_DIR}/libmdtutilsgui${MDTLIB_VERSION_SUFFIX}.so"
+#                     COMMAND objcopy --add-gnu-debuglink="libmdtutilsgui${MDTLIB_VERSION_SUFFIX}.dbg" "${PROJECT_SOURCE_DIR}/libmdtutilsgui${MDTLIB_VERSION_SUFFIX}.so"
+#                     COMMAND chmod -x "${PROJECT_SOURCE_DIR}/libmdtutilsgui${MDTLIB_VERSION_SUFFIX}.dbg")
+#   install(FILES "${PROJECT_SOURCE_DIR}/libmdtutilsgui${MDTLIB_VERSION_SUFFIX}.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
+# endif(UNIX)

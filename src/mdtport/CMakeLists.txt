@@ -131,6 +131,9 @@ target_link_libraries(mdtport${MDTLIB_VERSION_SUFFIX} ${QT_LIBRARIES})
 target_link_libraries(mdtport${MDTLIB_VERSION_SUFFIX} "usb-1.0")
 target_link_libraries(mdtport${MDTLIB_VERSION_SUFFIX} "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
 
+# We must add current build directory in include list, else generated ui_*.h files will not be available
+# include_directories("${CMAKE_CURRENT_BINARY_DIR}")
+
 # Version statique
 #if(MDT_BUILD_STATIC_LIBS)
 #  add_library (mdtport_static STATIC ${SOURCES_FILES} )
@@ -165,9 +168,19 @@ install(TARGETS "mdtport${MDTLIB_VERSION_SUFFIX}" DESTINATION "${LIB_DEST_DIR}" 
 if(UNIX)
   add_custom_command(TARGET "mdtport${MDTLIB_VERSION_SUFFIX}"
                     POST_BUILD
-                    COMMAND objcopy --only-keep-debug "${PROJECT_SOURCE_DIR}/libmdtport${MDTLIB_VERSION_SUFFIX}.so" "${PROJECT_SOURCE_DIR}/libmdtport${MDTLIB_VERSION_SUFFIX}.dbg"
-                    COMMAND strip --strip-debug --strip-unneeded "${PROJECT_SOURCE_DIR}/libmdtport${MDTLIB_VERSION_SUFFIX}.so"
-                    COMMAND objcopy --add-gnu-debuglink="libmdtport${MDTLIB_VERSION_SUFFIX}.dbg" "${PROJECT_SOURCE_DIR}/libmdtport${MDTLIB_VERSION_SUFFIX}.so"
-                    COMMAND chmod -x "${PROJECT_SOURCE_DIR}/libmdtport${MDTLIB_VERSION_SUFFIX}.dbg")
-  install(FILES "${PROJECT_SOURCE_DIR}/libmdtport${MDTLIB_VERSION_SUFFIX}.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
+                    COMMAND objcopy --only-keep-debug "libmdtport${MDTLIB_VERSION_SUFFIX}.so" "libmdtport${MDTLIB_VERSION_SUFFIX}.dbg"
+                    COMMAND strip --strip-debug --strip-unneeded "libmdtport${MDTLIB_VERSION_SUFFIX}.so"
+                    COMMAND objcopy --add-gnu-debuglink="libmdtport${MDTLIB_VERSION_SUFFIX}.dbg" "libmdtport${MDTLIB_VERSION_SUFFIX}.so"
+                    COMMAND chmod -x "libmdtport${MDTLIB_VERSION_SUFFIX}.dbg")
+  install(FILES "libmdtport${MDTLIB_VERSION_SUFFIX}.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
 endif(UNIX)
+
+# if(UNIX)
+#   add_custom_command(TARGET "mdtport${MDTLIB_VERSION_SUFFIX}"
+#                     POST_BUILD
+#                     COMMAND objcopy --only-keep-debug "${PROJECT_SOURCE_DIR}/libmdtport${MDTLIB_VERSION_SUFFIX}.so" "${PROJECT_SOURCE_DIR}/libmdtport${MDTLIB_VERSION_SUFFIX}.dbg"
+#                     COMMAND strip --strip-debug --strip-unneeded "${PROJECT_SOURCE_DIR}/libmdtport${MDTLIB_VERSION_SUFFIX}.so"
+#                     COMMAND objcopy --add-gnu-debuglink="libmdtport${MDTLIB_VERSION_SUFFIX}.dbg" "${PROJECT_SOURCE_DIR}/libmdtport${MDTLIB_VERSION_SUFFIX}.so"
+#                     COMMAND chmod -x "${PROJECT_SOURCE_DIR}/libmdtport${MDTLIB_VERSION_SUFFIX}.dbg")
+#   install(FILES "${PROJECT_SOURCE_DIR}/libmdtport${MDTLIB_VERSION_SUFFIX}.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
+# endif(UNIX)

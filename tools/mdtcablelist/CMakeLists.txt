@@ -6,6 +6,8 @@ project (multidiagtools)
 
 include_directories("${PROJECT_SOURCE_DIR}")
 include_directories("${PROJECT_SOURCE_DIR}/src")
+# For headers that are generated during build, add current build directory
+include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 # Header files containing Qt Q_OBJECT macro
 set (HEADER_FILES

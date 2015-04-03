@@ -71,9 +71,19 @@ install(TARGETS "qtsingleapplication${MDTLIB_VERSION_SUFFIX}" DESTINATION "${LIB
 if(UNIX)
   add_custom_command(TARGET "qtsingleapplication${MDTLIB_VERSION_SUFFIX}"
                     POST_BUILD
-                    COMMAND objcopy --only-keep-debug "${PROJECT_SOURCE_DIR}/libqtsingleapplication${MDTLIB_VERSION_SUFFIX}.so" "${PROJECT_SOURCE_DIR}/libqtsingleapplication${MDTLIB_VERSION_SUFFIX}.dbg"
-                    COMMAND strip --strip-debug --strip-unneeded "${PROJECT_SOURCE_DIR}/libqtsingleapplication${MDTLIB_VERSION_SUFFIX}.so"
-                    COMMAND objcopy --add-gnu-debuglink="libqtsingleapplication${MDTLIB_VERSION_SUFFIX}.dbg" "${PROJECT_SOURCE_DIR}/libqtsingleapplication${MDTLIB_VERSION_SUFFIX}.so"
-                    COMMAND chmod -x "${PROJECT_SOURCE_DIR}/libqtsingleapplication${MDTLIB_VERSION_SUFFIX}.dbg")
-  install(FILES "${PROJECT_SOURCE_DIR}/libqtsingleapplication${MDTLIB_VERSION_SUFFIX}.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
+                    COMMAND objcopy --only-keep-debug "libqtsingleapplication${MDTLIB_VERSION_SUFFIX}.so" "libqtsingleapplication${MDTLIB_VERSION_SUFFIX}.dbg"
+                    COMMAND strip --strip-debug --strip-unneeded "libqtsingleapplication${MDTLIB_VERSION_SUFFIX}.so"
+                    COMMAND objcopy --add-gnu-debuglink="libqtsingleapplication${MDTLIB_VERSION_SUFFIX}.dbg" "libqtsingleapplication${MDTLIB_VERSION_SUFFIX}.so"
+                    COMMAND chmod -x "libqtsingleapplication${MDTLIB_VERSION_SUFFIX}.dbg")
+  install(FILES "libqtsingleapplication${MDTLIB_VERSION_SUFFIX}.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
 endif(UNIX)
+
+# if(UNIX)
+#   add_custom_command(TARGET "qtsingleapplication${MDTLIB_VERSION_SUFFIX}"
+#                     POST_BUILD
+#                     COMMAND objcopy --only-keep-debug "${PROJECT_SOURCE_DIR}/libqtsingleapplication${MDTLIB_VERSION_SUFFIX}.so" "${PROJECT_SOURCE_DIR}/libqtsingleapplication${MDTLIB_VERSION_SUFFIX}.dbg"
+#                     COMMAND strip --strip-debug --strip-unneeded "${PROJECT_SOURCE_DIR}/libqtsingleapplication${MDTLIB_VERSION_SUFFIX}.so"
+#                     COMMAND objcopy --add-gnu-debuglink="libqtsingleapplication${MDTLIB_VERSION_SUFFIX}.dbg" "${PROJECT_SOURCE_DIR}/libqtsingleapplication${MDTLIB_VERSION_SUFFIX}.so"
+#                     COMMAND chmod -x "${PROJECT_SOURCE_DIR}/libqtsingleapplication${MDTLIB_VERSION_SUFFIX}.dbg")
+#   install(FILES "${PROJECT_SOURCE_DIR}/libqtsingleapplication${MDTLIB_VERSION_SUFFIX}.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
+# endif(UNIX)
