@@ -88,13 +88,6 @@ target_link_libraries(mdtdevice${MDTLIB_VERSION_SUFFIX} "mdtutilsgui${MDTLIB_VER
 target_link_libraries(mdtdevice${MDTLIB_VERSION_SUFFIX} "mdtport${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtdevice${MDTLIB_VERSION_SUFFIX} ${QT_LIBRARIES})
 
-# Version statique
-# if(MDT_BUILD_STATIC_LIBS)
-#   add_library (mdtdevice_static STATIC ${SOURCES_FILES} )
-#   target_link_libraries(mdtdevice_static "mdtutils")
-#   target_link_libraries(mdtdevice_static ${QT_LIBRARIES})
-# endif(MDT_BUILD_STATIC_LIBS)
-
 # Headers to install
 file(GLOB INSTALL_HEADERS *.h)
 install(FILES ${INSTALL_HEADERS} DESTINATION "${HEADERS_DEST_DIR}/mdtdevice" COMPONENT dev)
@@ -112,18 +105,3 @@ if(UNIX)
                     COMMAND chmod -x "libmdtdevice${MDTLIB_VERSION_SUFFIX}.dbg")
   install(FILES "libmdtdevice${MDTLIB_VERSION_SUFFIX}.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
 endif(UNIX)
-
-# if(UNIX)
-#   add_custom_command(TARGET "mdtdevice${MDTLIB_VERSION_SUFFIX}"
-#                     POST_BUILD
-#                     COMMAND objcopy --only-keep-debug "${PROJECT_SOURCE_DIR}/libmdtdevice${MDTLIB_VERSION_SUFFIX}.so" "${PROJECT_SOURCE_DIR}/libmdtdevice${MDTLIB_VERSION_SUFFIX}.dbg"
-#                     COMMAND strip --strip-debug --strip-unneeded "${PROJECT_SOURCE_DIR}/libmdtdevice${MDTLIB_VERSION_SUFFIX}.so"
-#                     COMMAND objcopy --add-gnu-debuglink="libmdtdevice${MDTLIB_VERSION_SUFFIX}.dbg" "${PROJECT_SOURCE_DIR}/libmdtdevice${MDTLIB_VERSION_SUFFIX}.so"
-#                     COMMAND chmod -x "${PROJECT_SOURCE_DIR}/libmdtdevice${MDTLIB_VERSION_SUFFIX}.dbg")
-#   install(FILES "${PROJECT_SOURCE_DIR}/libmdtdevice${MDTLIB_VERSION_SUFFIX}.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
-# endif(UNIX)
-
-
-#if(MDT_BUILD_STATIC_LIBS)
-#  install(TARGETS "mdtdevice_static" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
-#endif(MDT_BUILD_STATIC_LIBS)

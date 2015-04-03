@@ -139,9 +139,6 @@ endif(UNIX)
 # *** Librairies section ***
 #################################################################################################################################################
 
-# Build the static variant of libraries
-#set(MDT_BUILD_STATIC_LIBS 0)
-
 # Libraries and headers install directories
 if(WIN32)
   set(LIB_DEST_DIR "bin")

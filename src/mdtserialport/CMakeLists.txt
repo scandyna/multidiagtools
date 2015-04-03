@@ -63,18 +63,6 @@ target_link_libraries(mdtserialport${MDTLIB_VERSION_SUFFIX} ${QT_LIBRARIES})
 target_link_libraries(mdtserialport${MDTLIB_VERSION_SUFFIX} "mdtport${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtserialport${MDTLIB_VERSION_SUFFIX} "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
 
-# We must add current build directory in include list, else generated ui_*.h files will not be available
-# include_directories("${CMAKE_CURRENT_BINARY_DIR}")
-
-# Version statique
-#if(MDT_BUILD_STATIC_LIBS)
-#  add_library (mdtserialport${MDTLIB_VERSION_SUFFIX}_static STATIC ${SOURCES_FILES} )
-#  target_link_libraries(mdtserialport${MDTLIB_VERSION_SUFFIX}_static ${QT_LIBRARIES})
-#  target_link_libraries(mdtserialport${MDTLIB_VERSION_SUFFIX}_static "mdtport")
-#  target_link_libraries(mdtserialport${MDTLIB_VERSION_SUFFIX}_static "mdtutilsgui")
-  #set_target_properties("mdtutils_static" PROPERTIES OUTPUT_NAME "mdtutils")
-#endif(MDT_BUILD_STATIC_LIBS)
-
 # Headers to install
 file(GLOB INSTALL_HEADERS *.h)
 install(FILES ${INSTALL_HEADERS} DESTINATION "${HEADERS_DEST_DIR}/mdtserialport" COMPONENT dev)
@@ -92,17 +80,3 @@ if(UNIX)
                     COMMAND chmod -x "libmdtserialport${MDTLIB_VERSION_SUFFIX}.dbg")
   install(FILES "libmdtserialport${MDTLIB_VERSION_SUFFIX}.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
 endif(UNIX)
-
-# if(UNIX)
-#   add_custom_command(TARGET "mdtserialport${MDTLIB_VERSION_SUFFIX}"
-#                     POST_BUILD
-#                     COMMAND objcopy --only-keep-debug "${PROJECT_SOURCE_DIR}/libmdtserialport${MDTLIB_VERSION_SUFFIX}.so" "${PROJECT_SOURCE_DIR}/libmdtserialport${MDTLIB_VERSION_SUFFIX}.dbg"
-#                     COMMAND strip --strip-debug --strip-unneeded "${PROJECT_SOURCE_DIR}/libmdtserialport${MDTLIB_VERSION_SUFFIX}.so"
-#                     COMMAND objcopy --add-gnu-debuglink="libmdtserialport${MDTLIB_VERSION_SUFFIX}.dbg" "${PROJECT_SOURCE_DIR}/libmdtserialport${MDTLIB_VERSION_SUFFIX}.so"
-#                     COMMAND chmod -x "${PROJECT_SOURCE_DIR}/libmdtserialport${MDTLIB_VERSION_SUFFIX}.dbg")
-#   install(FILES "${PROJECT_SOURCE_DIR}/libmdtserialport${MDTLIB_VERSION_SUFFIX}.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
-# endif(UNIX)
-
-#if(MDT_BUILD_STATIC_LIBS)
-#  install(TARGETS "mdtserialport${MDTLIB_VERSION_SUFFIX}_static" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
-#endif(MDT_BUILD_STATIC_LIBS)

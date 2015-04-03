@@ -65,9 +65,6 @@ install(FILES ${INSTALL_HEADERS} DESTINATION "${HEADERS_DEST_DIR}/mdttools" COMP
 
 # Destinations
 install(TARGETS "mdttools${MDTLIB_VERSION_SUFFIX}" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
-# if(MDT_BUILD_STATIC_LIBS)
-#   install(TARGETS "mdttools_static" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
-# endif(MDT_BUILD_STATIC_LIBS)
 
 # Strip library and put debug symbols into separate file
 if(UNIX)
@@ -79,13 +76,3 @@ if(UNIX)
                     COMMAND chmod -x "libmdttools${MDTLIB_VERSION_SUFFIX}.dbg")
   install(FILES "libmdttools${MDTLIB_VERSION_SUFFIX}.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
 endif(UNIX)
-
-# if(UNIX)
-#   add_custom_command(TARGET "mdttools${MDTLIB_VERSION_SUFFIX}"
-#                     POST_BUILD
-#                     COMMAND objcopy --only-keep-debug "${PROJECT_SOURCE_DIR}/libmdttools${MDTLIB_VERSION_SUFFIX}.so" "${PROJECT_SOURCE_DIR}/libmdttools${MDTLIB_VERSION_SUFFIX}.dbg"
-#                     COMMAND strip --strip-debug --strip-unneeded "${PROJECT_SOURCE_DIR}/libmdttools${MDTLIB_VERSION_SUFFIX}.so"
-#                     COMMAND objcopy --add-gnu-debuglink="libmdttools${MDTLIB_VERSION_SUFFIX}.dbg" "${PROJECT_SOURCE_DIR}/libmdttools${MDTLIB_VERSION_SUFFIX}.so"
-#                     COMMAND chmod -x "${PROJECT_SOURCE_DIR}/libmdttools${MDTLIB_VERSION_SUFFIX}.dbg")
-#   install(FILES "${PROJECT_SOURCE_DIR}/libmdttools${MDTLIB_VERSION_SUFFIX}.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
-# endif(UNIX)

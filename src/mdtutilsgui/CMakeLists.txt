@@ -143,25 +143,12 @@ else(WIN32)
   target_link_libraries(mdtutilsgui${MDTLIB_VERSION_SUFFIX} "qwt")
 endif(WIN32)
 
-# We must add current build directory in include list, else generated ui_*.h files will not be available
-#include_directories("${CMAKE_CURRENT_BINARY_DIR}")
-
-# Version statique
-# if(MDT_BUILD_STATIC_LIBS)
-#   add_library (mdtutilsgui_static STATIC ${SOURCES_FILES} )
-#   target_link_libraries(mdtutilsgui_static ${QT_LIBRARIES})
-#   set_target_properties("mdtutilsgui_static" PROPERTIES OUTPUT_NAME "mdtutils")
-# endif(MDT_BUILD_STATIC_LIBS)
-
 # Headers to install
 file(GLOB INSTALL_HEADERS *.h)
 install(FILES ${INSTALL_HEADERS} DESTINATION "${HEADERS_DEST_DIR}/mdtutilsgui" COMPONENT dev)
 
 # Destinations
 install(TARGETS "mdtutilsgui${MDTLIB_VERSION_SUFFIX}" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
-#if(MDT_BUILD_STATIC_LIBS)
-#  install(TARGETS "mdtutilsgui_static" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
-#endif(MDT_BUILD_STATIC_LIBS)
 
 # Strip library and put debug symbols into separate file
 if(UNIX)
@@ -173,13 +160,3 @@ if(UNIX)
                     COMMAND chmod -x "libmdtutilsgui${MDTLIB_VERSION_SUFFIX}.dbg")
   install(FILES "libmdtutilsgui${MDTLIB_VERSION_SUFFIX}.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
 endif(UNIX)
-
-# if(UNIX)
-#   add_custom_command(TARGET "mdtutilsgui${MDTLIB_VERSION_SUFFIX}"
-#                     POST_BUILD
-#                     COMMAND objcopy --only-keep-debug "${PROJECT_SOURCE_DIR}/libmdtutilsgui${MDTLIB_VERSION_SUFFIX}.so" "${PROJECT_SOURCE_DIR}/libmdtutilsgui${MDTLIB_VERSION_SUFFIX}.dbg"
-#                     COMMAND strip --strip-debug --strip-unneeded "${PROJECT_SOURCE_DIR}/libmdtutilsgui${MDTLIB_VERSION_SUFFIX}.so"
-#                     COMMAND objcopy --add-gnu-debuglink="libmdtutilsgui${MDTLIB_VERSION_SUFFIX}.dbg" "${PROJECT_SOURCE_DIR}/libmdtutilsgui${MDTLIB_VERSION_SUFFIX}.so"
-#                     COMMAND chmod -x "${PROJECT_SOURCE_DIR}/libmdtutilsgui${MDTLIB_VERSION_SUFFIX}.dbg")
-#   install(FILES "${PROJECT_SOURCE_DIR}/libmdtutilsgui${MDTLIB_VERSION_SUFFIX}.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
-# endif(UNIX)

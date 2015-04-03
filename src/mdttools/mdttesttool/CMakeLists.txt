@@ -208,11 +208,6 @@ QT4_ADD_RESOURCES (RCC_FILES ${RESOURCE_FILES})
 
 # Librairies to link
 add_library (mdttesttool${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
-#target_link_libraries(mdttesttool${MDTLIB_VERSION_SUFFIX} ${QT_LIBRARIES})
-#target_link_libraries(mdttesttool${MDTLIB_VERSION_SUFFIX} "mdtutils${MDTLIB_VERSION_SUFFIX}")
-#target_link_libraries(mdttesttool${MDTLIB_VERSION_SUFFIX} "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
-#target_link_libraries(mdttesttool${MDTLIB_VERSION_SUFFIX} "mdtport${MDTLIB_VERSION_SUFFIX}")
-#target_link_libraries(mdttesttool${MDTLIB_VERSION_SUFFIX} "mdtserialport${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdttesttool${MDTLIB_VERSION_SUFFIX} "mdtdevice${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdttesttool${MDTLIB_VERSION_SUFFIX} "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdttesttool${MDTLIB_VERSION_SUFFIX} "mdttools${MDTLIB_VERSION_SUFFIX}")
@@ -235,9 +230,6 @@ install(FILES ${INSTALL_HEADERS} DESTINATION "${HEADERS_DEST_DIR}/mdttesttool" C
 
 # Destinations
 install(TARGETS "mdttesttool${MDTLIB_VERSION_SUFFIX}" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
-# if(MDT_BUILD_STATIC_LIBS)
-#   install(TARGETS "mdttesttool_static" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
-# endif(MDT_BUILD_STATIC_LIBS)
 
 # Strip library and put debug symbols into separate file
 if(UNIX)
@@ -249,13 +241,3 @@ if(UNIX)
                     COMMAND chmod -x "libmdttesttool${MDTLIB_VERSION_SUFFIX}.dbg")
   install(FILES "libmdttesttool${MDTLIB_VERSION_SUFFIX}.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
 endif(UNIX)
-
-# if(UNIX)
-#   add_custom_command(TARGET "mdttesttool${MDTLIB_VERSION_SUFFIX}"
-#                     POST_BUILD
-#                     COMMAND objcopy --only-keep-debug "${PROJECT_SOURCE_DIR}/libmdttesttool${MDTLIB_VERSION_SUFFIX}.so" "${PROJECT_SOURCE_DIR}/libmdttesttool${MDTLIB_VERSION_SUFFIX}.dbg"
-#                     COMMAND strip --strip-debug --strip-unneeded "${PROJECT_SOURCE_DIR}/libmdttesttool${MDTLIB_VERSION_SUFFIX}.so"
-#                     COMMAND objcopy --add-gnu-debuglink="libmdttesttool${MDTLIB_VERSION_SUFFIX}.dbg" "${PROJECT_SOURCE_DIR}/libmdttesttool${MDTLIB_VERSION_SUFFIX}.so"
-#                     COMMAND chmod -x "${PROJECT_SOURCE_DIR}/libmdttesttool${MDTLIB_VERSION_SUFFIX}.dbg")
-#   install(FILES "${PROJECT_SOURCE_DIR}/libmdttesttool${MDTLIB_VERSION_SUFFIX}.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
-# endif(UNIX)
