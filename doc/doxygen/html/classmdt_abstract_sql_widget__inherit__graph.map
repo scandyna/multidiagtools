@@ -1,5 +1,0 @@
-<map id="mdtAbstractSqlWidget" name="mdtAbstractSqlWidget">
-<area shape="rect" id="node5" href="$classmdt_sql_form_widget.html" title="Widget that accept a user designed form and helps dealing with table model. " alt="" coords="5,160,139,189"/>
-<area shape="rect" id="node7" href="$classmdt_sql_table_widget.html" title="Table view based SQL widget. " alt="" coords="163,160,299,189"/>
-<area shape="rect" id="node2" href="$class_q_widget.html" title="QWidget" alt="" coords="115,5,187,35"/>
-</map>

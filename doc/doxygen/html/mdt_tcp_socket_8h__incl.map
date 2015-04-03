@@ -1,7 +1,0 @@
-<map id="src/mdtport/mdtTcpSocket.h" name="src/mdtport/mdtTcpSocket.h">
-<area shape="rect" id="node3" href="$mdt_abstract_port_8h.html" title="mdtAbstractPort.h" alt="" coords="511,83,639,112"/>
-<area shape="rect" id="node5" href="$mdt_frame_8h.html" title="mdtFrame.h" alt="" coords="307,237,397,267"/>
-<area shape="rect" id="node9" href="$mdt_frame_modbus_tcp_8h.html" title="mdtFrameModbusTcp.h" alt="" coords="5,160,165,189"/>
-<area shape="rect" id="node13" href="$mdt_frame_ascii_8h.html" title="mdtFrameAscii.h" alt="" coords="656,160,776,189"/>
-<area shape="rect" id="node16" href="$mdt_port_config_8h.html" title="mdtPortConfig.h" alt="" coords="800,160,917,189"/>
-</map>

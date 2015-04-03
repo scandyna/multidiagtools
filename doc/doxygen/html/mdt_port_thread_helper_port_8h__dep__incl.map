@@ -1,7 +1,0 @@
-<map id="src/mdtport/mdtPortThreadHelperPort.h" name="src/mdtport/mdtPortThreadHelperPort.h">
-<area shape="rect" id="node2" href="$mdt_port_read_thread_8cpp.html" title="src/mdtport/mdtPortReadThread.cpp" alt="" coords="5,104,239,131"/>
-<area shape="rect" id="node3" href="$mdt_port_thread_helper_port_8cpp.html" title="src/mdtport/mdtPortThread\lHelperPort.cpp" alt="" coords="264,97,443,138"/>
-<area shape="rect" id="node4" href="$mdt_port_write_thread_8cpp.html" title="src/mdtport/mdtPortWrite\lThread.cpp" alt="" coords="467,97,636,138"/>
-<area shape="rect" id="node5" href="$mdt_tcp_socket_thread_8cpp.html" title="src/mdtport/mdtTcpSocket\lThread.cpp" alt="" coords="661,97,837,138"/>
-<area shape="rect" id="node6" href="$mdt_usb_port_thread_8cpp.html" title="src/mdtport/mdtUsbPortThread.cpp" alt="" coords="863,104,1089,131"/>
-</map>

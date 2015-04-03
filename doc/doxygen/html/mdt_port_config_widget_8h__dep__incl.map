@@ -1,8 +1,0 @@
-<map id="src/mdtport/mdtPortConfigWidget.h" name="src/mdtport/mdtPortConfigWidget.h">
-<area shape="rect" id="node2" href="$mdt_port_config_widget_8cpp.html" title="src/mdtport/mdtPortConfig\lWidget.cpp" alt="" coords="5,97,181,138"/>
-<area shape="rect" id="node3" href="$mdt_serial_port_setup_dialog_8h.html" title="src/mdtserialport/mdtSerial\lPortSetupDialog.h" alt="" coords="205,97,384,138"/>
-<area shape="rect" id="node4" href="$main_8cpp.html" title="src/main.cpp" alt="" coords="199,277,296,304"/>
-<area shape="rect" id="node5" href="$mdt_serial_port_setup_dialog_8cpp.html" title="src/mdtserialport/mdtSerial\lPortSetupDialog.cpp" alt="" coords="205,187,384,229"/>
-<area shape="rect" id="node6" href="$mdt_port_term_8h.html" title="src/mdttools/mdtPortTerm.h" alt="" coords="409,195,593,221"/>
-<area shape="rect" id="node7" href="$mdt_port_term_8cpp.html" title="src/mdttools/mdtPortTerm.cpp" alt="" coords="402,277,600,304"/>
-</map>

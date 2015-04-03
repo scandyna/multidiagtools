@@ -1,4 +1,0 @@
-<map id="mdtMultiIoDevice" name="mdtMultiIoDevice">
-<area shape="rect" id="node2" href="$classmdt_device.html" title="Base class for a device connected to a port. " alt="" coords="45,96,131,123"/>
-<area shape="rect" id="node4" href="$classmdt_error.html" title="mdtError contains informations about a error that occured " alt="" coords="100,5,172,32"/>
-</map>

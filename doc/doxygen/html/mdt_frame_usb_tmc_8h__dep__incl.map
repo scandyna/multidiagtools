@@ -1,6 +1,0 @@
-<map id="src/mdtutils/mdtFrameUsbTmc.h" name="src/mdtutils/mdtFrameUsbTmc.h">
-<area shape="rect" id="node3" href="$mdt_abstract_port_8cpp.html" title="src/mdtport/mdtAbstractPort.cpp" alt="" coords="5,111,216,140"/>
-<area shape="rect" id="node5" href="$mdt_usbtmc_port_manager_8cpp.html" title="src/mdtport/mdtUsbtmcPort\lManager.cpp" alt="" coords="240,102,424,149"/>
-<area shape="rect" id="node7" href="$mdt_usbtmc_port_thread_8cpp.html" title="src/mdtport/mdtUsbtmcPort\lThread.cpp" alt="" coords="448,102,632,149"/>
-<area shape="rect" id="node9" href="$mdt_frame_usb_tmc_8cpp.html" title="src/mdtutils/mdtFrameUsb\lTmc.cpp" alt="" coords="656,102,832,149"/>
-</map>

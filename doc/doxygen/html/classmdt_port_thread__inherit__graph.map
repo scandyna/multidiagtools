@@ -1,8 +1,0 @@
-<map id="mdtPortThread" name="mdtPortThread">
-<area shape="rect" id="node3" href="$classmdt_port_read_thread.html" title="Reader thread for port I/O. " alt="" coords="293,5,432,32"/>
-<area shape="rect" id="node4" href="$classmdt_port_write_thread.html" title="mdtPortWriteThread" alt="" coords="293,56,432,83"/>
-<area shape="rect" id="node5" href="$classmdt_serial_port_ctl_thread.html" title="mdtSerialPortCtlThread" alt="" coords="283,107,442,133"/>
-<area shape="rect" id="node6" href="$classmdt_tcp_socket_thread.html" title="mdtTcpSocketThread" alt="" coords="289,157,436,184"/>
-<area shape="rect" id="node7" href="$classmdt_usb_port_thread.html" title="mdtUsbPortThread" alt="" coords="297,208,429,235"/>
-<area shape="rect" id="node2" href="$class_q_thread.html" title="QThread" alt="" coords="5,107,77,133"/>
-</map>

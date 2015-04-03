@@ -1,8 +1,0 @@
-<map id="QMainWindow" name="QMainWindow">
-<area shape="rect" id="node2" href="$classmdt_device_window.html" title="mdtDeviceWindow" alt="" coords="198,5,330,32"/>
-<area shape="rect" id="node3" href="$classmdt_modbus_io_tool.html" title="Minimal tool for MODBUS I/O. " alt="" coords="201,56,327,83"/>
-<area shape="rect" id="node4" href="$classmdt_port_term.html" title="Mini port treminal. " alt="" coords="215,107,313,133"/>
-<area shape="rect" id="node5" href="$classmdt_sql_window.html" title="Main window for a database table view/editor. " alt="" coords="209,157,319,184"/>
-<area shape="rect" id="node6" href="$classmdt_tt_basic_tester_window.html" title="mdtTtBasicTesterWindow" alt="" coords="177,208,351,235"/>
-<area shape="rect" id="node7" href="$classmdt_tt_basic_test_node_calibration_window.html" title="mdtTtBasicTestNodeCalibration\lWindow" alt="" coords="160,259,368,301"/>
-</map>

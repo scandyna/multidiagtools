@@ -1,7 +1,0 @@
-<map id="src/mdtport/mdtUsbtmcBulkTransfer.h" name="src/mdtport/mdtUsbtmcBulkTransfer.h">
-<area shape="rect" id="node2" href="$mdt_usb_transfer_8h.html" title="mdtUsbTransfer.h" alt="" coords="202,96,328,123"/>
-<area shape="rect" id="node10" href="$mdt_usbtmc_frame_8h.html" title="mdtUsbtmcFrame.h" alt="" coords="596,96,735,123"/>
-<area shape="rect" id="node16" href="$mdt_usb_endpoint_descriptor_8h.html" title="mdtUsbEndpointDescriptor.h" alt="" coords="381,96,571,123"/>
-<area shape="rect" id="node3" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="116,171,197,197"/>
-<area shape="rect" id="node11" href="$mdt_usbtmc_message_8h.html" title="mdtUsbtmcMessage.h" alt="" coords="809,171,963,197"/>
-</map>

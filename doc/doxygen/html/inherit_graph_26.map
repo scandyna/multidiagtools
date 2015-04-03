@@ -1,5 +1,0 @@
-<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node2" href="$classmdt_frame.html" title="Provide an array of bytes. " alt="" coords="145,31,226,57"/>
-<area shape="rect" id="node3" href="$classmdt_frame_ascii.html" title="mdtFrameAscii" alt="" coords="294,5,405,32"/>
-<area shape="rect" id="node4" href="$classmdt_frame_modbus_tcp.html" title="MODBUS/TCP Frame. " alt="" coords="275,56,424,83"/>
-</map>

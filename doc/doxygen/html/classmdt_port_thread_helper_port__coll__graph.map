@@ -1,7 +1,0 @@
-<map id="mdtPortThreadHelperPort" name="mdtPortThreadHelperPort">
-<area shape="rect" id="node2" href="$classmdt_port_thread_helper.html" title="Helper class for mdtPortThread and subclasses. " alt="" coords="438,557,585,584"/>
-<area shape="rect" id="node9" href="$classmdt_abstract_port.html" title="Base class for port I/O. " alt="" coords="453,376,569,403"/>
-<area shape="rect" id="node4" href="$classmdt_port_thread.html" title="mdtPortThread" alt="" coords="228,467,336,493"/>
-<area shape="rect" id="node5" href="$class_q_thread.html" title="QThread" alt="" coords="357,376,429,403"/>
-<area shape="rect" id="node10" href="$classmdt_port_config.html" title="mdtPortConfig" alt="" coords="570,243,677,269"/>
-</map>

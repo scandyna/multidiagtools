@@ -1,5 +1,0 @@
-<map id="mdtMultiIoDevice" name="mdtMultiIoDevice">
-<area shape="rect" id="node4" href="$classmdt_device_modbus.html" title="Represent a MODBUS device. " alt="" coords="21,229,151,256"/>
-<area shape="rect" id="node2" href="$classmdt_device.html" title="Base class for a device connected to a port. " alt="" coords="44,80,129,107"/>
-<area shape="rect" id="node5" href="$classmdt_device_modbus_wago.html" title="mdtDeviceModbusWago" alt="" coords="4,304,168,331"/>
-</map>

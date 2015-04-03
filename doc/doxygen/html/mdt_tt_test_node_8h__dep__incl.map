@@ -1,9 +1,0 @@
-<map id="src/mdttools/mdttesttool/mdtTtTestNode.h" name="src/mdttools/mdttesttool/mdtTtTestNode.h">
-<area shape="rect" id="node2" href="$mdt_tt_logical_test_cable_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtLogicalTestCableEditor.cpp" alt="" coords="5,97,224,138"/>
-<area shape="rect" id="node3" href="$mdt_tt_relay_path_dialog_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtRelayPathDialog.cpp" alt="" coords="249,97,431,138"/>
-<area shape="rect" id="node4" href="$mdt_tt_test_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTest.cpp" alt="" coords="456,97,619,138"/>
-<area shape="rect" id="node5" href="$mdt_tt_test_model_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestModel.cpp" alt="" coords="643,97,805,138"/>
-<area shape="rect" id="node6" href="$mdt_tt_test_node_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestNode.cpp" alt="" coords="829,97,992,138"/>
-<area shape="rect" id="node7" href="$mdt_tt_test_node_editor_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestNodeEditor.cpp" alt="" coords="1016,97,1192,138"/>
-<area shape="rect" id="node8" href="$mdt_tt_test_node_manager_8cpp.html" title="src/mdttools/mdttesttool\l/mdtTtTestNodeManager.cpp" alt="" coords="1216,97,1408,138"/>
-</map>

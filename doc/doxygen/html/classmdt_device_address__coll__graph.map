@@ -1,5 +1,0 @@
-<map id="mdtDeviceAddress" name="mdtDeviceAddress">
-<area shape="rect" id="node2" href="$structmdt_usb_device_address.html" title="mdtUsbDeviceAddress" alt="" coords="195,109,352,136"/>
-<area shape="rect" id="node6" href="$structmdt_tcpip_device_address.html" title="mdtTcpipDeviceAddress" alt="" coords="5,109,169,136"/>
-<area shape="rect" id="node5" href="$structmdt_asrl_device_address.html" title="mdtAsrlDeviceAddress" alt="" coords="377,109,532,136"/>
-</map>

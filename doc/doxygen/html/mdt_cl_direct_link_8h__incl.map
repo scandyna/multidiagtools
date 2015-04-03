@@ -1,8 +1,0 @@
-<map id="src/mdttools/mdttesttool/mdtcablelist/mdtClDirectLink.h" name="src/mdttools/mdttesttool/mdtcablelist/mdtClDirectLink.h">
-<area shape="rect" id="node2" href="$mdt_tt_base_8h.html" title="mdtTtBase.h" alt="" coords="596,96,693,123"/>
-<area shape="rect" id="node8" href="$mdt_sql_record_8h.html" title="mdtSqlRecord.h" alt="" coords="835,171,950,197"/>
-<area shape="rect" id="node3" href="$mdt_error_8h.html" title="mdtError.h" alt="" coords="746,245,827,272"/>
-<area shape="rect" id="node15" href="$mdt_sql_table_selection_8h.html" title="mdtSqlTableSelection.h" alt="" coords="285,171,443,197"/>
-<area shape="rect" id="node16" href="$mdt_sql_table_selection_row_8h.html" title="mdtSqlTableSelectionRow.h" alt="" coords="173,245,359,272"/>
-<area shape="rect" id="node17" href="$mdt_sql_table_selection_item_8h.html" title="mdtSqlTableSelectionItem.h" alt="" coords="173,320,359,347"/>
-</map>

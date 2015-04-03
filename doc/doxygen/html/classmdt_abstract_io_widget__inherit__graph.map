@@ -1,7 +1,0 @@
-<map id="mdtAbstractIoWidget" name="mdtAbstractIoWidget">
-<area shape="rect" id="node5" href="$classmdt_analog_in_widget.html" title="Representation of a analog input. " alt="" coords="5,160,141,189"/>
-<area shape="rect" id="node7" href="$classmdt_analog_out_widget.html" title="Representation of a analog output. " alt="" coords="165,160,312,189"/>
-<area shape="rect" id="node9" href="$classmdt_digital_in_widget.html" title="Representation of a digital input. " alt="" coords="336,160,469,189"/>
-<area shape="rect" id="node11" href="$classmdt_digital_out_widget.html" title="mdtDigitalOutWidget" alt="" coords="493,160,635,189"/>
-<area shape="rect" id="node2" href="$class_q_widget.html" title="QWidget" alt="" coords="284,5,356,35"/>
-</map>

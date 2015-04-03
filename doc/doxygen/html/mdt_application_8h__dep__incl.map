@@ -1,7 +1,0 @@
-<map id="src/mdtutils/mdtApplication.h" name="src/mdtutils/mdtApplication.h">
-<area shape="rect" id="node3" href="$mdt_device_window_8cpp.html" title="src/mdtdevice/mdtDeviceWindow.cpp" alt="" coords="5,92,248,121"/>
-<area shape="rect" id="node5" href="$mdt_modbus_tcp_port_manager_8cpp.html" title="src/mdtport/mdtModbusTcp\lPortManager.cpp" alt="" coords="272,83,453,130"/>
-<area shape="rect" id="node7" href="$mdt_modbus_io_tool_8cpp.html" title="src/mdttools/mdtModbusIo\lTool.cpp" alt="" coords="477,83,653,130"/>
-<area shape="rect" id="node9" href="$mdt_port_term_8cpp.html" title="src/mdttools/mdtPortTerm.cpp" alt="" coords="677,92,875,121"/>
-<area shape="rect" id="node11" href="$mdt_application_8cpp.html" title="src/mdtutils/mdtApplication.cpp" alt="" coords="899,92,1104,121"/>
-</map>

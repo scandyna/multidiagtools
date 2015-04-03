@@ -1,6 +1,0 @@
-<map id="mdtSerialPortCtlThread" name="mdtSerialPortCtlThread">
-<area shape="rect" id="node2" href="$classmdt_port_thread.html" title="mdtPortThread" alt="" coords="214,467,321,493"/>
-<area shape="rect" id="node3" href="$class_q_thread.html" title="QThread" alt="" coords="5,376,77,403"/>
-<area shape="rect" id="node9" href="$classmdt_port_config.html" title="mdtPortConfig" alt="" coords="619,243,725,269"/>
-<area shape="rect" id="node7" href="$classmdt_abstract_port.html" title="Base class for port I/O. " alt="" coords="836,376,952,403"/>
-</map>

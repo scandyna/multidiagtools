@@ -1,8 +1,0 @@
-<map id="src/mdtport/mdtPortStatusWidget.h" name="src/mdtport/mdtPortStatusWidget.h">
-<area shape="rect" id="node3" href="$mdt_device_window_8h.html" title="src/mdtdevice/mdtDeviceWindow.h" alt="" coords="12,111,241,140"/>
-<area shape="rect" id="node7" href="$mdt_abstract_port_setup_dialog_8cpp.html" title="src/mdtport/mdtAbstractPort\lSetupDialog.cpp" alt="" coords="265,102,452,149"/>
-<area shape="rect" id="node9" href="$mdt_port_status_widget_8cpp.html" title="src/mdtport/mdtPortStatus\lWidget.cpp" alt="" coords="476,102,652,149"/>
-<area shape="rect" id="node11" href="$mdt_modbus_io_tool_8cpp.html" title="src/mdttools/mdtModbusIo\lTool.cpp" alt="" coords="676,102,852,149"/>
-<area shape="rect" id="node13" href="$mdt_port_term_8cpp.html" title="src/mdttools/mdtPortTerm.cpp" alt="" coords="876,111,1073,140"/>
-<area shape="rect" id="node5" href="$mdt_device_window_8cpp.html" title="src/mdtdevice/mdtDeviceWindow.cpp" alt="" coords="5,197,248,227"/>
-</map>

@@ -1,5 +1,0 @@
-<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$class_q_state_machine.html" title="QStateMachine" alt="" coords="5,5,117,32"/>
-<area shape="rect" id="node2" href="$classmdt_state_machine.html" title="Extend Qt&#39;s QStateMachine. " alt="" coords="166,5,290,32"/>
-<area shape="rect" id="node3" href="$classmdt_port_manager_state_machine.html" title="State machine for port manager. " alt="" coords="339,5,538,32"/>
-</map>

@@ -1,7 +1,0 @@
-<map id="src/mdtutils/mdtErrorOut.h" name="src/mdtutils/mdtErrorOut.h">
-<area shape="rect" id="node3" href="$main_8cpp.html" title="src/main.cpp" alt="" coords="5,92,101,121"/>
-<area shape="rect" id="node5" href="$mdt_modbus_io_tool_8cpp.html" title="src/mdttools/mdtModbusIo\lTool.cpp" alt="" coords="125,83,301,130"/>
-<area shape="rect" id="node7" href="$mdt_application_8cpp.html" title="src/mdtutils/mdtApplication.cpp" alt="" coords="325,92,531,121"/>
-<area shape="rect" id="node9" href="$mdt_error_8cpp.html" title="src/mdtutils/mdtError.cpp" alt="" coords="555,92,723,121"/>
-<area shape="rect" id="node11" href="$mdt_error_out_8cpp.html" title="src/mdtutils/mdtErrorOut.cpp" alt="" coords="747,92,936,121"/>
-</map>
