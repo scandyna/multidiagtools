@@ -1254,6 +1254,21 @@ void mdtTestToolTest::testStepContainerTest()
   ///QTest::qWait(2000);
   tsc.step(2)->setFinishedSuccess();
   QVERIFY(tsc.state() == mdtTtTestStep::State_t::Success);
+  /*
+   * Check reset
+   */
+  // Set some states
+  tsc.step(0)->setFinishedSuccess();
+  QVERIFY(tsc.step(0)->state() == mdtTtTestStep::State_t::Success);
+  tsc.step(1)->setFinishedWarn();
+  QVERIFY(tsc.step(1)->state() == mdtTtTestStep::State_t::Warn);
+  tsc.step(2)->setFinishedFail();
+  QVERIFY(tsc.step(2)->state() == mdtTtTestStep::State_t::Fail);
+  // Reset and check
+  tsc.reset();
+  QVERIFY(tsc.step(0)->state() == mdtTtTestStep::State_t::Initial);
+  QVERIFY(tsc.step(1)->state() == mdtTtTestStep::State_t::Initial);
+  QVERIFY(tsc.step(2)->state() == mdtTtTestStep::State_t::Initial);
 
   // Play
   /*

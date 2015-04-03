@@ -139,6 +139,14 @@ class mdtTtTestStepContainer : public QObject
    */
   mdtTtTestStep::State_t state() const;
 
+  /*! \brief Reset state of all steps to Initial
+   */
+  void reset();
+
+  /*! \brief Clear message of all test steps
+   */
+  void clearStepsMessage();
+
   /*! \brief Set Run/Abort function enabled for all test steps
    *
    * See mdtTtTestStepWidget::setRunAbortButtonEnabled().

@@ -94,6 +94,22 @@ mdtTtTestStep::State_t mdtTtTestStepContainer::state() const
   return mdtTtTestStep::State_t::Success;
 }
 
+void mdtTtTestStepContainer::reset()
+{
+  for(auto & ts : pvSteps){
+    Q_ASSERT(ts);
+    ts->reset();
+  }
+}
+
+void mdtTtTestStepContainer::clearStepsMessage()
+{
+  for(auto & ts : pvSteps){
+    Q_ASSERT(ts);
+    ts->clearMessage();
+  }
+}
+
 void mdtTtTestStepContainer::setRunAbortEnabled(bool enable)
 {
   for(auto & ts : pvSteps){
