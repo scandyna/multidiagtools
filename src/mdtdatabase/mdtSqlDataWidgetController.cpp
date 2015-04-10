@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -179,7 +179,7 @@ void mdtSqlDataWidgetController::onStateVisualizingExited()
 {
   mdtAbstractSqlTableController::onStateVisualizingExited();
   /*
-   * Because currentState() will return Visualizing untile next state is enterred,
+   * Because currentState() will return Visualizing until next state is enterred,
    *  we cannot use updateNavigationControls() here
    */
   emit toFirstEnabledStateChanged(false);
@@ -188,11 +188,16 @@ void mdtSqlDataWidgetController::onStateVisualizingExited()
   emit toNextEnabledStateChanged(false);
 }
 
-void mdtSqlDataWidgetController::modelSetEvent()
-{
-  Q_ASSERT(model());
+// void mdtSqlDataWidgetController::modelSetEvent()
+// {
+//   Q_ASSERT(model());
+// 
+//   model()->setEditStrategy(QSqlTableModel::OnManualSubmit);
+// }
 
-  model()->setEditStrategy(QSqlTableModel::OnManualSubmit);
+bool mdtSqlDataWidgetController::beforeCurrentRowChangeEvent()
+{
+  return allDataAreSaved(true);
 }
 
 void mdtSqlDataWidgetController::currentRowChangedEvent(int row)
@@ -221,9 +226,11 @@ bool mdtSqlDataWidgetController::submitToModel()
 
   QSqlError sqlError;
 
+  /**
   if(!canWriteToDatabase()){
     return true;
   }
+  */
   // Call widget mapper submit() (will commit data from widgets to model)
   if(!pvWidgetMapper.submit()){
     sqlError = model()->lastError();

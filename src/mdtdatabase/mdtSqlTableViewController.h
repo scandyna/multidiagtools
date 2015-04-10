@@ -147,7 +147,7 @@ class mdtSqlTableViewController : public mdtAbstractSqlTableController
 
   /*! \brief Activity after Visualizing state entered
    */
-  void onStateVisualizingEntered();
+//   void onStateVisualizingEntered();
 
   /*! \brief Activity after Editing state entered
    *
@@ -155,11 +155,23 @@ class mdtSqlTableViewController : public mdtAbstractSqlTableController
    */
   void onStateEditingEntered();
 
+  /*! \brief Activity after Editing state exited
+   *
+   * Will set pvEditionDone
+   */
+  void onStateEditingExited();
+
   /*! \brief Activity after EditingNewRow state entered
    *
    * Will unset pvEditionDone
    */
   void onStateEditingNewRowEntered();
+
+  /*! \brief Activity after Editing state exited
+   *
+   * Will set pvEditionDone
+   */
+  void onStateEditingNewRowExited();
 
   /*! \brief Set pvEditionDone flag
    */

@@ -35,6 +35,7 @@
 #include "mdtSqlForm.h"
 #include "mdtSqlFieldSelectionDialog.h"
 #include "mdtDoubleEdit.h"
+#include "mdtSqlDialog.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -131,6 +132,157 @@ void sqlDataWidgetControllerTestWidget::setRevertEnableState(bool enable)
   revertEnabled = enable;
 }
 
+/*
+ * Test scenario data class
+ */
+
+class mdtDatabaseWidgetTestScenario1Data
+{
+ public:
+  // Constructor
+  mdtDatabaseWidgetTestScenario1Data(QSqlDatabase db)
+   : pvDatabase(db)
+   {
+   }
+   // Destructor - Will also clear data
+   ~mdtDatabaseWidgetTestScenario1Data()
+   {
+     clear();
+   }
+   // Populate with scenario data
+   bool populate();
+   bool populate1000Names();
+   // Clear scenario data
+   void clear();
+ private:
+  // Log errors to terminal
+  void debugSqlError(const QSqlError & error);
+  Q_DISABLE_COPY(mdtDatabaseWidgetTestScenario1Data);
+  QSqlDatabase pvDatabase;
+};
+
+bool mdtDatabaseWidgetTestScenario1Data::populate()
+{
+  QSqlQuery query(pvDatabase);
+
+  if(!pvDatabase.transaction()){
+    debugSqlError(pvDatabase.lastError());
+    return false;
+  }
+  // Inert some data in Client_tbl
+  if(!query.exec("INSERT INTO 'Client_tbl' (Id_PK, FirstName) VALUES(1, 'Andy')")){
+    debugSqlError(query.lastError());
+    pvDatabase.rollback();
+    return false;
+  }
+  if(!query.exec("INSERT INTO 'Client_tbl' (Id_PK, 'FirstName', 'Remarks', 'SomeValueDouble') VALUES(2, 'Bety', 'Remark on Bety', 2)")){
+    debugSqlError(query.lastError());
+    pvDatabase.rollback();
+    return false;
+  }
+  if(!query.exec("INSERT INTO 'Client_tbl' (Id_PK, 'FirstName', 'Remarks') VALUES(3, 'Zeta', 'Remark on Zeta')")){
+    debugSqlError(query.lastError());
+    pvDatabase.rollback();
+    return false;
+  }
+  if(!query.exec("INSERT INTO 'Client_tbl' (Id_PK, 'FirstName', 'Remarks') VALUES(4, 'Charly', 'Remark on Charly')")){
+    debugSqlError(query.lastError());
+    pvDatabase.rollback();
+    return false;
+  }
+  if(!query.exec("SELECT * FROM 'Client_tbl'")){
+    debugSqlError(query.lastError());
+    pvDatabase.rollback();
+    return false;
+  }
+  while(query.next()){
+    if(query.record().isEmpty()){
+      qDebug() << "mdtDatabaseWidgetTestScenario1Data: inserting data into Client_tbl failed";
+      pvDatabase.rollback();
+      return false;
+    }
+  }
+  // Inert some data into Address_tbl
+  if(!query.exec("INSERT INTO 'Address_tbl' ('StreetName', 'StreetNumber', 'Client_Id_FK') VALUES('Andy street 1', 11 , 1)")){
+    debugSqlError(query.lastError());
+    pvDatabase.rollback();
+    return false;
+  }
+  if(!query.exec("INSERT INTO 'Address_tbl' ('StreetName', 'StreetNumber', 'Client_Id_FK') VALUES('Andy street 2', 12 , 1)")){
+    debugSqlError(query.lastError());
+    pvDatabase.rollback();
+    return false;
+  }
+  if(!query.exec("INSERT INTO 'Address_tbl' ('StreetName', 'StreetNumber', 'Client_Id_FK') VALUES('Bety street 1', 21 , 2)")){
+    debugSqlError(query.lastError());
+    pvDatabase.rollback();
+    return false;
+  }
+  if(!query.exec("SELECT * FROM 'Address_tbl'")){
+    debugSqlError(query.lastError());
+    pvDatabase.rollback();
+    return false;
+  }
+  while(query.next()){
+    if(query.record().isEmpty()){
+      qDebug() << "mdtDatabaseWidgetTestScenario1Data: inserting data into Address_tbl failed";
+      pvDatabase.rollback();
+      return false;
+    }
+  }
+  if(!pvDatabase.commit()){
+    debugSqlError(query.lastError());
+    pvDatabase.rollback();
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtDatabaseWidgetTestScenario1Data::populate1000Names()
+{
+  QSqlQuery query(pvDatabase);
+  QString sql;
+  int i;
+
+  if(!pvDatabase.transaction()){
+    debugSqlError(pvDatabase.lastError());
+    return false;
+  }
+  for(i = 0; i < 1000; ++i){
+    sql = QString("INSERT INTO 'Client_tbl' (Id_PK, 'FirstName', 'Remarks') VALUES(%1, 'Name %2', 'Remark %3')").arg(i+1).arg(i+1).arg(i+1);
+    if(!query.exec(sql)){
+      debugSqlError(query.lastError());
+      pvDatabase.rollback();
+      return false;
+    }
+  }
+  if(!pvDatabase.commit()){
+    debugSqlError(query.lastError());
+    pvDatabase.rollback();
+    return false;
+  }
+
+  return true;
+}
+
+void mdtDatabaseWidgetTestScenario1Data::clear()
+{
+  QString sql;
+  QSqlQuery query(pvDatabase);
+
+  sql = "DELETE FROM Address_tbl";
+  QVERIFY(query.exec(sql));
+  sql = "DELETE FROM ClientDetail_tbl";
+  QVERIFY(query.exec(sql));
+  sql = "DELETE FROM Client_tbl";
+  QVERIFY(query.exec(sql));
+}
+
+void mdtDatabaseWidgetTestScenario1Data::debugSqlError(const QSqlError& error)
+{
+  qDebug() << error;
+}
 
 /*
  * Test implementation
@@ -140,10 +292,6 @@ void mdtDatabaseWidgetTest::initTestCase()
 {
   createDatabaseSchema();
   QVERIFY(pvDatabaseManager.database().isOpen());
-  /**
-  populateTestDatabase();
-  clearTestDatabaseData();
-  */
 }
 
 void mdtDatabaseWidgetTest::cleanupTestCase()
@@ -153,6 +301,7 @@ void mdtDatabaseWidgetTest::cleanupTestCase()
 
 void mdtDatabaseWidgetTest::sqlRelationTest()
 {
+  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabaseManager.database());
   QSqlTableModel clientModel;
   QSqlTableModel detailModel;
   QSqlTableModel addressModel;
@@ -162,7 +311,8 @@ void mdtDatabaseWidgetTest::sqlRelationTest()
   QModelIndex index;
 
   // Create test data
-  populateTestDatabase();
+//   populateTestDatabase();
+  QVERIFY(scenario1.populate());
   // Setup models
   clientModel.setEditStrategy(QSqlTableModel::OnManualSubmit);
   clientModel.setTable("Client_tbl");
@@ -380,7 +530,7 @@ void mdtDatabaseWidgetTest::sqlRelationTest()
   QCOMPARE(detailModel.rowCount(), 0);
 
   // Clear test data
-  clearTestDatabaseData();
+//   clearTestDatabaseData();
 }
 
 void mdtDatabaseWidgetTest::sqlFieldHandlerTest()
@@ -708,6 +858,7 @@ void mdtDatabaseWidgetTest::sqlFieldHandlerTest()
 
 void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
 {
+  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabaseManager.database());
   QSqlQuery q(pvDatabaseManager.database());
   sqlDataWidgetControllerTestWidget w;
   ///std::shared_ptr<mdtUiMessageHandler> messageHandler(new mdtUiMessageHandler(&w));
@@ -715,7 +866,6 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   std::shared_ptr<QSqlTableModel> m1(new QSqlTableModel(0, pvDatabaseManager.database()));
   std::shared_ptr<QSqlTableModel> m2(new QSqlTableModel(0, pvDatabaseManager.database()));
   std::shared_ptr<QSqlTableModel> model;
-  ///mdtSqlRelationInfo relationInfo;
   QVariant data;
   QStringList fields;
   mdtSqlRecord rec;
@@ -725,7 +875,7 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   // For this test, we wont foreign_keys support
   QVERIFY(q.exec("PRAGMA foreign_keys = OFF"));
   // Create test data
-  populateTestDatabase();
+  QVERIFY(scenario1.populate());
   // Setup
   ///wc.setMessageHandler(messageHandler);
   ///connect(&wc, SIGNAL(globalWidgetEnableStateChanged(bool)), &w, SLOT(setEnabled(bool)));
@@ -756,6 +906,7 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   m1->setTable("Client_tbl");
   wc.setModel(m1);
   QVERIFY(wc.model() == m1);
+  QVERIFY(wc.model()->editStrategy() == QSqlTableModel::OnManualSubmit);
   QCOMPARE(wc.model()->tableName(), QString("Client_tbl"));
   QCOMPARE(wc.userFriendlyTableName(), QString("Client_tbl"));
   QCOMPARE(wc.rowCount(), 0);
@@ -956,11 +1107,11 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
    *
    * Note:
    *  Because of internal state machine,
-   *  witch runs asynchronousliy, we must wait between each action.
+   *  witch runs asynchronousliy, we must wait between each action that is not explicitly synch (xyAndWait() functions)
    */
   QCOMPARE(wc.rowCount(), 4);
   QCOMPARE(wc.currentRow(), 0);
-  // Insert a record
+  // Insert a record (asynch version)
   wc.insert();
   QTest::qWait(50);
   QCOMPARE(wc.rowCount(), 5);
@@ -1009,9 +1160,8 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QCOMPARE(w.fld_FirstName->text(), QString("New name 1"));
   QCOMPARE(w.fld_Remarks->text(), QString("New remark 1"));
   QCOMPARE(w.fld_SomeValueDouble->value(), QVariant(5.0));
-  // Insert a record
-  wc.insert();
-  QTest::qWait(50);
+  // Insert a record (synch version)
+  QVERIFY(wc.insertAndWait());
   QCOMPARE(wc.rowCount(), 6);
   QCOMPARE(wc.currentRow(), 5);
   QVERIFY(w.fld_FirstName->isEnabled());
@@ -1214,7 +1364,8 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   /*
    * Checks on empty table
    */
-  clearTestDatabaseData();
+//   clearTestDatabaseData();
+  scenario1.clear();
   QVERIFY(wc.select());
   QCOMPARE(wc.rowCount(), 0);
   QCOMPARE(wc.currentRow(), -1);
@@ -1235,7 +1386,8 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
    * (will check fetch more and related behaviours)
    */
   // Check navigation
-  populate1000Names();
+//   populate1000Names();
+  QVERIFY(scenario1.populate1000Names());
   QVERIFY(wc.select());
   QCOMPARE(wc.rowCount(), 1000);
   QCOMPARE(wc.currentRow(), 0);
@@ -1336,8 +1488,10 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
    * Check sorting
    */
   // Repopulate original test data
-  clearTestDatabaseData();
-  populateTestDatabase();
+//   clearTestDatabaseData();
+//   populateTestDatabase();
+  scenario1.clear();
+  QVERIFY(scenario1.populate());
   // Setup sorting
   wc.addColumnToSortOrder("FirstName", Qt::AscendingOrder);
   wc.sort();
@@ -1449,6 +1603,8 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QCOMPARE(w.fld_Remarks->text(), QString("Edited remark on Zeta"));
   QCOMPARE(wc.currentData("FirstName"), QVariant("Zeta"));
   QCOMPARE(wc.currentData("Remarks"), QVariant("Edited remark on Zeta"));
+  wc.revert();
+  QTest::qWait(50);
   // Check that DB is intact
   QVERIFY(wc.select());
   wc.sort();
@@ -1481,24 +1637,107 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
    *  - Edit many rows
    *  - Submit all at once
    */
-  // Edit each row
+  /// \note Many row edition disabled because row changing is not allowed without saving data.
+//   // Edit each row
+//   wc.toFirst();
+//   QTest::qWait(50);
+//   QVERIFY(wc.setCurrentData("Remarks", "Edited remark on Andy", false));
+//   wc.toNext();
+//   QTest::qWait(50);
+//   QVERIFY(wc.setCurrentData("Remarks", "Edited remark on Bety", false));
+//   wc.toNext();
+//   QTest::qWait(50);
+//   QVERIFY(wc.setCurrentData("Remarks", "Edited remark on Charly", false));
+//   wc.toNext();
+//   QTest::qWait(50);
+//   QVERIFY(wc.setCurrentData("Remarks", "Edited remark on Laura", false));
+//   wc.toNext();
+//   QTest::qWait(50);
+//   QVERIFY(wc.setCurrentData("Remarks", "Edited remark 2 on Zeta", false));
+//   QVERIFY(!wc.allDataAreSaved(true));
+//   // Submit all rows
+//   QVERIFY(wc.submitAndWait());
+//   QVERIFY(wc.allDataAreSaved(true));
+//   // Check that database was updated
+//   QVERIFY(wc.select());
+//   wc.sort();
+//   wc.toFirst();
+//   QTest::qWait(50);
+//   QCOMPARE(w.fld_FirstName->text(), QString("Andy"));
+//   QCOMPARE(w.fld_Remarks->text(), QString("Edited remark on Andy"));
+//   QCOMPARE(wc.currentData("FirstName"), QVariant("Andy"));
+//   QCOMPARE(wc.currentData("Remarks"), QVariant("Edited remark on Andy"));
+//   // Go to next row and check
+//   wc.toNext();
+//   QTest::qWait(50);
+//   QCOMPARE(w.fld_FirstName->text(), QString("Bety"));
+//   QCOMPARE(w.fld_Remarks->text(), QString("Edited remark on Bety"));
+//   QCOMPARE(wc.currentData("FirstName"), QVariant("Bety"));
+//   QCOMPARE(wc.currentData("Remarks"), QVariant("Edited remark on Bety"));
+//   // Go to next row and check
+//   wc.toNext();
+//   QTest::qWait(50);
+//   QCOMPARE(w.fld_FirstName->text(), QString("Charly"));
+//   QCOMPARE(w.fld_Remarks->text(), QString("Edited remark on Charly"));
+//   QCOMPARE(wc.currentData("FirstName"), QVariant("Charly"));
+//   QCOMPARE(wc.currentData("Remarks"), QVariant("Edited remark on Charly"));
+//   // Go to next row and check
+//   wc.toNext();
+//   QTest::qWait(50);
+//   QCOMPARE(w.fld_FirstName->text(), QString("Laura"));
+//   QCOMPARE(w.fld_Remarks->text(), QString("Edited remark on Laura"));
+//   QCOMPARE(wc.currentData("FirstName"), QVariant("Laura"));
+//   QCOMPARE(wc.currentData("Remarks"), QVariant("Edited remark on Laura"));
+//   // Go to next row and check
+//   wc.toNext();
+//   QTest::qWait(50);
+//   QCOMPARE(w.fld_FirstName->text(), QString("Zeta"));
+//   QCOMPARE(w.fld_Remarks->text(), QString("Edited remark 2 on Zeta"));
+//   QCOMPARE(wc.currentData("FirstName"), QVariant("Zeta"));
+//   QCOMPARE(wc.currentData("Remarks"), QVariant("Edited remark 2 on Zeta"));
+  /*
+   * Check programmed edition:
+   *  - Edit field(s)
+   *  - Submit the row at once
+   */
+  // Edit row
   wc.toFirst();
   QTest::qWait(50);
   QVERIFY(wc.setCurrentData("Remarks", "Edited remark on Andy", false));
+  // Submit row
+  QVERIFY(!wc.allDataAreSaved(true));
+  QVERIFY(wc.submitAndWait());
+  QVERIFY(wc.allDataAreSaved(true));
+  // Edit next row
   wc.toNext();
   QTest::qWait(50);
   QVERIFY(wc.setCurrentData("Remarks", "Edited remark on Bety", false));
+  // Submit row
+  QVERIFY(!wc.allDataAreSaved(true));
+  QVERIFY(wc.submitAndWait());
+  QVERIFY(wc.allDataAreSaved(true));
+  // Edit next row
   wc.toNext();
   QTest::qWait(50);
   QVERIFY(wc.setCurrentData("Remarks", "Edited remark on Charly", false));
+  // Submit row
+  QVERIFY(!wc.allDataAreSaved(true));
+  QVERIFY(wc.submitAndWait());
+  QVERIFY(wc.allDataAreSaved(true));
+  // Edit next row
   wc.toNext();
   QTest::qWait(50);
   QVERIFY(wc.setCurrentData("Remarks", "Edited remark on Laura", false));
+  // Submit row
+  QVERIFY(!wc.allDataAreSaved(true));
+  QVERIFY(wc.submitAndWait());
+  QVERIFY(wc.allDataAreSaved(true));
+  // Edit next row
   wc.toNext();
   QTest::qWait(50);
   QVERIFY(wc.setCurrentData("Remarks", "Edited remark 2 on Zeta", false));
+  // Submit row
   QVERIFY(!wc.allDataAreSaved(true));
-  // Submit all rows
   QVERIFY(wc.submitAndWait());
   QVERIFY(wc.allDataAreSaved(true));
   // Check that database was updated
@@ -1645,6 +1884,8 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QCOMPARE(wc.data("Id_PK", 2, "FirstName"), QVariant("Bety"));
   QVERIFY(wc.setData("Id_PK", 2, "FirstName", "Bety (P edited)", false));
   QCOMPARE(wc.data("Id_PK", 2, "FirstName"), QVariant("Bety (P edited)"));
+  wc.revert();
+  QTest::qWait(50);
   QVERIFY(wc.select());
   QCOMPARE(wc.data("Id_PK", 2, "FirstName"), QVariant("Bety"));
   /*
@@ -1706,13 +1947,14 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QVERIFY(ok);
 
   // Clear test data
-  clearTestDatabaseData();
+//   clearTestDatabaseData();
   // Re-enable foreign_keys support
   QVERIFY(q.exec("PRAGMA foreign_keys = ON"));
 }
 
 void mdtDatabaseWidgetTest::sqlDataWidgetControllerRoTest()
 {
+  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabaseManager.database());
   QSqlQuery q(pvDatabaseManager.database());
   sqlDataWidgetControllerTestWidget w;
   mdtSqlDataWidgetController wc;
@@ -1725,7 +1967,8 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerRoTest()
   // For this test, we wont foreign_keys support
   QVERIFY(q.exec("PRAGMA foreign_keys = OFF"));
   // Create test data
-  populateTestDatabase();
+//   populateTestDatabase();
+  QVERIFY(scenario1.populate());
   // Setup
   connect(&wc, SIGNAL(toFirstEnabledStateChanged(bool)), &w, SLOT(setToFirstEnableState(bool)));
   connect(&wc, SIGNAL(toLastEnabledStateChanged(bool)), &w, SLOT(setToLastEnableState(bool)));
@@ -1918,13 +2161,14 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerRoTest()
   QVERIFY(ok);
 
   // Clear test data
-  clearTestDatabaseData();
+//   clearTestDatabaseData();
   // Re-enable foreign_keys support
   QVERIFY(q.exec("PRAGMA foreign_keys = ON"));
 }
 
 void mdtDatabaseWidgetTest::sqlDataWidgetController2tableTest()
 {
+  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabaseManager.database());
   QSqlQuery q(pvDatabaseManager.database());
   sqlDataWidgetControllerTestWidget w;
   mdtSqlDataWidgetController clientController;
@@ -1940,7 +2184,8 @@ void mdtDatabaseWidgetTest::sqlDataWidgetController2tableTest()
   // For this test, we wont foreign_keys support
   ///QVERIFY(q.exec("PRAGMA foreign_keys = OFF"));
   // Create test data
-  populateTestDatabase();
+//   populateTestDatabase();
+  QVERIFY(scenario1.populate());
   // Setup
   connect(&clientController, SIGNAL(toFirstEnabledStateChanged(bool)), &w, SLOT(setToFirstEnableState(bool)));
   connect(&clientController, SIGNAL(toLastEnabledStateChanged(bool)), &w, SLOT(setToLastEnableState(bool)));
@@ -2269,13 +2514,14 @@ void mdtDatabaseWidgetTest::sqlDataWidgetController2tableTest()
   */
   
   // Clear test data
-  clearTestDatabaseData();
+//   clearTestDatabaseData();
   // Re-enable foreign_keys support
   QVERIFY(q.exec("PRAGMA foreign_keys = ON"));
 }
 
 void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
 {
+  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabaseManager.database());
   mdtSqlTableViewController tvc;
   QTableView tv;
   QSqlQuery q(pvDatabaseManager.database());
@@ -2289,7 +2535,8 @@ void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
   // For this test, we wont foreign_keys support
   QVERIFY(q.exec("PRAGMA foreign_keys = OFF"));
   // Create test data
-  populateTestDatabase();
+//   populateTestDatabase();
+  QVERIFY(scenario1.populate());
   /*
    * Setup
    */
@@ -2415,6 +2662,7 @@ void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
   qDebug() << "TEST - check edition + submit...";
   
   QVERIFY(tvc.currentState() == mdtAbstractSqlTableController::Visualizing);
+  // Begin edition and get edition widget
   index = tv.model()->index(0, 2);
   tv.edit(index);
   lineEdit = qobject_cast<QLineEdit*>(tv.indexWidget(index));
@@ -2422,8 +2670,12 @@ void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
   QTest::keyClicks(lineEdit, "Edited remark on Andy");
   QVERIFY(tvc.currentState() == mdtAbstractSqlTableController::Editing);
   QTest::keyClick(lineEdit, Qt::Key_Enter);
+  QTest::qWait(50);
+  // Submit
+  QVERIFY(!tvc.allDataAreSaved());
   QVERIFY(tvc.submitAndWait());
   QVERIFY(tvc.currentState() == mdtAbstractSqlTableController::Visualizing);
+  QVERIFY(tvc.allDataAreSaved());
   // Select and check that database was updated
   QVERIFY(tvc.select());
   QCOMPARE(tvc.data(0, "FirstName"), QVariant("Andy"));
@@ -2436,12 +2688,14 @@ void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
 
   QCOMPARE(tvc.rowCount(), 4);
   QVERIFY(tvc.currentState() == mdtAbstractSqlTableController::Visualizing);
+  // Begin edition and get edition widget
   index = tv.model()->index(0, 2);
   tv.edit(index);
   lineEdit = qobject_cast<QLineEdit*>(tv.indexWidget(index));
   QVERIFY(lineEdit != 0);
   QTest::keyClicks(lineEdit, "Edited remark 2 on Andy");
   QTest::keyClick(lineEdit, Qt::Key_Enter);
+  QTest::qWait(50);
   tvc.revert();
   QTest::qWait(50);
   // Select and check that database was not updated
@@ -2458,16 +2712,22 @@ void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
   tvc.insert();   // Will also call edit itself
   QTest::qWait(50);
   QCOMPARE(tvc.rowCount(false), 5);
+  // Get edition widget
   index = tv.model()->index(4, 1);
   ///tv.edit(index);
   lineEdit = qobject_cast<QLineEdit*>(tv.indexWidget(index));
   QVERIFY(lineEdit != 0);
   QTest::keyClicks(lineEdit, "New name 1");
   QTest::keyClick(lineEdit, Qt::Key_Enter);
+  QTest::qWait(50);
+  // Check that data was set to model
+  QCOMPARE(tvc.currentData("FirstName"), QVariant("New name 1"));
+  QCOMPARE(tvc.currentData("Remarks"), QVariant(""));
+  // Submit
+  QVERIFY(!tvc.allDataAreSaved());
   QVERIFY(tvc.submitAndWait());
-  // Check that data was set
-  ///QCOMPARE(tvc.currentData("FirstName"), QVariant("New name 1"));
-  ///QCOMPARE(tvc.currentData("Remarks"), QVariant(""));
+  QVERIFY(tvc.currentState() == mdtAbstractSqlTableController::Visualizing);
+  QVERIFY(tvc.allDataAreSaved());
   // Select and check that database was updated
   /*
    * Select and check
@@ -2488,12 +2748,14 @@ void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
   QTest::qWait(50);
   QCOMPARE(tvc.rowCount(false), 6);
   ///index = tv.model()->index(tvc.currentRow(), 2);
+  // Get edition widget
   index = tv.model()->index(5, 2);
   ///tv.edit(index);
   lineEdit = qobject_cast<QLineEdit*>(tv.indexWidget(index));
   QVERIFY(lineEdit != 0);
   QTest::keyClicks(lineEdit, "New remark 1");
   QTest::keyClick(lineEdit, Qt::Key_Enter);
+  QTest::qWait(50);
   tvc.revert();
   QTest::qWait(50);
   // Select and check that database was NOT updated
@@ -2535,13 +2797,21 @@ void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
    *  - Edit many rows
    *  - Submit all at once
    */
+  QVERIFY(tvc.currentState() == mdtAbstractSqlTableController::Visualizing);
   // Edit each row
   QVERIFY(tvc.setData(0, "Remarks", "Edited remark 2 on Andy", false));
+  QVERIFY(tvc.currentState() == mdtAbstractSqlTableController::Editing);
   QVERIFY(tvc.setData(1, "Remarks", "Edited remark on Bety", false));
   QVERIFY(tvc.setData(2, "Remarks", "Edited remark on Charly", false));
   QVERIFY(tvc.setData(3, "Remarks", "Edited remark on Zeta", false));
   // Submit all rows
+  qDebug() << "TEST - submitting ...";
+  QVERIFY(tvc.currentState() == mdtAbstractSqlTableController::Editing);
   QVERIFY(tvc.submitAndWait());
+  QVERIFY(tvc.currentState() == mdtAbstractSqlTableController::Visualizing);
+  
+  qDebug() << "TEST - submitting DONE";
+  
   // Check that database was updated
   QVERIFY(tvc.select());
   tvc.sort();
@@ -2789,8 +3059,6 @@ void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
   }
   */
 
-  // Clear test data
-  clearTestDatabaseData();
   // Re-enable foreign_keys support
   QVERIFY(q.exec("PRAGMA foreign_keys = ON"));
 }
@@ -2842,6 +3110,7 @@ void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
 
 void mdtDatabaseWidgetTest::sqlControllerParentChildTest()
 {
+  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabaseManager.database());
   sqlDataWidgetControllerTestWidget clientWidget;
   mdtSqlDataWidgetController clientController;
   QTableView addressView;
@@ -2852,7 +3121,8 @@ void mdtDatabaseWidgetTest::sqlControllerParentChildTest()
   QSpinBox *spinBox;
 
   // Create test data
-  populateTestDatabase();
+//   populateTestDatabase();
+  QVERIFY(scenario1.populate());
   /*
    * Setup
    */
@@ -3029,17 +3299,19 @@ void mdtDatabaseWidgetTest::sqlControllerParentChildTest()
   */
 
   // Clear test data
-  clearTestDatabaseData();
+//   clearTestDatabaseData();
 }
 
 
 void mdtDatabaseWidgetTest::sqlTableSelectionItemTest()
 {
+  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabaseManager.database());
   QSqlTableModel model;
   QModelIndex index;
 
   // Populate database and setup model
-  populateTestDatabase();
+//   populateTestDatabase();
+  QVERIFY(scenario1.populate());
   model.setTable("Client_tbl");
   QVERIFY(model.select());
   // Get index of first row, field Id_PK
@@ -3051,17 +3323,19 @@ void mdtDatabaseWidgetTest::sqlTableSelectionItemTest()
   QCOMPARE(item.index().row(), 0);
   QCOMPARE(item.fieldName(), QString("Id_PK"));
   // Clear database data
-  clearTestDatabaseData();
+//   clearTestDatabaseData();
 }
 
 void mdtDatabaseWidgetTest::sqlTableSelectionRowTest()
 {
+  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabaseManager.database());
   QSqlTableModel model;
   QModelIndex index;
   mdtSqlTableSelectionRow row;
 
   // Populate database and setup model
-  populateTestDatabase();
+//   populateTestDatabase();
+  QVERIFY(scenario1.populate());
   model.setTable("Client_tbl");
   QVERIFY(model.select());
 
@@ -3097,11 +3371,12 @@ void mdtDatabaseWidgetTest::sqlTableSelectionRowTest()
   QCOMPARE(row.fields().size(), 0);
 
   // Clear database data
-  clearTestDatabaseData();
+//   clearTestDatabaseData();
 }
 
 void mdtDatabaseWidgetTest::sqlTableSelectionTest()
 {
+  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabaseManager.database());
   QSqlTableModel model;
   QTableView view;
   QItemSelectionModel *selectionModel;
@@ -3111,7 +3386,8 @@ void mdtDatabaseWidgetTest::sqlTableSelectionTest()
   QList<QVariant> expectedDataList;
 
   // Populate database and setup model + view
-  populateTestDatabase();
+//   populateTestDatabase();
+  QVERIFY(scenario1.populate());
   view.setModel(&model);
   model.setTable("Client_tbl");
   QVERIFY(model.select());
@@ -3265,11 +3541,12 @@ void mdtDatabaseWidgetTest::sqlTableSelectionTest()
   */
 
   // Clear database data
-  clearTestDatabaseData();
+//   clearTestDatabaseData();
 }
 
 void mdtDatabaseWidgetTest::sqlSelectionDialogTest()
 {
+  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabaseManager.database());
   mdtSqlSelectionDialog *dialog;
   QSqlQuery q;
   QString sql;
@@ -3277,7 +3554,8 @@ void mdtDatabaseWidgetTest::sqlSelectionDialogTest()
   QStringList fields;
 
   // Populate database
-  populateTestDatabase();
+//   populateTestDatabase();
+  QVERIFY(scenario1.populate());
   /*
    * Check single selection with 1 field, at column 0
    */
@@ -3407,11 +3685,12 @@ void mdtDatabaseWidgetTest::sqlSelectionDialogTest()
   delete dialog;
 
   // Cleanup
-  clearTestDatabaseData();
+//   clearTestDatabaseData();
 }
 
 void mdtDatabaseWidgetTest::sqlTableWidgetTest()
 {
+  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabaseManager.database());
   mdtSqlTableWidget *sqlTableWidget;
   std::shared_ptr<mdtSqlTableViewController> addressController;
   mdtSqlTableWidget *addressWidget;
@@ -3422,7 +3701,8 @@ void mdtDatabaseWidgetTest::sqlTableWidgetTest()
   QModelIndex index;
 
   // Populate database
-  populateTestDatabase();
+//   populateTestDatabase();
+  QVERIFY(scenario1.populate());
   // Setup client widget
   sqlTableWidget = new mdtSqlTableWidget;
   sqlTableWidget->setTableName("Client_tbl", pvDatabaseManager.database());
@@ -3606,12 +3886,13 @@ void mdtDatabaseWidgetTest::sqlTableWidgetTest()
   */
 
   // Cleanup
-  clearTestDatabaseData();
+//   clearTestDatabaseData();
   delete sqlTableWidget;
 }
 
 void mdtDatabaseWidgetTest::sqlTableWidgetCsvExportTest()
 {
+  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabaseManager.database());
   mdtSqlTableWidget *sqlTableWidget;
   std::shared_ptr<mdtSqlTableViewController> addressController;
   ///mdtSqlTableWidget *addressWidget;
@@ -3627,7 +3908,8 @@ void mdtDatabaseWidgetTest::sqlTableWidgetCsvExportTest()
   QByteArray expecetedCsvData;
 
   // Populate database
-  populateTestDatabase();
+//   populateTestDatabase();
+  QVERIFY(scenario1.populate());
   // Setup client widget
   sqlTableWidget = new mdtSqlTableWidget;
   sqlTableWidget->setTableName("Client_tbl", pvDatabaseManager.database());
@@ -3677,19 +3959,19 @@ void mdtDatabaseWidgetTest::sqlTableWidgetCsvExportTest()
   }
 
   // Cleanup
-  clearTestDatabaseData();
+//   clearTestDatabaseData();
   delete sqlTableWidget;
 }
 
 void mdtDatabaseWidgetTest::sqlFormTest()
 {
+  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabaseManager.database());
   mdtSqlForm form(0, pvDatabaseManager.database());
   sqlDataWidgetControllerTestWidget clientWidget;
   mdtSqlRelationInfo relationInfo;
-  ///mdtSqlTableWidget *tableWidget;
 
   // Create test data
-  populateTestDatabase();
+  QVERIFY(scenario1.populate());
   // Setup form - Main table part
   form.setMainTableWidget(&clientWidget);
   QVERIFY(form.setMainTable("Client_tbl", "Clients", "FirstName"));
@@ -3702,8 +3984,28 @@ void mdtDatabaseWidgetTest::sqlFormTest()
   // Start and select data
   form.start();
   QVERIFY(form.select());
-  ///form.start();
   form.show();
+  QCOMPARE(form.rowCount("Client_tbl"), 4);
+  // Check that we are at correct row (Andy)
+  QCOMPARE(form.currentData("Client_tbl", "Id_PK"), QVariant(1));
+  QCOMPARE(form.rowCount("Address_tbl"), 2);
+  /*
+   * Check insertion
+   */
+  QVERIFY(form.insert());
+  QCOMPARE(form.rowCount("Client_tbl"), 5);
+  // Check that we are at new row
+  QVERIFY(form.currentData("Client_tbl", "Id_PK").isNull());
+  QCOMPARE(form.rowCount("Address_tbl"), 0);
+  // Edit name - don't save now
+  QVERIFY(form.setCurrentData("Client_tbl", "FirstName", "New name 1", false));
+  ///QVERIFY(!form.allDataAreSaved());
+  QCOMPARE(form.currentData("Client_tbl", "FirstName"), QVariant("New name 1"));
+  // Edit remark and save
+  QVERIFY(form.setCurrentData("Client_tbl", "Remarks", "New remark 1", true));
+  QVERIFY(form.allDataAreSaved());
+  QCOMPARE(form.currentData("Client_tbl", "Remarks"), QVariant("New remark 1"));
+
   /*
    * Check data getters
    */
@@ -3729,9 +4031,42 @@ void mdtDatabaseWidgetTest::sqlFormTest()
     QTest::qWait(500);
   }
   */
+}
 
-  // Cleanup
-  clearTestDatabaseData();
+void mdtDatabaseWidgetTest::mdtSqlDialogTest()
+{
+  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabaseManager.database());
+  mdtSqlDialog sqlDialog;
+  mdtSqlForm *form;
+  QWidget *formWidget;
+
+  // Create test data
+  QVERIFY(scenario1.populate());
+
+  sqlDialog.show();
+  
+  QTest::qWait(2000);
+  
+  /*
+   * Setup - We simly create a fake main widget for form
+   */
+  form = new mdtSqlForm(0, pvDatabaseManager.database());
+  formWidget = new QWidget;
+  formWidget->setLayout(new QVBoxLayout);
+  form->setMainTableWidget(formWidget);
+  QVERIFY(form->setMainTable("Client_tbl", "Clients"));
+  sqlDialog.setSqlForm(form);
+  
+  QTest::qWait(2000);
+  
+  /*
+   * Play
+   */
+
+  while(sqlDialog.isVisible()){
+    QTest::qWait(500);
+  }
+
 }
 
 void mdtDatabaseWidgetTest::sqlFieldSelectionDialogTest()
@@ -3913,55 +4248,6 @@ void mdtDatabaseWidgetTest::createDatabaseSchema()
   QVERIFY(pvDatabaseManager.setForeignKeysEnabled(true));
 }
 
-void mdtDatabaseWidgetTest::populateTestDatabase()
-{
-  QSqlQuery query(pvDatabaseManager.database());
-
-  // Inert some data in Client_tbl
-  QVERIFY(query.exec("INSERT INTO 'Client_tbl' (Id_PK, FirstName) VALUES(1, 'Andy')"));
-  QVERIFY(query.exec("INSERT INTO 'Client_tbl' (Id_PK, 'FirstName', 'Remarks', 'SomeValueDouble') VALUES(2, 'Bety', 'Remark on Bety', 2)"));
-  QVERIFY(query.exec("INSERT INTO 'Client_tbl' (Id_PK, 'FirstName', 'Remarks') VALUES(3, 'Zeta', 'Remark on Zeta')"));
-  QVERIFY(query.exec("INSERT INTO 'Client_tbl' (Id_PK, 'FirstName', 'Remarks') VALUES(4, 'Charly', 'Remark on Charly')"));
-  QVERIFY(query.exec("SELECT * FROM 'Client_tbl'"));
-  while(query.next()){
-    QVERIFY(!query.record().isEmpty());
-  }
-  // Inert some data into Address_tbl
-  QVERIFY(query.exec("INSERT INTO 'Address_tbl' ('StreetName', 'StreetNumber', 'Client_Id_FK') VALUES('Andy street 1', 11 , 1)"));
-  QVERIFY(query.exec("INSERT INTO 'Address_tbl' ('StreetName', 'StreetNumber', 'Client_Id_FK') VALUES('Andy street 2', 12 , 1)"));
-  QVERIFY(query.exec("INSERT INTO 'Address_tbl' ('StreetName', 'StreetNumber', 'Client_Id_FK') VALUES('Bety street 1', 21 , 2)"));
-  QVERIFY(query.exec("SELECT * FROM 'Address_tbl'"));
-  while(query.next()){
-    QVERIFY(!query.record().isEmpty());
-  }
-}
-
-void mdtDatabaseWidgetTest::populate1000Names()
-{
-  QSqlQuery query(pvDatabaseManager.database());
-  QString sql;
-  int i;
-
-  QVERIFY(pvDatabaseManager.database().transaction());
-  for(i = 0; i < 1000; ++i){
-    sql = QString("INSERT INTO 'Client_tbl' (Id_PK, 'FirstName', 'Remarks') VALUES(%1, 'Name %2', 'Remark %3')").arg(i+1).arg(i+1).arg(i+1);
-    QVERIFY(query.exec(sql));
-  }
-  QVERIFY(pvDatabaseManager.database().commit());
-}
-
-void mdtDatabaseWidgetTest::clearTestDatabaseData()
-{
-  QString sql;
-  QSqlQuery query(pvDatabaseManager.database());
-
-  sql = "DELETE FROM Address_tbl";
-  QVERIFY(query.exec(sql));
-  sql = "DELETE FROM ClientDetail_tbl";
-  QVERIFY(query.exec(sql));
-  sql = "DELETE FROM Client_tbl";
-  QVERIFY(query.exec(sql));
-}
 
 /*
  * Main

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -28,8 +28,6 @@
 #include <QList>
 #include <QPair>
 
-///class mdtAbstractSqlWidget;
-///class QTabWidget;
 class QHBoxLayout;
 class QVBoxLayout;
 class QPushButton;
@@ -58,7 +56,7 @@ class mdtSqlDialog : public QDialog
   /*! \brief Set the SQL form
    *
    * Note: because form will be reparented,
-   *       it will be deleted when this dialog is destroyed !
+   *       it will be deleted when this dialog is destroyed.
    *
    * \pre form must be a valid pointer .
    */

@@ -24,7 +24,6 @@
 #include "mdtTtTestStepWidget.h"
 #include <QWidget>
 #include <QVBoxLayout>
-#include <QList>
 
 class mdtTtTestStepContainer;
 
@@ -51,19 +50,13 @@ class mdtTtTestStepContainerWidget : public QWidget
    *  and this widget will also be added to widgets layout.
    */
   void setContainer(mdtTtTestStepContainer *c);
-  
-  
-  /*! \brief Add a test item widget
-   */
-  void addItem(mdtTtTestStepWidget *w);
 
-  /*! \brief Add a stretch to internal layout
+  /*! \brief Get test step widgets count
    */
-//   void addStretch();
-
-  /*! \brief Enable or disable run/abort function of all widgets
-   */
-  void setRunAbortEnabled(bool enable);
+  int stepWidgetsCount() const
+  {
+    return pvLayout->count() - 1;
+  }
 
  public slots:
 
@@ -71,22 +64,18 @@ class mdtTtTestStepContainerWidget : public QWidget
    */
   void addStepWidget(mdtTtTestStepWidget *tsw);
 
- private slots:
-
-  /*! \brief Disable run/abort function of all item widgets, expect the one that called this slot
+  /*! \brief Remove a test step widget
+   *
+   * Given widget will be removed from layout.
+   * Note that it will also be destroyed.
    */
-  void disableRunAbortOfOtherWidgets(mdtTtTestStepWidget *callerWidget);
-
-  /*! \brief Enable run/abort function of all item widgets
-   */
-  void enableRunAbortOfAllWidgets();
+  void removeStepWidget(mdtTtTestStepWidget *tsw);
 
  private:
 
   Q_DISABLE_COPY(mdtTtTestStepContainerWidget);
 
   QVBoxLayout *pvLayout;
-  QList<mdtTtTestStepWidget*> pvStepWidgets;
 };
 
 #endif // #ifndef MDT_TT_TEST_STEP_CONTAINER_WIDGET_H

@@ -53,10 +53,6 @@ class mdtTtTestStepWidget : public QWidget
    */
   void setMessage(const QString & msg);
 
-  /*! \brief Set message
-   */
-//   void setMessage(const mdtError & error);
-
   /*! \brief Clear message
    */
   void clearMessage();
@@ -76,49 +72,6 @@ class mdtTtTestStepWidget : public QWidget
    */
   void setRunAbortButtonEnabled(bool enable);
 
-  /*! \brief Turn to Running state
-   *
-   * Note: if user clicked the run/abort button,
-   *  this is done automatically.
-   */
-//   void setRunning();
-
-  /*! \brief Turn to Success state
-   */
-//   void setFinishedSuccess();
-
-  /*! \brief Turn to Warn state
-   */
-//   void setFinishedWarn();
-
-  /*! \brief Turn to Warn state and display a message (in message label)
-   */
-//   void setFinishedWarn(const QString & msg);
-
-  /*! \brief Turn to Warn state and display a message (in message label)
-   */
-//   void setFinishedWarn(const mdtError & msg);
-
-  /*! \brief Turn to Fail state
-   */
-//   void setFinishedFail();
-// 
-//   /*! \brief Turn to Fail state and display a message (in message label)
-//    */
-//   void setFinishedFail(const QString & msg);
-// 
-//   /*! \brief Turn to Fail state and display a message (in message label)
-//    */
-//   void setFinishedFail(const mdtError & msg);
-
-  /*! \brief Reset to Initial state
-   */
-//   void reset();
-
-  /*! \brief Enable or disable Run/Abort function
-   */
-  //void setRunAbortEnabled(bool enable);
-
   /*! \brief Set state
    */
   void setState(mdtTtTestStep::State_t state);
@@ -128,14 +81,6 @@ class mdtTtTestStepWidget : public QWidget
   /*! \brief Emitted when Run/Abort button was clicked
    */
   void runAbortButtonClicked();
-
-//   /*! \brief Emitted when run function was clicked
-//    */
-//   void runCalled();
-// 
-//   /*! \brief Emitted when abort function was clicked
-//    */
-//   void abortCalled();
 
   /*! \brief Emitted when test item has started
    *
@@ -148,12 +93,6 @@ class mdtTtTestStepWidget : public QWidget
    * \param w this pointer
    */
   void finished(mdtTtTestStepWidget *w);
-
-//  private slots:
-// 
-//   /*! \brief
-//    */
-//   void runAbort();
 
  private:
 

@@ -28,7 +28,7 @@
 #include <QSqlError>
 #include <QCoreApplication>
 
-//#include <QDebug>
+#include <QDebug>
 
 /*
  * mdtSqlTableViewControllerItemDelegate implementation
@@ -208,22 +208,36 @@ void mdtSqlTableViewController::onTableViewcurrentRowChanged(const QModelIndex& 
   pvRowChangingByInternalEvent = false;
 }
 
-void mdtSqlTableViewController::onStateVisualizingEntered()
-{
-  mdtAbstractSqlTableController::onStateVisualizingEntered();
-  pvEditionDone = true;
-}
+// void mdtSqlTableViewController::onStateVisualizingEntered()
+// {
+//   mdtAbstractSqlTableController::onStateVisualizingEntered();
+//   pvEditionDone = true;
+// }
 
 void mdtSqlTableViewController::onStateEditingEntered()
 {
+  qDebug() << "Table view controller: enetering edition";
   pvEditionDone = false;
   mdtAbstractSqlTableController::onStateEditingEntered();
+}
+
+void mdtSqlTableViewController::onStateEditingExited()
+{
+  mdtAbstractSqlTableController::onStateEditingExited();
+  pvEditionDone = true;
+  qDebug() << "Table view controller: edition DONE";
 }
 
 void mdtSqlTableViewController::onStateEditingNewRowEntered()
 {
   pvEditionDone = false;
   mdtAbstractSqlTableController::onStateEditingNewRowEntered();
+}
+
+void mdtSqlTableViewController::onStateEditingNewRowExited()
+{
+  mdtAbstractSqlTableController::onStateEditingNewRowExited();
+  pvEditionDone = true;
 }
 
 void mdtSqlTableViewController::onEditionDone()
@@ -234,6 +248,7 @@ void mdtSqlTableViewController::onEditionDone()
 void mdtSqlTableViewController::waitEditionDone()
 {
   while(!pvEditionDone){
+    qDebug() << "Table view controller: waiting edition done ...";
     QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
   }
 }

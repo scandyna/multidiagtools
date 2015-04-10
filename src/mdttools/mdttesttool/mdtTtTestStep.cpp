@@ -142,8 +142,6 @@ bool mdtTtTestStep::isInRange(const mdtValueDouble & x, double min, double max, 
   if(!mdtAlgorithms::isInRange(x.value(), min, max, true, true)){
     QString msg;
     pvLastError.setError(tr("Range checking failed for given value."), mdtError::Error);
-//     msg  = tr("Value") + " " + QString::number(x.value()) + " " + tr("is out of range.") + " ";
-//     msg += tr("Allowed range is: ") + "[" + QString::number(min) + ";" + QString::number(max) + "]";
     msg  = tr("Value %1 %2 is out of range.").arg(x.value(), 0, 'g', 2).arg(valueUnit) + " ";
     msg += tr("Allowed range is from %1 to %2 %3 [%1;%2] %3").arg(min, 0, 'g', 2).arg(max, 0, 'g', 2).arg(valueUnit);
     pvLastError.setInformativeText(msg);

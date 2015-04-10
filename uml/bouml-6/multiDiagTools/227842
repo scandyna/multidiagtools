@@ -1,6 +1,6 @@
 format 209
 "DatabaseLogical" // mdttools::mdttesttool::DatabaseLogical
-  revision 64
+  revision 65
   modified_by 2 "philippe"
   // class settings
   
@@ -2282,6 +2282,18 @@ ${inlines}
       end
 
       attribute 1576450 "Section"
+	private explicit_type "double"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1625858 "ExternalDiameter"
 	private explicit_type "double"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "

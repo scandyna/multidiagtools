@@ -128,6 +128,7 @@ class mdtDatabaseWidgetTest : public mdtTest
   void sqlTableWidgetCsvExportTest();
 
   void sqlFormTest();
+  void mdtSqlDialogTest();
 
   void sqlFieldSelectionDialogTest();
 
@@ -138,10 +139,10 @@ class mdtDatabaseWidgetTest : public mdtTest
   // Create test database schema - Will FAIL on problem
   void createDatabaseSchema();
 
-  void populateTestDatabase();
-  void clearTestDatabaseData();
+//   void populateTestDatabase();
+//   void clearTestDatabaseData();
 
-  void populate1000Names();
+//   void populate1000Names();
 
   mdtSqlDatabaseManager pvDatabaseManager;
 };

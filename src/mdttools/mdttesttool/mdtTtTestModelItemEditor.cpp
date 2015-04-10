@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -776,18 +776,11 @@ bool mdtTtTestModelItemEditor::setupTestLinkTable()
   if(!addChildTable(relationInfo, tr("Test links"))){
     return false;
   }
-  /**
-  if(!addChildTable("TestModelItem_TestLink_view", tr("Test links"), database())){
-    return false;
-  }
-  if(!addRelation("Id_PK", "TestModelItem_TestLink_view", "TestModelItem_Id_FK")){
-    return false;
-  }
-  */
   widget = sqlTableWidget("TestModelItem_TestLink_view");
   Q_ASSERT(widget != 0);
   // Hide technical fields
   widget->setColumnHidden("TestModelItem_Id_FK", true);
+  widget->setColumnHidden("TestNodeUnit_Id_FK", true);
   widget->setColumnHidden("TestLink_Id_FK", true);
   widget->setColumnHidden("TestConnection_Id_FK", true);
   widget->setColumnHidden("DutConnection_Id_FK", true);
@@ -799,10 +792,11 @@ bool mdtTtTestModelItemEditor::setupTestLinkTable()
   widget->setColumnHidden("IoPosition", true);
   widget->setColumnHidden("TestNodeSeriesNumber", true);
   // Rename visible fields to something human friendly
-  ///widget->setHeaderData("IoPosition", tr("I/O\nPos."));
-  ///widget->setHeaderData("TestNodeUnitSchemaPosition", tr("Test node\nunit\nschema pos."));
+  widget->setHeaderData("TestLinkIdentification", tr("Test link\nIdentification"));
   widget->setHeaderData("TestConnectorName", tr("Test\nconnector"));
   widget->setHeaderData("TestContactName", tr("Test\ncontact"));
+  widget->setHeaderData("Alias", tr("Test system\nalias"));
+  widget->setHeaderData("AddressString", tr("Test system\naddress string"));
   widget->setHeaderData("DutUnitSchemaPosition", tr("DUT\nSchema pos."));
   widget->setHeaderData("DutUnitAlias", tr("DUT\n   alias   "));
   widget->setHeaderData("DutConnectorName", tr("DUT\nconnector"));
@@ -839,17 +833,9 @@ bool mdtTtTestModelItemEditor::setupTestItemRouteTable()
 
   relationInfo.setChildTableName("TestModelItemRoute_view");
   relationInfo.addRelation("Id_PK", "TestModelItem_Id_FK", false);
-  if(!addChildTable(relationInfo, tr("Routes"))){
+  if(!addChildTable(relationInfo, tr("Test node internal routes"))){
     return false;
   }
-  /**
-  if(!addChildTable("TestModelItemRoute_view", tr("Routes"), database())){
-    return false;
-  }
-  if(!addRelation("Id_PK", "TestModelItemRoute_view", "TestModelItem_Id_FK")){
-    return false;
-  }
-  */
   widget = sqlTableWidget("TestModelItemRoute_view");
   Q_ASSERT(widget != 0);
   // Hide technical fields
@@ -858,6 +844,9 @@ bool mdtTtTestModelItemEditor::setupTestItemRouteTable()
   widget->setColumnHidden("TestLink_Id_FK", true);
   widget->setColumnHidden("MeasureTestNodeUnitConnection_Id_FK", true);
   widget->setColumnHidden("TestAlias", true);
+  widget->setColumnHidden("TestConnection_Id_FK", true);
+  widget->setColumnHidden("DutConnection_Id_FK", true);
+  widget->setColumnHidden("TestNode_Id_FK", true);
   // Choose MeasureContactFunction field regarding language
   switch(locale.language()){
     case QLocale::French:
@@ -915,6 +904,7 @@ bool mdtTtTestModelItemEditor::setupTestItemRouteTable()
   widget->setHeaderData("TestSchemaPosition", tr("Test\nConnector"));
   widget->setHeaderData("TestContactName", tr("Test\nContact"));
   widget->setHeaderData("RouteTestNodeUnits", tr("Route\nrelays"));
+  widget->setHeaderData("RouteResistance", tr("Route\nresistance"));
   widget->setHeaderData("MeasureSchemaPosition", tr("Measure\nunit"));
   widget->setHeaderData("MeasureAlias", tr("Measure\nalias"));
   widget->setHeaderData("MeasureContactName", tr("Measure\ncontact"));
@@ -942,8 +932,6 @@ bool mdtTtTestModelItemEditor::setupTestNodeUnitSetupTable()
   QPushButton *pbEditRelayPath;
   QPushButton *pbSetupNodeUnit;
   QPushButton *pbRemoveNodeUnits;
-  ///QPushButton *pbGenerateTestNodeUnitSetup;
-  ///QPushButton *pbRemoveTestNodeUnitSetup;
   QLocale locale;
   mdtSqlRelationInfo relationInfo;
 
@@ -952,24 +940,20 @@ bool mdtTtTestModelItemEditor::setupTestNodeUnitSetupTable()
   if(!addChildTable(relationInfo, tr("Node unit setup"))){
     return false;
   }
-  /**
-  if(!addChildTable("TestNodeUnitSetup_view", tr("Node unit setup"), database())){
-    return false;
-  }
-  if(!addRelation("Id_PK", "TestNodeUnitSetup_view", "TestModelItem_Id_FK")){
-    return false;
-  }
-  */
   widget = sqlTableWidget("TestNodeUnitSetup_view");
   Q_ASSERT(widget != 0);
   // Hide technical fields
   widget->setColumnHidden("TestModelItem_Id_FK", true);
+  widget->setColumnHidden("TestModelItemRoute_Id_FK", true);
   widget->setColumnHidden("TestNodeUnit_Id_FK", true);
   widget->setColumnHidden("TestNode_Id_FK", true);
   widget->setColumnHidden("IoPosition", true);
   widget->setColumnHidden("Type_Code_FK", true);
   // Set fields a user friendly name
-  widget->setHeaderData("SchemaPosition", tr("Schema\npos."));
+  widget->setHeaderData("StepNumber", tr("Step #"));
+  widget->setHeaderData("SchemaPosition", tr("Test node unit\nschema pos."));
+  widget->setHeaderData("Alias", tr("Test node unit\nalias"));
+  widget->setHeaderData("Type", tr("Test node unit\ntype"));
   // Choose Name field regarding language
   switch(locale.language()){
     case QLocale::French:
@@ -1020,18 +1004,6 @@ bool mdtTtTestModelItemEditor::setupTestNodeUnitSetupTable()
   connect(pbRemoveNodeUnits, SIGNAL(clicked()), this, SLOT(removeNodeUnits()));
   widget->addWidgetToLocalBar(pbRemoveNodeUnits);
   widget->addStretchToLocalBar();
-
-  
-  // Add buttons
-  /**
-  pbGenerateTestNodeUnitSetup = new QPushButton(tr("Generate setup"));
-  connect(pbGenerateTestNodeUnitSetup, SIGNAL(clicked()), this, SLOT(generateTestNodeUnitSetup()));
-  widget->addWidgetToLocalBar(pbGenerateTestNodeUnitSetup);
-  pbRemoveTestNodeUnitSetup = new QPushButton(tr("Remove setup item"));
-  connect(pbRemoveTestNodeUnitSetup, SIGNAL(clicked()), this, SLOT(removeTestNodeUnitSetup()));
-  widget->addWidgetToLocalBar(pbRemoveTestNodeUnitSetup);
-  widget->addStretchToLocalBar();
-  */
 
   return true;
 }

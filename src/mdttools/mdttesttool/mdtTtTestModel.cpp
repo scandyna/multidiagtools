@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -42,10 +42,11 @@ QString mdtTtTestModel::sqlForTestNodeSelection(const QVariant & testModelId) co
 
   sql = "SELECT\n"\
         " TN.VehicleType_Id_FK_PK,\n"\
-        " TN.NodeIdentification,\n"\
+        " TN.Alias,\n"\
         " VT.Type,\n"\
         " VT.SubType,\n"\
-        " VT.SeriesNumber\n"\
+        " VT.SeriesNumber,\n"\
+        " TN.AddressString\n"\
         "FROM TestNode_tbl TN\n"\
         " JOIN VehicleType_tbl VT\n"\
         "  ON VT.Id_PK = TN.VehicleType_Id_FK_PK\n";

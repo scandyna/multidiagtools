@@ -161,7 +161,7 @@ class mdtTtTestStepContainer : public QObject
 
   /*! \brief Emitted when a test step with a widget was removed from container
    */
-//   void stepWidgetRemoved(mdtTtTestStepWidget *tsw);
+  void stepWidgetRemoved(mdtTtTestStepWidget *tsw);
 
  private slots:
 

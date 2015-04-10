@@ -102,6 +102,24 @@ class mdtAbstractSqlTableController : public QObject
                 Removing          /*!< Removing state */
                };
 
+  /*! \brief Data update strategy
+   *
+   * Some functions are available to update data by programming.
+   * Depending on use case, such data update must tell the user
+   *  that data has changed, and let him the possibility to save (or revert) them.
+   *  Another case could be data that we just want to display, but never save
+   *  to database, or explicitly only (the user can possibly not save or revert).
+   *
+   * \sa setData()
+   * \sa setCurrentData()
+   */
+//   enum class DataUpdateStrategy
+//   {
+//     SubmitDirectly    /*!< The function will submit data directly to database.
+//                             No check will be performed (data that was edited by user are possibly lost, 
+//                             depending on subclass implementation of cacheed data) */
+//   };
+
   /*! \brief Constructor
    */
   mdtAbstractSqlTableController(QObject * parent = 0);
@@ -129,6 +147,11 @@ class mdtAbstractSqlTableController : public QObject
   /*! \brief Set table model
    *
    * Will replace internal model if allready set.
+   *
+   * Note that one of the goal of a SQL table controller is to prevent from silent update of database
+   *  by making checks before submitting data and warn the user if something is wrong.
+   *  Keeping GUI coherent with current state is also a goal.
+   *  For this reasons, the model's edit strategy will be set to QSqlTableModel::OnManualSubmit.
    */
   void setModel(std::shared_ptr<QSqlTableModel> m, const QString & userFriendlyTableName = QString());
 
@@ -282,7 +305,7 @@ class mdtAbstractSqlTableController : public QObject
 
   /*! \brief Select data in main table
    *
-   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   * \pre Table model must be set with setModel() or setTableName() before calling this method.
    * \pre Internal state machine must run (see start() ).
    */
   bool select();
@@ -363,13 +386,13 @@ class mdtAbstractSqlTableController : public QObject
 
   /*! \brief Start internal state machine
    *
-   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   * \pre Table model must be set with setModel() or setTableName() before calling this method.
    */
   void start();
 
   /*! \brief Stop internal state machine
    *
-   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   * \pre Table model must be set with setModel() or setTableName() before calling this method.
    */
   void stop();
 
@@ -428,11 +451,24 @@ class mdtAbstractSqlTableController : public QObject
 
   /*! \brief Set current data for given field name
    *
+   * Will update current data for given fieldName in internal model.
+   *  If given fieldName does not exists, lastError will contain a message on index error.
+   *
+   * If canWriteToDatabase is true, currentState will be updated, else not.
+   *
+   * Note: if submit is true, but canWriteToDatabase flag is false,
+   *  submit flag is silently ignored.
+   *
    * \pre Table model must be set with setModel() or setTableName() begore calling this method.
    */
   bool setCurrentData(const QString &fieldName, const QVariant &data, bool submit = true);
 
   /*! \brief Set data for given row and field name
+   *
+   * Will update data at given row and fieldName in internal model.
+   *  Index checking is done internally, and lastError will contain a message on index error.
+   *
+   * If canWriteToDatabase is true, currentState will be updated, else not.
    *
    * Note: row is relative to sorted data model (proxyModel),
    *   not underlaying QSqlTableModel.
@@ -452,6 +488,7 @@ class mdtAbstractSqlTableController : public QObject
    * \param data Data to set
    * \param submit If true, data will be submitted to database, else it will be cached only in model.
    * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   * \sa setData(int row, const QString&, const QVariant&, bool)
    */
   bool setData(const QString & matchFieldName, const QVariant & matchData, const QString & dataFieldName, const QVariant &data, bool submit = true);
 
@@ -465,6 +502,7 @@ class mdtAbstractSqlTableController : public QObject
    * \param data Data to set
    * \param submit If true, data will be submitted to database, else it will be cached only in model.
    * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   * \sa setData(int row, const QString&, const QVariant&, bool)
    */
   bool setData(const QString & matchFieldName1, const QVariant & key1, const QString & matchFieldName2, const QVariant & key2,
                const QString & dataFieldName, const QVariant &data, bool submit = true);
@@ -794,9 +832,8 @@ class mdtAbstractSqlTableController : public QObject
 
   /*! \brief Set current row
    *
-   * If not all data are saved for current row, this method will return false.
-   *  If row is > model's cached rowCount-1, data will be fetched
-   *   in database. If request row could not be found, false is returned.
+   * If row is > model's cached rowCount-1, data will be fetched
+   *  in database. If request row could not be found, false is returned.
    *
    * \param row Row to witch to go. Must be in range [-1;rowCount()-1]
    *            Note: row is relative to sorted data model (proxyModel),
@@ -860,6 +897,18 @@ class mdtAbstractSqlTableController : public QObject
    */
   bool removeAndWait();
 
+  /*! \brief Insert a new row and wait until done
+   *
+   * Will insert new row linke insert(),
+   *  but the function returns once internal state
+   *  is EditingNewRow (case of success) or Visualizing (case of failure).
+   *
+   *  Note: wait will not freeze Qt's event loop.
+   *
+   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   */
+  bool insertAndWait();
+
  public slots:
 
   /*! \brief Submit data
@@ -873,9 +922,6 @@ class mdtAbstractSqlTableController : public QObject
   void submit();
 
   /*! \brief Revert current record from model
-   *
-   * Depending on subclass choosen EditStrategy,
-   *  this method has potentially no effect.
    *
    * Internally, revertTriggered() signal will be emitted.
    */
@@ -945,6 +991,18 @@ class mdtAbstractSqlTableController : public QObject
    */
   virtual void modelSetEvent() {}
 
+  /*! \brief Before current row change event
+   *
+   * Subclass can re-implement this function if some tasks must be done before current row changes.
+   *  If current row change is not allowed, this function returns false.
+   *
+   * This default implementation does nothing and allways returns true.
+   */
+  virtual bool beforeCurrentRowChangeEvent()
+  {
+    return true;
+  }
+
   /*! \brief Current row changed event
    *
    * Subclass can re-implement this method
@@ -1011,9 +1069,6 @@ class mdtAbstractSqlTableController : public QObject
    * Subclass must implement this method.
    *  On problem, subclass should explain
    *  what goes wrong to the user and return false.
-   *
-   * Depending on subclass choosen EditStrategy,
-   *  this method has potentially no effect.
    */
   virtual bool doRevert() = 0;
 
@@ -1149,7 +1204,7 @@ class mdtAbstractSqlTableController : public QObject
    * This slot is called from internal state machine
    *  and should not be used directly.
    */
-  void onStateEditingExited();
+  virtual void onStateEditingExited();
 
   /*! \brief Activity after Submitting state entered
    *
@@ -1188,7 +1243,7 @@ class mdtAbstractSqlTableController : public QObject
    * This slot is called from internal state machine
    *  and should not be used directly.
    */
-  void onStateEditingNewRowExited();
+  virtual void onStateEditingNewRowExited();
 
   /*! \brief Activity after SubmittingNewRow state entered
    *

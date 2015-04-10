@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -150,7 +150,11 @@ class mdtSqlDataWidgetController : public mdtAbstractSqlTableController
 
   /*! \brief Table model set event
    */
-  void modelSetEvent();
+//   void modelSetEvent();
+
+  /*! \brief Check that all data are saved
+   */
+  bool beforeCurrentRowChangeEvent();
 
   /*! \brief Current row changed event
    */

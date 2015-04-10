@@ -73,7 +73,7 @@ class mdtTtTestStep : public QObject
 
   /*! \brief Access test step widget
    *
-   * Returns the widget that was passed in cionstructor,
+   * Returns the widget that was passed in constructor,
    *  wich can also be a nullptr.
    */
   mdtTtTestStepWidget* widget()

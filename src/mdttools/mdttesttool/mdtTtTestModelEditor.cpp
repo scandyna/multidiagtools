@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -228,6 +228,11 @@ void mdtTtTestModelEditor::addTestItem()
     return;
   }
   // Create and setup item editors and dialog
+  /*
+   * Create and setup item editor in a generic SQL dialog
+   * Note: once the item editor was set to the SQL dialog,
+   *       the dialog will delete the form itself.
+   */
   tie = new mdtTtTestModelItemEditor(0, database());
   if(!tie->setupTables()){
     pvLastError = tie->lastError();
@@ -239,7 +244,12 @@ void mdtTtTestModelEditor::addTestItem()
   dialog.resize(900, 600);
   dialog.enableEdition();
   dialog.setWindowTitle(tr("Test item edition"));
-  tie->insert();
+  ///tie->insert();
+//   if(!tie->insertAndWait()){
+//     pvLastError = tie->lastError();
+//     displayLastError();
+//     return;
+//   }
   tie->setTestModelId(testModelId);
   tie->setSequenceNumber(seqNumber);
   dialog.exec();

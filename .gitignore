@@ -65,6 +65,11 @@ Thumbs.db
 *.log
 *.tmp
 
+# API documentation generated from Doxygen #
+############################################
+doc/doxygen
+
+
 # Documents with Copyright #
 ############################
 doc/Agilent

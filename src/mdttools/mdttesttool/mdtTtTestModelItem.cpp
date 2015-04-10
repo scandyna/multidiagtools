@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -56,7 +56,7 @@ QString mdtTtTestModelItem::sqlForTestLinkSelection(const QVariant & testModelIt
         " VTN.Type AS TestNodeType,\n"\
         " VTN.SubType AS TestNodeSubType,\n"\
         " VTN.SeriesNumber AS TestNodeSeriesNumber,\n"\
-        " TN.NodeIdentification,\n"\
+        " TN.Alias AS TestNodeAlias,\n"\
         " UVT.Type,\n"\
         " UVT.SubType,\n"\
         " UVT.SeriesNumber\n"\
@@ -157,7 +157,7 @@ QString mdtTtTestModelItem::sqlForTestNodeSelection(const QVariant& testModelId)
 
   sql = "SELECT\n"\
         " TMTN.TestNode_Id_FK,\n"\
-        " TN.NodeIdentification,\n"\
+        " TN.Alias AS TestNodeAlias,\n"\
         " VT.Type,\n"\
         " VT.SubType,\n"\
         " VT.SeriesNumber\n"\

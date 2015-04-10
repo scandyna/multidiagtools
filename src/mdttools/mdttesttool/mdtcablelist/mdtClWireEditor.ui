@@ -65,14 +65,14 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
+     <item row="4" column="0">
       <widget class="QLabel" name="lbLineicResistance">
        <property name="text">
         <string>Lineic resistance:</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
+     <item row="4" column="1">
       <widget class="mdtDoubleEdit" name="fld_LineicResistance">
        <property name="unit">
         <string>Ω/m</string>
@@ -91,13 +91,36 @@
        </property>
       </widget>
      </item>
-     <item row="4" column="1">
+     <item row="5" column="1">
       <widget class="QLineEdit" name="fld_ColorEN"/>
      </item>
-     <item row="4" column="0">
+     <item row="5" column="0">
       <widget class="QLabel" name="lbColorEN">
        <property name="text">
         <string>Color:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="mdtDoubleEdit" name="fld_ExternalDiameter">
+       <property name="unit">
+        <string>m</string>
+       </property>
+       <property name="editionMode">
+        <enum>mdtDoubleEdit::DefaultEditionMode</enum>
+       </property>
+       <property name="minimum">
+        <double>0.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>100.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="lbExternalDiameter">
+       <property name="text">
+        <string>External diameter:</string>
        </property>
       </widget>
      </item>
@@ -155,6 +178,16 @@
    <header>mdtDoubleEdit.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>fld_ArticleCode</tabstop>
+  <tabstop>fld_Model</tabstop>
+  <tabstop>fld_Section</tabstop>
+  <tabstop>fld_ExternalDiameter</tabstop>
+  <tabstop>fld_LineicResistance</tabstop>
+  <tabstop>fld_ColorEN</tabstop>
+  <tabstop>fld_Manufacturer</tabstop>
+  <tabstop>fld_ManufacturerArticleCode</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

@@ -1514,6 +1514,11 @@ bool mdtTtDatabaseSchema::setupWireTable()
   field.setName("Section");
   field.setType(QVariant::Double);
   table.addField(field, false);
+  // ExternalDiameter
+  field = QSqlField();
+  field.setName("ExternalDiameter");
+  field.setType(QVariant::Double);
+  table.addField(field, false);
   // LineicResistance
   field = QSqlField();
   field.setName("LineicResistance");
@@ -3978,30 +3983,31 @@ bool mdtTtDatabaseSchema::createTestModelItemTestLinkView()
   sql = "CREATE VIEW TestModelItem_TestLink_view AS\n"\
         "SELECT\n"\
         " TMITL.*,\n"\
-        " TL.TestConnection_Id_FK,\n"\
-        " TL.DutConnection_Id_FK,\n"\
-        " TL.Identification,\n"\
-        /**" TL.Resistance,\n"\ */
-        " TNU.Unit_Id_FK_PK,\n"\
-        " TNB.NameEN AS Bus,\n"\
-        " TNU.IoPosition,\n"\
-        " UTNU.SchemaPosition AS TestNodeUnitSchemaPosition,\n"\
-        " UCT.Name AS TestConnectorName,\n"\
-        " UCNXT.UnitContactName AS TestContactName,\n"\
+        " UVT.Type,\n"\
+        " UVT.SubType,\n"\
+        " UVT.SeriesNumber,\n"\
         " UD.Id_PK AS DutUnitId,\n"\
         " UD.SchemaPosition AS DutUnitSchemaPosition,\n"\
         " UD.Alias AS DutUnitAlias,\n"\
         " UCD.Name AS DutConnectorName,\n"\
         " UCNXD.UnitContactName AS DutContactName,\n"\
+        " TL.TestConnection_Id_FK,\n"\
+        " TL.DutConnection_Id_FK,\n"\
+        " TL.Identification AS TestLinkIdentification,\n"\
+        /** " TL.Resistance,\n"\ */
+        " UCNXT.UnitContactName AS TestContactName,\n"\
+        " UCT.Name AS TestConnectorName,\n"\
+        " TNUCNX.TestNodeUnit_Id_FK,\n"\
+        " UTNU.SchemaPosition AS TestNodeUnitSchemaPosition,\n"\
+        /** " TNU.Unit_Id_FK_PK,\n"\ */
+        /** " TNB.NameEN AS Bus,\n"\ */
+        " TNU.IoPosition,\n"\
+        " TN.Alias,\n"\
         " VTN.Type AS TestNodeType,\n"\
         " VTN.SubType AS TestNodeSubType,\n"\
         " VTN.SeriesNumber AS TestNodeSeriesNumber,\n"\
         " TN.VehicleType_Id_FK_PK,\n"\
-        " TN.AddressString,\n"\
-        " TN.Alias,\n"\
-        " UVT.Type,\n"\
-        " UVT.SubType,\n"\
-        " UVT.SeriesNumber\n"\
+        " TN.AddressString\n"\
         "FROM TestModelItem_TestLink_tbl TMITL\n"\
         " JOIN TestLink_tbl TL\n"\
         "  ON TL.Id_PK = TMITL.TestLink_Id_FK\n"\
@@ -4019,8 +4025,10 @@ bool mdtTtDatabaseSchema::createTestModelItemTestLinkView()
         "  ON TN.VehicleType_Id_FK_PK = TNU.TestNode_Id_FK\n"\
         " JOIN VehicleType_tbl VTN\n"\
         "  ON VTN.Id_PK = TN.VehicleType_Id_FK_PK\n"\
+        /**
         " LEFT JOIN TestNodeBus_tbl TNB\n"\
         "  ON TNB.Id_PK = TNUCNX.TestNodeBus_Id_FK\n"\
+        */
         " JOIN UnitConnection_tbl UCNXD\n"\
         "  ON UCNXD.Id_PK = TL.DutConnection_Id_FK\n"\
         " LEFT JOIN UnitConnector_tbl UCD\n"\
@@ -4041,18 +4049,23 @@ bool mdtTtDatabaseSchema::createTestNodeUnitSetupView()
 
   sql = "CREATE VIEW TestNodeUnitSetup_view AS\n"\
         "SELECT\n"\
-        " TNU.TestNode_Id_FK,\n"\
-        " TNU.Type_Code_FK,\n"\
-        " TNU.IoPosition,\n"\
-        " TNU.CalibrationOffset,\n"\
-        " TNU.CalibrationDate,\n"\
+        " TNUS.TestModelItem_Id_FK,\n"\
+        " TNUS.TestModelItemRoute_Id_FK,\n"\
+        " TNUS.TestNodeUnit_Id_FK,\n"\
+        " TNUS.StepNumber,\n"\
         " U.SchemaPosition,\n"\
         " U.Alias,\n"\
-        " TNUS.*,\n"\
         " TNUT.NameEN,\n"\
         " TNUT.NameFR,\n"\
         " TNUT.NameDE,\n"\
-        " TNUT.NameIT\n"\
+        " TNUT.NameIT,\n"\
+        " TNU.TestNode_Id_FK,\n"\
+        " TNU.Type_Code_FK,\n"\
+        " TNU.IoPosition,\n"\
+        " TNUS.State,\n"\
+        " TNUS.Value,\n"\
+        " TNU.CalibrationOffset,\n"\
+        " TNU.CalibrationDate\n"\
         "FROM TestNodeUnitSetup_tbl TNUS\n"\
         " JOIN TestNodeUnit_tbl TNU\n"\
         "  ON TNU.Unit_Id_FK_PK = TNUS.TestNodeUnit_Id_FK\n"\
@@ -4071,6 +4084,13 @@ bool mdtTtDatabaseSchema::createTestModelItemRouteView()
   sql = "CREATE VIEW TestModelItemRoute_view AS\n"\
         "SELECT\n"\
         " TMIR.*,\n"\
+        " UM.SchemaPosition AS MeasureSchemaPosition,\n"\
+        " UM.Alias AS MeasureAlias,\n"\
+        " UCNXM.UnitContactName AS MeasureContactName,\n"\
+        " UCNXM.FunctionEN AS MeasureContactFunctionEN,\n"\
+        " UCNXM.FunctionFR AS MeasureContactFunctionFR,\n"\
+        " UCNXM.FunctionDE AS MeasureContactFunctionDE,\n"\
+        " UCNXM.FunctionIT AS MeasureContactFunctionIT,\n"\
         " TL.TestConnection_Id_FK,\n"\
         " TL.DutConnection_Id_FK,\n"\
         " TL.Identification,\n"\
@@ -4083,14 +4103,7 @@ bool mdtTtDatabaseSchema::createTestModelItemRouteView()
         " UCNXT.FunctionIT AS TestContactFunctionIT,\n"\
         " GROUP_CONCAT(U.SchemaPosition, ', ') AS RouteTestNodeUnits,\n"\
         " SUM(TNU.CalibrationOffset) AS RouteResistance,\n"\
-        " TNU.TestNode_Id_FK,\n"\
-        " UM.SchemaPosition AS MeasureSchemaPosition,\n"\
-        " UM.Alias AS MeasureAlias,\n"\
-        " UCNXM.UnitContactName AS MeasureContactName,\n"\
-        " UCNXM.FunctionEN AS MeasureContactFunctionEN,\n"\
-        " UCNXM.FunctionFR AS MeasureContactFunctionFR,\n"\
-        " UCNXM.FunctionDE AS MeasureContactFunctionDE,\n"\
-        " UCNXM.FunctionIT AS MeasureContactFunctionIT\n";
+        " TNU.TestNode_Id_FK\n";
   sql += "FROM TestModelItemRoute_tbl TMIR\n"\
          " JOIN TestLink_tbl TL\n"\
          "  ON TL.Id_PK = TMIR.TestLink_Id_FK\n";

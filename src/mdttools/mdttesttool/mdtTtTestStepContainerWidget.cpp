@@ -36,31 +36,7 @@ void mdtTtTestStepContainerWidget::setContainer(mdtTtTestStepContainer* c)
   Q_ASSERT(c != nullptr);
 
   connect(c, SIGNAL(stepWidgetAdded(mdtTtTestStepWidget*)), this, SLOT(addStepWidget(mdtTtTestStepWidget*)));
-}
-
-
-
-void mdtTtTestStepContainerWidget::addItem(mdtTtTestStepWidget* w)
-{
-  Q_ASSERT(w != nullptr);
-
-  connect(w, SIGNAL(started(mdtTtTestStepWidget*)), this, SLOT(disableRunAbortOfOtherWidgets(mdtTtTestStepWidget*)));
-  connect(w, SIGNAL(finished(mdtTtTestStepWidget*)), this, SLOT(enableRunAbortOfAllWidgets()));
-  pvLayout->addWidget(w);
-  pvStepWidgets.append(w);
-}
-
-// void mdtTtTestStepContainerWidget::addStretch()
-// {
-//   pvLayout->addStretch(1);
-// }
-
-void mdtTtTestStepContainerWidget::setRunAbortEnabled(bool enable)
-{
-  for(auto *w : pvStepWidgets){
-    Q_ASSERT(w != nullptr);
-    ///w->setRunAbortEnabled(enable);
-  }
+  connect(c, SIGNAL(stepWidgetRemoved(mdtTtTestStepWidget*)), this, SLOT(removeStepWidget(mdtTtTestStepWidget*)));
 }
 
 void mdtTtTestStepContainerWidget::addStepWidget(mdtTtTestStepWidget* tsw)
@@ -68,24 +44,13 @@ void mdtTtTestStepContainerWidget::addStepWidget(mdtTtTestStepWidget* tsw)
   Q_ASSERT(tsw != nullptr);
   Q_ASSERT(pvLayout->count() > 0);  // A stretch was added in constructor
 
-  ///pvLayout->addWidget(tsw);
   pvLayout->insertWidget(pvLayout->count()-1, tsw);
 }
 
-
-void mdtTtTestStepContainerWidget::disableRunAbortOfOtherWidgets(mdtTtTestStepWidget* callerWidget)
+void mdtTtTestStepContainerWidget::removeStepWidget(mdtTtTestStepWidget* tsw)
 {
-  Q_ASSERT(callerWidget != nullptr);
+  Q_ASSERT(tsw != nullptr);
 
-  for(auto *w : pvStepWidgets){
-    Q_ASSERT(w != nullptr);
-    if(w != callerWidget){
-      ///w->setRunAbortEnabled(false);
-    }
-  }
-}
-
-void mdtTtTestStepContainerWidget::enableRunAbortOfAllWidgets()
-{
-  setRunAbortEnabled(true);
+  pvLayout->removeWidget(tsw);
+  delete tsw;
 }

@@ -25,40 +25,20 @@ mdtTtTestStepContainer::mdtTtTestStepContainer(QObject* parent)
 {
 }
 
-// std::shared_ptr<mdtTtTestStep> mdtTtTestStepContainer::addStep(const std::shared_ptr<mdtTtTestNodeManager> & tnm, mdtTtTestStepWidget* tsw)
-// {
-//   auto ts = createStep<mdtTtTestStep>(tnm, tsw);
-// 
-//   pvSteps.emplace_back(ts);
-// 
-//   return ts;
-// }
-
-// std::shared_ptr<mdtTtTestStep> mdtTtTestStepContainer::addStep(int index, const std::shared_ptr<mdtTtTestNodeManager> & tnm, mdtTtTestStepWidget* tsw )
-// {
-//   auto ts = createStep<mdtTtTestStep>(tnm, tsw);
-//   auto it = pvSteps.begin();
-// 
-//   pvSteps.insert(it + index, ts);
-// 
-//   return ts;
-// }
-
-// std::shared_ptr< mdtTtTestStep > mdtTtTestStepContainer::createStep(const std::shared_ptr<mdtTtTestNodeManager> & tnm, mdtTtTestStepWidget* tsw)
-// {
-//   std::shared_ptr<mdtTtTestStep> ts(new mdtTtTestStep(tnm, tsw));
-// 
-//   connect(ts.get(), SIGNAL(started(mdtTtTestStep*)), this, SLOT(disableRunAbortOfOtherSteps(mdtTtTestStep*)));
-//   connect(ts.get(), SIGNAL(stopped(mdtTtTestStep*)), this, SLOT(enableRunAbortOfAllSteps()));
-//   if(tsw != nullptr){
-//     emit stepWidgetAdded(tsw);
-//   }
-// 
-//   return ts;
-// }
-
 void mdtTtTestStepContainer::clear()
 {
+  /*
+   * Signal the we want to remove a test step widget.
+   * Note: no memory management is sone here.
+   * Some container, such as mdtTtTestStepContainerWidget will delete widget itself.
+   */
+  for(auto & ts : pvSteps){
+    Q_ASSERT(ts);
+    if(ts->widget() != nullptr){
+      emit stepWidgetRemoved(ts->widget());
+    }
+  }
+  // Remove test steps
   pvSteps.clear();
 }
 

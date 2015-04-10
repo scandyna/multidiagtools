@@ -29,7 +29,7 @@
 #include <QPair>
 #include <QVector>
 
-#include <QDebug>
+//#include <QDebug>
 
 using namespace std;
 
@@ -46,7 +46,7 @@ mdtAbstractSqlTableController::~mdtAbstractSqlTableController()
 {
 }
 
-void mdtAbstractSqlTableController::setMessageHandler(shared_ptr< mdtUiMessageHandler > handler)
+void mdtAbstractSqlTableController::setMessageHandler(shared_ptr<mdtUiMessageHandler> handler)
 {
   Q_ASSERT(handler);
 
@@ -75,11 +75,12 @@ void mdtAbstractSqlTableController::setTableName(const QString& tableName, QSqlD
   setModel(m, userFriendlyTableName);
 }
 
-void mdtAbstractSqlTableController::setModel(shared_ptr< QSqlTableModel > m, const QString& userFriendlyTableName)
+void mdtAbstractSqlTableController::setModel(shared_ptr<QSqlTableModel> m, const QString& userFriendlyTableName)
 {
   Q_ASSERT(m);
 
   pvModel = m;
+  pvModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
   pvProxyModel->setSourceModel(pvModel.get());
   if(userFriendlyTableName.isEmpty()){
     pvUserFriendlyTableName = m->tableName();
@@ -308,7 +309,7 @@ void mdtAbstractSqlTableController::start()
     c->start();
     if(c->model()){
       c->model()->setFilter("-1");
-      if(!c->select()){
+      if(!c->select()){   /// \todo Check if select must be called here
         pvLastError = c->lastError();
         if(messageHandler()){
           messageHandler()->setError(pvLastError);
@@ -367,7 +368,7 @@ void mdtAbstractSqlTableController::sort()
 {
   Q_ASSERT(pvModel);
 
-  qDebug() << "mdtAbstractSqlTableController::sort() - table: " << tableName() << " - called ...";
+  ///qDebug() << "mdtAbstractSqlTableController::sort() - table: " << tableName() << " - called ...";
   if(!proxyModel()->hasColumnToSort()){
     return;
   }
@@ -379,18 +380,18 @@ void mdtAbstractSqlTableController::sort()
     model()->fetchMore();
   }
   // Sort
-  qDebug() << "mdtAbstractSqlTableController::sort() - table: " << tableName() << " - sort ...";
+  ///qDebug() << "mdtAbstractSqlTableController::sort() - table: " << tableName() << " - sort ...";
   pvProxyModel->sort();
 }
 
-bool mdtAbstractSqlTableController::setCurrentData(const QString& fieldName, const QVariant& data, bool submit)
+bool mdtAbstractSqlTableController::setCurrentData(const QString & fieldName, const QVariant& data, bool submit)
 {
   Q_ASSERT(pvModel);
 
   return setData(currentRow(), fieldName, data, submit);
 }
 
-bool mdtAbstractSqlTableController::setData(int row, const QString& fieldName, const QVariant& data, bool submit)
+bool mdtAbstractSqlTableController::setData(int row, const QString & fieldName, const QVariant& data, bool submit)
 {
   Q_ASSERT(pvModel);
 
@@ -415,11 +416,22 @@ bool mdtAbstractSqlTableController::setData(int row, const QString& fieldName, c
     return false;
   }
   // Update model
+  if(pvCanWriteToDatabase){
+    emit dataEdited();
+  }
   pvProxyModel->setData(index, data);
   // Submit if requested
   if(submit && pvCanWriteToDatabase){
-    ///return submitAndWait();
-    return submitToDatabase();
+    /*
+     * We triggered dataEdited signal before,
+     * but it's possible that state machine didn't change state now.
+     * We must wait until state really changed, else sata will not be saved
+     */
+    QVector<int> states;
+    states << Editing << EditingNewRow;
+    pvStateMachine.waitOnOneState(states);
+    return submitAndWait();
+    ///return submitToDatabase();
   }
 
   return true;
@@ -821,10 +833,16 @@ bool mdtAbstractSqlTableController::setCurrentRow(int row)
     pvLastError.commit();
     return false;
   }
+  // Send before change event
+  if(!beforeCurrentRowChangeEvent()){
+    return false;
+  }
   // Check about unsaved data
+  /**
   if(!allDataAreSaved()){
     return false;
   }
+  */
   // Update current row
   if(!setCurrentRowPv(row)){
     return false;
@@ -946,6 +964,32 @@ bool mdtAbstractSqlTableController::removeAndWait()
   emit removeTriggered();
   waitOperationComplete();
   if(pvLastError.level() != mdtError::NoError){
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtAbstractSqlTableController::insertAndWait()
+{
+  Q_ASSERT(pvModel);
+
+  // Check that all data are saved
+  if(!allDataAreSaved()){
+    return false;
+  }
+  // Trigger insertion and wait
+  emit insertTriggered();
+  QVector<int> states;
+  states << EditingNewRow << Visualizing;
+  if(!pvStateMachine.waitOnOneState(states)){
+    pvLastError.setError(tr("Waiting on 'EditingNewRow' or 'Visualizing' failed."), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtAbstractSqlTableController");
+    pvLastError.commit();
+    return false;
+  }
+  // Check that we are in EditingNewRow state (state machine goes back to Visualizing on error)
+  if(currentState() != EditingNewRow){
     return false;
   }
 

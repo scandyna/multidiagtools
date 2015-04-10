@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -65,6 +65,7 @@ bool mdtSqlForm::setMainTable(const QString& tableName, const QString& userFrien
 bool mdtSqlForm::setMainTable(const QString& tableName, const QString& userFriendlyTableName, QSqlDatabase db, const QString& firstWidgetInTabOrder)
 {
   Q_ASSERT(pvMainTableWidget != 0);
+  Q_ASSERT(pvMainTableWidget->layout() != 0);
 
   // Check that db is open
   if(!db.isOpen()){

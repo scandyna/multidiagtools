@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -83,6 +83,9 @@ class mdtSqlForm : public QWidget
    *
    *  If you have a UI file generated from QtDesigner,
    *  witch has a setupUi() method, simply use setMainTableUi()
+   *
+   * \pre widget must be a valid pointer
+   * \pre widget must have a layout
    */
   void setMainTableWidget(QWidget *widget);
 
@@ -435,9 +438,12 @@ class mdtSqlForm : public QWidget
    */
   QList<QVariant> dataList(const QString &tableName, const QString &fieldName, bool & ok, bool fetchAll = true);
 
-  /*! \brief Call insert method on main table controller
+  /*! \brief Call insertAndWait() method on main table controller
    */
-  void insert() { pvController->insert(); }
+  bool insert()
+  {
+    return pvController->insertAndWait();
+  }
 
   /*! \brief Setup tables
    *

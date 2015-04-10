@@ -1185,19 +1185,23 @@ void mdtTestToolTest::testStepContainerTest()
   // Initial state of container
   QCOMPARE(tsc.count(), 0);
   QVERIFY(tsc.state() == mdtTtTestStep::State_t::Initial);
+  QCOMPARE(tscw->stepWidgetsCount(), tsc.count());
   // Create a test step - use version that accepts index
   ts = tsc.addStep(0, tnm, new mdtTtTestStepWidget);
   QCOMPARE(tsc.count(), 1);
+  QCOMPARE(tscw->stepWidgetsCount(), tsc.count());
   QVERIFY(ts.get() != nullptr);
   ts->setTitle("Test step 1");
   // Create a test step - use version that accepts index
   ts = tsc.addStep(1, tnm, new mdtTtTestStepWidget);
   QCOMPARE(tsc.count(), 2);
+  QCOMPARE(tscw->stepWidgetsCount(), tsc.count());
   QVERIFY(ts.get() != nullptr);
   ts->setTitle("Test step 2");
   // Create a test step
   ts = tsc.addStep(tnm, new mdtTtTestStepWidget);
   QCOMPARE(tsc.count(), 3);
+  QCOMPARE(tscw->stepWidgetsCount(), tsc.count());
   QVERIFY(ts.get() != nullptr);
   ts->setTitle("Test step 3");
   // Check global state
@@ -1269,6 +1273,12 @@ void mdtTestToolTest::testStepContainerTest()
   QVERIFY(tsc.step(0)->state() == mdtTtTestStep::State_t::Initial);
   QVERIFY(tsc.step(1)->state() == mdtTtTestStep::State_t::Initial);
   QVERIFY(tsc.step(2)->state() == mdtTtTestStep::State_t::Initial);
+  /*
+   * Check clear
+   */
+  tsc.clear();
+  QCOMPARE(tsc.count(), 0);
+  QCOMPARE(tscw->stepWidgetsCount(), tsc.count());
 
   // Play
   /*
@@ -1276,6 +1286,10 @@ void mdtTestToolTest::testStepContainerTest()
     QTest::qWait(500);
   }
   */
+
+  // Cleanup
+  delete sa;
+//  delete tscw;
 }
 
 void mdtTestToolTest::testStepContainerBenchmark()
