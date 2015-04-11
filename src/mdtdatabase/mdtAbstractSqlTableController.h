@@ -102,24 +102,6 @@ class mdtAbstractSqlTableController : public QObject
                 Removing          /*!< Removing state */
                };
 
-  /*! \brief Data update strategy
-   *
-   * Some functions are available to update data by programming.
-   * Depending on use case, such data update must tell the user
-   *  that data has changed, and let him the possibility to save (or revert) them.
-   *  Another case could be data that we just want to display, but never save
-   *  to database, or explicitly only (the user can possibly not save or revert).
-   *
-   * \sa setData()
-   * \sa setCurrentData()
-   */
-//   enum class DataUpdateStrategy
-//   {
-//     SubmitDirectly    /*!< The function will submit data directly to database.
-//                             No check will be performed (data that was edited by user are possibly lost, 
-//                             depending on subclass implementation of cacheed data) */
-//   };
-
   /*! \brief Constructor
    */
   mdtAbstractSqlTableController(QObject * parent = 0);

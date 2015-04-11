@@ -148,10 +148,6 @@ class mdtSqlDataWidgetController : public mdtAbstractSqlTableController
 
  private:
 
-  /*! \brief Table model set event
-   */
-//   void modelSetEvent();
-
   /*! \brief Check that all data are saved
    */
   bool beforeCurrentRowChangeEvent();
@@ -168,17 +164,9 @@ class mdtSqlDataWidgetController : public mdtAbstractSqlTableController
    */
   bool submitToModel();
 
-  /*! \brief Submit current row to model
-   */
-  //bool doSubmit();
-
   /*! \brief Revert current row from model
    */
   bool doRevert();
-
-  /*! \brief Submit new row to model
-   */
-  //bool doSubmitNewRow();
 
   /*! \brief Remove current row from model
    */

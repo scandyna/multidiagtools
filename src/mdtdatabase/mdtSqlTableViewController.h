@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -145,10 +145,6 @@ class mdtSqlTableViewController : public mdtAbstractSqlTableController
    */
   void onTableViewcurrentRowChanged(const QModelIndex & current, const QModelIndex & previous);
 
-  /*! \brief Activity after Visualizing state entered
-   */
-//   void onStateVisualizingEntered();
-
   /*! \brief Activity after Editing state entered
    *
    * Will unset pvEditionDone
@@ -199,17 +195,9 @@ class mdtSqlTableViewController : public mdtAbstractSqlTableController
    */
   bool submitToModel();
 
-  /*! \brief Submit current row to model
-   */
-  //bool doSubmit();
-
   /*! \brief Revert current row from model
    */
   bool doRevert();
-
-  /*! \brief Submit new row to model
-   */
-  //bool doSubmitNewRow();
 
   /*! \brief Remove current row from model
    */

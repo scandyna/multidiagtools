@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -28,7 +28,7 @@
 #include <QSqlError>
 #include <QCoreApplication>
 
-#include <QDebug>
+//#include <QDebug>
 
 /*
  * mdtSqlTableViewControllerItemDelegate implementation
@@ -208,15 +208,8 @@ void mdtSqlTableViewController::onTableViewcurrentRowChanged(const QModelIndex& 
   pvRowChangingByInternalEvent = false;
 }
 
-// void mdtSqlTableViewController::onStateVisualizingEntered()
-// {
-//   mdtAbstractSqlTableController::onStateVisualizingEntered();
-//   pvEditionDone = true;
-// }
-
 void mdtSqlTableViewController::onStateEditingEntered()
 {
-  qDebug() << "Table view controller: enetering edition";
   pvEditionDone = false;
   mdtAbstractSqlTableController::onStateEditingEntered();
 }
@@ -225,7 +218,6 @@ void mdtSqlTableViewController::onStateEditingExited()
 {
   mdtAbstractSqlTableController::onStateEditingExited();
   pvEditionDone = true;
-  qDebug() << "Table view controller: edition DONE";
 }
 
 void mdtSqlTableViewController::onStateEditingNewRowEntered()
@@ -248,7 +240,6 @@ void mdtSqlTableViewController::onEditionDone()
 void mdtSqlTableViewController::waitEditionDone()
 {
   while(!pvEditionDone){
-    qDebug() << "Table view controller: waiting edition done ...";
     QCoreApplication::processEvents(QEventLoop::AllEvents | QEventLoop::WaitForMoreEvents);
   }
 }
@@ -286,32 +277,6 @@ bool mdtSqlTableViewController::submitToModel()
   return true;
 }
 
-// bool mdtSqlTableViewController::doSubmit()
-// {
-//   Q_ASSERT(model());
-//   Q_ASSERT(pvTableView != 0);
-//   Q_ASSERT(pvTableView->itemDelegate() != 0);
-// 
-//   QSqlError sqlError;
-// 
-//   waitEditionDone();
-//   // Submit to database
-//   if(!model()->submitAll()){
-//     sqlError = model()->lastError();
-//     pvLastError.setError(tr("Submitting data to database failed."), mdtError::Error);
-//     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-//     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlTableViewController");
-//     pvLastError.commit();
-//     if(messageHandler()){
-//       messageHandler()->setError(pvLastError);
-//       messageHandler()->displayToUser();
-//     }
-//     return false;
-//   }
-// 
-//   return true;
-// }
-
 bool mdtSqlTableViewController::doRevert()
 {
   Q_ASSERT(model());
@@ -320,11 +285,6 @@ bool mdtSqlTableViewController::doRevert()
 
   return true;
 }
-
-// bool mdtSqlTableViewController::doSubmitNewRow()
-// {
-//   return doSubmit();
-// }
 
 bool mdtSqlTableViewController::doRemove()
 {

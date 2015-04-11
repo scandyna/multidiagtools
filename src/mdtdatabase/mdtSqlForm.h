@@ -317,7 +317,7 @@ class mdtSqlForm : public QWidget
 
   /*! \brief Display last error in a message box
    */
-  void displayLastError();
+  void displayLastError(const QString & windowTitle = QString());
 
   /*! \brief Get row count for given tableName
    *
@@ -344,6 +344,13 @@ class mdtSqlForm : public QWidget
       return false;
     }
     return true;
+  }
+
+  /*! \brief Get current row of main table controller
+   */
+  inline int currentRow() const
+  {
+    return pvController->currentRow();
   }
 
   /*! \brief Set the first row that matches given criteria as current row.
@@ -443,6 +450,13 @@ class mdtSqlForm : public QWidget
   bool insert()
   {
     return pvController->insertAndWait();
+  }
+
+  /*! \brief Call submitAndWait() function on main table controller
+   */
+  bool submit()
+  {
+    return pvController->submitAndWait();
   }
 
   /*! \brief Setup tables

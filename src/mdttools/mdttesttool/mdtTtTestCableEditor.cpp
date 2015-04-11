@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -690,6 +690,7 @@ void mdtTtTestCableEditor::editLogicalTestCable()
     return;
   }
   dialog.setSqlForm(ltce);
+  dialog.setWindowTitle(tr("Logical test cable edition"));
   dialog.resize(900, 700);
   dialog.enableEdition();
   if(!ltce->setMainTableFilter("Id_PK", logicalCableId)){
@@ -1144,14 +1145,13 @@ bool mdtTtTestCableEditor::setupUnitLinkTable()
   widget->setColumnHidden("StartAlias", true);
   widget->setColumnHidden("EndAlias", true);
   // Give fields a user friendly name
-  ///widget->setHeaderData("StartSchemaPosition", tr("Start\nschema pos."));
-  ///widget->setHeaderData("StartAlias", tr("Start\nalias"));
+  widget->setHeaderData("Identification", tr("Physical\ntest link\nidentification"));
   widget->setHeaderData("StartUnitConnectorName", tr("DUT\nside\nconnector"));
   widget->setHeaderData("StartUnitContactName", tr("DUT\nside\ncontact"));
-  ///widget->setHeaderData("EndSchemaPosition", tr("End\nschema pos."));
-  ///widget->setHeaderData("EndAlias", tr("End\nalias"));
+  widget->setHeaderData("StartUnitConnectionResistance", tr("DUT\nside\ncontact resistance"));
   widget->setHeaderData("EndUnitConnectorName", tr("Test\nsys. side\nconnector"));
   widget->setHeaderData("EndUnitContactName", tr("Test\nsys. side\ncontact"));
+  widget->setHeaderData("EndUnitConnectionResistance", tr("Test\nsys. side\ncontact resistance"));
   widget->setHeaderData("SinceVersion", tr("Since\nversion"));
   widget->setHeaderData("LinkTypeNameEN", tr("Link type"));
   widget->setHeaderData("ValueUnit", tr("Unit"));

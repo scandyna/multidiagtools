@@ -500,7 +500,22 @@ bool mdtTtTestModelItem::addRoute(const QVariant & testModelItemId, const QVaria
 
 bool mdtTtTestModelItem::removeRoutes(const mdtSqlTableSelection & s)
 {
-  return removeData("TestModelItemRoute_tbl", s, true);
+  Q_ASSERT(!s.isEmpty());
+  Q_ASSERT(!s.data(0, "Id_PK").isNull());
+
+  if(!beginTransaction()){
+    return false;
+  }
+  if(!removeData("TestNodeUnitSetup_tbl", "TestModelItemRoute_Id_FK", s.data(0, "Id_PK"))){
+    rollbackTransaction();
+    return false;
+  }
+  if(!removeData("TestModelItemRoute_tbl", s, false)){
+    rollbackTransaction();
+    return false;
+  }
+
+  return commitTransaction();
 }
 
 bool mdtTtTestModelItem::addTestNodeUnitSetup(const QVariant & testItemId, const QVariant & testNodeUnitId, const QVariant & state)

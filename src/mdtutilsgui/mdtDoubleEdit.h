@@ -321,6 +321,20 @@ class mdtDoubleEdit : public QWidget
    */
   void displayValue();
 
+  /*! \brief Check if str is plus infinity
+   */
+  inline bool strIsPlusInfinity(const QString & str) const
+  {
+    return ( (str == "inf") || (str == "\u221E") );
+  }
+
+  /*! \brief Check if str is minus infinity
+   */
+  inline bool strIsMinusInfinity(const QString & str) const
+  {
+    return ( (str == "-inf") || (str == "-\u221E") );
+  }
+
   /*! \brief Check if str is a infinity (or -infinity)
    */
   bool strIsInfinity(const QString & str) const;

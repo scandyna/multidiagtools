@@ -128,8 +128,16 @@ void mdtWidgetsTest::mdtDoubleValidatorTest()
   QCOMPARE(v.validate(str, pos), QValidator::Acceptable);
   str = "1.5 mm";
   QCOMPARE(v.validate(str, pos), QValidator::Acceptable);
-
-
+  // Check with infinity values
+  v.setSuffix("");
+  str = "inf";
+  QCOMPARE(v.validate(str, pos), QValidator::Acceptable);
+  str = "\u221E";
+  QCOMPARE(v.validate(str, pos), QValidator::Acceptable);
+  str = "-inf";
+  QCOMPARE(v.validate(str, pos), QValidator::Acceptable);
+  str = "-\u221E";
+  QCOMPARE(v.validate(str, pos), QValidator::Acceptable);
 
 }
 
@@ -446,6 +454,67 @@ void mdtWidgetsTest::mdtDoubleEditTest()
   QVERIFY(e.isNull());
   QVERIFY(e.valueIsValid());
   QVERIFY(e.lineEdit()->text().isEmpty());
+  /*
+   * Check validate
+   * This is used by mdtSqlFieldHandle
+   */
+  // Setup
+  e.setEditionMode(mdtDoubleEdit::DefaultEditionMode);
+  QVERIFY(e.editionMode() == mdtDoubleEdit::DefaultEditionMode);
+  e.setUnit("");
+  e.setMinimumToMinusInfinity();
+  e.setMaximumToInfinity();
+  QVERIFY(e.isNull());
+  QVERIFY(!e.valueIsValid());
+  QVERIFY(e.lineEdit()->text().isEmpty());
+  // Check with standard values - using setValue(double)
+  e.setValue(1.5);
+  QVERIFY(e.validate());
+  QVERIFY(!e.isNull());
+  QVERIFY(e.valueIsValid());
+  QCOMPARE(e.value(), QVariant(1.5));
+  // Check with infinity - using setValue(double)
+  e.setValue(std::numeric_limits<double>::infinity());
+  QVERIFY(e.validate());
+  QVERIFY(!e.isNull());
+  QVERIFY(e.valueIsValid());
+  QCOMPARE(e.value(), QVariant(std::numeric_limits<double>::infinity()));
+  QCOMPARE(e.text().trimmed(), e.infinityString());
+  // Check with minus infinity - using setValue(double)
+  e.setValue(-std::numeric_limits<double>::infinity());
+  QVERIFY(e.validate());
+  QVERIFY(!e.isNull());
+  QVERIFY(e.valueIsValid());
+  QCOMPARE(e.value(), QVariant(-std::numeric_limits<double>::infinity()));
+  QCOMPARE(e.text().trimmed(), QString("-" + e.infinityString()));
+  // Check with standard values - using setValue(QString)
+  e.setValue("1.5");
+  QVERIFY(e.validate());
+  QVERIFY(!e.isNull());
+  QVERIFY(e.valueIsValid());
+  QCOMPARE(e.value(), QVariant(1.5));
+  // Check with infinity - using setValue(QString)
+  e.setValue("inf");
+  QVERIFY(e.validate());
+  QVERIFY(!e.isNull());
+  QVERIFY(e.valueIsValid());
+  QCOMPARE(e.value(), QVariant(std::numeric_limits<double>::infinity()));
+  QCOMPARE(e.text().trimmed(), e.infinityString());
+  // Check with minus infinity - using setValue(QString)
+  e.setValue("-inf");
+  QVERIFY(e.validate());
+  QVERIFY(!e.isNull());
+  QVERIFY(e.valueIsValid());
+  QCOMPARE(e.value(), QVariant(-std::numeric_limits<double>::infinity()));
+  QCOMPARE(e.text().trimmed(), QString("-" + e.infinityString()));
+  // Check with standard values - simulate user inputs
+  qDebug() << "TEST - click 1.5";
+  e.lineEdit()->clear();
+  QTest::keyClicks(e.lineEdit(), "1.5");
+  QVERIFY(e.validate());
+  QVERIFY(!e.isNull());
+  QVERIFY(e.valueIsValid());
+  QCOMPARE(e.value(), QVariant(1.5));
 
   /*
   while(e.isVisible()){

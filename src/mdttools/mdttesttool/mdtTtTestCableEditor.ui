@@ -7,11 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>860</width>
-    <height>117</height>
+    <height>149</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Physical test cable edition</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>

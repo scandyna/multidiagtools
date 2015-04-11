@@ -216,6 +216,7 @@ void mdtTtTestModelEditor::addTestItem()
   mdtSqlDialog dialog;
   QVariant testModelId;
   QVariant seqNumber;
+  int row;
 
   // Get current test model ID
   testModelId = currentData("TestModel_tbl", "Id_PK");
@@ -227,7 +228,6 @@ void mdtTtTestModelEditor::addTestItem()
   if(seqNumber.isNull()){
     return;
   }
-  // Create and setup item editors and dialog
   /*
    * Create and setup item editor in a generic SQL dialog
    * Note: once the item editor was set to the SQL dialog,
@@ -244,14 +244,20 @@ void mdtTtTestModelEditor::addTestItem()
   dialog.resize(900, 600);
   dialog.enableEdition();
   dialog.setWindowTitle(tr("Test item edition"));
-  ///tie->insert();
-//   if(!tie->insertAndWait()){
-//     pvLastError = tie->lastError();
-//     displayLastError();
-//     return;
-//   }
+  if(!tie->select()){
+    pvLastError = tie->lastError();
+    displayLastError();
+    return;
+  }
+  // Add new item and set known data
+  if(!tie->insert()){
+    pvLastError = tie->lastError();
+    displayLastError();
+    return;
+  }
   tie->setTestModelId(testModelId);
   tie->setSequenceNumber(seqNumber);
+  
   dialog.exec();
   // Update views
   select("TestModelItem_tbl");
@@ -267,6 +273,11 @@ void mdtTtTestModelEditor::editTestItem()
   if(currentTestItemId.isNull()){
     return;
   }
+  /*
+   * Create and setup item editor in a generic SQL dialog
+   * Note: once the item editor was set to the SQL dialog,
+   *       the dialog will delete the form itself.
+   */
   tie = new mdtTtTestModelItemEditor(0, database());
   if(!tie->setupTables()){
     pvLastError = tie->lastError();
@@ -277,13 +288,11 @@ void mdtTtTestModelEditor::editTestItem()
   if(!tie->setMainTableFilter("Id_PK", currentTestItemId)){
     pvLastError = tie->lastError();
     displayLastError();
-    delete tie;
     return;
   }
   if(!tie->select()){
     pvLastError = tie->lastError();
     displayLastError();
-    delete tie;
     return;
   }
   dialog.resize(900, 600);
@@ -358,14 +367,14 @@ void mdtTtTestModelEditor::generateContinuityTest()
   // Load link list
   if(!graph.loadLinkList()){
     pvLastError = graph.lastError();
-    displayLastError();
+    displayLastError(tr("Test generator"));
     return;
   }
   // Generate test
   ok = tm.generateTestModel(parameters, graph);
   if(!ok){
     pvLastError = tm.lastError();
-    displayLastError();
+    displayLastError(tr("Test generator"));
     return;
   }
   // Update views

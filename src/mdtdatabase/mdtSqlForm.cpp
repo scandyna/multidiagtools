@@ -205,7 +205,7 @@ mdtError mdtSqlForm::lastError() const
   return pvLastError;
 }
 
-void mdtSqlForm::displayLastError()
+void mdtSqlForm::displayLastError(const QString & windowTitle)
 {
   QMessageBox msgBox(this);
 
@@ -213,6 +213,9 @@ void mdtSqlForm::displayLastError()
   msgBox.setInformativeText(pvLastError.informativeText());
   msgBox.setDetailedText(pvLastError.systemText());
   msgBox.setIcon(pvLastError.levelIcon());
+  if(!windowTitle.isEmpty()){
+    msgBox.setWindowTitle(windowTitle);
+  }
   msgBox.exec();
 }
 

@@ -252,7 +252,7 @@ QList<QSqlRecord> mdtTtTestModel::getTestNodeDataList(const QVariant & testModel
 
   sql = "SELECT\n"\
         " TN.VehicleType_Id_FK_PK,\n"\
-        " TN.NodeIdentification,\n"\
+        " TN.Alias,\n"\
         " VT.Type,\n"\
         " VT.SubType,\n"\
         " VT.SeriesNumber\n"\
@@ -262,7 +262,7 @@ QList<QSqlRecord> mdtTtTestModel::getTestNodeDataList(const QVariant & testModel
         " JOIN VehicleType_tbl VT\n"\
         "  ON VT.Id_PK = TN.VehicleType_Id_FK_PK\n";
   sql += " WHERE TMTN.TestModel_Id_FK = " + testModelId.toString();
-  sql += " ORDER BY NodeIdentification ASC";
+  sql += " ORDER BY Alias ASC";
   dataList = getDataList<QSqlRecord>(sql, ok);
 
   return dataList;

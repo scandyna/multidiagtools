@@ -568,6 +568,7 @@ void mdtDatabaseWidgetTest::sqlFieldHandlerTest()
   QTest::keyClicks(&le, "ABCD");
   // Check field handler flags
   QVERIFY(!fh.isNull());
+  QCOMPARE(fh.data(), QVariant("ABCD"));
   QVERIFY(fh.dataWasEdited());
   // User edit ...
   QTest::keyClick(&le, Qt::Key_Backspace);
@@ -818,6 +819,10 @@ void mdtDatabaseWidgetTest::sqlFieldHandlerTest()
   field.setType(QVariant::Double);
   field.setRequired(true);
   field.setReadOnly(false);
+  // Setup double edit
+  de.setEditionMode(mdtDoubleEdit::DefaultEditionMode);
+  de.setMinimumToMinusInfinity();
+  de.setMaximumToInfinity();
   // Setup field handler
   fh.setField(field);
   fh.setDataWidget(&de);
@@ -831,11 +836,29 @@ void mdtDatabaseWidgetTest::sqlFieldHandlerTest()
   QVERIFY(de.value().isNull());
   QVERIFY(!de.lineEdit()->isReadOnly());
   // User edit ...
-  QTest::keyClicks(de.lineEdit(), "2.5");
+//   qDebug() << "TEST - click 2.5";
+//   QTest::keyClicks(de.lineEdit(), "2.5");
+  de.setValue(2.5);
   // Check field handler flags
   QVERIFY(fh.checkBeforeSubmit());
   QVERIFY(!fh.isNull());
   QVERIFY(fh.dataWasEdited());
+  QCOMPARE(fh.data(), QVariant(2.5));
+  // Check with infinity values
+//   qDebug() << "TEST - click inf";
+//   QTest::keyClicks(de.lineEdit(), "inf");
+  de.setValue(std::numeric_limits<double>::infinity());
+  QVERIFY(fh.checkBeforeSubmit());
+  qDebug() << "FH data: " << fh.data();
+  QVERIFY(!fh.isNull());
+  QVERIFY(fh.dataWasEdited());
+  QCOMPARE(fh.data(), QVariant(std::numeric_limits<double>::infinity()));
+//   QTest::keyClicks(de.lineEdit(), "-inf");
+  de.setValue(-std::numeric_limits<double>::infinity());
+  QVERIFY(fh.checkBeforeSubmit());
+  QVERIFY(!fh.isNull());
+  QVERIFY(fh.dataWasEdited());
+  QCOMPARE(fh.data(), QVariant(-std::numeric_limits<double>::infinity()));
   // Check not required field when user not enter anything
   field.setRequired(false);
   fh.setField(field);
@@ -849,11 +872,9 @@ void mdtDatabaseWidgetTest::sqlFieldHandlerTest()
   /*
    * Play
    */
-  /*
   while(de.isVisible()){
     QTest::qWait(1000);
   }
-  */
 }
 
 void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
@@ -1418,8 +1439,7 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QVERIFY(wc.rowCount(false) < 1000);
   QCOMPARE(wc.currentRow(), 0);
   // Insert a record
-  wc.insert();
-  QTest::qWait(50);
+  QVERIFY(wc.insertAndWait());
   QCOMPARE(wc.rowCount(false), 1001);
   QCOMPARE(wc.currentRow(), 1000);
   QVERIFY(w.fld_FirstName->isEnabled());
@@ -3987,6 +4007,7 @@ void mdtDatabaseWidgetTest::sqlFormTest()
   form.show();
   QCOMPARE(form.rowCount("Client_tbl"), 4);
   // Check that we are at correct row (Andy)
+  QCOMPARE(form.currentRow(), 0);
   QCOMPARE(form.currentData("Client_tbl", "Id_PK"), QVariant(1));
   QCOMPARE(form.rowCount("Address_tbl"), 2);
   /*
@@ -3995,6 +4016,7 @@ void mdtDatabaseWidgetTest::sqlFormTest()
   QVERIFY(form.insert());
   QCOMPARE(form.rowCount("Client_tbl"), 5);
   // Check that we are at new row
+  QCOMPARE(form.currentRow(), 4);
   QVERIFY(form.currentData("Client_tbl", "Id_PK").isNull());
   QCOMPARE(form.rowCount("Address_tbl"), 0);
   // Edit name - don't save now
@@ -4004,6 +4026,7 @@ void mdtDatabaseWidgetTest::sqlFormTest()
   // Edit remark and save
   QVERIFY(form.setCurrentData("Client_tbl", "Remarks", "New remark 1", true));
   QVERIFY(form.allDataAreSaved());
+  QCOMPARE(form.currentRow(), 4);
   QCOMPARE(form.currentData("Client_tbl", "Remarks"), QVariant("New remark 1"));
 
   /*

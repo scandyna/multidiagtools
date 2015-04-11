@@ -130,6 +130,9 @@ class mdtTtTestModelItem : public mdtTtBase
   bool addRoute(const QVariant & testModelItemId, const QVariant & testLinkId, const QVariant & measureTestNodeUnitConnectionId, const QList<mdtTtTestNodeUnitSetupData> & dataList, bool handleTransaction);
 
   /*! \brief Remove a route from TestModelItemRoute_tbl
+   *
+   * \pre s must not be empty
+   * \pre s must contain field Id_PK with a non null value
    */
   bool removeRoutes(const mdtSqlTableSelection & s);
 

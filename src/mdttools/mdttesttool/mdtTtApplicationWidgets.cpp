@@ -122,7 +122,7 @@ bool mdtTtApplicationWidgets::createTestCableEditor()
   // Setup in a generic SQL window
   auto window = setupEditorInSqlWindow(pvTestCableEditor);
   Q_ASSERT(window);
-  window->setWindowTitle(tr("Test cable edition"));
+  window->setWindowTitle(tr("Physical test cable edition"));
   window->resize(800, 600);
 
   return true;

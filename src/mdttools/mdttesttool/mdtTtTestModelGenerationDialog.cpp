@@ -148,6 +148,8 @@ void mdtTtTestModelGenerationDialog::populateMeasureConnectionAComboBox(int inde
 {
   int i;
   QSqlRecord data;
+  QString s;
+  QString str;
 
   cbMeasureConnectionA->clear();
   if(index < 0){
@@ -155,7 +157,17 @@ void mdtTtTestModelGenerationDialog::populateMeasureConnectionAComboBox(int inde
   }
   for(i = 0; i < pvMeasureConnectionDataList.size(); ++i){
     data = pvMeasureConnectionDataList.at(i);
-    cbMeasureConnectionA->addItem(data.value("UnitContactName").toString(), data.value("Id_PK"));
+    // Build string with format Position-Connector;Contact
+    str  = data.value("SchemaPosition").toString();
+    s = data.value("UnitConnectorName").toString();
+    if(!s.isEmpty()){
+      str += " - " + s;
+    }
+    s = data.value("UnitContactName").toString();
+    if(!s.isEmpty()){
+      str += " ; " + s;
+    }
+    cbMeasureConnectionA->addItem(str, data.value("Id_PK"));
   }
 }
 
@@ -163,6 +175,8 @@ void mdtTtTestModelGenerationDialog::populateMeasureConnectionBComboBox(int inde
 {
   int i;
   QSqlRecord data;
+  QString s;
+  QString str;
 
   cbMeasureConnectionB->clear();
   if(index < 0){
@@ -170,7 +184,17 @@ void mdtTtTestModelGenerationDialog::populateMeasureConnectionBComboBox(int inde
   }
   for(i = 0; i < pvMeasureConnectionDataList.size(); ++i){
     data = pvMeasureConnectionDataList.at(i);
-    cbMeasureConnectionB->addItem(data.value("UnitContactName").toString(), data.value("Id_PK"));
+    // Build string with format Position-Connector;Contact
+    str  = data.value("SchemaPosition").toString();
+    s = data.value("UnitConnectorName").toString();
+    if(!s.isEmpty()){
+      str += " - " + s;
+    }
+    s = data.value("UnitContactName").toString();
+    if(!s.isEmpty()){
+      str += " ; " + s;
+    }
+    cbMeasureConnectionB->addItem(str, data.value("Id_PK"));
   }
 }
 
@@ -241,7 +265,7 @@ void mdtTtTestModelGenerationDialog::populateTestNodeComboBox(const QVariant & t
   }
   for(i = 0; i < dataList.size(); ++i){
     data = dataList.at(i);
-    text = "ID: " + data.value("NodeIdentification").toString();
+    text = data.value("Alias").toString();
     text += " , " + data.value("Type").toString();
     text += " , " + data.value("SubType").toString();
     cbTestNode->addItem(text, data.value("VehicleType_Id_FK_PK"));
@@ -255,8 +279,10 @@ void mdtTtTestModelGenerationDialog::getMeasureConnectionData(const QVariant & t
   bool ok;
 
   pvMeasureConnectionDataList.clear();
-  sql = "SELECT UCNX.Id_PK, UCNX.UnitContactName";
+  sql = "SELECT UCNX.Id_PK, U.SchemaPosition, UCNR.Name AS UnitConnectorName, UCNX.UnitContactName";
   sql += " FROM UnitConnection_tbl UCNX JOIN TestNodeUnitConnection_tbl TNUCNX ON TNUCNX.UnitConnection_Id_FK_PK = UCNX.Id_PK";
+  sql += " JOIN Unit_tbl U ON U.Id_PK = UCNX.Unit_Id_FK";
+  sql += " LEFT JOIN UnitConnector_tbl UCNR ON UCNR.Id_PK = UCNX.UnitConnector_Id_FK";
   sql += " JOIN TestNodeUnit_tbl TNU ON TNU.Unit_Id_FK_PK = TNUCNX.TestNodeUnit_Id_FK";
   sql += " WHERE TNU.TestNode_Id_FK = " + testNodeId.toString();
   sql += " AND TNU.Type_Code_FK = 'MEASCONNECTOR'";

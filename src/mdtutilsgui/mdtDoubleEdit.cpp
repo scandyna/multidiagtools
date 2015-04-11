@@ -420,10 +420,20 @@ void mdtDoubleEdit::convertAndSetValue(QString str)
     str = str.trimmed();
   }
   // Do conversion
-  pvValue = str.toDouble(&pvValueIsValid);
-  if(pvValueIsValid){
-    pvValue = pvValue * std::pow(10, (double)(p10e * pvUnitExponent) );
+  if(strIsMinusInfinity(str)){
+    pvValue = -std::numeric_limits<double>::infinity();
+    pvValueIsValid = true;
     pvIsNull = false;
+  }else if(strIsPlusInfinity(str)){
+    pvValue = std::numeric_limits<double>::infinity();
+    pvValueIsValid = true;
+    pvIsNull = false;
+  }else{
+    pvValue = str.toDouble(&pvValueIsValid);
+    if(pvValueIsValid){
+      pvValue = pvValue * std::pow(10, (double)(p10e * pvUnitExponent) );
+      pvIsNull = false;
+    }
   }
 }
 
@@ -471,12 +481,18 @@ void mdtDoubleEdit::displayValue()
 
 bool mdtDoubleEdit::strIsInfinity(const QString & str) const
 {
-  if((str == "-inf")||(str == "inf")){
+  if(strIsMinusInfinity(str)){
     return true;
   }
-  if((str == "-\u221E")||(str == "\u221E")){
+  if(strIsPlusInfinity(str)){
     return true;
   }
+//   if((str == "-inf")||(str == "inf")){
+//     return true;
+//   }
+//   if((str == "-\u221E")||(str == "\u221E")){
+//     return true;
+//   }
   return false;
 }
 

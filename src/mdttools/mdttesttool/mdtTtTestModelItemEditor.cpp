@@ -142,6 +142,7 @@ void mdtTtTestModelItemEditor::addTestLink()
   selectionDialog.setHeaderData("DutConnectorName", tr("DUT\nconnector"));
   selectionDialog.setHeaderData("DutContactName", tr("DUT\ncontact"));
   selectionDialog.resize(800, 400);
+  selectionDialog.setWindowTitle(tr("Test link selection"));
   if(selectionDialog.exec() != QDialog::Accepted){
     return;
   }

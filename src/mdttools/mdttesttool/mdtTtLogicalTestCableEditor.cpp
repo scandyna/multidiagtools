@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -68,7 +68,7 @@ bool mdtTtLogicalTestCableEditor::setupTables()
 
 void mdtTtLogicalTestCableEditor::addTestNodeUnit()
 {
-  mdtTtLogicalTestCable tcc(0, database());
+  mdtTtLogicalTestCable ltc(0, database());
   mdtSqlSelectionDialog selectionDialog;
   mdtSqlTableSelection s;
   QVariant testCableId;
@@ -81,14 +81,14 @@ void mdtTtLogicalTestCableEditor::addTestNodeUnit()
     return;
   }
   // Setup and show dialog
-  sql = tcc.sqlForTestNodeUnitSelection(testCableId);
+  sql = ltc.sqlForTestNodeUnitSelection(testCableId);
   selectionDialog.setQuery(sql, database(), false);
   selectionDialog.setMessage(tr("Select test connector to use:"));
   selectionDialog.setColumnHidden("SeriesNumber", true);
   selectionDialog.setColumnHidden("Unit_Id_FK_PK", true);
   selectionDialog.setHeaderData("Type", tr("Test system"));
   selectionDialog.setHeaderData("SubType", tr("Test node"));
-  selectionDialog.setHeaderData("NodeId", tr("Node ID"));
+  selectionDialog.setHeaderData("TestNodeAlias", tr("Test node alias"));
   selectionDialog.setHeaderData("SchemaPosition", tr("Schema\nposition"));
   selectionDialog.setHeaderData("TestNodeUnitTypeEN", tr("Type\n(English)"));
   selectionDialog.setHeaderData("TestNodeUnitTypeFR", tr("Type\n(Frensh)"));
@@ -109,8 +109,8 @@ void mdtTtLogicalTestCableEditor::addTestNodeUnit()
   Q_ASSERT(s.rowCount() == 1);
   testNodeUnitId = s.data(0, "Unit_Id_FK_PK");
   // Add unit
-  if(!tcc.addTestNodeUnit(testNodeUnitId, testCableId)){
-    pvLastError = tcc.lastError();
+  if(!ltc.addTestNodeUnit(testNodeUnitId, testCableId)){
+    pvLastError = ltc.lastError();
     displayLastError();
     return;
   }
@@ -814,8 +814,10 @@ bool mdtTtLogicalTestCableEditor::setupTestLinkTable()
   Q_ASSERT(widget != 0);
   // Hide technical fields
   widget->setColumnHidden("Id_PK", true);
+  widget->setColumnHidden("Identification", true);
   widget->setColumnHidden("TestCableUnitConnectionStart_Id_FK", true);
   widget->setColumnHidden("TestCableUnitConnectionEnd_Id_FK", true);
+  widget->setColumnHidden("DutConnectionResistance", true);
   widget->setColumnHidden("TestConnection_Id_FK", true);
   widget->setColumnHidden("DutConnection_Id_FK", true);
   widget->setColumnHidden("LogicalTestCable_Id_FK", true);
@@ -823,47 +825,27 @@ bool mdtTtLogicalTestCableEditor::setupTestLinkTable()
   widget->setColumnHidden("DutUnitConnector_Id_FK", true);
   widget->setColumnHidden("DutUnit_Id_FK", true);
   widget->setColumnHidden("TestNodeUnitConnector_Id_FK", true);
-  
-//   widget->setColumnHidden("TestNode_Id_FK", true);
-
-
-//   widget->setColumnHidden("VehicleType_Id_FK_PK", true);
-//   widget->setColumnHidden("Unit_Id_FK_PK", true);
-//   widget->setColumnHidden("DutUnitId", true);
-//   widget->setColumnHidden("TestNodeUnitSchemaPosition", true);
-//   widget->setColumnHidden("IoPosition", true);
+  widget->setColumnHidden("TestCableLinkResistance", true);
+  widget->setColumnHidden("TestCableDutSideConnectorName", true);
+  widget->setColumnHidden("TestCableDutSideContactName", true);
+  widget->setColumnHidden("TestCableDutSideConnectionResistance", true);
+  widget->setColumnHidden("TestCableTestSideConnectorName", true);
+  widget->setColumnHidden("TestCableTestSideContactName", true);
+  widget->setColumnHidden("TestCableTestSideConnectionResistance", true);
+  widget->setColumnHidden("TestNodeConnectionResistance", true);
   // Set fields a user friendly name
   widget->setHeaderData("DutSchemaPosition", tr("DUT\nschema pos."));
   widget->setHeaderData("DutAlias", tr("DUT\nalias"));
   widget->setHeaderData("DutConnectorName", tr("DUT\nconnector"));
   widget->setHeaderData("DutContactName", tr("DUT\ncontact"));
-  widget->setHeaderData("TestCableDutSideConnectorName", tr("Test cable\nDUT side\nconnector"));
-  widget->setHeaderData("TestCableDutSideContactName", tr("Test cable\nDUT side\ncontact"));
+  ///widget->setHeaderData("TestCableDutSideConnectorName", tr("Test cable\nDUT side\nconnector"));
+  ///widget->setHeaderData("TestCableDutSideContactName", tr("Test cable\nDUT side\ncontact"));
   widget->setHeaderData("TestCableLinkIdentification", tr("Test cable\nlink\nidentification"));
-  widget->setHeaderData("TestCableLinkResistance", tr("Test cable\nlink\nresistance"));
-  widget->setHeaderData("TestCableTestSideConnectorName", tr("Test cable\nTest node side\nconnector"));
-  widget->setHeaderData("TestCableTestSideContactName", tr("Test cable\nTest node side\ncontact"));
+  ///widget->setHeaderData("TestCableLinkResistance", tr("Test cable\nlink\nresistance"));
+  ///widget->setHeaderData("TestCableTestSideConnectorName", tr("Test cable\nTest node side\nconnector"));
+  ///widget->setHeaderData("TestCableTestSideContactName", tr("Test cable\nTest node side\ncontact"));
   widget->setHeaderData("TestNodeConnectorName", tr("Test node\nconnector"));
   widget->setHeaderData("TestNodeContactName", tr("Test node\ncontact"));
-  
-  //widget->setHeaderData("LogicalTestCableKey", tr("Test node\nType"));
-//   widget->setHeaderData("TestNodeType", tr("Test node\nType"));
-//   widget->setHeaderData("TestNodeSubType", tr("Test node\nSub type"));
-//   widget->setHeaderData("TestNodeSeriesNumber", tr("Test node\nSerie"));
-//   widget->setHeaderData("NodeIdentification", tr("Test node\nNode ID"));
-//   ///widget->setHeaderData("TestNodeUnitSchemaPosition", tr("Test node\nUnit"));
-//   widget->setHeaderData("TestConnectorName", tr("Test\nConnector"));
-//   widget->setHeaderData("TestContactName", tr("Test\nContact"));
-//   widget->setHeaderData("TestLinkIdentification", tr("Test link\nIdentification"));
-//   widget->setHeaderData("TestLinkValue", tr("Test link\nR [Ohm]"));
-//   
-//   
-//   
-//   
-//   
-//   widget->setHeaderData("Type", tr("DUT\nVehicle type"));
-//   widget->setHeaderData("SubType", tr("DUT\nVehicle sub type"));
-//   widget->setHeaderData("SeriesNumber", tr("DUT\nVehicle type serie"));
   // Set some attributes on table view
   widget->tableView()->resizeColumnsToContents();
   // Add buttons

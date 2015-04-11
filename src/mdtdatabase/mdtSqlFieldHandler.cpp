@@ -651,8 +651,8 @@ void mdtSqlFieldHandler::setDataWidget(mdtDoubleEdit* widget)
   w->setDoubleEdit(widget);
   pvDataWidget = w;
   setDataWidgetAttributes();
-  ///connect(widget, SIGNAL(valueChanged(double,bool)), this, SLOT(onDataEdited(double,bool)));
-  connect(widget, SIGNAL(valueEdited()), this, SLOT(onDataEdited()));
+  connect(widget, SIGNAL(valueChanged(double,bool)), this, SLOT(onDataEdited(double,bool)));
+  ///connect(widget, SIGNAL(valueEdited()), this, SLOT(onDataEdited()));
 }
 
 void mdtSqlFieldHandler::setDataWidget(QAbstractButton *widget)
@@ -772,26 +772,27 @@ void mdtSqlFieldHandler::setData(const QVariant & data)
 QVariant mdtSqlFieldHandler::data() const
 {
   Q_ASSERT(pvDataWidget != 0);
+  return pvDataWidget->data();
 
-  QVariant data = pvDataWidget->data();
-  if((data.isValid())&&(!data.isNull())){   /// \todo ???
-    return data;
-  }
-  // If data is null, we must return a empty string for fields that are strings,
-  //  and that accept null values, else mapper will revert data
-  /**
-  switch(pvSqlField.type()){
-    case QVariant::String:
-      if(pvSqlField.requiredStatus() != QSqlField::Required){
-        return "";
-      }
-      break;
-    default:
-      return data;
-  }
-  */
-
-  return data;  /// \todo ???
+//   QVariant data = pvDataWidget->data();
+//   if((data.isValid())&&(!data.isNull())){   /// \todo ???
+//     return data;
+//   }
+//   // If data is null, we must return a empty string for fields that are strings,
+//   //  and that accept null values, else mapper will revert data
+//   /**
+//   switch(pvSqlField.type()){
+//     case QVariant::String:
+//       if(pvSqlField.requiredStatus() != QSqlField::Required){
+//         return "";
+//       }
+//       break;
+//     default:
+//       return data;
+//   }
+//   */
+// 
+//   return data;  /// \todo ???
 }
 
 void mdtSqlFieldHandler::updateFlags()
