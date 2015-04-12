@@ -48,13 +48,6 @@
 
 #include <QDebug>
 
-/**
-mdtTtTestModelItemEditor::mdtTtTestModelItemEditor(QObject *parent, QSqlDatabase db)
- : mdtClEditor(parent, db)
-{
-}
-*/
-
 mdtTtTestModelItemEditor::mdtTtTestModelItemEditor(QWidget *parent, QSqlDatabase db)
  : mdtSqlForm(parent, db)
 {

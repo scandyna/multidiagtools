@@ -405,6 +405,7 @@ void mdtSqlFieldHandlerMdtDoubleEdit::setData(const QVariant & data)
 QVariant mdtSqlFieldHandlerMdtDoubleEdit::data() const
 {
   Q_ASSERT(pvDoubleEdit != 0);
+  qDebug() << "** -- DBL EDIT - le text: " << pvDoubleEdit->lineEdit()->text();
   return pvDoubleEdit->value();
 }
 
@@ -416,6 +417,7 @@ bool mdtSqlFieldHandlerMdtDoubleEdit::isNull() const
 void mdtSqlFieldHandlerMdtDoubleEdit::clear()
 {
   Q_ASSERT(pvDoubleEdit != 0);
+  
   pvDoubleEdit->setValue(QVariant());
 }
 
@@ -651,8 +653,7 @@ void mdtSqlFieldHandler::setDataWidget(mdtDoubleEdit* widget)
   w->setDoubleEdit(widget);
   pvDataWidget = w;
   setDataWidgetAttributes();
-  connect(widget, SIGNAL(valueChanged(double,bool)), this, SLOT(onDataEdited(double,bool)));
-  ///connect(widget, SIGNAL(valueEdited()), this, SLOT(onDataEdited()));
+  connect(widget, SIGNAL(valueEdited()), this, SLOT(onDataEdited()));
 }
 
 void mdtSqlFieldHandler::setDataWidget(QAbstractButton *widget)
@@ -704,6 +705,7 @@ void mdtSqlFieldHandler::clearWidgetData()
 {
   Q_ASSERT(pvDataWidget != 0);
 
+  qDebug() << "* clearWidgetData() - field: " << pvDataWidget->widget()->objectName() << "  ...";
   pvDataWidget->clear();
 
   return;
@@ -726,20 +728,25 @@ bool mdtSqlFieldHandler::checkBeforeSubmit()
 {
   Q_ASSERT(pvDataWidget != 0);
 
+  qDebug() << "* checkBeforeSubmit() - field: " << pvDataWidget->widget()->objectName() << "  ...";
   // Call validate (some widgets need that)
   if(!pvDataWidget->validate()){
+    qDebug() << "* -> No valid data";
     setDataWidgetNotOk(tr("This field contains not valid data"));
     return false;
   }
   // If Null flag is set, we clear widget
   if(isNull()){
+    qDebug() << "* -> Null";
     clearDataWidget();
   }
   // Check the requiered state
   if((pvSqlField.requiredStatus() == QSqlField::Required)&&(isNull())){
+    qDebug() << "* -> Required and not data";
     setDataWidgetNotOk(tr("This field is requiered"));
     return false;
   }
+  qDebug() << "* -> Ok - data: " << pvDataWidget->data();
 
   return true;
 }
@@ -748,6 +755,7 @@ void mdtSqlFieldHandler::setData(const QVariant & data)
 {
   Q_ASSERT(pvDataWidget != 0);
 
+  qDebug() << "* setData() - field: " << pvDataWidget->widget()->objectName() << "  - data: " << data;
   // Try to handle some date/time format
   if(data.type() == QVariant::String){
     switch(pvSqlField.type()){
@@ -767,11 +775,14 @@ void mdtSqlFieldHandler::setData(const QVariant & data)
     pvDataWidget->setData(data);
   }
   updateFlags();
+  
+  qDebug() << "* -> data: " << pvDataWidget->data();
 }
 
 QVariant mdtSqlFieldHandler::data() const
 {
   Q_ASSERT(pvDataWidget != 0);
+  qDebug() << "* data() - field: " << pvDataWidget->widget()->objectName() << "  - data: " << pvDataWidget->data();
   return pvDataWidget->data();
 
 //   QVariant data = pvDataWidget->data();
@@ -804,12 +815,16 @@ void mdtSqlFieldHandler::updateFlags()
 
 void mdtSqlFieldHandler::onDataEdited(const QString &text)
 {
+  qDebug() << "* onDataEdited() - field: " << pvDataWidget->widget()->objectName() << "  ...";
   // Set the data edited flag
   if(!pvDataEdited){
+    qDebug() << "* -> Setting pvDataEdited flag";
     pvDataEdited = true;
     emit dataEdited();
   }
   setDataWidgetOk();
+  
+  qDebug() << "* -> data: " << data();
 }
 
 void mdtSqlFieldHandler::onDataEdited()
@@ -825,7 +840,7 @@ void mdtSqlFieldHandler::onDataEdited()
 void mdtSqlFieldHandler::onDataEdited(double x, bool isValid)
 {
   // Set the data edited flag
-  qDebug() << "mdtSqlFieldHandler::onDataEdited() - x: " << x << ", valid: " << isValid << ", pvDataEdited: " << pvDataEdited;
+  ///qDebug() << "mdtSqlFieldHandler::onDataEdited() - x: " << x << ", valid: " << isValid << ", pvDataEdited: " << pvDataEdited;
   if(!pvDataEdited){
     pvDataEdited = true;
     ///qDebug() << "mdtSqlFieldHandler::onDataEdited() - emit dataEdited() ...";
@@ -852,6 +867,7 @@ void mdtSqlFieldHandler::clearDataWidget()
 {
   Q_ASSERT(pvDataWidget != 0);
 
+  qDebug() << "* clearDataWidget() - field: " << pvDataWidget->widget()->objectName() << "  ...";
   setDataWidgetOk();
   pvDataWidget->clear();
 }
@@ -882,6 +898,8 @@ void mdtSqlFieldHandler::setDataWidgetNotOk(const QString &toolTip)
   Q_ASSERT(pvDataWidget != 0);
   Q_ASSERT(pvDataWidget->widget() != 0);
 
+  qDebug() << "* setDataWidgetNotOk() - field: " << pvDataWidget->widget()->objectName() << "  ...";
+
   QPalette palette;
 
   palette.setColor(QPalette::Base, QColor(255, 190, 180));
@@ -895,6 +913,9 @@ void mdtSqlFieldHandler::setDataWidgetOk()
   Q_ASSERT(pvDataWidget != 0);
   Q_ASSERT(pvDataWidget->widget() != 0);
 
+  qDebug() << "* setDataWidgetOk() - field: " << pvDataWidget->widget()->objectName() << "  ...";
+
   pvDataWidget->widget()->setPalette(pvDataWidgetOriginalPalette);
   pvDataWidget->widget()->setToolTip("");
+  qDebug() << "* -> data: " << pvDataWidget->data();
 }

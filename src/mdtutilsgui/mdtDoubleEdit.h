@@ -111,6 +111,11 @@ class mdtDoubleEdit : public QWidget
    */
   mdtDoubleEdit(QWidget* parent = 0);
 
+  /// \todo Just for debug
+private slots:
+  void debugTextChanged(const QString & str);
+public:
+  
   /*! \brief Set read only
    */
   void setReadOnly(bool ro);
@@ -265,6 +270,18 @@ class mdtDoubleEdit : public QWidget
    */
   void setEditionMode(EditionMode_t mode);
 
+  /*! \brief Set value null
+   */
+  void setNull();
+
+  /*! \brief Set value -infinity
+   */
+  void setMinusInfinity();
+
+  /*! \brief Set value +infinity
+   */
+  void setPlusInfinity();
+
  signals:
 
   /*! \brief Emitted when a new value was set
@@ -283,9 +300,6 @@ class mdtDoubleEdit : public QWidget
 
  private slots:
 
-  void setNull();
-  void setMinusInfinity();
-  void setInfinity();
   void setValueFromLineEdit();
 
  private:

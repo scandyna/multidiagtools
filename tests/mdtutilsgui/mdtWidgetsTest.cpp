@@ -413,10 +413,13 @@ void mdtWidgetsTest::mdtDoubleEditTest()
   QVERIFY(e.editionMode() == mdtDoubleEdit::DefaultEditionMode);
   e.setUnit("m");
   e.setRange(0.0, 1e6);
+  /**
   QVERIFY(e.isNull());
   QVERIFY(!e.valueIsValid());
   QVERIFY(e.lineEdit()->text().isEmpty());
+  */
   // Edit and check
+  e.lineEdit()->clear();
   QTest::keyClicks(e.lineEdit(), "2.5");
   QVERIFY(e.validate());
   QVERIFY(!e.isNull());
@@ -464,9 +467,11 @@ void mdtWidgetsTest::mdtDoubleEditTest()
   e.setUnit("");
   e.setMinimumToMinusInfinity();
   e.setMaximumToInfinity();
+  /**
   QVERIFY(e.isNull());
   QVERIFY(!e.valueIsValid());
   QVERIFY(e.lineEdit()->text().isEmpty());
+  */
   // Check with standard values - using setValue(double)
   e.setValue(1.5);
   QVERIFY(e.validate());
@@ -507,6 +512,40 @@ void mdtWidgetsTest::mdtDoubleEditTest()
   QVERIFY(e.valueIsValid());
   QCOMPARE(e.value(), QVariant(-std::numeric_limits<double>::infinity()));
   QCOMPARE(e.text().trimmed(), QString("-" + e.infinityString()));
+  /*
+   * Check setValue(null) and setValue(1.2)
+   * (added while searching a bug when used with mdtSqlFieldHandler, 2015/04/12)
+   */
+  // Set a null value
+  e.setValue(QVariant());
+  QVERIFY(e.isNull());
+  QVERIFY(e.valueIsValid());
+  QCOMPARE(e.value(), QVariant());
+  QCOMPARE(e.text().trimmed(), QString(""));
+  // Set a valid value
+  e.setValue(1.2);
+  QVERIFY(!e.isNull());
+  QVERIFY(e.valueIsValid());
+  QCOMPARE(e.value(), QVariant(1.2));
+  QCOMPARE(e.text().trimmed(), QString("1.2"));
+  /*
+   * Check dynamic unit change
+   * When a value was set, and unit is changed, the value must be keeped
+   * (Bug found with mdtTtTestModelItemEditor, 2015/04/12)
+   */
+  // Set a value
+  e.setValue(2.5);
+  QVERIFY(!e.isNull());
+  QVERIFY(e.valueIsValid());
+  QCOMPARE(e.value(), QVariant(2.5));
+  QCOMPARE(e.text().trimmed(), QString("2.5"));
+  // Change unit
+  e.setUnit("m");
+  QVERIFY(!e.isNull());
+  QVERIFY(e.valueIsValid());
+  QCOMPARE(e.value(), QVariant(2.5));
+  QCOMPARE(e.text().trimmed(), QString("2.5"));
+
   // Check with standard values - simulate user inputs
   qDebug() << "TEST - click 1.5";
   e.lineEdit()->clear();

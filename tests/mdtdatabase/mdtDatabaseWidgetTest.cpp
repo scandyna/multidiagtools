@@ -836,28 +836,53 @@ void mdtDatabaseWidgetTest::sqlFieldHandlerTest()
   QVERIFY(de.value().isNull());
   QVERIFY(!de.lineEdit()->isReadOnly());
   // User edit ...
-//   qDebug() << "TEST - click 2.5";
-//   QTest::keyClicks(de.lineEdit(), "2.5");
-  de.setValue(2.5);
+  qDebug() << "TEST - input 2.5 ...";
+  de.lineEdit()->clear();
+  QTest::keyClicks(de.lineEdit(), "2.5");
   // Check field handler flags
   QVERIFY(fh.checkBeforeSubmit());
   QVERIFY(!fh.isNull());
   QVERIFY(fh.dataWasEdited());
   QCOMPARE(fh.data(), QVariant(2.5));
-  // Check with infinity values
-//   qDebug() << "TEST - click inf";
-//   QTest::keyClicks(de.lineEdit(), "inf");
-  de.setValue(std::numeric_limits<double>::infinity());
+  // Set value from database
+  fh.setData(3.2);
+  QVERIFY(!fh.isNull());
+  QVERIFY(!fh.dataWasEdited());
+  QCOMPARE(fh.data(), QVariant(3.2));
+  QCOMPARE(de.lineEdit()->text().trimmed(), QString("3.2"));
+  // Set a null value from database, then a non null one (added when searching a bug, 2015/04/12)
+  fh.setData(QVariant());
+  QVERIFY(fh.isNull());
+  QVERIFY(!fh.dataWasEdited());
+  QCOMPARE(fh.data(), QVariant());
+  QCOMPARE(de.lineEdit()->text().trimmed(), QString(""));
+  fh.setData(1.2);
+  QVERIFY(!fh.isNull());
+  QVERIFY(!fh.dataWasEdited());
+  QCOMPARE(fh.data(), QVariant(1.2));
+  QCOMPARE(de.lineEdit()->text().trimmed(), QString("1.2"));
+
+  // Check with +infinity value - Input by user
+  de.setPlusInfinity();
   QVERIFY(fh.checkBeforeSubmit());
-  qDebug() << "FH data: " << fh.data();
   QVERIFY(!fh.isNull());
   QVERIFY(fh.dataWasEdited());
   QCOMPARE(fh.data(), QVariant(std::numeric_limits<double>::infinity()));
-//   QTest::keyClicks(de.lineEdit(), "-inf");
-  de.setValue(-std::numeric_limits<double>::infinity());
+  // Check with +infinity value - Input by database
+  fh.setData(std::numeric_limits<double>::infinity());
+  QVERIFY(!fh.isNull());
+  QVERIFY(!fh.dataWasEdited());
+  QCOMPARE(fh.data(), QVariant(std::numeric_limits<double>::infinity()));
+  // Check with -infinity value - Input by user
+  de.setMinusInfinity();
   QVERIFY(fh.checkBeforeSubmit());
   QVERIFY(!fh.isNull());
   QVERIFY(fh.dataWasEdited());
+  QCOMPARE(fh.data(), QVariant(-std::numeric_limits<double>::infinity()));
+  // Check with -infinity value - Input by database
+  fh.setData(-std::numeric_limits<double>::infinity());
+  QVERIFY(!fh.isNull());
+  QVERIFY(!fh.dataWasEdited());
   QCOMPARE(fh.data(), QVariant(-std::numeric_limits<double>::infinity()));
   // Check not required field when user not enter anything
   field.setRequired(false);
@@ -872,9 +897,11 @@ void mdtDatabaseWidgetTest::sqlFieldHandlerTest()
   /*
    * Play
    */
+  /*
   while(de.isVisible()){
     QTest::qWait(1000);
   }
+  */
 }
 
 void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()

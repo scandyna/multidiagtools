@@ -29,7 +29,7 @@
 void mdtValueTest::valueDoubleTest()
 {
   mdtValueDouble x;
-
+  
   // Initial state
   QVERIFY(x.isNull());
   QVERIFY(!x.isMinusOl());

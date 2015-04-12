@@ -34,7 +34,6 @@ class mdtTtTestModelItemEditor : public mdtSqlForm
 
   /*! \brief Constructor
    */
-  ///mdtTtTestModelItemEditor(QObject *parent, QSqlDatabase db);
   mdtTtTestModelItemEditor(QWidget *parent, QSqlDatabase db);
 
   /*! \brief Setup all tables

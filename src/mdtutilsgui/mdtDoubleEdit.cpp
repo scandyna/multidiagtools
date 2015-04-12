@@ -29,7 +29,7 @@
 #include <limits>
 #include <cmath>
 
-//#include <QDebug>
+#include <QDebug>
 
 mdtDoubleEdit::mdtDoubleEdit(QWidget* parent)
  : QWidget(parent)
@@ -57,12 +57,16 @@ mdtDoubleEdit::mdtDoubleEdit(QWidget* parent)
   setLayout(l);
   connect(pbSetNull, SIGNAL(clicked()), this, SLOT(setNull()));
   connect(pbSetMinusInfinity, SIGNAL(clicked()), this, SLOT(setMinusInfinity()));
-  connect(pbSetInfinity, SIGNAL(clicked()), this, SLOT(setInfinity()));
+  connect(pbSetInfinity, SIGNAL(clicked()), this, SLOT(setPlusInfinity()));
   // Validator
   pvValidator = new mdtDoubleValidator(this);
   pvLineEdit->setValidator(pvValidator);
   connect(pvLineEdit, SIGNAL(editingFinished()), this, SLOT(setValueFromLineEdit()));
   connect(pvLineEdit, SIGNAL(textEdited(const QString&)), this, SIGNAL(valueEdited()));
+  
+  /// \todo Just for debug
+  connect(pvLineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(debugTextChanged(const QString&)));
+  
   // Set initial value
   pvValue = 0.0;
   pvIsNull = true;
@@ -74,6 +78,13 @@ mdtDoubleEdit::mdtDoubleEdit(QWidget* parent)
   setFocusPolicy(Qt::StrongFocus);
   setFocusProxy(pvLineEdit);
 }
+
+void mdtDoubleEdit::debugTextChanged(const QString& str)
+{
+  qDebug() << "=== LE text changed: " << str << " -- OBJNAME: " << objectName();
+}
+
+
 
 void mdtDoubleEdit::setReadOnly(bool ro)
 {
@@ -213,6 +224,7 @@ void mdtDoubleEdit::setValueDouble(double v, bool emitValueChanged)
 
 void mdtDoubleEdit::setValue(const QVariant & v, bool emitValueChanged)
 {
+  qDebug() << "mdtDoubleEdit::setValue(" << v << ", " << emitValueChanged << ") OBJ: " << objectName();
   if((v.type() == QVariant::Double)||(v.type() == QVariant::Int)||(v.type() == QVariant::LongLong)){
     setValueDouble(v.toDouble(), emitValueChanged);
     return;
@@ -248,6 +260,7 @@ QVariant mdtDoubleEdit::value() const
 
 bool mdtDoubleEdit::validate()
 {
+  qDebug() << "mdtDoubleEdit::validate() - le text: " << pvLineEdit->text();
   convertAndSetValue(pvLineEdit->text());
   displayValue();
   return pvValueIsValid;
@@ -296,7 +309,7 @@ void mdtDoubleEdit::setUnit(const QString & u)
 //     pvUnitExponent = 1;
 //     buildDefaultUnitRanges();
 //   }
-  clear();
+  ///clear();
 }
 
 void mdtDoubleEdit::setEditionMode(mdtDoubleEdit::EditionMode_t mode)
@@ -325,7 +338,7 @@ void mdtDoubleEdit::setMinusInfinity()
   emit valueEdited();
 }
 
-void mdtDoubleEdit::setInfinity()
+void mdtDoubleEdit::setPlusInfinity()
 {
   setValueDouble(std::numeric_limits<double>::infinity(), true);
   emit valueEdited();
