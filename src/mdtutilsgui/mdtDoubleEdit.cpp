@@ -435,6 +435,13 @@ void mdtDoubleEdit::convertAndSetValue(QString str)
       pvIsNull = false;
     }
   }
+  // Check respect of ranges
+  if(pvValue < minimum()){
+    pvValue = minimum();
+  }
+  if(pvValue > maximum()){
+    pvValue = maximum();
+  }
 }
 
 void mdtDoubleEdit::displayValue()

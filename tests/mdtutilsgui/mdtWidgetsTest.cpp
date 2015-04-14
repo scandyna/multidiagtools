@@ -138,7 +138,6 @@ void mdtWidgetsTest::mdtDoubleValidatorTest()
   QCOMPARE(v.validate(str, pos), QValidator::Acceptable);
   str = "-\u221E";
   QCOMPARE(v.validate(str, pos), QValidator::Acceptable);
-
 }
 
 void mdtWidgetsTest::mdtDoubleEditTest()
@@ -534,7 +533,52 @@ void mdtWidgetsTest::mdtDoubleEditTest()
   QVERIFY(!e.isNull());
   QVERIFY(e.valueIsValid());
   QCOMPARE(e.value(), QVariant(2.5));
-  QCOMPARE(e.text().trimmed(), QString("2.5"));
+  QCOMPARE(e.text().trimmed(), QString("2.5"));  /// \todo Correct ??
+  /*
+   * Check respect of limits
+   */
+  e.setUnit("");
+  e.setRange(1.0, 10.0);
+  // Check with set value - value in range
+  e.setValue(1.0);
+  QVERIFY(!e.isNull());
+  QVERIFY(e.valueIsValid());
+  QCOMPARE(e.value(), QVariant(1.0));
+  QCOMPARE(e.text().trimmed(), QString("1"));
+  // Check with set value - value in range
+  e.setValue(10.0);
+  QVERIFY(!e.isNull());
+  QVERIFY(e.valueIsValid());
+  QCOMPARE(e.value(), QVariant(10.0));
+  QCOMPARE(e.text().trimmed(), QString("10"));
+  // Check with set value - value out of range
+  e.setValue(0.9);
+  QVERIFY(!e.isNull());
+  QVERIFY(e.valueIsValid());
+  QCOMPARE(e.value(), QVariant(1.0));
+  QCOMPARE(e.text().trimmed(), QString("1"));
+  // Check with set value - value out of range
+  e.setValue(10.1);
+  QVERIFY(!e.isNull());
+  QVERIFY(e.valueIsValid());
+  QCOMPARE(e.value(), QVariant(10.0));
+  QCOMPARE(e.text().trimmed(), QString("10"));
+  // Check by user input - value out of range
+  e.lineEdit()->clear();
+  QTest::keyClicks(e.lineEdit(), "0.9");
+  QVERIFY(e.validate());
+  QVERIFY(!e.isNull());
+  QVERIFY(e.valueIsValid());
+  QCOMPARE(e.value(), QVariant(1.0));
+  QCOMPARE(e.text().trimmed(), QString("1"));
+  // Check by user input - value out of range
+  e.lineEdit()->clear();
+  QTest::keyClicks(e.lineEdit(), "10.1");
+  QVERIFY(e.validate());
+  QVERIFY(!e.isNull());
+  QVERIFY(e.valueIsValid());
+  QCOMPARE(e.value(), QVariant(10.0));
+  QCOMPARE(e.text().trimmed(), QString("10"));
 
   // Check with standard values - simulate user inputs
   e.lineEdit()->clear();
@@ -543,6 +587,7 @@ void mdtWidgetsTest::mdtDoubleEditTest()
   QVERIFY(!e.isNull());
   QVERIFY(e.valueIsValid());
   QCOMPARE(e.value(), QVariant(1.5));
+
 
   /*
   while(e.isVisible()){

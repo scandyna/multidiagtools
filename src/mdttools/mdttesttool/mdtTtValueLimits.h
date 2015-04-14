@@ -21,7 +21,9 @@
 #ifndef MDT_TT_VALUE_LIMITS_H
 #define MDT_TT_VALUE_LIMITS_H
 
+#include "mdtValue.h"
 #include "mdtAlgorithms.h"
+#include <QVariant>
 
 /*! \brief Class to define limits of values in test applications
  *
@@ -94,16 +96,33 @@ class mdtTtValueLimits
 
   /*! \brief Get left bottom limit
    */
-  double leftBottomLimit() const
+  mdtValueDouble leftBottomLimit() const
   {
-    return pvLeftLimitRange.bottom;
+    ///return pvLeftLimitRange.bottom;
+    return pvLeftBottomLimit;
+  }
+
+  /*! \brief Get left bottom limit
+   */
+  QVariant leftBottomLimitVar() const
+  {
+    if(pvLeftBottomLimit.isNull()){
+      return QVariant();
+    }
+    return pvLeftBottomLimit.value();
   }
 
   /*! \brief Set left bottom limit
    *
    * \pre x must be <= #leftTopLimit
    */
-  void setLeftBottomLimit(double x);
+  void setLeftBottomLimit(const mdtValueDouble & x);
+
+  /*! \brief Set left bottom limit
+   *
+   * \pre x must be <= #leftTopLimit
+   */
+  void setLeftBottomLimitVar(const QVariant & v);
 
   /*! \brief Reset left bottom limit
    */
@@ -111,16 +130,33 @@ class mdtTtValueLimits
 
   /*! \brief Get left top limit
    */
-  double leftTopLimit() const
+  mdtValueDouble leftTopLimit() const
   {
-    return pvLeftLimitRange.top;
+    ///return pvLeftLimitRange.top;
+    return pvLeftTopLimit;
+  }
+
+  /*! \brief Get left top limit
+   */
+  QVariant leftTopLimitVar() const
+  {
+    if(pvLeftTopLimit.isNull()){
+      return QVariant();
+    }
+    return pvLeftTopLimit.value();
   }
 
   /*! \brief Set left top limit
    *
    * \pre x must be >= #leftBottomLimit and <= #rightBottomLimit
    */
-  void setLeftTopLimit(double x);
+  void setLeftTopLimit(const mdtValueDouble & x);
+
+  /*! \brief Set left top limit
+   *
+   * \pre x must be >= #leftBottomLimit and <= #rightBottomLimit
+   */
+  void setLeftTopLimitVar(const QVariant & v);
 
   /*! \brief Reset left top limit
    */
@@ -128,16 +164,33 @@ class mdtTtValueLimits
 
   /*! \brief Get right bottom limit
    */
-  double rightBottomLimit() const
+  mdtValueDouble rightBottomLimit() const
   {
-    return pvRightLimitRange.bottom;
+    ///return pvRightLimitRange.bottom;
+    return pvRightBottomLimit;
+  }
+
+  /*! \brief Get right bottom limit
+   */
+  QVariant rightBottomLimitVar() const
+  {
+    if(pvRightBottomLimit.isNull()){
+      return QVariant();
+    }
+    return pvRightBottomLimit.value();
   }
 
   /*! \brief Set right bottom limit
    *
    * \pre x must be >= #leftTopLimit and <= #rightTopLimit
    */
-  void setRightBottomLimit(double x);
+  void setRightBottomLimit(const mdtValueDouble & x);
+
+  /*! \brief Set right bottom limit
+   *
+   * \pre x must be >= #leftTopLimit and <= #rightTopLimit
+   */
+  void setRightBottomLimitVar(const QVariant & v);
 
   /*! \brief Reset right bottom limit
    */
@@ -145,16 +198,33 @@ class mdtTtValueLimits
 
   /*! \brief Get top bottom limit
    */
-  double rightTopLimit() const
+  mdtValueDouble rightTopLimit() const
   {
-    return pvRightLimitRange.top;
+    ///return pvRightLimitRange.top;
+    return pvRightTopLimit;
+  }
+
+  /*! \brief Get top bottom limit
+   */
+  QVariant rightTopLimitVar() const
+  {
+    if(pvRightTopLimit.isNull()){
+      return QVariant();
+    }
+    return pvRightTopLimit.value();
   }
 
   /*! \brief Set right top limit
    *
    * \pre x must be >= #rightBottomLimit
    */
-  void setRightTopLimit(double x);
+  void setRightTopLimit(const mdtValueDouble & x);
+
+  /*! \brief Set right top limit
+   *
+   * \pre x must be >= #rightBottomLimit
+   */
+  void setRightTopLimitVar(const QVariant & v);
 
   /*! \brief Reset top bottom limit
    */
@@ -162,8 +232,12 @@ class mdtTtValueLimits
 
  private:
 
-  mdtAlgorithms::NumericRangeDouble pvLeftLimitRange;
-  mdtAlgorithms::NumericRangeDouble pvRightLimitRange;
+  ///mdtAlgorithms::NumericRangeDouble pvLeftLimitRange;
+  mdtValueDouble pvLeftBottomLimit;
+  mdtValueDouble pvLeftTopLimit;
+  ///mdtAlgorithms::NumericRangeDouble pvRightLimitRange;
+  mdtValueDouble pvRightBottomLimit;
+  mdtValueDouble pvRightTopLimit;
   Result_t pvResult;
 };
 

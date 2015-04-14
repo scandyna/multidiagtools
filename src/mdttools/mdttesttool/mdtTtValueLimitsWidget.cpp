@@ -24,6 +24,8 @@
 #include <QString>
 #include <QToolButton>
 
+#include <QVariant>
+
 mdtTtValueLimitsWidget::mdtTtValueLimitsWidget(QWidget* parent)
  : QWidget(parent)
 {
@@ -42,12 +44,12 @@ void mdtTtValueLimitsWidget::editLeftBottomLimit()
 
   de.setLabelText(tr("Enter left bottom limit:"));
   de.setMinimumToMinusInfinity();
-  de.setMaximum(pvLimits.leftTopLimit());
-  de.setValueDouble(pvLimits.leftBottomLimit());
+  de.setMaximum(pvLimits.leftTopLimit().value());
+  de.setValue(pvLimits.leftBottomLimitVar());
   if(de.exec() != QDialog::Accepted){
     return;
   }
-  pvLimits.setLeftBottomLimit(de.valueDouble());
+  pvLimits.setLeftBottomLimitVar(de.value());
   displayLeftLimits();
 }
 
@@ -56,13 +58,13 @@ void mdtTtValueLimitsWidget::editLeftTopLimit()
   mdtDoubleEditDialog de(this);
 
   de.setLabelText(tr("Enter left top limit:"));
-  de.setMinimum(pvLimits.leftBottomLimit());
-  de.setMaximum(pvLimits.rightBottomLimit());
-  de.setValueDouble(pvLimits.leftTopLimit());
+  de.setMinimum(pvLimits.leftBottomLimit().value());
+  de.setMaximum(pvLimits.rightBottomLimit().value());
+  de.setValue(pvLimits.leftTopLimitVar());
   if(de.exec() != QDialog::Accepted){
     return;
   }
-  pvLimits.setLeftTopLimit(de.valueDouble());
+  pvLimits.setLeftTopLimitVar(de.value());
   displayLeftLimits();
 }
 
@@ -71,13 +73,13 @@ void mdtTtValueLimitsWidget::editRightBottomLimit()
   mdtDoubleEditDialog de(this);
 
   de.setLabelText(tr("Enter right bottom limit:"));
-  de.setMinimum(pvLimits.leftTopLimit());
-  de.setMaximum(pvLimits.rightTopLimit());
-  de.setValueDouble(pvLimits.rightBottomLimit());
+  de.setMinimum(pvLimits.leftTopLimit().value());
+  de.setMaximum(pvLimits.rightTopLimit().value());
+  de.setValue(pvLimits.rightBottomLimitVar());
   if(de.exec() != QDialog::Accepted){
     return;
   }
-  pvLimits.setRightBottomLimit(de.valueDouble());
+  pvLimits.setRightBottomLimitVar(de.value());
   displayRightLimits();
 }
 
@@ -86,13 +88,13 @@ void mdtTtValueLimitsWidget::editRightTopLimit()
   mdtDoubleEditDialog de(this);
 
   de.setLabelText(tr("Enter right top limit:"));
-  de.setMinimum(pvLimits.rightBottomLimit());
+  de.setMinimum(pvLimits.rightBottomLimit().value());
   de.setMaximumToInfinity();
-  de.setValueDouble(pvLimits.rightTopLimit());
+  de.setValue(pvLimits.rightTopLimitVar());
   if(de.exec() != QDialog::Accepted){
     return;
   }
-  pvLimits.setRightTopLimit(de.valueDouble());
+  pvLimits.setRightTopLimitVar(de.value());
   displayRightLimits();
 }
 
@@ -115,11 +117,19 @@ void mdtTtValueLimitsWidget::displayLeftLimits()
     lbLeftLimitRange->setVisible(true);
   }
   // Update left limits bottom button
-  str = QString("%1").arg(bottom.value());
-  tbLeftLimitBottomValue->setText(str);
+  if(bottom.isNull()){
+    tbLeftLimitBottomValue->setText("...");
+  }else{
+    str = QString("%1").arg(bottom.value());
+    tbLeftLimitBottomValue->setText(str);
+  }
   // Update left limits top button
-  str = QString("%1").arg(top.value());
-  tbLeftLimitTopValue->setText(str);
+  if(top.isNull()){
+    tbLeftLimitTopValue->setText("...");
+  }else{
+    str = QString("%1").arg(top.value());
+    tbLeftLimitTopValue->setText(str);
+  }
 }
 
 void mdtTtValueLimitsWidget::displayRightLimits()
@@ -141,9 +151,17 @@ void mdtTtValueLimitsWidget::displayRightLimits()
     lbRightLimitRange->setVisible(true);
   }
   // Update right limits bottom button
-  str = QString("%1").arg(bottom.value());
-  tbRightLimitBottomValue->setText(str);
+  if(bottom.isNull()){
+    tbRightLimitBottomValue->setText("...");
+  }else{
+    str = QString("%1").arg(bottom.value());
+    tbRightLimitBottomValue->setText(str);
+  }
   // Update right limits top button
-  str = QString("%1").arg(top.value());
-  tbRightLimitTopValue->setText(str);
+  if(top.isNull()){
+    tbRightLimitTopValue->setText("...");
+  }else{
+    str = QString("%1").arg(top.value());
+    tbRightLimitTopValue->setText(str);
+  }
 }

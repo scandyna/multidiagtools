@@ -72,6 +72,11 @@ void mdtDoubleEditDialog::setRange(double min, double max)
   deEdit->setRange(min, max);
 }
 
+void mdtDoubleEditDialog::setValue(const QVariant & v)
+{
+  deEdit->setValue(v, false);
+}
+
 void mdtDoubleEditDialog::setValueDouble(double v)
 {
   deEdit->setValueDouble(v, false);
@@ -80,6 +85,11 @@ void mdtDoubleEditDialog::setValueDouble(double v)
 double mdtDoubleEditDialog::valueDouble() const
 {
   return deEdit->valueDouble();
+}
+
+QVariant mdtDoubleEditDialog::value() const
+{
+  return deEdit->value();
 }
 
 void mdtDoubleEditDialog::accept()

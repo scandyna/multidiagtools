@@ -75,11 +75,19 @@ class mdtDoubleEditDialog : public QDialog, Ui::mdtDoubleEditDialog
 
   /*! \brief Set value
    */
+  void setValue(const QVariant & v);
+
+  /*! \brief Set value
+   */
   void setValueDouble(double v);
 
   /*! \brief Get value
    */
   double valueDouble() const;
+
+  /*! \brief Get value
+   */
+  QVariant value() const;
 
  public slots:
 

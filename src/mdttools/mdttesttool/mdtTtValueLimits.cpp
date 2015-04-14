@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtTtValueLimits.h"
-#include "mdtValue.h"
+///#include "mdtValue.h"
 
 mdtTtValueLimits::mdtTtValueLimits()
  : pvResult(Result_t::Undefined)
@@ -27,28 +27,74 @@ mdtTtValueLimits::mdtTtValueLimits()
 
 }
 
-void mdtTtValueLimits::setLeftBottomLimit(double x)
+void mdtTtValueLimits::setLeftBottomLimit(const mdtValueDouble & x)
 {
-  Q_ASSERT(mdtValueDouble(x) <= mdtValueDouble(pvLeftLimitRange.top));
-  pvLeftLimitRange.bottom = x;
+  ///Q_ASSERT(mdtValueDouble(x) <= mdtValueDouble(pvLeftLimitRange.top));
+  Q_ASSERT( (x.isNull()) || (pvLeftBottomLimit.isNull()) || (x <= pvLeftBottomLimit) );
+  ///pvLeftLimitRange.bottom = x;
+  pvLeftBottomLimit = x;
 }
 
-void mdtTtValueLimits::setLeftTopLimit(double x)
+void mdtTtValueLimits::setLeftBottomLimitVar(const QVariant & v)
 {
-  Q_ASSERT(mdtValueDouble(x) >= mdtValueDouble(pvLeftLimitRange.bottom));
-  Q_ASSERT(mdtValueDouble(x) <= mdtValueDouble(pvRightLimitRange.bottom));
-  pvLeftLimitRange.top = x;
+  if(v.isNull()){
+    setLeftBottomLimit(mdtValueDouble());
+  }else{
+    setLeftBottomLimit(v.toDouble());
+  }
 }
 
-void mdtTtValueLimits::setRightBottomLimit(double x)
+void mdtTtValueLimits::setLeftTopLimit(const mdtValueDouble & x)
 {
-  Q_ASSERT(mdtValueDouble(x) >= mdtValueDouble(pvLeftLimitRange.top));
-  Q_ASSERT(mdtValueDouble(x) <= mdtValueDouble(pvRightLimitRange.top));
-  pvRightLimitRange.bottom = x;
+  ///Q_ASSERT(mdtValueDouble(x) >= mdtValueDouble(pvLeftLimitRange.bottom));
+  ///Q_ASSERT(mdtValueDouble(x) <= mdtValueDouble(pvRightLimitRange.bottom));
+  Q_ASSERT( (x.isNull()) || (pvLeftBottomLimit.isNull()) ||  (x >= pvLeftBottomLimit) );
+  Q_ASSERT( (x.isNull()) || (pvRightBottomLimit.isNull()) ||  (x <= pvRightBottomLimit) );
+  ///pvLeftLimitRange.top = x;
+  pvLeftTopLimit = x;
 }
 
-void mdtTtValueLimits::setRightTopLimit(double x)
+void mdtTtValueLimits::setLeftTopLimitVar(const QVariant & v)
 {
-  Q_ASSERT(mdtValueDouble(x) >= mdtValueDouble(pvRightLimitRange.bottom));
-  pvRightLimitRange.top = x;
+  if(v.isNull()){
+    setLeftTopLimit(mdtValueDouble());
+  }else{
+    setLeftTopLimit(v.toDouble());
+  }
+}
+
+void mdtTtValueLimits::setRightBottomLimit(const mdtValueDouble & x)
+{
+  ///Q_ASSERT(mdtValueDouble(x) >= mdtValueDouble(pvLeftLimitRange.top));
+  ///Q_ASSERT(mdtValueDouble(x) <= mdtValueDouble(pvRightLimitRange.top));
+  Q_ASSERT( (x.isNull()) || (pvLeftTopLimit.isNull()) ||  (x >= pvLeftTopLimit) );
+  Q_ASSERT( (x.isNull()) || (pvRightTopLimit.isNull()) ||  (x <= pvRightTopLimit) );
+  ///pvRightLimitRange.bottom = x;
+  pvRightBottomLimit = x;
+}
+
+void mdtTtValueLimits::setRightBottomLimitVar(const QVariant & v)
+{
+  if(v.isNull()){
+    setRightBottomLimit(mdtValueDouble());
+  }else{
+    setRightBottomLimit(v.toDouble());
+  }
+}
+
+void mdtTtValueLimits::setRightTopLimit(const mdtValueDouble & x)
+{
+  ///Q_ASSERT(mdtValueDouble(x) >= mdtValueDouble(pvRightLimitRange.bottom));
+  Q_ASSERT( (x.isNull()) || (pvRightBottomLimit.isNull()) ||  (x >= pvRightBottomLimit) );
+  ///pvRightLimitRange.top = x;
+  pvRightTopLimit = x;
+}
+
+void mdtTtValueLimits::setRightTopLimitVar(const QVariant & v)
+{
+  if(v.isNull()){
+    setRightTopLimit(mdtValueDouble());
+  }else{
+    setRightTopLimit(v.toDouble());
+  }
 }
