@@ -291,6 +291,8 @@ if(UNIX)
 
   add_test (mdtDeviceTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdevice/mdtdevicetest)
 
+  # mdtTtValueLimitsTest
+  add_test (mdtTtValueLimitsTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdttesttool/mdttvaluelimitstest)
   # mdtTestToolTest
   add_test (mdtTestToolTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdttesttool/mdttesttooltest)
 

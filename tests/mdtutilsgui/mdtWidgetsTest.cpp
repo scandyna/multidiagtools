@@ -413,11 +413,6 @@ void mdtWidgetsTest::mdtDoubleEditTest()
   QVERIFY(e.editionMode() == mdtDoubleEdit::DefaultEditionMode);
   e.setUnit("m");
   e.setRange(0.0, 1e6);
-  /**
-  QVERIFY(e.isNull());
-  QVERIFY(!e.valueIsValid());
-  QVERIFY(e.lineEdit()->text().isEmpty());
-  */
   // Edit and check
   e.lineEdit()->clear();
   QTest::keyClicks(e.lineEdit(), "2.5");
@@ -467,11 +462,6 @@ void mdtWidgetsTest::mdtDoubleEditTest()
   e.setUnit("");
   e.setMinimumToMinusInfinity();
   e.setMaximumToInfinity();
-  /**
-  QVERIFY(e.isNull());
-  QVERIFY(!e.valueIsValid());
-  QVERIFY(e.lineEdit()->text().isEmpty());
-  */
   // Check with standard values - using setValue(double)
   e.setValue(1.5);
   QVERIFY(e.validate());
@@ -547,7 +537,6 @@ void mdtWidgetsTest::mdtDoubleEditTest()
   QCOMPARE(e.text().trimmed(), QString("2.5"));
 
   // Check with standard values - simulate user inputs
-  qDebug() << "TEST - click 1.5";
   e.lineEdit()->clear();
   QTest::keyClicks(e.lineEdit(), "1.5");
   QVERIFY(e.validate());

@@ -37,6 +37,8 @@ set (TT_HEADER_FILES
           mdtTtTestStepContainer.h
           mdtTtTestStepWidget.h
           mdtTtTestStepContainerWidget.h
+#           mdtTtValueLimits.h
+          mdtTtValueLimitsWidget.h
     )
 
 # Sources files for mdtTestTool
@@ -87,6 +89,8 @@ set (TT_SOURCES_FILES
           mdtTtTestStepContainer.cpp
           mdtTtTestStepWidget.cpp
           mdtTtTestStepContainerWidget.cpp
+          mdtTtValueLimits.cpp
+          mdtTtValueLimitsWidget.cpp
     )
 
 # Form files for mdtTestTool
@@ -107,6 +111,7 @@ set (TT_FORM_FILES
           mdtTtRelayPathDialog.ui
           mdtTtTestModelGenerationDialog.ui
           mdtTtValueEditionDialog.ui
+          mdtTtValueLimitsWidget.ui
     )
 
 # Header files for mdtCableList

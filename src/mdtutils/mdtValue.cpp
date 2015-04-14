@@ -46,12 +46,11 @@ void mdtValueDouble::clear() noexcept
   pvIsNull = true;
 }
 
-/// \todo Use functions from cmath !
 void mdtValueDouble::setValue(double value, bool isOl) noexcept
 {
-  pvIsNull = false;
   if(isOl){
-    if( (value > 0.0) || ( (value > -std::numeric_limits<double>::epsilon()) && (value < std::numeric_limits<double>::epsilon()) ) ){
+    // OL flag is set. If value >= 0 , we are +infinity, else -infinity
+    if(std::isgreaterequal(value, 0.0)){
       pvValue = std::numeric_limits<double>::infinity();
     }else{
       pvValue = -std::numeric_limits<double>::infinity();
@@ -59,9 +58,19 @@ void mdtValueDouble::setValue(double value, bool isOl) noexcept
   }else{
     pvValue = value;
   }
+  pvIsNull = false;
+//   if(isOl){
+//     if( (value > 0.0) || ( (value > -std::numeric_limits<double>::epsilon()) && (value < std::numeric_limits<double>::epsilon()) ) ){
+//       pvValue = std::numeric_limits<double>::infinity();
+//     }else{
+//       pvValue = -std::numeric_limits<double>::infinity();
+//     }
+//   }else{
+//     pvValue = value;
+//   }
 }
 
-bool mdtValueDouble::isMinusOl() const noexcept
+bool mdtValueDouble::isMinusInfinity() const noexcept
 {
   if(pvValue > 0.0){
     return false;
@@ -69,7 +78,7 @@ bool mdtValueDouble::isMinusOl() const noexcept
   return std::isinf(pvValue);
 }
 
-bool mdtValueDouble::isPlusOl() const noexcept
+bool mdtValueDouble::isPlusInfinity() const noexcept
 {
   if(pvValue < 0.0){
     return false;
@@ -77,12 +86,27 @@ bool mdtValueDouble::isPlusOl() const noexcept
   return std::isinf(pvValue);
 }
 
+// bool mdtValueDouble::isMinusOl() const noexcept
+// {
+//   if(pvValue > 0.0){
+//     return false;
+//   }
+//   return std::isinf(pvValue);
+// }
+// 
+// bool mdtValueDouble::isPlusOl() const noexcept
+// {
+//   if(pvValue < 0.0){
+//     return false;
+//   }
+//   return std::isinf(pvValue);
+// }
+
 bool mdtValueDouble::isNaN() const noexcept
 {
   return std::isnan(pvValue);
 }
 
-/// \todo Use functions from cmath !
 bool mdtValueDouble::operator==(const mdtValueDouble & other) const noexcept
 {
   if(pvIsNull || other.pvIsNull){

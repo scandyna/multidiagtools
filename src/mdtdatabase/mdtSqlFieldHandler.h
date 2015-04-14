@@ -275,10 +275,6 @@ class mdtSqlFieldHandler : public QWidget
 
   /*! \brief Used together with edit widget to set flags
    */
-  void onDataEdited(double x, bool isValid);
-
-  /*! \brief Used together with edit widget to set flags
-   */
   void onDataEdited(bool state);
 
   /*! \brief Used together with edit widget to set flags

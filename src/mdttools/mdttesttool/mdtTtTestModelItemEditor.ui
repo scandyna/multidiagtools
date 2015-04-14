@@ -6,52 +6,208 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>692</width>
-    <height>233</height>
+    <width>931</width>
+    <height>251</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QFormLayout" name="formLayout">
-   <property name="fieldGrowthPolicy">
-    <enum>QFormLayout::ExpandingFieldsGrow</enum>
-   </property>
-   <item row="1" column="0">
+   <item row="0" column="0">
     <widget class="QLabel" name="lbSequenceNumber">
      <property name="text">
       <string>Seq. #:</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="1">
-    <widget class="QLineEdit" name="fld_SequenceNumber"/>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="fld_SequenceNumber">
+     <property name="maximumSize">
+      <size>
+       <width>100</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
    </item>
-   <item row="5" column="0">
+   <item row="1" column="0">
+    <widget class="QLabel" name="lbKey">
+     <property name="text">
+      <string>Key:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QLineEdit" name="fld_Key">
+     <property name="maximumSize">
+      <size>
+       <width>300</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="lbDesignationEN">
+     <property name="text">
+      <string>Designation (English):</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QLineEdit" name="fld_DesignationEN"/>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="lbValueUnit">
+     <property name="text">
+      <string>Unit:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QComboBox" name="fld_ValueUnit">
+       <item>
+        <property name="text">
+         <string/>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Ohm</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>F</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>H</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>T</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>V</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>A</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>W</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>J</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Hz</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>K</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>°C</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>°F</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>N</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Pa</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>s</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item row="4" column="0">
     <widget class="QLabel" name="lbExpectedValue">
      <property name="text">
       <string>Expected value:</string>
      </property>
     </widget>
    </item>
-   <item row="5" column="1">
-    <widget class="mdtDoubleEdit" name="fld_ExpectedValue">
-     <property name="maximumSize">
-      <size>
-       <width>200</width>
-       <height>16777215</height>
-      </size>
-     </property>
-    </widget>
+   <item row="4" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="mdtDoubleEdit" name="fld_ExpectedValue">
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
    </item>
-   <item row="6" column="0">
+   <item row="5" column="0">
     <widget class="QLabel" name="lbLimitMin">
      <property name="text">
       <string>Limit min:</string>
      </property>
     </widget>
    </item>
-   <item row="6" column="1">
+   <item row="5" column="1">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="mdtDoubleEdit" name="fld_LimitValueMin"/>
@@ -75,14 +231,14 @@
      </item>
     </layout>
    </item>
-   <item row="7" column="0">
+   <item row="6" column="0">
     <widget class="QLabel" name="lbFailMin">
      <property name="text">
       <string>Fail min:</string>
      </property>
     </widget>
    </item>
-   <item row="7" column="1">
+   <item row="6" column="1">
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <widget class="mdtDoubleEdit" name="fld_FailValueMin"/>
@@ -106,117 +262,6 @@
      </item>
     </layout>
    </item>
-   <item row="8" column="0">
-    <widget class="QLabel" name="lbValueUnit">
-     <property name="text">
-      <string>Unit:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="1">
-    <widget class="QComboBox" name="fld_ValueUnit">
-     <item>
-      <property name="text">
-       <string/>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Ohm</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>F</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>H</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>T</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>V</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>A</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>W</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>J</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Hz</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>K</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>°C</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>°F</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>N</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Pa</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>s</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item row="3" column="1">
-    <widget class="QLineEdit" name="fld_Key"/>
-   </item>
-   <item row="4" column="1">
-    <widget class="QLineEdit" name="fld_DesignationEN"/>
-   </item>
-   <item row="4" column="0">
-    <widget class="QLabel" name="lbDesignationEN">
-     <property name="text">
-      <string>Designation (English):</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="lbKey">
-     <property name="text">
-      <string>Key:</string>
-     </property>
-    </widget>
-   </item>
   </layout>
  </widget>
  <customwidgets>
@@ -238,12 +283,12 @@
    <slot>setUnit(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>176</x>
-     <y>109</y>
+     <x>220</x>
+     <y>249</y>
     </hint>
     <hint type="destinationlabel">
-     <x>245</x>
-     <y>77</y>
+     <x>361</x>
+     <y>146</y>
     </hint>
    </hints>
   </connection>
@@ -254,12 +299,12 @@
    <slot>setUnit(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>176</x>
-     <y>181</y>
+     <x>220</x>
+     <y>249</y>
     </hint>
     <hint type="destinationlabel">
-     <x>254</x>
-     <y>110</y>
+     <x>417</x>
+     <y>180</y>
     </hint>
    </hints>
   </connection>
@@ -270,12 +315,12 @@
    <slot>setUnit(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>176</x>
-     <y>181</y>
+     <x>220</x>
+     <y>249</y>
     </hint>
     <hint type="destinationlabel">
-     <x>536</x>
-     <y>110</y>
+     <x>821</x>
+     <y>180</y>
     </hint>
    </hints>
   </connection>
@@ -286,12 +331,12 @@
    <slot>setUnit(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>176</x>
-     <y>181</y>
+     <x>220</x>
+     <y>249</y>
     </hint>
     <hint type="destinationlabel">
-     <x>255</x>
-     <y>148</y>
+     <x>418</x>
+     <y>215</y>
     </hint>
    </hints>
   </connection>
@@ -302,12 +347,12 @@
    <slot>setUnit(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>176</x>
-     <y>181</y>
+     <x>220</x>
+     <y>249</y>
     </hint>
     <hint type="destinationlabel">
-     <x>535</x>
-     <y>148</y>
+     <x>821</x>
+     <y>215</y>
     </hint>
    </hints>
   </connection>

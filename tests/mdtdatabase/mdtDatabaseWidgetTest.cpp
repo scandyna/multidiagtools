@@ -528,9 +528,6 @@ void mdtDatabaseWidgetTest::sqlRelationTest()
   QCOMPARE(clientModel.data(index), QVariant("Charly"));
   // Check details count
   QCOMPARE(detailModel.rowCount(), 0);
-
-  // Clear test data
-//   clearTestDatabaseData();
 }
 
 void mdtDatabaseWidgetTest::sqlFieldHandlerTest()
@@ -1412,7 +1409,6 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   /*
    * Checks on empty table
    */
-//   clearTestDatabaseData();
   scenario1.clear();
   QVERIFY(wc.select());
   QCOMPARE(wc.rowCount(), 0);
@@ -1434,7 +1430,6 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
    * (will check fetch more and related behaviours)
    */
   // Check navigation
-//   populate1000Names();
   QVERIFY(scenario1.populate1000Names());
   QVERIFY(wc.select());
   QCOMPARE(wc.rowCount(), 1000);
@@ -1535,8 +1530,6 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
    * Check sorting
    */
   // Repopulate original test data
-//   clearTestDatabaseData();
-//   populateTestDatabase();
   scenario1.clear();
   QVERIFY(scenario1.populate());
   // Setup sorting
@@ -1993,8 +1986,6 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   QCOMPARE(wc.data("Id_PK", 2, "Remarks", ok), QVariant("Changed remark on Bety"));
   QVERIFY(ok);
 
-  // Clear test data
-//   clearTestDatabaseData();
   // Re-enable foreign_keys support
   QVERIFY(q.exec("PRAGMA foreign_keys = ON"));
 }
@@ -2014,7 +2005,6 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerRoTest()
   // For this test, we wont foreign_keys support
   QVERIFY(q.exec("PRAGMA foreign_keys = OFF"));
   // Create test data
-//   populateTestDatabase();
   QVERIFY(scenario1.populate());
   // Setup
   connect(&wc, SIGNAL(toFirstEnabledStateChanged(bool)), &w, SLOT(setToFirstEnableState(bool)));
@@ -2231,7 +2221,6 @@ void mdtDatabaseWidgetTest::sqlDataWidgetController2tableTest()
   // For this test, we wont foreign_keys support
   ///QVERIFY(q.exec("PRAGMA foreign_keys = OFF"));
   // Create test data
-//   populateTestDatabase();
   QVERIFY(scenario1.populate());
   // Setup
   connect(&clientController, SIGNAL(toFirstEnabledStateChanged(bool)), &w, SLOT(setToFirstEnableState(bool)));
@@ -2559,9 +2548,6 @@ void mdtDatabaseWidgetTest::sqlDataWidgetController2tableTest()
     QTest::qWait(500);
   }
   */
-  
-  // Clear test data
-//   clearTestDatabaseData();
   // Re-enable foreign_keys support
   QVERIFY(q.exec("PRAGMA foreign_keys = ON"));
 }
@@ -2582,7 +2568,6 @@ void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
   // For this test, we wont foreign_keys support
   QVERIFY(q.exec("PRAGMA foreign_keys = OFF"));
   // Create test data
-//   populateTestDatabase();
   QVERIFY(scenario1.populate());
   /*
    * Setup
@@ -2705,9 +2690,6 @@ void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
   /*
    * Check edition (by user) and submit
    */
-  
-  qDebug() << "TEST - check edition + submit...";
-  
   QVERIFY(tvc.currentState() == mdtAbstractSqlTableController::Visualizing);
   // Begin edition and get edition widget
   index = tv.model()->index(0, 2);
@@ -2730,9 +2712,6 @@ void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
   /*
    * Check edition (by user) and revert
    */
-  
-  qDebug() << "TEST - check edition + revert ...";
-
   QCOMPARE(tvc.rowCount(), 4);
   QVERIFY(tvc.currentState() == mdtAbstractSqlTableController::Visualizing);
   // Begin edition and get edition widget
@@ -3168,7 +3147,6 @@ void mdtDatabaseWidgetTest::sqlControllerParentChildTest()
   QSpinBox *spinBox;
 
   // Create test data
-//   populateTestDatabase();
   QVERIFY(scenario1.populate());
   /*
    * Setup
@@ -3344,9 +3322,6 @@ void mdtDatabaseWidgetTest::sqlControllerParentChildTest()
     QTest::qWait(500);
   }
   */
-
-  // Clear test data
-//   clearTestDatabaseData();
 }
 
 
@@ -3357,7 +3332,6 @@ void mdtDatabaseWidgetTest::sqlTableSelectionItemTest()
   QModelIndex index;
 
   // Populate database and setup model
-//   populateTestDatabase();
   QVERIFY(scenario1.populate());
   model.setTable("Client_tbl");
   QVERIFY(model.select());
@@ -3369,8 +3343,6 @@ void mdtDatabaseWidgetTest::sqlTableSelectionItemTest()
   QVERIFY(item.index().isValid());
   QCOMPARE(item.index().row(), 0);
   QCOMPARE(item.fieldName(), QString("Id_PK"));
-  // Clear database data
-//   clearTestDatabaseData();
 }
 
 void mdtDatabaseWidgetTest::sqlTableSelectionRowTest()
@@ -3381,7 +3353,6 @@ void mdtDatabaseWidgetTest::sqlTableSelectionRowTest()
   mdtSqlTableSelectionRow row;
 
   // Populate database and setup model
-//   populateTestDatabase();
   QVERIFY(scenario1.populate());
   model.setTable("Client_tbl");
   QVERIFY(model.select());
@@ -3416,9 +3387,6 @@ void mdtDatabaseWidgetTest::sqlTableSelectionRowTest()
   QCOMPARE(row.index("Id_PK"), QModelIndex());
   QCOMPARE(row.index("Remarks"), QModelIndex());
   QCOMPARE(row.fields().size(), 0);
-
-  // Clear database data
-//   clearTestDatabaseData();
 }
 
 void mdtDatabaseWidgetTest::sqlTableSelectionTest()
@@ -3433,7 +3401,6 @@ void mdtDatabaseWidgetTest::sqlTableSelectionTest()
   QList<QVariant> expectedDataList;
 
   // Populate database and setup model + view
-//   populateTestDatabase();
   QVERIFY(scenario1.populate());
   view.setModel(&model);
   model.setTable("Client_tbl");
@@ -3586,9 +3553,6 @@ void mdtDatabaseWidgetTest::sqlTableSelectionTest()
     QTest::qWait(1000);
   }
   */
-
-  // Clear database data
-//   clearTestDatabaseData();
 }
 
 void mdtDatabaseWidgetTest::sqlSelectionDialogTest()
@@ -3601,7 +3565,6 @@ void mdtDatabaseWidgetTest::sqlSelectionDialogTest()
   QStringList fields;
 
   // Populate database
-//   populateTestDatabase();
   QVERIFY(scenario1.populate());
   /*
    * Check single selection with 1 field, at column 0
@@ -3730,9 +3693,6 @@ void mdtDatabaseWidgetTest::sqlSelectionDialogTest()
   QCOMPARE(s.data(1, "Id_PK"), QVariant(2));
   QCOMPARE(s.data(1, "FirstName"), QVariant("Bety"));
   delete dialog;
-
-  // Cleanup
-//   clearTestDatabaseData();
 }
 
 void mdtDatabaseWidgetTest::sqlTableWidgetTest()
@@ -3748,7 +3708,6 @@ void mdtDatabaseWidgetTest::sqlTableWidgetTest()
   QModelIndex index;
 
   // Populate database
-//   populateTestDatabase();
   QVERIFY(scenario1.populate());
   // Setup client widget
   sqlTableWidget = new mdtSqlTableWidget;
@@ -3933,7 +3892,6 @@ void mdtDatabaseWidgetTest::sqlTableWidgetTest()
   */
 
   // Cleanup
-//   clearTestDatabaseData();
   delete sqlTableWidget;
 }
 
@@ -4000,10 +3958,11 @@ void mdtDatabaseWidgetTest::sqlTableWidgetCsvExportTest()
   /*
    * Play
    */
-
+  /*
   while(sqlTableWidget->isVisible()){
     QTest::qWait(1000);
   }
+  */
 
   // Cleanup
 //   clearTestDatabaseData();
@@ -4094,9 +4053,6 @@ void mdtDatabaseWidgetTest::mdtSqlDialogTest()
   QVERIFY(scenario1.populate());
 
   sqlDialog.show();
-  
-  QTest::qWait(2000);
-  
   /*
    * Setup - We simly create a fake main widget for form
    */
@@ -4106,16 +4062,15 @@ void mdtDatabaseWidgetTest::mdtSqlDialogTest()
   form->setMainTableWidget(formWidget);
   QVERIFY(form->setMainTable("Client_tbl", "Clients"));
   sqlDialog.setSqlForm(form);
-  
-  QTest::qWait(2000);
-  
+
   /*
    * Play
    */
-
+  /*
   while(sqlDialog.isVisible()){
     QTest::qWait(500);
   }
+  */
 
 }
 

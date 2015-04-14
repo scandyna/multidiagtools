@@ -11,6 +11,7 @@ set (HEADER_FILES
           mdtLed.h
           mdtBlinkLed.h
           mdtDoubleEdit.h
+          mdtDoubleEditDialog.h
           mdtDoubleValidator.h
           # I/O Widgets
           mdtAbstractIoWidget.h
@@ -52,6 +53,7 @@ set (SOURCES_FILES
           mdtLed.cpp
           mdtBlinkLed.cpp
           mdtDoubleEdit.cpp
+          mdtDoubleEditDialog.cpp
           mdtDoubleValidator.cpp
           # I/O Widgets
           mdtAbstractIoWidget.cpp
@@ -97,6 +99,7 @@ set (SOURCES_FILES
 
 # Qt ui files
 set (FORM_FILES
+          mdtDoubleEditDialog.ui
           mdtSqlQueryWidget.ui
           mdtSqlWindow.ui
           mdtItemsSelectorDialog.ui

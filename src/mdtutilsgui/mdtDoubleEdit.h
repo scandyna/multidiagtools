@@ -28,7 +28,10 @@
 #include <vector>
 
 class QLineEdit;
+
 class QPushButton;
+class QToolButton;
+
 class mdtDoubleValidator;
 
 /*! \brief Store informations about a range of a unit
@@ -99,23 +102,10 @@ class mdtDoubleEdit : public QWidget
     EngineeringNotationMode /*!< Wire edition mode */
   };
 
-  /*! \brief Unit prefix ranges
-   */
-//   enum class UnitPrefixRange_t
-//   {
-//     Default,        /*!< Contains all supported ranges */
-//     CableSection    /*!< Contains range of mm2 [-inf;+inf] */
-//   };
-
   /*! \brief Constructor
    */
   mdtDoubleEdit(QWidget* parent = 0);
 
-  /// \todo Just for debug
-private slots:
-  void debugTextChanged(const QString & str);
-public:
-  
   /*! \brief Set read only
    */
   void setReadOnly(bool ro);
@@ -158,7 +148,7 @@ public:
    *
    * Supported chars are:
    *
-   *  <table border="1" cellpadding="5">
+   *  <table>
    *   <tr><th>Char</th><th>Designation</th><th>Factor</th></tr>
    *   <tr><td>a</td><td>atto</td><td>-18</td></tr>
    *   <tr><td>f</td><td>femto</td><td>-15</td></tr>
@@ -386,9 +376,15 @@ public:
   Q_DISABLE_COPY(mdtDoubleEdit);
 
   QLineEdit *pvLineEdit;
+  /**
   QPushButton *pbSetNull;
   QPushButton *pbSetInfinity;
   QPushButton *pbSetMinusInfinity;
+  */
+  QToolButton *pbSetNull;
+  QToolButton *pbSetInfinity;
+  QToolButton *pbSetMinusInfinity;
+
   mdtDoubleValidator *pvValidator;
   
   EditionMode_t pvEditionMode;

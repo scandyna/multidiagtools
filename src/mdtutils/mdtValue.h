@@ -77,13 +77,27 @@ class mdtValueDouble
     return pvValue;
   }
 
+  /*! \brief Check if value is -infinity
+   */
+  bool isMinusInfinity() const noexcept;
+
+  /*! \brief Check if value is +infinity
+   */
+  bool isPlusInfinity() const noexcept;
+
   /*! \brief Check if value is -OL
    */
-  bool isMinusOl() const noexcept;
+  inline bool isMinusOl() const noexcept
+  {
+    return isMinusInfinity();
+  }
 
   /*! \brief Check if value is +OL
    */
-  bool isPlusOl() const noexcept;
+  inline bool isPlusOl() const noexcept
+  {
+    return isPlusInfinity();
+  }
 
   /*! \brief Check if value is NaN
    */
