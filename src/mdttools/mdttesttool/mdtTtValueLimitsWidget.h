@@ -24,6 +24,7 @@
 #include "ui_mdtTtValueLimitsWidget.h"
 #include "mdtTtValueLimits.h"
 #include <QWidget>
+#include <QString>
 
 /*! \brief Widget to display and edit mdtTtValueLimits
  */
@@ -39,6 +40,27 @@ class mdtTtValueLimitsWidget : public QWidget, Ui::mdtTtValueLimitsWidget
   /*! \brief Constructor
    */
   mdtTtValueLimitsWidget(QWidget *parent = 0);
+
+  /*! \brief Set value limits
+   */
+  void setLimits(const mdtTtValueLimits & l);
+
+  /*! \brief Get limits
+   */
+  mdtTtValueLimits limits() const
+  {
+    return pvLimits;
+  }
+
+  /*! \brief Set unit
+   */
+  void setUnit(const QString & u);
+
+ signals:
+
+  /*! \brief Emited when a limit was edited
+   */
+  void limitEdited();
 
  private slots:
 
@@ -71,6 +93,7 @@ class mdtTtValueLimitsWidget : public QWidget, Ui::mdtTtValueLimitsWidget
   Q_DISABLE_COPY(mdtTtValueLimitsWidget);
 
   mdtTtValueLimits pvLimits;
+  QString pvUnit;
 };
 
 #endif // #ifndef MDT_TT_VALUE_LIMITS_WIDGET_H

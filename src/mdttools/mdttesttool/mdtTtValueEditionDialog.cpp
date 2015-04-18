@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,7 +19,11 @@
  **
  ****************************************************************************/
 #include "mdtTtValueEditionDialog.h"
+#include "mdtTtValueLimitsWidget.h"
 #include <QDoubleSpinBox>
+#include <QVBoxLayout>
+#include <QPushButton>
+#include <QDialogButtonBox>
 
 #include <QDebug>
 
@@ -27,81 +31,166 @@ mdtTtValueEditionDialog::mdtTtValueEditionDialog(QWidget* parent)
  : QDialog(parent)
 {
   setupUi(this);
+  pvLimitsWidget = new mdtTtValueLimitsWidget;
+  Q_ASSERT(dynamic_cast<QVBoxLayout*>(layout()) != 0);
+  auto *l = static_cast<QVBoxLayout*>(layout());
+  l->insertWidget(l->count()-2, pvLimitsWidget);
   connect(deValue, SIGNAL(valueChanged(double,bool)), this, SLOT(onValueChanged(double,bool)));
-  connect(sbLimitMin, SIGNAL(valueChanged(double)), this, SLOT(onLimitMinChanged(double)));
-  connect(sbLimitMax, SIGNAL(valueChanged(double)), this, SLOT(onLimitMaxChanged(double)));
-  connect(sbFailMin, SIGNAL(valueChanged(double)), this, SLOT(onFailMinChanged(double)));
-  connect(sbFailMax, SIGNAL(valueChanged(double)), this, SLOT(onFailMaxChanged(double)));
+  connect(pvLimitsWidget, SIGNAL(limitEdited()), this, SLOT(onLimitEdited()));
+//   connect(deValue, SIGNAL(valueChanged(double,bool)), this, SLOT(onValueChanged(double,bool)));
+//   connect(sbLimitMin, SIGNAL(valueChanged(double)), this, SLOT(onLimitMinChanged(double)));
+//   connect(sbLimitMax, SIGNAL(valueChanged(double)), this, SLOT(onLimitMaxChanged(double)));
+//   connect(sbFailMin, SIGNAL(valueChanged(double)), this, SLOT(onFailMinChanged(double)));
+//   connect(sbFailMax, SIGNAL(valueChanged(double)), this, SLOT(onFailMaxChanged(double)));
+  setOkButtonEnabled(false);
 }
 
-QVariant mdtTtValueEditionDialog::limitValueMin() const
+void mdtTtValueEditionDialog::setValue(const mdtValueDouble & x)
 {
-  if(deValue->value().isNull()){
-    return QVariant();
+  if(x.isNull()){
+    setValueVar(QVariant());
+  }else{
+    setValueVar(x.value());
   }
 }
 
-QVariant mdtTtValueEditionDialog::limitValueMax() const
+void mdtTtValueEditionDialog::setValueVar(const QVariant & v)
 {
-  if(deValue->value().isNull()){
-    return QVariant();
-  }
-
+  deValue->setValue(v);
 }
 
-QVariant mdtTtValueEditionDialog::failValueMin() const
+mdtValueDouble mdtTtValueEditionDialog::value() const
 {
-  if(deValue->value().isNull()){
-    return QVariant();
+  QVariant v = deValue->value();
+  if(v.isNull()){
+    return mdtValueDouble();
   }
-
+  return v.toDouble();
 }
 
-QVariant mdtTtValueEditionDialog::failValueMax() const
+QVariant mdtTtValueEditionDialog::valueVar() const
 {
-  if(deValue->value().isNull()){
-    return QVariant();
-  }
-
+  return deValue->value();
 }
+
+void mdtTtValueEditionDialog::setLimits(const mdtTtValueLimits & l)
+{
+  pvLimitsWidget->setLimits(l);
+}
+
+mdtTtValueLimits mdtTtValueEditionDialog::limits() const
+{
+  return pvLimitsWidget->limits();
+}
+
+void mdtTtValueEditionDialog::setUnit(const QString & u)
+{
+  deValue->setUnit(u);
+  pvLimitsWidget->setUnit(u);
+}
+
+// QVariant mdtTtValueEditionDialog::limitValueMin() const
+// {
+//   if(deValue->value().isNull()){
+//     return QVariant();
+//   }
+// }
+// 
+// QVariant mdtTtValueEditionDialog::limitValueMax() const
+// {
+//   if(deValue->value().isNull()){
+//     return QVariant();
+//   }
+// 
+// }
+// 
+// QVariant mdtTtValueEditionDialog::failValueMin() const
+// {
+//   if(deValue->value().isNull()){
+//     return QVariant();
+//   }
+// 
+// }
+// 
+// QVariant mdtTtValueEditionDialog::failValueMax() const
+// {
+//   if(deValue->value().isNull()){
+//     return QVariant();
+//   }
+// 
+// }
 
 void mdtTtValueEditionDialog::onValueChanged(double x, bool isValid)
 {
   qDebug() << "onValueChanged() - x: " << x << " , valid: " << isValid;
-}
-
-void mdtTtValueEditionDialog::onLimitMinChanged(double x)
-{
-  qDebug() << "onLimitMinChanged() - x: " << x;
-  // Check coherence with fail min value
-  if(x < sbFailMin->value()){
-    sbFailMin->setValue(x);
+  if(isValid && (!deValue->isNull()) ){
+    validateLimits(x);
+  }else{
+    validateLimits(mdtValueDouble());
   }
 }
 
-void mdtTtValueEditionDialog::onLimitMaxChanged(double x)
+void mdtTtValueEditionDialog::onLimitEdited()
 {
-  qDebug() << "onLimitMaxChanged() - x: " << x;
-  // Check coherence with fail max value
-  if(x > sbFailMax->value()){
-    sbFailMax->setValue(x);
+  if(deValue->isNull()){
+    validateLimits(mdtValueDouble());
+  }else{
+    validateLimits(deValue->valueDouble());
   }
 }
 
-void mdtTtValueEditionDialog::onFailMinChanged(double x)
+void mdtTtValueEditionDialog::validateLimits(const mdtValueDouble & x)
 {
-  qDebug() << "onFailMinChanged() - x: " << x;
-  // Check coherence with limit min value
-  if(x > sbLimitMin->value()){
-    sbLimitMin->setValue(x);
+  if(x.isNull()){
+    setOkButtonEnabled(false);
+    return;
+  }
+  if(pvLimitsWidget->limits().isValid(x)){
+    setOkButtonEnabled(true);
+  }else{
+    setOkButtonEnabled(false);
   }
 }
 
-void mdtTtValueEditionDialog::onFailMaxChanged(double x)
+// void mdtTtValueEditionDialog::onLimitMinChanged(double x)
+// {
+//   qDebug() << "onLimitMinChanged() - x: " << x;
+//   // Check coherence with fail min value
+//   if(x < sbFailMin->value()){
+//     sbFailMin->setValue(x);
+//   }
+// }
+// 
+// void mdtTtValueEditionDialog::onLimitMaxChanged(double x)
+// {
+//   qDebug() << "onLimitMaxChanged() - x: " << x;
+//   // Check coherence with fail max value
+//   if(x > sbFailMax->value()){
+//     sbFailMax->setValue(x);
+//   }
+// }
+// 
+// void mdtTtValueEditionDialog::onFailMinChanged(double x)
+// {
+//   qDebug() << "onFailMinChanged() - x: " << x;
+//   // Check coherence with limit min value
+//   if(x > sbLimitMin->value()){
+//     sbLimitMin->setValue(x);
+//   }
+// }
+// 
+// void mdtTtValueEditionDialog::onFailMaxChanged(double x)
+// {
+//   qDebug() << "onFailMaxChanged() - x: " << x;
+//   // Check coherence with limit max value
+//   if(x < sbLimitMax->value()){
+//     sbLimitMax->setValue(x);
+//   }
+// }
+
+void mdtTtValueEditionDialog::setOkButtonEnabled(bool enable)
 {
-  qDebug() << "onFailMaxChanged() - x: " << x;
-  // Check coherence with limit max value
-  if(x < sbLimitMax->value()){
-    sbLimitMax->setValue(x);
-  }
+  QPushButton *pb = buttonBox->button(QDialogButtonBox::Ok);
+  Q_ASSERT(pb != 0);
+  pb->setEnabled(enable);
 }

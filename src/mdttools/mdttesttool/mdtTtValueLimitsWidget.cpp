@@ -21,7 +21,6 @@
 #include "mdtTtValueLimitsWidget.h"
 #include "mdtValue.h"
 #include "mdtDoubleEditDialog.h"
-#include <QString>
 #include <QToolButton>
 
 #include <QVariant>
@@ -34,6 +33,21 @@ mdtTtValueLimitsWidget::mdtTtValueLimitsWidget(QWidget* parent)
   connect(tbLeftLimitTopValue, SIGNAL(clicked()), this, SLOT(editLeftTopLimit()));
   connect(tbRightLimitBottomValue, SIGNAL(clicked()), this, SLOT(editRightBottomLimit()));
   connect(tbRightLimitTopValue, SIGNAL(clicked()), this, SLOT(editRightTopLimit()));
+  displayLeftLimits();
+  displayRightLimits();
+}
+
+void mdtTtValueLimitsWidget::setLimits(const mdtTtValueLimits & l)
+{
+  pvLimits = l;
+  displayLeftLimits();
+  displayRightLimits();
+  emit limitEdited(); /// \brief clarify limitChanged v.s. limitEdited
+}
+
+void mdtTtValueLimitsWidget::setUnit(const QString & u)
+{
+  pvUnit = u;
   displayLeftLimits();
   displayRightLimits();
 }
@@ -51,6 +65,7 @@ void mdtTtValueLimitsWidget::editLeftBottomLimit()
   }
   pvLimits.setLeftBottomLimitVar(de.value());
   displayLeftLimits();
+  emit limitEdited();
 }
 
 void mdtTtValueLimitsWidget::editLeftTopLimit()
@@ -66,6 +81,7 @@ void mdtTtValueLimitsWidget::editLeftTopLimit()
   }
   pvLimits.setLeftTopLimitVar(de.value());
   displayLeftLimits();
+  emit limitEdited();
 }
 
 void mdtTtValueLimitsWidget::editRightBottomLimit()
@@ -81,6 +97,7 @@ void mdtTtValueLimitsWidget::editRightBottomLimit()
   }
   pvLimits.setRightBottomLimitVar(de.value());
   displayRightLimits();
+  emit limitEdited();
 }
 
 void mdtTtValueLimitsWidget::editRightTopLimit()
@@ -96,6 +113,7 @@ void mdtTtValueLimitsWidget::editRightTopLimit()
   }
   pvLimits.setRightTopLimitVar(de.value());
   displayRightLimits();
+  emit limitEdited();
 }
 
 void mdtTtValueLimitsWidget::displayLeftLimits()
@@ -121,6 +139,9 @@ void mdtTtValueLimitsWidget::displayLeftLimits()
     tbLeftLimitBottomValue->setText("...");
   }else{
     str = QString("%1").arg(bottom.value());
+    if(!pvUnit.isEmpty() && !bottom.isInfinity()){
+      str += " [" + pvUnit + "]";
+    }
     tbLeftLimitBottomValue->setText(str);
   }
   // Update left limits top button
@@ -128,6 +149,9 @@ void mdtTtValueLimitsWidget::displayLeftLimits()
     tbLeftLimitTopValue->setText("...");
   }else{
     str = QString("%1").arg(top.value());
+    if(!pvUnit.isEmpty() && !top.isInfinity()){
+      str += " [" + pvUnit + "]";
+    }
     tbLeftLimitTopValue->setText(str);
   }
 }
@@ -155,6 +179,9 @@ void mdtTtValueLimitsWidget::displayRightLimits()
     tbRightLimitBottomValue->setText("...");
   }else{
     str = QString("%1").arg(bottom.value());
+    if(!pvUnit.isEmpty() && !bottom.isInfinity()){
+      str += " [" + pvUnit + "]";
+    }
     tbRightLimitBottomValue->setText(str);
   }
   // Update right limits top button
@@ -162,6 +189,9 @@ void mdtTtValueLimitsWidget::displayRightLimits()
     tbRightLimitTopValue->setText("...");
   }else{
     str = QString("%1").arg(top.value());
+    if(!pvUnit.isEmpty() && !top.isInfinity()){
+      str += " [" + pvUnit + "]";
+    }
     tbRightLimitTopValue->setText(str);
   }
 }

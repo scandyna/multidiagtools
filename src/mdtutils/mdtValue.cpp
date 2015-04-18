@@ -70,6 +70,11 @@ void mdtValueDouble::setValue(double value, bool isOl) noexcept
 //   }
 }
 
+bool mdtValueDouble::isInfinity() const noexcept
+{
+  return std::isinf(pvValue);
+}
+
 bool mdtValueDouble::isMinusInfinity() const noexcept
 {
   if(pvValue > 0.0){

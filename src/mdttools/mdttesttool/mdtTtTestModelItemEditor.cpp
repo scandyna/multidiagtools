@@ -25,12 +25,12 @@
 #include "mdtTtTestNodeUnitSetupDialog.h"
 #include "mdtTtRelayPathDialog.h"
 #include "mdtClPathGraph.h"
-///#include "mdtSqlFormWidget.h"
 #include "mdtSqlRelation.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlSelectionDialog.h"
 #include "mdtSqlTableSelection.h"
 #include "mdtTtValueEditionDialog.h"
+#include "mdtDoubleEdit.h"
 #include <QSqlQueryModel>
 #include <QSqlTableModel>
 #include <QTableView>
@@ -87,10 +87,30 @@ void mdtTtTestModelItemEditor::setSequenceNumber(const QVariant & seqNumber)
 void mdtTtTestModelItemEditor::editExpectedValueLimits()
 {
   mdtTtValueEditionDialog dialog(this);
-  
+  auto tc = tableController<mdtAbstractSqlTableController>("TestModelItem_tbl");
+  Q_ASSERT(tc);
+  QVariant value;
+  mdtTtValueLimits limits;
+  QString unit;
+
+  // Get current data
+  value = currentExpectedValue();
+  limits = currentValueLimits();
+  unit = tc->currentData("ValueUnit").toString();
+  // Setup and show dialog
+  dialog.setValueVar(value);
+  dialog.setLimits(limits);
+  dialog.setUnit(unit);
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
+  // Update data
+  tc->setCurrentData("ExpectedValue", dialog.valueVar(), false);
+  limits = dialog.limits();
+  tc->setCurrentData("LeftBottomLimit", limits.leftBottomLimitVar(), false);
+  tc->setCurrentData("LeftTopLimit", limits.leftTopLimitVar(), false);
+  tc->setCurrentData("RightBottomLimit", limits.rightBottomLimitVar(), false);
+  tc->setCurrentData("RightTopLimit", limits.rightTopLimitVar(), false);
 }
 
 void mdtTtTestModelItemEditor::addTestLink()
@@ -742,18 +762,44 @@ QVariant mdtTtTestModelItemEditor::selectTestLink(const QString & bus)
   return selectionDialog.selectionResult().at(0);
 }
 
+QVariant mdtTtTestModelItemEditor::currentExpectedValue()
+{
+  ///return fld_ExpectedValue->value();
+  return currentData("TestModelItem_tbl", "ExpectedValue");
+}
+
+mdtTtValueLimits mdtTtTestModelItemEditor::currentValueLimits()
+{
+  mdtTtValueLimits limits;
+  auto tc = tableController<mdtAbstractSqlTableController>("TestModelItem_tbl");
+  Q_ASSERT(tc);
+  QVariant v;
+
+  v = tc->currentData("LeftBottomLimit");
+  limits.setLeftBottomLimitVar(v);
+  v = tc->currentData("LeftTopLimit");
+  limits.setLeftTopLimitVar(v);
+  v = tc->currentData("RightBottomLimit");
+  limits.setRightBottomLimitVar(v);
+  v = tc->currentData("RightTopLimit");
+  limits.setRightTopLimitVar(v);
+
+  return limits;
+}
+
 bool mdtTtTestModelItemEditor::setupTestItemTable() 
 {
-  ///Ui::mdtTtTestModelItemEditor tie;
+  Ui::mdtTtTestModelItemEditor tie;
 
   // Setup main form widget
   ///tie.setupUi(mainSqlWidget());
-  setMainTableUi<Ui::mdtTtTestModelItemEditor>();
+  ///setMainTableUi<Ui::mdtTtTestModelItemEditor>();
+  setMainTableUi(tie);
   // Setup form
   if(!setMainTable("TestModelItem_tbl", "Test item", database())){
     return false;
   }
-  ///connect(tie.pbEditMinMax, SIGNAL(clicked()), this, SLOT(editExpectedValueLimits()));
+  connect(tie.pbEditLimits, SIGNAL(clicked()), this, SLOT(editExpectedValueLimits()));
 
   return true;
 }

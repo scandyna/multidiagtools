@@ -22,6 +22,7 @@
 #define MDT_TT_TEST_MODEL_ITEM_EDITOR_H
 
 #include "mdtSqlForm.h"
+#include "mdtTtValueLimits.h"
 #include <QVariant>
 
 /*! \brief Test item editor
@@ -107,6 +108,14 @@ class mdtTtTestModelItemEditor : public mdtSqlForm
   /*! \brief Select a test link
    */
   QVariant selectTestLink(const QString & bus);
+
+  /*! \brief Get current expected value
+   */
+  QVariant currentExpectedValue();
+
+  /*! \brief Get current value limits
+   */
+  mdtTtValueLimits currentValueLimits();
 
   /*! \brief Setup test item table
    */

@@ -1,6 +1,6 @@
 format 209
 "DatabaseLogical" // mdttools::mdttesttool::DatabaseLogical
-  revision 65
+  revision 66
   modified_by 2 "philippe"
   // class settings
   
@@ -2797,7 +2797,7 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 1042178 "LimitValueMin"
+      attribute 1042178 "LeftBottomLimit"
 	private explicit_type "double"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
@@ -2809,7 +2809,7 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 1042306 "LimitValueMax"
+      attribute 1042306 "LeftTopLimit"
 	private explicit_type "double"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
@@ -2821,7 +2821,7 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 1042434 "FailValueMin"
+      attribute 1042434 "RightBottomLimit"
 	private explicit_type "double"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
@@ -2833,7 +2833,7 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 1042562 "FailValueMax"
+      attribute 1042562 "RightTopLimit"
 	private explicit_type "double"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "

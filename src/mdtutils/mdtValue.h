@@ -77,6 +77,10 @@ class mdtValueDouble
     return pvValue;
   }
 
+  /*! \brief Check if value is infinity (+infinity or -infinity)
+   */
+  bool isInfinity() const noexcept;
+
   /*! \brief Check if value is -infinity
    */
   bool isMinusInfinity() const noexcept;

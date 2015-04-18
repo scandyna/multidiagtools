@@ -32,6 +32,8 @@
  *   <td bgcolor="00FF00">Ok zone</td>
  *   <td>#rightBottomLimit</td><td bgcolor="orange">Right limit range</td><td>#rightTopLimit</td><td style="background-color:red; color:white">Right fail zone</td><td>+&infin;</td></tr>
  *  </table>
+ *
+ * \sa mdtTtValueLimitsWidget
  */
 class mdtTtValueLimits
 {
@@ -87,18 +89,30 @@ class mdtTtValueLimits
    */
   mdtTtValueLimits();
 
+  /*! \brief Clear limits
+   */
+  void clear();
+
+  /*! \brief Set limits all at once
+   *
+   * \pre leftBottomLimit must be <= #leftTopLimit
+   * \pre leftTopLimit must be >= #leftBottomLimit and <= #rightBottomLimit
+   * \pre rightBottomLimit must be >= #leftTopLimit and <= #rightTopLimit
+   * \pre rightTopLimit must be >= #rightBottomLimit
+   */
+  void setLimits(const mdtValueDouble & leftBottomLimit, const mdtValueDouble & leftTopLimit, const mdtValueDouble & rightBottomLimit, const mdtValueDouble & rightTopLimit);
+
   /*! \brief Get result
    */
-  Result_t result() const
-  {
-    return pvResult;
-  }
+//   Result_t result() const
+//   {
+//     return pvResult;
+//   }
 
   /*! \brief Get left bottom limit
    */
   mdtValueDouble leftBottomLimit() const
   {
-    ///return pvLeftLimitRange.bottom;
     return pvLeftBottomLimit;
   }
 
@@ -124,6 +138,10 @@ class mdtTtValueLimits
    */
   void setLeftBottomLimitVar(const QVariant & v);
 
+  /*! \brief Set left bottom limit to -infinity
+   */
+  void setLeftBottomLimitToMinusInfinity();
+
   /*! \brief Reset left bottom limit
    */
   void resetLeftBottomLimit();
@@ -132,7 +150,6 @@ class mdtTtValueLimits
    */
   mdtValueDouble leftTopLimit() const
   {
-    ///return pvLeftLimitRange.top;
     return pvLeftTopLimit;
   }
 
@@ -158,6 +175,12 @@ class mdtTtValueLimits
    */
   void setLeftTopLimitVar(const QVariant & v);
 
+  /*! \brief Set left top limit to -infinity
+   *
+   * \pre #leftBottomLimit must be -infinity
+   */
+  void setLeftTopLimitToMinusInfinity();
+
   /*! \brief Reset left top limit
    */
   void resetLeftTopLimit();
@@ -166,7 +189,6 @@ class mdtTtValueLimits
    */
   mdtValueDouble rightBottomLimit() const
   {
-    ///return pvRightLimitRange.bottom;
     return pvRightBottomLimit;
   }
 
@@ -192,6 +214,12 @@ class mdtTtValueLimits
    */
   void setRightBottomLimitVar(const QVariant & v);
 
+  /*! \brief Set right bottom limit to +infinity
+   *
+   * \pre #rightTopLimit must be +infinity
+   */
+  void setRightBottomLimitToPlusInfinity();
+
   /*! \brief Reset right bottom limit
    */
   void resetRightBottomLimit();
@@ -200,7 +228,6 @@ class mdtTtValueLimits
    */
   mdtValueDouble rightTopLimit() const
   {
-    ///return pvRightLimitRange.top;
     return pvRightTopLimit;
   }
 
@@ -226,19 +253,58 @@ class mdtTtValueLimits
    */
   void setRightTopLimitVar(const QVariant & v);
 
+  /*! \brief Set right top limit to +infinity
+   */
+  void setRightTopLimitToPlusInfinity();
+
   /*! \brief Reset top bottom limit
    */
   void resetRightTopLimit();
 
+  /*! \brief Check if limits are all set
+   */
+  bool isSet() const
+  {
+    return !(pvLeftBottomLimit.isNull() || pvLeftTopLimit.isNull() || pvRightBottomLimit.isNull() || pvRightTopLimit.isNull());
+  }
+
+  /*! \brief Check if limits are valid for given value
+   *
+   * Limits are valid if:
+   *  - No limit is null (i.e. isSet() returns true)
+   *  - Both left limits are <= x
+   *  - Both right limits are >= x
+   *  - Both left limits are < right limits
+   *  - For left and right limit, bottom is <= top
+   *
+   * \pre x must not be null
+   */
+  bool isValid(const mdtValueDouble & x) const;
+
+  /*! \brief Get result for given value x
+   *
+   * If limits are not completely set ( see isSet()  ),
+   *  result will be Undefined.
+   *
+   * If x is in Ok zone, i.e. x in [#leftTopLimit;#rightBottomLimit],
+   *  result will be Ok.
+   *  If x is in left limit range, i.e. x in [#leftBottomLimit;#leftTopLimit[,
+   *  or x is in right limit range, i.e. x in ]#rightBottomLimit;#rightTopLimit],
+   *  result will be Limit.
+   *
+   * For all other caeses, result will be Fail.
+   *
+   * \pre x must not be null
+   */
+  Result_t getResult(const mdtValueDouble & x) const;
+
  private:
 
-  ///mdtAlgorithms::NumericRangeDouble pvLeftLimitRange;
   mdtValueDouble pvLeftBottomLimit;
   mdtValueDouble pvLeftTopLimit;
-  ///mdtAlgorithms::NumericRangeDouble pvRightLimitRange;
   mdtValueDouble pvRightBottomLimit;
   mdtValueDouble pvRightTopLimit;
-  Result_t pvResult;
+//   Result_t pvResult;
 };
 
 #endif // #ifndef MDT_TT_VALUE_LIMITS_H

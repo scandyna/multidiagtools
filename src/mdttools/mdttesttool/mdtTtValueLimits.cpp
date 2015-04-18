@@ -19,19 +19,33 @@
  **
  ****************************************************************************/
 #include "mdtTtValueLimits.h"
-///#include "mdtValue.h"
+#include <limits>
 
 mdtTtValueLimits::mdtTtValueLimits()
- : pvResult(Result_t::Undefined)
+/// : pvResult(Result_t::Undefined)
 {
+}
 
+void mdtTtValueLimits::clear()
+{
+  pvLeftBottomLimit.clear();
+  pvLeftTopLimit.clear();
+  pvRightBottomLimit.clear();
+  pvRightTopLimit.clear();
+}
+
+void mdtTtValueLimits::setLimits(const mdtValueDouble & leftBottomLimit, const mdtValueDouble & leftTopLimit, const mdtValueDouble & rightBottomLimit, const mdtValueDouble & rightTopLimit)
+{
+  clear();
+  setLeftBottomLimit(leftBottomLimit);
+  setLeftTopLimit(leftTopLimit);
+  setRightBottomLimit(rightBottomLimit);
+  setRightTopLimit(rightTopLimit);
 }
 
 void mdtTtValueLimits::setLeftBottomLimit(const mdtValueDouble & x)
 {
-  ///Q_ASSERT(mdtValueDouble(x) <= mdtValueDouble(pvLeftLimitRange.top));
-  Q_ASSERT( (x.isNull()) || (pvLeftBottomLimit.isNull()) || (x <= pvLeftBottomLimit) );
-  ///pvLeftLimitRange.bottom = x;
+  Q_ASSERT( (x.isNull()) || (pvLeftTopLimit.isNull()) || (x <= pvLeftTopLimit) );
   pvLeftBottomLimit = x;
 }
 
@@ -44,13 +58,15 @@ void mdtTtValueLimits::setLeftBottomLimitVar(const QVariant & v)
   }
 }
 
+void mdtTtValueLimits::setLeftBottomLimitToMinusInfinity()
+{
+  setLeftBottomLimit(-std::numeric_limits<double>::infinity());
+}
+
 void mdtTtValueLimits::setLeftTopLimit(const mdtValueDouble & x)
 {
-  ///Q_ASSERT(mdtValueDouble(x) >= mdtValueDouble(pvLeftLimitRange.bottom));
-  ///Q_ASSERT(mdtValueDouble(x) <= mdtValueDouble(pvRightLimitRange.bottom));
   Q_ASSERT( (x.isNull()) || (pvLeftBottomLimit.isNull()) ||  (x >= pvLeftBottomLimit) );
   Q_ASSERT( (x.isNull()) || (pvRightBottomLimit.isNull()) ||  (x <= pvRightBottomLimit) );
-  ///pvLeftLimitRange.top = x;
   pvLeftTopLimit = x;
 }
 
@@ -63,13 +79,16 @@ void mdtTtValueLimits::setLeftTopLimitVar(const QVariant & v)
   }
 }
 
+void mdtTtValueLimits::setLeftTopLimitToMinusInfinity()
+{
+  Q_ASSERT( (pvLeftBottomLimit.isNull()) || (pvLeftBottomLimit.isMinusInfinity()));
+  setLeftTopLimit(-std::numeric_limits<double>::infinity());
+}
+
 void mdtTtValueLimits::setRightBottomLimit(const mdtValueDouble & x)
 {
-  ///Q_ASSERT(mdtValueDouble(x) >= mdtValueDouble(pvLeftLimitRange.top));
-  ///Q_ASSERT(mdtValueDouble(x) <= mdtValueDouble(pvRightLimitRange.top));
   Q_ASSERT( (x.isNull()) || (pvLeftTopLimit.isNull()) ||  (x >= pvLeftTopLimit) );
   Q_ASSERT( (x.isNull()) || (pvRightTopLimit.isNull()) ||  (x <= pvRightTopLimit) );
-  ///pvRightLimitRange.bottom = x;
   pvRightBottomLimit = x;
 }
 
@@ -82,11 +101,15 @@ void mdtTtValueLimits::setRightBottomLimitVar(const QVariant & v)
   }
 }
 
+void mdtTtValueLimits::setRightBottomLimitToPlusInfinity()
+{
+  Q_ASSERT( (pvRightTopLimit.isNull()) || (pvRightTopLimit.isPlusInfinity()) );
+  setRightBottomLimit(std::numeric_limits<double>::infinity());
+}
+
 void mdtTtValueLimits::setRightTopLimit(const mdtValueDouble & x)
 {
-  ///Q_ASSERT(mdtValueDouble(x) >= mdtValueDouble(pvRightLimitRange.bottom));
   Q_ASSERT( (x.isNull()) || (pvRightBottomLimit.isNull()) ||  (x >= pvRightBottomLimit) );
-  ///pvRightLimitRange.top = x;
   pvRightTopLimit = x;
 }
 
@@ -97,4 +120,76 @@ void mdtTtValueLimits::setRightTopLimitVar(const QVariant & v)
   }else{
     setRightTopLimit(v.toDouble());
   }
+}
+
+void mdtTtValueLimits::setRightTopLimitToPlusInfinity()
+{
+  setRightTopLimit(std::numeric_limits<double>::infinity());
+}
+
+bool mdtTtValueLimits::isValid(const mdtValueDouble & x) const
+{
+  Q_ASSERT(!x.isNull());
+
+  // If one limit is null, limits are not valid
+  if(!isSet()){
+    return false;
+  }
+  // For left and right limits, if bottom > top, limits are not valid
+  if(pvLeftBottomLimit > pvLeftTopLimit){
+    return false;
+  }
+  if(pvRightBottomLimit > pvRightTopLimit){
+    return false;
+  }
+  // If a right limit is <= a left limit, limits are not valid
+  if(pvRightBottomLimit <= pvLeftTopLimit){
+    return false;
+  }
+  // If one of the left limit > x, limits are not valid
+  if( (pvLeftBottomLimit > x) || (pvLeftTopLimit > x) ){
+    return false;
+  }
+  // If one of the right limit < x, limits are not valid
+  if( (pvRightBottomLimit < x) || (pvRightTopLimit < x) ){
+    return false;
+  }
+
+  return true;
+}
+
+  /*! \brief Get result for given value x
+   *
+   * If limits are not completely set ( see isValid()  ),
+   *  result will be Undefined.
+   *
+   * If x is in Ok zone, i.e. x in [#leftTopLimit;#rightBottomLimit],
+   *  result will be Ok.
+   *  If x is in left limit range, i.e. x in [#leftBottomLimit;#leftTopLimit[,
+   *  or x is in right limit range, i.e. x in ]#rightBottomLimit;#rightTopLimit],
+   *  result will be Limit.
+   *
+   * For all other caeses, result will be Fail.
+   *
+   * \pre x must not be null
+   */
+
+mdtTtValueLimits::Result_t mdtTtValueLimits::getResult(const mdtValueDouble& x) const
+{
+  Q_ASSERT(!x.isNull());
+
+  // If limits are not completely set, result is Undefined
+  if(!isSet()){
+    return Result_t::Undefined;
+  }
+  // Check about Ok zone
+  if( (x >= pvLeftTopLimit) && (x <= pvRightBottomLimit) ){
+    return Result_t::Ok;
+  }
+  // Check about limit ranges
+  if( ( (x >= pvLeftBottomLimit)&&(x < pvLeftTopLimit) ) || ( (x > pvRightBottomLimit)&&(x <= pvRightTopLimit) ) ){
+    return Result_t::Limit;
+  }
+
+  return Result_t::Fail;
 }

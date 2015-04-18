@@ -2548,16 +2548,6 @@ bool mdtTtDatabaseSchema::setupTestModelItemTable()
   table.addField(field, false);
   // TestLinkBusA_Id_FK
   field = QSqlField();
-  /**
-  field.setName("TestLinkBusA_Id_FK");
-  field.setType(QVariant::Int);
-  table.addField(field, false);
-  // TestLinkBusB_Id_FK
-  field = QSqlField();
-  field.setName("TestLinkBusB_Id_FK");
-  field.setType(QVariant::Int);
-  table.addField(field, false);
-  */
   // SequenceNumber
   field = QSqlField();
   field.setName("SequenceNumber");
@@ -2574,24 +2564,24 @@ bool mdtTtDatabaseSchema::setupTestModelItemTable()
   field.setName("ExpectedValue");
   field.setType(QVariant::Double);
   table.addField(field, false);
-  // LimitValueMin
+  // LeftBottomLimit
   field = QSqlField();
-  field.setName("LimitValueMin");
+  field.setName("LeftBottomLimit");
   field.setType(QVariant::Double);
   table.addField(field, false);
-  // LimitValueMax
+  // LeftTopLimit
   field = QSqlField();
-  field.setName("LimitValueMax");
+  field.setName("LeftTopLimit");
   field.setType(QVariant::Double);
   table.addField(field, false);
-  // FailValueMin
+  // RightBottomLimit
   field = QSqlField();
-  field.setName("FailValueMin");
+  field.setName("RightBottomLimit");
   field.setType(QVariant::Double);
   table.addField(field, false);
-  // FailValueMax
+  // RightTopLimit
   field = QSqlField();
-  field.setName("FailValueMax");
+  field.setName("RightTopLimit");
   field.setType(QVariant::Double);
   table.addField(field, false);
   // ValueUnit
@@ -4319,10 +4309,10 @@ bool mdtTtDatabaseSchema::createTestItemView()
         " TI.InstrumentRangeMax,\n"\
         " TI.ResultValue,\n"\
         " TMI.ExpectedValue,\n"\
-        " TMI.LimitValueMin,\n"\
-        " TMI.LimitValueMax,\n"\
-        " TMI.FailValueMin,\n"\
-        " TMI.FailValueMax,\n"\
+        " TMI.LeftBottomLimit,\n"\
+        " TMI.LeftTopLimit,\n"\
+        " TMI.RightBottomLimit,\n"\
+        " TMI.RightTopLimit,\n"\
         " TI.Result,\n"\
         " TI.Remark\n"\
         "FROM TestModelItem_tbl TMI\n"\

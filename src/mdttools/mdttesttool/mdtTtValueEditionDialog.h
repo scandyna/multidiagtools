@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,10 +22,13 @@
 #define MDT_TT_VALUE_EDITION_DIALOG_H
 
 #include "ui_mdtTtValueEditionDialog.h"
+#include "mdtTtValueLimits.h"
+#include "mdtValue.h"
 #include <QDialog>
 #include <QVariant>
 
 class QWidget;
+class mdtTtValueLimitsWidget;
 
 /*! \brief Dialog to edit a value, limit and fail
  */
@@ -39,33 +42,76 @@ class mdtTtValueEditionDialog : public QDialog, Ui::mdtTtValueEditionDialog
    */
   mdtTtValueEditionDialog(QWidget *parent = 0);
 
-  /*! \brief Get limit value min
+  /*! \brief Set value
    */
-  QVariant limitValueMin() const;
+  void setValue(const mdtValueDouble & x);
 
-  /*! \brief Get limit value max
+  /*! \brief Set value
    */
-  QVariant limitValueMax() const;
+  void setValueVar(const QVariant & v);
 
-  /*! \brief Get fail value min
+  /*! \brief Get value
    */
-  QVariant failValueMin() const;
+  mdtValueDouble value() const;
 
-  /*! \brief Get fail value min
+  /*! \brief Get value
    */
-  QVariant failValueMax() const;
+  QVariant valueVar() const;
+
+  /*! \brief Set value limits
+   */
+  void setLimits(const mdtTtValueLimits & l);
+
+  /*! \brief Get limits
+   */
+  mdtTtValueLimits limits() const;
+
+  /*! \brief Set unit
+   */
+  void setUnit(const QString & u);
+
+//   /*! \brief Get limit value min
+//    */
+//   QVariant limitValueMin() const;
+// 
+//   /*! \brief Get limit value max
+//    */
+//   QVariant limitValueMax() const;
+// 
+//   /*! \brief Get fail value min
+//    */
+//   QVariant failValueMin() const;
+// 
+//   /*! \brief Get fail value min
+//    */
+//   QVariant failValueMax() const;
 
  private slots:
 
   void onValueChanged(double x, bool isValid);
-  void onLimitMinChanged(double x);
-  void onLimitMaxChanged(double x);
-  void onFailMinChanged(double x);
-  void onFailMaxChanged(double x);
+  
+  void onLimitEdited();
+
+//   void onLimitMinChanged(double x);
+//   void onLimitMaxChanged(double x);
+//   void onFailMinChanged(double x);
+//   void onFailMaxChanged(double x);
 
  private:
 
+  /*! \brief Check if limits are valid
+   *
+   * \sa mdtTtValueLimits::isValid()
+   */
+  void validateLimits(const mdtValueDouble & x);
+
+  /*! \brief Set Ok button enabled/disabled
+   */
+  void setOkButtonEnabled(bool enable);
+
   Q_DISABLE_COPY(mdtTtValueEditionDialog);
+
+  mdtTtValueLimitsWidget *pvLimitsWidget;
 };
 
 

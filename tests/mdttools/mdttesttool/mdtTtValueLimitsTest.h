@@ -29,11 +29,15 @@ class mdtTtValueLimitsTest : public mdtTest
 
  private slots:
 
+  void simpleSetGetTest();
+  void simpleSetGetBenchmark();
   void voltageLimitsTest();
   void continuityLimitsTest();
   void isolationLimitsTest();
 
   void limitsWidgetTest();
+
+  void valueEditionDialogTest();
 };
 
 #endif // #ifndef MDT_TT_VALUE_LIMITS_TEST_H

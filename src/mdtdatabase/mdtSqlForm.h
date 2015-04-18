@@ -102,7 +102,8 @@ class mdtSqlForm : public QWidget
 
   /*! \brief Set main table UI
    *
-   * Usefull for UI created with QtDesigner
+   * Usefull for UI created with QtDesigner.
+   *  setupUi() will be called on given ui.
    */
   template<typename T>
   void setMainTableUi(T & ui)
