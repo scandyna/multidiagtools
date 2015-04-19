@@ -23,6 +23,7 @@
 
 #include "mdtError.h"
 #include "mdtTtTestNodeManager.h"
+#include "mdtTtValueLimits.h"
 #include "mdtValue.h"
 #include <QObject>
 #include <QString>
@@ -50,6 +51,8 @@ class mdtTtTestStep : public QObject
 {
  Q_OBJECT
 
+  friend class mdtTestToolTest; // For unit tests
+
  public:
 
   /*! \brief State
@@ -60,7 +63,7 @@ class mdtTtTestStep : public QObject
     Running,  /*!< Test step is running. */
     Fail,     /*!< Test step was executed and failed. */
     Warn,     /*!< Test step was exectued and the result is not so good. */
-    Success   /*!< Test step was exectued and the result good. */
+    Success   /*!< Test step was exectued and the result is good. */
   };
 
   /*! \brief Constructor
@@ -244,8 +247,25 @@ class mdtTtTestStep : public QObject
    *  You can use pvLastError.updateText() to set the main error text.
    *
    * Note: if value has -OL or +OL flag set, -infinity, respecively +infinity value is considered.
+   *
+   * \deprecated Use isValueOk()
    */
   bool isInRange(const mdtValueDouble & x, double min, double max = std::numeric_limits<double>::infinity(), const QString & valueUnit = QString());
+
+  /*! \brief Check if x is ok for given limits
+   *
+   * Return true if value is Ok (see mdtTtValueLimits::getResult() for details).
+   *  If value is not Ok, a descriptive text is stored to pvLastError
+   *  You can use pvLastError.updateText() to set the main error text.
+   *
+   * If x is null (wich can happen, f.ex., by communication error),
+   *  a descriptive text is alos stored in pvLastError, and false is returned.
+   *
+   * Note: if value has -OL or +OL flag set, -infinity, respecively +infinity value is considered.
+   *
+   * \pre limits must be set (see mdtTtValueLimits::isSet()).
+   */
+  bool isValueOk(const mdtValueDouble & x, const mdtTtValueLimits & limits, const QString & valueUnit = QString());
 
   /*! \brief Storage of last error
    */

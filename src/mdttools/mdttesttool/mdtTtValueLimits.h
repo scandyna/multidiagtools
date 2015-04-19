@@ -102,13 +102,6 @@ class mdtTtValueLimits
    */
   void setLimits(const mdtValueDouble & leftBottomLimit, const mdtValueDouble & leftTopLimit, const mdtValueDouble & rightBottomLimit, const mdtValueDouble & rightTopLimit);
 
-  /*! \brief Get result
-   */
-//   Result_t result() const
-//   {
-//     return pvResult;
-//   }
-
   /*! \brief Get left bottom limit
    */
   mdtValueDouble leftBottomLimit() const
@@ -304,7 +297,6 @@ class mdtTtValueLimits
   mdtValueDouble pvLeftTopLimit;
   mdtValueDouble pvRightBottomLimit;
   mdtValueDouble pvRightTopLimit;
-//   Result_t pvResult;
 };
 
 #endif // #ifndef MDT_TT_VALUE_LIMITS_H

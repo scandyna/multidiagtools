@@ -279,6 +279,12 @@ class mdtMultiIoDevice : public mdtDevice
    */
   bool setAnalogOutputValue(const QString &labelShort, const mdtValue &value, bool sendToDevice, bool waitOnReply = true);
 
+  /*! \brief Set a value and validity for all analog outputs
+   *
+   * \sa setAnalogOutputValue(mdtDigitalIo*, const mdtValue&, bool, bool)
+   */
+  bool setAnalogOutputsValue(const mdtValue & value, bool sendToDevice);
+
   /*! \brief Write all analog outputs on physical device and update (G)UI representation
    *
    * To send the analog outputs values once, it's possible to set them without sending query.

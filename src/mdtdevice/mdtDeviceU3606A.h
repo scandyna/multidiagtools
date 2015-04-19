@@ -63,6 +63,7 @@ class mdtDeviceU3606A : public mdtDeviceScpi
     Range1,           /*!< 1 range */
     Range10,          /*!< 10 range */
     Range100,         /*!< 100 range */
+    Range750,         /*!< 750 range */
     Range1k,          /*!< 1k range */
     Range10k,         /*!< 10k range */
     Range100k,        /*!< 100k range */
@@ -123,6 +124,14 @@ class mdtDeviceU3606A : public mdtDeviceScpi
    * \param resolution Resolution to use
    */
   bool setupVoltageDcMeasure(Range_t range, Resolution_t resolution);
+
+  /*! \brief Setup AC voltage measure
+   *
+   * \param range If range is supported by instrument, it will be set,
+   *               else AUTO range is used.
+   * \param resolution Resolution to use
+   */
+  bool setupVoltageAcMeasure(Range_t range, Resolution_t resolution);
 
   /*! \brief Setup resistance measure
    *

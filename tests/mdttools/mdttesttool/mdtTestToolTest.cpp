@@ -39,6 +39,7 @@
 #include "mdtDeviceContainer.h"
 #include "mdtDeviceContainerWidget.h"
 #include "mdtDeviceU3606A.h"
+#include "mdtTtValueLimits.h"
 #include "mdtTtTestStep.h"
 #include "mdtTtTestStepContainer.h"
 #include "mdtTtTestStepWidget.h"
@@ -74,6 +75,7 @@
 #include <QItemSelectionModel>
 
 #include <QDebug>
+
 
 void mdtTestToolTest::initTestCase()
 {
@@ -1089,6 +1091,7 @@ void mdtTestToolTest::mdtTtTestModelItemDataTest()
 void mdtTestToolTest::testStepTest()
 {
   std::shared_ptr<mdtTtTestNodeManager> tnm(new mdtTtTestNodeManager(0, pvDatabaseManager.database()));
+  mdtTtValueLimits limits;
 
   /*
    * Check test step without widget
@@ -1104,6 +1107,22 @@ void mdtTestToolTest::testStepTest()
   ts1.reset();
   QVERIFY(ts1.state() == mdtTtTestStep::State_t::Initial);
   /*
+   * Check state update when checking values that are out of some limits
+   */
+  // Setup limits
+  limits.setLimits(2.3, 2.4, 2.6, 2.7);
+  // Run step
+  ts1.setRunning();
+  QVERIFY(ts1.state() == mdtTtTestStep::State_t::Running);
+  // Check a value that is Ok with isValueOk()
+  QVERIFY(ts1.isValueOk(2.5, limits));
+  QVERIFY(ts1.state() == mdtTtTestStep::State_t::Running);
+  // Check a value that is not ok with isValueOk()
+  QVERIFY(!ts1.isValueOk(2.0, limits));
+  ///QVERIFY(ts1.state() == mdtTtTestStep::State_t::Fail);
+
+  
+  /*
    * Check with a test step widget
    *  -> check when test step is destroyed first
    */
@@ -1117,7 +1136,7 @@ void mdtTestToolTest::testStepTest()
   /// ...
   ts2->setRunning();
   QVERIFY(ts2->state() == mdtTtTestStep::State_t::Running);
-  QTest::qWait(2000);
+  ///QTest::qWait(2000);
   ts2->reset();
   QVERIFY(ts2->state() == mdtTtTestStep::State_t::Initial);
 
@@ -1141,7 +1160,7 @@ void mdtTestToolTest::testStepTest()
   /// ...
   ts3.setRunning();
   QVERIFY(ts3.state() == mdtTtTestStep::State_t::Running);
-  QTest::qWait(2000);
+  ///QTest::qWait(2000);
   ts3.reset();
   QVERIFY(ts3.state() == mdtTtTestStep::State_t::Initial);
 
@@ -1153,7 +1172,7 @@ void mdtTestToolTest::testStepTest()
   ts3.setRunning();
   QVERIFY(ts3.state() == mdtTtTestStep::State_t::Running);
 
-  QTest::qWait(2000);
+  ///QTest::qWait(2000);
   
   // Play
   /*

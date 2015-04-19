@@ -541,6 +541,26 @@ bool mdtMultiIoDevice::setAnalogOutputValue(const QString & labelShort, const md
   return setAnalogOutputValue(analogOutput, value, sendToDevice, waitOnReply);
 }
 
+bool mdtMultiIoDevice::setAnalogOutputsValue(const mdtValue & value, bool sendToDevice)
+{
+  Q_ASSERT(pvIos);
+
+  if(pvIos->analogOutputsCount() < 1){
+    pvLastError.setError(deviceIdString() + tr("has no analog output."), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
+    pvLastError.commit();
+    return false;
+  }
+  // Cache value to all digital outputs
+  pvIos->setAnalogOutputsValue(value);
+  // Send to device if requested
+  if(sendToDevice){
+    return setAnalogOutputs();
+  }
+
+  return true;
+}
+
 bool mdtMultiIoDevice::setAnalogOutputs(bool waitOnReply)
 {
   Q_ASSERT(pvIos);

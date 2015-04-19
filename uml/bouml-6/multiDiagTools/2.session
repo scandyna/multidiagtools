@@ -1,14 +1,9 @@
 window_sizes 1280 996 271 1003 943 0
 cleanlooks_style
-diagrams
-  classdiagram_ref 739586 // CableListAllTables
-    1003 943 67 17 0 118
-  active  classdiagram_ref 941058 // Test
-    1003 943 70 3 113 0
-end
 show_stereotypes
-selected attribute_ref 1042562 // RightTopLimit
+selected classview_ref 576258 // TestTool
 open
-  class_ref 1006210 // TestModelItem_tbl
+  
+package_ref 227842 // DatabaseLogical
 end
 end

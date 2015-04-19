@@ -22,7 +22,6 @@
 #include <limits>
 
 mdtTtValueLimits::mdtTtValueLimits()
-/// : pvResult(Result_t::Undefined)
 {
 }
 
@@ -157,22 +156,6 @@ bool mdtTtValueLimits::isValid(const mdtValueDouble & x) const
 
   return true;
 }
-
-  /*! \brief Get result for given value x
-   *
-   * If limits are not completely set ( see isValid()  ),
-   *  result will be Undefined.
-   *
-   * If x is in Ok zone, i.e. x in [#leftTopLimit;#rightBottomLimit],
-   *  result will be Ok.
-   *  If x is in left limit range, i.e. x in [#leftBottomLimit;#leftTopLimit[,
-   *  or x is in right limit range, i.e. x in ]#rightBottomLimit;#rightTopLimit],
-   *  result will be Limit.
-   *
-   * For all other caeses, result will be Fail.
-   *
-   * \pre x must not be null
-   */
 
 mdtTtValueLimits::Result_t mdtTtValueLimits::getResult(const mdtValueDouble& x) const
 {

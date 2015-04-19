@@ -89,6 +89,58 @@ bool mdtDeviceU3606A::setupVoltageDcMeasure(mdtDeviceU3606A::Range_t range, mdtD
   return sendCommand(command);
 }
 
+bool mdtDeviceU3606A::setupVoltageAcMeasure(mdtDeviceU3606A::Range_t range, mdtDeviceU3606A::Resolution_t resolution)
+{
+  QByteArray rangeStr;
+  QByteArray resolutionStr;
+  QByteArray command;
+
+  // Set range part
+  switch(range){
+    case Range_t::Auto:
+      rangeStr = "AUTO";
+      break;
+    case Range_t::Min:
+      rangeStr = "MIN";
+      break;
+    case Range_t::Max:
+      rangeStr = "MAX";
+      break;
+    case Range_t::Range100m:
+      rangeStr = "0.1";
+      break;
+    case Range_t::Range1:
+      rangeStr = "1";
+      break;
+    case Range_t::Range10:
+      rangeStr = "10";
+      break;
+    case Range_t::Range100:
+      rangeStr = "100";
+      break;
+    case Range_t::Range750:
+      rangeStr = "750";
+      break;
+    default:
+      pvLastError.setError(deviceIdString() + tr("requested range is not supported for AC voltage measurement, AUTO will be used."), mdtError::Warning);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtDeviceU3606A");
+      pvLastError.commit();
+      rangeStr = "AUTO";
+  }
+  // Set resolution part
+  switch(resolution){
+    case Resolution_t::Min:
+      resolutionStr = "MIN";
+      break;
+    case Resolution_t::Max:
+      resolutionStr = "MAX";
+      break;
+  }
+  // Send command to device
+  command = "CONF:VOLT:AC " + rangeStr + "," + resolutionStr;
+  return sendCommand(command);
+}
+
 bool mdtDeviceU3606A::setupResistanceMeasure(mdtDeviceU3606A::Range_t range, mdtDeviceU3606A::Resolution_t resolution)
 {
   QByteArray rangeStr;

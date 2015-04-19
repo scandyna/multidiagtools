@@ -145,7 +145,34 @@ bool mdtTtTestStep::isInRange(const mdtValueDouble & x, double min, double max, 
     msg  = tr("Value %1 %2 is out of range.").arg(x.value(), 0, 'g', 2).arg(valueUnit) + " ";
     msg += tr("Allowed range is from %1 to %2 %3 [%1;%2] %3").arg(min, 0, 'g', 2).arg(max, 0, 'g', 2).arg(valueUnit);
     pvLastError.setInformativeText(msg);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtBasicTestNodeCalibrationTool");
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestStep");
+    pvLastError.commit();
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtTtTestStep::isValueOk(const mdtValueDouble & x, const mdtTtValueLimits & limits, const QString & valueUnit)
+{
+  Q_ASSERT(limits.isSet());
+
+  if(x.isNull()){
+    QString msg;
+    pvLastError.setError(tr("Value checking failed for given value."), mdtError::Error);
+    msg  = tr("Value is null.");
+    pvLastError.setInformativeText(msg);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestStep");
+    pvLastError.commit();
+    return false;
+  }
+  if(limits.getResult(x) != mdtTtValueLimits::Result_t::Ok){
+    QString msg;
+    pvLastError.setError(tr("Value checking failed for given value."), mdtError::Error);
+    msg  = tr("Value %1 %2 is out of range.").arg(x.value(), 0, 'g', 2).arg(valueUnit) + " ";
+    msg += tr("Allowed range is from %1 to %2 %3 [%1;%2] %3").arg(limits.leftTopLimit().value(), 0, 'g', 2).arg(limits.rightBottomLimit().value(), 0, 'g', 2).arg(valueUnit);
+    pvLastError.setInformativeText(msg);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestStep");
     pvLastError.commit();
     return false;
   }

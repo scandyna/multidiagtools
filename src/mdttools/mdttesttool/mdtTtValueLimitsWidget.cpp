@@ -23,8 +23,6 @@
 #include "mdtDoubleEditDialog.h"
 #include <QToolButton>
 
-#include <QVariant>
-
 mdtTtValueLimitsWidget::mdtTtValueLimitsWidget(QWidget* parent)
  : QWidget(parent)
 {
