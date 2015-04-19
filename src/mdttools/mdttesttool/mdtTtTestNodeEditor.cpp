@@ -59,9 +59,9 @@ bool mdtTtTestNodeEditor::setupTables()
   if(!setupTestNodeUnitTable()){
     return false;
   }
-  if(!setupTestNodeBusTable()){
-    return false;
-  }
+//   if(!setupTestNodeBusTable()){
+//     return false;
+//   }
   if(!setupTestNodeUnitConnectionTable()){
     return false;
   }
@@ -890,38 +890,38 @@ void mdtTtTestNodeEditor::updateTestNodeUnitTable(const QLocale & locale)
   }
 }
 
-bool mdtTtTestNodeEditor::setupTestNodeBusTable()
-{
-  mdtSqlTableWidget *widget;
-  mdtSqlRelationInfo relationInfo;
-
-  relationInfo.setChildTableName("TestNodeBus_tbl");
-  ///relationInfo.addRelation("VehicleType_Id_FK_PK", "TestNode_Id_FK", false);
-  relationInfo.addRelation("Id_PK", "TestNode_Id_FK", false);
-  if(!addChildTable(relationInfo, tr("Bus"))){
-    return false;
-  }
-  /**
-  if(!addChildTable("TestNodeBus_tbl", tr("Bus"), database())){
-    return false;
-  }
-  if(!addRelation("VehicleType_Id_FK_PK", "TestNodeBus_tbl", "TestNode_Id_FK")){
-    return false;
-  }
-  */
-  widget = sqlTableWidget("TestNodeBus_tbl");
-  Q_ASSERT(widget != 0);
-  // Hide technical fields
-  widget->setColumnHidden("Id_PK", true);
-  widget->setColumnHidden("TestNode_Id_FK", true);
-  // Set some attributes on table view
-  widget->enableLocalEdition();
-  widget->addStretchToLocalBar();
-  widget->addColumnToSortOrder("NameEN", Qt::AscendingOrder);
-  widget->tableView()->resizeColumnsToContents();
-
-  return true;
-}
+// bool mdtTtTestNodeEditor::setupTestNodeBusTable()
+// {
+//   mdtSqlTableWidget *widget;
+//   mdtSqlRelationInfo relationInfo;
+// 
+//   relationInfo.setChildTableName("TestNodeBus_tbl");
+//   ///relationInfo.addRelation("VehicleType_Id_FK_PK", "TestNode_Id_FK", false);
+//   relationInfo.addRelation("Id_PK", "TestNode_Id_FK", false);
+//   if(!addChildTable(relationInfo, tr("Bus"))){
+//     return false;
+//   }
+//   /**
+//   if(!addChildTable("TestNodeBus_tbl", tr("Bus"), database())){
+//     return false;
+//   }
+//   if(!addRelation("VehicleType_Id_FK_PK", "TestNodeBus_tbl", "TestNode_Id_FK")){
+//     return false;
+//   }
+//   */
+//   widget = sqlTableWidget("TestNodeBus_tbl");
+//   Q_ASSERT(widget != 0);
+//   // Hide technical fields
+//   widget->setColumnHidden("Id_PK", true);
+//   widget->setColumnHidden("TestNode_Id_FK", true);
+//   // Set some attributes on table view
+//   widget->enableLocalEdition();
+//   widget->addStretchToLocalBar();
+//   widget->addColumnToSortOrder("NameEN", Qt::AscendingOrder);
+//   widget->tableView()->resizeColumnsToContents();
+// 
+//   return true;
+// }
 
 bool mdtTtTestNodeEditor::setupTestNodeUnitConnectionTable()
 {

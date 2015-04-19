@@ -207,13 +207,17 @@ class mdtTtDatabaseSchema
    */
   bool setupTestNodeUnitConnectionTable();
 
+  /*! \brief Setup TestNodeRoute_tbl
+   */
+  bool setupTestNodeRouteTable();
+
   /*! \brief Setup TestNodeUnitType_tbl
    */
   bool setupTestNodeUnitTypeTable();
 
   /*! \brief Setup TestNodeBus_tbl
    */
-  bool setupTestNodeBusTable();
+//   bool setupTestNodeBusTable();
 
   /*! \brief Setup TestCable_TestNodeUnit_tbl
    */

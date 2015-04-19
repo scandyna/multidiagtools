@@ -144,7 +144,7 @@ class mdtTtTestNodeEditor : public mdtSqlForm
 
   /*! \brief Setup TestNodeBus_tbl
    */
-  bool setupTestNodeBusTable();
+//   bool setupTestNodeBusTable();
 
   /*! \brief Setup TestNodeUnitConnection_view
    */

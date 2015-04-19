@@ -1,9 +1,15 @@
 window_sizes 1280 996 271 1003 943 0
 cleanlooks_style
+diagrams
+  active  classdiagram_ref 941058 // Test
+    1003 943 70 3 0 0
+end
 show_stereotypes
-selected classview_ref 576258 // TestTool
+selected attribute_ref 1305602 // TestModelItemRoute_Id_FK
 open
-  
-package_ref 227842 // DatabaseLogical
+  attribute_ref 1632898 // TestNodeRoute_Id_FK
+  attribute_ref 1305602 // TestModelItemRoute_Id_FK
+  class_ref 1249154 // TestNodeUnitConnection_tbl
+  class_ref 1571970 // TestNodeRoute_tbl
 end
 end

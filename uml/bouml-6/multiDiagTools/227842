@@ -1,6 +1,6 @@
 format 209
 "DatabaseLogical" // mdttools::mdttesttool::DatabaseLogical
-  revision 66
+  revision 67
   modified_by 2 "philippe"
   // class settings
   
@@ -2973,7 +2973,7 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 1305602 "TestModelItemRoute_Id_FK"
+      attribute 1632898 "TestNodeRoute_Id_FK"
 	private explicit_type "int"
 	stereotype "FK"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
@@ -3034,6 +3034,19 @@ ${inlines}
 	MysqlColumn
       end
 
+      attribute 1305602 "TestModelItemRoute_Id_FK"
+	private explicit_type "int"
+	stereotype "FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
       classrelation 1654274 // <unidirectional association>
 	relation 1638786 --->
 	  a role_name "" private
@@ -3041,6 +3054,15 @@ ${inlines}
 "
 	    classrelation_ref 1654274 // <unidirectional association>
 	  b parent class_ref 1329026 // TestModelItemRoute_tbl
+      end
+
+      classrelation 1962114 // <unidirectional association>
+	relation 1945986 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1962114 // <unidirectional association>
+	  b parent class_ref 1571970 // TestNodeRoute_tbl
       end
     end
 
@@ -4071,6 +4093,100 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+      end
+    end
+
+    class 1571970 "TestNodeRoute_tbl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 1632386 "Id_PK"
+	private explicit_type "int"
+	stereotype "PK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 1961730 // <unidirectional association>
+	relation 1945602 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1961730 // <unidirectional association>
+	  b parent class_ref 992642 // TestNode_tbl
+      end
+
+      attribute 1632514 "TestNode_Id_FK"
+	private explicit_type "int"
+	stereotype "FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1632642 "TestNodeUnitConnectionA_Id_FK"
+	private explicit_type "int"
+	stereotype "FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1632770 "TestNodeUnitConnectionB_Id_FK"
+	private explicit_type "int"
+	stereotype "FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 1961858 // <unidirectional association>
+	relation 1945730 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1961858 // <unidirectional association>
+	  b parent class_ref 1249154 // TestNodeUnitConnection_tbl
+      end
+
+      classrelation 1961986 // <unidirectional association>
+	relation 1945858 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1961986 // <unidirectional association>
+	  b parent class_ref 1249154 // TestNodeUnitConnection_tbl
       end
     end
   end
