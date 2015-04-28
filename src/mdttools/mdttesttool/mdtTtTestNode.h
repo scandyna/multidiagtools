@@ -42,6 +42,10 @@ class mdtTtTestNode : public mdtTtBase
    */
   mdtTtTestNode(QObject *parent, QSqlDatabase db);
 
+  /*! \brief Constructor
+   */
+  mdtTtTestNode(QSqlDatabase db);
+
   /*! \brief Get SQL statement for units selection
    *
    * Give a list of units related to given TestNodeId (i.e. VehicleType ID)

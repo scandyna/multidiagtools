@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,10 +18,10 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_TT_RELAY_PATH_DIALOG_H
-#define MDT_TT_RELAY_PATH_DIALOG_H
+#ifndef MDT_TT_TEST_NODE_ROUTE_DIALOG_H
+#define MDT_TT_TEST_NODE_ROUTE_DIALOG_H
 
-#include "ui_mdtTtRelayPathDialog.h"
+#include "ui_mdtTtTestNodeRouteDialog.h"
 #include "mdtError.h"
 #include <QDialog>
 #include <QSqlDatabase>
@@ -35,23 +35,25 @@ class QWidget;
 
 /*! \brief Edit path from a starting connection to a end connection in a test node
  */
-class mdtTtRelayPathDialog : public QDialog, Ui::mdtTtRelayPathDialog
+class mdtTtTestNodeRouteDialog : public QDialog, Ui::mdtTtTestNodeRouteDialog
 {
  Q_OBJECT
 
  public:
 
   /*! \brief Constructor
+   *
+   * Note: for given path grah (pg), link list must allready been loaded (see mdtClPathGraph::loadLinkList() ).
    */
-  mdtTtRelayPathDialog(QSqlDatabase db, mdtClPathGraph *pg, QWidget *parent = 0);
+  mdtTtTestNodeRouteDialog(QSqlDatabase db, mdtClPathGraph *pg, QWidget *parent = 0);
 
   /*! \brief Set test node ID
    */
-  void setTestNodeId(const QVariant & id);
+  void setTestNodeId(const QVariant & testNodeId);
 
   /*! \brief Set data
    */
-  void setData(const QVariant & testModelItemId, const QVariant & testNodeId);
+//  void setData(const QVariant & testModelItemId, const QVariant & testNodeId);
 
   /*! \brief Get list if relays IDs to enable
    */
@@ -117,7 +119,7 @@ class mdtTtRelayPathDialog : public QDialog, Ui::mdtTtRelayPathDialog
    */
   void displayError(const mdtError & error);
 
-  Q_DISABLE_COPY(mdtTtRelayPathDialog);
+  Q_DISABLE_COPY(mdtTtTestNodeRouteDialog);
 
   QSqlDatabase pvDatabase;
   mdtClPathGraph *pvGraph;
@@ -127,4 +129,4 @@ class mdtTtRelayPathDialog : public QDialog, Ui::mdtTtRelayPathDialog
   QMap<int, QString> pvRelayNameMap;
 };
 
-#endif  // #ifndef MDT_TT_RELAY_PATH_DIALOG_H
+#endif  // #ifndef MDT_TT_TEST_NODE_ROUTE_DIALOG_H

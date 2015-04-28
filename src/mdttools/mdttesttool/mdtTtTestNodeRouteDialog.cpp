@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,7 +18,7 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtTtRelayPathDialog.h"
+#include "mdtTtTestNodeRouteDialog.h"
 #include "mdtClPathGraph.h"
 #include "mdtTtTestNode.h"
 #include <QSqlRecord>
@@ -28,10 +28,10 @@
 
 #include <QDebug>
 
-mdtTtRelayPathDialog::mdtTtRelayPathDialog(QSqlDatabase db, mdtClPathGraph *pg, QWidget *parent)
+mdtTtTestNodeRouteDialog::mdtTtTestNodeRouteDialog(QSqlDatabase db, mdtClPathGraph *pg, QWidget *parent)
  : QDialog(parent)
 {
-  Q_ASSERT(pg != 0);
+  Q_ASSERT(pg != nullptr);
   pvGraph = pg;
   pvDatabase = db;
   pvLoadingData = false;
@@ -42,30 +42,38 @@ mdtTtRelayPathDialog::mdtTtRelayPathDialog(QSqlDatabase db, mdtClPathGraph *pg, 
   connect(cbDestinationConnection, SIGNAL(currentIndexChanged(int)), this, SLOT(searchPath(int)));
 }
 
-void mdtTtRelayPathDialog::setTestNodeId(const QVariant & id)
+void mdtTtTestNodeRouteDialog::setTestNodeId(const QVariant & testNodeId)
 {
-
-}
-
-void mdtTtRelayPathDialog::setData(const QVariant & testModelItemId, const QVariant & testNodeId)
-{
-  pvTestModelItemId = testModelItemId;
+  ///pvTestModelItemId = testModelItemId;
   pvLoadingData = true;
   displayTestNodeData(testNodeId);
   populateSourceTestNodeUnitCombobox(testNodeId);
   populateDestinationTestNodeUnitCombobox(testNodeId);
-  pvGraph->loadLinkList();
+  ///pvGraph->loadLinkList();
   loadRelays(testNodeId);
   pvLoadingData = false;
   searchPath(0);
 }
 
-QList< QVariant > mdtTtRelayPathDialog::idListOfRelaysToEnable() const
+// void mdtTtTestNodeRouteDialog::setData(const QVariant & testModelItemId, const QVariant & testNodeId)
+// {
+//   pvTestModelItemId = testModelItemId;
+//   pvLoadingData = true;
+//   displayTestNodeData(testNodeId);
+//   populateSourceTestNodeUnitCombobox(testNodeId);
+//   populateDestinationTestNodeUnitCombobox(testNodeId);
+//   pvGraph->loadLinkList();
+//   loadRelays(testNodeId);
+//   pvLoadingData = false;
+//   searchPath(0);
+// }
+
+QList< QVariant > mdtTtTestNodeRouteDialog::idListOfRelaysToEnable() const
 {
   return pvRelaysToEnableIds;
 }
 
-QVariant mdtTtRelayPathDialog::selectedTestConnection() const
+QVariant mdtTtTestNodeRouteDialog::selectedTestConnection() const
 {
   int index = cbDestinationConnection->currentIndex();
 
@@ -75,7 +83,7 @@ QVariant mdtTtRelayPathDialog::selectedTestConnection() const
   return cbDestinationConnection->itemData(index);
 }
 
-QVariant mdtTtRelayPathDialog::selectedMeasureConnection() const
+QVariant mdtTtTestNodeRouteDialog::selectedMeasureConnection() const
 {
   int index = cbSourceConnection->currentIndex();
 
@@ -85,7 +93,7 @@ QVariant mdtTtRelayPathDialog::selectedMeasureConnection() const
   return cbSourceConnection->itemData(index);
 }
 
-void mdtTtRelayPathDialog::updateSourceConnections(int index)
+void mdtTtTestNodeRouteDialog::updateSourceConnections(int index)
 {
   cbSourceConnection->clear();
   if(index < 0){
@@ -94,7 +102,7 @@ void mdtTtRelayPathDialog::updateSourceConnections(int index)
   populateSourceConnectionCombobox(cbSourceUnit->itemData(index));
 }
 
-void mdtTtRelayPathDialog::updateDestinationConnections(int index)
+void mdtTtTestNodeRouteDialog::updateDestinationConnections(int index)
 {
   cbDestinationConnection->clear();
   if(index < 0){
@@ -103,7 +111,7 @@ void mdtTtRelayPathDialog::updateDestinationConnections(int index)
   populateDestinationConnectionCombobox(cbDestinationUnit->itemData(index));
 }
 
-void mdtTtRelayPathDialog::searchPath(int index)
+void mdtTtTestNodeRouteDialog::searchPath(int index)
 {
   int sourceCbIndex, destinationCbIndex;
   QVariant sourceConnectionId, destinationConnectionId;
@@ -158,7 +166,7 @@ void mdtTtRelayPathDialog::searchPath(int index)
   lbRelays->setText(relaysStr);
 }
 
-void mdtTtRelayPathDialog::displayTestNodeData(const QVariant& testNodeId)
+void mdtTtTestNodeRouteDialog::displayTestNodeData(const QVariant& testNodeId)
 {
   mdtTtTestNode tn(0, pvDatabase);
   QSqlRecord data;
@@ -174,7 +182,7 @@ void mdtTtRelayPathDialog::displayTestNodeData(const QVariant& testNodeId)
   lbTestNode->setText(data.value("SubType").toString());
 }
 
-bool mdtTtRelayPathDialog::populateSourceTestNodeUnitCombobox(const QVariant & testNodeId)
+bool mdtTtTestNodeRouteDialog::populateSourceTestNodeUnitCombobox(const QVariant & testNodeId)
 {
   mdtTtTestNode tn(0, pvDatabase);
   QList<QSqlRecord> dataList;
@@ -206,7 +214,7 @@ bool mdtTtRelayPathDialog::populateSourceTestNodeUnitCombobox(const QVariant & t
   return true;
 }
 
-bool mdtTtRelayPathDialog::populateSourceConnectionCombobox(const QVariant& testNodeUnitId)
+bool mdtTtTestNodeRouteDialog::populateSourceConnectionCombobox(const QVariant& testNodeUnitId)
 {
   mdtTtTestNode tn(0, pvDatabase);
   QList<QSqlRecord> dataList;
@@ -234,7 +242,7 @@ bool mdtTtRelayPathDialog::populateSourceConnectionCombobox(const QVariant& test
   return true;
 }
 
-bool mdtTtRelayPathDialog::populateDestinationTestNodeUnitCombobox(const QVariant& testNodeId)
+bool mdtTtTestNodeRouteDialog::populateDestinationTestNodeUnitCombobox(const QVariant& testNodeId)
 {
   mdtTtTestNode tn(0, pvDatabase);
   QList<QSqlRecord> dataList;
@@ -266,7 +274,7 @@ bool mdtTtRelayPathDialog::populateDestinationTestNodeUnitCombobox(const QVarian
   return true;
 }
 
-bool mdtTtRelayPathDialog::populateDestinationConnectionCombobox(const QVariant& testNodeUnitId)
+bool mdtTtTestNodeRouteDialog::populateDestinationConnectionCombobox(const QVariant& testNodeUnitId)
 {
   mdtTtTestNode tn(0, pvDatabase);
   QList<QSqlRecord> dataList;
@@ -318,7 +326,7 @@ bool mdtTtRelayPathDialog::populateDestinationConnectionCombobox(const QVariant&
   return true;
 }
 
-bool mdtTtRelayPathDialog::loadRelays(const QVariant & testNodeId)
+bool mdtTtTestNodeRouteDialog::loadRelays(const QVariant & testNodeId)
 {
   QString sql;
   mdtTtTestNode tn(0, pvDatabase);
@@ -370,7 +378,7 @@ bool mdtTtRelayPathDialog::loadRelays(const QVariant & testNodeId)
       pvRelayNameMap.insert(testNodeUnitId.toInt(), data.value("SchemaPosition").toString());
     }else{
       mdtError e(tr("Relay ID") + data.value("Unit_Id_FK_PK").toString() + tr(" has not exactly 2 connections, will be ignored."), mdtError::Warning);
-      MDT_ERROR_SET_SRC(e, "mdtTtRelayPathDialog");
+      MDT_ERROR_SET_SRC(e, "mdtTtTestNodeRouteDialog");
       e.commit();
     }
   }
@@ -379,7 +387,7 @@ bool mdtTtRelayPathDialog::loadRelays(const QVariant & testNodeId)
   return true;
 }
 
-QString mdtTtRelayPathDialog::sqlForTestConnectionData(const QVariant & testNodeUnitId) const
+QString mdtTtTestNodeRouteDialog::sqlForTestConnectionData(const QVariant & testNodeUnitId) const
 {
   QString sql;
   QLocale locale;
@@ -403,7 +411,7 @@ QString mdtTtRelayPathDialog::sqlForTestConnectionData(const QVariant & testNode
   return sql;
 }
 
-void mdtTtRelayPathDialog::displayError(const mdtError & error)
+void mdtTtTestNodeRouteDialog::displayError(const mdtError & error)
 {
   QMessageBox msgBox(this);
 

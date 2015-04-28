@@ -54,6 +54,7 @@ mdtDoubleEdit::mdtDoubleEdit(QWidget* parent)
   l = new QHBoxLayout;
   pvLineEdit = new QLineEdit;
   pvLineEdit->setAlignment(Qt::AlignRight);
+  pvLineEdit->setMaxLength(22);
   l->addWidget(pvLineEdit);
   l->addWidget(pbSetMinusInfinity);
   l->addWidget(pbSetNull);

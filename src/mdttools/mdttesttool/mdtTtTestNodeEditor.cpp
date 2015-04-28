@@ -30,6 +30,9 @@
 #include "mdtTtTestNodeUnitData.h"
 #include "mdtTtTestNodeUnitDialog.h"
 #include "mdtClPathGraph.h"
+#include "mdtTtTestNodeRoute.h"
+#include "mdtTtTestNodeRouteData.h"
+#include "mdtTtTestNodeRouteDialog.h"
 #include <QSqlQueryModel>
 #include <QSqlTableModel>
 #include <QTableView>
@@ -57,6 +60,9 @@ bool mdtTtTestNodeEditor::setupTables()
     return false;
   }
   if(!setupTestNodeUnitTable()){
+    return false;
+  }
+  if(!setupTestNodeRouteTable()){
     return false;
   }
 //   if(!setupTestNodeBusTable()){
@@ -391,6 +397,35 @@ void mdtTtTestNodeEditor::setIoPositionRange()
   }
   // Update UI
   select("TestNodeUnit_view");
+}
+
+void mdtTtTestNodeEditor::addRoute()
+{
+  mdtClPathGraph graph(database());
+  mdtTtTestNodeRouteDialog dialog(database(), &graph, this);
+  QVariant testNodeId;
+
+  // Get test node ID
+  testNodeId = currentData("TestNode_tbl", "VehicleType_Id_FK_PK");
+  if(testNodeId.isNull()){
+    return;
+  }
+  // Load link list in graph
+  if(!graph.loadLinkList()){
+    pvLastError = graph.lastError();
+    displayLastError();
+    return;
+  }
+  // Setup and show dialog
+  dialog.setTestNodeId(testNodeId);
+  dialog.exec();
+
+  select("TestNodeRoute_view");
+}
+
+void mdtTtTestNodeEditor::removeRoutes()
+{
+
 }
 
 void mdtTtTestNodeEditor::setBusToUnitConnection()
@@ -888,6 +923,32 @@ void mdtTtTestNodeEditor::updateTestNodeUnitTable(const QLocale & locale)
       widget->setColumnHidden("NameIT", true);
       widget->setHeaderData("NameEN", tr("Type"));
   }
+}
+
+bool mdtTtTestNodeEditor::setupTestNodeRouteTable()
+{
+  mdtSqlRelationInfo relationInfo;
+  QPushButton *pb;
+
+  relationInfo.setChildTableName("TestNodeRoute_view");
+  relationInfo.addRelation("Id_PK", "TestNode_Id_FK", false);
+  if(!addChildTable(relationInfo, tr("Routes"))){
+    return false;
+  }
+  auto *widget = sqlTableWidget("TestNodeRoute_view");
+  Q_ASSERT(widget != nullptr);
+  // Add buttons
+  pb = new QPushButton(tr("Add ..."));
+  pb->setIcon(QIcon::fromTheme("list-add"));
+  connect(pb, SIGNAL(clicked()), this, SLOT(addRoute()));
+  widget->addWidgetToLocalBar(pb);
+  pb = new QPushButton(tr("Remove ..."));
+  pb->setIcon(QIcon::fromTheme("list-remove"));
+  connect(pb, SIGNAL(clicked()), this, SLOT(removeRoutes()));
+  widget->addWidgetToLocalBar(pb);
+  widget->addStretchToLocalBar();
+
+  return true;
 }
 
 // bool mdtTtTestNodeEditor::setupTestNodeBusTable()

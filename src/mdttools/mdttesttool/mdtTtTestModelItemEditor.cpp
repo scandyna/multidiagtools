@@ -23,7 +23,7 @@
 #include "mdtTtTestModelItem.h"
 #include "mdtTtTestNodeUnitSetupData.h"
 #include "mdtTtTestNodeUnitSetupDialog.h"
-#include "mdtTtRelayPathDialog.h"
+///#include "mdtTtRelayPathDialog.h"
 #include "mdtClPathGraph.h"
 #include "mdtSqlRelation.h"
 #include "mdtSqlTableWidget.h"
@@ -212,93 +212,93 @@ void mdtTtTestModelItemEditor::removeTestLinks()
 
 void mdtTtTestModelItemEditor::addRoute()
 {
-  mdtTtTestModelItem tmi(0, database());
-  mdtClPathGraph graph(database());
-  mdtTtRelayPathDialog dialog(database(), &graph, this);
-  mdtSqlSelectionDialog selectionDialog(this);
-  mdtSqlTableSelection s;
-  QVariant testModelId;
-  QVariant testModelItemId;
-  QVariant testLinkId;
-  QVariant measureCnxId;
-  QVariant testNodeId;
-  mdtTtTestNodeUnitSetupData setupData;
-  QList<mdtTtTestNodeUnitSetupData> setupDataList;
-  QList<QVariant> nodeUnitIdList;
-  QString sql;
-  int i;
-
-  // Get test model ID
-  testModelId = currentData("TestModelItem_tbl", "TestModel_Id_FK");
-  if(testModelId.isNull()){
-    return;
-  }
-  // Get test model item ID
-  testModelItemId = currentData("TestModelItem_tbl", "Id_PK");
-  if(testModelItemId.isNull()){
-    return;
-  }
-  // Setup test node unit setup data
-  if(!setupData.setup(database())){
-    pvLastError = setupData.lastError();
-    displayLastError();
-    return;
-  }
-  setupData.setValue("TestModelItem_Id_FK", testModelItemId);
-  // Setup and show dialog for test node selection
-  sql = tmi.sqlForTestNodeSelection(testModelId);
-  selectionDialog.setMessage(tr("Please select a test node to use:"));
-  selectionDialog.setQuery(sql, database(), false);
-  selectionDialog.setColumnHidden("TestNode_Id_FK", true);
-  selectionDialog.setHeaderData("Type", tr("Test system"));
-  selectionDialog.setHeaderData("SubType", tr("Test node"));
-  selectionDialog.addColumnToSortOrder("Type", Qt::AscendingOrder);
-  selectionDialog.addColumnToSortOrder("SubType", Qt::AscendingOrder);
-  selectionDialog.addColumnToSortOrder("SeriesNumber", Qt::AscendingOrder);
-  selectionDialog.sort();
-  selectionDialog.setWindowTitle(tr("Test node selection"));
-  selectionDialog.resize(600, 300);
-  if(selectionDialog.exec() != QDialog::Accepted){
-    return;
-  }
-  s = selectionDialog.selection("TestNode_Id_FK");
-  if(s.isEmpty()){
-    return;
-  }
-  Q_ASSERT(s.rowCount() == 1);
-  testNodeId = s.data(0, "TestNode_Id_FK");
-  // Setup and show dialog
-  ///dialog.setTestNodeId(testNodeId);
-  dialog.setData(testModelItemId, testNodeId);
-  if(dialog.exec() != QDialog::Accepted){
-    return;
-  }
-  nodeUnitIdList = dialog.idListOfRelaysToEnable();
-  testLinkId = getTestLinkIdForTestConnectionId(testModelItemId, dialog.selectedTestConnection());
-  if(testLinkId.isNull()){
-    return;
-  }
-  measureCnxId = dialog.selectedMeasureConnection();
-  if(measureCnxId.isNull()){
-    return;
-  }
-  for(i = 0; i < nodeUnitIdList.size(); ++i){
-    setupData.setValue("TestNodeUnit_Id_FK", nodeUnitIdList.at(i));
-    setupData.setValue("StepNumber", 0);
-    setupData.setValue("State", true);
-    setupDataList.append(setupData);
-  }
-  ///testLinkId = ???
-  ///measureCnxId = ???
-  // Add to db
-  if(!tmi.addRoute(testModelItemId, testLinkId, measureCnxId, setupDataList, true)){
-    pvLastError = tmi.lastError();
-    displayLastError();
-    return;
-  }
-  // Update views
-  select("TestNodeUnitSetup_view");
-  select("TestModelItemRoute_view");
+//   mdtTtTestModelItem tmi(0, database());
+//   mdtClPathGraph graph(database());
+//   mdtTtRelayPathDialog dialog(database(), &graph, this);
+//   mdtSqlSelectionDialog selectionDialog(this);
+//   mdtSqlTableSelection s;
+//   QVariant testModelId;
+//   QVariant testModelItemId;
+//   QVariant testLinkId;
+//   QVariant measureCnxId;
+//   QVariant testNodeId;
+//   mdtTtTestNodeUnitSetupData setupData;
+//   QList<mdtTtTestNodeUnitSetupData> setupDataList;
+//   QList<QVariant> nodeUnitIdList;
+//   QString sql;
+//   int i;
+// 
+//   // Get test model ID
+//   testModelId = currentData("TestModelItem_tbl", "TestModel_Id_FK");
+//   if(testModelId.isNull()){
+//     return;
+//   }
+//   // Get test model item ID
+//   testModelItemId = currentData("TestModelItem_tbl", "Id_PK");
+//   if(testModelItemId.isNull()){
+//     return;
+//   }
+//   // Setup test node unit setup data
+//   if(!setupData.setup(database())){
+//     pvLastError = setupData.lastError();
+//     displayLastError();
+//     return;
+//   }
+//   setupData.setValue("TestModelItem_Id_FK", testModelItemId);
+//   // Setup and show dialog for test node selection
+//   sql = tmi.sqlForTestNodeSelection(testModelId);
+//   selectionDialog.setMessage(tr("Please select a test node to use:"));
+//   selectionDialog.setQuery(sql, database(), false);
+//   selectionDialog.setColumnHidden("TestNode_Id_FK", true);
+//   selectionDialog.setHeaderData("Type", tr("Test system"));
+//   selectionDialog.setHeaderData("SubType", tr("Test node"));
+//   selectionDialog.addColumnToSortOrder("Type", Qt::AscendingOrder);
+//   selectionDialog.addColumnToSortOrder("SubType", Qt::AscendingOrder);
+//   selectionDialog.addColumnToSortOrder("SeriesNumber", Qt::AscendingOrder);
+//   selectionDialog.sort();
+//   selectionDialog.setWindowTitle(tr("Test node selection"));
+//   selectionDialog.resize(600, 300);
+//   if(selectionDialog.exec() != QDialog::Accepted){
+//     return;
+//   }
+//   s = selectionDialog.selection("TestNode_Id_FK");
+//   if(s.isEmpty()){
+//     return;
+//   }
+//   Q_ASSERT(s.rowCount() == 1);
+//   testNodeId = s.data(0, "TestNode_Id_FK");
+//   // Setup and show dialog
+//   ///dialog.setTestNodeId(testNodeId);
+//   dialog.setData(testModelItemId, testNodeId);
+//   if(dialog.exec() != QDialog::Accepted){
+//     return;
+//   }
+//   nodeUnitIdList = dialog.idListOfRelaysToEnable();
+//   testLinkId = getTestLinkIdForTestConnectionId(testModelItemId, dialog.selectedTestConnection());
+//   if(testLinkId.isNull()){
+//     return;
+//   }
+//   measureCnxId = dialog.selectedMeasureConnection();
+//   if(measureCnxId.isNull()){
+//     return;
+//   }
+//   for(i = 0; i < nodeUnitIdList.size(); ++i){
+//     setupData.setValue("TestNodeUnit_Id_FK", nodeUnitIdList.at(i));
+//     setupData.setValue("StepNumber", 0);
+//     setupData.setValue("State", true);
+//     setupDataList.append(setupData);
+//   }
+//   ///testLinkId = ???
+//   ///measureCnxId = ???
+//   // Add to db
+//   if(!tmi.addRoute(testModelItemId, testLinkId, measureCnxId, setupDataList, true)){
+//     pvLastError = tmi.lastError();
+//     displayLastError();
+//     return;
+//   }
+//   // Update views
+//   select("TestNodeUnitSetup_view");
+//   select("TestModelItemRoute_view");
 }
 
 void mdtTtTestModelItemEditor::removeRoutes()
@@ -414,80 +414,80 @@ void mdtTtTestModelItemEditor::addNodeUnit()
 
 void mdtTtTestModelItemEditor::editRelayPath()
 {
-  mdtTtTestModelItem tmi(0, database());
-  mdtClPathGraph graph(database());
-  mdtTtRelayPathDialog dialog(database(), &graph, this);
-  mdtSqlSelectionDialog selectionDialog(this);
-  mdtSqlTableSelection s;
-  QVariant testModelId;
-  QVariant testModelItemId;
-  QVariant testNodeId;
-  mdtTtTestNodeUnitSetupData setupData;
-  QList<mdtTtTestNodeUnitSetupData> setupDataList;
-  QList<QVariant> nodeUnitIdList;
-  QString sql;
-  int i;
-
-  // Get test model ID
-  testModelId = currentData("TestModelItem_tbl", "TestModel_Id_FK");
-  if(testModelId.isNull()){
-    return;
-  }
-  // Get test model item ID
-  testModelItemId = currentData("TestModelItem_tbl", "Id_PK");
-  if(testModelItemId.isNull()){
-    return;
-  }
-  // Setup data
-  if(!setupData.setup(database())){
-    pvLastError = setupData.lastError();
-    displayLastError();
-    return;
-  }
-  setupData.setValue("TestModelItem_Id_FK", testModelItemId);
-  // Setup and show dialog for test node selection
-  sql = tmi.sqlForTestNodeSelection(testModelId);
-  selectionDialog.setMessage(tr("Please select a test node to use:"));
-  selectionDialog.setQuery(sql, database(), false);
-  selectionDialog.setColumnHidden("TestNode_Id_FK", true);
-  selectionDialog.setHeaderData("Type", tr("Test system"));
-  selectionDialog.setHeaderData("SubType", tr("Test node"));
-  selectionDialog.addColumnToSortOrder("Type", Qt::AscendingOrder);
-  selectionDialog.addColumnToSortOrder("SubType", Qt::AscendingOrder);
-  selectionDialog.addColumnToSortOrder("SeriesNumber", Qt::AscendingOrder);
-  selectionDialog.sort();
-  selectionDialog.setWindowTitle(tr("Test node selection"));
-  selectionDialog.resize(600, 300);
-  if(selectionDialog.exec() != QDialog::Accepted){
-    return;
-  }
-  s = selectionDialog.selection("TestNode_Id_FK");
-  if(s.isEmpty()){
-    return;
-  }
-  Q_ASSERT(s.rowCount() == 1);
-  testNodeId = s.data(0, "TestNode_Id_FK");
-  // Setup and show dialog
-  dialog.setTestNodeId(testNodeId);
-  if(dialog.exec() != QDialog::Accepted){
-    return;
-  }
-  nodeUnitIdList = dialog.idListOfRelaysToEnable();
-  for(i = 0; i < nodeUnitIdList.size(); ++i){
-    setupData.setValue("TestNodeUnit_Id_FK", nodeUnitIdList.at(i));
-    setupData.setValue("StepNumber", 0);
-    setupData.setValue("State", true);
-    setupDataList.append(setupData);
-  }
-  // Add to db
-  if(!tmi.addOrUpdateTestNodeUnitSetupList(setupDataList)){
-    pvLastError = tmi.lastError();
-    displayLastError();
-    return;
-  }
-  // Update views
-  select("TestNodeUnitSetup_view");
-  select("TestModelItemRoute_view");
+//   mdtTtTestModelItem tmi(0, database());
+//   mdtClPathGraph graph(database());
+//   mdtTtRelayPathDialog dialog(database(), &graph, this);
+//   mdtSqlSelectionDialog selectionDialog(this);
+//   mdtSqlTableSelection s;
+//   QVariant testModelId;
+//   QVariant testModelItemId;
+//   QVariant testNodeId;
+//   mdtTtTestNodeUnitSetupData setupData;
+//   QList<mdtTtTestNodeUnitSetupData> setupDataList;
+//   QList<QVariant> nodeUnitIdList;
+//   QString sql;
+//   int i;
+// 
+//   // Get test model ID
+//   testModelId = currentData("TestModelItem_tbl", "TestModel_Id_FK");
+//   if(testModelId.isNull()){
+//     return;
+//   }
+//   // Get test model item ID
+//   testModelItemId = currentData("TestModelItem_tbl", "Id_PK");
+//   if(testModelItemId.isNull()){
+//     return;
+//   }
+//   // Setup data
+//   if(!setupData.setup(database())){
+//     pvLastError = setupData.lastError();
+//     displayLastError();
+//     return;
+//   }
+//   setupData.setValue("TestModelItem_Id_FK", testModelItemId);
+//   // Setup and show dialog for test node selection
+//   sql = tmi.sqlForTestNodeSelection(testModelId);
+//   selectionDialog.setMessage(tr("Please select a test node to use:"));
+//   selectionDialog.setQuery(sql, database(), false);
+//   selectionDialog.setColumnHidden("TestNode_Id_FK", true);
+//   selectionDialog.setHeaderData("Type", tr("Test system"));
+//   selectionDialog.setHeaderData("SubType", tr("Test node"));
+//   selectionDialog.addColumnToSortOrder("Type", Qt::AscendingOrder);
+//   selectionDialog.addColumnToSortOrder("SubType", Qt::AscendingOrder);
+//   selectionDialog.addColumnToSortOrder("SeriesNumber", Qt::AscendingOrder);
+//   selectionDialog.sort();
+//   selectionDialog.setWindowTitle(tr("Test node selection"));
+//   selectionDialog.resize(600, 300);
+//   if(selectionDialog.exec() != QDialog::Accepted){
+//     return;
+//   }
+//   s = selectionDialog.selection("TestNode_Id_FK");
+//   if(s.isEmpty()){
+//     return;
+//   }
+//   Q_ASSERT(s.rowCount() == 1);
+//   testNodeId = s.data(0, "TestNode_Id_FK");
+//   // Setup and show dialog
+//   dialog.setTestNodeId(testNodeId);
+//   if(dialog.exec() != QDialog::Accepted){
+//     return;
+//   }
+//   nodeUnitIdList = dialog.idListOfRelaysToEnable();
+//   for(i = 0; i < nodeUnitIdList.size(); ++i){
+//     setupData.setValue("TestNodeUnit_Id_FK", nodeUnitIdList.at(i));
+//     setupData.setValue("StepNumber", 0);
+//     setupData.setValue("State", true);
+//     setupDataList.append(setupData);
+//   }
+//   // Add to db
+//   if(!tmi.addOrUpdateTestNodeUnitSetupList(setupDataList)){
+//     pvLastError = tmi.lastError();
+//     displayLastError();
+//     return;
+//   }
+//   // Update views
+//   select("TestNodeUnitSetup_view");
+//   select("TestModelItemRoute_view");
 }
 
 void mdtTtTestModelItemEditor::setupNodeUnit()

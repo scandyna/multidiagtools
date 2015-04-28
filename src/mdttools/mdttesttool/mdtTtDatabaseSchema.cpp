@@ -146,6 +146,7 @@ bool mdtTtDatabaseSchema::importDatabase(const QFileInfo sourceDbFileInfo)
   
   /// \todo Provisoire !!
   ///sourceTables.removeAll("TestNodeUnitConnection_tbl");
+  ///sourceTables.removeAll("TestNodeUnitSetup_tbl");
   
   // Copy tables
   tableManager.enableProgressDialog(true);
@@ -294,6 +295,12 @@ bool mdtTtDatabaseSchema::setupTables()
   if(!setupTestNodeUnitConnectionTable()){
     return false;
   }
+  if(!setupTestNodeRouteTable()){
+    return false;
+  }
+  if(!setupTestNodeRouteUnitTable()){
+    return false;
+  }
   if(!setupTestCableTable()){
     return false;
   }
@@ -324,9 +331,9 @@ bool mdtTtDatabaseSchema::setupTables()
   if(!setupTestNodeUnitSetupTable()){
     return false;
   }
-  if(!setupTestModelItemRouteTable()){
-    return false;
-  }
+//   if(!setupTestModelItemRouteTable()){
+//     return false;
+//   }
   if(!setupTestTable()){
     return false;
   }
@@ -446,9 +453,12 @@ bool mdtTtDatabaseSchema::createViews()
   if(!createTestItemNodeUnitSetupView()){
     return false;
   }
-  if(!createTestModelItemRouteView()){
+  if(!createTestNodeRouteView()){
     return false;
   }
+//   if(!createTestModelItemRouteView()){
+//     return false;
+//   }
   /**
   if(!createTestModelItemNodeUnitSetupView()){
     return false;
@@ -2145,6 +2155,20 @@ bool mdtTtDatabaseSchema::setupTestNodeRouteTable()
   field.setRequired(true);
   table.addField(field, false);
   // Indexes
+  table.addIndex("TestNodeRoute_idx", true);
+  if(!table.addFieldToIndex("TestNodeRoute_idx", "TestNode_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  if(!table.addFieldToIndex("TestNodeRoute_idx", "TestNodeUnitConnectionA_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  if(!table.addFieldToIndex("TestNodeRoute_idx", "TestNodeUnitConnectionB_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  /**
   table.addIndex("TestNode_Id_FK_idx4", false);
   if(!table.addFieldToIndex("TestNode_Id_FK_idx4", "TestNode_Id_FK")){
     pvLastError = table.lastError();
@@ -2160,6 +2184,7 @@ bool mdtTtDatabaseSchema::setupTestNodeRouteTable()
     pvLastError = table.lastError();
     return false;
   }
+  */
   // Foreign keys
   table.addForeignKey("TestNode_Id_FK_fk4", "TestNode_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   if(!table.addFieldToForeignKey("TestNode_Id_FK_fk4", "TestNode_Id_FK", "VehicleType_Id_FK_PK")){
@@ -2173,6 +2198,38 @@ bool mdtTtDatabaseSchema::setupTestNodeRouteTable()
   }
   table.addForeignKey("TestNodeUnitConnectionB_Id_FK_fk", "TestNodeUnitConnection_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   if(!table.addFieldToForeignKey("TestNodeUnitConnectionB_Id_FK_fk", "TestNodeUnitConnectionB_Id_FK", "UnitConnection_Id_FK_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+
+  pvTables.append(table);
+
+  return true;
+}
+
+bool mdtTtDatabaseSchema::setupTestNodeRouteUnitTable()
+{
+  mdtSqlSchemaTable table;
+  QSqlField field;
+
+  table.setTableName("TestNodeRouteUnit_tbl", "UTF8");
+  // TestNodeRoute_Id_FK
+  field.setName("TestNodeRoute_Id_FK");
+  field.setType(QVariant::Int);
+  table.addField(field, true);
+  // TestNodeUnit_Id_FK
+  field = QSqlField();
+  field.setName("TestNodeUnit_Id_FK");
+  field.setType(QVariant::Int);
+  table.addField(field, true);
+  // Foreign keys
+  table.addForeignKey("TestNodeRoute_Id_FK_fk4", "TestNodeRoute_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("TestNodeRoute_Id_FK_fk4", "TestNodeRoute_Id_FK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addForeignKey("TestNodeUnit_Id_FK_kf4", "TestNodeUnit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("TestNodeUnit_Id_FK_kf4", "TestNodeUnit_Id_FK", "Unit_Id_FK_PK")){
     pvLastError = table.lastError();
     return false;
   }
@@ -2766,10 +2823,17 @@ bool mdtTtDatabaseSchema::setupTestNodeUnitSetupTable()
   ///field.setRequiredStatus(QSqlField::Required);
   table.addField(field, true);
   // TestModelItemRoute_Id_FK
+//   field = QSqlField();
+//   field.setName("TestModelItemRoute_Id_FK");
+//   field.setType(QVariant::Int);
+//   table.addField(field, false);
+  /**
+  // TestNodeRoute_Id_FK
   field = QSqlField();
-  field.setName("TestModelItemRoute_Id_FK");
+  field.setName("TestNodeRoute_Id_FK");
   field.setType(QVariant::Int);
   table.addField(field, false);
+  */
   // StepNumber
   field = QSqlField();
   field.setName("StepNumber");
@@ -2792,11 +2856,18 @@ bool mdtTtDatabaseSchema::setupTestNodeUnitSetupTable()
   field.setLength(100);
   table.addField(field, false);
   // Indexes
-  table.addIndex("TestModelItemRoute_Id_FK_idx", false);
-  if(!table.addFieldToIndex("TestModelItemRoute_Id_FK_idx", "TestModelItemRoute_Id_FK")){
+//   table.addIndex("TestModelItemRoute_Id_FK_idx", false);
+//   if(!table.addFieldToIndex("TestModelItemRoute_Id_FK_idx", "TestModelItemRoute_Id_FK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+  /**
+  table.addIndex("TestNodeRoute_Id_FK_idx", false);
+  if(!table.addFieldToIndex("TestNodeRoute_Id_FK_idx", "TestNodeRoute_Id_FK")){
     pvLastError = table.lastError();
     return false;
   }
+  */
   /**
   table.addIndex("TestModelItem_Id_FK_idx", false);
   if(!table.addFieldToIndex("TestModelItem_Id_FK_idx", "TestModelItem_Id_FK")){
@@ -2820,11 +2891,18 @@ bool mdtTtDatabaseSchema::setupTestNodeUnitSetupTable()
     pvLastError = table.lastError();
     return false;
   }
-  table.addForeignKey("TestModelItemRoute_Id_FK_fk", "TestModelItemRoute_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("TestModelItemRoute_Id_FK_fk", "TestModelItemRoute_Id_FK", "Id_PK")){
+//   table.addForeignKey("TestModelItemRoute_Id_FK_fk", "TestModelItemRoute_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+//   if(!table.addFieldToForeignKey("TestModelItemRoute_Id_FK_fk", "TestModelItemRoute_Id_FK", "Id_PK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+/**
+  table.addForeignKey("TestNodeRoute_Id_FK_fk", "TestNodeRoute_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("TestNodeRoute_Id_FK_fk", "TestNodeRoute_Id_FK", "Id_PK")){
     pvLastError = table.lastError();
     return false;
   }
+*/
 
   pvTables.append(table);
 
@@ -4111,7 +4189,7 @@ bool mdtTtDatabaseSchema::createTestNodeUnitSetupView()
   sql = "CREATE VIEW TestNodeUnitSetup_view AS\n"\
         "SELECT\n"\
         " TNUS.TestModelItem_Id_FK,\n"\
-        " TNUS.TestModelItemRoute_Id_FK,\n"\
+        /** " TNUS.TestNodeRoute_Id_FK,\n"\ */
         " TNUS.TestNodeUnit_Id_FK,\n"\
         " TNUS.StepNumber,\n"\
         " U.SchemaPosition,\n"\
@@ -4136,6 +4214,41 @@ bool mdtTtDatabaseSchema::createTestNodeUnitSetupView()
         "  ON TNUT.Code_PK = TNU.Type_Code_FK";
 
   return createView("TestNodeUnitSetup_view", sql);
+}
+
+bool mdtTtDatabaseSchema::createTestNodeRouteView()
+{
+  QString sql;
+
+  sql = "CREATE VIEW TestNodeRoute_view AS\n"\
+        "SELECT\n"\
+        " TNR.*,\n"\
+        // Test node connection A part
+        " UA.SchemaPosition AS TestNodeUnitConnectionASchemaPosition,\n"\
+        " UCNXA.UnitContactName AS TestNodeUnitConnectionAContactName,\n"\
+        // Test node connection B part
+        " UB.SchemaPosition AS TestNodeUnitConnectionBSchemaPosition,\n"\
+        " UCNXB.UnitContactName AS TestNodeUnitConnectionBContactName,\n"\
+        // Node units that are used to create the route
+        " GROUP_CONCAT(UR.SchemaPosition, ', ') AS RouteTestNodeUnits\n"\
+        "FROM TestNodeRoute_tbl TNR\n"\
+        // Test node connection A part
+        " JOIN UnitConnection_tbl UCNXA\n"\
+        "  ON UCNXA.Id_PK = TNR.TestNodeUnitConnectionA_Id_FK\n"\
+        " JOIN Unit_tbl UA\n"\
+        "  ON UA.Id_PK = UCNXA.Unit_Id_FK\n"\
+        // Test node connection B part
+        " JOIN UnitConnection_tbl UCNXB\n"\
+        "  ON UCNXB.Id_PK = TNR.TestNodeUnitConnectionB_Id_FK\n"\
+        " JOIN Unit_tbl UB\n"\
+        "  ON UB.Id_PK = UCNXB.Unit_Id_FK\n"\
+        // Node units that are used to create the route
+        " JOIN TestNodeRouteUnit_tbl TNRU\n"\
+        "  ON TNRU.TestNodeRoute_Id_FK = TNR.Id_PK\n"\
+        " JOIN Unit_tbl UR\n"\
+        "  ON UR.Id_PK = TNRU.TestNodeUnit_Id_FK\n";
+
+  return createView("TestNodeRoute_view", sql);
 }
 
 bool mdtTtDatabaseSchema::createTestModelItemRouteView()

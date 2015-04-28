@@ -77,6 +77,14 @@ class mdtTtTestNodeEditor : public mdtSqlForm
    */
   void setIoPositionRange();
 
+  /*! \brief Add a route
+   */
+  void addRoute();
+
+  /*! \brief Remove routes
+   */
+  void removeRoutes();
+
   /*! \brief Update node unit connections
    *
    * Will add connections that are missing in TestNodeUnitConnection_tbl.
@@ -141,6 +149,10 @@ class mdtTtTestNodeEditor : public mdtSqlForm
   /*! \brief Update TestNodeUnit table regarding language
    */
   void updateTestNodeUnitTable(const QLocale & locale);
+
+  /*! \brief Setup TestNodeRoute_view table
+   */
+  bool setupTestNodeRouteTable();
 
   /*! \brief Setup TestNodeBus_tbl
    */

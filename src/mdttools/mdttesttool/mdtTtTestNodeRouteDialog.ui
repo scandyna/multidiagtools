@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>mdtTtRelayPathDialog</class>
- <widget class="QDialog" name="mdtTtRelayPathDialog">
+ <class>mdtTtTestNodeRouteDialog</class>
+ <widget class="QDialog" name="mdtTtTestNodeRouteDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>505</width>
-    <height>154</height>
+    <height>188</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -144,7 +144,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>mdtTtRelayPathDialog</receiver>
+   <receiver>mdtTtTestNodeRouteDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -160,7 +160,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>mdtTtRelayPathDialog</receiver>
+   <receiver>mdtTtTestNodeRouteDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

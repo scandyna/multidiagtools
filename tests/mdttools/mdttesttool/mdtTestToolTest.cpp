@@ -44,6 +44,7 @@
 #include "mdtTtTestStepContainer.h"
 #include "mdtTtTestStepWidget.h"
 #include "mdtTtTestStepContainerWidget.h"
+#include "mdtTtTestNodeTestData.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -498,10 +499,26 @@ void mdtTestToolTest::mdtTtTestNodeUnitDataTest()
 
 void mdtTestToolTest::mdtTtTestNodeUnitTest()
 {
+  mdtTtTestNodeATestData data(pvDatabaseManager.database());
   mdtTtTestNodeUnit tnu(this, pvDatabaseManager.database());
-  
 
-  
+  // Create test node A data
+  QVERIFY(data.populate());
+
+  QSqlQuery q(pvDatabaseManager.database());
+  QVERIFY(q.exec("SELECT * FROM TestNode_view"));
+  while(q.next()){
+    qDebug() << q.record();
+  }
+  QVERIFY(q.exec("SELECT * FROM TestNodeUnit_tbl"));
+  while(q.next()){
+    qDebug() << q.record();
+  }
+  QVERIFY(q.exec("SELECT * FROM Link_tbl"));
+  while(q.next()){
+    qDebug() << q.record();
+  }
+
 }
 
 void mdtTestToolTest::mdtTtTestNodeManagerTest()

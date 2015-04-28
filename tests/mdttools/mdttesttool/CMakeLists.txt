@@ -15,9 +15,21 @@ target_link_libraries(mdttvaluelimitstest "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdttvaluelimitstest "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdttvaluelimitstest "mdttesttool${MDTLIB_VERSION_SUFFIX}")
 
+# * mdtTestNodeTest executable *
+QT4_WRAP_CPP(MDT_TEST_NODE_MOC "mdtTestNodeTest.h")
+add_executable(mdttestnodetest mdtTestNodeTest.cpp mdtCableListTestScenario.cpp mdtTtTestNodeTestData.cpp ${MDT_TEST_NODE_MOC})
+target_link_libraries(mdttestnodetest ${QT_LIBRARIES})
+target_link_libraries(mdttestnodetest "mdttest")
+target_link_libraries(mdttestnodetest "mdtutils${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdttestnodetest "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
+#target_link_libraries(mdttestnodetest "mdtdevice${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdttestnodetest "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdttestnodetest "mdttesttool${MDTLIB_VERSION_SUFFIX}")
+#target_link_libraries(mdttestnodetest "mdtcablelist${MDTLIB_VERSION_SUFFIX}")
+
 # * mdtTestToolTest executable *
 QT4_WRAP_CPP(MDT_TEST_TOOL_MOC "mdtTestToolTest.h")
-add_executable(mdttesttooltest mdtTestToolTest.cpp mdtCableListTestScenario.cpp ${MDT_TEST_TOOL_MOC})
+add_executable(mdttesttooltest mdtTestToolTest.cpp mdtCableListTestScenario.cpp mdtTtTestNodeTestData.cpp ${MDT_TEST_TOOL_MOC})
 target_link_libraries(mdttesttooltest ${QT_LIBRARIES})
 target_link_libraries(mdttesttooltest "mdttest")
 target_link_libraries(mdttesttooltest "mdtutils${MDTLIB_VERSION_SUFFIX}")

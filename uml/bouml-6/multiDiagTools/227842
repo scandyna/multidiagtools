@@ -1,6 +1,6 @@
 format 209
 "DatabaseLogical" // mdttools::mdttesttool::DatabaseLogical
-  revision 67
+  revision 70
   modified_by 2 "philippe"
   // class settings
   
@@ -4187,6 +4187,65 @@ ${inlines}
 "
 	    classrelation_ref 1961986 // <unidirectional association>
 	  b parent class_ref 1249154 // TestNodeUnitConnection_tbl
+      end
+    end
+
+    class 1598466 "TestNodeRouteUnit_tbl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 1975298 // <unidirectional association>
+	relation 1959170 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1975298 // <unidirectional association>
+	  b parent class_ref 1571970 // TestNodeRoute_tbl
+      end
+
+      attribute 1646722 "TestNodeRoute_Id_FK"
+	private explicit_type "int"
+	stereotype "PK, FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 1975426 // <unidirectional association>
+	relation 1959298 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 1975426 // <unidirectional association>
+	  b parent class_ref 992770 // TestNodeUnit_tbl
+      end
+
+      attribute 1646850 "TestNodeUnit_Id_FK"
+	private explicit_type "int"
+	stereotype "PK, FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
     end
   end

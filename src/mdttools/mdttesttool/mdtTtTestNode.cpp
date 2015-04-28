@@ -32,6 +32,11 @@ mdtTtTestNode::mdtTtTestNode(QObject *parent, QSqlDatabase db)
 {
 }
 
+mdtTtTestNode::mdtTtTestNode(QSqlDatabase db)
+ : mdtTtBase(0, db)
+{
+}
+
 QString mdtTtTestNode::sqlForUnitSelection(const QVariant & VehicleTypeId) 
 {
   QString sql;

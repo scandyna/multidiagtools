@@ -293,6 +293,8 @@ if(UNIX)
 
   # mdtTtValueLimitsTest
   add_test (mdtTtValueLimitsTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdttesttool/mdttvaluelimitstest)
+  # mdtTestNodeTest
+  add_test (mdtTestNodeTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdttesttool/mdttestnodetest)
   # mdtTestToolTest
   add_test (mdtTestToolTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdttesttool/mdttesttooltest)
 

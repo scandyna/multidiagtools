@@ -43,9 +43,17 @@ class mdtTtTestNodeUnit : public mdtTtBase
    */
   mdtTtTestNodeUnit(QObject *parent, const QSqlDatabase & db);
 
+  /*! \brief Constructor
+   */
+  mdtTtTestNodeUnit(const QSqlDatabase & db);
+
   /*! \brief Get SQL statement for test connection selection
    */
   QString sqlForTestConnectionSelection(const QList<QVariant> connectionIdList) const;
+
+  /*! \brief Get connection ID by test node alias, schema position and contact name
+   */
+  QVariant getConnectionId(const QString & testNodeAlias, const QString & schemaPosition, const QString & contactName, bool & ok);
 
   /*! \brief Get a list of unit connection IDs for given unit ID
    */

@@ -31,6 +31,11 @@ mdtTtTestNodeUnit::mdtTtTestNodeUnit(QObject *parent, const QSqlDatabase & db)
 {
 }
 
+mdtTtTestNodeUnit::mdtTtTestNodeUnit(const QSqlDatabase & db)
+ : mdtTtBase(0, db)
+{
+}
+
 QString mdtTtTestNodeUnit::sqlForTestConnectionSelection(const QList<QVariant> connectionIdList) const
 {
   QString sql;
@@ -48,6 +53,31 @@ QString mdtTtTestNodeUnit::sqlForTestConnectionSelection(const QList<QVariant> c
 
   return sql;
 }
+
+QVariant mdtTtTestNodeUnit::getConnectionId(const QString & testNodeAlias, const QString & schemaPosition, const QString & contactName, bool & ok)
+{
+  QList<QVariant> idList;
+  QString sql;
+
+  sql = "SELECT UCNX.Id_PK FROM UnitConnection_tbl UCNX";
+  sql += " JOIN Unit_tbl U ON U.Id_PK = UCNX.Unit_Id_FK";
+  sql += " JOIN VehicleType_Unit_tbl VTU ON VTU.Unit_Id_FK = U.Id_PK";
+  sql += " JOIN TestNode_tbl TN ON TN.VehicleType_Id_FK_PK = VTU.VehicleType_Id_FK";
+  sql += " WHERE TN.Alias = '" + testNodeAlias + "'";
+  sql += " AND U.schemaPosition = '" + schemaPosition + "'";
+  sql += " AND UCNX.UnitContactName = '" + contactName + "'";
+  idList = getDataList<QVariant>(sql, ok);
+  if(!ok){
+    return QVariant();
+  }
+  if(idList.isEmpty()){
+    return QVariant();
+  }
+  Q_ASSERT(idList.size() > 0);
+
+  return idList.at(0);
+}
+
 
 ///QList<QVariant> mdtTtTestNodeUnit::getConnectionIdListOfUnitId(const QVariant & unitId, bool *ok)
 QList<QVariant> mdtTtTestNodeUnit::getConnectionIdListOfUnitId(const QVariant & unitId, bool excludeAllreadyAffectedToTestNode, bool  & ok)

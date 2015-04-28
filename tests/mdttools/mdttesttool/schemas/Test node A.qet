@@ -1,0 +1,354 @@
+<project folioSheetQuantity="0" title="" version="0.4">
+    <properties/>
+    <newdiagrams>
+        <border displayrows="true" cols="17" displaycols="true" colsize="60" rows="8" rowsize="80"/>
+        <inset title="" folio="%id/%total" author="" filename="" date="null"/>
+        <conductors num="_" vertirotatetext="270" displaytext="1" type="multi" horizrotatetext="0" numsize="7" onetextperfolio="0"/>
+        <report label="%f-%l%c"/>
+        <xrefs>
+            <xref snapto="label" switchprefix="" powerprefix="" displayhas="cross" type="protection" showpowerctc="false" delayprefix=""/>
+            <xref snapto="label" switchprefix="" powerprefix="" displayhas="cross" type="coil" showpowerctc="false" delayprefix=""/>
+        </xrefs>
+        <conductors_autonums>
+            <conductor_autonum title="No name">
+                <part increase="1" type="unit" value="6"/>
+            </conductor_autonum>
+        </conductors_autonums>
+    </newdiagrams>
+    <diagram title="Coupling" displayrows="true" version="0.4" cols="17" folio="%id/%total" displaycols="true" conductorAutonum="No name" height="660" colsize="60" order="1" rows="8" author="Steinmann Philippe" filename="Test node A" date="20150421" rowsize="80">
+        <defaultconductor num="_" vertirotatetext="270" displaytext="1" type="multi" horizrotatetext="0" numsize="7" onetextperfolio="0"/>
+        <elements>
+            <element x="680" y="490" type="embed://import/contact_simple_no.elmt" uuid="{35cf0cff-55e5-43df-8adc-a036a7f7cce5}" orientation="0">
+                <terminals>
+                    <terminal x="0" y="-16" nameHidden="0" number="_" id="0" name="_" orientation="0"/>
+                    <terminal x="0" y="16" nameHidden="0" number="_" id="1" name="_" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="-23" y="17" text="14"/>
+                    <input x="-34" y="1.5" text="K41"/>
+                    <input x="-23" y="-16" text="13"/>
+                </inputs>
+                <elementInformations>
+                    <elementInformation name="comment" show="1"></elementInformation>
+                    <elementInformation name="label" show="1"></elementInformation>
+                </elementInformations>
+            </element>
+            <element x="610" y="490" type="embed://import/contact_simple_no.elmt" uuid="{816a8374-c782-4ecd-b2d4-ec5645bad70e}" orientation="0">
+                <terminals>
+                    <terminal x="0" y="-16" nameHidden="0" number="_" id="2" name="_" orientation="0"/>
+                    <terminal x="0" y="16" nameHidden="0" number="_" id="3" name="_" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="-23" y="17" text="14"/>
+                    <input x="-34" y="1.5" text="K40"/>
+                    <input x="-23" y="-16" text="13"/>
+                </inputs>
+                <elementInformations>
+                    <elementInformation name="comment" show="1"></elementInformation>
+                    <elementInformation name="label" show="1"></elementInformation>
+                </elementInformations>
+            </element>
+            <element x="680" y="270" type="embed://import/contact_simple_no.elmt" uuid="{aeafa5d2-c71a-4831-9e5c-df67be5a4fa8}" orientation="0">
+                <terminals>
+                    <terminal x="0" y="-16" nameHidden="0" number="_" id="4" name="_" orientation="0"/>
+                    <terminal x="0" y="16" nameHidden="0" number="_" id="5" name="_" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="-23" y="17" text="14"/>
+                    <input x="-34" y="1.5" text="K31"/>
+                    <input x="-23" y="-16" text="13"/>
+                </inputs>
+                <elementInformations>
+                    <elementInformation name="comment" show="1"></elementInformation>
+                    <elementInformation name="label" show="1"></elementInformation>
+                </elementInformations>
+            </element>
+            <element x="610" y="270" type="embed://import/contact_simple_no.elmt" uuid="{a460ff91-7166-4faf-bb7f-361ef63af508}" orientation="0">
+                <terminals>
+                    <terminal x="0" y="-16" nameHidden="0" number="_" id="6" name="_" orientation="0"/>
+                    <terminal x="0" y="16" nameHidden="0" number="_" id="7" name="_" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="-23" y="17" text="14"/>
+                    <input x="-34" y="1.5" text="K30"/>
+                    <input x="-23" y="-16" text="13"/>
+                </inputs>
+                <elementInformations>
+                    <elementInformation name="comment" show="1"></elementInformation>
+                    <elementInformation name="label" show="1"></elementInformation>
+                </elementInformations>
+            </element>
+            <element x="680" y="410" type="embed://import/contact_female_nord.elmt" uuid="{ff0e186e-8fef-45fd-b1cf-c39a0a377718}" orientation="0">
+                <terminals>
+                    <terminal x="0" y="6" nameHidden="0" number="_" id="8" name="_" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="-27" y="4.5" text="A4"/>
+                    <input x="-29" y="-9.5" text=""/>
+                </inputs>
+                <elementInformations>
+                    <elementInformation name="comment" show="1"></elementInformation>
+                    <elementInformation name="label" show="1"></elementInformation>
+                </elementInformations>
+            </element>
+            <element x="610" y="410" type="embed://import/contact_female_nord.elmt" uuid="{2e2a7ee0-4888-4d7e-aa23-adbd93b7e0b0}" orientation="0">
+                <terminals>
+                    <terminal x="0" y="6" nameHidden="0" number="_" id="9" name="_" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="-27" y="4.5" text="A2"/>
+                    <input x="-29" y="-9.5" text=""/>
+                </inputs>
+            </element>
+            <element x="680" y="330" type="embed://import/contact_female_sud.elmt" uuid="{44bae6ff-5fa1-4be5-8fe1-ea7cea821ad7}" orientation="0">
+                <terminals>
+                    <terminal x="0" y="-7" nameHidden="0" number="_" id="10" name="_" orientation="0"/>
+                </terminals>
+                <inputs>
+                    <input x="-27" y="4.5" text="A3"/>
+                    <input x="-29" y="-9.5" text=""/>
+                </inputs>
+            </element>
+            <element x="610" y="330" type="embed://import/contact_female_sud.elmt" uuid="{dba36ba3-b31a-4dd1-b91b-0574d989c32b}" orientation="0">
+                <terminals>
+                    <terminal x="0" y="-7" nameHidden="0" number="_" id="11" name="_" orientation="0"/>
+                </terminals>
+                <inputs>
+                    <input x="-27" y="4.5" text="A1"/>
+                    <input x="-29" y="-9.5" text=""/>
+                </inputs>
+            </element>
+            <element x="350" y="150" type="embed://import/contact_simple_no.elmt" uuid="{90bff3ad-cb2b-45d3-ad2c-c07aaf16433a}" orientation="0">
+                <terminals>
+                    <terminal x="0" y="-16" nameHidden="0" number="_" id="12" name="_" orientation="0"/>
+                    <terminal x="0" y="16" nameHidden="0" number="_" id="13" name="_" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="-23" y="17" text="14"/>
+                    <input x="-34" y="1.5" text="K4"/>
+                    <input x="-23" y="-16" text="13"/>
+                </inputs>
+            </element>
+            <element x="190" y="150" type="embed://import/contact_simple_no.elmt" uuid="{54daa589-0907-4f9a-b9fe-5e0313ae12df}" orientation="0">
+                <terminals>
+                    <terminal x="0" y="-16" nameHidden="0" number="_" id="14" name="_" orientation="0"/>
+                    <terminal x="0" y="16" nameHidden="0" number="_" id="15" name="_" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="-23" y="17" userx="-20" usery="20" text="14"/>
+                    <input x="-34" y="1.5" text="K2"/>
+                    <input x="-23" y="-16" text="13"/>
+                </inputs>
+            </element>
+            <element x="280" y="150" type="embed://import/contact_simple_no.elmt" uuid="{7ad35d2c-666a-42e3-aa98-ed1f061739e4}" orientation="0">
+                <terminals>
+                    <terminal x="0" y="-16" nameHidden="0" number="_" id="16" name="_" orientation="0"/>
+                    <terminal x="0" y="16" nameHidden="0" number="_" id="17" name="_" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="-23" y="17" text="14"/>
+                    <input x="-34" y="1.5" text="K3"/>
+                    <input x="-23" y="-16" text="13"/>
+                </inputs>
+                <elementInformations>
+                    <elementInformation name="comment" show="1"></elementInformation>
+                    <elementInformation name="label" show="1"></elementInformation>
+                </elementInformations>
+            </element>
+            <element x="280" y="80" type="embed://import/contact_female_nord.elmt" uuid="{4c34e23a-a568-4428-8198-0176ce6e4ba4}" orientation="0">
+                <terminals>
+                    <terminal x="0" y="6" nameHidden="0" number="_" id="18" name="_" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="-27" y="4.5" userx="-50" usery="0" text="XMEAS-"/>
+                    <input x="-29" y="-9.5" text=""/>
+                </inputs>
+                <elementInformations>
+                    <elementInformation name="comment" show="1"></elementInformation>
+                    <elementInformation name="label" show="1"></elementInformation>
+                </elementInformations>
+            </element>
+            <element x="120" y="80" type="embed://import/contact_female_nord.elmt" uuid="{5d7665b5-5529-44b0-97bd-7b662c6e3b70}" orientation="0">
+                <terminals>
+                    <terminal x="0" y="6" nameHidden="0" number="_" id="19" name="_" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="-27" y="4.5" userx="-50" usery="0" text="XMEAS+"/>
+                    <input x="-29" y="-9.5" text=""/>
+                </inputs>
+            </element>
+            <element x="120" y="150" type="embed://import/contact_simple_no.elmt" uuid="{3894c451-de8e-4287-9a81-de629ce97865}" orientation="0">
+                <terminals>
+                    <terminal x="0" y="-16" nameHidden="0" number="_" id="20" name="_" orientation="0"/>
+                    <terminal x="0" y="16" nameHidden="0" number="_" id="21" name="_" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="-23" y="17" text="14"/>
+                    <input x="-34" y="1.5" text="K1"/>
+                    <input x="-23" y="-16" text="13"/>
+                </inputs>
+            </element>
+        </elements>
+        <conductors>
+            <conductor num="W011 (BUSB)" x="0" vertirotatetext="270" y="0" displaytext="1" terminal1="1" terminal2="3" type="multi" horizrotatetext="0" numsize="7" onetextperfolio="0">
+                <segment length="9" orientation="vertical"/>
+                <segment length="41" orientation="vertical"/>
+                <segment length="-70" orientation="horizontal"/>
+                <segment length="-41" orientation="vertical"/>
+                <segment length="-9" orientation="vertical"/>
+            </conductor>
+            <conductor num="W011 (BUSB)" x="0" vertirotatetext="270" y="0" displaytext="1" terminal1="15" terminal2="13" type="multi" horizrotatetext="0" numsize="7" onetextperfolio="0">
+                <segment length="9" orientation="vertical"/>
+                <segment length="111" orientation="vertical"/>
+                <segment length="160" orientation="horizontal"/>
+                <segment length="-111" orientation="vertical"/>
+                <segment length="-9" orientation="vertical"/>
+            </conductor>
+            <conductor num="W011 (BUSB)" x="0" vertirotatetext="270" y="0" displaytext="1" terminal1="13" terminal2="3" type="multi" horizrotatetext="0" numsize="7" onetextperfolio="0">
+                <segment length="7" orientation="vertical"/>
+                <segment length="113" orientation="vertical"/>
+                <segment length="120" orientation="horizontal"/>
+                <segment length="270" orientation="vertical"/>
+                <segment length="140" orientation="horizontal"/>
+                <segment length="-39" orientation="vertical"/>
+                <segment length="-11" orientation="vertical"/>
+            </conductor>
+            <conductor num="W010 (BUSA)" x="0" vertirotatetext="270" y="0" displaytext="1" terminal1="17" terminal2="6" type="multi" horizrotatetext="0" numsize="7" onetextperfolio="0">
+                <segment length="6.5" orientation="vertical"/>
+                <segment length="43.5" orientation="vertical"/>
+                <segment length="330" orientation="horizontal"/>
+                <segment length="23.5" orientation="vertical"/>
+                <segment length="6.5" orientation="vertical"/>
+            </conductor>
+            <conductor num="W010 (BUSA)" x="0" vertirotatetext="270" y="0" displaytext="1" terminal1="6" terminal2="4" type="multi" horizrotatetext="0" numsize="7" onetextperfolio="0">
+                <segment length="-9" orientation="vertical"/>
+                <segment length="-21" orientation="vertical"/>
+                <segment length="70" orientation="horizontal"/>
+                <segment length="21" orientation="vertical"/>
+                <segment length="9" orientation="vertical"/>
+            </conductor>
+            <conductor num="W010 (BUSA)" x="0" vertirotatetext="270" y="0" displaytext="1" terminal1="21" userx="200" terminal2="6" usery="220" type="multi" horizrotatetext="0" numsize="7" onetextperfolio="0">
+                <segment length="14" orientation="vertical"/>
+                <segment length="36" orientation="vertical"/>
+                <segment length="490" orientation="horizontal"/>
+                <segment length="16" orientation="vertical"/>
+                <segment length="14" orientation="vertical"/>
+            </conductor>
+            <conductor num="W041" x="0" vertirotatetext="270" y="20" displaytext="1" terminal1="0" terminal2="8" type="multi" horizrotatetext="0" numsize="7" onetextperfolio="0"/>
+            <conductor num="W040" x="0" vertirotatetext="270" y="20" displaytext="1" terminal1="2" terminal2="9" type="multi" horizrotatetext="0" numsize="7" onetextperfolio="0"/>
+            <conductor num="W031" x="0" vertirotatetext="270" y="0" displaytext="1" terminal1="5" terminal2="10" type="multi" horizrotatetext="0" numsize="7" onetextperfolio="0"/>
+            <conductor num="W030" x="0" vertirotatetext="270" y="0" displaytext="1" terminal1="7" terminal2="11" type="multi" horizrotatetext="0" numsize="7" onetextperfolio="0"/>
+            <conductor num="W002" x="-20" vertirotatetext="270" y="0" displaytext="1" terminal1="12" userx="310" terminal2="16" usery="120" type="multi" horizrotatetext="0" numsize="7" onetextperfolio="0"/>
+            <conductor num="W001" x="0" vertirotatetext="270" y="0" displaytext="1" terminal1="14" userx="130" terminal2="20" usery="120" type="multi" horizrotatetext="0" numsize="7" onetextperfolio="0"/>
+            <conductor num="" x="110" vertirotatetext="270" y="0" displaytext="1" terminal1="16" terminal2="18" type="multi" horizrotatetext="0" numsize="7" onetextperfolio="0"/>
+            <conductor num="" x="0" vertirotatetext="270" y="0" displaytext="1" terminal1="20" terminal2="19" type="multi" horizrotatetext="0" numsize="7" onetextperfolio="0"/>
+        </conductors>
+        <inputs>
+            <input x="620" y="360" text="&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;>&#xa;&lt;html>&lt;head>&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; />&lt;style type=&quot;text/css&quot;>&#xa;p, li { white-space: pre-wrap; }&#xa;&lt;/style>&lt;/head>&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;>&#xa;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;>XTEST&lt;/p>&lt;/body>&lt;/html>"/>
+        </inputs>
+    </diagram>
+    <collection>
+        <category name="import">
+            <names>
+                <name lang="de">Importierte elemente</name>
+                <name lang="ru">Импортированные элементы</name>
+                <name lang="pt">elementos importados</name>
+                <name lang="el">Εισηγμένα στοιχεία</name>
+                <name lang="en">Imported elements</name>
+                <name lang="hr">Uvezeni elementi</name>
+                <name lang="it">Elementi importati</name>
+                <name lang="fr">Éléments importés</name>
+                <name lang="pl">Elementy importowane</name>
+                <name lang="es">Elementos importados</name>
+                <name lang="ro">Elemente importate</name>
+                <name lang="nl">Elementen geïmporteerd</name>
+                <name lang="ca">Elements importats</name>
+                <name lang="cs">Zavedené prvky</name>
+            </names>
+            <element name="contact_simple_no.elmt">
+                <definition width="40" version="0.4" hotspot_x="36" hotspot_y="30" height="60" link_type="slave" type="element" ic="true" orientation="dyyy">
+                    <names>
+                        <name lang="ar">مُلامس بسيط (NO)</name>
+                        <name lang="de">Kontakt Einfach</name>
+                        <name lang="ru">Проктой контакт (НР)</name>
+                        <name lang="pt">Contacto simples (NO)</name>
+                        <name lang="el">Απλή επαφή, ανοικτή</name>
+                        <name lang="en">Simple contact</name>
+                        <name lang="it">Contatto semplice (NO)</name>
+                        <name lang="fr">Contact simple (NO)</name>
+                        <name lang="pl">Zestyk zwierny</name>
+                        <name lang="es">Contactor simple</name>
+                        <name lang="cs">Jednoduché spojení</name>
+                    </names>
+                    <kindInformations>
+                        <kindInformation name="number" show="1">1</kindInformation>
+                        <kindInformation name="type" show="1">simple</kindInformation>
+                        <kindInformation name="state" show="1">NO</kindInformation>
+                    </kindInformations>
+                    <informations>Author: The QElectroTech team
+License: see http://qelectrotech.org/wiki/doc/elements_license</informations>
+                    <description>
+                        <input x="-23" y="17" size="7" rotate="true" text="_4" tagg="none"/>
+                        <polygon antialias="true" style="line-style:normal;line-weight:normal;filling:none;color:black" closed="false" y1="-10" x1="-5" y2="10" x2="0" y3="20" x3="0"/>
+                        <input x="-34" y="1.5" size="9" text="K_" tagg="label"/>
+                        <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-20" x1="0" y2="-10" x2="0"/>
+                        <input x="-23" y="-16" size="7" rotate="true" text="_3" tagg="none"/>
+                        <terminal x="0" y="-20" orientation="n"/>
+                        <terminal x="0" y="20" orientation="s"/>
+                    </description>
+                </definition>
+            </element>
+            <element name="contact_female_nord.elmt">
+                <definition width="40" version="0.4" hotspot_x="33" hotspot_y="23" height="40" link_type="simple" type="element" ic="true" orientation="dyyy">
+                    <names>
+                        <name lang="ar">موصل أنثوي</name>
+                        <name lang="de">Stecker (weiblich)</name>
+                        <name lang="ru">Гнездо (нов.)</name>
+                        <name lang="pt">Conector fêmea</name>
+                        <name lang="en">Female connector</name>
+                        <name lang="it">Connettore femmina</name>
+                        <name lang="fr">Connecteur femelle</name>
+                        <name lang="pl">Gniazdo</name>
+                        <name lang="es">Conector hembra</name>
+                        <name lang="cs">Ženská spojka</name>
+                    </names>
+                    <informations>Author: The QElectroTech team
+License: see http://qelectrotech.org/wiki/doc/elements_license</informations>
+                    <description>
+                        <input x="-27" y="4.5" size="7" rotate="true" text="_" tagg="none"/>
+                        <input x="-29" y="-9.5" size="8" rotate="true" text="X_" tagg="none"/>
+                        <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="0" x1="0" y2="10" x2="0"/>
+                        <arc width="6" x="-3" y="-6" antialias="true" height="6" style="line-style:normal;line-weight:normal;filling:none;color:black" start="-180" angle="180"/>
+                        <terminal x="0" y="10" orientation="s"/>
+                    </description>
+                </definition>
+            </element>
+            <element name="contact_female_sud.elmt">
+                <definition width="40" version="0.4" hotspot_x="33" hotspot_y="23" height="40" link_type="simple" type="element" ic="true" orientation="dyyy">
+                    <names>
+                        <name lang="ar">موصل أنثوي</name>
+                        <name lang="de">Stecker (weiblich)</name>
+                        <name lang="ru">Гнездо (нов.)</name>
+                        <name lang="pt">Conector fêmea</name>
+                        <name lang="en">Female connector</name>
+                        <name lang="it">Connettore femmina</name>
+                        <name lang="fr">Connecteur femelle</name>
+                        <name lang="pl">Gniazdo</name>
+                        <name lang="es">Conector hembra</name>
+                        <name lang="cs">Ženská spojka</name>
+                    </names>
+                    <informations>Author: The QElectroTech team
+License: see http://qelectrotech.org/wiki/doc/elements_license</informations>
+                    <description>
+                        <input x="-27" y="4.5" size="7" rotate="true" text="_" tagg="none"/>
+                        <input x="-29" y="-9.5" size="8" rotate="true" text="X_" tagg="none"/>
+                        <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-10" x1="0" y2="-1" x2="0"/>
+                        <arc width="6" x="-3" y="0" antialias="true" height="6" style="line-style:normal;line-weight:normal;filling:none;color:black" start="-180" angle="-84"/>
+                        <arc width="6" x="-3" y="0" antialias="true" height="6" style="line-style:normal;line-weight:normal;filling:none;color:black" start="83" angle="-84"/>
+                        <terminal x="0" y="-11" orientation="n"/>
+                    </description>
+                </definition>
+            </element>
+        </category>
+    </collection>
+</project>

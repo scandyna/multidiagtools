@@ -211,6 +211,10 @@ class mdtTtDatabaseSchema
    */
   bool setupTestNodeRouteTable();
 
+  /*! \brief Setup TestNodeRouteUnit_tbl
+   */
+  bool setupTestNodeRouteUnitTable();
+
   /*! \brief Setup TestNodeUnitType_tbl
    */
   bool setupTestNodeUnitTypeTable();
@@ -418,6 +422,10 @@ class mdtTtDatabaseSchema
   /*! \brief Create TestNodeUnitSetup_view
    */
   bool createTestNodeUnitSetupView();
+
+  /*! \brief Create TestNodeRoute_view
+   */
+  bool createTestNodeRouteView();
 
   /*! \brief Create TestModelItemRoute_view
    */
