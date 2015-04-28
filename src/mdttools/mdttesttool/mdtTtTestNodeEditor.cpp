@@ -401,8 +401,10 @@ void mdtTtTestNodeEditor::setIoPositionRange()
 
 void mdtTtTestNodeEditor::addRoute()
 {
-  mdtClPathGraph graph(database());
-  mdtTtTestNodeRouteDialog dialog(database(), &graph, this);
+  std::shared_ptr<mdtClPathGraph> graph(new mdtClPathGraph(database()));
+  mdtTtTestNodeRouteDialog dialog(database(), this);
+  mdtTtTestNodeRoute tnr(database());
+  mdtTtTestNode tn(database());
   QVariant testNodeId;
 
   // Get test node ID
@@ -411,14 +413,28 @@ void mdtTtTestNodeEditor::addRoute()
     return;
   }
   // Load link list in graph
-  if(!graph.loadLinkList()){
-    pvLastError = graph.lastError();
+  if(!graph->loadLinkList()){
+    pvLastError = graph->lastError();
+    displayLastError();
+    return;
+  }
+  // Add test nodes relays to graph
+  if(!tn.addRelaysToGraph(testNodeId, *graph)){
+    pvLastError = tn.lastError();
     displayLastError();
     return;
   }
   // Setup and show dialog
-  dialog.setTestNodeId(testNodeId);
-  dialog.exec();
+  dialog.setTestNodeId(testNodeId, graph);
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
+  // Add route to database
+  if(!tnr.addRoute(dialog.routeData())){
+    pvLastError = tnr.lastError();
+    displayLastError();
+    return;
+  }
 
   select("TestNodeRoute_view");
 }
@@ -937,6 +953,17 @@ bool mdtTtTestNodeEditor::setupTestNodeRouteTable()
   }
   auto *widget = sqlTableWidget("TestNodeRoute_view");
   Q_ASSERT(widget != nullptr);
+  // Hide technical fields
+  widget->setColumnHidden("Id_PK", true);
+  widget->setColumnHidden("TestNode_Id_FK", true);
+  widget->setColumnHidden("TestNodeUnitConnectionA_Id_FK", true);
+  widget->setColumnHidden("TestNodeUnitConnectionB_Id_FK", true);
+  // Set fields a user friendly name (using tr() )
+  widget->setHeaderData("TestNodeUnitConnectionASchemaPosition", tr("Schema pos. A"));
+  widget->setHeaderData("TestNodeUnitConnectionAContactName", tr("Connection A"));
+  widget->setHeaderData("TestNodeUnitConnectionBSchemaPosition", tr("Schema pos. B"));
+  widget->setHeaderData("TestNodeUnitConnectionBContactName", tr("Connection B"));
+  widget->setHeaderData("RouteTestNodeUnits", tr("Relays to enable"));
   // Add buttons
   pb = new QPushButton(tr("Add ..."));
   pb->setIcon(QIcon::fromTheme("list-add"));

@@ -22,6 +22,7 @@
 #define MDT_TT_TEST_NODE_ROUTE_DIALOG_H
 
 #include "ui_mdtTtTestNodeRouteDialog.h"
+#include "mdtTtTestNodeRouteData.h"
 #include "mdtError.h"
 #include <QDialog>
 #include <QSqlDatabase>
@@ -29,6 +30,7 @@
 #include <QString>
 #include <QList>
 #include <QMap>
+#include <memory>
 
 class mdtClPathGraph;
 class QWidget;
@@ -42,14 +44,27 @@ class mdtTtTestNodeRouteDialog : public QDialog, Ui::mdtTtTestNodeRouteDialog
  public:
 
   /*! \brief Constructor
-   *
-   * Note: for given path grah (pg), link list must allready been loaded (see mdtClPathGraph::loadLinkList() ).
    */
-  mdtTtTestNodeRouteDialog(QSqlDatabase db, mdtClPathGraph *pg, QWidget *parent = 0);
+  mdtTtTestNodeRouteDialog(QSqlDatabase db, QWidget *parent = 0);
 
   /*! \brief Set test node ID
+   *
+   * Will also populate comboboxes with units of given test node.
+   *
+   * \param testNodeId Id (database primary key) of test node
+   * \param graph Graph to use for path search.
+   *               Link list must allready been loaded (see mdtClPathGraph::loadLinkList() )
+   *               and (coupling and channel) relays of test node been added (see mdtTtTestNode::addRelaysToGraph() ).
+   * \pre graph must be a valid pointer
    */
-  void setTestNodeId(const QVariant & testNodeId);
+  void setTestNodeId(const QVariant & testNodeId, const std::shared_ptr<mdtClPathGraph> & graph);
+
+  /*! \brief Get route data
+   */
+  mdtTtTestNodeRouteData routeData() const
+  {
+    return pvRouteData;
+  }
 
   /*! \brief Set data
    */
@@ -57,25 +72,33 @@ class mdtTtTestNodeRouteDialog : public QDialog, Ui::mdtTtTestNodeRouteDialog
 
   /*! \brief Get list if relays IDs to enable
    */
-  QList<QVariant> idListOfRelaysToEnable() const;
+//   QList<QVariant> idListOfRelaysToEnable() const;
 
   /*! \brief Get currently selected test connection
    */
-  QVariant selectedTestConnection() const;
+//   QVariant selectedTestConnection() const;
 
   /*! \brief Get currently selected measure connection
    */
-  QVariant selectedMeasureConnection() const;
+//   QVariant selectedMeasureConnection() const;
 
  private slots:
 
-  /*! \brief Update source connections list regarding current source connector
+  /*! \brief Update unit A list regarding current unit A type
    */
-  void updateSourceConnections(int index);
+  void updateUnitA(int index);
 
-  /*! \brief Update destination connections list regarding current source connector
+  /*! \brief Update connections list of unit A regarding current unit A
    */
-  void updateDestinationConnections(int index);
+  void updateUnitAConnections(int index);
+
+  /*! \brief Update unit B list regarding current unit A type
+   */
+  void updateUnitB(int index);
+
+  /*! \brief Update connections list of unit B regarding current unit B
+   */
+  void updateUnitBConnections(int index);
 
   /*! \brief Search path form source connection to destination connection
    */
@@ -85,35 +108,51 @@ class mdtTtTestNodeRouteDialog : public QDialog, Ui::mdtTtTestNodeRouteDialog
 
   /*! \brief Display test node related data
    */
-  void displayTestNodeData(const QVariant & testNodeId);
+  void displayTestNodeData();
 
-  /*! \brief Populate the source test node unit combobox
+  /*! \brief Populate test node unit A type combobox
    */
-  bool populateSourceTestNodeUnitCombobox(const QVariant & testNodeId);
+  bool populateTestNodeUnitATypeCombobox();
 
-  /*! \brief Populate the source connection combobox
+  /*! \brief Populate test node unit A combobox
    */
-  bool populateSourceConnectionCombobox(const QVariant & testNodeUnitId);
+  bool populateTestNodeUnitACombobox(const QString & unitType);
 
-  /*! \brief Populate the destination test node unit combobox
+  /*! \brief Populate test node unit A connections combobox
    */
-  bool populateDestinationTestNodeUnitCombobox(const QVariant & testNodeId);
+  bool populateConnectionACombobox(const QVariant & testNodeUnitId);
 
-  /*! \brief Populate the destination connection combobox
+  /*! \brief Populate test node unit B type combobox
    */
-  bool populateDestinationConnectionCombobox(const QVariant & testNodeUnitId);
+  bool populateTestNodeUnitBTypeCombobox();
+
+  /*! \brief Populate test node unit B combobox
+   */
+  bool populateTestNodeUnitBCombobox(const QString & unitType);
+
+  /*! \brief Populate test node unit B connections combobox
+   */
+  bool populateConnectionBCombobox(const QVariant & testNodeUnitId);
 
   /*! \brief Load relays
    */
-  bool loadRelays(const QVariant & testNodeId);
+//   bool loadRelays(const QVariant & testNodeId);
 
   /*! \brief Load channel relays
    */
   ///bool loadChannelRelays(const QVariant & testNodeId);
 
+  /*! \brief Get SQL statement to get unit type data list
+   */
+  QString sqlForUnitTypeData() const;
+
+  /*! \brief Get SQL statement to get unit data list
+   */
+  QString sqlForUnitData(const QString & unitType) const;
+
   /*! \brief Get SQL statement to get connection data list
    */
-  QString sqlForTestConnectionData(const QVariant & testNodeUnitId) const;
+  QString sqlForConnectionData(const QVariant & testNodeUnitId) const;
 
   /*! \brief Display a error
    */
@@ -122,8 +161,11 @@ class mdtTtTestNodeRouteDialog : public QDialog, Ui::mdtTtTestNodeRouteDialog
   Q_DISABLE_COPY(mdtTtTestNodeRouteDialog);
 
   QSqlDatabase pvDatabase;
-  mdtClPathGraph *pvGraph;
-  QVariant pvTestModelItemId;
+  QVariant pvTestNodeId;
+  mdtTtTestNodeRouteData pvRouteData;
+  ///mdtClPathGraph *pvGraph;
+  std::shared_ptr<mdtClPathGraph> pvGraph;
+  ///QVariant pvTestModelItemId;
   bool pvLoadingData;
   QList<QVariant> pvRelaysToEnableIds;
   QMap<int, QString> pvRelayNameMap;
