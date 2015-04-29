@@ -80,7 +80,14 @@ class mdtTtTestNodeRoute : public mdtTtBase
 
   /*! \brief Set route resistance
    */
-  bool setRouteResistance(const QVariant & routeId, const mdtValueDouble & resistance, const QDateTime d = QDateTime::currentDateTime());
+  bool setRouteResistance(const QVariant & routeId, const mdtValueDouble & resistance, const QDateTime & d = QDateTime::currentDateTime());
+
+  /*! \brief Get route resistance
+   *
+   * \param routeId ID of route
+   * \param ok Will be set false on error, true else.
+   */
+  ///mdtValueDouble getRouteResistance(const QVariant & routeId, bool & ok);
 
   /*! \brief Remove a route from TestNodeRoute_tbl
    *

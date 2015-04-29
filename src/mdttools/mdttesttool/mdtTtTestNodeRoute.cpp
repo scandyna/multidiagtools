@@ -168,9 +168,23 @@ mdtTtTestNodeRouteData mdtTtTestNodeRoute::getRoute(const QVariant & testNodeId,
   return routeData;
 }
 
-bool mdtTtTestNodeRoute::setRouteResistance(const QVariant & routeId, const mdtValueDouble & resistance, const QDateTime d)
+bool mdtTtTestNodeRoute::setRouteResistance(const QVariant & routeId, const mdtValueDouble & resistance, const QDateTime & d)
 {
+  mdtSqlRecord routeRecord;
 
+  // Setup record
+  if(!routeRecord.addAllFields("TestNodeRoute_tbl", database())){
+    pvLastError = routeRecord.lastError();
+    return false;
+  }
+  if(resistance.isNull()){
+    routeRecord.setValue("Resistance", QVariant());
+  }else{
+    routeRecord.setValue("Resistance", resistance.value());
+  }
+  routeRecord.setValue("CalibrationDate", d);
+
+  return updateRecord("TestNodeRoute_tbl", routeRecord, "Id_PK", routeId);
 }
 
 bool mdtTtTestNodeRoute::removeRoute(const QVariant & routeId)

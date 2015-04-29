@@ -227,6 +227,13 @@ void mdtTestNodeTest::routeAddRemoveTest()
   QVERIFY(route.resistance().isNull());
   QVERIFY(route.calibrationDate().isNull());
   QCOMPARE(route.relaysToEnableCount(), createdRoute.relaysToEnableCount());
+  // Update route resistance in database using mdtTtTestNodeRoute
+  QVERIFY(tnr.setRouteResistance(route.id(), 0.7, QDateTime::fromString("2015-02-12T10:22:33", Qt::ISODate)));
+  // Get route back and check
+  route = getRoute("A", "XMEAS", "+", "XTEST", "A1", ok);
+  QVERIFY(ok);
+  QCOMPARE(route.resistance().value(), 0.7);
+  QCOMPARE(route.calibrationDate(), QDateTime::fromString("2015-02-12T10:22:33", Qt::ISODate));
   // Remove route
   QVERIFY(tnr.removeRoute(route.id()));
   /*
@@ -241,14 +248,6 @@ void mdtTestNodeTest::routeAddRemoveTest()
   createdRoute.setCalibrationDate(QDateTime::fromString("2014-03-29T17:44:56", Qt::ISODate));
   // Store route
   QVERIFY(tnr.addRoute(createdRoute));
-  
-  QSqlQuery q(pvDatabaseManager.database());
-  q.exec("SELECT * FROM TestNodeRoute_view");
-  while(q.next()){
-    qDebug() << q.record();
-  }
-
-  
   // Get route back and check
   route = getRoute("A", "XMEAS", "-", "XTEST", "A2", ok);
   QVERIFY(ok);
@@ -261,6 +260,7 @@ void mdtTestNodeTest::routeAddRemoveTest()
   QCOMPARE(route.relaysToEnableCount(), createdRoute.relaysToEnableCount());
   // Remove route
   QVERIFY(tnr.removeRoute(route.id()));
+
 
 }
 

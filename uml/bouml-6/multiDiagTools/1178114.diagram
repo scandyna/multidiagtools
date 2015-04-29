@@ -1,4 +1,4 @@
-format 206
+format 209
 
 classcanvas 128002 class_ref 1302018 // mdtTtTestNodeManager
   classdiagramsettings member_max_width 0 end
@@ -26,7 +26,7 @@ classcanvas 129410 class_ref 1302274 // mdtDeviceContainer
 end
 classcanvas 129794 class_ref 1308930 // mdtTtTestItemNodeSetupData
   classdiagramsettings member_max_width 0 end
-  xyz 86 513 2006
+  xyz 12 711 2006
 end
 relationcanvas 128386 relation_ref 372098 // <generalisation>
   from ref 128130 z 2012 to ref 128258
@@ -54,9 +54,9 @@ relationcanvas 129666 relation_ref 1598210 // <directional composition>
   multiplicity_a_pos 651 364 3000 no_multiplicity_b
 end
 relationcanvas 129922 relation_ref 1604994 // <directional composition>
-  from ref 129794 z 2007 stereotype "<<multimap>>" xyz 421 718 2007 to ref 128642
-  role_a_pos 396 751 3000 no_role_b
-  multiplicity_a_pos 519 781 3000 no_multiplicity_b
+  from ref 129794 z 2007 stereotype "<<multimap>>" xyz 397.5 789 2007 to ref 128642
+  role_a_pos 340 767 3000 no_role_b
+  multiplicity_a_pos 465 797 3000 no_multiplicity_b
 end
 relationcanvas 130050 relation_ref 1618178 // <generalisation>
   from ref 129410 z 2012 to ref 128258

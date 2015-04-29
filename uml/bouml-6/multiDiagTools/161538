@@ -1,6 +1,6 @@
 format 209
 "mdtdevice" // mdtdevice
-  revision 54
+  revision 55
   modified_by 2 "philippe"
   // class settings
   
@@ -267,14 +267,6 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 611842 // <generalisation>
-	relation 604546 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 611842 // <generalisation>
-	  b parent class_ref 309250 // mdtDevice
-      end
-
       classrelation 611970 // pvTcpPortManager (<directional composition>)
 	relation 604674 *-->
 	  a role_name "pvTcpPortManager" multiplicity "0..1" private
@@ -562,6 +554,14 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 1981954 // <generalisation>
+	relation 1965826 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1981954 // <generalisation>
+	  b parent class_ref 1604994 // mdtMultiIoDevice
       end
     end
 
@@ -950,6 +950,29 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 1627138 // <generalisation>
 	  b parent class_ref 138626 // QObject
+      end
+    end
+
+    class 1604994 "mdtMultiIoDevice"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 1982082 // <generalisation>
+	relation 1965954 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 1982082 // <generalisation>
+	  b parent class_ref 309250 // mdtDevice
       end
     end
   end

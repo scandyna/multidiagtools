@@ -1,6 +1,6 @@
 format 209
 "mdttesttool" // mdttools::mdttesttool
-  revision 73
+  revision 74
   modified_by 2 "philippe"
   // class settings
   
@@ -2076,6 +2076,30 @@ ${inlines}
 	
 	
       end
+
+      attribute 1660034 "Resistance"
+	private explicit_type "mdtValueDouble"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1660162 "CalibrationDate"
+	private explicit_type "QDateTime"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
     end
 
     class 1578626 "mdtTtTestNodeRoute"
@@ -2265,6 +2289,18 @@ ${inlines}
 
       attribute 1640066 "schemaPosition"
 	public type class_ref 161154 // QVariant
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1660290 "ioPosition"
+	public explicit_type "int"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -4119,6 +4155,24 @@ ${inlines}
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2527106 "setupDevice"
+	public explicit_return_type "bool"
+	nparams 2
+	  param inout name "device" type class_ref 1604994 // mdtMultiIoDevice
+	  param in name "relays" type class_ref 1578882 // mdtTtTestNodeRouteRelay
+	multiplicity "*"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
