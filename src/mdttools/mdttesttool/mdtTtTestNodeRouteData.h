@@ -21,8 +21,10 @@
 #ifndef MDT_TT_TEST_NODE_ROUTE_DATA_H
 #define MDT_TT_TEST_NODE_ROUTE_DATA_H
 
+#include "mdtValue.h"
 #include <QVariant>
 #include <QString>
+#include <QDateTime>
 #include <vector>
 
 /*! \brief Test node route relay data for test node route data
@@ -123,6 +125,34 @@ class mdtTtTestNodeRouteData
     return pvConnectionBId;
   }
 
+  /*! \brief Set route resistance
+   */
+  void setResistance(const mdtValueDouble & r)
+  {
+    pvResistance = r;
+  }
+
+  /*! \brief Get route resistance
+   */
+  inline mdtValueDouble resistance() const
+  {
+    return pvResistance;
+  }
+
+  /*! \brief Set route resistance calibration date
+   */
+  void setCalibrationDate(const QDateTime & d)
+  {
+    pvCalibrationDate = d;
+  }
+
+  /*! \brief Get route resistance calibration date
+   */
+  inline QDateTime calibrationDate() const
+  {
+    return pvCalibrationDate;
+  }
+
   /*! \brief Add a relay to enable
    */
   void addRelayToEnable(const QVariant & id, const QVariant & schemaPosition);
@@ -134,7 +164,7 @@ class mdtTtTestNodeRouteData
     return pvRelaysToEnable.size();
   }
 
-  /*! \brief Access internal vector
+  /*! \brief Access internal relays to enable vector
    *
    * Can be used, for example, to iterate all relays:
    * \code
@@ -159,6 +189,8 @@ class mdtTtTestNodeRouteData
   QVariant pvTestNodeId;
   QVariant pvConnectionAId;
   QVariant pvConnectionBId;
+  mdtValueDouble pvResistance;
+  QDateTime pvCalibrationDate;
   std::vector<mdtTtTestNodeRouteRelay> pvRelaysToEnable;
 };
 

@@ -26,11 +26,13 @@
 #include "mdtTtTestNodeUnitSetupData.h"
 #include "mdtClPathGraph.h"
 #include "mdtClLinkData.h"
+#include "mdtTtTestNodeRouteData.h"
 #include <QList>
 #include <QVariant>
 #include <QString>
 #include <QSqlRecord>
 #include <QPair>
+#include <vector>
 
 /*! \brief Helper class for test node edition
  */
@@ -125,8 +127,25 @@ class mdtTtTestNode : public mdtTtBase
    * \param relayPathConnectionIdList List of connection ID of path (as returned by mdtClPathGraph::getShortestPath()).
    * \param graph Graph object. Relays must allready been loaded (see addRelaysToGraph()).
    * \param ok Will be set false if a error occured, true else
+   * 
+   * \deprecated ?
    */
   QList<mdtTtTestNodeUnitSetupData> getRelayPathSetupDataList(const QList<QVariant> & relayPathConnectionIdList, mdtClPathGraph & graph, bool & ok);
+
+  /*! \brief Check if enabling a set of coupling and channel relays produces a link between connections A and B
+   *
+   * \todo rename !
+   * 
+   * \param connectionIdA Fisrt connection from witch it must be checked about short circuit
+   * \param connectionIdB Second connection from witch it must be checked about short circuit
+   * \param relays List of coupling and channel relays that will be turned ON in given scenario
+   * \param graph Graph to use for path search.
+   *               Link list must allready been loaded (see mdtClPathGraph::loadLinkList() ).
+   * \param ok Will be set false if a error occured, true else
+   * \return true if given list of relays produces a short between connections A and B
+   * \pre connectionIdA and connectionIdB must not be null
+   */
+  bool makesShortCircuit(const QVariant & connectionIdA, const QVariant & connectionIdB, const std::vector<mdtTtTestNodeRouteRelay> & relays, mdtClPathGraph & graph, bool & ok);
 
   /*! \brief Check that enabling a set of coupling and channel relays does not produce a short circuit between connections A and B
    *
@@ -136,6 +155,8 @@ class mdtTtTestNode : public mdtTtBase
    * \param graph Graph object. Cable list must allready be loaded (see mdtClPathGraph::loadLinkList()).
    * \param ok Will be set false if a error occured, true else
    * \return True if a short circuit was detected, false if OK
+   * 
+   * \deprecated 
    */
   bool ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, const QVariant & connectionIdB, const QList<mdtTtTestNodeUnitSetupData> & testNodeUnitSetupDataList, mdtClPathGraph & graph, bool & ok);
 

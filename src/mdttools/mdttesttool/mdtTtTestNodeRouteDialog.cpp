@@ -53,50 +53,9 @@ void mdtTtTestNodeRouteDialog::setTestNodeId(const QVariant & testNodeId, const 
   displayTestNodeData();
   populateTestNodeUnitATypeCombobox();
   populateTestNodeUnitBTypeCombobox();
-//   populateTestNodeUnitACombobox(testNodeId);
-//   populateTestNodeUnitBCombobox(testNodeId);
-//   loadRelays(testNodeId);
   pvLoadingData = false;
   searchPath(0);
 }
-
-// void mdtTtTestNodeRouteDialog::setData(const QVariant & testModelItemId, const QVariant & testNodeId)
-// {
-//   pvTestModelItemId = testModelItemId;
-//   pvLoadingData = true;
-//   displayTestNodeData(testNodeId);
-//   populateTestNodeUnitACombobox(testNodeId);
-//   populateTestNodeUnitBCombobox(testNodeId);
-//   pvGraph->loadLinkList();
-//   loadRelays(testNodeId);
-//   pvLoadingData = false;
-//   searchPath(0);
-// }
-
-// QList< QVariant > mdtTtTestNodeRouteDialog::idListOfRelaysToEnable() const
-// {
-//   return pvRelaysToEnableIds;
-// }
-// 
-// QVariant mdtTtTestNodeRouteDialog::selectedTestConnection() const
-// {
-//   int index = cbConnectionB->currentIndex();
-// 
-//   if(index < 0){
-//     return QVariant();
-//   }
-//   return cbConnectionB->itemData(index);
-// }
-// 
-// QVariant mdtTtTestNodeRouteDialog::selectedMeasureConnection() const
-// {
-//   int index = cbConnectionA->currentIndex();
-// 
-//   if(index < 0){
-//     return QVariant();
-//   }
-//   return cbConnectionA->itemData(index);
-// }
 
 void mdtTtTestNodeRouteDialog::updateUnitA(int index)
 {
@@ -139,21 +98,19 @@ void mdtTtTestNodeRouteDialog::searchPath(int index)
   mdtTtTestNodeRoute tnr(pvDatabase);
   int cbIndexA, cbIndexB;
   QVariant connectionIdA, connectionIdB;
-  ///QList<QVariant> pathConnectionIdList;
   QString relaysStr;
-//   QVariant relayId;
   bool ok;
 
+  // Clear previous results
+  lbRelays->clear();
   pvRouteData.clear();
+  // Check if we can proceed now
   if(!pvGraph){
     return;
   }
   if(pvLoadingData){
     return;
   }
-  // Clear previous results
-  lbRelays->clear();
-  pvRelaysToEnableIds.clear();
   // Get selected A and B connection IDs
   cbIndexA = cbConnectionA->currentIndex();
   cbIndexB = cbConnectionB->currentIndex();
@@ -183,30 +140,6 @@ void mdtTtTestNodeRouteDialog::searchPath(int index)
       relaysStr += ", " + relay.schemaPosition.toString();
     }
   }
-
-//   pathConnectionIdList = pvGraph->getShortestPath(sourceConnectionId, destinationConnectionId, ok);
-//   if(!ok){
-//     displayError(pvGraph->lastError());
-//     return;
-//   }
-//   if(pathConnectionIdList.size() < 2){
-//     return;
-//   }
-//   // Build relays list
-//   for(i = 1; i < pathConnectionIdList.size(); ++i){
-//     Q_ASSERT(!pathConnectionIdList.at(i-1).isNull());
-//     Q_ASSERT(!pathConnectionIdList.at(i).isNull());
-//     relayId = pvGraph->getUserData(pathConnectionIdList.at(i-1), pathConnectionIdList.at(i));
-//     if(!relayId.isNull()){
-//       Q_ASSERT(!pvRelaysToEnableIds.contains(relayId));
-//       pvRelaysToEnableIds.append(relayId);
-//       if(relaysStr.isEmpty()){
-//         relaysStr = pvRelayNameMap.value(relayId.toInt());
-//       }else{
-//         relaysStr += ", " + pvRelayNameMap.value(relayId.toInt());
-//       }
-//     }
-//   }
   // Display result
   lbRelays->setText(relaysStr);
 }
@@ -250,24 +183,10 @@ bool mdtTtTestNodeRouteDialog::populateTestNodeUnitACombobox(const QString & uni
 {
   mdtTtTestNode tn(0, pvDatabase);
   QList<QSqlRecord> dataList;
-//   QString sql;
   bool ok;
   int i;
 
   cbUnitA->clear();
-  /**
-  sql = "SELECT\n"
-        " TNU.Unit_Id_FK_PK,\n"\
-        " U.SchemaPosition\n"\
-        "FROM TestNodeUnit_tbl TNU\n"\
-        " JOIN Unit_tbl U\n"\
-        "  ON U.Id_PK = TNU.Unit_Id_FK_PK\n"\
-        " JOIN TestNode_tbl TN\n"
-        "  ON TN.VehicleType_Id_FK_PK = TNU.TestNode_Id_FK\n";
-  sql += " WHERE TN.VehicleType_Id_FK_PK = " + testNodeId.toString();
-  sql += " AND (TNU.Type_Code_FK <> 'BUSCPLREL' AND TNU.Type_Code_FK <> 'CHANELREL' AND TNU.Type_Code_FK <> 'TESTCONNECTOR')";
-  sql += " ORDER BY U.SchemaPosition ASC";
-  */
   dataList = tn.getData(sqlForUnitData(unitType), &ok);
   if(!ok){
     displayError(tn.lastError());
@@ -328,24 +247,10 @@ bool mdtTtTestNodeRouteDialog::populateTestNodeUnitBCombobox(const QString & uni
 {
   mdtTtTestNode tn(0, pvDatabase);
   QList<QSqlRecord> dataList;
-//   QString sql;
   bool ok;
   int i;
 
   cbUnitB->clear();
-  /**
-  sql = "SELECT\n"
-        " TNU.Unit_Id_FK_PK,\n"\
-        " U.SchemaPosition\n"\
-        "FROM TestNodeUnit_tbl TNU\n"\
-        " JOIN Unit_tbl U\n"\
-        "  ON U.Id_PK = TNU.Unit_Id_FK_PK\n"\
-        " JOIN TestNode_tbl TN\n"
-        "  ON TN.VehicleType_Id_FK_PK = TNU.TestNode_Id_FK\n";
-  sql += " WHERE TN.VehicleType_Id_FK_PK = " + testNodeId.toString();
-  sql += " AND (TNU.Type_Code_FK = 'TESTCONNECTOR')";
-  sql += " ORDER BY U.SchemaPosition ASC";
-  */
   dataList = tn.getData(sqlForUnitData(unitType), &ok);
   if(!ok){
     displayError(tn.lastError());
@@ -382,121 +287,6 @@ bool mdtTtTestNodeRouteDialog::populateConnectionBCombobox(const QVariant& testN
 
   return true;
 }
-
-// bool mdtTtTestNodeRouteDialog::populateConnectionBCombobox(const QVariant& testNodeUnitId)
-// {
-//   mdtTtTestNode tn(0, pvDatabase);
-//   QList<QSqlRecord> dataList;
-//   QSqlRecord data;
-//   QString text;
-//   QString function;
-//   QString sql;
-//   QLocale locale;
-//   QString functionFieldName;
-//   bool ok;
-//   int i;
-// 
-//   // Select function field and generate SQL statement
-//   switch(locale.language()){
-//     case QLocale::French:
-//       functionFieldName = "FunctionFR AS Function";
-//       break;
-//     case QLocale::German:
-//       functionFieldName = "FunctionDE AS Function";
-//       break;
-//     case QLocale::Italian:
-//       functionFieldName = "FunctionIT AS Function";
-//       break;
-//     default:
-//       functionFieldName = "FunctionEN AS Function";
-//   }
-//   sql = "SELECT Id_PK, UnitContactName, " + functionFieldName + " FROM UnitConnection_tbl ";
-//   sql += " WHERE Unit_Id_FK = " + testNodeUnitId.toString();
-//   sql += " AND Id_PK IN (";
-//   sql += "  SELECT TL.TestConnection_Id_FK FROM TestLink_tbl TL JOIN TestModelItem_TestLink_tbl TMITL ON TMITL.TestLink_Id_FK = TL.Id_PK ";
-//   sql += "  WHERE TMITL.TestModelItem_Id_FK = " + pvTestModelItemId.toString();
-//   sql += ")";
-//   // Get data and populate combobox
-//   dataList = tn.getData(sql, &ok);
-//   if(!ok){
-//     displayError(tn.lastError());
-//     return false;
-//   }
-//   for(i = 0; i < dataList.size(); ++i){
-//     data = dataList.at(i);
-//     text = data.value("UnitContactName").toString();
-//     function = data.value("Function").toString();
-//     if(!function.isEmpty()){
-//       text += " ( " + function + " )";
-//     }
-//     cbConnectionB->addItem(text, data.value("Id_PK"));
-//   }
-// 
-//   return true;
-// }
-
-// bool mdtTtTestNodeRouteDialog::loadRelays(const QVariant & testNodeId)
-// {
-//   Q_ASSERT(pvGraph);
-// 
-//   QString sql;
-//   mdtTtTestNode tn(0, pvDatabase);
-//   QList<QSqlRecord> dataList;
-//   ///QSqlRecord data;
-//   ///QList<QVariant> connectionsList;
-//   ///QVariant testNodeUnitId;
-//   bool ok;
-//   int i;
-// 
-//   // Add relays to graph
-//   if(!tn.addRelaysToGraph(testNodeId, *pvGraph)){
-//     displayError(tn.lastError());
-//     return false;
-//   }
-//   // Load the relays name map
-//   sql = "SELECT TNU.Unit_Id_FK_PK, U.SchemaPosition FROM TestNodeUnit_tbl TNU JOIN Unit_tbl U ON U.Id_PK = TNU.Unit_Id_FK_PK ";
-//   sql += " WHERE TNU.TestNode_Id_FK = " + testNodeId.toString();
-//   sql += " AND (Type_Code_FK = 'BUSCPLREL' OR Type_Code_FK = 'CHANELREL')";
-//   dataList = tn.getDataList<QSqlRecord>(sql, ok);
-//   if(!ok){
-//     displayError(tn.lastError());
-//     return false;
-//   }
-//   for(i = 0; i < dataList.size(); ++i){
-//     Q_ASSERT(!dataList.at(i).value("Unit_Id_FK_PK").isNull());
-//     pvRelayNameMap.insert(dataList.at(i).value("Unit_Id_FK_PK").toInt(), dataList.at(i).value("SchemaPosition").toString());
-//   }
-//   /**
-//   dataList = tn.getData(sql, &ok);
-//   if(!ok){
-//     displayError(tn.lastError());
-//     return false;
-//   }
-//   for(i = 0; i < dataList.size(); ++i){
-//     // Get connections
-//     data = dataList.at(i);
-//     sql = "SELECT Id_PK FROM UnitConnection_tbl WHERE Unit_Id_FK = " + data.value("Unit_Id_FK_PK").toString();
-//     connectionsList = tn.getDataList<QVariant>(sql, ok);
-//     if(!ok){
-//       displayError(tn.lastError());
-//       return false;
-//     }
-//     // We only handle relays with exactly 2 connections
-//     if(connectionsList.size() == 2){
-//       testNodeUnitId = data.value("Unit_Id_FK_PK");
-//       Q_ASSERT(!testNodeUnitId.isNull());
-//       pvGraph->addLink(connectionsList.at(0), connectionsList.at(1), testNodeUnitId, true, 2);
-//       pvRelayNameMap.insert(testNodeUnitId.toInt(), data.value("SchemaPosition").toString());
-//     }else{
-//       mdtError e(tr("Relay ID") + data.value("Unit_Id_FK_PK").toString() + tr(" has not exactly 2 connections, will be ignored."), mdtError::Warning);
-//       MDT_ERROR_SET_SRC(e, "mdtTtTestNodeRouteDialog");
-//       e.commit();
-//     }
-//   }
-//   */
-// 
-//   return true;
-// }
 
 QString mdtTtTestNodeRouteDialog::sqlForUnitTypeData() const
 {

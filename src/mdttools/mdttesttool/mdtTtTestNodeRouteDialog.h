@@ -66,22 +66,6 @@ class mdtTtTestNodeRouteDialog : public QDialog, Ui::mdtTtTestNodeRouteDialog
     return pvRouteData;
   }
 
-  /*! \brief Set data
-   */
-//  void setData(const QVariant & testModelItemId, const QVariant & testNodeId);
-
-  /*! \brief Get list if relays IDs to enable
-   */
-//   QList<QVariant> idListOfRelaysToEnable() const;
-
-  /*! \brief Get currently selected test connection
-   */
-//   QVariant selectedTestConnection() const;
-
-  /*! \brief Get currently selected measure connection
-   */
-//   QVariant selectedMeasureConnection() const;
-
  private slots:
 
   /*! \brief Update unit A list regarding current unit A type
@@ -134,14 +118,6 @@ class mdtTtTestNodeRouteDialog : public QDialog, Ui::mdtTtTestNodeRouteDialog
    */
   bool populateConnectionBCombobox(const QVariant & testNodeUnitId);
 
-  /*! \brief Load relays
-   */
-//   bool loadRelays(const QVariant & testNodeId);
-
-  /*! \brief Load channel relays
-   */
-  ///bool loadChannelRelays(const QVariant & testNodeId);
-
   /*! \brief Get SQL statement to get unit type data list
    */
   QString sqlForUnitTypeData() const;
@@ -163,12 +139,10 @@ class mdtTtTestNodeRouteDialog : public QDialog, Ui::mdtTtTestNodeRouteDialog
   QSqlDatabase pvDatabase;
   QVariant pvTestNodeId;
   mdtTtTestNodeRouteData pvRouteData;
-  ///mdtClPathGraph *pvGraph;
   std::shared_ptr<mdtClPathGraph> pvGraph;
-  ///QVariant pvTestModelItemId;
   bool pvLoadingData;
-  QList<QVariant> pvRelaysToEnableIds;
-  QMap<int, QString> pvRelayNameMap;
+//   QList<QVariant> pvRelaysToEnableIds;
+//   QMap<int, QString> pvRelayNameMap;
 };
 
 #endif  // #ifndef MDT_TT_TEST_NODE_ROUTE_DIALOG_H

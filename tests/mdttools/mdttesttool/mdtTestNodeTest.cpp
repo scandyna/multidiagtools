@@ -34,7 +34,6 @@
 #include "mdtClUnitConnectionData.h"
 ///#include "mdtTtTestItemNodeSetupData.h"
 #include "mdtTtTestNodeRoute.h"
-#include "mdtTtTestNodeRouteData.h"
 #include "mdtTtTestNodeSetupData.h"
 #include "mdtTtTestNodeUnitSetupData.h"
 ///#include "mdtTtTestModelItemData.h"
@@ -57,13 +56,11 @@
 ///#include <QWidget>
 ///#include <QScrollArea>
 ///#include <QDialog>
-#include <QString>
 #include <QStringList>
 #include <QSqlDatabase>
 ///#include <QSqlQueryModel>
 #include <QSqlTableModel>
 #include <QFile>
-#include <QVariant>
 ///#include <QTimer>
 ///#include <QModelIndex>
 #include <QList>
@@ -121,6 +118,8 @@ void mdtTestNodeTest::testNodeRouteDataTest()
   data.setTestNodeId(2);
   data.setConnectionAId(3);
   data.setConnectionBId(4);
+  data.setResistance(1.2);
+  data.setCalibrationDate(QDateTime::fromString("2015-04-29T17:25:47", Qt::ISODate));
   data.addRelayToEnable(5, "K5");
   data.addRelayToEnable(6, "K6");
   // Check
@@ -128,6 +127,8 @@ void mdtTestNodeTest::testNodeRouteDataTest()
   QCOMPARE(data.testNodeId(), QVariant(2));
   QCOMPARE(data.connectionAId(), QVariant(3));
   QCOMPARE(data.connectionBId(), QVariant(4));
+  QCOMPARE(data.resistance().value(), 1.2);
+  QCOMPARE(data.calibrationDate(), QDateTime::fromString("2015-04-29T17:25:47", Qt::ISODate));
   QCOMPARE(data.relaysToEnableCount(), 2);
   // Check clear
   data.clear();
@@ -135,6 +136,8 @@ void mdtTestNodeTest::testNodeRouteDataTest()
   QVERIFY(data.testNodeId().isNull());
   QVERIFY(data.connectionAId().isNull());
   QVERIFY(data.connectionBId().isNull());
+  QVERIFY(data.resistance().isNull());
+  QVERIFY(data.calibrationDate().isNull());
   QCOMPARE(data.relaysToEnableCount(), 0);
 }
 
@@ -182,13 +185,6 @@ void mdtTestNodeTest::routeBuildTest()
   QCOMPARE(route.relaysToEnableCount(), 2);
   // Save route
   QVERIFY(tnr.addRoute(route));
-  
-  QSqlQuery q(pvDatabaseManager.database());
-  q.exec("SELECT * FROM TestNodeRoute_view");
-  while(q.next()){
-    qDebug() << q.record();
-  }
-  
   // Get route from DB and check
   route = tnr.getRoute(testNodeId, connectionAId, connectionBId, ok);
   QVERIFY(ok);
@@ -205,10 +201,188 @@ void mdtTestNodeTest::routeBuildTest()
 
 void mdtTestNodeTest::routeAddRemoveTest()
 {
-  mdtTtTestNodeRoute route(0, pvDatabaseManager.database());
-  mdtTtTestNodeRouteData data;
+  mdtTtTestNodeRoute tnr(0, pvDatabaseManager.database());
+  mdtTtTestNodeATestData tnAd(pvDatabaseManager.database());
+  mdtTtTestNodeRouteData createdRoute, route;
+  bool ok;
+
+  // Create test node A
+  QVERIFY(tnAd.populate());
+  /*
+   * Build a route XMEAS+ to XTEST;A1
+   *  - Must enable relays K1 and K30
+   *  - We not set route resistance and calibration date
+   */
+  createdRoute = builRoute("A", "XMEAS", "+", "XTEST", "A1", ok);
+  QVERIFY(ok);
+  // Store route
+  QVERIFY(tnr.addRoute(createdRoute));
+  // Get route back and check
+  route = getRoute("A", "XMEAS", "+", "XTEST", "A1", ok);
+  QVERIFY(ok);
+  QVERIFY(!route.id().isNull());
+  QCOMPARE(route.testNodeId(), createdRoute.testNodeId());
+  QCOMPARE(route.connectionAId(), createdRoute.connectionAId());
+  QCOMPARE(route.connectionBId(), createdRoute.connectionBId());
+  QVERIFY(route.resistance().isNull());
+  QVERIFY(route.calibrationDate().isNull());
+  QCOMPARE(route.relaysToEnableCount(), createdRoute.relaysToEnableCount());
+  // Remove route
+  QVERIFY(tnr.removeRoute(route.id()));
+  /*
+   * Build a route XMEAS- to XTEST;A2
+   *  - Must enable relays K4 and K40
+   *  - We also set route resistance and calibration date
+   */
+  createdRoute = builRoute("A", "XMEAS", "-", "XTEST", "A2", ok);
+  QVERIFY(ok);
+  // Update route resistance
+  createdRoute.setResistance(2.4);
+  createdRoute.setCalibrationDate(QDateTime::fromString("2014-03-29T17:44:56", Qt::ISODate));
+  // Store route
+  QVERIFY(tnr.addRoute(createdRoute));
+  
+  QSqlQuery q(pvDatabaseManager.database());
+  q.exec("SELECT * FROM TestNodeRoute_view");
+  while(q.next()){
+    qDebug() << q.record();
+  }
+
+  
+  // Get route back and check
+  route = getRoute("A", "XMEAS", "-", "XTEST", "A2", ok);
+  QVERIFY(ok);
+  QVERIFY(!route.id().isNull());
+  QCOMPARE(route.testNodeId(), createdRoute.testNodeId());
+  QCOMPARE(route.connectionAId(), createdRoute.connectionAId());
+  QCOMPARE(route.connectionBId(), createdRoute.connectionBId());
+  QCOMPARE(route.resistance(), createdRoute.resistance());
+  QCOMPARE(route.calibrationDate(), createdRoute.calibrationDate());
+  QCOMPARE(route.relaysToEnableCount(), createdRoute.relaysToEnableCount());
+  // Remove route
+  QVERIFY(tnr.removeRoute(route.id()));
+
 }
 
+void mdtTestNodeTest::shortDetectionTest()
+{
+  mdtTtTestNode tn(pvDatabaseManager.database());
+  mdtTtTestNodeRoute tnr(0, pvDatabaseManager.database());
+  mdtTtTestNodeATestData tnAd(pvDatabaseManager.database());
+  mdtClPathGraph graph(pvDatabaseManager.database());
+  mdtTtTestNodeRouteData route;
+  QVariant connectionAId, connectionBId;
+  bool ok;
+
+  // Create test node A
+  QVERIFY(tnAd.populate());
+  // Load link list
+  QVERIFY(graph.loadLinkList());
+  /*
+   * Build a route XMEAS+ to XTEST;A1
+   * Must enable relays K1 and K30
+   */
+  route = builRoute("A", "XMEAS", "+", "XTEST", "A1", ok);
+  QVERIFY(ok);
+  // Check about short
+  connectionAId = getConnectionId("A", "XMEAS", "+", ok);
+  QVERIFY(ok);
+  connectionBId = getConnectionId("A", "XMEAS", "-", ok);
+  QVERIFY(ok);
+  QVERIFY(!tn.makesShortCircuit(connectionAId, connectionBId, route.relaysToEnableVector(), graph, ok));
+  QVERIFY(ok);
+  connectionAId = getConnectionId("A", "XMEAS", "+", ok);
+  QVERIFY(ok);
+  connectionBId = getConnectionId("A", "XTEST", "A1", ok);
+  QVERIFY(ok);
+  QVERIFY(tn.makesShortCircuit(connectionAId, connectionBId, route.relaysToEnableVector(), graph, ok));
+  QVERIFY(ok);
+  /// \todo tester en donnat B et A (inverse)
+
+}
+
+QVariant mdtTestNodeTest::getConnectionId(const QString & testNodeAlias, const QString & schemaPosition, const QString & contact, bool & ok)
+{
+  mdtTtTestNodeUnit tnu(pvDatabaseManager.database());
+
+  return tnu.getConnectionId(testNodeAlias, schemaPosition, contact, ok);
+}
+
+mdtTtTestNodeRouteData mdtTestNodeTest::builRoute(const QString & testNodeAlias, const QString & schemaPositionA, const QString & contactA, const QString & schemaPositionB, const QString & contactB, bool & ok)
+{
+  mdtTtTestNodeRouteData routeData;
+  mdtTtTestNode tn(pvDatabaseManager.database());
+  mdtTtTestNodeUnit tnu(pvDatabaseManager.database());
+  mdtClPathGraph graph(pvDatabaseManager.database());
+  mdtTtTestNodeRoute tnr(pvDatabaseManager.database());
+  QVariant testNodeId;
+  QVariant connectionAId, connectionBId;
+
+  // Get test node ID
+  testNodeId = tn.getTestNodeIdForAlias(testNodeAlias);
+  if(testNodeId.isNull()){
+    ok = false;
+    return routeData;
+  }
+  // Load link list and add test node's relays to graph
+  if(!graph.loadLinkList()){
+    ok = false;
+    return routeData;
+  }
+  if(!tn.addRelaysToGraph(testNodeId, graph)){
+    ok = false;
+    return routeData;
+  }
+  // Get connection IDs
+  connectionAId = tnu.getConnectionId(testNodeAlias, schemaPositionA, contactA, ok);
+  if(!ok){
+    return routeData;
+  }
+  connectionBId = tnu.getConnectionId(testNodeAlias, schemaPositionB, contactB, ok);
+  if(!ok){
+    return routeData;
+  }
+  // Build route
+  routeData = tnr.buildRoute(testNodeId, connectionAId, connectionBId, graph, ok);
+  if(!ok){
+    return routeData;
+  }
+
+  return routeData;
+}
+
+mdtTtTestNodeRouteData mdtTestNodeTest::getRoute(const QString & testNodeAlias, const QString & schemaPositionA, const QString & contactA, const QString & schemaPositionB, const QString & contactB, bool & ok)
+{
+  mdtTtTestNodeRouteData routeData;
+  mdtTtTestNode tn(pvDatabaseManager.database());
+  mdtTtTestNodeUnit tnu(pvDatabaseManager.database());
+  mdtTtTestNodeRoute tnr(pvDatabaseManager.database());
+  QVariant testNodeId;
+  QVariant connectionAId, connectionBId;
+
+  // Get test node ID
+  testNodeId = tn.getTestNodeIdForAlias(testNodeAlias);
+  if(testNodeId.isNull()){
+    ok = false;
+    return routeData;
+  }
+  // Get connection IDs
+  connectionAId = tnu.getConnectionId(testNodeAlias, schemaPositionA, contactA, ok);
+  if(!ok){
+    return routeData;
+  }
+  connectionBId = tnu.getConnectionId(testNodeAlias, schemaPositionB, contactB, ok);
+  if(!ok){
+    return routeData;
+  }
+  // Get route
+  routeData = tnr.getRoute(testNodeId, connectionAId, connectionBId, ok);
+  if(!ok){
+    return routeData;
+  }
+
+  return routeData;
+}
 
 void mdtTestNodeTest::createDatabaseSchema()
 {

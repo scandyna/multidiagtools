@@ -104,6 +104,10 @@ bool mdtTtTestNodeRoute::addRoute(const mdtTtTestNodeRouteData & data)
   routeRecord.setValue("TestNode_Id_FK", data.testNodeId());
   routeRecord.setValue("TestNodeUnitConnectionA_Id_FK", data.connectionAId());
   routeRecord.setValue("TestNodeUnitConnectionB_Id_FK", data.connectionBId());
+  if(!data.resistance().isNull()){
+    routeRecord.setValue("Resistance", data.resistance().value());
+  }
+  routeRecord.setValue("CalibrationDate", data.calibrationDate());
   if(!addRecord(routeRecord, "TestNodeRoute_tbl", query)){
     rollbackTransaction();
     return false;
@@ -146,6 +150,10 @@ mdtTtTestNodeRouteData mdtTtTestNodeRoute::getRoute(const QVariant & testNodeId,
   routeData.setTestNodeId(dataList.at(0).value("TestNode_Id_FK"));
   routeData.setConnectionAId(dataList.at(0).value("TestNodeUnitConnectionA_Id_FK"));
   routeData.setConnectionBId(dataList.at(0).value("TestNodeUnitConnectionB_Id_FK"));
+  if(!dataList.at(0).value("Resistance").isNull()){
+    routeData.setResistance(dataList.at(0).value("Resistance").toDouble());
+  }
+  routeData.setCalibrationDate(dataList.at(0).value("CalibrationDate").toDateTime());
   // Get relays from TestNodeRouteUnit_tbl
   sql = "SELECT TestNodeUnit_Id_FK FROM TestNodeRouteUnit_tbl WHERE TestNodeRoute_Id_FK = " + routeData.id().toString();
   idList = getDataList<QVariant>(sql, ok);
@@ -160,20 +168,51 @@ mdtTtTestNodeRouteData mdtTtTestNodeRoute::getRoute(const QVariant & testNodeId,
   return routeData;
 }
 
+bool mdtTtTestNodeRoute::setRouteResistance(const QVariant & routeId, const mdtValueDouble & resistance, const QDateTime d)
+{
+
+}
+
 bool mdtTtTestNodeRoute::removeRoute(const QVariant & routeId)
 {
   if(!beginTransaction()){
     return false;
   }
-  if(!removeData("TestNodeRouteUnit_tbl", "TestNodeRoute_Id_FK", routeId)){
-    rollbackTransaction();
-    return false;
-  }
-  if(!removeData("TestNodeRoute_tbl", "Id_PK", routeId)){
+  if(!removeRoutePv(routeId)){
     rollbackTransaction();
     return false;
   }
   if(!commitTransaction()){
+    return false;
+  }
+  return true;
+}
+
+bool mdtTtTestNodeRoute::removeRoutes(const mdtSqlTableSelection & s)
+{
+  if(!beginTransaction()){
+    return false;
+  }
+  for(const auto & id : s.dataList("Id_PK")){
+    if(!removeRoutePv(id)){
+      rollbackTransaction();
+      return false;
+    }
+  }
+  if(!commitTransaction()){
+    return false;
+  }
+  return true;
+}
+
+bool mdtTtTestNodeRoute::removeRoutePv(const QVariant & routeId)
+{
+  if(!removeData("TestNodeRouteUnit_tbl", "TestNodeRoute_Id_FK", routeId)){
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNodeRoute");
+    return false;
+  }
+  if(!removeData("TestNodeRoute_tbl", "Id_PK", routeId)){
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNodeRoute");
     return false;
   }
   return true;

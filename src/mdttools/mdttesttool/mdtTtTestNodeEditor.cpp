@@ -441,7 +441,35 @@ void mdtTtTestNodeEditor::addRoute()
 
 void mdtTtTestNodeEditor::removeRoutes()
 {
+  mdtSqlTableWidget *widget;
+  mdtTtTestNodeRoute tnr(database());
+  QMessageBox msgBox;
+  mdtSqlTableSelection s;
 
+  widget = sqlTableWidget("TestNodeRoute_view");
+  Q_ASSERT(widget != 0);
+  // Get selection
+  s = widget->currentSelection("Id_PK");
+  if(s.isEmpty()){
+    return;
+  }
+  // We ask confirmation to the user
+  msgBox.setText(tr("You are about to remove selected routes."));
+  msgBox.setInformativeText(tr("Do you want to continue ?"));
+  msgBox.setIcon(QMessageBox::Warning);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+  msgBox.setDefaultButton(QMessageBox::No);
+  if(msgBox.exec() != QMessageBox::Yes){
+    return;
+  }
+  // Delete seleced rows
+  if(!tnr.removeRoutes(s)){
+    pvLastError = tnr.lastError();
+    displayLastError();
+    return;
+  }
+  // Update UI
+  select("TestNodeRoute_view");
 }
 
 void mdtTtTestNodeEditor::setBusToUnitConnection()

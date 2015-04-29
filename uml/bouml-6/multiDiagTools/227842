@@ -1,6 +1,6 @@
 format 209
 "DatabaseLogical" // mdttools::mdttesttool::DatabaseLogical
-  revision 70
+  revision 73
   modified_by 2 "philippe"
   // class settings
   
@@ -2973,19 +2973,6 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 1632898 "TestNodeRoute_Id_FK"
-	private explicit_type "int"
-	stereotype "FK"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
       attribute 1251458 "StepNumber"
 	private explicit_type "int"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
@@ -3034,36 +3021,6 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 1305602 "TestModelItemRoute_Id_FK"
-	private explicit_type "int"
-	stereotype "FK"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      classrelation 1654274 // <unidirectional association>
-	relation 1638786 --->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 1654274 // <unidirectional association>
-	  b parent class_ref 1329026 // TestModelItemRoute_tbl
-      end
-
-      classrelation 1962114 // <unidirectional association>
-	relation 1945986 --->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 1962114 // <unidirectional association>
-	  b parent class_ref 1571970 // TestNodeRoute_tbl
-      end
     end
 
     classdiagram 947586 "TestCable"
@@ -4002,100 +3959,6 @@ ${inlines}
       end
     end
 
-    class 1329026 "TestModelItemRoute_tbl"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      attribute 1305858 "Id_PK"
-	private explicit_type "int"
-	stereotype "PK"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 1305474 "TestModelItem_Id_FK"
-	private explicit_type "int"
-	stereotype "FK"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      classrelation 1654146 // <unidirectional association>
-	relation 1638658 --->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 1654146 // <unidirectional association>
-	  b parent class_ref 1006210 // TestModelItem_tbl
-      end
-
-      classrelation 1654402 // <unidirectional association>
-	relation 1638914 --->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 1654402 // <unidirectional association>
-	  b parent class_ref 1013634 // TestLink_tbl
-      end
-
-      attribute 1305730 "TestLink_Id_FK"
-	private explicit_type "int"
-	stereotype "FK"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      classrelation 1654530 // <unidirectional association>
-	relation 1639042 --->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 1654530 // <unidirectional association>
-	  b parent class_ref 1249154 // TestNodeUnitConnection_tbl
-      end
-
-      attribute 1305986 "MeasureTestNodeUnitConnection_Id_FK"
-	private explicit_type "int"
-	stereotype "FK"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-    end
-
     class 1571970 "TestNodeRoute_tbl"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
@@ -4187,6 +4050,30 @@ ${inlines}
 "
 	    classrelation_ref 1961986 // <unidirectional association>
 	  b parent class_ref 1249154 // TestNodeUnitConnection_tbl
+      end
+
+      attribute 1653378 "Resistance"
+	private explicit_type "double"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1653506 "CalibrationDate"
+	private explicit_type "datetime"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
     end
 

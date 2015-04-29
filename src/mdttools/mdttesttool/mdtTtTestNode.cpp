@@ -416,6 +416,28 @@ QList<mdtTtTestNodeUnitSetupData> mdtTtTestNode::getRelayPathSetupDataList(const
   return setupDataList;
 }
 
+bool mdtTtTestNode::makesShortCircuit(const QVariant& connectionIdA, const QVariant& connectionIdB, const std::vector<mdtTtTestNodeRouteRelay> & relays, mdtClPathGraph& graph, bool & ok)
+{
+  Q_ASSERT(!connectionIdA.isNull());
+  Q_ASSERT(!connectionIdB.isNull());
+
+  QList<QVariant> testNodeUnitIdList;
+
+  // Clear previous results
+  graph.removeAddedLinks();
+  // Add relays of given node units to graph
+  for(const auto & relay : relays){
+    testNodeUnitIdList.append(relay.id);
+  }
+  if(!addRelayListToGraphPv(testNodeUnitIdList, graph, 2)){
+    ok = false;
+    return false;
+  }
+  ok = true;
+
+  return graph.connectionsAreLinked(connectionIdA, connectionIdB);
+}
+
 bool mdtTtTestNode::ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, const QVariant & connectionIdB, const QList<mdtTtTestNodeUnitSetupData> & testNodeUnitSetupDataList, mdtClPathGraph & graph, bool & ok)
 {
   Q_ASSERT(!connectionIdA.isNull());

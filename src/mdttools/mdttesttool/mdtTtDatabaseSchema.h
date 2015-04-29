@@ -272,7 +272,7 @@ class mdtTtDatabaseSchema
    * This table will contain routes (paths)
    *  from a test link to node units.
    */
-  bool setupTestModelItemRouteTable();
+//   bool setupTestModelItemRouteTable();
 
   /*! \brief Setup test result table
    *

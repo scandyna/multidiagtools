@@ -23,6 +23,9 @@
 
 #include "mdtTest.h"
 #include "mdtSqlDatabaseManager.h"
+#include "mdtTtTestNodeRouteData.h"
+#include <QString>
+#include <QVariant>
 
 class mdtTestNodeTest : public mdtTest
 {
@@ -40,8 +43,16 @@ class mdtTestNodeTest : public mdtTest
   void routeBuildTest();
   void routeAddRemoveTest();
 
+  void shortDetectionTest();
+
  private:
 
+  // Helper function to get a connection ID
+  QVariant getConnectionId(const QString & testNodeAlias, const QString & schemaPosition, const QString & contact, bool & ok);
+  // Helper function to build a route
+  mdtTtTestNodeRouteData builRoute(const QString & testNodeAlias, const QString & schemaPositionA, const QString & contactA, const QString & schemaPositionB, const QString & contactB, bool & ok);
+  // Helper function to get a route from database
+  mdtTtTestNodeRouteData getRoute(const QString & testNodeAlias, const QString & schemaPositionA, const QString & contactA, const QString & schemaPositionB, const QString & contactB, bool & ok);
   // Create test database schema - Will FAIL on problem
   void createDatabaseSchema();
 

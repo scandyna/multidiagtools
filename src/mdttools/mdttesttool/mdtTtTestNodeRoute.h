@@ -24,6 +24,9 @@
 #include "mdtTtBase.h"
 #include "mdtTtTestNodeRouteData.h"
 #include "mdtClPathGraph.h"
+#include "mdtSqlTableSelection.h"
+#include "mdtValue.h"
+#include <QDateTime>
 #include <QSqlDatabase>
 #include <QVariant>
 #include <QString>
@@ -75,13 +78,30 @@ class mdtTtTestNodeRoute : public mdtTtBase
    */
   mdtTtTestNodeRouteData getRoute(const QVariant & testNodeId, const QVariant & testNodeConnectionAId, const QVariant & testNodeConnectionBId, bool & ok);
 
+  /*! \brief Set route resistance
+   */
+  bool setRouteResistance(const QVariant & routeId, const mdtValueDouble & resistance, const QDateTime d = QDateTime::currentDateTime());
+
   /*! \brief Remove a route from TestNodeRoute_tbl
    *
    * Will also remove related elements (relays) from TestNodeRouteUnit_tbl
    */
   bool removeRoute(const QVariant & routeId);
 
+  /*! \brief Remove routes from TestNodeRoute_tbl
+   *
+   * Will also remove related elements (relays) from TestNodeRouteUnit_tbl.
+   * In given table selection, field Id_PK is threated as test node route ID
+   */
+  bool removeRoutes(const mdtSqlTableSelection & s);
+
  private:
+
+  /*! \brief Remove a route from TestNodeRoute_tbl
+   *
+   * No transaction is initiated by this helper function
+   */
+  bool removeRoutePv(const QVariant & routeId);
 
   /*! \brief Add a relay to list of relays to enable
    */

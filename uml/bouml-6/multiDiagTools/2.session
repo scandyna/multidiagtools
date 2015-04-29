@@ -1,8 +1,8 @@
-window_sizes 1280 916 271 1003 863 0
+window_sizes 1280 996 271 1003 943 0
 cleanlooks_style
 diagrams
   active  classdiagram_ref 941058 // Test
-    1003 863 70 3 0 0
+    1003 943 70 3 0 0
   classdiagram_ref 927874 // TestNode
     120 106 90 18 0 0
   classdiagram_ref 1158530 // mdtTtTestNode
@@ -13,8 +13,9 @@ diagrams
     1003 863 100 4 72 0
 end
 show_stereotypes
-selected attribute_ref 1646850 // TestNodeUnit_Id_FK
 open
+  class_ref 1006722 // TestNodeUnitSetup_tbl
+  class_ref 1571970 // TestNodeRoute_tbl
   class_ref 1598466 // TestNodeRouteUnit_tbl
   operation_ref 2520066 // isEmpty
   operation_ref 2519938 // buildRoute

@@ -32,5 +32,7 @@ void mdtTtTestNodeRouteData::clear()
   pvConnectionAId.clear();
   pvConnectionBId.clear();
   pvRelaysToEnable.clear();
+  pvResistance.clear();
+  pvCalibrationDate = QDateTime();
 }
 
