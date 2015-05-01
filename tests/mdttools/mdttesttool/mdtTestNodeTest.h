@@ -45,6 +45,8 @@ class mdtTestNodeTest : public mdtTest
 
   void shortDetectionTest();
 
+  void testNodeManagerTest();
+
  private:
 
   // Helper function to get a connection ID

@@ -23,11 +23,12 @@
 
 #include "mdtDevice.h"
 #include "mdtDeviceAddress.h"
-#include <vector>
-#include <memory>
-#include <typeinfo>
 #include <QVariant>
 #include <QList>
+#include <vector>
+#include <memory>
+#include <atomic>
+#include <typeinfo>
 
 class QObject;
 
@@ -141,16 +142,36 @@ class mdtGlobalDeviceContainer
 {
  public:
 
+  /*! \brief Constructor
+   *
+   * Will initialize the global container if this is the first instance
+   *  of mdtGlobalDeviceContainer
+   */
+  mdtGlobalDeviceContainer();
+
+  /*! \brief Destructor
+   *
+   * If this is the last instance that uses the global container,
+   *  container will be cleared and destroyed.
+   */
+  ~mdtGlobalDeviceContainer();
+
   /*! \brief Access global container
    */
-  std::shared_ptr<mdtDeviceContainer> container();
+  std::shared_ptr<mdtDeviceContainer> container()
+  {
+    return pvContainer;
+  }
 
   /*! \brief Use global container
    *
    * Permit to use the global container the same way
    *  as mdtDeviceContainer
    */
-  mdtDeviceContainer* operator->() const;
+  mdtDeviceContainer* operator->() const
+  {
+    return pvContainer.get();
+  }
 
   /*! \brief 
    *
@@ -162,11 +183,12 @@ class mdtGlobalDeviceContainer
    *  and it can happen that it is destroyed to late,
    *  causing troubles when device destructors are called.
    */
-  void clear();
+//   void clear();
 
  private:
 
   static std::shared_ptr<mdtDeviceContainer> pvContainer;
+  static std::atomic<int> pvInstanceCount;
 };
 
 

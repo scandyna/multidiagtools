@@ -112,7 +112,7 @@ class mdtTtTestNodeRoute : public mdtTtBase
 
   /*! \brief Add a relay to list of relays to enable
    */
-  void addRelayToRoute(const QVariant & relayId, mdtTtTestNodeRouteData & routeData);
+  bool addRelayToRoute(const QVariant & relayId, mdtTtTestNodeRouteData & routeData);
 
   /*! \brief Add a relay to TestNodeRouteUnit_tbl
    */

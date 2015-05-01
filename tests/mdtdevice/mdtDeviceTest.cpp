@@ -167,6 +167,7 @@ void mdtDeviceTest::deviceContainerTest()
 void mdtDeviceTest::globalDeviceContainerTest()
 {
   mdtGlobalDeviceContainer gc1, gc2;
+  mdtGlobalDeviceContainer *gc3, *gc4;
   std::shared_ptr<mdtDeviceContainer> c;
   std::shared_ptr<mdtDevice> dev;
 
@@ -189,8 +190,42 @@ void mdtDeviceTest::globalDeviceContainerTest()
   dev = gc2->device<mdtDeviceU3606A>("DMM1");
   QVERIFY(dev.get() != 0);
   QCOMPARE(dev->alias(), QString("DMM1"));
-  // Release global container
-  gc1.clear();
+  /*
+   * Check global container object creation and destruction
+   */
+  // Create gc3 instance
+  gc3 = new mdtGlobalDeviceContainer;
+  // Check accessing global container from gc3
+  QCOMPARE((*gc3)->deviceCount(), 1);
+  dev = (*gc3)->device<mdtDeviceU3606A>("DMM1");
+  QVERIFY(dev.get() != 0);
+  QCOMPARE(dev->alias(), QString("DMM1"));
+  // Create gc4 instance
+  gc4 = new mdtGlobalDeviceContainer;
+  // Check accessing global container from gc3
+  QCOMPARE((*gc4)->deviceCount(), 1);
+  dev = (*gc4)->device<mdtDeviceU3606A>("DMM1");
+  QVERIFY(dev.get() != 0);
+  QCOMPARE(dev->alias(), QString("DMM1"));
+  // Remove gc3 instance
+  delete gc3;
+  // Check gc1 instance
+  QCOMPARE(gc1->deviceCount(), 1);
+  dev = gc1->device<mdtDeviceU3606A>("DMM1");
+  QVERIFY(dev.get() != 0);
+  QCOMPARE(dev->alias(), QString("DMM1"));
+  // Check gc4 instance
+  QCOMPARE((*gc4)->deviceCount(), 1);
+  dev = (*gc4)->device<mdtDeviceU3606A>("DMM1");
+  QVERIFY(dev.get() != 0);
+  QCOMPARE(dev->alias(), QString("DMM1"));
+  // Remove gc4 instance
+  delete gc4;
+  // Check gc1 instance
+  QCOMPARE(gc1->deviceCount(), 1);
+  dev = gc1->device<mdtDeviceU3606A>("DMM1");
+  QVERIFY(dev.get() != 0);
+  QCOMPARE(dev->alias(), QString("DMM1"));
 }
 
 void mdtDeviceTest::deviceIosSegmentTest()

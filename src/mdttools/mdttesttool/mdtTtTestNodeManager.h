@@ -51,6 +51,10 @@ class mdtTtTestNodeManager : public QObject
    */
   mdtTtTestNodeManager(QObject *parent, QSqlDatabase db);
 
+  /*! \brief Constructor
+   */
+  mdtTtTestNodeManager(QSqlDatabase db);
+
   /*! \brief Add a test node
    */
   
@@ -109,7 +113,10 @@ class mdtTtTestNodeManager : public QObject
 
   /*! \brief Get last error
    */
-  inline mdtError lastError() const { return pvLastError; }
+  inline mdtError lastError() const
+  {
+    return pvLastError;
+  }
 
  private:
 

@@ -20,9 +20,9 @@
  ****************************************************************************/
 #include "mdtTtTestNodeRouteData.h"
 
-void mdtTtTestNodeRouteData::addRelayToEnable(const QVariant& id, const QVariant & schemaPosition)
+void mdtTtTestNodeRouteData::addRelayToEnable(const QVariant& id, const QVariant & schemaPosition, int ioPosition)
 {
-  pvRelaysToEnable.emplace_back(id, schemaPosition);
+  pvRelaysToEnable.emplace_back(id, schemaPosition, ioPosition);
 }
 
 void mdtTtTestNodeRouteData::clear()

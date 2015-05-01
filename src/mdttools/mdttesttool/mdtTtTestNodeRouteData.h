@@ -31,10 +31,17 @@
  */
 struct mdtTtTestNodeRouteRelay
 {
-  /*! \brief Constructor
+  /*! \brief Construct a empty relay
    */
-  mdtTtTestNodeRouteRelay(const QVariant & id, const QVariant & schemaPosition)
-   : id(id), schemaPosition(schemaPosition)
+  mdtTtTestNodeRouteRelay()
+   : ioPosition(-1)
+  {
+  }
+
+  /*! \brief Construct a relay with given parameters
+   */
+  mdtTtTestNodeRouteRelay(const QVariant & id, const QVariant & schemaPosition, int ioPosition)
+   : id(id), schemaPosition(schemaPosition), ioPosition(ioPosition)
   {
   }
 
@@ -49,6 +56,13 @@ struct mdtTtTestNodeRouteRelay
    * Related to field SchemaPosition in Unit_tbl
    */
   QVariant schemaPosition;
+
+  /*! \brief I/O position of relay
+   *
+   * Related to field IoPosition in TestNodeUnit_tbl
+   *  Note: -1 represents a null value
+   */
+  int ioPosition;
 };
 
 /*! \brief Data for test node route
@@ -155,13 +169,22 @@ class mdtTtTestNodeRouteData
 
   /*! \brief Add a relay to enable
    */
-  void addRelayToEnable(const QVariant & id, const QVariant & schemaPosition);
+  void addRelayToEnable(const QVariant & id, const QVariant & schemaPosition, int ioPosition);
 
   /*! \brief Check how many relays are to enable
    */
   inline int relaysToEnableCount() const
   {
     return pvRelaysToEnable.size();
+  }
+
+  /*! \brief Get relay at given index
+   */
+  const mdtTtTestNodeRouteRelay & relayToEnableAt(int index) const
+  {
+    Q_ASSERT(index >= 0);
+    Q_ASSERT(index < (int)pvRelaysToEnable.size());
+    return pvRelaysToEnable[index];
   }
 
   /*! \brief Access internal relays to enable vector

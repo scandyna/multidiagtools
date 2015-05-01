@@ -21,7 +21,7 @@
 #include "mdtTestNodeTest.h"
 #include "mdtTtTestNode.h"
 #include "mdtTtTestNodeUnit.h"
-#include "mdtTestToolTest.h"
+///#include "mdtTestToolTest.h"
 #include "mdtCableListTestScenario.h"
 #include "mdtApplication.h"
 #include "mdtTtDatabaseSchema.h"
@@ -39,6 +39,7 @@
 ///#include "mdtTtTestModelItemData.h"
 ///#include "mdtTtTestModelItemRouteData.h"
 #include "mdtTtTestNodeManager.h"
+#include "mdtMultiIoDevice.h"
 ///#include "mdtDeviceContainer.h"
 ///#include "mdtDeviceContainerWidget.h"
 ///#include "mdtDeviceU3606A.h"
@@ -120,8 +121,8 @@ void mdtTestNodeTest::testNodeRouteDataTest()
   data.setConnectionBId(4);
   data.setResistance(1.2);
   data.setCalibrationDate(QDateTime::fromString("2015-04-29T17:25:47", Qt::ISODate));
-  data.addRelayToEnable(5, "K5");
-  data.addRelayToEnable(6, "K6");
+  data.addRelayToEnable(5, "K5", 4);
+  data.addRelayToEnable(6, "K6", 5);
   // Check
   QCOMPARE(data.id(), QVariant(1));
   QCOMPARE(data.testNodeId(), QVariant(2));
@@ -130,6 +131,12 @@ void mdtTestNodeTest::testNodeRouteDataTest()
   QCOMPARE(data.resistance().value(), 1.2);
   QCOMPARE(data.calibrationDate(), QDateTime::fromString("2015-04-29T17:25:47", Qt::ISODate));
   QCOMPARE(data.relaysToEnableCount(), 2);
+  QCOMPARE(data.relayToEnableAt(0).id, QVariant(5));
+  QCOMPARE(data.relayToEnableAt(0).schemaPosition, QVariant("K5"));
+  QCOMPARE(data.relayToEnableAt(0).ioPosition, 4);
+  QCOMPARE(data.relayToEnableAt(1).id, QVariant(6));
+  QCOMPARE(data.relayToEnableAt(1).schemaPosition, QVariant("K6"));
+  QCOMPARE(data.relayToEnableAt(1).ioPosition, 5);
   // Check clear
   data.clear();
   QVERIFY(data.id().isNull());
@@ -183,6 +190,10 @@ void mdtTestNodeTest::routeBuildTest()
   QCOMPARE(route.connectionAId(), connectionAId);
   QCOMPARE(route.connectionBId(), connectionBId);
   QCOMPARE(route.relaysToEnableCount(), 2);
+  QCOMPARE(route.relayToEnableAt(0).schemaPosition, QVariant("K1"));
+  QCOMPARE(route.relayToEnableAt(0).ioPosition, 0);
+  QCOMPARE(route.relayToEnableAt(1).schemaPosition, QVariant("K30"));
+  QCOMPARE(route.relayToEnableAt(1).ioPosition, 29);
   // Save route
   QVERIFY(tnr.addRoute(route));
   // Get route from DB and check
@@ -193,7 +204,10 @@ void mdtTestNodeTest::routeBuildTest()
   QCOMPARE(route.connectionAId(), connectionAId);
   QCOMPARE(route.connectionBId(), connectionBId);
   QCOMPARE(route.relaysToEnableCount(), 2);
-  
+  QCOMPARE(route.relayToEnableAt(0).schemaPosition, QVariant("K1"));
+  QCOMPARE(route.relayToEnableAt(0).ioPosition, 0);
+  QCOMPARE(route.relayToEnableAt(1).schemaPosition, QVariant("K30"));
+  QCOMPARE(route.relayToEnableAt(1).ioPosition, 29);
   // Remove route
   QVERIFY(tnr.removeRoute(route.id()));
 
@@ -299,6 +313,22 @@ void mdtTestNodeTest::shortDetectionTest()
   QVERIFY(ok);
   /// \todo tester en donnat B et A (inverse)
 
+}
+
+void mdtTestNodeTest::testNodeManagerTest()
+{
+  mdtTtTestNodeManager tnm(pvDatabaseManager.database());
+  
+  mdtTtTestNodeManager tnm2(pvDatabaseManager.database());
+  mdtTtTestNodeManager tnm3(pvDatabaseManager.database());
+  mdtTtTestNodeManager tnm4(pvDatabaseManager.database());
+
+  auto device = tnm.addDevice<mdtMultiIoDevice>("A");
+  QVERIFY(tnm.device<mdtMultiIoDevice>("A") == device);
+  
+  auto d2 = tnm2.device<mdtMultiIoDevice>("A");
+  
+  ///tnm.container()->clear();
 }
 
 QVariant mdtTestNodeTest::getConnectionId(const QString & testNodeAlias, const QString & schemaPosition, const QString & contact, bool & ok)

@@ -31,9 +31,15 @@
 using namespace std;
 
 mdtTtTestNodeManager::mdtTtTestNodeManager(QObject* parent, QSqlDatabase db)
- : QObject(parent) /**, pvDevices(new mdtDeviceContainer(this))*/
+ : QObject(parent),
+   pvDatabase(db)
 {
-  pvDatabase = db;
+}
+
+mdtTtTestNodeManager::mdtTtTestNodeManager(QSqlDatabase db)
+ : QObject(nullptr),
+   pvDatabase(db)
+{
 }
 
 QList<std::shared_ptr<mdtDevice> > mdtTtTestNodeManager::allDevices()

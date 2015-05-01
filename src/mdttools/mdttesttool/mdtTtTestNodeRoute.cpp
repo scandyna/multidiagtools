@@ -70,7 +70,11 @@ mdtTtTestNodeRouteData mdtTtTestNodeRoute::buildRoute(const QVariant & testNodeI
     relayId = graph.getUserData(pathConnectionIdList.at(i-1), pathConnectionIdList.at(i));
     // Path contains other units than relays, we only have interrest of relays here
     if(!relayId.isNull()){
-      addRelayToRoute(relayId, routeData);
+      if(!addRelayToRoute(relayId, routeData)){
+        routeData.clear();
+        ok = false;
+        return routeData;
+      }
     }
   }
   // Set test node and connection IDs to route data
@@ -162,7 +166,11 @@ mdtTtTestNodeRouteData mdtTtTestNodeRoute::getRoute(const QVariant & testNodeId,
     return routeData;
   }
   for(const auto & id : idList){
-    addRelayToRoute(id, routeData);
+    if(!addRelayToRoute(id, routeData)){
+      routeData.clear();
+      ok = false;
+      return routeData;
+    }
   }
 
   return routeData;
@@ -232,23 +240,48 @@ bool mdtTtTestNodeRoute::removeRoutePv(const QVariant & routeId)
   return true;
 }
 
-void mdtTtTestNodeRoute::addRelayToRoute(const QVariant & relayId, mdtTtTestNodeRouteData & routeData)
+bool mdtTtTestNodeRoute::addRelayToRoute(const QVariant & relayId, mdtTtTestNodeRouteData & routeData)
 {
   Q_ASSERT(!relayId.isNull());
 
   QList<QVariant> dataList;
   QString sql;
   QString schemaPosition;
+  int ioPosition;
   bool ok;
 
+  // Get schema position
   sql = "SELECT SchemaPosition FROM Unit_tbl WHERE Id_PK = " + relayId.toString();
   dataList = getDataList<QVariant>(sql, ok);
-  if( (ok) && (dataList.size() == 1) ){
+  if(!ok){
+    return false;
+  }
+  if(dataList.size() == 1){
     schemaPosition = dataList.at(0).toString();
   }else{
     schemaPosition = "<\?\?\?>";
   }
-  routeData.addRelayToEnable(relayId, schemaPosition);
+  // Get I/O position
+  sql = "SELECT IoPosition FROM TestNodeUnit_tbl WHERE Unit_Id_FK_PK = " + relayId.toString();
+  dataList = getDataList<QVariant>(sql, ok);
+  if(!ok){
+    return false;
+  }
+  if(dataList.size() != 1){
+    pvLastError.setError(tr("Getting I/O position from TestNodeUnit_tbl returned unexpected amout of data (expected: 1 record)."), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNodeRoute");
+    pvLastError.commit();
+    return false;
+  }
+  if(dataList.at(0).isNull()){
+    ioPosition = -1;
+  }else{
+    ioPosition = dataList.at(0).toInt();
+  }
+  // Add relay
+  routeData.addRelayToEnable(relayId, schemaPosition, ioPosition);
+
+  return true;
 }
 
 // bool mdtTtTestNodeRoute::addRelayToDatabase(const mdtTtTestNodeRouteRelay & relay)
