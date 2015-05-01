@@ -26,6 +26,7 @@
 #include "mdtMultiIoDevice.h"
 #include "mdtDeviceAddress.h"
 #include "mdtTtTestItemNodeSetupData.h"
+#include "mdtTtTestNodeRouteData.h"
 #include "mdtError.h"
 #include <QObject>
 #include <QSqlDatabase>
@@ -120,6 +121,19 @@ class mdtTtTestNodeManager : public QObject
    *  (see mdtDeviceIos for details).
    */
   bool setDeviceIosLabelShort(const QString & alias);
+
+  /*! \brief Set relays to enable to given device
+   *
+   * Similar to addRelaysToEnable() , but will fisrt clear digital outputs states (set them OFF).
+   */
+  bool setRelaysToEnable(const std::vector<mdtTtTestNodeRouteRelay> & relays , std::shared_ptr<mdtMultiIoDevice> dev);
+
+  /*! \brief Add relays to enable to given device
+   *
+   * Will set digital outputs in device that correspond to relay for each relays in list.
+   *  Note: will only cache output states. Sending I/O map to device must be done explicitly.
+   */
+  bool addRelaysToEnable(const std::vector<mdtTtTestNodeRouteRelay> & relays , std::shared_ptr<mdtMultiIoDevice> dev);
 
   /*! \brief Get last error
    */

@@ -173,18 +173,6 @@ class mdtGlobalDeviceContainer
     return pvContainer.get();
   }
 
-  /*! \brief 
-   *
-   * Release all devices shared pointers and the global container itself.
-   *
-   * It is recommanded to call this function
-   *  (from one global container object) before the end of the programm.
-   *  This is because internal container is a static member,
-   *  and it can happen that it is destroyed to late,
-   *  causing troubles when device destructors are called.
-   */
-//   void clear();
-
  private:
 
   static std::shared_ptr<mdtDeviceContainer> pvContainer;

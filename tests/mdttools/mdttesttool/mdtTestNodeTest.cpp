@@ -216,13 +216,19 @@ void mdtTestNodeTest::routeBuildTest()
 
 void mdtTestNodeTest::routeAddRemoveTest()
 {
-  mdtTtTestNodeRoute tnr(0, pvDatabaseManager.database());
+  mdtTtTestNode tn(pvDatabaseManager.database());
+  mdtTtTestNodeRoute tnr(pvDatabaseManager.database());
   mdtTtTestNodeATestData tnAd(pvDatabaseManager.database());
   mdtTtTestNodeRouteData createdRoute, route;
+  QVariant testNodeId;
+  QList<mdtTtTestNodeRouteData> routeDataList;
   bool ok;
 
   // Create test node A
   QVERIFY(tnAd.populate());
+  // Get test node ID
+  testNodeId = tn.getTestNodeIdForAlias("A");
+  QVERIFY(!testNodeId.isNull());
   /*
    * Build a route XMEAS+ to XTEST;A1
    *  - Must enable relays K1 and K30
@@ -242,6 +248,13 @@ void mdtTestNodeTest::routeAddRemoveTest()
   QVERIFY(route.resistance().isNull());
   QVERIFY(route.calibrationDate().isNull());
   QCOMPARE(route.relaysToEnableCount(), createdRoute.relaysToEnableCount());
+  // Check all routes getter
+  routeDataList = tnr.getAllRoutes(testNodeId, ok);
+  QVERIFY(ok);
+  QCOMPARE(routeDataList.size(), 1);
+  routeDataList = tnr.getAllRoutesByAlias("A", ok);
+  QVERIFY(ok);
+  QCOMPARE(routeDataList.size(), 1);
   // Update route resistance in database using mdtTtTestNodeRoute
   QVERIFY(tnr.setRouteResistance(route.id(), 0.7, QDateTime::fromString("2015-02-12T10:22:33", Qt::ISODate)));
   // Get route back and check
@@ -250,7 +263,7 @@ void mdtTestNodeTest::routeAddRemoveTest()
   QCOMPARE(route.resistance().value(), 0.7);
   QCOMPARE(route.calibrationDate(), QDateTime::fromString("2015-02-12T10:22:33", Qt::ISODate));
   // Remove route
-  QVERIFY(tnr.removeRoute(route.id()));
+  ///QVERIFY(tnr.removeRoute(route.id()));
   /*
    * Build a route XMEAS- to XTEST;A2
    *  - Must enable relays K4 and K40
@@ -273,9 +286,22 @@ void mdtTestNodeTest::routeAddRemoveTest()
   QCOMPARE(route.resistance(), createdRoute.resistance());
   QCOMPARE(route.calibrationDate(), createdRoute.calibrationDate());
   QCOMPARE(route.relaysToEnableCount(), createdRoute.relaysToEnableCount());
-  // Remove route
-  QVERIFY(tnr.removeRoute(route.id()));
-
+  // Check all routes getter
+  routeDataList = tnr.getAllRoutes(testNodeId, ok);
+  QCOMPARE(routeDataList.size(), 2);
+  QVERIFY(ok);
+  routeDataList = tnr.getAllRoutesByAlias("A", ok);
+  QVERIFY(ok);
+  QCOMPARE(routeDataList.size(), 2);
+  // Remove routes that where created for test node A
+  routeDataList = tnr.getAllRoutes(testNodeId, ok);
+  QVERIFY(ok);
+  for(const auto & routeData : routeDataList){
+    QVERIFY(tnr.removeRoute(routeData.id()));
+  }
+  // Check all routes getter
+  routeDataList = tnr.getAllRoutes(testNodeId, ok);
+  QCOMPARE(routeDataList.size(), 0);
 
 }
 
@@ -358,19 +384,83 @@ void mdtTestNodeTest::testNodeManagerTest()
    * Check I/O labelling
    */
   QVERIFY(tnm.setDeviceIosLabelShort("A"));
+  auto digitalOuptus = device->ios()->digitalOutputs();
   // Check K1
-  dout = device->ios()->digitalOutputs().at(0);
+  dout = digitalOuptus.at(0);
   QCOMPARE(dout->labelShort(), QString("K1"));
-
-
-  
-  // Build device
-  // Add relays
-  // Set labels
-  ///QVERIFY(tnm.setDeviceIosLabelShort("A", false));
-
-  
-
+  // Check K2
+  dout = digitalOuptus.at(1);
+  QCOMPARE(dout->labelShort(), QString("K2"));
+  // Check K3
+  dout = digitalOuptus.at(2);
+  QCOMPARE(dout->labelShort(), QString("K3"));
+  // Check K4
+  dout = digitalOuptus.at(3);
+  QCOMPARE(dout->labelShort(), QString("K4"));
+  // Check K30
+  dout = digitalOuptus.at(29);
+  QCOMPARE(dout->labelShort(), QString("K30"));
+  // Check K31
+  dout = digitalOuptus.at(30);
+  QCOMPARE(dout->labelShort(), QString("K31"));
+  // Check K40
+  dout = digitalOuptus.at(39);
+  QCOMPARE(dout->labelShort(), QString("K40"));
+  // Check K40
+  dout = digitalOuptus.at(40);
+  QCOMPARE(dout->labelShort(), QString("K41"));
+  /*
+   * Check setting relays
+   */
+  // Build a relays list
+  mdtTtTestNodeRouteData route;
+  route.addRelayToEnable(0, "K1", 0);
+  route.addRelayToEnable(0, "K2", 1);
+  route.addRelayToEnable(0, "K30", 29);
+  route.addRelayToEnable(0, "K40", 39);
+  // Set relays to enable to device
+  QVERIFY(tnm.setRelaysToEnable(route.relaysToEnableVector(), device));
+  // Check digital outputs states
+  QVERIFY(digitalOuptus.at(0)->value().valueBool() == true);
+  QVERIFY(digitalOuptus.at(1)->value().valueBool() == true);
+  QVERIFY(digitalOuptus.at(2)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(3)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(4)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(5)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(6)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(7)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(8)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(9)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(10)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(11)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(12)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(13)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(14)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(15)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(16)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(17)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(18)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(19)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(20)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(21)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(22)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(23)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(24)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(25)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(26)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(27)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(28)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(29)->value().valueBool() == true);
+  QVERIFY(digitalOuptus.at(30)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(31)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(32)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(33)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(34)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(35)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(36)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(37)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(38)->value().valueBool() == false);
+  QVERIFY(digitalOuptus.at(39)->value().valueBool() == true);
 }
 
 QVariant mdtTestNodeTest::getConnectionId(const QString & testNodeAlias, const QString & schemaPosition, const QString & contact, bool & ok)

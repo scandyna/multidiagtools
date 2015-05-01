@@ -979,7 +979,7 @@ bool mdtMultiIoDevice::setDigitalOutputValue(int addressWrite, const mdtValue &v
   return setDigitalOutputValue(digitalOutput, value, sendToDevice, waitOnReply);
 }
 
-bool mdtMultiIoDevice::setDigitalOutputValueAt(int position, const mdtValue &value, bool sendToDevice, bool waitOnReply)
+bool mdtMultiIoDevice::setDigitalOutputValueAt(int position, const mdtValue & value, bool sendToDevice, bool waitOnReply)
 {
   Q_ASSERT(pvIos);
 
@@ -994,7 +994,7 @@ bool mdtMultiIoDevice::setDigitalOutputValueAt(int position, const mdtValue &val
   }
   // Get internal I/O object
   digitalOutput = pvIos->digitalOutputs().at(position);
-  if(digitalOutput == 0){
+  if(digitalOutput == nullptr){
     pvLastError.setError(deviceIdString() + tr(": no digital output assigned at position ") + QString::number(position), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtMultiIoDevice");
     pvLastError.commit();

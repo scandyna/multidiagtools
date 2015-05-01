@@ -23,7 +23,7 @@
 #include "mdtDeviceU3606A.h"
 #include <QObject>
 
-#include <QDebug>
+//#include <QDebug>
 
 using namespace std;
 
@@ -71,8 +71,6 @@ atomic<int> mdtGlobalDeviceContainer::pvInstanceCount;
 
 mdtGlobalDeviceContainer::mdtGlobalDeviceContainer()
 {
-  qDebug() << "Global DEV containre + , uses: " << pvContainer.use_count();
-  qDebug() << "Global DEV containre + , instances: " << pvInstanceCount;
   ++pvInstanceCount;
   if(!pvContainer){
     pvContainer.reset(new mdtDeviceContainer);
@@ -82,8 +80,6 @@ mdtGlobalDeviceContainer::mdtGlobalDeviceContainer()
 
 mdtGlobalDeviceContainer::~mdtGlobalDeviceContainer()
 {
-  qDebug() << "Global DEV containre - , uses: " << pvContainer.use_count();
-  qDebug() << "Global DEV containre - , instances: " << pvInstanceCount;
   --pvInstanceCount;
   // If current object is the last that uses global container, we delete it
   if( (pvContainer) && (pvInstanceCount == 0) ){
@@ -91,11 +87,3 @@ mdtGlobalDeviceContainer::~mdtGlobalDeviceContainer()
     pvContainer.reset();
   }
 }
-
-// void mdtGlobalDeviceContainer::clear()
-// {
-//   if(pvContainer){
-//     pvContainer->clear();
-//     pvContainer.reset();
-//   }
-// }

@@ -113,9 +113,31 @@ bool mdtTtTestNodeManager::setDeviceIosLabelShort(const QString & alias)
     return false;
   }
   // Set digital outputs labels
-  qDebug() << "Labelling DOs...";
   if(!setDigitalOutputsLabelShort(dev->ios(), testNodeId, alias)){
     return false;
+  }
+
+  return true;
+}
+
+bool mdtTtTestNodeManager::setRelaysToEnable(const vector< mdtTtTestNodeRouteRelay >& relays, shared_ptr<mdtMultiIoDevice> dev)
+{
+  Q_ASSERT(dev);
+
+  dev->setDigitalOutputsValue(false, false);
+
+  return addRelaysToEnable(relays, dev);
+}
+
+bool mdtTtTestNodeManager::addRelaysToEnable(const vector<mdtTtTestNodeRouteRelay> & relays, shared_ptr<mdtMultiIoDevice> dev)
+{
+  Q_ASSERT(dev);
+
+  for(const auto & relay : relays){
+    if(!dev->setDigitalOutputValueAt(relay.ioPosition, true, false)){
+      pvLastError = dev->lastError();
+      return false;
+    }
   }
 
   return true;
@@ -194,7 +216,7 @@ bool mdtTtTestNodeManager::checkDeviceIoMapCoherence(const QVariant & testNodeId
   return true;
 }
 
-bool mdtTtTestNodeManager::analogInputIoPositionExistsInDevice(int ioPosition, const shared_ptr< mdtDeviceIos >& ios) const
+bool mdtTtTestNodeManager::analogInputIoPositionExistsInDevice(int ioPosition, const shared_ptr<mdtDeviceIos> & ios) const
 {
   Q_ASSERT(ios);
   return (ioPosition < ios->analogInputsCount());
@@ -218,7 +240,7 @@ bool mdtTtTestNodeManager::digitalOutputIoPositionExistsInDevice(int ioPosition,
   return (ioPosition < ios->digitalOutputsCount());
 }
 
-bool mdtTtTestNodeManager::setAnalogInputsLabelShort(shared_ptr< mdtDeviceIos > ios, const QVariant& testNodeId, const QString & alias)
+bool mdtTtTestNodeManager::setAnalogInputsLabelShort(shared_ptr<mdtDeviceIos> ios, const QVariant& testNodeId, const QString & alias)
 {
   Q_ASSERT(ios);
 

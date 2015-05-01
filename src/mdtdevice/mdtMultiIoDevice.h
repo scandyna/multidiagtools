@@ -35,7 +35,7 @@ class mdtPortManager;
  * Notes about I/O container:
  *  In first version of mdtDevice, I/O container (mdtDeviceIos object) was handled by caller.
  *  Experience showed that this was a bad solution.
- *  Now, the container is created, and destroyed, by mdtDevice itself.
+ *  Now, the container is created, and destroyed, by mdtMultiIoDevice itself.
  *  To deal with I/O container, some methods are available:
  *  - addInput(mdtAnalogIo *) : add a analog input.
  *  - addInputs(QList<mdtAnalogIo*> &) : add a list of analog inputs.
@@ -447,11 +447,12 @@ class mdtMultiIoDevice : public mdtDevice
 
   /*! \brief Set digital output value
    *
-   * \param position See the concept of position in mdtDeviceIos class detailed description .
+   * \param position Position of I/O in container.
+   *                 If given position not exists, a error is stored and this function returns false.
    *
    * \sa setDigitalOutputValue(mdtDigitalIo*, const mdtValue&, bool, bool)
    */
-  bool setDigitalOutputValueAt(int position, const mdtValue &value, bool sendToDevice, bool waitOnReply = true);
+  bool setDigitalOutputValueAt(int position, const mdtValue & value, bool sendToDevice, bool waitOnReply = true);
 
   /*! \brief Set digital output value
    *

@@ -134,7 +134,7 @@ bool mdtTtTestNodeRoute::addRoute(const mdtTtTestNodeRouteData & data)
   return true;
 }
 
-mdtTtTestNodeRouteData mdtTtTestNodeRoute::getRoute(const QVariant & testNodeId, const QVariant & testNodeConnectionAId, const QVariant & testNodeConnectionBId, bool & ok)
+mdtTtTestNodeRouteData mdtTtTestNodeRoute::getRoute(const QVariant & testNodeRouteId, bool & ok)
 {
   mdtTtTestNodeRouteData routeData;
   QList<QSqlRecord> dataList;
@@ -142,9 +142,7 @@ mdtTtTestNodeRouteData mdtTtTestNodeRoute::getRoute(const QVariant & testNodeId,
   QString sql;
 
   // Get TestNodeRoute_tbl part
-  sql  = "SELECT * FROM TestNodeRoute_tbl WHERE TestNode_Id_FK = " + testNodeId.toString();
-  sql += " AND TestNodeUnitConnectionA_Id_FK = " + testNodeConnectionAId.toString();
-  sql += " AND TestNodeUnitConnectionB_Id_FK = " + testNodeConnectionBId.toString();
+  sql  = "SELECT * FROM TestNodeRoute_tbl WHERE Id_PK = " + testNodeRouteId.toString();
   dataList = getDataList<QSqlRecord>(sql, ok);
   if( (!ok) || (dataList.isEmpty())){
     return routeData;
@@ -174,6 +172,107 @@ mdtTtTestNodeRouteData mdtTtTestNodeRoute::getRoute(const QVariant & testNodeId,
   }
 
   return routeData;
+}
+
+// mdtTtTestNodeRouteData mdtTtTestNodeRoute::getRoute(const QVariant & testNodeId, const QVariant & testNodeConnectionAId, const QVariant & testNodeConnectionBId, bool & ok)
+// {
+//   mdtTtTestNodeRouteData routeData;
+//   QList<QSqlRecord> dataList;
+//   QList<QVariant> idList;
+//   QString sql;
+// 
+//   // Get TestNodeRoute_tbl part
+//   sql  = "SELECT * FROM TestNodeRoute_tbl WHERE TestNode_Id_FK = " + testNodeId.toString();
+//   sql += " AND TestNodeUnitConnectionA_Id_FK = " + testNodeConnectionAId.toString();
+//   sql += " AND TestNodeUnitConnectionB_Id_FK = " + testNodeConnectionBId.toString();
+//   dataList = getDataList<QSqlRecord>(sql, ok);
+//   if( (!ok) || (dataList.isEmpty())){
+//     return routeData;
+//   }
+//   Q_ASSERT(dataList.size() == 1);
+//   routeData.setId(dataList.at(0).value("Id_PK"));
+//   routeData.setTestNodeId(dataList.at(0).value("TestNode_Id_FK"));
+//   routeData.setConnectionAId(dataList.at(0).value("TestNodeUnitConnectionA_Id_FK"));
+//   routeData.setConnectionBId(dataList.at(0).value("TestNodeUnitConnectionB_Id_FK"));
+//   if(!dataList.at(0).value("Resistance").isNull()){
+//     routeData.setResistance(dataList.at(0).value("Resistance").toDouble());
+//   }
+//   routeData.setCalibrationDate(dataList.at(0).value("CalibrationDate").toDateTime());
+//   // Get relays from TestNodeRouteUnit_tbl
+//   sql = "SELECT TestNodeUnit_Id_FK FROM TestNodeRouteUnit_tbl WHERE TestNodeRoute_Id_FK = " + routeData.id().toString();
+//   idList = getDataList<QVariant>(sql, ok);
+//   if(!ok){
+//     routeData.clear();
+//     return routeData;
+//   }
+//   for(const auto & id : idList){
+//     if(!addRelayToRoute(id, routeData)){
+//       routeData.clear();
+//       ok = false;
+//       return routeData;
+//     }
+//   }
+// 
+//   return routeData;
+// }
+
+mdtTtTestNodeRouteData mdtTtTestNodeRoute::getRoute(const QVariant & testNodeId, const QVariant & testNodeConnectionAId, const QVariant & testNodeConnectionBId, bool & ok)
+{
+  QList<QVariant> idList;
+  QString sql;
+
+  sql  = "SELECT Id_PK FROM TestNodeRoute_tbl WHERE TestNode_Id_FK = " + testNodeId.toString();
+  sql += " AND TestNodeUnitConnectionA_Id_FK = " + testNodeConnectionAId.toString();
+  sql += " AND TestNodeUnitConnectionB_Id_FK = " + testNodeConnectionBId.toString();
+  idList = getDataList<QVariant>(sql, ok);
+  if( (!ok) || (idList.isEmpty())){
+    return mdtTtTestNodeRouteData();
+  }
+  Q_ASSERT(idList.size() == 1);
+
+  return getRoute(idList.at(0), ok);
+}
+
+QList<mdtTtTestNodeRouteData> mdtTtTestNodeRoute::getAllRoutes(const QVariant & testNodeId, bool & ok)
+{
+  QList<mdtTtTestNodeRouteData> routeList;
+  QList<QVariant> idList;
+  QString sql;
+
+  sql  = "SELECT Id_PK FROM TestNodeRoute_tbl WHERE TestNode_Id_FK = " + testNodeId.toString();
+  idList = getDataList<QVariant>(sql, ok);
+  if(!ok){
+    return routeList;
+  }
+  for(const auto & id : idList){
+    mdtTtTestNodeRouteData route = getRoute(id, ok);
+    if(!ok){
+      routeList.clear();
+      return routeList;
+    }
+    routeList.append(route);
+  }
+
+  return routeList;
+}
+
+QList<mdtTtTestNodeRouteData> mdtTtTestNodeRoute::getAllRoutesByAlias(const QString & testNodeAlias, bool& ok)
+{
+  QList<QVariant> idList;
+  QString sql;
+
+  sql  = "SELECT VehicleType_Id_FK_PK FROM TestNode_tbl WHERE Alias = '" + testNodeAlias + "'";
+  idList = getDataList<QVariant>(sql, ok);
+  if( (!ok) || (idList.size() != 1) ){
+    return QList<mdtTtTestNodeRouteData>();
+  }
+
+  return getAllRoutes(idList.at(0), ok);
+}
+
+QString mdtTtTestNodeRoute::getRouteString(const mdtTtTestNodeRouteData& route)
+{
+  return getSchemaPosAndContactName(route.connectionAId()) + " - " + getSchemaPosAndContactName(route.connectionBId());
 }
 
 bool mdtTtTestNodeRoute::setRouteResistance(const QVariant & routeId, const mdtValueDouble & resistance, const QDateTime & d)
@@ -283,10 +382,6 @@ bool mdtTtTestNodeRoute::addRelayToRoute(const QVariant & relayId, mdtTtTestNode
 
   return true;
 }
-
-// bool mdtTtTestNodeRoute::addRelayToDatabase(const mdtTtTestNodeRouteRelay & relay)
-// {
-// }
 
 QString mdtTtTestNodeRoute::getSchemaPosAndContactName(const QVariant& connectionId)
 {

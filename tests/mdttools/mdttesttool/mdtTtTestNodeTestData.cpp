@@ -402,7 +402,7 @@ bool mdtTtTestNodeATestData::createRelays()
     rollbackTransaction();
     return false;
   }
-  if(!addTestNodeUnit(unitId, pvTestNodeId, "CHANELREL", 33)){
+  if(!addTestNodeUnit(unitId, pvTestNodeId, "CHANELREL", 39)){
     rollbackTransaction();
     return false;
   }
@@ -435,7 +435,7 @@ bool mdtTtTestNodeATestData::createRelays()
     rollbackTransaction();
     return false;
   }
-  if(!addTestNodeUnit(unitId, pvTestNodeId, "CHANELREL", 33)){
+  if(!addTestNodeUnit(unitId, pvTestNodeId, "CHANELREL", 40)){
     rollbackTransaction();
     return false;
   }

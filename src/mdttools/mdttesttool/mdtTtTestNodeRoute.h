@@ -30,6 +30,7 @@
 #include <QSqlDatabase>
 #include <QVariant>
 #include <QString>
+#include <QList>
 
 /*! \brief Test node route creation and access
  */
@@ -69,6 +70,15 @@ class mdtTtTestNodeRoute : public mdtTtBase
 
   /*! \brief Get a route from TestNodeRoute_tbl
    *
+   * \param testNodeRouteId ID of test node route (primary key of TestNodeRoute_tbl)
+   * \param ok Will be set false on error, true else.
+   * \return Requested route. A empty route means that no route could be found between given connections, or a error occured.
+   *         Use the ok parameter to differenciate this 2 cases.
+   */
+  mdtTtTestNodeRouteData getRoute(const QVariant & testNodeRouteId, bool & ok);
+
+  /*! \brief Get a route from TestNodeRoute_tbl
+   *
    * \param testNodeId ID of test node
    * \param testNodeConnectionAId ID of first (external) connection of test node
    * \param testNodeConnectionBId ID of second (external) connection of test node
@@ -77,6 +87,28 @@ class mdtTtTestNodeRoute : public mdtTtBase
    *         Use the ok parameter to differenciate this 2 cases.
    */
   mdtTtTestNodeRouteData getRoute(const QVariant & testNodeId, const QVariant & testNodeConnectionAId, const QVariant & testNodeConnectionBId, bool & ok);
+
+  /*! \brief Get a list of all routes for given test node from TestNodeRoute_tbl
+   *
+   * \param testNodeId ID of test node
+   * \param ok Will be set false on error, true else.
+   * \return List that contains all routes of test node. A empty list means that no route exists for given test node, or a error occured.
+   *         Use the ok parameter to differenciate this 2 cases.
+   */
+  QList<mdtTtTestNodeRouteData> getAllRoutes(const QVariant & testNodeId, bool & ok);
+
+  /*! \brief Get a list of all routes for given test node from TestNodeRoute_tbl
+   *
+   * \param testNodeAlias Alias of test node
+   * \param ok Will be set false on error, true else.
+   * \return List that contains all routes of test node. A empty list means that no route exists for given test node, or a error occured.
+   *         Use the ok parameter to differenciate this 2 cases.
+   */
+  QList<mdtTtTestNodeRouteData> getAllRoutesByAlias(const QString & testNodeAlias, bool & ok);
+
+  /*! \brief Get a string that describes given route
+   */
+  QString getRouteString(const mdtTtTestNodeRouteData & route);
 
   /*! \brief Set route resistance
    */
