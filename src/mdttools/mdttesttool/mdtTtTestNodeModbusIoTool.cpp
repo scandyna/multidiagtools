@@ -66,8 +66,15 @@ bool mdtTtTestNodeModbusIoTool::connectToDevice()
     setStateConnectingToNodeFinished();
     return false;
   }
+  // Check I/Os coherence
+  if(!pvTestNodeManager->checkDeviceIoMapCoherence(pvDeviceModbus->alias())){
+    pvLastError = pvTestNodeManager->lastError();
+    pvDeviceModbus->disconnectFromDevice();
+    setStateConnectingToNodeFinished();
+    return false;
+  }
   // Set I/O short labels
-  if(!pvTestNodeManager->setDeviceIosLabelShort(pvDeviceModbus->alias(), false)){
+  if(!pvTestNodeManager->setDeviceIosLabelShort(pvDeviceModbus->alias())){
     pvLastError = pvTestNodeManager->lastError();
     pvDeviceModbus->disconnectFromDevice();
     setStateConnectingToNodeFinished();

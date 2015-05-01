@@ -44,7 +44,7 @@ class mdtTestToolTest : public mdtTest
 
   void mdtTtTestNodeUnitTest();
 
-  void mdtTtTestNodeManagerTest();
+//   void mdtTtTestNodeManagerTest();
 
   void mdtTtTestModelItemRouteDataTest();
   void testItemNodeNodeSetupDataTest();

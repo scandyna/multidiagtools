@@ -40,6 +40,7 @@
 ///#include "mdtTtTestModelItemRouteData.h"
 #include "mdtTtTestNodeManager.h"
 #include "mdtMultiIoDevice.h"
+#include "mdtDigitalIo.h"
 ///#include "mdtDeviceContainer.h"
 ///#include "mdtDeviceContainerWidget.h"
 ///#include "mdtDeviceU3606A.h"
@@ -317,18 +318,59 @@ void mdtTestNodeTest::shortDetectionTest()
 
 void mdtTestNodeTest::testNodeManagerTest()
 {
+  mdtTtTestNodeATestData tnAd(pvDatabaseManager.database());
   mdtTtTestNodeManager tnm(pvDatabaseManager.database());
-  
-  mdtTtTestNodeManager tnm2(pvDatabaseManager.database());
-  mdtTtTestNodeManager tnm3(pvDatabaseManager.database());
-  mdtTtTestNodeManager tnm4(pvDatabaseManager.database());
+  mdtDigitalIo *dout;
 
+  // Create test node A in database
+  QVERIFY(tnAd.populate());
+  // Add test node A
   auto device = tnm.addDevice<mdtMultiIoDevice>("A");
   QVERIFY(tnm.device<mdtMultiIoDevice>("A") == device);
+  QCOMPARE(tnm.allDevices().count(), 1);
+  QCOMPARE(tnm.allDevices().at(0)->alias(), QString("A"));
+  /*
+   * Some subclasses of mdtMultiIoDevice can, once connected to device,
+   * detect the I/O map of physical device.
+   * Here, we build it manually regarding test node A.
+   */
+  /*
+   * Test I/O coherence map checking functions
+   */
+  // Check with empty device I/O container
+  QVERIFY(!tnm.checkDeviceIoMapCoherence("A"));
+  // Add to less relays
+  for(int i = 0; i < 10; ++i){
+    dout = new mdtDigitalIo;
+    dout->setAddress(i);
+    device->addOutput(dout);
+  }
+  QVERIFY(!tnm.checkDeviceIoMapCoherence("A"));
+  // Add enouth relays
+  device->ios()->deleteIos();
+  for(int i = 0; i < 41; ++i){
+    dout = new mdtDigitalIo;
+    dout->setAddress(i);
+    device->addOutput(dout);
+  }
+  QVERIFY(tnm.checkDeviceIoMapCoherence("A"));
+  /*
+   * Check I/O labelling
+   */
+  QVERIFY(tnm.setDeviceIosLabelShort("A"));
+  // Check K1
+  dout = device->ios()->digitalOutputs().at(0);
+  QCOMPARE(dout->labelShort(), QString("K1"));
+
+
   
-  auto d2 = tnm2.device<mdtMultiIoDevice>("A");
+  // Build device
+  // Add relays
+  // Set labels
+  ///QVERIFY(tnm.setDeviceIosLabelShort("A", false));
+
   
-  ///tnm.container()->clear();
+
 }
 
 QVariant mdtTestNodeTest::getConnectionId(const QString & testNodeAlias, const QString & schemaPosition, const QString & contact, bool & ok)

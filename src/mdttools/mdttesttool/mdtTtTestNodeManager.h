@@ -23,6 +23,7 @@
 
 #include "mdtDeviceContainer.h"
 #include "mdtDevice.h"
+#include "mdtMultiIoDevice.h"
 #include "mdtDeviceAddress.h"
 #include "mdtTtTestItemNodeSetupData.h"
 #include "mdtError.h"
@@ -54,10 +55,6 @@ class mdtTtTestNodeManager : public QObject
   /*! \brief Constructor
    */
   mdtTtTestNodeManager(QSqlDatabase db);
-
-  /*! \brief Add a test node
-   */
-  
 
   /*! \brief Create and add a device
    */
@@ -97,6 +94,22 @@ class mdtTtTestNodeManager : public QObject
    */
   void clear();
 
+  /*! \brief Check coherence of I/O map between device and database
+   *
+   * When we use a test node that was defined in database (TestNode_tbl and TestNodeUnit_tbl),
+   *  we mabe want that physical device to witch we are connected has the same layout than
+   *  the one that is defined in database.
+   *
+   * Check is done as follow:
+   *  For each I/O of a type that has its IoPosition set in TestNodeUnit_tbl,
+   *  the I/O of the same type must exists in mdtMultiIoDevice container.
+   *  If a mismatch was found, it is described and can be retrived with lastError().
+   *  Note that other error can happen, on witch case this function will also fail.
+   *
+   * \param alias Alias of device to check. Corresponding device must be a mdtMultiIoDevice or subclass.
+   */
+  bool checkDeviceIoMapCoherence(const QString & alias);
+
   /*! \brief Set short label to device I/Os
    *
    * Will get device from global device container that has given alias,
@@ -105,11 +118,8 @@ class mdtTtTestNodeManager : public QObject
    *  for test node that has given alias.
    *  For all test node units that have a IoPosition, SchemaPosition is set as short label in device's I/O container
    *  (see mdtDeviceIos for details).
-   *
-   * If failOnIoMismatch is true, this function fails as soon as a I/O set in database (IoPosition in TestNodeUnit_view)
-   *  does not exists in device.
    */
-  bool setDeviceIosLabelShort(const QString & alias, bool failOnIoMismatch);
+  bool setDeviceIosLabelShort(const QString & alias);
 
   /*! \brief Get last error
    */
@@ -120,21 +130,57 @@ class mdtTtTestNodeManager : public QObject
 
  private:
 
+  /*! \brief Check I/O map coherence of given device I/O container
+   */
+  bool checkDeviceIoMapCoherence(const QVariant & testNodeId, const std::shared_ptr<mdtMultiIoDevice> & dev);
+
+  /*! \brief Check if given analog input position exists in device I/O container
+   */
+  bool analogInputIoPositionExistsInDevice(int ioPosition, const std::shared_ptr<mdtDeviceIos> & ios) const;
+
+  /*! \brief Check if given analog output position exists in device I/O container
+   */
+  bool analogOutputIoPositionExistsInDevice(int ioPosition, const std::shared_ptr<mdtDeviceIos> & ios) const;
+
+  /*! \brief Check if given digital input position exists in device I/O container
+   */
+  bool digitalInputIoPositionExistsInDevice(int ioPosition, const std::shared_ptr<mdtDeviceIos> & ios) const;
+
+  /*! \brief Check if given digital output position exists in device I/O container
+   */
+  bool digitalOutputIoPositionExistsInDevice(int ioPosition, const std::shared_ptr<mdtDeviceIos> & ios) const;
+
   /*! \brief Set short labels to analog inputs
    */
-  bool setAnalogInputsLabelShort(std::shared_ptr<mdtDeviceIos> ios, const QVariant & testNodeId, const QString & alias, bool failOnIoMismatch);
+  bool setAnalogInputsLabelShort(std::shared_ptr<mdtDeviceIos> ios, const QVariant & testNodeId, const QString & alias);
 
   /*! \brief Set short labels to analog outputs
    */
-  bool setAnalogOutputsLabelShort(std::shared_ptr<mdtDeviceIos> ios, const QVariant & testNodeId, const QString & alias, bool failOnIoMismatch);
+  bool setAnalogOutputsLabelShort(std::shared_ptr<mdtDeviceIos> ios, const QVariant & testNodeId, const QString & alias);
 
   /*! \brief Set short labels to digital inputs
    */
-  bool setDigitalInputsLabelShort(std::shared_ptr<mdtDeviceIos> ios, const QVariant & testNodeId, const QString & alias, bool failOnIoMismatch);
+  bool setDigitalInputsLabelShort(std::shared_ptr<mdtDeviceIos> ios, const QVariant & testNodeId, const QString & alias);
 
   /*! \brief Set short labels to digital outputs
    */
-  bool setDigitalOutputsLabelShort(std::shared_ptr<mdtDeviceIos> ios, const QVariant & testNodeId, const QString & alias, bool failOnIoMismatch);
+  bool setDigitalOutputsLabelShort(std::shared_ptr<mdtDeviceIos> ios, const QVariant & testNodeId, const QString & alias);
+
+  /*! \brief Get a list of analog inputs IoPosition in database
+   */
+  std::vector<int> getAnalogInputsIoPositionsList(const QVariant & testNodeId, bool & ok);
+
+  /*! \brief Get a list of analog outputs IoPosition in database
+   */
+  std::vector<int> getAnalogOutputsIoPositionsList(const QVariant & testNodeId, bool & ok);
+
+  /*! \brief Get a list of digital inputs IoPosition in database
+   */
+  std::vector<int> getDigitalInputsIoPositionsList(const QVariant & testNodeId, bool & ok);
+
+  /*! \brief Get a list of digital outputs IoPosition in database
+   */
+  std::vector<int> getDigitalOutputsIoPositionsList(const QVariant & testNodeId, bool & ok);
 
   Q_DISABLE_COPY(mdtTtTestNodeManager);
 

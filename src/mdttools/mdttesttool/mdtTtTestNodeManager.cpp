@@ -23,7 +23,6 @@
 #include "mdtTtTestNode.h"
 #include "mdtDeviceIos.h"
 #include "mdtAbstractIo.h"
-#include "mdtMultiIoDevice.h"
 #include <QSqlRecord>
 
 #include <QDebug>
@@ -57,7 +56,31 @@ void mdtTtTestNodeManager::clear()
   pvDevices->clear();
 }
 
-bool mdtTtTestNodeManager::setDeviceIosLabelShort(const QString & alias, bool failOnIoMismatch)
+bool mdtTtTestNodeManager::checkDeviceIoMapCoherence(const QString & alias)
+{
+  mdtTtTestNode tn(0, pvDatabase);
+  QVariant testNodeId;
+
+  // Get device
+  auto dev = device<mdtMultiIoDevice>(alias);
+  if(!dev){
+    pvLastError.setError(tr("No multi I/O device found with alias") + " '" + alias + "'", mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNodeManager");
+    pvLastError.commit();
+    return false;
+  }
+  Q_ASSERT(dev->ios());
+  // Get test node ID
+  testNodeId = tn.getTestNodeIdForAlias(alias);
+  if(testNodeId.isNull()){
+    pvLastError = tn.lastError();
+    return false;
+  }
+
+  return checkDeviceIoMapCoherence(testNodeId, dev);
+}
+
+bool mdtTtTestNodeManager::setDeviceIosLabelShort(const QString & alias)
 {
   mdtTtTestNode tn(0, pvDatabase);
   QVariant testNodeId;
@@ -78,27 +101,124 @@ bool mdtTtTestNodeManager::setDeviceIosLabelShort(const QString & alias, bool fa
   }
   Q_ASSERT(dev->ios());
   // Set analog inputs labels
-  if(!setAnalogInputsLabelShort(dev->ios(), testNodeId, alias, failOnIoMismatch)){
+  if(!setAnalogInputsLabelShort(dev->ios(), testNodeId, alias)){
     return false;
   }
   // Set analog outputs labels
-  if(!setAnalogOutputsLabelShort(dev->ios(), testNodeId, alias, failOnIoMismatch)){
+  if(!setAnalogOutputsLabelShort(dev->ios(), testNodeId, alias)){
     return false;
   }
   // Set digital inputs labels
-  if(!setDigitalInputsLabelShort(dev->ios(), testNodeId, alias, failOnIoMismatch)){
+  if(!setDigitalInputsLabelShort(dev->ios(), testNodeId, alias)){
     return false;
   }
   // Set digital outputs labels
-  if(!setDigitalOutputsLabelShort(dev->ios(), testNodeId, alias, failOnIoMismatch)){
+  qDebug() << "Labelling DOs...";
+  if(!setDigitalOutputsLabelShort(dev->ios(), testNodeId, alias)){
     return false;
   }
 
   return true;
 }
 
-/// \todo failOnIoMismatch implemented wrong
-bool mdtTtTestNodeManager::setAnalogInputsLabelShort(shared_ptr< mdtDeviceIos > ios, const QVariant& testNodeId, const QString & alias, bool failOnIoMismatch)
+bool mdtTtTestNodeManager::checkDeviceIoMapCoherence(const QVariant & testNodeId, const shared_ptr<mdtMultiIoDevice> & dev)
+{
+  Q_ASSERT(!testNodeId.isNull());
+  Q_ASSERT(dev);
+  Q_ASSERT(dev->ios());
+
+  std::vector<int> analogInputsIoPositions;
+  std::vector<int> analogOutputsIoPositions;
+  std::vector<int> digitalInputsIoPositions;
+  std::vector<int> digitalOutputsIoPositions;
+  bool ok;
+
+  // Get I/O positions
+  analogInputsIoPositions = getAnalogInputsIoPositionsList(testNodeId, ok);
+  if(!ok){
+    return false;
+  }
+  analogOutputsIoPositions = getAnalogOutputsIoPositionsList(testNodeId, ok);
+  if(!ok){
+    return false;
+  }
+  digitalInputsIoPositions = getDigitalInputsIoPositionsList(testNodeId, ok);
+  if(!ok){
+    return false;
+  }
+  digitalOutputsIoPositions = getDigitalOutputsIoPositionsList(testNodeId, ok);
+  if(!ok){
+    return false;
+  }
+  // Check analog inputs
+  for(const auto & ioPosition : analogInputsIoPositions){
+    if(!analogInputIoPositionExistsInDevice(ioPosition, dev->ios())){
+      QString msg = tr("Device '%1': I/O position %2 does not exist in analog inputs of device.").arg(dev->alias()).arg(ioPosition);
+      pvLastError.setError(msg, mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNodeManager");
+      pvLastError.commit();
+      return false;
+    }
+  }
+  // Check analog outputs
+  for(const auto & ioPosition : analogOutputsIoPositions){
+    if(!analogOutputIoPositionExistsInDevice(ioPosition, dev->ios())){
+      QString msg = tr("Device '%1': I/O position %2 does not exist in analog outputs of device.").arg(dev->alias()).arg(ioPosition);
+      pvLastError.setError(msg, mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNodeManager");
+      pvLastError.commit();
+      return false;
+    }
+  }
+  // Check digital inputs
+  for(const auto & ioPosition : digitalInputsIoPositions){
+    if(!digitalInputIoPositionExistsInDevice(ioPosition, dev->ios())){
+      QString msg = tr("Device '%1': I/O position %2 does not exist in digital inputs of device.").arg(dev->alias()).arg(ioPosition);
+      pvLastError.setError(msg, mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNodeManager");
+      pvLastError.commit();
+      return false;
+    }
+  }
+  // Check digital outputs
+  for(const auto & ioPosition : digitalOutputsIoPositions){
+    if(!digitalOutputIoPositionExistsInDevice(ioPosition, dev->ios())){
+      QString msg = tr("Device '%1': I/O position %2 does not exist in digital outputs of device.").arg(dev->alias()).arg(ioPosition);
+      pvLastError.setError(msg, mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNodeManager");
+      pvLastError.commit();
+      return false;
+    }
+  }
+
+  return true;
+}
+
+bool mdtTtTestNodeManager::analogInputIoPositionExistsInDevice(int ioPosition, const shared_ptr< mdtDeviceIos >& ios) const
+{
+  Q_ASSERT(ios);
+  return (ioPosition < ios->analogInputsCount());
+}
+
+bool mdtTtTestNodeManager::analogOutputIoPositionExistsInDevice(int ioPosition, const shared_ptr< mdtDeviceIos >& ios) const
+{
+  Q_ASSERT(ios);
+  return (ioPosition < ios->analogOutputsCount());
+}
+
+bool mdtTtTestNodeManager::digitalInputIoPositionExistsInDevice(int ioPosition, const shared_ptr<mdtDeviceIos> & ios) const
+{
+  Q_ASSERT(ios);
+  return (ioPosition < ios->digitalInputsCount());
+}
+
+bool mdtTtTestNodeManager::digitalOutputIoPositionExistsInDevice(int ioPosition, const shared_ptr< mdtDeviceIos >& ios) const
+{
+  Q_ASSERT(ios);
+  return (ioPosition < ios->digitalOutputsCount());
+}
+
+bool mdtTtTestNodeManager::setAnalogInputsLabelShort(shared_ptr< mdtDeviceIos > ios, const QVariant& testNodeId, const QString & alias)
 {
   Q_ASSERT(ios);
 
@@ -130,25 +250,18 @@ bool mdtTtTestNodeManager::setAnalogInputsLabelShort(shared_ptr< mdtDeviceIos > 
     }
     Q_ASSERT(dbIoPos >= 0);
     // Update label
-    if(ios->analogInputsCount() > dbIoPos){
+    if(analogInputIoPositionExistsInDevice(dbIoPos, ios)){
+      Q_ASSERT(dbIoPos < ios->analogInputs().size());
       io = ios->analogInputs().at(dbIoPos);
       Q_ASSERT(io != nullptr);
       io->setLabelShort(dbIo.value(0).toString());
-    }else{
-      if(failOnIoMismatch){
-        pvLastError.setError(tr("Device '") + alias + tr("' I/O position of '") + dbIo.value(0).toString() + tr("' not exists on device."), mdtError::Error);
-        MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNodeManager");
-        pvLastError.commit();
-        return false;
-      }
     }
   }
 
   return true;
 }
 
-/// \todo failOnIoMismatch implemented wrong
-bool mdtTtTestNodeManager::setAnalogOutputsLabelShort(shared_ptr< mdtDeviceIos > ios, const QVariant& testNodeId, const QString & alias, bool failOnIoMismatch)
+bool mdtTtTestNodeManager::setAnalogOutputsLabelShort(shared_ptr< mdtDeviceIos > ios, const QVariant& testNodeId, const QString & alias)
 {
   Q_ASSERT(ios);
 
@@ -180,25 +293,18 @@ bool mdtTtTestNodeManager::setAnalogOutputsLabelShort(shared_ptr< mdtDeviceIos >
     }
     Q_ASSERT(dbIoPos >= 0);
     // Update label
-    if(ios->analogOutputsCount() > dbIoPos){
+    if(analogOutputIoPositionExistsInDevice(dbIoPos, ios)){
+      Q_ASSERT(dbIoPos < ios->analogOutputs().size());
       io = ios->analogOutputs().at(dbIoPos);
       Q_ASSERT(io != nullptr);
       io->setLabelShort(dbIo.value(0).toString());
-    }else{
-      if(failOnIoMismatch){
-        pvLastError.setError(tr("Device '") + alias + tr("' I/O position of '") + dbIo.value(0).toString() + tr("' not exists on device."), mdtError::Error);
-        MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNodeManager");
-        pvLastError.commit();
-        return false;
-      }
     }
   }
 
   return true;
 }
 
-/// \todo failOnIoMismatch implemented wrong
-bool mdtTtTestNodeManager::setDigitalInputsLabelShort(std::shared_ptr<mdtDeviceIos> ios, const QVariant& testNodeId, const QString & alias, bool failOnIoMismatch)
+bool mdtTtTestNodeManager::setDigitalInputsLabelShort(std::shared_ptr<mdtDeviceIos> ios, const QVariant& testNodeId, const QString & alias)
 {
   Q_ASSERT(ios);
 
@@ -230,25 +336,18 @@ bool mdtTtTestNodeManager::setDigitalInputsLabelShort(std::shared_ptr<mdtDeviceI
     }
     Q_ASSERT(dbIoPos >= 0);
     // Update label
-    if(ios->digitalInputsCount() > dbIoPos){
+    if(digitalInputIoPositionExistsInDevice(dbIoPos, ios)){
+      Q_ASSERT(dbIoPos < ios->digitalInputs().size());
       io = ios->digitalInputs().at(dbIoPos);
       Q_ASSERT(io != nullptr);
       io->setLabelShort(dbIo.value(0).toString());
-    }else{
-      if(failOnIoMismatch){
-        pvLastError.setError(tr("Device '") + alias + tr("' I/O position of '") + dbIo.value(0).toString() + tr("' not exists on device."), mdtError::Error);
-        MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNodeManager");
-        pvLastError.commit();
-        return false;
-      }
     }
   }
 
   return true;
 }
 
-/// \todo failOnIoMismatch implemented wrong
-bool mdtTtTestNodeManager::setDigitalOutputsLabelShort(std::shared_ptr<mdtDeviceIos> ios, const QVariant& testNodeId, const QString & alias, bool failOnIoMismatch)
+bool mdtTtTestNodeManager::setDigitalOutputsLabelShort(std::shared_ptr<mdtDeviceIos> ios, const QVariant& testNodeId, const QString & alias)
 {
   Q_ASSERT(ios);
 
@@ -280,19 +379,105 @@ bool mdtTtTestNodeManager::setDigitalOutputsLabelShort(std::shared_ptr<mdtDevice
     }
     Q_ASSERT(dbIoPos >= 0);
     // Update label
-    if(ios->digitalOutputsCount() > dbIoPos){
+    if(digitalOutputIoPositionExistsInDevice(dbIoPos, ios)){
+      Q_ASSERT(dbIoPos < ios->digitalOutputs().size());
       io = ios->digitalOutputs().at(dbIoPos);
       Q_ASSERT(io != nullptr);
       io->setLabelShort(dbIo.value(0).toString());
-    }else{
-      if(failOnIoMismatch){
-        pvLastError.setError(tr("Device '") + alias + tr("' I/O position of '") + dbIo.value(0).toString() + tr("' not exists on device."), mdtError::Error);
-        MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNodeManager");
-        pvLastError.commit();
-        return false;
-      }
     }
   }
 
   return true;
+}
+
+vector<int> mdtTtTestNodeManager::getAnalogInputsIoPositionsList(const QVariant & testNodeId, bool & ok)
+{
+  std::vector<int> ioPositionList;
+  mdtTtTestNode tn(pvDatabase);
+  QString sql;
+  QList<QVariant> dataList;
+
+  sql = "SELECT IoPosition FROM TestNodeUnit_tbl WHERE TestNode_Id_FK = " + testNodeId.toString();
+  sql += " AND (Type_Code_FK = 'AI')";
+  sql += " AND IoPosition IS NOT NULL";
+  dataList = tn.getDataList<QVariant>(sql, ok);
+  if(!ok){
+    pvLastError = tn.lastError();
+    return ioPositionList;
+  }
+  for(const auto & var : dataList){
+    Q_ASSERT(!var.isNull());
+    ioPositionList.emplace_back(var.toInt());
+  }
+
+  return ioPositionList;
+}
+
+vector<int> mdtTtTestNodeManager::getAnalogOutputsIoPositionsList(const QVariant & testNodeId, bool & ok)
+{
+  std::vector<int> ioPositionList;
+  mdtTtTestNode tn(pvDatabase);
+  QString sql;
+  QList<QVariant> dataList;
+
+  sql = "SELECT IoPosition FROM TestNodeUnit_tbl WHERE TestNode_Id_FK = " + testNodeId.toString();
+  sql += " AND (Type_Code_FK = 'AO')";
+  sql += " AND IoPosition IS NOT NULL";
+  dataList = tn.getDataList<QVariant>(sql, ok);
+  if(!ok){
+    pvLastError = tn.lastError();
+    return ioPositionList;
+  }
+  for(const auto & var : dataList){
+    Q_ASSERT(!var.isNull());
+    ioPositionList.emplace_back(var.toInt());
+  }
+
+  return ioPositionList;
+}
+
+vector<int> mdtTtTestNodeManager::getDigitalInputsIoPositionsList(const QVariant & testNodeId, bool & ok)
+{
+  std::vector<int> ioPositionList;
+  mdtTtTestNode tn(pvDatabase);
+  QString sql;
+  QList<QVariant> dataList;
+
+  sql = "SELECT IoPosition FROM TestNodeUnit_tbl WHERE TestNode_Id_FK = " + testNodeId.toString();
+  sql += " AND (Type_Code_FK = 'DI')";
+  sql += " AND IoPosition IS NOT NULL";
+  dataList = tn.getDataList<QVariant>(sql, ok);
+  if(!ok){
+    pvLastError = tn.lastError();
+    return ioPositionList;
+  }
+  for(const auto & var : dataList){
+    Q_ASSERT(!var.isNull());
+    ioPositionList.emplace_back(var.toInt());
+  }
+
+  return ioPositionList;
+}
+
+vector<int> mdtTtTestNodeManager::getDigitalOutputsIoPositionsList(const QVariant & testNodeId, bool & ok)
+{
+  std::vector<int> ioPositionList;
+  mdtTtTestNode tn(pvDatabase);
+  QString sql;
+  QList<QVariant> dataList;
+
+  sql = "SELECT IoPosition FROM TestNodeUnit_tbl WHERE TestNode_Id_FK = " + testNodeId.toString();
+  sql += " AND (Type_Code_FK = 'BUSCPLREL' OR Type_Code_FK = 'CHANELREL')";
+  sql += " AND IoPosition IS NOT NULL";
+  dataList = tn.getDataList<QVariant>(sql, ok);
+  if(!ok){
+    pvLastError = tn.lastError();
+    return ioPositionList;
+  }
+  for(const auto & var : dataList){
+    Q_ASSERT(!var.isNull());
+    ioPositionList.emplace_back(var.toInt());
+  }
+
+  return ioPositionList;
 }

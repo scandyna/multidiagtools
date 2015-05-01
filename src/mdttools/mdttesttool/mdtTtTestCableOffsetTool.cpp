@@ -461,8 +461,14 @@ bool mdtTtTestCableOffsetTool::connectToInstruments()
     pvLastError = coupler->lastError();
     return false;
   }
+  // Check I/Os coherence
+  if(!pvTestNodeManager->checkDeviceIoMapCoherence("W750")){
+    pvLastError = pvTestNodeManager->lastError();
+    disconnectFromInstruments();
+    return false;
+  }
   // Set short labels to coupler units
-  if(!pvTestNodeManager->setDeviceIosLabelShort("W750", true)){
+  if(!pvTestNodeManager->setDeviceIosLabelShort("W750")){
     pvLastError = pvTestNodeManager->lastError();
     disconnectFromInstruments();
     return false;
