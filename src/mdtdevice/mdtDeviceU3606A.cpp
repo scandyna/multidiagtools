@@ -22,11 +22,13 @@
 #include "mdtError.h"
 #include <QByteArray>
 #include <QList>
+#include <QTimer>
 
 #include <QDebug>
 
 mdtDeviceU3606A::mdtDeviceU3606A(QObject *parent)
- : mdtDeviceScpi(parent)
+ : mdtDeviceScpi(parent),
+   pvContinousMeasurementActive(false)
 {
 }
 
@@ -287,9 +289,9 @@ mdtDeviceU3606A::MeasureType_t mdtDeviceU3606A::getMeasureConfiguration()
 
 mdtValueDouble mdtDeviceU3606A::getMeasureValue(int timeout)
 {
+  mdtValueDouble x;
   QByteArray data;
   mdtCodecScpi codec;
-  mdtValueDouble x;
 
   data = sendQuery("READ?\n", timeout);
   if(data.isEmpty()){
@@ -302,6 +304,26 @@ mdtValueDouble mdtDeviceU3606A::getMeasureValue(int timeout)
   }
 
   return x;
+}
+
+void mdtDeviceU3606A::startContinuousMeasurement(int interval)
+{
+  Q_ASSERT(interval >= 0);
+
+  // Setup device in free-run mode
+  if(!sendCommand("INIT:CONT 1\n")){
+    return;
+  }
+  // Update flags and fetch device a first time
+  pvContinousMeasurementActive = true;
+  pvContinousMeasurementIntervall = interval;
+  sendFetchQuery();
+}
+
+void mdtDeviceU3606A::stopContinuousMeasurement()
+{
+  pvContinousMeasurementActive = false;
+  sendCommand("INIT:CONT 0\n");
 }
 
 bool mdtDeviceU3606A::setOutputState(bool state)
@@ -349,4 +371,48 @@ bool mdtDeviceU3606A::setSourceCurrent(double x)
   cmd += QByteArray::number(x);
 
   return sendCommand(cmd);
+}
+
+void mdtDeviceU3606A::sendFetchQuery()
+{
+  mdtValueDouble x;
+  QByteArray data;
+  mdtCodecScpi codec;
+
+  // Check if continous mesurement is active
+  if(!pvContinousMeasurementActive){
+    return;
+  }
+  // Check if we are ready to process
+  /**
+  if(currentState() != State_t::Ready){
+    stopContinuousMeasurement();
+    return;
+  }
+  */
+  // Query device
+  data = sendQuery("FETC?\n", 30000);
+  qDebug() << "****** FETC returned " << data;
+  if(data.isEmpty()){
+    stopContinuousMeasurement();
+    return;
+  }
+  x = codec.decodeValueDouble(data);
+  if(x.isNull()){
+    pvLastError = codec.lastError();
+    stopContinuousMeasurement();
+    return;
+  }
+  // Signal new value
+  emit measureValueReceived(x);
+  // If we are active and ready, re-arm timer for next measurement
+  /**
+  if(currentState() != State_t::Ready){
+    stopContinuousMeasurement();
+    return;
+  }
+  */
+  if(pvContinousMeasurementActive){
+    QTimer::singleShot(pvContinousMeasurementIntervall, this, SLOT(sendFetchQuery()));
+  }
 }

@@ -163,9 +163,40 @@ class mdtDeviceU3606A : public mdtDeviceScpi
    * Will submit the READ? query to device.
    *  Don't forget to setup measure before.
    *
+   * \sa setupVoltageDcMeasure()
+   * \sa setupVoltageAcMeasure()
+   * \sa setupResistanceMeasure()
+   * \sa setupLowResistanceMeasure()
+   *
    * \param timeout Timeout [ms]
    */
   mdtValueDouble getMeasureValue(int timeout = 30000);
+
+  /*! \brief Start continuous measurement
+   *
+   * Internally, this will turn instrument to free run mode
+   *  using INITiate:CONTinuous command.
+   *  Then, FETCh? query is sent.
+   *  Once instrument reurned a value,
+   *  measureValueReceived() signal is emitted,
+   *  and FETCh? query is sent again after given interval.
+   *
+   * Note that instrument must be configured before
+   *  starting continuous measurement.
+   *
+   * \sa setupVoltageDcMeasure()
+   * \sa setupVoltageAcMeasure()
+   * \sa setupResistanceMeasure()
+   * \sa setupLowResistanceMeasure()
+   *
+   * \param internal Interval before requery instrument [ms]
+   * \pre interval must be >= 0
+   */
+  void startContinuousMeasurement(int interval);
+
+  /*! \brief Stop continuous measurement
+   */
+  void stopContinuousMeasurement();
 
   /*! \brief Set source output state (On/Off)
    */
@@ -195,9 +226,28 @@ class mdtDeviceU3606A : public mdtDeviceScpi
    */
   bool setSourceCurrent(double x);
 
+ signals:
+
+  /*! \brief Emitted when a measure value was received from instrument
+   */
+  void measureValueReceived(const mdtValueDouble & x);
+
+ private slots:
+
+  /*! \brief Send FETCh query to device
+   *
+   * Will send the FETCh query to device.
+   *  Once device returned data, measureValueReceived() signal is emitted.
+   */
+  void sendFetchQuery();
+
  private:
 
   Q_DISABLE_COPY(mdtDeviceU3606A);
+
+  // Flags used for continous measurement
+  bool pvContinousMeasurementActive;
+  int  pvContinousMeasurementIntervall;
 };
 
 #endif  // #ifndef MDT_DEVICE_U3606A_H
