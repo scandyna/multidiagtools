@@ -2709,6 +2709,10 @@ void mdtDeviceTest::scpiTest()
   mdtScpiIdnResponse idnResponse;
   QByteArray data;
 
+  /*
+   * Default states
+   */
+  QCOMPARE(d.defaultTimeout(), 30000);
   // Try to find a USBTMC device
   dialog.scan();
   QTimer::singleShot(1000, &dialog, SLOT(accept()));
@@ -2755,6 +2759,7 @@ void mdtDeviceTest::U3606ATest()
 {
   mdtDeviceU3606A d;
   mdtValueDouble x;
+  mdtValueBool b;
   mdtScpiIdnResponse idnResponse;
 
   // Try to find a device and connect if ok
@@ -2771,7 +2776,6 @@ void mdtDeviceTest::U3606ATest()
    */
   QVERIFY(d.sendCommand("*CLS\n"));
   d.wait(1);
-
   // Get device identification
   idnResponse = d.getDeviceIdentification();
   QVERIFY(!idnResponse.isNull());
@@ -2785,13 +2789,13 @@ void mdtDeviceTest::U3606ATest()
   QCOMPARE((int)d.deviceAddress().usbIdProduct(), 0x4d18);
   QCOMPARE(d.deviceAddress().usbDeviceSerialNumber(), idnResponse.serial);
   QCOMPARE(d.alias(), QString("U3606A-02"));
-
-
+  // Reset device
+  QVERIFY(d.reset(true, true));
   // Check generic command
-  QVERIFY(d.sendCommand("*CLS\n"));
-  d.wait(1);
-  QVERIFY(d.sendCommand("*RST\n"));
-  d.wait(1);
+//   QVERIFY(d.sendCommand("*CLS\n"));
+//   d.wait(1);
+//   QVERIFY(d.sendCommand("*RST\n"));
+//   d.wait(1);
   QCOMPARE(d.getDeviceError().systemNumber(), 0);
   d.wait(1);
   QVERIFY(d.sendQuery("*IDN?\n").left(27) == "Agilent Technologies,U3606A");
@@ -2806,6 +2810,57 @@ void mdtDeviceTest::U3606ATest()
   x = d.getMeasureValue();
   qDebug() << "----------> Voltage: " << x;
   QVERIFY(!x.isNull());
+  /*
+   * Check source functions
+   */
+  // Reset device
+  QVERIFY(d.reset(true, true));
+  // Setup source as constant current source
+  QVERIFY(d.setupSourceCurrent(0.5, 5.0, 7.0));
+  // Check that source output is OFF
+  b = d.getSourceOutputState();
+  QVERIFY(!b.isNull());
+  QVERIFY(b == false);
+  d.wait(1);
+  // Check source current
+  x = d.getSourceCurrent();
+  QVERIFY(!x.isNull());
+  QVERIFY(x == 0.5);
+  d.wait(1);
+  // Check source voltage limit
+  x = d.getSourceVoltageLimit();
+  QVERIFY(!x.isNull());
+  QVERIFY(x == 5.0);
+  d.wait(1);
+  // Check OVP
+  x = d.getSourceVoltageProtection();
+  QVERIFY(!x.isNull());
+  QVERIFY(x == 7.0);
+  d.wait(1);
+  // Setup source as constant voltage source
+  QVERIFY(d.setupSourceVoltage(5.0, 2.0, 2.5));
+  // Check that source output is OFF
+  b = d.getSourceOutputState();
+  QVERIFY(!b.isNull());
+  QVERIFY(b == false);
+  d.wait(1);
+  // Check source voltage
+  x = d.getSourceVoltage();
+  QVERIFY(!x.isNull());
+  QVERIFY(x == 5.0);
+  d.wait(1);
+  // Check source current limit
+  x = d.getSourceCurrentLimit();
+  qDebug() << "--------> x: " << x;
+  QVERIFY(!x.isNull());
+  QVERIFY(x == 2.0);
+  d.wait(1);
+  // Check OCP
+  x = d.getSourceCurrentProtection();
+  QVERIFY(!x.isNull());
+  QVERIFY(x == 2.5);
+  d.wait(1);
+
 
   // Enable bits in Status Byte Register
   QVERIFY(d.sendCommand("*SRE 255\n"));

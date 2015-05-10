@@ -36,6 +36,23 @@ mdtDeviceU3606A::~mdtDeviceU3606A()
 {
 }
 
+bool mdtDeviceU3606A::reset(bool rst, bool cls)
+{
+  if(rst){
+    if(!sendCommand("*RST\n")){
+      return false;
+    }
+    wait(1);
+  }
+  if(cls){
+    if(!sendCommand("*CLS\n")){
+      return false;
+    }
+    wait(1);
+  }
+  return true;
+}
+
 bool mdtDeviceU3606A::setupVoltageDcMeasure(mdtDeviceU3606A::Range_t range, mdtDeviceU3606A::Resolution_t resolution)
 {
   QByteArray rangeStr;
@@ -287,24 +304,24 @@ mdtDeviceU3606A::MeasureType_t mdtDeviceU3606A::getMeasureConfiguration()
   }
 }
 
-mdtValueDouble mdtDeviceU3606A::getMeasureValue(int timeout)
-{
-  mdtValueDouble x;
-  QByteArray data;
-  mdtCodecScpi codec;
-
-  data = sendQuery("READ?\n", timeout);
-  if(data.isEmpty()){
-    return x;
-  }
-  x = codec.decodeValueDouble(data);
-  if(x.isNull()){
-    pvLastError = codec.lastError();
-    return x;
-  }
-
-  return x;
-}
+// mdtValueDouble mdtDeviceU3606A::getMeasureValue(int timeout)
+// {
+//   mdtValueDouble x;
+//   QByteArray data;
+//   mdtCodecScpi codec;
+// 
+//   data = sendQuery("READ?\n", timeout);
+//   if(data.isEmpty()){
+//     return x;
+//   }
+//   x = codec.decodeValueDouble(data);
+//   if(x.isNull()){
+//     pvLastError = codec.lastError();
+//     return x;
+//   }
+// 
+//   return x;
+// }
 
 void mdtDeviceU3606A::startContinuousMeasurement(int interval)
 {
@@ -326,7 +343,7 @@ void mdtDeviceU3606A::stopContinuousMeasurement()
   sendCommand("INIT:CONT 0\n");
 }
 
-bool mdtDeviceU3606A::setOutputState(bool state)
+bool mdtDeviceU3606A::setSourceOutputState(bool state)
 {
   QByteArray cmd = "OUTP:STAT ";
 
@@ -339,7 +356,26 @@ bool mdtDeviceU3606A::setOutputState(bool state)
   return sendCommand(cmd);
 }
 
-bool mdtDeviceU3606A::setSourceRange(mdtDeviceU3606A::SourceRange_t range)
+mdtValueBool mdtDeviceU3606A::getSourceOutputState()
+{
+  mdtValueBool state;
+  QByteArray data;
+  mdtCodecScpi codec;
+
+  data = sendQuery("OUTP:STAT?\n");
+  if(data.isEmpty()){
+    return state;
+  }
+  state = codec.decodeValueBool(data);
+  if(state.isNull()){
+    pvLastError = codec.lastError();
+    return state;
+  }
+
+  return state;
+}
+
+bool mdtDeviceU3606A::setSourceVoltageRange(mdtDeviceU3606A::SourceRange_t range)
 {
   QByteArray cmd = "SOUR:VOLT:RANG ";
 
@@ -355,6 +391,22 @@ bool mdtDeviceU3606A::setSourceRange(mdtDeviceU3606A::SourceRange_t range)
   return sendCommand(cmd);
 }
 
+bool mdtDeviceU3606A::setSourceCurrentRange(mdtDeviceU3606A::SourceRange_t range)
+{
+  QByteArray cmd = "SOUR:CURR:RANG ";
+
+  switch(range){
+    case SourceRange_t::S1_30V1A:
+      cmd += "1";
+      break;
+    case SourceRange_t::S2_8V3A:
+      cmd += "3";
+      break;
+  }
+
+  return sendCommand(cmd);
+}
+
 bool mdtDeviceU3606A::setSourceVoltageLimit(double v)
 {
   QByteArray cmd = "SOUR:VOLT:LIM ";
@@ -364,6 +416,124 @@ bool mdtDeviceU3606A::setSourceVoltageLimit(double v)
   return sendCommand(cmd);
 }
 
+// mdtValueDouble mdtDeviceU3606A::getSourceVoltageLimit()
+// {
+//   mdtValueDouble x;
+//   QByteArray data;
+//   mdtCodecScpi codec;
+// 
+//   data = sendQuery("SOUR:VOLT:LIM?\n");
+//   if(data.isEmpty()){
+//     return x;
+//   }
+//   x = codec.decodeValueDouble(data);
+//   if(x.isNull()){
+//     pvLastError = codec.lastError();
+//     return x;
+//   }
+// 
+//   return x;
+// }
+
+bool mdtDeviceU3606A::setSourceCurrentLimit(double x)
+{
+  QByteArray cmd = "SOUR:CURR:LIM ";
+
+  cmd += QByteArray::number(x);
+
+  return sendCommand(cmd);
+}
+
+// mdtValueDouble mdtDeviceU3606A::getSourceCurrentLimit()
+// {
+//   mdtValueDouble x;
+//   QByteArray data;
+//   mdtCodecScpi codec;
+// 
+//   data = sendQuery("SOUR:CURR:LIM?\n");
+//   if(data.isEmpty()){
+//     return x;
+//   }
+//   x = codec.decodeValueDouble(data);
+//   if(x.isNull()){
+//     pvLastError = codec.lastError();
+//     return x;
+//   }
+// 
+//   return x;
+// }
+
+bool mdtDeviceU3606A::setSourceVoltageProtection(double ovp)
+{
+  Q_ASSERT(mdtValueDouble(ovp) >= mdtValueDouble(0.0));
+  Q_ASSERT(mdtValueDouble(ovp) <= mdtValueDouble(33.0));
+
+  QByteArray cmd = "SOUR:VOLT:PROT ";
+
+  cmd += QByteArray::number(ovp);
+
+  return sendCommand(cmd);
+}
+
+// mdtValueDouble mdtDeviceU3606A::getSourceVoltageProtection()
+// {
+//   mdtValueDouble x;
+//   QByteArray data;
+//   mdtCodecScpi codec;
+// 
+//   data = sendQuery("SOUR:VOLT:PROT?\n");
+//   if(data.isEmpty()){
+//     return x;
+//   }
+//   x = codec.decodeValueDouble(data);
+//   if(x.isNull()){
+//     pvLastError = codec.lastError();
+//     return x;
+//   }
+// 
+//   return x;
+// }
+
+bool mdtDeviceU3606A::setSourceCurrentProtection(double ocp)
+{
+  Q_ASSERT(mdtValueDouble(ocp) >= mdtValueDouble(0.0));
+  Q_ASSERT(mdtValueDouble(ocp) <= mdtValueDouble(3.3));
+
+  QByteArray cmd = "SOUR:CURR:PROT ";
+
+  cmd += QByteArray::number(ocp);
+
+  return sendCommand(cmd);
+}
+
+bool mdtDeviceU3606A::setSourceVoltage(double x)
+{
+  QByteArray cmd = "SOUR:VOLT ";
+
+  cmd += QByteArray::number(x);
+
+  return sendCommand(cmd);
+}
+
+// mdtValueDouble mdtDeviceU3606A::getSourceSenseVoltage()
+// {
+//   mdtValueDouble x;
+//   QByteArray data;
+//   mdtCodecScpi codec;
+// 
+//   data = sendQuery("SENS:VOLT?\n");
+//   if(data.isEmpty()){
+//     return x;
+//   }
+//   x = codec.decodeValueDouble(data);
+//   if(x.isNull()){
+//     pvLastError = codec.lastError();
+//     return x;
+//   }
+// 
+//   return x;
+// }
+
 bool mdtDeviceU3606A::setSourceCurrent(double x)
 {
   QByteArray cmd = "SOUR:CURR ";
@@ -371,6 +541,115 @@ bool mdtDeviceU3606A::setSourceCurrent(double x)
   cmd += QByteArray::number(x);
 
   return sendCommand(cmd);
+}
+
+// mdtValueDouble mdtDeviceU3606A::getSourceSenseCurrent()
+// {
+//   mdtValueDouble x;
+//   QByteArray data;
+//   mdtCodecScpi codec;
+// 
+//   data = sendQuery("SENS:CURR?\n");
+//   if(data.isEmpty()){
+//     return x;
+//   }
+//   x = codec.decodeValueDouble(data);
+//   if(x.isNull()){
+//     pvLastError = codec.lastError();
+//     return x;
+//   }
+// 
+//   return x;
+// }
+
+bool mdtDeviceU3606A::setupSourceCurrent(const mdtValueDouble & current, const mdtValueDouble & voltageLimit, const mdtValueDouble & ovp)
+{
+  Q_ASSERT(!current.isNull());
+
+  SourceRange_t range;
+
+  // Disable source output (required for range setup)
+  if(!setSourceOutputState(false)){
+    return false;
+  }
+  wait(1);
+  // Setup source range regarding current
+  if(current <= 1.0){
+    range = SourceRange_t::S1_30V1A;
+  }else{
+    range = SourceRange_t::S2_8V3A;
+  }
+  if(!setSourceCurrentRange(range)){
+    return false;
+  }
+  wait(1);
+  // Set voltage limit
+  if(!voltageLimit.isNull()){
+    if(!setSourceVoltageLimit(voltageLimit.value())){
+      return false;
+    }
+    wait(1);
+  }
+  // Set OVP
+  if(!ovp.isNull()){
+    if(!setSourceVoltageProtection(ovp.value())){
+      return false;
+    }
+    wait(1);
+  }
+  // Set current
+  if(!setSourceCurrent(current.value())){
+    return false;
+  }
+  wait(1);
+  // We not re-enable source output
+
+  return true;
+}
+
+bool mdtDeviceU3606A::setupSourceVoltage(const mdtValueDouble & voltage, const mdtValueDouble & currentLimit, const mdtValueDouble & ocp)
+{
+  Q_ASSERT(!voltage.isNull());
+
+  SourceRange_t range;
+
+  // Disable source output (required for range setup)
+  if(!setSourceOutputState(false)){
+    return false;
+  }
+  wait(1);
+  // Setup source range regarding voltage
+  if(voltage <= 8.0){
+    range = SourceRange_t::S2_8V3A;
+  }else{
+    range = SourceRange_t::S1_30V1A;
+  }
+  if(!setSourceVoltageRange(range)){
+    return false;
+  }
+  wait(1);
+  // Set current limit
+  if(!currentLimit.isNull()){
+    if(!setSourceCurrentLimit(currentLimit.value())){
+      return false;
+    }
+    wait(1);
+  }
+  // Set OCP
+  if(!ocp.isNull()){
+    if(!setSourceCurrentProtection(ocp.value())){
+      return false;
+    }
+    wait(1);
+  }
+  // Set voltage
+  if(!setSourceVoltage(voltage.value())){
+    return false;
+  }
+  wait(1);
+  // We not re-enable source output
+
+  return true;
 }
 
 void mdtDeviceU3606A::sendFetchQuery()

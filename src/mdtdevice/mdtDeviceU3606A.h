@@ -100,22 +100,47 @@ class mdtDeviceU3606A : public mdtDeviceScpi
 
   /*! \brief Connect to device
    *
+   * Will connect to the instrument and send a device clear (USBTMC level clear).
+   *  As recommanded in programmers guide, this function will also wait 2 seconds
+   *  once connected before returning.
+   *
    * \param serialNumber Device serial number. Will be ignored if empty
    * \param alias Alias to give. Will be ignored if empty
    */
   bool connectToDevice(const QString & serialNumber, const QString & alias)
   {
-    return mdtDeviceScpi::connectToDevice(0x0957, 0x4d18, serialNumber, alias);
+    if(!mdtDeviceScpi::connectToDevice(0x0957, 0x4d18, serialNumber, alias)){
+      return false;
+    }
+    wait(2000);
+    return true;
   }
 
   /*! \brief Connect to device
+   *
+   * Will connect to the instrument and send a device clear (USBTMC level clear).
+   *  As recommanded in programmers guide, this function will also wait 2 seconds
+   *  once connected before returning.
    *
    * \param alias Alias to give. Will be ignored if empty
    */
   bool connectToDevice(const QString & alias)
   {
-    return mdtDeviceScpi::connectToDevice(0x0957, 0x4d18, QString(), alias);
+    if(!mdtDeviceScpi::connectToDevice(0x0957, 0x4d18, QString(), alias)){
+      return false;
+    }
+    wait(2000);
+    return true;
   }
+
+  /*! \brief Reset device
+   *
+   * \param rst If true, the *RST command will be sent to device,
+   *            which place it to factory default state.
+   * \param cls If true, the *CLS command will be sent to device,
+   *           which clears event registers and error queue.
+   */
+  bool reset(bool rst, bool cls);
 
   /*! \brief Setup DC voltage measure
    *
@@ -168,9 +193,12 @@ class mdtDeviceU3606A : public mdtDeviceScpi
    * \sa setupResistanceMeasure()
    * \sa setupLowResistanceMeasure()
    *
-   * \param timeout Timeout [ms]
+   * \param timeout Timeout [ms]. If -2 is given, defaultTimeout will be used (see mdtDeviceScpi::defaultTimeout() ).
    */
-  mdtValueDouble getMeasureValue(int timeout = 30000);
+  mdtValueDouble getMeasureValue(int timeout = -2)
+  {
+    return getValueDouble("READ?\n", timeout);
+  }
 
   /*! \brief Start continuous measurement
    *
@@ -199,16 +227,37 @@ class mdtDeviceU3606A : public mdtDeviceScpi
   void stopContinuousMeasurement();
 
   /*! \brief Set source output state (On/Off)
-   */
-  bool setOutputState(bool state);
-
-  /*! \brief Set source range
    *
+   * Refers to OUTPut[:STATe] in programmers reference guide.
+   */
+  bool setSourceOutputState(bool state);
+
+  /*! \brief Get source output state (On/Off)
+   *
+   * Refers to OUTPut[:STATe]? in programmers reference guide.
+   *
+   * \return The state of source output.
+   *         On error, a null value is returned and lastError() contains the error.
+   */
+  mdtValueBool getSourceOutputState();
+
+  /*! \brief Set source range for constant voltage usage
+   *
+   * Refers to SOURce:VOLTage:RANGe in programmers reference guide.
+   * Note: source range can be changed only whenn output is OFF.
+   *
+   * \sa setOutputState()
+   */
+  bool setSourceVoltageRange(SourceRange_t range);
+
+  /*! \brief Set source range for constant current usage
+   *
+   * Refers to SOURce:CURRent:RANGe in programmers reference guide.
    * Note: source range can ba changed only whenn output is OFF.
    *
    * \sa setOutputState()
    */
-  bool setSourceRange(SourceRange_t range);
+  bool setSourceCurrentRange(SourceRange_t range);
 
   /*! \brief Set source voltage limit
    *
@@ -217,14 +266,152 @@ class mdtDeviceU3606A : public mdtDeviceScpi
    */
   bool setSourceVoltageLimit(double v);
 
-  /*! \brief Set source current
+  /*! \brief Get source voltage limit
    *
-   * Will setup source for constant current mode,
-   *  with given current.
+   * This voltage limit is used for constant current source mode.
+   * Refers to [SOURce:]VOLTage:LIMit? in programmers reference guide.
+   */
+  mdtValueDouble getSourceVoltageLimit()
+  {
+    return getValueDouble("SOUR:VOLT:LIM?\n");
+  }
+
+  /*! \brief Set source current limit
+   *
+   * Current limit is used constant voltage source mode.
+   * Refers to [SOURce:]CURRent:LIMit in programmers reference guide.
+   */
+  bool setSourceCurrentLimit(double x);
+
+  /*! \brief Get source current limit
+   *
+   * This current limit is used for constant voltage source mode.
+   * Refers to [SOURce:]CURRent:LIMit? in programmers reference guide.
+   */
+  mdtValueDouble getSourceCurrentLimit()
+  {
+    return getValueDouble("SOUR:CURR:LIM?\n");
+  }
+
+  /*! \brief Set source over voltage protection (OVP)
+   *
+   * OVP is used for constant current source mode.
+   * Refers to [SOURce:]VOLTage:PROTection in programmers reference guide.
+   *
+   * \param ovp OVP value. Minimum value is 0.
+   *            Maximum value depends on source range:
+   *            for S1 (30V/1A) the max is 33V and
+   *            for S2 (8V/3A) the max is 8.8V.
+   * \pre ovp must be >= 0 and <= 33
+   */
+  bool setSourceVoltageProtection(double ovp);
+
+  /*! \brief Get source over voltage protection (OVP)
+   *
+   * OVP is used for constant current source mode.
+   * Refers to [SOURce:]VOLTage:PROTection? in programmers reference guide.
+   */
+  mdtValueDouble getSourceVoltageProtection()
+  {
+    return getValueDouble("SOUR:VOLT:PROT?\n");
+  }
+
+  /*! \brief Set source over current protection (OCP)
+   *
+   * OCP is used for constant voltage source mode.
+   * Refers to [SOURce:]CURRent:PROTection in programmers reference guide.
+   *
+   * \param ocp OCP value. Minimum value is 0.
+   *            Maximum value depends on source range:
+   *            for S1 (30V/1A) the max is 1.1A and
+   *            for S2 (8V/3A) the max is 3.3A.
+   * \pre ocp must be >= 0 and <= 3.3
+   */
+  bool setSourceCurrentProtection(double ocp);
+
+  /*! \brief Get source over current protection (OCP)
+   *
+   * OCP is used for constant voltage source mode.
+   * Refers to [SOURce:]CURRent:PROTection? in programmers reference guide.
+   */
+  mdtValueDouble getSourceCurrentProtection()
+  {
+    return getValueDouble("SOUR:CURR:PROT?\n");
+  }
+
+  /*! \brief Set source voltage
+   *
+   * Refers to [SOURce:]VOLTage[:LEVel][:IMMediate][:AMPLitude] in programmers reference guide.
+   */
+  bool setSourceVoltage(double x);
+
+  /*! \brief Get configured source voltage
+   *
+   * Refers to [SOURce:]VOLTage[:LEVel][:IMMediate][:AMPLitude]? in programmers reference guide.
+   * Note: to get the real source voltage, use getSourceSenseVoltage()
+   */
+  mdtValueDouble getSourceVoltage()
+  {
+    return getValueDouble("SOUR:VOLT?\n");
+  }
+
+  /*! \brief Get source sense voltage
+   *
+   * Refers to [SOURce:]SENSe:VOLTage[:LEVel]? in programmers reference guide.
+   */
+  mdtValueDouble getSourceSenseVoltage()
+  {
+    return getValueDouble("SENS:VOLT?\n");
+  }
+
+  /*! \brief Set source current
    *
    * Refers to [SOURce:]CURRent[:LEVel][:IMMediate][:AMPLitude] in programmers reference guide.
    */
   bool setSourceCurrent(double x);
+
+  /*! \brief Get configured source current
+   *
+   * Refers to [SOURce:]CURRent[:LEVel][:IMMediate][:AMPLitude]? in programmers reference guide.
+   * Note: to get the real source current, use getSourceSenseCurrent()
+   */
+  mdtValueDouble getSourceCurrent()
+  {
+    return getValueDouble("SOUR:CURR?\n");
+  }
+
+  /*! \brief Get source sense current
+   *
+   * Refers to [SOURce:]SENSe:CURRent[:LEVel]? in programmers reference guide.
+   */
+  mdtValueDouble getSourceSenseCurrent()
+  {
+    return getValueDouble("SENS:CURR?\n");
+  }
+
+  /*! \brief Setup source as constant current source
+   *
+   * Will set range reagrding given current, voltage limit and OVP.
+   * Note: during setup, source output will be disabled. After setup, it must be explicitly re-enabled.
+   *
+   * \param current Constant current value [A]
+   * \param voltageLimit Voltage limit [V]. If null, it will be ignored. \sa setSourceVoltageLimit()
+   * \param ovp OVP voltage [V]. If null, it will be ignored. \sa setSourceVoltageProtection()
+   * \pre current must not be null
+   */
+  bool setupSourceCurrent(const mdtValueDouble & current, const mdtValueDouble & voltageLimit = mdtValueDouble(), const mdtValueDouble & ovp = mdtValueDouble());
+
+  /*! \brief Setup source as constant voltage source
+   *
+   * Will set range regarding given voltage, current limit and OCP.
+   * Note: during setup, source output will be disabled. After setup, it must be explicitly re-enabled.
+   *
+   * \param voltage Constant voltage value [V]
+   * \param currentLimit Current limit [A]. If null, it will be ignored. \sa setSourceCurrentLimit()
+   * \param ocp OCP current [A]. If null, it will be ignored. \sa setSourceCurrentProtection()
+   * \pre voltage must not be null
+   */
+  bool setupSourceVoltage(const mdtValueDouble & voltage, const mdtValueDouble & currentLimit = mdtValueDouble(), const mdtValueDouble & ocp = mdtValueDouble());
 
  signals:
 

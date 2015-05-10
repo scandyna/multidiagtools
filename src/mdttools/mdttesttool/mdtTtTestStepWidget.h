@@ -57,6 +57,26 @@ class mdtTtTestStepWidget : public QWidget
    */
   void clearMessage();
 
+  /*! \brief Set custom widget
+   *
+   * Add a custom widget just after step title.
+   *  Given widget will be reparented,
+   *  and destroyed once test step object dies.
+   *  If a widget was previously set,
+   *  it will be removed and destroyed.
+   */
+  void setCustomWidget(QWidget *w);
+
+  /*! \brief Get custom widget
+   *
+   * Returns the widget set with setCustomWidget(),
+   *  or a nulltpr if it was never set.
+   */
+  QWidget *customWidget()
+  {
+    return pvCustomWidget;
+  }
+
   /*! \brief Set abortSupported flag
    *
    * Default is false.
@@ -126,6 +146,7 @@ class mdtTtTestStepWidget : public QWidget
 
   mdtTtTestStep::State_t pvState;
   QGridLayout *pvLayout;
+  QWidget *pvCustomWidget;
   QPushButton *pbRunAbort;
   bool pvRunAbortButtonEnabled;
   bool pvAbortSupported;

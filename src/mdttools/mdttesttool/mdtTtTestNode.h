@@ -158,6 +158,7 @@ class mdtTtTestNode : public mdtTtBase
    * 
    * \deprecated 
    */
+  ///[[deprecated]]
   bool ensureAbsenceOfShortCircuit(const QVariant & connectionIdA, const QVariant & connectionIdB, const QList<mdtTtTestNodeUnitSetupData> & testNodeUnitSetupDataList, mdtClPathGraph & graph, bool & ok);
 
   /*! \brief Get a list of links that are travsersed from connectionIdA to connectionIdB

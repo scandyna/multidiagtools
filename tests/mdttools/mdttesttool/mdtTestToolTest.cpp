@@ -71,6 +71,10 @@
 #include <QModelIndex>
 #include <QList>
 #include <QFileInfo>
+#include <QPointF>
+#include <QVector>
+#include <qwt_plot.h>
+#include <qwt_plot_curve.h>
 
 #include <QTableView>
 #include <QItemSelectionModel>
@@ -1118,6 +1122,7 @@ void mdtTestToolTest::testStepTest()
   QVERIFY(ts1.state() == mdtTtTestStep::State_t::Initial);
   QVERIFY(!ts1.abortSupported());
   QVERIFY(ts1.widget() == nullptr);
+  QVERIFY(ts1.customWidget() == nullptr);
   /// ...
   ts1.setRunning();
   QVERIFY(ts1.state() == mdtTtTestStep::State_t::Running);
@@ -1150,6 +1155,7 @@ void mdtTestToolTest::testStepTest()
   QVERIFY(ts2->state() == mdtTtTestStep::State_t::Initial);
   QVERIFY(!ts2->abortSupported());
   QVERIFY(ts2->widget() == &tsw);
+  QVERIFY(ts2->customWidget() == nullptr);
   /// ...
   ts2->setRunning();
   QVERIFY(ts2->state() == mdtTtTestStep::State_t::Running);
@@ -1174,6 +1180,7 @@ void mdtTestToolTest::testStepTest()
   QVERIFY(ts3.state() == mdtTtTestStep::State_t::Initial);
   QVERIFY(!ts3.abortSupported());
   QVERIFY(ts3.widget() == tsw3);
+  QVERIFY(ts3.customWidget() == nullptr);
   /// ...
   ts3.setRunning();
   QVERIFY(ts3.state() == mdtTtTestStep::State_t::Running);
@@ -1189,14 +1196,49 @@ void mdtTestToolTest::testStepTest()
   ts3.setRunning();
   QVERIFY(ts3.state() == mdtTtTestStep::State_t::Running);
 
-  ///QTest::qWait(2000);
+  /*
+   * Check with a test step widget and a custom widget
+   */
+  ts2 = new mdtTtTestStep(tnm, &tsw);
+  tsw.show();
+  // Initial state
+  QVERIFY(ts2->state() == mdtTtTestStep::State_t::Initial);
+  QVERIFY(!ts2->abortSupported());
+  QVERIFY(ts2->widget() == &tsw);
+  QVERIFY(ts2->customWidget() == nullptr);
+  // Setup a plot widget
+  QwtPlot *plot0 = new QwtPlot;
+  ts2->setCustomWidget(plot0);
+  QVERIFY(ts2->customWidget() == plot0);
+  plot0->setTitle("Plot 0");
+  // Setup a plot widget
+  QwtPlot *plot = new QwtPlot;
+  ts2->setCustomWidget(plot);
+  QVERIFY(ts2->customWidget() == plot);
+  plot->setTitle("Test");
+  // This should crach
+  //plot0->setTitle("Plot 0");
+  // Setup a curve
+  QwtPlotCurve *curve1 = new QwtPlotCurve;
+  QVector<QPointF> curve1Data;
+  curve1Data.append(QPointF(0.5, 1.0));
+  curve1Data.append(QPointF(1.0, 2.0));
+  curve1Data.append(QPointF(1.5, 3.0));
+  curve1->setSamples(curve1Data);
+  curve1->attach(plot);
+  // Refresh plot
+  plot->replot();
   
+
   // Play
   /*
   while(tsw.isVisible()){
     QTest::qWait(500);
   }
   */
+  // Delete ts2
+  delete ts2;
+  ts2 = nullptr;
 }
 
 void mdtTestToolTest::testStepContainerTest()

@@ -11,6 +11,12 @@ add_executable(mdtalgorithmstest "mdtAlgorithmsTest.cpp" ${MDT_ALGORITHM_TEST_MO
 target_link_libraries(mdtalgorithmstest "mdtutils${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtalgorithmstest "mdttest")
 
+# * mdtMathTest executable *
+QT4_WRAP_CPP(MDT_MATH_TEST_MOC "mdtMathTest.h")
+add_executable(mdtmathtest "mdtMathTest.cpp" ${MDT_MATH_TEST_MOC})
+target_link_libraries(mdtmathtest "mdtutils${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtmathtest "mdttest")
+
 # * mdtErrorTest executable *
 QT4_WRAP_CPP(MDT_ERROR_TEST_MOC "mdtErrorTest.h")
 add_executable(mdterrortest "mdtErrorTest.cpp" ${MDT_ERROR_TEST_MOC})

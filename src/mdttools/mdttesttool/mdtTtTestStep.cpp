@@ -66,6 +66,23 @@ void mdtTtTestStep::clearMessage()
   }
 }
 
+void mdtTtTestStep::setCustomWidget(QWidget* w)
+{
+  if(pvWidget != nullptr){
+    pvWidget->setCustomWidget(w);
+  }else{
+    delete w;
+  }
+}
+
+QWidget* mdtTtTestStep::customWidget()
+{
+  if(pvWidget == nullptr){
+    return nullptr;
+  }
+  return pvWidget->customWidget();
+}
+
 void mdtTtTestStep::setAbortSupported(bool support)
 {
   pvAbortSupported = support;

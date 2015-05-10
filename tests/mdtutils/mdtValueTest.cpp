@@ -201,6 +201,13 @@ void mdtValueTest::valueDoubleTest()
   QVERIFY(!(x == y));
   QVERIFY(x != y);
   x.setValue(0.0);
+  // Comparison with double
+  x.setValue(1.0);
+  QVERIFY(x == 1.0);
+  QVERIFY(x <= 1.0);
+  QVERIFY(x >= 1.0);
+  QVERIFY(x < 1.0000001);
+  QVERIFY(x > 0.9999999);
 
   /*
    * Copy constructor
@@ -582,13 +589,65 @@ void mdtValueTest::valueBoolTest()
   QVERIFY(a.isNull());
   QVERIFY(!a.value());
 
-  // Assignation
+  /*
+   * Assignment
+   */
   b.clear();
   a.setValue(true);
   b = a;
   QVERIFY(!b.isNull());
   QVERIFY(b.value());
-
+  a = true;
+  QVERIFY(!a.isNull());
+  QVERIFY(a.value() == true);
+  a = false;
+  QVERIFY(!a.isNull());
+  QVERIFY(a.value() == false);
+  /*
+   * Comparaison
+   */
+  // mdtValueBool - bool comparison
+  a = false;
+  QVERIFY(a == false);
+  QVERIFY(!(a != false));
+  QVERIFY(!(a == true));
+  QVERIFY(a != true);
+  a = true;
+  QVERIFY(a == true);
+  QVERIFY(!(a != true));
+  QVERIFY(!(a == false));
+  QVERIFY(a != false);
+  a.clear();
+  QVERIFY(!(a == false));
+  QVERIFY(!(a == true));
+  QVERIFY(a != false);
+  QVERIFY(a != true);
+  // mdtValueBool - mdtValueBool comparison
+  a = false;
+  b = false;
+  QVERIFY(a == b);
+  QVERIFY(!(a != b));
+  a = true;
+  QVERIFY(!(a == b));
+  QVERIFY(a != b);
+  b = true;
+  QVERIFY(a == b);
+  QVERIFY(!(a != b));
+  a = false;
+  QVERIFY(!(a == b));
+  QVERIFY(a != b);
+  a.clear();
+  QVERIFY(!(a == b));
+  QVERIFY(a != b);
+  b.clear();
+  QVERIFY(!(a == b));
+  QVERIFY(a != b);
+  b = true;
+  QVERIFY(!(a == b));
+  QVERIFY(a != b);
+  a = true;
+  QVERIFY(a == b);
+  QVERIFY(!(a != b));
 }
 
 void mdtValueTest::valueBoolBenchmark()

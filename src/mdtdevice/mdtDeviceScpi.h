@@ -25,6 +25,7 @@
 #include "mdtError.h"
 #include "mdtUsbtmcPort.h"
 #include "mdtCodecScpi.h"
+#include "mdtValue.h"
 #include <QList>
 #include <QVariant>
 #include <cstdint>
@@ -52,13 +53,31 @@ class mdtDeviceScpi : public mdtDevice
   /*! \brief Construct a SCPI device
    *
    * Will create and configure a USBTMC
-   *  port manager.
+   *  port (mdtUsbtmcPort instance).
+   *
+   * Default transaction timeout will also be set to 30000ms (30s)
    */
   mdtDeviceScpi(QObject *parent = 0);
 
   /*! \brief Destructor
    */
   virtual ~mdtDeviceScpi();
+
+  /*! \brief Set default transaction timeout
+   *
+   * \param timeout Timeout [ms]
+   */
+  void setDefaultTimeout(int timeout)
+  {
+    pvDefaultTimeout = timeout;
+  }
+
+  /*! \brief Get default transaction timeout
+   */
+  inline int defaultTimeout() const
+  {
+    return pvDefaultTimeout;
+  }
 
   /*! \brief Connect to a USBTMC device
    *
@@ -80,16 +99,20 @@ class mdtDeviceScpi : public mdtDevice
   /*! \brief Send a command to device
    *
    * \param command Command to send
-   * \param timeout Timeout [ms]
+   * \param timeout Timeout [ms]. If -2 is given, defaultTimeout will be used.
    */
-  bool sendCommand(const QByteArray & command, int timeout = 30000);
+  bool sendCommand(const QByteArray & command, int timeout = -2);
 
   /*! \brief Send a query to device
    *
    * \param query Query to send
-   * \param timeout Timeout [ms]
+   * \param timeout Timeout [ms]. If -2 is given, defaultTimeout will be used.
    */
-  QByteArray sendQuery(const QByteArray & query, int timeout = 30000);
+  QByteArray sendQuery(const QByteArray & query, int timeout = -2);
+
+  /*! \brief Get a double value for given query
+   */
+  mdtValueDouble getValueDouble(const QByteArray & query, int timeout = -2);
 
   /*! \brief Get device identification
    *
@@ -177,6 +200,7 @@ class mdtDeviceScpi : public mdtDevice
  private:
 
   mdtUsbtmcPort *pvPort;
+  int pvDefaultTimeout; // Default transaction timeout [ms]
 
   bool pvOperationComplete;
   int pvOperationCompleteTryLeft;

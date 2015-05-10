@@ -31,6 +31,7 @@
 #include <limits>
 
 class mdtTtTestStepWidget;
+class QWidget;
 
 /*! \brief Test step class
  *
@@ -99,6 +100,24 @@ class mdtTtTestStep : public QObject
   /*! \brief Clear message
    */
   void clearMessage();
+
+  /*! \brief Set custom widget
+   *
+   * If test step widget was set,
+   *  given custom widget will be added
+   *  using mdtTtTestStepWidget::setCustomWidget().
+   *
+   * If test step widget was not set,
+   *  given object will be destroyed.
+   */
+  void setCustomWidget(QWidget *w);
+
+  /*! \brief Get custom widget
+   *
+   * Returns the widget set with setCustomWidget(),
+   *  or a nulltpr if it was never set or no test step widget was set.
+   */
+  QWidget *customWidget();
 
   /*! \brief Set abortSupported flag
    *

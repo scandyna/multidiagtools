@@ -477,9 +477,58 @@ class mdtValueBool
 
   /*! \brief Get boolean's value
    */
-  bool value() const
+  inline bool value() const
   {
     return pvValue;
+  }
+
+  /*! \brief Check equality
+   *
+   * If this object is null,
+   *  this function returns allways false.
+   */
+  bool operator==(bool b) const
+  {
+    if(pvIsNull){
+      return false;
+    }
+    return (pvValue == b);
+  }
+
+  /*! \brief Check inequality
+   *
+   * If this object is null,
+   *  this function returns allways true.
+   */
+  bool operator!=(bool b) const
+  {
+    if(pvIsNull){
+      return true;
+    }
+    return (pvValue != b);
+  }
+
+  /*! \brief Check equality
+   *
+   * If this one of the value is null,
+   *  this function returns allways false.
+   */
+  bool operator==(const mdtValueBool & other) const
+  {
+    if( (pvIsNull) || (other.pvIsNull) ){
+      return false;
+    }
+    return (pvValue == other.pvValue);
+  }
+
+  /*! \brief Check inequality
+   *
+   * If this one of the value is null,
+   *  this function returns allways false.
+   */
+  bool operator!=(const mdtValueBool & other) const
+  {
+    return !(*this == other);
   }
 
  private:

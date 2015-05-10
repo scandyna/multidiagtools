@@ -31,7 +31,8 @@
 
 mdtDeviceScpi::mdtDeviceScpi(QObject *parent)
  : mdtDevice(parent),
-   pvPort(new mdtUsbtmcPort(this))
+   pvPort(new mdtUsbtmcPort(this)),
+   pvDefaultTimeout(30000)
 {
   pvOperationComplete = false;
   pvOperationCompleteTryLeft = 0;
@@ -86,6 +87,9 @@ bool mdtDeviceScpi::connectToDevice(uint16_t idVendor, uint16_t idProduct, const
 
 bool mdtDeviceScpi::sendCommand(const QByteArray& command, int timeout)
 {
+  if(timeout == -2){
+    timeout = pvDefaultTimeout;
+  }
   if(!pvPort->sendCommand(command, timeout)){
     pvLastError = pvPort->lastError();
     return false;
@@ -95,11 +99,33 @@ bool mdtDeviceScpi::sendCommand(const QByteArray& command, int timeout)
 
 QByteArray mdtDeviceScpi::sendQuery(const QByteArray & query, int timeout)
 {
+  if(timeout == -2){
+    timeout = pvDefaultTimeout;
+  }
   QByteArray data = pvPort->sendQuery(query, timeout);
   if(data.isEmpty()){
     pvLastError = pvPort->lastError();
   }
   return data;
+}
+
+mdtValueDouble mdtDeviceScpi::getValueDouble(const QByteArray & query, int timeout)
+{
+  mdtValueDouble x;
+  QByteArray data;
+  mdtCodecScpi codec;
+
+  data = sendQuery(query, timeout);
+  if(data.isEmpty()){
+    return x;
+  }
+  x = codec.decodeValueDouble(data);
+  if(x.isNull()){
+    pvLastError = codec.lastError();
+    return x;
+  }
+
+  return x;
 }
 
 mdtScpiIdnResponse mdtDeviceScpi::getDeviceIdentification()

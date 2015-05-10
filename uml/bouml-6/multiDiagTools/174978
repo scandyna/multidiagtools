@@ -1,6 +1,6 @@
-format 207
+format 209
 "mdtutilsgui" // mdtutilsgui
-  revision 75
+  revision 76
   modified_by 2 "philippe"
   // class settings
   
@@ -7879,6 +7879,28 @@ ${inlines}
 	    classrelation_ref 1710082 // <generalisation>
 	  b parent class_ref 209410 // QMessageBox
       end
+    end
+  end
+
+  classview 748674 "Plot"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 1404418 "PlotWidegt"
+      classdiagramsettings member_max_width 0 end
+      size A4
     end
   end
 end

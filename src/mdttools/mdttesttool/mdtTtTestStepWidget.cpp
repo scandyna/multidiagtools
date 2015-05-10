@@ -30,7 +30,8 @@
 
 mdtTtTestStepWidget::mdtTtTestStepWidget(QWidget* parent)
  : QWidget(parent),
-   pvLayout(new QGridLayout)
+   pvLayout(new QGridLayout),
+   pvCustomWidget(nullptr)
 {
   // Setup run/abort button
   pbRunAbort = new QPushButton;
@@ -50,13 +51,13 @@ mdtTtTestStepWidget::mdtTtTestStepWidget(QWidget* parent)
   f.setBold(true);
   lbState->setFont(f);
   lbState->setTextFormat(Qt::PlainText);
-  pvLayout->addWidget(lbState, 0, 2);
+  pvLayout->addWidget(lbState, 0, 3);
   // Setup message label
   lbMessage = new QLabel;
   lbMessage->setTextFormat(Qt::PlainText);
-  pvLayout->addWidget(lbMessage, 0, 3);
+  pvLayout->addWidget(lbMessage, 0, 4);
   // Other setup
-  pvLayout->setColumnStretch(4, 2);
+  pvLayout->setColumnStretch(5, 2);
   setLayout(pvLayout);
   setStateInitial();
 }
@@ -74,6 +75,16 @@ void mdtTtTestStepWidget::setMessage(const QString & msg)
 void mdtTtTestStepWidget::clearMessage()
 {
   lbMessage->clear();
+}
+
+void mdtTtTestStepWidget::setCustomWidget(QWidget* w)
+{
+  if(pvCustomWidget != nullptr){
+    pvLayout->removeWidget(pvCustomWidget);
+    delete pvCustomWidget;
+  }
+  pvCustomWidget = w;
+  pvLayout->addWidget(pvCustomWidget, 0, 2);
 }
 
 void mdtTtTestStepWidget::setAbortSupported(bool support)

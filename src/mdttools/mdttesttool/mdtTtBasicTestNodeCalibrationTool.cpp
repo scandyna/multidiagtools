@@ -1003,11 +1003,11 @@ bool mdtTtBasicTestNodeCalibrationTool::fritLine()
     pvLastError = pvMultimeter->lastError();
     return false;
   }
-  if(!pvMultimeter->setOutputState(false)){
+  if(!pvMultimeter->setSourceOutputState(false)){
     pvLastError = pvMultimeter->lastError();
     return false;
   }
-  if(!pvMultimeter->setSourceRange(mdtDeviceU3606A::SourceRange_t::S1_30V1A)){
+  if(!pvMultimeter->setSourceVoltageRange(mdtDeviceU3606A::SourceRange_t::S1_30V1A)){
     pvLastError = pvMultimeter->lastError();
     return false;
   }
@@ -1019,7 +1019,7 @@ bool mdtTtBasicTestNodeCalibrationTool::fritLine()
     pvLastError = pvMultimeter->lastError();
     return false;
   }
-  if(!pvMultimeter->setOutputState(true)){
+  if(!pvMultimeter->setSourceOutputState(true)){
     pvLastError = pvMultimeter->lastError();
     return false;
   }
@@ -1038,7 +1038,7 @@ bool mdtTtBasicTestNodeCalibrationTool::fritLine()
   qDebug() << "U (=R): " << pvMultimeter->getMeasureValue();
   pvMultimeter->wait(1000);
   
-  if(!pvMultimeter->setOutputState(false)){
+  if(!pvMultimeter->setSourceOutputState(false)){
     pvLastError = pvMultimeter->lastError();
     return false;
   }
