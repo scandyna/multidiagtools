@@ -16,6 +16,8 @@ QT4_WRAP_CPP(MDT_MATH_TEST_MOC "mdtMathTest.h")
 add_executable(mdtmathtest "mdtMathTest.cpp" ${MDT_MATH_TEST_MOC})
 target_link_libraries(mdtmathtest "mdtutils${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtmathtest "mdttest")
+# NOTE: only for sandbox
+target_link_libraries(mdtmathtest "${QWT_LIBRARIES}")
 
 # * mdtErrorTest executable *
 QT4_WRAP_CPP(MDT_ERROR_TEST_MOC "mdtErrorTest.h")

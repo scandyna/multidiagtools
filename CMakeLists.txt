@@ -220,6 +220,8 @@ enable_testing()
 
 # mdtAlgorithmsTest
 add_test (mdtAlgorithmsTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtalgorithmstest)
+# mdtMathTest
+add_test (mdtMathTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtmathtest)
 # mdtErrorTest
 add_test (mdtErrorTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdterrortest)
 # mdtBufferTest

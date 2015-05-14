@@ -27,6 +27,7 @@ set (HEADER_FILES
 # List of source files
 set (SOURCES_FILES 
           mdtAlgorithms.cpp
+          mdtMath.cpp
           mdtBuffer.cpp
           # Frame
           mdtFrame.cpp

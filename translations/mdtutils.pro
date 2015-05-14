@@ -3,6 +3,7 @@
 TRANSLATIONS = /home/philippe/programmation/multiDiagTools/src/mdtutils/../../translations/mdtutils_fr.ts
 TRANSLATIONS += /home/philippe/programmation/multiDiagTools/src/mdtutils/../../translations/mdtutils_de.ts
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtAlgorithms.cpp
+SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtMath.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtBuffer.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtFrame.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtFrameAscii.cpp

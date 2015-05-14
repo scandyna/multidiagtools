@@ -29,7 +29,29 @@ class mdtMathTest : public mdtTest
 
  private slots:
 
-  
+  void sandbox();
+
+  void advanceIteratorTest();
+
+  void productTest();
+  void productTest_data();
+  void productBenchamrk();
+  void productBenchamrk_data();
+
+  void arithmeticMeanTest();
+  void arithmeticMeanTest_data();
+  void arithmeticMeanBenchmark();
+  void arithmeticMeanBenchmark_data();
+
+  void geometricMeanTest();
+  void geometricMeanTest_data();
+  void geometricMeanBenchmark();
+  void geometricMeanBenchmark_data();
+
+  void sumOfSquaredDifferencesTest();
+  void sumOfSquaredDifferencesTest_data();
+  void sumOfSquaredDifferencesBenchmark();
+  void sumOfSquaredDifferencesBenchmark_data();
 };
 
 #endif // #ifndef MDT_MATH_TEST_H
