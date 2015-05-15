@@ -39,6 +39,7 @@ class mdtTestNodeTest : public mdtTest
 
   void testNodeUnitTest();
 
+  void getRouteRelaysTest();
   void testNodeRouteDataTest();
   void routeBuildTest();
   void routeAddRemoveTest();

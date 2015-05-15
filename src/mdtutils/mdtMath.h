@@ -155,8 +155,15 @@ namespace mdt{
      * \f$
      *
      * In above expression, N is the size of the container c.
+     *
+     * \pre c must be a non empty container
      */
-    void variance();
+    template<typename T = double, typename ContainerType>
+    T variance(const ContainerType & c, T mean)
+    {
+      Q_ASSERT(std::distance(std::begin(c), std::end(c)) > 0);
+      return sumOfSquaredDifferences<T>(c, mean) / static_cast<T>(std::distance(std::begin(c), std::end(c)));
+    }
 
     /*! \brief Calculate the uncorrected standard deviation
      *
@@ -165,8 +172,15 @@ namespace mdt{
      * \f$
      *
      * In above expression, N is the size of the container c.
+     *
+     * \pre c must be a non empty container
      */
-    void uncorrectedStandardDeviation();
+    template<typename T = double, typename ContainerType>
+    T uncorrectedStandardDeviation(const ContainerType & c, T mean)
+    {
+      Q_ASSERT(std::distance(std::begin(c), std::end(c)) > 0);
+      return std::sqrt(variance<T>(c, mean));
+    }
 
     /*! \brief Calculate the corrected standard deviation
      *
@@ -175,8 +189,15 @@ namespace mdt{
      * \f$
      *
      * In above expression, N is the size of the container c.
+     *
+     * \pre c must contain at least 2 elements
      */
-    void correctedStandardDeviation();
+    template<typename T = double, typename ContainerType>
+    T correctedStandardDeviation(const ContainerType & c, T mean)
+    {
+      Q_ASSERT(std::distance(std::begin(c), std::end(c)) > 1);
+      return std::sqrt( sumOfSquaredDifferences<T>(c, mean) / (static_cast<T>(std::distance(std::begin(c), std::end(c)))-1.0) );
+    }
 
   };
 };

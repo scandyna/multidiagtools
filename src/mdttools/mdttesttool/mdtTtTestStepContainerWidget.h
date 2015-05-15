@@ -24,8 +24,10 @@
 #include "mdtTtTestStepWidget.h"
 #include <QWidget>
 #include <QVBoxLayout>
+#include <vector>
 
 class mdtTtTestStepContainer;
+class QFrame;
 
 /*! \brief Widget that contains mdtTtTestStepWidget items
  *
@@ -55,8 +57,16 @@ class mdtTtTestStepContainerWidget : public QWidget
    */
   int stepWidgetsCount() const
   {
-    return pvLayout->count() - 1;
+    return pvStepWidgetsCount;
   }
+
+  /*! \brief Show separation lines
+   */
+  void showSeparationLines();
+
+  /*! \brief Hide separation lines
+   */
+  void hideSeparationLines();
 
  public slots:
 
@@ -73,9 +83,24 @@ class mdtTtTestStepContainerWidget : public QWidget
 
  private:
 
+  /*! \brief Add a separation line
+   */
+  void addSeparationLine();
+
+  /*! \brief remove last added separation line
+   */
+  void removeSeparationLine();
+
+  /*! \brief Update separation lines visiblity
+   */
+  void updateSeparationLinesVisibility();
+
   Q_DISABLE_COPY(mdtTtTestStepContainerWidget);
 
   QVBoxLayout *pvLayout;
+  int pvStepWidgetsCount;
+  bool pvSeparationLinesVisible;
+  std::vector<QFrame*> pvSeparationLines; // We hold pointers to be able to set lines visible or not visible
 };
 
 #endif // #ifndef MDT_TT_TEST_STEP_CONTAINER_WIDGET_H

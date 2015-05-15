@@ -52,6 +52,21 @@ class mdtMathTest : public mdtTest
   void sumOfSquaredDifferencesTest_data();
   void sumOfSquaredDifferencesBenchmark();
   void sumOfSquaredDifferencesBenchmark_data();
+
+  void varianceTest();
+  void varianceTest_data();
+  void varianceBenchmark();
+  void varianceBenchmark_data();
+
+  void uncorrectedStandardDeviationTest();
+  void uncorrectedStandardDeviationTest_data();
+  void uncorrectedStandardDeviationBenchmark();
+  void uncorrectedStandardDeviationBenchmark_data();
+
+  void correctedStandardDeviationTest();
+  void correctedStandardDeviationTest_data();
+  void correctedStandardDeviationBenchmark();
+  void correctedStandardDeviationBenchmark_data();
 };
 
 #endif // #ifndef MDT_MATH_TEST_H

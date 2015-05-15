@@ -22,10 +22,15 @@
 #include "mdtTtTestStepContainer.h"
 
 #include <QLabel>
+#include <QFrame>
+
+#include <QDebug>
 
 mdtTtTestStepContainerWidget::mdtTtTestStepContainerWidget(QWidget* parent)
  : QWidget(parent),
-   pvLayout(new QVBoxLayout)
+   pvLayout(new QVBoxLayout),
+   pvStepWidgetsCount(0),
+   pvSeparationLinesVisible(true)
 {
   pvLayout->addStretch(1);
   setLayout(pvLayout);
@@ -39,12 +44,26 @@ void mdtTtTestStepContainerWidget::setContainer(mdtTtTestStepContainer* c)
   connect(c, SIGNAL(stepWidgetRemoved(mdtTtTestStepWidget*)), this, SLOT(removeStepWidget(mdtTtTestStepWidget*)));
 }
 
+void mdtTtTestStepContainerWidget::showSeparationLines()
+{
+  pvSeparationLinesVisible = true;
+  updateSeparationLinesVisibility();
+}
+
+void mdtTtTestStepContainerWidget::hideSeparationLines()
+{
+  pvSeparationLinesVisible = false;
+  updateSeparationLinesVisibility();
+}
+
 void mdtTtTestStepContainerWidget::addStepWidget(mdtTtTestStepWidget* tsw)
 {
   Q_ASSERT(tsw != nullptr);
   Q_ASSERT(pvLayout->count() > 0);  // A stretch was added in constructor
 
   pvLayout->insertWidget(pvLayout->count()-1, tsw);
+  ++pvStepWidgetsCount;
+  addSeparationLine();
 }
 
 void mdtTtTestStepContainerWidget::removeStepWidget(mdtTtTestStepWidget* tsw)
@@ -53,4 +72,38 @@ void mdtTtTestStepContainerWidget::removeStepWidget(mdtTtTestStepWidget* tsw)
 
   pvLayout->removeWidget(tsw);
   delete tsw;
+  --pvStepWidgetsCount;
+  removeSeparationLine();
+}
+
+void mdtTtTestStepContainerWidget::addSeparationLine()
+{
+  Q_ASSERT(pvLayout->count() > 0);
+
+  QFrame *line = new QFrame;
+  line->setFrameStyle(QFrame::HLine | QFrame::Plain);
+  pvLayout->insertWidget(pvLayout->count()-1, line);
+  pvSeparationLines.emplace_back(line);
+  line->setVisible(pvSeparationLinesVisible);
+}
+
+void mdtTtTestStepContainerWidget::removeSeparationLine()
+{
+  if(pvSeparationLines.empty()){
+    return;
+  }
+  QFrame *line = pvSeparationLines.back();
+  Q_ASSERT(line != nullptr);
+  qDebug() << "Remocing line...";
+  pvLayout->removeWidget(line);
+  delete line;
+  pvSeparationLines.pop_back();
+}
+
+void mdtTtTestStepContainerWidget::updateSeparationLinesVisibility()
+{
+  for(auto *line : pvSeparationLines){
+    Q_ASSERT(line != nullptr);
+    line->setVisible(pvSeparationLinesVisible);
+  }
 }

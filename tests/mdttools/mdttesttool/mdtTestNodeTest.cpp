@@ -108,6 +108,69 @@ void mdtTestNodeTest::testNodeUnitTest()
 
 }
 
+void mdtTestNodeTest::getRouteRelaysTest()
+{
+  mdtTtTestNode tn(pvDatabaseManager.database());
+  mdtTtTestNodeATestData tnAd(pvDatabaseManager.database());
+  QStringList schemaPosList;
+  std::vector<mdtTtTestNodeRouteRelay> relays;
+  QVariant testNodeId;
+
+  // Create test node A
+  QVERIFY(tnAd.populate());
+  // Get test node ID
+  testNodeId = tn.getTestNodeIdForAlias("A");
+  QVERIFY(!testNodeId.isNull());
+
+  /*
+   * Get single relays
+   */
+  // Check K1
+  schemaPosList.clear();
+  schemaPosList << "K1";
+  relays = tn.getTestNodeRouteRelays(testNodeId, schemaPosList);
+  QCOMPARE((int)relays.size(), 1);
+  QCOMPARE(relays[0].schemaPosition, QVariant("K1"));
+  QCOMPARE(relays[0].ioPosition, 0);
+  // Check K30
+  schemaPosList.clear();
+  schemaPosList << "K30";
+  relays = tn.getTestNodeRouteRelays(testNodeId, schemaPosList);
+  QCOMPARE((int)relays.size(), 1);
+  QCOMPARE(relays[0].schemaPosition, QVariant("K30"));
+  QCOMPARE(relays[0].ioPosition, 29);
+  /*
+   * Get many relays
+   */
+  // Check K1 + K2
+  schemaPosList.clear();
+  schemaPosList << "K1" << "K2";
+  relays = tn.getTestNodeRouteRelays(testNodeId, schemaPosList);
+  QCOMPARE((int)relays.size(), 2);
+  // Check K1 + K2 + K31
+  schemaPosList.clear();
+  schemaPosList << "K1" << "K2" << "K31";
+  relays = tn.getTestNodeRouteRelays(testNodeId, schemaPosList);
+  QCOMPARE((int)relays.size(), 3);
+  /*
+   * Check non existing
+   */
+  // Check only non existing
+  schemaPosList.clear();
+  schemaPosList << "KA";
+  relays = tn.getTestNodeRouteRelays(testNodeId, schemaPosList);
+  QCOMPARE((int)relays.size(), 0);
+  schemaPosList.clear();
+  schemaPosList << "KA" << "KB";
+  relays = tn.getTestNodeRouteRelays(testNodeId, schemaPosList);
+  QCOMPARE((int)relays.size(), 0);
+  // Mix existing and non existing
+  schemaPosList.clear();
+  schemaPosList << "K1" << "KA";
+  relays = tn.getTestNodeRouteRelays(testNodeId, schemaPosList);
+  QCOMPARE((int)relays.size(), 0);
+}
+
 void mdtTestNodeTest::testNodeRouteDataTest()
 {
   mdtTtTestNodeRouteData data;

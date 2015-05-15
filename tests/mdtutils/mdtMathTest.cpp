@@ -64,6 +64,9 @@ void mdtMathTest::sandbox()
   hl->addWidget(lbGmeanLabel);
   hl->addWidget(lbGmean);
   layout->addLayout(hl);
+  
+  QLabel *lastLabel = new QLabel;
+  layout->addWidget(lastLabel);
 
   /*
    * Generate data
@@ -78,7 +81,7 @@ void mdtMathTest::sandbox()
 //   ///std::default_random_engine e1(rd());
 //   ///std::uniform_real_distribution<double> dist1(0.0, 1.0);
    std::mt19937 e1(rd());
-   std::normal_distribution<double> dist1(70, 5);
+   std::normal_distribution<double> dist1(70, 2);
    for(int i = 0; i < N; ++i){
      data.push_back( dist1(e1) );
    }
@@ -99,10 +102,16 @@ void mdtMathTest::sandbox()
   curve->setSamples(curveData);
   curve->attach(plot);
   /*
-   * Calculate mean, ...
+   * Calculate mean, variance, deviation
    */
-  lbAmean->setText(QString::number(mdt::arithmeticMean<double>(data)));
+  double aMean = mdt::arithmeticMean<double>(data);
+  lbAmean->setText(QString::number(aMean));
   lbGmean->setText(QString::number(mdt::geometricMean(data, 100)));
+  QString str = "Variance: " + QString::number(mdt::variance(data, aMean));
+  str += "  , ecart type: " + QString::number(mdt::uncorrectedStandardDeviation(data, aMean));
+  str += "  , ecart type corrige: " + QString::number(mdt::correctedStandardDeviation(data, aMean));
+  lastLabel->setText(str);
+  
   
   dialog.setLayout(layout);
   dialog.resize(500, 300);
@@ -530,7 +539,6 @@ void mdtMathTest::sumOfSquaredDifferencesBenchmark()
     sum = mdt::sumOfSquaredDifferences(v, y);
   }
   QCOMPARE(sum, expectedSum);
-
 }
 
 void mdtMathTest::sumOfSquaredDifferencesBenchmark_data()
@@ -546,6 +554,199 @@ void mdtMathTest::sumOfSquaredDifferencesBenchmark_data()
   QTest::newRow("1000 elements") << tmp << 0.5 << 4000.0;
   tmp.assign(10000, 2.5);
   QTest::newRow("10'000 elements") << tmp << 0.5 << 40000.0;
+}
+
+void mdtMathTest::varianceTest()
+{
+  QFETCH(std::vector<double>, v);
+  QFETCH(double, mean);
+  QFETCH(double, expectedVariance);
+
+  QVector<double> qv = QVector<double>::fromStdVector(v);
+
+  QCOMPARE(mdt::variance(v, mean), expectedVariance);
+  QCOMPARE(mdt::variance(qv, mean), expectedVariance);
+}
+
+void mdtMathTest::varianceTest_data()
+{
+  QTest::addColumn<std::vector<double>>("v");
+  QTest::addColumn<double>("mean");
+  QTest::addColumn<double>("expectedVariance");
+
+  std::vector<double> tmp1 {1.0};
+  QTest::newRow("1 variable values") << tmp1 << 0.5 << 0.25/1.0;
+  std::vector<double> tmp2 {1.0, 2.0};
+  QTest::newRow("2 variable values") << tmp2 << 0.5 << 2.5/2.0;
+  std::vector<double> tmp3 {1.0, 2.0, 3.0};
+  QTest::newRow("3 variable values") << tmp3 << 0.5 << 8.75/3.0;
+  std::vector<double> tmp4 {1.0, 2.0, 3.0, 4.0};
+  QTest::newRow("4 variable values") << tmp4 << 0.5 << 21.0/4.0;
+  // Make some grater data sets
+  std::vector<double> tmp;
+  tmp.assign(100, 2.5);
+  QTest::newRow("100 elements") << tmp << 0.5 << 400.0/100.0;
+  tmp.assign(1000, 2.5);
+  QTest::newRow("1000 elements") << tmp << 0.5 << 4000.0/1000.0;
+  tmp.assign(10000, 2.5);
+  QTest::newRow("10'000 elements") << tmp << 0.5 << 40000.0/10000.0;
+}
+
+void mdtMathTest::varianceBenchmark()
+{
+  QFETCH(std::vector<double>, v);
+  QFETCH(double, mean);
+  QFETCH(double, expectedVariance);
+
+  double sum;
+
+  QBENCHMARK{
+    sum = mdt::variance(v, mean);
+  }
+  QCOMPARE(sum, expectedVariance);
+}
+
+void mdtMathTest::varianceBenchmark_data()
+{
+  QTest::addColumn<std::vector<double>>("v");
+  QTest::addColumn<double>("mean");
+  QTest::addColumn<double>("expectedVariance");
+
+  std::vector<double> tmp;
+  tmp.assign(100, 2.5);
+  QTest::newRow("100 elements") << tmp << 0.5 << 4.0;
+  tmp.assign(1000, 2.5);
+  QTest::newRow("1000 elements") << tmp << 0.5 << 4.0;
+  tmp.assign(10000, 2.5);
+  QTest::newRow("10'000 elements") << tmp << 0.5 << 4.0;
+}
+
+void mdtMathTest::uncorrectedStandardDeviationTest()
+{
+  QFETCH(std::vector<double>, v);
+  QFETCH(double, mean);
+  QFETCH(double, expectedDeviation);
+
+  QVector<double> qv = QVector<double>::fromStdVector(v);
+
+  QCOMPARE(mdt::uncorrectedStandardDeviation(v, mean), expectedDeviation);
+  QCOMPARE(mdt::uncorrectedStandardDeviation(qv, mean), expectedDeviation);
+}
+
+void mdtMathTest::uncorrectedStandardDeviationTest_data()
+{
+  QTest::addColumn<std::vector<double>>("v");
+  QTest::addColumn<double>("mean");
+  QTest::addColumn<double>("expectedDeviation");
+
+  std::vector<double> tmp1 {1.0};
+  QTest::newRow("1 variable values") << tmp1 << 0.5 << 0.5;
+  std::vector<double> tmp2 {1.0, 2.0};
+  QTest::newRow("2 variable values") << tmp2 << 0.5 << std::sqrt(2.5/2.0);
+  std::vector<double> tmp3 {1.0, 2.0, 3.0};
+  QTest::newRow("3 variable values") << tmp3 << 0.5 << std::sqrt(8.75/3.0);
+  std::vector<double> tmp4 {1.0, 2.0, 3.0, 4.0};
+  QTest::newRow("4 variable values") << tmp4 << 0.5 << std::sqrt(21.0/4.0);
+  // Make some grater data sets
+  std::vector<double> tmp;
+  tmp.assign(100, 2.5);
+  QTest::newRow("100 elements") << tmp << 0.5 << 2.0;
+  tmp.assign(1000, 2.5);
+  QTest::newRow("1000 elements") << tmp << 0.5 << 2.0;
+  tmp.assign(10000, 2.5);
+  QTest::newRow("10'000 elements") << tmp << 0.5 << 2.0;
+}
+
+void mdtMathTest::uncorrectedStandardDeviationBenchmark()
+{
+  QFETCH(std::vector<double>, v);
+  QFETCH(double, mean);
+  QFETCH(double, expectedDeviation);
+
+  double sum;
+
+  QBENCHMARK{
+    sum = mdt::uncorrectedStandardDeviation(v, mean);
+  }
+  QCOMPARE(sum, expectedDeviation);
+}
+
+void mdtMathTest::uncorrectedStandardDeviationBenchmark_data()
+{
+  QTest::addColumn<std::vector<double>>("v");
+  QTest::addColumn<double>("mean");
+  QTest::addColumn<double>("expectedDeviation");
+
+  std::vector<double> tmp;
+  tmp.assign(100, 2.5);
+  QTest::newRow("100 elements") << tmp << 0.5 << 2.0;
+  tmp.assign(1000, 2.5);
+  QTest::newRow("1000 elements") << tmp << 0.5 << 2.0;
+  tmp.assign(10000, 2.5);
+  QTest::newRow("10'000 elements") << tmp << 0.5 << 2.0;
+}
+
+void mdtMathTest::correctedStandardDeviationTest()
+{
+  QFETCH(std::vector<double>, v);
+  QFETCH(double, mean);
+  QFETCH(double, expectedDeviation);
+
+  QVector<double> qv = QVector<double>::fromStdVector(v);
+
+  QCOMPARE(mdt::correctedStandardDeviation(v, mean), expectedDeviation);
+  QCOMPARE(mdt::correctedStandardDeviation(qv, mean), expectedDeviation);
+}
+
+void mdtMathTest::correctedStandardDeviationTest_data()
+{
+  QTest::addColumn<std::vector<double>>("v");
+  QTest::addColumn<double>("mean");
+  QTest::addColumn<double>("expectedDeviation");
+
+  std::vector<double> tmp2 {1.0, 2.0};
+  QTest::newRow("2 variable values") << tmp2 << 0.5 << std::sqrt(2.5);
+  std::vector<double> tmp3 {1.0, 2.0, 3.0};
+  QTest::newRow("3 variable values") << tmp3 << 0.5 << std::sqrt(8.75/2.0);
+  std::vector<double> tmp4 {1.0, 2.0, 3.0, 4.0};
+  QTest::newRow("4 variable values") << tmp4 << 0.5 << std::sqrt(21.0/3.0);
+  // Make some grater data sets
+  std::vector<double> tmp;
+  tmp.assign(100, 2.5);
+  QTest::newRow("100 elements") << tmp << 0.5 << std::sqrt(400.0/99.0);
+  tmp.assign(1000, 2.5);
+  QTest::newRow("1000 elements") << tmp << 0.5 << std::sqrt(4000.0/999.0);
+  tmp.assign(10000, 2.5);
+  QTest::newRow("10'000 elements") << tmp << 0.5 << std::sqrt(40000.0/9999.0);
+}
+
+void mdtMathTest::correctedStandardDeviationBenchmark()
+{
+  QFETCH(std::vector<double>, v);
+  QFETCH(double, mean);
+  QFETCH(double, expectedDeviation);
+
+  double sum;
+
+  QBENCHMARK{
+    sum = mdt::correctedStandardDeviation(v, mean);
+  }
+  QCOMPARE(sum, expectedDeviation);
+}
+
+void mdtMathTest::correctedStandardDeviationBenchmark_data()
+{
+  QTest::addColumn<std::vector<double>>("v");
+  QTest::addColumn<double>("mean");
+  QTest::addColumn<double>("expectedDeviation");
+
+  std::vector<double> tmp;
+  tmp.assign(100, 2.5);
+  QTest::newRow("100 elements") << tmp << 0.5 << std::sqrt(400.0/99.0);
+  tmp.assign(1000, 2.5);
+  QTest::newRow("1000 elements") << tmp << 0.5 << std::sqrt(4000.0/999.0);
+  tmp.assign(10000, 2.5);
+  QTest::newRow("10'000 elements") << tmp << 0.5 << std::sqrt(40000.0/9999.0);
 }
 
 

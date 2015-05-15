@@ -1284,9 +1284,6 @@ void mdtTestToolTest::testStepContainerTest()
   ts->setTitle("Test step 3");
   // Check global state
   QVERIFY(tsc.state() == mdtTtTestStep::State_t::Initial);
-  
-  
-  ///QTest::qWait(2000);
   /*
    * Run steps
    *  - step 1 succeed
@@ -1296,44 +1293,39 @@ void mdtTestToolTest::testStepContainerTest()
   // Run step 1
   tsc.step(0)->setRunning();
   QVERIFY(tsc.state() == mdtTtTestStep::State_t::Running);
-  ///QTest::qWait(2000);
   tsc.step(0)->setFinishedSuccess();
   QVERIFY(tsc.state() == mdtTtTestStep::State_t::Initial);
   // Run step 2
   tsc.step(1)->setRunning();
   QVERIFY(tsc.state() == mdtTtTestStep::State_t::Running);
-  ///QTest::qWait(2000);
   tsc.step(1)->setFinishedWarn("Just limit");
   QVERIFY(tsc.state() == mdtTtTestStep::State_t::Warn);
   // Run step 3
   tsc.step(2)->setRunning();
   QVERIFY(tsc.state() == mdtTtTestStep::State_t::Running);
-  ///QTest::qWait(2000);
   tsc.step(2)->setFinishedFail("Failure");
   QVERIFY(tsc.state() == mdtTtTestStep::State_t::Fail);
   /*
    * Run steps - all steps succeed
    */
-  ///QTest::qWait(2000);
   tsc.step(0)->reset();
   tsc.step(1)->reset();
   tsc.step(2)->reset();
   // Run step 1
   tsc.step(0)->setRunning();
   QVERIFY(tsc.state() == mdtTtTestStep::State_t::Running);
-  ///QTest::qWait(2000);
   tsc.step(0)->setFinishedSuccess();
   QVERIFY(tsc.state() == mdtTtTestStep::State_t::Initial);
   // Run step 2
   tsc.step(1)->setRunning();
   QVERIFY(tsc.state() == mdtTtTestStep::State_t::Running);
-  ///QTest::qWait(2000);
   tsc.step(1)->setFinishedSuccess();
   QVERIFY(tsc.state() == mdtTtTestStep::State_t::Initial);
   // Run step 3
   tsc.step(2)->setRunning();
   QVERIFY(tsc.state() == mdtTtTestStep::State_t::Running);
-  ///QTest::qWait(2000);
+  tscw->hideSeparationLines();
+  tscw->showSeparationLines();
   tsc.step(2)->setFinishedSuccess();
   QVERIFY(tsc.state() == mdtTtTestStep::State_t::Success);
   /*
@@ -1364,7 +1356,6 @@ void mdtTestToolTest::testStepContainerTest()
     QTest::qWait(500);
   }
   */
-
   // Cleanup
   delete sa;
 //  delete tscw;

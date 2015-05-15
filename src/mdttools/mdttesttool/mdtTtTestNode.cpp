@@ -262,6 +262,44 @@ QList<QVariant> mdtTtTestNode::getChannelTestConnectionIdList(const QVariant & t
   return testConnectionIdList;
 }
 
+std::vector<mdtTtTestNodeRouteRelay> mdtTtTestNode::getTestNodeRouteRelays(const QVariant & testNodeId, const QStringList & schemaPositionList)
+{
+  std::vector<mdtTtTestNodeRouteRelay> relays;
+  QList<QSqlRecord> dataList;
+  QString sql;
+  bool ok;
+
+  // Get data from DB
+  sql = "SELECT U.Id_PK, U.SchemaPosition, TNU.IoPosition FROM TestNodeUnit_tbl TNU JOIN Unit_tbl U ON U.Id_PK = TNU.Unit_Id_FK_PK";
+  sql += " WHERE TNU.TestNode_Id_FK = " + testNodeId.toString();
+  sql += " AND (TNU.Type_Code_FK = 'BUSCPLREL' OR TNU.Type_Code_FK = 'CHANELREL')";
+  sql += " AND(";
+  for(int i = 0; i < schemaPositionList.size(); ++i){
+    sql += "U.SchemaPosition = '" + schemaPositionList.at(i) + "'";
+    if(i < (schemaPositionList.size()-1)){
+      sql += " OR ";
+    }
+  }
+  sql += ")";
+  dataList = getDataList<QSqlRecord>(sql, ok);
+  if(!ok){
+    return relays;
+  }
+  // Check that the expected amount of data was found
+  if(dataList.size() != schemaPositionList.size()){
+    pvLastError.setError(tr("The amount of relays returned from database differs from expected one."), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNode");
+    pvLastError.commit();
+    return relays;
+  }
+  // Build relays list and return it
+  for(const auto & record : dataList){
+    relays.emplace_back(record.value(0).toInt(), record.value(1).toString(), record.value(2).toInt());
+  }
+
+  return relays;
+}
+
 bool mdtTtTestNode::addMissingConnections(const QVariant & testNodeId)
 {
   QList<QSqlRecord> dataList;

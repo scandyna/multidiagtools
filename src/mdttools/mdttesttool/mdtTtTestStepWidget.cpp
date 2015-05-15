@@ -25,6 +25,7 @@
 #include <QLabel>
 #include <QIcon>
 #include <QFont>
+#include <QSizePolicy>
 
 //#include <QDebug>
 
@@ -37,25 +38,26 @@ mdtTtTestStepWidget::mdtTtTestStepWidget(QWidget* parent)
   pbRunAbort = new QPushButton;
 //   connect(pbRunAbort, SIGNAL(clicked()), this, SLOT(runAbort()));
   connect(pbRunAbort, SIGNAL(clicked()), this, SIGNAL(runAbortButtonClicked()));
-  pvLayout->addWidget(pbRunAbort, 0, 0);
+  pvLayout->addWidget(pbRunAbort, 0, 0, Qt::AlignHCenter);
   pvRunAbortButtonEnabled = true;
   pvAbortSupported = false;
   // Setup title label
   lbTitle = new QLabel;
   lbTitle->setTextFormat(Qt::PlainText);
-  pvLayout->addWidget(lbTitle, 0, 1);
+  pvLayout->addWidget(lbTitle, 0, 1, Qt::AlignHCenter);
   // Setup state label
   lbState = new QLabel;
   lbState->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+  lbState->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
   QFont f("Sans Serif", 12);
   f.setBold(true);
   lbState->setFont(f);
   lbState->setTextFormat(Qt::PlainText);
-  pvLayout->addWidget(lbState, 0, 3);
+  pvLayout->addWidget(lbState, 0, 3, Qt::AlignHCenter);
   // Setup message label
   lbMessage = new QLabel;
   lbMessage->setTextFormat(Qt::PlainText);
-  pvLayout->addWidget(lbMessage, 0, 4);
+  pvLayout->addWidget(lbMessage, 0, 4, Qt::AlignHCenter);
   // Other setup
   pvLayout->setColumnStretch(5, 2);
   setLayout(pvLayout);
