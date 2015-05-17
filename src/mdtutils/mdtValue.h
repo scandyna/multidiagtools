@@ -189,6 +189,7 @@ class mdtValueDouble
    * Note:
    *  - If one (or both) value is null, a null value will be returned (Same rule as IEEE 754 NaN)
    *  - For all other cases, including OL flags (wich are stored as infinity values), follows standard floating point arithmetic rules
+   * \todo Review if really noexcept
    */
   mdtValueDouble operator+(const mdtValueDouble & other) const noexcept
   {
@@ -203,6 +204,7 @@ class mdtValueDouble
    * Note:
    *  - If one (or both) value is null, a null value will be returned (Same rule as IEEE 754 NaN)
    *  - For all other cases, including OL flags (wich are stored as infinity values), follows standard floating point arithmetic rules
+   * \todo Review if really noexcept
    */
   mdtValueDouble operator-(const mdtValueDouble & other) const noexcept
   {
@@ -212,11 +214,29 @@ class mdtValueDouble
     return mdtValueDouble(pvValue - other.pvValue);
   }
 
+  /*! \brief Negation operator
+   *
+   * Will return a new value witch is the negate version of this.
+   *
+   * Note:
+   *  - If current value is null, a null value will be returned (Same rule as IEEE 754 NaN)
+   *  - For all other cases, including OL flags (wich are stored as infinity values), follows standard floating point arithmetic rules
+   * \todo Review if really noexcept
+   */
+  mdtValueDouble operator-() const noexcept
+  {
+    if(pvIsNull){
+      return mdtValueDouble();
+    }
+    return mdtValueDouble(-pvValue);
+  }
+
   /*! \brief Multiplication operator
    *
    * Note:
    *  - If one (or both) value is null, a null value will be returned (Same rule as IEEE 754 NaN)
    *  - For all other cases, including OL flags (wich are stored as infinity values), follows standard floating point arithmetic rules
+   * \todo Review if really noexcept
    */
   mdtValueDouble operator*(const mdtValueDouble & other) const noexcept
   {
@@ -231,6 +251,7 @@ class mdtValueDouble
    * Note:
    *  - If one (or both) value is null, a null value will be returned (Same rule as IEEE 754 NaN)
    *  - For all other cases, including OL flags (wich are stored as infinity values), follows standard floating point arithmetic rules
+   * \todo Review if really noexcept
    */
   mdtValueDouble operator/(const mdtValueDouble & other) const noexcept
   {

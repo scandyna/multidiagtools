@@ -273,12 +273,12 @@ std::vector<mdtTtTestNodeRouteRelay> mdtTtTestNode::getTestNodeRouteRelays(const
   sql = "SELECT U.Id_PK, U.SchemaPosition, TNU.IoPosition FROM TestNodeUnit_tbl TNU JOIN Unit_tbl U ON U.Id_PK = TNU.Unit_Id_FK_PK";
   sql += " WHERE TNU.TestNode_Id_FK = " + testNodeId.toString();
   sql += " AND (TNU.Type_Code_FK = 'BUSCPLREL' OR TNU.Type_Code_FK = 'CHANELREL')";
-  sql += " AND(";
+  sql += " AND U.SchemaPosition IN (";
   for(int i = 0; i < schemaPositionList.size(); ++i){
-    sql += "U.SchemaPosition = '" + schemaPositionList.at(i) + "'";
-    if(i < (schemaPositionList.size()-1)){
-      sql += " OR ";
+    if(i > 0){
+      sql += ",";
     }
+    sql += "'" + schemaPositionList.at(i) + "'";
   }
   sql += ")";
   dataList = getDataList<QSqlRecord>(sql, ok);
@@ -286,18 +286,61 @@ std::vector<mdtTtTestNodeRouteRelay> mdtTtTestNode::getTestNodeRouteRelays(const
     return relays;
   }
   // Check that the expected amount of data was found
-  if(dataList.size() != schemaPositionList.size()){
-    pvLastError.setError(tr("The amount of relays returned from database differs from expected one."), mdtError::Error);
+  if(dataList.size() < schemaPositionList.size()){
+    QStringList missingRelays;
+    QString missingRelaysStr;
+    QVariant id;
+    // Search missing relays
+    for(const auto & sp : schemaPositionList){
+      id = getTestNodeRouteRelayIdBySchemaPosition(testNodeId, sp, ok);
+      if(!ok){
+        return relays;
+      }
+      if(id.isNull()){
+        missingRelays.append(sp);
+      }
+    }
+    // Build missing relays string
+    for(int i = 0; i < missingRelays.size(); ++i){
+      if(i > 0){
+        missingRelaysStr += ", ";
+      }
+      missingRelaysStr += missingRelays.at(i);
+    }
+    // Build error
+    pvLastError.setError(tr("Some requested relays not exist in database."), mdtError::Error);
+    pvLastError.setInformativeText(tr("Missing relays are: ") + missingRelaysStr);
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNode");
     pvLastError.commit();
     return relays;
   }
+  Q_ASSERT(dataList.size() == schemaPositionList.size());
   // Build relays list and return it
   for(const auto & record : dataList){
     relays.emplace_back(record.value(0).toInt(), record.value(1).toString(), record.value(2).toInt());
   }
 
   return relays;
+}
+
+QVariant mdtTtTestNode::getTestNodeRouteRelayIdBySchemaPosition(const QVariant & testNodeId, const QString & schemaPosition, bool & ok)
+{
+  QList<QSqlRecord> dataList;
+  QString sql;
+
+  sql = "SELECT U.Id_PK, U.SchemaPosition FROM TestNodeUnit_tbl TNU JOIN Unit_tbl U ON U.Id_PK = TNU.Unit_Id_FK_PK";
+  sql += " WHERE TNU.TestNode_Id_FK = " + testNodeId.toString();
+  sql += " AND (TNU.Type_Code_FK = 'BUSCPLREL' OR TNU.Type_Code_FK = 'CHANELREL')";
+  sql += " AND U.SchemaPosition = '" + schemaPosition + "'";
+  dataList = getDataList<QSqlRecord>(sql, ok);
+  if(!ok){
+    return QVariant();
+  }
+  if(dataList.isEmpty()){
+    return QVariant();
+  }
+
+  return dataList.at(0).value(0);
 }
 
 bool mdtTtTestNode::addMissingConnections(const QVariant & testNodeId)

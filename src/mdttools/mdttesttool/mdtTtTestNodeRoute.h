@@ -68,6 +68,16 @@ class mdtTtTestNodeRoute : public mdtTtBase
    */
   bool addRoute(const mdtTtTestNodeRouteData & data);
 
+  /*! \brief Check if route for given test node and route name exists in TestNodeRoute_tbl
+   *
+   * \param testNodeId ID of test node
+   * \param routeName Name of requested route (Name field in TestNodeRoute_tbl)
+   * \param ok Will be set false on error, true else.
+   * \return true if route exists, false else. If a error occured, false is also returned.
+   *         Use the ok parameter to differenciate this 2 cases.
+   */
+  bool routeExist(const QVariant & testNodeId, const QString & routeName, bool & ok);
+
   /*! \brief Get a route from TestNodeRoute_tbl
    *
    * \param testNodeRouteId ID of test node route (primary key of TestNodeRoute_tbl)
@@ -106,9 +116,17 @@ class mdtTtTestNodeRoute : public mdtTtBase
    */
   QList<mdtTtTestNodeRouteData> getAllRoutesByAlias(const QString & testNodeAlias, bool & ok);
 
+  /*! \brief Set route name to route data
+   *
+   * Route name is of form start,relays,end
+   * For example, a route that start at XMEAS;+ , that end at XMEAS;- , and for witch K1, K5 and K6 must be enabled,
+   *  name would be: XMEAS;+,K1,K5,K6,XMEAS;-
+   */
+  bool setRouteName(mdtTtTestNodeRouteData & route);
+
   /*! \brief Get a string that describes given route
    */
-  QString getRouteString(const mdtTtTestNodeRouteData & route);
+//   QString getRouteString(const mdtTtTestNodeRouteData & route);
 
   /*! \brief Set route resistance
    */

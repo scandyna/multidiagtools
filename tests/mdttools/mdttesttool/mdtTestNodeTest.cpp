@@ -108,6 +108,43 @@ void mdtTestNodeTest::testNodeUnitTest()
 
 }
 
+void mdtTestNodeTest::getRouteRelayIdTest()
+{
+  mdtTtTestNode tn(pvDatabaseManager.database());
+  mdtTtTestNodeATestData tnAd(pvDatabaseManager.database());
+  QVariant id;
+  QVariant testNodeId;
+  bool ok;
+
+  // Create test node A
+  QVERIFY(tnAd.populate());
+  // Get test node ID
+  testNodeId = tn.getTestNodeIdForAlias("A");
+  QVERIFY(!testNodeId.isNull());
+
+  /*
+   * Check with existing relays
+   */
+  id = tn.getTestNodeRouteRelayIdBySchemaPosition(testNodeId, "K1", ok);
+  QVERIFY(ok);
+  QVERIFY(!id.isNull());
+  id = tn.getTestNodeRouteRelayIdBySchemaPosition(testNodeId, "K30", ok);
+  QVERIFY(ok);
+  QVERIFY(!id.isNull());
+  /*
+   * Check with non existing relays
+   */
+  id = tn.getTestNodeRouteRelayIdBySchemaPosition(testNodeId, "K1000", ok);
+  QVERIFY(ok);
+  QVERIFY(id.isNull());
+  /*
+   * Check with existing positions that are not relays
+   */
+  id = tn.getTestNodeRouteRelayIdBySchemaPosition(testNodeId, "XMEAS", ok);
+  QVERIFY(ok);
+  QVERIFY(id.isNull());
+}
+
 void mdtTestNodeTest::getRouteRelaysTest()
 {
   mdtTtTestNode tn(pvDatabaseManager.database());
@@ -187,6 +224,7 @@ void mdtTestNodeTest::testNodeRouteDataTest()
   data.setCalibrationDate(QDateTime::fromString("2015-04-29T17:25:47", Qt::ISODate));
   data.addRelayToEnable(5, "K5", 4);
   data.addRelayToEnable(6, "K6", 5);
+  data.setName("NAME");
   // Check
   QCOMPARE(data.id(), QVariant(1));
   QCOMPARE(data.testNodeId(), QVariant(2));
@@ -201,6 +239,7 @@ void mdtTestNodeTest::testNodeRouteDataTest()
   QCOMPARE(data.relayToEnableAt(1).id, QVariant(6));
   QCOMPARE(data.relayToEnableAt(1).schemaPosition, QVariant("K6"));
   QCOMPARE(data.relayToEnableAt(1).ioPosition, 5);
+  QCOMPARE(data.name(), QVariant("NAME"));
   // Check clear
   data.clear();
   QVERIFY(data.id().isNull());
@@ -210,6 +249,7 @@ void mdtTestNodeTest::testNodeRouteDataTest()
   QVERIFY(data.resistance().isNull());
   QVERIFY(data.calibrationDate().isNull());
   QCOMPARE(data.relaysToEnableCount(), 0);
+  QVERIFY(data.name().isNull());
 }
 
 void mdtTestNodeTest::routeBuildTest()
@@ -258,6 +298,10 @@ void mdtTestNodeTest::routeBuildTest()
   QCOMPARE(route.relayToEnableAt(0).ioPosition, 0);
   QCOMPARE(route.relayToEnableAt(1).schemaPosition, QVariant("K30"));
   QCOMPARE(route.relayToEnableAt(1).ioPosition, 29);
+  QCOMPARE(route.name(), QVariant("XMEAS;+,K1,K30,XTEST;A1"));
+  // Check routeExist()
+  QVERIFY(!tnr.routeExist(testNodeId, "XMEAS;+,K1,K30,XTEST;A1", ok));
+  QVERIFY(ok);
   // Save route
   QVERIFY(tnr.addRoute(route));
   // Get route from DB and check
@@ -272,6 +316,13 @@ void mdtTestNodeTest::routeBuildTest()
   QCOMPARE(route.relayToEnableAt(0).ioPosition, 0);
   QCOMPARE(route.relayToEnableAt(1).schemaPosition, QVariant("K30"));
   QCOMPARE(route.relayToEnableAt(1).ioPosition, 29);
+  QCOMPARE(route.name(), QVariant("XMEAS;+,K1,K30,XTEST;A1"));
+  // Check routeExist()
+  QVERIFY(tnr.routeExist(testNodeId, "XMEAS;+,K1,K30,XTEST;A1", ok));
+  QVERIFY(ok);
+  // Check also that setRouteName() sets the correct name (buildRoute() does not use it, because of overheath)
+  QVERIFY(tnr.setRouteName(route));
+  QCOMPARE(route.name(), QVariant("XMEAS;+,K1,K30,XTEST;A1"));
   // Remove route
   QVERIFY(tnr.removeRoute(route.id()));
 

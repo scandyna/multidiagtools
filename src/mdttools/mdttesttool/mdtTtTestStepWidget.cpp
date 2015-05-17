@@ -34,6 +34,7 @@ mdtTtTestStepWidget::mdtTtTestStepWidget(QWidget* parent)
    pvLayout(new QGridLayout),
    pvCustomWidget(nullptr)
 {
+  QFont font;
   // Setup run/abort button
   pbRunAbort = new QPushButton;
 //   connect(pbRunAbort, SIGNAL(clicked()), this, SLOT(runAbort()));
@@ -41,25 +42,29 @@ mdtTtTestStepWidget::mdtTtTestStepWidget(QWidget* parent)
   pvLayout->addWidget(pbRunAbort, 0, 0, Qt::AlignHCenter);
   pvRunAbortButtonEnabled = true;
   pvAbortSupported = false;
-  // Setup title label
-  lbTitle = new QLabel;
-  lbTitle->setTextFormat(Qt::PlainText);
-  pvLayout->addWidget(lbTitle, 0, 1, Qt::AlignHCenter);
   // Setup state label
   lbState = new QLabel;
   lbState->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
   lbState->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
-  QFont f("Sans Serif", 12);
-  f.setBold(true);
-  lbState->setFont(f);
+  font = lbState->font();
+  font.setPointSize(12);
+  font.setBold(true);
+  lbState->setFont(font);
   lbState->setTextFormat(Qt::PlainText);
-  pvLayout->addWidget(lbState, 0, 3, Qt::AlignHCenter);
+  pvLayout->addWidget(lbState, 0, 1, Qt::AlignHCenter);
+  // Setup title label
+  lbTitle = new QLabel;
+  lbTitle->setTextFormat(Qt::PlainText);
+  font = lbTitle->font();
+  font.setWeight(QFont::DemiBold);
+  lbTitle->setFont(font);
+  pvLayout->addWidget(lbTitle, 0, 2, Qt::AlignHCenter);
   // Setup message label
   lbMessage = new QLabel;
   lbMessage->setTextFormat(Qt::PlainText);
-  pvLayout->addWidget(lbMessage, 0, 4, Qt::AlignHCenter);
+  pvLayout->addWidget(lbMessage, 1, 1, 1, 4, Qt::AlignLeft | Qt::AlignTop);
   // Other setup
-  pvLayout->setColumnStretch(5, 2);
+  pvLayout->setColumnStretch(4, 2);
   setLayout(pvLayout);
   setStateInitial();
 }
@@ -86,7 +91,7 @@ void mdtTtTestStepWidget::setCustomWidget(QWidget* w)
     delete pvCustomWidget;
   }
   pvCustomWidget = w;
-  pvLayout->addWidget(pvCustomWidget, 0, 2);
+  pvLayout->addWidget(pvCustomWidget, 0, 3, 2, 2);
 }
 
 void mdtTtTestStepWidget::setAbortSupported(bool support)

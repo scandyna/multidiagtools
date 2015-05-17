@@ -32,8 +32,10 @@
 #include <QSqlDatabase>
 #include <QVariant>
 #include <QString>
+#include <QStringList>
 #include <QList>
 #include <memory>
+#include <vector>
 
 class mdtDeviceIos;
 class mdtTtTestNodeManagerWidget;
@@ -121,6 +123,14 @@ class mdtTtTestNodeManager : public QObject
    *  (see mdtDeviceIos for details).
    */
   bool setDeviceIosLabelShort(const QString & alias);
+
+  /*! \brief Get a list of test node route relays for given test node and schema position list
+   *
+   * \param alias Alias of test node
+   * \param schemaPositionList List of schema position of requested relays
+   * \return List of test node route relays, or a empty list on error
+   */
+  std::vector<mdtTtTestNodeRouteRelay> getTestNodeRouteRelays(const QString & alias, const QStringList & schemaPositionList);
 
   /*! \brief Set relays to enable to given device
    *

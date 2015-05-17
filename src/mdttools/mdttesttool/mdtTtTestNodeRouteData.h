@@ -202,6 +202,20 @@ class mdtTtTestNodeRouteData
     return pvRelaysToEnable;
   }
 
+  /*! \brief Set route name
+   */
+  void setName(const QVariant & n)
+  {
+    pvName = n;
+  }
+
+  /*! \brief Get name
+   */
+  QVariant name() const
+  {
+    return pvName;
+  }
+
   /*! \brief Clear route data
    */
   void clear();
@@ -215,6 +229,7 @@ class mdtTtTestNodeRouteData
   mdtValueDouble pvResistance;
   QDateTime pvCalibrationDate;
   std::vector<mdtTtTestNodeRouteRelay> pvRelaysToEnable;
+  QVariant pvName;
 };
 
 #endif // # ifndef MDT_TT_TEST_NODE_ROUTE_DATA_H

@@ -1112,6 +1112,7 @@ QList<mdtClLinkData> mdtClUnit::getArticleLinkListUsingConnectionId(const mdtClU
     linkDataList.append(dataList.at(i));
     if(!lnk.buildVehicleTypeLinkDataList(linkDataList[i], vtList, vtList)){
       *ok = false;
+      pvLastError = lnk.lastError();
       return linkDataList;
     }
   }

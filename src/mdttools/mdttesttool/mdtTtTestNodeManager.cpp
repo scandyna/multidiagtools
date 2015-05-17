@@ -120,6 +120,25 @@ bool mdtTtTestNodeManager::setDeviceIosLabelShort(const QString & alias)
   return true;
 }
 
+vector<mdtTtTestNodeRouteRelay> mdtTtTestNodeManager::getTestNodeRouteRelays(const QString & alias, const QStringList & schemaPositionList)
+{
+  vector<mdtTtTestNodeRouteRelay> relays;
+  mdtTtTestNode tn(pvDatabase);
+  QVariant testNodeId;
+
+  testNodeId = tn.getTestNodeIdForAlias(alias);
+  if(testNodeId.isNull()){
+    pvLastError = tn.lastError();
+    return relays;
+  }
+  relays = tn.getTestNodeRouteRelays(testNodeId, schemaPositionList);
+  if(relays.empty()){
+    pvLastError = tn.lastError();
+  }
+
+  return relays;
+}
+
 bool mdtTtTestNodeManager::setRelaysToEnable(const vector< mdtTtTestNodeRouteRelay >& relays, shared_ptr<mdtMultiIoDevice> dev)
 {
   Q_ASSERT(dev);

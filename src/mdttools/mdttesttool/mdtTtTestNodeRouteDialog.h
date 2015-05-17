@@ -68,6 +68,10 @@ class mdtTtTestNodeRouteDialog : public QDialog, Ui::mdtTtTestNodeRouteDialog
 
  private slots:
 
+  /*! \brief Called when rbAuto was toggled
+   */
+  void onRbAutoToggled(bool checked);
+
   /*! \brief Update unit A list regarding current unit A type
    */
   void updateUnitA(int index);
@@ -86,9 +90,35 @@ class mdtTtTestNodeRouteDialog : public QDialog, Ui::mdtTtTestNodeRouteDialog
 
   /*! \brief Search path form source connection to destination connection
    */
-  void searchPath(int index);
+//   void searchPath(int index);
+
+  /*! \brief Let user select a relay to add to route
+   */
+  void selectAndAddRelay();
+
+  /*! \brief Accept overload
+   *
+   * Will do some check (especially on manual mode) before really accept
+   */
+  void accept();
+
+  /*! \brief Build the route automatically
+   */
+  void buildRouteAuto(int);
 
  private:
+
+  /*! \brief Build the route manually
+   */
+  bool buildRouteManual();
+
+  /*! \brief Set selected connections to route
+   */
+  bool setSelectedConnectionsToRoute();
+
+  /*! \brief Clear route
+   */
+  void clearRoute();
 
   /*! \brief Display test node related data
    */
@@ -141,8 +171,6 @@ class mdtTtTestNodeRouteDialog : public QDialog, Ui::mdtTtTestNodeRouteDialog
   mdtTtTestNodeRouteData pvRouteData;
   std::shared_ptr<mdtClPathGraph> pvGraph;
   bool pvLoadingData;
-//   QList<QVariant> pvRelaysToEnableIds;
-//   QMap<int, QString> pvRelayNameMap;
 };
 
 #endif  // #ifndef MDT_TT_TEST_NODE_ROUTE_DIALOG_H

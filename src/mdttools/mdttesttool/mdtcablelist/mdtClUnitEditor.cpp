@@ -478,6 +478,15 @@ void mdtClUnitEditor::addArticleConnectorBasedConnector()
   mdtClUnit unit(0, database());
   QInputDialog dialog;
 
+  // Check that vehicle type assignation was made
+  if(rowCount("Unit_VehicleType_view", false) < 1){
+    pvLastError.setError(tr("No vehicle type was assigned."), mdtError::Error);
+    pvLastError.setInformativeText(tr("Please assign a vehicle type and try again."));
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClUnitEditor");
+    pvLastError.commit();
+    displayLastError();
+    return;
+  }
   // Setup data
   if(!connectorData.setup(database(), true, true)){
     pvLastError = connectorData.lastError();
@@ -1055,6 +1064,14 @@ void mdtClUnitEditor::connectConnectors()
   // Get current unit ID
   startUnitId = currentUnitId();
   if(startUnitId.isNull()){
+    return;
+  }
+  // Check that vehicle type assignation was made
+  if(rowCount("Unit_VehicleType_view", false) < 1){
+    pvLastError.setError(tr("No vehicle type was assigned."), mdtError::Error);
+    pvLastError.setInformativeText(tr("Please assign a vehicle type and try again."));
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClUnitEditor");
+    pvLastError.commit();
     return;
   }
   // Select start connector

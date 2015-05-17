@@ -2154,6 +2154,11 @@ bool mdtTtDatabaseSchema::setupTestNodeRouteTable()
   field.setType(QVariant::Int);
   field.setRequired(true);
   table.addField(field, false);
+  // Name
+  field = QSqlField();
+  field.setName("Name");
+  field.setType(QVariant::String);
+  table.addField(field, false);
   // Resistance
   field = QSqlField();
   field.setName("Resistance");
@@ -2165,7 +2170,7 @@ bool mdtTtDatabaseSchema::setupTestNodeRouteTable()
   field.setType(QVariant::DateTime);
   table.addField(field, false);
   // Indexes
-  table.addIndex("TestNodeRoute_idx", true);
+  table.addIndex("TestNodeRoute_idx", false);
   if(!table.addFieldToIndex("TestNodeRoute_idx", "TestNode_Id_FK")){
     pvLastError = table.lastError();
     return false;
@@ -2175,6 +2180,11 @@ bool mdtTtDatabaseSchema::setupTestNodeRouteTable()
     return false;
   }
   if(!table.addFieldToIndex("TestNodeRoute_idx", "TestNodeUnitConnectionB_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addIndex("TestNodeRouteName_idx", false);
+  if(!table.addFieldToIndex("TestNodeRouteName_idx", "Name")){
     pvLastError = table.lastError();
     return false;
   }

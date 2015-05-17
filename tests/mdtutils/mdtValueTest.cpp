@@ -409,6 +409,27 @@ void mdtValueTest::valueDoubleTest()
   QVERIFY(!z.isNull());
   QVERIFY(!z.isNaN());
   //QVERIFY(z.isPlusOl());
+  /*
+   * Negation
+   */
+  // Negate common value
+  x = 5.0;
+  x = -x;
+  QCOMPARE(x.value(), -5.0);
+  // Negate +infinity
+  x.setValue(1.0, true);
+  x = -x;
+  QVERIFY(!x.isPlusOl());
+  QVERIFY(x.isMinusOl());
+  // Negate -infinity
+  x.setValue(-1.0, true);
+  x = -x;
+  QVERIFY(x.isPlusOl());
+  QVERIFY(!x.isMinusOl());
+  // Negate a null value
+  x.clear();
+  x = -x;
+  QVERIFY(x.isNull());
 
   /*
    * QVariant storage

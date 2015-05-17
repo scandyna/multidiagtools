@@ -96,9 +96,18 @@ class mdtTtTestNode : public mdtTtBase
 
   /*! \brief Get a list of test node route relays for given test node and list of schema positions
    *
-   * \return List of route relays. On error, a empty list is returned (a non found relays is also considered as a error).
+   * \return List of route relays. On error, a empty list is returned (non found relays is also considered as a error).
    */
   std::vector<mdtTtTestNodeRouteRelay> getTestNodeRouteRelays(const QVariant & testNodeId, const QStringList & schemaPositionList);
+
+  /*! \brief Get test node route relay ID by schema position
+   *
+   * \return ID of relay. If returned ID is null, it can be due that is not exists, or a error occured.
+   *          Use the ok flag to differiencate both cases.
+   *
+   * Note: if schema position is not unique for given test node, the first found is returned.
+   */
+  QVariant getTestNodeRouteRelayIdBySchemaPosition(const QVariant & testNodeId, const QString & schemaPosition, bool & ok);
 
   /*! \brief Update node unit connections of given test node
    *

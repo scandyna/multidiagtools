@@ -992,6 +992,9 @@ bool mdtTtTestNodeEditor::setupTestNodeRouteTable()
   widget->setHeaderData("TestNodeUnitConnectionBSchemaPosition", tr("Schema pos. B"));
   widget->setHeaderData("TestNodeUnitConnectionBContactName", tr("Connection B"));
   widget->setHeaderData("RouteTestNodeUnits", tr("Relays to enable"));
+  // Setup sorting
+  widget->addColumnToSortOrder("Name", Qt::AscendingOrder);
+  widget->sort();
   // Add buttons
   pb = new QPushButton(tr("Add ..."));
   pb->setIcon(QIcon::fromTheme("list-add"));

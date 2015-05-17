@@ -106,30 +106,36 @@ class mdtDeviceU3606A : public mdtDeviceScpi
    *
    * \param serialNumber Device serial number. Will be ignored if empty
    * \param alias Alias to give. Will be ignored if empty
+   * \param waitAfterClear Time to wait after device clear was sent [ms].
+   *                       Agilent (now Keysight) recommand 2 seconds (2000 ms).
    */
-  bool connectToDevice(const QString & serialNumber, const QString & alias)
+  bool connectToDevice(const QString & serialNumber, const QString & alias, int waitAfterClear = 2000)
   {
     if(!mdtDeviceScpi::connectToDevice(0x0957, 0x4d18, serialNumber, alias)){
       return false;
     }
-    wait(2000);
+    if(waitAfterClear > 0){
+      wait(waitAfterClear);
+    }
     return true;
   }
 
   /*! \brief Connect to device
    *
    * Will connect to the instrument and send a device clear (USBTMC level clear).
-   *  As recommanded in programmers guide, this function will also wait 2 seconds
-   *  once connected before returning.
    *
    * \param alias Alias to give. Will be ignored if empty
+   * \param waitAfterClear Time to wait after device clear was sent [ms].
+   *                       Agilent (now Keysight) recommand 2 seconds (2000 ms).
    */
-  bool connectToDevice(const QString & alias)
+  bool connectToDevice(const QString & alias, int waitAfterClear = 2000)
   {
     if(!mdtDeviceScpi::connectToDevice(0x0957, 0x4d18, QString(), alias)){
       return false;
     }
-    wait(2000);
+    if(waitAfterClear > 0){
+      wait(waitAfterClear);
+    }
     return true;
   }
 

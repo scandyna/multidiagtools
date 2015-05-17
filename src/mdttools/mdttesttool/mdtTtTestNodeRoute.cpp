@@ -41,8 +41,13 @@ mdtTtTestNodeRouteData mdtTtTestNodeRoute::buildRoute(const QVariant & testNodeI
   mdtTtTestNodeRouteData routeData;
   QList<QVariant> pathConnectionIdList;
   QVariant relayId;
+  QString nameStartPart, nameEndPart;
+  QString name;
   int i;
 
+  // Get start and end name part
+  nameStartPart = getSchemaPosAndContactName(testNodeConnectionAId);
+  nameEndPart = getSchemaPosAndContactName(testNodeConnectionBId);
   // Build path
   pathConnectionIdList = graph.getShortestPath(testNodeConnectionAId, testNodeConnectionBId, ok);
   if(!ok){
@@ -51,9 +56,9 @@ mdtTtTestNodeRouteData mdtTtTestNodeRoute::buildRoute(const QVariant & testNodeI
   }
   if(pathConnectionIdList.size() < 2){
     QString msg = tr("Could not find a route from") + " ";
-    msg += getSchemaPosAndContactName(testNodeConnectionAId) + " ";
+    msg += nameStartPart + " ";
     msg += tr("to") + " ";
-    msg += getSchemaPosAndContactName(testNodeConnectionBId);
+    msg += nameEndPart;
     pvLastError.setError(msg, mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestNodeRoute");
     pvLastError.commit();
@@ -81,6 +86,13 @@ mdtTtTestNodeRouteData mdtTtTestNodeRoute::buildRoute(const QVariant & testNodeI
   routeData.setTestNodeId(testNodeId);
   routeData.setConnectionAId(testNodeConnectionAId);
   routeData.setConnectionBId(testNodeConnectionBId);
+  // Build and set route name
+  name = nameStartPart + ",";
+  for(const auto & relay : routeData.relaysToEnableVector()){
+    name += relay.schemaPosition.toString() + ",";
+  }
+  name += nameEndPart;
+  routeData.setName(name);
 
   return routeData;
 }
@@ -112,6 +124,9 @@ bool mdtTtTestNodeRoute::addRoute(const mdtTtTestNodeRouteData & data)
     routeRecord.setValue("Resistance", data.resistance().value());
   }
   routeRecord.setValue("CalibrationDate", data.calibrationDate());
+  if(!data.name().isNull()){
+    routeRecord.setValue("Name", data.name());
+  }
   if(!addRecord(routeRecord, "TestNodeRoute_tbl", query)){
     rollbackTransaction();
     return false;
@@ -132,6 +147,23 @@ bool mdtTtTestNodeRoute::addRoute(const mdtTtTestNodeRouteData & data)
   }
 
   return true;
+}
+
+bool mdtTtTestNodeRoute::routeExist(const QVariant & testNodeId, const QString & routeName, bool & ok)
+{
+  QList<QVariant> dataList;
+  QString sql;
+
+  sql = "SELECT COUNT(*) FROM TestNodeRoute_tbl";
+  sql += " WHERE TestNode_Id_FK = " + testNodeId.toString();
+  sql += " AND Name = '" + routeName + "'";
+  dataList = getDataList<QVariant>(sql, ok);
+  if(!ok){
+    return false;
+  }
+  Q_ASSERT(dataList.size() == 1);
+
+  return (dataList.at(0).toInt(&ok) > 0);
 }
 
 mdtTtTestNodeRouteData mdtTtTestNodeRoute::getRoute(const QVariant & testNodeRouteId, bool & ok)
@@ -156,6 +188,7 @@ mdtTtTestNodeRouteData mdtTtTestNodeRoute::getRoute(const QVariant & testNodeRou
     routeData.setResistance(dataList.at(0).value("Resistance").toDouble());
   }
   routeData.setCalibrationDate(dataList.at(0).value("CalibrationDate").toDateTime());
+  routeData.setName(dataList.at(0).value("Name"));
   // Get relays from TestNodeRouteUnit_tbl
   sql = "SELECT TestNodeUnit_Id_FK FROM TestNodeRouteUnit_tbl WHERE TestNodeRoute_Id_FK = " + routeData.id().toString();
   idList = getDataList<QVariant>(sql, ok);
@@ -270,10 +303,37 @@ QList<mdtTtTestNodeRouteData> mdtTtTestNodeRoute::getAllRoutesByAlias(const QStr
   return getAllRoutes(idList.at(0), ok);
 }
 
-QString mdtTtTestNodeRoute::getRouteString(const mdtTtTestNodeRouteData& route)
+// QString mdtTtTestNodeRoute::getRouteName(const mdtTtTestNodeRouteData & route)
+// {
+//   QString name;
+// 
+//   name = getSchemaPosAndContactName(route.connectionAId()) + ",";
+//   for(const auto & relay : route.relaysToEnableVector()){
+//     name += relay.schemaPosition.toString() + ",";
+//   }
+//   name += getSchemaPosAndContactName(route.connectionBId());
+// 
+//   return name;
+// }
+
+bool mdtTtTestNodeRoute::setRouteName(mdtTtTestNodeRouteData & route)
 {
-  return getSchemaPosAndContactName(route.connectionAId()) + " - " + getSchemaPosAndContactName(route.connectionBId());
+  QString name;
+
+  name = getSchemaPosAndContactName(route.connectionAId()) + ",";
+  for(const auto & relay : route.relaysToEnableVector()){
+    name += relay.schemaPosition.toString() + ",";
+  }
+  name += getSchemaPosAndContactName(route.connectionBId());
+  route.setName(name);
+
+  return true;
 }
+
+// QString mdtTtTestNodeRoute::getRouteString(const mdtTtTestNodeRouteData& route)
+// {
+//   return getSchemaPosAndContactName(route.connectionAId()) + " - " + getSchemaPosAndContactName(route.connectionBId());
+// }
 
 bool mdtTtTestNodeRoute::setRouteResistance(const QVariant & routeId, const mdtValueDouble & resistance, const QDateTime & d)
 {
