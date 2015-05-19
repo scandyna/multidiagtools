@@ -1,6 +1,6 @@
 format 209
 "DatabaseLogical" // mdttools::mdttesttool::DatabaseLogical
-  revision 73
+  revision 74
   modified_by 2 "philippe"
   // class settings
   
@@ -3020,7 +3020,6 @@ ${inlines}
 	mysql_decl ""
 	MysqlColumn
       end
-
     end
 
     classdiagram 947586 "TestCable"
@@ -4050,6 +4049,18 @@ ${inlines}
 "
 	    classrelation_ref 1961986 // <unidirectional association>
 	  b parent class_ref 1249154 // TestNodeUnitConnection_tbl
+      end
+
+      attribute 1666818 "Name"
+	private explicit_type "String"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
 
       attribute 1653378 "Resistance"

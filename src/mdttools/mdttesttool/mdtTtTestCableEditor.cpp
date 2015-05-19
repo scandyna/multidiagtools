@@ -109,7 +109,7 @@ void mdtTtTestCableEditor::assignTestNode()
     return;
   }
   // Build SQL query to get the list of test nodes that are not allready assigned
-  sql = "SELECT VehicleType_Id_FK_PK, Type, SubType, NodeIdentification, DeviceIdentification, SeriesNumber "\
+  sql = "SELECT VehicleType_Id_FK_PK, Type, SubType, SeriesNumber, Alias, AddressString "\
         "FROM TestNode_view "\
         "WHERE VehicleType_Id_FK_PK NOT IN ( "\
         " SELECT VehicleType_Id_FK "\

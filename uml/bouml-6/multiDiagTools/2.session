@@ -1,14 +1,12 @@
 window_sizes 1280 996 271 1003 943 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 1404418 // PlotWidegt
-    1003 943 100 4 0 0
+  active  classdiagram_ref 941058 // Test
+    1003 943 90 3 108 0
 end
 show_stereotypes
-selected classdiagram_ref 1404418 // PlotWidegt
+selected attribute_ref 1666818 // Name
 open
-  classview_ref 748674 // Plot
-  
-  package_ref 181506 // mdttools
+  attribute_ref 1666818 // Name
 end
 end

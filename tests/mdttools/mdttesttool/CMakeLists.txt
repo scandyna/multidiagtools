@@ -27,6 +27,17 @@ target_link_libraries(mdttestnodetest "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdttestnodetest "mdttesttool${MDTLIB_VERSION_SUFFIX}")
 #target_link_libraries(mdttestnodetest "mdtcablelist${MDTLIB_VERSION_SUFFIX}")
 
+# * mdtTestCableTest executable *
+QT4_WRAP_CPP(MDT_TEST_CABLE_MOC "mdtTestCableTest.h")
+add_executable(mdttestcabletest mdtTestCableTest.cpp mdtTtDut01TestData.cpp ${MDT_TEST_CABLE_MOC})
+target_link_libraries(mdttestcabletest ${QT_LIBRARIES})
+target_link_libraries(mdttestcabletest "mdttest")
+target_link_libraries(mdttestcabletest "mdtutils${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdttestcabletest "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdttestcabletest "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdttestcabletest "mdttesttool${MDTLIB_VERSION_SUFFIX}")
+#target_link_libraries(mdttestcabletest "mdtcablelist${MDTLIB_VERSION_SUFFIX}")
+
 # * mdtTestToolTest executable *
 QT4_WRAP_CPP(MDT_TEST_TOOL_MOC "mdtTestToolTest.h")
 add_executable(mdttesttooltest mdtTestToolTest.cpp mdtCableListTestScenario.cpp mdtTtTestNodeTestData.cpp ${MDT_TEST_TOOL_MOC})

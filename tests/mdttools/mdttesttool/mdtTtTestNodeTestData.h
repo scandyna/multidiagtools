@@ -57,7 +57,7 @@ class mdtTtTestNodeATestData
   // Clear created data in VehicleType_tbl and TestNode_tbl
   void removeTestNodeData();
   /*
-   * Create relays - will also create realted unit connections
+   * Create relays - will also create related unit connections
    */
   bool createRelays();
   /*

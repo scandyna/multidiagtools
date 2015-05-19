@@ -1,0 +1,352 @@
+<project folioSheetQuantity="0" title="" version="0.4">
+    <properties/>
+    <newdiagrams>
+        <border displayrows="true" cols="17" displaycols="true" colsize="60" rows="8" rowsize="80"/>
+        <inset title="" folio="%id/%total" author="" filename="" date="null"/>
+        <conductors num="_" vertirotatetext="270" displaytext="1" type="multi" horizrotatetext="0" numsize="7" onetextperfolio="0"/>
+        <report label="%f-%l%c"/>
+        <xrefs>
+            <xref snapto="label" switchprefix="" powerprefix="" displayhas="cross" type="protection" showpowerctc="false" delayprefix=""/>
+            <xref snapto="label" switchprefix="" powerprefix="" displayhas="cross" type="coil" showpowerctc="false" delayprefix=""/>
+        </xrefs>
+        <conductors_autonums/>
+    </newdiagrams>
+    <diagram title="Main" displayrows="true" version="0.4" cols="17" folio="%id/%total" displaycols="true" height="660" colsize="60" order="1" rows="8" author="Steinmann Philippe" filename="DUT 01" date="20150517" rowsize="80">
+        <defaultconductor num="_" vertirotatetext="270" displaytext="1" type="multi" horizrotatetext="0" numsize="7" onetextperfolio="0"/>
+        <elements>
+            <element x="640" y="260" type="embed://import/10_electric/10_allpole/140_connectors&amp;plugs/01_connectors_pins/connecteur_m.elmt" uuid="{4f08f7f0-6ff0-47a5-9c56-1b2e35bd30f7}" orientation="1">
+                <terminals>
+                    <terminal x="0" y="6" nameHidden="0" number="_" id="0" name="_" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="1.5" text=""/>
+                </inputs>
+                <elementInformations>
+                    <elementInformation name="comment" show="1"></elementInformation>
+                    <elementInformation name="label" show="1"></elementInformation>
+                </elementInformations>
+            </element>
+            <element x="640" y="240" type="embed://import/10_electric/10_allpole/140_connectors&amp;plugs/01_connectors_pins/connecteur_m.elmt" uuid="{713043ee-a2f5-4316-949e-a5b3c0bc81fa}" orientation="1">
+                <terminals>
+                    <terminal x="0" y="6" nameHidden="0" number="_" id="1" name="_" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="1.5" text=""/>
+                </inputs>
+                <elementInformations>
+                    <elementInformation name="comment" show="1"></elementInformation>
+                    <elementInformation name="label" show="1"></elementInformation>
+                </elementInformations>
+            </element>
+            <element x="640" y="220" type="embed://import/10_electric/10_allpole/140_connectors&amp;plugs/01_connectors_pins/connecteur_m.elmt" uuid="{98e43aca-dbe7-4518-af20-494612838921}" orientation="1">
+                <terminals>
+                    <terminal x="0" y="6" nameHidden="0" number="_" id="2" name="_" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="1.5" text=""/>
+                </inputs>
+                <elementInformations>
+                    <elementInformation name="comment" show="1"></elementInformation>
+                    <elementInformation name="label" show="1"></elementInformation>
+                </elementInformations>
+            </element>
+            <element x="640" y="200" type="embed://import/10_electric/10_allpole/140_connectors&amp;plugs/01_connectors_pins/connecteur_m.elmt" uuid="{9edfd0c4-1452-4fa3-a7fe-6043915a11aa}" orientation="1">
+                <terminals>
+                    <terminal x="0" y="6" nameHidden="0" number="_" id="3" name="_" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="1.5" text=""/>
+                </inputs>
+                <elementInformations>
+                    <elementInformation name="comment" show="1"></elementInformation>
+                    <elementInformation name="label" show="1"></elementInformation>
+                </elementInformations>
+            </element>
+            <element x="640" y="180" type="embed://import/10_electric/10_allpole/140_connectors&amp;plugs/01_connectors_pins/connecteur_m.elmt" uuid="{200ef461-fb8e-4a73-8cf1-5e379bcb09da}" orientation="1">
+                <terminals>
+                    <terminal x="0" y="6" nameHidden="0" number="_" id="4" name="_" orientation="2"/>
+                </terminals>
+                <inputs>
+                    <input x="5" y="1.5" text=""/>
+                </inputs>
+            </element>
+        </elements>
+        <conductors>
+            <conductor num="W002" x="-210" vertirotatetext="270" y="0" displaytext="1" terminal1="0" terminal2="1" type="multi" horizrotatetext="0" numsize="7" onetextperfolio="0">
+                <segment length="-9" orientation="horizontal"/>
+                <segment length="-151" orientation="horizontal"/>
+                <segment length="-20" orientation="vertical"/>
+                <segment length="151" orientation="horizontal"/>
+                <segment length="9" orientation="horizontal"/>
+            </conductor>
+            <conductor num="W002" x="-210" vertirotatetext="270" y="0" displaytext="1" terminal1="2" terminal2="1" type="multi" horizrotatetext="0" numsize="7" onetextperfolio="0">
+                <segment length="-9" orientation="horizontal"/>
+                <segment length="-151" orientation="horizontal"/>
+                <segment length="20" orientation="vertical"/>
+                <segment length="151" orientation="horizontal"/>
+                <segment length="9" orientation="horizontal"/>
+            </conductor>
+            <conductor num="W001" x="-210" vertirotatetext="270" y="0" displaytext="1" terminal1="4" terminal2="3" type="multi" horizrotatetext="0" numsize="7" onetextperfolio="0">
+                <segment length="-9" orientation="horizontal"/>
+                <segment length="-151" orientation="horizontal"/>
+                <segment length="20" orientation="vertical"/>
+                <segment length="151" orientation="horizontal"/>
+                <segment length="9" orientation="horizontal"/>
+            </conductor>
+        </conductors>
+        <inputs>
+            <input x="438.806" y="77.5746" text="&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;>&#xa;&lt;html>&lt;head>&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; />&lt;style type=&quot;text/css&quot;>&#xa;p, li { white-space: pre-wrap; }&#xa;&lt;/style>&lt;/head>&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;>&#xa;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;>Vehicle sub type: DUT 01 VST&lt;/p>&lt;/body>&lt;/html>"/>
+            <input x="438.806" y="57.5746" text="&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;>&#xa;&lt;html>&lt;head>&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; />&lt;style type=&quot;text/css&quot;>&#xa;p, li { white-space: pre-wrap; }&#xa;&lt;/style>&lt;/head>&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;>&#xa;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;>Vehicle type: DUT 01 VT&lt;/p>&lt;/body>&lt;/html>"/>
+            <input x="440" y="110" text="&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;>&#xa;&lt;html>&lt;head>&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; />&lt;style type=&quot;text/css&quot;>&#xa;p, li { white-space: pre-wrap; }&#xa;&lt;/style>&lt;/head>&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;>&#xa;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;>Schema position: DUT 01&lt;/p>&lt;/body>&lt;/html>"/>
+            <input x="660" y="250" text="&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;>&#xa;&lt;html>&lt;head>&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; />&lt;style type=&quot;text/css&quot;>&#xa;p, li { white-space: pre-wrap; }&#xa;&lt;/style>&lt;/head>&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;>&#xa;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;>E&lt;/p>&lt;/body>&lt;/html>"/>
+            <input x="660" y="230" text="&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;>&#xa;&lt;html>&lt;head>&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; />&lt;style type=&quot;text/css&quot;>&#xa;p, li { white-space: pre-wrap; }&#xa;&lt;/style>&lt;/head>&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;>&#xa;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;>D&lt;/p>&lt;/body>&lt;/html>"/>
+            <input x="660" y="210" text="&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;>&#xa;&lt;html>&lt;head>&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; />&lt;style type=&quot;text/css&quot;>&#xa;p, li { white-space: pre-wrap; }&#xa;&lt;/style>&lt;/head>&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;>&#xa;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;>C&lt;/p>&lt;/body>&lt;/html>"/>
+            <input x="660" y="190" text="&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;>&#xa;&lt;html>&lt;head>&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; />&lt;style type=&quot;text/css&quot;>&#xa;p, li { white-space: pre-wrap; }&#xa;&lt;/style>&lt;/head>&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;>&#xa;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;>B&lt;/p>&lt;/body>&lt;/html>"/>
+            <input x="660" y="170" text="&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;>&#xa;&lt;html>&lt;head>&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; />&lt;style type=&quot;text/css&quot;>&#xa;p, li { white-space: pre-wrap; }&#xa;&lt;/style>&lt;/head>&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;>&#xa;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;>A&lt;/p>&lt;/body>&lt;/html>"/>
+            <input x="630" y="150" text="&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;>&#xa;&lt;html>&lt;head>&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; />&lt;style type=&quot;text/css&quot;>&#xa;p, li { white-space: pre-wrap; }&#xa;&lt;/style>&lt;/head>&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;>&#xa;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;>X1&lt;/p>&lt;/body>&lt;/html>"/>
+        </inputs>
+    </diagram>
+    <collection>
+        <category name="import">
+            <names>
+                <name lang="de">Importierte elemente</name>
+                <name lang="ru">Импортированные элементы</name>
+                <name lang="pt">elementos importados</name>
+                <name lang="el">Εισηγμένα στοιχεία</name>
+                <name lang="en">Imported elements</name>
+                <name lang="hr">Uvezeni elementi</name>
+                <name lang="it">Elementi importati</name>
+                <name lang="fr">Éléments importés</name>
+                <name lang="pl">Elementy importowane</name>
+                <name lang="es">Elementos importados</name>
+                <name lang="ro">Elemente importate</name>
+                <name lang="nl">Elementen geïmporteerd</name>
+                <name lang="ca">Elements importats</name>
+                <name lang="cs">Zavedené prvky</name>
+            </names>
+            <category name="10_electric">
+                <names>
+                    <name lang="de">Elektrik</name>
+                    <name lang="ru">Электротехника</name>
+                    <name lang="el">Ηλεκτρικά</name>
+                    <name lang="en">Electric</name>
+                    <name lang="it">Elettrica</name>
+                    <name lang="fr">Electrique</name>
+                    <name lang="pl">Elektrotechnika</name>
+                    <name lang="nl">Elektrotechniek</name>
+                    <name lang="cs">Elektrotechnika</name>
+                </names>
+                <category name="10_allpole">
+                    <names>
+                        <name lang="de">Allpolig</name>
+                        <name lang="ru">Многополюсные</name>
+                        <name lang="el">Πολυγραμμικό</name>
+                        <name lang="en">All-pole</name>
+                        <name lang="it">Multifilare</name>
+                        <name lang="fr">Multifilaire</name>
+                        <name lang="pl">Schematy wieloliniowe</name>
+                        <name lang="nl">Veel polig</name>
+                        <name lang="cs">Vícežilový</name>
+                    </names>
+                    <category name="140_connectors&amp;plugs">
+                        <names>
+                            <name lang="de">Steckverbinder und Steckdosen</name>
+                            <name lang="ru">Соединители и разъемы</name>
+                            <name lang="el">Σύνδεσμοι και πρίζες</name>
+                            <name lang="en">Connectors and plugs</name>
+                            <name lang="it">Connettori e prese</name>
+                            <name lang="fr">Connecteurs et prises</name>
+                            <name lang="pl">Złącza wtykowe</name>
+                            <name lang="nl">Connectoren en stekkers</name>
+                        </names>
+                        <category name="10_connectors_circular">
+                            <names>
+                                <name lang="de">Rundsteckverbinder</name>
+                                <name lang="ru">Цилиндрические сединители</name>
+                                <name lang="el">Κυκλικοί σύνδεσμοι</name>
+                                <name lang="en">Circular connectors</name>
+                                <name lang="it">Connettori circolari</name>
+                                <name lang="fr">Connecteurs circulaires</name>
+                                <name lang="pl">Złącza okrągłe</name>
+                                <name lang="cs">Kulaté přípojky</name>
+                            </names>
+                            <element name="connettore_22.elmt">
+                                <definition width="90" version="0.5" hotspot_x="45" hotspot_y="45" height="90" link_type="simple" type="element" orientation="dyyy">
+                                    <names>
+                                        <name lang="en">22 Pin Male Connector</name>
+                                        <name lang="fr">Connecteur male 22 broches</name>
+                                        <name lang="cs">Kulatá zástrčka 22 kolíků</name>
+                                        <name lang="de">Rundstecker 22-polig</name>
+                                        <name lang="it">Maschio 22 Pin</name>
+                                        <name lang="el">Αρσενικός σύνδεσμος 22 ακροδεκτών</name>
+                                        <name lang="pl">Złącze dwudziestodwustykowe</name>
+                                    </names>
+                                    <informations>Author: The QElectroTech team
+License: see http://qelectrotech.org/wiki/doc/elements_license</informations>
+                                    <description>
+                                        <text x="19" y="7" size="4" text="W"/>
+                                        <text x="21" y="-3" size="4" text="V"/>
+                                        <text x="20" y="18" size="4" text="X"/>
+                                        <text x="20" y="-13" size="4" text="U"/>
+                                        <arc width="80" x="-40" y="-40" antialias="true" height="80" style="line-style:normal;line-weight:normal;filling:none;color:black" start="87" angle="-354"/>
+                                        <text x="-10" y="22" size="4" text="I"/>
+                                        <circle x="-16.5" y="17.5" antialias="true" style="line-style:normal;line-weight:normal;filling:none;color:black" diameter="5"/>
+                                        <circle x="-3.5" y="20.5" antialias="true" style="line-style:normal;line-weight:normal;filling:none;color:black" diameter="7"/>
+                                        <circle x="-16.5" y="7.5" antialias="true" style="line-style:normal;line-weight:normal;filling:none;color:black" diameter="5"/>
+                                        <circle x="-3.5" y="4.5" antialias="true" style="line-style:normal;line-weight:normal;filling:none;color:black" diameter="7"/>
+                                        <circle x="-3.5" y="-11.5" antialias="true" style="line-style:normal;line-weight:normal;filling:none;color:black" diameter="7"/>
+                                        <circle x="24.5" y="-7.5" antialias="true" style="line-style:normal;line-weight:normal;filling:none;color:black" diameter="5"/>
+                                        <circle x="-3.5" y="-27.5" antialias="true" style="line-style:normal;line-weight:normal;filling:none;color:black" diameter="7"/>
+                                        <circle x="11.5" y="17.5" antialias="true" style="line-style:normal;line-weight:normal;filling:none;color:black" diameter="5"/>
+                                        <text x="-11" y="-18" size="4" text="E"/>
+                                        <circle x="24.5" y="2.5" antialias="true" style="line-style:normal;line-weight:normal;filling:none;color:black" diameter="5"/>
+                                        <circle x="11.5" y="7.5" antialias="true" style="line-style:normal;line-weight:normal;filling:none;color:black" diameter="5"/>
+                                        <circle x="11.5" y="-2.5" antialias="true" style="line-style:normal;line-weight:normal;filling:none;color:black" diameter="5"/>
+                                        <circle x="24.5" y="13.5" antialias="true" style="line-style:normal;line-weight:normal;filling:none;color:black" diameter="5"/>
+                                        <circle x="24.5" y="-17.5" antialias="true" style="line-style:normal;line-weight:normal;filling:none;color:black" diameter="5"/>
+                                        <circle x="11.5" y="-22.5" antialias="true" style="line-style:normal;line-weight:normal;filling:none;color:black" diameter="5"/>
+                                        <circle x="11.5" y="-12.5" antialias="true" style="line-style:normal;line-weight:normal;filling:none;color:black" diameter="5"/>
+                                        <circle x="-16.5" y="-2.5" antialias="true" style="line-style:normal;line-weight:normal;filling:none;color:black" diameter="5"/>
+                                        <circle x="-29.5" y="-7.5" antialias="true" style="line-style:normal;line-weight:normal;filling:none;color:black" diameter="5"/>
+                                        <circle x="-29.5" y="1.5" antialias="true" style="line-style:normal;line-weight:normal;filling:none;color:black" diameter="5"/>
+                                        <circle x="-16.5" y="-22.5" antialias="true" style="line-style:normal;line-weight:normal;filling:none;color:black" diameter="5"/>
+                                        <circle x="-29.5" y="12.5" antialias="true" style="line-style:normal;line-weight:normal;filling:none;color:black" diameter="5"/>
+                                        <polygon x4="2" antialias="false" style="line-style:normal;line-weight:normal;filling:none;color:black" closed="false" y1="-39.5" x1="-2" y2="-35.5" y3="-35.5" x2="-2" y4="-39.5" x3="2"/>
+                                        <circle x="-29.5" y="-17.5" antialias="true" style="line-style:normal;line-weight:normal;filling:none;color:black" diameter="5"/>
+                                        <circle x="-16.5" y="-12.5" antialias="true" style="line-style:normal;line-weight:normal;filling:none;color:black" diameter="5"/>
+                                        <text x="-24" y="-13" size="4" text="A"/>
+                                        <text x="-11" y="-8" size="4" text="F"/>
+                                        <text x="-24" y="6" size="4" text="C"/>
+                                        <text x="-11" y="2" size="4" text="G"/>
+                                        <text x="7" y="-19" size="4" text="N"/>
+                                        <text x="-2" y="20" size="4" text="M"/>
+                                        <text x="-1" y="4" size="4" text="L"/>
+                                        <text x="-24" y="-3" size="4" text="B"/>
+                                        <text x="-11" y="12" size="4" text="H"/>
+                                        <text x="7" y="2" size="4" text="R"/>
+                                        <text x="8" y="12" size="4" text="S"/>
+                                        <text x="-1" y="-16" size="4" text="J"/>
+                                        <text x="-24" y="17" size="4" text="D"/>
+                                        <text x="7" y="-8" size="4" text="P"/>
+                                        <text x="8" y="22" size="4" text="T"/>
+                                        <text x="-1" y="0" size="4" text="K"/>
+                                        <input x="45" y="4.5" size="9" rotate="true" tagg="label" text="_"/>
+                                        <terminal x="0" y="-27" orientation="n"/>
+                                        <terminal x="-16" y="0" orientation="w"/>
+                                        <terminal x="-16" y="-20" orientation="w"/>
+                                        <terminal x="-16" y="-10" orientation="w"/>
+                                        <terminal x="-29" y="15" orientation="w"/>
+                                        <terminal x="-29" y="-15" orientation="w"/>
+                                        <terminal x="-29" y="-5" orientation="w"/>
+                                        <terminal x="0" y="-11" orientation="n"/>
+                                        <terminal x="-29" y="4" orientation="w"/>
+                                        <terminal x="-16" y="20" orientation="w"/>
+                                        <terminal x="-16" y="10" orientation="w"/>
+                                        <terminal x="16" y="0" orientation="e"/>
+                                        <terminal x="16" y="-20" orientation="e"/>
+                                        <terminal x="16" y="-10" orientation="e"/>
+                                        <terminal x="16" y="20" orientation="e"/>
+                                        <terminal x="16" y="10" orientation="e"/>
+                                        <terminal x="29" y="16" orientation="e"/>
+                                        <terminal x="29" y="-15" orientation="e"/>
+                                        <terminal x="29" y="-5" orientation="e"/>
+                                        <terminal x="29" y="5" orientation="e"/>
+                                        <terminal x="0" y="11" orientation="s"/>
+                                        <terminal x="0" y="27" orientation="s"/>
+                                    </description>
+                                </definition>
+                            </element>
+                        </category>
+                        <category name="01_connectors_pins">
+                            <names>
+                                <name lang="de">Steckkontakte</name>
+                                <name lang="ru">Контакты разъемов</name>
+                                <name lang="el">Ακίδες συνδέσμων</name>
+                                <name lang="en">Connector pins</name>
+                                <name lang="it">Contatti</name>
+                                <name lang="fr">Contacts de fiche</name>
+                                <name lang="pl">Złącza wtykowe</name>
+                                <name lang="cs">Doteky zástrčky</name>
+                            </names>
+                            <element name="connecteur_m.elmt">
+                                <definition width="10" version="0.5" hotspot_x="4" hotspot_y="13" height="30" link_type="simple" type="element" orientation="dyyy">
+                                    <names>
+                                        <name lang="en">Male connector</name>
+                                        <name lang="fr">Connecteur mâle</name>
+                                        <name lang="ru">Штырь (нов.)</name>
+                                        <name lang="es">Conector macho</name>
+                                        <name lang="nl">Steker Man</name>
+                                        <name lang="pt">Conector macho</name>
+                                        <name lang="cs">Mužská spojka</name>
+                                        <name lang="de">Steckverbindung Stecker</name>
+                                        <name lang="it">Connettore maschio</name>
+                                        <name lang="el">Αρσενικός σύνδεσμος</name>
+                                        <name lang="ar">موصل ذكري</name>
+                                        <name lang="pl">Wtyk</name>
+                                    </names>
+                                    <informations>Author: The QElectroTech team
+License: see http://qelectrotech.org/wiki/doc/elements_license</informations>
+                                    <description>
+                                        <line length1="1.5" antialias="false" length2="1.5" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-8" x1="-1" y2="-1" x2="-1"/>
+                                        <line length1="1.5" antialias="false" length2="1.5" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-8" x1="1" y2="-1" x2="1"/>
+                                        <line length1="1.5" antialias="false" length2="1.5" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-8" x1="0" y2="10" x2="0"/>
+                                        <input x="5" y="1.5" size="8" rotate="true" tagg="label" text="_"/>
+                                        <terminal x="0" y="10" orientation="s"/>
+                                    </description>
+                                </definition>
+                            </element>
+                            <element name="contact_prise_fiche.elmt">
+                                <definition width="10" version="0.3" hotspot_x="5" hotspot_y="10" height="20" type="element" orientation="dyyy">
+                                    <names>
+                                        <name lang="ar">قابس ذكري</name>
+                                        <name lang="de">Steckverbindung Stecker</name>
+                                        <name lang="en">plug male</name>
+                                        <name lang="it">Contatto maschio</name>
+                                        <name lang="fr">Contact mâle fiche</name>
+                                        <name lang="pl">Wtyk</name>
+                                        <name lang="es">Enchufe macho</name>
+                                        <name lang="cs">Pól samčí zástrčky</name>
+                                        <name lang="nl">Steker</name>
+                                    </names>
+                                    <informations>EN 60617: 03-03-03</informations>
+                                    <description>
+                                        <input x="1" y="2" size="8" rotate="true" text="_" tagg="label"/>
+                                        <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-8" x1="-1" y2="-1" x2="-1"/>
+                                        <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-8" x1="0" y2="10" x2="0"/>
+                                        <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="-8" x1="1" y2="-1" x2="1"/>
+                                        <terminal x="0" y="10" orientation="s"/>
+                                    </description>
+                                </definition>
+                            </element>
+                        </category>
+                    </category>
+                </category>
+            </category>
+            <element name="contact_female_nord.elmt">
+                <definition width="40" version="0.4" hotspot_x="33" hotspot_y="23" height="40" link_type="simple" type="element" ic="true" orientation="dyyy">
+                    <names>
+                        <name lang="ar">موصل أنثوي</name>
+                        <name lang="de">Stecker (weiblich)</name>
+                        <name lang="ru">Гнездо (нов.)</name>
+                        <name lang="pt">Conector fêmea</name>
+                        <name lang="en">Female connector</name>
+                        <name lang="it">Connettore femmina</name>
+                        <name lang="fr">Connecteur femelle</name>
+                        <name lang="pl">Gniazdo</name>
+                        <name lang="es">Conector hembra</name>
+                        <name lang="cs">Ženská spojka</name>
+                    </names>
+                    <informations>Author: The QElectroTech team
+License: see http://qelectrotech.org/wiki/doc/elements_license</informations>
+                    <description>
+                        <input x="-27" y="4.5" size="7" rotate="true" text="_" tagg="none"/>
+                        <input x="-29" y="-9.5" size="8" rotate="true" text="X_" tagg="none"/>
+                        <line length1="1.5" length2="1.5" antialias="false" end1="none" end2="none" style="line-style:normal;line-weight:normal;filling:none;color:black" y1="0" x1="0" y2="10" x2="0"/>
+                        <arc width="6" x="-3" y="-6" antialias="true" height="6" style="line-style:normal;line-weight:normal;filling:none;color:black" start="-180" angle="180"/>
+                        <terminal x="0" y="10" orientation="s"/>
+                    </description>
+                </definition>
+            </element>
+        </category>
+    </collection>
+</project>
