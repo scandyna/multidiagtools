@@ -1,12 +1,16 @@
-window_sizes 1280 996 271 1003 943 0
+window_sizes 1280 916 271 1003 863 0
 cleanlooks_style
 diagrams
   active  classdiagram_ref 941058 // Test
-    1003 943 90 3 108 0
+    1003 863 90 3 0 0
 end
 show_stereotypes
-selected attribute_ref 1666818 // Name
+selected attribute_ref 1681410 // TestSystemComponent_Id_FK
 open
   attribute_ref 1666818 // Name
+  class_ref 1611522 // TestSystem_tbl
+  class_ref 1618050 // TestSystemComponentType_tbl
+  attribute_ref 1681154 // Alias
+  class_ref 1618306 // TestSystem_TestSystemComponent_tbl
 end
 end

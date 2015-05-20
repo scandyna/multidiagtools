@@ -7,6 +7,9 @@ project (multidiagtools)
 
 # Header files for mdtTestTool
 set (TT_HEADER_FILES 
+          mdtTtTestSystemEditor.h
+          mdtTtTestSystemComponentEditor.h
+
           mdtTtApplicationWidgets.h
           mdtTtTestCableEditor.h
           mdtTtLogicalTestCableEditor.h
@@ -43,6 +46,9 @@ set (TT_HEADER_FILES
 
 # Sources files for mdtTestTool
 set (TT_SOURCES_FILES 
+          mdtTtTestSystemEditor.cpp
+          mdtTtTestSystemComponentEditor.cpp
+
           mdtTtApplicationWidgets.cpp
           mdtTtBase.cpp
           mdtTtDatabaseSchema.cpp
@@ -97,6 +103,9 @@ set (TT_SOURCES_FILES
 
 # Form files for mdtTestTool
 set (TT_FORM_FILES
+          mdtTtTestSystemEditor.ui
+          mdtTtTestSystemComponentEditor.ui
+
           mdtTtTestCableEditor.ui
           mdtTtLogicalTestCableEditor.ui
           mdtTtLogicalTestCableDialog.ui

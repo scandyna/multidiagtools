@@ -24,6 +24,9 @@
 #include "mdtSqlApplicationWidgets.h"
 
 // Editors
+class mdtTtTestSystemEditor;
+class mdtTtTestSystemComponentEditor;
+
 class mdtTtTestCableEditor;
 class mdtTtTestNodeEditor;
 // Tools
@@ -44,6 +47,15 @@ class mdtTtApplicationWidgets : public mdtSqlApplicationWidgets<mdtTtApplication
 
  public:
 
+  /*! \brief Edit test systems
+   */
+  static void editTestSystems();
+
+  /*! \brief Edit test system components
+   */
+  static void editTestSystemComponents();
+
+
   /*! \brief Edit a specific test cable
    */
   static void editTestCable(const QVariant & testCableId);
@@ -58,6 +70,15 @@ class mdtTtApplicationWidgets : public mdtSqlApplicationWidgets<mdtTtApplication
 
  public slots:
 
+  /*! \brief Edit test systems
+   */
+  void slotEditTestSystems();
+
+  /*! \brief Edit test system components
+   */
+  void slotEditTestSystemComponents();
+
+
   /*! \brief Edit test cables
    */
   void slotEditTestCables();
@@ -67,6 +88,15 @@ class mdtTtApplicationWidgets : public mdtSqlApplicationWidgets<mdtTtApplication
   void slotEditTestNodes();
 
  private:
+
+  /*! \brief Create test system editor
+   */
+  bool createTestSystemEditor();
+
+  /*! \brief Create test system component editor
+   */
+  bool createTestSystemComponentEditor();
+
 
   /*! \brief Create test cable editor
    */
@@ -97,6 +127,9 @@ class mdtTtApplicationWidgets : public mdtSqlApplicationWidgets<mdtTtApplication
   Q_DISABLE_COPY(mdtTtApplicationWidgets);
 
   // Editors
+  std::shared_ptr<mdtTtTestSystemEditor> pvTestSystemEditor;
+  std::shared_ptr<mdtTtTestSystemComponentEditor> pvTestSystemComponentEditor;
+  
   std::shared_ptr<mdtTtTestCableEditor> pvTestCableEditor;
   std::shared_ptr<mdtTtTestNodeEditor> pvTestNodeEditor;
   // Tools

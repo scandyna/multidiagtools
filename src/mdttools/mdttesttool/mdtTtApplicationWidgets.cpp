@@ -20,6 +20,9 @@
  ****************************************************************************/
 #include "mdtTtApplicationWidgets.h"
 // Editor classes
+#include "mdtTtTestSystemEditor.h"
+#include "mdtTtTestSystemComponentEditor.h"
+
 #include "mdtTtTestCableEditor.h"
 #include "mdtTtTestNodeEditor.h"
 // Tools classes
@@ -31,6 +34,42 @@
 #include <QAction>
 
 #include <QDebug>
+
+void mdtTtApplicationWidgets::editTestSystems()
+{
+  auto & aw = instance();
+
+  if(!aw.pvTestSystemEditor){
+    if(!aw.createTestSystemEditor()){
+      return;
+    }
+  }
+  Q_ASSERT(aw.pvTestSystemEditor);
+  if(!aw.pvTestSystemEditor->select()){
+    aw.displayError(aw.pvTestSystemEditor->lastError());
+    return;
+  }
+  aw.showSqlWindow(aw.pvTestSystemEditor, false, true);
+}
+
+void mdtTtApplicationWidgets::editTestSystemComponents()
+{
+  auto & aw = instance();
+
+  if(!aw.pvTestSystemComponentEditor){
+    if(!aw.createTestSystemComponentEditor()){
+      return;
+    }
+  }
+  Q_ASSERT(aw.pvTestSystemComponentEditor);
+  if(!aw.pvTestSystemComponentEditor->select()){
+    aw.displayError(aw.pvTestSystemComponentEditor->lastError());
+    return;
+  }
+  aw.showSqlWindow(aw.pvTestSystemComponentEditor, false, true);
+}
+
+
 
 void mdtTtApplicationWidgets::editTestCable(const QVariant & testCableId)
 {
@@ -78,6 +117,39 @@ void mdtTtApplicationWidgets::showTestNodeModbusIoTool(const QString& deviceAlia
   aw.pvTestNodeModbusIoTool->show();
 }
 
+
+void mdtTtApplicationWidgets::slotEditTestSystems()
+{
+  if(!pvTestSystemEditor){
+    if(!createTestSystemEditor()){
+      return;
+    }
+  }
+  Q_ASSERT(pvTestSystemEditor);
+  if(!pvTestSystemEditor->select()){
+    displayError(pvTestSystemEditor->lastError());
+    return;
+  }
+  showSqlWindow(pvTestSystemEditor, true, true);
+}
+
+void mdtTtApplicationWidgets::slotEditTestSystemComponents()
+{
+  if(!pvTestSystemComponentEditor){
+    if(!createTestSystemComponentEditor()){
+      return;
+    }
+  }
+  Q_ASSERT(pvTestSystemComponentEditor);
+  if(!pvTestSystemComponentEditor->select()){
+    displayError(pvTestSystemComponentEditor->lastError());
+    return;
+  }
+  showSqlWindow(pvTestSystemComponentEditor, true, true);
+}
+
+
+
 void mdtTtApplicationWidgets::slotEditTestCables()
 {
   if(!pvTestCableEditor){
@@ -107,6 +179,49 @@ void mdtTtApplicationWidgets::slotEditTestNodes()
   }
   showSqlWindow(pvTestNodeEditor, true, true);
 }
+
+
+bool mdtTtApplicationWidgets::createTestSystemEditor()
+{
+  Q_ASSERT(!pvTestSystemEditor);
+
+  // Setup editor
+  pvTestSystemEditor.reset(new mdtTtTestSystemEditor(0, pvDatabase) );
+  if(!pvTestSystemEditor->setupTables()){
+    displayError(pvTestSystemEditor->lastError());
+    pvTestSystemEditor.reset();
+    return false;
+  }
+  // Setup in a generic SQL window
+  auto window = setupEditorInSqlWindow(pvTestSystemEditor);
+  Q_ASSERT(window);
+  window->setWindowTitle(tr("Test system edition"));
+  window->resize(800, 600);
+
+  return true;
+}
+
+bool mdtTtApplicationWidgets::createTestSystemComponentEditor()
+{
+  Q_ASSERT(!pvTestSystemComponentEditor);
+
+  // Setup editor
+  pvTestSystemComponentEditor.reset(new mdtTtTestSystemComponentEditor(0, pvDatabase) );
+  if(!pvTestSystemComponentEditor->setupTables()){
+    displayError(pvTestSystemComponentEditor->lastError());
+    pvTestSystemComponentEditor.reset();
+    return false;
+  }
+  // Setup in a generic SQL window
+  auto window = setupEditorInSqlWindow(pvTestSystemComponentEditor);
+  Q_ASSERT(window);
+  window->setWindowTitle(tr("Test system component edition"));
+  window->resize(800, 600);
+
+  return true;
+}
+
+
 
 bool mdtTtApplicationWidgets::createTestCableEditor()
 {
@@ -177,6 +292,9 @@ bool mdtTtApplicationWidgets::closeCustomWidgets()
 void mdtTtApplicationWidgets::clearAllWidgets()
 {
   // Delete all editors
+  pvTestSystemEditor.reset();
+  pvTestSystemComponentEditor.reset();
+  
   pvTestCableEditor.reset();
   pvTestNodeEditor.reset();
   // Delete all tools

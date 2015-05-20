@@ -34,7 +34,7 @@
 #include <QSqlField>
 #include <QSqlIndex>
 
-//#include <QDebug>
+#include <QDebug>
 
 mdtSqlDataWidgetController::mdtSqlDataWidgetController(QObject* parent)
  : mdtAbstractSqlTableController(parent)
@@ -55,11 +55,12 @@ bool mdtSqlDataWidgetController::mapFormWidgets(QWidget* widget, const QString& 
   Q_ASSERT(model());
   Q_ASSERT(currentState() == Stopped);
 
-  int i;
+//   int i;
   QString fieldName;
-  QWidget *w;
+//   QWidget *w;
   mdtSqlSchemaTable st;
   bool isFirstWidgetInTabOrder;
+  QList<QWidget*> foundWidgets;
 
   // Clear previous mapping
   qDeleteAll(pvFieldHandlers);
@@ -67,17 +68,20 @@ bool mdtSqlDataWidgetController::mapFormWidgets(QWidget* widget, const QString& 
   pvWidgetMapper.clearMapping();
   pvFirstDataWidget = 0;
   // Search widgets with fld_ as prefix in they objectName
-  buildWidgetsList(widget, "fld_");
+//   buildWidgetsList(widget, "fld_");
+  foundWidgets = getWidgetList(widget, "fld_");
+  qDebug() << "Found widgets: " << foundWidgets;
+  
   // Fetch table information - record returned by QSqlDatabase does not return Date and DateTime field infomration
   if(!st.setupFromTable(model()->tableName(), model()->database())){
     pvLastError = st.lastError();
     return false;
   }
   // Map found widgets
-  for(i = 0; i < pvFoundWidgets.size(); ++i){
-    w = pvFoundWidgets.at(i);
+  for(auto *w : foundWidgets){
     Q_ASSERT(w != 0);
     fieldName = w->objectName();
+    qDebug() << "MAP - OBJ name: " << fieldName;
     fieldName = fieldName.right(fieldName.length()-4);
     isFirstWidgetInTabOrder = (w->objectName() == firstWidgetInTabOrder);
     if(!addMapping(w, fieldName, st, isFirstWidgetInTabOrder)){
@@ -88,13 +92,32 @@ bool mdtSqlDataWidgetController::mapFormWidgets(QWidget* widget, const QString& 
       return false;
     }
   }
+  
+  // Map found widgets
+  /**
+  for(i = 0; i < pvFoundWidgets.size(); ++i){
+    w = pvFoundWidgets.at(i);
+    Q_ASSERT(w != 0);
+    fieldName = w->objectName();
+    qDebug() << "MAP - OBJ name: " << fieldName;
+    fieldName = fieldName.right(fieldName.length()-4);
+    isFirstWidgetInTabOrder = (w->objectName() == firstWidgetInTabOrder);
+    if(!addMapping(w, fieldName, st, isFirstWidgetInTabOrder)){
+      qDeleteAll(pvFieldHandlers);
+      pvFieldHandlers.clear();
+      pvWidgetMapper.clearMapping();
+      pvFirstDataWidget = 0;
+      return false;
+    }
+  }
+  */
   // Update UI
   updateMappedWidgets();
   updateNavigationControls();
   // Add data validator
   addDataValidator(std::shared_ptr<mdtSqlFormWidgetDataValidator>(new mdtSqlFormWidgetDataValidator(0, pvFieldHandlers)));
   // Found widgets are not needed anymore
-  pvFoundWidgets.clear();
+//   pvFoundWidgets.clear();
 
   return true;
 }
@@ -363,47 +386,77 @@ void mdtSqlDataWidgetController::updateNavigationControls()
 }
 
 
-void mdtSqlDataWidgetController::buildWidgetsList(QWidget *w, const QString &prefix)
+// void mdtSqlDataWidgetController::buildWidgetsList(QWidget *w, const QString &prefix)
+// {
+//   Q_ASSERT(w != 0);
+//   Q_ASSERT(w->layout() != 0);
+// 
+//   int i;
+// 
+//   
+//   qDebug() << "SEARCH: children: " << w->children();
+//   pvFoundWidgets.clear();
+//   for(i = 0; i < w->layout()->count(); ++i){
+//     searchWidgets(w->layout()->itemAt(i), prefix);
+//   }
+// }
+// 
+// void mdtSqlDataWidgetController::searchWidgets(QLayoutItem *item, const QString &prefix)
+// {
+//   Q_ASSERT(item != 0);
+// 
+//   int i;
+//   QWidget *widget;
+//   QLayout *layout;
+//   QString name;
+// 
+//   // If current item is a layout, and search in it if true
+//   layout = item->layout();
+//   if(layout != 0){
+//     for(i = 0; i < layout->count(); ++i){
+//       searchWidgets(layout->itemAt(i), prefix);
+//     }
+//   }
+//   widget = item->widget();
+//   if(widget != 0){
+//     name = widget->objectName();
+//     qDebug() << "SEARCH - W name: " << name;
+//     if(name.left(prefix.size()) == prefix){
+//       pvFoundWidgets.append(widget);
+//     }
+//     // If widget has a layout, serach in it
+//     layout = widget->layout();
+//     if(layout != 0){
+//       for(i = 0; i < layout->count(); ++i){
+//         searchWidgets(layout->itemAt(i), prefix);
+//       }
+//     }
+//   }
+// }
+
+QList<QWidget*> mdtSqlDataWidgetController::getWidgetList(QWidget* w, const QString & prefix)
 {
-  Q_ASSERT(w != 0);
-  Q_ASSERT(w->layout() != 0);
+  Q_ASSERT(w != nullptr);
 
-  int i;
+  QList<QWidget*> widgets;
 
-  pvFoundWidgets.clear();
-  for(i = 0; i < w->layout()->count(); ++i){
-    searchWidgets(w->layout()->itemAt(i), prefix);
-  }
+  searchWidgetsRec(w, prefix, widgets);
+
+  return widgets;
 }
 
-void mdtSqlDataWidgetController::searchWidgets(QLayoutItem *item, const QString &prefix)
+void mdtSqlDataWidgetController::searchWidgetsRec(QObject *obj, const QString & prefix, QList<QWidget*> & lst)
 {
-  Q_ASSERT(item != 0);
+  Q_ASSERT(obj != nullptr);
 
-  int i;
-  QWidget *widget;
-  QLayout *layout;
-  QString name;
-
-  // If current item is a layout, and search in it if true
-  layout = item->layout();
-  if(layout != 0){
-    for(i = 0; i < layout->count(); ++i){
-      searchWidgets(layout->itemAt(i), prefix);
+  qDebug() << "SEARCH - OBJ: " << obj->objectName();
+  if(obj->isWidgetType()){
+    if(obj->objectName().left(prefix.size()) == prefix){
+      lst.append(static_cast<QWidget*>(obj));
     }
   }
-  widget = item->widget();
-  if(widget != 0){
-    name = widget->objectName();
-    if(name.left(prefix.size()) == prefix){
-      pvFoundWidgets.append(widget);
-    }
-    // If widget has a layout, serach in it
-    layout = widget->layout();
-    if(layout != 0){
-      for(i = 0; i < layout->count(); ++i){
-        searchWidgets(layout->itemAt(i), prefix);
-      }
-    }
+  auto chd = obj->children();
+  for(auto * o : chd){
+    searchWidgetsRec(o, prefix, lst);
   }
 }

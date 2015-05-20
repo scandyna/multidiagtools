@@ -195,7 +195,26 @@ class mdtTtDatabaseSchema
    */
   bool setupLinkDirectionTable();
 
+  /*! \brief Setup TestSystem_tbl
+   */
+  bool setupTestSystemTable();
+
+  /*! \brief Setup TestSystemComponentType_tbl
+   */
+  bool setupTestSystemComponentTypeTable();
+
+  /*! \brief Setup TestSystemComponent_tbl
+   */
+  bool setupTestSystemComponentTable();
+
+  /*! \brief Setup TestSystem_TestSystemComponent_tbl
+   */
+  bool setupTestSystem_TestSystemComponentTable();
+
+
   /*! \brief Setup TestNode_tbl
+   *
+   * \deprecated Will be replaced by NOTE
    */
   bool setupTestNodeTable();
 
@@ -377,6 +396,13 @@ class mdtTtDatabaseSchema
    */
   bool createLinkBeamUnitEndView();
 
+  
+  /*! \brief Setup TestSystemComponent_view
+   */
+  bool createTestSystemComponentView();
+
+  
+  
   /*! \brief Create TestNode_view
    */
   bool createTestNodeView();
@@ -498,6 +524,11 @@ class mdtTtDatabaseSchema
   /*! \brief Populate LinkType table
    */
   bool populateLinkDirectionTable();
+
+  /*! \brief Populate TestSystemComponentType_tbl
+   */
+  bool populateTestSystemComponentTypeTable();
+
 
   /*! \brief Populate TestNodeUnitType table
    *

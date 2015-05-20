@@ -1371,6 +1371,11 @@ void mdtClMainWindow::connectActions()
   connect(actConnectTestCable, SIGNAL(triggered()), this, SLOT(connectTestCable()));
   connect(actDisconnectTestCable, SIGNAL(triggered()), this, SLOT(disconnectTestCable()));
   */
+  
+  // Test system edition
+  connect(actEditTestSystem, SIGNAL(triggered()), mdtTtApplicationWidgets::instancePtr(), SLOT(slotEditTestSystems()));
+  connect(actEditTestSystemComponent, SIGNAL(triggered()), mdtTtApplicationWidgets::instancePtr(), SLOT(slotEditTestSystemComponents()));
+  
   // Test node edition
   ///connect(actEditTestNode, SIGNAL(triggered()), this, SLOT(editTestNode()));
   connect(actEditTestNode, SIGNAL(triggered()), mdtTtApplicationWidgets::instancePtr(), SLOT(slotEditTestNodes()));
