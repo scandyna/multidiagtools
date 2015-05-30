@@ -7,17 +7,23 @@
     <x>0</x>
     <y>0</y>
     <width>850</width>
-    <height>269</height>
+    <height>294</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
+  <layout class="QHBoxLayout" name="horizontalLayout_2">
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QGroupBox" name="gbTsc">
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>500</height>
+        </size>
+       </property>
        <property name="title">
         <string>Test system component</string>
        </property>
@@ -58,6 +64,12 @@
      </item>
      <item>
       <widget class="QGroupBox" name="gbSystemUnit">
+       <property name="maximumSize">
+        <size>
+         <width>500</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="title">
         <string>Test system unit data</string>
        </property>
@@ -107,108 +119,142 @@
       <string>Base article</string>
      </property>
      <layout class="QFormLayout" name="formLayout_2">
-      <property name="fieldGrowthPolicy">
-       <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-      </property>
       <item row="0" column="0">
        <widget class="QLabel" name="lbSelectBaseArticle">
         <property name="text">
-         <string>Select</string>
+         <string>Select / unset:</string>
         </property>
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QToolButton" name="pbSelectBaseArticle">
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QToolButton" name="pbSelectBaseArticle">
+          <property name="text">
+           <string>...</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="pbUnsetBaseArticle">
+          <property name="toolTip">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Unset base article&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="text">
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset theme="list-remove"/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
       </item>
-      <item row="2" column="0">
+      <item row="1" column="0">
        <widget class="QLabel" name="lbArticleCode">
         <property name="text">
          <string>Article code:</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
+      <item row="1" column="1">
        <widget class="QLabel" name="fld_ArticleCode">
         <property name="text">
          <string>ArticleCode</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="0">
+      <item row="2" column="0">
        <widget class="QLabel" name="lbDesignationEN">
         <property name="text">
          <string>Designation (english):</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
+      <item row="2" column="1">
        <widget class="QLabel" name="fld_DesignationEN">
         <property name="text">
          <string>DesignationEN</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="0">
+      <item row="3" column="0">
        <widget class="QLabel" name="lbDesignationFR">
         <property name="text">
          <string>Designation (frensh):</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="1">
+      <item row="3" column="1">
        <widget class="QLabel" name="fld_DesignationFR">
         <property name="text">
          <string>DesignationFR</string>
         </property>
        </widget>
       </item>
-      <item row="5" column="1">
-       <widget class="QLabel" name="fld_DesignationEN_2">
+      <item row="4" column="0">
+       <widget class="QLabel" name="lbDesignationDE">
+        <property name="text">
+         <string>Designation (german):</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLabel" name="fld_DesignationDE">
         <property name="text">
          <string>DesignationEN</string>
         </property>
        </widget>
       </item>
       <item row="5" column="0">
-       <widget class="QLabel" name="lbDesignationEN_2">
-        <property name="text">
-         <string>Designation (english):</string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="1">
-       <widget class="QLabel" name="fld_DesignationIT">
-        <property name="text">
-         <string>DesignationIT</string>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="1">
-       <widget class="QLabel" name="fld_Manufacturer">
-        <property name="text">
-         <string>Manufacturer</string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="0">
        <widget class="QLabel" name="lbDesignationIT">
         <property name="text">
          <string>Designation (italian):</string>
         </property>
        </widget>
       </item>
-      <item row="7" column="0">
+      <item row="5" column="1">
+       <widget class="QLabel" name="fld_DesignationIT">
+        <property name="text">
+         <string>DesignationIT</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
        <widget class="QLabel" name="lbManufacturer">
         <property name="text">
          <string>Manufacturer:</string>
         </property>
        </widget>
       </item>
-      <item row="8" column="1">
+      <item row="6" column="1">
+       <widget class="QLabel" name="fld_Manufacturer">
+        <property name="text">
+         <string>Manufacturer</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="0">
+       <widget class="QLabel" name="lbManufacturerType">
+        <property name="text">
+         <string>Manufacturer type:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
        <widget class="QLabel" name="fld_ManufacturerType">
         <property name="text">
          <string>ManufacturerType</string>
@@ -216,23 +262,16 @@
        </widget>
       </item>
       <item row="8" column="0">
-       <widget class="QLabel" name="lbManufacturerType">
-        <property name="text">
-         <string>Manufacturer type:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="9" column="1">
-       <widget class="QLabel" name="fld_ManufacturerCode">
-        <property name="text">
-         <string>ManufacturerCode</string>
-        </property>
-       </widget>
-      </item>
-      <item row="9" column="0">
        <widget class="QLabel" name="lbManufacturerCode">
         <property name="text">
          <string>Manufacturer code:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="1">
+       <widget class="QLabel" name="fld_ManufacturerCode">
+        <property name="text">
+         <string>ManufacturerCode</string>
         </property>
        </widget>
       </item>

@@ -42,4 +42,5 @@ void mdtSqlRelationInfo::clear()
   pvParentTableName.clear();
   pvChildTableName.clear();
   pvItems.clear();
+  pvRelationType = OneToMany;
 }

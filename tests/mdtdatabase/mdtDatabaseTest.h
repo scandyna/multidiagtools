@@ -45,6 +45,7 @@ class mdtDatabaseTest : public mdtTest
 
   void sqlRecordTest();
 
+  void sqlRelationInfoTest();
   void sqlRelationTest();
 
   void doubleValueTest();

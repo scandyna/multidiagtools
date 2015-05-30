@@ -46,6 +46,14 @@ class mdtTtTestSystemUnitEditor : public mdtSqlForm
 
  private slots:
 
+  /*! \brief Set the base article of current unit
+   */
+  void setBaseArticle();
+
+  /*! \brief Set the base article of current unit
+   */
+  void unsetBaseArticle();
+
   /*! \brief Add a free connector (based on nothing) to unit connector table
    */
   void addConnector();

@@ -961,6 +961,40 @@ void mdtDatabaseTest::sqlRecordTest()
   clearTestDatabaseData();
 }
 
+void mdtDatabaseTest::sqlRelationInfoTest()
+{
+  mdtSqlRelationInfo relationInfo;
+
+  /*
+   * Initial state
+   */
+  QVERIFY(relationInfo.relationType() == mdtSqlRelationInfo::OneToMany);
+  QVERIFY(relationInfo.parentTableName().isEmpty());
+  QVERIFY(relationInfo.childTableName().isEmpty());
+  QCOMPARE(relationInfo.items().size(), 0);
+  /*
+   * Setup a (fake) 1-1 relation
+   */
+  // Setup relation
+  relationInfo.setRelationType(mdtSqlRelationInfo::OneToOne);
+  relationInfo.setParentTableName("Client_tbl");
+  relationInfo.setChildTableName("Address_tbl");
+  relationInfo.addRelation("Id_PK", "Client_Id_FK", true);
+  // Check
+  QVERIFY(relationInfo.relationType() == mdtSqlRelationInfo::OneToOne);
+  QCOMPARE(relationInfo.parentTableName(), QString("Client_tbl"));
+  QCOMPARE(relationInfo.childTableName(), QString("Address_tbl"));
+  QCOMPARE(relationInfo.items().size(), 1);
+  /*
+   * Check clear
+   */
+  relationInfo.clear();
+  QVERIFY(relationInfo.relationType() == mdtSqlRelationInfo::OneToMany);
+  QVERIFY(relationInfo.parentTableName().isEmpty());
+  QVERIFY(relationInfo.childTableName().isEmpty());
+  QCOMPARE(relationInfo.items().size(), 0);
+}
+
 void mdtDatabaseTest::sqlRelationTest()
 {
   QSqlTableModel clientModel(0, pvDatabase);

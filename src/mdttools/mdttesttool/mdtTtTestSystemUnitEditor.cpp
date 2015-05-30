@@ -58,6 +58,110 @@ bool mdtTtTestSystemUnitEditor::setupTables()
   return true;
 }
 
+void mdtTtTestSystemUnitEditor::setBaseArticle()
+{
+  mdtClUnit unit(this, database());
+  mdtSqlSelectionDialog selectionDialog;
+  mdtSqlTableSelection s;
+  int ret;
+  QString sql;
+
+  // Check if some unit connections are related to article connections
+  //  If yes, we cannot change the base article
+  ret = unit.toUnitRelatedArticleConnectionCount(currentUnitId());
+  if(ret < 0){
+    QMessageBox msgBox;
+    msgBox.setText(tr("Cannot check if current unit has connections based on current article."));
+    msgBox.setDetailedText(unit.lastError().text());
+    msgBox.setIcon(QMessageBox::Critical);
+    msgBox.exec();
+    return;
+  }
+  if(ret > 0){
+    QMessageBox msgBox;
+    msgBox.setText(tr("Cannot change base article because some connections are based on it."));
+    msgBox.setInformativeText(tr("Please remove used connections that are related to base article and try again."));
+    msgBox.setIcon(QMessageBox::Warning);
+    msgBox.exec();
+    return;
+  }
+  // Setup article selection dialog and show it to user
+  sql = "SELECT * FROM Article_tbl;";
+  selectionDialog.setMessage("Please select article:");
+  selectionDialog.setQuery(sql, database(), false);
+  ///selectionDialog.setColumnHidden("Id_PK", true);
+  selectionDialog.setHeaderData("ArticleCode", tr("Article code\n(internal)"));
+  selectionDialog.addColumnToSortOrder("ArticleCode", Qt::AscendingOrder);
+  selectionDialog.addColumnToSortOrder("DesignationEN", Qt::AscendingOrder);
+  selectionDialog.sort();
+  selectionDialog.resize(800, 400);
+  if(selectionDialog.exec() != QDialog::Accepted){
+    return;
+  }
+  s = selectionDialog.selection("Id_PK");
+  Q_ASSERT(s.rowCount() == 1);
+  auto uc = mainTableController<mdtAbstractSqlTableController>()->childController<mdtAbstractSqlTableController>("Unit_tbl");
+  Q_ASSERT(uc);
+  if(!uc->setCurrentData("Article_Id_FK", s.data(0, "Id_PK"), true)){
+    pvLastError = uc->lastError();
+    displayLastError();
+    return;
+  }
+  submit();
+  // Update UI
+  auto ac = uc->childController<mdtAbstractSqlTableController>("Article_tbl");
+  Q_ASSERT(ac);
+  uc->select();
+  ac->select();
+}
+
+void mdtTtTestSystemUnitEditor::unsetBaseArticle()
+{
+  mdtClUnit unit(this, database());
+  int ret;
+
+  // Check if some unit connections are related to article connections
+  //  If yes, we cannot change the base article
+  ret = unit.toUnitRelatedArticleConnectionCount(currentUnitId());
+  if(ret < 0){
+    QMessageBox msgBox;
+    msgBox.setText(tr("Cannot check if current unit has connections based on current article."));
+    msgBox.setDetailedText(unit.lastError().text());
+    msgBox.setIcon(QMessageBox::Critical);
+    msgBox.exec();
+    return;
+  }
+  if(ret > 0){
+    QMessageBox msgBox;
+    msgBox.setText(tr("Cannot change base article because some connections are based on it."));
+    msgBox.setInformativeText(tr("Please remove used connections that are related to base article and try again."));
+    msgBox.setIcon(QMessageBox::Warning);
+    msgBox.exec();
+    return;
+  }
+  // We ask confirmation to the user
+  QMessageBox msgBox;
+  msgBox.setText(tr("You are about to unset base article from current unit."));
+  msgBox.setInformativeText(tr("Do you want to continue ?"));
+  msgBox.setIcon(QMessageBox::Warning);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+  msgBox.setDefaultButton(QMessageBox::No);
+  if(msgBox.exec() != QMessageBox::Yes){
+    return;
+  }
+  if(!setCurrentData("Unit_tbl", "Article_Id_FK", QVariant(), true)){
+    return;
+  }
+  submit();
+  // Update UI
+  auto uc = mainTableController<mdtAbstractSqlTableController>()->childController<mdtAbstractSqlTableController>("Unit_tbl");
+  Q_ASSERT(uc);
+  auto ac = uc->childController<mdtAbstractSqlTableController>("Article_tbl");
+  Q_ASSERT(ac);
+  uc->select();
+  ac->select();
+}
+
 void mdtTtTestSystemUnitEditor::addConnector()
 {
   QVariant unitId;
@@ -516,10 +620,31 @@ bool mdtTtTestSystemUnitEditor::setupTestSystemUnitTables()
   /*
    * Setup base article widget mapping
    */
-  // Add a new child controller to test system unit controller
-  
+  // Add a new child controller to unit controller
+  Q_ASSERT(uController);
+  relationInfo.clear();
+  relationInfo.setChildTableName("Article_tbl");
+  relationInfo.addRelation("Article_Id_FK", "Id_PK", false);
+  if(!uController->addChildController<mdtSqlDataWidgetController>(relationInfo, tr("Test system component"))){
+    pvLastError = uController->lastError();
+    return false;
+  }
   // Get freshly added controller and map widgets to it
-  
+  baseArticleController = uController->childController<mdtSqlDataWidgetController>("Article_tbl");
+  Q_ASSERT(baseArticleController);
+  baseArticleController->setCanWriteToDatabase(false);
+  baseArticleController->addMapping(tsue.fld_ArticleCode, "ArticleCode");
+  baseArticleController->addMapping(tsue.fld_DesignationEN, "DesignationEN");
+  baseArticleController->addMapping(tsue.fld_DesignationFR, "DesignationFR");
+  baseArticleController->addMapping(tsue.fld_DesignationDE, "DesignationDE");
+  baseArticleController->addMapping(tsue.fld_DesignationIT, "DesignationIT");
+  baseArticleController->addMapping(tsue.fld_Manufacturer, "Manufacturer");
+  baseArticleController->addMapping(tsue.fld_ManufacturerType, "ManufacturerType");
+  baseArticleController->addMapping(tsue.fld_ManufacturerCode, "ManufacturerCode");
+  // Connect actions
+  connect(tsue.pbSelectBaseArticle, SIGNAL(clicked()), this, SLOT(setBaseArticle()));
+  connect(tsue.pbUnsetBaseArticle, SIGNAL(clicked()), this, SLOT(unsetBaseArticle()));
+
   return true;
 }
 
