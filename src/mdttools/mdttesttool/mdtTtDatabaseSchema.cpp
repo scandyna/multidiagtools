@@ -296,6 +296,12 @@ bool mdtTtDatabaseSchema::setupTables()
   if(!setupTestSystem_TestSystemComponentTable()){
     return false;
   }
+  if(!setupTestSystemUnitTypeTable()){
+    return false;
+  }
+  if(!setupTestSystemUnitTable()){
+    return false;
+  }
   
   if(!setupTestNodeTable()){
     return false;
@@ -435,6 +441,9 @@ bool mdtTtDatabaseSchema::createViews()
   if(!createTestSystemComponentView()){
     return false;
   }
+  if(!createTestSytemOfComponentView()){
+    return false;
+  }
 
   if(!createTestNodeUnitView()){
     return false;
@@ -516,10 +525,14 @@ bool mdtTtDatabaseSchema::populateTables()
   if(!populateTestSystemComponentTypeTable()){
     return false;
   }
-  
   if(!populateTestNodeUnitTypeTable()){
     return false;
   }
+  /**
+  if(!populateTestNodeUnitTypeTable()){
+    return false;
+  }
+  */
   return true;
 }
 
@@ -2057,6 +2070,7 @@ bool mdtTtDatabaseSchema::setupTestSystemComponentTable()
   // Alias
   field = QSqlField();
   field.setName("Alias");
+  field.setRequired(true);
   field.setType(QVariant::String);
   field.setLength(50);
   table.addField(field, false);
@@ -2153,6 +2167,118 @@ bool mdtTtDatabaseSchema::setupTestSystem_TestSystemComponentTable()
   }
   table.addForeignKey("TestSystemComponent_Id_FK_fk", "TestSystemComponent_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   if(!table.addFieldToForeignKey("TestSystemComponent_Id_FK_fk", "TestSystemComponent_Id_FK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+
+  pvTables.append(table);
+
+  return true;
+}
+
+bool mdtTtDatabaseSchema::setupTestSystemUnitTable()
+{
+  mdtSqlSchemaTable table;
+  QSqlField field;
+
+  table.setTableName("TestSystemUnitType_tbl", "UTF8");
+  // Code_PK
+  field.setName("Code_PK");
+  field.setType(QVariant::String);
+  field.setLength(20);
+  table.addField(field, true);
+  // NameEN
+  field = QSqlField();
+  field.setName("NameEN");
+  field.setType(QVariant::String);
+  field.setLength(200);
+  table.addField(field, false);
+  // NameFR
+  field = QSqlField();
+  field.setName("NameFR");
+  field.setType(QVariant::String);
+  field.setLength(200);
+  table.addField(field, false);
+  // NameDE
+  field = QSqlField();
+  field.setName("NameDE");
+  field.setType(QVariant::String);
+  field.setLength(200);
+  table.addField(field, false);
+  // NameIT
+  field = QSqlField();
+  field.setName("NameIT");
+  field.setType(QVariant::String);
+  field.setLength(200);
+  table.addField(field, false);
+
+  pvTables.append(table);
+
+  return true;
+}
+
+bool mdtTtDatabaseSchema::setupTestSystemUnitTypeTable()
+{
+  mdtSqlSchemaTable table;
+  QSqlField field;
+
+  table.setTableName("TestSystemUnit_tbl", "UTF8");
+  // Unit_Id_FK_PK
+  field.setName("Unit_Id_FK_PK");
+  field.setType(QVariant::Int);
+  table.addField(field, true);
+  // TestSystemComponent_Id_FK
+  field = QSqlField();
+  field.setName("TestSystemComponent_Id_FK");
+  field.setType(QVariant::Int);
+  field.setRequired(true);
+  table.addField(field, false);
+  // Type_Code_FK
+  field = QSqlField();
+  field.setName("Type_Code_FK");
+  field.setType(QVariant::String);
+  field.setLength(10);
+  field.setRequired(true);
+  table.addField(field, false);
+  // IoPosition
+  field = QSqlField();
+  field.setName("IoPosition");
+  field.setType(QVariant::Int);
+  table.addField(field, false);
+  // CalibrationDate
+  field = QSqlField();
+  field.setName("CalibrationDate");
+  field.setType(QVariant::DateTime);
+  table.addField(field, false);
+  // Indexes
+  table.addIndex("Unit_Id_FK_PK_idx", false);
+  if(!table.addFieldToIndex("Unit_Id_FK_PK_idx", "Unit_Id_FK_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addIndex("TestSystemComponent_Id_FK_idx", false);
+  if(!table.addFieldToIndex("TestSystemComponent_Id_FK_idx", "TestSystemComponent_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addIndex("Type_Code_FK_idx4", false);
+  if(!table.addFieldToIndex("Type_Code_FK_idx4", "Type_Code_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  // Foreign keys
+  table.addForeignKey("Unit_Id_FK_PK_fk", "Unit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("Unit_Id_FK_PK_fk", "Unit_Id_FK_PK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addForeignKey("TestSystemComponent_Id_FK_fk4", "TestSystemComponent_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("TestSystemComponent_Id_FK_fk4", "TestSystemComponent_Id_FK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addForeignKey("Type_Code_FK_fk4", "TestSystemUnitType_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("Type_Code_FK_fk4", "Type_Code_FK", "Code_PK")){
     pvLastError = table.lastError();
     return false;
   }
@@ -3975,6 +4101,21 @@ bool mdtTtDatabaseSchema::createTestSystemComponentView()
   return createView("TestSystemComponent_view", sql);
 }
 
+bool mdtTtDatabaseSchema::createTestSytemOfComponentView()
+{
+  QString sql;
+
+  sql = "CREATE VIEW TestSystemOfComponent_view AS\n"\
+        "SELECT\n"\
+        " TS_TSC.*,\n"\
+        " TS.*\n"\
+        "FROM TestSystem_TestSystemComponent_tbl TS_TSC\n"\
+        " JOIN TestSystem_tbl TS\n"\
+        "  ON TS.Id_PK = TS_TSC.TestSystem_Id_FK\n";
+
+  return createView("TestSystemOfComponent_view", sql);
+}
+
 
 
 bool mdtTtDatabaseSchema::createTestNodeView()
@@ -5098,6 +5239,58 @@ bool mdtTtDatabaseSchema::populateTestSystemComponentTypeTable()
   data.clear();
   data << "TESTPLUG" << "Test plug" << "Fiche de test" << "Test Stecker" << "Spina di prova";
   if(!insertDataIntoTable("TestSystemComponentType_tbl", fields, data)){
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtTtDatabaseSchema::populateTestSystemUnitTypeTable()
+{
+  QStringList fields;
+  QList<QVariant> data;
+
+  fields << "Code_PK" << "NameEN" << "NameFR" << "NameDE" << "NameIT";
+
+  // Bus coupling relay
+  data << "BUSCPLREL" << "Bus coupling relay" << "Relai de couplage de bus" << "Bus Koppelrelais" << "Relè di accoppiamento bus";
+  if(!insertDataIntoTable("TestSystemUnitType_tbl", fields, data)){
+    return false;
+  }
+  // Channel relay
+  data.clear();
+  data << "CHANELREL" << "Channel relay" << "Relai de canal" << "Kanal-Relais" << "Relè della Manica";
+  if(!insertDataIntoTable("TestSystemUnitType_tbl", fields, data)){
+    return false;
+  }
+  // Test connector
+  data.clear();
+  data << "TESTCONNECTOR" << "Test connector" << "Connecteur de test" << "Test Stecker" << "Connettore di test";
+  if(!insertDataIntoTable("TestSystemUnitType_tbl", fields, data)){
+    return false;
+  }
+  // Measure connector
+  data.clear();
+  data << "MEASCONNECTOR" << "Measure connector" << "Connecteur de mesure" << "Mess Stecker" << "Connettore di misura";
+  if(!insertDataIntoTable("TestSystemUnitType_tbl", fields, data)){
+    return false;
+  }
+  // Power supply
+  data.clear();
+  data << "PWR" << "Power supply" << "Alimentation" << "Speisung" << "Alimentazione";
+  if(!insertDataIntoTable("TestSystemUnitType_tbl", fields, data)){
+    return false;
+  }
+  // Analog output
+  data.clear();
+  data << "AO" << "Analog output" << "Sortie analogique" << "Analog Ausgabe" << "Uscita analogica";
+  if(!insertDataIntoTable("TestSystemUnitType_tbl", fields, data)){
+    return false;
+  }
+  // Analog input
+  data.clear();
+  data << "AI" << "Analog input" << "Entrée analogique" << "Analog Eingabe" << "Ingresso analogica";
+  if(!insertDataIntoTable("TestSystemUnitType_tbl", fields, data)){
     return false;
   }
 

@@ -22,6 +22,7 @@
 // Editor classes
 #include "mdtTtTestSystemEditor.h"
 #include "mdtTtTestSystemComponentEditor.h"
+#include "mdtTtTestSystemUnitEditor.h"
 
 #include "mdtTtTestCableEditor.h"
 #include "mdtTtTestNodeEditor.h"
@@ -148,6 +149,21 @@ void mdtTtApplicationWidgets::slotEditTestSystemComponents()
   showSqlWindow(pvTestSystemComponentEditor, true, true);
 }
 
+void mdtTtApplicationWidgets::slotEditTestSystemUnits()
+{
+  if(!pvTestSystemUnitEditor){
+    if(!createTestSystemUnitEditor()){
+      return;
+    }
+  }
+  Q_ASSERT(pvTestSystemUnitEditor);
+  if(!pvTestSystemUnitEditor->select()){
+    displayError(pvTestSystemUnitEditor->lastError());
+    return;
+  }
+  showSqlWindow(pvTestSystemUnitEditor, true, true);
+}
+
 
 
 void mdtTtApplicationWidgets::slotEditTestCables()
@@ -216,6 +232,26 @@ bool mdtTtApplicationWidgets::createTestSystemComponentEditor()
   auto window = setupEditorInSqlWindow(pvTestSystemComponentEditor);
   Q_ASSERT(window);
   window->setWindowTitle(tr("Test system component edition"));
+  window->resize(800, 600);
+
+  return true;
+}
+
+bool mdtTtApplicationWidgets::createTestSystemUnitEditor()
+{
+  Q_ASSERT(!pvTestSystemUnitEditor);
+
+  // Setup editor
+  pvTestSystemUnitEditor.reset(new mdtTtTestSystemUnitEditor(0, pvDatabase) );
+  if(!pvTestSystemUnitEditor->setupTables()){
+    displayError(pvTestSystemUnitEditor->lastError());
+    pvTestSystemUnitEditor.reset();
+    return false;
+  }
+  // Setup in a generic SQL window
+  auto window = setupEditorInSqlWindow(pvTestSystemUnitEditor);
+  Q_ASSERT(window);
+  window->setWindowTitle(tr("Test system unit edition"));
   window->resize(800, 600);
 
   return true;
@@ -294,6 +330,7 @@ void mdtTtApplicationWidgets::clearAllWidgets()
   // Delete all editors
   pvTestSystemEditor.reset();
   pvTestSystemComponentEditor.reset();
+  pvTestSystemUnitEditor.reset();
   
   pvTestCableEditor.reset();
   pvTestNodeEditor.reset();

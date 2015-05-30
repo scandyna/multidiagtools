@@ -137,7 +137,7 @@ void mdtSqlForm::addChildWidget(QWidget *widget, const QString & label, const QI
   // Setup tab widget if needed
   if(pvChildsTabWidget == 0){
     pvChildsTabWidget = new QTabWidget;
-    pvMainLayout->addWidget(pvChildsTabWidget);
+    pvMainLayout->addWidget(pvChildsTabWidget, 5);
   }
   Q_ASSERT(pvChildsTabWidget != 0);
   // Add widget

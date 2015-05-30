@@ -44,11 +44,25 @@ class mdtTtTestSystemEditor : public mdtSqlForm
    */
   bool setupTables();
 
+ private slots:
+
+  /*! \brief Add test system component assignation
+   */
+  void addComponentAssignation();
+
+  /*! \brief Remove test system component assignation
+   */
+  void removeComponentAssignation();
+
  private:
 
   /*! \brief Setup TestSystem_tbl part
    */
   bool setupTestSystemTable();
+
+  /*! \brief Setup TestSystemComponent_view
+   */
+  bool setupTestSystemComponentAssignationTable();
 
   Q_DISABLE_COPY(mdtTtTestSystemEditor);
 

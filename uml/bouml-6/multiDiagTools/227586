@@ -1,6 +1,6 @@
 format 209
 "mdttesttool" // mdttools::mdttesttool
-  revision 75
+  revision 76
   modified_by 2 "philippe"
   // class settings
   
@@ -2850,14 +2850,6 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 1253122 // <generalisation>
-	relation 1240194 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 1253122 // <generalisation>
-	  b parent class_ref 952962 // mdtTtBase
-      end
-
       operation 1769218 "mdtTtTestNode"
 	public explicit_return_type ""
 	nparams 1
@@ -2906,6 +2898,14 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 2002306 // <generalisation>
+	relation 1986178 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2002306 // <generalisation>
+	  b parent class_ref 1631490 // mdtTtTestSystemComponent
       end
     end
 

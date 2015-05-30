@@ -26,6 +26,7 @@
 // Editors
 class mdtTtTestSystemEditor;
 class mdtTtTestSystemComponentEditor;
+class mdtTtTestSystemUnitEditor;
 
 class mdtTtTestCableEditor;
 class mdtTtTestNodeEditor;
@@ -78,6 +79,10 @@ class mdtTtApplicationWidgets : public mdtSqlApplicationWidgets<mdtTtApplication
    */
   void slotEditTestSystemComponents();
 
+  /*! \brief Edit test system units
+   */
+  void slotEditTestSystemUnits();
+
 
   /*! \brief Edit test cables
    */
@@ -96,6 +101,10 @@ class mdtTtApplicationWidgets : public mdtSqlApplicationWidgets<mdtTtApplication
   /*! \brief Create test system component editor
    */
   bool createTestSystemComponentEditor();
+
+  /*! \brief Create test system unit editor
+   */
+  bool createTestSystemUnitEditor();
 
 
   /*! \brief Create test cable editor
@@ -129,6 +138,7 @@ class mdtTtApplicationWidgets : public mdtSqlApplicationWidgets<mdtTtApplication
   // Editors
   std::shared_ptr<mdtTtTestSystemEditor> pvTestSystemEditor;
   std::shared_ptr<mdtTtTestSystemComponentEditor> pvTestSystemComponentEditor;
+  std::shared_ptr<mdtTtTestSystemUnitEditor> pvTestSystemUnitEditor;
   
   std::shared_ptr<mdtTtTestCableEditor> pvTestCableEditor;
   std::shared_ptr<mdtTtTestNodeEditor> pvTestNodeEditor;

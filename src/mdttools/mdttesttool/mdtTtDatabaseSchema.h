@@ -211,6 +211,15 @@ class mdtTtDatabaseSchema
    */
   bool setupTestSystem_TestSystemComponentTable();
 
+  /*! \brief Setup TestSystemUnit_tbl
+   */
+  bool setupTestSystemUnitTable();
+
+  /*! \brief Setup TestSystemUnitType_tbl
+   */
+  bool setupTestSystemUnitTypeTable();
+
+
 
   /*! \brief Setup TestNode_tbl
    *
@@ -397,11 +406,17 @@ class mdtTtDatabaseSchema
   bool createLinkBeamUnitEndView();
 
   
-  /*! \brief Setup TestSystemComponent_view
+  /*! \brief Create TestSystemComponent_view
+   *
+   * Lists components of a test system.
    */
   bool createTestSystemComponentView();
 
-  
+  /*! \brief Create TestSystemOfComponent_view
+   *
+   * Lists test systems assigned to a component
+   */
+  bool createTestSytemOfComponentView();
   
   /*! \brief Create TestNode_view
    */
@@ -528,6 +543,10 @@ class mdtTtDatabaseSchema
   /*! \brief Populate TestSystemComponentType_tbl
    */
   bool populateTestSystemComponentTypeTable();
+
+  /*! \brief Populate TestSystemUnitType_tbl
+   */
+  bool populateTestSystemUnitTypeTable();
 
 
   /*! \brief Populate TestNodeUnitType table

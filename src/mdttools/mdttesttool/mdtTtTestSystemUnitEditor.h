@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_TT_TEST_SYSTEM_COMPONENT_EDITOR_H
-#define MDT_TT_TEST_SYSTEM_COMPONENT_EDITOR_H
+#ifndef MDT_TT_TEST_SYSTEM_UNIT_EDITOR_H
+#define MDT_TT_TEST_SYSTEM_UNIT_EDITOR_H
 
 #include "mdtSqlForm.h"
 #include <QSqlDatabase>
@@ -28,9 +28,9 @@
 
 class QWidget;
 
-/*! \brief Test system component editor
+/*! \brief Test system unit editor
  */
-class mdtTtTestSystemComponentEditor : public mdtSqlForm
+class mdtTtTestSystemUnitEditor : public mdtSqlForm
 {
  Q_OBJECT
 
@@ -38,7 +38,7 @@ class mdtTtTestSystemComponentEditor : public mdtSqlForm
 
   /*! \brief Constructor
    */
-  mdtTtTestSystemComponentEditor(QWidget *parent, QSqlDatabase db);
+  mdtTtTestSystemUnitEditor(QWidget *parent, QSqlDatabase db);
 
   /*! \brief Setup tables
    */
@@ -46,25 +46,17 @@ class mdtTtTestSystemComponentEditor : public mdtSqlForm
 
  private slots:
 
-  /*! \brief Add test system assignation
+  /*! \brief Set test system component
    */
-  void addTestSystemAssignation();
-
-  /*! \brief Remove test system assignation
-   */
-  void removeTestSystemAssignation();
+  void setTestSystemComponent();
 
  private:
 
-  /*! \brief Setup TestSystemComponent_tbl part
+  /*! \brief Setup Unit_tbl + TestSystemUnit_tbl part
    */
-  bool setupTestSystemComponentTable();
+  bool setupTestSystemUnitTables();
 
-  /*! \brief Setup TestSystemOfComponent_view
-   */
-  bool setupTestSystemAssignationTable();
-
-  Q_DISABLE_COPY(mdtTtTestSystemComponentEditor);
+  Q_DISABLE_COPY(mdtTtTestSystemUnitEditor);
 };
 
-#endif // #ifndef MDT_TT_TEST_SYSTEM_COMPONENT_EDITOR_H
+#endif // #ifndef MDT_TT_TEST_SYSTEM_UNIT_EDITOR_H

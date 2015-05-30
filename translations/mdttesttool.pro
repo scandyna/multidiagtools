@@ -3,7 +3,9 @@
 TRANSLATIONS = /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/../../../translations/mdttesttool_fr.ts
 TRANSLATIONS += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/../../../translations/mdttesttool_de.ts
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtTtTestSystemEditor.cpp
+SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtTtTestSystemComponent.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtTtTestSystemComponentEditor.cpp
+SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtTtTestSystemUnitEditor.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtTtApplicationWidgets.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtTtBase.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtTtDatabaseSchema.cpp
@@ -87,6 +89,7 @@ SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtcablelist/mdtClConnectableConnectorDialog.cpp
 FORMS += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtTtTestSystemEditor.ui
 FORMS += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtTtTestSystemComponentEditor.ui
+FORMS += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtTtTestSystemUnitEditor.ui
 FORMS += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtTtTestCableEditor.ui
 FORMS += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtTtLogicalTestCableEditor.ui
 FORMS += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtTtLogicalTestCableDialog.ui

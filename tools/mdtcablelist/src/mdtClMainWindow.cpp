@@ -1375,6 +1375,7 @@ void mdtClMainWindow::connectActions()
   // Test system edition
   connect(actEditTestSystem, SIGNAL(triggered()), mdtTtApplicationWidgets::instancePtr(), SLOT(slotEditTestSystems()));
   connect(actEditTestSystemComponent, SIGNAL(triggered()), mdtTtApplicationWidgets::instancePtr(), SLOT(slotEditTestSystemComponents()));
+  connect(actEditTestSystemUnit, SIGNAL(triggered()), mdtTtApplicationWidgets::instancePtr(), SLOT(slotEditTestSystemUnits()));
   
   // Test node edition
   ///connect(actEditTestNode, SIGNAL(triggered()), this, SLOT(editTestNode()));

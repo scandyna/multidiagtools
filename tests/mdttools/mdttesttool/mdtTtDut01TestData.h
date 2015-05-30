@@ -71,6 +71,7 @@ class mdtTtDut01TestData
   // Helper function to remove a link
   void removeLink(const QVariant & startConnectionId, const QVariant & endConnectionId);
 
+  /// \todo Candidates for a common base class
   bool beginTransaction();
   bool commitTransaction();
   bool rollbackTransaction();

@@ -195,22 +195,6 @@ class mdtSqlDataWidgetController : public mdtAbstractSqlTableController
    */
   void updateNavigationControls();
 
-//   /*! \brief Build the list of widgets contained in w
-//    * \deprecated
-//    * 
-//    * Result will be stored to pvFoundWidgets .
-//    *
-//    * \pre w must be valid and contain a valid layout
-//    */
-//   void buildWidgetsList(QWidget *w, const QString &prefix);
-// 
-//   /*! \brief Search all widgets contained in a layout item
-//    * \deprecated
-//    * 
-//    * If objectName beginns with prefix, it will be added to pvFoundWidgets .
-//    */
-//   void searchWidgets(QLayoutItem *item, const QString &prefix);
-
   /*! brief Get a list of widgets for witch object name beginns with given prefix
    *
    * \pre w must be a valid pointer
@@ -226,7 +210,6 @@ class mdtSqlDataWidgetController : public mdtAbstractSqlTableController
   Q_DISABLE_COPY(mdtSqlDataWidgetController);
 
   QDataWidgetMapper pvWidgetMapper;
-//   QWidgetList pvFoundWidgets;       /// \deprecated Used temporary during mapping - see searchWidgets() and buildWidgetsList()
   QList<mdtSqlFieldHandler*> pvFieldHandlers;
   QWidget *pvFirstDataWidget;       // Keep trace of first data edit/view widget in focus chain
 };

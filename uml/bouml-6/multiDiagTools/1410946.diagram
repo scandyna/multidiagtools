@@ -1,0 +1,43 @@
+format 209
+
+classcanvas 128002 class_ref 952962 // mdtTtBase
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 318 45 2000
+end
+classcanvas 128130 class_ref 1631490 // mdtTtTestSystemComponent
+  classdiagramsettings member_max_width 0 end
+  xyz 107 148 2000
+end
+classcanvas 128386 class_ref 999426 // mdtTtTestNode
+  classdiagramsettings member_max_width 0 end
+  xyz 21 284 2006
+end
+classcanvas 128770 class_ref 1631618 // mdtTtTestCable
+  classdiagramsettings member_max_width 0 end
+  xyz 367 428 2000
+end
+classcanvas 129026 class_ref 1631746 // mdtTtTestPlug
+  classdiagramsettings member_max_width 0 end
+  xyz 361 563 2000
+end
+relationcanvas 128258 relation_ref 1986050 // <generalisation>
+  from ref 128130 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128642 relation_ref 1986178 // <generalisation>
+  from ref 128386 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 1986306 // <generalisation>
+  from ref 128770 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 1986434 // <generalisation>
+  from ref 129026 z 2001 to ref 128770
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

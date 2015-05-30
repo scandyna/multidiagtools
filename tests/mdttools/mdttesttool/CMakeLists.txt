@@ -15,6 +15,18 @@ target_link_libraries(mdttvaluelimitstest "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdttvaluelimitstest "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdttvaluelimitstest "mdttesttool${MDTLIB_VERSION_SUFFIX}")
 
+# * mdtTtTestSystemComponentTest executable *
+QT4_WRAP_CPP(MDT_TEST_SYSTEM_COMPONENT_MOC "mdtTtTestSystemComponentTest.h")
+add_executable(mdttestsystemcomponenttest mdtTtTestSystemComponentTest.cpp mdtCableListTestScenario.cpp ${MDT_TEST_SYSTEM_COMPONENT_MOC})
+target_link_libraries(mdttestsystemcomponenttest ${QT_LIBRARIES})
+target_link_libraries(mdttestsystemcomponenttest "mdttest")
+target_link_libraries(mdttestsystemcomponenttest "mdtutils${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdttestsystemcomponenttest "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
+#target_link_libraries(mdttestsystemcomponenttest "mdtdevice${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdttestsystemcomponenttest "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdttestsystemcomponenttest "mdttesttool${MDTLIB_VERSION_SUFFIX}")
+#target_link_libraries(mdttestsystemcomponenttest "mdtcablelist${MDTLIB_VERSION_SUFFIX}")
+
 # * mdtTestNodeTest executable *
 QT4_WRAP_CPP(MDT_TEST_NODE_MOC "mdtTestNodeTest.h")
 add_executable(mdttestnodetest mdtTestNodeTest.cpp mdtCableListTestScenario.cpp mdtTtTestNodeTestData.cpp ${MDT_TEST_NODE_MOC})

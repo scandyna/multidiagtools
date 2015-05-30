@@ -99,6 +99,7 @@ p, li { white-space: pre-wrap; }
     </widget>
     <addaction name="actEditTestSystem"/>
     <addaction name="actEditTestSystemComponent"/>
+    <addaction name="actEditTestSystemUnit"/>
     <addaction name="actEditTestNode"/>
     <addaction name="actCalibrateW750_2BusNode"/>
     <addaction name="actEditTest"/>
@@ -380,6 +381,11 @@ p, li { white-space: pre-wrap; }
   <action name="actEditTestSystemComponent">
    <property name="text">
     <string>Test system component</string>
+   </property>
+  </action>
+  <action name="actEditTestSystemUnit">
+   <property name="text">
+    <string>Test system unit</string>
    </property>
   </action>
  </widget>
