@@ -212,6 +212,42 @@ void mdtTtTestSystemComponentTest::testSystemAssignationTest()
   QCOMPARE(dataList.size(), 0);
 }
 
+void mdtTtTestSystemComponentTest::createUnitTest()
+{
+  mdtTtTestSystemComponent tsc(pvDatabaseManager.database());
+  mdtTtTestSystemComponentTestData testData(pvDatabaseManager.database());
+  QList<QSqlRecord> dataList;
+  QVariant unitId;
+  bool ok;
+
+  // Create dataset
+  QVERIFY(testData.populateTestSystems());
+  QVERIFY(testData.populateTestSystemComponents());
+
+  /*
+   * Create a bus coupling relay that belongs to Test system component 11
+   */
+  // Create unit
+  unitId = tsc.createUnit(11, "BUSCPLREL");
+  QVERIFY(!unitId.isNull());
+  // Check back
+  dataList = tsc.getDataList<QSqlRecord>("SELECT * FROM TestSystemUnit_view", ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 1);
+  QCOMPARE(dataList.at(0).value("TestSystemComponent_Id_FK"), QVariant(11));
+  QCOMPARE(dataList.at(0).value("Type_Code_FK"), QVariant("BUSCPLREL"));
+  // Remove unit
+  QVERIFY(tsc.removeUnit(unitId, true));
+  // Check back
+  dataList = tsc.getDataList<QSqlRecord>("SELECT * FROM TestSystemUnit_view", ok);
+  QVERIFY(ok);
+  QCOMPARE(dataList.size(), 0);
+}
+
+/*
+ * Test helper functions
+ */
+
 void mdtTtTestSystemComponentTest::createDatabaseSchema()
 {
   QTemporaryFile dbFile;

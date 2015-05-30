@@ -70,6 +70,27 @@ void mdtTtApplicationWidgets::editTestSystemComponents()
   aw.showSqlWindow(aw.pvTestSystemComponentEditor, false, true);
 }
 
+void mdtTtApplicationWidgets::editTestSystemUnit(const QVariant& unitId)
+{
+  auto & aw = instance();
+
+  if(!aw.pvTestSystemUnitEditor){
+    if(!aw.createTestSystemUnitEditor()){
+      return;
+    }
+  }
+  Q_ASSERT(aw.pvTestSystemUnitEditor);
+  if(!aw.pvTestSystemUnitEditor->select()){
+    aw.displayError(aw.pvTestSystemUnitEditor->lastError());
+    return;
+  }
+  if(!aw.pvTestSystemUnitEditor->setCurrentRow("Unit_Id_FK_PK", unitId)){
+    aw.displayError(aw.pvTestSystemUnitEditor->lastError());
+    return;
+  }
+  aw.showSqlWindow(aw.pvTestSystemUnitEditor, false, true);
+}
+
 
 
 void mdtTtApplicationWidgets::editTestCable(const QVariant & testCableId)
@@ -251,6 +272,8 @@ bool mdtTtApplicationWidgets::createTestSystemUnitEditor()
   // Setup in a generic SQL window
   auto window = setupEditorInSqlWindow(pvTestSystemUnitEditor);
   Q_ASSERT(window);
+  window->disableInsertion();
+  window->disableDeletion();
   window->setWindowTitle(tr("Test system unit edition"));
   window->resize(800, 600);
 

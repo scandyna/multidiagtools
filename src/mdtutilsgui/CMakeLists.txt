@@ -20,8 +20,6 @@ set (HEADER_FILES
           mdtDigitalInWidget.h
           mdtDigitalOutWidget.h
           # Database
-          mdtSqlTableModel.h
-          #mdtSqlDataWidgetMapper.h
           mdtDataTableItemDelegate.h
           #mdtDataTableManager.h
           mdtDataTableModel.h
@@ -32,16 +30,7 @@ set (HEADER_FILES
           mdtItemsSelectorDialog.h
           mdtMvColumnSelectionDialog.h
           mdtMvSortingSetupDialog.h
-          mdtSqlRelation.h
-          #mdtSqlFieldHandler.h
-          #mdtAbstractSqlWidget.h
-          #mdtSqlFormWidget.h
-          #mdtSqlTableWidget.h
-          #mdtSqlSelectionDialog.h
           mdtSortFilterProxyModel.h
-          #mdtSqlDataValidator.h
-#          mdtSqlFormWidgetDataValidator.h
-          #mdtSqlDatabaseManager.h
           # Essais
           mdtParentChildTableModel.h
           mdtParentChildTableItem.h
@@ -62,8 +51,6 @@ set (SOURCES_FILES
           mdtDigitalInWidget.cpp
           mdtDigitalOutWidget.cpp
           # Database
-          mdtSqlTableModel.cpp
-          #mdtSqlDataWidgetMapper.cpp
           mdtDataTableItemDelegate.cpp
           #mdtDataTableManager.cpp
           mdtDataTableModel.cpp
@@ -78,18 +65,7 @@ set (SOURCES_FILES
           mdtItemsSelectorDialogItem.cpp
           mdtMvColumnSelectionDialog.cpp
           mdtMvSortingSetupDialog.cpp
-          mdtSqlRelation.cpp
-          mdtSqlRelationItem.cpp
-          #mdtSqlFieldHandler.cpp
-          #mdtAbstractSqlWidget.cpp
-          #mdtSqlFormWidget.cpp
-          #mdtSqlTableWidget.cpp
-          #mdtSqlSelectionDialog.cpp
           mdtSortFilterProxyModel.cpp
-          #mdtSqlDataValidator.cpp
-          #mdtSqlFormWidgetDataValidator.cpp
-          #mdtSqlSchemaTable.cpp
-          #mdtSqlDatabaseManager.cpp
           # Essais
           mdtParentChildTableModel.cpp
           mdtParentChildTableItem.cpp
@@ -101,7 +77,7 @@ set (SOURCES_FILES
 set (FORM_FILES
           mdtDoubleEditDialog.ui
           mdtSqlQueryWidget.ui
-          mdtSqlWindow.ui
+#           mdtSqlWindow.ui
           mdtItemsSelectorDialog.ui
           mdtFieldMapDialog.ui
           mdtFieldMapItemDialog.ui

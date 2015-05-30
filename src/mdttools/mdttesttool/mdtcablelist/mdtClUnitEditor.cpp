@@ -1309,7 +1309,7 @@ QVariant mdtClUnitEditor::selectArticleConnector()
   selectionDialog.setMessage("Please select a connector:");
   selectionDialog.setQuery(sql, database(), false);
   selectionDialog.setColumnHidden("Id_PK", true);
-  selectionDialog.addSelectionResultColumn("Id_PK");
+//   selectionDialog.addSelectionResultColumn("Id_PK");
   selectionDialog.addColumnToSortOrder("Name", Qt::AscendingOrder);
   selectionDialog.sort();
   selectionDialog.resize(400, 300);
@@ -1317,9 +1317,12 @@ QVariant mdtClUnitEditor::selectArticleConnector()
   if(selectionDialog.exec() != QDialog::Accepted){
     return QVariant();
   }
-  Q_ASSERT(selectionDialog.selectionResult().size() == 1);
+//   Q_ASSERT(selectionDialog.selectionResult().size() == 1);
+// 
+//   return selectionDialog.selectionResult().at(0);
+  Q_ASSERT(selectionDialog.selection("Id_PK").rowCount() == 1);
 
-  return selectionDialog.selectionResult().at(0);
+  return selectionDialog.selection("Id_PK").data(0, "Id_PK");
 }
 
 QList<QVariant> mdtClUnitEditor::selectByArticleConnectorIdArticleConnectionIdList(const QVariant & articleConnectorId, const QVariant & unitId, bool multiSelection)
@@ -1593,7 +1596,7 @@ bool mdtClUnitEditor::setupUnitConnectorTable()
   // Stretch
   widget->addStretchToLocalBar();
   // Set some attributes on table view
-  widget->tableView()->resizeColumnsToContents();
+  widget->resizeViewToContents();
 
   return true;
 }
@@ -1624,7 +1627,7 @@ bool mdtClUnitEditor::setupUnitConnectionTable()
   }
   */
   widget = sqlTableWidget("UnitConnection_view");
-  Q_ASSERT(widget != 0);
+  Q_ASSERT(widget != nullptr);
   // Add add connection button
   pbAddConnection = new QPushButton(tr("Add connection ..."));
   pbAddConnection->setIcon(QIcon::fromTheme("document-new"));

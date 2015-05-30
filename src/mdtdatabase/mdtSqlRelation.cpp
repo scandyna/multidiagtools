@@ -25,11 +25,11 @@
 //#include <QDebug>
 
 mdtSqlRelation::mdtSqlRelation(QObject *parent)
- : QObject(parent)
+ : QObject(parent),
+   pvParentModel(nullptr),
+   pvChildModel(nullptr),
+   pvCurrentRow(-1)
 {
-  pvParentModel = 0;
-  pvChildModel = 0;
-  pvCurrentRow = -1;
 }
 
 mdtSqlRelation::~mdtSqlRelation()
@@ -39,23 +39,102 @@ mdtSqlRelation::~mdtSqlRelation()
 
 void mdtSqlRelation::setParentModel(QSqlTableModel *model)
 {
-  Q_ASSERT(model != 0);
+  Q_ASSERT(model != nullptr);
 
   pvParentModel = model;
 }
 
 void mdtSqlRelation::setChildModel(QSqlTableModel *model)
 {
-  Q_ASSERT(model != 0);
+  Q_ASSERT(model != nullptr);
 
   pvChildModel = model;
   connect(pvChildModel, SIGNAL(beforeInsert(QSqlRecord&)), this, SLOT(onChildBeforeInsert(QSqlRecord&)));
 }
 
+bool mdtSqlRelation::addRelations(const mdtSqlRelationInfo & relationInfo)
+{
+  Q_ASSERT(pvParentModel != nullptr);
+  Q_ASSERT(pvChildModel != nullptr);
+
+  int i;
+
+  for(i = 0; i < relationInfo.items().size(); ++i){
+    if(!addRelation(relationInfo.items().at(i))){
+      return false;
+    }
+  }
+
+  return true;
+}
+
+void mdtSqlRelation::clear()
+{
+  qDeleteAll(pvRelations);
+  pvRelations.clear();
+  pvParentModel = nullptr;
+  pvChildModel = nullptr;
+}
+
+void mdtSqlRelation::setParentCurrentRow(int row)
+{
+  Q_ASSERT(pvParentModel != nullptr);
+  Q_ASSERT(pvChildModel != nullptr);
+
+  pvCurrentRow = row;
+  generateChildModelRelationFilter(pvCurrentRow);
+}
+
+void mdtSqlRelation::setParentCurrentIndex(int index)
+{
+  Q_ASSERT(pvParentModel != nullptr);
+  Q_ASSERT(pvChildModel != nullptr);
+
+  pvCurrentRow = index;
+  generateChildModelRelationFilter(index);
+}
+
+void mdtSqlRelation::setParentCurrentIndex(const QModelIndex &index)
+{
+  Q_ASSERT(pvParentModel != nullptr);
+  Q_ASSERT(pvChildModel != nullptr);
+
+  if(index.isValid()){
+    setParentCurrentIndex(index.row());
+  }else{
+    setParentCurrentIndex(-1);
+  }
+}
+
+void mdtSqlRelation::setParentCurrentIndex(const QModelIndex &current, const QModelIndex &previous)
+{
+  Q_ASSERT(pvParentModel != nullptr);
+  Q_ASSERT(pvChildModel != nullptr);
+
+  setParentCurrentIndex(current);
+}
+
+void mdtSqlRelation::onChildBeforeInsert(QSqlRecord &childRecord)
+{
+  Q_ASSERT(pvParentModel != nullptr);
+  Q_ASSERT(pvChildModel != nullptr);
+
+  QSqlRecord parentRecord;
+
+  // On invalid index, we do nothing
+  if(pvCurrentRow < 0){
+    return;
+  }
+  // Get data record of the parent model
+  parentRecord = pvParentModel->record(pvCurrentRow);
+  // Update childs
+  setChildForeingKeyValues(parentRecord, childRecord);
+}
+
 bool mdtSqlRelation::addRelation(const mdtSqlRelationInfoItem & relationInfoItem)
 {
-  Q_ASSERT(pvParentModel != 0);
-  Q_ASSERT(pvChildModel != 0);
+  Q_ASSERT(pvParentModel != nullptr);
+  Q_ASSERT(pvChildModel != nullptr);
 
   QSqlRecord record;
   int parentFieldIndex;
@@ -96,104 +175,10 @@ bool mdtSqlRelation::addRelation(const mdtSqlRelationInfoItem & relationInfoItem
   return true;
 }
 
-bool mdtSqlRelation::addRelation(const QString &parentFieldName, const QString &childFieldName, bool copyParentToChildOnInsertion, const QString &operatorWithPreviousItem)
-{
-  Q_ASSERT(pvParentModel != 0);
-  Q_ASSERT(pvChildModel != 0);
-
-  mdtSqlRelationInfoItem item;
-
-  item.parentFieldName = parentFieldName;
-  item.childFieldName = childFieldName;
-  item.copyParentToChildOnInsertion = copyParentToChildOnInsertion;
-  item.relationOperatorWithPreviousItem = operatorWithPreviousItem;
-
-  return addRelation(item);
-}
-
-bool mdtSqlRelation::addRelations(const mdtSqlRelationInfo & relationInfo)
-{
-  Q_ASSERT(pvParentModel != 0);
-  Q_ASSERT(pvChildModel != 0);
-
-  int i;
-
-  for(i = 0; i < relationInfo.items().size(); ++i){
-    if(!addRelation(relationInfo.items().at(i))){
-      return false;
-    }
-  }
-
-  return true;
-}
-
-void mdtSqlRelation::clear()
-{
-  qDeleteAll(pvRelations);
-  pvRelations.clear();
-  pvParentModel = 0;
-  pvChildModel = 0;
-}
-
-void mdtSqlRelation::setParentCurrentRow(int row)
-{
-  Q_ASSERT(pvParentModel != 0);
-  Q_ASSERT(pvChildModel != 0);
-
-  pvCurrentRow = row;
-  generateChildModelRelationFilter(pvCurrentRow);
-}
-
-void mdtSqlRelation::setParentCurrentIndex(int index)
-{
-  Q_ASSERT(pvParentModel != 0);
-  Q_ASSERT(pvChildModel != 0);
-
-  pvCurrentRow = index;
-  generateChildModelRelationFilter(index);
-}
-
-void mdtSqlRelation::setParentCurrentIndex(const QModelIndex &index)
-{
-  Q_ASSERT(pvParentModel != 0);
-  Q_ASSERT(pvChildModel != 0);
-
-  if(index.isValid()){
-    setParentCurrentIndex(index.row());
-  }else{
-    setParentCurrentIndex(-1);
-  }
-}
-
-void mdtSqlRelation::setParentCurrentIndex(const QModelIndex &current, const QModelIndex &previous)
-{
-  Q_ASSERT(pvParentModel != 0);
-  Q_ASSERT(pvChildModel != 0);
-
-  setParentCurrentIndex(current);
-}
-
-void mdtSqlRelation::onChildBeforeInsert(QSqlRecord &childRecord)
-{
-  Q_ASSERT(pvParentModel != 0);
-  Q_ASSERT(pvChildModel != 0);
-
-  QSqlRecord parentRecord;
-
-  // On invalid index, we do nothing
-  if(pvCurrentRow < 0){
-    return;
-  }
-  // Get data record of the parent model
-  parentRecord = pvParentModel->record(pvCurrentRow);
-  // Update childs
-  setChildForeingKeyValues(parentRecord, childRecord);
-}
-
 void mdtSqlRelation::setChildForeingKeyValues(QSqlRecord &parentRecord, QSqlRecord &childRecord)
 {
-  Q_ASSERT(pvParentModel != 0);
-  Q_ASSERT(pvChildModel != 0);
+  Q_ASSERT(pvParentModel != nullptr);
+  Q_ASSERT(pvChildModel != nullptr);
 
   int i;
   mdtSqlRelationItem *item;
@@ -215,8 +200,8 @@ void mdtSqlRelation::setChildForeingKeyValues(QSqlRecord &parentRecord, QSqlReco
 
 void mdtSqlRelation::generateChildModelRelationFilter(int row)
 {
-  Q_ASSERT(pvParentModel != 0);
-  Q_ASSERT(pvChildModel != 0);
+  Q_ASSERT(pvParentModel != nullptr);
+  Q_ASSERT(pvChildModel != nullptr);
 
   int i;
   mdtSqlRelationItem *item;

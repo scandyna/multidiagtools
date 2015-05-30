@@ -319,9 +319,11 @@ bool mdtTtCableChecker::setupTestTable()
   baseTestRelation = new mdtSqlRelation(this);
   baseTestRelation->setParentModel(testResultModel);
   baseTestRelation->setChildModel(baseTestModel);
+  /**
   if(!baseTestRelation->addRelation("TestModel_Id_FK", "Id_PK", false)){
     return false;
   }
+  */
   ///connect(mainSqlWidget(), SIGNAL(currentRowChanged(int)), baseTestRelation, SLOT(setParentCurrentIndex(int)));
   connect(baseTestRelation, SIGNAL(childModelFilterApplied()), baseTestMapper, SLOT(toFirst()));
   connect(baseTestRelation, SIGNAL(childModelIsEmpty()), baseTestMapper, SLOT(revert()));

@@ -92,7 +92,6 @@ class mdtSqlRelationInfo
    * \param childFieldName Field of child model to use in relation (usually FK)
    * \param copyParentToChildOnInsertion If true, data from parent model will be copied
    *                                      to child model for this fields.
-   *                                      (See mdtSqlRelationItem for details).
    * \param operatorWithPreviousItem Most of cases, the operator between multiple relation items is AND.
    *                     If another is needed (f.ex. OR), specify it here.
    */

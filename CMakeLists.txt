@@ -188,24 +188,6 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/tools")
 
 endif(UNIX)
 
-# *** Mini test programm section ***
-
-# NOTE: Support Windows pas terminé
-if(UNIX)
-
-# Exécutable pour tests
-add_executable (essais src/main.cpp)
-# Librairies à lier
-target_link_libraries(essais "mdtutils${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(essais "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(essais "mdtport${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(essais "mdtserialport${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(essais "mdtdevice${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(essais "mdttools${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(essais ${QT_LIBRARIES})
-
-endif(UNIX)
-
 #################################################################################################################################################
 # *** Unit tests section ***
 #################################################################################################################################################

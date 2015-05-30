@@ -20,12 +20,11 @@
  ****************************************************************************/
 #include "mdtDatabaseTest.h"
 #include "mdtApplication.h"
-
-#include "mdtApplication.h"
 #include "mdtSqlDatabaseManager.h"
 #include "mdtSqlSchemaTable.h"
 #include "mdtSqlRecord.h"
-#include "mdtSqlSelectionDialog.h"
+#include "mdtSqlRelation.h"
+#include "mdtSqlRelationInfo.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -54,6 +53,8 @@
 
 #include <QTableView>
 #include <QItemSelectionModel>
+
+#include <QSignalSpy>
 
 #include <QDebug>
 
@@ -955,6 +956,37 @@ void mdtDatabaseTest::sqlRecordTest()
   matchData.setValue("FirstName", "Name 8");
   matchData.setValue("Remarks", "Remark 8");
   QCOMPARE(record.sqlForUpdate("Client_tbl", matchData), QString("UPDATE Client_tbl SET FirstName=? WHERE Id_PK=8 AND FirstName='Name 8' AND Remarks='Remark 8'"));
+
+  // Cleanup
+  clearTestDatabaseData();
+}
+
+void mdtDatabaseTest::sqlRelationTest()
+{
+  QSqlTableModel clientModel(0, pvDatabase);
+  QSqlTableModel addressModel(0, pvDatabase);
+
+  // Set database data
+  clearTestDatabaseData();
+  populateTestDatabase();
+
+  /*
+   * Setup models
+   */
+  // Setup client model
+  clientModel.setTable("Client_tbl");
+  QVERIFY(clientModel.select());
+  QCOMPARE(clientModel.rowCount(), 2);
+  // Setup address model
+  addressModel.setTable("Address_tbl");
+  QVERIFY(addressModel.select());
+  QCOMPARE(addressModel.rowCount(), 3);
+
+
+  // Cleanup
+  clearTestDatabaseData();
+  
+  QFAIL("Test not implemented yet..");
 }
 
 void mdtDatabaseTest::doubleValueTest()
@@ -1064,8 +1096,8 @@ void mdtDatabaseTest::populateTestDatabase()
   QSqlQuery query(pvDatabase);
 
   // Inert some data in Client_tbl
-  QVERIFY(query.exec("INSERT INTO 'Client_tbl' ('FirstName') VALUES('Andy')"));
-  QVERIFY(query.exec("INSERT INTO 'Client_tbl' ('FirstName', 'Remarks') VALUES('Bety', 'Remark on Bety')"));
+  QVERIFY(query.exec("INSERT INTO 'Client_tbl' ('Id_PK', 'FirstName') VALUES(1, 'Andy')"));
+  QVERIFY(query.exec("INSERT INTO 'Client_tbl' ('Id_PK', 'FirstName', 'Remarks') VALUES(2, 'Bety', 'Remark on Bety')"));
   QVERIFY(query.exec("SELECT * FROM 'Client_tbl'"));
   while(query.next()){
     QVERIFY(!query.record().isEmpty());

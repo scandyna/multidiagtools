@@ -1491,12 +1491,9 @@ bool mdtAbstractSqlTableController::setupAndAddChildController(shared_ptr< mdtAb
   // Setup relation
   relation->setParentModel(pvModel.get());
   relation->setChildModel(controller->pvModel.get());
-  for(i = 0; i < relationInfo.items().size(); ++i){
-    item = relationInfo.items().at(i);
-    if(!relation->addRelation(item.parentFieldName, item.childFieldName, item.copyParentToChildOnInsertion, item.relationOperatorWithPreviousItem)){
-      pvLastError = relation->lastError();
-      return false;
-    }
+  if(!relation->addRelations(relationInfo)){
+    pvLastError = relation->lastError();
+    return false;
   }
   if(relationInfo.relationType() == mdtSqlRelationInfo::OneToOne){
     connect(controller.get(), SIGNAL(dataEdited()), this, SIGNAL(dataEdited()));
@@ -1543,12 +1540,12 @@ void mdtAbstractSqlTableController::updateChildControllersAfterInsert()
 
   proxyIndex = pvProxyModel->index(pvCurrentRow, 0);
   sourceIndex = pvProxyModel->mapToSource(proxyIndex);
-  for(i = 0; i < pvChildControllerContainers.size(); ++i){
-    Q_ASSERT(pvChildControllerContainers.at(i).relation);
-    pvChildControllerContainers.at(i).relation->setParentCurrentRow(sourceIndex.row());
-    if(pvChildControllerContainers.at(i).relationType == mdtSqlRelationInfo::OneToOne){
-      Q_ASSERT(pvChildControllerContainers.at(i).controller);
-      pvChildControllerContainers.at(i).controller->insert();
+  for(const auto & cc : pvChildControllerContainers){
+    Q_ASSERT(cc.relation);
+    cc.relation->setParentCurrentRow(sourceIndex.row());
+    if(cc.relationType == mdtSqlRelationInfo::OneToOne){
+      Q_ASSERT(cc.controller);
+      cc.controller->insert();
     }
   }
 }

@@ -417,7 +417,12 @@ class mdtTtDatabaseSchema
    * Lists test systems assigned to a component
    */
   bool createTestSytemOfComponentView();
-  
+
+  /*! \brief Create TestSystemUnit_view
+   */
+  bool createTestSystemUnitView();
+
+
   /*! \brief Create TestNode_view
    */
   bool createTestNodeView();

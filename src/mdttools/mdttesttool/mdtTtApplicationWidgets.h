@@ -56,6 +56,10 @@ class mdtTtApplicationWidgets : public mdtSqlApplicationWidgets<mdtTtApplication
    */
   static void editTestSystemComponents();
 
+  /*! \brief Edit specified test system unit
+   */
+  static void editTestSystemUnit(const QVariant & unitId);
+
 
   /*! \brief Edit a specific test cable
    */

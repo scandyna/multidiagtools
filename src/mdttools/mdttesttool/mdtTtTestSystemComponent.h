@@ -24,6 +24,7 @@
 #include "mdtTtBase.h"
 #include "mdtSqlTableSelection.h"
 #include <QVariant>
+#include <QString>
 
 /*! \brief Test system assignation data
  */
@@ -64,6 +65,31 @@ class mdtTtTestSystemComponent : public mdtTtBase
    * Removes a entry in TestSystem_TestSystemComponent_tbl
    */
   bool removeTestSystemAssignation(const mdtSqlTableSelection & s);
+
+  /*! \brief Create a new test system unit
+   *
+   * Will handle creation in Unit_tbl and TestSystemUnit_tbl
+   *
+   * \return ID of created test system unit. If a error occured, a null ID is returned.
+   */
+  QVariant createUnit(const QVariant & componentId, const QString & typeCode);
+
+  /*! \brief Remove a test system unit
+   *
+   *  Will handle deletion in Unit_tbl and TestSystemUnit_tbl
+   *
+   * \param id ID of test system unit to remove (delete)
+   * \param handleTransaction Because data must be removed in Unit_tbl and TestSystemUnit_tbl,
+   *          a (explicit) transaction is used. If a transaction was started before calling this function,
+   *          set this parameter false.
+   */
+  bool removeUnit(const QVariant & id, bool handleTransaction);
+
+  /*! \brief Remove test system units contained in selection
+   *
+   * \sa removeUnit()
+   */
+  bool removeUnits(const mdtSqlTableSelection & s);
 
  private:
 

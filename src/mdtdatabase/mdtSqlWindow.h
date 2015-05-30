@@ -46,9 +46,19 @@ class mdtSqlWindow : public QMainWindow, public Ui::mdtSqlWindow
   /*! \brief Constructor
    *
    * Will construct a empty window.
-   *  Use setSqlWidget() to set central widget,
-   *  enableNavigation() to build navigaton bar
-   *  and enableEdition() to add edition buttons.
+   *  Use setSqlWidget() to set central widget.
+   *
+   * By default, navigation, insertion, deletion and edition
+   *  actions are disabled.
+   *
+   * \sa enableNavigation()
+   * \sa disableNavigation()
+   * \sa enableInsertion()
+   * \sa disableInsertion()
+   * \sa enableDeletion()
+   * \sa disableDeletion()
+   * \sa enableEdition()
+   * \sa disableEdition()
    */
   mdtSqlWindow(QWidget *parent = 0, Qt::WindowFlags flags = 0);
 
@@ -95,11 +105,25 @@ class mdtSqlWindow : public QMainWindow, public Ui::mdtSqlWindow
     }
   }
 
+  /*! \brief Enable insertion
+   */
+  void enableInsertion();
+
+  /*! \brief Disable insertion
+   */
+  void disableInsertion();
+
+  /*! \brief Enable deletion
+   */
+  void enableDeletion();
+
+  /*! \brief Disable deletion
+   */
+  void disableDeletion();
+
   /*! \brief Enable edition
    *
-   * Will add insert/revert/save/delete buttons.
-   *
-   * \pre Form must be set with setSqlForm() before call this method.
+   * Will make save and revert actions available.
    */
   void enableEdition();
 

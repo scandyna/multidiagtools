@@ -54,3 +54,107 @@ bool mdtTtTestSystemComponent::removeTestSystemAssignation(const mdtSqlTableSele
 {
   return removeData("TestSystem_TestSystemComponent_tbl", s, true);
 }
+
+QVariant mdtTtTestSystemComponent::createUnit(const QVariant & componentId, const QString & typeCode)
+{
+  QSqlQuery query(database());
+  mdtSqlRecord uRecord, tsuRecord;
+  QVariant id;
+
+  // Setup records
+  if(!uRecord.addAllFields("Unit_tbl", database())){
+    pvLastError = uRecord.lastError();
+    return QVariant();
+  }
+  if(!tsuRecord.addAllFields("TestSystemUnit_tbl", database())){
+    pvLastError = tsuRecord.lastError();
+    return QVariant();
+  }
+  // Start a trasaction
+  if(!beginTransaction()){
+    return QVariant();
+  }
+  // Insert into Unit_tbl and get created ID
+  uRecord.setValue("SchemaPosition", "");
+  if(!addRecord(uRecord, "Unit_tbl", query)){
+    rollbackTransaction();
+    return QVariant();
+  }
+  id = query.lastInsertId();
+  if(id.isNull()){
+    rollbackTransaction();
+    pvLastError.setError(tr("Creating test system unit failed: created Id_PK in Unit_tbl is Null"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtTestSystemComponent");
+    pvLastError.commit();
+    return QVariant();
+  }
+  // Insert into TestSystemUnit_tbl
+  tsuRecord.setValue("Unit_Id_FK_PK", id);
+  tsuRecord.setValue("TestSystemComponent_Id_FK", componentId);
+  tsuRecord.setValue("Type_Code_FK", typeCode);
+  if(!addRecord(tsuRecord, "TestSystemUnit_tbl", query)){
+    rollbackTransaction();
+    return QVariant();
+  }
+  // Commit transaction
+  if(!commitTransaction()){
+    return QVariant();
+  }
+
+  return id;
+}
+
+bool mdtTtTestSystemComponent::removeUnit(const QVariant& id, bool handleTransaction)
+{
+  if(handleTransaction){
+    if(!beginTransaction()){
+      return false;
+    }
+  }
+  if(!removeData("TestSystemUnit_tbl", "Unit_Id_FK_PK", id)){
+    if(handleTransaction){
+      rollbackTransaction();
+    }
+    return false;
+  }
+  if(!removeData("Unit_tbl", "Id_PK", id)){
+    if(handleTransaction){
+      rollbackTransaction();
+    }
+    return false;
+  }
+  if(handleTransaction){
+    if(!commitTransaction()){
+      return false;
+    }
+  }
+
+  return true;
+}
+
+bool mdtTtTestSystemComponent::removeUnits(const mdtSqlTableSelection & s)
+{
+  auto idList = s.dataList("Unit_Id_FK_PK");
+
+  if(idList.isEmpty()){
+    return true;
+  }
+  if(!beginTransaction()){
+    return false;
+  }
+  for(const auto & id : idList){
+    if(!removeUnit(id, false)){
+      rollbackTransaction();
+      return false;
+    }
+  }
+  if(!commitTransaction()){
+    return false;
+  }
+
+  return true;
+}
+
+
+
+

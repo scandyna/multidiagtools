@@ -94,6 +94,7 @@ class mdtTtTestSystemComponentTest : public mdtTest
   void cleanupTestCase();
 
   void testSystemAssignationTest();
+  void createUnitTest();
 
  private:
 

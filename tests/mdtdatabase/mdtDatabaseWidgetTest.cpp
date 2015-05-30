@@ -65,6 +65,7 @@
 #include <QTableView>
 #include <QItemSelectionModel>
 #include <QVBoxLayout>
+#include <QPoint>
 
 #include <QDebug>
 
@@ -131,6 +132,31 @@ void sqlDataWidgetControllerTestWidget::setRevertEnableState(bool enable)
 {
   revertEnabled = enable;
 }
+
+/*
+ * mdtTableViewControllerTestObject implementation
+ */
+
+mdtTableViewControllerTestObject::mdtTableViewControllerTestObject()
+ : QObject(0)
+{
+}
+
+void mdtTableViewControllerTestObject::doubleClick(QTableView* tv, int row, int column)
+{
+  Q_ASSERT(tv != nullptr);
+  int x = tv->columnViewportPosition(column) + 5;
+  int y = tv->rowViewportPosition(row) + 10;
+  QTest::mouseClick( tv->viewport(), Qt::LeftButton, 0, QPoint(x, y));
+  QTest::mouseDClick( tv->viewport(), Qt::LeftButton, 0, QPoint(x, y));
+}
+
+void mdtTableViewControllerTestObject::doubleClickedReceiver(const QSqlRecord& record)
+{
+  doubleClickReceiverRecord = record;
+}
+
+
 
 /*
  * Test scenario data class
@@ -2555,6 +2581,7 @@ void mdtDatabaseWidgetTest::sqlDataWidgetController2tableTest()
 void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
 {
   mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabaseManager.database());
+  mdtTableViewControllerTestObject testObject;
   mdtSqlTableViewController tvc;
   QTableView tv;
   QSqlQuery q(pvDatabaseManager.database());
@@ -2575,6 +2602,7 @@ void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
   tvc.setTableView(&tv);
   tvc.setTableName("Client_tbl", pvDatabaseManager.database(), "Clients");
   QCOMPARE(tvc.tableName(), QString("Client_tbl"));
+  connect(&tvc, SIGNAL(doubleClicked(const QSqlRecord&)), &testObject, SLOT(doubleClickedReceiver(const QSqlRecord&)));
   tv.setEditTriggers(QAbstractItemView::EditKeyPressed);
   tv.resize(400, 300);
   tv.show();
@@ -3074,7 +3102,45 @@ void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
   QCOMPARE(strList.at(0), QString("Zeta"));
   QCOMPARE(strList.at(1), QString("Edited remark on Zeta"));
   QCOMPARE(strList.at(2), QString(""));
-
+  /*
+   * Check double click
+   */
+  // Row 0
+  testObject.doubleClick(&tv, 0, 0);
+  QCOMPARE(testObject.doubleClickReceiverRecord.value("FirstName"), QVariant("Andy"));
+  testObject.doubleClick(&tv, 0, 1);
+  QCOMPARE(testObject.doubleClickReceiverRecord.value("FirstName"), QVariant("Andy"));
+  testObject.doubleClick(&tv, 0, 2);
+  QCOMPARE(testObject.doubleClickReceiverRecord.value("FirstName"), QVariant("Andy"));
+  testObject.doubleClick(&tv, 0, 3);
+  QCOMPARE(testObject.doubleClickReceiverRecord.value("FirstName"), QVariant("Andy"));
+  // Row 1
+  testObject.doubleClick(&tv, 1, 0);
+  QCOMPARE(testObject.doubleClickReceiverRecord.value("FirstName"), QVariant("Bety"));
+  testObject.doubleClick(&tv, 1, 1);
+  QCOMPARE(testObject.doubleClickReceiverRecord.value("FirstName"), QVariant("Bety"));
+  testObject.doubleClick(&tv, 1, 2);
+  QCOMPARE(testObject.doubleClickReceiverRecord.value("FirstName"), QVariant("Bety"));
+  testObject.doubleClick(&tv, 1, 3);
+  QCOMPARE(testObject.doubleClickReceiverRecord.value("FirstName"), QVariant("Bety"));
+  // Row 2
+  testObject.doubleClick(&tv, 2, 0);
+  QCOMPARE(testObject.doubleClickReceiverRecord.value("FirstName"), QVariant("Charly"));
+  testObject.doubleClick(&tv, 2, 1);
+  QCOMPARE(testObject.doubleClickReceiverRecord.value("FirstName"), QVariant("Charly"));
+  testObject.doubleClick(&tv, 2, 2);
+  QCOMPARE(testObject.doubleClickReceiverRecord.value("FirstName"), QVariant("Charly"));
+  testObject.doubleClick(&tv, 2, 3);
+  QCOMPARE(testObject.doubleClickReceiverRecord.value("FirstName"), QVariant("Charly"));
+  // Row 3
+  testObject.doubleClick(&tv, 3, 0);
+  QCOMPARE(testObject.doubleClickReceiverRecord.value("FirstName"), QVariant("Zeta"));
+  testObject.doubleClick(&tv, 3, 1);
+  QCOMPARE(testObject.doubleClickReceiverRecord.value("FirstName"), QVariant("Zeta"));
+  testObject.doubleClick(&tv, 3, 2);
+  QCOMPARE(testObject.doubleClickReceiverRecord.value("FirstName"), QVariant("Zeta"));
+  testObject.doubleClick(&tv, 3, 3);
+  QCOMPARE(testObject.doubleClickReceiverRecord.value("FirstName"), QVariant("Zeta"));
 
   /*
    * Play

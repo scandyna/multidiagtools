@@ -189,6 +189,8 @@ std::shared_ptr<mdtSqlWindow> mdtSqlApplicationWidgets<T>::setupEditorInSqlWindo
   std::shared_ptr<mdtSqlWindow> window(new mdtSqlWindow);
 
   window->setSqlForm(editor.get());
+  window->enableInsertion();
+  window->enableDeletion();
   window->enableEdition();
   pvOpenEditorWidows.append(window);
 

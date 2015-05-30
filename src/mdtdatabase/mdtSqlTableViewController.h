@@ -101,7 +101,7 @@ class mdtSqlTableViewController : public mdtAbstractSqlTableController
    *  Here it's possible to define witch column must be selected
    *  in such case.
    *
-   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   * \pre Table model must be set with setModel() or setTableName() before calling this method.
    */
   void setDefaultColumnToSelect(int column);
 
@@ -109,7 +109,7 @@ class mdtSqlTableViewController : public mdtAbstractSqlTableController
    *
    * Same as setDefaultColumnToSelect(int), but you can give a field name.
    *
-   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   * \pre Table model must be set with setModel() or setTableName() before calling this method.
    */
   void setDefaultColumnToSelect(const QString &fieldName);
 
@@ -122,7 +122,7 @@ class mdtSqlTableViewController : public mdtAbstractSqlTableController
    * The returned selection will only contain data related
    *  to given field list.
    *
-   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   * \pre Table model must be set with setModel() or setTableName() before calling this method.
    */
   mdtSqlTableSelection currentSelection(const QStringList &fieldList);
 
@@ -131,11 +131,25 @@ class mdtSqlTableViewController : public mdtAbstractSqlTableController
    * The returned selection will only contain data related
    *  to given field.
    *
-   * \pre Table model must be set with setModel() or setTableName() begore calling this method.
+   * \pre Table model must be set with setModel() or setTableName() before calling this method.
    */
   mdtSqlTableSelection currentSelection(const QString &field);
 
+ signals:
+
+  /*! \brief Emitted when a item in table view was double clicked
+   *
+   * The record related to double clicked row is given as argument.
+   */
+  void doubleClicked(const QSqlRecord & record);
+
  private slots:
+
+  /*! \brief Get row of data related to index that was double clicked in table view
+   *
+   * Will also emit doubleClicked(const QSqlRecord &)
+   */
+  void onTableViewDoubleClicked(const QModelIndex & index);
 
   /*! \brief Will set pvTableView pointer to Null
    */

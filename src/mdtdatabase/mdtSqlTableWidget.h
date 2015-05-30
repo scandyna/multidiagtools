@@ -381,6 +381,14 @@ class mdtSqlTableWidget :  public QWidget
     return exportToCsvFile(csvFile, csvSettings, includeHeader, columnsOfFieldNames(fieldNames));
   }
 
+ signals:
+
+  /*! \brief Emitted when a item in table view was double clicked
+   *
+   * The record related to double clicked row is given as argument.
+   */
+  void doubleClicked(const QSqlRecord & record);
+
  public slots:
 
   /*! \brief Resize view to contents

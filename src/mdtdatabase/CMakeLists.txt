@@ -18,11 +18,12 @@ set (HEADER_FILES
           mdtSqlWindow.h
           mdtSqlDialog.h
           mdtSqlSelectionDialog.h
-          #mdtSqlFormWidget.h
           mdtSqlTableWidget.h
           mdtDataTableManager.h
           mdtSqlDatabaseManager.h
           mdtSqlFieldSelectionDialog.h
+          mdtSqlRelation.h
+
     )
 
 # Liste des fichiers sources
@@ -30,6 +31,8 @@ set (SOURCES_FILES
           mdtAbstractSqlTableController.cpp
           mdtSqlFieldHandler.cpp
           mdtSqlDataValidator.cpp
+          mdtSqlRelation.cpp
+          mdtSqlRelationItem.cpp
           mdtSqlRelationInfo.cpp
           mdtSqlFormWidgetDataValidator.cpp
           mdtSqlDataWidgetController.cpp
@@ -39,7 +42,6 @@ set (SOURCES_FILES
           mdtSqlDialog.cpp
           mdtSqlRecord.cpp
           mdtSqlSelectionDialog.cpp
-          #mdtSqlFormWidget.cpp
           mdtSqlTableWidget.cpp
           mdtSqlTableSelectionItem.cpp
           mdtSqlTableSelectionRow.cpp

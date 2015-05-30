@@ -73,20 +73,36 @@ void mdtSqlWindow::disableNavigation()
   actNavToLast->setVisible(false);
 }
 
-void mdtSqlWindow::enableEdition()
+void mdtSqlWindow::enableInsertion()
 {
   actInsert->setVisible(true);
+}
+
+void mdtSqlWindow::disableInsertion()
+{
+  actInsert->setVisible(false);
+}
+
+void mdtSqlWindow::enableDeletion()
+{
+  actRemove->setVisible(true);
+}
+
+void mdtSqlWindow::disableDeletion()
+{
+  actRemove->setVisible(false);
+}
+
+void mdtSqlWindow::enableEdition()
+{
   actSubmit->setVisible(true);
   actRevert->setVisible(true);
-  actRemove->setVisible(true);
 }
 
 void mdtSqlWindow::disableEdition()
 {
-  actInsert->setVisible(false);
   actSubmit->setVisible(false);
   actRevert->setVisible(false);
-  actRemove->setVisible(false);
 }
 
 void mdtSqlWindow::createEditionElements()

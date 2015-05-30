@@ -23,6 +23,8 @@
 
 #include "mdtSqlForm.h"
 #include <QSqlDatabase>
+#include <QModelIndex>
+#include <QSqlRecord>
 #include <QList>
 #include <QLocale>
 
@@ -54,6 +56,22 @@ class mdtTtTestSystemComponentEditor : public mdtSqlForm
    */
   void removeTestSystemAssignation();
 
+  /*! \brief Create a new test system unit
+   */
+  void createUnit();
+
+  /*! \brief Edit selected test system unit
+   */
+  void editUnit(const QSqlRecord & record);
+
+  /*! \brief Edit current test system unit
+   */
+  void editUnit();
+
+  /*! \brief Remove selected test system units
+   */
+  void removeUnits();
+
  private:
 
   /*! \brief Setup TestSystemComponent_tbl part
@@ -63,6 +81,10 @@ class mdtTtTestSystemComponentEditor : public mdtSqlForm
   /*! \brief Setup TestSystemOfComponent_view
    */
   bool setupTestSystemAssignationTable();
+
+  /*! \brief Setup TestSystemUnit_view table
+   */
+  bool setupTestSystemUnitTable();
 
   Q_DISABLE_COPY(mdtTtTestSystemComponentEditor);
 };

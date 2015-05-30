@@ -46,15 +46,62 @@ class mdtTtTestSystemUnitEditor : public mdtSqlForm
 
  private slots:
 
-  /*! \brief Set test system component
+  /*! \brief Add a free connector (based on nothing) to unit connector table
    */
-  void setTestSystemComponent();
+  void addConnector();
+
+  /*! \brief Add a connector based on a one from Connector_tbl to unit connector table
+   */
+  void addConnectorBasedConnector();
+
+  /*! \brief Add a connector based on article connector to unit connector table
+   */
+  void addArticleConnectorBasedConnector();
+
+  /*! \brief Edit connector name
+   */
+  void editConnectorName();
+
+  /*! \brief Remove a connector
+   */
+  void removeConnectors();
 
  private:
+
+  /*! \brief Get current unit ID
+   */
+  QVariant currentUnitId()
+  {
+    return currentData("TestSystemUnit_tbl", "Unit_Id_FK_PK");
+  }
+
+  /*! \brief Let user choose a connector (from Connector_tbl)
+   */
+  QVariant selectBaseConnector();
+
+  /*! \brief Let user select connections related to a connector from Connector_tbl
+   */
+  QList<QVariant> selectBaseConnectorContactIdList(const QVariant & connectorId, bool multiSelection = true);
+
+  /*! \brief Let user choose a connector from those that are related to current article
+   */
+  QVariant selectArticleConnector();
+
+  /*! \brief Select article connections related to given article connector ID
+   */
+  QList<QVariant> selectByArticleConnectorIdArticleConnectionIdList(const QVariant & articleConnectorId, const QVariant & unitId, bool multiSelection = true);
 
   /*! \brief Setup Unit_tbl + TestSystemUnit_tbl part
    */
   bool setupTestSystemUnitTables();
+
+  /*! \brief Setup UnitConnector_view part
+   */
+  bool setupConnectorTable();
+
+  /*! \brief Setup UnitConnection_view part
+   */
+  bool setupConnectionTable();
 
   Q_DISABLE_COPY(mdtTtTestSystemUnitEditor);
 };

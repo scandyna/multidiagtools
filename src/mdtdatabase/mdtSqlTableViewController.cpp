@@ -82,6 +82,7 @@ void mdtSqlTableViewController::setTableView(QTableView* tv, QAbstractItemDelega
   pvRowChangingByInternalEvent = false;
   pvTableView = tv;
   connect(pvTableView, SIGNAL(destroyed(QObject*)), this, SLOT(onTableViewDestroyed(QObject*)));
+  connect(pvTableView, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(onTableViewDoubleClicked(const QModelIndex&)) );
   pvTableView->setModel(proxyModel().get());
   Q_ASSERT(pvTableView->selectionModel() != 0);
   connect(pvTableView->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(onTableViewcurrentRowChanged(QModelIndex,QModelIndex)));
@@ -167,6 +168,12 @@ mdtSqlTableSelection mdtSqlTableViewController::currentSelection(const QString& 
   fieldList.append(field);
 
   return currentSelection(fieldList);
+}
+
+void mdtSqlTableViewController::onTableViewDoubleClicked(const QModelIndex & index)
+{
+  Q_ASSERT(model());
+  emit doubleClicked(model()->record(proxyModel()->mapToSource(index).row()));
 }
 
 void mdtSqlTableViewController::onTableViewDestroyed(QObject* obj)

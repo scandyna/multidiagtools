@@ -105,6 +105,7 @@ mdtSqlTableWidget::mdtSqlTableWidget(QWidget *parent)
   pvTableView->setSelectionBehavior(QAbstractItemView::SelectItems);
   // Setup table view controller
   pvController->setTableView(pvTableView);
+  connect( pvController.get(), SIGNAL(doubleClicked(const QSqlRecord&)), this, SIGNAL(doubleClicked(const QSqlRecord&)) );
   // Install event filter on table view to catch some key events
   /**
   mdtSqlTableWidgetKeyEventFilter *keyEventFilter = new mdtSqlTableWidgetKeyEventFilter(this);
@@ -153,9 +154,11 @@ void mdtSqlTableWidget::setTableController(shared_ptr< mdtSqlTableViewController
 {
   Q_ASSERT(controller);
 
+  disconnect( pvController.get(), SIGNAL(doubleClicked(const QSqlRecord&)), this, SIGNAL(doubleClicked(const QSqlRecord&)) );
   disconnectLocalEditionSignals();
   pvController = controller;
   pvController->setTableView(pvTableView);
+  connect( pvController.get(), SIGNAL(doubleClicked(const QSqlRecord&)), this, SIGNAL(doubleClicked(const QSqlRecord&)) );
   connectLocalEditionSignals();
 }
 

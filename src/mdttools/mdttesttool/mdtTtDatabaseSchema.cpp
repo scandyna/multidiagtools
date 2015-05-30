@@ -444,6 +444,9 @@ bool mdtTtDatabaseSchema::createViews()
   if(!createTestSytemOfComponentView()){
     return false;
   }
+  if(!createTestSystemUnitView()){
+    return false;
+  }
 
   if(!createTestNodeUnitView()){
     return false;
@@ -525,6 +528,10 @@ bool mdtTtDatabaseSchema::populateTables()
   if(!populateTestSystemComponentTypeTable()){
     return false;
   }
+  if(!populateTestSystemUnitTypeTable()){
+    return false;
+  }
+  
   if(!populateTestNodeUnitTypeTable()){
     return false;
   }
@@ -4114,6 +4121,32 @@ bool mdtTtDatabaseSchema::createTestSytemOfComponentView()
         "  ON TS.Id_PK = TS_TSC.TestSystem_Id_FK\n";
 
   return createView("TestSystemOfComponent_view", sql);
+}
+
+bool mdtTtDatabaseSchema::createTestSystemUnitView()
+{
+  QString sql;
+
+  sql = "CREATE VIEW TestSystemUnit_view AS\n"\
+        "SELECT\n"\
+        " TSU.Unit_Id_FK_PK,\n"\
+        " TSU.TestSystemComponent_Id_FK,\n"\
+        " TSU.Type_Code_FK,\n"\
+        " U.Article_Id_FK,\n"\
+        " U.SchemaPosition,\n"\
+        " TSU.IoPosition,\n"\
+        " TSU.CalibrationDate,\n"\
+        " TSUT.NameEN AS TsuTypeEN,\n"\
+        " TSUT.NameFR AS TsuTypeFR,\n"\
+        " TSUT.NameDE AS TsuTypeDE,\n"\
+        " TSUT.NameIT AS TsuTypeIT\n"\
+        "FROM TestSystemUnit_tbl TSU\n"\
+        " JOIN TestSystemUnitType_tbl TSUT\n"\
+        "  ON TSUT.Code_PK = TSU.Type_Code_FK\n"\
+        " JOIN Unit_tbl U\n"\
+        "  ON U.Id_PK = TSU.Unit_Id_FK_PK";
+
+  return createView("TestSystemUnit_view", sql);
 }
 
 

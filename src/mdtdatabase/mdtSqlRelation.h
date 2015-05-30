@@ -77,38 +77,6 @@ class mdtSqlRelation : public QObject
    */
   void setChildModel(QSqlTableModel *model);
 
-  /*! \brief Add a relation
-   *
-   * Note that this method will fetch some information about fields in parent and
-   *  child model (data type, field index, ...), so parent and child models must be set before.
-   *
-   * \return True on succes, false if a field could not be found.
-   * \pre Parent model must be set with setParentModel() before using this method.
-   * \pre Child model must be set with setChildModel() before using this method.
-   */
-  bool addRelation(const mdtSqlRelationInfoItem & relationInfoItem);
-
-  /*! \brief Add a relation
-   *
-   * The parentFieldName is a field name from the parent table (typically a field from primary key).
-   *  The childFieldName is a field from child table (typically a field from foreing keys).
-   *
-   * Note that this method will fetch some information about fields in parent and
-   *  child model (data type, field index, ...), so parent and child models must be set before.
-   *
-   * \param parentFieldName Field of parent model to use in relation (usually PK)
-   * \param childFieldName Field of child model to use in relation (usually FK)
-   * \param copyParentToChildOnInsertion If true, data from parent model will be copied
-   *                                      to child model for this fields.
-   *                                      (See mdtSqlRelationItem for details).
-   * \param operatorWithPreviousItem Most of cases, the operator between multiple relation items is AND.
-   *                     If another is needed (f.ex. OR), specify it here.
-   * \return True on succes, false if a field could not be found.
-   * \pre Parent model must be set with setParentModel() before using this method.
-   * \pre Child model must be set with setChildModel() before using this method.
-   */
-  bool addRelation(const QString &parentFieldName, const QString &childFieldName, bool copyParentToChildOnInsertion, const QString &operatorWithPreviousItem = "AND");
-
   /*! \brief Add all relations contained in given relationInfo
    *
    * \sa addRelation(const mdtSqlRelationInfoItem&).
@@ -187,6 +155,17 @@ class mdtSqlRelation : public QObject
 
  private:
 
+  /*! \brief Add a relation
+   *
+   * Note that this method will fetch some information about fields in parent and
+   *  child model (data type, field index, ...), so parent and child models must be set before.
+   *
+   * \return True on succes, false if a field could not be found.
+   * \pre Parent model must be set with setParentModel() before using this method.
+   * \pre Child model must be set with setChildModel() before using this method.
+   */
+  bool addRelation(const mdtSqlRelationInfoItem & relationInfoItem);
+
   /*! \brief Copy the parent primary key's values to related foreing key in child model
    *
    * \pre Parent model must be set with setParentModel() and child model with setChildModel() before using this method.
@@ -206,10 +185,10 @@ class mdtSqlRelation : public QObject
   QList<mdtSqlRelationItem*> pvRelations;
   QSqlTableModel *pvParentModel;
   QSqlTableModel *pvChildModel;
+  int pvCurrentRow;
   QString pvChildModelUserFilter;
   QString pvChildModelRelationFilter;
   QString pvChildModelFilter;
-  int pvCurrentRow;
   mdtError pvLastError;
 };
 

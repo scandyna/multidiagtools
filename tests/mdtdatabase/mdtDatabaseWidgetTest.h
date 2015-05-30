@@ -27,6 +27,7 @@
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QSqlDatabase>
+#include <QSqlRecord>
 
 class QLineEdit;
 class mdtDoubleEdit;
@@ -72,6 +73,28 @@ class sqlDataWidgetControllerTestWidget : public QWidget
 };
 
 /*
+ * Test object for table view controller tests
+ */
+class mdtTableViewControllerTestObject : public QObject
+{
+ Q_OBJECT
+
+ public:
+
+  mdtTableViewControllerTestObject();
+
+  // Helper function to trigger double click on a table view
+  void doubleClick(QTableView *tv, int row, int column);
+
+  // Record set by doubleClickedReceiver()
+  QSqlRecord doubleClickReceiverRecord;
+
+ public slots:
+
+  void doubleClickedReceiver(const QSqlRecord & record);
+};
+
+/*
  * Concrete application widgets test class
  */
 class mdtSqlApplicationWidgetsTest : public mdtSqlApplicationWidgets<mdtSqlApplicationWidgetsTest>
@@ -95,6 +118,7 @@ class mdtSqlApplicationWidgetsTest : public mdtSqlApplicationWidgets<mdtSqlAppli
   mdtSqlApplicationWidgetsTest(){}
   Q_DISABLE_COPY(mdtSqlApplicationWidgetsTest);
 };
+
 
 /*
  * Test itself

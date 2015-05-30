@@ -44,8 +44,7 @@ class mdtSqlRelation;
 class mdtSortFilterProxyModel;
 class QSqlField;
 
-/*
- * Container for internal use
+/*! \internal Container for internal use
  */
 struct mdtAbstractSqlTableControllerContainer
 {
