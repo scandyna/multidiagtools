@@ -5,6 +5,16 @@
 # Project
 project (multidiagtools)
 
+# * mdtClConnectorTest executable *
+QT4_WRAP_CPP(MDT_CONNECTOR_TEST_MOC "mdtClConnectorTest.h")
+add_executable(mdtclconnectortest mdtClConnectorTest.cpp ${MDT_CONNECTOR_TEST_MOC})
+target_link_libraries(mdtclconnectortest ${QT_LIBRARIES})
+target_link_libraries(mdtclconnectortest "mdttest")
+target_link_libraries(mdtclconnectortest "mdtutils${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtclconnectortest "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
+#target_link_libraries(mdtclconnectortest "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtclconnectortest "mdttesttool${MDTLIB_VERSION_SUFFIX}")
+
 # * mdtTtValueLimitsTest executable *
 QT4_WRAP_CPP(MDT_VALUE_LIMITS_MOC "mdtTtValueLimitsTest.h")
 add_executable(mdttvaluelimitstest mdtTtValueLimitsTest.cpp ${MDT_VALUE_LIMITS_MOC})

@@ -157,6 +157,7 @@ set (CL_SOURCES_FILES
           mdtcablelist/mdtClApplicationWidgets.cpp
           mdtcablelist/mdtClVehicleTypeEditor.cpp
           mdtcablelist/mdtClConnectorData.cpp
+          mdtcablelist/mdtClConnector.cpp
           mdtcablelist/mdtClConnectorEditor.cpp
           mdtcablelist/mdtClConnectorSelectionDialog.cpp
           mdtcablelist/mdtClArticle.cpp

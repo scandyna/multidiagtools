@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -27,15 +27,84 @@
 #include <QSqlDatabase>
 #include <QSqlRecord>
 
+/*! \brief Data container for connector key
+ *
+ * Refers to Connector_tbl
+ */
+struct mdtClConnectorKeyData
+{
+  /*! \brief Connector ID (Id_PK)
+   */
+  QVariant id;
+
+  /*! \brief Check if key data is null
+   */
+  bool isNull() const
+  {
+    return id.isNull();
+  }
+
+  /*! \brief Clear
+   */
+  void clear()
+  {
+    id.clear();
+  }
+};
+
+
 /*! \brief Data container class for connector data
  *
- * Permit to echange data with Connector_tbl and ConnectorContact_tbl.
+ * Refers to Connector_tbl
  */
-class mdtClConnectorData : public mdtSqlRecord
+struct mdtClConnectorData : public mdtSqlRecord /// \todo When all is adapted, remove this inheritance
 {
+  /*! \brief Connector key data
+   */
+  mdtClConnectorKeyData keyData;
+
+  /*! \brief Connector gender
+   *
+   * \todo Currently, gender is a simple string, wicth is not typed..
+   */
+  QVariant gender;
+
+  /*! \brief Connector form
+   *
+   * \todo Currently, form is a simple string, wicth is not typed..
+   */
+  QVariant form;
+
+  /*! \brief Manufacturer
+   */
+  QVariant manufacturer;
+
+  /*! \brief Manufacturer config code
+   */
+  QVariant manufacturerConfigCode;
+
+  /*! \brief Manufacturer article code
+   */
+  QVariant manufacturerArticleCode;
+
+  /*! \brief Check if data is null
+   *
+   * Data is considered null if keyData is null
+   */
+  inline bool isNull() const
+  {
+    return keyData.isNull();
+  }
+
+  /*! \brief Clear data
+   */
+  void clear();
+
  public:
 
   /*! \brief Construct a empty mdtClConnectorData
+   *
+   * \deprecated
    */
   mdtClConnectorData();
 
@@ -44,10 +113,14 @@ class mdtClConnectorData : public mdtSqlRecord
    * Note: if this method is used, setup is not relevant.
    *
    * \pre All fields from Connector_tbl must exist in record
+   * 
+   * \deprecated
    */
   mdtClConnectorData(const QSqlRecord & record);
 
   /*! \brief Setup fields from Connector_tbl
+   * 
+   * \deprecated
    */
   bool setup(const QSqlDatabase & db);
 
@@ -57,10 +130,14 @@ class mdtClConnectorData : public mdtSqlRecord
    *  valid records, that contains needed fields.
    *
    * \sa addContactData().
+   * 
+   * \deprecated
    */
   void setContactDataList(const QList<mdtSqlRecord> & dataList);
 
   /*! \brief Get list of contact data
+   * 
+   * \deprecated
    */
   QList<mdtSqlRecord> contactDataList() const;
 
@@ -71,6 +148,8 @@ class mdtClConnectorData : public mdtSqlRecord
    * \pre data must contains following fields:
    *  - Id_PK
    *  - Connector_Id_FK
+   * 
+   * \deprecated
    */
   void addContactData(const mdtSqlRecord & data);
 
@@ -79,6 +158,8 @@ class mdtClConnectorData : public mdtSqlRecord
    * Will update contact data for witch Id_PK matches given contactId.
    *
    * \return False if contactId was not found.
+   * 
+   * \deprecated
    */
   bool setContactData(const QVariant & contactId, const mdtSqlRecord & data);
 
@@ -86,6 +167,8 @@ class mdtClConnectorData : public mdtSqlRecord
    *
    * Return the contact data for witch Id_PK matches given contactId.
    *  ok will be set to false if contactId was not found.
+   * 
+   * \deprecated
    */
   mdtSqlRecord contactData(const QVariant & contactId, bool *ok) const;
 

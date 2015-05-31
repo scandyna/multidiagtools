@@ -1,4 +1,4 @@
-format 206
+format 209
 
 classcanvas 128002 class_ref 888194 // mdtClLinkData
   classdiagramsettings member_max_width 0 end
@@ -32,19 +32,19 @@ relationcanvas 128898 relation_ref 1371650 // <generalisation>
 end
 relationcanvas 129026 relation_ref 1371394 // <directional composition>
   from ref 128514 z 3006 to ref 128770
-  role_a_pos 786 109 3000 no_role_b
-  multiplicity_a_pos 754 109 3000 no_multiplicity_b
+  role_a_pos 783 110 3000 no_role_b
+  multiplicity_a_pos 756 110 3000 no_multiplicity_b
 end
 relationcanvas 129154 relation_ref 1391490 // <directional composition>
   decenter_begin 740
   from ref 128002 z 2007 to ref 128514
   no_role_a no_role_b
-  multiplicity_a_pos 682 248 3000 no_multiplicity_b
+  multiplicity_a_pos 673 251 3000 no_multiplicity_b
 end
 relationcanvas 129922 relation_ref 1391746 // <directional composition>
-  from ref 128002 z 2001 stereotype "<<list>>" xyz 611.5 548 3000 to ref 129794
-  role_a_pos 516 532 3000 no_role_b
-  multiplicity_a_pos 612 566 3000 no_multiplicity_b
+  from ref 128002 z 2001 stereotype "<<list>>" xyz 611 548 3000 to ref 129794
+  role_a_pos 519 534 3000 no_role_b
+  multiplicity_a_pos 616 564 3000 no_multiplicity_b
 end
 relationcanvas 130434 relation_ref 1432194 // <generalisation>
   from ref 128002 z 2001 to ref 128130

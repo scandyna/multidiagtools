@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -23,6 +23,21 @@
 
 //#include <QDebug>
 
+void mdtClConnectorData::clear()
+{
+  keyData.clear();
+  gender.clear();
+  form.clear();
+  manufacturer.clear();
+  manufacturerConfigCode.clear();
+  manufacturerArticleCode.clear();
+}
+
+
+/**
+ * OLD version implementation
+ */
+
 mdtClConnectorData::mdtClConnectorData()
 {
 }
@@ -33,7 +48,6 @@ mdtClConnectorData::mdtClConnectorData(const QSqlRecord& record)
   Q_ASSERT(contains("Id_PK"));
   /// \todo Once fields are defined, complete this part
 }
-
 
 bool mdtClConnectorData::setup(const QSqlDatabase & db)
 {
