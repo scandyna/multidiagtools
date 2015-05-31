@@ -74,117 +74,117 @@ class mdtCableListTest : public mdtTest
    * Create some vehicle types for tests
    *  See mdtCableListTestScenario class for details.
    */
-  void createTestVehicleTypes();
-  /*
-   * Remove test vehicle types
-   */
-  void removeTestVehicleTypes();
-
-  /*
-   * Create some connectors for tests
-   *  See mdtCableListTestScenario class for details.
-   */
-  void createTestConnectors();
-  /*
-   * Remove test connectors
-   */
-  void removeTestConnectors();
-
-  /*
-   * Create some articles for tests
-   *  See mdtCableListTestScenario class for details.
-   */
-  void createTestArticles();
-  /*
-   * Remove test articles
-   */
-  void removeTestArticles();
-
-  /*
-   * Create some article connections for tests
-   *  See mdtCableListTestScenario class for details.
-   */
-  void createTestArticleConnections();
-  /*
-   * Remove test article connections
-   */
-  void removeTestArticleConnections();
-
-  /*
-   * Create some article connectors for tests
-   *  See mdtCableListTestScenario class for details.
-   */
-  void createTestArticleConnectors();
-  /*
-   * Remove test article connectors
-   */
-  void removeTestArticleConnectors();
-
-  /*
-   * Create some article links for tests
-   *  See mdtCableListTestScenario class for details.
-   */
-  void createTestArticleLinks();
-  /*
-   * Remove test article links
-   */
-  void removeTestArticleLinks();
-
-  /*
-   * Create some units for tests
-   *  See mdtCableListTestScenario class for details.
-   */
-  void createTestUnits();
-  /*
-   * Remove test units
-   */
-  void removeTestUnits();
-
-  /*
-   * Create some VehicleType-Unit assignations for tests
-   *  See mdtCableListTestScenario class for details.
-   */
-  void createTestVehicleTypeUnitAssignations();
-  /*
-   * Remove VehicleType-Unit assignations
-   */
-  void removeTestVehicleTypeUnitAssignations();
-
-  /*
-   * Create some unit connections for tests
-   *  See mdtCableListTestScenario class for details.
-   */
-  void createTestUnitConnections();
-  /*
-   * Remove test unit connections
-   */
-  void removeTestUnitConnections();
-
-  /*
-   * Create some unit connectors for tests
-   *  See mdtCableListTestScenario class for details.
-   */
-  void createTestUnitConnectors();
-  /*
-   * Remove test unit connectors
-   */
-  void removeTestUnitConnectors();
-
-  /*
-   * Create links for tests
-   *  See mdtCableListTestScenario class for details.
-   */
-  void createTestLinks();
-  /*
-   * Remove test links
-   */
-  void removeTestLinks();
+//   void createTestVehicleTypes();
+//   /*
+//    * Remove test vehicle types
+//    */
+//   void removeTestVehicleTypes();
+// 
+//   /*
+//    * Create some connectors for tests
+//    *  See mdtCableListTestScenario class for details.
+//    */
+//   void createTestConnectors();
+//   /*
+//    * Remove test connectors
+//    */
+//   void removeTestConnectors();
+// 
+//   /*
+//    * Create some articles for tests
+//    *  See mdtCableListTestScenario class for details.
+//    */
+//   void createTestArticles();
+//   /*
+//    * Remove test articles
+//    */
+//   void removeTestArticles();
+// 
+//   /*
+//    * Create some article connections for tests
+//    *  See mdtCableListTestScenario class for details.
+//    */
+//   void createTestArticleConnections();
+//   /*
+//    * Remove test article connections
+//    */
+//   void removeTestArticleConnections();
+// 
+//   /*
+//    * Create some article connectors for tests
+//    *  See mdtCableListTestScenario class for details.
+//    */
+//   void createTestArticleConnectors();
+//   /*
+//    * Remove test article connectors
+//    */
+//   void removeTestArticleConnectors();
+// 
+//   /*
+//    * Create some article links for tests
+//    *  See mdtCableListTestScenario class for details.
+//    */
+//   void createTestArticleLinks();
+//   /*
+//    * Remove test article links
+//    */
+//   void removeTestArticleLinks();
+// 
+//   /*
+//    * Create some units for tests
+//    *  See mdtCableListTestScenario class for details.
+//    */
+//   void createTestUnits();
+//   /*
+//    * Remove test units
+//    */
+//   void removeTestUnits();
+// 
+//   /*
+//    * Create some VehicleType-Unit assignations for tests
+//    *  See mdtCableListTestScenario class for details.
+//    */
+//   void createTestVehicleTypeUnitAssignations();
+//   /*
+//    * Remove VehicleType-Unit assignations
+//    */
+//   void removeTestVehicleTypeUnitAssignations();
+// 
+//   /*
+//    * Create some unit connections for tests
+//    *  See mdtCableListTestScenario class for details.
+//    */
+//   void createTestUnitConnections();
+//   /*
+//    * Remove test unit connections
+//    */
+//   void removeTestUnitConnections();
+// 
+//   /*
+//    * Create some unit connectors for tests
+//    *  See mdtCableListTestScenario class for details.
+//    */
+//   void createTestUnitConnectors();
+//   /*
+//    * Remove test unit connectors
+//    */
+//   void removeTestUnitConnectors();
+// 
+//   /*
+//    * Create links for tests
+//    *  See mdtCableListTestScenario class for details.
+//    */
+//   void createTestLinks();
+//   /*
+//    * Remove test links
+//    */
+//   void removeTestLinks();
 
   // Create test database schema - Will FAIL on problem
   void createDatabaseSchema();
 
   mdtSqlDatabaseManager pvDatabaseManager;
-  mdtCableListTestScenario *pvScenario;
+//   mdtCableListTestScenario *pvScenario;
 };
 
 #endif // #ifndef MDT_CABLE_LIST_TEST_H

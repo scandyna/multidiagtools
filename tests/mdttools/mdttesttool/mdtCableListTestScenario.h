@@ -28,6 +28,10 @@ class mdtCableListTestScenario
  public:
 
   mdtCableListTestScenario(QSqlDatabase db);
+  ~mdtCableListTestScenario()
+  {
+    removeScenario();
+  }
 
   /*
    * Will populate tables with scenario.

@@ -73,12 +73,12 @@ void mdtCableListTest::initTestCase()
 {
   createDatabaseSchema();
   QVERIFY(pvDatabaseManager.database().isOpen());
-  pvScenario = new mdtCableListTestScenario(pvDatabaseManager.database());
+  ///pvScenario = new mdtCableListTestScenario(pvDatabaseManager.database());
 }
 
 void mdtCableListTest::cleanupTestCase()
 {
-  delete pvScenario;
+  ///delete pvScenario;
 }
 
 void mdtCableListTest::applicationWidgetsTest()
@@ -456,25 +456,36 @@ void mdtCableListTest::articleTest()
   /*
    * Check helper methods
    */
-  createTestArticles();
-  createTestConnectors();
-  createTestArticleConnections();
-  createTestArticleLinks();
-  createTestArticleConnectors();
-  removeTestArticleLinks();
-  removeTestArticleConnections();
-  removeTestArticleConnectors();
-  removeTestConnectors();
-  removeTestArticles();
+//   createTestArticles();
+//   createTestConnectors();
+//   createTestArticleConnections();
+//   createTestArticleLinks();
+//   createTestArticleConnectors();
+//   removeTestArticleLinks();
+//   removeTestArticleConnections();
+//   removeTestArticleConnectors();
+//   removeTestConnectors();
+//   removeTestArticles();
 }
 
 void mdtCableListTest::unitConnectionUpdateTest()
 {
   mdtClArticle art(0, pvDatabaseManager.database());
+  mdtCableListTestScenario scenario(pvDatabaseManager.database());
   QList<QSqlRecord> dataList;
   bool ok;
 
   // Create scenario
+  scenario.createTestVehicleTypes();
+  scenario.createTestArticles();
+  scenario.createTestConnectors();
+  scenario.createTestArticleConnections();
+  scenario.createTestArticleLinks();
+  scenario.createTestArticleConnectors();
+  scenario.createTestUnits();
+  scenario.createTestVehicleTypeUnitAssignations();
+  scenario.createTestUnitConnections();
+  /**
   createTestVehicleTypes();
   createTestArticles();
   createTestConnectors();
@@ -484,6 +495,7 @@ void mdtCableListTest::unitConnectionUpdateTest()
   createTestUnits();
   createTestVehicleTypeUnitAssignations();
   createTestUnitConnections();
+  */
 
   /*
    * We make update test on Resistance
@@ -538,6 +550,7 @@ void mdtCableListTest::unitConnectionUpdateTest()
 
 
   // Remove test scenario
+  /**
   removeTestUnitConnections();
   removeTestUnitConnectors();
   removeTestVehicleTypeUnitAssignations();
@@ -548,7 +561,7 @@ void mdtCableListTest::unitConnectionUpdateTest()
   removeTestConnectors();
   removeTestArticles();
   removeTestVehicleTypes();
-
+  */
 }
 
 void mdtCableListTest::unitConnectionDataTest()
@@ -720,18 +733,20 @@ void mdtCableListTest::unitTest()
 {
   mdtClUnit unit(0, pvDatabaseManager.database());
   mdtClUnitConnectorData connectorData;
+  mdtCableListTestScenario scenario(pvDatabaseManager.database());
 
   QVERIFY(connectorData.setup(pvDatabaseManager.database(), true, true));
   // Create base structure
-  createTestVehicleTypes();
-  createTestArticles();
-  createTestConnectors();
-  createTestArticleConnections();
-  createTestArticleLinks();
-  createTestArticleConnectors();
-  createTestUnits();
-  createTestVehicleTypeUnitAssignations();
-  createTestUnitConnections();
+  scenario.createTestVehicleTypes();
+  scenario.createTestArticles();
+  scenario.createTestConnectors();
+  scenario.createTestArticleConnections();
+  scenario.createTestArticleLinks();
+  scenario.createTestArticleConnectors();
+  scenario.createTestUnits();
+  scenario.createTestVehicleTypeUnitAssignations();
+  scenario.createTestUnitConnections();
+  scenario.createTestUnitConnectors();
 
   /*
    * Try to add a unit connector that is based on a article connector
@@ -744,9 +759,10 @@ void mdtCableListTest::unitTest()
   connectorData.setValue("ArticleConnector_Id_FK", 200);
   QVERIFY(!unit.addConnector(connectorData));
   */
-  createTestUnitConnectors();
+//   createTestUnitConnectors();
 
   // Remove base structure
+  /**
   removeTestUnitConnectors();
   removeTestUnitConnections();
   removeTestVehicleTypeUnitAssignations();
@@ -757,6 +773,7 @@ void mdtCableListTest::unitTest()
   removeTestConnectors();
   removeTestArticles();
   removeTestVehicleTypes();
+  */
 }
 
 void mdtCableListTest::unitConnectionTest()
@@ -764,9 +781,20 @@ void mdtCableListTest::unitConnectionTest()
   mdtClUnit unit(0, pvDatabaseManager.database());
   mdtClLink lnk(0, pvDatabaseManager.database());
   mdtClUnitConnectionData connectionData;
+  mdtCableListTestScenario scenario(pvDatabaseManager.database());
   bool ok;
 
   // Create base structure
+  scenario.createTestVehicleTypes();
+  scenario.createTestArticles();
+  scenario.createTestConnectors();
+  scenario.createTestArticleConnections();
+  scenario.createTestArticleLinks();
+  scenario.createTestArticleConnectors();
+  scenario.createTestUnits();
+  scenario.createTestVehicleTypeUnitAssignations();
+  scenario.createTestUnitConnections();
+/*
   createTestVehicleTypes();
   createTestArticles();
   createTestConnectors();
@@ -775,7 +803,7 @@ void mdtCableListTest::unitConnectionTest()
   createTestArticleConnectors();
   createTestUnits();
   createTestVehicleTypeUnitAssignations();
-  createTestUnitConnections();
+  createTestUnitConnections();*/
 
   /*
    * Check basic connection edition
@@ -798,15 +826,15 @@ void mdtCableListTest::unitConnectionTest()
   QCOMPARE(connectionData.value("UnitContactName"), QVariant("Unit contact 10000"));
 
   // Remove base structure
-  removeTestUnitConnections();
-  removeTestVehicleTypeUnitAssignations();
-  removeTestUnits();
-  removeTestArticleLinks();
-  removeTestArticleConnections();
-  removeTestArticleConnectors();
-  removeTestConnectors();
-  removeTestArticles();
-  removeTestVehicleTypes();
+//   removeTestUnitConnections();
+//   removeTestVehicleTypeUnitAssignations();
+//   removeTestUnits();
+//   removeTestArticleLinks();
+//   removeTestArticleConnections();
+//   removeTestArticleConnectors();
+//   removeTestConnectors();
+//   removeTestArticles();
+//   removeTestVehicleTypes();
 }
 
 void mdtCableListTest::unitConnectorTest()
@@ -814,9 +842,21 @@ void mdtCableListTest::unitConnectorTest()
   mdtClUnit unit(0, pvDatabaseManager.database());
   ///mdtClLink lnk(0, pvDatabaseManager.database());
   mdtClUnitConnectorData connectorData;
+  mdtCableListTestScenario scenario(pvDatabaseManager.database());
   bool ok;
 
   // Create base structure
+  scenario.createTestVehicleTypes();
+  scenario.createTestArticles();
+  scenario.createTestConnectors();
+  scenario.createTestArticleConnections();
+  scenario.createTestArticleLinks();
+  scenario.createTestArticleConnectors();
+  scenario.createTestUnits();
+  scenario.createTestVehicleTypeUnitAssignations();
+  scenario.createTestUnitConnections();
+  scenario.createTestUnitConnectors();
+/*
   createTestVehicleTypes();
   createTestArticles();
   createTestConnectors();
@@ -827,7 +867,7 @@ void mdtCableListTest::unitConnectorTest()
   createTestVehicleTypeUnitAssignations();
   createTestUnitConnections();
   createTestUnitConnectors();
-
+*/
   /*
    * Get unit connector ID 100000
    */
@@ -847,16 +887,16 @@ void mdtCableListTest::unitConnectorTest()
   QCOMPARE(connectorData.connectionDataList().at(0).value("Id_PK"), QVariant(20005));
 
   // Remove base structure
-  removeTestUnitConnectors();
-  removeTestUnitConnections();
-  removeTestVehicleTypeUnitAssignations();
-  removeTestUnits();
-  removeTestArticleLinks();
-  removeTestArticleConnections();
-  removeTestArticleConnectors();
-  removeTestConnectors();
-  removeTestArticles();
-  removeTestVehicleTypes();
+//   removeTestUnitConnectors();
+//   removeTestUnitConnections();
+//   removeTestVehicleTypeUnitAssignations();
+//   removeTestUnits();
+//   removeTestArticleLinks();
+//   removeTestArticleConnections();
+//   removeTestArticleConnectors();
+//   removeTestConnectors();
+//   removeTestArticles();
+//   removeTestVehicleTypes();
 }
 
 void mdtCableListTest::mdtClLinkDataTest()
@@ -926,6 +966,7 @@ void mdtCableListTest::linkTest()
   mdtClUnitConnectionData connectionData;
   ///QList<QSqlRecord> dataList;
   QList<mdtClVehicleTypeLinkData> vtLinkDataList;
+  mdtCableListTestScenario scenario(pvDatabaseManager.database());
   QString sql;
   bool ok;
 
@@ -976,7 +1017,8 @@ void mdtCableListTest::linkTest()
 
   /// \todo suite
   // Create base structure
-  pvScenario->createSenario();
+  ///pvScenario->createSenario();
+  scenario.createSenario();
   // Get link data for a non existing link, ok must be false
   linkData = lnk.getLinkData(135, 45687, true, true, ok);
   QVERIFY(!ok);
@@ -1142,13 +1184,14 @@ void mdtCableListTest::linkTest()
 
 
   // Cleanup
-  pvScenario->removeScenario();
+//   pvScenario->removeScenario();
 }
 
 void mdtCableListTest::linkUpdateFromArticleLinkTest()
 {
   mdtClLink lnk(0, pvDatabaseManager.database());
   mdtClArticle art(0, pvDatabaseManager.database());
+  mdtCableListTestScenario scenario(pvDatabaseManager.database());
   QList<QSqlRecord> dataList;
   QSqlRecord data;
   ///mdtClUnit unit(0, pvDatabaseManager.database());
@@ -1163,7 +1206,7 @@ void mdtCableListTest::linkUpdateFromArticleLinkTest()
   QVERIFY(linkData.setup(pvDatabaseManager.database()));
 
   // Create base structure
-  pvScenario->createSenario();
+  scenario.createSenario();
 
   /*
    * Check that we have initial expected link data
@@ -1235,7 +1278,7 @@ void mdtCableListTest::linkUpdateFromArticleLinkTest()
   QCOMPARE(linkData.value("LinkType_Code_FK"), QVariant("INTERNLINK"));
 
   // Cleanup
-  pvScenario->removeScenario();
+//   pvScenario->removeScenario();
 }
 
 void mdtCableListTest::linkConnectableConnectorTest()
@@ -1409,6 +1452,7 @@ void mdtCableListTest::linkConnectableConnectorTest()
 void mdtCableListTest::linkAutoConnectionTest()
 {
   mdtClLink lnk(0, pvDatabaseManager.database());
+  mdtCableListTestScenario scenario(pvDatabaseManager.database());
   QList<mdtClLinkData> cnnLinkDataList;
   mdtClLinkData cnnLinkData;
   mdtClConnectableCriteria criteria;
@@ -1572,15 +1616,15 @@ void mdtCableListTest::linkAutoConnectionTest()
   /// \todo Combinaisons with non compatible P-S , with T, etc...
 
   // Create base structure for next tests
-  createTestVehicleTypes();
-  createTestArticles();
-  createTestConnectors();
-  createTestArticleConnections();
-  createTestArticleLinks();
-  createTestArticleConnectors();
-  createTestUnits();
-  createTestVehicleTypeUnitAssignations();
-  createTestUnitConnectors();
+  scenario.createTestVehicleTypes();
+  scenario.createTestArticles();
+  scenario.createTestConnectors();
+  scenario.createTestArticleConnections();
+  scenario.createTestArticleLinks();
+  scenario.createTestArticleConnectors();
+  scenario.createTestUnits();
+  scenario.createTestVehicleTypeUnitAssignations();
+  scenario.createTestUnitConnectors();
 
   /*
    * Check connect method with following connectors:
@@ -1634,21 +1678,22 @@ void mdtCableListTest::linkAutoConnectionTest()
   QVERIFY(!lnk.linkExists(40005, 50005, ok));
 
   // Remove base structure
-  removeTestUnitConnectors();
-  removeTestVehicleTypeUnitAssignations();
-  removeTestUnits();
-  removeTestArticleLinks();
-  removeTestArticleConnections();
-  removeTestArticleConnectors();
-  removeTestConnectors();
-  removeTestArticles();
-  removeTestVehicleTypes();
+//   removeTestUnitConnectors();
+//   removeTestVehicleTypeUnitAssignations();
+//   removeTestUnits();
+//   removeTestArticleLinks();
+//   removeTestArticleConnections();
+//   removeTestArticleConnectors();
+//   removeTestConnectors();
+//   removeTestArticles();
+//   removeTestVehicleTypes();
 }
 
 
 void mdtCableListTest::pathGraphTest()
 {
   mdtClPathGraph graph(pvDatabaseManager.database());
+  mdtCableListTestScenario scenario(pvDatabaseManager.database());
   QList<QVariant> idList;
   bool ok;
 
@@ -1774,7 +1819,7 @@ void mdtCableListTest::pathGraphTest()
    * Tests with database data
    */
   // Scenario
-  pvScenario->createSenario();
+  scenario.createSenario();
   // Load link list
   QVERIFY(graph.loadLinkList());
   // Check that manually added links was cleared
@@ -1862,13 +1907,14 @@ void mdtCableListTest::pathGraphTest()
   QCOMPARE(idList.at(2), QVariant(20000));
   QCOMPARE(idList.at(3), QVariant(20001));
 
-  pvScenario->removeScenario();
+//   pvScenario->removeScenario();
 }
 
 void mdtCableListTest::directLinkTest()
 {
   mdtClDirectLink *dlnk;
   mdtClPathGraph graph(pvDatabaseManager.database());
+  mdtCableListTestScenario scenario(pvDatabaseManager.database());
   QSqlRecord record;
   QList<QSqlRecord> dataList;
   QList<QVariant> idList;
@@ -1878,7 +1924,7 @@ void mdtCableListTest::directLinkTest()
   int i;
 
   // Scenario
-  pvScenario->createSenario();
+  scenario.createSenario();
   // Load link list
   QVERIFY(graph.loadLinkList());
   // Initial
@@ -1931,18 +1977,19 @@ void mdtCableListTest::directLinkTest()
 
   delete dlnk;
   QVERIFY(!pvDatabaseManager.database().tables().contains("DirectLink_tbl"));
-  pvScenario->removeScenario();
+//   pvScenario->removeScenario();
 }
 
 void mdtCableListTest::linkBeamTest()
 {
   mdtClLinkBeam lb(0, pvDatabaseManager.database());
+  mdtCableListTestScenario scenario(pvDatabaseManager.database());
   mdtSqlRecord record;
   QList<QSqlRecord> dataList;
   bool ok;
 
   // Scenario
-  pvScenario->createSenario();
+  scenario.createSenario();
   /*
    * Create a LinkBeam
    */
@@ -2009,123 +2056,123 @@ void mdtCableListTest::linkBeamTest()
   QCOMPARE(dataList.size(), 0);
 
   // Cleanup
-  pvScenario->removeScenario();
+//   pvScenario->removeScenario();
 }
 
 /*
  * Test data manipulation methods
  */
 
-void mdtCableListTest::createTestVehicleTypes()
-{
-  pvScenario->createTestVehicleTypes();
-}
-
-void mdtCableListTest::removeTestVehicleTypes()
-{
-  pvScenario->removeTestVehicleTypes();
-}
-
-void mdtCableListTest::createTestConnectors()
-{
-  pvScenario->createTestConnectors();
-}
-
-void mdtCableListTest::removeTestConnectors()
-{
-  pvScenario->removeTestConnectors();
-}
-
-
-void mdtCableListTest::createTestArticles()
-{
-  pvScenario->createTestArticles();
-}
-
-void mdtCableListTest::removeTestArticles()
-{
-  pvScenario->removeTestArticles();
-}
-
-void mdtCableListTest::createTestArticleConnections()
-{
-  pvScenario->createTestArticleConnections();
-}
-
-void mdtCableListTest::removeTestArticleConnections()
-{
-  pvScenario->removeTestArticleConnections();
-}
-
-void mdtCableListTest::createTestArticleConnectors()
-{
-  pvScenario->createTestArticleConnectors();
-}
-
-void mdtCableListTest::removeTestArticleConnectors()
-{
-  pvScenario->removeTestArticleConnectors();
-}
-
-void mdtCableListTest::createTestArticleLinks()
-{
-  pvScenario->createTestArticleLinks();
-}
-
-void mdtCableListTest::removeTestArticleLinks()
-{
-  pvScenario->removeTestArticleLinks();
-}
-
-void mdtCableListTest::createTestUnits()
-{
-  pvScenario->createTestUnits();
-}
-
-void mdtCableListTest::removeTestUnits()
-{
-  pvScenario->removeTestUnits();
-}
-
-void mdtCableListTest::createTestVehicleTypeUnitAssignations()
-{
-  pvScenario->createTestVehicleTypeUnitAssignations();
-}
-
-void mdtCableListTest::removeTestVehicleTypeUnitAssignations()
-{
-  pvScenario->removeTestVehicleTypeUnitAssignations();
-}
-
-void mdtCableListTest::createTestUnitConnections()
-{
-  pvScenario->createTestUnitConnections();
-}
-
-void mdtCableListTest::removeTestUnitConnections()
-{
-  pvScenario->removeTestUnitConnections();
-}
-
-void mdtCableListTest::createTestUnitConnectors()
-{
-  pvScenario->createTestUnitConnectors();
-}
-
-void mdtCableListTest::removeTestUnitConnectors()
-{
-  pvScenario->removeTestUnitConnectors();
-}
-
-void mdtCableListTest::createTestLinks()
-{
-  pvScenario->createTestLinks();
-}
-
-void mdtCableListTest::removeTestLinks()
-{
-  pvScenario->removeTestLinks();
-}
+// void mdtCableListTest::createTestVehicleTypes()
+// {
+//   pvScenario->createTestVehicleTypes();
+// }
+// 
+// void mdtCableListTest::removeTestVehicleTypes()
+// {
+//   pvScenario->removeTestVehicleTypes();
+// }
+// 
+// void mdtCableListTest::createTestConnectors()
+// {
+//   pvScenario->createTestConnectors();
+// }
+// 
+// void mdtCableListTest::removeTestConnectors()
+// {
+//   pvScenario->removeTestConnectors();
+// }
+// 
+// 
+// void mdtCableListTest::createTestArticles()
+// {
+//   pvScenario->createTestArticles();
+// }
+// 
+// void mdtCableListTest::removeTestArticles()
+// {
+//   pvScenario->removeTestArticles();
+// }
+// 
+// void mdtCableListTest::createTestArticleConnections()
+// {
+//   pvScenario->createTestArticleConnections();
+// }
+// 
+// void mdtCableListTest::removeTestArticleConnections()
+// {
+//   pvScenario->removeTestArticleConnections();
+// }
+// 
+// void mdtCableListTest::createTestArticleConnectors()
+// {
+//   pvScenario->createTestArticleConnectors();
+// }
+// 
+// void mdtCableListTest::removeTestArticleConnectors()
+// {
+//   pvScenario->removeTestArticleConnectors();
+// }
+// 
+// void mdtCableListTest::createTestArticleLinks()
+// {
+//   pvScenario->createTestArticleLinks();
+// }
+// 
+// void mdtCableListTest::removeTestArticleLinks()
+// {
+//   pvScenario->removeTestArticleLinks();
+// }
+// 
+// void mdtCableListTest::createTestUnits()
+// {
+//   pvScenario->createTestUnits();
+// }
+// 
+// void mdtCableListTest::removeTestUnits()
+// {
+//   pvScenario->removeTestUnits();
+// }
+// 
+// void mdtCableListTest::createTestVehicleTypeUnitAssignations()
+// {
+//   pvScenario->createTestVehicleTypeUnitAssignations();
+// }
+// 
+// void mdtCableListTest::removeTestVehicleTypeUnitAssignations()
+// {
+//   pvScenario->removeTestVehicleTypeUnitAssignations();
+// }
+// 
+// void mdtCableListTest::createTestUnitConnections()
+// {
+//   pvScenario->createTestUnitConnections();
+// }
+// 
+// void mdtCableListTest::removeTestUnitConnections()
+// {
+//   pvScenario->removeTestUnitConnections();
+// }
+// 
+// void mdtCableListTest::createTestUnitConnectors()
+// {
+//   pvScenario->createTestUnitConnectors();
+// }
+// 
+// void mdtCableListTest::removeTestUnitConnectors()
+// {
+//   pvScenario->removeTestUnitConnectors();
+// }
+// 
+// void mdtCableListTest::createTestLinks()
+// {
+//   pvScenario->createTestLinks();
+// }
+// 
+// void mdtCableListTest::removeTestLinks()
+// {
+//   pvScenario->removeTestLinks();
+// }
 
 
 /*
