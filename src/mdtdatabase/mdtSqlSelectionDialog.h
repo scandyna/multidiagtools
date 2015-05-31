@@ -225,14 +225,14 @@ class mdtSqlSelectionDialog : public QDialog, Ui::mdtSqlSelectionDialog
    * The returned selection will only contain data related
    *  to given field list.
    */
-  mdtSqlTableSelection selection(const QStringList &fieldList);
+  mdtSqlTableSelection selection(const QStringList &fieldList) const;
 
   /*! \brief Get selection
    *
    * The returned selection will only contain data related
    *  to given field.
    */
-  mdtSqlTableSelection selection(const QString &field);
+  mdtSqlTableSelection selection(const QString &field) const;
 
  public slots:
 

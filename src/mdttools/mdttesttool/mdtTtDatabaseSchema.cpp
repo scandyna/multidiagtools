@@ -2073,6 +2073,7 @@ bool mdtTtDatabaseSchema::setupTestSystemComponentTable()
   field.setName("Type_Code_FK");
   field.setType(QVariant::String);
   field.setLength(20);
+  field.setRequired(true);
   table.addField(field, false);
   // Alias
   field = QSqlField();

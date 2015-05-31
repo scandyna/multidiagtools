@@ -135,10 +135,12 @@ set (CL_HEADER_FILES
           mdtcablelist/mdtClApplicationWidgets.h
           mdtcablelist/mdtClVehicleTypeEditor.h
           mdtcablelist/mdtClConnectorEditor.h
+          mdtcablelist/mdtClConnectorSelectionDialog.h
           mdtcablelist/mdtClArticleEditor.h
           mdtcablelist/mdtClArticleComponentDialog.h
           mdtcablelist/mdtClArticleConnectionDialog.h
           mdtcablelist/mdtClArticleLinkDialog.h
+          mdtcablelist/mdtClArticleSelectionDialog.h
           mdtcablelist/mdtClPathGraphDialog.h
           mdtcablelist/mdtClUnitConnectionDialog.h
           mdtcablelist/mdtClUnitEditor.h
@@ -156,6 +158,7 @@ set (CL_SOURCES_FILES
           mdtcablelist/mdtClVehicleTypeEditor.cpp
           mdtcablelist/mdtClConnectorData.cpp
           mdtcablelist/mdtClConnectorEditor.cpp
+          mdtcablelist/mdtClConnectorSelectionDialog.cpp
           mdtcablelist/mdtClArticle.cpp
           mdtcablelist/mdtClArticleConnectorData.cpp
           mdtcablelist/mdtClArticleConnectionData.cpp
@@ -163,6 +166,7 @@ set (CL_SOURCES_FILES
           mdtcablelist/mdtClArticleComponentDialog.cpp
           mdtcablelist/mdtClArticleConnectionDialog.cpp
           mdtcablelist/mdtClArticleLinkDialog.cpp
+          mdtcablelist/mdtClArticleSelectionDialog.cpp
           mdtcablelist/mdtClPathGraph.cpp
           mdtcablelist/mdtClPathGraphDialog.cpp
           mdtcablelist/mdtClPathGraphicsConnection.cpp

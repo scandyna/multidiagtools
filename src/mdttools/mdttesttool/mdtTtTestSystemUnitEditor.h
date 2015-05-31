@@ -74,6 +74,22 @@ class mdtTtTestSystemUnitEditor : public mdtSqlForm
    */
   void removeConnectors();
 
+  /*! \brief Add a connection to unit connection table
+   */
+  void addConnection();
+
+  /*! \brief Add connections based on article connections
+   */
+  void addArticleConnectionsBasedConnections();
+
+  /*! \brief Edit a connection
+   */
+  void editConnection();
+
+  /*! \brief Remove connection from unit connection table
+   */
+  void removeConnections();
+
  private:
 
   /*! \brief Get current unit ID
@@ -82,10 +98,6 @@ class mdtTtTestSystemUnitEditor : public mdtSqlForm
   {
     return currentData("TestSystemUnit_tbl", "Unit_Id_FK_PK");
   }
-
-  /*! \brief Let user choose a connector (from Connector_tbl)
-   */
-  QVariant selectBaseConnector();
 
   /*! \brief Let user select connections related to a connector from Connector_tbl
    */
@@ -110,6 +122,10 @@ class mdtTtTestSystemUnitEditor : public mdtSqlForm
   /*! \brief Setup UnitConnection_view part
    */
   bool setupConnectionTable();
+
+  /*! \brief Setup UnitLink_view part
+   */
+  bool setupLinkTable();
 
   Q_DISABLE_COPY(mdtTtTestSystemUnitEditor);
 };

@@ -55,7 +55,7 @@ bool mdtTtTestSystemComponent::removeTestSystemAssignation(const mdtSqlTableSele
   return removeData("TestSystem_TestSystemComponent_tbl", s, true);
 }
 
-QVariant mdtTtTestSystemComponent::createUnit(const QVariant & componentId, const QString & typeCode)
+QVariant mdtTtTestSystemComponent::createUnit(const QVariant & componentId, const QString & typeCode, const QVariant & baseAticleId)
 {
   QSqlQuery query(database());
   mdtSqlRecord uRecord, tsuRecord;
@@ -75,7 +75,8 @@ QVariant mdtTtTestSystemComponent::createUnit(const QVariant & componentId, cons
     return QVariant();
   }
   // Insert into Unit_tbl and get created ID
-  uRecord.setValue("SchemaPosition", "");
+  ///uRecord.setValue("SchemaPosition", "");
+  uRecord.setValue("Article_Id_FK", baseAticleId);
   if(!addRecord(uRecord, "Unit_tbl", query)){
     rollbackTransaction();
     return QVariant();

@@ -24,6 +24,7 @@
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlSelectionDialog.h"
 #include "mdtSqlTableSelection.h"
+#include "mdtClArticleSelectionDialog.h"
 #include "mdtSqlRelationInfo.h"
 #include "mdtTtApplicationWidgets.h"
 #include <QPushButton>
@@ -52,6 +53,35 @@ bool mdtTtTestSystemComponentEditor::setupTables()
     return false;
   }
   return true;
+}
+
+void mdtTtTestSystemComponentEditor::setType()
+{
+  mdtSqlSelectionDialog sDialog(this);
+  QString sql;
+
+  // Let user select type
+  sql = "SELECT * FROM TestSystemComponentType_tbl";
+  sDialog.setWindowTitle(tr("Test system component type selection"));
+  sDialog.setMessage(tr("Select test system component:"));
+  sDialog.setQuery(sql, database(), false);
+  
+  if(sDialog.exec() != QDialog::Accepted){
+    return;
+  }
+  auto s = sDialog.selection("Code_PK");
+  if(s.isEmpty()){
+    return;
+  }
+  Q_ASSERT(s.rowCount() == 1);
+  // Set
+  if(!setCurrentData("TestSystemComponent_tbl", "Type_Code_FK", s.data(0, "Code_PK"), true)){
+    displayLastError();
+    return;
+  }
+  submit();
+  // Update UI
+  refresh();
 }
 
 void mdtTtTestSystemComponentEditor::addTestSystemAssignation()
@@ -144,9 +174,11 @@ void mdtTtTestSystemComponentEditor::createUnit()
   mdtTtTestSystemComponent tsc(database());
   mdtSqlSelectionDialog dialog(this);
   mdtSqlTableSelection s;
+  QMessageBox msgBox(this);
   QString sql;
   QVariant testSystemComponentId;
   QVariant unitId;
+  QVariant baseArticleId;
 
   // Get component ID
   testSystemComponentId = currentData("TestSystemComponent_tbl", "Id_PK");
@@ -166,8 +198,21 @@ void mdtTtTestSystemComponentEditor::createUnit()
   if(s.isEmpty()){
     return;
   }
+  // Let user select a base article
+  msgBox.setText(tr("Do you want to base new unit on a article (model) ?"));
+  ///msgBox.setInformativeText(tr("Do you want to continue ?"));
+  msgBox.setIcon(QMessageBox::Question);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+  msgBox.setDefaultButton(QMessageBox::No);
+  if(msgBox.exec() == QMessageBox::Yes){
+    mdtClArticleSelectionDialog asDialog(this, database());
+    if(asDialog.exec() != QDialog::Accepted){
+      return;
+    }
+    baseArticleId = asDialog.selectedArticleId();
+  }
   // Create unit
-  unitId = tsc.createUnit(testSystemComponentId, s.data(0, "Code_PK").toString());
+  unitId = tsc.createUnit(testSystemComponentId, s.data(0, "Code_PK").toString(), baseArticleId);
   if(unitId.isNull()){
     pvLastError = tsc.lastError();
     displayLastError();
@@ -229,11 +274,33 @@ void mdtTtTestSystemComponentEditor::removeUnits()
 
 bool mdtTtTestSystemComponentEditor::setupTestSystemComponentTable()
 {
-  setMainTableUi<Ui::mdtTtTestSystemComponentEditor>();
+  mdtSqlRelationInfo relationInfo;
+  Ui::mdtTtTestSystemComponentEditor tsce;
+
+  ///setMainTableUi<Ui::mdtTtTestSystemComponentEditor>();
+  setMainTableUi(tsce);
   if(!setMainTable("TestSystemComponent_tbl", "Test system component", database())){
     return false;
   }
   setWindowTitle(tr("Test system component edition"));
+  /*
+   * Setup component type widget mapping
+   */
+  // Add a controller that acts on TestSystemComponentType_tbl
+  relationInfo.setChildTableName("TestSystemComponentType_tbl");
+  relationInfo.addRelation("Type_Code_FK", "Code_PK", false);
+  auto componentController = mainTableController<mdtSqlDataWidgetController>();
+  Q_ASSERT(componentController);
+  if(!componentController->addChildController<mdtSqlDataWidgetController>(relationInfo, tr("Test system component type"))){
+    pvLastError = componentController->lastError();
+    return false;
+  }
+  // Get freshly added controller and map widgets to it
+  auto typeController = componentController->childController<mdtSqlDataWidgetController>("TestSystemComponentType_tbl");
+  Q_ASSERT(typeController);
+  typeController->addMapping(tsce.TypeNameEN, "NameEN");
+  
+  connect(tsce.pbSetType, SIGNAL(clicked()), this, SLOT(setType()));
 
   return true;
 }

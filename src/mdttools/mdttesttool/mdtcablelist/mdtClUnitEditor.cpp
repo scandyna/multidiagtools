@@ -28,8 +28,10 @@
 #include "mdtSqlRelationInfo.h"
 #include "mdtSqlSelectionDialog.h"
 #include "mdtSqlTableSelection.h"
+#include "mdtClArticleSelectionDialog.h"
 #include "mdtError.h"
 #include "mdtClUnitVehicleType.h"
+#include "mdtClConnectorSelectionDialog.h"
 #include "mdtClUnitConnectionDialog.h"
 #include "mdtClLinkData.h"
 #include "mdtClUnitLinkDialog.h"
@@ -222,8 +224,7 @@ void mdtClUnitEditor::removeVehicleAssignation()
 void mdtClUnitEditor::setBaseArticle()
 {
   mdtClUnit unit(this, database());
-  mdtSqlSelectionDialog selectionDialog;
-  mdtSqlTableSelection s;
+  mdtClArticleSelectionDialog asDialog(this, database());
   int ret;
   QString sql;
 
@@ -266,24 +267,18 @@ void mdtClUnitEditor::setBaseArticle()
       return;
     }
   }
-  // Setup article selection dialog and show it to user
-  sql = "SELECT * FROM Article_tbl;";
-  selectionDialog.setMessage("Please select article");
-  selectionDialog.setQuery(sql, database(), false);
-  ///selectionDialog.setColumnHidden("Id_PK", true);
-  selectionDialog.setHeaderData("ArticleCode", tr("Article code\n(internal)"));
-  selectionDialog.addColumnToSortOrder("ArticleCode", Qt::AscendingOrder);
-  selectionDialog.addColumnToSortOrder("DesignationEN", Qt::AscendingOrder);
-  selectionDialog.sort();
-  selectionDialog.resize(800, 400);
-  if(selectionDialog.exec() != QDialog::Accepted){
+  // Let the user select article
+  if(asDialog.exec() != QDialog::Accepted){
     return;
   }
-  s = selectionDialog.selection("Id_PK");
-  Q_ASSERT(s.rowCount() == 1);
-  if(!setCurrentData("Unit_tbl", "Article_Id_FK", s.data(0, "Id_PK"))){
+  // Set to db
+  if(!setCurrentData("Unit_tbl", "Article_Id_FK", asDialog.selectedArticleId(), true)){
+    displayLastError();
     return;
   }
+  submit();
+  // Update UI
+  refresh();
 }
 
 void mdtClUnitEditor::addComponent()
@@ -422,7 +417,11 @@ void mdtClUnitEditor::addConnectorBasedConnector()
     return;
   }
   // Select connector from Connector_tbl
-  baseConnectorId = selectBaseConnector();
+  mdtClConnectorSelectionDialog csDialog(this, database());
+  if(csDialog.exec() != QDialog::Accepted){
+    return;
+  }
+  baseConnectorId = csDialog.selectedConnectorId();
   if(baseConnectorId.isNull()){
     return;
   }
@@ -824,7 +823,6 @@ void mdtClUnitEditor::removeConnections()
   mdtSqlTableWidget *widget;
   mdtClUnit unit(this, database());
   QMessageBox msgBox;
-  ///QModelIndexList indexes;
   mdtSqlTableSelection s;
   QString linksMsg;
   bool ok;
@@ -836,14 +834,7 @@ void mdtClUnitEditor::removeConnections()
   if(s.rowCount() < 1){
     return;
   }
-  /**
-  indexes = widget->indexListOfSelectedRows("UnitConnection_Id_PK");
-  if(indexes.size() < 1){
-    return;
-  }
-  */
   // Check that selected connections are not related to some links
-  ///linksMsg = unit.toUnitRelatedLinksListStr(currentUnitId(), indexes, &ok);
   linksMsg = unit.toUnitRelatedLinksListStr(currentUnitId(), s.dataList("UnitConnection_Id_PK"), &ok);
   if(!ok){
     pvLastError = unit.lastError();
@@ -1195,41 +1186,6 @@ QVariant mdtClUnitEditor::selectUnitConnector(const QString & message, const QSt
   Q_ASSERT(selectionDialog.selectionResult().size() == 1);
 
   return selectionDialog.selectionResult().at(0);
-}
-
-QVariant mdtClUnitEditor::selectBaseConnector()
-{
-  mdtSqlSelectionDialog selectionDialog;
-  QString sql;
-
-  if(currentUnitId().isNull()){
-    return QVariant();
-  }
-  // Setup model to show available connectors
-  sql = "SELECT * FROM Connector_tbl";
-  // Setup and show dialog
-  selectionDialog.setMessage("Please select a connector:");
-  selectionDialog.setQuery(sql, database(), false);
-  selectionDialog.setColumnHidden("Id_PK", true);
-  selectionDialog.setHeaderData("ContactQty", tr("Contact\nQty"));
-  selectionDialog.setHeaderData("InsertRotation", tr("Insert\nRotation"));
-  selectionDialog.setHeaderData("ManufacturerConfigCode", tr("Manufacturer\nConfiguration code"));
-  selectionDialog.setHeaderData("ManufacturerArticleCode", tr("Manufacturer\nArticle code"));
-  selectionDialog.addColumnToSortOrder("Gender", Qt::AscendingOrder);
-  selectionDialog.addColumnToSortOrder("ContactQty", Qt::AscendingOrder);
-  selectionDialog.addColumnToSortOrder("ManufacturerConfigCode", Qt::AscendingOrder);
-  selectionDialog.sort();
-  ///selectionDialog.addSelectionResultColumn("Id_PK");
-  selectionDialog.resize(700, 400);
-  selectionDialog.setWindowTitle(tr("Connector selection"));
-  if(selectionDialog.exec() != QDialog::Accepted){
-    return QVariant();
-  }
-  Q_ASSERT(selectionDialog.selection("Id_PK").rowCount() == 1);
-  ///Q_ASSERT(selectionDialog.selectionResult().size() == 1);
-
-  ///return selectionDialog.selectionResult().at(0);
-  return selectionDialog.selection("Id_PK").data(0, "Id_PK");
 }
 
 QList<QVariant> mdtClUnitEditor::selectBaseConnectorContactIdList(const QVariant & connectorId, bool multiSelection)
@@ -1786,7 +1742,7 @@ bool mdtClUnitEditor::setupUnitLinkTable()
   widget->addColumnToSortOrder("EndUnitContactName", Qt::AscendingOrder);
   widget->sort();
   // Set some attributes on table view
-  widget->tableView()->resizeColumnsToContents();
+  widget->resizeViewToContents();
 
   return true;
 }

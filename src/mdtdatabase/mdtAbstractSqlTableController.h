@@ -291,6 +291,15 @@ class mdtAbstractSqlTableController : public QObject
    */
   bool select();
 
+  /*! \brief Refresh data of current row
+   *
+   * This is the same as calling setCurrentRow(currentRow()).
+   */
+  bool refresh()
+  {
+    return setCurrentRow(currentRow());
+  }
+
   /*! \brief Set a filter on main table
    *
    * Set filter based on SQL query WHERE part, without the WHERE keyword (f.ex. Id_PK = 15)

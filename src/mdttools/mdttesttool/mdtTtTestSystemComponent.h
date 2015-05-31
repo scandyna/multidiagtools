@@ -72,7 +72,7 @@ class mdtTtTestSystemComponent : public mdtTtBase
    *
    * \return ID of created test system unit. If a error occured, a null ID is returned.
    */
-  QVariant createUnit(const QVariant & componentId, const QString & typeCode);
+  QVariant createUnit(const QVariant & componentId, const QString & typeCode, const QVariant & baseAticleId);
 
   /*! \brief Remove a test system unit
    *

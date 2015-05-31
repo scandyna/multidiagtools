@@ -175,10 +175,6 @@ class mdtClUnitEditor : public mdtSqlForm
    */
   QVariant selectUnitConnector(const QString & message, const QString & sql);
 
-  /*! \brief Let user choose a connector (from Connector table)
-   */
-  QVariant selectBaseConnector();
-
   /*! \brief Let user select connections related to a connector from Connector_tbl
    */
   QList<QVariant> selectBaseConnectorContactIdList(const QVariant & connectorId, bool multiSelection = true);

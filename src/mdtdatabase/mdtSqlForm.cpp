@@ -185,8 +185,9 @@ bool mdtSqlForm::select(const QString &tableName)
     }
     return true;
   }
-  std::shared_ptr<mdtSqlTableViewController> controller;
-  controller = pvController->childController<mdtSqlTableViewController>(tableName);
+  ///std::shared_ptr<mdtSqlTableViewController> controller;
+  ///controller = pvController->childController<mdtSqlTableViewController>(tableName);
+  auto controller = pvController->childController<mdtAbstractSqlTableController>(tableName);
   if(!controller){
     pvLastError.setError(tr("Cannot find controller that acts on table '") + tableName + tr("'"), mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlForm");

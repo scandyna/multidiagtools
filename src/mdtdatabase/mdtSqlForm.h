@@ -245,6 +245,15 @@ class mdtSqlForm : public QWidget
    */
   bool select(const QString &tableName);
 
+  /*! \brief Refresh data of current row
+   *
+   * This is the same as calling setCurrentRow(currentRow()).
+   */
+  bool refresh()
+  {
+    return pvController->refresh();
+  }
+
   /*! \brief Set a filter on main table
    *
    * Set filter based on SQL query WHERE part, without the WHERE keyword (f.ex. Id_PK = 15)

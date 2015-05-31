@@ -48,6 +48,10 @@ class mdtTtTestSystemComponentEditor : public mdtSqlForm
 
  private slots:
 
+  /*! \brief Set test system component type
+   */
+  void setType();
+
   /*! \brief Add test system assignation
    */
   void addTestSystemAssignation();

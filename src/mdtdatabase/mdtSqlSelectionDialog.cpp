@@ -302,7 +302,7 @@ QVariant mdtSqlSelectionDialog::selectedData(int row, const QString &fieldName)
   return data;
 }
 
-mdtSqlTableSelection mdtSqlSelectionDialog::selection(const QStringList &fieldList)
+mdtSqlTableSelection mdtSqlSelectionDialog::selection(const QStringList &fieldList) const
 {
   Q_ASSERT(pvModel != 0);
 
@@ -313,7 +313,7 @@ mdtSqlTableSelection mdtSqlSelectionDialog::selection(const QStringList &fieldLi
   return s;
 }
 
-mdtSqlTableSelection mdtSqlSelectionDialog::selection(const QString &field)
+mdtSqlTableSelection mdtSqlSelectionDialog::selection(const QString &field) const
 {
   Q_ASSERT(pvModel != 0);
 

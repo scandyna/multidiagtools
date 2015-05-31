@@ -1,16 +1,21 @@
-window_sizes 1280 916 349 925 863 0
+window_sizes 1280 977 349 925 924 0
 cleanlooks_style
 diagrams
   active  classdiagram_ref 941058 // Test
-    925 863 90 3 0 0
+    925 924 90 3 0 0
   classdiagram_ref 1410946 // TestSystemComponent
     802 863 100 4 0 0
+  classdiagram_ref 772866 // mdtClLink
+    120 106 100 4 0 0
+  classdiagram_ref 852610 // mdtClLinkData
+    120 106 100 18 0 0
 end
 show_stereotypes
-selected attribute_ref 1695106 // CalibrationDate
+selected classdiagram_ref 941058 // Test
 open
   class_ref 1611522 // TestSystem_tbl
   class_ref 1624834 // TestSystemUnit_tbl
   class_ref 1631490 // mdtTtTestSystemComponent
+  classview_ref 503554 // Link
 end
 end

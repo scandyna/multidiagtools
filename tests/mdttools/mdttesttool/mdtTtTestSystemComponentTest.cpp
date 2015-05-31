@@ -228,7 +228,7 @@ void mdtTtTestSystemComponentTest::createUnitTest()
    * Create a bus coupling relay that belongs to Test system component 11
    */
   // Create unit
-  unitId = tsc.createUnit(11, "BUSCPLREL");
+  unitId = tsc.createUnit(11, "BUSCPLREL", QVariant());
   QVERIFY(!unitId.isNull());
   // Check back
   dataList = tsc.getDataList<QSqlRecord>("SELECT * FROM TestSystemUnit_view", ok);
