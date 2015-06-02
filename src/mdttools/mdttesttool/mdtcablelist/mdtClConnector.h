@@ -24,10 +24,15 @@
 #include "mdtTtBase.h"
 #include "mdtError.h"
 #include "mdtClConnectorData.h"
+#include "mdtClConnectorContactData.h"
+#include "mdtClConnectionTypeData.h"
+#include <QList>
 
 /*! \brief Helper class for connector manipulations
  *
  * Acts mainly on Connector_tbl and ConnectorContact_tbl
+ *
+ * Acting with ConnectionType_tbl is also provided.
  */
 class mdtClConnector : public mdtTtBase
 {
@@ -41,17 +46,73 @@ class mdtClConnector : public mdtTtBase
    */
   mdtClConnector(QSqlDatabase db);
 
+  /*! \brief Get connection type data for given code
+   *
+   * \return Data for given code.
+   *       A null data is returned if given code does not exist, or a error occured.
+   *       Use ok parameter to diffrenciate both cases.
+   */
+  mdtClConnectionTypeData getConnectionTypeData(const QString & code, bool & ok);
+
+  /*! \brief Add a connector contact to database
+   *
+   * \param data Contact data
+   * \param handleTransaction Internally, a transaction is (explicitly) open.
+   *             By calling this function with a allready open transaction,
+   *             set this argument false.
+   * \return Id_PK of added contact, or a null key on error
+   */
+  mdtClConnectorContactKeyData addContact(const mdtClConnectorContactData & data, bool handleTransaction);
+
+  /*! \brief Get connector contact data from database
+   *
+   * \param key Data that contains contact ID (Id_PK).
+   *     Note: only id is used, other key memebers are ignored.
+   * \return data for given key.
+   *       A null data is returned if given key does not exist, or a error occured.
+   *       Use ok parameter to diffrenciate both cases.
+   */
+  mdtClConnectorContactData getContactData(const mdtClConnectorContactKeyData & key, bool & ok);
+
+  /*! \brief Remove a contact
+   */
+  bool removeContact(const mdtClConnectorContactKeyData & key);
+
+  /*! \brief Add a list of connector contacts to database
+   *
+   * \param dataList List of contact data
+   * \param handleTransaction Internally, a transaction is (explicitly) open.
+   *             By calling this function with a allready open transaction,
+   *             set this argument false.
+   */
+  bool addContactList(const QList<mdtClConnectorContactData> & dataList, bool handleTransaction);
+
+  /*! \brief Get a list of contact data for given connector
+   *
+   * \param key Key of connector that contains contacts
+   * \return List of connector contacts.
+   *        A empty list is returned if connector contains no contact, or a error occured.
+   *        Use ok parameter to diffrenciate both cases.
+   */
+  QList<mdtClConnectorContactData> getContactDataList(const mdtClConnectorKeyData & key, bool & ok);
+
+  /*! \brief Remove contact list of given connector
+   *
+   * \param key Key of connector that contains contacts to remove
+   */
+  bool removeContactList(const mdtClConnectorKeyData & key);
+
   /*! \brief Add a connector to database
    *
    * \param data Connector data to store
    * \param handleTransaction Internally, a transaction is (explicitly) open.
-   *             By callsing this function with a allready open transaction,
+   *             By calling this function with a allready open transaction,
    *             set this argument false.
    * \return Id_PK of added connector, or a null key on error
    */
-  mdtClConnectorKeyData addConnector(const mdtClConnectorData & data, bool handleTransaction);
+  mdtClConnectorKeyData addConnector(mdtClConnectorData data, bool handleTransaction);
 
-  /*! \brief Get connector data
+  /*! \brief Get connector data from database
    *
    * \return data for given key.
    *       A null data is returned if given key does not exist, or a error occured.
@@ -60,10 +121,21 @@ class mdtClConnector : public mdtTtBase
   mdtClConnectorData getConnectorData(const mdtClConnectorKeyData & key, bool & ok);
 
   /*! \brief Remove connector
+   *
+   * \param key Key of connector to remove
+   * \param handleTransaction Internally, a transaction is (explicitly) open.
+   *             By calling this function with a allready open transaction,
+   *             set this argument false.
    */
-  bool removeConnector(const mdtClConnectorKeyData & key);
+  bool removeConnector(const mdtClConnectorKeyData & key, bool handleTransaction);
 
  private:
+
+  /*! \brief Fill given record with given connector contact data
+   *
+   * \pre record must be setup
+   */
+  void fillRecord(mdtSqlRecord & record, const mdtClConnectorContactData & data);
 
   Q_DISABLE_COPY(mdtClConnector);
 };

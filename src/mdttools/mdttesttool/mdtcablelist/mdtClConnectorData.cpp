@@ -23,14 +23,32 @@
 
 //#include <QDebug>
 
+void mdtClConnectorData::setKeyData(const mdtClConnectorKeyData & key)
+{
+  // Update contacts with new ID
+  for(auto & cd : _pvContactDataList){
+    cd.setConnectorFk(key);
+  }
+  pvKeyData = key;
+}
+
 void mdtClConnectorData::clear()
 {
-  keyData.clear();
+  pvKeyData.clear();
   gender.clear();
   form.clear();
   manufacturer.clear();
   manufacturerConfigCode.clear();
   manufacturerArticleCode.clear();
+  _pvContactDataList.clear();
+}
+
+void mdtClConnectorData::addContactData(const mdtClConnectorContactData & data)
+{
+  auto _data = data;
+
+  _data.setConnectorFk(pvKeyData);
+  _pvContactDataList.append(_data);
 }
 
 
@@ -57,15 +75,10 @@ bool mdtClConnectorData::setup(const QSqlDatabase & db)
   return true;
 }
 
-void mdtClConnectorData::setContactDataList(const QList<mdtSqlRecord> & dataList) 
-{
-  pvContactDataList = dataList;
-}
-
-QList<mdtSqlRecord> mdtClConnectorData::contactDataList() const
-{
-  return pvContactDataList;
-}
+// void mdtClConnectorData::setContactDataList(const QList<mdtSqlRecord> & dataList) 
+// {
+//   pvContactDataList = dataList;
+// }
 
 void mdtClConnectorData::addContactData(const mdtSqlRecord & data) 
 {
@@ -75,6 +88,13 @@ void mdtClConnectorData::addContactData(const mdtSqlRecord & data)
   mdtSqlRecord _data = data;
   _data.setValue("Connector_Id_FK", value("Id_PK"));
   pvContactDataList.append(_data);
+}
+
+void mdtClConnectorData::setContactDataList(const QList< mdtClConnectorContactData > &dataList)
+{
+  for(const auto & data : dataList){
+    addContactData(data);
+  }
 }
 
 bool mdtClConnectorData::setContactData(const QVariant & contactId, const mdtSqlRecord & data) 

@@ -58,7 +58,7 @@ relationcanvas 130946 relation_ref 1371394 // <directional composition>
   multiplicity_a_pos 608 300 3000 no_multiplicity_b
 end
 relationcanvas 131074 relation_ref 1371778 // <directional composition>
-  from ref 130434 z 3012 stereotype "<<list>>" xyz 434 271.5 3012 to ref 130818
+  from ref 130434 z 3012 stereotype "<<list>>" xyz 434 271 3012 to ref 130818
   role_a_pos 411 249 3000 no_role_b
   multiplicity_a_pos 514 279 3000 no_multiplicity_b
 end

@@ -23,7 +23,11 @@
 #include "mdtTtBase.h"
 #include "mdtClArticle.h"
 #include "mdtClUnit.h"
+#include "mdtClConnector.h"
 #include "mdtClConnectorData.h"
+#include "mdtClConnectorKeyData.h"
+#include "mdtClConnectionTypeData.h"
+#include "mdtClConnectorContactData.h"
 #include "mdtClArticleConnectorData.h"
 #include "mdtClArticleConnectorData.h"
 #include "mdtClUnitConnectionData.h"
@@ -131,30 +135,59 @@ void mdtCableListTestScenario::removeTestVehicleTypes()
 
 void mdtCableListTestScenario::createTestConnectors()
 {
-  mdtClArticle art(0, pvDatabase);
+  mdtClConnector cnr(pvDatabase);
+  mdtClConnectorKeyData connectorKey;
   mdtClConnectorData connectorData;
-  mdtSqlRecord contactData;
-  QList<QSqlRecord> dataList;
+  mdtClConnectorContactKeyData contactKey;
+  ///mdtClConnectorContactData contactData;
   bool ok;
 
   // Add connector 1
-  QVERIFY(connectorData.setup(pvDatabase));
-  connectorData.setValue("Id_PK", 1);
-  QVERIFY(art.addRecord(connectorData, "Connector_tbl"));
+  connectorKey.id = 1;
+  connectorData.setKeyData(connectorKey);
+  connectorKey = cnr.addConnector(connectorData, true);
+  QCOMPARE(connectorKey.id, QVariant(1));
   // Check back
-  dataList = art.getData("SELECT * FROM Connector_tbl", &ok);
+  connectorData = cnr.getConnectorData(connectorKey, ok);
   QVERIFY(ok);
-  QCOMPARE(dataList.size(), 1);
-  QCOMPARE(dataList.at(0).value("Id_PK"), QVariant(1));
+  QCOMPARE(connectorData.keyData().id, QVariant(1));
   // Add connector 2
-  connectorData.clearValues();
-  connectorData.setValue("Id_PK", 2);
-  QVERIFY(art.addRecord(connectorData, "Connector_tbl"));
+  connectorData.clear();
+  connectorKey.clear();
+  connectorKey.id = 2;
+  connectorData.setKeyData(connectorKey);
+  connectorKey = cnr.addConnector(connectorData, true);
+  QCOMPARE(connectorKey.id, QVariant(2));
   // Check back
-  dataList = art.getData("SELECT * FROM Connector_tbl", &ok);
+  connectorData = cnr.getConnectorData(connectorKey, ok);
   QVERIFY(ok);
-  QCOMPARE(dataList.size(), 2);
-  QCOMPARE(dataList.at(1).value("Id_PK"), QVariant(2));
+  QCOMPARE(connectorData.keyData().id, QVariant(2));
+
+
+  mdtClArticle art(0, pvDatabase);
+  
+  mdtSqlRecord contactData;
+  QList<QSqlRecord> dataList;
+  
+
+  // Add connector 1
+  QVERIFY(connectorData.setup(pvDatabase));
+//   connectorData.setValue("Id_PK", 1);
+//   QVERIFY(art.addRecord(connectorData, "Connector_tbl"));
+//   // Check back
+//   dataList = art.getData("SELECT * FROM Connector_tbl", &ok);
+//   QVERIFY(ok);
+//   QCOMPARE(dataList.size(), 1);
+//   QCOMPARE(dataList.at(0).value("Id_PK"), QVariant(1));
+//   // Add connector 2
+//   connectorData.clearValues();
+//   connectorData.setValue("Id_PK", 2);
+//   QVERIFY(art.addRecord(connectorData, "Connector_tbl"));
+//   // Check back
+//   dataList = art.getData("SELECT * FROM Connector_tbl", &ok);
+//   QVERIFY(ok);
+//   QCOMPARE(dataList.size(), 2);
+//   QCOMPARE(dataList.at(1).value("Id_PK"), QVariant(2));
   /*
    * Create connect 3
    *  - Id_PK : 3

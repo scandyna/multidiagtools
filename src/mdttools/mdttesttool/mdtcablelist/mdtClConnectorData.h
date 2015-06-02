@@ -22,36 +22,12 @@
 #define MDT_CL_CONNECTOR_DATA_H
 
 #include "mdtSqlRecord.h"
+#include "mdtClConnectorKeyData.h"
+#include "mdtClConnectorContactData.h"
 #include <QList>
 #include <QVariant>
 #include <QSqlDatabase>
 #include <QSqlRecord>
-
-/*! \brief Data container for connector key
- *
- * Refers to Connector_tbl
- */
-struct mdtClConnectorKeyData
-{
-  /*! \brief Connector ID (Id_PK)
-   */
-  QVariant id;
-
-  /*! \brief Check if key data is null
-   */
-  bool isNull() const
-  {
-    return id.isNull();
-  }
-
-  /*! \brief Clear
-   */
-  void clear()
-  {
-    id.clear();
-  }
-};
-
 
 /*! \brief Data container class for connector data
  *
@@ -59,9 +35,24 @@ struct mdtClConnectorKeyData
  */
 struct mdtClConnectorData : public mdtSqlRecord /// \todo When all is adapted, remove this inheritance
 {
+ private:
+
   /*! \brief Connector key data
    */
-  mdtClConnectorKeyData keyData;
+  mdtClConnectorKeyData pvKeyData;
+
+ public:
+
+  /*! \brief Get key data
+   */
+  inline mdtClConnectorKeyData keyData() const
+  {
+    return pvKeyData;
+  }
+
+  /*! \brief Set key data
+   */
+  void setKeyData(const mdtClConnectorKeyData & key);
 
   /*! \brief Connector gender
    *
@@ -87,18 +78,42 @@ struct mdtClConnectorData : public mdtSqlRecord /// \todo When all is adapted, r
    */
   QVariant manufacturerArticleCode;
 
+  /*! \brief Add contact to connector
+   *
+   * Note: in given contact key data,
+   *  connectorFk is ignored and replaced by connector ID
+   */
+  void addContactData(const mdtClConnectorContactData & data);
+
+  /*! \brief Set list of contacts
+   *
+   * \sa addContactData()
+   */
+  void setContactDataList(const QList<mdtClConnectorContactData> & dataList);
+
+  /*! \brief Access list of contacts
+   */
+  const QList<mdtClConnectorContactData> & contactDataList() const
+  {
+    return _pvContactDataList;
+  }
+
   /*! \brief Check if data is null
    *
    * Data is considered null if keyData is null
    */
   inline bool isNull() const
   {
-    return keyData.isNull();
+    return pvKeyData.isNull();
   }
 
   /*! \brief Clear data
    */
   void clear();
+
+ private:
+
+  QList<mdtClConnectorContactData> _pvContactDataList;
 
  public:
 
@@ -133,13 +148,7 @@ struct mdtClConnectorData : public mdtSqlRecord /// \todo When all is adapted, r
    * 
    * \deprecated
    */
-  void setContactDataList(const QList<mdtSqlRecord> & dataList);
-
-  /*! \brief Get list of contact data
-   * 
-   * \deprecated
-   */
-  QList<mdtSqlRecord> contactDataList() const;
+//   void setContactDataList(const QList<mdtSqlRecord> & dataList);
 
   /*! \brief Add contact data
    *

@@ -156,6 +156,7 @@ set (CL_HEADER_FILES
 set (CL_SOURCES_FILES 
           mdtcablelist/mdtClApplicationWidgets.cpp
           mdtcablelist/mdtClVehicleTypeEditor.cpp
+          mdtcablelist/mdtClConnectionTypeData.cpp
           mdtcablelist/mdtClConnectorData.cpp
           mdtcablelist/mdtClConnector.cpp
           mdtcablelist/mdtClConnectorEditor.cpp
