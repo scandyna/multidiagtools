@@ -2,31 +2,31 @@ format 209
 
 classcanvas 128002 class_ref 1639170 // mdtClConnectorKeyData
   classdiagramsettings member_max_width 0 end
-  xyz 74 33 2000
+  xyz 74.3 33.1 2000
 end
 classcanvas 128130 class_ref 1639298 // mdtClConnectorContactKeyData
   classdiagramsettings member_max_width 0 end
-  xyz 383 30 2000
+  xyz 383.4 30.3 2000
 end
 classcanvas 128258 class_ref 1639426 // mdtClConnectorContactData
   classdiagramsettings member_max_width 0 end
-  xyz 425 196 2006
+  xyz 418.7 185.5 2006
 end
 classcanvas 128514 class_ref 1106946 // mdtClConnectorData
   classdiagramsettings member_max_width 0 end
-  xyz 7 170 2012
+  xyz 7.7 170 2012
 end
 classcanvas 128898 class_ref 1646466 // mdtClConnectionTypeKeyData
   classdiagramsettings member_max_width 0 end
-  xyz 188 399 2000
+  xyz 190.8 423 2000
 end
 classcanvas 129026 class_ref 1646594 // mdtClConnectionTypeData
   classdiagramsettings member_max_width 0 end
-  xyz 162 519 2000
+  xyz 165.2 543.6 2000
 end
 relationcanvas 128770 relation_ref 1994370 // <directional composition>
   from ref 128514 z 2013 to ref 128258
-  role_a_pos 364 260 3000 no_role_b
-  multiplicity_a_pos 394 290 3000 no_multiplicity_b
+  role_a_pos 352 252 3000 no_role_b
+  multiplicity_a_pos 381 284 3000 no_multiplicity_b
 end
 end

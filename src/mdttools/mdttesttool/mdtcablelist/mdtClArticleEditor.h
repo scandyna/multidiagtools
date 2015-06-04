@@ -127,7 +127,7 @@ class mdtClArticleEditor : public mdtSqlForm
    *
    * \return Selected connector ID or Null if nothing was selected or error occured .
    */
-  QVariant selectConnector();
+  ///QVariant selectConnector();
 
   /*! \brief Select contacts in Connector contact table
    *

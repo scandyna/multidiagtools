@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,6 +22,22 @@
 #include <QString>
 
 //#include <QDebug>
+
+void mdtClArticleConnectorData::setKeyData(const mdtClArticleConnectorKeyData & key)
+{
+  pvKeyData = key;
+}
+
+void mdtClArticleConnectorData::clear()
+{
+  pvKeyData.clear();
+  name.clear();
+}
+
+
+/*
+ * OLD
+ */
 
 mdtClArticleConnectorData::mdtClArticleConnectorData()
 {
@@ -56,12 +72,12 @@ void mdtClArticleConnectorData::clearValues()
   mdtSqlRecord::clearValues();
 }
 
-void mdtClArticleConnectorData::clear()
-{
-  pvConnectionDataList.clear();
-  pvConnectorData.clear();
-  mdtSqlRecord::clear();
-}
+// void mdtClArticleConnectorData::clear()
+// {
+//   pvConnectionDataList.clear();
+//   pvConnectorData.clear();
+//   mdtSqlRecord::clear();
+// }
 
 
 void mdtClArticleConnectorData::setConnectionDataList(const QList<mdtClArticleConnectionData> & dataList) 
@@ -143,7 +159,7 @@ mdtClConnectorData mdtClArticleConnectorData::connectorData() const
   return pvConnectorData;
 }
 
-bool mdtClArticleConnectorData::isBasedOnConnector() const
-{
-  return !value("Connector_Id_FK").isNull();
-}
+// bool mdtClArticleConnectorData::isBasedOnConnector() const
+// {
+//   return !value("Connector_Id_FK").isNull();
+// }

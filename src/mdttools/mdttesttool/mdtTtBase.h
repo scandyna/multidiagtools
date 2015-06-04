@@ -261,18 +261,24 @@ class mdtTtBase : public QObject
   /*! \brief Beginn manually a new transaction
    *
    * On error, false is returned and error is available with lastError() .
+   *
+   * \deprecated See mdtSqlTransaction
    */
   bool beginTransaction();
 
   /*! \brief Rollback manually a new transaction
    *
    * On error, false is returned and error is available with lastError() .
+   * 
+   * \deprecated See mdtSqlTransaction
    */
   bool rollbackTransaction();
 
   /*! \brief Commit manually a new transaction
    *
    * On error, false is returned and error is available with lastError() .
+   * 
+   * \deprecated See mdtSqlTransaction
    */
   bool commitTransaction();
 

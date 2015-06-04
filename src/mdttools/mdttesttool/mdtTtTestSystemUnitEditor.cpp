@@ -29,6 +29,7 @@
 #include "mdtSqlTableSelection.h"
 #include "mdtClArticleSelectionDialog.h"
 #include "mdtClConnectorSelectionDialog.h"
+#include "mdtClConnectorContactSelectionDialog.h"
 #include "mdtClUnit.h"
 #include "mdtClUnitConnectionData.h"
 #include "mdtClUnitConnectorData.h"
@@ -208,9 +209,12 @@ void mdtTtTestSystemUnitEditor::addConnector()
 void mdtTtTestSystemUnitEditor::addConnectorBasedConnector()
 {
   mdtClUnit unit(this, database());
+  mdtClConnectorSelectionDialog csDialog(this);
+  mdtClConnectorContactSelectionDialog ccsDialog(this);
   mdtClUnitConnectorData connectorData;
   QVariant unitId;
-  QVariant baseConnectorId;
+  ///QVariant baseConnectorId;
+  mdtClConnectorKeyData baseConnectorKey;
   QVariant connectorName;
   QList<QVariant> contactList;
   QInputDialog dialog;
@@ -221,14 +225,22 @@ void mdtTtTestSystemUnitEditor::addConnectorBasedConnector()
     return;
   }
   // Select connector from Connector_tbl
-  mdtClConnectorSelectionDialog csDialog(this, database());
+  if(!csDialog.select(database())){
+    pvLastError = csDialog.lastError();
+    displayLastError();
+    return;
+  }
   if(csDialog.exec() != QDialog::Accepted){
     return;
   }
-  baseConnectorId = csDialog.selectedConnectorId();
-  if(baseConnectorId.isNull()){
+  baseConnectorKey = csDialog.selectedConnectorKey();
+  if(baseConnectorKey.isNull()){
     return;
   }
+//   baseConnectorId = csDialog.selectedConnectorId();
+//   if(baseConnectorId.isNull()){
+//     return;
+//   }
   // Set connector name
   dialog.setLabelText(tr("Connector name:"));
   dialog.setTextValue(connectorName.toString());
@@ -240,10 +252,20 @@ void mdtTtTestSystemUnitEditor::addConnectorBasedConnector()
     return;
   }
   // Select contacts
+  if(!ccsDialog.select(database(), baseConnectorKey)){
+    pvLastError = ccsDialog.lastError();
+    displayLastError();
+    return;
+  }
+  if(ccsDialog.exec() != QDialog::Accepted){
+    return;
+  }
+  /**
   contactList = selectBaseConnectorContactIdList(baseConnectorId);
   if(contactList.isEmpty()){
     return;
   }
+  */
   // Setup unit connector data
   if(!connectorData.setup(database(), true, false)){
     pvLastError = connectorData.lastError();
@@ -251,7 +273,7 @@ void mdtTtTestSystemUnitEditor::addConnectorBasedConnector()
     return;
   }
   connectorData.setValue("Unit_Id_FK", unitId);
-  connectorData.setValue("Connector_Id_FK", baseConnectorId);
+  ///connectorData.setValue("Connector_Id_FK", baseConnectorId);
   connectorData.setValue("Name", connectorName);
   // Add contacts to unit connector data
   if(!unit.addConnectionDataListFromConnectorContactIdList(connectorData, contactList)){
@@ -549,6 +571,7 @@ void mdtTtTestSystemUnitEditor::removeConnections()
   select("UnitConnection_view");
 }
 
+/**
 QList< QVariant > mdtTtTestSystemUnitEditor::selectBaseConnectorContactIdList(const QVariant& connectorId, bool multiSelection)
 {
   QList<QVariant> idList;
@@ -577,6 +600,7 @@ QList< QVariant > mdtTtTestSystemUnitEditor::selectBaseConnectorContactIdList(co
 
   return idList;
 }
+*/
 
 QVariant mdtTtTestSystemUnitEditor::selectArticleConnector()
 {

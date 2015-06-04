@@ -76,15 +76,40 @@ struct mdtClConnectionTypeKeyData
  */
 struct mdtClConnectionTypeData
 {
+ private:
+
   /*! \brief Connection type key data
    */
-  mdtClConnectionTypeKeyData keyData;
+  mdtClConnectionTypeKeyData pvKeyData;
+
+ public:
+
+  /*! \brief Get key data
+   */
+  inline mdtClConnectionTypeKeyData keyData() const
+  {
+    return pvKeyData;
+  }
+
+  /*! \brief Set connection type code (ConnectionType_Code_FK)
+   */
+  void setCode(const QVariant & code)
+  {
+    pvKeyData.code = code;
+  }
+
+  /*! \brief Set key data
+   */
+  void setKeyData(const mdtClConnectionTypeKeyData & key)
+  {
+    pvKeyData = key;
+  }
 
   /*! \brief Get connection type
    */
   mdtClConnectionType_t type() const
   {
-    return keyData.type();
+    return pvKeyData.type();
   }
 
   /*! \brief Set connection type
@@ -121,7 +146,7 @@ struct mdtClConnectionTypeData
    */
   inline bool isNull() const
   {
-    return keyData.isNull();
+    return pvKeyData.isNull();
   }
 
   /*! \brief Clear data

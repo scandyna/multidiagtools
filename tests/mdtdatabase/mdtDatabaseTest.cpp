@@ -25,6 +25,7 @@
 #include "mdtSqlRecord.h"
 #include "mdtSqlRelation.h"
 #include "mdtSqlRelationInfo.h"
+#include "mdtSqlTransaction.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -959,6 +960,28 @@ void mdtDatabaseTest::sqlRecordTest()
 
   // Cleanup
   clearTestDatabaseData();
+}
+
+void mdtDatabaseTest::sqlTransactionTest()
+{
+  mdtSqlTransaction t(pvDatabase);
+
+  // Initial state
+  QVERIFY(!t.isStarted());
+  // Begin
+  QVERIFY(t.begin());
+  QVERIFY(t.isStarted());
+  QVERIFY(t.beginIfNotStarted());
+  QVERIFY(t.isStarted());
+  // Rollback
+  QVERIFY(t.rollback());
+  QVERIFY(!t.isStarted());
+  // Begin
+  QVERIFY(t.beginIfNotStarted());
+  QVERIFY(t.isStarted());
+  // Commit
+  QVERIFY(t.commit());
+  QVERIFY(!t.isStarted());
 }
 
 void mdtDatabaseTest::sqlRelationInfoTest()

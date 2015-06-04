@@ -18,39 +18,55 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CL_ARTICLE_CONNECTION_DATA_H
-#define MDT_CL_ARTICLE_CONNECTION_DATA_H
+#ifndef MDT_CL_ARTICLE_CONNECTOR_KEY_DATA_H
+#define MDT_CL_ARTICLE_CONNECTOR_KEY_DATA_H
 
-#include "mdtClArticleConnectionKeyData.h"
-
-#include "mdtSqlRecord.h"
-#include <QList>
+#include "mdtClConnectorKeyData.h"
 #include <QVariant>
-#include <QSqlDatabase>
 
-/*! \brief Data container for article connection data
+/*! \brief Data container for article connector key
  *
- * Refers to ArticleConnection_tbl
+ * Refers to ArticleConnector_tbl
  */
-struct mdtClArticleConnectionData : public mdtSqlRecord  /// \todo When all is adapted, remove this inheritance
+struct mdtClArticleConnectorKeyData
 {
- public:
-
-  /*! \brief Construct a empty mdtClArticleConnectionData
+  /*! \brief Article connector ID (Id_PK)
    */
-  mdtClArticleConnectionData();
+  QVariant id;
 
-  /*! \brief Contruct a mdtClArticleConnectionData from a QSqlRecord
+  /*! \brief Article ID (Article_Id_FK)
+   */
+  QVariant articleId;
+
+  /*! \brief Connector ID (Connector_Id_FK)
+   */
+  mdtClConnectorKeyData connectorFk;
+
+  /*! \brief Check if key data is null
    *
-   * Note: if this method is used, setup is not relevant.
-   *
-   * \pre All fields from ArticleConnection_tbl must exist in record
+   * Key data is null when id or articleId is null
+   *  (connectorFk is optionnal)
    */
-  mdtClArticleConnectionData(const QSqlRecord & record);
+  bool isNull() const
+  {
+    return (id.isNull() || articleId.isNull());
+  }
 
-  /*! \brief Setup fields from ArticleConnection_tbl
+  /*! \brief Check if key data is based on a connector (from Connector_tbl)
    */
-  bool setup(QSqlDatabase db);
+  bool isBasedOnConnector() const
+  {
+    return !connectorFk.isNull();
+  }
+
+  /*! \brief Clear key data
+   */
+  void clear()
+  {
+    id.clear();
+    articleId.clear();
+    connectorFk.clear();
+  }
 };
 
-#endif // #ifndef MDT_CL_ARTICLE_CONNECTION_DATA_H
+#endif // #ifndef MDT_CL_ARTICLE_CONNECTOR_KEY_DATA_H

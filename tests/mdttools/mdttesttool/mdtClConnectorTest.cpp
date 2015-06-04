@@ -92,31 +92,31 @@ void mdtClConnectorTest::connectionTypeDataTest()
   QVERIFY(data.isNull());
   QVERIFY(data.type() == mdtClConnectionType_t::Undefined);
   // Set type directly
-  data.keyData.code = "T";
+  data.setCode("T");
   QVERIFY(data.type() == mdtClConnectionType_t::Terminal);
-  data.keyData.code = "P";
+  data.setCode("P");
   QVERIFY(data.type() == mdtClConnectionType_t::Pin);
-  data.keyData.code = "S";
+  data.setCode("S");
   QVERIFY(data.type() == mdtClConnectionType_t::Socket);
   data.clear();
-  QVERIFY(data.keyData.code.isNull());
+  QVERIFY(data.keyData().code.isNull());
   QVERIFY(data.isNull());
   QVERIFY(data.type() == mdtClConnectionType_t::Undefined);
   // Set type with setType()
   data.setType(mdtClConnectionType_t::Terminal);
-  QCOMPARE(data.keyData.code, QVariant("T"));
+  QCOMPARE(data.keyData().code, QVariant("T"));
   QVERIFY(data.type() == mdtClConnectionType_t::Terminal);
   data.setType(mdtClConnectionType_t::Pin);
-  QCOMPARE(data.keyData.code, QVariant("P"));
+  QCOMPARE(data.keyData().code, QVariant("P"));
   QVERIFY(data.type() == mdtClConnectionType_t::Pin);
   data.setType(mdtClConnectionType_t::Socket);
-  QCOMPARE(data.keyData.code, QVariant("S"));
+  QCOMPARE(data.keyData().code, QVariant("S"));
   QVERIFY(data.type() == mdtClConnectionType_t::Socket);
   data.setType(mdtClConnectionType_t::Undefined);
   QVERIFY(data.isNull());
   QVERIFY(data.type() == mdtClConnectionType_t::Undefined);
   // Setup a socket with names
-  data.keyData.code = "S";
+  data.setCode("S");
   data.nameEN = "Socket EN";
   data.nameFR = "Socket FR";
   data.nameDE = "Socket DE";
@@ -144,25 +144,25 @@ void mdtClConnectorTest::connectionTypeGetTest()
   data = cnr.getConnectionTypeData("T", ok);
   QVERIFY(ok);
   QVERIFY(!data.isNull());
-  QCOMPARE(data.keyData.code, QVariant("T"));
+  QCOMPARE(data.keyData().code, QVariant("T"));
   QVERIFY(data.type() == mdtClConnectionType_t::Terminal);
   // Pin
   data = cnr.getConnectionTypeData("P", ok);
   QVERIFY(ok);
   QVERIFY(!data.isNull());
-  QCOMPARE(data.keyData.code, QVariant("P"));
+  QCOMPARE(data.keyData().code, QVariant("P"));
   QVERIFY(data.type() == mdtClConnectionType_t::Pin);
   // Socket
   data = cnr.getConnectionTypeData("S", ok);
   QVERIFY(ok);
   QVERIFY(!data.isNull());
-  QCOMPARE(data.keyData.code, QVariant("S"));
+  QCOMPARE(data.keyData().code, QVariant("S"));
   QVERIFY(data.type() == mdtClConnectionType_t::Socket);
   // Non existant
   data = cnr.getConnectionTypeData("NonExist", ok);
   QVERIFY(ok);
   QVERIFY(data.isNull());
-  QVERIFY(data.keyData.isNull());
+  QVERIFY(data.keyData().isNull());
   QVERIFY(data.type() == mdtClConnectionType_t::Undefined);
 }
 

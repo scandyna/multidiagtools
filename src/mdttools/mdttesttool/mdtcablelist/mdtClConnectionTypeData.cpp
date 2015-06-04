@@ -64,7 +64,7 @@ void mdtClConnectionTypeKeyData::setType(mdtClConnectionType_t t)
 void mdtClConnectionTypeData::setType(mdtClConnectionType_t t)
 {
   clear();
-  keyData.setType(t);
+  pvKeyData.setType(t);
 }
 
 QString mdtClConnectionTypeData::name(const QLocale & locale) const
@@ -83,7 +83,7 @@ QString mdtClConnectionTypeData::name(const QLocale & locale) const
 
 void mdtClConnectionTypeData::clear()
 {
-  keyData.clear();
+  pvKeyData.clear();
   nameEN.clear();
   nameFR.clear();
   nameDE.clear();

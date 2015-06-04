@@ -20,11 +20,14 @@
  ****************************************************************************/
 #include "mdtClArticleEditor.h"
 #include "ui_mdtClArticleEditor.h"
+#include "mdtClConnectionTypeData.h"
+#include "mdtClConnectorSelectionDialog.h"
+#include "mdtClConnectorData.h"
+#include "mdtClConnectorContactSelectionDialog.h"
+#include "mdtClConnectorContactData.h"
+
 #include "mdtSqlTableSelection.h"
-///#include "mdtSqlFormWidget.h"
 #include "mdtSqlTableWidget.h"
-///#include "mdtAbstractSqlWidget.h"
-///#include "mdtSqlRelation.h"
 #include "mdtSqlSelectionDialog.h"
 #include "mdtError.h"
 #include "mdtClArticleComponentDialog.h"
@@ -368,8 +371,12 @@ void mdtClArticleEditor::removeConnections()
 
 void mdtClArticleEditor::addConnector()
 {
+  mdtClConnectorSelectionDialog csDialog(this);
+  mdtClConnectorKeyData baseConnectorKey;
+  mdtClConnectorContactSelectionDialog ccsDialog(this);
+  
   QVariant articleId;
-  QVariant baseConnectorId;
+  ///QVariant baseConnectorId;
   QString connectorName;
   QList<QVariant> selectedContacts;
   mdtClArticleConnectorData connectorData;
@@ -386,10 +393,24 @@ void mdtClArticleEditor::addConnector()
     return;
   }
   // Let user choose a base connector
+  if(!csDialog.select(database())){
+    pvLastError = csDialog.lastError();
+    displayLastError();
+    return;
+  }
+  if(csDialog.exec() != QDialog::Accepted){
+    return;
+  }
+  baseConnectorKey = csDialog.selectedConnectorKey();
+  if(baseConnectorKey.isNull()){
+    return;
+  }
+  /**
   baseConnectorId = selectConnector();
   if(baseConnectorId.isNull()){
     return;
   }
+  */
   // Let user give a connector name
   QInputDialog dialog;
   dialog.setLabelText(tr("Connector name:"));
@@ -401,10 +422,16 @@ void mdtClArticleEditor::addConnector()
     return;
   }
   connectorData.setValue("Article_Id_FK", articleId);
-  connectorData.setValue("Connector_Id_FK", baseConnectorId);
+  ///connectorData.setValue("Connector_Id_FK", baseConnectorId);
   connectorData.setValue("Name", connectorName);
   // Let user choose connector contacts
-  selectedContacts = selectConnectorContacts(baseConnectorId);
+  if(!ccsDialog.select(database(), baseConnectorKey)){
+    pvLastError = ccsDialog.lastError();
+    displayLastError();
+    return;
+  }
+  
+  ///selectedContacts = selectConnectorContacts(baseConnectorId);
   if(selectedContacts.isEmpty()){
     return;
   }
@@ -677,6 +704,7 @@ QVariant mdtClArticleEditor::currentArticleId()
   return currentData("Article_tbl", "Id_PK");
 }
 
+/**
 QVariant mdtClArticleEditor::selectConnector()
 {
   mdtSqlSelectionDialog selectionDialog;
@@ -712,6 +740,7 @@ QVariant mdtClArticleEditor::selectConnector()
 
   return selectionDialog.selectionResult().at(0);
 }
+*/
 
 QList<QVariant> mdtClArticleEditor::selectConnectorContacts(const QVariant &connectorId)
 {

@@ -40,6 +40,8 @@ class mdtDatabaseTest : public mdtTest
 
   void databaseManagerTest();
 
+  void sqlTransactionTest();
+
   /// \todo Add mdtSqlForm test
   /// \todo Add mdtSqlWindow test
 

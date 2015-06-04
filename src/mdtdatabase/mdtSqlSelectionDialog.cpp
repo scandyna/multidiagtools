@@ -20,7 +20,6 @@
  ****************************************************************************/
 #include "mdtSqlSelectionDialog.h"
 #include "mdtSortFilterProxyModel.h"
-#include "mdtError.h"
 #include <QSqlQueryModel>
 #include <QSqlField>
 #include <QDialogButtonBox>
@@ -28,7 +27,6 @@
 #include <QVBoxLayout>
 #include <QSqlRecord>
 #include <QItemSelectionModel>
-#include <QMessageBox>
 
 //#include <QDebug>
 
@@ -61,7 +59,7 @@ void mdtSqlSelectionDialog::setAllowEmptyResult(bool allow)
   pvAllowEmptyResult = allow;
 }
 
-void mdtSqlSelectionDialog::setQuery(const QString& sql, QSqlDatabase db, bool allowMultiSelection)
+bool mdtSqlSelectionDialog::setQuery(const QString& sql, QSqlDatabase db, bool allowMultiSelection)
 {
   Q_ASSERT(pvModel != 0);
 
@@ -70,8 +68,15 @@ void mdtSqlSelectionDialog::setQuery(const QString& sql, QSqlDatabase db, bool a
   pvModel->setQuery(sql, db);
   sqlError = pvModel->lastError();
   if(sqlError.isValid()){
+    pvLastError.setError(tr("Unable to get data for given SQL query."), mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlSelectionDialog");
+    pvLastError.commit();
+    return false;
+/*
+    
     displaySqlError(sqlError);
-    return;
+    return;*/
   }
   pvTableView->resizeColumnsToContents();
   pvTableView->resizeRowsToContents();
@@ -80,6 +85,8 @@ void mdtSqlSelectionDialog::setQuery(const QString& sql, QSqlDatabase db, bool a
   }else{
     pvTableView->setSelectionMode(QAbstractItemView::SingleSelection);
   }
+
+  return true;
 }
 
 void mdtSqlSelectionDialog::setHeaderData(const QString &fieldName, const QString &data)
@@ -360,20 +367,4 @@ void mdtSqlSelectionDialog::buildSelectionResults()
       pvSelectionResults.append(index);
     }
   }
-}
-
-void mdtSqlSelectionDialog::displaySqlError(const QSqlError & sqlError)
-{
-  QMessageBox msgBox;
-
-  // Log error
-  mdtError e(tr("Unable to get data for given SQL query."), mdtError::Error);
-  e.setSystemError(sqlError.number(), sqlError.text());
-  MDT_ERROR_SET_SRC(e, "mdtClArticle");
-  e.commit();
-  // Display error
-  msgBox.setText(e.text());
-  msgBox.setDetailedText(e.systemText());
-  msgBox.setIcon(e.levelIcon());
-  msgBox.exec();
 }

@@ -22,6 +22,7 @@
 #define MDT_CL_CONNECTOR_SELECTION_DIALOG_H
 
 #include "mdtSqlSelectionDialog.h"
+#include "mdtClConnectorData.h"
 #include <QSqlDatabase>
 #include <QVariant>
 
@@ -35,7 +36,17 @@ class mdtClConnectorSelectionDialog : public mdtSqlSelectionDialog
 
    /*! \brief Constructor
     */
-  mdtClConnectorSelectionDialog(QWidget *parent, QSqlDatabase db);
+  mdtClConnectorSelectionDialog(QWidget *parent);
+
+  /*! \brief Set SQL query and select data
+   */
+  bool select(QSqlDatabase db);
+
+  /*! \brief Get selected connector key
+   *
+   * If user rejected the dialog, a null key is returned.
+   */
+  mdtClConnectorKeyData selectedConnectorKey() const;
 
   /*! \brief Get selected connector ID
    *

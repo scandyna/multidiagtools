@@ -22,14 +22,22 @@
 #include "mdtSqlTableSelection.h"
 #include <QString>
 
-mdtClConnectorSelectionDialog::mdtClConnectorSelectionDialog(QWidget *parent, QSqlDatabase db)
+mdtClConnectorSelectionDialog::mdtClConnectorSelectionDialog(QWidget *parent)
  : mdtSqlSelectionDialog(parent)
+{
+  resize(700, 400);
+  setWindowTitle(tr("Connector selection"));
+}
+
+bool mdtClConnectorSelectionDialog::select(QSqlDatabase db)
 {
   QString sql;
 
   sql = "SELECT * FROM Connector_tbl";
   setMessage(tr("Select connector:"));
-  setQuery(sql, db, false);
+  if(!setQuery(sql, db, false)){
+    return false;
+  }
   setColumnHidden("Id_PK", true);
   setHeaderData("ContactQty", tr("Contact\nQty"));
   setHeaderData("InsertRotation", tr("Insert\nRotation"));
@@ -39,8 +47,22 @@ mdtClConnectorSelectionDialog::mdtClConnectorSelectionDialog(QWidget *parent, QS
   addColumnToSortOrder("ContactQty", Qt::AscendingOrder);
   addColumnToSortOrder("ManufacturerConfigCode", Qt::AscendingOrder);
   sort();
-  resize(700, 400);
-  setWindowTitle(tr("Connector selection"));
+
+  return true;
+}
+
+mdtClConnectorKeyData mdtClConnectorSelectionDialog::selectedConnectorKey() const
+{
+  mdtClConnectorKeyData key;
+
+  if(result() != Accepted){
+    return key;
+  }
+  auto s = selection("Id_PK");
+  Q_ASSERT(s.rowCount() == 1);
+  key.id = s.data(0, "Id_PK");
+
+  return key;
 }
 
 QVariant mdtClConnectorSelectionDialog::selectedConnectorId() const

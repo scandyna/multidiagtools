@@ -136,6 +136,7 @@ set (CL_HEADER_FILES
           mdtcablelist/mdtClVehicleTypeEditor.h
           mdtcablelist/mdtClConnectorEditor.h
           mdtcablelist/mdtClConnectorSelectionDialog.h
+          mdtcablelist/mdtClConnectorContactSelectionDialog.h
           mdtcablelist/mdtClArticleEditor.h
           mdtcablelist/mdtClArticleComponentDialog.h
           mdtcablelist/mdtClArticleConnectionDialog.h
@@ -161,7 +162,9 @@ set (CL_SOURCES_FILES
           mdtcablelist/mdtClConnector.cpp
           mdtcablelist/mdtClConnectorEditor.cpp
           mdtcablelist/mdtClConnectorSelectionDialog.cpp
+          mdtcablelist/mdtClConnectorContactSelectionDialog.cpp
           mdtcablelist/mdtClArticle.cpp
+          mdtcablelist/mdtClArticleConnection.cpp
           mdtcablelist/mdtClArticleConnectorData.cpp
           mdtcablelist/mdtClArticleConnectionData.cpp
           mdtcablelist/mdtClArticleEditor.cpp

@@ -18,15 +18,15 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CL_CONNECTOR_TEST_H
-#define MDT_CL_CONNECTOR_TEST_H
+#ifndef MDT_CL_ARTICLE_CONNECTION_TEST_H
+#define MDT_CL_ARTICLE_CONNECTION_TEST_H
 
 #include "mdtTest.h"
 #include "mdtSqlDatabaseManager.h"
 #include <QMessageBox>
 #include <QFileInfo>
 
-class mdtClConnectorTest : public mdtTest
+class mdtClArticleConnectionTest : public mdtTest
 {
  Q_OBJECT
 
@@ -39,17 +39,10 @@ class mdtClConnectorTest : public mdtTest
    *  and must assure that they finish with a empty schema at end.
    */
   void initTestCase();
-
   void cleanupTestCase();
 
-  void connectionTypeDataTest();
-  void connectionTypeGetTest();
-
-  void contactDataTest();
-  void contactAddGetRemoveTest();
-
-  void connectorDataTest();
-  void connectorAddGetRemoveTest();
+  void articleConnectorDataTest();
+  void articleConnectionDataTest();
 
  private:
 
@@ -60,4 +53,4 @@ class mdtClConnectorTest : public mdtTest
   QFileInfo pvDbFileInfo;
 };
 
-#endif // #ifndef MDT_CL_CONNECTOR_TEST_H
+#endif // #ifndef MDT_CL_ARTICLE_CONNECTION_TEST_H

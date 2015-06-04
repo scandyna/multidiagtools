@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,21 +22,67 @@
 #define MDT_CL_ARTICLE_CONNECTOR_DATA_H
 
 #include "mdtSqlRecord.h"
-#include "mdtClConnectorData.h"
+#include "mdtClConnectorData.h" /// \todo could be removed (once done)
+#include "mdtClArticleConnectorKeyData.h"
 #include "mdtClArticleConnectionData.h"
 #include <QList>
 #include <QVariant>
 #include <QSqlDatabase>
 
-/*! \brief Data container class for article connector data
+/*! \brief Data container for article connector data
  *
- * Permit to exchange data with ArticleConnector_tbl and ArticleConnection_tbl.
+ * Refers to ArticleConnector_tbl
  */
-class mdtClArticleConnectorData : public mdtSqlRecord
+struct mdtClArticleConnectorData : public mdtSqlRecord  /// \todo When all is adapted, remove this inheritance
 {
+ private:
+
+  /*! \brief Article connector key data
+   */
+  mdtClArticleConnectorKeyData pvKeyData;
+
+ public:
+
+  /*! \brief Get key data
+   */
+  mdtClArticleConnectorKeyData keyData() const
+  {
+    return pvKeyData;
+  }
+
+  /*! \brief Set key data
+   */
+  void setKeyData(const mdtClArticleConnectorKeyData & key);
+
+  /*! \brief Check if data is null
+   *
+   * Article connector data is null if its key is null
+   */
+  inline bool isNull() const
+  {
+    return pvKeyData.isNull();
+  }
+
+  /*! \brief Clear data
+   */
+  void clear();
+
+  /*! \brief Check if data is based on a connector (from Connector_tbl)
+   */
+  inline bool isBasedOnConnector() const
+  {
+    return pvKeyData.isBasedOnConnector();
+  }
+
+  /*! \brief Article connector name
+   */
+  QVariant name;
+
  public:
 
   /*! \brief Construct a empty mdtClArticleConnectorData
+   *
+   * \deprecated
    */
   mdtClArticleConnectorData();
 
@@ -45,12 +91,14 @@ class mdtClArticleConnectorData : public mdtSqlRecord
    * Note: if this method is used, setup is not relevant.
    *
    * \pre All fields from ArticleConnector_tbl must exist in record
+   * \deprecated
    */
   mdtClArticleConnectorData(const QSqlRecord & record);
 
   /*! \brief Setup fields from ArticleConnector_tbl
    *
    * \param setupCd If true, fields from connector part are also added.
+   * \deprecated
    */
   bool setup(const QSqlDatabase & db, bool setupCd);
 
@@ -58,6 +106,7 @@ class mdtClArticleConnectorData : public mdtSqlRecord
    *
    * Will clear values, including connection data.
    *  Fields are keeped.
+   * \deprecated
    */
   void clearValues();
 
@@ -65,8 +114,9 @@ class mdtClArticleConnectorData : public mdtSqlRecord
    *
    * Will clear values, including connection data.
    *  Fields are also removed.
+   * \deprecated
    */
-  void clear();
+//   void clear();
 
   /*! \brief Add a list of connection data
    *
@@ -74,6 +124,7 @@ class mdtClArticleConnectorData : public mdtSqlRecord
    *  valid records, that contains needed fields.
    *
    * \sa addConnectionData().
+   * \deprecated
    */
   void setConnectionDataList(const QList<mdtClArticleConnectionData> & dataList);
 
@@ -96,6 +147,7 @@ class mdtClArticleConnectorData : public mdtSqlRecord
    *  - FunctionFR
    *  - FunctionDE
    *  - FunctionIT
+   * \deprecated
    */
   void addConnectionData(const mdtClArticleConnectionData & data);
 
@@ -104,6 +156,7 @@ class mdtClArticleConnectorData : public mdtSqlRecord
    * Will update connection data for witch Id_PK matches given connectionId.
    *
    * \return False if connectionId was not found.
+   * \deprecated
    */
   bool setConnectionData(const QVariant & connectionId, const mdtClArticleConnectionData & data);
 
@@ -111,6 +164,7 @@ class mdtClArticleConnectorData : public mdtSqlRecord
    *
    * Return the connection data for witch Id_PK matches given connectionId.
    *  ok will be set to false if connectionId was not found.
+   * \deprecated
    */
   mdtClArticleConnectionData connectionData(const QVariant & connectionId, bool *ok) const;
 
@@ -119,6 +173,7 @@ class mdtClArticleConnectorData : public mdtSqlRecord
    * Will also update Connector_Id_FK
    *
    * \pre data must contain a non Null Id_PK
+   * \deprecated
    */
   void setConnectorData(const mdtClConnectorData & data);
 
@@ -127,8 +182,9 @@ class mdtClArticleConnectorData : public mdtSqlRecord
   mdtClConnectorData connectorData() const;
 
   /*! \brief Check if current artice connector is based on a connector
+   * \deprecated
    */
-  bool isBasedOnConnector() const;
+//   bool isBasedOnConnector() const;
 
  private:
 

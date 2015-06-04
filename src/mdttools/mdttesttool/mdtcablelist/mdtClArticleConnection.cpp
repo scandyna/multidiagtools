@@ -18,46 +18,21 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CL_CONNECTOR_TEST_H
-#define MDT_CL_CONNECTOR_TEST_H
+#include "mdtClArticleConnection.h"
+#include "mdtSqlRecord.h"
+#include "mdtSqlTransaction.h"
+#include <QSqlRecord>
+#include <QSqlQuery>
+#include <QList>
 
-#include "mdtTest.h"
-#include "mdtSqlDatabaseManager.h"
-#include <QMessageBox>
-#include <QFileInfo>
+#include <QDebug>
 
-class mdtClConnectorTest : public mdtTest
+mdtClArticleConnection::mdtClArticleConnection(QObject *parent, QSqlDatabase db)
+ : mdtClConnector(parent, db)
 {
- Q_OBJECT
+}
 
- private slots:
-
-  /*
-   * Will create database schema (see createDatabaseSchema() )
-   * No data is inserted in tables by this method.
-   * Each test also has a empty schema at startup,
-   *  and must assure that they finish with a empty schema at end.
-   */
-  void initTestCase();
-
-  void cleanupTestCase();
-
-  void connectionTypeDataTest();
-  void connectionTypeGetTest();
-
-  void contactDataTest();
-  void contactAddGetRemoveTest();
-
-  void connectorDataTest();
-  void connectorAddGetRemoveTest();
-
- private:
-
-  // Create test database schema - Will FAIL on problem
-  void createDatabaseSchema();
-
-  mdtSqlDatabaseManager pvDatabaseManager;
-  QFileInfo pvDbFileInfo;
-};
-
-#endif // #ifndef MDT_CL_CONNECTOR_TEST_H
+mdtClArticleConnection::mdtClArticleConnection(QSqlDatabase db) 
+ : mdtClConnector(db)
+{
+}

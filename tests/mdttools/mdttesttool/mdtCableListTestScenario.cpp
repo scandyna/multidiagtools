@@ -139,7 +139,7 @@ void mdtCableListTestScenario::createTestConnectors()
   mdtClConnectorKeyData connectorKey;
   mdtClConnectorData connectorData;
   mdtClConnectorContactKeyData contactKey;
-  ///mdtClConnectorContactData contactData;
+  mdtClConnectorContactData contactData;
   bool ok;
 
   // Add connector 1
@@ -162,16 +162,54 @@ void mdtCableListTestScenario::createTestConnectors()
   connectorData = cnr.getConnectorData(connectorKey, ok);
   QVERIFY(ok);
   QCOMPARE(connectorData.keyData().id, QVariant(2));
+  /*
+   * Create connect 3
+   *  - Id_PK : 3
+   *   -> Contact : Id_PK : 300 (, Connector_Id_FK : 3) , ConnectionType_Code_FK : P
+   *   -> Contact : Id_PK : 301 (, Connector_Id_FK : 3) , ConnectionType_Code_FK : S
+   */
+  connectorKey.clear();
+  connectorData.clear();
+  // Setup connector data
+  connectorKey.id = 3;
+  connectorData.setKeyData(connectorKey);
+  // Add contact 300
+  contactData.clear();
+  contactKey.clear();
+  contactKey.id = 300;
+  contactKey.connectionTypeFk.code = "P";
+  contactData.setKeyData(contactKey);
+  connectorData.addContactData(contactData);
+  // Add contact 301
+  contactKey.id = 301;
+  contactKey.connectionTypeFk.code = "S";
+  contactData.setKeyData(contactKey);
+  connectorData.addContactData(contactData);
+  // Add connector to DB
+  connectorKey = cnr.addConnector(connectorData, true);
+  QCOMPARE(connectorKey.id, QVariant(3));
+  // Check back
+  connectorData = cnr.getConnectorData(connectorKey, ok);
+  QVERIFY(ok);
+  QCOMPARE(connectorData.keyData().id, QVariant(3));
+  QCOMPARE(connectorData.contactDataList().size(), 2);
+  QCOMPARE(connectorData.contactDataList().at(0).keyData().id, QVariant(300));
+  QCOMPARE(connectorData.contactDataList().at(0).keyData().connectorFk.id, QVariant(3));
+  QVERIFY(connectorData.contactDataList().at(0).keyData().connectionTypeFk.type() == mdtClConnectionType_t::Pin);
+  QCOMPARE(connectorData.contactDataList().at(1).keyData().id, QVariant(301));
+  QCOMPARE(connectorData.contactDataList().at(1).keyData().connectorFk.id, QVariant(3));
+  QVERIFY(connectorData.contactDataList().at(1).keyData().connectionTypeFk.type() == mdtClConnectionType_t::Socket);
 
-
+  
+/*
   mdtClArticle art(0, pvDatabase);
   
   mdtSqlRecord contactData;
-  QList<QSqlRecord> dataList;
+  QList<QSqlRecord> dataList;*/
   
 
   // Add connector 1
-  QVERIFY(connectorData.setup(pvDatabase));
+//   QVERIFY(connectorData.setup(pvDatabase));
 //   connectorData.setValue("Id_PK", 1);
 //   QVERIFY(art.addRecord(connectorData, "Connector_tbl"));
 //   // Check back
@@ -194,53 +232,53 @@ void mdtCableListTestScenario::createTestConnectors()
    *   -> Contact : Id_PK : 300 (, Connector_Id_FK : 3) , ConnectionType_Code_FK : P
    *   -> Contact : Id_PK : 301 (, Connector_Id_FK : 3) , ConnectionType_Code_FK : S
    */
-  connectorData.clearValues();
-  connectorData.setValue("Id_PK", 3);
-  QVERIFY(art.addRecord(connectorData, "Connector_tbl"));
-  // Setup contact data
-  QVERIFY(contactData.addAllFields("ConnectorContact_tbl", pvDatabase));
-  /*
-   * Add contact ID 300
-   */
-  contactData.setValue("Id_PK", 300);
-  contactData.setValue("ConnectionType_Code_FK", "P");
-  connectorData.addContactData(contactData);
-  // Get contact data and check
-  contactData = connectorData.contactData(300, &ok);
-  QVERIFY(ok);
-  QCOMPARE(contactData.value("Id_PK"), QVariant(300));
-  QCOMPARE(contactData.value("Connector_Id_FK"), QVariant(3));
-  QCOMPARE(contactData.value("ConnectionType_Code_FK"), QVariant("P"));
-  // Add contact to db
-  QVERIFY(art.addRecord(contactData, "ConnectorContact_tbl"));
-  // Check back
-  dataList = art.getData("SELECT * FROM ConnectorContact_tbl WHERE Id_PK = 300", &ok);
-  QVERIFY(ok);
-  QCOMPARE(dataList.size(), 1);
-  QCOMPARE(dataList.at(0).value("Id_PK"), QVariant(300));
-  QCOMPARE(dataList.at(0).value("Connector_Id_FK"), QVariant(3));
-  QCOMPARE(dataList.at(0).value("ConnectionType_Code_FK"), QVariant("P"));
-  /*
-   * Add contact ID 301
-   */
-  contactData.setValue("Id_PK", 301);
-  contactData.setValue("ConnectionType_Code_FK", "S");
-  connectorData.addContactData(contactData);
-  // Get contact data and check
-  contactData = connectorData.contactData(301, &ok);
-  QVERIFY(ok);
-  QCOMPARE(contactData.value("Id_PK"), QVariant(301));
-  QCOMPARE(contactData.value("Connector_Id_FK"), QVariant(3));
-  QCOMPARE(contactData.value("ConnectionType_Code_FK"), QVariant("S"));
-  // Add contact to db
-  QVERIFY(art.addRecord(contactData, "ConnectorContact_tbl"));
-  // Check back
-  dataList = art.getData("SELECT * FROM ConnectorContact_tbl WHERE Id_PK = 301", &ok);
-  QVERIFY(ok);
-  QCOMPARE(dataList.size(), 1);
-  QCOMPARE(dataList.at(0).value("Id_PK"), QVariant(301));
-  QCOMPARE(dataList.at(0).value("Connector_Id_FK"), QVariant(3));
-  QCOMPARE(dataList.at(0).value("ConnectionType_Code_FK"), QVariant("S"));
+//   connectorData.clearValues();
+//   connectorData.setValue("Id_PK", 3);
+//   QVERIFY(art.addRecord(connectorData, "Connector_tbl"));
+//   // Setup contact data
+//   QVERIFY(contactData.addAllFields("ConnectorContact_tbl", pvDatabase));
+//   /*
+//    * Add contact ID 300
+//    */
+//   contactData.setValue("Id_PK", 300);
+//   contactData.setValue("ConnectionType_Code_FK", "P");
+//   connectorData.addContactData(contactData);
+//   // Get contact data and check
+//   contactData = connectorData.contactData(300, &ok);
+//   QVERIFY(ok);
+//   QCOMPARE(contactData.value("Id_PK"), QVariant(300));
+//   QCOMPARE(contactData.value("Connector_Id_FK"), QVariant(3));
+//   QCOMPARE(contactData.value("ConnectionType_Code_FK"), QVariant("P"));
+//   // Add contact to db
+//   QVERIFY(art.addRecord(contactData, "ConnectorContact_tbl"));
+//   // Check back
+//   dataList = art.getData("SELECT * FROM ConnectorContact_tbl WHERE Id_PK = 300", &ok);
+//   QVERIFY(ok);
+//   QCOMPARE(dataList.size(), 1);
+//   QCOMPARE(dataList.at(0).value("Id_PK"), QVariant(300));
+//   QCOMPARE(dataList.at(0).value("Connector_Id_FK"), QVariant(3));
+//   QCOMPARE(dataList.at(0).value("ConnectionType_Code_FK"), QVariant("P"));
+//   /*
+//    * Add contact ID 301
+//    */
+//   contactData.setValue("Id_PK", 301);
+//   contactData.setValue("ConnectionType_Code_FK", "S");
+//   connectorData.addContactData(contactData);
+//   // Get contact data and check
+//   contactData = connectorData.contactData(301, &ok);
+//   QVERIFY(ok);
+//   QCOMPARE(contactData.value("Id_PK"), QVariant(301));
+//   QCOMPARE(contactData.value("Connector_Id_FK"), QVariant(3));
+//   QCOMPARE(contactData.value("ConnectionType_Code_FK"), QVariant("S"));
+//   // Add contact to db
+//   QVERIFY(art.addRecord(contactData, "ConnectorContact_tbl"));
+//   // Check back
+//   dataList = art.getData("SELECT * FROM ConnectorContact_tbl WHERE Id_PK = 301", &ok);
+//   QVERIFY(ok);
+//   QCOMPARE(dataList.size(), 1);
+//   QCOMPARE(dataList.at(0).value("Id_PK"), QVariant(301));
+//   QCOMPARE(dataList.at(0).value("Connector_Id_FK"), QVariant(3));
+//   QCOMPARE(dataList.at(0).value("ConnectionType_Code_FK"), QVariant("S"));
 }
 
 void mdtCableListTestScenario::removeTestConnectors()

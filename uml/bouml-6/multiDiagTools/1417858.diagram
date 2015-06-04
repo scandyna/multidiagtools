@@ -2,23 +2,23 @@ format 209
 
 classcanvas 128002 class_ref 1107074 // mdtClArticleConnectorData
   classdiagramsettings member_max_width 0 end
-  xyz 59 242 2000
+  xyz 0 360 2000
 end
 classcanvas 128130 class_ref 1639810 // mdtClArticleConnectorKeyData
   classdiagramsettings member_max_width 0 end
-  xyz 127 63 2000
+  xyz 61 79 2000
 end
 classcanvas 128258 class_ref 1113730 // mdtClArticleConnectionData
   classdiagramsettings member_max_width 0 end
-  xyz 520 249 3005
+  xyz 455 318 3005
 end
 classcanvas 128514 class_ref 1639938 // mdtClArticleConnectionKeyData
   classdiagramsettings member_max_width 0 end
-  xyz 533 81 2000
+  xyz 461 77 2000
 end
 relationcanvas 128386 relation_ref 1371778 // <directional composition>
-  from ref 128002 z 3006 stereotype "<<list>>" xyz 399.5 286 3006 to ref 128258
-  role_a_pos 401 263 3000 no_role_b
-  multiplicity_a_pos 504 293 3000 no_multiplicity_b
+  from ref 128002 z 3006 stereotype "<<list>>" xyz 386 452.5 3006 to ref 128258
+  role_a_pos 336 431 3000 no_role_b
+  multiplicity_a_pos 439 461 3000 no_multiplicity_b
 end
 end

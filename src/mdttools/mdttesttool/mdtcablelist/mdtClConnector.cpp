@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtClConnector.h"
 #include "mdtSqlRecord.h"
+#include "mdtSqlTransaction.h"
 #include <QSqlRecord>
 #include <QSqlQuery>
 #include <QList>
@@ -51,7 +52,7 @@ mdtClConnectionTypeData mdtClConnector::getConnectionTypeData(const QString & co
     return data;
   }
   Q_ASSERT(dataList.size() == 1);
-  data.keyData.code = dataList.at(0).value("Code_PK");
+  data.setCode(dataList.at(0).value("Code_PK"));
   data.nameEN = dataList.at(0).value("nameEN");
   data.nameFR = dataList.at(0).value("nameFR");
   data.nameDE = dataList.at(0).value("nameDE");
@@ -65,6 +66,7 @@ mdtClConnectorContactKeyData mdtClConnector::addContact(const mdtClConnectorCont
   mdtClConnectorContactKeyData key;
   mdtSqlRecord record;
   QSqlQuery query(database());
+  mdtSqlTransaction transaction(database());
 
   // Setup record with given data
   if(!record.addAllFields("ConnectorContact_tbl", database())){
@@ -74,20 +76,19 @@ mdtClConnectorContactKeyData mdtClConnector::addContact(const mdtClConnectorCont
   fillRecord(record, data);
   // Save to database
   if(handleTransaction){
-    if(!beginTransaction()){
+    if(!transaction.begin()){
+      pvLastError = transaction.lastError();
       return key;
     }
   }
   if(!addRecord(record, "ConnectorContact_tbl", query)){
-    if(handleTransaction){
-      rollbackTransaction();
-    }
     return key;
   }
   key = data.keyData();
   key.id = query.lastInsertId();
   if(handleTransaction){
-    if(!commitTransaction()){
+    if(!transaction.commit()){
+      pvLastError = transaction.lastError();
       key.clear();
       return key;
     }
@@ -129,27 +130,27 @@ bool mdtClConnector::removeContact(const mdtClConnectorContactKeyData & key)
 bool mdtClConnector::addContactList(const QList<mdtClConnectorContactData> & dataList, bool handleTransaction)
 {
   mdtSqlRecord record;
+  mdtSqlTransaction transaction(database());
 
   if(!record.addAllFields("ConnectorContact_tbl", database())){
     pvLastError = record.lastError();
     return false;
   }
   if(handleTransaction){
-    if(!beginTransaction()){
+    if(!transaction.begin()){
+      pvLastError = transaction.lastError();
       return false;
     }
   }
   for(const auto & data : dataList){
     fillRecord(record, data);
     if(!addRecord(record, "ConnectorContact_tbl")){
-      if(handleTransaction){
-        rollbackTransaction();
-      }
       return false;
     }
   }
   if(handleTransaction){
-    if(!commitTransaction()){
+    if(!transaction.commit()){
+      pvLastError = transaction.lastError();
       return false;
     }
   }
@@ -192,6 +193,7 @@ mdtClConnectorKeyData mdtClConnector::addConnector(mdtClConnectorData data, bool
   mdtClConnectorKeyData key;
   mdtSqlRecord record;
   QSqlQuery query(database());
+  mdtSqlTransaction transaction(database());
 
   // Setup record with given data
   if(!record.addAllFields("Connector_tbl", database())){
@@ -206,28 +208,24 @@ mdtClConnectorKeyData mdtClConnector::addConnector(mdtClConnectorData data, bool
   record.setValue("ManufacturerArticleCode", data.manufacturerArticleCode);
   // Save connector to database
   if(handleTransaction){
-    if(!beginTransaction()){
+    if(!transaction.begin()){
+      pvLastError = transaction.lastError();
       return key;
     }
   }
   if(!addRecord(record, "Connector_tbl", query)){
-    if(handleTransaction){
-      rollbackTransaction();
-    }
     return key;
   }
   key.id = query.lastInsertId();
   data.setKeyData(key);
   // Save contacts to database
   if(!addContactList(data.contactDataList(), false)){
-    if(handleTransaction){
-      rollbackTransaction();
-    }
     key.clear();
     return key;
   }
   if(handleTransaction){
-    if(!commitTransaction()){
+    if(!transaction.commit()){
+      pvLastError = transaction.lastError();
       key.clear();
       return key;
     }
@@ -267,25 +265,23 @@ mdtClConnectorData mdtClConnector::getConnectorData(const mdtClConnectorKeyData 
 
 bool mdtClConnector::removeConnector(const mdtClConnectorKeyData & key, bool handleTransaction)
 {
+  mdtSqlTransaction transaction(database());
+
   if(handleTransaction){
-    if(!beginTransaction()){
+    if(!transaction.begin()){
+      pvLastError = transaction.lastError();
       return false;
     }
   }
   if(!removeContactList(key)){
-    if(handleTransaction){
-      rollbackTransaction();
-    }
     return false;
   }
   if(!removeData("Connector_tbl", "Id_PK", key.id.toString())){
-    if(handleTransaction){
-      rollbackTransaction();
-    }
     return false;
   }
   if(handleTransaction){
-    if(!commitTransaction()){
+    if(!transaction.commit()){
+      pvLastError = transaction.lastError();
       return false;
     }
   }

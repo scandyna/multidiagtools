@@ -288,12 +288,18 @@ if(UNIX)
   # mdtTestToolTest
   add_test (mdtTestToolTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdttesttool/mdttesttooltest)
 
-  # mdtCableListTest
-  add_test (mdtCableListTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdttesttool/mdtcablelisttest)
 
 endif(UNIX)
 
 # * Tools - mdt cable list *
+
+# mdtClConnectorTest
+add_test (mdtClConnectorTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdttesttool/mdtclconnectortest)
+# mdtClConnectorTest
+add_test (mdtClArticleConnectionTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdttesttool/mdtclarticleconnectiontest)
+
+# mdtCableListTest
+add_test (mdtCableListTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdttesttool/mdtcablelisttest)
 
 # mdtClUnitTest
 add_test (mdtClUnitTest ${CMAKE_CURRENT_BINARY_DIR}/tools/mdtcablelist/tests/mdtclunittest)

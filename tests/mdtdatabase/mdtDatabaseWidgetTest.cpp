@@ -3637,7 +3637,7 @@ void mdtDatabaseWidgetTest::sqlSelectionDialogTest()
    */
   sql = "SELECT * FROM Client_tbl";
   dialog = new mdtSqlSelectionDialog;
-  dialog->setQuery(sql, pvDatabaseManager.database());
+  QVERIFY(dialog->setQuery(sql, pvDatabaseManager.database()));
   dialog->selectRow(0);
   QTimer::singleShot(50, dialog, SLOT(accept()));
   QVERIFY(dialog->exec() == QDialog::Accepted);
@@ -3650,7 +3650,7 @@ void mdtDatabaseWidgetTest::sqlSelectionDialogTest()
    */
   sql = "SELECT * FROM Client_tbl";
   dialog = new mdtSqlSelectionDialog;
-  dialog->setQuery(sql, pvDatabaseManager.database());
+  QVERIFY(dialog->setQuery(sql, pvDatabaseManager.database()));
   dialog->addColumnToSortOrder("FirstName", Qt::AscendingOrder);
   dialog->sort();
   dialog->selectRow(0);
@@ -3665,7 +3665,7 @@ void mdtDatabaseWidgetTest::sqlSelectionDialogTest()
    */
   sql = "SELECT * FROM Client_tbl";
   dialog = new mdtSqlSelectionDialog;
-  dialog->setQuery(sql, pvDatabaseManager.database());
+  QVERIFY(dialog->setQuery(sql, pvDatabaseManager.database()));
   dialog->addColumnToSortOrder("FirstName", Qt::DescendingOrder);
   dialog->sort();
   dialog->selectRow(0);
@@ -3680,7 +3680,7 @@ void mdtDatabaseWidgetTest::sqlSelectionDialogTest()
    */
   sql = "SELECT * FROM Client_tbl";
   dialog = new mdtSqlSelectionDialog;
-  dialog->setQuery(sql, pvDatabaseManager.database());
+  QVERIFY(dialog->setQuery(sql, pvDatabaseManager.database()));
   dialog->selectRow(0);
   QTimer::singleShot(50, dialog, SLOT(accept()));
   QVERIFY(dialog->exec() == QDialog::Accepted);
@@ -3693,7 +3693,7 @@ void mdtDatabaseWidgetTest::sqlSelectionDialogTest()
    */
   sql = "SELECT * FROM Client_tbl";
   dialog = new mdtSqlSelectionDialog;
-  dialog->setQuery(sql, pvDatabaseManager.database());
+  QVERIFY(dialog->setQuery(sql, pvDatabaseManager.database()));
   dialog->selectRow(0);
   QTimer::singleShot(50, dialog, SLOT(accept()));
   QVERIFY(dialog->exec() == QDialog::Accepted);
@@ -3709,7 +3709,7 @@ void mdtDatabaseWidgetTest::sqlSelectionDialogTest()
    */
   sql = "SELECT * FROM Client_tbl";
   dialog = new mdtSqlSelectionDialog;
-  dialog->setQuery(sql, pvDatabaseManager.database(), true);
+  QVERIFY(dialog->setQuery(sql, pvDatabaseManager.database(), true));
   dialog->selectRow(0);
   dialog->selectRow(1);
   QTimer::singleShot(50, dialog, SLOT(accept()));
@@ -3724,7 +3724,7 @@ void mdtDatabaseWidgetTest::sqlSelectionDialogTest()
    */
   sql = "SELECT * FROM Client_tbl";
   dialog = new mdtSqlSelectionDialog;
-  dialog->setQuery(sql, pvDatabaseManager.database(), true);
+  QVERIFY(dialog->setQuery(sql, pvDatabaseManager.database(), true));
   dialog->addColumnToSortOrder("FirstName", Qt::DescendingOrder);
   dialog->sort();
   dialog->selectRow(0);
@@ -3744,7 +3744,7 @@ void mdtDatabaseWidgetTest::sqlSelectionDialogTest()
    */
   sql = "SELECT * FROM Client_tbl";
   dialog = new mdtSqlSelectionDialog;
-  dialog->setQuery(sql, pvDatabaseManager.database(), true);
+  QVERIFY(dialog->setQuery(sql, pvDatabaseManager.database(), true));
   dialog->addColumnToSortOrder("FirstName", Qt::DescendingOrder);
   dialog->selectRow(0);
   dialog->selectRow(1);

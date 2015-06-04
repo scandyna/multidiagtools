@@ -101,7 +101,7 @@ class mdtTtTestSystemUnitEditor : public mdtSqlForm
 
   /*! \brief Let user select connections related to a connector from Connector_tbl
    */
-  QList<QVariant> selectBaseConnectorContactIdList(const QVariant & connectorId, bool multiSelection = true);
+  ///QList<QVariant> selectBaseConnectorContactIdList(const QVariant & connectorId, bool multiSelection = true);
 
   /*! \brief Let user choose a connector from those that are related to current article
    */

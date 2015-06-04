@@ -23,6 +23,7 @@
 
 #include "ui_mdtSqlSelectionDialog.h"
 #include "mdtSqlTableSelection.h"
+#include "mdtError.h"
 #include <QDialog>
 #include <QList>
 #include <QString>
@@ -68,7 +69,14 @@ class mdtSqlSelectionDialog : public QDialog, Ui::mdtSqlSelectionDialog
 
   /*! \brief Set SQL query to display data
    */
-  void setQuery(const QString & sql, QSqlDatabase db, bool allowMultiSelection = false);
+  bool setQuery(const QString & sql, QSqlDatabase db, bool allowMultiSelection = false);
+
+  /*! \brief Get last error
+   */
+  mdtError lastError() const
+  {
+    return pvLastError;
+  }
 
   /*! \brief Set a user friendly name for a column
    *
@@ -244,15 +252,17 @@ class mdtSqlSelectionDialog : public QDialog, Ui::mdtSqlSelectionDialog
    */
   void reject();
 
+ protected:
+
+  /*! \brief Object to store last error
+   */
+  mdtError pvLastError;
+
  private:
 
   /*! \brief Build the election results
    */
   void buildSelectionResults();
-
-  /*! \brief Log and display a sql error
-   */
-  void displaySqlError(const QSqlError & sqlError);
 
   Q_DISABLE_COPY(mdtSqlSelectionDialog);
 

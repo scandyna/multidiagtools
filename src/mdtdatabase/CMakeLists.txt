@@ -50,6 +50,7 @@ set (SOURCES_FILES
           mdtSqlDatabaseManager.cpp
           mdtSqlSchemaTable.cpp
           mdtSqlFieldSelectionDialog.cpp
+          mdtSqlTransaction.cpp
     )
 
 # Qt ui files

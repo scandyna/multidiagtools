@@ -404,6 +404,7 @@ void mdtClUnitEditor::addConnector()
 void mdtClUnitEditor::addConnectorBasedConnector()
 {
   mdtClUnit unit(this, database());
+  mdtClConnectorSelectionDialog csDialog(this);
   mdtClUnitConnectorData connectorData;
   QVariant unitId;
   QVariant baseConnectorId;
@@ -417,7 +418,11 @@ void mdtClUnitEditor::addConnectorBasedConnector()
     return;
   }
   // Select connector from Connector_tbl
-  mdtClConnectorSelectionDialog csDialog(this, database());
+  if(!csDialog.select(database())){
+    pvLastError = csDialog.lastError();
+    displayLastError();
+    return;
+  }
   if(csDialog.exec() != QDialog::Accepted){
     return;
   }
