@@ -3635,12 +3635,28 @@ bool mdtTtDatabaseSchema::createArticleConnectionView()
 
   sql = "CREATE VIEW ArticleConnection_view AS\n"\
         "SELECT\n"\
-        " ArticleConnector_tbl.Connector_Id_FK,\n"\
-        " ArticleConnector_tbl.Name AS ArticleConnectorName,\n"\
-        " ArticleConnection_tbl.*\n"\
-        "FROM ArticleConnection_tbl\n"\
-        " LEFT JOIN ArticleConnector_tbl\n"\
-        "  ON ArticleConnection_tbl.ArticleConnector_Id_FK = ArticleConnector_tbl.Id_PK";
+        " ACNR.Connector_Id_FK,\n"\
+        " ACNR.Name AS ArticleConnectorName,\n"\
+        " ACNX.Id_PK,\n"\
+        " ACNX.Article_Id_FK,\n"\
+        " ACNX.ArticleConnector_Id_FK,\n"\
+        " ACNX.ConnectionType_Code_FK,\n"\
+        " ACNX.ArticleContactName,\n"\
+        " CT.NameEN AS ConnectionTypeEN,\n"\
+        " CT.NameFR AS ConnectionTypeFR,\n"\
+        " CT.NameDE AS ConnectionTypeDE,\n"\
+        " CT.NameIT AS ConnectionTypeIT,\n"\
+        " ACNX.Resistance,\n"\
+        " ACNX.IoType,\n"\
+        " ACNX.FunctionEN,\n"\
+        " ACNX.FunctionFR,\n"\
+        " ACNX.FunctionDE,\n"\
+        " ACNX.FunctionIT\n"\
+        "FROM ArticleConnection_tbl ACNX\n"\
+        " LEFT JOIN ArticleConnector_tbl ACNR\n"\
+        "  ON ACNX.ArticleConnector_Id_FK = ACNR.Id_PK\n"\
+        " JOIN ConnectionType_tbl CT\n"\
+        "  ON CT.Code_PK = ACNX.ConnectionType_Code_FK";
 
   return createView("ArticleConnection_view", sql);
 }

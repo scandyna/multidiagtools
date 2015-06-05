@@ -85,13 +85,15 @@ struct mdtClConnectorContactData
 
   /*! \brief Set key data
    */
-  void setKeyData(const mdtClConnectorContactKeyData & key){
+  void setKeyData(const mdtClConnectorContactKeyData & key)
+  {
     pvKeyData = key;
   }
 
   /*! \brief Set connector foreign key data
    */
-  void setConnectorFk(const mdtClConnectorKeyData & fk){
+  void setConnectorFk(const mdtClConnectorKeyData & fk)
+  {
     pvKeyData.connectorFk = fk;
   }
 

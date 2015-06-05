@@ -44,6 +44,7 @@ class mdtClConnectorTest : public mdtTest
 
   void connectionTypeDataTest();
   void connectionTypeGetTest();
+  void connectionTypeModelTest();
 
   void contactDataTest();
   void contactAddGetRemoveTest();

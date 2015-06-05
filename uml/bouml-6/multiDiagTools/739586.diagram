@@ -137,8 +137,8 @@ end
 relationcanvas 130050 relation_ref 1020674 // <unidirectional association>
   decenter_begin 629
   decenter_end 361
-  from ref 128130 z 2001 to point 787.541 115.43
-  line 130178 z 2001 to point 787.541 75.8044
+  from ref 128130 z 2001 to point 787 115
+  line 130178 z 2001 to point 787 75
   line 130306 z 2001 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -146,8 +146,8 @@ end
 relationcanvas 130434 relation_ref 1020802 // <unidirectional association>
   decenter_begin 550
   decenter_end 438
-  from ref 128642 z 2001 to point 868.608 583.15
-  line 130562 z 2001 to point 867.793 547.787
+  from ref 128642 z 2001 to point 868 583
+  line 130562 z 2001 to point 867 547
   line 130690 z 2001 to ref 128642
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -239,7 +239,7 @@ end
 relationcanvas 135042 relation_ref 1176194 // <unidirectional association>
   geometry HVr
   decenter_begin 613
-  from ref 133762 z 2001 to point 1343 1145
+  from ref 133762 z 2001 to point 1342 1147
   line 140418 z 2001 to ref 129794
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -337,7 +337,7 @@ relationcanvas 139394 relation_ref 1494914 // <unidirectional association>
 end
 relationcanvas 139778 relation_ref 1501442 // <unidirectional association>
   geometry HVr
-  from ref 139650 z 2006 to point 416.938 741.022
+  from ref 139650 z 2006 to point 416 741
   line 139906 z 2006 to ref 136706
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

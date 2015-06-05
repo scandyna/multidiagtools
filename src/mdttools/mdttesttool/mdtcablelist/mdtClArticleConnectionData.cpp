@@ -22,6 +22,28 @@
 
 //#include <QDebug>
 
+void mdtClArticleConnectionData::setKeyData(const mdtClArticleConnectionKeyData &key)
+{
+  pvKeyData = key;
+}
+
+void mdtClArticleConnectionData::clear()
+{
+  pvKeyData.clear();
+  name.clear();
+  resistance.clear();
+  ioType.clear();
+  functionEN.clear();
+  functionFR.clear();
+  functionDE.clear();
+  functionIT.clear();
+}
+
+
+/*
+ * OLD
+ */
+
 mdtClArticleConnectionData::mdtClArticleConnectionData()
  : mdtSqlRecord()
 {

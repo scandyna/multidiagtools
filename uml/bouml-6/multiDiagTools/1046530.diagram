@@ -6,11 +6,11 @@ classcanvas 128130 class_ref 1067266 // mdtSqlRecord
 end
 classcanvas 128258 class_ref 404994 // QSqlRecord
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 485.6 15.8 2006
+  xyz 485.8 15.6 2006
 end
 classcanvas 128642 class_ref 182402 // mdtError
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 674.9 75.8 3005
+  xyz 674.3 75.6 3005
 end
 classcanvas 129026 class_ref 1106946 // mdtClConnectorData
   classdiagramsettings member_max_width 0 end
@@ -66,7 +66,7 @@ relationcanvas 129794 relation_ref 1364098 // <generalisation>
 end
 relationcanvas 129922 relation_ref 1364226 // <directional composition>
   geometry VH
-  from ref 129026 z 2001 to point 175.2 158
+  from ref 129026 z 2001 to point 175.6 158
   line 130818 z 2001 stereotype "<<list>>" xyz 379 195 3000 to ref 128130
   role_a_pos 359 138 3000 no_role_b
   multiplicity_a_pos 463 168 3000 no_multiplicity_b

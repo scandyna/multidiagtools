@@ -27,6 +27,7 @@
 #include "mdtClConnectorData.h"
 #include "mdtClConnectorContactData.h"
 #include "mdtClConnectionTypeData.h"
+#include "mdtClConnectionTypeModel.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -164,6 +165,31 @@ void mdtClConnectorTest::connectionTypeGetTest()
   QVERIFY(data.isNull());
   QVERIFY(data.keyData().isNull());
   QVERIFY(data.type() == mdtClConnectionType_t::Undefined);
+}
+
+void mdtClConnectorTest::connectionTypeModelTest()
+{
+  QLocale locale(QLocale::English);
+  mdtClConnectionTypeModel m(pvDatabaseManager.database(), locale);
+  mdtClConnectionTypeKeyData key;
+
+  // Initial state
+  QCOMPARE(m.rowCount(), 3);
+  // Check row of key
+  key.code = "T";
+  QVERIFY(m.row(key) >= 0);
+  key.code = "S";
+  QVERIFY(m.row(key) >= 0);
+  key.code = "P";
+  QVERIFY(m.row(key) >= 0);
+  key.code = "O";
+  QVERIFY(m.row(key) < 0);
+  // Check getting key data of row
+  QVERIFY(m.keyData(-1).isNull());
+  QVERIFY(!m.keyData(0).isNull());
+  QVERIFY(!m.keyData(1).isNull());
+  QVERIFY(!m.keyData(2).isNull());
+  QVERIFY(m.keyData(50).isNull());
 }
 
 void mdtClConnectorTest::contactDataTest()

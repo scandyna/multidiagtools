@@ -22,10 +22,10 @@
 #define MDT_CL_ARTICLE_CONNECTION_DATA_H
 
 #include "mdtClArticleConnectionKeyData.h"
+#include <QVariant>
 
 #include "mdtSqlRecord.h"
 #include <QList>
-#include <QVariant>
 #include <QSqlDatabase>
 
 /*! \brief Data container for article connection data
@@ -34,9 +34,77 @@
  */
 struct mdtClArticleConnectionData : public mdtSqlRecord  /// \todo When all is adapted, remove this inheritance
 {
+ private:
+
+  /*! \brief Key data
+   */
+  mdtClArticleConnectionKeyData pvKeyData;
+
+ public:
+
+  /*! \brief Get article connection key data
+   */
+  mdtClArticleConnectionKeyData keyData() const
+  {
+    return pvKeyData;
+  }
+
+  /*! \brief Set key data
+   */
+  void setKeyData(const mdtClArticleConnectionKeyData & key);
+
+  /*! \brief Check if data is null
+   *
+   * Article connection data is null when its key is null
+   */
+  inline bool isNull() const
+  {
+    return pvKeyData.isNull();
+  }
+
+  /*! \brief Check if article connection is part of a article connector
+   */
+  inline bool isPartOfArticleConnector() const
+  {
+    return pvKeyData.isPartOfArticleConnector();
+  }
+
+  /*! \brief Clear data
+   */
+  void clear();
+
+  /*! \brief Name (ArticleContactName)
+   */
+  QVariant name;
+
+  /*! \brief Contact resistance (Resistance)
+   */
+  QVariant resistance;
+
+  /*! \brief I/O type (IoType)
+   */
+  QVariant ioType;
+
+  /*! \brief Function english (FunctionEN)
+   */
+  QVariant functionEN;
+
+  /*! \brief Function frensh (FunctionFR)
+   */
+  QVariant functionFR;
+
+  /*! \brief Function german (FunctionDE)
+   */
+  QVariant functionDE;
+
+  /*! \brief Function italian (FunctionIT)
+   */
+  QVariant functionIT;
+
  public:
 
   /*! \brief Construct a empty mdtClArticleConnectionData
+   * \deprecated
    */
   mdtClArticleConnectionData();
 
@@ -45,10 +113,12 @@ struct mdtClArticleConnectionData : public mdtSqlRecord  /// \todo When all is a
    * Note: if this method is used, setup is not relevant.
    *
    * \pre All fields from ArticleConnection_tbl must exist in record
+   * \deprecated
    */
   mdtClArticleConnectionData(const QSqlRecord & record);
 
   /*! \brief Setup fields from ArticleConnection_tbl
+   * \deprecated
    */
   bool setup(QSqlDatabase db);
 };

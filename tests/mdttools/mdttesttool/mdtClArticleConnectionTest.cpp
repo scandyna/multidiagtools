@@ -160,7 +160,7 @@ void mdtClArticleConnectionTest::articleConnectionDataTest()
   QVERIFY(acnxKey.connectionTypeFk.isNull());
   QVERIFY(acnxKey.isNull());
   QVERIFY(!acnxKey.isPartOfArticleConnector());
-  // Set key - Based ona article connector
+  // Set key - Based on a article connector
   acnxKey.id = 3;
   acnxKey.articleId = 4;
   acnxKey.connectionTypeFk.setType(mdtClConnectionType_t::Pin);
@@ -180,7 +180,65 @@ void mdtClArticleConnectionTest::articleConnectionDataTest()
   /*
    * Article connection data test
    */
-
+  // Initial state
+  QVERIFY(acnxData.isNull());
+  QVERIFY(!acnxData.isPartOfArticleConnector());
+  // Set data - Not part of a article connector
+  acnxKey.clear();
+  acnxKey.id = 1;
+  acnxKey.articleId = 2;
+  acnxKey.connectionTypeFk.setType(mdtClConnectionType_t::Pin);
+  acnxData.setKeyData(acnxKey);
+  acnxData.name = "ACNX 1";
+  acnxData.resistance = 0.12;
+  acnxData.ioType = "DO";
+  acnxData.functionFR = "FFR01";
+  acnxData.functionEN = "FEN01";
+  acnxData.functionDE = "FDE01";
+  acnxData.functionIT = "FIT01";
+  QVERIFY(!acnxData.isNull());
+  QVERIFY(!acnxData.isPartOfArticleConnector());
+  QVERIFY(acnxData.keyData().connectionTypeFk.type() == mdtClConnectionType_t::Pin);
+  // Clear
+  acnxData.clear();
+  QVERIFY(acnxData.name.isNull());
+  QVERIFY(acnxData.resistance.isNull());
+  QVERIFY(acnxData.ioType.isNull());
+  QVERIFY(acnxData.functionEN.isNull());
+  QVERIFY(acnxData.functionFR.isNull());
+  QVERIFY(acnxData.functionDE.isNull());
+  QVERIFY(acnxData.functionIT.isNull());
+  QVERIFY(acnxData.isNull());
+  QVERIFY(!acnxData.isPartOfArticleConnector());
+  // Set data - Part of a article connector
+  acnxKey.clear();
+  acnxKey.id = 3;
+  acnxKey.articleId = 4;
+  acnxKey.connectionTypeFk.setType(mdtClConnectionType_t::Pin);
+  acnxKey.articleConnectorFk.id = 5;
+  acnxKey.articleConnectorFk.articleId = 4;
+  acnxData.setKeyData(acnxKey);
+  acnxData.name = "ACNX 3";
+  acnxData.resistance = 0.25;
+  acnxData.ioType = "DO";
+  acnxData.functionFR = "FFR03";
+  acnxData.functionEN = "FEN03";
+  acnxData.functionDE = "FDE03";
+  acnxData.functionIT = "FIT03";
+  QVERIFY(!acnxData.isNull());
+  QVERIFY(acnxData.isPartOfArticleConnector());
+  QVERIFY(acnxData.keyData().connectionTypeFk.type() == mdtClConnectionType_t::Pin);
+  // Clear
+  acnxData.clear();
+  QVERIFY(acnxData.name.isNull());
+  QVERIFY(acnxData.resistance.isNull());
+  QVERIFY(acnxData.ioType.isNull());
+  QVERIFY(acnxData.functionEN.isNull());
+  QVERIFY(acnxData.functionFR.isNull());
+  QVERIFY(acnxData.functionDE.isNull());
+  QVERIFY(acnxData.functionIT.isNull());
+  QVERIFY(acnxData.isNull());
+  QVERIFY(!acnxData.isPartOfArticleConnector());
 }
 
 /*
