@@ -114,11 +114,13 @@ class mdtClConnector : public mdtTtBase
 
   /*! \brief Get connector data from database
    *
+   * \param includeContactData If true, related contacts are also included in data
+   * \param ok Is set false on error
    * \return data for given key.
    *       A null data is returned if given key does not exist, or a error occured.
    *       Use ok parameter to diffrenciate both cases.
    */
-  mdtClConnectorData getConnectorData(const mdtClConnectorKeyData & key, bool & ok);
+  mdtClConnectorData getConnectorData(const mdtClConnectorKeyData & key, bool includeContactData, bool & ok);
 
   /*! \brief Remove connector
    *

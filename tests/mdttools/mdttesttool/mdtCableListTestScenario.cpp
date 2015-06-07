@@ -28,7 +28,7 @@
 #include "mdtClConnectorKeyData.h"
 #include "mdtClConnectionTypeData.h"
 #include "mdtClConnectorContactData.h"
-#include "mdtClArticleConnectorData.h"
+#include "mdtClArticleConnection.h"
 #include "mdtClArticleConnectorData.h"
 #include "mdtClUnitConnectionData.h"
 #include "mdtClUnitConnectorData.h"
@@ -148,7 +148,7 @@ void mdtCableListTestScenario::createTestConnectors()
   connectorKey = cnr.addConnector(connectorData, true);
   QCOMPARE(connectorKey.id, QVariant(1));
   // Check back
-  connectorData = cnr.getConnectorData(connectorKey, ok);
+  connectorData = cnr.getConnectorData(connectorKey, true, ok);
   QVERIFY(ok);
   QCOMPARE(connectorData.keyData().id, QVariant(1));
   // Add connector 2
@@ -159,7 +159,7 @@ void mdtCableListTestScenario::createTestConnectors()
   connectorKey = cnr.addConnector(connectorData, true);
   QCOMPARE(connectorKey.id, QVariant(2));
   // Check back
-  connectorData = cnr.getConnectorData(connectorKey, ok);
+  connectorData = cnr.getConnectorData(connectorKey, true, ok);
   QVERIFY(ok);
   QCOMPARE(connectorData.keyData().id, QVariant(2));
   /*
@@ -189,7 +189,7 @@ void mdtCableListTestScenario::createTestConnectors()
   connectorKey = cnr.addConnector(connectorData, true);
   QCOMPARE(connectorKey.id, QVariant(3));
   // Check back
-  connectorData = cnr.getConnectorData(connectorKey, ok);
+  connectorData = cnr.getConnectorData(connectorKey, true, ok);
   QVERIFY(ok);
   QCOMPARE(connectorData.keyData().id, QVariant(3));
   QCOMPARE(connectorData.contactDataList().size(), 2);
@@ -357,103 +357,205 @@ void mdtCableListTestScenario::removeTestArticles()
 
 void mdtCableListTestScenario::createTestArticleConnections()
 {
-  mdtClArticle art(0, pvDatabase);
+  mdtClArticleConnection acnx(pvDatabase);
+  mdtClArticleConnectionKeyData key;
   mdtClArticleConnectionData connectionData;
-  QList<QVariant> idList;
-  QList<mdtClArticleConnectionData> connectionDataList;
   bool ok;
 
+  /*
+   * Add article connections
+   */
   // Add contact ID 10 to article ID 1
-  QVERIFY(connectionData.setup(pvDatabase));
-  connectionData.setValue("Id_PK", 10);
-  connectionData.setValue("Article_Id_FK", 1);
-  connectionData.setValue("ConnectionType_Code_FK", "T");
-  connectionData.setValue("ArticleContactName", "10");
-  connectionData.setValue("Resistance", 0.1);
-  QVERIFY(art.addConnection(connectionData));
+  connectionData.clear();
+  key.clear();
+  key.id = 10;
+  key.articleId = 1;
+  key.connectionTypeFk.setType(mdtClConnectionType_t::Terminal);
+  connectionData.setKeyData(key);
+  connectionData.name = "10";
+  connectionData.resistance = 0.1;
+  QVERIFY(!acnx.addArticleConnection(connectionData, true).isNull());
   // Add contact ID 20 to article ID 2
-  connectionData.clearValues();
-  connectionData.setValue("Id_PK", 20);
-  connectionData.setValue("Article_Id_FK", 2);
-  connectionData.setValue("ConnectionType_Code_FK", "T");
-  connectionData.setValue("ArticleContactName", "20");
-  connectionData.setValue("Resistance", 0.2);
-  QVERIFY(art.addConnection(connectionData));
+  connectionData.clear();
+  key.clear();
+  key.id = 20;
+  key.articleId = 2;
+  key.connectionTypeFk.setType(mdtClConnectionType_t::Terminal);
+  connectionData.setKeyData(key);
+  connectionData.name = "20";
+  connectionData.resistance = 0.2;
+  QVERIFY(!acnx.addArticleConnection(connectionData, true).isNull());
   // Add contact ID 21 to article ID 2
-  connectionData.clearValues();
-  connectionData.setValue("Id_PK", 21);
-  connectionData.setValue("Article_Id_FK", 2);
-  connectionData.setValue("ConnectionType_Code_FK", "T");
-  connectionData.setValue("ArticleContactName", "21");
-  connectionData.setValue("Resistance", 0.21);
-  QVERIFY(art.addConnection(connectionData));
+  connectionData.clear();
+  key.clear();
+  key.id = 21;
+  key.articleId = 2;
+  key.connectionTypeFk.setType(mdtClConnectionType_t::Terminal);
+  connectionData.setKeyData(key);
+  connectionData.name = "21";
+  connectionData.resistance = 0.21;
+  QVERIFY(!acnx.addArticleConnection(connectionData, true).isNull());
   // Add contact ID 22 to article ID 2
-  connectionData.clearValues();
-  connectionData.setValue("Id_PK", 22);
-  connectionData.setValue("Article_Id_FK", 2);
-  connectionData.setValue("ConnectionType_Code_FK", "S");
-  connectionData.setValue("ArticleContactName", "22");
-  connectionData.setValue("Resistance", 0.22);
-  QVERIFY(art.addConnection(connectionData));
+  connectionData.clear();
+  key.clear();
+  key.id = 22;
+  key.articleId = 2;
+  key.connectionTypeFk.setType(mdtClConnectionType_t::Socket);
+  connectionData.setKeyData(key);
+  connectionData.name = "22";
+  connectionData.resistance = 0.22;
+  QVERIFY(!acnx.addArticleConnection(connectionData, true).isNull());
+  /*
+   * Check back
+   */
+  // Check contact ID 10
+  key.clear();
+  key.id = 10;
+  connectionData = acnx.getArticleConnectionData(key, ok);
+  QVERIFY(ok);
+  QCOMPARE(connectionData.keyData().id, QVariant(10));
+  QCOMPARE(connectionData.keyData().articleId, QVariant(1));
+  QVERIFY(connectionData.keyData().connectionTypeFk.type() == mdtClConnectionType_t::Terminal);
+  QCOMPARE(connectionData.name, QVariant("10"));
+  QCOMPARE(connectionData.resistance, QVariant(0.1));
+  // Check contact ID 20
+  key.clear();
+  key.id = 20;
+  connectionData = acnx.getArticleConnectionData(key, ok);
+  QVERIFY(ok);
+  QCOMPARE(connectionData.keyData().id, QVariant(20));
+  QCOMPARE(connectionData.keyData().articleId, QVariant(2));
+  QVERIFY(connectionData.keyData().connectionTypeFk.type() == mdtClConnectionType_t::Terminal);
+  QCOMPARE(connectionData.name, QVariant("20"));
+  QCOMPARE(connectionData.resistance, QVariant(0.2));
+  // Check contact ID 21
+  key.clear();
+  key.id = 21;
+  connectionData = acnx.getArticleConnectionData(key, ok);
+  QVERIFY(ok);
+  QCOMPARE(connectionData.keyData().id, QVariant(21));
+  QCOMPARE(connectionData.keyData().articleId, QVariant(2));
+  QVERIFY(connectionData.keyData().connectionTypeFk.type() == mdtClConnectionType_t::Terminal);
+  QCOMPARE(connectionData.name, QVariant("21"));
+  QCOMPARE(connectionData.resistance, QVariant(0.21));
+  // Check contact ID 22
+  key.clear();
+  key.id = 22;
+  connectionData = acnx.getArticleConnectionData(key, ok);
+  QVERIFY(ok);
+  QCOMPARE(connectionData.keyData().id, QVariant(22));
+  QCOMPARE(connectionData.keyData().articleId, QVariant(2));
+  QVERIFY(connectionData.keyData().connectionTypeFk.type() == mdtClConnectionType_t::Socket);
+  QCOMPARE(connectionData.name, QVariant("22"));
+  QCOMPARE(connectionData.resistance, QVariant(0.22));
+
+//   mdtClArticle art(0, pvDatabase);
+//   QList<QVariant> idList;
+//   QList<mdtClArticleConnectionData> connectionDataList;
+// 
+//   // Add contact ID 10 to article ID 1
+//   QVERIFY(connectionData.setup(pvDatabase));
+//   connectionData.setValue("Id_PK", 10);
+//   connectionData.setValue("Article_Id_FK", 1);
+//   connectionData.setValue("ConnectionType_Code_FK", "T");
+//   connectionData.setValue("ArticleContactName", "10");
+//   connectionData.setValue("Resistance", 0.1);
+//   QVERIFY(art.addConnection(connectionData));
+  // Add contact ID 20 to article ID 2
+//   connectionData.clearValues();
+//   connectionData.setValue("Id_PK", 20);
+//   connectionData.setValue("Article_Id_FK", 2);
+//   connectionData.setValue("ConnectionType_Code_FK", "T");
+//   connectionData.setValue("ArticleContactName", "20");
+//   connectionData.setValue("Resistance", 0.2);
+//   QVERIFY(art.addConnection(connectionData));
+  // Add contact ID 21 to article ID 2
+//   connectionData.clearValues();
+//   connectionData.setValue("Id_PK", 21);
+//   connectionData.setValue("Article_Id_FK", 2);
+//   connectionData.setValue("ConnectionType_Code_FK", "T");
+//   connectionData.setValue("ArticleContactName", "21");
+//   connectionData.setValue("Resistance", 0.21);
+//   QVERIFY(art.addConnection(connectionData));
+  // Add contact ID 22 to article ID 2
+//   connectionData.clearValues();
+//   connectionData.setValue("Id_PK", 22);
+//   connectionData.setValue("Article_Id_FK", 2);
+//   connectionData.setValue("ConnectionType_Code_FK", "S");
+//   connectionData.setValue("ArticleContactName", "22");
+//   connectionData.setValue("Resistance", 0.22);
+//   QVERIFY(art.addConnection(connectionData));
   // Check back data
-  connectionData = art.getConnectionData(10, &ok);
-  QVERIFY(ok);
-  QCOMPARE(connectionData.value("Id_PK"), QVariant(10));
-  QCOMPARE(connectionData.value("Article_Id_FK"), QVariant(1));
-  QCOMPARE(connectionData.value("ConnectionType_Code_FK"), QVariant("T"));
-  QCOMPARE(connectionData.value("ArticleContactName"), QVariant("10"));
-  QCOMPARE(connectionData.value("Resistance"), QVariant(0.1));
-  connectionData = art.getConnectionData(20, &ok);
-  QVERIFY(ok);
-  QCOMPARE(connectionData.value("Id_PK"), QVariant(20));
-  QCOMPARE(connectionData.value("Article_Id_FK"), QVariant(2));
-  QCOMPARE(connectionData.value("ConnectionType_Code_FK"), QVariant("T"));
-  QCOMPARE(connectionData.value("ArticleContactName"), QVariant("20"));
-  QCOMPARE(connectionData.value("Resistance"), QVariant(0.2));
-  connectionData = art.getConnectionData(21, &ok);
-  QVERIFY(ok);
-  QCOMPARE(connectionData.value("Id_PK"), QVariant(21));
-  QCOMPARE(connectionData.value("Article_Id_FK"), QVariant(2));
-  QCOMPARE(connectionData.value("ConnectionType_Code_FK"), QVariant("T"));
-  QCOMPARE(connectionData.value("ArticleContactName"), QVariant("21"));
-  QCOMPARE(connectionData.value("Resistance"), QVariant(0.21));
-  // Check connections data list getter method
-  idList.clear();
-  idList << 20 << 21;
-  connectionDataList = art.getConnectionDataListFromConnectionIdList(idList, &ok);
-  QVERIFY(ok);
-  QCOMPARE(connectionDataList.size(), 2);
-  connectionData = connectionDataList.at(0);
-  QCOMPARE(connectionData.value("Id_PK"), QVariant(20));
-  QCOMPARE(connectionData.value("Article_Id_FK"), QVariant(2));
-  QCOMPARE(connectionData.value("ConnectionType_Code_FK"), QVariant("T"));
-  QCOMPARE(connectionData.value("ArticleContactName"), QVariant("20"));
-  QCOMPARE(connectionData.value("Resistance"), QVariant(0.2));
-  connectionData = art.getConnectionData(21, &ok);
-  connectionData = connectionDataList.at(1);
-  QCOMPARE(connectionData.value("Id_PK"), QVariant(21));
-  QCOMPARE(connectionData.value("Article_Id_FK"), QVariant(2));
-  QCOMPARE(connectionData.value("ConnectionType_Code_FK"), QVariant("T"));
-  QCOMPARE(connectionData.value("ArticleContactName"), QVariant("21"));
-  QCOMPARE(connectionData.value("Resistance"), QVariant(0.21));
+//   connectionData = art.getConnectionData(10, &ok);
+//   QVERIFY(ok);
+//   QCOMPARE(connectionData.value("Id_PK"), QVariant(10));
+//   QCOMPARE(connectionData.value("Article_Id_FK"), QVariant(1));
+//   QCOMPARE(connectionData.value("ConnectionType_Code_FK"), QVariant("T"));
+//   QCOMPARE(connectionData.value("ArticleContactName"), QVariant("10"));
+//   QCOMPARE(connectionData.value("Resistance"), QVariant(0.1));
+//   connectionData = art.getConnectionData(20, &ok);
+//   QVERIFY(ok);
+//   QCOMPARE(connectionData.value("Id_PK"), QVariant(20));
+//   QCOMPARE(connectionData.value("Article_Id_FK"), QVariant(2));
+//   QCOMPARE(connectionData.value("ConnectionType_Code_FK"), QVariant("T"));
+//   QCOMPARE(connectionData.value("ArticleContactName"), QVariant("20"));
+//   QCOMPARE(connectionData.value("Resistance"), QVariant(0.2));
+//   connectionData = art.getConnectionData(21, &ok);
+//   QVERIFY(ok);
+//   QCOMPARE(connectionData.value("Id_PK"), QVariant(21));
+//   QCOMPARE(connectionData.value("Article_Id_FK"), QVariant(2));
+//   QCOMPARE(connectionData.value("ConnectionType_Code_FK"), QVariant("T"));
+//   QCOMPARE(connectionData.value("ArticleContactName"), QVariant("21"));
+//   QCOMPARE(connectionData.value("Resistance"), QVariant(0.21));
+//   // Check connections data list getter method
+//   idList.clear();
+//   idList << 20 << 21;
+//   connectionDataList = art.getConnectionDataListFromConnectionIdList(idList, &ok);
+//   QVERIFY(ok);
+//   QCOMPARE(connectionDataList.size(), 2);
+//   connectionData = connectionDataList.at(0);
+//   QCOMPARE(connectionData.value("Id_PK"), QVariant(20));
+//   QCOMPARE(connectionData.value("Article_Id_FK"), QVariant(2));
+//   QCOMPARE(connectionData.value("ConnectionType_Code_FK"), QVariant("T"));
+//   QCOMPARE(connectionData.value("ArticleContactName"), QVariant("20"));
+//   QCOMPARE(connectionData.value("Resistance"), QVariant(0.2));
+//   connectionData = art.getConnectionData(21, &ok);
+//   connectionData = connectionDataList.at(1);
+//   QCOMPARE(connectionData.value("Id_PK"), QVariant(21));
+//   QCOMPARE(connectionData.value("Article_Id_FK"), QVariant(2));
+//   QCOMPARE(connectionData.value("ConnectionType_Code_FK"), QVariant("T"));
+//   QCOMPARE(connectionData.value("ArticleContactName"), QVariant("21"));
+//   QCOMPARE(connectionData.value("Resistance"), QVariant(0.21));
 }
 
 void mdtCableListTestScenario::removeTestArticleConnections()
 {
+  mdtClArticleConnection acnx(pvDatabase);
+  mdtClArticleConnectionKeyData key;
+
+  key.id = 10;
+  QVERIFY(acnx.removeArticleConnection(key));
+  key.id = 20;
+  QVERIFY(acnx.removeArticleConnection(key));
+  key.id = 21;
+  QVERIFY(acnx.removeArticleConnection(key));
+  key.id = 22;
+  QVERIFY(acnx.removeArticleConnection(key));
+/*
   mdtClArticle art(0, pvDatabase);
   QList<QSqlRecord> dataList;
   bool ok;
-
-  qDebug() << "Removing article connections ...";
-  
-  QVERIFY(art.removeConnection(10));
-  QVERIFY(art.removeConnection(20));
-  QVERIFY(art.removeConnection(21));
-  QVERIFY(art.removeConnection(22));
-  dataList = art.getData("SELECT * FROM ArticleConnection_view", &ok);
-  QVERIFY(ok);
-  
-  qDebug() << "All (?) article connections removed";
+*/
+//   qDebug() << "Removing article connections ...";
+//   
+//   QVERIFY(art.removeConnection(10));
+//   QVERIFY(art.removeConnection(20));
+//   QVERIFY(art.removeConnection(21));
+//   QVERIFY(art.removeConnection(22));
+//   dataList = art.getData("SELECT * FROM ArticleConnection_view", &ok);
+//   QVERIFY(ok);
+//   
+//   qDebug() << "All (?) article connections removed";
 }
 
 void mdtCableListTestScenario::createTestArticleConnectors()

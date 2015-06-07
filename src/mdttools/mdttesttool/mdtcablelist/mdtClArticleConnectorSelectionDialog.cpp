@@ -18,63 +18,49 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtClConnectorSelectionDialog.h"
+#include "mdtClArticleConnectorSelectionDialog.h"
 #include "mdtSqlTableSelection.h"
-#include <QString>
+#include <QStringList>
 
-mdtClConnectorSelectionDialog::mdtClConnectorSelectionDialog(QWidget *parent)
+mdtClArticleConnectorSelectionDialog::mdtClArticleConnectorSelectionDialog(QWidget *parent)
  : mdtSqlSelectionDialog(parent)
 {
-  resize(1000, 400);
-  setWindowTitle(tr("Connector selection"));
+  resize(700, 400);
+  setWindowTitle(tr("Article connector selection"));
 }
 
-bool mdtClConnectorSelectionDialog::select(QSqlDatabase db)
+bool mdtClArticleConnectorSelectionDialog::select(QSqlDatabase db, const QVariant & articleId)
 {
   QString sql;
 
-  sql = "SELECT * FROM Connector_tbl";
-  setMessage(tr("Select connector:"));
+  sql = "SELECT * FROM ArticleConnector_tbl WHERE Article_Id_FK = " + articleId.toString();
   if(!setQuery(sql, db, false)){
     return false;
   }
+  setMessage(tr("Select article connector to use:"));
   setColumnHidden("Id_PK", true);
-  setHeaderData("ContactQty", tr("Contact\nQty"));
-  setHeaderData("InsertRotation", tr("Insert\nRotation"));
-  setHeaderData("ManufacturerConfigCode", tr("Manufacturer\nConfiguration code"));
-  setHeaderData("ManufacturerArticleCode", tr("Manufacturer\nArticle code"));
-  addColumnToSortOrder("Gender", Qt::AscendingOrder);
-  addColumnToSortOrder("ContactQty", Qt::AscendingOrder);
-  addColumnToSortOrder("ManufacturerConfigCode", Qt::AscendingOrder);
+  setColumnHidden("Article_Id_FK", true);
+  setColumnHidden("Connector_Id_FK", true);
+  addColumnToSortOrder("Name", Qt::AscendingOrder);
   sort();
 
   return true;
 }
 
-mdtClConnectorKeyData mdtClConnectorSelectionDialog::selectedConnectorKey() const
+mdtClArticleConnectorKeyData mdtClArticleConnectorSelectionDialog::selectedArticleConnectorKey() const
 {
-  mdtClConnectorKeyData key;
+  mdtClArticleConnectorKeyData key;
+  QStringList fields;
 
   if(result() != Accepted){
     return key;
   }
-  auto s = selection("Id_PK");
+  fields << "Id_PK" << "Article_Id_FK" << "Connector_Id_FK";
+  auto s = selection(fields);
   Q_ASSERT(s.rowCount() == 1);
   key.id = s.data(0, "Id_PK");
+  key.articleId = s.data(0, "Article_Id_FK");
+  key.connectorFk.id = s.data(0, "Connector_Id_FK");
 
   return key;
-}
-
-QVariant mdtClConnectorSelectionDialog::selectedConnectorId() const
-{
-  QVariant id;
-
-  if(result() != Accepted){
-    return id;
-  }
-  auto s = selection("Id_PK");
-  Q_ASSERT(s.rowCount() == 1);
-  id = s.data(0, "Id_PK");
-
-  return id;
 }

@@ -315,57 +315,57 @@ bool mdtClArticle::addConnectionDataListFromConnectorContactIdList(mdtClArticleC
   return true;
 }
 
-bool mdtClArticle::addConnection(const mdtClArticleConnectionData &data)
-{
-  return addRecord(data, "ArticleConnection_tbl");
-}
+// bool mdtClArticle::addConnection(const mdtClArticleConnectionData &data)
+// {
+//   return addRecord(data, "ArticleConnection_tbl");
+// }
 
-bool mdtClArticle::editConnection(const QVariant & connectionId, const mdtClArticleConnectionData & data)
-{
-  return updateRecord("ArticleConnection_tbl", data, "Id_PK", connectionId);
-}
+// bool mdtClArticle::editConnection(const QVariant & connectionId, const mdtClArticleConnectionData & data)
+// {
+//   return updateRecord("ArticleConnection_tbl", data, "Id_PK", connectionId);
+// }
 
-bool mdtClArticle::removeConnection(const QVariant & articleConnectionId)
-{
-  QList<QVariant> idList;
+// bool mdtClArticle::removeConnection(const QVariant & articleConnectionId)
+// {
+//   QList<QVariant> idList;
+// 
+//   idList.append(articleConnectionId);
+// 
+//   return removeConnections(idList);
+// }
 
-  idList.append(articleConnectionId);
-
-  return removeConnections(idList);
-}
-
-bool mdtClArticle::removeConnections(const QList<QVariant> & articleConnectionIdList)
-{
-  int i;
-  QString sql;
-
-  if(articleConnectionIdList.size() < 1){
-    return true;
-  }
-  // Generate SQL
-  sql = "DELETE FROM ArticleConnection_tbl ";
-  for(i = 0; i < articleConnectionIdList.size(); ++i){
-    if(i == 0){
-      sql += " WHERE ( ";
-    }else{
-      sql += " OR ";
-    }
-    sql += " Id_PK = " + articleConnectionIdList.at(i).toString();
-  }
-  sql += " ) ";
-  // Submit query
-  QSqlQuery query(database());
-  if(!query.exec(sql)){
-    QSqlError sqlError = query.lastError();
-    pvLastError.setError("Cannot execute query for connection deletion", mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClArticle");
-    pvLastError.commit();
-    return false;
-  }
-
-  return true;
-}
+// bool mdtClArticle::removeConnections(const QList<QVariant> & articleConnectionIdList)
+// {
+//   int i;
+//   QString sql;
+// 
+//   if(articleConnectionIdList.size() < 1){
+//     return true;
+//   }
+//   // Generate SQL
+//   sql = "DELETE FROM ArticleConnection_tbl ";
+//   for(i = 0; i < articleConnectionIdList.size(); ++i){
+//     if(i == 0){
+//       sql += " WHERE ( ";
+//     }else{
+//       sql += " OR ";
+//     }
+//     sql += " Id_PK = " + articleConnectionIdList.at(i).toString();
+//   }
+//   sql += " ) ";
+//   // Submit query
+//   QSqlQuery query(database());
+//   if(!query.exec(sql)){
+//     QSqlError sqlError = query.lastError();
+//     pvLastError.setError("Cannot execute query for connection deletion", mdtError::Error);
+//     pvLastError.setSystemError(sqlError.number(), sqlError.text());
+//     MDT_ERROR_SET_SRC(pvLastError, "mdtClArticle");
+//     pvLastError.commit();
+//     return false;
+//   }
+// 
+//   return true;
+// }
 
 /**
 bool mdtClArticle::removeConnections(const QModelIndexList & indexListOfSelectedRows)
@@ -381,14 +381,14 @@ bool mdtClArticle::removeConnections(const QModelIndexList & indexListOfSelected
 }
 */
 
-bool mdtClArticle::removeConnections(const mdtSqlTableSelection & s)
-{
-  QList<QVariant> idList;
-
-  idList = s.dataList("Id_PK");
-
-  return removeConnections(idList);
-}
+// bool mdtClArticle::removeConnections(const mdtSqlTableSelection & s)
+// {
+//   QList<QVariant> idList;
+// 
+//   idList = s.dataList("Id_PK");
+// 
+//   return removeConnections(idList);
+// }
 
 bool mdtClArticle::updateUnitConnections(const QStringList & fields, const QVariant & connectionId)
 {

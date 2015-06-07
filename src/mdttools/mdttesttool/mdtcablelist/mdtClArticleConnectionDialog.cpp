@@ -19,14 +19,19 @@
  **
  ****************************************************************************/
 #include "mdtClArticleConnectionDialog.h"
-#include "mdtSqlSelectionDialog.h"
+#include "mdtClArticleConnection.h"
 #include "mdtClArticleConnectorData.h"
-#include "mdtClArticle.h"
+#include "mdtClArticleConnectorSelectionDialog.h"
+#include "mdtClConnectionTypeData.h"
+#include "mdtClConnectionTypeModel.h"
 #include <QWidget>
 #include <QSqlQueryModel>
 #include <QList>
 #include <QSqlRecord>
+#include <QComboBox>
 #include <QLocale>
+#include <QMessageBox>
+#include <QStringList>
 
 //#include <QDebug>
 
@@ -37,8 +42,9 @@ mdtClArticleConnectionDialog::mdtClArticleConnectionDialog(QWidget *parent, cons
   setupUi(this);
   ///pbSelectArticleConnector->setEnabled(false);
   connect(pbSelectArticleConnector, SIGNAL(clicked()), this, SLOT(selectArticleConnector()));
-  connect(cbConnectionType, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(updateConnectionTypeText(const QString &)));
-  populateConnectionTypeComboBox();
+  // Setup connection type selection combobox
+  cbConnectionType->setModel(new mdtClConnectionTypeModel(db));
+  cbConnectionType->setModelColumn(1);
 }
 
 mdtClArticleConnectionDialog::~mdtClArticleConnectionDialog() 
@@ -47,17 +53,9 @@ mdtClArticleConnectionDialog::~mdtClArticleConnectionDialog()
 
 void mdtClArticleConnectionDialog::setData(const mdtClArticleConnectionData & data)
 {
+  Q_ASSERT(!data.keyData().articleId.isNull());
+
   pvData = data;
-  Q_ASSERT(pvData.contains("Id_PK"));
-  Q_ASSERT(pvData.contains("Article_Id_FK"));
-  Q_ASSERT(pvData.contains("ArticleConnector_Id_FK"));
-  Q_ASSERT(pvData.contains("ConnectionType_Code_FK"));
-  Q_ASSERT(pvData.contains("ArticleContactName"));
-  Q_ASSERT(pvData.contains("IoType"));
-  Q_ASSERT(pvData.contains("FunctionEN"));
-  Q_ASSERT(pvData.contains("FunctionDE"));
-  Q_ASSERT(pvData.contains("FunctionFR"));
-  Q_ASSERT(pvData.contains("FunctionIT"));
   updateDialog();
 }
 
@@ -68,89 +66,28 @@ mdtClArticleConnectionData mdtClArticleConnectionDialog::data() const
 
 void mdtClArticleConnectionDialog::selectArticleConnector()
 {
-  mdtSqlSelectionDialog dialog(this);
-  QString sql;
+  Q_ASSERT(!pvData.keyData().articleId.isNull());
 
-  // Setup and show dialog
-  sql = "SELECT Id_PK, Name FROM ArticleConnector_tbl WHERE Article_Id_FK = " + pvData.value("Article_Id_FK").toString();
-  dialog.setQuery(sql, pvDatabase, false);
-  dialog.setMessage(tr("Select article connector to use:"));
-  dialog.setColumnHidden("Id_PK", true);
-  dialog.addColumnToSortOrder("Name", Qt::AscendingOrder);
-  dialog.sort();
-  dialog.addSelectionResultColumn("Id_PK");
-  dialog.setWindowTitle(tr("Article connector selection"));
+  mdtClArticleConnectorSelectionDialog dialog(this);
+
+  if(!dialog.select(pvDatabase, pvData.keyData().articleId)){
+    displayError(dialog.lastError());
+    return;
+  }
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
-  // Store selected article connector ID
-  Q_ASSERT(dialog.selectionResult().size() == 1);
-  pvData.setValue("ArticleConnector_Id_FK", dialog.selectionResult().at(0));
+  pvData.setArticleConnectorFk(dialog.selectedArticleConnectorKey());
   updateDialog();
-}
-
-void mdtClArticleConnectionDialog::updateConnectionTypeText(const QString& type)
-{
-  QLocale locale;
-  mdtClArticle art(0, pvDatabase);
-  QString fieldName;
-  QString sql;
-  QList<QSqlRecord> dataList;
-  bool ok;
-
-  // Select field regarding language
-  switch(locale.language()){
-    case QLocale::French:
-      fieldName = "NameFR";
-      break;
-    case QLocale::German:
-      fieldName = "NameDE";
-      break;
-    case QLocale::Italian:
-      fieldName = "NameIT";
-      break;
-    default:
-      fieldName = "NameEN";
-  }
-  // Get text
-  sql = "SELECT " + fieldName + " FROM ConnectionType_tbl WHERE Code_PK = '" + type + "'";
-  dataList = art.getData(sql , &ok);
-  if(!ok){
-    lbConnectionTypeText->setText(tr("<Error!>"));
-    return;
-  }
-  if(dataList.size() < 1){
-    lbConnectionTypeText->setText("");
-    return;
-  }
-  lbConnectionTypeText->setText(dataList.at(0).value(fieldName).toString());
 }
 
 void mdtClArticleConnectionDialog::accept()
 {
   updateData();
-  QDialog::accept();
-}
-
-void mdtClArticleConnectionDialog::populateConnectionTypeComboBox()
-{
-  mdtClArticle art(0, pvDatabase);
-  QList<QSqlRecord> dataList;
-  bool ok;
-  int i;
-
-  cbConnectionType->clear();
-  // Get available codes
-  dataList = art.getData("SELECT Code_PK FROM ConnectionType_tbl", &ok);
-  if(!ok){
-    cbConnectionType->addItem(tr("<Error!>"));
-    lbConnectionTypeText->setText(tr("<Error!>"));
+  if(!checkData()){
     return;
   }
-  // Populate combo box
-  for(i = 0; i < dataList.size(); ++i){
-    cbConnectionType->addItem(dataList.at(i).value("Code_PK").toString());
-  }
+  QDialog::accept();
 }
 
 void mdtClArticleConnectionDialog::setCurrentConnectionType(const QString& type)
@@ -167,30 +104,40 @@ void mdtClArticleConnectionDialog::setCurrentConnectionType(const QString& type)
   cbConnectionType->setCurrentIndex(-1);
 }
 
+void mdtClArticleConnectionDialog::setCurrentConnectionType(const mdtClConnectionTypeKeyData & type)
+{
+  Q_ASSERT(dynamic_cast<mdtClConnectionTypeModel*>(cbConnectionType->model()) != nullptr);
+
+  auto *model = static_cast<mdtClConnectionTypeModel*>(cbConnectionType->model());
+  int idx;
+
+  idx = model->row(type);
+  cbConnectionType->setCurrentIndex(idx);
+}
+
 void mdtClArticleConnectionDialog::updateDialog()
 {
-  mdtClArticle art(0, pvDatabase);
-  mdtClArticleConnectorData connectorData;
-  bool ok;
-
   // Update article connections data
-  fld_ArticleContactName->setText(pvData.value("ArticleContactName").toString());
-  if(pvData.value("Resistance").isNull()){
+  fld_ArticleContactName->setText(pvData.name.toString());
+  if(pvData.resistance.isNull()){
     sbConnectionResistance->setValue(sbConnectionResistance->minimum());
   }else{
-    sbConnectionResistance->setValue(pvData.value("Resistance").toDouble());
+    sbConnectionResistance->setValue(pvData.resistance.toDouble());
   }
-  fld_IoType->setText(pvData.value("IoType").toString());
-  fld_FunctionEN->setText(pvData.value("FunctionEN").toString());
-  fld_FunctionFR->setText(pvData.value("FunctionFR").toString());
-  fld_FunctionDE->setText(pvData.value("FunctionDE").toString());
-  fld_FunctionIT->setText(pvData.value("FunctionIT").toString());
-  setCurrentConnectionType(pvData.value("ConnectionType_Code_FK").toString());
+  fld_IoType->setText(pvData.ioType.toString());
+  fld_FunctionEN->setText(pvData.functionEN.toString());
+  fld_FunctionFR->setText(pvData.functionFR.toString());
+  fld_FunctionDE->setText(pvData.functionDE.toString());
+  fld_FunctionIT->setText(pvData.functionIT.toString());
+  setCurrentConnectionType(pvData.keyData().connectionTypeFk);
   // Update article connector data if one is set
-  if(!pvData.value("ArticleConnector_Id_FK").isNull()){
-    connectorData = art.getConnectorData(pvData.value("ArticleConnector_Id_FK"), &ok, false, false);
+  if(pvData.isPartOfArticleConnector()){
+    mdtClArticleConnection acnx(pvDatabase);
+    mdtClArticleConnectorData connectorData;
+    bool ok;
+    connectorData = acnx.getArticleConnectorData(pvData.keyData().articleConnectorFk, false, ok);
     if(ok){
-      lbArticleConnectorName->setText(connectorData.value("Name").toString());
+      lbArticleConnectorName->setText(connectorData.name.toString());
     }else{
       lbArticleConnectorName->setText("<Error!>");
     }
@@ -199,16 +146,62 @@ void mdtClArticleConnectionDialog::updateDialog()
 
 void mdtClArticleConnectionDialog::updateData()
 {
-  pvData.setValue("ConnectionType_Code_FK", cbConnectionType->currentText());
+  Q_ASSERT(dynamic_cast<mdtClConnectionTypeModel*>(cbConnectionType->model()) != nullptr);
+  auto *model = static_cast<mdtClConnectionTypeModel*>(cbConnectionType->model());
+  Q_ASSERT(model != nullptr);
+
+  // Article connector FK was allready set by selectArticleConnector()
+  pvData.setConnectionType( model->keyData(cbConnectionType->currentIndex()) );
   if(sbConnectionResistance->value() < 0.0){
-    pvData.setValue("Resistance", QVariant());
+    pvData.resistance.clear();
   }else{
-    pvData.setValue("Resistance", sbConnectionResistance->value());
+    pvData.resistance = sbConnectionResistance->value();
   }
-  pvData.setValue("ArticleContactName", fld_ArticleContactName->text());
-  pvData.setValue("IoType", fld_IoType->text());
-  pvData.setValue("FunctionEN", fld_FunctionEN->text());
-  pvData.setValue("FunctionFR", fld_FunctionFR->text());
-  pvData.setValue("FunctionDE", fld_FunctionDE->text());
-  pvData.setValue("FunctionIT", fld_FunctionIT->text());
+  pvData.name = fld_ArticleContactName->text();
+  pvData.ioType = fld_IoType->text();
+  pvData.functionEN = fld_FunctionEN->text();
+  pvData.functionFR = fld_FunctionFR->text();
+  pvData.functionDE = fld_FunctionDE->text();
+  pvData.functionIT = fld_FunctionIT->text();
+}
+
+bool mdtClArticleConnectionDialog::checkData()
+{
+  QStringList missingItems;
+
+  // Check connection type
+  if(pvData.keyData().connectionTypeFk.type() == mdtClConnectionType_t::Undefined){
+    missingItems << tr("Connection type is not defined");
+  }
+  // Check connection name
+  if(pvData.name.toString().trimmed().isEmpty()){
+    missingItems << tr("Contact (name) is not set");
+  }
+  // If some data are missing, display a message
+  if(!missingItems.isEmpty()){
+    QMessageBox msgBox(this);
+    QString text;
+    msgBox.setText(tr("Some data are not correctly set."));
+    text = tr("Problems are:\n");
+    for(const auto & item : missingItems){
+      text += " - " + item + "\n";
+    }
+    msgBox.setInformativeText(text);
+    msgBox.setIcon(QMessageBox::Warning);
+    msgBox.exec();
+    return false;
+  }
+
+  return true;
+}
+
+void mdtClArticleConnectionDialog::displayError(const mdtError & error)
+{
+  QMessageBox msgBox(this);
+
+  msgBox.setText(error.text());
+  msgBox.setInformativeText(error.informativeText());
+  msgBox.setDetailedText(error.systemText());
+  msgBox.setIcon(error.levelIcon());
+  msgBox.exec();
 }

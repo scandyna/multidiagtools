@@ -51,6 +51,8 @@ struct mdtClArticleConnectorData : public mdtSqlRecord  /// \todo When all is ad
   }
 
   /*! \brief Set key data
+   *
+   * If connector contains connections, they will also updated
    */
   void setKeyData(const mdtClArticleConnectorKeyData & key);
 
@@ -77,6 +79,26 @@ struct mdtClArticleConnectorData : public mdtSqlRecord  /// \todo When all is ad
   /*! \brief Article connector name
    */
   QVariant name;
+
+  /*! \brief Add connection data
+   *
+   * In key that given data contains, only id and connectionTypeFk are keeped.
+   *  articleId and articleConnectorFk are set to match article connector data.
+   */
+  void addConnectionData(mdtClArticleConnectionData data);
+
+  /*! \brief Set list of connection data
+   *
+   * \sa addConnectionData().
+   */
+  void setConnectionDataList(const QList<mdtClArticleConnectionData> & dataList);
+
+  /*! \brief Access list of connection data
+   */
+  inline const QList<mdtClArticleConnectionData> & connectionDataList() const
+  {
+    return pvConnectionDataList;
+  }
 
  public:
 
@@ -117,39 +139,6 @@ struct mdtClArticleConnectorData : public mdtSqlRecord  /// \todo When all is ad
    * \deprecated
    */
 //   void clear();
-
-  /*! \brief Add a list of connection data
-   *
-   * By using this method, the caller is responsible to give
-   *  valid records, that contains needed fields.
-   *
-   * \sa addConnectionData().
-   * \deprecated
-   */
-  void setConnectionDataList(const QList<mdtClArticleConnectionData> & dataList);
-
-  /*! \brief Get list of connection data
-   */
-  const QList<mdtClArticleConnectionData> & connectionDataList() const;
-
-  /*! \brief Add connection data
-   *
-   * Will also get Article_Id_FK and ArticleConnector_Id_FK from article connector data,
-   *  so these 2 fields are not relevant in given data.
-   *
-   * \pre data must contains following fields:
-   *  - Id_PK
-   *  - Article_Id_FK
-   *  - ArticleConnector_Id_FK
-   *  - ArticleContactName
-   *  - IoType
-   *  - FunctionEN
-   *  - FunctionFR
-   *  - FunctionDE
-   *  - FunctionIT
-   * \deprecated
-   */
-  void addConnectionData(const mdtClArticleConnectionData & data);
 
   /*! \brief Update existing connection data
    *

@@ -46,23 +46,47 @@ bool mdtClConnectorContactSelectionDialog::select(QSqlDatabase db, const mdtClCo
   return true;
 }
 
-QList<mdtClConnectorContactKeyData> mdtClConnectorContactSelectionDialog::selectedContactKeyList() const
+QList<mdtClConnectorContactData> mdtClConnectorContactSelectionDialog::selectedContactDataList() const
 {
-  QList<mdtClConnectorContactKeyData> keyList;
+  QList<mdtClConnectorContactData> dataList;
   QStringList fields;
 
   if(result() != Accepted){
-    return keyList;
+    return dataList;
   }
-  fields << "Id_PK" << "Connector_Id_FK" << "ConnectorType_Code_FK";
+  fields << "Id_PK" << "Connector_Id_FK" << "ConnectionType_Code_FK" << "Name";
   auto s = selection(fields);
   for(int row = 0; row < s.rowCount(); ++row){
     mdtClConnectorContactKeyData key;
+    mdtClConnectorContactData data;
     key.id = s.data(row, "Id_PK");
     key.connectorFk.id = s.data(row, "Connector_Id_FK");
-    key.connectionTypeFk.code = s.data(row, "ConnectorType_Code_FK");
-    keyList.append(key);
+    key.connectionTypeFk.code = s.data(row, "ConnectionType_Code_FK");
+    data.setKeyData(key);
+    data.name = s.data(row, "Name");
+    dataList.append(data);
   }
 
-  return keyList;
+  return dataList;
 }
+
+// QList<mdtClConnectorContactKeyData> mdtClConnectorContactSelectionDialog::selectedContactKeyList() const
+// {
+//   QList<mdtClConnectorContactKeyData> keyList;
+//   QStringList fields;
+// 
+//   if(result() != Accepted){
+//     return keyList;
+//   }
+//   fields << "Id_PK" << "Connector_Id_FK" << "ConnectorType_Code_FK";
+//   auto s = selection(fields);
+//   for(int row = 0; row < s.rowCount(); ++row){
+//     mdtClConnectorContactKeyData key;
+//     key.id = s.data(row, "Id_PK");
+//     key.connectorFk.id = s.data(row, "Connector_Id_FK");
+//     key.connectionTypeFk.code = s.data(row, "ConnectorType_Code_FK");
+//     keyList.append(key);
+//   }
+// 
+//   return keyList;
+// }

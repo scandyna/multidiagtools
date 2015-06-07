@@ -67,6 +67,7 @@ SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtcablelist/mdtClArticle.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtcablelist/mdtClArticleConnection.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtcablelist/mdtClArticleConnectorData.cpp
+SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtcablelist/mdtClArticleConnectorSelectionDialog.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtcablelist/mdtClArticleConnectionData.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtcablelist/mdtClArticleEditor.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtcablelist/mdtClArticleComponentDialog.cpp

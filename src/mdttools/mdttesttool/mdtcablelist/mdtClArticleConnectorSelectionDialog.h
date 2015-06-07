@@ -18,42 +18,41 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CL_ARTICLE_CONNECTION_TEST_H
-#define MDT_CL_ARTICLE_CONNECTION_TEST_H
+#ifndef MDT_CL_ARTICLE_CONNECTOR_SELECTION_DIALOG_H
+#define MDT_CL_ARTICLE_CONNECTOR_SELECTION_DIALOG_H
 
-#include "mdtTest.h"
-#include "mdtSqlDatabaseManager.h"
-#include <QMessageBox>
-#include <QFileInfo>
+#include "mdtSqlSelectionDialog.h"
+#include "mdtClArticleConnectorKeyData.h"
+#include <QSqlDatabase>
+#include <QVariant>
 
-class mdtClArticleConnectionTest : public mdtTest
+/*! \brief Dialog for article connector selection (in ArticleConnector_tbl)
+ */
+class mdtClArticleConnectorSelectionDialog : public mdtSqlSelectionDialog
 {
  Q_OBJECT
 
- private slots:
+ public:
 
-  /*
-   * Will create database schema (see createDatabaseSchema() )
-   * No data is inserted in tables by this method.
-   * Each test also has a empty schema at startup,
-   *  and must assure that they finish with a empty schema at end.
+   /*! \brief Constructor
+    */
+  mdtClArticleConnectorSelectionDialog(QWidget *parent);
+
+  /*! \brief Set SQL query and select data
+   *
+   * Will select article connectors that belongs to given article
    */
-  void initTestCase();
-  void cleanupTestCase();
+  bool select(QSqlDatabase db, const QVariant & articleId);
 
-  void articleConnectorDataTest();
-  void articleConnectionDataTest();
-
-  void articleConnectionAddGetRemoveTest();
-  void articleConnectorAddGetRemoveTest();
+  /*! \brief Get selected article connector key
+   *
+   * If user rejected the dialog, a null key is returned.
+   */
+  mdtClArticleConnectorKeyData selectedArticleConnectorKey() const;
 
  private:
 
-  // Create test database schema - Will FAIL on problem
-  void createDatabaseSchema();
-
-  mdtSqlDatabaseManager pvDatabaseManager;
-  QFileInfo pvDbFileInfo;
+  Q_DISABLE_COPY(mdtClArticleConnectorSelectionDialog);
 };
 
-#endif // #ifndef MDT_CL_ARTICLE_CONNECTION_TEST_H
+#endif // #ifndef MDT_CL_ARTICLE_CONNECTOR_SELECTION_DIALOG_H

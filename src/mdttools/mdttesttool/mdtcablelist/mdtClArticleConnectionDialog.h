@@ -21,9 +21,10 @@
 #ifndef MDT_CL_ARTICLE_CONNECTION_DIALOG_H
 #define MDT_CL_ARTICLE_CONNECTION_DIALOG_H
 
+#include "mdtError.h"
 #include "ui_mdtClArticleConnectionDialog.h"
 #include "mdtClArticleConnectionData.h"
-#include <boost/graph/graph_concepts.hpp>
+#include "mdtClConnectionTypeData.h"
 #include <QDialog>
 #include <QVariant>
 #include <QSqlRecord>
@@ -49,7 +50,7 @@ class mdtClArticleConnectionDialog : public QDialog, Ui::mdtClArticleConnectionD
 
   /*! \brief Set connection data
    *
-   * \pre All fields from ArticleConnection_tbl must exists in data.
+   * \pre data's key must have a article ID set
    */
   void setData(const mdtClArticleConnectionData & data);
 
@@ -63,23 +64,19 @@ class mdtClArticleConnectionDialog : public QDialog, Ui::mdtClArticleConnectionD
    */
   void selectArticleConnector();
 
-  /*! \brief Update connection type text
-   */
-  void updateConnectionTypeText(const QString & type);
-
   /*! \brief Make some checks and accept dialog if ok
    */
   void accept();
 
  private:
 
-  /*! \brief Populate connection type cobobox with available types
-   */
-  void populateConnectionTypeComboBox();
-
   /*! \brief Set connection type combobox current value
    */
   void setCurrentConnectionType(const QString & type);
+
+  /*! \brief Set connection type combobox current value
+   */
+  void setCurrentConnectionType(const mdtClConnectionTypeKeyData & type);
 
   /*! \brief Display data conetent to dialog's widget
    */
@@ -88,6 +85,14 @@ class mdtClArticleConnectionDialog : public QDialog, Ui::mdtClArticleConnectionD
   /*! \brief Update data from dialog's widgets
    */
   void updateData();
+
+  /*! \brief Check data
+   */
+  bool checkData();
+
+  /*! \brief Display a error
+   */
+  void displayError(const mdtError & error);
 
   Q_DISABLE_COPY(mdtClArticleConnectionDialog);
 

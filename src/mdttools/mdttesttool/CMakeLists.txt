@@ -139,6 +139,7 @@ set (CL_HEADER_FILES
           mdtcablelist/mdtClConnectorContactSelectionDialog.h
           mdtcablelist/mdtClArticleEditor.h
           mdtcablelist/mdtClArticleComponentDialog.h
+          mdtcablelist/mdtClArticleConnectorSelectionDialog.h
           mdtcablelist/mdtClArticleConnectionDialog.h
           mdtcablelist/mdtClArticleLinkDialog.h
           mdtcablelist/mdtClArticleSelectionDialog.h
@@ -167,6 +168,7 @@ set (CL_SOURCES_FILES
           mdtcablelist/mdtClArticle.cpp
           mdtcablelist/mdtClArticleConnection.cpp
           mdtcablelist/mdtClArticleConnectorData.cpp
+          mdtcablelist/mdtClArticleConnectorSelectionDialog.cpp
           mdtcablelist/mdtClArticleConnectionData.cpp
           mdtcablelist/mdtClArticleEditor.cpp
           mdtcablelist/mdtClArticleComponentDialog.cpp

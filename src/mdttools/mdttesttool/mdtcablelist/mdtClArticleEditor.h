@@ -22,8 +22,10 @@
 #define MDT_CL_ARTICLE_EDITOR_H
 
 #include "mdtSqlForm.h"
+#include "mdtClArticleConnectionKeyData.h"
 #include <QSqlDatabase>
 #include <QModelIndex>
+#include <QSqlRecord>
 #include <QVariant>
 #include <QList>
 
@@ -77,11 +79,11 @@ class mdtClArticleEditor : public mdtSqlForm
 
   /*! \brief Edit a connection
    */
-  void editConnection();
+  void editCurrentConnection();
 
   /*! \brief Edit a connection
    */
-  void editConnection(const QModelIndex &);
+  void editConnection(const QSqlRecord & record);
 
   /*! \brief Update related unit connections data from article connection
    */
@@ -116,6 +118,10 @@ class mdtClArticleEditor : public mdtSqlForm
   void removeLinks();
 
  private:
+
+  /*! \brief Edit given article connection
+   */
+  void editConnection(const mdtClArticleConnectionKeyData & key);
 
   /*! \brief Get current Article ID
    *

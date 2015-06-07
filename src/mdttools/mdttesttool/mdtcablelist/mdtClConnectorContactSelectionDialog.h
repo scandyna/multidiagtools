@@ -48,7 +48,8 @@ class mdtClConnectorContactSelectionDialog : public mdtSqlSelectionDialog
 
   /*! \brief Get list of selected contacts
    */
-  QList<mdtClConnectorContactKeyData> selectedContactKeyList() const;
+  QList<mdtClConnectorContactData> selectedContactDataList() const;
+//   QList<mdtClConnectorContactKeyData> selectedContactKeyList() const;
 
  private:
 

@@ -6,221 +6,214 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>502</width>
-    <height>335</height>
+    <width>447</width>
+    <height>282</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Article connection edition</string>
   </property>
-  <layout class="QFormLayout" name="formLayout">
-   <item row="0" column="0">
-    <widget class="QLabel" name="lbArticleConnectorNameLabel">
-     <property name="text">
-      <string>Connector:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QPushButton" name="pbSelectArticleConnector">
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="lbArticleConnectorNameLabel">
        <property name="text">
-        <string>...</string>
+        <string>Connector:</string>
        </property>
       </widget>
      </item>
-     <item>
-      <widget class="QLabel" name="lbArticleConnectorName">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
+     <item row="0" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QPushButton" name="pbSelectArticleConnector">
+         <property name="text">
+          <string>...</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="lbArticleConnectorName">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>&lt;None&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="lbConnectionType">
        <property name="text">
-        <string>&lt;None&gt;</string>
+        <string>Connection type:</string>
        </property>
       </widget>
      </item>
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="lbConnectionType">
-     <property name="text">
-      <string>Connection type:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <item>
+     <item row="1" column="1">
       <widget class="QComboBox" name="cbConnectionType">
        <property name="editable">
         <bool>false</bool>
        </property>
       </widget>
      </item>
-     <item>
-      <widget class="QLabel" name="lbConnectionTypeText">
+     <item row="2" column="0">
+      <widget class="QLabel" name="lbArticleContactName">
        <property name="text">
-        <string>Connection type text</string>
+        <string>Contact:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="fld_ArticleContactName">
+       <property name="maximumSize">
+        <size>
+         <width>300</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="maxLength">
+        <number>30</number>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="lbConnectionResistance">
+       <property name="text">
+        <string>Connection resistance:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QDoubleSpinBox" name="sbConnectionResistance">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="specialValueText">
+        <string>Null</string>
+       </property>
+       <property name="suffix">
+        <string> [Ohm]</string>
+       </property>
+       <property name="decimals">
+        <number>3</number>
+       </property>
+       <property name="minimum">
+        <double>-0.010000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>10.000000000000000</double>
+       </property>
+       <property name="singleStep">
+        <double>0.010000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="lbIoType">
+       <property name="text">
+        <string>I/O type:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QLineEdit" name="fld_IoType">
+       <property name="maximumSize">
+        <size>
+         <width>300</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="maxLength">
+        <number>30</number>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="lbFunctionEN">
+       <property name="text">
+        <string>Function (English):</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QLineEdit" name="fld_FunctionEN">
+       <property name="maxLength">
+        <number>100</number>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="0">
+      <widget class="QLabel" name="lbFunctionFR">
+       <property name="text">
+        <string>Function (French):</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="1">
+      <widget class="QLineEdit" name="fld_FunctionFR">
+       <property name="maxLength">
+        <number>100</number>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="0">
+      <widget class="QLabel" name="lbFunctionDE">
+       <property name="text">
+        <string>Function (German):</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="1">
+      <widget class="QLineEdit" name="fld_FunctionDE">
+       <property name="maxLength">
+        <number>100</number>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="0">
+      <widget class="QLabel" name="lbFunctionIT">
+       <property name="text">
+        <string>Function (Italian):</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="1">
+      <widget class="QLineEdit" name="fld_FunctionIT">
+       <property name="maxLength">
+        <number>100</number>
        </property>
       </widget>
      </item>
     </layout>
    </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="lbArticleContactName">
-     <property name="text">
-      <string>Contact:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="QLineEdit" name="fld_ArticleContactName">
-     <property name="maximumSize">
-      <size>
-       <width>300</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="maxLength">
-      <number>30</number>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0">
-    <widget class="QLabel" name="lbIoType">
-     <property name="text">
-      <string>I/O type:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="1">
-    <widget class="QLineEdit" name="fld_IoType">
-     <property name="maximumSize">
-      <size>
-       <width>300</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="maxLength">
-      <number>30</number>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0">
-    <widget class="QLabel" name="lbFunctionEN">
-     <property name="text">
-      <string>Function (English):</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="1">
-    <widget class="QLineEdit" name="fld_FunctionEN">
-     <property name="maxLength">
-      <number>100</number>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="0">
-    <widget class="QLabel" name="lbFunctionFR">
-     <property name="text">
-      <string>Function (French):</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="1">
-    <widget class="QLineEdit" name="fld_FunctionFR">
-     <property name="maxLength">
-      <number>100</number>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="0">
-    <widget class="QLabel" name="lbFunctionDE">
-     <property name="text">
-      <string>Function (German):</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="1">
-    <widget class="QLineEdit" name="fld_FunctionDE">
-     <property name="maxLength">
-      <number>100</number>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="0">
-    <widget class="QLabel" name="lbFunctionIT">
-     <property name="text">
-      <string>Function (Italian):</string>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="1">
-    <widget class="QLineEdit" name="fld_FunctionIT">
-     <property name="maxLength">
-      <number>100</number>
-     </property>
-    </widget>
-   </item>
-   <item row="9" column="1">
+   <item>
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons">
       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="1">
-    <widget class="QDoubleSpinBox" name="sbConnectionResistance">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="specialValueText">
-      <string>Null</string>
-     </property>
-     <property name="suffix">
-      <string> [Ohm]</string>
-     </property>
-     <property name="decimals">
-      <number>3</number>
-     </property>
-     <property name="minimum">
-      <double>-0.010000000000000</double>
-     </property>
-     <property name="maximum">
-      <double>10.000000000000000</double>
-     </property>
-     <property name="singleStep">
-      <double>0.010000000000000</double>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="lbConnectionResistance">
-     <property name="text">
-      <string>Connection resistance:</string>
      </property>
     </widget>
    </item>

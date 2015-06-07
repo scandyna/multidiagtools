@@ -50,8 +50,20 @@ struct mdtClArticleConnectionData : public mdtSqlRecord  /// \todo When all is a
   }
 
   /*! \brief Set key data
+   *
+   * \pre If key.articleConnectorFk is not null, key.articleConnectorFk.articleId must match key.articleId
    */
   void setKeyData(const mdtClArticleConnectionKeyData & key);
+
+  /*! \brief Set article connector FK
+   *
+   * \pre key.articleId must match keyData().articleId
+   */
+  void setArticleConnectorFk(const mdtClArticleConnectorKeyData & key);
+
+  /*! \brief Set connection type
+   */
+  void setConnectionType(const mdtClConnectionTypeKeyData & typeKey);
 
   /*! \brief Check if data is null
    *

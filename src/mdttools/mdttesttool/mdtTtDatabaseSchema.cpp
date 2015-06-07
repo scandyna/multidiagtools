@@ -1052,7 +1052,7 @@ bool mdtTtDatabaseSchema::setupArticleConnectionTable()
   field = QSqlField();
   field.setName("Article_Id_FK");
   field.setType(QVariant::Int);
-  field.setRequiredStatus(QSqlField::Required);
+  field.setRequired(true);
   table.addField(field, false);
   // ArticleConnector_Id_FK
   field = QSqlField();
@@ -1064,14 +1064,14 @@ bool mdtTtDatabaseSchema::setupArticleConnectionTable()
   field.setName("ConnectionType_Code_FK");
   field.setType(QVariant::String);
   field.setLength(1);
-  /// \todo Remove default value
-  field.setDefaultValue("T");
+  field.setRequired(true);
   table.addField(field, false);
   // ArticleContactName
   field = QSqlField();
   field.setName("ArticleContactName");
   field.setType(QVariant::String);
   field.setLength(30);
+  field.setRequired(true);
   table.addField(field, false);
   // Resistance
   field = QSqlField();

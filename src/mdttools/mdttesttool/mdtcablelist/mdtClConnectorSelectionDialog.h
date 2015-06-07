@@ -51,6 +51,7 @@ class mdtClConnectorSelectionDialog : public mdtSqlSelectionDialog
   /*! \brief Get selected connector ID
    *
    * If user rejected the dialog, a null value is returned.
+   * \deprecated
    */
   QVariant selectedConnectorId() const;
 

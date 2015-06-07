@@ -347,7 +347,7 @@ void mdtClConnectorTest::connectorAddGetRemoveTest()
   key = cnr.addConnector(data, true);
   QVERIFY(!key.isNull());
   // Get connector back and check
-  data = cnr.getConnectorData(key, ok);
+  data = cnr.getConnectorData(key, true, ok);
   QVERIFY(ok);
   QVERIFY(!data.isNull());
   QCOMPARE(data.gender, QVariant("Male"));
@@ -357,7 +357,7 @@ void mdtClConnectorTest::connectorAddGetRemoveTest()
   QCOMPARE(data.manufacturerArticleCode, QVariant("Manufacturer art 1"));
   // Remove connector
   QVERIFY(cnr.removeConnector(key, true));
-  data = cnr.getConnectorData(key, ok);
+  data = cnr.getConnectorData(key, true, ok);
   QVERIFY(ok);
   QVERIFY(data.isNull());
   /*
@@ -379,8 +379,8 @@ void mdtClConnectorTest::connectorAddGetRemoveTest()
   // Add connector to DB
   key = cnr.addConnector(data, true);
   QVERIFY(!key.isNull());
-  // Get connector back and check
-  data = cnr.getConnectorData(key, ok);
+  // Get connector back and check - inlude contacts
+  data = cnr.getConnectorData(key, true, ok);
   QVERIFY(ok);
   QVERIFY(!data.isNull());
   QCOMPARE(data.gender, QVariant("Male"));
@@ -393,9 +393,19 @@ void mdtClConnectorTest::connectorAddGetRemoveTest()
   QCOMPARE(data.contactDataList().at(0).name, QVariant("A"));
   QVERIFY(data.contactDataList().at(1).keyData().connectionTypeFk.type() == mdtClConnectionType_t::Pin);
   QCOMPARE(data.contactDataList().at(1).name, QVariant("B"));
+  // Get connector back and check - do not inlude contacts
+  data = cnr.getConnectorData(key, false, ok);
+  QVERIFY(ok);
+  QVERIFY(!data.isNull());
+  QCOMPARE(data.gender, QVariant("Male"));
+  QCOMPARE(data.form, QVariant("Round"));
+  QCOMPARE(data.manufacturer, QVariant("Manufacturer 2"));
+  QCOMPARE(data.manufacturerConfigCode, QVariant("Manufacturer cfg 2"));
+  QCOMPARE(data.manufacturerArticleCode, QVariant("Manufacturer art 2"));
+  QCOMPARE(data.contactDataList().size(), 0);
   // Remove connector
   QVERIFY(cnr.removeConnector(key, true));
-  data = cnr.getConnectorData(key, ok);
+  data = cnr.getConnectorData(key, true, ok);
   QVERIFY(ok);
   QVERIFY(data.isNull());
 }

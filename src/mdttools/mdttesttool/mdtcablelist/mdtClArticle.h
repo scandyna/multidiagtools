@@ -129,20 +129,27 @@ class mdtClArticle : public mdtTtBase
   bool addConnectionDataListFromConnectorContactIdList(mdtClArticleConnectorData & data, const QList<QVariant> & connectorContactIdList);
 
   /*! \brief Add a connection
+   *
+   * \deprecated
    */
-  bool addConnection(const mdtClArticleConnectionData & data);
+//   bool addConnection(const mdtClArticleConnectionData & data);
 
   /*! \brief Edit a article connection
+   *
+   * \deprecated
    */
-  bool editConnection(const QVariant & connectionId, const mdtClArticleConnectionData & data);
+//   bool editConnection(const QVariant & connectionId, const mdtClArticleConnectionData & data);
 
   /*! \brief Remove a single connection
+   * 
+   * \deprecated
    */
-  bool removeConnection(const QVariant & articleConnectionId);
+//   bool removeConnection(const QVariant & articleConnectionId);
 
   /*! \brief Remove connections
+   * \deprecated
    */
-  bool removeConnections(const QList<QVariant> & articleConnectionIdList);
+//   bool removeConnections(const QList<QVariant> & articleConnectionIdList);
 
   /*! \brief Remove each connection that is contained in selection
    *
@@ -151,7 +158,7 @@ class mdtClArticle : public mdtTtBase
    * \return True on success, false else.
    *          To get reason of failure, use lastError() .
    */
-  bool removeConnections(const mdtSqlTableSelection & s);
+//   bool removeConnections(const mdtSqlTableSelection & s);
 
   /*! \brief Update unit connections with data from given article connection
    *
@@ -189,6 +196,7 @@ class mdtClArticle : public mdtTtBase
    * Note: in connection data (contained in data),
    *  Article_Id_FK and ArticleConnector_Id_FK are not relevant,
    *  because they are token from data directly.
+   * \deprecated
    */
   bool addConnector(const mdtClArticleConnectorData & data);
 

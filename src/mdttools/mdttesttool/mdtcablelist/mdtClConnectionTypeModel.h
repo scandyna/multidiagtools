@@ -27,6 +27,21 @@
 #include <QSqlDatabase>
 #include <QLocale>
 
+/*! \brief Model that acts on ConnectionType_tbl
+ *
+ * This model is typically used with QComboBox
+ *  for connection type selection.
+ *
+ * This model will select Code_PK and a name field that depends on given locale
+ *  (see constructors for details).
+ *
+ * Usage:
+ * \code
+ *   QComboBox *cb = new QComboBox;
+ *   cb->setModel(new mdtClConnectionTypeModel);
+ *   cb->setModelColumn(1);  // Will display name field
+ * \endcode
+ */
 class mdtClConnectionTypeModel : public QSqlQueryModel
 {
  public:

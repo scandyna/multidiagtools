@@ -67,10 +67,8 @@ int mdtClConnectionTypeModel::row(const mdtClConnectionTypeKeyData & key)
       return row;
     }
   }
-  QString msg = QString(tr("Could not find a connection of type '%1' in ConnectionType_tbl.")).arg(key.code.toString());
-  pvLastError.setError(msg, mdtError::Error);
-  MDT_ERROR_SET_SRC(pvLastError, "mdtClConnectionTypeModel");
-  pvLastError.commit();
+  // Update error only if a error occured
+  isInError();
 
   return -1;
 }

@@ -234,7 +234,7 @@ mdtClConnectorKeyData mdtClConnector::addConnector(mdtClConnectorData data, bool
   return key;
 }
 
-mdtClConnectorData mdtClConnector::getConnectorData(const mdtClConnectorKeyData & key, bool & ok)
+mdtClConnectorData mdtClConnector::getConnectorData(const mdtClConnectorKeyData & key, bool includeContactData, bool & ok)
 {
   mdtClConnectorData data;
   QList<QSqlRecord> dataList;
@@ -255,9 +255,11 @@ mdtClConnectorData mdtClConnector::getConnectorData(const mdtClConnectorKeyData 
   data.manufacturer = dataList.at(0).value("Manufacturer");
   data.manufacturerConfigCode = dataList.at(0).value("ManufacturerConfigCode");
   data.manufacturerArticleCode = dataList.at(0).value("ManufacturerArticleCode");
-  data.setContactDataList(getContactDataList(data.keyData(), ok));
-  if(!ok){
-    data.clear();
+  if(includeContactData){
+    data.setContactDataList(getContactDataList(data.keyData(), ok));
+    if(!ok){
+      data.clear();
+    }
   }
 
   return data;
