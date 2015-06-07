@@ -18,16 +18,15 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CABLE_LIST_TEST_H
-#define MDT_CABLE_LIST_TEST_H
+#ifndef MDT_CL_ARTICLE_LINK_TEST_H
+#define MDT_CL_ARTICLE_LINK_TEST_H
 
 #include "mdtTest.h"
-#include "mdtCableListTestScenario.h"
 #include "mdtSqlDatabaseManager.h"
 #include <QMessageBox>
 #include <QFileInfo>
 
-class mdtCableListTest : public mdtTest
+class mdtClArticleLinkTest : public mdtTest
 {
  Q_OBJECT
 
@@ -40,33 +39,9 @@ class mdtCableListTest : public mdtTest
    *  and must assure that they finish with a empty schema at end.
    */
   void initTestCase();
-
   void cleanupTestCase();
 
-  void applicationWidgetsTest();
-
-//   void articleConnectionDataTest();
-//   void articleConnectorDataTest();
-  void articleTest();
-  void unitConnectionUpdateTest();
-
-  void unitConnectionDataTest();
-  void unitConnectorDataTest();
-  void unitTest();
-  void unitConnectionTest();
-  void unitConnectorTest();
-  /// Créer des fonction (pas slot) qui construisent à mesure un sénario
-
-  void mdtClLinkDataTest();
-  void linkTest();  /// \todo Ne pas oublier: UnitLink_view et LinkList_view !
-  void linkUpdateFromArticleLinkTest();
-  void linkConnectableConnectorTest();
-  void linkAutoConnectionTest();
-
-  void pathGraphTest();
-  void directLinkTest();
-
-  void linkBeamTest();
+  void articleLinkDataTest();
 
  private:
 
@@ -77,4 +52,4 @@ class mdtCableListTest : public mdtTest
   QFileInfo pvDbFileInfo;
 };
 
-#endif // #ifndef MDT_CABLE_LIST_TEST_H
+#endif // #ifndef MDT_CL_ARTICLE_LINK_TEST_H

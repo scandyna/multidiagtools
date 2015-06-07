@@ -18,41 +18,55 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CL_CONNECTOR_CONTACT_SELECTION_DIALOG_H
-#define MDT_CL_CONNECTOR_CONTACT_SELECTION_DIALOG_H
+#ifndef MDT_CL_LINK_TYPE_DATA_H
+#define MDT_CL_LINK_TYPE_DATA_H
 
-#include "mdtSqlSelectionDialog.h"
-#include "mdtClConnectorData.h"
-#include "mdtClConnectorContactData.h"
-#include <QSqlDatabase>
 #include <QVariant>
-#include <QList>
+#include <QString>
+#include <QLocale>
 
-/*! \brief Dialog for connector selection (in Connector_tbl)
+/*! \brief Link type
  */
-class mdtClConnectorContactSelectionDialog : public mdtSqlSelectionDialog
+enum class mdtClLinkType_t
 {
- Q_OBJECT
-
- public:
-
-   /*! \brief Constructor
-    */
-  mdtClConnectorContactSelectionDialog(QWidget *parent);
-
-  /*! \brief Set SQL query and select data
-   *
-   * \param connectorKey Key of connector for witch contacts must be listed
-   */
-  bool select(QSqlDatabase db, const mdtClConnectorKeyData & connectorKey);
-
-  /*! \brief Get list of selected contacts
-   */
-  QList<mdtClConnectorContactData> selectedContactDataList() const;
-
- private:
-
-  Q_DISABLE_COPY(mdtClConnectorContactSelectionDialog);
+  Undefined,    /*!< Undefined type (is the case for null data) */
+  CableLink,    /*!< Cable link */
+  InternalLink, /*!< Device internal link */
+  Connection,   /*!< A link of 2 connections */
+  TestLink      /*!< Test link */
 };
 
-#endif // #ifndef MDT_CL_CONNECTOR_CONTACT_SELECTION_DIALOG_H
+/*! \brief Link type key data
+ *
+ * Refers to LinkType_tbl
+ */
+struct mdtClLinkTypeKeyData
+{
+  /*! \brief Link type code (Code_PK)
+   */
+  QVariant code;
+
+  /*! \brief Get link type
+   */
+  mdtClLinkType_t type() const;
+
+  /*! \brief Set link type
+   */
+  void setType(mdtClLinkType_t t);
+
+  /*! \brief Check if key data is null
+   */
+  inline bool isNull() const
+  {
+    return code.isNull();
+  }
+
+  /*! \brief Clear key data
+   */
+  void clear()
+  {
+    code.clear();
+  }
+};
+
+#endif // #ifndef MDT_CL_LINK_TYPE_DATA_H

@@ -295,8 +295,12 @@ endif(UNIX)
 
 # mdtClConnectorTest
 add_test (mdtClConnectorTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdttesttool/mdtclconnectortest)
-# mdtClConnectorTest
+# mdtClArticleConnectionTest
 add_test (mdtClArticleConnectionTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdttesttool/mdtclarticleconnectiontest)
+# mdtClLinkTest
+add_test (mdtClLinkTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdttesttool/mdtcllinktest)
+# mdtClArticleLinkTest
+add_test (mdtClArticleLinkTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdttesttool/mdtclarticlelinktest)
 
 # mdtCableListTest
 add_test (mdtCableListTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdttesttool/mdtcablelisttest)

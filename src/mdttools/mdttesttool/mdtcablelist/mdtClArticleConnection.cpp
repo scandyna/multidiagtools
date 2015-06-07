@@ -268,6 +268,19 @@ mdtClArticleConnectorData mdtClArticleConnection::getArticleConnectorData(mdtClA
   return data;
 }
 
+bool mdtClArticleConnection::updateArticleConnectorName(const mdtClArticleConnectorKeyData &key, const QVariant &name)
+{
+  mdtSqlRecord record;
+
+  if(!record.addAllFields("ArticleConnector_tbl", database())){
+    pvLastError = record.lastError();
+    return false;
+  }
+  record.setValue("Name", name);
+
+  return updateRecord("ArticleConnector_tbl", record, "Id_PK", key.id);
+}
+
 bool mdtClArticleConnection::removeArticleConnector(const mdtClArticleConnectorKeyData & key, bool handleTransaction)
 {
   mdtSqlTransaction transaction(database());
@@ -289,6 +302,30 @@ bool mdtClArticleConnection::removeArticleConnector(const mdtClArticleConnectorK
       pvLastError = transaction.lastError();
       return false;
     }
+  }
+
+  return true;
+}
+
+bool mdtClArticleConnection::removeArticleConnectors(const mdtSqlTableSelection &s)
+{
+  mdtSqlTransaction transaction(database());
+
+  if(!transaction.begin()){
+    pvLastError = transaction.lastError();
+    return false;
+  }
+  auto idList = s.dataList("Id_PK");
+  for(const auto & id : idList){
+    mdtClArticleConnectorKeyData key;
+    key.id = id;
+    if(!removeArticleConnector(key, false)){
+      return false;
+    }
+  }
+  if(!transaction.commit()){
+    pvLastError = transaction.lastError();
+    return false;
   }
 
   return true;

@@ -53,13 +53,6 @@ class mdtClArticle : public mdtTtBase
    */
   QString sqlForArticleComponentSelection(const QVariant &articleId) const;
 
-  /*! \brief Get SQL statement for connector contact selection
-   *
-   * Get a list of connector contact (including some connector data)
-   *  for witch connector exists in given articleId.
-   */
-  
-
   /*! \brief Add a article as component
    *
    * \return True on success, false else.
@@ -128,38 +121,6 @@ class mdtClArticle : public mdtTtBase
    */
   bool addConnectionDataListFromConnectorContactIdList(mdtClArticleConnectorData & data, const QList<QVariant> & connectorContactIdList);
 
-  /*! \brief Add a connection
-   *
-   * \deprecated
-   */
-//   bool addConnection(const mdtClArticleConnectionData & data);
-
-  /*! \brief Edit a article connection
-   *
-   * \deprecated
-   */
-//   bool editConnection(const QVariant & connectionId, const mdtClArticleConnectionData & data);
-
-  /*! \brief Remove a single connection
-   * 
-   * \deprecated
-   */
-//   bool removeConnection(const QVariant & articleConnectionId);
-
-  /*! \brief Remove connections
-   * \deprecated
-   */
-//   bool removeConnections(const QList<QVariant> & articleConnectionIdList);
-
-  /*! \brief Remove each connection that is contained in selection
-   *
-   * This is usefull used together with mdtSqlTableWidget .
-   *
-   * \return True on success, false else.
-   *          To get reason of failure, use lastError() .
-   */
-//   bool removeConnections(const mdtSqlTableSelection & s);
-
   /*! \brief Update unit connections with data from given article connection
    *
    * For each unit connection that is based on given article connection,
@@ -175,49 +136,10 @@ class mdtClArticle : public mdtTtBase
   /*! \brief Update unit connections with data from given article connection
    *
    * See bool updateUnitConnections(const QStringList &, const QVariant &);
+   * 
+   * \todo Dangerous function, check it better (in unit tests)
    */
   bool updateUnitConnections(const QStringList & fields, const mdtSqlTableSelection & s);
-
-  /*! \brief Remove connections for a given article connector
-   *
-   * If single transaction is set, a transaction is used .
-   */
-  bool removeConnectorConnections(const QVariant & articleConnectorId);
-
-  /*! \brief Remove connections for a given list article connectors
-   */
-  bool removeConnectorsConnections(const QList<QVariant> & articleConnectorIdList);
-
-  /*! \brief Add a connector
-   *
-   * If given article connector contains connections,
-   *  they will be added.
-   *
-   * Note: in connection data (contained in data),
-   *  Article_Id_FK and ArticleConnector_Id_FK are not relevant,
-   *  because they are token from data directly.
-   * \deprecated
-   */
-  bool addConnector(const mdtClArticleConnectorData & data);
-
-  /*! \brief Edit connector name
-   */
-  bool editConnectorName(const QVariant & articleConnectorId, const QVariant & name);
-
-  /*! \brief Remove a connector and all its contacts
-   */
-  bool removeConnector(const QVariant & articleConnectorId);
-
-  /*! \brief Remove each connector that is contained in selection
-   *
-   * Will also remove related connections.
-   *
-   * This is usefull used together with mdtSqlTableWidget .
-   *
-   * \return True on success, false else.
-   *          To get reason of failure, use lastError() .
-   */
-  bool removeConnectors(const mdtSqlTableSelection & s);
 
   /*! \brief Add a record in Link table
    *

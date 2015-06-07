@@ -1,0 +1,11 @@
+format 209
+
+classcanvas 128002 class_ref 1638786 // mdtClArticleLinkKeyData
+  classdiagramsettings member_max_width 0 end
+  xyz 125 74 2000
+end
+classcanvas 128130 class_ref 1638274 // mdtClArticleLinkData
+  classdiagramsettings member_max_width 0 end
+  xyz 122 286 2006
+end
+end

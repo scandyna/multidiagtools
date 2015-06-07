@@ -18,41 +18,54 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CL_CONNECTOR_CONTACT_SELECTION_DIALOG_H
-#define MDT_CL_CONNECTOR_CONTACT_SELECTION_DIALOG_H
+#ifndef MDT_CL_LINK_DIRECTION_DATA_H
+#define MDT_CL_LINK_DIRECTION_DATA_H
 
-#include "mdtSqlSelectionDialog.h"
-#include "mdtClConnectorData.h"
-#include "mdtClConnectorContactData.h"
-#include <QSqlDatabase>
 #include <QVariant>
-#include <QList>
+#include <QString>
+#include <QLocale>
 
-/*! \brief Dialog for connector selection (in Connector_tbl)
+/*! \brief Link direction type
  */
-class mdtClConnectorContactSelectionDialog : public mdtSqlSelectionDialog
+enum class mdtClLinkDirection_t
 {
- Q_OBJECT
-
- public:
-
-   /*! \brief Constructor
-    */
-  mdtClConnectorContactSelectionDialog(QWidget *parent);
-
-  /*! \brief Set SQL query and select data
-   *
-   * \param connectorKey Key of connector for witch contacts must be listed
-   */
-  bool select(QSqlDatabase db, const mdtClConnectorKeyData & connectorKey);
-
-  /*! \brief Get list of selected contacts
-   */
-  QList<mdtClConnectorContactData> selectedContactDataList() const;
-
- private:
-
-  Q_DISABLE_COPY(mdtClConnectorContactSelectionDialog);
+  Undefined,      /*!< Undefined direction (is the case for null data) */
+  Bidirectional,  /*!< Bidirectional direction (is the case for null data) */
+  StartToEnd,     /*!< Start -> end direction */
+  EndToStart      /*!< End -> start direction */
 };
 
-#endif // #ifndef MDT_CL_CONNECTOR_CONTACT_SELECTION_DIALOG_H
+/*! \brief Link direction key data
+ *
+ * Refers to LinkDirection_tbl
+ */
+struct mdtClLinkDirectionKeyData
+{
+  /*! \brief Link direction code (Code_PK)
+   */
+  QVariant code;
+
+  /*! \brief Get link direction
+   */
+  mdtClLinkDirection_t direction() const;
+
+  /*! \brief Set link direction
+   */
+  void setDirection(mdtClLinkDirection_t d);
+
+  /*! \brief Check if key data is null
+   */
+  inline bool isNull() const
+  {
+    return code.isNull();
+  }
+
+  /*! \brief Clear key data
+   */
+  void clear()
+  {
+    code.clear();
+  }
+};
+
+#endif // MDT_CL_LINK_DIRECTION_DATA_H

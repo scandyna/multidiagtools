@@ -185,6 +185,8 @@ set (CL_SOURCES_FILES
           mdtcablelist/mdtClUnitConnectionDialog.cpp
           mdtcablelist/mdtClUnitEditor.cpp
           mdtcablelist/mdtClWireEditor.cpp
+          mdtcablelist/mdtClLinkTypeData.cpp
+          mdtcablelist/mdtClLinkDirectionData.cpp
           mdtcablelist/mdtClLinkData.cpp
           mdtcablelist/mdtClVehicleTypeLinkData.cpp
           mdtcablelist/mdtClLink.cpp

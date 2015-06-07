@@ -129,18 +129,6 @@ class mdtClArticleEditor : public mdtSqlForm
    */
   QVariant currentArticleId();
 
-  /*! \brief Select a connector in Connector table
-   *
-   * \return Selected connector ID or Null if nothing was selected or error occured .
-   */
-  ///QVariant selectConnector();
-
-  /*! \brief Select contacts in Connector contact table
-   *
-   * \return A list of selected connector contact IDs or a empty list if nothing was selected or error occured .
-   */
-  QList<QVariant> selectConnectorContacts(const QVariant &connectorId);
-
   /*! \brief Setup Article table
    */
   bool setupArticleTable();

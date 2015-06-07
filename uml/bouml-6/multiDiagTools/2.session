@@ -1,57 +1,29 @@
 window_sizes 1280 977 349 925 924 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 941058 // Test
-    925 924 90 3 0 0
   classdiagram_ref 1410946 // TestSystemComponent
     802 863 100 4 0 0
-  classdiagram_ref 772866 // mdtClLink
-    120 106 100 4 0 0
-  classdiagram_ref 852610 // mdtClLinkData
-    120 106 100 18 0 0
-  classdiagram_ref 1417474 // Sandbox
-    120 106 100 4 0 0
   classdiagram_ref 1046530 // ConnectionData
     120 106 80 17 0 0
   classdiagram_ref 1417602 // Sandbox
     120 106 100 4 12 0
-  classdiagram_ref 1417730 // ConnectorData
-    925 924 90 4 0 0
-  classdiagram_ref 1417858 // ArticleConnectorAndConnection
-    925 924 100 4 12 0
-  active  classdiagram_ref 739586 // CableListAllTables
+  classdiagram_ref 739586 // CableListAllTables
     925 924 100 17 0 565
+  classdiagram_ref 852610 // mdtClLinkData
+    120 106 100 18 0 0
+  classdiagram_ref 772866 // mdtClLink
+    120 106 100 4 0 0
+  active  classdiagram_ref 1424386 // ArticleLinkData
+    925 924 100 4 24 0
 end
 show_stereotypes
-selected attribute_ref 1725186 // Resistance
+selected classdiagram_ref 1424386 // ArticleLinkData
 open
-  attribute_ref 1725186 // Resistance
-  class_ref 1611522 // TestSystem_tbl
-  class_ref 1624834 // TestSystemUnit_tbl
-  class_ref 1631490 // mdtTtTestSystemComponent
-  class_ref 1106946 // mdtClConnectorData
-  class_ref 1639170 // mdtClConnectorKeyData
-  class_ref 1639298 // mdtClConnectorContactKeyData
-  class_ref 1639426 // mdtClConnectorContactData
-  operation_ref 2569474 // clear
-  operation_ref 2568962 // keyData
-  operation_ref 2569090 // setKeyData
-  operation_ref 2541058 // isNull
-  operation_ref 2569602 // clear
-  operation_ref 2569346 // isBasedOnConnector
-  attribute_ref 1703554 // name
-  class_ref 1639938 // mdtClArticleConnectionKeyData
-  operation_ref 2569730 // keyData
-  operation_ref 2569986 // setKeyData
-  attribute_ref 1718658 // functionIT
-  class_ref 1646466 // mdtClConnectionTypeKeyData
-  operation_ref 2562434 // setKeyData
-  operation_ref 2548482 // type
-  operation_ref 2548098 // isNull
-  operation_ref 2548354 // clear
-  operation_ref 2547970 // name
-  classview_ref 497026 // Article
-  classview_ref 490498 // Unit
-  classview_ref 503554 // Link
+  classview_ref 755202 // ConnectorAndConnection
+  classdiagram_ref 1424386 // ArticleLinkData
+  class_ref 1638274 // mdtClArticleLinkData
+  class_ref 1638786 // mdtClArticleLinkKeyData
+  class_ref 1653122 // mdtClLinkTypeKeyData
+  class_ref 1653250 // mdtClLinkDirectionKeyData
 end
 end

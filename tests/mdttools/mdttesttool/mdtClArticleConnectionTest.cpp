@@ -591,20 +591,6 @@ void mdtClArticleConnectionTest::articleConnectorAddGetRemoveTest()
   ccDataList.append(ccData);
   // Add article connections to article connector
   acnx.addConnectionsToArticleConnector(acData, ccDataList);
-  // Add article connection C
-//   acnxKey.clear();
-//   acnxData.clear();
-//   acnxKey.connectionTypeFk.setType(mdtClConnectionType_t::Pin);
-//   acnxData.setKeyData(acnxKey);
-//   acnxData.name = "C";
-//   acData.addConnectionData(acnxData);
-  // Add article connection D
-//   acnxKey.clear();
-//   acnxData.clear();
-//   acnxKey.connectionTypeFk.setType(mdtClConnectionType_t::Socket);
-//   acnxData.setKeyData(acnxKey);
-//   acnxData.name = "D";
-//   acData.addConnectionData(acnxData);
   // Add to database
   key2 = acnx.addArticleConnector(acData, true);
   QVERIFY(!key2.isNull());
@@ -637,6 +623,12 @@ void mdtClArticleConnectionTest::articleConnectorAddGetRemoveTest()
   QCOMPARE(acData.keyData().articleId, QVariant(1));
   QCOMPARE(acData.name, QVariant("ACNR 2"));
   QCOMPARE(acData.connectionDataList().size(), 0);
+  // Edit connector name
+  QVERIFY(acnx.updateArticleConnectorName(key2, "ACNR 22"));
+  acData = acnx.getArticleConnectorData(key2, false, ok);
+  QVERIFY(ok);
+  QVERIFY(!acData.isNull());
+  QCOMPARE(acData.name, QVariant("ACNR 22"));
   /*
    * Remove connectors 1 and 2
    */

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -44,11 +44,13 @@ bool mdtClUnitConnectorData::setup(const QSqlDatabase & db, bool setupCd, bool s
   if(!addAllFields("UnitConnector_tbl", db)){
     return false;
   }
+  /**
   if(setupCd){
     if(!pvConnectorData.setup(db)){
       return false;
     }
   }
+  */
   if(setupAcd){
     return pvArticleConnectorData.setup(db, setupCd);
   }

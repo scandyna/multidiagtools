@@ -993,7 +993,7 @@ mdtClUnitConnectorData mdtClUnit::getConnectorDataPv(const QString& sql, bool* o
       return data;
     }
     Q_ASSERT(dataList.size() == 1);
-    data.setConnectorData(dataList.at(0));
+    ///data.setConnectorData(dataList.at(0));
   }
   // Get article connector data if requested
   if(includeArticleConnectorData){

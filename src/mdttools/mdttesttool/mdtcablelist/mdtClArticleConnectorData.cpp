@@ -84,7 +84,7 @@ bool mdtClArticleConnectorData::setup(const QSqlDatabase & db, bool setupCd)
     return false;
   }
   if(setupCd){
-    return pvConnectorData.setup(db);
+    ///return pvConnectorData.setup(db);
   }
   return true;
 }
@@ -92,7 +92,7 @@ bool mdtClArticleConnectorData::setup(const QSqlDatabase & db, bool setupCd)
 void mdtClArticleConnectorData::clearValues()
 {
   pvConnectionDataList.clear();
-  pvConnectorData.clearValues();
+//   pvConnectorData.clearValues();
   mdtSqlRecord::clearValues();
 }
 
@@ -172,9 +172,9 @@ mdtClArticleConnectionData mdtClArticleConnectorData::connectionData(const QVari
 
 void mdtClArticleConnectorData::setConnectorData(const mdtClConnectorData & data)
 {
-  Q_ASSERT(!data.value("Id_PK").isNull());
+//   Q_ASSERT(!data.value("Id_PK").isNull());
 
-  setValue("Connector_Id_FK", data.value("Id_PK"));
+//   setValue("Connector_Id_FK", data.value("Id_PK"));
   pvConnectorData = data;
 }
 

@@ -124,6 +124,13 @@ class mdtClArticleConnection : public mdtClConnector
    */
   mdtClArticleConnectorData getArticleConnectorData(mdtClArticleConnectorKeyData key, bool includeConnectionData, bool & ok);
 
+  /*! \brief Update article connector name
+   *
+   * \param key Article connector key. Only id must be set, other data are not used.
+   * \param name New name to give to article connector
+   */
+  bool updateArticleConnectorName(const mdtClArticleConnectorKeyData & key, const QVariant & name);
+
   /*! \brief Remove article connector
    *
    * \param key Key of article connector to remove
@@ -132,6 +139,17 @@ class mdtClArticleConnection : public mdtClConnector
    *             set this argument false.
    */
   bool removeArticleConnector(const mdtClArticleConnectorKeyData & key, bool handleTransaction);
+
+  /*! \brief Remove each connector that is contained in selection
+   *
+   * Will also remove related connections.
+   *
+   * This is usefull used together with mdtSqlTableWidget .
+   *
+   * \return True on success, false else.
+   *          To get reason of failure, use lastError() .
+   */
+  bool removeArticleConnectors(const mdtSqlTableSelection & s);
 
   /*! \brief Add article connections to given article connector by taking given connector contacts as base
    *

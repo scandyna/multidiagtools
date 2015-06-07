@@ -69,24 +69,3 @@ QList<mdtClConnectorContactData> mdtClConnectorContactSelectionDialog::selectedC
 
   return dataList;
 }
-
-// QList<mdtClConnectorContactKeyData> mdtClConnectorContactSelectionDialog::selectedContactKeyList() const
-// {
-//   QList<mdtClConnectorContactKeyData> keyList;
-//   QStringList fields;
-// 
-//   if(result() != Accepted){
-//     return keyList;
-//   }
-//   fields << "Id_PK" << "Connector_Id_FK" << "ConnectorType_Code_FK";
-//   auto s = selection(fields);
-//   for(int row = 0; row < s.rowCount(); ++row){
-//     mdtClConnectorContactKeyData key;
-//     key.id = s.data(row, "Id_PK");
-//     key.connectorFk.id = s.data(row, "Connector_Id_FK");
-//     key.connectionTypeFk.code = s.data(row, "ConnectorType_Code_FK");
-//     keyList.append(key);
-//   }
-// 
-//   return keyList;
-// }

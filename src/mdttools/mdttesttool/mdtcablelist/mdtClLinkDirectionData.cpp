@@ -18,40 +18,37 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtClConnectorData.h"
-#include <QString>
+#include "mdtClLinkDirectionData.h"
 
-//#include <QDebug>
-
-void mdtClConnectorData::setKeyData(const mdtClConnectorKeyData & key)
+mdtClLinkDirection_t mdtClLinkDirectionKeyData::direction() const
 {
-  // Update contacts with new ID
-  for(auto & cd : pvContactDataList){
-    cd.setConnectorFk(key);
+  QString _code = code.toString();
+
+  if(_code == "BID"){
+    return mdtClLinkDirection_t::Bidirectional;
+  }else if(_code == "STE"){
+    return mdtClLinkDirection_t::StartToEnd;
+  }else if(_code == "ETS"){
+    return mdtClLinkDirection_t::EndToStart;
+  }else{
+    return mdtClLinkDirection_t::Undefined;
   }
-  pvKeyData = key;
 }
 
-void mdtClConnectorData::clear()
+void mdtClLinkDirectionKeyData::setDirection(mdtClLinkDirection_t d)
 {
-  pvKeyData.clear();
-  gender.clear();
-  form.clear();
-  manufacturer.clear();
-  manufacturerConfigCode.clear();
-  manufacturerArticleCode.clear();
-  pvContactDataList.clear();
-}
-
-void mdtClConnectorData::addContactData(mdtClConnectorContactData data)
-{
-  data.setConnectorFk(pvKeyData);
-  pvContactDataList.append(data);
-}
-
-void mdtClConnectorData::setContactDataList(const QList< mdtClConnectorContactData > &dataList)
-{
-  for(const auto & data : dataList){
-    addContactData(data);
+  switch(d){
+    case mdtClLinkDirection_t::Bidirectional:
+      code = "BID";
+      break;
+    case mdtClLinkDirection_t::StartToEnd:
+      code = "STE";
+      break;
+    case mdtClLinkDirection_t::EndToStart:
+      code = "ETS";
+      break;
+    case mdtClLinkDirection_t::Undefined:
+      code.clear();
+      break;
   }
 }

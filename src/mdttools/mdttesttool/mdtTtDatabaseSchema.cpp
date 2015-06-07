@@ -1157,13 +1157,13 @@ bool mdtTtDatabaseSchema::setupArticleLinkTable()
   field = QSqlField();
   field.setName("ArticleConnectionStart_Id_FK");
   field.setType(QVariant::Int);
-  field.setRequiredStatus(QSqlField::Required);
+  field.setRequired(true);
   table.addField(field, true);
   // ArticleConnectionEnd_Id_FK
   field = QSqlField();
   field.setName("ArticleConnectionEnd_Id_FK");
   field.setType(QVariant::Int);
-  field.setRequiredStatus(QSqlField::Required);
+  field.setRequired(true);
   table.addField(field, true);
   // SinceVersion
   field = QSqlField();
@@ -1187,14 +1187,14 @@ bool mdtTtDatabaseSchema::setupArticleLinkTable()
   field.setName("LinkDirection_Code_FK");
   field.setType(QVariant::String);
   field.setLength(10);
-  field.setRequiredStatus(QSqlField::Required);
+  field.setRequired(true);
   table.addField(field, false);
   // LinkType_Code_FK
   field = QSqlField();
   field.setName("LinkType_Code_FK");
   field.setType(QVariant::String);
   field.setLength(10);
-  field.setRequiredStatus(QSqlField::Required);
+  field.setRequired(true);
   table.addField(field, false);
   // Resistance
   field = QSqlField();

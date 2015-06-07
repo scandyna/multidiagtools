@@ -18,40 +18,42 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtClConnectorData.h"
-#include <QString>
+#include "mdtClLinkTypeData.h"
 
-//#include <QDebug>
-
-void mdtClConnectorData::setKeyData(const mdtClConnectorKeyData & key)
+mdtClLinkType_t mdtClLinkTypeKeyData::type() const
 {
-  // Update contacts with new ID
-  for(auto & cd : pvContactDataList){
-    cd.setConnectorFk(key);
+  QString _code = code.toString();
+
+  if(_code == "CABLELINK"){
+    return mdtClLinkType_t::CableLink;
+  }else if(_code == "INTERNLINK"){
+    return mdtClLinkType_t::InternalLink;
+  }else if(_code == "CONNECTION"){
+    return mdtClLinkType_t::Connection;
+  }else if(_code == "TESTLINK"){
+    return mdtClLinkType_t::TestLink;
+  }else{
+    return mdtClLinkType_t::Undefined;
   }
-  pvKeyData = key;
 }
 
-void mdtClConnectorData::clear()
+void mdtClLinkTypeKeyData::setType(mdtClLinkType_t t)
 {
-  pvKeyData.clear();
-  gender.clear();
-  form.clear();
-  manufacturer.clear();
-  manufacturerConfigCode.clear();
-  manufacturerArticleCode.clear();
-  pvContactDataList.clear();
-}
-
-void mdtClConnectorData::addContactData(mdtClConnectorContactData data)
-{
-  data.setConnectorFk(pvKeyData);
-  pvContactDataList.append(data);
-}
-
-void mdtClConnectorData::setContactDataList(const QList< mdtClConnectorContactData > &dataList)
-{
-  for(const auto & data : dataList){
-    addContactData(data);
+  switch(t){
+    case mdtClLinkType_t::CableLink:
+      code = "CABLELINK";
+      break;
+    case mdtClLinkType_t::InternalLink:
+      code = "INTERNLINK";
+      break;
+    case mdtClLinkType_t::Connection:
+      code = "CONNECTION";
+      break;
+    case mdtClLinkType_t::TestLink:
+      code = "TESTLINK";
+      break;
+    case mdtClLinkType_t::Undefined:
+      code.clear();
+      break;
   }
 }

@@ -83,7 +83,7 @@ struct mdtClConnectorData : public mdtSqlRecord /// \todo When all is adapted, r
    * Note: in given contact key data,
    *  connectorFk is ignored and replaced by connector ID
    */
-  void addContactData(const mdtClConnectorContactData & data);
+  void addContactData(mdtClConnectorContactData data);
 
   /*! \brief Set list of contacts
    *
@@ -95,7 +95,7 @@ struct mdtClConnectorData : public mdtSqlRecord /// \todo When all is adapted, r
    */
   const QList<mdtClConnectorContactData> & contactDataList() const
   {
-    return _pvContactDataList;
+    return pvContactDataList;
   }
 
   /*! \brief Check if data is null
@@ -113,77 +113,7 @@ struct mdtClConnectorData : public mdtSqlRecord /// \todo When all is adapted, r
 
  private:
 
-  QList<mdtClConnectorContactData> _pvContactDataList;
-
- public:
-
-  /*! \brief Construct a empty mdtClConnectorData
-   *
-   * \deprecated
-   */
-  mdtClConnectorData();
-
-  /*! \brief Contruct a mdtClConnectorData from a QSqlRecord
-   *
-   * Note: if this method is used, setup is not relevant.
-   *
-   * \pre All fields from Connector_tbl must exist in record
-   * 
-   * \deprecated
-   */
-  mdtClConnectorData(const QSqlRecord & record);
-
-  /*! \brief Setup fields from Connector_tbl
-   * 
-   * \deprecated
-   */
-  bool setup(const QSqlDatabase & db);
-
-  /*! \brief Add a list of contact data
-   *
-   * By using this method, the caller is responsible to give
-   *  valid records, that contains needed fields.
-   *
-   * \sa addContactData().
-   * 
-   * \deprecated
-   */
-//   void setContactDataList(const QList<mdtSqlRecord> & dataList);
-
-  /*! \brief Add contact data
-   *
-   * Will also update Connector_Id_FK in data.
-   *
-   * \pre data must contains following fields:
-   *  - Id_PK
-   *  - Connector_Id_FK
-   * 
-   * \deprecated
-   */
-  void addContactData(const mdtSqlRecord & data);
-
-  /*! \brief Update existing contact data
-   *
-   * Will update contact data for witch Id_PK matches given contactId.
-   *
-   * \return False if contactId was not found.
-   * 
-   * \deprecated
-   */
-  bool setContactData(const QVariant & contactId, const mdtSqlRecord & data);
-
-  /*! \brief Get contact data for given contact ID
-   *
-   * Return the contact data for witch Id_PK matches given contactId.
-   *  ok will be set to false if contactId was not found.
-   * 
-   * \deprecated
-   */
-  mdtSqlRecord contactData(const QVariant & contactId, bool *ok) const;
-
- private:
-
-  QList<mdtSqlRecord> pvContactDataList;
+  QList<mdtClConnectorContactData> pvContactDataList;
 };
 
 #endif // #ifndef MDT_CL_CONNECTOR_DATA_H
