@@ -232,10 +232,13 @@ void mdtClLinkTest::linkDirectionModelTest()
   QVERIFY(m.keyData(50).isNull());
   key.code = "BID";
   QCOMPARE(m.keyData(m.row(key)).code, QVariant("BID"));
+  QCOMPARE(m.pictureAscii(m.row(key)), QString("<-->"));
   key.code = "STE";
   QCOMPARE(m.keyData(m.row(key)).code, QVariant("STE"));
+  QCOMPARE(m.pictureAscii(m.row(key)), QString("-->"));
   key.code = "ETS";
   QCOMPARE(m.keyData(m.row(key)).code, QVariant("ETS"));
+  QCOMPARE(m.pictureAscii(m.row(key)), QString("<--"));
   // Check setting link type
   typeKey.setType(mdtClLinkType_t::CableLink);
   m.setLinkType(typeKey);

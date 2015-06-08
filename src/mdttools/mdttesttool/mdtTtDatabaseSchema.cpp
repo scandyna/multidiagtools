@@ -5258,7 +5258,7 @@ bool mdtTtDatabaseSchema::populateLinkDirectionTable()
   }
   // End to start
   data.clear();
-  data << "ETS" << "-->" << "End to Start" << "Ende zum Start" << "Arrivée vers départ" << "Dall'fine alla inizio";
+  data << "ETS" << "<--" << "End to Start" << "Ende zum Start" << "Arrivée vers départ" << "Dall'fine alla inizio";
   if(!insertDataIntoTable("LinkDirection_tbl", fields, data)){
     return false;
   }

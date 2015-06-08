@@ -71,6 +71,10 @@ class mdtClLinkDirectionModel : public QSqlQueryModel
    */
   mdtClLinkDirectionKeyData keyData(int row);
 
+  /*! \brief Get picture in ASCII for given row (PictureAscii field)
+   */
+  QString pictureAscii(int row);
+
   /*! \brief Set link type
    *
    * Will filter available directions regarding given link type.

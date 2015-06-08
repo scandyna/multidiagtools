@@ -94,6 +94,29 @@ mdtClLinkDirectionKeyData mdtClLinkDirectionModel::keyData(int row)
   return key;
 }
 
+QString mdtClLinkDirectionModel::pictureAscii(int row)
+{
+  QString pa;
+
+  if(row < 0){
+    return pa;
+  }
+  if(isInError()){
+    pa = tr("<Error>");
+    return pa;
+  }
+  QModelIndex idx = index(row, 2);
+  pa = data(idx).toString();
+  if(pa.isEmpty()){
+    QString msg = QString(tr("Could not find link direction for row '%1'.")).arg(row);
+    pvLastError.setError(msg, mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClLinkDirectionModel");
+    pvLastError.commit();
+  }
+
+  return pa;
+}
+
 void mdtClLinkDirectionModel::setLinkType(const mdtClLinkTypeKeyData &key)
 {
   QString sql = pvBaseSql;

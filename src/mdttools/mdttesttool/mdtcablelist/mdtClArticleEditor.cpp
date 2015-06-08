@@ -26,6 +26,8 @@
 #include "mdtClConnectorContactSelectionDialog.h"
 #include "mdtClConnectorContactData.h"
 #include "mdtClArticleConnection.h"
+#include "mdtClArticleLink.h"
+#include "mdtClArticleLinkKeyData.h"
 
 #include "mdtSqlTableSelection.h"
 #include "mdtSqlTableWidget.h"
@@ -460,7 +462,8 @@ void mdtClArticleEditor::removeConnectors()
 void mdtClArticleEditor::addLink()
 {
   mdtClArticleLinkDialog dialog(this, database(), currentArticleId());
-  mdtClArticle art(this, database());
+  mdtClArticleLink alnk(database());
+//   mdtClArticle art(this, database());
 
   // Check if some connection exists
   if(rowCount("ArticleConnection_view") < 1){
@@ -477,11 +480,16 @@ void mdtClArticleEditor::addLink()
     return;
   }
   // Add link
-  if(!art.addLink(dialog.linkData())){
-    pvLastError = art.lastError();
+  if(alnk.addLink(dialog.linkData())){
+    pvLastError = alnk.lastError();
     displayLastError();
     return;
   }
+//   if(!art.addLink(dialog.linkData())){
+//     pvLastError = art.lastError();
+//     displayLastError();
+//     return;
+//   }
   // Update link table
   select("ArticleLink_view");
 }
@@ -521,20 +529,20 @@ void mdtClArticleEditor::editLink()
     return;
   }
   dialog.setConnectionEditionLocked(hasRelatedLinks);
-  dialog.setLinkTypeCode(s.data(0, "LinkType_Code_FK"));
-  dialog.setLinkDirectionCode(s.data(0, "LinkDirection_Code_FK"));
-  dialog.setValue(s.data(0, "Resistance"));
-  dialog.setStartConnectionId(articleConnectionStartId);
-  dialog.setEndConnectionId(articleConnectionEndId);
+//   dialog.setLinkTypeCode(s.data(0, "LinkType_Code_FK"));
+//   dialog.setLinkDirectionCode(s.data(0, "LinkDirection_Code_FK"));
+//   dialog.setValue(s.data(0, "Resistance"));
+//   dialog.setStartConnectionId(articleConnectionStartId);
+//   dialog.setEndConnectionId(articleConnectionEndId);
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
   // Edit link
-  if(!art.editLink(articleConnectionStartId, articleConnectionEndId, dialog.linkData())){
-    pvLastError = art.lastError();
-    displayLastError();
-    return;
-  }
+//   if(!art.editLink(articleConnectionStartId, articleConnectionEndId, dialog.linkData())){
+//     pvLastError = art.lastError();
+//     displayLastError();
+//     return;
+//   }
   // Update related links if they exists
   /**
   if(hasRelatedLinks){

@@ -25,6 +25,7 @@
 
 #include "mdtSqlRecord.h"
 
+#include "mdtClArticleLinkData.h"
 #include "mdtClLinkTypeData.h"
 #include "mdtClLinkDirectionData.h"
 #include <QDialog>
@@ -56,34 +57,50 @@ class mdtClArticleLinkDialog : public QDialog, public Ui::mdtClArticleLinkDialog
    */
   void setConnectionEditionLocked(bool lock);
 
-  /*! \brief Display link type in combobox
+  /*! \brief Set link type
    */
   void setLinkType(mdtClLinkType_t t);
 
   /*! \brief Display link type in combobox
    * \deprecated
    */
-  void setLinkTypeCode(const QVariant & code);
+//   void setLinkTypeCode(const QVariant & code);
+
+  /*! \brief Set link direction
+   */
+  void setLinkDirection(mdtClLinkDirection_t d);
 
   /*! \brief Display link direction in combobox
+   * \deprecated
    */
-  void setLinkDirectionCode(const QVariant & code);
+//   void setLinkDirectionCode(const QVariant & code);
 
   /*! \brief Display value
    */
   void setValue(const QVariant & value);
 
-  /*! \brief Store id as current selected start connection and display it
+  /*! \brief Store key as current selected start connection and display it
    */
-  void setStartConnectionId(const QVariant & id);
+  void setStartConnection(const mdtClArticleConnectionKeyData & fk);
 
-  /*! \brief Store id as current selected end connection and display it
+  /*! \brief Store key as current selected end connection and display it
    */
-  void setEndConnectionId(const QVariant & id);
+  void setEndConnection(const mdtClArticleConnectionKeyData & fk);
+
+//   /*! \brief Store id as current selected start connection and display it
+//    */
+//   void setStartConnectionId(const QVariant & id);
+// 
+//   /*! \brief Store id as current selected end connection and display it
+//    */
+//   void setEndConnectionId(const QVariant & id);
 
   /*! \brief Get link data
    */
-  mdtSqlRecord linkData() const;
+  mdtClArticleLinkData linkData() const
+  {
+    return pvLinkData;
+  }
 
  private slots:
 
@@ -131,11 +148,14 @@ class mdtClArticleLinkDialog : public QDialog, public Ui::mdtClArticleLinkDialog
 
   Q_DISABLE_COPY(mdtClArticleLinkDialog);
 
-  mdtSqlRecord pvLinkData;
+//   mdtSqlRecord pvLinkData;
+  mdtClArticleLinkData pvLinkData;
   QSqlDatabase pvDatabase;
   mdtClLinkTypeModel *pvLinkTypeModel;
   mdtClLinkDirectionModel *pvLinkDirectionModel;
   QSqlQueryModel *pvArticleConnectionModel;
+  
+  QVariant pvArticleId;
 };
 
 #endif  // #ifndef MDT_CL_ARTICLE_LINK_DIALOG_H

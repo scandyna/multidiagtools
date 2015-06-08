@@ -170,6 +170,7 @@ set (CL_SOURCES_FILES
           mdtcablelist/mdtClArticleConnectorData.cpp
           mdtcablelist/mdtClArticleConnectorSelectionDialog.cpp
           mdtcablelist/mdtClArticleConnectionData.cpp
+          mdtcablelist/mdtClArticleConnectionSelectionDialog.cpp
           mdtcablelist/mdtClArticleEditor.cpp
           mdtcablelist/mdtClArticleComponentDialog.cpp
           mdtcablelist/mdtClArticleConnectionDialog.cpp
