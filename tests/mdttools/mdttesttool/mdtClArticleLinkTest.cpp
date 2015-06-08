@@ -21,6 +21,7 @@
 #include "mdtClArticleLinkTest.h"
 #include "mdtClArticleLinkKeyData.h"
 #include "mdtClArticleLinkData.h"
+#include "mdtClArticleLink.h"
 #include "mdtApplication.h"
 #include "mdtTtDatabaseSchema.h"
 #include "mdtSqlRecord.h"
@@ -117,6 +118,32 @@ void mdtClArticleLinkTest::articleLinkDataTest()
   QVERIFY(data.isNull());
 }
 
+void mdtClArticleLinkTest::articleLinkAddGetRemoveTest()
+{
+  mdtClArticleLink alnk(pvDatabaseManager.database());
+  mdtClArticleLinkKeyData key;
+  mdtClArticleLinkData data;
+  mdtCableListTestScenario scenario(pvDatabaseManager.database());
+
+  // Populate db with base data
+  scenario.createTestArticles();
+  scenario.createTestArticleConnections();
+
+  // Setup link data
+  data.clear();
+  key.clear();
+  key.connectionStartFk.id = 21;
+  key.connectionEndFk.id = 22;
+  key.linkTypeFk.setType(mdtClLinkType_t::CableLink);
+  key.linkDirectionFk.setDirection(mdtClLinkDirection_t::Bidirectional);
+  data.setKeyData(key);
+  data.indetification = "Link 21-22";
+  data.sinceVersion = 1.0;
+  data.modification = "new";
+  data.resistance = 0.1;
+  QVERIFY(alnk.addLink(data));
+  
+}
 
 /*
  * Test database helper methods

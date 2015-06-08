@@ -173,6 +173,7 @@ set (CL_SOURCES_FILES
           mdtcablelist/mdtClArticleEditor.cpp
           mdtcablelist/mdtClArticleComponentDialog.cpp
           mdtcablelist/mdtClArticleConnectionDialog.cpp
+          mdtcablelist/mdtClArticleLink.cpp
           mdtcablelist/mdtClArticleLinkDialog.cpp
           mdtcablelist/mdtClArticleSelectionDialog.cpp
           mdtcablelist/mdtClPathGraph.cpp
@@ -186,7 +187,9 @@ set (CL_SOURCES_FILES
           mdtcablelist/mdtClUnitEditor.cpp
           mdtcablelist/mdtClWireEditor.cpp
           mdtcablelist/mdtClLinkTypeData.cpp
+          mdtcablelist/mdtClLinkTypeModel.cpp
           mdtcablelist/mdtClLinkDirectionData.cpp
+          mdtcablelist/mdtClLinkDirectionModel.cpp
           mdtcablelist/mdtClLinkData.cpp
           mdtcablelist/mdtClVehicleTypeLinkData.cpp
           mdtcablelist/mdtClLink.cpp

@@ -20,6 +20,8 @@
  ****************************************************************************/
 #include "mdtClArticleLinkDialog.h"
 #include "mdtSqlSelectionDialog.h"
+#include "mdtClLinkTypeModel.h"
+#include "mdtClLinkDirectionModel.h"
 #include <QSqlQueryModel>
 #include <QSqlRecord>
 #include <QSqlField>
@@ -55,15 +57,13 @@ mdtClArticleLinkDialog::mdtClArticleLinkDialog(QWidget *parent, QSqlDatabase db,
   connect(pbStartConnection, SIGNAL(clicked()), this, SLOT(selectStartConnection()));
   connect(pbEndConnection, SIGNAL(clicked()), this, SLOT(selectEndConnection()));
   // Setup link type
-  pvLinkTypeModel = new QSqlQueryModel(this);
-  pvLinkTypeModel->setQuery("SELECT Code_PK, NameEN, ValueUnit FROM LinkType_tbl ORDER BY NameEN", pvDatabase);
+  pvLinkTypeModel = new mdtClLinkTypeModel(this, db);
   cbLinkType->setModel(pvLinkTypeModel);
   cbLinkType->setModelColumn(1);
   cbLinkType->setCurrentIndex(-1);
   connect(cbLinkType, SIGNAL(currentIndexChanged(int)), this, SLOT(onCbLinkTypeCurrentIndexChanged(int)));
   // Setup link direction
-  pvLinkDirectionModel = new QSqlQueryModel(this);
-  pvLinkDirectionModel->setQuery("SELECT Code_PK, NameEN FROM LinkDirection_tbl", pvDatabase);
+  pvLinkDirectionModel = new mdtClLinkDirectionModel(this, db);
   cbLinkDirection->setModel(pvLinkDirectionModel);
   cbLinkDirection->setModelColumn(1);
   connect(cbLinkDirection, SIGNAL(currentIndexChanged(int)), this, SLOT(onCbLinkDirectionCurrentIndexChanged(int)));
@@ -87,6 +87,16 @@ void mdtClArticleLinkDialog::setConnectionEditionLocked(bool lock)
 {
   pbStartConnection->setEnabled(!lock);
   pbEndConnection->setEnabled(!lock);
+}
+
+void mdtClArticleLinkDialog::setLinkType(mdtClLinkType_t t)
+{
+  mdtClLinkTypeKeyData key;
+  int row;
+
+  key.setType(t);
+  row = pvLinkTypeModel->row(key);
+  cbLinkType->setCurrentIndex(row);
 }
 
 void mdtClArticleLinkDialog::setLinkTypeCode(const QVariant & code)
@@ -149,29 +159,35 @@ mdtSqlRecord mdtClArticleLinkDialog::linkData() const
 
 void mdtClArticleLinkDialog::onCbLinkTypeCurrentIndexChanged(int row)
 {
-  QModelIndex index;
-  QVariant data;
+  mdtClLinkTypeKeyData linkTypeKey;
+//   QModelIndex index;
+//   QVariant data;
 
   if(row < 0){
     lbUnit->setText("");
     return;
   }
   // We must update available directions regarding link type
-  index = pvLinkTypeModel->index(row, 0);
-  data = pvLinkTypeModel->data(index);
-  if(data == QVariant("DIODE")){
-    pvLinkDirectionModel->setQuery("SELECT Code_PK, NameEN, PictureAscii FROM LinkDirection_tbl WHERE Code_PK <> 'BID'", pvDatabase);
+  linkTypeKey = pvLinkTypeModel->keyData(row);
+  pvLinkDirectionModel->setLinkType(linkTypeKey);
+  if(pvLinkDirectionModel->rowCount() > 1){
     cbLinkDirection->setEnabled(true);
-    sbValue->setValue(0.7);
   }else{
-    pvLinkDirectionModel->setQuery("SELECT Code_PK, NameEN, PictureAscii FROM LinkDirection_tbl WHERE Code_PK = 'BID'", pvDatabase);
     cbLinkDirection->setEnabled(false);
-    sbValue->setValue(0.0);
   }
+//   index = pvLinkTypeModel->index(row, 0);
+//   data = pvLinkTypeModel->data(index);
+//   if(data == QVariant("DIODE")){
+//     pvLinkDirectionModel->setQuery("SELECT Code_PK, NameEN, PictureAscii FROM LinkDirection_tbl WHERE Code_PK <> 'BID'", pvDatabase);
+//     cbLinkDirection->setEnabled(true);
+//     sbValue->setValue(0.7);
+//   }else{
+//     pvLinkDirectionModel->setQuery("SELECT Code_PK, NameEN, PictureAscii FROM LinkDirection_tbl WHERE Code_PK = 'BID'", pvDatabase);
+//     cbLinkDirection->setEnabled(false);
+//     sbValue->setValue(0.0);
+//   }
   // Update displayed unit (V, Ohm, ...)
-  index = pvLinkTypeModel->index(row, 2);
-  data = pvLinkTypeModel->data(index);
-  lbUnit->setText("[" + data.toString() + "]");
+  lbUnit->setText("[" + pvLinkTypeModel->unit(row) + "]");
 }
 
 void mdtClArticleLinkDialog::onCbLinkDirectionCurrentIndexChanged(int row)

@@ -472,6 +472,7 @@ void mdtClArticleEditor::addLink()
     return;
   }
   // Setup and show dialog
+  dialog.setLinkType(mdtClLinkType_t::CableLink);
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
@@ -487,7 +488,7 @@ void mdtClArticleEditor::addLink()
 
 void mdtClArticleEditor::editLink()
 {
-  mdtClArticleLinkDialog dialog(0, database(), currentArticleId());
+  mdtClArticleLinkDialog dialog(this, database(), currentArticleId());
   mdtSqlTableWidget *widget;
   mdtClArticle art(this, database());
   QVariant articleConnectionStartId, articleConnectionEndId;
@@ -500,7 +501,7 @@ void mdtClArticleEditor::editLink()
     return;
   }
   widget = sqlTableWidget("ArticleLink_view");
-  Q_ASSERT(widget != 0);
+  Q_ASSERT(widget != nullptr);
   // Get selected links
   fields << "ArticleConnectionStart_Id_FK" << "ArticleConnectionEnd_Id_FK" << "LinkType_Code_FK" << "LinkDirection_Code_FK" << "Resistance";
   s = widget->currentSelection(fields);

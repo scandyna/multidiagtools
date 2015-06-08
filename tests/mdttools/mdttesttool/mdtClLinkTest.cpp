@@ -20,7 +20,9 @@
  ****************************************************************************/
 #include "mdtClLinkTest.h"
 #include "mdtClLinkTypeData.h"
+#include "mdtClLinkTypeModel.h"
 #include "mdtClLinkDirectionData.h"
+#include "mdtClLinkDirectionModel.h"
 #include "mdtApplication.h"
 #include "mdtTtDatabaseSchema.h"
 #include "mdtSqlRecord.h"
@@ -111,6 +113,47 @@ void mdtClLinkTest::linkTypeDataTest()
   QVERIFY(key.type() == mdtClLinkType_t::Undefined);
 }
 
+void mdtClLinkTest::linkTypeModelTest()
+{
+  QLocale locale(QLocale::English);
+  mdtClLinkTypeModel m(pvDatabaseManager.database(), locale);
+  mdtClLinkTypeKeyData key;
+
+  // Initial state
+  QCOMPARE(m.rowCount(), 4);
+  // Check row of key
+  key.code = "CABLELINK";
+  QVERIFY(m.row(key) >= 0);
+  key.code = "INTERNLINK";
+  QVERIFY(m.row(key) >= 0);
+  key.code = "CONNECTION";
+  QVERIFY(m.row(key) >= 0);
+  key.code = "TESTLINK";
+  QVERIFY(m.row(key) >= 0);
+  key.code = "FAKE";
+  QVERIFY(m.row(key) < 0);
+  // Check getting key data of row
+  QVERIFY(m.keyData(-1).isNull());
+  QVERIFY(m.unit(-1).isEmpty());
+  QVERIFY(!m.keyData(0).isNull());
+  QVERIFY(!m.keyData(1).isNull());
+  QVERIFY(!m.keyData(2).isNull());
+  QVERIFY(!m.keyData(3).isNull());
+  QVERIFY(m.keyData(50).isNull());
+  key.code = "CABLELINK";
+  QCOMPARE(m.keyData(m.row(key)).code, QVariant("CABLELINK"));
+  QCOMPARE(m.unit(m.row(key)), QString("Ohm"));
+  key.code = "INTERNLINK";
+  QCOMPARE(m.keyData(m.row(key)).code, QVariant("INTERNLINK"));
+  QCOMPARE(m.unit(m.row(key)), QString("Ohm"));
+  key.code = "CONNECTION";
+  QCOMPARE(m.keyData(m.row(key)).code, QVariant("CONNECTION"));
+  QCOMPARE(m.unit(m.row(key)), QString("Ohm"));
+  key.code = "TESTLINK";
+  QCOMPARE(m.keyData(m.row(key)).code, QVariant("TESTLINK"));
+  QCOMPARE(m.unit(m.row(key)), QString("Ohm"));
+}
+
 void mdtClLinkTest::linkDirectionDataTest()
 {
   mdtClLinkDirectionKeyData key;
@@ -161,6 +204,60 @@ void mdtClLinkTest::linkDirectionDataTest()
   QVERIFY(key.code.isNull());
   QVERIFY(key.isNull());
   QVERIFY(key.direction() == mdtClLinkDirection_t::Undefined);
+}
+
+void mdtClLinkTest::linkDirectionModelTest()
+{
+  QLocale locale(QLocale::English);
+  mdtClLinkDirectionModel m(pvDatabaseManager.database(), locale);
+  mdtClLinkDirectionKeyData key;
+  mdtClLinkTypeKeyData typeKey;
+
+  // Initial state
+  QCOMPARE(m.rowCount(), 3);
+  // Check row of key
+  key.code = "BID";
+  QVERIFY(m.row(key) >= 0);
+  key.code = "STE";
+  QVERIFY(m.row(key) >= 0);
+  key.code = "ETS";
+  QVERIFY(m.row(key) >= 0);
+  key.code = "FAKE";
+  QVERIFY(m.row(key) < 0);
+  // Check getting key data of row
+  QVERIFY(m.keyData(-1).isNull());
+  QVERIFY(!m.keyData(0).isNull());
+  QVERIFY(!m.keyData(1).isNull());
+  QVERIFY(!m.keyData(2).isNull());
+  QVERIFY(m.keyData(50).isNull());
+  key.code = "BID";
+  QCOMPARE(m.keyData(m.row(key)).code, QVariant("BID"));
+  key.code = "STE";
+  QCOMPARE(m.keyData(m.row(key)).code, QVariant("STE"));
+  key.code = "ETS";
+  QCOMPARE(m.keyData(m.row(key)).code, QVariant("ETS"));
+  // Check setting link type
+  typeKey.setType(mdtClLinkType_t::CableLink);
+  m.setLinkType(typeKey);
+  QCOMPARE(m.rowCount(), 1);
+  QVERIFY(m.keyData(0).direction() == mdtClLinkDirection_t::Bidirectional);
+  typeKey.setType(mdtClLinkType_t::Connection);
+  m.setLinkType(typeKey);
+  QCOMPARE(m.rowCount(), 1);
+  QVERIFY(m.keyData(0).direction() == mdtClLinkDirection_t::Bidirectional);
+  typeKey.setType(mdtClLinkType_t::InternalLink);
+  m.setLinkType(typeKey);
+  QCOMPARE(m.rowCount(), 1);
+  QVERIFY(m.keyData(0).direction() == mdtClLinkDirection_t::Bidirectional);
+  typeKey.setType(mdtClLinkType_t::TestLink);
+  m.setLinkType(typeKey);
+  QCOMPARE(m.rowCount(), 1);
+  QVERIFY(m.keyData(0).direction() == mdtClLinkDirection_t::Bidirectional);
+  typeKey.setType(mdtClLinkType_t::Undefined);
+  m.setLinkType(typeKey);
+  QCOMPARE(m.rowCount(), 0);
+  QVERIFY(m.keyData(0).isNull());
+
 }
 
 

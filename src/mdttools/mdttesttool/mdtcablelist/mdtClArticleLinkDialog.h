@@ -22,11 +22,17 @@
 #define MDT_CL_ARTICLE_LINK_DIALOG_H
 
 #include "ui_mdtClArticleLinkDialog.h"
+
 #include "mdtSqlRecord.h"
+
+#include "mdtClLinkTypeData.h"
+#include "mdtClLinkDirectionData.h"
 #include <QDialog>
 #include <QVariant>
 #include <QSqlDatabase>
 
+class mdtClLinkTypeModel;
+class mdtClLinkDirectionModel;
 class QSqlQueryModel;
 class QComboBox;
 
@@ -51,6 +57,11 @@ class mdtClArticleLinkDialog : public QDialog, public Ui::mdtClArticleLinkDialog
   void setConnectionEditionLocked(bool lock);
 
   /*! \brief Display link type in combobox
+   */
+  void setLinkType(mdtClLinkType_t t);
+
+  /*! \brief Display link type in combobox
+   * \deprecated
    */
   void setLinkTypeCode(const QVariant & code);
 
@@ -122,8 +133,8 @@ class mdtClArticleLinkDialog : public QDialog, public Ui::mdtClArticleLinkDialog
 
   mdtSqlRecord pvLinkData;
   QSqlDatabase pvDatabase;
-  QSqlQueryModel *pvLinkTypeModel;
-  QSqlQueryModel *pvLinkDirectionModel;
+  mdtClLinkTypeModel *pvLinkTypeModel;
+  mdtClLinkDirectionModel *pvLinkDirectionModel;
   QSqlQueryModel *pvArticleConnectionModel;
 };
 

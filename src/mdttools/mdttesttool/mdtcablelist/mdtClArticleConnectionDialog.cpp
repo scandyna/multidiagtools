@@ -49,6 +49,8 @@ mdtClArticleConnectionDialog::mdtClArticleConnectionDialog(QWidget *parent, cons
 
 mdtClArticleConnectionDialog::~mdtClArticleConnectionDialog() 
 {
+  /// \todo Check if we have to delete our model or not (this not crashes, because QComboBox uses destroyed() signal..)
+  delete cbConnectionType->model();
 }
 
 void mdtClArticleConnectionDialog::setData(const mdtClArticleConnectionData & data)

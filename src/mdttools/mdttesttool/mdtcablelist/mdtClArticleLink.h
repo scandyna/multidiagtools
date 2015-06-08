@@ -18,42 +18,49 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CL_LINK_TEST_H
-#define MDT_CL_LINK_TEST_H
+#ifndef MDT_CL_ARTICLE_LINK_H
+#define MDT_CL_ARTICLE_LINK_H
 
-#include "mdtTest.h"
-#include "mdtSqlDatabaseManager.h"
-#include <QMessageBox>
-#include <QFileInfo>
+#include "mdtTtBase.h"
+#include "mdtSqlTableSelection.h"
+#include "mdtError.h"
+#include "mdtClArticleLinkData.h"
+#include "mdtClArticleLinkKeyData.h"
+#include "mdtSqlRecord.h"
+#include <QSqlRecord>
+#include <QList>
 
-class mdtClLinkTest : public mdtTest
+/*! \brief Helper class for article link manipulations
+ *
+ * Acts on ArticleLink_tbl
+ */
+class mdtClArticleLink : public mdtTtBase
 {
- Q_OBJECT
+ public:
 
- private slots:
-
-  /*
-   * Will create database schema (see createDatabaseSchema() )
-   * No data is inserted in tables by this method.
-   * Each test also has a empty schema at startup,
-   *  and must assure that they finish with a empty schema at end.
+  /*! \brief Constructor
    */
-  void initTestCase();
-  void cleanupTestCase();
+  mdtClArticleLink(QObject *parent, QSqlDatabase db);
 
-  void linkTypeDataTest();
-  void linkTypeModelTest();
+  /*! \brief Constructor
+   */
+  mdtClArticleLink(QSqlDatabase db);
 
-  void linkDirectionDataTest();
-  void linkDirectionModelTest();
+  /*! \brief Add article link to database
+   *
+   * \param data Article link data to store
+   */
+  bool addLink(const mdtClArticleLinkData & data);
 
  private:
 
-  // Create test database schema - Will FAIL on problem
-  void createDatabaseSchema();
+  /*! \brief Fill given record with given article link data
+   *
+   * \pre record must be setup
+   */
+  void fillRecord(mdtSqlRecord & record, const mdtClArticleLinkData & data);
 
-  mdtSqlDatabaseManager pvDatabaseManager;
-  QFileInfo pvDbFileInfo;
+  Q_DISABLE_COPY(mdtClArticleLink);
 };
 
-#endif // #ifndef MDT_CL_LINK_TEST_H
+#endif // #ifndef MDT_CL_ARTICLE_LINK_H

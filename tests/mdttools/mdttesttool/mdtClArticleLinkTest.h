@@ -42,6 +42,7 @@ class mdtClArticleLinkTest : public mdtTest
   void cleanupTestCase();
 
   void articleLinkDataTest();
+  void articleLinkAddGetRemoveTest();
 
  private:
 

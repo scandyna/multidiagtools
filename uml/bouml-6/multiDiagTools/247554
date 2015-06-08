@@ -1,6 +1,6 @@
 format 209
 "mdtcablelist" // mdttools::mdttesttool::mdtcablelist
-  revision 45
+  revision 46
   modified_by 2 "philippe"
   // class settings
   
@@ -4659,7 +4659,6 @@ ${inlines}
 	
 	
       end
-
     end
 
     classdiagram 859138 "LinkPath"
@@ -5704,13 +5703,6 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 2009218 // <generalisation>
-	relation 1993090 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 2009218 // <generalisation>
-	  b parent class_ref 818690 // mdtClLink
-      end
     end
 
     class 1638530 "mdtClArticleLink"
@@ -5727,12 +5719,12 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 2009346 // <generalisation>
-	relation 1993218 ---|>
+      classrelation 2017026 // <generalisation>
+	relation 2000898 ---|>
 	  a public
 	    cpp default "${type}"
-	    classrelation_ref 2009346 // <generalisation>
-	  b parent class_ref 818690 // mdtClLink
+	    classrelation_ref 2017026 // <generalisation>
+	  b parent class_ref 952962 // mdtTtBase
       end
     end
 
@@ -5750,13 +5742,6 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 2009474 // <generalisation>
-	relation 1993346 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 2009474 // <generalisation>
-	  b parent class_ref 952962 // mdtTtBase
-      end
     end
 
     class 1638786 "mdtClArticleLinkKeyData"

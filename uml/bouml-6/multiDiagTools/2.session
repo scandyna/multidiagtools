@@ -13,11 +13,13 @@ diagrams
     120 106 100 18 0 0
   classdiagram_ref 772866 // mdtClLink
     120 106 100 4 0 0
-  active  classdiagram_ref 1424386 // ArticleLinkData
-    925 924 100 4 24 0
+  classdiagram_ref 1424386 // ArticleLinkData
+    925 924 100 4 36 0
+  active  classdiagram_ref 1417474 // Sandbox
+    925 924 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 1424386 // ArticleLinkData
+selected classdiagram_ref 1417474 // Sandbox
 open
   classview_ref 755202 // ConnectorAndConnection
   classdiagram_ref 1424386 // ArticleLinkData
