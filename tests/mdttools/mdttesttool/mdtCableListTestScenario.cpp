@@ -22,6 +22,7 @@
 #include "mdtSqlRecord.h"
 #include "mdtTtBase.h"
 #include "mdtClArticle.h"
+#include "mdtClArticleLink.h"
 #include "mdtClUnit.h"
 #include "mdtClConnector.h"
 #include "mdtClConnectorData.h"
@@ -713,13 +714,47 @@ void mdtCableListTestScenario::removeTestArticleConnectors()
 
 void mdtCableListTestScenario::createTestArticleLinks()
 {
+  mdtClArticleLink alnk(pvDatabase);
+  mdtClArticleLinkPkData pk;
+  mdtClArticleLinkData data;
+//   mdtClArticleConnectionKeyData acnnKey;
+
+  // Add cable link 10 <--> 20
+  data.clear();
+  pk.clear();
+  pk.connectionStartId = 10;
+  pk.connectionEndId = 20;
+  data.setPkData(pk);
+  data.setLinkType(mdtClLinkType_t::CableLink);
+  data.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
+  QVERIFY(alnk.addLink(data));
+  // Add cable link 21 <--> 20
+  data.clear();
+  pk.clear();
+  pk.connectionStartId = 21;
+  pk.connectionEndId = 20;
+  data.setPkData(pk);
+  data.setLinkType(mdtClLinkType_t::CableLink);
+  data.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
+  QVERIFY(alnk.addLink(data));
+  // Add internal link 21 <--> 22
+  data.clear();
+  pk.clear();
+  pk.connectionStartId = 21;
+  pk.connectionEndId = 22;
+  data.setPkData(pk);
+  data.setLinkType(mdtClLinkType_t::InternalLink);
+  data.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
+  QVERIFY(alnk.addLink(data));
+  
+  
   mdtClArticle art(0, pvDatabase);
   QList<QSqlRecord> dataList;
   bool ok;
 
-  QVERIFY(art.addCableLink(10, 20, "", 0.0));  
-  QVERIFY(art.addCableLink(21, 20, "", 0.0));
-  QVERIFY(art.addInternalLink(21, 22, "", 0.0));
+//   QVERIFY(art.addCableLink(10, 20, "", 0.0));  
+//   QVERIFY(art.addCableLink(21, 20, "", 0.0));
+//   QVERIFY(art.addInternalLink(21, 22, "", 0.0));
   dataList = art.getData("SELECT * FROM ArticleLink_view", &ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 3);

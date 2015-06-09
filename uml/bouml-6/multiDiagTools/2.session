@@ -13,18 +13,20 @@ diagrams
     120 106 100 18 0 0
   classdiagram_ref 772866 // mdtClLink
     120 106 100 4 0 0
-  classdiagram_ref 1424386 // ArticleLinkData
+  active  classdiagram_ref 1424386 // ArticleLinkData
     925 924 100 4 36 0
-  active  classdiagram_ref 1417858 // ArticleConnectorAndConnection
-    925 924 100 18 0 0
 end
 show_stereotypes
-selected classdiagram_ref 1417858 // ArticleConnectorAndConnection
+selected operation_ref 2599938 // clear
 open
   classview_ref 755202 // ConnectorAndConnection
-  classdiagram_ref 1424386 // ArticleLinkData
-  class_ref 1638274 // mdtClArticleLinkData
+  class_ref 1659778 // mdtClArticleLinkPkData
   class_ref 1638786 // mdtClArticleLinkKeyData
+  operation_ref 2599682 // setPkData
+  operation_ref 2599170 // setLinkTypeFk
+  operation_ref 2599426 // setLinkType
+  operation_ref 2599298 // setLinkDirectionFk
+  operation_ref 2599554 // setLinkDirection
   class_ref 1653122 // mdtClLinkTypeKeyData
   class_ref 1653250 // mdtClLinkDirectionKeyData
 end

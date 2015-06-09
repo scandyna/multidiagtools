@@ -25,19 +25,55 @@
 #include "mdtClLinkTypeData.h"
 #include "mdtClLinkDirectionData.h"
 
+/*! \brief Article link primary key data
+ *
+ * Refers to ArticleLink_tbl
+ */
+struct mdtClArticleLinkPkData
+{
+  /*! \brief Start connection ID (ArticleConnectionStart_Id_FK)
+   */
+  QVariant connectionStartId;
+
+  /*! \brief End connection ID (ArticleConnectionEnd_Id_FK)
+   */
+  QVariant connectionEndId;
+
+  /*! \brief Check if primary key is null
+   *
+   * Primary key is null if one of the connection ID is null
+   */
+  bool isNull() const
+  {
+    return (connectionStartId.isNull() || connectionEndId.isNull());
+  }
+
+  /*! \brief Clear primary key
+   */
+  void clear()
+  {
+    connectionStartId.clear();
+    connectionEndId.clear();
+  }
+};
+
 /*! \brief Article link key data
  *
  * Refers to ArticleLink_tbl
  */
 struct mdtClArticleLinkKeyData
 {
+  /*! \brief Primary key data
+   */
+  mdtClArticleLinkPkData pk;
+
   /*! \brief Start connection (ArticleConnectionStart_Id_FK)
    */
-  mdtClArticleConnectionKeyData connectionStartFk;
+//   mdtClArticleConnectionKeyData connectionStartFk;
 
   /*! \brief End connection (ArticleConnectionEnd_Id_FK)
    */
-  mdtClArticleConnectionKeyData connectionEndFk;
+//   mdtClArticleConnectionKeyData connectionEndFk;
 
   /*! \brief Link type (LinkType_Code_FK)
    */
@@ -49,20 +85,22 @@ struct mdtClArticleLinkKeyData
 
   /*! \brief Check if key data is null
    *
-   * Key is null if connectionStartFk or connectionEndFk
+   * Key is null if pk is null
    *  or linkTypeFk or linkDirectionFk is null
    */
   bool isNull() const
   {
-    return (connectionStartFk.isNull() || connectionEndFk.isNull() || linkTypeFk.isNull() || linkDirectionFk.isNull());
+//     return (connectionStartFk.isNull() || connectionEndFk.isNull() || linkTypeFk.isNull() || linkDirectionFk.isNull());
+    return (pk.isNull() || linkTypeFk.isNull() || linkDirectionFk.isNull());
   }
 
   /*! \brief Clear
    */
   void clear()
   {
-    connectionStartFk.clear();
-    connectionEndFk.clear();
+//     connectionStartFk.clear();
+//     connectionEndFk.clear();
+    pk.clear();
     linkTypeFk.clear();
     linkDirectionFk.clear();
   }

@@ -50,6 +50,61 @@ struct mdtClArticleLinkData
     return pvKeyData;
   }
 
+  /*! \brief Set primary key data
+   */
+  void setPkData(const mdtClArticleLinkPkData & pk)
+  {
+    pvKeyData.pk = pk;
+  }
+
+  /*! \brief Set article connection start FK
+   *
+   * Note: in fk, only id is used (other key attributes are ignored)
+   */
+  void setConnectionStartFk(const mdtClArticleConnectionKeyData & fk)
+  {
+    pvKeyData.pk.connectionStartId = fk.id;
+//     pvKeyData.connectionStartFk = fk;
+  }
+
+  /*! \brief Set article connection end FK
+   *
+   * Note: in fk, only id is used (other key attributes are ignored)
+   */
+  void setConnectionEndFk(const mdtClArticleConnectionKeyData & fk)
+  {
+    pvKeyData.pk.connectionEndId = fk.id;
+//     pvKeyData.connectionEndFk = fk;
+  }
+
+  /*! \brief Set link type FK
+   */
+  void setLinkTypeFk(const mdtClLinkTypeKeyData & fk)
+  {
+    pvKeyData.linkTypeFk = fk;
+  }
+
+  /*! \brief Set link type
+   */
+  void setLinkType(mdtClLinkType_t t)
+  {
+    pvKeyData.linkTypeFk.setType(t);
+  }
+
+  /*! \brief Set link direction FK
+   */
+  void setLinkDirectionFk(const mdtClLinkDirectionKeyData & fk)
+  {
+    pvKeyData.linkDirectionFk = fk;
+  }
+
+  /*! \brief Set link direction
+   */
+  void setLinkDirection(mdtClLinkDirection_t d)
+  {
+    pvKeyData.linkDirectionFk.setDirection(d);
+  }
+
   /*! \brief Check if data is null
    *
    * Data is null if keyData is null

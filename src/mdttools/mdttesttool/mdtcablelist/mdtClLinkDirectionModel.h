@@ -57,6 +57,12 @@ class mdtClLinkDirectionModel : public QSqlQueryModel
    */
   mdtClLinkDirectionModel(QSqlDatabase db, const QLocale & locale = QLocale());
 
+  /*! \brief Get row that contains given link direction
+   *
+   * \return Row of searched key or -1 if not found.
+   */
+  int row(mdtClLinkDirection_t d);
+
   /*! \brief Get row that contains given key
    *
    * \return Row of searched key or -1 if not found.

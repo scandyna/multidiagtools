@@ -53,6 +53,15 @@ mdtClLinkDirectionModel::mdtClLinkDirectionModel(QSqlDatabase db, const QLocale 
 {
 }
 
+int mdtClLinkDirectionModel::row(mdtClLinkDirection_t d)
+{
+  mdtClLinkDirectionKeyData key;
+
+  key.setDirection(d);
+
+  return row(key);
+}
+
 int mdtClLinkDirectionModel::row(const mdtClLinkDirectionKeyData &key)
 {
   int row;

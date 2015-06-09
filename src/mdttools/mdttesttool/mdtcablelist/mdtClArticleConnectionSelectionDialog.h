@@ -26,6 +26,7 @@
 #include "mdtClArticleConnectorKeyData.h"
 #include <QSqlDatabase>
 #include <QVariant>
+#include <QList>
 
 /*! \brief Dialog for article connection selection (in ArticleConnection_tbl)
  */
@@ -66,6 +67,18 @@ class mdtClArticleConnectionSelectionDialog : public mdtSqlSelectionDialog
   /*! \brief Select article connections that are part of given article connector and not used in given unit
    */
   bool select(QSqlDatabase db, const mdtClArticleConnectorKeyData & articleConnectorKey, const QVariant & unitId, ArticleConnectorMembership_t acms, bool allowMultiSelection);
+
+  /*! \brief Get selected article connection key
+   *
+   * If user rejected the dialog, a null key is returned.
+   */
+  mdtClArticleConnectionKeyData selectedArticleConnectionKey() const;
+
+  /*! \brief Get a list of selected connection key
+   *
+   * If user rejected the dialog, a empty list is returned.
+   */
+  QList<mdtClArticleConnectionKeyData> selectedArticleConnectionKeyList() const;
 
  private:
 

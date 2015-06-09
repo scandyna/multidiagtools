@@ -91,6 +91,48 @@ bool mdtClArticleConnectionSelectionDialog::select(QSqlDatabase db, const mdtClA
 
 }
 
+mdtClArticleConnectionKeyData mdtClArticleConnectionSelectionDialog::selectedArticleConnectionKey() const
+{
+  mdtClArticleConnectionKeyData key;
+  QList<mdtClArticleConnectionKeyData> keyList;
+
+  if(result() != Accepted){
+    return key;
+  }
+  keyList = selectedArticleConnectionKeyList();
+  if(keyList.isEmpty()){
+    return key;
+  }
+  Q_ASSERT(keyList.size() == 1);
+  key = keyList.at(0);
+
+  return key;
+}
+
+QList<mdtClArticleConnectionKeyData> mdtClArticleConnectionSelectionDialog::selectedArticleConnectionKeyList() const
+{
+  QList<mdtClArticleConnectionKeyData> keyList;
+  QStringList fields;
+
+  if(result() != Accepted){
+    return keyList;
+  }
+  fields << "Id_PK" << "Article_Id_FK" << "ArticleConnector_Id_FK" << "ConnectionType_Code_FK" << "Connector_Id_FK";
+  auto s = selection(fields);
+  for(int row = 0; row < s.rowCount(); ++row){
+    mdtClArticleConnectionKeyData key;
+    key.id = s.data(row, "Id_PK");
+    key.articleId = s.data(row, "Article_Id_FK");
+    key.articleConnectorFk.articleId = s.data(row, "Article_Id_FK");
+    key.articleConnectorFk.id = s.data(row, "ArticleConnector_Id_FK");
+    key.articleConnectorFk.connectorFk.id = s.data(row, "Connector_Id_FK");
+    key.connectionTypeFk.code = s.data(row, "ConnectionType_Code_FK");
+    keyList.append(key);
+  }
+
+  return keyList;
+}
+
 QString mdtClArticleConnectionSelectionDialog::acmsClause(ArticleConnectorMembership_t acms) const
 {
   switch(acms){

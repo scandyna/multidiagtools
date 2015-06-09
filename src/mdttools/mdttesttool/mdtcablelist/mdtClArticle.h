@@ -141,20 +141,13 @@ class mdtClArticle : public mdtTtBase
    */
   bool updateUnitConnections(const QStringList & fields, const mdtSqlTableSelection & s);
 
-  /*! \brief Add a record in Link table
-   *
-   * \return True on success, false else.
-   *          To get reason of failure, use lastError() .
-   */
-  bool addLink(const mdtSqlRecord & linkData);
-
   /*! \brief Add a cable link
    */
-  bool addCableLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, const QVariant & identification, const QVariant & R);
+//   bool addCableLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, const QVariant & identification, const QVariant & R);
 
-  /*! \brief Add a internal link
-   */
-  bool addInternalLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, const QVariant & identification, const QVariant & R);
+//   /*! \brief Add a internal link
+//    */
+//   bool addInternalLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, const QVariant & identification, const QVariant & R);
 
   /*! \brief Add a link of type resistor
    *

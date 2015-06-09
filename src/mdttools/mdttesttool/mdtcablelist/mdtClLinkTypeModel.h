@@ -55,6 +55,12 @@ class mdtClLinkTypeModel : public QSqlQueryModel
    */
   mdtClLinkTypeModel(QSqlDatabase db, const QLocale & locale = QLocale());
 
+  /*! \brief Get row that contains given link type
+   *
+   * \return Row of searched link type or -1 if not found.
+   */
+  int row(mdtClLinkType_t t);
+
   /*! \brief Get row that contains given key
    *
    * \return Row of searched key or -1 if not found.

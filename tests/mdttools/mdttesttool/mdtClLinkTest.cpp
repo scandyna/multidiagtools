@@ -124,12 +124,16 @@ void mdtClLinkTest::linkTypeModelTest()
   // Check row of key
   key.code = "CABLELINK";
   QVERIFY(m.row(key) >= 0);
+  QCOMPARE(m.row(mdtClLinkType_t::CableLink), m.row(key));
   key.code = "INTERNLINK";
   QVERIFY(m.row(key) >= 0);
+  QCOMPARE(m.row(mdtClLinkType_t::InternalLink), m.row(key));
   key.code = "CONNECTION";
   QVERIFY(m.row(key) >= 0);
+  QCOMPARE(m.row(mdtClLinkType_t::Connection), m.row(key));
   key.code = "TESTLINK";
   QVERIFY(m.row(key) >= 0);
+  QCOMPARE(m.row(mdtClLinkType_t::TestLink), m.row(key));
   key.code = "FAKE";
   QVERIFY(m.row(key) < 0);
   // Check getting key data of row
@@ -218,10 +222,13 @@ void mdtClLinkTest::linkDirectionModelTest()
   // Check row of key
   key.code = "BID";
   QVERIFY(m.row(key) >= 0);
+  QCOMPARE(m.row(mdtClLinkDirection_t::Bidirectional), m.row(key));
   key.code = "STE";
   QVERIFY(m.row(key) >= 0);
+  QCOMPARE(m.row(mdtClLinkDirection_t::StartToEnd), m.row(key));
   key.code = "ETS";
   QVERIFY(m.row(key) >= 0);
+  QCOMPARE(m.row(mdtClLinkDirection_t::EndToStart), m.row(key));
   key.code = "FAKE";
   QVERIFY(m.row(key) < 0);
   // Check getting key data of row

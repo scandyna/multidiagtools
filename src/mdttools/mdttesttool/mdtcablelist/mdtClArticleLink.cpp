@@ -43,6 +43,12 @@ bool mdtClArticleLink::addLink(const mdtClArticleLinkData &data)
   return addRecord(record, "ArticleLink_tbl");
 }
 
+mdtClArticleLinkData mdtClArticleLink::getLinkData(const mdtClArticleLinkPkData & key, bool & ok)
+{
+  mdtClArticleLinkData data;
+
+}
+
 void mdtClArticleLink::fillRecord(mdtSqlRecord &record, const mdtClArticleLinkData &data)
 {
   Q_ASSERT(!record.isEmpty());
@@ -50,12 +56,39 @@ void mdtClArticleLink::fillRecord(mdtSqlRecord &record, const mdtClArticleLinkDa
   auto key = data.keyData();
 
   record.clearValues();
-  record.setValue("ArticleConnectionStart_Id_FK", key.connectionStartFk.id);
-  record.setValue("ArticleConnectionEnd_Id_FK", key.connectionEndFk.id);
+//   record.setValue("ArticleConnectionStart_Id_FK", key.connectionStartFk.id);
+//   record.setValue("ArticleConnectionEnd_Id_FK", key.connectionEndFk.id);
+  record.setValue("ArticleConnectionStart_Id_FK", key.pk.connectionStartId);
+  record.setValue("ArticleConnectionEnd_Id_FK", key.pk.connectionEndId);
   record.setValue("LinkType_Code_FK", key.linkTypeFk.code);
   record.setValue("LinkDirection_Code_FK", key.linkDirectionFk.code);
   record.setValue("Identification", data.indetification);
   record.setValue("SinceVersion", data.sinceVersion);
   record.setValue("Modification", data.modification);
   record.setValue("Resistance", data.resistance);
+}
+
+void mdtClArticleLink::fillData(mdtClArticleLinkData & data, const QSqlRecord & record)
+{
+  Q_ASSERT(record.contains("ArticleConnectionStart_Id_FK"));
+  Q_ASSERT(record.contains("ArticleConnectionEnd_Id_FK"));
+  Q_ASSERT(record.contains("LinkType_Code_FK"));
+  Q_ASSERT(record.contains("LinkDirection_Code_FK"));
+  Q_ASSERT(record.contains("Identification"));
+  Q_ASSERT(record.contains("SinceVersion"));
+  Q_ASSERT(record.contains("Modification"));
+  Q_ASSERT(record.contains("Resistance"));
+
+  mdtClArticleLinkKeyData key;
+  // Fill key
+  key.pk.connectionStartId = record.value("ArticleConnectionStart_Id_FK");
+  key.pk.connectionEndId = record.value("ArticleConnectionEnd_Id_FK");
+  key.linkTypeFk.code = record.value("LinkType_Code_FK");
+  key.linkDirectionFk.code = record.value("LinkDirection_Code_FK");
+  // Fill data
+  data.setKeyData(key);
+  data.indetification = record.value("Identification");
+  data.sinceVersion = record.value("SinceVersion");
+  data.modification = record.value("Modification");
+  data.resistance = record.value("Resistance");
 }

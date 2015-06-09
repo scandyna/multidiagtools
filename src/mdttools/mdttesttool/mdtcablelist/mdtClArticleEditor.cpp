@@ -463,7 +463,6 @@ void mdtClArticleEditor::addLink()
 {
   mdtClArticleLinkDialog dialog(this, database(), currentArticleId());
   mdtClArticleLink alnk(database());
-//   mdtClArticle art(this, database());
 
   // Check if some connection exists
   if(rowCount("ArticleConnection_view") < 1){
@@ -480,16 +479,11 @@ void mdtClArticleEditor::addLink()
     return;
   }
   // Add link
-  if(alnk.addLink(dialog.linkData())){
+  if(!alnk.addLink(dialog.linkData())){
     pvLastError = alnk.lastError();
     displayLastError();
     return;
   }
-//   if(!art.addLink(dialog.linkData())){
-//     pvLastError = art.lastError();
-//     displayLastError();
-//     return;
-//   }
   // Update link table
   select("ArticleLink_view");
 }

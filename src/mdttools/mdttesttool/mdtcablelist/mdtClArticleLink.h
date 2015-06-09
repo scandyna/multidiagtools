@@ -52,6 +52,15 @@ class mdtClArticleLink : public mdtTtBase
    */
   bool addLink(const mdtClArticleLinkData & data);
 
+  /*! \brief Get article link data from database
+   *
+   * \param key Data that contains start and end article connection IDs (ArticleConnectionStart_Id_FK and ArticleConnectionEnd_Id_FK)
+   * \return data for given key.
+   *       A null data is returned if given key does not exist, or a error occured.
+   *       Use ok parameter to diffrenciate both cases.
+   */
+  mdtClArticleLinkData getLinkData(const mdtClArticleLinkPkData & key, bool & ok);
+
  private:
 
   /*! \brief Fill given record with given article link data
@@ -59,6 +68,12 @@ class mdtClArticleLink : public mdtTtBase
    * \pre record must be setup
    */
   void fillRecord(mdtSqlRecord & record, const mdtClArticleLinkData & data);
+
+  /*! \brief Fill given article link data with given record
+   *
+   * \pre record must contain all fields from ArticleLink_tbl
+   */
+  void fillData(mdtClArticleLinkData & data, const QSqlRecord & record);
 
   Q_DISABLE_COPY(mdtClArticleLink);
 };

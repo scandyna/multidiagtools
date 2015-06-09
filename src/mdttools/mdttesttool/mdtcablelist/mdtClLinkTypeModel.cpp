@@ -54,6 +54,15 @@ mdtClLinkTypeModel::mdtClLinkTypeModel(QSqlDatabase db, const QLocale &locale)
 {
 }
 
+int mdtClLinkTypeModel::row(mdtClLinkType_t t)
+{
+  mdtClLinkTypeKeyData key;
+
+  key.setType(t);
+
+  return row(key);
+}
+
 int mdtClLinkTypeModel::row(const mdtClLinkTypeKeyData & key)
 {
   int row;
