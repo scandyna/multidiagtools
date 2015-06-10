@@ -46,7 +46,39 @@ bool mdtClArticleLink::addLink(const mdtClArticleLinkData &data)
 mdtClArticleLinkData mdtClArticleLink::getLinkData(const mdtClArticleLinkPkData & key, bool & ok)
 {
   mdtClArticleLinkData data;
+  QList<QSqlRecord> dataList;
+  QString sql;
 
+  sql = "SELECT * FROM ArticleLink_tbl";
+  sql += " WHERE ArticleConnectionStart_Id_FK = " + key.connectionStartId.toString();
+  sql += " AND ArticleConnectionEnd_Id_FK = " + key.connectionEndId.toString();
+  dataList = getDataList<QSqlRecord>(sql, ok);
+  if(!ok){
+    return data;
+  }
+  if(dataList.isEmpty()){
+    return data;
+  }
+  Q_ASSERT(dataList.size() == 1);
+  fillData(data, dataList.at(0));
+
+  return data;
+}
+
+int mdtClArticleLink::relatedLinksCount(const mdtClArticleLinkPkData & pk)
+{
+  QString sql;
+  QList<QVariant> dataList;
+  bool ok;
+
+  sql = "SELECT COUNT(*) FROM Link_tbl WHERE ArticleConnectionStart_Id_FK = " + pk.connectionStartId.toString() + " AND ArticleConnectionEnd_Id_FK = " + pk.connectionEndId.toString();
+  dataList = getDataList<QVariant>(sql, ok);
+  if(!ok){
+    return -1;
+  }
+  Q_ASSERT(dataList.size() == 1);
+
+  return dataList.at(0).toInt();
 }
 
 void mdtClArticleLink::fillRecord(mdtSqlRecord &record, const mdtClArticleLinkData &data)
@@ -56,8 +88,6 @@ void mdtClArticleLink::fillRecord(mdtSqlRecord &record, const mdtClArticleLinkDa
   auto key = data.keyData();
 
   record.clearValues();
-//   record.setValue("ArticleConnectionStart_Id_FK", key.connectionStartFk.id);
-//   record.setValue("ArticleConnectionEnd_Id_FK", key.connectionEndFk.id);
   record.setValue("ArticleConnectionStart_Id_FK", key.pk.connectionStartId);
   record.setValue("ArticleConnectionEnd_Id_FK", key.pk.connectionEndId);
   record.setValue("LinkType_Code_FK", key.linkTypeFk.code);

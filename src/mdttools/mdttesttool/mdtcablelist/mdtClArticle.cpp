@@ -485,21 +485,21 @@ bool mdtClArticle::editLink(const QVariant & articleConnectionStartId, const QVa
 //   return updateRecord("ArticleLink_tbl", data, matchData);
 }
 
-int mdtClArticle::relatedLinksCount(const QVariant& articleConnectionStartId, const QVariant& articleConnectionEndId)
-{
-  QString sql;
-  QList<QVariant> dataList;
-  bool ok;
-
-  sql = "SELECT COUNT(*) FROM Link_tbl WHERE ArticleConnectionStart_Id_FK = " + articleConnectionStartId.toString() + " AND ArticleConnectionEnd_Id_FK = " + articleConnectionEndId.toString();
-  dataList = getDataList<QVariant>(sql, ok);
-  if(!ok){
-    return -1;
-  }
-  Q_ASSERT(dataList.size() == 1);
-
-  return dataList.at(0).toInt();
-}
+// int mdtClArticle::relatedLinksCount(const QVariant& articleConnectionStartId, const QVariant& articleConnectionEndId)
+// {
+//   QString sql;
+//   QList<QVariant> dataList;
+//   bool ok;
+// 
+//   sql = "SELECT COUNT(*) FROM Link_tbl WHERE ArticleConnectionStart_Id_FK = " + articleConnectionStartId.toString() + " AND ArticleConnectionEnd_Id_FK = " + articleConnectionEndId.toString();
+//   dataList = getDataList<QVariant>(sql, ok);
+//   if(!ok){
+//     return -1;
+//   }
+//   Q_ASSERT(dataList.size() == 1);
+// 
+//   return dataList.at(0).toInt();
+// }
 
 bool mdtClArticle::updateRelatedLinks(const QVariant& articleConnectionStartId, const QVariant& articleConnectionEndId, const QStringList& articleLinkFields)
 {

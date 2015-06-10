@@ -29,6 +29,7 @@
 #include "mdtClConnectorData.h"
 #include "mdtClArticleConnectorData.h"
 #include "mdtClArticleConnectorData.h"
+#include "mdtClArticleLink.h"
 #include "mdtClUnitConnectionData.h"
 #include "mdtClUnitConnectorData.h"
 #include "mdtClUnitVehicleType.h"
@@ -1087,6 +1088,9 @@ void mdtCableListTest::linkTest()
 void mdtCableListTest::linkUpdateFromArticleLinkTest()
 {
   mdtClLink lnk(0, pvDatabaseManager.database());
+  mdtClArticleLink alnk(pvDatabaseManager.database());
+  mdtClArticleLinkPkData aLnkPk;
+  
   mdtClArticle art(0, pvDatabaseManager.database());
   mdtCableListTestScenario scenario(pvDatabaseManager.database());
   QList<QSqlRecord> dataList;
@@ -1156,9 +1160,14 @@ void mdtCableListTest::linkUpdateFromArticleLinkTest()
    * Edit article link 21-20 and check that links 20001-20000 , update raleted links and check
    */
   // Check number of related links
-  QCOMPARE(art.relatedLinksCount(21, 20), 2);
-  QVERIFY(art.hasRelatedLinks(21, 20, ok));
+  aLnkPk.connectionStartId = 21;
+  aLnkPk.connectionEndId = 20;
+  QCOMPARE(alnk.relatedLinksCount(aLnkPk), 2);
+  QVERIFY(alnk.hasRelatedLinks(aLnkPk, ok));
   QVERIFY(ok);
+//   QCOMPARE(art.relatedLinksCount(21, 20), 2);
+//   QVERIFY(art.hasRelatedLinks(21, 20, ok));
+//   QVERIFY(ok);
   // Edit article link
   sql = "SELECT * FROM ArticleLink_tbl WHERE ArticleConnectionStart_Id_FK = 21 AND ArticleConnectionEnd_Id_FK = 20";
   dataList = art.getDataList<QSqlRecord>(sql, ok);

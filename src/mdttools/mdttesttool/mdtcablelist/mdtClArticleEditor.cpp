@@ -491,9 +491,13 @@ void mdtClArticleEditor::addLink()
 void mdtClArticleEditor::editLink()
 {
   mdtClArticleLinkDialog dialog(this, database(), currentArticleId());
+  mdtClArticleLink alnk(database());
+  mdtClArticleLinkPkData pk;
+  mdtClArticleLinkData data;
+  
   mdtSqlTableWidget *widget;
-  mdtClArticle art(this, database());
-  QVariant articleConnectionStartId, articleConnectionEndId;
+//   mdtClArticle art(this, database());
+//   QVariant articleConnectionStartId, articleConnectionEndId;
   mdtSqlTableSelection s;
   QStringList fields;
   bool hasRelatedLinks;
@@ -505,24 +509,45 @@ void mdtClArticleEditor::editLink()
   widget = sqlTableWidget("ArticleLink_view");
   Q_ASSERT(widget != nullptr);
   // Get selected links
-  fields << "ArticleConnectionStart_Id_FK" << "ArticleConnectionEnd_Id_FK" << "LinkType_Code_FK" << "LinkDirection_Code_FK" << "Resistance";
+//   fields << "ArticleConnectionStart_Id_FK" << "ArticleConnectionEnd_Id_FK" << "LinkType_Code_FK" << "LinkDirection_Code_FK" << "Resistance";
+  fields << "ArticleConnectionStart_Id_FK" << "ArticleConnectionEnd_Id_FK";
   s = widget->currentSelection(fields);
   if(s.isEmpty()){
     return;
   }
   Q_ASSERT(s.rowCount() > 0);
+  pk.connectionStartId = s.data(0, "ArticleConnectionStart_Id_FK");
+  pk.connectionEndId = s.data(0, "ArticleConnectionEnd_Id_FK");
+  if(pk.isNull()){
+    return;
+  }
+  data = alnk.getLinkData(pk, ok);
+  if(!ok){
+    pvLastError = alnk.lastError();
+    displayLastError();
+    return;
+  }
   // Get start and end connection ID
   /// \todo OK if Null ??
-  articleConnectionStartId = s.data(0, "ArticleConnectionStart_Id_FK");
-  articleConnectionEndId = s.data(0, "ArticleConnectionEnd_Id_FK");
+//   articleConnectionStartId = s.data(0, "ArticleConnectionStart_Id_FK");
+//   articleConnectionEndId = s.data(0, "ArticleConnectionEnd_Id_FK");
   // Setup and show dialog
+  hasRelatedLinks = alnk.hasRelatedLinks(pk, ok);
+  if(!ok){
+    pvLastError = alnk.lastError();
+    displayLastError();
+    return;
+  }
+  /**
   hasRelatedLinks = art.hasRelatedLinks(articleConnectionStartId, articleConnectionEndId, ok);
   if(!ok){
     pvLastError = art.lastError();
     displayLastError();
     return;
   }
+  */
   dialog.setConnectionEditionLocked(hasRelatedLinks);
+  dialog.setLinkData(data);
 //   dialog.setLinkTypeCode(s.data(0, "LinkType_Code_FK"));
 //   dialog.setLinkDirectionCode(s.data(0, "LinkDirection_Code_FK"));
 //   dialog.setValue(s.data(0, "Resistance"));

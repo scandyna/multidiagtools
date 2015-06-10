@@ -100,6 +100,20 @@ void mdtClArticleLinkDialog::setValue(const QVariant & value)
   sbValue->setValue(value.toDouble());
 }
 
+void mdtClArticleLinkDialog::setLinkData(const mdtClArticleLinkData & data)
+{
+  pvLinkData = data;
+  // Display start and end connections
+  displayCurrentSelectedStartConnection();
+  displayCurrentSelectedEndConnection();
+  // Display link type
+  setLinkType(data.keyData().linkTypeFk.type());
+  // Display link direction
+  setLinkDirection(data.keyData().linkDirectionFk.direction());
+  // Display values
+  sbValue->setValue(data.resistance.toDouble());
+}
+
 // void mdtClArticleLinkDialog::setStartConnection(const mdtClArticleConnectionKeyData &fk)
 // {
 //   auto key = pvLinkData.keyData();

@@ -61,6 +61,25 @@ class mdtClArticleLink : public mdtTtBase
    */
   mdtClArticleLinkData getLinkData(const mdtClArticleLinkPkData & key, bool & ok);
 
+  /*! \brief Get number of links in Link_tbl that are based on given article link
+   *
+   * \return Number of related links in Link_tbl or value < 0 on error
+   */
+  int relatedLinksCount(const mdtClArticleLinkPkData & pk);
+
+  /*! \brief Check if given article link has related links in Link_tbl
+   */
+  bool hasRelatedLinks(const mdtClArticleLinkPkData & pk, bool & ok)
+  {
+    int n = relatedLinksCount(pk);
+    if(n < 0){
+      ok = false;
+      return false;
+    }
+    ok = true;
+    return (n > 0);
+  }
+
  private:
 
   /*! \brief Fill given record with given article link data

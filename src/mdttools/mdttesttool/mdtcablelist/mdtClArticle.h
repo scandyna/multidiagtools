@@ -178,20 +178,20 @@ class mdtClArticle : public mdtTtBase
    *
    * \return Number of related links in Link_tbl or value < 0 on error
    */
-  int relatedLinksCount(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId);
+//   int relatedLinksCount(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId);
 
   /*! \brief Check if given article link has related links in Link_tbl
    */
-  bool hasRelatedLinks(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, bool & ok)
-  {
-    int n = relatedLinksCount(articleConnectionStartId, articleConnectionEndId);
-    if(n < 0){
-      ok = false;
-      return false;
-    }
-    ok = true;
-    return (n > 0);
-  }
+//   bool hasRelatedLinks(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, bool & ok)
+//   {
+//     int n = relatedLinksCount(articleConnectionStartId, articleConnectionEndId);
+//     if(n < 0){
+//       ok = false;
+//       return false;
+//     }
+//     ok = true;
+//     return (n > 0);
+//   }
 
   /*! \brief Update links in Link_tbl that are based in given article link
    *

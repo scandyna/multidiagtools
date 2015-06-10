@@ -180,9 +180,9 @@ void mdtClArticleLinkTest::articleLinkAddGetRemoveTest()
 {
   mdtClArticleLink alnk(pvDatabaseManager.database());
   mdtClArticleLinkPkData pk;
-//   mdtClArticleLinkKeyData key;
   mdtClArticleLinkData data;
   mdtCableListTestScenario scenario(pvDatabaseManager.database());
+  bool ok;
 
   // Populate db with base data
   scenario.createTestArticles();
@@ -193,21 +193,40 @@ void mdtClArticleLinkTest::articleLinkAddGetRemoveTest()
   pk.clear();
   pk.connectionStartId = 21;
   pk.connectionEndId = 22;
-//   key.clear();
-//   key.connectionStartFk.id = 21;
-//   key.connectionEndFk.id = 22;
-//   key.linkTypeFk.setType(mdtClLinkType_t::CableLink);
-//   key.linkDirectionFk.setDirection(mdtClLinkDirection_t::Bidirectional);
   data.setPkData(pk);
   data.setLinkType(mdtClLinkType_t::CableLink);
   data.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
-//   data.setKeyData(key);
   data.indetification = "Link 21-22";
   data.sinceVersion = 1.0;
   data.modification = "new";
   data.resistance = 0.1;
+  // Add to database
   QVERIFY(alnk.addLink(data));
-  
+  // Get article link data from DB and check back
+  data = alnk.getLinkData(pk, ok);
+  QVERIFY(ok);
+  QVERIFY(!data.isNull());
+  QCOMPARE(data.keyData().pk.connectionStartId, QVariant(21));
+  QCOMPARE(data.keyData().pk.connectionEndId, QVariant(22));
+  QVERIFY(data.keyData().linkTypeFk.type() == mdtClLinkType_t::CableLink);
+  QVERIFY(data.keyData().linkDirectionFk.direction() == mdtClLinkDirection_t::Bidirectional);
+  QCOMPARE(data.indetification, QVariant("Link 21-22"));
+  QCOMPARE(data.sinceVersion, QVariant(1.0));
+  QCOMPARE(data.modification, QVariant("new"));
+  QCOMPARE(data.resistance, QVariant(0.1));
+  QCOMPARE(alnk.relatedLinksCount(pk), 0);
+  QVERIFY(!alnk.hasRelatedLinks(pk, ok));
+  QVERIFY(ok);
+  // Try to get a unexisting article link
+  pk.connectionStartId = 1;
+  pk.connectionEndId = 2;
+  data = alnk.getLinkData(pk, ok);
+  QVERIFY(ok);
+  QVERIFY(data.isNull());
+  QCOMPARE(alnk.relatedLinksCount(pk), 0);
+  QVERIFY(!alnk.hasRelatedLinks(pk, ok));
+  QVERIFY(ok);
+
 }
 
 /*

@@ -66,6 +66,12 @@ class mdtClArticleLinkDialog : public QDialog, public Ui::mdtClArticleLinkDialog
    */
   void setValue(const QVariant & value);
 
+  /*! \brief Set article link data
+   *
+   * Will store display given link data and related connections
+   */
+  void setLinkData(const mdtClArticleLinkData & data);
+
 //   /*! \brief Store key as current selected start connection and display it
 //    */
 //   void setStartConnection(const mdtClArticleConnectionKeyData & fk);
