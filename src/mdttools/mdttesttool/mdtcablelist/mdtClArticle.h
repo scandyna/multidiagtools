@@ -141,57 +141,12 @@ class mdtClArticle : public mdtTtBase
    */
   bool updateUnitConnections(const QStringList & fields, const mdtSqlTableSelection & s);
 
-  /*! \brief Add a cable link
-   */
-//   bool addCableLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, const QVariant & identification, const QVariant & R);
-
-//   /*! \brief Add a internal link
-//    */
-//   bool addInternalLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, const QVariant & identification, const QVariant & R);
-
-  /*! \brief Add a link of type resistor
-   *
-   * \return True on success, false else.
-   *          To get reason of failure, use lastError() .
-   */
-  //bool addResistor(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, double value);
-
-  /*! \brief Add a link of type diode
-   */
-  //bool addDiode(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, double Vf, const QVariant & directionCode);
-
-  /*! \brief Add a link of type bridge
-   *
-   * \return True on success, false else.
-   *          To get reason of failure, use lastError() .
-   */
-  //bool addBridge(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId);
-
   /*! \brief Edit a record in ArticleLink_tbl
    *
    * \return True on success, false else.
    *          To get reason of failure, use lastError() .
    */
   bool editLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, const mdtSqlRecord &data);
-
-  /*! \brief Get number of links in Link_tbl that are based on given article link
-   *
-   * \return Number of related links in Link_tbl or value < 0 on error
-   */
-//   int relatedLinksCount(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId);
-
-  /*! \brief Check if given article link has related links in Link_tbl
-   */
-//   bool hasRelatedLinks(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, bool & ok)
-//   {
-//     int n = relatedLinksCount(articleConnectionStartId, articleConnectionEndId);
-//     if(n < 0){
-//       ok = false;
-//       return false;
-//     }
-//     ok = true;
-//     return (n > 0);
-//   }
 
   /*! \brief Update links in Link_tbl that are based in given article link
    *

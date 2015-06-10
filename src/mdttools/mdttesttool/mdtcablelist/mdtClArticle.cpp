@@ -412,59 +412,6 @@ bool mdtClArticle::updateUnitConnections(const QStringList & fields, const mdtSq
   return commitTransaction();
 }
 
-// bool mdtClArticle::addCableLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, const QVariant & identification, const QVariant & R)
-// {
-//   mdtSqlRecord record;
-// 
-//   if(!record.addAllFields("ArticleLink_tbl", database())){
-//     pvLastError = record.lastError();
-//     return false;
-//   }
-//   record.setValue("ArticleConnectionStart_Id_FK", articleConnectionStartId);
-//   record.setValue("ArticleConnectionEnd_Id_FK", articleConnectionEndId);
-//   record.setValue("LinkType_Code_FK", "CABLELINK");
-//   record.setValue("LinkDirection_Code_FK", "BID");
-//   record.setValue("Identification", identification);
-//   record.setValue("Resistance", R);
-// 
-//   return addRecord(record, "ArticleLink_tbl");
-// }
-
-// bool mdtClArticle::addInternalLink(const QVariant& articleConnectionStartId, const QVariant& articleConnectionEndId, const QVariant& identification, const QVariant& R )
-// {
-//   mdtSqlRecord record;
-// 
-//   if(!record.addAllFields("ArticleLink_tbl", database())){
-//     pvLastError = record.lastError();
-//     return false;
-//   }
-//   record.setValue("ArticleConnectionStart_Id_FK", articleConnectionStartId);
-//   record.setValue("ArticleConnectionEnd_Id_FK", articleConnectionEndId);
-//   record.setValue("LinkType_Code_FK", "INTERNLINK");
-//   record.setValue("LinkDirection_Code_FK", "BID");
-//   record.setValue("Identification", identification);
-//   record.setValue("Resistance", R);
-// 
-//   return addRecord(record, "ArticleLink_tbl");
-// }
-
-/*
-bool mdtClArticle::addResistor(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, double value)
-{
-  return addLink(articleConnectionStartId, articleConnectionEndId, value, "BID", "RESISTOR");
-}
-
-bool mdtClArticle::addDiode(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, double Vf, const QVariant & directionCode)
-{
-  return addLink(articleConnectionStartId, articleConnectionEndId, Vf, directionCode, "DIODE");
-}
-
-bool mdtClArticle::addBridge(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId)
-{
-  return addLink(articleConnectionStartId, articleConnectionEndId, 0.0, "BID", "ARTBRIDGE");
-}
-*/
-
 bool mdtClArticle::editLink(const QVariant & articleConnectionStartId, const QVariant & articleConnectionEndId, const mdtSqlRecord & data)
 {
   return updateRecord("ArticleLink_tbl", data, "ArticleConnectionStart_Id_FK", articleConnectionStartId , "ArticleConnectionEnd_Id_FK", articleConnectionEndId);
@@ -484,22 +431,6 @@ bool mdtClArticle::editLink(const QVariant & articleConnectionStartId, const QVa
 // 
 //   return updateRecord("ArticleLink_tbl", data, matchData);
 }
-
-// int mdtClArticle::relatedLinksCount(const QVariant& articleConnectionStartId, const QVariant& articleConnectionEndId)
-// {
-//   QString sql;
-//   QList<QVariant> dataList;
-//   bool ok;
-// 
-//   sql = "SELECT COUNT(*) FROM Link_tbl WHERE ArticleConnectionStart_Id_FK = " + articleConnectionStartId.toString() + " AND ArticleConnectionEnd_Id_FK = " + articleConnectionEndId.toString();
-//   dataList = getDataList<QVariant>(sql, ok);
-//   if(!ok){
-//     return -1;
-//   }
-//   Q_ASSERT(dataList.size() == 1);
-// 
-//   return dataList.at(0).toInt();
-// }
 
 bool mdtClArticle::updateRelatedLinks(const QVariant& articleConnectionStartId, const QVariant& articleConnectionEndId, const QStringList& articleLinkFields)
 {

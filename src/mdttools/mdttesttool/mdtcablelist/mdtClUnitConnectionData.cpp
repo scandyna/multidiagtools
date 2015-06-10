@@ -22,6 +22,25 @@
 
 #include <QDebug>
 
+void mdtClUnitConnectionData::setKeyData(const mdtClUnitConnectionKeyData &key)
+{
+  pvKeyData = key;
+}
+
+void mdtClUnitConnectionData::setUnitConnectorFk(const mdtClUnitConnectorKeyData &fk)
+{
+  pvKeyData.unitConnectorFk = fk;
+}
+
+void mdtClUnitConnectionData::clear()
+{
+  
+}
+
+
+/*
+ * OLD stuff
+ */
 mdtClUnitConnectionData::mdtClUnitConnectionData()
  : mdtSqlRecord()
 {
@@ -72,7 +91,7 @@ void mdtClUnitConnectionData::setArticleConnectionData(const mdtClArticleConnect
   pvArticleConnectionData = data;
 }
 
-bool mdtClUnitConnectionData::isBasedOnArticleConnection() const
-{
-  return !value("ArticleConnection_Id_FK").isNull();
-}
+// bool mdtClUnitConnectionData::isBasedOnArticleConnection() const
+// {
+//   return !value("ArticleConnection_Id_FK").isNull();
+// }

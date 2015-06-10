@@ -1165,9 +1165,6 @@ void mdtCableListTest::linkUpdateFromArticleLinkTest()
   QCOMPARE(alnk.relatedLinksCount(aLnkPk), 2);
   QVERIFY(alnk.hasRelatedLinks(aLnkPk, ok));
   QVERIFY(ok);
-//   QCOMPARE(art.relatedLinksCount(21, 20), 2);
-//   QVERIFY(art.hasRelatedLinks(21, 20, ok));
-//   QVERIFY(ok);
   // Edit article link
   sql = "SELECT * FROM ArticleLink_tbl WHERE ArticleConnectionStart_Id_FK = 21 AND ArticleConnectionEnd_Id_FK = 20";
   dataList = art.getDataList<QSqlRecord>(sql, ok);

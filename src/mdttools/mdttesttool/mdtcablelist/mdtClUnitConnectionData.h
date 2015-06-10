@@ -21,8 +21,12 @@
 #ifndef MDT_CL_UNIT_CONNECTION_DATA_H
 #define MDT_CL_UNIT_CONNECTION_DATA_H
 
+#include "mdtClUnitConnectionKeyData.h"
+#include "mdtClUnitConnectorKeyData.h"
+
 #include "mdtSqlRecord.h"
 #include "mdtClArticleConnectionData.h"
+
 #include <QList>
 #include <QVariant>
 #include <QSqlDatabase>
@@ -31,14 +35,95 @@
 /*! \brief Data container class for unit connection data
  *
  * Permit to echange data with UnitConnection_tbl.
- *
- * This class was made for data edition.
- *  It is also mandatory that fields matches UnitConnection_tbl.
- *  To get data from a view, witch also can miss fields, 
- *  or have different field name, considere QSqlRecord.
  */
-class mdtClUnitConnectionData : public mdtSqlRecord
+struct mdtClUnitConnectionData : public mdtSqlRecord /// \todo Remove this inheritance once all is done
 {
+ private:
+
+  /*! \brief Key data
+   */
+  mdtClUnitConnectionKeyData pvKeyData;
+
+ public:
+
+  /*! \brief Get key data
+   */
+  inline mdtClUnitConnectionKeyData keyData() const
+  {
+    return pvKeyData;
+  }
+
+  /*! \brief Set key data
+   */
+  void setKeyData(const mdtClUnitConnectionKeyData & key);
+
+  /*! \brief Set unit connector FK
+   */
+  void setUnitConnectorFk(const mdtClUnitConnectorKeyData & fk);
+
+  /*! \brief Check if unit connection is part of a unit connector
+   */
+  inline bool isPartOfUnitConnector() const
+  {
+    return pvKeyData.isPartOfUnitConnector();
+  }
+
+  /*! \brief Check if unit connection is based on a article connection
+   */
+  inline bool isBasedOnArticleConnection() const
+  {
+    return pvKeyData.isBasedOnArticleConnection();
+  }
+
+  /*! \brief Check if data is null
+   *
+   * Data is null if key data is null
+   */
+  inline bool isNull() const
+  {
+    return pvKeyData.isNull();
+  }
+
+  /*! \brief Clear data
+   */
+  void clear();
+
+  /*! \brief name (UnitContactName)
+   */
+  QVariant name;
+
+  /*! \brief Resistance (Resistance)
+   */
+  QVariant resistance;
+
+  /*! \brief Schema page (SchemaPage)
+   */
+  QVariant schemaPage;
+
+  /*! \brief Signal name (SignalName)
+   */
+  QVariant signalName;
+
+  /*! \brief SW address (SwAddress)
+   */
+  QVariant swAddress;
+
+  /*! \brief Function EN (FunctionEN)
+   */
+  QVariant functionEN;
+
+  /*! \brief Function FR (FunctionFR)
+   */
+  QVariant functionFR;
+
+  /*! \brief Function DE (FunctionDE)
+   */
+  QVariant functionDE;
+
+  /*! \brief Function IT (FunctionIT)
+   */
+  QVariant functionIT;
+
  public:
 
   /*! \brief Construct a empty mdtClUnitConnectionData
@@ -73,9 +158,6 @@ class mdtClUnitConnectionData : public mdtSqlRecord
    */
   mdtClArticleConnectionData & articleConnectionData();
 
-  /*! \brief Check if connection is based on a article connection
-   */
-  bool isBasedOnArticleConnection() const;
 
  private:
 

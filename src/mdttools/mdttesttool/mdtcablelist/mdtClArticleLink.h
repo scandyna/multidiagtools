@@ -65,13 +65,13 @@ class mdtClArticleLink : public mdtTtBase
    *
    * \return Number of related links in Link_tbl or value < 0 on error
    */
-  int relatedLinksCount(const mdtClArticleLinkPkData & pk);
+  int relatedLinksCount(const mdtClArticleLinkPkData & key);
 
   /*! \brief Check if given article link has related links in Link_tbl
    */
-  bool hasRelatedLinks(const mdtClArticleLinkPkData & pk, bool & ok)
+  bool hasRelatedLinks(const mdtClArticleLinkPkData & key, bool & ok)
   {
-    int n = relatedLinksCount(pk);
+    int n = relatedLinksCount(key);
     if(n < 0){
       ok = false;
       return false;
@@ -79,6 +79,23 @@ class mdtClArticleLink : public mdtTtBase
     ok = true;
     return (n > 0);
   }
+
+  /*! \brief Update article link for given key with given data
+   */
+  bool updateLink(const mdtClArticleLinkPkData & key, const mdtClArticleLinkData & data);
+
+  /*! \brief Remove article link for given key
+   */
+  bool removeLink(const mdtClArticleLinkPkData & key);
+
+  /*! \brief Remove each article link that is contained in selection
+   *
+   * This is usefull used together with mdtSqlTableWidget .
+   *
+   * \return True on success, false else.
+   *          To get reason of failure, use lastError() .
+   */
+  bool removeLinks(const mdtSqlTableSelection & s);
 
  private:
 

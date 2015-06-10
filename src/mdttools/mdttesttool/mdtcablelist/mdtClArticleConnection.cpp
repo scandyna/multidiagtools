@@ -162,7 +162,7 @@ bool mdtClArticleConnection::updateArticleConnection(const mdtClArticleConnectio
 
 bool mdtClArticleConnection::removeArticleConnection(const mdtClArticleConnectionKeyData &key)
 {
-  return removeData("ArticleConnection_tbl", "Id_PK", key.id.toString());
+  return removeData("ArticleConnection_tbl", "Id_PK", key.id);
 }
 
 bool mdtClArticleConnection::removeArticleConnections(const mdtSqlTableSelection &s)

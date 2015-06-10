@@ -321,8 +321,10 @@ bool mdtTtBase::removeData(const QString & tableName, const QString & fieldName1
   QSqlQuery query(database());
   if(!query.exec(sql)){
     QSqlError sqlError;
+    QString msg = tr("Cannot remove row from table '") + tableName + tr("'.");
+    msg += "\n" + tr("SQL: ") + sql;
     sqlError = query.lastError();
-    pvLastError.setError(tr("Cannot remove row from table '") + tableName + tr("'."), mdtError::Error);
+    pvLastError.setError(msg, mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
     MDT_ERROR_SET_SRC(pvLastError, "mdtTtBase");
     pvLastError.commit();

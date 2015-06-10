@@ -494,10 +494,7 @@ void mdtClArticleEditor::editLink()
   mdtClArticleLink alnk(database());
   mdtClArticleLinkPkData pk;
   mdtClArticleLinkData data;
-  
   mdtSqlTableWidget *widget;
-//   mdtClArticle art(this, database());
-//   QVariant articleConnectionStartId, articleConnectionEndId;
   mdtSqlTableSelection s;
   QStringList fields;
   bool hasRelatedLinks;
@@ -509,7 +506,6 @@ void mdtClArticleEditor::editLink()
   widget = sqlTableWidget("ArticleLink_view");
   Q_ASSERT(widget != nullptr);
   // Get selected links
-//   fields << "ArticleConnectionStart_Id_FK" << "ArticleConnectionEnd_Id_FK" << "LinkType_Code_FK" << "LinkDirection_Code_FK" << "Resistance";
   fields << "ArticleConnectionStart_Id_FK" << "ArticleConnectionEnd_Id_FK";
   s = widget->currentSelection(fields);
   if(s.isEmpty()){
@@ -527,10 +523,6 @@ void mdtClArticleEditor::editLink()
     displayLastError();
     return;
   }
-  // Get start and end connection ID
-  /// \todo OK if Null ??
-//   articleConnectionStartId = s.data(0, "ArticleConnectionStart_Id_FK");
-//   articleConnectionEndId = s.data(0, "ArticleConnectionEnd_Id_FK");
   // Setup and show dialog
   hasRelatedLinks = alnk.hasRelatedLinks(pk, ok);
   if(!ok){
@@ -538,30 +530,17 @@ void mdtClArticleEditor::editLink()
     displayLastError();
     return;
   }
-  /**
-  hasRelatedLinks = art.hasRelatedLinks(articleConnectionStartId, articleConnectionEndId, ok);
-  if(!ok){
-    pvLastError = art.lastError();
-    displayLastError();
-    return;
-  }
-  */
   dialog.setConnectionEditionLocked(hasRelatedLinks);
   dialog.setLinkData(data);
-//   dialog.setLinkTypeCode(s.data(0, "LinkType_Code_FK"));
-//   dialog.setLinkDirectionCode(s.data(0, "LinkDirection_Code_FK"));
-//   dialog.setValue(s.data(0, "Resistance"));
-//   dialog.setStartConnectionId(articleConnectionStartId);
-//   dialog.setEndConnectionId(articleConnectionEndId);
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
-  // Edit link
-//   if(!art.editLink(articleConnectionStartId, articleConnectionEndId, dialog.linkData())){
-//     pvLastError = art.lastError();
-//     displayLastError();
-//     return;
-//   }
+  // Update link
+  if(!alnk.updateLink(pk, dialog.linkData())){
+    pvLastError = alnk.lastError();
+    displayLastError();
+    return;
+  }
   // Update related links if they exists
   /**
   if(hasRelatedLinks){
@@ -581,10 +560,10 @@ void mdtClArticleEditor::editLink()
 void mdtClArticleEditor::removeLinks()
 {
   mdtSqlTableWidget *widget;
-  mdtClArticle art(this, database());
+  mdtClArticleLink alnk(database());
+//   mdtClArticle art(this, database());
   QMessageBox msgBox;
   QStringList fields;
-  ///QList<QModelIndexList> indexes;
   mdtSqlTableSelection s;
   QSqlError sqlError;
   int ret;
@@ -597,12 +576,6 @@ void mdtClArticleEditor::removeLinks()
   if(s.isEmpty()){
     return;
   }
-  /**
-  indexes = widget->indexListOfSelectedRowsByRowsList(fields);
-  if(indexes.size() < 1){
-    return;
-  }
-  */
   // We ask confirmation to the user
   msgBox.setText(tr("You are about to remove links for current article."));
   msgBox.setInformativeText(tr("Do you want to continue ?"));
@@ -614,8 +587,8 @@ void mdtClArticleEditor::removeLinks()
     return;
   }
   // Delete seleced rows
-  if(!art.removeLinks(s)){
-    pvLastError = art.lastError();
+  if(!alnk.removeLinks(s)){
+    pvLastError = alnk.lastError();
     displayLastError();
     return;
   }

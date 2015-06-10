@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtClArticleLink.h"
+#include "mdtSqlTransaction.h"
 
 mdtClArticleLink::mdtClArticleLink(QObject *parent, QSqlDatabase db)
  : mdtTtBase(parent, db)
@@ -65,13 +66,13 @@ mdtClArticleLinkData mdtClArticleLink::getLinkData(const mdtClArticleLinkPkData 
   return data;
 }
 
-int mdtClArticleLink::relatedLinksCount(const mdtClArticleLinkPkData & pk)
+int mdtClArticleLink::relatedLinksCount(const mdtClArticleLinkPkData & key)
 {
   QString sql;
   QList<QVariant> dataList;
   bool ok;
 
-  sql = "SELECT COUNT(*) FROM Link_tbl WHERE ArticleConnectionStart_Id_FK = " + pk.connectionStartId.toString() + " AND ArticleConnectionEnd_Id_FK = " + pk.connectionEndId.toString();
+  sql = "SELECT COUNT(*) FROM Link_tbl WHERE ArticleConnectionStart_Id_FK = " + key.connectionStartId.toString() + " AND ArticleConnectionEnd_Id_FK = " + key.connectionEndId.toString();
   dataList = getDataList<QVariant>(sql, ok);
   if(!ok){
     return -1;
@@ -79,6 +80,49 @@ int mdtClArticleLink::relatedLinksCount(const mdtClArticleLinkPkData & pk)
   Q_ASSERT(dataList.size() == 1);
 
   return dataList.at(0).toInt();
+}
+
+bool mdtClArticleLink::updateLink(const mdtClArticleLinkPkData & key, const mdtClArticleLinkData & data)
+{
+  mdtSqlRecord record;
+
+  if(!record.addAllFields("ArticleLink_tbl", database())){
+    pvLastError = record.lastError();
+    return false;
+  }
+  fillRecord(record, data);
+
+  return updateRecord("ArticleLink_tbl", record, "ArticleConnectionStart_Id_FK", key.connectionStartId, "ArticleConnectionEnd_Id_FK", key.connectionEndId);
+}
+
+bool mdtClArticleLink::removeLink(const mdtClArticleLinkPkData & key)
+{
+  return removeData("ArticleLink_tbl", "ArticleConnectionStart_Id_FK", key.connectionStartId, "ArticleConnectionEnd_Id_FK", key.connectionEndId);
+}
+
+bool mdtClArticleLink::removeLinks(const mdtSqlTableSelection & s)
+{
+  mdtSqlTransaction transaction(database());
+  int row;
+
+  if(!transaction.begin()){
+    pvLastError = transaction.lastError();
+    return false;
+  }
+  for(row = 0; row < s.rowCount(); ++row){
+    mdtClArticleLinkPkData key;
+    key.connectionStartId = s.data(row, "ArticleConnectionStart_Id_FK");
+    key.connectionEndId = s.data(row, "ArticleConnectionEnd_Id_FK");
+    if(!removeLink(key)){
+      return false;
+    }
+  }
+  if(!transaction.commit()){
+    pvLastError = transaction.lastError();
+    return false;
+  }
+
+  return true;
 }
 
 void mdtClArticleLink::fillRecord(mdtSqlRecord &record, const mdtClArticleLinkData &data)

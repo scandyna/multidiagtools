@@ -217,9 +217,30 @@ void mdtClArticleLinkTest::articleLinkAddGetRemoveTest()
   QCOMPARE(alnk.relatedLinksCount(pk), 0);
   QVERIFY(!alnk.hasRelatedLinks(pk, ok));
   QVERIFY(ok);
+  // Update article link
+  data.setLinkType(mdtClLinkType_t::InternalLink);
+  data.setLinkDirection(mdtClLinkDirection_t::StartToEnd);
+  data.indetification = "Link 21-22 edited";
+  data.sinceVersion = 1.1;
+  data.modification = "update";
+  data.resistance = 0.2;
+  QVERIFY(alnk.updateLink(pk, data));
+  QVERIFY(ok);
+  // Get data back and check
+  data = alnk.getLinkData(pk, ok);
+  QVERIFY(ok);
+  QVERIFY(!data.isNull());
+  QCOMPARE(data.keyData().pk.connectionStartId, QVariant(21));
+  QCOMPARE(data.keyData().pk.connectionEndId, QVariant(22));
+  QVERIFY(data.keyData().linkTypeFk.type() == mdtClLinkType_t::InternalLink);
+  QVERIFY(data.keyData().linkDirectionFk.direction() == mdtClLinkDirection_t::StartToEnd);
+  QCOMPARE(data.indetification, QVariant("Link 21-22 edited"));
+  QCOMPARE(data.sinceVersion, QVariant(1.1));
+  QCOMPARE(data.modification, QVariant("update"));
+  QCOMPARE(data.resistance, QVariant(0.2));
+  // Remove article link
+  QVERIFY(alnk.removeLink(pk));
   // Try to get a unexisting article link
-  pk.connectionStartId = 1;
-  pk.connectionEndId = 2;
   data = alnk.getLinkData(pk, ok);
   QVERIFY(ok);
   QVERIFY(data.isNull());
