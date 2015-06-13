@@ -53,6 +53,8 @@ struct mdtClArticleConnectorData : public mdtSqlRecord  /// \todo When all is ad
   /*! \brief Set key data
    *
    * If connector contains connections, they will also updated
+   *
+   * \pre key must at least have its articleId set.
    */
   void setKeyData(const mdtClArticleConnectorKeyData & key);
 
@@ -84,6 +86,8 @@ struct mdtClArticleConnectorData : public mdtSqlRecord  /// \todo When all is ad
    *
    * In key that given data contains, only id and connectionTypeFk are keeped.
    *  articleId and articleConnectorFk are set to match article connector data.
+   *
+   * \pre In keyData, articleId must allready benn set.
    */
   void addConnectionData(mdtClArticleConnectionData data);
 

@@ -59,9 +59,11 @@ QList<mdtClConnectorContactData> mdtClConnectorContactSelectionDialog::selectedC
   for(int row = 0; row < s.rowCount(); ++row){
     mdtClConnectorContactKeyData key;
     mdtClConnectorContactData data;
+    mdtClConnectorKeyData connectorFk;
     key.id = s.data(row, "Id_PK");
-    key.connectorFk.id = s.data(row, "Connector_Id_FK");
-    key.connectionTypeFk.code = s.data(row, "ConnectionType_Code_FK");
+    connectorFk.id = s.data(row, "Connector_Id_FK");
+    key.setConnectorFk(connectorFk);
+    key.setConnectionTypeCode(s.data(row, "ConnectionType_Code_FK"));
     data.setKeyData(key);
     data.name = s.data(row, "Name");
     dataList.append(data);

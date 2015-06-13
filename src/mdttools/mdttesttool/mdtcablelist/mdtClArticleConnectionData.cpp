@@ -24,19 +24,16 @@
 
 void mdtClArticleConnectionData::setKeyData(const mdtClArticleConnectionKeyData &key)
 {
-  Q_ASSERT( (key.articleConnectorFk.isNull()) || (key.articleConnectorFk.articleId == key.articleId) );
+  Q_ASSERT(!key.articleId().isNull());
+  Q_ASSERT( (key.articleConnectorFk().isNull()) || (key.articleConnectorFk().articleId() == key.articleId()) );
   pvKeyData = key;
 }
 
-void mdtClArticleConnectionData::setArticleConnectorFk(const mdtClArticleConnectorKeyData &key)
+void mdtClArticleConnectionData::setArticleConnectorFk(const mdtClArticleConnectorKeyData & fk)
 {
-  Q_ASSERT(key.articleId == pvKeyData.articleId);
-  pvKeyData.articleConnectorFk = key;
-}
-
-void mdtClArticleConnectionData::setConnectionType(const mdtClConnectionTypeKeyData &typeKey)
-{
-  pvKeyData.connectionTypeFk = typeKey;
+  Q_ASSERT(!fk.articleId().isNull());
+  Q_ASSERT(fk.articleId() == pvKeyData.articleId());
+  pvKeyData.setArticleConnectorFk(fk);
 }
 
 void mdtClArticleConnectionData::clear()

@@ -50,6 +50,7 @@ bool mdtClArticleConnectorSelectionDialog::select(QSqlDatabase db, const QVarian
 mdtClArticleConnectorKeyData mdtClArticleConnectorSelectionDialog::selectedArticleConnectorKey() const
 {
   mdtClArticleConnectorKeyData key;
+  mdtClConnectorKeyData connectorFk;
   QStringList fields;
 
   if(result() != Accepted){
@@ -59,8 +60,9 @@ mdtClArticleConnectorKeyData mdtClArticleConnectorSelectionDialog::selectedArtic
   auto s = selection(fields);
   Q_ASSERT(s.rowCount() == 1);
   key.id = s.data(0, "Id_PK");
-  key.articleId = s.data(0, "Article_Id_FK");
-  key.connectorFk.id = s.data(0, "Connector_Id_FK");
+  key.setArticleId(s.data(0, "Article_Id_FK"));
+  connectorFk.id = s.data(0, "Connector_Id_FK");
+  key.setConnectorFk(connectorFk);
 
   return key;
 }

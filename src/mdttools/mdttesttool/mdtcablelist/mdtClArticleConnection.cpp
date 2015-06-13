@@ -202,8 +202,8 @@ mdtClArticleConnectorKeyData mdtClArticleConnection::addArticleConnector(mdtClAr
     return key;
   }
   record.setValue("Id_PK", data.keyData().id);
-  record.setValue("Article_Id_FK", data.keyData().articleId);
-  record.setValue("Connector_Id_FK", data.keyData().connectorFk.id);
+  record.setValue("Article_Id_FK", data.keyData().articleId());
+  record.setValue("Connector_Id_FK", data.keyData().connectorFk().id);
   record.setValue("Name", data.name);
   // Save connector to database
   if(handleTransaction){
@@ -240,6 +240,7 @@ mdtClArticleConnectorKeyData mdtClArticleConnection::addArticleConnector(mdtClAr
 mdtClArticleConnectorData mdtClArticleConnection::getArticleConnectorData(mdtClArticleConnectorKeyData key, bool includeConnectionData, bool &ok)
 {
   mdtClArticleConnectorData data;
+  mdtClConnectorKeyData connectorFk;
   QList<QSqlRecord> dataList;
   QString sql;
 
@@ -253,8 +254,9 @@ mdtClArticleConnectorData mdtClArticleConnection::getArticleConnectorData(mdtClA
   }
   Q_ASSERT(dataList.size() == 1);
   // Set key data
-  key.articleId = dataList.at(0).value("Article_Id_FK");
-  key.connectorFk.id = dataList.at(0).value("Connector_Id_FK");
+  key.setArticleId(dataList.at(0).value("Article_Id_FK"));
+  connectorFk.id = dataList.at(0).value("Connector_Id_FK");
+  key.setConnectorFk(connectorFk);
   // Set article connector data
   data.setKeyData(key);
   data.name = dataList.at(0).value("Name");
@@ -335,7 +337,7 @@ void mdtClArticleConnection::addConnectionsToArticleConnector(mdtClArticleConnec
 {
   for(const auto & ccData : contactDataList){
     mdtClArticleConnectionData acData;
-    acData.setConnectionType(ccData.keyData().connectionTypeFk);
+    acData.setConnectionType(ccData.connectionType());
     acData.name = ccData.name;
     acnrData.addConnectionData(acData);
   }
@@ -349,9 +351,9 @@ void mdtClArticleConnection::fillRecord(mdtSqlRecord &record, const mdtClArticle
 
   record.clearValues();
   record.setValue("Id_PK", key.id);
-  record.setValue("Article_Id_FK", key.articleId);
-  record.setValue("ArticleConnector_Id_FK", key.articleConnectorFk.id);
-  record.setValue("ConnectionType_Code_FK", key.connectionTypeFk.code);
+  record.setValue("Article_Id_FK", key.articleId());
+  record.setValue("ArticleConnector_Id_FK", key.articleConnectorFk().id);
+  record.setValue("ConnectionType_Code_FK", key.connectionTypeFk().code);
   record.setValue("ArticleContactName", data.name);
   record.setValue("Resistance", data.resistance);
   record.setValue("IoType", data.ioType);
@@ -377,13 +379,20 @@ void mdtClArticleConnection::fillData(mdtClArticleConnectionData &data, const QS
   Q_ASSERT(record.contains("Connector_Id_FK")); // From Connector_tbl
 
   mdtClArticleConnectionKeyData key;
+  mdtClConnectorKeyData connectorFk;
+  mdtClArticleConnectorKeyData articleConnectorFk;
+
   // Fill key
   key.id = record.value("Id_PK");
-  key.articleId = record.value("Article_Id_FK");
-  key.articleConnectorFk.id = record.value("ArticleConnector_Id_FK");
-  key.articleConnectorFk.articleId = key.articleId;
-  key.articleConnectorFk.connectorFk.id = record.value("Connector_Id_FK");
-  key.connectionTypeFk.code = record.value("ConnectionType_Code_FK");
+  key.setArticleId(record.value("Article_Id_FK"));
+  articleConnectorFk.id = record.value("ArticleConnector_Id_FK");
+  articleConnectorFk.setArticleId(key.articleId());
+  connectorFk.id = record.value("Connector_Id_FK");
+  articleConnectorFk.setConnectorFk(connectorFk);
+  if(!articleConnectorFk.isNull()){
+    key.setArticleConnectorFk(articleConnectorFk);
+  }
+  key.setConnectionTypeCode(record.value("ConnectionType_Code_FK"));
   // Fill data
   data.setKeyData(key);
   data.name = record.value("ArticleContactName");

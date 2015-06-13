@@ -43,7 +43,7 @@ mdtClArticleConnectionDialog::mdtClArticleConnectionDialog(QWidget *parent, cons
   ///pbSelectArticleConnector->setEnabled(false);
   connect(pbSelectArticleConnector, SIGNAL(clicked()), this, SLOT(selectArticleConnector()));
   // Setup connection type selection combobox
-  cbConnectionType->setModel(new mdtClConnectionTypeModel(db));
+  cbConnectionType->setModel(new mdtClConnectionTypeModel(this, db));
   cbConnectionType->setModelColumn(1);
 }
 
@@ -55,7 +55,7 @@ mdtClArticleConnectionDialog::~mdtClArticleConnectionDialog()
 
 void mdtClArticleConnectionDialog::setData(const mdtClArticleConnectionData & data)
 {
-  Q_ASSERT(!data.keyData().articleId.isNull());
+  Q_ASSERT(!data.keyData().articleId().isNull());
 
   pvData = data;
   updateDialog();
@@ -68,11 +68,11 @@ mdtClArticleConnectionData mdtClArticleConnectionDialog::data() const
 
 void mdtClArticleConnectionDialog::selectArticleConnector()
 {
-  Q_ASSERT(!pvData.keyData().articleId.isNull());
+  Q_ASSERT(!pvData.keyData().articleId().isNull());
 
   mdtClArticleConnectorSelectionDialog dialog(this);
 
-  if(!dialog.select(pvDatabase, pvData.keyData().articleId)){
+  if(!dialog.select(pvDatabase, pvData.keyData().articleId())){
     displayError(dialog.lastError());
     return;
   }
@@ -106,14 +106,25 @@ void mdtClArticleConnectionDialog::setCurrentConnectionType(const QString& type)
   cbConnectionType->setCurrentIndex(-1);
 }
 
-void mdtClArticleConnectionDialog::setCurrentConnectionType(const mdtClConnectionTypeKeyData & type)
+// void mdtClArticleConnectionDialog::setCurrentConnectionType(const mdtClConnectionTypeKeyData & type)
+// {
+//   Q_ASSERT(dynamic_cast<mdtClConnectionTypeModel*>(cbConnectionType->model()) != nullptr);
+// 
+//   auto *model = static_cast<mdtClConnectionTypeModel*>(cbConnectionType->model());
+//   int idx;
+// 
+//   idx = model->row(type);
+//   cbConnectionType->setCurrentIndex(idx);
+// }
+
+void mdtClArticleConnectionDialog::setCurrentConnectionType(mdtClConnectionType_t t)
 {
   Q_ASSERT(dynamic_cast<mdtClConnectionTypeModel*>(cbConnectionType->model()) != nullptr);
 
   auto *model = static_cast<mdtClConnectionTypeModel*>(cbConnectionType->model());
   int idx;
 
-  idx = model->row(type);
+  idx = model->row(t);
   cbConnectionType->setCurrentIndex(idx);
 }
 
@@ -131,13 +142,13 @@ void mdtClArticleConnectionDialog::updateDialog()
   fld_FunctionFR->setText(pvData.functionFR.toString());
   fld_FunctionDE->setText(pvData.functionDE.toString());
   fld_FunctionIT->setText(pvData.functionIT.toString());
-  setCurrentConnectionType(pvData.keyData().connectionTypeFk);
+  setCurrentConnectionType(pvData.connectionType());
   // Update article connector data if one is set
   if(pvData.isPartOfArticleConnector()){
     mdtClArticleConnection acnx(pvDatabase);
     mdtClArticleConnectorData connectorData;
     bool ok;
-    connectorData = acnx.getArticleConnectorData(pvData.keyData().articleConnectorFk, false, ok);
+    connectorData = acnx.getArticleConnectorData(pvData.keyData().articleConnectorFk(), false, ok);
     if(ok){
       lbArticleConnectorName->setText(connectorData.name.toString());
     }else{
@@ -153,7 +164,7 @@ void mdtClArticleConnectionDialog::updateData()
   Q_ASSERT(model != nullptr);
 
   // Article connector FK was allready set by selectArticleConnector()
-  pvData.setConnectionType( model->keyData(cbConnectionType->currentIndex()) );
+  pvData.setConnectionType( model->keyData(cbConnectionType->currentIndex()).type() );
   if(sbConnectionResistance->value() < 0.0){
     pvData.resistance.clear();
   }else{
@@ -172,7 +183,7 @@ bool mdtClArticleConnectionDialog::checkData()
   QStringList missingItems;
 
   // Check connection type
-  if(pvData.keyData().connectionTypeFk.type() == mdtClConnectionType_t::Undefined){
+  if(pvData.connectionType() == mdtClConnectionType_t::Undefined){
     missingItems << tr("Connection type is not defined");
   }
   // Check connection name

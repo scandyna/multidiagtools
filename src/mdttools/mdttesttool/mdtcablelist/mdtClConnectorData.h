@@ -51,6 +51,8 @@ struct mdtClConnectorData : public mdtSqlRecord /// \todo When all is adapted, r
   }
 
   /*! \brief Set key data
+   *
+   * \pre key must not be null
    */
   void setKeyData(const mdtClConnectorKeyData & key);
 

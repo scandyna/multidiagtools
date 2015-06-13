@@ -51,19 +51,33 @@ struct mdtClArticleConnectionData : public mdtSqlRecord  /// \todo When all is a
 
   /*! \brief Set key data
    *
+   * \pre key must not be completely null. Its articleId and connectionTypeFk must be set.
    * \pre If key.articleConnectorFk is not null, key.articleConnectorFk.articleId must match key.articleId
    */
   void setKeyData(const mdtClArticleConnectionKeyData & key);
 
-  /*! \brief Set article connector FK
+  /*! \brief Set article connector FK (ArticleConnector_Id_FK)
    *
-   * \pre key.articleId must match keyData().articleId
+   * \pre fk must not be completely null.
+   *      At least, its articleId must be set.
+   * \pre If articleId is not null (i.e. was set with setArticleId()),
+   *      fk.articleId must match articleId
    */
-  void setArticleConnectorFk(const mdtClArticleConnectorKeyData & key);
+  void setArticleConnectorFk(const mdtClArticleConnectorKeyData & fk);
 
   /*! \brief Set connection type
    */
-  void setConnectionType(const mdtClConnectionTypeKeyData & typeKey);
+  void setConnectionType(mdtClConnectionType_t t)
+  {
+    pvKeyData.setConnectionType(t);
+  }
+
+  /*! \brief Get connection type
+   */
+  mdtClConnectionType_t connectionType() const
+  {
+    return pvKeyData.connectionTypeFk().type();
+  }
 
   /*! \brief Check if data is null
    *

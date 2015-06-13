@@ -54,11 +54,11 @@ class mdtClConnectionTypeModel : public QSqlQueryModel
    */
   mdtClConnectionTypeModel(QSqlDatabase db, const QLocale & locale = QLocale());
 
-  /*! \brief Get row that contains given key
+  /*! \brief Get row that contains given connection type
    *
    * \return Row of searched key or -1 if not found.
    */
-  int row(const mdtClConnectionTypeKeyData & key);
+  int row(mdtClConnectionType_t t);
 
   /*! \brief Get connection type key data for given row
    *

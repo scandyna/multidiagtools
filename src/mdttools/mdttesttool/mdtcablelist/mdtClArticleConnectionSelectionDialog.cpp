@@ -121,12 +121,18 @@ QList<mdtClArticleConnectionKeyData> mdtClArticleConnectionSelectionDialog::sele
   auto s = selection(fields);
   for(int row = 0; row < s.rowCount(); ++row){
     mdtClArticleConnectionKeyData key;
+    mdtClArticleConnectorKeyData articleConnectorFk;
+    mdtClConnectorKeyData connectorFk;
     key.id = s.data(row, "Id_PK");
-    key.articleId = s.data(row, "Article_Id_FK");
-    key.articleConnectorFk.articleId = s.data(row, "Article_Id_FK");
-    key.articleConnectorFk.id = s.data(row, "ArticleConnector_Id_FK");
-    key.articleConnectorFk.connectorFk.id = s.data(row, "Connector_Id_FK");
-    key.connectionTypeFk.code = s.data(row, "ConnectionType_Code_FK");
+    key.setArticleId(s.data(row, "Article_Id_FK"));
+    articleConnectorFk.id = s.data(row, "ArticleConnector_Id_FK");
+    articleConnectorFk.setArticleId(key.articleId());
+    connectorFk.id = s.data(row, "Connector_Id_FK");
+    articleConnectorFk.setConnectorFk(connectorFk);
+    if(!articleConnectorFk.isNull()){
+      key.setArticleConnectorFk(articleConnectorFk);
+    }
+    key.setConnectionTypeCode(s.data(row, "ConnectionType_Code_FK"));
     keyList.append(key);
   }
 

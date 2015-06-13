@@ -21,6 +21,21 @@
 #include "mdtClUnitConnectorData.h"
 #include <QString>
 
+void mdtClUnitConnectorData::setKeyData(const mdtClUnitConnectorKeyData &key)
+{
+  pvKeyData = key;
+}
+
+void mdtClUnitConnectorData::clear()
+{
+  pvKeyData.clear();
+  name.clear();
+}
+
+/*
+ * OLD stuff
+ */
+
 mdtClUnitConnectorData::mdtClUnitConnectorData()
 {
 }
@@ -65,13 +80,13 @@ void mdtClUnitConnectorData::clearValues()
   mdtSqlRecord::clearValues();
 }
 
-void mdtClUnitConnectorData::clear()
-{
-  pvConnectionDataList.clear();
-  pvArticleConnectorData.clear();
-  pvConnectorData.clear();
-  mdtSqlRecord::clear();
-}
+// void mdtClUnitConnectorData::clear()
+// {
+//   pvConnectionDataList.clear();
+//   pvArticleConnectorData.clear();
+//   pvConnectorData.clear();
+//   mdtSqlRecord::clear();
+// }
 
 
 void mdtClUnitConnectorData::setConnectionDataList(const QList<mdtClUnitConnectionData> & dataList) 
@@ -170,12 +185,12 @@ mdtClArticleConnectorData mdtClUnitConnectorData::articleConnectorData() const
   return pvArticleConnectorData;
 }
 
-bool mdtClUnitConnectorData::isBasedOnArticleConnector() const
-{
-  return !value("ArticleConnector_Id_FK").isNull();
-}
-
-bool mdtClUnitConnectorData::isBasedOnConnector() const
-{
-  return !value("Connector_Id_FK").isNull();
-}
+// bool mdtClUnitConnectorData::isBasedOnArticleConnector() const
+// {
+//   return !value("ArticleConnector_Id_FK").isNull();
+// }
+// 
+// bool mdtClUnitConnectorData::isBasedOnConnector() const
+// {
+//   return !value("Connector_Id_FK").isNull();
+// }

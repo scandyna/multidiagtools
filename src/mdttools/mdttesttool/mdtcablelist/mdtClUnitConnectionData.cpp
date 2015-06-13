@@ -34,7 +34,16 @@ void mdtClUnitConnectionData::setUnitConnectorFk(const mdtClUnitConnectorKeyData
 
 void mdtClUnitConnectionData::clear()
 {
-  
+  pvKeyData.clear();
+  name.clear();
+  resistance.clear();
+  schemaPage.clear();
+  signalName.clear();
+  swAddress.clear();
+  functionEN.clear();
+  functionFR.clear();
+  functionDE.clear();
+  functionIT.clear();
 }
 
 

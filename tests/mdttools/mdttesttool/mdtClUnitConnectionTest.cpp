@@ -66,6 +66,8 @@ void mdtClUnitConnectionTest::unitConnectorDataTest()
 {
   mdtClUnitConnectorKeyData key;
   mdtClUnitConnectorData data;
+  mdtClConnectorKeyData cnrKey;
+  mdtClArticleConnectorKeyData acnrKey;
 
   /*
    * Key data test
@@ -83,7 +85,7 @@ void mdtClUnitConnectionTest::unitConnectorDataTest()
   QVERIFY(!key.isNull());
   QVERIFY(key.isBasedOnConnector());
   key.articleConnectorFk.id = 4;
-  key.articleConnectorFk.articleId = 5;
+  ///key.articleConnectorFk.articleId = 5;
   QVERIFY(!key.articleConnectorFk.isNull());
   QVERIFY(key.isBasedOnArticleConnector());
   // Clear
@@ -96,6 +98,67 @@ void mdtClUnitConnectionTest::unitConnectorDataTest()
   /*
    * Data test
    */
+  // Initial state
+  QVERIFY(data.isNull());
+  QVERIFY(!data.isBasedOnArticleConnector());
+  QVERIFY(!data.isBasedOnArticleConnector());
+  // Set data for a free unit connector
+  key.clear();
+  key.id = 5;
+  key.unitId = 6;
+  data.setKeyData(key);
+  data.name = "X1";
+  QVERIFY(!data.isNull());
+  QVERIFY(!data.isBasedOnConnector());
+  QVERIFY(!data.isBasedOnArticleConnector());
+  // Clear
+  data.clear();
+  QVERIFY(data.name.isNull());
+  QVERIFY(data.isNull());
+  QVERIFY(!data.isBasedOnArticleConnector());
+  QVERIFY(!data.isBasedOnArticleConnector());
+  // Set data for unit connector based on a connector
+  key.clear();
+  cnrKey.clear();
+  cnrKey.id = 1;
+  key.id = 2;
+  key.unitId = 3;
+  key.connectorFk = cnrKey;
+  data.setKeyData(key);
+  data.name = "X2";
+  QVERIFY(!data.isNull());
+  QVERIFY(data.isBasedOnConnector());
+  QVERIFY(!data.isBasedOnArticleConnector());
+  // Clear
+  data.clear();
+  QVERIFY(data.name.isNull());
+  QVERIFY(data.isNull());
+  QVERIFY(!data.isBasedOnArticleConnector());
+  QVERIFY(!data.isBasedOnArticleConnector());
+  // Set data for a unit connector based on a free article connector
+  key.clear();
+  acnrKey.clear();
+  acnrKey.id = 1;
+  acnrKey.setArticleId(2);
+  key.id = 3;
+  key.unitId = 4;
+  key.articleConnectorFk = acnrKey;
+  QVERIFY(!acnrKey.isNull());
+  data.setKeyData(key);
+  data.name = "X3";
+  QVERIFY(!data.isNull());
+  QVERIFY(!data.isBasedOnConnector());
+  QVERIFY(data.isBasedOnArticleConnector());
+  // Clear
+  data.clear();
+  QVERIFY(data.name.isNull());
+  QVERIFY(data.isNull());
+  QVERIFY(!data.isBasedOnArticleConnector());
+  QVERIFY(!data.isBasedOnArticleConnector());
+  // Set data for a unit connector based on a article connector that is based on a connector
+  
+  // Clear
+  
   /// \todo complete...
   
 }
@@ -124,8 +187,8 @@ void mdtClUnitConnectionTest::unitConnectionDataTest()
   QVERIFY(!key.unitConnectorFk.isNull());
   QVERIFY(key.isPartOfUnitConnector());
   key.articleConnectionFk.id = 5;
-  key.articleConnectionFk.articleId = 6;
-  key.articleConnectionFk.connectionTypeFk.setType(mdtClConnectionType_t::Pin);
+/// \todo update  key.articleConnectionFk.articleId = 6;
+/// \todo update  key.articleConnectionFk.connectionTypeFk.setType(mdtClConnectionType_t::Pin);
   QVERIFY(!key.articleConnectionFk.isNull());
   QVERIFY(key.isBasedOnArticleConnection());
   // Clear
@@ -145,7 +208,88 @@ void mdtClUnitConnectionTest::unitConnectionDataTest()
   QVERIFY(data.isNull());
   QVERIFY(!data.isPartOfUnitConnector());
   QVERIFY(!data.isBasedOnArticleConnection());
-  
+  // Set data for a free unit connection
+  data.clear();
+  key.clear();
+  key.id = 5;
+  key.unitId = 6;
+  key.connectionTypeFk.setType(mdtClConnectionType_t::Socket);
+  data.setKeyData(key);
+  QVERIFY(!data.isNull());
+  QVERIFY(!data.isPartOfUnitConnector());
+  QVERIFY(!data.isBasedOnArticleConnection());
+  // Clear
+  data.clear();
+  QVERIFY(data.isNull());
+  QVERIFY(!data.isPartOfUnitConnector());
+  QVERIFY(!data.isBasedOnArticleConnection());
+  // Set data for a unit connection part of unit connector
+  key.clear();
+  key.id = 1;
+  key.unitId = 2;
+  key.unitConnectorFk.id = 3;
+  key.unitConnectorFk.unitId = 2;
+  key.connectionTypeFk.setType(mdtClConnectionType_t::Pin);
+  data.setKeyData(key);
+  QVERIFY(!data.isNull());
+  QVERIFY(data.isPartOfUnitConnector());
+  QVERIFY(!data.isBasedOnArticleConnection());
+  // Clear
+  data.clear();
+  QVERIFY(data.isNull());
+  QVERIFY(!data.isPartOfUnitConnector());
+  QVERIFY(!data.isBasedOnArticleConnection());
+  // Set data for a unit connection based on a article connection
+  key.clear();
+  key.id = 5;
+  key.unitId = 6;
+  key.articleConnectionFk.id = 7;
+  key.articleConnectionFk.articleId() = 8;
+/// \todo update    key.articleConnectionFk.connectionTypeFk.setType(mdtClConnectionType_t::Socket);
+  key.connectionTypeFk.setType(mdtClConnectionType_t::Socket);
+  data.setKeyData(key);
+  QVERIFY(!data.isNull());
+  QVERIFY(!data.isPartOfUnitConnector());
+  QVERIFY(data.isBasedOnArticleConnection());
+  // Clear
+  data.clear();
+  QVERIFY(data.isNull());
+  QVERIFY(!data.isPartOfUnitConnector());
+  QVERIFY(!data.isBasedOnArticleConnection());
+  // Data members set/clear
+  key.clear();
+  key.id = 1;
+  key.unitId = 2;
+  key.connectionTypeFk.setType(mdtClConnectionType_t::Terminal);
+  data.setKeyData(key);
+  data.name = "A";
+  data.resistance = 1.0;
+  data.schemaPage = "20";
+  data.signalName = "SIG_A";
+  data.swAddress = 25;
+  data.functionEN = "EN";
+  data.functionFR = "FR";
+  data.functionDE = "DE";
+  data.functionIT = "IT";
+  QVERIFY(!data.isNull());
+  QVERIFY(!data.isPartOfUnitConnector());
+  QVERIFY(!data.isBasedOnArticleConnection());
+  // Clear
+  data.clear();
+  QVERIFY(data.name.isNull());
+  QVERIFY(data.resistance.isNull());
+  QVERIFY(data.schemaPage.isNull());
+  QVERIFY(data.signalName.isNull());
+  QVERIFY(data.swAddress.isNull());
+  QVERIFY(data.functionEN.isNull());
+  QVERIFY(data.functionFR.isNull());
+  QVERIFY(data.functionDE.isNull());
+  QVERIFY(data.functionIT.isNull());
+}
+
+void mdtClUnitConnectionTest::unitConnectorWithConnectionsTest()
+{
+  QFAIL("Not allready implemented");
 }
 
 

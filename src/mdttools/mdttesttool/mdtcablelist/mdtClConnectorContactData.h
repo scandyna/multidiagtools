@@ -35,13 +35,55 @@ struct mdtClConnectorContactKeyData
    */
   QVariant id;
 
+ private:
+
   /*! \brief Connector ID (Connector_Id_FK)
    */
-  mdtClConnectorKeyData connectorFk;
+  mdtClConnectorKeyData pvConnectorFk;
 
   /*! \brief Connection type (ConnectionType_Code_FK)
    */
-  mdtClConnectionTypeKeyData connectionTypeFk;
+  mdtClConnectionTypeKeyData pvConnectionTypeFk;
+
+ public:
+
+  /*! \brief Set connector FK (Connector_Id_FK)
+   *
+   * \pre fk must not be null.
+   */
+  void setConnectorFk(const mdtClConnectorKeyData & fk)
+  {
+    Q_ASSERT(!fk.isNull());
+    pvConnectorFk = fk;
+  }
+
+  /*! \brief Get connector FK (Connector_Id_FK)
+   */
+  inline mdtClConnectorKeyData connectorFk() const
+  {
+    return pvConnectorFk;
+  }
+
+  /*! \brief Set connection type
+   */
+  void setConnectionType(mdtClConnectionType_t t)
+  {
+    pvConnectionTypeFk.setType(t);
+  }
+
+  /*! \brief Set connection type code (ConnectionType_Code_FK)
+   */
+  void setConnectionTypeCode(const QVariant & c)
+  {
+    pvConnectionTypeFk.code = c;
+  }
+
+  /*! \brief Get connection type FK
+   */
+  inline mdtClConnectionTypeKeyData connectionTypeFk() const
+  {
+    return pvConnectionTypeFk;
+  }
 
   /*! \brief Check if key is null
    *
@@ -49,7 +91,7 @@ struct mdtClConnectorContactKeyData
    */
   bool isNull() const
   {
-    return (id.isNull() || connectionTypeFk.isNull() || connectionTypeFk.isNull());
+    return (id.isNull() || pvConnectorFk.isNull() || pvConnectionTypeFk.isNull());
   }
 
   /*! \brief Clear key
@@ -57,8 +99,8 @@ struct mdtClConnectorContactKeyData
   void clear()
   {
     id.clear();
-    connectorFk.clear();
-    connectionTypeFk.clear();
+    pvConnectorFk.clear();
+    pvConnectionTypeFk.clear();
   }
 };
 
@@ -94,14 +136,21 @@ struct mdtClConnectorContactData
    */
   void setConnectorFk(const mdtClConnectorKeyData & fk)
   {
-    pvKeyData.connectorFk = fk;
+    pvKeyData.setConnectorFk(fk);
   }
 
-  /*! \brief Set connection type foreign key data
+  /*! \brief Set connection type
    */
-  void setConnectionTypeFk(const mdtClConnectionTypeKeyData & fk)
+  void setConnectionType(mdtClConnectionType_t t)
   {
-    pvKeyData.connectionTypeFk = fk;
+    pvKeyData.setConnectionType(t);
+  }
+
+  /*! \brief Get connection type
+   */
+  mdtClConnectionType_t connectionType() const
+  {
+    return pvKeyData.connectionTypeFk().type();
   }
 
   /*! \brief Contact name (Name)

@@ -103,6 +103,7 @@ mdtClConnectorContactData mdtClConnector::getContactData(const mdtClConnectorCon
   QList<QSqlRecord> dataList;
   QString sql;
   mdtClConnectorContactKeyData keyData;
+  mdtClConnectorKeyData connectorFk;
 
   sql = "SELECT * FROM ConnectorContact_tbl WHERE Id_PK = " + key.id.toString();
   dataList = getDataList<QSqlRecord>(sql, ok);
@@ -114,8 +115,11 @@ mdtClConnectorContactData mdtClConnector::getContactData(const mdtClConnectorCon
   }
   Q_ASSERT(dataList.size() == 1);
   keyData.id = dataList.at(0).value("Id_PK");
-  keyData.connectorFk.id = dataList.at(0).value("Connector_Id_FK");
-  keyData.connectionTypeFk.code = dataList.at(0).value("ConnectionType_Code_FK");
+  connectorFk.id = dataList.at(0).value("Connector_Id_FK");
+  if(!connectorFk.isNull()){
+    keyData.setConnectorFk(connectorFk);
+  }
+  keyData.setConnectionTypeCode(dataList.at(0).value("ConnectionType_Code_FK"));
   data.setKeyData(keyData);
   data.name = dataList.at(0).value("Name");
 
@@ -172,9 +176,13 @@ QList<mdtClConnectorContactData> mdtClConnector::getContactDataList(const mdtClC
   for(const auto & record : recordList){
     mdtClConnectorContactData data;
     mdtClConnectorContactKeyData keyData;
+    mdtClConnectorKeyData connectorFk;
     keyData.id = record.value("Id_PK");
-    keyData.connectorFk.id = record.value("Connector_Id_FK");
-    keyData.connectionTypeFk.code = record.value("ConnectionType_Code_FK");
+    connectorFk.id = record.value("Connector_Id_FK");
+    if(!connectorFk.isNull()){
+      keyData.setConnectorFk(connectorFk);
+    }
+    keyData.setConnectionTypeCode(record.value("ConnectionType_Code_FK"));
     data.setKeyData(keyData);
     data.name = record.value("Name");
     dataList.append(data);
@@ -297,7 +305,7 @@ void mdtClConnector::fillRecord(mdtSqlRecord &record, const mdtClConnectorContac
 
   record.clearValues();
   record.setValue("Id_PK", data.keyData().id);
-  record.setValue("Connector_Id_FK", data.keyData().connectorFk.id);
-  record.setValue("ConnectionType_Code_FK", data.keyData().connectionTypeFk.code);
+  record.setValue("Connector_Id_FK", data.keyData().connectorFk().id);
+  record.setValue("ConnectionType_Code_FK", data.keyData().connectionTypeFk().code);
   record.setValue("Name", data.name);
 }

@@ -34,13 +34,47 @@ struct mdtClArticleConnectorKeyData
    */
   QVariant id;
 
-  /*! \brief Article ID (Article_Id_FK)
-   */
-  QVariant articleId;
+ private:
 
-  /*! \brief Connector ID (Connector_Id_FK)
+  /*! \brief Article ID (Article_Id_FK)
+   *
+   * \todo mettre private
    */
-  mdtClConnectorKeyData connectorFk;
+  QVariant pvArticleId;
+
+  /*! \brief Connector FK (Connector_Id_FK)
+   */
+  mdtClConnectorKeyData pvConnectorFk;
+
+ public:
+
+  /*! \brief Set article ID (Article_Id_FK)
+   */
+  void setArticleId(const QVariant & aid)
+  {
+    pvArticleId = aid;
+  }
+
+  /*! \brief Get article ID (Article_Id_FK)
+   */
+  inline QVariant articleId() const
+  {
+    return pvArticleId;
+  }
+
+  /*! \brief Set connector FK (Connector_Id_FK)
+   */
+  void setConnectorFk(const mdtClConnectorKeyData & fk)
+  {
+    pvConnectorFk = fk;
+  }
+
+  /*! \brief Get connector FK (Connector_Id_FK)
+   */
+  inline mdtClConnectorKeyData connectorFk() const
+  {
+    return pvConnectorFk;
+  }
 
   /*! \brief Check if key data is null
    *
@@ -49,14 +83,14 @@ struct mdtClArticleConnectorKeyData
    */
   bool isNull() const
   {
-    return (id.isNull() || articleId.isNull());
+    return (id.isNull() || pvArticleId.isNull());
   }
 
   /*! \brief Check if key data is based on a connector (from Connector_tbl)
    */
   bool isBasedOnConnector() const
   {
-    return !connectorFk.isNull();
+    return !pvConnectorFk.isNull();
   }
 
   /*! \brief Clear key data
@@ -64,8 +98,8 @@ struct mdtClArticleConnectorKeyData
   void clear()
   {
     id.clear();
-    articleId.clear();
-    connectorFk.clear();
+    pvArticleId.clear();
+    pvConnectorFk.clear();
   }
 };
 

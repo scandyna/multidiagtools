@@ -54,10 +54,12 @@ mdtClConnectionTypeModel::mdtClConnectionTypeModel(QSqlDatabase db, const QLocal
 {
 }
 
-int mdtClConnectionTypeModel::row(const mdtClConnectionTypeKeyData & key)
+int mdtClConnectionTypeModel::row(mdtClConnectionType_t t)
 {
   int row;
+  mdtClConnectionTypeKeyData key;
 
+  key.setType(t);
   if(isInError()){
     return -1;
   }

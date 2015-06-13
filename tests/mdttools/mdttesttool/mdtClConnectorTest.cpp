@@ -175,15 +175,11 @@ void mdtClConnectorTest::connectionTypeModelTest()
 
   // Initial state
   QCOMPARE(m.rowCount(), 3);
-  // Check row of key
-  key.code = "T";
-  QVERIFY(m.row(key) >= 0);
-  key.code = "S";
-  QVERIFY(m.row(key) >= 0);
-  key.code = "P";
-  QVERIFY(m.row(key) >= 0);
-  key.code = "O";
-  QVERIFY(m.row(key) < 0);
+  // Check row of type
+  QVERIFY(m.row(mdtClConnectionType_t::Terminal) >= 0);
+  QVERIFY(m.row(mdtClConnectionType_t::Pin) >= 0);
+  QVERIFY(m.row(mdtClConnectionType_t::Socket) >= 0);
+  QVERIFY(m.row(mdtClConnectionType_t::Undefined) < 0);
   // Check getting key data of row
   QVERIFY(m.keyData(-1).isNull());
   QVERIFY(!m.keyData(0).isNull());
@@ -196,6 +192,7 @@ void mdtClConnectorTest::contactDataTest()
 {
   mdtClConnectorContactKeyData keyData;
   mdtClConnectorContactData data;
+  mdtClConnectorKeyData connectorFk;
 
   /*
    * Key data test
@@ -205,15 +202,16 @@ void mdtClConnectorTest::contactDataTest()
   // Set keys
   keyData.id = 1;
   QVERIFY(keyData.isNull());
-  keyData.connectorFk.id = 2;
+  connectorFk.id = 2;
+  keyData.setConnectorFk(connectorFk);
   QVERIFY(keyData.isNull());
-  keyData.connectionTypeFk.code = "P";
+  keyData.setConnectionType(mdtClConnectionType_t::Pin);
   QVERIFY(!keyData.isNull());
   // Clear
   keyData.clear();
   QVERIFY(keyData.id.isNull());
-  QVERIFY(keyData.connectorFk.isNull());
-  QVERIFY(keyData.connectionTypeFk.isNull());
+  QVERIFY(keyData.connectorFk().isNull());
+  QVERIFY(keyData.connectionTypeFk().isNull());
   QVERIFY(keyData.isNull());
   /*
    * Data test
@@ -221,17 +219,21 @@ void mdtClConnectorTest::contactDataTest()
   // Initial state
   QVERIFY(data.isNull());
   // Set data
+  connectorFk.clear();
   keyData.clear();
   keyData.id = 3;
-  keyData.connectorFk.id = 4;
-  keyData.connectionTypeFk.code = "S";
+  connectorFk.id = 4;
+  keyData.setConnectorFk(connectorFk);
+  keyData.setConnectionType(mdtClConnectionType_t::Socket);
   data.setKeyData(keyData);
   data.name = "Name 3";
   QVERIFY(!data.isNull());
+  QVERIFY(data.connectionType() == mdtClConnectionType_t::Socket);
   // Clear
   data.clear();
   QVERIFY(data.isNull());
   QVERIFY(data.name.isNull());
+  QVERIFY(data.connectionType() == mdtClConnectionType_t::Undefined);
 }
 
 void mdtClConnectorTest::contactAddGetRemoveTest()
@@ -253,8 +255,8 @@ void mdtClConnectorTest::contactAddGetRemoveTest()
    * Setup and add contact
    */
   contactKey.clear();
-  contactKey.connectorFk = connectorKey;
-  contactKey.connectionTypeFk.code = "S";
+  contactKey.setConnectorFk(connectorKey);
+  contactKey.setConnectionType(mdtClConnectionType_t::Socket);
   contactData.setKeyData(contactKey);
   contactData.name = "A";
   contactKey = cnr.addContact(contactData, true);
@@ -264,8 +266,8 @@ void mdtClConnectorTest::contactAddGetRemoveTest()
   QVERIFY(ok);
   QVERIFY(!contactData.isNull());
   QCOMPARE(contactData.keyData().id, contactKey.id);
-  QCOMPARE(contactData.keyData().connectorFk.id, connectorKey.id);
-  QCOMPARE(contactData.keyData().connectionTypeFk.code, QVariant("S"));
+  QCOMPARE(contactData.keyData().connectorFk().id, connectorKey.id);
+  QCOMPARE(contactData.keyData().connectionTypeFk().code, QVariant("S"));
   QCOMPARE(contactData.name, QVariant("A"));
   /*
    * Remove conact and connector
@@ -313,7 +315,7 @@ void mdtClConnectorTest::connectorDataTest()
   contactData.name = "A";
   data.addContactData(contactData);
   QCOMPARE(data.contactDataList().size(), 1);
-  QCOMPARE(data.contactDataList().at(0).keyData().connectorFk.id, QVariant(1));
+  QCOMPARE(data.contactDataList().at(0).keyData().connectorFk().id, QVariant(1));
   QCOMPARE(data.contactDataList().at(0).name, QVariant("A"));
   // Clear
   data.clear();
@@ -370,7 +372,7 @@ void mdtClConnectorTest::connectorAddGetRemoveTest()
   data.manufacturerConfigCode = "Manufacturer cfg 2";
   data.manufacturerArticleCode = "Manufacturer art 2";
   // Add contacts
-  contactKey.connectionTypeFk.setType(mdtClConnectionType_t::Pin);
+  contactKey.setConnectionType(mdtClConnectionType_t::Pin);
   contactData.setKeyData(contactKey);
   contactData.name = "A";
   data.addContactData(contactData);
@@ -389,9 +391,9 @@ void mdtClConnectorTest::connectorAddGetRemoveTest()
   QCOMPARE(data.manufacturerConfigCode, QVariant("Manufacturer cfg 2"));
   QCOMPARE(data.manufacturerArticleCode, QVariant("Manufacturer art 2"));
   QCOMPARE(data.contactDataList().size(), 2);
-  QVERIFY(data.contactDataList().at(0).keyData().connectionTypeFk.type() == mdtClConnectionType_t::Pin);
+  QVERIFY(data.contactDataList().at(0).connectionType() == mdtClConnectionType_t::Pin);
   QCOMPARE(data.contactDataList().at(0).name, QVariant("A"));
-  QVERIFY(data.contactDataList().at(1).keyData().connectionTypeFk.type() == mdtClConnectionType_t::Pin);
+  QVERIFY(data.contactDataList().at(1).connectionType() == mdtClConnectionType_t::Pin);
   QCOMPARE(data.contactDataList().at(1).name, QVariant("B"));
   // Get connector back and check - do not inlude contacts
   data = cnr.getConnectorData(key, false, ok);

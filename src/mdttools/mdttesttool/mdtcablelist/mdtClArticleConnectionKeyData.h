@@ -35,17 +35,86 @@ struct mdtClArticleConnectionKeyData
    */
   QVariant id;
 
+ private:
+
   /*! \brief Article ID (Article_Id_FK)
    */
-  QVariant articleId;
+  QVariant pvArticleId;
 
   /*! \brief Article connector FK (ArticleConnector_Id_FK)
    */
-  mdtClArticleConnectorKeyData articleConnectorFk;
+  mdtClArticleConnectorKeyData pvArticleConnectorFk;
 
   /*! \brief Connector FK (Connector_Id_FK)
    */
-  mdtClConnectionTypeKeyData connectionTypeFk;
+  mdtClConnectionTypeKeyData pvConnectionTypeFk;
+
+ public:
+
+  /*! \brief Set article ID (Article_Id_FK)
+   *
+   * \pre articleConnectorFk must not allready been set
+   */
+  void setArticleId(const QVariant & aid)
+  {
+    /*
+     * If a article connector data/key is created for adding in database,
+     * its id is not allready set, so pvArticleConnectorFk is allays null.
+     * To check if pvArticleConnectorFk was set, we use the only mandatory field
+     * that is needed for this case: articleId
+     */
+    Q_ASSERT(pvArticleConnectorFk.articleId().isNull());
+    pvArticleId = aid;
+  }
+
+  /*! \brief Get article ID (Article_Id_FK)
+   */
+  inline QVariant articleId() const
+  {
+    return pvArticleId;
+  }
+
+  /*! \brief Set article connector FK (ArticleConnector_Id_FK)
+   *
+   * \pre fk must not be completely null.
+   *      At least, its articleId must be set.
+   * \pre If articleId is not null (i.e. was set with setArticleId()),
+   *      fk.articleId must match articleId
+   */
+  void setArticleConnectorFk(const mdtClArticleConnectorKeyData & fk)
+  {
+    Q_ASSERT(!fk.articleId().isNull());
+    Q_ASSERT(fk.articleId() == pvArticleId);
+    pvArticleConnectorFk = fk;
+  }
+
+  /*! \brief Get article connector FK (ArticleConnector_Id_FK)
+   */
+  inline mdtClArticleConnectorKeyData articleConnectorFk() const
+  {
+    return pvArticleConnectorFk;
+  }
+
+  /*! \brief Set connection type
+   */
+  void setConnectionType(mdtClConnectionType_t t)
+  {
+    pvConnectionTypeFk.setType(t);
+  }
+
+  /*! \brief Set connection type code (ConnectionType_Code_FK)
+   */
+  void setConnectionTypeCode(const QVariant & c)
+  {
+    pvConnectionTypeFk.code = c;
+  }
+
+  /*! \brief Get connection type FK
+   */
+  inline mdtClConnectionTypeKeyData connectionTypeFk() const
+  {
+    return pvConnectionTypeFk;
+  }
 
   /*! \brief Check if key data is null
    *
@@ -55,7 +124,7 @@ struct mdtClArticleConnectionKeyData
    */
   bool isNull() const
   {
-    return (id.isNull() || articleId.isNull() || connectionTypeFk.isNull());
+    return (id.isNull() || pvArticleId.isNull() || pvConnectionTypeFk.isNull());
   }
 
   /*! \brief Clear key data
@@ -63,16 +132,16 @@ struct mdtClArticleConnectionKeyData
   void clear()
   {
     id.clear();
-    articleId.clear();
-    articleConnectorFk.clear();
-    connectionTypeFk.clear();
+    pvArticleId.clear();
+    pvArticleConnectorFk.clear();
+    pvConnectionTypeFk.clear();
   }
 
   /*! \brief Check if article connection key is part of a article connector
    */
   bool isPartOfArticleConnector() const
   {
-    return !articleConnectorFk.isNull();
+    return !pvArticleConnectorFk.isNull();
   }
 };
 

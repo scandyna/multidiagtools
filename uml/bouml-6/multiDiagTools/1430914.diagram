@@ -14,11 +14,16 @@ classcanvas 128258 class_ref 1639682 // mdtClUnitConnectionKeyData
 end
 classcanvas 128386 class_ref 1113858 // mdtClUnitConnectionData
   classdiagramsettings member_max_width 0 end
-  xyz 534.4 315.6 3005
+  xyz 535.4 317.6 3005
 end
 relationcanvas 128514 relation_ref 1371906 // <directional composition>
-  from ref 128130 z 3006 stereotype "<<list>>" xyz 433.5 488.5 3006 to ref 128386
-  role_a_pos 415 470 3000 no_role_b
-  multiplicity_a_pos 518 500 3000 no_multiplicity_b
+  from ref 128130 z 3006 stereotype "<<list>>" xyz 433 499 3006 to ref 128386
+  role_a_pos 416 485 3000 no_role_b
+  multiplicity_a_pos 519 515 3000 no_multiplicity_b
+end
+relationcanvas 128642 relation_ref 2007810 // <unidirectional association>
+  from ref 128258 z 2001 to ref 128002
+  role_a_pos 377 128 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
 end
 end

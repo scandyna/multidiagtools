@@ -189,8 +189,8 @@ void mdtClArticleEditor::addConnection()
   mdtClArticleConnectionDialog dialog(this, database());
 
   // Setup data
-  key.articleId = currentArticleId();
-  if(key.articleId.isNull()){
+  key.setArticleId(currentArticleId());
+  if(key.articleId().isNull()){
     return;
   }
   data.setKeyData(key);
@@ -332,12 +332,12 @@ void mdtClArticleEditor::addConnector()
 //   mdtClConnectorKeyData baseConnectorKey;
   QList<mdtClConnectorContactData> selectedContacts;
   mdtClConnectorContactSelectionDialog ccsDialog(this);
-  mdtClArticleConnectorKeyData connectorKey;
-  mdtClArticleConnectorData connectorData;
+  mdtClArticleConnectorKeyData articleConnectorKey;
+  mdtClArticleConnectorData articleConnectorData;
 
   // Get current article ID
-  connectorKey.articleId = currentArticleId();
-  if(connectorKey.articleId.isNull()){
+  articleConnectorKey.setArticleId(currentArticleId());
+  if(articleConnectorKey.articleId().isNull()){
     return;
   }
   // Let user choose a base connector
@@ -349,23 +349,23 @@ void mdtClArticleEditor::addConnector()
   if(csDialog.exec() != QDialog::Accepted){
     return;
   }
-  connectorKey.connectorFk = csDialog.selectedConnectorKey();
-  if(connectorKey.connectorFk.isNull()){
+  articleConnectorKey.setConnectorFk( csDialog.selectedConnectorKey() );
+  if(articleConnectorKey.connectorFk().isNull()){
     return;
   }
-  connectorData.setKeyData(connectorKey);
+  articleConnectorData.setKeyData(articleConnectorKey);
   // Let user give a connector name
   QInputDialog dialog;
   dialog.setLabelText(tr("Connector name:"));
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
-  connectorData.name = dialog.textValue().trimmed();
-  if(connectorData.name.toString().isEmpty()){
+  articleConnectorData.name = dialog.textValue().trimmed();
+  if(articleConnectorData.name.toString().isEmpty()){
     return;
   }
   // Let user choose connector contacts
-  if(!ccsDialog.select(database(), connectorKey.connectorFk)){
+  if(!ccsDialog.select(database(), articleConnectorKey.connectorFk())){
     pvLastError = ccsDialog.lastError();
     displayLastError();
     return;
@@ -378,9 +378,9 @@ void mdtClArticleEditor::addConnector()
     return;
   }
   // Add connection based on selected base connector contacts
-  acnx.addConnectionsToArticleConnector(connectorData, selectedContacts);
+  acnx.addConnectionsToArticleConnector(articleConnectorData, selectedContacts);
   // Add connector to database
-  if(acnx.addArticleConnector(connectorData, true).isNull()){
+  if(acnx.addArticleConnector(articleConnectorData, true).isNull()){
     pvLastError = acnx.lastError();
     displayLastError();
     return;

@@ -42,8 +42,8 @@ class mdtClUnitConnectionTest : public mdtTest
   void cleanupTestCase();
 
   void unitConnectorDataTest();
-
   void unitConnectionDataTest();
+  void unitConnectorWithConnectionsTest();
 
  private:
 

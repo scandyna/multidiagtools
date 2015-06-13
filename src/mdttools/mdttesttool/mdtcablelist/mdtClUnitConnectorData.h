@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,6 +22,8 @@
 #define MDT_CL_UNIT_CONNECTOR_DATA_H
 
 #include "mdtSqlRecord.h"
+
+#include "mdtClUnitConnectorKeyData.h"
 #include "mdtClUnitConnectionData.h"
 #include "mdtClConnectorData.h"
 #include "mdtClArticleConnectorData.h"
@@ -33,8 +35,58 @@
  *
  * Permit to echange data with UnitConnector_tbl and UnitConnection_tbl.
  */
-class mdtClUnitConnectorData : public mdtSqlRecord
+struct mdtClUnitConnectorData : public mdtSqlRecord  /// \todo remove this inheritance once all is done
 {
+ private:
+
+  /*! \brief Key data
+   */
+  mdtClUnitConnectorKeyData pvKeyData;
+
+ public:
+
+  /*! \brief Get key data
+   */
+  inline mdtClUnitConnectorKeyData keyData() const
+  {
+    return pvKeyData;
+  }
+
+  /*! \brief Set key data
+   */
+  void setKeyData(const mdtClUnitConnectorKeyData & key);
+
+  /*! \brief Check if unit connector data is null
+   *
+   * Data is null if key data is null
+   */
+  inline bool isNull() const
+  {
+    return pvKeyData.isNull();
+  }
+
+  /*! \brief Clear data
+   */
+  void clear();
+
+  /*! \brief Check if unit connector is based on a connector (from Connector_tbl)
+   */
+  inline bool isBasedOnConnector() const
+  {
+    return pvKeyData.isBasedOnConnector();
+  }
+
+  /*! \brief Check if unit connector is based on a article connector
+   */
+  inline bool isBasedOnArticleConnector() const
+  {
+    return pvKeyData.isBasedOnArticleConnector();
+  }
+
+  /*! \brief Connector name (Name)
+   */
+  QVariant name;
+
  public:
 
   /*! \brief Construct a empty mdtClUnitConnectorData
@@ -68,7 +120,7 @@ class mdtClUnitConnectorData : public mdtSqlRecord
    * Will clear values, including connection data.
    *  Fields are also removed.
    */
-  void clear();
+//   void clear();
 
   /*! \brief Add a list of connection data
    *
@@ -142,11 +194,11 @@ class mdtClUnitConnectorData : public mdtSqlRecord
 
   /*! \brief Check if unit connector is based on a article connector
    */
-  bool isBasedOnArticleConnector() const;
+//   bool isBasedOnArticleConnector() const;
 
   /*! \brief Check if unit connector is based on a connector (from Connector_tbl)
    */
-  bool isBasedOnConnector() const;
+//   bool isBasedOnConnector() const;
 
  private:
 

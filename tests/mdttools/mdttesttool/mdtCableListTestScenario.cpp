@@ -178,12 +178,12 @@ void mdtCableListTestScenario::createTestConnectors()
   contactData.clear();
   contactKey.clear();
   contactKey.id = 300;
-  contactKey.connectionTypeFk.code = "P";
+  contactKey.setConnectionType(mdtClConnectionType_t::Pin);
   contactData.setKeyData(contactKey);
   connectorData.addContactData(contactData);
   // Add contact 301
   contactKey.id = 301;
-  contactKey.connectionTypeFk.code = "S";
+  contactKey.setConnectionType(mdtClConnectionType_t::Socket);
   contactData.setKeyData(contactKey);
   connectorData.addContactData(contactData);
   // Add connector to DB
@@ -195,11 +195,11 @@ void mdtCableListTestScenario::createTestConnectors()
   QCOMPARE(connectorData.keyData().id, QVariant(3));
   QCOMPARE(connectorData.contactDataList().size(), 2);
   QCOMPARE(connectorData.contactDataList().at(0).keyData().id, QVariant(300));
-  QCOMPARE(connectorData.contactDataList().at(0).keyData().connectorFk.id, QVariant(3));
-  QVERIFY(connectorData.contactDataList().at(0).keyData().connectionTypeFk.type() == mdtClConnectionType_t::Pin);
+  QCOMPARE(connectorData.contactDataList().at(0).keyData().connectorFk().id, QVariant(3));
+  QVERIFY(connectorData.contactDataList().at(0).connectionType() == mdtClConnectionType_t::Pin);
   QCOMPARE(connectorData.contactDataList().at(1).keyData().id, QVariant(301));
-  QCOMPARE(connectorData.contactDataList().at(1).keyData().connectorFk.id, QVariant(3));
-  QVERIFY(connectorData.contactDataList().at(1).keyData().connectionTypeFk.type() == mdtClConnectionType_t::Socket);
+  QCOMPARE(connectorData.contactDataList().at(1).keyData().connectorFk().id, QVariant(3));
+  QVERIFY(connectorData.contactDataList().at(1).connectionType() == mdtClConnectionType_t::Socket);
 
   
 /*
@@ -370,8 +370,8 @@ void mdtCableListTestScenario::createTestArticleConnections()
   connectionData.clear();
   key.clear();
   key.id = 10;
-  key.articleId = 1;
-  key.connectionTypeFk.setType(mdtClConnectionType_t::Terminal);
+  key.setArticleId(1);
+  key.setConnectionType(mdtClConnectionType_t::Terminal);
   connectionData.setKeyData(key);
   connectionData.name = "10";
   connectionData.resistance = 0.1;
@@ -380,8 +380,8 @@ void mdtCableListTestScenario::createTestArticleConnections()
   connectionData.clear();
   key.clear();
   key.id = 20;
-  key.articleId = 2;
-  key.connectionTypeFk.setType(mdtClConnectionType_t::Terminal);
+  key.setArticleId(2);
+  key.setConnectionType(mdtClConnectionType_t::Terminal);
   connectionData.setKeyData(key);
   connectionData.name = "20";
   connectionData.resistance = 0.2;
@@ -390,8 +390,8 @@ void mdtCableListTestScenario::createTestArticleConnections()
   connectionData.clear();
   key.clear();
   key.id = 21;
-  key.articleId = 2;
-  key.connectionTypeFk.setType(mdtClConnectionType_t::Terminal);
+  key.setArticleId(2);
+  key.setConnectionType(mdtClConnectionType_t::Terminal);
   connectionData.setKeyData(key);
   connectionData.name = "21";
   connectionData.resistance = 0.21;
@@ -400,8 +400,8 @@ void mdtCableListTestScenario::createTestArticleConnections()
   connectionData.clear();
   key.clear();
   key.id = 22;
-  key.articleId = 2;
-  key.connectionTypeFk.setType(mdtClConnectionType_t::Socket);
+  key.setArticleId(2);
+  key.setConnectionType(mdtClConnectionType_t::Socket);
   connectionData.setKeyData(key);
   connectionData.name = "22";
   connectionData.resistance = 0.22;
@@ -415,8 +415,8 @@ void mdtCableListTestScenario::createTestArticleConnections()
   connectionData = acnx.getArticleConnectionData(key, ok);
   QVERIFY(ok);
   QCOMPARE(connectionData.keyData().id, QVariant(10));
-  QCOMPARE(connectionData.keyData().articleId, QVariant(1));
-  QVERIFY(connectionData.keyData().connectionTypeFk.type() == mdtClConnectionType_t::Terminal);
+  QCOMPARE(connectionData.keyData().articleId(), QVariant(1));
+  QVERIFY(connectionData.connectionType() == mdtClConnectionType_t::Terminal);
   QCOMPARE(connectionData.name, QVariant("10"));
   QCOMPARE(connectionData.resistance, QVariant(0.1));
   // Check contact ID 20
@@ -425,8 +425,8 @@ void mdtCableListTestScenario::createTestArticleConnections()
   connectionData = acnx.getArticleConnectionData(key, ok);
   QVERIFY(ok);
   QCOMPARE(connectionData.keyData().id, QVariant(20));
-  QCOMPARE(connectionData.keyData().articleId, QVariant(2));
-  QVERIFY(connectionData.keyData().connectionTypeFk.type() == mdtClConnectionType_t::Terminal);
+  QCOMPARE(connectionData.keyData().articleId(), QVariant(2));
+  QVERIFY(connectionData.connectionType() == mdtClConnectionType_t::Terminal);
   QCOMPARE(connectionData.name, QVariant("20"));
   QCOMPARE(connectionData.resistance, QVariant(0.2));
   // Check contact ID 21
@@ -435,8 +435,8 @@ void mdtCableListTestScenario::createTestArticleConnections()
   connectionData = acnx.getArticleConnectionData(key, ok);
   QVERIFY(ok);
   QCOMPARE(connectionData.keyData().id, QVariant(21));
-  QCOMPARE(connectionData.keyData().articleId, QVariant(2));
-  QVERIFY(connectionData.keyData().connectionTypeFk.type() == mdtClConnectionType_t::Terminal);
+  QCOMPARE(connectionData.keyData().articleId(), QVariant(2));
+  QVERIFY(connectionData.connectionType() == mdtClConnectionType_t::Terminal);
   QCOMPARE(connectionData.name, QVariant("21"));
   QCOMPARE(connectionData.resistance, QVariant(0.21));
   // Check contact ID 22
@@ -445,8 +445,8 @@ void mdtCableListTestScenario::createTestArticleConnections()
   connectionData = acnx.getArticleConnectionData(key, ok);
   QVERIFY(ok);
   QCOMPARE(connectionData.keyData().id, QVariant(22));
-  QCOMPARE(connectionData.keyData().articleId, QVariant(2));
-  QVERIFY(connectionData.keyData().connectionTypeFk.type() == mdtClConnectionType_t::Socket);
+  QCOMPARE(connectionData.keyData().articleId(), QVariant(2));
+  QVERIFY(connectionData.connectionType() == mdtClConnectionType_t::Socket);
   QCOMPARE(connectionData.name, QVariant("22"));
   QCOMPARE(connectionData.resistance, QVariant(0.22));
 
@@ -562,10 +562,11 @@ void mdtCableListTestScenario::removeTestArticleConnections()
 void mdtCableListTestScenario::createTestArticleConnectors()
 {
   mdtClArticleConnection acnx(pvDatabase);
-  mdtClArticleConnectorKeyData connectorKey;
-  mdtClArticleConnectorData connectorData;
+  mdtClArticleConnectorKeyData articleConnectorKey;
+  mdtClArticleConnectorData articleConnectorData;
   mdtClArticleConnectionKeyData connectionKey;
   mdtClArticleConnectionData connectionData;
+  mdtClConnectorKeyData connectorFk;
   bool ok;
 
   /*
@@ -573,64 +574,65 @@ void mdtCableListTestScenario::createTestArticleConnectors()
    */
   // Setup connector 100
   connectionData.clear();
-  connectorKey.clear();
-  connectorKey.id = 100;
-  connectorKey.articleId = 1;
-  connectorData.setKeyData(connectorKey);
-  connectorData.name = "Article connector 100";
+  articleConnectorKey.clear();
+  articleConnectorKey.id = 100;
+  articleConnectorKey.setArticleId(1);
+  articleConnectorData.setKeyData(articleConnectorKey);
+  articleConnectorData.name = "Article connector 100";
   // Setup connection 15
   connectionData.clear();
   connectionKey.clear();
   connectionKey.id = 15;
-  connectionKey.connectionTypeFk.setType(mdtClConnectionType_t::Pin);
+  connectionKey.setConnectionType(mdtClConnectionType_t::Pin);
   connectionData.setKeyData(connectionKey);
   connectionData.name = "Article contact 15";
-  connectorData.addConnectionData(connectionData);
+  articleConnectorData.addConnectionData(connectionData);
   // Add connector and check
-  connectorKey = acnx.addArticleConnector(connectorData, true);
-  QVERIFY(!connectorKey.isNull());
-  connectorData = acnx.getArticleConnectorData(connectorKey, true, ok);
+  articleConnectorKey = acnx.addArticleConnector(articleConnectorData, true);
+  QVERIFY(!articleConnectorKey.isNull());
+  articleConnectorData = acnx.getArticleConnectorData(articleConnectorKey, true, ok);
   QVERIFY(ok);
-  QCOMPARE(connectorData.keyData().id, QVariant(100));
-  QCOMPARE(connectorData.keyData().articleId, QVariant(1));
-  QCOMPARE(connectorData.name, QVariant("Article connector 100"));
-  QCOMPARE(connectorData.connectionDataList().size(), 1);
-  QCOMPARE(connectorData.connectionDataList().at(0).keyData().id, QVariant(15));
-  QVERIFY(connectorData.connectionDataList().at(0).keyData().connectionTypeFk.type() == mdtClConnectionType_t::Pin);
-  QCOMPARE(connectorData.connectionDataList().at(0).name, QVariant("Article contact 15"));
+  QCOMPARE(articleConnectorData.keyData().id, QVariant(100));
+  QCOMPARE(articleConnectorData.keyData().articleId(), QVariant(1));
+  QCOMPARE(articleConnectorData.name, QVariant("Article connector 100"));
+  QCOMPARE(articleConnectorData.connectionDataList().size(), 1);
+  QCOMPARE(articleConnectorData.connectionDataList().at(0).keyData().id, QVariant(15));
+  QVERIFY(articleConnectorData.connectionDataList().at(0).connectionType() == mdtClConnectionType_t::Pin);
+  QCOMPARE(articleConnectorData.connectionDataList().at(0).name, QVariant("Article contact 15"));
   /*
    * Article connector 200
    */
   // Setup connector 200
   connectionData.clear();
-  connectorKey.clear();
-  connectorKey.id = 200;
-  connectorKey.articleId = 2;
-  connectorKey.connectorFk.id = 1;
-  connectorData.setKeyData(connectorKey);
-  connectorData.name = "Article connector 200";
+  articleConnectorKey.clear();
+  articleConnectorKey.id = 200;
+  articleConnectorKey.setArticleId(2);
+  connectorFk.id = 1;
+  articleConnectorKey.setConnectorFk(connectorFk);
+  articleConnectorData.setKeyData(articleConnectorKey);
+  articleConnectorData.name = "Article connector 200";
   // Setup connection 25
   connectionData.clear();
   connectionKey.clear();
   connectionKey.id = 25;
-  connectionKey.connectionTypeFk.setType(mdtClConnectionType_t::Socket);
+  connectionKey.setConnectionType(mdtClConnectionType_t::Socket);
   connectionData.setKeyData(connectionKey);
   connectionData.name = "Article contact 25";
-  connectorData.addConnectionData(connectionData);
+  articleConnectorData.addConnectionData(connectionData);
   // Add connector and check
-  connectorKey = acnx.addArticleConnector(connectorData, true);
-  QVERIFY(!connectorKey.isNull());
-  connectorData = acnx.getArticleConnectorData(connectorKey, true, ok);
+  articleConnectorKey = acnx.addArticleConnector(articleConnectorData, true);
+  QVERIFY(!articleConnectorKey.isNull());
+  articleConnectorData = acnx.getArticleConnectorData(articleConnectorKey, true, ok);
   QVERIFY(ok);
-  QCOMPARE(connectorData.keyData().id, QVariant(200));
-  QCOMPARE(connectorData.keyData().articleId, QVariant(2));
-  QVERIFY(connectorData.isBasedOnConnector());
-  QCOMPARE(connectorData.keyData().connectorFk.id, QVariant(1));
-  QCOMPARE(connectorData.name, QVariant("Article connector 200"));
-  QCOMPARE(connectorData.connectionDataList().size(), 1);
-  QCOMPARE(connectorData.connectionDataList().at(0).keyData().id, QVariant(25));
-  QVERIFY(connectorData.connectionDataList().at(0).keyData().connectionTypeFk.type() == mdtClConnectionType_t::Socket);
-  QCOMPARE(connectorData.connectionDataList().at(0).name, QVariant("Article contact 25"));
+  QCOMPARE(articleConnectorData.keyData().id, QVariant(200));
+  QCOMPARE(articleConnectorData.keyData().articleId(), QVariant(2));
+  QVERIFY(articleConnectorData.isBasedOnConnector());
+  QCOMPARE(articleConnectorData.keyData().connectorFk().id, QVariant(1));
+  QCOMPARE(articleConnectorData.name, QVariant("Article connector 200"));
+  QCOMPARE(articleConnectorData.connectionDataList().size(), 1);
+  QCOMPARE(articleConnectorData.connectionDataList().at(0).keyData().id, QVariant(25));
+  QVERIFY(articleConnectorData.connectionDataList().at(0).connectionType() == mdtClConnectionType_t::Socket);
+  QCOMPARE(articleConnectorData.connectionDataList().at(0).name, QVariant("Article contact 25"));
 
 
 //   mdtClArticle art(0, pvDatabase);

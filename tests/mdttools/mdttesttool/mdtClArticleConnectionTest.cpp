@@ -66,6 +66,7 @@ void mdtClArticleConnectionTest::articleConnectorDataTest()
   mdtClArticleConnectorData acData;
   mdtClArticleConnectionKeyData acnxKey;
   mdtClArticleConnectionData acnxData;
+  mdtClConnectorKeyData connectorFk;
 
   /*
    * Key data test
@@ -77,28 +78,29 @@ void mdtClArticleConnectionTest::articleConnectorDataTest()
   // Set a key - Not based on a connector
   acKeyData.id = 1;
   QVERIFY(acKeyData.isNull());
-  acKeyData.articleId = 2;
+  acKeyData.setArticleId(2);
   QVERIFY(!acKeyData.isNull());
   QVERIFY(!acKeyData.isBasedOnConnector());
   // Clear
   acKeyData.clear();
   QVERIFY(acKeyData.id.isNull());
-  QVERIFY(acKeyData.articleId.isNull());
-  QVERIFY(acKeyData.connectorFk.isNull());
+  QVERIFY(acKeyData.articleId().isNull());
+  QVERIFY(acKeyData.connectorFk().isNull());
   QVERIFY(acKeyData.isNull());
   QVERIFY(!acKeyData.isBasedOnConnector());
   QCOMPARE(acData.connectionDataList().size(), 0);
   // Set a key - Based on a connector
   acKeyData.id = 5;
-  acKeyData.articleId = 6;
-  acKeyData.connectorFk.id = 7;
+  acKeyData.setArticleId(6);
+  connectorFk.id = 7;
+  acKeyData.setConnectorFk(connectorFk);
   QVERIFY(!acKeyData.isNull());
   QVERIFY(acKeyData.isBasedOnConnector());
   // Clear
   acKeyData.clear();
   QVERIFY(acKeyData.id.isNull());
-  QVERIFY(acKeyData.articleId.isNull());
-  QVERIFY(acKeyData.connectorFk.isNull());
+  QVERIFY(acKeyData.articleId().isNull());
+  QVERIFY(acKeyData.connectorFk().isNull());
   QVERIFY(acKeyData.isNull());
   QVERIFY(!acKeyData.isBasedOnConnector());
   QCOMPARE(acData.connectionDataList().size(), 0);
@@ -112,7 +114,7 @@ void mdtClArticleConnectionTest::articleConnectorDataTest()
   // Set data - Not based on a connector
   acKeyData.clear();
   acKeyData.id = 4;
-  acKeyData.articleId = 5;
+  acKeyData.setArticleId(5);
   acData.setKeyData(acKeyData);
   acData.name = "ACNR 4";
   QVERIFY(!acData.isNull());
@@ -126,9 +128,11 @@ void mdtClArticleConnectionTest::articleConnectorDataTest()
   QCOMPARE(acData.connectionDataList().size(), 0);
   // Set data - Based on a connector
   acKeyData.clear();
+  connectorFk.clear();
   acKeyData.id = 7;
-  acKeyData.articleId = 8;
-  acKeyData.connectorFk.id = 9;
+  acKeyData.setArticleId(8);
+  connectorFk.id = 9;
+  acKeyData.setConnectorFk(connectorFk);
   acData.setKeyData(acKeyData);
   acData.name = "ACNR 7";
   QVERIFY(!acData.isNull());
@@ -146,22 +150,26 @@ void mdtClArticleConnectionTest::articleConnectorDataTest()
    */
   // Set connector data - Based on a connector
   acKeyData.clear();
+  connectorFk.clear();
   acKeyData.id = 5;
-  acKeyData.articleId = 6;
-  acKeyData.connectorFk.id = 7;
+  acKeyData.setArticleId(6);
+  connectorFk.id = 7;
+  acKeyData.setConnectorFk(connectorFk);
   acData.setKeyData(acKeyData);
   acData.name = "ACNR 5";
   // Add article connection A
   acnxKey.clear();
   acnxData.clear();
-  acnxKey.connectionTypeFk.setType(mdtClConnectionType_t::Pin);
+  acnxKey.setArticleId(6);
+  acnxKey.setConnectionType(mdtClConnectionType_t::Pin);
   acnxData.setKeyData(acnxKey);
   acnxData.name = "A";
   acData.addConnectionData(acnxData);
   // Add article connection B
   acnxKey.clear();
   acnxData.clear();
-  acnxKey.connectionTypeFk.setType(mdtClConnectionType_t::Socket);
+  acnxKey.setArticleId(6);
+  acnxKey.setConnectionType(mdtClConnectionType_t::Socket);
   acnxData.setKeyData(acnxKey);
   acnxData.name = "B";
   acData.addConnectionData(acnxData);
@@ -169,34 +177,36 @@ void mdtClArticleConnectionTest::articleConnectorDataTest()
   QVERIFY(!acData.isNull());
   QVERIFY(acData.isBasedOnConnector());
   QCOMPARE(acData.connectionDataList().size(), 2);
-  QCOMPARE(acData.connectionDataList().at(0).keyData().articleId, QVariant(6));
-  QCOMPARE(acData.connectionDataList().at(0).keyData().articleConnectorFk.articleId, QVariant(6));
-  QCOMPARE(acData.connectionDataList().at(0).keyData().articleConnectorFk.id, QVariant(5));
-  QCOMPARE(acData.connectionDataList().at(0).keyData().articleConnectorFk.connectorFk.id, QVariant(7));
+  QCOMPARE(acData.connectionDataList().at(0).keyData().articleId(), QVariant(6));
+  QCOMPARE(acData.connectionDataList().at(0).keyData().articleConnectorFk().articleId(), QVariant(6));
+  QCOMPARE(acData.connectionDataList().at(0).keyData().articleConnectorFk().id, QVariant(5));
+  QCOMPARE(acData.connectionDataList().at(0).keyData().articleConnectorFk().connectorFk().id, QVariant(7));
   QCOMPARE(acData.connectionDataList().at(0).name, QVariant("A"));
-  QCOMPARE(acData.connectionDataList().at(1).keyData().articleId, QVariant(6));
-  QCOMPARE(acData.connectionDataList().at(1).keyData().articleConnectorFk.articleId, QVariant(6));
-  QCOMPARE(acData.connectionDataList().at(1).keyData().articleConnectorFk.id, QVariant(5));
-  QCOMPARE(acData.connectionDataList().at(1).keyData().articleConnectorFk.connectorFk.id, QVariant(7));
+  QCOMPARE(acData.connectionDataList().at(1).keyData().articleId(), QVariant(6));
+  QCOMPARE(acData.connectionDataList().at(1).keyData().articleConnectorFk().articleId(), QVariant(6));
+  QCOMPARE(acData.connectionDataList().at(1).keyData().articleConnectorFk().id, QVariant(5));
+  QCOMPARE(acData.connectionDataList().at(1).keyData().articleConnectorFk().connectorFk().id, QVariant(7));
   QCOMPARE(acData.connectionDataList().at(1).name, QVariant("B"));
   // Update article connectors key and check
   acKeyData.clear();
+  connectorFk.clear();
   acKeyData.id = 1;
-  acKeyData.articleId = 2;
-  acKeyData.connectorFk.id = 3;
+  acKeyData.setArticleId(2);
+  connectorFk.id = 3;
+  acKeyData.setConnectorFk(connectorFk);
   acData.setKeyData(acKeyData);
   QVERIFY(!acData.isNull());
   QVERIFY(acData.isBasedOnConnector());
   QCOMPARE(acData.connectionDataList().size(), 2);
-  QCOMPARE(acData.connectionDataList().at(0).keyData().articleId, QVariant(2));
-  QCOMPARE(acData.connectionDataList().at(0).keyData().articleConnectorFk.articleId, QVariant(2));
-  QCOMPARE(acData.connectionDataList().at(0).keyData().articleConnectorFk.id, QVariant(1));
-  QCOMPARE(acData.connectionDataList().at(0).keyData().articleConnectorFk.connectorFk.id, QVariant(3));
+  QCOMPARE(acData.connectionDataList().at(0).keyData().articleId(), QVariant(2));
+  QCOMPARE(acData.connectionDataList().at(0).keyData().articleConnectorFk().articleId(), QVariant(2));
+  QCOMPARE(acData.connectionDataList().at(0).keyData().articleConnectorFk().id, QVariant(1));
+  QCOMPARE(acData.connectionDataList().at(0).keyData().articleConnectorFk().connectorFk().id, QVariant(3));
   QCOMPARE(acData.connectionDataList().at(0).name, QVariant("A"));
-  QCOMPARE(acData.connectionDataList().at(1).keyData().articleId, QVariant(2));
-  QCOMPARE(acData.connectionDataList().at(1).keyData().articleConnectorFk.articleId, QVariant(2));
-  QCOMPARE(acData.connectionDataList().at(1).keyData().articleConnectorFk.id, QVariant(1));
-  QCOMPARE(acData.connectionDataList().at(1).keyData().articleConnectorFk.connectorFk.id, QVariant(3));
+  QCOMPARE(acData.connectionDataList().at(1).keyData().articleId(), QVariant(2));
+  QCOMPARE(acData.connectionDataList().at(1).keyData().articleConnectorFk().articleId(), QVariant(2));
+  QCOMPARE(acData.connectionDataList().at(1).keyData().articleConnectorFk().id, QVariant(1));
+  QCOMPARE(acData.connectionDataList().at(1).keyData().articleConnectorFk().connectorFk().id, QVariant(3));
   QCOMPARE(acData.connectionDataList().at(1).name, QVariant("B"));
   // Clear
   acData.clear();
@@ -222,33 +232,35 @@ void mdtClArticleConnectionTest::articleConnectionDataTest()
   // Set key - Not based on a article connector
   acnxKey.id = 1;
   QVERIFY(acnxKey.isNull());
-  acnxKey.articleId = 2;
+  acnxKey.setArticleId(2);
   QVERIFY(acnxKey.isNull());
-  acnxKey.connectionTypeFk.setType(mdtClConnectionType_t::Terminal);
+  acnxKey.setConnectionType(mdtClConnectionType_t::Terminal);
   QVERIFY(!acnxKey.isNull());
   QVERIFY(!acnxKey.isPartOfArticleConnector());
   // Clear
   acnxKey.clear();
   QVERIFY(acnxKey.id.isNull());
-  QVERIFY(acnxKey.articleId.isNull());
-  QVERIFY(acnxKey.articleConnectorFk.isNull());
-  QVERIFY(acnxKey.connectionTypeFk.isNull());
+  QVERIFY(acnxKey.articleId().isNull());
+  QVERIFY(acnxKey.articleConnectorFk().isNull());
+  QVERIFY(acnxKey.connectionTypeFk().isNull());
   QVERIFY(acnxKey.isNull());
   QVERIFY(!acnxKey.isPartOfArticleConnector());
   // Set key - Based on a article connector
+  acnrKeyData.clear();
   acnxKey.id = 3;
-  acnxKey.articleId = 4;
-  acnxKey.connectionTypeFk.setType(mdtClConnectionType_t::Pin);
-  acnxKey.articleConnectorFk.id = 5;
-  acnxKey.articleConnectorFk.articleId = acnxKey.articleId;
+  acnxKey.setArticleId(4);
+  acnxKey.setConnectionType(mdtClConnectionType_t::Pin);
+  acnrKeyData.id = 5;
+  acnrKeyData.setArticleId(acnxKey.articleId());
+  acnxKey.setArticleConnectorFk(acnrKeyData);
   QVERIFY(!acnxKey.isNull());
   QVERIFY(acnxKey.isPartOfArticleConnector());
   // Clear
   acnxKey.clear();
   QVERIFY(acnxKey.id.isNull());
-  QVERIFY(acnxKey.articleId.isNull());
-  QVERIFY(acnxKey.articleConnectorFk.isNull());
-  QVERIFY(acnxKey.connectionTypeFk.isNull());
+  QVERIFY(acnxKey.articleId().isNull());
+  QVERIFY(acnxKey.articleConnectorFk().isNull());
+  QVERIFY(acnxKey.connectionTypeFk().isNull());
   QVERIFY(acnxKey.isNull());
   QVERIFY(!acnxKey.isPartOfArticleConnector());
   /*
@@ -260,8 +272,8 @@ void mdtClArticleConnectionTest::articleConnectionDataTest()
   // Set data - Not part of a article connector
   acnxKey.clear();
   acnxKey.id = 1;
-  acnxKey.articleId = 2;
-  acnxKey.connectionTypeFk.setType(mdtClConnectionType_t::Pin);
+  acnxKey.setArticleId(2);
+  acnxKey.setConnectionType(mdtClConnectionType_t::Pin);
   acnxData.setKeyData(acnxKey);
   acnxData.name = "ACNX 1";
   acnxData.resistance = 0.12;
@@ -272,8 +284,9 @@ void mdtClArticleConnectionTest::articleConnectionDataTest()
   acnxData.functionIT = "FIT01";
   QVERIFY(!acnxData.isNull());
   QVERIFY(!acnxData.isPartOfArticleConnector());
-  QVERIFY(acnxData.keyData().connectionTypeFk.type() == mdtClConnectionType_t::Pin);
+  QVERIFY(acnxData.connectionType() == mdtClConnectionType_t::Pin);
   // Clear
+  acnrKeyData.clear();
   acnxData.clear();
   QVERIFY(acnxData.name.isNull());
   QVERIFY(acnxData.resistance.isNull());
@@ -287,10 +300,11 @@ void mdtClArticleConnectionTest::articleConnectionDataTest()
   // Set data - Part of a article connector
   acnxKey.clear();
   acnxKey.id = 3;
-  acnxKey.articleId = 4;
-  acnxKey.connectionTypeFk.setType(mdtClConnectionType_t::Pin);
-  acnxKey.articleConnectorFk.id = 5;
-  acnxKey.articleConnectorFk.articleId = 4;
+  acnxKey.setArticleId(4);
+  acnxKey.setConnectionType(mdtClConnectionType_t::Pin);
+  acnrKeyData.id = 5;
+  acnrKeyData.setArticleId(4);
+  acnxKey.setArticleConnectorFk(acnrKeyData);
   acnxData.setKeyData(acnxKey);
   acnxData.name = "ACNX 3";
   acnxData.resistance = 0.25;
@@ -301,7 +315,7 @@ void mdtClArticleConnectionTest::articleConnectionDataTest()
   acnxData.functionIT = "FIT03";
   QVERIFY(!acnxData.isNull());
   QVERIFY(acnxData.isPartOfArticleConnector());
-  QVERIFY(acnxData.keyData().connectionTypeFk.type() == mdtClConnectionType_t::Pin);
+  QVERIFY(acnxData.connectionType() == mdtClConnectionType_t::Pin);
   // Clear
   acnxData.clear();
   QVERIFY(acnxData.name.isNull());
@@ -316,17 +330,18 @@ void mdtClArticleConnectionTest::articleConnectionDataTest()
   // Check setting article connector FK
   acnxKey.clear();
   acnxKey.id = 4;
-  acnxKey.articleId = 5;
-  acnxKey.connectionTypeFk.setType(mdtClConnectionType_t::Socket);
+  acnxKey.setArticleId(5);
+  acnxKey.setConnectionType(mdtClConnectionType_t::Socket);
   acnxData.setKeyData(acnxKey);
   acnrKeyData.clear();
   acnrKeyData.id = 6;
-  acnrKeyData.articleId = 5;
+  acnrKeyData.setArticleId(5);
+  acnxKey.setArticleId(5);
   acnxData.setArticleConnectorFk(acnrKeyData);
   QVERIFY(!acnxData.isNull());
   QVERIFY(acnxData.isPartOfArticleConnector());
-  QVERIFY(acnxData.keyData().connectionTypeFk.type() == mdtClConnectionType_t::Socket);
-  QVERIFY(acnxData.keyData().articleConnectorFk.id == acnrKeyData.id);
+  QVERIFY(acnxData.connectionType() == mdtClConnectionType_t::Socket);
+  QVERIFY(acnxData.keyData().articleConnectorFk().id == acnrKeyData.id);
   // Clear
   acnxData.clear();
   QVERIFY(acnxData.name.isNull());
@@ -359,8 +374,8 @@ void mdtClArticleConnectionTest::articleConnectionAddGetRemoveTest()
    *  - Type: Socket
    */
   // Setup key data
-  key.articleId = 1;
-  key.connectionTypeFk.setType(mdtClConnectionType_t::Socket);
+  key.setArticleId(1);
+  key.setConnectionType(mdtClConnectionType_t::Socket);
   // Setup article connection data
   data.setKeyData(key);
   data.name = "A";
@@ -376,9 +391,9 @@ void mdtClArticleConnectionTest::articleConnectionAddGetRemoveTest()
   data = acnx.getArticleConnectionData(key, ok);
   QVERIFY(ok);
   QVERIFY(!data.isNull());
-  QCOMPARE(data.keyData().articleId, QVariant(1));
+  QCOMPARE(data.keyData().articleId(), QVariant(1));
   QVERIFY(!data.isPartOfArticleConnector());
-  QVERIFY(data.keyData().connectionTypeFk.type() == mdtClConnectionType_t::Socket);
+  QVERIFY(data.connectionType() == mdtClConnectionType_t::Socket);
   QCOMPARE(data.name, QVariant("A"));
   QVERIFY(data.resistance.isNull());
   QCOMPARE(data.ioType, QVariant("DO"));
@@ -394,8 +409,8 @@ void mdtClArticleConnectionTest::articleConnectionAddGetRemoveTest()
    */
   // Update data
   key = data.keyData();
-  key.articleId = 2;
-  key.connectionTypeFk.setType(mdtClConnectionType_t::Pin);
+  key.setArticleId(2);
+  key.setConnectionType(mdtClConnectionType_t::Pin);
   data.setKeyData(key);
   data.name = "B";
   data.resistance = 0.12;
@@ -410,9 +425,9 @@ void mdtClArticleConnectionTest::articleConnectionAddGetRemoveTest()
   data = acnx.getArticleConnectionData(key, ok);
   QVERIFY(ok);
   QVERIFY(!data.isNull());
-  QCOMPARE(data.keyData().articleId, QVariant(2));
+  QCOMPARE(data.keyData().articleId(), QVariant(2));
   QVERIFY(!data.isPartOfArticleConnector());
-  QVERIFY(data.keyData().connectionTypeFk.type() == mdtClConnectionType_t::Pin);
+  QVERIFY(data.connectionType() == mdtClConnectionType_t::Pin);
   QCOMPARE(data.name, QVariant("B"));
   QCOMPARE(data.resistance, QVariant(0.12));
   QCOMPARE(data.ioType, QVariant("DI"));
@@ -434,6 +449,7 @@ void mdtClArticleConnectionTest::articleConnectorAddGetRemoveTest()
   mdtClArticleConnectorData acData;
   mdtClArticleConnectionKeyData acnxKey;
   mdtClArticleConnectionData acnxData;
+  mdtClConnectorKeyData connectorFk;
   mdtClConnectorContactKeyData ccKey;
   mdtClConnectorContactData ccData;
   QList<mdtClConnectorContactData> ccDataList;
@@ -451,7 +467,7 @@ void mdtClArticleConnectionTest::articleConnectorAddGetRemoveTest()
    *  - No connections
    */
   // Setup data
-  key1.articleId = 1;
+  key1.setArticleId(1);
   acData.setKeyData(key1);
   acData.name = "ACNR 1";
   // Add to database
@@ -462,7 +478,7 @@ void mdtClArticleConnectionTest::articleConnectorAddGetRemoveTest()
   QVERIFY(ok);
   QVERIFY(!acData.isNull());
   QVERIFY(!acData.isBasedOnConnector());
-  QCOMPARE(acData.keyData().articleId, QVariant(1));
+  QCOMPARE(acData.keyData().articleId(), QVariant(1));
   QCOMPARE(acData.name, QVariant("ACNR 1"));
   /*
    * Article connector:
@@ -472,8 +488,9 @@ void mdtClArticleConnectionTest::articleConnectorAddGetRemoveTest()
   // Setup data
   key2.clear();
   acData.clear();
-  key2.articleId = 1;
-  key2.connectorFk.id = 1;
+  key2.setArticleId(1);
+  connectorFk.id = 1;
+  key2.setConnectorFk(connectorFk);
   acData.setKeyData(key2);
   acData.name = "ACNR 2";
   // Add to database
@@ -484,8 +501,8 @@ void mdtClArticleConnectionTest::articleConnectorAddGetRemoveTest()
   QVERIFY(ok);
   QVERIFY(!acData.isNull());
   QVERIFY(acData.isBasedOnConnector());
-  QCOMPARE(acData.keyData().connectorFk.id, QVariant(1));
-  QCOMPARE(acData.keyData().articleId, QVariant(1));
+  QCOMPARE(acData.keyData().connectorFk().id, QVariant(1));
+  QCOMPARE(acData.keyData().articleId(), QVariant(1));
   QCOMPARE(acData.name, QVariant("ACNR 2"));
   /*
    * Remove connectors 1 and 2
@@ -510,20 +527,22 @@ void mdtClArticleConnectionTest::articleConnectorAddGetRemoveTest()
   // Setup article connector data
   key1.clear();
   acData.clear();
-  key1.articleId = 1;
+  key1.setArticleId(1);
   acData.setKeyData(key1);
   acData.name = "ACNR 1";
   // Add article connection A
   acnxKey.clear();
   acnxData.clear();
-  acnxKey.connectionTypeFk.setType(mdtClConnectionType_t::Pin);
+  acnxKey.setArticleId(1);
+  acnxKey.setConnectionType(mdtClConnectionType_t::Pin);
   acnxData.setKeyData(acnxKey);
   acnxData.name = "A";
   acData.addConnectionData(acnxData);
   // Add article connection B
   acnxKey.clear();
   acnxData.clear();
-  acnxKey.connectionTypeFk.setType(mdtClConnectionType_t::Socket);
+  acnxKey.setArticleId(1);
+  acnxKey.setConnectionType(mdtClConnectionType_t::Socket);
   acnxData.setKeyData(acnxKey);
   acnxData.name = "B";
   acData.addConnectionData(acnxData);
@@ -535,27 +554,27 @@ void mdtClArticleConnectionTest::articleConnectorAddGetRemoveTest()
   QVERIFY(ok);
   QVERIFY(!acData.isNull());
   QVERIFY(!acData.isBasedOnConnector());
-  QCOMPARE(acData.keyData().articleId, QVariant(1));
+  QCOMPARE(acData.keyData().articleId(), QVariant(1));
   QCOMPARE(acData.name, QVariant("ACNR 1"));
   QCOMPARE(acData.connectionDataList().size(), 2);
-  QCOMPARE(acData.connectionDataList().at(0).keyData().articleId, QVariant(1));
-  QCOMPARE(acData.connectionDataList().at(0).keyData().articleConnectorFk.articleId, QVariant(1));
-  QCOMPARE(acData.connectionDataList().at(0).keyData().articleConnectorFk.id, key1.id);
-  QVERIFY(acData.connectionDataList().at(0).keyData().articleConnectorFk.connectorFk.isNull());
-  QVERIFY(acData.connectionDataList().at(0).keyData().connectionTypeFk.type() == mdtClConnectionType_t::Pin);
+  QCOMPARE(acData.connectionDataList().at(0).keyData().articleId(), QVariant(1));
+  QCOMPARE(acData.connectionDataList().at(0).keyData().articleConnectorFk().articleId(), QVariant(1));
+  QCOMPARE(acData.connectionDataList().at(0).keyData().articleConnectorFk().id, key1.id);
+  QVERIFY(acData.connectionDataList().at(0).keyData().articleConnectorFk().connectorFk().isNull());
+  QVERIFY(acData.connectionDataList().at(0).connectionType() == mdtClConnectionType_t::Pin);
   QCOMPARE(acData.connectionDataList().at(0).name, QVariant("A"));
-  QCOMPARE(acData.connectionDataList().at(1).keyData().articleId, QVariant(1));
-  QCOMPARE(acData.connectionDataList().at(1).keyData().articleConnectorFk.articleId, QVariant(1));
-  QCOMPARE(acData.connectionDataList().at(1).keyData().articleConnectorFk.id, key1.id);
-  QVERIFY(acData.connectionDataList().at(1).keyData().articleConnectorFk.connectorFk.isNull());
-  QVERIFY(acData.connectionDataList().at(1).keyData().connectionTypeFk.type() == mdtClConnectionType_t::Socket);
+  QCOMPARE(acData.connectionDataList().at(1).keyData().articleId(), QVariant(1));
+  QCOMPARE(acData.connectionDataList().at(1).keyData().articleConnectorFk().articleId(), QVariant(1));
+  QCOMPARE(acData.connectionDataList().at(1).keyData().articleConnectorFk().id, key1.id);
+  QVERIFY(acData.connectionDataList().at(1).keyData().articleConnectorFk().connectorFk().isNull());
+  QVERIFY(acData.connectionDataList().at(1).connectionType() == mdtClConnectionType_t::Socket);
   QCOMPARE(acData.connectionDataList().at(1).name, QVariant("B"));
   // Get data without article connections
   acData = acnx.getArticleConnectorData(key1, false, ok);
   QVERIFY(ok);
   QVERIFY(!acData.isNull());
   QVERIFY(!acData.isBasedOnConnector());
-  QCOMPARE(acData.keyData().articleId, QVariant(1));
+  QCOMPARE(acData.keyData().articleId(), QVariant(1));
   QCOMPARE(acData.name, QVariant("ACNR 1"));
   QCOMPARE(acData.connectionDataList().size(), 0);
   /*
@@ -568,24 +587,30 @@ void mdtClArticleConnectionTest::articleConnectorAddGetRemoveTest()
   ccDataList.clear();
   // Setup article connector data
   key2.clear();
+  connectorFk.clear();
   acData.clear();
-  key2.articleId = 1;
-  key2.connectorFk.id = 1;
+  key2.setArticleId(1);
+  connectorFk.id = 1;
+  key2.setConnectorFk(connectorFk);
   acData.setKeyData(key2);
   acData.name = "ACNR 2";
   // Setup connector contact C
+  connectorFk.clear();
   ccData.clear();
   ccKey.clear();
-  ccKey.connectorFk.id = 1;
-  ccKey.connectionTypeFk.setType(mdtClConnectionType_t::Pin);
+  connectorFk.id = 1;
+  ccKey.setConnectorFk(connectorFk);
+  ccKey.setConnectionType(mdtClConnectionType_t::Pin);
   ccData.setKeyData(ccKey);
   ccData.name = "C";
   ccDataList.append(ccData);
   // Setup connector contact D
+  connectorFk.clear();
   ccData.clear();
   ccKey.clear();
-  ccKey.connectorFk.id = 1;
-  ccKey.connectionTypeFk.setType(mdtClConnectionType_t::Socket);
+  connectorFk.id = 1;
+  ccKey.setConnectorFk(connectorFk);
+  ccKey.setConnectionType(mdtClConnectionType_t::Socket);
   ccData.setKeyData(ccKey);
   ccData.name = "D";
   ccDataList.append(ccData);
@@ -600,27 +625,27 @@ void mdtClArticleConnectionTest::articleConnectorAddGetRemoveTest()
   QVERIFY(ok);
   QVERIFY(!acData.isNull());
   QVERIFY(acData.isBasedOnConnector());
-  QCOMPARE(acData.keyData().articleId, QVariant(1));
+  QCOMPARE(acData.keyData().articleId(), QVariant(1));
   QCOMPARE(acData.name, QVariant("ACNR 2"));
   QCOMPARE(acData.connectionDataList().size(), 2);
-  QCOMPARE(acData.connectionDataList().at(0).keyData().articleId, QVariant(1));
-  QCOMPARE(acData.connectionDataList().at(0).keyData().articleConnectorFk.articleId, QVariant(1));
-  QCOMPARE(acData.connectionDataList().at(0).keyData().articleConnectorFk.id, key2.id);
-  QCOMPARE(acData.connectionDataList().at(0).keyData().articleConnectorFk.connectorFk.id, QVariant(1));
-  QVERIFY(acData.connectionDataList().at(0).keyData().connectionTypeFk.type() == mdtClConnectionType_t::Pin);
+  QCOMPARE(acData.connectionDataList().at(0).keyData().articleId(), QVariant(1));
+  QCOMPARE(acData.connectionDataList().at(0).keyData().articleConnectorFk().articleId(), QVariant(1));
+  QCOMPARE(acData.connectionDataList().at(0).keyData().articleConnectorFk().id, key2.id);
+  QCOMPARE(acData.connectionDataList().at(0).keyData().articleConnectorFk().connectorFk().id, QVariant(1));
+  QVERIFY(acData.connectionDataList().at(0).connectionType() == mdtClConnectionType_t::Pin);
   QCOMPARE(acData.connectionDataList().at(0).name, QVariant("C"));
-  QCOMPARE(acData.connectionDataList().at(1).keyData().articleId, QVariant(1));
-  QCOMPARE(acData.connectionDataList().at(1).keyData().articleConnectorFk.articleId, QVariant(1));
-  QCOMPARE(acData.connectionDataList().at(1).keyData().articleConnectorFk.id, key2.id);
-  QCOMPARE(acData.connectionDataList().at(1).keyData().articleConnectorFk.connectorFk.id, QVariant(1));
-  QVERIFY(acData.connectionDataList().at(1).keyData().connectionTypeFk.type() == mdtClConnectionType_t::Socket);
+  QCOMPARE(acData.connectionDataList().at(1).keyData().articleId(), QVariant(1));
+  QCOMPARE(acData.connectionDataList().at(1).keyData().articleConnectorFk().articleId(), QVariant(1));
+  QCOMPARE(acData.connectionDataList().at(1).keyData().articleConnectorFk().id, key2.id);
+  QCOMPARE(acData.connectionDataList().at(1).keyData().articleConnectorFk().connectorFk().id, QVariant(1));
+  QVERIFY(acData.connectionDataList().at(1).connectionType() == mdtClConnectionType_t::Socket);
   QCOMPARE(acData.connectionDataList().at(1).name, QVariant("D"));
   // Get data without article connections
   acData = acnx.getArticleConnectorData(key2, false, ok);
   QVERIFY(ok);
   QVERIFY(!acData.isNull());
   QVERIFY(acData.isBasedOnConnector());
-  QCOMPARE(acData.keyData().articleId, QVariant(1));
+  QCOMPARE(acData.keyData().articleId(), QVariant(1));
   QCOMPARE(acData.name, QVariant("ACNR 2"));
   QCOMPARE(acData.connectionDataList().size(), 0);
   // Edit connector name

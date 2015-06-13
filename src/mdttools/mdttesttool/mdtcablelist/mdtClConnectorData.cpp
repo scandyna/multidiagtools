@@ -25,6 +25,8 @@
 
 void mdtClConnectorData::setKeyData(const mdtClConnectorKeyData & key)
 {
+  Q_ASSERT(!key.isNull());
+
   // Update contacts with new ID
   for(auto & cd : pvContactDataList){
     cd.setConnectorFk(key);
@@ -45,7 +47,9 @@ void mdtClConnectorData::clear()
 
 void mdtClConnectorData::addContactData(mdtClConnectorContactData data)
 {
-  data.setConnectorFk(pvKeyData);
+  if(!pvKeyData.isNull()){
+    data.setConnectorFk(pvKeyData);
+  }
   pvContactDataList.append(data);
 }
 

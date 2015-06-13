@@ -1,6 +1,6 @@
 format 209
 "mdtcablelist" // mdttools::mdttesttool::mdtcablelist
-  revision 48
+  revision 51
   modified_by 2 "philippe"
   // class settings
   
@@ -1207,8 +1207,8 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 1702018 "connectorFk"
-	public type class_ref 1639170 // mdtClConnectorKeyData
+      attribute 1702018 "pvConnectorFk"
+	private type class_ref 1639170 // mdtClConnectorKeyData
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -1219,8 +1219,8 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 1702146 "connectionTypeFk"
-	public type class_ref 1646466 // mdtClConnectionTypeKeyData
+      attribute 1702146 "pvConnectionTypeFk"
+	private type class_ref 1646466 // mdtClConnectionTypeKeyData
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -1229,10 +1229,88 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+      end
+
+      operation 2624514 "setConnectorFk"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "fk" type class_ref 1639170 // mdtClConnectorKeyData
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2624002 "setConnectionType"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "t" explicit_type "mdtClConnectionType_t"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2624130 "setConnectionTypeCode"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "c" type class_ref 161154 // QVariant
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2624258 "connectionTypeFk"
+	public return_type class_ref 1646466 // mdtClConnectionTypeKeyData
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
 
       operation 2540674 "isNull"
 	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2624642 "connectorFk"
+	public return_type class_ref 1639170 // mdtClConnectorKeyData
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -1347,10 +1425,26 @@ ${inlines}
 	
       end
 
-      operation 2555778 "setConnectionTypeFk"
+      operation 2555778 "setConnectionType"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "fk" type class_ref 1646466 // mdtClConnectionTypeKeyData
+	  param in name "fk" explicit_type "mdtClConnectionType_t"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2624386 "setConnectionTypeCode"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "c" type class_ref 161154 // QVariant
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -1400,8 +1494,8 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 1703170 "articleId"
-	public type class_ref 161154 // QVariant
+      attribute 1703170 "pvArticleId"
+	private type class_ref 161154 // QVariant
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -1412,8 +1506,8 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 1703298 "connectorFk"
-	public type class_ref 1639170 // mdtClConnectorKeyData
+      attribute 1703298 "pvConnectorFk"
+	private type class_ref 1639170 // mdtClConnectorKeyData
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -1422,6 +1516,68 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+      end
+
+      operation 2623234 "setArticleId"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "aid" type class_ref 161154 // QVariant
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2623362 "articleId"
+	public return_type class_ref 161154 // QVariant
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2616066 "setConnectorFk"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "fk" type class_ref 1639170 // mdtClConnectorKeyData
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2616194 "connectorFk"
+	public return_type class_ref 1639170 // mdtClConnectorKeyData
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
 
       operation 2540802 "isNull"
@@ -1467,6 +1623,24 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 2023810 // connectorFk_ (<unidirectional association>)
+	relation 2007682 --->
+	  a role_name "connectorFk_" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2023810 // connectorFk_ (<unidirectional association>)
+	  b parent class_ref 1639170 // mdtClConnectorKeyData
+      end
+
+      classrelation 2024578 // articleId_ (<unidirectional association>)
+	relation 2008450 --->
+	  a role_name "articleId_" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2024578 // articleId_ (<unidirectional association>)
+	  b parent class_ref 1666434 // Article
       end
     end
 
@@ -1654,8 +1828,8 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 1703810 "articleId"
-	public type class_ref 161154 // QVariant
+      attribute 1703810 "pvArticleId"
+	private type class_ref 161154 // QVariant
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -1666,8 +1840,8 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 1703938 "articleConnectorFk"
-	public type class_ref 1639810 // mdtClArticleConnectorKeyData
+      attribute 1703938 "pvArticleConnectorFk"
+	private type class_ref 1639810 // mdtClArticleConnectorKeyData
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -1678,8 +1852,8 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 1704066 "connectionTypeFk"
-	public type class_ref 1646466 // mdtClConnectionTypeKeyData
+      attribute 1704066 "pvConnectionTypeFk"
+	private type class_ref 1646466 // mdtClConnectionTypeKeyData
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -1688,6 +1862,115 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+      end
+
+      operation 2616578 "setArticleId"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "aid" type class_ref 161154 // QVariant
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2616706 "articleId"
+	public return_type class_ref 161154 // QVariant
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2616322 "setArticleConnectorFk"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "fk" type class_ref 1639810 // mdtClArticleConnectorKeyData
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2616450 "articleConnectorFk"
+	public return_type class_ref 1639810 // mdtClArticleConnectorKeyData
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2623490 "setConnectionType"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "t" explicit_type "mdtClConnectionType_t"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2623618 "setConnectionTypeCode"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "c" type class_ref 161154 // QVariant
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2623746 "connectionTypeFk"
+	public return_type class_ref 1646466 // mdtClConnectionTypeKeyData
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
 
       operation 2540930 "isNull"
@@ -1733,6 +2016,33 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 2024322 // articleConnectorFk_ (<unidirectional association>)
+	relation 2008194 --->
+	  a role_name "articleConnectorFk_" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2024322 // articleConnectorFk_ (<unidirectional association>)
+	  b parent class_ref 1639810 // mdtClArticleConnectorKeyData
+      end
+
+      classrelation 2024450 // connectionTypeFk_ (<unidirectional association>)
+	relation 2008322 --->
+	  a role_name "connectionTypeFk_" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2024450 // connectionTypeFk_ (<unidirectional association>)
+	  b parent class_ref 1646466 // mdtClConnectionTypeKeyData
+      end
+
+      classrelation 2024706 // articleId_ (<unidirectional association>)
+	relation 2008578 --->
+	  a role_name "articleId_" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2024706 // articleId_ (<unidirectional association>)
+	  b parent class_ref 1666434 // Article
       end
     end
 
@@ -1812,10 +2122,25 @@ ${inlines}
       operation 2583938 "setConnectionType"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "type" type class_ref 1646466 // mdtClConnectionTypeKeyData
+	  param in name "type" explicit_type "mdtClConnectionType_t"
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2623874 "connectionType"
+	public explicit_return_type "mdtClConnectionType_t"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -2309,6 +2634,33 @@ ${inlines}
 	
 	
       end
+
+      classrelation 2023554 // connectorFk_ (<unidirectional association>)
+	relation 2007426 --->
+	  a role_name "connectorFk_" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2023554 // connectorFk_ (<unidirectional association>)
+	  b parent class_ref 1639170 // mdtClConnectorKeyData
+      end
+
+      classrelation 2023682 // articleConnectorFk_ (<unidirectional association>)
+	relation 2007554 --->
+	  a role_name "articleConnectorFk_" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2023682 // articleConnectorFk_ (<unidirectional association>)
+	  b parent class_ref 1639810 // mdtClArticleConnectorKeyData
+      end
+
+      classrelation 2024834 // unitId_ (<unidirectional association>)
+	relation 2008706 --->
+	  a role_name "unitId_" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2024834 // unitId_ (<unidirectional association>)
+	  b parent class_ref 1666306 // Unit
+      end
     end
 
     class 1107202 "mdtClUnitConnectorData"
@@ -2616,6 +2968,42 @@ ${inlines}
 	
 	
       end
+
+      classrelation 2023938 // unitConnectorFk_ (<unidirectional association>)
+	relation 2007810 --->
+	  a role_name "unitConnectorFk_" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2023938 // unitConnectorFk_ (<unidirectional association>)
+	  b parent class_ref 1639554 // mdtClUnitConnectorKeyData
+      end
+
+      classrelation 2024066 // articleConnectionFk_ (<unidirectional association>)
+	relation 2007938 --->
+	  a role_name "articleConnectionFk_" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2024066 // articleConnectionFk_ (<unidirectional association>)
+	  b parent class_ref 1639938 // mdtClArticleConnectionKeyData
+      end
+
+      classrelation 2024194 // connectionTypeFk_ (<unidirectional association>)
+	relation 2008066 --->
+	  a role_name "connectionTypeFk_" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2024194 // connectionTypeFk_ (<unidirectional association>)
+	  b parent class_ref 1646466 // mdtClConnectionTypeKeyData
+      end
+
+      classrelation 2024962 // unitId_ (<unidirectional association>)
+	relation 2008834 --->
+	  a role_name "unitId_" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2024962 // unitId_ (<unidirectional association>)
+	  b parent class_ref 1666306 // Unit
+      end
     end
 
     class 1113858 "mdtClUnitConnectionData"
@@ -2799,6 +3187,38 @@ ${inlines}
 	
       end
 
+      operation 2615810 "setArticleConnectionFk"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "fk" type class_ref 1639938 // mdtClArticleConnectionKeyData
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2615938 "setConnectionType"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "t" explicit_type "mdtClConnectionType_t"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 2609154 "isNull"
 	public explicit_return_type "bool"
 	nparams 0
@@ -2858,6 +3278,43 @@ ${inlines}
 	
 	
       end
+    end
+
+    classdiagram 1437442 "KeyDataOverview"
+      classdiagramsettings member_max_width 0 end
+      size A4-Landscape
+    end
+
+    class 1666306 "Unit"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 1666434 "Article"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
     end
   end
 

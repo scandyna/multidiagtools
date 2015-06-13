@@ -76,7 +76,8 @@ class mdtClArticleConnectionDialog : public QDialog, Ui::mdtClArticleConnectionD
 
   /*! \brief Set connection type combobox current value
    */
-  void setCurrentConnectionType(const mdtClConnectionTypeKeyData & type);
+//   void setCurrentConnectionType(const mdtClConnectionTypeKeyData & type);
+  void setCurrentConnectionType(mdtClConnectionType_t t);
 
   /*! \brief Display data conetent to dialog's widget
    */

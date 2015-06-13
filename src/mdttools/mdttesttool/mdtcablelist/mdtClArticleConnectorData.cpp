@@ -25,12 +25,16 @@
 
 void mdtClArticleConnectorData::setKeyData(const mdtClArticleConnectorKeyData & key)
 {
+  Q_ASSERT(!key.articleId().isNull());
+
   pvKeyData = key;
   for(auto & data : pvConnectionDataList){
-    auto key = data.keyData();
-    key.articleConnectorFk = pvKeyData;
-    key.articleId = pvKeyData.articleId;
-    data.setKeyData(key);
+    mdtClArticleConnectionKeyData articleConnectionKey;
+    articleConnectionKey.id = data.keyData().id;
+    articleConnectionKey.setConnectionType(data.connectionType());
+    articleConnectionKey.setArticleId(pvKeyData.articleId());
+    articleConnectionKey.setArticleConnectorFk(pvKeyData);
+    data.setKeyData(articleConnectionKey);
   }
 }
 
@@ -43,16 +47,21 @@ void mdtClArticleConnectorData::clear()
 
 void mdtClArticleConnectorData::addConnectionData(mdtClArticleConnectionData data)
 {
-  mdtClArticleConnectionKeyData key = data.keyData();
+  Q_ASSERT(!pvKeyData.articleId().isNull());
 
-  key.articleConnectorFk = pvKeyData;
-  key.articleId = pvKeyData.articleId;
+  mdtClArticleConnectionKeyData key;
+
+  key.id = data.keyData().id;
+  key.setConnectionType(data.connectionType());
+  key.setArticleId(pvKeyData.articleId());
+  key.setArticleConnectorFk(pvKeyData);
   data.setKeyData(key);
   pvConnectionDataList.append(data);
 }
 
 void mdtClArticleConnectorData::setConnectionDataList(const QList<mdtClArticleConnectionData> & dataList)
 {
+  pvConnectionDataList.clear();
   for(const auto & data : dataList){
     addConnectionData(data);
   }
