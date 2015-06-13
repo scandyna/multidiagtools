@@ -29,7 +29,7 @@ void mdtClUnitConnectionData::setKeyData(const mdtClUnitConnectionKeyData &key)
 
 void mdtClUnitConnectionData::setUnitConnectorFk(const mdtClUnitConnectorKeyData &fk)
 {
-  pvKeyData.unitConnectorFk = fk;
+  pvKeyData.setUnitConnectorFk(fk);
 }
 
 void mdtClUnitConnectionData::clear()

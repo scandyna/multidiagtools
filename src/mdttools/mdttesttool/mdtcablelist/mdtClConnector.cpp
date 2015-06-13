@@ -25,7 +25,7 @@
 #include <QSqlQuery>
 #include <QList>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtClConnector::mdtClConnector(QObject *parent, QSqlDatabase db)
  : mdtTtBase(parent, db)

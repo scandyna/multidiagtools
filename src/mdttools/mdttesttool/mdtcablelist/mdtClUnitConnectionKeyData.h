@@ -36,21 +36,142 @@ struct mdtClUnitConnectionKeyData
    */
   QVariant id;
 
+ private:
+
   /*! \brief Unit ID (Unit_Id_FK)
    */
-  QVariant unitId;
+  QVariant pvUnitId;
 
   /*! \brief Unit connector ID (UnitConnector_Id_FK)
    */
-  mdtClUnitConnectorKeyData unitConnectorFk;
+  mdtClUnitConnectorKeyData pvUnitConnectorFk;
 
   /*! \brief Article connection FK (ArticleConnection_Id_FK)
    */
-  mdtClArticleConnectionKeyData articleConnectionFk;
+  mdtClArticleConnectionKeyData pvArticleConnectionFk;
 
-  /*! \brief Connection type
+  /*! \brief Connection type (ConnectionType_Code_FK)
    */
-  mdtClConnectionTypeKeyData connectionTypeFk;
+  mdtClConnectionTypeKeyData pvConnectionTypeFk;
+
+ public:
+
+  /*! \brief Set unit ID (Unit_Id_FK)
+   *
+   * \pre uid must not be null
+   * \pre unitConnectorFk must not allready been set
+   */
+  void setUnitId(const QVariant & uid)
+  {
+    Q_ASSERT(!uid.isNull());
+    /*
+     * By constructing data for insertion into database,
+     * unitConnectorFk's id is not allready set, so unitConnectorFk will also be null.
+     * To check if it was allready set, we check its unitId, witch is mandatory
+     */
+    Q_ASSERT(pvUnitConnectorFk.unitId().isNull());
+    pvUnitId = uid;
+  }
+
+  /*! \brief Get unit ID (Unit_Id_FK)
+   */
+  inline QVariant unitId() const
+  {
+    return pvUnitId;
+  }
+
+  /*! \brief Set unit connector FK (UnitConnector_Id_FK)
+   *
+   * \pre fk must not be totally null, at least its unitId must be set
+   * \pre If fk is based on a article connector and articleConnectionFk was allready set,
+   *      fk's article connector must match articleConnectionFk's article connector
+   */
+  void setUnitConnectorFk(const mdtClUnitConnectorKeyData & fk)
+  {
+    /*
+     * By constructing data for insertion into database,
+     * fk's id is not allready set, so fk will also be null.
+     * To check if it was allready set, we check its unitId, witch is mandatory
+     */
+    Q_ASSERT(!fk.unitId().isNull());
+    Q_ASSERT( ( !fk.isBasedOnArticleConnector() ) || ( pvArticleConnectionFk.articleId().isNull() ) ||
+              ( ( (fk.articleConnectorFk().id == pvArticleConnectionFk.articleConnectorFk().id) ) &&
+                ( (fk.articleConnectorFk().articleId() == pvArticleConnectionFk.articleConnectorFk().articleId()) ) ) );
+    pvUnitConnectorFk = fk;
+  }
+
+  /*! \brief Get unit connector FK (UnitConnector_Id_FK)
+   */
+  inline mdtClUnitConnectorKeyData unitConnectorFk() const
+  {
+    return pvUnitConnectorFk;
+  }
+
+  /*! \brief Set article connection FK (ArticleConnection_Id_FK)
+   *
+   * connectionType will be updated with fk's connectionType.
+   *
+   * \pre fk must not be totally null, its articleId must be set
+   * \pre If fk is part of a article connector and unit connector was allready set,
+   *      fk's article connector must match unitConnectorFk's article connector
+   */
+  void setArticleConnectionFk(const mdtClArticleConnectionKeyData & fk)
+  {
+    /*
+     * By constructing data for insertion into database,
+     * fk's id is not allready set, so fk will also be null.
+     * To check if it was allready set, we check its unitId, witch is mandatory
+     */
+    Q_ASSERT(!fk.articleId().isNull());
+    Q_ASSERT( ( !fk.isPartOfArticleConnector() ) || ( pvUnitConnectorFk.unitId().isNull() ) ||
+              ( ( fk.articleConnectorFk().id == pvUnitConnectorFk.articleConnectorFk().id ) &&
+                ( fk.articleConnectorFk().articleId() == pvUnitConnectorFk.articleConnectorFk().articleId() ) ) );
+    pvArticleConnectionFk = fk;
+  }
+
+  /*! \brief Get article connection FK (ArticleConnection_Id_FK)
+   */
+  inline mdtClArticleConnectionKeyData articleConnectionFk() const
+  {
+    return pvArticleConnectionFk;
+  }
+
+  /*! \brief Set connection type
+   *
+   * \pre articleConnectionFk must not allready been set
+   */
+  void setConnectionType(mdtClConnectionType_t t)
+  {
+    /*
+     * By constructing data for insertion into database,
+     * articleConnectionFk's id is not allready set, so articleConnectionFk will also be null.
+     * To check if it was allready set, we check its articleId, witch is mandatory
+     */
+    Q_ASSERT(pvArticleConnectionFk.articleId().isNull());
+    pvConnectionTypeFk.setType(t);
+  }
+
+  /*! \brief Set connection type code (ConnectionType_Code_FK)
+   *
+   * \pre articleConnectionFk must not allready been set
+   */
+  void setConnectionTypeCode(const QVariant & c)
+  {
+    /*
+     * By constructing data for insertion into database,
+     * articleConnectionFk's id is not allready set, so articleConnectionFk will also be null.
+     * To check if it was allready set, we check its articleId, witch is mandatory
+     */
+    Q_ASSERT(pvArticleConnectionFk.articleId().isNull());
+    pvConnectionTypeFk.code = c;
+  }
+
+  /*! \brief Get connection type FK (ConnectionType_Code_FK)
+   */
+  inline mdtClConnectionTypeKeyData connectionTypeFk() const
+  {
+    return pvConnectionTypeFk;
+  }
 
   /*! \brief Check if key data is null
    *
@@ -58,7 +179,7 @@ struct mdtClUnitConnectionKeyData
    */
   bool isNull() const
   {
-    return (id.isNull() || unitId.isNull() || connectionTypeFk.isNull());
+    return (id.isNull() || pvUnitId.isNull() || pvConnectionTypeFk.isNull());
   }
 
   /*! \brief Clear
@@ -66,24 +187,24 @@ struct mdtClUnitConnectionKeyData
   void clear()
   {
     id.clear();
-    unitId.clear();
-    unitConnectorFk.clear();
-    articleConnectionFk.clear();
-    connectionTypeFk.clear();
+    pvUnitId.clear();
+    pvUnitConnectorFk.clear();
+    pvArticleConnectionFk.clear();
+    pvConnectionTypeFk.clear();
   }
 
   /*! \brief Check if unit connection is part of a unit connector
    */
   bool isPartOfUnitConnector() const
   {
-    return (!unitConnectorFk.isNull());
+    return (!pvUnitConnectorFk.isNull());
   }
 
   /*! \brief Check if unit connection is based on a article connection
    */
   bool isBasedOnArticleConnection() const
   {
-    return (!articleConnectionFk.isNull());
+    return (!pvArticleConnectionFk.isNull());
   }
 };
 

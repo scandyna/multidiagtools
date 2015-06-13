@@ -47,12 +47,6 @@ mdtClArticleConnectionDialog::mdtClArticleConnectionDialog(QWidget *parent, cons
   cbConnectionType->setModelColumn(1);
 }
 
-mdtClArticleConnectionDialog::~mdtClArticleConnectionDialog() 
-{
-  /// \todo Check if we have to delete our model or not (this not crashes, because QComboBox uses destroyed() signal..)
-  delete cbConnectionType->model();
-}
-
 void mdtClArticleConnectionDialog::setData(const mdtClArticleConnectionData & data)
 {
   Q_ASSERT(!data.keyData().articleId().isNull());
@@ -105,17 +99,6 @@ void mdtClArticleConnectionDialog::setCurrentConnectionType(const QString& type)
   // type not found
   cbConnectionType->setCurrentIndex(-1);
 }
-
-// void mdtClArticleConnectionDialog::setCurrentConnectionType(const mdtClConnectionTypeKeyData & type)
-// {
-//   Q_ASSERT(dynamic_cast<mdtClConnectionTypeModel*>(cbConnectionType->model()) != nullptr);
-// 
-//   auto *model = static_cast<mdtClConnectionTypeModel*>(cbConnectionType->model());
-//   int idx;
-// 
-//   idx = model->row(type);
-//   cbConnectionType->setCurrentIndex(idx);
-// }
 
 void mdtClArticleConnectionDialog::setCurrentConnectionType(mdtClConnectionType_t t)
 {

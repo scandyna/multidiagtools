@@ -35,17 +35,81 @@ struct mdtClUnitConnectorKeyData
    */
   QVariant id;
 
+ private:
+
   /*! \brief Unit ID (Unit_Id_FK)
    */
-  QVariant unitId;
+  QVariant pvUnitId;
 
   /*! \brief Connector FK (Connector_Id_FK)
    */
-  mdtClConnectorKeyData connectorFk;
+  mdtClConnectorKeyData pvConnectorFk;
 
   /*! \brief Article connector FK (ArticleConnector_Id_FK)
    */
-  mdtClArticleConnectorKeyData articleConnectorFk;
+  mdtClArticleConnectorKeyData pvArticleConnectorFk;
+
+ public:
+
+  /*! \brief Set unit ID (Unit_Id_FK)
+   */
+  void setUnitId(const QVariant & uid)
+  {
+    pvUnitId = uid;
+  }
+
+  /*! \brief Get unit ID (Unit_Id_FK)
+   */
+  inline QVariant unitId() const
+  {
+    return pvUnitId;
+  }
+
+  /*! \brief Set connector FK (Connector_Id_FK)
+   *
+   * \pre fk must not be null
+   * \pre articleConnectorFk must not allready been set
+   */
+  void setConnectorFk(const mdtClConnectorKeyData & fk)
+  {
+    Q_ASSERT(!fk.isNull());
+    /*
+     * When constructing new data for future storage into databse,
+     * article connector's key ID is not set, in witch case it will be null.
+     * To check if article connector key was set, we use the articleId, witch is mandatory
+     */
+    Q_ASSERT(pvArticleConnectorFk.articleId().isNull());
+    pvConnectorFk = fk;
+  }
+
+  /*! \brief Get connector FK (Connector_Id_FK)
+   */
+  inline mdtClConnectorKeyData connectorFk() const
+  {
+    return pvConnectorFk;
+  }
+
+  /*! \brief Set article connector FK (ArticleConnector_Id_FK)
+   *
+   * Will also update connectorFk with those contained in fk.
+   *
+   * \pre fk must not be totally null, at least its articleId mus be set
+   * \pre connectorFk must not allready been set
+   */
+  void setArticleConnectorFk(const mdtClArticleConnectorKeyData & fk)
+  {
+    Q_ASSERT(!fk.articleId().isNull());
+    Q_ASSERT(pvConnectorFk.isNull());
+    pvArticleConnectorFk = fk;
+    pvConnectorFk = fk.connectorFk();
+  }
+
+  /*! \brief Get article connector FK (ArticleConnector_Id_FK)
+   */
+  inline mdtClArticleConnectorKeyData articleConnectorFk() const
+  {
+    return pvArticleConnectorFk;
+  }
 
   /*! \brief Check if key data is null
    *
@@ -53,7 +117,7 @@ struct mdtClUnitConnectorKeyData
    */
   bool isNull() const
   {
-    return (id.isNull() || unitId.isNull());
+    return (id.isNull() || pvUnitId.isNull());
   }
 
   /*! \brief Clear key data
@@ -61,23 +125,23 @@ struct mdtClUnitConnectorKeyData
   void clear()
   {
     id.clear();
-    unitId.clear();
-    connectorFk.clear();
-    articleConnectorFk.clear();
+    pvUnitId.clear();
+    pvConnectorFk.clear();
+    pvArticleConnectorFk.clear();
   }
 
   /*! \brief Check if unit connector is based on a connector (from Connector_tbl)
    */
   bool isBasedOnConnector() const
   {
-    return (!connectorFk.isNull());
+    return (!pvConnectorFk.isNull());
   }
 
   /*! \brief Check if unit connector is based on a article connector
    */
   bool isBasedOnArticleConnector() const
   {
-    return (!articleConnectorFk.isNull());
+    return (!pvArticleConnectorFk.articleId().isNull());
   }
 };
 

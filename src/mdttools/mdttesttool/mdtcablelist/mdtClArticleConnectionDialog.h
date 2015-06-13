@@ -44,10 +44,6 @@ class mdtClArticleConnectionDialog : public QDialog, Ui::mdtClArticleConnectionD
    */
   mdtClArticleConnectionDialog(QWidget *parent, const QSqlDatabase & db);
 
-  /*! \brief Destructor
-   */
-  ~mdtClArticleConnectionDialog();
-
   /*! \brief Set connection data
    *
    * \pre data's key must have a article ID set

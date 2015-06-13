@@ -1,15 +1,15 @@
 window_sizes 1280 977 268 1006 924 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 1417858 // ArticleConnectorAndConnection
-    1006 924 100 18 0 186
   classdiagram_ref 1430914 // UnitConnectorAndConnection
-    925 924 100 18 0 207
-  classdiagram_ref 1437442 // KeyDataOverview
-    1006 924 90 18 0 67
+    925 924 100 18 0 0
+  active  classdiagram_ref 1437442 // KeyDataOverview
+    1006 924 90 18 0 0
+  classdiagram_ref 1417858 // ArticleConnectorAndConnection
+    120 106 100 18 0 0
 end
 show_stereotypes
-selected operation_ref 2624642 // connectorFk
+selected operation_ref 2632962 // connectionTypeFk
 open
   operation_ref 2624514 // setConnectorFk
   operation_ref 2540674 // isNull
@@ -22,6 +22,21 @@ open
   operation_ref 2616450 // articleConnectorFk
   classrelation_ref 2024706 // articleId_ (<unidirectional association>)
   operation_ref 2623874 // connectionType
+  operation_ref 2631170 // setUnitId
+  operation_ref 2631298 // unitId
+  operation_ref 2631426 // setConnectorFk
+  operation_ref 2631554 // connectorFk
+  operation_ref 2631682 // setArticleConnectorFk
+  classrelation_ref 2024834 // unitId_ (<unidirectional association>)
+  operation_ref 2631938 // setUintId
+  operation_ref 2632066 // unitId
+  operation_ref 2632194 // setUnitConnectorFk
+  operation_ref 2632322 // unitConnectorFk
+  operation_ref 2632450 // setArticleConnectionFk
+  operation_ref 2632578 // articleConnectionFk
+  operation_ref 2632706 // setConnectionType
+  operation_ref 2632834 // setConnectionTypeCode
+  operation_ref 2632962 // connectionTypeFk
   classview_ref 497026 // Article
   classdiagram_ref 1046530 // ConnectionData
   class_ref 1659778 // mdtClArticleLinkPkData
