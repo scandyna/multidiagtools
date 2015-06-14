@@ -87,7 +87,7 @@ struct mdtClArticleConnectorData : public mdtSqlRecord  /// \todo When all is ad
    * In key that given data contains, only id and connectionTypeFk are keeped.
    *  articleId and articleConnectorFk are set to match article connector data.
    *
-   * \pre In keyData, articleId must allready benn set.
+   * \pre In keyData, articleId must allready been set.
    */
   void addConnectionData(mdtClArticleConnectionData data);
 

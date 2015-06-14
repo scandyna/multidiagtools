@@ -2,11 +2,11 @@ format 209
 
 classcanvas 128002 class_ref 1638786 // mdtClArticleLinkKeyData
   classdiagramsettings member_max_width 0 end
-  xyz 144 206 2000
+  xyz 142 201 2000
 end
 classcanvas 128130 class_ref 1638274 // mdtClArticleLinkData
   classdiagramsettings member_max_width 0 end
-  xyz 94 418 2006
+  xyz 93 490 2006
 end
 classcanvas 128258 class_ref 1659778 // mdtClArticleLinkPkData
   classdiagramsettings member_max_width 0 end

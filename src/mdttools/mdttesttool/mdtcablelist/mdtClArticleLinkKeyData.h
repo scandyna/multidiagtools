@@ -67,21 +67,59 @@ struct mdtClArticleLinkKeyData
    */
   mdtClArticleLinkPkData pk;
 
-  /*! \brief Start connection (ArticleConnectionStart_Id_FK)
-   */
-//   mdtClArticleConnectionKeyData connectionStartFk;
-
-  /*! \brief End connection (ArticleConnectionEnd_Id_FK)
-   */
-//   mdtClArticleConnectionKeyData connectionEndFk;
+ private:
 
   /*! \brief Link type (LinkType_Code_FK)
    */
-  mdtClLinkTypeKeyData linkTypeFk;
+  mdtClLinkTypeKeyData pvLinkTypeFk;
 
   /*! \brief Link direction (LinkDirection_Code_FK)
    */
-  mdtClLinkDirectionKeyData linkDirectionFk;
+  mdtClLinkDirectionKeyData pvLinkDirectionFk;
+
+ public:
+
+  /*! \brief Set link type
+   */
+  void setLinkType(mdtClLinkType_t t)
+  {
+    pvLinkTypeFk.setType(t);
+  }
+
+  /*! \brief Set link type code (LinkType_Code_FK)
+   */
+  void setLinkTypeCode(const QVariant & c)
+  {
+    pvLinkTypeFk.code = c;
+  }
+
+  /*! \brief Get link type FK (LinkType_Code_FK)
+   */
+  inline mdtClLinkTypeKeyData linkTypeFk() const
+  {
+    return pvLinkTypeFk;
+  }
+
+  /*! \brief Set link direction
+   */
+  void setLinkDirection(mdtClLinkDirection_t d)
+  {
+    pvLinkDirectionFk.setDirection(d);
+  }
+
+  /*! \brief Set link direction code (LinkDirection_Code_FK)
+   */
+  void setLinkDirectionCode(const QVariant & c)
+  {
+    pvLinkDirectionFk.code = c;
+  }
+
+  /*! \brief Get link direction FK (LinkDirection_Code_FK)
+   */
+  inline mdtClLinkDirectionKeyData linkDirectionFk() const
+  {
+    return pvLinkDirectionFk;
+  }
 
   /*! \brief Check if key data is null
    *
@@ -90,19 +128,16 @@ struct mdtClArticleLinkKeyData
    */
   bool isNull() const
   {
-//     return (connectionStartFk.isNull() || connectionEndFk.isNull() || linkTypeFk.isNull() || linkDirectionFk.isNull());
-    return (pk.isNull() || linkTypeFk.isNull() || linkDirectionFk.isNull());
+    return (pk.isNull() || pvLinkTypeFk.isNull() || pvLinkDirectionFk.isNull());
   }
 
   /*! \brief Clear
    */
   void clear()
   {
-//     connectionStartFk.clear();
-//     connectionEndFk.clear();
     pk.clear();
-    linkTypeFk.clear();
-    linkDirectionFk.clear();
+    pvLinkTypeFk.clear();
+    pvLinkDirectionFk.clear();
   }
 };
 

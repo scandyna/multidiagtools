@@ -2,39 +2,39 @@ format 209
 
 classcanvas 128130 class_ref 1639298 // mdtClConnectorContactKeyData
   classdiagramsettings member_max_width 0 end
-  xyz 452.8 132.2 2000
+  xyz 452.9 132 2000
 end
 classcanvas 128258 class_ref 1639810 // mdtClArticleConnectorKeyData
   classdiagramsettings member_max_width 0 end
-  xyz 819.6 9.1 2000
+  xyz 819.4 9.2 2000
 end
 classcanvas 128386 class_ref 1639938 // mdtClArticleConnectionKeyData
   classdiagramsettings member_max_width 0 end
-  xyz 758.1 421.3 2000
+  xyz 758.3 421 2000
 end
 classcanvas 128514 class_ref 1646466 // mdtClConnectionTypeKeyData
   classdiagramsettings member_max_width 0 end
-  xyz 499.3 742.3 2000
+  xyz 499.2 742.4 2000
 end
 classcanvas 128642 class_ref 1639554 // mdtClUnitConnectorKeyData
   classdiagramsettings member_max_width 0 end
-  xyz 10.8 6.4 2005
+  xyz 10.8 6.6 2005
 end
 classcanvas 128770 class_ref 1639682 // mdtClUnitConnectionKeyData
   classdiagramsettings member_max_width 0 end
-  xyz 15 398.7 2005
+  xyz 15.9 398.5 2005
 end
 classcanvas 128898 class_ref 1639170 // mdtClConnectorKeyData
   classdiagramsettings member_max_width 0 end
-  xyz 536.7 30.5 2000
+  xyz 536.8 30.9 2000
 end
 classcanvas 130434 class_ref 1666306 // Unit
   classdiagramsettings member_max_width 0 end
-  xyzwh 495.1 360.6 2000 45 61
+  xyzwh 495.4 360.6 2000 45 61
 end
 classcanvas 130562 class_ref 1666434 // Article
   classdiagramsettings member_max_width 0 end
-  xyzwh 662.9 364.7 2000 54 61
+  xyzwh 663 364.3 2000 54 61
 end
 relationcanvas 129026 relation_ref 2007426 // <unidirectional association>
   decenter_begin 145
@@ -70,7 +70,7 @@ end
 relationcanvas 129666 relation_ref 2008066 // <unidirectional association>
   geometry VH
   decenter_end 766
-  from ref 128770 z 2006 to point 206 812
+  from ref 128770 z 2006 to point 205 812
   line 129922 z 2006 to ref 128514
   role_a_pos 369 789 3000 no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -85,7 +85,7 @@ end
 relationcanvas 130178 relation_ref 2008322 // <unidirectional association>
   geometry HVr
   decenter_end 792
-  from ref 128386 z 2001 to point 963 815
+  from ref 128386 z 2001 to point 962 815
   line 130306 z 2001 to ref 128514
   role_a_pos 717 791 3000 no_role_b
   no_multiplicity_a no_multiplicity_b

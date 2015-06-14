@@ -39,7 +39,7 @@
  * Usage:
  * \code
  *   QComboBox *cb = new QComboBox;
- *   cb->setModel(new mdtClLinkTypeModel);
+ *   cb->setModel(new mdtClLinkTypeModel(this, db));
  *   cb->setModelColumn(1);  // Will display name field
  * \endcode
  */

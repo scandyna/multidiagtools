@@ -64,7 +64,6 @@ struct mdtClArticleLinkData
   void setConnectionStartFk(const mdtClArticleConnectionKeyData & fk)
   {
     pvKeyData.pk.connectionStartId = fk.id;
-//     pvKeyData.connectionStartFk = fk;
   }
 
   /*! \brief Set article connection end FK
@@ -74,35 +73,34 @@ struct mdtClArticleLinkData
   void setConnectionEndFk(const mdtClArticleConnectionKeyData & fk)
   {
     pvKeyData.pk.connectionEndId = fk.id;
-//     pvKeyData.connectionEndFk = fk;
-  }
-
-  /*! \brief Set link type FK
-   */
-  void setLinkTypeFk(const mdtClLinkTypeKeyData & fk)
-  {
-    pvKeyData.linkTypeFk = fk;
   }
 
   /*! \brief Set link type
    */
   void setLinkType(mdtClLinkType_t t)
   {
-    pvKeyData.linkTypeFk.setType(t);
+    pvKeyData.setLinkType(t);
   }
 
-  /*! \brief Set link direction FK
+  /*! \brief Get link type
    */
-  void setLinkDirectionFk(const mdtClLinkDirectionKeyData & fk)
+  mdtClLinkType_t linkType() const
   {
-    pvKeyData.linkDirectionFk = fk;
+    return pvKeyData.linkTypeFk().type();
   }
 
   /*! \brief Set link direction
    */
   void setLinkDirection(mdtClLinkDirection_t d)
   {
-    pvKeyData.linkDirectionFk.setDirection(d);
+    pvKeyData.setLinkDirection(d);
+  }
+
+  /*! \brief Get link direction
+   */
+  mdtClLinkDirection_t linkDirection() const
+  {
+    return pvKeyData.linkDirectionFk().direction();
   }
 
   /*! \brief Check if data is null

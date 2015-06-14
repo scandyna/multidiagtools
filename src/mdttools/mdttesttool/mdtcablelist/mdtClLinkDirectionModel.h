@@ -40,7 +40,7 @@
  * Usage:
  * \code
  *   QComboBox *cb = new QComboBox;
- *   cb->setModel(new mdtClLinkDirectionModel);
+ *   cb->setModel(new mdtClLinkDirectionModel(this, db));
  *   cb->setModelColumn(1);  // Will display name field
  * \endcode
  */
@@ -87,7 +87,7 @@ class mdtClLinkDirectionModel : public QSqlQueryModel
    *  F.ex. a cable link can only be bidirectional, but a diode
    *  is unidirectional (start to end or end to start)
    */
-  void setLinkType(const mdtClLinkTypeKeyData & key);
+  void setLinkType(mdtClLinkType_t lt);
 
   /*! \brief Get last error
    */

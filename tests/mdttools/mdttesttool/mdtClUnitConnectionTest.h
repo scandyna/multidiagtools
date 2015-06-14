@@ -45,6 +45,11 @@ class mdtClUnitConnectionTest : public mdtTest
   void unitConnectionDataTest();
   void unitConnectorWithConnectionsTest();
 
+  void unitConnectionAddGetRemoveTest();
+  void unitConnectionWithArticleLinkAddGetRemoveTest();
+  void unitConnectorAddGetRemoveTest();
+  void unitConnectorWithConnectionsAddGetRemoveTest();
+
  private:
 
   // Create test database schema - Will FAIL on problem

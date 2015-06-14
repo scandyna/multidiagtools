@@ -126,11 +126,11 @@ QString mdtClLinkDirectionModel::pictureAscii(int row)
   return pa;
 }
 
-void mdtClLinkDirectionModel::setLinkType(const mdtClLinkTypeKeyData &key)
+void mdtClLinkDirectionModel::setLinkType(mdtClLinkType_t lt)
 {
   QString sql = pvBaseSql;
 
-  switch(key.type()){
+  switch(lt){
     case mdtClLinkType_t::CableLink:
     case mdtClLinkType_t::Connection:
     case mdtClLinkType_t::InternalLink:

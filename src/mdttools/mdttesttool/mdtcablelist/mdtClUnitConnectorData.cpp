@@ -30,6 +30,26 @@ void mdtClUnitConnectorData::clear()
 {
   pvKeyData.clear();
   name.clear();
+  pvConnectionDataList.clear();
+}
+
+void mdtClUnitConnectorData::addConnectionData(mdtClUnitConnectionData data) 
+{
+  Q_ASSERT(!pvKeyData.unitId().isNull());
+  Q_ASSERT(!data.isPartOfUnitConnector());
+
+  mdtClUnitConnectionKeyData key;
+
+  key.id = data.keyData().id;
+  key.setUnitId(pvKeyData.unitId());
+  key.setUnitConnectorFk(pvKeyData);
+  if(data.isBasedOnArticleConnection()){
+    key.setArticleConnectionFk(data.keyData().articleConnectionFk());
+  }else{
+    key.setConnectionType(data.connectionType());
+  }
+  data.setKeyData(key);
+  pvConnectionDataList.append(data);
 }
 
 /*
@@ -94,33 +114,33 @@ void mdtClUnitConnectorData::setConnectionDataList(const QList<mdtClUnitConnecti
   pvConnectionDataList = dataList;
 }
 
-const QList<mdtClUnitConnectionData> & mdtClUnitConnectorData::connectionDataList() const
-{
-  return pvConnectionDataList;
-}
+// const QList<mdtClUnitConnectionData> & mdtClUnitConnectorData::connectionDataList() const
+// {
+//   return pvConnectionDataList;
+// }
 
 QList<mdtClUnitConnectionData> & mdtClUnitConnectorData::connectionDataList()
 {
   return pvConnectionDataList;
 }
 
-void mdtClUnitConnectorData::addConnectionData(const mdtClUnitConnectionData & data) 
-{
-  Q_ASSERT(data.contains("Id_PK"));
-  Q_ASSERT(data.contains("Unit_Id_FK"));
-  Q_ASSERT(data.contains("UnitConnector_Id_FK"));
-  Q_ASSERT(data.contains("ArticleConnection_Id_FK"));
-  Q_ASSERT(data.contains("UnitContactName"));
-  Q_ASSERT(data.contains("SchemaPage"));
-  Q_ASSERT(data.contains("SignalName"));
-  Q_ASSERT(data.contains("SwAddress"));
-  Q_ASSERT(data.contains("FunctionEN"));
-  Q_ASSERT(data.contains("FunctionFR"));
-  Q_ASSERT(data.contains("FunctionDE"));
-  Q_ASSERT(data.contains("FunctionFR"));
-
-  pvConnectionDataList.append(data);
-}
+// void mdtClUnitConnectorData::addConnectionData(const mdtClUnitConnectionData & data) 
+// {
+//   Q_ASSERT(data.contains("Id_PK"));
+//   Q_ASSERT(data.contains("Unit_Id_FK"));
+//   Q_ASSERT(data.contains("UnitConnector_Id_FK"));
+//   Q_ASSERT(data.contains("ArticleConnection_Id_FK"));
+//   Q_ASSERT(data.contains("UnitContactName"));
+//   Q_ASSERT(data.contains("SchemaPage"));
+//   Q_ASSERT(data.contains("SignalName"));
+//   Q_ASSERT(data.contains("SwAddress"));
+//   Q_ASSERT(data.contains("FunctionEN"));
+//   Q_ASSERT(data.contains("FunctionFR"));
+//   Q_ASSERT(data.contains("FunctionDE"));
+//   Q_ASSERT(data.contains("FunctionFR"));
+// 
+//   pvConnectionDataList.append(data);
+// }
 
 bool mdtClUnitConnectorData::setConnectionData(const QVariant & connectionId, const mdtClUnitConnectionData & data) 
 {

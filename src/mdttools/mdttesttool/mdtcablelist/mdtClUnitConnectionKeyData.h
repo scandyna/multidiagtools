@@ -83,6 +83,7 @@ struct mdtClUnitConnectionKeyData
   /*! \brief Set unit connector FK (UnitConnector_Id_FK)
    *
    * \pre fk must not be totally null, at least its unitId must be set
+   * \pre fk's unitId must match unitId
    * \pre If fk is based on a article connector and articleConnectionFk was allready set,
    *      fk's article connector must match articleConnectionFk's article connector
    */
@@ -94,6 +95,7 @@ struct mdtClUnitConnectionKeyData
      * To check if it was allready set, we check its unitId, witch is mandatory
      */
     Q_ASSERT(!fk.unitId().isNull());
+    Q_ASSERT(fk.unitId() == pvUnitId);
     Q_ASSERT( ( !fk.isBasedOnArticleConnector() ) || ( pvArticleConnectionFk.articleId().isNull() ) ||
               ( ( (fk.articleConnectorFk().id == pvArticleConnectionFk.articleConnectorFk().id) ) &&
                 ( (fk.articleConnectorFk().articleId() == pvArticleConnectionFk.articleConnectorFk().articleId()) ) ) );
@@ -127,6 +129,7 @@ struct mdtClUnitConnectionKeyData
               ( ( fk.articleConnectorFk().id == pvUnitConnectorFk.articleConnectorFk().id ) &&
                 ( fk.articleConnectorFk().articleId() == pvUnitConnectorFk.articleConnectorFk().articleId() ) ) );
     pvArticleConnectionFk = fk;
+    pvConnectionTypeFk.setType(fk.connectionTypeFk().type());
   }
 
   /*! \brief Get article connection FK (ArticleConnection_Id_FK)
@@ -197,14 +200,24 @@ struct mdtClUnitConnectionKeyData
    */
   bool isPartOfUnitConnector() const
   {
-    return (!pvUnitConnectorFk.isNull());
+    /*
+     * By constructing data for insertion into database,
+     * unitConnectorFk's id is not allready set, so unitConnectorFk will also be null.
+     * To check if it was allready set, we check its unitId, witch is mandatory
+     */
+    return (!pvUnitConnectorFk.unitId().isNull());
   }
 
   /*! \brief Check if unit connection is based on a article connection
    */
   bool isBasedOnArticleConnection() const
   {
-    return (!pvArticleConnectionFk.isNull());
+    /*
+     * By constructing data for insertion into database,
+     * articleConnectionFk's id is not allready set, so articleConnectionFk will also be null.
+     * To check if it was allready set, we check its articleId, witch is mandatory
+     */
+    return (!pvArticleConnectionFk.articleId().isNull());
   }
 };
 

@@ -134,8 +134,8 @@ void mdtClArticleLink::fillRecord(mdtSqlRecord &record, const mdtClArticleLinkDa
   record.clearValues();
   record.setValue("ArticleConnectionStart_Id_FK", key.pk.connectionStartId);
   record.setValue("ArticleConnectionEnd_Id_FK", key.pk.connectionEndId);
-  record.setValue("LinkType_Code_FK", key.linkTypeFk.code);
-  record.setValue("LinkDirection_Code_FK", key.linkDirectionFk.code);
+  record.setValue("LinkType_Code_FK", key.linkTypeFk().code);
+  record.setValue("LinkDirection_Code_FK", key.linkDirectionFk().code);
   record.setValue("Identification", data.indetification);
   record.setValue("SinceVersion", data.sinceVersion);
   record.setValue("Modification", data.modification);
@@ -157,8 +157,8 @@ void mdtClArticleLink::fillData(mdtClArticleLinkData & data, const QSqlRecord & 
   // Fill key
   key.pk.connectionStartId = record.value("ArticleConnectionStart_Id_FK");
   key.pk.connectionEndId = record.value("ArticleConnectionEnd_Id_FK");
-  key.linkTypeFk.code = record.value("LinkType_Code_FK");
-  key.linkDirectionFk.code = record.value("LinkDirection_Code_FK");
+  key.setLinkTypeCode(record.value("LinkType_Code_FK"));
+  key.setLinkDirectionCode(record.value("LinkDirection_Code_FK"));
   // Fill data
   data.setKeyData(key);
   data.indetification = record.value("Identification");

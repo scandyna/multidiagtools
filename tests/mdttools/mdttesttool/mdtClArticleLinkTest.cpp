@@ -86,9 +86,9 @@ void mdtClArticleLinkTest::articleLinkDataTest()
   key.pk.connectionEndId = 2;
   QVERIFY(!key.pk.isNull());
   QVERIFY(key.isNull());
-  key.linkTypeFk.setType(mdtClLinkType_t::CableLink);
+  key.setLinkType(mdtClLinkType_t::CableLink);
   QVERIFY(key.isNull());
-  key.linkDirectionFk.setDirection(mdtClLinkDirection_t::Bidirectional);
+  key.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
   QVERIFY(!key.isNull());
 //   // Set some data
 //   key.connectionStartFk.id = 1;
@@ -110,8 +110,8 @@ void mdtClArticleLinkTest::articleLinkDataTest()
 //   QVERIFY(key.connectionStartFk.isNull());
 //   QVERIFY(key.connectionEndFk.isNull());
   QVERIFY(key.pk.isNull());
-  QVERIFY(key.linkTypeFk.isNull());
-  QVERIFY(key.linkDirectionFk.isNull());
+  QVERIFY(key.linkTypeFk().isNull());
+  QVERIFY(key.linkDirectionFk().isNull());
   QVERIFY(key.isNull());
   /*
    * Data test
@@ -123,8 +123,8 @@ void mdtClArticleLinkTest::articleLinkDataTest()
   pk.connectionStartId = 5;
   pk.connectionEndId = 6;
   key.pk = pk;
-  key.linkTypeFk.setType(mdtClLinkType_t::CableLink);
-  key.linkDirectionFk.setDirection(mdtClLinkDirection_t::Bidirectional);
+  key.setLinkType(mdtClLinkType_t::CableLink);
+  key.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
   QVERIFY(!key.isNull());
 //   key.clear();
 //   key.connectionStartFk.id = 5;
@@ -150,22 +150,16 @@ void mdtClArticleLinkTest::articleLinkDataTest()
   data.setConnectionStartFk(acKey);
   acKey.id = 11;
   data.setConnectionEndFk(acKey);
-  ltKey.clear();
-  ltKey.setType(mdtClLinkType_t::CableLink);
-  data.setLinkTypeFk(ltKey);
-  ldKey.clear();
-  ldKey.setDirection(mdtClLinkDirection_t::Bidirectional);
-//   QCOMPARE(data.keyData().connectionStartFk.id, QVariant(10));
-//   QCOMPARE(data.keyData().connectionEndFk.id, QVariant(11));
+  data.setLinkType(mdtClLinkType_t::CableLink);
   QCOMPARE(data.keyData().pk.connectionStartId, QVariant(10));
   QCOMPARE(data.keyData().pk.connectionEndId, QVariant(11));
-  QVERIFY(data.keyData().linkTypeFk.type() == mdtClLinkType_t::CableLink);
-  QVERIFY(data.keyData().linkDirectionFk.direction() == mdtClLinkDirection_t::Bidirectional);
+  QVERIFY(data.linkType() == mdtClLinkType_t::CableLink);
+  QVERIFY(data.linkDirection() == mdtClLinkDirection_t::Bidirectional);
   // Update link type and direction
   data.setLinkType(mdtClLinkType_t::Connection);
   data.setLinkDirection(mdtClLinkDirection_t::StartToEnd);
-  QVERIFY(data.keyData().linkTypeFk.type() == mdtClLinkType_t::Connection);
-  QVERIFY(data.keyData().linkDirectionFk.direction() == mdtClLinkDirection_t::StartToEnd);
+  QVERIFY(data.linkType() == mdtClLinkType_t::Connection);
+  QVERIFY(data.linkDirection() == mdtClLinkDirection_t::StartToEnd);
   // Clear
   data.clear();
   QVERIFY(data.keyData().isNull());
@@ -208,8 +202,8 @@ void mdtClArticleLinkTest::articleLinkAddGetRemoveTest()
   QVERIFY(!data.isNull());
   QCOMPARE(data.keyData().pk.connectionStartId, QVariant(21));
   QCOMPARE(data.keyData().pk.connectionEndId, QVariant(22));
-  QVERIFY(data.keyData().linkTypeFk.type() == mdtClLinkType_t::CableLink);
-  QVERIFY(data.keyData().linkDirectionFk.direction() == mdtClLinkDirection_t::Bidirectional);
+  QVERIFY(data.linkType() == mdtClLinkType_t::CableLink);
+  QVERIFY(data.linkDirection() == mdtClLinkDirection_t::Bidirectional);
   QCOMPARE(data.indetification, QVariant("Link 21-22"));
   QCOMPARE(data.sinceVersion, QVariant(1.0));
   QCOMPARE(data.modification, QVariant("new"));
@@ -232,8 +226,8 @@ void mdtClArticleLinkTest::articleLinkAddGetRemoveTest()
   QVERIFY(!data.isNull());
   QCOMPARE(data.keyData().pk.connectionStartId, QVariant(21));
   QCOMPARE(data.keyData().pk.connectionEndId, QVariant(22));
-  QVERIFY(data.keyData().linkTypeFk.type() == mdtClLinkType_t::InternalLink);
-  QVERIFY(data.keyData().linkDirectionFk.direction() == mdtClLinkDirection_t::StartToEnd);
+  QVERIFY(data.linkType() == mdtClLinkType_t::InternalLink);
+  QVERIFY(data.linkDirection() == mdtClLinkDirection_t::StartToEnd);
   QCOMPARE(data.indetification, QVariant("Link 21-22 edited"));
   QCOMPARE(data.sinceVersion, QVariant(1.1));
   QCOMPARE(data.modification, QVariant("update"));

@@ -247,24 +247,19 @@ void mdtClLinkTest::linkDirectionModelTest()
   QCOMPARE(m.keyData(m.row(key)).code, QVariant("ETS"));
   QCOMPARE(m.pictureAscii(m.row(key)), QString("<--"));
   // Check setting link type
-  typeKey.setType(mdtClLinkType_t::CableLink);
-  m.setLinkType(typeKey);
+  m.setLinkType(mdtClLinkType_t::CableLink);
   QCOMPARE(m.rowCount(), 1);
   QVERIFY(m.keyData(0).direction() == mdtClLinkDirection_t::Bidirectional);
-  typeKey.setType(mdtClLinkType_t::Connection);
-  m.setLinkType(typeKey);
+  m.setLinkType(mdtClLinkType_t::Connection);
   QCOMPARE(m.rowCount(), 1);
   QVERIFY(m.keyData(0).direction() == mdtClLinkDirection_t::Bidirectional);
-  typeKey.setType(mdtClLinkType_t::InternalLink);
-  m.setLinkType(typeKey);
+  m.setLinkType(mdtClLinkType_t::InternalLink);
   QCOMPARE(m.rowCount(), 1);
   QVERIFY(m.keyData(0).direction() == mdtClLinkDirection_t::Bidirectional);
-  typeKey.setType(mdtClLinkType_t::TestLink);
-  m.setLinkType(typeKey);
+  m.setLinkType(mdtClLinkType_t::TestLink);
   QCOMPARE(m.rowCount(), 1);
   QVERIFY(m.keyData(0).direction() == mdtClLinkDirection_t::Bidirectional);
-  typeKey.setType(mdtClLinkType_t::Undefined);
-  m.setLinkType(typeKey);
+  m.setLinkType(mdtClLinkType_t::Undefined);
   QCOMPARE(m.rowCount(), 0);
   QVERIFY(m.keyData(0).isNull());
 

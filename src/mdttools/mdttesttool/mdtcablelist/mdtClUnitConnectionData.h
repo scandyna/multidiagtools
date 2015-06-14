@@ -75,6 +75,19 @@ struct mdtClUnitConnectionData : public mdtSqlRecord /// \todo Remove this inher
     return pvKeyData.isBasedOnArticleConnection();
   }
 
+  /*! \brief Set connection type
+   *
+   * \pre Setting connection type is not allowed if unit connection is based on a article connection
+   */
+  void setConnectionType(mdtClConnectionType_t t);
+
+  /*! \brief Get connection type
+   */
+  inline mdtClConnectionType_t connectionType() const
+  {
+    return pvKeyData.connectionTypeFk().type();
+  }
+
   /*! \brief Check if data is null
    *
    * Data is null if key data is null

@@ -107,9 +107,9 @@ void mdtClArticleLinkDialog::setLinkData(const mdtClArticleLinkData & data)
   displayCurrentSelectedStartConnection();
   displayCurrentSelectedEndConnection();
   // Display link type
-  setLinkType(data.keyData().linkTypeFk.type());
+  setLinkType(data.linkType());
   // Display link direction
-  setLinkDirection(data.keyData().linkDirectionFk.direction());
+  setLinkDirection(data.linkDirection());
   // Display values
   sbValue->setValue(data.resistance.toDouble());
 }
@@ -138,7 +138,7 @@ void mdtClArticleLinkDialog::onCbLinkTypeCurrentIndexChanged(int row)
   }
   // We must update available directions regarding link type
   auto key = pvLinkTypeModel->keyData(row);
-  pvLinkDirectionModel->setLinkType(key);
+  pvLinkDirectionModel->setLinkType(key.type());
   if(pvLinkDirectionModel->rowCount() > 1){
     cbLinkDirection->setEnabled(true);
   }else{
@@ -147,7 +147,7 @@ void mdtClArticleLinkDialog::onCbLinkTypeCurrentIndexChanged(int row)
   // Update displayed unit (V, Ohm, ...)
   lbUnit->setText("[" + pvLinkTypeModel->unit(row) + "]");
   // Update link data
-  pvLinkData.setLinkTypeFk(key);
+  pvLinkData.setLinkType(key.type());
 }
 
 void mdtClArticleLinkDialog::onCbLinkDirectionCurrentIndexChanged(int row)
@@ -160,7 +160,7 @@ void mdtClArticleLinkDialog::onCbLinkDirectionCurrentIndexChanged(int row)
   // Update the ASCII picture
   lbLinkDirectionAsciiPicture->setText(pvLinkDirectionModel->pictureAscii(row));
   // Update link data
-  pvLinkData.setLinkDirectionFk(key);
+  pvLinkData.setLinkDirection(key.direction());
 }
 
 void mdtClArticleLinkDialog::selectStartConnection()
@@ -207,11 +207,11 @@ void mdtClArticleLinkDialog::accept()
   auto key = pvLinkData.keyData();
 
   // Link type was allready set by onCbLinkTypeCurrentIndexChanged() - check it
-  if(key.linkTypeFk.isNull()){
+  if(key.linkTypeFk().isNull()){
     errorList << tr("Link type is not set");
   }
   // Link direction was allready set by onCbLinkDirectionCurrentIndexChanged() - check it
-  if(key.linkDirectionFk.isNull()){
+  if(key.linkDirectionFk().isNull()){
     errorList << tr("Link direction is not set");
   }
   // Start and end connections are allready set afetr selection by user

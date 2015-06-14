@@ -182,6 +182,7 @@ set (CL_SOURCES_FILES
           mdtcablelist/mdtClPathGraphicsConnection.cpp
           mdtcablelist/mdtClPathGraphicsLink.cpp
           mdtcablelist/mdtClUnit.cpp
+          mdtcablelist/mdtClUnitConnection.cpp
           mdtcablelist/mdtClUnitConnectorData.cpp
           mdtcablelist/mdtClUnitConnectionData.cpp
           mdtcablelist/mdtClUnitConnectionDialog.cpp

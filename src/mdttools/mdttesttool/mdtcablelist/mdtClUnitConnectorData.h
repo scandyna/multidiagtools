@@ -87,6 +87,24 @@ struct mdtClUnitConnectorData : public mdtSqlRecord  /// \todo remove this inher
    */
   QVariant name;
 
+  /*! \brief Add connection data
+   *
+   * In key that is contained in given data,
+   *  unitId and unitConnectorFk will be updated
+   *  to match this unit connector befor adding connection.
+   *
+   * \pre In this unit connector's key, unitId must be set
+   * \pre In data's key, unitConnectorFk must not allready been set
+   */
+  void addConnectionData(mdtClUnitConnectionData data);
+
+  /*! \brief Access list of connection data
+   */
+  inline const QList<mdtClUnitConnectionData> & connectionDataList() const
+  {
+    return pvConnectionDataList;
+  }
+
  public:
 
   /*! \brief Construct a empty mdtClUnitConnectorData
@@ -133,29 +151,11 @@ struct mdtClUnitConnectorData : public mdtSqlRecord  /// \todo remove this inher
 
   /*! \brief Get list of connection data
    */
-  const QList<mdtClUnitConnectionData> & connectionDataList() const;
+//   const QList<mdtClUnitConnectionData> & connectionDataList() const;
 
   /*! \brief Get list of connection data
    */
   QList<mdtClUnitConnectionData> & connectionDataList();
-
-  /*! \brief Add connection data
-   *
-   * \pre data must contains following fields:
-   *  - Id_PK
-   *  - Unit_Id_FK
-   *  - UnitConnector_Id_FK
-   *  - ArticleConnection_Id_FK
-   *  - UnitContactName
-   *  - SchemaPage
-   *  - SignalName
-   *  - SwAddress
-   *  - FunctionEN
-   *  - FunctionFR
-   *  - FunctionDE
-   *  - FunctionIT
-   */
-  void addConnectionData(const mdtClUnitConnectionData & data);
 
   /*! \brief Update existing connection data
    *
