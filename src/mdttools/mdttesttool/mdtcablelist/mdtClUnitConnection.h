@@ -63,9 +63,53 @@ class mdtClUnitConnection : public mdtClArticleConnection
    */
   mdtClUnitConnectionData getUnitConnectionData(const mdtClUnitConnectionKeyData & key, bool & ok);
 
+  /*! \brief Update unit connection
+   *
+   * \param key Key of unit connection to edit (only id is used in key)
+   * \param data Data to set
+   */
+  bool updateUnitConnection(const mdtClUnitConnectionKeyData & key, const mdtClUnitConnectionData & data);
+
   /*! \brief Remove a unit connection
    */
   bool removeUnitConnection(const mdtClUnitConnectionKeyData & key);
+
+  /*! \brief Add a unit connector to database
+   *
+   * \param data Unit connector data to store
+   * \param handleTransaction Internally, a transaction is (explicitly) open.
+   *             By calling this function with a allready open transaction,
+   *             set this argument false.
+   * \return Id_PK of added unit connector, or a null key on error
+   */
+  mdtClUnitConnectorKeyData addUnitConnector(mdtClUnitConnectorData data, bool handleTransaction);
+
+  /*! \brief Get unit connector data from database
+   *
+   * \param key Unit connector key. Only id must be set, other data are not used.
+   * \param includeConnectionData If true, related connections are also included in data
+   * \param ok Is set false on error
+   * \return data for given key.
+   *       A null data is returned if given key does not exist, or a error occured.
+   *       Use ok parameter to diffrenciate both cases.
+   */
+  mdtClUnitConnectorData getUnitConnectorData(mdtClUnitConnectorKeyData key, bool includeConnectionData, bool & ok);
+
+  /*! \brief Update unit connector name
+   *
+   * \param key Unit connector key. Only id must be set, other data are not used.
+   * \param name New name to give to unit connector
+   */
+  bool updateUnitConnectorName(const mdtClUnitConnectorKeyData & key, const QVariant & name);
+
+  /*! \brief Remove unit connector
+   *
+   * \param key Key of unit connector to remove
+   * \param handleTransaction Internally, a transaction is (explicitly) open.
+   *             By calling this function with a allready open transaction,
+   *             set this argument false.
+   */
+  bool removeUnitConnector(const mdtClUnitConnectorKeyData & key, bool handleTransaction);
 
  private:
 
@@ -81,6 +125,19 @@ class mdtClUnitConnection : public mdtClArticleConnection
    *       and Connector_Id_FK from UnitConnector_tbl
    */
   void fillData(mdtClUnitConnectionData & data, const QSqlRecord & record);
+
+  /*! \brief Fill given record with given unit connector data
+   *
+   * \pre record must be setup
+   */
+  void fillRecord(mdtSqlRecord & record, const mdtClUnitConnectorData & data);
+
+  /*! \brief Fill given unit connector data with given record
+   *
+   * \pre record must contain all fields from UnitConnector_tbl,
+   *       Connector_Id_FK and Article_Id_FK from ArticleConnector_tbl
+   */
+  void fillData(mdtClUnitConnectorData & data, const QSqlRecord & record);
 
   Q_DISABLE_COPY(mdtClUnitConnection);
 };

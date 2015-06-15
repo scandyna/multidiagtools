@@ -101,11 +101,143 @@ mdtClUnitConnectionData mdtClUnitConnection::getUnitConnectionData(const mdtClUn
   return data;
 }
 
+bool mdtClUnitConnection::updateUnitConnection(const mdtClUnitConnectionKeyData & key, const mdtClUnitConnectionData & data)
+{
+  mdtSqlRecord record;
+
+  if(!record.addAllFields("UnitConnection_tbl", database())){
+    pvLastError = record.lastError();
+    return false;
+  }
+  fillRecord(record, data);
+
+  return updateRecord("UnitConnection_tbl", record, "Id_PK", key.id);
+}
+
 bool mdtClUnitConnection::removeUnitConnection(const mdtClUnitConnectionKeyData & key)
 {
   return removeData("UnitConnection_tbl", "Id_PK", key.id);
 }
 
+mdtClUnitConnectorKeyData mdtClUnitConnection::addUnitConnector(mdtClUnitConnectorData data, bool handleTransaction)
+{
+  mdtClUnitConnectorKeyData key;
+  mdtSqlRecord record;
+  QSqlQuery query(database());
+  mdtSqlTransaction transaction(database());
+
+  // Setup record with given data
+  if(!record.addAllFields("UnitConnector_tbl", database())){
+    pvLastError = record.lastError();
+    return key;
+  }
+  fillRecord(record, data);
+  // Save connector to database
+  if(handleTransaction){
+    if(!transaction.begin()){
+      pvLastError = transaction.lastError();
+      return key;
+    }
+  }
+  if(!addRecord(record, "UnitConnector_tbl", query)){
+    return key;
+  }
+  // Setup key to return
+  key = data.keyData();
+  key.id = query.lastInsertId();
+  // Save connections to database
+  if(data.connectionDataList().size() > 0){
+    /**
+    data.setKeyData(key);
+    if(!addArticleConnectionList(data.connectionDataList(), false)){
+      key.clear();
+      return key;
+    }
+    */
+  }
+  if(handleTransaction){
+    if(!transaction.commit()){
+      pvLastError = transaction.lastError();
+      key.clear();
+      return key;
+    }
+  }
+
+  return key;
+}
+
+mdtClUnitConnectorData mdtClUnitConnection::getUnitConnectorData(mdtClUnitConnectorKeyData key, bool includeConnectionData, bool &ok)
+{
+  mdtClUnitConnectorData data;
+  QList<QSqlRecord> dataList;
+  QString sql;
+
+  sql = "SELECT UCNR.*,"\
+        " ACNR.Article_Id_FK AS ACNR_Article_Id_FK,"\
+        " ACNR.Connector_Id_FK AS ACNR_Connector_Id_FK\n"\
+        "FROM UnitConnector_tbl UCNR\n"\
+        " LEFT JOIN ArticleConnector_tbl ACNR ON ACNR.Id_PK = UCNR.ArticleConnector_Id_FK\n";
+  sql += " WHERE UCNR.Id_PK = " + key.id.toString();
+  dataList = getDataList<QSqlRecord>(sql, ok);
+  if(!ok){
+    return data;
+  }
+  if(dataList.isEmpty()){
+    return data;
+  }
+  Q_ASSERT(dataList.size() == 1);
+  fillData(data, dataList.at(0));
+  if(includeConnectionData){
+    /**
+    data.setConnectionDataList(getArticleConnectionDataList(data.keyData(), ok));
+    if(!ok){
+      data.clear();
+    }
+    */
+  }
+
+  return data;
+}
+
+bool mdtClUnitConnection::updateUnitConnectorName(const mdtClUnitConnectorKeyData & key, const QVariant &name)
+{
+  mdtSqlRecord record;
+
+  if(!record.addAllFields("UnitConnector_tbl", database())){
+    pvLastError = record.lastError();
+    return false;
+  }
+  record.setValue("Name", name);
+
+  return updateRecord("UnitConnector_tbl", record, "Id_PK", key.id);
+}
+
+bool mdtClUnitConnection::removeUnitConnector(const mdtClUnitConnectorKeyData & key, bool handleTransaction)
+{
+  mdtSqlTransaction transaction(database());
+
+  if(handleTransaction){
+    if(!transaction.begin()){
+      pvLastError = transaction.lastError();
+      return false;
+    }
+  }
+  /// \todo when links are implemented, this must be changed
+  if(!removeData("UnitConnection_tbl", "UnitConnector_Id_FK", key.id.toString())){
+    return false;
+  }
+  if(!removeData("UnitConnector_tbl", "Id_PK", key.id.toString())){
+    return false;
+  }
+  if(handleTransaction){
+    if(!transaction.commit()){
+      pvLastError = transaction.lastError();
+      return false;
+    }
+  }
+
+  return true;
+}
 
 void mdtClUnitConnection::fillRecord(mdtSqlRecord & record, const mdtClUnitConnectionData & data)
 {
@@ -205,4 +337,56 @@ void mdtClUnitConnection::fillData(mdtClUnitConnectionData & data, const QSqlRec
   data.functionFR = record.value("functionFR");
   data.functionDE = record.value("functionDE");
   data.functionIT = record.value("functionIT");
+}
+
+void mdtClUnitConnection::fillRecord(mdtSqlRecord &record, const mdtClUnitConnectorData &data)
+{
+  Q_ASSERT(!record.isEmpty());
+
+  auto key = data.keyData();
+
+  record.clearValues();
+  record.setValue("Id_PK", key.id);
+  record.setValue("Unit_Id_FK", key.unitId());
+  record.setValue("Connector_Id_FK", key.connectorFk().id);
+  record.setValue("ArticleConnector_Id_FK", key.articleConnectorFk().id);
+  record.setValue("Name", data.name);
+}
+
+void mdtClUnitConnection::fillData(mdtClUnitConnectorData &data, const QSqlRecord &record)
+{
+  Q_ASSERT(record.contains("Id_PK"));
+  Q_ASSERT(record.contains("Unit_Id_FK"));
+  Q_ASSERT(record.contains("Connector_Id_FK"));
+  Q_ASSERT(record.contains("ArticleConnector_Id_FK"));
+  Q_ASSERT(record.contains("Name"));
+  Q_ASSERT(record.contains("ACNR_Article_Id_FK"));
+  Q_ASSERT(record.contains("ACNR_Connector_Id_FK"));
+
+  mdtClConnectorKeyData connectorFk;
+  mdtClArticleConnectorKeyData articleConnectorFk;
+  mdtClUnitConnectorKeyData key;
+
+  // Setup article connector FK
+  articleConnectorFk.id = record.value("ArticleConnector_Id_FK");
+  articleConnectorFk.setArticleId(record.value("ACNR_Article_Id_FK"));
+  connectorFk.id = record.value("ACNR_Connector_Id_FK");
+  if(!connectorFk.isNull()){
+    articleConnectorFk.setConnectorFk(connectorFk);
+  }
+  // Setup connector FK
+  connectorFk.id = record.value("Connector_Id_FK");
+  // Setup unit connector FK
+  key.id = record.value("Id_PK");
+  key.setUnitId(record.value("Unit_Id_FK"));
+  if(!articleConnectorFk.isNull()){
+    key.setArticleConnectorFk(articleConnectorFk);
+  }else{
+    if(!connectorFk.isNull()){
+      key.setConnectorFk(connectorFk);
+    }
+  }
+  // Fill data
+  data.setKeyData(key);
+  data.name = record.value("Name");
 }

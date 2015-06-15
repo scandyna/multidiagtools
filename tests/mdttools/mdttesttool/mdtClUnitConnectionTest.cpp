@@ -560,6 +560,34 @@ void mdtClUnitConnectionTest::unitConnectionAddGetRemoveTest()
   QCOMPARE(data.functionFR, QVariant("FFR"));
   QCOMPARE(data.functionDE, QVariant("FDE"));
   QCOMPARE(data.functionIT, QVariant("FIT"));
+  // Edit unit connection
+  data.name = "C";
+  data.resistance = 1.2;
+  data.schemaPage = "30";
+  data.signalName = "Name_C";
+  data.swAddress = 300;
+  data.functionEN = "FEN2";
+  data.functionFR = "FFR2";
+  data.functionDE = "FDE2";
+  data.functionIT = "FIT2";
+  QVERIFY(ucnx.updateUnitConnection(key1, data));
+  // Get data from database and check
+  data = ucnx.getUnitConnectionData(key1, ok);
+  QVERIFY(ok);
+  QVERIFY(!data.isNull());
+  QCOMPARE(data.keyData().unitId(), QVariant(1000));
+  QVERIFY(!data.isPartOfUnitConnector());
+  QVERIFY(!data.isBasedOnArticleConnection());
+  QVERIFY(data.connectionType() == mdtClConnectionType_t::Terminal);
+  QCOMPARE(data.name, QVariant("C"));
+  QCOMPARE(data.resistance, QVariant(1.2));
+  QCOMPARE(data.schemaPage, QVariant("30"));
+  QCOMPARE(data.signalName, QVariant("Name_C"));
+  QCOMPARE(data.swAddress, QVariant(300));
+  QCOMPARE(data.functionEN, QVariant("FEN2"));
+  QCOMPARE(data.functionFR, QVariant("FFR2"));
+  QCOMPARE(data.functionDE, QVariant("FDE2"));
+  QCOMPARE(data.functionIT, QVariant("FIT2"));
   /*
    * Add a unit connection based on a article connection
    */
@@ -612,7 +640,127 @@ void mdtClUnitConnectionTest::unitConnectionWithArticleLinkAddGetRemoveTest()
 
 void mdtClUnitConnectionTest::unitConnectorAddGetRemoveTest()
 {
-  QFAIL("Not implementd yet");
+  mdtClUnitConnection ucnx(pvDatabaseManager.database());
+  mdtClUnitConnectorKeyData key1, key2, key3;
+  mdtClUnitConnectorData data;
+  mdtClConnectorKeyData connectorFk;
+  mdtClArticleConnectorKeyData articleConnectorFk;
+  mdtCableListTestScenario scenario(pvDatabaseManager.database());
+  bool ok;
+
+  /*
+   * Populate data
+   */
+  scenario.createTestConnectors();
+  scenario.createTestArticles();
+  scenario.createTestArticleConnectors();
+  scenario.createTestUnits();
+  /*
+   * Add a free unit connector
+   */
+  // Setup unit connector key
+  key1.setUnitId(1000);
+  // Setup unit connector data
+  data.clear();
+  data.setKeyData(key1);
+  data.name = "X1";
+  // Add to database
+  key1 = ucnx.addUnitConnector(data, true);
+  QVERIFY(!key1.isNull());
+  // Get data back and check
+  data = ucnx.getUnitConnectorData(key1, true, ok);
+  QVERIFY(ok);
+  QVERIFY(!data.isNull());
+  QCOMPARE(data.keyData().unitId(), QVariant(1000));
+  QCOMPARE(data.name, QVariant("X1"));
+  QVERIFY(!data.isBasedOnConnector());
+  QVERIFY(!data.isBasedOnArticleConnector());
+  QCOMPARE(data.connectionDataList().size(), 0);
+  // Edit connector name
+  QVERIFY(ucnx.updateUnitConnectorName(key1, "X11"));
+  // Get data back and check
+  data = ucnx.getUnitConnectorData(key1, true, ok);
+  QVERIFY(ok);
+  QVERIFY(!data.isNull());
+  QCOMPARE(data.keyData().unitId(), QVariant(1000));
+  QCOMPARE(data.name, QVariant("X11"));
+  QVERIFY(!data.isBasedOnConnector());
+  QVERIFY(!data.isBasedOnArticleConnector());
+  QCOMPARE(data.connectionDataList().size(), 0);
+  /*
+   * Add a unit connector based on a connector (from Connector_tbl)
+   */
+  // Setup connector FK
+  connectorFk.clear();
+  connectorFk.id = 1;
+  // Setup unit connector key
+  key2.setUnitId(1000);
+  key2.setConnectorFk(connectorFk);
+  // Setup unit connector data
+  data.clear();
+  data.setKeyData(key2);
+  data.name = "X2";
+  // Add to database
+  key2 = ucnx.addUnitConnector(data, true);
+  QVERIFY(!key2.isNull());
+  // Get data back and check
+  data = ucnx.getUnitConnectorData(key2, true, ok);
+  QVERIFY(ok);
+  QVERIFY(!data.isNull());
+  QCOMPARE(data.keyData().unitId(), QVariant(1000));
+  QCOMPARE(data.keyData().connectorFk().id, QVariant(1));
+  QCOMPARE(data.name, QVariant("X2"));
+  QVERIFY(data.isBasedOnConnector());
+  QVERIFY(!data.isBasedOnArticleConnector());
+  QCOMPARE(data.connectionDataList().size(), 0);
+  /*
+   * Add a unit connector based on a article connector
+   */
+  // Setup article connector FK
+  articleConnectorFk.clear();
+  articleConnectorFk.id = 200;
+  articleConnectorFk.setArticleId(2);
+  // Setup unit connector key
+  key3.setUnitId(2000);
+  key3.setArticleConnectorFk(articleConnectorFk);
+  // Setup unit connector data
+  data.clear();
+  data.setKeyData(key3);
+  data.name = "X3";
+  // Add to database
+  key3 = ucnx.addUnitConnector(data, true);
+  QVERIFY(!key3.isNull());
+  // Get data back and check
+  data = ucnx.getUnitConnectorData(key3, true, ok);
+  QVERIFY(ok);
+  QVERIFY(!data.isNull());
+  QCOMPARE(data.keyData().unitId(), QVariant(2000));
+  QCOMPARE(data.keyData().articleConnectorFk().id, QVariant(200));
+  QCOMPARE(data.keyData().articleConnectorFk().articleId(), QVariant(2));
+  QCOMPARE(data.keyData().articleConnectorFk().connectorFk().id, QVariant(1));
+  QCOMPARE(data.keyData().connectorFk().id, QVariant(1));
+  QCOMPARE(data.name, QVariant("X3"));
+  QVERIFY(data.isBasedOnConnector());
+  QVERIFY(data.isBasedOnArticleConnector());
+  QCOMPARE(data.connectionDataList().size(), 0);
+  /*
+   * Remove connectors
+   */
+  // Remove connector key1
+  QVERIFY(ucnx.removeUnitConnector(key1, true));
+  data = ucnx.getUnitConnectorData(key1, true, ok);
+  QVERIFY(ok);
+  QVERIFY(data.isNull());
+  // Remove connector key2
+  QVERIFY(ucnx.removeUnitConnector(key2, true));
+  data = ucnx.getUnitConnectorData(key2, true, ok);
+  QVERIFY(ok);
+  QVERIFY(data.isNull());
+  // Remove connector key3
+  QVERIFY(ucnx.removeUnitConnector(key3, true));
+  data = ucnx.getUnitConnectorData(key3, true, ok);
+  QVERIFY(ok);
+  QVERIFY(data.isNull());
 }
 
 void mdtClUnitConnectionTest::unitConnectorWithConnectionsAddGetRemoveTest()

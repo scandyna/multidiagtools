@@ -5,7 +5,7 @@ diagrams
     1006 924 90 18 0 0
 end
 show_stereotypes
-selected classdiagram_ref 1417858 // ArticleConnectorAndConnection
+selected classdiagram_ref 1430914 // UnitConnectorAndConnection
 open
   classview_ref 755202 // ConnectorAndConnection
   classview_ref 497026 // Article

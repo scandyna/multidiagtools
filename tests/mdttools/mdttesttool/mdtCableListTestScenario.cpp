@@ -583,6 +583,7 @@ void mdtCableListTestScenario::createTestArticleConnectors()
   connectionData.clear();
   connectionKey.clear();
   connectionKey.id = 15;
+  connectionKey.setArticleId(1);
   connectionKey.setConnectionType(mdtClConnectionType_t::Pin);
   connectionData.setKeyData(connectionKey);
   connectionData.name = "Article contact 15";
@@ -603,6 +604,7 @@ void mdtCableListTestScenario::createTestArticleConnectors()
    * Article connector 200
    */
   // Setup connector 200
+  articleConnectorData.clear();
   connectionData.clear();
   articleConnectorKey.clear();
   articleConnectorKey.id = 200;
@@ -615,6 +617,7 @@ void mdtCableListTestScenario::createTestArticleConnectors()
   connectionData.clear();
   connectionKey.clear();
   connectionKey.id = 25;
+  connectionKey.setArticleId(2);
   connectionKey.setConnectionType(mdtClConnectionType_t::Socket);
   connectionData.setKeyData(connectionKey);
   connectionData.name = "Article contact 25";
