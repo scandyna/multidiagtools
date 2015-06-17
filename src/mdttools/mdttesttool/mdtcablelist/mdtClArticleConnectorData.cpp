@@ -23,18 +23,26 @@
 
 //#include <QDebug>
 
-void mdtClArticleConnectorData::setKeyData(const mdtClArticleConnectorKeyData & key)
-{
-  Q_ASSERT(!key.articleId().isNull());
+// void mdtClArticleConnectorData::setKeyData(const mdtClArticleConnectorKeyData & key)
+// {
+//   Q_ASSERT(!key.articleId().isNull());
+// 
+//   pvKeyData = key;
+//   for(auto & data : pvConnectionDataList){
+//     mdtClArticleConnectionKeyData articleConnectionKey;
+//     articleConnectionKey.id = data.keyData().id;
+//     articleConnectionKey.setConnectionType(data.connectionType());
+//     articleConnectionKey.setArticleId(pvKeyData.articleId());
+//     articleConnectionKey.setArticleConnectorFk(pvKeyData);
+//     data.setKeyData(articleConnectionKey);
+//   }
+// }
 
-  pvKeyData = key;
-  for(auto & data : pvConnectionDataList){
-    mdtClArticleConnectionKeyData articleConnectionKey;
-    articleConnectionKey.id = data.keyData().id;
-    articleConnectionKey.setConnectionType(data.connectionType());
-    articleConnectionKey.setArticleId(pvKeyData.articleId());
-    articleConnectionKey.setArticleConnectorFk(pvKeyData);
-    data.setKeyData(articleConnectionKey);
+void mdtClArticleConnectorData::setId(const QVariant &id)
+{
+  pvKeyData.id = id;
+  for(auto & articleConnectionData : pvConnectionDataList){
+    articleConnectionData.setArticleConnectorFk(pvKeyData);
   }
 }
 

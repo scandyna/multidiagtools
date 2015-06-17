@@ -43,7 +43,9 @@ class mdtClUnitConnectionTest : public mdtTest
 
   void unitConnectorDataTest();
   void unitConnectionDataTest();
-  void unitConnectorWithConnectionsTest();
+  void unitConnectorWithConnectionsDataTest();
+  void unitConnectorDataFromConnectorContactsTest();
+  void unitConnectorDataFromArticleConnectionListTest();
 
   void unitConnectionAddGetRemoveTest();
   void unitConnectionWithArticleLinkAddGetRemoveTest();

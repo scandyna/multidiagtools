@@ -165,7 +165,7 @@ bool mdtClArticleConnection::removeArticleConnection(const mdtClArticleConnectio
   return removeData("ArticleConnection_tbl", "Id_PK", key.id);
 }
 
-bool mdtClArticleConnection::removeArticleConnections(const mdtSqlTableSelection &s)
+bool mdtClArticleConnection::removeArticleConnections(const mdtSqlTableSelection & s)
 {
   QList<QVariant> idList = s.dataList("Id_PK");
   mdtSqlTransaction transaction(database());
@@ -220,7 +220,7 @@ mdtClArticleConnectorKeyData mdtClArticleConnection::addArticleConnector(mdtClAr
   key.id = query.lastInsertId();
   // Save connections to database
   if(data.connectionDataList().size() > 0){
-    data.setKeyData(key);
+    data.setId(key.id);
     if(!addArticleConnectionList(data.connectionDataList(), false)){
       key.clear();
       return key;
@@ -309,7 +309,7 @@ bool mdtClArticleConnection::removeArticleConnector(const mdtClArticleConnectorK
   return true;
 }
 
-bool mdtClArticleConnection::removeArticleConnectors(const mdtSqlTableSelection &s)
+bool mdtClArticleConnection::removeArticleConnectors(const mdtSqlTableSelection & s)
 {
   mdtSqlTransaction transaction(database());
 

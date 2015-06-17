@@ -52,11 +52,23 @@ struct mdtClArticleConnectorData : public mdtSqlRecord  /// \todo When all is ad
 
   /*! \brief Set key data
    *
-   * If connector contains connections, they will also updated
-   *
-   * \pre key must at least have its articleId set.
+   * \pre key must at least have its articleId set
+   * \pre keyData must not allready been set
    */
-  void setKeyData(const mdtClArticleConnectorKeyData & key);
+  void setKeyData(const mdtClArticleConnectorKeyData & key)
+  {
+    Q_ASSERT(!key.articleId().isNull());
+    Q_ASSERT(pvKeyData.articleId().isNull());
+    Q_ASSERT(!pvKeyData.isBasedOnConnector());
+    pvKeyData = key;
+  }
+
+  /*! \brief Set/update article connector ID (Id_PK)
+   *
+   * If connector contains connections,
+   *  they will be updated.
+   */
+  void setId(const QVariant & id);
 
   /*! \brief Check if data is null
    *

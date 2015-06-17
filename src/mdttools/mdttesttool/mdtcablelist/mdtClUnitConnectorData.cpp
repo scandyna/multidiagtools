@@ -21,9 +21,14 @@
 #include "mdtClUnitConnectorData.h"
 #include <QString>
 
-void mdtClUnitConnectorData::setKeyData(const mdtClUnitConnectorKeyData &key)
+//#include <QDebug>
+
+void mdtClUnitConnectorData::setId(const QVariant & id)
 {
-  pvKeyData = key;
+  pvKeyData.id = id;
+  for(auto & unitConnectionData : pvConnectionDataList){
+    unitConnectionData.setUnitConnectorFk(pvKeyData);
+  }
 }
 
 void mdtClUnitConnectorData::clear()
@@ -36,7 +41,9 @@ void mdtClUnitConnectorData::clear()
 void mdtClUnitConnectorData::addConnectionData(mdtClUnitConnectionData data) 
 {
   Q_ASSERT(!pvKeyData.unitId().isNull());
-  Q_ASSERT(!data.isPartOfUnitConnector());
+  Q_ASSERT( ( (data.keyData().id.isNull()) && (!data.isPartOfUnitConnector()) ) ||
+            ( (!data.keyData().id.isNull()) && (data.keyData().unitConnectorFk().id == pvKeyData.id)
+               && (data.keyData().unitConnectorFk().unitId() == pvKeyData.unitId()) ) );
 
   mdtClUnitConnectionKeyData key;
 
@@ -50,6 +57,14 @@ void mdtClUnitConnectorData::addConnectionData(mdtClUnitConnectionData data)
   }
   data.setKeyData(key);
   pvConnectionDataList.append(data);
+}
+
+void mdtClUnitConnectorData::setConnectionDataList(const QList<mdtClUnitConnectionData> & dataList) 
+{
+  pvConnectionDataList.clear();
+  for(const auto & data : dataList){
+    addConnectionData(data);
+  }
 }
 
 /*
@@ -109,10 +124,10 @@ void mdtClUnitConnectorData::clearValues()
 // }
 
 
-void mdtClUnitConnectorData::setConnectionDataList(const QList<mdtClUnitConnectionData> & dataList) 
-{
-  pvConnectionDataList = dataList;
-}
+// void mdtClUnitConnectorData::setConnectionDataList(const QList<mdtClUnitConnectionData> & dataList) 
+// {
+//   pvConnectionDataList = dataList;
+// }
 
 // const QList<mdtClUnitConnectionData> & mdtClUnitConnectorData::connectionDataList() const
 // {

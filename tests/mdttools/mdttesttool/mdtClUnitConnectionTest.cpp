@@ -448,12 +448,14 @@ void mdtClUnitConnectionTest::unitConnectionDataTest()
   QVERIFY(data.functionIT.isNull());
 }
 
-void mdtClUnitConnectionTest::unitConnectorWithConnectionsTest()
+void mdtClUnitConnectionTest::unitConnectorWithConnectionsDataTest()
 {
   mdtClUnitConnectorKeyData unitConnectorKey;
   mdtClUnitConnectorData unitConnectorData;
   mdtClUnitConnectionKeyData unitConnectionKey;
   mdtClUnitConnectionData unitConnectionData;
+  mdtClArticleConnectorKeyData articleConnectorFk;
+  mdtClArticleConnectionKeyData articleConnectionFk;
 
   /*
    * Initial state
@@ -483,8 +485,6 @@ void mdtClUnitConnectionTest::unitConnectorWithConnectionsTest()
   QCOMPARE(unitConnectorData.connectionDataList().at(0).keyData().unitConnectorFk().unitId(), QVariant(1));
   QVERIFY(unitConnectorData.connectionDataList().at(0).connectionType() == mdtClConnectionType_t::Pin);
   QCOMPARE(unitConnectorData.connectionDataList().at(0).name, QVariant("A"));
-  // Setup unit connection key
-  
   // Setup unit connection data and add
   unitConnectionData.clear();
   unitConnectionData.setConnectionType(mdtClConnectionType_t::Socket);
@@ -500,11 +500,145 @@ void mdtClUnitConnectionTest::unitConnectorWithConnectionsTest()
   QCOMPARE(unitConnectorData.connectionDataList().at(1).keyData().unitConnectorFk().unitId(), QVariant(1));
   QVERIFY(unitConnectorData.connectionDataList().at(1).connectionType() == mdtClConnectionType_t::Socket);
   QCOMPARE(unitConnectorData.connectionDataList().at(1).name, QVariant("B"));
+  // Update unit connectors ID
+  unitConnectorData.setId(10);
+  // Check
+  QCOMPARE(unitConnectorData.connectionDataList().size(), 2);
+  QCOMPARE(unitConnectorData.connectionDataList().at(0).keyData().unitId(), QVariant(1));
+  QCOMPARE(unitConnectorData.connectionDataList().at(0).keyData().unitConnectorFk().unitId(), QVariant(1));
+  QCOMPARE(unitConnectorData.connectionDataList().at(0).keyData().unitConnectorFk().id, QVariant(10));
+  QVERIFY(unitConnectorData.connectionDataList().at(0).connectionType() == mdtClConnectionType_t::Pin);
+  QCOMPARE(unitConnectorData.connectionDataList().at(0).name, QVariant("A"));
+  QCOMPARE(unitConnectorData.connectionDataList().at(1).keyData().unitId(), QVariant(1));
+  QCOMPARE(unitConnectorData.connectionDataList().at(1).keyData().unitConnectorFk().unitId(), QVariant(1));
+  QCOMPARE(unitConnectorData.connectionDataList().at(1).keyData().unitConnectorFk().id, QVariant(10));
+  QVERIFY(unitConnectorData.connectionDataList().at(1).connectionType() == mdtClConnectionType_t::Socket);
+  QCOMPARE(unitConnectorData.connectionDataList().at(1).name, QVariant("B"));
   // Clear
   unitConnectorData.clear();
   QCOMPARE(unitConnectorData.connectionDataList().size(), 0);
+  /*
+   * Setup a unit connector based on a article connector
+   */
+  // Setup article connector
+  articleConnectorFk.clear();
+  articleConnectorFk.setArticleId(1);
+  // Setup unit connector
+  unitConnectorKey.clear();
+  unitConnectorKey.setUnitId(2);
+  unitConnectorKey.setArticleConnectorFk(articleConnectorFk);
+  unitConnectorData.setKeyData(unitConnectorKey);
+  // Setup a article connection
+  articleConnectionFk.clear();
+  articleConnectionFk.setArticleId(1);
+  articleConnectionFk.setArticleConnectorFk(articleConnectorFk);
+  articleConnectionFk.setConnectionType(mdtClConnectionType_t::Pin);
+  // Setup a unit connection and add it
+  unitConnectionKey.clear();
+  unitConnectionKey.setArticleConnectionFk(articleConnectionFk);
+  unitConnectionData.setKeyData(unitConnectionKey);
+  unitConnectionData.name = "C";
+  unitConnectorData.addConnectionData(unitConnectionData);
+  // Check
+  QCOMPARE(unitConnectorData.connectionDataList().size(), 1);
+  QCOMPARE(unitConnectorData.connectionDataList().at(0).keyData().unitId(), QVariant(2));
+  QCOMPARE(unitConnectorData.connectionDataList().at(0).keyData().unitConnectorFk().unitId(), QVariant(2));
+  QCOMPARE(unitConnectorData.connectionDataList().at(0).keyData().articleConnectionFk().articleId(), QVariant(1));
+  QVERIFY(unitConnectorData.connectionDataList().at(0).connectionType() == mdtClConnectionType_t::Pin);
+  QVERIFY(unitConnectorData.connectionDataList().at(0).isPartOfUnitConnector());
+  QVERIFY(unitConnectorData.connectionDataList().at(0).isBasedOnArticleConnection());
+  QCOMPARE(unitConnectorData.connectionDataList().at(0).name, QVariant("C"));
+  // Update unit connector ID
+  unitConnectorData.setId(30);
+  QCOMPARE(unitConnectorData.connectionDataList().at(0).keyData().unitConnectorFk().id, QVariant(30));
   
   /// \test Add other combinaisons
+}
+
+void mdtClUnitConnectionTest::unitConnectorDataFromConnectorContactsTest()
+{
+  mdtClUnitConnection ucnx(pvDatabaseManager.database());
+  mdtClUnitConnectorKeyData key;
+  mdtClUnitConnectorData data;
+  mdtClConnectorKeyData connectorFk;
+  mdtClConnectorContactKeyData contactKey;
+  mdtClConnectorContactData contactData;
+  QList<mdtClConnectorContactData> contactDataList;
+
+  // Setup unit connector
+  key.setUnitId(1);
+  data.setKeyData(key);
+  // Setup connector
+  connectorFk.id = 10;
+  // Setup a connector contact and add to list
+  contactKey.clear();
+  contactData.clear();
+  contactData.setConnectorFk(connectorFk);
+  contactData.setConnectionType(mdtClConnectionType_t::Pin);
+  contactData.name = "A";
+  contactDataList.append(contactData);
+  // Setup a connector contact and add to list
+  contactKey.clear();
+  contactData.clear();
+  contactData.setConnectorFk(connectorFk);
+  contactData.setConnectionType(mdtClConnectionType_t::Socket);
+  contactData.name = "B";
+  contactDataList.append(contactData);
+  // Add contacts to unit connector
+  ucnx.addConnectionsToUnitConnector(data, contactDataList);
+  // Check
+  QCOMPARE(data.connectionDataList().size(), 2);
+  QVERIFY(data.connectionDataList().at(0).connectionType() == mdtClConnectionType_t::Pin);
+  QCOMPARE(data.connectionDataList().at(0).name, QVariant("A"));
+  QVERIFY(data.connectionDataList().at(1).connectionType() == mdtClConnectionType_t::Socket);
+  QCOMPARE(data.connectionDataList().at(1).name, QVariant("B"));
+}
+
+void mdtClUnitConnectionTest::unitConnectorDataFromArticleConnectionListTest()
+{
+  mdtClUnitConnection ucnx(pvDatabaseManager.database());
+  mdtClUnitConnectorKeyData key;
+  mdtClUnitConnectorData data;
+  mdtClArticleConnectorKeyData articleConnectorFk;
+  mdtClArticleConnectorData articleConnectorData;
+  mdtClArticleConnectionData articleConnectionData;
+  ///QList<mdtClArticleConnectionData> articleConnectionDataList;
+
+  // Setup article connector
+  articleConnectorFk.setArticleId(1);
+  articleConnectorData.setKeyData(articleConnectorFk);
+  // Setup unit connector
+  key.setUnitId(2);
+  key.setArticleConnectorFk(articleConnectorFk);
+  data.setKeyData(key);
+  // Setup a article connection and add to list
+  articleConnectionData.clear();
+  articleConnectionData.setConnectionType(mdtClConnectionType_t::Pin);
+  articleConnectionData.name = "A";
+  articleConnectorData.addConnectionData(articleConnectionData);
+  // Setup a article connection and add to list
+  articleConnectionData.clear();
+  articleConnectionData.setConnectionType(mdtClConnectionType_t::Socket);
+  articleConnectionData.name = "B";
+  articleConnectorData.addConnectionData(articleConnectionData);
+  // Build unit connection list
+  ucnx.addConnectionsToUnitConnector(data, articleConnectorData.connectionDataList());
+  // Check
+  QCOMPARE(data.connectionDataList().size(), 2);
+  ///QCOMPARE(data.connectionDataList().at(0).keyData().articleConnectionFk().articleConnectorFk().articleId(), QVariant(1));
+  QCOMPARE(data.connectionDataList().at(0).keyData().articleConnectionFk().articleId(), QVariant(1));
+  QCOMPARE(data.connectionDataList().at(0).keyData().unitId(), QVariant(2));
+  QVERIFY(data.connectionDataList().at(0).isPartOfUnitConnector());
+  QVERIFY(data.connectionDataList().at(0).isBasedOnArticleConnection());
+  QVERIFY(data.connectionDataList().at(0).connectionType() == mdtClConnectionType_t::Pin);
+  QCOMPARE(data.connectionDataList().at(0).name, QVariant("A"));
+  QCOMPARE(data.connectionDataList().at(1).keyData().articleConnectionFk().articleConnectorFk().articleId(), QVariant(1));
+  QCOMPARE(data.connectionDataList().at(1).keyData().articleConnectionFk().articleId(), QVariant(1));
+  QCOMPARE(data.connectionDataList().at(1).keyData().unitId(), QVariant(2));
+  QVERIFY(data.connectionDataList().at(1).isPartOfUnitConnector());
+  QVERIFY(data.connectionDataList().at(1).isBasedOnArticleConnection());
+  QVERIFY(data.connectionDataList().at(1).connectionType() == mdtClConnectionType_t::Socket);
+  QCOMPARE(data.connectionDataList().at(1).name, QVariant("B"));
 }
 
 void mdtClUnitConnectionTest::unitConnectionAddGetRemoveTest()
@@ -765,7 +899,187 @@ void mdtClUnitConnectionTest::unitConnectorAddGetRemoveTest()
 
 void mdtClUnitConnectionTest::unitConnectorWithConnectionsAddGetRemoveTest()
 {
-  QFAIL("Not implementd yet");
+  mdtClUnitConnection ucnx(pvDatabaseManager.database());
+  mdtClUnitConnectorKeyData key1, key2;
+  mdtClUnitConnectorData data;
+  mdtClUnitConnectionKeyData unitConnectionKey;
+  mdtClUnitConnectionData unitConnectionsData;
+  mdtClArticleConnectorKeyData articleConnectorFk;
+  mdtClArticleConnectionKeyData articleConnectionFk;
+  mdtCableListTestScenario scenario(pvDatabaseManager.database());
+  bool ok;
+
+  /*
+   * Populate data
+   */
+  scenario.createTestConnectors();
+  scenario.createTestArticles();
+  scenario.createTestArticleConnectors();
+  scenario.createTestUnits();
+
+  /*
+   * Free unit connector with
+   */
+  // Setup unit connector key
+  key1.setUnitId(1000);
+  // Setup unit connector data
+  data.clear();
+  data.setKeyData(key1);
+  data.name = "X1";
+  // Setup unit connection data and add to unit connector
+  unitConnectionsData.clear();
+  unitConnectionsData.setConnectionType(mdtClConnectionType_t::Pin);
+  unitConnectionsData.name = "A";
+  unitConnectionsData.resistance = 1.0;
+  unitConnectionsData.schemaPage = "26";
+  unitConnectionsData.signalName = "Sig_A";
+  unitConnectionsData.swAddress = 1256;
+  unitConnectionsData.functionEN = "FEN";
+  unitConnectionsData.functionFR = "FFR";
+  unitConnectionsData.functionDE = "FDE";
+  unitConnectionsData.functionIT = "FIT";
+  data.addConnectionData(unitConnectionsData);
+  // Setup unit connection data and add to unit connector
+  unitConnectionsData.clear();
+  unitConnectionsData.setConnectionType(mdtClConnectionType_t::Socket);
+  unitConnectionsData.name = "B";
+  unitConnectionsData.resistance = 1.2;
+  unitConnectionsData.schemaPage = "27";
+  unitConnectionsData.signalName = "Sig_B";
+  unitConnectionsData.swAddress = 1259;
+  unitConnectionsData.functionEN = "FEN2";
+  unitConnectionsData.functionFR = "FFR2";
+  unitConnectionsData.functionDE = "FDE2";
+  unitConnectionsData.functionIT = "FIT2";
+  data.addConnectionData(unitConnectionsData);
+  // Add to database
+  key1 = ucnx.addUnitConnector(data, true);
+  QVERIFY(!key1.isNull());
+  // Get data back and check
+  data = ucnx.getUnitConnectorData(key1, true, ok);
+  QVERIFY(ok);
+  QVERIFY(!data.isNull());
+  QCOMPARE(data.keyData().unitId(), QVariant(1000));
+  QCOMPARE(data.name, QVariant("X1"));
+  QVERIFY(!data.isBasedOnConnector());
+  QVERIFY(!data.isBasedOnArticleConnector());
+  QCOMPARE(data.connectionDataList().size(), 2);
+  // Check unit connection A
+  QVERIFY(!data.connectionDataList().at(0).isNull());
+  QCOMPARE(data.connectionDataList().at(0).keyData().unitId(), QVariant(1000));
+  QCOMPARE(data.connectionDataList().at(0).keyData().unitConnectorFk().unitId(), QVariant(1000));
+  QVERIFY(data.connectionDataList().at(0).isPartOfUnitConnector());
+  QVERIFY(!data.connectionDataList().at(0).isBasedOnArticleConnection());
+  QVERIFY(data.connectionDataList().at(0).connectionType() == mdtClConnectionType_t::Pin);
+  QCOMPARE(data.connectionDataList().at(0).name, QVariant("A"));
+  QCOMPARE(data.connectionDataList().at(0).resistance, QVariant(1.0));
+  QCOMPARE(data.connectionDataList().at(0).schemaPage, QVariant("26"));
+  QCOMPARE(data.connectionDataList().at(0).signalName, QVariant("Sig_A"));
+  QCOMPARE(data.connectionDataList().at(0).swAddress, QVariant(1256));
+  QCOMPARE(data.connectionDataList().at(0).functionEN, QVariant("FEN"));
+  QCOMPARE(data.connectionDataList().at(0).functionFR, QVariant("FFR"));
+  QCOMPARE(data.connectionDataList().at(0).functionDE, QVariant("FDE"));
+  QCOMPARE(data.connectionDataList().at(0).functionIT, QVariant("FIT"));
+  // Check unit connection B
+  QVERIFY(!data.connectionDataList().at(1).isNull());
+  QCOMPARE(data.connectionDataList().at(1).keyData().unitId(), QVariant(1000));
+  QCOMPARE(data.connectionDataList().at(1).keyData().unitConnectorFk().unitId(), QVariant(1000));
+  QVERIFY(data.connectionDataList().at(1).isPartOfUnitConnector());
+  QVERIFY(!data.connectionDataList().at(1).isBasedOnArticleConnection());
+  QVERIFY(data.connectionDataList().at(1).connectionType() == mdtClConnectionType_t::Socket);
+  QCOMPARE(data.connectionDataList().at(1).name, QVariant("B"));
+  QCOMPARE(data.connectionDataList().at(1).resistance, QVariant(1.2));
+  QCOMPARE(data.connectionDataList().at(1).schemaPage, QVariant("27"));
+  QCOMPARE(data.connectionDataList().at(1).signalName, QVariant("Sig_B"));
+  QCOMPARE(data.connectionDataList().at(1).swAddress, QVariant(1259));
+  QCOMPARE(data.connectionDataList().at(1).functionEN, QVariant("FEN2"));
+  QCOMPARE(data.connectionDataList().at(1).functionFR, QVariant("FFR2"));
+  QCOMPARE(data.connectionDataList().at(1).functionDE, QVariant("FDE2"));
+  QCOMPARE(data.connectionDataList().at(1).functionIT, QVariant("FIT2"));
+  /*
+   * Unit connector based on a article connector
+   */
+  // Setup article connector FK
+  articleConnectorFk.clear();
+  articleConnectorFk.id = 200;
+  articleConnectorFk.setArticleId(2);
+  // Setup unit connector key
+  key2.setUnitId(2000);
+  key2.setArticleConnectorFk(articleConnectorFk);
+  // Setup unit connector data
+  data.clear();
+  data.setKeyData(key2);
+  data.name = "X2";
+  // Setup article connection key data
+  articleConnectionFk.clear();
+  articleConnectionFk.id = 25;
+  articleConnectionFk.setArticleId(2);
+  articleConnectionFk.setArticleConnectorFk(articleConnectorFk);
+  articleConnectionFk.setConnectionType(mdtClConnectionType_t::Socket);
+  // Setup unit connection key
+  unitConnectionKey.clear();
+  unitConnectionKey.setArticleConnectionFk(articleConnectionFk);
+  // Setup unit connection data and add to unit connector
+  unitConnectionsData.clear();
+  unitConnectionsData.setKeyData(unitConnectionKey);
+  unitConnectionsData.name = "C";
+  unitConnectionsData.resistance = 2.0;
+  unitConnectionsData.schemaPage = "35";
+  unitConnectionsData.signalName = "Sig_C";
+  unitConnectionsData.swAddress = 3556;
+  unitConnectionsData.functionEN = "FEN3";
+  unitConnectionsData.functionFR = "FFR3";
+  unitConnectionsData.functionDE = "FDE3";
+  unitConnectionsData.functionIT = "FIT3";
+  data.addConnectionData(unitConnectionsData);
+  // Add to database
+  key2 = ucnx.addUnitConnector(data, true);
+  QVERIFY(!key2.isNull());
+  // Get data back and check
+  data = ucnx.getUnitConnectorData(key2, true, ok);
+  QVERIFY(ok);
+  QVERIFY(!data.isNull());
+  QCOMPARE(data.keyData().unitId(), QVariant(2000));
+  QCOMPARE(data.name, QVariant("X2"));
+  QVERIFY(data.isBasedOnConnector());
+  QVERIFY(data.isBasedOnArticleConnector());
+  QCOMPARE(data.connectionDataList().size(), 1);
+  // Check unit connection A
+  QVERIFY(!data.connectionDataList().at(0).isNull());
+  QCOMPARE(data.connectionDataList().at(0).keyData().unitId(), QVariant(2000));
+  QCOMPARE(data.connectionDataList().at(0).keyData().unitConnectorFk().unitId(), QVariant(2000));
+  QCOMPARE(data.connectionDataList().at(0).keyData().unitConnectorFk().connectorFk().id, QVariant(1));
+  QCOMPARE(data.connectionDataList().at(0).keyData().articleConnectionFk().id, QVariant(25));
+  QCOMPARE(data.connectionDataList().at(0).keyData().articleConnectionFk().articleId(), QVariant(2));
+  QVERIFY(data.connectionDataList().at(0).keyData().articleConnectionFk().connectionTypeFk().type() == mdtClConnectionType_t::Socket);
+  QCOMPARE(data.connectionDataList().at(0).keyData().articleConnectionFk().articleConnectorFk().id, QVariant(200));
+  QCOMPARE(data.connectionDataList().at(0).keyData().articleConnectionFk().articleConnectorFk().articleId(), QVariant(2));
+  QCOMPARE(data.connectionDataList().at(0).keyData().articleConnectionFk().articleConnectorFk().connectorFk().id, QVariant(1));
+  QVERIFY(data.connectionDataList().at(0).isPartOfUnitConnector());
+  QVERIFY(data.connectionDataList().at(0).isBasedOnArticleConnection());
+  QVERIFY(data.connectionDataList().at(0).connectionType() == mdtClConnectionType_t::Socket);
+  QCOMPARE(data.connectionDataList().at(0).name, QVariant("C"));
+  QCOMPARE(data.connectionDataList().at(0).resistance, QVariant(2.0));
+  QCOMPARE(data.connectionDataList().at(0).schemaPage, QVariant("35"));
+  QCOMPARE(data.connectionDataList().at(0).signalName, QVariant("Sig_C"));
+  QCOMPARE(data.connectionDataList().at(0).swAddress, QVariant(3556));
+  QCOMPARE(data.connectionDataList().at(0).functionEN, QVariant("FEN3"));
+  QCOMPARE(data.connectionDataList().at(0).functionFR, QVariant("FFR3"));
+  QCOMPARE(data.connectionDataList().at(0).functionDE, QVariant("FDE3"));
+  QCOMPARE(data.connectionDataList().at(0).functionIT, QVariant("FIT3"));
+  /*
+   * Remove unit connectors
+   */
+  // Remove connector key1
+  QVERIFY(ucnx.removeUnitConnector(key1, true));
+  data = ucnx.getUnitConnectorData(key1, true, ok);
+  QVERIFY(ok);
+  QVERIFY(data.isNull());
+  // Remove connector key2
+  QVERIFY(ucnx.removeUnitConnector(key2, true));
+  data = ucnx.getUnitConnectorData(key2, true, ok);
+  QVERIFY(ok);
+  QVERIFY(data.isNull());
 }
 
 /*

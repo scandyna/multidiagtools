@@ -44,11 +44,23 @@ class mdtClArticleConnectorSelectionDialog : public mdtSqlSelectionDialog
    */
   bool select(QSqlDatabase db, const QVariant & articleId);
 
+  /*! \brief Set SQL query and select data
+   *
+   * Will select article connectors that belongs to given article and that is not used in given unit
+   */
+  bool select(QSqlDatabase db, const QVariant & articleId, const QVariant & unitId);
+
   /*! \brief Get selected article connector key
    *
    * If user rejected the dialog, a null key is returned.
    */
   mdtClArticleConnectorKeyData selectedArticleConnectorKey() const;
+
+  /*! \brief Get selected article connector name
+   *
+   * If user rejected the dialog, a null value is returned.
+   */
+  QVariant selectedArticleConnectorName() const;
 
  private:
 

@@ -53,8 +53,25 @@ struct mdtClUnitConnectorData : public mdtSqlRecord  /// \todo remove this inher
   }
 
   /*! \brief Set key data
+   *
+   * \pre key must at least have its unitId set.
+   * \pre keyData must not allready been set
    */
-  void setKeyData(const mdtClUnitConnectorKeyData & key);
+  void setKeyData(const mdtClUnitConnectorKeyData & key)
+  {
+    Q_ASSERT(!key.unitId().isNull());
+    Q_ASSERT(pvKeyData.unitId().isNull());
+    Q_ASSERT(!pvKeyData.isBasedOnConnector());
+    Q_ASSERT(!pvKeyData.isBasedOnArticleConnector());
+    pvKeyData = key;
+  }
+
+  /*! \brief Set/update unit connector ID (Id_PK)
+   *
+   * If connector contains connections,
+   *  they will be updated.
+   */
+  void setId(const QVariant & id);
 
   /*! \brief Check if unit connector data is null
    *
@@ -90,13 +107,21 @@ struct mdtClUnitConnectorData : public mdtSqlRecord  /// \todo remove this inher
   /*! \brief Add connection data
    *
    * In key that is contained in given data,
+   *  if its id is null (that tells that connector is freshly created, not fetched from database),
    *  unitId and unitConnectorFk will be updated
    *  to match this unit connector befor adding connection.
    *
    * \pre In this unit connector's key, unitId must be set
-   * \pre In data's key, unitConnectorFk must not allready been set
+   * \pre In data's key, id must be null and unitConnectorFk must not allready been set,
+   *      or id is not null and unitConnectorFk must match this connector's key
    */
   void addConnectionData(mdtClUnitConnectionData data);
+
+  /*! \brief Add a list of connection data
+   *
+   * \sa addConnectionData().
+   */
+  void setConnectionDataList(const QList<mdtClUnitConnectionData> & dataList);
 
   /*! \brief Access list of connection data
    */
@@ -139,15 +164,6 @@ struct mdtClUnitConnectorData : public mdtSqlRecord  /// \todo remove this inher
    *  Fields are also removed.
    */
 //   void clear();
-
-  /*! \brief Add a list of connection data
-   *
-   * By using this method, the caller is responsible to give
-   *  valid records, that contains needed fields.
-   *
-   * \sa addConnectionData().
-   */
-  void setConnectionDataList(const QList<mdtClUnitConnectionData> & dataList);
 
   /*! \brief Get list of connection data
    */

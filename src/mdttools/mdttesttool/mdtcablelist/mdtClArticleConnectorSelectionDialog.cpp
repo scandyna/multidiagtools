@@ -47,6 +47,29 @@ bool mdtClArticleConnectorSelectionDialog::select(QSqlDatabase db, const QVarian
   return true;
 }
 
+bool mdtClArticleConnectorSelectionDialog::select(QSqlDatabase db, const QVariant & articleId, const QVariant & unitId)
+{
+  QString sql;
+
+  sql = "SELECT * FROM ArticleConnector_tbl WHERE Article_Id_FK = " + articleId.toString();
+  sql += " AND Id_PK NOT IN ("\
+         "  SELECT ArticleConnector_Id_FK"\
+         "  FROM UnitConnector_tbl"\
+         "  WHERE Unit_Id_FK = " + unitId.toString();
+  sql += "  AND ArticleConnector_Id_FK IS NOT NULL)";
+  if(!setQuery(sql, db, false)){
+    return false;
+  }
+  setMessage(tr("Select article connector to use:"));
+  setColumnHidden("Id_PK", true);
+  setColumnHidden("Article_Id_FK", true);
+  setColumnHidden("Connector_Id_FK", true);
+  addColumnToSortOrder("Name", Qt::AscendingOrder);
+  sort();
+
+  return true;
+}
+
 mdtClArticleConnectorKeyData mdtClArticleConnectorSelectionDialog::selectedArticleConnectorKey() const
 {
   mdtClArticleConnectorKeyData key;
@@ -65,4 +88,14 @@ mdtClArticleConnectorKeyData mdtClArticleConnectorSelectionDialog::selectedArtic
   key.setConnectorFk(connectorFk);
 
   return key;
+}
+
+QVariant mdtClArticleConnectorSelectionDialog::selectedArticleConnectorName() const
+{
+  if(result() != Accepted){
+    return QVariant();
+  }
+  auto s = selection("Name");
+  Q_ASSERT(s.rowCount() == 1);
+  return s.data(0, "Name");
 }

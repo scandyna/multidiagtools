@@ -97,6 +97,7 @@ class mdtClArticleConnection : public mdtClConnector
   /*! \brief Remove each article connection that is contained in selection
    *
    * This is usefull used together with mdtSqlTableWidget .
+   *  Note: is selection s, Id_PK from ArticleConnection_tbl is used.
    *
    * \return True on success, false else.
    *          To get reason of failure, use lastError() .
@@ -145,6 +146,7 @@ class mdtClArticleConnection : public mdtClConnector
    * Will also remove related connections.
    *
    * This is usefull used together with mdtSqlTableWidget .
+   *  Note: is selection s, Id_PK from ArticleConnector_tbl is used.
    *
    * \return True on success, false else.
    *          To get reason of failure, use lastError() .

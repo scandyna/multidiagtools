@@ -23,6 +23,7 @@
 
 #include "mdtSqlSelectionDialog.h"
 #include "mdtClArticleConnectionKeyData.h"
+#include "mdtClArticleConnectionData.h"
 #include "mdtClArticleConnectorKeyData.h"
 #include <QSqlDatabase>
 #include <QVariant>
@@ -38,8 +39,8 @@ class mdtClArticleConnectionSelectionDialog : public mdtSqlSelectionDialog
    */
   enum class ArticleConnectorMembership_t
   {
-    PartOfArticleConnector,     /*!< List only article connections that are part of a article connectior */
-    NotPartOfArticleConnector,  /*!< List only article connections that are not part of a article connectior */
+    PartOfArticleConnector,     /*!< List only article connections that are part of a article connector */
+    NotPartOfArticleConnector,  /*!< List only article connections that are not part of a article connector */
     All                         /*!< Don't care if article connection is part of article connector or not, list all */
   };
 
@@ -66,7 +67,7 @@ class mdtClArticleConnectionSelectionDialog : public mdtSqlSelectionDialog
 
   /*! \brief Select article connections that are part of given article connector and not used in given unit
    */
-  bool select(QSqlDatabase db, const mdtClArticleConnectorKeyData & articleConnectorKey, const QVariant & unitId, ArticleConnectorMembership_t acms, bool allowMultiSelection);
+  bool select(QSqlDatabase db, const mdtClArticleConnectorKeyData & articleConnectorKey, const QVariant & unitId, bool allowMultiSelection);
 
   /*! \brief Get selected article connection key
    *
@@ -80,7 +81,17 @@ class mdtClArticleConnectionSelectionDialog : public mdtSqlSelectionDialog
    */
   QList<mdtClArticleConnectionKeyData> selectedArticleConnectionKeyList() const;
 
+  /*! \brief Get a list of selected connection data
+   *
+   * If user rejected the dialog, a empty list is returned.
+   */
+  QList<mdtClArticleConnectionData> selectedArticleConnectionDataList() const;
+
  private:
+
+  /*! \brief Set SQL query and other setup
+   */
+  bool setQuery(const QString & sql, QSqlDatabase & db, bool allowMultiSelection);
 
   /*! \brief Get clause regarding article connector membership
    */
@@ -89,6 +100,10 @@ class mdtClArticleConnectionSelectionDialog : public mdtSqlSelectionDialog
   /*! \brief Get clause regarding article link usage
    */
   QString articleLinkUsageClause(ArticleLinkUsage_t alu, const QVariant & articleId) const;
+
+  /*! \brief Build article connection key data
+   */
+  mdtClArticleConnectionKeyData buildKeyData(const mdtSqlTableSelection & s, int row) const;
 
   /*! \brief Get table name to use
    */

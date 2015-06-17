@@ -24,6 +24,7 @@
 #include "mdtClArticle.h"
 #include "mdtClArticleLink.h"
 #include "mdtClUnit.h"
+#include "mdtClUnitConnection.h"
 #include "mdtClConnector.h"
 #include "mdtClConnectorData.h"
 #include "mdtClConnectorKeyData.h"
@@ -910,35 +911,73 @@ void mdtCableListTestScenario::removeTestVehicleTypeUnitAssignations()
 
 void mdtCableListTestScenario::createTestUnitConnections()
 {
+  mdtClUnitConnection ucnx(pvDatabase);
+  mdtClUnitConnectionKeyData key;
+  mdtClUnitConnectionData data;
+  bool ok;
+
+  // Add and chek unit connection 10000
+  key.clear();
+  data.clear();
+  key.id = 10000;
+  key.setUnitId(1000);
+  data.setKeyData(key);
+  data.name = "Unit contact 10000";
+  key = ucnx.addUnitConnection(data, true);
+  QVERIFY(!key.isNull());
+  data = ucnx.getUnitConnectionData(key, ok);
+  QVERIFY(ok);
+  QVERIFY(!data.isNull());
+  QCOMPARE(data.keyData().id, QVariant(10000));
+  QCOMPARE(data.keyData().unitId(), QVariant(1000));
+  QCOMPARE(data.name, QVariant("Unit contact 10000"));
+
+  // Add and chek unit connection 10001
+  key.clear();
+  data.clear();
+  key.id = 10001;
+  key.setUnitId(1000);
+  data.setKeyData(key);
+  data.name = "Unit contact 10001";
+  key = ucnx.addUnitConnection(data, true);
+  QVERIFY(!key.isNull());
+  data = ucnx.getUnitConnectionData(key, ok);
+  QVERIFY(ok);
+  QVERIFY(!data.isNull());
+  QCOMPARE(data.keyData().id, QVariant(10001));
+  QCOMPARE(data.keyData().unitId(), QVariant(1000));
+  QCOMPARE(data.name, QVariant("Unit contact 10001"));
+
+  
   mdtClUnit unit(0, pvDatabase);
   mdtClUnitConnectionData connectionData;
   QList<QSqlRecord> dataList;
-  bool ok;
+  
 
   QVERIFY(connectionData.setup(pvDatabase, true));
   // Add and chek unit connection 10000
-  connectionData.setValue("Id_PK", 10000);
-  connectionData.setValue("Unit_Id_FK", 1000);
-  connectionData.setValue("UnitContactName", "Unit contact 10000");
-  QVERIFY(unit.addConnection(connectionData));
-  connectionData = unit.getConnectionData(10000, true, &ok);
-  QVERIFY(ok);
-  QCOMPARE(connectionData.value("Id_PK"), QVariant(10000));
-  QCOMPARE(connectionData.value("Unit_Id_FK"), QVariant(1000));
-  QCOMPARE(connectionData.value("UnitContactName"), QVariant("Unit contact 10000"));
-  QVERIFY(connectionData.value("ArticleConnection_Id_FK").isNull());
+//   connectionData.setValue("Id_PK", 10000);
+//   connectionData.setValue("Unit_Id_FK", 1000);
+//   connectionData.setValue("UnitContactName", "Unit contact 10000");
+//   QVERIFY(unit.addConnection(connectionData));
+//   connectionData = unit.getConnectionData(10000, true, &ok);
+//   QVERIFY(ok);
+//   QCOMPARE(connectionData.value("Id_PK"), QVariant(10000));
+//   QCOMPARE(connectionData.value("Unit_Id_FK"), QVariant(1000));
+//   QCOMPARE(connectionData.value("UnitContactName"), QVariant("Unit contact 10000"));
+//   QVERIFY(connectionData.value("ArticleConnection_Id_FK").isNull());
 
   // Add and chek unit connection 10001
-  connectionData.setValue("Id_PK", 10001);
-  connectionData.setValue("Unit_Id_FK", 1000);
-  connectionData.setValue("UnitContactName", "Unit contact 10001");
-  QVERIFY(unit.addConnection(connectionData));
-  connectionData = unit.getConnectionData(10001, true, &ok);
-  QVERIFY(ok);
-  QCOMPARE(connectionData.value("Id_PK"), QVariant(10001));
-  QCOMPARE(connectionData.value("Unit_Id_FK"), QVariant(1000));
-  QCOMPARE(connectionData.value("UnitContactName"), QVariant("Unit contact 10001"));
-  QVERIFY(connectionData.value("ArticleConnection_Id_FK").isNull());
+//   connectionData.setValue("Id_PK", 10001);
+//   connectionData.setValue("Unit_Id_FK", 1000);
+//   connectionData.setValue("UnitContactName", "Unit contact 10001");
+//   QVERIFY(unit.addConnection(connectionData));
+//   connectionData = unit.getConnectionData(10001, true, &ok);
+//   QVERIFY(ok);
+//   QCOMPARE(connectionData.value("Id_PK"), QVariant(10001));
+//   QCOMPARE(connectionData.value("Unit_Id_FK"), QVariant(1000));
+//   QCOMPARE(connectionData.value("UnitContactName"), QVariant("Unit contact 10001"));
+//   QVERIFY(connectionData.value("ArticleConnection_Id_FK").isNull());
   /*
    * Add and chek unit connection 20000
    */

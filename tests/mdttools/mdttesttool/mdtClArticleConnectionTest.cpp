@@ -127,6 +127,7 @@ void mdtClArticleConnectionTest::articleConnectorDataTest()
   QVERIFY(!acData.isBasedOnConnector());
   QCOMPARE(acData.connectionDataList().size(), 0);
   // Set data - Based on a connector
+  acData.clear();
   acKeyData.clear();
   connectorFk.clear();
   acKeyData.id = 7;
@@ -149,6 +150,7 @@ void mdtClArticleConnectionTest::articleConnectorDataTest()
    * Data test - with connections
    */
   // Set connector data - Based on a connector
+  acData.clear();
   acKeyData.clear();
   connectorFk.clear();
   acKeyData.id = 5;
@@ -187,26 +189,20 @@ void mdtClArticleConnectionTest::articleConnectorDataTest()
   QCOMPARE(acData.connectionDataList().at(1).keyData().articleConnectorFk().id, QVariant(5));
   QCOMPARE(acData.connectionDataList().at(1).keyData().articleConnectorFk().connectorFk().id, QVariant(7));
   QCOMPARE(acData.connectionDataList().at(1).name, QVariant("B"));
-  // Update article connectors key and check
-  acKeyData.clear();
-  connectorFk.clear();
-  acKeyData.id = 1;
-  acKeyData.setArticleId(2);
-  connectorFk.id = 3;
-  acKeyData.setConnectorFk(connectorFk);
-  acData.setKeyData(acKeyData);
+  // Update article connectors ID and check
+  acData.setId(1);
   QVERIFY(!acData.isNull());
   QVERIFY(acData.isBasedOnConnector());
   QCOMPARE(acData.connectionDataList().size(), 2);
-  QCOMPARE(acData.connectionDataList().at(0).keyData().articleId(), QVariant(2));
-  QCOMPARE(acData.connectionDataList().at(0).keyData().articleConnectorFk().articleId(), QVariant(2));
+  QCOMPARE(acData.connectionDataList().at(0).keyData().articleId(), QVariant(6));
+  QCOMPARE(acData.connectionDataList().at(0).keyData().articleConnectorFk().articleId(), QVariant(6));
   QCOMPARE(acData.connectionDataList().at(0).keyData().articleConnectorFk().id, QVariant(1));
-  QCOMPARE(acData.connectionDataList().at(0).keyData().articleConnectorFk().connectorFk().id, QVariant(3));
+  QCOMPARE(acData.connectionDataList().at(0).keyData().articleConnectorFk().connectorFk().id, QVariant(7));
   QCOMPARE(acData.connectionDataList().at(0).name, QVariant("A"));
-  QCOMPARE(acData.connectionDataList().at(1).keyData().articleId(), QVariant(2));
-  QCOMPARE(acData.connectionDataList().at(1).keyData().articleConnectorFk().articleId(), QVariant(2));
+  QCOMPARE(acData.connectionDataList().at(1).keyData().articleId(), QVariant(6));
+  QCOMPARE(acData.connectionDataList().at(1).keyData().articleConnectorFk().articleId(), QVariant(6));
   QCOMPARE(acData.connectionDataList().at(1).keyData().articleConnectorFk().id, QVariant(1));
-  QCOMPARE(acData.connectionDataList().at(1).keyData().articleConnectorFk().connectorFk().id, QVariant(3));
+  QCOMPARE(acData.connectionDataList().at(1).keyData().articleConnectorFk().connectorFk().id, QVariant(7));
   QCOMPARE(acData.connectionDataList().at(1).name, QVariant("B"));
   // Clear
   acData.clear();

@@ -53,6 +53,15 @@ class mdtClUnitConnection : public mdtClArticleConnection
    */
   mdtClUnitConnectionKeyData addUnitConnection(const mdtClUnitConnectionData & data, bool handleTransaction);
 
+  /*! \brief Add a list of unit connections to database
+   *
+   * \param dataList List of unit connections data to store
+   * \param handleTransaction Internally, a transaction is (explicitly) open.
+   *             By calling this function with a allready open transaction,
+   *             set this argument false.
+   */
+  bool addUnitConnectionList(const QList<mdtClUnitConnectionData> & dataList, bool handleTransaction);
+
   /*! \brief Get unit connection data from database
    *
    * \param key Data that contains connection ID (Id_PK).
@@ -62,6 +71,15 @@ class mdtClUnitConnection : public mdtClArticleConnection
    *       Use ok parameter to diffrenciate both cases.
    */
   mdtClUnitConnectionData getUnitConnectionData(const mdtClUnitConnectionKeyData & key, bool & ok);
+
+  /*! \brief Get a list of unit connections data for given unit connector
+   *
+   * \param key Key of unit connector that contains connections
+   * \return List of unit connections.
+   *        A empty list is returned if connector contains no connection, or a error occured.
+   *        Use ok parameter to diffrenciate both cases.
+   */
+  QList<mdtClUnitConnectionData> getUnitConnectionDataList(const mdtClUnitConnectorKeyData & key, bool & ok);
 
   /*! \brief Update unit connection
    *
@@ -111,7 +129,25 @@ class mdtClUnitConnection : public mdtClArticleConnection
    */
   bool removeUnitConnector(const mdtClUnitConnectorKeyData & key, bool handleTransaction);
 
+  /*! \brief Add unit connections to given unit connector by taking given connector contacts as base
+   *
+   * \param ucnrData Unit connector data to update
+   * \param contactDataList List of contacts (from ConnectorContact_tbl) to use for unit connections creation
+   */
+  void addConnectionsToUnitConnector(mdtClUnitConnectorData & ucnrData, const QList<mdtClConnectorContactData> & contactDataList);
+
+  /*! \brief Add unit connections to given unit connector by taking given article connections as base
+   *
+   * \param ucnrData Unit connector data to update
+   * \param articleConnectionDataList List of article connections to use for unit connections creation
+   */
+  void addConnectionsToUnitConnector(mdtClUnitConnectorData & ucnrData, const QList<mdtClArticleConnectionData> & articleConnectionDataList);
+
  private:
+
+  /*! \brief Get base SQL statement to get unit connections
+   */
+  QString baseSqlForUnitConnection() const;
 
   /*! \brief Fill given record with given unit connection data
    *
