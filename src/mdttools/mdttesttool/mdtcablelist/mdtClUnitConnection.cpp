@@ -157,6 +157,30 @@ bool mdtClUnitConnection::removeUnitConnection(const mdtClUnitConnectionKeyData 
   return removeData("UnitConnection_tbl", "Id_PK", key.id);
 }
 
+bool mdtClUnitConnection::removeUnitConnections(const mdtSqlTableSelection & s)
+{
+  QList<QVariant> idList = s.dataList("Id_PK");
+  mdtSqlTransaction transaction(database());
+
+  if(!transaction.begin()){
+    pvLastError = transaction.lastError();
+    return false;
+  }
+  for(const auto & id : idList){
+    mdtClUnitConnectionKeyData key;
+    key.id = id;
+    if(!removeUnitConnection(key)){
+      return false;
+    }
+  }
+  if(!transaction.commit()){
+    pvLastError = transaction.lastError();
+    return false;
+  }
+
+  return true;
+}
+
 mdtClUnitConnectorKeyData mdtClUnitConnection::addUnitConnector(mdtClUnitConnectorData data, bool handleTransaction)
 {
   mdtClUnitConnectorKeyData key;
@@ -268,6 +292,30 @@ bool mdtClUnitConnection::removeUnitConnector(const mdtClUnitConnectorKeyData & 
       pvLastError = transaction.lastError();
       return false;
     }
+  }
+
+  return true;
+}
+
+bool mdtClUnitConnection::removeUnitConnectors(const mdtSqlTableSelection & s)
+{
+  QList<QVariant> idList = s.dataList("Id_PK");
+  mdtSqlTransaction transaction(database());
+
+  if(!transaction.begin()){
+    pvLastError = transaction.lastError();
+    return false;
+  }
+  for(const auto & id : idList){
+    mdtClUnitConnectorKeyData key;
+    key.id = id;
+    if(!removeUnitConnector(key, false)){
+      return false;
+    }
+  }
+  if(!transaction.commit()){
+    pvLastError = transaction.lastError();
+    return false;
   }
 
   return true;

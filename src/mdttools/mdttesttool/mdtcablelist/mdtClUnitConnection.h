@@ -92,6 +92,16 @@ class mdtClUnitConnection : public mdtClArticleConnection
    */
   bool removeUnitConnection(const mdtClUnitConnectionKeyData & key);
 
+  /*! \brief Remove each unit connection that is contained in selection
+   *
+   * This is usefull used together with mdtSqlTableWidget .
+   *  Note: is selection s, Id_PK from UnitConnection_tbl is used.
+   *
+   * \return True on success, false else.
+   *          To get reason of failure, use lastError() .
+   */
+  bool removeUnitConnections(const mdtSqlTableSelection & s);
+
   /*! \brief Add a unit connector to database
    *
    * \param data Unit connector data to store
@@ -128,6 +138,16 @@ class mdtClUnitConnection : public mdtClArticleConnection
    *             set this argument false.
    */
   bool removeUnitConnector(const mdtClUnitConnectorKeyData & key, bool handleTransaction);
+
+  /*! \brief Remove each unit connector that is contained in selection
+   *
+   * This is usefull used together with mdtSqlTableWidget .
+   *  Note: is selection s, Id_PK from UnitConnector_tbl is used.
+   *
+   * \return True on success, false else.
+   *          To get reason of failure, use lastError() .
+   */
+  bool removeUnitConnectors(const mdtSqlTableSelection & s);
 
   /*! \brief Add unit connections to given unit connector by taking given connector contacts as base
    *

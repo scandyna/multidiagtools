@@ -758,10 +758,9 @@ void mdtClUnitEditor::editConnectorName()
 
 void mdtClUnitEditor::removeConnectors()
 {
+  mdtClUnitConnection ucnx(database());
   mdtSqlTableWidget *widget;
-  mdtClUnit unit(this, database());
-  QMessageBox msgBox;
-  ///QModelIndexList indexes;
+  QMessageBox msgBox(this);
   mdtSqlTableSelection s;
 
   widget = sqlTableWidget("UnitConnector_view");
@@ -771,13 +770,6 @@ void mdtClUnitEditor::removeConnectors()
   if(s.isEmpty()){
     return;
   }
-  /**
-  indexes = widget->indexListOfSelectedRows("Id_PK");
-  if(indexes.size() < 1){
-    return;
-  }
-  */
-  // We ask confirmation to the user
   msgBox.setText(tr("You are about to remove connectors from current unit. This will also remove related connections."));
   msgBox.setInformativeText(tr("Do you want to continue ?"));
   msgBox.setIcon(QMessageBox::Warning);
@@ -787,11 +779,45 @@ void mdtClUnitEditor::removeConnectors()
     return;
   }
   // Remove connectors
-  if(!unit.removeConnectors(s)){
-    pvLastError = unit.lastError();
+  if(!ucnx.removeUnitConnectors(s)){
+    pvLastError = ucnx.lastError();
     displayLastError();
     return;
   }
+  
+//   mdtClUnit unit(this, database());
+  
+  ///QModelIndexList indexes;
+  
+
+//   widget = sqlTableWidget("UnitConnector_view");
+//   Q_ASSERT(widget != 0);
+//   // Get selected rows
+//   s = widget->currentSelection("Id_PK");
+//   if(s.isEmpty()){
+//     return;
+//   }
+  /**
+  indexes = widget->indexListOfSelectedRows("Id_PK");
+  if(indexes.size() < 1){
+    return;
+  }
+  */
+  // We ask confirmation to the user
+//   msgBox.setText(tr("You are about to remove connectors from current unit. This will also remove related connections."));
+//   msgBox.setInformativeText(tr("Do you want to continue ?"));
+//   msgBox.setIcon(QMessageBox::Warning);
+//   msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+//   msgBox.setDefaultButton(QMessageBox::No);
+//   if(msgBox.exec() != QMessageBox::Yes){
+//     return;
+//   }
+  // Remove connectors
+//   if(!unit.removeConnectors(s)){
+//     pvLastError = unit.lastError();
+//     displayLastError();
+//     return;
+//   }
   // Update views
   select("UnitConnector_view");
   select("UnitConnection_view");
