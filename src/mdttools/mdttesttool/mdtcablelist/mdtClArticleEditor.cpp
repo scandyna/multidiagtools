@@ -365,7 +365,7 @@ void mdtClArticleEditor::addConnector()
     return;
   }
   // Let user choose connector contacts
-  if(!ccsDialog.select(database(), articleConnectorKey.connectorFk())){
+  if(!ccsDialog.select(database(), articleConnectorKey.connectorFk(), true)){
     pvLastError = ccsDialog.lastError();
     displayLastError();
     return;

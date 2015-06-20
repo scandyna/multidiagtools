@@ -81,6 +81,12 @@ class mdtClArticleConnectionSelectionDialog : public mdtSqlSelectionDialog
    */
   QList<mdtClArticleConnectionKeyData> selectedArticleConnectionKeyList() const;
 
+  /*! \brief Get selected article connection data
+   *
+   * If user rejected the dialog, a null key is returned.
+   */
+  mdtClArticleConnectionData selectedArticleConnectionData() const;
+
   /*! \brief Get a list of selected connection data
    *
    * If user rejected the dialog, a empty list is returned.

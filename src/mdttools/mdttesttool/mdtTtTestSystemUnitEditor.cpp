@@ -252,7 +252,7 @@ void mdtTtTestSystemUnitEditor::addConnectorBasedConnector()
     return;
   }
   // Select contacts
-  if(!ccsDialog.select(database(), baseConnectorKey)){
+  if(!ccsDialog.select(database(), baseConnectorKey, true)){
     pvLastError = ccsDialog.lastError();
     displayLastError();
     return;

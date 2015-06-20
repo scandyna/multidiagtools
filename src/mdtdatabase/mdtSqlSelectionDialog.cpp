@@ -68,7 +68,7 @@ bool mdtSqlSelectionDialog::setQuery(const QString& sql, QSqlDatabase db, bool a
   pvModel->setQuery(sql, db);
   sqlError = pvModel->lastError();
   if(sqlError.isValid()){
-    pvLastError.setError(tr("Unable to get data for given SQL query."), mdtError::Error);
+    pvLastError.setError(tr("Unable to get data for given SQL query") + ": '" + sql + "'", mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlSelectionDialog");
     pvLastError.commit();

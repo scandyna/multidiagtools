@@ -102,6 +102,13 @@ struct mdtClUnitConnectionKeyData
     pvUnitConnectorFk = fk;
   }
 
+  /*! \brief Clear unit connector FK (UnitConnector_Id_FK)
+   */
+  void clearUnitConnectorFk()
+  {
+    pvUnitConnectorFk.clear();
+  }
+
   /*! \brief Get unit connector FK (UnitConnector_Id_FK)
    */
   inline mdtClUnitConnectorKeyData unitConnectorFk() const
@@ -130,6 +137,13 @@ struct mdtClUnitConnectionKeyData
                 ( fk.articleConnectorFk().articleId() == pvUnitConnectorFk.articleConnectorFk().articleId() ) ) );
     pvArticleConnectionFk = fk;
     pvConnectionTypeFk.setType(fk.connectionTypeFk().type());
+  }
+
+  /*! \brief Clear article connection FK (ArticleConnection_Id_FK)
+   */
+  void clearArticleConnectionFk()
+  {
+    pvArticleConnectionFk.clear();
   }
 
   /*! \brief Get article connection FK (ArticleConnection_Id_FK)

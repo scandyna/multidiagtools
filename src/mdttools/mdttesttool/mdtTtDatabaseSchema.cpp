@@ -1420,9 +1420,8 @@ bool mdtTtDatabaseSchema::setupUnitConnectionTable()
   field.setName("ConnectionType_Code_FK");
   field.setType(QVariant::String);
   field.setLength(1);
-  /// \todo Remove default value
-  /// \todo Set required
-  field.setDefaultValue("T");
+  ///field.setDefaultValue("T");
+  field.setRequired(true);
   table.addField(field, false);
   // UnitContactName
   field = QSqlField();

@@ -369,18 +369,7 @@ void mdtClUnitEditor::addConnector()
   QInputDialog dialog(this);
   mdtClUnitConnectorKeyData key;
   mdtClUnitConnectorData data;
-  
-//   QVariant unitId;
-//   QVariant connectorName;
-//   mdtClUnit unit(this, database());
-  
-  
 
-//   if(!data.setup(database(), false, false)){
-//     pvLastError = data.lastError();
-//     displayLastError();
-//     return;
-//   }
   // Get unit ID
   key.setUnitId(currentUnitId());
   if(key.unitId().isNull()){
@@ -402,13 +391,6 @@ void mdtClUnitEditor::addConnector()
     displayLastError();
     return;
   }
-//   data.setValue("Unit_Id_FK", unitId);
-//   data.setValue("Name", connectorName);
-//   if(!unit.addConnector(data)){
-//     pvLastError = unit.lastError();
-//     displayLastError();
-//     return;
-//   }
   // Update views
   select("UnitConnection_view");
   select("UnitConnector_view");
@@ -456,7 +438,7 @@ void mdtClUnitEditor::addConnectorBasedConnector()
     return;
   }
   // Select contacts and add them to unit connector
-  if(!ccsDialog.select(database(), connectorKey)){
+  if(!ccsDialog.select(database(), connectorKey, true)){
     pvLastError = ccsDialog.lastError();
     displayLastError();
     return;
@@ -471,75 +453,6 @@ void mdtClUnitEditor::addConnectorBasedConnector()
     displayLastError();
     return;
   }
-  
-//   mdtClUnit unit(this, database());
-//   mdtClUnitConnectorData connectorData;
-//   QVariant unitId;
-//   QVariant baseConnectorId;
-//   QVariant connectorName;
-//   QList<QVariant> contactList;
-  
-
-  // Get unit ID
-//   unitId = currentUnitId();
-//   if(unitId.isNull()){
-//     return;
-//   }
-//   // Select connector from Connector_tbl
-//   if(!csDialog.select(database())){
-//     pvLastError = csDialog.lastError();
-//     displayLastError();
-//     return;
-//   }
-//   if(csDialog.exec() != QDialog::Accepted){
-//     return;
-//   }
-//   baseConnectorId = csDialog.selectedConnectorId();
-//   if(baseConnectorId.isNull()){
-//     return;
-//   }
-//   // Set connector name
-//   dialog.setLabelText(tr("Connector name:"));
-//   dialog.setTextValue(connectorName.toString());
-//   if(dialog.exec() != QDialog::Accepted){
-//     return;
-//   }
-//   connectorName = dialog.textValue().trimmed();
-//   if(connectorName.isNull()){
-//     return;
-//   }
-  // Select contacts
-//   contactList = selectBaseConnectorContactIdList(baseConnectorId);
-//   if(contactList.isEmpty()){
-//     return;
-//   }
-  // Setup unit connector data
-  /*
-  if(!connectorData.setup(database(), true, false)){
-    pvLastError = connectorData.lastError();
-    displayLastError();
-    return;
-  }
-  connectorData.setValue("Unit_Id_FK", unitId);
-  connectorData.setValue("Connector_Id_FK", baseConnectorId);
-  connectorData.setValue("Name", connectorName);
-  */
-  // Add contacts to unit connector data
-  /*
-  if(!unit.addConnectionDataListFromConnectorContactIdList(connectorData, contactList)){
-    pvLastError = unit.lastError();
-    displayLastError();
-    return;
-  }
-  */
-  // Add connector
-  /*
-  if(!unit.addConnector(connectorData)){
-    pvLastError = unit.lastError();
-    displayLastError();
-    return;
-  }
-  */
   // Update views
   select("UnitConnector_view");
   select("UnitConnection_view");
@@ -617,77 +530,6 @@ void mdtClUnitEditor::addArticleConnectorBasedConnector()
     displayLastError();
     return;
   }
-  
-  
-//   QVariant unitId;
-//   QVariant connectorName;
-//   mdtClUnitConnectorData connectorData;
-//   QVariant articleConnectorId;
-//   QList<QVariant> articleConnectionIdList;
-//   mdtClUnit unit(0, database());
-//   QInputDialog dialog;
-
-//   // Check that vehicle type assignation was made
-//   if(rowCount("Unit_VehicleType_view", false) < 1){
-//     pvLastError.setError(tr("No vehicle type was assigned."), mdtError::Error);
-//     pvLastError.setInformativeText(tr("Please assign a vehicle type and try again."));
-//     MDT_ERROR_SET_SRC(pvLastError, "mdtClUnitEditor");
-//     pvLastError.commit();
-//     displayLastError();
-//     return;
-//   }
-  // Setup data
-//   if(!connectorData.setup(database(), true, true)){
-//     pvLastError = connectorData.lastError();
-//     displayLastError();
-//     return;
-//   }
-  // Get unit ID
-//   unitId = currentUnitId();
-//   if(unitId.isNull()){
-//     return;
-//   }
-//   connectorData.setValue("Unit_Id_FK", unitId);
-  // Let user choose a article connector
-//   articleConnectorId = selectArticleConnector();
-//   if(articleConnectorId.isNull()){
-//     return;
-//   }
-  // Add connector data
-//   if(!unit.addArticleConnectorData(connectorData, articleConnectorId, true)){
-//     pvLastError = unit.lastError();
-//     displayLastError();
-//     return;
-//   }
-//   // Set connector name
-//   connectorName = connectorData.value("Name");
-//   dialog.setLabelText(tr("Connector name:"));
-//   dialog.setTextValue(connectorName.toString());
-//   if(dialog.exec() != QDialog::Accepted){
-//     return;
-//   }
-//   connectorName = dialog.textValue().trimmed();
-//   if(connectorName.isNull()){
-//     return;
-//   }
-//   connectorData.setValue("Name", connectorName);
-  // Select article connections to use
-//   articleConnectionIdList = selectByArticleConnectorIdArticleConnectionIdList(articleConnectorId, unitId);
-//   if(articleConnectionIdList.isEmpty()){
-//     return;
-//   }
-//   // Add connections
-//   if(!unit.addConnectionDataListFromArticleConnectionIdList(connectorData, articleConnectionIdList, true)){
-//     pvLastError = unit.lastError();
-//     displayLastError();
-//     return;
-//   }
-//   // Add connector
-//   if(!unit.addConnector(connectorData)){
-//     pvLastError = unit.lastError();
-//     displayLastError();
-//     return;
-//   }
   // Update views
   select("UnitConnector_view");
   select("UnitConnection_view");
@@ -722,34 +564,6 @@ void mdtClUnitEditor::editConnectorName()
     displayLastError();
     return;
   }
-  
-//   QVariant unitConnectorId;
-//   QString str;
-//   QInputDialog dialog;
-//   mdtClUnit unit(this, database());
-
-  // Get current data
-//   unitConnectorId = currentData("UnitConnector_view", "Id_PK");
-//   if(unitConnectorId.isNull()){
-//     return;
-//   }
-//   connectorName = currentData("UnitConnector_view", "UnitConnectorName");
-  // Let user set connector name
-//   dialog.setLabelText(tr("Connector name:"));
-//   dialog.setTextValue(connectorName.toString());
-//   if(dialog.exec() != QDialog::Accepted){
-//     return;
-//   }
-//   str = dialog.textValue().trimmed();
-//   if(!str.isEmpty()){
-//     connectorName = str;
-//   }
-  // Edit connector name
-//   if(!unit.editConnectorName(unitConnectorId, connectorName)){
-//     pvLastError = unit.lastError();
-//     displayLastError();
-//     return;
-//   }
   // Update views
   select("UnitConnector_view");
   select("UnitConnection_view");
@@ -784,40 +598,6 @@ void mdtClUnitEditor::removeConnectors()
     displayLastError();
     return;
   }
-  
-//   mdtClUnit unit(this, database());
-  
-  ///QModelIndexList indexes;
-  
-
-//   widget = sqlTableWidget("UnitConnector_view");
-//   Q_ASSERT(widget != 0);
-//   // Get selected rows
-//   s = widget->currentSelection("Id_PK");
-//   if(s.isEmpty()){
-//     return;
-//   }
-  /**
-  indexes = widget->indexListOfSelectedRows("Id_PK");
-  if(indexes.size() < 1){
-    return;
-  }
-  */
-  // We ask confirmation to the user
-//   msgBox.setText(tr("You are about to remove connectors from current unit. This will also remove related connections."));
-//   msgBox.setInformativeText(tr("Do you want to continue ?"));
-//   msgBox.setIcon(QMessageBox::Warning);
-//   msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
-//   msgBox.setDefaultButton(QMessageBox::No);
-//   if(msgBox.exec() != QMessageBox::Yes){
-//     return;
-//   }
-  // Remove connectors
-//   if(!unit.removeConnectors(s)){
-//     pvLastError = unit.lastError();
-//     displayLastError();
-//     return;
-//   }
   // Update views
   select("UnitConnector_view");
   select("UnitConnection_view");
@@ -849,33 +629,55 @@ void mdtClUnitEditor::viewLinkedConnectors()
 
 void mdtClUnitEditor::addConnection()
 {
-  mdtClUnitConnectionDialog dialog(0, database(), mdtClUnitConnectionDialog::Add);
-  mdtClUnit unit(this, database());
+  mdtClUnitConnectionDialog dialog(this, database(), mdtClUnitConnectionDialog::Add);
+  mdtClUnitConnection ucnx(database());
+  mdtClUnitConnectionKeyData key;
   mdtClUnitConnectionData data;
-  QVariant unitId;
 
-  unitId = currentUnitId();
-  if(unitId.isNull()){
+  key.setUnitId(currentUnitId());
+  if(key.unitId().isNull()){
     return;
   }
-  // Setup unit connection data
-  if(!data.setup(database(), true)){
-    pvLastError = data.lastError();
-    displayLastError();
-    return;
-  }
-  data.setValue("Unit_Id_FK", unitId);
+  data.setKeyData(key);
   // Setup and show dialog
   dialog.setData(data, currentData("Unit_tbl", "Article_Id_FK"));
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
   // Add connection
-  if(!unit.addConnection(dialog.data())){
-    pvLastError = unit.lastError();
+  if(ucnx.addUnitConnection(dialog.data(), true).isNull()){
+    pvLastError = ucnx.lastError();
     displayLastError();
     return;
   }
+
+  
+//   mdtClUnit unit(this, database());
+//   QVariant unitId;
+  
+
+//   unitId = currentUnitId();
+//   if(unitId.isNull()){
+//     return;
+//   }
+  // Setup unit connection data
+//   if(!data.setup(database(), true)){
+//     pvLastError = data.lastError();
+//     displayLastError();
+//     return;
+//   }
+//   data.setValue("Unit_Id_FK", unitId);
+//   // Setup and show dialog
+//   dialog.setData(data, currentData("Unit_tbl", "Article_Id_FK"));
+//   if(dialog.exec() != QDialog::Accepted){
+//     return;
+//   }
+  // Add connection
+//   if(!unit.addConnection(dialog.data())){
+//     pvLastError = unit.lastError();
+//     displayLastError();
+//     return;
+//   }
   // Update connections view
   select("UnitConnection_view");
   select("UnitLink_view");

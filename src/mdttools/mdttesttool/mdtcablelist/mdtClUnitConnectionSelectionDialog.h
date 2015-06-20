@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2014 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,45 +18,27 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CL_CONNECTOR_CONTACT_SELECTION_DIALOG_H
-#define MDT_CL_CONNECTOR_CONTACT_SELECTION_DIALOG_H
+#ifndef MDT_CL_UNIT_CONNECTION_SELECTION_DIALOG_H
+#define MDT_CL_UNIT_CONNECTION_SELECTION_DIALOG_H
 
 #include "mdtSqlSelectionDialog.h"
-#include "mdtClConnectorData.h"
-#include "mdtClConnectorContactData.h"
+#include "mdtClUnitConnectionKeyData.h"
+#include "mdtClUnitConnectionData.h"
+#include "mdtClUnitConnectorKeyData.h"
 #include <QSqlDatabase>
 #include <QVariant>
 #include <QList>
 
-/*! \brief Dialog for connector selection (in Connector_tbl)
+/*! \brief Dialog for unit connection selection (in UnitConnection_tbl)
  */
-class mdtClConnectorContactSelectionDialog : public mdtSqlSelectionDialog
+class mdtClUnitConnectionSelectionDialog : public mdtSqlSelectionDialog
 {
- Q_OBJECT
-
  public:
-
-   /*! \brief Constructor
-    */
-  mdtClConnectorContactSelectionDialog(QWidget *parent);
-
-  /*! \brief Set SQL query and select data
-   *
-   * \param connectorKey Key of connector for witch contacts must be listed
-   */
-  bool select(QSqlDatabase db, const mdtClConnectorKeyData & connectorKey, bool allowMultiSelection);
-
-  /*! \brief Get selected contact data
-   */
-  mdtClConnectorContactData selectedContactData() const;
-
-  /*! \brief Get list of selected contacts
-   */
-  QList<mdtClConnectorContactData> selectedContactDataList() const;
 
  private:
 
-  Q_DISABLE_COPY(mdtClConnectorContactSelectionDialog);
+  Q_DISABLE_COPY(mdtClUnitConnectionSelectionDialog);
 };
 
-#endif // #ifndef MDT_CL_CONNECTOR_CONTACT_SELECTION_DIALOG_H
+#endif // #ifndef MDT_CL_UNIT_CONNECTION_SELECTION_DIALOG_H
+

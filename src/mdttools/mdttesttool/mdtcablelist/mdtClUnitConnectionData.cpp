@@ -32,6 +32,21 @@ void mdtClUnitConnectionData::setUnitConnectorFk(const mdtClUnitConnectorKeyData
   pvKeyData.setUnitConnectorFk(fk);
 }
 
+void mdtClUnitConnectionData::clearUnitConnectorFk()
+{
+  pvKeyData.clearUnitConnectorFk();
+}
+
+void mdtClUnitConnectionData::setArticleConnectionFk(const mdtClArticleConnectionKeyData & fk)
+{
+  pvKeyData.setArticleConnectionFk(fk);
+}
+
+void mdtClUnitConnectionData::clearArticleConnectionFk()
+{
+  pvKeyData.clearArticleConnectionFk();
+}
+
 void mdtClUnitConnectionData::setConnectionType(mdtClConnectionType_t t)
 {
   Q_ASSERT(!isBasedOnArticleConnection());

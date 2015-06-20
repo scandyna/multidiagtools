@@ -21,12 +21,15 @@
 #ifndef MDT_CL_UNIT_CONNECTION_DIALOG_H
 #define MDT_CL_UNIT_CONNECTION_DIALOG_H
 
+#include "mdtError.h"
 #include "mdtClUnitConnectionData.h"
 #include "ui_mdtClUnitConnectionDialog.h"
+#include "mdtClConnectionTypeData.h"
 #include <QDialog>
 #include <QSqlDatabase>
 
 class QWidget;
+class mdtClConnectionTypeModel;
 
 /*! \brief Dialog for edition of a unit connection
  */
@@ -56,19 +59,22 @@ class mdtClUnitConnectionDialog : public QDialog, Ui::mdtClUnitConnectionDialog
    * Fields that are realated to article connection,
    *  and thoses that are not null in data, will be enabled.
    *
-   * \pre Field Unit_Id_FK must contain a valid ID (not Null)
+   * \pre data's key must not be totally null (its unitId must at least be set)
    */
-  void setData(const mdtClUnitConnectionData &data, const QVariant & baseArticleId);
+  void setData(const mdtClUnitConnectionData & data, const QVariant & baseArticleId);
 
   /*! \brief Get data
    */
-  const mdtClUnitConnectionData &data() const;
+  mdtClUnitConnectionData data() const
+  {
+    return pvData;
+  }
 
  private slots:
 
   /*! \brief Update connection type text
    */
-  void updateConnectionTypeText(const QString & type);
+//   void updateConnectionTypeText(const QString & type);
 
   /*! \brief Copy article connection function EN to unit connection function EN
    */
@@ -124,32 +130,38 @@ class mdtClUnitConnectionDialog : public QDialog, Ui::mdtClUnitConnectionDialog
 
   /*! \brief Populate connection type cobobox with available types
    */
-  void populateConnectionTypeComboBox();
+//   void populateConnectionTypeComboBox();
 
   /*! \brief Set connection type combobox current value
    */
-  void setCurrentConnectionType(const QString & type);
+  void setCurrentConnectionType(mdtClConnectionType_t t);
+//   void setCurrentConnectionType(const QString & type);
+
+  /*! \brief Set unit connection from a article connection
+   */
+  void setConnectionFromArticleConnection();
 
   /*! \brief Set unit connection based on a free article connection
    *
    * Will list article connections based on base article, but NOT on a article connector,
    *  let the user select one and set unit connection based on it.
    */
-  void setConnectionFromFreeArticleConnection();
+//   void setConnectionFromFreeArticleConnection();
 
   /*! \brief Set unit connection based on a article connection choosen by article connector
    *
    * Will list article connections based on given article connector,
    *  let the user select one and set unit connection based on it.
    */
-  void setConnectionFromArticleConnectorConnection(const QVariant & articleConnectorId);
+//   void setConnectionFromArticleConnectorConnection(const QVariant & articleConnectorId);
 
   /*! \brief Set unit connection based on a connector contact
    *
-   * Will list connector contacts based on given connector,
+   * Will list connector contacts based on actual connector,
    *  let the user select one and set unit connection based on it.
    */
-  void setConnectionFromConnectorContact(const QVariant & connectorId);
+  void setConnectionFromConnectorContact();
+//   void setConnectionFromConnectorContact(const QVariant & connectorId);
 
   /*! \brief Get connector data from database and update widgets
    */
@@ -171,12 +183,25 @@ class mdtClUnitConnectionDialog : public QDialog, Ui::mdtClUnitConnectionDialog
    */
   void showArticleConnectionWidgets();
 
+  /*! \brief Display a error
+   */
+  void displayError(const mdtError & error);
+
+  /*! \brief Check if its possible to select a connection
+   */
+  bool canSelectConnection() const;
+
+  /*! \brief Check if its possible to select connection type
+   */
+  bool canSelectConnectionType() const;
+
   Q_DISABLE_COPY(mdtClUnitConnectionDialog);
 
   QSqlDatabase pvDatabase;
   mdtClUnitConnectionData pvData;
   QVariant pvBaseArticleId;       // Used to list article related connections
   mode_t pvMode;
+  mdtClConnectionTypeModel *pvConnectionTypeModel;
 };
 
 #endif // #ifndef MDT_CL_UNIT_CONNECTION_DIALOG_H

@@ -18,45 +18,49 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CL_CONNECTOR_CONTACT_SELECTION_DIALOG_H
-#define MDT_CL_CONNECTOR_CONTACT_SELECTION_DIALOG_H
+#ifndef MDT_CL_UNIT_CONNECTOR_SELECTION_DIALOG_H
+#define MDT_CL_UNIT_CONNECTOR_SELECTION_DIALOG_H
 
 #include "mdtSqlSelectionDialog.h"
-#include "mdtClConnectorData.h"
-#include "mdtClConnectorContactData.h"
+#include "mdtClUnitConnectorKeyData.h"
+#include "mdtClUnitConnectorData.h"
 #include <QSqlDatabase>
 #include <QVariant>
-#include <QList>
 
-/*! \brief Dialog for connector selection (in Connector_tbl)
+/*! \brief Dialog for unit connector selection (in UnitConnector_tbl)
  */
-class mdtClConnectorContactSelectionDialog : public mdtSqlSelectionDialog
+class mdtClUnitConnectorSelectionDialog : public mdtSqlSelectionDialog
 {
- Q_OBJECT
-
  public:
 
    /*! \brief Constructor
     */
-  mdtClConnectorContactSelectionDialog(QWidget *parent);
+  mdtClUnitConnectorSelectionDialog(QWidget *parent);
 
   /*! \brief Set SQL query and select data
    *
-   * \param connectorKey Key of connector for witch contacts must be listed
+   * Will select unit connectors that belongs to given unit
+   *
+   * \pre unitId must not be null
    */
-  bool select(QSqlDatabase db, const mdtClConnectorKeyData & connectorKey, bool allowMultiSelection);
+  bool select(QSqlDatabase db, const QVariant & unitId);
 
-  /*! \brief Get selected contact data
+  /*! \brief Get selected unit connector key
+   *
+   * If user rejected the dialog, a null key is returned.
    */
-  mdtClConnectorContactData selectedContactData() const;
+  mdtClUnitConnectorKeyData selectedUnitConnectorKey() const;
 
-  /*! \brief Get list of selected contacts
+  /*! \brief Get selected unit connector data
+   *
+   * If user rejected the dialog, null data is returned.
    */
-  QList<mdtClConnectorContactData> selectedContactDataList() const;
+  mdtClUnitConnectorData selectedUnitConnectorData() const;
 
  private:
 
-  Q_DISABLE_COPY(mdtClConnectorContactSelectionDialog);
+  Q_DISABLE_COPY(mdtClUnitConnectorSelectionDialog);
 };
 
-#endif // #ifndef MDT_CL_CONNECTOR_CONTACT_SELECTION_DIALOG_H
+#endif // #ifndef MDT_CL_UNIT_CONNECTOR_SELECTION_DIALOG_H
+

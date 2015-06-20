@@ -85,7 +85,9 @@ mdtClArticleConnectorKeyData mdtClArticleConnectorSelectionDialog::selectedArtic
   key.id = s.data(0, "Id_PK");
   key.setArticleId(s.data(0, "Article_Id_FK"));
   connectorFk.id = s.data(0, "Connector_Id_FK");
-  key.setConnectorFk(connectorFk);
+  if(!connectorFk.isNull()){
+    key.setConnectorFk(connectorFk);
+  }
 
   return key;
 }

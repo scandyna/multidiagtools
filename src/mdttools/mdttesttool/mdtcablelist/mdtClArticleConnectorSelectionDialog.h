@@ -30,8 +30,6 @@
  */
 class mdtClArticleConnectorSelectionDialog : public mdtSqlSelectionDialog
 {
- Q_OBJECT
-
  public:
 
    /*! \brief Constructor

@@ -289,6 +289,20 @@ void mdtClUnitConnectionTest::unitConnectionDataTest()
   QVERIFY(key.connectionTypeFk().type() == mdtClConnectionType_t::Pin);
   QVERIFY(key.isPartOfUnitConnector());
   QVERIFY(!key.isBasedOnArticleConnection());
+  // Clear unit connector FK
+  key.clearUnitConnectorFk();
+  QVERIFY(!key.isNull());
+  QCOMPARE(key.unitId(), QVariant(5));
+  QVERIFY(key.connectionTypeFk().type() == mdtClConnectionType_t::Pin);
+  QVERIFY(!key.isPartOfUnitConnector());
+  QVERIFY(!key.isBasedOnArticleConnection());
+  // Set unit connector FK again
+  key.setUnitConnectorFk(unitConnectorFk);
+  QVERIFY(!key.isNull());
+  QCOMPARE(key.unitId(), QVariant(5));
+  QVERIFY(key.connectionTypeFk().type() == mdtClConnectionType_t::Pin);
+  QVERIFY(key.isPartOfUnitConnector());
+  QVERIFY(!key.isBasedOnArticleConnection());
   // Clear
   key.clear();
   QVERIFY(key.id.isNull());
@@ -305,6 +319,20 @@ void mdtClUnitConnectionTest::unitConnectionDataTest()
   key.setUnitId(7);
   articleConnectionFk.setArticleId(8);
   articleConnectionFk.setConnectionType(mdtClConnectionType_t::Socket);
+  key.setArticleConnectionFk(articleConnectionFk);
+  QVERIFY(!key.isNull());
+  QCOMPARE(key.unitId(), QVariant(7));
+  QVERIFY(key.connectionTypeFk().type() == mdtClConnectionType_t::Socket);
+  QVERIFY(!key.isPartOfUnitConnector());
+  QVERIFY(key.isBasedOnArticleConnection());
+  // Clear article connection FK
+  key.clearArticleConnectionFk();
+  QVERIFY(!key.isNull());
+  QCOMPARE(key.unitId(), QVariant(7));
+  QVERIFY(key.connectionTypeFk().type() == mdtClConnectionType_t::Socket);
+  QVERIFY(!key.isPartOfUnitConnector());
+  QVERIFY(!key.isBasedOnArticleConnection());
+  // Set article connection again
   key.setArticleConnectionFk(articleConnectionFk);
   QVERIFY(!key.isNull());
   QCOMPARE(key.unitId(), QVariant(7));
@@ -393,6 +421,18 @@ void mdtClUnitConnectionTest::unitConnectionDataTest()
   QVERIFY(data.isPartOfUnitConnector());
   QVERIFY(!data.isBasedOnArticleConnection());
   QVERIFY(data.connectionType() == mdtClConnectionType_t::Pin);
+  // Clear unit connector FK
+  data.clearUnitConnectorFk();
+  QVERIFY(!data.isNull());
+  QVERIFY(!data.isPartOfUnitConnector());
+  QVERIFY(!data.isBasedOnArticleConnection());
+  QVERIFY(data.connectionType() == mdtClConnectionType_t::Pin);
+  // Set unit connector FK again
+  data.setUnitConnectorFk(unitConnectorFk);
+  QVERIFY(!data.isNull());
+  QVERIFY(data.isPartOfUnitConnector());
+  QVERIFY(!data.isBasedOnArticleConnection());
+  QVERIFY(data.connectionType() == mdtClConnectionType_t::Pin);
   // Clear
   data.clear();
   QVERIFY(data.isNull());
@@ -407,6 +447,18 @@ void mdtClUnitConnectionTest::unitConnectionDataTest()
   articleConnectionFk.setConnectionType(mdtClConnectionType_t::Socket);
   key.setArticleConnectionFk(articleConnectionFk);
   data.setKeyData(key);
+  QVERIFY(!data.isNull());
+  QVERIFY(!data.isPartOfUnitConnector());
+  QVERIFY(data.isBasedOnArticleConnection());
+  QVERIFY(data.connectionType() == mdtClConnectionType_t::Socket);
+  // Clear article connection FK
+  data.clearArticleConnectionFk();
+  QVERIFY(!data.isNull());
+  QVERIFY(!data.isPartOfUnitConnector());
+  QVERIFY(!data.isBasedOnArticleConnection());
+  QVERIFY(data.connectionType() == mdtClConnectionType_t::Socket);
+  // Set article connection again
+  data.setArticleConnectionFk(articleConnectionFk);
   QVERIFY(!data.isNull());
   QVERIFY(!data.isPartOfUnitConnector());
   QVERIFY(data.isBasedOnArticleConnection());

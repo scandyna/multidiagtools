@@ -58,8 +58,24 @@ struct mdtClUnitConnectionData : public mdtSqlRecord /// \todo Remove this inher
   void setKeyData(const mdtClUnitConnectionKeyData & key);
 
   /*! \brief Set unit connector FK
+   *
+   * \sa mdtClUnitConnectionKeyData::setUnitConnectorFk()
    */
   void setUnitConnectorFk(const mdtClUnitConnectorKeyData & fk);
+
+  /*! \brief Clear unit connector FK (UnitConnector_Id_FK)
+   */
+  void clearUnitConnectorFk();
+
+  /*! \brief Set article connection FK (ArticleConnection_Id_FK)
+   *
+   * \sa mdtClUnitConnectionKeyData::setArticleConnectionFk()
+   */
+  void setArticleConnectionFk(const mdtClArticleConnectionKeyData & fk);
+
+  /*! \brief Clear article connection FK (ArticleConnection_Id_FK)
+   */
+  void clearArticleConnectionFk();
 
   /*! \brief Check if unit connection is part of a unit connector
    */

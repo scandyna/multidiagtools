@@ -169,6 +169,24 @@ QList<mdtClArticleConnectionKeyData> mdtClArticleConnectionSelectionDialog::sele
   return keyList;
 }
 
+mdtClArticleConnectionData mdtClArticleConnectionSelectionDialog::selectedArticleConnectionData() const
+{
+  mdtClArticleConnectionData data;
+  QList<mdtClArticleConnectionData> dataList;
+
+  if(result() != Accepted){
+    return data;
+  }
+  dataList = selectedArticleConnectionDataList();
+  if(dataList.isEmpty()){
+    return data;
+  }
+  Q_ASSERT(dataList.size() == 1);
+  data = dataList.at(0);
+
+  return data;
+}
+
 QList<mdtClArticleConnectionData> mdtClArticleConnectionSelectionDialog::selectedArticleConnectionDataList() const
 {
   QList<mdtClArticleConnectionData> dataList;
