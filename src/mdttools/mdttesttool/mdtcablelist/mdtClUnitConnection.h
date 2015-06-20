@@ -64,13 +64,23 @@ class mdtClUnitConnection : public mdtClArticleConnection
 
   /*! \brief Get unit connection data from database
    *
-   * \param key Data that contains connection ID (Id_PK).
+   * \param key Data that contains unit connection ID (Id_PK).
    *     Note: only id is used, other key memebers are ignored.
    * \return data for given key.
    *       A null data is returned if given key does not exist, or a error occured.
    *       Use ok parameter to diffrenciate both cases.
    */
   mdtClUnitConnectionData getUnitConnectionData(const mdtClUnitConnectionKeyData & key, bool & ok);
+
+  /*! \brief Get unit connection data from database
+   *
+   * \param key Data that contains article connection ID (ArticleConnection_Id_FK).
+   *     Note: only id is used, other key memebers are ignored.
+   * \return data for given key.
+   *       A null data is returned if given key does not exist, or a error occured.
+   *       Use ok parameter to diffrenciate both cases.
+   */
+  mdtClUnitConnectionData getUnitConnectionData(const mdtClArticleConnectionKeyData & key, bool & ok);
 
   /*! \brief Get a list of unit connections data for given unit connector
    *
@@ -122,6 +132,17 @@ class mdtClUnitConnection : public mdtClArticleConnection
    *       Use ok parameter to diffrenciate both cases.
    */
   mdtClUnitConnectorData getUnitConnectorData(mdtClUnitConnectorKeyData key, bool includeConnectionData, bool & ok);
+
+  /*! \brief Get unit connector data from database
+   *
+   * \param key Article connection, that also is presumed to be based on a article connector, on witch unit connector is based.
+   *            Note: in key, only id is used, other members are ignored.
+   * \param ok Is set false on error
+   * \return data for given key.
+   *       A null data is returned if given key does not return a result, or a error occured.
+   *       Use ok parameter to diffrenciate both cases.
+   */
+  mdtClUnitConnectorKeyData getUnitConnectorKeyData(const mdtClArticleConnectionKeyData & key, bool & ok);
 
   /*! \brief Update unit connector name
    *
@@ -181,6 +202,10 @@ class mdtClUnitConnection : public mdtClArticleConnection
    *       and Connector_Id_FK from UnitConnector_tbl
    */
   void fillData(mdtClUnitConnectionData & data, const QSqlRecord & record);
+
+  /*! \brief Get base SQL statement to get unit connectors
+   */
+  QString baseSqlForUnitConnector() const;
 
   /*! \brief Fill given record with given unit connector data
    *

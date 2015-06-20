@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -72,10 +72,6 @@ class mdtClUnitConnectionDialog : public QDialog, Ui::mdtClUnitConnectionDialog
 
  private slots:
 
-  /*! \brief Update connection type text
-   */
-//   void updateConnectionTypeText(const QString & type);
-
   /*! \brief Copy article connection function EN to unit connection function EN
    */
   void copyFunctionEN();
@@ -118,6 +114,10 @@ class mdtClUnitConnectionDialog : public QDialog, Ui::mdtClUnitConnectionDialog
    */
   void copyContactName();
 
+  /*! \brief Copy article resistance to unit resistance
+   */
+  void copyResistance();
+
   /*! \brief Do some check, store values and accept dialog if Ok
    */
   void accept();
@@ -128,32 +128,13 @@ class mdtClUnitConnectionDialog : public QDialog, Ui::mdtClUnitConnectionDialog
 
  private:
 
-  /*! \brief Populate connection type cobobox with available types
-   */
-//   void populateConnectionTypeComboBox();
-
   /*! \brief Set connection type combobox current value
    */
   void setCurrentConnectionType(mdtClConnectionType_t t);
-//   void setCurrentConnectionType(const QString & type);
 
   /*! \brief Set unit connection from a article connection
    */
   void setConnectionFromArticleConnection();
-
-  /*! \brief Set unit connection based on a free article connection
-   *
-   * Will list article connections based on base article, but NOT on a article connector,
-   *  let the user select one and set unit connection based on it.
-   */
-//   void setConnectionFromFreeArticleConnection();
-
-  /*! \brief Set unit connection based on a article connection choosen by article connector
-   *
-   * Will list article connections based on given article connector,
-   *  let the user select one and set unit connection based on it.
-   */
-//   void setConnectionFromArticleConnectorConnection(const QVariant & articleConnectorId);
 
   /*! \brief Set unit connection based on a connector contact
    *
@@ -161,7 +142,6 @@ class mdtClUnitConnectionDialog : public QDialog, Ui::mdtClUnitConnectionDialog
    *  let the user select one and set unit connection based on it.
    */
   void setConnectionFromConnectorContact();
-//   void setConnectionFromConnectorContact(const QVariant & connectorId);
 
   /*! \brief Get connector data from database and update widgets
    */
@@ -174,6 +154,10 @@ class mdtClUnitConnectionDialog : public QDialog, Ui::mdtClUnitConnectionDialog
   /*! \brief Update data from dialog's widgets
    */
   void updateData();
+
+  /*! \brief Check if all required data are set
+   */
+  bool checkData();
 
   /*! \brief Hide all widgets related to article connection
    */
@@ -199,6 +183,7 @@ class mdtClUnitConnectionDialog : public QDialog, Ui::mdtClUnitConnectionDialog
 
   QSqlDatabase pvDatabase;
   mdtClUnitConnectionData pvData;
+  QVariant pvArticleConnectionResistance;
   QVariant pvBaseArticleId;       // Used to list article related connections
   mode_t pvMode;
   mdtClConnectionTypeModel *pvConnectionTypeModel;

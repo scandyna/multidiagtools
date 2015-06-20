@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>650</width>
-    <height>381</height>
+    <height>384</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -147,6 +147,16 @@
        </property>
       </widget>
      </item>
+     <item row="3" column="1">
+      <widget class="QComboBox" name="cbConnectionType">
+       <property name="maximumSize">
+        <size>
+         <width>200</width>
+         <height>16777215</height>
+        </size>
+       </property>
+      </widget>
+     </item>
      <item row="4" column="0">
       <widget class="QLabel" name="lbUnitContactName">
        <property name="text">
@@ -199,34 +209,6 @@
       <widget class="QLabel" name="lbConnectionResistance">
        <property name="text">
         <string>Connection resistance:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="1">
-      <widget class="QDoubleSpinBox" name="sbConnectionResistance">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="specialValueText">
-        <string>Null</string>
-       </property>
-       <property name="suffix">
-        <string> [Ohm]</string>
-       </property>
-       <property name="decimals">
-        <number>3</number>
-       </property>
-       <property name="minimum">
-        <double>-0.010000000000000</double>
-       </property>
-       <property name="maximum">
-        <double>10.000000000000000</double>
-       </property>
-       <property name="singleStep">
-        <double>0.010000000000000</double>
        </property>
       </widget>
      </item>
@@ -415,17 +397,63 @@
        </item>
       </layout>
      </item>
-     <item row="3" column="1">
-      <widget class="QComboBox" name="cbConnectionType">
-       <property name="maximumSize">
-        <size>
-         <width>200</width>
-         <height>16777215</height>
-        </size>
-       </property>
-      </widget>
+     <item row="5" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout_13">
+       <item>
+        <widget class="QDoubleSpinBox" name="sbConnectionResistance">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="specialValueText">
+          <string>Null</string>
+         </property>
+         <property name="suffix">
+          <string> [Ohm]</string>
+         </property>
+         <property name="decimals">
+          <number>3</number>
+         </property>
+         <property name="minimum">
+          <double>-0.010000000000000</double>
+         </property>
+         <property name="maximum">
+          <double>10.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.010000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="pbCopyResistance">
+         <property name="text">
+          <string>&lt;--</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="lbArticleConnectionResistance">
+         <property name="text">
+          <string>Article connection resistance</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QGroupBox" name="gbRanges">
@@ -483,16 +511,6 @@
      </layout>
     </widget>
    </item>
-   <item>
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
-   </item>
   </layout>
  </widget>
  <tabstops>
@@ -502,7 +520,6 @@
   <tabstop>leUnitContactName</tabstop>
   <tabstop>pbCopyContactName</tabstop>
   <tabstop>pbSelectContact</tabstop>
-  <tabstop>sbConnectionResistance</tabstop>
   <tabstop>leFunctionEN</tabstop>
   <tabstop>pbCopyFunctionEN</tabstop>
   <tabstop>leFunctionFR</tabstop>

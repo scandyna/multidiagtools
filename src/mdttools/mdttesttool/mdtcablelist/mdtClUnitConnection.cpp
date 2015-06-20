@@ -118,6 +118,27 @@ mdtClUnitConnectionData mdtClUnitConnection::getUnitConnectionData(const mdtClUn
   return data;
 }
 
+mdtClUnitConnectionData mdtClUnitConnection::getUnitConnectionData(const mdtClArticleConnectionKeyData & key, bool &ok)
+{
+  mdtClUnitConnectionData data;
+  QList<QSqlRecord> dataList;
+  QString sql;
+
+  sql = baseSqlForUnitConnection();
+  sql += " WHERE UCNX.ArticleConnection_Id_FK = " + key.id.toString();
+  dataList = getDataList<QSqlRecord>(sql, ok);
+  if(!ok){
+    return data;
+  }
+  if(dataList.isEmpty()){
+    return data;
+  }
+  Q_ASSERT(dataList.size() == 1);
+  fillData(data, dataList.at(0));
+
+  return data;
+}
+
 QList<mdtClUnitConnectionData> mdtClUnitConnection::getUnitConnectionDataList(const mdtClUnitConnectorKeyData & key, bool & ok)
 {
   QList<mdtClUnitConnectionData> dataList;
@@ -232,11 +253,12 @@ mdtClUnitConnectorData mdtClUnitConnection::getUnitConnectorData(mdtClUnitConnec
   QList<QSqlRecord> dataList;
   QString sql;
 
-  sql = "SELECT UCNR.*,"\
-        " ACNR.Article_Id_FK AS ACNR_Article_Id_FK,"\
-        " ACNR.Connector_Id_FK AS ACNR_Connector_Id_FK\n"\
-        "FROM UnitConnector_tbl UCNR\n"\
-        " LEFT JOIN ArticleConnector_tbl ACNR ON ACNR.Id_PK = UCNR.ArticleConnector_Id_FK\n";
+//   sql = "SELECT UCNR.*,"\
+//         " ACNR.Article_Id_FK AS ACNR_Article_Id_FK,"\
+//         " ACNR.Connector_Id_FK AS ACNR_Connector_Id_FK\n"\
+//         "FROM UnitConnector_tbl UCNR\n"\
+//         " LEFT JOIN ArticleConnector_tbl ACNR ON ACNR.Id_PK = UCNR.ArticleConnector_Id_FK\n";
+  sql = baseSqlForUnitConnector();
   sql += " WHERE UCNR.Id_PK = " + key.id.toString();
   dataList = getDataList<QSqlRecord>(sql, ok);
   if(!ok){
@@ -255,6 +277,30 @@ mdtClUnitConnectorData mdtClUnitConnection::getUnitConnectorData(mdtClUnitConnec
   }
 
   return data;
+}
+
+mdtClUnitConnectorKeyData mdtClUnitConnection::getUnitConnectorKeyData(const mdtClArticleConnectionKeyData & key, bool & ok)
+{
+  mdtClUnitConnectorKeyData unitConnectorKey;
+  mdtClUnitConnectorData data;
+  QList<QSqlRecord> dataList;
+  QString sql;
+
+  sql = baseSqlForUnitConnector();
+  sql += " LEFT JOIN ArticleConnection_tbl ACNX ON ACNX.ArticleConnector_Id_FK = ACNR.Id_PK\n";
+  sql += " WHERE ACNX.Id_PK = " + key.id.toString();
+  dataList = getDataList<QSqlRecord>(sql, ok);
+  if(!ok){
+    return unitConnectorKey;
+  }
+  if(dataList.isEmpty()){
+    return unitConnectorKey;
+  }
+  Q_ASSERT(dataList.size() == 1);
+  fillData(data, dataList.at(0));
+  unitConnectorKey = data.keyData();
+
+  return unitConnectorKey;
 }
 
 bool mdtClUnitConnection::updateUnitConnectorName(const mdtClUnitConnectorKeyData & key, const QVariant &name)
@@ -457,6 +503,15 @@ void mdtClUnitConnection::fillData(mdtClUnitConnectionData & data, const QSqlRec
   data.functionFR = record.value("functionFR");
   data.functionDE = record.value("functionDE");
   data.functionIT = record.value("functionIT");
+}
+
+QString mdtClUnitConnection::baseSqlForUnitConnector() const
+{
+  return "SELECT UCNR.*,"\
+         " ACNR.Article_Id_FK AS ACNR_Article_Id_FK,"\
+         " ACNR.Connector_Id_FK AS ACNR_Connector_Id_FK\n"\
+         "FROM UnitConnector_tbl UCNR\n"\
+         " LEFT JOIN ArticleConnector_tbl ACNR ON ACNR.Id_PK = UCNR.ArticleConnector_Id_FK\n";
 }
 
 void mdtClUnitConnection::fillRecord(mdtSqlRecord &record, const mdtClUnitConnectorData &data)

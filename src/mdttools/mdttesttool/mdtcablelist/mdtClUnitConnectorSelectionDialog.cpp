@@ -27,7 +27,7 @@
 mdtClUnitConnectorSelectionDialog::mdtClUnitConnectorSelectionDialog(QWidget *parent)
  : mdtSqlSelectionDialog(parent)
 {
-  resize(400, 300);
+  resize(700, 300);
   setWindowTitle(tr("Unit connector selection"));
 }
 
@@ -37,9 +37,12 @@ bool mdtClUnitConnectorSelectionDialog::select(QSqlDatabase db, const QVariant &
 
   QString sql;
 
-  sql = "SELECT UCNR.* , ACNR.Article_Id_FK \n"\
+  sql = "SELECT UCNR.* ,"\
+        " ACNR.Article_Id_FK, ACNR.Name AS ArticleConnectorName,"\
+        " CNR.Gender, CNR.Form, CNR.Manufacturer, CNR.Series, CNR.'Insert', CNR.InsertRotation, CNR.ManufacturerConfigCode, CNR.ManufacturerArticleCode\n"\
         "FROM UnitConnector_tbl UCNR\n"\
-        " LEFT JOIN ArticleConnector_tbl ACNR ON ACNR.Id_PK = UCNR.ArticleConnector_Id_FK\n";
+        " LEFT JOIN ArticleConnector_tbl ACNR ON ACNR.Id_PK = UCNR.ArticleConnector_Id_FK\n"\
+        " LEFT JOIN Connector_tbl CNR ON CNR.Id_PK = UCNR.Connector_Id_FK\n";
   sql += "WHERE UCNR.Unit_Id_FK = " + unitId.toString();
   if(!setQuery(sql, db, false)){
     return false;
@@ -48,6 +51,16 @@ bool mdtClUnitConnectorSelectionDialog::select(QSqlDatabase db, const QVariant &
   setColumnHidden("Id_PK", true);
   setColumnHidden("Unit_Id_FK", true);
   setColumnHidden("Connector_Id_FK", true);
+  setColumnHidden("ArticleConnector_Id_FK", true);
+  setColumnHidden("Article_Id_FK", true);
+  setHeaderData("Name", tr("Unit\nconnector\nname"));
+  setHeaderData("ArticleConnectorName", tr("Article\nconnector\nname"));
+//   setHeaderData("ContactQty", tr("Contact\nQty"));
+  setHeaderData("InsertRotation", tr("Insert\nRotation"));
+  setHeaderData("ManufacturerConfigCode", tr("Manufacturer\nConfiguration code"));
+  setHeaderData("ManufacturerArticleCode", tr("Manufacturer\nArticle code"));
+
+  
   addColumnToSortOrder("Name", Qt::AscendingOrder);
   sort();
 

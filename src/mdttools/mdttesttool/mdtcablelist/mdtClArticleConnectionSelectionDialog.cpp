@@ -69,24 +69,22 @@ bool mdtClArticleConnectionSelectionDialog::select(QSqlDatabase db, const QVaria
   sql += articleLinkUsageClause(alu, articleId);
 
   return setQuery(sql, db, allowMultiSelection);
-
-//   if(!setQuery(sql, db, allowMultiSelection)){
-//     return false;
-//   }
-//   setMessage(tr("Select article connection to use:"));
-//   setColumnHidden("Id_PK", true);
-//   setColumnHidden("Article_Id_FK", true);
-//   setColumnHidden("Connector_Id_FK", true);
-//   addColumnToSortOrder("ArticleConnectorName", Qt::AscendingOrder);
-//   addColumnToSortOrder("ArticleContactName", Qt::AscendingOrder);
-//   sort();
-// 
-//   return true;
 }
 
-bool mdtClArticleConnectionSelectionDialog::select(QSqlDatabase db, const QVariant &articleId, const QVariant &unitId, ArticleConnectorMembership_t acms, bool allowMultiSelection)
+bool mdtClArticleConnectionSelectionDialog::select(QSqlDatabase db, const QVariant & articleId, const QVariant & unitId, ArticleConnectorMembership_t acms, bool allowMultiSelection)
 {
+  QString sql;
 
+  sql = "SELECT * FROM ArticleConnection_view";
+  sql += " WHERE Article_Id_FK = " + articleId.toString();
+  sql += " AND Id_PK NOT IN ("\
+         "  SELECT ArticleConnection_Id_FK"\
+         "  FROM UnitConnection_tbl"\
+         "  WHERE Unit_Id_FK = " + unitId.toString();
+  sql += "  AND ArticleConnection_Id_FK IS NOT NULL)";
+  sql += acmsClause(acms);
+
+  return setQuery(sql, db, allowMultiSelection);
 }
 
 bool mdtClArticleConnectionSelectionDialog::select(QSqlDatabase db, const mdtClArticleConnectorKeyData & articleConnectorKey, const QVariant & unitId, bool allowMultiSelection)
@@ -113,6 +111,9 @@ bool mdtClArticleConnectionSelectionDialog::setQuery(const QString & sql, QSqlDa
   setColumnHidden("Id_PK", true);
   setColumnHidden("Article_Id_FK", true);
   setColumnHidden("Connector_Id_FK", true);
+  setColumnHidden("ArticleConnector_Id_FK", true);
+  setHeaderData("ArticleConnectorName", tr("Article\nconnector\nname"));
+  setHeaderData("ArticleContactName", tr("Article\ncontact\nname"));
   addColumnToSortOrder("ArticleConnectorName", Qt::AscendingOrder);
   addColumnToSortOrder("ArticleContactName", Qt::AscendingOrder);
   sort();
@@ -149,20 +150,6 @@ QList<mdtClArticleConnectionKeyData> mdtClArticleConnectionSelectionDialog::sele
   fields << "Id_PK" << "Article_Id_FK" << "ArticleConnector_Id_FK" << "ConnectionType_Code_FK" << "Connector_Id_FK";
   auto s = selection(fields);
   for(int row = 0; row < s.rowCount(); ++row){
-//     mdtClArticleConnectionKeyData key;
-//     mdtClArticleConnectorKeyData articleConnectorFk;
-//     mdtClConnectorKeyData connectorFk;
-//     key.id = s.data(row, "Id_PK");
-//     key.setArticleId(s.data(row, "Article_Id_FK"));
-//     articleConnectorFk.id = s.data(row, "ArticleConnector_Id_FK");
-//     articleConnectorFk.setArticleId(key.articleId());
-//     connectorFk.id = s.data(row, "Connector_Id_FK");
-//     articleConnectorFk.setConnectorFk(connectorFk);
-//     if(!articleConnectorFk.isNull()){
-//       key.setArticleConnectorFk(articleConnectorFk);
-//     }
-//     key.setConnectionTypeCode(s.data(row, "ConnectionType_Code_FK"));
-//     keyList.append(key);
     keyList.append(buildKeyData(s, row));
   }
 
@@ -224,6 +211,7 @@ QString mdtClArticleConnectionSelectionDialog::acmsClause(ArticleConnectorMember
     case ArticleConnectorMembership_t::All:
       return "";
   }
+  return "";
 }
 
 QString mdtClArticleConnectionSelectionDialog::articleLinkUsageClause(ArticleLinkUsage_t alu, const QVariant & articleId) const

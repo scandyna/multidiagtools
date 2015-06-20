@@ -650,34 +650,6 @@ void mdtClUnitEditor::addConnection()
     displayLastError();
     return;
   }
-
-  
-//   mdtClUnit unit(this, database());
-//   QVariant unitId;
-  
-
-//   unitId = currentUnitId();
-//   if(unitId.isNull()){
-//     return;
-//   }
-  // Setup unit connection data
-//   if(!data.setup(database(), true)){
-//     pvLastError = data.lastError();
-//     displayLastError();
-//     return;
-//   }
-//   data.setValue("Unit_Id_FK", unitId);
-//   // Setup and show dialog
-//   dialog.setData(data, currentData("Unit_tbl", "Article_Id_FK"));
-//   if(dialog.exec() != QDialog::Accepted){
-//     return;
-//   }
-  // Add connection
-//   if(!unit.addConnection(dialog.data())){
-//     pvLastError = unit.lastError();
-//     displayLastError();
-//     return;
-//   }
   // Update connections view
   select("UnitConnection_view");
   select("UnitLink_view");
@@ -685,45 +657,57 @@ void mdtClUnitEditor::addConnection()
 
 void mdtClUnitEditor::addArticleConnectionsBasedConnections()
 {
-  mdtClUnit unit(this, database());
-  mdtClUnitConnectionData data;
-  QVariant unitId;
-  QVariant unitConnectorId;
+  mdtClUnitConnection ucnx(database());
+  mdtClUnitConnectionDialog dialog(this, database(), mdtClUnitConnectionDialog::Add);
+  mdtClArticleConnectionSelectionDialog selectionDialog(this);
+  mdtClArticleConnectionKeyData articleConnectionFk;
   QVariant articleId;
-  QList<QVariant> articleConnectionIdList;
-  QList<mdtClUnitConnectionData> unitConnectionDataList;
+  mdtClUnitConnectionKeyData key;
+  mdtClUnitConnectorKeyData unitConnectorFk;
+  mdtClUnitConnectionData data;
   bool ok;
 
-  unitId = currentUnitId();
-  if(unitId.isNull()){
-    return;
-  }
   articleId = currentData("Unit_tbl", "Article_Id_FK");
   if(articleId.isNull()){
     return;
   }
-  // Setup unit connection data
-  if(!data.setup(database(), true)){
-    pvLastError = data.lastError();
+  // Set unit ID
+  key.setUnitId(currentUnitId());
+  if(key.unitId().isNull()){
+    return;
+  }
+  // Let user select article connection
+  if(!selectionDialog.select(database(), articleId, key.unitId(), mdtClArticleConnectionSelectionDialog::ArticleConnectorMembership_t::All, false)){
+    pvLastError = selectionDialog.lastError();
     displayLastError();
     return;
   }
-  data.setValue("Unit_Id_FK", unitId);
-  // Let user select article connections
-  articleConnectionIdList = selectByArticleIdArticleConnectionIdList(articleId, unitId, true);
-  if(articleConnectionIdList.isEmpty()){
+  if(selectionDialog.exec() != QDialog::Accepted){
     return;
   }
-  // Get unit connection data
-  unitConnectionDataList = unit.getUnitConnectionDataListFromArticleConnectionIdList(unitId /**, QVariant()*/ , articleConnectionIdList, true, &ok);
+  articleConnectionFk = selectionDialog.selectedArticleConnectionKey();
+  Q_ASSERT(!articleConnectionFk.isNull());
+  // Get unit connector key for given article connection
+  unitConnectorFk = ucnx.getUnitConnectorKeyData(articleConnectionFk, ok);
   if(!ok){
-    pvLastError = unit.lastError();
+    pvLastError = ucnx.lastError();
     displayLastError();
     return;
   }
-  // Add connections
-  if(!unit.addConnections(unitConnectionDataList)){
-    pvLastError = data.lastError();
+  // Update unit connection key and set it to data
+  if(!unitConnectorFk.isNull()){
+    key.setUnitConnectorFk(unitConnectorFk);
+  }
+  key.setArticleConnectionFk(articleConnectionFk);
+  data.setKeyData(key);
+  // Setup and show unit connection edition dialog
+  dialog.setData(data, articleId);
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
+  // Add connection
+  if(ucnx.addUnitConnection(dialog.data(), true).isNull()){
+    pvLastError = ucnx.lastError();
     displayLastError();
     return;
   }
@@ -735,38 +719,69 @@ void mdtClUnitEditor::addArticleConnectionsBasedConnections()
 void mdtClUnitEditor::editConnection()
 {
   mdtSqlTableWidget *widget;
-  mdtClUnitConnectionDialog dialog(0, database(), mdtClUnitConnectionDialog::Edit);
-  mdtClUnit unit(this, database());
-  QVariant connectionId;
+  mdtClUnitConnectionDialog dialog(this, database(), mdtClUnitConnectionDialog::Edit);
+  mdtClUnitConnection ucnx(database());
+  mdtClUnitConnectionKeyData key;
   mdtClUnitConnectionData data;
   bool ok;
 
   widget = sqlTableWidget("UnitConnection_view");
   Q_ASSERT(widget != 0);
-
   // Get current unit connection data
-  connectionId = widget->currentData("UnitConnection_Id_PK");
-  if(connectionId.isNull()){
+  key.id = widget->currentData("UnitConnection_Id_PK");
+  if(key.id.isNull()){
     return;
   }
-  data = unit.getConnectionData(connectionId, true, &ok);
+  data = ucnx.getUnitConnectionData(key, ok);
   if(!ok){
-    pvLastError = unit.lastError();
+    pvLastError = ucnx.lastError();
     displayLastError();
+    return;
   }
   // Setup and show dialog
   dialog.setData(data, currentData("Unit_tbl", "Article_Id_FK"));
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
-  // Edit connection
-  if(!unit.editConnection(connectionId, dialog.data())){
-    pvLastError = unit.lastError();
+  // Update in database
+  if(!ucnx.updateUnitConnection(data.keyData(), data)){
+    pvLastError = ucnx.lastError();
     displayLastError();
     return;
   }
+  
+//   mdtClUnit unit(this, database());
+//   QVariant connectionId;
+  
+  
+
+//   widget = sqlTableWidget("UnitConnection_view");
+//   Q_ASSERT(widget != 0);
+
+  // Get current unit connection data
+//   connectionId = widget->currentData("UnitConnection_Id_PK");
+//   if(connectionId.isNull()){
+//     return;
+//   }
+//   data = unit.getConnectionData(connectionId, true, &ok);
+//   if(!ok){
+//     pvLastError = unit.lastError();
+//     displayLastError();
+//   }
+//   // Setup and show dialog
+//   dialog.setData(data, currentData("Unit_tbl", "Article_Id_FK"));
+//   if(dialog.exec() != QDialog::Accepted){
+//     return;
+//   }
+  // Edit connection
+//   if(!unit.editConnection(connectionId, dialog.data())){
+//     pvLastError = unit.lastError();
+//     displayLastError();
+//     return;
+//   }
   // Update connections view
   select("UnitConnection_view");
+  select("UnitLink_view");
 }
 
 void mdtClUnitEditor::setFunctionsFromOtherConnection()

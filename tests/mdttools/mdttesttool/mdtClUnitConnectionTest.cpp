@@ -804,6 +804,17 @@ void mdtClUnitConnectionTest::unitConnectionAddGetRemoveTest()
   QVERIFY(data.isBasedOnArticleConnection());
   QVERIFY(data.connectionType() == mdtClConnectionType_t::Terminal);
   QCOMPARE(data.name, QVariant("B"));
+  // Check that getting unit connection for given article connection key also works
+  data = ucnx.getUnitConnectionData(articleConnectionFk, ok);
+  QVERIFY(ok);
+  QVERIFY(!data.isNull());
+  QCOMPARE(data.keyData().unitId(), QVariant(2000));
+  QCOMPARE(data.keyData().articleConnectionFk().id, QVariant(20));
+  QCOMPARE(data.keyData().articleConnectionFk().articleId(), QVariant(2));
+  QVERIFY(!data.isPartOfUnitConnector());
+  QVERIFY(data.isBasedOnArticleConnection());
+  QVERIFY(data.connectionType() == mdtClConnectionType_t::Terminal);
+  QCOMPARE(data.name, QVariant("B"));
   /*
    * Remove connections
    */
@@ -831,6 +842,7 @@ void mdtClUnitConnectionTest::unitConnectorAddGetRemoveTest()
   mdtClUnitConnectorData data;
   mdtClConnectorKeyData connectorFk;
   mdtClArticleConnectorKeyData articleConnectorFk;
+  mdtClArticleConnectionKeyData articleConnectionKey;
   mdtCableListTestScenario scenario(pvDatabaseManager.database());
   bool ok;
 
@@ -929,6 +941,19 @@ void mdtClUnitConnectionTest::unitConnectorAddGetRemoveTest()
   QVERIFY(data.isBasedOnConnector());
   QVERIFY(data.isBasedOnArticleConnector());
   QCOMPARE(data.connectionDataList().size(), 0);
+  // Check getting unit connector key from article connection key
+  articleConnectionKey.clear();
+  articleConnectionKey.id = 25;
+  key3 = ucnx.getUnitConnectorKeyData(articleConnectionKey, ok);
+  QVERIFY(ok);
+  QVERIFY(!key3.isNull());
+  QCOMPARE(key3.unitId(), QVariant(2000));
+  QCOMPARE(key3.articleConnectorFk().id, QVariant(200));
+  QCOMPARE(key3.articleConnectorFk().articleId(), QVariant(2));
+  QCOMPARE(key3.articleConnectorFk().connectorFk().id, QVariant(1));
+  QCOMPARE(key3.connectorFk().id, QVariant(1));
+  QVERIFY(key3.isBasedOnConnector());
+  QVERIFY(key3.isBasedOnArticleConnector());
   /*
    * Remove connectors
    */
