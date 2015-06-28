@@ -294,6 +294,8 @@ endif(UNIX)
 
 # * Tools - mdt cable list *
 
+# mdtClModificationTest
+add_test (mdtClModificationTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdttesttool/mdtclmodificationtest)
 # mdtClConnectorTest
 add_test (mdtClConnectorTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdttesttool/mdtclconnectortest)
 # mdtClArticleConnectionTest

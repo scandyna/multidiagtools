@@ -146,6 +146,7 @@ set (CL_HEADER_FILES
           mdtcablelist/mdtClUnitConnectionDialog.h
           mdtcablelist/mdtClUnitEditor.h
           mdtcablelist/mdtClWireEditor.h
+          mdtcablelist/mdtClLinkVersion.h
           mdtcablelist/mdtClUnitLinkDialog.h
           mdtcablelist/mdtClLinkedUnitConnectionInfoDialog.h
           mdtcablelist/mdtClLinkedUnitConnectorInfoDialog.h
@@ -156,6 +157,7 @@ set (CL_HEADER_FILES
 # Source files for mdtCableList
 set (CL_SOURCES_FILES 
           mdtcablelist/mdtClApplicationWidgets.cpp
+          mdtcablelist/mdtClModificationModel.cpp
           mdtcablelist/mdtClVehicleTypeEditor.cpp
           mdtcablelist/mdtClConnectionTypeData.cpp
           mdtcablelist/mdtClConnectionTypeModel.cpp
@@ -195,6 +197,9 @@ set (CL_SOURCES_FILES
           mdtcablelist/mdtClLinkDirectionModel.cpp
           mdtcablelist/mdtClLinkData.cpp
           mdtcablelist/mdtClVehicleTypeLinkData.cpp
+          mdtcablelist/mdtClLinkVersion.cpp
+          mdtcablelist/mdtClLinkVersionModel.cpp
+          mdtcablelist/mdtClLinkVersionDialog.cpp
           mdtcablelist/mdtClLink.cpp
           mdtcablelist/mdtClDirectLink.cpp
           mdtcablelist/mdtClUnitLinkDialog.cpp
@@ -218,6 +223,7 @@ set (CL_FORM_FILES
           mdtcablelist/mdtClUnitConnectionDialog.ui
           mdtcablelist/mdtClUnitEditor.ui
           mdtcablelist/mdtClWireEditor.ui
+          mdtcablelist/mdtClLinkVersionDialog.ui
           mdtcablelist/mdtClUnitLinkDialog.ui
           mdtcablelist/mdtClLinkedUnitConnectionInfoDialog.ui
           mdtcablelist/mdtClLinkedUnitConnectorInfoDialog.ui

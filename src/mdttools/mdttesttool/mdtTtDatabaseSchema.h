@@ -105,6 +105,10 @@ class mdtTtDatabaseSchema
    */
   bool createTablesSqlite();
 
+  /*! \brief Create triggers
+   */
+  bool createTriggers();
+
   /*! \brief
    */
   bool createViews();
@@ -174,6 +178,22 @@ class mdtTtDatabaseSchema
    * Wire_tbl is a sort of wires databse
    */
   bool setupWireTable();
+
+  /*! \brief Setup Modification_tbl
+   */
+  bool setupModificationTable();
+
+  /*! \brief Setup LinkModification_tbl
+   */
+  bool setupLinkModificationTable();
+
+  /*! \brief Setup LinkVersion_tbl
+   */
+  bool setupLinkVersionTable();
+
+  /*! \brief Create onLinkVersionAfterInsert trigger
+   */
+  bool createOnLinkVersionAfterInsertTrigger();
 
   /*! \brief Create Link_tbl
    */
@@ -317,6 +337,12 @@ class mdtTtDatabaseSchema
   /*! \brief
    */
   bool setupLinkTypeTable();
+
+  /*! \brief Create a trigger
+   *
+   * Will also drop trigger first if extits
+   */
+  bool createTrigger(const QString & triggerName, const QString & sql);
 
   /*! \brief Create a view
    *
@@ -532,6 +558,10 @@ class mdtTtDatabaseSchema
   /*! \brief Get SQL statement for data edition
    */
   QString sqlForDataEdition(const QString & tableName, const QStringList & fields, const QList<QVariant> & data);
+
+  /*! \brief Populate Modification_tbl
+   */
+  bool populateModificationTable();
 
   /*! \brief Populate Connection type table
    */

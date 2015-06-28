@@ -39,4 +39,9 @@ relationcanvas 129922 relation_ref 1391746 // <directional composition>
   role_a_pos 520 580 3000 no_role_b
   multiplicity_a_pos 617 610 3000 no_multiplicity_b
 end
+relationcanvas 131074 relation_ref 2015490 // <unidirectional association>
+  from ref 130946 z 2001 to ref 130818
+  role_a_pos 260 144 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
 end

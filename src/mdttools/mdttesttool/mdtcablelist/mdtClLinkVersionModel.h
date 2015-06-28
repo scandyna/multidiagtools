@@ -18,55 +18,62 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CL_CONNECTION_TYPE_MODEL_H
-#define MDT_CL_CONNECTION_TYPE_MODEL_H
+#ifndef MDT_CL_LINK_VERSION_MODEL_H
+#define MDT_CL_LINK_VERSION_MODEL_H
 
 #include "mdtError.h"
-#include "mdtClConnectionTypeData.h"
+#include "mdtClLinkVersionData.h"
 #include <QSqlQueryModel>
 #include <QSqlDatabase>
-#include <QLocale>
 
-/*! \brief Model that acts on ConnectionType_tbl
+class QComboBox;
+
+/*! \brief Model that acts on LinkVersion_tbl
  *
  * This model is typically used with QComboBox
- *  for connection type selection.
+ *  for link version selection.
  *
- * This model will select Code_PK and a name field that depends on given locale
+ * This model will select Version_PK and Version
  *  (see constructors for details).
  *
  * Usage:
  * \code
  *   QComboBox *cb = new QComboBox;
- *   cb->setModel(new mdtClConnectionTypeModel(this));
- *   cb->setModelColumn(1);  // Will display name field
+ *   cb->setModel(new mdtClLinkVersionModel(this));
+ *   cb->setModelColumn(1);  // Will display Version field
  * \endcode
  */
-class mdtClConnectionTypeModel : public QSqlQueryModel
+class mdtClLinkVersionModel : public QSqlQueryModel
 {
  public:
 
   /*! \brief Constructor
    */
-  mdtClConnectionTypeModel(QObject *parent, QSqlDatabase db, const QLocale & locale = QLocale());
+  mdtClLinkVersionModel(QObject *parent, QSqlDatabase db);
 
   /*! \brief Constructor
    */
-  mdtClConnectionTypeModel(QSqlDatabase db, const QLocale & locale = QLocale());
+  mdtClLinkVersionModel(QSqlDatabase db);
 
-  /*! \brief Get row that contains given connection type
+  /*! \brief Get row that contains given version PK
    *
    * \return Row of searched key or -1 if not found.
    */
-  int row(mdtClConnectionType_t t);
+  int row(const mdtClLinkVersionPkData & key);
 
-  /*! \brief Get connection type key data for given row
+  /*! \brief Get version PK for given row
    *
-   * If row is < 0, a null key is returned (lastError() is not updated).
-   * If row >= 0, and a error occured, a null key is returned and lastError() contains error.
-   * If all works fine, requested key is returned.
+   * If row is < 0, a null PK is returned (lastError() is not updated).
+   * If row >= 0, and a error occured, a null PK is returned and lastError() contains error.
+   * If all works fine, requested PK is returned.
    */
-  mdtClConnectionTypeKeyData keyData(int row);
+  mdtClLinkVersionPkData versionPk(int row);
+
+  /*! \brief Get version PK of given combo box current index
+   *
+   * \sa versionPk()
+   */
+  mdtClLinkVersionPkData currentVersionPk(QComboBox *cb);
 
   /*! \brief Get last error
    */
@@ -77,7 +84,7 @@ class mdtClConnectionTypeModel : public QSqlQueryModel
 
  private:
 
-  Q_DISABLE_COPY(mdtClConnectionTypeModel);
+  Q_DISABLE_COPY(mdtClLinkVersionModel);
 
   /*! \brief Check if QSqlQueryModel is in error (and store if true)
    */
@@ -86,4 +93,4 @@ class mdtClConnectionTypeModel : public QSqlQueryModel
   mdtError pvLastError;
 };
 
-#endif // #ifndef MDT_CL_CONNECTION_TYPE_MODEL_H
+#endif // #ifndef MDT_CL_LINK_VERSION_MODEL_H

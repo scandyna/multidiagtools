@@ -29,36 +29,6 @@ mdtClArticleConnectionSelectionDialog::mdtClArticleConnectionSelectionDialog(QWi
   setWindowTitle(tr("Article connection selection"));
 }
 
-// "SELECT Id_PK, ArticleConnectorName, ArticleContactName, IoType, FunctionEN, FunctionFR, FunctionDE, FunctionIT \
-//                                      FROM ArticleConnection_view WHERE Article_Id_FK = " + articleId.toString()
-// 
-//   sql = "SELECT * FROM ArticleConnection_tbl ";
-//   sql += "WHERE ArticleConnector_Id_FK = " + articleConnectorId.toString();
-//   sql += " AND Id_PK NOT IN ("\
-//          "  SELECT ArticleConnection_Id_FK"\
-//          "  FROM UnitConnection_tbl"\
-//          "  WHERE Unit_Id_FK = " + unitId.toString();
-//   sql += "  AND ArticleConnection_Id_FK IS NOT NULL)";
-// 
-// 
-//   sql = "SELECT * FROM ArticleConnection_tbl ";
-//   sql += "WHERE Article_Id_FK = " + articleId.toString();
-//   sql += " AND ArticleConnector_Id_FK IS NULL ";
-//   sql += " AND Id_PK NOT IN ("\
-//          "  SELECT ArticleConnection_Id_FK"\
-//          "  FROM UnitConnection_tbl"\
-//          "  WHERE Unit_Id_FK = " + unitId.toString();
-//   sql += "  AND ArticleConnection_Id_FK IS NOT NULL)";
-// 
-// 
-//   sql = "SELECT * FROM ArticleConnection_view ";
-//   sql += "WHERE Article_Id_FK = " + articleId.toString();
-//   sql += " AND Id_PK NOT IN ("\
-//          "  SELECT ArticleConnection_Id_FK"\
-//          "  FROM UnitConnection_tbl"\
-//          "  WHERE Unit_Id_FK = " + unitId.toString();
-//   sql += "  AND ArticleConnection_Id_FK IS NOT NULL)";
-
 bool mdtClArticleConnectionSelectionDialog::select(QSqlDatabase db, const QVariant & articleId, ArticleConnectorMembership_t acms, ArticleLinkUsage_t alu, bool allowMultiSelection)
 {
   QString sql;

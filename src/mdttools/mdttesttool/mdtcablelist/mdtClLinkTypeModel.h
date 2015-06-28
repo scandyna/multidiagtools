@@ -67,7 +67,7 @@ class mdtClLinkTypeModel : public QSqlQueryModel
    */
   int row(const mdtClLinkTypeKeyData & key);
 
-  /*! \brief Get connection type key data for given row
+  /*! \brief Get link type key data for given row
    *
    * If row is < 0, a null key is returned (lastError() is not updated).
    * If row >= 0, and a error occured, a null key is returned and lastError() contains error.

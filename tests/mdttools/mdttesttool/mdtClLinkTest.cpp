@@ -19,6 +19,13 @@
  **
  ****************************************************************************/
 #include "mdtClLinkTest.h"
+#include "mdtClLinkKeyData.h"
+#include "mdtClLinkData.h"
+#include "mdtClLinkVersionKeyData.h"
+#include "mdtClLinkVersionData.h"
+#include "mdtClLinkVersion.h"
+#include "mdtClLinkVersionModel.h"
+#include "mdtClLink.h"
 #include "mdtClLinkTypeData.h"
 #include "mdtClLinkTypeModel.h"
 #include "mdtClLinkDirectionData.h"
@@ -262,7 +269,161 @@ void mdtClLinkTest::linkDirectionModelTest()
   m.setLinkType(mdtClLinkType_t::Undefined);
   QCOMPARE(m.rowCount(), 0);
   QVERIFY(m.keyData(0).isNull());
+}
 
+void mdtClLinkTest::linkVersionDataTest()
+{
+  mdtClLinkVersionPkData pk;
+  mdtClLinkVersionData data;
+
+  /*
+   * Link version PK data test
+   */
+  // Initial state
+  QVERIFY(pk.isNull());
+  // Set
+  pk.versionPk = 1000;
+  QVERIFY(!pk.isNull());
+  // Clear
+  pk.clear();
+  QVERIFY(pk.versionPk.isNull());
+  QVERIFY(pk.isNull());
+  /*
+   * Link version data test
+   */
+  // Initial state
+  QVERIFY(data.isNull());
+  QCOMPARE(data.version(), 0.0);
+  // Set from PK - int
+  data.setVersionPk(1000);
+  QVERIFY(!data.isNull());
+  QCOMPARE(data.versionPk(), 1000);
+  QCOMPARE(data.version(), 1.0);
+  // Clear
+  data.clear();
+  QCOMPARE(data.versionPk(), 0);
+  QCOMPARE(data.version(), 0.0);
+  QVERIFY(data.isNull());
+  // Set from PK - QVariant
+  data.setVersionPk(QVariant(1100));
+  QVERIFY(!data.isNull());
+  QCOMPARE(data.versionPk(), 1100);
+  QCOMPARE(data.version(), 1.1);
+  // Set from PK - null QVariant
+  data.setVersionPk(QVariant());
+  QVERIFY(data.isNull());
+  QCOMPARE(data.versionPk(), 0);
+  QCOMPARE(data.version(), 0.0);
+  // Set version
+  data.setVersion(1.2);
+  QVERIFY(!data.isNull());
+  QCOMPARE(data.versionPk(), 1200);
+  QCOMPARE(data.version(), 1.2);
+  // Clear
+  data.clear();
+  QCOMPARE(data.versionPk(), 0);
+  QCOMPARE(data.version(), 0.0);
+  QVERIFY(data.isNull());
+}
+
+void mdtClLinkTest::linkVersionAddGetRemoveTest()
+{
+  mdtClLinkVersion lv(pvDatabaseManager.database());
+  mdtClLinkVersionData data;
+  mdtClLinkVersionPkData key;
+  bool ok;
+
+  // Initial state
+  QVERIFY(mdtClLinkVersion::currentVersion().isNull());
+  QVERIFY(lv.currentVersion().isNull());
+  // Check get last version
+  data = lv.getLastVersionData(ok);
+  QVERIFY(ok);
+  QVERIFY(data.isNull());
+  // Add version 1.0
+  data.setVersion(1.0);
+  QVERIFY(lv.addVersion(data));
+  // Get back and check
+  key.versionPk.setValue(1000);
+  data = lv.getVersionData(key, ok);
+  QVERIFY(ok);
+  QVERIFY(!data.isNull());
+  QCOMPARE(data.versionPk(), 1000);
+  QCOMPARE(data.version(), 1.0);
+  // Check get last version
+  data = lv.getLastVersionData(ok);
+  QVERIFY(ok);
+  QVERIFY(!data.isNull());
+  QCOMPARE(data.versionPk(), 1000);
+  QCOMPARE(data.version(), 1.0);
+  // Check setting current version
+  QVERIFY(lv.setCurrentVersion(1.0));
+  QCOMPARE(lv.currentVersion().version(), 1.0);
+  QCOMPARE(mdtClLinkVersion::currentVersion().version(), 1.0);
+  // Remove version 1.0
+  QVERIFY(lv.removeVersion(key));
+  data = lv.getVersionData(key, ok);
+  QVERIFY(ok);
+  QVERIFY(data.isNull());
+  // After removing version that is current version, currentVersion() must retrun a null version
+  QVERIFY(mdtClLinkVersion::currentVersion().isNull());
+  QVERIFY(lv.currentVersion().isNull());
+  // Check that setting a non existing version fails
+  QVERIFY(!lv.setCurrentVersion(1.0));
+  QVERIFY(lv.currentVersion().isNull());
+  
+}
+
+void mdtClLinkTest::linkVersionModelTest()
+{
+  mdtCableListTestScenario scenario(pvDatabaseManager.database());
+  mdtClLinkVersionPkData pk;
+
+  // Populate versions
+  scenario.createTestLinkVersions();
+
+  mdtClLinkVersionModel m(pvDatabaseManager.database());
+  // Initial state
+  QCOMPARE(m.rowCount(), 4);
+  // Check row of version
+  pk.versionPk.setValue(500);
+  QCOMPARE(m.row(pk), 0);
+  pk.versionPk.setValue(1000);
+  QCOMPARE(m.row(pk), 1);
+  pk.versionPk.setValue(1500);
+  QCOMPARE(m.row(pk), 2);
+  pk.versionPk.setValue(2000);
+  QCOMPARE(m.row(pk), 3);
+  pk.versionPk.setValue(5000000);
+  QCOMPARE(m.row(pk), -1);
+  // Check PK of row
+  QCOMPARE(m.versionPk(0).versionPk.value(), 500);
+  QCOMPARE(m.versionPk(1).versionPk.value(), 1000);
+  QCOMPARE(m.versionPk(2).versionPk.value(), 1500);
+  QCOMPARE(m.versionPk(3).versionPk.value(), 2000);
+  QVERIFY(m.versionPk(500).isNull());
+
+}
+
+void mdtClLinkTest::linkDataTest()
+{
+  mdtClLinkPkData pk;
+
+  /*
+   * Link PK data test
+   */
+  // Initial state
+  QVERIFY(pk.isNull());
+  // Set
+  pk.connectionStartId = 1;
+  QVERIFY(pk.isNull());
+  pk.connectionEndId = 2;
+  QVERIFY(!pk.isNull());
+  // Clear
+  pk.clear();
+  QVERIFY(pk.connectionStartId.isNull());
+  QVERIFY(pk.connectionEndId.isNull());
+  QVERIFY(pk.isNull());
 }
 
 

@@ -18,15 +18,15 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CL_LINK_TEST_H
-#define MDT_CL_LINK_TEST_H
+#ifndef MDT_CL_MODIFICATION_TEST_H
+#define MDT_CL_MODIFICATION_TEST_H
 
 #include "mdtTest.h"
 #include "mdtSqlDatabaseManager.h"
 #include <QMessageBox>
 #include <QFileInfo>
 
-class mdtClLinkTest : public mdtTest
+class mdtClModificationTest : public mdtTest
 {
  Q_OBJECT
 
@@ -41,17 +41,8 @@ class mdtClLinkTest : public mdtTest
   void initTestCase();
   void cleanupTestCase();
 
-  void linkTypeDataTest();
-  void linkTypeModelTest();
-
-  void linkDirectionDataTest();
-  void linkDirectionModelTest();
-
-  void linkVersionDataTest();
-  void linkVersionAddGetRemoveTest();
-  void linkVersionModelTest();
-
-  void linkDataTest();
+  void modificationDataTest();
+  void modificationModelTest();
 
  private:
 
@@ -62,4 +53,4 @@ class mdtClLinkTest : public mdtTest
   QFileInfo pvDbFileInfo;
 };
 
-#endif // #ifndef MDT_CL_LINK_TEST_H
+#endif // #ifndef MDT_CL_MODIFICATION_TEST_H

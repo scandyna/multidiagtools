@@ -42,16 +42,16 @@
         <widget class="QComboBox" name="cbModification"/>
        </item>
        <item row="2" column="0">
-        <widget class="QLabel" name="lbSinceVersion">
+        <widget class="QLabel" name="lbLinkVersion">
          <property name="text">
-          <string>Since version:</string>
+          <string>Version:</string>
          </property>
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QComboBox" name="cbSinceVersion">
+        <widget class="QComboBox" name="cbLinkVersion">
          <property name="editable">
-          <bool>true</bool>
+          <bool>false</bool>
          </property>
         </widget>
        </item>
@@ -165,7 +165,9 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset theme="edit-clear"/>
+            <iconset theme="edit-clear">
+             <normaloff/>
+            </iconset>
            </property>
           </widget>
          </item>
@@ -705,7 +707,7 @@ p, li { white-space: pre-wrap; }
  <tabstops>
   <tabstop>leIdentification</tabstop>
   <tabstop>cbModification</tabstop>
-  <tabstop>cbSinceVersion</tabstop>
+  <tabstop>cbLinkVersion</tabstop>
   <tabstop>cbLinkType</tabstop>
   <tabstop>cbLinkDirection</tabstop>
   <tabstop>deLength</tabstop>

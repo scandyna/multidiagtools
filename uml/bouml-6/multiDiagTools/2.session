@@ -1,17 +1,30 @@
-window_sizes 1280 977 268 1006 924 0
+window_sizes 1280 977 312 962 924 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 1437442 // KeyDataOverview
+  classdiagram_ref 1443970 // LinkTypeAndDirection
+    804 739 100 4 0 0
+  classdiagram_ref 772866 // mdtClLink
+    804 739 100 4 0 0
+  classdiagram_ref 1450626 // LinkKeyDataOverView
     1006 924 90 18 0 0
+  active  classdiagram_ref 1457154 // ModificationData
+    962 924 100 4 0 0
+  classdiagram_ref 1457282 // LinkVersionData
+    120 106 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 1430914 // UnitConnectorAndConnection
+selected operation_ref 2656258 // clear
 open
   classview_ref 755202 // ConnectorAndConnection
-  classview_ref 497026 // Article
-  classdiagram_ref 1046530 // ConnectionData
-  class_ref 1673218 // mdtClVehicleTypeLinkKeyData
-  class_ref 1120386 // mdtClVehicleTypeLinkData
   class_ref 1639042 // mdtClUnitLinkKeyData
+  class_ref 1679746 // mdtClLinkVersionPkData
+  attribute_ref 1778050 // pvPk
+  attribute_ref 1777922 // pvVersion
+  operation_ref 2655362 // setPk
+  operation_ref 2655490 // pk
+  operation_ref 2654722 // setVersionPk
+  operation_ref 2654850 // setVersionPk
+  operation_ref 2656386 // setModification
+  operation_ref 2656258 // clear
 end
 end

@@ -189,6 +189,20 @@ class mdtCableListTestScenario
   void removeTestUnitConnectors();
 
   /*
+   * Create link versions (in LinkVersion_tbl)  for tests:
+   *
+   *  - Version_PK : 500 , Version: 0.5
+   *  - Version_PK : 1000 , Version: 1.0
+   *  - Version_PK : 1500 , Version: 1.5
+   *  - Version_PK : 2000 , Version: 2.0
+   */
+  void createTestLinkVersions();
+  /*
+   * Remove created link versions
+   */
+  void removeTestLinkVersions();
+
+  /*
    * Create links for tests:
    *
    *  - UnitConnectionStart_Id_FK : 10000 , UnitConnectionEnd_Id_FK : 10001 , Identification : Link 10000<->10001 , LinkType_Code_FK : CABLELINK , LinkDirection_Code_FK : BID

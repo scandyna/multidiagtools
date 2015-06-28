@@ -32,6 +32,10 @@
 class QWidget;
 class QSqlQueryModel;
 class QComboBox;
+class mdtClModificationModel;
+class mdtClLinkVersionModel;
+class mdtClLinkTypeModel;
+class mdtClLinkDirectionModel;
 
 /*! \brief Dialog that let the user edit a unit link
  */
@@ -214,7 +218,7 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
 
   /*! \brief Update since version combobox
    */
-  void updateSinceVersionCombobox(const QVariant &data);
+//   void updateSinceVersionCombobox(const QVariant &data);
 
   /*! \brief Update wire data
    */
@@ -269,8 +273,6 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
   QVariant pvEndUnitId;
   QList<QVariant> pvEndUnitSelectionIdList;
   QList<QVariant> pvEndConnectorLimitIdList;    // If not empty, end connection selection will be limited to these connectors
-  QSqlQueryModel *pvLinkTypeModel;
-  QSqlQueryModel *pvLinkDirectionModel;
   mdtClLinkData pvLinkData;
   QSqlQueryModel *pvStartVehicleTypesModel;
   QList<QVariant> pvStartVehicleTypesIdList;
@@ -279,6 +281,10 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
   QList<QVariant> pvWorkingOnVehicleTypeIdList;
   bool pvVehicleTypesEdited;
   bool pvUnitConnectionChanged;
+  mdtClModificationModel *pvModificationModel;
+  mdtClLinkVersionModel *pvLinkVersionModel;
+  mdtClLinkTypeModel *pvLinkTypeModel;
+  mdtClLinkDirectionModel *pvLinkDirectionModel;
 };
 
 #endif // #ifndef MDT_CL_UNIT_LINK_DIALOG_H

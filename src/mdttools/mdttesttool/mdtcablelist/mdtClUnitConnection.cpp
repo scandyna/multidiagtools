@@ -253,11 +253,6 @@ mdtClUnitConnectorData mdtClUnitConnection::getUnitConnectorData(mdtClUnitConnec
   QList<QSqlRecord> dataList;
   QString sql;
 
-//   sql = "SELECT UCNR.*,"\
-//         " ACNR.Article_Id_FK AS ACNR_Article_Id_FK,"\
-//         " ACNR.Connector_Id_FK AS ACNR_Connector_Id_FK\n"\
-//         "FROM UnitConnector_tbl UCNR\n"\
-//         " LEFT JOIN ArticleConnector_tbl ACNR ON ACNR.Id_PK = UCNR.ArticleConnector_Id_FK\n";
   sql = baseSqlForUnitConnector();
   sql += " WHERE UCNR.Id_PK = " + key.id.toString();
   dataList = getDataList<QSqlRecord>(sql, ok);

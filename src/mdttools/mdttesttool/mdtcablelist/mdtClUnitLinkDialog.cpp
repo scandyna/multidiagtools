@@ -23,6 +23,10 @@
 #include "mdtSqlTableSelection.h"
 #include "mdtClUnit.h"
 #include "mdtClUnitConnectorData.h"
+#include "mdtClModificationModel.h"
+#include "mdtClLinkVersionModel.h"
+#include "mdtClLinkTypeModel.h"
+#include "mdtClLinkDirectionModel.h"
 #include "mdtClLink.h"
 #include "mdtError.h"
 #include <QWidget>
@@ -45,16 +49,26 @@ mdtClUnitLinkDialog::mdtClUnitLinkDialog(QWidget *parent, QSqlDatabase db)
   pvLinkData.setup(pvDatabase);
   setupUi(this);
   setWindowTitle(tr("Unit link edition"));
+  // Setup Modification combo box
+  pvModificationModel = new mdtClModificationModel(this, db);
+  cbModification->setModel(pvModificationModel);
+  cbModification->setModelColumn(1);
+  // Setup link version combo box
+  pvLinkVersionModel = new mdtClLinkVersionModel(this, db);
+  cbLinkVersion->setModel(pvLinkVersionModel);
+  cbLinkVersion->setModelColumn(1);
   // Setup link type
-  pvLinkTypeModel = new QSqlQueryModel(this);
-  pvLinkTypeModel->setQuery("SELECT Code_PK, NameEN, ValueUnit FROM LinkType_tbl ORDER BY NameEN", pvDatabase);
+  ///pvLinkTypeModel = new QSqlQueryModel(this);
+  ///pvLinkTypeModel->setQuery("SELECT Code_PK, NameEN, ValueUnit FROM LinkType_tbl ORDER BY NameEN", pvDatabase);
+  pvLinkTypeModel = new mdtClLinkTypeModel(this, db);
   cbLinkType->setModel(pvLinkTypeModel);
   cbLinkType->setModelColumn(1);
   cbLinkType->setCurrentIndex(-1);
   connect(cbLinkType, SIGNAL(currentIndexChanged(int)), this, SLOT(onCbLinkTypeCurrentIndexChanged(int)));
   // Setup link direction
-  pvLinkDirectionModel = new QSqlQueryModel(this);
-  pvLinkDirectionModel->setQuery("SELECT Code_PK, NameEN FROM LinkDirection_tbl", pvDatabase);
+  ///pvLinkDirectionModel = new QSqlQueryModel(this);
+  ///pvLinkDirectionModel->setQuery("SELECT Code_PK, NameEN FROM LinkDirection_tbl", pvDatabase);
+  pvLinkDirectionModel = new mdtClLinkDirectionModel(this, db);
   cbLinkDirection->setModel(pvLinkDirectionModel);
   cbLinkDirection->setModelColumn(1);
   connect(cbLinkDirection, SIGNAL(currentIndexChanged(int)), this, SLOT(onCbLinkDirectionCurrentIndexChanged(int)));
@@ -63,7 +77,7 @@ mdtClUnitLinkDialog::mdtClUnitLinkDialog(QWidget *parent, QSqlDatabase db)
   connect(pbClearWire, SIGNAL(clicked()), this, SLOT(clearWire()));
   connect(deLength, SIGNAL(valueChanged(double, bool)), this, SLOT(setLinkResistance(double, bool)));
   // Setup modification combobox
-  cbModification->addItem("new", QVariant("new"));
+  ///cbModification->addItem("new", QVariant("new"));
   // Setup since version combobox
   
   
@@ -282,7 +296,7 @@ void mdtClUnitLinkDialog::setLinkData(mdtClLinkData &data)
   // Update common data
   leIdentification->setText(data.value("Identification").toString());
   updateModificationCombobox(data.value("Modification"));
-  updateSinceVersionCombobox(data.value("SinceVersion"));
+  ///updateSinceVersionCombobox(data.value("SinceVersion"));
   setLinkTypeCode(data.value("LinkType_Code_FK"));
   setLinkDirectionCode(data.value("LinkDirection_Code_FK"));
   deResistance->setValue(data.value("Resistance"));
@@ -315,51 +329,84 @@ mdtClLinkData mdtClUnitLinkDialog::linkData()
   return pvLinkData;
 }
 
+// void mdtClUnitLinkDialog::onCbLinkTypeCurrentIndexChanged(int row)
+// {
+//   QModelIndex index;
+//   QVariant data;
+// 
+//   if(row < 0){
+//     ///lbUnit->setText("");
+//     return;
+//   }
+//   // We must update available directions regarding link type
+//   index = pvLinkTypeModel->index(row, 0);
+//   data = pvLinkTypeModel->data(index);
+//   /// \todo Update whenn Voltage field is added
+//   if(data == QVariant("DIODE")){
+//     pvLinkDirectionModel->setQuery("SELECT Code_PK, NameEN, PictureAscii FROM LinkDirection_tbl WHERE Code_PK <> 'BID'", pvDatabase);
+//     cbLinkDirection->setEnabled(true);
+//     ///sbValue->setValue(0.7);
+//   }else{
+//     pvLinkDirectionModel->setQuery("SELECT Code_PK, NameEN, PictureAscii FROM LinkDirection_tbl WHERE Code_PK = 'BID'", pvDatabase);
+//     cbLinkDirection->setEnabled(false);
+//     ///sbValue->setValue(0.0);
+//   }
+//   // Update displayed unit (V, Ohm, ...)
+//   index = pvLinkTypeModel->index(row, 2);
+//   data = pvLinkTypeModel->data(index);
+//   ///lbUnit->setText("[" + data.toString() + "]");
+//   // Update link data
+//   pvLinkData.setValue("LinkType_Code_FK", linkTypeCode());
+// }
+
 void mdtClUnitLinkDialog::onCbLinkTypeCurrentIndexChanged(int row)
 {
-  QModelIndex index;
-  QVariant data;
-
   if(row < 0){
     ///lbUnit->setText("");
     return;
   }
   // We must update available directions regarding link type
-  index = pvLinkTypeModel->index(row, 0);
-  data = pvLinkTypeModel->data(index);
-  /// \todo Update whenn Voltage field is added
-  if(data == QVariant("DIODE")){
-    pvLinkDirectionModel->setQuery("SELECT Code_PK, NameEN, PictureAscii FROM LinkDirection_tbl WHERE Code_PK <> 'BID'", pvDatabase);
+  auto key = pvLinkTypeModel->keyData(row);
+  pvLinkDirectionModel->setLinkType(key.type());
+  if(pvLinkDirectionModel->rowCount() > 1){
     cbLinkDirection->setEnabled(true);
-    ///sbValue->setValue(0.7);
   }else{
-    pvLinkDirectionModel->setQuery("SELECT Code_PK, NameEN, PictureAscii FROM LinkDirection_tbl WHERE Code_PK = 'BID'", pvDatabase);
     cbLinkDirection->setEnabled(false);
-    ///sbValue->setValue(0.0);
   }
   // Update displayed unit (V, Ohm, ...)
-  index = pvLinkTypeModel->index(row, 2);
-  data = pvLinkTypeModel->data(index);
-  ///lbUnit->setText("[" + data.toString() + "]");
+  ///lbUnit->setText("[" + pvLinkTypeModel->unit(row) + "]");
   // Update link data
-  pvLinkData.setValue("LinkType_Code_FK", linkTypeCode());
+  ///pvLinkData.setLinkType(key.type());
 }
+
+// void mdtClUnitLinkDialog::onCbLinkDirectionCurrentIndexChanged(int row)
+// {
+//   QModelIndex index;
+//   QVariant data;
+// 
+//   if(row < 0){
+//     lbLinkDirectionAsciiPicture->setText("");
+//     return;
+//   }
+//   // Update the ASCII picture
+//   index = pvLinkDirectionModel->index(row, 2);
+//   data = pvLinkDirectionModel->data(index);
+//   lbLinkDirectionAsciiPicture->setText(data.toString());
+//   // Update link data
+//   pvLinkData.setValue("LinkDirection_Code_FK", linkDirectionCode());
+// }
 
 void mdtClUnitLinkDialog::onCbLinkDirectionCurrentIndexChanged(int row)
 {
-  QModelIndex index;
-  QVariant data;
-
   if(row < 0){
     lbLinkDirectionAsciiPicture->setText("");
     return;
   }
+  auto key = pvLinkDirectionModel->keyData(row);
   // Update the ASCII picture
-  index = pvLinkDirectionModel->index(row, 2);
-  data = pvLinkDirectionModel->data(index);
-  lbLinkDirectionAsciiPicture->setText(data.toString());
+  lbLinkDirectionAsciiPicture->setText(pvLinkDirectionModel->pictureAscii(row));
   // Update link data
-  pvLinkData.setValue("LinkDirection_Code_FK", linkDirectionCode());
+  ///pvLinkData.setLinkDirection(key.direction());
 }
 
 void mdtClUnitLinkDialog::selectWire()
@@ -777,7 +824,7 @@ void mdtClUnitLinkDialog::accept()
   // Most of data are dynamically stored during edition, but some are to do here
   pvLinkData.setValue("Identification", leIdentification->text());
   pvLinkData.setValue("Modification", cbModification->currentText());
-  pvLinkData.setValue("SinceVersion", cbSinceVersion->currentText());
+  ///pvLinkData.setValue("SinceVersion", cbSinceVersion->currentText());
   pvLinkData.setValue("Resistance", deResistance->value());
   pvLinkData.setValue("Length", deLength->value());
   /*
@@ -816,19 +863,19 @@ void mdtClUnitLinkDialog::updateModificationCombobox(const QVariant &data)
   cbModification->setCurrentIndex(-1);
 }
 
-void mdtClUnitLinkDialog::updateSinceVersionCombobox(const QVariant &data)
-{
-  int row;
-
-  for(row = 0; row < cbSinceVersion->count(); ++row){
-    if(cbSinceVersion->itemData(row) == data){
-      cbSinceVersion->setCurrentIndex(row);
-      return;
-    }
-  }
-  // Data not found
-  cbSinceVersion->setCurrentIndex(-1);
-}
+// void mdtClUnitLinkDialog::updateSinceVersionCombobox(const QVariant &data)
+// {
+//   int row;
+// 
+//   for(row = 0; row < cbSinceVersion->count(); ++row){
+//     if(cbSinceVersion->itemData(row) == data){
+//       cbSinceVersion->setCurrentIndex(row);
+//       return;
+//     }
+//   }
+//   // Data not found
+//   cbSinceVersion->setCurrentIndex(-1);
+// }
 
 void mdtClUnitLinkDialog::updateWire(const QVariant& wireId)
 {

@@ -18,48 +18,45 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CL_LINK_TEST_H
-#define MDT_CL_LINK_TEST_H
+#ifndef MDT_CL_LINK_KEY_DATA_H
+#define MDT_CL_LINK_KEY_DATA_H
 
-#include "mdtTest.h"
-#include "mdtSqlDatabaseManager.h"
-#include <QMessageBox>
-#include <QFileInfo>
+#include <QVariant>
 
-class mdtClLinkTest : public mdtTest
+/*! \brief Link primary key data
+ *
+ * Refers to Link_tbl
+ */
+struct mdtClLinkPkData
 {
- Q_OBJECT
-
- private slots:
-
-  /*
-   * Will create database schema (see createDatabaseSchema() )
-   * No data is inserted in tables by this method.
-   * Each test also has a empty schema at startup,
-   *  and must assure that they finish with a empty schema at end.
+  /*! \brief Start connection ID (UnitConnectionStart_Id_FK)
    */
-  void initTestCase();
-  void cleanupTestCase();
+  QVariant connectionStartId;
 
-  void linkTypeDataTest();
-  void linkTypeModelTest();
+  /*! \brief End connection ID (UnitConnectionEnd_Id_FK)
+   */
+  QVariant connectionEndId;
 
-  void linkDirectionDataTest();
-  void linkDirectionModelTest();
+  /*! \brief Check if primary key is null
+   *
+   * Primary key is null if one of the connection ID is null
+   */
+  bool isNull() const
+  {
+    return (connectionStartId.isNull() || connectionEndId.isNull());
+  }
 
-  void linkVersionDataTest();
-  void linkVersionAddGetRemoveTest();
-  void linkVersionModelTest();
-
-  void linkDataTest();
-
- private:
-
-  // Create test database schema - Will FAIL on problem
-  void createDatabaseSchema();
-
-  mdtSqlDatabaseManager pvDatabaseManager;
-  QFileInfo pvDbFileInfo;
+  /*! \brief Clear primary key
+   */
+  void clear()
+  {
+    connectionStartId.clear();
+    connectionEndId.clear();
+  }
 };
 
-#endif // #ifndef MDT_CL_LINK_TEST_H
+struct mdtClLinkKeyData
+{
+};
+
+#endif // #ifndef MDT_CL_LINK_KEY_DATA_H

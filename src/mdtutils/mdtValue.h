@@ -275,6 +275,7 @@ private:
  *  Here, the Null flag is used for that.
  */
 template<typename T>
+// requires std::integral_type<T>{}
 class mdtValueIntegral
 {
  public:

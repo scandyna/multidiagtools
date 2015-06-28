@@ -67,6 +67,9 @@ bool mdtTtDatabaseSchema::createSchemaSqlite()
   if(!createTablesSqlite()){
     return false;
   }
+  if(!createTriggers()){
+    return false;
+  }
 
   qDebug() << "Table count: " << pvDatabaseManager->database().tables(QSql::Tables).size();
   qDebug() << "Tables: " << pvDatabaseManager->database().tables(QSql::Tables);
@@ -139,11 +142,13 @@ bool mdtTtDatabaseSchema::importDatabase(const QFileInfo sourceDbFileInfo)
   // We also remove the sqlite_sequence table
   sourceTables.removeAll("sqlite_sequence");
   // We also ignore some type tables
+  sourceTables.removeAll("Modification_tbl");
   sourceTables.removeAll("ConnectionType_tbl");
   sourceTables.removeAll("LinkDirection_tbl");
   sourceTables.removeAll("LinkType_tbl");
   
   sourceTables.removeAll("TestSystemComponentType_tbl");
+  sourceTables.removeAll("TestSystemUnitType_tbl");
   
   sourceTables.removeAll("TestNodeUnitType_tbl");
   
@@ -219,6 +224,9 @@ mdtError mdtTtDatabaseSchema::lastError() const
 bool mdtTtDatabaseSchema::setupTables() 
 {
   // We must build tables list in correct order, regarding dependencies
+  if(!setupModificationTable()){
+    return false;
+  }
   if(!setupVehicleTypeTable()){
     return false;
   }
@@ -274,6 +282,12 @@ bool mdtTtDatabaseSchema::setupTables()
     return false;
   }
   if(!setupWireTable()){
+    return false;
+  }
+  if(!setupLinkModificationTable()){
+    return false;
+  }
+  if(!setupLinkVersionTable()){
     return false;
   }
   if(!setupLinkTable()){
@@ -378,6 +392,14 @@ bool mdtTtDatabaseSchema::createTablesSqlite()
     }
   }
 
+  return true;
+}
+
+bool mdtTtDatabaseSchema::createTriggers()
+{
+  if(!createOnLinkVersionAfterInsertTrigger()){
+    return false;
+  }
   return true;
 }
 
@@ -516,6 +538,9 @@ bool mdtTtDatabaseSchema::createViews()
 
 bool mdtTtDatabaseSchema::populateTables()
 {
+  if(!populateModificationTable()){
+    return false;
+  }
   if(!populateConnectionTypeTable()){
     return false;
   }
@@ -1611,6 +1636,149 @@ bool mdtTtDatabaseSchema::setupWireTable()
   pvTables.append(table);
 
   return true;
+}
+
+bool mdtTtDatabaseSchema::setupModificationTable()
+{
+  mdtSqlSchemaTable table;
+  QSqlField field;
+
+  table.setTableName("Modification_tbl", "UTF8");
+  // Code_PK
+  field.setName("Code_PK");
+  field.setType(QVariant::String);
+  field.setLength(10);
+  table.addField(field, true);
+  // SortOrder
+  field = QSqlField();
+  field.setName("SortOrder");
+  field.setType(QVariant::Int);
+  table.addField(field, false);
+  // NameEN
+  field = QSqlField();
+  field.setName("NameEN");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  table.addField(field, false);
+  // NameFR
+  field = QSqlField();
+  field.setName("NameFR");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  table.addField(field, false);
+  // NameDE
+  field = QSqlField();
+  field.setName("NameDE");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  table.addField(field, false);
+  // NameIT
+  field = QSqlField();
+  field.setName("NameIT");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  table.addField(field, false);
+
+  pvTables.append(table);
+
+  return true;
+}
+
+bool mdtTtDatabaseSchema::setupLinkModificationTable()
+{
+  mdtSqlSchemaTable table;
+  QSqlField field;
+
+  table.setTableName("LinkModification_tbl", "UTF8");
+  // UnitConnectionStart_Id_FK
+  field.setName("UnitConnectionStart_Id_FK");
+  field.setType(QVariant::Int);
+  table.addField(field, true);
+  // UnitConnectionEnd_Id_FK
+  field = QSqlField();
+  field.setName("UnitConnectionEnd_Id_FK");
+  field.setType(QVariant::Int);
+  table.addField(field, true);
+  // Version_FK
+  field = QSqlField();
+  field.setName("Version_FK");
+  field.setType(QVariant::Int);
+  table.addField(field, true);
+  // Modification_Code_FK
+  field.setName("Modification_Code_FK");
+  field.setType(QVariant::String);
+  field.setLength(10);
+  table.addField(field, true);
+  // Foreign keys
+  table.addForeignKey("LinkModification_Link_fk", "Link_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("LinkModification_Link_fk", "UnitConnectionStart_Id_FK", "UnitConnectionStart_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  if(!table.addFieldToForeignKey("LinkModification_Link_fk", "UnitConnectionEnd_Id_FK", "UnitConnectionEnd_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addForeignKey("LinkModification_LinkVersion_fk", "LinkVersion_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("LinkModification_LinkVersion_fk", "Version_FK", "Version_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addForeignKey("LinkModification_Modification_fk", "Modification_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("LinkModification_Modification_fk", "Modification_Code_FK", "Code_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+
+  pvTables.append(table);
+
+  return true;
+}
+
+bool mdtTtDatabaseSchema::setupLinkVersionTable()
+{
+  mdtSqlSchemaTable table;
+  QSqlField field;
+
+  table.setTableName("LinkVersion_tbl", "UTF8");
+  // Version_PK
+  field.setName("Version_PK");
+  field.setType(QVariant::Int);
+  table.addField(field, true);
+  // Version
+  field = QSqlField();
+  field.setName("Version");
+  field.setType(QVariant::Double);
+  table.addField(field, false);
+
+  pvTables.append(table);
+
+  return true;
+}
+
+bool mdtTtDatabaseSchema::createOnLinkVersionAfterInsertTrigger()
+{
+  QString sql;
+
+  /*
+   * When creating a new link version in LinkVersion_tbl
+   * we must add a entry in LinkModification_tbl for each link
+   * that is allready versionned
+   */
+  sql = "CREATE TRIGGER onLinkVersionAfterInsert AFTER INSERT ON LinkVersion_tbl\n"\
+        "FOR EACH ROW\n"\
+        "BEGIN\n"\
+        " INSERT INTO LinkModification_tbl (UnitConnectionStart_Id_FK, UnitConnectionEnd_Id_FK, Version_FK, Modification_Code_FK)\n"\
+        "  SELECT DISTINCT L.UnitConnectionStart_Id_FK, L.UnitConnectionEnd_Id_FK, NEW.Version_PK, 'EXISTS'\n"\
+        "   FROM Link_tbl L\n"\
+        "   LEFT JOIN LinkModification_tbl LM\n"\
+        "    ON LM.UnitConnectionStart_Id_FK = L.UnitConnectionStart_Id_FK\n"\
+        "    AND LM.UnitConnectionEnd_Id_FK = L.UnitConnectionEnd_Id_FK\n"\
+        "  WHERE LM.Version_FK = (SELECT max(Version_FK) FROM LinkModification_tbl)\n"\
+        "  AND (LM.Modification_Code_FK NOT IN ('REM') OR Modification_Code_FK IS NULL);\n"\
+        "END";
+
+  return createTrigger("onLinkVersionAfterInsert", sql);
 }
 
 bool mdtTtDatabaseSchema::setupLinkTable() 
@@ -3501,6 +3669,36 @@ bool mdtTtDatabaseSchema::setupTestItemTable()
   return true;
 }
 
+bool mdtTtDatabaseSchema::createTrigger(const QString & triggerName, const QString & sql)
+{
+  QSqlQuery query(pvDatabaseManager->database());
+  QSqlError sqlError;
+  QString dropSql;
+
+  qDebug() << "Creating trigger " << triggerName << " ...";
+  // Drop trigger
+  dropSql = "DROP TRIGGER IF EXISTS '" + triggerName +"'";
+  if(!query.exec(dropSql)){
+    sqlError = query.lastError();
+    pvLastError.setError("Unable to drop trigger '" + triggerName + "'", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtDatabaseSchema");
+    pvLastError.commit();
+    return false;
+  }
+  // Create trigger
+  if(!query.exec(sql)){
+    sqlError = query.lastError();
+    pvLastError.setError("Unable to create trigger '" + triggerName + "'", mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtTtDatabaseSchema");
+    pvLastError.commit();
+    return false;
+  }
+
+  return true;
+}
+
 bool mdtTtDatabaseSchema::createView(const QString & viewName, const QString & sql) 
 {
   QSqlQuery query(pvDatabaseManager->database());
@@ -3834,35 +4032,41 @@ bool mdtTtDatabaseSchema::createUnitConnectionView()
 
   sql = "CREATE VIEW UnitConnection_view AS\n"\
         "SELECT\n"\
-        " UnitConnection_tbl.Id_PK AS UnitConnection_Id_PK ,\n"\
-        " UnitConnection_tbl.Unit_Id_FK ,\n"\
-        " UnitConnection_tbl.UnitConnector_Id_FK ,\n"\
-        " UnitConnection_tbl.ConnectionType_Code_FK ,\n"\
-        " UnitConnection_tbl.ArticleConnection_Id_FK,\n"\
-        " UnitConnector_tbl.Name AS UnitConnectorName ,\n"\
-        " UnitConnection_tbl.UnitContactName ,\n"\
-        " UnitConnection_tbl.Resistance AS UnitConnectionResistance,\n"\
-        " UnitConnection_tbl.SchemaPage ,\n"\
-        " UnitConnection_tbl.FunctionEN AS UnitFunctionEN,\n"\
-        " UnitConnection_tbl.FunctionFR AS UnitFunctionFR,\n"\
-        " UnitConnection_tbl.FunctionDE AS UnitFunctionDE,\n"\
-        " UnitConnection_tbl.FunctionIT AS UnitFunctionIT,\n"\
-        " UnitConnection_tbl.SignalName ,\n"\
-        " UnitConnection_tbl.SwAddress ,\n"\
-        " ArticleConnector_tbl.Name AS ArticleConnectorName ,\n"\
-        " ArticleConnection_tbl.ArticleContactName ,\n"\
-        " ArticleConnection_tbl.IoType ,\n"\
-        " ArticleConnection_tbl.FunctionEN AS ArticleFunctionEN,\n"\
-        " ArticleConnection_tbl.FunctionFR AS ArticleFunctionFR,\n"\
-        " ArticleConnection_tbl.FunctionDE AS ArticleFunctionDE,\n"\
-        " ArticleConnection_tbl.FunctionIT AS ArticleFunctionIT\n"\
-        "FROM UnitConnection_tbl\n"\
-        " LEFT JOIN UnitConnector_tbl\n"\
-        "  ON UnitConnector_tbl.Id_PK = UnitConnection_tbl.UnitConnector_Id_FK\n"\
-        " LEFT JOIN ArticleConnector_tbl\n"\
-        "  ON UnitConnector_tbl.ArticleConnector_Id_FK = ArticleConnector_tbl.Id_PK\n"\
-        " LEFT JOIN ArticleConnection_tbl\n"\
-        "  ON UnitConnection_tbl.ArticleConnection_Id_FK = ArticleConnection_tbl.Id_PK\n";
+        " UCNR.Name AS UnitConnectorName ,\n"\
+        " UCNX.Id_PK,\n"\
+        " UCNX.Unit_Id_FK ,\n"\
+        " UCNX.UnitConnector_Id_FK ,\n"\
+        " UCNX.ConnectionType_Code_FK ,\n"\
+        " UCNX.ArticleConnection_Id_FK,\n"\
+        " UCNX.UnitContactName ,\n"\
+        " CT.NameEN AS ConnectionTypeEN,\n"\
+        " CT.NameFR AS ConnectionTypeFR,\n"\
+        " CT.NameDE AS ConnectionTypeDE,\n"\
+        " CT.NameIT AS ConnectionTypeIT,\n"\
+        " UCNX.Resistance AS UnitConnectionResistance,\n"\
+        " UCNX.SchemaPage ,\n"\
+        " UCNX.FunctionEN AS UnitFunctionEN,\n"\
+        " UCNX.FunctionFR AS UnitFunctionFR,\n"\
+        " UCNX.FunctionDE AS UnitFunctionDE,\n"\
+        " UCNX.FunctionIT AS UnitFunctionIT,\n"\
+        " UCNX.SignalName ,\n"\
+        " UCNX.SwAddress ,\n"\
+        " ACNR.Name AS ArticleConnectorName ,\n"\
+        " ACNX.ArticleContactName ,\n"\
+        " ACNX.IoType ,\n"\
+        " ACNX.FunctionEN AS ArticleFunctionEN,\n"\
+        " ACNX.FunctionFR AS ArticleFunctionFR,\n"\
+        " ACNX.FunctionDE AS ArticleFunctionDE,\n"\
+        " ACNX.FunctionIT AS ArticleFunctionIT\n"\
+        "FROM UnitConnection_tbl UCNX\n"\
+        " LEFT JOIN UnitConnector_tbl UCNR\n"\
+        "  ON UCNR.Id_PK = UCNX.UnitConnector_Id_FK\n"\
+        " LEFT JOIN ArticleConnector_tbl ACNR\n"\
+        "  ON UCNR.ArticleConnector_Id_FK = ACNR.Id_PK\n"\
+        " LEFT JOIN ArticleConnection_tbl ACNX\n"\
+        "  ON UCNX.ArticleConnection_Id_FK = ACNX.Id_PK\n"\
+        " JOIN ConnectionType_tbl CT\n"\
+        "  ON CT.Code_PK = UCNX.ConnectionType_Code_FK";
 
   return createView("UnitConnection_view", sql);
 }
@@ -5173,6 +5377,45 @@ QString mdtTtDatabaseSchema::sqlForDataEdition(const QString & tableName, const 
   sql += " WHERE " + fields.at(0) + " = " + dp + pkData.toString() + dp;
 
   return sql;
+}
+
+bool mdtTtDatabaseSchema::populateModificationTable()
+{
+  QStringList fields;
+  QList<QVariant> data;
+
+  fields << "Code_PK" << "SortOrder" << "NameEN" << "NameDE" << "NameFR" << "NameIT";
+  // NEW
+  data << "NEW" << 1 << "New" << "Neu" << "Nouveau" << "Nuovo";
+  if(!insertDataIntoTable("Modification_tbl", fields, data)){
+    return false;
+  }
+  // REM
+  data.clear();
+  data << "REM" << 1 << "Remove" << "Entfernen" << "Supprimer" << "Rimuovere";
+  if(!insertDataIntoTable("Modification_tbl", fields, data)){
+    return false;
+  }
+  // MODNEW
+  data.clear();
+  data << "MODNEW" << 1 << "Modifiy (+)" << "Ändern (+)" << "Modifier (+)" << "Modificare (+)";
+  if(!insertDataIntoTable("Modification_tbl", fields, data)){
+    return false;
+  }
+  // MODREM
+  data.clear();
+  data << "MODREM" << 2 << "Modifiy (-)" << "Ändern (-)" << "Modifier (-)" << "Modificare (-)";
+  if(!insertDataIntoTable("Modification_tbl", fields, data)){
+    return false;
+  }
+  // EXISTS
+  data.clear();
+  data << "EXISTS" << 1 << "Existing" << "Bestehend" << "Existant" << "Esistente";
+  if(!insertDataIntoTable("Modification_tbl", fields, data)){
+    return false;
+  }
+
+  return true;
 }
 
 bool mdtTtDatabaseSchema::populateConnectionTypeTable()

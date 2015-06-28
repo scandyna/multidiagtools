@@ -22,6 +22,7 @@
 #include "mdtSqlWindow.h"
 #include "mdtSqlForm.h"
 #include "mdtSqlDatabaseManager.h"
+#include "mdtClLinkVersion.h"
 #include "mdtTtDatabaseSchema.h"
 #include "mdtClVehicleTypeEditor.h"
 #include "mdtClConnectorEditor.h"
@@ -1361,6 +1362,8 @@ void mdtClMainWindow::connectActions()
   // Link beam
   connect(actViewLinkBeam, SIGNAL(triggered()), this, SLOT(viewLinkBeam()));
   connect(actEditLinkBeam, SIGNAL(triggered()), this, SLOT(editLinkBeam()));
+  // Link version
+  connect(actCreateLinkVersion, SIGNAL(triggered()), mdtClApplicationWidgets::instancePtr(), SLOT(createLinkVersion()));
 
   // Test connection cable
   connect(actViewTestConnectionCable, SIGNAL(triggered()), this, SLOT(viewTestConnectionCable()));

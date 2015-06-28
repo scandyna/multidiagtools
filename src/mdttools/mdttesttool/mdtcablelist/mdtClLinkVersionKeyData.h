@@ -18,48 +18,34 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CL_LINK_TEST_H
-#define MDT_CL_LINK_TEST_H
+#ifndef MDT_CL_LINK_VERSION_KEY_DATA_H
+#define MDT_CL_LINK_VERSION_KEY_DATA_H
 
-#include "mdtTest.h"
-#include "mdtSqlDatabaseManager.h"
-#include <QMessageBox>
-#include <QFileInfo>
+#include "mdtValue.h"
 
-class mdtClLinkTest : public mdtTest
+/*! \brief Link version primary key data
+ *
+ * Refers to LinkVersion_tbl
+ */
+struct mdtClLinkVersionPkData
 {
- Q_OBJECT
-
- private slots:
-
-  /*
-   * Will create database schema (see createDatabaseSchema() )
-   * No data is inserted in tables by this method.
-   * Each test also has a empty schema at startup,
-   *  and must assure that they finish with a empty schema at end.
+  /*! \brief Version_PK
    */
-  void initTestCase();
-  void cleanupTestCase();
+  mdtValueInt versionPk;
 
-  void linkTypeDataTest();
-  void linkTypeModelTest();
+  /*! \brief Check if PK is null
+   */
+  bool isNull() const
+  {
+    return versionPk.isNull();
+  }
 
-  void linkDirectionDataTest();
-  void linkDirectionModelTest();
-
-  void linkVersionDataTest();
-  void linkVersionAddGetRemoveTest();
-  void linkVersionModelTest();
-
-  void linkDataTest();
-
- private:
-
-  // Create test database schema - Will FAIL on problem
-  void createDatabaseSchema();
-
-  mdtSqlDatabaseManager pvDatabaseManager;
-  QFileInfo pvDbFileInfo;
+  /*! \brief Clear PK
+   */
+  void clear()
+  {
+    versionPk.clear();
+  }
 };
 
-#endif // #ifndef MDT_CL_LINK_TEST_H
+#endif // #ifndef MDT_CL_LINK_VERSION_KEY_DATA_H

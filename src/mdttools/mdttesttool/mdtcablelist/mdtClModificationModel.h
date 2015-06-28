@@ -18,19 +18,22 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CL_CONNECTION_TYPE_MODEL_H
-#define MDT_CL_CONNECTION_TYPE_MODEL_H
+#ifndef MDT_CL_MODIFICATION_MODEL_H
+#define MDT_CL_MODIFICATION_MODEL_H
 
 #include "mdtError.h"
-#include "mdtClConnectionTypeData.h"
+#include "mdtClModificationKeyData.h"
 #include <QSqlQueryModel>
 #include <QSqlDatabase>
 #include <QLocale>
+#include <QString>
 
-/*! \brief Model that acts on ConnectionType_tbl
+class QComboBox;
+
+/*! \brief Model that acts on Modification_tbl
  *
  * This model is typically used with QComboBox
- *  for connection type selection.
+ *  for modification selection.
  *
  * This model will select Code_PK and a name field that depends on given locale
  *  (see constructors for details).
@@ -38,35 +41,47 @@
  * Usage:
  * \code
  *   QComboBox *cb = new QComboBox;
- *   cb->setModel(new mdtClConnectionTypeModel(this));
+ *   cb->setModel(new mdtClModificationModel(this, db));
  *   cb->setModelColumn(1);  // Will display name field
  * \endcode
  */
-class mdtClConnectionTypeModel : public QSqlQueryModel
+class mdtClModificationModel : public QSqlQueryModel
 {
  public:
 
   /*! \brief Constructor
    */
-  mdtClConnectionTypeModel(QObject *parent, QSqlDatabase db, const QLocale & locale = QLocale());
+  mdtClModificationModel(QObject *parent, QSqlDatabase db, const QLocale & locale = QLocale());
 
   /*! \brief Constructor
    */
-  mdtClConnectionTypeModel(QSqlDatabase db, const QLocale & locale = QLocale());
+  mdtClModificationModel(QSqlDatabase db, const QLocale & locale = QLocale());
 
-  /*! \brief Get row that contains given connection type
+  /*! \brief Get row that contains given modification
    *
-   * \return Row of searched key or -1 if not found.
+   * \return Row of searched modification or -1 if not found.
    */
-  int row(mdtClConnectionType_t t);
+  int row(mdtClModification_t m);
 
-  /*! \brief Get connection type key data for given row
+  /*! \brief Get row that contains given modification
    *
-   * If row is < 0, a null key is returned (lastError() is not updated).
-   * If row >= 0, and a error occured, a null key is returned and lastError() contains error.
-   * If all works fine, requested key is returned.
+   * \return Row of searched modification or -1 if not found.
    */
-  mdtClConnectionTypeKeyData keyData(int row);
+  int row(const mdtClModificationPkData & key);
+
+  /*! \brief Get modification PK for given row
+   *
+   * If row is < 0, a null PK is returned (lastError() is not updated).
+   * If row >= 0, and a error occured, a null PK is returned and lastError() contains error.
+   * If all works fine, requested PK is returned.
+   */
+  mdtClModificationPkData modificationPk(int row);
+
+  /*! \brief Get modification PK of given combo box current index
+   *
+   * \sa modificationPk()
+   */
+  mdtClModificationPkData currentModificationPk(QComboBox *cb);
 
   /*! \brief Get last error
    */
@@ -77,7 +92,7 @@ class mdtClConnectionTypeModel : public QSqlQueryModel
 
  private:
 
-  Q_DISABLE_COPY(mdtClConnectionTypeModel);
+  Q_DISABLE_COPY(mdtClModificationModel);
 
   /*! \brief Check if QSqlQueryModel is in error (and store if true)
    */
@@ -86,4 +101,5 @@ class mdtClConnectionTypeModel : public QSqlQueryModel
   mdtError pvLastError;
 };
 
-#endif // #ifndef MDT_CL_CONNECTION_TYPE_MODEL_H
+#endif // #ifndef MDT_CL_MODIFICATION_MODEL_H
+

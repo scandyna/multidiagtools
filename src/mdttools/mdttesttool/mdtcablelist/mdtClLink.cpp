@@ -22,7 +22,7 @@
 #include "mdtClUnit.h"
 #include "mdtClVehicleTypeLinkData.h"
 #include "mdtError.h"
-#include <boost/graph/graph_concepts.hpp>
+///#include <boost/graph/graph_concepts.hpp>
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QSqlRecord>
@@ -31,6 +31,11 @@
 
 mdtClLink::mdtClLink(QObject* parent, QSqlDatabase db)
  : mdtTtBase(parent, db)
+{
+}
+
+mdtClLink::mdtClLink(QSqlDatabase db)
+ : mdtTtBase(nullptr, db)
 {
 }
 

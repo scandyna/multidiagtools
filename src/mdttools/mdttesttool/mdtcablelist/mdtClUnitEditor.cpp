@@ -728,7 +728,7 @@ void mdtClUnitEditor::editConnection()
   widget = sqlTableWidget("UnitConnection_view");
   Q_ASSERT(widget != 0);
   // Get current unit connection data
-  key.id = widget->currentData("UnitConnection_Id_PK");
+  key.id = widget->currentData("Id_PK");
   if(key.id.isNull()){
     return;
   }
@@ -744,41 +744,11 @@ void mdtClUnitEditor::editConnection()
     return;
   }
   // Update in database
-  if(!ucnx.updateUnitConnection(data.keyData(), data)){
+  if(!ucnx.updateUnitConnection(data.keyData(), dialog.data())){
     pvLastError = ucnx.lastError();
     displayLastError();
     return;
   }
-  
-//   mdtClUnit unit(this, database());
-//   QVariant connectionId;
-  
-  
-
-//   widget = sqlTableWidget("UnitConnection_view");
-//   Q_ASSERT(widget != 0);
-
-  // Get current unit connection data
-//   connectionId = widget->currentData("UnitConnection_Id_PK");
-//   if(connectionId.isNull()){
-//     return;
-//   }
-//   data = unit.getConnectionData(connectionId, true, &ok);
-//   if(!ok){
-//     pvLastError = unit.lastError();
-//     displayLastError();
-//   }
-//   // Setup and show dialog
-//   dialog.setData(data, currentData("Unit_tbl", "Article_Id_FK"));
-//   if(dialog.exec() != QDialog::Accepted){
-//     return;
-//   }
-  // Edit connection
-//   if(!unit.editConnection(connectionId, dialog.data())){
-//     pvLastError = unit.lastError();
-//     displayLastError();
-//     return;
-//   }
   // Update connections view
   select("UnitConnection_view");
   select("UnitLink_view");
@@ -795,7 +765,7 @@ void mdtClUnitEditor::setFunctionsFromOtherConnection()
   bool ok;
 
   // Get current unit connection ID
-  connectionId = currentData("UnitConnection_view", "UnitConnection_Id_PK");
+  connectionId = currentData("UnitConnection_view", "Id_PK");
   if(connectionId.isNull()){
     return;
   }
@@ -839,6 +809,7 @@ void mdtClUnitEditor::setFunctionsFromOtherConnection()
 
 void mdtClUnitEditor::removeConnections()
 {
+  mdtClUnitConnection ucnx(database());
   mdtSqlTableWidget *widget;
   mdtClUnit unit(this, database());
   QMessageBox msgBox;
@@ -849,12 +820,12 @@ void mdtClUnitEditor::removeConnections()
   widget = sqlTableWidget("UnitConnection_view");
   Q_ASSERT(widget != 0);
   // Get selected rows
-  s = widget->currentSelection("UnitConnection_Id_PK");
+  s = widget->currentSelection("Id_PK");
   if(s.rowCount() < 1){
     return;
   }
   // Check that selected connections are not related to some links
-  linksMsg = unit.toUnitRelatedLinksListStr(currentUnitId(), s.dataList("UnitConnection_Id_PK"), &ok);
+  linksMsg = unit.toUnitRelatedLinksListStr(currentUnitId(), s.dataList("Id_PK"), &ok);
   if(!ok){
     pvLastError = unit.lastError();
     displayLastError();
@@ -879,14 +850,15 @@ void mdtClUnitEditor::removeConnections()
   if(msgBox.exec() != QMessageBox::Yes){
     return;
   }
-  // Delete seleced rows
-  if(!unit.removeConnections(s)){
-    pvLastError = unit.lastError();
+  // Delete seleced unit connections
+  if(!ucnx.removeUnitConnections(s)){
+    pvLastError = ucnx.lastError();
     displayLastError();
     return;
   }
   // Update connections table
   select("UnitConnection_view");
+  select("UnitLink_view");
 }
 
 void mdtClUnitEditor::viewLinkedConnections()
@@ -898,7 +870,7 @@ void mdtClUnitEditor::viewLinkedConnections()
   bool ok;
 
   // Get current unit connection ID
-  connectionId = currentData("UnitConnection_view", "UnitConnection_Id_PK");
+  connectionId = currentData("UnitConnection_view", "Id_PK");
   if(connectionId.isNull()){
     return;
   }
@@ -1207,181 +1179,6 @@ QVariant mdtClUnitEditor::selectUnitConnector(const QString & message, const QSt
   return selectionDialog.selectionResult().at(0);
 }
 
-QList<QVariant> mdtClUnitEditor::selectBaseConnectorContactIdList(const QVariant & connectorId, bool multiSelection)
-{
-  mdtSqlSelectionDialog selectionDialog;
-  QString sql;
-  ///QModelIndexList selectedItems;
-  mdtSqlTableSelection s;
-  QList<QVariant> idList;
-  int i;
-
-  if(connectorId.isNull()){
-    return idList;
-  }
-  // Setup model to show available connectors
-  sql = "SELECT * FROM ConnectorContact_tbl ";
-  sql += " WHERE Connector_Id_FK = " + connectorId.toString();
-  // Setup and show dialog
-  selectionDialog.setMessage("Please select contacts to use:");
-  selectionDialog.setQuery(sql, database(), multiSelection);
-  selectionDialog.setColumnHidden("Id_PK", true);
-  selectionDialog.setColumnHidden("Connector_Id_FK", true);
-  selectionDialog.addColumnToSortOrder("Name", Qt::AscendingOrder);
-  selectionDialog.sort();
-  ///selectionDialog.addSelectionResultColumn("Id_PK");
-  selectionDialog.resize(400, 300);
-  selectionDialog.setWindowTitle(tr("Contacts selection"));
-  if(selectionDialog.exec() != QDialog::Accepted){
-    return idList;
-  }
-  s = selectionDialog.selection("Id_PK");
-  for(i = 0; i < s.rowCount(); ++i){
-    idList.append(s.data(i, "Id_PK"));
-  }
-  /**
-  selectedItems = selectionDialog.selectionResults();
-  for(i = 0; i < selectedItems.size(); ++i){
-    idList.append(selectedItems.at(i).data());
-  }
-  */
-
-  return idList;
-}
-
-QVariant mdtClUnitEditor::selectBaseConnectorContactId(const QVariant & connectorId)
-{
-  QList<QVariant> idList;
-
-  idList = selectBaseConnectorContactIdList(connectorId, false);
-  if(idList.isEmpty()){
-    return QVariant();
-  }
-
-  return idList.at(0);
-}
-
-QVariant mdtClUnitEditor::selectArticleConnector()
-{
-  mdtSqlSelectionDialog selectionDialog;
-  QString sql;
-  mdtClUnit unit(this, database());
-  QVariant unitId;
-  QVariant articleId;
-
-  // Get unit and article IDs
-  unitId = currentUnitId();
-  if(unitId.isNull()){
-    return QVariant();
-  }
-  articleId = currentData("Unit_tbl", "Article_Id_FK");
-  if(articleId.isNull()){
-    return QVariant();
-  }
-  // Setup model to show available connectors
-  sql = unit.sqlForArticleConnectorSelection(articleId, unitId);
-  // Setup and show dialog
-  selectionDialog.setMessage("Please select a connector:");
-  selectionDialog.setQuery(sql, database(), false);
-  selectionDialog.setColumnHidden("Id_PK", true);
-//   selectionDialog.addSelectionResultColumn("Id_PK");
-  selectionDialog.addColumnToSortOrder("Name", Qt::AscendingOrder);
-  selectionDialog.sort();
-  selectionDialog.resize(400, 300);
-  selectionDialog.setWindowTitle(tr("Article connector selection"));
-  if(selectionDialog.exec() != QDialog::Accepted){
-    return QVariant();
-  }
-//   Q_ASSERT(selectionDialog.selectionResult().size() == 1);
-// 
-//   return selectionDialog.selectionResult().at(0);
-  Q_ASSERT(selectionDialog.selection("Id_PK").rowCount() == 1);
-
-  return selectionDialog.selection("Id_PK").data(0, "Id_PK");
-}
-
-QList<QVariant> mdtClUnitEditor::selectByArticleConnectorIdArticleConnectionIdList(const QVariant & articleConnectorId, const QVariant & unitId, bool multiSelection)
-{
-  mdtSqlSelectionDialog selectionDialog;
-  mdtClUnit unit(this, database());
-  QString sql;
-  QModelIndexList selectedItems;
-  QList<QVariant> idList;
-  int i;
-
-  if((articleConnectorId.isNull())||(unitId.isNull())){
-    return idList;
-  }
-  // Setup and show dialog
-  sql = unit.sqlForArticleConnectionLinkedToArticleConnectorSelection(articleConnectorId, unitId);
-  selectionDialog.setMessage("Please select article connections to use:");
-  selectionDialog.setQuery(sql, database(), multiSelection);
-  selectionDialog.setColumnHidden("Id_PK", true);
-  selectionDialog.setColumnHidden("Article_Id_FK", true);
-  selectionDialog.setColumnHidden("ArticleConnector_Id_FK", true);
-  selectionDialog.setHeaderData("ArticleContactName", tr("Contact"));
-  selectionDialog.setHeaderData("IoType", tr("I/O type"));
-  selectionDialog.setHeaderData("FunctionEN", tr("Function\n(English)"));
-  selectionDialog.setHeaderData("FunctionFR", tr("Function\n(French)"));
-  selectionDialog.setHeaderData("FunctionDE", tr("Function\n(German)"));
-  selectionDialog.setHeaderData("FunctionIT", tr("Function\n(Italian)"));
-  selectionDialog.addColumnToSortOrder("ArticleContactName", Qt::AscendingOrder);
-  selectionDialog.sort();
-  selectionDialog.addSelectionResultColumn("Id_PK");
-  selectionDialog.resize(700, 300);
-  selectionDialog.setWindowTitle(tr("Article contacts selection"));
-  if(selectionDialog.exec() != QDialog::Accepted){
-    return idList;
-  }
-  selectedItems = selectionDialog.selectionResults();
-  for(i = 0; i < selectedItems.size(); ++i){
-    idList.append(selectedItems.at(i).data());
-  }
-
-  return idList;
-}
-
-QList<QVariant> mdtClUnitEditor::selectByArticleIdArticleConnectionIdList(const QVariant & articleId, const QVariant & unitId, bool multiSelection)
-{
-  mdtSqlSelectionDialog selectionDialog;
-  mdtClUnit unit(this, database());
-  QString sql;
-  QModelIndexList selectedItems;
-  QList<QVariant> idList;
-  int i;
-
-  // Setup and show dialog
-  sql = unit.sqlForArticleConnectionLinkedToArticleSelection(articleId, unitId);
-  selectionDialog.setMessage("Please select article connections to use:");
-  selectionDialog.setQuery(sql, database(), multiSelection);
-  selectionDialog.setColumnHidden("Connector_Id_FK", true);
-  selectionDialog.setColumnHidden("Id_PK", true);
-  selectionDialog.setColumnHidden("Article_Id_FK", true);
-  selectionDialog.setColumnHidden("ArticleConnector_Id_FK", true);
-  selectionDialog.setHeaderData("ArticleConnectorName", tr("Connector"));
-  selectionDialog.setHeaderData("ArticleContactName", tr("Contact"));
-  selectionDialog.setHeaderData("IoType", tr("I/O type"));
-  selectionDialog.setHeaderData("FunctionEN", tr("Function\n(English)"));
-  selectionDialog.setHeaderData("FunctionFR", tr("Function\n(French)"));
-  selectionDialog.setHeaderData("FunctionDE", tr("Function\n(German)"));
-  selectionDialog.setHeaderData("FunctionIT", tr("Function\n(Italian)"));
-  selectionDialog.addColumnToSortOrder("ArticleConnectorName", Qt::AscendingOrder);
-  selectionDialog.addColumnToSortOrder("ArticleContactName", Qt::AscendingOrder);
-  selectionDialog.sort();
-  selectionDialog.addSelectionResultColumn("Id_PK");
-  selectionDialog.resize(700, 300);
-  selectionDialog.setWindowTitle(tr("Article contacts selection"));
-  if(selectionDialog.exec() != QDialog::Accepted){
-    return idList;
-  }
-  selectedItems = selectionDialog.selectionResults();
-  for(i = 0; i < selectedItems.size(); ++i){
-    idList.append(selectedItems.at(i).data());
-  }
-
-  return idList;
-}
-
 bool mdtClUnitEditor::setupUnitTable()
 {
   Ui::mdtClUnitEditor ue;
@@ -1593,14 +1390,6 @@ bool mdtClUnitEditor::setupUnitConnectionTable()
   if(!addChildTable(relationInfo, tr("Connections"))){
     return false;
   }
-  /**
-  if(!addChildTable("UnitConnection_view", tr("Connections"), database())){
-    return false;
-  }
-  if(!addRelation("Id_PK", "UnitConnection_view", "Unit_Id_FK")){
-    return false;
-  }
-  */
   widget = sqlTableWidget("UnitConnection_view");
   Q_ASSERT(widget != nullptr);
   // Add add connection button
@@ -1636,16 +1425,13 @@ bool mdtClUnitEditor::setupUnitConnectionTable()
   Q_ASSERT(widget->tableView() != 0);
   connect(widget->tableView(), SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(editConnection()));
   // Hide relation fields and PK
-  widget->setColumnHidden("UnitConnection_Id_PK", true);
+  widget->setColumnHidden("Id_PK", true);
   widget->setColumnHidden("UnitConnector_Id_FK", true);
   widget->setColumnHidden("Unit_Id_FK", true);
   widget->setColumnHidden("ArticleConnection_Id_FK", true);
+  widget->setColumnHidden("ConnectionType_Code_FK", true);
   // Give fields a user friendly name
   widget->setHeaderData("SchemaPage", tr("Vehicle\nSchema\npage"));
-  widget->setHeaderData("UnitFunctionEN", tr("Unit\nfunction\n(English)"));
-  widget->setHeaderData("UnitFunctionFR", tr("Unit\nfunction\n(French)"));
-  widget->setHeaderData("UnitFunctionDE", tr("Unit\nfunction\n(German)"));
-  widget->setHeaderData("UnitFunctionIT", tr("Unit\nfunction\n(Italian)"));
   widget->setHeaderData("SignalName", tr("Signal name"));
   widget->setHeaderData("SwAddress", tr("SW address"));
   widget->setHeaderData("UnitConnectorName", tr("Unit\nconnector"));
@@ -1654,10 +1440,7 @@ bool mdtClUnitEditor::setupUnitConnectionTable()
   widget->setHeaderData("ArticleConnectorName", tr("Article\nconnector"));
   widget->setHeaderData("ArticleContactName", tr("Article\ncontact"));
   widget->setHeaderData("IoType", tr("I/O type"));
-  widget->setHeaderData("ArticleFunctionEN", tr("Article\nfunction\n(English)"));
-  widget->setHeaderData("ArticleFunctionFR", tr("Article\nfunction\n(French)"));
-  widget->setHeaderData("ArticleFunctionDE", tr("Article\nfunction\n(German)"));
-  widget->setHeaderData("ArticleFunctionIT", tr("Article\nfunction\n(Italian)"));
+  updateUnitConnectionTable();
   // Enable sorting
   widget->addColumnToSortOrder("UnitConnectorName", Qt::AscendingOrder);
   widget->addColumnToSortOrder("UnitContactName", Qt::AscendingOrder);
@@ -1666,6 +1449,70 @@ bool mdtClUnitEditor::setupUnitConnectionTable()
   widget->tableView()->resizeColumnsToContents();
 
   return true;
+}
+
+void mdtClUnitEditor::updateUnitConnectionTable(const QLocale & locale)
+{
+  auto *widget = sqlTableWidget("UnitConnection_view");
+  Q_ASSERT(widget != nullptr);
+
+  switch(locale.language()){
+    case QLocale::French:
+      widget->setColumnHidden("UnitFunctionEN", true);
+      widget->setColumnHidden("UnitFunctionDE", true);
+      widget->setColumnHidden("UnitFunctionIT", true);
+      widget->setHeaderData("UnitFunctionFR", tr("Unit\nconnection\nfunction"));
+      widget->setColumnHidden("ArticleFunctionEN", true);
+      widget->setColumnHidden("ArticleFunctionDE", true);
+      widget->setColumnHidden("ArticleFunctionIT", true);
+      widget->setHeaderData("ArticleFunctionFR", tr("Article\nconnection\nfunction"));
+      widget->setColumnHidden("ConnectionTypeEN", true);
+      widget->setColumnHidden("ConnectionTypeDE", true);
+      widget->setColumnHidden("ConnectionTypeIT", true);
+      widget->setHeaderData("ConnectionTypeFR", tr("Connection\ntype"));
+      break;
+    case QLocale::German:
+      widget->setColumnHidden("UnitFunctionEN", true);
+      widget->setColumnHidden("UnitFunctionFR", true);
+      widget->setColumnHidden("UnitFunctionIT", true);
+      widget->setHeaderData("UnitFunctionDE", tr("Unit\nconnection\nfunction"));
+      widget->setColumnHidden("ArticleFunctionEN", true);
+      widget->setColumnHidden("ArticleFunctionFR", true);
+      widget->setColumnHidden("ArticleFunctionIT", true);
+      widget->setHeaderData("ArticleFunctionDE", tr("Article\nconnection\nfunction"));
+      widget->setColumnHidden("ConnectionTypeEN", true);
+      widget->setColumnHidden("ConnectionTypeFR", true);
+      widget->setColumnHidden("ConnectionTypeIT", true);
+      widget->setHeaderData("ConnectionTypeDE", tr("Connection\ntype"));
+      break;
+    case QLocale::Italian:
+      widget->setColumnHidden("UnitFunctionEN", true);
+      widget->setColumnHidden("UnitFunctionDE", true);
+      widget->setColumnHidden("UnitFunctionFR", true);
+      widget->setHeaderData("UnitFunctionIT", tr("Unit\nconnection\nfunction"));
+      widget->setColumnHidden("ArticleFunctionEN", true);
+      widget->setColumnHidden("ArticleFunctionDE", true);
+      widget->setColumnHidden("ArticleFunctionFR", true);
+      widget->setHeaderData("ArticleFunctionIT", tr("Article\nconnection\nfunction"));
+      widget->setColumnHidden("ConnectionTypeEN", true);
+      widget->setColumnHidden("ConnectionTypeDE", true);
+      widget->setColumnHidden("ConnectionTypeFR", true);
+      widget->setHeaderData("ConnectionTypeIT", tr("Connection\ntype"));
+      break;
+    default:
+      widget->setColumnHidden("UnitFunctionFR", true);
+      widget->setColumnHidden("UnitFunctionDE", true);
+      widget->setColumnHidden("UnitFunctionIT", true);
+      widget->setHeaderData("UnitFunctionEN", tr("Unit\nconnection\nfunction"));
+      widget->setColumnHidden("ArticleFunctionFR", true);
+      widget->setColumnHidden("ArticleFunctionDE", true);
+      widget->setColumnHidden("ArticleFunctionIT", true);
+      widget->setHeaderData("ArticleFunctionEN", tr("Article\nconnection\nfunction"));
+      widget->setColumnHidden("ConnectionTypeFR", true);
+      widget->setColumnHidden("ConnectionTypeDE", true);
+      widget->setColumnHidden("ConnectionTypeIT", true);
+      widget->setHeaderData("ConnectionTypeEN", tr("Connection\ntype"));
+  }
 }
 
 bool mdtClUnitEditor::setupUnitLinkTable()

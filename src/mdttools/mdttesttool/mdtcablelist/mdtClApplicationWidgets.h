@@ -55,6 +55,10 @@ class mdtClApplicationWidgets : public mdtSqlApplicationWidgets<mdtClApplication
    */
   void slotEditUnits();
 
+  /*! \brief Create a new link version
+   */
+  void createLinkVersion(QWidget *parentWidget = nullptr);
+
  private:
 
   /*! \brief Create Unit editor

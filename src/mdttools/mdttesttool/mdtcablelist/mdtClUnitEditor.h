@@ -26,6 +26,7 @@
 #include <QModelIndex>
 #include <QVariant>
 #include <QList>
+#include <QLocale>
 #include "mdtSqlForm.h"
 #include "mdtClUnitConnectionData.h"
 
@@ -175,26 +176,6 @@ class mdtClUnitEditor : public mdtSqlForm
    */
   QVariant selectUnitConnector(const QString & message, const QString & sql);
 
-  /*! \brief Let user select connections related to a connector from Connector_tbl
-   */
-  QList<QVariant> selectBaseConnectorContactIdList(const QVariant & connectorId, bool multiSelection = true);
-
-  /*! \brief Let user select a connection related to a connector from Connector_tbl
-   */
-  QVariant selectBaseConnectorContactId(const QVariant & connectorId);
-
-  /*! \brief Let user choose a connector from those that are related to current article
-   */
-  QVariant selectArticleConnector();
-
-  /*! \brief Select article connections related to given article connector ID
-   */
-  QList<QVariant> selectByArticleConnectorIdArticleConnectionIdList(const QVariant & articleConnectorId, const QVariant & unitId, bool multiSelection = true);
-
-  /*! \brief Select article connections related to given article ID
-   */
-  QList<QVariant> selectByArticleIdArticleConnectionIdList(const QVariant & articleId, const QVariant & unitId, bool multiSelection = true);
-
   /*! \brief Setup Unit table and widget
    */
   bool setupUnitTable();
@@ -210,6 +191,10 @@ class mdtClUnitEditor : public mdtSqlForm
   /*! \brief Setup unit connection table and widget
    */
   bool setupUnitConnectionTable();
+
+  /*! \brief Update unit connection table
+   */
+  void updateUnitConnectionTable(const QLocale & locale = QLocale());
 
   /*! \brief Setup unit link table
    */

@@ -1,0 +1,16 @@
+format 209
+
+classcanvas 128002 class_ref 1679746 // mdtClLinkVersionPkData
+  classdiagramsettings member_max_width 0 end
+  xyz 377 192 2000
+end
+classcanvas 128130 class_ref 1679874 // mdtClLinkVersionData
+  classdiagramsettings member_max_width 0 end
+  xyz 310 453 2006
+end
+relationcanvas 128258 relation_ref 2029314 // <unidirectional association>
+  from ref 128130 z 2007 to ref 128002
+  role_a_pos 470 294 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

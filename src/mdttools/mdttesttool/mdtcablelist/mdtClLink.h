@@ -116,6 +116,10 @@ class mdtClLink : public mdtTtBase
    */
   mdtClLink(QObject* parent, QSqlDatabase db);
 
+  /*! \brief Constructor
+   */
+  mdtClLink(QSqlDatabase db);
+
   /*! \brief Destructor
    */
   ~mdtClLink();
