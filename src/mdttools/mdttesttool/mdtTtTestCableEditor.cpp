@@ -472,7 +472,7 @@ void mdtTtTestCableEditor::addLink()
       startConnectorIdList.append(idList.at(i));
     }
   }
-  dialog.setStartConnectorLimitIdList(startConnectorIdList);
+  /// dialog.setStartConnectorLimitIdList(startConnectorIdList);
   idList = dataList("UnitLink_view", "EndUnitConnector_Id_FK", ok, true);
   if(!ok){
     displayLastError();
@@ -483,7 +483,7 @@ void mdtTtTestCableEditor::addLink()
       endConnectorIdList.append(idList.at(i));
     }
   }
-  dialog.setEndConnectorLimitIdList(endConnectorIdList);
+  ///dialog.setEndConnectorLimitIdList(endConnectorIdList);
   // Setup and show dialog
   unitId = currentUnitId();
   if(unitId.isNull()){

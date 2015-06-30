@@ -924,6 +924,7 @@ void mdtCableListTestScenario::createTestUnitConnections()
   key.id = 10000;
   key.setUnitId(1000);
   data.setKeyData(key);
+  data.setConnectionType(mdtClConnectionType_t::Terminal);
   data.name = "Unit contact 10000";
   key = ucnx.addUnitConnection(data, true);
   QVERIFY(!key.isNull());
@@ -940,6 +941,7 @@ void mdtCableListTestScenario::createTestUnitConnections()
   key.id = 10001;
   key.setUnitId(1000);
   data.setKeyData(key);
+  data.setConnectionType(mdtClConnectionType_t::Terminal);
   data.name = "Unit contact 10001";
   key = ucnx.addUnitConnection(data, true);
   QVERIFY(!key.isNull());
@@ -988,6 +990,7 @@ void mdtCableListTestScenario::createTestUnitConnections()
   connectionData.setValue("Id_PK", 20000);
   connectionData.setValue("Unit_Id_FK", 2000);
   connectionData.setValue("ArticleConnection_Id_FK", 20);
+  connectionData.setValue("ConnectionType_Code_FK", "T"); /// \todo provisoire
   connectionData.setValue("UnitContactName", "Unit contact 20000");
   QVERIFY(unit.addConnection(connectionData));
   connectionData = unit.getConnectionData(20000, true, &ok);
@@ -1013,6 +1016,7 @@ void mdtCableListTestScenario::createTestUnitConnections()
   connectionData.setValue("Unit_Id_FK", 2000);
   connectionData.setValue("ArticleConnection_Id_FK", 21);
   connectionData.setValue("UnitContactName", "Unit contact 20001");
+  connectionData.setValue("ConnectionType_Code_FK", "T"); /// \todo provisoire
   QVERIFY(unit.addConnection(connectionData));
   connectionData = unit.getConnectionData(20001, true, &ok);
   QVERIFY(ok);
@@ -1050,6 +1054,7 @@ void mdtCableListTestScenario::createTestUnitConnections()
   connectionData.setValue("Id_PK", 20002);
   connectionData.setValue("Unit_Id_FK", 2001);
   connectionData.setValue("ArticleConnection_Id_FK", 20);
+  connectionData.setValue("ConnectionType_Code_FK", "T"); /// \todo provisoire
   connectionData.setValue("UnitContactName", "Unit contact 20002");
   QVERIFY(unit.addConnection(connectionData));
   connectionData = unit.getConnectionData(20002, true, &ok);
@@ -1075,6 +1080,7 @@ void mdtCableListTestScenario::createTestUnitConnections()
   connectionData.setValue("Unit_Id_FK", 2001);
   connectionData.setValue("ArticleConnection_Id_FK", 21);
   connectionData.setValue("UnitContactName", "Unit contact 20003");
+  connectionData.setValue("ConnectionType_Code_FK", "T"); /// \todo provisoire
   QVERIFY(unit.addConnection(connectionData));
   connectionData = unit.getConnectionData(20003, true, &ok);
   QVERIFY(ok);
@@ -1112,6 +1118,7 @@ void mdtCableListTestScenario::createTestUnitConnections()
   connectionData.setValue("Id_PK", 20004);
   connectionData.setValue("Unit_Id_FK", 2001);
   connectionData.setValue("ArticleConnection_Id_FK", 22);
+  connectionData.setValue("ConnectionType_Code_FK", "T"); /// \todo provisoire
   connectionData.setValue("UnitContactName", "Unit contact 20004");
   QVERIFY(unit.addConnection(connectionData));
   connectionData = unit.getConnectionData(20004, true, &ok);

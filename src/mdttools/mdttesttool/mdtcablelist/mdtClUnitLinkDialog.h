@@ -23,6 +23,10 @@
 
 #include "ui_mdtClUnitLinkDialog.h"
 #include "mdtClUnitConnectionData.h"
+#include "mdtClLinkTypeData.h"
+#include "mdtClLinkDirectionData.h"
+#include "mdtClLinkVersionData.h"
+#include "mdtClModificationKeyData.h"
 #include "mdtClLinkData.h"
 #include <QDialog>
 #include <QVariant>
@@ -69,7 +73,7 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
 
   /*! \brief Limit start connection selection to given connectors
    */
-  void setStartConnectorLimitIdList(const QList<QVariant> & unitConnectorIdList);
+  ///void setStartConnectorLimitIdList(const QList<QVariant> & unitConnectorIdList);
 
   /*! \brief Change start connection label
    */
@@ -87,7 +91,7 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
 
   /*! \brief Limit end connection selection to given connectors
    */
-  void setEndConnectorLimitIdList(const QList<QVariant> & unitConnectorIdList);
+  ///void setEndConnectorLimitIdList(const QList<QVariant> & unitConnectorIdList);
 
   /*! \brief Clear end unit selection list
    */
@@ -140,6 +144,14 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
    */
   void setLinkTypeCode(const QVariant & code);
 
+  /*! \brief Set link type
+   */
+  void setLinkType(mdtClLinkType_t t);
+
+  /*! \brief Get link type key data
+   */
+  mdtClLinkTypeKeyData linkTypeKeyData() const;
+
   /*! \brief Get selected link type code
    */
   QVariant linkTypeCode() const;
@@ -148,9 +160,33 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
    */
   void setLinkDirectionCode(const QVariant & code);
 
+  /*! \brief Set link direction
+   */
+  void setLinkDirection(mdtClLinkDirection_t d);
+
+  /*! \brief Get selected link direction
+   */
+  mdtClLinkDirectionKeyData linkDirectionKeyData() const;
+
   /*! \brief Get selected link direction code
    */
   QVariant linkDirectionCode() const;
+
+  /*! \brief Set link version
+   */
+  void setLinkVersion(const mdtClLinkVersionData & v);
+
+  /*! \brief Get selected link version key data
+   */
+  mdtClLinkVersionPkData linkVersionKeyData() const;
+
+  /*! \brief Set link modification
+   */
+  void setLinkModification(const mdtClModificationPkData & m);
+
+  /*! \brief Get selected modification key data
+   */
+  mdtClModificationPkData linkModificationKeyData() const;
 
   /*! \brief Set link data
    */
@@ -269,10 +305,10 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
   QSqlDatabase pvDatabase;
   QVariant pvStartUnitId;
   QList<QVariant> pvStartUnitSelectionIdList;
-  QList<QVariant> pvStartConnectorLimitIdList;  // If not empty, start connection selection will be limited to these connectors
+  QList<mdtClUnitConnectorPkData> pvStartConnectorLimitIdList;  // If not empty, start connection selection will be limited to these connectors
   QVariant pvEndUnitId;
   QList<QVariant> pvEndUnitSelectionIdList;
-  QList<QVariant> pvEndConnectorLimitIdList;    // If not empty, end connection selection will be limited to these connectors
+  QList<mdtClUnitConnectorPkData> pvEndConnectorLimitIdList;    // If not empty, end connection selection will be limited to these connectors
   mdtClLinkData pvLinkData;
   QSqlQueryModel *pvStartVehicleTypesModel;
   QList<QVariant> pvStartVehicleTypesIdList;

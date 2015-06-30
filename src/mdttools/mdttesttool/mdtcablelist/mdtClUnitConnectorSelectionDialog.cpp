@@ -89,7 +89,7 @@ mdtClUnitConnectorKeyData mdtClUnitConnectorSelectionDialog::selectedUnitConnect
     articleConnectorFk.setConnectorFk(connectorFk);
   }
   // Setup unit connector FK
-  key.id = s.data(0, "Id_PK");
+  key.pk.id = s.data(0, "Id_PK");
   key.setUnitId(s.data(0, "Unit_Id_FK"));
   if(!articleConnectorFk.isNull()){
     key.setArticleConnectorFk(articleConnectorFk);

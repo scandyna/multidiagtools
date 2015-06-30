@@ -540,12 +540,12 @@ void mdtClUnitEditor::editConnectorName()
 {
   mdtClUnitConnection ucnx(database());
   QInputDialog inputDialog(this);
-  mdtClUnitConnectorKeyData key;
+  mdtClUnitConnectorPkData pk;
   QVariant connectorName;
 
   // Get current data
-  key.id = currentData("UnitConnector_view", "Id_PK");
-  if(key.id.isNull()){
+  pk.id = currentData("UnitConnector_view", "Id_PK");
+  if(pk.id.isNull()){
     return;
   }
   connectorName = currentData("UnitConnector_view", "UnitConnectorName");
@@ -559,7 +559,7 @@ void mdtClUnitEditor::editConnectorName()
     return;
   }
   // Update unit connector name in database
-  if(!ucnx.updateUnitConnectorName(key, connectorName)){
+  if(!ucnx.updateUnitConnectorName(pk, connectorName)){
     pvLastError = ucnx.lastError();
     displayLastError();
     return;

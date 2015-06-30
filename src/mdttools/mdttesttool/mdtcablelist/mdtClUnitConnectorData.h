@@ -66,6 +66,13 @@ struct mdtClUnitConnectorData : public mdtSqlRecord  /// \todo remove this inher
     pvKeyData = key;
   }
 
+  /*! \brief Set/update PK
+   *
+   * If connector contains connections,
+   *  they will be updated.
+   */
+  void setPk(const mdtClUnitConnectorPkData & pk);
+
   /*! \brief Set/update unit connector ID (Id_PK)
    *
    * If connector contains connections,

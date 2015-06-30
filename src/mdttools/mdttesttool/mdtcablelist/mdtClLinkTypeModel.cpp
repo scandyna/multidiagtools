@@ -21,6 +21,7 @@
 #include "mdtClLinkTypeModel.h"
 #include <QSqlError>
 #include <QModelIndex>
+#include <QComboBox>
 
 //#include <QDebug>
 
@@ -102,6 +103,13 @@ mdtClLinkTypeKeyData mdtClLinkTypeModel::keyData(int row)
   }
 
   return key;
+}
+
+mdtClLinkTypeKeyData mdtClLinkTypeModel::currentKeyData(QComboBox *cb)
+{
+  Q_ASSERT(cb != nullptr);
+
+  return keyData(cb->currentIndex());
 }
 
 QString mdtClLinkTypeModel::unit(int row)

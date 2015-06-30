@@ -23,9 +23,17 @@
 
 //#include <QDebug>
 
+void mdtClUnitConnectorData::setPk(const mdtClUnitConnectorPkData & pk)
+{
+  pvKeyData.pk = pk;
+  for(auto & unitConnectionData : pvConnectionDataList){
+    unitConnectionData.setUnitConnectorFk(pvKeyData);
+  }
+}
+
 void mdtClUnitConnectorData::setId(const QVariant & id)
 {
-  pvKeyData.id = id;
+  pvKeyData.pk.id = id;
   for(auto & unitConnectionData : pvConnectionDataList){
     unitConnectionData.setUnitConnectorFk(pvKeyData);
   }
@@ -42,7 +50,7 @@ void mdtClUnitConnectorData::addConnectionData(mdtClUnitConnectionData data)
 {
   Q_ASSERT(!pvKeyData.unitId().isNull());
   Q_ASSERT( ( (data.keyData().id.isNull()) && (!data.isPartOfUnitConnector()) ) ||
-            ( (!data.keyData().id.isNull()) && (data.keyData().unitConnectorFk().id == pvKeyData.id)
+            ( (!data.keyData().id.isNull()) && (data.keyData().unitConnectorFk().pk.id == pvKeyData.pk.id)
                && (data.keyData().unitConnectorFk().unitId() == pvKeyData.unitId()) ) );
 
   mdtClUnitConnectionKeyData key;

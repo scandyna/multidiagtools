@@ -314,7 +314,7 @@ void mdtClUnitConnectionDialog::updateConnectorData()
 
   // Get unit connector data
   if(pvData.isPartOfUnitConnector()){
-    unitConnectorData = ucnx.getUnitConnectorData(pvData.keyData().unitConnectorFk(), false, ok);
+    unitConnectorData = ucnx.getUnitConnectorData(pvData.keyData().unitConnectorFk().pk, false, ok);
     if(!ok){
       displayError(ucnx.lastError());
     }

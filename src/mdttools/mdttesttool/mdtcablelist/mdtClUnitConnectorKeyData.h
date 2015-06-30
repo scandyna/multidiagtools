@@ -25,6 +25,31 @@
 #include "mdtClArticleConnectorKeyData.h"
 #include <QVariant>
 
+/*! \brief Unit connector primary key data
+ *
+ * Refers to UnitConnector_tbl
+ */
+struct mdtClUnitConnectorPkData
+{
+  /*! \brief Unit connector ID (Id_PK)
+   */
+  QVariant id;
+
+  /*! \brief Check if PK is null
+   */
+  bool isNull() const
+  {
+    return id.isNull();
+  }
+
+  /*! \brief Clear PK
+   */
+  void clear()
+  {
+    id.clear();
+  }
+};
+
 /*! \brief Data container for unit connector key data
  *
  * Refers to UnitConnector_tbl
@@ -33,7 +58,11 @@ struct mdtClUnitConnectorKeyData
 {
   /*! \brief Unit connector ID (Id_PK)
    */
-  QVariant id;
+  ///QVariant id;
+
+  /*! \brief Primary key
+   */
+  mdtClUnitConnectorPkData pk;
 
  private:
 
@@ -113,18 +142,18 @@ struct mdtClUnitConnectorKeyData
 
   /*! \brief Check if key data is null
    *
-   * Key data is null if id or unitId is null
+   * Key data is null if PK or unitId is null
    */
   bool isNull() const
   {
-    return (id.isNull() || pvUnitId.isNull());
+    return (pk.isNull() || pvUnitId.isNull());
   }
 
   /*! \brief Clear key data
    */
   void clear()
   {
-    id.clear();
+    pk.clear();
     pvUnitId.clear();
     pvConnectorFk.clear();
     pvArticleConnectorFk.clear();

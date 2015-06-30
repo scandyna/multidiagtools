@@ -29,6 +29,8 @@
 #include <QLocale>
 #include <QString>
 
+class QComboBox;
+
 /*! \brief Model that acts on LinkDirection_tbl
  *
  * This model is typically used with QComboBox
@@ -69,13 +71,19 @@ class mdtClLinkDirectionModel : public QSqlQueryModel
    */
   int row(const mdtClLinkDirectionKeyData & key);
 
-  /*! \brief Get connection type key data for given row
+  /*! \brief Get connection direction key data for given row
    *
    * If row is < 0, a null key is returned (lastError() is not updated).
    * If row >= 0, and a error occured, a null key is returned and lastError() contains error.
    * If all works fine, requested key is returned.
    */
   mdtClLinkDirectionKeyData keyData(int row);
+
+  /*! \brief Get link direction key data of given combobox's current index
+   *
+   * \sa keyData()
+   */
+  mdtClLinkDirectionKeyData currentKeyData(QComboBox *cb);
 
   /*! \brief Get picture in ASCII for given row (PictureAscii field)
    */

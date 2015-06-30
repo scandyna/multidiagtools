@@ -21,6 +21,7 @@
 #include "mdtClLinkDirectionModel.h"
 #include <QSqlError>
 #include <QModelIndex>
+#include <QComboBox>
 
 //#include <QDebug>
 
@@ -101,6 +102,13 @@ mdtClLinkDirectionKeyData mdtClLinkDirectionModel::keyData(int row)
   }
 
   return key;
+}
+
+mdtClLinkDirectionKeyData mdtClLinkDirectionModel::currentKeyData(QComboBox *cb)
+{
+  Q_ASSERT(cb != nullptr);
+
+  return keyData(cb->currentIndex());
 }
 
 QString mdtClLinkDirectionModel::pictureAscii(int row)

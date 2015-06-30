@@ -84,12 +84,12 @@ class mdtClUnitConnection : public mdtClArticleConnection
 
   /*! \brief Get a list of unit connections data for given unit connector
    *
-   * \param key Key of unit connector that contains connections
+   * \param pk PK of unit connector that contains connections
    * \return List of unit connections.
    *        A empty list is returned if connector contains no connection, or a error occured.
    *        Use ok parameter to diffrenciate both cases.
    */
-  QList<mdtClUnitConnectionData> getUnitConnectionDataList(const mdtClUnitConnectorKeyData & key, bool & ok);
+  QList<mdtClUnitConnectionData> getUnitConnectionDataList(const mdtClUnitConnectorPkData & key, bool & ok);
 
   /*! \brief Update unit connection
    *
@@ -118,20 +118,20 @@ class mdtClUnitConnection : public mdtClArticleConnection
    * \param handleTransaction Internally, a transaction is (explicitly) open.
    *             By calling this function with a allready open transaction,
    *             set this argument false.
-   * \return Id_PK of added unit connector, or a null key on error
+   * \return Id_PK of added unit connector, or a null PK on error
    */
-  mdtClUnitConnectorKeyData addUnitConnector(mdtClUnitConnectorData data, bool handleTransaction);
+  mdtClUnitConnectorPkData addUnitConnector(mdtClUnitConnectorData data, bool handleTransaction);
 
   /*! \brief Get unit connector data from database
    *
-   * \param key Unit connector key. Only id must be set, other data are not used.
+   * \param pk Unit connector PK.
    * \param includeConnectionData If true, related connections are also included in data
    * \param ok Is set false on error
    * \return data for given key.
    *       A null data is returned if given key does not exist, or a error occured.
    *       Use ok parameter to diffrenciate both cases.
    */
-  mdtClUnitConnectorData getUnitConnectorData(mdtClUnitConnectorKeyData key, bool includeConnectionData, bool & ok);
+  mdtClUnitConnectorData getUnitConnectorData(mdtClUnitConnectorPkData pk, bool includeConnectionData, bool & ok);
 
   /*! \brief Get unit connector data from database
    *
@@ -146,19 +146,19 @@ class mdtClUnitConnection : public mdtClArticleConnection
 
   /*! \brief Update unit connector name
    *
-   * \param key Unit connector key. Only id must be set, other data are not used.
+   * \param pk Unit connector PK.
    * \param name New name to give to unit connector
    */
-  bool updateUnitConnectorName(const mdtClUnitConnectorKeyData & key, const QVariant & name);
+  bool updateUnitConnectorName(const mdtClUnitConnectorPkData & pk, const QVariant & name);
 
   /*! \brief Remove unit connector
    *
-   * \param key Key of unit connector to remove
+   * \param pk PK of unit connector to remove
    * \param handleTransaction Internally, a transaction is (explicitly) open.
    *             By calling this function with a allready open transaction,
    *             set this argument false.
    */
-  bool removeUnitConnector(const mdtClUnitConnectorKeyData & key, bool handleTransaction);
+  bool removeUnitConnector(const mdtClUnitConnectorPkData & pk, bool handleTransaction);
 
   /*! \brief Remove each unit connector that is contained in selection
    *

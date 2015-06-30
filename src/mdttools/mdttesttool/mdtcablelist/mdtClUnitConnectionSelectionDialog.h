@@ -35,7 +35,37 @@ class mdtClUnitConnectionSelectionDialog : public mdtSqlSelectionDialog
 {
  public:
 
+  /*! \brief Unit connection usage in link filter
+   */
+  enum class LinkUsage_t
+  {
+    NotUsedAsConnectionStart, /*!< List only unit connections that are not used in link table as unit connection start */
+    NotUsedAsConnectionEnd,   /*!< List only unit connections that are not used in link table as unit connection end */
+    NotUsed,                  /*!< List only unit connections that are not used in link table */
+    All                       /*!< Don't care about link, list all unit connections */
+  };
+
+  /*! \brief Constructor
+   */
+  mdtClUnitConnectionSelectionDialog(QWidget *parent);
+
+  /*! \brief Select unit connections that are part of given unit
+   */
+  bool select(QSqlDatabase db, const QVariant & unitId, LinkUsage_t lu, bool allowMultiSelection);
+
+  /*! \brief Select unit connections that are part of given unit and also part of given unit connectors
+   */
+  bool select(QSqlDatabase db, const QVariant & unitId, QList<mdtClUnitConnectorPkData> ucnrPkList, LinkUsage_t lu, bool allowMultiSelection);
+
  private:
+
+  /*! \brief SQL base statement
+   */
+  QString baseSqlStatement() const;
+
+  /*! \brief Get clause regarding link usage
+   */
+  QString linkUsageClause(LinkUsage_t lu, const QVariant & unitId) const;
 
   Q_DISABLE_COPY(mdtClUnitConnectionSelectionDialog);
 };

@@ -52,6 +52,8 @@ class mdtClUnitConnectionTest : public mdtTest
   void unitConnectorAddGetRemoveTest();
   void unitConnectorWithConnectionsAddGetRemoveTest();
 
+  void unitConnectionSelectionDialogTest();
+
  private:
 
   // Create test database schema - Will FAIL on problem

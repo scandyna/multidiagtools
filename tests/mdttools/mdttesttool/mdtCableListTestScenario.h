@@ -145,8 +145,8 @@ class mdtCableListTestScenario
 
   /*
    * Create some unit connections for tests:
-   *  - Id_PK : 10000 , Unit_Id_FK : 1000 , ArticleConnection_Id_FK : NULL , UnitContactName : Unit contact 10000
-   *  - Id_PK : 10001 , Unit_Id_FK : 1000 , ArticleConnection_Id_FK : NULL , UnitContactName : Unit contact 10001
+   *  - Id_PK : 10000 , Unit_Id_FK : 1000 , ArticleConnection_Id_FK : NULL , ConnectionType_Code_FK : T , UnitContactName : Unit contact 10000
+   *  - Id_PK : 10001 , Unit_Id_FK : 1000 , ArticleConnection_Id_FK : NULL , ConnectionType_Code_FK : T , UnitContactName : Unit contact 10001
    *  - Id_PK : 20000 , Unit_Id_FK : 2000 , ArticleConnection_Id_FK : 20 , UnitContactName : Unit contact 20000
    *  - Id_PK : 20001 , Unit_Id_FK : 2000 , ArticleConnection_Id_FK : 21 , UnitContactName : Unit contact 20001
    *  - Id_PK : 20002 , Unit_Id_FK : 2001 , ArticleConnection_Id_FK : 20 , UnitContactName : Unit contact 20002

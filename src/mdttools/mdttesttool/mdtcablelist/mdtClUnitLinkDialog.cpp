@@ -23,6 +23,7 @@
 #include "mdtSqlTableSelection.h"
 #include "mdtClUnit.h"
 #include "mdtClUnitConnectorData.h"
+#include "mdtClUnitConnectionSelectionDialog.h"
 #include "mdtClModificationModel.h"
 #include "mdtClLinkVersionModel.h"
 #include "mdtClLinkTypeModel.h"
@@ -49,38 +50,31 @@ mdtClUnitLinkDialog::mdtClUnitLinkDialog(QWidget *parent, QSqlDatabase db)
   pvLinkData.setup(pvDatabase);
   setupUi(this);
   setWindowTitle(tr("Unit link edition"));
-  // Setup Modification combo box
+  // Setup Modification combobox
   pvModificationModel = new mdtClModificationModel(this, db);
   cbModification->setModel(pvModificationModel);
   cbModification->setModelColumn(1);
-  // Setup link version combo box
+  // Setup link version combobox
   pvLinkVersionModel = new mdtClLinkVersionModel(this, db);
   cbLinkVersion->setModel(pvLinkVersionModel);
   cbLinkVersion->setModelColumn(1);
   // Setup link type
-  ///pvLinkTypeModel = new QSqlQueryModel(this);
-  ///pvLinkTypeModel->setQuery("SELECT Code_PK, NameEN, ValueUnit FROM LinkType_tbl ORDER BY NameEN", pvDatabase);
   pvLinkTypeModel = new mdtClLinkTypeModel(this, db);
   cbLinkType->setModel(pvLinkTypeModel);
   cbLinkType->setModelColumn(1);
   cbLinkType->setCurrentIndex(-1);
   connect(cbLinkType, SIGNAL(currentIndexChanged(int)), this, SLOT(onCbLinkTypeCurrentIndexChanged(int)));
   // Setup link direction
-  ///pvLinkDirectionModel = new QSqlQueryModel(this);
-  ///pvLinkDirectionModel->setQuery("SELECT Code_PK, NameEN FROM LinkDirection_tbl", pvDatabase);
   pvLinkDirectionModel = new mdtClLinkDirectionModel(this, db);
   cbLinkDirection->setModel(pvLinkDirectionModel);
   cbLinkDirection->setModelColumn(1);
   connect(cbLinkDirection, SIGNAL(currentIndexChanged(int)), this, SLOT(onCbLinkDirectionCurrentIndexChanged(int)));
   cbLinkDirection->setCurrentIndex(-1);
+  // Setup wire edition part
   connect(pbSelectWire, SIGNAL(clicked()), this, SLOT(selectWire()));
   connect(pbClearWire, SIGNAL(clicked()), this, SLOT(clearWire()));
   connect(deLength, SIGNAL(valueChanged(double, bool)), this, SLOT(setLinkResistance(double, bool)));
-  // Setup modification combobox
-  ///cbModification->addItem("new", QVariant("new"));
-  // Setup since version combobox
-  
-  
+
   // Set default link type
   setLinkTypeCode("CABLELINK");
   // Setup unit
@@ -136,10 +130,10 @@ void mdtClUnitLinkDialog::clearStartUnitSelectionList()
   pvStartUnitSelectionIdList.clear();
 }
 
-void mdtClUnitLinkDialog::setStartConnectorLimitIdList(const QList<QVariant> & unitConnectorIdList)
-{
-  pvStartConnectorLimitIdList = unitConnectorIdList;
-}
+// void mdtClUnitLinkDialog::setStartConnectorLimitIdList(const QList<QVariant> & unitConnectorIdList)
+// {
+//   pvStartConnectorLimitIdList = unitConnectorIdList;
+// }
 
 void mdtClUnitLinkDialog::setStartConnectionLabel(const QString& labelText)
 {
@@ -165,10 +159,10 @@ void mdtClUnitLinkDialog::clearEndUnitSelectionList()
   pvEndUnitSelectionIdList.clear();
 }
 
-void mdtClUnitLinkDialog::setEndConnectorLimitIdList(const QList<QVariant> & unitConnectorIdList)
-{
-  pvEndConnectorLimitIdList = unitConnectorIdList;
-}
+// void mdtClUnitLinkDialog::setEndConnectorLimitIdList(const QList<QVariant> & unitConnectorIdList)
+// {
+//   pvEndConnectorLimitIdList = unitConnectorIdList;
+// }
 
 void mdtClUnitLinkDialog::setEndConnectionLabel(const QString& labelText)
 {
@@ -223,6 +217,7 @@ const QList<QVariant> mdtClUnitLinkDialog::endVehicleTypeIdList() const
   return idList;
 }
 
+/// \deprecated
 void mdtClUnitLinkDialog::setLinkTypeCode(const QVariant & code)
 {
   QModelIndex index;
@@ -239,6 +234,20 @@ void mdtClUnitLinkDialog::setLinkTypeCode(const QVariant & code)
   }
 }
 
+void mdtClUnitLinkDialog::setLinkType(mdtClLinkType_t t)
+{
+  int row;
+
+  row = pvLinkTypeModel->row(t);
+  cbLinkType->setCurrentIndex(row);
+}
+
+mdtClLinkTypeKeyData mdtClUnitLinkDialog::linkTypeKeyData() const
+{
+  return pvLinkTypeModel->currentKeyData(cbLinkType);
+}
+
+/// \deprecated
 QVariant mdtClUnitLinkDialog::linkTypeCode() const
 {
   QModelIndex index;
@@ -255,6 +264,7 @@ QVariant mdtClUnitLinkDialog::linkTypeCode() const
   return data;
 }
 
+/// \deprecated
 void mdtClUnitLinkDialog::setLinkDirectionCode(const QVariant & code)
 {
   QModelIndex index;
@@ -271,6 +281,20 @@ void mdtClUnitLinkDialog::setLinkDirectionCode(const QVariant & code)
   }
 }
 
+void mdtClUnitLinkDialog::setLinkDirection(mdtClLinkDirection_t d)
+{
+  int row;
+
+  row = pvLinkDirectionModel->row(d);
+  cbLinkDirection->setCurrentIndex(row);
+}
+
+mdtClLinkDirectionKeyData mdtClUnitLinkDialog::linkDirectionKeyData() const
+{
+  return pvLinkDirectionModel->currentKeyData(cbLinkDirection);
+}
+
+/// \deprecated
 QVariant mdtClUnitLinkDialog::linkDirectionCode() const
 {
   QModelIndex index;
@@ -285,6 +309,32 @@ QVariant mdtClUnitLinkDialog::linkDirectionCode() const
   data = pvLinkDirectionModel->data(index);
 
   return data;
+}
+
+void mdtClUnitLinkDialog::setLinkVersion(const mdtClLinkVersionData &v)
+{
+  int row;
+
+  row = pvLinkVersionModel->row(v.pk());
+  cbLinkVersion->setCurrentIndex(row);
+}
+
+mdtClLinkVersionPkData mdtClUnitLinkDialog::linkVersionKeyData() const
+{
+  return pvLinkVersionModel->currentVersionPk(cbLinkVersion);
+}
+
+void mdtClUnitLinkDialog::setLinkModification(const mdtClModificationPkData &m)
+{
+  int row;
+
+  row = pvModificationModel->row(m);
+  cbModification->setCurrentIndex(row);
+}
+
+mdtClModificationPkData mdtClUnitLinkDialog::linkModificationKeyData() const
+{
+  return pvModificationModel->currentModificationPk(cbModification);
 }
 
 void mdtClUnitLinkDialog::setLinkData(mdtClLinkData &data)
@@ -329,40 +379,9 @@ mdtClLinkData mdtClUnitLinkDialog::linkData()
   return pvLinkData;
 }
 
-// void mdtClUnitLinkDialog::onCbLinkTypeCurrentIndexChanged(int row)
-// {
-//   QModelIndex index;
-//   QVariant data;
-// 
-//   if(row < 0){
-//     ///lbUnit->setText("");
-//     return;
-//   }
-//   // We must update available directions regarding link type
-//   index = pvLinkTypeModel->index(row, 0);
-//   data = pvLinkTypeModel->data(index);
-//   /// \todo Update whenn Voltage field is added
-//   if(data == QVariant("DIODE")){
-//     pvLinkDirectionModel->setQuery("SELECT Code_PK, NameEN, PictureAscii FROM LinkDirection_tbl WHERE Code_PK <> 'BID'", pvDatabase);
-//     cbLinkDirection->setEnabled(true);
-//     ///sbValue->setValue(0.7);
-//   }else{
-//     pvLinkDirectionModel->setQuery("SELECT Code_PK, NameEN, PictureAscii FROM LinkDirection_tbl WHERE Code_PK = 'BID'", pvDatabase);
-//     cbLinkDirection->setEnabled(false);
-//     ///sbValue->setValue(0.0);
-//   }
-//   // Update displayed unit (V, Ohm, ...)
-//   index = pvLinkTypeModel->index(row, 2);
-//   data = pvLinkTypeModel->data(index);
-//   ///lbUnit->setText("[" + data.toString() + "]");
-//   // Update link data
-//   pvLinkData.setValue("LinkType_Code_FK", linkTypeCode());
-// }
-
 void mdtClUnitLinkDialog::onCbLinkTypeCurrentIndexChanged(int row)
 {
   if(row < 0){
-    ///lbUnit->setText("");
     return;
   }
   // We must update available directions regarding link type
@@ -373,28 +392,9 @@ void mdtClUnitLinkDialog::onCbLinkTypeCurrentIndexChanged(int row)
   }else{
     cbLinkDirection->setEnabled(false);
   }
-  // Update displayed unit (V, Ohm, ...)
-  ///lbUnit->setText("[" + pvLinkTypeModel->unit(row) + "]");
   // Update link data
   ///pvLinkData.setLinkType(key.type());
 }
-
-// void mdtClUnitLinkDialog::onCbLinkDirectionCurrentIndexChanged(int row)
-// {
-//   QModelIndex index;
-//   QVariant data;
-// 
-//   if(row < 0){
-//     lbLinkDirectionAsciiPicture->setText("");
-//     return;
-//   }
-//   // Update the ASCII picture
-//   index = pvLinkDirectionModel->index(row, 2);
-//   data = pvLinkDirectionModel->data(index);
-//   lbLinkDirectionAsciiPicture->setText(data.toString());
-//   // Update link data
-//   pvLinkData.setValue("LinkDirection_Code_FK", linkDirectionCode());
-// }
 
 void mdtClUnitLinkDialog::onCbLinkDirectionCurrentIndexChanged(int row)
 {
@@ -464,7 +464,6 @@ void mdtClUnitLinkDialog::selectStartUnit()
   mdtSqlSelectionDialog selectionDialog(this);
   mdtSqlTableSelection s;
   QString sql;
-  ///QList<QVariant> result;
   int i;
 
   // Setup SQL query statement
@@ -504,7 +503,6 @@ void mdtClUnitLinkDialog::selectStartUnit()
   selectionDialog.setColumnHidden("Unit_Id_PK", true);
   selectionDialog.setColumnHidden("VehicleType_Id_PK", true);
   selectionDialog.setColumnHidden("Article_Id_PK", true);
-  ///selectionDialog.setHeaderData("Vehicle", tr("Type"));
   selectionDialog.setHeaderData("SubType", tr("Sub type"));
   selectionDialog.setHeaderData("SeriesNumber", tr("Serie"));
   selectionDialog.setHeaderData("SchemaPosition", tr("Schema position"));
@@ -515,7 +513,6 @@ void mdtClUnitLinkDialog::selectStartUnit()
   selectionDialog.addColumnToSortOrder("SeriesNumber", Qt::AscendingOrder);
   selectionDialog.addColumnToSortOrder("SchemaPosition", Qt::AscendingOrder);
   selectionDialog.sort();
-  ///selectionDialog.addSelectionResultColumn("Unit_Id_PK");
   selectionDialog.resize(800, 300);
   if(selectionDialog.exec() != QDialog::Accepted){
     return;
@@ -524,12 +521,6 @@ void mdtClUnitLinkDialog::selectStartUnit()
   Q_ASSERT(s.rowCount() == 1);
   // Store unit and update GUI
   setStartUnit(s.data(0, "Unit_Id_PK"));
-  /**
-  result = selectionDialog.selectionResult();
-  Q_ASSERT(result.size() == 1);
-  // Store unit and update GUI
-  setStartUnit(result.at(0));
-  */
 }
 
 void mdtClUnitLinkDialog::selectEndUnit()
@@ -537,7 +528,6 @@ void mdtClUnitLinkDialog::selectEndUnit()
   mdtSqlSelectionDialog selectionDialog(this);
   mdtSqlTableSelection s;
   QString sql;
-  ///QList<QVariant> result;
   int i;
 
   // Setup and run query
@@ -588,7 +578,6 @@ void mdtClUnitLinkDialog::selectEndUnit()
   selectionDialog.addColumnToSortOrder("SeriesNumber", Qt::AscendingOrder);
   selectionDialog.addColumnToSortOrder("SchemaPosition", Qt::AscendingOrder);
   selectionDialog.sort();
-  ///selectionDialog.addSelectionResultColumn("Unit_Id_PK");
   selectionDialog.resize(800, 300);
   if(selectionDialog.exec() != QDialog::Accepted){
     return;
@@ -597,126 +586,160 @@ void mdtClUnitLinkDialog::selectEndUnit()
   Q_ASSERT(s.rowCount() == 1);
   // Store unit and update GUI
   setEndUnit(s.data(0, "Unit_Id_PK"));
-  /**
-  result = selectionDialog.selectionResult();
-  Q_ASSERT(result.size() == 1);
-  // Store unit and update GUI
-  setEndUnit(result.at(0));
-  */
 }
 
 void mdtClUnitLinkDialog::selectStartConnection()
 {
-  mdtSqlSelectionDialog selectionDialog(this);
-  mdtSqlTableSelection s;
-  QString sql;
-  mdtClUnit unit(this, pvDatabase);
-  int i;
-  int lastIndex;
+  mdtClUnitConnectionSelectionDialog selectionDialog(this);
+  mdtClUnitConnectionSelectionDialog::LinkUsage_t linkUsage;
+  mdtClUnitConnectionKeyData ucnxKey;
 
-  // Setup and run query
-  sql = "SELECT * FROM UnitConnection_view WHERE Unit_Id_FK = " + pvStartUnitId.toString();
-  if(!pvStartConnectorLimitIdList.isEmpty()){
-    sql += " AND UnitConnector_Id_FK IN(";
-    lastIndex = pvStartConnectorLimitIdList.size() - 1;
-    for(i = 0; i < lastIndex; ++i){
-      sql += pvStartConnectorLimitIdList.at(i).toString();
-    }
-    sql += pvStartConnectorLimitIdList.at(lastIndex).toString() + ")";
-  }
-  if(cbShowOnlyUnusedStartConnections->isChecked()){
-    sql += " AND UnitConnection_Id_PK NOT IN (";
-    sql += "  SELECT UnitConnectionStart_Id_FK FROM UnitLink_view WHERE Unit_Id_FK = " + pvStartUnitId.toString();
-    sql += ")";
-  }
   // Setup and show dialog
-  selectionDialog.setMessage(tr("Please select") + " " + gbStartConnection->title() + " :");
-  selectionDialog.setQuery(sql, pvDatabase, false);
-  selectionDialog.setColumnHidden("UnitConnection_Id_PK", true);
-  selectionDialog.setColumnHidden("Unit_Id_FK", true);
-  selectionDialog.setColumnHidden("ArticleConnection_Id_FK", true);
-  selectionDialog.setColumnHidden("UnitConnector_Id_FK", true);
-  selectionDialog.setHeaderData("ConnectionType_Code_FK", tr("Contact\ntype"));
-  selectionDialog.setHeaderData("SchemaPage", tr("Schema\npage"));
-  selectionDialog.setHeaderData("UnitFunctionEN", tr("Unit\nfunction (ENG)"));
-  selectionDialog.setHeaderData("SignalName", tr("Signal name"));
-  selectionDialog.setHeaderData("SwAddress", tr("SW address"));
-  selectionDialog.setHeaderData("UnitConnectorName", tr("Unit\nconnector"));
-  selectionDialog.setHeaderData("UnitContactName", tr("Unit\ncontact"));
-  selectionDialog.setHeaderData("ArticleConnectorName", tr("Article\nconnector"));
-  selectionDialog.setHeaderData("ArticleContactName", tr("Article\ncontact"));
-  selectionDialog.setHeaderData("IoType", tr("I/O type"));
-  selectionDialog.setHeaderData("ArticleFunctionEN", tr("Article\nfunction (ENG)"));
-  selectionDialog.addColumnToSortOrder("UnitConnectorName", Qt::AscendingOrder);
-  selectionDialog.addColumnToSortOrder("UnitContactName", Qt::AscendingOrder);
-  selectionDialog.sort();
-  selectionDialog.resize(700, 400);
+  if(cbShowOnlyUnusedStartConnections->isChecked()){
+    linkUsage = mdtClUnitConnectionSelectionDialog::LinkUsage_t::NotUsed;
+  }else{
+    linkUsage = mdtClUnitConnectionSelectionDialog::LinkUsage_t::All;
+  }
+  if(!selectionDialog.select(pvDatabase, pvStartUnitId, pvStartConnectorLimitIdList, linkUsage, false)){
+    /// \todo Display a error
+    return;
+  }
   if(selectionDialog.exec() != QDialog::Accepted){
     return;
   }
-  s = selectionDialog.selection("UnitConnection_Id_PK");
-  Q_ASSERT(s.rowCount() == 1);
   // Get connection data and update
-  pvLinkData.setValue("UnitConnectionStart_Id_FK", s.data(0, "UnitConnection_Id_PK"));
-  updateStartConnection();
-  pvUnitConnectionChanged = true;
+
+  
+//   mdtSqlSelectionDialog selectionDialog(this);
+//   mdtSqlTableSelection s;
+//   QString sql;
+//   mdtClUnit unit(this, pvDatabase);
+//   int i;
+//   int lastIndex;
+// 
+//   // Setup and run query
+//   sql = "SELECT * FROM UnitConnection_view WHERE Unit_Id_FK = " + pvStartUnitId.toString();
+//   if(!pvStartConnectorLimitIdList.isEmpty()){
+//     sql += " AND UnitConnector_Id_FK IN(";
+//     lastIndex = pvStartConnectorLimitIdList.size() - 1;
+//     for(i = 0; i < lastIndex; ++i){
+//       sql += pvStartConnectorLimitIdList.at(i).toString();
+//     }
+//     sql += pvStartConnectorLimitIdList.at(lastIndex).toString() + ")";
+//   }
+//   if(cbShowOnlyUnusedStartConnections->isChecked()){
+//     sql += " AND UnitConnection_Id_PK NOT IN (";
+//     sql += "  SELECT UnitConnectionStart_Id_FK FROM UnitLink_view WHERE Unit_Id_FK = " + pvStartUnitId.toString();
+//     sql += ")";
+//   }
+//   // Setup and show dialog
+//   selectionDialog.setMessage(tr("Please select") + " " + gbStartConnection->title() + " :");
+//   selectionDialog.setQuery(sql, pvDatabase, false);
+//   selectionDialog.setColumnHidden("UnitConnection_Id_PK", true);
+//   selectionDialog.setColumnHidden("Unit_Id_FK", true);
+//   selectionDialog.setColumnHidden("ArticleConnection_Id_FK", true);
+//   selectionDialog.setColumnHidden("UnitConnector_Id_FK", true);
+//   selectionDialog.setHeaderData("ConnectionType_Code_FK", tr("Contact\ntype"));
+//   selectionDialog.setHeaderData("SchemaPage", tr("Schema\npage"));
+//   selectionDialog.setHeaderData("UnitFunctionEN", tr("Unit\nfunction (ENG)"));
+//   selectionDialog.setHeaderData("SignalName", tr("Signal name"));
+//   selectionDialog.setHeaderData("SwAddress", tr("SW address"));
+//   selectionDialog.setHeaderData("UnitConnectorName", tr("Unit\nconnector"));
+//   selectionDialog.setHeaderData("UnitContactName", tr("Unit\ncontact"));
+//   selectionDialog.setHeaderData("ArticleConnectorName", tr("Article\nconnector"));
+//   selectionDialog.setHeaderData("ArticleContactName", tr("Article\ncontact"));
+//   selectionDialog.setHeaderData("IoType", tr("I/O type"));
+//   selectionDialog.setHeaderData("ArticleFunctionEN", tr("Article\nfunction (ENG)"));
+//   selectionDialog.addColumnToSortOrder("UnitConnectorName", Qt::AscendingOrder);
+//   selectionDialog.addColumnToSortOrder("UnitContactName", Qt::AscendingOrder);
+//   selectionDialog.sort();
+//   selectionDialog.resize(700, 400);
+//   if(selectionDialog.exec() != QDialog::Accepted){
+//     return;
+//   }
+//   s = selectionDialog.selection("UnitConnection_Id_PK");
+//   Q_ASSERT(s.rowCount() == 1);
+//   // Get connection data and update
+//   pvLinkData.setValue("UnitConnectionStart_Id_FK", s.data(0, "UnitConnection_Id_PK"));
+//   updateStartConnection();
+//   pvUnitConnectionChanged = true;
 }
 
 void mdtClUnitLinkDialog::selectEndConnection()
 {
-  mdtSqlSelectionDialog selectionDialog(this);
-  mdtSqlTableSelection s;
-  QString sql;
-  mdtClUnit unit(this, pvDatabase);
-  int i;
-  int lastIndex;
+  mdtClUnitConnectionSelectionDialog selectionDialog(this);
+  mdtClUnitConnectionSelectionDialog::LinkUsage_t linkUsage;
+  mdtClUnitConnectionKeyData ucnxKey;
 
-  // Setup and run query
-  sql = "SELECT * FROM UnitConnection_view WHERE Unit_Id_FK = " + pvEndUnitId.toString();
-  if(!pvEndConnectorLimitIdList.isEmpty()){
-    sql += " AND UnitConnector_Id_FK IN(";
-    lastIndex = pvEndConnectorLimitIdList.size() - 1;
-    for(i = 0; i < lastIndex; ++i){
-      sql += pvEndConnectorLimitIdList.at(i).toString();
-    }
-    sql += pvEndConnectorLimitIdList.at(lastIndex).toString() + ")";
-  }
-  if(cbShowOnlyUnusedEndConnections->isChecked()){
-    sql += " AND UnitConnection_Id_PK NOT IN (";
-    sql += "  SELECT UnitConnectionEnd_Id_FK FROM UnitLink_view WHERE Unit_Id_FK = " + pvStartUnitId.toString();
-    sql += ")";
-  }
   // Setup and show dialog
-  selectionDialog.setMessage(tr("Please select") + " " + gbEndConnection->title() + " :");
-  selectionDialog.setQuery(sql, pvDatabase, false);
-  selectionDialog.setColumnHidden("UnitConnection_Id_PK", true);
-  selectionDialog.setColumnHidden("Unit_Id_FK", true);
-  selectionDialog.setColumnHidden("ArticleConnection_Id_FK", true);
-  selectionDialog.setColumnHidden("UnitConnector_Id_FK", true);
-  selectionDialog.setHeaderData("ConnectionType_Code_FK", tr("Contact\ntype"));
-  selectionDialog.setHeaderData("SchemaPage", tr("Schema\npage"));
-  selectionDialog.setHeaderData("UnitFunctionEN", tr("Unit\nfunction (ENG)"));
-  selectionDialog.setHeaderData("SignalName", tr("Signal name"));
-  selectionDialog.setHeaderData("SwAddress", tr("SW address"));
-  selectionDialog.setHeaderData("UnitConnectorName", tr("Unit\nconnector"));
-  selectionDialog.setHeaderData("UnitContactName", tr("Unit\ncontact"));
-  selectionDialog.setHeaderData("ArticleConnectorName", tr("Article\nconnector"));
-  selectionDialog.setHeaderData("ArticleContactName", tr("Article\ncontact"));
-  selectionDialog.setHeaderData("IoType", tr("I/O type"));
-  selectionDialog.setHeaderData("ArticleFunctionEN", tr("Article\nfunction (ENG)"));
-  selectionDialog.addColumnToSortOrder("UnitConnectorName", Qt::AscendingOrder);
-  selectionDialog.addColumnToSortOrder("UnitContactName", Qt::AscendingOrder);
-  selectionDialog.sort();
-  selectionDialog.resize(700, 400);
+  if(cbShowOnlyUnusedStartConnections->isChecked()){
+    linkUsage = mdtClUnitConnectionSelectionDialog::LinkUsage_t::NotUsed;
+  }else{
+    linkUsage = mdtClUnitConnectionSelectionDialog::LinkUsage_t::All;
+  }
+  if(!selectionDialog.select(pvDatabase, pvEndUnitId, pvStartConnectorLimitIdList, linkUsage, false)){
+    /// \todo Display a error
+    return;
+  }
   if(selectionDialog.exec() != QDialog::Accepted){
     return;
   }
-  s = selectionDialog.selection("UnitConnection_Id_PK");
-  Q_ASSERT(s.rowCount() == 1);
   // Get connection data and update
-  pvLinkData.setValue("UnitConnectionEnd_Id_FK", s.data(0, "UnitConnection_Id_PK"));
-  updateEndConnection();
-  pvUnitConnectionChanged = true;
+
+
+//   mdtSqlSelectionDialog selectionDialog(this);
+//   mdtSqlTableSelection s;
+//   QString sql;
+//   mdtClUnit unit(this, pvDatabase);
+//   int i;
+//   int lastIndex;
+// 
+//   // Setup and run query
+//   sql = "SELECT * FROM UnitConnection_view WHERE Unit_Id_FK = " + pvEndUnitId.toString();
+//   if(!pvEndConnectorLimitIdList.isEmpty()){
+//     sql += " AND UnitConnector_Id_FK IN(";
+//     lastIndex = pvEndConnectorLimitIdList.size() - 1;
+//     for(i = 0; i < lastIndex; ++i){
+//       sql += pvEndConnectorLimitIdList.at(i).toString();
+//     }
+//     sql += pvEndConnectorLimitIdList.at(lastIndex).toString() + ")";
+//   }
+//   if(cbShowOnlyUnusedEndConnections->isChecked()){
+//     sql += " AND UnitConnection_Id_PK NOT IN (";
+//     sql += "  SELECT UnitConnectionEnd_Id_FK FROM UnitLink_view WHERE Unit_Id_FK = " + pvStartUnitId.toString();
+//     sql += ")";
+//   }
+//   // Setup and show dialog
+//   selectionDialog.setMessage(tr("Please select") + " " + gbEndConnection->title() + " :");
+//   selectionDialog.setQuery(sql, pvDatabase, false);
+//   selectionDialog.setColumnHidden("UnitConnection_Id_PK", true);
+//   selectionDialog.setColumnHidden("Unit_Id_FK", true);
+//   selectionDialog.setColumnHidden("ArticleConnection_Id_FK", true);
+//   selectionDialog.setColumnHidden("UnitConnector_Id_FK", true);
+//   selectionDialog.setHeaderData("ConnectionType_Code_FK", tr("Contact\ntype"));
+//   selectionDialog.setHeaderData("SchemaPage", tr("Schema\npage"));
+//   selectionDialog.setHeaderData("UnitFunctionEN", tr("Unit\nfunction (ENG)"));
+//   selectionDialog.setHeaderData("SignalName", tr("Signal name"));
+//   selectionDialog.setHeaderData("SwAddress", tr("SW address"));
+//   selectionDialog.setHeaderData("UnitConnectorName", tr("Unit\nconnector"));
+//   selectionDialog.setHeaderData("UnitContactName", tr("Unit\ncontact"));
+//   selectionDialog.setHeaderData("ArticleConnectorName", tr("Article\nconnector"));
+//   selectionDialog.setHeaderData("ArticleContactName", tr("Article\ncontact"));
+//   selectionDialog.setHeaderData("IoType", tr("I/O type"));
+//   selectionDialog.setHeaderData("ArticleFunctionEN", tr("Article\nfunction (ENG)"));
+//   selectionDialog.addColumnToSortOrder("UnitConnectorName", Qt::AscendingOrder);
+//   selectionDialog.addColumnToSortOrder("UnitContactName", Qt::AscendingOrder);
+//   selectionDialog.sort();
+//   selectionDialog.resize(700, 400);
+//   if(selectionDialog.exec() != QDialog::Accepted){
+//     return;
+//   }
+//   s = selectionDialog.selection("UnitConnection_Id_PK");
+//   Q_ASSERT(s.rowCount() == 1);
+//   // Get connection data and update
+//   pvLinkData.setValue("UnitConnectionEnd_Id_FK", s.data(0, "UnitConnection_Id_PK"));
+//   updateEndConnection();
+//   pvUnitConnectionChanged = true;
 }
 
 void mdtClUnitLinkDialog::selectStartVehicleTypes()
@@ -849,6 +872,7 @@ void mdtClUnitLinkDialog::accept()
   QDialog::accept();
 }
 
+/// \deprecated
 void mdtClUnitLinkDialog::updateModificationCombobox(const QVariant &data)
 {
   int row;
@@ -862,20 +886,6 @@ void mdtClUnitLinkDialog::updateModificationCombobox(const QVariant &data)
   // Data not found
   cbModification->setCurrentIndex(-1);
 }
-
-// void mdtClUnitLinkDialog::updateSinceVersionCombobox(const QVariant &data)
-// {
-//   int row;
-// 
-//   for(row = 0; row < cbSinceVersion->count(); ++row){
-//     if(cbSinceVersion->itemData(row) == data){
-//       cbSinceVersion->setCurrentIndex(row);
-//       return;
-//     }
-//   }
-//   // Data not found
-//   cbSinceVersion->setCurrentIndex(-1);
-// }
 
 void mdtClUnitLinkDialog::updateWire(const QVariant& wireId)
 {

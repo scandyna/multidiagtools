@@ -28,6 +28,8 @@
 #include <QLocale>
 #include <QString>
 
+class QComboBox;
+
 /*! \brief Model that acts on LinkType_tbl
  *
  * This model is typically used with QComboBox
@@ -74,6 +76,12 @@ class mdtClLinkTypeModel : public QSqlQueryModel
    * If all works fine, requested key is returned.
    */
   mdtClLinkTypeKeyData keyData(int row);
+
+  /*! \brief Get link type key data of given combobox's current index
+   *
+   * \sa keyData()
+   */
+  mdtClLinkTypeKeyData currentKeyData(QComboBox *cb);
 
   /*! \brief Get unit for given row
    *
